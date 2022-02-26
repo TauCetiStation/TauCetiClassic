@@ -465,7 +465,7 @@ SUBSYSTEM_DEF(shuttle)
 
 //To stop things being sent to centcom which should not be sent to centcom. Recursively checks for these types.
 /datum/controller/subsystem/shuttle/proc/forbidden_atoms_check(atom/A)
-	if(istype(A,/mob/living))
+	if(isliving(A))
 		return TRUE
 	if(istype(A,/obj/item/weapon/disk/nuclear))
 		return TRUE

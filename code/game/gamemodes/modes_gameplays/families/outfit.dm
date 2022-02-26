@@ -106,7 +106,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	head = /obj/item/clothing/head/helmet/space/syndicate
 	suit = /obj/item/clothing/suit/space/syndicate
-	mask = /obj/item/clothing/mask/breath
+	mask = /obj/item/clothing/mask/gas/voice
 	shoes = /obj/item/clothing/shoes/boots/combat
 	l_hand = /obj/item/weapon/tank/jetpack/oxygen/harness
 	l_pocket = /obj/item/weapon/tank/emergency_oxygen/engi
@@ -117,5 +117,8 @@
 	backpack_contents = list(
 		/obj/item/weapon/reagent_containers/pill/cyanide,
 		/obj/item/weapon/extraction_pack/dealer,
+		)
+	implants = list(
+		/obj/item/weapon/implant/dexplosive
 		)
 	survival_box = TRUE

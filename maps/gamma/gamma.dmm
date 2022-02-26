@@ -5500,7 +5500,7 @@
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "aLu" = (
-/obj/random/scrap/dense_weighted,
+/obj/random/scrap/safe_even,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
@@ -7828,7 +7828,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bwR" = (
-/obj/structure/weightlifter,
+/obj/structure/stacklifter,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -8201,7 +8201,7 @@
 "bCA" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Vacant Office APC";
+	name = "Coworking APC";
 	pixel_x = -26
 	},
 /obj/structure/table/woodentable,
@@ -9856,10 +9856,6 @@
 	icon_state = "warning"
 	},
 /area/station/gateway)
-"ccM" = (
-/obj/random/scrap/dense_weighted,
-/turf/simulated/floor/plating,
-/area/station/maintenance/brig)
 "ccS" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -11879,7 +11875,7 @@
 /area/station/hallway/primary/central)
 "cKj" = (
 /obj/item/weapon/scrap_lump,
-/obj/random/scrap/dense_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "cKC" = (
@@ -16560,8 +16556,8 @@
 "eio" = (
 /obj/structure/disposalpipe/sortjunction{
 	dir = 1;
-	name = "Vacant Office";
-	sortType = "Vacant Office"
+	name = "Coworking";
+	sortType = "Coworking"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -18896,6 +18892,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
+"eVq" = (
+/obj/structure/dumbbells_rack,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/security/prison)
 "eVC" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical{
@@ -22043,7 +22045,7 @@
 "fRA" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/camera{
-	c_tag = "Vacant Office";
+	c_tag = "Coworking";
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
@@ -29825,7 +29827,7 @@
 /area/station/medical/hallway)
 "iun" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/dense_even,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "iuu" = (
@@ -32350,11 +32352,6 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/chapel/altar)
-"jlw" = (
-/obj/random/scrap/dense_weighted,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/station/maintenance/brig)
 "jlx" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -35336,7 +35333,7 @@
 	},
 /area/station/security/secconfhall)
 "keN" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
@@ -36417,7 +36414,7 @@
 	},
 /area/station/cargo/storage)
 "kxI" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "kxT" = (
@@ -36458,7 +36455,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/incinerator)
 "kyk" = (
-/obj/random/scrap/dense_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "kyK" = (
@@ -37733,7 +37730,7 @@
 /turf/space,
 /area/space)
 "kTv" = (
-/obj/random/scrap/dense_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -37819,7 +37816,7 @@
 /area/station/engineering/engine)
 "kUu" = (
 /obj/item/weapon/paper/crumpled/bloody/dickbutt,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -39301,7 +39298,7 @@
 	},
 /area/station/medical/hallway)
 "lpc" = (
-/obj/random/scrap/dense_even,
+/obj/random/scrap/safe_even,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
@@ -49943,7 +49940,7 @@
 "oIv" = (
 /obj/item/weapon/scrap_lump,
 /obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/dense_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "oIx" = (
@@ -52082,7 +52079,7 @@
 	},
 /area/station/maintenance/science)
 "pva" = (
-/obj/random/scrap/dense_even,
+/obj/random/scrap/safe_even,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -59168,7 +59165,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "rIl" = (
-/obj/random/scrap/dense_even,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "rIs" = (
@@ -71613,7 +71610,7 @@
 	},
 /area/station/medical/surgeryobs)
 "vCt" = (
-/obj/random/scrap/dense_even,
+/obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
@@ -73944,7 +73941,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "whL" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/item/weapon/scrap_lump,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -74623,6 +74620,12 @@
 	icon_state = "vault"
 	},
 /area/station/gateway)
+"wub" = (
+/obj/structure/dumbbells_rack,
+/turf/simulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/station/civilian/gym)
 "wvH" = (
 /turf/simulated/floor{
 	dir = 5;
@@ -76195,7 +76198,7 @@
 	},
 /area/station/medical/reception)
 "wZu" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /obj/item/weapon/scrap_lump,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating{
@@ -100868,7 +100871,7 @@ uyY
 oMm
 kzJ
 kzJ
-kzJ
+eVq
 gOl
 eHC
 amh
@@ -102479,7 +102482,7 @@ uIK
 rBj
 dhY
 uwW
-uwW
+wub
 rBj
 bRY
 caR
@@ -102889,8 +102892,8 @@ plf
 mRW
 keN
 kUu
-ccM
-ccM
+kxI
+kxI
 mRW
 qCs
 kfx
@@ -103145,9 +103148,9 @@ kHU
 plf
 mRW
 kxI
-jlw
-jlw
-ccM
+vCt
+vCt
+kxI
 mRW
 qod
 hJJ

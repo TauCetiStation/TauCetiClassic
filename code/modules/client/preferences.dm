@@ -52,6 +52,8 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/outline_color = COLOR_BLUE_LIGHT
 	var/eorg_enabled = TRUE
 
+	var/show_runechat = TRUE
+
 	//TGUI
 	var/tgui_fancy = TRUE
 	var/tgui_lock = FALSE
@@ -129,6 +131,10 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/med_record = ""
 	var/sec_record = ""
 	var/gen_record = ""
+
+	// Qualities
+	var/have_quality = FALSE
+	var/selecting_quality = FALSE
 
 	// Quirk list
 	var/list/positive_quirks = list()

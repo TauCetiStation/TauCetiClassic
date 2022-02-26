@@ -11441,7 +11441,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "atB" = (
-/obj/random/scrap/dense_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "atC" = (
@@ -11477,7 +11477,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "atG" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "atH" = (
@@ -12632,6 +12632,7 @@
 	network = list("SS13","Prison");
 	pixel_x = 22
 	},
+/obj/structure/dumbbells_rack,
 /turf/simulated/floor{
 	icon_state = "black"
 	},
@@ -15666,7 +15667,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "aBP" = (
@@ -15703,10 +15704,6 @@
 	icon_state = "warning"
 	},
 /area/station/ai_monitored/eva)
-"aBR" = (
-/obj/random/scrap/sparse_weighted,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "aBS" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -16202,7 +16199,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aCU" = (
-/obj/random/scrap/dense_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -23631,7 +23628,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "aQK" = (
-/obj/random/scrap/dense_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aQL" = (
@@ -23975,7 +23972,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aRt" = (
@@ -29992,7 +29989,7 @@
 "bbN" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Vacant Office APC";
+	name = "Coworking APC";
 	pixel_x = -26
 	},
 /obj/structure/cable{
@@ -33048,7 +33045,7 @@
 /area/station/hallway/secondary/entry)
 "bhe" = (
 /obj/machinery/camera{
-	c_tag = "Vacant Office";
+	c_tag = "Coworking";
 	dir = 4
 	},
 /obj/structure/filingcabinet/chestdrawer/black,
@@ -37668,7 +37665,7 @@
 /area/station/medical/surgery)
 "bpR" = (
 /obj/effect/decal/cleanable/cobweb2,
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -52391,6 +52388,7 @@
 /area/station/storage/tech)
 "bQu" = (
 /obj/machinery/light,
+/obj/structure/dumbbells_rack,
 /turf/simulated/floor/carpet/blue2,
 /area/station/civilian/gym)
 "bQv" = (
@@ -52515,7 +52513,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "bQH" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bQI" = (
@@ -66634,8 +66632,8 @@
 /turf/simulated/wall/r_wall,
 /area/station/aisat/antechamber_interior)
 "cFL" = (
-/obj/random/scrap/moderate_weighted,
 /obj/effect/decal/cleanable/cobweb,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cFN" = (
@@ -69570,7 +69568,7 @@
 	},
 /area/station/engineering/drone_fabrication)
 "dLO" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "dMb" = (
@@ -77969,7 +77967,7 @@
 /turf/simulated/wall,
 /area/station/maintenance/cargo)
 "nKb" = (
-/obj/random/scrap/moderate_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "nLb" = (
@@ -131687,7 +131685,7 @@ bFo
 tVb
 tDb
 aFC
-aBR
+nKb
 bFo
 aah
 aah
@@ -131943,7 +131941,7 @@ nab
 bFo
 lOb
 cak
-aBR
+nKb
 cak
 bFo
 aaa
@@ -132201,7 +132199,7 @@ bFo
 aBO
 cak
 cak
-aBR
+nKb
 bMQ
 aaa
 aaa
@@ -132457,7 +132455,7 @@ nkb
 bFo
 aBO
 cES
-aBR
+nKb
 jtb
 bMQ
 aaa

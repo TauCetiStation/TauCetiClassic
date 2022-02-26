@@ -304,7 +304,7 @@ update_flag
 		user.SetNextMove(CLICK_CD_MELEE)
 		take_damage(W.force)
 
-	if(istype(user, /mob/living/silicon/robot) && istype(W, /obj/item/weapon/tank/jetpack))
+	if(isrobot(user) && istype(W, /obj/item/weapon/tank/jetpack))
 		var/obj/item/weapon/tank/jetpack/J = W
 		var/datum/gas_mixture/thejetpack = J.air_contents
 		var/env_pressure = thejetpack.return_pressure()

@@ -65,7 +65,7 @@
 	if(!user || user.incapacitated())
 		return FALSE
 
-	if(!( istype(user, /mob/living/carbon/human)))
+	if(!( ishuman(user)))
 		return FALSE
 
 	// If the uplink's holder is in the user's contents or near him
@@ -86,7 +86,7 @@
 		if(I.tag)
 			bundlename = "[I.tag] bundle"
 			I.tag = null
-		if(istype(I, /obj/item) && ishuman(user))
+		if(isitem(I) && ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
 			loging(A, tempstate, bundlename)
@@ -332,6 +332,18 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/light_armor
 	cost = 4
 	uplink_types = list("traitor")
+
+/datum/uplink_item/dangerous/light_armor/dealer
+	cost = 12
+	uplink_types = list("dealer")
+	need_wanted_level = 5
+
+/datum/uplink_item/dangerous/cheap_armor
+	name = "Standard Armor Set"
+	desc = "A set of basic armor to protect against enemies"
+	item = /obj/item/weapon/storage/box/syndie_kit/cheap_armor
+	cost = 10
+	uplink_types = list("dealer")
 
 /datum/uplink_item/dangerous/mine
 	name = "High Explosive Mine"
