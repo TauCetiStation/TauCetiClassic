@@ -24,7 +24,7 @@
 		var/mob/living/carbon/human/H = speaker
 		speaker_name = H.GetVoice()
 
-		if(H != src && H.mind && H.mind.assigned_role == "Mime" && length(H.languages))
+		if(H != src && H.mind?.assigned_role == "Mime" && length(H.languages))
 			H.emote("gasp")
 			H.adjustOxyLoss(20)
 			H.Weaken(3)
