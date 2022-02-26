@@ -3,7 +3,7 @@
 //ripley and odyssey
 #define SKILL_CIV_MECH "civ_mech"
 #define SKILL_CIV_MECH_DEFAULT -2 //civilians
-#define SKILL_CIV_MECH_NOVICE -1 // 
+#define SKILL_CIV_MECH_NOVICE -1 //
 #define SKILL_CIV_MECH_TRAINED 0 //  engineer, medical intern, scientist, medical doctor
 #define SKILL_CIV_MECH_PRO 1 // cargo techincian, recycler, robotech, paramedic, mecha operator
 #define SKILL_CIV_MECH_MASTER 2 // RD, miner, QM, CE, CMO
@@ -29,14 +29,14 @@
 //melee_weapons skill
 //buff to melee weapon attack damage(+20% dmg per level)
 #define SKILL_MELEE "melee"
-#define SKILL_MELEE_WEAK -1 
-#define SKILL_MELEE_DEFAULT 0 //civilian, 
+#define SKILL_MELEE_WEAK -1
+#define SKILL_MELEE_DEFAULT 0 //civilian,
 #define SKILL_MELEE_TRAINED 1 //cook, botanist, atmospheric techician
 #define SKILL_MELEE_MASTER 2  //nuclear, security
 
 //engineering skill
 #define SKILL_ENGINEERING "engineering"
-#define SKILL_ENGINEERING_DEFAULT 0  
+#define SKILL_ENGINEERING_DEFAULT 0
 #define SKILL_ENGINEERING_NOVICE 1	//  hacking
 #define SKILL_ENGINEERING_TRAINED 2 //   techincal assistant, atmospheric technician
 #define SKILL_ENGINEERING_PRO 3	//  bubble shield generators, singularity computer ,engineer
@@ -44,7 +44,7 @@
 
 //atmospherics skill
 #define SKILL_ATMOS "atmospherics"
-#define SKILL_ATMOS_DEFAULT 0  
+#define SKILL_ATMOS_DEFAULT 0
 #define SKILL_ATMOS_TRAINED 1	//scientist
 #define SKILL_ATMOS_PRO 2	//engineer, RD
 #define SKILL_ATMOS_MASTER 3	//CE, atmospheric techincian
@@ -53,7 +53,7 @@
 #define SKILL_CONSTRUCTION "construction"
 #define SKILL_CONSTRUCTION_DEFAULT 0
 #define SKILL_CONSTRUCTION_NOVICE 1	// tables, glass
-#define SKILL_CONSTRUCTION_TRAINED 2  //walls, reinforced glass, RCD usage(scientist, robotech)  
+#define SKILL_CONSTRUCTION_TRAINED 2  //walls, reinforced glass, RCD usage(scientist, robotech)
 #define SKILL_CONSTRUCTION_ADVANCED 3	//computer, machine frames,  RD, engineer, reinforced walls
 #define SKILL_CONSTRUCTION_MASTER 4	// CE - AI core and reinforced phoron windows
 
@@ -67,15 +67,15 @@
 //research
 #define SKILL_RESEARCH "research"
 #define SKILL_RESEARCH_DEFAULT 0
-#define SKILL_RESEARCH_TRAINED 1 
+#define SKILL_RESEARCH_TRAINED 1
 #define SKILL_RESEARCH_PROFESSIONAL 2 //   xenoarch consoles, genetics
 #define SKILL_RESEARCH_EXPERT 4 // AI creation and law modification, telescience console
 
 //medical
 #define SKILL_MEDICAL "medical"
 #define SKILL_MEDICAL_UNTRAINED 0
-#define SKILL_MEDICAL_NOVICE 1 
-#define SKILL_MEDICAL_PRACTICED 2 
+#define SKILL_MEDICAL_NOVICE 1
+#define SKILL_MEDICAL_PRACTICED 2
 #define SKILL_MEDICAL_COMPETENT 3 //intern
 #define SKILL_MEDICAL_EXPERT 4 //paramedic, surgeon
 #define SKILL_MEDICAL_MASTER 5 //CMO, medical doctor

@@ -330,7 +330,7 @@ Class Procs:
 
 	usr.set_machine(src)
 	add_fingerprint(usr)
-	
+
 	return TRUE
 
 /obj/machinery/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
