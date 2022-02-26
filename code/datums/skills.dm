@@ -88,10 +88,10 @@ medical, chemistry, research, command)
 		return vars[skill]
 
 /datum/skills
-	var/datum/skillset/active_skillset = new /datum/skillset
-	var/datum/skillset/available_skillset = new /datum/skillset
+	var/datum/skillset/active_skillset = new
+	var/datum/skillset/available_skillset = new
 
-	var/list/modifiers = list()
+	var/list/modifiers
 
 /datum/skills/proc/get_value(skill, user = usr)
 	return min(active_skillset.get_value(skill), available_skillset.get_value(skill))
