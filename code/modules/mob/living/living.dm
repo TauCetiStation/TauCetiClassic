@@ -844,7 +844,7 @@
 			M.drop_from_inventory(H)
 			to_chat(M, "<span class='notice'>[H] wriggles out of your grip!</span>")
 			to_chat(src, "<span class='notice'>You wriggle out of [M]'s grip!</span>")
-		else if(istype(H.loc,/obj/item))
+		else if(isitem(H.loc))
 			to_chat(src, "<span class='notice'>You struggle free of [H.loc].</span>")
 			H.forceMove(get_turf(H))
 		return
@@ -1477,3 +1477,6 @@
 */
 /mob/living/proc/try_take(atom/movable/AM, atom/fallback)
 	return AM.taken(src, fallback)
+
+/mob/living/proc/get_pumped(bodypart)
+	return 0
