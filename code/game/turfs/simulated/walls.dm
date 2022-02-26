@@ -345,8 +345,8 @@
 			thermitemelt(user, seconds_to_melt)
 			return
 
-	var/turf/T = user.loc	//get user's location for delay checks 
-	
+	var/turf/T = user.loc	//get user's location for delay checks
+
 	//DECONSTRUCTION
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -357,13 +357,13 @@
 			if(!damage)
 				return
 			to_chat(user, "<span class='warning'>You start repairing the damage to [src].</span>")
-			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100, required_proficiency = SKILL_ENGINEERING_TRAINED))
+			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100, required_skills = list(SKILL_ENGINEERING = SKILL_ENGINEERING_TRAINED)))
 				to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
 				take_damage(-damage)
 
 		else
 			to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
-			if(WT.use_tool(src, user, SKILL_TASK_DIFFICULT, 3, 100, required_proficiency = SKILL_ENGINEERING_TRAINED))
+			if(WT.use_tool(src, user, SKILL_TASK_DIFFICULT, 3, 100, required_skills = list(SKILL_ENGINEERING = SKILL_ENGINEERING_TRAINED)))
 				if(!istype(src, /turf/simulated/wall))
 					return
 				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
@@ -373,7 +373,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
-		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_proficiency = SKILL_ENGINEERING_TRAINED))
+		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills = list(SKILL_ENGINEERING = SKILL_ENGINEERING_TRAINED)))
 			if(mineral == "diamond")//Oh look, it's tougher
 				sleep(60)
 			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
@@ -390,7 +390,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
-		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50, required_proficiency = SKILL_ENGINEERING_TRAINED))
+		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50, required_skills = list(SKILL_ENGINEERING = SKILL_ENGINEERING_TRAINED)))
 			if(mineral == "diamond")
 				sleep(60)
 			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)

@@ -48,7 +48,7 @@
 		target.log_combat(user, "handcuffed (attempt) with [name]")
 		target.visible_message("<span class='warning'><B>[user]</B> attempts to handcuff <B>[target]</B>!</span>", \
 			"<span class='warning'><B>[user]</B> attempts to handcuff you!</span>")
-		var/time = max(HUMAN_STRIP_DELAY/4, apply_skill_bonus(user, HUMAN_STRIP_DELAY, SKILL_POLICE, SKILL_POLICE_UNTRAINED, bonus = 0.3))
+		var/time = max(HUMAN_STRIP_DELAY/4, apply_skill_bonus(user, HUMAN_STRIP_DELAY, list(SKILL_POLICE = SKILL_POLICE_UNTRAINED), bonus = 0.3))
 		if(do_mob(user, target, time) && mob_can_equip(target, SLOT_HANDCUFFED))
 			if(!isrobot(user) && !isIAN(user) && user != target)
 				var/grabbing = FALSE

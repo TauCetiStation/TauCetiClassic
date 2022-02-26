@@ -70,7 +70,7 @@
 
 	var/delay = L == user ? self_delay : other_delay
 	if(!is_skill_competent(user, SKILL_MEDICAL, skill_level_needed))
-		delay = apply_skill_bonus(user, delay, SKILL_MEDICAL, skill_level_needed, penalty = 2)
+		delay = apply_skill_bonus(user, delay, list(SKILL_MEDICAL = skill_level_needed), penalty = 2)
 	if(delay)
 		if(!silent)
 			announce_heal(L, user)
