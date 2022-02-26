@@ -254,7 +254,7 @@
 	set_frequency(1341)
 
 /obj/item/device/radio/headset/velocity
-	name = "Velocity Crew headset"
+	name = "velocity crew headset"
 	desc = "The headset, if you wish to talk to your fellow crew-nies. ; - Velocity crew channel."
 	icon_state = "vel_headset"
 	item_state = "headset"
