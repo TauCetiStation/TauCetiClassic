@@ -3,6 +3,8 @@
 
 	var/requirement
 
+	var/hidden_chance = 0
+
 	var/list/jobs_required
 	var/list/species_required
 
