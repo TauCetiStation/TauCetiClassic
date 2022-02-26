@@ -186,16 +186,20 @@ function find_code {
 }
 
 function newline_at_eof {
-    counter=0
+    TEMPCOUNTER=/tmp/$$.tmp
+    echo 0 > $TEMPCOUNTER
     find ./code -regex '.*\.dm' | \
         while read line
         do
             if [[ -s "$line" && -n "$(tail -c 1 "$line")" ]]
             then
                 echo "No newline at end of file: $line"
-                ((counter++))
+                counter=$(($(cat $TEMPCOUNTER) + 1))
+                echo $counter > $TEMPCOUNTER
             fi
         done
+    counter=$(cat $TEMPCOUNTER)
+    unlink $TEMPCOUNTER
     return $counter
 }
 
@@ -235,7 +239,7 @@ function run_code_tests {
     run_test_fail "global variable is declared without the /global/ modifier" "grep -RPnr \"^var/(?!global)\" code/**/*.dm"
     match_is_helpers
 
-    run_test_fail "check eof" "newline_at_eof"
+    run_test "check eof" "newline_at_eof"
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
     run_test "check tags" "python2 scripts/tag-matcher.py ."
     run_test "check color hex" "python2 scripts/color-hex-checker.py ."
