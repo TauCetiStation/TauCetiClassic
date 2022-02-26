@@ -361,6 +361,10 @@ var/global/list/blacklisted_builds = list(
 	clients -= src
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	LAZYREMOVE(movingmob?.clients_in_contents, src)
+
+	if(!gc_destroyed) //Clean up signals and timers.
+		Destroy()
+
 	return ..()
 
 /client/proc/handle_autokick_reasons()

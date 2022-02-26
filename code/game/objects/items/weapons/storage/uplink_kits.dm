@@ -258,6 +258,17 @@
 	new /obj/item/clothing/head/helmet/syndilight(src)
 	make_exact_fit()
 
+
+/obj/item/weapon/storage/box/syndie_kit/cheap_armor
+	name = "box (CA)"
+
+/obj/item/weapon/storage/box/syndie_kit/cheap_armor/atom_init()
+	. = ..()
+	new /obj/item/clothing/suit/armor/vest(src)
+	new /obj/item/clothing/head/helmet(src)
+	make_exact_fit()
+
+
 /obj/item/weapon/storage/box/syndie_kit/fake
 	name = "box (B)"
 	desc = "This set allows you to forge various documents at the station."
