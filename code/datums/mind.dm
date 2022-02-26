@@ -65,10 +65,12 @@
 	var/datum/skills/skills = new
 
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
+	var/creation_roundtime
 
 /datum/mind/New(key)
 	src.key = key
 	creation_time = world.time
+	creation_roundtime = roundduration2text()
 
 /datum/mind/proc/transfer_to(mob/new_character)
 	for(var/role in antag_roles)

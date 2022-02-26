@@ -35,6 +35,8 @@
 	var/list/greets = list(GREET_DEFAULT, GREET_CUSTOM)
 
 	var/skillset_type = /datum/skills_modifier
+	// Type for collector of statistics by this role
+	var/datum/stat/role/stat_type = /datum/stat/role
 
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
@@ -308,13 +310,11 @@
 			if(win)
 				text += "<br><font color='green'><B>\The [name] was successful!</B></font>"
 				feedback_add_details("[id]_success","SUCCESS")
-				score["roleswon"]++
+				SSStatistics.score.roleswon++
 			else
 				text += "<br><font color='red'><B>\The [name] has failed.</B></font>"
 				feedback_add_details("[id]_success","FAIL")
 		text += "</ul>"
-
-	antagonists_completion += list(list("role" = id, "html" = text))
 
 	return text
 
