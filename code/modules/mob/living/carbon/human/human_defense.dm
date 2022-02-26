@@ -307,7 +307,7 @@
 		return FALSE
 
 	//Apply weapon damage
-	var/force_with_melee_skill = applySkillModifier(user, I.force, SKILL_MELEE, SKILL_MELEE_DEFAULT, -0.2, -0.2)
+	var/force_with_melee_skill = apply_skill_bonus(user, I.force, SKILL_MELEE, SKILL_MELEE_DEFAULT, -0.2, -0.2)
 	var/damage_flags = I.damage_flags()
 	if(prob(armor))
 		damage_flags &= ~(DAM_SHARP | DAM_EDGE)

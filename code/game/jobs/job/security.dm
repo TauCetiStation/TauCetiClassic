@@ -19,7 +19,7 @@
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/hos
-	skill_sets = list("Head of Security" = /datum/skills/hos)
+	skill_sets = list("Head of Security" = /datum/skills_modifier/hos)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -45,7 +45,7 @@
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
 	outfit = /datum/outfit/job/warden
-	skill_sets = list("Warden" = /datum/skills/warden)
+	skill_sets = list("Warden" = /datum/skills_modifier/warden)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -71,7 +71,7 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/detective
-	skill_sets = list("Detective" = /datum/skills/detective)
+	skill_sets = list("Detective" = /datum/skills_modifier/detective)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -97,7 +97,7 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/officer
-	skill_sets = list("Security Officer" = /datum/skills/officer)
+	skill_sets = list("Security Officer" = /datum/skills_modifier/officer)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -123,7 +123,7 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/forensic
-	skill_sets = list("Forensic Technician" = /datum/skills/forensic)
+	skill_sets = list("Forensic Technician" = /datum/skills_modifier/forensic)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -149,7 +149,7 @@
 	minimal_player_age = 2
 	minimal_player_ingame_minutes = 520
 	outfit = /datum/outfit/job/cadet
-	skill_sets = list("Security Cadet" = /datum/skills/cadet)
+	skill_sets = list("Security Cadet" = /datum/skills_modifier/cadet)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm

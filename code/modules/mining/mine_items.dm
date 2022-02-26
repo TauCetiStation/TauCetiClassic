@@ -485,9 +485,9 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 	if(user.is_busy(src))
 		return
-	
+
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
-	var/planting_time =  max(SKILL_TASK_EASY, SKILL_TASK_DIFFICULT - 1 SECONDS *  ( 2 * user.mind.getSkillRating(SKILL_FIREARMS)  + user.mind.getSkillRating(SKILL_ENGINEERING)))
+	var/planting_time =  max(SKILL_TASK_EASY, SKILL_TASK_DIFFICULT - 1 SECONDS *  ( 2 * user.mind.skills.get_value(SKILL_FIREARMS)  + user.mind.skills.get_value(SKILL_ENGINEERING)))
 	if(do_after(user, planting_time, target = target))
 		user.drop_item()
 		target = target

@@ -34,7 +34,7 @@
 	// Allows you to change the number of greeting messages for a role
 	var/list/greets = list(GREET_DEFAULT, GREET_CUSTOM)
 
-	var/datum/skills/skillset = /datum/skills
+	var/skillset_type = /datum/skills_modifier
 
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
@@ -64,7 +64,7 @@
 	antag = M
 	M.antag_roles[id] = src
 	objectives.owner = M
-	M.skills_modifiers += new skillset()
+	M.skills.add_modifier(new skillset_type)
 	if(msg_admins)
 		message_admins("[key_name(M)] is now \an [id].")
 		log_mode("[key_name(M)] is now \an [id].")
@@ -86,7 +86,7 @@
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
-	M.removeSkillsModifier(new skillset())
+	M.skills.remove_modifier(new skillset_type)
 
 	remove_antag_hud()
 	if(msg_admins)
@@ -173,7 +173,6 @@
 /datum/role/proc/OnPostSetup(laterole = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	add_antag_hud()
-	antag.current_skillset = antag.getAvailableSkillSet()
 	SEND_SIGNAL(src, COMSIG_ROLE_POSTSETUP, laterole)
 
 /datum/role/process()

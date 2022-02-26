@@ -114,8 +114,8 @@
 	data["civilian_jobs"] = format_jobs(civilian_positions)
 	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
 
-	data["fast_modify_region"] = isSkillCompetent(user, SKILL_COMMAND, SKILL_COMMAND_EXPERT)
-	data["fast_full_access"] = isSkillCompetent(user, SKILL_COMMAND, SKILL_COMMAND_MASTER)
+	data["fast_modify_region"] = is_skill_competent(user, SKILL_COMMAND, SKILL_COMMAND_EXPERT)
+	data["fast_full_access"] = is_skill_competent(user, SKILL_COMMAND, SKILL_COMMAND_MASTER)
 
 	if (modify && is_centcom())
 		var/list/all_centcom_access = list()

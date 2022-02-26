@@ -64,6 +64,9 @@
 	var/list/skills_modifiers = list()
 	var/skillset/current_skillset
 
+	//skills
+	var/datum/skills/skills = new /datum/skills()
+
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 
 /datum/mind/New(key)
@@ -108,37 +111,6 @@
 			if(G.can_reenter_corpse || even_if_they_cant_reenter)
 				return G
 			break
-
-/datum/mind/proc/getSkillRating(skill)
-	if(issilicon(usr))
-		return getSkillMaximum(skill);
-	if(!current_skillset)
-		current_skillset = getAvailableSkillSet()
-	var/skillset/available = getAvailableSkillSet()
-	return min(current_skillset.getRating(skill), available.getRating(skill))
-
-/datum/mind/proc/getAvailableSkillSet()
-	var/skillset/available = new /skillset()
-	available.InitFromDatum(skills_modifiers[1])
-	for(var/datum/skills/skills in skills_modifiers)
-		available.Merge(skills)
-	return available
-
-/datum/mind/proc/removeSkillsModifier(datum/skills/removable)
-	for(var/datum/skills/s in skills_modifiers)
-		if(s.tag == removable.tag)
-			skills_modifiers.Remove(s)
-
-/datum/mind/proc/changeSkillValue(skill,value)
-	var/skillset/available = getAvailableSkillSet()
-	if (value > getSkillMaximum(skill) || value < getSkillMinimum(skill))
-		return
-	if (value > available.getRating(skill))
-		return
-	if (value == getSkillRating(skill))
-		return
-	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill] from [current_skillset.getRating(skill)] to [value].</span>")
-	current_skillset.setRating(skill, value)
 
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
@@ -665,7 +637,7 @@
 	else
 		mind = new /datum/mind(key)
 		mind.original = src
-		mind.skills_modifiers = list(new /datum/skills())
+		mind.skills.add_modifier(new /datum/skills_modifier)
 		if(SSticker)
 			SSticker.minds += mind
 		else

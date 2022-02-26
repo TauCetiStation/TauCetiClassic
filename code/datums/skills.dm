@@ -12,12 +12,12 @@ melee = 0, engineering = 0, construction = 0, atmospherics = 0, civ_mech = 0, co
 medical = 0, chemistry = 0, research = 0, command = 0)
 	. = locate(SKILLSID)
 	if(!.)
-		. = new /datum/skills(police = 0, firearms = 0,\
+		. = new /datum/skills_modifier(police = 0, firearms = 0,\
 			melee = 0, engineering = 0, construction = 0, atmospherics = 0, civ_mech = 0, combat_mech = 0, surgery = 0,\
 			medical = 0, chemistry = 0, research = 0, command = 0)
 
-/proc/getSkillsType(skills_type = /datum/skills)
-	var/datum/skills/new_skill = skills_type
+/proc/get_skills_type(skills_type = /datum/skills_modifier)
+	var/datum/skills_modifier/new_skill = skills_type
 	var/police = initial(new_skill.police)
 	var/firearms = initial(new_skill.firearms)
 	var/melee = initial(new_skill.melee)
@@ -35,7 +35,7 @@ medical = 0, chemistry = 0, research = 0, command = 0)
 	if(!.)
 		. = new skills_type
 
-/datum/skills
+/datum/skills_modifier
 	var/police = SKILL_POLICE_UNTRAINED
 	var/firearms = SKILL_FIREARMS_UNTRAINED
 	var/melee = SKILL_MELEE_DEFAULT
@@ -50,7 +50,7 @@ medical = 0, chemistry = 0, research = 0, command = 0)
 	var/research = SKILL_RESEARCH_DEFAULT
 	var/command = SKILL_COMMAND_DEFAULT
 
-/datum/skills/New(police, firearms,\
+/datum/skills_modifier/New(police, firearms,\
 melee, engineering, construction, atmospherics, civ_mech, combat_mech, surgery,\
 medical, chemistry, research, command)
 	if(!isnull(police))
@@ -83,447 +83,50 @@ medical, chemistry, research, command)
 
 #undef SKILLSID
 
-
-/datum/skills/proc/getRating(skill)
+/datum/skills_modifier/proc/get_value(skill)
 	if(skill in SKILL_BOUNDS)
 		return vars[skill]
 
-/proc/getSkillMinimum(skill)
-	if(skill in SKILL_BOUNDS)
-		return SKILL_BOUNDS[skill][1]
-
-/proc/getSkillMaximum(skill)
-	if(skill in SKILL_BOUNDS)
-		return SKILL_BOUNDS[skill][2]
-
-/proc/applySkillModifier(mob/user, value, required_skill, required_proficiency, penalty = 0.5, bonus = 0.4)
-	if(user.mind.getSkillRating(required_skill) < required_proficiency)
-		return  value + value * penalty * (required_proficiency - user.mind.getSkillRating(required_skill))
-	if(user.mind.getSkillRating(required_skill) > required_proficiency)
-		return value - value * bonus * (user.mind.getSkillRating(required_skill) - required_proficiency)
-	return value
-
-/proc/do_skilled(mob/user, atom/target,  delay, required_skill, required_proficiency, penalty = 0.5, bonus = 0.4)
-	return do_after(user, delay = applySkillModifier(user, delay, required_skill, required_proficiency, penalty, bonus), target = target)
-
-/proc/handle_fumbling(mob/user, atom/target, delay, required_skill, required_proficiency, time_bonus = SKILL_TASK_TRIVIAL, message_self = "", message_others = "", text_target = null)
-	if(isSkillCompetent(user, required_skill, required_proficiency))
-		return TRUE
-	var/display_message_self = message_self
-	var/used_item = target
-	if(text_target)
-		used_item = text_target
-	if(!message_self)
-		display_message_self = "<span class='notice'>You fumble around figuring out how to use the [used_item].</span>"
-	to_chat(user, display_message_self)
-
-	var/required_time = max(time_bonus, delay - time_bonus * user.mind.getSkillRating(required_skill))
-	return do_after(user, required_time, target = target)
-
-
-/proc/isSkillCompetent(mob/user, required_skill, required_proficiency)
-	return user?.mind?.getSkillRating(required_skill) >= required_proficiency
-
-/skillset
-	var/skills = list()
-
-/skillset/proc/InitFromDatum(datum/skills/initial)
-	for(var/skill in SKILL_BOUNDS)
-		skills[skill] = max(getSkillMinimum(skill), initial.getRating(skill))
-
-/skillset/proc/Merge(datum/skills/other)
-	for(var/skill in skills)
-		setRating(skill, max(other.getRating(skill), getRating(skill)))
-
-/skillset/proc/getRating(skill)
-	if(skill in skills)
-		return skills[skill]
-
-/skillset/proc/setRating(skill, value)
-	if(skill in skills)
-		skills[skill] = max(min(getSkillMaximum(skill), value), getSkillMinimum(skill))
-
-//medical
-/datum/skills/cmo
-	chemistry = SKILL_CHEMISTRY_EXPERT
-	command = SKILL_COMMAND_EXPERT
-	medical = SKILL_MEDICAL_MASTER
-	surgery = SKILL_SURGERY_EXPERT
-	police = SKILL_POLICE_TRAINED
-	research = SKILL_RESEARCH_TRAINED
-	civ_mech = SKILL_CIV_MECH_MASTER
-
-/datum/skills/doctor
-	medical = SKILL_MEDICAL_EXPERT
-	surgery = SKILL_SURGERY_PROFESSIONAL
-	civ_mech = SKILL_CIV_MECH_TRAINED
-	chemistry = SKILL_CHEMISTRY_COMPETENT
-
-/datum/skills/doctor/surgeon
-	surgery = SKILL_SURGERY_EXPERT
-	medical = SKILL_MEDICAL_EXPERT
-
-/datum/skills/doctor/nurse
-	surgery = SKILL_SURGERY_PROFESSIONAL
-	medical = SKILL_MEDICAL_MASTER
-	chemistry = SKILL_CHEMISTRY_PRACTICED
-
-/datum/skills/virologist
-	chemistry = SKILL_CHEMISTRY_COMPETENT
-	research = SKILL_RESEARCH_TRAINED
-	medical = SKILL_MEDICAL_COMPETENT
-	surgery = SKILL_SURGERY_AMATEUR
-	civ_mech = SKILL_CIV_MECH_NOVICE
-
-/datum/skills/chemist
-	chemistry = SKILL_CHEMISTRY_EXPERT
-	medical = SKILL_MEDICAL_COMPETENT
-	surgery = SKILL_SURGERY_AMATEUR
-	civ_mech = SKILL_CIV_MECH_NOVICE
-
-/datum/skills/paramedic
-	medical = SKILL_MEDICAL_EXPERT
-	surgery = SKILL_SURGERY_TRAINED
-	civ_mech = SKILL_CIV_MECH_PRO
-	chemistry = SKILL_CHEMISTRY_PRACTICED
-
-/datum/skills/psychiatrist
-	medical = SKILL_MEDICAL_COMPETENT
-	command = SKILL_COMMAND_BEGINNER
-	chemistry = SKILL_CHEMISTRY_COMPETENT
-	surgery = SKILL_SURGERY_AMATEUR
-
-/datum/skills/geneticist
-	research = SKILL_RESEARCH_PROFESSIONAL
-	medical = SKILL_MEDICAL_COMPETENT
-	surgery = SKILL_SURGERY_AMATEUR
-	chemistry = SKILL_CHEMISTRY_PRACTICED
-	civ_mech = SKILL_CIV_MECH_NOVICE
-	atmospherics = SKILL_ATMOS_TRAINED
-
-/datum/skills/intern
-	medical = SKILL_MEDICAL_COMPETENT
-	surgery = SKILL_SURGERY_AMATEUR
-	chemistry = SKILL_CHEMISTRY_PRACTICED
-	civ_mech = SKILL_CIV_MECH_TRAINED
-
-//engineering
-/datum/skills/ce
-	construction = SKILL_CONSTRUCTION_MASTER
-	command = SKILL_COMMAND_EXPERT
-	engineering =  SKILL_ENGINEERING_MASTER
-	atmospherics = SKILL_ATMOS_MASTER
-	civ_mech = SKILL_CIV_MECH_MASTER
-	police = SKILL_POLICE_TRAINED
-
-/datum/skills/engineer
-	construction = SKILL_CONSTRUCTION_ADVANCED
-	engineering =  SKILL_ENGINEERING_PRO
-	atmospherics = SKILL_ATMOS_PRO
-	civ_mech = SKILL_CIV_MECH_TRAINED
-
-/datum/skills/atmostech
-	atmospherics = SKILL_ATMOS_MASTER
-	construction = SKILL_CONSTRUCTION_ADVANCED
-	engineering =  SKILL_ENGINEERING_TRAINED
-	melee = SKILL_MELEE_TRAINED
-	civ_mech = SKILL_CIV_MECH_TRAINED
-
-/datum/skills/technicassistant
-	construction = SKILL_CONSTRUCTION_TRAINED
-	engineering =  SKILL_ENGINEERING_TRAINED
-	atmospherics = SKILL_ATMOS_TRAINED
-	civ_mech = SKILL_CIV_MECH_NOVICE
-
-//security
-/datum/skills/hos
-	firearms = SKILL_FIREARMS_PRO
-	command = SKILL_COMMAND_EXPERT
-	police = SKILL_POLICE_PRO
-	melee = SKILL_MELEE_MASTER
-	medical = SKILL_MEDICAL_PRACTICED
-	combat_mech = SKILL_COMBAT_MECH_PRO
-
-/datum/skills/warden
-	firearms = SKILL_FIREARMS_PRO
-	command = SKILL_COMMAND_TRAINED
-	police = SKILL_POLICE_PRO
-	melee = SKILL_MELEE_MASTER
-	medical = SKILL_MEDICAL_NOVICE
-	combat_mech = SKILL_COMBAT_MECH_NOVICE
-
-/datum/skills/officer
-	firearms = SKILL_FIREARMS_PRO
-	police = SKILL_POLICE_PRO
-	melee = SKILL_MELEE_MASTER
-	combat_mech = SKILL_COMBAT_MECH_NOVICE
-	command = SKILL_COMMAND_BEGINNER
-
-/datum/skills/cadet
-	firearms = SKILL_FIREARMS_TRAINED
-	police = SKILL_POLICE_TRAINED
-	melee = SKILL_MELEE_TRAINED
-
-/datum/skills/forensic
-	police = SKILL_POLICE_TRAINED
-	surgery = SKILL_SURGERY_TRAINED
-	medical = SKILL_MEDICAL_COMPETENT
-	research = SKILL_RESEARCH_TRAINED
-	firearms = SKILL_FIREARMS_TRAINED
-
-/datum/skills/detective
-	police = SKILL_POLICE_TRAINED
-	firearms = SKILL_FIREARMS_PRO
-	medical = SKILL_MEDICAL_NOVICE
-	melee = SKILL_MELEE_TRAINED
-
-//science
-/datum/skills/rd
-	research = SKILL_RESEARCH_EXPERT
-	command = SKILL_COMMAND_EXPERT
-	atmospherics = SKILL_ATMOS_TRAINED
-	construction =  SKILL_CONSTRUCTION_ADVANCED
-	chemistry =  SKILL_CHEMISTRY_COMPETENT
-	medical = SKILL_MEDICAL_COMPETENT
-	civ_mech = SKILL_CIV_MECH_MASTER
-	combat_mech = SKILL_COMBAT_MECH_PRO
-	police = SKILL_POLICE_TRAINED
-	surgery = SKILL_SURGERY_PROFESSIONAL
-	engineering = SKILL_ENGINEERING_MASTER
-
-/datum/skills/scientist
-	research = SKILL_RESEARCH_EXPERT
-	atmospherics = SKILL_ATMOS_TRAINED
-	construction =  SKILL_CONSTRUCTION_TRAINED
-	engineering = SKILL_ENGINEERING_NOVICE
-	chemistry =  SKILL_CHEMISTRY_PRACTICED
-	medical = SKILL_MEDICAL_NOVICE
-	surgery = SKILL_SURGERY_AMATEUR
-	civ_mech = SKILL_CIV_MECH_NOVICE
-/datum/skills/scientist/phoron
-	atmospherics = SKILL_ATMOS_PRO
-	research = SKILL_RESEARCH_PROFESSIONAL
-	chemistry = SKILL_CHEMISTRY_COMPETENT
-
-/datum/skills/roboticist
-	research = SKILL_RESEARCH_EXPERT
-	surgery = SKILL_SURGERY_TRAINED
-	medical = SKILL_MEDICAL_PRACTICED
-	construction = SKILL_CONSTRUCTION_TRAINED
-	engineering = SKILL_ENGINEERING_NOVICE
-	civ_mech = SKILL_CIV_MECH_PRO
-	combat_mech = SKILL_COMBAT_MECH_NOVICE
-
-/datum/skills/roboticist/bio
-	surgery = SKILL_SURGERY_PROFESSIONAL
-	civ_mech = SKILL_CIV_MECH_TRAINED
-
-/datum/skills/roboticist/mecha
-	construction = SKILL_CONSTRUCTION_ADVANCED
-	combat_mech = SKILL_COMBAT_MECH_PRO
-	civ_mech = SKILL_CIV_MECH_MASTER
-	surgery = SKILL_SURGERY_AMATEUR
-
-/datum/skills/xenoarchaeologist
-	chemistry = SKILL_CHEMISTRY_COMPETENT
-	research = SKILL_RESEARCH_PROFESSIONAL
-	civ_mech = SKILL_CIV_MECH_TRAINED
-
-/datum/skills/xenobiologist
-	research = SKILL_RESEARCH_PROFESSIONAL
-	surgery = SKILL_SURGERY_AMATEUR
-	medical = SKILL_MEDICAL_PRACTICED
-	chemistry = SKILL_CHEMISTRY_PRACTICED
-
-/datum/skills/research_assistant
-	research = SKILL_RESEARCH_TRAINED
-	medical = SKILL_MEDICAL_NOVICE
-	surgery = SKILL_SURGERY_AMATEUR
-	construction = SKILL_CONSTRUCTION_NOVICE
-	engineering =  SKILL_ENGINEERING_NOVICE
-	civ_mech = SKILL_CIV_MECH_NOVICE
-
-//cargo
-/datum/skills/quartermaster
-	civ_mech = SKILL_CIV_MECH_MASTER
-	police = SKILL_POLICE_TRAINED
-	construction = SKILL_CONSTRUCTION_NOVICE
-	command = SKILL_COMMAND_TRAINED
-
-/datum/skills/miner
-	civ_mech = SKILL_CIV_MECH_MASTER
-	firearms  = SKILL_FIREARMS_TRAINED
-
-/datum/skills/cargotech
-	civ_mech = SKILL_CIV_MECH_PRO
-	construction = SKILL_CONSTRUCTION_NOVICE
-/datum/skills/recycler
-	civ_mech = SKILL_CIV_MECH_PRO
-	construction = SKILL_CONSTRUCTION_NOVICE
-
-//civilians
-/datum/skills/captain
-	command = SKILL_COMMAND_MASTER
-	police = SKILL_POLICE_PRO
-	firearms = SKILL_FIREARMS_PRO
-	melee = SKILL_MELEE_TRAINED
-	engineering =  SKILL_ENGINEERING_NOVICE
-	construction = SKILL_CONSTRUCTION_NOVICE
-	research = SKILL_RESEARCH_TRAINED
-	medical = SKILL_MEDICAL_NOVICE
-	civ_mech = SKILL_CIV_MECH_TRAINED
-	combat_mech = SKILL_COMBAT_MECH_NOVICE
-
-/datum/skills/hop
-	command = SKILL_COMMAND_EXPERT
-	police = SKILL_POLICE_TRAINED
-	firearms = SKILL_FIREARMS_TRAINED
-	civ_mech = SKILL_CIV_MECH_TRAINED
-
-/datum/skills/internal_affairs
-	police = SKILL_POLICE_TRAINED
-	command = SKILL_COMMAND_TRAINED
-
-/datum/skills/bartender
-	firearms = SKILL_FIREARMS_TRAINED
-	police = SKILL_POLICE_TRAINED
-	chemistry = SKILL_CHEMISTRY_PRACTICED
-
-/datum/skills/botanist
-	melee = SKILL_MELEE_TRAINED
-	chemistry = SKILL_CHEMISTRY_PRACTICED
-
-/datum/skills/chef
-	melee = SKILL_MELEE_MASTER
-	surgery = SKILL_SURGERY_AMATEUR
-	medical = SKILL_MEDICAL_NOVICE
-	chemistry = SKILL_CHEMISTRY_PRACTICED
-
-/datum/skills/librarian
-	research = SKILL_RESEARCH_TRAINED
-	chemistry = SKILL_CHEMISTRY_PRACTICED
-	command = SKILL_COMMAND_BEGINNER
-
-/datum/skills/barber
-	medical = SKILL_MEDICAL_NOVICE
-
-/datum/skills/clown
-	melee = SKILL_MELEE_WEAK
-/datum/skills/mime
-	melee = SKILL_MELEE_WEAK
-
-/datum/skills/chaplain
-	command = SKILL_COMMAND_EXPERT
-	melee = SKILL_MELEE_MASTER
-
-/datum/skills/janitor
-/datum/skills/test_subject
-/datum/skills/test_subject/lawyer
-	command = SKILL_COMMAND_BEGINNER
-
-/datum/skills/test_subject/mecha
-	civ_mech = SKILL_CIV_MECH_MASTER
-	combat_mech = SKILL_COMBAT_MECH_NOVICE
-
-/datum/skills/test_subject/detective
-	firearms = SKILL_FIREARMS_TRAINED
-
-/datum/skills/test_subject/reporter
-	command = SKILL_COMMAND_BEGINNER
-
-/datum/skills/test_subject/waiter
-	chemistry = SKILL_CHEMISTRY_PRACTICED
-	police = SKILL_POLICE_TRAINED
-
-/datum/skills/test_subject/vice_officer
-	command = SKILL_COMMAND_TRAINED
-	police = SKILL_POLICE_TRAINED
-
-/datum/skills/test_subject/paranormal
-	research = SKILL_RESEARCH_TRAINED
-	medical = SKILL_MEDICAL_NOVICE
-
-
-//antagonists
-/datum/skills/traitor
-	police = SKILL_POLICE_PRO
-	firearms = SKILL_FIREARMS_PRO
-	melee = SKILL_MELEE_MASTER
-	engineering = SKILL_ENGINEERING_MASTER
-	construction = SKILL_CONSTRUCTION_MASTER
-	atmospherics = SKILL_ATMOS_MASTER
-	civ_mech = SKILL_CIV_MECH_MASTER
-	combat_mech = SKILL_CIV_MECH_PRO
-	surgery = SKILL_SURGERY_EXPERT
-	medical = SKILL_MEDICAL_MASTER
-	chemistry = SKILL_CHEMISTRY_EXPERT
-	research = SKILL_RESEARCH_EXPERT
-	command = SKILL_COMMAND_MASTER
-
-/datum/skills/revolutionary
-	police = SKILL_POLICE_TRAINED
-	firearms = SKILL_FIREARMS_TRAINED
-	command = SKILL_COMMAND_BEGINNER
-	melee = SKILL_MELEE_TRAINED
-
-/datum/skills/gangster
-	firearms = SKILL_FIREARMS_PRO
-	melee = SKILL_MELEE_MASTER
-
-/datum/skills/cultist
-	melee = SKILL_MELEE_MASTER
-	surgery = SKILL_SURGERY_EXPERT
-	medical = SKILL_MEDICAL_MASTER
-	chemistry = SKILL_CHEMISTRY_PRACTICED
-	research = SKILL_RESEARCH_TRAINED
-
-/datum/skills/cultist/leader
-	command = SKILL_COMMAND_EXPERT
-	police = SKILL_POLICE_TRAINED
-	firearms = SKILL_FIREARMS_TRAINED
-	chemistry = SKILL_CHEMISTRY_COMPETENT
-	combat_mech = SKILL_COMBAT_MECH_NOVICE
-	civ_mech = SKILL_CIV_MECH_TRAINED
-	research = SKILL_RESEARCH_PROFESSIONAL
-
-/datum/skills/abductor
-	medical = SKILL_MEDICAL_PRACTICED
-	surgery = SKILL_SURGERY_AMATEUR
-	firearms = SKILL_FIREARMS_TRAINED
-	police = SKILL_POLICE_TRAINED
-	research = SKILL_RESEARCH_TRAINED
-
-/datum/skills/abductor/agent
-	melee = SKILL_MELEE_MASTER
-	firearms = SKILL_FIREARMS_PRO
-	police = SKILL_POLICE_PRO
-
-/datum/skills/abductor/scientist
-	surgery = SKILL_SURGERY_EXPERT
-	medical = SKILL_MEDICAL_MASTER
-	research = SKILL_RESEARCH_EXPERT
-
-
-/datum/skills/wizard
-	melee = SKILL_MELEE_MASTER
-	medical = SKILL_MEDICAL_MASTER
-	surgery = SKILL_SURGERY_EXPERT
-	chemistry = SKILL_CHEMISTRY_EXPERT
-	command = SKILL_COMMAND_TRAINED
-
-/datum/skills/undercover
-	police = SKILL_POLICE_PRO
-	firearms = SKILL_FIREARMS_PRO
-	command = SKILL_COMMAND_TRAINED
-	combat_mech = SKILL_COMBAT_MECH_NOVICE
-	melee = SKILL_MELEE_TRAINED
-
-/datum/skills/cop
-	police = SKILL_POLICE_PRO
-	firearms = SKILL_FIREARMS_PRO
-	combat_mech = SKILL_COMBAT_MECH_PRO
-	command = SKILL_COMMAND_EXPERT
-	melee = SKILL_MELEE_MASTER
-
-
-
+/datum/skills
+	var/datum/skillset/active_skillset = new /datum/skillset
+	var/datum/skillset/available_skillset = new /datum/skillset
+
+	var/list/modifiers = list()
+
+/datum/skills/proc/get_value(skill, user = usr)
+	return min(active_skillset.get_value(skill), available_skillset.get_value(skill))
+
+/datum/skills/proc/get_max(skill)
+	return available_skillset.get_value(skill)
+
+/datum/skills/proc/update_available()
+	available_skillset = new /datum/skillset()
+	available_skillset.init_from_datum(modifiers[1])
+	for(var/datum/skills_modifier/skills in modifiers)
+		available_skillset.merge(skills)
+
+/datum/skills/proc/remove_modifier(datum/skills/removable)
+	for(var/datum/skills_modifier/s as anything in modifiers)
+		if(s.tag == removable.tag)
+			LAZYREMOVE(modifiers, s)
+			break
+	update_available()
+
+/datum/skills/proc/transfer_skills(datum/mind/target)
+	for(var/datum/skills_modifier/s as anything in target.skills.modifiers)
+		add_modifier(s)
+
+/datum/skills/proc/add_modifier(datum/skills/new_skills)
+	LAZYADD(modifiers, new_skills)
+	update_available()
+	active_skillset.skills = available_skillset.skills.Copy()
+
+/datum/skills/proc/set_value(skill,value)
+	if (value > get_skill_absolute_maximum(skill) || value < get_skill_absolute_minimum(skill))
+		return
+	if (value > available_skillset.get_value(skill))
+		return
+	if (value == get_value(skill))
+		return
+	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill] from [active_skillset.get_value(skill)] to [value].</span>")
+	active_skillset.set_value(skill, value)
