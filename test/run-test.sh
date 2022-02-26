@@ -186,7 +186,7 @@ function find_code {
 }
 
 function newline_at_eof {
-    TEMPCOUNTER=/tmp/$$.tmp
+    TEMPCOUNTER=/tmp/counter.tmp
     echo 0 > $TEMPCOUNTER
     find ./code -regex '.*\.dm' | \
         while read line
