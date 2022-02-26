@@ -114,3 +114,76 @@
 	H.apply_recolor()
 	H.update_body()
 	H.regenerate_icons()
+
+/datum/quality/non_comprende
+	desc = "Ты не знаешь никаких языков кроме общего."
+	requirement = "Нет."
+
+/datum/quality/non_comprende/add_effect(mob/living/carbon/human/H, latespawn)
+	for(var/datum/language/language as anything in H.languages)
+		H.remove_language(language.name)
+
+
+/datum/quality/patriot
+	desc = "Ты знаешь только один язык. И всегда будешь говорить только на нём."
+	requirement = "Нет."
+
+/datum/quality/patriot/add_effect(mob/living/carbon/human/H, latespawn)
+	if(length(H.languages) == 0)
+		return
+
+	H.forced_language = pick(H.languages)
+
+	for(var/datum/language/language as anything in H.languages)
+		if(language == H.forced_language)
+			continue
+		H.remove_language(language.name)
+
+
+/datum/quality/shkiondioniovioion
+	desc = "Тё знёёшь тёлькё ёдён ёзёк. Ё всёгдё бёдёшь гёвёрёть тёлькё нё нём."
+	requirement = "Нёт."
+
+/datum/quality/shkiondioniovioion/add_effect(mob/living/carbon/human/H, latespawn)
+	H.add_language(LANGUAGE_SHKIONDIONIOVIOION)
+	H.forced_language = LANGUAGE_SHKIONDIONIOVIOION
+
+	for(var/datum/language/language as anything in H.languages)
+		if(language == H.forced_language)
+			continue
+		H.remove_language(language.name)
+
+
+/datum/quality/clumsy
+	desc = "Ты - неуклюжий, криворукий дурачок. Лучше не трогать всякие опасные штуки!"
+	requirement = "Все, кроме Клоуна."
+
+/datum/quality/clumsy/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.assigned_role != "Clown"
+
+/datum/quality/clumsy/add_effect(mob/living/carbon/human/H, latespawn)
+	H.mutations.Add(CLUMSY)
+
+
+var/global/list/allergen_reagents_list
+/datum/quality/allergies
+	desc = "Ты - аллергик, с рождения такой. Вот только беда... А на что аллергия то?"
+	requirement = "Не синтет."
+
+	var/allergies_amount = 3
+
+/datum/quality/allergies/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !H.species.flags[IS_SYNTHETIC]
+
+/datum/quality/allergies/add_effect(mob/living/carbon/human/H, latespawn)
+	for(var/i in 1 to allergies_amount)
+		var/reagent = pick(global.allergen_reagents_list)
+		H.allergies[reagent] = ALLERGY_UNDISCOVERED
+
+
+/datum/quality/dumb
+	desc = "Ты несколько раз упал головой на тулбокс и отупел."
+	requirement = "Нет."
+
+/datum/quality/dumb/add_effect(mob/living/carbon/human/H, latespawn)
+	H.adjustBrainLoss(rand(30, 99))

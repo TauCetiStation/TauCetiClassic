@@ -327,7 +327,7 @@
 		icon_state = not_bloody_state
 		item_state = not_bloody_item_state
 	..()
-	if(istype(src.loc, /mob/living))
+	if(isliving(src.loc))
 		var/mob/living/user = src.loc
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()

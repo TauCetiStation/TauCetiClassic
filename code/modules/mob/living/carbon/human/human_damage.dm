@@ -363,8 +363,14 @@ This function restores all bodyparts.
 /mob/living/carbon/human/proc/get_bodypart(zone)
 	if(!zone)
 		zone = BP_CHEST
-	if(zone in list(O_EYES , O_MOUTH))
+
+	else if(zone in list(O_EYES , O_MOUTH))
 		zone = BP_HEAD
+	else if(zone == BP_ACTIVE_ARM)
+		zone = hand ? BP_L_ARM : BP_R_ARM
+	else if(zone == BP_INACTIVE_ARM)
+		zone = hand ? BP_R_ARM : BP_L_ARM
+
 	return bodyparts_by_name[zone]
 
 /mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
