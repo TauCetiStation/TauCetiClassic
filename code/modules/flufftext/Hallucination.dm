@@ -52,7 +52,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					var/list/slots_free = list(ui_lhand,ui_rhand)
 					if(l_hand) slots_free -= ui_lhand
 					if(r_hand) slots_free -= ui_rhand
-					if(istype(src,/mob/living/carbon/human))
+					if(ishuman(src))
 						var/mob/living/carbon/human/H = src
 						if(!H.belt) slots_free += ui_belt
 						if(!H.l_store) slots_free += ui_storage1
@@ -279,6 +279,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					hal_crit = 0
 					hal_screwyhud = 0
 
+			if(76 to 100)
+				continue
 
 	handling_hal = 0
 

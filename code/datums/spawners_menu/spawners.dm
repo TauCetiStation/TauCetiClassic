@@ -267,17 +267,20 @@ var/global/list/datum/spawners_cooldown = list()
 	var/new_name = sanitize_safe(input(ghost, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
 
 	var/datum/faction/strike_team/ert/ERT_team = find_faction_by_type(/datum/faction/strike_team/ert)
-	var/leader_selected = isemptylist(ERT_team.members)
 
-	var/mob/living/carbon/human/new_commando = ghost.client.create_response_team(spawnloc.loc, leader_selected, new_name)
+	var/is_leader = FALSE
+	if(!ERT_team.leader_selected)
+		is_leader = TRUE
+		ERT_team.leader_selected = TRUE
+
+	var/mob/living/carbon/human/new_commando = ghost.client.create_response_team(spawnloc.loc, is_leader, new_name)
 	new_commando.mind.key = ghost.key
 	new_commando.key = ghost.key
 	create_random_account_and_store_in_mind(new_commando)
-	qdel(spawnloc)
 
-	to_chat(new_commando, "<span class='notice'>You are [!leader_selected ? "a member" : "the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.</span>")
+	to_chat(new_commando, "<span class='notice'>You are [!is_leader ? "a member" : "the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.</span>")
 	to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.</b>")
-	if(!leader_selected)
+	if(!is_leader)
 		to_chat(new_commando, "<b>As member of the Emergency Response Team, you answer to your leader and CentCom officials with higher priority and the commander of the ship with lower.</b>")
 	else
 		to_chat(new_commando, "<b>As leader of the Emergency Response Team, you answer only to CentComm and the commander of the ship with lower. You can override orders when it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the commander of the ship where possible, however.</b>")
@@ -481,42 +484,81 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/drone/spawn_ghost(mob/dead/observer/ghost)
 	ghost.dronize()
 
-/datum/spawner/plant
+/datum/spawner/podman
+	name = "Подкидыш"
+	desc = "Человечка вырастили на грядке."
+	wiki_ref = "Podmen"
+
+	ranks = list(ROLE_GHOSTLY)
+
+	var/mob/podman
+
+/datum/spawner/podman/New(mob/_podman)
+	. = ..()
+	podman = _podman
+
+/datum/spawner/podman/jump(mob/dead/observer/ghost)
+	ghost.forceMove(get_turf(podman))
+
+/datum/spawner/podman/spawn_ghost(mob/dead/observer/ghost)
+	podman.key = ghost.key
+
+	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	msg += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
+	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+	to_chat(podman, msg)
+
+/datum/spawner/fake_diona
 	name = "Нимфа Дионы"
-	desc = "Нимфу вырастили на грядке."
+	desc = "Диону вырастили на грядке."
 	wiki_ref = "Dionaea"
 
 	ranks = list(ROLE_GHOSTLY)
 
 	var/mob/diona
-	var/realName
 
-/datum/spawner/plant/New(mob/_diona, _realName)
+/datum/spawner/fake_diona/New(mob/_diona)
 	. = ..()
 	diona = _diona
-	realName = _realName
 
-/datum/spawner/plant/can_spawn(mob/dead/observer/ghost)
-	if(is_alien_whitelisted_banned(ghost, DIONA) || !is_alien_whitelisted(ghost, DIONA))
-		to_chat(ghost, "<span class='warning'>Вы не можете играть за дион.</span>")
-		return FALSE
-	return ..()
-
-/datum/spawner/plant/jump(mob/dead/observer/ghost)
+/datum/spawner/fake_diona/jump(mob/dead/observer/ghost)
 	ghost.forceMove(get_turf(diona))
 
-/datum/spawner/plant/spawn_ghost(mob/dead/observer/ghost)
+/datum/spawner/fake_diona/spawn_ghost(mob/dead/observer/ghost)
 	diona.key = ghost.key
 
-	if(realName)
-		diona.real_name = realName
-	diona.dna.real_name = diona.real_name
+	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	msg += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B><BR>"
+	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+	to_chat(diona, msg)
 
-	to_chat(diona, "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>")
-	to_chat(diona, "<B>You are now one of the Dionaea, a race of drifting interstellar plantlike creatures that sometimes share their seeds with human traders.</B>")
-	to_chat(diona, "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>")
+/datum/spawner/spy
+	name = "Агент Прослушки"
+	desc = "Вы появляетесь на аванпосте прослушки Синдиката."
 
-	if(!realName)
-		var/newname = sanitize_safe(input(diona,"Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
-		if (newname != "")
-			diona.real_name = newname
+	ranks = list(ROLE_GHOSTLY)
+
+/datum/spawner/spy/spawn_ghost(mob/dead/observer/ghost)
+	var/spawnloc = pick(espionageagent_start)
+	espionageagent_start -= spawnloc
+
+	var/client/C = ghost.client
+
+	var/mob/living/carbon/human/H = new(null)
+	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
+	C.create_human_apperance(H, new_name)
+
+	H.loc = spawnloc
+	H.key = C.key
+	H.equipOutfit(/datum/outfit/spy)
+
+	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на [station_name_ru()].</B>")
+	if(mode_has_antags())
+		to_chat(H, "<B>Согласно сводкам, именно сегодня Ваши наниматели готовятся нанести удар по корпоративным ублюдкам, и Вы можете посодействовать засланным на станцию агентам.</B>")
+	else
+		to_chat(H, "<B>Сегодня очередной рабочий день. Ничего из ряда вон выходящего произойти не должно, так что можно расслабиться.</B>")
+	to_chat(H, "<B>Вы ни в коем случае не должны покидать свой пост! Невыполнение своих задач приведёт к увольнению.</B>")
+
+/datum/spawner/spy/jump(mob/dead/observer/ghost)
+	var/jump_to = pick(espionageagent_start)
+	ghost.forceMove(get_turf(jump_to))

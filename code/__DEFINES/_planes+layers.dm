@@ -105,8 +105,8 @@ What is the naming convention for planes or layers?
 #define EMOTE_LAYER                     5.02
 
 #define SINGULARITY_PLANE 10
-#define SINGULARITY_LAYER 1
-#define ABOVE_SINGULARITY_LAYER 2
+  #define SINGULARITY_LAYER 1
+  #define ABOVE_SINGULARITY_LAYER 2
 
 #define AREA_PLANE 60
 #define GHOST_PLANE 80
@@ -114,14 +114,16 @@ What is the naming convention for planes or layers?
 
 //---------- -----LIGHTING -------------
 #define LIGHTING_PLANE 100
-#define LIGHTING_LAYER 1
+  #define LIGHTING_LAYER 1
 #define ABOVE_LIGHTING_PLANE 120
-#define ABOVE_LIGHTING_LAYER 1
+  #define ABOVE_LIGHTING_LAYER 3
+  #define RUNECHAT_LAYER 4
+  #define RUNECHAT_LAYER_MAX 5
 
 ///--------------- FULLSCREEN IMAGES ------------
 #define FULLSCREEN_PLANE 500
-#define FLASH_LAYER 1
-#define FULLSCREEN_LAYER 2
+  #define FLASH_LAYER 1
+  #define FULLSCREEN_LAYER 2
 
 //-------------------- Rendering ---------------------
 #define RENDER_PLANE_GAME 990
@@ -132,9 +134,9 @@ What is the naming convention for planes or layers?
 //-------------------- HUD ---------------------
 //HUD layer defines
 #define HUD_PLANE 1000
-#define HUD_LAYER 1
+  #define HUD_LAYER 1
 #define ABOVE_HUD_PLANE 1100
-#define ABOVE_HUD_LAYER 1
+  #define ABOVE_HUD_LAYER 1
 
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"

@@ -77,18 +77,12 @@
 
 /obj/singularity/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			if(current_size <= 3)
 				log_investigate("has been destroyed by a heavy explosion.",INVESTIGATE_SINGULO)
 				qdel(src)
 				return
-			else
-				energy -= round(((energy+1)/2),1)
-		if(2.0)
-			energy -= round(((energy+1)/3),1)
-		if(3.0)
-			energy -= round(((energy+1)/4),1)
-	return
+	energy -= round(((energy + 1) / (severity + 1)), 1)
 
 /obj/singularity/Bump(atom/A)
 	consume(A)
@@ -312,10 +306,10 @@
 	var/dir2 = 0
 	var/dir3 = 0
 	switch(direction)
-		if(NORTH||SOUTH)
+		if(NORTH, SOUTH)
 			dir2 = 4
 			dir3 = 8
-		if(EAST||WEST)
+		if(EAST, WEST)
 			dir2 = 1
 			dir3 = 2
 	var/turf/T2 = T

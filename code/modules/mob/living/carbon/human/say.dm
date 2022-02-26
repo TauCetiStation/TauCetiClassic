@@ -69,8 +69,6 @@
 	add_conversation(speaker.GetVoice(), "hear", message)
 	H.add_conversation(GetVoice(), "say", message)
 
-var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
-
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"
 	var/message_range = world.view
@@ -120,12 +118,14 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 			message = copytext(message,2)	//it would be really nice if the parse procs could do this for us.
 		else
 			message = copytext(message,2 + length(message[2]))
+		if(!message)
+			return
 
 	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
 	var/has_lang_prefix = !!speaking
 	if(!has_lang_prefix && HAS_TRAIT(src, TRAIT_MUTE))
-		var/datum/language/USL = all_languages["Universal Sign Language"]
+		var/datum/language/USL = all_languages[LANGUAGE_USL]
 		if(can_speak(USL))
 			speaking = USL
 
@@ -144,9 +144,13 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 
 	if (has_lang_prefix)
 		message = copytext(message,2+length_char(speaking.key))
-	else if(species.force_racial_language)
-		speaking = all_languages[species.language]
+		if(!message)
+			return
+
 	else
+		speaking = get_language()
+
+	if(!speaking)
 		switch(species.name)
 			if(TAJARAN)
 				message = replacetextEx_char(message, "р", pick(list("ррр" , "рр")))
@@ -155,6 +159,11 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 				message = replacetextEx_char(message, "с", pick(list("ссс" , "сс")))
 				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
 				message = replacetextEx_char(message, "С", pick(list("Ссс" , "Сс")))
+			if(PODMAN)
+				message = replacetextEx_char(message, "ж", pick(list("ш", "хш")))
+				message = replacetextEx_char(message, "Ж", pick(list("Ш", "Хш")))
+				message = replacetextEx_char(message, "з", pick(list("с", "хс")))
+				message = replacetextEx_char(message, "З", pick(list("С", "Хс")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
@@ -173,17 +182,12 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 				return ""
 
 	message = capitalize(trim(message))
+	message = add_period(message)
 
 	if(iszombie(src))
 		message = zombie_talk(message)
 
 	var/ending = copytext(message, -1)
-
-	if(!(ending in punctuation_marks_final))
-		if(ending == ",")
-			message = splicetext(message, length(message), , ".")
-		else
-			message += "."
 
 	if(speaking)
 		//If we've gotten this far, keep going!

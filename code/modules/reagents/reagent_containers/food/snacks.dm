@@ -24,14 +24,14 @@
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
-		score["foodeaten"]++
+		SSStatistics.score.foodeaten++
 		usr.drop_from_inventory(src)	//so icons update :[
 
 		if(trash)
 			if(ispath(trash,/obj/item))
 				var/obj/item/TrashItem = new trash(usr)
 				usr.put_in_hands(TrashItem)
-			else if(istype(trash,/obj/item))
+			else if(isitem(trash))
 				usr.put_in_hands(trash)
 		qdel(src)
 	return
@@ -65,7 +65,7 @@
 				to_chat(C, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
 
 		else
-			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
+			if(!isslime(M))		//If you're feeding it to someone else.
 
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
 					M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
@@ -155,7 +155,7 @@
 				var/obj/item/TrashItem
 				if(ispath(trash,/obj/item))
 					TrashItem = new trash(src)
-				else if(istype(trash,/obj/item))
+				else if(isitem(trash))
 					TrashItem = trash
 				TrashItem.forceMove(loc)
 			qdel(src)
@@ -1288,7 +1288,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/On_Consume(mob/M)
 	to_chat(M, "<span class = 'warning'>Something inside of you suddently expands!</span>")
 
-	if (istype(M, /mob/living/carbon/human))
+	if (ishuman(M))
 		//Do not try to understand.
 		var/obj/item/weapon/surprise = new/obj/item/weapon(M)
 		var/mob/living/carbon/monkey/ook = new monkey_type(null) //no other way to get access to the vars, alas
@@ -1729,7 +1729,7 @@
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return FALSE
 	var/inaccurate = 0
-	if(W.tools[TOOL_KNIFE] || W.sharp)
+	if(W.get_quality(QUALITY_CUTTING) > 0 || W.sharp)
 		inaccurate = 1
 	else
 		return FALSE

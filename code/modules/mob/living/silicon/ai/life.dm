@@ -38,7 +38,7 @@
 			adjustOxyLoss(-1)
 
 		//stage = 1
-		//if (istype(src, /mob/living/silicon/ai)) // Are we not sure what we are?
+		//if (isAI(src)) // Are we not sure what we are?
 		var/blind = 0
 		//stage = 2
 		var/area/loc = null
@@ -47,7 +47,7 @@
 			loc = T.loc
 			if (istype(loc, /area))
 				//stage = 4
-				if (!loc.power_equip && !istype(src.loc,/obj/item))
+				if (!loc.power_equip && !isitem(src.loc))
 					//stage = 5
 					blind = 1
 
@@ -79,7 +79,7 @@
 				return
 		else
 
-			if (((!loc.power_equip) || istype(T, /turf/space)) && !istype(src.loc,/obj/item))
+			if (((!loc.power_equip) || istype(T, /turf/space)) && !isitem(src.loc))
 				if (src:aiRestorePowerRoutine==0)
 					src:aiRestorePowerRoutine = 1
 

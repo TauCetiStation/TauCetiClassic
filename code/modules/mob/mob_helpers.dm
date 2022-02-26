@@ -202,12 +202,14 @@
 					new_letter = "х"
 
 		switch(rand(1,15))
-			if(1,3,5,8)
+			if(1 to 4)
 				new_letter = lowertext(new_letter)
-			if(2,4,6,15)
+			if(5 to 9)
 				new_letter = uppertext(new_letter)
-			if(7)
+			if(10)
 				new_letter += "'"
+			if(11 to 15)
+				SWITCH_PASS
 
 		new_text += new_letter
 

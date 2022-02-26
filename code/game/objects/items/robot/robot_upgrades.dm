@@ -182,3 +182,20 @@
 
 	R.can_be_security = TRUE
 	return TRUE
+
+/obj/item/borg/upgrade/hud_calibrator
+	name = "Рекалибратор дисплея"
+	desc = "Рекалибрует дисплей с помощью интерференции волн, улучшая опыт пользования визуальным интерфейсом."
+	icon_state = "cyborg_upgrade2"
+	require_module = TRUE
+
+/obj/item/borg/upgrade/hud_calibrator/action(mob/living/silicon/robot/R)
+	if(..())
+		return FALSE
+	var/founded_hud = FALSE
+	for(var/obj/item/borg/sight/hud in R?.module?.modules)
+		if(!(hud.sight_mode & BORGIGNORESIGHT))
+			hud.sight_mode |= BORGIGNORESIGHT
+			founded_hud = TRUE
+	return founded_hud
+

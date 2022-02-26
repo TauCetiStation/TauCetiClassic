@@ -195,9 +195,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else
 			resting = TRUE
 			Sleeping(2 SECONDS)
-		ghostize(can_reenter_corpse = FALSE)
-	return
 
+		SSStatistics.add_leave_stat(mind, "Ghosted")
+		ghostize(can_reenter_corpse = FALSE)
 
 /mob/dead/observer/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = TRUE
@@ -307,7 +307,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	set name = "Teleport"
 	set desc= "Teleport to a location"
-	if(!istype(usr, /mob/dead/observer))
+	if(!isobserver(usr))
 		to_chat(usr, "Not when you're not dead!")
 		return
 	usr.verbs -= /mob/dead/observer/proc/dead_tele
@@ -385,7 +385,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Jump to Mob"
 	set desc = "Teleport to a mob."
 
-	if(istype(usr, /mob/dead/observer)) //Make sure they're an observer!
+	if(isobserver(usr)) //Make sure they're an observer!
 		var/list/dest = list() //List of possible destinations (mobs)
 		var/target = null	   //Chosen target.
 
@@ -433,7 +433,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Analyze Air"
 	set category = "Ghost"
 
-	if(!istype(usr, /mob/dead/observer)) return
+	if(!isobserver(usr)) return
 
 	var/turf/t = get_turf(src)
 	if(t)

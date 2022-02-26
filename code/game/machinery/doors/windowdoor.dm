@@ -12,6 +12,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	air_properties_vary_with_direction = 1
 	door_open_sound  = 'sound/machines/windowdoor.ogg'
 	door_close_sound = 'sound/machines/windowdoor.ogg'
+
+	can_wedge_items = FALSE
+
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/base_state = "left"
 	var/health = 150.0 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
@@ -246,7 +249,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	attack_generic(attacker, attacker.melee_damage)
 
 /obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user)
-	if(!istype(user, /mob/living/carbon/slime/adult))
+	if(!isslimeadult(user))
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)

@@ -146,6 +146,10 @@
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return
+		if(target.ismindprotect())
+			to_chat(usr, "<span class='notice'>Their mind seems to be protected!</span>")
+			charge_counter = charge_max
+			return
 		if(enthralling)
 			to_chat(usr, "<span class='warning'>You are already enthralling!</span>")
 			charge_counter = charge_max
@@ -167,18 +171,6 @@
 					to_chat(target, "<span class='boldannounce'>Your gaze is forcibly drawn into a blinding red light. You fall to the floor as conscious thought is wiped away.</span>")
 					target.Weaken(12)
 					sleep(20)
-					if(target.ismindprotect())
-						to_chat(usr, "<span class='notice'>They are enslaved by Nanotrasen. You begin to shut down the nanobot implant - this will take some time.</span>")
-						usr.visible_message("<span class='danger'>[usr] halts for a moment, then begins passing its hand over [target]'s body.</span>")
-						to_chat(target, "<span class='boldannounce'>You feel your loyalties begin to weaken!</span>")
-						sleep(150) //15 seconds - not spawn() so the enthralling takes longer
-						to_chat(usr, "<span class='notice'>The nanobots composing the loyalty implant have been rendered inert. Now to continue.</span>")
-						usr.visible_message("<span class='danger'>[usr] halts thier hand and resumes staring into [target]'s face.</span>")
-						for(var/obj/item/weapon/implant/mind_protect/L in target)
-							if(L.implanted)
-								qdel(L)
-								to_chat(target, "<span class='boldannounce'>Your unwavering volition unexpectedly falters, dims, dies. You feel a sense of true terror.</span>")
-						target.sec_hud_set_implants()
 				if(3)
 					to_chat(usr, "<span class='notice'>You begin rearranging [target]'s memories.</span>")
 					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
@@ -392,7 +384,7 @@
 				var/mob/living/carbon/M = target
 				to_chat(M, "<span class='danger'><b>A spike of pain drives into your head and scrambles your thoughts!</b></span>")
 				M.Weaken(2)
-				M.confused += 10
+				M.AdjustConfused(10)
 				//M.setEarDamage(M.ear_damage + 3)
 				M.ear_damage += 3
 			else if(issilicon(target))

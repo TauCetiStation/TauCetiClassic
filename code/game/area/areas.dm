@@ -175,16 +175,13 @@ var/global/list/ghostteleportlocs = list()
 /area/proc/update_beauty()
 	if(!areasize)
 		beauty = 0
-		SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
 		return FALSE
 
 	if(areasize >= beauty_threshold)
 		beauty = 0
-		SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
 		return FALSE
 
 	beauty = totalbeauty / areasize
-	SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
 
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
@@ -481,7 +478,7 @@ var/global/list/ghostteleportlocs = list()
 	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.
 		return
 
-	if(istype(mob,/mob/living/carbon/human))  // Only humans can wear magboots, so we give them a chance to.
+	if(ishuman(mob))  // Only humans can wear magboots, so we give them a chance to.
 		var/mob/living/carbon/human/H = mob
 		if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
 			return

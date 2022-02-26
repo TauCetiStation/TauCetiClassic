@@ -19,6 +19,11 @@
 
 	heavy_animation = TRUE
 
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 6,
+		BP_CHEST = 6,
+	)
+
 /datum/combat_combo/uppercut/animate_combo(mob/living/victim, mob/living/attacker)
 	var/saved_targetzone = attacker.get_targetzone()
 	var/list/attack_obj = attacker.get_unarmed_attack()
@@ -129,6 +134,15 @@
 
 	force_dam_type = BRUTE
 
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 7,
+		BP_INACTIVE_ARM = 7,
+		BP_CHEST = 7,
+		BP_GROIN = 7,
+		BP_L_LEG = 7,
+		BP_R_LEG = 7,
+	)
+
 /datum/combat_combo/suplex/animate_combo(mob/living/victim, mob/living/attacker)
 	var/saved_targetzone = attacker.get_targetzone()
 	var/list/attack_obj = attacker.get_unarmed_attack()
@@ -220,6 +234,12 @@
 
 	force_dam_type = BRUTE
 
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 5,
+		BP_INACTIVE_ARM = 5,
+		BP_CHEST = 5,
+	)
+
 /datum/combat_combo/diving_elbow_drop/animate_combo(mob/living/victim, mob/living/attacker)
 	var/list/attack_obj = attacker.get_unarmed_attack()
 
@@ -308,6 +328,13 @@
 
 	force_dam_type = BRUTE
 
+	pump_bodyparts = list(
+		BP_L_LEG = 7,
+		BP_R_LEG = 7,
+		BP_GROIN = 7,
+		BP_CHEST = 7,
+	)
+
 /datum/combat_combo/charge/animate_combo(mob/living/victim, mob/living/attacker)
 	var/list/attack_obj = attacker.get_unarmed_attack()
 
@@ -379,6 +406,15 @@
 	heavy_animation = TRUE
 
 	force_dam_type = BRUTE
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 5,
+		BP_INACTIVE_ARM = 5,
+		BP_CHEST = 5,
+		BP_GROIN = 5,
+		BP_L_LEG = 5,
+		BP_R_LEG = 5,
+	)
 
 /datum/combat_combo/spin_throw/animate_combo(mob/living/victim, mob/living/attacker)
 	var/list/attack_obj = attacker.get_unarmed_attack()

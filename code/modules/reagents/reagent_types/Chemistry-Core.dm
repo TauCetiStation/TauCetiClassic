@@ -75,6 +75,11 @@
 			C.remove_paint_state()
 			C.color = null
 
+/datum/reagent/water/on_general_digest(mob/living/M)
+	..()
+	if(M.IsSleeping())
+		M.AdjustDrunkenness(-1)
+
 /datum/reagent/water/on_diona_digest(mob/living/M)
 	..()
 	M.nutrition += REM
@@ -113,7 +118,7 @@
 		else
 			cleansed.result = G.result
 		cleansed.icon_state = "[initial(cleansed.icon_state)][cleansed.result]"
-		if(istype(O.loc, /mob/living)) // Just for the sake of me feeling better.
+		if(isliving(O.loc)) // Just for the sake of me feeling better.
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
@@ -123,21 +128,21 @@
 		if(G.lit) // Haha, but wouldn't water actually extinguish it?
 			cleansed.light("")
 		cleansed.wax = G.wax
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/game_kit/chaplain))
 		var/obj/item/weapon/game_kit/chaplain/G = O
 		var/obj/item/weapon/game_kit/random/cleansed = new /obj/item/weapon/game_kit/random(G.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/pen/ghost))
 		var/obj/item/weapon/pen/ghost/G = O
 		var/obj/item/weapon/pen/cleansed = new /obj/item/weapon/pen(G.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
@@ -193,7 +198,7 @@
 		else
 			cursed.result = N.result
 		cursed.icon_state = "[initial(cursed.icon_state)][cursed.result]"
-		if(istype(O.loc, /mob/living)) // Just for the sake of me feeling better.
+		if(isliving(O.loc)) // Just for the sake of me feeling better.
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
@@ -203,7 +208,7 @@
 		if(N.lit) // Haha, but wouldn't water actually extinguish it?
 			cursed.light("")
 		cursed.wax = N.wax
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
@@ -211,14 +216,14 @@
 		var/obj/item/weapon/game_kit/N = O
 		var/obj/item/weapon/game_kit/random/cursed = new /obj/item/weapon/game_kit/chaplain(N.loc)
 		cursed.board_stat = N.board_stat
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/pen) && !istype(O, /obj/item/weapon/pen/ghost))
 		var/obj/item/weapon/pen/N = O
 		var/obj/item/weapon/pen/ghost/cursed = new /obj/item/weapon/pen/ghost(N.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
@@ -433,7 +438,7 @@
 	..()
 	M.apply_effect(2 * REM,IRRADIATE, 0)
 	// radium may increase your chances to cure a disease
-	if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
+	if(iscarbon(M)) // make sure to only use it on carbon mobs
 		var/mob/living/carbon/C = M
 		if(C.virus2.len)
 			for(var/ID in C.virus2)
@@ -442,7 +447,7 @@
 					if(prob(50))
 						M.radiation += 50 // curing it that way may kill you instead
 						var/mob/living/carbon/human/H
-						if(istype(C,/mob/living/carbon/human))
+						if(ishuman(C))
 							H = C
 						if(!H || (H.species && !H.species.flags[RAD_ABSORB]))
 							M.adjustToxLoss(100)

@@ -113,15 +113,27 @@
 			return
 		open = 0
 		density = TRUE
-		for(var/mob/living/carbon/C in loc)
-			if(C.buckled)	continue
-			if(C.client)
-				C.client.perspective = EYE_PERSPECTIVE
-				C.client.eye = src
-			occupant = C
-			C.loc = src
-			C.stop_pulling()
-			break
+		var/atom/movable/occupant_body
+		for(var/atom/movable/M in loc)
+			if(occupant)
+				break
+			if(iscarbon(M))
+				var/mob/living/carbon/C = M
+				occupant = occupant_body = C
+				break
+			if(isbrain(M))
+				var/obj/item/brain/B = M
+				occupant = B.brainmob
+				occupant_body = B
+				break
+			if(istype(M, /obj/item/organ/external/head))
+				var/obj/item/organ/external/head/H = M
+				occupant = H.brainmob
+				occupant_body = H
+				break
+		occupant_body?.forceMove(src)
+		occupant?.client?.perspective = EYE_PERSPECTIVE
+		occupant?.client?.eye = src
 		icon_state = initial(icon_state) + (occupant ? "_occupied" : "")
 
 		// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
@@ -220,26 +232,16 @@
 
 /obj/machinery/dna_scannernew/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			for(var/atom/movable/A in src)
-				A.loc = loc
-				A.ex_act(severity)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				qdel(src)
 				return
-		if(3.0)
-			if(prob(25))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(75))
 				return
+	for(var/atom/movable/A as anything in src)
+		A.loc = loc
+		A.ex_act(severity)
+	qdel(src)
 
 /obj/machinery/dna_scannernew/blob_act()
 	if(prob(75))

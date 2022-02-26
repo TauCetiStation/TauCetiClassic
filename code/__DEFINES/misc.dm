@@ -4,6 +4,11 @@
 //number of deciseconds in a day
 #define MIDNIGHT_ROLLOVER 864000
 
+// Define for coders.
+// If you want switch conditions to be fully specified in the switch body
+// and at the same time the empty condition do nothing.
+#define SWITCH_PASS ;
+
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
 #define GHOST_ORBIT_TRIANGLE	"triangle"
@@ -293,3 +298,9 @@
 // If dir is EAST, then a positive number will be returned, if WEST, then a negative one.
 #define X_OFFSET(n_steps, dir) (n_steps * (!!(dir & EAST) + !!(dir & WEST) * -1))
 #define Y_OFFSET(n_steps, dir) (n_steps * (!!(dir & NORTH) + !!(dir & SOUTH) * -1))
+
+// strips all newlines from a string, replacing them with null
+#define STRIP_NEWLINE(S) replacetextEx(S, "\n", null)
+
+/// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
+#define MAPTEXT(text) {"<span class='maptext'>[##text]</span>"}
