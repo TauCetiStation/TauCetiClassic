@@ -8201,7 +8201,7 @@
 "bCA" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Vacant Office APC";
+	name = "Coworking APC";
 	pixel_x = -26
 	},
 /obj/structure/table/woodentable,
@@ -16556,8 +16556,8 @@
 "eio" = (
 /obj/structure/disposalpipe/sortjunction{
 	dir = 1;
-	name = "Vacant Office";
-	sortType = "Vacant Office"
+	name = "Coworking";
+	sortType = "Coworking"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -22045,7 +22045,7 @@
 "fRA" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/camera{
-	c_tag = "Vacant Office";
+	c_tag = "Coworking";
 	dir = 4
 	},
 /turf/simulated/floor/carpet,

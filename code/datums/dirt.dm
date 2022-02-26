@@ -12,6 +12,10 @@
 	name = "dirt"
 	color = "#784800"
 
+/datum/dirt_cover/mud
+	name = "mud"
+	color = "#4d2f02"
+
 /datum/dirt_cover/oil
 	name = "oil"
 	color = "#1f181f"
