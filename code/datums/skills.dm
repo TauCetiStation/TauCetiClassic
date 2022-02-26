@@ -122,7 +122,7 @@ medical, chemistry, research, command)
 	active_skillset.skills = available_skillset.skills.Copy()
 
 /datum/skills/proc/set_value(skill,value)
-	if (value > get_skill_maximum(skill) || value < get_skill_minimum(skill))
+	if (value > get_skill_absolute_maximum(skill) || value < get_skill_absolute_minimum(skill))
 		return
 	if (value > available_skillset.get_value(skill))
 		return

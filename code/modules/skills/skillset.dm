@@ -3,7 +3,7 @@
 
 /datum/skillset/proc/init_from_datum(datum/skills_modifier/initial)
 	for(var/skill in SKILL_BOUNDS)
-		skills[skill] = max(get_skill_minimum(skill), initial.get_value(skill))
+		skills[skill] = max(get_skill_absolute_minimum(skill), initial.get_value(skill))
 
 /datum/skillset/proc/merge(datum/skills/other)
 	for(var/skill in skills)
@@ -15,4 +15,4 @@
 
 /datum/skillset/proc/set_value(skill, value)
 	if(skill in skills)
-		skills[skill] = max(min(get_skill_maximum(skill), value), get_skill_minimum(skill))
+		skills[skill] = max(min(get_skill_absolute_maximum(skill), value), get_skill_absolute_minimum(skill))
