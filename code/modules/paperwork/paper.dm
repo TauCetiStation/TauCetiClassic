@@ -343,7 +343,7 @@
 	popup.open()
 /obj/item/weapon/paper/proc/select_form(mob/user)
 	var/dat
-	
+
 	for(var/department in predefined_forms_list)
 		var/color = predefined_forms_list[department]["color"]
 		var/dep_name = predefined_forms_list[department]["name"]
@@ -351,7 +351,7 @@
 		dat += "<table><tbody><tr>"
 		dat += "<th style='background:[color]; width:6em'>Номер</th>"
 		dat += "<th style='background:[color];'>Название</th></tr>"
-		
+
 		for(var/premade_form in predefined_forms_list[department]["content"])
 			var/datum/form/form = new premade_form
 			dat += "<tr><th style='background-color:[color];'><A href='?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></th>"
@@ -423,7 +423,7 @@
 						t = sanitize(form.content, free_space, extra = FALSE)
 						break
 		else
-			if (isSkillCompetent(usr, SKILL_COMMAND, SKILL_COMMAND_BEGINNER) && id == "end" )
+			if (is_skill_competent(usr, SKILL_COMMAND, SKILL_COMMAND_BEGINNER) && id == "end" )
 				if(tgui_alert(usr, "Are you sure you want to write text of create form?",, list("Text","Form")) == "Form")
 					select_form(usr)
 			else
