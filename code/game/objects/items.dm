@@ -760,10 +760,10 @@
 
 	var/skill_bonus = 1
 	if(required_skill)
-		skill_bonus = applySkillModifier(user, 1, required_skill, required_proficiency)
+		skill_bonus = apply_skill_bonus(user, 1, required_skill, required_proficiency)
 	//skill bonus for tool but use other skill than defined in `required_skill`. E.g. check surgergy skill for screwdriver in case of ghetto surgery
 	if(other_skill)
-		skill_bonus = applySkillModifier(user, 1, other_skill, required_proficiency)
+		skill_bonus = apply_skill_bonus(user, 1, other_skill, required_proficiency)
 	delay *= toolspeed
 	delay *= skill_bonus
 

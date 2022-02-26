@@ -292,8 +292,8 @@
 			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
 				for(var/datum/reagent/R in reagents.reagent_list)
 					msg += "<br><span class='info'>[R.volume] units of [R.name]</span>"
-			else if (isSkillCompetent(user, SKILL_CHEMISTRY, SKILL_CHEMISTRY_EXPERT))
-				if(length(reagents.reagent_list) == 1) 
+			else if (is_skill_competent(user, SKILL_CHEMISTRY, SKILL_CHEMISTRY_EXPERT))
+				if(length(reagents.reagent_list) == 1)
 					msg += "<br><span class='info'>[reagents.reagent_list[1].volume] units of [reagents.reagent_list[1].name]</span>"
 				else
 					for(var/datum/reagent/R in reagents.reagent_list)
