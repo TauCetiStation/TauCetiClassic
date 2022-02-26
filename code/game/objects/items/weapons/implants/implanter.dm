@@ -105,13 +105,13 @@
 /obj/item/weapon/implanter/compressed/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(istype(target,/obj/item) && imp)
+	if(isitem(target) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if (c.scanned)
 			to_chat(user, "<span class='warning'>Something is already scanned inside the implant!</span>")
 			return
 		c.scanned = target
-		if(istype(target.loc,/mob/living/carbon/human))
+		if(ishuman(target.loc))
 			var/mob/living/carbon/human/H = target.loc
 			H.remove_from_mob(target)
 		else if(istype(target.loc,/obj/item/weapon/storage))

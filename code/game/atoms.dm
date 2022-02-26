@@ -158,7 +158,7 @@
 		return null
 
 /atom/proc/check_eye(user)
-	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
+	if (isAI(user)) // WHYYYY
 		return 1
 	return
 

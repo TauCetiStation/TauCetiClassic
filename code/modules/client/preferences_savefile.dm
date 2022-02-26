@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 35
+#define SAVEFILE_VERSION_MAX 36
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -82,7 +82,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				language = A.name
 
 			var/datum/language/lang = all_languages[language]
-			if(!(species in lang.allowed_species))
+			if(!(species in lang.allowed_speak))
 				language = "None"
 				S["language"] << language
 
@@ -234,6 +234,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			var/list/diff = ignore_question - global.full_ignore_question
 			if(diff.len)
 				S["ignore_question"] << ignore_question - diff
+
+	if(current_version < 36)
+		var/datum/job/assistant/J = new
+
+		if(player_alt_titles && (player_alt_titles[J.title] in list("Mecha Operator")))
+			player_alt_titles -= J.title
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()

@@ -175,7 +175,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	if(new_orbit)
 		prefs.ghost_orbit = new_orbit
 		prefs.save_preferences()
-		if(istype(mob, /mob/dead/observer))
+		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
 			O.ghost_orbit = new_orbit
 

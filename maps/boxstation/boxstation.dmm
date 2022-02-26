@@ -12632,6 +12632,7 @@
 	network = list("SS13","Prison");
 	pixel_x = 22
 	},
+/obj/structure/dumbbells_rack,
 /turf/simulated/floor{
 	icon_state = "black"
 	},
@@ -29988,7 +29989,7 @@
 "bbN" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Vacant Office APC";
+	name = "Coworking APC";
 	pixel_x = -26
 	},
 /obj/structure/cable{
@@ -33044,7 +33045,7 @@
 /area/station/hallway/secondary/entry)
 "bhe" = (
 /obj/machinery/camera{
-	c_tag = "Vacant Office";
+	c_tag = "Coworking";
 	dir = 4
 	},
 /obj/structure/filingcabinet/chestdrawer/black,
@@ -52387,6 +52388,7 @@
 /area/station/storage/tech)
 "bQu" = (
 /obj/machinery/light,
+/obj/structure/dumbbells_rack,
 /turf/simulated/floor/carpet/blue2,
 /area/station/civilian/gym)
 "bQv" = (

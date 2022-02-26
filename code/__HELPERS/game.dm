@@ -254,7 +254,7 @@
 			var/turf/ear = get_turf(M)
 			if(ear)
 				// Ghostship is magic: Ghosts can hear radio chatter from anywhere
-				if(speaker_coverage[ear] || (istype(M, /mob/dead/observer) && (M.client) && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)))
+				if(speaker_coverage[ear] || (isobserver(M) && (M.client) && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)))
 					. |= M		// Since we're already looping through mobs, why bother using |= ? This only slows things down.
 	return .
 
@@ -262,7 +262,7 @@
 	return
 
 /obj/machinery/bot/mulebot/get_mob()
-	if(load && istype(load, /mob/living))
+	if(load && isliving(load))
 		return load
 
 /obj/mecha/get_mob()

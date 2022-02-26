@@ -20,9 +20,21 @@
 		message = scrambled_msg
 
 	var/speaker_name = speaker.name
-	if(istype(speaker, /mob/living/carbon/human))
+	if(ishuman(speaker))
 		var/mob/living/carbon/human/H = speaker
 		speaker_name = H.GetVoice()
+
+		if(H != src && H.mind.assigned_role == "Mime" && length(H.languages))
+			H.emote("gasp")
+			H.adjustOxyLoss(20)
+			H.Weaken(3)
+
+			H.loc.shake_act(2)
+
+			to_chat(H, "<span class='bold userdanger'>As punishment for breaking the vow, you will forget all your languages!</span>")
+
+			for(var/datum/language/L as anything in H.languages)
+				H.remove_language(L.name)
 
 	if(ishuman(src)) //zombie logic
 		var/mob/living/carbon/human/ME = src
@@ -48,7 +60,7 @@
 		message = "<i>[message]</i>"
 
 	var/track = null
-	if(istype(src, /mob/dead/observer))
+	if(isobserver(src))
 		if(speaker && !speaker.client && !(client.prefs.chat_toggles & CHAT_GHOSTNPC) && !(speaker in view(src)))
 			return
 		if(used_radio && (client.prefs.chat_toggles & CHAT_GHOSTRADIO))
