@@ -178,7 +178,7 @@ var/global/list/allergen_reagents_list
 /datum/quality/allergies/add_effect(mob/living/carbon/human/H, latespawn)
 	for(var/i in 1 to allergies_amount)
 		var/reagent = pick(global.allergen_reagents_list)
-		H.allergies[reagent] = ALLERGY_UNDISCOVERED
+		LAZYSET(H.allergies, reagent, ALLERGY_UNDISCOVERED)
 
 
 /datum/quality/dumb
