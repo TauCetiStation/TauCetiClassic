@@ -91,34 +91,34 @@ medical, chemistry, research, command)
 	var/skillset/active_skillset = new /skillset
 	var/skillset/available_skillset = new /skillset
 
-	var/list/skills_modifiers = list()
+	var/list/modifiers = list()
 
 /datum/skills/proc/get_value(skill, user = usr)
 	return min(active_skillset.get_value(skill), available_skillset.get_value(skill))
 
-/datum/skills/proc/get_max_value(skill)
+/datum/skills/proc/get_max(skill)
 	return available_skillset.get_value(skill)
 
-/datum/skills/proc/update_available_skillset()
+/datum/skills/proc/update_available()
 	available_skillset = new /skillset()
-	available_skillset.init_from_datum(skills_modifiers[1])
-	for(var/datum/skills_modifier/skills in skills_modifiers)
+	available_skillset.init_from_datum(modifiers[1])
+	for(var/datum/skills_modifier/skills in modifiers)
 		available_skillset.merge(skills)
 
 /datum/skills/proc/remove_modifier(datum/skills/removable)
-	for(var/datum/skills_modifier/s as anything in skills_modifiers)
+	for(var/datum/skills_modifier/s as anything in modifiers)
 		if(s.tag == removable.tag)
-			skills_modifiers.Remove(s)
+			modifiers.Remove(s)
 			break
-	update_available_skillset()
+	update_available()
 
 /datum/skills/proc/transfer_skills(datum/mind/target)
-	for(var/datum/skills_modifier/s in target.skills.skills_modifiers)
+	for(var/datum/skills_modifier/s in target.skills.modifiers)
 		add_skills_modifier(s)
 
 /datum/skills/proc/add_skills_modifier(datum/skills/new_skills)
-	skills_modifiers += new_skills
-	update_available_skillset()
+	modifiers += new_skills
+	update_available()
 	active_skillset.skills = available_skillset.skills.Copy()
 
 /datum/skills/proc/set_value(skill,value)
