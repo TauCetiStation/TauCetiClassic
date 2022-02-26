@@ -19,11 +19,7 @@
 		religion = R
 		religion.runes += src
 
-		if(!religion.runes_by_ckey[creator_ckey])
-			religion.runes_by_ckey[creator_ckey] = list(src)
-		else
-			var/list/L = religion.runes_by_ckey[creator_ckey]
-			L += src
+		LAZYADDASSOCLIST(religion.runes_by_ckey, creator_ckey, src)
 
 	if(rand_icon)
 		var/list/all_words = RUNE_WORDS
@@ -42,8 +38,7 @@
 
 /obj/effect/rune/Destroy()
 	if(religion && creator_ckey)
-		var/list/L = religion.runes_by_ckey[creator_ckey]
-		L -= src
+		LAZYREMOVEASSOC(religion.runes_by_ckey, creator_ckey, src)
 		religion.runes -= src
 		religion = null
 
