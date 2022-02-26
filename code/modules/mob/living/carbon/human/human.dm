@@ -1650,7 +1650,7 @@
 		return
 	if(!mind)
 		return
-	mind.skills.set_value(skill, value)
+	mind.skills.choose_value(skill, value)
 
 /mob/living/carbon/human/verb/examine_ooc()
 	set name = "Examine OOC"

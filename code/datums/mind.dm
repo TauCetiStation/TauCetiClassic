@@ -65,7 +65,7 @@
 	var/skillset/current_skillset
 
 	//skills
-	var/datum/skills/skills = new /datum/skills()
+	var/datum/skills/skills = new
 
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 
