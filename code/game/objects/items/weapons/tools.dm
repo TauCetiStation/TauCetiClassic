@@ -28,7 +28,6 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Ratchet.ogg'
 	var/random_color = TRUE
-	required_skill = SKILL_ENGINEERING
 
 /obj/item/weapon/wrench/atom_init(mapload, param_color)
 	. = ..()
