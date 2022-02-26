@@ -47,7 +47,7 @@
 			loc = T.loc
 			if (istype(loc, /area))
 				//stage = 4
-				if (!loc.power_equip && !istype(src.loc,/obj/item))
+				if (!loc.power_equip && !isitem(src.loc))
 					//stage = 5
 					blind = 1
 
@@ -79,7 +79,7 @@
 				return
 		else
 
-			if (((!loc.power_equip) || isenvironmentturf(T)) && !istype(src.loc,/obj/item))
+			if (((!loc.power_equip) || isenvironmentturf(T)) && !isitem(src.loc))
 				if (src:aiRestorePowerRoutine==0)
 					src:aiRestorePowerRoutine = 1
 

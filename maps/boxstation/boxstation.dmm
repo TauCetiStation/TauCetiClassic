@@ -29989,7 +29989,7 @@
 "bbN" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Vacant Office APC";
+	name = "Coworking APC";
 	pixel_x = -26
 	},
 /obj/structure/cable{
@@ -33045,7 +33045,7 @@
 /area/station/hallway/secondary/entry)
 "bhe" = (
 /obj/machinery/camera{
-	c_tag = "Vacant Office";
+	c_tag = "Coworking";
 	dir = 4
 	},
 /obj/structure/filingcabinet/chestdrawer/black,
