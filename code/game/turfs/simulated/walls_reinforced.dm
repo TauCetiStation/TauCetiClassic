@@ -151,7 +151,7 @@
 				if(WT.use(0,user))
 
 					to_chat(user, "<span class='notice'>You begin slicing through the metal cover.</span>")
-					if(WT.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_proficiency = SKILL_ENGINEERING_PRO))
+					if(WT.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills = list(SKILL_ENGINEERING = SKILL_ENGINEERING_PRO)))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 

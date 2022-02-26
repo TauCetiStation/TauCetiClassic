@@ -107,6 +107,12 @@
 			else
 				S.uplink_items_bought += {"<img src="logo_[tempstate].png"> [bundlename] for [cost] TC."}
 
+			var/datum/stat/uplink_purchase/stat = new
+			stat.bundlename = bundlename
+			stat.cost = cost
+			stat.item_type = item
+			S.uplink_purchases += stat
+
 
 /*
 //
