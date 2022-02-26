@@ -88,8 +88,8 @@ medical, chemistry, research, command)
 		return vars[skill]
 
 /datum/skills
-	var/skillset/active_skillset = new /skillset()
-	var/skillset/available_skillset = new /skillset()
+	var/skillset/active_skillset = new /skillset
+	var/skillset/available_skillset = new /skillset
 
 	var/list/skills_modifiers = list()
 

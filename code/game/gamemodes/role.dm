@@ -86,7 +86,7 @@
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
-	M.skills.remove_skills_modifier(new skillset())
+	M.skills.remove_skills_modifier(new skillset)
 
 	remove_antag_hud()
 	if(msg_admins)
