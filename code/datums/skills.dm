@@ -16,7 +16,7 @@ medical = 0, chemistry = 0, research = 0, command = 0)
 			melee = 0, engineering = 0, construction = 0, atmospherics = 0, civ_mech = 0, combat_mech = 0, surgery = 0,\
 			medical = 0, chemistry = 0, research = 0, command = 0)
 
-/proc/getSkillsType(skills_type = /datum/skills_modifier)
+/proc/get_skills_type(skills_type = /datum/skills_modifier)
 	var/datum/skills_modifier/new_skill = skills_type
 	var/police = initial(new_skill.police)
 	var/firearms = initial(new_skill.firearms)
