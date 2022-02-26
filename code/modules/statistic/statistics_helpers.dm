@@ -111,7 +111,7 @@
 	if(istype(O, /datum/objective/target))
 		var/datum/objective/target/T = O
 		stat.target_name = STRIP_NEWLINE(T.target.name)
-		stat.target_assigned_role = T.target.assigned_job
+		stat.target_assigned_role = T.target.assigned_role
 		stat.target_special_role = T.target.special_role
 
 	return stat
