@@ -126,6 +126,12 @@
 		tactical_reload(dropping, user)
 	return ..()
 
+/obj/item/weapon/gun/projectile/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(istype(I, /obj/item/ammo_box/magazine))
+		tactical_reload(I, user)
+	return ..()
+
 /obj/item/weapon/gun/projectile/proc/tactical_reload(obj/item/ammo_box/magazine/new_magazine, mob/living/user)
 	if(!istype(user) || user.incapacitated())
 		return

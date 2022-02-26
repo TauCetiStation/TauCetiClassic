@@ -94,7 +94,7 @@ medical, chemistry, research, command)
 	var/list/modifiers = list()
 
 /datum/skills/proc/get_value(skill, user = usr)
-	return min(active_skillset.get_value(skill), available_skillset.get_value(skill))
+	return active_skillset.get_value(skill)
 
 /datum/skills/proc/get_max(skill)
 	return available_skillset.get_value(skill)
