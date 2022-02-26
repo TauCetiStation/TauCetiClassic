@@ -299,5 +299,8 @@
 #define X_OFFSET(n_steps, dir) (n_steps * (!!(dir & EAST) + !!(dir & WEST) * -1))
 #define Y_OFFSET(n_steps, dir) (n_steps * (!!(dir & NORTH) + !!(dir & SOUTH) * -1))
 
+// strips all newlines from a string, replacing them with null
+#define STRIP_NEWLINE(S) replacetextEx(S, "\n", null)
+
 /// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
 #define MAPTEXT(text) {"<span class='maptext'>[##text]</span>"}
