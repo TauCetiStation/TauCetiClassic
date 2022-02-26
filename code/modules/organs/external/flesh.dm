@@ -26,7 +26,7 @@
 /datum/bodypart_controller/proc/adjust_pumped(value, cap=null)
 	// TO-DO: either give other species different limb types, or add some HAS_MUSCLES specie flag.
 	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
-		return
+		return 0
 
 	if(isnull(cap))
 		cap = BP.max_pumped

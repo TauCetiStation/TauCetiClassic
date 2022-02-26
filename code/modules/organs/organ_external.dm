@@ -654,7 +654,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	W.loc = owner
 
 /obj/item/organ/external/proc/adjust_pumped(value, cap)
-	controller.adjust_pumped(value, cap)
+	return controller.adjust_pumped(value, cap)
 
 /****************************************************
 			   ORGAN DEFINES
