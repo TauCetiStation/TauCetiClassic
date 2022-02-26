@@ -308,7 +308,6 @@
 /obj/machinery/mecha_part_fabricator/ui_interact(mob/user)
 	var/dat
 	var/left_part
-	
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
 		visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")
