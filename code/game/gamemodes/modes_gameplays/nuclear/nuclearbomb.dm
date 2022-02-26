@@ -356,7 +356,7 @@ var/global/bomb_set
 		if( (bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)) )
 			off_station = 1
 		else
-			score["nuked"]++
+			SSStatistics.score.nuked++
 			sleep(10)
 			explosion(src, 15, 70, 200)
 	else
