@@ -102,7 +102,7 @@ medical, chemistry, research, command)
 /datum/skills/proc/update_available()
 	available = new /datum/skillset()
 	available.init_from_datum(modifiers[1])
-	for(var/datum/skills_modifier/modifier in modifiers)
+	for(var/datum/skills_modifier/modifier as anything in modifiers)
 		available.merge(modifier)
 
 /datum/skills/proc/remove_modifier(datum/skills/removable)
