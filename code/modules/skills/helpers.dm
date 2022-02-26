@@ -6,10 +6,10 @@
 	if(skill in SKILL_BOUNDS)
 		return SKILL_BOUNDS[skill][2]
 
-/proc/isSkillCompetent(mob/user, required_skill, required_proficiency)
-	return user?.mind?.skills.get_value(required_skill) >= required_proficiency
+/proc/is_skill_competent(mob/user, required_skill, required_proficiency)
+	return user.mind?.skills.get_value(required_skill) >= required_proficiency
 
-/proc/applySkillBonus(mob/user, value, required_skill, required_proficiency, penalty = 0.5, bonus = 0.4)
+/proc/apply_skill_bonus(mob/user, value, required_skill, required_proficiency, penalty = 0.5, bonus = 0.4)
 	if(user.mind.skills.get_value(required_skill) < required_proficiency)
 		return  value + value * penalty * (required_proficiency - user.mind.skills.get_value(required_skill))
 	if(user.mind.skills.get_value(required_skill) > required_proficiency)
@@ -17,10 +17,10 @@
 	return value
 
 /proc/do_skilled(mob/user, atom/target,  delay, required_skill, required_proficiency, penalty = 0.5, bonus = 0.4)
-	return do_after(user, delay = applySkillBonus(user, delay, required_skill, required_proficiency, penalty, bonus), target = target)
+	return do_after(user, delay = apply_skill_bonus(user, delay, required_skill, required_proficiency, penalty, bonus), target = target)
 
 /proc/handle_fumbling(mob/user, atom/target, delay, required_skill, required_proficiency, time_bonus = SKILL_TASK_TRIVIAL, message_self = "", message_others = "", text_target = null)
-	if(isSkillCompetent(user, required_skill, required_proficiency))
+	if(is_skill_competent(user, required_skill, required_proficiency))
 		return TRUE
 	var/display_message_self = message_self
 	var/used_item = target
