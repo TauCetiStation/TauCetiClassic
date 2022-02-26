@@ -9,6 +9,8 @@
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
+	if(QDELING(W))
+		return TRUE
 	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
 		return TRUE
 	return FALSE
