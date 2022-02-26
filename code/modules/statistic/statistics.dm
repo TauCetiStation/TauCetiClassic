@@ -27,8 +27,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/mode_result
 	var/map
 	// You can get the nanoui map using
-	// "https://cdn.jsdelivr.net/gh/TauCetiStation/TauCetiClassic@" + base_commit_sha + "/" + nanoui_map_path
-	var/nanoui_map_path
+	// "https://cdn.jsdelivr.net/gh/TauCetiStation/TauCetiClassic@" + base_commit_sha + "/" + minimap_image
+	var/minimap_image
 	var/server_address
 	var/base_commit_sha
 	var/test_merges
@@ -79,7 +79,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	mode = SSticker.mode.name
 	mode_result = SSticker.mode.get_mode_result()
 	map = SSmapping.config.map_name
-	nanoui_map_path = "nano/images/nanomap_[SSmapping.config.map_path]_1.png"
+	minimap_image = "nano/images/nanomap_[SSmapping.station_image]_1.png"
 	server_address = BYOND_SERVER_ADDRESS
 	base_commit_sha = global.base_commit_sha
 	test_merges = global.test_merges
