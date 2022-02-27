@@ -59,7 +59,7 @@
 	var/traitorswon    = 0 // how many traitors were successful?
 	// int, [0...]
 	var/roleswon       = 0 // how many roles were successful?
-	// int, [0...]
+	// boolean, [0, 1]
 	var/allarrested    = 0 // did the crew catch all the enemies alive?
 	// int, [0...]
 	var/opkilled       = 0 // used during nuke mode, how many operatives died?
