@@ -794,6 +794,8 @@ var/global/list/disconnected_ckey_by_timer_id = list()
 /client/proc/handle_leave()
 	if(!isliving(mob) || !mob.mind)
 		return
+	if(istype(mob.loc, /obj/machinery/cryopod))
+		return
 	var/timer_id = addtimer(
 		CALLBACK(
 			SSStatistics,
