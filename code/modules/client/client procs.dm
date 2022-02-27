@@ -339,6 +339,8 @@ var/global/list/blacklisted_builds = list(
 		if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. \
 		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
+	handle_connect()
+
 	spawn(50)//should wait for goonchat initialization
 		handle_autokick_reasons()
 
@@ -361,6 +363,8 @@ var/global/list/blacklisted_builds = list(
 	clients -= src
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	LAZYREMOVE(movingmob?.clients_in_contents, src)
+
+	handle_leave()
 
 	if(!gc_destroyed) //Clean up signals and timers.
 		Destroy()
@@ -777,6 +781,32 @@ var/global/list/blacklisted_builds = list(
 
 #undef MAXIMAZED
 #undef FULLSCREEN
+
+// ckey = timer_id
+var/global/list/disconnected_ckey_by_timer_id = list()
+/client/proc/handle_connect()
+	if(!disconnected_ckey_by_timer_id[ckey])
+		return
+	var/timer_id = disconnected_ckey_by_timer_id[ckey]
+	deltimer(timer_id)
+	disconnected_ckey_by_timer_id -= ckey
+
+/client/proc/handle_leave()
+	if(!isliving(mob) || !mob.mind)
+		return
+	var/timer_id = addtimer(
+		CALLBACK(
+			SSStatistics,
+			/datum/stat_collector.proc/add_leave_stat,
+			mob.mind,
+			"Disconnected",
+			roundduration2text()
+		),
+		config.afk_time_bracket,
+		TIMER_STOPPABLE
+	)
+
+	disconnected_ckey_by_timer_id[ckey] = timer_id
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
