@@ -197,6 +197,13 @@
 		return O
 	return null
 
+/datum/role/proc/GetObjectives()
+	return objectives.GetObjectives()
+
+/datum/role/proc/calculate_completion()
+	for(var/datum/objective/O in GetObjectives())
+		O.calculate_completion()
+
 /datum/role/proc/get_logo_icon(custom)
 	if(custom)
 		return icon('icons/misc/logos.dmi', custom)
@@ -294,10 +301,9 @@
 		var/count = 1
 		text += "<ul>"
 		for(var/datum/objective/objective in objectives.GetObjectives())
-			var/successful = objective.calculate_completion()
 			text += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
 			feedback_add_details("[id]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
-			if(!successful) //If one objective fails, then you did not win.
+			if(!objective.completed) //If one objective fails, then you did not win.
 				win = FALSE
 			if (count < objectives.objectives.len)
 				text += "<br>"
