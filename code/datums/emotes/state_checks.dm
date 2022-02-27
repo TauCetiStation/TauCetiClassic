@@ -7,7 +7,6 @@
 	return TRUE
 
 /proc/is_not_intentional_or_stat(stat, mob/M, intentional)
-	to_chat(world, "[stat] [M] [intentional]")
 	if(!intentional)
 		return TRUE
 
