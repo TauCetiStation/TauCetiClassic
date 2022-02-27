@@ -969,6 +969,11 @@
 
 	return ..()
 
+/datum/species/abductor/on_loose(mob/living/carbon/human/H)
+	..()
+	// Abductors don't get sad when not talking, but not Abductors do. So we need to refresh the timer
+	H.handle_socialization()
+
 /datum/species/abductor/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_abductor_digest(M)
 

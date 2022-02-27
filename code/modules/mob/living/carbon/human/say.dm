@@ -26,6 +26,9 @@
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
 
 /mob/living/carbon/human/proc/handle_socialization()
+	if(get_species() == ABDUCTOR)
+		return
+
 	deltimer(conversation_timer)
 	conversation_timer = addtimer(
 		CALLBACK(src, .proc/handle_no_socialization),
