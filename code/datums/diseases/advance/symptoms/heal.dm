@@ -37,4 +37,4 @@ Bonus
 
 	var/get_damage = rand(1, 2)
 	M.adjustToxLoss(-get_damage)
-	return 1
+	return TRUE

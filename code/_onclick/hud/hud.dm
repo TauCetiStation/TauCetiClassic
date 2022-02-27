@@ -152,9 +152,9 @@ var/global/list/available_ui_styles = list(
 
 /datum/hud/proc/instantiate()
 	if(!ismob(mymob))
-		return 0
+		return FALSE
 	if(!mymob.client)
-		return 0
+		return FALSE
 
 	var/ui_color = mymob.client.prefs.UI_style_color
 	var/ui_alpha = mymob.client.prefs.UI_style_alpha
@@ -189,17 +189,21 @@ var/global/list/available_ui_styles = list(
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)
 
-	if(plane_masters.len)
-		for(var/thing in plane_masters)
-			mymob.client.screen += plane_masters[thing]
 	create_parallax()
 
-//Version denotes which style should be displayed. blank or 0 means "next version"
+	// See the comment from "/mob/living/carbon/human/create_mob_hud()"
+	// If comment does not exist, then delete code below and this comment
+	if(!ishuman(mymob))
+		plane_masters_update()
+
+	return TRUE
+
+//Version denotes which style should be displayed. blank or FALSE means "next version"   //khem, what? return is not used anywhere
 /datum/hud/proc/show_hud(version = 0)
 	if(!ismob(mymob))
-		return 0
+		return FALSE
 	if(!mymob.client)
-		return 0
+		return FALSE
 	var/display_hud_version = version
 	if(!display_hud_version)	//If 0 or blank, display the next hud version
 		display_hud_version = hud_version + 1
@@ -275,9 +279,7 @@ var/global/list/available_ui_styles = list(
 			persistant_inventory_update()
 			mymob.update_action_buttons()
 			reorganize_alerts()
-	if(plane_masters.len)
-		for(var/thing in plane_masters)
-			mymob.client.screen += plane_masters[thing]
+
 	hud_version = display_hud_version
 	create_parallax()
 	plane_masters_update()

@@ -180,7 +180,7 @@
 		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
 
 /mob/proc/findname(msg)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.real_name == text("[]", msg))
 			return M
 	return 0
@@ -211,7 +211,6 @@
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
 	return
-
 
 /mob/proc/show_inv(mob/user)
 	return
@@ -279,17 +278,6 @@
 	else
 		to_chat(src, "The game appears to have misplaced your mind datum, so we can't show you your notes.")
 
-/mob/proc/store_memory(msg, popup)
-	msg = sanitize(msg)
-
-	if(length(memory) == 0)
-		memory += msg
-	else
-		memory += "<BR>[msg]"
-
-	if(popup)
-		memory()
-
 /mob/proc/update_flavor_text()
 	set src in usr
 	if(usr != src)
@@ -323,35 +311,33 @@
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
 	set category = "Object"
-	if(next_point_to > world.time)
+
+	if (next_point_to > world.time)
 		return
-	if(!usr || !isturf(usr.loc))
+
+	if (incapacitated() || (status_flags & FAKEDEATH))
 		return
-	if(usr.incapacitated())
+
+	if (istype(A, /obj/effect/decal/point))
 		return
-	if(usr.status_flags & FAKEDEATH)
-		return
-	if(!(A in oview(usr.loc)))
-		return
-	if(istype(A, /obj/effect/decal/point))
+
+	// Removes an ability to point to the object which is out of our sight.
+	// Mostly for cases when we have mesons, thermals etc. equipped.
+	if (!(A in oview(usr.loc)))
 		return
 
 	var/tile = get_turf(A)
-	if(!tile)
+	if (!tile)
 		return
 
-	var/obj/P = new /obj/effect/decal/point(tile)
-	P.pixel_x = A.pixel_x
-	P.pixel_y = A.pixel_y
-	P.plane = GAME_PLANE
-
-	QDEL_IN(P, 20)
+	point_at(A)
 
 	usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
 
-	if(isliving(A))
-		for(var/mob/living/carbon/slime/S in oview())
-			if(usr in S.Friends)
+	// TODO: replace with a "COMSIG_MOB_POINTED" signal
+	if (isliving(A))
+		for (var/mob/living/carbon/slime/S in oview())
+			if (usr in S.Friends)
 				S.last_pointed = A
 
 	next_point_to = world.time + 1.5 SECONDS
@@ -368,7 +354,7 @@
 		return
 	else
 		var/deathtime = world.time - src.timeofdeath
-		if(istype(src,/mob/dead/observer))
+		if(isobserver(src))
 			var/mob/dead/observer/G = src
 			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
 				to_chat(usr, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
@@ -586,7 +572,7 @@
 /mob/proc/is_mechanical()
 	if(mind && (mind.assigned_role == "Cyborg" || mind.assigned_role == "AI"))
 		return 1
-	return istype(src, /mob/living/silicon) || get_species() == IPC
+	return issilicon(src) || get_species() == IPC
 
 /mob/proc/is_ready()
 	return client && !!mind
@@ -771,6 +757,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	density = !lying
 
+	if(lying != was_lying)
+		if(lying)
+			SEND_SIGNAL(src, COMSIG_MOB_STATUS_LYING)
+		else
+			SEND_SIGNAL(src, COMSIG_MOB_STATUS_NOT_LYING)
+		was_lying = lying
+
 	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isxeno(src))
 		drop_l_hand()
 		drop_r_hand()
@@ -931,6 +924,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount, 0)
 	return
+
 // ========== DRUGGINESS ==========
 /mob/proc/adjustDrugginess(amount)
 	druggy = max(druggy + amount, 0)
@@ -963,6 +957,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(status_flags & GODMODE)
 		return
 	stuttering = max(amount, 0)
+
+//========== Shock Stage =========
+/mob/proc/AdjustShockStage(amount)
+	return
+
+/mob/proc/SetShockStage(amount)
+	return
 
 // =============================
 
@@ -1047,7 +1048,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
 
-		H.shock_stage += 20
+		H.AdjustShockStage(20)
 		BP.take_damage((selection.w_class * 3), null, DAM_EDGE, "Embedded object extraction")
 
 		if(prob(selection.w_class * 5) && BP.sever_artery()) // I'M SO ANEMIC I COULD JUST -DIE-.
@@ -1230,3 +1231,58 @@ note dizziness decrements automatically in the mob's Life() proc.
 		set_dir(D)
 		spintime -= speed
 	flags &= ~IS_SPINNING
+
+/mob/proc/confuse_input(dir)
+	return input_offsets["[dir]"]
+
+/mob/proc/randomise_inputs()
+	if(!confused)
+		return
+	if(next_randomise_inputs > world.time)
+		return
+
+	next_randomise_inputs = world.time + randomise_inputs_cooldown
+
+	input_offsets = list()
+	var/list/pos_dirs = list() + cardinal
+
+	for(var/d in cardinal)
+		var/map_to = pick(pos_dirs)
+		input_offsets["[d]"] = map_to
+		pos_dirs -= map_to
+
+	addtimer(CALLBACK(src, .proc/randomise_inputs), randomise_inputs_cooldown)
+
+/mob/proc/AdjustConfused(amount)
+	confused += amount
+	if(confused < 0)
+		confused = 0
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/SetConfused(value)
+	confused = value
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/MakeConfused(value)
+	confused = max(value, confused)
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/get_language()
+	if(forced_language)
+		return all_languages[forced_language]
+	return null

@@ -212,3 +212,17 @@
 					prob(1);/obj/item/device/encryptionkey/headset_medsci,\
 					prob(1);/obj/item/device/encryptionkey/headset_com\
 				)
+
+/obj/random/science/science_supply_safe
+	name = "Random SCIENCE Supply"
+	desc = "This is a random piece of science supplies."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "cell"
+/obj/random/science/science_supply_safe/item_to_spawn()
+	return pick(\
+					prob(20);/obj/random/science/bomb_supply,\
+					prob(5);/obj/random/science/slimecore,\
+					prob(10);/obj/random/science/circuit,\
+					prob(2);/obj/item/weapon/reagent_containers/spray/extinguisher,\
+					prob(50);/obj/random/science/stock_part,\
+				)

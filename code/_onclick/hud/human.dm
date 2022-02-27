@@ -413,7 +413,7 @@
 	lingchemdisplay.screen_loc = ui_lingchemdisplay
 	lingchemdisplay.layer = ABOVE_HUD_LAYER
 	lingchemdisplay.plane = ABOVE_HUD_PLANE
-	lingchemdisplay.invisibility = 101
+	lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 	lingstingdisplay = new /atom/movable/screen()
 	lingstingdisplay.icon = 'icons/mob/screen_gen.dmi'
@@ -421,7 +421,7 @@
 	lingstingdisplay.screen_loc = ui_lingstingdisplay
 	lingstingdisplay.layer = ABOVE_HUD_LAYER
 	lingstingdisplay.plane = ABOVE_HUD_PLANE
-	lingstingdisplay.invisibility = 101
+	lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 	mymob.pain = new /atom/movable/screen( null )
 

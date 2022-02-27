@@ -1,0 +1,483 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aw" = (
+/obj/item/stack/sheet/metal{
+	amount = 12
+	},
+/obj/structure/closet/crate/engi,
+/turf/simulated/shuttle/floor/cargo,
+/area/space_structures/resource_shuttle)
+"bv" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "9,7"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"cL" = (
+/obj/item/stack/rods,
+/turf/space,
+/area/space)
+"dM" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "5,1"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"ee" = (
+/turf/simulated/shuttle/plating{
+	icon_state = "platingdmg2"
+	},
+/area/space_structures/resource_shuttle)
+"gv" = (
+/obj/structure/object_wall/cargo,
+/obj/structure/object_wall/cargo{
+	icon_state = "0,7"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"lt" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/closet/crate/secure/miningsec{
+	locked = 0
+	},
+/obj/item/stack/sheet/glass{
+	amount = 23
+	},
+/turf/simulated/shuttle/floor/cargo,
+/area/space_structures/resource_shuttle)
+"pC" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "6,1"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"pI" = (
+/obj/machinery/door/unpowered/shuttle/wagon,
+/turf/simulated/shuttle/floor/cargo,
+/area/space_structures/resource_shuttle)
+"qG" = (
+/obj/structure/closet/crate/secure/miningsec,
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 10
+	},
+/obj/item/stack/sheet/mineral/gold{
+	amount = 5
+	},
+/turf/simulated/shuttle/floor/cargo,
+/area/space_structures/resource_shuttle)
+"qR" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space)
+"rr" = (
+/obj/machinery/door/poddoor/cargo{
+	density = 0;
+	icon_state = "pdoor0";
+	opacity = 0
+	},
+/turf/simulated/shuttle/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/resource_shuttle)
+"rH" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "9,3"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"rJ" = (
+/obj/structure/object_wall/cargo,
+/obj/structure/object_wall/cargo{
+	icon_state = "8,7"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"sm" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "0,6"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"sy" = (
+/turf/simulated/shuttle/plating{
+	icon_state = "platingdmg3"
+	},
+/area/space_structures/resource_shuttle)
+"sI" = (
+/obj/structure/object_wall/cargo,
+/turf/space,
+/area/space_structures/resource_shuttle)
+"tA" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "0,4"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"uZ" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "8,4"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"vY" = (
+/turf/simulated/shuttle/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/resource_shuttle)
+"wa" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "9,4"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"wq" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "0,3"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"wV" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "0,2"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"xm" = (
+/obj/structure/closet/crate,
+/turf/space,
+/area/space)
+"xn" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "4,7"
+	},
+/obj/structure/object_wall/cargo{
+	icon_state = "4,1"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"ye" = (
+/obj/structure/object_wall/cargo,
+/obj/structure/object_wall/cargo{
+	icon_state = "7,1"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"yq" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "1,7"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"zk" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "0,1"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"Bd" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "2,1"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"Bm" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "9,1"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"Bz" = (
+/turf/simulated/shuttle/plating{
+	icon_state = "platingdmg1"
+	},
+/area/space_structures/resource_shuttle)
+"BY" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "0,0"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"BZ" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "9,5"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"DR" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "1,0"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"EA" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "2,0"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"EH" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "1,1"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"Fv" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "8,1"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"GK" = (
+/obj/machinery/light_construct{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/cargo,
+/area/space_structures/resource_shuttle)
+"If" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "3,0"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"Jw" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "4,0"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"JX" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "5,0"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"Lk" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "6,0"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"Nn" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "7,7"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"NG" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "7,0"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"Oq" = (
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/cargo,
+/area/space_structures/resource_shuttle)
+"OS" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "8,0"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"RX" = (
+/turf/space,
+/area/space_structures/resource_shuttle)
+"RY" = (
+/turf/space,
+/area/space)
+"SI" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "8,6"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"SR" = (
+/obj/structure/closet/crate/secure/weapon{
+	icon_state = "weaponcrateopen";
+	opened = 1
+	},
+/turf/simulated/shuttle/floor/cargo,
+/area/space_structures/resource_shuttle)
+"TJ" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "9,2"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"Va" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "8,2"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"Vs" = (
+/obj/item/stack/sheet/metal,
+/turf/space,
+/area/space)
+"VE" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "9,6"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"XB" = (
+/turf/simulated/shuttle/floor/cargo,
+/area/space_structures/resource_shuttle)
+"Yw" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "8,5"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+"YD" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
+	opened = 1
+	},
+/obj/item/toy/carpplushie,
+/turf/simulated/shuttle/floor/cargo,
+/area/space_structures/resource_shuttle)
+"YI" = (
+/obj/machinery/door/poddoor/cargo,
+/turf/simulated/shuttle/floor/cargo,
+/area/space_structures/resource_shuttle)
+"YY" = (
+/obj/structure/object_wall/cargo{
+	icon_state = "3,1"
+	},
+/turf/space,
+/area/space_structures/resource_shuttle)
+
+(1,1,1) = {"
+RY
+RY
+RY
+gv
+sm
+sI
+tA
+wq
+wV
+zk
+BY
+"}
+(2,1,1) = {"
+RY
+RY
+RY
+yq
+Oq
+SR
+XB
+XB
+lt
+EH
+DR
+"}
+(3,1,1) = {"
+RY
+RY
+RY
+YI
+XB
+XB
+XB
+aw
+XB
+Bd
+EA
+"}
+(4,1,1) = {"
+RY
+cL
+RY
+pI
+XB
+XB
+XB
+XB
+XB
+YY
+If
+"}
+(5,1,1) = {"
+RY
+RY
+Vs
+qR
+sy
+ee
+XB
+XB
+qG
+xn
+Jw
+"}
+(6,1,1) = {"
+RY
+RY
+RY
+RY
+RY
+qR
+Bz
+XB
+YD
+dM
+JX
+"}
+(7,1,1) = {"
+Vs
+RY
+RY
+rr
+ee
+vY
+sy
+XB
+XB
+pC
+Lk
+"}
+(8,1,1) = {"
+RY
+RY
+xm
+Nn
+vY
+Bz
+XB
+XB
+GK
+ye
+NG
+"}
+(9,1,1) = {"
+RY
+RY
+RY
+rJ
+SI
+Yw
+uZ
+Yw
+Va
+Fv
+OS
+"}
+(10,1,1) = {"
+RY
+RY
+RY
+bv
+VE
+BZ
+wa
+rH
+TJ
+Bm
+RX
+"}

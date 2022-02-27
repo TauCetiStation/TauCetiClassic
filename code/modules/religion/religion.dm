@@ -106,8 +106,8 @@
 
 	// All runes on map
 	var/list/obj/effect/rune/runes = list()
-	// mob = list(rune, rune, rune)
-	var/list/runes_by_mob = list()
+	// ckey = list(rune, rune, rune)
+	var/list/runes_by_ckey
 	// Max runes on mob
 	var/max_runes_on_mob
 
@@ -668,10 +668,11 @@
 				C.say(message)
 	return acolytes
 
-/datum/religion/proc/send_message_to_members(message, name) // As a god
+/datum/religion/proc/send_message_to_members(message, name, font_size = 6)
+	var/format_name = name ? "[name]: " : ""
 	for(var/mob/M in global.mob_list)
 		if(is_member(M) || isobserver(M))
-			to_chat(M, "<span class='[style_text]'><font size='6'>[name]: [message]</font></span>")
+			to_chat(M, "<span class='[style_text]'><font size='[font_size]'>[format_name][message]</font></span>")
 
 /datum/religion/proc/add_tech(tech_type)
 	var/datum/religion_tech/T = new tech_type
@@ -680,3 +681,12 @@
 
 /datum/religion/proc/get_tech(tech_id)
 	return all_techs[tech_id]
+
+/datum/religion/proc/get_runes_by_type(rune_type)
+	var/list/valid_runes = list()
+	for(var/obj/effect/rune/R as anything in runes)
+		if(!istype(R.power, rune_type))
+			continue
+		if(!is_centcom_level(R.loc.z) || istype(get_area(R), area_type))
+			valid_runes += R
+	return valid_runes

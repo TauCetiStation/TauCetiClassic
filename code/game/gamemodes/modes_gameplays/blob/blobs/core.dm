@@ -1,5 +1,5 @@
 //Few global vars to track the blob
-var/blob_tiles_grown_total = 0
+var/global/blob_tiles_grown_total = 0
 var/global/list/blobs = list()
 var/global/list/blob_cores = list()
 var/global/list/blob_nodes = list()
@@ -16,13 +16,14 @@ var/global/list/blob_nodes = list()
 	var/point_rate = 2
 	var/last_resource_collection
 
-/obj/effect/blob/core/atom_init(mapload, h = 200, client/new_overmind, new_rate = 2)
+/obj/effect/blob/core/atom_init(mapload, client/new_overmind, h = 200, new_rate = 2)
 	blob_cores += src
 	START_PROCESSING(SSobj, src)
 	if(!overmind)
 		INVOKE_ASYNC(src, .proc/create_overmind, new_overmind)
 	point_rate = new_rate
 	last_resource_collection = world.time
+	health = h
 	. = ..()
 
 
@@ -103,7 +104,7 @@ var/global/list/blob_nodes = list()
 			var/ded = TRUE
 			if(conglomerate.members.len)
 				for(var/datum/role/R in conglomerate.members)
-					if (R.antag && R.antag.current && !(R.antag.current.is_dead()))
+					if (R.antag.current && !(R.antag.current.is_dead()))
 						ded = FALSE
 						break
 			add_faction_member(conglomerate, B, !ded)

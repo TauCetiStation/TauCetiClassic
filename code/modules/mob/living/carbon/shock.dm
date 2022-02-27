@@ -25,13 +25,13 @@
 		src.traumatic_shock -= 80
 	if(reagents.has_reagent("oxycodone"))
 		src.traumatic_shock -= 200
-	if(src.slurring)
-		src.traumatic_shock -= 20
+	if(src.slurring && drunkenness > DRUNKENNESS_SLUR)
+		src.traumatic_shock -= min(drunkenness - DRUNKENNESS_SLUR, 40)
 	if(src.analgesic)
 		src.traumatic_shock = 0
 
 	// broken or ripped off bodyparts will add quite a bit of pain
-	if(istype(src,/mob/living/carbon/human))
+	if(ishuman(src))
 		var/mob/living/carbon/human/M = src
 		for(var/obj/item/organ/external/BP in M.bodyparts)
 			if(BP.is_stump)

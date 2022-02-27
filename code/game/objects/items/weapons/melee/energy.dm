@@ -43,7 +43,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_SMALL
-	flags = CONDUCT | NOSHIELD | NOBLOODY
+	flags = CONDUCT | NOBLOODY
 	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	edge = 1
@@ -63,7 +63,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_TINY
-	flags = NOSHIELD | NOBLOODY
+	flags = NOBLOODY
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	edge = 1
@@ -80,7 +80,7 @@
 		to_chat(user, "<span class='notice'>You attach the ends of the two \
 			energy swords, making a single double-bladed weapon! \
 			You're cool.</span>")
-		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
+		var/obj/item/weapon/dualsaber/newSaber = new(user.loc)
 		user.unEquip(I)
 		user.unEquip(src)
 		qdel(I)
@@ -122,6 +122,6 @@
 	throw_speed = 1
 	throw_range = 1
 	w_class = SIZE_NORMAL//So you can't hide it in your pocket or some such.
-	flags = NOSHIELD | NOBLOODY | DROPDEL
+	flags = NOBLOODY | DROPDEL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system

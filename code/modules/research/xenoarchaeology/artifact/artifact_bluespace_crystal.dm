@@ -56,7 +56,7 @@
 	tesla_zap(src,round(damage/10),round(damage/5)*25000)
 	empulse(src, round(damage/10),round(damage/5))
 	if(health < 0)
-		Destroy()
+		qdel(src)
 
 /obj/machinery/artifact/bluespace_crystal/bullet_act(obj/item/projectile/Proj)
 	if(prob(Proj.damage))

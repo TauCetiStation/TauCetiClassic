@@ -6,7 +6,7 @@
 		return OBJECTIVE_LOSS
 	if(!faction.members.len)
 		return OBJECTIVE_LOSS
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(!H || !H.mind || !is_station_level(H.z))
 			continue
 		if(!H.mind.GetRoleByType(faction.initroletype) || !H.mind.GetRoleByType(faction.roletype))

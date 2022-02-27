@@ -5,9 +5,6 @@
 		param = copytext(act, t1 + 1)
 		act = copytext(act, 1, t1)
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act,1,-1)
-
 	switch(act)
 		if ("me")
 			if (src.client)

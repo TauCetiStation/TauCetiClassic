@@ -1,5 +1,5 @@
-var/list/net_announcer_secret = list()
-var/bridge_secret = null
+var/global/list/net_announcer_secret = list()
+var/global/bridge_secret = null
 
 /datum/configuration
 	var/name = "Configuration"			// datum name
@@ -211,6 +211,9 @@ var/bridge_secret = null
 	var/secondtopiclimit = 10
 
 	var/deathmatch_arena = TRUE
+
+	var/hard_deletes_overrun_threshold = 0.5
+	var/hard_deletes_overrun_limit = 0
 
 /datum/configuration/New()
 	for (var/type in subtypesof(/datum/game_mode))
@@ -654,6 +657,12 @@ var/bridge_secret = null
 
 				if("second_topic_limit")
 					config.secondtopiclimit = text2num(value)
+
+				if("hard_deletes_overrun_threshold")
+					config.hard_deletes_overrun_threshold = text2num(value)
+
+				if("hard_deletes_overrun_limit")
+					config.hard_deletes_overrun_limit = text2num(value)
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

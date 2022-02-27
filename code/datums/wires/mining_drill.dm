@@ -1,8 +1,8 @@
-var/const/MINING_DRILL_WIRES_SHOCK = 1
-var/const/MINING_DRILL_WIRES_OVERLOAD = 2
-var/const/MINING_DRILL_WIRES_RADIO_DISABLE = 4
-var/const/MINING_DRILL_WIRES_POWER_DISABLE = 8
-var/const/MINING_DRILL_WIRES_PROTECTOR_DISABLE = 16
+var/global/const/MINING_DRILL_WIRES_SHOCK = 1
+var/global/const/MINING_DRILL_WIRES_OVERLOAD = 2
+var/global/const/MINING_DRILL_WIRES_RADIO_DISABLE = 4
+var/global/const/MINING_DRILL_WIRES_POWER_DISABLE = 8
+var/global/const/MINING_DRILL_WIRES_PROTECTOR_DISABLE = 16
 
 /datum/wires/mining_drill
 	holder_type = /obj/machinery/mining/drill

@@ -1,4 +1,4 @@
-var/list/GPS_list = list()
+var/global/list/GPS_list = list()
 
 #define EMP_DISABLE_TIME 30 SECONDS
 #define POS_VECTOR(A) list(A.x, A.y, A.z)

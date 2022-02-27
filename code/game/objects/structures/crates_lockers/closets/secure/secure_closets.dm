@@ -70,7 +70,7 @@
 /obj/structure/closet/secure_closet/attackby(obj/item/weapon/W, mob/user)
 	if(opened  || istype(W, /obj/item/weapon/grab))
 		return ..()
-	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
+	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/dualsaber)) && !src.broken)
 		broken = 1
 		locked = 0
 		user.SetNextMove(CLICK_CD_MELEE)

@@ -3,6 +3,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
 	anchored = TRUE
+	layer = TURF_LAYER
 	unacidable = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 
@@ -299,3 +300,12 @@
 
 /obj/effect/landmark/blockway
 	density = TRUE
+
+/obj/effect/landmark/espionage_start
+	name = "Espionage Agent Start"
+
+/obj/effect/landmark/espionage_start/atom_init(mapload)
+	..()
+	global.espionageagent_start += loc
+	create_spawner(/datum/spawner/spy, "spy")
+	return INITIALIZE_HINT_QDEL

@@ -23,25 +23,15 @@
 /obj/mecha/combat/melee_action(target)
 	if(internal_damage&MECHA_INT_CONTROL_LOST)
 		target = safepick(oview(1,src))
-	if(!melee_can_hit || !istype(target, /atom)) return
-	if(istype(target, /mob/living))
+	if(!melee_can_hit || !isatom(target)) return
+	if(isliving(target))
 		var/mob/living/M = target
 		if(src.occupant.a_intent == INTENT_HARM)
 			playsound(src, 'sound/weapons/punch4.ogg', VOL_EFFECTS_MASTER)
 			if(damtype == "brute")
 				step_away(M,src,15)
-			/*
-			if(M.stat>1)
-				M.gib()
-				melee_can_hit = 0
-				if(do_after(melee_cooldown))
-					melee_can_hit = 1
-				return
-			*/
-			if(istype(target, /mob/living/carbon/human))
+			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
-	//			if (M.health <= 0) return
-
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
 				if(BP)
 					switch(damtype)
@@ -83,9 +73,8 @@
 			occupant_message("You push [target] out of the way.")
 			visible_message("[src] pushes [target] out of the way.")
 
-		melee_can_hit = 0
-		if(do_after(melee_cooldown))
-			melee_can_hit = 1
+		melee_can_hit = FALSE
+		VARSET_IN(src, melee_can_hit, TRUE, melee_cooldown)
 		return
 
 	else
@@ -101,9 +90,8 @@
 						occupant_message("<span class='notice'>You smash through the wall.</span>")
 						visible_message("<b>[src.name] smashes through the wall</b>")
 						playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
-					melee_can_hit = 0
-					if(do_after(melee_cooldown))
-						melee_can_hit = 1
+					melee_can_hit = FALSE
+					VARSET_IN(src, melee_can_hit, TRUE, melee_cooldown)
 					break
 	return
 

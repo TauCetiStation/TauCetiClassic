@@ -68,7 +68,7 @@
 	switch(href_list["preference"])
 		if("antagoptions")
 			if(href_list["antagtask"] == "uplinktype")
-				var/uplink_type = input(user, "Select a type of uplink") as null|anything in list("PDA", "Headset", "None")
+				var/uplink_type = input(user, "Select a type of uplink") as null|anything in list("PDA", "Headset", "Intercom", "None")
 				if(!isnull(uplink_type))
 					uplinklocation = uplink_type
 

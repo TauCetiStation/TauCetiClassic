@@ -1,4 +1,4 @@
-var/church_name = null
+var/global/church_name = null
 /proc/church_name()
 	if (church_name)
 		return church_name
@@ -15,7 +15,7 @@ var/church_name = null
 
 	return name
 
-var/command_name = null
+var/global/command_name = null
 /proc/command_name()
 	if (command_name)
 		return command_name
@@ -31,7 +31,7 @@ var/command_name = null
 
 	return name
 
-var/religion_name = null
+var/global/religion_name = null
 /proc/religion_name()
 	if (religion_name)
 		return religion_name
@@ -127,7 +127,7 @@ var/religion_name = null
 
 	return name
 
-var/syndicate_name = null
+var/global/syndicate_name = null
 /proc/syndicate_name()
 	if (syndicate_name)
 		return syndicate_name

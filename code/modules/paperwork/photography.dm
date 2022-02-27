@@ -33,19 +33,27 @@
 	var/icon/tiny
 	var/list/photographed_names = list() // For occult purposes.
 
+/obj/item/weapon/photo/atom_init()
+	. = ..()
+	RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/summon_ectoplasm)
+
 /obj/item/weapon/photo/Destroy()
 	img = null
 	qdel(tiny)
 	tiny = null
 	return ..()
 
-/obj/item/weapon/photo/burnpaper(obj/item/weapon/lighter/P, mob/user)
-	..()
+/obj/item/weapon/photo/proc/summon_ectoplasm()
+	var/ghost_count = 0
 	for(var/A in photographed_names)
 		if(photographed_names[A] == /mob/dead/observer)
-			if(prob(10))
-				new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(loc) // I mean, it is already dropped in the parent proc, so this is pretty safe to do.
-			break
+			ghost_count++
+
+	if(!ghost_count)
+		return
+
+	for(var/i in 1 to round(ghost_count / 3))
+		new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(get_turf(src))
 
 /obj/item/weapon/photo/attack_self(mob/user)
 	user.examinate(src)
@@ -71,7 +79,8 @@
 	set src in oview(1)
 	if(in_range(usr, src))
 		show(usr)
-		to_chat(usr, desc)
+		if(desc)
+			to_chat(usr, desc)
 	else
 		to_chat(usr, "<span class='notice'>It is too far away.</span>")
 
@@ -120,7 +129,7 @@
 
 /obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
 
-	if((istype(usr, /mob/living/carbon/human)))
+	if((ishuman(usr)))
 		var/mob/M = usr
 		if(!( istype(over_object, /atom/movable/screen) ))
 			return ..()
@@ -234,7 +243,7 @@
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
-		if(istype(A, /mob/living) && A:lying)
+		if(isliving(A) && A:lying)
 			img.Turn(A:lying_current)
 
 		var/offX = 1 + (photo_size-1)*16 + (A.x - center.x) * 32 + A.pixel_x
@@ -256,7 +265,7 @@
 	var/names_detail = list()
 	for(var/mob/M in the_turf)
 		if(M.invisibility)
-			if(see_ghosts && istype(M,/mob/dead/observer))
+			if(see_ghosts && isobserver(M))
 				var/mob/dead/observer/O = M
 				if(O.orbiting)
 					continue
@@ -270,7 +279,7 @@
 
 		var/holding = null
 
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			var/mob/living/L = M
 			if(L.l_hand || L.r_hand)
 				if(L.l_hand) holding = "They are holding \a [L.l_hand]"
@@ -315,7 +324,7 @@
 
 	var/mobs = ""
 	var/list/mob_names = list()
-	var/isAi = istype(user, /mob/living/silicon/ai)
+	var/isAi = isAI(user)
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
 		if(user.client)		//To make shooting through security cameras possible

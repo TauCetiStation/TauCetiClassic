@@ -14,6 +14,7 @@
 	. += 						"(<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)"
 	. += 						"<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
 	. += 						"<br><b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
+	. += 						"<br><b>Height:</b> <a href='?_src_=prefs;preference=height;task=input'>[height]</a>"
 	. += 						"<br><b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
 	. += 						"<hr>"
 	. += 					"</td>"
@@ -211,6 +212,8 @@
 					real_name = random_name(gender)
 				if("age")
 					age = rand(specie_obj.min_age, specie_obj.max_age)
+				if("height")
+					height = HUMANHEIGHT_MEDIUM
 				if("hair")
 					r_hair = rand(0,255)
 					g_hair = rand(0,255)
@@ -262,6 +265,11 @@
 					if(new_age)
 						age = max(min( round(text2num(new_age)), specie_obj.max_age), specie_obj.min_age)
 
+				if("height")
+					var/new_height = input(user, "Choose your character's height:", "Character Height", height) as null|anything in heights_list
+					if(new_height)
+						height = new_height
+
 				if("species")
 					var/list/new_species = list(HUMAN)
 					var/prev_species = species
@@ -287,7 +295,7 @@
 						ResetQuirks()
 						if(language && language != "None")
 							var/datum/language/lang = all_languages[language]
-							if(!(species in lang.allowed_species))
+							if(!(species in lang.allowed_speak))
 								language = "None"
 
 				if("language")
@@ -295,7 +303,7 @@
 					var/datum/species/S = all_species[species]
 					for(var/L in all_languages)
 						var/datum/language/lang = all_languages[L]
-						if(!(lang.flags & RESTRICTED) && (S.name in lang.allowed_species))
+						if(!(lang.flags & RESTRICTED) && (S.name in lang.allowed_speak))
 							new_languages += lang.name
 
 					language = input("Please select a secondary language", "Character Generation", language) in new_languages

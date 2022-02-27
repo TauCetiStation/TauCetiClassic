@@ -75,7 +75,7 @@
 	var/mob/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M, user, src))
-			return 0
+			return FALSE
 
 	if(stab_eyes && user.a_intent != INTENT_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
 		if((CLUMSY in user.mutations) && prob(50))
@@ -94,9 +94,9 @@
 				if(!protected)
 					//TODO: better alternative for applying damage multiple times? Nice knifing sound?
 					var/damage_flags = damage_flags()
-					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
-					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
-					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(force, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(force, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(force, BRUTE, BP_HEAD, null, damage_flags)
 					M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
 					playsound(M, 'sound/effects/throat_cutting.ogg', VOL_EFFECTS_MASTER)
 					flick(G.hud.icon_state, G.hud)
@@ -105,7 +105,7 @@
 					M.log_combat(user, "knifed with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 					return
 
-	if (istype(M,/mob/living/carbon/brain))
+	if (isbrain(M))
 		messagesource = M:container
 	if (length(hitsound))
 		playsound(M, pick(hitsound), VOL_EFFECTS_MASTER)
@@ -132,6 +132,11 @@
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 
 	var/power = force
+	if(ishuman(user) && damtype == BRUTE)
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
+		if(BP.pumped)
+			power += max(round((PARABOLIC_SCALING(force, 1, 0.01) * BP.pumped * 0.1)), 0) //We need a pumped force multiplied by parabolic scaled item's force with a borders of 1 to 0
 	if(HULK in user.mutations)
 		power *= 2
 
@@ -149,7 +154,7 @@
 				slime.Discipline = 0
 
 			if(power >= 3)
-				if(istype(slime, /mob/living/carbon/slime/adult))
+				if(isslimeadult(slime))
 					if(prob(5 + round(power/2)))
 
 						if(slime.Victim)
@@ -257,7 +262,7 @@
 	else
 		switch(damtype)
 			if("brute")
-				if(istype(src, /mob/living/carbon/slime))
+				if(isslime(src))
 					M.adjustBrainLoss(power)
 
 				else
@@ -275,4 +280,4 @@
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(M)
 	SSdemo.mark_dirty(user)
-	return 1
+	return TRUE

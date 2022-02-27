@@ -8,7 +8,9 @@
 	name = "Space"
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
-	layer = 10
+	layer = AREA_LAYER
+	//Keeping this on the default plane, GAME_PLANE, will make area overlays fail to render on FLOOR_PLANE.
+	plane = AREA_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	var/static/global_uid = 0
@@ -88,7 +90,7 @@
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
-var/list/teleportlocs = list()
+var/global/list/teleportlocs = list()
 
 /proc/process_teleport_locs()
 	for(var/area/AR in all_areas)
@@ -101,10 +103,9 @@ var/list/teleportlocs = list()
 			teleportlocs += AR.name
 			teleportlocs[AR.name] = AR
 	teleportlocs = sortAssoc(teleportlocs)
-	return 1
 
 
-var/list/ghostteleportlocs = list()
+var/global/list/ghostteleportlocs = list()
 
 /proc/process_ghost_teleport_locs()
 	for(var/area/AR in all_areas)
@@ -118,7 +119,6 @@ var/list/ghostteleportlocs = list()
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 	ghostteleportlocs = sortAssoc(ghostteleportlocs)
-	return 1
 
 /area/New() // not ready for transfer, problems with alarms raises if this part moved into init (requires more time)
 	icon_state = ""
@@ -175,16 +175,13 @@ var/list/ghostteleportlocs = list()
 /area/proc/update_beauty()
 	if(!areasize)
 		beauty = 0
-		SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
 		return FALSE
 
 	if(areasize >= beauty_threshold)
 		beauty = 0
-		SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
 		return FALSE
 
 	beauty = totalbeauty / areasize
-	SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
 
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
@@ -198,7 +195,7 @@ var/list/ghostteleportlocs = list()
 					C.add_network("Power Alarms")
 				else
 					C.remove_network("Power Alarms")
-			for (var/mob/living/silicon/aiPlayer in silicon_list)
+			for (var/mob/living/silicon/aiPlayer as anything in silicon_list)
 				if(!aiPlayer.client)
 					continue
 				if(aiPlayer.z == source.z)
@@ -227,7 +224,7 @@ var/list/ghostteleportlocs = list()
 		if (danger_level < 2 && atmosalm >= 2)
 			for(var/obj/machinery/camera/C in src)
 				C.remove_network("Atmosphere Alarms")
-			for(var/mob/living/silicon/aiPlayer in silicon_list)
+			for(var/mob/living/silicon/aiPlayer as anything in silicon_list)
 				if(!aiPlayer.client)
 					continue
 				aiPlayer.cancelAlarm("Atmosphere", src, src)
@@ -239,7 +236,7 @@ var/list/ghostteleportlocs = list()
 			for(var/obj/machinery/camera/C in src)
 				cameras += C
 				C.add_network("Atmosphere Alarms")
-			for(var/mob/living/silicon/aiPlayer in silicon_list)
+			for(var/mob/living/silicon/aiPlayer as anything in silicon_list)
 				if(!aiPlayer.client)
 					continue
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
@@ -251,8 +248,8 @@ var/list/ghostteleportlocs = list()
 		for (var/obj/machinery/alarm/AA in src)
 			AA.update_icon()
 
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /area/proc/air_doors_close()
 	if(!air_doors_activated)
@@ -291,7 +288,7 @@ var/list/ghostteleportlocs = list()
 		for (var/obj/machinery/camera/C in src)
 			cameras.Add(C)
 			C.add_network("Fire Alarms")
-		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
+		for (var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 			if(!aiPlayer.client)
 				continue
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
@@ -310,7 +307,7 @@ var/list/ghostteleportlocs = list()
 					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
 		for (var/obj/machinery/camera/C in src)
 			C.remove_network("Fire Alarms")
-		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
+		for (var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 			if(!aiPlayer.client)
 				continue
 			aiPlayer.cancelAlarm("Fire", src, src)
@@ -345,9 +342,9 @@ var/list/ghostteleportlocs = list()
 
 /area/proc/powered(chan)		// return true if the area has power to given channel
 	if(!requires_power)
-		return 1
+		return TRUE
 	if(always_unpowered)
-		return 0
+		return FALSE
 	switch(chan)
 		if(STATIC_EQUIP)
 			return power_equip
@@ -356,7 +353,7 @@ var/list/ghostteleportlocs = list()
 		if(STATIC_ENVIRON)
 			return power_environ
 
-	return 0
+	return FALSE
 
 // called when power status changes
 /area/proc/power_change()
@@ -481,7 +478,7 @@ var/list/ghostteleportlocs = list()
 	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.
 		return
 
-	if(istype(mob,/mob/living/carbon/human))  // Only humans can wear magboots, so we give them a chance to.
+	if(ishuman(mob))  // Only humans can wear magboots, so we give them a chance to.
 		var/mob/living/carbon/human/H = mob
 		if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
 			return
@@ -501,7 +498,7 @@ var/list/ghostteleportlocs = list()
 		T = get_turf(AT)
 	var/area/A = get_area(T)
 	if(istype(T, /turf/space)) // Turf never has gravity
-		return 0
+		return FALSE
 	else if(A && A.has_gravity) // Areas which always has gravity
-		return 1
-	return 0
+		return TRUE
+	return FALSE
