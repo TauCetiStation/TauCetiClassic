@@ -1238,7 +1238,7 @@ var/global/list/WALLITEMS = typecacheof(list(
 	return FALSE
 
 /proc/params2turf(scr_loc, turf/origin)
-	if(!scr_loc || !origin)
+	if(!scr_loc)
 		return null
 	var/tX = splittext(scr_loc, ",")
 	var/tY = splittext(tX[2], ":")
