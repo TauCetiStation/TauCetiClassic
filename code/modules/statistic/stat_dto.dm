@@ -63,9 +63,9 @@
 	var/allarrested    = 0 // did the crew catch all the enemies alive?
 	// int, [0...]
 	var/opkilled       = 0 // used during nuke mode, how many operatives died?
-	// int, [0...]
+	// boolean, [0, 1]
 	var/disc           = 0 // is the disc safe and secure?
-	// int, [0...]
+	// boolean, [0, 1]
 	var/nuked          = 0 // was the station blown into little bits?
 	// int, [0...]
 	var/destranomaly   = 0 // anomaly of cult
