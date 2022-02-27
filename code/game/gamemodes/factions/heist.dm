@@ -65,7 +65,7 @@
 
 	//Decrease success for failed objectives.
 	for(var/datum/objective/O in objectives)
-		if(objective.completed == OBJECTIVE_LOSS)
+		if(O.completed == OBJECTIVE_LOSS)
 			success--
 
 	if(success != objectives.len && success > objectives.len / 2)
