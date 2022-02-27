@@ -134,12 +134,19 @@ var/global/list/all_emotes
 	var/msg_3p = get_emote_message_3p(user)
 	var/range = !isnull(emote_range) ? emote_range : world.view
 
+	if(!msg_1p)
+		msg_1p = msg_3p
+
 	log_emote("[key_name(user)] : [msg_3p]")
 
-	if(message_type & SHOWMSG_VISUAL)
-		user.visible_message(msg_3p, msg_1p, message_impaired_reception, viewing_distance = range, ignored_mobs = observer_list)
-	else if(message_type & SHOWMSG_AUDIO)
-		user.audible_message(msg_3p, msg_1p, message_impaired_reception, hearing_distance = range, ignored_mobs = observer_list)
+	if(msg_3p)
+		if(message_type & SHOWMSG_VISUAL)
+			user.visible_message(msg_3p, msg_1p, message_impaired_reception, viewing_distance = range, ignored_mobs = observer_list)
+		else if(message_type & SHOWMSG_AUDIO)
+			user.audible_message(msg_3p, msg_1p, message_impaired_reception, hearing_distance = range, ignored_mobs = observer_list)
+
+	else
+		to_chat(user, msg_1p)
 
 	if(sound && check_cooldown(user, user.next_audio_emote_produce, intentional))
 		set_cooldown(user, user.next_audio_emote_produce, audio_cooldown, intentional)
