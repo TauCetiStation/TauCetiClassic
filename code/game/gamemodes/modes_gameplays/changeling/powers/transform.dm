@@ -24,6 +24,8 @@
 	user.UpdateAppearance()
 	domutcheck(user, null)
 
+	user.fixblood(FALSE) // to change blood DNA too
+
 	feedback_add_details("changeling_powers","TR")
 	return TRUE
 
