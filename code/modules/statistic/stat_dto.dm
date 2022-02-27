@@ -72,7 +72,6 @@
 	var/name
 	var/from_suicide
 	var/last_attacker_name
-	var/last_attacker_key
 	var/list/damage = list(
 		"BRUTE" = 0,
 		"FIRE" = 0,
