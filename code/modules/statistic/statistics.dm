@@ -17,7 +17,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 // To ensure that if output file syntax is changed, we will still be able to process
 // new and old files
 // please increment this version whenever making changes
-#define STAT_OUTPUT_VERSION 3
+#define STAT_OUTPUT_VERSION 2
 #define STAT_FILE_NAME "stat.json"
 
 /datum/stat_collector
@@ -90,3 +90,6 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 
 	for(var/datum/mind/M in SSticker.minds)
 		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles)
+
+	for(var/ckey in global.disconnected_ckey_by_stat)
+		leave_stats += global.disconnected_ckey_by_stat[ckey]

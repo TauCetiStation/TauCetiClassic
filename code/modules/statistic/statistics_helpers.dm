@@ -80,7 +80,7 @@
 
 	manifest_entries += stat
 
-/datum/stat_collector/proc/add_leave_stat(datum/mind/M, leave_type, leave_time = roundduration2text())
+/datum/stat_collector/proc/get_leave_stat(datum/mind/M, leave_type, leave_time = roundduration2text())
 	var/datum/stat/leave_stat/stat = new
 	stat.name = STRIP_NEWLINE(M.name)
 	stat.assigned_role = STRIP_NEWLINE(M.assigned_role)
@@ -95,6 +95,10 @@
 	stat.start_time = M.creation_roundtime
 	stat.leave_time = leave_time
 
+	return stat
+
+/datum/stat_collector/proc/add_leave_stat(datum/mind/M, leave_type, leave_time = roundduration2text())
+	var/datum/stat/leave_stat/stat = get_leave_stat(M, leave_type, leave_time)
 	leave_stats += stat
 
 /datum/stat_collector/proc/get_objective_stat(datum/objective/O)

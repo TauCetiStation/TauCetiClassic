@@ -782,33 +782,23 @@ var/global/list/blacklisted_builds = list(
 #undef MAXIMAZED
 #undef FULLSCREEN
 
-// ckey = timer_id
-var/global/list/disconnected_ckey_by_timer_id = list()
+// ckey = datum/stat/leave_stat
+var/global/list/disconnected_ckey_by_stat = list()
 /client/proc/handle_connect()
-	if(!disconnected_ckey_by_timer_id[ckey])
+	if(!global.disconnected_ckey_by_stat[ckey])
 		return
-	var/timer_id = disconnected_ckey_by_timer_id[ckey]
-	deltimer(timer_id)
-	disconnected_ckey_by_timer_id -= ckey
+	var/datum/stat/leave_stat/stat = global.disconnected_ckey_by_stat[ckey]
+	qdel(stat)
+	global.disconnected_ckey_by_stat -= ckey
 
 /client/proc/handle_leave()
 	if(!isliving(mob) || !mob.mind)
 		return
 	if(istype(mob.loc, /obj/machinery/cryopod))
 		return
-	var/timer_id = addtimer(
-		CALLBACK(
-			SSStatistics,
-			/datum/stat_collector.proc/add_leave_stat,
-			mob.mind,
-			"Disconnected",
-			roundduration2text()
-		),
-		config.afk_time_bracket,
-		TIMER_STOPPABLE
-	)
+	var/datum/stat/leave_stat/stat = SSStatistics.get_leave_stat(mob.mind, "Disconnected", roundduration2text())
 
-	disconnected_ckey_by_timer_id[ckey] = timer_id
+	global.disconnected_ckey_by_stat[ckey] = stat
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
