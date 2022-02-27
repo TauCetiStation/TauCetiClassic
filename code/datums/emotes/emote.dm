@@ -1,3 +1,5 @@
+var/global/list/all_emotes
+
 /*
  * Singleton emote datum.
  *
@@ -9,6 +11,8 @@
 /datum/emote
 	// Default command to use emote ie. '*[key]'
 	var/key
+	// If two emotes override the same key, which one has the priority?
+	var/priority = EMOTE_PRIO_DEFAULT
 
 	// First person message ('You laugh!')
 	var/message_1p
@@ -26,7 +30,7 @@
 	var/message_type = SHOWMSG_VISUAL
 
 	// Range outside which emote is not shown
-	var/emote_range
+	var/emote_range = 7
 
 	// Sound produced. (HAHAHAHA)
 	var/sound
@@ -41,7 +45,7 @@
 	// Visual cue with a cloud above head for some emotes.
 	var/cloud
 
-	var/state_checks
+	var/list/state_checks
 
 /datum/emote/proc/get_emote_message_1p(mob/living/carbon/human/user)
 	return message_1p
@@ -60,7 +64,7 @@
 
 /datum/emote/proc/his_macro(mob/living/carbon/human/user)
 	. = "its" // maybe put it in a separate file and expand the variables in such cases? I don't know how to make it through the BYOND macro
-	switch(gender)
+	switch(user.gender)
 		if(FEMALE)
 			. = "her"
 		if(MALE)
@@ -70,7 +74,7 @@
 
 /datum/emote/proc/he_macro(mob/living/carbon/human/user)
 	. = "it" // this too
-	switch(gender)
+	switch(user.gender)
 		if(FEMALE)
 			. = "she"
 		if(MALE)
@@ -106,32 +110,35 @@
 	playsound(src, get_sound(user, intentional), VOL_EFFECTS_MASTER, null, FALSE, null)
 
 /datum/emote/proc/can_emote(mob/living/carbon/human/user, intentional)
-	if(!check_cooldown(user, use.next_emote_use, intentional))
+	if(!check_cooldown(user, user.next_emote_use, intentional))
+		if(intentional)
+			to_chat(user, "<span class='notice'>You can't emote so much, give it a rest.</span>")
 		return FALSE
 
 	for(var/datum/callback/state as anything in state_checks)
 		if(!state.Invoke(user, intentional))
-			returN FALSE
+			return FALSE
 
 	return TRUE
 
-/datum/emote/proc/do_emote(mob/living/carbon/human/user, intentional)
-	log_emote("[key_name(user)] : [message]")
-
+/datum/emote/proc/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	set_cooldown(user, user.next_emote_use, cooldown, intentional)
 
 	for(var/obj/item/weapon/implant/I in user)
 		if(!I.implanted)
 			continue
-		I.trigger(key, user)
+		I.trigger(emote_key, user)
 
+	var/msg_1p = get_emote_message_1p(user)
 	var/msg_3p = get_emote_message_3p(user)
 	var/range = !isnull(emote_range) ? emote_range : world.view
 
+	log_emote("[key_name(user)] : [msg_3p]")
+
 	if(message_type & SHOWMSG_VISUAL)
-		visible_message(msg_3p, message_impaired, viewing_distance = range, ignored_mobs = observer_list)
+		user.visible_message(msg_3p, msg_1p, message_impaired_reception, viewing_distance = range, ignored_mobs = observer_list)
 	else if(message_type & SHOWMSG_AUDIO)
-		audible_message(msg_3p, message_impaired, hearing_distance = range, ignored_mobs = observer_list)
+		user.audible_message(msg_3p, msg_1p, message_impaired_reception, hearing_distance = range, ignored_mobs = observer_list)
 
 	if(sound && check_cooldown(user, user.next_audio_emote_produce, intentional))
 		set_cooldown(user, user.next_audio_emote_produce, audio_cooldown, intentional)
@@ -146,13 +153,11 @@
 				// ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
 				to_chat(M, "[FOLLOW_LINK(M, src)] [msg_3p]")
 			if(CHAT_GHOSTSIGHT_ALLMANUAL)
-				if(!auto)
+				if(intentional)
 					to_chat(M, "[FOLLOW_LINK(M, src)] [msg_3p]")
 
-	play_rock_paper_scissors_animation(act)
-
 	if(cloud)
-		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud, EMOTE_LAYER)
+		var/image/emote_bubble = image('icons/mob/emote.dmi', user, cloud, EMOTE_LAYER)
 		emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		flick_overlay(emote_bubble, clients, 30)
 		QDEL_IN(emote_bubble, 3 SECONDS)

@@ -13,27 +13,26 @@
 	message_type = SHOWMSG_VISUAL
 
 	state_checks = list(
-		CALLBACK(GLOBAL_PROC, .is_not_intentional),
-		CALLBACK(GLOBAL_PROC, .is_stat, CONSCIOUS),
+		CALLBACK(GLOBAL_PROC, .proc/is_not_intentional_or_stat, CONSCIOUS),
 	)
 
 /datum/emote/laugh/get_sound(mob/living/carbon/human/user, intentional)
-	switch(get_species())
+	switch(user.get_species())
 		if(SKRELL)
-			switch(gender)
+			switch(user.gender)
 				if(FEMALE)
 					return pick(SOUNDIN_LAUGH_SKRELL_FEMALE)
 				else
 					return pick(SOUNDIN_LAUGH_SKRELL_MALE)
 		else
-			switch(gender)
+			switch(user.gender)
 				if(FEMALE)
 					return pick(SOUNDIN_LAUGH_FEMALE)
 				else
 					return pick(SOUNDIN_LAUGH_MALE)
 
 /datum/emote/laugh/play_sound(mob/living/carbon/human/user, intentional)
-	var/voice_frequency = TRANSLATE_RANGE(age, species.min_age, species.max_age, 0.85, 1.05)
-	sound_frequency = 1.05 - (voice_frequency - 0.85)
+	var/voice_frequency = TRANSLATE_RANGE(user.age, user.species.min_age, user.species.max_age, 0.85, 1.05)
+	var/sound_frequency = 1.05 - (voice_frequency - 0.85)
 
 	playsound(src, get_sound(user, intentional), VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
