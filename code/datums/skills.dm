@@ -7,6 +7,11 @@
 -[S.firearms]-[S.melee]-[S.engineering]-[S.construction]-[S.atmospherics]-[S.civ_mech]\
 -[S.combat_mech]-[S.surgery]-[S.medical]-[S.chemistry]-[S.research]-[S.command]"
 
+
+#define SKILLSID_FROM_TYPE(T) "skills-[initial(T.police)]\
+-[initial(T.firearms)]-[initial(T.melee)]-[initial(T.engineering)]-[initial(T.construction)]-[initial(T.atmospherics)]-[initial(T.civ_mech)]\
+-[initial(T.combat_mech)]-[initial(T.surgery)]-[initial(T.medical)	]-[initial(T.chemistry)]-[initial(T.research)]-[initial(T.command)]"
+
 /proc/getSkills(police = 0, firearms = 0,\
 melee = 0, engineering = 0, construction = 0, atmospherics = 0, civ_mech = 0, combat_mech = 0, surgery = 0,\
 medical = 0, chemistry = 0, research = 0, command = 0)
@@ -104,11 +109,14 @@ medical, chemistry, research, command)
 	available.init_from_datum(modifiers[1])
 	for(var/datum/skills_modifier/modifier as anything in modifiers)
 		available.merge(modifier)
+	for(var/skill in available.skills)
+		active.set_value(skill, min( active.get_value(skill), available.get_value(skill)))
 
-/datum/skills/proc/remove_modifier(datum/skills/removable)
-	removable = new removable()
+/datum/skills/proc/remove_modifier(datum/skills/skillset_type)
+	var/datum/skills_modifier/SM = skillset_type
+	var/tag = SKILLSID_FROM_TYPE(SM)
 	for(var/datum/skills_modifier/s as anything in modifiers)
-		if(s.tag == removable.tag)
+		if(s.tag == tag)
 			LAZYREMOVE(modifiers, s)
 			break
 	update_available()
