@@ -107,7 +107,8 @@ var/global/list/all_emotes
 	return sound
 
 /datum/emote/proc/play_sound(mob/living/carbon/human/user, intentional)
-	playsound(src, get_sound(user, intentional), VOL_EFFECTS_MASTER, null, FALSE, null)
+	var/S = get_sound(user, intentional)
+	playsound(src, S, VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/emote/proc/can_emote(mob/living/carbon/human/user, intentional)
 	if(!check_cooldown(user, user.next_emote_use, intentional))
