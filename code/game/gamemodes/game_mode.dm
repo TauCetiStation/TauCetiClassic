@@ -211,6 +211,7 @@
 	completition_text = "<h2>Factions & Roles</h2>"
 	var/exist = FALSE
 	for(var/datum/faction/F in factions)
+		SSStatistics.add_faction(F)
 		if (F.members.len > 0)
 			exist = TRUE
 			completition_text += "<div class='Section'>"
@@ -220,6 +221,7 @@
 	if (orphaned_roles.len > 0)
 		completition_text += "<FONT size = 2><B>Independents:</B></FONT><br>"
 	for(var/datum/role/R in orphaned_roles)
+		SSStatistics.add_orphaned_role(R)
 		exist = TRUE
 		completition_text += "<div class='Section'>"
 		completition_text += R.GetScoreboard()

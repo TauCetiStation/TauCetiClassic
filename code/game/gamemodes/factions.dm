@@ -34,6 +34,9 @@
 	// What are the goals of this faction?
 	var/datum/objective_holder/objective_holder
 
+	// Type for collector of statistics by this faction
+	var/datum/stat/faction/stat_type = /datum/stat/faction
+
 /datum/faction/New()
 	SHOULD_CALL_PARENT(TRUE)
 	..()
@@ -197,7 +200,7 @@
 			if (IsSuccessful())
 				score_results += "<span class='green'><B>\The [capitalize(name)] was successful!</B></span>"
 				feedback_add_details("[ID]_success","SUCCESS")
-				score["roleswon"]++
+				SSStatistics.score.roleswon++
 			else if (minor_victory)
 				score_results += "<span class='orange'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</span>"
 				feedback_add_details("[ID]_success","HALF")
@@ -216,8 +219,6 @@
 				score_results += "<br>"
 
 		score_results += "</ul>"
-
-	antagonists_completion += list(list("faction" = ID, "html" = score_results))
 
 	score_results += "<ul>"
 
