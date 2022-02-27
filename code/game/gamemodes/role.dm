@@ -253,7 +253,7 @@
 /datum/role/proc/IsSuccessful()
 	if(objectives.objectives.len > 0)
 		for (var/datum/objective/objective in objectives.GetObjectives())
-			if(!objective.check_completion())
+			if(objective.completed == OBJECTIVE_LOSS)
 				return FALSE
 	return TRUE
 
@@ -303,7 +303,7 @@
 		for(var/datum/objective/objective in objectives.GetObjectives())
 			text += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
 			feedback_add_details("[id]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
-			if(!objective.completed) //If one objective fails, then you did not win.
+			if(objective.completed == OBJECTIVE_LOSS) //If one objective fails, then you did not win.
 				win = FALSE
 			if (count < objectives.objectives.len)
 				text += "<br>"

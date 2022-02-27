@@ -272,7 +272,7 @@
 /datum/faction/proc/IsSuccessful()
 	if(objective_holder.objectives.len > 0)
 		for(var/datum/objective/objective in objective_holder.GetObjectives())
-			if(!objective.check_completion())
+			if(objective.completed == OBJECTIVE_LOSS)
 				return FALSE
 	for(var/datum/role/R in members)
 		if(!R.IsSuccessful())
