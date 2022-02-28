@@ -210,7 +210,7 @@
 			M.drop_from_inventory(container)
 			to_chat(M, "<span class='notice'>[container] wriggles out of your grip!</span>")
 			to_chat(src, "<span class='notice'>You wriggle out of [M]'s grip!</span>")
-		else if(istype(container.loc, /obj/item) || istype(container.loc, /obj/machinery/pipedispenser/disposal))
+		else if(isitem(container.loc) || istype(container.loc, /obj/machinery/pipedispenser/disposal))
 			to_chat(src, "<span class='notice'>You struggle free of [container.loc].</span>")
 			container.forceMove(get_turf(container.loc))
 		else if(istype(container.loc, /obj/structure/closet))

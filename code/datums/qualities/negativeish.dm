@@ -79,6 +79,108 @@
 	if(istype(A, /area/station/bridge))
 		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "rts_failure", /datum/mood_event/rts_failure)
 
+/datum/quality/dirty
+	desc = "Прекрасным ранним утром в дороге на работу ты поскользнулся и упал в глубокую лужу грязи, полностью пропитавшись этой субстанцией. Времени не было и пришлось лететь на станцию в таком виде."
+	requirement = "Быть чистым. (Требований нет)"
+
+/datum/quality/dirty/add_effect(mob/living/carbon/human/H, latespawn)
+	var/datum/dirt_cover/mud/dirt_config = new
+	var/dirt_r = HEX_VAL_RED(dirt_config.color)
+	var/dirt_g = HEX_VAL_GREEN(dirt_config.color)
+	var/dirt_b = HEX_VAL_BLUE(dirt_config.color)
+
+	for(var/obj/O in H.get_all_slots())
+		O.add_dirt_cover(dirt_config)
+
+	var/list/dirt_DNA = list("UNKNOWN DNA" = "X*")
+	H.blood_DNA = dirt_DNA
+	H.hand_dirt_datum = new /datum/dirt_cover(dirt_config)
+	H.feet_blood_DNA = dirt_DNA
+	H.feet_dirt_color = new /datum/dirt_cover(dirt_config)
+
+	H.lip_style = "spray_face"
+	H.lip_color = dirt_config.color
+
+	H.dyed_r_hair = dirt_r
+	H.dyed_g_hair = dirt_g
+	H.dyed_b_hair = dirt_b
+	H.hair_painted = TRUE
+
+	H.dyed_r_facial = dirt_r
+	H.dyed_g_facial = dirt_g
+	H.dyed_b_facial = dirt_b
+	H.facial_painted = TRUE
+
+	H.apply_recolor()
+	H.update_body()
+	H.regenerate_icons()
+
+/datum/quality/non_comprende
+	desc = "Ты не знаешь никаких языков кроме общего."
+	requirement = "Нет."
+
+/datum/quality/non_comprende/add_effect(mob/living/carbon/human/H, latespawn)
+	for(var/datum/language/language as anything in H.languages)
+		H.remove_language(language.name)
+
+
+/datum/quality/patriot
+	desc = "Ты знаешь только один язык. И всегда будешь говорить только на нём."
+	requirement = "Нет."
+
+/datum/quality/patriot/add_effect(mob/living/carbon/human/H, latespawn)
+	if(length(H.languages) == 0)
+		return
+
+	H.forced_language = pick(H.languages)
+
+	for(var/datum/language/language as anything in H.languages)
+		if(language == H.forced_language)
+			continue
+		H.remove_language(language.name)
+
+
+/datum/quality/shkiondioniovioion
+	desc = "Тё знёёшь тёлькё ёдён ёзёк. Ё всёгдё бёдёшь гёвёрёть тёлькё нё нём."
+	requirement = "Нёт."
+
+/datum/quality/shkiondioniovioion/add_effect(mob/living/carbon/human/H, latespawn)
+	H.add_language(LANGUAGE_SHKIONDIONIOVIOION)
+	H.forced_language = LANGUAGE_SHKIONDIONIOVIOION
+
+	for(var/datum/language/language as anything in H.languages)
+		if(language == H.forced_language)
+			continue
+		H.remove_language(language.name)
+
+
+/datum/quality/clumsy
+	desc = "Ты - неуклюжий, криворукий дурачок. Лучше не трогать всякие опасные штуки!"
+	requirement = "Все, кроме Клоуна."
+
+/datum/quality/clumsy/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.assigned_role != "Clown"
+
+/datum/quality/clumsy/add_effect(mob/living/carbon/human/H, latespawn)
+	H.mutations.Add(CLUMSY)
+
+
+var/global/list/allergen_reagents_list
+/datum/quality/allergies
+	desc = "Ты - аллергик, с рождения такой. Вот только беда... А на что аллергия то?"
+	requirement = "Не синтет."
+
+	var/allergies_amount = 3
+
+/datum/quality/allergies/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !H.species.flags[IS_SYNTHETIC]
+
+/datum/quality/allergies/add_effect(mob/living/carbon/human/H, latespawn)
+	for(var/i in 1 to allergies_amount)
+		var/reagent = pick(global.allergen_reagents_list)
+		LAZYSET(H.allergies, reagent, ALLERGY_UNDISCOVERED)
+
+
 /datum/quality/dumb
 	desc = "Ты несколько раз упал головой на тулбокс и отупел."
 	requirement = "Нет."

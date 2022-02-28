@@ -4,4 +4,5 @@
 
 //Tool types defines
 
-#define TOOL_KNIFE "knife"
+#define QUALITY_CUTTING "cutting"
+#define QUALITY_PRYING "prying"

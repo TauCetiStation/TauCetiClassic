@@ -107,6 +107,9 @@
 /mob/living/carbon/human/diona/atom_init(mapload)
 	. = ..(mapload, DIONA)
 
+/mob/living/carbon/human/podman/atom_init(mapload)
+	. = ..(mapload, PODMAN)
+
 /mob/living/carbon/human/machine/atom_init(mapload)
 	h_style = "blue IPC screen"
 	. = ..(mapload, IPC)
@@ -1422,7 +1425,7 @@
 
 	if(species.additional_languages)
 		for(var/A in species.additional_languages)
-			add_language(A)
+			add_language(A, species.additional_languages[A])
 
 	typing_indicator_type = species.typing_indicator_type
 
@@ -1696,7 +1699,7 @@
 
 	visible_message("<span class='warning'><b>\The [src]</b> rips viciously at \the [G.affecting]'s body with its claws!</span>")
 
-	if(istype(G.affecting,/mob/living/carbon/human))
+	if(ishuman(G.affecting))
 		var/mob/living/carbon/human/H = G.affecting
 		H.apply_damage(50,BRUTE)
 		if(H.stat == DEAD)
@@ -1989,7 +1992,7 @@
 	if(species.flags[NO_BLOOD])
 		return
 
-	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT && timeofdeath != 0)
+	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT)
 		to_chat(user, "<span class='notice'>It seems [src] is far too gone to be reanimated... Your efforts are futile.</span>")
 		return
 
@@ -2142,7 +2145,7 @@
 	if(species.flags[IS_SYNTHETIC])
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "wet_clothes", /datum/mood_event/dangerous_clothes, -wet_clothes * 2)
 		return
-	if(get_species() in list(SKRELL, DIONA))
+	if(get_species() in list(SKRELL, DIONA, PODMAN))
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "wet_clothes", /datum/mood_event/refreshing_clothes, wet_clothes)
 		return
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "wet_clothes", /datum/mood_event/wet_clothes, -wet_clothes)
@@ -2234,7 +2237,6 @@
 	RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), .proc/mood_item_make_wet)
 	UnregisterSignal(I, list(COMSIG_ITEM_MAKE_DRY))
 
-
 /mob/living/carbon/human/proc/attack_heart(damage_prob, heal_prob)
 	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
 	if(!Heart)
@@ -2251,3 +2253,60 @@
 		if(HEART_FAILURE)
 			if(prob(heal_prob))
 				Heart.heart_fibrillate()
+
+/mob/living/carbon/human/handle_drunkenness()
+	. = ..()
+	if(drunkenness >= DRUNKENNESS_PASS_OUT)
+		var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
+		if(istype(IO))
+			IO.take_damage(0.1, 1)
+		adjustToxLoss(0.1)
+
+/mob/living/carbon/human/get_language()
+	if(species.force_racial_language)
+		return all_languages[species.language]
+
+	return ..()
+
+// TO-DO: make it so it algo triggers a random mild virus symptom because that's funny? ~Luduk
+/mob/living/carbon/human/proc/trigger_allergy(reagent, volume)
+	if(!allergies)
+		return
+
+	if(!allergies[reagent])
+		return
+
+	if(reagents.has_reagent("inaprovaline"))
+		reagents.remove_reagent("inaprovaline", volume)
+		return
+
+	allergies[reagent] += volume
+
+	var/effect_coeff = 0.0
+
+	switch(allergies[reagent])
+		if(ALLERGY_UNDISCOVERED to ALLERGY_DISCOVERED)
+			effect_coeff = 0.1
+		if(ALLERGY_DISCOVERED to ALLERGY_LETHAL)
+			effect_coeff = 0.5
+			allergies[reagent] = ALLERGY_LETHAL
+			to_chat(src, "<span class='danger'>AAAH THE RASH IS UNBEARABLE!</span>")
+		if(ALLERGY_LETHAL to INFINITY)
+			effect_coeff = 2.0
+			adjustOxyLoss(effect_coeff)
+			if(next_allergy_message < world.time)
+				next_allergy_message = world.time + 10 SECONDS
+				to_chat(src, "<span class='userdanger'>I THINK I'M DYING!</span>")
+
+	adjustToxLoss(effect_coeff)
+
+	if(bodytemperature < 330)
+		//310 is the normal bodytemp. 310.055
+		bodytemperature = min(330, bodytemperature + 10 * effect_coeff * TEMPERATURE_DAMAGE_COEFFICIENT)
+
+/mob/living/carbon/human/get_pumped(bodypart)
+	var/obj/item/organ/external/BP = get_bodypart(bodypart)
+	if(!BP)
+		return 0
+
+	return BP.pumped
