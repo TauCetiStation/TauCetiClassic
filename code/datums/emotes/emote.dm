@@ -62,26 +62,6 @@ var/global/list/all_emotes
 
 	return "<b>[user]</b> [msg]"
 
-/datum/emote/proc/his_macro(mob/living/carbon/human/user)
-	. = "its" // maybe put it in a separate file and expand the variables in such cases? I don't know how to make it through the BYOND macro
-	switch(user.gender)
-		if(FEMALE)
-			. = "her"
-		if(MALE)
-			. = "his"
-		if(PLURAL)
-			. = "their"
-
-/datum/emote/proc/he_macro(mob/living/carbon/human/user)
-	. = "it" // this too
-	switch(user.gender)
-		if(FEMALE)
-			. = "she"
-		if(MALE)
-			. = "he"
-		if(PLURAL)
-			. = "they"
-
 /datum/emote/proc/get_cooldown_group(mob/living/carbon/human/user)
 	if(isnull(cooldown_group))
 		return type
