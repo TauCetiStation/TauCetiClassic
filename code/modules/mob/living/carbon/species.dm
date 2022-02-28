@@ -834,6 +834,8 @@
 	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
 
 /datum/species/diona/podman/proc/find_replacement(datum/source, can_reenter_corpse, bancheck, timeofdeath)
+	SIGNAL_HANDLER
+
 	if(can_reenter_corpse)
 		return
 	create_spawner(/datum/spawner/podman, "podman", source)
