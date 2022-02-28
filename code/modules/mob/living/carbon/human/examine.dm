@@ -61,7 +61,7 @@
 	msg += "<EM>[src.name]"
 	if(!(skipface && skipjumpsuit))
 		var/species_name = "[get_species()]"
-		msg += ", <span color='[species.flesh_color]'>\a [species_name]</span>"
+		msg += ", <font color='[species.flesh_color]'>\a [species_name]</font>"
 	msg += "</EM>!\n"
 
 	//uniform
