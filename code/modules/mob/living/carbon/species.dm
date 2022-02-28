@@ -1097,7 +1097,7 @@
 	language = LANGUAGE_SOLCOMMON
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
-	flesh_color = "353535"
+	flesh_color = "#ff0000"
 
 	warning_low_pressure = 50
 	hazard_low_pressure = -1
