@@ -480,6 +480,9 @@
 */
 /atom/movable/proc/taken(mob/living/user, atom/fallback)
 	forceMove(fallback)
+	// We failed to be taken, but still are in some mob. Drop down.
+	if(ismob(loc))
+		forceMove(loc.loc)
 
 /atom/movable/proc/jump_from_contents(rec_level=1)
 	for(var/i in 1 to rec_level)
