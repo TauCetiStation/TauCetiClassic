@@ -484,51 +484,65 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/drone/spawn_ghost(mob/dead/observer/ghost)
 	ghost.dronize()
 
-/datum/spawner/plant
+/datum/spawner/podman
+	name = "Подкидыш"
+	desc = "Человечка вырастили на грядке."
+	wiki_ref = "Podmen"
+
+	ranks = list(ROLE_GHOSTLY)
+
+	var/mob/podman
+
+/datum/spawner/podman/New(mob/_podman)
+	. = ..()
+	podman = _podman
+
+/datum/spawner/podman/jump(mob/dead/observer/ghost)
+	ghost.forceMove(get_turf(podman))
+
+/datum/spawner/podman/spawn_ghost(mob/dead/observer/ghost)
+	podman.key = ghost.key
+
+	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	msg += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
+	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+	to_chat(podman, msg)
+
+/datum/spawner/fake_diona
 	name = "Нимфа Дионы"
-	desc = "Нимфу вырастили на грядке."
+	desc = "Диону вырастили на грядке."
 	wiki_ref = "Dionaea"
 
 	ranks = list(ROLE_GHOSTLY)
 
 	var/mob/diona
-	var/realName
 
-/datum/spawner/plant/New(mob/_diona, _realName)
+/datum/spawner/fake_diona/New(mob/_diona)
 	. = ..()
 	diona = _diona
-	realName = _realName
 
-/datum/spawner/plant/can_spawn(mob/dead/observer/ghost)
-	if(is_alien_whitelisted_banned(ghost, DIONA) || !is_alien_whitelisted(ghost, DIONA))
-		to_chat(ghost, "<span class='warning'>Вы не можете играть за дион.</span>")
-		return FALSE
-	return ..()
-
-/datum/spawner/plant/jump(mob/dead/observer/ghost)
+/datum/spawner/fake_diona/jump(mob/dead/observer/ghost)
 	ghost.forceMove(get_turf(diona))
 
-/datum/spawner/plant/spawn_ghost(mob/dead/observer/ghost)
+/datum/spawner/fake_diona/spawn_ghost(mob/dead/observer/ghost)
 	diona.key = ghost.key
 
-	if(realName)
-		diona.real_name = realName
-	diona.dna.real_name = diona.real_name
-
-	to_chat(diona, "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>")
-	to_chat(diona, "<B>You are now one of the Dionaea, a race of drifting interstellar plantlike creatures that sometimes share their seeds with human traders.</B>")
-	to_chat(diona, "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>")
-
-	if(!realName)
-		var/newname = sanitize_safe(input(diona,"Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
-		if (newname != "")
-			diona.real_name = newname
+	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	msg += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B><BR>"
+	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+	to_chat(diona, msg)
 
 /datum/spawner/spy
 	name = "Агент Прослушки"
 	desc = "Вы появляетесь на аванпосте прослушки Синдиката."
 
 	ranks = list(ROLE_GHOSTLY)
+
+/datum/spawner/spy/can_spawn(mob/dead/observer/ghost)
+	if(SSticker.current_state != GAME_STATE_PLAYING)
+		to_chat(ghost, "<span class='notice'>Please wait till round start!</span>")
+		return FALSE
+	return ..()
 
 /datum/spawner/spy/spawn_ghost(mob/dead/observer/ghost)
 	var/spawnloc = pick(espionageagent_start)

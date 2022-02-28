@@ -117,6 +117,13 @@
 	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.
 	var/busy_right_hand = FALSE
 
+	// Mood affecting how we see the world.
+	var/list/moody_color
+
 	// Clothes count. Used in mood.
 	var/wet_clothes = 0
 	var/dirty_clothes = 0
+
+	// Reagent allergies.
+	var/list/allergies
+	var/next_allergy_message = 0
