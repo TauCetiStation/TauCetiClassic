@@ -49,8 +49,8 @@
 	var/speech_allowed = 1 //Meme Stuff
 	var/damageoverlaytemp = 0
 	var/computer_id = null
-	var/mob/lastattacker = null
-	var/mob/lastattacked = null
+	var/lastattacker_name = ""
+	var/lastattacker_key = ""
 	var/attack_log = list( )
 	var/already_placed = 0.0
 	var/obj/machinery/machine = null
