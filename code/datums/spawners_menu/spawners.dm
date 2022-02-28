@@ -532,6 +532,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/spy/can_spawn(mob/dead/observer/ghost)
 	if(SSticker.current_state != GAME_STATE_PLAYING)
+		to_chat(ghost, "<span class='notice'>Please wait till round start!</span>")
 		return FALSE
 	return ..()
 
