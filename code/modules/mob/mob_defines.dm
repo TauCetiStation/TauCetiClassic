@@ -50,7 +50,7 @@
 	var/damageoverlaytemp = 0
 	var/computer_id = null
 	var/mob/lastattacker = null
-	var/lastattacked = null
+	var/mob/lastattacked = null
 	var/attack_log = list( )
 	var/already_placed = 0.0
 	var/obj/machinery/machine = null

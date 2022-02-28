@@ -20,6 +20,12 @@
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 
+	lastattacked.lastattacker = null
+	if(mind)
+		if(mind.current == src)
+			mind.set_current(null)
+		if(mind.original == src)
+			mind.set_original(null)
 	return ..()
 
 
