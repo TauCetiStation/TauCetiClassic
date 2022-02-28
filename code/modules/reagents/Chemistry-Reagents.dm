@@ -207,8 +207,7 @@
 	religion.on_holy_reagent_created(src)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
-	for(var/i in data)
-		data -= i
+	data = null
 	return ..()
 
 /proc/pretty_string_from_reagent_list(list/reagent_list)

@@ -497,19 +497,6 @@
 	SIGNAL_HANDLER
 	set_current(null)
 
-/datum/mind/proc/set_original(mob/new_original)
-	if(new_original && QDELETED(new_original))
-		CRASH("Tried to set a mind's original var to a qdeleted mob, what the fuck")
-	if(original)
-		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
-	original = new_original
-	if(original)
-		RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/clearoriginal)
-
-/datum/mind/proc/clear_original(datum/source)
-	SIGNAL_HANDLER
-	set_original(null)
-
 // check whether this mind's mob has been brigged for the given duration
 // have to call this periodically for the duration to work properly
 /datum/mind/proc/is_brigged(duration)
