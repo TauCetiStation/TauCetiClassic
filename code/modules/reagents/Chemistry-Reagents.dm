@@ -91,7 +91,7 @@
 	if(!prob(chance))
 		return
 
-	if(allergen && allergen[ALLERGY_SKIN] && ishuman(M))
+	if(self.allergen && self.allergen[ALLERGY_SKIN] && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.trigger_allergy(self.id, self.volume)
 		return
