@@ -54,6 +54,10 @@
 	objectives.owner = M
 	..()
 
+/datum/role/Destroy(force, ...)
+	QDEL_NULL(objectives)
+	return ..()
+
 /datum/role/proc/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
 	if(!istype(M) && !override)
 		log_mode("M is [M.type]!")
