@@ -28,7 +28,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	var/mob/living/carbon/human/blood_source = null
 	var/list/replicant_languages
 
-	var/spawner_type = /datum/spawner/podman
+	var/spawner_type = /datum/spawner/podkid
 	var/spawner_id = "podman_pod"
 
 /obj/item/seeds/replicapod/Destroy()

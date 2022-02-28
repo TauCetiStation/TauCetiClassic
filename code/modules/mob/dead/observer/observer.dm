@@ -144,26 +144,32 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	return 1
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE, timeofdeath = world.time)
-	if(key)
-		if(!(ckey in admin_datums) && bancheck == TRUE && jobban_isbanned(src, "Observer"))
-			var/mob/M = mousize()
-			if((config.allow_drone_spawn) || !jobban_isbanned(src, ROLE_DRONE))
-				var/response = tgui_alert(M, "Do you want to become a maintenance drone?","Are you sure you want to beep?", list("Beep!","Nope!"))
-				if(response == "Beep!")
-					M.dronize()
-					qdel(M)
-			return
-		var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
-		set_EyesVision(transition_time = 0)
-		SStgui.on_transfer(src, ghost)
-		ghost.can_reenter_corpse = can_reenter_corpse
-		ghost.timeofdeath = timeofdeath
-		ghost.key = key
-		ghost.playsound_stop(CHANNEL_AMBIENT)
-		ghost.playsound_stop(CHANNEL_AMBIENT_LOOP)
-		if(client && !ghost.client.holder && !config.antag_hud_allowed)		// For new ghosts we remove the verb from even showing up if it's not allowed.
-			ghost.verbs -= /mob/dead/observer/verb/toggle_antagHUD			// Poor guys, don't know what they are missing!
-		return ghost
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse, bancheck, timeofdeath)
+
+	if(!key)
+		return
+
+	if(!(ckey in admin_datums) && bancheck == TRUE && jobban_isbanned(src, "Observer"))
+		var/mob/M = mousize()
+		if((config.allow_drone_spawn) || !jobban_isbanned(src, ROLE_DRONE))
+			var/response = tgui_alert(M, "Do you want to become a maintenance drone?","Are you sure you want to beep?", list("Beep!","Nope!"))
+			if(response == "Beep!")
+				M.dronize()
+				qdel(M)
+		return
+
+	var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
+	set_EyesVision(transition_time = 0)
+	SStgui.on_transfer(src, ghost)
+	ghost.can_reenter_corpse = can_reenter_corpse
+	ghost.timeofdeath = timeofdeath
+	ghost.key = key
+	ghost.playsound_stop(CHANNEL_AMBIENT)
+	ghost.playsound_stop(CHANNEL_AMBIENT_LOOP)
+	if(client && !ghost.client.holder && !config.antag_hud_allowed)		// For new ghosts we remove the verb from even showing up if it's not allowed.
+		ghost.verbs -= /mob/dead/observer/verb/toggle_antagHUD			// Poor guys, don't know what they are missing!
+	return ghost
 
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.

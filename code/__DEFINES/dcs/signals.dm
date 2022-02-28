@@ -241,6 +241,8 @@
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)
 #define COMSIG_MOB_DIED "mob_died"
+///from base of mob/ghostize(): (can_reenter_corpse, bancheck, timeofdeath)
+#define COMSIG_MOB_GHOSTIZE "mob_ghostize"
 ///from base of mob/create_mob_hud(): ()
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 ///from base of item/equipped(): (obj/item/I, slot)
