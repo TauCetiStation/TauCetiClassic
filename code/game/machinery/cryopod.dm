@@ -222,8 +222,9 @@ var/global/list/frozen_items = list()
 			//Handle job slot/tater cleanup.
 			if(occupant && occupant.mind)
 				var/job = occupant.mind.assigned_role
-
 				SSjob.FreeRole(job)
+
+				SSStatistics.add_leave_stat(occupant.mind, "Cryopod")
 
 			// Delete them from datacore.
 
@@ -243,8 +244,6 @@ var/global/list/frozen_items = list()
 				icon_state = "cryosleeper_right"
 			else
 				icon_state = "cryosleeper_left"
-
-			SSStatistics.add_leave_stat(occupant.mind, "Cryopod")
 
 			//This should guarantee that ghosts don't spawn.
 			occupant.ckey = null

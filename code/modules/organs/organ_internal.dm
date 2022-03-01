@@ -136,6 +136,8 @@
 /obj/item/organ/internal/heart/proc/heart_stop()
 	if(!owner.reagents.has_reagent("inaprovaline") || owner.stat == DEAD)
 		heart_status = HEART_FAILURE
+		deltimer(fibrillation_timer_id)
+		fibrillation_timer_id = null
 	else
 		take_damage(1, 0)
 		fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
