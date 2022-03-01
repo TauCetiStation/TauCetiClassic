@@ -520,7 +520,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	var/mob/diona
 
-/datum/spawner/fake_diona/New(mob/_diona)
+/datum/spawner/fake_diona/New(mob/_diona, _replicant_memory)
 	. = ..()
 	diona = _diona
 

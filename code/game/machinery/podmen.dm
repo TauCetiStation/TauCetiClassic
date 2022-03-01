@@ -113,16 +113,16 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 	var/mob/living/carbon/monkey/diona/D = new product_type(pod.loc)
 
-	for(var/language in replicant_languages)
-		D.add_language(language)
-
-	D.saved_quirks = replicant_quirks.Copy()
-
 	if(copycat_replica && replicant_dna)
 		D.dna = replicant_dna.Clone()
 		D.dna.mutantrace = "plant"
 		D.real_name = D.dna.real_name
 		D.name = D.real_name
+
+		for(var/language in replicant_languages)
+			D.add_language(language)
+
+		D.saved_quirks = replicant_quirks.Copy()
 
 	if(copycat_replica && priveleged_player && priveleged_player.current == blood_source && blood_source.stat == DEAD)
 		D.key = blood_source.key
