@@ -14,6 +14,8 @@
 	plane = PLANE_SPACE
 //	heat_capacity = 700000 No.
 
+	flags = NOBLOODY | NOSTEPSOUND
+
 /**
   * Space Initialize
   *

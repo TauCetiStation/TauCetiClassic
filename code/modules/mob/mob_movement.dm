@@ -237,6 +237,11 @@
 	if(!Adjacent(machine) || !machine.can_interact_with(src))
 		return FALSE
 	var/obj/machinery/computer/security/console = machine
+
+	if(QDELETED(console.active_camera))
+		console.active_camera = null // if qdeling, set it null
+		return FALSE
+
 	var/turf/T = get_turf(console.active_camera)
 	var/list/cameras = list()
 

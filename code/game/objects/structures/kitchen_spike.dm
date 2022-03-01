@@ -67,7 +67,7 @@
 					H.forceMove(src.loc)
 					H.emote("scream")
 					if(iscarbon(H)) //So you don't get human blood when you spike a giant spidere
-						var/turf/simulated/pos = get_turf(H)
+						var/turf/pos = get_turf(H)
 						pos.add_blood_floor(H)
 					H.adjustBruteLoss(30)
 					H.buckled = src

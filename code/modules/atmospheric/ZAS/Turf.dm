@@ -93,7 +93,6 @@
 				. |= dir
 
 /turf/simulated/update_air_properties()
-
 	if(zone && zone.invalid) //this turf's zone is in the process of being rebuilt
 		c_copy_air() //not very efficient :(
 		zone = null //Easier than iterating through the list at the zone.

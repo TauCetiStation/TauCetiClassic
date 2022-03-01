@@ -186,16 +186,20 @@ function find_code {
 }
 
 function newline_at_eof {
-    counter=0
+    TEMPCOUNTER=/tmp/counter.tmp
+    echo 0 > $TEMPCOUNTER
     find ./code -regex '.*\.dm' | \
         while read line
         do
             if [[ -s "$line" && -n "$(tail -c 1 "$line")" ]]
             then
                 echo "No newline at end of file: $line"
-                ((counter++))
+                counter=$(($(cat $TEMPCOUNTER) + 1))
+                echo $counter > $TEMPCOUNTER
             fi
         done
+    counter=$(cat $TEMPCOUNTER)
+    unlink $TEMPCOUNTER
     return $counter
 }
 
