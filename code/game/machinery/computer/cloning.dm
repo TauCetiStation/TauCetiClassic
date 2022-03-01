@@ -20,7 +20,7 @@
 	var/autoprocess = 0
 	required_skill = SKILL_RESEARCH
 	required_skill_proficiency = SKILL_RESEARCH_PROFESSIONAL
-	fumbling_time_additional_delay = 3 SECONDS
+	fumbling_time = 3 SECONDS
 
 /obj/machinery/computer/cloning/atom_init()
 	..()

@@ -640,8 +640,10 @@
 		electrocution_animation(40)
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if (href_list["skill"])
+	if(href_list["skill"])
 		update_skills(href_list)
+	if(href_list["set_max_skills"])
+		mind.skills.maximize_active_skills()
 	if (href_list["item"])
 		var/slot = text2num(href_list["item"])
 		if(slot in check_obscured_slots())
@@ -1576,6 +1578,9 @@
 			}
 		</style>
 		"}
+	dat += {"
+		<input type="button" min="0" max="100" value="Set Max Skills" id="skills_max" onclick="saveVolume()">
+	"}
 	for(var/category in tables_data)
 		dat += {"
 			<table>
@@ -1619,7 +1624,6 @@
 						setSkill(slider_id);
 					}, 300);
 				}
-
 			}
 			function setSkill(slider_id) {
 				var element =  document.getElementById(slider_id);
@@ -1633,7 +1637,10 @@
 			function showHint(text) {
 				document.getElementById("notice").innerHTML = '<b>Hint: ' + text + '</b>';
 			}
-
+			function setMaxSkills() {
+				window.location = 'byond://?_src_=\ref[src];set_max_skills';
+				showHint('You are now trying your best.')
+			}
 		</script>
 		"}
 	var/style = CSS_THEME_DARK

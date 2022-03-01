@@ -1,10 +1,10 @@
 /proc/get_skill_absolute_minimum(skill)
-	if(!(skill in SKILL_BOUNDS))
+	if(isnull(SKILL_BOUNDS[skill]))
 		return 0
 	return SKILL_BOUNDS[skill][1]
 
 /proc/get_skill_absolute_maximum(skill)
-	if(!(skill in SKILL_BOUNDS))
+	if(isnull(SKILL_BOUNDS[skill]))
 		return 0
 	return SKILL_BOUNDS[skill][2]
 

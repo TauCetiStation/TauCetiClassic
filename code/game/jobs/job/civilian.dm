@@ -247,7 +247,7 @@
 	salary = 20
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/clown
-	skill_sets = list("Clown" = /datum/skills_modifier/clown)
+	skill_sets = list("Clown" = /datum/skills_modifier/default)
 
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
@@ -266,7 +266,7 @@
 	access = list(access_mime, access_theatre)
 	salary = 20
 	outfit = /datum/outfit/job/mime
-	skill_sets = list("Mime" = /datum/skills_modifier/mime)
+	skill_sets = list("Mime" = /datum/skills_modifier/default)
 
 /datum/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)

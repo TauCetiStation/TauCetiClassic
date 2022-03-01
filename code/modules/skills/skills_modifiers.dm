@@ -1,3 +1,8 @@
+
+
+/datum/skills_modifier/default
+	melee = SKILL_MELEE_WEAK
+
 //medical
 /datum/skills_modifier/cmo
 	chemistry = SKILL_CHEMISTRY_EXPERT
@@ -261,11 +266,6 @@
 
 /datum/skills_modifier/barber
 	medical = SKILL_MEDICAL_NOVICE
-
-/datum/skills_modifier/clown
-	melee = SKILL_MELEE_WEAK
-/datum/skills_modifier/mime
-	melee = SKILL_MELEE_WEAK
 
 /datum/skills_modifier/chaplain
 	command = SKILL_COMMAND_EXPERT

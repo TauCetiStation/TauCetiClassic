@@ -106,11 +106,12 @@ medical, chemistry, research, command)
 
 /datum/skills/proc/update_available()
 	available = new /datum/skillset()
-	available.init_from_datum(modifiers[1])
 	for(var/datum/skills_modifier/modifier as anything in modifiers)
 		available.merge(modifier)
+
+/datum/skills/proc/maximize_active_skills()
 	for(var/skill in available.skills)
-		active.set_value(skill, min( active.get_value(skill), available.get_value(skill)))
+		active.set_value(skill, min(active.get_value(skill), available.get_value(skill)))
 
 /datum/skills/proc/remove_modifier(datum/skills/skillset_type)
 	var/datum/skills_modifier/SM = skillset_type

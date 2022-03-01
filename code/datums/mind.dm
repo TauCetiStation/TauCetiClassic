@@ -635,7 +635,6 @@
 	else
 		mind = new /datum/mind(key)
 		mind.original = src
-		mind.skills.add_modifier(new /datum/skills_modifier)
 		if(SSticker)
 			SSticker.minds += mind
 		else
