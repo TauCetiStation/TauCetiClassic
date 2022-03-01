@@ -764,6 +764,12 @@
 	if(H.mind)
 		H.mind.transfer_to(S)
 
+	for(var/datum/language/L as anything in H.languages)
+		S.add_language(L.name, H.languages[L])
+
+	for(var/quirk in H.roundstart_quirks)
+		new quirk(S)
+
 	for(var/mob/living/carbon/monkey/diona/D in H.contents)
 		D.splitting(H)
 

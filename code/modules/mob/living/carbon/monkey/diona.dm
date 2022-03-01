@@ -267,8 +267,12 @@
 		forceMove(L.loc)
 		qdel(L)
 
-	for(var/datum/language/L in languages)
+	for(var/datum/language/L as anything in languages)
 		adult.add_language(L.name, languages[L])
+
+	for(var/quirk in roundstart_quirks)
+		new quirk(adult)
+
 	adult.regenerate_icons()
 
 	adult.name = name

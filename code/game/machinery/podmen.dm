@@ -27,6 +27,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	var/datum/dna/replicant_dna = null
 	var/mob/living/carbon/human/blood_source = null
 	var/list/replicant_languages
+	var/list/replicant_quirks
 
 	var/spawner_type = /datum/spawner/podman
 	var/spawner_id = "podman_pod"
@@ -86,6 +87,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	priveleged_player = blood_source.mind
 	replicant_dna = blood_source.dna.Clone()
 	replicant_languages = blood_source.languages.Copy()
+	replicant_quirks = blood_source.roundstart_quirks.Copy()
 
 	RegisterSignal(priveleged_player, list(COMSIG_PARENT_QDELETING), .proc/clear_priveleged_player)
 	RegisterSignal(blood_source, list(COMSIG_PARENT_QDELETING), .proc/clear_blood_source)
@@ -101,6 +103,9 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 	for(var/language in replicant_languages)
 		D.add_language(language)
+
+	for(var/quirk in replicant_quirks)
+		new quirk(D)
 
 	if(copycat_replica && replicant_dna)
 		D.dna = replicant_dna.Clone()
