@@ -215,7 +215,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 //or randomly when ramming turfs
 /obj/effect/meteor/proc/get_hit()
 	hits--
-	if(hits <= 0)
+	if(hits == 0)
 		make_debris()
 		meteor_effect()
 		qdel(src)
