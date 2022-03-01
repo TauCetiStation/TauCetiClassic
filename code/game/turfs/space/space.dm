@@ -4,11 +4,6 @@
 	icon_state = "0"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
-	oxygen = 0
-	carbon_dioxide = 0
-	nitrogen = 0
-	phoron = 0
-
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	plane = PLANE_SPACE
