@@ -281,9 +281,6 @@
 /obj/machinery/mech_bay_recharge_port{
 	dir = 2
 	},
-/obj/machinery/firealarm{
-	pixel_y = 22
-	},
 /turf/simulated/floor/plating{
 	icon_state = "platebot";
 	nitrogen = 0.01;
@@ -4590,7 +4587,8 @@
 "aib" = (
 /obj/structure/curtain/open/privacy,
 /turf/simulated/floor{
-	icon_state = "wooden-2"
+	dir = 8;
+	icon_state = "barber"
 	},
 /area/station/civilian/locker)
 "aic" = (
@@ -4779,8 +4777,12 @@
 /area/station/civilian/locker)
 "ait" = (
 /obj/machinery/washing_machine,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor{
-	icon_state = "wooden-2"
+	dir = 8;
+	icon_state = "barber"
 	},
 /area/station/civilian/locker)
 "aiu" = (
@@ -8881,7 +8883,6 @@
 	},
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/device/gps/engineering,
-/obj/item/clothing/accessory/armband/engine,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -8915,7 +8916,6 @@
 	dir = 4
 	},
 /obj/item/device/gps/engineering,
-/obj/item/clothing/accessory/armband/engine,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -9280,6 +9280,7 @@
 	pixel_y = -4
 	},
 /obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkpurple"
@@ -10094,15 +10095,16 @@
 	},
 /area/station/civilian/bar)
 "aIj" = (
-/obj/item/weapon/flora/random,
-/obj/machinery/firealarm{
-	pixel_y = 22
+/obj/machinery/recharge_station,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -21
 	},
 /turf/simulated/floor{
-	dir = 9;
-	icon_state = "black"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/station/hallway/primary/central)
+/area/station/rnd/chargebay)
 "aIm" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -14545,15 +14547,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "eZe" = (
-/obj/machinery/recharge_station,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
+/obj/machinery/washing_machine,
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "vault"
+	icon_state = "barber"
 	},
-/area/station/rnd/chargebay)
+/area/station/civilian/locker)
 "eZP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -15936,10 +15935,6 @@
 /area/station/engineering/break_room)
 "gxI" = (
 /obj/machinery/hydroponics/constructable,
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_y = -32
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -19256,8 +19251,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/alarm{
-	pixel_y = 21
+/obj/machinery/firealarm{
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -19793,12 +19788,13 @@
 	},
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/shoes/magboots,
-/obj/item/weapon/gun/energy/kinetic_accelerator{
-	pixel_x = 3
-	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
+	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/gun/energy/kinetic_accelerator{
+	pixel_x = 3
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -19859,7 +19855,6 @@
 	pixel_y = 0
 	},
 /obj/structure/closet/secure_closet/scientist,
-/obj/item/clothing/accessory/armband/science,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -20162,9 +20157,6 @@
 	},
 /area/station/engineering/chiefs_office)
 "kIq" = (
-/obj/machinery/alarm{
-	pixel_y = 21
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
@@ -22331,14 +22323,18 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "mUe" = (
-/obj/machinery/washing_machine,
-/obj/machinery/light/small{
-	dir = 1
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/area/station/civilian/locker)
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxstarboard)
 "mUC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -24620,8 +24616,6 @@
 /obj/structure/closet/secure_closet/medical3,
 /obj/item/clothing/accessory/stethoscope,
 /obj/item/clothing/accessory/stethoscope,
-/obj/item/clothing/accessory/armband/medgreen,
-/obj/item/clothing/accessory/armband/medgreen,
 /obj/machinery/computer/guestpass{
 	dir = 8;
 	pixel_x = -28
@@ -24802,7 +24796,7 @@
 	},
 /obj/item/weapon/storage/box/donkpockets{
 	pixel_x = 3;
-	pixel_y = 3
+	pixel_y = 15
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -26332,6 +26326,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -31140,6 +31137,10 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 21
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "black"
@@ -33073,6 +33074,10 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "xaV" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 22
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "black"
@@ -56154,7 +56159,7 @@ iSt
 iSt
 iSt
 iSt
-mUe
+eZe
 ait
 akb
 akA
@@ -67209,12 +67214,12 @@ dvp
 bpc
 kFa
 fIW
-aIj
+rIv
 iHp
 iZn
 eVf
 xhU
-eZe
+aIj
 ocn
 uTN
 pyl
@@ -72567,7 +72572,7 @@ crv
 qws
 crv
 kGN
-kqT
+mUe
 hPk
 kGN
 kqT
@@ -73598,7 +73603,7 @@ gay
 qws
 gay
 kGN
-kqT
+mUe
 hPk
 gay
 kGN
@@ -73859,7 +73864,7 @@ crv
 crv
 crv
 kGN
-kqT
+mUe
 hPk
 crv
 kGN
@@ -74120,7 +74125,7 @@ crv
 gay
 crv
 kGN
-kqT
+mUe
 hPk
 gay
 gay
