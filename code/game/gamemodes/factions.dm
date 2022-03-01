@@ -178,6 +178,12 @@
 /datum/faction/proc/CheckObjectives()
 	return objective_holder.GetObjectiveString(check_success = TRUE)
 
+/datum/faction/proc/calculate_completion()
+	for(var/datum/objective/O in GetObjectives())
+		O.calculate_completion()
+	for(var/datum/role/R in members)
+		R.calculate_completion()
+
 // Numbers!!
 /datum/faction/proc/build_scorestat()
 	return
@@ -215,7 +221,6 @@
 		score_results += "<br><br>"
 		for (var/datum/objective/objective in objective_holder.GetObjectives())
 			objective.extra_info()
-			objective.calculate_completion()
 			score_results += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
 			feedback_add_details("[ID]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
 			count++
@@ -271,7 +276,7 @@
 /datum/faction/proc/IsSuccessful()
 	if(objective_holder.objectives.len > 0)
 		for(var/datum/objective/objective in objective_holder.GetObjectives())
-			if(!objective.check_completion())
+			if(objective.completed == OBJECTIVE_LOSS)
 				return FALSE
 	for(var/datum/role/R in members)
 		if(!R.IsSuccessful())
