@@ -124,7 +124,8 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSMOB     32
 
 //turf-only flags
-#define NOJAUNT  1
+#define NOJAUNT			1
+#define NOSTEPSOUND		2
 
 //flags for customizing id-cards
 #define FORDBIDDEN_VIEW      1
