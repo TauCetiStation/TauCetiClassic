@@ -15,7 +15,7 @@ export const MafiaPanel = (props, context) => {
   } = data;
   return (
     <Window
-      title="Mafia"
+      title="Мафия"
       theme={role_theme}
       width={650}
       height={580}>
