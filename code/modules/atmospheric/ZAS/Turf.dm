@@ -4,10 +4,7 @@
 /turf/var/needs_air_update = FALSE
 /turf/var/datum/gas_mixture/air
 
-/turf/var/air_unsim = TRUE
 /turf/var/air_unsim_multiplier = 0
-/turf/simulated/air_unsim = FALSE
-/turf/environment/air_unsim = TRUE
 
 /turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
 	if(graphic_add && graphic_add.len)
