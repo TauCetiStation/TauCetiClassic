@@ -35,8 +35,8 @@
 	stat.name = H.name
 	stat.real_name = H.real_name
 
-	if(H.lastattacker)
-		stat.last_attacker_name = H.lastattacker?.name
+	if(H.lastattacker_name)
+		stat.last_attacker_name = H.lastattacker_name
 
 	stat.damage["BRUTE"] = H.getBruteLoss()
 	stat.damage["FIRE"]  = H.getFireLoss()

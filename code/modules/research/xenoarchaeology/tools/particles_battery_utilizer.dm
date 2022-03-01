@@ -237,8 +237,7 @@
 		user.visible_message("<span class='notice'>[user] taps [M] with [src], but nothing happens.</span>")
 
 	// admin logging
-	user.lastattacked = M
-	M.lastattacker = user
+	M.set_lastattacker_info(user)
 
 	if(inserted_battery.battery_effect)
 		M.log_combat(user, "tapped with [name] (EFFECT: [inserted_battery.battery_effect.log_name]) ")
