@@ -28,6 +28,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	var/mob/living/carbon/human/blood_source = null
 	var/list/replicant_languages
 	var/list/replicant_quirks
+	var/replicant_memory
 
 	var/spawner_type = /datum/spawner/podman
 	var/spawner_id = "podman_pod"
@@ -91,6 +92,14 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	var/list/datum/quirk/blood_quirks = blood_source.roundstart_quirks.Copy()
 	for(var/datum/quirk/Q in blood_quirks)
 		replicant_quirks += Q.type
+	var/memory_time = 0
+	if(blood_source.timeofdeath)
+		memory_time = blood_source.timeofdeath
+	if(B.data["time"])
+		memory_time = min(memory_time, B.data["time"])
+	replicant_memory = blood_source.mind.memory
+	if(memory_time)
+		replicant_memory += "Your memory fades somewhere around [worldtime2text(memory_time)].<BR>"
 
 	RegisterSignal(priveleged_player, list(COMSIG_PARENT_QDELETING), .proc/clear_priveleged_player)
 	RegisterSignal(blood_source, list(COMSIG_PARENT_QDELETING), .proc/clear_blood_source)
@@ -118,6 +127,8 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	if(copycat_replica && priveleged_player && priveleged_player.current == blood_source && blood_source.stat == DEAD)
 		D.key = blood_source.key
 
+		D.mind.memory = replicant_memory
+
 		var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
 		msg += "<B>You are alive. Again. But you are not you. You are a mere Podmen, a husk of what you should have been. Neither of humans, nor of them. A hollow shell, filled with disease.</B><BR>"
 		msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
@@ -125,7 +136,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		return
 
 	else
-		create_spawner(spawner_type, spawner_id, D)
+		create_spawner(spawner_type, spawner_id, D, replicant_memory)
 
 	user.visible_message("<span class='notice'>The pod disgorges a fully-formed plant creature!</span>")
 	qdel(src)
