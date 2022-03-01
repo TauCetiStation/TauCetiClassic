@@ -29,7 +29,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	var/list/replicant_languages
 
 	var/spawner_type = /datum/spawner/podkid
-	var/spawner_id = "podman_pod"
+	var/spawner_id = "podkid_pod"
 
 /obj/item/seeds/replicapod/Destroy()
 	QDEL_NULL(replicant_dna)
