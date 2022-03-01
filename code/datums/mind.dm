@@ -82,7 +82,7 @@
 		current.mind = null
 
 	if(new_character.mind)		//remove any mind currently in our new body's mind variable
-		new_character.mind.current = null
+		new_character.mind.set_current(null)
 
 	nanomanager.user_transferred(current, new_character) // transfer active NanoUI instances to new user
 
@@ -487,6 +487,17 @@
 		return R.GetFaction()
 	return FALSE
 
+/datum/mind/proc/set_current(mob/new_current)
+	if(current)
+		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
+	current = new_current
+	if(current)
+		RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/clear_current)
+
+/datum/mind/proc/clear_current(datum/source)
+	SIGNAL_HANDLER
+	set_current(null)
+
 // check whether this mind's mob has been brigged for the given duration
 // have to call this periodically for the duration to work properly
 /datum/mind/proc/is_brigged(duration)
@@ -642,7 +653,7 @@
 		else
 			world.log << "## DEBUG: mind_initialize(): No SSticker ready yet! Please inform Carn"
 	if(!mind.name)	mind.name = real_name
-	mind.current = src
+	mind.set_current(src)
 
 
 //HUMAN

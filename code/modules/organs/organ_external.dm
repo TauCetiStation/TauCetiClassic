@@ -78,6 +78,7 @@
 		if(owner.bodyparts_by_name[body_zone] == src)
 			owner.bodyparts_by_name -= body_zone
 		owner.bad_bodyparts -= src
+	QDEL_LIST(bodypart_organs)
 	return ..()
 
 /obj/item/organ/external/proc/harvest(obj/item/I, mob/user)

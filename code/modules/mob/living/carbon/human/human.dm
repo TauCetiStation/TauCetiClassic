@@ -82,6 +82,8 @@
 		golem_hud.remove_from_hud(src)
 		my_golem.death()
 	my_golem = null
+	QDEL_LIST(bodyparts)
+	QDEL_LIST(organs)
 	return ..()
 
 /mob/living/carbon/human/skrell/atom_init(mapload)
