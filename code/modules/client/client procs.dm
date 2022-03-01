@@ -339,6 +339,8 @@ var/global/list/blacklisted_builds = list(
 		if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. \
 		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
+	handle_connect()
+
 	spawn(50)//should wait for goonchat initialization
 		handle_autokick_reasons()
 
@@ -361,6 +363,8 @@ var/global/list/blacklisted_builds = list(
 	clients -= src
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	LAZYREMOVE(movingmob?.clients_in_contents, src)
+
+	handle_leave()
 
 	if(!gc_destroyed) //Clean up signals and timers.
 		Destroy()
@@ -777,6 +781,24 @@ var/global/list/blacklisted_builds = list(
 
 #undef MAXIMAZED
 #undef FULLSCREEN
+
+// ckey = datum/stat/leave_stat
+var/global/list/disconnected_ckey_by_stat = list()
+/client/proc/handle_connect()
+	if(!global.disconnected_ckey_by_stat[ckey])
+		return
+	var/datum/stat/leave_stat/stat = global.disconnected_ckey_by_stat[ckey]
+	qdel(stat)
+	global.disconnected_ckey_by_stat -= ckey
+
+/client/proc/handle_leave()
+	if(!isliving(mob) || !mob.mind)
+		return
+	if(istype(mob.loc, /obj/machinery/cryopod))
+		return
+	var/datum/stat/leave_stat/stat = SSStatistics.get_leave_stat(mob.mind, "Disconnected", roundduration2text())
+
+	global.disconnected_ckey_by_stat[ckey] = stat
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))

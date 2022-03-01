@@ -24,6 +24,8 @@
 	var/list/valid_accessory_slots
 	var/list/restricted_accessory_slots
 
+	var/flashbang_protection = FALSE
+
 /obj/item/clothing/atom_init()
 	. = ..()
 	if (!species_restricted_locked)

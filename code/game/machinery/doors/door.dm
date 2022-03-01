@@ -113,7 +113,8 @@ var/global/list/wedge_image_cache = list()
 		return
 
 	if(!wedged_item)
-		try_wedge_item(user)
+		if(!try_wedge_item(user))
+			return ..()
 	else
 		take_out_wedged_item(user)
 
@@ -425,27 +426,28 @@ var/global/list/wedge_image_cache = list()
 
 /obj/machinery/door/proc/try_wedge_item(mob/living/user)
 	if(!can_wedge_items)
-		return
+		return FALSE
 
 	var/obj/item/I = user.get_active_hand()
 	if(!istype(I))
-		return
+		return FALSE
 
 	if(I.w_class < SIZE_SMALL)
-		return
+		return FALSE
 
 	if(I.get_quality(QUALITY_PRYING) <= 0.0)
-		return
+		return FALSE
 
 	if(density)
 		to_chat(user, "<span class='notice'>[I] can't be wedged into [src], while [src] is closed.</span>")
-		return
+		return FALSE
 
 	if(!user.drop_from_inventory(I))
-		return
+		return FALSE
 
 	force_wedge_item(I)
 	to_chat(user, "<span class='notice'>You wedge [I] into [src].</span>")
+	return TRUE
 
 /obj/machinery/door/proc/take_out_wedged_item(mob/living/user)
 	if(!wedged_item)

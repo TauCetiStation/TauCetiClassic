@@ -64,6 +64,14 @@
 			return TRUE
 	return FALSE
 
+/proc/get_type_in_list(atom/A, list/L)
+	if(!length(L) || !A)
+		return null
+	for(var/type in L)
+		if(istype(A, type))
+			return type
+	return null
+
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
 	if(istype(list))
