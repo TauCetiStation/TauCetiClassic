@@ -144,9 +144,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	return 1
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE, timeofdeath = world.time)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZE, can_reenter_corpse, bancheck, timeofdeath)
-
 	if(!key)
 		return
 
@@ -179,16 +176,21 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
 		to_chat(src, "<span class='red'>You have been banned from observing.</span>")
 		return
+
 	if(stat == DEAD)
 		if(fake_death)
 			var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
 			if(response != "Ghost")
 				return	//didn't want to ghost after-all
+			SEND_SIGNAL(src, COMSIG_MOB_GHOST, FALSE)
 			ghostize(can_reenter_corpse = FALSE)
 		else
+			SEND_SIGNAL(src, COMSIG_MOB_GHOST, TRUE)
 			ghostize(can_reenter_corpse = TRUE)
 	else
 		var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
@@ -206,6 +208,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(istype(loc, /obj/machinery/cryopod))
 			leave_type = "Ghosted in Cryopod"
 		SSStatistics.add_leave_stat(mind, leave_type)
+		SEND_SIGNAL(src, COMSIG_MOB_GHOST, FALSE)
 		ghostize(can_reenter_corpse = FALSE)
 
 /mob/dead/observer/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
