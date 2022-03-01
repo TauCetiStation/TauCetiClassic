@@ -96,7 +96,10 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	if(blood_source.timeofdeath)
 		memory_time = blood_source.timeofdeath
 	if(B.data["time"])
-		memory_time = min(memory_time, B.data["time"])
+		if(memory_time)
+			memory_time = min(memory_time, B.data["time"])
+		else
+			memory_time = B.data["time"]
 	replicant_memory = blood_source.mind.memory
 	if(memory_time)
 		replicant_memory += "Your memory fades somewhere around [worldtime2text(memory_time)].<BR>"
