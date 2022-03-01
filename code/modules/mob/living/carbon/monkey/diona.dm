@@ -33,12 +33,31 @@
 	icon_state = "podkid1"
 	race = PODMAN
 	holder_type = /obj/item/weapon/holder/diona/podkid
+	var/spawner_type = /datum/spawner/podkid
+	var/spawner_id = "podkid"
+
+/mob/living/carbon/monkey/diona/podman/atom_init()
+	. = ..()
+	RegisterSignal(src, list(COMSIG_MOB_GHOST), .proc/find_replacement)
+
+/mob/living/carbon/monkey/diona/podman/Destroy()
+	UnregisterSignal(src, list(COMSIG_MOB_GHOST))
+	return ..()
+
+/mob/living/carbon/monkey/diona/podman/proc/find_replacement(datum/source, can_reenter_corpse)
+	SIGNAL_HANDLER
+
+	if(can_reenter_corpse)
+		return
+	create_spawner(spawner_type, spawner_id, src)
 
 /mob/living/carbon/monkey/diona/podman/fake
 	name = "diona nymph"
 	voice_name = "diona nymph"
 	icon_state = "nymph1"
 	holder_type = /obj/item/weapon/holder/diona
+	spawner_type = /datum/spawner/fake_diona
+	spawner_id = "nymph"
 
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()
