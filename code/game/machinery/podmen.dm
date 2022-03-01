@@ -87,7 +87,10 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	priveleged_player = blood_source.mind
 	replicant_dna = blood_source.dna.Clone()
 	replicant_languages = blood_source.languages.Copy()
-	replicant_quirks = blood_source.roundstart_quirks.Copy()
+	replicant_quirks = list()
+	var/list/datum/quirk/blood_quirks = blood_source.roundstart_quirks.Copy()
+	for(var/datum/quirk/Q in blood_quirks)
+		replicant_quirks += Q.type
 
 	RegisterSignal(priveleged_player, list(COMSIG_PARENT_QDELETING), .proc/clear_priveleged_player)
 	RegisterSignal(blood_source, list(COMSIG_PARENT_QDELETING), .proc/clear_blood_source)
@@ -104,8 +107,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	for(var/language in replicant_languages)
 		D.add_language(language)
 
-	for(var/quirk in replicant_quirks)
-		new quirk(D)
+	D.saved_quirks = replicant_quirks.Copy()
 
 	if(copycat_replica && replicant_dna)
 		D.dna = replicant_dna.Clone()
