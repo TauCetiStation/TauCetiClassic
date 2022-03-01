@@ -232,6 +232,9 @@
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
+/obj/item/weapon/gun/projectile/revolver/peacemaker/detective
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45/rubber
+
 /obj/item/weapon/gun/projectile/revolver/flare
 	name = "flare gun"
 	desc = "Fires flares."

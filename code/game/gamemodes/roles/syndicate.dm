@@ -32,7 +32,7 @@
 	if(ishuman(antag.current))
 		var/mob/living/carbon/human/H = antag.current
 		H.equipOutfit(nuclear_outfit)
-	antag.current.add_language("Sy-Code")
+	antag.current.add_language(LANGUAGE_SYCODE)
 
 	INVOKE_ASYNC(src, .proc/NukeNameAssign, antag)
 	return ..()

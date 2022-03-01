@@ -1814,6 +1814,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/device/biocan
 	category = list("Support")
 
+/datum/design/changeling_test
+	name = "Changeling test"
+	desc = "Allows you to identify hidden changelings"
+	id = "changtest"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 12500, MAT_GOLD = 2000, MAT_DIAMOND = 3750, MAT_URANIUM = 4000)
+	build_path = /obj/item/weapon/changeling_test
+	category = list("Support")
+
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////

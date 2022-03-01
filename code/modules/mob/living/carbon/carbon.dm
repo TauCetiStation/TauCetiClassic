@@ -71,26 +71,60 @@
 				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	var/turf/oldLoc = loc
+
 	. = ..()
-	if(. && !ISDIAGONALDIR(Dir))
-		handle_phantom_move(NewLoc, Dir)
-		if(nutrition && stat != DEAD)
-			var/met_factor = get_metabolism_factor()
+
+	if(!. || ISDIAGONALDIR(Dir))
+		return .
+	
+	handle_phantom_move(NewLoc, Dir)
+	if(nutrition && stat != DEAD)
+		var/met_factor = get_metabolism_factor()
+		nutrition -= met_factor * 0.01
+		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
+			var/pain = getHalLoss()
+			if(pain > 0)
+				nutrition -= met_factor * pain * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
+		if(m_intent == "run")
 			nutrition -= met_factor * 0.01
-			if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-				var/pain = getHalLoss()
-				if(pain > 0)
-					nutrition -= met_factor * pain * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
-			if(m_intent == "run")
-				nutrition -= met_factor * 0.01
-		if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)
-			bodytemperature += 2
+	if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)
+		bodytemperature += 2
 
-		// Moving around increases germ_level faster
-		if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
-			germ_level++
+	// Moving around increases germ_level faster
+	if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
+		germ_level++
 
-		handle_rig_move(NewLoc, Dir)
+	handle_rig_move(NewLoc, Dir)
+
+	handle_footsteps(oldLoc, NewLoc, Dir)
+
+/mob/living/carbon/proc/handle_footsteps(turf/oldLoc, turf/newLoc, Dir)
+	if(lying && !crawling)
+		return
+
+	// check if oldLoc and newLoc are turfs and at least one doesn't have the NOBLOODY flag
+	if(!isturf(oldLoc) || !isturf(newLoc) || ((oldLoc.flags & NOBLOODY) && (newLoc.flags & NOBLOODY)))
+		return
+
+	// Tracking blood
+	var/list/bloodDNA = null
+	var/datum/dirt_cover/blooddatum
+	if(shoes)
+		var/obj/item/clothing/shoes/S = shoes
+		if(S.track_blood && S.blood_DNA)
+			bloodDNA   = S.blood_DNA
+			blooddatum = new/datum/dirt_cover(S.dirt_overlay)
+			S.track_blood--
+	else
+		if(track_blood && feet_blood_DNA)
+			bloodDNA   = feet_blood_DNA
+			blooddatum = new/datum/dirt_cover(feet_dirt_color)
+			track_blood--
+
+	if (bloodDNA)
+		oldLoc.AddTracks(src, bloodDNA, 0, Dir, blooddatum) // from
+		newLoc.AddTracks(src, bloodDNA, Dir, 0, blooddatum) // to
 
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(isessence(user))
@@ -491,7 +525,13 @@
 
 	if(!item) return //Grab processing has a chance of returning null
 
-	remove_from_mob(item)
+	if(item.loc == src)
+		// Holder and the mob holding it.
+		item.jump_from_contents(rec_level=2)
+		if(!isturf(item.loc))
+			return
+		if(!remove_from_mob(item, item.loc))
+			return
 
 	//actually throw it!
 	if (item)
@@ -1021,6 +1061,7 @@
 				sight |= SEE_TURFS
 				if(!druggy)
 					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
 	return TRUE
 
 /mob/living/carbon/get_unarmed_attack()

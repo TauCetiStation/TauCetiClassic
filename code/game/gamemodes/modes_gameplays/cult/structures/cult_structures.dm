@@ -252,7 +252,7 @@
 
 	C.adjust_favor(rand(1, 5))
 	// statistics!
-	score["destranomaly"]++
+	SSStatistics.score.destranomaly++
 
 /obj/structure/cult/anomaly/proc/destroying(datum/religion/cult/C)
 	INVOKE_ASYNC(src, .proc/async_destroying, C)
