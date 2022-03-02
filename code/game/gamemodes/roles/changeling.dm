@@ -92,6 +92,7 @@
 
 /datum/role/changeling/RemoveFromRole(datum/mind/M, msg_admins)
 	antag.current?.hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
+	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "changeling")
 	. = ..()
 
 /datum/role/changeling/proc/changelingRegen()
