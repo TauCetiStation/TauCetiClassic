@@ -37,7 +37,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/duration
 	// string, pool in ./code/game/gamemodes/modes_declares/ in var name
 	var/mode
-	// string, ["win", "lose"]
+	// string, ["win", "lose"], shows whether all objectives of all antagonists' are completed
 	var/mode_result
 	// string, pool in ./maps/ directory in json files in var map_name
 	var/map
