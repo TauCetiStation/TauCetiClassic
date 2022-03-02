@@ -23726,7 +23726,7 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/obj/item/weapon/storage/belt,
+/obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/firstaid,
 /turf/simulated/floor{
 	dir = 9;
@@ -53047,7 +53047,7 @@
 /obj/item/weapon/stock_parts/cell{
 	maxcharge = 2000
 	},
-/obj/item/weapon/storage/belt,
+/obj/item/weapon/storage/belt/utility,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "bSd" = (
@@ -66677,7 +66677,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/item/weapon/storage/belt,
+/obj/item/weapon/storage/belt/utility,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/closet,
 /turf/simulated/floor/plating,
@@ -78204,9 +78204,9 @@
 /area/station/medical/hallway)
 "nZG" = (
 /obj/structure/table,
-/obj/item/weapon/storage/belt,
-/obj/item/weapon/storage/belt,
-/obj/item/weapon/storage/belt,
+/obj/item/weapon/storage/belt/utility,
+/obj/item/weapon/storage/belt/utility,
+/obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/firstaid/regular,
 /obj/machinery/computer/guestpass{
 	dir = 8;

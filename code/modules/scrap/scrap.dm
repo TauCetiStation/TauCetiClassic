@@ -1,6 +1,5 @@
 var/global/list/scrap_base_cache = list()
 
-ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 /obj/structure/scrap
 	name = "scrap pile"
 	desc = "Pile of industrial debris. It could use a shovel and pair of hands in gloves. "

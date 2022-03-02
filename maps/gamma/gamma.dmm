@@ -36894,7 +36894,7 @@
 /area/station/engineering/monitoring)
 "kFp" = (
 /obj/structure/table,
-/obj/item/weapon/storage/belt,
+/obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor,
@@ -72951,7 +72951,7 @@
 /area/station/engineering)
 "vSk" = (
 /obj/structure/table,
-/obj/item/weapon/storage/belt,
+/obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/firstaid/regular,
 /turf/simulated/floor{
 	icon_state = "brown"
