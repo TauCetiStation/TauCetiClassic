@@ -5,7 +5,7 @@
 // Documentation rules:
 //  * First write the type of data
 //  * Then write the format of data in square brackets or data pool in square brackets or comments
-//  * At the end of any comment
+//  * At the end, write any comment about the variable
 /datum/stat/communication_log
 	// string, byond_type
 	var/__type
@@ -31,7 +31,7 @@
 /datum/stat/score
 	// int, [0...]
 	var/crewscore      = 0 // this is the overall var/score for the whole round
-	// string, ["The Aristocrats!", "Even the Singularity Deserves Better", "Singularity Fodder", "You're All Fired", "A Waste of Perfectly Good Oxygen", "A Wretched Heap of Scum and Incompetence", "Outclassed by Lab Monkeys", "The Undesirables", "Not So Good", "Nothing of Value", "Ambivalently Average", "Not Bad", "but Not Good", "Skillful Servants of Science", "Best of a Good Bunch", "Lean Mean Machine ThirteenPromotions for Everyone", "Ambassadors of Discovery", "The Pride of Science Itself", "NanoTrasen's Finest"]
+	// string, pool in ./code/game/gamemodes/scoreboard.dm near switch(SSStatistics.score.crewscore)
 	var/rating         = "Nothing of Value" // crewscore but string
 	// int, [0...]
 	var/stuffshipped   = 0 // how many useful items have cargo shipped out?
@@ -98,7 +98,7 @@
 	// string, anything
 	var/richestname   = "" // this is all stuff to show who was the richest alive on the shuttle
 	// string, anything
-	var/richestjob    = "" // kinda pointless if you dont have a money system i guess
+	var/richestjob    = ""
 	// int, [0...]
 	var/richestcash   = 0
 	// string, anything
@@ -121,7 +121,7 @@
 	var/death_z
 	// int, [0...] in ticks
 	var/time_of_death
-	// string, anything, name of antagonists role
+	// string, anything, name of antagonists' role
 	var/special_role
 	// string, anything
 	var/assigned_role
@@ -135,7 +135,7 @@
 	var/from_suicide
 	// string, anything
 	var/last_attacker_name
-	// object, where digits: int, [0...]
+	// object, where DAMAGE TYPE: int, [0...]
 	var/list/damage = list(
 		"BRUTE" = 0,
 		"FIRE" = 0,
@@ -158,7 +158,7 @@
 	var/heavy_impact_range = 0
 	// int, [-infinity...]
 	var/light_impact_range = 0
-	// int, [-infinity...]
+	// int, [-infinity...MAX_EXPLOSION_RANGE], now MAX_EXPLOSION_RANGE is 14
 	var/flash_range = 0
 
 /datum/stat/manifest_entry
@@ -166,9 +166,9 @@
 	var/name
 	// string, anything
 	var/assigned_role
-	// string, anything, name of antagonists role
+	// string, anything, name of antagonists' role
 	var/special_role
-	// array of strings, where strings is antagonusts roles
+	// array of strings, where strings are antagonists' roles
 	var/list/antag_roles = null
 
 /datum/stat/leave_stat
@@ -176,9 +176,9 @@
 	var/name
 	// string, anything
 	var/assigned_role
-	// string, anything, name of antagonists role
+	// string, anything, name of antagonists' role
 	var/special_role
-	// array of strings, where strings is antagonusts roles
+	// array of strings, where strings are antagonists' roles
 	var/list/antag_roles = null
 
 	// string, ["Ghosted", "Ghosted in Cryopod", "Disconnected", "Cryopod"]

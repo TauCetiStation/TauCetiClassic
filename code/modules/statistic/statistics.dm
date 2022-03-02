@@ -23,7 +23,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 // Documentation rules:
 //  * First write the type of data
 //  * Then write the format of data in square brackets or data pool in square brackets or comments
-//  * At the end of any comment
+//  * At the end, write any comment about the variable
 /datum/stat_collector
 	// int, [2...]
 	var/const/version = STAT_OUTPUT_VERSION
