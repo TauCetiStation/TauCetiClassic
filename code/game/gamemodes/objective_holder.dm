@@ -3,6 +3,10 @@
 	var/datum/mind/owner = null
 	var/datum/faction/faction = null
 
+/datum/objective_holder/Destroy(force, ...)
+	QDEL_LIST(objectives)
+	return ..()
+
 /datum/objective_holder/proc/AddObjective(datum/objective/O, datum/mind/M, datum/faction/F)
 	ASSERT(!objectives.Find(O))
 	objectives.Add(O)

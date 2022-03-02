@@ -35,9 +35,8 @@
 	stat.name = H.name
 	stat.real_name = H.real_name
 
-	if(H.lastattacker)
-		stat.last_attacker_name = H.lastattacker?.name
-		stat.last_attacker_key = H.lastattacker?.key
+	if(H.lastattacker_name)
+		stat.last_attacker_name = H.lastattacker_name
 
 	stat.damage["BRUTE"] = H.getBruteLoss()
 	stat.damage["FIRE"]  = H.getFireLoss()
@@ -80,7 +79,7 @@
 
 	manifest_entries += stat
 
-/datum/stat_collector/proc/add_leave_stat(datum/mind/M, leave_type)
+/datum/stat_collector/proc/get_leave_stat(datum/mind/M, leave_type, leave_time = roundduration2text())
 	var/datum/stat/leave_stat/stat = new
 	stat.name = STRIP_NEWLINE(M.name)
 	stat.assigned_role = STRIP_NEWLINE(M.assigned_role)
@@ -93,8 +92,12 @@
 
 	stat.leave_type = leave_type
 	stat.start_time = M.creation_roundtime
-	stat.leave_time = roundduration2text()
+	stat.leave_time = leave_time
 
+	return stat
+
+/datum/stat_collector/proc/add_leave_stat(datum/mind/M, leave_type, leave_time = roundduration2text())
+	var/datum/stat/leave_stat/stat = get_leave_stat(M, leave_type, leave_time)
 	leave_stats += stat
 
 /datum/stat_collector/proc/get_objective_stat(datum/objective/O)
@@ -111,7 +114,7 @@
 	if(istype(O, /datum/objective/target))
 		var/datum/objective/target/T = O
 		stat.target_name = STRIP_NEWLINE(T.target.name)
-		stat.target_assigned_role = T.target.assigned_job
+		stat.target_assigned_role = T.target.assigned_role
 		stat.target_special_role = T.target.special_role
 
 	return stat
