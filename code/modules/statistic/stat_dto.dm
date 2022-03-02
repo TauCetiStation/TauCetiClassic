@@ -181,7 +181,7 @@
 	// array of strings, where strings is antagonusts roles
 	var/list/antag_roles = null
 
-	// string, ["Ghosted", "Ghosted in Cryopod", "Disconnected"]
+	// string, ["Ghosted", "Ghosted in Cryopod", "Disconnected", "Cryopod"]
 	var/leave_type
 	// string, [hh:mm]
 	var/start_time
