@@ -1,4 +1,4 @@
-/obj/item/ammo_casing/proc/fire(atom/target, mob/living/user, params, distro, quiet)
+/obj/item/ammo_casing/proc/fire(obj/item/weapon/gun/weapon, atom/target, mob/living/user, params, distro, quiet)
 	var/boolet_number = 0
 	distro += variance
 	if(isnull(BB))
@@ -7,15 +7,15 @@
 
 	for(var/i = max(1, pellets), i > 0, i--)
 		boolet_number++
-		// Ammunition in gun in mob in turf
-		var/atom/curloc = loc.loc
+		var/atom/curloc = weapon.loc
 		if(ismob(curloc))
 			curloc = curloc.loc
+		to_chat(world, "[curloc] [weapon] [weapon.loc]")
 		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet)
 		if(distro)
 			targloc = spread(targloc, curloc, distro)
-		if(!throw_proj(target, targloc, user, params, boolet_number))
+		if(!throw_proj(weapon, target, targloc, user, params, boolet_number))
 			return 0
 		if(i > 1)
 			newshot()
@@ -34,8 +34,8 @@
 	BB.silenced = quiet
 	return
 
-/obj/item/ammo_casing/proc/throw_proj(atom/target, turf/targloc, mob/living/user, params, boolet_number)
-	var/turf/curloc = loc.loc
+/obj/item/ammo_casing/proc/throw_proj(obj/item/weapon/gun/weapon, atom/target, turf/targloc, mob/living/user, params, boolet_number)
+	var/turf/curloc = weapon.loc
 	if(ismob(curloc))
 		curloc = curloc.loc
 	if (!istype(targloc) || !istype(curloc) || !BB)
