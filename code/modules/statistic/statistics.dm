@@ -11,6 +11,9 @@
 // Space Station Statistics
 var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 
+// You can find migration of statistics here
+// https://github.com/TauCetiStation/TauCetiClassic/commits/master/code/modules/statistic/statistics.dm
+
 // To ensure that if output file syntax is changed, we will still be able to process
 // new and old files
 // please increment this version whenever making changes
@@ -87,3 +90,6 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 
 	for(var/datum/mind/M in SSticker.minds)
 		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles)
+
+	for(var/ckey in global.disconnected_ckey_by_stat)
+		leave_stats += global.disconnected_ckey_by_stat[ckey]

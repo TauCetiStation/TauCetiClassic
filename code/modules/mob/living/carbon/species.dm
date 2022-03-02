@@ -764,6 +764,12 @@
 	if(H.mind)
 		H.mind.transfer_to(S)
 
+	for(var/datum/language/L as anything in H.languages)
+		S.add_language(L.name, H.languages[L])
+
+	for(var/datum/quirk/Q in H.roundstart_quirks)
+		S.saved_quirks += Q.type
+
 	for(var/mob/living/carbon/monkey/diona/D in H.contents)
 		D.splitting(H)
 
@@ -951,6 +957,8 @@
 	icobase = 'icons/mob/human_races/r_abductor.dmi'
 	deform = 'icons/mob/human_races/r_abductor.dmi'
 
+	flesh_color = "#808080"
+
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
@@ -984,6 +992,7 @@
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
 	dietflags = DIET_ALL
+	flesh_color = "#c0c0c0"
 
 	oxy_mod = 0
 	tox_mod = 0
@@ -1099,6 +1108,7 @@
 	language = LANGUAGE_SOLCOMMON
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
+	flesh_color = "#ff0000"
 
 	warning_low_pressure = 50
 	hazard_low_pressure = -1

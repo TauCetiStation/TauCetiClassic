@@ -1,7 +1,7 @@
-/datum/event/roundstart/area/cargo_storage
+/datum/event/feature/area/cargo_storage
 	special_area_types = list(/area/station/cargo/storage)
 
-/datum/event/roundstart/area/cargo_storage/start()
+/datum/event/feature/area/cargo_storage/start()
 	for(var/area/target_area in targeted_areas)
 		message_admins("RoundStart Event: Change [target_area]")
 		log_game("RoundStart Event: Change [target_area]")
@@ -9,6 +9,10 @@
 		for(var/A in all_atoms)
 			if(istype(A, /obj/structure/closet/crate))
 				if(prob(50))
+					qdel(A)
+				else if(prob(10))
+					var/obj/structure/closet/crate/crate = A
+					new /mob/living/simple_animal/hostile/mimic(crate.loc)
 					qdel(A)
 			else if(istype(A, /obj/item/device/flashlight/lamp/fir))
 				if(prob(50))
@@ -31,10 +35,9 @@
 					AB.make_empty(TRUE)
 			else if(istype(A, /turf/simulated/floor))
 				if(prob(5))
-					var/list/types = list(/mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/headcrab, /mob/living/simple_animal/borer, /mob/living/simple_animal/hostile/giant_spider, /mob/living/carbon/monkey, /mob/living/simple_animal/chicken, /mob/living/simple_animal/cow)
+					var/list/types = list(/mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/giant_spider, /mob/living/carbon/monkey, /mob/living/simple_animal/chicken, /mob/living/simple_animal/cow, /mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/snake)
 					var/type = pick(types)
-					var/mob/M = new type(A)
-					M.death()
+					new type(A)
 				if(prob(2))
 					var/type = pick(subtypesof(/obj/structure/closet/critter))
 					var/obj/structure/closet/critter/C = new type(A)

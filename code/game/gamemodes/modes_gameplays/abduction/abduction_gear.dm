@@ -478,8 +478,7 @@
 	toggle(user)
 
 /obj/item/weapon/abductor_baton/proc/StunAttack(mob/living/L,mob/living/user)
-	user.lastattacked = L
-	L.lastattacker = user
+	L.set_lastattacker_info(user)
 
 	L.Stun(7)
 	L.Weaken(7)
