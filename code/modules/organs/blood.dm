@@ -378,6 +378,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	B.data["antibodies"] = antibodies
 	B.data["blood_DNA"] = dna.unique_enzymes // todo: for some reason we ignore original blood datum and all his data here, refactoring needed
 	B.data["blood_type"] = dna.b_type
+	B.data["time"] = world.time
 	if(resistances && resistances.len)
 		if(B.data["resistances"])
 			B.data["resistances"] |= resistances.Copy()
