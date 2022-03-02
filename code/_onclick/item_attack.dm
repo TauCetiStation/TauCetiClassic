@@ -110,8 +110,7 @@
 	if (length(hitsound))
 		playsound(M, pick(hitsound), VOL_EFFECTS_MASTER)
 	/////////////////////////
-	user.lastattacked = M
-	M.lastattacker = user
+	M.set_lastattacker_info(user)
 	user.do_attack_animation(M)
 
 	if(slot_flags & SLOT_FLAGS_HEAD && def_zone == BP_HEAD && mob_can_equip(M, SLOT_HEAD, TRUE) && user.a_intent != INTENT_HARM)
@@ -267,7 +266,7 @@
 
 				else
 					if(prob(33)) // Added blood for whacking non-humans too
-						var/turf/simulated/T = M.loc
+						var/turf/T = M.loc
 						if(istype(T))
 							T.add_blood_floor(M)
 					M.take_bodypart_damage(power)

@@ -346,6 +346,8 @@
 			force_down = 1
 			affecting.Weaken(3)
 			step_to(assailant, affecting)
+			if(QDELING(src)) // grab was deleted during step_to
+				return
 			assailant.set_dir(EAST) //face the victim
 			affecting.set_dir(SOUTH) //face up
 		set_state(GRAB_AGGRESSIVE)
