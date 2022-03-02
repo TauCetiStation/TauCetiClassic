@@ -37,29 +37,6 @@
 	)
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
 
-/mob/living/carbon/human/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
-	. = ..()
-	if(!.)
-		return
-
-	if(speaker == src)
-		return
-
-	if(stat != CONSCIOUS)
-		return
-
-	if(!client)
-		return
-
-	if(used_radio)
-		return
-
-	if(!ishuman(speaker))
-		return
-
-	var/mob/living/carbon/human/H = speaker
-	H.handle_socialization()
-
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"
 	var/message_range = world.view
