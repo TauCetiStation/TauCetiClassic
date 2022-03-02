@@ -235,7 +235,7 @@ var/global/list/icon_state_allowed_cache = list()
 	if(!user.IsAdvancedToolUser())
 		return
 
-	var/obj/item/I = usr.get_active_hand()
+	var/obj/item/I = user.get_active_hand()
 	if(!I)
 		handle_accessories_removal()
 		return
