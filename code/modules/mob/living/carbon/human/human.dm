@@ -1647,7 +1647,6 @@
 				document.getElementById("notice").innerHTML = '<b>Hint: ' + text + '</b>';
 			}
 			function setMaxSkills() {
-				alert('bruh');
 				'byond://?src=\ref[src];set_max_skills;
 			}
 		</script>
