@@ -644,6 +644,7 @@
 		update_skills(href_list)
 	if(href_list["set_max_skills"])
 		mind.skills.maximize_active_skills()
+		to_chat(usr, "<span class='notice'>You are trying your best now.</span>")
 	if (href_list["item"])
 		var/slot = text2num(href_list["item"])
 		if(slot in check_obscured_slots())
@@ -1576,10 +1577,16 @@
 				background-color: #444;
 				font-weight: bold;
 			}
+			юmax-button {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
 		</style>
 		"}
 	dat += {"
-		<input type="button" min="0" max="100" value="Set Max Skills" id="skills_max" onclick="saveVolume()">
+		<button class="max-button" type="submit" value="1" id="skills_max" onclick="setMaxSkills()">Set skills values to maximum</button>
 	"}
 	for(var/category in tables_data)
 		dat += {"
@@ -1638,8 +1645,8 @@
 				document.getElementById("notice").innerHTML = '<b>Hint: ' + text + '</b>';
 			}
 			function setMaxSkills() {
-				window.location = 'byond://?_src_=\ref[src];set_max_skills';
-				showHint('You are now trying your best.')
+				alert('bruh');
+				'byond://?src=\ref[src];set_max_skills;
 			}
 		</script>
 		"}

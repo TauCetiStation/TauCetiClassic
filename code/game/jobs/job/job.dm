@@ -84,6 +84,7 @@
 	if (H.mind)
 		var/skills = get_skills_type(return_skill_set(H))
 		H.mind.skills.add_modifier(skills)
+		H.mind.skills.maximize_active_skills()
 	post_equip(H, visualsOnly)
 	return TRUE
 
