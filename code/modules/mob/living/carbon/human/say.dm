@@ -130,8 +130,8 @@
 			speaking = USL
 
 	//check if we're muted and not using gestures
-	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
-		if (!(speaking && (speaking.flags & SIGNLANG)))
+	if(HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
+		if(!speaking || !(speaking.flags & SIGNLANG))
 			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 			return
 
@@ -147,7 +147,7 @@
 		if(!message)
 			return
 
-	else
+	if(!speaking)
 		speaking = get_language()
 
 	if(!speaking)
