@@ -10,7 +10,6 @@
 		var/atom/curloc = weapon.loc
 		if(ismob(curloc))
 			curloc = curloc.loc
-		to_chat(world, "[curloc] [weapon] [weapon.loc]")
 		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet)
 		if(distro)
