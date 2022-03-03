@@ -381,7 +381,7 @@ SUBSYSTEM_DEF(air)
 		return
 
 	var/direct = !(block & ZONE_BLOCKED)
-	var/space = !istype(B) || B.air_unsim
+	var/space = !istype(B)
 
 	if(!space)
 		if(min(A.zone.contents.len, B.zone.contents.len) < ZONE_MIN_SIZE || (direct && (equivalent_pressure(A.zone, B.zone) || times_fired == 0)))
