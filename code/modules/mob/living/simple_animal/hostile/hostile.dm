@@ -82,10 +82,7 @@
 	if(search_objects)
 		var/list/Objects = oview(vision_range, src)
 		L += Objects
-	else
-		if(!SSchunks.has_enemy_faction(src, vision_range))
-			return L
-
+	else if(SSchunks.has_enemy_faction(src, vision_range))
 		var/list/Mobs = hearers(vision_range, src) - src //Remove self, so we don't suicide
 		L += Mobs
 		for(var/obj/mecha/M in range(vision_range, src))
