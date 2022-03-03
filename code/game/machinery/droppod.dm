@@ -264,7 +264,7 @@
 	var/area/area_to_deploy = allowed_areas.areas[pick(allowed_areas.areas)]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(area_to_deploy.type))
-		if(!T.density && !istype(T, /turf/space) && !T.obscured)
+		if(!T.density && !isenvironmentturf(T) && !T.obscured)
 			var/clear = TRUE
 			for(var/obj/O in T)
 				if(O.density)
@@ -285,7 +285,7 @@
 	var/area/thearea = allowed_areas.areas[A]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.density && !istype(T, /turf/space) && !T.obscured)
+		if(!T.density && !isenvironmentturf(T) && !T.obscured)
 			L+=T
 	flags &= ~STATE_AIMING
 	if(isemptylist(L))
@@ -311,7 +311,7 @@
 	if(!eyeobj || is_centcom_level(eyeobj.z))
 		return
 	var/turf/teleport_turf = get_turf(eyeobj.loc)
-	if(teleport_turf.obscured || istype(teleport_turf, /turf/space))
+	if(teleport_turf.obscured || isenvironmentturf(teleport_turf))
 		to_chat(intruder, "<span class='userdanger'>No signal here! It might be unsafe to deploy here!</span>")
 		return
 	if(!(flags & IS_LEGITIMATE) && is_type_in_list(teleport_turf.loc, allowed_areas.black_list_areas))
