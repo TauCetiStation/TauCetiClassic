@@ -1,11 +1,11 @@
-/turf/simulated/environment/snow
+/turf/environment/snow
 	icon = 'icons/turf/snow2.dmi'
 	name = "snow"
 	icon_state = "snow0"
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	force_lighting_update = TRUE
 
-	basetype = /turf/simulated/environment/snow
+	basetype = /turf/environment/snow
 	footstep = FOOTSTEP_SNOWSTEP
 	barefootstep = FOOTSTEP_SNOWSTEP
 	clawfootstep = FOOTSTEP_SNOWSTEP
@@ -21,7 +21,7 @@
 	var/static/datum/dirt_cover/basedatum = /datum/dirt_cover/snow
 	var/static/image/snow_fall_overlay
 
-/turf/simulated/environment/snow/atom_init(mapload)
+/turf/environment/snow/atom_init(mapload)
 	. = ..()
 
 	if(it_is_a_snow_day)
@@ -34,53 +34,53 @@
 	if(IS_EVEN(x) && IS_EVEN(y))
 		set_light(1.4)
 
-	if(type == /turf/simulated/environment/snow)
+	if(type == /turf/environment/snow)
 		if(prob(27)) // ~= 100*30/110
 			icon_state = "snow[rand(1,12)]"
 		if(ispath(basedatum))
 			basedatum = new basedatum
 
-/turf/simulated/environment/snow/Destroy()
+/turf/environment/snow/Destroy()
 	return QDEL_HINT_LETMELIVE
 
-/turf/simulated/environment/snow/attack_paw(mob/user)
+/turf/environment/snow/attack_paw(mob/user)
 	return attack_hand(user)
 
-/turf/simulated/environment/snow/attackby(obj/item/C, mob/user)
+/turf/environment/snow/attackby(obj/item/C, mob/user)
 	build_floor_support(C, user, 100)
 
-/turf/simulated/environment/snow/Entered(atom/movable/AM)
+/turf/environment/snow/Entered(atom/movable/AM)
 	..()
 
 	if(!SSticker || !SSticker.mode)
 		return
 
-	if(type == /turf/simulated/environment/snow && iscarbon(AM))
+	if(type == /turf/environment/snow && iscarbon(AM))
 		var/mob/living/carbon/perp = AM
 		perp.add_feet_dirt(basedatum, 7, blood=FALSE)
 
-/turf/simulated/environment/snow/singularity_act()
+/turf/environment/snow/singularity_act()
 	return
 
-/turf/simulated/environment/snow/ice
+/turf/environment/snow/ice
 	name = "ice"
 	icon = 'icons/turf/snow2.dmi'
 	icon_state = "ice"
 
-	basetype = /turf/simulated/environment/snow/ice
+	basetype = /turf/environment/snow/ice
 	footstep = FOOTSTEP_ICESTEP
 	barefootstep = FOOTSTEP_ICESTEP
 	clawfootstep = FOOTSTEP_ICESTEP
 	heavyfootstep = FOOTSTEP_ICESTEP
 
-/turf/simulated/environment/snow/ice/ChangeTurf(path)
+/turf/environment/snow/ice/ChangeTurf(path)
 	if(path != type)
 		var/obj/effect/overlay/ice_hole/IH = locate() in contents
 		if(IH)
 			qdel(IH)
 	return ..()
 
-/turf/simulated/environment/snow/ice/attackby(obj/item/O, mob/user)
+/turf/environment/snow/ice/attackby(obj/item/O, mob/user)
 	. = ..()
 	if(locate(/obj/effect/overlay/ice_hole) in range(4))
 		to_chat(user, "<span class='notice'>Too close to the other ice hole.</span>")
@@ -100,7 +100,7 @@
 /atom/movable
 	var/ice_slide_count = 0
 
-/turf/simulated/environment/snow/ice/Entered(atom/movable/AM)
+/turf/environment/snow/ice/Entered(atom/movable/AM)
 	..()
 
 	if(QDELETED(AM) || src != AM.loc)

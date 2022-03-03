@@ -5,11 +5,11 @@
 
 // TURFS
 
-#define isenvironmentturf(A) (istype(A, /turf/simulated/environment))
+#define isenvironmentturf(A) (istype(A, /turf/environment))
 
-#define isspaceturf(A) (istype(A, /turf/simulated/environment/space))
+#define isspaceturf(A) (istype(A, /turf/environment/space))
 
-#define isiceturf(A) (istype(A, /turf/simulated/environment/snow/ice))
+#define isiceturf(A) (istype(A, /turf/environment/snow/ice))
 
 // HUMAN
 

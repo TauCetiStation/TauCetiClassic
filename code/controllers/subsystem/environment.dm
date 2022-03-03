@@ -49,15 +49,15 @@ SUBSYSTEM_DEF(environment)
 
 	switch(envtype_)
 		if (ENV_TYPE_SPACE)
-			turf_type_ = /turf/simulated/environment/space
+			turf_type_ = /turf/environment/space
 		if (ENV_TYPE_SNOW)
-			turf_type_ = /turf/simulated/environment/snow
+			turf_type_ = /turf/environment/snow
 			post_gen_type_ = /datum/map_generator/snow
 			turf_light_color_ = COLOR_BLUE
 		else
 			error("[envtype_] is not valid environment type, revert to space")
 			envtype_ = ENV_TYPE_SPACE
-			turf_type_ = /turf/simulated/environment/space
+			turf_type_ = /turf/environment/space
 
 	//Properties for environment tiles
 	var/oxygen = initial(turf_type_.oxygen)

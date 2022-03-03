@@ -2553,7 +2553,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "aei" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /turf/simulated/floor/engine/vacuum,
 /area/station/rnd/test_area)
 "aej" = (
@@ -2576,13 +2576,13 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /turf/simulated/floor{
 	icon_state = "boxing"
 	},
 /area/station/civilian/gym)
 "aem" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /turf/simulated/floor{
 	icon_state = "boxing"
 	},
@@ -2593,7 +2593,7 @@
 	dir = 4
 	},
 /obj/structure/stool,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /turf/simulated/floor{
 	icon_state = "boxing"
 	},
@@ -3086,19 +3086,19 @@
 /obj/structure/object_wall/mining{
 	icon_state = "5-2"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "aeY" = (
 /obj/structure/object_wall/mining{
 	icon_state = "5-3"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "aeZ" = (
 /obj/structure/window/reinforced/shuttle/mining{
 	icon_state = "5-4"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "afa" = (
 /obj/machinery/door/unpowered/shuttle/wagon,
@@ -3110,13 +3110,13 @@
 /obj/structure/window/reinforced/shuttle/mining{
 	icon_state = "5-6"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "afc" = (
 /obj/structure/object_wall/mining{
 	icon_state = "5-7"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "afd" = (
 /obj/structure/cable{
@@ -3134,13 +3134,13 @@
 /obj/structure/object_wall/mining{
 	icon_state = "5-8"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "aff" = (
 /obj/structure/object_wall/mining{
 	icon_state = "5-9"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "afg" = (
 /turf/simulated/shuttle/floor/mining{
@@ -3638,7 +3638,7 @@
 /obj/structure/object_wall/mining{
 	icon_state = "5-1"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "aha" = (
 /obj/structure/table,
@@ -3895,7 +3895,7 @@
 "aks" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green,
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "akw" = (
 /turf/simulated/floor{
@@ -4293,7 +4293,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "ari" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -4358,7 +4358,7 @@
 	destroyed = 1
 	},
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "arK" = (
 /obj/structure/largecrate,
@@ -4466,7 +4466,7 @@
 /obj/structure/object_wall/mining{
 	icon_state = "4-1"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "ats" = (
 /turf/simulated/wall,
@@ -4792,7 +4792,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod2/station)
 "azH" = (
 /obj/machinery/airlock_sensor{
@@ -4868,7 +4868,7 @@
 	},
 /area/station/aisat)
 "aAC" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/syndicate/south)
 "aAF" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -4990,7 +4990,7 @@
 /obj/structure/object_wall/mining{
 	icon_state = "4-9"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "aCd" = (
 /obj/machinery/computer/security/wooden_tv,
@@ -5301,7 +5301,7 @@
 "aHf" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "aHx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -5856,7 +5856,7 @@
 	},
 /area/station/cargo/office)
 "aQr" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/officer/station)
 "aQE" = (
 /obj/structure/window/reinforced,
@@ -6019,7 +6019,7 @@
 /area/station/tcommsat/computer)
 "aTP" = (
 /obj/item/airbag,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "aTX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -6461,7 +6461,7 @@
 	},
 /area/station/rnd/robotics)
 "bbR" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/vox/southeast_solars)
 "bbX" = (
 /obj/machinery/vending/boozeomat{
@@ -7545,7 +7545,7 @@
 	},
 /area/station/civilian/chapel)
 "bsd" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/syndicate/southwest)
 "bsf" = (
 /obj/structure/bookcase/manuals/medical,
@@ -9969,7 +9969,7 @@
 	dir = 1
 	},
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "cej" = (
 /obj/machinery/hologram/holopad,
@@ -10947,7 +10947,7 @@
 /obj/structure/object_wall/mining{
 	icon_state = "1-7"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "cvP" = (
 /obj/structure/table,
@@ -11557,7 +11557,7 @@
 	},
 /area/station/bridge/ai_upload)
 "cDH" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/syndicate/northwest)
 "cDM" = (
 /obj/structure/window/reinforced{
@@ -11824,7 +11824,7 @@
 "cJc" = (
 /obj/item/weapon/wirecutters,
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "cJF" = (
 /obj/structure/closet/crate/freezer,
@@ -12042,7 +12042,7 @@
 /obj/structure/window/reinforced/shuttle/mining{
 	icon_state = "1-4,6"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "cNr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -12650,7 +12650,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "cTK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -14149,7 +14149,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod2/station)
 "duD" = (
 /turf/simulated/floor{
@@ -16425,7 +16425,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "3,0"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "egm" = (
 /obj/machinery/light_switch{
@@ -16953,7 +16953,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "eoH" = (
 /obj/structure/stool/bed/chair/pew/left,
@@ -17260,7 +17260,7 @@
 	dir = 1
 	},
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "esY" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -17438,7 +17438,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "evI" = (
 /obj/structure/table,
@@ -17971,7 +17971,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "eFO" = (
 /obj/structure/window/reinforced/tinted{
@@ -18316,7 +18316,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod2/station)
 "eLM" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -19632,7 +19632,7 @@
 	dir = 1;
 	icon_state = "2,0"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "fgh" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
@@ -20865,7 +20865,7 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "fyr" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/syndicate/northeast)
 "fyM" = (
 /turf/simulated/floor/carpet{
@@ -20916,7 +20916,7 @@
 /area/station/civilian/dormitories/dormone)
 "fzG" = (
 /obj/structure/grille,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/station/engineering)
 "fzW" = (
 /obj/structure/filingcabinet,
@@ -21208,7 +21208,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "fFM" = (
 /obj/structure/sign/warning/securearea{
@@ -21392,7 +21392,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "fIm" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -22743,7 +22743,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "gep" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -23109,7 +23109,7 @@
 	},
 /area/station/medical/hallway)
 "ghS" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/vox/southwest_solars)
 "ghX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -23407,7 +23407,7 @@
 /area/station/maintenance/auxsolarstarboard)
 "goK" = (
 /obj/structure/grille,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "goQ" = (
 /obj/machinery/door/airlock/external{
@@ -23478,7 +23478,7 @@
 	icon_state = "2-8";
 	opacity = 0
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "gqz" = (
 /obj/structure/table,
@@ -23580,7 +23580,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "gst" = (
 /obj/structure/table,
@@ -23989,7 +23989,7 @@
 	},
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "gys" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -24097,7 +24097,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod2/station)
 "gAr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -24147,7 +24147,7 @@
 	dir = 8
 	},
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "gBj" = (
 /obj/machinery/smartfridge/chemistry,
@@ -24650,7 +24650,7 @@
 /obj/effect/landmark{
 	name = "carpspawn"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "gJH" = (
 /obj/machinery/light{
@@ -25021,7 +25021,7 @@
 	},
 /area/station/medical/reception)
 "gPm" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/syndicate/southeast)
 "gPs" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
@@ -25238,7 +25238,7 @@
 /obj/structure/object_wall/mining{
 	icon_state = "2-9"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "gUd" = (
 /obj/structure/sign/warning/biohazard,
@@ -25427,7 +25427,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "gVR" = (
 /turf/simulated/floor{
@@ -25770,7 +25770,7 @@
 "hbO" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "hcd" = (
 /obj/structure/stool/bed/chair/schair/wagon{
@@ -25828,7 +25828,7 @@
 /obj/effect/landmark{
 	name = "carpspawn"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/administration/station)
 "hdB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -26179,7 +26179,7 @@
 	destroyed = 1
 	},
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/station/engineering)
 "hid" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -27115,7 +27115,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "hxm" = (
 /obj/structure/table/woodentable,
@@ -28087,7 +28087,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "3,2"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "hOT" = (
 /obj/machinery/door/airlock/glass{
@@ -28635,7 +28635,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "hZP" = (
 /obj/item/weapon/flora/random,
@@ -28656,7 +28656,7 @@
 	dir = 4
 	},
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "iaa" = (
 /obj/machinery/door/morgue{
@@ -29024,7 +29024,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "igD" = (
 /obj/machinery/door/poddoor{
@@ -29048,7 +29048,7 @@
 	},
 /area/station/engineering/engine)
 "igP" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/escape/station)
 "ihe" = (
 /turf/simulated/floor,
@@ -29892,7 +29892,7 @@
 	icon_state = "2-2";
 	opacity = 0
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "iuZ" = (
 /obj/machinery/door/poddoor{
@@ -30848,7 +30848,7 @@
 	dir = 1;
 	icon_state = "3,0"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "iKQ" = (
 /obj/machinery/disposal,
@@ -32747,7 +32747,7 @@
 /obj/structure/window/reinforced/shuttle/mining{
 	icon_state = "3-9"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "jtc" = (
 /obj/structure/disposalpipe/trunk{
@@ -33405,7 +33405,7 @@
 	dir = 1;
 	icon_state = "1,0"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "jDH" = (
 /obj/structure/disposalpipe/segment{
@@ -33939,7 +33939,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "3,2"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "jJx" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -34630,7 +34630,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "jUa" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -35238,7 +35238,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "kdy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -36554,7 +36554,7 @@
 	dir = 1;
 	icon_state = "0,0"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "kAt" = (
 /obj/machinery/light,
@@ -37016,7 +37016,7 @@
 /area/station/security/brig)
 "kHU" = (
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "kHX" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -37727,7 +37727,7 @@
 "kTj" = (
 /obj/structure/transit_tube,
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "kTv" = (
 /obj/random/scrap/safe_even,
@@ -38702,7 +38702,7 @@
 "lgc" = (
 /obj/structure/grille,
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "lgf" = (
 /obj/machinery/door/firedoor,
@@ -39407,7 +39407,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "lrD" = (
 /obj/machinery/door/airlock/external{
@@ -39680,7 +39680,7 @@
 	dir = 8
 	},
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "lxq" = (
 /obj/structure/table,
@@ -40638,7 +40638,7 @@
 	icon_state = "4-2";
 	opacity = 0
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "lNj" = (
 /obj/item/weapon/caution/cone{
@@ -40916,7 +40916,7 @@
 "lRf" = (
 /obj/structure/grille,
 /obj/item/stack/rods,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "lRD" = (
 /obj/structure/disposalpipe/segment{
@@ -41011,7 +41011,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "lSN" = (
 /obj/structure/table,
@@ -43868,7 +43868,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "mMg" = (
 /obj/effect/decal/cleanable/dirt,
@@ -44227,7 +44227,7 @@
 	name = "shuttle window";
 	opacity = 0
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "mRu" = (
 /obj/structure/disposalpipe/sortjunction/flipped{
@@ -44346,7 +44346,7 @@
 	dir = 8;
 	network = list("MiniSat")
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "mSV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -44676,7 +44676,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "mZg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -44851,7 +44851,7 @@
 /obj/structure/object_wall/mining{
 	icon_state = "2-1"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "naY" = (
 /obj/structure/table,
@@ -44953,7 +44953,7 @@
 	dir = 1;
 	icon_state = "3,2"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "ncI" = (
 /obj/structure/stool/bed/chair/comfy/black{
@@ -45287,7 +45287,7 @@
 /obj/structure/object_wall/mining{
 	icon_state = "1-3"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "nic" = (
 /obj/structure/cable{
@@ -45454,7 +45454,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "nlB" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/arrival/station)
 "nlD" = (
 /obj/machinery/camera{
@@ -45515,7 +45515,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "nnp" = (
 /obj/machinery/gateway{
@@ -46026,7 +46026,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod2/station)
 "nug" = (
 /obj/structure/closet/athletic_mixed,
@@ -46128,7 +46128,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 4
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "nxi" = (
 /obj/structure/cable{
@@ -46187,7 +46187,7 @@
 	icon_state = "4-8";
 	opacity = 0
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "nyp" = (
 /obj/machinery/firealarm{
@@ -46559,7 +46559,7 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
 "nCX" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /turf/simulated/wall/r_wall,
 /area/station/rnd/test_area)
 "nDa" = (
@@ -47217,7 +47217,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "nOe" = (
 /obj/structure/disposaloutlet,
@@ -47621,7 +47621,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 4
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "nVd" = (
 /obj/machinery/light{
@@ -48822,7 +48822,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod2/station)
 "opb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -48864,7 +48864,7 @@
 /obj/structure/transit_tube{
 	icon_state = "N-S"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "opt" = (
 /obj/machinery/door/airlock/maintenance{
@@ -49227,7 +49227,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "owT" = (
 /obj/item/weapon/flora/random,
@@ -50224,7 +50224,7 @@
 	dir = 1;
 	icon_state = "2,2"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "oNQ" = (
 /obj/structure/table,
@@ -51444,7 +51444,7 @@
 "pka" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "pkh" = (
 /obj/item/weapon/storage/toolbox/electrical,
@@ -51484,7 +51484,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "plf" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "plA" = (
 /obj/effect/landmark/start{
@@ -52573,7 +52573,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "pBE" = (
 /obj/machinery/light/small{
@@ -52969,7 +52969,7 @@
 "pJo" = (
 /obj/structure/lattice,
 /obj/item/stack/rods,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "pJr" = (
 /obj/machinery/floodlight,
@@ -53004,7 +53004,7 @@
 /obj/structure/transit_tube{
 	icon_state = "D-SE"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "pKF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -53771,7 +53771,7 @@
 /area/station/cargo/recycleroffice)
 "pVr" = (
 /obj/structure/scrap_cube,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "pVz" = (
 /obj/structure/window/reinforced{
@@ -54660,7 +54660,7 @@
 	layer = 3
 	},
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "qiv" = (
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -55676,7 +55676,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "3,2"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "qyz" = (
 /obj/machinery/door/airlock/maintenance{
@@ -56658,7 +56658,7 @@
 /area/station/security/lobby)
 "qOQ" = (
 /obj/item/weapon/crowbar,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "qPb" = (
 /obj/machinery/door/poddoor{
@@ -58424,7 +58424,7 @@
 "rut" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "ruI" = (
 /turf/simulated/wall/r_wall,
@@ -59475,14 +59475,14 @@
 /turf/simulated/floor/wood,
 /area/station/maintenance/eva)
 "rLR" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/administration/station)
 "rLT" = (
 /obj/structure/object_wall/pod{
 	dir = 1;
 	icon_state = "1,2"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "rMj" = (
 /obj/machinery/door/airlock/glass{
@@ -59546,7 +59546,7 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "rNG" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/syndicate/north)
 "rOb" = (
 /turf/simulated/floor{
@@ -59656,7 +59656,7 @@
 	name = "shuttle window";
 	opacity = 0
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "rQu" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
@@ -60130,7 +60130,7 @@
 	destroyed = 1
 	},
 /obj/item/stack/rods,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "rXw" = (
 /obj/structure/cable{
@@ -61001,7 +61001,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod3/station)
 "sls" = (
 /obj/structure/stool/bed/chair/office/light{
@@ -61101,7 +61101,7 @@
 /obj/structure/object_wall/mining{
 	icon_state = "1-1"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "sng" = (
 /obj/machinery/camera{
@@ -64648,7 +64648,7 @@
 /area/station/civilian/dormitories)
 "ttm" = (
 /obj/item/weapon/weldingtool,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "ttw" = (
 /obj/machinery/door/airlock/external{
@@ -65070,7 +65070,7 @@
 	pixel_x = -32
 	},
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "tAd" = (
 /obj/machinery/door/firedoor,
@@ -65259,7 +65259,7 @@
 "tCI" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/visible/green,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "tCO" = (
 /turf/simulated/wall,
@@ -65282,7 +65282,7 @@
 	},
 /area/station/rnd/mixing)
 "tDD" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/syndicate_elite/station)
 "tDO" = (
 /obj/machinery/door/poddoor{
@@ -67491,7 +67491,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "3,0"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "unD" = (
 /obj/machinery/door/airlock{
@@ -67635,7 +67635,7 @@
 	},
 /obj/item/stack/rods,
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "upp" = (
 /obj/machinery/computer/skills{
@@ -68838,7 +68838,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/portsolar)
 "uHr" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/transport1/station)
 "uHE" = (
 /turf/simulated/floor/wood,
@@ -69209,7 +69209,7 @@
 /obj/structure/object_wall/mining{
 	icon_state = "1-5"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "uOt" = (
 /obj/machinery/power/solar_control{
@@ -69298,13 +69298,13 @@
 /turf/simulated/floor,
 /area/station/maintenance/eva)
 "uPt" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/supply/station)
 "uQg" = (
 /obj/structure/object_wall/mining{
 	icon_state = "1-8"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "uQk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -69495,7 +69495,7 @@
 /obj/effect/landmark{
 	name = "Marauder Entry"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "uSV" = (
 /obj/structure/particle_accelerator/end_cap{
@@ -71563,7 +71563,7 @@
 	name = "shuttle window";
 	opacity = 0
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "vBz" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -72350,7 +72350,7 @@
 	name = "shuttle window";
 	opacity = 0
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "vKc" = (
 /obj/machinery/door/airlock/maintenance{
@@ -72430,7 +72430,7 @@
 /obj/structure/grille{
 	destroyed = 1
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "vKC" = (
 /obj/machinery/power/apc{
@@ -72628,7 +72628,7 @@
 /obj/structure/object_wall/mining{
 	icon_state = "1-9"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "vOc" = (
 /turf/simulated/floor/plating,
@@ -74379,7 +74379,7 @@
 	dir = 1;
 	icon_state = "0,2"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "woK" = (
 /obj/machinery/camera{
@@ -74693,7 +74693,7 @@
 "wwS" = (
 /obj/structure/window/reinforced,
 /obj/structure/lattice,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "wxs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -75043,7 +75043,7 @@
 	},
 /area/station/security/main)
 "wFw" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/specops/station)
 "wFY" = (
 /obj/structure/sign/nanotrasen{
@@ -75244,7 +75244,7 @@
 	},
 /area/station/storage/tech/north)
 "wJc" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/vox/northwest_solars)
 "wJd" = (
 /obj/machinery/recharge_station,
@@ -75418,7 +75418,7 @@
 /obj/structure/object_wall/mining{
 	icon_state = "1-2"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "wMm" = (
 /obj/structure/rack,
@@ -77945,7 +77945,7 @@
 /obj/structure/object_wall/mining{
 	icon_state = "3-1"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/mining/station)
 "xCA" = (
 /obj/structure/toilet{
@@ -77994,7 +77994,7 @@
 /turf/simulated/floor,
 /area/station/gateway)
 "xCZ" = (
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/vox/northeast_solars)
 "xDe" = (
 /obj/structure/grille,
@@ -78129,7 +78129,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/simulated/environment/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "xFH" = (
 /obj/machinery/computer/security/telescreen{
@@ -78406,7 +78406,7 @@
 	dir = 4;
 	network = list("MiniSat")
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "xKW" = (
 /obj/machinery/firealarm{
@@ -79131,7 +79131,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "3,0"
 	},
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "xWI" = (
 /obj/effect/decal/cleanable/dirt,
@@ -79455,7 +79455,7 @@
 /area/station/security/vacantoffice)
 "ybL" = (
 /obj/structure/window/reinforced,
-/turf/simulated/environment/space,
+/turf/environment/space,
 /area/space)
 "ybP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
