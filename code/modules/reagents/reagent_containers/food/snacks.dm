@@ -24,7 +24,7 @@
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
-		score["foodeaten"]++
+		SSStatistics.score.foodeaten++
 		usr.drop_from_inventory(src)	//so icons update :[
 
 		if(trash)
@@ -1729,7 +1729,7 @@
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return FALSE
 	var/inaccurate = 0
-	if(W.tools[TOOL_KNIFE] || W.sharp)
+	if(W.get_quality(QUALITY_CUTTING) > 0 || W.sharp)
 		inaccurate = 1
 	else
 		return FALSE

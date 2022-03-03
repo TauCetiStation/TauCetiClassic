@@ -186,27 +186,31 @@ function find_code {
 }
 
 function newline_at_eof {
-    counter=0
+    TEMPCOUNTER=/tmp/counter.tmp
+    echo 0 > $TEMPCOUNTER
     find ./code -regex '.*\.dm' | \
         while read line
         do
             if [[ -s "$line" && -n "$(tail -c 1 "$line")" ]]
             then
                 echo "No newline at end of file: $line"
-                ((counter++))
+                counter=$(($(cat $TEMPCOUNTER) + 1))
+                echo $counter > $TEMPCOUNTER
             fi
         done
+    counter=$(cat $TEMPCOUNTER)
+    unlink $TEMPCOUNTER
     return $counter
 }
 
 function match_helper {
-    local s=$1 regex='([A-Za-z]+)\([A-Za-z]+\) \((istype\([A-Za-z]+, [A-Za-z0-9\/]+\))\)'
+    local s=$1 regex='([A-Za-z1-9._]+)\([A-Za-z1-9._]+\) \((istype\([A-Za-z1-9._]+,\s*[A-Za-z0-9\/]+\))\)'
     while [[ $s =~ $regex ]]; do
         define="${BASH_REMATCH[1]}"
         s=${s#*"${BASH_REMATCH[1]}"}
         istype="${BASH_REMATCH[2]}"
         s=${s#*"${BASH_REMATCH[2]}"}
-        istype_pattern=`echo "$istype" | sed -r "s/istype\([A-Za-z]+, ([A-Za-z0-9\/]+)\)/istype\\\\\(([A-Za-z]+),\\\\\s*\1\\\\\)/"`
+        istype_pattern=`echo "$istype" | sed -r "s/istype\([A-Za-z1-9._]+,\s*([A-Za-z0-9\/]+)\)/istype\\\\\(([A-Za-z1-9._]+),\\\\\s*\1\\\\\)/"`
         run_test_fail_desc "$define" "Change istype to $define. Use this pattern for your VSCode: ^(?!//|#define|\.\*)(.*)$istype_pattern -> \$1$define(\$2)" "grep -RPnr --include='*.dm' '^(?!//|#define|\.\*).*$istype_pattern' code/"
     done
 }

@@ -194,15 +194,15 @@ var/global/list/ai_verbs_default = list(
 		add_ai_verbs(src)
 
 	//Languages
-	add_language("Sol Common", 0)
-	add_language("Sinta'unathi", 0)
-	add_language("Siik'maas", 0)
-	add_language("Siik'tajr", 0)
-	add_language("Skrellian", 0)
-	add_language("Rootspeak", 0)
-	add_language("Tradeband", 1)
-	add_language("Trinary", 1)
-	add_language("Gutter", 0)
+	add_language(LANGUAGE_SOLCOMMON, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SINTAUNATHI, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SIIKMAAS, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SIIKTAJR, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SKRELLIAN, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_ROOTSPEAK, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_TRADEBAND)
+	add_language(LANGUAGE_TRINARY)
+	add_language(LANGUAGE_GUTTER, LANGUAGE_CAN_UNDERSTAND)
 
 	if(!safety) // Only used by AIize() to successfully spawn an AI.
 		if(!B)  // If there is no player/brain inside.

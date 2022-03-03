@@ -4,10 +4,7 @@
 /turf/var/needs_air_update = FALSE
 /turf/var/datum/gas_mixture/air
 
-/turf/var/air_unsim = TRUE
 /turf/var/air_unsim_multiplier = 0
-/turf/simulated/air_unsim = FALSE
-/turf/environment/air_unsim = TRUE
 /turf/environment/snow/air_unsim_multiplier = 45 // speeds up zone air equalization process with snow turfs
 
 /turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
@@ -100,9 +97,6 @@
 				. |= dir
 
 /turf/simulated/update_air_properties()
-	if(air_unsim)
-		return ..()
-
 	if(zone && zone.invalid) //this turf's zone is in the process of being rebuilt
 		c_copy_air() //not very efficient :(
 		zone = null //Easier than iterating through the list at the zone.

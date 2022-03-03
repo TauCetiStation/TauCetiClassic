@@ -3117,6 +3117,8 @@
 	},
 /area/station/security/warden)
 "afs" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/changeling_tests,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -23427,6 +23429,7 @@
 	pixel_x = 4
 	},
 /obj/item/weapon/storage/secure/briefcase,
+/obj/item/weapon/changeling_test,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -23723,7 +23726,7 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/obj/item/weapon/storage/belt,
+/obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/firstaid,
 /turf/simulated/floor{
 	dir = 9;
@@ -29989,7 +29992,7 @@
 "bbN" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Vacant Office APC";
+	name = "Coworking APC";
 	pixel_x = -26
 	},
 /obj/structure/cable{
@@ -33045,7 +33048,7 @@
 /area/station/hallway/secondary/entry)
 "bhe" = (
 /obj/machinery/camera{
-	c_tag = "Vacant Office";
+	c_tag = "Coworking";
 	dir = 4
 	},
 /obj/structure/filingcabinet/chestdrawer/black,
@@ -53044,7 +53047,7 @@
 /obj/item/weapon/stock_parts/cell{
 	maxcharge = 2000
 	},
-/obj/item/weapon/storage/belt,
+/obj/item/weapon/storage/belt/utility,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "bSd" = (
@@ -66674,7 +66677,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/item/weapon/storage/belt,
+/obj/item/weapon/storage/belt/utility,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/closet,
 /turf/simulated/floor/plating,
@@ -78201,9 +78204,9 @@
 /area/station/medical/hallway)
 "nZG" = (
 /obj/structure/table,
-/obj/item/weapon/storage/belt,
-/obj/item/weapon/storage/belt,
-/obj/item/weapon/storage/belt,
+/obj/item/weapon/storage/belt/utility,
+/obj/item/weapon/storage/belt/utility,
+/obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/firstaid/regular,
 /obj/machinery/computer/guestpass{
 	dir = 8;

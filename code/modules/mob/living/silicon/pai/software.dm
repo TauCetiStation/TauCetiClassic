@@ -1059,20 +1059,20 @@
 	if(translator_on)
 		translator_on = 0
 
-		remove_language("Sinta'unathi")
-		remove_language("Siik'maas")
-		remove_language("Siik'tajr")
-		remove_language("Skrellian")
+		remove_language(LANGUAGE_SINTAUNATHI)
+		remove_language(LANGUAGE_SIIKMAAS)
+		remove_language(LANGUAGE_SIIKTAJR)
+		remove_language(LANGUAGE_SKRELLIAN)
 
 		to_chat(src, "<span class='notice'>Translator Module toggled OFF.</span>")
 
 	else
 		translator_on = 1
 
-		add_language("Sinta'unathi")
-		add_language("Siik'maas")
-		add_language("Siik'tajr", 0)
-		add_language("Skrellian")
+		add_language(LANGUAGE_SINTAUNATHI)
+		add_language(LANGUAGE_SIIKMAAS)
+		add_language(LANGUAGE_SIIKTAJR, 0)
+		add_language(LANGUAGE_SKRELLIAN)
 
 		to_chat(src, "<span class='notice'>Translator Module toggled ON.</span>")
 
