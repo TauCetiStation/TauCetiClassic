@@ -292,8 +292,6 @@ SUBSYSTEM_DEF(air)
 	map_init_levels = world.maxz // we simply set current max Z level (later on this value will be increased by maploading process).
 
 	for(var/turf/simulated/T in turfs_to_init)
-		if(T.air_unsim)
-			continue
 		T.update_air_properties()
 		CHECK_TICK
 
