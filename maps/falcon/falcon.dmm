@@ -18442,11 +18442,6 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/airlock_sensor{
-	id_tag = "recycler_sensor";
-	layer = 3.3;
-	pixel_y = 28
-	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "jcU" = (
@@ -24750,8 +24745,8 @@
 	},
 /area/station/security/main)
 "oZh" = (
-/obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/dirt,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "oZx" = (
@@ -25646,6 +25641,11 @@
 	tag_chamber_sensor = "recycler_sensor";
 	tag_exterior_door = "recycler_outer";
 	tag_interior_door = "recycler_inner"
+	},
+/obj/machinery/airlock_sensor{
+	id_tag = "recycler_sensor";
+	layer = 3.3;
+	pixel_y = 28
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
