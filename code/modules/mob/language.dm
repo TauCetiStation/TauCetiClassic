@@ -261,7 +261,7 @@
 
 /datum/language/salarian
 	name = LANGUAGE_SALARIAN
-	desc = ""
+	desc = "One of the most prominent space-slavic languages out there. Consists of many funny sounds, as well as deep, melodic structure."
 	speech_verb = "says"
 	ask_verb = "asks"
 	exclaim_verb = "exclaims"
