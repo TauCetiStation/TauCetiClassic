@@ -494,7 +494,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		BP.germ_level++
 		BP.owner.adjustToxLoss(1)
 
-/datum/bodypart_controller/proc/try_autoheal()
+/datum/bodypart_controller/proc/try_autoheal(datum/wound/W)
 	// if damage >= 50 AFTER treatment then it's probably too severe to heal within the timeframe of a round.
 	if (!W.can_autoheal() || W.wound_damage() >= 50)
 		return
@@ -529,8 +529,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 			continue
 			// let the GC handle the deletion of the wound
 
-		if(word.time >= BP.owner.next_autoheal_allowed)
-			try_autoheal()
+		if(world.time >= BP.owner.next_autoheal_allowed)
+			try_autoheal(W)
 
 		// Salving also helps against infection
 		if(W.germ_level > 0 && W.salved && prob(2))
