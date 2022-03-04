@@ -280,3 +280,35 @@
 	H.name = H.real_name
 	H.emote("scream")
 	H.update_body()
+
+
+/datum/quality/eye_reading
+	desc = "Ты по их глазам видишь чего они там задумали."
+	requirement = "Нет."
+
+/datum/quality/eye_reading/proc/see_intent(datum/source, atom/target)
+	var/mob/living/carbon/human/seer = source
+	if(!ismob(target))
+		return
+	var/mob/M = target
+	if(M?.client?.tooltip)
+		var/atom/targets_target = locate(M.client.tooltip.looking_at)
+		if(isturf(targets_target.loc))
+			to_chat(seer, "<span class='notice'>They are looking at [targets_target].</span>")
+
+	switch(seer.a_intent)
+		if(INTENT_HELP)
+			to_chat(seer, "<span class='notice'>They intend to help out.</span>")
+		if(INTENT_PUSH)
+			to_chat(seer, "<span class='notice'>They are very pushy.</span>")
+		if(INTENT_GRAB)
+			to_chat(seer, "<span class='notice'>They will grab whatever.</span>")
+		if(INTENT_HARM)
+			to_chat(seer, "<span class='warning'>They intend to do harm!</span>")
+
+	var/target_zone = M.get_targetzone()
+	if(target_zone)
+		to_chat(seer, "<span class='notice'>Their gaze is somewhere at the level of \the [parse_zone(target_zone)].</span>")
+
+/datum/quality/eye_reading/add_effect(mob/living/carbon/human/H, latespawn)
+	RegisterSignal(H, list(COMSIG_PARENT_POST_EXAMINATE), .proc/see_intent)
