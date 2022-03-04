@@ -48,7 +48,6 @@ SUBSYSTEM_DEF(qualities)
 		selected_quality = quality
 		break
 
-	selected_quality = qualities_pool[/datum/quality/war_face]
 	if(!selected_quality)
 		return
 
