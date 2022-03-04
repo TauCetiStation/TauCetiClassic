@@ -54,11 +54,9 @@
 	if(wet < severity)
 		wet = severity
 		UpdateSlip()
-
-		if(severity < LUBE_FLOOR) // Thats right, lube does not add nor clean wet overlay. So if the floor was wet before and we add lube, wet overlay simply stays longer.
-			if(!wet_overlay)      // For stealth - floor must be dry, so added lube effect will be invisible.
-				wet_overlay = image('icons/effects/water.dmi', "wet_floor", src)
-				add_overlay(wet_overlay)
+		if(!wet_overlay)      // Removed invinsible lube.
+			wet_overlay = image('icons/effects/water.dmi', "wet_floor", src)
+			add_overlay(wet_overlay)
 
 /turf/simulated/proc/make_dry_floor()
 	if(wet)
@@ -73,6 +71,6 @@
 		if(WATER_FLOOR)
 			AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
 		if(LUBE_FLOOR)
-			AddComponent(/datum/component/slippery, 5, SLIDE)
+			AddComponent(/datum/component/slippery, 6, SLIDE)
 		else
 			qdel(GetComponent(/datum/component/slippery))
