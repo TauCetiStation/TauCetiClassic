@@ -249,7 +249,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 		shake_camera(user, shake_duration, shake_strength)
 
 	announce_global(ring_msg, strength)
-	
+
 /obj/effect/effect/bell/attackby(obj/item/I, mob/user)
 	if(user.a_intent == INTENT_HARM)
 		ring_global(user, I.force)
@@ -307,3 +307,77 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 /obj/structure/big_bell/CheckExit(atom/movable/mover, target)
 	return istype(mover) && mover.checkpass(PASSCRAWL)
+
+
+/obj/structure/stool/bed/chair/lectern
+	name = "lectern"
+	desc = "Моли о прощении, тебе есть чего замолить."
+	icon = 'icons/obj/lectern.dmi'
+	icon_state = "lectern"
+
+	layer = INFRONT_MOB_LAYER
+
+	density = FALSE
+	anchored = TRUE
+
+	var/image/lectern_overlay
+
+/obj/structure/stool/bed/chair/lectern/atom_init()
+	. = ..()
+	lectern_overlay = image(icon, "lectern_overlay")
+	lectern_overlay.layer = INFRONT_MOB_LAYER
+
+	update_icon()
+
+/obj/structure/stool/bed/chair/lectern/Destroy()
+	QDEL_NULL(lectern_overlay)
+	return ..()
+
+/obj/structure/stool/bed/chair/lectern/attackby(obj/item/weapon/W, mob/user)
+
+/obj/structure/stool/bed/chair/lectern/handle_rotation()
+	if(dir == NORTH)
+		layer = BELOW_MOB_LAYER
+	else
+		layer = INFRONT_MOB_LAYER
+
+	if(buckled_mob)
+		buckled_mob.set_dir(dir)
+		buckled_mob.update_canmove()
+
+/obj/structure/stool/bed/chair/lectern/post_buckle_mob(mob/living/M)
+	if(M == buckled_mob)
+		layer = BELOW_MOB_LAYER
+		M.pixel_y = 12
+		update_buckle_mob(M)
+		add_overlay(lectern_overlay)
+
+	else
+		if(dir == NORTH)
+			layer = BELOW_MOB_LAYER
+		else
+			layer = INFRONT_MOB_LAYER
+		M.pixel_y = M.get_pixel_y_offset()
+		cut_overlay(lectern_overlay)
+
+/obj/structure/stool/bed/chair/lectern/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if(istype(mover) && mover.checkpass(PASSTABLE))
+		return TRUE
+
+	return get_dir(target, loc) & dir
+
+/obj/structure/stool/bed/chair/lectern/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+	if(!density)
+		return TRUE
+
+	return is_the_opposite_dir(dir, to_dir)
+
+/obj/structure/stool/bed/chair/lectern/CheckExit(atom/movable/O, target)
+	if(istype(O) && O.checkpass(PASSTABLE))
+		return TRUE
+	if(get_dir(target, O.loc) != dir)
+		return FALSE
+	return TRUE
+
+/obj/structure/stool/bed/chair/lectern/update_icon()
+	return
