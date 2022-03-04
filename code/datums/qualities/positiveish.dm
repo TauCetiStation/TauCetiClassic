@@ -241,6 +241,7 @@
 /datum/quality/reliquary/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/device/soulstone(H), SLOT_R_STORE)
 
+
 /datum/quality/crusader
 	desc = "Dominus concessit vos arma! DEUS VULT!"
 	requirement = "Капеллан."
@@ -250,3 +251,32 @@
 /datum/quality/crusader/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/clothing/head/helmet/crusader(H), SLOT_HEAD)
 	H.equip_or_collect(new /obj/item/clothing/suit/armor/crusader(H), SLOT_WEAR_SUIT)
+
+
+/datum/quality/war_face
+	desc = "ПОКАЖИ МНЕ СВОЙ БОЕВОЙ ОСКАЛ."
+	requirement = "Нет."
+
+	var/list/war_colors = list(
+		COLOR_CRIMSON_RED,
+		COLOR_CRIMSON,
+		COLOR_WHITE,
+		COLOR_BLACK,
+		COLOR_YELLOW,
+		COLOR_GOLD,
+		COLOR_INDIGO,
+		COLOR_ADMIRAL_BLUE,
+		COLOR_CROCODILE,
+		COLOR_SEAWEED,
+		COLOR_ROSE_PINK,
+		COLOR_TIGER,
+		COLOR_PURPLE,
+	)
+
+/datum/quality/war_face/add_effect(mob/living/carbon/human/H, latespawn)
+	H.lip_style = "spray_face"
+	H.lip_color = pick(war_colors)
+	// for some reason name is not set at this stage and if I don't do this the emote message will be nameless
+	H.name = H.real_name
+	H.emote("scream")
+	H.update_body()
