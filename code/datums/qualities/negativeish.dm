@@ -162,11 +162,6 @@
 	H.add_language(LANGUAGE_SALARIAN)
 	H.forced_language = LANGUAGE_SALARIAN
 
-	for(var/datum/language/language as anything in H.languages)
-		if(language == H.forced_language)
-			continue
-		H.remove_language(language.name)
-
 
 /datum/quality/clumsy
 	desc = "Ты - неуклюжий, криворукий дурачок. Лучше не трогать всякие опасные штуки!"
