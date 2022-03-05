@@ -55,6 +55,8 @@
 /mob/living/carbon/human/proc/handle_socialization(mob/hearer)
 	if(!species.flags[IS_SOCIAL])
 		return
+	if(HAS_TRAIT(src, TRAIT_MUTE))
+		return
 
 	var/new_social_state = SOCIALIZATION_LONELY
 	if(ishuman(hearer))
