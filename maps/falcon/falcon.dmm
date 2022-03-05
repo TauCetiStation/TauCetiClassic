@@ -2630,7 +2630,7 @@
 /obj/structure/sign/warning/securearea{
 	pixel_y = 32
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "aeq" = (
 /obj/structure/cable{
@@ -2764,7 +2764,7 @@
 	c_tag = "MiniSat West North";
 	network = list("MiniSat")
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "aeB" = (
 /obj/machinery/computer/reconstitutor/animal,
@@ -2948,7 +2948,7 @@
 /obj/structure/sign/warning/docking{
 	pixel_x = 32
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "aeZ" = (
 /turf/simulated/wall,
@@ -3456,7 +3456,7 @@
 /area/space)
 "afR" = (
 /obj/structure/girder,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "afS" = (
 /obj/structure/closet/emergency_wall{
@@ -3565,7 +3565,7 @@
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
 	name = "Syndicate agent remains"
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "agi" = (
 /obj/structure/table/reinforced,
@@ -3636,13 +3636,13 @@
 /area/space)
 "agr" = (
 /obj/machinery/door/airlock/centcom,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "ags" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "agt" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3689,7 +3689,7 @@
 "agz" = (
 /obj/structure/lattice,
 /obj/random/foods/food_without_garbage,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "agA" = (
 /obj/structure/table/glass,
@@ -3762,7 +3762,7 @@
 /area/station/maintenance/science)
 "agH" = (
 /obj/item/stack/rods,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "agI" = (
 /obj/structure/grille,
@@ -3795,15 +3795,15 @@
 "agK" = (
 /obj/structure/lattice,
 /obj/item/weapon/storage/fancy/donut_box/traitor,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "agL" = (
 /obj/item/stack/sheet/metal,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "agM" = (
 /obj/random/foods/donuts,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "agN" = (
 /obj/structure/closet/crate{
@@ -3818,11 +3818,11 @@
 /area/space)
 "agO" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "agP" = (
 /obj/item/weapon/shard,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "agQ" = (
 /turf/simulated/shuttle/wall{
@@ -3835,16 +3835,16 @@
 	},
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak,
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "agS" = (
 /obj/structure/lattice,
 /obj/item/pizzabox/meat,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "agT" = (
 /obj/random/foods/food_without_garbage,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "agU" = (
 /turf/simulated/shuttle/wall{
@@ -7560,7 +7560,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/engineering/atmos)
 "anV" = (
-/turf/space,
+/turf/environment/space,
 /area/shuttle/vox/mining)
 "anW" = (
 /turf/simulated/mineral/random/high_chance,
@@ -9132,7 +9132,7 @@
 	c_tag = "MiniSat South";
 	network = list("MiniSat")
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "aqV" = (
 /turf/simulated/floor/airless{
@@ -9373,7 +9373,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 9
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "aro" = (
 /obj/effect/decal/cleanable/dirt,
@@ -9750,7 +9750,7 @@
 /area/station/rnd/hallway)
 "arN" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/asteroid/mine/eva)
 "arO" = (
 /turf/simulated/floor/airless{
@@ -10306,7 +10306,7 @@
 /area/station/civilian/chapel)
 "aRB" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "aRD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -11365,7 +11365,7 @@
 	dir = 1;
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "bPW" = (
 /obj/machinery/telecomms/server/presets/common,
@@ -11628,7 +11628,7 @@
 	name = "HIGH VOLTAGE";
 	pixel_y = -32
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "cdr" = (
 /obj/structure/cable{
@@ -11946,7 +11946,7 @@
 /area/station/rnd/lab)
 "crv" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "csF" = (
 /obj/structure/kitchenspike,
@@ -12153,7 +12153,7 @@
 	dir = 1;
 	icon_state = "1,0"
 	},
-/turf/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "cJy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -13250,7 +13250,7 @@
 /obj/structure/sign/warning/securearea{
 	pixel_y = -32
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "dHS" = (
 /obj/machinery/navbeacon{
@@ -14018,7 +14018,7 @@
 	dir = 4
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "ewk" = (
 /obj/item/weapon/storage/secure/safe{
@@ -14763,7 +14763,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "fkm" = (
 /obj/structure/cable{
@@ -14926,7 +14926,7 @@
 	dir = 1;
 	icon_state = "1,2"
 	},
-/turf/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "fub" = (
 /obj/item/weapon/crowbar/fluff/zelda_creedy_1,
@@ -15419,7 +15419,7 @@
 	},
 /area/station/security/prison)
 "gay" = (
-/turf/space,
+/turf/environment/space,
 /area/space)
 "gbe" = (
 /obj/machinery/firealarm{
@@ -16774,7 +16774,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "hqn" = (
 /turf/simulated/wall/r_wall,
@@ -17472,7 +17472,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "idm" = (
-/turf/space,
+/turf/environment/space,
 /area/shuttle/supply/station)
 "idp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -17704,7 +17704,7 @@
 	dir = 1;
 	icon_state = "0,2"
 	},
-/turf/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "iqS" = (
 /turf/simulated/wall/r_wall,
@@ -18007,7 +18007,7 @@
 	name = "shuttle window";
 	opacity = 0
 	},
-/turf/space,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "iGg" = (
 /obj/machinery/door/firedoor,
@@ -18677,7 +18677,7 @@
 /obj/structure/grille{
 	destroyed = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "jwX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -19019,7 +19019,7 @@
 	dir = 6;
 	network = list("MiniSat")
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "jHm" = (
 /obj/structure/table,
@@ -19969,7 +19969,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "kya" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -20044,7 +20044,7 @@
 	},
 /area/station/bridge)
 "kBu" = (
-/turf/space,
+/turf/environment/space,
 /area/shuttle/vox/southeast_solars)
 "kBP" = (
 /obj/structure/cable{
@@ -21550,7 +21550,7 @@
 	},
 /area/station/hallway/primary/central)
 "mei" = (
-/turf/space,
+/turf/environment/space,
 /area/shuttle/vox/northeast_solars)
 "meq" = (
 /obj/structure/table/glass,
@@ -22166,7 +22166,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "mOp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -22584,7 +22584,7 @@
 	dir = 10;
 	network = list("MiniSat")
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "nfp" = (
 /obj/structure/disposalpipe/segment{
@@ -22827,7 +22827,7 @@
 /obj/effect/landmark{
 	name = "carpspawn"
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "nom" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -23222,7 +23222,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "3,2"
 	},
-/turf/space,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "nEs" = (
 /obj/structure/rack,
@@ -23260,7 +23260,7 @@
 	},
 /area/station/rnd/hallway)
 "nFT" = (
-/turf/space,
+/turf/environment/space,
 /area/shuttle/vox/northwest_solars)
 "nGv" = (
 /obj/machinery/space_heater,
@@ -23600,7 +23600,7 @@
 	dir = 1;
 	network = list("MiniSat")
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "nVz" = (
 /obj/structure/cable{
@@ -23740,7 +23740,7 @@
 "odS" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "oeD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -23762,7 +23762,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "3,0"
 	},
-/turf/space,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "ogs" = (
 /obj/structure/closet/crate/freezer,
@@ -23992,7 +23992,7 @@
 	},
 /area/station/civilian/bar)
 "otM" = (
-/turf/space,
+/turf/environment/space,
 /area/shuttle/vox/southwest_solars)
 "otN" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/cyan{
@@ -24572,7 +24572,7 @@
 	dir = 8;
 	network = list("MiniSat")
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "oSW" = (
 /obj/structure/stool/bed/chair/comfy/teal{
@@ -24919,7 +24919,7 @@
 	dir = 4;
 	network = list("MiniSat")
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "piy" = (
 /obj/machinery/door/airlock/external{
@@ -26418,7 +26418,7 @@
 "qws" = (
 /obj/structure/grille,
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "qwC" = (
 /obj/machinery/portable_atmospherics/powered/pump,
@@ -26690,7 +26690,7 @@
 	name = "HIGH VOLTAGE";
 	pixel_x = -32
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "qFP" = (
 /obj/structure/table,
@@ -26947,7 +26947,7 @@
 	dir = 1;
 	icon_state = "0,0"
 	},
-/turf/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "qQs" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -27133,7 +27133,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "qZX" = (
 /obj/machinery/light{
@@ -27191,7 +27191,7 @@
 "rct" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "rdJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -27516,7 +27516,7 @@
 /area/station/rnd/telesci)
 "rxt" = (
 /obj/structure/grille,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "rxv" = (
 /obj/structure/flora/ausbushes/fullgrass,
@@ -27568,7 +27568,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "rzB" = (
-/turf/space,
+/turf/environment/space,
 /area/shuttle/arrival/station)
 "rzG" = (
 /obj/structure/window/reinforced{
@@ -28423,7 +28423,7 @@
 	dir = 1;
 	icon_state = "2,2"
 	},
-/turf/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "ssk" = (
 /obj/effect/decal/cleanable/dirt,
@@ -29015,7 +29015,7 @@
 	name = "shuttle window";
 	opacity = 0
 	},
-/turf/space,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "sWo" = (
 /obj/machinery/power/apc{
@@ -29132,7 +29132,7 @@
 	name = "HIGH VOLTAGE";
 	pixel_y = -32
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "tfx" = (
 /obj/machinery/computer/prisoner,
@@ -29461,7 +29461,7 @@
 	dir = 4
 	},
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "tyQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -29797,7 +29797,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "tOr" = (
 /obj/item/device/radio/intercom{
@@ -30286,7 +30286,7 @@
 /area/station/bridge)
 "ugK" = (
 /obj/effect/landmark/dealer_spawn,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "uhX" = (
 /obj/item/weapon/storage/toolbox/mechanical{
@@ -31419,7 +31419,7 @@
 	},
 /area/station/bridge)
 "vrL" = (
-/turf/space,
+/turf/environment/space,
 /area/shuttle/escape/station)
 "vsZ" = (
 /obj/structure/table/glass,
@@ -31562,7 +31562,7 @@
 	dir = 1;
 	icon_state = "3,2"
 	},
-/turf/space,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "vAA" = (
 /obj/structure/cable{
@@ -31618,7 +31618,7 @@
 /area/station/hallway/secondary/arrival)
 "vES" = (
 /obj/structure/scrap_cube,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "vFc" = (
 /obj/machinery/atmospherics/components/trinary/tvalve/mirrored/digital{
@@ -31630,7 +31630,7 @@
 /obj/structure/grille,
 /obj/structure/grille,
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "vFF" = (
 /obj/machinery/door/firedoor,
@@ -32664,7 +32664,7 @@
 	dir = 1;
 	network = list("MiniSat")
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "wHw" = (
 /obj/machinery/navbeacon{
@@ -32837,7 +32837,7 @@
 	dir = 1;
 	icon_state = "2,0"
 	},
-/turf/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "wMu" = (
 /obj/structure/grille,
@@ -33694,7 +33694,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/space/shuttle,
+/turf/environment/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "xCK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
