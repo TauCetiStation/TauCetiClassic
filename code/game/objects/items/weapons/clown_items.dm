@@ -39,7 +39,7 @@
 	. = ..()
 	
 	
-	Component(/datum/component/slippery, 4, SLIDE | GALOSHES_DONT_HELP)
+	AddComponent(/datum/component/slippery, 4, SLIDE | GALOSHES_DONT_HELP)
 
 /*
  * Soap
