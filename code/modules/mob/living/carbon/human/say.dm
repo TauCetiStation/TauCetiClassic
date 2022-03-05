@@ -18,7 +18,7 @@
 	switch(state)
 		if(SOCIALIZATION_NORMAL)
 			social_state = SOCIALIZATION_NORMAL
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
+			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "no_socialization")
 
 			deltimer(conversation_timer)
 			conversation_timer = addtimer(
