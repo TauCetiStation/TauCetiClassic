@@ -342,7 +342,7 @@
 	..()
 	M.verbs += /mob/living/carbon/human/proc/air_sample
 
-/datum/species/unathi/on_loose(mob/living/M)
+/datum/species/unathi/on_loose(mob/living/M, new_species)
 	M.verbs -= /mob/living/carbon/human/proc/air_sample
 	..()
 
@@ -574,7 +574,7 @@
 
 	..()
 
-/datum/species/vox/on_loose(mob/living/carbon/human/H)
+/datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
 	if(name != VOX_ARMALIS)
 		if(H.leap_icon)
 			if(H.hud_used)
@@ -929,7 +929,7 @@
 	if(BP)
 		H.set_light(BP.screen_brightness)
 
-/datum/species/machine/on_loose(mob/living/carbon/human/H)
+/datum/species/machine/on_loose(mob/living/carbon/human/H, new_species)
 	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
 	H.verbs -= /mob/living/carbon/human/proc/IPC_toggle_screen
 	H.verbs -= /mob/living/carbon/human/proc/IPC_display_text
@@ -977,7 +977,7 @@
 
 	return ..()
 
-/datum/species/abductor/on_loose(mob/living/carbon/human/H)
+/datum/species/abductor/on_loose(mob/living/carbon/human/H, new_species)
 	..()
 	// Abductors don't get sad when not talking, but not Abductors do. So we need to refresh the timer
 	H.handle_socialization()
@@ -1229,7 +1229,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, SLOT_WEAR_MASK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
 
-/datum/species/golem/on_loose(mob/living/carbon/human/H)
+/datum/species/golem/on_loose(mob/living/carbon/human/H, new_species)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
 	H.dna.mutantrace = null
 	H.real_name = "unknown"
@@ -1300,7 +1300,7 @@
 
 	..()
 
-/datum/species/zombie/on_loose(mob/living/carbon/human/H)
+/datum/species/zombie/on_loose(mob/living/carbon/human/H, new_species)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
 
 	if(istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))

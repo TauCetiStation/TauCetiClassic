@@ -1406,7 +1406,7 @@
 	species = all_species[new_species]
 
 	if(old_species)
-		old_species.on_loose(src)
+		old_species.on_loose(src, new_species)
 
 	maxHealth = species.total_health
 
