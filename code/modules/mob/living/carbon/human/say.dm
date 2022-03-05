@@ -15,7 +15,7 @@
 	return ..()
 
 /mob/living/carbon/human/proc/set_social_state(state)
-	switch(social_state)
+	switch(state)
 		if(SOCIALIZATION_NORMAL)
 			social_state = SOCIALIZATION_NORMAL
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
