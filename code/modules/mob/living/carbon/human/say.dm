@@ -61,6 +61,8 @@
 	var/new_social_state = SOCIALIZATION_LONELY
 	if(ishuman(hearer))
 		new_social_state = SOCIALIZATION_NORMAL
+	else if(isnull(hearer))
+		new_social_state = SOCIALIZATION_NORMAL
 
 	if(social_state > new_social_state)
 		set_social_state(new_social_state)
