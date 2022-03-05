@@ -159,10 +159,11 @@
 		to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
 		if (!do_after(usr, R.time, target = usr))
 			return
+	var/atom/build_loc = loc
 	if(!use(R.req_amount*multiplier))
 		return
-	var/atom/movable/O = new R.result_type( loc )
-	user.try_take(O, loc)
+	var/atom/movable/O = new R.result_type(build_loc)
+	user.try_take(O, build_loc)
 	O.set_dir(usr.dir)
 	if (R.max_res_amount>1)
 		var/obj/item/stack/new_item = O
