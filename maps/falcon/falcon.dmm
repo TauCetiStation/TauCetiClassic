@@ -1538,7 +1538,6 @@
 "acO" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/device/radio/off,
 /obj/machinery/turretid/stun/AI_special{
 	control_area = "Telecoms Control Room";
 	dir = 8;
@@ -1548,6 +1547,7 @@
 /obj/item/stack/sheet/mineral/phoron{
 	amount = 25
 	},
+/obj/item/device/radio/off,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8461,13 +8461,11 @@
 	pixel_y = -21
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /obj/item/device/taperecorder{
 	pixel_x = -3
 	},
 /obj/item/device/camera{
-	pixel_x = 14
+	pixel_x = 13
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -8496,6 +8494,14 @@
 	},
 /obj/machinery/light,
 /obj/structure/table/reinforced,
+/obj/item/weapon/paper_bin{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/weapon/pen{
+	pixel_x = -6;
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurplefull"
@@ -15294,7 +15300,8 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /obj/item/weapon/nullrod{
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = -7
 	},
 /obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1{
 	pixel_x = 7;
@@ -19029,7 +19036,7 @@
 	secured = 1
 	},
 /obj/item/ashtray/bronze{
-	pixel_x = 5;
+	pixel_x = 12;
 	pixel_y = -4
 	},
 /turf/simulated/floor{
@@ -32699,8 +32706,8 @@
 "wHM" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp{
-	pixel_x = -4;
-	pixel_y = 13
+	pixel_x = -13;
+	pixel_y = 12
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
 /obj/item/device/radio/intercom{
@@ -64662,7 +64669,7 @@ nqt
 sFn
 acb
 acb
-acb
+crv
 idm
 idm
 idm
@@ -64919,7 +64926,7 @@ fJZ
 sFn
 acb
 acb
-acb
+crv
 idm
 idm
 idm
