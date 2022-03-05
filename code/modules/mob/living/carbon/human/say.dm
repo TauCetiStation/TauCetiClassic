@@ -53,7 +53,7 @@
 	set_social_state(SOCIALIZATION_LONELY)
 
 /mob/living/carbon/human/proc/handle_socialization(mob/hearer)
-	if(get_species() == ABDUCTOR)
+	if(!species.flags[IS_SOCIAL])
 		return
 
 	var/new_social_state = SOCIALIZATION_LONELY
