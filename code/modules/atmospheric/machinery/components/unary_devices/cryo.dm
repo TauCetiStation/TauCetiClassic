@@ -14,8 +14,7 @@
 	var/efficiency
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/list/cryo_medicine = list("cryoxadone", "clonexadone")
-	required_skill = SKILL_MEDICAL
-	required_skill_proficiency = SKILL_MEDICAL_COMPETENT
+	required_skills = list(/datum/skill/medical/pro)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/atom_init()
 	. = ..()

@@ -8,8 +8,7 @@
 	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/unwrenched = 0
 	var/wait = 0
-	required_skill = SKILL_ATMOS
-	required_skill_proficiency = SKILL_ATMOS_PRO
+	required_skills = list(/datum/skill/atmospherics/trained)
 
 /obj/machinery/pipedispenser/ui_interact(user)
 	var/dat = {"

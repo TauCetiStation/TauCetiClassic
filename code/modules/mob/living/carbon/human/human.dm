@@ -1511,45 +1511,7 @@
 /mob/living/carbon/human/verb/skills_menu()
 	set category = "IC"
 	set name = "Skills Menu"
-	var/list/tables_data = list(
-		"Engineering related skills" = list(
-			"Engineering" = SKILL_ENGINEERING,
-			"Construction" = SKILL_CONSTRUCTION,
-			"Atmospherics" =SKILL_ATMOS,
-			),
-		"Medical skills" = list(
-			"Medical" = SKILL_MEDICAL,
-			"Surgery" = SKILL_SURGERY,
-			"Chemistry" = SKILL_CHEMISTRY,
-			),
-		"Combat skills" = list(
-			"Melee" = SKILL_MELEE,
-			"Firearms" = SKILL_FIREARMS,
-			"Police" = SKILL_POLICE,
-			"Combat exosuits" = SKILL_COMBAT_MECH,
-			),
-		"Civilian skills" = list(
-			"Command" = SKILL_COMMAND,
-			"Research" = SKILL_RESEARCH,
-			"Civilian exosuits" = SKILL_CIV_MECH
-			)
-	)
 
-	var/list/sliders_hint = list(
-		"[SKILL_ENGINEERING]" = "Tools usage, hacking, wall repairs and deconstruction. Engine related tasks and configuring of telecommunications. ",
-		"[SKILL_CONSTRUCTION]" = "Construction of tables, walls, windows and crafting.",
-		"[SKILL_ATMOS]" = "Interacting with atmos related devices: pumps, scrubbers, space heaters. Usage of atmospherics computers.",
-		"[SKILL_MEDICAL]" = "Faster usage of syringes. Proficiency with defibrilators, medical scanners, cryo tubes, sleepers and life support machinery.",
-		"[SKILL_SURGERY]" = "Higher level means faster surgical operations.",
-		"[SKILL_CHEMISTRY]" = "Chemistry related machinery: grinders, chem dispensers and chem masters. You can recognize reagents in pills and bottles.",
-		"[SKILL_MELEE]" = "Higher levels means more damage with melee weapons.",
-		"[SKILL_FIREARMS]" = "Affects recoil from firearms. Proficiency in firearms allows for tactical reloads. Usage of mines and explosives.",
-		"[SKILL_POLICE]" = "Usage of tasers and flashers. Higher levels allows for faster handcuffing.",
-		"[SKILL_COMBAT_MECH]" = "Faster moving speed of piloted combat exosuits.",
-		"[SKILL_CIV_MECH]" = "Faster moving speed of piloted civilian exosuits: Ripley and Odysseus.",
-		"[SKILL_COMMAND]" = "Low level means basic knowledge of paperwork, usage of identification computers. Higher level means you can yell at people to boost their productivity.",
-		"[SKILL_RESEARCH]" = "Usage of complex machinery and computers. AI law modification, xenoarcheology and xenobiology consoles, exosuit fabricators.",
-		)
 	var/dat = {"
 		<style>
 			.skill_slider {
@@ -1590,10 +1552,10 @@
 	dat += {"
 		<button class="max-button" type="submit" value="1" id="skills_max" onclick="setMaxSkills()">Set skills values to maximum</button>
 	"}
-	for(var/category in tables_data)
+	for(var/skill in skills_list)
 		dat += {"
 			<table>
-				<caption>[category]</caption>
+				<caption>[skill.name]</caption>
 		"}
 
 		var/list/sliders_data = tables_data[category]

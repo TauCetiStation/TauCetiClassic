@@ -19,8 +19,7 @@
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = STATIC_ENVIRON
-	required_skill = SKILL_COMMAND
-	required_skill_proficiency = SKILL_COMMAND_TRAINED
+	required_skills = list(/datum/skill/command/trained)
 
 /obj/machinery/keycard_auth/attack_ai(mob/user)
 	if(IsAdminGhost(user))
@@ -99,7 +98,7 @@
 		to_chat(usr, "This device is busy.")
 		return
 
-	
+
 	if(href_list["triggerevent"])
 		event = href_list["triggerevent"]
 		screen = 2

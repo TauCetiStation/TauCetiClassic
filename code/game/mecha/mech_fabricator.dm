@@ -49,8 +49,7 @@
 								"Misc",
 								"Stock Parts",
 								)
-	required_skill = SKILL_RESEARCH
-	required_skill_proficiency = SKILL_RESEARCH_EXPERT
+	required_skills = list(/datum/skill/research/pro)
 
 /obj/machinery/mecha_part_fabricator/atom_init()
 	. = ..()

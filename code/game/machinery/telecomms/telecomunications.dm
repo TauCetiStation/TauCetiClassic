@@ -32,8 +32,7 @@
 	var/hide = FALSE            // Is it a hidden machine?
 	var/listening_level = 0     // 0 = auto set in New() - this is the z level that the machine is listening to.
 
-	required_skill = SKILL_ENGINEERING
-	required_skill_proficiency = SKILL_ENGINEERING_MASTER
+	required_skills = list(/datum/skill/engineering/master)
 
 
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)

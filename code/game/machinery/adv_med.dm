@@ -10,8 +10,7 @@
 	density = TRUE
 	anchored = TRUE
 	light_color = "#00ff00"
-	required_skill = SKILL_MEDICAL
-	required_skill_proficiency = SKILL_MEDICAL_NOVICE
+	required_skills = list(/datum/skill/medical/novice)
 
 /obj/machinery/bodyscanner/power_change()
 	..()
@@ -158,9 +157,7 @@
 	anchored = TRUE
 	var/next_print = 0
 	var/storedinfo = null
-	required_skill = SKILL_MEDICAL
-	required_skill_proficiency = SKILL_MEDICAL_COMPETENT
-
+	required_skills = list(/datum/skill/medical/trained)
 
 /obj/machinery/body_scanconsole/atom_init()
 	..()

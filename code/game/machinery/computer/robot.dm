@@ -9,8 +9,7 @@
 	req_access = list(access_robotics)
 	circuit = /obj/item/weapon/circuitboard/robotics
 
-	required_skill = SKILL_RESEARCH
-	required_skill_proficiency = SKILL_RESEARCH_EXPERT
+	required_skills = list(/datum/skill/research/pro)
 
 	var/id = 0.0
 	var/temp = null

@@ -35,8 +35,7 @@
 	var/stat_msg1
 	var/stat_msg2
 
-	required_skill = SKILL_COMMAND
-	required_skill_proficiency = SKILL_COMMAND_EXPERT
+	required_skills = list(/datum/skill/command/pro)
 	var/datum/announcement/station/command/announcement = new
 
 /obj/machinery/computer/communications/atom_init()

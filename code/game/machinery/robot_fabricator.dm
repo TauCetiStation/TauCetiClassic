@@ -11,9 +11,7 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 	allowed_checks = ALLOWED_CHECK_TOPIC
-	required_skill = SKILL_RESEARCH
-	required_skill_proficiency = SKILL_RESEARCH_PROFESSIONAL
-
+	required_skills = list(/datum/skill/research/pro)
 
 /obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/stack/sheet/metal))

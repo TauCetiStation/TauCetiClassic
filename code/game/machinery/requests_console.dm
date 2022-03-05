@@ -67,8 +67,7 @@ var/global/list/departments_genitive = list()
 	light_range = 0
 	var/datum/announcement/station/command/department/announcement = new
 
-	required_skill = SKILL_COMMAND
-	required_skill_proficiency = SKILL_COMMAND_TRAINED
+	required_skills = list(/datum/skill/command/trained)
 
 /obj/machinery/requests_console/power_change()
 	..()

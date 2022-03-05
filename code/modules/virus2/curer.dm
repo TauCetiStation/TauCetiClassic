@@ -9,8 +9,7 @@
 	var/virusing
 
 	var/obj/item/weapon/reagent_containers/container = null
-	required_skill = SKILL_MEDICAL
-	required_skill_proficiency = SKILL_MEDICAL_COMPETENT
+	required_skills = list(/datum/skill/chemistry/novice, /datum/skill/research/trained, /datum/skill/medical/pro)
 
 /obj/machinery/computer/curer/attackby(obj/I, mob/user)
 	if(istype(I,/obj/item/weapon/reagent_containers))

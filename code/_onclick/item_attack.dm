@@ -136,7 +136,7 @@
 		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
 		if(BP.pumped)
 			power += max(round((PARABOLIC_SCALING(force, 1, 0.01) * BP.pumped * 0.1)), 0) //We need a pumped force multiplied by parabolic scaled item's force with a borders of 1 to 0
-	power = apply_skill_bonus(user, power, SKILL_MELEE, SKILL_MELEE_DEFAULT, -0.2, -0.2)
+	power = apply_skill_bonus(user, power, list(/datum/skill/melee), -0.2, -0.2)
 	if(HULK in user.mutations)
 		power *= 2
 	if(!ishuman(M))

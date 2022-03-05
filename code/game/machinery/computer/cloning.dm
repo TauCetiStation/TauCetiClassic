@@ -18,8 +18,7 @@
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/loading = 0 // Nice loading text
 	var/autoprocess = 0
-	required_skill = SKILL_RESEARCH
-	required_skill_proficiency = SKILL_RESEARCH_PROFESSIONAL
+	required_skills = list(/datum/skill/medical/pro, /datum/skill/research/trained)
 	fumbling_time = 3 SECONDS
 
 /obj/machinery/computer/cloning/atom_init()

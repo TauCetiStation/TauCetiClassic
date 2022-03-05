@@ -44,7 +44,7 @@
 			status = 0
 			update_icon()
 		return
-	if(!handle_fumbling(user, src, SKILL_TASK_VERY_EASY, SKILL_POLICE, SKILL_POLICE_PRO, SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>"))
+	if(!handle_fumbling(user, src, SKILL_TASK_VERY_EASY, list(/datum/skill/police/master), SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>"))
 		return
 	if(charges > 0)
 		status = !status

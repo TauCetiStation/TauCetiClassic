@@ -12,8 +12,7 @@
 
 	var/start_pressure = ONE_ATMOSPHERE
 	var/maximum_pressure = 90 * ONE_ATMOSPHERE
-	required_skill = SKILL_ATMOS
-	required_skill_proficiency = SKILL_ATMOS_TRAINED
+	required_skills = list(/datum/skill/atmospherics/novice)
 
 /obj/machinery/portable_atmospherics/atom_init()
 	. = ..()

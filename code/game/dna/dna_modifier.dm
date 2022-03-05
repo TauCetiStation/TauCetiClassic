@@ -279,8 +279,9 @@
 	idle_power_usage = 10
 	active_power_usage = 400
 	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
-	required_skill = SKILL_RESEARCH
-	required_skill_proficiency = SKILL_RESEARCH_PROFESSIONAL
+
+	required_skills = list(/datum/skill/research/trained, /datum/skill/medical/trained)
+
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS

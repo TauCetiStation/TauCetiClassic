@@ -50,7 +50,7 @@
 	else
 		user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow [src].</span>")
 
-		var/ingestion_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(SKILL_MEDICAL = SKILL_MEDICAL_PRACTICED), 0, 0.25)
+		var/ingestion_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical/novice), 0, 0.25)
 		if(!do_mob(user, M, ingestion_time))
 			return
 
@@ -90,7 +90,7 @@
 
 /obj/item/weapon/reagent_containers/pill/examine(mob/user)
 	..()
-	if(!is_skill_competent(user, SKILL_CHEMISTRY, SKILL_CHEMISTRY_COMPETENT))
+	if(!is_skill_competent(user, list(/datum/skill/chemistry/trained)))
 		return
 	to_chat(user, "It contains:")
 	if(reagents.reagent_list.len)

@@ -27,8 +27,7 @@
 	var/stored_core_stability_delay = 0
 
 	var/stored_power = 0//Power to deploy per tick
-	required_skill = SKILL_ENGINEERING
-	required_skill_proficiency = SKILL_ENGINEERING_PRO
+	required_skills = list(/datum/skill/engineering/pro)
 
 
 /obj/machinery/power/am_control_unit/atom_init()

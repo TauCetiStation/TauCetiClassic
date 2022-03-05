@@ -26,7 +26,7 @@
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 		if(S.mode != 2)//SYRINGE_BROKEN in syringes.dm
 			if(syringes.len < max_syringes)
-				if(!handle_fumbling(user, src, SKILL_TASK_EASY, SKILL_CHEMISTRY, SKILL_CHEMISTRY_PRACTICED))
+				if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/chemistry/novice)))
 					return
 				user.drop_from_inventory(I, src)
 				syringes += I

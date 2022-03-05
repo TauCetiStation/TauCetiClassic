@@ -8,8 +8,7 @@
 
 	var/icon_state_attached
 	var/icon_state_detached
-	required_skill = SKILL_MEDICAL
-	required_skill_proficiency = SKILL_MEDICAL_COMPETENT
+	required_skills = list(/datum/skill/medical/trained)
 
 /obj/machinery/life_assist/atom_init()
 	. = ..()
