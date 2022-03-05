@@ -20,6 +20,11 @@
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 
+	if(mind)
+		if(mind.current == src)
+			mind.set_current(null)
+		if(mind.original == src)
+			mind.original = null
 	return ..()
 
 
@@ -1289,3 +1294,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(forced_language)
 		return all_languages[forced_language]
 	return null
+
+/mob/proc/set_lastattacker_info(mob/M)
+	lastattacker_name = M.real_name
+	lastattacker_key = M.key

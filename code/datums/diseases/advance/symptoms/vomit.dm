@@ -80,6 +80,6 @@ Bonus
 	if(brute_dam < 50)
 		M.adjustBruteLoss(3)
 
-	var/turf/simulated/T = get_turf(M)
+	var/turf/T = get_turf(M)
 	if(istype(T))
 		T.add_blood_floor(M)

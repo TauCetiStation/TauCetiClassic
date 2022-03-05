@@ -15,6 +15,7 @@
 	w_class = SIZE_SMALL
 	force = 5
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
+	flashbang_protection = TRUE
 
 /obj/item/clothing/head/helmet/psyamp
 	name = "psychic amplifier"

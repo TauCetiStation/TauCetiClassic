@@ -73,9 +73,6 @@
 
 	var/list/found
 	for(var/i in 1 to len)
-		if(QDELETED(client))
-			// He got cleaned up before we were done
-			return
 		var/list/row = telemetry_connections[i]
 
 		// Check for a malformed history object
@@ -94,6 +91,10 @@
 			break
 
 		CHECK_TICK
+		if(QDELETED(client))
+			// He got cleaned up before we were done
+			return
+
 	// This fucker has a history of playing on a banned account.
 	if(found)
 		client.guard.chat_data["cookie_match"] = found
