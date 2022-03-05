@@ -1,5 +1,10 @@
+#define SOCIALIZATION_NORMAL 0
+#define SOCIALIZATION_LONELY 1
+#define SOCIALIZATION_VERY_LONELY 2
+
 /mob/living/carbon/human
 	var/conversation_timer
+	var/social_state = SOCIALIZATION_NORMAL
 
 /mob/living/carbon/human/atom_init()
 	. = ..()
@@ -9,53 +14,54 @@
 	deltimer(conversation_timer)
 	return ..()
 
+/mob/living/carbon/human/proc/set_social_state(state)
+	switch(social_state)
+		if(SOCIALIZATION_NORMAL)
+			social_state = SOCIALIZATION_NORMAL
+			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
+
+			deltimer(conversation_timer)
+			conversation_timer = addtimer(
+				CALLBACK(src, .proc/handle_no_socialization),
+				5 MINUTES,
+				TIMER_STOPPABLE
+			)
+
+		if(SOCIALIZATION_LONELY)
+			social_state = SOCIALIZATION_LONELY
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
+
+			deltimer(conversation_timer)
+			conversation_timer = addtimer(
+				CALLBACK(src, .proc/handle_prolonged_no_socialization),
+				5 MINUTES,
+				TIMER_STOPPABLE
+			)
+
+		if(SOCIALIZATION_VERY_LONELY)
+			social_state = SOCIALIZATION_VERY_LONELY
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/very_lonely)
+
 /mob/living/carbon/human/proc/handle_prolonged_no_socialization()
 	if(HAS_TRAIT(src, TRAIT_MUTE))
 		return
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/very_lonely)
+	set_social_state(SOCIALIZATION_VERY_LONELY)
 
 /mob/living/carbon/human/proc/handle_no_socialization()
-	conversation_timer = addtimer(
-		CALLBACK(src, .proc/handle_prolonged_no_socialization),
-		5 MINUTES,
-		TIMER_STOPPABLE
-	)
-
 	if(HAS_TRAIT(src, TRAIT_MUTE))
 		return
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
+	set_social_state(SOCIALIZATION_LONELY)
 
-/mob/living/carbon/human/proc/handle_socialization()
+/mob/living/carbon/human/proc/handle_socialization(mob/hearer)
 	if(get_species() == ABDUCTOR)
 		return
 
-	deltimer(conversation_timer)
-	conversation_timer = addtimer(
-		CALLBACK(src, .proc/handle_no_socialization),
-		5 MINUTES,
-		TIMER_STOPPABLE
-	)
-	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
+	var/new_social_state = SOCIALIZATION_LONELY
+	if(ishuman(hearer))
+		new_social_state = SOCIALIZATION_NORMAL
 
-/mob/living/carbon/human/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
-	. = ..()
-	if(!.)
-		return
-
-	if(speaker == src)
-		return
-
-	if(stat != CONSCIOUS)
-		return
-
-	if(!client)
-		return
-
-	if(!ishuman(speaker))
-		return
-
-	var/mob/living/carbon/human/H = speaker
-	H.handle_socialization()
+	if(social_state > new_social_state)
+		set_social_state(new_social_state)
 
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"
@@ -440,3 +446,7 @@
 	returns[5] = sound_vol
 
 	return returns
+
+#undef SOCIALIZATION_NORMAL
+#undef SOCIALIZATION_LONELY
+#undef SOCIALIZATION_VERY_LONELY
