@@ -1511,7 +1511,29 @@
 /mob/living/carbon/human/verb/skills_menu()
 	set category = "IC"
 	set name = "Skills Menu"
-
+	var/list/tables_data = list(
+		"Engineering related skills" = list(
+			/datum/skill/engineering,
+			/datum/skill/construction,
+			/datum/skill/atmospherics
+			),
+		"Medical skills" = list(
+			/datum/skill/medical,
+			/datum/skill/surgery,
+			/datum/skill/chemistry
+			),
+		"Combat skills" = list(
+			/datum/skill/melee,
+			/datum/skill/firearms,
+			/datum/skill/police,
+			/datum/skill/combat_mech
+			),
+		"Civilian skills" = list(
+			/datum/skill/command,
+			/datum/skill/research,
+			/datum/skill/civ_mech
+			)
+	)
 	var/dat = {"
 		<style>
 			.skill_slider {
@@ -1552,24 +1574,24 @@
 	dat += {"
 		<button class="max-button" type="submit" value="1" id="skills_max" onclick="setMaxSkills()">Set skills values to maximum</button>
 	"}
-	for(var/skill in skills_list)
+	for(var/category in tables_data)
 		dat += {"
 			<table>
-				<caption>[skill.name]</caption>
+				<caption>[category]</caption>
 		"}
 
 		var/list/sliders_data = tables_data[category]
 
-		for(var/slider_name in sliders_data)
-			var/slider_id = sliders_data[slider_name]
+		for(var/datum/skill/skill in sliders_data)
+			var/slider_id = initial(skill.name)
 			var/slider_value = mind.skills.get_value(slider_id)
-			var/slider_min_value = get_skill_absolute_minimum(slider_id)
-			var/slider_max_value = mind.skills.get_max(slider_id)
-			var/slider_hint = sliders_hint[slider_id]
+			var/slider_min_value = initial(skill.min_value)
+			var/slider_max_value = initial(skill.max_value)
+			var/slider_hint = initial(skill.hint)
 			dat += {"
 				<tr>
 					<td>
-						[slider_name] <span title="[slider_hint]">(?)</span>:
+						[slider_id] <span title="[slider_hint]">(?)</span>:
 					</td>
 					<td>
 						<input type="range" class="skill_slider" min="[slider_min_value]" max="[slider_max_value]" value="[slider_value]" id="[slider_id]" onchange="updateSkill('[slider_id]')" >
@@ -1682,7 +1704,7 @@
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
 		//untrained 8 seconds, novice 6.5, practiced 5, competent 3.5, expert and master 2
-		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(SKILL_MEDICAL = SKILL_MEDICAL_UNTRAINED), penalty = 0, bonus = 0.15)
+		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical), penalty = 0, bonus = 0.15)
 		if(!instant)
 			if(hunt_injection_port) // takes additional time
 				if(!stealth)

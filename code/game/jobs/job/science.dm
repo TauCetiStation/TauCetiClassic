@@ -18,7 +18,7 @@
 	salary = 250
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
-	skill_sets = list("Research Director" = /datum/skills_modifier/rd)
+	skill_sets = list("Research Director" = /datum/skillset/rd)
 	outfit = /datum/outfit/job/rd
 	/*
 		HEY YOU!
@@ -46,8 +46,8 @@
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/scientist
 	skill_sets = list(
-		"Scientist" = /datum/skills_modifier/scientist,
-		"Phoron Researcher" = /datum/skills_modifier/scientist/phoron
+		"Scientist" = /datum/skillset/scientist,
+		"Phoron Researcher" = /datum/skillset/scientist/phoron
 		)
 
 
@@ -65,7 +65,7 @@
 	salary = 190
 	minimal_player_ingame_minutes = 1400
 	outfit = /datum/outfit/job/xenoarchaeologist
-	skill_sets = list("Xenoarchaeologist" = /datum/skills_modifier/xenoarchaeologist)
+	skill_sets = list("Xenoarchaeologist" = /datum/skillset/xenoarchaeologist)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -90,7 +90,7 @@
 	salary = 190
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/xenobiologist
-	skill_sets = list("Xenobiologist" = /datum/skills_modifier/xenobiologist)
+	skill_sets = list("Xenobiologist" = /datum/skillset/xenobiologist)
 
 
 /datum/job/roboticist
@@ -109,9 +109,9 @@
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/roboticist
 	skill_sets = list(
-		"Roboticist" = /datum/skills_modifier/roboticist,
-		"Biomechanical Engineer" = /datum/skills_modifier/roboticist/bio,
-		"Mechatronic Engineer" = /datum/skills_modifier/roboticist/mecha
+		"Roboticist" = /datum/skillset/roboticist,
+		"Biomechanical Engineer" = /datum/skillset/roboticist/bio,
+		"Mechatronic Engineer" = /datum/skillset/roboticist/mecha
 	)
 
 
@@ -128,5 +128,5 @@
 	access = list(access_research)
 	salary = 50
 	outfit = /datum/outfit/job/research_assistant
-	skill_sets = list("Research Assistant" = /datum/skills_modifier/research_assistant)
+	skill_sets = list("Research Assistant" = /datum/skillset/research_assistant)
 

@@ -69,10 +69,10 @@
 	value = -1
 
 /datum/skill/melee/trained
-	value = 1 //cook, botanist, atmospheric techician
+	value = 1 //botanist, atmospheric techician
 
 /datum/skill/melee/master
-	value = 2 // chaplain, security
+	value = 2 // chaplain, security, cook
 
 /datum/skill/atmospherics
 	name = SKILL_ATMOS
