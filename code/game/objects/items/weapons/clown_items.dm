@@ -22,7 +22,7 @@
 
 /obj/item/weapon/bananapeel/atom_init()
 	. = ..()
-	AddComponent(/datum/component/slippery, 3)
+	AddComponent(/datum/component/slippery, 2)
 
 /obj/item/weapon/bananapeel/honk
 	name = "Clowny banana peel"
@@ -37,7 +37,9 @@
 
 /obj/item/weapon/bananapeel/honk/atom_init()
 	. = ..()
-	AddComponent(/datum/component/slippery, 4, SLIDE | GALOSHES_DONT_HELP)
+	
+	
+	Component(/datum/component/slippery, 4, SLIDE | GALOSHES_DONT_HELP)
 
 /*
  * Soap
