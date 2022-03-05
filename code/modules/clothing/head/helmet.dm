@@ -15,6 +15,7 @@
 	w_class = SIZE_SMALL
 	force = 5
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
+	flashbang_protection = TRUE
 
 /obj/item/clothing/head/helmet/warden
 	name = "warden's helmet"
@@ -210,3 +211,12 @@
 /obj/item/clothing/head/helmet/syndiassault/alternate
 	icon_state = "assaulthelmet"
 	item_state = "assaulthelmet"
+
+/obj/item/clothing/head/helmet/crusader
+	name = "crusader topfhelm"
+	desc = "They may call you a buckethead but who'll laugh when crusade begins?"
+	icon_state = "crusader"
+	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 20, bio = 0, rad = 10)
+	siemens_coefficient = 1.2
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES

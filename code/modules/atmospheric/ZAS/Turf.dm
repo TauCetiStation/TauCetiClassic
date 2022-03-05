@@ -4,6 +4,11 @@
 /turf/var/needs_air_update = FALSE
 /turf/var/datum/gas_mixture/air
 
+/turf/var/air_unsim_multiplier = 0
+#ifdef ZASDBG
+/turf/var/verbose = FALSE
+#endif
+
 /turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
 	if(graphic_add && graphic_add.len)
 		vis_contents += graphic_add
@@ -91,7 +96,6 @@
 				. |= dir
 
 /turf/simulated/update_air_properties()
-
 	if(zone && zone.invalid) //this turf's zone is in the process of being rebuilt
 		c_copy_air() //not very efficient :(
 		zone = null //Easier than iterating through the list at the zone.

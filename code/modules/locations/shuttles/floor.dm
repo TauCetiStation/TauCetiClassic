@@ -76,9 +76,11 @@
 //Скоро бэй обновит шаттлконтроллеры, там и сделаем по человечески.
 //======
 //Привет! Как дела?
-/turf/space/shuttle
+//======
+//Привет! Как дела?
+/turf/environment/space/shuttle
 	icon = 'icons/locations/shuttles/space.dmi'
 	icon_state = "1swall_s"
 
-/turf/space/shuttle/New()
+/turf/environment/space/shuttle/New()
 	icon_state = "[rand(1,4)]swall_s"

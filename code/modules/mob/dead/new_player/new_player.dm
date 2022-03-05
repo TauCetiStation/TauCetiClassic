@@ -87,6 +87,21 @@
 			client << output(ready, "lobbybrowser:setReadyStatus")
 		return
 
+	if(href_list["lobby_be_special"])
+		if(client.prefs.have_quality)
+			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
+			return
+		if(!client.prefs.selecting_quality)
+			client.prefs.selecting_quality = TRUE
+			if(tgui_alert(
+				src,
+				"Вы уверенны, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.",
+				"Особенность",
+				list("ДА!!!", "Нет")) == "ДА!!!")
+				SSqualities.register_client(client)
+			client.prefs.selecting_quality = FALSE
+		return
+
 	if(href_list["lobby_observe"])
 		if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
 			to_chat(src, "<span class='red'>You have been banned from observing. Declare yourself.</span>")
@@ -201,9 +216,12 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
+
+	SSjob.EquipRank(character, rank, 1)					//equips the human
+
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
-	SSjob.EquipRank(character, rank, 1)					//equips the human
+		SSqualities.give_quality(character, TRUE)
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")

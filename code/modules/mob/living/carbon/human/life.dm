@@ -564,7 +564,7 @@
 	//Moved pressure calculations here for use in skip-processing check.
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = calculate_affecting_pressure(pressure)
-	var/is_in_space = istype(get_turf(src), /turf/space)
+	var/is_in_space = isspaceturf(get_turf(src))
 
 	if(!is_in_space) //space is not meant to change your body temperature.
 		var/loc_temp = get_temperature(environment)
@@ -1386,7 +1386,15 @@
 			else
 				sightglassesmod = "nightsight"
 
-	set_EyesVision(sightglassesmod)
+	if(sightglassesmod)
+		set_EyesVision(sightglassesmod)
+		return TRUE
+
+	if(moody_color)
+		animate(client, color = moody_color, time = 5)
+	else
+		animate(client, color = null, time = 5)
+
 	return TRUE
 
 /mob/living/carbon/human/proc/handle_random_events()
@@ -1500,7 +1508,7 @@
 
 	if(pulse == PULSE_NONE) return
 
-	if(pulse == PULSE_2FAST || shock_stage >= 10 || istype(get_turf(src), /turf/space))
+	if(pulse == PULSE_2FAST || shock_stage >= 10 || isspaceturf(get_turf(src)))
 
 		var/temp = (5 - pulse)/2
 

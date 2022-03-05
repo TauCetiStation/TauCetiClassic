@@ -20,6 +20,11 @@
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 
+	if(mind)
+		if(mind.current == src)
+			mind.set_current(null)
+		if(mind.original == src)
+			mind.original = null
 	return ..()
 
 
@@ -212,7 +217,6 @@
 				client.eye = loc
 	return
 
-
 /mob/proc/show_inv(mob/user)
 	return
 
@@ -278,17 +282,6 @@
 		mind.store_memory(msg)
 	else
 		to_chat(src, "The game appears to have misplaced your mind datum, so we can't show you your notes.")
-
-/mob/proc/store_memory(msg, popup)
-	msg = sanitize(msg)
-
-	if(length(memory) == 0)
-		memory += msg
-	else
-		memory += "<BR>[msg]"
-
-	if(popup)
-		memory()
 
 /mob/proc/update_flavor_text()
 	set src in usr
@@ -768,6 +761,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 					lying = 1
 
 	density = !lying
+
+	if(lying != was_lying)
+		if(lying)
+			SEND_SIGNAL(src, COMSIG_MOB_STATUS_LYING)
+		else
+			SEND_SIGNAL(src, COMSIG_MOB_STATUS_NOT_LYING)
+		was_lying = lying
 
 	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isxeno(src))
 		drop_l_hand()
@@ -1286,3 +1286,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		input_offsets = null
 		next_randomise_inputs = world.time
+
+/mob/proc/get_language()
+	if(forced_language)
+		return all_languages[forced_language]
+	return null
+
+/mob/proc/set_lastattacker_info(mob/M)
+	lastattacker_name = M.real_name
+	lastattacker_key = M.key

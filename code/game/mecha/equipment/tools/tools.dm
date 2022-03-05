@@ -331,7 +331,7 @@
 					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.use_power(energy_drain)
 		if(1)
-			if(istype(target, /turf/space))
+			if(isenvironmentturf(target))
 				occupant_message("Building Floor...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -1134,7 +1134,7 @@
 	var/area/thearea = allowed_areas.areas[A]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.density && !istype(T, /turf/space) && !T.obscured)
+		if(!T.density && !isenvironmentturf(T) && !T.obscured)
 			var/clear = TRUE
 			for(var/obj/O in T)
 				if(O.density)
