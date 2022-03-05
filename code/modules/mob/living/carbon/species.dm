@@ -224,6 +224,9 @@
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
+	if(!flags[IS_SOCIAL])
+		H.handle_socialization()
+
 	H.remove_moveset_source(MOVESET_SPECIES)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
@@ -985,11 +988,6 @@
 	H.gender = NEUTER
 
 	return ..()
-
-/datum/species/abductor/on_loose(mob/living/carbon/human/H, new_species)
-	..()
-	// Abductors don't get sad when not talking, but not Abductors do. So we need to refresh the timer
-	H.handle_socialization()
 
 /datum/species/abductor/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_abductor_digest(M)
