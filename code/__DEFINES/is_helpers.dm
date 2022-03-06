@@ -3,6 +3,12 @@
 // Example: isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
 // Bad example: isabductor(A) istype(A, /mob/living/carbon/human/abductor)
 
+// TURFS
+
+#define isenvironmentturf(A) (istype(A, /turf/environment))
+
+#define isspaceturf(A) (istype(A, /turf/environment/space))
+
 // HUMAN
 
 #define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))

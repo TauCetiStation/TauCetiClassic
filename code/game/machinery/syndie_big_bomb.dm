@@ -58,7 +58,7 @@
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user)
 	if(iswrench(I))
 		if(!anchored)
-			if(!isturf(src.loc) || istype(src.loc, /turf/space))
+			if(!isturf(src.loc) || isspaceturf(src.loc))
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it</span>")
 			else
 				if(!do_skill_checks(user))
