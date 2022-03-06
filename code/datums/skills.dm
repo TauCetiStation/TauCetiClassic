@@ -1,6 +1,6 @@
 /datum/skills
 	var/datum/skillset/active = new
-	var/datum/skillset/available  = new
+	var/datum/skillset/available = new
 
 	var/list/available_skillsets
 
