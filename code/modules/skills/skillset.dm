@@ -1,18 +1,33 @@
 /datum/skillset
-	var/list/skills = list()
+	var/list/skills
+	var/list/initial_skills
 
-/datum/skillset/proc/init_from_datum(datum/skills_modifier/initial)
-	for(var/skill in SKILL_BOUNDS)
-		skills[skill] = max(get_skill_absolute_minimum(skill), initial.get_value(skill))
+/datum/skillset/New()
+	for(var/datum/skill/s as anything in initial_skills)
+		LAZYSET(skills, initial(s.name), new s)
 
-/datum/skillset/proc/merge(datum/skills/other)
+	for(var/datum/skill/skill as anything in skills_list)
+		if(!(initial(skill.name) in skills))
+			LAZYSET(skills, initial(skill.name), new skill)
+
+/datum/skillset/proc/merge(datum/skillset/skillset_type)
+	var/datum/skillset/other_skillset = new skillset_type
 	for(var/skill in skills)
-		set_value(skill, max(other.get_value(skill), get_value(skill)))
+		var/new_value = max(other_skillset.get_value(skill), get_value(skill))
+		set_value(skill, new_value)
+
 
 /datum/skillset/proc/get_value(skill)
+	var/datum/skill/s = get_skill(skill)
+	return s.value
+
+/datum/skillset/proc/set_value(skill, value)
+	var/datum/skill/s = get_skill(skill)
+	s.value = value
+
+/datum/skillset/proc/get_skill(skill)
 	if(skill in skills)
 		return skills[skill]
 
-/datum/skillset/proc/set_value(skill, value)
-	if(skill in skills)
-		skills[skill] = max(min(get_skill_absolute_maximum(skill), value), get_skill_absolute_minimum(skill))
+
+
