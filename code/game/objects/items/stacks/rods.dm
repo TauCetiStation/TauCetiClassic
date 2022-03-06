@@ -50,7 +50,7 @@
 /obj/item/stack/rods/attack_self(mob/living/user)
 	var/atom/build_loc = loc
 	if(ismob(build_loc))
-		build_loc = loc
+		build_loc = build_loc.loc
 
 	if(!isturf(build_loc))
 		return FALSE
