@@ -17,7 +17,8 @@
 		active.set_value(skill, min(active.get_value(skill), available.get_value(skill)))
 
 /datum/skills/proc/maximize_active_skills()
-	active.skills = available.skills.Copy()
+	for(var/skill in available.skills)
+		active.set_value(skill, available.get_value(skill))
 
 /datum/skills/proc/remove_modifier(datum/skillset/skillset_type)
 	for(var/datum/skillset/s as anything in available_skillsets)
@@ -43,4 +44,4 @@
 	if (value == get_value(skill_name))
 		return
 	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill_name] from [active.get_value(skill_name)] to [value].</span>")
-	active.set_value(skill, value)
+	active.set_value(skill_name, value)

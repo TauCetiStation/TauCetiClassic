@@ -1,14 +1,14 @@
 /datum/skillset
-	var/list/skills = list()
+	var/list/skills
 	var/list/initial_skills
 
 /datum/skillset/New()
 	for(var/datum/skill/s as anything in initial_skills)
-		skills[initial(s.name)] = new s
+		LAZYSET(skills, initial(s.name), new s)
 
 	for(var/datum/skill/skill as anything in skills_list)
 		if(!(initial(skill.name) in skills))
-			skills[initial(skill.name)] = new skill
+			LAZYSET(skills, initial(skill.name), new skill)
 
 /datum/skillset/proc/merge(datum/skillset/skillset_type)
 	var/datum/skillset/other_skillset = new skillset_type
