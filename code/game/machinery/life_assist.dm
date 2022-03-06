@@ -8,6 +8,7 @@
 
 	var/icon_state_attached
 	var/icon_state_detached
+	required_skills = list(/datum/skill/medical/trained)
 
 /obj/machinery/life_assist/atom_init()
 	. = ..()
@@ -58,6 +59,8 @@
 	if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
 		return
 
+	if(!do_skill_checks(usr))
+		return
 	if(do_after(usr, 20, target = src))
 		if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
 			return

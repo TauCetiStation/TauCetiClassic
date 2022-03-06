@@ -9,6 +9,7 @@
 	circuit = /obj/item/weapon/circuitboard/operating
 	var/mob/living/carbon/human/victim = null
 	var/obj/machinery/optable/table = null
+	required_skills = list(/datum/skill/surgery/trained)
 
 /obj/machinery/computer/operating/atom_init()
 	. = ..()
@@ -24,7 +25,8 @@
 			user.unset_machine()
 			user << browse(null, "window=op")
 			return
-
+	if(!do_skill_checks(user))
+		return
 	var/dat = ""
 	if(src.table && (table.check_victim()))
 		src.victim = src.table.victim
