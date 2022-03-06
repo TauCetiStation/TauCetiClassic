@@ -111,7 +111,7 @@
 /obj/effect/blob/proc/expand(turf/T = null, prob = 1)
 	if(prob && !prob(health))
 		return
-	if(istype(T, /turf/space) && prob(75))
+	if(isspaceturf(T) && prob(75))
 		return
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
