@@ -65,10 +65,8 @@ var/global/list/departments_genitive = list()
 	var/priority = -1 ; //Priority of the message being sent
 	var/list/departments = list() // Buffer for duplicate department filter
 	light_range = 0
-	var/datum/announcement/station/command/department/announcement = new
 
-	required_skill = SKILL_COMMAND
-	required_skill_proficiency = SKILL_COMMAND_TRAINED
+	var/datum/announcement/station/command/department/announcement = new
 
 /obj/machinery/requests_console/power_change()
 	..()
@@ -228,6 +226,7 @@ var/global/list/departments_genitive = list()
 	. = ..()
 	if(!.)
 		return
+
 	if(href_list["write"])
 		to_dpt = sanitize(href_list["write"])  //write contains the string of the receiving department's name
 

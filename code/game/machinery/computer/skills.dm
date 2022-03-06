@@ -27,8 +27,6 @@
 	var/sortBy = "name"                      // field to sort
 	var/order = 1                            // -1 = Descending - 1 = Ascending
 	var/docname
-	required_skill = SKILL_COMMAND
-	required_skill_proficiency = SKILL_COMMAND_TRAINED
 
 /obj/machinery/computer/skills/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)

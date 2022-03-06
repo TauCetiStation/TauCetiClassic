@@ -23,8 +23,6 @@
 	var/static/icon/mugshot = icon('icons/obj/mugshot.dmi', "background") //records photo background
 	var/next_print = 0
 	var/docname
-	required_skill = SKILL_POLICE
-	required_skill_proficiency = SKILL_POLICE_TRAINED
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
