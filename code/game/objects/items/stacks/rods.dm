@@ -57,8 +57,8 @@
 
 	add_fingerprint(user)
 
-	if(locate(/obj/structure/grille, usr.loc))
-		for(var/obj/structure/grille/G in usr.loc)
+	if(locate(/obj/structure/grille, build_loc))
+		for(var/obj/structure/grille/G in build_loc)
 			if(!G.destroyed)
 				return TRUE
 
