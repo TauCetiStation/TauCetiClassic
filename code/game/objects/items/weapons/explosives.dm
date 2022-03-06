@@ -21,7 +21,7 @@
 	else
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target.name]</font>"
 		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [target.name]", user)
-	var/planting_time =  max(SKILL_TASK_AVERAGE, SKILL_TASK_DIFFICULT - 1 SECONDS *  (user.mind.skills.get_value(SKILL_FIREARMS)  + user.mind.skills.get_value(SKILL_ENGINEERING)))
+	var/planting_time = apply_skill_bonus(user, SKILL_TASK_DIFFICULT, list(/datum/skill/firearms/master, /datum/skill/engineering/pro))
 	if(do_after(user, planting_time, target = target) && user.Adjacent(target))
 		user.drop_item()
 		target = target

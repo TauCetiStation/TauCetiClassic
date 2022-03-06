@@ -1563,7 +1563,7 @@
 				background-color: #444;
 				font-weight: bold;
 			}
-			юmax-button {
+			max-button {
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -1582,11 +1582,11 @@
 
 		var/list/sliders_data = tables_data[category]
 
-		for(var/datum/skill/skill in sliders_data)
+		for(var/datum/skill/skill as anything in sliders_data)
 			var/slider_id = initial(skill.name)
 			var/slider_value = mind.skills.get_value(slider_id)
 			var/slider_min_value = initial(skill.min_value)
-			var/slider_max_value = initial(skill.max_value)
+			var/slider_max_value = mind.skills.get_max(slider_id)
 			var/slider_hint = initial(skill.hint)
 			dat += {"
 				<tr>
@@ -1631,7 +1631,8 @@
 				document.getElementById("notice").innerHTML = '<b>Hint: ' + text + '</b>';
 			}
 			function setMaxSkills() {
-				'byond://?src=\ref[src];set_max_skills;
+				window.location  = 'byond://?src=\ref[src];set_max_skills=1';
+				setTimeout("location.reload(true);", 100);
 			}
 		</script>
 		"}

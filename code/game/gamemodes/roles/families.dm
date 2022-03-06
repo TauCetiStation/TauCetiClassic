@@ -95,7 +95,7 @@
 
 /datum/role/gangster/leader
 	id = GANGSTER_LEADER
-	skillset_type = /datum/skillset/max
+	skillset_type = /datum/skillset/gangster
 
 /datum/role/gangster/leader/OnPostSetup(laterole)
 	..()

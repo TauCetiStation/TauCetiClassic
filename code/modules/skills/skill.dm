@@ -1,8 +1,8 @@
 /datum/skill
 	var/name
-	var/min_value
+	var/min_value = 0
 	var/max_value
-	var/value
+	var/value = 0
 	var/hint
 
 /datum/skill/civ_mech

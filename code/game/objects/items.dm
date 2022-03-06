@@ -78,8 +78,8 @@
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
-	// Is using this item requires any specific skill?
-	var/required_skill
+	// Is using this item requires any specific skills?
+	var/skill_checks
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -759,9 +759,9 @@
 		return
 
 	var/skill_bonus = 1
-	//default check for item, assumes that is 2 equal to trained in most of skills, so this check veryfies that we are trained enough
-	if(required_skill)
-		skill_bonus = apply_skill_bonus(user, 1, list(required_skill = 2))
+	//default check for item
+	if(skill_checks)
+		skill_bonus = apply_skill_bonus(user, 1, skill_checks)
 	//in case item have no defined default required_skill or we need to check other skills e.g. check crowbar for surgery
 	if(required_skills)
 		skill_bonus = apply_skill_bonus(user, 1, required_skills)

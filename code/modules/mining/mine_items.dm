@@ -182,7 +182,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	sharp = 1
 
 	var/excavation_amount = 100
-	required_skill = SKILL_ENGINEERING
+	skill_checks = list(/datum/skill/engineering/novice)
 
 /obj/item/weapon/pickaxe/silver
 	name = "silver pickaxe"
@@ -487,7 +487,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
-	var/planting_time =  max(SKILL_TASK_EASY, SKILL_TASK_DIFFICULT - 1 SECONDS *  ( 2 * user.mind.skills.get_value(SKILL_FIREARMS)  + user.mind.skills.get_value(SKILL_ENGINEERING)))
+	var/planting_time = apply_skill_bonus(user, SKILL_TASK_DIFFICULT, list(/datum/skill/firearms/master, /datum/skill/engineering/pro))
 	if(do_after(user, planting_time, target = target))
 		user.drop_item()
 		target = target
