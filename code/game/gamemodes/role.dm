@@ -34,7 +34,7 @@
 	// Allows you to change the number of greeting messages for a role
 	var/list/greets = list(GREET_DEFAULT, GREET_CUSTOM)
 
-	var/skillset_type = /datum/skillset
+	var/skillset_type
 	//if set to true, users skills will be set to maximum available after he gets this role
 	var/change_to_maximum_skills = TRUE
 
