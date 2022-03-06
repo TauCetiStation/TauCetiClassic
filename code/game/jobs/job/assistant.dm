@@ -19,14 +19,14 @@
 		)
 	outfit = /datum/outfit/job/assistant/test_subject
 	skill_sets = list(
-		"Test Subject"   = /datum/skillset/test_subject,
-		"Lawyer"         = /datum/skillset/test_subject/lawyer,
-		"Mecha Operator" = /datum/skillset/test_subject/mecha,
-		"Private Eye"    = /datum/skillset/test_subject/detective,
-		"Reporter"       = /datum/skillset/test_subject/reporter,
-		"Waiter"         = /datum/skillset/test_subject/waiter,
-		"Vice Officer"   = /datum/skillset/test_subject/vice_officer,
-		"Paranormal Investigator" = /datum/skillset/test_subject/paranormal
+		"Test Subject"   = /datum/skills_modifier/test_subject,
+		"Lawyer"         = /datum/skills_modifier/test_subject/lawyer,
+		"Mecha Operator" = /datum/skills_modifier/test_subject/mecha,
+		"Private Eye"    = /datum/skills_modifier/test_subject/detective,
+		"Reporter"       = /datum/skills_modifier/test_subject/reporter,
+		"Waiter"         = /datum/skills_modifier/test_subject/waiter,
+		"Vice Officer"   = /datum/skills_modifier/test_subject/vice_officer,
+		"Paranormal Investigator" = /datum/skills_modifier/test_subject/paranormal
 		)
 
 /datum/job/assistant/get_access()

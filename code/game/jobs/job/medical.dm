@@ -19,7 +19,7 @@
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/cmo
-	skill_sets = list("Chief Medical Officer" = /datum/skillset/cmo)
+	skill_sets = list("Chief Medical Officer" = /datum/skills_modifier/cmo)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -49,9 +49,9 @@
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/doctor
 	skill_sets = list(
-		"Medical Doctor" = /datum/skillset/doctor,
-		"Surgeon" = /datum/skillset/doctor/surgeon,
-		"Nurse" = /datum/skillset/doctor/nurse
+		"Medical Doctor" = /datum/skills_modifier/doctor,
+		"Surgeon" = /datum/skills_modifier/doctor/surgeon,
+		"Nurse" = /datum/skills_modifier/doctor/nurse
 		)
 	/*
 		HEY YOU!
@@ -77,7 +77,7 @@
 	salary = 120
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
 	outfit = /datum/outfit/job/paramedic
-	skill_sets = list("Paramedic" = /datum/skillset/paramedic)
+	skill_sets = list("Paramedic" = /datum/skills_modifier/paramedic)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -108,7 +108,7 @@
 	alt_titles = list("Pharmacist")
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/chemist
-	skill_sets = list("Chemist" = /datum/skillset/chemist)
+	skill_sets = list("Chemist" = /datum/skills_modifier/chemist)
 
 
 /datum/job/geneticist
@@ -125,7 +125,7 @@
 	salary = 180
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/geneticist
-	skill_sets = list("Geneticist" = /datum/skillset/geneticist)
+	skill_sets = list("Geneticist" = /datum/skills_modifier/geneticist)
 
 
 /datum/job/virologist
@@ -143,7 +143,7 @@
 	minimal_player_ingame_minutes = 960
 	salary = 180
 	outfit = /datum/outfit/job/virologist
-	skill_sets = list("Virologist" = /datum/skillset/virologist)
+	skill_sets = list("Virologist" = /datum/skills_modifier/virologist)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -169,7 +169,7 @@
 	salary = 140
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/psychiatrist
-	skill_sets = list("Psychiatrist" = /datum/skillset/psychiatrist)
+	skill_sets = list("Psychiatrist" = /datum/skills_modifier/psychiatrist)
 
 
 /datum/job/intern
@@ -185,5 +185,5 @@
 	access = list(access_medical)
 	salary = 50
 	outfit = /datum/outfit/job/intern
-	skill_sets = list("Medical Intern" = /datum/skillset/intern)
+	skill_sets = list("Medical Intern" = /datum/skills_modifier/intern)
 

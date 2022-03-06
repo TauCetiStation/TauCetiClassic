@@ -21,7 +21,6 @@
 	var/datum/disease2/effectholder/selected = null
 
 	var/working = 0
-	required_skills = list(/datum/skill/chemistry/novice, /datum/skill/research/trained, /datum/skill/medical/pro)
 
 /obj/machinery/disease2/incubator/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/syringe))
@@ -29,8 +28,7 @@
 		if(beaker)
 			to_chat(user, "\The [src] is already loaded.")
 			return
-		if(!do_skill_checks(user))
-			return
+
 		beaker = O
 		user.drop_from_inventory(O, src)
 
@@ -45,8 +43,7 @@
 		if(dish)
 			to_chat(user, "The dish tray is aleady full!")
 			return
-		if(!do_skill_checks(user))
-			return
+
 		dish = O
 		user.drop_from_inventory(O, src)
 

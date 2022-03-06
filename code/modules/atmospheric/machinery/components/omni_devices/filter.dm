@@ -163,6 +163,7 @@
 /obj/machinery/atmospherics/components/omni/filter/Topic(href, href_list)
 	if(!..())
 		return FALSE
+
 	switch(href_list["command"])
 		if("power")
 			if(!configuring)

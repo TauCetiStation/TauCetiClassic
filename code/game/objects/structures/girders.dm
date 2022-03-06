@@ -89,6 +89,7 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet))
+
 		var/obj/item/stack/sheet/S = W
 		switch(S.type)
 
@@ -103,7 +104,7 @@
 					if(S.get_amount() < 2)
 						return ..()
 					to_chat(user, "<span class='notice'>Now adding plating...</span>")
-					if(S.use_tool(src, user, SKILL_TASK_AVERAGE, amount = 2, volume = 100))
+					if(S.use_tool(src, user, 40, amount = 2, volume = 100))
 						to_chat(user, "<span class='notice'>You added the plating!</span>")
 						var/turf/Tsrc = get_turf(src)
 						Tsrc.ChangeTurf(/turf/simulated/wall)
@@ -124,7 +125,7 @@
 						if(S.get_amount() < 1)
 							return ..()
 						to_chat(user, "<span class='notice'>Now finalising reinforced wall.</span>")
-						if(S.use_tool(src, user, SKILL_TASK_AVERAGE, amount = 1, volume = 100,  required_skills = list(/datum/skill/construction/pro)))
+						if(S.use_tool(src, user, 50, amount = 1, volume = 100))
 							to_chat(user, "<span class='notice'>Wall fully reinforced!</span>")
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall/r_wall)
@@ -136,7 +137,7 @@
 						if(S.get_amount() < 1)
 							return ..()
 						to_chat(user, "<span class='notice'>Now reinforcing girders</span>")
-						if(S.use_tool(src, user, 60, amount = 1, volume = 100, required_skills = list(/datum/skill/construction/pro)))
+						if(S.use_tool(src, user, 60, amount = 1, volume = 100))
 							to_chat(user, "<span class='notice'>Girders reinforced!</span>")
 							new/obj/structure/girder/reinforced( src.loc )
 							qdel(src)

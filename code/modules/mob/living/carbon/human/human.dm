@@ -642,11 +642,8 @@
 		electrocution_animation(40)
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(href_list["skill"])
+	if (href_list["skill"])
 		update_skills(href_list)
-	if(href_list["set_max_skills"])
-		mind.skills.maximize_active_skills()
-		to_chat(usr, "<span class='notice'>You are trying your best now.</span>")
 	if (href_list["item"])
 		var/slot = text2num(href_list["item"])
 		if(slot in check_obscured_slots())
@@ -1513,27 +1510,43 @@
 	set name = "Skills Menu"
 	var/list/tables_data = list(
 		"Engineering related skills" = list(
-			/datum/skill/engineering,
-			/datum/skill/construction,
-			/datum/skill/atmospherics
+			"Engineering" = SKILL_ENGINEERING,
+			"Construction" = SKILL_CONSTRUCTION,
+			"Atmospherics" =SKILL_ATMOS,
 			),
 		"Medical skills" = list(
-			/datum/skill/medical,
-			/datum/skill/surgery,
-			/datum/skill/chemistry
+			"Medical" = SKILL_MEDICAL,
+			"Surgery" = SKILL_SURGERY,
+			"Chemistry" = SKILL_CHEMISTRY,
 			),
 		"Combat skills" = list(
-			/datum/skill/melee,
-			/datum/skill/firearms,
-			/datum/skill/police,
-			/datum/skill/combat_mech
+			"Melee" = SKILL_MELEE,
+			"Firearms" = SKILL_FIREARMS,
+			"Police" = SKILL_POLICE,
+			"Combat exosuits" = SKILL_COMBAT_MECH,
 			),
 		"Civilian skills" = list(
-			/datum/skill/command,
-			/datum/skill/research,
-			/datum/skill/civ_mech
+			"Command" = SKILL_COMMAND,
+			"Research" = SKILL_RESEARCH,
+			"Civilian exosuits" = SKILL_CIV_MECH
 			)
 	)
+
+	var/list/sliders_hint = list(
+		"[SKILL_ENGINEERING]" = "Tools usage, hacking, wall repairs and deconstruction. Engine related tasks and configuring of telecommunications. ",
+		"[SKILL_CONSTRUCTION]" = "Construction of tables, walls, windows and crafting.",
+		"[SKILL_ATMOS]" = "Interacting with atmos related devices: pumps, scrubbers, space heaters. Usage of atmospherics computers.",
+		"[SKILL_MEDICAL]" = "Faster usage of syringes. Proficiency with defibrilators, medical scanners, cryo tubes, sleepers and life support machinery.",
+		"[SKILL_SURGERY]" = "Higher level means faster surgical operations.",
+		"[SKILL_CHEMISTRY]" = "Chemistry related machinery: grinders, chem dispensers and chem masters. You can recognize reagents in pills and bottles.",
+		"[SKILL_MELEE]" = "Higher levels means more damage with melee weapons.",
+		"[SKILL_FIREARMS]" = "Affects recoil from firearms. Proficiency in firearms allows for tactical reloads. Usage of mines and explosives.",
+		"[SKILL_POLICE]" = "Usage of tasers and flashers. Higher levels allows for faster handcuffing.",
+		"[SKILL_COMBAT_MECH]" = "Faster moving speed of piloted combat exosuits.",
+		"[SKILL_CIV_MECH]" = "Faster moving speed of piloted civilian exosuits: Ripley and Odysseus.",
+		"[SKILL_COMMAND]" = "Low level means basic knowledge of paperwork, usage of identification computers. Higher level means you can yell at people to boost their productivity.",
+		"[SKILL_RESEARCH]" = "Usage of complex machinery and computers. AI law modification, xenoarcheology and xenobiology consoles, exosuit fabricators.",
+		)
 	var/dat = {"
 		<style>
 			.skill_slider {
@@ -1563,17 +1576,8 @@
 				background-color: #444;
 				font-weight: bold;
 			}
-			max-button {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-
 		</style>
 		"}
-	dat += {"
-		<button class="max-button" type="submit" value="1" id="skills_max" onclick="setMaxSkills()">Set skills values to maximum</button>
-	"}
 	for(var/category in tables_data)
 		dat += {"
 			<table>
@@ -1582,16 +1586,16 @@
 
 		var/list/sliders_data = tables_data[category]
 
-		for(var/datum/skill/skill as anything in sliders_data)
-			var/slider_id = initial(skill.name)
+		for(var/slider_name in sliders_data)
+			var/slider_id = sliders_data[slider_name]
 			var/slider_value = mind.skills.get_value(slider_id)
-			var/slider_min_value = initial(skill.min_value)
+			var/slider_min_value = get_skill_absolute_minimum(slider_id)
 			var/slider_max_value = mind.skills.get_max(slider_id)
-			var/slider_hint = initial(skill.hint)
+			var/slider_hint = sliders_hint[slider_id]
 			dat += {"
 				<tr>
 					<td>
-						[slider_id] <span title="[slider_hint]">(?)</span>:
+						[slider_name] <span title="[slider_hint]">(?)</span>:
 					</td>
 					<td>
 						<input type="range" class="skill_slider" min="[slider_min_value]" max="[slider_max_value]" value="[slider_value]" id="[slider_id]" onchange="updateSkill('[slider_id]')" >
@@ -1617,6 +1621,7 @@
 						setSkill(slider_id);
 					}, 300);
 				}
+
 			}
 			function setSkill(slider_id) {
 				var element =  document.getElementById(slider_id);
@@ -1630,10 +1635,7 @@
 			function showHint(text) {
 				document.getElementById("notice").innerHTML = '<b>Hint: ' + text + '</b>';
 			}
-			function setMaxSkills() {
-				window.location  = 'byond://?src=\ref[src];set_max_skills=1';
-				setTimeout("location.reload(true);", 100);
-			}
+
 		</script>
 		"}
 	var/style = CSS_THEME_DARK
@@ -1704,19 +1706,19 @@
 			if(error_msg)
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
-		//untrained 8 seconds, novice 6.5, practiced 5, competent 3.5, expert and master 2
-		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical), penalty = 0, bonus = 0.15)
+
 		if(!instant)
+			var/time_to_inject = HUMAN_STRIP_DELAY
 			if(hunt_injection_port) // takes additional time
 				if(!stealth)
 					user.visible_message("<span class='danger'>[user] begins hunting for an injection port on [src]'s suit!</span>")
-				if(!do_mob(user, src, injection_time / 2, TRUE))
+				if(!do_mob(user, src, time_to_inject / 2, TRUE))
 					return FALSE
 
 			if(!stealth)
 				user.visible_message("<span class='danger'>[user] is trying to inject [src]!</span>")
 
-			if(!do_mob(user, src, injection_time, TRUE))
+			if(!do_mob(user, src, time_to_inject, TRUE))
 				return FALSE
 
 		if(!stealth)

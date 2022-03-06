@@ -105,16 +105,9 @@
 		holo_build.alpha = 160
 		holo_build.color = list(-1,0,0,0,-1,0,0,0,-1,1,1,1)
 		holo_build.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
+		to_chat(M, "Building [from_recipe.title] ...")
 		var/failed = FALSE
-		var/building_time =  apply_skill_bonus(M, from_recipe.time, list(from_recipe.skill_req), 1, 0.4)
-		if (building_time)
-			if(building_time > from_recipe.time)
-				to_chat(usr,"<span class='notice'>You fumble around figuring out how to build \a [from_recipe.title].</span>")
-			else
-				to_chat(M, "Building [from_recipe.title] ...")
-
-		if(!do_after(M, building_time, target = M))
+		if(!do_after(M, from_recipe.time, target = M))
 			failed = TRUE
 		busy = FALSE
 		if(!in_building_mode)

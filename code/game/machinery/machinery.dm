@@ -139,9 +139,9 @@ Class Procs:
 	var/min_operational_temperature = 5
 	var/max_operational_temperature = 10
 
-	var/list/required_skills //e.g. medical, engineering
-
-	var/fumbling_time = 5 SECONDS
+	var/required_skill = FALSE  //e.g. medical, engineering
+	var/required_skill_proficiency = FALSE // e.g. novice, trained, pro
+	var/fumbling_time_multiplier = 5 SECONDS
 
 /obj/machinery/atom_init()
 	. = ..()
@@ -331,9 +331,6 @@ Class Procs:
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
-	if(!do_skill_checks(usr))
-		return FALSE
-
 	return TRUE
 
 /obj/machinery/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
@@ -342,8 +339,6 @@ Class Procs:
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
-	if(!do_skill_checks(usr))
-		return FALSE
 	return FALSE
 
 /obj/machinery/proc/issilicon_allowed(mob/living/silicon/S)
@@ -434,8 +429,6 @@ Class Procs:
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
-		if(!handle_fumbling(usr, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering/trained), SKILL_TASK_VERY_EASY, "<span class='notice'>You fumble around, figuring out how to deconstruct [src].</span>"))
-			return
 		deconstruction()
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
@@ -452,14 +445,10 @@ Class Procs:
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(!panel_open)
-			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering/trained), SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around, figuring out how to open the maintenance hatch of [src].</span>"))
-				return 0
 			panel_open = 1
 			icon_state = icon_state_open
 			to_chat(user, "<span class='notice'>You open the maintenance hatch of [src].</span>")
 		else
-			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering/trained), SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around, figuring out how to close the maintenance hatch of [src].</span>"))
-				return 1
 			panel_open = 0
 			icon_state = icon_state_closed
 			to_chat(user, "<span class='notice'>You close the maintenance hatch of [src].</span>")
@@ -474,11 +463,11 @@ Class Procs:
 		return 1
 	return 0
 
-/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = SKILL_TASK_VERY_EASY)
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	if(istype(W) &&  !(flags & NODECONSTRUCT))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
-		if(W.use_tool(src, user, time, volume = 50, required_skills = list(/datum/skill/engineering/novice)))
+		if(W.use_tool(src, user, time, volume = 50))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
@@ -557,6 +546,6 @@ Class Procs:
 		ex_act(EXPLODE_DEVASTATE)
 
 /obj/machinery/proc/do_skill_checks(mob/user)
-	if (!required_skills || !user || issilicon(user) || isobserver(user))
+	if (!required_skill || !required_skill_proficiency || !user || issilicon(user) || isobserver(user))
 		return TRUE
-	return handle_fumbling(user, src, fumbling_time * 2, required_skills, time_bonus = fumbling_time)
+	return handle_fumbling(user, src, fumbling_time_multiplier * 2, required_skill, required_skill_proficiency, time_bonus = fumbling_time_multiplier)

@@ -50,9 +50,7 @@
 	else
 		user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow [src].</span>")
 
-		var/ingestion_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical/novice), 0, 0.25)
-		if(!do_mob(user, M, ingestion_time))
-			return
+		if(!do_mob(user, M)) return
 
 		user.drop_from_inventory(src) //icon update
 		user.visible_message("<span class='warning'>[user] forces [M] to swallow [src].</span>")
@@ -87,15 +85,6 @@
 			qdel(src)
 
 	return
-
-/obj/item/weapon/reagent_containers/pill/examine(mob/user)
-	..()
-	if(!is_skill_competent(user, list(/datum/skill/chemistry/trained)))
-		return
-	to_chat(user, "It contains:")
-	if(reagents.reagent_list.len)
-		for(var/datum/reagent/R in reagents.reagent_list)
-			to_chat(user, "<span class='info'>[R.volume + R.volume * rand(-25,25) / 100] units of [R.name]</span>")
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills. END

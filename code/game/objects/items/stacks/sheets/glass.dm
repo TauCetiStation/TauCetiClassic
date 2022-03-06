@@ -18,7 +18,6 @@
 	g_amt = 3750
 	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/basic
-	skill_checks = list(/datum/skill/construction/novice)
 
 /obj/item/stack/sheet/glass/cyborg
 	name = "glass"
@@ -91,8 +90,6 @@
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	var/title = "Sheet-Glass"
-	if(!handle_fumbling(user, user, SKILL_TASK_AVERAGE, skill_checks, SKILL_TASK_VERY_EASY, "<span class='notice'>You fumble around figuring out how to use glass to make window.</span>"))
-		return
 	title += " ([get_amount()] sheet\s left)"
 	switch(input(title, "What would you like to make?", "One Direction") in list("One Direction", "Full Window", "Glass Table Parts", "Cancel"))
 		if("One Direction")
@@ -189,7 +186,6 @@
 	g_amt = 3750
 	m_amt = 1875
 	origin_tech = "materials=2"
-	skill_checks = list(/datum/skill/construction/trained)
 
 /obj/item/stack/sheet/rglass/cyborg
 	name = "reinforced glass"
@@ -212,8 +208,6 @@
 		return 0
 	var/title = "Sheet Reinf. Glass"
 	title += " ([get_amount()] sheet\s left)"
-	if(!handle_fumbling(user, user, SKILL_TASK_AVERAGE, skill_checks, SKILL_TASK_VERY_EASY, "<span class='notice'>You fumble around figuring out how to use reinforced glass to make window.</span>"))
-		return
 	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
 			if(QDELETED(src))
@@ -397,7 +391,6 @@
 	g_amt = 7500
 	origin_tech = "materials=3;phorontech=2"
 	created_window = /obj/structure/window/phoronbasic
-	skill_checks = list(/datum/skill/construction/pro)
 
 /obj/item/stack/sheet/glass/phoronglass/attack_self(mob/user)
 	construct_window(user)
@@ -414,7 +407,6 @@
 	m_amt = 1875
 	origin_tech = "materials=4;phorontech=2"
 	created_window = /obj/structure/window/phoronreinforced
-	skill_checks = list(/datum/skill/construction/master)
 
 /obj/item/stack/sheet/glass/phoronrglass/attack_self(mob/user)
 	construct_window(user)

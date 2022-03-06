@@ -8,13 +8,11 @@
 	item_state = "electronic"
 	flags = CONDUCT
 
-
 /obj/item/device/antibody_scanner/attack(mob/M, mob/user)
 	if(!iscarbon(M))
 		report("Scan aborted: Incompatible target.", user)
 		return
-	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, list(/datum/skill/medical/pro), SKILL_TASK_TRIVIAL, text_target = src))
-		return
+
 	var/mob/living/carbon/C = M
 	if (ishuman(C))
 		var/mob/living/carbon/human/H = C

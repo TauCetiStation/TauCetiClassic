@@ -19,7 +19,6 @@
 	var/static/icon/mugshot = icon('icons/obj/mugshot.dmi', "background") //records photo background
 	var/next_print = 0
 	var/docname
-	required_skills = list(/datum/skill/medical/novice)
 
 /obj/machinery/computer/med_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -148,6 +147,7 @@
 	. = ..()
 	if(!.)
 		return
+
 	if (!( data_core.general.Find(src.active1) ))
 		src.active1 = null
 

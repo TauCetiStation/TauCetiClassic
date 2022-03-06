@@ -10,7 +10,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 	icon_state = "d_analyzer"
 	var/obj/item/weapon/loaded_item = null
 	var/decon_mod = 0
-	required_skills = list(/datum/skill/research/trained)
 
 /obj/machinery/r_n_d/destructive_analyzer/atom_init()
 	. = ..()
@@ -67,8 +66,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
 		if (temp_tech.len == 0)
 			to_chat(user, "<span class='warning'> You cannot deconstruct this item!</span>")
-			return
-		if(!do_skill_checks(user))
 			return
 		busy = 1
 		loaded_item = O
