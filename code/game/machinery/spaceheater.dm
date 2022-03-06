@@ -21,9 +21,7 @@
 	var/efficiency = 20000
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
-	required_skill = SKILL_ATMOS
-	required_skill_proficiency = SKILL_ATMOS_TRAINED
-
+	required_skills = list(/datum/skill/atmospherics/novice)
 
 /obj/machinery/space_heater/atom_init()
 	. = ..()

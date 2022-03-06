@@ -196,7 +196,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			resting = TRUE
 			Sleeping(2 SECONDS)
 
-		SSStatistics.add_leave_stat(mind, "Ghosted")
+		var/leave_type = "Ghosted"
+		if(istype(loc, /obj/machinery/cryopod))
+			leave_type = "Ghosted in Cryopod"
+		SSStatistics.add_leave_stat(mind, leave_type)
 		ghostize(can_reenter_corpse = FALSE)
 
 /mob/dead/observer/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)

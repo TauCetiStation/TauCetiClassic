@@ -301,20 +301,24 @@
 	mass = 2
 	max_pumped = 25
 
-/obj/item/weapon/dumbbell/attack_self(mob/living/carbon/human/user)
+/obj/item/weapon/dumbbell/attack_self(mob/living/user)
 	if(user.is_busy())
 		return
 	if(!do_after(user, 25 * mass, target = src))
 		return
 
-	var/obj/item/organ/external/BP = user.get_bodypart(user.hand ? BP_L_ARM : BP_R_ARM)
+	user.visible_message("<span class='notice'>\The [user] excercises with [src].</span>")
+
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+
+	var/obj/item/organ/external/BP = H.get_bodypart(BP_ACTIVE_ARM)
 	if(!BP)
 		return
 
-	user.apply_effect(3 * BP.adjust_pumped(mass, max_pumped), AGONY, 0)
-	user.update_body()
+	H.apply_effect(3 * BP.adjust_pumped(mass, max_pumped), AGONY, 0)
+	H.update_body()
 
-	user.nutrition -= 2 * mass
-	user.overeatduration -= 2 * mass
-
-	user.visible_message("<span class='notice'>\The [user] excercises with [src].</span>")
+	H.nutrition -= 2 * mass
+	H.overeatduration -= 2 * mass

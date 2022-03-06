@@ -61,11 +61,7 @@
 	//put this here for easier tracking ingame
 	var/datum/money_account/initial_account
 	//skills
-	var/list/skills_modifiers = list()
-	var/skillset/current_skillset
-
-	//skills
-	var/datum/skills/skills = new
+	var/datum/skills/skills = new /datum/skills
 
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 	var/creation_roundtime
@@ -85,7 +81,7 @@
 		current.mind = null
 
 	if(new_character.mind)		//remove any mind currently in our new body's mind variable
-		new_character.mind.current = null
+		new_character.mind.set_current(null)
 
 	nanomanager.user_transferred(current, new_character) // transfer active NanoUI instances to new user
 
@@ -490,6 +486,17 @@
 		return R.GetFaction()
 	return FALSE
 
+/datum/mind/proc/set_current(mob/new_current)
+	if(current)
+		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
+	current = new_current
+	if(current)
+		RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/clear_current)
+
+/datum/mind/proc/clear_current(datum/source)
+	SIGNAL_HANDLER
+	set_current(null)
+
 // check whether this mind's mob has been brigged for the given duration
 // have to call this periodically for the duration to work properly
 /datum/mind/proc/is_brigged(duration)
@@ -639,13 +646,12 @@
 	else
 		mind = new /datum/mind(key)
 		mind.original = src
-		mind.skills.add_modifier(new /datum/skills_modifier)
 		if(SSticker)
 			SSticker.minds += mind
 		else
 			world.log << "## DEBUG: mind_initialize(): No SSticker ready yet! Please inform Carn"
 	if(!mind.name)	mind.name = real_name
-	mind.current = src
+	mind.set_current(src)
 
 
 //HUMAN

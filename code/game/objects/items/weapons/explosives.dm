@@ -1,5 +1,5 @@
 /obj/item/weapon/plastique/attack_self(mob/user)
-	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL, SKILL_FIREARMS, SKILL_FIREARMS_TRAINED, message_self = "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>"))
+	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL, list(/datum/skill/firearms/trained), message_self = "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>"))
 		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(newtime < 10)
@@ -21,7 +21,7 @@
 	else
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target.name]</font>"
 		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [target.name]", user)
-	var/planting_time =  max(SKILL_TASK_AVERAGE, SKILL_TASK_DIFFICULT - 1 SECONDS *  (user.mind.skills.get_value(SKILL_FIREARMS)  + user.mind.skills.get_value(SKILL_ENGINEERING)))
+	var/planting_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/firearms/master, /datum/skill/engineering/pro))
 	if(do_after(user, planting_time, target = target) && user.Adjacent(target))
 		user.drop_item()
 		target = target

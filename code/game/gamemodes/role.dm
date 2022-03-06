@@ -34,7 +34,10 @@
 	// Allows you to change the number of greeting messages for a role
 	var/list/greets = list(GREET_DEFAULT, GREET_CUSTOM)
 
-	var/skillset_type = /datum/skills_modifier
+	var/skillset_type
+	//if set to true, users skills will be set to maximum available after he gets this role
+	var/change_to_maximum_skills = TRUE
+
 	// Type for collector of statistics by this role
 	var/datum/stat/role/stat_type = /datum/stat/role
 
@@ -55,6 +58,10 @@
 	objectives.owner = M
 	..()
 
+/datum/role/Destroy(force, ...)
+	QDEL_NULL(objectives)
+	return ..()
+
 /datum/role/proc/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
 	if(!istype(M) && !override)
 		log_mode("M is [M.type]!")
@@ -66,7 +73,9 @@
 	antag = M
 	M.antag_roles[id] = src
 	objectives.owner = M
-	M.skills.add_modifier(new skillset_type)
+	M.skills.add_available_skillset(skillset_type)
+	if(change_to_maximum_skills)
+		M.skills.maximize_active_skills()
 	if(msg_admins)
 		message_admins("[key_name(M)] is now \an [id].")
 		log_mode("[key_name(M)] is now \an [id].")
@@ -201,6 +210,13 @@
 		return O
 	return null
 
+/datum/role/proc/GetObjectives()
+	return objectives.GetObjectives()
+
+/datum/role/proc/calculate_completion()
+	for(var/datum/objective/O in GetObjectives())
+		O.calculate_completion()
+
 /datum/role/proc/get_logo_icon(custom)
 	if(custom)
 		return icon('icons/misc/logos.dmi', custom)
@@ -250,7 +266,7 @@
 /datum/role/proc/IsSuccessful()
 	if(objectives.objectives.len > 0)
 		for (var/datum/objective/objective in objectives.GetObjectives())
-			if(!objective.check_completion())
+			if(objective.completed == OBJECTIVE_LOSS)
 				return FALSE
 	return TRUE
 
@@ -298,10 +314,9 @@
 		var/count = 1
 		text += "<ul>"
 		for(var/datum/objective/objective in objectives.GetObjectives())
-			var/successful = objective.calculate_completion()
 			text += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
 			feedback_add_details("[id]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
-			if(!successful) //If one objective fails, then you did not win.
+			if(objective.completed == OBJECTIVE_LOSS) //If one objective fails, then you did not win.
 				win = FALSE
 			if (count < objectives.objectives.len)
 				text += "<br>"

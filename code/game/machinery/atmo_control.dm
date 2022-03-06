@@ -82,8 +82,7 @@
 	var/list/sensors = list()
 
 	var/list/sensor_information = list()
-	required_skill = SKILL_ATMOS
-	required_skill_proficiency = SKILL_ATMOS_PRO
+	required_skills = list(/datum/skill/atmospherics/trained)
 
 
 /obj/machinery/computer/general_air_control/ui_interact(mob/user)
@@ -280,8 +279,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 
 	var/cutoff_temperature = 2000
 	var/on_temperature = 1200
-	required_skill = SKILL_ENGINEERING
-	required_skill_proficiency = SKILL_ENGINEERING_PRO
+	required_skills = list(/datum/skill/engineering/pro)
 
 /obj/machinery/computer/general_air_control/fuel_injection/process()
 	if(automation)

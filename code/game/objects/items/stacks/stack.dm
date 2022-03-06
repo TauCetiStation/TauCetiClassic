@@ -153,7 +153,7 @@
 	if (R.on_floor)
 		usr.client.cob.turn_on_build_overlay(usr.client, R, src)
 		return
-	var/building_time = apply_skill_bonus(user, R.time, list(SKILL_CONSTRUCTION = R.skill_req), 1, 0.4)
+	var/building_time = apply_skill_bonus(user, R.time, list(R.skill_req), 1, 0.4)
 	if (building_time)
 		if(usr.is_busy())
 			return
@@ -162,7 +162,6 @@
 				to_chat(usr,"<span class='notice'>You fumble around figuring out how to build \a [R.title].</span>")
 			else
 				to_chat(usr,"<span class='notice'>You start building \a [R.title]...</span>")
-
 		if (!do_after(usr, building_time, target = usr))
 			return
 	if(!use(R.req_amount*multiplier))

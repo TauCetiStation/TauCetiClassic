@@ -44,8 +44,6 @@
 			status = 0
 			update_icon()
 		return
-	if(!handle_fumbling(user, src, SKILL_TASK_VERY_EASY, SKILL_POLICE, SKILL_POLICE_PRO, SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>"))
-		return
 	if(charges > 0)
 		status = !status
 		to_chat(user, "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>")
@@ -90,8 +88,7 @@
 		//H.apply_effect(10, WEAKEN, 0)
 		//H.apply_effect(10, STUTTER, 0)
 		H.apply_effect(agony,AGONY,0)
-		user.lastattacked = M
-		H.lastattacker = user
+		H.set_lastattacker_info(user)
 		if(isrobot(src.loc))
 			var/mob/living/silicon/robot/R = src.loc
 			if(R && R.cell)

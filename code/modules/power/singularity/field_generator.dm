@@ -42,8 +42,7 @@ field_generator power level display
 	var/list/obj/machinery/containment_field/fields
 	var/list/obj/machinery/field_generator/connected_gens
 
-	required_skill = SKILL_ENGINEERING
-	required_skill_proficiency = SKILL_ENGINEERING_PRO
+	required_skills = list(/datum/skill/engineering/pro)
 
 
 /obj/machinery/field_generator/Destroy()
@@ -141,7 +140,7 @@ field_generator power level display
 						"<span class='notice'>[user.name] starts to weld the [src.name] to the floor.</span>",
 						"<span class='notice'>You start to weld the [src] to the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if(WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50,  required_skills = list(SKILL_ENGINEERING = SKILL_ENGINEERING_PRO)))
+					if(WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50,  required_skills = list(/datum/skill/engineering/pro)))
 						state = FG_WELDED
 						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 			if(FG_WELDED)
@@ -150,7 +149,7 @@ field_generator power level display
 						"<span class='notice'>[user.name] starts to cut the [src.name] free from the floor.</span>",
 						"<span class='notice'>You start to cut the [src] free from the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50,  required_skills = list(SKILL_ENGINEERING = SKILL_ENGINEERING_PRO)))
+					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50,  required_skills = list(/datum/skill/engineering/pro)))
 						state = FG_SECURED
 						to_chat(user, "<span class='notice'>You cut the [src] free from the floor.</span>")
 	else

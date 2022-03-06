@@ -20,6 +20,11 @@
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 
+	if(mind)
+		if(mind.current == src)
+			mind.set_current(null)
+		if(mind.original == src)
+			mind.original = null
 	return ..()
 
 
@@ -1017,7 +1022,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		to_chat(U, "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>")
 
-	if(!do_skilled(U, S, SKILL_TASK_DIFFICULT, SKILL_MEDICAL, SKILL_MEDICAL_COMPETENT))
+	if(!do_skilled(U, S, SKILL_TASK_DIFFICULT, list(/datum/skill/medical/trained)))
 		return
 	if(!selection || !S || !U)
 		return
@@ -1286,3 +1291,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(forced_language)
 		return all_languages[forced_language]
 	return null
+
+/mob/proc/set_lastattacker_info(mob/M)
+	lastattacker_name = M.real_name
+	lastattacker_key = M.key

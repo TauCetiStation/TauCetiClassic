@@ -11,40 +11,69 @@
 // Space Station Statistics
 var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 
+// You can find migration of statistics here
+// https://github.com/TauCetiStation/TauCetiClassic/commits/master/code/modules/statistic/statistics.dm
+
 // To ensure that if output file syntax is changed, we will still be able to process
 // new and old files
 // please increment this version whenever making changes
 #define STAT_OUTPUT_VERSION 2
 #define STAT_FILE_NAME "stat.json"
 
+// Documentation rules:
+//  * First write the type of data
+//  * Then write the format of data in square brackets or data pool in square brackets or comments
+//  * At the end, write any comment about the variable
 /datum/stat_collector
+	// int, [2...]
 	var/const/version = STAT_OUTPUT_VERSION
+	// int, [1...]
 	var/round_id
+	// string, [hh:mm:ss]
 	var/start_time
+	// string, [hh:mm:ss]
 	var/end_time
+	// string, [hh:mm]
 	var/duration
+	// string, pool in ./code/game/gamemodes/modes_declares/ in var name
 	var/mode
+	// string, ["win", "lose"], shows whether all objectives of all antagonists' are completed
 	var/mode_result
+	// string, pool in ./maps/ directory in json files in var map_name
 	var/map
 	// You can get the nanoui map using
 	// "https://cdn.jsdelivr.net/gh/TauCetiStation/TauCetiClassic@" + base_commit_sha + "/" + minimap_image
+	// string, pool in ./maps/ directory in json files in var station_image
 	var/minimap_image
+	// string, ["byond://game.taucetistation.org:[2506, 2507, 2508]"]
 	var/server_address
+	// string, sha
 	var/base_commit_sha
+	// string, ["#pr_id #pr_id..."]
 	var/test_merges
 
+	// string, html page
 	var/completion_html
 
+	// object
 	var/datum/stat/score/score = new /datum/stat/score
+	// array of objects
 	var/list/datum/stat/achievement/achievements = list()
+	// array of objects
 	var/list/datum/stat/communication_log/communication_logs = list()
 
 	// New data
+	// array of objects
 	var/list/datum/stat/death_stat/deaths = list()
+	// array of objects
 	var/list/datum/stat/explosion_stat/explosions = list()
+	// array of objects
 	var/list/datum/stat/manifest_entry/manifest_entries = list()
+	// array of objects
 	var/list/datum/stat/leave_stat/leave_stats = list()
+	// array of objects
 	var/list/datum/stat/role/orphaned_roles = list()
+	// array of objects
 	var/list/datum/stat/faction/factions = list()
 
 /datum/stat_collector/New()
@@ -87,3 +116,6 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 
 	for(var/datum/mind/M in SSticker.minds)
 		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles)
+
+	for(var/ckey in global.disconnected_ckey_by_stat)
+		leave_stats += global.disconnected_ckey_by_stat[ckey]

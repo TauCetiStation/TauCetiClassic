@@ -8,8 +8,7 @@
 	active_power_usage = 500
 	circuit = /obj/item/weapon/circuitboard/crew
 	var/obj/nano_module/crew_monitor/crew_monitor
-	required_skill = SKILL_MEDICAL
-	required_skill_proficiency = SKILL_MEDICAL_NOVICE
+	required_skills = list(/datum/skill/medical/novice)
 
 /obj/machinery/computer/crew/atom_init()
 	crew_monitor = new(src)

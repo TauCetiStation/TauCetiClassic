@@ -110,8 +110,7 @@
 	if (length(hitsound))
 		playsound(M, pick(hitsound), VOL_EFFECTS_MASTER)
 	/////////////////////////
-	user.lastattacked = M
-	M.lastattacker = user
+	M.set_lastattacker_info(user)
 	user.do_attack_animation(M)
 
 	if(slot_flags & SLOT_FLAGS_HEAD && def_zone == BP_HEAD && mob_can_equip(M, SLOT_HEAD, TRUE) && user.a_intent != INTENT_HARM)
@@ -137,9 +136,9 @@
 		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
 		if(BP.pumped)
 			power += max(round((PARABOLIC_SCALING(force, 1, 0.01) * BP.pumped * 0.1)), 0) //We need a pumped force multiplied by parabolic scaled item's force with a borders of 1 to 0
+	power = apply_skill_bonus(user, power, list(/datum/skill/melee), -0.2, -0.2)
 	if(HULK in user.mutations)
 		power *= 2
-
 	if(!ishuman(M))
 		if(isslime(M))
 			var/mob/living/carbon/slime/slime = M
@@ -267,7 +266,7 @@
 
 				else
 					if(prob(33)) // Added blood for whacking non-humans too
-						var/turf/simulated/T = M.loc
+						var/turf/T = M.loc
 						if(istype(T))
 							T.add_blood_floor(M)
 					M.take_bodypart_damage(power)

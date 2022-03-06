@@ -35,8 +35,7 @@
 
 	var/obj/machinery/power/terminal/terminal = null
 	var/power_failure = FALSE
-	required_skill = SKILL_ENGINEERING
-	required_skill_proficiency = SKILL_ENGINEERING_NOVICE
+	required_skills = list(/datum/skill/engineering/novice)
 
 /obj/machinery/power/smes/atom_init()
 	. = ..()
@@ -54,9 +53,9 @@
 	var/map_charge = charge
 	var/map_max_input = input_level_max
 	var/map_max_output = output_level_max
-	
+
 	RefreshParts()
-	
+
 	if(map_capacity)
 		capacity = map_capacity
 	if(map_charge)

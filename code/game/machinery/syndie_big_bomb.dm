@@ -30,8 +30,7 @@
 	var/defused = FALSE		//is the bomb capable of exploding?
 	var/degutted = FALSE	//is the bomb even a bomb anymore?
 
-	required_skill = SKILL_ENGINEERING
-	required_skill_proficiency = SKILL_ENGINEERING_PRO
+	required_skills = list(/datum/skill/engineering/pro)
 
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock

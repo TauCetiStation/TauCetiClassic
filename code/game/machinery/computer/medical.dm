@@ -19,8 +19,7 @@
 	var/static/icon/mugshot = icon('icons/obj/mugshot.dmi', "background") //records photo background
 	var/next_print = 0
 	var/docname
-	required_skill = SKILL_MEDICAL
-	required_skill_proficiency = SKILL_MEDICAL_NOVICE
+	required_skills = list(/datum/skill/medical/novice)
 
 /obj/machinery/computer/med_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)

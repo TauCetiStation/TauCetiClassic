@@ -166,8 +166,7 @@
 	var/list/servers = list()
 	var/list/consoles = list()
 	var/badmin = 0
-	required_skill = SKILL_RESEARCH
-	required_skill_proficiency = SKILL_RESEARCH_PROFESSIONAL
+	required_skills = list(/datum/skill/research/pro)
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	. = ..()

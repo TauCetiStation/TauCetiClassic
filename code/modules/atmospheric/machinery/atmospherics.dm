@@ -35,8 +35,7 @@ Pipelines + Other Objects -> Pipe network
 	var/list/obj/machinery/atmospherics/nodes
 
 	var/atmos_initalized = FALSE
-	required_skill = SKILL_ATMOS
-	required_skill_proficiency = SKILL_ATMOS_TRAINED
+	required_skills = list(/datum/skill/atmospherics/novice)
 
 /obj/machinery/atmospherics/atom_init(mapload, process = TRUE)
 	nodes = new(device_type)
@@ -176,7 +175,7 @@ Pipelines + Other Objects -> Pipe network
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
 				unsafe_wrenching = TRUE //Oh dear oh dear
 
-			if (W.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_skills = list(SKILL_ATMOS = SKILL_ATMOS_TRAINED)))
+			if (W.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_skills = list(/datum/skill/atmospherics/novice)))
 				user.visible_message(
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>",

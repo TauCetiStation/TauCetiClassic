@@ -13,8 +13,7 @@
 	var/scan_duration = 100
 	var/obj/scanned_object
 	var/report_num = 0
-	required_skill = SKILL_RESEARCH
-	required_skill_proficiency = SKILL_RESEARCH_PROFESSIONAL
+	required_skills = list(/datum/skill/research/trained)
 
 /obj/machinery/artifact_analyser/atom_init()
 	..()

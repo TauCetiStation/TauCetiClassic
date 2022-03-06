@@ -6,9 +6,8 @@
 	light_color = "#ffffff"
 	var/mob/living/silicon/ai/current = null
 	var/opened = FALSE
-	required_skill = SKILL_RESEARCH
-	required_skill_proficiency = SKILL_RESEARCH_EXPERT
-	fumbling_time_additional_delay = 7 SECONDS
+	required_skills = list(/datum/skill/research/pro)
+	fumbling_time = 7 SECONDS
 
 /obj/machinery/computer/aiupload/verb/AccessInternals()
 	set category = "Object"
@@ -56,9 +55,8 @@
 	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/borgupload
 	var/mob/living/silicon/robot/current = null
-	required_skill = SKILL_RESEARCH
-	required_skill_proficiency = SKILL_RESEARCH_EXPERT
-	fumbling_time_additional_delay = 7 SECONDS
+	required_skills = list(/datum/skill/research/pro)
+	fumbling_time = 7 SECONDS
 
 /obj/machinery/computer/borgupload/attackby(obj/item/weapon/aiModule/module, mob/user)
 	if(istype(module, /obj/item/weapon/aiModule))

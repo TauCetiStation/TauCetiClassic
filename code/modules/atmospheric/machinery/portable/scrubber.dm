@@ -19,7 +19,7 @@
 	var/volume_rate = SCRUBBER_DEFAULT_RATE
 
 	var/list/scrubbing_gas
-	required_skill_proficiency = SKILL_ATMOS_PRO
+	required_skills = list(/datum/skill/atmospherics/trained)
 
 /obj/machinery/portable_atmospherics/powered/scrubber/atom_init()
 	. = ..()

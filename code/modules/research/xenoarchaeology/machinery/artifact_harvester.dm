@@ -13,8 +13,7 @@
 	var/obj/item/weapon/particles_battery/inserted_battery
 	var/obj/machinery/artifact/current_artifact
 	var/obj/machinery/artifact_scanpad/owned_scanner = null
-	required_skill = SKILL_RESEARCH
-	required_skill_proficiency = SKILL_RESEARCH_PROFESSIONAL
+	required_skills = list(/datum/skill/research/trained)
 
 
 /obj/machinery/artifact_harvester/atom_init()
