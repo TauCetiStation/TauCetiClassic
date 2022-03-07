@@ -5,6 +5,9 @@
 /turf/var/datum/gas_mixture/air
 
 /turf/var/air_unsim_multiplier = 0
+#ifdef ZASDBG
+/turf/var/verbose = FALSE
+#endif
 
 /turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
 	if(graphic_add && graphic_add.len)
