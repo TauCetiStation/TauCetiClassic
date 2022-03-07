@@ -332,8 +332,8 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 	var/saved_text = ""
 
-	var/paragraph_size = 48
-	var/max_paragraph_buffer = 16
+	var/paragraph_size = RUNECHAT_MESSAGE_MAX_LENGTH - 10
+	var/max_paragraph_buffer = 10
 
 	var/obj/item/weapon/storage/internal/book
 
