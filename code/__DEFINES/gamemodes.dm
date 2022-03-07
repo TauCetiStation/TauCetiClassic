@@ -47,6 +47,7 @@
 #define RESPONDER "Emergency Responder"
 #define SHADOW "Shadowling"
 #define SHADOW_THRALL "Thrall"
+#define SLAVE "Slave"
 #define SPACE_COP "OCD Officer"
 #define SYNDIESQUADIE "Syndicate Commando"
 #define TRAITOR "Traitor"
