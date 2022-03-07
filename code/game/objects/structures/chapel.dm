@@ -320,20 +320,226 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	density = FALSE
 	anchored = TRUE
 
+	material = /obj/item/stack/sheet/wood
+
+	can_flipped = TRUE
+
+	var/next_speech
+	var/speech_cooldown = 0.5 SECONDS
+
+	var/next_shake
+	var/shake_cooldown = 0.5 SECONDS
+
+	var/saved_text = ""
+
+	var/paragraph_size = 48
+	var/max_paragraph_buffer = 16
+
+	var/obj/item/weapon/storage/internal/book
+
 	var/image/lectern_overlay
+	var/image/book_overlay
+	var/image/emblem_overlay
 
 /obj/structure/stool/bed/chair/lectern/atom_init()
 	. = ..()
+
+	book = new(src)
+	book.set_slots(slots = 1, slot_size = SIZE_NORMAL)
+	book.w_class = SIZE_NORMAL
+
+	book.can_hold = list(
+		/obj/item/weapon/spellbook,
+		/obj/item/weapon/book,
+		/obj/item/weapon/storage/bible,
+	)
+
+	RegisterSignal(book, list(COMSIG_STORAGE_ENTERED), .proc/add_book)
+	RegisterSignal(book, list(COMSIG_STORAGE_EXITED), .proc/remove_book)
+
 	lectern_overlay = image(icon, "lectern_overlay")
 	lectern_overlay.layer = INFRONT_MOB_LAYER
+
+	book_overlay = image(icon, "book")
+	book_overlay.layer = INFRONT_MOB_LAYER
+
+	emblem_overlay = image(icon, "general")
+	emblem_overlay.layer = INFRONT_MOB_LAYER
+	lectern_overlay.add_overlay(emblem_overlay)
+	add_overlay(emblem_overlay)
 
 	update_icon()
 
 /obj/structure/stool/bed/chair/lectern/Destroy()
 	QDEL_NULL(lectern_overlay)
+	QDEL_NULL(book_overlay)
+	QDEL_NULL(emblem_overlay)
+	QDEL_NULL(book)
 	return ..()
 
-/obj/structure/stool/bed/chair/lectern/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/stool/bed/chair/lectern/proc/get_text_from(obj/item/I)
+	if(istype(I, /obj/item/weapon/book))
+		var/obj/item/weapon/book/B = I
+		return B.dat
+
+	if(istype(I, /obj/item/weapon/storage/bible))
+		var/obj/item/weapon/storage/bible/B = I
+		if(!B.religion)
+			return ""
+		if(length(B.religion.rites_by_name) <= 0)
+			return ""
+		var/list/pos_rites = B.religion.rites_by_name.Copy()
+		while(pos_rites.len > 0)
+			var/rite_name = pick(B.religion.rites_by_name)
+			pos_rites -= rite_name
+
+			var/datum/religion_rites/RR = B.religion.rites_by_name[rite_name]
+			if(length(RR.ritual_invocations) <= 0)
+				continue
+
+			saved_text = ""
+			return pick(RR.ritual_invocations)
+
+	if(istype(I, /obj/item/weapon/spellbook))
+		var/obj/item/weapon/spellbook/SB = I
+		if(length(SB.entries) <= 0)
+			return ""
+
+		var/datum/spellbook_entry/SE = pick(SB.entries)
+		saved_text = ""
+		return SE.desc
+
+	return ""
+
+/obj/structure/stool/bed/chair/lectern/proc/get_text()
+	if(saved_text)
+		return fragment_text()
+
+	if(length(book.contents) <= 0)
+		return ""
+
+	var/obj/item/I = pick(book.contents)
+	saved_text = get_text_from(I)
+	return fragment_text()
+
+/obj/structure/stool/bed/chair/lectern/proc/fragment_text()
+	var/static/list/delims = list(" ", ".", ",", ":", "!", "?")
+
+	var/txt_end = length_char(saved_text)
+
+	var/start = 1
+	var/end = min(txt_end, paragraph_size)
+
+	if(end == txt_end)
+		var/fragment = saved_text
+		saved_text = ""
+		return fragment
+
+	var/min_delim_pos = paragraph_size + max_paragraph_buffer
+	for(var/delim in delims)
+		var/delim_pos = findtext_char(saved_text, delim, end, end + max_paragraph_buffer)
+		if(delim_pos == 0)
+			continue
+
+		if(delim_pos < min_delim_pos)
+			min_delim_pos = delim_pos
+
+	end = min_delim_pos
+
+	var/fragment = copytext_char(saved_text, start, end + 1)
+	saved_text = copytext_char(saved_text, end + 1, txt_end + 1)
+
+	return fragment
+
+/obj/structure/stool/bed/chair/lectern/proc/add_book(datum/source, obj/item/I)
+	add_overlay(book_overlay)
+	lectern_overlay.add_overlay(book_overlay)
+
+/obj/structure/stool/bed/chair/lectern/proc/remove_book(datum/source, obj/item/I)
+	saved_text = ""
+	cut_overlay(book_overlay)
+	lectern_overlay.cut_overlay(book_overlay)
+
+/obj/structure/stool/bed/chair/lectern/AltClick(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+
+	if(H.incapacitated())
+		return
+	if(!H.Adjacent(src))
+		return
+	if(!H.IsAdvancedToolUser())
+		return
+
+	if(H != buckled_mob)
+		return
+
+	if(H.a_intent == INTENT_HARM)
+		if(next_shake > world.time)
+			return
+		next_shake = world.time + shake_cooldown
+
+		shake_act(1)
+		return
+
+	if(next_speech > world.time)
+		return
+	next_speech = world.time + shake_cooldown
+
+	var/txt = get_text()
+	if(txt == "")
+		return
+
+	H.say(txt)
+
+/obj/structure/stool/bed/chair/lectern/attack_hand(mob/user)
+	if(anchored && book.handle_attack_hand(user))
+		return
+
+	return ..()
+
+/obj/structure/stool/bed/chair/lectern/MouseDrop(obj/over_object)
+	if(anchored && book.handle_mousedrop(usr, over_object))
+		return
+
+	return ..()
+
+/obj/structure/stool/bed/chair/lectern/can_flip(mob/living/carbon/human/user)
+	if(!anchored)
+		return FALSE
+	return ..()
+
+/obj/structure/stool/bed/chair/lectern/attackby(obj/item/weapon/W, mob/user, params)
+	if(iswrench(W))
+		if(flipped)
+			to_chat(user, "<span class='notice'>You need to flip [src] back upright.</span>")
+			return
+
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+		anchored = !anchored
+		to_chat(user, "<span class='notice'>You have [anchored ? "secured" : "unsecured"] [src].</span>")
+		return
+
+	if(iscrowbar(W))
+		if(anchored)
+			to_chat(user, "<span class='notice'>You need to unsecure [src] first.</span>")
+			return
+		if(!flipped)
+			to_chat(user, "<span class='notice'>You need to flip [src] over.</span>")
+			return
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>You are disassembling [src].</span>")
+		for(var/obj/item/I as anything in src)
+			I.forceMove(loc)
+		new material(loc)
+		qdel(src)
+		return
+
+	if(user.a_intent != INTENT_HARM && anchored && book.attackby(W, user, params))
+		return
+
+	return ..()
 
 /obj/structure/stool/bed/chair/lectern/handle_rotation()
 	if(dir == NORTH)
