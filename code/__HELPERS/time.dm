@@ -25,12 +25,9 @@
 	return pluralize_russian(m, "[m] минута", "[m] минуты", "[m] минут")
 
 var/global/next_duration_update = 0
-var/global/round_duration_cash = list()
+var/global/round_duration_cash = 0
 
 /proc/roundtimestamp(time = world.time)
-	if(global.round_duration_cash["[time]"])
-		return global.round_duration_cash["[time]"]
-
 	var/mills = global.round_start_time ? time - global.round_start_time : 0
 	var/mins = round((mills % 36000) / 600)
 	var/hours = round(mills / 36000)
@@ -38,18 +35,17 @@ var/global/round_duration_cash = list()
 	mins = mins < 10 ? add_zero(mins, 1) : mins
 	hours = hours < 10 ? add_zero(hours, 1) : hours
 
-	var/timestamp = "[hours]:[mins]"
-	global.round_duration_cash["[time]"] = timestamp
-	return timestamp
+	return "[hours]:[mins]"
 
 /proc/roundduration2text()
 	if(!global.round_start_time)
 		return "00:00"
 	if(world.time < next_duration_update)
-		return global.round_duration_cash["[world.time]"]
+		return global.round_duration_cash
 
 	global.next_duration_update = world.time + 1 MINUTES
-	return global.roundtimestamp(world.time)
+	global.round_duration_cash = global.roundtimestamp(world.time)
+	return global.round_duration_cash
 
 /* Returns TRUE if it is the selected month and day */
 /proc/isDay(month, day)
