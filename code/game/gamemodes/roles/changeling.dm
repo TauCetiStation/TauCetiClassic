@@ -41,10 +41,12 @@
 	. = ..()
 	antag.current.make_changeling()
 	set_changeling_identifications()
-	
+
 	var/mob/living/carbon/human/H = antag.current
 	if(istype(H))
 		H.fixblood(FALSE) // to add changeling marker
+
+	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "changeling", /datum/mood_event/changeling)
 
 /datum/role/changeling/proc/set_changeling_identifications()
 	var/honorific
@@ -90,6 +92,7 @@
 
 /datum/role/changeling/RemoveFromRole(datum/mind/M, msg_admins)
 	antag.current?.hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
+	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "changeling")
 	. = ..()
 
 /datum/role/changeling/proc/changelingRegen()
