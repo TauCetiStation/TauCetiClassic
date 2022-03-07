@@ -233,11 +233,11 @@
 	passive_message = "<span class='notice'>You miss the feeling of starlight on your skin.</span>"
 
 /datum/disease2/effect/heal/starlight/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
-	if(istype(get_turf(M), /turf/space))
+	if(isspaceturf(get_turf(M)))
 		return 1
 	else
 		for(var/turf/T in view(M, 2))
-			if(istype(T, /turf/space))
+			if(isspaceturf(T))
 				return 0.5
 
 /datum/disease2/effect/heal/starlight/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
@@ -295,7 +295,7 @@
 
 /datum/disease2/effect/heal/darkness/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
 	var/light_amount = 0
-	if(M.loc && istype(M.loc.type, /turf/space))
+	if(M.loc && isspaceturf(M.loc))
 		return 0
 	if(isturf(M.loc))
 		var/turf/T = M.loc

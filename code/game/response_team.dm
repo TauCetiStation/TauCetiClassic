@@ -192,7 +192,7 @@ var/global/can_call_ert
 
 	//Creates mind stuff.
 	M.mind = new
-	M.mind.current = M
+	M.mind.set_current(M)
 	M.mind.original = M
 	M.mind.assigned_role = "MODE"
 	M.mind.special_role = "Response Team"

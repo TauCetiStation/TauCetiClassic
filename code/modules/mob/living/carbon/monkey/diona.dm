@@ -27,6 +27,8 @@
 	holder_type = /obj/item/weapon/holder/diona
 	blood_datum = /datum/dirt_cover/green_blood
 
+	var/list/saved_quirks
+
 /mob/living/carbon/monkey/diona/podman
 	name = "podkid"
 	voice_name = "podkid"
@@ -286,8 +288,12 @@
 		forceMove(L.loc)
 		qdel(L)
 
-	for(var/datum/language/L in languages)
+	for(var/datum/language/L as anything in languages)
 		adult.add_language(L.name, languages[L])
+
+	for(var/quirk in saved_quirks)
+		new quirk(adult)
+
 	adult.regenerate_icons()
 
 	adult.name = name

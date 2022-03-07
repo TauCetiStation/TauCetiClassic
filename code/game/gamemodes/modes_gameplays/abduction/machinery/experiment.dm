@@ -182,7 +182,7 @@
 				req_f = F
 				break
 
-		req_f.abductees += create_and_setup_role(/datum/role/abducted, H)
+		add_faction_member(req_f, H, TRUE)
 		for(var/obj/item/gland/G in H)
 			G.Start()
 			point_reward++

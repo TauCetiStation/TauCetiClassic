@@ -492,16 +492,19 @@ var/global/list/datum/spawners_cooldown = list()
 	ranks = list(ROLE_GHOSTLY)
 
 	var/mob/podman
+	var/replicant_memory
 
-/datum/spawner/podman/New(mob/_podman)
+/datum/spawner/podman/New(mob/_podman, _replicant_memory)
 	. = ..()
 	podman = _podman
+	replicant_memory = _replicant_memory
 
 /datum/spawner/podman/jump(mob/dead/observer/ghost)
 	ghost.forceMove(get_turf(podman))
 
 /datum/spawner/podman/spawn_ghost(mob/dead/observer/ghost)
 	podman.key = ghost.key
+	podman.mind.memory = replicant_memory
 
 	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
 	msg += "<B>You are now in possession of Podmen's body. It's previous owner found it no longer appealing, by rejecting it - they brought you here. You are now, again, an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
@@ -541,7 +544,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	var/mob/diona
 
-/datum/spawner/fake_diona/New(mob/_diona)
+/datum/spawner/fake_diona/New(mob/_diona, _replicant_memory)
 	. = ..()
 	diona = _diona
 

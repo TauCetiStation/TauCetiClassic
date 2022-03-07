@@ -43,6 +43,10 @@
 	objective_holder = new
 	objective_holder.faction = src
 
+/datum/faction/Destroy(force, ...)
+	QDEL_NULL(objective_holder)
+	return ..()
+
 /datum/faction/proc/OnPostSetup()
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
