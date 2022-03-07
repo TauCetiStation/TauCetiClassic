@@ -368,8 +368,6 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	lectern_overlay.add_overlay(emblem_overlay)
 	add_overlay(emblem_overlay)
 
-	update_icon()
-
 /obj/structure/stool/bed/chair/lectern/Destroy()
 	QDEL_NULL(lectern_overlay)
 	QDEL_NULL(book_overlay)
