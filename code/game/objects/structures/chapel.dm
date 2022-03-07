@@ -397,7 +397,6 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 			if(length(RR.ritual_invocations) <= 0)
 				continue
 
-			saved_text = ""
 			return pick(RR.ritual_invocations)
 
 	if(istype(I, /obj/item/weapon/spellbook))
@@ -406,7 +405,6 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 			return ""
 
 		var/datum/spellbook_entry/SE = pick(SB.entries)
-		saved_text = ""
 		return SE.desc
 
 	return ""
