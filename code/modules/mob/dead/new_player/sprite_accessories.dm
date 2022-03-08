@@ -1415,7 +1415,7 @@
 /datum/sprite_accessory/hair/skr_long
 	name = "Skrell Long Tentacles"
 	icon_state = "skr_long"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 
 /datum/sprite_accessory/hair/skr_verylong_f
 	name = "Skrell Very Long Female Tentacles"
@@ -1426,46 +1426,53 @@
 /datum/sprite_accessory/hair/skr_tentacle_m
 	name = "Skrell Male Tentacles"
 	icon_state = "skr_tentacles_m"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 
 /datum/sprite_accessory/hair/skr_tentacle_f
 	name = "Skrell Female Tentacles"
 	icon_state = "skr_tentacles_f"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/skr_wavy_m
 	name = "Skrell Wavy Male Tentacles"
 	icon_state = "skr_wavy_m"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 	gender = MALE
 
 /datum/sprite_accessory/hair/skr_wavy_f
 	name = "Skrell Wavy Female Tentacles"
 	icon_state = "skr_wavy_f"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 	gender = FEMALE
 
 /datum/sprite_accessory/hair/skr_pulledback_m
 	name = "Skrell Pulled Back Male Tentacles"
 	icon_state = "skr_pulledback_m"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 	gender = MALE
 
 /datum/sprite_accessory/hair/skr_pulledback_f
 	name = "Skrell Pulled Back Female Tentacles"
 	icon_state = "skr_pulledback_f"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 
-/datum/sprite_accessory/hair/skr_tentacleovereye
-	name = "Skrell Tentacle Over Eye"
-	icon_state = "skr_tentacleovereye"
-	species_allowed = list(SKRELL)
+/datum/sprite_accessory/hair/skr_tentacleovereye_f
+	name = "Skrell Female Tentacle Over Eye"
+	icon_state = "skr_tentacleovereye_f"
+	species_allowed = list(SKRELL, PODMAN)
+	gender = FEMALE
+
+/datum/sprite_accessory/hair/skr_tentacleovereye_m
+	name = "Skrell Male Tentacle Over Eye"
+	icon_state = "skr_tentacleovereye_m"
+	species_allowed = list(SKRELL, PODMAN)
+	gender = MALE
 
 /datum/sprite_accessory/hair/skr_flipflap
 	name = "Skrell Flip-flap Tentacles"
 	icon_state = "skr_flipflap"
-	species_allowed = list(SKRELL)
+	species_allowed = list(SKRELL, PODMAN)
 
 /datum/sprite_accessory/hair/taj_ears
 	name = "Tajaran Ears"
