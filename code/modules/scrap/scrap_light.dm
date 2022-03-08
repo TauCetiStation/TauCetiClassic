@@ -71,6 +71,183 @@
 /obj/item/stack/medical/bruise_pack/rags/update_icon()
 	return
 
+/obj/item/torch_holder_frame
+	name = "torch holder frame"
+	desc = "Used for holder torch."
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "torch-holder-item"
+	flags = CONDUCT
+	var/obj/machinery/light/newlight = null
+	var/sheets_refunded = 2
+
+/obj/item/torch_holder_frame/attackby(obj/item/I, mob/user, params)
+	if(iswrench(I))
+		new /obj/item/stack/sheet/metal(get_turf(loc), sheets_refunded)
+		user.SetNextMove(CLICK_CD_RAPID)
+		qdel(src)
+		return
+	return ..()
+
+/obj/item/torch_holder_frame/proc/try_build(turf/on_wall)
+	if (get_dist(on_wall,usr)>1)
+		return
+	var/ndir = get_dir(usr,on_wall)
+	if (!(ndir in cardinal))
+		return
+	var/turf/loc = get_turf_loc(usr)
+	if (!istype(loc, /turf/simulated/floor))
+		to_chat(usr, "<span class='warning'>[src.name] cannot be placed on this spot.</span>")
+		return
+	to_chat(usr, "Attaching [src] to the wall.")
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+	var/constrdir = usr.dir
+	var/constrloc = usr.loc
+	if (usr.is_busy() || !do_after(usr, 30, target = on_wall))
+		return
+	new /obj/machinery/torch_holder_construct(constrloc)
+	newlight.set_dir(constrdir)
+	newlight.fingerprints = src.fingerprints
+	newlight.fingerprintshidden = src.fingerprintshidden
+	newlight.fingerprintslast = src.fingerprintslast
+
+	usr.visible_message("[usr.name] attaches [src] to the wall.", \
+		"You attach [src] to the wall.")
+	qdel(src)
+
+/obj/machinery/torch_holder
+	name = "torch holder frame"
+	desc = "A torch holder under construction."
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "torch_holder_construct"
+	anchored = TRUE
+	layer = 5
+	var/stage = 1
+	var/on = 0
+	var/fuel = 0
+	var/empty = TRUE
+	var/sheets_refunded = 2
+
+/obj/item/device/flashlight/proc/update_brightness(mob/user = null)
+	if(on)
+		icon_state = "torch-holder1"
+		set_light(4)
+	else if fuel == 0
+		icon_state = "torch-holder-burned"
+		set_light(0)
+	else
+		icon_state = "torch-holder0"
+		set_light(0)
+
+/obj/machinery/torch_holder/examine(mob/user)
+	..()
+	if (src in view(2, user))
+		switch(src.stage)
+			if(1)
+				to_chat(user, "It's an unscrew frame.")
+			if(2)
+				to_chat(user, "The casing is closed.")
+
+/obj/machinery/torch_holder/attackby(obj/item/I, mob/user)
+	add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_RAPID)
+	if (iswrench(I))
+		if (src.stage == 1)
+			if(user.is_busy(src))
+				return
+			to_chat(user, "You begin deconstructing [src].")
+			if(!W.use_tool(src, usr, 30, volume = 75))
+				return
+			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
+			user.visible_message("[user.name] deconstructs [src].", \
+				"You deconstruct [src].", "You hear a noise.")
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
+			qdel(src)
+		if (src.stage == 2)
+			to_chat(usr, "You have to unscrew the case first.")
+			return
+
+	if(isscrewdriver(I))
+		if (src.stage == 1)
+			src.icon_state = "torch-holder-empty"
+			src.stage = 2
+			user.visible_message("[user.name] closes [src]'s casing.", \
+				"You close [src]'s casing.", "You hear a noise.")
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+			return
+		if (src.stage == 2 and empty)
+			src.icon_state = "torch-holder-construct"
+			src.stage = 1
+			user.visible_message("[user.name] opens [src]'s casing.", \
+				"You open [src]'s casing.", "You hear a noise.")
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+			return
+		
+	if(istype(I, /obj/item/device/flashlight/flare/torch))
+		if (src.stage == 2 and empty)
+			var/obj/item/device/flashlight/flare/torch/T = I
+			src.icon_state = "torch-holder-empty"
+			empty = FALSE
+			fuel = T.fuel
+			on = T.on
+			to_chat(user, "You insert the torch.")
+			qdel(T)
+
+/obj/machinery/torch_holder/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	user.SetNextMove(CLICK_CD_RAPID)
+
+	if(empty)
+		to_chat(user, "There is no torch in this holder.")
+		return
+
+	to_chat(user, "You remove the torch.")
+
+	var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch
+	T.on = on
+	T.fuel = fuel
+
+	user.SetNextMove(CLICK_CD_INTERACT)
+
+	// light item inherits the switchcount, then zero it
+	T.switchcount = switchcount
+	switchcount = 0
+
+	T.update()
+	T.add_fingerprint(user)
+
+	if(!user.put_in_active_hand(T))	//puts it in our active hand (don't forget check)
+		T.loc = get_turf(user)
+		
+	empty = TRUE
+
+
+	..()
+
+/obj/machinery/torch_holder/process()
+	var/turf/pos = get_turf(src)
+	if(pos)
+		pos.hotspot_expose(produce_heat, 5)
+	fuel = max(fuel - 1, 0)
+	if(!fuel || !on)
+		turn_off()
+
+/obj/item/device/flashlight/flare/proc/turn_off()
+	on = FALSE
+	if(ismob(loc))
+		var/mob/U = loc
+		update_brightness(U)
+	else
+		update_brightness(null)
+
+	if(!fuel)
+		icon_state = "torch-holder-burned"
+		item_state = "torch-holder-burned"
+		update_inv_mob()
+	STOP_PROCESSING(SSobj, src)
+
+
 //////SHITTY BONFIRE PORT///////
 
 
