@@ -24,8 +24,9 @@
 		return
 
 	var/datum/stat/death_stat/stat = new
-	stat.time_of_death = H.timeofdeath
+	stat.time_of_death = roundtimestamp(world.time)
 	stat.from_suicide = H.suiciding
+	stat.mob_type = H.type
 
 	var/turf/spot = get_turf(H)
 	stat.death_x = spot.x
@@ -34,9 +35,7 @@
 
 	stat.name = H.name
 	stat.real_name = H.real_name
-
-	if(H.lastattacker_name)
-		stat.last_attacker_name = H.lastattacker_name
+	stat.last_attacker_name = H.lastattacker_name
 
 	stat.damage["BRUTE"] = H.getBruteLoss()
 	stat.damage["FIRE"]  = H.getFireLoss()
@@ -45,10 +44,9 @@
 	stat.damage["CLONE"] = H.getCloneLoss()
 	stat.damage["BRAIN"] = H.getBrainLoss()
 
-	if(H.mind)
-		stat.mind_name = H.mind.name
-		stat.assigned_role = H.mind.assigned_role
-		stat.special_role = H.mind.special_role
+	stat.mind_name = H.mind.name
+	stat.assigned_role = H.mind.assigned_role
+	stat.special_role = H.mind.special_role
 
 	deaths += stat
 

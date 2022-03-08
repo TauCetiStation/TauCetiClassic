@@ -426,6 +426,7 @@
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
+	has_gendered_icons = FALSE
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -799,8 +800,8 @@
 
 	brute_mod = 1.3
 	burn_mod = 1.3
-	speed_mod = 0.7
-	speed_mod_no_shoes = -1
+	speed_mod = 2.7
+	speed_mod_no_shoes = -2
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -839,8 +840,23 @@
 	regen_mod = 0.5
 	regen_limbs = FALSE
 
+/datum/species/diona/podman/on_gain(mob/living/carbon/human/H)
+	. = ..()
+	RegisterSignal(H, list(COMSIG_MOB_GHOST), .proc/find_replacement)
+
+/datum/species/diona/podman/on_loose(mob/living/carbon/human/H)
+	UnregisterSignal(H, list(COMSIG_MOB_GHOST))
+	return ..()
+
 /datum/species/diona/podman/handle_death(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
+
+/datum/species/diona/podman/proc/find_replacement(datum/source, can_reenter_corpse)
+	SIGNAL_HANDLER
+
+	if(can_reenter_corpse)
+		return
+	create_spawner(/datum/spawner/podman, "podman", source)
 
 /datum/species/machine
 	name = IPC
@@ -1379,6 +1395,7 @@
 
 	flesh_color = "#34af10"
 	base_color = "#000000"
+	has_gendered_icons = FALSE
 
 	flags = list(
 	NO_BREATHE = TRUE
