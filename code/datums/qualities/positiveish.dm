@@ -296,7 +296,7 @@
 		if(isturf(targets_target.loc))
 			to_chat(seer, "<span class='notice'>They are looking at [targets_target].</span>")
 
-	switch(seer.a_intent)
+	switch(M.a_intent)
 		if(INTENT_HELP)
 			to_chat(seer, "<span class='notice'>They intend to help out.</span>")
 		if(INTENT_PUSH)
