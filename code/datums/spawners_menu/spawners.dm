@@ -362,11 +362,22 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/borer/New(_borer)
 	. = ..()
 	borer = _borer
+	RegisterSignal(borer, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
+
+/datum/spawner/borer/Destroy()
+	UnregisterSignal(borer, list(COMSIG_PARENT_QDELETING))
+	borer = null
+	return ..()
+
+/datum/spawner/borer/proc/on_target_del()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /datum/spawner/borer/jump(mob/dead/observer/ghost)
 	ghost.forceMove(get_turf(borer))
 
 /datum/spawner/borer/spawn_ghost(mob/dead/observer/ghost)
+	UnregisterSignal(borer, list(COMSIG_PARENT_QDELETING))
 	borer.transfer_personality(ghost.client)
 
 /*
@@ -404,11 +415,22 @@ var/global/list/datum/spawners_cooldown = list()
 	religion = _religion
 
 	desc = "Вы появляетесь в виде [animal.name] в подчинении [religion.name]."
+	RegisterSignal(animal, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
+
+/datum/spawner/religion_familiar/Destroy()
+	UnregisterSignal(animal, list(COMSIG_PARENT_QDELETING))
+	animal = null
+	return ..()
+
+/datum/spawner/religion_familiar/proc/on_target_del()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /datum/spawner/religion_familiar/jump(mob/dead/observer/ghost)
 	ghost.forceMove(get_turf(animal))
 
 /datum/spawner/religion_familiar/spawn_ghost(mob/dead/observer/ghost)
+	UnregisterSignal(animal, list(COMSIG_PARENT_QDELETING))
 	animal.ckey = ghost.ckey
 	religion.add_member(animal, HOLY_ROLE_PRIEST)
 
@@ -499,10 +521,22 @@ var/global/list/datum/spawners_cooldown = list()
 	podman = _podman
 	replicant_memory = _replicant_memory
 
+	RegisterSignal(podman, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
+
+/datum/spawner/podman/Destroy()
+	UnregisterSignal(podman, list(COMSIG_PARENT_QDELETING))
+	podman = null
+	return ..()
+
+/datum/spawner/podman/proc/on_target_del()
+	SIGNAL_HANDLER
+	qdel(src)
+
 /datum/spawner/podman/jump(mob/dead/observer/ghost)
 	ghost.forceMove(get_turf(podman))
 
 /datum/spawner/podman/spawn_ghost(mob/dead/observer/ghost)
+	UnregisterSignal(podman, list(COMSIG_PARENT_QDELETING))
 	podman.key = ghost.key
 	podman.mind.memory = replicant_memory
 
@@ -548,10 +582,22 @@ var/global/list/datum/spawners_cooldown = list()
 	. = ..()
 	diona = _diona
 
+	RegisterSignal(diona, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
+
+/datum/spawner/fake_diona/Destroy()
+	UnregisterSignal(diona, list(COMSIG_PARENT_QDELETING))
+	diona = null
+	return ..()
+
+/datum/spawner/fake_diona/proc/on_target_del()
+	SIGNAL_HANDLER
+	qdel(src)
+
 /datum/spawner/fake_diona/jump(mob/dead/observer/ghost)
 	ghost.forceMove(get_turf(diona))
 
 /datum/spawner/fake_diona/spawn_ghost(mob/dead/observer/ghost)
+	UnregisterSignal(diona, list(COMSIG_PARENT_QDELETING))
 	diona.key = ghost.key
 
 	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
