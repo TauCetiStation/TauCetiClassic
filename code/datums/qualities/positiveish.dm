@@ -298,13 +298,13 @@
 
 	switch(M.a_intent)
 		if(INTENT_HELP)
-			to_chat(seer, "<span style='color: green;'>They intend to help out.</span>")
+			to_chat(seer, "<span class='notice'>They intend to help out.</span>")
 		if(INTENT_PUSH)
-			to_chat(seer, "<span style='color: blue;'>They are very pushy.</span>")
+			to_chat(seer, "<span class='notice'>They are very pushy.</span>")
 		if(INTENT_GRAB)
-			to_chat(seer, "<span style='color: yellow;'>They will grab whatever.</span>")
+			to_chat(seer, "<span class='notice'>They will grab whatever.</span>")
 		if(INTENT_HARM)
-			to_chat(seer, "<span style='color: red;'>They intend to do harm!</span>")
+			to_chat(seer, "<span class='notice'>They intend to do harm!</span>")
 
 	var/target_zone = M.get_targetzone()
 	if(target_zone)
