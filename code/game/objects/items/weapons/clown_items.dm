@@ -37,7 +37,7 @@
 
 /obj/item/weapon/bananapeel/honk/atom_init()
 	. = ..()
-	AddComponent(/datum/component/slippery, 4, SLIDE | GALOSHES_DONT_HELP)
+	AddComponent(/datum/component/slippery, 3, SLIDE | GALOSHES_DONT_HELP)
 
 /*
  * Soap
