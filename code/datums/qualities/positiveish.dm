@@ -273,6 +273,19 @@
 		COLOR_PURPLE,
 	)
 
+/datum/quality/war_face/proc/battlecry(datum/source, new_intent)
+	var/mob/living/carbon/human/H = source
+	if(H.stat != CONSCIOUS)
+		return
+
+	if(new_intent == H.a_intent)
+		return
+
+	if(new_intent != INTENT_HARM)
+		return
+
+	H.emote("scream")
+
 /datum/quality/war_face/add_effect(mob/living/carbon/human/H, latespawn)
 	H.lip_style = "spray_face"
 	H.lip_color = pick(war_colors)
@@ -280,6 +293,8 @@
 	H.name = H.real_name
 	H.emote("scream")
 	H.update_body()
+
+	RegisterSignal(H, list(COMSIG_MOB_SET_A_INTENT), .proc/battlecry)
 
 
 /datum/quality/eye_reading
