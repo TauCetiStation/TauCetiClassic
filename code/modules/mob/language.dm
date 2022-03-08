@@ -232,6 +232,7 @@
 	ask_verb = "asks"
 	exclaim_verb = "exclaims"
 	colour = "body"
+	key = list("`", "ё")
 	syllables = list("ёх", "ёс", "ёс", "ём", "ён", "бён", "вёл", "гёр", "мёг", "трё", "лёс", "рёйд", "ё", "мём", "ёнт")
 
 	var/list/replacements
