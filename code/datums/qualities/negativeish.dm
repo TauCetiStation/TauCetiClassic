@@ -145,6 +145,8 @@
 	requirement = "Нёт."
 
 /datum/quality/shkiondioniovioion/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
+
 	H.add_language(LANGUAGE_SHKIONDIONIOVIOION)
 	H.forced_language = LANGUAGE_SHKIONDIONIOVIOION
 
@@ -159,6 +161,8 @@
 	requirement = "Нема."
 
 /datum/quality/salarian/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
+
 	H.add_language(LANGUAGE_SALARIAN)
 	H.forced_language = LANGUAGE_SALARIAN
 
