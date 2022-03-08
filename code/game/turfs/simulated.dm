@@ -71,6 +71,6 @@
 		if(WATER_FLOOR)
 			AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
 		if(LUBE_FLOOR)
-			AddComponent(/datum/component/slippery, 6, SLIDE)
+			AddComponent(/datum/component/slippery, 5, SLIDE)
 		else
 			qdel(GetComponent(/datum/component/slippery))
