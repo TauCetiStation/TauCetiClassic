@@ -267,7 +267,7 @@
 	ask_verb = "asks"
 	exclaim_verb = "exclaims"
 	colour = "body"
-	key = list("u", "г")
+	key = list("x", "ч")
 	syllables = list("на", "ня", "ні", "нає", "ма", "мі", "та", "тя", "ко", "нко", "ля", "ла", "ша", "шо", "ха", "хо", "хи", "ги", "ґи", "юк", "як")
 
 	var/list/replacements
