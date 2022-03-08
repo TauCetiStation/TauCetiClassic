@@ -485,8 +485,8 @@ var/global/list/datum/spawners_cooldown = list()
 	ghost.dronize()
 
 /datum/spawner/podman
-	name = "Подкидыш"
-	desc = "Человечка вырастили на грядке."
+	name = "Подмена"
+	desc = "Подмена умерла, да здраствует подмена."
 	wiki_ref = "Podmen"
 
 	ranks = list(ROLE_GHOSTLY)
@@ -507,9 +507,33 @@ var/global/list/datum/spawners_cooldown = list()
 	podman.mind.memory = replicant_memory
 
 	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
-	msg += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
+	msg += "<B>You are now in possession of Podmen's body. It's previous owner found it no longer appealing, by rejecting it - they brought you here. You are now, again, an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
 	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
 	to_chat(podman, msg)
+
+/datum/spawner/podkid
+	name = "Подкидыш"
+	desc = "Человечка вырастили на грядке."
+	wiki_ref = "Podmen"
+
+	ranks = list(ROLE_GHOSTLY)
+
+	var/mob/podkid
+
+/datum/spawner/podkid/New(mob/_podkid)
+	. = ..()
+	podkid = _podkid
+
+/datum/spawner/podkid/jump(mob/dead/observer/ghost)
+	ghost.forceMove(get_turf(podkid))
+
+/datum/spawner/podkid/spawn_ghost(mob/dead/observer/ghost)
+	podkid.key = ghost.key
+
+	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	msg += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
+	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+	to_chat(podkid, msg)
 
 /datum/spawner/fake_diona
 	name = "Нимфа Дионы"
