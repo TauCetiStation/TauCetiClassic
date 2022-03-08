@@ -1,73 +1,71 @@
+#define SOCIALIZATION_NORMAL 0
+#define SOCIALIZATION_LONELY 1
+#define SOCIALIZATION_VERY_LONELY 2
+
 /mob/living/carbon/human
-	var/list/conversations
-	var/conversation_expiration = 45 SECONDS
+	var/conversation_timer
+	var/social_state = SOCIALIZATION_NORMAL
 
-/mob/living/carbon/human/proc/handle_conversation(speaker, speak_tags, hear_tags)
-	var/speech_amount = speak_tags + hear_tags
-
-	if(speech_amount < 30)
-		return
-
-	var/speech_imbalance = 1.0
-	if(speak_tags > hear_tags)
-		speech_imbalance = (speak_tags + 1) / (hear_tags + 1)
-	else
-		speech_imbalance = (hear_tags + 1) / (speak_tags + 1)
-
-	if(speech_amount < 150)
-		if(speech_imbalance < 20.0)
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/chit_chat, speaker)
-		return
-
-	if(speech_imbalance < 2.0 && speech_amount > 500)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/deep_conversation, speaker)
-		return
-
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/conversation, speaker)
-
-/mob/living/carbon/human/proc/clear_conversation(speaker)
-	if(!conversations || !conversations[speaker])
-		return
-
-	handle_conversation(speaker, conversations[speaker]["say"], conversations[speaker]["hear"])
-
-	conversations -= speaker
-	if(conversations.len == 0)
-		conversations = null
-
-/mob/living/carbon/human/proc/add_conversation(speaker, tag, message)
-	if(!conversations)
-		conversations = list()
-	// Can't pay attention to all these people around.
-	if(conversations.len > 3)
-		return
-	if(!conversations[speaker])
-		conversations[speaker] = list("say" = 0, "hear" = 0)
-
-	conversations[speaker][tag] += length(message)
-	addtimer(
-		CALLBACK(
-			src, .proc/clear_conversation, speaker
-		),
-		conversation_expiration,
-		TIMER_OVERRIDE|TIMER_UNIQUE
-	)
-
-/mob/living/carbon/human/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
+/mob/living/carbon/human/atom_init()
 	. = ..()
-	if(!.)
+	handle_socialization()
+
+/mob/living/carbon/human/Destroy()
+	deltimer(conversation_timer)
+	return ..()
+
+/mob/living/carbon/human/proc/set_social_state(state)
+	switch(state)
+		if(SOCIALIZATION_NORMAL)
+			social_state = SOCIALIZATION_NORMAL
+			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "no_socialization")
+
+			deltimer(conversation_timer)
+			conversation_timer = addtimer(
+				CALLBACK(src, .proc/handle_no_socialization),
+				5 MINUTES,
+				TIMER_STOPPABLE
+			)
+
+		if(SOCIALIZATION_LONELY)
+			social_state = SOCIALIZATION_LONELY
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
+
+			deltimer(conversation_timer)
+			conversation_timer = addtimer(
+				CALLBACK(src, .proc/handle_prolonged_no_socialization),
+				5 MINUTES,
+				TIMER_STOPPABLE
+			)
+
+		if(SOCIALIZATION_VERY_LONELY)
+			social_state = SOCIALIZATION_VERY_LONELY
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/very_lonely)
+
+/mob/living/carbon/human/proc/handle_prolonged_no_socialization()
+	if(HAS_TRAIT(src, TRAIT_MUTE))
+		return
+	set_social_state(SOCIALIZATION_VERY_LONELY)
+
+/mob/living/carbon/human/proc/handle_no_socialization()
+	if(HAS_TRAIT(src, TRAIT_MUTE))
+		return
+	set_social_state(SOCIALIZATION_LONELY)
+
+/mob/living/carbon/human/proc/handle_socialization(mob/hearer)
+	if(!species.flags[IS_SOCIAL])
+		return
+	if(HAS_TRAIT(src, TRAIT_MUTE))
 		return
 
-	if(speaker == src)
-		return
+	var/new_social_state = SOCIALIZATION_LONELY
+	if(ishuman(hearer))
+		new_social_state = SOCIALIZATION_NORMAL
+	else if(isnull(hearer))
+		new_social_state = SOCIALIZATION_NORMAL
 
-	if(!ishuman(speaker))
-		return
-
-	var/mob/living/carbon/human/H = speaker
-
-	add_conversation(speaker.GetVoice(), "hear", message)
-	H.add_conversation(GetVoice(), "say", message)
+	if(social_state > new_social_state)
+		set_social_state(new_social_state)
 
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"
@@ -130,8 +128,8 @@
 			speaking = USL
 
 	//check if we're muted and not using gestures
-	if(HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
-		if(!speaking || !(speaking.flags & SIGNLANG))
+	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
+		if (!(speaking && (speaking.flags & SIGNLANG)))
 			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 			return
 
@@ -147,7 +145,7 @@
 		if(!message)
 			return
 
-	if(!speaking)
+	else
 		speaking = get_language()
 
 	if(!speaking)
@@ -452,3 +450,7 @@
 	returns[5] = sound_vol
 
 	return returns
+
+#undef SOCIALIZATION_NORMAL
+#undef SOCIALIZATION_LONELY
+#undef SOCIALIZATION_VERY_LONELY
