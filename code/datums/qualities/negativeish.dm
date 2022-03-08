@@ -154,6 +154,15 @@
 		H.remove_language(language.name)
 
 
+/datum/quality/salarian
+	desc = "Ну що хлопче, готовий?"
+	requirement = "Нема."
+
+/datum/quality/salarian/add_effect(mob/living/carbon/human/H, latespawn)
+	H.add_language(LANGUAGE_SALARIAN)
+	H.forced_language = LANGUAGE_SALARIAN
+
+
 /datum/quality/clumsy
 	desc = "Ты - неуклюжий, криворукий дурачок. Лучше не трогать всякие опасные штуки!"
 	requirement = "Все, кроме Клоуна."
