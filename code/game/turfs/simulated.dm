@@ -54,7 +54,7 @@
 	if(wet < severity)
 		wet = severity
 		UpdateSlip()
-		if(!wet_overlay)      // Removed invinsible lube.
+		if(!wet_overlay)
 			wet_overlay = image('icons/effects/water.dmi', "wet_floor", src)
 			add_overlay(wet_overlay)
 
