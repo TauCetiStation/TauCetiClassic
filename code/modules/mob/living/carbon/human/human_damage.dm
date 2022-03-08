@@ -279,6 +279,9 @@
 /mob/living/carbon/human/proc/take_certain_bodypart_damage(list/parts_name, brute, burn, sharp = 0, edge = 0)
 	for(var/name in parts_name)
 		var/obj/item/organ/external/BP = get_bodypart(name)
+		if(!BP)
+			continue
+
 		var/damage_flags = (sharp ? DAM_SHARP : FALSE) | (edge ? DAM_EDGE : FALSE)
 
 		if(BP.take_damage(brute, burn, damage_flags))
