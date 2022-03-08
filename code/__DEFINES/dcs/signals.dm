@@ -121,6 +121,8 @@
 #define COMSIG_PARENT_EXAMINE "atom_examine"
 /// from base of mob/examinate(): (/mob)
 #define COMSIG_PARENT_POST_EXAMINE "atom_post_examine"
+/// from base of mob/examinate(): (/atom)
+#define COMSIG_PARENT_POST_EXAMINATE "atom_post_examinate"
 /// from base of atom/get_examine_name(): (/mob/user, list/override)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_get_examine_name"
 	//Positions for overrides list
@@ -245,6 +247,8 @@
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)
 #define COMSIG_MOB_DIED "mob_died"
+///from base of mob/ghost(): (can_reenter_corpse)
+#define COMSIG_MOB_GHOST "mob_ghost"
 ///from base of mob/create_mob_hud(): ()
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 ///from base of item/equipped(): (obj/item/I, slot)

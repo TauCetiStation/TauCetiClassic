@@ -155,26 +155,29 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	return 1
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE, timeofdeath = world.time)
-	if(key)
-		if(!(ckey in admin_datums) && bancheck == TRUE && jobban_isbanned(src, "Observer"))
-			var/mob/M = mousize()
-			if((config.allow_drone_spawn) || !jobban_isbanned(src, ROLE_DRONE))
-				var/response = tgui_alert(M, "Do you want to become a maintenance drone?","Are you sure you want to beep?", list("Beep!","Nope!"))
-				if(response == "Beep!")
-					M.dronize()
-					qdel(M)
-			return
-		var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
-		set_EyesVision(transition_time = 0)
-		SStgui.on_transfer(src, ghost)
-		ghost.can_reenter_corpse = can_reenter_corpse
-		ghost.timeofdeath = timeofdeath
-		ghost.key = key
-		ghost.playsound_stop(CHANNEL_AMBIENT)
-		ghost.playsound_stop(CHANNEL_AMBIENT_LOOP)
-		if(client && !ghost.client.holder && !config.antag_hud_allowed)		// For new ghosts we remove the verb from even showing up if it's not allowed.
-			ghost.verbs -= /mob/dead/observer/verb/toggle_antagHUD			// Poor guys, don't know what they are missing!
-		return ghost
+	if(!key)
+		return
+
+	if(!(ckey in admin_datums) && bancheck == TRUE && jobban_isbanned(src, "Observer"))
+		var/mob/M = mousize()
+		if((config.allow_drone_spawn) || !jobban_isbanned(src, ROLE_DRONE))
+			var/response = tgui_alert(M, "Do you want to become a maintenance drone?","Are you sure you want to beep?", list("Beep!","Nope!"))
+			if(response == "Beep!")
+				M.dronize()
+				qdel(M)
+		return
+
+	var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
+	set_EyesVision(transition_time = 0)
+	SStgui.on_transfer(src, ghost)
+	ghost.can_reenter_corpse = can_reenter_corpse
+	ghost.timeofdeath = timeofdeath
+	ghost.key = key
+	ghost.playsound_stop(CHANNEL_AMBIENT)
+	ghost.playsound_stop(CHANNEL_AMBIENT_LOOP)
+	if(client && !ghost.client.holder && !config.antag_hud_allowed)		// For new ghosts we remove the verb from even showing up if it's not allowed.
+		ghost.verbs -= /mob/dead/observer/verb/toggle_antagHUD			// Poor guys, don't know what they are missing!
+	return ghost
 
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
@@ -187,13 +190,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
 		to_chat(src, "<span class='red'>You have been banned from observing.</span>")
 		return
+
 	if(stat == DEAD)
 		if(fake_death)
 			var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
 			if(response != "Ghost")
 				return	//didn't want to ghost after-all
+			SEND_SIGNAL(src, COMSIG_MOB_GHOST, FALSE)
 			ghostize(can_reenter_corpse = FALSE)
 		else
+			SEND_SIGNAL(src, COMSIG_MOB_GHOST, TRUE)
 			ghostize(can_reenter_corpse = TRUE)
 	else
 		var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
@@ -211,6 +217,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(istype(loc, /obj/machinery/cryopod))
 			leave_type = "Ghosted in Cryopod"
 		SSStatistics.add_leave_stat(mind, leave_type)
+		SEND_SIGNAL(src, COMSIG_MOB_GHOST, FALSE)
 		ghostize(can_reenter_corpse = FALSE)
 
 /mob/dead/observer/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)

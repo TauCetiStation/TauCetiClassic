@@ -81,21 +81,24 @@
 	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER, 20)
 	Generator.Rotated()
+
 	var/mob/living/carbon/human/pedaler = buckled_mob
-	pedaler.nutrition -= 0.5
-	var/obj/item/organ/external/l_leg/LL = pedaler.get_bodypart(BP_L_LEG)
-	var/obj/item/organ/external/r_leg/RL = pedaler.get_bodypart(BP_R_LEG)
-	if(LL && pedal)
-		pedaler.apply_effect(LL.adjust_pumped(1), AGONY, 0)
-	if(RL && !pedal)
-		pedaler.apply_effect(RL.adjust_pumped(1), AGONY, 0)
-	pedaler.update_body()
+	if(ishuman(pedaler))
+		var/obj/item/organ/external/l_leg/LL = pedaler.get_bodypart(BP_L_LEG)
+		var/obj/item/organ/external/r_leg/RL = pedaler.get_bodypart(BP_R_LEG)
+		if(LL && pedal)
+			pedaler.apply_effect(LL.adjust_pumped(1), AGONY, 0)
+		if(RL && !pedal)
+			pedaler.apply_effect(RL.adjust_pumped(1), AGONY, 0)
+		pedaler.update_body()
 
 	pedal = !pedal
-	if(pedaler.halloss > 80)
+	if(buckled_mob.halloss > 80)
 		to_chat(user, "You pushed yourself too hard.")
-		pedaler.apply_effect(24,AGONY,0)
+		buckled_mob.apply_effect(24,AGONY,0)
 		unbuckle_mob()
+
+	buckled_mob.nutrition -= 0.5
 
 	VARSET_IN(src, pedaled, FALSE, 5)
 
