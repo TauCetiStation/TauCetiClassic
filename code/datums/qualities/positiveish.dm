@@ -304,7 +304,7 @@
 		if(INTENT_GRAB)
 			to_chat(seer, "<span class='notice'>They will grab whatever.</span>")
 		if(INTENT_HARM)
-			to_chat(seer, "<span class='notice'>They intend to do harm!</span>")
+			to_chat(seer, "<span class='warning'>They intend to do harm!</span>")
 
 	var/target_zone = M.get_targetzone()
 	if(target_zone)
