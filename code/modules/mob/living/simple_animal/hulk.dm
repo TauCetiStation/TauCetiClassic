@@ -256,6 +256,17 @@
 		if (!is_busy() && do_after(src, 40, target = D) && D)
 			D.open(1)
 
+/mob/living/simple_animal/hulk/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+
+	if(!. || moving_diagonally)
+		return .
+	
+	var/turf/T = loc
+
+	if(isturf(T) && !(T.flags & NOSTEPSOUND) && !lying)
+		playsound(T, 'sound/effects/hulk_step.ogg', VOL_EFFECTS_MASTER)
+
 /mob/living/proc/hulk_scream(obj/target, chance)
 	if(prob(chance))
 		visible_message("<span class='userdanger'>[src] has punched \the [target]!</span>",\
