@@ -170,6 +170,8 @@
 	requirement = "Нет."
 
 /datum/quality/polyglot/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
+
 	for(var/language in all_languages)
 		var/datum/language/L = all_languages[language]
 		if(H.get_species() in L.allowed_speak)
@@ -202,11 +204,13 @@
 		H.add_language(language, LANGUAGE_CAN_UNDERSTAND)
 
 
-/datum/quality/mutated_throat
-	desc = "Мутация в строении твоего речевого аппарата позволяет издавать удивительные звуки..."
+/datum/quality/augmented_voice
+	desc = "Кузнец подковал тебе голосок и теперь ты освоил невозможный для себя язык."
 	requirement = "Нет."
 
-/datum/quality/mutated_throat/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/augmented_voice/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
+
 	var/possibilities = list()
 	for(var/language in all_languages)
 		var/datum/language/L = all_languages[language]
