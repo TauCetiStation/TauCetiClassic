@@ -369,7 +369,7 @@
 			W.loc = src.back
 		if(SLOT_TIE)
 			var/obj/item/clothing/under/uniform = w_uniform
-			uniform.attackby(W, src)
+			uniform.attach_accessory(W, src)
 		else
 			to_chat(src, "<span class='warning'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return

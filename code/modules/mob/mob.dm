@@ -312,6 +312,7 @@
 	face_atom(A)
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
+	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
 
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
