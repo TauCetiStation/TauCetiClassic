@@ -50,7 +50,7 @@
 			else
 				var/sense = 1
 				switch(T.type)
-					if(/turf/space)
+					if(/turf/environment/space)
 						colour = rgb(10,10,10)
 						sense = 0
 
@@ -205,7 +205,7 @@
 			else
 				var/sense = 1
 				switch(T.type)
-					if(/turf/space)
+					if(/turf/environment/space)
 						colour = rgb(10,10,10)
 						sense = 0
 
@@ -258,7 +258,7 @@
 							else
 								colour = rgb(255,128,128)
 
-						//if(istype(AM, /obj/effect/blob))
+						//if(isblob(AM))
 						//	colour = rgb(255,0,255)
 
 				var/area/A = T.loc

@@ -465,7 +465,7 @@ SUBSYSTEM_DEF(shuttle)
 
 //To stop things being sent to centcom which should not be sent to centcom. Recursively checks for these types.
 /datum/controller/subsystem/shuttle/proc/forbidden_atoms_check(atom/A)
-	if(istype(A,/mob/living))
+	if(isliving(A))
 		return TRUE
 	if(istype(A,/obj/item/weapon/disk/nuclear))
 		return TRUE
@@ -564,7 +564,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(SO.object.dangerous)
 			message_admins("[SO.object.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
 
-		score["stuffshipped"]++
+		SSStatistics.score.stuffshipped++
 		CHECK_TICK
 
 	SSshuttle.shoppinglist.Cut()

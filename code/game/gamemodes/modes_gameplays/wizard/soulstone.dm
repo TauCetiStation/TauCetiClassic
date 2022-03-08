@@ -31,7 +31,7 @@
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
 /obj/item/device/soulstone/attack(mob/living/carbon/human/H, mob/user)
-	if(!istype(H, /mob/living/carbon/human))//If target is not a human.
+	if(!ishuman(H))//If target is not a human.
 		return ..()
 
 	if(H.has_brain_worms()) //Borer stuff - RR
@@ -179,8 +179,10 @@
 	if(isanyantag(user))
 		for(var/role in user.mind.antag_roles)
 			var/datum/role/R = user.mind.antag_roles[role]
-			if(R.faction)
-				add_faction_member(R.faction, M, TRUE)
+			var/datum/role/slave/construct_role = create_and_setup_role(/datum/role/slave, M, setup_role = FALSE)
+			construct_role.copy_variables(R)
+			setup_role(construct_role, TRUE)
+			R.faction.HandleRecruitedRole(construct_role)
 
 	if(user.my_religion) // for cult and chaplain religion
 		user.my_religion.add_member(M, CULT_ROLE_HIGHPRIEST)

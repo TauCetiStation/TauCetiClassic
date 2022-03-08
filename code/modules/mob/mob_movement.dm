@@ -151,7 +151,7 @@
 		move_delay += add_delay
 
 		if(mob.pulledby || mob.buckled) // Wheelchair driving!
-			if(istype(mob.loc, /turf/space))
+			if(isspaceturf(mob.loc))
 				return // No wheelchair driving in space
 			if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
 				return mob.pulledby.relaymove(mob, direct)
@@ -237,6 +237,11 @@
 	if(!Adjacent(machine) || !machine.can_interact_with(src))
 		return FALSE
 	var/obj/machinery/computer/security/console = machine
+
+	if(QDELETED(console.active_camera))
+		console.active_camera = null // if qdeling, set it null
+		return FALSE
+
 	var/turf/T = get_turf(console.active_camera)
 	var/list/cameras = list()
 
@@ -351,7 +356,7 @@
 
 		else if(isturf(A))
 			var/turf/turf = A
-			if(istype(turf,/turf/space))
+			if(isspaceturf(turf))
 				continue
 
 			if(!turf.density && !mob_negates_gravity())

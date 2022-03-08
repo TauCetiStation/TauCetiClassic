@@ -23,7 +23,7 @@
 	if(!cargo_holder) return
 	if(istype(target, /obj/structure/stool)) return
 	for(var/M in target.contents)
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			return
 
 	if(istype(target,/obj))
@@ -69,7 +69,7 @@
 				log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 				return 1
 
-	else if(istype(target,/mob/living))
+	else if(isliving(target))
 		var/mob/living/M = target
 		if(M.stat>1) return
 		if(chassis.occupant.a_intent == INTENT_HARM)
@@ -138,7 +138,7 @@
 							if(get_dir(chassis,ore)&chassis.dir)
 								ore.Move(ore_box)
 			else if(target.loc == C)
-				if(istype(target,/mob/living))
+				if(isliving(target))
 					var/mob/living/M = target
 					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 
@@ -201,7 +201,7 @@
 						for(var/obj/item/weapon/ore/ore in range(target,1))
 							ore.Move(ore_box)
 			else if(target.loc == C)
-				if(istype(target,/mob/living))
+				if(isliving(target))
 					var/mob/living/M = target
 					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 				log_message("Drilled through [target]")
@@ -331,7 +331,7 @@
 					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.use_power(energy_drain)
 		if(1)
-			if(istype(target, /turf/space))
+			if(isenvironmentturf(target))
 				occupant_message("Building Floor...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -1059,7 +1059,7 @@
 		else
 			chassis.occupant_message("<font color='red'>[target] is firmly secured.</font>")
 
-	else if(istype(target,/mob/living))
+	else if(isliving(target))
 		var/mob/living/M = target
 		if(M.stat>1) return
 		if(chassis.occupant.a_intent == INTENT_HARM)
@@ -1134,7 +1134,7 @@
 	var/area/thearea = allowed_areas.areas[A]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.density && !istype(T, /turf/space) && !T.obscured)
+		if(!T.density && !isenvironmentturf(T) && !T.obscured)
 			var/clear = TRUE
 			for(var/obj/O in T)
 				if(O.density)

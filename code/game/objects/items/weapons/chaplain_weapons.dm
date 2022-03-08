@@ -302,7 +302,7 @@
 
 	summoner.my_religion.add_deity(brainmob)
 
-	for(var/datum/language/L in summoner.languages)
+	for(var/datum/language/L as anything in summoner.languages)
 		brainmob.add_language(L.name)
 
 	name = "staff of the [god_name]"

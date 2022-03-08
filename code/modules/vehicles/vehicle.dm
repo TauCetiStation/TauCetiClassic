@@ -68,7 +68,7 @@
 		return 0
 	if(!on)
 		return 0
-	if(istype(loc, /turf/space) && !istype(src, /obj/vehicle/space))
+	if(isspaceturf(loc) && !istype(src, /obj/vehicle/space))
 		return 0
 	return 1
 
@@ -168,7 +168,7 @@
 	new /obj/item/stack/cable_coil/red(Tsec, 2)
 
 	//stuns people who are thrown off a train that has been blown up
-	if(istype(load, /mob/living))
+	if(isliving(load))
 		var/mob/living/M = load
 		M.apply_effects(5, 5)
 

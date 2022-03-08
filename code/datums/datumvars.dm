@@ -20,7 +20,7 @@
 	var/body = ""
 
 	if(!D)	return
-	if(istype(D, /atom))
+	if(isatom(D))
 		var/atom/A = D
 		title = "[A.name] (\ref[A]) = [A.type]"
 
@@ -31,7 +31,7 @@
 
 	var/sprite
 
-	if(istype(D,/atom))
+	if(isatom(D))
 		var/atom/AT = D
 		if(AT.icon && AT.icon_state)
 			sprite = 1
@@ -172,7 +172,7 @@
 
 	body += "<div align='center'>"
 
-	if(istype(D,/atom))
+	if(isatom(D))
 		var/atom/A = D
 		if(isliving(A))
 			body += "<a href='?_src_=vars;rename=\ref[D]'><b>[D]</b></a>"
@@ -268,6 +268,7 @@
 		body += "<option value='?_src_=vars;setckey=\ref[D]'>Set Client</option>"
 		if(ishuman(D))
 			body += "<option value>---</option>"
+			body += "<option value='?_src_=vars;give_quality=\ref[D]'>Give Quality</option>"
 			body += "<option value='?_src_=vars;setmutantrace=\ref[D]'>Set Mutantrace</option>"
 			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
 			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
@@ -384,7 +385,7 @@ body
 		var/datum/D = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
 
-	else if (istype(value, /client))
+	else if (isclient(value))
 		var/client/C = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
 //
@@ -450,7 +451,7 @@ body
 			return
 
 		var/D = locate(href_list["datumedit"])
-		if(!istype(D,/datum) && !istype(D,/client))
+		if(!istype(D,/datum) && !isclient(D))
 			to_chat(usr, "This can only be used on instances of types /client or /datum")
 			return
 
@@ -461,7 +462,7 @@ body
 			return
 
 		var/D = locate(href_list["datumchange"])
-		if(!istype(D,/datum) && !istype(D,/client))
+		if(!istype(D,/datum) && !isclient(D))
 			to_chat(usr, "This can only be used on instances of types /client or /datum")
 			return
 
@@ -902,6 +903,20 @@ body
 			H.regenerate_icons()
 		else
 			to_chat(usr, "Failed! Something went wrong.")
+
+	else if(href_list["give_quality"])
+		if(!check_rights(R_VAREDIT))
+			return
+
+		var/mob/living/carbon/human/H = locate(href_list["give_quality"])
+		if(!istype(H))
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+			return
+
+		var/quality_type = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.qualities_pool
+		if(!quality_type)
+			return
+		SSqualities.force_give_quality(H, quality_type, usr)
 
 	else if(href_list["addlanguage"])
 		if(!check_rights(R_VAREDIT))

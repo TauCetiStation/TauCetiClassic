@@ -31,7 +31,7 @@
 	M.cut_overlays()
 	M.invisibility = 101
 
-	if(istype(M, /mob/living/silicon/robot))
+	if(isrobot(M))
 		var/mob/living/silicon/robot/Robot = M
 		if(Robot.mmi)	qdel(Robot.mmi)
 	else
@@ -135,7 +135,7 @@
 
 /obj/item/projectile/magic/animate/Bump(atom/change)
 	. = ..()
-	if(istype(change, /obj/item) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
+	if(isitem(change) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
 		var/obj/O = change
 		new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
 	else if(istype(change, /mob/living/simple_animal/hostile/mimic/copy))

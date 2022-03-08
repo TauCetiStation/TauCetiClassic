@@ -40,6 +40,9 @@
 	return null
 
 /proc/get_area_by_type(type) //get area by its type
+	var/area/area = areas_by_type[type]
+	if(area)
+		return area
 	return locate(type) in all_areas
 
 /proc/in_range(source, user)
@@ -254,7 +257,7 @@
 			var/turf/ear = get_turf(M)
 			if(ear)
 				// Ghostship is magic: Ghosts can hear radio chatter from anywhere
-				if(speaker_coverage[ear] || (istype(M, /mob/dead/observer) && (M.client) && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)))
+				if(speaker_coverage[ear] || (isobserver(M) && (M.client) && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)))
 					. |= M		// Since we're already looping through mobs, why bother using |= ? This only slows things down.
 	return .
 
@@ -262,7 +265,7 @@
 	return
 
 /obj/machinery/bot/mulebot/get_mob()
-	if(load && istype(load, /mob/living))
+	if(load && isliving(load))
 		return load
 
 /obj/mecha/get_mob()
@@ -732,3 +735,16 @@
 	if(icon_state in icon_states(icon))
 		return TRUE
 	return FALSE
+
+/**
+ * Returns the atom sitting on the turf.
+ * For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
+ * Optional arg 'type' to stop once it reaches a specific type instead of a turf.
+**/
+/proc/get_atom_on_turf(atom/movable/atom_on_turf, stop_type)
+	var/atom/turf_to_check = atom_on_turf
+	while(turf_to_check?.loc && !isturf(turf_to_check.loc))
+		turf_to_check = turf_to_check.loc
+		if(stop_type && istype(turf_to_check, stop_type))
+			break
+	return turf_to_check
