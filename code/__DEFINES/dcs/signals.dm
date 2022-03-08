@@ -161,7 +161,7 @@
 #define COMSIG_ATOM_STOP_PULL  "atom_stop_pull"
 /// from atom/movable/proc/waddle(): (waddle_angle, waddle_height)
 #define COMSIG_MOVABLE_WADDLE "movable_waddle"
-/// from mob/tryGrab(): (mob/grabber, force_state, show_warnings)
+/// from mob/tryGrab(): (/mob/grabber, force_state, show_warnings)
 #define COMSIG_MOVABLE_TRY_GRAB "movable_try_grab"
 	#define COMPONENT_PREVENT_GRAB 1
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
@@ -170,6 +170,10 @@
 #define COMSIG_ENTER_AREA "enter_area"
 ///from base of area/Exited(): (/area, /atom/NewLoc). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_EXIT_AREA "exit_area"
+/// from datum/orbit/New(): (/atom/orbiting)
+#define COMSIG_MOVABLE_ORBIT_BEGIN "orbit_begin"
+/// from datum/orbit/New(): (/atom/orbiting)
+#define COMSIG_MOVABLE_ORBIT_STOP "orbit_stop"
 
 // /obj
 /// from base of datum/religion_rites/reset_rite_wrapper(): ()

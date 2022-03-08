@@ -109,6 +109,10 @@ What is the naming convention for planes or layers?
   #define ABOVE_SINGULARITY_LAYER 2
 
 #define AREA_PLANE 60
+
+#define GHOST_ILLUSION_PLANE 79
+#define GHOST_ILLUSION_RENDER_TARGET "*GHOST_ILLUSION_RENDER_TARGET"
+
 #define GHOST_PLANE 80
 #define POINT_PLANE 90
 
