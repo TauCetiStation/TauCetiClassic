@@ -241,6 +241,7 @@
 /datum/quality/reliquary/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/device/soulstone(H), SLOT_R_STORE)
 
+
 /datum/quality/crusader
 	desc = "Dominus concessit vos arma! DEUS VULT!"
 	requirement = "Капеллан."
@@ -250,3 +251,64 @@
 /datum/quality/crusader/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/clothing/head/helmet/crusader(H), SLOT_HEAD)
 	H.equip_or_collect(new /obj/item/clothing/suit/armor/crusader(H), SLOT_WEAR_SUIT)
+
+
+/datum/quality/war_face
+	desc = "ПОКАЖИ МНЕ СВОЙ БОЕВОЙ ОСКАЛ."
+	requirement = "Нет."
+
+	var/list/war_colors = list(
+		COLOR_CRIMSON_RED,
+		COLOR_CRIMSON,
+		COLOR_WHITE,
+		COLOR_BLACK,
+		COLOR_YELLOW,
+		COLOR_GOLD,
+		COLOR_INDIGO,
+		COLOR_ADMIRAL_BLUE,
+		COLOR_CROCODILE,
+		COLOR_SEAWEED,
+		COLOR_ROSE_PINK,
+		COLOR_TIGER,
+		COLOR_PURPLE,
+	)
+
+/datum/quality/war_face/add_effect(mob/living/carbon/human/H, latespawn)
+	H.lip_style = "spray_face"
+	H.lip_color = pick(war_colors)
+	// for some reason name is not set at this stage and if I don't do this the emote message will be nameless
+	H.name = H.real_name
+	H.emote("scream")
+	H.update_body()
+
+
+/datum/quality/eye_reading
+	desc = "Ты по их глазам видишь чего они там задумали."
+	requirement = "Нет."
+
+/datum/quality/eye_reading/proc/see_intent(datum/source, atom/target)
+	var/mob/living/carbon/human/seer = source
+	if(!ismob(target))
+		return
+	var/mob/M = target
+	if(M?.client?.tooltip)
+		var/atom/targets_target = locate(M.client.tooltip.looking_at)
+		if(isturf(targets_target.loc))
+			to_chat(seer, "<span class='notice'>They are looking at [targets_target].</span>")
+
+	switch(seer.a_intent)
+		if(INTENT_HELP)
+			to_chat(seer, "<span class='notice'>They intend to help out.</span>")
+		if(INTENT_PUSH)
+			to_chat(seer, "<span class='notice'>They are very pushy.</span>")
+		if(INTENT_GRAB)
+			to_chat(seer, "<span class='notice'>They will grab whatever.</span>")
+		if(INTENT_HARM)
+			to_chat(seer, "<span class='warning'>They intend to do harm!</span>")
+
+	var/target_zone = M.get_targetzone()
+	if(target_zone)
+		to_chat(seer, "<span class='notice'>Their gaze is somewhere at the level of \the [parse_zone(target_zone)].</span>")
+
+/datum/quality/eye_reading/add_effect(mob/living/carbon/human/H, latespawn)
+	RegisterSignal(H, list(COMSIG_PARENT_POST_EXAMINATE), .proc/see_intent)

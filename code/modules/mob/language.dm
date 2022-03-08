@@ -260,6 +260,39 @@
 /datum/language/shkiondioniovioion/scramble(input)
 	return replace_characters(input, replacements)
 
+/datum/language/salarian
+	name = LANGUAGE_SALARIAN
+	desc = "One of the most prominent space-slavic languages out there. Consists of many funny sounds, as well as deep, melodic structure."
+	speech_verb = "says"
+	ask_verb = "asks"
+	exclaim_verb = "exclaims"
+	colour = "body"
+	key = list("u", "г")
+	syllables = list("на", "ня", "ні", "нє", "та", "тя", "ко", "нко", "ля", "ла", "ша", "шо", "ха", "хо", "хи", "ґи", "ук", "ак")
+
+	var/list/replacements
+
+/datum/language/salarian/New()
+	var/list/lowercase_letters = list(
+		"и" = "і",
+		"ы" = "и",
+		"э" = "е",
+		"е" = "є",
+		"ё" = "йо",
+		"г" = "ґ",
+		"чт" = "ш",
+	)
+
+	replacements = list()
+	replacements["Чт"] = "Ш"
+	for(var/letter in lowercase_letters)
+		var/replacement = lowercase_letters[letter]
+		replacements[letter] = replacement
+		replacements[uppertext(letter)] = uppertext(replacement)
+
+/datum/language/salarian/scramble(input)
+	return replace_characters(input, replacements)
+
 // Language handling.
 /mob/proc/add_language(language, flags=LANGUAGE_CAN_SPEAK)
 	if(isnull(flags))
