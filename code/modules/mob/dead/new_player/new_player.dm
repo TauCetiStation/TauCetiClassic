@@ -99,7 +99,8 @@
 				"Особенность",
 				list("ДА!!!", "Нет")) == "ДА!!!")
 				SSqualities.register_client(client)
-			client.prefs.selecting_quality = FALSE
+			if(client)
+				client.prefs.selecting_quality = FALSE
 		return
 
 	if(href_list["lobby_observe"])
