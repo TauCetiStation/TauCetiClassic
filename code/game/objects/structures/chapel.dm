@@ -311,7 +311,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 /obj/structure/stool/bed/chair/lectern
 	name = "lectern"
-	desc = "Моли о прощении, тебе есть чего замолить."
+	desc = "Уверовавший в свою безгрешность умирает нераскаявшимся."
 	icon = 'icons/obj/lectern.dmi'
 	icon_state = "lectern"
 
