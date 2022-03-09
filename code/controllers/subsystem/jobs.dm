@@ -53,6 +53,17 @@ SUBSYSTEM_DEF(job)
 		SetupOccupations()
 	return name_occupations[rank]
 
+/datum/controller/subsystem/job/proc/GetJobByAltTitle(rank)
+	if(!occupations.len)
+		SetupOccupations()
+	for(var/job_name in name_occupations)
+		var/datum/job/J = name_occupations[job_name]
+		if(!J.alt_titles)
+			continue
+		if(rank in J.alt_titles)
+			return J
+	return null
+
 /datum/controller/subsystem/job/proc/GetJobType(jobtype)
 	if(!occupations.len)
 		SetupOccupations()
@@ -361,8 +372,10 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
 			Debug("Alternate return to lobby, Player: [player]")
+
 			player.ready = FALSE
 			player.client << output(player.ready, "lobbybrowser:setReadyStatus")
+
 			unassigned -= player
 			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</span>")
 	return TRUE

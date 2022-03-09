@@ -9,6 +9,10 @@
 
 	allowed_target_zones = TARGET_ZONE_ALL
 
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 1,
+	)
+
 /datum/combat_combo/disarm/proc/item_swaparoo(mob/living/victim, mob/living/attacker)
 	if(!iscarbon(attacker))
 		return
@@ -99,6 +103,11 @@
 
 	allowed_target_zones = list(BP_CHEST)
 
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 4,
+		BP_INACTIVE_ARM = 4,
+	)
+
 /datum/combat_combo/push/execute(mob/living/victim, mob/living/attacker)
 	var/list/attack_obj = attacker.get_unarmed_attack()
 	apply_effect(3, WEAKEN, victim, attacker, attack_obj=attack_obj, min_value=1)
@@ -122,6 +131,11 @@
 	require_leg_to_perform = TRUE
 
 	heavy_animation = TRUE
+
+	pump_bodyparts = list(
+		BP_L_LEG = 4,
+		BP_R_LEG = 4,
+	)
 
 // Returns what to replace the append to the slide kick message with
 /datum/combat_combo/slide_kick/proc/take_pants_off(mob/living/L, mob/living/attacker)
@@ -231,6 +245,12 @@
 
 	require_arm = TRUE
 
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 7,
+		BP_INACTIVE_ARM = 7,
+		BP_CHEST = 7,
+	)
+
 /datum/combat_combo/capture/execute(mob/living/victim, mob/living/attacker)
 	var/saved_targetzone = attacker.get_targetzone()
 	var/list/attack_obj = attacker.get_unarmed_attack()
@@ -285,6 +305,12 @@
 	require_leg_to_perform = TRUE
 
 	heavy_animation = TRUE
+
+	pump_bodyparts = list(
+		BP_L_LEG = 2,
+		BP_R_LEG = 2,
+		BP_GROIN = 2,
+	)
 
 /datum/combat_combo/dropkick/animate_combo(mob/living/victim, mob/living/attacker)
 	var/list/attack_obj = attacker.get_unarmed_attack()

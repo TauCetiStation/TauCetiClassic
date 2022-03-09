@@ -747,7 +747,7 @@
 			W.dropped(M)
 		M.sec_hud_set_implants()
 		var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
-		new_mob.a_intent = INTENT_HARM
+		new_mob.set_a_intent(INTENT_HARM)
 		new_mob.universal_speak = 1
 		if(M.mind)
 			M.mind.transfer_to(new_mob)
@@ -771,7 +771,7 @@
 /datum/reagent/space_drugs/on_general_digest(mob/living/M)
 	..()
 	M.adjustDrugginess(2)
-	if(isturf(M.loc) && !istype(M.loc, /turf/space))
+	if(isturf(M.loc) && !isspaceturf(M.loc))
 		if(M.canmove && !M.incapacitated())
 			if(prob(10))
 				step(M, pick(cardinal))

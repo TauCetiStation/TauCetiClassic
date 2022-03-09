@@ -1,6 +1,6 @@
 var/global/savefile/iconCache = new /savefile("data/iconCache.sav")
 
-/var/list/bicon_cache = list()
+var/global/list/bicon_cache = list()
 
 /icon
 	var/icon_info
@@ -25,29 +25,44 @@ var/global/savefile/iconCache = new /savefile("data/iconCache.sav")
 	var/list/almost_partial = splittext(partial[2], "}")
 	return replacetext(copytext(almost_partial[1], 3, -5), "\n", "")
 
-/proc/bicon(obj, css = "class='icon'") // if you don't want any styling just pass null to css
+/proc/bicon(obj, css = "class='icon'", time_stamp = -1) // if you don't want any styling just pass null to css
 	if (!obj)
 		return
 
-	return "<img [css] src='data:image/png;base64,[bicon_raw(obj)]'>"
+	return "<img [css] src='data:image/png;base64,[bicon_raw(obj, time_stamp)]'>"
 
-/proc/bicon_raw(obj)
+/proc/timestamp_cache_add(key, element)
+	global.bicon_cache[key] = list(element, world.time)
+	return element
+
+/proc/timestamp_cache_get(key, time_stamp)
+	if(!global.bicon_cache[key])
+		return null
+
+	if(time_stamp >= 0 && global.bicon_cache[key][2] < time_stamp)
+		return null
+
+	return global.bicon_cache[key][1]
+
+/proc/bicon_raw(obj, time_stamp)
 	if (!obj)
 		return
 
 	// This check will check for an icon object that already has a cool key.
 	if (istype(obj, /icon))
 		var/icon/I = obj
-		if (!bicon_cache[I.icon_info])
-			bicon_cache[I.icon_info] = icon2base64(obj)
-		return "[bicon_cache[I.icon_info]]"
+		var/bicon_obj = timestamp_cache_get(I.icon_info, time_stamp)
+		if (!bicon_obj)
+			bicon_obj = timestamp_cache_add(I.icon_info, icon2base64(obj))
+		return bicon_obj
 
 	// This check will check if you pass it to this proc 'foo/bar.dmi', or something from your computer in game
 	if(isicon(obj))
 		var/key = "\ref[obj]"
-		if(!bicon_cache[key])
-			bicon_cache[key] = icon2base64(obj)
-		return "[bicon_cache[key]]"
+		var/bicon_obj = timestamp_cache_get(key, time_stamp)
+		if(!bicon_obj)
+			bicon_obj = timestamp_cache_add(key, icon2base64(obj))
+		return bicon_obj
 
 	if(!isatom(obj) && !istype(obj, /image)) // we don't need datums here. no runtimes :<
 		return
@@ -55,7 +70,8 @@ var/global/savefile/iconCache = new /savefile("data/iconCache.sav")
 	// Thanks to dynamic typing, this atom can be both an image and a mutable_apperance
 	var/atom/A = obj
 	var/key = "\ref[A.icon]#[A.icon_state]"
-	if (!bicon_cache[key]) // Doesn't exist, make it.
+	var/bicon_obj = timestamp_cache_get(key, time_stamp)
+	if (!bicon_obj) // Doesn't exist, make it.
 		var/icon/I
 		if(!A.icon || !A.icon_state || !(A.icon_state in icon_states(A.icon))) // fixes freeze when client uses examine or anything else, when there is something wrong with icon data.
 			I = icon('icons/misc/buildmode.dmi', "buildhelp")                  // there is no logic with this icon choice, i just like it.
@@ -65,6 +81,6 @@ var/global/savefile/iconCache = new /savefile("data/iconCache.sav")
 			var/icon/temp = I
 			I = icon()
 			I.Insert(temp, dir = SOUTH)
-		bicon_cache[key] = icon2base64(I, key)
+		bicon_obj = timestamp_cache_add(key, icon2base64(I, key))
 
-	return "[bicon_cache[key]]"
+	return bicon_obj

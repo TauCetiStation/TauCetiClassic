@@ -49,8 +49,8 @@
 	var/speech_allowed = 1 //Meme Stuff
 	var/damageoverlaytemp = 0
 	var/computer_id = null
-	var/lastattacker = null
-	var/lastattacked = null
+	var/lastattacker_name = ""
+	var/lastattacker_key = ""
 	var/attack_log = list( )
 	var/already_placed = 0.0
 	var/obj/machinery/machine = null
@@ -266,3 +266,5 @@
 	var/typing = FALSE
 	var/obj/effect/overlay/typing_indicator/typing_indicator
 	var/typing_indicator_type = "default"
+
+	var/forced_language
