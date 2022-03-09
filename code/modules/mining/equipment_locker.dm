@@ -292,7 +292,7 @@
 		EQUIPMENT("Soap",						/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,									150),
 		EQUIPMENT("Alien toy",					/obj/item/clothing/mask/facehugger_toy,								250),
 		EQUIPMENT("Point card",					/obj/item/weapon/card/mining_point_card,							500),
-		EQUIPMENT("Space cash",					/obj/item/weapon/spacecash/c1000,									5000),
+		EQUIPMENT("Space cash",					/obj/item/weapon/spacecash/bill/c500,									5000),
 		EQUIPMENT("Mining voucher",				/obj/item/weapon/mining_voucher,									10000),
 	)
 

@@ -206,7 +206,7 @@
 
 /obj/item/weapon/storage/secure/briefcase/syndie/atom_init()
 	for (var/i in 1 to 4)
-		new /obj/item/weapon/spacecash/c1000(src)
+		new /obj/item/weapon/spacecash/bill/c500(src)
 	. = ..()
 
 

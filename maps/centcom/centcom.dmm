@@ -11125,8 +11125,8 @@
 /turf/unsimulated/wall,
 /area/centcom/living)
 "aAn" = (
-/obj/item/weapon/spacecash/c1000,
-/obj/item/weapon/spacecash/c500,
+/obj/item/weapon/spacecash/bill/c500,
+/obj/item/weapon/spacecash/bill/c500,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
@@ -19152,7 +19152,7 @@
 /area/custom/wizard_station)
 "bcp" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/spacecash/c1,
+/obj/item/weapon/spacecash/bill/c1,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"

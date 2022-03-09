@@ -81,13 +81,13 @@
 /obj/item/weapon/storage/wallet/random/atom_init()
 	. = ..()
 	var/list/spawn_type1 = list(
-		/obj/item/weapon/spacecash/c10,
-		/obj/item/weapon/spacecash/c100,
-		/obj/item/weapon/spacecash/c1000,
-		/obj/item/weapon/spacecash/c20,
-		/obj/item/weapon/spacecash/c200,
-		/obj/item/weapon/spacecash/c50,
-		/obj/item/weapon/spacecash/c500
+		/obj/item/weapon/spacecash/bill/c10,
+		/obj/item/weapon/spacecash/bill/c100,
+		/obj/item/weapon/spacecash/bill/c500,
+		/obj/item/weapon/spacecash/bill/c20,
+		/obj/item/weapon/spacecash/bill/c200,
+		/obj/item/weapon/spacecash/bill/c50,
+		/obj/item/weapon/spacecash/bill/c500
 		)
 	var/item1_type = pick(spawn_type1)
 

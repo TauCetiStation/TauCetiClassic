@@ -5,10 +5,11 @@
 	requirement = "Нет."
 
 	var/list/money_types = list(
-		/obj/item/weapon/spacecash/c1000,
-		/obj/item/weapon/spacecash/c500,
-		/obj/item/weapon/spacecash/c200,
-		/obj/item/weapon/spacecash/c100,
+		/obj/item/weapon/spacecash/bill/c500,
+		/obj/item/weapon/spacecash/bill/c500,
+		/obj/item/weapon/spacecash/bill/c500,
+		/obj/item/weapon/spacecash/bill/c200,
+		/obj/item/weapon/spacecash/bill/c100,
 	)
 
 /datum/quality/loadsamoney/proc/load_money(mob/living/carbon/human/H, obj/item/weapon/storage/S)

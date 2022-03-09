@@ -1019,19 +1019,17 @@
 		if(0 to 10)
 			new/obj/item/weapon/spacecash(loc)
 		if(11 to 20)
-			new/obj/item/weapon/spacecash/c10(loc)
+			new/obj/item/weapon/spacecash/bill/c10(loc)
 		if(21 to 30)
-			new/obj/item/weapon/spacecash/c20(loc)
+			new/obj/item/weapon/spacecash/bill/c20(loc)
 		if(31 to 40)
-			new/obj/item/weapon/spacecash/c50(loc)
+			new/obj/item/weapon/spacecash/bill/c50(loc)
 		if(41 to 50)
-			new/obj/item/weapon/spacecash/c100(loc)
+			new/obj/item/weapon/spacecash/bill/c100(loc)
 		if(51 to 60)
-			new/obj/item/weapon/spacecash/c200(loc)
+			new/obj/item/weapon/spacecash/bill/c200(loc)
 		if(61 to 80)
-			new/obj/item/weapon/spacecash/c500(loc)
-		else
-			new/obj/item/weapon/spacecash/c1000(loc)
+			new/obj/item/weapon/spacecash/bill/c500(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato

@@ -55,6 +55,9 @@
 	var/datum/wires/vending/wires = null
 	var/scan_id = TRUE
 
+	var/cash = 0
+	var/datum/money_account/id_scanned = null
+
 
 /obj/machinery/vending/atom_init()
 	. = ..()
@@ -214,6 +217,10 @@
 		var/obj/item/weapon/card/I = W
 		scan_card(I)
 
+	else if(currently_vending && istype(W, /obj/item/weapon/spacecash/bill))
+		var/obj/item/weapon/spacecash/bill/B = W
+		scan_cash(B)
+
 	else if(istype(W, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
 			to_chat(user, "<span class='notice'>It does nothing.</span>")
@@ -287,42 +294,9 @@
 							to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
 							return
 						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
-
 					if(D)
-						var/transaction_amount = currently_vending.price
-						if(transaction_amount <= D.money)
-
-							//transfer the money
-							D.adjust_money(-transaction_amount)
-							vendor_account.adjust_money(transaction_amount)
-
-							//create entries in the two account transaction logs
-							var/datum/transaction/T = new()
-							T.target_name = "[vendor_account.owner_name] (via [src.name])"
-							T.purpose = "Purchase of [currently_vending.product_name]"
-							if(transaction_amount > 0)
-								T.amount = "([transaction_amount])"
-							else
-								T.amount = "[transaction_amount]"
-							T.source_terminal = src.name
-							T.date = current_date_string
-							T.time = worldtime2text()
-							D.transaction_log.Add(T)
-							//
-							T = new()
-							T.target_name = D.owner_name
-							T.purpose = "Purchase of [currently_vending.product_name]"
-							T.amount = "[transaction_amount]"
-							T.source_terminal = src.name
-							T.date = current_date_string
-							T.time = worldtime2text()
-							vendor_account.transaction_log.Add(T)
-
-							// Vend the item
-							vend(src.currently_vending, usr)
-							currently_vending = null
-						else
-							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
+						id_scanned = D
+						updateUsrDialog()
 					else
 						to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
 				else
@@ -335,6 +309,72 @@
 			currently_vending = null
 	else
 		to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>")
+
+/obj/machinery/vending/proc/vend_card()
+	if(id_scanned)
+		var/transaction_amount = currently_vending.price
+		if(transaction_amount <= id_scanned.money)
+
+			//transfer the money
+			id_scanned.adjust_money(-transaction_amount)
+			vendor_account.adjust_money(transaction_amount)
+
+			//create entries in the two account transaction logs
+			var/datum/transaction/T = new()
+			T.target_name = "[vendor_account.owner_name] (via [src.name])"
+			T.purpose = "Purchase of [currently_vending.product_name]"
+			if(transaction_amount > 0)
+				T.amount = "([transaction_amount])"
+			else
+				T.amount = "[transaction_amount]"
+			T.source_terminal = src.name
+			T.date = current_date_string
+			T.time = worldtime2text()
+			id_scanned.transaction_log.Add(T)
+			//
+			T = new()
+			T.target_name = id_scanned.owner_name
+			T.purpose = "Purchase of [currently_vending.product_name]"
+			T.amount = "[transaction_amount]"
+			T.source_terminal = src.name
+			T.date = current_date_string
+			T.time = worldtime2text()
+			vendor_account.transaction_log.Add(T)
+
+			// Vend the item
+			vend(src.currently_vending, usr)
+			currently_vending = null
+			id_scanned = null
+		else
+			to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
+
+/obj/machinery/vending/proc/scan_cash(obj/item/weapon/I)
+	if(!currently_vending)
+		return
+	if(istype(I, /obj/item/weapon/spacecash/bill))
+		var/obj/item/weapon/spacecash/bill/B = I
+		visible_message("<span class='info'>[usr] inserted a [B.name] into a [src]'s validator.</span>")
+		cash += B.worth
+		qdel(B)
+		updateUsrDialog()
+
+/obj/machinery/vending/proc/vend_cash()
+	if(cash)
+		var/transaction_amount = currently_vending.price
+		if(transaction_amount <= cash)
+			cash -= transaction_amount
+			vendor_account.adjust_money(transaction_amount)
+
+			if(cash > 0)
+				spawn_money(cash, src.loc)
+				cash = 0
+				to_chat(usr, "[bicon(src)]<span class='warning'>Here is your change!</span>")
+
+			// Vend the item
+			vend(src.currently_vending, usr)
+			currently_vending = null
+		else
+			to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much cash!</span>")
 
 /obj/machinery/vending/proc/set_extended_inventory(state)
 	extended_inventory = state
@@ -352,7 +392,13 @@
 
 	if(currently_vending)
 		var/dat
-		dat += "<b>You have selected [currently_vending.product_name].<br>Please swipe your ID to pay for the article.</b><br>"
+		dat += "<b>You have selected [currently_vending.product_name] for [currently_vending.price] cr.<br>Please swipe your ID or insert cash to pay for the article.</b><br>"
+		if(id_scanned)
+			dat += "<b>Your ID card is scanned, please confirm operation.</b><br>"
+		else if(cash > 0)
+			dat += "<b>Cash inserted, credits amount: [cash] cr.</b><br>"
+			dat += "<a href='byond://?src=\ref[src];withdraw=1'>Withdraw</a><br>"
+		dat += "<a href='byond://?src=\ref[src];confirm=1'>Confirm</a><br>"
 		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
 		var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
 		popup.set_content(dat)
@@ -464,8 +510,29 @@
 				updateUsrDialog()
 		return
 
+	else if (href_list["confirm"])
+		if(id_scanned)
+			vend_card()
+		else if(cash > 0)
+			vend_cash()
+		else
+			to_chat(usr, "<span class='warning'>Scan your ID card or insert cash.</span>")
+			return
+		src.currently_vending = null
+		updateUsrDialog()
+		return
+
+	else if (href_list["withdraw"])
+		if(cash > 0)
+			spawn_money(cash, src.loc)
+			cash = 0
+			to_chat(usr, "[bicon(src)]<span class='warning'>Here is your cash!</span>")
+		updateUsrDialog()
+		return
+
 	else if (href_list["cancel_buying"])
 		src.currently_vending = null
+		id_scanned = null
 		updateUsrDialog()
 		return
 

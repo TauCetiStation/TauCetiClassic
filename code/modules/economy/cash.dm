@@ -20,58 +20,138 @@
 	. = ..()
 	price = worth
 
-/obj/item/weapon/spacecash/c1
+/obj/item/weapon/spacecash/bill/c1
 	name = "1 credit chip"
-	icon_state = "spacecash"
+	icon_state = "spacecash1"
 	desc = "It's worth 1 credit."
 	worth = 1
 
-/obj/item/weapon/spacecash/c10
+/obj/item/weapon/spacecash/bill/c5
+	name = "5 credit chip"
+	icon_state = "spacecash5"
+	desc = "It's worth 5 credits."
+	worth = 5
+
+/obj/item/weapon/spacecash/bill/c10
 	name = "10 credit chip"
 	icon_state = "spacecash10"
 	desc = "It's worth 10 credits."
 	worth = 10
 
-/obj/item/weapon/spacecash/c20
+/obj/item/weapon/spacecash/bill/c20
 	name = "20 credit chip"
 	icon_state = "spacecash20"
 	desc = "It's worth 20 credits."
 	worth = 20
 
-/obj/item/weapon/spacecash/c50
+/obj/item/weapon/spacecash/bill/c50
 	name = "50 credit chip"
 	icon_state = "spacecash50"
 	desc = "It's worth 50 credits."
 	worth = 50
 
-/obj/item/weapon/spacecash/c100
+/obj/item/weapon/spacecash/bill/c100
 	name = "100 credit chip"
 	icon_state = "spacecash100"
 	desc = "It's worth 100 credits."
 	worth = 100
 
-/obj/item/weapon/spacecash/c200
+/obj/item/weapon/spacecash/bill/c200
 	name = "200 credit chip"
 	icon_state = "spacecash200"
 	desc = "It's worth 200 credits."
 	worth = 200
 
-/obj/item/weapon/spacecash/c500
+/obj/item/weapon/spacecash/bill/c500
 	name = "500 credit chip"
 	icon_state = "spacecash500"
 	desc = "It's worth 500 credits."
 	worth = 500
 
-/obj/item/weapon/spacecash/c1000
-	name = "1000 credit chip"
-	icon_state = "spacecash1000"
-	desc = "It's worth 1000 credits."
-	worth = 1000
+/obj/item/weapon/spacecash/bill/attackby(obj/item/I, mob/user, params)
+	..()
+	if(istype(I, /obj/item/weapon/spacecash/bill) && !istype(src.loc, /obj/item/weapon/storage/bill_bundle))
+		var/obj/item/weapon/spacecash/bill/B = I
+		var/obj/item/weapon/storage/bill_bundle/Bundle = new/obj/item/weapon/storage/bill_bundle(user.loc)
+		Bundle.handle_item_insertion(B)
+		Bundle.handle_item_insertion(src)
+		Bundle.pickup(user)
+		user.put_in_hands(Bundle)
+		to_chat(user, "<span class='notice'>You combine the [B.name] and the [src.name] into a bundle.</span>")
+
+/obj/item/weapon/storage/bill_bundle
+	name = "wad of cash"
+	desc = "Here comes the money"
+	max_storage_space = 20
+	display_contents_with_number = TRUE
+	use_to_pickup = TRUE
+	collection_mode = 0
+	icon = 'icons/obj/economy.dmi'
+	icon_state = "rubberband"
+	w_class = SIZE_SMALL
+	can_hold = list(/obj/item/weapon/spacecash/bill)
+	slot_flags = SLOT_FLAGS_BELT
+	var/list/bundle_overlays = list()
+	var/worth = 0
+
+/obj/item/weapon/storage/bill_bundle/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
+	. = ..(W, new_location)
+	if(.)
+		update_icon()
+		var/obj/item/weapon/storage/bill_bundle/B = W
+		worth -= B.worth
+		if(contents.len <= 1)
+			for(var/obj/item/I in contents)
+				remove_from_storage(I, src.loc)
+				if(ismob(src.loc))
+					var/mob/M = src.loc
+					M.put_in_hands(I)
+				qdel(src)
+
+/obj/item/weapon/storage/bill_bundle/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
+	. = ..(W, prevent_warning)
+	if(.)
+		update_icon()
+		var/obj/item/weapon/storage/bill_bundle/B = W
+		worth += B.worth
+
+/obj/item/weapon/storage/bill_bundle/update_icon()
+	cut_overlay(bundle_overlays)
+	for(var/i in 1 to contents.len)
+		var/obj/item/weapon/spacecash/bill/B = contents[i]
+		var/image/I = image(icon=B.icon, icon_state="spacecash[B.worth]")
+		I.color = list(1/contents.len*i,0,0, 0,1/contents.len*i,0, 0,0,1/contents.len*i, 0,0,0)
+		I.pixel_x += rand(-1,1)
+		I.pixel_y -= 1-i
+		bundle_overlays += I
+		add_overlay(I)
+	var/band_type = "3x"
+	switch(contents.len)
+		if(1,2,3)
+			band_type = "3x"
+			w_class = SIZE_TINY
+		if(4,5)
+			band_type = "5x"
+			w_class = SIZE_SMALL
+		if(6,7)
+			band_type = "7x"
+			w_class = SIZE_NORMAL
+		if(8,9,10)
+			band_type = "10x"
+			w_class = SIZE_BIG
+	var/image/Band = image(icon=icon, icon_state="[icon_state][band_type]")
+	bundle_overlays += Band
+	add_overlay(Band)
+
+/obj/item/weapon/storage/bill_bundle/examine(mob/user)
+	..()
+	if(src in view(1, user))
+		to_chat(user, "<span class='notice'>A bundle is [src.worth] credits worth.</span>")
 
 /proc/spawn_money(sum, spawnloc)
 	var/cash_type
-	for(var/i in list(1000,500,200,100,50,20,10,1))
-		cash_type = text2path("/obj/item/weapon/spacecash/c[i]")
+	for(var/i in list(500,200,100,50,20,10,5, 1))
+		cash_type = text2path("/obj/item/weapon/spacecash/bill/c[i]")
 		while(sum >= i)
 			sum -= i
 			new cash_type(spawnloc)
