@@ -213,11 +213,11 @@
 		var/obj/item/weapon/card/I = W.GetID()
 		scan_card(I)
 
-	else if(currently_vending && istype(W, /obj/item/weapon/card))
+	else if(currently_vending && istype(W, /obj/item/weapon/card) && cash == 0)
 		var/obj/item/weapon/card/I = W
 		scan_card(I)
 
-	else if(currently_vending && istype(W, /obj/item/weapon/spacecash/bill))
+	else if(currently_vending && istype(W, /obj/item/weapon/spacecash/bill && !id_scanned))
 		var/obj/item/weapon/spacecash/bill/B = W
 		scan_cash(B)
 
