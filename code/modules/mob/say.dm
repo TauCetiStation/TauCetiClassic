@@ -175,7 +175,7 @@
 /mob/proc/approximate_sounds(txt)
 	return replace_characters(txt, sound_approximations)
 
-/mob/proc/accent_sounds(txt)
+/mob/proc/accent_sounds(txt, datum/language/speaking)
 	return txt
 
 /mob/proc/init_languages()

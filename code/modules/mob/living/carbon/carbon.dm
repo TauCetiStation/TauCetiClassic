@@ -1100,8 +1100,11 @@
 
 	return ..()
 
-/mob/living/carbon/accent_sounds(txt)
+/mob/living/carbon/accent_sounds(txt, datum/language/speaking)
 	for(var/datum/language/L as anything in languages)
+		if(L == speaking)
+			continue
+
 		txt = L.accentuate(txt)
 	return txt
 

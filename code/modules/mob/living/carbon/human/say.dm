@@ -148,9 +148,9 @@
 	else
 		speaking = get_language()
 
-	if(!speaking)
-		message = accent_sounds(message)
+	message = accent_sounds(message, speaking)
 
+	if(!speaking)
 		switch(species.name)
 			if(PODMAN)
 				message = replacetextEx_char(message, "ж", pick(list("ш", "хш")))
