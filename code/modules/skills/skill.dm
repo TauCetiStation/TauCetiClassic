@@ -64,6 +64,7 @@
 	min_value = -1
 	max_value = 2
 	hint = "Higher levels means more damage with melee weapons."
+	value = -1
 
 /datum/skill/melee/weak
 	value = -1

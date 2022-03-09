@@ -38,7 +38,7 @@
 
 /datum/skills/proc/choose_value(skill_name,value)
 	var/list/allowed_skill_names = list()
-	for(var/skill in skills_list)
+	for(var/datum/skill/skill as anything in skills_list)
 		allowed_skill_names.Add(initial(skill.name))
 	if(!(skill_name in allowed_skill_names))
 		return

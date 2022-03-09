@@ -5,7 +5,6 @@
 /datum/skillset/New()
 	for(var/datum/skill/s as anything in initial_skills)
 		LAZYSET(skills, initial(s.name), new s)
-
 	for(var/datum/skill/skill as anything in skills_list)
 		if(!(initial(skill.name) in skills))
 			LAZYSET(skills, initial(skill.name), new skill)
