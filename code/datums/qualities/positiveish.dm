@@ -243,7 +243,7 @@
 
 /datum/quality/ghost_buster
 	desc = "При крещение Вас окунули в чан с проклятой водой. Это дало вам возможность видеть призраков."
-	requirement = "Капеллан, Исследователь паранормального, Культист."
+	requirement = "Нет."
 
 /datum/quality/ghost_buster/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_GHOST_BUSTER, QUALITY_TRAIT)
