@@ -23,7 +23,10 @@ SUBSYSTEM_DEF(junkyard)
 /datum/controller/subsystem/junkyard/proc/populate_junkyard()
 	var/zlevel = SSmapping.level_by_trait(ZTRAIT_JUNKYARD)
 	if(!zlevel)
-		return
+		SSmapping.LoadGroup(list(), "Junkyard", "junkyard", "junkyard.dmm", default_traits = list(ZTRAIT_JUNKYARD = TRUE))
+		zlevel = SSmapping.level_by_trait(ZTRAIT_JUNKYARD)
+		if(!zlevel)
+			CRASH("Somehow junkyard wasn't loaded, missing file or smt like that")
 
 	var/list/turfs_to_init = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
 	for(var/thing in turfs_to_init)
