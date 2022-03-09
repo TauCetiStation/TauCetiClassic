@@ -268,3 +268,6 @@
 	var/typing_indicator_type = "default"
 
 	var/forced_language
+
+	// Some sounds that this mob can't emit, only approximate.
+	var/list/sound_approximations

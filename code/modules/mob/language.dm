@@ -20,6 +20,8 @@
 
 	// Symbols(sounds) exclusively available to (native speakers) of this language, and their approximations for those who can't pronounce them
 	var/list/approximations
+	// Special symbol combinations to produce exclusive to native speakers sounds.
+	var/list/special_symbols
 
 	// Names of species in both of these.
 	// What species can understand but can't speak
@@ -80,10 +82,18 @@
 	exclaim_verb = "roars"
 	colour = "soghun"
 	key = list("o", "щ")
-	syllables = list("sʂ","ss","ss","sʃ","skak","seeki","resh","las","esi","kor","sh")
+	syllables = list("sç","ss","ss","sꚖ","skak","seeki","resh","las","esi","kor","sh")
 	approximations = list(
-		"ʂ" = "s",
-		"ʃ" = "s",
+		"Ç" = "С",
+		"ç" = "с",
+		"Ꚗ" = "Ш",
+		"Ꚗ" = "ш",
+	)
+	special_symbols = list(
+		"*С" = "Ç",
+		"*с" = "ç",
+		"*Ш" = "Ꚗ",
+		"*ш" = "Ꚗ",
 	)
 	allowed_speak = list(IPC)
 
@@ -101,8 +111,16 @@
 	"ka","aasi","far","wa","baq","ara","qara","zir","sam","mæk","hrar","nja","rir","khan","jun","dar","rik","kah", \
 	"hal","kət","jurl","mah","tul","cresh","azu","ragh")
 	approximations = list(
+		"Æ" = "Ае",
+		"Ə" = "Е",
 		"æ" = "ae",
 		"ə" = "e",
+	)
+	special_symbols = list(
+		"*А" = ,
+		"*Е" = ,
+		"*а" = "æ",
+		"*е" = "ə",
 	)
 
 /datum/language/tajaran_sign
@@ -125,11 +143,16 @@
 	colour = "skrell"
 	key = list("k", "л")
 	allowed_speak = list(IPC)
-	syllables = list("qr","qrr","xuq","qil","quun","xuqn","rol","xrin","zaoo","qu-uu","qix","qoo","zix","*","!")
+	syllables = list("qr","qrr","xuq","qil","quun","xuqn","rol","xrin","zaoo","qu-uu","qix","qoo","zix","*","!","♭","♮","♯")
 	approximations = list(
 		"♭" = "",
 		"♮" = "",
 		"♯" = "",
+	)
+	special_symbols = list(
+		"*а" = "♭",
+		"*е" = "♮",
+		"*о" = "♯",
 	)
 
 /datum/language/vox
@@ -207,7 +230,6 @@
 	key = list("3")
 	allowed_speak = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
-
 
 /datum/language/syndi
 	name = LANGUAGE_SYCODE
@@ -322,11 +344,25 @@
 	if((new_language in languages) && flags == LANGUAGE_CAN_UNDERSTAND)
 		return 0
 
+	for(var/sound in new_language.approximations)
+		remove_approximation(sound)
+
+	for(var/sound in new_language.special_symbols)
+		add_approximation(sound, new_language.special_symbols[sound])
+
 	languages[new_language] = flags
 	return 1
 
 /mob/proc/remove_language(language, flags)
-	languages.Remove(all_languages[language])
+	var/datum/language/L = all_languages[language]
+	languages.Remove(L)
+
+	for(var/sound in L.approximations)
+		add_approximation(sound, L.approximations[sound])
+
+	for(var/sound in L.special_symbols)
+		remove_approximation(sound)
+
 	return 0
 
 /mob/proc/can_understand(datum/language/speaking)

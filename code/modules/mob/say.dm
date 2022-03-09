@@ -165,3 +165,15 @@
 			return L
 
 	return null
+
+/mob/proc/add_approximation(sound, approximation)
+	LAZYSET(sound_approximations, sound, approximation)
+
+/mob/proc/remove_approximation(sound)
+	LAZYREMOVE(sound_approximations, sound)
+
+/mob/proc/approximate_sounds(txt)
+	return replace_characters(txt, sound_approximations)
+
+/mob/proc/init_languages()
+	return

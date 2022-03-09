@@ -102,6 +102,9 @@ var/global/list/department_radio_keys = list(
 			return
 	if(sanitize)
 		message = sanitize(message)
+		if(!speaking || !(speaking.flags & SIGNLANG))
+			message = approximate_sounds(message)
+
 		if(!message)
 			return
 		message = capitalize(trim(message))
@@ -198,3 +201,10 @@ var/global/list/department_radio_keys = list(
 
 /obj/effect/speech_bubble
 	var/mob/parent
+
+/mob/living/init_languages()
+	for(var/name in all_languages)
+		var/datum/language/L = all_languages[name]
+
+		for(var/sound in L.approximations)
+			add_approximation(sound, L.approximations[sound])

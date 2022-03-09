@@ -76,7 +76,7 @@
 
 	if(!. || ISDIAGONALDIR(Dir))
 		return .
-	
+
 	handle_phantom_move(NewLoc, Dir)
 	if(nutrition && stat != DEAD)
 		var/met_factor = get_metabolism_factor()
@@ -1099,3 +1099,9 @@
 			return FALSE
 
 	return ..()
+
+/mob/living/carbon/init_languages()
+	. = ..()
+	for(var/datum/language/L as anything in languages)
+		for(var/sound in L.special_symbols)
+			add_approximation(sound, L.special_symbols[sound])
