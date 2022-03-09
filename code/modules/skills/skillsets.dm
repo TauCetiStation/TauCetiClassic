@@ -414,11 +414,21 @@
 
 //antagonists
 /datum/skillset/max
-
-/datum/skillset/max/New()
-	initial_skills = list()
-	for(var/datum/skill/skill as anything in skills)
-		initial_skills.Add(initial(skill.max_value))
+	initial_skills = list(
+		/datum/skill/police/master,
+		/datum/skill/firearms/master,
+		/datum/skill/melee/master,
+		/datum/skill/engineering/master,
+		/datum/skill/construction/master,
+		/datum/skill/atmospherics/master,
+		/datum/skill/civ_mech/master,
+		/datum/skill/combat_mech/master,
+		/datum/skill/surgery/master,
+		/datum/skill/medical/master,
+		/datum/skill/chemistry/master,
+		/datum/skill/research/master,
+		/datum/skill/command/master
+	)
 
 /datum/skillset/revolutionary
 	initial_skills = list(
