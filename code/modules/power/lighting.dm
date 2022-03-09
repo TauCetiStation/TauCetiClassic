@@ -688,36 +688,6 @@
 	sleep(1)
 	qdel(src)
 
-/obj/machinery/light/torch
-	icon_state = "torch-holder1"
-	base_state = "torch-holder"
-	brightness_range = 6
-	brightness_color = "#e0863c"
-	desc = "A torch holder."
-
-/obj/machinery/light/torch/examine(mob/user)
-	..()
-	if(src in oview(1, user))
-		to_chat(user, "The torch is burning.")
-
-/obj/machinery/light/torch/attackby(obj/item, mob/user)
-	return
-
-/obj/machinery/light/attack_animal(mob/living/simple_animal/attacker)
-	return
-
-/obj/machinery/light/attack_hand(mob/user)
-	to_chat(user, "It's too hot and you don't want to burn your hand.")
-	return
-
-/obj/machinery/light/attack_tk(mob/user)
-	return
-
-/obj/machinery/light/attack_alien(mob/living/carbon/xenomorph/humanoid/user)
-	return
-
-/obj/machinery/light/attack_ai(mob/user)
-	return
 
 // the light item
 // can be tube or bulb subtypes

@@ -525,7 +525,7 @@
 	pixel_y = 6
 	},
 /obj/structure/table/woodentable,
-/obj/machinery/light/torch,
+/obj/structure/magic_torch_holder,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -591,7 +591,7 @@
 /obj/structure/sign/poster/official/no_erp{
 	pixel_y = 32
 	},
-/obj/machinery/light/torch{
+/obj/structure/magic_torch_holder{
 	dir = 1
 	},
 /turf/unsimulated/floor{
@@ -645,7 +645,7 @@
 "abt" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/ywflowers,
-/obj/machinery/light/torch{
+/obj/structure/magic_torch_holder{
 	dir = 1
 	},
 /turf/unsimulated/floor{
@@ -2236,7 +2236,7 @@
 	},
 /area/centcom/evac)
 "afR" = (
-/obj/machinery/light/torch{
+/obj/structure/magic_torch_holder{
 	dir = 1
 	},
 /turf/unsimulated/floor{
@@ -11618,7 +11618,7 @@
 	},
 /area/centcom/living)
 "aBd" = (
-/obj/machinery/light/torch,
+/obj/structure/magic_torch_holder,
 /turf/unsimulated/floor{
 	icon_state = "asteroid2";
 	name = "plating"
@@ -11666,7 +11666,7 @@
 /area/custom/wizard_station)
 "aBi" = (
 /obj/structure/cult/anomaly/timewhole,
-/obj/machinery/light/torch,
+/obj/structure/magic_torch_holder,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
 "aBj" = (
@@ -11741,7 +11741,7 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/obj/machinery/light/torch{
+/obj/structure/magic_torch_holder{
 	dir = 8
 	},
 /turf/unsimulated/floor{
@@ -11764,7 +11764,7 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/obj/machinery/light/torch{
+/obj/structure/magic_torch_holder{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -11859,7 +11859,7 @@
 "aBB" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/wiz,
-/obj/machinery/light/torch,
+/obj/structure/magic_torch_holder,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -18936,7 +18936,7 @@
 	subspace_transmission = 1;
 	syndie = 1
 	},
-/obj/machinery/light/torch{
+/obj/structure/magic_torch_holder{
 	dir = 1
 	},
 /turf/unsimulated/floor{
@@ -18956,7 +18956,9 @@
 /area/custom/wizard_station)
 "baK" = (
 /obj/structure/pedestal/cult,
-/turf/unsimulated/floor/cult,
+/turf/unsimulated/floor{
+	icon_state = "cult"
+	},
 /area/custom/wizard_station)
 "baL" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -19044,11 +19046,13 @@
 /area/custom/wizard_station)
 "baS" = (
 /obj/structure/kitchenspike,
-/turf/unsimulated/floor/cult,
+/turf/unsimulated/floor{
+	icon_state = "cult"
+	},
 /area/custom/wizard_station)
 "baT" = (
 /obj/machinery/photocopier,
-/obj/machinery/light/torch{
+/obj/structure/magic_torch_holder{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -19077,7 +19081,7 @@
 /obj/structure/mirror/magic{
 	pixel_x = -30
 	},
-/obj/machinery/light/torch{
+/obj/structure/magic_torch_holder{
 	dir = 8
 	},
 /turf/unsimulated/floor{
@@ -19090,11 +19094,15 @@
 /obj/item/cardboard_cutout{
 	icon_state = "cutout_fukken_xeno"
 	},
-/turf/unsimulated/floor/cult,
+/turf/unsimulated/floor{
+	icon_state = "cult"
+	},
 /area/custom/wizard_station)
 "baY" = (
 /obj/structure/mineral_door/wood,
-/turf/unsimulated/floor/cult,
+/turf/unsimulated/floor{
+	icon_state = "cult"
+	},
 /area/custom/wizard_station)
 "baZ" = (
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -19130,10 +19138,12 @@
 	pixel_x = -32
 	},
 /obj/structure/device/piano/minimoog,
-/turf/unsimulated/floor/cult,
+/turf/unsimulated/floor{
+	icon_state = "cult"
+	},
 /area/custom/wizard_station)
 "bbe" = (
-/obj/machinery/light/torch{
+/obj/structure/magic_torch_holder{
 	dir = 4
 	},
 /obj/item/weapon/flora/pottedplant/ficus,
@@ -19146,10 +19156,12 @@
 "bbf" = (
 /obj/structure/closet/coffin,
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
-/turf/unsimulated/floor/cult,
+/turf/unsimulated/floor{
+	icon_state = "cult"
+	},
 /area/custom/wizard_station)
 "bbg" = (
-/obj/machinery/light/torch{
+/obj/structure/magic_torch_holder{
 	dir = 1
 	},
 /obj/structure/noticeboard{
@@ -19215,7 +19227,9 @@
 /area/custom/wizard_station)
 "bbp" = (
 /obj/structure/cult/statue,
-/turf/unsimulated/floor/cult,
+/turf/unsimulated/floor{
+	icon_state = "cult"
+	},
 /area/custom/wizard_station)
 "bbq" = (
 /turf/unsimulated/floor{
@@ -19223,14 +19237,14 @@
 	},
 /area/custom/wizard_station)
 "bbr" = (
-/obj/machinery/light/torch,
+/obj/structure/magic_torch_holder,
 /obj/item/weapon/flora/pottedplant/mysterious,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "bbx" = (
-/obj/machinery/light/torch,
+/obj/structure/magic_torch_holder,
 /obj/item/weapon/flora/pottedplant/unusual,
 /turf/unsimulated/floor{
 	icon_state = "wood-broken2"
@@ -19267,7 +19281,9 @@
 	pixel_y = -2
 	},
 /obj/effect/decal/cleanable/cobweb,
-/turf/unsimulated/floor/cult,
+/turf/unsimulated/floor{
+	icon_state = "cult"
+	},
 /area/custom/wizard_station)
 "bbD" = (
 /obj/random/guns/handgun_security,
@@ -19276,7 +19292,9 @@
 	},
 /area/custom/arena)
 "bbG" = (
-/turf/unsimulated/floor/cult,
+/turf/unsimulated/floor{
+	icon_state = "cult"
+	},
 /area/custom/wizard_station)
 "bbJ" = (
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -19293,7 +19311,10 @@
 /area/custom/wizard_station)
 "bbK" = (
 /obj/structure/stool/bar,
-/turf/unsimulated/floor/cult/lava,
+/turf/unsimulated/floor{
+	icon_state = "wizlava";
+	name = "lava"
+	},
 /area/custom/wizard_station)
 "bbL" = (
 /turf/unsimulated/wall/abductor{
@@ -19554,7 +19575,9 @@
 /obj/item/weapon/storage/bag/cash,
 /obj/structure/table/woodentable,
 /obj/item/clothing/glasses/monocle,
-/turf/unsimulated/floor/cult,
+/turf/unsimulated/floor{
+	icon_state = "cult"
+	},
 /area/custom/wizard_station)
 "bdv" = (
 /obj/structure/table/woodentable,
@@ -26468,7 +26491,7 @@
 /obj/effect/overlay/tophat_portal{
 	pixel_y = 32
 	},
-/obj/machinery/light/torch{
+/obj/structure/magic_torch_holder{
 	dir = 1
 	},
 /turf/unsimulated/floor{
@@ -26522,9 +26545,6 @@
 /obj/structure/flora/grass/brown,
 /turf/unsimulated/floor/snow,
 /area/space)
-"nQb" = (
-/turf/unsimulated/wall/fakeglass,
-/area/custom/tophat)
 "nRb" = (
 /obj/machinery/vending/snack{
 	name = "Magic Getmore Chocolate Corp";
@@ -26559,7 +26579,10 @@
 	},
 /area/custom/tophat)
 "nVb" = (
-/turf/unsimulated/floor/cult/lava,
+/turf/unsimulated/floor{
+	icon_state = "wizlava";
+	name = "lava"
+	},
 /area/custom/wizard_station)
 "nWb" = (
 /obj/structure/stool/bar,
@@ -33303,9 +33326,9 @@ abk
 abi
 nIb
 nIb
-nQb
-nQb
-nQb
+nIb
+nIb
+nIb
 nIb
 nIb
 abi
@@ -33816,7 +33839,7 @@ abi
 abi
 nIb
 nJb
-nMb
+nWb
 nMb
 nMb
 nMb
@@ -34845,9 +34868,9 @@ abi
 abi
 nIb
 nIb
-nQb
-nQb
-nQb
+nIb
+nIb
+nIb
 nIb
 nIb
 abi
@@ -35887,7 +35910,7 @@ abi
 abg
 abg
 abg
-bbX
+baY
 abg
 abg
 abg
