@@ -102,13 +102,14 @@ var/global/list/department_radio_keys = list(
 			return
 	if(sanitize)
 		message = sanitize(message)
-		if(!speaking || !(speaking.flags & SIGNLANG))
-			message = approximate_sounds(message)
+		message = approximate_sounds(message, speaking)
 
 		if(!message)
 			return
 		message = capitalize(trim(message))
 		message = add_period(message)
+	else
+		message = approximate_sounds(message, speaking)
 
 	var/turf/T = get_turf(src)
 

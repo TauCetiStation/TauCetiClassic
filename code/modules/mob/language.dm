@@ -44,7 +44,7 @@
 /datum/language/proc/accentuate(input)
 	if(!accents)
 		return input
-	return replace_characters(input, accents)
+	return replaceEx_characters(input, accents)
 
 /datum/language/proc/scramble(input)
 
@@ -90,18 +90,18 @@
 	exclaim_verb = "roars"
 	colour = "soghun"
 	key = list("o", "щ")
-	syllables = list("sç","ss","ss","sꚖ","skak","seeki","resh","las","esi","kor","sh")
+	syllables = list("sç","ss","ss","sꚗ","skak","seeki","resh","las","esi","kor","sh")
 	approximations = list(
 		"Ç" = "С",
 		"ç" = "с",
 		"Ꚗ" = "Ш",
-		"Ꚗ" = "ш",
+		"ꚗ" = "ш",
 	)
 	special_symbols = list(
 		"*С" = "Ç",
 		"*с" = "ç",
 		"*Ш" = "Ꚗ",
-		"*ш" = "Ꚗ",
+		"*ш" = "ꚗ",
 	)
 	accents = list(
 		"С" = "Сс",
@@ -124,8 +124,8 @@
 	"hal","kət","jurl","mah","tul","cresh","azu","ragh")
 	approximations = list(
 		"Æ" = "Ае",
-		"Ə" = "Е",
 		"æ" = "ae",
+		"Ə" = "Е",
 		"ə" = "e",
 	)
 	special_symbols = list(

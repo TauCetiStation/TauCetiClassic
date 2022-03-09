@@ -172,8 +172,11 @@
 /mob/proc/remove_approximation(sound)
 	LAZYREMOVE(sound_approximations, sound)
 
-/mob/proc/approximate_sounds(txt)
-	return replace_characters(txt, sound_approximations)
+/mob/proc/approximate_sounds(txt, datum/language/speaking)
+	if(speaking && (speaking.flags & SIGNLANG))
+		return txt
+
+	return replaceEx_characters(txt, sound_approximations)
 
 /mob/proc/accent_sounds(txt, datum/language/speaking)
 	return txt
