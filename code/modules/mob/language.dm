@@ -166,9 +166,9 @@
 		"♯" = "",
 	)
 	special_symbols = list(
-		"*а" = "♭",
-		"*е" = "♮",
-		"*о" = "♯",
+		"*я" = "♭",
+		"*ю" = "♮",
+		"*ё" = "♯",
 	)
 
 /datum/language/vox
@@ -412,6 +412,15 @@
 
 	for(var/datum/language/L in languages)
 		dat += "<b>[L.name] "
+		var/sound_macros = ""
+		var/first_macro = TRUE
+		for(var/m_key in L.special_symbols)
+			if(!first_macro)
+				sound_macros += ", "
+			first_macro = FALSE
+			sound_macros += "[m_key]=[L.special_symbols[m_key]]"
+		if(sound_macros != "")
+			dat += "([sound_macros])"
 		for(var/l_key in L.key)
 			dat += "(:[l_key])"
 		var/remark = ""
