@@ -15,7 +15,6 @@
 		var/new_value = max(other_skillset.get_value(skill), get_value(skill))
 		set_value(skill, new_value)
 
-
 /datum/skillset/proc/get_value(skill)
 	var/datum/skill/s = get_skill(skill)
 	return s.value

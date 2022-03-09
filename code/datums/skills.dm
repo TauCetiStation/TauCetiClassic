@@ -11,6 +11,10 @@
 	return available.get_value(skill)
 
 /datum/skills/proc/update_available()
+	if(length(available_skillsets) == 1)
+		var/skillset = LAZYACCESS(available_skillsets, 1)
+		var/datum/skillset/first = new skillset
+		available = first
 	for(var/datum/skillset/sk_set as anything in available_skillsets)
 		available.merge(sk_set)
 	for(var/skill in available.skills)

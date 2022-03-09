@@ -1563,16 +1563,16 @@
 				background-color: #444;
 				font-weight: bold;
 			}
-			max-button {
-				display: flex;
-				justify-content: center;
-				align-items: center;
+			.container{
+				text-align: center;
+				width: 100%;
 			}
-
 		</style>
 		"}
 	dat += {"
-		<button class="max-button" type="submit" value="1" id="skills_max" onclick="setMaxSkills()">Set skills values to maximum</button>
+		<div class = "container">
+			<button type="submit" value="1" onclick="setMaxSkills()">Set skills values to maximum</button>
+		</div>
 	"}
 	for(var/category in tables_data)
 		dat += {"

@@ -1,13 +1,6 @@
 
 
-// /datum/skillset/default
-// 	var/skills = list(
-// 		/datum/skill/melee/weak
-// 	)
-
-
 //medical
-
 
 /datum/skillset/cmo
 	initial_skills = list(
@@ -421,21 +414,11 @@
 
 //antagonists
 /datum/skillset/max
-	initial_skills = list(
-		/datum/skill/police/master,
-		/datum/skill/firearms/master,
-		/datum/skill/melee/master,
-		/datum/skill/engineering/master,
-		/datum/skill/construction/master,
-		/datum/skill/atmospherics/master,
-		/datum/skill/civ_mech/master,
-		/datum/skill/combat_mech/master,
-		/datum/skill/surgery/master,
-		/datum/skill/medical/master,
-		/datum/skill/chemistry/master,
-		/datum/skill/research/master,
-		/datum/skill/command/master
-	)
+
+/datum/skillset/max/New()
+	initial_skills = list()
+	for(var/datum/skill/skill as anything in skills)
+		initial_skills.Add(initial(skill.max_value))
 
 /datum/skillset/revolutionary
 	initial_skills = list(
