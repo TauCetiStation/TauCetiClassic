@@ -13,14 +13,8 @@ Format:
 	(not implemented) votable (is this map votable)
 endmap
 
-map boxstation(-junk)
-	default
-endmap
-
 map boxstation
-endmap
-
-map boxstation(-ruins,asteroid,junk)
+	default
 endmap
 
 map gamma
