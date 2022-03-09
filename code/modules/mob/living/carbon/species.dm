@@ -228,6 +228,9 @@
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
+	if(!flags[IS_SOCIAL])
+		H.handle_socialization()
+
 	H.remove_moveset_source(MOVESET_SPECIES)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
@@ -275,6 +278,7 @@
 	,HAS_HAIR = TRUE
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	//If you wanted to add a species-level ability:
@@ -315,6 +319,7 @@
 	,HAS_HAIR_COLOR = TRUE
 	,NO_MINORCUTS = TRUE
 	,FACEHUGGABLE = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	flesh_color = "#34af10"
@@ -346,7 +351,7 @@
 	..()
 	M.verbs += /mob/living/carbon/human/proc/air_sample
 
-/datum/species/unathi/on_loose(mob/living/M)
+/datum/species/unathi/on_loose(mob/living/M, new_species)
 	M.verbs -= /mob/living/carbon/human/proc/air_sample
 	..()
 
@@ -386,6 +391,7 @@
 	,HAS_HAIR_COLOR = TRUE
 	,HAS_HAIR = TRUE
 	,FACEHUGGABLE = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	flesh_color = "#afa59e"
@@ -424,6 +430,7 @@
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
+	has_gendered_icons = FALSE
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -432,6 +439,7 @@
 	,HAS_SKIN_COLOR = TRUE
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	has_organ = list(
@@ -492,6 +500,7 @@
 		,SPRITE_SHEET_RESTRICTION = TRUE
 		,HAS_HAIR_COLOR = TRUE
 		,NO_FAT = TRUE
+		,IS_SOCIAL = TRUE
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
@@ -582,7 +591,7 @@
 
 	..()
 
-/datum/species/vox/on_loose(mob/living/carbon/human/H)
+/datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
 	if(name != VOX_ARMALIS)
 		if(H.leap_icon)
 			if(H.hud_used)
@@ -634,6 +643,7 @@
 	,NO_PAIN = TRUE
 	,SPRITE_SHEET_RESTRICTION = TRUE
 	,NO_FAT = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -697,6 +707,7 @@
 	,IS_PLANT = TRUE
 	,NO_VOMIT = TRUE
 	,RAD_ABSORB = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	has_bodypart = list(
@@ -805,8 +816,8 @@
 
 	brute_mod = 1.3
 	burn_mod = 1.3
-	speed_mod = 0.7
-	speed_mod_no_shoes = -1
+	speed_mod = 2.7
+	speed_mod_no_shoes = -2
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -820,6 +831,7 @@
 	,RAD_ABSORB = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_HAIR = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	has_bodypart = list(
@@ -844,8 +856,23 @@
 	regen_mod = 0.5
 	regen_limbs = FALSE
 
+/datum/species/diona/podman/on_gain(mob/living/carbon/human/H)
+	. = ..()
+	RegisterSignal(H, list(COMSIG_MOB_GHOST), .proc/find_replacement)
+
+/datum/species/diona/podman/on_loose(mob/living/carbon/human/H)
+	UnregisterSignal(H, list(COMSIG_MOB_GHOST))
+	return ..()
+
 /datum/species/diona/podman/handle_death(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
+
+/datum/species/diona/podman/proc/find_replacement(datum/source, can_reenter_corpse)
+	SIGNAL_HANDLER
+
+	if(can_reenter_corpse)
+		return
+	create_spawner(/datum/spawner/podman, "podman", source)
 
 /datum/species/machine
 	name = IPC
@@ -905,6 +932,7 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_MUTATION = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	has_bodypart = list(
@@ -949,7 +977,7 @@
 	if(BP)
 		H.set_light(BP.screen_brightness)
 
-/datum/species/machine/on_loose(mob/living/carbon/human/H)
+/datum/species/machine/on_loose(mob/living/carbon/human/H, new_species)
 	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
 	H.verbs -= /mob/living/carbon/human/proc/IPC_toggle_screen
 	H.verbs -= /mob/living/carbon/human/proc/IPC_display_text
@@ -1217,6 +1245,7 @@
 		NO_EMOTION = TRUE,
 		NO_MUTATION = TRUE,
 		NO_FAT = TRUE,
+		IS_SOCIAL = TRUE,
 		)
 
 	has_organ = list(
@@ -1248,7 +1277,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, SLOT_WEAR_MASK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
 
-/datum/species/golem/on_loose(mob/living/carbon/human/H)
+/datum/species/golem/on_loose(mob/living/carbon/human/H, new_species)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
 	H.dna.mutantrace = null
 	H.real_name = "unknown"
@@ -1319,7 +1348,7 @@
 
 	..()
 
-/datum/species/zombie/on_loose(mob/living/carbon/human/H)
+/datum/species/zombie/on_loose(mob/living/carbon/human/H, new_species)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
 
 	if(istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
@@ -1390,6 +1419,7 @@
 
 	flesh_color = "#34af10"
 	base_color = "#000000"
+	has_gendered_icons = FALSE
 
 	flags = list(
 	NO_BREATHE = TRUE
@@ -1427,6 +1457,7 @@
 	,HAS_UNDERWEAR = TRUE
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	min_age = 1

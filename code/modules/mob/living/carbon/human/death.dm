@@ -121,7 +121,7 @@
 
 	var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
 	if(IO && IO.parent_bodypart == BP_HEAD)
-
+		SSStatistics.add_death_stat(src) // because mind transfer to brain
 		BP.transfer_identity(src)
 
 		BP.name = "[real_name]'s head"

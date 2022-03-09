@@ -19,10 +19,13 @@
 	Check()
 	lock = _lock
 
+	SEND_SIGNAL(orbiter, COMSIG_MOVABLE_ORBIT_BEGIN, orbiting)
+
 
 
 //do not qdel directly, use stop_orbit on the orbiter. (This way the orbiter can bind to the orbit stopping)
 /datum/orbit/Destroy()
+	SEND_SIGNAL(orbiter, COMSIG_MOVABLE_ORBIT_STOP, orbiting)
 	SSorbit.orbits -= src
 	if (orbiter)
 		orbiter.orbiting = null

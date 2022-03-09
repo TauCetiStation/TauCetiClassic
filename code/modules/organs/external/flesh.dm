@@ -66,7 +66,7 @@
 	if(BP.is_stump)
 		return 0
 
-	BP.owner.next_autoheal_allowed = world.time + 15 SECONDS
+	BP.owner.next_autoheal_allowed = world.time + 5 SECONDS
 
 	var/sharp = (damage_flags & DAM_SHARP)
 	var/edge  = (damage_flags & DAM_EDGE)
@@ -494,6 +494,32 @@ Note that amputating the affected organ does in fact remove the infection from t
 		BP.germ_level++
 		BP.owner.adjustToxLoss(1)
 
+/datum/bodypart_controller/proc/try_autoheal(datum/wound/W)
+	// if damage >= 50 AFTER treatment then it's probably too severe to heal within the timeframe of a round.
+	if (!W.can_autoheal() || W.wound_damage() >= 50)
+		return
+
+	// slow healing
+	var/heal_amt = 0.5
+	var/mob/living/carbon/H = BP.owner
+	if(H.IsSleeping())
+		if(istype(H.buckled, /obj/structure/stool/bed))
+			heal_amt += 0.2
+		else if((locate(/obj/structure/table) in H.loc))
+			heal_amt += 0.1
+		if((locate(/obj/item/weapon/bedsheet) in H.loc))
+			heal_amt += 0.1
+
+	//we only update wounds once in [wound_update_accuracy] ticks so have to emulate realtime
+	heal_amt = heal_amt * BP.wound_update_accuracy
+	//configurable regen speed woo, no-regen hardcore or instaheal hugbox, choose your destiny
+	heal_amt = heal_amt * config.organ_regeneration_multiplier
+	// amount of healing is spread over all the wounds
+	heal_amt = heal_amt / BP.wounds.len
+	// making it look prettier on scanners
+	heal_amt = round(heal_amt, 0.1)
+	W.heal_damage(heal_amt)
+
 //Updating wounds. Handles wound natural I had some free spachealing, internal bleedings and infections
 /datum/bodypart_controller/proc/update_wounds()
 	for(var/datum/wound/W in BP.wounds)
@@ -504,30 +530,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			// let the GC handle the deletion of the wound
 
 		if(world.time >= BP.owner.next_autoheal_allowed)
-			// slow healing
-			var/heal_amt = 0
-
-			// if damage >= 50 AFTER treatment then it's probably too severe to heal within the timeframe of a round.
-			if (W.can_autoheal() && W.wound_damage() < 50)
-				heal_amt += 0.5
-				var/mob/living/carbon/H = BP.owner
-				if(H.IsSleeping())
-					if(istype(H.buckled, /obj/structure/stool/bed))
-						heal_amt += 0.2
-					else if((locate(/obj/structure/table) in H.loc))
-						heal_amt += 0.1
-					if((locate(/obj/item/weapon/bedsheet) in H.loc))
-						heal_amt += 0.1
-
-			//we only update wounds once in [wound_update_accuracy] ticks so have to emulate realtime
-			heal_amt = heal_amt * BP.wound_update_accuracy
-			//configurable regen speed woo, no-regen hardcore or instaheal hugbox, choose your destiny
-			heal_amt = heal_amt * config.organ_regeneration_multiplier
-			// amount of healing is spread over all the wounds
-			heal_amt = heal_amt / (BP.wounds.len + 1)
-			// making it look prettier on scanners
-			heal_amt = round(heal_amt,0.1)
-			W.heal_damage(heal_amt)
+			try_autoheal(W)
 
 		// Salving also helps against infection
 		if(W.germ_level > 0 && W.salved && prob(2))

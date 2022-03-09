@@ -6,6 +6,9 @@
 
 /turf/var/air_unsim_multiplier = 0
 /turf/environment/snow/air_unsim_multiplier = 45 // speeds up zone air equalization process with snow turfs
+#ifdef ZASDBG
+/turf/var/verbose = FALSE
+#endif
 
 /turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
 	if(graphic_add && graphic_add.len)
