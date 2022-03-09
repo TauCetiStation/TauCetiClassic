@@ -367,6 +367,16 @@
 	/datum/skill/melee/master
 	)
 
+/datum/skillset/mime
+	initial_skills = list(
+		/datum/skill/melee/weak
+	)
+
+/datum/skillset/clown
+	initial_skills = list(
+		/datum/skill/melee/weak
+	)
+
 /datum/skillset/janitor
 /datum/skillset/test_subject
 /datum/skillset/test_subject/lawyer
