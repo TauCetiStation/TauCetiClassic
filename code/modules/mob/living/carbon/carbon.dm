@@ -1101,6 +1101,9 @@
 	return ..()
 
 /mob/living/carbon/accent_sounds(txt, datum/language/speaking)
+	if(speaking && (speaking.flags & SIGNLANG))
+		return txt
+
 	for(var/datum/language/L as anything in languages)
 		if(L == speaking)
 			continue
