@@ -20,7 +20,11 @@
 	for(var/skill in available.skills)
 		active.set_value(skill, available.get_value(skill))
 
-/datum/skills/proc/remove_modifier(datum/skillset/skillset_type)
+/datum/skills/proc/add_available_skillset(datum/skillset/new_skillset)
+	LAZYADD(available_skillsets, new_skillset)
+	update_available()
+
+/datum/skills/proc/remove_available_skillset(datum/skillset/skillset_type)
 	for(var/datum/skillset/s as anything in available_skillsets)
 		if(s.initial_skills == skillset_type.initial_skills)
 			LAZYREMOVE(available_skillsets, s)
@@ -31,13 +35,15 @@
 	for(var/datum/skillset/s as anything in target.skills.available_skillsets)
 		add_available_skillset(s)
 
-/datum/skills/proc/add_available_skillset(datum/skillset/new_skillset)
-	LAZYADD(available_skillsets, new_skillset)
-	update_available()
 
 /datum/skills/proc/choose_value(skill_name,value)
+	var/list/allowed_skill_names = list()
+	for(var/skill in skills_list)
+		allowed_skill_names.Add(initial(skill.name))
+	if(!(skill_name in allowed_skill_names))
+		return
 	var/datum/skill/skill = active.get_skill(skill_name)
-	if (!skill || value > skill.max_value || value < skill.min_value)
+	if (value > skill.max_value || value < skill.min_value)
 		return
 	if (value > available.get_value(skill_name))
 		return

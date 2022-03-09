@@ -99,7 +99,7 @@
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
 	if(!isnull(skillset_type))
-		M.skills.remove_modifier(skillset_type)
+		M.skills.remove_available_skillset(skillset_type)
 
 	remove_antag_hud()
 	if(msg_admins)
