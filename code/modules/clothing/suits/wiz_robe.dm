@@ -6,6 +6,13 @@
 	siemens_coefficient = 0.4
 	body_parts_covered = 0
 
+/obj/item/clothing/head/wizard/santa
+	name = "Santa's hat"
+	desc = "Ho ho ho. Merrry X-mas!"
+	icon_state = "santahat"
+	flags = HEADCOVERSEYES | BLOCKHAIR
+	body_parts_covered = HEAD
+
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
 	desc = "Strange-looking, red, hat-wear that most certainly belongs to a real magic user."
@@ -61,6 +68,12 @@
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.4
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+
+/obj/item/clothing/suit/wizrobe/santa
+	name = "Santa's suit"
+	desc = "Festive!"
+	icon_state = "santa"
+	item_state = "santa"
 
 /obj/item/clothing/suit/wizrobe/wiz_blue
 	name = "blue jacket"
