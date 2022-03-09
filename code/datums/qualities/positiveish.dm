@@ -245,6 +245,13 @@
 /datum/quality/reliquary/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/device/soulstone(H), SLOT_R_STORE)
 
+/datum/quality/ghost_buster
+	desc = "При крещение Вас окунули в чан с проклятой водой. Это дало вам возможность видеть призраков."
+	requirement = "Нет."
+
+/datum/quality/ghost_buster/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_GHOST_BUSTER, QUALITY_TRAIT)
+	H.update_alt_apperance_by(/datum/atom_hud/alternate_appearance/basic/ghost_buster)
 
 /datum/quality/crusader
 	desc = "Dominus concessit vos arma! DEUS VULT!"
