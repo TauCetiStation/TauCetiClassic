@@ -23,9 +23,6 @@ endmap
 map boxstation(-ruins,asteroid,junk)
 endmap
 
-map boxstation_snow
-endmap
-
 map gamma
 endmap
 
