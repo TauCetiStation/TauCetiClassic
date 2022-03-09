@@ -418,11 +418,11 @@
 			if(!first_macro)
 				sound_macros += ", "
 			first_macro = FALSE
-			sound_macros += "[m_key]=[L.special_symbols[m_key]]"
-		if(sound_macros != "")
-			dat += "([sound_macros])"
+			sound_macros += "[m_key]"
 		for(var/l_key in L.key)
 			dat += "(:[l_key])"
+		if(sound_macros != "")
+			dat += "([sound_macros])"
 		var/remark = ""
 		if(languages[L] == LANGUAGE_CAN_UNDERSTAND)
 			remark = " <i>(can't speak)</i>"
