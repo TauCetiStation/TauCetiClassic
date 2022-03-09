@@ -1,5 +1,5 @@
 {
-    "map_name": "Box Station(-ruins,asteroid,junk)",
+    "map_name": "Box Station(wihout ruins, asteroid and junkyard)",
     "map_path": "boxstation",
     "map_file": "boxstation.dmm",
     "space_ruin_levels": 0,
