@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(junkyard)
 	flags = SS_NO_FIRE
 	msg_lobby = "Уничтожаем Землю..."
 	var/list/junk = list()
-	var/junkyard_initialised = 0
+	var/junkyard_initialised = FALSE
 
 /datum/controller/subsystem/junkyard/Initialize(timeofday)
 	..()
@@ -37,10 +37,13 @@ SUBSYSTEM_DEF(junkyard)
 			T.surround_by_scrap()
 			T.resource_definition()
 		CHECK_TICK
-	junkyard_initialised = 1
-	SSweather.eligible_zlevels.Add(zlevel) //junkyard
 
-	create_spawner(/datum/spawner/space_bum, "space_bum")
+	if(!junkyard_initialised)
+		SSweather.eligible_zlevels.Add(zlevel) //junkyard
+
+		create_spawner(/datum/spawner/space_bum, "space_bum")
+
+	junkyard_initialised = TRUE
 
 /datum/controller/subsystem/junkyard/proc/add_junk_to_stats(junktype)
 	if(!junktype)
