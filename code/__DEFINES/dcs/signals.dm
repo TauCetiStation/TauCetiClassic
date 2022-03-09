@@ -90,6 +90,8 @@
 	#define COMPONENT_CLIENTMOB_BLOCK_MOVE 1
 /// from base of client/Move, after all movement is finished(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_POSTMOVE "client_postmove"
+/// from base of mob/set_a_intent(): (new_intent)
+#define COMSIG_MOB_SET_A_INTENT "mob_set_a_intent"
 
 // /area signals
 ///from base of area/Entered(): (area/entered, atom/OldLoc)

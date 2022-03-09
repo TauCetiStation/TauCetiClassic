@@ -170,6 +170,8 @@
 	requirement = "Нет."
 
 /datum/quality/polyglot/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
+
 	for(var/language in all_languages)
 		var/datum/language/L = all_languages[language]
 		if(H.get_species() in L.allowed_speak)
@@ -202,11 +204,13 @@
 		H.add_language(language, LANGUAGE_CAN_UNDERSTAND)
 
 
-/datum/quality/mutated_throat
-	desc = "Мутация в строении твоего речевого аппарата позволяет издавать удивительные звуки..."
+/datum/quality/augmented_voice
+	desc = "Кузнец подковал тебе голосок и теперь ты освоил невозможный для себя язык."
 	requirement = "Нет."
 
-/datum/quality/mutated_throat/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/augmented_voice/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
+
 	var/possibilities = list()
 	for(var/language in all_languages)
 		var/datum/language/L = all_languages[language]
@@ -280,6 +284,19 @@
 		COLOR_PURPLE,
 	)
 
+/datum/quality/war_face/proc/battlecry(datum/source, new_intent)
+	var/mob/living/carbon/human/H = source
+	if(H.stat != CONSCIOUS)
+		return
+
+	if(new_intent == H.a_intent)
+		return
+
+	if(new_intent != INTENT_HARM)
+		return
+
+	H.emote("scream")
+
 /datum/quality/war_face/add_effect(mob/living/carbon/human/H, latespawn)
 	H.lip_style = "spray_face"
 	H.lip_color = pick(war_colors)
@@ -287,6 +304,8 @@
 	H.name = H.real_name
 	H.emote("scream")
 	H.update_body()
+
+	RegisterSignal(H, list(COMSIG_MOB_SET_A_INTENT), .proc/battlecry)
 
 
 /datum/quality/eye_reading
