@@ -149,14 +149,9 @@
 		speaking = get_language()
 
 	if(!speaking)
+		message = accent_sounds(message)
+
 		switch(species.name)
-			if(TAJARAN)
-				message = replacetextEx_char(message, "р", pick(list("ррр" , "рр")))
-				message = replacetextEx_char(message, "Р", pick(list("Ррр" , "Рр")))
-			if(UNATHI)
-				message = replacetextEx_char(message, "с", pick(list("ссс" , "сс")))
-				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
-				message = replacetextEx_char(message, "С", pick(list("Ссс" , "Сс")))
 			if(PODMAN)
 				message = replacetextEx_char(message, "ж", pick(list("ш", "хш")))
 				message = replacetextEx_char(message, "Ж", pick(list("Ш", "Хш")))

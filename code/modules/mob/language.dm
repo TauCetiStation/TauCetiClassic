@@ -22,6 +22,8 @@
 	var/list/approximations
 	// Special symbol combinations to produce exclusive to native speakers sounds.
 	var/list/special_symbols
+	// Approximations, but which carriers of the language produce when not speaking in this language.
+	var/list/accents
 
 	// Names of species in both of these.
 	// What species can understand but can't speak
@@ -37,6 +39,12 @@
 
 /datum/language/proc/format_message_radio(message, verb)
 	return "[verb], <span class='[colour]'>\"[capitalize(message)]\"</span>"
+
+// How the bearer of this language pronounces stuff in their non-native language.
+/datum/language/proc/accentuate(input)
+	if(!accents)
+		return input
+	return replace_characters(input, accents)
 
 /datum/language/proc/scramble(input)
 
@@ -95,6 +103,10 @@
 		"*Ш" = "Ꚗ",
 		"*ш" = "Ꚗ",
 	)
+	accents = list(
+		"С" = "Сс",
+		"с" = "сс",
+	)
 	allowed_speak = list(IPC)
 
 /datum/language/tajaran
@@ -117,10 +129,14 @@
 		"ə" = "e",
 	)
 	special_symbols = list(
-		"*А" = ,
-		"*Е" = ,
+		"*А" = "Æ",
+		"*Е" = "Ə",
 		"*а" = "æ",
 		"*е" = "ə",
+	)
+	accents = list(
+		"Р" = "Рр",
+		"р" = "рр",
 	)
 
 /datum/language/tajaran_sign
@@ -230,6 +246,10 @@
 	key = list("3")
 	allowed_speak = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
+	accents = list(
+		"Р" = "Гр",
+		"р" = "гр",
+	)
 
 /datum/language/syndi
 	name = LANGUAGE_SYCODE
@@ -307,6 +327,10 @@
 	colour = "body"
 	key = list("x", "ч")
 	syllables = list("на", "ня", "ні", "нає", "ма", "мі", "та", "тя", "ко", "нко", "ля", "ла", "ша", "шо", "ха", "хо", "хи", "ги", "ґи", "юк", "як")
+
+	approximations = list(
+		"і" = "и",
+	)
 
 	var/list/replacements
 
