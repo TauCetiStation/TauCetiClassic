@@ -90,7 +90,7 @@
 	exclaim_verb = "roars"
 	colour = "soghun"
 	key = list("o", "щ")
-	syllables = list("sç","ss","ss","sꚗ","skak","seeki","resh","las","esi","kor","sh")
+	syllables = list("çs","ss","ss","ꚗs","skak","seeki","resh","las","esi","kor","sh")
 	approximations = list(
 		"Ç" = "С",
 		"ç" = "с",
@@ -424,7 +424,7 @@
 		for(var/l_key in L.key)
 			dat += "(:[l_key])"
 		if(sound_macros != "")
-			dat += "([sound_macros])"
+			dat += " ([sound_macros])"
 		var/remark = ""
 		if(languages[L] == LANGUAGE_CAN_UNDERSTAND)
 			remark = " <i>(can't speak)</i>"
