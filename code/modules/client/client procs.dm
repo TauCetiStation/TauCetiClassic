@@ -45,9 +45,6 @@ var/global/list/blacklisted_builds = list(
 		if(!asset_cache_job)
 			return
 
-	if(href_list["_src_"] == "chat")
-		return chatOutput.Topic(href, href_list)
-
 	//Reduces spamming of links by dropping calls that happen during the delay period
 	if (!holder && config.minutetopiclimit)
 		var/minute = round(world.time, 600)
@@ -92,8 +89,10 @@ var/global/list/blacklisted_builds = list(
 		return
 
 	// Tgui Topic middleware
-	if(!tgui_Topic(href_list))
+	if(tgui_Topic(href_list))
 		return
+	if(href_list["reload_tguipanel"])
+		nuke_chat()
 
 	//Logs all hrefs
 	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) || [hsrc ? "[hsrc] " : ""][href]")
@@ -213,8 +212,6 @@ var/global/list/blacklisted_builds = list(
 	if(!guard)
 		guard = new(src)
 
-	chatOutput = new /datum/chatOutput(src) // Right off the bat.
-
 	// Change the way they should download resources.
 	if(config.resource_urls)
 		src.preload_rsc = pick(config.resource_urls)
@@ -225,6 +222,9 @@ var/global/list/blacklisted_builds = list(
 
 	clients += src
 	directory[ckey] = src
+
+	// Instantiate tgui panel
+	tgui_panel = new(src)
 
 	global.ahelp_tickets?.ClientLogin(src)
 
@@ -281,8 +281,8 @@ var/global/list/blacklisted_builds = list(
 	if(SSinput.initialized)
 		set_macros()
 
-	spawn() // Goonchat does some non-instant checks in start()
-		chatOutput.start()
+	// Initialize tgui panel
+	tgui_panel.initialize()
 
 	connection_time = world.time
 
@@ -322,7 +322,7 @@ var/global/list/blacklisted_builds = list(
 
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
-		winset(src, "rpane.changelog", "font-style=bold;background-color=#B1E477")
+		winset(src, "rpane.changelog", "font-style=bold")
 
 		//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
@@ -338,6 +338,8 @@ var/global/list/blacklisted_builds = list(
 		to_chat(src, "<span class='warning'>Unable to access asset cache browser, \
 		if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. \
 		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
+
+	handle_connect()
 
 	spawn(50)//should wait for goonchat initialization
 		handle_autokick_reasons()
@@ -361,6 +363,12 @@ var/global/list/blacklisted_builds = list(
 	clients -= src
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	LAZYREMOVE(movingmob?.clients_in_contents, src)
+
+	handle_leave()
+
+	if(!gc_destroyed) //Clean up signals and timers.
+		Destroy()
+
 	return ..()
 
 /client/proc/handle_autokick_reasons()
@@ -773,6 +781,24 @@ var/global/list/blacklisted_builds = list(
 
 #undef MAXIMAZED
 #undef FULLSCREEN
+
+// ckey = datum/stat/leave_stat
+var/global/list/disconnected_ckey_by_stat = list()
+/client/proc/handle_connect()
+	if(!global.disconnected_ckey_by_stat[ckey])
+		return
+	var/datum/stat/leave_stat/stat = global.disconnected_ckey_by_stat[ckey]
+	qdel(stat)
+	global.disconnected_ckey_by_stat -= ckey
+
+/client/proc/handle_leave()
+	if(!isliving(mob) || !mob.mind)
+		return
+	if(istype(mob.loc, /obj/machinery/cryopod))
+		return
+	var/datum/stat/leave_stat/stat = SSStatistics.get_leave_stat(mob.mind, "Disconnected", roundduration2text())
+
+	global.disconnected_ckey_by_stat[ckey] = stat
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))

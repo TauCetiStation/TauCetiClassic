@@ -77,6 +77,13 @@
 }\
 /datum/controller/subsystem/processing/##X
 
+#define TIMER_SUBSYSTEM_DEF(X) var/datum/controller/subsystem/timer/##X/SS##X;\
+/datum/controller/subsystem/timer/##X/New(){\
+	NEW_SS_GLOBAL(SS##X);\
+	PreInit();\
+}\
+/datum/controller/subsystem/timer/##X
+
 // Timing subsystem
 // Don't run if there is an identical unique timer active
 #define TIMER_UNIQUE      (1<<0)

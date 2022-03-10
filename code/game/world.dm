@@ -151,7 +151,7 @@ var/global/world_topic_spam_protect_time = world.timeofday
 		s["players"] = list()
 		s["stationtime"] = worldtime2text()
 		s["gamestate"] = SSticker.current_state
-		s["roundduration"] = roundduration2text()
+		s["roundduration"] = global.roundduration2text()
 		s["map_name"] = SSmapping.config?.map_name || "Loading..."
 		s["popcap"] = config.client_limit_panic_bunker_count ? config.client_limit_panic_bunker_count : 0
 		s["round_id"] = global.round_id
@@ -233,6 +233,7 @@ var/global/shutdown_processed = FALSE
 
 	for(var/client/C in clients)
 		//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+		C.tgui_panel?.send_roundrestart()
 		C << link(BYOND_JOIN_LINK)
 
 	round_log("Reboot [end_state ? ", [end_state]" : ""]")

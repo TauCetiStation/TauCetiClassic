@@ -82,7 +82,7 @@
 		life_cicle = 0
 
 		for(var/turf/T in view(7, src))
-			if(istype(T,/turf/space)) continue
+			if(isspaceturf(T)) continue
 			turfs_around += T
 			for(var/obj/item/F in T.contents)
 				F.set_light(0)
@@ -114,7 +114,7 @@
 	for(var/mob/living/L in view(7,src))
 		if(L == src) continue
 		var/turf/T = get_turf(L)
-		if(istype(T,/turf/space)) continue
+		if(isspaceturf(T)) continue
 
 		var/light_amount = 0
 		light_amount = round(T.get_lumcount()*10)

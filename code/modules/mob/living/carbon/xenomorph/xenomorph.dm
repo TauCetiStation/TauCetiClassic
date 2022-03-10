@@ -36,7 +36,7 @@
 
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
-	add_language("Xenomorph language")
+	add_language(LANGUAGE_XENOMORPH)
 	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
 	hud.add_hud_to(src)	//add xenomorph to the hudusers list to see who is infected
 	for(var/spell in alien_spells)
@@ -219,12 +219,12 @@ Hit Procs
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if(EXPLODE_DEVASTATE)
 			b_loss += 500
 			gib()
 			return
 
-		if (2.0)
+		if(EXPLODE_HEAVY)
 			if (!shielded)
 				b_loss += 60
 
@@ -233,7 +233,7 @@ Hit Procs
 			ear_damage += 30
 			ear_deaf += 120
 
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			b_loss += 30
 			if (prob(50) && !shielded)
 				Paralyse(1)

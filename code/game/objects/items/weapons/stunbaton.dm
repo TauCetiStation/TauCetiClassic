@@ -88,8 +88,7 @@
 		//H.apply_effect(10, WEAKEN, 0)
 		//H.apply_effect(10, STUTTER, 0)
 		H.apply_effect(agony,AGONY,0)
-		user.lastattacked = M
-		H.lastattacker = user
+		H.set_lastattacker_info(user)
 		if(isrobot(src.loc))
 			var/mob/living/silicon/robot/R = src.loc
 			if(R && R.cell)
@@ -111,7 +110,7 @@
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if (prob(50))
-		if(istype(hit_atom, /mob/living))
+		if(isliving(hit_atom))
 			var/mob/living/carbon/human/H = hit_atom
 			if(status)
 				//H.apply_effect(10, STUN, 0)

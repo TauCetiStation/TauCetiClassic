@@ -27,7 +27,7 @@
 	spawn(150)
 		usr.hulk_cd = 0
 
-	if (istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
+	if (isturf(usr.loc) && !isspaceturf(usr.loc))
 
 		if(usr.restrained())
 			for(var/mob/M in range(usr, 1))
@@ -73,7 +73,7 @@
 			if(M != usr)
 				M.log_combat(usr, "hulk_jumped")
 				var/mob/living/carbon/human/H = M
-				if(istype(H,/mob/living/carbon/human))
+				if(ishuman(H))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)]
 					BP.take_damage(20, null, null, "Hulk Foot")
@@ -160,7 +160,7 @@
 	spawn(150)
 		usr.hulk_cd = 0
 
-	if (istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
+	if (isturf(usr.loc) && !isspaceturf(usr.loc))
 		if(usr.restrained())
 			for(var/mob/M in range(usr, 1))
 				if(M.pulling == usr)
@@ -203,7 +203,7 @@
 				if(istype(T,/turf/simulated/floor))
 					for(var/obj/structure/S in T.contents)
 						if(istype(S,/obj/structure/window))
-							S.ex_act(2)
+							S.ex_act(EXPLODE_HEAVY)
 						if(istype(S,/obj/structure/grille))
 							qdel(S)
 				if(istype(T,/turf/simulated/wall))
@@ -240,7 +240,7 @@
 						for(var/o=0, o<10, o++)
 							target = get_turf(get_step(target,cur_dir))
 						var/mob/living/carbon/human/H = M
-						if(istype(H,/mob/living/carbon/human))
+						if(ishuman(H))
 							var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)]
 							BP.take_damage(20, null, null, "Hulk Shoulder")
 							BP.fracture()
@@ -356,7 +356,7 @@
 			if(M != usr)
 				M.log_combat(usr, "hulk_smashed")
 				var/mob/living/carbon/human/H = M
-				if(istype(H,/mob/living/carbon/human))
+				if(ishuman(H))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)]
 					if(HAS_TRAIT(usr, TRAIT_FAT))
@@ -388,7 +388,7 @@
 				M.Weaken(5)
 		for(var/obj/structure/S in range(1, T))
 			if(istype(S,/obj/structure/window))
-				S.ex_act(2)
+				S.ex_act(EXPLODE_HEAVY)
 			if(istype(S,/obj/structure/grille))
 				qdel(S)
 		sleep(3)
@@ -402,7 +402,7 @@
 		for(var/obj/structure/S in range(2, T))
 			if(prob(40))
 				if(istype(S,/obj/structure/window))
-					S.ex_act(2)
+					S.ex_act(EXPLODE_HEAVY)
 				if(istype(S,/obj/structure/grille))
 					qdel(S)
 		usr.canmove = 1

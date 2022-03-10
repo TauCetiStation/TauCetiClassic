@@ -38,7 +38,7 @@
 	name = "alien facehugger ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
-	a_intent = INTENT_GRAB
+	set_a_intent(INTENT_GRAB)
 	alien_list[ALIEN_FACEHUGGER] += src
 
 /mob/living/carbon/xenomorph/facehugger/Destroy()
@@ -58,7 +58,7 @@
 
 /mob/living/carbon/xenomorph/facehugger/movement_delay()
 	var/tally = 0
-	if (istype(src, /mob/living/carbon/xenomorph/facehugger)) //just in case
+	if (isfacehugger(src)) //just in case
 		tally = -1
 	return (tally + move_delay_add + config.alien_delay)
 
@@ -281,7 +281,7 @@ This is chestburster mechanic for damaging
 		return FALSE
 
 	if(affecting)
-		if(istype(chestburster.loc, /mob/living))
+		if(isliving(chestburster.loc))
 			return TRUE
 		else
 			qdel(src)

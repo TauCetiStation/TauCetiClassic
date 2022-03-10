@@ -49,8 +49,8 @@
 	var/speech_allowed = 1 //Meme Stuff
 	var/damageoverlaytemp = 0
 	var/computer_id = null
-	var/lastattacker = null
-	var/lastattacked = null
+	var/lastattacker_name = ""
+	var/lastattacker_key = ""
 	var/attack_log = list( )
 	var/already_placed = 0.0
 	var/obj/machinery/machine = null
@@ -78,12 +78,19 @@
 	var/blinded = null
 	var/daltonism = FALSE
 	var/druggy = 0			//Carbon
+
+	// Confused rework. Randomises inputs once every randomiseinputs_cooldown ticks.
 	var/confused = 0		//Carbon
+	var/list/input_offsets
+	var/next_randomise_inputs = 0
+	var/randomise_inputs_cooldown = 30 SECONDS
+
 	var/antitoxs = null
 	var/phoron = null
 	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
+	var/was_lying = FALSE //For user of clown pda slippery
 	var/lying_current = 0
 	var/crawling = 0 //For crawling
 	var/canmove = 1
@@ -259,3 +266,5 @@
 	var/typing = FALSE
 	var/obj/effect/overlay/typing_indicator/typing_indicator
 	var/typing_indicator_type = "default"
+
+	var/forced_language

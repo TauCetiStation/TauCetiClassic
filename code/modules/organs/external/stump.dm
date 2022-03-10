@@ -4,6 +4,9 @@
 	icon_state = ""
 	is_stump = TRUE
 
+/datum/bodypart_controller/stump/adjust_pumped(value)
+	return 0
+
 /obj/item/organ/external/stump/insert_organ(mob/living/carbon/human/H, surgically, obj/item/organ/external/limb)
 	if(istype(limb))
 		name = "[limb.is_robotic()?"mechanical ":""]stump of \a [limb.name]"

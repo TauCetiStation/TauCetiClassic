@@ -251,24 +251,26 @@ var/global/list/slot_equipment_priority = list(
 		return 0
 
 // Removes an item from inventory and places it in the target atom
-/mob/proc/drop_from_inventory(obj/item/W, atom/target=null, additional_pixel_x=0, additional_pixel_y=0)
-	if(W)
-		var/was_holding = (get_active_hand() == W) || (get_inactive_hand() == W)
+/mob/proc/drop_from_inventory(obj/item/W, atom/target=null, additional_pixel_x=0, additional_pixel_y=0, putdown_anim=TRUE)
+	if(!W)
+		return FALSE
 
-		remove_from_mob(W, target)
-		if(!(W && W.loc))
-			return 1 // self destroying objects (tk, grabs)
+	var/was_holding = (get_active_hand() == W) || (get_inactive_hand() == W)
 
-		if(target && was_holding && target != src && target.loc != src)
-			INVOKE_ASYNC(W, /atom/movable.proc/do_putdown_animation, target, src, additional_pixel_x, additional_pixel_y)
+	var/prev_slot = W.slot_equipped
+	remove_from_mob(W, target)
+	if(!(W && W.loc))
+		return TRUE // self destroying objects (tk, grabs)
 
-		update_icons()
-		return 1
-	return 0
+	if(target && putdown_anim && was_holding && target != src && target.loc != src)
+		INVOKE_ASYNC(W, /atom/movable.proc/do_putdown_animation, target, src, additional_pixel_x, additional_pixel_y)
+
+	update_inv_slot(prev_slot)
+	return TRUE
 
 //Drops the item in our left hand
 /mob/proc/drop_l_hand(atom/Target)
-	if(istype(l_hand, /obj/item))
+	if(isitem(l_hand))
 		var/obj/item/W = l_hand
 		if(W.flags & NODROP)
 			return FALSE
@@ -276,7 +278,7 @@ var/global/list/slot_equipment_priority = list(
 
 //Drops the item in our right hand
 /mob/proc/drop_r_hand(atom/Target)
-	if(istype(r_hand, /obj/item))
+	if(isitem(r_hand))
 		var/obj/item/W = r_hand
 		if(W.flags & NODROP)
 			return FALSE
@@ -339,7 +341,7 @@ var/global/list/slot_equipment_priority = list(
 	O.appearance_flags = initial(O.appearance_flags)
 	O.screen_loc = null
 
-	if(istype(O, /obj/item))
+	if(isitem(O))
 		if(!target)
 			target = loc
 
@@ -535,7 +537,7 @@ var/global/list/slot_equipment_priority = list(
 
 	to_chat(usr, "<span class='notice'>You start unequipping the [C].</span>")
 	C.equipping = TRUE
-	var/equip_time = HAS_TRAIT(usr, TRAIT_FAST_EQUIP) ? C.equip_time / 2 : C.equip_time 
+	var/equip_time = HAS_TRAIT(usr, TRAIT_FAST_EQUIP) ? C.equip_time / 2 : C.equip_time
 	if(!do_after(usr, equip_time, target = C))
 		C.equipping = FALSE
 		to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
@@ -563,7 +565,7 @@ var/global/list/slot_equipment_priority = list(
 
 	to_chat(usr, "<span class='notice'>You start equipping the [C].</span>")
 	C.equipping = 1
-	var/equip_time = HAS_TRAIT(usr, TRAIT_FAST_EQUIP) ? C.equip_time / 2 : C.equip_time 
+	var/equip_time = HAS_TRAIT(usr, TRAIT_FAST_EQUIP) ? C.equip_time / 2 : C.equip_time
 	if(do_after(usr, equip_time, target = C))
 		equip_to_slot_if_possible(C, slot)
 		to_chat(usr, "<span class='notice'>You have finished equipping the [C].</span>")
