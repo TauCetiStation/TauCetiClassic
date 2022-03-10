@@ -82,6 +82,9 @@
 		H.dna.SetSEState(SMALLSIZEBLOCK, 1)
 		domutcheck(H, null)
 
+
+	H.add_language(LANGUAGE_SHKIONDIONIOVIOION)
+
 	H.equip_or_collect(new /obj/item/weapon/pickaxe/diamond(H), SLOT_L_HAND)
 
 /datum/quality/informed

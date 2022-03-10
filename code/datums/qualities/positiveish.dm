@@ -345,5 +345,4 @@
 
 /datum/quality/deathalarm/add_effect(mob/living/carbon/human/H, latespawn)
 	var/obj/item/weapon/implant/death_alarm/DA = new(H)
-	DA.imp_in = H
-	DA.implanted = TRUE
+	DA.stealth_inject(H)
