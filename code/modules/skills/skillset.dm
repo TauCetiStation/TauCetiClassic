@@ -24,8 +24,7 @@
 	s.value = value
 
 /datum/skillset/proc/get_skill(skill)
-	if(skill in skills)
-		return skills[skill]
+	return skills[skill]
 
 
 
