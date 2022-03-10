@@ -84,7 +84,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 
 /mob/living/simple_animal/det5/HasProximity(atom/movable/AM)	// Trigger move
 	if(searchfortarget == 1)
-		if(istype(AM, /mob/living/carbon) && !(AM.name == act_emag))	//do not explode EMAG USER
+		if(iscarbon(AM) && !(AM.name == act_emag))	//do not explode EMAG USER
 			searchfortarget = 0
 			explode()
 

@@ -135,7 +135,7 @@
 				to_chat(user, "<span class='userdanger'>You need to attach a flash to [p] first!</span>")
 				return FALSE
 			return target.op_stage.bodyparts[target_zone] == ORGAN_ATTACHABLE
-		if(istype(tool, /obj/item/organ/external))
+		if(isbodypart(tool))
 			var/obj/item/organ/external/p = tool
 			if (target_zone != p.body_zone)
 				to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
@@ -160,7 +160,7 @@
 		target.remove_from_mob(tool)
 		qdel(tool)
 
-	if(istype(tool, /obj/item/organ/external))
+	if(isbodypart(tool))
 		BP = tool
 
 	if(!BP)

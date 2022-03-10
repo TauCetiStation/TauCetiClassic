@@ -53,6 +53,7 @@
 	interface_name = "mounted drill"
 	interface_desc = "A diamond-tipped industrial drill."
 	use_power_cost = 100 // normal drills use 15 energy, we mine 3 turfs at a time
+	usable = TRUE // Allow mode switching
 	origin_tech = "materials=5;powerstorage=3;engineering=3;programming=2"
 	device_type = /obj/item/weapon/pickaxe/drill/jackhammer // this one doesn't use energy
 
@@ -263,7 +264,7 @@
 
 	var/mob/living/carbon/target_mob
 	if(target)
-		if(istype(target,/mob/living/carbon))
+		if(iscarbon(target))
 			target_mob = target
 		else
 			return FALSE
@@ -599,6 +600,13 @@
 /obj/item/rig_module/mounted_relay/atom_init()
 	. = ..()
 	relay = new relay_type(src)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/rig_module/mounted_relay/atom_init_late()
+	for(var/obj/machinery/telecomms/T in telecomms_list)
+		if(istype(T, /obj/machinery/telecomms/hub))
+			T.links |= relay
+			relay.links |= T
 
 /obj/item/rig_module/mounted_relay/process_module()
 	if(!active)

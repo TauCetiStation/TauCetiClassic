@@ -37,8 +37,8 @@
 		user.take_bodypart_damage(5, 5)
 	active = !active
 	if (active)
-		tools = list(
-			TOOL_KNIFE = 1
+		qualities = list(
+			QUALITY_KNIFE = 1
 		)
 		sharp = TRUE
 		force = 30
@@ -52,7 +52,7 @@
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 
 	else
-		tools = list()
+		qualities = null
 		sharp = FALSE
 		force = 3
 		hitsound = initial(hitsound)
@@ -64,7 +64,7 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
@@ -190,7 +190,7 @@
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()

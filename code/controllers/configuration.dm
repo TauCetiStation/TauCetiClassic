@@ -137,17 +137,17 @@ var/global/bridge_secret = null
 	var/expected_round_length = 90 MINUTES
 	// If the first delay has a custom start time
 	// No custom time
-	var/list/event_first_run = list(EVENT_LEVEL_ROUNDSTART = null,
+	var/list/event_first_run = list(EVENT_LEVEL_FEATURE = null,
 									EVENT_LEVEL_MUNDANE = null,
 									EVENT_LEVEL_MODERATE = null,
 									EVENT_LEVEL_MAJOR = list("lower" = 50 MINUTES, "upper" = 70 MINUTES))
 	// The lowest delay until next event
-	var/list/event_delay_lower = list(EVENT_LEVEL_ROUNDSTART = null,
+	var/list/event_delay_lower = list(EVENT_LEVEL_FEATURE = null,
 									  EVENT_LEVEL_MUNDANE  = 10 MINUTES,
 									  EVENT_LEVEL_MODERATE = 30 MINUTES,
 									  EVENT_LEVEL_MAJOR    = 50 MINUTES)
 	// The upper delay until next event
-	var/list/event_delay_upper = list(EVENT_LEVEL_ROUNDSTART = null,
+	var/list/event_delay_upper = list(EVENT_LEVEL_FEATURE = null,
 									  EVENT_LEVEL_MUNDANE  = 15 MINUTES,
 									  EVENT_LEVEL_MODERATE = 45 MINUTES,
 									  EVENT_LEVEL_MAJOR    = 70 MINUTES)
@@ -211,6 +211,9 @@ var/global/bridge_secret = null
 	var/secondtopiclimit = 10
 
 	var/deathmatch_arena = TRUE
+
+	var/hard_deletes_overrun_threshold = 0.5
+	var/hard_deletes_overrun_limit = 0
 
 /datum/configuration/New()
 	for (var/type in subtypesof(/datum/game_mode))
@@ -654,6 +657,12 @@ var/global/bridge_secret = null
 
 				if("second_topic_limit")
 					config.secondtopiclimit = text2num(value)
+
+				if("hard_deletes_overrun_threshold")
+					config.hard_deletes_overrun_threshold = text2num(value)
+
+				if("hard_deletes_overrun_limit")
+					config.hard_deletes_overrun_limit = text2num(value)
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

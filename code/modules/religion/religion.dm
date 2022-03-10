@@ -106,8 +106,8 @@
 
 	// All runes on map
 	var/list/obj/effect/rune/runes = list()
-	// mob = list(rune, rune, rune)
-	var/list/runes_by_mob = list()
+	// ckey = list(rune, rune, rune)
+	var/list/runes_by_ckey
 	// Max runes on mob
 	var/max_runes_on_mob
 
@@ -681,3 +681,12 @@
 
 /datum/religion/proc/get_tech(tech_id)
 	return all_techs[tech_id]
+
+/datum/religion/proc/get_runes_by_type(rune_type)
+	var/list/valid_runes = list()
+	for(var/obj/effect/rune/R as anything in runes)
+		if(!istype(R.power, rune_type))
+			continue
+		if(!is_centcom_level(R.loc.z) || istype(get_area(R), area_type))
+			valid_runes += R
+	return valid_runes
