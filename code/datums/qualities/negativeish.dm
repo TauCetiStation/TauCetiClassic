@@ -114,7 +114,7 @@
 
 
 	H.r_facial = H.r_hair
-	H.g_facial = H.g_facial
+	H.g_facial = H.g_hair
 	H.b_facial = H.b_hair
 
 /datum/quality/dirty
