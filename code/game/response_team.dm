@@ -13,7 +13,7 @@ var/global/can_call_ert
 		to_chat(usr, "<span class='warning'>Только администрация может использовать это.</span>")
 		return
 	if(!SSticker)
-		to_chat(usr, "<span class='warning'>Игра еще не началась!</span>")
+		to_chat(usr, "<span class='warning'>Игра еще не загрузилась!</span>")
 		return
 	if(SSticker.current_state == 1)
 		to_chat(usr, "<span class='warning'>Раунд еще не начался!</span>")
@@ -134,7 +134,7 @@ var/global/can_call_ert
 		H.g_eyes = hex2num(copytext(new_eyes, 4, 6))
 		H.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-	var/new_tone = input(src, "Выберите тон кожи: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Создание персонажа")  as text
+	var/new_tone = input(src, "Выберите тон кожи: 1-220 (1=альбинос, 35=белый, 150=чёрный, 220='очень' чёрный)", "Создание персонажа")  as text
 
 	if (!new_tone)
 		new_tone = 35
@@ -159,12 +159,12 @@ var/global/can_call_ert
 			H.gender = FEMALE
 
 	//hair
-	var/new_hstyle = input(src, "Выберите прическу", "Отличительные признаки")  as null|anything in get_valid_styles_from_cache(hairs_cache, H.get_species(), H.gender)
+	var/new_hstyle = input(src, "Выберите прическу", "Внешность")  as null|anything in get_valid_styles_from_cache(hairs_cache, H.get_species(), H.gender)
 	if(new_hstyle)
 		H.h_style = new_hstyle
 
 	// facial hair
-	var/new_fstyle = input(src, "Выберите стиль растительности на лице", "Отличительные признаки")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, H.get_species(), H.gender)
+	var/new_fstyle = input(src, "Выберите стиль растительности на лице", "Внешность")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, H.get_species(), H.gender)
 	if(new_fstyle)
 		H.f_style = new_fstyle
 

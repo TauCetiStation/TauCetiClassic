@@ -57,7 +57,7 @@
 				to_chat(user, "<span class='warning'>Недостаточно стержней.</span>")
 				return
 			if(user.is_busy()) return
-			to_chat(user, "<span class='notice'>Вы начали собирать помост.</span>")
+			to_chat(user, "<span class='notice'>Вы начинаете собирать помост.</span>")
 			if(R.use_tool(src, user, 30, amount = 2, volume = volume))
 				to_chat(user, "<span class='notice'>Вы собрали помост!</span>")
 				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
@@ -66,7 +66,7 @@
 
 		if(!R.use(1))
 			return
-		to_chat(user, "<span class='notice'>Вы собрали поддерживающую решетку.</span>")
+		to_chat(user, "<span class='notice'>Создание поддерживающей решетки...</span>")
 		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 		ReplaceWithLattice()
 
@@ -82,7 +82,7 @@
 			S.build(src)
 			return
 		else
-			to_chat(user, "<span class='warning'>Для обшивки нужна основа.</span>")
+			to_chat(user, "<span class='warning'>Для покрытия нужна опора.</span>")
 
 /turf/environment/space/attackby(obj/item/C, mob/user)
 	build_floor_support(C, user)
@@ -115,7 +115,7 @@
 				if(isliving(A))
 					var/mob/living/MM = A
 					if(MM.client && !MM.stat)
-						to_chat(MM, "<span class='warning'>Кое-что мешает улететь. Не прикидывайся дурачком; ты знаешь о чем мы.</span>")
+						to_chat(MM, "<span class='warning'>Вы имеете что-то, что мешает улететь. Не прикидывайтесь: вы знаете, что это.</span>")
 						if(MM.x <= TRANSITIONEDGE)
 							MM.inertia_dir = 4
 						else if(MM.x >= world.maxx -TRANSITIONEDGE)

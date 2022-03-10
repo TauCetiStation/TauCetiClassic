@@ -515,23 +515,23 @@ var/global/list/wood_icons = list("wood","wood-broken")
 				qdel(C)
 				set_lightfloor_state(0) //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
-				to_chat(user, "<span class='notice'>Вы заменяете лампочку.</span>")
+				to_chat(user, "<span class='notice'>Вы заменили лампочку.</span>")
 			else
-				to_chat(user, "<span class='notice'>Лампочка выглядит целой, нет нужды заменять ее.</span>")
+				to_chat(user, "<span class='notice'>Похоже, лампочка в порядке, менять её не нужно.</span>")
 
 	if(iscrowbar(C) && (!(is_plating())))
 		if(broken || burnt)
-			to_chat(user, "<span class='warning'>Вы удаляете поврежденное покрытие.</span>")
+			to_chat(user, "<span class='warning'>Вы сняли поврежденное покрытие.</span>")
 		else
 			if(is_wood_floor())
-				to_chat(user, "<span class='warning'>Вы с трудом отдираете доски, ломая их в процессе.</span>")
+				to_chat(user, "<span class='warning'>Вы с трудом отодрали доски, сломав их.</span>")
 			else
 				var/obj/item/I = new floor_type(src)
 				if(is_light_floor())
 					var/obj/item/stack/tile/light/L = I
 					L.on = get_lightfloor_on()
 					L.state = get_lightfloor_state()
-				to_chat(user, "<span class='warning'>Вы демонтируете покрытие.</span>")
+				to_chat(user, "<span class='warning'>Вы демонтировали светящуюся плитку.</span>")
 
 		make_plating()
 		// Can't play sounds from areas. - N3X
@@ -545,7 +545,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 				return
 			else
 				if(is_wood_floor())
-					to_chat(user, "<span class='warning'>Вы откручиваете доски.</span>")
+					to_chat(user, "<span class='warning'>Вы открутили доски.</span>")
 					new floor_type(src)
 
 			make_plating()
@@ -641,7 +641,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 		if(user.a_intent == INTENT_HELP)
 			if(!broken && !burnt)
 				return
-			to_chat(user, "<span class='warning'>Вы ремонтируете обшивку.</span>")
+			to_chat(user, "<span class='warning'>Вы отремонтировали обшивку.</span>")
 			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 			icon_state = "plating"
 			burnt = 0
