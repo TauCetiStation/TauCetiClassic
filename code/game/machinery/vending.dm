@@ -217,7 +217,7 @@
 		var/obj/item/weapon/card/I = W
 		scan_card(I)
 
-	else if(currently_vending && istype(W, /obj/item/weapon/spacecash/bill && !id_scanned))
+	else if(currently_vending && istype(W, /obj/item/weapon/spacecash/bill) && !id_scanned)
 		var/obj/item/weapon/spacecash/bill/B = W
 		scan_cash(B)
 
@@ -344,7 +344,6 @@
 			// Vend the item
 			vend(src.currently_vending, usr)
 			currently_vending = null
-			id_scanned = null
 		else
 			to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 
@@ -557,6 +556,8 @@
 				QDEL_NULL(coin)
 		else
 			QDEL_NULL(coin)
+
+	id_scanned = null
 
 	R.amount--
 
