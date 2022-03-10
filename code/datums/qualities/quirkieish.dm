@@ -1,5 +1,4 @@
 // Put qualities that change gameplay in unique ways, which are neither strictly positve or negative.
-
 /datum/quality/cyborg
 	desc = "Все твои конечности и органы были заменены протезами в результате недавнего несчастного случая."
 	requirement = "Нет."
@@ -68,3 +67,19 @@
 	if(H.equip_or_collect(NC, SLOT_R_STORE))
 		return
 	qdel(NC)
+
+/datum/quality/diggydiggyhole
+	desc = "Вы - дворф! Вы любите пиво, копать породу и блестящие металлы."
+	requirement = "Шахтер."
+
+	jobs_required = list("Shaft Miner")
+
+/datum/quality/diggydiggyhole/add_effect(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_DWARF, QUALITY_TRAIT)
+	H.f_style = pick("Dwarf Beard", "Very Long Beard")
+	H.update_hair()
+	if(!(NOCLONE in H.mutations))
+		H.dna.SetSEState(SMALLSIZEBLOCK, 1)
+		domutcheck(H, null)
+
+	H.equip_or_collect(new /obj/item/weapon/pickaxe/diamond(H), SLOT_L_HAND)

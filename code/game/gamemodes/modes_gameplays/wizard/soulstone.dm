@@ -38,6 +38,10 @@
 		to_chat(user, "<span class='warning'>Разум этого существа сопротивляется силе камня.</span>")
 		return ..()
 
+	if(HAS_TRAIT(H, TRAIT_NO_SOUL))
+		to_chat(user, "<span class='warning'>У этого существа нет души.</span>")
+		return ..()
+
 	H.log_combat(user, "soul-captured via [name]")
 
 	transfer_soul(SOULSTONE_VICTIM, H, user)

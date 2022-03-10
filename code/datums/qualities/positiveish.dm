@@ -113,7 +113,7 @@
 	H.equip_or_collect(new /obj/item/clothing/under/fluff/cowboy/brown(H), SLOT_W_UNIFORM)
 	H.equip_or_collect(new /obj/item/clothing/head/western/cowboy(H), SLOT_HEAD)
 	H.equip_or_collect(new /obj/item/clothing/shoes/western(H), SLOT_SHOES)
-	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/peacemaker(H), SLOT_L_HAND)
+	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/peacemaker/detective(H), SLOT_L_HAND)
 	H.equip_or_collect(new /obj/item/ammo_box/c45rubber(H), SLOT_L_STORE)
 	H.equip_or_collect(new /obj/item/ammo_box/c45rubber(H), SLOT_R_STORE)
 
@@ -191,3 +191,12 @@
 		var/datum/language/L = all_languages[language]
 		if(H.get_species() in L.allowed_species)
 			H.add_language(language)
+
+/datum/quality/deathalarm
+	desc = "Вы раскошелились на имплант оповещения о смерти перед тем, как отправиться в опасный сектор Исхода."
+	requirement = "Нет."
+
+/datum/quality/deathalarm/add_effect(mob/living/carbon/human/H, latespawn)
+	var/obj/item/weapon/implant/death_alarm/DA = new(H)
+	DA.imp_in = H
+	DA.implanted = TRUE
