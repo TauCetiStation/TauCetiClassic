@@ -1,4 +1,5 @@
 // Put qualities that change gameplay in unique ways, which are neither strictly positve or negative.
+
 /datum/quality/cyborg
 	desc = "Все твои конечности и органы были заменены протезами в результате недавнего несчастного случая."
 	requirement = "Нет."
