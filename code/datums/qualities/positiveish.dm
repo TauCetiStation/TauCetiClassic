@@ -198,8 +198,6 @@
 /datum/quality/traveler/add_effect(mob/living/carbon/human/H, latespawn)
 	for(var/language in all_languages)
 		var/datum/language/L = all_languages[language]
-		if(H.get_species() in L.allowed_species)
-			H.add_language(language)
 
 		if(L.flags & RESTRICTED)
 			continue
