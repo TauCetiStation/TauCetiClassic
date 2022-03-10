@@ -79,9 +79,8 @@
 	ADD_TRAIT(H, TRAIT_DWARF, QUALITY_TRAIT)
 	H.f_style = pick("Dwarf Beard", "Very Long Beard")
 	H.update_hair()
-	if(!(NOCLONE in H.mutations))
-		H.dna.SetSEState(SMALLSIZEBLOCK, 1)
-		domutcheck(H, null)
+	H.mutations.Add(SMALLSIZE)
+	H.update_mutations()
 
 
 	H.add_language(LANGUAGE_SHKIONDIONIOVIOION)
