@@ -41,13 +41,8 @@
 
 
 /datum/skills/proc/choose_value(skill_name,value)
-	var/list/allowed_skill_names = list()
-	for(var/datum/skill/skill as anything in skills_list)
-		allowed_skill_names.Add(initial(skill.name))
-	if(!(skill_name in allowed_skill_names))
-		return
 	var/datum/skill/skill = active.get_skill(skill_name)
-	if (value > skill.max_value || value < skill.min_value)
+	if (!skill || value > skill.max_value || value < skill.min_value)
 		return
 	if (value > available.get_value(skill_name))
 		return
