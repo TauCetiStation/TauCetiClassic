@@ -49,7 +49,6 @@
 
 	var/list/internal_log = list()
 	var/mode = FALSE // FALSE - making pass, TRUE - viewing logs
-	required_skills = list(/datum/skill/command/novice)
 
 /obj/machinery/computer/guestpass/atom_init()
 	. = ..()

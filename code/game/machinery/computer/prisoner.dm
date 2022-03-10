@@ -13,7 +13,6 @@
 	var/timeleft = 60
 	var/stop = 0.0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
-	required_skills = list(/datum/skill/police/master)
 
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
 	var/dat = ""

@@ -10,6 +10,7 @@
 	maptext_width = 999
 	maptext_x = -385
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/looking_at
 	var/state = TRUE
 	var/font_size = 8
 
@@ -30,6 +31,7 @@
 /client/MouseEntered(atom/hoverOn, location, control, params)
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
+	tooltip.looking_at = "\ref[hoverOn]"
 	if(prefs.tooltip && tooltip?.state)
 		var/text_in_tooltip = hoverOn.get_name()
 		screen |= tooltip

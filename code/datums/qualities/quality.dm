@@ -34,7 +34,7 @@
 	return
 
 /datum/quality/proc/is_jobs(mob/living/carbon/human/H, list/jobs)
-	return H.mind.assigned_role in jobs
+	return (H.mind.assigned_role in jobs) || (H.mind.role_alt_title in jobs)
 
 /datum/quality/proc/is_species(mob/living/carbon/human/H, list/species)
 	return H.get_species() in species
@@ -44,6 +44,8 @@
 		if(jobban_isbanned(C.mob, job))
 			continue
 		var/datum/job/J = SSjob.GetJob(job)
+		if(!J)
+			J = SSjob.GetJobByAltTitle(job)
 		if(!J.player_old_enough(C))
 			continue
 

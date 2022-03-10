@@ -73,7 +73,8 @@
 	antag = M
 	M.antag_roles[id] = src
 	objectives.owner = M
-	M.skills.add_available_skillset(skillset_type)
+	if(!isnull(skillset_type))
+		M.skills.add_available_skillset(skillset_type)
 	if(change_to_maximum_skills)
 		M.skills.maximize_active_skills()
 	if(msg_admins)
@@ -97,7 +98,8 @@
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
-	M.skills.remove_modifier(skillset_type)
+	if(!isnull(skillset_type))
+		M.skills.remove_available_skillset(skillset_type)
 
 	remove_antag_hud()
 	if(msg_admins)

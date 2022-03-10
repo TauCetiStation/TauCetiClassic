@@ -18,7 +18,7 @@
 		"Paranormal Investigator" = /datum/outfit/job/assistant/paranormal_investigator
 		)
 	outfit = /datum/outfit/job/assistant/test_subject
-	skill_sets = list(
+	skillsets = list(
 		"Test Subject"   = /datum/skillset/test_subject,
 		"Lawyer"         = /datum/skillset/test_subject/lawyer,
 		"Mecha Operator" = /datum/skillset/test_subject/mecha,
