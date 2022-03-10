@@ -25,6 +25,7 @@ var/global/abductor_landmarks_setuped = FALSE
 	required_pref = ROLE_ABDUCTOR
 
 	initroletype = /datum/role/abductor/agent
+	roletype = /datum/role/abducted
 
 	logo_state = "abductor-logo"
 
@@ -93,17 +94,6 @@ var/global/abductor_landmarks_setuped = FALSE
 			return FALSE
 
 	return FALSE
-
-/datum/faction/abductors/GetScoreboard()
-	var/dat = ..()
-
-	if(abductees.len)
-		dat += "<br><b>The abductees:</b><br>"
-		for(var/datum/role/abducted/A in abductees)
-			dat += A.GetScoreboard()
-			dat += "<br>"
-
-	return dat
 
 /datum/faction/abductors/proc/get_team_console(team)
 	for(var/obj/machinery/abductor/console/c in abductor_machinery_list)

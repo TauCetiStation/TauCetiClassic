@@ -120,3 +120,6 @@
 	var/last_ui_resource_send = 0
 
 	var/fullscreen = NONE
+
+	/// Messages currently seen by this client
+	var/list/seen_messages

@@ -82,8 +82,9 @@
 			SEND_SIGNAL(T.antag.current, COMSIG_ADD_MOOD_EVENT, "master_died", /datum/mood_event/master_died)
 			to_chat(T.antag.current, "<span class='shadowling'><font size=3>Sudden realization strikes you like a truck! ONE OF OUR MASTERS HAS DIED!!!</span></font>")
 
+	..(gibbed)
 
-	return ..(gibbed)
+	SSStatistics.add_death_stat(src)
 
 // Called right after we will lost our head
 /mob/living/carbon/human/proc/handle_decapitation(obj/item/organ/external/head/BP)
@@ -120,7 +121,7 @@
 
 	var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
 	if(IO && IO.parent_bodypart == BP_HEAD)
-
+		SSStatistics.add_death_stat(src) // because mind transfer to brain
 		BP.transfer_identity(src)
 
 		BP.name = "[real_name]'s head"

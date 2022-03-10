@@ -176,7 +176,7 @@
 			if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
 				nutrimentMutation()
 				if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
-					harvest = TRUE
+					ripen()
 				else
 					lastproduce = age
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
@@ -196,6 +196,10 @@
 		if (needs_update)
 			update_icon()
 	return
+
+/obj/machinery/hydroponics/proc/ripen()
+	harvest = TRUE
+	myseed.ripen()
 
 /obj/machinery/hydroponics/proc/nutrimentMutation()
 	if (mutmod == 0)
@@ -678,7 +682,7 @@
 			if(!S.can_be_inserted(G))
 				return
 			S.handle_item_insertion(G, 1)
-			score["stuffharvested"]++
+			SSStatistics.score.stuffharvested++
 
 	else if(iswrench(O) && unwrenchable)
 		if(anchored == 2)
@@ -783,6 +787,9 @@
 		return min(yield, 1)//1 if above zero, 0 otherwise
 	return (yield * parent.yieldmod)
 
+/obj/item/seeds/proc/ripen()
+	return
+
 /obj/item/seeds/proc/harvest(mob/user = usr)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
@@ -826,7 +833,7 @@
 			t_amount++
 
 	if(getYield() >= 1)
-		score["stuffharvested"]++
+		SSStatistics.score.stuffharvested++
 
 	parent.update_tray()
 	return result

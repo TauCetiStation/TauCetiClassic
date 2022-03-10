@@ -49,6 +49,13 @@
 
 	var/in_use_action = FALSE // do_after sets this to TRUE and is_busy() can check for that to disallow multiple users to interact with this at the same time.
 
+	/// Last name used to calculate a color for the chatmessage overlays
+	var/chat_color_name
+	/// Last color calculated for the the chatmessage overlays
+	var/chat_color
+	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
+	var/chat_color_darkened
+
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
@@ -76,7 +83,7 @@
 
 //Note: the following functions don't call the base for optimization and must copypasta:
 // /turf/atom_init
-// /turf/space/atom_init
+// /turf/environment/space/atom_init
 // /mob/dead/atom_init
 
 //Do also note that this proc always runs in New for /mob/dead
@@ -111,8 +118,7 @@
 			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
 			AA.remove_from_hud(src)
 
-	if(reagents)
-		QDEL_NULL(reagents)
+	QDEL_NULL(reagents)
 
 	LAZYCLEARLIST(overlays)
 
@@ -555,10 +561,7 @@
 		return 0
 
 /atom/proc/isinspace()
-	if(istype(get_turf(src), /turf/space))
-		return 1
-	else
-		return 0
+	return isspaceturf(get_turf(src))
 
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
@@ -633,7 +636,7 @@
 				C.inertia_dir = 0
 		return TRUE
 
-/turf/space/handle_slip()
+/turf/environment/space/handle_slip()
 	return
 
 // Recursive function to find everything this atom is holding.

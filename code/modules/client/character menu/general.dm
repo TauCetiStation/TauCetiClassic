@@ -295,7 +295,7 @@
 						ResetQuirks()
 						if(language && language != "None")
 							var/datum/language/lang = all_languages[language]
-							if(!(species in lang.allowed_species))
+							if(!(species in lang.allowed_speak))
 								language = "None"
 
 				if("language")
@@ -303,7 +303,7 @@
 					var/datum/species/S = all_species[species]
 					for(var/L in all_languages)
 						var/datum/language/lang = all_languages[L]
-						if(!(lang.flags & RESTRICTED) && (S.name in lang.allowed_species))
+						if(!(lang.flags & RESTRICTED) && (S.name in lang.allowed_speak))
 							new_languages += lang.name
 
 					language = input("Please select a secondary language", "Character Generation", language) in new_languages

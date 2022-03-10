@@ -257,7 +257,7 @@
 
 		//paralysis += 1
 
-	to_chat("<span class='warning'>The blob attacks you!</span>")
+	to_chat(src, "<span class='warning'>The blob attacks you!</span>")
 
 	adjustFireLoss(damage)
 

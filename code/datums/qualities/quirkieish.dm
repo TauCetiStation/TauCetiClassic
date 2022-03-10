@@ -83,3 +83,19 @@
 		domutcheck(H, null)
 
 	H.equip_or_collect(new /obj/item/weapon/pickaxe/diamond(H), SLOT_L_HAND)
+
+/datum/quality/informed
+	desc = "В баре тебе удалось подслушать странный разговор о каких-то кодовых словах."
+	requirement = "Все, кроме охраны, Капитана и ХоПа."
+
+	var/list/funpolice = list("Security Officer", "Security Cadet", "Head of Security", "Captain", "Forensic Technician", "Detective", "Captain", "Warden", "Head of Personnel")
+
+/datum/quality/informed/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !(H.mind.assigned_role in funpolice)
+
+/datum/quality/informed/add_effect(mob/living/carbon/human/H)
+	var/response = "[codewords2string(global.syndicate_code_response)]"
+	var/phrase = "[codewords2string(global.syndicate_code_phrase)]"
+	var/message = "Кажется, было что-то типа... [pick(response, phrase)]"
+	to_chat(H, "<span class ='notice'>Ты припоминаешь услышанные слова... [message].</span>")
+	H.mind.store_memory(message)

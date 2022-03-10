@@ -92,11 +92,11 @@
 	desc = "Unknown shuttle"
 	mappath = "maps/templates/space_structures/delivery_shuttle.dmm"
 
-/datum/map_template/space_structure/lost_pod
-	name = "lost_pod"
-	structure_id = "lost_pod"
+/datum/map_template/space_structure/escape_pod
+	name = "escape_pod"
+	structure_id = "escape_pod"
 	desc = "Unknown small object"
-	mappath = "maps/templates/space_structures/lost_pod.dmm"
+	mappath = "maps/templates/space_structures/escape_pod.dmm"
 
 /datum/map_template/space_structure/cloning_lab
 	name = "cloning_lab"
@@ -128,11 +128,11 @@
 	desc = "Unknown object"
 	mappath = "maps/templates/space_structures/tree_asteroid.dmm"
 
-/datum/map_template/space_structure/recourse_shuttle
+/datum/map_template/space_structure/resource_shuttle
 	name = "Abandoned Cargo Shuttle"
-	structure_id = "recourse_shuttle"
+	structure_id = "resource_shuttle"
 	desc = "Unknown shuttle"
-	mappath = "maps/templates/space_structures/recourse_shuttle.dmm"
+	mappath = "maps/templates/space_structures/resource_shuttle.dmm"
 
 /datum/map_template/space_structure/ships_squad
 	name = "NT Ships Squad"
@@ -144,7 +144,7 @@
 	name = "Secrete Lab"
 	structure_id = "secrete_lab"
 	desc = "Debris of an unknown lab"
-	mappath = "maps/templates/space_structures/sectere_lab.dmm"
+	mappath = "maps/templates/space_structures/secrete_lab.dmm"
 
 /datum/map_template/space_structure/broken_breacher
 	name = "Broken Breacher"

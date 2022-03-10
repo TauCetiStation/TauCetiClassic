@@ -211,7 +211,7 @@
 	can_unwrench = FALSE
 
 /obj/structure/cult/portal_to_station/Bumped(atom/A)
-	var/area/area = findEventArea()
+	var/area/area = SSevents.findEventArea()
 	var/turf/target = get_turf(pick(get_area_turfs(area.type, FALSE)))
 	if(ismob(A))
 		var/mob/user = A
@@ -252,7 +252,7 @@
 
 	C.adjust_favor(rand(1, 5))
 	// statistics!
-	score["destranomaly"]++
+	SSStatistics.score.destranomaly++
 
 /obj/structure/cult/anomaly/proc/destroying(datum/religion/cult/C)
 	INVOKE_ASYNC(src, .proc/async_destroying, C)

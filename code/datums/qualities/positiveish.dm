@@ -52,7 +52,7 @@
 
 /datum/quality/wonder_doctor/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>В твоем кармане лежит фиолетовая таблетка, которая способна излечить любые раны... как жаль, что в ней лишь одна единица вещества.</span>")
-	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/adminodrazine(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/weapon/reagent_containers/pill/adminordrazine(H), SLOT_L_STORE)
 
 
 /datum/quality/prepared
@@ -60,7 +60,7 @@
 	requirement = "Нет."
 
 /datum/quality/prepared/add_effect(mob/living/carbon/human/H, latespawn)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/yellow(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/clothing/gloves/yellow(H), SLOT_L_STORE)
 
 
 /datum/quality/disguise
@@ -71,19 +71,8 @@
 
 /datum/quality/disguise/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>Карта в твоих руках способна менять свой внешний вид и имя владельца, а одежда в коробке заменит целый гардероб.</span>")
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/syndie_kit/chameleon(H), SLOT_L_HAND)
-	H.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(H), SLOT_R_HAND)
-
-
-/datum/quality/clumsy
-	desc = "Ты - неуклюжий, криворукий дурачок. Лучше не трогать всякие опасные штуки!"
-	requirement = "Все, кроме Клоуна."
-
-/datum/quality/clumsy/satisfies_requirements(mob/living/carbon/human/H, latespawn)
-	return H.mind.assigned_role != "Clown"
-
-/datum/quality/clumsy/add_effect(mob/living/carbon/human/H, latespawn)
-	H.mutations.Add(CLUMSY)
+	H.equip_or_collect(new /obj/item/weapon/storage/box/syndie_kit/chameleon(H), SLOT_L_HAND)
+	H.equip_or_collect(new /obj/item/weapon/card/id/syndicate(H), SLOT_R_HAND)
 
 
 /datum/quality/heavy_equipment
@@ -177,20 +166,180 @@
 
 
 /datum/quality/polyglot
-	desc = "Ты знаешь все языки. Вот и всё, все."
-	requirement = "Мим, Библиотекарь, Агент Внутренних Дел."
-
-	jobs_required = list(
-		"Mime",
-		"Librarian",
-		"Internal Affairs Agent",
-	)
+	desc = "Ты знаешь все языки."
+	requirement = "Нет."
 
 /datum/quality/polyglot/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
+
+	for(var/language in all_languages)
+		var/datum/language/L = all_languages[language]
+		if(H.get_species() in L.allowed_speak)
+			H.add_language(language)
+
+
+/datum/quality/freakish_linguist
+	desc = "Ты знаешь все языки. Абсолютно все. Но какой ценой?"
+	requirement = "Мим."
+
+	jobs_required = list(
+		"Mime"
+	)
+
+/datum/quality/freakish_linguist/add_effect(mob/living/carbon/human/H, latespawn)
+	for(var/language in all_languages)
+		H.add_language(language)
+
+
+/datum/quality/traveler
+	desc = "Ты много где побывал, и понимаешь большинство существующих языков."
+	requirement = "Нет."
+
+/datum/quality/traveler/add_effect(mob/living/carbon/human/H, latespawn)
 	for(var/language in all_languages)
 		var/datum/language/L = all_languages[language]
 		if(H.get_species() in L.allowed_species)
 			H.add_language(language)
+
+		if(L.flags & RESTRICTED)
+			continue
+		H.add_language(language, LANGUAGE_CAN_UNDERSTAND)
+
+
+/datum/quality/augmented_voice
+	desc = "Кузнец подковал тебе голосок и теперь ты освоил невозможный для себя язык."
+	requirement = "Нет."
+
+/datum/quality/augmented_voice/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
+
+	var/possibilities = list()
+	for(var/language in all_languages)
+		var/datum/language/L = all_languages[language]
+		if(L.flags & RESTRICTED)
+			continue
+		if(H.can_speak(L))
+			continue
+		possibilities += L.name
+
+	if(length(possibilities) == 0)
+		return
+
+	H.add_language(pick(possibilities))
+
+
+/datum/quality/endangered_plants
+	desc = "Бабушка передала тебе со своего гидропонического огорода семена редких растений."
+	requirement = "Ботаник."
+
+	jobs_required = list("Botanist")
+
+/datum/quality/endangered_plants/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/weapon/storage/box/rare_seeds(H), SLOT_L_HAND)
+
+
+/datum/quality/reliquary
+	desc = "Тебе выпала великая честь - нести осколок душ. Возможно, заплатив частью своей."
+	requirement = "Капеллан."
+
+	jobs_required = list("Chaplain")
+
+/datum/quality/reliquary/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/device/soulstone(H), SLOT_R_STORE)
+
+/datum/quality/ghost_buster
+	desc = "При крещение Вас окунули в чан с проклятой водой. Это дало вам возможность видеть призраков."
+	requirement = "Нет."
+
+/datum/quality/ghost_buster/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_GHOST_BUSTER, QUALITY_TRAIT)
+	H.update_alt_apperance_by(/datum/atom_hud/alternate_appearance/basic/ghost_buster)
+
+/datum/quality/crusader
+	desc = "Dominus concessit vos arma! DEUS VULT!"
+	requirement = "Капеллан."
+
+	jobs_required = list("Chaplain")
+
+/datum/quality/crusader/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/clothing/head/helmet/crusader(H), SLOT_HEAD)
+	H.equip_or_collect(new /obj/item/clothing/suit/armor/crusader(H), SLOT_WEAR_SUIT)
+
+
+/datum/quality/war_face
+	desc = "ПОКАЖИ МНЕ СВОЙ БОЕВОЙ ОСКАЛ."
+	requirement = "Нет."
+
+	var/list/war_colors = list(
+		COLOR_CRIMSON_RED,
+		COLOR_CRIMSON,
+		COLOR_WHITE,
+		COLOR_BLACK,
+		COLOR_YELLOW,
+		COLOR_GOLD,
+		COLOR_INDIGO,
+		COLOR_ADMIRAL_BLUE,
+		COLOR_CROCODILE,
+		COLOR_SEAWEED,
+		COLOR_ROSE_PINK,
+		COLOR_TIGER,
+		COLOR_PURPLE,
+	)
+
+/datum/quality/war_face/proc/battlecry(datum/source, new_intent)
+	var/mob/living/carbon/human/H = source
+	if(H.stat != CONSCIOUS)
+		return
+
+	if(new_intent == H.a_intent)
+		return
+
+	if(new_intent != INTENT_HARM)
+		return
+
+	H.emote("scream")
+
+/datum/quality/war_face/add_effect(mob/living/carbon/human/H, latespawn)
+	H.lip_style = "spray_face"
+	H.lip_color = pick(war_colors)
+	// for some reason name is not set at this stage and if I don't do this the emote message will be nameless
+	H.name = H.real_name
+	H.emote("scream")
+	H.update_body()
+
+	RegisterSignal(H, list(COMSIG_MOB_SET_A_INTENT), .proc/battlecry)
+
+
+/datum/quality/eye_reading
+	desc = "Ты по их глазам видишь чего они там задумали."
+	requirement = "Нет."
+
+/datum/quality/eye_reading/proc/see_intent(datum/source, atom/target)
+	var/mob/living/carbon/human/seer = source
+	if(!ismob(target))
+		return
+	var/mob/M = target
+	if(M?.client?.tooltip)
+		var/atom/targets_target = locate(M.client.tooltip.looking_at)
+		if(isturf(targets_target.loc))
+			to_chat(seer, "<span class='notice'>They are looking at [targets_target].</span>")
+
+	switch(M.a_intent)
+		if(INTENT_HELP)
+			to_chat(seer, "<span class='notice'>They intend to help out.</span>")
+		if(INTENT_PUSH)
+			to_chat(seer, "<span class='notice'>They are very pushy.</span>")
+		if(INTENT_GRAB)
+			to_chat(seer, "<span class='notice'>They will grab whatever.</span>")
+		if(INTENT_HARM)
+			to_chat(seer, "<span class='warning'>They intend to do harm!</span>")
+
+	var/target_zone = M.get_targetzone()
+	if(target_zone)
+		to_chat(seer, "<span class='notice'>Their gaze is somewhere at the level of \the [parse_zone(target_zone)].</span>")
+
+/datum/quality/eye_reading/add_effect(mob/living/carbon/human/H, latespawn)
+	RegisterSignal(H, list(COMSIG_PARENT_POST_EXAMINATE), .proc/see_intent)
 
 /datum/quality/deathalarm
 	desc = "Вы раскошелились на имплант оповещения о смерти перед тем, как отправиться в опасный сектор Исхода."
