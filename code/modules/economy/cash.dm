@@ -91,6 +91,7 @@
 	w_class = SIZE_SMALL
 	can_hold = list(/obj/item/weapon/spacecash/bill)
 	slot_flags = SLOT_FLAGS_BELT
+	use_sound = list('sound/items/cash.ogg')
 	var/list/bundle_overlays = list()
 	var/worth = 0
 
@@ -129,16 +130,12 @@
 	switch(contents.len)
 		if(1,2,3)
 			band_type = "3x"
-			w_class = SIZE_TINY
 		if(4,5)
 			band_type = "5x"
-			w_class = SIZE_SMALL
 		if(6,7)
 			band_type = "7x"
-			w_class = SIZE_NORMAL
 		if(8,9,10)
 			band_type = "10x"
-			w_class = SIZE_BIG
 	var/image/Band = image(icon=icon, icon_state="[icon_state][band_type]")
 	bundle_overlays += Band
 	add_overlay(Band)

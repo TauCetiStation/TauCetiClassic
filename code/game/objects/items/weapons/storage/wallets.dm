@@ -27,6 +27,7 @@
 	slot_flags = SLOT_FLAGS_ID
 
 	var/obj/item/weapon/card/id/front_id = null
+	var/list/cash_overlays = list()
 
 
 /obj/item/weapon/storage/wallet/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
@@ -50,6 +51,7 @@
 					H.sec_hud_set_ID()
 
 /obj/item/weapon/storage/wallet/update_icon()
+	cut_overlay(cash_overlays)
 
 	if(front_id)
 		switch(front_id.icon_state)
@@ -66,6 +68,20 @@
 				icon_state = "walletid_centcom"
 				return
 	icon_state = "wallet"
+
+	var/list/bills = list()
+	for(var/obj/item/weapon/spacecash/bill/B in contents)
+		bills += B
+	if(bills.len > 0)
+		for(var/i in 1 to min(3, bills.len))
+			var/obj/item/weapon/spacecash/bill/B = bills[i]
+			var/image/I = image(icon=B.icon, icon_state="spacecash[B.worth]")
+			I.color = list(1/i,0,0, 0,1/i,0, 0,0,1/i, 0,0,0)
+			var/icon/Ic = icon(B.icon, B.icon_state)
+			I.add_filter(name="Cut Money", priority=1, params=alpha_mask_filter(x=0, y=7, icon=Ic))
+			I.pixel_y += 3+i
+			cash_overlays += I
+			add_overlay(I)
 
 
 /obj/item/weapon/storage/wallet/GetID()
