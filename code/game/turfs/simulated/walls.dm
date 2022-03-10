@@ -294,7 +294,7 @@
 		return //##Z2
 
 	if(rotting)
-		to_chat(user, "<span class='notice'>Стена крошится от касания.</span>")
+		to_chat(user, "<span class='notice'>Стена крошится от вашего касания.</span>")
 		dismantle_wall()
 		return
 
@@ -313,14 +313,14 @@
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
-				to_chat(user, "<span class='notice'>Вы сжигаете грибок инструментом.</span>")
+				to_chat(user, "<span class='notice'>Вы сжигаете грибок сваркой.</span>")
 				playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER, 10)
 				for(var/obj/effect/E in src) if(E.name == "Wallrot")
 					qdel(E)
 				rotting = 0
 				return
 		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
-			to_chat(user, "<span class='notice'>Стена рассыпается под воздействием [W.name].</span>")
+			to_chat(user, "<span class='notice'>Стена рассыпается от удара [W.name].</span>")
 			dismantle_wall(1)
 			return
 
@@ -358,23 +358,23 @@
 		if(user.a_intent == INTENT_HELP)
 			if(!damage)
 				return
-			to_chat(user, "<span class='warning'>Вы начинаете ремонтировать стену.</span>")
+			to_chat(user, "<span class='warning'>Вы ремонтируете стену.</span>")
 			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
-				to_chat(user, "<span class='notice'>Вы закончили ремонт стены.</span>")
+				to_chat(user, "<span class='notice'>Вы отремонтировали стену.</span>")
 				take_damage(-damage)
 
 		else
-			to_chat(user, "<span class='notice'>Вы начинаете разрезать внешнее покрытие.</span>")
+			to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
 			if(WT.use_tool(src, user, 100, 3, 100))
 				if(!istype(src, /turf/simulated/wall))
 					return
-				to_chat(user, "<span class='notice'>Вы удалили внешнее покрытие.</span>")
+				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		if(user.is_busy(src))
 			return
-		to_chat(user, "<span class='notice'>Вы начинаете разрезать внешнее покрытие.</span>")
+		to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
 		if(W.use_tool(src, user, 60, volume = 100))
 			if(mineral == "diamond")//Oh look, it's tougher
 				sleep(60)
@@ -382,16 +382,16 @@
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
-				to_chat(user, "<span class='notice'>Вы удалили внешнее покрытие.</span>")
+				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
-				visible_message("<span class='warning'>[user] завершает разборку стены!</span>", blind_message = "<span class='warning'>Вы слышите, что металл был разрезан на части.</span>", viewing_distance = 5)
+				visible_message("<span class='warning'>[user] завершает разборку стены!</span>", blind_message = "<span class='warning'>Вы слышите, как металл разрезается на части.</span>", viewing_distance = 5)
 		return
 
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		if(user.is_busy(src))
 			return
-		to_chat(user, "<span class='notice'>Вы начинаете сверлить сквозь стену.</span>")
+		to_chat(user, "<span class='notice'>Вы бурите сквозь стену.</span>")
 		if(W.use_tool(src, user, 60, volume = 50))
 			if(mineral == "diamond")
 				sleep(60)
@@ -399,9 +399,9 @@
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
-				to_chat(user, "<span class='notice'>Вы просверлили последнюю укрепленную пластину.</span>")
+				to_chat(user, "<span class='notice'>Вы пробурили последний лист обшивки.</span>")
 				dismantle_wall()
-				visible_message("<span class='warning'>[user] завершает сверлить стену!</span>", blind_message = "<span class='warning'>Вы слышите скрежет металла.</span>", viewing_distance = 5)
+				visible_message("<span class='warning'>[user] пробурил стену!</span>", blind_message = "<span class='warning'>Вы слышите скрежет металла.</span>", viewing_distance = 5)
 		return
 
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -422,7 +422,7 @@
 				playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 				playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 				dismantle_wall(1)
-				visible_message("<span class='warning'>[user] завершает разборку стены!</span>", blind_message = "<span class='warning'>Вы слышите летящие искры и металл, разрезанный на части.</span>", viewing_distance = 5)
+				visible_message("<span class='warning'>[user] прорезает стену!</span>", blind_message = "<span class='warning'>Вы слышите треск искр и скрежет металла.</span>", viewing_distance = 5)
 		return
 	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
 		var/obj/item/weapon/changeling_hammer/C = W

@@ -54,14 +54,14 @@
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
-				to_chat(user, "<span class='notice'>Вы сжигаете грибок инстурментом.</span>")
+				to_chat(user, "<span class='notice'>Вы сжигаете грибок сваркой.</span>")
 				playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER, 10)
 				for(var/obj/effect/E in src) if(E.name == "Wallrot")
 					qdel(E)
 				rotting = 0
 				return
 		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
-			to_chat(user, "<span class='notice'>Укрепленная стена рассыпается под воздействием предмета.</span>")
+			to_chat(user, "<span class='notice'>Укрепленная стена рассыпется от удара [W.name].</span>")
 			dismantle_wall()
 			return
 
@@ -188,7 +188,7 @@
 		if(ANCHOR_BOLTS)
 			if (iswrench(W))
 
-				to_chat(user, "<span class='notice'>Вы начинаете ослаблять болты, которые закрепляют поддерживающий каркас.</span>")
+				to_chat(user, "<span class='notice'>Вы ослабляете болты, закрепляющие поддерживающие балки.</span>")
 				if(W.use_tool(src, user, 40, volume = 100))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
@@ -196,7 +196,7 @@
 					if(d_state == ANCHOR_BOLTS && user.loc == T && user.get_active_hand() == W)
 						d_state = SUPPORT_RODS
 						update_icon()
-						to_chat(user, "<span class='notice'>Вы удалили болты, закрепляющие поддерживающий каркас.</span>")
+						to_chat(user, "<span class='notice'>Вы ослабили болты, закрепляющие поддерживающие балки.</span>")
 				return
 
 		if(SUPPORT_RODS)
@@ -204,7 +204,7 @@
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.use(0,user))
 
-					to_chat(user, "<span class='notice'>Вы начинаете разрезать поддерживающий каркас.</span>")
+					to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки.</span>")
 					if(W.use_tool(src, user, 100, volume = 100))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
@@ -213,14 +213,14 @@
 							d_state = SHEATH
 							update_icon()
 							new /obj/item/stack/rods(src)
-							to_chat(user, "<span class='notice'>Вы убрали поддерживающий каркас.</span>")
+							to_chat(user, "<span class='notice'>Вы убрали поддерживающие балки.</span>")
 				else
 					to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 				return
 
 			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 
-				to_chat(user, "<span class='notice'>Вы начинаете разрезать поддерживающий каркас.</span>")
+				to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки.</span>")
 				if(W.use_tool(src, user, 70, volume = 100))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
@@ -229,19 +229,19 @@
 						d_state = SHEATH
 						update_icon()
 						new /obj/item/stack/rods(src)
-						to_chat(user, "<span class='notice'>Вы убрали поддерживающий каркас.</span>")
+						to_chat(user, "<span class='notice'>Вы убрали поддерживающие балки.</span>")
 				return
 
 		if(SHEATH)
 			if(iscrowbar(W))
 
-				to_chat(user, "<span class='notice'>Вы пытаетесь отделить внешнюю оболочку.</span>")
+				to_chat(user, "<span class='notice'>Вы отделяете внешнюю обшивку.</span>")
 				if(W.use_tool(src, user, 100, volume  = 100))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
 					if(d_state == SHEATH && user.loc == T && user.get_active_hand() == W)
-						to_chat(user, "<span class='notice'>Вы отделили внешнюю оболочку.</span>")
+						to_chat(user, "<span class='notice'>Вы отделили внешнюю обшивку.</span>")
 						dismantle_wall()
 				return
 
@@ -258,21 +258,21 @@
 		return
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
-		to_chat(user, "<span class='notice'>Вы начинаете сверлить сквозь укрепленную стену.</span>")
+		to_chat(user, "<span class='notice'>Вы бурите сквозь укрепленную стену.</span>")
 
 		if(W.use_tool(src, user, 200, volume = 50))
 			if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
-				to_chat(user, "<span class='notice'>Вы просверлили последнюю укрепленную пластину.</span>")
+				to_chat(user, "<span class='notice'>Вы пробурили последнюю укрепленную пластину.</span>")
 				dismantle_wall()
 
 	//REPAIRING
 	else if(istype(W, /obj/item/stack/sheet/metal) && d_state)
 		var/obj/item/stack/sheet/metal/MS = W
 
-		to_chat(user, "<span class='notice'>Вы начинаете ремонтировать укрепленную стену инструментом.</span>")
+		to_chat(user, "<span class='notice'>Вы ремонтируете укрепленную стену металлом.</span>")
 
 		if(W.use_tool(src, user, (max(20*d_state,100)), volume = 100))	//time taken to repair is proportional to the damage! (max 10 seconds)
 			if(!istype(src, /turf/simulated/wall/r_wall) || !T)
@@ -284,7 +284,7 @@
 				d_state = INTACT
 				update_icon()
 				queue_smooth(src)	//call smoothwall stuff
-				to_chat(user, "<span class='notice'>Вы закончили ремонтировать укрепленную стену.</span>")
+				to_chat(user, "<span class='notice'>Вы отремонтировали укрепленную стену.</span>")
 
 	//APC
 	else if(istype(W,/obj/item/apc_frame))

@@ -39,21 +39,21 @@
 			qdel(src)
 	else if(iswrench(W) && state == 0)
 		if(anchored && !istype(src,/obj/structure/girder/displaced))
-			to_chat(user, "<span class='notice'>Вы начинаете разбирать каркас.</span>")
+			to_chat(user, "<span class='notice'>Вы разбираете каркас.</span>")
 			if(W.use_tool(src, user, 40, volume = 100))
 				if(!src) return
 				to_chat(user, "<span class='notice'>Вы разобрали каркас!</span>")
 				new /obj/item/stack/sheet/metal(get_turf(src))
 				qdel(src)
 		else if(!anchored)
-			to_chat(user, "<span class='notice'>Вы начинаете фиксировать каркас к полу.</span>")
+			to_chat(user, "<span class='notice'>Вы фиксируете каркас.</span>")
 			if(W.use_tool(src, user, 40, volume = 100))
-				to_chat(user, "<span class='notice'>Вы зафиксировали каркас в пол!</span>")
+				to_chat(user, "<span class='notice'>Вы зафиксировали каркас!</span>")
 				new/obj/structure/girder( src.loc )
 				qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-		to_chat(user, "<span class='notice'>Вы начинаете разрезать каркас на куски.</span>")
+		to_chat(user, "<span class='notice'>Вы режете каркас.</span>")
 		if(W.use_tool(src, user, 30, volume = 100))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы разрезали каркас!</span>")
@@ -66,25 +66,25 @@
 		qdel(src)
 
 	else if(isscrewdriver(W) && state == 2 && istype(src,/obj/structure/girder/reinforced))
-		to_chat(user, "<span class='notice'>Вы начинаете ослаблять поддерживающие опоры.</span>")
+		to_chat(user, "<span class='notice'>Вы ослабляете кронштейны.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
-			to_chat(user, "<span class='notice'>Вы ослабили поддерживающие опоры!</span>")
+			to_chat(user, "<span class='notice'>Вы ослабили кронштейны!</span>")
 			state = 1
 
 	else if(iswirecutter(W) && istype(src,/obj/structure/girder/reinforced) && state == 1)
-		to_chat(user, "<span class='notice'>Вы начинаете удалять поддерживающие опоры.</span>")
+		to_chat(user, "<span class='notice'>Вы разбираете кронштейны.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
-			to_chat(user, "<span class='notice'>Вы удалили поддерживающие опоры!</span>")
+			to_chat(user, "<span class='notice'>Вы разобрали кронштейны!</span>")
 			new/obj/structure/girder( src.loc )
 			qdel(src)
 
 	else if(iscrowbar(W) && state == 0 && anchored )
-		to_chat(user, "<span class='notice'>Вы начинаете смещать каркас.</span>")
+		to_chat(user, "<span class='notice'>Вы делаете каркас подвижным.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
-			to_chat(user, "<span class='notice'>Вы сместили каркас!</span>")
+			to_chat(user, "<span class='notice'>Вы сделали каркас подвижным!</span>")
 			new/obj/structure/girder/displaced( src.loc )
 			qdel(src)
 
@@ -103,9 +103,9 @@
 				else
 					if(S.get_amount() < 2)
 						return ..()
-					to_chat(user, "<span class='notice'>Вы начинаете добавлять материал.</span>")
+					to_chat(user, "<span class='notice'>Вы устанавливаете обшивку.</span>")
 					if(S.use_tool(src, user, 40, amount = 2, volume = 100))
-						to_chat(user, "<span class='notice'>Вы добавили материал!</span>")
+						to_chat(user, "<span class='notice'>Вы установили обшивку!</span>")
 						var/turf/Tsrc = get_turf(src)
 						Tsrc.ChangeTurf(/turf/simulated/wall)
 						for(var/turf/simulated/wall/X in Tsrc.loc)
@@ -136,7 +136,7 @@
 					else
 						if(S.get_amount() < 1)
 							return ..()
-						to_chat(user, "<span class='notice'>Вы начинаете укреплять каркас.</span>")
+						to_chat(user, "<span class='notice'>Вы укрепляете каркас.</span>")
 						if(S.use_tool(src, user, 60, amount = 1, volume = 100))
 							to_chat(user, "<span class='notice'>Каркас укреплен!</span>")
 							new/obj/structure/girder/reinforced( src.loc )
@@ -157,9 +157,9 @@
 			else
 				if(S.get_amount() < 2)
 					return ..()
-				to_chat(user, "<span class='notice'>Вы начинаете добавлять материал.</span>")
+				to_chat(user, "<span class='notice'>Вы устанавливаете обшивку.</span>")
 				if(S.use_tool(src, user, 40, amount = 2, volume = 100))
-					to_chat(user, "<span class='notice'>Вы добавили материал!</span>")
+					to_chat(user, "<span class='notice'>Вы установили обшивку!</span>")
 					var/turf/Tsrc = get_turf(src)
 					Tsrc.ChangeTurf(text2path("/turf/simulated/wall/mineral/[M]"))
 					for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
