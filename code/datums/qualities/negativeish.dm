@@ -108,7 +108,7 @@
 /datum/quality/soulless/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_NO_SOUL, QUALITY_TRAIT)
 
-	H.r_hair = rand(170, 300)
+	H.r_hair = rand(170, 255)
 	H.g_hair = rand(0, 100)
 	H.b_hair = rand(50, 100)
 
