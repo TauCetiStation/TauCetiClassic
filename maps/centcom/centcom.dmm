@@ -476,9 +476,17 @@
 /turf/unsimulated/wall/fakeglass,
 /area/custom/wizard_station)
 "aaZ" = (
-/obj/structure/flora/ausbushes/pointybush,
-/turf/unsimulated/floor/snow,
-/area/space)
+/obj/structure/table/woodentable/poker,
+/obj/item/weapon/storage/pill_bottle/dice,
+/obj/item/weapon/game_kit/random,
+/obj/item/toy/cards,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/tophat)
 "aba" = (
 /obj/machinery/abductor/gland_dispenser{
 	team = 4
@@ -496,73 +504,53 @@
 	},
 /area/custom/syndicate_mothership)
 "abd" = (
-/obj/structure/closet{
-	icon_closed = "cabinet_closed";
-	icon_opened = "cabinet_open";
-	icon_state = "cabinet_closed"
+/obj/structure/sign/poster/contraband/space_cola{
+	pixel_x = -32
 	},
-/obj/item/weapon/staff/gentcane,
-/obj/item/weapon/storage/backpack/satchel/withwallet,
-/obj/item/clothing/head/wizard/cap,
-/obj/item/clothing/suit/wizrobe/gentlecoat,
-/obj/item/clothing/under/gentlesuit,
-/obj/item/clothing/shoes/sandal/marisa{
-	desc = "A set of fancy shoes that are as functional as they are comfortable.";
-	name = "Gentlemans Shoes"
+/obj/machinery/vending/snack{
+	name = "Magic Getmore Chocolate Corp";
+	prices = list();
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 10, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 10, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 10, /obj/item/weapon/reagent_containers/food/snacks/chips = 10, /obj/item/weapon/reagent_containers/food/snacks/sosjerky = 10, /obj/item/weapon/reagent_containers/food/snacks/no_raisin = 10, /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 10, /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 10, /obj/item/weapon/reagent_containers/food/snacks/candy_corn = 10, /obj/item/weapon/reagent_containers/food/snacks/cracker = 20)
 	},
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_y = 5
-	},
-/obj/item/weapon/book/manual/wiki/barman_recipes,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
 /area/custom/tophat)
 "abe" = (
-/obj/machinery/chem_dispenser/beer{
-	dispensable_reagents = list("singulo","demonsblood","lean","hippiesdelight","devilskiss","kvass","doctorsdelight","atomicbomb","nuka_cola","patron","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead","sake");
-	name = "magic booze dispenser";
-	pixel_y = 6
+/obj/machinery/vending/cigarette{
+	name = "Magic Cigarette machine";
+	prices = list();
+	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10, /obj/item/weapon/storage/fancy/cigarettes/menthol = 5, /obj/item/weapon/storage/box/matches = 10, /obj/item/weapon/lighter/random = 4, /obj/item/clothing/mask/ecig = 4, /obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 5, /obj/item/weapon/lighter/zippo = 5, /obj/item/clothing/mask/cigarette/cigar/havana = 5)
 	},
-/obj/structure/table/woodentable,
-/obj/structure/magic_torch_holder,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/tophat)
-"abf" = (
-/obj/machinery/vending/boozeomat{
-	name = "Magic Booze-O-Mat";
-	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/gin = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/wine = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/cognac = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/beer = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/ale = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/tonic = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/cola = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/sodawater = 15, /obj/item/weapon/reagent_containers/food/drinks/flask/barflask = 5, /obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask = 5, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 50, /obj/item/weapon/reagent_containers/food/drinks/ice = 15, /obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/champagne = 10);
-	req_access = list()
-	},
-/obj/item/weapon/reagent_containers/food/drinks/shaker,
 /obj/structure/sign/poster/contraband/space_up{
-	pixel_x = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/tophat)
-"abg" = (
-/turf/unsimulated/wall/log,
-/area/custom/wizard_station)
-"abh" = (
-/obj/machinery/chem_dispenser/soda{
-	dispensable_reagents = list("water","ice","coffee","cream","tea","tea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","tomatojuice","banana","limejuice","watermelonjuice","berryjuice","grapejuice","lemonjuice","milk","soymilk","nothing");
-	name = "magic soda fountain";
-	pixel_y = 6
-	},
-/obj/structure/table/woodentable,
-/obj/structure/sign/poster/official/high_class_martini{
 	pixel_x = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
 /area/custom/tophat)
+"abf" = (
+/obj/effect/overlay/tophat_portal{
+	pixel_y = -32
+	},
+/obj/structure/torch_holder,
+/turf/unsimulated/floor{
+	icon_state = "wood-broken"
+	},
+/area/custom/tophat)
+"abg" = (
+/turf/unsimulated/wall/log,
+/area/custom/wizard_station)
+"abh" = (
+/obj/structure/flora/tree/pine,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "abi" = (
-/turf/unsimulated/floor/snow,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
 /area/space)
 "abj" = (
 /obj/structure/dryer{
@@ -580,24 +568,24 @@
 	},
 /area/custom/wizard_station)
 "abk" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/turf/unsimulated/floor/snow,
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
 /area/space)
 "abl" = (
-/obj/structure/flora/tree/pine,
-/turf/unsimulated/floor/snow,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
 /area/space)
 "abm" = (
-/obj/structure/sign/poster/official/no_erp{
-	pixel_y = 32
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/tree/pine,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/obj/structure/magic_torch_holder{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
-	},
-/area/custom/wizard_station)
+/area/space)
 "abn" = (
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/evac)
@@ -643,16 +631,11 @@
 	},
 /area/custom/wizard_station)
 "abt" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/magic_torch_holder{
-	dir = 1
+/obj/structure/flora/grass/green,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/turf/unsimulated/floor{
-	icon_state = "grass1";
-	name = "grass"
-	},
-/area/custom/wizard_station)
+/area/space)
 "abu" = (
 /obj/effect/landmark/blockway,
 /turf/environment/space,
@@ -2236,13 +2219,11 @@
 	},
 /area/centcom/evac)
 "afR" = (
-/obj/structure/magic_torch_holder{
-	dir = 1
+/obj/structure/flora/ausbushes/pointybush,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
-	},
-/area/custom/wizard_station)
+/area/space)
 "afS" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/unsimulated/floor{
@@ -2251,8 +2232,10 @@
 	},
 /area/custom/wizard_station)
 "afT" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/unsimulated/floor/snow,
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
 /area/space)
 "afU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -11414,9 +11397,21 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "aAO" = (
-/obj/structure/flora/grass/both,
-/turf/unsimulated/floor/snow,
-/area/space)
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/weapon/reagent_containers/glass/rag{
+	pixel_x = -6
+	},
+/obj/structure/sign/poster/contraband/red_rum{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/tophat)
 "aAP" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -11431,11 +11426,14 @@
 	},
 /area/centcom/living)
 "aAQ" = (
-/obj/structure/reagent_dispensers/kvasstank{
-	dir = 8
+/obj/item/device/radio/intercom{
+	name = "Magic intercom";
+	pixel_x = -32
 	},
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/wiz,
 /turf/unsimulated/floor{
-	icon_state = "wood-broken3"
+	icon_state = "wood"
 	},
 /area/custom/tophat)
 "aAR" = (
@@ -11452,47 +11450,29 @@
 	},
 /area/centcom/tdome/tdomeobserve)
 "aAT" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/flora/deskferntrim{
-	icon_state = "plant-34-alternative";
-	pixel_x = -8;
-	pixel_y = 5
-	},
-/obj/item/weapon/paper_bin{
-	pixel_x = 12
-	},
-/obj/item/weapon/pen/blue{
-	pixel_x = 12;
-	pixel_y = 3
+/obj/structure/stool/bar,
+/obj/machinery/newscaster{
+	pixel_x = 32
 	},
 /turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
-	name = "black carpet"
+	icon_state = "wood-broken2"
 	},
 /area/custom/tophat)
 "aAU" = (
-/obj/structure/table/woodentable,
-/obj/item/ashtray/bronze{
-	pixel_x = 4;
-	pixel_y = 5
-	},
-/obj/item/weapon/reagent_containers/glass/rag{
-	pixel_x = -6
-	},
+/obj/structure/stool/bar,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
+	icon_state = "blackcarpet11-12";
 	name = "black carpet"
 	},
 /area/custom/tophat)
 "aAV" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/flask/barflask{
-	pixel_y = 8
+/obj/machinery/vending/tophat_vend,
+/obj/structure/sign/poster/official/cohiba_robusto_ad{
+	pixel_x = -32
 	},
 /turf/unsimulated/floor{
-	icon_state = "wood"
+	icon_state = "wood-broken3"
 	},
 /area/custom/tophat)
 "aAW" = (
@@ -11502,11 +11482,12 @@
 	},
 /area/space)
 "aAX" = (
-/obj/structure/coatrack,
 /turf/unsimulated/floor{
-	icon_state = "wood"
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet11-12";
+	name = "black carpet"
 	},
-/area/custom/wizard_station)
+/area/custom/tophat)
 "aAY" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/hypospray,
@@ -11618,12 +11599,14 @@
 	},
 /area/centcom/living)
 "aBd" = (
-/obj/structure/magic_torch_holder,
-/turf/unsimulated/floor{
-	icon_state = "asteroid2";
-	name = "plating"
+/obj/structure/device/piano/minimoog,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
 	},
-/area/custom/wizard_station)
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/tophat)
 "aBe" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/mask/gas/sechailer,
@@ -11665,10 +11648,13 @@
 	},
 /area/custom/wizard_station)
 "aBi" = (
-/obj/structure/cult/anomaly/timewhole,
-/obj/structure/magic_torch_holder,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/wizard_station)
+/obj/structure/stool/bar,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet5-1";
+	name = "black carpet"
+	},
+/area/custom/tophat)
 "aBj" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -11731,48 +11717,25 @@
 	},
 /area/centcom/living)
 "aBo" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Magic Intercom";
-	pixel_x = -28;
-	pixel_y = -4;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/obj/structure/magic_torch_holder{
-	dir = 8
-	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet";
-	name = "blue carpet"
+	icon_state = "blackcarpet13-5";
+	name = "black carpet"
 	},
-/area/custom/wizard_station)
+/area/custom/tophat)
 "aBp" = (
 /turf/unsimulated/wall,
 /area/centcom/specops)
 "aBq" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Magic Intercom";
-	pixel_x = 27;
-	pixel_y = -4;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/obj/structure/magic_torch_holder{
+/obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet";
-	name = "blue carpet"
+	icon_state = "blackcarpet9-4";
+	name = "black carpet"
 	},
-/area/custom/wizard_station)
+/area/custom/tophat)
 "aBr" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/wiz,
@@ -11857,13 +11820,14 @@
 	},
 /area/velocity)
 "aBB" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/wiz,
-/obj/structure/magic_torch_holder,
+/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/sign/poster/contraband/smoke{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
-/area/custom/wizard_station)
+/area/custom/tophat)
 "aBC" = (
 /obj/machinery/mech_bay_recharge_port,
 /turf/unsimulated/floor{
@@ -12069,6 +12033,14 @@
 	name = "sand"
 	},
 /area/centcom/specops)
+"aBT" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/custom/wizard_station)
 "aBU" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/unsimulated/floor{
@@ -12157,6 +12129,13 @@
 	icon_state = "vault"
 	},
 /area/centcom/living)
+"aCg" = (
+/obj/structure/flora/ausbushes/pointybush,
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "aCh" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Engineering Special Operations";
@@ -12177,6 +12156,14 @@
 	icon_state = "vault"
 	},
 /area/centcom/living)
+"aCj" = (
+/obj/structure/flora/ausbushes/pointybush,
+/obj/effect/landmark/blockway,
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "aCk" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
@@ -12201,6 +12188,13 @@
 	icon_state = "floor"
 	},
 /area/centcom/living)
+"aCn" = (
+/obj/structure/flora/grass/brown,
+/obj/structure/flora/tree/dead,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "aCo" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Special Operations";
@@ -12210,6 +12204,12 @@
 	icon_state = "floor"
 	},
 /area/centcom/living)
+"aCp" = (
+/obj/structure/snowman,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "aCq" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -12295,6 +12295,18 @@
 	icon_state = "warning"
 	},
 /area/velocity)
+"aCA" = (
+/obj/structure/table/woodentable,
+/obj/effect/decal/cleanable/cobweb,
+/obj/machinery/chem_dispenser/soda{
+	dispensable_reagents = list("kvass","doctorsdelight","water","ice","coffee","cream","tea","tea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","tomatojuice","banana","limejuice","watermelonjuice","berryjuice","grapejuice","lemonjuice","milk","soymilk","nothing");
+	name = "magic soda fountain";
+	pixel_y = 6
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
 "aCB" = (
 /obj/structure/window/reinforced,
 /turf/unsimulated/floor{
@@ -12325,6 +12337,42 @@
 	icon_state = "delivery"
 	},
 /area/centcom/living)
+"aCF" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 1
+	},
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood-broken4"
+	},
+/area/custom/wizard_station)
+"aCG" = (
+/obj/structure/table/woodentable,
+/obj/item/device/radio/intercom{
+	desc = "Talk through this. Evilly";
+	freerange = 1;
+	frequency = 1213;
+	name = "Magic Intercom";
+	pixel_x = -28;
+	pixel_y = -4;
+	subspace_transmission = 1;
+	syndie = 1
+	},
+/obj/item/candle/infinite{
+	pixel_y = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood-broken5"
+	},
+/area/custom/wizard_station)
 "aCH" = (
 /obj/machinery/light{
 	dir = 1
@@ -12333,6 +12381,44 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"aCI" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/table/woodentable,
+/obj/item/clothing/head/wizard/bearpelt{
+	pixel_y = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "cult"
+	},
+/area/custom/wizard_station)
+"aCJ" = (
+/obj/item/device/radio/intercom{
+	desc = "Talk through this. Evilly";
+	freerange = 1;
+	frequency = 1213;
+	name = "Magic Intercom";
+	pixel_y = 20;
+	subspace_transmission = 1;
+	syndie = 1
+	},
+/obj/structure/torch_holder/magic{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"aCK" = (
+/obj/structure/torch_holder/magic{
+	dir = 1
+	},
+/obj/structure/noticeboard{
+	pixel_y = 26
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
 "aCL" = (
 /obj/machinery/light{
 	dir = 4
@@ -12410,11 +12496,90 @@
 	icon_state = "red"
 	},
 /area/centcom/specops)
+"aCU" = (
+/obj/structure/closet/cabinet,
+/obj/item/weapon/storage/backpack/cultpack,
+/obj/item/weapon/kitchenknife/ritual,
+/obj/item/weapon/storage/bible{
+	icon = 'icons/obj/cult.dmi';
+	icon_state = "book"
+	},
+/obj/item/clothing/shoes/boots/German,
+/obj/item/clothing/under/color/black,
+/obj/item/clothing/suit/wizrobe/necromancer_hoodie,
+/obj/item/clothing/head/wizard/black_hood,
+/turf/unsimulated/floor{
+	icon_state = "wood-broken"
+	},
+/area/custom/wizard_station)
 "aCV" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
 /area/centcom/specops)
+"aCW" = (
+/obj/item/clothing/shoes/sandal/marisa,
+/obj/effect/decal/cleanable/cobweb2,
+/obj/structure/closet/cabinet{
+	name = "Marisa"
+	},
+/obj/item/clothing/shoes/heels/alternate,
+/obj/item/clothing/suit/wizrobe/marisa,
+/obj/item/weapon/staff/broom,
+/obj/item/clothing/head/wizard/marisa,
+/obj/item/clothing/mask/scarf/violet,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"aCX" = (
+/obj/item/clothing/suit/wizrobe/magusblue,
+/obj/item/clothing/head/wizard/magus,
+/obj/item/weapon/staff,
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/device/radio/intercom{
+	desc = "Talk through this. Evilly";
+	freerange = 1;
+	frequency = 1213;
+	name = "Magic Intercom";
+	pixel_x = 27;
+	pixel_y = -4;
+	subspace_transmission = 1;
+	syndie = 1
+	},
+/obj/item/weapon/storage/backpack/cultpack,
+/obj/structure/closet/cabinet{
+	name = "Blue Magus"
+	},
+/obj/item/clothing/shoes/sandal/brown,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"aCY" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
+"aCZ" = (
+/obj/structure/bookcase/manuals/engineering,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/torch_holder/magic{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"aDa" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet6-2";
+	name = "black carpet"
+	},
+/area/custom/wizard_station)
 "aDb" = (
 /obj/machinery/vending/coffee{
 	name = "hacked Hot Drinks machine";
@@ -12424,6 +12589,56 @@
 	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
+"aDc" = (
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet14-10";
+	name = "black carpet"
+	},
+/area/custom/wizard_station)
+"aDd" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet10-8";
+	name = "black carpet"
+	},
+/area/custom/wizard_station)
+"aDe" = (
+/obj/machinery/photocopier,
+/turf/unsimulated/floor{
+	icon_state = "wood-broken4"
+	},
+/area/custom/wizard_station)
+"aDf" = (
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/custom/wizard_station)
+"aDg" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/custom/wizard_station)
+"aDh" = (
+/obj/structure/rack,
+/obj/item/device/flashlight/flare/torch{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/device/flashlight/flare/torch,
+/obj/item/device/flashlight/flare/torch{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/weapon/storage/box/matches,
+/turf/unsimulated/floor{
+	icon_state = "cult"
+	},
+/area/custom/wizard_station)
 "aDi" = (
 /obj/machinery/door/poddoor{
 	id = "ASSAULT2";
@@ -12443,6 +12658,39 @@
 	icon_state = "bot"
 	},
 /area/centcom/living)
+"aDk" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "bluecarpet6-2";
+	name = "blue carpet"
+	},
+/area/custom/wizard_station)
+"aDl" = (
+/obj/structure/stool/bed/chair/comfy/brown,
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "bluecarpet14-10";
+	name = "blue carpet"
+	},
+/area/custom/wizard_station)
+"aDm" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "bluecarpet10-8";
+	name = "blue carpet"
+	},
+/area/custom/wizard_station)
+"aDn" = (
+/obj/structure/torch_holder/magic{
+	dir = 8
+	},
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/custom/wizard_station)
 "aDo" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 1
@@ -12452,6 +12700,12 @@
 	icon_state = "floor"
 	},
 /area/centcom/living)
+"aDp" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/custom/wizard_station)
 "aDq" = (
 /turf/unsimulated/floor{
 	icon_state = "bot"
@@ -12482,6 +12736,88 @@
 	icon_state = "delivery"
 	},
 /area/centcom/specops)
+"aDu" = (
+/obj/structure/mirror/magic{
+	pixel_x = -30
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/closet/cabinet{
+	name = "Pirate"
+	},
+/obj/item/clothing/shoes/boots,
+/obj/item/clothing/head/wizard/pirate,
+/obj/item/clothing/under/pirate,
+/obj/item/clothing/suit/wizrobe/pirate,
+/obj/item/clothing/glasses/eyepatch,
+/obj/item/weapon/storage/backpack/kitbag,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"aDv" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet14-10";
+	name = "black carpet"
+	},
+/area/custom/wizard_station)
+"aDw" = (
+/obj/machinery/vending/magivend,
+/obj/effect/decal/cleanable/cobweb2,
+/obj/structure/torch_holder/magic{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood-broken2"
+	},
+/area/custom/wizard_station)
+"aDx" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet7-3";
+	name = "black carpet"
+	},
+/area/custom/wizard_station)
+"aDy" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet11-12";
+	name = "black carpet"
+	},
+/area/custom/wizard_station)
+"aDz" = (
+/obj/structure/mineral_door/wood,
+/turf/unsimulated/floor{
+	icon_state = "wizlava";
+	name = "lava"
+	},
+/area/custom/wizard_station)
+"aDA" = (
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "bluecarpet7-3";
+	name = "blue carpet"
+	},
+/area/custom/wizard_station)
+"aDB" = (
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 8
+	},
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "bluecarpet11-12";
+	name = "blue carpet"
+	},
+/area/custom/wizard_station)
 "aDC" = (
 /obj/mecha/working/ripley/firefighter,
 /turf/unsimulated/floor{
@@ -12494,6 +12830,24 @@
 	icon_state = "red"
 	},
 /area/centcom/living)
+"aDE" = (
+/obj/structure/closet/cabinet{
+	name = "Ded moroz"
+	},
+/obj/item/clothing/under/redcoat,
+/obj/item/clothing/suit/wizrobe/santa{
+	name = "Ded Moroz suit"
+	},
+/obj/item/weapon/storage/backpack/santabag{
+	name = "Ded Moroz Gift Bag"
+	},
+/obj/item/clothing/head/wizard/santa{
+	name = "Ded Moroz hat"
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood-broken4"
+	},
+/area/custom/wizard_station)
 "aDF" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -12586,6 +12940,13 @@
 	icon_state = "red"
 	},
 /area/centcom/specops)
+"aDO" = (
+/obj/structure/flora/grass/both,
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "aDP" = (
 /obj/machinery/door/airlock/external,
 /turf/unsimulated/floor{
@@ -12600,6 +12961,34 @@
 	icon_state = "floor"
 	},
 /area/centcom/specops)
+"aDR" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet5-1";
+	name = "black carpet"
+	},
+/area/custom/wizard_station)
+"aDS" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet13-5";
+	name = "black carpet"
+	},
+/area/custom/wizard_station)
+"aDT" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet9-4";
+	name = "black carpet"
+	},
+/area/custom/wizard_station)
+"aDU" = (
+/obj/structure/torch_holder/magic,
+/obj/structure/bookcase/manuals/medical,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
 "aDV" = (
 /obj/machinery/door/poddoor{
 	id = "ASSAULT1";
@@ -12619,6 +13008,15 @@
 	icon_state = "bot"
 	},
 /area/centcom/living)
+"aDX" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/sign/plaques/kiddie/library{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/custom/wizard_station)
 "aDY" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -12692,6 +13090,27 @@
 	name = "sand"
 	},
 /area/centcom/specops)
+"aEf" = (
+/obj/structure/torch_holder/magic{
+	dir = 4
+	},
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/custom/wizard_station)
+"aEg" = (
+/obj/structure/device/piano/minimoog,
+/turf/unsimulated/floor{
+	icon_state = "cult"
+	},
+/area/custom/wizard_station)
+"aEh" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "bluecarpet5-1";
+	name = "blue carpet"
+	},
+/area/custom/wizard_station)
 "aEi" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -12855,9 +13274,96 @@
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
+"aEx" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "bluecarpet13-5";
+	name = "blue carpet"
+	},
+/area/custom/wizard_station)
+"aEy" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "bluecarpet9-4";
+	name = "blue carpet"
+	},
+/area/custom/wizard_station)
 "aEz" = (
 /turf/unsimulated/wall,
 /area/centcom)
+"aEA" = (
+/obj/structure/mirror/magic{
+	pixel_x = -30
+	},
+/obj/structure/torch_holder/magic,
+/obj/structure/closet/cabinet{
+	name = "Crusader"
+	},
+/obj/item/clothing/shoes/boots,
+/obj/item/clothing/suit/wizrobe/crusader,
+/obj/item/clothing/gloves/black,
+/obj/item/clothing/head/wizard/crusader,
+/obj/item/clothing/under/color/black,
+/obj/item/weapon/storage/backpack/chaplain,
+/obj/item/weapon/claymore/religion,
+/obj/item/weapon/shield/riot/roman{
+	name = "Sacred shield"
+	},
+/obj/item/weapon/storage/bible,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"aEB" = (
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"aEC" = (
+/obj/structure/torch_holder/magic,
+/obj/item/weapon/flora/pottedplant/mysterious,
+/obj/structure/mirror/magic{
+	pixel_y = -30
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"aED" = (
+/obj/structure/torch_holder/magic,
+/obj/item/weapon/flora/pottedplant/unusual,
+/obj/structure/mirror/magic{
+	pixel_y = -30
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood-broken2"
+	},
+/area/custom/wizard_station)
+"aEE" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/wallet/random{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/wallet/random,
+/turf/unsimulated/floor{
+	icon_state = "cult"
+	},
+/area/custom/wizard_station)
+"aEF" = (
+/obj/item/clothing/under/psysuit,
+/obj/item/clothing/suit/wizrobe/psypurple,
+/obj/item/clothing/head/wizard/amp,
+/obj/item/weapon/storage/backpack/cultpack,
+/obj/structure/closet/cabinet,
+/obj/item/weapon/scythe,
+/turf/unsimulated/floor{
+	icon_state = "wood-broken3"
+	},
+/area/custom/wizard_station)
 "aEG" = (
 /obj/machinery/door/poddoor{
 	id = "ASSAULT0";
@@ -12922,6 +13428,24 @@
 	name = "plating"
 	},
 /area/centcom/living)
+"aEL" = (
+/obj/item/clothing/shoes/sandal/marisa{
+	desc = "A set of fancy shoes that are as functional as they are comfortable.";
+	name = "Gentlemans Shoes"
+	},
+/obj/item/clothing/under/gentlesuit,
+/obj/item/clothing/suit/wizrobe/gentlecoat,
+/obj/item/clothing/head/wizard/cap,
+/obj/item/weapon/staff/gentcane,
+/obj/item/weapon/storage/backpack/satchel/withwallet,
+/obj/structure/closet/cabinet{
+	name = "Gentleman"
+	},
+/obj/item/clothing/glasses/monocle,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
 "aEM" = (
 /obj/structure/bookcase{
 	name = "bookcase (Tactics)"
@@ -12963,6 +13487,62 @@
 	icon_state = "grimy"
 	},
 /area/centcom/creed)
+"aER" = (
+/obj/item/clothing/suit/wizrobe/magusred,
+/obj/item/clothing/head/wizard/magus,
+/obj/item/weapon/staff,
+/obj/item/device/radio/intercom{
+	desc = "Talk through this. Evilly";
+	freerange = 1;
+	frequency = 1213;
+	name = "Magic Intercom";
+	pixel_x = 27;
+	pixel_y = -4;
+	subspace_transmission = 1;
+	syndie = 1
+	},
+/obj/item/weapon/storage/backpack/cultpack,
+/obj/structure/closet/cabinet{
+	name = "Red Magus"
+	},
+/obj/item/clothing/shoes/sandal/brown,
+/turf/unsimulated/floor{
+	icon_state = "wood-broken4"
+	},
+/area/custom/wizard_station)
+"aES" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/head/wizard/ushanka,
+/obj/item/clothing/head/wizard/ushanka/black,
+/obj/item/clothing/head/wizard/ushanka/black_white,
+/obj/item/clothing/head/wizard/ushanka/brown,
+/obj/item/clothing/head/wizard/ushanka/brown_white,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"aET" = (
+/obj/structure/flora/tree/pine{
+	layer = 9.1
+	},
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
+"aEU" = (
+/obj/structure/cult/anomaly/timewhole,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/wizard_station)
+"aEV" = (
+/obj/structure/flora/tree/pine{
+	layer = 9.1
+	},
+/obj/structure/flora/grass/brown,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "aEW" = (
 /turf/unsimulated/floor{
 	name = "plating"
@@ -12992,6 +13572,23 @@
 	name = "plating"
 	},
 /area/centcom)
+"aFa" = (
+/obj/item/device/radio/intercom{
+	desc = "Talk through this. Evilly";
+	freerange = 1;
+	frequency = 1213;
+	name = "Magic Intercom";
+	pixel_x = -28;
+	pixel_y = -4;
+	subspace_transmission = 1;
+	syndie = 1
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "bluecarpet6-2";
+	name = "blue carpet"
+	},
+/area/custom/wizard_station)
 "aFb" = (
 /obj/machinery/light{
 	dir = 1
@@ -13000,6 +13597,13 @@
 	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
+"aFc" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "bluecarpet14-10";
+	name = "blue carpet"
+	},
+/area/custom/wizard_station)
 "aFd" = (
 /obj/structure/mopbucket,
 /turf/unsimulated/floor{
@@ -13007,12 +13611,38 @@
 	icon_state = "vault"
 	},
 /area/centcom/living)
+"aFe" = (
+/obj/item/device/radio/intercom{
+	desc = "Talk through this. Evilly";
+	freerange = 1;
+	frequency = 1213;
+	name = "Magic Intercom";
+	pixel_x = 27;
+	pixel_y = -4;
+	subspace_transmission = 1;
+	syndie = 1
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "bluecarpet10-8";
+	name = "blue carpet"
+	},
+/area/custom/wizard_station)
 "aFf" = (
 /obj/machinery/door/airlock/external{
 	name = "Arrival Airlock"
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"aFg" = (
+/obj/effect/landmark/blockway,
+/obj/structure/flora/tree/pine{
+	layer = 9.2
+	},
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "aFh" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -13045,6 +13675,13 @@
 /obj/machinery/door/airlock/external,
 /turf/unsimulated/floor,
 /area/shuttle/administration/centcom)
+"aFl" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "bluecarpet7-3";
+	name = "blue carpet"
+	},
+/area/custom/wizard_station)
 "aFm" = (
 /obj/machinery/vending/engineering,
 /turf/unsimulated/floor{
@@ -13145,6 +13782,13 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"aFt" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "bluecarpet11-12";
+	name = "blue carpet"
+	},
+/area/custom/wizard_station)
 "aFu" = (
 /obj/machinery/door/airlock/centcom{
 	name = "General Access";
@@ -13164,6 +13808,14 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"aFw" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/landmark/blockway,
+/obj/structure/flora/tree/pine,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "aFx" = (
 /obj/machinery/light{
 	dir = 8
@@ -13266,6 +13918,30 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/administration/centcom)
+"aFL" = (
+/obj/structure/flora/grass/green,
+/obj/structure/flora/tree/dead,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
+"aFM" = (
+/obj/effect/landmark/blockway,
+/obj/structure/flora/tree/pine{
+	layer = 9.1
+	},
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
+"aFN" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/tree/pine,
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "aFO" = (
 /obj/machinery/light{
 	dir = 8
@@ -13274,6 +13950,14 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"aFP" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/wiz,
+/obj/structure/torch_holder/magic,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
 "aFQ" = (
 /obj/structure/table/woodentable{
 	dir = 9
@@ -13311,6 +13995,15 @@
 	icon_state = "grimy"
 	},
 /area/centcom/creed)
+"aFU" = (
+/obj/effect/landmark/blockway,
+/obj/structure/flora/tree/pine{
+	layer = 9.5
+	},
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "aFV" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -13357,6 +14050,24 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/administration/centcom)
+"aGc" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/tree/pine{
+	layer = 9.6
+	},
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
+"aGd" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/tree/pine{
+	layer = 9.7
+	},
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "aGn" = (
 /turf/environment/space,
 /area/shuttle/escape_pod1/centcom)
@@ -18777,11 +19488,12 @@
 	},
 /area/custom/wizard_station)
 "bau" = (
-/obj/machinery/vending/tophat_vend,
-/turf/unsimulated/floor{
-	icon_state = "wood"
+/obj/structure/flora/tree/pine,
+/obj/structure/flora/grass/brown,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/area/custom/tophat)
+/area/space)
 "bav" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/fancy/donut_box{
@@ -18799,18 +19511,14 @@
 	},
 /area/custom/wizard_station)
 "baw" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 8
+/obj/structure/flora/tree/pine{
+	layer = 9.5
 	},
-/obj/effect/landmark/start{
-	name = "wizard"
+/obj/structure/flora/grass/brown,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet";
-	name = "blue carpet"
-	},
-/area/custom/wizard_station)
+/area/space)
 "bax" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin{
@@ -18835,80 +19543,46 @@
 	},
 /area/custom/wizard_station)
 "bay" = (
-/obj/machinery/vending/magivend,
-/obj/effect/decal/cleanable/cobweb2,
-/turf/unsimulated/floor{
-	icon_state = "wood-broken2"
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/tree/pine,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/area/custom/wizard_station)
+/area/space)
 "baz" = (
-/obj/structure/closet{
-	icon_closed = "cabinet_closed";
-	icon_opened = "cabinet_open";
-	icon_state = "cabinet_closed"
+/obj/structure/flora/tree/dead,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/obj/item/clothing/suit/wizrobe/santa,
-/obj/item/clothing/head/wizard/santa,
-/obj/item/weapon/storage/backpack/santabag,
-/turf/unsimulated/floor{
-	icon_state = "wood-broken4"
-	},
-/area/custom/wizard_station)
+/area/space)
 "baA" = (
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "baB" = (
-/obj/structure/table/woodentable,
-/obj/machinery/chem_dispenser/soda{
-	dispensable_reagents = list("kvass");
-	name = "magic soda fountain";
-	pixel_y = 6
+/obj/structure/flora/tree/pine,
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/obj/effect/decal/cleanable/cobweb,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
+/area/space)
 "baC" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/nuclear,
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Magic Intercom";
-	pixel_x = -28;
-	pixel_y = -4;
-	subspace_transmission = 1;
-	syndie = 1
+/obj/structure/flora/tree/pine{
+	layer = 9.4
 	},
-/turf/unsimulated/floor{
-	icon_state = "wood-broken5"
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/area/custom/wizard_station)
+/area/space)
 "baD" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/flask/barflask{
-	pixel_x = -10;
-	pixel_y = 5
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = 3;
-	pixel_y = 8
-	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = 1
-	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = 9;
-	pixel_y = 5
-	},
-/turf/unsimulated/floor{
-	icon_state = "wood-broken4"
-	},
-/area/custom/wizard_station)
+/area/space)
 "baE" = (
 /obj/structure/table/woodentable,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -18927,22 +19601,13 @@
 	},
 /area/custom/wizard_station)
 "baH" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Magic Intercom";
-	pixel_y = 20;
-	subspace_transmission = 1;
-	syndie = 1
+/obj/structure/flora/tree/pine{
+	layer = 9.4
 	},
-/obj/structure/magic_torch_holder{
-	dir = 1
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
+/area/space)
 "baI" = (
 /obj/effect/decal/cleanable/cobweb2,
 /turf/unsimulated/floor{
@@ -18967,76 +19632,43 @@
 	},
 /area/custom/wizard_station)
 "baM" = (
-/obj/structure/closet{
-	icon_closed = "cabinet_closed";
-	icon_opened = "cabinet_open";
-	icon_state = "cabinet_closed"
+/obj/structure/flora/tree/pine{
+	layer = 9.2
 	},
-/obj/item/clothing/suit/wizrobe/marisa,
-/obj/item/clothing/shoes/sandal/marisa,
-/obj/item/clothing/head/wizard/marisa,
-/obj/item/weapon/staff/broom,
-/obj/effect/decal/cleanable/cobweb2,
-/turf/unsimulated/floor{
-	icon_state = "wood"
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/area/custom/wizard_station)
+/area/space)
 "baN" = (
-/obj/structure/closet{
-	icon_closed = "cabinet_closed";
-	icon_opened = "cabinet_open";
-	icon_state = "cabinet_closed"
+/obj/effect/landmark/blockway,
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/obj/item/clothing/suit/wizrobe/red,
-/obj/item/clothing/shoes/sandal,
-/obj/item/clothing/head/wizard/red,
-/obj/item/weapon/staff,
-/turf/unsimulated/floor{
-	icon_state = "wood-broken"
-	},
-/area/custom/wizard_station)
+/area/space)
 "baO" = (
-/obj/structure/bookcase/manuals/engineering,
-/obj/effect/decal/cleanable/cobweb,
-/turf/unsimulated/floor{
-	icon_state = "wood"
+/obj/structure/flora/grass/brown,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/area/custom/wizard_station)
+/area/space)
 "baP" = (
-/obj/structure/closet{
-	icon_closed = "cabinet_closed";
-	icon_opened = "cabinet_open";
-	icon_state = "cabinet_closed"
+/obj/structure/flora/tree/pine{
+	layer = 9.2
 	},
-/obj/item/clothing/suit/wizrobe/magusblue,
-/obj/item/clothing/head/wizard/magus,
-/obj/item/weapon/staff,
-/obj/effect/decal/cleanable/cobweb,
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Magic Intercom";
-	pixel_x = 27;
-	pixel_y = -4;
-	subspace_transmission = 1;
-	syndie = 1
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/obj/item/weapon/storage/backpack/cultpack,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
+/area/space)
 "baQ" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 1
+/obj/structure/flora/tree/pine{
+	layer = 9.5
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
-	name = "black carpet"
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/area/custom/wizard_station)
+/area/space)
 "baR" = (
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
@@ -19045,51 +19677,45 @@
 	},
 /area/custom/wizard_station)
 "baS" = (
-/obj/structure/kitchenspike,
-/turf/unsimulated/floor{
-	icon_state = "cult"
+/obj/structure/flora/tree/pine{
+	layer = 9.5
 	},
-/area/custom/wizard_station)
+/obj/effect/landmark/blockway,
+/obj/structure/flora/grass/both,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "baT" = (
-/obj/machinery/photocopier,
-/obj/structure/magic_torch_holder{
-	dir = 4
+/obj/structure/flora/grass/both,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
-	name = "black carpet"
-	},
-/area/custom/wizard_station)
+/area/space)
 "baU" = (
 /turf/unsimulated/floor{
 	icon_state = "wood-broken"
 	},
 /area/custom/wizard_station)
 "baV" = (
-/obj/structure/stool/bed/chair/comfy/brown,
-/obj/effect/landmark/start{
-	name = "wizard"
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/tree/pine{
+	layer = 9.3
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet";
-	name = "blue carpet"
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/area/custom/wizard_station)
+/area/space)
 "baW" = (
-/obj/structure/mirror/magic{
-	pixel_x = -30
+/obj/structure/flora/tree/pine{
+	layer = 9.5
 	},
-/obj/structure/magic_torch_holder{
-	dir = 8
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
-	name = "black carpet"
-	},
-/area/custom/wizard_station)
+/area/space)
 "baX" = (
 /obj/item/cardboard_cutout{
 	icon_state = "cutout_fukken_xeno"
@@ -19099,11 +19725,13 @@
 	},
 /area/custom/wizard_station)
 "baY" = (
-/obj/structure/mineral_door/wood,
-/turf/unsimulated/floor{
-	icon_state = "cult"
+/obj/structure/flora/tree/pine{
+	layer = 9.6
 	},
-/area/custom/wizard_station)
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "baZ" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
@@ -19134,43 +19762,34 @@
 	},
 /area/custom/wizard_station)
 "bbd" = (
-/obj/structure/sign/plaques/kiddie/library{
-	pixel_x = -32
+/obj/item/snowball,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/obj/structure/device/piano/minimoog,
-/turf/unsimulated/floor{
-	icon_state = "cult"
-	},
-/area/custom/wizard_station)
+/area/space)
 "bbe" = (
-/obj/structure/magic_torch_holder{
-	dir = 4
+/obj/structure/flora/tree/pine,
+/obj/structure/flora/grass/both,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/obj/item/weapon/flora/pottedplant/ficus,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
-	name = "black carpet"
-	},
-/area/custom/wizard_station)
+/area/space)
 "bbf" = (
-/obj/structure/closet/coffin,
-/obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
-/turf/unsimulated/floor{
-	icon_state = "cult"
+/obj/structure/flora/tree/pine{
+	layer = 9.7
 	},
-/area/custom/wizard_station)
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "bbg" = (
-/obj/structure/magic_torch_holder{
-	dir = 1
+/obj/structure/flora/tree/pine{
+	layer = 9.1
 	},
-/obj/structure/noticeboard{
-	pixel_y = 26
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
+/area/space)
 "bbh" = (
 /obj/item/weapon/caution,
 /turf/unsimulated/floor{
@@ -19184,11 +19803,12 @@
 	},
 /area/custom/wizard_station)
 "bbj" = (
-/obj/structure/bookcase/manuals/medical,
-/turf/unsimulated/floor{
-	icon_state = "wood"
+/obj/structure/flora/tree/pine,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/area/custom/wizard_station)
+/area/space)
 "bbk" = (
 /obj/structure/bookcase/manuals/security,
 /obj/item/device/radio/intercom{
@@ -19237,54 +19857,43 @@
 	},
 /area/custom/wizard_station)
 "bbr" = (
-/obj/structure/magic_torch_holder,
-/obj/item/weapon/flora/pottedplant/mysterious,
-/turf/unsimulated/floor{
-	icon_state = "wood"
+/obj/structure/flora/tree/pine{
+	layer = 9.7
 	},
-/area/custom/wizard_station)
+/obj/structure/flora/grass/both,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "bbx" = (
-/obj/structure/magic_torch_holder,
-/obj/item/weapon/flora/pottedplant/unusual,
-/turf/unsimulated/floor{
-	icon_state = "wood-broken2"
+/obj/structure/flora/grass/brown,
+/obj/structure/flora/tree/pine{
+	layer = 9.1
 	},
-/area/custom/wizard_station)
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "bby" = (
 /turf/unsimulated/floor{
 	icon_state = "wood-broken3"
 	},
 /area/custom/wizard_station)
 "bbz" = (
-/obj/structure/closet{
-	icon_closed = "cabinet_closed";
-	icon_opened = "cabinet_open";
-	icon_state = "cabinet_closed"
+/obj/structure/flora/tree/pine,
+/obj/structure/flora/grass/green,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/obj/item/clothing/under/psysuit,
-/obj/item/clothing/suit/wizrobe/psypurple,
-/obj/item/clothing/head/wizard/amp,
-/obj/item/weapon/storage/backpack/cultpack,
-/turf/unsimulated/floor{
-	icon_state = "wood-broken3"
-	},
-/area/custom/wizard_station)
+/area/space)
 "bbA" = (
-/obj/structure/rack,
-/obj/item/weapon/kitchenknife/ritual{
-	pixel_x = 4;
-	pixel_y = 2
+/obj/structure/flora/grass/both,
+/obj/structure/flora/tree/pine,
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/obj/item/weapon/kitchenknife/ritual,
-/obj/item/weapon/kitchenknife/ritual{
-	pixel_x = -4;
-	pixel_y = -2
-	},
-/obj/effect/decal/cleanable/cobweb,
-/turf/unsimulated/floor{
-	icon_state = "cult"
-	},
-/area/custom/wizard_station)
+/area/space)
 "bbD" = (
 /obj/random/guns/handgun_security,
 /turf/unsimulated/floor{
@@ -19297,18 +19906,19 @@
 	},
 /area/custom/wizard_station)
 "bbJ" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 4
+/obj/structure/closet/cabinet{
+	name = "Gnome"
 	},
-/obj/effect/landmark/start{
-	name = "wizard"
+/obj/item/clothing/mask/gnome_beard,
+/obj/item/clothing/under/gnome_suit,
+/obj/item/clothing/shoes/red,
+/obj/item/clothing/suit/wizrobe/suspenders,
+/obj/item/clothing/gloves/white,
+/obj/item/clothing/head/wizard/gnome_hat,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet";
-	name = "blue carpet"
-	},
-/area/custom/wizard_station)
+/area/space)
 "bbK" = (
 /obj/structure/stool/bar,
 /turf/unsimulated/floor{
@@ -19354,12 +19964,13 @@
 	},
 /area/custom/wizard_station)
 "bbY" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "bluecarpet";
-	name = "blue carpet"
+/obj/structure/flora/tree/pine{
+	layer = 9.3
 	},
-/area/custom/wizard_station)
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "bcb" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien16"
@@ -19423,29 +20034,14 @@
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
 "bco" = (
-/obj/structure/closet{
-	icon_closed = "cabinet_closed";
-	icon_opened = "cabinet_open";
-	icon_state = "cabinet_closed"
+/obj/structure/flora/tree/pine{
+	layer = 9.3
 	},
-/obj/item/clothing/suit/wizrobe/magusred,
-/obj/item/clothing/head/wizard/magus,
-/obj/item/weapon/staff,
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Magic Intercom";
-	pixel_x = 27;
-	pixel_y = -4;
-	subspace_transmission = 1;
-	syndie = 1
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
 	},
-/obj/item/weapon/storage/backpack/cultpack,
-/turf/unsimulated/floor{
-	icon_state = "wood-broken4"
-	},
-/area/custom/wizard_station)
+/area/space)
 "bcp" = (
 /mob/living/simple_animal/hostile/tribesman{
 	name = "Experiment 69T"
@@ -19572,13 +20168,14 @@
 	},
 /area/custom/wizard_station)
 "bdu" = (
-/obj/item/weapon/storage/bag/cash,
-/obj/structure/table/woodentable,
-/obj/item/clothing/glasses/monocle,
-/turf/unsimulated/floor{
-	icon_state = "cult"
+/obj/structure/flora/tree/pine{
+	layer = 9.3
 	},
-/area/custom/wizard_station)
+/obj/structure/flora/grass/green,
+/turf/unsimulated/floor/snow{
+	temperature = 253.15
+	},
+/area/space)
 "bdv" = (
 /obj/structure/table/woodentable,
 /obj/item/device/violin{
@@ -19589,22 +20186,14 @@
 	},
 /area/custom/wizard_station)
 "bdw" = (
-/obj/structure/closet{
-	icon_closed = "cabinet_closed";
-	icon_opened = "cabinet_open";
-	icon_state = "cabinet_closed"
+/obj/structure/sign/poster/official/no_erp{
+	pixel_y = 32
 	},
-/obj/item/clothing/shoes/sandal/marisa{
-	desc = "A set of fancy shoes that are as functional as they are comfortable.";
-	name = "Gentlemans Shoes"
+/obj/structure/torch_holder/magic{
+	dir = 1
 	},
-/obj/item/clothing/under/gentlesuit,
-/obj/item/clothing/suit/wizrobe/gentlecoat,
-/obj/item/clothing/head/wizard/cap,
-/obj/item/weapon/staff/gentcane,
-/obj/item/weapon/storage/backpack/satchel/withwallet,
 /turf/unsimulated/floor{
-	icon_state = "wood"
+	icon_state = "freezerfloor"
 	},
 /area/custom/wizard_station)
 "bdx" = (
@@ -26469,40 +27058,58 @@
 	},
 /area/centcom/tdome/tdomeadmin)
 "nHb" = (
-/obj/structure/flora/grass/green,
-/turf/unsimulated/floor/snow,
-/area/space)
-"nIb" = (
-/turf/unsimulated/wall/log,
-/area/custom/tophat)
-"nJb" = (
-/obj/structure/mirror/magic{
-	pixel_y = 25
+/obj/machinery/newscaster{
+	pixel_y = 32
 	},
-/obj/structure/sign/poster/contraband/space_cola{
-	pixel_x = -32
+/obj/structure/table/woodentable,
+/obj/machinery/chem_dispenser/beer{
+	dispensable_reagents = list("singulo","demonsblood","lean","hippiesdelight","devilskiss","kvass","doctorsdelight","atomicbomb","nuka_cola","patron","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead","sake");
+	name = "magic booze dispenser";
+	pixel_y = 6
 	},
-/obj/item/weapon/flora/monkey,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
 /area/custom/tophat)
-"nKb" = (
-/obj/effect/overlay/tophat_portal{
-	pixel_y = 32
+"nIb" = (
+/turf/unsimulated/wall/log,
+/area/custom/tophat)
+"nJb" = (
+/obj/structure/table/woodentable,
+/obj/machinery/chem_dispenser/soda{
+	dispensable_reagents = list("water","ice","coffee","cream","tea","tea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","tomatojuice","banana","limejuice","watermelonjuice","berryjuice","grapejuice","lemonjuice","milk","soymilk","nothing");
+	name = "magic soda fountain";
+	pixel_y = 6
 	},
-/obj/structure/magic_torch_holder{
+/obj/structure/torch_holder{
 	dir = 1
 	},
+/obj/structure/sign/double/barsign{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken"
+	icon_state = "wood-broken4"
+	},
+/area/custom/tophat)
+"nKb" = (
+/obj/structure/table/woodentable,
+/obj/machinery/computer/security/wooden_tv/miami{
+	name = "Magic TV";
+	pixel_y = 3
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
 	},
 /area/custom/tophat)
 "nLb" = (
-/obj/machinery/vending/cigarette{
-	name = "Magic Cigarette machine";
-	prices = list();
-	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10, /obj/item/weapon/storage/fancy/cigarettes/menthol = 5, /obj/item/weapon/storage/box/matches = 10, /obj/item/weapon/lighter/random = 4, /obj/item/clothing/mask/ecig = 4, /obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 5, /obj/item/weapon/lighter/zippo = 5, /obj/item/clothing/mask/cigarette/cigar/havana = 5)
+/obj/structure/sign/velocity_overlay/reklama{
+	name = "\improper It's in the Hat!";
+	pixel_y = 32
+	},
+/obj/machinery/vending/boozeomat{
+	name = "Magic Booze-O-Mat";
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/gin = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/wine = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/cognac = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/beer = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/ale = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/tonic = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/cola = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/sodawater = 15, /obj/item/weapon/reagent_containers/food/drinks/flask/barflask = 5, /obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask = 5, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 50, /obj/item/weapon/reagent_containers/food/drinks/ice = 15, /obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/champagne = 10);
+	req_access = list()
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -26516,66 +27123,81 @@
 	},
 /area/custom/tophat)
 "nNb" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 4
-	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
+	icon_state = "blackcarpet6-2";
 	name = "black carpet"
 	},
 /area/custom/tophat)
 "nOb" = (
-/obj/structure/sign/velocity_overlay/reklama{
-	name = "\improper It's in the Hat!";
-	pixel_y = 32
-	},
-/obj/structure/table/woodentable/poker,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = 32
-	},
-/obj/item/weapon/storage/pill_bottle/dice,
-/obj/item/weapon/game_kit/random,
-/obj/item/toy/cards,
 /turf/unsimulated/floor{
-	icon_state = "wood"
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet14-10";
+	name = "black carpet"
 	},
 /area/custom/tophat)
 "nPb" = (
-/obj/structure/flora/grass/brown,
-/turf/unsimulated/floor/snow,
-/area/space)
+/turf/unsimulated/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet10-8";
+	name = "black carpet"
+	},
+/area/custom/tophat)
 "nRb" = (
-/obj/machinery/vending/snack{
-	name = "Magic Getmore Chocolate Corp";
-	prices = list();
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 10, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 10, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 10, /obj/item/weapon/reagent_containers/food/snacks/chips = 10, /obj/item/weapon/reagent_containers/food/snacks/sosjerky = 10, /obj/item/weapon/reagent_containers/food/snacks/no_raisin = 10, /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 10, /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 10, /obj/item/weapon/reagent_containers/food/snacks/candy_corn = 10, /obj/item/weapon/reagent_containers/food/snacks/cracker = 20)
+/obj/structure/closet{
+	icon_closed = "cabinet_closed";
+	icon_opened = "cabinet_open";
+	icon_state = "cabinet_closed"
+	},
+/obj/item/weapon/staff/gentcane,
+/obj/item/weapon/storage/backpack/satchel/withwallet,
+/obj/item/clothing/head/wizard/cap,
+/obj/item/clothing/suit/wizrobe/gentlecoat,
+/obj/item/clothing/under/gentlesuit,
+/obj/item/clothing/shoes/sandal/marisa{
+	desc = "A set of fancy shoes that are as functional as they are comfortable.";
+	name = "Gentlemans Shoes"
+	},
+/obj/item/weapon/book/manual/wiki/barman_recipes,
+/obj/structure/sign/poster/official/high_class_martini{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
 /area/custom/tophat)
 "nSb" = (
-/obj/structure/device/piano/minimoog,
+/obj/structure/reagent_dispensers/kvasstank{
+	dir = 8
+	},
+/obj/structure/sign/poster/contraband/starkist{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood"
+	icon_state = "wood-broken5"
 	},
 /area/custom/tophat)
 "nTb" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 1
-	},
 /turf/unsimulated/floor{
-	icon_state = "wood"
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet7-3";
+	name = "black carpet"
 	},
 /area/custom/tophat)
 "nUb" = (
-/obj/machinery/vending/sovietsoda{
-	emagged = 1;
-	name = "magic BODA"
+/obj/structure/table/woodentable,
+/obj/item/ashtray/bronze{
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/obj/item/weapon/reagent_containers/food/drinks/shaker{
+	pixel_x = -7;
+	pixel_y = 11
 	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken4"
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet";
+	name = "black carpet"
 	},
 /area/custom/tophat)
 "nVb" = (
@@ -26599,9 +27221,23 @@
 	},
 /area/custom/wizard_station)
 "nYb" = (
-/obj/structure/stool/bar,
+/obj/structure/table/woodentable,
+/obj/item/weapon/paper_bin{
+	pixel_x = 12
+	},
+/obj/item/weapon/pen/blue{
+	pixel_x = 12;
+	pixel_y = 3
+	},
+/obj/item/weapon/flora/deskferntrim{
+	icon_state = "plant-34-alternative";
+	pixel_x = -8;
+	pixel_y = 10
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken5"
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet11-12";
+	name = "black carpet"
 	},
 /area/custom/tophat)
 "nZb" = (
@@ -28682,6 +29318,13 @@ aaM
 aaM
 aaM
 aaM
+nIb
+nIb
+nIb
+nIb
+nIb
+nIb
+nIb
 aaM
 aaM
 aaM
@@ -28691,6 +29334,12 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aeD
 aeD
 aeD
@@ -28713,22 +29362,9 @@ aeD
 aeD
 aeD
 aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -28938,6 +29574,19 @@ aaM
 aaM
 aaM
 aaM
+nIb
+nIb
+nLb
+nSb
+aAQ
+aAV
+aBd
+nIb
+nIb
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -28963,29 +29612,16 @@ abi
 abi
 abi
 abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
+abh
 abi
 abi
 abi
 abi
 abi
 aeD
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -29195,6 +29831,19 @@ aaM
 aaM
 aaM
 aaM
+nIb
+nHb
+nNb
+nTb
+nTb
+nTb
+aBi
+abd
+nIb
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -29208,12 +29857,7 @@ aaM
 aeD
 abi
 abi
-abi
-abi
-abi
-abi
-abi
-abi
+abh
 abi
 abl
 abi
@@ -29222,27 +29866,19 @@ abi
 abi
 abi
 abi
+abh
 abi
 abi
 abi
 abi
 abi
 abi
-abi
-abk
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abl
-abi
-abi
-abi
+abh
 abi
 aeD
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -29452,34 +30088,38 @@ aaM
 aaM
 aaM
 aaM
+nIb
+nJb
+nOb
+nUb
+nWb
+nMb
+aBo
+abf
+nIb
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
 aeD
 abi
 abi
 abi
 abi
 abi
+abi
 abl
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
+abh
 abi
 abi
 abi
@@ -29488,17 +30128,13 @@ abl
 abi
 abi
 abi
+abh
 abi
 abl
-abk
 abi
-abi
-abk
-abi
-abi
-abi
-abi
-abi
+aeD
+aeD
+aeD
 aeD
 aaM
 aaM
@@ -29709,39 +30345,22 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+nIb
+nKb
+nPb
+nYb
+aAU
+aAX
+aBq
+abe
+nIb
 aaM
 aeD
 abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
 abl
 abi
 abi
 abi
-abk
 abi
 abi
 abi
@@ -29749,12 +30368,29 @@ abi
 abi
 abi
 abi
-afT
 abi
 abi
-abl
 abi
 abi
+abh
+abi
+abi
+abi
+abi
+abi
+abh
+abi
+abi
+abi
+abi
+abh
+abi
+abi
+abi
+abi
+abi
+abi
+abh
 abi
 aeD
 aaM
@@ -29966,49 +30602,49 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+nIb
+nIb
+nRb
+aAO
+aAT
+aBB
+aaZ
+nIb
+nIb
 aaM
 aeD
 abi
 abi
 abi
 abi
+abh
 abi
 abi
 abi
 abi
-abi
-abi
-abi
-abi
-abi
-abi
+abh
 abl
 abi
 abi
 abi
-aaZ
 abi
 abi
 abi
-abl
-aAO
 abi
 abi
-abk
+abh
 abi
 abi
-abl
+abi
+abh
 abi
 abi
+abi
+abi
+abi
+abi
+abi
+abh
 abi
 abi
 abi
@@ -30224,13 +30860,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+nIb
+nIb
+nIb
+nIb
+nIb
+nIb
+nIb
 aaM
 aaM
 aeD
@@ -30239,35 +30875,35 @@ abi
 abi
 abi
 abi
-abi
-abi
-abi
-abi
-abl
-abi
+abh
 abi
 abi
 abi
 abi
 abi
 abi
-abk
+abh
 abi
 abi
 abl
 abi
 abi
-aaZ
-afT
-abi
-abi
-abi
-abi
-abi
-abi
 abi
 afT
+afT
+aCY
+afT
+afT
+afT
+afT
+abh
 abi
+abi
+abh
+abi
+abi
+abi
+abh
 abi
 abi
 aeD
@@ -30494,27 +31130,30 @@ aeD
 abi
 abi
 abi
+abh
+abi
+abl
+abi
+abi
+abi
+baT
 abi
 abi
 abi
 abi
 abi
+abh
 abi
 abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-nPb
-abi
-abi
-aaZ
-abk
-abi
+baB
+afT
+abg
+aaY
+aaY
+aaY
+abg
+afT
+afT
 abi
 abl
 abi
@@ -30523,10 +31162,7 @@ abi
 abi
 abi
 abi
-abi
-abi
-abi
-abi
+abh
 aeD
 aaM
 aaM
@@ -30748,6 +31384,7 @@ aaM
 aaM
 aaM
 aeD
+abh
 abi
 abi
 abi
@@ -30755,34 +31392,33 @@ abi
 abi
 abi
 abi
-abl
+abh
 abi
 abi
+abh
 abi
+bbx
 abi
-abi
-abi
-abi
-abi
-abi
-abi
-abl
 afT
+afT
+baW
+aCj
+abg
+abg
+aCZ
+baZ
+bbc
+abg
+abg
+aCY
 abi
 abi
+abm
 abi
 abi
+baM
 abi
 abi
-abi
-abk
-aaZ
-abi
-abi
-abl
-abi
-abi
-abl
 abi
 aeD
 aaM
@@ -31009,37 +31645,37 @@ abi
 abi
 abi
 abi
-abl
+abh
 abi
 abi
 abi
 abi
 abi
-abi
-abi
+abh
 abi
 abi
 afT
-abi
-abk
-abi
-abi
-abi
+bco
+afT
+baH
+abl
+baQ
+aaY
+aCG
+aDa
+aDx
+aDR
+bbk
 abg
-aaY
-aaY
-aaY
-abg
-abi
-nPb
-abi
-abi
+afT
+aET
+afT
+afT
+baB
+bbg
 abi
 abi
-abi
-abi
-abi
-abi
+abh
 abi
 aeD
 aaM
@@ -31263,38 +31899,38 @@ aaM
 aaM
 aeD
 abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
+abl
 abi
 abi
 abl
 abi
 abi
 abi
-abl
-aaZ
+baM
 abi
-abg
-abg
-baO
-baZ
-bbc
-abg
-abg
-abi
-abi
-abi
-abl
 afT
+baB
+afT
+baP
+abi
+bdu
 abi
 abi
+baO
+aaY
+baF
+aDc
+baR
+aDS
+aEB
+abg
+abh
+abi
+baM
+baQ
+aCY
+abi
+bbg
 abi
 abi
 abi
@@ -31521,40 +32157,40 @@ aaM
 aeD
 abi
 abi
+abh
 abi
 abi
 abi
 abi
+abh
+abi
+baP
+afT
+abi
+bbg
+abi
+abi
+abi
+abi
+abi
+abh
+aaY
+baE
+aDd
+aDy
+aDT
+bbo
+abg
+abi
+abi
+abh
+abi
+afT
+abh
+abi
+abi
+abh
 abl
-abk
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-nHb
-abi
-abi
-aaY
-baC
-baR
-baR
-baR
-bbk
-aaY
-abi
-aaZ
-abi
-nHb
-abi
-abi
-abi
-abi
-abi
-abi
 aeD
 aaM
 aaM
@@ -31779,37 +32415,37 @@ aeD
 abi
 abi
 abi
-abl
+abi
+abh
 abi
 abi
-abi
-abi
-abi
-abi
-abl
-abi
-abi
-abi
-aAO
-abi
-abi
-abi
-aaZ
-aaY
-baF
-baQ
-baR
-baR
-bbj
-aaY
 abi
 afT
+afT
+bbY
 abi
 abi
-aaZ
 abi
-abi
+abk
+baY
 abl
+abi
+abi
+abg
+abg
+aDe
+baA
+aDU
+abg
+abg
+baO
+abi
+baO
+abi
+baB
+afT
+bbg
+abi
 abi
 abi
 aeD
@@ -32034,39 +32670,39 @@ aaM
 aaM
 aeD
 abi
+abh
 abi
 abi
 abi
 abi
 abi
 abi
+baP
 abi
 abi
-abk
+baQ
 abi
 abi
+bbd
 abi
-abl
 abi
-aaZ
+bbY
 abi
-abk
 abi
-aaY
-baE
-baT
-baR
-bbe
-bbo
+abg
+abg
+aDz
+abg
 abg
 abi
-abl
-aaZ
+abh
+bbd
 abk
 abi
 abi
+baB
 abi
-abi
+baQ
 abi
 abi
 aeD
@@ -32292,40 +32928,40 @@ aaM
 aeD
 abi
 abi
+abl
+abi
+abi
+abi
+abh
+abl
+afT
+baS
+abi
+abi
+baz
+abi
+abi
+abi
+abt
+abi
+abi
+abi
+bbe
+aDf
+aDf
+aDX
+abi
+abi
+abi
+abi
+abi
+baz
 abi
 afT
+aFU
 abi
 abi
-abi
-abi
-abl
-aaZ
-abi
-abi
-abi
-abi
-abk
-abi
-abi
-abl
-abi
-abg
-abg
-abg
-baY
-abg
-abg
-abg
-aaZ
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
+abh
 aeD
 aaM
 aaM
@@ -32549,37 +33185,37 @@ aaM
 aeD
 abi
 abi
-abl
 abi
-abi
-abk
-aaZ
+abh
 abi
 abi
 abi
+abh
 abi
 afT
-aaZ
+baQ
 abi
 abi
 abi
+baT
+bbY
 abi
-abg
-abg
-abg
-bbA
-baS
-bbG
+abi
+afR
+abi
+abi
+aDf
+aDf
+aDf
 bbd
-bbp
-abg
-abg
-abg
+abi
+abk
 abi
 abi
+afR
 abi
-abi
-abl
+baM
+aFU
 abi
 abi
 abi
@@ -32805,39 +33441,39 @@ aaM
 aaM
 aeD
 abi
+abh
 abi
 abi
 abi
 abi
 abi
-abi
-abl
-nPb
-abi
-abi
-abi
-abi
-abl
-afT
-abi
-abg
-abg
-afS
-aaY
-nVb
-nVb
-nVb
-bbK
-nVb
-aaY
-bdO
-abg
-abg
 abi
 afT
+baV
 abi
 abi
 abi
+baY
+abi
+afR
+abi
+abl
+aCn
+abi
+abi
+aDg
+aDf
+aEf
+abi
+abt
+abi
+abi
+abi
+abh
+bbg
+afT
+afT
+baQ
 abi
 abi
 aeD
@@ -33064,37 +33700,37 @@ aeD
 abi
 abi
 abi
+abk
+abi
+abt
+abi
+abi
+baB
+afR
+abi
+baQ
+abi
 abi
 abl
-nHb
 abi
-afT
-abi
-abi
-aaZ
-abi
-abi
-abi
+abl
 abi
 abi
 abg
-abt
-ahM
-aaY
-baA
-baA
-baA
-baA
-baU
-aaY
-bcp
-aBd
+abg
+abg
+aDz
+abg
+abg
 abg
 abi
+afR
 abi
 abi
 abi
+aFg
 abi
+abl
 abi
 abi
 aeD
@@ -33320,39 +33956,39 @@ aaM
 aeD
 abi
 abi
-abi
-abi
-abk
-abi
-nIb
-nIb
-nIb
-nIb
-nIb
-nIb
-nIb
-abi
-abi
-abi
-abg
-bdN
-bdt
-aaY
-bbq
-bbY
-bbJ
-bbY
-baA
-aaY
-bdQ
-nXb
-abg
-abg
-abg
-abg
+abh
 abi
 abi
 abl
+afR
+abi
+afT
+baW
+abi
+abk
+afR
+bbd
+abi
+abi
+bbd
+abg
+abg
+abg
+aCI
+aDh
+bbG
+aEg
+bbp
+abg
+abg
+abg
+abk
+abi
+aFM
+afT
+baQ
+abi
+abi
 abi
 aeD
 aaM
@@ -33577,40 +34213,40 @@ aaM
 aeD
 abi
 abi
+abl
 abi
 abi
 abi
-nIb
-nIb
-nSb
-nRb
-nUb
-aAQ
-abd
-nIb
-nIb
+abi
+abh
+baO
+afT
+baw
+abi
+bbf
+abi
 abk
+abi
 abg
 abg
+afS
+aaY
+nVb
+nVb
+nVb
+bbK
+nVb
+aaY
+bdO
 abg
 abg
-abg
-baH
-baV
-bar
-bbY
-bbr
-abg
-abg
-abg
-abg
-aBr
-aBx
-abg
-abg
+baB
+baD
 abi
 abi
 abi
+abi
+abh
 aeD
 aaM
 aaM
@@ -33836,35 +34472,35 @@ abi
 abi
 abi
 abi
+abh
+abt
 abi
-nIb
-nJb
-nWb
-nMb
-nMb
-nMb
-nMb
-abf
-nIb
-abi
-abg
-abj
-bba
-abg
+baD
+afT
 baB
+afR
+abi
+abi
+abi
+abi
+bbf
+abg
+aBT
+ahM
+aaY
 baA
-baV
-bat
-bbY
-bby
-bdv
+baA
+baA
+baA
+baU
+aaY
+bcp
+bdO
 abg
-aBg
-aBo
-bbY
-bbY
-aBz
-abg
+afT
+afT
+afT
+afT
 abi
 abi
 abi
@@ -34094,36 +34730,36 @@ abi
 abi
 abi
 abi
-nIb
-nKb
-nMb
-nMb
-nWb
-aAU
-nMb
-abe
-nIb
+abi
+abi
+baC
+abi
+abi
+baY
+abi
+abi
+abi
+abt
+abi
+abg
+bdN
+bdt
+aaY
+bbq
+aDk
+aDA
+aEh
+baA
+aaY
+bdQ
+nXb
+abg
+abg
+abg
+abg
 afT
-abg
-abm
-abs
-avG
-baA
-baJ
-baV
-bas
-bbY
-baA
-bbq
-bbX
-bbq
-bbY
-aBs
-bbY
-aBB
-abg
-abi
-abi
+afT
+abh
 abi
 aeD
 aaM
@@ -34347,41 +34983,41 @@ aaM
 aaM
 aeD
 abi
-abi
-abi
-abi
-abi
-nIb
-nLb
-nNb
-nMb
-nWb
-aAT
-nMb
 abh
-nIb
-abi
-abg
-abo
-abo
-abg
-baD
-baA
-baV
-bav
-bbY
-baA
-aAX
-abg
-aBh
-aBq
-bbY
-bbY
-aBN
-abg
 abi
 abi
 abi
+abh
+abi
+afT
+baQ
+abi
+abi
+abi
+bbj
+abi
+bbd
+abg
+abg
+abg
+abg
+abg
+aCJ
+aDl
+bar
+aEx
+aEC
+abg
+abg
+abg
+abg
+aBr
+aBx
+abg
+abg
+afT
+abi
+abh
 aeD
 aaM
 aaM
@@ -34606,37 +35242,37 @@ aeD
 abi
 abi
 abi
+abh
 abi
 abi
-nIb
-nIb
-nOb
-nTb
-nYb
-aAV
-bau
-nIb
-nIb
+abi
+baC
+abi
+baY
+abi
+abi
+abi
+bbf
 abi
 abg
+abj
+bba
 abg
+aCA
+baA
+aDl
+bat
+aEx
+bby
+bdv
 abg
+aBg
+aFa
+aFl
+aEh
+aBz
 abg
-abg
-bbg
-baV
-bax
-bbY
-bbx
-abg
-abg
-abg
-abg
-aBw
-aBr
-abg
-abg
-abi
+baB
 abi
 abi
 aeD
@@ -34860,40 +35496,40 @@ aaM
 aaM
 aaM
 aeD
+abl
 abi
 abi
 abi
 abi
+abh
 abi
+afT
+baQ
 abi
-nIb
-nIb
-nIb
-nIb
-nIb
-nIb
-nIb
+abt
+bbd
 abi
 abi
 abi
 abg
-afP
-bbh
-aaY
-baI
-bbY
-baw
-bbY
+bdw
+abs
+avG
 baA
-aaY
-bdP
-bds
+baJ
+aDl
+bas
+aEx
+baA
+bbq
+bbX
+bbq
+aFc
+aBs
+aEx
+aFP
 abg
-abg
-abg
-abg
-abi
-abi
+afT
 abi
 abi
 aeD
@@ -35120,39 +35756,39 @@ aeD
 abi
 abi
 abi
-abl
+abh
+abi
 abi
 afT
+baC
+abi
+abi
+baz
 abi
 abi
 abi
-abi
-nPb
-abi
-abk
-abi
-aaZ
-abi
+abh
 abg
-afR
-awB
-aaY
-baL
-baU
-baA
-bbq
-baA
-aaY
-bdR
-aBi
+abo
+abo
 abg
-abi
-abi
-abi
-abi
+aCF
+baA
+aDl
+bav
+aEx
+baA
+aES
+abg
+aBh
+aFe
+aFt
+aEy
+aBN
+abg
+afT
 abi
 abl
-abi
 aeD
 aaM
 aaM
@@ -35375,41 +36011,41 @@ aaM
 aaM
 aeD
 abi
+abh
 abi
 abi
 abi
 abi
-abi
-abk
-abl
-aaZ
+baB
 abi
 abi
+baQ
 abi
 abi
+bbr
+bbd
 abi
-abi
-abk
 abg
 abg
-avd
-aaY
-nVb
-nVb
-nVb
-nVb
-nVb
-aaY
-bds
+abg
+abg
+abg
+aCK
+aDl
+bax
+aEx
+aED
+abg
+abg
+abg
+abg
+aBw
+aBr
 abg
 abg
 afT
 abi
-abi
-abi
-abi
-abi
-abi
+abh
 aeD
 aaM
 aaM
@@ -35635,36 +36271,36 @@ abi
 abi
 abi
 abi
-afT
-abi
 abi
 abi
 afT
-aAO
+baH
 abi
 abi
-abl
+baY
 abi
 abi
 abi
+baO
 abi
+abg
+afP
+bbh
+aaY
+baI
+aDm
+aDB
+aEy
+baA
+aaY
+bdP
+bds
 abg
 abg
 abg
-baK
-baX
-bbG
-bbf
-bdu
 abg
-abg
-abg
-abi
-abi
-abl
-abi
-abi
-abi
+afT
+afT
 abi
 abi
 aeD
@@ -35891,38 +36527,38 @@ aeD
 abi
 abi
 abi
-abi
-abi
-aaZ
-abi
-abi
-abi
+abh
 abi
 abk
-abi
-abi
-abi
-aaZ
-abi
+afT
+baN
+afT
+baB
+baO
 abi
 abl
 abi
+abh
+abi
 abg
+abs
+awB
+aaY
+baL
+baU
+baA
+bbq
+baA
+aaY
+bdR
+aEU
 abg
-abg
-baY
-abg
-abg
-abg
+afT
+afT
+aET
+afT
 abi
-abi
-abi
-abi
-abk
-abi
-abi
-abi
-abi
+abh
 abi
 aeD
 aaM
@@ -36146,38 +36782,38 @@ aaM
 aaM
 aeD
 abi
+abh
 abi
-abi
-abi
-abl
 abi
 abi
 abi
 abl
-abi
-abi
-aaZ
-abi
+abh
+afR
 afT
+abh
+abi
+bbd
 abi
 abi
-aaZ
-abi
-afT
+abl
+abg
+abg
+avd
 aaY
-baN
-baW
-baR
-baW
-bbz
+nVb
+nVb
+nVb
+nVb
+nVb
 aaY
-afT
+bds
+abg
+abg
+aFw
 abi
-abl
 abi
-abi
-abi
-abi
+baM
 abi
 abi
 abi
@@ -36406,37 +37042,37 @@ abi
 abi
 abi
 abi
-abi
-abi
-abi
-abi
-abi
-abi
-abl
-abi
+abm
 abi
 abi
 abi
 abk
+bbA
 abi
 abi
-abi
-aaY
-baM
-baR
-baR
-baR
-bdw
-aaY
+abh
 abi
 abi
-nPb
+bbd
 abi
-aaZ
+abg
+abg
+abg
+baK
+baX
+bbG
+aDh
+aEE
+abg
+abg
+abg
+abi
+afT
+baB
+bbg
 abi
 abi
-abi
-abi
+abh
 abi
 aeD
 aaM
@@ -36660,41 +37296,41 @@ aaM
 aaM
 aeD
 abi
+abh
 abi
 abi
+abi
+afR
+abi
+abh
 afT
-abi
-abi
-abk
-abi
-abi
-abi
 afT
+bay
+abi
+abi
+bbz
+afR
+abi
+abi
+abh
+abi
+abg
+abg
+abg
+aDz
+abg
+abg
+abg
 abi
 abi
 abi
 abi
+aFN
 abi
-abl
-abi
-abi
-aaY
-baP
-baR
-baR
-baR
-bco
-aaY
-abi
-aaZ
+bbg
 abi
 abi
-abi
-afT
-abi
-abi
-abi
-abi
+baH
 aeD
 aaM
 aaM
@@ -36919,37 +37555,37 @@ aeD
 abi
 abi
 abi
+abh
 abi
 abi
 abi
 abi
+baB
+bbJ
 abi
-abi
-abi
-abi
-abi
-abi
-abl
-abi
-abi
-abi
-abk
-abi
-abg
-abg
-bay
-baz
-bbi
-abg
-abg
+afR
 abi
 abk
 abi
 abi
+afR
+bbd
+abk
 abi
 abi
-abl
+aDn
+aDf
+aDg
+afR
 abi
+abk
+abi
+bbz
+abi
+afT
+abh
+abi
+aGc
 abi
 abi
 aeD
@@ -37178,36 +37814,36 @@ abi
 abi
 abi
 abi
+abi
+abh
+abi
+afT
+afT
+bbe
+bbd
+abi
+abi
+baz
 abl
 abi
 abi
 abi
 abi
+bbe
+aDf
+aDf
+aDf
+bbd
 abi
 abi
 abi
+baO
 abi
+baB
+afT
+bbg
 abi
-aaZ
-abi
-abi
-abi
-abi
-abg
-aaY
-aaY
-aaY
-abg
-abi
-abi
-abi
-abi
-aaZ
-abi
-abi
-abi
-abi
-abi
+bbf
 abi
 aeD
 aaM
@@ -37431,30 +38067,7 @@ aaM
 aaM
 aeD
 abi
-abi
-abi
-abi
-abi
-abi
-abi
-abl
-abi
-abi
-abi
-abi
-abk
-abi
-abi
-abi
-abi
-abi
-abl
-aaZ
-abi
-abi
-abi
-abi
-abi
+abh
 abi
 abk
 abi
@@ -37462,8 +38075,31 @@ abi
 abl
 abi
 abi
+baB
+abk
 abi
 abi
+abi
+abi
+abi
+abh
+abi
+aCp
+abi
+abi
+aDp
+aDf
+aDf
+baT
+abi
+abh
+afR
+abk
+abi
+abi
+baB
+abi
+baQ
 abi
 abi
 aeD
@@ -37689,37 +38325,37 @@ aaM
 aeD
 abi
 abi
+abh
 abi
 abi
 abi
+abh
+abi
+abi
+baB
 abi
 abi
 abi
-abi
-abl
-abi
+bbz
 abi
 abi
 abi
+bay
 abi
-abl
-abi
-abi
-abi
-abi
-abk
-abi
-abi
-abi
-abl
-nHb
-aaZ
-abi
-abi
-abi
+bbd
+abg
+abg
+aDz
+abg
+abg
 abi
 abi
 abl
+abi
+aFL
+abi
+afT
+aFU
 abi
 abi
 abi
@@ -37947,37 +38583,37 @@ aeD
 abi
 abi
 abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-aaZ
-abi
-aAO
-abi
-afT
-abi
+abh
 abi
 abi
 abi
 abi
 abi
 afT
+abh
 abi
 abi
 abi
+bbd
+afR
 abi
 abi
+abi
+abg
+abg
+aDu
+baA
+aEA
+abg
+abg
+abi
+abh
+abi
+afR
+abi
+baM
+afT
+baQ
 abi
 abi
 aeD
@@ -38202,40 +38838,40 @@ aaM
 aaM
 aeD
 abi
+abh
 abi
 abi
 abi
+abi
+abi
+abh
+abi
+afT
+afT
+abh
+abl
+abi
+abh
+abi
+abi
+bbz
+abi
+aaY
+aCU
+aDa
+aDx
+aDR
+aEF
+aaY
 abl
 abi
 abi
+abh
+bbg
+afT
+afT
 abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abk
-abi
-abi
-abi
-abi
-abi
-aaZ
-abi
-abi
-abk
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
+aGd
 abi
 aeD
 aaM
@@ -38461,37 +39097,37 @@ aeD
 abi
 abi
 abi
+abh
+abi
+abl
 abi
 abi
 abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
+bau
 afT
+afT
+baB
+afT
+afT
+abh
 abi
 abi
-abl
+abh
+aaY
+aCW
+aDv
+baR
+aDS
+aEL
+aaY
+afR
 abi
 abi
 abi
-aaZ
 abi
+aFM
 abi
-abl
-abi
-abi
-abl
-abi
-abi
-abi
+baY
 abi
 abi
 aeD
@@ -38716,6 +39352,7 @@ aaM
 aaM
 aeD
 abi
+abh
 abi
 abi
 abi
@@ -38724,32 +39361,31 @@ abi
 abi
 abi
 abi
-abl
+abh
 abi
 abi
+abh
+afT
+afT
+baB
+aCg
+afT
+aaY
+aCX
+aDd
+aDy
+aDT
+aER
+aaY
+abi
+aEV
+abk
+afT
+baB
+afT
+baQ
 abi
 abi
-abi
-abi
-abl
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abl
 abi
 aeD
 aaM
@@ -38976,36 +39612,36 @@ abi
 abi
 abi
 abi
+abh
+abi
+abi
+abh
 abi
 abi
 abi
+abh
 abi
 abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
+abh
 abi
 abl
 abi
+baB
+abg
+abg
+aDw
+aDE
+bbi
+abg
+abg
+baB
+afT
+aFg
+afT
 abi
+baM
 abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
+bbf
 abi
 abi
 aeD
@@ -39231,6 +39867,7 @@ aaM
 aeD
 abi
 abi
+abl
 abi
 abi
 abi
@@ -39240,28 +39877,27 @@ abi
 abi
 abi
 abi
+abh
 abi
 abi
+bbe
 abi
+abk
+afT
+afT
+abg
+aaY
+aaY
+aaY
+abg
+afT
+afT
+abh
 abi
+bbg
+bbY
 abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
+abl
 abi
 abi
 abi
@@ -39486,42 +40122,42 @@ aaM
 aaM
 aaM
 aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
-aeD
+abi
+abh
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abh
+abi
+abl
+abi
+abi
+abi
+abi
+abh
+abi
+abi
+afT
+baB
+afT
+aDO
+afT
+afT
+afT
+abi
+bbY
+abi
+abi
+abi
+bbY
+abi
+abi
+abh
+abi
 aeD
 aaM
 aaM
@@ -39742,44 +40378,44 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+abi
+abi
+abi
+abh
+abi
+abi
+abh
+abi
+abi
+abi
+abh
+abi
+abi
+abh
+abi
+abi
+abl
+abi
+abi
+abi
+abl
+abi
+abi
+abh
+abi
+abi
+abi
+abi
+abi
+abi
+abh
+abi
+abi
+abi
+abi
+abl
+aeD
 aaM
 aaM
 aaM
@@ -39999,44 +40635,44 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abl
+abi
+abi
+abi
+abi
+abi
+abi
+abh
+abi
+abi
+abi
+abi
+abh
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abh
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+aeD
 aaM
 aaM
 aaM
@@ -40256,44 +40892,44 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+baO
+abi
+abl
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+aeD
+aeD
+aeD
+aeD
 aaM
 aaM
 aaM
@@ -40526,28 +41162,28 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+abl
+abi
+abi
+abh
+abi
+abi
+abi
+abh
+abi
+abi
+abi
+abh
+abi
+abl
+abi
+abi
+abh
+abi
+abl
+abi
+aeD
 aaM
 aaM
 aaM
@@ -40783,28 +41419,28 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+abi
+aeD
 aaM
 aaM
 aaM
@@ -41040,28 +41676,28 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
 aaM
 aaM
 aaM
