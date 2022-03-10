@@ -148,6 +148,7 @@
 #define TRAIT_FAST_EQUIP          "fast_equip"
 #define TRAIT_NO_CLONE            "no_clone"
 #define TRAIT_VACCINATED          "vaccinated"
+#define TRAIT_GHOST_BUSTER        "ghost_buster"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
