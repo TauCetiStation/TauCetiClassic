@@ -73,7 +73,6 @@
 		BP.rejuvenate()
 
 	//Now apply cortical stack.
-	var/obj/item/organ/external/BP = vox.bodyparts_by_name[BP_HEAD]
 
 	var/obj/item/weapon/implant/cortical/I = new(vox)
 	I.inject(vox, BP_HEAD)
