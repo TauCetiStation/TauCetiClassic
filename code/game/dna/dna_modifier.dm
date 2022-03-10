@@ -545,6 +545,8 @@
 			selected_ui_subblock = select_subblock
 
 	else if (href_list["pulseUIRadiation"])
+		if(!connected.occupant)
+			return FALSE
 		var/block = connected.occupant.dna.GetUISubBlock(selected_ui_block, selected_ui_subblock)
 
 		irradiating = radiation_duration
@@ -579,6 +581,8 @@
 	else if (href_list["injectRejuvenators"])
 		if (!connected.occupant)
 			return FALSE
+		if(!connected.beaker)
+			return FALSE
 		var/inject_amount = round(text2num(href_list["injectRejuvenators"]), 5) // round to nearest 5
 		if (inject_amount < 0) // Since the user can actually type the commands himself, some sanity checking
 			inject_amount = 0
@@ -599,6 +603,9 @@
 		//testing("User selected block [selected_se_block] (sent [select_block]), subblock [selected_se_subblock] (sent [select_block]).")
 
 	else if (href_list["pulseSERadiation"])
+		if(!connected.occupant)
+			return FALSE
+
 		var/block = connected.occupant.dna.GetSESubBlock(selected_se_block, selected_se_subblock)
 		//var/original_block=block
 		//testing("Irradiating SE block [selected_se_block]:[selected_se_subblock] ([block])...")
@@ -611,6 +618,9 @@
 		sleep(radiation_duration SECONDS) // sleep for radiation_duration seconds
 
 		irradiating = 0
+
+		if(!connected)
+			return FALSE
 
 		if(connected.occupant)
 			if (prob(80 + connected.precision_coeff + radiation_duration / 2))

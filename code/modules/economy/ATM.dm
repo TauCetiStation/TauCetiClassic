@@ -331,26 +331,27 @@ log transactions
 					tgui_alert(usr, "That is not a valid amount.")
 				else if(authenticated_account && amount > 0)
 					var/response = tgui_alert(usr.client, "In what way would you like to recieve your money?", "Choose money format", list("Chip", "Cash"))
-					if(amount <= authenticated_account.money)
-						authenticated_account.adjust_money(-amount)
-						playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-						if(response == "Chip")
-							spawn_ewallet(amount,src.loc)
+					if(authenticated_account)
+						if(amount <= authenticated_account.money)
+							authenticated_account.adjust_money(-amount)
+							playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
+							if(response == "Chip")
+								spawn_ewallet(amount,src.loc)
+							else
+								print_money_stock(amount)
+
+
+							//create an entry in the account transaction log
+							var/datum/transaction/T = new()
+							T.target_name = authenticated_account.owner_name
+							T.purpose = "Credit withdrawal"
+							T.amount = "([amount])"
+							T.source_terminal = machine_id
+							T.date = current_date_string
+							T.time = worldtime2text()
+							authenticated_account.transaction_log.Add(T)
 						else
-							print_money_stock(amount)
-
-
-						//create an entry in the account transaction log
-						var/datum/transaction/T = new()
-						T.target_name = authenticated_account.owner_name
-						T.purpose = "Credit withdrawal"
-						T.amount = "([amount])"
-						T.source_terminal = machine_id
-						T.date = current_date_string
-						T.time = worldtime2text()
-						authenticated_account.transaction_log.Add(T)
-					else
-						to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough funds to do that!</span>")
+							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough funds to do that!</span>")
 			if("balance_statement")
 				if(authenticated_account)
 					var/obj/item/weapon/paper/R = new(src.loc)

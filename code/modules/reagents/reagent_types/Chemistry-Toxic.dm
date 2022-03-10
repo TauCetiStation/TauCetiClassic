@@ -747,7 +747,7 @@
 			W.dropped(M)
 		M.sec_hud_set_implants()
 		var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
-		new_mob.a_intent = INTENT_HARM
+		new_mob.set_a_intent(INTENT_HARM)
 		new_mob.universal_speak = 1
 		if(M.mind)
 			M.mind.transfer_to(new_mob)

@@ -45,17 +45,21 @@
 	var/poison_type = "phoron"           // Poisonous air.
 	var/exhale_type = "carbon_dioxide"   // Exhaled gas type.
 
-	var/cold_level_1 = 260  // Cold damage level 1 below this point.
-	var/cold_level_2 = 200  // Cold damage level 2 below this point.
-	var/cold_level_3 = 120  // Cold damage level 3 below this point.
+	var/cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT		// Cold damage level 1 below this point.
+	var/cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 5	// Cold damage level 2 below this point.
+	var/cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 10	// Cold damage level 3 below this point.
 
-	var/heat_level_1 = 360  // Heat damage level 1 above this point.
-	var/heat_level_2 = 400  // Heat damage level 2 above this point.
-	var/heat_level_3 = 1000 // Heat damage level 3 above this point.
+	var/heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT		// Heat damage level 1 above this point.
+	var/heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 40	// Heat damage level 2 above this point.
+	var/heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 640	// Heat damage level 3 above this point.
 
-	var/body_temperature = 310.15	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
-	var/synth_temp_gain = 0			//IS_SYNTHETIC species will gain this much temperature every second
-	var/synth_temp_max = 0			//IS_SYNTHETIC will cap at this value
+	var/breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 15
+	var/breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 30
+	var/breath_cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 45
+
+	var/body_temperature = BODYTEMP_NORMAL	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
+	var/synth_temp_gain = 0					//IS_SYNTHETIC species will gain this much temperature every second
+	var/synth_temp_max = 0					//IS_SYNTHETIC will cap at this value
 
 	var/metabolism_mod = METABOLISM_FACTOR // Whether the xeno has custom metabolism? Is not additive, does override.
 	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
@@ -224,6 +228,9 @@
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
+	if(!flags[IS_SOCIAL])
+		H.handle_socialization()
+
 	H.remove_moveset_source(MOVESET_SPECIES)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
@@ -271,6 +278,7 @@
 	,HAS_HAIR = TRUE
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	//If you wanted to add a species-level ability:
@@ -290,13 +298,13 @@
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
 
-	cold_level_1 = 280 //Default 260 - Lower is better
-	cold_level_2 = 220 //Default 200
-	cold_level_3 = 130 //Default 120
+	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT + 20
+	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT + 15
+	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT + 13
 
-	heat_level_1 = 420 //Default 360 - Higher is better
-	heat_level_2 = 480 //Default 400
-	heat_level_3 = 1100 //Default 1000
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT + 60
+	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 120
+	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 740
 
 	brute_mod = 0.80
 	burn_mod = 0.90
@@ -311,6 +319,7 @@
 	,HAS_HAIR_COLOR = TRUE
 	,NO_MINORCUTS = TRUE
 	,FACEHUGGABLE = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	flesh_color = "#34af10"
@@ -342,7 +351,7 @@
 	..()
 	M.verbs += /mob/living/carbon/human/proc/air_sample
 
-/datum/species/unathi/on_loose(mob/living/M)
+/datum/species/unathi/on_loose(mob/living/M, new_species)
 	M.verbs -= /mob/living/carbon/human/proc/air_sample
 	..()
 
@@ -359,13 +368,13 @@
 	darksight = 8
 	nighteyes = 1
 
-	cold_level_1 = 200 //Default 260
-	cold_level_2 = 140 //Default 200
-	cold_level_3 = 80 //Default 120
+	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 10
+	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
+	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
 
-	heat_level_1 = 330 //Default 360
-	heat_level_2 = 380 //Default 400
-	heat_level_3 = 800 //Default 1000
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT
+	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 20
+	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 440
 
 	primitive = /mob/living/carbon/monkey/tajara
 
@@ -382,6 +391,7 @@
 	,HAS_HAIR_COLOR = TRUE
 	,HAS_HAIR = TRUE
 	,FACEHUGGABLE = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	flesh_color = "#afa59e"
@@ -420,6 +430,7 @@
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
+	has_gendered_icons = FALSE
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -428,6 +439,7 @@
 	,HAS_SKIN_COLOR = TRUE
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	has_organ = list(
@@ -471,6 +483,10 @@
 	cold_level_2 = 50
 	cold_level_3 = 0
 
+	breath_cold_level_1 = 80
+	breath_cold_level_2 = 50
+	breath_cold_level_3 = 0
+
 	eyes = "vox_eyes"
 
 	breath_type = "nitrogen"
@@ -484,6 +500,7 @@
 		,SPRITE_SHEET_RESTRICTION = TRUE
 		,HAS_HAIR_COLOR = TRUE
 		,NO_FAT = TRUE
+		,IS_SOCIAL = TRUE
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
@@ -574,7 +591,7 @@
 
 	..()
 
-/datum/species/vox/on_loose(mob/living/carbon/human/H)
+/datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
 	if(name != VOX_ARMALIS)
 		if(H.leap_icon)
 			if(H.hud_used)
@@ -604,6 +621,10 @@
 	cold_level_2 = 50
 	cold_level_3 = 0
 
+	breath_cold_level_1 = 80
+	breath_cold_level_2 = 50
+	breath_cold_level_3 = 0
+
 	heat_level_1 = 2000
 	heat_level_2 = 3000
 	heat_level_3 = 4000
@@ -622,6 +643,7 @@
 	,NO_PAIN = TRUE
 	,SPRITE_SHEET_RESTRICTION = TRUE
 	,NO_FAT = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -655,6 +677,10 @@
 	cold_level_2 = -1
 	cold_level_3 = -1
 
+	breath_cold_level_1 = 50
+	breath_cold_level_2 = -1
+	breath_cold_level_3 = -1
+
 	heat_level_1 = 2000
 	heat_level_2 = 3000
 	heat_level_3 = 4000
@@ -681,6 +707,7 @@
 	,IS_PLANT = TRUE
 	,NO_VOMIT = TRUE
 	,RAD_ABSORB = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	has_bodypart = list(
@@ -789,8 +816,8 @@
 
 	brute_mod = 1.3
 	burn_mod = 1.3
-	speed_mod = 0.7
-	speed_mod_no_shoes = -1
+	speed_mod = 2.7
+	speed_mod_no_shoes = -2
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -804,6 +831,7 @@
 	,RAD_ABSORB = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_HAIR = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	has_bodypart = list(
@@ -828,8 +856,23 @@
 	regen_mod = 0.5
 	regen_limbs = FALSE
 
+/datum/species/diona/podman/on_gain(mob/living/carbon/human/H)
+	. = ..()
+	RegisterSignal(H, list(COMSIG_MOB_GHOST), .proc/find_replacement)
+
+/datum/species/diona/podman/on_loose(mob/living/carbon/human/H)
+	UnregisterSignal(H, list(COMSIG_MOB_GHOST))
+	return ..()
+
 /datum/species/diona/podman/handle_death(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
+
+/datum/species/diona/podman/proc/find_replacement(datum/source, can_reenter_corpse)
+	SIGNAL_HANDLER
+
+	if(can_reenter_corpse)
+		return
+	create_spawner(/datum/spawner/podman, "podman", source)
 
 /datum/species/machine
 	name = IPC
@@ -849,7 +892,11 @@
 	cold_level_2 = -1
 	cold_level_3 = -1
 
-	heat_level_1 = 400		//gives them about 15 seconds in space before taking damage
+	breath_cold_level_1 = 50
+	breath_cold_level_2 = -1
+	breath_cold_level_3 = -1
+
+	heat_level_1 = 400		//gives them about 25 seconds in space before taking damage
 	heat_level_2 = 1000
 	heat_level_3 = 2000
 
@@ -885,6 +932,7 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_MUTATION = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	has_bodypart = list(
@@ -929,7 +977,7 @@
 	if(BP)
 		H.set_light(BP.screen_brightness)
 
-/datum/species/machine/on_loose(mob/living/carbon/human/H)
+/datum/species/machine/on_loose(mob/living/carbon/human/H, new_species)
 	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
 	H.verbs -= /mob/living/carbon/human/proc/IPC_toggle_screen
 	H.verbs -= /mob/living/carbon/human/proc/IPC_display_text
@@ -1114,6 +1162,10 @@
 	cold_level_2 = -1
 	cold_level_3 = -1
 
+	breath_cold_level_1 = 50
+	breath_cold_level_2 = -1
+	breath_cold_level_3 = -1
+
 	heat_level_1 = 2000
 	heat_level_2 = 3000
 	heat_level_3 = 4000
@@ -1193,6 +1245,7 @@
 		NO_EMOTION = TRUE,
 		NO_MUTATION = TRUE,
 		NO_FAT = TRUE,
+		IS_SOCIAL = TRUE,
 		)
 
 	has_organ = list(
@@ -1224,7 +1277,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, SLOT_WEAR_MASK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
 
-/datum/species/golem/on_loose(mob/living/carbon/human/H)
+/datum/species/golem/on_loose(mob/living/carbon/human/H, new_species)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
 	H.dna.mutantrace = null
 	H.real_name = "unknown"
@@ -1295,7 +1348,7 @@
 
 	..()
 
-/datum/species/zombie/on_loose(mob/living/carbon/human/H)
+/datum/species/zombie/on_loose(mob/living/carbon/human/H, new_species)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
 
 	if(istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
@@ -1366,6 +1419,7 @@
 
 	flesh_color = "#34af10"
 	base_color = "#000000"
+	has_gendered_icons = FALSE
 
 	flags = list(
 	NO_BREATHE = TRUE
@@ -1391,9 +1445,9 @@
 	unarmed_type = /datum/unarmed_attack/slime_glomp
 	has_gendered_icons = FALSE
 
-	cold_level_1 = 280
-	cold_level_2 = 230
-	cold_level_3 = 150
+	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT + 20
+	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 10
+	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
 
 	flags = list(
 	 NO_BREATHE = TRUE
@@ -1403,6 +1457,7 @@
 	,HAS_UNDERWEAR = TRUE
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	min_age = 1

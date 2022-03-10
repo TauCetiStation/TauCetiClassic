@@ -145,6 +145,8 @@
 	requirement = "Нёт."
 
 /datum/quality/shkiondioniovioion/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
+
 	H.add_language(LANGUAGE_SHKIONDIONIOVIOION)
 	H.forced_language = LANGUAGE_SHKIONDIONIOVIOION
 
@@ -152,6 +154,17 @@
 		if(language == H.forced_language)
 			continue
 		H.remove_language(language.name)
+
+
+/datum/quality/salarian
+	desc = "Ну що хлопче, готовий?"
+	requirement = "Нема."
+
+/datum/quality/salarian/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
+
+	H.add_language(LANGUAGE_SALARIAN)
+	H.forced_language = LANGUAGE_SALARIAN
 
 
 /datum/quality/clumsy

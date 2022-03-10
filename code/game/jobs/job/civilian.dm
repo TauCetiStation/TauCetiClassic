@@ -13,7 +13,7 @@
 	salary = 160
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/qm
-	skill_sets = list("Quartermaster" = /datum/skillset/quartermaster)
+	skillsets = list("Quartermaster" = /datum/skillset/quartermaster)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -38,7 +38,7 @@
 	salary = 50
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/cargo_tech
-	skill_sets = list("Cargo Technician" = /datum/skillset/cargotech)
+	skillsets = list("Cargo Technician" = /datum/skillset/cargotech)
 
 
 /datum/job/mining
@@ -55,7 +55,7 @@
 	salary = 80
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/mining
-	skill_sets = list("Shaft Miner" = /datum/skillset/miner)
+	skillsets = list("Shaft Miner" = /datum/skillset/miner)
 
 
 /datum/job/recycler
@@ -72,7 +72,7 @@
 	salary = 60
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/recycler
-	skill_sets = list("Recycler" = /datum/skillset/recycler)
+	skillsets = list("Recycler" = /datum/skillset/recycler)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -98,7 +98,7 @@
 	salary = 40
 	minimal_player_ingame_minutes = 240
 	outfit = /datum/outfit/job/bartender
-	skill_sets = list("Bartender" = /datum/skillset/bartender)
+	skillsets = list("Bartender" = /datum/skillset/bartender)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -124,7 +124,7 @@
 	alt_titles = list("Cook")
 	minimal_player_ingame_minutes = 240
 	outfit = /datum/outfit/job/chef
-	skill_sets = list("Chef" = /datum/skillset/chef)
+	skillsets = list("Chef" = /datum/skillset/chef)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -150,7 +150,7 @@
 	alt_titles = list("Hydroponicist")
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/hydro
-	skill_sets = list("Botanist" = /datum/skillset/botanist)
+	skillsets = list("Botanist" = /datum/skillset/botanist)
 
 
 /datum/job/janitor
@@ -167,7 +167,7 @@
 	salary = 50
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/janitor
-	skill_sets = list("Janitor" = /datum/skillset/janitor)
+	skillsets = list("Janitor" = /datum/skillset/janitor)
 
 
 //More or less assistants
@@ -186,7 +186,7 @@
 	alt_titles = list("Stylist" = /datum/outfit/job/stylist)
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/barber
-	skill_sets = list("Barber" = /datum/skillset/barber)
+	skillsets = list("Barber" = /datum/skillset/barber)
 
 
 /datum/job/librarian
@@ -204,7 +204,7 @@
 	alt_titles = list("Journalist")
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/librarian
-	skill_sets = list("Librarian" = /datum/skillset/librarian)
+	skillsets = list("Librarian" = /datum/skillset/librarian)
 
 
 //var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
@@ -222,7 +222,7 @@
 	salary = 200
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/lawyer
-	skill_sets = list("Internal Affairs Agent" = /datum/skillset/internal_affairs)
+	skillsets = list("Internal Affairs Agent" = /datum/skillset/internal_affairs)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -247,6 +247,7 @@
 	salary = 20
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/clown
+	skillsets = list("Clown" = /datum/skillset/clown)
 
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
@@ -265,6 +266,7 @@
 	access = list(access_mime, access_theatre)
 	salary = 20
 	outfit = /datum/outfit/job/mime
+	skillsets = list("Mime" = /datum/skillset/mime)
 
 /datum/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
