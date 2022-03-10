@@ -96,6 +96,9 @@
 
 /obj/item/weapon/storage/wallet/random/atom_init()
 	. = ..()
+
+	use_sound = SOUNDIN_VELCRO
+
 	var/list/spawn_type1 = list(
 		/obj/item/weapon/spacecash/bill/c10,
 		/obj/item/weapon/spacecash/bill/c100,

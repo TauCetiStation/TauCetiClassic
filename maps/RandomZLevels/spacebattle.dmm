@@ -2233,8 +2233,8 @@
 /area/awaymission/spacebattle/cruiser)
 "gI" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/spacecash/c10,
-/obj/item/weapon/spacecash/c10,
+/obj/item/weapon/spacecash/bill/c10,
+/obj/item/weapon/spacecash/bill/c10,
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "gJ" = (

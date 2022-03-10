@@ -357,8 +357,8 @@
 /area/awaymission/BMPship3)
 "bk" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/spacecash/c500,
-/obj/item/weapon/spacecash/c100,
+/obj/item/weapon/spacecash/bill/c500,
+/obj/item/weapon/spacecash/bill/c100,
 /turf/simulated/floor/wood,
 /area/awaymission/BMPship3)
 "bl" = (
@@ -545,8 +545,8 @@
 /area/awaymission/BMPship1)
 "bN" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/spacecash/c1000,
-/obj/item/weapon/spacecash/c50,
+/obj/item/weapon/spacecash/bill/c500,
+/obj/item/weapon/spacecash/bill/c50,
 /turf/simulated/floor/plating{
 	dir = 4;
 	icon_state = "warnplate"
@@ -725,16 +725,16 @@
 "cr" = (
 /obj/structure/closet/crate,
 /obj/item/device/analyzer,
-/obj/item/weapon/spacecash/c10,
+/obj/item/weapon/spacecash/bill/c10,
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
 	},
 /area/awaymission/BMPship1)
 "cs" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/spacecash/c1000,
-/obj/item/weapon/spacecash/c200,
-/obj/item/weapon/spacecash/c500,
+/obj/item/weapon/spacecash/bill/c500,
+/obj/item/weapon/spacecash/bill/c200,
+/obj/item/weapon/spacecash/bill/c500,
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
 	},
@@ -3047,13 +3047,13 @@
 /area/awaymission)
 "iv" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/spacecash/c10,
-/obj/item/weapon/spacecash/c200,
+/obj/item/weapon/spacecash/bill/c10,
+/obj/item/weapon/spacecash/bill/c200,
 /turf/simulated/floor,
 /area/awaymission/BMPship1)
 "iw" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/spacecash/c10,
+/obj/item/weapon/spacecash/bill/c10,
 /turf/simulated/floor,
 /area/awaymission/BMPship1)
 "ix" = (

@@ -55,19 +55,19 @@
 	pixel_x = 12;
 	pixel_y = 6
 	},
-/obj/item/weapon/spacecash/c500{
+/obj/item/weapon/spacecash/bill/c500{
 	pixel_x = -2;
 	pixel_y = -7
 	},
-/obj/item/weapon/spacecash/c1000{
+/obj/item/weapon/spacecash/bill/c500{
 	pixel_x = 11;
 	pixel_y = 5
 	},
-/obj/item/weapon/spacecash/c1000,
-/obj/item/weapon/spacecash/c200{
+/obj/item/weapon/spacecash/bill/c500,
+/obj/item/weapon/spacecash/bill/c200{
 	pixel_y = 9
 	},
-/obj/item/weapon/spacecash/c500{
+/obj/item/weapon/spacecash/bill/c500{
 	pixel_x = -12;
 	pixel_y = 6
 	},

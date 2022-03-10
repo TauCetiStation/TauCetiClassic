@@ -42376,9 +42376,9 @@
 /area/station/maintenance/brig)
 "mlz" = (
 /obj/item/weapon/moneybag,
-/obj/item/weapon/spacecash/c10,
-/obj/item/weapon/spacecash/c10,
-/obj/item/weapon/spacecash/c100,
+/obj/item/weapon/spacecash/bill/c10,
+/obj/item/weapon/spacecash/bill/c10,
+/obj/item/weapon/spacecash/bill/c100,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "mlA" = (
@@ -79571,7 +79571,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/weapon/spacecash/c10,
+/obj/item/weapon/spacecash/bill/c10,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "yes" = (
