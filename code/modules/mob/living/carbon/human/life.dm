@@ -454,7 +454,7 @@
 			inhaled_gas_used = inhaling * ratio * BREATH_USED_PART
 		else
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		
+
 		failed_last_breath = 1
 		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 
@@ -660,7 +660,7 @@
 		throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
 	else if(adjusted_pressure >= species.warning_low_pressure)
 		clear_alert("pressure")
-	else if(adjusted_pressure >= species.hazard_low_pressure)
+	else if(adjusted_pressure >= species.get_hazard_low_pressure(src))
 		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 	else
 		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
