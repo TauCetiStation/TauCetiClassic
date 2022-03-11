@@ -26,4 +26,3 @@
 /datum/skillset/proc/get_skill(skill)
 	return skills[skill]
 
-
