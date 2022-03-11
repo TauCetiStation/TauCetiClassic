@@ -1108,7 +1108,7 @@
 		if(L == speaking)
 			continue
 
-		txt = L.accentuate(txt)
+		txt = L.accentuate(txt, speaking)
 	return txt
 
 /mob/living/carbon/init_languages()
