@@ -20,6 +20,9 @@
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 
+	// I dont known how
+	global.player_list -= src
+
 	if(mind)
 		if(mind.current == src)
 			mind.set_current(null)
