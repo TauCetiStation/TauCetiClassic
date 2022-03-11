@@ -83,6 +83,10 @@
 	if(!..())
 		return FALSE
 
+	if(!AOG.buckled_mob)
+		to_chat(user, "<span class='warning'>Для обращения нужно существо на алтаре.</span>")
+		return FALSE
+
 	if(!religion.can_convert(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>Вы не можете обратить это существо.</span>")
 		return FALSE
@@ -91,6 +95,11 @@
 
 /datum/religion_rites/instant/cult/convert/invoke_effect(mob/living/user, obj/AOG)
 	..()
+
+	if(!AOG.buckled_mob)
+		to_chat(user, "<span class='warning'>Для обращения нужно существо на алтаре.</span>")
+		return FALSE
+
 	if(!religion.can_convert(AOG.buckled_mob))
 		return FALSE
 
