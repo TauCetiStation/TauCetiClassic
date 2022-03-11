@@ -391,11 +391,11 @@
 
 	if(currently_vending)
 		var/dat
-		dat += "<b>You have selected [currently_vending.product_name] for [currently_vending.price] cr.<br>Please swipe your ID or insert cash to pay for the article.</b><br>"
+		dat += "<b>You have selected [currently_vending.product_name] for [currently_vending.price] <span class='credit'></span><br>Please swipe your ID or insert cash to pay for the article.</b><br>"
 		if(id_scanned)
 			dat += "<b>Your ID card is scanned, please confirm operation.</b><br>"
 		else if(cash > 0)
-			dat += "<b>Cash inserted, credits amount: [cash] cr.</b><br>"
+			dat += "<b>Cash inserted, credits amount: [cash] <span class='credit'></span></b><br>"
 			dat += "<a href='byond://?src=\ref[src];withdraw=1'>Withdraw</a><br>"
 		dat += "<a href='byond://?src=\ref[src];confirm=1'>Confirm</a><br>"
 		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
@@ -441,9 +441,9 @@
 		dat += "<td><B>[R.product_name]</B></td>"
 		dat += "<td class='collapsing' align='center'><span class='[1 < R.amount ? "good" : R.amount == 1 ? "average" : "bad"]'>[R.amount] in stock</span></td>"
 		if (R.amount > 0)
-			dat += "<td class='collapsing' align='center'><a class='fluid' href='byond://?src=\ref[src];vend=\ref[R]'>[R.price ? "[R.price] cr." : "FREE"]</A></td>"
+			dat += "<td class='collapsing' align='center'><a class='fluid' href='byond://?src=\ref[src];vend=\ref[R]'>[R.price ? "[R.price] <span class='credit'></span>" : "FREE"]</A></td>"
 		else
-			dat += "<td class='collapsing' align='center'><div class='disabled fluid'>[R.price ? "[R.price] cr." : "FREE"]</div></td>"
+			dat += "<td class='collapsing' align='center'><div class='disabled fluid'>[R.price ? "[R.price] <span class='credit'></span>" : "FREE"]</div></td>"
 		dat += "</tr>"
 	return dat
 
