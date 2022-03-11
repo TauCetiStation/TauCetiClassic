@@ -429,6 +429,9 @@
 	id_tag = "Listening_Post_pump";
 	name = "DJ Large Air Vent"
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
