@@ -137,7 +137,7 @@
 				continue
 			if(istype(H.head, /obj/item/clothing/head))
 				var/obj/item/clothing/head/hat = H.head
-				if(istype(hat) && hat.blockTracking)
+				if(hat.blockTracking)
 					continue
 
 		 // Now, are they viewable by a camera? (This is last because it's the most intensive check)
@@ -205,7 +205,7 @@
 					return
 				if(istype(H.head, /obj/item/clothing/head))
 					var/obj/item/clothing/head/hat = H.head
-					if(istype(hat) && hat.blockTracking)
+					if(hat.blockTracking)
 						to_chat(U, "Follow camera mode terminated.")
 						U.cameraFollow = null
 						return
