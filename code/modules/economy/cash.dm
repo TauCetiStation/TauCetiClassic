@@ -121,7 +121,7 @@
 	for(var/i in 1 to contents.len)
 		var/obj/item/weapon/spacecash/bill/B = contents[i]
 		var/image/I = image(icon=B.icon, icon_state="spacecash[B.worth]")
-		I.color = list(1/contents.len*i,0,0, 0,1/contents.len*i,0, 0,0,1/contents.len*i, 0,0,0)
+		I.color = COLOR_LUMINOSITY(1/contents.len*i)
 		I.pixel_x += rand(-1,1)
 		I.pixel_y -= 1-i
 		bundle_overlays += I

@@ -132,3 +132,6 @@
 	0.0, \
 	0.0 \
 )
+
+//Luminocity change
+#define COLOR_LUMINOSITY(lum) list(lum,0,0, 0,lum,0, 0,0,lum, 0,0,0)
