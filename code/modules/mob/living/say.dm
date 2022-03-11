@@ -102,10 +102,13 @@ var/global/list/department_radio_keys = list(
 			return
 	if(sanitize)
 		message = sanitize(message)
-		message = approximate_sounds(message, speaking)
-
 		if(!message)
 			return
+
+		message = approximate_sounds(message, speaking)
+		if(!message)
+			return
+
 		message = capitalize(trim(message))
 		message = add_period(message)
 	else
