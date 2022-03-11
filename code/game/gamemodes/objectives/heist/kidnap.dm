@@ -23,6 +23,7 @@
 	if(target && target.current)
 		if(target.current.stat == DEAD)
 			return OBJECTIVE_LOSS // They're dead. Fail.
-		if(get_area(target.current) == get_area_by_type(/area/shuttle/vox/arkship))
+		var/list/area/arkship_areas = list(/area/shuttle/vox/arkship, /area/shuttle/vox/arkship_hold)
+		if(is_type_in_list(get_area(target.current), arkship_areas))
 			return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS

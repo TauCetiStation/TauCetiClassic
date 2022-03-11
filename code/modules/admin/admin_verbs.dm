@@ -157,6 +157,7 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/edit_color_matrix,
 	/client/proc/restart_controller,
 	/client/proc/generate_round_scoreboard,
+	/client/proc/save_statistics,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/forceEvent,
@@ -279,6 +280,7 @@ var/global/list/admin_verbs_hideable = list(
 	/datum/admins/proc/toggleAI,
 	/client/proc/restart_controller,
 	/client/proc/generate_round_scoreboard,
+	/client/proc/save_statistics,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
 	/datum/admins/proc/adjump,
@@ -400,7 +402,7 @@ var/global/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	set name = "Aghost"
 	if(!holder)	return
-	if(istype(mob,/mob/dead/observer))
+	if(isobserver(mob))
 		//re-enter
 		var/mob/dead/observer/ghost = mob
 		ghost.can_reenter_corpse = TRUE
@@ -810,7 +812,7 @@ var/global/list/admin_verbs_hideable = list(
 	if(!check_rights(R_FUN))
 		return
 
-	if(!istype(M, /mob/living/carbon/human))
+	if(!ishuman(M))
 		to_chat(usr, "<span class='warning'>You can only do this to humans!</span>")
 		return
 	switch(tgui_alert(usr, "Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",, list("Yes","No")))
@@ -1025,7 +1027,7 @@ var/global/list/admin_verbs_hideable = list(
 	var/name = sanitize(input("What will you call your achievement?", "Achievement Winner", "New Achievement"))
 	var/desc = sanitize(input("What description will you give it?", "Achievement Description", "You Win"))
 
-	if(istype(winner, /mob/living))
+	if(isliving(winner))
 		achoice = tgui_alert(usr, "Give our winner his own trophy?","Achievement Trophy", list("Confirm","Cancel"))
 
 	var/glob = tgui_alert(usr, "Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", list("No!","Yes!"))
@@ -1050,7 +1052,7 @@ var/global/list/admin_verbs_hideable = list(
 
 	to_chat(winner, "<span class='danger'>Congratulations!</span>")
 
-	achievements += list(list("key" = winner.key, "name" = winner.name, "title" = name, "desc" = desc))
+	SSStatistics.add_achievement(winner.key, winner.name, name, desc)
 
 /client/proc/aooc()
 	set category = "Admin"
@@ -1068,7 +1070,7 @@ var/global/list/admin_verbs_hideable = list(
 
 	for(var/mob/M in player_list)
 		if((isanyantag(M)) || (M.client && M.client.holder))
-			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
+			to_chat(M, "<span class='antagooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span>")
 
 	log_ooc("Antag-OOC: [key_name(src)] : [msg]")
 
@@ -1210,7 +1212,7 @@ var/global/centcom_barriers_stat = 1
 /obj/effect/landmark/trololo/Crossed(atom/movable/AM)
 	. = ..()
 	if(!active) return
-	/*if(istype(M, /mob/living/carbon))
+	/*if(iscarbon(M))
 		M.playsound_local(null, melody, VOL_EFFECTS_MASTER, 20, FALSE, channel = lchannel, wait = TRUE, ignore_environment = TRUE)*/
 
 /obj/structure/centcom_barrier

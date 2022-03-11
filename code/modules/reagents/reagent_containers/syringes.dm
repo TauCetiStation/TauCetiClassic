@@ -72,13 +72,13 @@
 				return
 
 			if(ismob(target))//Blood!
-				if(istype(target, /mob/living/carbon/slime))
+				if(isslime(target))
 					to_chat(user, "<span class='warning'>You are unable to locate any blood.</span>")
 					return
 				if(reagents.has_reagent("blood"))
 					to_chat(user, "<span class='warning'>There is already a blood sample in this syringe</span>")
 					return
-				if(istype(target, /mob/living/carbon))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
+				if(iscarbon(target))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 					var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 					var/mob/living/carbon/T = target
 					if(!T.dna)
@@ -89,7 +89,7 @@
 						return
 
 					var/datum/reagent/B
-					if(istype(T,/mob/living/carbon/human))
+					if(ishuman(T))
 						var/mob/living/carbon/human/H = T
 						if(H.species && H.species.flags[NO_BLOOD])
 							H.reagents.trans_to(src,amount)
@@ -129,7 +129,7 @@
 			if(istype(target, /obj/item/weapon/implantcase/chem))
 				return
 
-			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
+			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes) && !istype(target, /obj/item/weapon/changeling_test))
 				to_chat(user, "<span class='warning'>You cannot directly fill this object.</span>")
 				return
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -164,7 +164,7 @@
 				B = d
 				break
 			var/trans = 5
-			if(B && istype(target,/mob/living/carbon))
+			if(B && iscarbon(target))
 				var/list/virus2 = B.data["virus2"]
 				if(virus2 && virus2.len)
 					message_admins("<font color='red'>Injected blood with virus to [target] by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) [ADMIN_JMP(user)]</font>",0,1)
@@ -304,7 +304,7 @@
 				return
 
 			if(ismob(target))
-				if(istype(target, /mob/living/carbon))//I Do not want it to suck 50 units out of people
+				if(iscarbon(target))//I Do not want it to suck 50 units out of people
 					to_chat(usr, "This needle isn't designed for drawing blood.")
 					return
 			else //if not mob

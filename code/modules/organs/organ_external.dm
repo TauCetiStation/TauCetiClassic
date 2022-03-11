@@ -40,6 +40,11 @@
 	var/bandaged = FALSE              // Are there any visual bandages on this bodypart
 	var/is_stump = FALSE              // Is it just a leftover of a destroyed bodypart
 	var/leaves_stump = TRUE           // Does this bodypart leaves a stump when destroyed
+	// PUMPED, yo
+	var/pumped = 0
+	// Value after which the bodypart changes it's sprite
+	var/pumped_threshold = 20
+	var/max_pumped = 60
 
 	// Joint/state stuff.
 	var/cannot_amputate               // Impossible to amputate.
@@ -73,6 +78,7 @@
 		if(owner.bodyparts_by_name[body_zone] == src)
 			owner.bodyparts_by_name -= body_zone
 		owner.bad_bodyparts -= src
+	QDEL_LIST(bodypart_organs)
 	return ..()
 
 /obj/item/organ/external/proc/harvest(obj/item/I, mob/user)
@@ -132,6 +138,7 @@
 	var/mutations = owner ? owner.mutations : list()
 	var/fat
 	var/g
+	var/pump
 
 	if(body_zone == BP_CHEST && owner)
 		fat = HAS_TRAIT(owner, TRAIT_FAT) ? "fat" : null
@@ -141,15 +148,17 @@
 	if (!species.has_gendered_icons)
 		g = null
 
+	pump = pumped > pumped_threshold ? "pumped" : null
+
 	if (HUSK in mutations)
 		icon = 'icons/mob/human_races/husk.dmi'
 		icon_state = body_zone
 	else if (status & ORGAN_MUTATED)
 		icon = species.deform
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""]"
+		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
 	else
 		icon = species.icobase
-		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""]"
+		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
 
 	if(status & ORGAN_DEAD)
 		color = NECROSIS_COLOR_MOD
@@ -293,20 +302,20 @@ Note that amputating the affected organ does in fact remove the infection from t
 				var/gore_sound = "[is_robotic() ? "tortured metal" : "ripping tendons and flesh"]"
 				owner.visible_message(
 					"<span class='danger'>\The [owner]'s [name] flies off in an arc!</span>",
-					"<span class='moderate'><b>Your [name] goes flying off!</b></span>",
+					"<span class='userdanger'><b>Your [name] goes flying off!</b></span>",
 					"<span class='danger'>You hear a terrible sound of [gore_sound].</span>")
 		if(DROPLIMB_BURN)
 			var/gore = "[is_robotic() ? "": " of burning flesh"]"
 			owner.visible_message(
 				"<span class='danger'>\The [owner]'s [name] flashes away into ashes!</span>",
-				"<span class='moderate'><b>Your [name] flashes away into ashes!</b></span>",
+				"<span class='userdanger'><b>Your [name] flashes away into ashes!</b></span>",
 				"<span class='danger'>You hear a crackling sound[gore].</span>")
 		if(DROPLIMB_BLUNT)
 			var/gore = "[is_robotic() ? "": " in shower of gore"]"
 			var/gore_sound = "[is_robotic() ? "rending sound of tortured metal" : "sickening splatter of gore"]"
 			owner.visible_message(
 				"<span class='danger'>\The [owner]'s [name] explodes[gore]!</span>",
-				"<span class='moderate'><b>Your [name] explodes[gore]!</b></span>",
+				"<span class='userdanger'><b>Your [name] explodes[gore]!</b></span>",
 				"<span class='danger'>You hear the [gore_sound].</span>")
 
 	status &= ~(ORGAN_BROKEN | ORGAN_BLEEDING | ORGAN_SPLINTED | ORGAN_ARTERY_CUT)
@@ -645,6 +654,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 		H.drop_from_inventory(W)
 	W.loc = owner
 
+/obj/item/organ/external/proc/adjust_pumped(value, cap)
+	return controller.adjust_pumped(value, cap)
+
 /****************************************************
 			   ORGAN DEFINES
 ****************************************************/
@@ -708,6 +720,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = TRUE
 	w_class = SIZE_SMALL
 
+	// No PUMPED sprite for the head means you can't pump it.
+	// Threshold is still there to not be interpreted as FULLY PUMPED
+	pumped_threshold = 20
+	max_pumped = 0
+
 	var/disfigured = FALSE
 	var/mob/living/carbon/brain/brainmob
 	var/brain_op_stage = 0
@@ -742,7 +759,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	organ_head_list += src
 
 /obj/item/organ/external/head/is_compatible(mob/living/carbon/human/H)
-	if(H.species.name == IPC || H.species.name == DIONA)
+	if(H.get_species() in list(IPC, DIONA, PODMAN))
 		return FALSE
 
 	return TRUE
@@ -826,7 +843,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			else
 				return ..()
 
-	else if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/hatchet))
+	else if(istype(I, /obj/item/weapon/circular_saw) || iscrowbar(I) || istype(I, /obj/item/weapon/hatchet))
 		switch(brain_op_stage)
 			if(1)
 				for(var/mob/O in (oviewers(brainmob) - user))
@@ -859,12 +876,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/head/diona
 	vital = FALSE
+	controller_type = /datum/bodypart_controller/nymph
+
+/obj/item/organ/external/head/podman
+	controller_type = /datum/bodypart_controller/plant
 
 /obj/item/organ/external/head/diona/is_compatible(mob/living/carbon/human/H)
-	if(H.species.name == DIONA)
-		return TRUE
-
-	return FALSE
+	return species.name == H.species.name
 
 /obj/item/organ/external/head/abomination
 	vital = FALSE
@@ -895,6 +913,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(owner)
 		process_grasp(owner.l_hand, "left hand")
 
+/obj/item/organ/external/l_arm/diona
+	name = "left upper tendril"
+	vital = FALSE
+	controller_type = /datum/bodypart_controller/nymph
+
+/obj/item/organ/external/l_arm/diona/podman
+	controller_type = /datum/bodypart_controller/plant
 
 /obj/item/organ/external/r_arm
 	name = "right arm"
@@ -921,6 +946,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(owner)
 		process_grasp(owner.r_hand, "right hand")
 
+/obj/item/organ/external/r_arm/diona
+	name = "right upper tendril"
+	vital = FALSE
+	controller_type = /datum/bodypart_controller/nymph
+
+/obj/item/organ/external/r_arm/diona/podman
+	controller_type = /datum/bodypart_controller/plant
+
 /obj/item/organ/external/l_leg
 	name = "left leg"
 	artery_name = "femoral artery"
@@ -941,6 +974,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = SIZE_SMALL
 
+/obj/item/organ/external/l_leg/diona
+	name = "left lower tendril"
+	vital = FALSE
+	controller_type = /datum/bodypart_controller/nymph
+
+/obj/item/organ/external/l_leg/diona/podman
+	controller_type = /datum/bodypart_controller/plant
+
 /obj/item/organ/external/r_leg
 	name = "right leg"
 	artery_name = "femoral artery"
@@ -960,6 +1001,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = SIZE_SMALL
+
+/obj/item/organ/external/r_leg/diona
+	name = "right lower tendril"
+	vital = FALSE
+	controller_type = /datum/bodypart_controller/nymph
+
+/obj/item/organ/external/r_leg/diona/podman
+	controller_type = /datum/bodypart_controller/plant
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)

@@ -128,7 +128,7 @@
 		var/update_hair = 0
 		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
 			update_hair = 1
-		else if(istype(W, /obj/item))
+		else if(isitem(W))
 			var/obj/item/I = W
 			if(I.flags_inv & HIDEMASK)
 				update_hair = 1
@@ -161,7 +161,7 @@
 		var/update_hair = 0
 		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
 			update_hair = 1
-		else if(istype(W, /obj/item))
+		else if(isitem(W))
 			var/obj/item/I = W
 			if(I.flags_inv & HIDEMASK)
 				update_hair = 1
@@ -369,7 +369,7 @@
 			W.loc = src.back
 		if(SLOT_TIE)
 			var/obj/item/clothing/under/uniform = w_uniform
-			uniform.attackby(W, src)
+			uniform.attach_accessory(W, src)
 		else
 			to_chat(src, "<span class='warning'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return

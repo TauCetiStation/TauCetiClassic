@@ -58,7 +58,7 @@
 			new /obj/item/weapon/gun/projectile/automatic/pistol(src)
 			new /obj/item/weapon/silencer(src)
 			new /obj/item/ammo_box/magazine/m9mm(src)
-			new /obj/item/weapon/soap/syndie(src)
+			new /obj/item/weapon/reagent_containers/food/snacks/soap/syndie(src)
 			new /obj/item/weapon/storage/bag/trash(src)
 			new /obj/item/bodybag(src)
 			new /obj/item/clothing/under/suit_jacket/reinforced(src)
@@ -257,6 +257,17 @@
 	new /obj/item/clothing/suit/armor/syndilight(src)
 	new /obj/item/clothing/head/helmet/syndilight(src)
 	make_exact_fit()
+
+
+/obj/item/weapon/storage/box/syndie_kit/cheap_armor
+	name = "box (CA)"
+
+/obj/item/weapon/storage/box/syndie_kit/cheap_armor/atom_init()
+	. = ..()
+	new /obj/item/clothing/suit/armor/vest(src)
+	new /obj/item/clothing/head/helmet(src)
+	make_exact_fit()
+
 
 /obj/item/weapon/storage/box/syndie_kit/fake
 	name = "box (B)"

@@ -75,7 +75,7 @@ var/global/list/department_radio_keys = list(
 )
 
 /mob/living/proc/binarycheck()
-	if (istype(src, /mob/living/silicon/pai))
+	if (ispAI(src))
 		return
 	if (issilicon(src))
 		return 1
@@ -104,6 +104,8 @@ var/global/list/department_radio_keys = list(
 		message = sanitize(message)
 		if(!message)
 			return
+		message = capitalize(trim(message))
+		message = add_period(message)
 
 	var/turf/T = get_turf(src)
 
@@ -126,7 +128,7 @@ var/global/list/department_radio_keys = list(
 		italics = 1
 		message_range = 1
 
-		if (!istype(src, /mob/living/silicon/ai)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
+		if (!isAI(src)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
 			for(var/mob/living/M in hearers(5, src))
 				if(M != src)
 					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>", SHOWMSG_VISUAL|SHOWMSG_AUDIO)
@@ -163,6 +165,8 @@ var/global/list/department_radio_keys = list(
 			hearturfs += AM.locs[1]
 
 		for(var/mob/M in player_list)
+			if(QDELETED(M)) // avoid not hard-deleted mobs with client
+				continue
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 				listening |= M
 				continue

@@ -202,7 +202,7 @@
 			if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
 				tally -= 0.5
 		//Machinery pulling
-		if(istype(AM, /obj/machinery))
+		if(ismachinery(AM))
 			tally += 0.5
 		pull_debuff += tally
 
@@ -240,7 +240,7 @@
 
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
 /mob/living/proc/burn_skin(burn_amount)
-	if(istype(src, /mob/living/carbon/human))
+	if(ishuman(src))
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
 		if(NO_SHOCK in src.mutations) //shockproof
 			return 0
@@ -253,14 +253,14 @@
 			BP.take_damage(0, divided_damage + extradam)	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
 		H.updatehealth()
 		return 1
-	else if(istype(src, /mob/living/carbon/monkey))
+	else if(ismonkey(src))
 		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
 		var/mob/living/carbon/monkey/M = src
 		M.adjustFireLoss(burn_amount)
 		M.updatehealth()
 		return 1
-	else if(istype(src, /mob/living/silicon/ai))
+	else if(isAI(src))
 		return 0
 
 /mob/living/proc/adjustBodyTemp(actual, desired, incrementboost)
@@ -279,7 +279,7 @@
 		temperature -= change
 		if(actual < desired)
 			temperature = desired
-//	if(istype(src, /mob/living/carbon/human))
+//	if(ishuman(src))
 //		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
 	return temperature
 
@@ -471,7 +471,7 @@
 	else if(istype(loc, /obj/structure/transit_tube_pod))
 		loc_temp = environment.temperature
 
-	else if(istype(get_turf(src), /turf/space))
+	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
 
@@ -575,6 +575,8 @@
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
+
+	SetDrunkenness(0)
 
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -842,7 +844,7 @@
 			M.drop_from_inventory(H)
 			to_chat(M, "<span class='notice'>[H] wriggles out of your grip!</span>")
 			to_chat(src, "<span class='notice'>You wriggle out of [M]'s grip!</span>")
-		else if(istype(H.loc,/obj/item))
+		else if(isitem(H.loc))
 			to_chat(src, "<span class='notice'>You struggle free of [H.loc].</span>")
 			H.forceMove(get_turf(H))
 		return
@@ -1398,3 +1400,55 @@
 	if(beauty.Get() == 0.0)
 		return
 	AddElement(/datum/element/beauty, beauty.Get())
+
+/mob/living/proc/AdjustDrunkenness(amount)
+	drunkenness += amount
+
+/mob/living/proc/SetDrunkenness(value)
+	drunkenness = value
+
+/mob/living/proc/MakeDrunkenness(value)
+	drunkenness = max(value, drunkenness)
+
+/mob/living/proc/handle_drunkenness()
+	if(drunkenness <= 0)
+		drunkenness = 0
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
+		return
+
+	if(drunkenness >= DRUNKENNESS_PASS_OUT)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk_catharsis)
+	else if(drunkenness >= DRUNKENNESS_CONFUSED)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/very_drunk)
+	else if(drunkenness >= DRUNKENNESS_SLUR)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
+
+	if(drowsyness)
+		AdjustDrunkenness(-1)
+
+	if(drunkenness >= DRUNKENNESS_PASS_OUT)
+		paralysis = max(paralysis, 3)
+		drowsyness = max(drowsyness, 3)
+		return
+
+	if(drunkenness >= DRUNKENNESS_BLUR)
+		eye_blurry = max(eye_blurry, 2)
+
+	if(drunkenness >= DRUNKENNESS_SLUR)
+		if(drowsyness)
+			drowsyness = max(drowsyness, 3)
+		slurring = max(slurring, 3)
+
+	if(drunkenness >= DRUNKENNESS_CONFUSED)
+		MakeConfused(2)
+
+/mob/living/carbon/human/handle_drunkenness()
+	. = ..()
+	if(drunkenness >= DRUNKENNESS_PASS_OUT)
+		var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
+		if(istype(IO))
+			IO.take_damage(0.1, 1)
+		adjustToxLoss(0.1)
+
+/mob/living/proc/get_pumped(bodypart)
+	return 0

@@ -278,7 +278,7 @@
 /obj/item/weapon/rcd_ammo/price = 1700
 /obj/item/weapon/retractor/price = 1250
 /obj/item/weapon/scalpel/price = 1250
-/obj/item/weapon/soap/nanotrasen/price = 222
+/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen/price = 222
 /obj/item/weapon/stamp/price = 3330
 /obj/item/weapon/stamp/captain/price = 25000
 /obj/item/weapon/stamp/clown/price = 9900

@@ -147,6 +147,8 @@
 #define TRAIT_NO_RUN              "no_run"
 #define TRAIT_FAST_EQUIP          "fast_equip"
 #define TRAIT_NO_CLONE            "no_clone"
+#define TRAIT_VACCINATED          "vaccinated"
+#define TRAIT_GHOST_BUSTER        "ghost_buster"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -163,7 +165,9 @@
 #define GENERIC_TRAIT "generic"
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
+#define QUALITY_TRAIT      "quality"
 #define TWOHANDED_TRAIT    "twohanded"
+
 // self explanatory
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
 #define MOOD_COMPONENT_TRAIT "mood_component"

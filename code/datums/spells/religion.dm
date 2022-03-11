@@ -394,11 +394,10 @@
 		user.RemoveSpell(src)
 		return
 
-	if(user.my_religion.runes_by_mob[user])
-		var/list/L = user.my_religion.runes_by_mob[user]
-		if(L.len > user.my_religion.max_runes_on_mob)
-			to_chat(user, "<span class='warning'>Вуаль пространства не сможет сдержать больше рун!</span>")
-			return
+	var/list/L = LAZYACCESS(user.my_religion.runes_by_ckey, user.ckey)
+	if(!isnull(L) && L.len >= user.my_religion.max_runes_on_mob)
+		to_chat(user, "<span class='warning'>Ваше тело слишком слабо, чтобы выдержать ещё больше рун!</span>")
+		return
 
 	var/obj/effect/rune/R = new agent.building_type(get_turf(user), user.my_religion, user)
 	var/datum/rune/rune = new agent.rune_type(R)

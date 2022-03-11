@@ -65,7 +65,7 @@
 	if(!user || user.incapacitated())
 		return FALSE
 
-	if(!( istype(user, /mob/living/carbon/human)))
+	if(!( ishuman(user)))
 		return FALSE
 
 	// If the uplink's holder is in the user's contents or near him
@@ -86,7 +86,7 @@
 		if(I.tag)
 			bundlename = "[I.tag] bundle"
 			I.tag = null
-		if(istype(I, /obj/item) && ishuman(user))
+		if(isitem(I) && ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
 			loging(A, tempstate, bundlename)
@@ -106,6 +106,12 @@
 				R.faction.faction_scoreboard_data += {"<img src="logo_[tempstate].png"> [bundlename] for [cost] TC."}
 			else
 				S.uplink_items_bought += {"<img src="logo_[tempstate].png"> [bundlename] for [cost] TC."}
+
+			var/datum/stat/uplink_purchase/stat = new
+			stat.bundlename = bundlename
+			stat.cost = cost
+			stat.item_type = item
+			S.uplink_purchases += stat
 
 
 /*
@@ -327,6 +333,18 @@
 	cost = 4
 	uplink_types = list("traitor")
 
+/datum/uplink_item/dangerous/light_armor/dealer
+	cost = 12
+	uplink_types = list("dealer")
+	need_wanted_level = 5
+
+/datum/uplink_item/dangerous/cheap_armor
+	name = "Standard Armor Set"
+	desc = "A set of basic armor to protect against enemies"
+	item = /obj/item/weapon/storage/box/syndie_kit/cheap_armor
+	cost = 10
+	uplink_types = list("dealer")
+
 /datum/uplink_item/dangerous/mine
 	name = "High Explosive Mine"
 	desc = "A mine that explodes upon pressure. Use multitool to disarm it."
@@ -542,7 +560,7 @@
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
 	desc = "A sinister-looking surfactant used to clean blood stains to hide murders and prevent DNA analysis. You can also drop it underfoot to slip people."
-	item = /obj/item/weapon/soap/syndie
+	item = /obj/item/weapon/reagent_containers/food/snacks/soap/syndie
 	cost = 1
 
 /datum/uplink_item/stealthy_weapons/detomatix

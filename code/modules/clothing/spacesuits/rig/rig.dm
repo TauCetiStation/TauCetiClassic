@@ -43,7 +43,7 @@
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_head()
 
@@ -413,7 +413,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!istype(src.loc,/mob/living)) return
+	if(!isliving(src.loc)) return
 
 	if(!helmet)
 		to_chat(usr, "There is no helmet installed.")
@@ -450,7 +450,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!istype(src.loc,/mob/living)) return
+	if(!isliving(src.loc)) return
 
 	if(!boots)
 		to_chat(usr, "\The [src] does not have any boots installed.")

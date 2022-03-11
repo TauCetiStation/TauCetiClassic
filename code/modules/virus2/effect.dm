@@ -233,11 +233,11 @@
 	passive_message = "<span class='notice'>You miss the feeling of starlight on your skin.</span>"
 
 /datum/disease2/effect/heal/starlight/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
-	if(istype(get_turf(M), /turf/space))
+	if(isspaceturf(get_turf(M)))
 		return 1
 	else
 		for(var/turf/T in view(M, 2))
-			if(istype(T, /turf/space))
+			if(isspaceturf(T))
 				return 0.5
 
 /datum/disease2/effect/heal/starlight/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
@@ -295,7 +295,7 @@
 
 /datum/disease2/effect/heal/darkness/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
 	var/light_amount = 0
-	if(M.loc && istype(M.loc.type, /turf/space))
+	if(M.loc && isspaceturf(M.loc))
 		return 0
 	if(isturf(M.loc))
 		var/turf/T = M.loc
@@ -388,7 +388,7 @@
 		M.dizziness = max(0, M.dizziness - 2)
 		M.drowsyness = max(0, M.drowsyness - 2)
 		M.slurring = max(0, M.slurring - 2)
-		M.confused = max(0, M.confused - 2)
+		M.AdjustConfused(-2)
 		M.adjustDrugginess(-2)
 	if(holder.stage	>= 4)
 		M.drowsyness = max(0, M.drowsyness - 2)
@@ -542,7 +542,7 @@
 	cooldown = 30
 
 /datum/disease2/effect/monkey/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(istype(mob,/mob/living/carbon/human))
+	if(ishuman(mob))
 		var/mob/living/carbon/human/h = mob
 		switch(holder.stage)
 			if(1,2,3)
@@ -659,7 +659,7 @@
 	level = 7
 
 /datum/disease2/effect/immortal/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(istype(mob, /mob/living/carbon/human))
+	if(ishuman(mob))
 		var/mob/living/carbon/human/H = mob
 		for (var/obj/item/organ/external/BP in H.bodyparts)
 			if (BP.status & ORGAN_BROKEN && prob(30))
@@ -668,7 +668,7 @@
 	mob.apply_damages(heal_amt,heal_amt,heal_amt,heal_amt)
 
 /datum/disease2/effect/immortal/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(istype(mob, /mob/living/carbon/human))
+	if(ishuman(mob))
 		var/mob/living/carbon/human/H = mob
 		to_chat(H, "<span class='notice'>You suddenly feel hurt and old...</span>")
 		H.age += 8
@@ -860,10 +860,10 @@
 		to_chat(mob, "<span class='notice'>[pick("You suddenly forget where your right is.", "You suddenly forget where your left is.")]</span>")
 	else if(prob(20) || holder.stage == 2)
 		to_chat(mob, "<span class='notice'>You have trouble telling right and left apart all of a sudden.</span>")
-		mob.confused = max(mob.confused, 2)
+		mob.MakeConfused(2)
 	else if(holder.stage == 3)
 		to_chat(mob, "<span class='warning'><i>Where am I?</i></span>")
-		mob.confused = max(mob.confused, 10)
+		mob.MakeConfused(10)
 
 /*/datum/disease2/effect/mutation
 	name = "DNA Degradation"
