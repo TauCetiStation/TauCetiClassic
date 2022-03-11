@@ -39,7 +39,6 @@
 	for(var/datum/skillset/s as anything in target.skills.available_skillsets)
 		add_available_skillset(s)
 
-
 /datum/skills/proc/choose_value(skill_name,value)
 	var/datum/skill/skill = active.get_skill(skill_name)
 	if (!skill || value > skill.max_value || value < skill.min_value)
