@@ -12,7 +12,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "grimy"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "af" = (
 /obj/item/ammo_casing/a74,
 /obj/effect/decal/cleanable/dirt,
@@ -21,7 +21,7 @@
 	dir = 3;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "ah" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/engineering,
@@ -34,14 +34,14 @@
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "aj" = (
 /obj/structure/grille{
 	destroyed = 1
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/shuttle/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "al" = (
 /obj/item/clothing/mask/gas/coloured,
 /obj/structure/closet/l3closet/scientist,
@@ -49,7 +49,7 @@
 	dir = 9;
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "an" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
@@ -57,12 +57,12 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "ao" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "ap" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -72,7 +72,7 @@
 	dir = 1;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "ar" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -85,7 +85,7 @@
 	dir = 1;
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "au" = (
 /obj/machinery/shower{
 	dir = 8
@@ -101,7 +101,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "aw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/light{
@@ -111,7 +111,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "ax" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -120,7 +120,7 @@
 	dir = 8;
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "aA" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -131,14 +131,14 @@
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "aE" = (
 /obj/structure/closet/firecloset,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "aH" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/dirt,
@@ -146,7 +146,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "aK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -155,26 +155,26 @@
 	dir = 4;
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "aL" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "aM" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/sheet/plasteel,
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "aN" = (
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "aO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/firealarm{
@@ -184,7 +184,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "grimy"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "aR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -193,7 +193,7 @@
 	dir = 9;
 	icon_state = "whitepurple"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "aS" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research and Development";
@@ -205,13 +205,13 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "aT" = (
 /obj/structure/table/glass,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "aX" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/table/glass,
@@ -237,14 +237,14 @@
 	dir = 1;
 	icon_state = "whitepurple"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bc" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitepurple"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bg" = (
 /obj/machinery/light{
 	dir = 1
@@ -259,13 +259,13 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bi" = (
 /mob/living/simple_animal/hostile/carp,
 /turf/simulated/floor/airless{
 	icon_state = "grimy"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -277,7 +277,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -290,7 +290,7 @@
 	dir = 4;
 	icon_state = "whitepurple"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -299,7 +299,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bn" = (
 /obj/machinery/door/airlock/virology/glass{
 	name = "Isolation A";
@@ -316,7 +316,7 @@
 	dir = 4;
 	icon_state = "whitegreenfull"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -327,7 +327,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "br" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -339,7 +339,7 @@
 	dir = 6;
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bs" = (
 /obj/item/weapon/flora/random,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -348,7 +348,7 @@
 	dir = 6;
 	icon_state = "whitepurple"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bu" = (
 /obj/machinery/suit_storage_unit/science,
 /obj/machinery/power/apc{
@@ -364,7 +364,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bv" = (
 /obj/item/clothing/shoes/magboots,
 /obj/effect/decal/cleanable/dirt,
@@ -372,13 +372,13 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bw" = (
 /obj/effect/decal/cleanable/cellular/meat,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -393,13 +393,13 @@
 /turf/simulated/floor{
 	icon_state = "whitepurple"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bB" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bD" = (
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace,
 /obj/item/weapon/shard,
@@ -410,15 +410,15 @@
 	},
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 "bF" = (
 /turf/simulated/wall,
-/area/space)
+/area/space_structures/derelict_lab)
 "bH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /obj/machinery/meter,
 /turf/simulated/wall,
-/area/space)
+/area/space_structures/derelict_lab)
 "bI" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 10
@@ -428,11 +428,11 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bK" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/space_structures/derelict_lab)
 "bP" = (
 /obj/machinery/power/solar{
 	id = "portsolar";
@@ -445,7 +445,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "bX" = (
 /obj/machinery/chem_dispenser,
 /obj/machinery/light{
@@ -456,11 +456,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 "bY" = (
 /obj/machinery/chem_master,
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 "bZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -477,7 +477,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "ca" = (
 /obj/structure/lattice,
 /obj/item/weapon/shard{
@@ -487,7 +487,7 @@
 /area/space)
 "cb" = (
 /turf/simulated/wall/r_wall,
-/area/space)
+/area/space_structures/derelict_lab)
 "cd" = (
 /obj/machinery/power/solar{
 	id = "portsolar";
@@ -505,7 +505,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "ce" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -517,7 +517,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/shuttle/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "cf" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -529,7 +529,7 @@
 	dir = 5;
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "cj" = (
 /obj/structure/table/glass,
 /obj/item/weapon/folder/white{
@@ -540,7 +540,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 "ck" = (
 /obj/structure/cable,
 /obj/item/weapon/shard{
@@ -549,7 +549,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "cm" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
@@ -562,7 +562,7 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 "co" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper{
@@ -583,7 +583,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 "cp" = (
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder,
@@ -598,18 +598,18 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "cq" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/derelict_lab)
 "cu" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/under/ert,
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 "cD" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
@@ -617,7 +617,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 "cE" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
@@ -625,7 +625,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "cG" = (
 /obj/machinery/power/solar{
 	id = "portsolar";
@@ -635,7 +635,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "cX" = (
 /obj/structure/lattice,
 /obj/effect/decal/cleanable/blood,
@@ -652,14 +652,14 @@
 	dir = 10;
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "dX" = (
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "fh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -667,7 +667,7 @@
 /turf/simulated/floor{
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "fq" = (
 /obj/structure/table/glass,
 /obj/item/device/antibody_scanner{
@@ -678,13 +678,13 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "fC" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "fK" = (
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
@@ -692,7 +692,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "gb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/table/woodentable,
@@ -706,7 +706,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "grimy"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "gi" = (
 /mob/living/simple_animal/hostile/carp,
 /turf/environment/space,
@@ -720,7 +720,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "gF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -731,7 +731,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "grimy"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "gQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -741,7 +741,7 @@
 	},
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "gR" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -749,7 +749,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/random/foods/donuts,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/space_structures/derelict_lab)
 "gU" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -758,11 +758,11 @@
 	},
 /obj/item/stack/cable_coil/cut/red,
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/derelict_lab)
 "hb" = (
 /obj/machinery/computer/diseasesplicer,
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 "hn" = (
 /obj/item/stack/cable_coil/cut/red,
 /turf/environment/space,
@@ -776,7 +776,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "grimy"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "hs" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -789,7 +789,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/derelict_lab)
 "hu" = (
 /obj/effect/decal/cleanable/vomit,
 /obj/structure/cellular_biomass/grass/meat,
@@ -798,7 +798,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "hx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -810,7 +810,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "il" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -821,7 +821,7 @@
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "in" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -832,7 +832,7 @@
 	dir = 1;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "iw" = (
 /obj/structure/lattice,
 /obj/item/weapon/shard,
@@ -854,7 +854,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "iW" = (
 /obj/structure/stool/bed/chair/office/light,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -866,7 +866,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "ja" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
@@ -874,20 +874,20 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "jl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cellular/meat,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "jz" = (
 /obj/structure/stool/bed,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "jD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/under/ert,
@@ -895,7 +895,7 @@
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "jZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -907,11 +907,11 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "kd" = (
 /obj/structure/table/glass,
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "km" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -925,7 +925,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "kA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -938,7 +938,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "la" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
@@ -949,7 +949,7 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "le" = (
 /obj/item/weapon/pen,
 /obj/effect/decal/cleanable/blood/gibs,
@@ -957,7 +957,7 @@
 	dir = 10;
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "lj" = (
 /obj/structure/sink{
 	pixel_y = 24
@@ -971,7 +971,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "ll" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -986,7 +986,7 @@
 /obj/item/ammo_casing/a74,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 "lx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -1000,7 +1000,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "lK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -1013,11 +1013,11 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "lP" = (
 /obj/structure/girder/reinforced,
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "mB" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -1029,21 +1029,21 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "mJ" = (
 /obj/item/weapon/bedsheet/medical,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "mM" = (
 /obj/effect/landmark/corpse/doctor,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "mP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -1056,7 +1056,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "mR" = (
 /obj/machinery/door/airlock/virology/glass{
 	name = "Isolation A";
@@ -1070,7 +1070,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "nC" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
@@ -1087,7 +1087,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "nK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/item/ammo_casing/a74,
@@ -1096,7 +1096,7 @@
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "nM" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
@@ -1104,7 +1104,7 @@
 	dir = 4;
 	icon_state = "whitegreenfull"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "ok" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -1117,7 +1117,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/derelict_lab)
 "oq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -1129,7 +1129,7 @@
 	dir = 3;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "oE" = (
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/space/rig/engineering,
@@ -1139,7 +1139,7 @@
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "oO" = (
 /obj/item/weapon/storage/briefcase/inflatable,
 /obj/structure/rack,
@@ -1157,7 +1157,7 @@
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "po" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/structure/closet/firecloset,
@@ -1166,7 +1166,7 @@
 	dir = 6;
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "pu" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/shower{
@@ -1182,7 +1182,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "px" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 1
@@ -1191,7 +1191,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "pY" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 8
@@ -1200,14 +1200,14 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "qi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "ql" = (
 /obj/item/weapon/flora/random,
 /obj/structure/sign/warning/biohazard{
@@ -1216,7 +1216,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "qp" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/spray/cleaner{
@@ -1235,7 +1235,7 @@
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "qs" = (
 /obj/machinery/door/airlock/virology/glass{
 	name = "Virology";
@@ -1247,7 +1247,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "qX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/cleanable/dirt,
@@ -1255,7 +1255,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "qY" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -1264,14 +1264,14 @@
 /turf/simulated/floor{
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "rm" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/under/rank/virologist,
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 "rx" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/syringes{
@@ -1284,7 +1284,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "rz" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1302,7 +1302,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/derelict_lab)
 "rK" = (
 /obj/item/clothing/mask/gas/coloured,
 /obj/structure/closet/l3closet/virology,
@@ -1311,7 +1311,7 @@
 	dir = 5;
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "rS" = (
 /obj/structure/table/glass,
 /obj/item/weapon/disk/design_disk{
@@ -1325,7 +1325,7 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "rU" = (
 /obj/structure/lattice,
 /obj/structure/grille{
@@ -1339,7 +1339,7 @@
 /turf/simulated/floor{
 	icon_state = "whitepurple"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "sS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -1348,7 +1348,7 @@
 /turf/simulated/floor{
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "tA" = (
 /obj/machinery/r_n_d/destructive_analyzer,
 /obj/machinery/light{
@@ -1362,7 +1362,7 @@
 	dir = 1;
 	icon_state = "whitepurple"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "tD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -1373,7 +1373,7 @@
 	dir = 9;
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "tF" = (
 /obj/effect/landmark/corpse/doctor,
 /turf/environment/space,
@@ -1387,13 +1387,13 @@
 /turf/simulated/floor/airless{
 	icon_state = "grimy"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "um" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/wall,
-/area/space)
+/area/space_structures/derelict_lab)
 "uK" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1406,7 +1406,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/derelict_lab)
 "vd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 4;
@@ -1420,7 +1420,7 @@
 	pixel_y = 26
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "vm" = (
 /obj/machinery/door/poddoor{
 	id = "Abad Blast Door";
@@ -1434,7 +1434,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/shuttle/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "vq" = (
 /obj/structure/lattice,
 /obj/item/trash/popcorn,
@@ -1445,7 +1445,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "vF" = (
 /obj/structure/lattice,
 /obj/item/weapon/flora/random,
@@ -1468,7 +1468,7 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "vN" = (
 /obj/structure/closet/crate/freezer{
 	opened = 1
@@ -1479,7 +1479,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "wc" = (
 /obj/structure/computerframe,
 /obj/structure/cable{
@@ -1495,7 +1495,7 @@
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "we" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -1505,7 +1505,7 @@
 	dir = 10;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "wC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -1515,7 +1515,7 @@
 /turf/simulated/floor{
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "wO" = (
 /obj/structure/table/glass,
 /obj/item/weapon/virusdish/random,
@@ -1527,24 +1527,24 @@
 	dir = 3;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "wQ" = (
 /obj/item/stack/cable_coil/cut/red,
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/derelict_lab)
 "wR" = (
 /obj/machinery/r_n_d/protolathe,
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "xb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/random/tools/powercell,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "xz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/disposalpipe/segment{
@@ -1559,7 +1559,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "grimy"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "yd" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1572,13 +1572,13 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/derelict_lab)
 "yn" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "yD" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -1592,7 +1592,7 @@
 	dir = 1;
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "yP" = (
 /obj/machinery/computer/rdconsole/core,
 /obj/structure/extinguisher_cabinet{
@@ -1602,7 +1602,7 @@
 	dir = 1;
 	icon_state = "whitepurple"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "zl" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible,
 /obj/structure/cable{
@@ -1611,7 +1611,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "zp" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -1623,7 +1623,7 @@
 /area/space)
 "zw" = (
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/derelict_lab)
 "zV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 8;
@@ -1632,14 +1632,14 @@
 	name = "Solar Xeno Large Air Vent"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "Aa" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "AB" = (
 /obj/machinery/light{
 	dir = 8
@@ -1650,7 +1650,7 @@
 	dir = 8;
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "AR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -1660,7 +1660,7 @@
 	dir = 3;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Bg" = (
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -1682,7 +1682,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Ca" = (
 /obj/machinery/light{
 	dir = 4
@@ -1693,7 +1693,7 @@
 	dir = 4;
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Ci" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/mechanical{
@@ -1706,7 +1706,7 @@
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "CE" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
@@ -1716,14 +1716,14 @@
 	dir = 3;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "De" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitegreenfull"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "DX" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1734,13 +1734,13 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "Ef" = (
 /obj/item/stack/sheet/plasteel,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Em" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -1752,7 +1752,7 @@
 	dir = 3;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "En" = (
 /obj/structure/lattice,
 /obj/random/randomfigure,
@@ -1764,7 +1764,7 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Ez" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
 	dir = 1;
@@ -1775,13 +1775,13 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "platebot"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "EX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/space_structures/derelict_lab)
 "Fi" = (
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -1798,7 +1798,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/derelict_lab)
 "Fn" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -1807,14 +1807,14 @@
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Fw" = (
 /obj/structure/stool/bed,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "FO" = (
 /obj/machinery/door/airlock/virology/glass{
 	name = "Isolation B";
@@ -1831,13 +1831,13 @@
 	dir = 4;
 	icon_state = "whitegreenfull"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Gt" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Gu" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/fancy/vials{
@@ -1854,7 +1854,7 @@
 	dir = 3;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "GG" = (
 /obj/structure/lattice,
 /obj/random/foods/food_without_garbage,
@@ -1869,7 +1869,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "GN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -1881,14 +1881,14 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "GS" = (
 /obj/item/weapon/paper_bin,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor{
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Ha" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -1896,7 +1896,7 @@
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "HA" = (
 /obj/machinery/power/solar{
 	id = "portsolar";
@@ -1911,12 +1911,12 @@
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "HF" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "HK" = (
 /obj/machinery/light{
 	dir = 1
@@ -1934,9 +1934,8 @@
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "HZ" = (
-/obj/machinery/door/airlock/engineering/glass,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -1944,17 +1943,18 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "If" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Iz" = (
 /obj/structure/stool/bed/chair/office/light,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -1966,28 +1966,28 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "IG" = (
 /obj/item/weapon/flora/random,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "IX" = (
 /obj/machinery/disease2/incubator,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Jk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Jl" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
@@ -1998,14 +1998,14 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Jo" = (
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "JZ" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
@@ -2016,7 +2016,7 @@
 	dir = 6;
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Kg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -2032,13 +2032,13 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Kq" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/space_structures/derelict_lab)
 "KX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -2048,14 +2048,14 @@
 	dir = 6;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Lg" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "LI" = (
 /obj/item/stack/rods,
 /turf/environment/space,
@@ -2082,7 +2082,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Md" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2096,7 +2096,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Mf" = (
 /obj/machinery/r_n_d/circuit_imprinter,
 /obj/machinery/firealarm{
@@ -2108,7 +2108,7 @@
 	dir = 10;
 	icon_state = "whitepurple"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Mi" = (
 /obj/structure/lattice,
 /obj/structure/lattice,
@@ -2121,7 +2121,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/derelict_lab)
 "Mr" = (
 /obj/machinery/door/airlock/virology/glass{
 	name = "Isolation B";
@@ -2135,11 +2135,11 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "My" = (
 /obj/machinery/disease2/diseaseanalyser,
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 "MM" = (
 /obj/item/ammo_casing/a74,
 /obj/effect/decal/cleanable/dirt,
@@ -2148,7 +2148,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Np" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -2166,7 +2166,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "NS" = (
 /obj/random/foods/food_without_garbage,
 /turf/environment/space,
@@ -2181,7 +2181,7 @@
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/remains/human,
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 "Oy" = (
 /obj/machinery/light,
 /obj/effect/decal/cleanable/blood,
@@ -2197,7 +2197,7 @@
 	dir = 3;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "ON" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -2210,7 +2210,7 @@
 	dir = 4;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "OQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2224,14 +2224,14 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Pm" = (
 /obj/machinery/smartfridge/secure/virology,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "PX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -2241,7 +2241,7 @@
 	dir = 3;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "QV" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper{
@@ -2251,7 +2251,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Rx" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
@@ -2265,7 +2265,7 @@
 	dir = 10;
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "RO" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "solar_abad_airlock";
@@ -2281,7 +2281,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "RR" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2295,7 +2295,7 @@
 	},
 /obj/item/stack/cable_coil/cut/red,
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/derelict_lab)
 "RY" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -2305,7 +2305,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Sa" = (
 /obj/item/stack/cable_coil/cut/red,
 /obj/item/weapon/shard,
@@ -2318,7 +2318,7 @@
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Sq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -2331,13 +2331,13 @@
 	dir = 8;
 	icon_state = "whitepurple"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Su" = (
 /obj/structure/dispenser/oxygen,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "SC" = (
 /obj/item/weapon/shard,
 /obj/structure/cellular_biomass/grass/meat,
@@ -2345,7 +2345,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "SG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2358,7 +2358,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "SL" = (
 /obj/structure/lattice,
 /obj/item/stack/sheet/metal,
@@ -2375,12 +2375,12 @@
 	dir = 1;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Tr" = (
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "TB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -2393,14 +2393,14 @@
 	dir = 8;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "TQ" = (
 /obj/structure/cellular_biomass/grass/meat,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "TR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -2410,13 +2410,13 @@
 /turf/simulated/floor{
 	icon_state = "warnwhite"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "TS" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "TU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -2426,13 +2426,13 @@
 	dir = 1;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Ud" = (
 /obj/effect/decal/cleanable/cellular/meat,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Uj" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2450,7 +2450,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/derelict_lab)
 "Vj" = (
 /obj/structure/filingcabinet/medical,
 /obj/effect/decal/cleanable/dirt,
@@ -2458,7 +2458,7 @@
 	dir = 3;
 	icon_state = "whitegreen"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "VH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -2471,7 +2471,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "VN" = (
 /obj/structure/lattice,
 /turf/environment/space,
@@ -2479,7 +2479,7 @@
 "VX" = (
 /obj/item/clothing/head/ushanka/black_white,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/space_structures/derelict_lab)
 "Wg" = (
 /obj/item/weapon/storage/firstaid/regular,
 /turf/environment/space,
@@ -2494,7 +2494,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Wu" = (
 /obj/structure/table/woodentable,
 /obj/structure/disposalpipe/segment{
@@ -2507,7 +2507,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "WF" = (
 /obj/item/ammo_casing/a74,
 /obj/effect/decal/cleanable/dirt,
@@ -2516,7 +2516,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "WX" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -2526,7 +2526,7 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Xh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -2537,7 +2537,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Xi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2549,7 +2549,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Yw" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2557,7 +2557,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/area/space_structures/derelict_lab)
 "Yz" = (
 /obj/structure/stool/bed/chair/office/light,
 /obj/effect/decal/cleanable/dirt,
@@ -2565,14 +2565,14 @@
 /turf/simulated/floor{
 	icon_state = "whitepurple"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "YH" = (
 /obj/item/ammo_box/magazine/m9mm_2,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Zd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -2584,7 +2584,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Zi" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
@@ -2599,7 +2599,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/derelict_lab)
 "Zl" = (
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/blood,
@@ -2609,7 +2609,7 @@
 	dir = 4;
 	icon_state = "whitegreenfull"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Zq" = (
 /obj/structure/sink{
 	pixel_y = 24
@@ -2623,7 +2623,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "Zu" = (
 /obj/machinery/computer/centrifuge,
 /obj/machinery/light{
@@ -2633,7 +2633,7 @@
 	pixel_y = 30
 	},
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 "ZI" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -2643,14 +2643,14 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/space_structures/derelict_lab)
 "ZN" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
 	},
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor,
-/area/space)
+/area/space_structures/derelict_lab)
 
 (1,1,1) = {"
 aa
