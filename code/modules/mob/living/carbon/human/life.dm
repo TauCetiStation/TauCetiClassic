@@ -121,6 +121,11 @@
 
 	pressure_adjustment_coefficient = CLAMP01(pressure_adjustment_coefficient) //So it isn't less than 0 or larger than 1.
 
+	if(get_species() == VOX || get_species() == VOX_ARMALIS)
+		var/skin_pressure_coefficient = (getBruteLoss() + getFireLoss()) * 0.1
+		skin_pressure_coefficient = CLAMP01(skin_pressure_coefficient)
+		pressure_adjustment_coefficient *= skin_pressure_coefficient
+
 	return 1 - pressure_adjustment_coefficient	//want 0 to be bad protection, 1 to be good protection
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
@@ -454,7 +459,7 @@
 			inhaled_gas_used = inhaling * ratio * BREATH_USED_PART
 		else
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		
+
 		failed_last_breath = 1
 		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 

@@ -476,9 +476,6 @@
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	dietflags = DIET_OMNI
 
-	warning_low_pressure = 50
-	hazard_low_pressure = 0
-
 	cold_level_1 = 80
 	cold_level_2 = 50
 	cold_level_3 = 0
