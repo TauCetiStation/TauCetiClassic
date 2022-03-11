@@ -57,10 +57,9 @@
 	qdel(my_area)
 	my_area = null
 	for(var/L in loot_ore)
-		if(!istype(L, /obj/item/weapon/ore))
-			var/R = rand(0,35)
-			for(var/I =1, I<= R, I++)
-				new L(get_turf(src))
+		var/R = rand(0,35)
+		for(var/I =1, I<= R, I++)
+			new L(get_turf(src))
 	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/spawner/proc/pick_modifiers(special_prob = 30, min_mod_am = 1, max_mod_am = 3, min_rarity_cost = 2, max_rarity_cost = 6)
