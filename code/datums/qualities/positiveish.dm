@@ -6,8 +6,6 @@
 
 	var/list/money_types = list(
 		/obj/item/weapon/spacecash/bill/c500,
-		/obj/item/weapon/spacecash/bill/c500,
-		/obj/item/weapon/spacecash/bill/c500,
 		/obj/item/weapon/spacecash/bill/c200,
 		/obj/item/weapon/spacecash/bill/c100,
 	)

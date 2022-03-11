@@ -102,7 +102,6 @@
 	var/list/spawn_type1 = list(
 		/obj/item/weapon/spacecash/bill/c10,
 		/obj/item/weapon/spacecash/bill/c100,
-		/obj/item/weapon/spacecash/bill/c500,
 		/obj/item/weapon/spacecash/bill/c20,
 		/obj/item/weapon/spacecash/bill/c200,
 		/obj/item/weapon/spacecash/bill/c50,

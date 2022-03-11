@@ -148,7 +148,10 @@
 /proc/spawn_money(sum, spawnloc)
 	var/cash_type
 	for(var/i in list(500,200,100,50,20,10,5, 1))
-		cash_type = text2path("/obj/item/weapon/spacecash/bill/c[i]")
+		if(sum >= i)
+			cash_type = text2path("/obj/item/weapon/spacecash/bill/c[i]")
+		else
+			continue
 		while(sum >= i)
 			sum -= i
 			new cash_type(spawnloc)

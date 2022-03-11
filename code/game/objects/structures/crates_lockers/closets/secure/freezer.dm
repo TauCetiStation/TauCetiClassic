@@ -67,8 +67,6 @@
 	req_access = list(access_heads_vault)
 
 /obj/structure/closet/secure_closet/freezer/money/PopulateContents()
-	for (var/i in 1 to 3)
-		new /obj/item/weapon/spacecash/bill/c500(src)
 	for (var/i in 1 to 5)
 		new /obj/item/weapon/spacecash/bill/c500(src)
 	for (var/i in 1 to 6)
