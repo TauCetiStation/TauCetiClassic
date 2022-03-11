@@ -59,16 +59,12 @@
 		switch(front_id.icon_state)
 			if("id")
 				icon_state = "walletid"
-				return
 			if("silver")
 				icon_state = "walletid_silver"
-				return
 			if("gold")
 				icon_state = "walletid_gold"
-				return
 			if("centcom")
 				icon_state = "walletid_centcom"
-				return
 	else
 		icon_state = "wallet"
 
@@ -82,6 +78,7 @@
 			I.color = COLOR_LUMINOSITY(1-(i%2)/2)
 			I.add_filter(name="Cut Money", priority=1, params=alpha_mask_filter(x=0, y=7, icon=Cut_cash))
 			I.pixel_y += 3+i
+			I.appearance_flags = KEEP_TOGETHER
 			cash_overlays += I
 			add_overlay(I)
 

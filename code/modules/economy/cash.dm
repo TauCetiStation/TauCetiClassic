@@ -91,9 +91,13 @@
 	w_class = SIZE_SMALL
 	can_hold = list(/obj/item/weapon/spacecash/bill)
 	slot_flags = SLOT_FLAGS_BELT
-	use_sound = list('sound/items/cash.ogg')
 	var/list/bundle_overlays = list()
 	var/worth = 0
+
+/obj/item/weapon/storage/bill_bundle/atom_init()
+	. = ..()
+
+	use_sound = list('sound/items/cash.ogg')
 
 /obj/item/weapon/storage/bill_bundle/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
 	. = ..(W, new_location)
@@ -129,6 +133,7 @@
 		I.color = COLOR_LUMINOSITY(luminocity)
 		I.pixel_x += rand(-1,1)
 		I.pixel_y -= 1-i
+		I.appearance_flags = KEEP_TOGETHER
 		bundle_overlays += I
 		add_overlay(I)
 	var/band_type = "3x"
