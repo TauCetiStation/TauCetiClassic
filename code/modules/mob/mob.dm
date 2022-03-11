@@ -404,6 +404,9 @@
 		qdel(M)
 		return
 
+	// New life, new quality.
+	client.prefs.have_quality = FALSE
+
 	M.key = key
 //	M.Login()	//wat
 	return
