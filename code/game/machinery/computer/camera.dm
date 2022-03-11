@@ -257,16 +257,6 @@
 
 	return data
 
-/**
- * 			var/list/serialized = list()
-			serialized["name"] = C.c_tag
-			serialized["x"] = C.x
-			serialized["y"] = C.y
-			serialized["z"] = C.z
-
-			data["cameras"] += list(serialized)
- */
-
 /obj/machinery/computer/security/attack_ghost(mob/user) // this should not ever be opened to ghots, there is simply no point (even for admin) and also this thing eats up ALOT of resources.
 	return
 
