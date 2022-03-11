@@ -1795,7 +1795,9 @@
 	},
 /area/custom/arena)
 "aeQ" = (
-/obj/mecha/combat/marauder/loaded,
+/obj/mecha/combat/marauder/loaded{
+	operation_req_access = list()
+	},
 /obj/machinery/light{
 	dir = 8;
 	invisibility = 101;
@@ -2201,7 +2203,9 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "afO" = (
-/obj/mecha/combat/marauder/mauler,
+/obj/mecha/combat/marauder/mauler{
+	operation_req_access = list()
+	},
 /obj/machinery/light{
 	dir = 4;
 	invisibility = 101;
