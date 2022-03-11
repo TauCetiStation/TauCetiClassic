@@ -120,8 +120,8 @@
 	cut_overlay(bundle_overlays)
 	for(var/i in 1 to contents.len)
 		var/obj/item/weapon/spacecash/bill/B = contents[i]
-		var/image/I = image(icon=B.icon, icon_state="spacecash[B.worth]")
-		I.color = COLOR_LUMINOSITY(1/contents.len*i)
+		var/image/I = image(icon=B.icon, icon_state="[B.icon_state]")
+		I.color = COLOR_LUMINOSITY((i%2)/2)
 		I.pixel_x += rand(-1,1)
 		I.pixel_y -= 1-i
 		bundle_overlays += I
