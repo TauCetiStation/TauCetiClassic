@@ -19,6 +19,8 @@
 	flags_inv = HIDEEARS
 	icon_state = "ushanka_black_brown-down"
 	var/ushanka_state = "ushanka_black_brown"
+	cold_protection = HEAD
+	min_cold_protection_temperature = HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/head/wizard/ushanka/atom_init()
 	. = ..()
@@ -83,6 +85,17 @@
 	icon_state = "necromancer"
 	item_state = "necromancer"
 	flags = HEADCOVERSEYES|BLOCKHAIR
+
+/obj/item/clothing/head/wizard/nimb
+	name = "Nimb"
+	desc = "Just a Nimb"
+	icon_state = "wizard_nimb"
+
+/obj/item/clothing/head/wizard/cowboy
+	name = "cowboy hat"
+	icon_state = "cowboy_hat"
+	item_state = "cowboy_hat"
+	desc = "Howdy, partner!"
 
 /obj/item/clothing/head/wizard/bearpelt
 	name = "bear pelt hat"
@@ -186,6 +199,20 @@
 	icon_state = "necromancer"
 	item_state = "necromancer"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+
+/obj/item/clothing/suit/wizrobe/holidaypriest
+	name = "holiday priest"
+	desc = "This is a nice holiday my son."
+	icon_state = "holidaypriest"
+	item_state = "holidaypriest"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/wizrobe/serifcoat
+	name = "serif coat"
+	desc = "A old coat"
+	icon_state = "serif_coat"
+	item_state = "det_suit"
 
 /obj/item/clothing/suit/wizrobe/suspenders
 	name = "suspenders"

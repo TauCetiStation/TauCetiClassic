@@ -22,3 +22,4 @@
 	desc = "A magic torch holder."
 	icon_state = "magic-torch-holder1"
 	light_color = "#618bff"
+	

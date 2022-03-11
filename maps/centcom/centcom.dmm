@@ -544,12 +544,16 @@
 "abh" = (
 /obj/structure/flora/tree/pine,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "abi" = (
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "abj" = (
@@ -570,20 +574,26 @@
 "abk" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "abl" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "abm" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/tree/pine,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "abn" = (
@@ -633,7 +643,9 @@
 "abt" = (
 /obj/structure/flora/grass/green,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "abu" = (
@@ -2221,7 +2233,9 @@
 "afR" = (
 /obj/structure/flora/ausbushes/pointybush,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "afS" = (
@@ -2234,7 +2248,9 @@
 "afT" = (
 /obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "afU" = (
@@ -12130,10 +12146,13 @@
 	},
 /area/centcom/living)
 "aCg" = (
-/obj/structure/flora/ausbushes/pointybush,
-/obj/effect/landmark/blockway,
+/obj/item/snowball,
+/obj/effect/decal/cleanable/blood/writing,
+/obj/effect/decal/cleanable/blood/drip,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "aCh" = (
@@ -12159,9 +12178,10 @@
 "aCj" = (
 /obj/structure/flora/ausbushes/pointybush,
 /obj/effect/landmark/blockway,
-/obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "aCk" = (
@@ -12189,10 +12209,13 @@
 	},
 /area/centcom/living)
 "aCn" = (
-/obj/structure/flora/grass/brown,
-/obj/structure/flora/tree/dead,
+/obj/structure/flora/ausbushes/pointybush,
+/obj/effect/landmark/blockway,
+/obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "aCo" = (
@@ -12207,7 +12230,9 @@
 "aCp" = (
 /obj/structure/snowman,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "aCq" = (
@@ -12518,49 +12543,29 @@
 	},
 /area/centcom/specops)
 "aCW" = (
-/obj/item/clothing/shoes/sandal/marisa,
-/obj/effect/decal/cleanable/cobweb2,
-/obj/structure/closet/cabinet{
-	name = "Marisa"
-	},
-/obj/item/clothing/shoes/heels/alternate,
-/obj/item/clothing/suit/wizrobe/marisa,
-/obj/item/weapon/staff/broom,
-/obj/item/clothing/head/wizard/marisa,
-/obj/item/clothing/mask/scarf/violet,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
-"aCX" = (
-/obj/item/clothing/suit/wizrobe/magusblue,
-/obj/item/clothing/head/wizard/magus,
-/obj/item/weapon/staff,
-/obj/effect/decal/cleanable/cobweb,
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Magic Intercom";
-	pixel_x = 27;
-	pixel_y = -4;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/obj/item/weapon/storage/backpack/cultpack,
-/obj/structure/closet/cabinet{
-	name = "Blue Magus"
-	},
-/obj/item/clothing/shoes/sandal/brown,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
-"aCY" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/effect/landmark/blockway,
+/obj/effect/decal/cleanable/blood/writing,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
+	},
+/area/space)
+"aCX" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/decal/cleanable/blood/writing,
+/obj/effect/decal/cleanable/blood,
+/turf/unsimulated/floor/snow{
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
+	},
+/area/space)
+"aCY" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/unsimulated/floor/snow{
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "aCZ" = (
@@ -12613,14 +12618,19 @@
 	},
 /area/custom/wizard_station)
 "aDf" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
-/area/custom/wizard_station)
+/area/space)
 "aDg" = (
-/obj/structure/flora/ausbushes/fullgrass,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/custom/wizard_station)
 "aDh" = (
@@ -12684,11 +12694,11 @@
 	},
 /area/custom/wizard_station)
 "aDn" = (
-/obj/structure/torch_holder/magic{
-	dir = 8
-	},
+/obj/structure/flora/ausbushes/fullgrass,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/custom/wizard_station)
 "aDo" = (
@@ -12701,9 +12711,13 @@
 	},
 /area/centcom/living)
 "aDp" = (
-/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/torch_holder/magic{
+	dir = 8
+	},
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/custom/wizard_station)
 "aDq" = (
@@ -12737,9 +12751,6 @@
 	},
 /area/centcom/specops)
 "aDu" = (
-/obj/structure/mirror/magic{
-	pixel_x = -30
-	},
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet/cabinet{
 	name = "Pirate"
@@ -12750,6 +12761,9 @@
 /obj/item/clothing/suit/wizrobe/pirate,
 /obj/item/clothing/glasses/eyepatch,
 /obj/item/weapon/storage/backpack/kitbag,
+/obj/structure/mirror/magic{
+	pixel_y = 25
+	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -12831,23 +12845,14 @@
 	},
 /area/centcom/living)
 "aDE" = (
-/obj/structure/closet/cabinet{
-	name = "Ded moroz"
+/obj/structure/flora/ausbushes/pointybush,
+/obj/effect/decal/cleanable/blood/writing,
+/turf/unsimulated/floor/snow{
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
-/obj/item/clothing/under/redcoat,
-/obj/item/clothing/suit/wizrobe/santa{
-	name = "Ded Moroz suit"
-	},
-/obj/item/weapon/storage/backpack/santabag{
-	name = "Ded Moroz Gift Bag"
-	},
-/obj/item/clothing/head/wizard/santa{
-	name = "Ded Moroz hat"
-	},
-/turf/unsimulated/floor{
-	icon_state = "wood-broken4"
-	},
-/area/custom/wizard_station)
+/area/space)
 "aDF" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -12941,10 +12946,12 @@
 	},
 /area/centcom/specops)
 "aDO" = (
-/obj/structure/flora/grass/both,
-/obj/effect/landmark/blockway,
+/obj/structure/flora/grass/brown,
+/obj/structure/flora/tree/dead,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "aDP" = (
@@ -13009,12 +13016,24 @@
 	},
 /area/centcom/living)
 "aDX" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/sign/plaques/kiddie/library{
-	pixel_x = -32
+/obj/item/clothing/shoes/sandal/marisa,
+/obj/effect/decal/cleanable/cobweb2,
+/obj/structure/closet/cabinet{
+	name = "Marisa"
 	},
-/turf/unsimulated/floor/snow{
-	temperature = 253.15
+/obj/item/clothing/shoes/heels/alternate,
+/obj/item/clothing/suit/wizrobe/marisa,
+/obj/item/weapon/staff/broom,
+/obj/item/clothing/head/wizard/marisa,
+/obj/item/clothing/under/dress/dress_evening,
+/obj/item/clothing/under/dress/dress_party,
+/obj/item/clothing/under/dress/dress_saloon,
+/obj/item/clothing/under/dress/dress_vintage,
+/obj/item/clothing/under/dress/dress_summer,
+/obj/item/clothing/under/pretty_dress,
+/obj/item/clothing/mask/scarf/violet,
+/turf/unsimulated/floor{
+	icon_state = "wood"
 	},
 /area/custom/wizard_station)
 "aDY" = (
@@ -13095,7 +13114,9 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/custom/wizard_station)
 "aEg" = (
@@ -13292,24 +13313,29 @@
 /turf/unsimulated/wall,
 /area/centcom)
 "aEA" = (
-/obj/structure/mirror/magic{
-	pixel_x = -30
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/device/radio/intercom{
+	desc = "Talk through this. Evilly";
+	freerange = 1;
+	frequency = 1213;
+	name = "Magic Intercom";
+	pixel_x = 27;
+	pixel_y = -4;
+	subspace_transmission = 1;
+	syndie = 1
 	},
-/obj/structure/torch_holder/magic,
 /obj/structure/closet/cabinet{
-	name = "Crusader"
+	name = "Blue Magus"
 	},
-/obj/item/clothing/shoes/boots,
-/obj/item/clothing/suit/wizrobe/crusader,
-/obj/item/clothing/gloves/black,
-/obj/item/clothing/head/wizard/crusader,
-/obj/item/clothing/under/color/black,
-/obj/item/weapon/storage/backpack/chaplain,
-/obj/item/weapon/claymore/religion,
-/obj/item/weapon/shield/riot/roman{
-	name = "Sacred shield"
-	},
-/obj/item/weapon/storage/bible,
+/obj/item/clothing/shoes/western,
+/obj/item/clothing/under/fluff/cowboy,
+/obj/item/clothing/under/fluff/cowboy/grey,
+/obj/item/clothing/under/fluff/cowboy/brown,
+/obj/item/clothing/accessory/holster/armpit,
+/obj/item/device/harmonica,
+/obj/item/toy/gun/peacemaker,
+/obj/item/clothing/suit/wizrobe/serifcoat,
+/obj/item/clothing/head/wizard/cowboy,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -13488,46 +13514,38 @@
 	},
 /area/centcom/creed)
 "aER" = (
-/obj/item/clothing/suit/wizrobe/magusred,
-/obj/item/clothing/head/wizard/magus,
-/obj/item/weapon/staff,
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Magic Intercom";
-	pixel_x = 27;
-	pixel_y = -4;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/obj/item/weapon/storage/backpack/cultpack,
 /obj/structure/closet/cabinet{
-	name = "Red Magus"
+	name = "Ded moroz"
 	},
-/obj/item/clothing/shoes/sandal/brown,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/weapon/storage/backpack/santabag{
+	name = "Ded Moroz Gift Bag"
+	},
+/obj/item/clothing/suit/wizrobe/santa{
+	name = "Ded Moroz suit"
+	},
+/obj/item/clothing/head/wizard/santa{
+	name = "Ded Moroz hat"
+	},
 /turf/unsimulated/floor{
 	icon_state = "wood-broken4"
 	},
 /area/custom/wizard_station)
 "aES" = (
-/obj/structure/closet/cabinet,
-/obj/item/clothing/head/wizard/ushanka,
-/obj/item/clothing/head/wizard/ushanka/black,
-/obj/item/clothing/head/wizard/ushanka/black_white,
-/obj/item/clothing/head/wizard/ushanka/brown,
-/obj/item/clothing/head/wizard/ushanka/brown_white,
-/turf/unsimulated/floor{
-	icon_state = "wood"
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/unsimulated/floor/snow{
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/custom/wizard_station)
 "aET" = (
-/obj/structure/flora/tree/pine{
-	layer = 9.1
-	},
+/obj/structure/flora/grass/both,
 /obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "aEU" = (
@@ -13535,14 +13553,16 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
 "aEV" = (
-/obj/structure/flora/tree/pine{
-	layer = 9.1
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/sign/plaques/kiddie/library{
+	pixel_x = -32
 	},
-/obj/structure/flora/grass/brown,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
-/area/space)
+/area/custom/wizard_station)
 "aEW" = (
 /turf/unsimulated/floor{
 	name = "plating"
@@ -13635,14 +13655,10 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aFg" = (
-/obj/effect/landmark/blockway,
-/obj/structure/flora/tree/pine{
-	layer = 9.2
-	},
-/turf/unsimulated/floor/snow{
-	temperature = 253.15
-	},
-/area/space)
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/remains/xeno/burned,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/wizard_station)
 "aFh" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -13809,11 +13825,14 @@
 	},
 /area/centcom/specops)
 "aFw" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/effect/landmark/blockway,
-/obj/structure/flora/tree/pine,
+/obj/structure/flora/tree/pine{
+	layer = 9.1
+	},
+/obj/structure/flora/grass/brown,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "aFx" = (
@@ -13919,29 +13938,79 @@
 	},
 /area/shuttle/administration/centcom)
 "aFL" = (
-/obj/structure/flora/grass/green,
-/obj/structure/flora/tree/dead,
-/turf/unsimulated/floor/snow{
-	temperature = 253.15
+/obj/structure/torch_holder/magic,
+/obj/structure/closet/cabinet{
+	name = "Crusader"
 	},
-/area/space)
+/obj/item/clothing/shoes/boots,
+/obj/item/clothing/suit/wizrobe/crusader,
+/obj/item/clothing/gloves/black,
+/obj/item/clothing/head/wizard/crusader,
+/obj/item/clothing/under/color/black,
+/obj/item/weapon/storage/backpack/chaplain,
+/obj/item/weapon/claymore/religion,
+/obj/item/weapon/shield/riot/roman{
+	name = "Sacred shield"
+	},
+/obj/item/weapon/storage/bible,
+/obj/structure/mirror/magic{
+	pixel_y = -30
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
 "aFM" = (
-/obj/effect/landmark/blockway,
-/obj/structure/flora/tree/pine{
-	layer = 9.1
+/obj/structure/closet/cabinet,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat/wiz_red,
+/obj/item/clothing/suit/hooded/wintercoat/wiz_red,
+/obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
+/obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
+/obj/item/clothing/head/wizard/ushanka/brown_white,
+/obj/item/clothing/head/wizard/ushanka/brown,
+/obj/item/clothing/head/wizard/ushanka/black_white,
+/obj/item/clothing/head/wizard/ushanka/black,
+/obj/item/clothing/head/wizard/ushanka,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/turf/unsimulated/floor{
+	icon_state = "wood"
 	},
-/turf/unsimulated/floor/snow{
-	temperature = 253.15
-	},
-/area/space)
+/area/custom/wizard_station)
 "aFN" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/tree/pine,
-/obj/effect/landmark/blockway,
-/turf/unsimulated/floor/snow{
-	temperature = 253.15
+/obj/item/device/radio/intercom{
+	desc = "Talk through this. Evilly";
+	freerange = 1;
+	frequency = 1213;
+	name = "Magic Intercom";
+	pixel_x = 27;
+	pixel_y = -4;
+	subspace_transmission = 1;
+	syndie = 1
 	},
-/area/space)
+/obj/structure/closet/cabinet{
+	name = "Red Magus"
+	},
+/obj/item/clothing/under/rank/chaplain/light,
+/obj/item/weapon/storage/bible,
+/obj/item/weapon/storage/backpack/chaplain,
+/obj/item/clothing/suit/wizrobe/holidaypriest,
+/obj/item/clothing/glasses/sunglasses/hud/chaplain,
+/obj/item/clothing/head/wizard/nimb,
+/turf/unsimulated/floor{
+	icon_state = "wood-broken4"
+	},
+/area/custom/wizard_station)
 "aFO" = (
 /obj/machinery/light{
 	dir = 8
@@ -13996,12 +14065,14 @@
 	},
 /area/centcom/creed)
 "aFU" = (
-/obj/effect/landmark/blockway,
 /obj/structure/flora/tree/pine{
-	layer = 9.5
+	layer = 9.1
 	},
+/obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "aFV" = (
@@ -14051,21 +14122,87 @@
 	},
 /area/shuttle/administration/centcom)
 "aGc" = (
+/obj/effect/landmark/blockway,
+/obj/structure/flora/tree/pine{
+	layer = 9.2
+	},
+/turf/unsimulated/floor/snow{
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
+	},
+/area/space)
+"aGd" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/landmark/blockway,
+/obj/structure/flora/tree/pine,
+/turf/unsimulated/floor/snow{
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
+	},
+/area/space)
+"aGe" = (
+/obj/structure/flora/grass/green,
+/obj/structure/flora/tree/dead,
+/turf/unsimulated/floor/snow{
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
+	},
+/area/space)
+"aGf" = (
+/obj/effect/landmark/blockway,
+/obj/structure/flora/tree/pine{
+	layer = 9.1
+	},
+/turf/unsimulated/floor/snow{
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
+	},
+/area/space)
+"aGg" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/tree/pine,
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
+	},
+/area/space)
+"aGh" = (
+/obj/effect/landmark/blockway,
+/obj/structure/flora/tree/pine{
+	layer = 9.5
+	},
+/turf/unsimulated/floor/snow{
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
+	},
+/area/space)
+"aGi" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/tree/pine{
 	layer = 9.6
 	},
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
-"aGd" = (
+"aGj" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/tree/pine{
 	layer = 9.7
 	},
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "aGn" = (
@@ -19491,7 +19628,9 @@
 /obj/structure/flora/tree/pine,
 /obj/structure/flora/grass/brown,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bav" = (
@@ -19516,7 +19655,9 @@
 	},
 /obj/structure/flora/grass/brown,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bax" = (
@@ -19546,13 +19687,17 @@
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/tree/pine,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baz" = (
 /obj/structure/flora/tree/dead,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baA" = (
@@ -19564,7 +19709,9 @@
 /obj/structure/flora/tree/pine,
 /obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baC" = (
@@ -19573,14 +19720,18 @@
 	},
 /obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baD" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baE" = (
@@ -19605,7 +19756,9 @@
 	layer = 9.4
 	},
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baI" = (
@@ -19636,20 +19789,26 @@
 	layer = 9.2
 	},
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baN" = (
 /obj/effect/landmark/blockway,
 /obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baO" = (
 /obj/structure/flora/grass/brown,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baP" = (
@@ -19658,7 +19817,9 @@
 	},
 /obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baQ" = (
@@ -19666,7 +19827,9 @@
 	layer = 9.5
 	},
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baR" = (
@@ -19683,13 +19846,17 @@
 /obj/effect/landmark/blockway,
 /obj/structure/flora/grass/both,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baT" = (
 /obj/structure/flora/grass/both,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baU" = (
@@ -19704,7 +19871,9 @@
 	},
 /obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baW" = (
@@ -19713,7 +19882,9 @@
 	},
 /obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baX" = (
@@ -19729,7 +19900,9 @@
 	layer = 9.6
 	},
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "baZ" = (
@@ -19764,14 +19937,18 @@
 "bbd" = (
 /obj/item/snowball,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bbe" = (
 /obj/structure/flora/tree/pine,
 /obj/structure/flora/grass/both,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bbf" = (
@@ -19779,7 +19956,9 @@
 	layer = 9.7
 	},
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bbg" = (
@@ -19787,11 +19966,13 @@
 	layer = 9.1
 	},
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bbh" = (
-/obj/item/weapon/caution,
+/obj/item/weapon/caution/cone,
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -19806,7 +19987,9 @@
 /obj/structure/flora/tree/pine,
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bbk" = (
@@ -19862,7 +20045,9 @@
 	},
 /obj/structure/flora/grass/both,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bbx" = (
@@ -19871,7 +20056,9 @@
 	layer = 9.1
 	},
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bby" = (
@@ -19883,7 +20070,9 @@
 /obj/structure/flora/tree/pine,
 /obj/structure/flora/grass/green,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bbA" = (
@@ -19891,7 +20080,9 @@
 /obj/structure/flora/tree/pine,
 /obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bbD" = (
@@ -19915,8 +20106,11 @@
 /obj/item/clothing/suit/wizrobe/suspenders,
 /obj/item/clothing/gloves/white,
 /obj/item/clothing/head/wizard/gnome_hat,
+/obj/effect/decal/cleanable/blood,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bbK" = (
@@ -19968,7 +20162,9 @@
 	layer = 9.3
 	},
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bcb" = (
@@ -20039,7 +20235,9 @@
 	},
 /obj/effect/landmark/blockway,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bcp" = (
@@ -20173,7 +20371,9 @@
 	},
 /obj/structure/flora/grass/green,
 /turf/unsimulated/floor/snow{
-	temperature = 253.15
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
 	},
 /area/space)
 "bdv" = (
@@ -30891,7 +31091,7 @@ abi
 abi
 afT
 afT
-aCY
+aDf
 afT
 afT
 afT
@@ -31402,7 +31602,7 @@ abi
 afT
 afT
 baW
-aCj
+aCn
 abg
 abg
 aCZ
@@ -31410,7 +31610,7 @@ baZ
 bbc
 abg
 abg
-aCY
+aDf
 abi
 abi
 abm
@@ -31668,7 +31868,7 @@ aDR
 bbk
 abg
 afT
-aET
+aFU
 afT
 afT
 baB
@@ -31928,7 +32128,7 @@ abh
 abi
 baM
 baQ
-aCY
+aDf
 abi
 bbg
 abi
@@ -32947,9 +33147,9 @@ abi
 abi
 abi
 bbe
-aDf
-aDf
-aDX
+aDg
+aDg
+aEV
 abi
 abi
 abi
@@ -32958,7 +33158,7 @@ abi
 baz
 abi
 afT
-aFU
+aGh
 abi
 abi
 abh
@@ -33204,9 +33404,9 @@ abi
 afR
 abi
 abi
-aDf
-aDf
-aDf
+aDg
+aDg
+aDg
 bbd
 abi
 abk
@@ -33215,7 +33415,7 @@ abi
 afR
 abi
 baM
-aFU
+aGh
 abi
 abi
 abi
@@ -33458,11 +33658,11 @@ abi
 afR
 abi
 abl
-aCn
+aDO
 abi
 abi
+aDn
 aDg
-aDf
 aEf
 abi
 abt
@@ -33728,7 +33928,7 @@ afR
 abi
 abi
 abi
-aFg
+aGc
 abi
 abl
 abi
@@ -33984,7 +34184,7 @@ abg
 abg
 abk
 abi
-aFM
+aGf
 afT
 baQ
 abi
@@ -35778,7 +35978,7 @@ aDl
 bav
 aEx
 baA
-aES
+aFM
 abg
 aBh
 aFe
@@ -36294,7 +36494,7 @@ aEy
 baA
 aaY
 bdP
-bds
+aFg
 abg
 abg
 abg
@@ -36555,7 +36755,7 @@ aEU
 abg
 afT
 afT
-aET
+aFU
 afT
 abi
 abh
@@ -36810,7 +37010,7 @@ aaY
 bds
 abg
 abg
-aFw
+aGd
 abi
 abi
 baM
@@ -37052,7 +37252,7 @@ abi
 abi
 abh
 abi
-abi
+aCY
 bbd
 abi
 abg
@@ -37325,7 +37525,7 @@ abi
 abi
 abi
 abi
-aFN
+aGg
 abi
 bbg
 abi
@@ -37562,20 +37762,20 @@ abi
 abi
 baB
 bbJ
-abi
+aCW
 afR
+aCW
+aCX
 abi
+aCY
+aDE
+aCg
 abk
-abi
-abi
-afR
-bbd
-abk
-abi
-abi
-aDn
-aDf
+aCW
+aCW
+aDp
 aDg
+aDn
 afR
 abi
 abk
@@ -37585,7 +37785,7 @@ abi
 afT
 abh
 abi
-aGc
+aGi
 abi
 abi
 aeD
@@ -37821,7 +38021,7 @@ afT
 afT
 bbe
 bbd
-abi
+aCY
 abi
 baz
 abl
@@ -37830,9 +38030,9 @@ abi
 abi
 abi
 bbe
-aDf
-aDf
-aDf
+aDg
+aDg
+aDg
 bbd
 abi
 abi
@@ -38087,9 +38287,9 @@ abi
 aCp
 abi
 abi
-aDp
-aDf
-aDf
+aES
+aDg
+aDg
 baT
 abi
 abh
@@ -38352,10 +38552,10 @@ abi
 abi
 abl
 abi
-aFL
+aGe
 abi
 afT
-aFU
+aGh
 abi
 abi
 abi
@@ -38603,7 +38803,7 @@ abg
 abg
 aDu
 baA
-aEA
+aFL
 abg
 abg
 abi
@@ -38871,7 +39071,7 @@ bbg
 afT
 afT
 abi
-aGd
+aGj
 abi
 aeD
 aaM
@@ -39114,7 +39314,7 @@ abi
 abi
 abh
 aaY
-aCW
+aDX
 aDv
 baR
 aDS
@@ -39125,7 +39325,7 @@ abi
 abi
 abi
 abi
-aFM
+aGf
 abi
 baY
 abi
@@ -39368,17 +39568,17 @@ abh
 afT
 afT
 baB
-aCg
+aCj
 afT
 aaY
-aCX
+aEA
 aDd
 aDy
 aDT
-aER
+aFN
 aaY
 abi
-aEV
+aFw
 abk
 afT
 baB
@@ -39630,13 +39830,13 @@ baB
 abg
 abg
 aDw
-aDE
+aER
 bbi
 abg
 abg
 baB
 afT
-aFg
+aGc
 afT
 abi
 baM
@@ -40144,7 +40344,7 @@ abi
 afT
 baB
 afT
-aDO
+aET
 afT
 afT
 afT
