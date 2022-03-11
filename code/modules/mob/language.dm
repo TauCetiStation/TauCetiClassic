@@ -41,7 +41,7 @@
 	return "[verb], <span class='[colour]'>\"[capitalize(message)]\"</span>"
 
 // How the bearer of this language pronounces stuff in their non-native language.
-/datum/language/proc/accentuate(input)
+/datum/language/proc/accentuate(input, datum/language/speaking)
 	if(!accents)
 		return input
 	return replaceEx_characters(input, accents)
@@ -138,6 +138,11 @@
 		"Р" = "Рр",
 		"р" = "рр",
 	)
+
+/datum/language/tajaran/accentuate(input, datum/language/speaking)
+	if(speaking.name == LANGUAGE_SIIKTAJR)
+		return input
+	return ..()
 
 /datum/language/tajaran_sign
 	name = LANGUAGE_SIIKTAJR
