@@ -29,7 +29,7 @@
 	var/obj/item/weapon/card/id/front_id = null
 	var/list/cash_overlays = list()
 
-	var/icon/Cut_cash = icon('icons/obj/economy.dmi', "spacecash1")
+	var/icon/Cut_cash = icon('icons/obj/economy.dmi', "spacecash500")
 
 
 /obj/item/weapon/storage/wallet/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
@@ -69,7 +69,8 @@
 			if("centcom")
 				icon_state = "walletid_centcom"
 				return
-	icon_state = "wallet"
+	else
+		icon_state = "wallet"
 
 	var/list/bills = list()
 	for(var/obj/item/weapon/spacecash/bill/B in contents)
@@ -78,7 +79,7 @@
 		for(var/i in 1 to min(3, bills.len))
 			var/obj/item/weapon/spacecash/bill/B = bills[i]
 			var/image/I = image(icon=B.icon, icon_state="spacecash[B.worth]")
-			I.color = COLOR_LUMINOSITY(1/i)
+			I.color = COLOR_LUMINOSITY(1-(i%2)/2)
 			I.add_filter(name="Cut Money", priority=1, params=alpha_mask_filter(x=0, y=7, icon=Cut_cash))
 			I.pixel_y += 3+i
 			cash_overlays += I
