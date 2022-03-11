@@ -264,9 +264,6 @@
 /datum/species/proc/on_life(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/get_hazard_low_pressure(mob/living/carbon/human/H)
-	return hazard_low_pressure
-
 /datum/species/human
 	name = HUMAN
 	language = LANGUAGE_SOLCOMMON
@@ -479,6 +476,9 @@
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	dietflags = DIET_OMNI
 
+	warning_low_pressure = 50
+	hazard_low_pressure = 0
+
 	cold_level_1 = 80
 	cold_level_2 = 50
 	cold_level_3 = 0
@@ -586,13 +586,6 @@
 		H.verbs -= /mob/living/carbon/human/proc/gut
 
 	..()
-
-/datum/species/vox/get_hazard_low_pressure(mob/living/carbon/human/H)
-	var/dam = H.getBruteLoss() + H.getFireLoss()
-	if(dam > 1)
-		return hazard_low_pressure
-
-	return 0
 
 /datum/species/vox/armalis
 	name = VOX_ARMALIS

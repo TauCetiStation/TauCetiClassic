@@ -660,7 +660,7 @@
 		throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
 	else if(adjusted_pressure >= species.warning_low_pressure)
 		clear_alert("pressure")
-	else if(adjusted_pressure >= species.get_hazard_low_pressure(src))
+	else if(adjusted_pressure >= species.hazard_low_pressure)
 		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 	else
 		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
