@@ -2109,11 +2109,6 @@
 	icon_state = "whitepurple"
 	},
 /area/space_structures/derelict_lab)
-"Mi" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/environment/space,
-/area/space)
 "Mn" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2772,7 +2767,7 @@ VN
 aa
 aa
 VN
-Mi
+VN
 VN
 aa
 aa
