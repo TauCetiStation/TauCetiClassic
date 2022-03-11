@@ -4,7 +4,7 @@ $background-color: rgba(0, 0, 0, 0.33) !default;
 
 .CameraConsole__left {
   position: absolute;
-  top: 0;
+  top: 23px;
   bottom: 0;
   left: 0;
   width: base.em(220px);
@@ -15,6 +15,15 @@ $background-color: rgba(0, 0, 0, 0.33) !default;
   top: 0;
   bottom: 0;
   left: base.em(220px);
+  right: 0;
+  background-color: $background-color;
+}
+
+.CameraConsole__new__right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 600px;
   right: 0;
   background-color: $background-color;
 }

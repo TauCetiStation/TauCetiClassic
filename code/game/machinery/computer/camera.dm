@@ -94,7 +94,7 @@
 			user.client.register_map_obj(plane)
 		user.client.register_map_obj(cam_background)
 		// Open UI
-		ui = new(user, src, "CameraConsole", name)
+		ui = new(user, src, "CameraConsole", name, 1200, 600)
 		ui.open()
 
 /obj/machinery/computer/security/tgui_state(mob/user)
@@ -233,24 +233,39 @@
 	data["mapStyle"] = winget(user.client, "mapwindow.map", "style")
 	if(!QDELETED(active_camera))
 		data["activeCamera"] = list(
-			name = active_camera.c_tag,
-			status = active_camera.status,
+			"name" = active_camera.c_tag,
+			"status" = active_camera.status,
 		)
 	return data
 
 /obj/machinery/computer/security/tgui_static_data(mob/user)
 	var/list/data = list()
 	data["mapRef"] = map_name
+	// maybe transfer to main config?
+	data["stationImage"] = SSmapping.station_image
 	var/list/cameras = get_cached_cameras()
 	data["cameras"] = list()
 	for(var/i in cameras)
 		var/obj/machinery/camera/C = cameras[i]
 		if(!QDELETED(C))
 			data["cameras"] += list(list(
-				name = C.c_tag,
+				"name" = C.c_tag,
+				"x" = C.x,
+				"y" = C.y,
+				"z" = C.z,
 			))
 
 	return data
+
+/**
+ * 			var/list/serialized = list()
+			serialized["name"] = C.c_tag
+			serialized["x"] = C.x
+			serialized["y"] = C.y
+			serialized["z"] = C.z
+
+			data["cameras"] += list(serialized)
+ */
 
 /obj/machinery/computer/security/attack_ghost(mob/user) // this should not ever be opened to ghots, there is simply no point (even for admin) and also this thing eats up ALOT of resources.
 	return
