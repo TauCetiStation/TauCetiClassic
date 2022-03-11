@@ -612,14 +612,18 @@
 	},
 /area/station/hallway/primary/central)
 "aaY" = (
-/obj/machinery/atmospherics/components/unary/tank/nitrogen{
-	dir = 1
+/obj/structure/grille,
+/obj/structure/barricade/wooden,
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "engin_airlock";
+	name = "interior access button";
+	pixel_y = -28;
+	req_one_access = list(13,45,1)
 	},
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "darkblue"
-	},
-/area/station/tcommsat/computer)
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
 "aaZ" = (
 /obj/machinery/door/airlock/medical{
 	name = "Operating Theatre 1";
@@ -2462,25 +2466,16 @@
 	},
 /area/station/aisat/ai_chamber)
 "aed" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/access_button{
-	command = "cycle_interior";
+	command = "cycle_exterior";
 	frequency = 1379;
-	master_tag = "satellite_aux_airlock";
-	name = "interior access button";
-	pixel_x = -32;
-	pixel_y = -28;
-	req_access = list(66)
+	master_tag = "engin_airlock";
+	name = "exterior access button";
+	pixel_y = 28;
+	req_one_access = list(13,45,1)
 	},
-/turf/simulated/floor{
-	icon_state = "darkblue"
-	},
-/area/station/tcommsat/computer)
+/turf/simulated/floor/plating/airless,
+/area/space)
 "aee" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -5156,24 +5151,28 @@
 /area/station/civilian/locker)
 "ajd" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass{
-	amount = 50;
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/device/multitool,
-/obj/item/weapon/storage/belt,
-/obj/item/weapon/storage/belt,
-/obj/item/weapon/storage/belt,
 /obj/machinery/newscaster{
 	pixel_x = 28
 	},
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
+/obj/item/weapon/storage/belt/utility{
+	pixel_y = 6
+	},
+/obj/item/weapon/storage/belt/utility{
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/belt/utility,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50;
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/device/multitool,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brown"
@@ -6777,15 +6776,6 @@
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 8
 	},
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "engin_airlock";
-	name = "interior access button";
-	pixel_x = -32;
-	pixel_y = -28;
-	req_one_access = list(13,45,1)
-	},
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -8177,14 +8167,18 @@
 	},
 /area/station/tcommsat/computer)
 "apm" = (
-/obj/machinery/light/small{
-	dir = 4
+/obj/structure/closet/secure_closet/miner,
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "mining_east_airlock";
+	name = "interior access button";
+	pixel_y = -28
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "warningcorner"
+	icon_state = "brown"
 	},
-/area/station/rnd/hallway)
+/area/station/cargo/storage)
 "apn" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/box/lights/mixed,
@@ -9111,29 +9105,14 @@
 /turf/simulated/floor/plating,
 /area/station/tcommsat/computer)
 "aqT" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1379;
-	master_tag = "satellite_aux_airlock";
-	name = "exterior access button";
-	pixel_x = 32;
-	pixel_y = 28;
-	req_access = list(66)
-	},
-/turf/simulated/floor/plating/airless/catwalk,
-/area/space)
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "aqU" = (
-/obj/machinery/camera{
-	c_tag = "MiniSat South";
-	network = list("MiniSat")
+/obj/structure/closet/crate,
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
 	},
-/turf/environment/space,
-/area/space)
+/area/station/cargo/recycler)
 "aqV" = (
 /turf/simulated/floor/airless{
 	dir = 8;
@@ -9337,6 +9316,14 @@
 	pixel_x = -22;
 	pixel_y = 0
 	},
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "robotics_solar_airlock";
+	name = "interior access button";
+	pixel_y = -28;
+	req_access = list(13)
+	},
 /turf/simulated/floor/plating{
 	icon_state = "platebot"
 	},
@@ -9438,14 +9425,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "mining_east_airlock";
-	name = "interior access button";
-	pixel_x = -32;
-	pixel_y = -28
-	},
 /obj/machinery/atmospherics/components/binary/pump/on,
 /turf/simulated/floor{
 	dir = 6;
@@ -9517,31 +9496,22 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "ary" = (
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1379;
-	master_tag = "mining_east_airlock";
-	name = "exterior access button";
-	pixel_x = 32;
-	pixel_y = 28
+/obj/machinery/light/small{
+	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/asteroid/mine/eva)
-"arz" = (
 /obj/machinery/access_button{
 	command = "cycle_interior";
 	frequency = 1379;
-	master_tag = "robotics_solar_airlock";
+	master_tag = "research_airlock";
 	name = "interior access button";
-	pixel_x = -32;
-	pixel_y = -28;
-	req_access = list(13)
+	pixel_y = -28
 	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warningcorner"
+	},
+/area/station/rnd/hallway)
+"arz" = (
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -9611,19 +9581,22 @@
 	},
 /area/station/maintenance/portsolar)
 "arC" = (
+/obj/machinery/atmospherics/components/unary/tank/nitrogen{
+	dir = 1
+	},
 /obj/machinery/access_button{
 	command = "cycle_interior";
 	frequency = 1379;
-	master_tag = "research_airlock";
+	master_tag = "satellite_aux_airlock";
 	name = "interior access button";
-	pixel_x = 32;
-	pixel_y = -28
+	pixel_y = -28;
+	req_access = list(66)
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor{
-	icon_state = "warning"
+	dir = 10;
+	icon_state = "darkblue"
 	},
-/area/station/rnd/hallway)
+/area/station/tcommsat/computer)
 "arD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/cigbutt{
@@ -9633,18 +9606,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "arE" = (
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1379;
-	master_tag = "robotics_solar_airlock";
-	name = "exterior access button";
-	pixel_x = 32;
-	pixel_y = 28;
-	req_access = list(13)
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/structure/cable,
-/turf/simulated/floor/plating/airless/catwalk,
-/area/station/solar/port)
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/tcommsat/computer)
 "arF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 4;
@@ -9682,15 +9653,11 @@
 /obj/machinery/access_button{
 	command = "cycle_exterior";
 	frequency = 1379;
-	master_tag = "research_airlock";
+	master_tag = "mining_east_airlock";
 	name = "exterior access button";
-	pixel_x = 28;
-	pixel_y = 32
+	pixel_y = 28
 	},
-/turf/simulated/floor/airless{
-	dir = 4;
-	icon_state = "asteroidwarning"
-	},
+/turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/eva)
 "arI" = (
 /obj/structure/window/reinforced{
@@ -9734,18 +9701,9 @@
 	},
 /area/asteroid/mine/eva)
 "arM" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/structure/ore_box,
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 8;
-	frequency = 1379;
-	id_tag = "research_pump";
-	name = "Research Large Air Vent"
-	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/turf/simulated/floor{
+	icon_state = "warning"
 	},
 /area/station/rnd/hallway)
 "arN" = (
@@ -9787,6 +9745,74 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/construction/assembly_line)
+"arT" = (
+/obj/structure/cable,
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/port)
+"arU" = (
+/obj/structure/lattice,
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "robotics_solar_airlock";
+	name = "exterior access button";
+	pixel_y = 28;
+	req_access = list(13)
+	},
+/turf/environment/space,
+/area/space)
+"arV" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space)
+"arW" = (
+/obj/machinery/camera{
+	c_tag = "MiniSat South";
+	network = list("MiniSat")
+	},
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "satellite_aux_airlock";
+	name = "exterior access button";
+	pixel_y = 28;
+	req_access = list(66)
+	},
+/turf/environment/space,
+/area/space)
+"arX" = (
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "research_airlock";
+	name = "exterior access button";
+	pixel_x = 28
+	},
+/turf/simulated/floor/airless{
+	dir = 4;
+	icon_state = "asteroidwarning"
+	},
+/area/asteroid/mine/eva)
+"arY" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/station/rnd/hallway)
+"arZ" = (
+/obj/structure/ore_box,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/eva)
 "asi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -11795,14 +11821,13 @@
 /obj/machinery/access_button{
 	command = "cycle_exterior";
 	frequency = 1379;
-	master_tag = "virology_airlock";
+	master_tag = "solar_tool_airlock";
 	name = "exterior access button";
-	pixel_x = 28;
-	pixel_y = 32;
-	req_one_access = list(13,45,1)
+	pixel_y = -28;
+	req_access = list(13)
 	},
-/turf/simulated/floor/plating/airless,
-/area/space)
+/turf/simulated/floor/plating/airless/catwalk,
+/area/station/solar/auxport)
 "clJ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -13467,17 +13492,11 @@
 	},
 /area/station/engineering/atmos)
 "dSY" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/access_button{
 	command = "cycle_exterior";
 	frequency = 1379;
 	master_tag = "solar_chapel_airlock";
 	name = "exterior access button";
-	pixel_x = -32;
 	pixel_y = -28;
 	req_access = list(10,13)
 	},
@@ -15470,6 +15489,14 @@
 /obj/machinery/power/solar_control{
 	id = "auxsolareast";
 	name = "Fore Port Solar Control"
+	},
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "solar_tool_airlock";
+	name = "interior access button";
+	pixel_y = 28;
+	req_access = list(13)
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebot"
@@ -20881,15 +20908,6 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1379;
-	master_tag = "solar_tool_airlock";
-	name = "exterior access button";
-	pixel_x = -32;
-	pixel_y = -28;
-	req_access = list(13)
-	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
 "lvS" = (
@@ -24775,6 +24793,14 @@
 /obj/item/weapon/storage/box/contraband{
 	icon_state = "box_of_doom"
 	},
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "virology_airlock";
+	name = "exterior access button";
+	pixel_x = 28;
+	req_one_access = list(13,45,1)
+	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "pbE" = (
@@ -26367,6 +26393,14 @@
 /obj/structure/table,
 /obj/random/tools/tool,
 /obj/effect/spawner/lootdrop/maintenance/two,
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "solar_chapel_airlock";
+	name = "interior access button";
+	pixel_y = 28;
+	req_access = list(13)
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "quF" = (
@@ -26877,15 +26911,6 @@
 /area/station/maintenance/medbay)
 "qMs" = (
 /obj/machinery/atmospherics/pipe/manifold/visible,
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "virology_airlock";
-	name = "interior access button";
-	pixel_x = 32;
-	pixel_y = 28;
-	req_one_access = list(13,45,1)
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -28474,15 +28499,6 @@
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
 	},
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "solar_tool_airlock";
-	name = "interior access button";
-	pixel_x = -32;
-	pixel_y = 28;
-	req_access = list(13)
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -29452,6 +29468,14 @@
 	icon_state = "4-8"
 	},
 /mob/living/simple_animal/mouse,
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "virology_airlock";
+	name = "interior access button";
+	pixel_y = 28;
+	req_one_access = list(13,45,1)
+	},
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -31312,25 +31336,13 @@
 /turf/simulated/floor/engine/oxygen,
 /area/station/engineering/atmos)
 "vnl" = (
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "solar_chapel_airlock";
-	name = "interior access button";
-	pixel_x = 32;
-	pixel_y = 28;
-	req_access = list(13)
-	},
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/auxsolarstarboard)
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/explored)
 "vnN" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/flask/barflask{
@@ -33945,17 +33957,16 @@
 	},
 /area/station/civilian/kitchen)
 "xOV" = (
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1379;
-	master_tag = "engin_airlock";
-	name = "exterior access button";
-	pixel_x = 32;
-	pixel_y = 28;
-	req_one_access = list(13,45,1)
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating/airless,
-/area/space)
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/auxsolarstarboard)
 "xOY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -51306,7 +51317,7 @@ apl
 aaE
 aaM
 adT
-aaY
+arC
 vlu
 aes
 aez
@@ -51563,13 +51574,13 @@ aaz
 adB
 adM
 adV
-aed
+arE
 aek
 aeq
 aeq
 aex
 aqI
-aqT
+arV
 aeD
 crv
 gay
@@ -51826,7 +51837,7 @@ aer
 aev
 apv
 vlu
-aqU
+arW
 azF
 crv
 crv
@@ -55146,7 +55157,7 @@ akh
 alp
 alN
 amj
-alp
+aaY
 akb
 aho
 akb
@@ -55407,7 +55418,7 @@ amx
 ahl
 vvG
 nue
-xOV
+agg
 ojo
 ojo
 ojo
@@ -55664,7 +55675,7 @@ amA
 akb
 amJ
 akb
-agg
+aed
 azn
 fFG
 oFi
@@ -56135,7 +56146,7 @@ dZx
 dZx
 crv
 crv
-dZx
+cly
 fSx
 osN
 osN
@@ -57671,7 +57682,7 @@ yfp
 cjX
 crv
 pbx
-cly
+agg
 crv
 rTG
 cUq
@@ -59792,7 +59803,7 @@ arz
 arA
 arB
 aeS
-arE
+arT
 rIo
 rIo
 crv
@@ -60049,7 +60060,7 @@ vzI
 cXT
 cXT
 cXT
-crv
+arU
 crv
 crv
 crv
@@ -62355,7 +62366,7 @@ acV
 acG
 aeC
 aca
-ace
+aqU
 abP
 amY
 amY
@@ -62610,10 +62621,10 @@ sFn
 kOm
 acW
 sFn
+aiy
+aiy
+aiy
 sFn
-sFn
-aco
-abP
 idm
 idm
 idm
@@ -62869,7 +62880,7 @@ mVa
 pSh
 arv
 aiy
-aiy
+aqT
 nhT
 idm
 idm
@@ -65436,7 +65447,7 @@ ykW
 dyA
 kZA
 avF
-sRE
+apm
 vlw
 gih
 aof
@@ -65698,7 +65709,7 @@ tmq
 wZq
 aog
 fXJ
-ary
+lem
 lem
 lem
 lem
@@ -65955,7 +65966,7 @@ vlw
 anZ
 adO
 gpH
-jWx
+arH
 jWx
 jWx
 jWx
@@ -67764,7 +67775,7 @@ mKx
 mKx
 mKx
 uJq
-jWx
+arZ
 skE
 yjd
 goP
@@ -68017,8 +68028,8 @@ apU
 aoY
 aoK
 arL
+arX
 apy
-arH
 apA
 apB
 skE
@@ -68786,7 +68797,7 @@ apJ
 apN
 apX
 aqb
-arC
+arM
 wDB
 ksC
 ksC
@@ -69043,10 +69054,10 @@ pMW
 noD
 aoR
 aqc
-apm
+ary
 vKc
 afu
-arM
+arY
 aoK
 aoK
 hvD
@@ -72600,7 +72611,7 @@ cXm
 cXm
 cXm
 cXm
-cXm
+dSY
 wEm
 fmD
 xYI
@@ -72857,7 +72868,7 @@ cXm
 cXm
 cXm
 nwP
-dSY
+vnl
 wVf
 dUN
 ivh
@@ -73119,7 +73130,7 @@ wEm
 dVg
 mSF
 goj
-vnl
+xOV
 aiN
 buo
 aoO
