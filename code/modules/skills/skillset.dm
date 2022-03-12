@@ -25,3 +25,11 @@
 /datum/skillset/proc/get_skill(skill)
 	return skills[skill]
 
+/datum/skillset/proc/copy_skills()
+	var/result = list()
+	for(var/skill_name in skills)
+		var/datum/skill/original = get_skill(skill_name)
+		var/datum/skill/skill_copy = new original.type
+		result[skill_name] = skill_copy
+	return result
+
