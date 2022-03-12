@@ -165,7 +165,7 @@
 	<B>Rampant Diseases:</B> [SSStatistics.score.disease] (-[SSStatistics.score.disease * 30] Points)<BR>
 	<B>AI Destroyed:</B> [SSStatistics.score.deadaipenalty ? "Yes" : "No"] (-[SSStatistics.score.deadaipenalty * 250] Points)<BR><BR>
 	<U>THE WEIRD</U><BR>
-	<B>Final Station Budget:</B> $[num2text(totalfunds,50)]<BR>"}
+	<B>Final Station Budget:</B> [num2text(totalfunds,50)]<image class='credit'/><BR>"}
 	var/profit = totalfunds - global.initial_station_money
 	if (profit > 0)
 		dat += "<B>Station Profit:</B> +[num2text(profit,50)]<BR>"

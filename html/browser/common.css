@@ -641,8 +641,9 @@ body.theme_abductor {
 }
 
 .credit {
-    width: 150px;
-    height: 150px;
-    background-size: 150px 150px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 137.95 162.94'%3E%3Cg id='layer_2' data-name='layer 2'%3E%3Cg id='layer_1-2' data-name='layer 1'%3E%3Cpolygon fill='%23000000' points='110.04 56.48 82.13 56.48 82.13 0.66 137.95 0.66 110.04 56.48' /%3E%3Cpolygon fill='%23000000' points='110.04 80.81 82.13 80.81 82.13 162.94 137.95 162.94 110.04 80.81' /%3E%3Cpolygon fill='%23000000' points='54.56 0 0 0 0 18 15 18 15 43.31 0 43.31 0 51.75 15 51.75 15 76.88 0 76.88 0 96.19 15 96.19 15 145.31 0 145.31 0 161.63 54.56 161.63 54.56 0' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    width: 12px;
+    height: 12px;
+    background-size: 12px 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 137.95 162.94'%3E%3Cg id='layer_2' data-name='layer 2'%3E%3Cg id='layer_1-2' data-name='layer 1'%3E%3Cpolygon fill='%23FFFFFF' points='110.04 56.48 82.13 56.48 82.13 0.66 137.95 0.66 110.04 56.48' /%3E%3Cpolygon fill='%23FFFFFF' points='110.04 80.81 82.13 80.81 82.13 162.94 137.95 162.94 110.04 80.81' /%3E%3Cpolygon fill='%23FFFFFF' points='54.56 0 0 0 0 18 15 18 15 43.31 0 43.31 0 51.75 15 51.75 15 76.88 0 76.88 0 96.19 15 96.19 15 145.31 0 145.31 0 161.63 54.56 161.63 54.56 0' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+	background-position: left bottom;
 }
