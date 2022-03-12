@@ -13,6 +13,31 @@
 	icon_state = "grimy"
 	},
 /area/space_structures/derelict_lab)
+"ac" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swall1_2"
+	},
+/area/space_structures/derelict_lab)
+"ad" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall1"
+	},
+/area/space_structures/derelict_lab)
+"ae" = (
+/obj/machinery/door/poddoor{
+	id = "Abad Blast Door";
+	name = "Blast Door"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/shuttle/window{
+	dir = 8;
+	name = "window"
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/space_structures/derelict_lab)
 "af" = (
 /obj/item/ammo_casing/a74,
 /obj/effect/decal/cleanable/dirt,
@@ -21,6 +46,23 @@
 	dir = 3;
 	icon_state = "whitegreen"
 	},
+/area/space_structures/derelict_lab)
+"ag" = (
+/obj/machinery/door/poddoor{
+	id = "Abad Blast Door";
+	name = "Blast Door"
+	},
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/shuttle/window{
+	dir = 8;
+	icon_state = "3";
+	name = "window"
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
 /area/space_structures/derelict_lab)
 "ah" = (
 /obj/structure/rack,
@@ -35,12 +77,29 @@
 	icon_state = "warndark"
 	},
 /area/space_structures/derelict_lab)
-"aj" = (
-/obj/structure/grille{
-	destroyed = 1
-	},
+"ai" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/shuttle/plating,
+/area/space_structures/derelict_lab)
+"aj" = (
+/obj/item/weapon/reagent_containers/glass/beaker/bluespace,
+/obj/item/weapon/shard,
+/obj/structure/cellular_biomass/grass/meat,
+/turf/simulated/floor,
+/area/space_structures/derelict_lab)
+"ak" = (
+/obj/machinery/door/poddoor{
+	id = "Abad Blast Door";
+	name = "Blast Door"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/shuttle/window{
+	dir = 8;
+	icon_state = "3";
+	name = "window"
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
 /area/space_structures/derelict_lab)
 "al" = (
 /obj/item/clothing/mask/gas/coloured,
@@ -49,6 +108,19 @@
 	dir = 9;
 	icon_state = "warnwhite"
 	},
+/area/space_structures/derelict_lab)
+"am" = (
+/obj/machinery/door/poddoor{
+	id = "Abad Blast Door";
+	name = "Blast Door"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/shuttle/window{
+	dir = 4;
+	name = "window"
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
 /area/space_structures/derelict_lab)
 "an" = (
 /obj/effect/decal/cleanable/blood,
@@ -73,6 +145,12 @@
 	icon_state = "whitegreen"
 	},
 /area/space_structures/derelict_lab)
+"aq" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swall1"
+	},
+/area/space_structures/derelict_lab)
 "ar" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -85,6 +163,20 @@
 	dir = 1;
 	icon_state = "warnwhite"
 	},
+/area/space_structures/derelict_lab)
+"as" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall1_2"
+	},
+/area/space_structures/derelict_lab)
+"at" = (
+/obj/structure/shuttle/window{
+	dir = 1;
+	name = "window"
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
 /area/space_structures/derelict_lab)
 "au" = (
 /obj/machinery/shower{
@@ -101,6 +193,14 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
+/area/space_structures/derelict_lab)
+"av" = (
+/obj/structure/shuttle/window{
+	icon_state = "3";
+	name = "window"
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
 /area/space_structures/derelict_lab)
 "aw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -121,15 +221,41 @@
 	icon_state = "warnwhite"
 	},
 /area/space_structures/derelict_lab)
-"aA" = (
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
+"ay" = (
+/obj/structure/shuttle/window{
+	name = "window"
 	},
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/space_structures/derelict_lab)
+"az" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall1_2"
+	},
+/area/space_structures/derelict_lab)
+"aA" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall2_2"
+	},
+/area/space_structures/derelict_lab)
+"aB" = (
+/obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "warndark"
+/obj/item/stack/sheet/plasteel,
+/obj/structure/cellular_biomass/grass/meat,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/derelict_lab)
+"aC" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall1"
+	},
+/area/space_structures/derelict_lab)
+"aD" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall4"
 	},
 /area/space_structures/derelict_lab)
 "aE" = (
@@ -139,12 +265,54 @@
 	icon_state = "warnwhite"
 	},
 /area/space_structures/derelict_lab)
+"aF" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall4_2"
+	},
+/area/space_structures/derelict_lab)
+"aG" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall3_2"
+	},
+/area/space_structures/derelict_lab)
 "aH" = (
-/obj/effect/decal/remains/human,
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall2"
+	},
+/area/space_structures/derelict_lab)
+"aI" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall5_2"
+	},
+/area/space_structures/derelict_lab)
+"aJ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/table/glass,
+/obj/item/stack/sheet/mineral/silver{
+	amount = 8;
+	pixel_x = -8
+	},
+/obj/item/device/science_tool{
+	pixel_y = 7
+	},
+/obj/random/science/scanning_module,
+/obj/random/science/matter_bin,
+/obj/random/science/matter_bin,
+/obj/random/science/manipulator,
+/obj/item/device/radio/intercom{
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_x = 2;
+	pixel_y = 22
+	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/sheet/plasteel,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+/obj/random/science/manipulator,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitepurple"
 	},
 /area/space_structures/derelict_lab)
 "aK" = (
@@ -185,6 +353,32 @@
 	icon_state = "grimy"
 	},
 /area/space_structures/derelict_lab)
+"aP" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/constructable_frame/machine_frame,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cellular_biomass/grass/meat,
+/turf/simulated/floor{
+	icon_state = "warndark"
+	},
+/area/space_structures/derelict_lab)
+"aQ" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/belt/utility,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/cable_coil/random,
+/obj/item/device/radio/off,
+/obj/structure/cellular_biomass/grass/meat,
+/turf/simulated/floor{
+	icon_state = "warndark"
+	},
+/area/space_structures/derelict_lab)
 "aR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -212,30 +406,109 @@
 	icon_state = "freezerfloor"
 	},
 /area/space_structures/derelict_lab)
-"aX" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/structure/table/glass,
-/obj/item/stack/sheet/mineral/silver{
-	amount = 8;
-	pixel_x = -8
+"aU" = (
+/obj/machinery/light{
+	dir = 1
 	},
-/obj/item/device/science_tool{
-	pixel_y = 7
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
 	},
-/obj/random/science/scanning_module,
-/obj/random/science/matter_bin,
-/obj/random/science/matter_bin,
-/obj/random/science/manipulator,
-/obj/item/device/radio/intercom{
-	frequency = 1485;
-	name = "Station Intercom (Medbay)";
-	pixel_y = 22
+/obj/structure/rack,
+/obj/item/stack/sheet/metal{
+	amount = 12
+	},
+/obj/item/device/gps/engineering,
+/obj/item/weapon/airlock_painter,
+/obj/structure/cellular_biomass/grass/meat,
+/turf/simulated/floor{
+	icon_state = "warndark"
+	},
+/area/space_structures/derelict_lab)
+"aV" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/random/science/manipulator,
+/obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict_lab)
+"aW" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cellular_biomass/grass/meat,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict_lab)
+"aX" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swall5"
+	},
+/area/space_structures/derelict_lab)
+"aY" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/item/weapon/circuitboard/smes,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cellular_biomass/grass/meat,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict_lab)
+"aZ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/structure/cellular_biomass/grass/meat,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict_lab)
+"ba" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/obj/structure/stool/bed/chair/metal/yellow{
+	dir = 1
+	},
+/obj/machinery/firealarm{
 	dir = 1;
-	icon_state = "whitepurple"
+	pixel_y = -22
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cellular_biomass/grass/meat,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict_lab)
+"bb" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3_2"
 	},
 /area/space_structures/derelict_lab)
 "bc" = (
@@ -243,6 +516,28 @@
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitepurple"
+	},
+/area/space_structures/derelict_lab)
+"bd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/random/tools/powercell,
+/obj/structure/cellular_biomass/grass/meat,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict_lab)
+"be" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/machinery/meter,
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall2"
+	},
+/area/space_structures/derelict_lab)
+"bf" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall3"
 	},
 /area/space_structures/derelict_lab)
 "bg" = (
@@ -260,10 +555,31 @@
 	icon_state = "panelscorched"
 	},
 /area/space_structures/derelict_lab)
+"bh" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/structure/cellular_biomass/grass/meat,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict_lab)
 "bi" = (
 /mob/living/simple_animal/hostile/carp,
 /turf/simulated/floor/airless{
 	icon_state = "grimy"
+	},
+/area/space_structures/derelict_lab)
+"bj" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cellular_biomass/grass/meat,
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space_structures/derelict_lab)
 "bk" = (
@@ -401,32 +717,25 @@
 	},
 /area/space_structures/derelict_lab)
 "bD" = (
-/obj/item/weapon/reagent_containers/glass/beaker/bluespace,
-/obj/item/weapon/shard,
-/obj/item/device/radio/intercom{
-	frequency = 1485;
-	name = "Station Intercom (Medbay)";
-	pixel_y = 22
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swall5_2"
 	},
-/obj/structure/cellular_biomass/grass/meat,
-/turf/simulated/floor,
 /area/space_structures/derelict_lab)
 "bF" = (
-/turf/simulated/wall,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall5"
+	},
 /area/space_structures/derelict_lab)
 "bH" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/obj/machinery/meter,
-/turf/simulated/wall,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall5_2"
+	},
 /area/space_structures/derelict_lab)
 "bI" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 10
-	},
-/obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "dark"
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall5"
 	},
 /area/space_structures/derelict_lab)
 "bK" = (
@@ -451,31 +760,25 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/alarm{
 	pixel_y = 21
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/space_structures/derelict_lab)
 "bY" = (
 /obj/machinery/chem_master,
+/obj/item/device/radio/intercom{
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_y = 22
+	},
 /turf/simulated/floor,
 /area/space_structures/derelict_lab)
 "bZ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "dark"
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall5_2"
 	},
 /area/space_structures/derelict_lab)
 "ca" = (
@@ -486,7 +789,12 @@
 /turf/environment/space,
 /area/space)
 "cb" = (
-/turf/simulated/wall/r_wall,
+/obj/structure/shuttle/window{
+	dir = 8;
+	name = "window"
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
 /area/space_structures/derelict_lab)
 "cd" = (
 /obj/machinery/power/solar{
@@ -507,16 +815,13 @@
 	},
 /area/space_structures/derelict_lab)
 "ce" = (
+/obj/structure/shuttle/window{
+	dir = 8;
+	icon_state = "3";
+	name = "window"
+	},
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/door/poddoor{
-	id = "Abad Blast Door";
-	name = "Blast Door"
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/shuttle/plating,
+/turf/simulated/floor/plating,
 /area/space_structures/derelict_lab)
 "cf" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -1002,16 +1307,13 @@
 	},
 /area/space_structures/derelict_lab)
 "lK" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/item/weapon/circuitboard/smes,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/cellular_biomass/grass/meat,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
 /area/space_structures/derelict_lab)
 "lP" = (
@@ -1193,12 +1495,9 @@
 	},
 /area/space_structures/derelict_lab)
 "pY" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/blood/gibs/core,
-/turf/simulated/floor{
-	icon_state = "dark"
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall3"
 	},
 /area/space_structures/derelict_lab)
 "qi" = (
@@ -1422,18 +1721,10 @@
 /turf/simulated/floor/plating,
 /area/space_structures/derelict_lab)
 "vm" = (
-/obj/machinery/door/poddoor{
-	id = "Abad Blast Door";
-	name = "Blast Door"
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swall3_2"
 	},
-/obj/item/weapon/shard{
-	icon_state = "medium"
-	},
-/obj/structure/grille{
-	destroyed = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/shuttle/plating,
 /area/space_structures/derelict_lab)
 "vq" = (
 /obj/structure/lattice,
@@ -1539,10 +1830,9 @@
 	},
 /area/space_structures/derelict_lab)
 "xb" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/random/tools/powercell,
-/turf/simulated/floor{
-	icon_state = "dark"
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall1"
 	},
 /area/space_structures/derelict_lab)
 "xz" = (
@@ -1634,10 +1924,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/derelict_lab)
 "Aa" = (
-/obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "warning"
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swall3"
 	},
 /area/space_structures/derelict_lab)
 "AB" = (
@@ -1695,17 +1984,12 @@
 	},
 /area/space_structures/derelict_lab)
 "Ci" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 5
+/obj/structure/shuttle/window{
+	dir = 4;
+	name = "window"
 	},
-/obj/item/weapon/storage/belt/utility,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/cable_coil/random,
-/obj/item/device/radio/off,
-/turf/simulated/floor{
-	icon_state = "warndark"
-	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
 /area/space_structures/derelict_lab)
 "CE" = (
 /obj/effect/decal/cleanable/blood,
@@ -1834,8 +2118,8 @@
 /area/space_structures/derelict_lab)
 "Gt" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
-/turf/simulated/floor{
-	icon_state = "warning"
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
 /area/space_structures/derelict_lab)
 "Gu" = (
@@ -1918,21 +2202,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/derelict_lab)
 "HK" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
-	},
-/obj/structure/rack,
-/obj/item/stack/sheet/metal{
-	amount = 12
-	},
-/obj/item/device/gps/engineering,
-/obj/item/weapon/airlock_painter,
-/turf/simulated/floor{
-	icon_state = "warndark"
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall1_2"
 	},
 /area/space_structures/derelict_lab)
 "HZ" = (
@@ -2018,19 +2290,14 @@
 	},
 /area/space_structures/derelict_lab)
 "Kg" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
-/obj/structure/stool/bed/chair/metal/yellow{
-	dir = 1
-	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -22
-	},
+/obj/structure/filingcabinet/medical,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/virusfood{
+	pixel_y = -32
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 3;
+	icon_state = "whitegreen"
 	},
 /area/space_structures/derelict_lab)
 "Kq" = (
@@ -2447,11 +2714,9 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space_structures/derelict_lab)
 "Vj" = (
-/obj/structure/filingcabinet/medical,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	dir = 3;
-	icon_state = "whitegreen"
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall5"
 	},
 /area/space_structures/derelict_lab)
 "VH" = (
@@ -2513,13 +2778,8 @@
 	},
 /area/space_structures/derelict_lab)
 "WX" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
-	},
-/obj/structure/cellular_biomass/grass/meat,
-/turf/simulated/floor{
-	icon_state = "white"
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2"
 	},
 /area/space_structures/derelict_lab)
 "Xh" = (
@@ -2534,15 +2794,10 @@
 	},
 /area/space_structures/derelict_lab)
 "Xi" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
+/obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "dark"
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
 /area/space_structures/derelict_lab)
 "Yw" = (
@@ -2569,15 +2824,8 @@
 	},
 /area/space_structures/derelict_lab)
 "Zd" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/blood/gibs/core,
-/turf/simulated/floor{
-	icon_state = "dark"
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2_2"
 	},
 /area/space_structures/derelict_lab)
 "Zi" = (
@@ -2623,9 +2871,6 @@
 /obj/machinery/computer/centrifuge,
 /obj/machinery/light{
 	dir = 1
-	},
-/obj/structure/reagent_dispensers/virusfood{
-	pixel_y = 30
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict_lab)
@@ -2753,11 +2998,11 @@ VN
 aa
 VN
 aa
-bF
-bF
-bF
-bF
-bF
+bH
+at
+av
+ay
+Vj
 VN
 aa
 VN
@@ -2782,17 +3027,17 @@ Np
 aa
 aa
 VN
-bF
-bF
-bF
-bF
+bH
+Zd
+WX
+pY
 al
 AB
 aE
-bF
-bF
-bF
-bF
+vm
+Zd
+WX
+Vj
 aa
 aa
 VN
@@ -2814,18 +3059,18 @@ VN
 VN
 VN
 aa
-bF
+aH
 nM
 De
-bF
+ac
 ar
 cE
 wC
-bF
+aq
 wR
 Sm
-bF
-bF
+aX
+bZ
 VN
 VN
 VN
@@ -2844,9 +3089,9 @@ aa
 Np
 aa
 aa
-bF
-bF
-bF
+bH
+WX
+bI
 TB
 we
 bm
@@ -2857,7 +3102,7 @@ aS
 aR
 Sq
 Mf
-bF
+aH
 VN
 aa
 aa
@@ -2876,21 +3121,21 @@ aa
 Np
 VN
 bF
-bF
+bI
 cp
 Rx
 Md
 CE
-bF
+ad
 Zq
 au
 vr
-bF
-aX
+as
+aJ
 RY
 bx
-bF
-bF
+aX
+Vj
 VN
 bP
 cd
@@ -2907,22 +3152,22 @@ Np
 aa
 aa
 VN
-bF
-bD
+aA
+aj
 cu
 qi
-WX
+lK
 TR
-cb
-cb
-cb
-cb
-cb
+bD
+Zd
+WX
+WX
+pY
 tA
 Wp
 sj
 rS
-bF
+aA
 VN
 VN
 VN
@@ -2939,7 +3184,7 @@ Np
 aa
 aa
 VN
-bF
+aH
 bX
 cD
 Gt
@@ -2949,12 +3194,12 @@ bn
 TU
 aw
 PX
-cb
+aH
 yP
 bk
 Yz
 la
-bF
+aH
 aa
 VN
 aa
@@ -2971,22 +3216,22 @@ aa
 aa
 VN
 VN
-bF
+aH
 bY
 lt
 YH
 lx
 HF
-cb
+ad
 in
 TQ
 Em
-cb
+aA
 bc
 bl
 bs
 vJ
-bH
+be
 Ez
 VN
 aa
@@ -3003,23 +3248,23 @@ aa
 Np
 VN
 VN
-bF
-bF
+aX
+bZ
 qp
 TS
 OQ
 LJ
-cb
+vm
 lP
 mR
-cb
-cb
-cb
+az
+aD
+xb
 HZ
-cb
-cb
-cb
-cb
+az
+bb
+bf
+bZ
 VN
 VN
 VN
@@ -3036,23 +3281,23 @@ aa
 aa
 VN
 VN
-bF
-bF
+Aa
+xb
 ql
 kA
 QV
-ce
+ae
 mJ
 aL
-aH
+aB
 lP
-aA
-bZ
+aP
+aV
 bu
-cb
+aq
 vd
-cb
-cb
+aX
+xb
 aa
 VN
 Yw
@@ -3068,16 +3313,16 @@ aa
 aa
 VN
 VN
-bF
+cb
 IX
 Jo
 iW
 rx
-vm
+ag
 Ha
 jz
 hu
-cb
+aH
 wc
 iN
 Bg
@@ -3100,23 +3345,23 @@ aa
 aa
 aa
 VN
-bF
+ce
 My
 mM
 hx
 SC
-aj
+ai
 an
 aN
 kd
-cb
-Ci
-Xi
+aA
+aQ
+aW
 bv
-cb
+ad
 RO
 zV
-cb
+ad
 aa
 VN
 Yw
@@ -3132,23 +3377,23 @@ aa
 Np
 VN
 VN
-bF
+ce
 Zu
 WF
 gQ
-Vj
-cb
+Kg
+Aa
 Ef
 lP
-cb
-cb
-HK
+WX
+pY
+aU
 Jl
-Kg
-cb
-cb
-cb
-cb
+ba
+bD
+WX
+WX
+aG
 aa
 VN
 ok
@@ -3164,23 +3409,23 @@ aa
 Np
 aa
 VN
-bF
+ce
 hb
-Aa
+Xi
 GN
 Gu
-ce
+ae
 aN
 aM
 jl
-cb
+aH
 oO
 VH
 qX
 Jk
-pY
+bh
 px
-cb
+aH
 VN
 VN
 Yw
@@ -3196,23 +3441,23 @@ VN
 Np
 VN
 VN
-bF
+Ci
 Pm
 dX
 Iz
 fq
-ce
+ak
 ao
 Fw
 fK
-cb
+aH
 ah
-lK
+aY
 bw
-xb
-bI
+bd
+bj
 ZI
-cb
+aA
 zw
 zw
 Yw
@@ -3228,23 +3473,23 @@ VN
 aa
 VN
 aa
-bF
-bF
+vm
+HK
 ql
 mP
 wO
-ce
+am
 If
 Lg
 aT
-cb
+aH
 oE
-Zd
+aZ
 IG
 Su
 yn
-cb
-cb
+bF
+bI
 aa
 VN
 Yw
@@ -3260,22 +3505,22 @@ VN
 aa
 VN
 bF
-bF
+bI
 Es
 le
 km
 Oy
-cb
-cb
+Aa
+HK
 Mr
-cb
-cb
-cb
+aC
+aF
+xb
 HZ
-cb
-cb
-cb
-cb
+aC
+WX
+bb
+aI
 ln
 VN
 VN
@@ -3291,22 +3536,22 @@ aa
 Np
 aa
 VN
-bF
+aA
 cj
 rm
 nK
 GL
 qY
-cb
+aq
 ap
 Tr
 AR
-cb
+aH
 tX
 gF
 aO
 gb
-bH
+be
 Ez
 aa
 VN
@@ -3323,7 +3568,7 @@ aa
 Np
 VN
 VN
-bF
+aH
 cm
 ZN
 Ud
@@ -3333,7 +3578,7 @@ FO
 Tj
 gC
 oq
-cb
+aH
 hp
 jZ
 VX
@@ -3355,17 +3600,17 @@ aa
 VN
 VN
 VN
-bF
+aH
 co
 NX
 jD
 bk
 GS
-cb
-cb
-cb
-cb
-cb
+bH
+WX
+WX
+Zd
+aG
 bg
 bp
 bi
@@ -3387,17 +3632,17 @@ aa
 aa
 aa
 VN
-bF
-bF
+bD
+Vj
 il
 JZ
 SG
 af
-bF
+aq
 lj
 pu
 aN
-bF
+aq
 xz
 gR
 EX
@@ -3420,9 +3665,9 @@ aa
 aa
 VN
 aa
-bF
-bF
-bF
+aX
+WX
+Vj
 ON
 KX
 qs
@@ -3454,14 +3699,14 @@ VN
 VN
 VN
 VN
-bF
+aA
 nM
 Zl
-bF
+as
 yD
 MM
 sS
-bF
+ad
 Wu
 ja
 bB
@@ -3486,14 +3731,14 @@ aa
 VN
 VN
 aa
-bF
-bF
-bF
-bF
+aX
+WX
+Zd
+pY
 rK
 Ca
 po
-bF
+vm
 um
 bK
 bK
@@ -3520,12 +3765,12 @@ VN
 VN
 VN
 aa
-aa
-bF
-bF
-bF
-bF
-bF
+VN
+bD
+at
+av
+ay
+aI
 zp
 VN
 VN

@@ -37,7 +37,7 @@
 /area/space_structures/ghostship)
 "af" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swall_f6"
+	icon_state = "swall5"
 	},
 /area/space_structures/ghostship)
 "ag" = (
@@ -48,9 +48,10 @@
 /area/space_structures/ghostship)
 "ah" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swall_s6"
+	dir = 8;
+	icon_state = "swall5"
 	},
-/area/space_structures/ghostship)
+/area/space)
 "ai" = (
 /obj/machinery/door/airlock/external,
 /turf/simulated/shuttle/plating,
@@ -103,14 +104,13 @@
 "ao" = (
 /turf/environment/space,
 /turf/simulated/shuttle/wall{
-	icon_state = "swall_s6"
+	dir = 4;
+	icon_state = "swall2"
 	},
 /area/space_structures/ghostship)
 "ap" = (
 /turf/simulated/floor/airless,
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s9"
-	},
+/turf/environment/space,
 /area/space_structures/ghostship)
 "aq" = (
 /obj/structure/window/phoronreinforced{
@@ -140,7 +140,8 @@
 /area/space_structures/ghostship)
 "au" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swall_f5"
+	dir = 1;
+	icon_state = "swall1"
 	},
 /area/space_structures/ghostship)
 "av" = (
@@ -173,9 +174,7 @@
 /area/space_structures/ghostship)
 "az" = (
 /turf/environment/space,
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s9"
-	},
+/turf/environment/space,
 /area/space_structures/ghostship)
 "aA" = (
 /obj/machinery/light_construct{
@@ -196,20 +195,19 @@
 /turf/environment/space,
 /area/space)
 "aD" = (
-/turf/simulated/floor/airless,
 /turf/simulated/shuttle/wall{
-	icon_state = "swall_s6"
+	icon_state = "swall5"
 	},
-/area/space_structures/ghostship)
+/area/space)
 "aE" = (
 /turf/simulated/floor{
 	icon_state = "damaged1"
 	},
 /area/space_structures/ghostship)
 "aF" = (
-/turf/simulated/floor/airless,
+/turf/environment/space,
 /turf/simulated/shuttle/wall{
-	icon_state = "swall_f10"
+	icon_state = "swall2"
 	},
 /area/space_structures/ghostship)
 "aG" = (
@@ -218,7 +216,7 @@
 "aH" = (
 /turf/environment/space,
 /turf/simulated/shuttle/wall{
-	icon_state = "swall_f5"
+	icon_state = "swall5"
 	},
 /area/space_structures/ghostship)
 "aI" = (
@@ -229,11 +227,10 @@
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "aK" = (
-/turf/environment/space,
 /turf/simulated/shuttle/wall{
-	icon_state = "swall_s10"
+	icon_state = "swall3"
 	},
-/area/space_structures/ghostship)
+/area/space)
 "aL" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -244,11 +241,11 @@
 /turf/simulated/shuttle/plating,
 /area/space_structures/ghostship)
 "aM" = (
-/turf/simulated/floor/airless,
 /turf/simulated/shuttle/wall{
-	icon_state = "swall_f5"
+	dir = 4;
+	icon_state = "swall2"
 	},
-/area/space_structures/ghostship)
+/area/space)
 "aN" = (
 /obj/item/stack/sheet/metal,
 /turf/simulated/floor/airless,
@@ -268,9 +265,9 @@
 /turf/environment/space,
 /area/space)
 "aQ" = (
-/turf/environment/space,
 /turf/simulated/shuttle/wall{
-	icon_state = "swall_f10"
+	dir = 4;
+	icon_state = "swall1"
 	},
 /area/space_structures/ghostship)
 "aR" = (
@@ -285,14 +282,13 @@
 /area/space)
 "aT" = (
 /obj/structure/sign/nanotrasen,
-/turf/simulated/shuttle/wall{
-	icon_state = "swall12"
-	},
+/turf/environment/space,
 /area/space_structures/ghostship)
 "aU" = (
-/turf/simulated/floor/airless,
+/turf/environment/space,
 /turf/simulated/shuttle/wall{
-	icon_state = "swall_s5"
+	dir = 1;
+	icon_state = "swall3"
 	},
 /area/space_structures/ghostship)
 "aV" = (
@@ -400,13 +396,14 @@
 /area/space_structures/ghostship)
 "bm" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swall_s9"
+	dir = 1;
+	icon_state = "swall5"
 	},
-/area/space_structures/ghostship)
+/area/space)
 "bn" = (
-/turf/simulated/floor/airless,
 /turf/simulated/shuttle/wall{
-	icon_state = "swall_s10"
+	dir = 8;
+	icon_state = "swall3"
 	},
 /area/space_structures/ghostship)
 "bo" = (
@@ -503,7 +500,8 @@
 /area/space_structures/ghostship)
 "bJ" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swall11"
+	dir = 1;
+	icon_state = "swall5"
 	},
 /area/space_structures/ghostship)
 "bK" = (
@@ -552,7 +550,8 @@
 /area/space_structures/ghostship)
 "bU" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swall14"
+	dir = 4;
+	icon_state = "swall2"
 	},
 /area/space_structures/ghostship)
 "bV" = (
@@ -570,7 +569,8 @@
 "bW" = (
 /obj/structure/sign/nanotrasen,
 /turf/simulated/shuttle/wall{
-	icon_state = "swall8"
+	dir = 4;
+	icon_state = "swall2"
 	},
 /area/space_structures/ghostship)
 "bX" = (
@@ -579,8 +579,9 @@
 	},
 /area/space_structures/ghostship)
 "bY" = (
+/obj/structure/sign/warning/radiation,
 /turf/simulated/shuttle/wall{
-	icon_state = "swall15"
+	icon_state = "swall5"
 	},
 /area/space_structures/ghostship)
 "bZ" = (
@@ -590,7 +591,8 @@
 /area/space_structures/ghostship)
 "ca" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swall13"
+	dir = 1;
+	icon_state = "swall3"
 	},
 /area/space_structures/ghostship)
 "cb" = (
@@ -677,11 +679,6 @@
 	icon_state = "damaged1"
 	},
 /area/space_structures/ghostship)
-"co" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall7"
-	},
-/area/space_structures/ghostship)
 "cp" = (
 /obj/item/ammo_casing/a12mm,
 /obj/machinery/door/unpowered/shuttle/officer,
@@ -732,7 +729,8 @@
 "cx" = (
 /obj/structure/sign/warning/nosmoking,
 /turf/simulated/shuttle/wall{
-	icon_state = "swall12"
+	dir = 4;
+	icon_state = "swall2"
 	},
 /area/space_structures/ghostship)
 "cy" = (
@@ -873,7 +871,8 @@
 "dc" = (
 /obj/structure/sign/warning/radiation,
 /turf/simulated/shuttle/wall{
-	icon_state = "swall12"
+	dir = 4;
+	icon_state = "swall5"
 	},
 /area/space_structures/ghostship)
 "dd" = (
@@ -911,12 +910,14 @@
 /area/space_structures/ghostship)
 "ds" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swall8"
+	dir = 8;
+	icon_state = "swall1"
 	},
 /area/space_structures/ghostship)
 "dv" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swall12"
+	dir = 4;
+	icon_state = "swall3"
 	},
 /area/space_structures/ghostship)
 "dQ" = (
@@ -1256,8 +1257,8 @@ aa
 aa
 aa
 aa
-ah
-co
+aG
+aG
 aC
 aa
 aa
@@ -1273,7 +1274,7 @@ aC
 aa
 bA
 aG
-co
+aG
 aC
 aa
 aa
@@ -1288,7 +1289,7 @@ aa
 aa
 aa
 aG
-bU
+aG
 az
 aa
 aa
@@ -1339,7 +1340,7 @@ cX
 dq
 aa
 aa
-aH
+az
 aa
 aa
 aa
@@ -1371,7 +1372,7 @@ aa
 aa
 aa
 aJ
-ca
+aG
 aa
 aa
 aa
@@ -1419,7 +1420,7 @@ aa
 aa
 aa
 aa
-dv
+bU
 aE
 aa
 aa
@@ -1428,7 +1429,7 @@ aC
 aC
 aa
 aa
-co
+aG
 aa
 aJ
 aE
@@ -1454,7 +1455,7 @@ aa
 aC
 bq
 aY
-bY
+aG
 aa
 aa
 bq
@@ -1462,9 +1463,9 @@ aa
 aa
 aJ
 aC
-bY
+aG
 cG
-dv
+aG
 aa
 aa
 aa
@@ -1483,10 +1484,10 @@ aa
 aa
 aa
 aa
-dv
+bU
 bf
 ch
-dv
+aG
 aC
 aa
 aa
@@ -1525,7 +1526,7 @@ aS
 aC
 bX
 bX
-dv
+aG
 bS
 aE
 aa
@@ -1546,8 +1547,8 @@ aa
 aa
 aa
 aa
-ao
-co
+aH
+bJ
 ap
 bX
 bM
@@ -1557,7 +1558,7 @@ aa
 cH
 aE
 nr
-dv
+aG
 bX
 bX
 aJ
@@ -1576,9 +1577,9 @@ aa
 aa
 aa
 aa
-aa
-ao
-bY
+aD
+aF
+bJ
 ap
 bX
 nr
@@ -1589,13 +1590,13 @@ cD
 bX
 Hy
 aJ
-dv
+aG
 bX
 bM
 aC
 aJ
-bY
-aH
+aG
+az
 aa
 aa
 aa
@@ -1609,7 +1610,7 @@ aa
 aa
 aa
 ao
-bY
+aG
 ap
 bX
 aE
@@ -1621,14 +1622,14 @@ aE
 aC
 bM
 FT
-dv
+aG
 SG
 aJ
 aJ
 aJ
-aF
-bY
-aH
+ap
+aG
+az
 aa
 aa
 aa
@@ -1644,24 +1645,24 @@ bJ
 ap
 aJ
 aJ
-aD
-co
-co
-bJ
+ap
+aG
+aG
+aG
 aC
 aa
 dd
 aY
 bo
-bJ
-co
-co
-aM
+aG
+aG
+aG
+ap
 aJ
 aJ
-aF
-bJ
-aH
+ap
+aG
+az
 aa
 aa
 "}
@@ -1671,13 +1672,13 @@ aa
 aa
 aa
 aa
-dv
+bU
 aA
 aJ
 aE
-aD
-bY
-bY
+ap
+cG
+aG
 ap
 bl
 aa
@@ -1687,13 +1688,13 @@ cH
 aJ
 aJ
 bT
-bY
-bY
-aM
+aG
+aG
+ap
 aJ
 Xl
 aJ
-dv
+bU
 aa
 aa
 "}
@@ -1703,11 +1704,11 @@ aa
 aa
 aa
 aa
-dv
+bU
 aE
 aJ
-aD
-bY
+ap
+aG
 ap
 ds
 bX
@@ -1719,13 +1720,13 @@ cy
 bG
 cy
 aJ
-ds
-aF
-bY
-aM
+aG
+ap
+aJ
+ap
 aJ
 DN
-dv
+bU
 aa
 aa
 "}
@@ -1738,7 +1739,7 @@ be
 be
 av
 aY
-bJ
+aG
 ap
 aI
 cp
@@ -1753,11 +1754,11 @@ bX
 aJ
 cq
 aJ
-aF
-bJ
-cG
-cq
-dv
+ap
+aJ
+aJ
+aJ
+bU
 aa
 aa
 "}
@@ -1773,7 +1774,7 @@ av
 cH
 bR
 aI
-bZ
+aQ
 cH
 aI
 cy
@@ -1789,7 +1790,7 @@ aJ
 aJ
 aJ
 aJ
-dv
+bU
 aa
 aa
 "}
@@ -1803,10 +1804,10 @@ bc
 aL
 cH
 aZ
-aD
-bo
-bY
-aM
+ap
+aG
+bU
+ap
 aJ
 bu
 aJ
@@ -1814,14 +1815,14 @@ aJ
 aJ
 aJ
 aJ
-aD
-bY
-bo
-aM
+ap
+bn
+aG
+az
 tW
 aJ
 aJ
-dv
+bU
 aa
 aa
 "}
@@ -1835,23 +1836,23 @@ bc
 be
 ay
 bz
-dv
-aa
+aY
 aK
-bY
+aU
 bo
-bo
-cG
+aY
+aY
+au
 cq
+cG
+aY
 aY
 bo
-bo
-bY
-bm
-aa
-dv
-aJ
-aJ
+ca
+aK
+aY
+au
+cq
 aJ
 dv
 aa
@@ -1867,10 +1868,10 @@ be
 ay
 aE
 bK
-dv
+aG
+aM
 aa
-aa
-dv
+bU
 bx
 bv
 aJ
@@ -1878,14 +1879,14 @@ aJ
 aJ
 bv
 bx
-dv
+bU
 aa
-aa
-dv
+aM
+aG
 aJ
 cc
 aJ
-dv
+bU
 aa
 aa
 "}
@@ -1895,14 +1896,14 @@ aa
 aa
 aa
 ao
-ca
+aG
 bM
 cH
 bM
+aG
 bU
-au
 aa
-dv
+bU
 by
 cA
 aJ
@@ -1910,15 +1911,15 @@ aJ
 aJ
 dl
 cg
-dv
+bU
 aa
 ao
-ca
+aG
 aJ
 aJ
 aJ
-bU
-aH
+aG
+az
 aa
 "}
 (26,1,1) = {"
@@ -1931,10 +1932,10 @@ ap
 aJ
 aW
 bM
-aF
-ca
+ap
+bU
 aa
-dv
+bU
 cV
 dl
 cK
@@ -1942,15 +1943,15 @@ dh
 nh
 dl
 cj
-dv
+bU
 aa
 bU
 ap
 cr
 cd
 cr
-bn
-ca
+ap
+bU
 aa
 "}
 (27,1,1) = {"
@@ -1958,15 +1959,15 @@ aa
 aa
 aa
 aa
-dv
+bU
 ak
 aI
 aJ
 aJ
 bp
-dv
+bU
 aa
-dv
+bU
 aJ
 dl
 cL
@@ -1974,15 +1975,15 @@ dn
 ci
 dl
 aJ
-dv
+bU
 aa
-dv
+bU
 hW
 aJ
 bH
 cz
 bp
-dv
+bU
 aa
 "}
 (28,1,1) = {"
@@ -1990,31 +1991,31 @@ aa
 aa
 aa
 aa
-dv
+bU
 an
 aJ
 al
 aJ
 ba
-dv
+bU
 aa
-aQ
-aU
+ao
+ap
 dl
 aB
 pU
 Ah
 dl
-aD
-az
+ap
+ao
 aa
-dv
+bU
 cb
 cr
 aJ
 cr
 ce
-dv
+bU
 aa
 "}
 (29,1,1) = {"
@@ -2022,31 +2023,31 @@ aa
 aa
 aa
 aa
-dv
+bU
 aw
 aJ
 am
 aJ
 bt
-dv
+bU
 aa
-aa
+ah
 dc
 dl
 cM
 Pv
 jP
 dl
-dc
+bY
+bm
 aa
-aa
-dv
+bU
 aJ
 cv
 aJ
 aJ
 aJ
-dv
+bU
 aa
 "}
 (30,1,1) = {"
@@ -2060,7 +2061,7 @@ aJ
 aJ
 bO
 bb
-ds
+bU
 aa
 aa
 cx
@@ -2072,7 +2073,7 @@ dl
 cx
 aa
 aa
-ds
+bU
 bO
 bO
 aJ
@@ -2095,13 +2096,13 @@ ax
 as
 aa
 aa
-dv
+bU
 dl
 cO
 YH
 Ls
 dl
-dv
+bU
 aa
 aa
 as
@@ -2127,13 +2128,13 @@ as
 as
 aa
 aa
-dv
+bU
 dl
 cP
 KJ
 WC
 dl
-dv
+bU
 aa
 aa
 as
@@ -2159,13 +2160,13 @@ aa
 aa
 aa
 aa
-dv
+bU
 bw
 cQ
 wX
 oI
 bN
-dv
+bU
 aa
 aa
 aa
@@ -2191,13 +2192,13 @@ aa
 aa
 aa
 aa
-dv
+bU
 dl
 cR
 dQ
 zW
 dl
-dv
+bU
 aa
 aa
 aa
@@ -2223,13 +2224,13 @@ aa
 aa
 aa
 aa
-dv
+bU
 dl
 cS
 DZ
 ne
 dl
-dv
+bU
 aa
 aa
 aa
@@ -2255,13 +2256,13 @@ aa
 aa
 aa
 aa
-dv
+bU
 dl
 cU
 Kx
 qN
 dl
-dv
+bU
 aa
 aa
 aa
@@ -2287,13 +2288,13 @@ aa
 aa
 aa
 aa
-dv
+bU
 dl
 cZ
 II
 Ft
 dl
-dv
+bU
 aa
 aa
 aa
@@ -2319,13 +2320,13 @@ aa
 aa
 aa
 aa
-bW
+aT
 aq
 da
 da
 da
 aq
-bW
+aT
 aa
 aa
 aa
