@@ -1585,12 +1585,13 @@
 
 		var/list/sliders_data = tables_data[category]
 
-		for(var/datum/skill/skill as anything in sliders_data)
-			var/slider_id = initial(skill.name)
+		for(var/datum/skill/s as anything in sliders_data)
+			var/datum/skill/skill = all_skills[s]
+			var/slider_id = skill.name
 			var/slider_value = mind.skills.get_value(slider_id)
-			var/slider_min_value = initial(skill.min_value)
+			var/slider_min_value = skill.min_value
 			var/slider_max_value = mind.skills.get_max(slider_id)
-			var/slider_hint = initial(skill.hint)
+			var/slider_hint = skill.hint
 			dat += {"
 				<tr>
 					<td>
