@@ -5,12 +5,14 @@
 "b" = (
 /turf/environment/space,
 /turf/simulated/shuttle/wall{
-	dir = 2;
-	icon_state = "swall_s6"
+	icon_state = "swall5"
 	},
 /area/space_structures/delivery_shuttle)
 "c" = (
-/obj/structure/shuttle/window,
+/obj/structure/shuttle/window{
+	dir = 4;
+	icon_state = "2"
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
@@ -18,14 +20,14 @@
 "d" = (
 /turf/environment/space,
 /turf/simulated/shuttle/wall{
-	dir = 2;
-	icon_state = "swall_s10"
+	dir = 8;
+	icon_state = "swall5"
 	},
 /area/space_structures/delivery_shuttle)
 "e" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
-	icon_state = "swall3"
+	dir = 1;
+	icon_state = "swall1"
 	},
 /area/space_structures/delivery_shuttle)
 "f" = (
@@ -53,47 +55,48 @@
 	},
 /area/space_structures/delivery_shuttle)
 "h" = (
-/obj/structure/stool/bed/chair/schair{
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2"
+	},
+/area/space_structures/delivery_shuttle)
+"i" = (
+/obj/structure/stool/bed/chair/schair/wagon{
 	dir = 1
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
 /area/space_structures/delivery_shuttle)
-"i" = (
-/turf/simulated/shuttle/wall{
-	dir = 2;
-	icon_state = "swallc4"
-	},
-/area/space_structures/delivery_shuttle)
 "j" = (
-/turf/simulated/shuttle/wall{
-	dir = 2;
-	icon_state = "swallc3"
+/obj/structure/shuttle/window{
+	icon_state = "2"
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
 	},
 /area/space_structures/delivery_shuttle)
 "k" = (
-/obj/structure/closet/crate/freezer/rations,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall2"
 	},
 /area/space_structures/delivery_shuttle)
 "l" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/pizzabox/margherita,
-/obj/item/pizzabox/meat,
-/obj/item/pizzabox/mushroom,
-/obj/item/pizzabox/vegetable,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall3"
 	},
 /area/space_structures/delivery_shuttle)
 "m" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/food/snacks/sushi,
-/obj/item/weapon/reagent_containers/food/snacks/sushi,
-/obj/item/weapon/reagent_containers/food/snacks/sashimi,
-/obj/item/weapon/reagent_containers/food/snacks/sashimi,
+/obj/structure/closet/crate/freezer/rations,
+/obj/random/foods/food_without_garbage,
+/obj/random/foods/food_without_garbage,
+/obj/random/foods/donuts,
+/obj/random/foods/donuts,
+/obj/item/weapon/reagent_containers/food/snacks/grown/killertomato,
+/obj/item/weapon/reagent_containers/food/snacks/candy/yumbaton,
+/obj/random/foods/drink_bottle,
+/obj/random/foods/food_without_garbage,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
@@ -120,10 +123,17 @@
 	},
 /area/space_structures/delivery_shuttle)
 "q" = (
-/obj/structure/shuttle/engine/heater,
-/turf/simulated/shuttle/wall{
-	dir = 2;
-	icon_state = "swall3"
+/obj/structure/closet/crate/freezer,
+/obj/item/pizzabox/margherita,
+/obj/item/pizzabox/meat,
+/obj/random/foods/food_without_garbage,
+/obj/random/foods/food_without_garbage,
+/obj/random/foods/donuts,
+/obj/item/weapon/reagent_containers/food/snacks/dionaroast,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager,
+/obj/random/foods/food_without_garbage,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
 	},
 /area/space_structures/delivery_shuttle)
 "r" = (
@@ -140,13 +150,29 @@
 /turf/environment/space,
 /area/space_structures/delivery_shuttle)
 "t" = (
-/obj/structure/shuttle/engine/propulsion{
-	desc = "Looks like meteor hit the engine!";
-	dir = 4;
-	icon_state = "burst_r";
-	name = "broken propulsion"
+/obj/structure/closet/crate/freezer,
+/obj/item/weapon/reagent_containers/food/snacks/sushi,
+/obj/item/weapon/reagent_containers/food/snacks/sushi,
+/obj/item/weapon/reagent_containers/food/snacks/sashimi,
+/obj/item/weapon/reagent_containers/food/snacks/sashimi,
+/obj/random/foods/food_without_garbage,
+/obj/random/foods/food_without_garbage,
+/obj/item/weapon/reagent_containers/food/snacks/clownburger,
+/obj/random/foods,
+/obj/random/foods/drink_bottle,
+/obj/random/foods/food_without_garbage,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
 	},
-/turf/environment/space,
+/area/space_structures/delivery_shuttle)
+"u" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater1"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall1"
+	},
 /area/space_structures/delivery_shuttle)
 
 (1,1,1) = {"
@@ -154,17 +180,17 @@ a
 a
 a
 b
-e
-e
-q
+h
+h
+u
 s
 "}
 (2,1,1) = {"
 b
 e
 g
-i
 k
+m
 n
 r
 a
@@ -172,19 +198,19 @@ a
 (3,1,1) = {"
 c
 f
-h
+i
 c
-l
+q
 o
 r
 a
 "}
 (4,1,1) = {"
 d
-e
-c
+h
 j
-m
+l
+t
 p
 r
 a
@@ -194,8 +220,8 @@ a
 a
 a
 d
-e
-e
-q
-t
+h
+h
+u
+s
 "}
