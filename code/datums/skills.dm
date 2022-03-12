@@ -4,6 +4,12 @@
 
 	var/list/available_skillsets
 
+/datum/skills/New()
+	for(var/skill_name in active.skills)
+		var/datum/skill/original = active.get_skill(skill_name)
+		var/datum/skill/skill_copy = new original.type  // new instance of skill because we will change the skills in active skillset
+		LAZYSET(active.skills, skill_name, skill_copy)
+
 /datum/skills/proc/get_value(skill)
 	return active.get_value(skill)
 
@@ -11,12 +17,12 @@
 	return available.get_value(skill)
 
 /datum/skills/proc/update_available()
+	var/datum/skillset/temporary = new //we want different instance beceause of merging proc
 	if(length(available_skillsets) == 1)
-		var/skillset = LAZYACCESS(available_skillsets, 1)
-		var/datum/skillset/first = new skillset
-		available = first
+		temporary = LAZYACCESS(available_skillsets, 1)
 	for(var/datum/skillset/sk_set as anything in available_skillsets)
-		available.merge(sk_set)
+		temporary.merge(sk_set)
+	available = temporary
 	for(var/skill in available.skills)
 		active.set_value(skill, min(active.get_value(skill), available.get_value(skill)))
 
@@ -24,13 +30,13 @@
 	for(var/skill in available.skills)
 		active.set_value(skill, available.get_value(skill))
 
-/datum/skills/proc/add_available_skillset(datum/skillset/new_skillset)
-	LAZYADD(available_skillsets, new_skillset)
-	update_available()
+/datum/skills/proc/add_available_skillset(skillset_type)
+    LAZYADD(available_skillsets, global.all_skillsets[skillset_type])
+    update_available()
 
-/datum/skills/proc/remove_available_skillset(datum/skillset/skillset_type)
+/datum/skills/proc/remove_available_skillset(skillset_type)
 	for(var/datum/skillset/s as anything in available_skillsets)
-		if(s.initial_skills == skillset_type.initial_skills)
+		if(s.type == skillset_type)
 			LAZYREMOVE(available_skillsets, s)
 			break
 	update_available()
