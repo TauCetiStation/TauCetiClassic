@@ -48,6 +48,8 @@
 			J = SSjob.GetJobByAltTitle(job)
 		if(!J.player_old_enough(C))
 			continue
+		if(!J.map_check())
+			continue
 
 		return TRUE
 

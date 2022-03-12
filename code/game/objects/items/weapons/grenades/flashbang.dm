@@ -50,7 +50,7 @@
 				ear_safety += 1
 			if(H.head)
 				var/obj/item/clothing/C = H.head
-				if(C.flashbang_protection)
+				if(istype(C) && C.flashbang_protection)
 					ear_safety += 1
 
 //Flashing everyone
