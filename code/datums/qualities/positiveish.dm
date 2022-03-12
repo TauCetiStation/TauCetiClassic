@@ -340,7 +340,7 @@
 	RegisterSignal(H, list(COMSIG_PARENT_POST_EXAMINATE), .proc/see_intent)
 
 /datum/quality/deathalarm
-	desc = "Вы раскошелились на имплант оповещения о смерти перед тем, как отправиться в опасный сектор Исхода."
+	desc = "Вы раскошелились на имплант оповещения о смерти перед тем, как отправиться в опасный сектор станции."
 	requirement = "Нет."
 
 /datum/quality/deathalarm/add_effect(mob/living/carbon/human/H, latespawn)
