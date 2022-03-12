@@ -1,18 +1,18 @@
 /proc/is_skill_competent(mob/user, required_skills)
-	for(var/datum/skill/skill as anything in required_skills)
-		if(user.mind.skills.get_value(initial(skill.name)) < initial(skill.value))
+	for(var/datum/skill/required_skill as anything in required_skills)
+		var/datum/skill/skill = all_skills[required_skill]
+		if(user.mind.skills.get_value(skill.name) < skill.value)
 			return FALSE
 	return TRUE
 
 /proc/apply_skill_bonus(mob/user, value, required_skills, penalty = 0.5, bonus = 0.4)
 	var/result = value
-	for(var/datum/skill/skill as anything in required_skills)
-		var/skill_name = initial(skill.name)
-		var/skill_value = initial(skill.value)
-		if(user.mind.skills.get_value(skill_name) < skill_value)
-			result += value * penalty * (skill_value - user.mind.skills.get_value(skill_name))
-		if(user.mind.skills.get_value(skill_name) > skill_value)
-			result -= value * bonus * (user.mind.skills.get_value(skill_name) -skill_value)
+	for(var/datum/skill/required_skill as anything in required_skills)
+		var/datum/skill/skill = all_skills[required_skill]
+		if(user.mind.skills.get_value(skill.name) < skill.value)
+			result += value * penalty * (skill.value - user.mind.skills.get_value(skill.name))
+		if(user.mind.skills.get_value(skill.name) > skill.value)
+			result -= value * bonus * (user.mind.skills.get_value(skill.name) - skill.value)
 	return result
 
 /proc/do_skilled(mob/user, atom/target,  delay, required_skills, penalty = 0.5, bonus = 0.4)
