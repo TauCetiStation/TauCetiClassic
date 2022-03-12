@@ -32,4 +32,3 @@
 		var/datum/skill/skill_copy = new original.type
 		result[skill_name] = skill_copy
 	return result
-
