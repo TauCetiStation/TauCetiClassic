@@ -321,7 +321,7 @@
 		replacements[uppertext(vowel)] = "Ё"
 
 /datum/language/shkiondioniovioion/scramble(input)
-	return replace_characters(input, replacements)
+	return replaceEx_characters(input, replacements)
 
 /datum/language/salarian
 	name = LANGUAGE_SALARIAN
@@ -358,7 +358,7 @@
 		replacements[uppertext(letter)] = uppertext(replacement)
 
 /datum/language/salarian/scramble(input)
-	return replace_characters(input, replacements)
+	return replaceEx_characters(input, replacements)
 
 // Language handling.
 /mob/proc/add_language(language, flags=LANGUAGE_CAN_SPEAK)
