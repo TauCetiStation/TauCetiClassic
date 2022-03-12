@@ -148,6 +148,8 @@
 #define TRAIT_FAST_EQUIP          "fast_equip"
 #define TRAIT_NO_CLONE            "no_clone"
 #define TRAIT_VACCINATED          "vaccinated"
+#define TRAIT_DWARF               "dwarf"
+#define TRAIT_NO_SOUL             "no_soul"
 #define TRAIT_GHOST_BUSTER        "ghost_buster"
 
 /*
