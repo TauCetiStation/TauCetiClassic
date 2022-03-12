@@ -56,7 +56,7 @@
 		part = BP
 
 /obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
-	loc = C
+	forceMove(C)
 	imp_in = C
 	implanted = TRUE
 	C.sec_hud_set_implants()
