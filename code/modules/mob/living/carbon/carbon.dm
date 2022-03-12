@@ -1110,9 +1110,3 @@
 
 		txt = L.accentuate(txt, speaking)
 	return txt
-
-/mob/living/carbon/init_languages()
-	. = ..()
-	for(var/datum/language/L as anything in languages)
-		for(var/sound in L.special_symbols)
-			add_approximation(sound, L.special_symbols[sound])
