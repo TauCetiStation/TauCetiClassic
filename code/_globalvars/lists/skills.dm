@@ -13,3 +13,7 @@ var/global/list/skills_list = list(
 	/datum/skill/research,
 	/datum/skill/command,
 )
+
+var/global/list/all_skillsets
+
+var/global/list/all_skills
