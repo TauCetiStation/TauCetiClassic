@@ -120,11 +120,7 @@
 				pressure_adjustment_coefficient = pressure_loss
 
 	pressure_adjustment_coefficient = CLAMP01(pressure_adjustment_coefficient) //So it isn't less than 0 or larger than 1.
-
-	if(get_species() == VOX || get_species() == VOX_ARMALIS)
-		var/skin_pressure_coefficient = (getBruteLoss() + getFireLoss()) * 0.1
-		skin_pressure_coefficient = CLAMP01(skin_pressure_coefficient)
-		pressure_adjustment_coefficient *= skin_pressure_coefficient
+	pressure_adjustment_coefficient *= 1 - species.get_pressure_protection(src)
 
 	return 1 - pressure_adjustment_coefficient	//want 0 to be bad protection, 1 to be good protection
 

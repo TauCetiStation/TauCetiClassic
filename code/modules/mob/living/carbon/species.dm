@@ -264,6 +264,11 @@
 /datum/species/proc/on_life(mob/living/carbon/human/H)
 	return
 
+// For species who's skin acts as a spacesuit of sorts
+// Return a value from 0 to 1, where 1 is full protection, and 0 is full weakness
+/datum/species/proc/get_pressure_protection(mob/living/carbon/human/H)
+	return 0
+
 /datum/species/human
 	name = HUMAN
 	language = LANGUAGE_SOLCOMMON
@@ -601,6 +606,10 @@
 		H.verbs -= /mob/living/carbon/human/proc/gut
 
 	..()
+
+/datum/species/vox/get_pressure_protection(mob/living/carbon/human/H)
+	return 1 - CLAMP01((H.getBruteLoss() + H.getFireLoss()) * 0.1)
+
 
 /datum/species/vox/armalis
 	name = VOX_ARMALIS
