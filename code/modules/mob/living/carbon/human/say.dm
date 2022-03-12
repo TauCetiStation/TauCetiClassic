@@ -186,7 +186,7 @@
 			verb = "asks"
 
 	if(speech_problem_flag)
-		var/list/handle_r = handle_speech_problems(message, message_mode)
+		var/list/handle_r = handle_speech_problems(message, message_mode, verb)
 		//var/list/handle_r = handle_speech_problems(message)
 		message = handle_r[1]
 		verb = handle_r[2]
@@ -380,9 +380,8 @@
 
 
 //mob/living/carbon/human/proc/handle_speech_problems(message)
-/mob/living/carbon/human/proc/handle_speech_problems(message, message_mode)
+/mob/living/carbon/human/proc/handle_speech_problems(message, message_mode, verb)
 	var/list/returns[5]
-	var/verb = "says"
 	var/handled = 0
 	var/sound/speech_sound = null
 	var/sound_vol = 50
