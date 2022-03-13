@@ -18,10 +18,6 @@
 	return current_emotes[key]
 
 /mob/living/carbon/human/proc/set_emote(key, datum/emote/emo)
-	var/datum/emote/current = get_emote(key)
-	if(current && current.priority > emo.priority)
-		return
-
 	current_emotes[key] = emo
 
 /mob/living/carbon/human/proc/clear_emote(key)

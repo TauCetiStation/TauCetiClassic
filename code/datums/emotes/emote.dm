@@ -11,8 +11,6 @@ var/global/list/all_emotes
 /datum/emote
 	// Default command to use emote ie. '*[key]'
 	var/key
-	// If two emotes override the same key, which one has the priority?
-	var/priority = EMOTE_PRIO_DEFAULT
 
 	// First person message ('You laugh!')
 	var/message_1p
@@ -59,6 +57,9 @@ var/global/list/all_emotes
 		msg = message_impaired_production
 	else if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 		msg = message_muzzled
+
+	if(!msg)
+		return null
 
 	return "<b>[user]</b> [msg]"
 
