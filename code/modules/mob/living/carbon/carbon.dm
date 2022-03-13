@@ -1104,8 +1104,15 @@
 	if(speaking && (speaking.flags & SIGNLANG))
 		return txt
 
+	var/datum/species/S = all_species[get_species()]
+	if(S && S.flags[IS_SYNTHETIC])
+		return txt
+
 	for(var/datum/language/L as anything in languages)
 		if(L == speaking)
+			continue
+
+		if(languages[L] != LANGUAGE_NATIVE)
 			continue
 
 		txt = L.accentuate(txt, speaking)

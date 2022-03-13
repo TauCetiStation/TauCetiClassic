@@ -1426,7 +1426,7 @@
 		apply_recolor()
 
 	if(species.language)
-		add_language(species.language)
+		add_language(species.language, LANGUAGE_NATIVE)
 
 	if(species.additional_languages)
 		for(var/A in species.additional_languages)

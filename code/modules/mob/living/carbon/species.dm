@@ -29,7 +29,7 @@
 	var/language                      // Default racial language, if any.
 	// Additional languages, to the primary. These can not be the forced ones.
 	// Use LANGUAGE = LANGUAGE_CAN_UNDERSTAND to give languages which a specimen can understand, but not speak.
-	var/list/additional_languages = list()
+	var/list/additional_languages
 	var/force_racial_language = FALSE // If TRUE, racial language will be forced by default when speaking.
 	var/attack_verb = "punch"         // Empty hand hurt intent verb.
 	var/punch_damage = 0              // Extra empty hand attack damage.
@@ -360,7 +360,7 @@
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
 	language = LANGUAGE_SIIKMAAS
-	additional_languages = list(LANGUAGE_SIIKTAJR)
+	additional_languages = list(LANGUAGE_SIIKTAJR = LANGUAGE_NATIVE)
 	tail = "tajaran"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
@@ -469,7 +469,7 @@
 	icobase = 'icons/mob/human_races/r_vox.dmi'
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = LANGUAGE_VOXPIDGIN
-	additional_languages = list(LANGUAGE_TRADEBAND)
+	additional_languages = list(LANGUAGE_TRADEBAND = LANGUAGE_CAN_SPEAK)
 	tail = "vox_prim"
 
 	force_racial_language = TRUE
