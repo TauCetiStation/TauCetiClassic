@@ -191,6 +191,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
+		EMOTE_STATE(is_species_flag, IS_SYNTHETIC),
 	)
 
 /datum/emote/beep/get_sound(mob/living/carbon/human/user, intentional)
@@ -214,6 +215,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
+		EMOTE_STATE(is_species_flag, IS_SYNTHETIC),
 	)
 
 /datum/emote/ping/get_sound(mob/living/carbon/human/user, intentional)
@@ -237,6 +239,7 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
+		EMOTE_STATE(is_species_flag, IS_SYNTHETIC),
 	)
 
 /datum/emote/ping/get_sound(mob/living/carbon/human/user, intentional)
