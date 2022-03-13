@@ -16,7 +16,11 @@
 	if (orbiter.orbiting)
 		orbiter.stop_orbit()
 	orbiter.orbiting = src
-	Check()
+
+	// NEVERMIND
+	if(!Check())
+		return
+
 	lock = _lock
 
 	SEND_SIGNAL(orbiter, COMSIG_MOVABLE_ORBIT_BEGIN, orbiting)
@@ -41,10 +45,10 @@
 /datum/orbit/proc/Check(turf/targetloc)
 	if (!orbiter)
 		qdel(src)
-		return
+		return FALSE
 	if (!orbiting)
 		orbiter.stop_orbit()
-		return
+		return FALSE
 	if (!orbiter.orbiting) //admin wants to stop the orbit.
 		orbiter.orbiting = src //set it back to us first
 		orbiter.stop_orbit()
@@ -53,11 +57,12 @@
 		targetloc = get_turf(orbiting)
 	if (!targetloc || (!lock && orbiter.loc != lastloc && orbiter.loc != targetloc))
 		orbiter.stop_orbit()
-		return
+		return FALSE
 
 	orbiter.loc = targetloc
 	orbiter.update_parallax_contents()
 	lastloc = orbiter.loc
+	return TRUE
 
 
 /atom/movable/var/datum/orbit/orbiting = null

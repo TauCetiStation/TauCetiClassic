@@ -20,6 +20,9 @@
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 
+	// I dont known how
+	global.player_list -= src
+
 	if(mind)
 		if(mind.current == src)
 			mind.set_current(null)
@@ -401,6 +404,9 @@
 		log_game("[key_name(usr)] AM failed due to disconnect.")
 		qdel(M)
 		return
+
+	// New life, new quality.
+	client.prefs.have_quality = FALSE
 
 	M.key = key
 //	M.Login()	//wat

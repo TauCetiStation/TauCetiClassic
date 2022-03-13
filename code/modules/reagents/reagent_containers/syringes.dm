@@ -455,3 +455,11 @@
 	reagents.add_reagent("mulligan", 1)
 	mode = SYRINGE_INJECT
 	update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/nutriment
+
+/obj/item/weapon/reagent_containers/syringe/nutriment/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 15)
+	mode = SYRINGE_INJECT
+	update_icon()
