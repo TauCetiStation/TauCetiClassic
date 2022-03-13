@@ -79,6 +79,44 @@
 	if(istype(A, /area/station/bridge))
 		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "rts_failure", /datum/mood_event/rts_failure)
 
+/datum/quality/kamikaze
+	desc = "Каким-то образом Вам вставили имплант самоуничтожения. Реанимировать после смерти Вас будет значительно сложнее..."
+	requirement = "Нет."
+
+/datum/quality/kamikaze/add_effect(mob/living/carbon/human/H, latespawn)
+	var/obj/item/weapon/implant/dexplosive/DE = new(H)
+	DE.stealth_inject(H)
+
+/datum/quality/obedient
+	desc = "За плохое поведение Вам ввели имплант подчинения. Лучше вести себя хорошо."
+	requirement = "Не охранник."
+
+
+	var/list/funpolice = list("Security Officer", "Security Cadet", "Warden")
+
+/datum/quality/obedient/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !(H.mind.assigned_role in funpolice)
+
+/datum/quality/obedient/add_effect(mob/living/carbon/human/H, latespawn)
+	var/obj/item/weapon/implant/obedience/O = new(H)
+	O.stealth_inject(H)
+
+/datum/quality/soulless
+	desc = "У Вас нет души."
+	requirement = "Нет."
+
+/datum/quality/soulless/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_NO_SOUL, QUALITY_TRAIT)
+
+	H.r_hair = rand(170, 255)
+	H.g_hair = rand(0, 100)
+	H.b_hair = rand(50, 100)
+
+
+	H.r_facial = H.r_hair
+	H.g_facial = H.g_hair
+	H.b_facial = H.b_hair
+
 /datum/quality/dirty
 	desc = "Прекрасным ранним утром в дороге на работу ты поскользнулся и упал в глубокую лужу грязи, полностью пропитавшись этой субстанцией. Времени не было и пришлось лететь на станцию в таком виде."
 	requirement = "Быть чистым. (Требований нет)"

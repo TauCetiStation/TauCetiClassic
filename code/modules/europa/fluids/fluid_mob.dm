@@ -126,7 +126,7 @@
 				power_calculated = 0
 				continue
 
-			if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig && H.wear_suit.flags & NOSLIP))
+			if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))
 				power_calculated = 0
 				continue
 
