@@ -35,7 +35,7 @@
 	var/voice_frequency = TRANSLATE_RANGE(user.age, user.species.min_age, user.species.max_age, 0.85, 1.05)
 	var/sound_frequency = 1.05 - (voice_frequency - 0.85)
 
-	playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
+	playsound(user, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
 
 
 /datum/emote/grunt
