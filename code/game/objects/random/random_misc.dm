@@ -101,7 +101,13 @@
 /obj/random/misc/toy/item_to_spawn()
 		return pick(subtypesof(/obj/item/toy))
 
-
+/obj/random/misc/book
+	name = "Random Medkit"
+	desc = "This is a random medical kit."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "firstaid"
+/obj/random/misc/book/item_to_spawn()
+		return pick(subtypesof(/obj/item/weapon/book/manual))
 
 /obj/random/misc/lightsource
 	name = "Random Medkit"
@@ -131,5 +137,6 @@
 						prob(40);/obj/random/misc/lighters,\
 						prob(40);/obj/random/misc/smokes,\
 						prob(90);/obj/random/misc/storage,\
+						prob(40);/obj/random/misc/book,\
 						prob(1);/obj/random/misc/musical\
 					)
