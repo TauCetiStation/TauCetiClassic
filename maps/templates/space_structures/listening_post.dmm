@@ -28,7 +28,6 @@
 "af" = (
 /obj/structure/rack,
 /obj/item/device/suit_cooling_unit,
-/obj/item/weapon/tank/jetpack/oxygen/harness,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "podhatch"
@@ -880,7 +879,7 @@
 	},
 /area/space_structures/listening_post)
 "bC" = (
-/obj/item/weapon/flora/pottedplant/thinbush,
+/mob/living/simple_animal/walrus/syndicate,
 /turf/simulated/floor/carpet/red,
 /area/space_structures/listening_post)
 "bD" = (
