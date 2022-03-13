@@ -607,8 +607,20 @@
 
 	..()
 
+// At 25 damage - no protection at all.
 /datum/species/vox/get_pressure_protection(mob/living/carbon/human/H)
-	return 1 - CLAMP01((H.getBruteLoss() + H.getFireLoss()) * 0.1)
+	var/damage = 0
+	var/static/list/cavity_parts = list(BP_HEAD, BP_CHEST, BP_GROIN)
+	for(var/bodypart in cavity_parts)
+		var/obj/item/organ/external/BP = H.get_bodypart(bodypart)
+		if(!BP)
+			// We surely are not hermetized.
+			damage += 100
+			continue
+
+		damage += BP.brute_dam + BP.burn_dam
+
+	return 1 - CLAMP01(damage / 25)
 
 
 /datum/species/vox/armalis
