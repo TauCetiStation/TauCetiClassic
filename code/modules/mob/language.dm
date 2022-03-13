@@ -409,7 +409,7 @@
 	if(!languages)
 		return FALSE
 
-	return languages[speaking] == LANGUAGE_CAN_SPEAK
+	return languages[speaking] >= LANGUAGE_CAN_SPEAK
 
 //TBD
 /mob/verb/check_languages()

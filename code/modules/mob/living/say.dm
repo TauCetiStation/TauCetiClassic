@@ -209,7 +209,7 @@ var/global/list/department_radio_keys = list(
 /mob/living/init_languages()
 	for(var/name in all_languages)
 		var/datum/language/L = all_languages[name]
-		if(languages[L] == LANGUAGE_CAN_SPEAK)
+		if(languages[L] >= LANGUAGE_CAN_SPEAK)
 			continue
 
 		for(var/sound in L.approximations)
