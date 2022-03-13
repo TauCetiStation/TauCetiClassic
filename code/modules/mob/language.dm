@@ -242,6 +242,10 @@
 					 "voluptate", "velit", "esse", "cillum", "dolore", "eu", "fugiat", "nulla",
 					 "pariatur", "excepteur", "sint", "occaecat", "cupidatat", "non", "proident", "sunt",
 					 "in", "culpa", "qui", "officia", "deserunt", "mollit", "anim", "id", "est", "laborum")
+	accents = list(
+		"Ё" = "Ю",
+		"ё" = "ю",
+	)
 
 /datum/language/gutter
 	name = LANGUAGE_GUTTER
@@ -250,10 +254,10 @@
 	colour = "rough"
 	key = list("3")
 	allowed_speak = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
-	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
+	syllables = list ("gra","ba","ba","breg","bra","rag","dur","ra","ro","gro","go","ber","bar","geg","gra")
 	accents = list(
-		"Р" = "Гр",
-		"р" = "гр",
+		"Х" = "Г",
+		"х" = "г",
 	)
 
 /datum/language/syndi
