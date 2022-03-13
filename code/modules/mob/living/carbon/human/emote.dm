@@ -1,17 +1,13 @@
 /mob/living/carbon/human
 	var/list/default_emotes = list(
-		// Generic
 		/datum/emote/help,
-		// Audible
 		/datum/emote/laugh,
 		/datum/emote/grunt,
 		/datum/emote/groan,
 		/datum/emote/scream,
 		/datum/emote/cough,
 		/datum/emote/hiccup,
-		// Gestures
 		/datum/emote/raisehand,
-		// Visual
 		/datum/emote/blink,
 	)
 	var/list/current_emotes = list(
