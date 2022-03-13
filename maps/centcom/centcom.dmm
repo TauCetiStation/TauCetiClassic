@@ -2063,15 +2063,24 @@
 /area/shuttle/escape/centcom)
 "afA" = (
 /obj/structure/object_wall/standart{
-	icon_state = "swall_f6"
+	dir = 4;
+	icon_state = "swall5"
 	},
-/turf/simulated/shuttle/plating,
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "swall1"
+	},
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "swall2"
+	},
+/turf/environment/space,
 /area/centcom/evac)
 "afB" = (
 /obj/structure/object_wall/standart{
-	icon_state = "swall_f10"
+	icon_state = "swall5"
 	},
-/turf/simulated/shuttle/plating,
+/turf/environment/space,
 /area/centcom/evac)
 "afC" = (
 /obj/structure/grille,
@@ -8555,14 +8564,12 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "auI" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_f10"
-	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
 /turf/unsimulated/floor{
 	name = "plating"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swall5"
 	},
 /area/velocity)
 "auJ" = (
@@ -8758,6 +8765,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
+"avd" = (
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "swall1"
+	},
+/turf/environment/space,
+/area/centcom/evac)
 "ave" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access = list(150)
@@ -9312,7 +9326,8 @@
 "awr" = (
 /obj/structure/sign/directions/velocity{
 	dir = 4;
-	pixel_x = -32
+	pixel_x = -32;
+	pixel_y = -9
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
@@ -9393,6 +9408,13 @@
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
+"awB" = (
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "swall2"
+	},
+/turf/environment/space,
+/area/centcom/evac)
 "awC" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/unsimulated/floor{
@@ -11377,6 +11399,21 @@
 /obj/machinery/computer/vox_station,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
+"aAO" = (
+/obj/structure/object_wall/standart{
+	dir = 1;
+	icon_state = "swall5"
+	},
+/obj/structure/object_wall/standart{
+	dir = 8;
+	icon_state = "swall1"
+	},
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "swall2"
+	},
+/turf/environment/space,
+/area/centcom/evac)
 "aAP" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -11390,6 +11427,13 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"aAQ" = (
+/obj/structure/object_wall/standart{
+	dir = 8;
+	icon_state = "swall5"
+	},
+/turf/environment/space,
+/area/centcom/evac)
 "aAR" = (
 /obj/structure/dresser,
 /turf/unsimulated/floor{
@@ -11403,12 +11447,37 @@
 	icon_state = "redbluefull"
 	},
 /area/centcom/tdome/tdomeobserve)
+"aAT" = (
+/turf/simulated/shuttle/floor,
+/turf/environment/space,
+/area/centcom/evac)
+"aAU" = (
+/obj/structure/object_wall/standart{
+	dir = 1;
+	icon_state = "swall1"
+	},
+/turf/environment/space,
+/area/centcom/evac)
+"aAV" = (
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "swall5"
+	},
+/turf/environment/space,
+/area/centcom/evac)
 "aAW" = (
 /obj/structure/rack,
 /turf/unsimulated/floor{
 	icon_state = "circuit"
 	},
 /area/space)
+"aAX" = (
+/obj/structure/object_wall/standart{
+	dir = 1;
+	icon_state = "swall5"
+	},
+/turf/environment/space,
+/area/centcom/evac)
 "aAY" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/hypospray,
@@ -11519,6 +11588,17 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"aBd" = (
+/obj/structure/object_wall/standart{
+	dir = 8;
+	icon_state = "swall1"
+	},
+/obj/structure/object_wall/standart{
+	dir = 8;
+	icon_state = "swall5"
+	},
+/turf/environment/space,
+/area/centcom/evac)
 "aBe" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/mask/gas/sechailer,
@@ -11546,6 +11626,31 @@
 	icon_state = "floor"
 	},
 /area/centcom/prison)
+"aBg" = (
+/obj/structure/shuttle/window{
+	dir = 1
+	},
+/obj/structure/grille,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/centcom/evac)
+"aBh" = (
+/obj/structure/shuttle/window{
+	icon_state = "3"
+	},
+/obj/structure/grille,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/centcom/evac)
+"aBi" = (
+/obj/structure/shuttle/window,
+/obj/structure/grille,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/centcom/evac)
 "aBj" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -11607,9 +11712,42 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"aBo" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Infirmary"
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/centcom/evac)
 "aBp" = (
 /turf/unsimulated/wall,
 /area/centcom/specops)
+"aBq" = (
+/obj/structure/shuttle/window,
+/obj/structure/object_wall/standart{
+	dir = 1;
+	icon_state = "swall5"
+	},
+/obj/structure/grille,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/centcom/evac)
+"aBr" = (
+/obj/structure/object_wall/standart{
+	dir = 8;
+	icon_state = "swall3"
+	},
+/turf/environment/space,
+/area/centcom/evac)
+"aBs" = (
+/obj/structure/object_wall/standart{
+	dir = 1;
+	icon_state = "swall3"
+	},
+/turf/environment/space,
+/area/centcom/evac)
 "aBt" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor{
@@ -12811,14 +12949,12 @@
 	},
 /area/centcom/creed)
 "aFi" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_f9"
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/unsimulated/floor{
-	name = "plating"
-	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
+	dir = 1;
+	icon_state = "Stairs_wide"
 	},
 /area/velocity)
 "aFj" = (
@@ -13434,11 +13570,14 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "aHp" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_s6"
+/turf/unsimulated/floor{
+	name = "plating"
 	},
-/turf/environment/space,
-/area/centcom/evac)
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall5"
+	},
+/area/velocity)
 "aHr" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
@@ -13999,19 +14138,12 @@
 /turf/unsimulated/wall,
 /area/centcom/control)
 "aJz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
+/turf/environment/space,
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall1"
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/shuttle/plating,
-/area/centcom/evac)
+/area/velocity)
 "aJA" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /turf/simulated/shuttle/floor{
@@ -14032,18 +14164,13 @@
 	},
 /area/centcom/evac)
 "aJC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/structure/shuttle/window{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
+/turf/unsimulated/floor{
+	name = "plating"
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/shuttle/plating,
-/area/centcom/evac)
+/area/velocity)
 "aJD" = (
 /obj/random/vending/snack,
 /turf/simulated/shuttle/floor,
@@ -14154,16 +14281,13 @@
 	},
 /area/centcom/evac)
 "aJY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
+/obj/structure/shuttle/window{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
-/turf/simulated/shuttle/plating,
-/area/centcom/evac)
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/velocity)
 "aJZ" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/shuttle/floor,
@@ -14227,11 +14351,11 @@
 /turf/environment/space,
 /area/shuttle/supply/velocity)
 "aKj" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_s10"
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall2"
 	},
-/turf/environment/space,
-/area/centcom/evac)
+/area/velocity)
 "aKl" = (
 /turf/environment/space,
 /area/shuttle/escape_pod4/centcom)
@@ -14372,16 +14496,14 @@
 	},
 /area/centcom/control)
 "aKF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
+/turf/unsimulated/floor{
+	name = "plating"
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall5"
 	},
-/turf/simulated/shuttle/plating,
-/area/centcom/evac)
+/area/velocity)
 "aKG" = (
 /obj/structure/table,
 /turf/simulated/shuttle/floor,
@@ -17546,12 +17668,12 @@
 	},
 /area/custom/arena)
 "aWG" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_f5"
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swall5"
 	},
-/turf/simulated/shuttle/floor,
 /turf/environment/space,
-/area/centcom/evac)
+/area/velocity)
 "aWH" = (
 /obj/random/guns/energy_weapon,
 /turf/unsimulated/floor{
@@ -17565,17 +17687,17 @@
 /turf/environment/space,
 /area/centcom/evac)
 "aWJ" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_s9"
-	},
 /turf/environment/space,
-/area/centcom/evac)
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall5"
+	},
+/area/velocity)
 "aWK" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_f5"
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2"
 	},
-/turf/environment/space,
-/area/centcom/evac)
+/area/velocity)
 "aWL" = (
 /obj/structure/object_wall/vox{
 	density = 0;
@@ -17600,10 +17722,12 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "aWP" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_s5"
+/obj/structure/shuttle/engine/heater{
+	dir = 1;
+	icon_state = "heater1"
 	},
-/turf/environment/space,
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating/airless,
 /area/centcom/evac)
 "aWQ" = (
 /obj/structure/object_wall/vox{
@@ -21244,11 +21368,8 @@
 	},
 /area/velocity)
 "dHb" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/unsimulated/floor{
-	icon_state = "rampbottom"
+	icon_state = "stairs_middle"
 	},
 /area/velocity)
 "dHm" = (
@@ -21258,30 +21379,29 @@
 	},
 /area/custom/ninjaspawn)
 "dIb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_f6"
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
-/turf/unsimulated/floor{
-	name = "plating"
+	icon_state = "Stairs2_wide"
 	},
 /area/velocity)
 "dJb" = (
-/obj/machinery/door/airlock/glass{
-	icon_state = "door_locked";
-	locked = 1
+/turf/unsimulated/floor{
+	name = "plating"
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "vwall12"
+/turf/simulated/shuttle/wall{
+	icon_state = "swall5"
 	},
 /area/velocity)
 "dKb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall12"
+/obj/structure/shuttle/window{
+	dir = 8
 	},
-/turf/environment/space,
+/obj/structure/grille,
+/turf/unsimulated/floor{
+	name = "plating"
+	},
 /area/velocity)
 "dLb" = (
 /obj/structure/disposalpipe/segment{
@@ -21323,10 +21443,13 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "dNb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall3"
+/obj/structure/shuttle/window{
+	dir = 4
 	},
-/turf/environment/space,
+/obj/structure/grille,
+/turf/unsimulated/floor{
+	name = "plating"
+	},
 /area/velocity)
 "dOb" = (
 /obj/structure/sign/warning/nosmoking{
@@ -21416,21 +21539,9 @@
 	},
 /area/velocity)
 "dUb" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "velocity05";
-	name = "Doors";
-	opacity = 0
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "rampbottom"
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall1"
 	},
 /area/velocity)
 "dVb" = (
@@ -21452,11 +21563,9 @@
 	},
 /area/velocity)
 "dXb" = (
-/obj/structure/shuttle/window{
-	icon_state = "2"
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2_2"
 	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
 /area/velocity)
 "dYb" = (
 /obj/machinery/door/poddoor{
@@ -21481,9 +21590,13 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "rampbottom"
+	dir = 8;
+	icon_state = "Stairs2_wide"
 	},
 /area/velocity)
 "eab" = (
@@ -21501,10 +21614,9 @@
 /area/velocity)
 "ebb" = (
 /obj/structure/sign/monorail_map,
-/obj/structure/object_wall/standart{
-	icon_state = "swall3"
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2"
 	},
-/turf/environment/space,
 /area/velocity)
 "ecb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
@@ -21619,43 +21731,36 @@
 	},
 /area/velocity)
 "enb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_f5"
+/obj/effect/landmark/latejoin,
+/obj/structure/stool/bed/chair/schair/monorail_chair{
+	dir = 8;
+	icon_state = "chair_c01"
 	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
-/turf/unsimulated/floor{
-	name = "plating"
+/turf/simulated/shuttle/floor{
+	icon_state = "floor2"
 	},
 /area/velocity)
 "eob" = (
-/obj/machinery/door/airlock/glass,
-/turf/simulated/shuttle/floor{
-	icon_state = "vwall12"
-	},
-/area/velocity)
-"epb" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Just billboard";
 	icon_state = "OneCompany";
 	name = "\improper billboard"
 	},
-/obj/structure/object_wall/standart{
-	icon_state = "swall12"
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2"
 	},
+/area/velocity)
+"epb" = (
 /turf/environment/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2"
+	},
 /area/velocity)
 "eqb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_f9"
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2_2"
 	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
+/turf/environment/space,
 /area/velocity)
 "erb" = (
 /obj/structure/sign/mark{
@@ -21680,15 +21785,10 @@
 	},
 /area/velocity)
 "evb" = (
-/obj/structure/sign/velocity_overlay/reklama{
-	desc = "Lunar Software";
-	icon_state = "Lunar";
-	name = "\improper billboard"
-	},
-/obj/structure/object_wall/standart{
-	icon_state = "swall12"
-	},
 /turf/environment/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2_2"
+	},
 /area/velocity)
 "ewb" = (
 /obj/structure/sign/mark{
@@ -21790,17 +21890,12 @@
 	},
 /area/velocity)
 "eIb" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "velocity03";
-	name = "Doors";
-	opacity = 0
+/obj/structure/shuttle/window{
+	icon_state = "2"
 	},
-/obj/machinery/door/firedoor,
+/obj/structure/grille,
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "rampbottom"
+	name = "plating"
 	},
 /area/velocity)
 "eJb" = (
@@ -21823,18 +21918,22 @@
 	},
 /area/centcom/prison)
 "eLb" = (
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "velocity05";
+	name = "Doors";
+	opacity = 0
+	},
+/obj/machinery/door/firedoor,
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "rampbottom"
+	dir = 8;
+	icon_state = "Stairs_wide"
 	},
 /area/velocity)
 "eMb" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "rampbottom"
+/turf/simulated/shuttle/wall{
+	icon_state = "swall1_2"
 	},
 /area/velocity)
 "eNb" = (
@@ -23300,14 +23399,9 @@
 	},
 /area/velocity)
 "hrb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_f5"
-	},
 /turf/unsimulated/floor{
-	name = "plating"
-	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
+	dir = 1;
+	icon_state = "stairs_middle"
 	},
 /area/velocity)
 "hsb" = (
@@ -23433,23 +23527,30 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "hDb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall7"
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall3"
 	},
-/turf/environment/space,
-/area/centcom/evac)
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2"
+	},
+/area/velocity)
 "hEb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall12"
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall1_2"
 	},
-/turf/environment/space,
-/area/centcom/evac)
+/area/velocity)
 "hFb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall11"
+/obj/effect/landmark/latejoin,
+/obj/structure/stool/bed/chair/schair/monorail_chair{
+	dir = 8;
+	icon_state = "chair_c03"
 	},
-/turf/environment/space,
-/area/centcom/evac)
+/turf/simulated/shuttle/floor{
+	icon_state = "floor2"
+	},
+/area/velocity)
 "hGb" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -23478,24 +23579,32 @@
 	},
 /area/custom/arena)
 "hKb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_f9"
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "velocity03";
+	name = "Doors";
+	opacity = 0
 	},
-/turf/simulated/shuttle/floor,
-/turf/environment/space,
-/area/centcom/evac)
+/obj/machinery/door/firedoor,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "Stairs2_wide"
+	},
+/area/velocity)
 "hLb" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
 /area/centcom/evac)
 "hMb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall3"
+/obj/structure/sign/velocity_overlay/reklama{
+	desc = "Lunar Software";
+	icon_state = "Lunar";
+	name = "\improper billboard"
 	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "warnplate"
+	name = "plating"
 	},
 /area/velocity)
 "hNb" = (
@@ -23517,13 +23626,17 @@
 	},
 /area/centcom/evac)
 "hQb" = (
-/obj/structure/sign/monorail_map,
-/obj/structure/object_wall/standart{
-	icon_state = "swall3"
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "velocity03";
+	name = "Doors";
+	opacity = 0
 	},
+/obj/machinery/door/firedoor,
 /turf/unsimulated/floor{
 	dir = 8;
-	icon_state = "warnplate"
+	icon_state = "Stairs_wide"
 	},
 /area/velocity)
 "hRb" = (
@@ -23546,25 +23659,14 @@
 	},
 /area/centcom)
 "hUb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_f6"
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
+/turf/simulated/shuttle/wall{
+	icon_state = "swall1"
 	},
 /area/velocity)
 "hVb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall_f10"
-	},
 /turf/unsimulated/floor{
-	name = "plating"
-	},
-/turf/unsimulated/floor{
-	icon_state = "circuit"
+	dir = 1;
+	icon_state = "Stairs2_wide"
 	},
 /area/velocity)
 "hWb" = (
@@ -23756,12 +23858,10 @@
 	},
 /area/centcom/control)
 "irb" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Infirmary"
+/obj/structure/object_wall/standart{
+	icon_state = "swall2"
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor2"
-	},
+/turf/environment/space,
 /area/centcom/evac)
 "isb" = (
 /turf/unsimulated/floor{
@@ -23809,7 +23909,8 @@
 /area/centcom/control)
 "izb" = (
 /obj/structure/object_wall/standart{
-	icon_state = "swall14"
+	dir = 8;
+	icon_state = "swall1"
 	},
 /turf/environment/space,
 /area/centcom/evac)
@@ -40387,11 +40488,11 @@ aaM
 aaM
 aaM
 aaM
-aHp
-hCb
-hCb
-hCb
-aWK
+aWI
+irb
+irb
+irb
+aAV
 aaM
 aaM
 aaM
@@ -40648,8 +40749,8 @@ hsb
 ahV
 aHb
 aHb
-afB
-aWK
+aAQ
+aAV
 aaM
 aaM
 aaM
@@ -40901,12 +41002,12 @@ aaM
 aaM
 aaM
 aaM
-htb
+hub
 ahV
 aHb
 aHb
 aHb
-hEb
+awB
 aaM
 aaM
 aaM
@@ -41157,23 +41258,23 @@ aaM
 aaM
 aaM
 aaM
-aaM
-hub
-ahV
-afA
-aWI
+hsb
+aWP
+afB
+irb
+aAU
 aHG
-hFb
+aAQ
+irb
+irb
+irb
 hCb
-hCb
-hCb
-hDb
-aJz
-hCb
-hCb
-hCb
-hCb
-aWK
+irb
+irb
+irb
+irb
+irb
+aAV
 aaM
 aaM
 aaM
@@ -41414,24 +41515,24 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aKj
-hDb
-hKb
+htb
+aWP
+afA
+aAT
 aHr
 aHs
 aHT
 aIq
 aIH
 aIY
-hEb
+awB
 aJA
 aJX
 aGz
 aKt
 aGz
-izb
-aWK
+aBr
+aAV
 aaM
 aaM
 aaM
@@ -41671,9 +41772,9 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-hEb
+hub
+aWP
+izb
 aHe
 aHs
 hLb
@@ -41681,17 +41782,17 @@ aHU
 aIr
 aIr
 aIr
-hEb
+awB
 aJA
 aJX
 aJX
 aJX
 aJX
-izb
-hFb
-hCb
-hCb
-aWP
+aBr
+aBs
+irb
+irb
+aAU
 aaM
 aaM
 aaM
@@ -41938,13 +42039,13 @@ aHV
 aIr
 aIr
 aIr
-hEb
+awB
 aJB
 aJX
 aJX
 aJX
 aJX
-hEb
+awB
 aLk
 aKG
 aLG
@@ -42187,7 +42288,7 @@ aaM
 aaM
 aaM
 aaM
-hEb
+avd
 aHg
 aHs
 hLb
@@ -42195,13 +42296,13 @@ aHU
 aIs
 aHU
 aIZ
-hFb
-aJC
-aJY
-irb
-aJC
-aKF
-hEb
+aBd
+aBg
+aBi
+aBo
+aBg
+aBq
+aAX
 aHW
 aHs
 aLH
@@ -42444,7 +42545,7 @@ aaM
 aaM
 aaM
 aaM
-hEb
+awB
 aHh
 aHt
 hLb
@@ -42701,7 +42802,7 @@ aaM
 aaM
 aaM
 aaM
-hEb
+izb
 aHi
 aHs
 hLb
@@ -42715,7 +42816,7 @@ aHW
 aHW
 hLb
 aKG
-hEb
+avd
 aHX
 aHs
 aLJ
@@ -42972,7 +43073,7 @@ aHX
 aHX
 hLb
 aKH
-hEb
+awB
 aLl
 aLy
 aLK
@@ -43213,9 +43314,9 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-hEb
+hsb
+aWP
+avd
 aHe
 aHs
 hLb
@@ -43229,11 +43330,11 @@ hLb
 hLb
 hLb
 aKI
-izb
-hDb
+aBr
 hCb
-hCb
-aWJ
+irb
+irb
+aAU
 aaM
 aaM
 aaM
@@ -43470,10 +43571,10 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aHp
-hFb
-aWG
+htb
+aWP
+aAO
+aAT
 aHu
 aHs
 aHY
@@ -43486,8 +43587,8 @@ aJZ
 aHY
 hLb
 aHe
-izb
-aWJ
+aBr
+aAX
 aaM
 aaM
 aaM
@@ -43727,23 +43828,23 @@ aaM
 aaM
 aaM
 aaM
-aaM
-hsb
-ahV
-afB
-aWI
+hub
+aWP
+aAQ
+irb
+aAU
 aHG
-hDb
+afB
 hCb
 aGN
-hCb
-hCb
-aJz
-hCb
-hCb
+aWI
+aBg
+aBh
+aBi
+aAU
 aGN
-hCb
-aWJ
+aWI
+aAX
 aaM
 aaM
 aaM
@@ -43985,12 +44086,12 @@ aaM
 aaM
 aaM
 aaM
-htb
+hsb
 ahV
 aHb
 aHb
 aHb
-hEb
+awB
 abn
 aII
 abn
@@ -44246,8 +44347,8 @@ hub
 ahV
 aHb
 aHb
-afA
-aWJ
+afB
+aAX
 abn
 aII
 abn
@@ -44499,11 +44600,11 @@ aaM
 aaM
 aaM
 aaM
-aKj
-hCb
-hCb
-hCb
-aWJ
+aWI
+irb
+irb
+irb
+aAX
 aaM
 abn
 aII
@@ -76586,16 +76687,16 @@ aoz
 aue
 aoz
 dMb
-dUb
 dZb
+eLb
 avX
 awm
 aoo
 aoo
 awm
 axK
-eIb
-eIb
+hKb
+hQb
 aoo
 aoo
 auZ
@@ -76854,7 +76955,7 @@ avB
 dVb
 dVb
 arZ
-eLb
+hVb
 aut
 aoo
 ayy
@@ -77098,7 +77199,7 @@ arZ
 dyb
 dAb
 arZ
-dGb
+dHb
 arZ
 arZ
 arZ
@@ -77111,7 +77212,7 @@ eFb
 arZ
 arZ
 arZ
-eLb
+hrb
 eNb
 ays
 eCb
@@ -77355,7 +77456,7 @@ dub
 dzb
 dBb
 auu
-dHb
+dIb
 arZ
 arZ
 arZ
@@ -77368,7 +77469,7 @@ eGb
 arZ
 arZ
 arZ
-eMb
+aFi
 auu
 aoo
 arZ
@@ -77869,20 +77970,20 @@ atP
 atP
 atP
 atP
-dIb
-dNb
+dJb
+dUb
 avn
 avn
 avn
-dNb
-enb
-dIb
-dNb
+eMb
+epb
+evb
+hEb
 axN
 axN
 axN
-dNb
-enb
+hUb
+aHp
 atP
 ayt
 atP
@@ -77892,11 +77993,11 @@ ayO
 azi
 azi
 azi
-hUb
+aJz
 aAA
 aAA
 aAA
-hrb
+aJz
 azi
 azi
 azi
@@ -78126,20 +78227,20 @@ dvb
 dvb
 dvb
 dvb
-dJb
+dKb
 dOb
 avo
 avo
 avo
 awr
-eob
-eob
+avo
+avo
 dOb
 avo
 avo
 avo
 awr
-dJb
+aJC
 dvb
 dvb
 dvb
@@ -78383,20 +78484,20 @@ dwb
 dwb
 dwb
 dwb
-dKb
+dNb
 dPb
 dWb
 eab
 dWb
-ejb
-epb
-evb
-dPb
+enb
+avo
+avo
+hFb
 dWb
 eab
 dWb
 ejb
-dKb
+aJY
 dwb
 dwb
 dwb
@@ -78406,11 +78507,11 @@ eRb
 eYb
 eYb
 eYb
-dKb
+aKj
 fyb
 fAb
 fGb
-dKb
+aKj
 eYb
 eYb
 eYb
@@ -78641,19 +78742,19 @@ atP
 atP
 atP
 auI
-dNb
 dXb
+eIb
 ebb
-dXb
-dNb
+eIb
+eob
 eqb
-auI
+hDb
 hMb
+eIb
+ebb
+eIb
 dXb
-hQb
-dXb
-hMb
-eqb
+aKF
 atP
 atP
 atP
@@ -78663,11 +78764,11 @@ ayO
 azi
 azi
 azi
-hVb
-dNb
-dNb
-dNb
-aFi
+aWG
+aWK
+aWK
+aWK
+aWJ
 azi
 azi
 azi
