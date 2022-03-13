@@ -367,6 +367,99 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/environment/space,
 /area/space_structures/nt_troopship)
+"aP" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall3_2"
+	},
+/area/space_structures/nt_fighter_skeora)
+"aQ" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2_2"
+	},
+/area/space_structures/nt_fighter_skeora)
+"aR" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall5_2"
+	},
+/area/space_structures/nt_fighter_blaton)
+"aS" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2_2"
+	},
+/area/space_structures/nt_fighter_blaton)
+"aT" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall1_2"
+	},
+/area/space_structures/nt_fighter_blaton)
+"aU" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall5_2"
+	},
+/area/space_structures/nt_fighter_blaton)
+"aV" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swall5_2"
+	},
+/area/space_structures/nt_fighter_blaton)
+"aW" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3_2"
+	},
+/area/space_structures/nt_fighter_skeora)
+"aX" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swall1_2"
+	},
+/area/space_structures/nt_fighter_skeora)
+"aY" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3_2"
+	},
+/area/space_structures/nt_fighter_blaton)
+"aZ" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall5_2"
+	},
+/area/space_structures/nt_fighter_blaton)
+"ba" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall1_2"
+	},
+/area/space_structures/nt_fighter_skeora)
+"bb" = (
+/turf/environment/space,
+/area/space_structures/nt_fighter_skeora)
+"bc" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall3_2"
+	},
+/area/space_structures/nt_fighter_blaton)
+"bd" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall2_2"
+	},
+/area/space_structures/nt_fighter_blaton)
+"be" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swall1_2"
+	},
+/area/space_structures/nt_fighter_blaton)
+"bf" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall1_2"
+	},
+/area/space_structures/nt_fighter_blaton)
 "bl" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -929,7 +1022,8 @@
 /area/space_structures/nt_fighter_blaton)
 "Ha" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swall2"
+	dir = 8;
+	icon_state = "swall5_2"
 	},
 /area/space_structures/nt_fighter_skeora)
 "Hx" = (
@@ -1390,10 +1484,10 @@ Rh
 Rh
 Rh
 Rh
-Jr
+aR
 RY
 RY
-DF
+aZ
 Rh
 Rh
 Rh
@@ -1414,11 +1508,11 @@ Rh
 Rh
 Rh
 Jr
-RY
+aY
 Lp
 fh
 Ki
-Lt
+bc
 DP
 au
 Vo
@@ -1473,7 +1567,7 @@ WV
 oG
 ag
 ao
-Sv
+bd
 au
 ay
 Rh
@@ -1495,13 +1589,13 @@ Rh
 Rh
 js
 Jr
-DF
+aZ
 Dk
 Va
 ah
 Sg
 as
-mH
+aU
 Rh
 Rh
 Rh
@@ -1518,7 +1612,7 @@ Rh
 Rh
 Rh
 Rh
-by
+aR
 ok
 ok
 DF
@@ -1526,11 +1620,11 @@ HH
 Dn
 pJ
 ai
-Jr
+aR
 Lt
-Lt
+bc
 ok
-Lp
+bf
 Rh
 Rh
 Rh
@@ -1599,10 +1693,10 @@ Rh
 Rh
 Rh
 Rh
-by
+Ki
+aS
 ok
-ok
-mH
+aU
 lr
 sX
 HH
@@ -1631,12 +1725,12 @@ Rh
 zP
 Ki
 RY
-ok
+aS
 ab
 um
 Ki
 RY
-DF
+aZ
 Rh
 Rh
 Rh
@@ -1662,7 +1756,7 @@ Dv
 ad
 am
 SY
-Sv
+bd
 au
 ax
 Rh
@@ -1682,7 +1776,7 @@ Rh
 Rh
 Rh
 Rh
-by
+aT
 RY
 DP
 wJ
@@ -1710,9 +1804,9 @@ Rh
 Rh
 Rh
 Rh
-Ki
+aV
 Lt
-ok
+aS
 ok
 RY
 RY
@@ -1742,7 +1836,7 @@ Rh
 Rh
 Rh
 Ki
-Lt
+bc
 Lt
 mH
 Rh
@@ -1771,7 +1865,7 @@ Rh
 Rh
 Rh
 gD
-ap
+be
 Rh
 Rh
 Rh
@@ -1787,11 +1881,11 @@ Rh
 Rh
 HI
 fP
-Ha
+aQ
 qy
 SQ
 jz
-UH
+aW
 qy
 Rh
 Rh
@@ -1818,7 +1912,7 @@ Sz
 SX
 zq
 SG
-yt
+aX
 Ss
 MA
 Rh
@@ -1916,11 +2010,11 @@ Rh
 "}
 (23,1,1) = {"
 Rh
-bl
+Ha
 gO
 Gh
 lW
-Wy
+aP
 Xp
 jP
 lM
@@ -1949,12 +2043,12 @@ Rh
 Rh
 fS
 bl
-Ha
-Ha
-SQ
-Ha
-Wy
+aQ
 qy
+SQ
+jz
+Wy
+ba
 Rh
 Rh
 XQ
@@ -1981,7 +2075,7 @@ Rh
 Rh
 Rh
 Rh
-Rh
+bb
 Rh
 Rh
 CO

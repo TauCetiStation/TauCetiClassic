@@ -520,10 +520,9 @@
 /turf/environment/space,
 /area/space_structures/abandoned_ship)
 "bB" = (
-/turf/environment/space,
 /turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "swall3"
+	dir = 4;
+	icon_state = "swall2_2"
 	},
 /area/space_structures/abandoned_ship)
 "bC" = (
@@ -629,9 +628,9 @@
 /area/space)
 "bQ" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swall2"
+	dir = 8;
+	icon_state = "swall5_2"
 	},
-/turf/environment/space,
 /area/space_structures/abandoned_ship)
 "bR" = (
 /obj/machinery/computer/card,
@@ -1065,11 +1064,9 @@
 	},
 /area/space_structures/abandoned_ship)
 "cY" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/flora/random,
-/turf/simulated/floor/plating/airless{
+/turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "swall5_2"
 	},
 /area/space_structures/abandoned_ship)
 "cZ" = (
@@ -1461,10 +1458,9 @@
 	},
 /area/space_structures/abandoned_ship)
 "ea" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "swall1"
-	},
+/obj/structure/lattice,
+/obj/structure/girder,
+/turf/environment/space,
 /area/space_structures/abandoned_ship)
 "eb" = (
 /obj/structure/rack,
@@ -2080,6 +2076,82 @@
 /obj/item/stack/sheet/metal,
 /turf/environment/space,
 /area/space_structures/abandoned_ship)
+"fp" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall5_2"
+	},
+/area/space_structures/abandoned_ship)
+"fq" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall3_2"
+	},
+/area/space_structures/abandoned_ship)
+"fr" = (
+/turf/environment/space,
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall3_2"
+	},
+/area/space_structures/abandoned_ship)
+"fs" = (
+/turf/environment/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2_2"
+	},
+/area/space_structures/abandoned_ship)
+"ft" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall5_2"
+	},
+/area/space_structures/abandoned_ship)
+"fu" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall1_2"
+	},
+/area/space_structures/abandoned_ship)
+"fv" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swall1_2"
+	},
+/area/space_structures/abandoned_ship)
+"fw" = (
+/obj/item/weapon/flora/random,
+/turf/simulated/floor/plating/airless{
+	dir = 1;
+	icon_state = "darkblue"
+	},
+/area/space_structures/abandoned_ship)
+"fx" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "swall1_2"
+	},
+/area/space_structures/abandoned_ship)
+"fy" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3_2"
+	},
+/area/space_structures/abandoned_ship)
+"fz" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "swall3_2"
+	},
+/area/space_structures/abandoned_ship)
+"fA" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "swall1_2"
+	},
+/area/space_structures/abandoned_ship)
+"fB" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2_2"
+	},
+/area/space_structures/abandoned_ship)
 
 (1,1,1) = {"
 aa
@@ -2137,8 +2209,8 @@ aa
 aa
 aa
 aa
-ac
-bQ
+fp
+fs
 aG
 bx
 cr
@@ -2149,7 +2221,7 @@ dP
 ae
 ap
 ex
-bl
+ft
 aa
 aa
 aa
@@ -2185,7 +2257,7 @@ aa
 aa
 aa
 aa
-ac
+fp
 aS
 ar
 bS
@@ -2201,7 +2273,7 @@ el
 ez
 aA
 ca
-ea
+fA
 aa
 aa
 aa
@@ -2211,7 +2283,7 @@ aa
 aa
 ac
 ap
-bB
+fr
 bE
 bT
 bk
@@ -2221,7 +2293,7 @@ cs
 dk
 dw
 dR
-ea
+fA
 em
 eA
 aA
@@ -2239,7 +2311,7 @@ aJ
 aw
 aD
 aY
-bl
+ft
 ce
 cu
 cJ
@@ -2248,7 +2320,7 @@ dx
 dS
 ae
 en
-aY
+fB
 eM
 aU
 aD
@@ -2259,7 +2331,7 @@ aa
 (8,1,1) = {"
 aa
 ac
-aG
+cY
 aK
 ax
 bF
@@ -2270,7 +2342,7 @@ aI
 ba
 dm
 ck
-aI
+fy
 ap
 aG
 eB
@@ -2278,12 +2350,12 @@ eN
 ah
 fb
 aD
-bl
+ft
 aa
 "}
 (9,1,1) = {"
 aa
-aA
+bB
 ai
 aL
 aT
@@ -2291,11 +2363,11 @@ af
 bV
 bm
 cf
-cv
+fv
 cK
 dn
 dy
-cv
+fv
 eb
 eo
 eC
@@ -2387,28 +2459,28 @@ aA
 am
 aq
 aX
-ac
+fp
 ba
 bo
-ck
+fu
 ar
 cO
 an
 dC
-ae
+fz
 ba
 er
 ck
-bl
+ft
 eY
 fg
 fn
-aA
+bB
 aa
 "}
 (14,1,1) = {"
 aa
-aD
+bQ
 aI
 aP
 aY
@@ -2425,7 +2497,7 @@ ef
 es
 eF
 aD
-aY
+fB
 aI
 aI
 aG
@@ -2434,8 +2506,8 @@ aa
 (15,1,1) = {"
 aa
 aa
-ae
-ar
+ea
+fq
 az
 bJ
 bc
@@ -2451,7 +2523,7 @@ et
 eG
 eR
 eZ
-ae
+fz
 ar
 aa
 aa
@@ -2485,7 +2557,7 @@ aa
 aa
 aE
 aa
-aD
+bQ
 at
 bL
 be
@@ -2501,7 +2573,7 @@ ev
 eI
 eT
 ac
-aG
+cY
 aa
 aa
 aa
@@ -2516,7 +2588,7 @@ ao
 bf
 bt
 cn
-aA
+bB
 cS
 dr
 dG
@@ -2525,7 +2597,7 @@ ej
 ew
 eJ
 eU
-aA
+bB
 aa
 aa
 aa
@@ -2540,7 +2612,7 @@ aZ
 bM
 bg
 bu
-ck
+fu
 ar
 cT
 cc
@@ -2570,7 +2642,7 @@ aA
 cU
 cs
 an
-aA
+bB
 co
 bN
 eK
@@ -2621,7 +2693,7 @@ cW
 aH
 dI
 cz
-ae
+fz
 at
 bN
 an
@@ -2640,7 +2712,7 @@ an
 bO
 an
 aa
-aA
+bB
 cA
 cX
 ds
@@ -2667,11 +2739,11 @@ aa
 aF
 aD
 bl
-cY
+fw
 ds
 dK
 ac
-aG
+cY
 aa
 aa
 aa
@@ -2692,7 +2764,7 @@ aa
 aa
 aE
 ae
-ba
+fx
 bq
 ck
 ar
@@ -2716,7 +2788,7 @@ bP
 aa
 aa
 aa
-aA
+bB
 cZ
 dc
 cB
@@ -2745,7 +2817,7 @@ aA
 da
 dc
 dL
-aA
+bB
 aa
 aa
 aa
@@ -2765,7 +2837,7 @@ aa
 aa
 aa
 aa
-ac
+fp
 aG
 db
 ah
@@ -2796,7 +2868,7 @@ dc
 ah
 cZ
 dX
-aA
+bB
 aa
 aa
 aa
@@ -2815,7 +2887,7 @@ aa
 aa
 aa
 aa
-aA
+bB
 cC
 ah
 dt
@@ -2846,7 +2918,7 @@ ba
 bq
 ck
 aY
-ar
+fq
 aa
 aa
 aa
@@ -2896,7 +2968,7 @@ de
 de
 de
 cE
-aA
+bB
 aa
 aa
 aa
@@ -2915,7 +2987,7 @@ aa
 aa
 aa
 aa
-aD
+bQ
 bl
 df
 df
@@ -2945,7 +3017,7 @@ aD
 dg
 bq
 dN
-aG
+cY
 aa
 aa
 aa
