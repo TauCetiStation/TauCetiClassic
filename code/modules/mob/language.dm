@@ -370,8 +370,7 @@
 		flags = LANGUAGE_CAN_SPEAK
 
 	var/datum/language/new_language = all_languages[language]
-
-	if(!istype(new_language))
+	if(!new_language)
 		return 0
 
 	if((new_language in languages) && flags == LANGUAGE_CAN_UNDERSTAND)
@@ -388,6 +387,9 @@
 
 /mob/proc/remove_language(language, flags)
 	var/datum/language/L = all_languages[language]
+	if(!L)
+		return
+
 	languages.Remove(L)
 
 	for(var/sound in L.approximations)
