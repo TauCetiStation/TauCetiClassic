@@ -12,8 +12,6 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	sound = TRUE
-
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS)
 	)
@@ -54,8 +52,6 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	sound = TRUE
-
 	cloud = "cloud-pain"
 
 	state_checks = list(
@@ -84,8 +80,6 @@
 	message_muzzled = "makes a weak noise."
 
 	message_type = SHOWMSG_AUDIO
-
-	sound = TRUE
 
 	cloud = "cloud-pain"
 
@@ -119,8 +113,6 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	sound = TRUE
-
 	cloud = "cloud-scream"
 
 	state_checks = list(
@@ -149,8 +141,6 @@
 	message_muzzled = "appears to cough."
 
 	message_type = SHOWMSG_AUDIO
-
-	sound = TRUE
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),

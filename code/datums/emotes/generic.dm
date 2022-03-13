@@ -7,8 +7,10 @@
 
 	for(var/emo_key in user.current_emotes)
 		var/datum/emote/E = user.current_emotes[emo_key]
-		var/key_mod = E.sound ? "<span class='bold'>" : ""
-		var/key_mod_end = E.sound ? "</span>" : ""
+		var/emote_sound = E.get_sound(user, TRUE)
+
+		var/key_mod = emote_sound ? "<span class='bold'>" : ""
+		var/key_mod_end = emote_sound ? "</span>" : ""
 		if(!first)
 			msg += ", "
 		first = FALSE
