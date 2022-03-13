@@ -87,9 +87,8 @@ var/global/list/all_emotes
 /datum/emote/proc/get_sound(mob/living/carbon/human/user, intentional)
 	return sound
 
-/datum/emote/proc/play_sound(mob/living/carbon/human/user, intentional)
-	var/S = get_sound(user, intentional)
-	playsound(src, S, VOL_EFFECTS_MASTER, null, FALSE)
+/datum/emote/proc/play_sound(mob/living/carbon/human/user, intentional, emote_sound)
+	playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/emote/proc/can_emote(mob/living/carbon/human/user, intentional)
 	if(!check_cooldown(user, user.next_emote_use, intentional))
@@ -129,9 +128,10 @@ var/global/list/all_emotes
 	else
 		to_chat(user, msg_1p)
 
-	if(sound && check_cooldown(user, user.next_audio_emote_produce, intentional))
+	var/emote_sound = get_sound(user, intentional)
+	if(emote_sound && check_cooldown(user, user.next_audio_emote_produce, intentional))
 		set_cooldown(user, user.next_audio_emote_produce, audio_cooldown, intentional)
-		play_sound(user, intentional)
+		play_sound(user, intentional, emote_sound)
 
 	for(var/mob/M as anything in observer_list)
 		if(!M.client)

@@ -31,13 +31,11 @@
 				else
 					return pick(SOUNDIN_LAUGH_MALE)
 
-/datum/emote/laugh/play_sound(mob/living/carbon/human/user, intentional)
+/datum/emote/laugh/play_sound(mob/living/carbon/human/user, intentional, emote_sound)
 	var/voice_frequency = TRANSLATE_RANGE(user.age, user.species.min_age, user.species.max_age, 0.85, 1.05)
 	var/sound_frequency = 1.05 - (voice_frequency - 0.85)
 
-	var/S = get_sound(user, intentional)
-
-	playsound(src, S, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
+	playsound(src, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
 
 
 /datum/emote/grunt
@@ -115,7 +113,7 @@
 
 	message_type = SHOWMSG_AUDIO
 
-	cloud = "cloud-pain"
+	cloud = "cloud-scream"
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
