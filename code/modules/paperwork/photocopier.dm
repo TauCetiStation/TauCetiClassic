@@ -120,7 +120,6 @@
 			break
 		if(!copyitem)
 			break
-		use_power(active_power_usage)
 		var/delay = get_copy_delay(copyitem)
 		if(delay == 0)
 			to_chat(user, "<span class='warning'>\The [copyitem] can't be copied by [src].</span>")
@@ -133,6 +132,7 @@
 			break
 
 		delay = copy_item(copyitem)
+		use_power(active_power_usage)
 		if(user.is_busy() || !do_after(user, delay, target = src, progress = FALSE))
 			break
 
