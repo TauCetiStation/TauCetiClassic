@@ -123,7 +123,7 @@ var/global/list/all_emotes
 		if(message_type & SHOWMSG_VISUAL)
 			user.visible_message(msg_3p, msg_1p, message_impaired_reception, viewing_distance = range, ignored_mobs = observer_list)
 		else if(message_type & SHOWMSG_AUDIO)
-			user.audible_message(msg_3p, msg_1p, message_impaired_reception, hearing_distance = range, ignored_mobs = observer_list)
+			user.audible_message(msg_3p, message_impaired_reception, hearing_distance = range, ignored_mobs = observer_list)
 
 	else
 		to_chat(user, msg_1p)

@@ -49,7 +49,7 @@
 	var/obj/item/organ/external/BP = H.get_bodypart(zone)
 	if(!BP)
 		if(intentional)
-			to_chat(H, "<span class='notice'>You can't perform this emote without a [parse_zone(zone)]")
+			to_chat(H, "<span class='notice'>You can't perform this emote without a [parse_zone(zone)]</span>")
 		return FALSE
 
 	return TRUE
