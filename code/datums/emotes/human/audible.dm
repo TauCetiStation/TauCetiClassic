@@ -12,6 +12,8 @@
 
 	message_type = SHOWMSG_AUDIO
 
+	sound = TRUE
+
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS)
 	)
@@ -52,6 +54,8 @@
 
 	message_type = SHOWMSG_AUDIO
 
+	sound = TRUE
+
 	cloud = "cloud-pain"
 
 	state_checks = list(
@@ -80,6 +84,8 @@
 	message_muzzled = "makes a weak noise."
 
 	message_type = SHOWMSG_AUDIO
+
+	sound = TRUE
 
 	cloud = "cloud-pain"
 
@@ -113,6 +119,8 @@
 
 	message_type = SHOWMSG_AUDIO
 
+	sound = TRUE
+
 	cloud = "cloud-scream"
 
 	state_checks = list(
@@ -141,6 +149,8 @@
 	message_muzzled = "appears to cough."
 
 	message_type = SHOWMSG_AUDIO
+
+	sound = TRUE
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
@@ -187,14 +197,11 @@
 
 	message_type = SHOWMSG_AUDIO
 
+	sound = 'sound/machines/twobeep.ogg'
+
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_species_flag, IS_SYNTHETIC),
 	)
-
-/datum/emote/beep/get_sound(mob/living/carbon/human/user, intentional)
-	if(user.species[IS_SYNTHETIC])
-		return 'sound/machines/twobeep.ogg'
 
 
 /datum/emote/ping
@@ -211,14 +218,11 @@
 
 	message_type = SHOWMSG_AUDIO
 
+	sound = 'sound/machines/ping.ogg'
+
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_species_flag, IS_SYNTHETIC),
 	)
-
-/datum/emote/ping/get_sound(mob/living/carbon/human/user, intentional)
-	if(user.species[IS_SYNTHETIC])
-		return 'sound/machines/ping.ogg'
 
 
 /datum/emote/buzz
@@ -235,11 +239,8 @@
 
 	message_type = SHOWMSG_AUDIO
 
+	sound = 'sound/machines/buzz-sigh.ogg'
+
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_species_flag, IS_SYNTHETIC),
 	)
-
-/datum/emote/ping/get_sound(mob/living/carbon/human/user, intentional)
-	if(user.species[IS_SYNTHETIC])
-		return 'sound/machines/buzz-sigh.ogg'

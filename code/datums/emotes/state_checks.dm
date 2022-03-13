@@ -6,18 +6,6 @@
 
 	return TRUE
 
-/proc/is_species_flag(flag, mob/M, intentional)
-	var/datum/species/S = all_species[M.get_species()]
-	if(!S)
-		return FALSE
-
-	if(!S.flags[flag])
-		if(intentional)
-			to_chat(M, "<span class='notice'>And how can I do that? I can't.</span>")
-		return FALSE
-
-	return TRUE
-
 /proc/is_species_not_flag(flag, mob/M, intentional)
 	var/datum/species/S = all_species[M.get_species()]
 	if(!S)
