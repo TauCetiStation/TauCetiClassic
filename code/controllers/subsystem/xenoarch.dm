@@ -52,6 +52,7 @@ SUBSYSTEM_DEF(xenoarch)
 	var/list/asteroid_zlevels = SSmapping.levels_by_trait(ZTRAIT_MINING)
 	for(var/z in asteroid_zlevels)
 		populate_z_level(z)
+	..()
 
 /datum/controller/subsystem/xenoarch/proc/populate_z_level(asteroid_zlevel)
 	// Local lists for sonic speed.
