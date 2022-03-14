@@ -77,7 +77,7 @@
 
 		target.mind.show_memory(user) //I can read your mind, kekeke. Output all their notes.
 		changeling.geneticpoints += 2
-
+		user.mind.skills.transfer_skills(target.mind)
 		var/datum/role/changeling/C = target.mind.GetRoleByType(/datum/role/changeling)
 		if(C)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(C.chem_charges, changeling.chem_storage)

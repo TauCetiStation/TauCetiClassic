@@ -91,7 +91,7 @@
 	if(!prob(chance))
 		return
 
-	if(allergen && allergen[ALLERGY_SKIN] && ishuman(M))
+	if(self.allergen && self.allergen[ALLERGY_SKIN] && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.trigger_allergy(self.id, self.volume)
 		return
@@ -207,8 +207,8 @@
 	religion.on_holy_reagent_created(src)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
-	. = ..()
-	holder = null
+	data = null
+	return ..()
 
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc

@@ -24,7 +24,7 @@
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
-		score["foodeaten"]++
+		SSStatistics.score.foodeaten++
 		usr.drop_from_inventory(src)	//so icons update :[
 
 		if(trash)
@@ -561,16 +561,8 @@
 	desc = "The food of choice for the seasoned traitor."
 	icon_state = "donkpocket"
 	filling_color = "#dedeab"
-	var/warm = 0
+	var/warm = FALSE
 	list_reagents = list("nutriment" = 4)
-
-/obj/item/weapon/reagent_containers/food/snacks/donkpocket/proc/cooltime() //Not working, derp?
-	if (src.warm)
-		spawn( 4200 )
-			src.warm = 0
-			reagents.del_reagent("tricordrazine")
-			src.name = "donk-pocket"
-	return
 
 /obj/item/weapon/reagent_containers/food/snacks/brainburger
 	name = "brainburger"

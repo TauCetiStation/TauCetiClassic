@@ -34,6 +34,13 @@
 	// Allows you to change the number of greeting messages for a role
 	var/list/greets = list(GREET_DEFAULT, GREET_CUSTOM)
 
+	var/skillset_type
+	//if set to true, users skills will be set to maximum available after he gets this role
+	var/change_to_maximum_skills = TRUE
+
+	// Type for collector of statistics by this role
+	var/datum/stat/role/stat_type = /datum/stat/role
+
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -51,6 +58,10 @@
 	objectives.owner = M
 	..()
 
+/datum/role/Destroy(force, ...)
+	QDEL_NULL(objectives)
+	return ..()
+
 /datum/role/proc/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
 	if(!istype(M) && !override)
 		log_mode("M is [M.type]!")
@@ -62,6 +73,10 @@
 	antag = M
 	M.antag_roles[id] = src
 	objectives.owner = M
+	if(!isnull(skillset_type))
+		M.skills.add_available_skillset(skillset_type)
+	if(change_to_maximum_skills)
+		M.skills.maximize_active_skills()
 	if(msg_admins)
 		message_admins("[key_name(M)] is now \an [id].")
 		log_mode("[key_name(M)] is now \an [id].")
@@ -83,6 +98,9 @@
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
+	if(!isnull(skillset_type))
+		M.skills.remove_available_skillset(skillset_type)
+
 	remove_antag_hud()
 	if(msg_admins)
 		message_admins("[key_name(M)] is <span class='danger'>no longer</span> \an [id].[M.current ? " [ADMIN_FLW(M.current)]" : ""]")
@@ -194,6 +212,13 @@
 		return O
 	return null
 
+/datum/role/proc/GetObjectives()
+	return objectives.GetObjectives()
+
+/datum/role/proc/calculate_completion()
+	for(var/datum/objective/O in GetObjectives())
+		O.calculate_completion()
+
 /datum/role/proc/get_logo_icon(custom)
 	if(custom)
 		return icon('icons/misc/logos.dmi', custom)
@@ -243,7 +268,7 @@
 /datum/role/proc/IsSuccessful()
 	if(objectives.objectives.len > 0)
 		for (var/datum/objective/objective in objectives.GetObjectives())
-			if(!objective.check_completion())
+			if(objective.completed == OBJECTIVE_LOSS)
 				return FALSE
 	return TRUE
 
@@ -291,10 +316,9 @@
 		var/count = 1
 		text += "<ul>"
 		for(var/datum/objective/objective in objectives.GetObjectives())
-			var/successful = objective.calculate_completion()
 			text += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
 			feedback_add_details("[id]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
-			if(!successful) //If one objective fails, then you did not win.
+			if(objective.completed == OBJECTIVE_LOSS) //If one objective fails, then you did not win.
 				win = FALSE
 			if (count < objectives.objectives.len)
 				text += "<br>"
@@ -303,13 +327,11 @@
 			if(win)
 				text += "<br><font color='green'><B>\The [name] was successful!</B></font>"
 				feedback_add_details("[id]_success","SUCCESS")
-				score["roleswon"]++
+				SSStatistics.score.roleswon++
 			else
 				text += "<br><font color='red'><B>\The [name] has failed.</B></font>"
 				feedback_add_details("[id]_success","FAIL")
 		text += "</ul>"
-
-	antagonists_completion += list(list("role" = id, "html" = text))
 
 	return text
 

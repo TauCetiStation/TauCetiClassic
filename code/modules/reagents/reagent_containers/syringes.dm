@@ -129,7 +129,7 @@
 			if(istype(target, /obj/item/weapon/implantcase/chem))
 				return
 
-			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
+			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes) && !istype(target, /obj/item/weapon/changeling_test))
 				to_chat(user, "<span class='warning'>You cannot directly fill this object.</span>")
 				return
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -453,5 +453,13 @@
 /obj/item/weapon/reagent_containers/syringe/mulligan/atom_init()
 	. = ..()
 	reagents.add_reagent("mulligan", 1)
+	mode = SYRINGE_INJECT
+	update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/nutriment
+
+/obj/item/weapon/reagent_containers/syringe/nutriment/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 15)
 	mode = SYRINGE_INJECT
 	update_icon()

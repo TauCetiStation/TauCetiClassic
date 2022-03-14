@@ -24,7 +24,7 @@
 		var/mob/living/carbon/human/H = speaker
 		speaker_name = H.GetVoice()
 
-		if(H != src && H.mind.assigned_role == "Mime" && length(H.languages))
+		if(H != src && H.mind?.assigned_role == "Mime" && length(H.languages))
 			H.emote("gasp")
 			H.adjustOxyLoss(20)
 			H.Weaken(3)
@@ -45,6 +45,16 @@
 				var/mob/living/carbon/human/H = speaker
 				if(!iszombie(H))
 					message = stars(message, 40)
+
+	if(!(sdisabilities & DEAF || ear_deaf) && client.prefs.show_runechat)
+		var/list/span_list = list()
+		if(copytext_char(message, -2) == "!!")
+			span_list.Add("yell")
+		if(italics)
+			span_list.Add("italics")
+		if(used_radio)
+			span_list.Add("speaker")
+		show_runechat_message(speaker, language, capitalize(message), span_list)
 
 	if(italics)
 		message = "<i>[message]</i>"
@@ -86,7 +96,23 @@
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
-	return TRUE
+
+	. = TRUE
+
+	if(speaker == src)
+		return
+
+	if(stat != CONSCIOUS)
+		return
+
+	if(!client)
+		return
+
+	if(!ishuman(speaker))
+		return
+
+	var/mob/living/carbon/human/H = speaker
+	H.handle_socialization(src)
 
 /mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 

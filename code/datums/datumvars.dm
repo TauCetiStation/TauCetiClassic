@@ -268,6 +268,7 @@
 		body += "<option value='?_src_=vars;setckey=\ref[D]'>Set Client</option>"
 		if(ishuman(D))
 			body += "<option value>---</option>"
+			body += "<option value='?_src_=vars;give_quality=\ref[D]'>Give Quality</option>"
 			body += "<option value='?_src_=vars;setmutantrace=\ref[D]'>Set Mutantrace</option>"
 			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
 			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
@@ -781,7 +782,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		if(tgui_alert(usr, "Confirm mob type change?",, list("Transform","Cancel") != "Transform"))	return
+		if(tgui_alert(usr, "Confirm mob type change?",, list("Transform","Cancel")) != "Transform")	return
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
@@ -902,6 +903,20 @@ body
 			H.regenerate_icons()
 		else
 			to_chat(usr, "Failed! Something went wrong.")
+
+	else if(href_list["give_quality"])
+		if(!check_rights(R_VAREDIT))
+			return
+
+		var/mob/living/carbon/human/H = locate(href_list["give_quality"])
+		if(!istype(H))
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+			return
+
+		var/quality_type = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.qualities_pool
+		if(!quality_type)
+			return
+		SSqualities.force_give_quality(H, quality_type, usr)
 
 	else if(href_list["addlanguage"])
 		if(!check_rights(R_VAREDIT))

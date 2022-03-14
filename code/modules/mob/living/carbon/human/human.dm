@@ -82,6 +82,8 @@
 		golem_hud.remove_from_hud(src)
 		my_golem.death()
 	my_golem = null
+	QDEL_LIST(bodyparts)
+	QDEL_LIST(organs)
 	return ..()
 
 /mob/living/carbon/human/skrell/atom_init(mapload)
@@ -640,7 +642,11 @@
 		electrocution_animation(40)
 
 /mob/living/carbon/human/Topic(href, href_list)
-
+	if(href_list["skill"])
+		update_skills(href_list)
+	if(href_list["set_max_skills"])
+		mind.skills.maximize_active_skills()
+		to_chat(usr, "<span class='notice'>You are trying your best now.</span>")
 	if (href_list["item"])
 		var/slot = text2num(href_list["item"])
 		if(slot in check_obscured_slots())
@@ -1377,6 +1383,7 @@
 		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [get_pulse(GETPULSE_HAND)].</span>")
 
 /mob/living/carbon/human/proc/set_species(new_species, force_organs = TRUE, default_colour = FALSE)
+	var/datum/species/old_species = species
 
 	if(!new_species)
 		if(dna.species)
@@ -1400,9 +1407,11 @@
 		if(client?.prefs.language)
 			remove_language(client.prefs.language)
 
-		species.on_loose(src, new_species)
-
 	species = all_species[new_species]
+
+	if(old_species)
+		old_species.on_loose(src, new_species)
+
 	maxHealth = species.total_health
 
 	if(species.base_color && default_colour)
@@ -1501,6 +1510,151 @@
 		W.update_icon()
 		W.message = message
 		W.add_fingerprint(src)
+
+/mob/living/carbon/human/verb/skills_menu()
+	set category = "IC"
+	set name = "Skills Menu"
+	var/list/tables_data = list(
+		"Engineering related skills" = list(
+			/datum/skill/engineering,
+			/datum/skill/construction,
+			/datum/skill/atmospherics
+			),
+		"Medical skills" = list(
+			/datum/skill/medical,
+			/datum/skill/surgery,
+			/datum/skill/chemistry
+			),
+		"Combat skills" = list(
+			/datum/skill/melee,
+			/datum/skill/firearms,
+			/datum/skill/police,
+			/datum/skill/combat_mech
+			),
+		"Civilian skills" = list(
+			/datum/skill/command,
+			/datum/skill/research,
+			/datum/skill/civ_mech
+			)
+	)
+	var/dat = {"
+		<style>
+			.skill_slider {
+				width: 100%;
+				position: relative;
+				padding: 0;
+			}
+			table {
+				line-height: 5px;
+				width: 100%;
+				border-collapse: collapse;
+				border: 1px solid;
+				padding: 0;
+			}
+			td {
+				width: 25%;
+			}
+			td:nth-child(2n+0) {
+				width: 65%;
+			}
+			td:nth-child(3n+0) {
+				width: 10%;
+			}
+			caption {
+				line-height: normal;
+				color: white;
+				background-color: #444;
+				font-weight: bold;
+			}
+			.container{
+				text-align: center;
+				width: 100%;
+			}
+		</style>
+		"}
+	dat += {"
+		<div class = "container">
+			<button type="submit" value="1" onclick="setMaxSkills()">Set skills values to maximum</button>
+		</div>
+	"}
+	for(var/category in tables_data)
+		dat += {"
+			<table>
+				<caption>[category]</caption>
+		"}
+
+		var/list/sliders_data = tables_data[category]
+
+		for(var/datum/skill/s as anything in sliders_data)
+			var/datum/skill/skill = all_skills[s]
+			var/slider_id = skill.name
+			var/slider_value = mind.skills.get_value(slider_id)
+			var/slider_min_value = skill.min_value
+			var/slider_max_value = mind.skills.get_max(slider_id)
+			var/slider_hint = skill.hint
+			dat += {"
+				<tr>
+					<td>
+						[slider_id] <span title="[slider_hint]">(?)</span>:
+					</td>
+					<td>
+						<input type="range" class="skill_slider" min="[slider_min_value]" max="[slider_max_value]" value="[slider_value]" id="[slider_id]" onchange="updateSkill('[slider_id]')" >
+					</td>
+					<td>
+						<p><b><center><a href='?src=\ref[src];skill=[slider_id]&value=[slider_value]'><span id="[slider_id]_value">[slider_value]</span></a></center></b></p>
+					</td>
+				</tr>
+			"}
+
+		dat += {"
+			</table>
+		"}
+
+	dat +={"
+		<p><span id="notice">&nbsp;</span></p>
+		<script>
+			var skillUpdating = false;
+			function updateSkill(slider_id) {
+				if (!skillUpdating) {
+					skillUpdating = true;
+					setTimeout(function() {
+						setSkill(slider_id);
+					}, 300);
+				}
+			}
+			function setSkill(slider_id) {
+				var element =  document.getElementById(slider_id);
+				var value = element.value;
+				window.location = 'byond://?src=\ref[src];skill=' + slider_id + '&value=' + value;
+				skillUpdating = false;
+
+				document.getElementById(slider_id + "_value").innerHTML = value;
+			}
+
+			function showHint(text) {
+				document.getElementById("notice").innerHTML = '<b>Hint: ' + text + '</b>';
+			}
+			function setMaxSkills() {
+				window.location  = 'byond://?src=\ref[src];set_max_skills=1';
+				setTimeout("location.reload(true);", 100);
+			}
+		</script>
+		"}
+	var/style = CSS_THEME_DARK
+	if (mind.antag_roles.len)
+		style = CSS_THEME_SYNDICATE
+	var/datum/browser/popup = new(usr, "mob\ref[src]", "Skills menu", 620, 500, null, style)
+	popup.set_content(dat)
+	popup.open()
+
+/mob/living/carbon/human/proc/update_skills(href_list)
+	var/skill = href_list["skill"]
+	var/value = text2num(href_list["value"])
+	if(!isnum(value) || !istext(skill))
+		return
+	if(!mind)
+		return
+	mind.skills.choose_value(skill, value)
 
 /mob/living/carbon/human/verb/examine_ooc()
 	set name = "Examine OOC"
@@ -1992,7 +2146,7 @@
 	if(species.flags[NO_BLOOD])
 		return
 
-	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT && timeofdeath != 0)
+	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT)
 		to_chat(user, "<span class='notice'>It seems [src] is far too gone to be reanimated... Your efforts are futile.</span>")
 		return
 

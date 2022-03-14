@@ -20,6 +20,14 @@
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 
+	// I dont known how
+	global.player_list -= src
+
+	if(mind)
+		if(mind.current == src)
+			mind.set_current(null)
+		if(mind.original == src)
+			mind.original = null
 	return ..()
 
 
@@ -307,6 +315,7 @@
 	face_atom(A)
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
+	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
 
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
@@ -394,6 +403,9 @@
 		log_game("[key_name(usr)] AM failed due to disconnect.")
 		qdel(M)
 		return
+
+	// New life, new quality.
+	client.prefs.have_quality = FALSE
 
 	M.key = key
 //	M.Login()	//wat
@@ -1286,3 +1298,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(forced_language)
 		return all_languages[forced_language]
 	return null
+
+/mob/proc/set_lastattacker_info(mob/M)
+	lastattacker_name = M.real_name
+	lastattacker_key = M.key

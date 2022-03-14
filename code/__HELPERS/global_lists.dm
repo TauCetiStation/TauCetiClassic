@@ -217,6 +217,10 @@
 			global.faith_reactions_by_aspects[aspect_type] = list()
 		global.faith_reactions_by_aspects[aspect_type] += id
 
+	global.contraband_listings = list()
+	for(var/listing in subtypesof(/datum/contraband_listing))
+		global.contraband_listings[listing] = new listing
+
 	populate_gear_list()
 
 	global.bridge_commands = list()
@@ -236,6 +240,14 @@
 	global.antag_roles = global.special_roles - ROLE_GHOSTLY
 
 	global.full_ignore_question = get_list_of_keys_from_values_as_list_from_associative_list(special_roles_ignore_question)
+
+	global.all_skills = list()
+	for(var/skill_type in subtypesof(/datum/skill))
+		global.all_skills[skill_type] = new skill_type
+
+	global.all_skillsets = list()
+	for(var/skillset_type in subtypesof(/datum/skillset))
+		global.all_skillsets[skillset_type] = new skillset_type
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!

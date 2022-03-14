@@ -139,6 +139,10 @@ Class Procs:
 	var/min_operational_temperature = 5
 	var/max_operational_temperature = 10
 
+	var/required_skill = FALSE  //e.g. medical, engineering
+	var/required_skill_proficiency = FALSE // e.g. novice, trained, pro
+	var/fumbling_time_multiplier = 5 SECONDS
+
 /obj/machinery/atom_init()
 	. = ..()
 	machines += src
@@ -540,3 +544,8 @@ Class Procs:
 		ex_act(EXPLODE_HEAVY)
 	else
 		ex_act(EXPLODE_DEVASTATE)
+
+/obj/machinery/proc/do_skill_checks(mob/user)
+	if (!required_skill || !required_skill_proficiency || !user || issilicon(user) || isobserver(user))
+		return TRUE
+	return handle_fumbling(user, src, fumbling_time_multiplier * 2, required_skill, required_skill_proficiency, time_bonus = fumbling_time_multiplier)
