@@ -8,7 +8,6 @@
 	item_state = "electronic"
 	flags = CONDUCT
 
-
 /obj/item/device/antibody_scanner/attack(mob/M, mob/user)
 	if(!iscarbon(M))
 		report("Scan aborted: Incompatible target.", user)
