@@ -558,6 +558,17 @@ var/global/list/datum/spawners_cooldown = list()
 	. = ..()
 	podkid = _podkid
 
+	RegisterSignal(podkid, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
+
+/datum/spawner/podkid/Destroy()
+	UnregisterSignal(podkid, list(COMSIG_PARENT_QDELETING))
+	podkid = null
+	return ..()
+
+/datum/spawner/podkid/proc/on_target_del()
+	SIGNAL_HANDLER
+	qdel(src)
+
 /datum/spawner/podkid/jump(mob/dead/observer/ghost)
 	ghost.forceMove(get_turf(podkid))
 
