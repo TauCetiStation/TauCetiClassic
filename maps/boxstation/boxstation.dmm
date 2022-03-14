@@ -11437,9 +11437,13 @@
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "ato" = (
-/obj/machinery/constructable_frame/machine_frame,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/obj/machinery/door/morgue{
+	dir = 4;
+	name = "Reading Bay"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/wood,
+/area/station/civilian/library)
 "atp" = (
 /obj/machinery/light{
 	dir = 8
@@ -50485,6 +50489,11 @@
 	},
 /turf/simulated/floor,
 /area/station/civilian/janitor)
+"bMk" = (
+/obj/machinery/constructable_frame/machine_frame,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "bMl" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -51122,6 +51131,31 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
+"bNp" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Victor Body Meat"
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Josh Body Meat"
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Edvard Right Leg Meat"
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meat/pug,
+/obj/item/organ/external/r_arm,
+/obj/item/organ/external/l_leg,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
+"bNq" = (
+/obj/item/weapon/circuitboard/gibber,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "bNr" = (
 /obj/machinery/cryopod,
 /turf/simulated/floor{
@@ -51290,6 +51324,12 @@
 	icon_state = "darkstairs_alone"
 	},
 /area/station/storage/tech)
+"bNE" = (
+/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "bNF" = (
 /turf/simulated/floor{
 	icon_state = "loadingarea"
@@ -53574,13 +53614,18 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bSC" = (
-/obj/machinery/door/morgue{
-	dir = 4;
-	name = "Reading Bay"
+/obj/machinery/door/airlock/glass{
+	name = "Library"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	icon_state = "cult"
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken4"
 	},
 /area/station/civilian/library)
 "bSD" = (
@@ -54911,7 +54956,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/wood,
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken"
+	},
 /area/station/civilian/library)
 "bWl" = (
 /obj/machinery/firealarm{
@@ -74497,16 +74544,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "jab" = (
-/obj/machinery/door/airlock/glass{
-	name = "Library"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "jal" = (
@@ -80945,9 +80989,7 @@
 	req_access = list(37)
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	icon_state = "cult"
-	},
+/turf/simulated/floor/wood,
 /area/station/civilian/library)
 "qXi" = (
 /obj/machinery/alarm{
@@ -130309,7 +130351,7 @@ bab
 bPL
 bSA
 cjs
-aSp
+aLQ
 aSp
 aSp
 ecb
@@ -130566,7 +130608,7 @@ cjG
 bPE
 bSy
 bWk
-bYl
+jab
 ciD
 dZb
 bYl
@@ -132117,7 +132159,7 @@ ifb
 aGx
 cGO
 aXP
-bSC
+ato
 ccq
 aKs
 aKs
@@ -132378,8 +132420,8 @@ aKs
 cLF
 ary
 aKs
-ato
-cak
+bMk
+bNq
 bFo
 jgb
 aGl
@@ -132627,7 +132669,7 @@ cvy
 ebb
 aKs
 aKs
-jab
+bSC
 cjY
 cjs
 aKs
@@ -132635,8 +132677,8 @@ aKs
 bYr
 arA
 aKs
-cak
-cES
+bNp
+bNE
 bFo
 jKb
 aGu
