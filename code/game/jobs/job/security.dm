@@ -76,7 +76,7 @@
 		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
 		~Luduk
 	*/
-	restricted_species = list(DIONA)
+	restricted_species = list(DIONA, TAJARAN)
 
 
 /datum/job/officer
