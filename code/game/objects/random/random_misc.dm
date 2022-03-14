@@ -102,10 +102,10 @@
 		return pick(subtypesof(/obj/item/toy))
 
 /obj/random/misc/book
-	name = "Random Medkit"
-	desc = "This is a random medical kit."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "firstaid"
+	name = "Random Book"
+	desc = "This is a random book."
+	icon = 'icons/obj/library.dmi'
+	icon_state = "book"
 /obj/random/misc/book/item_to_spawn()
 		return pick(subtypesof(/obj/item/weapon/book/manual))
 
