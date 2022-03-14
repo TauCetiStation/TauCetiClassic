@@ -33,15 +33,6 @@
 	icon_state = "podhatch"
 	},
 /area/space_structures/listening_post)
-"ag" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "dark"
-	},
-/area/space_structures/listening_post)
 "ah" = (
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -97,9 +88,6 @@
 	},
 /area/space_structures/listening_post)
 "am" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
 /obj/item/weapon/flora/pottedplant/tropicalfern,
 /turf/simulated/floor{
 	dir = 4;
@@ -227,6 +215,10 @@
 	pixel_y = 32
 	},
 /obj/structure/table/woodentable,
+/obj/item/weapon/coin/gold{
+	pixel_x = -5;
+	pixel_y = -11
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -287,14 +279,14 @@
 	pixel_x = 5;
 	pixel_y = 12
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer{
-	pixel_x = -6;
-	pixel_y = 7
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
 /obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua{
+	pixel_x = -6;
+	pixel_y = 3
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -731,14 +723,14 @@
 	},
 /area/space_structures/listening_post)
 "bm" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/alarm{
 	pixel_y = 23;
 	req_one_access = list(150)
 	},
 /obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -747,8 +739,8 @@
 	},
 /area/space_structures/listening_post)
 "bn" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -766,7 +758,7 @@
 /area/space_structures/listening_post)
 "bp" = (
 /obj/machinery/vending/snack{
-	name = "hacked Getmore Chocolate Corp";
+	name = "Hacked Getmore Chocolate Corp";
 	prices = list()
 	},
 /turf/simulated/floor{
@@ -798,8 +790,8 @@
 /turf/simulated/floor/wood,
 /area/space_structures/listening_post)
 "bt" = (
-/obj/machinery/vending/coffee{
-	name = "hacked Hot Drinks machine";
+/obj/machinery/vending/clothing{
+	name = "Hacked ClothesMate";
 	prices = list()
 	},
 /turf/simulated/floor/wood{
@@ -820,26 +812,26 @@
 	},
 /area/space_structures/listening_post)
 "bw" = (
-/obj/item/weapon/flora/pottedplant/palm,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/item/weapon/flora/pottedplant/palm,
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
 /area/space_structures/listening_post)
 "bx" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
 /area/space_structures/listening_post)
 "by" = (
 /obj/machinery/vending/cola{
-	name = "hacked Robust Softdrinks";
+	name = "Hacked Robust Softdrinks";
 	prices = list()
 	},
 /obj/structure/extinguisher_cabinet{
@@ -896,13 +888,13 @@
 /obj/structure/closet/cabinet,
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
-/obj/item/clothing/suit/storage/det_suit/fluff/leatherjack,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -23;
 	req_one_access = list(150)
 	},
 /obj/item/clothing/head/ushanka/black,
+/obj/item/clothing/suit/jacket/letterman_syndie,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -1183,7 +1175,8 @@
 	dir = 10
 	},
 /obj/machinery/bot/cleanbot{
-	on = 0
+	on = 0;
+	req_access = list(150)
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/listening_post)
@@ -1193,6 +1186,7 @@
 	},
 /obj/structure/table/holotable/wooden,
 /obj/machinery/computer/libraryconsole/bookmanagement{
+	layer = 4.1;
 	pixel_y = 6
 	},
 /turf/simulated/floor{
@@ -1946,9 +1940,9 @@ ab
 aA
 ac
 af
-ai
-ag
+aQ
 ao
+ae
 ae
 bd
 bo
