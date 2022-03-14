@@ -303,7 +303,7 @@
 		mind.transfer_to(adult)
 
 	for (var/obj/item/W in contents)
-		drop_from_inventory(W)
+		drop_from_inventory(W, loc)
 	qdel(src)
 
 /mob/living/carbon/monkey/diona/verb/evolve()
