@@ -7,12 +7,11 @@
 
 	for(var/emo_key in user.current_emotes)
 		var/datum/emote/E = user.current_emotes[emo_key]
-		var/emote_sound = E.get_sound(user, TRUE)
 
 		var/key_mod = ""
 		var/key_mod_end = ""
 
-		if(emote_sound)
+		if(E.get_sound(user, TRUE))
 			key_mod += "<span class='bold'>"
 			key_mod_end += "</span>"
 
@@ -20,9 +19,9 @@
 			key_mod += "<span class='italics'>"
 			key_mod_end += "</span>"
 
-		if(E.check_cooldown(user, user.next_emote_use, FALSE))
+		if(!E.check_cooldown(user, user.next_emote_use, FALSE))
 			key_mod += "<span class='warning'>"
-			key_mod_end = "</span>"
+			key_mod_end += "</span>"
 
 		if(!first)
 			msg += ", "
