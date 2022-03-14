@@ -140,7 +140,6 @@ Class Procs:
 	var/max_operational_temperature = 10
 
 	var/list/required_skills //e.g. medical, engineering
-
 	var/fumbling_time = 5 SECONDS
 
 /obj/machinery/atom_init()

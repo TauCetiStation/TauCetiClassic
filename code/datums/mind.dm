@@ -61,7 +61,7 @@
 	//put this here for easier tracking ingame
 	var/datum/money_account/initial_account
 	//skills
-	var/datum/skills/skills = new /datum/skills
+	var/datum/skills/skills = new
 
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 	var/creation_roundtime
