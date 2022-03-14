@@ -764,8 +764,9 @@
 
 /datum/species/diona/handle_death(mob/living/carbon/human/H)
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
-	S.name = H.name
-	S.real_name = S.name
+	S.real_name = H.real_name
+	S.name = S.real_name
+
 	S.dna = H.dna.Clone()
 	S.dna.SetSEState(MONKEYBLOCK, 1)
 	S.dna.SetSEValueRange(MONKEYBLOCK, 0xDAC, 0xFFF)
