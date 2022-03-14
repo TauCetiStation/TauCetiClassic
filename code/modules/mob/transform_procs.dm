@@ -105,9 +105,7 @@
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/Y in stored_implants)
 			var/obj/item/weapon/implant/IMP = Y
-			IMP.loc = O
-			IMP.imp_in = O
-			IMP.implanted = TRUE
+			IMP.stealth_inject(O)
 		O.sec_hud_set_implants()
 
 	//transfer stuns
@@ -243,13 +241,9 @@
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/Y in stored_implants)
 			var/obj/item/weapon/implant/IMP = Y
-			IMP.loc = O
-			IMP.imp_in = O
-			IMP.implanted = TRUE
 			var/obj/item/organ/external/BP = pick(O.bodyparts)
 			if(BP)
-				IMP.part = BP
-				BP.implants += IMP
+				IMP.inject(O, BP)
 		O.sec_hud_set_implants()
 
 	//transfer stuns
