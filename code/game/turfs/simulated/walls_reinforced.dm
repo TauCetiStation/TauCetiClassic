@@ -123,7 +123,7 @@
 				to_chat(user, "<span class='notice'>You begin removing the support lines.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
-				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills = list(/datum/skill/engineering/pro)))
+				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills_override = list(/datum/skill/engineering/pro)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -151,7 +151,7 @@
 				if(WT.use(0,user))
 
 					to_chat(user, "<span class='notice'>You begin slicing through the metal cover.</span>")
-					if(WT.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills = list(/datum/skill/engineering/pro)))
+					if(WT.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering/pro)))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
@@ -165,7 +165,7 @@
 
 			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 				to_chat(user, "<span class='notice'>You begin slicing through the metal cover.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills = list(/datum/skill/engineering/pro)))
+				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering/pro)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -178,7 +178,7 @@
 		if(CUT_COVER)
 			if (iscrowbar(W))
 				to_chat(user, "<span class='notice'>You struggle to pry off the cover.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills = list(/datum/skill/engineering/pro)))
+				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills_override = list(/datum/skill/engineering/pro)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -192,7 +192,7 @@
 			if (iswrench(W))
 
 				to_chat(user, "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills = list(/datum/skill/engineering/pro)))
+				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills_override = list(/datum/skill/engineering/pro)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -208,7 +208,7 @@
 				if(WT.use(0,user))
 
 					to_chat(user, "<span class='notice'>You begin slicing through the support rods.</span>")
-					if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills = list(/datum/skill/engineering/pro)))
+					if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills_override = list(/datum/skill/engineering/pro)))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
@@ -224,7 +224,7 @@
 			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 
 				to_chat(user, "<span class='notice'>You begin slicing through the support rods.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills = list(/datum/skill/engineering/pro)))
+				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering/pro)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -239,7 +239,7 @@
 			if(iscrowbar(W))
 
 				to_chat(user, "<span class='notice'>You struggle to pry off the outer sheath.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume  = 100,  required_skills = list(/datum/skill/engineering/pro)))
+				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume  = 100,  required_skills_override = list(/datum/skill/engineering/pro)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
