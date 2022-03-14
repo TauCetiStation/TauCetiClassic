@@ -10363,6 +10363,15 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
+"arq" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/black,
+/area/station/security/iaa_office)
 "arr" = (
 /obj/machinery/light{
 	dir = 4
@@ -13617,9 +13626,6 @@
 /area/station/rnd/xenobiology)
 "aya" = (
 /obj/structure/table/woodentable,
-/obj/machinery/camera{
-	c_tag = "Internal Affairs"
-	},
 /obj/item/weapon/book/manual/wiki/security_space_law{
 	pixel_x = 4;
 	pixel_y = 3
@@ -14508,6 +14514,9 @@
 	pixel_y = 20
 	},
 /obj/structure/filingcabinet/chestdrawer/black,
+/obj/machinery/camera{
+	c_tag = "Internal Affairs"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -113928,7 +113937,7 @@ avS
 axN
 azJ
 biL
-bBM
+arq
 bHA
 axN
 axN
