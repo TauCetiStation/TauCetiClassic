@@ -27,7 +27,7 @@
 
 /datum/emote/rock/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
-	play_rock_paper_scissors_animation(emote_key)
+	user.play_rock_paper_scissors_animation(emote_key)
 
 
 /datum/emote/paper
@@ -45,7 +45,7 @@
 
 /datum/emote/paper/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
-	play_rock_paper_scissors_animation(emote_key)
+	user.play_rock_paper_scissors_animation(emote_key)
 
 
 /datum/emote/scissors
@@ -63,4 +63,4 @@
 
 /datum/emote/scissors/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
-	play_rock_paper_scissors_animation(emote_key)
+	user.play_rock_paper_scissors_animation(emote_key)

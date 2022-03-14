@@ -46,7 +46,7 @@ var/global/list/all_emotes
 	var/list/state_checks
 
 /datum/emote/proc/get_emote_message_1p(mob/living/carbon/human/user)
-	return message_1p
+	return "<i>[message_1p]</i>"
 
 /datum/emote/proc/get_emote_message_3p(mob/living/carbon/human/user)
 	var/msg = message_3p
@@ -61,7 +61,7 @@ var/global/list/all_emotes
 	if(!msg)
 		return null
 
-	return "<b>[user]</b> [msg]"
+	return "<b>[user]</b> <i>[msg]</i>"
 
 /datum/emote/proc/get_cooldown_group(mob/living/carbon/human/user)
 	if(isnull(cooldown_group))
