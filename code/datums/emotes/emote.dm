@@ -51,11 +51,11 @@ var/global/list/all_emotes
 /datum/emote/proc/get_emote_message_3p(mob/living/carbon/human/user)
 	var/msg = message_3p
 
-	if(user.miming)
+	if(message_miming && user.miming)
 		msg = message_miming
-	else if((message_type & SHOWMSG_AUDIO) && HAS_TRAIT(user, TRAIT_MUTE))
+	else if(message_impaired_production && (message_type & SHOWMSG_AUDIO) && HAS_TRAIT(user, TRAIT_MUTE))
 		msg = message_impaired_production
-	else if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
+	else if(message_muzzled && istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 		msg = message_muzzled
 
 	if(!msg)
