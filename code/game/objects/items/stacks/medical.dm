@@ -68,8 +68,8 @@
 		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "self_tending", /datum/mood_event/self_tending)
 
 	var/delay = L == user ? self_delay : other_delay
-	if(!is_skill_competent(user, skill_checks))
-		delay = apply_skill_bonus(user, delay, skill_checks, penalty = 2)
+	if(!is_skill_competent(user, required_skills))
+		delay = apply_skill_bonus(user, delay, required_skills, penalty = 2)
 	if(delay)
 		if(!silent)
 			announce_heal(L, user)
@@ -105,7 +105,7 @@
 	repeating = TRUE
 	heal_brute = 1
 
-	skill_checks = list(/datum/skill/medical/novice)
+	required_skills = list(/datum/skill/medical/novice)
 
 /obj/item/stack/medical/bruise_pack/announce_heal(mob/living/L, mob/user)
 	..()
@@ -171,7 +171,7 @@
 	repeating = TRUE
 	heal_burn = 1
 
-	skill_checks = list(/datum/skill/medical/novice)
+	required_skills = list(/datum/skill/medical/novice)
 
 /obj/item/stack/medical/ointment/can_heal(mob/living/L, mob/living/user)
 	. = ..()
@@ -238,7 +238,7 @@
 	other_delay = 10
 
 	repeating = TRUE
-	skill_checks = list(/datum/skill/medical/trained)
+	required_skills = list(/datum/skill/medical/trained)
 
 /obj/item/stack/medical/advanced/bruise_pack/update_icon()
 	var/icon_amount = clamp(amount, 1, max_amount)
@@ -303,7 +303,7 @@
 	other_delay = 10
 
 	repeating = TRUE
-	skill_checks = list(/datum/skill/medical/trained)
+	required_skills = list(/datum/skill/medical/trained)
 
 /obj/item/stack/medical/advanced/ointment/update_icon()
 	var/icon_amount = clamp(amount, 1, max_amount)
@@ -349,7 +349,7 @@
 	other_delay = 25
 
 	repeating = FALSE
-	skill_checks = list(/datum/skill/medical/pro)
+	required_skills = list(/datum/skill/medical/pro)
 
 /obj/item/stack/medical/splint/can_heal(mob/living/L, mob/living/user)
 	. = ..()
@@ -402,7 +402,7 @@
 	other_delay = 5
 
 	repeating = FALSE
-	skill_checks = list(/datum/skill/medical/master)
+	required_skills = list(/datum/skill/medical/master)
 
 /obj/item/stack/medical/suture/update_icon()
 	var/icon_amount = clamp(amount, 1, max_amount)

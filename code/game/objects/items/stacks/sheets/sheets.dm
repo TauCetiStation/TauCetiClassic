@@ -9,4 +9,4 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 	var/perunit = 3750
 	var/sheettype = null //this is used for girders in the creation of walls/false walls
-	skill_checks = list(/datum/skill/construction/trained)
+	required_skills = list(/datum/skill/construction/trained)
