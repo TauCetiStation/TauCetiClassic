@@ -6,3 +6,7 @@
 #define P_THEM(g) g == MALE && "him" \
                || g == FEMALE && "her" \
                || "them"
+
+#define P_THEIR(g) g == MALE && "his" \
+                || g == FEMALE && "her" \
+                || "their"

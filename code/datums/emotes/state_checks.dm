@@ -53,3 +53,11 @@
 		return FALSE
 
 	return TRUE
+
+/proc/is_not_species(species, mob/M, intentional)
+	if(M.get_species() != species)
+		if(intentional)
+			to_chat(M, "<span class='notice'>Your species can't perform this emote.</span>")
+		return FALSE
+
+	return TRUE
