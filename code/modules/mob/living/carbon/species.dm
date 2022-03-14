@@ -855,7 +855,9 @@
 
 	if(can_reenter_corpse)
 		return
-	create_spawner(/datum/spawner/podman, "podman", source)
+	var/mob/living/carbon/human/H = source
+
+	create_spawner(/datum/spawner/podman, "podman", H, H.mind.memory)
 
 /datum/species/machine
 	name = IPC
