@@ -121,4 +121,3 @@
 		boolets += magazine.ammo_count()
 	return boolets
 
-
