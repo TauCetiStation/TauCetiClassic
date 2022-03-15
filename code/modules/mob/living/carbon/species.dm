@@ -264,6 +264,11 @@
 /datum/species/proc/on_life(mob/living/carbon/human/H)
 	return
 
+// For species who's skin acts as a spacesuit of sorts
+// Return a value from 0 to 1, where 1 is full protection, and 0 is full weakness
+/datum/species/proc/get_pressure_protection(mob/living/carbon/human/H)
+	return 0
+
 /datum/species/human
 	name = HUMAN
 	language = LANGUAGE_SOLCOMMON
@@ -476,9 +481,6 @@
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	dietflags = DIET_OMNI
 
-	warning_low_pressure = 50
-	hazard_low_pressure = 0
-
 	cold_level_1 = 80
 	cold_level_2 = 50
 	cold_level_3 = 0
@@ -586,6 +588,22 @@
 		H.verbs -= /mob/living/carbon/human/proc/gut
 
 	..()
+
+// At 25 damage - no protection at all.
+/datum/species/vox/get_pressure_protection(mob/living/carbon/human/H)
+	var/damage = 0
+	var/static/list/cavity_parts = list(BP_HEAD, BP_CHEST, BP_GROIN)
+	for(var/bodypart in cavity_parts)
+		var/obj/item/organ/external/BP = H.get_bodypart(bodypart)
+		if(!BP)
+			// We surely are not hermetized.
+			damage += 100
+			continue
+
+		damage += BP.brute_dam + BP.burn_dam
+
+	return 1 - CLAMP01(damage / 25)
+
 
 /datum/species/vox/armalis
 	name = VOX_ARMALIS
