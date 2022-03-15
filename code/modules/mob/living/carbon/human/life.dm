@@ -120,6 +120,7 @@
 				pressure_adjustment_coefficient = pressure_loss
 
 	pressure_adjustment_coefficient = CLAMP01(pressure_adjustment_coefficient) //So it isn't less than 0 or larger than 1.
+	pressure_adjustment_coefficient *= 1 - species.get_pressure_protection(src)
 
 	return 1 - pressure_adjustment_coefficient	//want 0 to be bad protection, 1 to be good protection
 
@@ -454,7 +455,7 @@
 			inhaled_gas_used = inhaling * ratio * BREATH_USED_PART
 		else
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		
+
 		failed_last_breath = 1
 		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 
