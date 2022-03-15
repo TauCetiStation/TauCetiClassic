@@ -734,9 +734,9 @@
 					visible_message("<span class='danger'>[usr] tears off \the [A] from [src]'s [S]!</span>")
 				else
 					visible_message("<span class='danger'>[usr] removed \the [A] from [src]'s [S]!</span>")
-				A.on_removed(usr)
-				S.accessories -= A
-				update_inv_w_uniform()
+
+				S.remove_accessory(usr, A)
+
 				attack_log += "\[[time_stamp()]\] <font color='orange'>Had their accessory ([A]) removed by [usr.name] ([usr.ckey])</font>"
 				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Attempted to remove [name]'s ([ckey]) accessory ([A])</font>"
 
