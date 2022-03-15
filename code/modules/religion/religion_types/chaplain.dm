@@ -78,6 +78,11 @@
 	bible_type = /obj/item/weapon/storage/bible
 	religious_tool_type = /obj/item/weapon/nullrod
 
+	binding_rites = list(
+		/datum/religion_rites/standing/consent/invite,
+		/datum/religion_rites/instant/communicate,
+	)
+
 	style_text = "piety"
 	symbol_icon_state = "nimbus"
 
