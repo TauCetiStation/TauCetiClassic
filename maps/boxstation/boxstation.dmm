@@ -10418,6 +10418,20 @@
 "arx" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
+"ary" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/book/manual/wiki/sop{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/weapon/lighter/zippo{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/security/iaa_office)
 "arz" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/brown,
@@ -12647,9 +12661,6 @@
 	pixel_x = 22
 	},
 /obj/structure/dumbbells_rack,
-/obj/structure/sign/poster/official/obey{
-	pixel_y = -32
-	},
 /turf/simulated/floor{
 	icon_state = "black"
 	},
@@ -13283,6 +13294,10 @@
 	pixel_x = -7;
 	pixel_y = -13
 	},
+/obj/item/device/flashlight/lamp{
+	pixel_x = -4;
+	pixel_y = 15
+	},
 /obj/item/device/camera{
 	pixel_x = -5
 	},
@@ -13630,13 +13645,13 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/item/weapon/book/manual/wiki/sop{
-	pixel_x = 4;
-	pixel_y = 6
-	},
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco{
 	pixel_x = -11;
 	pixel_y = 1
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 20
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -13769,20 +13784,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aym" = (
-/obj/structure/closet/lawcloset,
-/obj/item/clothing/shoes/laceup,
-/obj/item/clothing/shoes/leather,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/clothing/under/rank/centcom/representative,
-/obj/item/clothing/under/suit_jacket/burgundy,
-/obj/item/clothing/under/suit_jacket/navy,
-/obj/item/clothing/under/suit_jacket/charcoal,
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/obj/item/clothing/suit/dutch,
+/obj/structure/closet/secure_closet/iaa,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -14509,14 +14517,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "azD" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 20
-	},
-/obj/structure/filingcabinet/chestdrawer/black,
 /obj/machinery/camera{
 	c_tag = "Internal Affairs"
 	},
+/obj/item/weapon/flora/pottedplant/tropicalfern,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -14593,10 +14597,10 @@
 	},
 /area/station/civilian/gym)
 "azJ" = (
-/obj/item/weapon/flora/pottedplant/tropicalfern,
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
+/obj/structure/closet/secure_closet/iaa,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -43853,18 +43857,13 @@
 	},
 /area/station/bridge)
 "bAF" = (
-/obj/structure/table/reinforced,
-/obj/machinery/faxmachine{
-	department = "Internal Affairs";
-	pixel_y = 3
-	},
-/obj/item/weapon/hand_labeler{
-	pixel_y = -8
+/obj/structure/sign/poster/official/obey{
+	pixel_y = -32
 	},
 /turf/simulated/floor{
-	icon_state = "darkbluefull"
+	icon_state = "black"
 	},
-/area/station/security/iaa_office)
+/area/station/security/prison)
 "bAG" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -44294,28 +44293,16 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/office)
 "bBw" = (
-/obj/item/device/flashlight/lamp{
-	layer = 4.1;
-	pixel_x = -4;
-	pixel_y = 15
+/obj/structure/table/reinforced,
+/obj/machinery/faxmachine{
+	department = "Internal Affairs"
 	},
-/obj/item/ashtray/plastic{
-	pixel_x = 5;
-	pixel_y = -1
+/obj/item/weapon/hand_labeler{
+	pixel_y = -8
 	},
-/obj/structure/table/woodentable,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/turf/simulated/floor{
+	icon_state = "darkbluefull"
 	},
-/obj/item/clothing/mask/cigarette/cigar/cohiba{
-	pixel_x = -7;
-	pixel_y = -5
-	},
-/obj/item/clothing/head/beret/spacepolice{
-	pixel_x = 5;
-	pixel_y = -10
-	},
-/turf/simulated/floor/carpet/black,
 /area/station/security/iaa_office)
 "bBx" = (
 /obj/machinery/light/small{
@@ -47544,14 +47531,24 @@
 	},
 /area/station/civilian/chapel/office)
 "bHl" = (
-/obj/structure/sign/poster/official/random{
-	pixel_x = -32
+/obj/item/ashtray/plastic{
+	pixel_x = 5;
+	pixel_y = -1
 	},
-/obj/item/weapon/flora/pottedplant/ficus,
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "darkblue"
+/obj/structure/table/woodentable,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
+/obj/item/clothing/mask/cigarette/cigar/cohiba{
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/obj/item/weapon/flora/deskferntrim{
+	icon_state = "plant-34-alternative";
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/turf/simulated/floor/carpet/black,
 /area/station/security/iaa_office)
 "bHm" = (
 /obj/machinery/light_switch{
@@ -47571,13 +47568,12 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
 "bHo" = (
-/obj/machinery/photocopier,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
+/obj/structure/sign/poster/official/random{
+	pixel_x = -32
 	},
-/obj/machinery/light/small,
+/obj/structure/filingcabinet/chestdrawer/black,
 /turf/simulated/floor{
+	dir = 10;
 	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
@@ -49830,16 +49826,12 @@
 	},
 /area/station/security/prison)
 "bLy" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/flora/deskferntrim{
-	icon_state = "plant-34-alternative";
-	pixel_x = -8;
-	pixel_y = 10
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
 	},
-/obj/item/weapon/lighter/zippo{
-	pixel_x = 5;
-	pixel_y = 3
-	},
+/obj/machinery/light/small,
+/obj/machinery/photocopier,
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
@@ -112652,7 +112644,7 @@ aNo
 axN
 axN
 axN
-bAF
+bBw
 bFP
 axN
 axN
@@ -112911,7 +112903,7 @@ axo
 bhX
 bzC
 bzC
-bHl
+bHo
 axN
 alZ
 aYi
@@ -113168,7 +113160,7 @@ axw
 bAD
 bBC
 biL
-bHo
+bLy
 axN
 alZ
 bNg
@@ -113676,13 +113668,13 @@ ffD
 arl
 yjk
 auS
-aNo
+bAF
 axN
 azD
 bjH
-bBw
+bHl
 bFU
-bLy
+ary
 axN
 alZ
 aYi

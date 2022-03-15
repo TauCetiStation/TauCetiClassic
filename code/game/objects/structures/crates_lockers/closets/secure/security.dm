@@ -37,6 +37,36 @@
 		new /obj/item/clothing/head/santa(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 
+/obj/structure/closet/secure_closet/iaa
+	name = "Internal Affairs Agent's Locker"
+	req_access = list(access_lawyer)
+	icon_state = "iaasecure1"
+	icon_closed = "iaasecure"
+	icon_locked = "iaasecure1"
+	icon_opened = "iaasecureopen"
+	icon_broken = "iaasecurebroken"
+	icon_off = "iaasecureoff"
+
+/obj/structure/closet/secure_closet/iaa/PopulateContents()
+	new /obj/item/weapon/storage/backpack/satchel(src)
+	new /obj/item/clothing/under/suit_jacket/burgundy(src)
+	new /obj/item/clothing/under/suit_jacket/charcoal(src)
+	new /obj/item/clothing/under/rank/centcom/representative(src)
+	new /obj/item/clothing/under/suit_jacket/navy(src)
+	new /obj/item/clothing/shoes/leather(src)
+	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/under/lawyer/female(src)
+	new /obj/item/clothing/under/lawyer/black(src)
+	new /obj/item/clothing/under/lawyer/red(src)
+	new /obj/item/clothing/under/lawyer/bluesuit(src)
+	new /obj/item/clothing/suit/storage/lawyer/bluejacket(src)
+	new /obj/item/clothing/under/lawyer/purpsuit(src)
+	new /obj/item/clothing/suit/storage/lawyer/purpjacket(src)
+	new /obj/item/clothing/shoes/brown(src)
+	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/weapon/storage/briefcase/centcomm(src)
+	new /obj/item/clothing/suit/armor/vest(src)
+
 /obj/structure/closet/secure_closet/hop
 	name = "Head of Personnel's Locker"
 	req_access = list(access_hop)
