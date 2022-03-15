@@ -264,6 +264,11 @@
 /datum/species/proc/on_life(mob/living/carbon/human/H)
 	return
 
+// For species who's skin acts as a spacesuit of sorts
+// Return a value from 0 to 1, where 1 is full protection, and 0 is full weakness
+/datum/species/proc/get_pressure_protection(mob/living/carbon/human/H)
+	return 0
+
 /datum/species/human
 	name = HUMAN
 	language = LANGUAGE_SOLCOMMON
@@ -476,9 +481,6 @@
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	dietflags = DIET_OMNI
 
-	warning_low_pressure = 50
-	hazard_low_pressure = 0
-
 	cold_level_1 = 80
 	cold_level_2 = 50
 	cold_level_3 = 0
@@ -528,14 +530,12 @@
 		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi'
 		)
 
-	survival_kit_items = list(/obj/item/weapon/tank/emergency_nitrogen,
-							/obj/item/clothing/mask/gas/vox,
-							/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
-							/obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox
-	                          )
+	survival_kit_items = list(
+		/obj/item/weapon/tank/emergency_nitrogen,
+		/obj/item/weapon/reagent_containers/syringe/nutriment,
+	)
 
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
-
 
 	min_age = 1
 	max_age = 100
@@ -545,30 +545,14 @@
 /datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
-	replace_outfit = list(
-			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/magboots/vox
-			)
-
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
+
 	if(H.wear_mask)
 		qdel(H.wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
-	if(!H.r_store)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_R_STORE)
-		H.internal = H.r_store
-	else if(!H.l_store)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_L_STORE)
-		H.internal = H.l_store
-	else if(!H.r_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_R_HAND)
-		H.internal = H.r_hand
-	else if(!H.l_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_L_HAND)
-		H.internal = H.l_hand
-	if(H.shoes)
-		qdel(H.shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox(src), SLOT_SHOES)
+
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_vox_digest(M)
@@ -604,6 +588,22 @@
 		H.verbs -= /mob/living/carbon/human/proc/gut
 
 	..()
+
+// At 25 damage - no protection at all.
+/datum/species/vox/get_pressure_protection(mob/living/carbon/human/H)
+	var/damage = 0
+	var/static/list/cavity_parts = list(BP_HEAD, BP_CHEST, BP_GROIN)
+	for(var/bodypart in cavity_parts)
+		var/obj/item/organ/external/BP = H.get_bodypart(bodypart)
+		if(!BP)
+			// We surely are not hermetized.
+			damage += 100
+			continue
+
+		damage += BP.brute_dam + BP.burn_dam
+
+	return 1 - CLAMP01(damage / 25)
+
 
 /datum/species/vox/armalis
 	name = VOX_ARMALIS
