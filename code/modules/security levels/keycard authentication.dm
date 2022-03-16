@@ -96,6 +96,7 @@
 	if(busy)
 		to_chat(usr, "This device is busy.")
 		return
+
 	if(href_list["triggerevent"])
 		event = href_list["triggerevent"]
 		screen = 2

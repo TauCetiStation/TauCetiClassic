@@ -62,7 +62,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	if(href_list["inject1"])
 		var/obj/item/weapon/implant/I = locate(href_list["inject1"])
 		if(I)	I.activate(1)

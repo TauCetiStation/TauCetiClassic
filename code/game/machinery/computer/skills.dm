@@ -162,7 +162,6 @@ What a mess.*/
 
 	if (!( data_core.general.Find(active1) ))
 		active1 = null
-
 	switch(href_list["choice"])
 		// SORTING!
 		if("Sorting")

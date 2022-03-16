@@ -88,7 +88,8 @@
 	var/list/contents = get_surroundings(user)
 	if(check_contents(R, contents))
 		if(check_tools(user, R, contents))
-			if(do_after(user, R.time, target = user))
+			var/required_time = apply_skill_bonus(user, R.time, list(R.required_proficiency), penalty = 0.5, bonus = 0.4)
+			if(do_after(user, required_time, target = user))
 				contents = get_surroundings(user)
 				if(!check_contents(R, contents))
 					return ", missing component."
