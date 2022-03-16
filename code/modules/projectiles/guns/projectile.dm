@@ -127,9 +127,9 @@
 	return ..()
 
 /obj/item/weapon/gun/projectile/attackby(obj/item/I, mob/user, params)
-	. = ..()
-	if(istype(I, /obj/item/ammo_box/magazine))
+	if(istype(I, /obj/item/ammo_box/magazine) && magazine)
 		tactical_reload(I, user)
+		return
 	return ..()
 
 /obj/item/weapon/gun/projectile/proc/tactical_reload(obj/item/ammo_box/magazine/new_magazine, mob/living/user)
