@@ -157,8 +157,12 @@
 	if (building_time)
 		if(usr.is_busy())
 			return
-		to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
-		if (!do_skilled(usr, usr, R.time, R.required_skills, 1, 0.4))
+		if(building_time)
+			if(building_time > R.time)
+				to_chat(usr,"<span class='notice'>You fumble around figuring out how to build \a [R.title].</span>")
+			else
+				to_chat(usr,"<span class='notice'>You start building \a [R.title]...</span>")
+		if (!do_after(usr, building_time, target = usr))
 			return
 	if(!use(R.req_amount*multiplier))
 		return
@@ -345,9 +349,9 @@
 	var/time = 0
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
-	var/required_skills
+	var/skill_req = FALSE
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, required_skills = null)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, skill_req = FALSE)
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
@@ -356,7 +360,7 @@
 	src.time = time
 	src.one_per_turf = one_per_turf
 	src.on_floor = on_floor
-	src.required_skills = required_skills
+	src.skill_req = skill_req
 
 /*
  * Recipe list datum

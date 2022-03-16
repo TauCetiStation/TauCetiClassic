@@ -12,6 +12,7 @@
 		/datum/skill/police/trained,
 	)
 
+
 /datum/skillset/doctor
 	initial_skills = list(
 		/datum/skill/medical/expert,
@@ -23,13 +24,12 @@
 /datum/skillset/doctor/surgeon
 	initial_skills = list(
 		/datum/skill/surgery/master,
-		/datum/skill/medical/pro,
-		/datum/skill/chemistry/novice
+		/datum/skill/medical/expert
 	)
 
 /datum/skillset/doctor/nurse
 	initial_skills = list(
-		/datum/skill/surgery/trained,
+		/datum/skill/surgery/pro,
 		/datum/skill/medical/master,
 		/datum/skill/chemistry/novice
 	)

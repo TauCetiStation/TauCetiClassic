@@ -28,8 +28,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Ratchet.ogg'
 	var/random_color = TRUE
-
-	required_skills = list(/datum/skill/engineering/trained)
+	skill_checks = list(/datum/skill/engineering/trained)
 
 /obj/item/weapon/wrench/atom_init(mapload, param_color)
 	. = ..()
@@ -86,7 +85,7 @@
 
 	var/random_color = TRUE
 
-	required_skills = list(/datum/skill/engineering/trained)
+	skill_checks = list(/datum/skill/engineering/trained)
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
@@ -150,8 +149,7 @@
 	edge = 1
 	usesound = 'sound/items/Wirecutter.ogg'
 	var/random_color = TRUE
-
-	required_skills = list(/datum/skill/engineering/trained)
+	skill_checks = list(/datum/skill/engineering/trained)
 
 /obj/item/weapon/wirecutters/atom_init(mapload, param_color)
 	. = ..()
@@ -227,7 +225,7 @@
 	var/max_fuel = 20           // The max amount of fuel the welder can hold
 	var/image/welding_sparks    // Welding overlay for targets
 
-	required_skills = list(/datum/skill/engineering/trained)
+	skill_checks = list(/datum/skill/engineering/trained)
 
 /obj/item/weapon/weldingtool/atom_init()
 	. = ..()
@@ -353,11 +351,11 @@
 /obj/item/weapon/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount("fuel")
 
-/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills_override)
+/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills)
 	target.add_overlay(welding_sparks)
 	INVOKE_ASYNC(src, .proc/start_welding, target)
 	var/datum/callback/checks  = CALLBACK(src, .proc/check_active_and_extra, extra_checks)
-	. = ..(target, user, delay, amount, volume, extra_checks = checks, required_skills_override = required_skills_override)
+	. = ..(target, user, delay, amount, volume, extra_checks = checks, required_skills = required_skills)
 	stop_welding()
 	target.cut_overlay(welding_sparks)
 
@@ -561,8 +559,7 @@
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Crowbar.ogg'
-
-	required_skills = list(/datum/skill/engineering/trained)
+	skill_checks = list(/datum/skill/engineering/trained)
 
 	qualities = list(
 		QUALITY_PRYING = 1

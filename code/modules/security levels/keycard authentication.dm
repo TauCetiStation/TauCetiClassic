@@ -97,6 +97,7 @@
 		to_chat(usr, "This device is busy.")
 		return
 
+
 	if(href_list["triggerevent"])
 		event = href_list["triggerevent"]
 		screen = 2
@@ -104,6 +105,7 @@
 		reset()
 
 	updateUsrDialog()
+
 
 /obj/machinery/keycard_auth/proc/reset()
 	active = 0
