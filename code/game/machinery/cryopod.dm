@@ -223,8 +223,8 @@ var/global/list/frozen_items = list()
 			if(occupant && occupant.mind)
 				var/job = occupant.mind.assigned_role
 				SSjob.FreeRole(job)
-
-				SSStatistics.add_leave_stat(occupant.mind, "Cryopod")
+				if(occupant.ckey)
+					SSStatistics.add_leave_stat(occupant.mind, "Cryopod")
 
 			// Delete them from datacore.
 

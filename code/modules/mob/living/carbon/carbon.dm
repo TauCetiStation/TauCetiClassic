@@ -34,8 +34,7 @@
 			bodytemperature += affecting_temp / BODYTEMP_HEAT_DIVISOR
 		else if (affecting_temp < -BODYTEMP_SIGNIFICANT_CHANGE)
 			bodytemperature += affecting_temp / BODYTEMP_COLD_DIVISOR
-		else
-			bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
+		bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
 
 	if(flags & GODMODE)
 		clear_alert("temp")
@@ -45,12 +44,12 @@
 	switch(bodytemperature)
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
 			throw_alert("temp", /atom/movable/screen/alert/hot, 2)
-			adjustFireLoss(HEAT_DAMAGE_LEVEL_3)
+			adjustFireLoss(HEAT_DAMAGE_LEVEL_2)
 		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_HEAT_DAMAGE_LIMIT)
 			clear_alert("temp")
 		else
 			throw_alert("temp", /atom/movable/screen/alert/cold, 2)
-			adjustFireLoss(COLD_DAMAGE_LEVEL_3)
+			adjustFireLoss(COLD_DAMAGE_LEVEL_2)
 
 	//Account for massive pressure differences
 	switch(adjusted_pressure)

@@ -120,6 +120,7 @@
 				pressure_adjustment_coefficient = pressure_loss
 
 	pressure_adjustment_coefficient = CLAMP01(pressure_adjustment_coefficient) //So it isn't less than 0 or larger than 1.
+	pressure_adjustment_coefficient *= 1 - species.get_pressure_protection(src)
 
 	return 1 - pressure_adjustment_coefficient	//want 0 to be bad protection, 1 to be good protection
 
@@ -454,7 +455,7 @@
 			inhaled_gas_used = inhaling * ratio * BREATH_USED_PART
 		else
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		
+
 		failed_last_breath = 1
 		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 
@@ -525,13 +526,13 @@
 	//handle_temperature_effects(breath)
 
 	// Hot air hurts :(
-	if(breath.temperature < species.cold_level_1 || breath.temperature > species.heat_level_1)
+	if(breath.temperature < species.breath_cold_level_1 || breath.temperature > species.heat_level_1)
 		switch(breath.temperature)
-			if(-INFINITY to species.cold_level_3)
+			if(-INFINITY to species.breath_cold_level_3)
 				apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-			if(species.cold_level_3 to species.cold_level_2)
+			if(species.breath_cold_level_3 to species.breath_cold_level_2)
 				apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-			if(species.cold_level_2 to species.cold_level_1)
+			if(species.breath_cold_level_2 to species.breath_cold_level_1)
 				apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Cold")
 			if(species.heat_level_1 to species.heat_level_2)
 				apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Heat")
@@ -1285,9 +1286,6 @@
 				get_nutrition_max = NUTRITION_LEVEL_FAT
 			full_perc = clamp(((get_nutrition() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
 			nutrition_icon.icon_state = "[fullness_icon][CEILING(full_perc, 20)]"
-
-		if(pressure)
-			pressure.icon_state = "pressure[pressure_alert]"
 
 		//OH cmon...
 		var/nearsighted = 0
