@@ -119,12 +119,9 @@
 			return
 
 	//parse the language code and consume it or use default racial language if forced.
-	var/datum/language/speaking = parse_language(message)
-	var/has_lang_prefix = !!speaking
-	if(!has_lang_prefix && HAS_TRAIT(src, TRAIT_MUTE))
-		var/datum/language/USL = all_languages[LANGUAGE_USL]
-		if(can_speak(USL))
-			speaking = USL
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
 
 	//check if we're muted and not using gestures
 	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
@@ -138,14 +135,6 @@
 		if (!(LH && LH.is_usable() && RH && RH.is_usable()))
 			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
 			return
-
-	if (has_lang_prefix)
-		message = copytext(message,2+length_char(speaking.key))
-		if(!message)
-			return
-
-	else
-		speaking = get_language()
 
 	message = approximate_sounds(message, speaking)
 	if(!message)
@@ -195,7 +184,7 @@
 			verb = "asks"
 
 	if(speech_problem_flag)
-		var/list/handle_r = handle_speech_problems(message, message_mode)
+		var/list/handle_r = handle_speech_problems(message, message_mode, verb)
 		//var/list/handle_r = handle_speech_problems(message)
 		message = handle_r[1]
 		verb = handle_r[2]
@@ -389,9 +378,8 @@
 
 
 //mob/living/carbon/human/proc/handle_speech_problems(message)
-/mob/living/carbon/human/proc/handle_speech_problems(message, message_mode)
+/mob/living/carbon/human/proc/handle_speech_problems(message, message_mode, verb)
 	var/list/returns[5]
-	var/verb = "says"
 	var/handled = 0
 	var/sound/speech_sound = null
 	var/sound_vol = 50

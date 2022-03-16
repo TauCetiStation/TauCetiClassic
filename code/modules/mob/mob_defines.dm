@@ -267,7 +267,12 @@
 	var/obj/effect/overlay/typing_indicator/typing_indicator
 	var/typing_indicator_type = "default"
 
+	// Language that a mob is forced to speak instead of the Common one.
+	var/common_language
+	// Language that a mob is forced to speak and cannot choose any other one.
 	var/forced_language
+	// Language that is used by default whenever there's no language chosen.
+	var/default_language
 
 	// Some sounds that this mob can't emit, only approximate.
 	var/list/sound_approximations

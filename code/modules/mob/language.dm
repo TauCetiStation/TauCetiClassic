@@ -31,6 +31,25 @@
 	// What species can speak(and thus understand). Is used in loadout language choosing.
 	var/list/allowed_speak
 
+/datum/language/Topic(href, href_list)
+	var/mob/M = locate(href_list["usr"])
+	if(!istype(M))
+		return
+
+	if(M.languages[src] != LANGUAGE_CAN_SPEAK)
+		return
+
+	if(M.default_language == name)
+		// Please make Galactic Common a language one day? ~Luduk
+		to_chat(M, "<span class='notice'>Now speaking in Galactic Common by default.</span>")
+		M.default_language = null
+		M.check_languages()
+		return
+
+	to_chat(M, "<span class='notice'>Now speaking in [name] by default.</span>")
+	M.default_language = name
+	M.check_languages()
+
 /datum/language/proc/color_message(message)
 	return "<span class='message'><span class='[colour]'>[capitalize(message)]</span></span>"
 
@@ -398,6 +417,9 @@
 	for(var/sound in L.special_symbols)
 		remove_approximation(sound)
 
+	if(default_language == L.name)
+		default_language = null
+
 	return 0
 
 /mob/proc/can_understand(datum/language/speaking)
@@ -422,6 +444,7 @@
 	var/dat = ""
 
 	for(var/datum/language/L in languages)
+<<<<<<< HEAD
 		dat += "<b>[L.name] "
 		var/sound_macros = ""
 		var/first_macro = TRUE
@@ -436,15 +459,24 @@
 			dat += "(:[l_key])"
 		if(sound_macros != "")
 			dat += " ([sound_macros])"
+=======
+		var/lang_name = L.name
+		var/link_class = ""
+		if(L.name == default_language)
+			link_class = "class='good'"
+
+		dat += "<b><a href='?src=\ref[L];usr=\ref[src]'[link_class]>[lang_name]</a> "
+		for(var/l_key in L.key)
+			dat += "(:[l_key])"
+
+>>>>>>> 443db1de4d2d41f730906ad2d145b0145a4f62d4
 		var/remark = ""
 		if(languages[L] == LANGUAGE_CAN_UNDERSTAND)
-			remark = " <i>(can't speak)</i>"
+			remark += " <i>(can't speak)</i>"
 		dat += " </b><br/>[L.desc][remark]<br/><br/>"
 
 	var/datum/browser/popup = new(src, "checklanguage", "Known Languages")
 	popup.set_content(dat)
 	popup.open()
-
-	return
 
 #undef MESSAGE_LIMIT
