@@ -10882,19 +10882,17 @@
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "asm" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken3"
-	},
-/area/station/civilian/library)
-"asn" = (
-/obj/random/vending/cola,
-/obj/effect/decal/cleanable/cobweb2,
-/obj/structure/sign/poster/random{
-	pixel_x = 32
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/simulated/floor/wood,
+/area/station/civilian/library)
+"asn" = (
+/obj/structure/bookcase/manuals/medical,
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken7"
+	},
 /area/station/civilian/library)
 "aso" = (
 /obj/item/device/radio/intercom{
@@ -18059,8 +18057,11 @@
 	},
 /area/station/ai_monitored/eva)
 "aGc" = (
-/obj/structure/stool/bed/chair/comfy/black,
-/turf/simulated/floor/carpet,
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/box/cups{
+	pixel_y = 4
+	},
+/turf/simulated/floor/wood,
 /area/station/civilian/library)
 "aGd" = (
 /obj/structure/stool/bed/chair/metal{
@@ -23513,13 +23514,7 @@
 	},
 /area/station/civilian/playroom)
 "aQi" = (
-/obj/structure/table/woodentable,
-/obj/random/misc/book,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -32
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "aQj" = (
@@ -24676,18 +24671,13 @@
 	},
 /area/station/gateway)
 "aSo" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/structure/reagent_dispensers/water_cooler,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken6"
-	},
+/obj/structure/table/woodentable,
+/obj/random/misc/book,
+/turf/simulated/floor/wood,
 /area/station/civilian/library)
 "aSp" = (
 /turf/simulated/floor/carpet,
@@ -24726,17 +24716,15 @@
 	},
 /area/station/storage/primary)
 "aSs" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/snacks/chocolatebar{
-	pixel_x = 5;
-	pixel_y = 7
+/obj/effect/decal/cleanable/dirt,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
 	},
-/obj/item/weapon/reagent_containers/food/drinks/tea{
-	pixel_x = -9
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken7"
-	},
+/turf/simulated/floor/wood,
 /area/station/civilian/library)
 "aSt" = (
 /obj/structure/table,
@@ -47873,9 +47861,8 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/barbershop)
 "bHv" = (
-/obj/machinery/vending/donut,
 /turf/simulated/floor/wood{
-	icon_state = "wood-broken"
+	icon_state = "wood-broken7"
 	},
 /area/station/civilian/library)
 "bHw" = (
@@ -51335,6 +51322,18 @@
 	icon_state = "loadingarea"
 	},
 /area/station/hallway/primary/starboard)
+"bNG" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen{
+	pixel_y = 6
+	},
+/turf/simulated/floor{
+	icon_state = "cult"
+	},
+/area/station/civilian/library)
 "bNH" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
@@ -51378,6 +51377,16 @@
 	},
 /turf/simulated/floor,
 /area/station/civilian/janitor)
+"bNL" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/random{
+	pixel_x = 32
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/station/civilian/library)
 "bNM" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -51418,6 +51427,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"bNQ" = (
+/obj/random/vending/cola,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor/wood,
+/area/station/civilian/library)
 "bNR" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita,
@@ -55631,17 +55645,12 @@
 /turf/simulated/wall,
 /area/station/engineering/monitoring)
 "bYr" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/paper_bin{
-	pixel_y = 4
+/obj/machinery/photocopier,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
 	},
-/obj/item/weapon/pen{
-	pixel_y = 6
-	},
-/obj/effect/decal/cleanable/cobweb2,
-/turf/simulated/floor{
-	icon_state = "cult"
-	},
+/turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bYu" = (
 /obj/machinery/computer/general_air_control/large_tank_control{
@@ -55754,14 +55763,14 @@
 	eftpos_name = "Library EFTPOS scanner"
 	},
 /obj/item/device/taperecorder,
-/obj/effect/decal/cleanable/cobweb,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
 /obj/item/clothing/shoes/leather,
-/obj/item/clothing/suit/dutch,
+/obj/item/clothing/suit/wcoat,
 /obj/item/clothing/head/beret/black,
+/obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -65029,7 +65038,6 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "czO" = (
-/obj/item/weapon/flora/random,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -65592,6 +65600,9 @@
 	},
 /obj/structure/bookcase{
 	name = "bookcase (Non-Fiction)"
+	},
+/obj/machinery/light/small{
+	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
@@ -67902,8 +67913,15 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "cIu" = (
-/obj/structure/bookcase/manuals/medical,
-/turf/simulated/floor/wood,
+/obj/structure/table/woodentable,
+/obj/effect/decal/cleanable/cobweb2,
+/obj/item/weapon/flora/deskleaf{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/turf/simulated/floor{
+	icon_state = "cult"
+	},
 /area/station/civilian/library)
 "cIz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -67919,20 +67937,11 @@
 	},
 /area/station/civilian/chapel/mass_driver)
 "cIA" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
+/obj/structure/closet/emcloset,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/cups{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/weapon/newspaper{
-	pixel_x = 11
-	},
-/turf/simulated/floor/wood,
-/area/station/civilian/library)
+/area/station/maintenance/medbay)
 "cIB" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
@@ -71722,7 +71731,7 @@
 /turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "fRZ" = (
-/obj/machinery/photocopier,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "fSb" = (
@@ -129846,8 +129855,8 @@ hrb
 aKs
 aKs
 aKs
-aKs
-cFs
+cIA
+cak
 cGP
 bsA
 rBb
@@ -130102,9 +130111,9 @@ fPM
 aSq
 cBk
 aSo
-cIu
 aKs
 cLy
+cak
 bhA
 aKs
 aKs
@@ -130358,15 +130367,15 @@ ecb
 aSp
 iTb
 aVk
-ecb
-cIA
+aSs
+aKs
 aKs
 aKs
 bhD
 aKs
 asq
 auU
-bHv
+eeb
 aKs
 bFo
 bFo
@@ -130609,14 +130618,14 @@ bPE
 bSy
 bWk
 jab
-ciD
 dZb
+ciD
 bYl
 bYl
 iWb
 cBl
-aGc
-aQi
+bHv
+asn
 aKs
 baH
 cJF
@@ -130866,14 +130875,14 @@ bPu
 bMv
 cjY
 coN
-aLQ
 czO
+coQ
 aVj
 fRZ
 hxb
-cBM
-aHI
-aSs
+aQi
+asm
+bYr
 aKs
 bYe
 cLD
@@ -131126,7 +131135,7 @@ aKs
 cbT
 unb
 edb
-coQ
+aGc
 hyb
 arG
 awi
@@ -131648,7 +131657,7 @@ cID
 aKs
 cLC
 arq
-asm
+bNL
 cBM
 aLQ
 aBR
@@ -131905,8 +131914,8 @@ aXN
 aKs
 aKs
 aKs
-asn
-eeb
+aKs
+bNQ
 avY
 aKs
 aKs
@@ -132161,7 +132170,7 @@ cGO
 aXP
 ato
 ccq
-aKs
+bNG
 aKs
 aKs
 aKs
@@ -132674,7 +132683,7 @@ cjY
 cjs
 aKs
 aKs
-bYr
+cIu
 arA
 aKs
 bNp
