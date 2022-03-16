@@ -155,7 +155,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 		set_light(3, 1)
 
 	for(var/mob/living/L in loc)
-		L.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure())  //Burn the mobs!
+		L.FireBurn(firelevel, air_contents.temperature, air_contents.total_moles / MOLES_CELLSTANDARD)  //Burn the mobs!
 
 	loc.fire_act(air_contents, air_contents.temperature, air_contents.volume)
 	for(var/atom/A in loc)
@@ -400,12 +400,12 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	return max(0, firelevel)
 
 
-/mob/living/proc/FireBurn(firelevel, last_temperature, pressure)
-	var/mx = 5 * firelevel / vsc.fire_firelevel_multiplier * min(pressure / ONE_ATMOSPHERE, 1)
+/mob/living/proc/FireBurn(firelevel, last_temperature, air_multiplier)
+	var/mx = 5 * firelevel / vsc.fire_firelevel_multiplier * air_multiplier
 	apply_damage(2.5 * mx, BURN)
 
 
-/mob/living/carbon/human/FireBurn(firelevel, last_temperature, pressure)
+/mob/living/carbon/human/FireBurn(firelevel, last_temperature, air_multiplier)
 	//Burns mobs due to fire. Respects heat transfer coefficients on various body parts.
 	//Due to TG reworking how fireprotection works, this is kinda less meaningful.
 
@@ -432,8 +432,8 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 				legs_exposure = 0
 			if(C.body_parts_covered & ARMS)
 				arms_exposure = 0
-	//minimize this for low-pressure enviroments
-	var/mx = 5 * firelevel/vsc.fire_firelevel_multiplier * min(pressure / ONE_ATMOSPHERE, 1)
+
+	var/mx = 5 * firelevel/vsc.fire_firelevel_multiplier * air_multiplier
 
 	//Always check these damage procs first if fire damage isn't working. They're probably what's wrong.
 

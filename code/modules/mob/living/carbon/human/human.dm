@@ -734,9 +734,9 @@
 					visible_message("<span class='danger'>[usr] tears off \the [A] from [src]'s [S]!</span>")
 				else
 					visible_message("<span class='danger'>[usr] removed \the [A] from [src]'s [S]!</span>")
-				A.on_removed(usr)
-				S.accessories -= A
-				update_inv_w_uniform()
+
+				S.remove_accessory(usr, A)
+
 				attack_log += "\[[time_stamp()]\] <font color='orange'>Had their accessory ([A]) removed by [usr.name] ([usr.ckey])</font>"
 				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Attempted to remove [name]'s ([ckey]) accessory ([A])</font>"
 
@@ -1379,6 +1379,7 @@
 		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [get_pulse(GETPULSE_HAND)].</span>")
 
 /mob/living/carbon/human/proc/set_species(new_species, force_organs = TRUE, default_colour = FALSE)
+	var/datum/species/old_species = species
 
 	if(!new_species)
 		if(dna.species)
@@ -1402,9 +1403,11 @@
 		if(client?.prefs.language)
 			remove_language(client.prefs.language)
 
-		species.on_loose(src, new_species)
-
 	species = all_species[new_species]
+
+	if(old_species)
+		old_species.on_loose(src, new_species)
+
 	maxHealth = species.total_health
 
 	if(species.base_color && default_colour)

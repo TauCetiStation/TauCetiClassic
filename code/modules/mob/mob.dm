@@ -20,6 +20,9 @@
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 
+	// I dont known how
+	global.player_list -= src
+
 	if(mind)
 		if(mind.current == src)
 			mind.set_current(null)
@@ -312,6 +315,7 @@
 	face_atom(A)
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
+	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
 
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
@@ -399,6 +403,9 @@
 		log_game("[key_name(usr)] AM failed due to disconnect.")
 		qdel(M)
 		return
+
+	// New life, new quality.
+	client.prefs.have_quality = FALSE
 
 	M.key = key
 //	M.Login()	//wat
