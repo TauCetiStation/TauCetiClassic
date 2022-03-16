@@ -35,7 +35,7 @@
 	icon_state = "podkid1"
 	race = PODMAN
 	holder_type = /obj/item/weapon/holder/diona/podkid
-	var/spawner_type = /datum/spawner/podkid
+	var/spawner_type = /datum/spawner/podman/podkid
 	var/spawner_id = "podkid"
 
 /mob/living/carbon/monkey/diona/podman/atom_init()
@@ -51,14 +51,14 @@
 
 	if(can_reenter_corpse)
 		return
-	create_spawner(spawner_type, spawner_id, src)
+	create_spawner(spawner_type, spawner_id, src, mind.memory)
 
 /mob/living/carbon/monkey/diona/podman/fake
 	name = "diona nymph"
 	voice_name = "diona nymph"
 	icon_state = "nymph1"
 	holder_type = /obj/item/weapon/holder/diona
-	spawner_type = /datum/spawner/fake_diona
+	spawner_type = /datum/spawner/podman/fake_diona
 	spawner_id = "nymph"
 
 /mob/living/carbon/monkey/diona/atom_init()
@@ -303,7 +303,7 @@
 		mind.transfer_to(adult)
 
 	for (var/obj/item/W in contents)
-		drop_from_inventory(W)
+		drop_from_inventory(W, loc)
 	qdel(src)
 
 /mob/living/carbon/monkey/diona/verb/evolve()
