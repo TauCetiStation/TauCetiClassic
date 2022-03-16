@@ -53,6 +53,17 @@ SUBSYSTEM_DEF(job)
 		SetupOccupations()
 	return name_occupations[rank]
 
+/datum/controller/subsystem/job/proc/GetJobByAltTitle(rank)
+	if(!occupations.len)
+		SetupOccupations()
+	for(var/job_name in name_occupations)
+		var/datum/job/J = name_occupations[job_name]
+		if(!J.alt_titles)
+			continue
+		if(rank in J.alt_titles)
+			return J
+	return null
+
 /datum/controller/subsystem/job/proc/GetJobType(jobtype)
 	if(!occupations.len)
 		SetupOccupations()
