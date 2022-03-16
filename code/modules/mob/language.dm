@@ -36,7 +36,8 @@
 	if(!istype(M))
 		return
 
-	if(M.languages[src] != LANGUAGE_CAN_SPEAK)
+	// Can't speak and not native.
+	if(M.languages[src] == LANGUAGE_CAN_UNDERSTAND)
 		return
 
 	if(M.default_language == name)
