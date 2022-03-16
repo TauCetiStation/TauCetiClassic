@@ -636,11 +636,7 @@
 	desc = "Отправляет телепатическое сообщение всем членам религии!"
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Услышь меня!!!"
-	favor_cost = 100
-
-	needed_aspects = list(
-		ASPECT_HERD = 1,
-	)
+	favor_cost = 50
 
 /datum/religion_rites/instant/communicate/invoke_effect(mob/living/user, obj/AOG)
 	..()
