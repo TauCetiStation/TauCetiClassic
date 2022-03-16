@@ -168,6 +168,8 @@
 		harvesting.has_resources = 0
 		harvesting.resources = null
 		resource_field -= harvesting
+		if(resource_field.len <= 0)
+			break
 		harvesting = pick(resource_field)
 
 	if(!harvesting)
