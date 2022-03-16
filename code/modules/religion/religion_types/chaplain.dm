@@ -33,7 +33,7 @@
 	)
 
 	// Is required to have a "Default" as a fallback.
-	pews_info_by_name = list(
+	emblem_info_by_name = list(
 		"Default" = "general",
 		"Christianity" = "christianity",
 		"Satanism" = "dead",

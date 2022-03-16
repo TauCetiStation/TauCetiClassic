@@ -393,10 +393,13 @@
 	if(stat == DEAD)
 		return say_dead(message)
 
-	var/datum/language/speaking = parse_language(message)
+	var/ending = copytext(message, -1)
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
+
 	if(speaking)
-		verb = speaking.speech_verb
-		message = trim(copytext_char(message,2+length_char(speaking.key)))
+		verb = speaking.get_spoken_verb(ending)
 
 	if(!message || stat)
 		return
