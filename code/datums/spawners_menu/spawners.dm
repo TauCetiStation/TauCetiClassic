@@ -540,70 +540,36 @@ var/global/list/datum/spawners_cooldown = list()
 	podman.key = ghost.key
 	podman.mind.memory = replicant_memory
 
-	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
-	msg += "<B>You are now in possession of Podmen's body. It's previous owner found it no longer appealing, by rejecting it - they brought you here. You are now, again, an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
-	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
-	to_chat(podman, msg)
+	to_chat(podman, greet_message())
 
-/datum/spawner/podkid
+/datum/spawner/podman/proc/greet_message()
+	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	. += "<B>You are now in possession of Podmen's body. It's previous owner found it no longer appealing, by rejecting it - they brought you here. You are now, again, an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
+	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+
+/datum/spawner/podman/podkid
 	name = "Подкидыш"
 	desc = "Человечка вырастили на грядке."
 	wiki_ref = "Podmen"
 
 	ranks = list(ROLE_GHOSTLY)
 
-	var/mob/podkid
+/datum/spawner/podman/podkid/greet_message()
+	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	. += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
+	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
 
-/datum/spawner/podkid/New(mob/_podkid)
-	. = ..()
-	podkid = _podkid
-
-/datum/spawner/podkid/jump(mob/dead/observer/ghost)
-	ghost.forceMove(get_turf(podkid))
-
-/datum/spawner/podkid/spawn_ghost(mob/dead/observer/ghost)
-	podkid.key = ghost.key
-
-	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
-	msg += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
-	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
-	to_chat(podkid, msg)
-
-/datum/spawner/fake_diona
+/datum/spawner/podman/fake_diona
 	name = "Нимфа Дионы"
 	desc = "Диону вырастили на грядке."
 	wiki_ref = "Dionaea"
 
 	ranks = list(ROLE_GHOSTLY)
 
-	var/mob/diona
-
-/datum/spawner/fake_diona/New(mob/_diona, _replicant_memory)
-	. = ..()
-	diona = _diona
-
-	RegisterSignal(diona, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
-
-/datum/spawner/fake_diona/Destroy()
-	UnregisterSignal(diona, list(COMSIG_PARENT_QDELETING))
-	diona = null
-	return ..()
-
-/datum/spawner/fake_diona/proc/on_target_del()
-	SIGNAL_HANDLER
-	qdel(src)
-
-/datum/spawner/fake_diona/jump(mob/dead/observer/ghost)
-	ghost.forceMove(get_turf(diona))
-
-/datum/spawner/fake_diona/spawn_ghost(mob/dead/observer/ghost)
-	UnregisterSignal(diona, list(COMSIG_PARENT_QDELETING))
-	diona.key = ghost.key
-
-	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
-	msg += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B><BR>"
-	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
-	to_chat(diona, msg)
+/datum/spawner/podman/fake_diona/greet_message()
+	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	. += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B><BR>"
+	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
 
 /datum/spawner/spy
 	name = "Агент Прослушки"
