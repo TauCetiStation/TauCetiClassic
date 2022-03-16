@@ -444,22 +444,6 @@
 	var/dat = ""
 
 	for(var/datum/language/L in languages)
-<<<<<<< HEAD
-		dat += "<b>[L.name] "
-		var/sound_macros = ""
-		var/first_macro = TRUE
-		for(var/m_key in L.special_symbols)
-			if(m_key == uppertext(m_key))
-				continue
-			if(!first_macro)
-				sound_macros += ", "
-			first_macro = FALSE
-			sound_macros += "[m_key]"
-		for(var/l_key in L.key)
-			dat += "(:[l_key])"
-		if(sound_macros != "")
-			dat += " ([sound_macros])"
-=======
 		var/lang_name = L.name
 		var/link_class = ""
 		if(L.name == default_language)
@@ -469,10 +453,23 @@
 		for(var/l_key in L.key)
 			dat += "(:[l_key])"
 
->>>>>>> 443db1de4d2d41f730906ad2d145b0145a4f62d4
+		var/sound_macros = ""
+		var/first_macro = TRUE
+		for(var/m_key in L.special_symbols)
+			if(m_key == uppertext(m_key))
+				continue
+			if(!first_macro)
+				sound_macros += ", "
+			first_macro = FALSE
+			sound_macros += "[m_key]"
+
+		if(sound_macros != "")
+			dat += " ([sound_macros])"
+
 		var/remark = ""
 		if(languages[L] == LANGUAGE_CAN_UNDERSTAND)
 			remark += " <i>(can't speak)</i>"
+
 		dat += " </b><br/>[L.desc][remark]<br/><br/>"
 
 	var/datum/browser/popup = new(src, "checklanguage", "Known Languages")
