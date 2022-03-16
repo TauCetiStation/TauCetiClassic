@@ -368,10 +368,13 @@
 
 	var/verb = "says"
 	var/ending = copytext(message, -1)
-	var/datum/language/speaking = parse_language(message)
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
+
 	if (speaking)
 		verb = speaking.get_spoken_verb(ending)
-		message = copytext(message, 2 + length_char(speaking.key))
+
 	else
 		verb = pick(speak_emote)
 
