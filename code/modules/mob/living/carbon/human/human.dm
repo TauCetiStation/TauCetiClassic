@@ -2267,12 +2267,6 @@
 			IO.take_damage(0.1, 1)
 		adjustToxLoss(0.1)
 
-/mob/living/carbon/human/get_language()
-	if(species.force_racial_language)
-		return all_languages[species.language]
-
-	return ..()
-
 // TO-DO: make it so it algo triggers a random mild virus symptom because that's funny? ~Luduk
 /mob/living/carbon/human/proc/trigger_allergy(reagent, volume)
 	if(!allergies)

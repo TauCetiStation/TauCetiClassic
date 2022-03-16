@@ -207,7 +207,7 @@
 	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
 
 	H.add_language(LANGUAGE_SALARIAN)
-	H.forced_language = LANGUAGE_SALARIAN
+	H.common_language = LANGUAGE_SALARIAN
 
 
 /datum/quality/clumsy

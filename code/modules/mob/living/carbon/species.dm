@@ -30,10 +30,10 @@
 	// Additional languages, to the primary. These can not be the forced ones.
 	// Use LANGUAGE = LANGUAGE_CAN_UNDERSTAND to give languages which a specimen can understand, but not speak.
 	var/list/additional_languages = list()
-	var/force_racial_language = FALSE // If TRUE, racial language will be forced by default when speaking.
-	var/attack_verb = "punch"         // Empty hand hurt intent verb.
-	var/punch_damage = 0              // Extra empty hand attack damage.
-	var/mutantrace                    // Safeguard due to old code.
+	var/species_common_language = FALSE// If TRUE, species language will be forced instead of common.
+	var/attack_verb = "punch"          // Empty hand hurt intent verb.
+	var/punch_damage = 0               // Extra empty hand attack damage.
+	var/mutantrace                     // Safeguard due to old code.
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
 	// Perhaps one day make this an assoc list of BODYPART_NAME = list(drops) ? ~Luduk
 	// Is used when a bodypart of this race is butchered. Otherwise there are overrides for flesh, robot, and bone bodyparts.
@@ -477,7 +477,7 @@
 	additional_languages = list(LANGUAGE_TRADEBAND)
 	tail = "vox_prim"
 
-	force_racial_language = TRUE
+	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	dietflags = DIET_OMNI
 
