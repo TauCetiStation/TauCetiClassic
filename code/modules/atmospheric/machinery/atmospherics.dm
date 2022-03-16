@@ -175,7 +175,7 @@ Pipelines + Other Objects -> Pipe network
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
 				unsafe_wrenching = TRUE //Oh dear oh dear
 
-			if (W.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_skills = list(/datum/skill/atmospherics/novice)))
+			if (W.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_skills_override = list(/datum/skill/atmospherics/novice)))
 				user.visible_message(
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>",

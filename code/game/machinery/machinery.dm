@@ -140,7 +140,6 @@ Class Procs:
 	var/max_operational_temperature = 10
 
 	var/list/required_skills //e.g. medical, engineering
-
 	var/fumbling_time = 5 SECONDS
 
 /obj/machinery/atom_init()
@@ -478,7 +477,7 @@ Class Procs:
 	if(istype(W) &&  !(flags & NODECONSTRUCT))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
-		if(W.use_tool(src, user, time, volume = 50, required_skills = list(/datum/skill/engineering/novice)))
+		if(W.use_tool(src, user, time, volume = 50, required_skills_override = list(/datum/skill/engineering/novice)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
