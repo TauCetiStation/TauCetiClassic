@@ -44,6 +44,8 @@
 			status = 0
 			update_icon()
 		return
+	if(!handle_fumbling(user, src, SKILL_TASK_VERY_EASY, list(/datum/skill/police/master), SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>"))
+		return
 	if(charges > 0)
 		status = !status
 		to_chat(user, "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>")
