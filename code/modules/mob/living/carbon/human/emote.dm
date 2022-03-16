@@ -52,6 +52,7 @@
 	for(var/emote in default_emotes)
 		var/datum/emote/E = global.all_emotes[emote]
 		set_emote(E.key, E)
+	default_emotes = null
 
 /mob/living/carbon/human/proc/get_emote(key)
 	return current_emotes[key]
