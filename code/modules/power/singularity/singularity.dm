@@ -1,6 +1,10 @@
 /atom/movable/singularity_effect
 	plane = GRAVITY_PULSE_PLANE
-	appearance_flags = PIXEL_SCALE
+	//appearance_flags = PIXEL_SCALE
+
+/atom/movable/singularity_swirl
+	plane = GRAVITY_PULSE_PLANE
+	//appearance_flags = PIXEL_SCALE
 
 /obj/singularity
 	name = "gravitational singularity"
@@ -32,6 +36,7 @@
 	var/last_warning
 
 	var/atom/movable/singularity_effect/singulo_effect
+	var/atom/movable/singularity_swirl/singulo_swirl
 
 /obj/singularity/atom_init(mapload, starting_energy = 50, temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -115,7 +120,7 @@
 			icon_state = "singularity_s1"
 			pixel_x = 0
 			pixel_y = 0
-		if(STAGE_TWO)
+		if(STAGE_TWO )
 			icon = 'icons/effects/96x96.dmi'
 			icon_state = "singularity_s3"
 			pixel_x = -32
@@ -136,13 +141,22 @@
 			pixel_x = -128
 			pixel_y = -128
 
+	if(!singulo_swirl)
+		singulo_swirl = new(src)
+		singulo_swirl.transform = matrix().Scale(2.4)
+		vis_contents += singulo_swirl
+
 	if(!singulo_effect)
 		singulo_effect = new(src)
-		singulo_effect.transform = matrix().Scale(2.4)
+		singulo_effect.transform = matrix().Scale(1.2)
 		vis_contents += singulo_effect
 
+	singulo_swirl.icon = icon
+	singulo_swirl.icon_state = "gravitational_swirl"
+
 	singulo_effect.icon = icon
-	singulo_effect.icon_state = icon_state
+	singulo_effect.icon_state = "gravitational_lens"
+
 
 /obj/singularity/proc/admin_investigate_setup()
 	last_warning = world.time
@@ -186,7 +200,7 @@
 				current_size = STAGE_THREE
 				w_class = SIZE_GYGANT
 				grav_pull = 8
-				consume_range = 2
+				consume_range = 1
 				dissipate_delay = 4
 				dissipate_track = 0
 				dissipate_strength = 20
@@ -195,7 +209,7 @@
 				current_size = STAGE_FOUR
 				w_class = SIZE_GARGANTUAN
 				grav_pull = 10
-				consume_range = 3
+				consume_range = 1
 				dissipate_delay = 10
 				dissipate_track = 0
 				dissipate_strength = 10
@@ -203,7 +217,7 @@
 			current_size = STAGE_FIVE
 			w_class = SIZE_GARGANTUAN
 			grav_pull = 10
-			consume_range = 4
+			consume_range = 1
 			dissipate = 0 //It cant go smaller due to e loss
 	if(current_size == allowed_size)
 		log_investigate("<font color='red'>grew to size [current_size]</font>",INVESTIGATE_SINGULO)

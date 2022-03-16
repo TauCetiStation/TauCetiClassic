@@ -42,7 +42,9 @@
 
 /atom/movable/screen/plane_master/rendering_plate/game_world/atom_init(mapload, ...)
 	. = ..()
-	add_filter("displacer", 1, displacement_map_filter(render_source = GRAVITY_PULSE_RENDER_TARGET, size = 10))
+	add_filter("displacer", 1, displacement_map_filter(render_source = GRAVITY_PULSE_RENDER_TARGET, size = 700))
+	animate(get_filter("displacer"), size = 600, time = 50, easing = LINEAR_EASING,loop = -1)
+	animate(size = 700, time = 50, easing = LINEAR_EASING)
 
 ///everything that should be above game world. (for example, singularity, nar-si)
 /atom/movable/screen/plane_master/rendering_plate/above_game_world
