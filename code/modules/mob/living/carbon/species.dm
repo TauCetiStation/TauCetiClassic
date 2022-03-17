@@ -151,6 +151,9 @@
 	// Bubble can be changed depending on species
 	var/typing_indicator_type = "default"
 
+	// Emotes this species grants.
+	var/list/emotes
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -226,6 +229,10 @@
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_SPECIES)
 
+	for(var/emote in emotes)
+		var/datum/emote/E = global.all_emotes[emote]
+		H.set_emote(E.key, E)
+
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
@@ -233,6 +240,9 @@
 		H.handle_socialization()
 
 	H.remove_moveset_source(MOVESET_SPECIES)
+
+	for(var/emote in emotes)
+		H.clear_emote(emote)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
 
@@ -971,6 +981,12 @@
 	max_age = 125
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
+
+	emotes = list(
+		/datum/emote/beep,
+		/datum/emote/ping,
+		/datum/emote/buzz,
+	)
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	..()
