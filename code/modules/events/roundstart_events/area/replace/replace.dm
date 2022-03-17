@@ -1,35 +1,29 @@
-/datum/event/roundstart/area/replace
+/datum/event/feature/area/replace
 	// replace: left_type on right_type (a = b)
-	var/list/replace_types = list()
+	var/list/replace_types
 	// called before deleting replaceable item
 	var/datum/callback/replace_callback
 	// called after deleting replaced item for new item
 	var/datum/callback/new_atom_callback
 	// number of items to replace, -1 for infinity
 	var/num_replaceable = -1
+
 	// finds a random item that exists in the area by these types
-	var/list/random_replaceable_types = list()
+	var/list/random_replaceable_types
 
-/datum/event/roundstart/area/replace/proc/find_replaceable_type()
-	for(var/objects_type in random_replaceable_types)
-		// Collect all atoms so that later can choose a completely random type for a future replacement
-		var/list/all_atoms = list()
-		for(var/area/A in targeted_areas)
-			all_atoms |= A.get_all_contents_type(objects_type)
-		if(!all_atoms.len)
-			continue
-		shuffle(all_atoms)
-		var/atom/A = pick(all_atoms)
-		return A.type
+/datum/event/feature/area/replace/setup()
+	. = ..()
+	if(random_replaceable_types)
+		if(!replace_types)
+			replace_types = list()
+		replace_types += pick(random_replaceable_types)
+
+/datum/event/feature/area/replace/proc/get_replace_type(atom/A)
+	if(replace_types)
+		return get_type_in_list(A, replace_types)
 	return null
 
-/datum/event/roundstart/area/replace/proc/get_replace_type(atom/A)
-	for(var/type in replace_types)
-		if(istype(A, type))
-			return type
-	return null
-
-/datum/event/roundstart/area/replace/proc/replace(atom/A)
+/datum/event/feature/area/replace/proc/replace(atom/A)
 	var/replace_type = get_replace_type(A)
 	if(!replace_type)
 		return FALSE
@@ -48,11 +42,11 @@
 		qdel(A)
 	return TRUE
 
-/datum/event/roundstart/area/replace/start()
+/datum/event/feature/area/replace/start()
 	var/count = 0
-	for(var/area/target_area in targeted_areas)
+	for(var/area/target_area in shuffle(targeted_areas))
 		var/list/area_atoms = shuffle(target_area.GetAreaAllContents())
-		for(var/atom/A in area_atoms)
+		for(var/atom/A as anything in area_atoms)
 			if(replace(A))
 				count++
 

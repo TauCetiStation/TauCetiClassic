@@ -62,12 +62,11 @@
 		add_overlay(archaeo_overlay)
 	var/turf/T
 	for(var/direction_to_check in cardinal)
-		if((istype(get_step(src, direction_to_check), /turf/simulated/floor)) || (istype(get_step(src, direction_to_check), /turf/space)) || (istype(get_step(src, direction_to_check), /turf/simulated/shuttle/floor)))
-			T = get_step(src, direction_to_check)
-			if (T)
-				var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
-				I.plane = FLOOR_PLANE
-				T.add_overlay(I)
+		T = get_step(src, direction_to_check)
+		if(istype(T, /turf/simulated/floor) || isspaceturf(T) || istype(T, /turf/simulated/shuttle/floor))
+			var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
+			I.plane = FLOOR_PLANE
+			T.add_overlay(I)
 
 	if((excav_overlay || archaeo_overlay || mineral) && !istype(src, /turf/simulated/floor/plating/airless/asteroid))
 		update_hud()
@@ -581,7 +580,7 @@
 
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnFloor(turf/T)
 	for(var/turf/S in range(2, T))
-		if(istype(S, /turf/space) || istype(S.loc, /area/asteroid/mine/explored))
+		if(isenvironmentturf(S) || istype(S.loc, /area/asteroid/mine/explored))
 			sanity = FALSE
 			break
 
@@ -609,9 +608,6 @@
 	name = "Asteroid"
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "asteroid"
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
 	icon_plating = "asteroid"
 	var/dug = FALSE       //FALSE = has not yet been dug, TRUE = has already been dug
 	has_resources = TRUE
@@ -660,7 +656,7 @@
 	var/turf/T
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
-		if(T && istype(T, /turf/space))
+		if(T && isspaceturf(T))
 			var/lattice = 0
 			for(var/obj/O in T)
 				if(istype(O, /obj/structure/lattice))

@@ -176,8 +176,7 @@
 		//H.Weaken(stunforce)
 		//H.apply_effect(STUTTER, stunforce)
 		H.apply_effect(60,AGONY,0)
-		user.lastattacked = M
-		H.lastattacker = user
+		H.set_lastattacker_info(user)
 		if(isrobot(src.loc))
 			var/mob/living/silicon/robot/R = src.loc
 			if(R && R.cell)

@@ -362,11 +362,22 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/borer/New(_borer)
 	. = ..()
 	borer = _borer
+	RegisterSignal(borer, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
+
+/datum/spawner/borer/Destroy()
+	UnregisterSignal(borer, list(COMSIG_PARENT_QDELETING))
+	borer = null
+	return ..()
+
+/datum/spawner/borer/proc/on_target_del()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /datum/spawner/borer/jump(mob/dead/observer/ghost)
 	ghost.forceMove(get_turf(borer))
 
 /datum/spawner/borer/spawn_ghost(mob/dead/observer/ghost)
+	UnregisterSignal(borer, list(COMSIG_PARENT_QDELETING))
 	borer.transfer_personality(ghost.client)
 
 /*
@@ -404,11 +415,22 @@ var/global/list/datum/spawners_cooldown = list()
 	religion = _religion
 
 	desc = "Вы появляетесь в виде [animal.name] в подчинении [religion.name]."
+	RegisterSignal(animal, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
+
+/datum/spawner/religion_familiar/Destroy()
+	UnregisterSignal(animal, list(COMSIG_PARENT_QDELETING))
+	animal = null
+	return ..()
+
+/datum/spawner/religion_familiar/proc/on_target_del()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /datum/spawner/religion_familiar/jump(mob/dead/observer/ghost)
 	ghost.forceMove(get_turf(animal))
 
 /datum/spawner/religion_familiar/spawn_ghost(mob/dead/observer/ghost)
+	UnregisterSignal(animal, list(COMSIG_PARENT_QDELETING))
 	animal.ckey = ghost.ckey
 	religion.add_member(animal, HOLY_ROLE_PRIEST)
 
@@ -485,52 +507,69 @@ var/global/list/datum/spawners_cooldown = list()
 	ghost.dronize()
 
 /datum/spawner/podman
+	name = "Подмена"
+	desc = "Подмена умерла, да здраствует подмена."
+	wiki_ref = "Podmen"
+
+	ranks = list(ROLE_GHOSTLY)
+
+	var/mob/podman
+	var/replicant_memory
+
+/datum/spawner/podman/New(mob/_podman, _replicant_memory)
+	. = ..()
+	podman = _podman
+	replicant_memory = _replicant_memory
+
+	RegisterSignal(podman, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
+
+/datum/spawner/podman/Destroy()
+	UnregisterSignal(podman, list(COMSIG_PARENT_QDELETING))
+	podman = null
+	return ..()
+
+/datum/spawner/podman/proc/on_target_del()
+	SIGNAL_HANDLER
+	qdel(src)
+
+/datum/spawner/podman/jump(mob/dead/observer/ghost)
+	ghost.forceMove(get_turf(podman))
+
+/datum/spawner/podman/spawn_ghost(mob/dead/observer/ghost)
+	UnregisterSignal(podman, list(COMSIG_PARENT_QDELETING))
+	podman.key = ghost.key
+	podman.mind.memory = replicant_memory
+
+	to_chat(podman, greet_message())
+
+/datum/spawner/podman/proc/greet_message()
+	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	. += "<B>You are now in possession of Podmen's body. It's previous owner found it no longer appealing, by rejecting it - they brought you here. You are now, again, an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
+	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+
+/datum/spawner/podman/podkid
 	name = "Подкидыш"
 	desc = "Человечка вырастили на грядке."
 	wiki_ref = "Podmen"
 
 	ranks = list(ROLE_GHOSTLY)
 
-	var/mob/podman
+/datum/spawner/podman/podkid/greet_message()
+	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	. += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
+	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
 
-/datum/spawner/podman/New(mob/_podman)
-	. = ..()
-	podman = _podman
-
-/datum/spawner/podman/jump(mob/dead/observer/ghost)
-	ghost.forceMove(get_turf(podman))
-
-/datum/spawner/podman/spawn_ghost(mob/dead/observer/ghost)
-	podman.key = ghost.key
-
-	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
-	msg += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
-	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
-	to_chat(podman, msg)
-
-/datum/spawner/fake_diona
+/datum/spawner/podman/fake_diona
 	name = "Нимфа Дионы"
 	desc = "Диону вырастили на грядке."
 	wiki_ref = "Dionaea"
 
 	ranks = list(ROLE_GHOSTLY)
 
-	var/mob/diona
-
-/datum/spawner/fake_diona/New(mob/_diona)
-	. = ..()
-	diona = _diona
-
-/datum/spawner/fake_diona/jump(mob/dead/observer/ghost)
-	ghost.forceMove(get_turf(diona))
-
-/datum/spawner/fake_diona/spawn_ghost(mob/dead/observer/ghost)
-	diona.key = ghost.key
-
-	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
-	msg += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B><BR>"
-	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
-	to_chat(diona, msg)
+/datum/spawner/podman/fake_diona/greet_message()
+	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	. += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B><BR>"
+	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
 
 /datum/spawner/spy
 	name = "Агент Прослушки"

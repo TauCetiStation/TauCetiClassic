@@ -49,8 +49,8 @@
 	var/speech_allowed = 1 //Meme Stuff
 	var/damageoverlaytemp = 0
 	var/computer_id = null
-	var/mob/lastattacker = null
-	var/lastattacked = null
+	var/lastattacker_name = ""
+	var/lastattacker_key = ""
 	var/attack_log = list( )
 	var/already_placed = 0.0
 	var/obj/machinery/machine = null
@@ -267,4 +267,9 @@
 	var/obj/effect/overlay/typing_indicator/typing_indicator
 	var/typing_indicator_type = "default"
 
+	// Language that a mob is forced to speak instead of the Common one.
+	var/common_language
+	// Language that a mob is forced to speak and cannot choose any other one.
 	var/forced_language
+	// Language that is used by default whenever there's no language chosen.
+	var/default_language

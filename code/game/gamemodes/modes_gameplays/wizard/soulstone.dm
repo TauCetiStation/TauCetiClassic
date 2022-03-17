@@ -38,6 +38,10 @@
 		to_chat(user, "<span class='warning'>Разум этого существа сопротивляется силе камня.</span>")
 		return ..()
 
+	if(HAS_TRAIT(H, TRAIT_NO_SOUL))
+		to_chat(user, "<span class='warning'>У этого существа нет души.</span>")
+		return ..()
+
 	H.log_combat(user, "soul-captured via [name]")
 
 	transfer_soul(SOULSTONE_VICTIM, H, user)
@@ -179,8 +183,10 @@
 	if(isanyantag(user))
 		for(var/role in user.mind.antag_roles)
 			var/datum/role/R = user.mind.antag_roles[role]
-			if(R.faction)
-				add_faction_member(R.faction, M, TRUE)
+			var/datum/role/slave/construct_role = create_and_setup_role(/datum/role/slave, M, setup_role = FALSE)
+			construct_role.copy_variables(R)
+			setup_role(construct_role, TRUE)
+			R.faction.HandleRecruitedRole(construct_role)
 
 	if(user.my_religion) // for cult and chaplain religion
 		user.my_religion.add_member(M, CULT_ROLE_HIGHPRIEST)
