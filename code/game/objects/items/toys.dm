@@ -116,7 +116,7 @@
 	name = "Gravitational Singularity"
 	desc = "\"Singulo\" brand spinning toy."
 	icon = 'icons/obj/singularity.dmi'
-	icon_state = "singularity_s1"
+	icon_state = "singularity_s11"
 
 /*
  * Toy gun: Why isnt this an /obj/item/weapon/gun?
