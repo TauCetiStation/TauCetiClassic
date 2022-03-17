@@ -138,6 +138,13 @@
 	render_target = GRAVITY_RENDER_TARGET_3
 	render_relay_plane = null
 
+/atom/movable/screen/plane_master/anomaly
+	name = "anomaly plane"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = ANOMALY_PLANE
+	render_target = ANOMALY_RENDER_TARGET
+	render_relay_plane = null
+
 /atom/movable/screen/plane_master/area
 	name = "area plane"
 	plane = AREA_PLANE
