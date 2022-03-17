@@ -7,11 +7,11 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 #define CROSS_BOX "<span style='color:red'>☒</span>"
 #define CHECK_BOX "<span style='color:lime'>☑</span>"
 
-#define MARK_READY     "READY [CHECK_BOX]"
-#define MARK_NOT_READY "READY [CROSS_BOX]"
+#define MARK_READY     "Готов [CHECK_BOX]"
+#define MARK_NOT_READY "Готов [CROSS_BOX]"
 
-#define QUALITY_READY     "QUALITY [CHECK_BOX]"
-#define QUALITY_NOT_READY "QUALITY [CROSS_BOX]"
+#define QUALITY_READY     "Особенность [CHECK_BOX]"
+#define QUALITY_NOT_READY "Особенность [CROSS_BOX]"
 
 /mob/dead/new_player/proc/get_lobby_html()
 	var/dat = {"
@@ -103,7 +103,7 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	var/have_q = client.prefs.have_quality
 	dat += {"<a id="quality" class="menu_a" href='?src=\ref[src];lobby_be_special=1'>[have_q ? QUALITY_READY : QUALITY_NOT_READY]</a>"}
 
-	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>OBSERVE</a>"}
+	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>Наблюдать</a>"}
 	dat += "<br><br>"
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'>Чейнжлог</a>"}
 
