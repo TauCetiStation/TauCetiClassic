@@ -178,16 +178,6 @@
 	key = list("k", "л")
 	allowed_speak = list(IPC)
 	syllables = list("qr","qrr","xuq","qil","quun","xuqn","rol","xrin","zaoo","qu-uu","qix","qoo","zix","*","!","♭","♮","♯")
-	approximations = list(
-		"♭" = "",
-		"♮" = "",
-		"♯" = "",
-	)
-	special_symbols = list(
-		"*я" = "♭",
-		"*ю" = "♮",
-		"*ё" = "♯",
-	)
 
 /datum/language/vox
 	name = LANGUAGE_VOXPIDGIN
