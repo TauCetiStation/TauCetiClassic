@@ -145,10 +145,8 @@
 	if(!speaking)
 		switch(species.name)
 			if(PODMAN)
-				message = replacetextEx(message, "ж", pick(list("ш", "хш")))
-				message = replacetextEx(message, "Ж", pick(list("Ш", "Хш")))
-				message = replacetextEx(message, "з", pick(list("с", "хс")))
-				message = replacetextEx(message, "З", pick(list("С", "Хс")))
+				message = replacetext(message, "ж", pick(list("ш", "хш")))
+				message = replacetext(message, "з", pick(list("с", "хс")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)

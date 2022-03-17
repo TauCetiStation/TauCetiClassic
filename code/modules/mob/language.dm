@@ -63,7 +63,7 @@
 /datum/language/proc/accentuate(input, datum/language/speaking)
 	if(!accents)
 		return input
-	return replaceEx_characters(input, accents)
+	return replace_characters(input, accents)
 
 /datum/language/proc/scramble(input)
 
@@ -111,9 +111,7 @@
 	key = list("o", "щ")
 	syllables = list("çs","ss","ss","ꚗs","skak","seeki","resh","las","esi","kor","sh")
 	approximations = list(
-		"Ç" = "С",
 		"ç" = "с",
-		"Ꚗ" = "Ш",
 		"ꚗ" = "ш",
 	)
 	special_symbols = list(
@@ -123,7 +121,6 @@
 		"*ш" = "ꚗ",
 	)
 	accents = list(
-		"С" = "Сс",
 		"с" = "сс",
 	)
 	allowed_speak = list(IPC)
@@ -142,19 +139,16 @@
 	"ka","aasi","far","wa","baq","ara","qara","zir","sam","mæk","hrar","nja","rir","khan","jun","dar","rik","kah", \
 	"hal","kət","jurl","mah","tul","cresh","azu","ragh")
 	approximations = list(
-		"Æ" = "Ае",
 		"æ" = "ae",
-		"Ə" = "Е",
 		"ə" = "e",
 	)
 	special_symbols = list(
 		"*А" = "Æ",
-		"*Е" = "Ə",
 		"*а" = "æ",
+		"*Е" = "Ə",
 		"*е" = "ə",
 	)
 	accents = list(
-		"Р" = "Рр",
 		"р" = "рр",
 	)
 
@@ -262,7 +256,6 @@
 					 "pariatur", "excepteur", "sint", "occaecat", "cupidatat", "non", "proident", "sunt",
 					 "in", "culpa", "qui", "officia", "deserunt", "mollit", "anim", "id", "est", "laborum")
 	accents = list(
-		"Ё" = "Ю",
 		"ё" = "ю",
 	)
 
@@ -275,7 +268,6 @@
 	allowed_speak = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
 	syllables = list ("gra","ba","ba","breg","bra","rag","dur","ra","ro","gro","go","ber","bar","geg","gra")
 	accents = list(
-		"Х" = "Г",
 		"х" = "г",
 	)
 
@@ -325,10 +317,9 @@
 
 /datum/language/shkiondioniovioion/New()
 	var/list/lowercase_vowels = list()
-	lowercase_vowels = list()
 
 	for(var/vowel in ENGLISH_VOWELS)
-		lowercase_vowels[vowel] = "ё"
+		lowercase_vowels += vowel
 
 	var/list/ru_vowels = RUSSIAN_VOWELS
 	// Define problems
@@ -336,15 +327,14 @@
 	ru_vowels.Remove("ё")
 
 	for(var/vowel in ru_vowels)
-		lowercase_vowels[vowel] = "ё"
+		lowercase_vowels += vowel
 
 	replacements = list()
 	for(var/vowel in lowercase_vowels)
 		replacements[vowel] = "ё"
-		replacements[uppertext(vowel)] = "Ё"
 
 /datum/language/shkiondioniovioion/scramble(input)
-	return replaceEx_characters(input, replacements)
+	return replace_characters(input, replacements)
 
 /datum/language/salarian
 	name = LANGUAGE_SALARIAN
@@ -374,14 +364,12 @@
 	)
 
 	replacements = list()
-	replacements["Чт"] = "Ш"
 	for(var/letter in lowercase_letters)
 		var/replacement = lowercase_letters[letter]
 		replacements[letter] = replacement
-		replacements[uppertext(letter)] = uppertext(replacement)
 
 /datum/language/salarian/scramble(input)
-	return replaceEx_characters(input, replacements)
+	return replace_characters(input, replacements)
 
 // Language handling.
 /mob/proc/add_language(language, flags=LANGUAGE_CAN_SPEAK)
@@ -399,7 +387,7 @@
 		remove_approximation(sound)
 
 	for(var/sound in new_language.special_symbols)
-		add_approximation(sound, new_language.special_symbols[sound])
+		add_approximation(sound, new_language.special_symbols[sound], case_sensitive=TRUE)
 
 	languages[new_language] = flags
 	return 1
@@ -415,7 +403,7 @@
 		add_approximation(sound, L.approximations[sound])
 
 	for(var/sound in L.special_symbols)
-		remove_approximation(sound)
+		remove_approximation(sound, case_sensitive=TRUE)
 
 	if(default_language == L.name)
 		default_language = null

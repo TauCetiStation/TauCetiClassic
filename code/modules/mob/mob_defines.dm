@@ -276,3 +276,5 @@
 
 	// Some sounds that this mob can't emit, only approximate.
 	var/list/sound_approximations
+	// Case sensitive sound approximations.
+	var/list/sensitive_sound_approximations
