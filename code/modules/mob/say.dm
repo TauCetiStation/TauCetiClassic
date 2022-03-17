@@ -31,7 +31,7 @@
 	message = add_period(message)
 
 	if(me_verb_allowed)
-		usr.emote("me", usr.emote_type, message, FALSE)
+		usr.me_emote(message, message_type=usr.emote_type, intentional=TRUE)
 	else
 		to_chat(usr, "You are unable to emote.")
 		return
