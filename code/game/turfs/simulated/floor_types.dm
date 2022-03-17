@@ -1,9 +1,7 @@
 /turf/simulated/floor/airless
 	icon_state = "floor"
 	name = "airless floor"
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
+	airless = TRUE
 
 /turf/simulated/floor/airless/atom_init()
 	. = ..()
@@ -109,9 +107,7 @@
 /turf/simulated/floor/engine/vacuum
 	name = "vacuum floor"
 	icon_state = "engine"
-	oxygen = 0
-	nitrogen = 0.001
-	temperature = TCMB
+	airless = TRUE
 
 /turf/simulated/floor/plating
 	name = "plating"
@@ -123,9 +119,7 @@
 /turf/simulated/floor/plating/airless
 	icon_state = "plating"
 	name = "airless plating"
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
+	airless = TRUE
 
 /turf/simulated/floor/plating/airless/atom_init()
 	. = ..()
@@ -406,7 +400,6 @@
 	name = "catwalk"
 	desc = "Cats really don't like these things."
 
-	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
 	intact = 0
@@ -415,12 +408,12 @@
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
 	. = ..()
 	update_icon(1)
-	set_light(1.5)
+
+	set_light(1.5, l_color = SSenvironment.turf_light_color[z])
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
 	underlays.Cut()
-	var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
-	I.plane = PLANE_SPACE
+	var/image/I = SSenvironment.turf_image[z]
 	underlays += I
 
 	var/dirs = 0

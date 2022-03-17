@@ -17,6 +17,9 @@ map boxstation
 	default
 endmap
 
+map boxstation_snow
+endmap
+
 map gamma
 endmap
 
