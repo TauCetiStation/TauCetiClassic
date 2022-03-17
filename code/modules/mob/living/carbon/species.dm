@@ -30,10 +30,10 @@
 	// Additional languages, to the primary. These can not be the forced ones.
 	// Use LANGUAGE = LANGUAGE_CAN_UNDERSTAND to give languages which a specimen can understand, but not speak.
 	var/list/additional_languages = list()
-	var/force_racial_language = FALSE // If TRUE, racial language will be forced by default when speaking.
-	var/attack_verb = "punch"         // Empty hand hurt intent verb.
-	var/punch_damage = 0              // Extra empty hand attack damage.
-	var/mutantrace                    // Safeguard due to old code.
+	var/species_common_language = FALSE// If TRUE, species language will be forced instead of common.
+	var/attack_verb = "punch"          // Empty hand hurt intent verb.
+	var/punch_damage = 0               // Extra empty hand attack damage.
+	var/mutantrace                     // Safeguard due to old code.
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
 	// Perhaps one day make this an assoc list of BODYPART_NAME = list(drops) ? ~Luduk
 	// Is used when a bodypart of this race is butchered. Otherwise there are overrides for flesh, robot, and bone bodyparts.
@@ -264,6 +264,11 @@
 /datum/species/proc/on_life(mob/living/carbon/human/H)
 	return
 
+// For species who's skin acts as a spacesuit of sorts
+// Return a value from 0 to 1, where 1 is full protection, and 0 is full weakness
+/datum/species/proc/get_pressure_protection(mob/living/carbon/human/H)
+	return 0
+
 /datum/species/human
 	name = HUMAN
 	language = LANGUAGE_SOLCOMMON
@@ -472,12 +477,9 @@
 	additional_languages = list(LANGUAGE_TRADEBAND)
 	tail = "vox_prim"
 
-	force_racial_language = TRUE
+	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	dietflags = DIET_OMNI
-
-	warning_low_pressure = 50
-	hazard_low_pressure = 0
 
 	cold_level_1 = 80
 	cold_level_2 = 50
@@ -586,6 +588,22 @@
 		H.verbs -= /mob/living/carbon/human/proc/gut
 
 	..()
+
+// At 25 damage - no protection at all.
+/datum/species/vox/get_pressure_protection(mob/living/carbon/human/H)
+	var/damage = 0
+	var/static/list/cavity_parts = list(BP_HEAD, BP_CHEST, BP_GROIN)
+	for(var/bodypart in cavity_parts)
+		var/obj/item/organ/external/BP = H.get_bodypart(bodypart)
+		if(!BP)
+			// We surely are not hermetized.
+			damage += 100
+			continue
+
+		damage += BP.brute_dam + BP.burn_dam
+
+	return 1 - CLAMP01(damage / 25)
+
 
 /datum/species/vox/armalis
 	name = VOX_ARMALIS
@@ -764,8 +782,9 @@
 
 /datum/species/diona/handle_death(mob/living/carbon/human/H)
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
-	S.name = H.name
-	S.real_name = S.name
+	S.real_name = H.real_name
+	S.name = S.real_name
+
 	S.dna = H.dna.Clone()
 	S.dna.SetSEState(MONKEYBLOCK, 1)
 	S.dna.SetSEValueRange(MONKEYBLOCK, 0xDAC, 0xFFF)
@@ -854,7 +873,9 @@
 
 	if(can_reenter_corpse)
 		return
-	create_spawner(/datum/spawner/podman, "podman", source)
+	var/mob/living/carbon/human/H = source
+
+	create_spawner(/datum/spawner/podman, "podman", H, H.mind.memory)
 
 /datum/species/machine
 	name = IPC
