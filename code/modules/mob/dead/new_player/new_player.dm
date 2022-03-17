@@ -94,7 +94,7 @@
 		if(!SSmapping.station_loaded)
 			to_chat(src, "<span class='red'>Станция еще не загрузилась. Пожалуйста, подождите.</span>")
 			return
-		if(tgui_alert(src,"Вы уверены, что хотите стать наблюдателем? Вам придется подождать 30 минут, прежде чем Вы сможете возродиться!","Player Setup", list("Да","Нет")) == "Да")
+		if(tgui_alert(src,"Вы уверены, что хотите наблюдать? Вам придется подождать 30 минут, прежде чем Вы сможете возродиться!","Лобби", list("Да","Нет")) == "Да")
 			if(!client)
 				return
 			var/mob/dead/observer/observer = new()
@@ -134,7 +134,7 @@
 
 		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
-				tgui_alert(usr, "Вас нет в вайтлисте, чтобы играть за [client.prefs.species].")
+				tgui_alert(usr, "You are currently not whitelisted to play [client.prefs.species].")
 				return FALSE
 
 		LateChoices()
@@ -151,7 +151,7 @@
 
 		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
-				tgui_alert(usr, "Вас нет в вайтлисте, чтобы играть за [client.prefs.species].")
+				tgui_alert(usr, "You are currently not whitelisted to play [client.prefs.species].")
 				return FALSE
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
@@ -192,7 +192,7 @@
 		to_chat(usr, "<span class='notice'>Администрация заблокировала вход в игру!</span>")
 		return 0
 	if(!IsJobAvailable(rank))
-		to_chat(usr, "<span class='notice'>[rank] недоступен. Пожалуйста, выберите другую роль.</span>")
+		to_chat(usr, "<span class='notice'>[rank] недоступен. Пожалуйста, выберите другую профессию.</span>")
 		return 0
 
 	spawning = 1
@@ -294,15 +294,15 @@
 	if(!available_job_count)
 		dat += "<div class='notice red'>В настоящее время нет свободных ролей!</div>"
 	else
-		dat += "<div class='clearBoth'>Выберите одну из доступных ролей:</div>"
+		dat += "<div class='clearBoth'>Выберите одну из доступных позиций:</div>"
 		var/list/categorizedJobs = list(
-			"Руководство" = list(jobs = list(), titles = command_positions, color = "#aac1ee"),
+			"Командный состав" = list(jobs = list(), titles = command_positions, color = "#aac1ee"),
 			"Техническое обеспечение" = list(jobs = list(), titles = engineering_positions, color = "#ffd699"),
 			"Служба безопасности" = list(jobs = list(), titles = security_positions, color = "#ff9999"),
 			"Прочие" = list(jobs = list(), titles = list(), color = "#ffffff", colBreak = TRUE),
 			"Синтетический разум" = list(jobs = list(), titles = nonhuman_positions, color = "#ccffcc"),
 			"Обслуживающий персонал" = list(jobs = list(), titles = civilian_positions, color = "#cccccc"),
-			"Медицинский персонал" = list(jobs = list(), titles = medical_positions, color = "#99ffe6", colBreak = TRUE),
+			"Медперсонал" = list(jobs = list(), titles = medical_positions, color = "#99ffe6", colBreak = TRUE),
 			"Научные сотрудники" = list(jobs = list(), titles = science_positions, color = "#e6b3e6"),
 		)
 
@@ -313,7 +313,7 @@
 					var/list/jobs = categorizedJobs[jobcat]["jobs"]
 					if(job.title in categorizedJobs[jobcat]["titles"])
 						categorized = TRUE
-						if(jobcat == "Руководство")
+						if(jobcat == "Командный состав")
 
 							if(job.title == "Captain") // Put captain at top of command jobs
 								jobs.Insert(1, job)
