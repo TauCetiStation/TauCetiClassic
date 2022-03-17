@@ -165,6 +165,8 @@ var/global/list/department_radio_keys = list(
 			hearturfs += AM.locs[1]
 
 		for(var/mob/M in player_list)
+			if(QDELETED(M)) // avoid not hard-deleted mobs with client
+				continue
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 				listening |= M
 				continue
@@ -196,3 +198,12 @@ var/global/list/department_radio_keys = list(
 
 /obj/effect/speech_bubble
 	var/mob/parent
+
+/mob/living/init_languages()
+	for(var/name in all_languages)
+		var/datum/language/L = all_languages[name]
+		if(languages[L] >= LANGUAGE_CAN_SPEAK)
+			continue
+
+		for(var/sound in L.approximations)
+			add_approximation(sound, L.approximations[sound])

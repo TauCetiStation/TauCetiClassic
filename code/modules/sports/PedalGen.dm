@@ -25,7 +25,8 @@
 	density = FALSE
 	//copypaste sorry
 	var/obj/machinery/power/dynamo/Generator = null
-	var/pedaled = 0
+	var/next_pedal = 0
+	var/pedal_left_leg = FALSE
 
 /obj/structure/stool/bed/chair/pedalgen/atom_init()
 	. = ..()
@@ -55,7 +56,7 @@
 			Generator.loc = null
 
 /obj/structure/stool/bed/chair/pedalgen/attack_hand(mob/user)
-	if(buckled_mob)
+	if(buckled_mob && next_pedal < world.time)
 		pedal(user)
 	return 0
 
@@ -76,27 +77,26 @@
 		to_chat(user, "You are too exausted to pedal that thing.")
 		return FALSE
 
-	pedaled = TRUE
-	user.SetNextMove(CLICK_CD_INTERACT)
+	next_pedal = world.time + 4
+
 	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER, 20)
 	Generator.Rotated()
+
 	var/mob/living/carbon/human/pedaler = buckled_mob
-	pedaler.nutrition -= 0.5
-	pedaler.apply_effect(1,AGONY,0)
-	var/obj/item/organ/external/l_leg/LL = pedaler.get_bodypart(BP_L_LEG)
-	var/obj/item/organ/external/r_leg/RL = pedaler.get_bodypart(BP_R_LEG)
-	if(LL)
-		LL.adjust_pumped(1)
-	if(RL)
-		RL.adjust_pumped(1)
-	pedaler.update_body()
+	if(ishuman(pedaler))
+		var/leg = pedal_left_leg ? BP_L_LEG : BP_R_LEG
+		var/obj/item/organ/external/BP = pedaler.get_bodypart(leg)
+		if(BP)
+			pedaler.apply_effect(BP.adjust_pumped(1), AGONY, 0)
+			pedaler.update_body()
 
-	if(pedaler.halloss > 80)
+	buckled_mob.nutrition -= 0.5
+
+	pedal_left_leg = !pedal_left_leg
+	if(buckled_mob.halloss > 80)
 		to_chat(user, "You pushed yourself too hard.")
-		pedaler.apply_effect(24,AGONY,0)
+		buckled_mob.apply_effect(24,AGONY,0)
 		unbuckle_mob()
-
-	VARSET_IN(src, pedaled, FALSE, 5)
 
 	return TRUE
 
@@ -106,9 +106,8 @@
 	var/mob/living/carbon/human/pedaler = user
 	if(!pedaler.handcuffed)
 		unbuckle_mob()
-	else
-		if(!pedaled)
-			pedal(user)
+	else if(next_pedal < world.time)
+		pedal(user)
 
 
 /obj/structure/stool/bed/chair/pedalgen/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)

@@ -136,6 +136,8 @@
 /obj/item/organ/internal/heart/proc/heart_stop()
 	if(!owner.reagents.has_reagent("inaprovaline") || owner.stat == DEAD)
 		heart_status = HEART_FAILURE
+		deltimer(fibrillation_timer_id)
+		fibrillation_timer_id = null
 	else
 		take_damage(1, 0)
 		fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
@@ -224,10 +226,10 @@
 	..()
 	if(is_bruised())
 		if(prob(2))
-			owner.emote("me", 2, "annoyingly creaks!")
+			owner.me_emote("annoyingly creaks!")
 			owner.drip(10)
 		if(prob(4))
-			owner.emote("me", 2, "smells of rot.")
+			owner.me_emote("smells of rot.")
 			owner.apply_damage(rand(1,15), TOX, BP_CHEST, 0)		//Diona's lungs are used to dispose of toxins, so when lungs are broken, diona gets intoxified.
 	if(owner.life_tick % process_accuracy == 0)
 		if(damage < 0)

@@ -176,8 +176,7 @@
 		//H.Weaken(stunforce)
 		//H.apply_effect(STUTTER, stunforce)
 		H.apply_effect(60,AGONY,0)
-		user.lastattacked = M
-		H.lastattacker = user
+		H.set_lastattacker_info(user)
 		if(isrobot(src.loc))
 			var/mob/living/silicon/robot/R = src.loc
 			if(R && R.cell)
@@ -327,7 +326,7 @@
 		icon_state = not_bloody_state
 		item_state = not_bloody_item_state
 	..()
-	if(istype(src.loc, /mob/living))
+	if(isliving(src.loc))
 		var/mob/living/user = src.loc
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()

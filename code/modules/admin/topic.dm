@@ -1686,7 +1686,7 @@
 			if("No")
 				send_fax(usr, P, "[department]")
 
-		add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = input)
+		SSStatistics.add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = input)
 
 		to_chat(src.owner, "Message reply to transmitted successfully.")
 		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")
@@ -1853,7 +1853,7 @@
 				if(!marked_datum)
 					to_chat(usr, "You don't have any object marked. Abandoning spawn.")
 					return
-				else if(!istype(marked_datum,/atom))
+				else if(!isatom(marked_datum))
 					to_chat(usr, "The object you have marked cannot be used as a target. Target must be of type /atom. Abandoning spawn.")
 					return
 				else

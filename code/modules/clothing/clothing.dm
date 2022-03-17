@@ -24,6 +24,8 @@
 	var/list/valid_accessory_slots
 	var/list/restricted_accessory_slots
 
+	var/flashbang_protection = FALSE
+
 /obj/item/clothing/atom_init()
 	. = ..()
 	if (!species_restricted_locked)
@@ -139,7 +141,7 @@ var/global/list/icon_state_allowed_cache = list()
 /obj/item/clothing/proc/refit_for_species(target_species)
 	//Set species_restricted list
 	switch(target_species)
-		if(HUMAN , SKRELL)	//humanoid bodytypes
+		if(HUMAN , SKRELL, PODMAN)	//humanoid bodytypes
 			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)
 		else
 			species_restricted = list(target_species)
@@ -160,6 +162,8 @@ var/global/list/icon_state_allowed_cache = list()
 	//Set species_restricted list
 	switch(target_species)
 		if(SKRELL)
+			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)
+		if(PODMAN)
 			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)
 		if(HUMAN)
 			species_restricted = list("exclude" , SKRELL , UNATHI , TAJARAN , DIONA , VOX, VOX_ARMALIS)
@@ -221,8 +225,26 @@ var/global/list/icon_state_allowed_cache = list()
 	for(var/obj/item/clothing/accessory/A in accessories)
 		A.emplode(severity)
 
-/obj/item/clothing/AltClick()
-	handle_accessories_removal()
+/obj/item/clothing/AltClick(mob/user)
+	if(!isliving(user))
+		return
+	if(user.incapacitated())
+		return
+	if(!Adjacent(user))
+		return
+	if(!user.IsAdvancedToolUser())
+		return
+
+	var/obj/item/I = user.get_active_hand()
+	if(!I)
+		handle_accessories_removal()
+		return
+
+	if(!istype(I, /obj/item/clothing/accessory))
+		handle_accessories_removal()
+		return
+
+	attach_accessory(I, user)
 
 /obj/item/clothing/proc/can_attach_accessory(obj/item/clothing/accessory/A)
 	if(!valid_accessory_slots || !istype(A) || !(A.slot in valid_accessory_slots))
@@ -235,18 +257,8 @@ var/global/list/icon_state_allowed_cache = list()
 				return FALSE
 
 /obj/item/clothing/proc/handle_accessories_removal()
-	if(!isliving(usr))
-		return
-	if(usr.incapacitated())
-		return
-	if(!Adjacent(usr))
-		return
 	if(!accessories)
-		return
-
-	if(!usr.IsAdvancedToolUser())
-		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
-		return
+		return FALSE
 
 	var/obj/item/clothing/accessory/A
 	if(length(accessories) > 1)
@@ -254,16 +266,12 @@ var/global/list/icon_state_allowed_cache = list()
 	else
 		A = accessories[1]
 	remove_accessory(usr, A)
+	return TRUE
 
 /obj/item/clothing/proc/remove_accessory(mob/user, obj/item/clothing/accessory/A)
-	if(QDELETED(A) || !(A in accessories))
+	if(!(A in accessories))
 		return
-	if(!isliving(user))
-		return
-	if(user.incapacitated())
-		return
-	if(!Adjacent(user))
-		return
+
 	A.on_removed(user)
 	LAZYREMOVE(accessories, A)
 	A.update_icon()
@@ -275,8 +283,6 @@ var/global/list/icon_state_allowed_cache = list()
 		for(var/obj/item/clothing/accessory/A in accessories)
 			A.attack_accessory(I, user, params)
 			return
-
-	attach_accessory(I, user)
 
 	return ..()
 

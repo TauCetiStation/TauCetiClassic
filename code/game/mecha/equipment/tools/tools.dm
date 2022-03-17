@@ -115,10 +115,14 @@
 		if(T == chassis.loc && src == chassis.selected)
 			if(istype(target, /turf/simulated/wall/r_wall))
 				occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
-			else if(istype(target, /turf/simulated/mineral))
-				for(var/turf/simulated/mineral/M in range(chassis,1))
-					if(get_dir(chassis,M)&chassis.dir)
-						M.GetDrilled()
+			else if(istype(target, /turf/simulated/mineral) || istype(target, /obj/structure/flora/mine_rocks))
+				if(istype(target, /turf/simulated/mineral))
+					for(var/turf/simulated/mineral/M in range(chassis,1))
+						if(get_dir(chassis,M)&chassis.dir)
+							M.GetDrilled()
+				else
+					var/obj/structure/flora/mine_rocks/M = target
+					M.GetDrilled()
 				log_message("Drilled through [target]")
 				if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
@@ -180,10 +184,14 @@
 				if(do_after_cooldown(target))//To slow down how fast mechs can drill through the station
 					log_message("Drilled through [target]")
 					target.ex_act(EXPLODE_LIGHT)
-			else if(istype(target, /turf/simulated/mineral))
-				for(var/turf/simulated/mineral/M in range(chassis,1))
-					if(get_dir(chassis,M)&chassis.dir)
-						M.GetDrilled()
+			else if(istype(target, /turf/simulated/mineral) || istype(target, /obj/structure/flora/mine_rocks))
+				if(istype(target, /turf/simulated/mineral))
+					for(var/turf/simulated/mineral/M in range(chassis, 1))
+						if(get_dir(chassis, M) & chassis.dir)
+							M.GetDrilled()
+				else
+					var/obj/structure/flora/mine_rocks/M = target
+					M.GetDrilled()
 				log_message("Drilled through [target]")
 				if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
@@ -331,7 +339,7 @@
 					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.use_power(energy_drain)
 		if(1)
-			if(istype(target, /turf/space))
+			if(isenvironmentturf(target))
 				occupant_message("Building Floor...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -1134,7 +1142,7 @@
 	var/area/thearea = allowed_areas.areas[A]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.density && !istype(T, /turf/space) && !T.obscured)
+		if(!T.density && !isenvironmentturf(T) && !T.obscured)
 			var/clear = TRUE
 			for(var/obj/O in T)
 				if(O.density)

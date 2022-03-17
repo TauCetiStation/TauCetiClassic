@@ -93,9 +93,14 @@
 
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 	global.chemical_reagents_list = list()
+	global.allergen_reagents_list = list()
 	for(var/path in subtypesof(/datum/reagent))
 		var/datum/reagent/D = new path()
 		global.chemical_reagents_list[D.id] = D
+
+		if(!D.allergen)
+			continue
+		global.allergen_reagents_list[D.id] = TRUE
 
 	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 	// It is filtered into multiple lists within a list.
@@ -212,6 +217,10 @@
 			global.faith_reactions_by_aspects[aspect_type] = list()
 		global.faith_reactions_by_aspects[aspect_type] += id
 
+	global.contraband_listings = list()
+	for(var/listing in subtypesof(/datum/contraband_listing))
+		global.contraband_listings[listing] = new listing
+
 	populate_gear_list()
 
 	global.bridge_commands = list()
@@ -231,6 +240,10 @@
 	global.antag_roles = global.special_roles - ROLE_GHOSTLY
 
 	global.full_ignore_question = get_list_of_keys_from_values_as_list_from_associative_list(special_roles_ignore_question)
+
+	global.all_emotes = list()
+	for(var/emote_type in subtypesof(/datum/emote))
+		global.all_emotes[emote_type] = new emote_type
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!

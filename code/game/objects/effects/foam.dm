@@ -46,7 +46,7 @@
 	fore_image += image(icon, icon_state="afff_foam_fore", layer=MOB_LAYER + 0.9)
 	add_overlay(fore_image)
 
-	if(loc.density || !has_gravity(loc) || istype(get_turf(src), /turf/space))
+	if(loc.density || !has_gravity(loc))
 		addtimer(CALLBACK(src, .proc/disolve), 5 SECONDS)
 
 	INVOKE_ASYNC(src, .proc/performAction)

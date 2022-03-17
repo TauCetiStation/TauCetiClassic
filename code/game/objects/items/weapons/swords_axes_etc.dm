@@ -37,8 +37,8 @@
 		user.take_bodypart_damage(5, 5)
 	active = !active
 	if (active)
-		tools = list(
-			TOOL_KNIFE = 1
+		qualities = list(
+			QUALITY_KNIFE = 1
 		)
 		sharp = TRUE
 		force = 30
@@ -52,7 +52,7 @@
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 
 	else
-		tools = list()
+		qualities = null
 		sharp = FALSE
 		force = 3
 		hitsound = initial(hitsound)
@@ -197,18 +197,6 @@
 
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	add_fingerprint(user)
-
-	if(blood_overlay && blood_DNA && (blood_DNA.len >= 1)) //updates blood overlay, if any
-		cut_overlays()//this might delete other item overlays as well but eeeeeeeh
-
-		var/icon/I = new /icon(src.icon, src.icon_state)
-		I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD)
-		I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY)
-		blood_overlay = I
-
-		add_overlay(blood_overlay)
-
-	return
 
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)

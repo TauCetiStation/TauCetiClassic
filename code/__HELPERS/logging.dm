@@ -278,28 +278,3 @@
 		text += "no antagonists this moment"
 
 	log_game(text)
-
-/proc/drop_round_stats()
-	var/list/stats = list()
-
-	stats["round_id"] = global.round_id
-	stats["start_time"] = time2text(round_start_realtime, "hh:mm:ss")
-	stats["end_time"] = time2text(world.realtime, "hh:mm:ss")
-	stats["duration"] = roundduration2text()
-	stats["mode"] = SSticker.mode
-	stats["mode_result"] = SSticker.mode.get_mode_result()
-	stats["map"] = SSmapping.config.map_name
-
-	stats["completion_html"] = SSticker.mode.completition_text
-	stats["completion_antagonists"] = antagonists_completion
-
-	stats["score"] = score
-	stats["achievements"] = achievements
-	stats["centcomm_communications"] = centcomm_communications
-
-	var/stat_file = file("[global.log_directory]/stat.json")
-
-	stat_file << json_encode(stats)
-
-/proc/add_communication_log(type = 0, title = 0, author = 0, content = 0, time = roundduration2text())
-	centcomm_communications += list(list("type" = type, "title" = title, "time" = time, "content" = content))

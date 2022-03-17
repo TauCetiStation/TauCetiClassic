@@ -5,7 +5,7 @@
 	is_stump = TRUE
 
 /datum/bodypart_controller/stump/adjust_pumped(value)
-	return
+	return 0
 
 /obj/item/organ/external/stump/insert_organ(mob/living/carbon/human/H, surgically, obj/item/organ/external/limb)
 	if(istype(limb))

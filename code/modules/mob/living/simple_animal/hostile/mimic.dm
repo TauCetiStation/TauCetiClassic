@@ -208,6 +208,12 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	attacktext = "hugs"
 	a_intent = INTENT_HELP
 
+/mob/living/simple_animal/hostile/mimic/copy/flora/atom_init(mapload)
+	var/obj/structure/flora/copy = locate() in loc
+	if (!copy)
+		return INITIALIZE_HINT_QDEL
+	return ..(mapload, copy)
+
 /mob/living/simple_animal/hostile/mimic/prophunt
 	name = "mimic"
 	real_name = "mimic"
@@ -241,17 +247,17 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/prophunt/MouseEntered()
 	. = ..()
-	if(istype(my_prototype, /obj/item))
+	if(isitem(my_prototype))
 		apply_outline()
 
 /mob/living/simple_animal/hostile/mimic/prophunt/MouseExited()
 	. = ..()
-	if(istype(my_prototype, /obj/item))
+	if(isitem(my_prototype))
 		remove_outline()
 
 /mob/living/simple_animal/hostile/mimic/prophunt/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	. = ..()
-	if(src != over && istype(my_prototype, /obj/item))
+	if(src != over && isitem(my_prototype))
 		remove_outline()
 
 /mob/living/simple_animal/hostile/mimic/prophunt/RangedAttack(atom/A, params)

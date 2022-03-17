@@ -49,7 +49,7 @@
 		M.adjustToxLoss(rand(15,20))
 
 	var/hotspot = (locate(/obj/fire) in T)
-	if(hotspot && !istype(T, /turf/space))
+	if(hotspot && !isspaceturf(T))
 		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
@@ -59,7 +59,7 @@
 /datum/reagent/water/reaction_obj(obj/O, volume)
 	var/turf/T = get_turf(O)
 	var/hotspot = (locate(/obj/fire) in T)
-	if(hotspot && !istype(T, /turf/space))
+	if(hotspot && !isspaceturf(T))
 		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
@@ -118,7 +118,7 @@
 		else
 			cleansed.result = G.result
 		cleansed.icon_state = "[initial(cleansed.icon_state)][cleansed.result]"
-		if(istype(O.loc, /mob/living)) // Just for the sake of me feeling better.
+		if(isliving(O.loc)) // Just for the sake of me feeling better.
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
@@ -128,21 +128,21 @@
 		if(G.lit) // Haha, but wouldn't water actually extinguish it?
 			cleansed.light("")
 		cleansed.wax = G.wax
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/game_kit/chaplain))
 		var/obj/item/weapon/game_kit/chaplain/G = O
 		var/obj/item/weapon/game_kit/random/cleansed = new /obj/item/weapon/game_kit/random(G.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/pen/ghost))
 		var/obj/item/weapon/pen/ghost/G = O
 		var/obj/item/weapon/pen/cleansed = new /obj/item/weapon/pen(G.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
@@ -198,7 +198,7 @@
 		else
 			cursed.result = N.result
 		cursed.icon_state = "[initial(cursed.icon_state)][cursed.result]"
-		if(istype(O.loc, /mob/living)) // Just for the sake of me feeling better.
+		if(isliving(O.loc)) // Just for the sake of me feeling better.
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
@@ -208,7 +208,7 @@
 		if(N.lit) // Haha, but wouldn't water actually extinguish it?
 			cursed.light("")
 		cursed.wax = N.wax
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
@@ -216,14 +216,14 @@
 		var/obj/item/weapon/game_kit/N = O
 		var/obj/item/weapon/game_kit/random/cursed = new /obj/item/weapon/game_kit/chaplain(N.loc)
 		cursed.board_stat = N.board_stat
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/pen) && !istype(O, /obj/item/weapon/pen/ghost))
 		var/obj/item/weapon/pen/N = O
 		var/obj/item/weapon/pen/ghost/cursed = new /obj/item/weapon/pen/ghost(N.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
@@ -308,7 +308,7 @@
 
 /datum/reagent/mercury/on_general_digest(mob/living/M)
 	..()
-	if(M.canmove && !M.incapacitated() && istype(M.loc, /turf/space))
+	if(M.canmove && !M.incapacitated() && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -334,7 +334,7 @@
 
 /datum/reagent/carbon/reaction_turf(turf/T, volume)
 	. = ..()
-	if(!istype(T, /turf/space))
+	if(!isspaceturf(T))
 		var/obj/effect/decal/cleanable/dirt/dirtoverlay = locate(/obj/effect/decal/cleanable/dirt, T)
 		if (!dirtoverlay)
 			dirtoverlay = new/obj/effect/decal/cleanable/dirt(T)
@@ -407,7 +407,7 @@
 
 /datum/reagent/lithium/on_general_digest(mob/living/M)
 	..()
-	if(M.canmove && !M.incapacitated() && istype(M.loc, /turf/space))
+	if(M.canmove && !M.incapacitated() && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -425,6 +425,11 @@
 /datum/reagent/sugar/on_general_digest(mob/living/M)
 	..()
 	M.nutrition += 4 * REM
+
+/datum/reagent/sugar/on_vox_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(REAGENTS_METABOLISM * 0.5)
+	return FALSE
 
 /datum/reagent/radium
 	name = "Radium"
@@ -456,7 +461,7 @@
 /datum/reagent/radium/reaction_turf(turf/T, volume)
 	. = ..()
 	if(volume >= 3)
-		if(!istype(T, /turf/space))
+		if(!isspaceturf(T))
 			var/obj/effect/decal/cleanable/greenglow/glow = locate(/obj/effect/decal/cleanable/greenglow, T)
 			if(!glow)
 				new /obj/effect/decal/cleanable/greenglow(T)
@@ -505,7 +510,7 @@
 /datum/reagent/uranium/reaction_turf(turf/T, volume)
 	. = ..()
 	if(volume >= 3)
-		if(!istype(T, /turf/space))
+		if(!isspaceturf(T))
 			var/obj/effect/decal/cleanable/greenglow/glow = locate(/obj/effect/decal/cleanable/greenglow, T)
 			if(!glow)
 				new /obj/effect/decal/cleanable/greenglow(T)

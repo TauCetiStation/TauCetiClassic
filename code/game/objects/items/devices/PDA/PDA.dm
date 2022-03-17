@@ -105,6 +105,9 @@
 /obj/item/device/pda/CtrlClick(mob/user)
 	if (can_use(user))
 		remove_pen(user)
+		return
+
+	return ..()
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -155,6 +158,44 @@
 		var/obj/item/weapon/cartridge/clown/cart = cartridge
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
+
+/obj/item/device/pda/clown/Destroy()
+	if(slot_equipped)
+		unslip_lying_user(loc)
+		var/mob/living/carbon/human/H = loc
+		if(istype(H) && H.lying)
+			remove_user_slip(loc)
+	return ..()
+
+/obj/item/device/pda/clown/proc/make_user_slip(mob/living/carbon/user)
+	user.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
+
+/obj/item/device/pda/clown/proc/remove_user_slip(mob/living/carbon/user)
+	qdel(user.GetComponent(/datum/component/slippery))
+
+/obj/item/device/pda/clown/equipped(mob/living/carbon/user, slot)
+	..()
+	if(slot in list(SLOT_L_STORE, SLOT_R_STORE, SLOT_BELT, SLOT_WEAR_ID))
+		slip_lying_user(user)
+		if(user.lying)
+			make_user_slip(user)
+	else
+		unslip_lying_user(user)
+		if(user.lying)
+			remove_user_slip(user)
+
+/obj/item/device/pda/clown/proc/slip_lying_user(mob/living/carbon/user)
+	RegisterSignal(user, COMSIG_MOB_STATUS_LYING, .proc/make_user_slip)
+	RegisterSignal(user, COMSIG_MOB_STATUS_NOT_LYING, .proc/remove_user_slip)
+
+/obj/item/device/pda/clown/proc/unslip_lying_user(mob/living/carbon/user)
+	UnregisterSignal(user, list(COMSIG_MOB_STATUS_LYING, COMSIG_MOB_STATUS_NOT_LYING))
+
+/obj/item/device/pda/clown/dropped(mob/living/carbon/user)
+	..()
+	unslip_lying_user(user)
+	if(user.lying)
+		remove_user_slip(user)
 
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime
@@ -977,7 +1018,7 @@
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed. [ADMIN_JMP(U)]")
 						else
-							to_chat("<span class='notice'>Success!</span>")
+							to_chat(U, "<span class='notice'>Success!</span>")
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded. [ADMIN_JMP(U)]")
 							detonate_act(P)
