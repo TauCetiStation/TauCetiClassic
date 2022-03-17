@@ -200,9 +200,6 @@ var/global/bridge_secret = null
 	var/list/maplist = list()
 	var/datum/map_config/defaultmap
 	var/load_testmap = FALSE // swaps whatever.json with testmap.json in SSmapping init phase.
-	var/load_junkyard = TRUE
-	var/load_mine = TRUE
-	var/load_space_levels = TRUE
 
 	var/record_replays = FALSE
 
@@ -645,15 +642,6 @@ var/global/bridge_secret = null
 
 				if("summon_testmap")
 					config.load_testmap = TRUE
-
-				if("no_junkyard")
-					config.load_junkyard = FALSE
-
-				if("no_mine")
-					config.load_mine = FALSE
-
-				if("no_space_levels")
-					config.load_space_levels = FALSE
 
 				if("record_replays")
 					config.record_replays = TRUE

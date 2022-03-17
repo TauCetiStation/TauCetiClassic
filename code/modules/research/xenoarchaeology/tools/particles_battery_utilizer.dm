@@ -17,7 +17,7 @@
 	power_stored = min(power_stored, 100)
 	icon_state = "particles_battery[round(power_stored, 25)]"
 
-#define COOLDOWN_TIME 5
+#define COOLDOWN_TIME 5 
 
 /obj/item/weapon/xenoarch_utilizer
 	name = "Exotic particles power utilizer"
@@ -65,8 +65,7 @@
 		else
 			dat += "Device is inactive.<br>"
 
-		if(inserted_battery.battery_effect)
-			dat += "[inserted_battery] inserted, exotic wave ID: [inserted_battery.battery_effect.artifact_id ? inserted_battery.battery_effect.artifact_id : "NA"]<BR>"
+		dat += "[inserted_battery] inserted, exotic wave ID: [inserted_battery.battery_effect.artifact_id ? inserted_battery.battery_effect.artifact_id : "NA"]<BR>"
 		dat += "<b>Total Power:</b> [round(inserted_battery.stored_charge, 1)]/[inserted_battery.capacity]<BR><BR>"
 		dat += "<b>Timed activation:</b> <A href='?src=\ref[src];neg_changetime_max=-100'>--</a> <A href='?src=\ref[src];neg_changetime=-10'>-</a> [time >= 1000 ? "[time/10]" : time >= 100 ? " [time/10]" : "  [time/10]" ] <A href='?src=\ref[src];changetime=10'>+</a> <A href='?src=\ref[src];changetime_max=100'>++</a><BR>"
 		if(cooldown)

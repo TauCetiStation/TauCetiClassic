@@ -79,7 +79,6 @@
 	if(istype(A, /area/station/bridge))
 		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "rts_failure", /datum/mood_event/rts_failure)
 
-
 /datum/quality/kamikaze
 	desc = "Каким-то образом Вам вставили имплант самоуничтожения. Реанимировать после смерти Вас будет значительно сложнее..."
 	requirement = "Нет."
@@ -88,10 +87,10 @@
 	var/obj/item/weapon/implant/dexplosive/DE = new(H)
 	DE.stealth_inject(H)
 
-
 /datum/quality/obedient
 	desc = "За плохое поведение Вам ввели имплант подчинения. Лучше вести себя хорошо."
 	requirement = "Не охранник."
+
 
 	var/list/funpolice = list("Security Officer", "Security Cadet", "Warden")
 
@@ -102,11 +101,9 @@
 	var/obj/item/weapon/implant/obedience/O = new(H)
 	O.stealth_inject(H)
 
-
 /datum/quality/soulless
 	desc = "У Вас нет души."
 	requirement = "Нет."
-
 
 /datum/quality/soulless/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_NO_SOUL, QUALITY_TRAIT)
@@ -119,7 +116,6 @@
 	H.r_facial = H.r_hair
 	H.g_facial = H.g_hair
 	H.b_facial = H.b_hair
-
 
 /datum/quality/dirty
 	desc = "Прекрасным ранним утром в дороге на работу ты поскользнулся и упал в глубокую лужу грязи, полностью пропитавшись этой субстанцией. Времени не было и пришлось лететь на станцию в таком виде."
@@ -157,7 +153,6 @@
 	H.update_body()
 	H.regenerate_icons()
 
-
 /datum/quality/non_comprende
 	desc = "Ты не знаешь никаких языков кроме общего."
 	requirement = "Нет."
@@ -178,7 +173,7 @@
 	H.forced_language = pick(H.languages)
 
 	for(var/datum/language/language as anything in H.languages)
-		if(language.name == H.forced_language)
+		if(language == H.forced_language)
 			continue
 		H.remove_language(language.name)
 
@@ -194,7 +189,7 @@
 	H.forced_language = LANGUAGE_SHKIONDIONIOVIOION
 
 	for(var/datum/language/language as anything in H.languages)
-		if(language.name == H.forced_language)
+		if(language == H.forced_language)
 			continue
 		H.remove_language(language.name)
 
@@ -207,7 +202,7 @@
 	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
 
 	H.add_language(LANGUAGE_SALARIAN)
-	H.common_language = LANGUAGE_SALARIAN
+	H.forced_language = LANGUAGE_SALARIAN
 
 
 /datum/quality/clumsy

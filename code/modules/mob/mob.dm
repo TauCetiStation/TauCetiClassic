@@ -1294,26 +1294,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 		input_offsets = null
 		next_randomise_inputs = world.time
 
-/mob/proc/parse_language(message)
+/mob/proc/get_language()
 	if(forced_language)
-		return list(message, all_languages[forced_language])
-
-	var/datum/language/speaking = parse_language_code(message)
-	if(speaking)
-		var/new_msg = copytext_char(message, 2 + length_char(speaking.key))
-		return list(new_msg, speaking)
-
-	if(default_language)
-		return list(message, all_languages[default_language])
-
-	var/datum/species/S = all_species[get_species()]
-	if(S && S.species_common_language)
-		return list(message, all_languages[S.language])
-
-	if(common_language)
-		return list(message, all_languages[common_language])
-
-	return list(message, null)
+		return all_languages[forced_language]
+	return null
 
 /mob/proc/set_lastattacker_info(mob/M)
 	lastattacker_name = M.real_name

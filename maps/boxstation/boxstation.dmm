@@ -4455,12 +4455,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/mob/living/simple_animal/corgi/borgi,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/mob/living/simple_animal/corgi/borgi,
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "ahI" = (
@@ -10363,10 +10363,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
-"arq" = (
-/obj/structure/stool/bed/chair/lectern,
-/turf/simulated/floor/carpet/black,
-/area/station/civilian/chapel)
 "arr" = (
 /obj/machinery/light{
 	dir = 4
@@ -131907,7 +131903,7 @@ aLY
 byI
 bMe
 ePF
-arq
+ePF
 mlr
 aVp
 aVp

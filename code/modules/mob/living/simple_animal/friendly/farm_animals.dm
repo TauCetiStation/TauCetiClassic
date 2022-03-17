@@ -364,10 +364,3 @@ var/global/chicken_count = 0
 
 	has_head = TRUE
 	has_arm = TRUE
-
-/mob/living/simple_animal/walrus/syndicate
-	icon_state = "walrus-syndi"
-	icon_living = "walrus-syndi"
-	icon_dead = "walrus-syndi_dead"
-	speak = list("Urk?","urk","URK","Furk NT")
-	health = 80

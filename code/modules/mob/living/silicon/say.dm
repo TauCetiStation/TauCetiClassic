@@ -82,13 +82,10 @@
 			return
 
 	//parse language key and consume it
-	var/ending = copytext(message, -1)
-	var/list/parsed = parse_language(message)
-	message = parsed[1]
-	var/datum/language/speaking = parsed[2]
-
+	var/datum/language/speaking = parse_language(message)
 	if (speaking)
-		verb = speaking.get_spoken_verb(ending)
+		verb = speaking.speech_verb
+		message = trim(copytext(message,2+length_char(speaking.key)))
 
 	var/area/A = get_area(src)
 

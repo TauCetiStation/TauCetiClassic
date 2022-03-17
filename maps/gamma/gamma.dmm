@@ -52203,7 +52203,6 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "pwR" = (
-/obj/structure/stool/bed/chair/lectern,
 /turf/simulated/floor/carpet/red,
 /area/station/civilian/chapel)
 "pwS" = (

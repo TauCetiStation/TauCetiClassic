@@ -48,9 +48,12 @@
 		deity = "their progenitor"
 
 	//parse the language code and consume it
-	var/list/parsed = parse_language(msg)
-	msg = parsed[1]
-	var/datum/language/speaking = parsed[2]
+	var/datum/language/speaking = parse_language(msg)
+	if(speaking)
+		msg = copytext_char(msg, 2 + length_char(speaking.key))
+
+	if(!speaking)
+		speaking = get_language()
 
 	if(speaking)
 		msg = speaking.color_message(msg)

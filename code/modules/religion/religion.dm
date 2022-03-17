@@ -33,11 +33,20 @@
 
 	var/religious_tool_type
 
-	var/emblem_icon_state
+	/*
+	var/lecturn_icon_state
 	// Is required to have a "Default" as a fallback.
-	var/list/emblem_info_by_name
+	var/static/list/lecturn_info_by_name = list(
+	)
+
 	// Radial menu
-	var/list/emblem_skins
+	var/lecturn_skins
+	*/
+
+	var/pews_icon_state
+	var/list/pews_info_by_name
+	// Radial menu
+	var/list/pews_skins
 
 	var/altar_icon_state
 	// Is required to have a "Default" as a fallback.
@@ -215,10 +224,10 @@
 		I.transform = M
 		altar_skins[info] = I
 
-/datum/religion/proc/gen_emblem_variants()
-	emblem_skins = list()
-	for(var/info in emblem_info_by_name)
-		emblem_skins[info] = image(icon = 'icons/obj/lectern.dmi', icon_state = "[emblem_info_by_name[info]]")
+/datum/religion/proc/gen_pews_variants()
+	pews_skins = list()
+	for(var/info in pews_info_by_name)
+		pews_skins[info] = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "[pews_info_by_name[info]]_left")
 
 /datum/religion/proc/gen_carpet_variants()
 	carpet_skins = list()
@@ -242,7 +251,7 @@
 
 	gen_bible_info()
 	gen_altar_variants()
-	gen_emblem_variants()
+	gen_pews_variants()
 	gen_carpet_variants()
 
 	gen_agent_lists()
@@ -257,11 +266,20 @@
 	else
 		carpet_dir = 0
 
-	var/emblem_info = emblem_info_by_name[name]
-	if(emblem_info)
-		emblem_icon_state = emblem_info
+	/*
+	// Luduk when?
+	var/lecturn_info = lecturn_info_by_name[name]
+	if(lecturn_info)
+		lecturn_icon_state = lecturn_info
 	else
-		emblem_icon_state = emblem_info_by_name["Default"]
+		lecturn_info_state = lecturn_info_by_name["Default"]
+	*/
+
+	var/pews_info = pews_info_by_name[name]
+	if(pews_info)
+		pews_icon_state = pews_info
+	else
+		pews_icon_state = pews_info_by_name["Default"]
 
 	var/altar_info = altar_info_by_name[name]
 	if(altar_info)

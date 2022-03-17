@@ -8,7 +8,7 @@
 		"Cult of Blood" = /datum/bible_info/cult/blood
 	)
 
-	emblem_info_by_name = list(
+	pews_info_by_name = list(
 		"Cult of Blood" = "dead"
 	)
 
