@@ -516,6 +516,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
+		can_buckle = !can_buckle
 		to_chat(user, "<span class='notice'>You have [anchored ? "secured" : "unsecured"] [src].</span>")
 		return
 
