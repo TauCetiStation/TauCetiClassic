@@ -1,9 +1,13 @@
 /atom/movable/singularity_effect
-	plane = GRAVITY_PULSE_PLANE
+	plane = GRAVITY_PULSE_PLANE_1
 	//appearance_flags = PIXEL_SCALE
 
 /atom/movable/singularity_swirl
-	plane = GRAVITY_PULSE_PLANE
+	plane = GRAVITY_PULSE_PLANE_1
+	//appearance_flags = PIXEL_SCALE
+
+/atom/movable/singularity_lens
+	plane = GRAVITY_PULSE_PLANE_0
 	//appearance_flags = PIXEL_SCALE
 
 /obj/singularity
@@ -15,7 +19,8 @@
 	density = TRUE
 	plane = SINGULARITY_PLANE
 	layer = SINGULARITY_LAYER
-	appearance_flags = 0
+	appearance_flags = LONG_GLIDE
+	glide_size = 1
 	//light_range = 6
 	unacidable = 1 //Don't comment this out.
 	w_class = SIZE_MASSIVE
@@ -37,6 +42,7 @@
 
 	var/atom/movable/singularity_effect/singulo_effect
 	var/atom/movable/singularity_swirl/singulo_swirl
+	var/atom/movable/singularity_lens/singulo_lens
 
 /obj/singularity/atom_init(mapload, starting_energy = 50, temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
@@ -59,8 +65,12 @@
 			break
 
 /obj/singularity/Destroy()
+	vis_contents -= singulo_swirl
+	QDEL_NULL(singulo_swirl)
 	vis_contents -= singulo_effect
 	QDEL_NULL(singulo_effect)
+	vis_contents -= singulo_lens
+	QDEL_NULL(singulo_lens)
 	visible_message("<span class='warning'><B>[src] slows it's endless spinning down. A second passes - and reality around [src] distorts before allowing [src] to collapse into itself and disappear from existence.</B></span>")
 	STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -114,49 +124,65 @@
 	return
 
 /obj/singularity/update_icon(stage)
+	if(!singulo_lens)
+		singulo_lens = new(src)
+		singulo_lens.transform = matrix().Scale(3)
+		vis_contents += singulo_lens
+		singulo_lens.icon_state = "gravitational_lens"
+		singulo_lens.plane = GRAVITY_PULSE_PLANE_0
+
+	if(!singulo_swirl)
+		singulo_swirl = new(src)
+		singulo_swirl.transform = matrix().Scale(1.6)
+		vis_contents += singulo_swirl
+		singulo_swirl.icon_state = "gravitational_swirl"
+
+	if(!singulo_effect)
+		singulo_effect = new(src)
+		singulo_effect.transform = matrix().Scale(0.8)
+		vis_contents += singulo_effect
+		singulo_effect.icon_state = "gravitational_lens"
+
 	switch(stage)
 		if(STAGE_ONE)
 			icon = 'icons/obj/singularity.dmi'
 			icon_state = "singularity_s1"
 			pixel_x = 0
 			pixel_y = 0
+			singulo_swirl.plane = GRAVITY_PULSE_PLANE_1
+			singulo_effect.plane = GRAVITY_PULSE_PLANE_1
 		if(STAGE_TWO )
 			icon = 'icons/effects/96x96.dmi'
 			icon_state = "singularity_s3"
 			pixel_x = -32
 			pixel_y = -32
+			singulo_swirl.plane = GRAVITY_PULSE_PLANE_1
+			singulo_effect.plane = GRAVITY_PULSE_PLANE_2
 		if(STAGE_THREE)
 			icon = 'icons/effects/160x160.dmi'
 			icon_state = "singularity_s5"
 			pixel_x = -64
 			pixel_y = -64
+			singulo_swirl.plane = GRAVITY_PULSE_PLANE_2
+			singulo_effect.plane = GRAVITY_PULSE_PLANE_2
 		if(STAGE_FOUR)
 			icon = 'icons/effects/224x224.dmi'
 			icon_state = "singularity_s7"
 			pixel_x = -96
 			pixel_y = -96
+			singulo_swirl.plane = GRAVITY_PULSE_PLANE_2
+			singulo_effect.plane = GRAVITY_PULSE_PLANE_3
 		if(STAGE_FIVE)
 			icon = 'icons/effects/288x288.dmi'
 			icon_state = "singularity_s9"
 			pixel_x = -128
 			pixel_y = -128
+			singulo_swirl.plane = GRAVITY_PULSE_PLANE_3
+			singulo_effect.plane = GRAVITY_PULSE_PLANE_3
 
-	if(!singulo_swirl)
-		singulo_swirl = new(src)
-		singulo_swirl.transform = matrix().Scale(2.4)
-		vis_contents += singulo_swirl
-
-	if(!singulo_effect)
-		singulo_effect = new(src)
-		singulo_effect.transform = matrix().Scale(1.2)
-		vis_contents += singulo_effect
-
+	singulo_lens.icon = icon
 	singulo_swirl.icon = icon
-	singulo_swirl.icon_state = "gravitational_swirl"
-
 	singulo_effect.icon = icon
-	singulo_effect.icon_state = "gravitational_lens"
-
 
 /obj/singularity/proc/admin_investigate_setup()
 	last_warning = world.time

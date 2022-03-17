@@ -42,7 +42,7 @@
 ///////////////////////
 
 /atom/movable/warp_effect
-	plane = GRAVITY_PULSE_PLANE
+	plane = GRAVITY_PULSE_PLANE_1
 	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "emfield_s7"
