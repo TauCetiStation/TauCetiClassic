@@ -8347,6 +8347,7 @@
 "auh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/ladder{
+	anchored = 1;
 	height = 1;
 	icon_state = "ladderup";
 	id = "vox1"
@@ -8417,6 +8418,7 @@
 /area/shuttle/vox/arkship)
 "aup" = (
 /obj/structure/ladder{
+	anchored = 1;
 	height = 2;
 	icon_state = "ladderdown";
 	id = "vox1"
@@ -8550,6 +8552,7 @@
 "auD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/ladder{
+	anchored = 1;
 	height = 2;
 	icon_state = "ladderdown";
 	id = "vox2"
@@ -9081,6 +9084,7 @@
 "avK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/ladder{
+	anchored = 1;
 	height = 1;
 	icon_state = "ladderup";
 	id = "vox2"
