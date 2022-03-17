@@ -113,29 +113,29 @@
 /atom/movable/screen/plane_master/singularity_0
 	name = "singularity_0 plane"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	plane = GRAVITY_PULSE_PLANE_0
-	render_target = GRAVITY_RENDER_TARGET_0
+	plane = SINGULARITY_EFFECT_PLANE_0
+	render_target = SINGA_RENDER_TARGET_0
 	render_relay_plane = null
 
 /atom/movable/screen/plane_master/singularity_1
 	name = "singularity_1 plane"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	plane = GRAVITY_PULSE_PLANE_1
-	render_target = GRAVITY_RENDER_TARGET_1
+	plane = SINGULARITY_EFFECT_PLANE_1
+	render_target = SINGA_RENDER_TARGET_1
 	render_relay_plane = null
 
 /atom/movable/screen/plane_master/singularity_2
 	name = "singularity_2 plane"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	plane = GRAVITY_PULSE_PLANE_2
-	render_target = GRAVITY_RENDER_TARGET_2
+	plane = SINGULARITY_EFFECT_PLANE_2
+	render_target = SINGA_RENDER_TARGET_2
 	render_relay_plane = null
 
 /atom/movable/screen/plane_master/singularity_3
 	name = "singularity_3 plane"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	plane = GRAVITY_PULSE_PLANE_3
-	render_target = GRAVITY_RENDER_TARGET_3
+	plane = SINGULARITY_EFFECT_PLANE_3
+	render_target = SINGA_RENDER_TARGET_3
 	render_relay_plane = null
 
 /atom/movable/screen/plane_master/anomaly

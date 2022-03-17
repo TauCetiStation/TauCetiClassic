@@ -1,23 +1,23 @@
 /atom/movable/singularity_effect
-	plane = GRAVITY_PULSE_PLANE_1
+	plane = SINGULARITY_EFFECT_PLANE_1
 	appearance_flags = PIXEL_SCALE
 	icon = 'icons/effects/288x288.dmi'
 	icon_state = "gravitational_lens"
-	plane = GRAVITY_PULSE_PLANE_1
+	plane = SINGULARITY_EFFECT_PLANE_1
 
 /atom/movable/singularity_swirl
-	plane = GRAVITY_PULSE_PLANE_1
+	plane = SINGULARITY_EFFECT_PLANE_1
 	appearance_flags = PIXEL_SCALE
 	icon = 'icons/effects/288x288.dmi'
 	icon_state = "gravitational_swirl"
-	plane = GRAVITY_PULSE_PLANE_1
+	plane = SINGULARITY_EFFECT_PLANE_1
 
 /atom/movable/singularity_lens
-	plane = GRAVITY_PULSE_PLANE_0
+	plane = SINGULARITY_EFFECT_PLANE_0
 	appearance_flags = PIXEL_SCALE
 	icon = 'icons/effects/288x288.dmi'
 	icon_state = "gravitational_lens"
-	plane = GRAVITY_PULSE_PLANE_0
+	plane = SINGULARITY_EFFECT_PLANE_0
 
 /obj/singularity
 	name = "gravitational singularity"
@@ -151,8 +151,8 @@
 			icon_state = "singularity_s1"
 			pixel_x = 0
 			pixel_y = 0
-			singulo_swirl.plane = GRAVITY_PULSE_PLANE_1
-			singulo_effect.plane = GRAVITY_PULSE_PLANE_1
+			singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_1
+			singulo_effect.plane = SINGULARITY_EFFECT_PLANE_1
 			animate(singulo_lens, transform = matrix().Scale(0.45), time = 25)
 			singulo_lens.pixel_x = -128
 			singulo_lens.pixel_y = -128
@@ -167,8 +167,8 @@
 			icon_state = "singularity_s3"
 			pixel_x = -32
 			pixel_y = -32
-			singulo_swirl.plane = GRAVITY_PULSE_PLANE_1
-			singulo_effect.plane = GRAVITY_PULSE_PLANE_2
+			singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_1
+			singulo_effect.plane = SINGULARITY_EFFECT_PLANE_2
 			animate(singulo_lens, transform = matrix().Scale(0.72), time = 25)
 			singulo_lens.pixel_x = -96
 			singulo_lens.pixel_y = -96
@@ -183,8 +183,8 @@
 			icon_state = "singularity_s5"
 			pixel_x = -64
 			pixel_y = -64
-			singulo_swirl.plane = GRAVITY_PULSE_PLANE_2
-			singulo_effect.plane = GRAVITY_PULSE_PLANE_2
+			singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_2
+			singulo_effect.plane = SINGULARITY_EFFECT_PLANE_2
 			animate(singulo_lens, transform = matrix().Scale(1.16), time = 25)
 			singulo_lens.pixel_x = -64
 			singulo_lens.pixel_y = -64
@@ -199,8 +199,8 @@
 			icon_state = "singularity_s7"
 			pixel_x = -96
 			pixel_y = -96
-			singulo_swirl.plane = GRAVITY_PULSE_PLANE_2
-			singulo_effect.plane = GRAVITY_PULSE_PLANE_3
+			singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_2
+			singulo_effect.plane = SINGULARITY_EFFECT_PLANE_3
 			animate(singulo_lens, transform = matrix().Scale(1.87), time = 25)
 			singulo_lens.pixel_x = -32
 			singulo_lens.pixel_y = -32
@@ -215,8 +215,8 @@
 			icon_state = "singularity_s9"
 			pixel_x = -128
 			pixel_y = -128
-			singulo_swirl.plane = GRAVITY_PULSE_PLANE_3
-			singulo_effect.plane = GRAVITY_PULSE_PLANE_3
+			singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_3
+			singulo_effect.plane = SINGULARITY_EFFECT_PLANE_3
 			animate(singulo_lens, transform = matrix().Scale(3), time = 25)
 			singulo_lens.pixel_x = 0
 			singulo_lens.pixel_y = 0
