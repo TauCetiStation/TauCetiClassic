@@ -29,7 +29,7 @@
 	plane = SINGULARITY_PLANE
 	layer = SINGULARITY_LAYER
 	appearance_flags = LONG_GLIDE
-	glide_size = 1
+	glide_size = 0.65
 	//light_range = 6
 	unacidable = 1 //Don't comment this out.
 	w_class = SIZE_MASSIVE
