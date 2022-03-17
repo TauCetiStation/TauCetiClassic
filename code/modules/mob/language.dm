@@ -24,6 +24,25 @@
 	// What species can speak(and thus understand). Is used in loadout language choosing.
 	var/list/allowed_speak
 
+/datum/language/Topic(href, href_list)
+	var/mob/M = locate(href_list["usr"])
+	if(!istype(M))
+		return
+
+	if(M.languages[src] != LANGUAGE_CAN_SPEAK)
+		return
+
+	if(M.default_language == name)
+		// Please make Galactic Common a language one day? ~Luduk
+		to_chat(M, "<span class='notice'>Now speaking in Galactic Common by default.</span>")
+		M.default_language = null
+		M.check_languages()
+		return
+
+	to_chat(M, "<span class='notice'>Now speaking in [name] by default.</span>")
+	M.default_language = name
+	M.check_languages()
+
 /datum/language/proc/color_message(message)
 	return "<span class='message'><span class='[colour]'>[capitalize(message)]</span></span>"
 
@@ -232,6 +251,7 @@
 	ask_verb = "asks"
 	exclaim_verb = "exclaims"
 	colour = "body"
+	key = list("`", "ё")
 	syllables = list("ёх", "ёс", "ёс", "ём", "ён", "бён", "вёл", "гёр", "мёг", "трё", "лёс", "рёйд", "ё", "мём", "ёнт")
 
 	var/list/replacements
@@ -259,6 +279,39 @@
 /datum/language/shkiondioniovioion/scramble(input)
 	return replace_characters(input, replacements)
 
+/datum/language/salarian
+	name = LANGUAGE_SALARIAN
+	desc = "One of the most prominent space-slavic languages out there. Consists of many funny sounds, as well as deep, melodic structure."
+	speech_verb = "says"
+	ask_verb = "asks"
+	exclaim_verb = "exclaims"
+	colour = "body"
+	key = list("x", "ч")
+	syllables = list("на", "ня", "ні", "нає", "ма", "мі", "та", "тя", "ко", "нко", "ля", "ла", "ша", "шо", "ха", "хо", "хи", "ги", "ґи", "юк", "як")
+
+	var/list/replacements
+
+/datum/language/salarian/New()
+	var/list/lowercase_letters = list(
+		"и" = "і",
+		"ы" = "и",
+		"э" = "е",
+		"е" = "є",
+		"ё" = "йо",
+		"г" = "ґ",
+		"чт" = "ш",
+	)
+
+	replacements = list()
+	replacements["Чт"] = "Ш"
+	for(var/letter in lowercase_letters)
+		var/replacement = lowercase_letters[letter]
+		replacements[letter] = replacement
+		replacements[uppertext(letter)] = uppertext(replacement)
+
+/datum/language/salarian/scramble(input)
+	return replace_characters(input, replacements)
+
 // Language handling.
 /mob/proc/add_language(language, flags=LANGUAGE_CAN_SPEAK)
 	if(isnull(flags))
@@ -276,6 +329,9 @@
 	return 1
 
 /mob/proc/remove_language(language, flags)
+	if(default_language == name)
+		default_language = null
+
 	languages.Remove(all_languages[language])
 	return 0
 
@@ -301,18 +357,22 @@
 	var/dat = ""
 
 	for(var/datum/language/L in languages)
-		dat += "<b>[L.name] "
+		var/lang_name = L.name
+		var/link_class = ""
+		if(L.name == default_language)
+			link_class = "class='good'"
+
+		dat += "<b><a href='?src=\ref[L];usr=\ref[src]'[link_class]>[lang_name]</a> "
 		for(var/l_key in L.key)
 			dat += "(:[l_key])"
+
 		var/remark = ""
 		if(languages[L] == LANGUAGE_CAN_UNDERSTAND)
-			remark = " <i>(can't speak)</i>"
+			remark += " <i>(can't speak)</i>"
 		dat += " </b><br/>[L.desc][remark]<br/><br/>"
 
 	var/datum/browser/popup = new(src, "checklanguage", "Known Languages")
 	popup.set_content(dat)
 	popup.open()
-
-	return
 
 #undef MESSAGE_LIMIT

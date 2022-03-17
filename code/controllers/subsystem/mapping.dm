@@ -209,21 +209,24 @@ SUBSYSTEM_DEF(mapping)
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, default_traits = ZTRAITS_STATION)
 	station_loaded = TRUE
 	change_lobbyscreen()
-	while (space_levels_so_far < config.space_ruin_levels)
-		++space_levels_so_far
-		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
-	for (var/i in 1 to config.space_empty_levels)
-		++space_levels_so_far
-		add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
+	if(global.config.load_space_levels)
+		while (space_levels_so_far < config.space_ruin_levels)
+			++space_levels_so_far
+			add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
+
+		for (var/i in 1 to config.space_empty_levels)
+			++space_levels_so_far
+			add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 
 	// load mining
-	if(config.minetype == "asteroid")
-		LoadGroup(FailedZs, "Asteroid", "asteroid", "asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
-	else if (!isnull(config.minetype))
-		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
+	if(global.config.load_mine)
+		if(config.minetype == "asteroid")
+			LoadGroup(FailedZs, "Asteroid", "asteroid", "asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
+		else if (!isnull(config.minetype))
+			INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
 
-	if(config.load_junkyard)
+	if(global.config.load_junkyard && config.load_junkyard)
 		LoadGroup(FailedZs, "Junkyard", "junkyard", "junkyard.dmm", default_traits = list(ZTRAIT_JUNKYARD = TRUE))
 
 	if(length(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen

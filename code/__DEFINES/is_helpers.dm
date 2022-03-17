@@ -9,6 +9,8 @@
 
 #define isspaceturf(A) (istype(A, /turf/environment/space))
 
+#define isiceturf(A) (istype(A, /turf/environment/snow/ice))
+
 // HUMAN
 
 #define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))

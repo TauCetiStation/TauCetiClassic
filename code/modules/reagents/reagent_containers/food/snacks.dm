@@ -561,16 +561,8 @@
 	desc = "The food of choice for the seasoned traitor."
 	icon_state = "donkpocket"
 	filling_color = "#dedeab"
-	var/warm = 0
+	var/warm = FALSE
 	list_reagents = list("nutriment" = 4)
-
-/obj/item/weapon/reagent_containers/food/snacks/donkpocket/proc/cooltime() //Not working, derp?
-	if (src.warm)
-		spawn( 4200 )
-			src.warm = 0
-			reagents.del_reagent("tricordrazine")
-			src.name = "donk-pocket"
-	return
 
 /obj/item/weapon/reagent_containers/food/snacks/brainburger
 	name = "brainburger"

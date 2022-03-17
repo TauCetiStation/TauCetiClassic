@@ -119,7 +119,7 @@
 	var/death_y
 	// int, [0...]
 	var/death_z
-	// int, [0...] in ticks
+	// string, [hh:mm]
 	var/time_of_death
 	// string, anything, name of antagonists' role
 	var/special_role
@@ -131,6 +131,8 @@
 	var/real_name
 	// string, anything
 	var/name
+	// string, byond_type
+	var/mob_type
 	// boolean, [0, 1]
 	var/from_suicide
 	// string, anything
