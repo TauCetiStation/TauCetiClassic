@@ -502,7 +502,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	return ..()
 
 /obj/structure/stool/bed/chair/lectern/can_flip(mob/living/carbon/human/user)
-	if(!anchored)
+	if(anchored)
 		return FALSE
 	return ..()
 
