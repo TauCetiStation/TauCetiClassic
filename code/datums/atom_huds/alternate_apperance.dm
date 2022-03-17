@@ -333,8 +333,8 @@ var/global/list/active_alternate_appearances = list()
 		if(mobShouldSee(M))
 			add_hud_to(M)
 
-/datum/atom_hud/alternate_appearance/basic/ghost_buster/mobShouldSee(mob/living/carbon/human/H)
-	if(HAS_TRAIT(H, TRAIT_GHOST_BUSTER))
+/datum/atom_hud/alternate_appearance/basic/ghost_buster/mobShouldSee(mob/M)
+	if(HAS_TRAIT(M, TRAIT_GHOST_BUSTER))
 		return TRUE
 	return FALSE
 

@@ -145,7 +145,7 @@
 
 	needed_aspects = list(
 		ASPECT_WACKY = 1,
-		ASPECT_HERD = 1
+		ASPECT_CHAOS = 1,
 	)
 
 /datum/religion_rites/standing/consent/clownconversion/can_start(mob/living/user, obj/AOG)
@@ -215,10 +215,6 @@
 	favor_cost = 250
 
 	consent_msg = "Do you believe in God?"
-
-	needed_aspects = list(
-		ASPECT_HERD = 1
-	)
 
 /datum/religion_rites/standing/consent/invite/can_start(mob/living/user, obj/AOG)
 	if(!..())
