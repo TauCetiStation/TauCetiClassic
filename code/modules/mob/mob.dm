@@ -49,6 +49,7 @@
 	prepare_huds()
 	update_all_alt_apperance()
 
+	init_languages()
 
 /mob/proc/Cell()
 	set category = "Admin"

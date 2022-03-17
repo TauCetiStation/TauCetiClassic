@@ -165,3 +165,30 @@
 			return L
 
 	return null
+
+/mob/proc/add_approximation(sound, approximation, case_sensitive=FALSE)
+	if(case_sensitive)
+		LAZYSET(sensitive_sound_approximations, sound, approximation)
+		return
+
+	LAZYSET(sound_approximations, sound, approximation)
+
+/mob/proc/remove_approximation(sound, case_sensitive=FALSE)
+	if(case_sensitive)
+		LAZYREMOVE(sensitive_sound_approximations, sound)
+		return
+
+	LAZYREMOVE(sound_approximations, sound)
+
+/mob/proc/approximate_sounds(txt, datum/language/speaking)
+	if(speaking && (speaking.flags & SIGNLANG))
+		return txt
+
+	. = replace_characters(txt, sound_approximations)
+	. = replaceEx_characters(txt, sensitive_sound_approximations)
+
+/mob/proc/accent_sounds(txt, datum/language/speaking)
+	return txt
+
+/mob/proc/init_languages()
+	return
