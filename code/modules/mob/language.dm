@@ -370,7 +370,7 @@
 	if(!new_language)
 		return FALSE
 
-	if((new_language in languages) && language[new_language] >= flags)
+	if((new_language in languages) && languages[new_language] >= flags)
 		return FALSE
 
 	if(flags != LANGUAGE_CAN_UNDERSTAND)
@@ -381,12 +381,12 @@
 			add_approximation(sound, new_language.special_symbols[sound], case_sensitive=TRUE)
 
 	languages[new_language] = flags
-	return 1
+	return TRUE
 
 /mob/proc/remove_language(language, flags)
 	var/datum/language/L = all_languages[language]
 	if(!L)
-		return
+		return FALSE
 
 	if(languages[L] != LANGUAGE_CAN_UNDERSTAND)
 		for(var/sound in L.approximations)
@@ -400,7 +400,7 @@
 	if(default_language == L.name)
 		default_language = null
 
-	return 0
+	return TRUE
 
 /mob/proc/can_understand(datum/language/speaking)
 	return universal_understand || (speaking in languages)
