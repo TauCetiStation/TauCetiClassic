@@ -37,4 +37,4 @@
 	"%7b%22type%22%3a%22[type]%22%2c%22payload%22%3a[url_encode(json_encode(payload))]%7d" \
 )
 
-#define CREDIT_SYMBOL "<image class='credit'></image>"
+#define CREDIT_SYMBOL "<img class='credit'></img>"
