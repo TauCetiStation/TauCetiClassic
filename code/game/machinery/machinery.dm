@@ -386,6 +386,12 @@ Class Procs:
 		return TRUE
 	if(!can_interact_with(user))
 		return TRUE
+	if(HAS_TRAIT(user, TRAIT_GREASY_FINGERS))
+		var/dice = "1d20"
+		var/p = roll(dice)
+		if(p < 16)
+			to_chat(user, "<span class='notice'>Your fingers are slipping.</span>")
+			return TRUE
 
 	if(hasvar(src, "wires"))              // Lets close wires window if panel is closed.
 		var/datum/wires/DW = vars["wires"] // Wires and machinery that uses this feature actually should be refactored.
