@@ -189,6 +189,14 @@ var/global/list/allergen_reagents_list
 	H.adjustBrainLoss(rand(30, 99))
 
 
+/datum/quality/dnd
+	desc = "Вы непредсказуемы, даже для самого себя."
+	requirement = "Кадет, Офицер, Варден, ГСБ."
+
+/datum/quality/dnd/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_RANDOM_DAMAGE, QUALITY_TRAIT)
+
+
 /datum/quality/greasy_fingers
 	desc = "Ваши пальцы часто покрываются природным жиром."
 	requirement = "Не СПУ."
