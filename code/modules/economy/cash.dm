@@ -100,25 +100,27 @@
 	use_sound = list('sound/items/cash.ogg')
 
 /obj/item/weapon/storage/bill_bundle/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
-	. = ..(W, new_location)
-	if(.)
-		update_icon()
-		var/obj/item/weapon/storage/bill_bundle/B = W
-		worth -= B.worth
-		if(contents.len <= 1)
-			for(var/obj/item/I in contents)
-				remove_from_storage(I, src.loc)
-				if(ismob(src.loc))
-					var/mob/M = src.loc
-					M.put_in_hands(I)
-				qdel(src)
+	. = ..()
+	if(!.)
+		return
+	update_icon()
+	var/obj/item/weapon/storage/bill_bundle/B = W
+	worth -= B.worth
+	if(contents.len <= 1)
+		for(var/obj/item/I in contents)
+			remove_from_storage(I, src.loc)
+			if(ismob(src.loc))
+				var/mob/M = src.loc
+				M.put_in_hands(I)
+			qdel(src)
 
 /obj/item/weapon/storage/bill_bundle/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
-	. = ..(W, prevent_warning)
-	if(.)
-		update_icon()
-		var/obj/item/weapon/storage/bill_bundle/B = W
-		worth += B.worth
+	. = ..()
+	if(!.)
+		return
+	update_icon()
+	var/obj/item/weapon/storage/bill_bundle/B = W
+	worth += B.worth
 
 /obj/item/weapon/storage/bill_bundle/update_icon()
 	cut_overlay(bundle_overlays)

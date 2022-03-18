@@ -61,14 +61,6 @@ log transactions
 		if(ticks_left_locked_down <= 0)
 			number_incorrect_tries = 0
 
-	for(var/obj/item/weapon/spacecash/S in src)
-		S.loc = src.loc
-		if(prob(50))
-			playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
-		else
-			playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS_MASTER)
-		break
-
 /obj/machinery/atm/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card))
 		if(emagged > 0)
@@ -80,6 +72,7 @@ log transactions
 		if(!held_card)
 			usr.drop_from_inventory(idcard, src)
 			held_card = idcard
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 			if(authenticated_account && held_card.associated_account_number != authenticated_account.account_number)
 				authenticated_account = null
 	else if(authenticated_account)
@@ -93,10 +86,6 @@ log transactions
 				else
 					money_stock += SC.worth
 			authenticated_account.adjust_money(SC.worth)
-			if(prob(50))
-				playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
-			else
-				playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS_MASTER)
 
 			//create a transaction log entry
 			var/datum/transaction/T = new()
@@ -109,6 +98,7 @@ log transactions
 			authenticated_account.transaction_log.Add(T)
 
 			to_chat(user, "<span class='info'>You insert [I] into [src].</span>")
+			playsound(src, 'sound/machines/cash_in.ogg', VOL_EFFECTS_MASTER)
 			attack_hand(user)
 			qdel(I)
 	else
@@ -421,6 +411,7 @@ log transactions
 						if (istype(I, /obj/item/weapon/card/id))
 							usr.drop_from_inventory(I, src)
 							held_card = I
+							playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 							if(ishuman(usr))
 								var/mob/living/carbon/human/H = usr
 								H.sec_hud_set_ID()
@@ -468,6 +459,7 @@ log transactions
 	if(ishuman(human_user) && !human_user.get_active_hand())
 		human_user.put_in_hands(held_card)
 	held_card = null
+	playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
 
 
 /obj/machinery/atm/proc/spawn_ewallet(sum, loc)
@@ -488,3 +480,4 @@ log transactions
 	else
 		money_stock -= sum
 		spawn_money(sum, src.loc)
+		playsound(src, 'sound/machines/cash_out.ogg', VOL_EFFECTS_MASTER)

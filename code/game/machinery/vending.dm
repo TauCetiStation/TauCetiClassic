@@ -216,10 +216,12 @@
 	else if(currently_vending && istype(W, /obj/item/weapon/card) && cash == 0)
 		var/obj/item/weapon/card/I = W
 		scan_card(I)
+		playsound(src, 'sound/machines/card_swipe.ogg', VOL_EFFECTS_MASTER)
 
 	else if(currently_vending && istype(W, /obj/item/weapon/spacecash/bill) && !id_scanned)
 		var/obj/item/weapon/spacecash/bill/B = W
 		scan_cash(B)
+		playsound(src, 'sound/machines/cash_in.ogg', VOL_EFFECTS_MASTER)
 
 	else if(istype(W, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
@@ -311,41 +313,42 @@
 		to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>")
 
 /obj/machinery/vending/proc/vend_card()
-	if(id_scanned)
-		var/transaction_amount = currently_vending.price
-		if(transaction_amount <= id_scanned.money)
+	if(!id_scanned)
+		return
+	var/transaction_amount = currently_vending.price
+	if(transaction_amount <= id_scanned.money)
 
-			//transfer the money
-			id_scanned.adjust_money(-transaction_amount)
-			vendor_account.adjust_money(transaction_amount)
+		//transfer the money
+		id_scanned.adjust_money(-transaction_amount)
+		vendor_account.adjust_money(transaction_amount)
 
-			//create entries in the two account transaction logs
-			var/datum/transaction/T = new()
-			T.target_name = "[vendor_account.owner_name] (via [src.name])"
-			T.purpose = "Purchase of [currently_vending.product_name]"
-			if(transaction_amount > 0)
-				T.amount = "([transaction_amount])"
-			else
-				T.amount = "[transaction_amount]"
-			T.source_terminal = src.name
-			T.date = current_date_string
-			T.time = worldtime2text()
-			id_scanned.transaction_log.Add(T)
-			//
-			T = new()
-			T.target_name = id_scanned.owner_name
-			T.purpose = "Purchase of [currently_vending.product_name]"
-			T.amount = "[transaction_amount]"
-			T.source_terminal = src.name
-			T.date = current_date_string
-			T.time = worldtime2text()
-			vendor_account.transaction_log.Add(T)
-
-			// Vend the item
-			vend(src.currently_vending, usr)
-			currently_vending = null
+		//create entries in the two account transaction logs
+		var/datum/transaction/T = new()
+		T.target_name = "[vendor_account.owner_name] (via [src.name])"
+		T.purpose = "Purchase of [currently_vending.product_name]"
+		if(transaction_amount > 0)
+			T.amount = "([transaction_amount])"
 		else
-			to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
+			T.amount = "[transaction_amount]"
+		T.source_terminal = src.name
+		T.date = current_date_string
+		T.time = worldtime2text()
+		id_scanned.transaction_log.Add(T)
+
+		T = new()
+		T.target_name = id_scanned.owner_name
+		T.purpose = "Purchase of [currently_vending.product_name]"
+		T.amount = "[transaction_amount]"
+		T.source_terminal = src.name
+		T.date = current_date_string
+		T.time = worldtime2text()
+		vendor_account.transaction_log.Add(T)
+
+		// Vend the item
+		vend(src.currently_vending, usr)
+		currently_vending = null
+	else
+		to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 
 /obj/machinery/vending/proc/scan_cash(obj/item/weapon/I)
 	if(!currently_vending)
@@ -365,6 +368,7 @@
 			vendor_account.adjust_money(transaction_amount)
 
 			if(cash > 0)
+				playsound(src, 'sound/machines/cash_out.ogg', VOL_EFFECTS_MASTER)
 				spawn_money(cash, src.loc)
 				cash = 0
 				to_chat(usr, "[bicon(src)]<span class='warning'>Here is your change!</span>")
@@ -526,6 +530,7 @@
 			spawn_money(cash, src.loc)
 			cash = 0
 			to_chat(usr, "[bicon(src)]<span class='warning'>Here is your cash!</span>")
+			playsound(src, 'sound/machines/cash_out.ogg', VOL_EFFECTS_MASTER)
 		updateUsrDialog()
 		return
 
