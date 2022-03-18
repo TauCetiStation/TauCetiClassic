@@ -189,6 +189,14 @@ var/global/list/allergen_reagents_list
 	H.adjustBrainLoss(rand(30, 99))
 
 
+/datum/quality/wet_hands
+	desc = "Ваши верхние конечности можно сравнить с губкой, которая впитывает в себя жидкости. Осторожнее при работе с консолями."
+	requirement = "Нет."
+
+/datum/quality/wet_hands/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_WET_HANDS, QUALITY_TRAIT)
+
+
 /datum/quality/dnd
 	desc = "Вы непредсказуемы, даже для самого себя."
 	requirement = "Кадет, Офицер, Варден, ГСБ."
