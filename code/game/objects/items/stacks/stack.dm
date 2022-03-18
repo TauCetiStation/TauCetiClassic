@@ -346,7 +346,7 @@
 	var/on_floor = FALSE
 	var/required_skills
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, required_skills)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, floor_path = list(/turf/simulated/floor), required_skills)
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
@@ -355,6 +355,7 @@
 	src.time = time
 	src.one_per_turf = one_per_turf
 	src.on_floor = on_floor
+	src.floor_path = floor_path
 	src.required_skills = required_skills
 
 /*

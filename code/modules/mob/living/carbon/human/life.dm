@@ -1470,7 +1470,7 @@
 		to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
 
 	if(shock_stage >= 30)
-		if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
+		if(shock_stage == 30) me_emote("is having trouble keeping their eyes open.")
 		blurEyes(2)
 		stuttering = max(stuttering, 5)
 
@@ -1495,7 +1495,7 @@
 			Paralyse(5)
 
 	if(shock_stage == 150)
-		emote("me",1,"can no longer stand, collapsing!")
+		me_emote("can no longer stand, collapsing!")
 		Weaken(20)
 
 	if(shock_stage >= 150)

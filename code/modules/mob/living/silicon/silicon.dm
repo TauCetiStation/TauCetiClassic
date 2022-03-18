@@ -149,7 +149,7 @@
 
 /mob/living/silicon/add_language(language, flags=LANGUAGE_CAN_SPEAK)
 	. = ..()
-	if(. && flags == LANGUAGE_CAN_SPEAK)
+	if(. && flags >= LANGUAGE_CAN_SPEAK)
 		speech_synthesizer_langs.Add(all_languages[language])
 
 /mob/living/silicon/remove_language(rem_language)
