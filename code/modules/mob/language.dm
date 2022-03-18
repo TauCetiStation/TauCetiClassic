@@ -368,16 +368,17 @@
 
 	var/datum/language/new_language = all_languages[language]
 	if(!new_language)
-		return 0
+		return FALSE
 
-	if((new_language in languages) && flags == LANGUAGE_CAN_UNDERSTAND)
-		return 0
+	if((new_language in languages) && language[new_language] >= flags)
+		return FALSE
 
-	for(var/sound in new_language.approximations)
-		remove_approximation(sound)
+	if(flags != LANGUAGE_CAN_UNDERSTAND)
+		for(var/sound in new_language.approximations)
+			remove_approximation(sound)
 
-	for(var/sound in new_language.special_symbols)
-		add_approximation(sound, new_language.special_symbols[sound], case_sensitive=TRUE)
+		for(var/sound in new_language.special_symbols)
+			add_approximation(sound, new_language.special_symbols[sound], case_sensitive=TRUE)
 
 	languages[new_language] = flags
 	return 1
@@ -387,13 +388,14 @@
 	if(!L)
 		return
 
+	if(languages[L] != LANGUAGE_CAN_UNDERSTAND)
+		for(var/sound in L.approximations)
+			add_approximation(sound, L.approximations[sound])
+
+		for(var/sound in L.special_symbols)
+			remove_approximation(sound, case_sensitive=TRUE)
+
 	languages.Remove(L)
-
-	for(var/sound in L.approximations)
-		add_approximation(sound, L.approximations[sound])
-
-	for(var/sound in L.special_symbols)
-		remove_approximation(sound, case_sensitive=TRUE)
 
 	if(default_language == L.name)
 		default_language = null
