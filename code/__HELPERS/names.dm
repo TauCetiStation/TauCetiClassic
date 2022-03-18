@@ -233,6 +233,8 @@ var/global/regex/code_response_highlight_rule
 	return
 
 /proc/highlight_traitor_codewords(message, datum/mind/traitor_mind)
+	return message
+	/*
 	if(!traitor_mind)
 		return message
 
@@ -260,3 +262,4 @@ var/global/regex/code_response_highlight_rule
 			message = highlight_codewords(message, global.code_response_highlight_rule, "deptradio")
 
 	return message
+	*/
