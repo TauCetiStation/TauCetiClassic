@@ -29,11 +29,12 @@
 	var/language                      // Default racial language, if any.
 	// Additional languages, to the primary. These can not be the forced ones.
 	// Use LANGUAGE = LANGUAGE_CAN_UNDERSTAND to give languages which a specimen can understand, but not speak.
-	var/list/additional_languages = list()
-	var/species_common_language = FALSE// If TRUE, species language will be forced instead of common.
-	var/attack_verb = "punch"          // Empty hand hurt intent verb.
-	var/punch_damage = 0               // Extra empty hand attack damage.
-	var/mutantrace                     // Safeguard due to old code.
+	var/list/additional_languages
+	var/species_common_language = FALSE // If TRUE, racial language will be forced by default when speaking.
+	var/attack_verb = "punch"         // Empty hand hurt intent verb.
+	var/punch_damage = 0              // Extra empty hand attack damage.
+	var/mutantrace                    // Safeguard due to old code.
+
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
 	// Perhaps one day make this an assoc list of BODYPART_NAME = list(drops) ? ~Luduk
 	// Is used when a bodypart of this race is butchered. Otherwise there are overrides for flesh, robot, and bone bodyparts.
@@ -150,6 +151,9 @@
 	// Bubble can be changed depending on species
 	var/typing_indicator_type = "default"
 
+	// Emotes this species grants.
+	var/list/emotes
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -225,6 +229,10 @@
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_SPECIES)
 
+	for(var/emote in emotes)
+		var/datum/emote/E = global.all_emotes[emote]
+		H.set_emote(E.key, E)
+
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
@@ -232,6 +240,9 @@
 		H.handle_socialization()
 
 	H.remove_moveset_source(MOVESET_SPECIES)
+
+	for(var/emote in emotes)
+		H.clear_emote(emote)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
 
@@ -365,7 +376,7 @@
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
 	language = LANGUAGE_SIIKMAAS
-	additional_languages = list(LANGUAGE_SIIKTAJR)
+	additional_languages = list(LANGUAGE_SIIKTAJR = LANGUAGE_NATIVE)
 	tail = "tajaran"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
@@ -474,7 +485,7 @@
 	icobase = 'icons/mob/human_races/r_vox.dmi'
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = LANGUAGE_VOXPIDGIN
-	additional_languages = list(LANGUAGE_TRADEBAND)
+	additional_languages = list(LANGUAGE_TRADEBAND = LANGUAGE_CAN_SPEAK)
 	tail = "vox_prim"
 
 	species_common_language = TRUE
@@ -970,6 +981,12 @@
 	max_age = 125
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
+
+	emotes = list(
+		/datum/emote/beep,
+		/datum/emote/ping,
+		/datum/emote/buzz,
+	)
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	..()
