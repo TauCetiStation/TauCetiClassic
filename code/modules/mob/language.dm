@@ -422,7 +422,12 @@
 	var/dat = ""
 
 	for(var/datum/language/L in languages)
-		dat += "<b>[L.name] "
+		var/lang_name = L.name
+		var/link_class = ""
+		if(L.name == default_language)
+			link_class = "class='good'"
+
+		dat += "<b><a href='?src=\ref[L];usr=\ref[src]'[link_class]>[lang_name]</a> "
 		for(var/l_key in L.key)
 			dat += "(:[l_key])"
 
@@ -448,7 +453,5 @@
 	var/datum/browser/popup = new(src, "checklanguage", "Known Languages")
 	popup.set_content(dat)
 	popup.open()
-
-	return
 
 #undef MESSAGE_LIMIT

@@ -82,7 +82,6 @@
 		/datum/aspect/wacky = 1,
 		/datum/aspect/chaos = 1,
 		/datum/aspect/resources = 1,
-		/datum/aspect/herd = 1,
 	)
 
 /datum/religion_sect/custom/chaplain

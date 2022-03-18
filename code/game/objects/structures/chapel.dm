@@ -249,7 +249,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 		shake_camera(user, shake_duration, shake_strength)
 
 	announce_global(ring_msg, strength)
-	
+
 /obj/effect/effect/bell/attackby(obj/item/I, mob/user)
 	if(user.a_intent == INTENT_HARM)
 		ring_global(user, I.force)

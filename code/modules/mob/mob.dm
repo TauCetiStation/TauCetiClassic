@@ -1030,7 +1030,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		to_chat(U, "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>")
 
-	if(!do_skilled(U, S, SKILL_TASK_DIFFICULT, list(/datum/skill/medical/trained)))
+	if(!do_after(U, 80, target = S))
 		return
 	if(!selection || !S || !U)
 		return
@@ -1295,10 +1295,26 @@ note dizziness decrements automatically in the mob's Life() proc.
 		input_offsets = null
 		next_randomise_inputs = world.time
 
-/mob/proc/get_language()
+/mob/proc/parse_language(message)
 	if(forced_language)
-		return all_languages[forced_language]
-	return null
+		return list(message, all_languages[forced_language])
+
+	var/datum/language/speaking = parse_language_code(message)
+	if(speaking)
+		var/new_msg = copytext_char(message, 2 + length_char(speaking.key))
+		return list(new_msg, speaking)
+
+	if(default_language)
+		return list(message, all_languages[default_language])
+
+	var/datum/species/S = all_species[get_species()]
+	if(S && S.species_common_language)
+		return list(message, all_languages[S.language])
+
+	if(common_language)
+		return list(message, all_languages[common_language])
+
+	return list(message, null)
 
 /mob/proc/set_lastattacker_info(mob/M)
 	lastattacker_name = M.real_name
