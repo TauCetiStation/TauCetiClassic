@@ -7,6 +7,7 @@
 	var/can_deconstruct = FALSE
 
 	//Properties for open tiles (/floor)
+	var/airless = FALSE
 	var/oxygen = 0
 	var/carbon_dioxide = 0
 	var/nitrogen = 0
@@ -241,16 +242,19 @@
 		ChangeTurf(turf_type)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
+/turf/proc/ChangeTurf(path, list/arguments = list())
 	if (!path)
 		return
-
-	if (path == type)
-		return src
 
 	/*if(istype(src, path))
 		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
 		return*/
+
+	if(ispath(path, /turf/environment/space))
+		path = SSenvironment.turf_type[z]
+
+	if (path == type)
+		return src
 
 	// Back all this data up, so we can set it after the turf replace.
 	// If you're wondering how this proc'll keep running since the turf should be "deleted":
@@ -258,6 +262,7 @@
 	// Running procs do NOT get stopped due to this.
 	var/old_opacity = opacity
 	var/old_dynamic_lighting = dynamic_lighting
+	var/old_force_lighting_update = force_lighting_update
 	var/old_affecting_lights = affecting_lights
 	var/old_lighting_object = lighting_object
 	var/old_corners = corners
@@ -338,7 +343,7 @@
 		lighting_object = old_lighting_object
 		affecting_lights = old_affecting_lights
 		corners = old_corners
-		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
+		if (force_lighting_update || old_force_lighting_update || old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
 			reconsider_lights()
 
 		if (dynamic_lighting != old_dynamic_lighting)

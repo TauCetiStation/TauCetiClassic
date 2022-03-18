@@ -150,7 +150,7 @@
 
 		if(pressure <= 75)
 			if(prob(15))
-				emote("me",1,"gasps!")
+				emote("gasp")
 
 	weakened = 0
 	if(health > 0)

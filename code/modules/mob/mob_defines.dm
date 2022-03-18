@@ -268,3 +268,10 @@
 	var/typing_indicator_type = "default"
 
 	var/forced_language
+	// Language that is used by default whenever there's no language chosen.
+	var/default_language
+
+	// Some sounds that this mob can't emit, only approximate.
+	var/list/sound_approximations
+	// Case sensitive sound approximations.
+	var/list/sensitive_sound_approximations

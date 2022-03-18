@@ -85,7 +85,6 @@
 		return
 
 	message =  sanitize(message)
-
 	if(!message)
 		return
 
@@ -140,28 +139,17 @@
 			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
 			return
 
-	if (has_lang_prefix)
-		message = copytext(message,2+length_char(speaking.key))
-		if(!message)
-			return
+	message = approximate_sounds(message, speaking)
+	if(!message)
+		return
 
-	else
-		speaking = get_language()
+	message = accent_sounds(message, speaking)
 
 	if(!speaking)
 		switch(species.name)
-			if(TAJARAN)
-				message = replacetextEx_char(message, "р", pick(list("ррр" , "рр")))
-				message = replacetextEx_char(message, "Р", pick(list("Ррр" , "Рр")))
-			if(UNATHI)
-				message = replacetextEx_char(message, "с", pick(list("ссс" , "сс")))
-				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
-				message = replacetextEx_char(message, "С", pick(list("Ссс" , "Сс")))
 			if(PODMAN)
-				message = replacetextEx_char(message, "ж", pick(list("ш", "хш")))
-				message = replacetextEx_char(message, "Ж", pick(list("Ш", "Хш")))
-				message = replacetextEx_char(message, "з", pick(list("с", "хс")))
-				message = replacetextEx_char(message, "З", pick(list("С", "Хс")))
+				message = replacetext(message, "ж", pick(list("ш", "хш")))
+				message = replacetext(message, "з", pick(list("с", "хс")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
