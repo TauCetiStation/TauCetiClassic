@@ -56,7 +56,6 @@
 	var/scan_id = TRUE
 
 	var/cash = 0
-	var/datum/money_account/id_scanned = null
 
 
 /obj/machinery/vending/atom_init()
@@ -218,7 +217,7 @@
 		scan_card(I)
 		playsound(src, 'sound/machines/card_swipe.ogg', VOL_EFFECTS_MASTER)
 
-	else if(currently_vending && istype(W, /obj/item/weapon/spacecash/bill) && !id_scanned)
+	else if(currently_vending && istype(W, /obj/item/weapon/spacecash/bill))
 		var/obj/item/weapon/spacecash/bill/B = W
 		scan_cash(B)
 		playsound(src, 'sound/machines/cash_in.ogg', VOL_EFFECTS_MASTER)
@@ -280,7 +279,7 @@
 	..()
 
 /obj/machinery/vending/proc/scan_card(obj/item/weapon/card/I)
-	if(!currently_vending)
+	if(!currently_vending || cash)
 		return
 	if (istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = I
@@ -297,7 +296,7 @@
 							return
 						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
 					if(D)
-						id_scanned = D
+						vend_card(D)
 						updateUsrDialog()
 					else
 						to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
@@ -312,14 +311,12 @@
 	else
 		to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>")
 
-/obj/machinery/vending/proc/vend_card()
-	if(!id_scanned)
-		return
+/obj/machinery/vending/proc/vend_card(datum/money_account/D)
 	var/transaction_amount = currently_vending.price
-	if(transaction_amount <= id_scanned.money)
+	if(transaction_amount <= D.money)
 
 		//transfer the money
-		id_scanned.adjust_money(-transaction_amount)
+		D.adjust_money(-transaction_amount)
 		vendor_account.adjust_money(transaction_amount)
 
 		//create entries in the two account transaction logs
@@ -333,10 +330,10 @@
 		T.source_terminal = src.name
 		T.date = current_date_string
 		T.time = worldtime2text()
-		id_scanned.transaction_log.Add(T)
+		D.transaction_log.Add(T)
 
 		T = new()
-		T.target_name = id_scanned.owner_name
+		T.target_name = D.owner_name
 		T.purpose = "Purchase of [currently_vending.product_name]"
 		T.amount = "[transaction_amount]"
 		T.source_terminal = src.name
@@ -395,11 +392,9 @@
 
 	if(currently_vending)
 		var/dat
-		dat += "<b>You have selected [currently_vending.product_name] for [currently_vending.price] <image class='credit'/><br>Please swipe your ID or insert cash to pay for the article.</b><br>"
-		if(id_scanned)
-			dat += "<b>Your ID card is scanned, please confirm operation.</b><br>"
-		else if(cash > 0)
-			dat += "<b>Cash inserted, credits amount: [cash]<image class='credit'/></b><br>"
+		dat += "<b>You have selected [currently_vending.product_name] for [currently_vending.price] [CREDIT_SYMBOL]<br>Please swipe your ID or insert cash to pay for the article.</b><br>"
+		if(cash > 0)
+			dat += "<b>Cash inserted, credits amount: [cash][CREDIT_SYMBOL]</b><br>"
 			dat += "<a href='byond://?src=\ref[src];withdraw=1'>Withdraw</a><br>"
 		dat += "<a href='byond://?src=\ref[src];confirm=1'>Confirm</a><br>"
 		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
@@ -445,9 +440,9 @@
 		dat += "<td><B>[R.product_name]</B></td>"
 		dat += "<td class='collapsing' align='center'><span class='[1 < R.amount ? "good" : R.amount == 1 ? "average" : "bad"]'>[R.amount] in stock</span></td>"
 		if (R.amount > 0)
-			dat += "<td class='collapsing' align='center'><a class='fluid' href='byond://?src=\ref[src];vend=\ref[R]'>[R.price ? "[R.price]<image class='credit'/>" : "FREE"]</A></td>"
+			dat += "<td class='collapsing' align='center'><a class='fluid' href='byond://?src=\ref[src];vend=\ref[R]'>[R.price ? "[R.price][CREDIT_SYMBOL]" : "FREE"]</A></td>"
 		else
-			dat += "<td class='collapsing' align='center'><div class='disabled fluid'>[R.price ? "[R.price]<image class='credit'/>" : "FREE"]</div></td>"
+			dat += "<td class='collapsing' align='center'><div class='disabled fluid'>[R.price ? "[R.price][CREDIT_SYMBOL]" : "FREE"]</div></td>"
 		dat += "</tr>"
 	return dat
 
@@ -514,9 +509,7 @@
 		return
 
 	else if (href_list["confirm"])
-		if(id_scanned)
-			vend_card()
-		else if(cash > 0)
+		if(cash > 0)
 			vend_cash()
 		else
 			to_chat(usr, "<span class='warning'>Scan your ID card or insert cash.</span>")
@@ -536,7 +529,6 @@
 
 	else if (href_list["cancel_buying"])
 		src.currently_vending = null
-		id_scanned = null
 		updateUsrDialog()
 		return
 
@@ -561,8 +553,6 @@
 				QDEL_NULL(coin)
 		else
 			QDEL_NULL(coin)
-
-	id_scanned = null
 
 	R.amount--
 

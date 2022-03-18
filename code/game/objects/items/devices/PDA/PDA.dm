@@ -1605,9 +1605,9 @@
 				to_chat(L, "[bicon(src)]<span class='notice'><b>[owner], [source] returned your base salary.</b></span>")
 		else
 			if(amount > 0)
-				to_chat(L, "[bicon(src)]<span class='notice'>[owner], the amount of [amount]<image class='credit'/> from [source] was transferred to your account.</span>")
+				to_chat(L, "[bicon(src)]<span class='notice'>[owner], the amount of [amount][CREDIT_SYMBOL] from [source] was transferred to your account.</span>")
 			else
-				to_chat(L, "[bicon(src)]<span class='notice'>You have successfully transferred [amount]<image class='credit'/> to [target] account number.</span>")
+				to_chat(L, "[bicon(src)]<span class='notice'>You have successfully transferred [amount][CREDIT_SYMBOL] to [target] account number.</span>")
 		playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/device/pda/proc/check_rank(rank)

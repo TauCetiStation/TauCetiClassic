@@ -81,7 +81,7 @@ log transactions
 			//consume the money
 			if(!istype(SC, /obj/item/weapon/spacecash/ewallet))
 				if((money_stock + SC.worth) > money_stock_max)
-					tgui_alert(usr, "Sorry, the ATM cash storage is full and can only hold [money_stock_max]<image class='credit'/>")
+					tgui_alert(usr, "Sorry, the ATM cash storage is full and can only hold [money_stock_max][CREDIT_SYMBOL]")
 					return
 				else
 					money_stock += SC.worth
@@ -176,13 +176,13 @@ log transactions
 							dat += "<td>[T.time]</td>"
 							dat += "<td>[T.target_name]</td>"
 							dat += "<td>[T.purpose]</td>"
-							dat += "<td>[T.amount]<image class='credit'/></td>"
+							dat += "<td>[T.amount][CREDIT_SYMBOL]</td>"
 							dat += "<td>[T.source_terminal]</td>"
 							dat += "</tr>"
 						dat += "</table>"
 						dat += "<A href='?src=\ref[src];choice=print_transaction'>Print</a><br>"
 					if(TRANSFER_FUNDS)
-						dat += "<b>Account balance:</b> [authenticated_account.money]<image class='credit'/><br>"
+						dat += "<b>Account balance:</b> [authenticated_account.money][CREDIT_SYMBOL]<br>"
 						dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=0'>Back</a><br><br>"
 						dat += "<form name='transfer' action='?src=\ref[src]' method='get'>"
 						dat += "<input type='hidden' name='src' value='\ref[src]'>"
@@ -194,8 +194,8 @@ log transactions
 						dat += "</form>"
 					else
 						dat += "Welcome, <b>[authenticated_account.owner_name].</b><br/>"
-						dat += "<b>Account balance:</b> [authenticated_account.money]<image class='credit'/>"
-						dat += "<br><b>Stock of money in ATM:</b> [money_stock]<image class='credit'/>"
+						dat += "<b>Account balance:</b> [authenticated_account.money][CREDIT_SYMBOL]"
+						dat += "<br><b>Stock of money in ATM:</b> [money_stock][CREDIT_SYMBOL]"
 						dat += "<form name='withdrawal' action='?src=\ref[src]' method='get'>"
 						dat += "<input type='hidden' name='src' value='\ref[src]'>"
 						dat += "<input type='hidden' name='choice' value='withdrawal'>"
@@ -349,7 +349,7 @@ log transactions
 					R.info = "<b>NT Automated Teller Account Statement</b><br><br>"
 					R.info += "<i>Account holder:</i> [authenticated_account.owner_name]<br>"
 					R.info += "<i>Account number:</i> [authenticated_account.account_number]<br>"
-					R.info += "<i>Balance:</i> [authenticated_account.money]<image class='credit'/><br>"
+					R.info += "<i>Balance:</i> [authenticated_account.money][CREDIT_SYMBOL]<br>"
 					R.info += "<i>Date and time:</i> [worldtime2text()], [current_date_string]<br><br>"
 					R.info += "<i>Service terminal ID:</i> [machine_id]<br>"
 					R.update_icon()
@@ -386,7 +386,7 @@ log transactions
 						R.info += "<td>[T.time]</td>"
 						R.info += "<td>[T.target_name]</td>"
 						R.info += "<td>[T.purpose]</td>"
-						R.info += "<td>[T.amount]<image class='credit'/></td>"
+						R.info += "<td>[T.amount][CREDIT_SYMBOL]</td>"
 						R.info += "<td>[T.source_terminal]</td>"
 						R.info += "</tr>"
 					R.info += "</table>"

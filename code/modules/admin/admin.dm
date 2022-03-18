@@ -710,7 +710,7 @@ var/global/BSACooldown = 0
 			else if(acc.owner_salary < acc.base_salary)
 				color = "red"
 			dat += "<tr><td><span class='highlight'>[person["name"]]</span></td><td><span class='average'>[person["rank"]]</span></td>"
-			dat += "<td><font color='[color]'><b>[person["salary"]]<image class='credit'/></b></font></td>"
+			dat += "<td><font color='[color]'><b>[person["salary"]][CREDIT_SYMBOL]</b></font></td>"
 			dat += "<td><A href='byond://?src=\ref[src];salary=\ref[person["acc_datum"]]'>Change</A></td></tr>"
 		dat += "</table>"
 	else
