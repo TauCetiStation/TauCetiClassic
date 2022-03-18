@@ -433,18 +433,19 @@
 		for(var/l_key in L.key)
 			dat += "(:[l_key])"
 
-		var/sound_macros = ""
-		var/first_macro = TRUE
-		for(var/m_key in L.special_symbols)
-			if(m_key == uppertext(m_key))
-				continue
-			if(!first_macro)
-				sound_macros += ", "
-			first_macro = FALSE
-			sound_macros += "[m_key]"
+		if(languages[L] != LANGUAGE_CAN_UNDERSTAND)
+			var/sound_macros = ""
+			var/first_macro = TRUE
+			for(var/m_key in L.special_symbols)
+				if(m_key == uppertext(m_key))
+					continue
+				if(!first_macro)
+					sound_macros += ", "
+				first_macro = FALSE
+				sound_macros += "[m_key]"
 
-		if(sound_macros != "")
-			dat += " ([sound_macros])"
+			if(sound_macros != "")
+				dat += " ([sound_macros])"
 
 		var/remark = ""
 		if(languages[L] == LANGUAGE_CAN_UNDERSTAND)
