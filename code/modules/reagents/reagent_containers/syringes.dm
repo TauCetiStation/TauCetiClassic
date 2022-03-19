@@ -467,7 +467,7 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/proc/syringe_fear_trigger(mob/living/carbon/human/user)
-	to_chat(user, "<font color='red' size='7'>IT'S SYRINGE!!!</font>")
+	to_chat(user, "<font color='red' size='7'>IT'S A SYRINGE!!!</font>")
 	if(prob(5))
 		user.eye_blind = 20
 		user.blurEyes(40)
