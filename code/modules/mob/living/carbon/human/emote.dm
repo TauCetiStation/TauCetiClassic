@@ -90,10 +90,10 @@
 		switch(M.client.prefs.chat_ghostsight)
 			if(CHAT_GHOSTSIGHT_ALL)
 				// ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
-				to_chat(M, "[FOLLOW_LINK(M, src)] [message]")
+				to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")
 			if(CHAT_GHOSTSIGHT_ALLMANUAL)
 				if(intentional)
-					to_chat(M, "[FOLLOW_LINK(M, src)] [message]")
+					to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")
 
 /mob/living/carbon/human/verb/pose()
 	set name = "Set Pose"
