@@ -47,28 +47,17 @@
 		src.pod1.connected = src // Some variable the pod needs
 
 /obj/machinery/computer/cloning/proc/findscanner()
-	var/obj/machinery/dna_scannernew/scannerf = null
-	// Loop through every direction
-	for(var/nextdir in cardinal)
-
-		// Try to find a scanner in that direction
-		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, nextdir))
-
-		// If found, then we break, and return the scanner
-		if(!isnull(scannerf))
-			break
-	// If no scanner was found, it will return null
-	return scannerf
+	// Try to find a scanner
+	var/obj/machinery/dna_scannernew/scannerf = locate(/obj/machinery/dna_scannernew) in range(4, src)
+	// If found, then return the scanner
+	if(!isnull(scannerf))
+		return scannerf
 
 /obj/machinery/computer/cloning/proc/findcloner()
-	var/obj/machinery/clonepod/podf = null
-	for(var/newdir in cardinal)
-
-		podf = locate(/obj/machinery/clonepod, get_step(src, newdir))
-
-		if(!isnull(podf))
-			break
-	return podf
+	var/obj/machinery/clonepod/podf = locate(/obj/machinery/clonepod) in range(4, src)
+	
+	if(!isnull(podf))
+		return podf
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
@@ -360,7 +349,7 @@
 	if(!subject.dna)
 		scantemp = "Error: Unable to locate valid genetic data."
 		return
-	if(subject.suiciding == 1)
+	if(subject.suiciding)
 		scantemp = "Error: Subject's brain is not responding to scanning stimuli."
 		return
 	if((!subject.ckey) || (!subject.client))

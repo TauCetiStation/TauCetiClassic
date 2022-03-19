@@ -20,6 +20,14 @@
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 
+	// I dont known how
+	global.player_list -= src
+
+	if(mind)
+		if(mind.current == src)
+			mind.set_current(null)
+		if(mind.original == src)
+			mind.original = null
 	return ..()
 
 
@@ -41,6 +49,7 @@
 	prepare_huds()
 	update_all_alt_apperance()
 
+	init_languages()
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -212,7 +221,6 @@
 				client.eye = loc
 	return
 
-
 /mob/proc/show_inv(mob/user)
 	return
 
@@ -279,17 +287,6 @@
 	else
 		to_chat(src, "The game appears to have misplaced your mind datum, so we can't show you your notes.")
 
-/mob/proc/store_memory(msg, popup)
-	msg = sanitize(msg)
-
-	if(length(memory) == 0)
-		memory += msg
-	else
-		memory += "<BR>[msg]"
-
-	if(popup)
-		memory()
-
 /mob/proc/update_flavor_text()
 	set src in usr
 	if(usr != src)
@@ -319,6 +316,7 @@
 	face_atom(A)
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
+	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
 
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
@@ -366,7 +364,7 @@
 		return
 	else
 		var/deathtime = world.time - src.timeofdeath
-		if(istype(src,/mob/dead/observer))
+		if(isobserver(src))
 			var/mob/dead/observer/G = src
 			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
 				to_chat(usr, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
@@ -406,6 +404,9 @@
 		log_game("[key_name(usr)] AM failed due to disconnect.")
 		qdel(M)
 		return
+
+	// New life, new quality.
+	client.prefs.have_quality = FALSE
 
 	M.key = key
 //	M.Login()	//wat
@@ -584,7 +585,7 @@
 /mob/proc/is_mechanical()
 	if(mind && (mind.assigned_role == "Cyborg" || mind.assigned_role == "AI"))
 		return 1
-	return istype(src, /mob/living/silicon) || get_species() == IPC
+	return issilicon(src) || get_species() == IPC
 
 /mob/proc/is_ready()
 	return client && !!mind
@@ -768,6 +769,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 					lying = 1
 
 	density = !lying
+
+	if(lying != was_lying)
+		if(lying)
+			SEND_SIGNAL(src, COMSIG_MOB_STATUS_LYING)
+		else
+			SEND_SIGNAL(src, COMSIG_MOB_STATUS_NOT_LYING)
+		was_lying = lying
 
 	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isxeno(src))
 		drop_l_hand()
@@ -1236,3 +1244,78 @@ note dizziness decrements automatically in the mob's Life() proc.
 		set_dir(D)
 		spintime -= speed
 	flags &= ~IS_SPINNING
+
+/mob/proc/confuse_input(dir)
+	return input_offsets["[dir]"]
+
+/mob/proc/randomise_inputs()
+	if(!confused)
+		return
+	if(next_randomise_inputs > world.time)
+		return
+
+	next_randomise_inputs = world.time + randomise_inputs_cooldown
+
+	input_offsets = list()
+	var/list/pos_dirs = list() + cardinal
+
+	for(var/d in cardinal)
+		var/map_to = pick(pos_dirs)
+		input_offsets["[d]"] = map_to
+		pos_dirs -= map_to
+
+	addtimer(CALLBACK(src, .proc/randomise_inputs), randomise_inputs_cooldown)
+
+/mob/proc/AdjustConfused(amount)
+	confused += amount
+	if(confused < 0)
+		confused = 0
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/SetConfused(value)
+	confused = value
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/MakeConfused(value)
+	confused = max(value, confused)
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/parse_language(message)
+	if(forced_language)
+		return list(message, all_languages[forced_language])
+
+	var/datum/language/speaking = parse_language_code(message)
+	if(speaking)
+		var/new_msg = copytext_char(message, 2 + length_char(speaking.key))
+		return list(new_msg, speaking)
+
+	if(default_language)
+		return list(message, all_languages[default_language])
+
+	var/datum/species/S = all_species[get_species()]
+	if(S && S.species_common_language)
+		return list(message, all_languages[S.language])
+
+	if(common_language)
+		return list(message, all_languages[common_language])
+
+	return list(message, null)
+
+/mob/proc/set_lastattacker_info(mob/M)
+	lastattacker_name = M.real_name
+	lastattacker_key = M.key

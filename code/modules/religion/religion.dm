@@ -33,20 +33,11 @@
 
 	var/religious_tool_type
 
-	/*
-	var/lecturn_icon_state
+	var/emblem_icon_state
 	// Is required to have a "Default" as a fallback.
-	var/static/list/lecturn_info_by_name = list(
-	)
-
+	var/list/emblem_info_by_name
 	// Radial menu
-	var/lecturn_skins
-	*/
-
-	var/pews_icon_state
-	var/list/pews_info_by_name
-	// Radial menu
-	var/list/pews_skins
+	var/list/emblem_skins
 
 	var/altar_icon_state
 	// Is required to have a "Default" as a fallback.
@@ -106,8 +97,8 @@
 
 	// All runes on map
 	var/list/obj/effect/rune/runes = list()
-	// mob = list(rune, rune, rune)
-	var/list/runes_by_mob = list()
+	// ckey = list(rune, rune, rune)
+	var/list/runes_by_ckey
 	// Max runes on mob
 	var/max_runes_on_mob
 
@@ -224,10 +215,10 @@
 		I.transform = M
 		altar_skins[info] = I
 
-/datum/religion/proc/gen_pews_variants()
-	pews_skins = list()
-	for(var/info in pews_info_by_name)
-		pews_skins[info] = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "[pews_info_by_name[info]]_left")
+/datum/religion/proc/gen_emblem_variants()
+	emblem_skins = list()
+	for(var/info in emblem_info_by_name)
+		emblem_skins[info] = image(icon = 'icons/obj/lectern.dmi', icon_state = "[emblem_info_by_name[info]]")
 
 /datum/religion/proc/gen_carpet_variants()
 	carpet_skins = list()
@@ -251,7 +242,7 @@
 
 	gen_bible_info()
 	gen_altar_variants()
-	gen_pews_variants()
+	gen_emblem_variants()
 	gen_carpet_variants()
 
 	gen_agent_lists()
@@ -266,20 +257,11 @@
 	else
 		carpet_dir = 0
 
-	/*
-	// Luduk when?
-	var/lecturn_info = lecturn_info_by_name[name]
-	if(lecturn_info)
-		lecturn_icon_state = lecturn_info
+	var/emblem_info = emblem_info_by_name[name]
+	if(emblem_info)
+		emblem_icon_state = emblem_info
 	else
-		lecturn_info_state = lecturn_info_by_name["Default"]
-	*/
-
-	var/pews_info = pews_info_by_name[name]
-	if(pews_info)
-		pews_icon_state = pews_info
-	else
-		pews_icon_state = pews_info_by_name["Default"]
+		emblem_icon_state = emblem_info_by_name["Default"]
 
 	var/altar_info = altar_info_by_name[name]
 	if(altar_info)
@@ -681,3 +663,12 @@
 
 /datum/religion/proc/get_tech(tech_id)
 	return all_techs[tech_id]
+
+/datum/religion/proc/get_runes_by_type(rune_type)
+	var/list/valid_runes = list()
+	for(var/obj/effect/rune/R as anything in runes)
+		if(!istype(R.power, rune_type))
+			continue
+		if(!is_centcom_level(R.loc.z) || istype(get_area(R), area_type))
+			valid_runes += R
+	return valid_runes

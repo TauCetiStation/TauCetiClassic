@@ -29,6 +29,8 @@
 #define BP_R_ARM  "r_arm"
 #define BP_L_LEG  "l_leg"
 #define BP_R_LEG  "r_leg"
+#define BP_ACTIVE_ARM "active_arm"
+#define BP_INACTIVE_ARM "inactive_arm"
 
 // Organ defines.
 #define O_MOUTH    "mouth"
@@ -73,6 +75,7 @@
 #define TAJARAN        "Tajaran"
 #define SKRELL         "Skrell"
 #define DIONA          "Diona"
+#define PODMAN         "Podman"
 #define IPC            "Machine"
 #define VOX            "Vox"
 #define VOX_ARMALIS    "Vox Armalis"
@@ -129,6 +132,12 @@
 
 #define NUTRITION_PERCENT_MAX 120
 #define NUTRITION_PERCENT_ZERO 0
+
+// Drunknenness levels and their effects.
+#define DRUNKENNESS_SLUR 30
+#define DRUNKENNESS_CONFUSED 150
+#define DRUNKENNESS_BLUR 400
+#define DRUNKENNESS_PASS_OUT 600
 
 // How many units of reagent are consumed per tick, by default.
 #define REAGENTS_METABOLISM 0.2
@@ -196,3 +205,14 @@
 #define HUMANHEIGHT_MEDIUM   "medium height"
 #define HUMANHEIGHT_TALL     "tall height"
 #define HUMANHEIGHT_TALLEST  "tallest height"
+
+// How much of the reagent needs to be ingested before moving onto the next stage.
+#define ALLERGY_NONE 0
+#define ALLERGY_UNDISCOVERED 1
+#define ALLERGY_DISCOVERED 5
+#define ALLERGY_LETHAL 7
+
+#define ALLERGY_SKIN "skin"
+#define ALLERGY_INGESTION "ingestion"
+// can't implement rn but would be funny
+// #define ALLERGY_BREATH 3

@@ -438,16 +438,16 @@
 		if("act_intent")
 			usr.a_intent_change(INTENT_HOTKEY_RIGHT)
 		if(INTENT_HELP)
-			usr.a_intent = INTENT_HELP
+			usr.set_a_intent(INTENT_HELP)
 			usr.hud_used.action_intent.icon_state = "intent_help"
 		if(INTENT_HARM)
-			usr.a_intent = INTENT_HARM
+			usr.set_a_intent(INTENT_HARM)
 			usr.hud_used.action_intent.icon_state = "intent_harm"
 		if(INTENT_GRAB)
-			usr.a_intent = INTENT_GRAB
+			usr.set_a_intent(INTENT_GRAB)
 			usr.hud_used.action_intent.icon_state = "intent_grab"
 		if(INTENT_PUSH)
-			usr.a_intent = INTENT_PUSH
+			usr.set_a_intent(INTENT_PUSH)
 			usr.hud_used.action_intent.icon_state = "intent_push"
 		if("throw")
 			if(!usr.stat && isturf(usr.loc) && !usr.restrained())
@@ -489,15 +489,15 @@
 					to_chat(R, "You haven't selected a module yet.")
 
 		if("module1")
-			if(istype(usr, /mob/living/silicon/robot))
+			if(isrobot(usr))
 				usr:toggle_module(1)
 
 		if("module2")
-			if(istype(usr, /mob/living/silicon/robot))
+			if(isrobot(usr))
 				usr:toggle_module(2)
 
 		if("module3")
-			if(istype(usr, /mob/living/silicon/robot))
+			if(isrobot(usr))
 				usr:toggle_module(3)
 
 		if("AI Core")

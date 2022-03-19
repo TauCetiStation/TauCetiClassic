@@ -19,7 +19,7 @@ This is emryo growth procs
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/alien_embryo/atom_init_late()
-	if(istype(loc, /mob/living/carbon))
+	if(iscarbon(loc))
 		affected_mob = loc
 		START_PROCESSING(SSobj, src)
 		add_infected_hud()

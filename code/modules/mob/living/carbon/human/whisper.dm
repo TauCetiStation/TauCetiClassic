@@ -40,11 +40,9 @@
 		alt_name = "(as [get_id_name("Unknown")])"
 
 	//parse the language code and consume it
-	var/datum/language/speaking = parse_language(message)
-	if(speaking)
-		message = copytext(message,2+length_char(speaking.key))
-	else if(species.force_racial_language)
-		speaking = all_languages[species.language]
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
 
 	return whisper_say(message, speaking, alt_name)
 
@@ -98,7 +96,7 @@
 	//Pass whispers on to anything inside the immediate listeners.
 	for(var/mob/L in listening)
 		for(var/mob/C in L.contents)
-			if(istype(C,/mob/living))
+			if(isliving(C))
 				listening += C
 
 	//pass on the message to objects that can hear us.

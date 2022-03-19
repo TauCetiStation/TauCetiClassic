@@ -233,7 +233,7 @@
 	damage = 20
 
 /obj/item/projectile/bullet/incendiary/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(istype(target, /mob/living/carbon))
+	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(10)
 		M.IgniteMob()
@@ -261,7 +261,7 @@
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/flare/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(istype(target, /mob/living/carbon))
+	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(1)
 		M.IgniteMob()

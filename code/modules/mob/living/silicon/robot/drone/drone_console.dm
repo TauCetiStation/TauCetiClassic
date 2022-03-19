@@ -15,7 +15,7 @@
 	var/obj/machinery/drone_fabricator/dronefab
 
 /obj/machinery/computer/drone_control/interact(user)
-	if(istype(user, /mob/living/silicon/robot/drone))
+	if(isdrone(user))
 		to_chat(user, "<span class='warning'>Access Denied.</span>")
 	else
 		..()

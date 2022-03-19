@@ -147,8 +147,9 @@
 /mob/living/silicon/can_speak(datum/language/speaking)
 	return universal_speak || (speaking in src.speech_synthesizer_langs)	//need speech synthesizer support to vocalize a language
 
-/mob/living/silicon/add_language(language, can_speak=1)
-	if (..(language) && can_speak)
+/mob/living/silicon/add_language(language, flags=LANGUAGE_CAN_SPEAK)
+	. = ..()
+	if(. && flags >= LANGUAGE_CAN_SPEAK)
 		speech_synthesizer_langs.Add(all_languages[language])
 
 /mob/living/silicon/remove_language(rem_language)
@@ -165,7 +166,7 @@
 
 	var/dat = ""
 
-	for(var/datum/language/L in languages)
+	for(var/datum/language/L as anything in languages)
 		dat += "<b>[L.name] "
 		for(var/l_key in L.key)
 			dat += "(:[l_key])"

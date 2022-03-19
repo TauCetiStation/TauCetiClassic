@@ -169,7 +169,7 @@
 	var/mob/old_firer = firer
 	bumped = 1
 	if(firer && M)
-		if(!istype(A, /mob/living))
+		if(!isliving(A))
 			loc = A.loc
 			return 0// nope.avi
 		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
@@ -275,6 +275,8 @@
 
 		before_move()
 		Move(location.return_turf())
+		if(QDELING(src))
+			return
 
 		if(!bumped && !isturf(original))
 			if(loc == get_turf(original))
@@ -382,7 +384,7 @@
 		return //cannot shoot yourself
 	if(istype(A, /obj/item/projectile))
 		return
-	if(istype(A, /mob/living))
+	if(isliving(A))
 		result = A
 		bumped = TRUE
 		return

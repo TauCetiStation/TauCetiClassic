@@ -116,7 +116,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 					message = "<span class='notice'>[src] ate [A] and looks [expression]!</span>"
 					qdel(A)
 					soap_eaten += 200
-				else if(istype(A, /obj/item))
+				else if(isitem(A))
 					var/obj/item/I = A
 					I.make_wet()
 				visible_message(message)
@@ -332,7 +332,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 			                     "<span class='notice'>You can't reach its skin.</span>")
 		if(prob(15) && stat == CONSCIOUS)
 			var/expression = pick("an amused","an annoyed","a confused","a resentful","a happy","an excited")
-			emote("me",1,"looks at [user] with [expression] expression on his face")
+			me_emote("looks at [user] with [expression] expression on his face")
 		return
 	..()
 
@@ -352,14 +352,14 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 		flash_eyes()
 
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			gib()
-		if(2)
+		if(EXPLODE_HEAVY)
 			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 				updatehealth()
-		if(3)
+		if(EXPLODE_LIGHT)
 			if (stat != DEAD)
 				adjustBruteLoss(30)
 				updatehealth()
@@ -413,7 +413,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 			visible_message("<span class='notice'>[src] dodges [Proj].</span>")
 		if(prob(15))
 			var/expression = pick("a resentful","a happy","an excited")
-			emote("me",1,"looks with [expression] expression on his face and wants to play more!")
+			me_emote("looks with [expression] expression on his face and wants to play more!")
 		return
 
 	return ..()
@@ -439,7 +439,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 		visible_message(msg)
 		if(prob(15))
 			var/expression = pick("an amused","an annoyed","a confused","a resentful","a happy","an excited")
-			emote("me",1,"looks at [AM] with [expression] expression on his face")
+			me_emote("looks at [AM] with [expression] expression on his face")
 		return TRUE
 	return FALSE
 

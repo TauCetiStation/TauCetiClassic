@@ -292,13 +292,13 @@
 	if(!blinded)
 		flash_eyes()
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			gib()
 
-		if(2)
+		if(EXPLODE_HEAVY)
 			adjustBruteLoss(60)
 
-		if(3)
+		if(EXPLODE_LIGHT)
 			adjustBruteLoss(30)
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
@@ -323,7 +323,7 @@
 		var/obj/mecha/M = target_mob
 		if(M.occupant)
 			return FALSE
-	if (istype(target_mob, /obj/machinery/bot))
+	if (isbot(target_mob))
 		var/obj/machinery/bot/B = target_mob
 		if(B.health > 0)
 			return FALSE
@@ -368,10 +368,13 @@
 
 	var/verb = "says"
 	var/ending = copytext(message, -1)
-	var/datum/language/speaking = parse_language(message)
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
+
 	if (speaking)
 		verb = speaking.get_spoken_verb(ending)
-		message = copytext(message, 2 + length_char(speaking.key))
+
 	else
 		verb = pick(speak_emote)
 

@@ -95,15 +95,12 @@
 
 /obj/structure/window/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			take_damage(rand(30, 50))
-			return
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			take_damage(rand(5, 15))
-			return
 
 /obj/structure/window/airlock_crush_act()
 	take_damage(DOOR_CRUSH_DAMAGE * 2)
@@ -252,7 +249,7 @@
 
 	else if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
-		if (istype(G.affecting, /mob/living))
+		if (isliving(G.affecting))
 			user.SetNextMove(CLICK_CD_MELEE)
 			var/mob/living/M = G.affecting
 			var/mob/living/A = G.assailant

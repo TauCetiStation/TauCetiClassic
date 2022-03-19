@@ -50,7 +50,7 @@
 			uniques.Add(new_objective)
 	return uniques
 
-/proc/setup_role(datum/role/R, mob/P, post_setup)
+/proc/setup_role(datum/role/R, post_setup)
 	R.Greet()
 	R.add_antag_hud()
 	R.forgeObjectives()
@@ -67,9 +67,9 @@
 		. = faction.HandleNewMind(M.mind, laterole)
 
 	if(.)
-		setup_role(., M, post_setup)
+		setup_role(., post_setup)
 
-/proc/create_and_setup_role(role_type, mob/M, post_setup = TRUE)
+/proc/create_and_setup_role(role_type, mob/M, post_setup = TRUE, setup_role = TRUE)
 	. = SSticker.mode.CreateRole(role_type, M)
-	if(.)
-		setup_role(., M, post_setup)
+	if(. && setup_role)
+		setup_role(., post_setup)

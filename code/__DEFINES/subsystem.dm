@@ -26,6 +26,7 @@
 #define SS_INIT_JOBS          10
 #define SS_INIT_QUIRKS         9
 #define SS_INIT_MAPPING        8
+#define SS_INIT_ENVIRONMENT    7
 #define SS_INIT_XENOARCH       7
 #define SS_INIT_ATOMS          6
 #define SS_INIT_MACHINES       5
@@ -39,6 +40,7 @@
 #define SS_INIT_ICON_SMOOTH   -5
 #define SS_INIT_ORDER_OVERLAY -6
 #define SS_INIT_STICKY_BAN    -7
+#define SS_INIT_QUALITIES     -93
 #define SS_INIT_DEMO          -94 // To avoid a bunch of changes related to initialization being written, do this last
 #define SS_INIT_CHAT          -95 //Should be last to ensure chat remains smooth during init.
 #define SS_INIT_UNIT_TESTS    -100
@@ -47,6 +49,7 @@
 #define SS_PRIORITY_INPUT       1000  // This must always always be the max highest priority. Player input must never be lost.
 #define SS_PRIORITY_TIMER        700
 #define SS_PRIORITY_OVERLAYS     500
+#define SS_PRIORITY_RUNECHAT     410
 #define SS_PRIORITY_CHAT         400
 #define SS_PRIORITY_TICKER       200
 #define SS_PRIORITY_NANOUI       110

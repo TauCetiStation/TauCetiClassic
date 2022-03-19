@@ -69,7 +69,7 @@
 	var/list/sprite_sheets_obj = null
 
     /// A list of all tool qualities that src exhibits. To-Do: Convert all our tools to such a system.
-	var/list/tools = list()
+	var/list/qualities
 	// This thing can be used to stab eyes out.
 	var/stab_eyes = FALSE
 
@@ -119,7 +119,7 @@
 	message += "<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 		message += "<span class='notice'>Time of Death: [M.tod]</span><br>"
-	if(istype(M, /mob/living/carbon/human) && mode)
+	if(ishuman(M) && mode)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_bodyparts(1, 1)
 		message += "<span class='notice'>Localized Damage, Brute/Burn:</span><br>"
@@ -136,7 +136,7 @@
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected</span>" : "Subject bloodstream oxygen level normal"
 	message += "[OX]<br>[TX]<br>[BU]<br>[BR]<br>"
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.reagents.total_volume || C.is_infected_with_zombie_virus())
 			message += "<span class='warning'>Warning: Unknown substance detected in subject's blood.</span><br>"
@@ -157,7 +157,7 @@
 		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span><br>"
 	if(M.has_brain_worms())
 		message += "<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span><br>"
-	else if(M.getBrainLoss() >= 100 || (istype(M, /mob/living/carbon/human) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
+	else if(M.getBrainLoss() >= 100 || (ishuman(M) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
 		message += "<span class='warning'>Subject is brain dead.</span>"
 	else if(M.getBrainLoss() >= 60)
 		message += "<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span><br>"
@@ -219,19 +219,13 @@
 
 /obj/item/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(5))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(95))
 				return
-		else
-	return
+	qdel(src)
 
 /obj/item/blob_act()
 	return
@@ -372,7 +366,7 @@
 		else
 			user.remove_from_mob(src)
 	else
-		if(istype(src.loc, /mob/living))
+		if(isliving(src.loc))
 			return
 
 		user.next_move = max(user.next_move+2,world.time + 2)
@@ -649,7 +643,7 @@
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return FALSE
 				var/obj/item/clothing/under/uniform = H.w_uniform
-				if(uniform.accessories.len && !uniform.can_attach_accessory(src))
+				if(!uniform.can_attach_accessory(src))
 					if (!disable_warning)
 						to_chat(H, "<span class='warning'>You already have an accessory of this type attached to your [uniform].</span>")
 					return FALSE
@@ -734,7 +728,7 @@
 		return
 	if(usr.incapacitated() || !Adjacent(usr))
 		return
-	if((!istype(usr, /mob/living/carbon)) || (isbrain(usr)))//Is humanoid, and is not a brain
+	if((!iscarbon(usr)) || (isbrain(usr)))//Is humanoid, and is not a brain
 		to_chat(usr, "<span class='warning'>You can't pick things up!</span>")
 		return
 	if(src.anchored) //Object isn't anchored
@@ -753,7 +747,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, datum/callback/extra_checks)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -763,6 +757,13 @@
 		return
 
 	delay *= toolspeed
+
+	if(!isnull(quality))
+		var/qual_mod = get_quality(quality)
+		if(qual_mod <= 0)
+			return
+
+		delay *= 1 / qual_mod
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
@@ -857,7 +858,7 @@
 		to_chat(user, "<span class='warning'>You're going to need to remove the eye covering first.</span>")
 		return
 
-	if(istype(M, /mob/living/carbon/xenomorph) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
+	if(isxeno(M) || isslime(M))//Aliens don't have eyes./N     slimes also don't have eyes!
 		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
 		return
 
@@ -1024,3 +1025,21 @@
 	. = ..()
 	if(src != over)
 		remove_outline()
+
+/obj/item/airlock_crush_act()
+	var/qual_prying = get_quality(QUALITY_PRYING)
+	if(qual_prying <= 0)
+		return
+
+	var/chance = w_class / (qual_prying * (m_amt + 1))
+
+	if(prob(chance * 100))
+		qdel(src)
+
+/obj/item/proc/display_accessories()
+	return
+
+/obj/item/proc/get_quality(quality)
+	if(!qualities)
+		return 0
+	return qualities[quality]

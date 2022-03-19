@@ -1,28 +1,3 @@
-//NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
-#define HUMAN_MAX_OXYLOSS 1 //Defines how much oxyloss humans can get per tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
-#define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30) //The amount of damage you'll get when in critical condition. We want this to be a 5 minute deal = 300s. There are 50HP to get through, so (1/6)*last_tick_duration per second. Breaths however only happen every 4 ticks.
-
-#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 1000K point
-
-#define COLD_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when your body temperature just passes the 260.15k safety point
-#define COLD_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when your body temperature passes the 200K point
-#define COLD_DAMAGE_LEVEL_3 3 //Amount of damage applied when your body temperature passes the 120K point
-
-//Note that gas heat damage is only applied once every FOUR ticks.
-#define HEAT_GAS_DAMAGE_LEVEL_1 2 //Amount of damage applied when the current breath's temperature just passes the 360.15k safety point
-#define HEAT_GAS_DAMAGE_LEVEL_2 4 //Amount of damage applied when the current breath's temperature passes the 400K point
-#define HEAT_GAS_DAMAGE_LEVEL_3 8 //Amount of damage applied when the current breath's temperature passes the 1000K point
-
-#define COLD_GAS_DAMAGE_LEVEL_1 0.5 //Amount of damage applied when the current breath's temperature just passes the 260.15k safety point
-#define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
-#define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
-
-#define LIGHT_DAM_THRESHOLD 3
-#define LIGHT_HEAL_THRESHOLD 3
-#define LIGHT_DAMAGE_TAKEN 10
-
 /mob/living/carbon/human
 	var/prev_gender = null // Debug for plural genders
 
@@ -70,7 +45,7 @@
 				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
 		else //Still give containing object the chance to interact
-			if(istype(loc, /obj))
+			if(isobj(loc))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
@@ -104,6 +79,8 @@
 			handle_bodyparts()	//Optimized.
 			if(!species.flags[NO_BLOOD] && bodytemperature >= 170)
 				handle_blood()
+
+			handle_drunkenness()
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
@@ -143,11 +120,11 @@
 				pressure_adjustment_coefficient = pressure_loss
 
 	pressure_adjustment_coefficient = CLAMP01(pressure_adjustment_coefficient) //So it isn't less than 0 or larger than 1.
+	pressure_adjustment_coefficient *= 1 - species.get_pressure_protection(src)
 
 	return 1 - pressure_adjustment_coefficient	//want 0 to be bad protection, 1 to be good protection
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	..()
 	var/pressure_difference = abs( pressure - ONE_ATMOSPHERE )
 
 	if(pressure > ONE_ATMOSPHERE)
@@ -247,6 +224,9 @@
 						if(3)
 							emote("drool")
 
+			if(19 to 200)
+				return
+
 /mob/living/carbon/human/proc/handle_mutations_and_radiation()
 
 	if(species.flags[IS_SYNTHETIC]) //Robots don't suffer from mutations or radloss.
@@ -338,11 +318,11 @@
 	if((handle_drowning() || health < config.health_threshold_crit) && !reagents.has_reagent("inaprovaline") && !HAS_TRAIT(src, TRAIT_AV))
 		losebreath = max(2, losebreath + 1)
 
-	if(losebreath>0) //Suffocating so do not take a breath
+	if(losebreath > 0) //Suffocating so do not take a breath
 		losebreath--
 		if (prob(10)) //Gasp per 10 ticks? Sounds about right.
-			spawn emote("gasp")
-		if(istype(loc, /obj))
+			emote("gasp")
+		if(isobj(loc))
 			var/obj/location_as_object = loc
 			location_as_object.handle_internal_lifeform(src, 0)
 	else
@@ -350,35 +330,23 @@
 		breath = get_breath_from_internal(BREATH_VOLUME) // Super hacky -- TLE
 		//breath = get_breath_from_internal(0.5) // Manually setting to old BREATH_VOLUME amount -- TLE
 
-		//No breath from internal atmosphere so get breath from location
-		if(!breath)
+		if(breath)
+			if(isobj(loc)) //Still give containing object the chance to interact
+				var/obj/location_as_object = loc
+				location_as_object.handle_internal_lifeform(src, 0)
+		else //No breath from internal atmosphere so get breath from location
 			if(isobj(loc))
 				var/obj/location_as_object = loc
 				breath = location_as_object.handle_internal_lifeform(src, BREATH_MOLES)
 			else if(isturf(loc))
-				var/breath_moles = 0
-				/*if(environment.return_pressure() > ONE_ATMOSPHERE)
-					// Loads of air around (pressure effect will be handled elsewhere), so lets just take a enough to fill our lungs at normal atmos pressure (using n = Pv/RT)
-					breath_moles = (ONE_ATMOSPHERE*BREATH_VOLUME/R_IDEAL_GAS_EQUATION*environment.temperature)
-				else*/
-					// Not enough air around, take a percentage of what's there to model this properly
-				breath_moles = environment.total_moles * BREATH_PERCENTAGE
+				breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
 
-				breath = loc.remove_air(breath_moles)
-
-				// Handle filtering
-				var/block = 0
-				if(wear_mask)
-					if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
-						block = 1
-				if(glasses)
-					if(glasses.flags & BLOCK_GAS_SMOKE_EFFECT)
-						block = 1
-				if(head)
-					if(head.flags & BLOCK_GAS_SMOKE_EFFECT)
-						block = 1
-
-				if(!block)
+				// Handle smoke filtering
+				if( \
+					!(wear_mask && (wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)) && \
+					!(glasses && (glasses.flags & BLOCK_GAS_SMOKE_EFFECT)) && \
+					!(head && (head.flags & BLOCK_GAS_SMOKE_EFFECT)) \
+					)
 
 					for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
 						if(smoke.reagents.total_volume)
@@ -390,24 +358,16 @@
 
 			if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
 				var/obj/item/clothing/mask/gas/G = wear_mask
-				var/datum/gas_mixture/filtered = new
 				for(var/g in  G.filter)
 					if(breath.gas[g])
-						filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
-						breath.gas[g] -= filtered.gas[g]
+						breath.gas[g] -= breath.gas[g] * G.gas_filter_strength
 
 				breath.update_values()
-				filtered.update_values()
 
 			if(!is_lung_ruptured())
 				if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
 					if(prob(5))
 						rupture_lung()
-
-		else //Still give containing object the chance to interact
-			if(istype(loc, /obj))
-				var/obj/location_as_object = loc
-				location_as_object.handle_internal_lifeform(src, 0)
 
 	handle_breath(breath)
 
@@ -422,44 +382,43 @@
 					spread_disease_to(M)
 
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
-	if(internal)
-		if (!contents.Find(internal) && !HAS_TRAIT(src, TRAIT_AV))
-			internal = null
-		if (!HAS_TRAIT(src, TRAIT_AV) && (!wear_mask || !(wear_mask.flags & MASKINTERNALS)))
-			internal = null
-		if(internal)
-					//internal breath sounds
-			if(internal.distribute_pressure >= 16)
-				var/breathsound = pick(SOUNDIN_BREATHMASK)
-				if(istype(wear_mask, /obj/item/clothing/mask/gas))
-					breathsound = 'sound/misc/gasmaskbreath.ogg'
-				if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
-					breathsound = pick(SOUNDIN_RIGBREATH)
-				if(alpha < 50)
-					breathsound = pick(SOUNDIN_BREATHMASK) // the quietest breath for stealth
-				playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, null, -6)
-			return internal.remove_air_volume(volume_needed)
-		else if(internals)
+	if(!internal)
+		return null
+
+	if(!(HAS_TRAIT(src, TRAIT_AV) || (contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS))))
+		internal = null
+		if(internals)
 			internals.icon_state = "internal0"
-	return null
+		return null
+
+	//internal breath sounds
+	if(internal.distribute_pressure >= 16)
+		var/breathsound = pick(SOUNDIN_BREATHMASK)
+
+		if(alpha >= 50) // leave the quietest breath for stealth
+			if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
+				breathsound = pick(SOUNDIN_RIGBREATH)
+			else if(istype(wear_mask, /obj/item/clothing/mask/gas))
+				breathsound = 'sound/misc/gasmaskbreath.ogg'
+
+		playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, null, -6)
+	return internal.remove_air_volume(volume_needed)
 
 /mob/living/carbon/human/proc/handle_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)
+		clear_alert("oxy")
+		clear_alert("tox_in_air")
 		return
 
 	if(!breath || (breath.total_moles == 0) || suiciding)
 		if(suiciding)
-			adjustOxyLoss(2)//If you are suiciding, you should die a little bit faster
-			failed_last_breath = 1
-			throw_alert("oxy", /atom/movable/screen/alert/oxy)
-			return 0
-		if(health > config.health_threshold_crit)
+			adjustOxyLoss(HUMAN_MAX_OXYLOSS * 2)//If you are suiciding, you should die a little bit faster
+		else if(health > config.health_threshold_crit)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-			failed_last_breath = 1
 		else
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
-			failed_last_breath = 1
 
+		failed_last_breath = 1
 		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 
 		return 0
@@ -470,41 +429,41 @@
 	var/safe_toxins_max = 0.005
 	var/SA_para_min = 1
 	var/SA_sleep_min = 5
-	var/inhaled_gas_used = 0
-
-	var/breath_pressure = (breath.total_moles * R_IDEAL_GAS_EQUATION * breath.temperature) / BREATH_VOLUME
+	var/SA_giggle_min = 0.15
 
 	var/inhaling = breath.gas[species.breath_type]
-	var/poison = breath.gas[species.poison_type]
 	var/exhaling = species.exhale_type ? breath.gas[species.exhale_type] : 0
+	var/poison = breath.gas[species.poison_type]
+	var/sleeping_agent = breath.gas["sleeping_agent"]
 
-	var/inhale_pp = (inhaling / breath.total_moles) * breath_pressure
-	var/toxins_pp = (poison / breath.total_moles) * breath_pressure
-	var/exhaled_pp = (exhaling / breath.total_moles) * breath_pressure
+	var/inhaled_gas_used = 0
+	var/breath_pressure = (breath.total_moles * R_IDEAL_GAS_EQUATION * breath.temperature) / BREATH_VOLUME
+
+	var/inhale_pp = inhaling ? (inhaling / breath.total_moles) * breath_pressure : 0
+	var/exhaled_pp = exhaling ? (exhaling / breath.total_moles) * breath_pressure : 0
+	var/poison_pp = poison ? (poison / breath.total_moles) * breath_pressure : 0
+	var/SA_pp = sleeping_agent ? (sleeping_agent / breath.total_moles) * breath_pressure : 0
 
 	if(inhale_pp < safe_pressure_min)
 		if(prob(20))
 			emote("gasp")
 		if(inhale_pp > 0)
-			var/ratio = inhale_pp/safe_pressure_min
+			var/ratio = inhale_pp / safe_pressure_min
 
 			 // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
-			adjustOxyLoss(min(5*(1 - ratio), HUMAN_MAX_OXYLOSS))
-			failed_last_breath = 1
-			inhaled_gas_used = inhaling*ratio/6
-
+			adjustOxyLoss(HUMAN_MAX_OXYLOSS * (1 - ratio))
+			inhaled_gas_used = inhaling * ratio * BREATH_USED_PART
 		else
-
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-			failed_last_breath = 1
 
+		failed_last_breath = 1
 		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 
 	else
 		// We're in safe limits
-		failed_last_breath = 0
 		adjustOxyLoss(-5)
-		inhaled_gas_used = inhaling/6
+		inhaled_gas_used = inhaling * BREATH_USED_PART
+		failed_last_breath = 0
 		clear_alert("oxy")
 
 	breath.adjust_gas(species.breath_type, -inhaled_gas_used, update = FALSE) //update afterwards
@@ -521,9 +480,7 @@
 			// then have them pass out after 12s or so.
 			if(!co2overloadtime)
 				co2overloadtime = world.time
-
 			else if(world.time - co2overloadtime > 120)
-
 				// Lets hurt em a little, let them know we mean business
 				Paralyse(3)
 				adjustOxyLoss(3)
@@ -534,27 +491,24 @@
 
 			// Lets give them some chance to know somethings not right though I guess.
 			if(prob(20))
-				spawn(0) emote("cough")
+				emote("cough")
 		else
-			co2overloadtime = 0
+			co2overloadtime = null
 
 	// Too much poison in the air.
-	if(toxins_pp > safe_toxins_max)
-		var/ratio = (poison/safe_toxins_max) * 10
+	if(poison_pp > safe_toxins_max)
+		var/ratio = (poison / safe_toxins_max) * 10
 		if(reagents)
 			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
-		breath.adjust_gas(species.poison_type, -poison / 6, update = FALSE) //update after
+		breath.adjust_gas(species.poison_type, -poison * BREATH_USED_PART, update = FALSE) //update after
 		throw_alert("tox_in_air", /atom/movable/screen/alert/tox_in_air)
 	else
 		clear_alert("tox_in_air")
 
 	// If there's some other shit in the air lets deal with it here.
-	if(breath.gas["sleeping_agent"])
-		var/SA_pp = (breath.gas["sleeping_agent"] / breath.total_moles) * breath_pressure
-
+	if(sleeping_agent)
 		// Enough to make us paralysed for a bit
 		if(SA_pp > SA_para_min)
-
 			// 3 gives them one second to wake up and run away a bit!
 			Paralyse(3)
 
@@ -563,27 +517,22 @@
 				Sleeping(10 SECONDS)
 
 		// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-		else if(SA_pp > 0.15)
+		else if(SA_pp > SA_giggle_min)
 			if(prob(20))
 				emote(pick("giggle", "laugh"))
 
-		breath.adjust_gas("sleeping_agent", -breath.gas["sleeping_agent"] / 6, update = FALSE) //update after
+		breath.adjust_gas("sleeping_agent", -breath.gas["sleeping_agent"] * BREATH_USED_PART, update = FALSE) //update after
 
 	//handle_temperature_effects(breath)
 
 	// Hot air hurts :(
-	if( (breath.temperature < species.cold_level_1 || breath.temperature > species.heat_level_1))
-	 // #Z2 Cold_resistance wont save us anymore, we have no_breath genetics power now @ZVe
-
-		if(status_flags & GODMODE)
-			return 1
-
+	if(breath.temperature < species.breath_cold_level_1 || breath.temperature > species.heat_level_1)
 		switch(breath.temperature)
-			if(-INFINITY to species.cold_level_3)
+			if(-INFINITY to species.breath_cold_level_3)
 				apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-			if(species.cold_level_3 to species.cold_level_2)
+			if(species.breath_cold_level_3 to species.breath_cold_level_2)
 				apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-			if(species.cold_level_2 to species.cold_level_1)
+			if(species.breath_cold_level_2 to species.breath_cold_level_1)
 				apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Cold")
 			if(species.heat_level_1 to species.heat_level_2)
 				apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Heat")
@@ -599,11 +548,9 @@
 		else
 			temp_adj /= (BODYTEMP_HEAT_DIVISOR * 5)	//don't raise temperature as much as if we were directly exposed
 
-		var/relative_density = breath.total_moles / (MOLES_CELLSTANDARD * BREATH_PERCENTAGE)
-		temp_adj *= relative_density
+		temp_adj *= breath.total_moles / (MOLES_CELLSTANDARD * BREATH_PERCENTAGE)
+		temp_adj = clamp(temp_adj, BODYTEMP_COOLING_MAX, BODYTEMP_HEATING_MAX)
 
-		if (temp_adj > BODYTEMP_HEATING_MAX) temp_adj = BODYTEMP_HEATING_MAX
-		if (temp_adj < BODYTEMP_COOLING_MAX) temp_adj = BODYTEMP_COOLING_MAX
 		//world << "Breath: [breath.temperature], [src]: [bodytemperature], Adjusting: [temp_adj]"
 		bodytemperature += temp_adj
 
@@ -618,57 +565,47 @@
 	//Moved pressure calculations here for use in skip-processing check.
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = calculate_affecting_pressure(pressure)
-	var/is_in_space = istype(get_turf(src), /turf/space)
+	var/is_in_space = isspaceturf(get_turf(src))
 
 	if(!is_in_space) //space is not meant to change your body temperature.
 		var/loc_temp = get_temperature(environment)
 
-		if(adjusted_pressure < species.warning_high_pressure && adjusted_pressure > species.warning_low_pressure && abs(loc_temp - bodytemperature) < 20 && bodytemperature < species.heat_level_1 && bodytemperature > species.cold_level_1)
-			clear_alert("pressure")
-			clear_alert("temp")
-			return // Temperatures are within normal ranges, fuck all this processing. ~Ccomp
+		//Use heat transfer as proportional to the gas activity (pressure)
+		var/affecting_temp = (loc_temp - bodytemperature) * environment.total_moles / MOLES_CELLSTANDARD
 
-		//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
-		var/temp_adj = 0
 		//If you're on fire, you do not heat up or cool down based on surrounding gases.
-		if(!on_fire)
-			if(loc_temp < bodytemperature)			//Place is colder than we are
+		//Or if absolute temperature difference is too small
+		if(abs(affecting_temp) >= BODYTEMP_SIGNIFICANT_CHANGE && !on_fire)
+			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
+			var/temp_adj = 0
+
+			if(affecting_temp < 0.)	//Place is colder than we are
 				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
-					temp_adj = (1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR)	//this will be negative
-			else if (loc_temp > bodytemperature)			//Place is hotter than we are
+					temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_COLD_DIVISOR)	//this will be negative
+			else					//Place is hotter than we are
 				var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
-					temp_adj = (1 - thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
+					temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_HEAT_DIVISOR)
 
-			//Use heat transfer as proportional to the gas density. However, we only care about the relative density vs standard 101 kPa/20 C air. Therefore we can use mole ratios
-			var/relative_density = (environment.total_moles / environment.volume) / (MOLES_CELLSTANDARD / CELL_VOLUME)
-			temp_adj *= relative_density
-
-			if (temp_adj > BODYTEMP_HEATING_MAX) temp_adj = BODYTEMP_HEATING_MAX
-			if (temp_adj < BODYTEMP_COOLING_MAX) temp_adj = BODYTEMP_COOLING_MAX
+			temp_adj = clamp(temp_adj, BODYTEMP_COOLING_MAX, BODYTEMP_HEATING_MAX)
 			//world << "Environment: [loc_temp], [src]: [bodytemperature], Adjusting: [temp_adj]"
 			bodytemperature += temp_adj
 
-	else if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
-		if(istype(loc, /obj/mecha))
+	else if(!species.flags[IS_SYNTHETIC] && !species.flags[RAD_IMMUNE])
+		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
 			return
-		if(istype(loc, /obj/structure/transit_tube_pod))
-			return
-		var/protected = 0
-		if( (head && istype(head, /obj/item/clothing/head/helmet/space)) && (wear_suit && istype(wear_suit, /obj/item/clothing/suit/space)))
-			protected = 1
-		if(!protected && radiation < 100)
+		if(!(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space)) && radiation < 100)
 			apply_effect(5, IRRADIATE)
 
 	if(status_flags & GODMODE)
-		return 1	//godmode
-
-	if(bodytemperature <= species.heat_level_1 && bodytemperature >= species.cold_level_1)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
+		clear_alert("temp")
+		clear_alert("pressure")
 
-	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
+		return 1	//godmode
+
 	if(bodytemperature > species.heat_level_1)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
@@ -687,23 +624,22 @@
 		else
 			throw_alert("temp", /atom/movable/screen/alert/hot, 1)
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
-	else if(bodytemperature < species.cold_level_1)
+	else if(bodytemperature < species.cold_level_1 && !istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 
-		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-			if(bodytemperature < species.cold_level_3)
-				throw_alert("temp", /atom/movable/screen/alert/cold, 3)
-				take_overall_damage(burn=COLD_DAMAGE_LEVEL_3, used_weapon = "Low Body Temperature")
-			else if(bodytemperature < species.cold_level_2)
-				throw_alert("temp", /atom/movable/screen/alert/cold, 2)
-				take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "Low Body Temperature")
-			else
-				throw_alert("temp", /atom/movable/screen/alert/cold, 1)
-				take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "Low Body Temperature")
+		if(bodytemperature < species.cold_level_3)
+			throw_alert("temp", /atom/movable/screen/alert/cold, 3)
+			take_overall_damage(burn=COLD_DAMAGE_LEVEL_3, used_weapon = "Low Body Temperature")
+		else if(bodytemperature < species.cold_level_2)
+			throw_alert("temp", /atom/movable/screen/alert/cold, 2)
+			take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "Low Body Temperature")
 		else
-			clear_alert("temp")
+			throw_alert("temp", /atom/movable/screen/alert/cold, 1)
+			take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "Low Body Temperature")
 	else
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		clear_alert("temp")
 
 	if(bodytemperature < species.cold_level_1 && get_species() == UNATHI)
@@ -732,14 +668,6 @@
 		apply_effect(is_in_space ? 15 : 7, AGONY, 0)
 		take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 
-
-//#Z2 - No more low pressure resistance with Cold Resistance genetic power, for now
-		/*if( !(COLD_RESISTANCE in mutations))
-			take_overall_damage(brute=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
-			pressure_alert = -2
-		else
-			pressure_alert = -1*/
-//##Z2
 	//Check for contaminants before anything else because we don't want to skip it.
 	for(var/g in environment.gas)
 		if(gas_data.flags[g] & XGM_GAS_CONTAMINANT && environment.gas[g] > gas_data.overlay_limit[g] + 1)
@@ -1052,6 +980,8 @@
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
 		var/met_factor = get_metabolism_factor()
+		for(var/obj/item/organ/external/BP in bodyparts)
+			met_factor += BP.pumped / 100
 		nutrition = max(0, nutrition - met_factor * 0.1)
 		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
 			var/pain = getHalLoss()
@@ -1078,7 +1008,8 @@
 			Sleeping(10 SECONDS)
 			Paralyse(5)
 
-	confused = max(0, confused - 1)
+	AdjustConfused(-1)
+	AdjustDrunkenness(-1)
 	// decrement dizziness counter, clamped to 0
 	if(resting)
 		dizziness = max(0, dizziness - 15)
@@ -1356,14 +1287,6 @@
 			full_perc = clamp(((get_nutrition() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
 			nutrition_icon.icon_state = "[fullness_icon][CEILING(full_perc, 20)]"
 
-		if(pressure)
-			pressure.icon_state = "pressure[pressure_alert]"
-
-		if(pullin)
-			if(pulling)
-				pullin.icon_state = "pull1"
-			else
-				pullin.icon_state = "pull0"
 		//OH cmon...
 		var/nearsighted = 0
 		var/impaired    = 0
@@ -1461,7 +1384,15 @@
 			else
 				sightglassesmod = "nightsight"
 
-	set_EyesVision(sightglassesmod)
+	if(sightglassesmod)
+		set_EyesVision(sightglassesmod)
+		return TRUE
+
+	if(moody_color)
+		animate(client, color = moody_color, time = 5)
+	else
+		animate(client, color = null, time = 5)
+
 	return TRUE
 
 /mob/living/carbon/human/proc/handle_random_events()
@@ -1540,7 +1471,7 @@
 		to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
 
 	if(shock_stage >= 30)
-		if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
+		if(shock_stage == 30) me_emote("is having trouble keeping their eyes open.")
 		blurEyes(2)
 		stuttering = max(stuttering, 5)
 
@@ -1565,7 +1496,7 @@
 			Paralyse(5)
 
 	if(shock_stage == 150)
-		emote("me",1,"can no longer stand, collapsing!")
+		me_emote("can no longer stand, collapsing!")
 		Weaken(20)
 
 	if(shock_stage >= 150)
@@ -1575,7 +1506,7 @@
 
 	if(pulse == PULSE_NONE) return
 
-	if(pulse == PULSE_2FAST || shock_stage >= 10 || istype(get_turf(src), /turf/space))
+	if(pulse == PULSE_2FAST || shock_stage >= 10 || isspaceturf(get_turf(src)))
 
 		var/temp = (5 - pulse)/2
 
@@ -1597,11 +1528,17 @@
 		return PULSE_NORM
 
 	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
-	if(IO.heart_status == HEART_FAILURE)
-		return PULSE_NONE
-
-	if(IO.heart_status == HEART_FIBR)
-		return PULSE_SLOW
+	if(life_tick % 10)
+		switch(IO.heart_status)
+			if(HEART_FAILURE)
+				to_chat(src, "<span class='userdanger'>Your feel a prick in your heart!</span>")
+				apply_effect(5,AGONY,0)
+				return PULSE_NONE
+			if(HEART_FIBR)
+				to_chat(src, "<span class='danger'>Your heart hurts a little.</span>")
+				playsound_local(null, 'sound/machines/cardio/pulse_fibrillation.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+				apply_effect(1,AGONY,0)
+				return PULSE_SLOW
 
 	if(stat == DEAD)
 		return PULSE_NONE	//that's it, you're dead, nothing can influence your pulse

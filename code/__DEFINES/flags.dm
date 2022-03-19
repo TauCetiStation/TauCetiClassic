@@ -79,6 +79,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define HAS_LIPS           "has_lips"
 #define HAS_UNDERWEAR      "has_underwear"
 #define HAS_TAIL           "has_tail"
+#define IS_SOCIAL          "is_social"
 #define IS_PLANT           "is_plant"
 #define IS_WHITELISTED     "is_whitelisted"
 #define RAD_ABSORB         "rad_absorb"
@@ -124,7 +125,8 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSMOB     32
 
 //turf-only flags
-#define NOJAUNT  1
+#define NOJAUNT			1
+#define NOSTEPSOUND		2
 
 //flags for customizing id-cards
 #define FORDBIDDEN_VIEW      1

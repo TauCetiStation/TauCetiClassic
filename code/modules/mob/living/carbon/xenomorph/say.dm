@@ -11,7 +11,7 @@
 	if(stat == DEAD)
 		return say_dead(message)
 
-	var/datum/language/xeno_language = all_languages["Xenomorph language"]
+	var/datum/language/xeno_language = all_languages[LANGUAGE_XENOMORPH]
 
 	if(message[1] == "*")
 		return emote(copytext(message, 2))
