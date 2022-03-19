@@ -142,7 +142,7 @@
 	if(!is_skill_competent(user, list(/datum/skill/firearms/trained)))
 		to_chat(user, "<span class='warning'>You don't know how to do tactical reloads.</span>")
 		return
-	if((!istype(new_magazine, mag_type) || (!istype(new_magazine, mag_type2) || mag_type == null)))
+	if(!(istype(new_magazine, mag_type) || (istype(new_magazine, mag_type2))) || mag_type == null)
 		return
 	to_chat(user, "<span class='notice'>You start a tactical reload.</span>")
 
