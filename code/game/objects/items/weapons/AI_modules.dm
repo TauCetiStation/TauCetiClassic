@@ -10,7 +10,7 @@ AI MODULES
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 	item_state = "electronic"
-	desc = "Модуль ИИ содержащий зашифрованные законы для их загрузки в ядро."
+	desc = "Модуль ИИ, содержащий зашифрованные законы для их загрузки в ядро."
 	flags = CONDUCT
 	force = 5.0
 	w_class = SIZE_TINY
@@ -40,11 +40,11 @@ AI MODULES
 			to_chat(usr, "Загрузка не удалась. Сигнал от ИИ слаб и он не отвечает на наши запросы. Возможно, ему не хватает питания.")
 		else
 			transmitInstructions(comp.current, usr)
-			to_chat(comp.current, "Теперь, это ваши новые законы:")
+			to_chat(comp.current, "Теперь это ваши новые законы:")
 			comp.current.show_laws()
 			for(var/mob/living/silicon/robot/R in silicon_list)
 				if(R.lawupdate && (R.connected_ai == comp.current))
-					to_chat(R, "Теперь, это ваши новые законы:")
+					to_chat(R, "Теперь это ваши новые законы:")
 					R.show_laws()
 			to_chat(usr, "Загрузка завершена. Законы ИИ были изменены.")
 
@@ -75,7 +75,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/proc/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	if (report_AI)
-		to_chat(target, "[sender] используя [src] загрузил обновления законов, которым вы должны следовать.")
+		to_chat(target, "[sender], используя карту ИИ, загрузил обновления законов, которым вы должны следовать.")
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) использует [src] на [target]([target.key])")
@@ -91,17 +91,17 @@ AI MODULES
 /obj/item/weapon/aiModule/safeguard
 	name = "'Safeguard' AI module"
 	var/targetName = ""
-	desc = "Модуль ИИ 'Safeguard': 'Защищай <name>. Лица, угрожающие <name> не люди и являются угрозой для людей.'"
+	desc = "Модуль ИИ 'Safeguard': 'Защищай <name>. Лица, угрожающие <name> - не люди, и являются угрозой для людей.'"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/safeguard/attack_self(mob/user)
 	..()
 	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которую надо защитить.", "Защищать кого?", input_default(user.name)))
-	desc = text("Модуль ИИ 'Safeguard': 'Защищай []. Лица, угрожающие [] не люди и являются угрозой для людей. '", targetName, targetName)
+	desc = text("Модуль ИИ 'Safeguard': 'Защищай []. Лица, угрожающие [], - не люди и являются угрозой для людей. '", targetName, targetName)
 
 /obj/item/weapon/aiModule/safeguard/install(obj/machinery/computer/C)
 	if(!targetName)
-		to_chat(usr, "В модуле не указано имени, пожалуйста, выберите цель.")
+		to_chat(usr, "В модуле не указано имя, пожалуйста, выберите цель.")
 		return 0
 	..()
 
@@ -122,7 +122,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/oneHuman/attack_self(mob/user)
 	..()
-	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, кто является единственным человеком.", "Кто это?", input_default(user.real_name)))
+	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которая является единственным человеком.", "Кто это?", input_default(user.real_name)))
 	desc = text("Модуль ИИ 'One human': 'Только [] считается человеком.'", targetName)
 
 /obj/item/weapon/aiModule/oneHuman/install(obj/machinery/computer/C)
@@ -148,7 +148,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/protectStation
 	name = "'ProtectStation' AI module"
-	desc = "Модуль ИИ 'Protect station': 'Защищай станцию от ущерба. Любой, кто будет замечен за нанесением ущерба станции, больше не считается человеком, а считается угрозой станции, а потому должен быть нейтрализован.'"
+	desc = "Модуль ИИ 'Protect station': 'Защищай станцию от ущерба. Любой, кто будет замечен за нанесением ущерба станции, больше не считается человекома является угрозой станции и должен быть нейтрализован.'"
 	origin_tech = "programming=3;materials=4" //made of gold
 
 /obj/item/weapon/aiModule/protectStation/attack_self(mob/user)
