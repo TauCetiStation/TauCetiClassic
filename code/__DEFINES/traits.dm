@@ -148,6 +148,7 @@
 #define TRAIT_FAST_EQUIP          "fast_equip"
 #define TRAIT_NO_CLONE            "no_clone"
 #define TRAIT_VACCINATED          "vaccinated"
+#define TRAIT_SYRINGE_FEAR        "syringe_fear"
 #define TRAIT_WET_HANDS           "wet_hands"
 #define TRAIT_GREASY_FINGERS      "greasy_fingers"
 #define TRAIT_RANDOM_DAMAGE       "random_damage"

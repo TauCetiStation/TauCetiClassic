@@ -189,6 +189,17 @@ var/global/list/allergen_reagents_list
 	H.adjustBrainLoss(rand(30, 99))
 
 
+/datum/quality/trypanophobia
+	desc = "Вам с самого начала не понравились шприцы. Вам не хочется, чтобы ваше тело кололи иглой."
+	requirement = "Не СПУ."
+
+/datum/quality/trypanophobia/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !H.species.flags[IS_SYNTHETIC]
+
+/datum/quality/trypanophobia/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT)
+
+
 /datum/quality/wet_hands
 	desc = "Ваши верхние конечности можно сравнить с губкой, которая впитывает в себя жидкости. Осторожнее при работе с консолями."
 	requirement = "Нет."
