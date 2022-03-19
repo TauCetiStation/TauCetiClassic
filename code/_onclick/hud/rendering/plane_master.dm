@@ -50,6 +50,17 @@
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_NON_GAME
 
+/atom/movable/screen/plane_master/ghost_illusion
+	name = "ghost illusion plane master"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = GHOST_ILLUSION_PLANE
+	render_relay_plane = RENDER_PLANE_ABOVE_GAME
+
+/atom/movable/screen/plane_master/ghost_illusion/backdrop(mob/mymob)
+	. = ..()
+	remove_filter("ghost_illusion")
+	add_filter("ghost_illusion", 1, motion_blur_filter(x = 3, y = 3))
+
 /atom/movable/screen/plane_master/point
 	name = "point plane master"
 	plane = POINT_PLANE

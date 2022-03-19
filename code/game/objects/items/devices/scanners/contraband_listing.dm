@@ -148,7 +148,7 @@ var/global/list/contraband_listings
 					return
 
 /datum/contraband_listing/proc/tech_lists_checks(atom/target, mob/user, full)
-	if(!isobj(target))
+	if(!istype(target, /obj))
 		return
 
 	. = create_info()
