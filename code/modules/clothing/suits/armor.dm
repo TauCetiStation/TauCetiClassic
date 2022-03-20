@@ -287,7 +287,7 @@
 	set name = "Holster"
 	set category = "Object"
 	set src in usr
-	if(!istype(usr, /mob/living)) return
+	if(!isliving(usr)) return
 	if(usr.incapacitated())
 		return
 
@@ -348,3 +348,13 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 60, bullet = 80, laser = 40, energy = 50, bomb = 25, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
+
+/obj/item/clothing/suit/armor/crusader
+	name = "crusader tabard"
+	desc = "It's a chainmail with some cloth draped over. Non nobis domini and stuff."
+	icon_state = "crusader"
+	item_state = "armor"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 25, bio = 0, rad = 10)
+	siemens_coefficient = 1.2

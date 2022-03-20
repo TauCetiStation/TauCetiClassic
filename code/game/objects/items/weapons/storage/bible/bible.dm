@@ -7,8 +7,6 @@
 	w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BOX_STORAGE
 
-	var/deity_name = "Christ"
-
 	var/datum/religion/religion
 	var/religify_next = list()
 	var/religify_cd = 3 MINUTE

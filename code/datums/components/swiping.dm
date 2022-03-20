@@ -196,7 +196,6 @@
 		can_spin = TRUE
 		can_spin_call = SCB.can_spin_call
 		on_spin = SCB.on_spin
-		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/sweep_spin)
 		RegisterSignal(parent, list(COMSIG_ITEM_MIDDLECLICKWITH), .proc/sweep_spin_click)
 
 	RegisterSignal(parent, list(COMSIG_ITEM_MOUSEDROP_ONTO), .proc/sweep_mousedrop)
@@ -278,7 +277,7 @@
 			var/obj/item/I = parent
 			I.afterattack(target, user, TRUE, list()) // 1 indicates adjacency
 
-	if(!has_gravity(parent) && !istype(target, /turf/space))
+	if(!has_gravity(parent) && !isspaceturf(target))
 		step_away(user, T_target)
 	else if(istype(target, /atom/movable))
 		var/atom/movable/AM = target
@@ -305,7 +304,7 @@
 	var/turf/T_target = get_turf(target)
 
 	var/obj/effect/effect/weapon_sweep/WS = new(W_turf, W, list(), W.sweep_step)
-	WS.invisibility = 101
+	WS.invisibility = INVISIBILITY_ABSTRACT
 	WS.pass_flags = W.pass_flags
 
 	step(WS, get_dir(W_turf, T_target))
@@ -373,7 +372,7 @@
 			var/obj/item/I = parent
 			I.afterattack(target, user, TRUE, list()) // 1 indicates adjacency
 
-	if(!has_gravity(parent) && !istype(target, /turf/space))
+	if(!has_gravity(parent) && !isspaceturf(target))
 		step_to(user, T_target)
 	else if(istype(target, /atom/movable))
 		var/atom/movable/AM = target
@@ -400,7 +399,7 @@
 	var/turf/T_target = get_turf(target)
 
 	var/obj/effect/effect/weapon_sweep/WS = new(W_turf, W, list(), W.sweep_step)
-	WS.invisibility = 101
+	WS.invisibility = INVISIBILITY_ABSTRACT
 	WS.pass_flags = W.pass_flags
 
 	step(WS, get_dir(W_turf, T_target))

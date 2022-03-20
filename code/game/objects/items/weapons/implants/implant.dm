@@ -392,6 +392,12 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	spawn(20)
 		malfunction--
 
+var/global/list/death_alarm_stealth_areas = list(
+	/area/shuttle/syndicate,
+	/area/custom/syndicate_mothership,
+	/area/shuttle/syndicate_elite,
+	/area/custom/cult,
+)
 /obj/item/weapon/implant/death_alarm
 	name = "death alarm implant"
 	desc = "An alarm which monitors host vital signs and transmits a radio message upon death."
@@ -429,7 +435,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	switch (cause)
 		if("death")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			if(istype(t, /area/shuttle/syndicate) || istype(t, /area/custom/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) || istype(t, /area/custom/cult))
+			if(is_type_in_list(t, global.death_alarm_stealth_areas))
 				//give the syndies a bit of stealth
 				a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
 			else

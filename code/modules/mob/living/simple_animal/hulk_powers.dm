@@ -13,7 +13,7 @@
 		to_chat(usr, "<span class='warning'>You can't jump right now!</span>")
 		return
 
-	if (istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
+	if (isturf(usr.loc) && !(isspaceturf(usr.loc)))
 
 		for(var/mob/M in range(usr, 1))
 			if(M.pulling == usr)
@@ -58,7 +58,7 @@
 			if(M != usr)
 				M.log_combat(usr, "hulk_jumped")
 				var/mob/living/carbon/human/H = M
-				if(istype(H,/mob/living/carbon/human))
+				if(ishuman(H))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 					var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart_name]
@@ -139,7 +139,7 @@
 		to_chat(usr, "<span class='warning'>You can't dash right now!</span>")
 		return
 
-	if (istype(usr.loc,/turf) && !(istype(usr.loc,/turf/space)))
+	if (isturf(usr.loc) && !isspaceturf(usr.loc))
 		for(var/mob/M in range(usr, 1))
 			if(M.pulling == usr)
 				M.stop_pulling()
@@ -181,7 +181,7 @@
 				if(istype(T,/turf/simulated/floor))
 					for(var/obj/structure/S in T.contents)
 						if(istype(S,/obj/structure/window))
-							S.ex_act(2)
+							S.ex_act(EXPLODE_HEAVY)
 						if(istype(S,/obj/structure/grille))
 							qdel(S)
 				if(istype(T,/turf/simulated/wall))
@@ -218,7 +218,7 @@
 						for(var/o=0, o<10, o++)
 							target = get_turf(get_step(target,cur_dir))
 						var/mob/living/carbon/human/H = M
-						if(istype(H,/mob/living/carbon/human))
+						if(ishuman(H))
 							var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
 							var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart_name]
 							BP.take_damage(20, used_weapon = "Hulk Shoulder")
@@ -329,7 +329,7 @@
 			if(M != usr)
 				M.log_combat(usr, "hulk_smashed")
 				var/mob/living/carbon/human/H = M
-				if(istype(H,/mob/living/carbon/human))
+				if(ishuman(H))
 					playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 					var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart_name]
@@ -362,7 +362,7 @@
 				M.Weaken(5)
 		for(var/obj/structure/S in range(1, T))
 			if(istype(S,/obj/structure/window))
-				S.ex_act(2)
+				S.ex_act(EXPLODE_HEAVY)
 			if(istype(S,/obj/structure/grille))
 				qdel(S)
 		sleep(3)
@@ -376,7 +376,7 @@
 		for(var/obj/structure/S in range(2, T))
 			if(prob(40))
 				if(istype(S,/obj/structure/window))
-					S.ex_act(2)
+					S.ex_act(EXPLODE_HEAVY)
 				if(istype(S,/obj/structure/grille))
 					qdel(S)
 		usr.canmove = 1
@@ -448,7 +448,7 @@
 			usr.set_dir(1)
 
 		for(var/mob/living/M in view(2, usr) - usr - usr.contents)
-			if(istype(M, /mob/living/carbon/human))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart_name]
@@ -513,7 +513,7 @@
 	damage_type = TOX
 
 /obj/item/projectile/energy/hulkspit/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(istype(target, /mob/living/carbon))
+	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.Weaken(2)
 		M.adjust_fire_stacks(20)

@@ -3,6 +3,11 @@ SUBSYSTEM_DEF(weather)
 	name = "Weather"
 	flags = SS_BACKGROUND
 	wait = 10
+
+	runlevels = RUNLEVEL_GAME
+
+	msg_lobby = "Предсказываем метеоритные дожди..."
+
 	var/list/processing = list()
 	var/list/existing_weather = list()
 	var/list/eligible_zlevels = list()
@@ -12,7 +17,7 @@ SUBSYSTEM_DEF(weather)
 		var/datum/weather/W = V
 		if(W.aesthetic)
 			continue
-		for(var/mob/living/L in living_list)
+		for(var/mob/living/L as anything in living_list)
 			if(W.can_impact(L))
 				W.impact(L)
 		if(W.additional_action)

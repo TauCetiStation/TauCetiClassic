@@ -47,7 +47,7 @@
 		if(!resolved && src)
 			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
 
-	if(!has_gravity(src) && !istype(target, /turf/space))
+	if(!has_gravity(src) && !isspaceturf(target))
 		step_away(user, T_target)
 	else if(istype(target, /atom/movable))
 		var/atom/movable/AM = target
@@ -250,7 +250,7 @@
 
 
 /obj/item/weapon/shield/buckler/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/twohanded/spear))
+	if(istype(I, /obj/item/weapon/spear))
 		if(cooldown < world.time - 25)
 			user.visible_message("<span class='warning'>[user] hits the buclker with spear!</span>")
 			playsound(user, 'sound/effects/hits_to_w_shield.ogg', VOL_EFFECTS_MASTER)

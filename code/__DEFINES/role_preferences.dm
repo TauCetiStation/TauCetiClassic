@@ -23,19 +23,13 @@
 #define ROLE_DRONE             "Maintenance Drone"
 
 //Prefs for ignore a question which give special_roles
-#define IGNORE_PLANT        "Diona"
 #define IGNORE_PAI          "Pai"
 #define IGNORE_TSTAFF       "Religion staff"
 #define IGNORE_SURVIVOR     "Survivor"
 #define IGNORE_POSBRAIN     "Positronic brain"
 #define IGNORE_DRONE        "Drone"
-#define IGNORE_BORER        "Borer"
-#define IGNORE_FAMILIAR     "Religion familiar"
 #define IGNORE_NARSIE_SLAVE "Nar-sie slave"
-#define IGNORE_COPS         "Cops"
-#define IGNORE_DEALER       "Smuggler"
 #define IGNORE_SYNDI_BORG   "Syndicate robot"
-#define IGNORE_FACEHUGGER   "Facehugger"
 #define IGNORE_LAVRA        "Lavra"
 #define IGNORE_EVENT_BLOB   "Event blob"
 
@@ -46,15 +40,15 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_WIZARD     = null,
 	ROLE_MALF       = null,
 	ROLE_REV        = null,
-	ROLE_ALIEN      = list(IGNORE_FACEHUGGER, IGNORE_LAVRA),
+	ROLE_ALIEN      = list(IGNORE_LAVRA),
 	ROLE_CULTIST    = list(IGNORE_NARSIE_SLAVE),
 	ROLE_BLOB       = list(IGNORE_EVENT_BLOB),
 	ROLE_NINJA      = null,
 	ROLE_RAIDER     = null,
 	ROLE_SHADOWLING = null,
 	ROLE_ABDUCTOR   = null,
-	ROLE_FAMILIES   = list(IGNORE_COPS, IGNORE_DEALER),
-	ROLE_GHOSTLY    = list(IGNORE_PLANT, IGNORE_PAI, IGNORE_TSTAFF, IGNORE_SURVIVOR, IGNORE_POSBRAIN, IGNORE_DRONE ,IGNORE_FAMILIAR, IGNORE_BORER),
+	ROLE_FAMILIES   = null,
+	ROLE_GHOSTLY    = list(IGNORE_PAI, IGNORE_TSTAFF, IGNORE_SURVIVOR, IGNORE_POSBRAIN, IGNORE_DRONE),
 )
 
 var/global/list/special_roles

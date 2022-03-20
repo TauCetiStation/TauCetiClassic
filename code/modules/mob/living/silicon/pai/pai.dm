@@ -72,10 +72,10 @@
 	radio = card.radio
 
 	//Default languages without universal translator software
-	add_language("Sol Common", 1)
-	add_language("Trinary", 1)
-	add_language("Tradeband", 1)
-	add_language("Gutter", 1)
+	add_language(LANGUAGE_SOLCOMMON)
+	add_language(LANGUAGE_TRINARY)
+	add_language(LANGUAGE_TRADEBAND)
+	add_language(LANGUAGE_GUTTER)
 
 	//PDA
 	pda = new(src)
@@ -149,29 +149,25 @@
 			to_chat(src, "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>")
 
 /mob/living/silicon/pai/ex_act(severity)
+	if(stat == DEAD)
+		return
 	if(!blinded)
 		flash_eyes()
-
 	switch(severity)
-		if(1.0)
-			if (src.stat != DEAD)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-		if(2.0)
-			if (src.stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(3.0)
-			if (src.stat != DEAD)
-				adjustBruteLoss(30)
-
+		if(EXPLODE_DEVASTATE)
+			adjustBruteLoss(100)
+			adjustFireLoss(100)
+		if(EXPLODE_HEAVY)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+		if(EXPLODE_LIGHT)
+			adjustBruteLoss(30)
 	updatehealth()
-
 
 // See software.dm for Topic()
 
 /mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
-	if(istype(usr, /mob/living))
+	if(isliving(usr))
 		var/mob/living/U = usr
 		U.cameraFollow = null
 	if (!C)

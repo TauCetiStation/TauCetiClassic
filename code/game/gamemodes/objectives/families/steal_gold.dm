@@ -4,7 +4,7 @@
 /datum/objective/gang/steal_gold/check_completion()
 	for(var/R in faction.members)
 		var/datum/role/gangster/G = R
-		if(!G.antag || !G.antag.current)
+		if(!G.antag.current)
 			continue
 		var/mob/M = G.antag.current
 		if(!considered_alive(M.mind))

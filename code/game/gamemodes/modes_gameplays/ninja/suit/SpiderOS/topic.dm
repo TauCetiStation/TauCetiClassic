@@ -241,7 +241,7 @@
 					to_chat(U, "<span class='notice'>Hacking attempt disconnected. Resuming normal operation.</span>")
 				else
 					flush = 1
-					A.suiciding = 1
+					A.suiciding = TRUE
 					to_chat(A, "Your core files are being purged! This is the end...")
 					spawn(0)
 						display_spideros()//To refresh the screen and let this finish.

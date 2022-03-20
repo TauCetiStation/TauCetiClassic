@@ -58,7 +58,7 @@
 					var/old_icon1 = T.icon
 
 					if(platingRequired)
-						if(istype(B, /turf/space))
+						if(isenvironmentturf(B))
 							continue moving
 
 					var/turf/X = new T.type(B)
@@ -75,7 +75,7 @@
 						if(!istype(M,/mob) || istype(M, /mob/camera/Eye)) continue // If we need to check for more mobs, I'll add a variable
 						mobs += M
 
-					for(var/mob/M in mobs)
+					for(var/mob/M as anything in mobs)
 						newmobs += DuplicateObject(M , 1)
 
 					for(var/mob/M in newmobs)

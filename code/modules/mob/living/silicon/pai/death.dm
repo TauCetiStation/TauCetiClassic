@@ -2,9 +2,8 @@
 	if(stat == DEAD)	return
 	stat = DEAD
 	canmove = 0
-	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_LEVEL_TWO
+
+	update_sight()
 
 	//var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
 	//mind.store_memory("Time of death: [tod]", 0)

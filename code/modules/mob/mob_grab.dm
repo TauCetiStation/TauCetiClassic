@@ -153,7 +153,8 @@
 /mob/proc/GetGrabs()
 	. = list()
 	for(var/obj/item/weapon/grab/G in get_hand_slots())
-		. += G
+		if(!QDELETED(G)) // slots are wacky and clean itself some time after qdel
+			. += G
 
 /obj/item/weapon/grab/process()
 	confirm()
@@ -345,6 +346,8 @@
 			force_down = 1
 			affecting.Weaken(3)
 			step_to(assailant, affecting)
+			if(QDELING(src)) // grab was deleted during step_to
+				return
 			assailant.set_dir(EAST) //face the victim
 			affecting.set_dir(SOUTH) //face up
 		set_state(GRAB_AGGRESSIVE)

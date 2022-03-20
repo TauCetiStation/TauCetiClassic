@@ -117,7 +117,7 @@
 				laws.add_inherent_law(M.newFreeFormLaw)
 				to_chat(usr, "Added a freeform law.")
 
-			if(istype(P, /obj/item/device/mmi) || istype(P, /obj/item/device/mmi/posibrain))
+			if(isMMI(P))
 				var/obj/item/device/mmi/M = P
 
 				if(!M.brainmob)
@@ -135,7 +135,7 @@
 					for(var/role in list(CULTIST, REV, HEADREV))
 						var/datum/role/R = M.brainmob.mind.GetRole(role)
 						if(R)
-							R.RemoveFromRole(M.brainmob.mind)
+							R.Deconvert()
 
 				user.drop_from_inventory(M, src)
 				brain = M

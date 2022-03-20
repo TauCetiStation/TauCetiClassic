@@ -1,6 +1,6 @@
 #define VOX_SHUTTLE_MOVE_TIME 375
 #define VOX_SHUTTLE_COOLDOWN 1200
-#define VOX_CAN_USE(A) (ishuman(A) && A.can_speak(all_languages["Vox-pidgin"]) || isobserver(A))
+#define VOX_CAN_USE(A) (ishuman(A) && A.can_speak(all_languages[LANGUAGE_VOXPIDGIN]) || isobserver(A))
 // human and know vox language (and ghosts, because ghosts see everything).
 
 //Copied from Syndicate shuttle.
@@ -12,8 +12,8 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_stealth
 	name = "skipjack cloaking field terminal"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "syndishuttle"
+	icon = 'icons/locations/shuttles/vox_pc.dmi'
+	icon_state = "vox_invs"
 	state_broken_preset = "tcbossb"
 	state_nopower_preset = "tcboss0"
 
@@ -47,8 +47,8 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_station
 	name = "skipjack terminal"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "syndishuttle"
+	icon = 'icons/locations/shuttles/vox_pc.dmi'
+	icon_state = "vox_cont"
 	state_broken_preset = "tcbossb"
 	state_nopower_preset = "tcboss0"
 	var/area/curr_location

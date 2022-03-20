@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = SS_INIT_MAPPING
 	flags = SS_NO_FIRE
+	msg_lobby = "Строим станцию..."
 
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
@@ -47,6 +48,7 @@ SUBSYSTEM_DEF(mapping)
 	preloadTemplates()
 	// Space structures
 	spawn_space_structures()
+
 	..()
 
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
@@ -111,7 +113,7 @@ SUBSYSTEM_DEF(mapping)
 	var/structure_size = CEIL(max(structure.width / 2, structure.height / 2))
 	var/structure_padding = structure_size + TRANSITIONEDGE + 5
 	for (var/try_count in 1 to 10)
-		var/turf/space/T = locate(rand(structure_padding, world.maxx - structure_padding), rand(structure_padding, world.maxy - structure_padding), pick(levels_by_trait(ZTRAIT_SPACE_RUINS)))
+		var/turf/environment/T = locate(rand(structure_padding, world.maxx - structure_padding), rand(structure_padding, world.maxy - structure_padding), pick(levels_by_trait(ZTRAIT_SPACE_RUINS)))
 		if(!istype(T))
 			continue
 

@@ -3,6 +3,7 @@
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/alert = null
+	immune_to_ssd = TRUE
 	me_verb_allowed = 0 //Can't use the emote proc, it's a freaking immobile brain
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain1"
@@ -21,29 +22,34 @@
 	return ..()
 
 /mob/living/carbon/brain/say_understands(other)//Goddamn is this hackish, but this say code is so odd
-	if (istype(other, /mob/living/silicon/ai))
-		if(!(container && istype(container, /obj/item/device/mmi)))
+	if(isautosay(other))
+		if(!(container && isMMI(container)))
+			return 0
+		else
+			return 1
+	if (isAI(other))
+		if(!(container && isMMI(container)))
 			return 0
 		else
 			return 1
 	if (istype(other, /mob/living/silicon/decoy))
-		if(!(container && istype(container, /obj/item/device/mmi)))
+		if(!(container && isMMI(container)))
 			return 0
 		else
 			return 1
-	if (istype(other, /mob/living/silicon/pai))
-		if(!(container && istype(container, /obj/item/device/mmi)))
+	if (ispAI(other))
+		if(!(container && isMMI(container)))
 			return 0
 		else
 			return 1
-	if (istype(other, /mob/living/silicon/robot))
-		if(!(container && istype(container, /obj/item/device/mmi)))
+	if (isrobot(other))
+		if(!(container && isMMI(container)))
 			return 0
 		else
 			return 1
-	if (istype(other, /mob/living/carbon/human))
+	if (ishuman(other))
 		return 1
-	if (istype(other, /mob/living/carbon/slime))
+	if (isslime(other))
 		return 1
 	return ..()
 

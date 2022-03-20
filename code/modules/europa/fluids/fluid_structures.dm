@@ -1,6 +1,6 @@
 // Cheap, shitty, hacky means of draining water without a proper pipe system.
 // TODO: water pipes.
-var/list/gurgles = list(
+var/global/list/gurgles = list(
 	'sound/effects/gurgle1.ogg',
 	'sound/effects/gurgle2.ogg',
 	'sound/effects/gurgle3.ogg',

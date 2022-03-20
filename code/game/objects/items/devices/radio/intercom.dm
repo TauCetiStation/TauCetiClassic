@@ -1,3 +1,5 @@
+ADD_TO_GLOBAL_LIST(/obj/item/device/radio/intercom, intercom_list)
+
 /obj/item/device/radio/intercom
 	name = "station intercom"
 	desc = "Talk through this."
@@ -17,7 +19,6 @@
 /obj/item/device/radio/intercom/attack_paw(mob/user)
 	to_chat(user, "<span class='info'>The console controls are far too complicated for your tiny brain!</span>")
 	return
-
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
 	add_fingerprint(user)

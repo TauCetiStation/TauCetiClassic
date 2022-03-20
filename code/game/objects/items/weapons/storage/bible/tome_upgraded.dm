@@ -24,6 +24,6 @@
 		return
 	if(!iscultist(AM))
 		var/mob/living/carbon/human/H = AM
-		H.show_message("<span class='warning'>Наступив на книгу вы чувствуете невыносимо жгучую боль в ступнях.</span>")
+		to_chat(H, "<span class='warning'>Наступив на книгу вы чувствуете невыносимо жгучую боль в ступнях.</span>")
 		H.take_certain_bodypart_damage(list(BP_L_LEG, BP_R_LEG), 0, 10)
 		return
