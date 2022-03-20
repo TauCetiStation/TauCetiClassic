@@ -379,19 +379,13 @@
 
 	var/mob/living/simple_animal/hostile/H = parent
 
-	if(!warp)
-		warp = new(src)
-		warp.transform = matrix().Scale(0.01)
-		warp.pixel_x = -128
-		warp.pixel_y = -128
+	warp = new(src)
+	warp.transform = matrix().Scale(0.01)
+	warp.pixel_x = -128
+	warp.pixel_y = -128
 
 	H.vis_contents += warp
 	H.plane = SINGULARITY_PLANE
-
-	// AFTER BYOND 513 USE THESE
-	// singularity_filter = filter(type = "layer", render_source = I)
-
-	// H.filters += singularity_filter
 
 	START_PROCESSING(SSmob_modifier, src)
 	RegisterSignal(H, list(COMSIG_MOB_DIED), .proc/stop_pulling)
@@ -401,7 +395,7 @@
 	if(!update)
 		var/mob/living/simple_animal/hostile/H = parent
 		H.vis_contents -= warp
-		H.plane = GAME_PLANE
+		H.plane = initial(H.plane)
 
 		STOP_PROCESSING(SSmob_modifier, src)
 	return ..()
