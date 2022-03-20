@@ -278,7 +278,8 @@
 /datum/skillset/miner
 	initial_skills = list(
 		/datum/skill/civ_mech/master,
-		/datum/skill/firearms/trained
+		/datum/skill/firearms/trained,
+		/datum/skill/research/novice
 	)
 
 /datum/skillset/cargotech
