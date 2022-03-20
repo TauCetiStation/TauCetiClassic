@@ -311,16 +311,28 @@
 
 	H.loc.shake_act(2 + strength)
 
-
-/atom/movable/singular_effect
-	plane = SINGULARITY_EFFECT_PLANE_0
-	appearance_flags = PIXEL_SCALE
+/atom/movable/antiwarp_effect
+	plane = ANOMALY_PLANE
+	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
 	icon = 'icons/effects/288x288.dmi'
-	icon_state = "gravitational_lens"
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	alpha = 200
+	icon_state = "gravitational_anti_lens"
 	pixel_x = -128
 	pixel_y = -128
+
+/atom/movable/antiwarp_effect/atom_init(mapload, ...)
+	. = ..()
+	add_filter("ripple", 1, ripple_filter(radius = 0, size = 250, falloff = 0.5, repeat = 100))
+	START_PROCESSING(SSobj, src)
+
+/atom/movable/antiwarp_effect/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/atom/movable/antiwarp_effect/process()
+	animate(src, time = 6, transform = matrix().Scale(0.5, 0.5))
+	animate(time = 14, transform = matrix(), flags = ANIMATION_PARALLEL)
+	animate(get_filter("ripple"), radius = 0, size = 150, time = 14, flags = ANIMATION_PARALLEL)
+	animate(radius = 250, size = 0, time = 0)
 
 /datum/component/mob_modifier/singular
 	modifier_name = RL_MM_SINGULAR
@@ -333,11 +345,11 @@
 	var/grav_pull = 4
 	var/pull_stage = STAGE_ONE
 
-	var/atom/movable/singular_effect/singular
+	var/atom/movable/antiwarp_effect/warp
 
 /datum/component/mob_modifier/singular/Destroy()
 	STOP_PROCESSING(SSmob_modifier, src)
-	QDEL_NULL(singular)
+	QDEL_NULL(warp)
 	return ..()
 
 /datum/component/mob_modifier/singular/apply(update = FALSE)
@@ -367,12 +379,14 @@
 
 	var/mob/living/simple_animal/hostile/H = parent
 
-	if(!singular)
-		singular = new(src)
-		singular.transform = matrix().Scale(0.01)
+	if(!warp)
+		warp = new(src)
+		warp.transform = matrix().Scale(0.01)
+		warp.pixel_x = -128
+		warp.pixel_y = -128
 
-	H.vis_contents += singular
-	animate(singular, transform = matrix().Scale(0.45), time = 25)
+	H.vis_contents += warp
+	H.plane = SINGULARITY_PLANE
 
 	// AFTER BYOND 513 USE THESE
 	// singularity_filter = filter(type = "layer", render_source = I)
@@ -386,7 +400,8 @@
 /datum/component/mob_modifier/singular/revert(update = FALSE)
 	if(!update)
 		var/mob/living/simple_animal/hostile/H = parent
-		H.vis_contents -= singular
+		H.vis_contents -= warp
+		H.plane = GAME_PLANE
 
 		STOP_PROCESSING(SSmob_modifier, src)
 	return ..()
