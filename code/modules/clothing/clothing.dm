@@ -80,7 +80,9 @@ var/global/list/icon_state_allowed_cache = list()
 			species_restricted = null
 		return
 
-	var/t_state = get_standing_icon_state(sprite_sheet_slot)
+	var/t_state_appendix = sprite_sheet_slot == SPRITE_SHEET_UNIFORM ? "_s" : ""
+
+	var/t_state = get_standing_icon_state(sprite_sheet_slot, t_state_appendix)
 
 	for(var/specie in global.sprite_sheet_restricted)
 		var/allowed = FALSE
