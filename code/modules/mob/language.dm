@@ -429,7 +429,10 @@
 		if(L.name == default_language)
 			link_class = "class='good'"
 
-		dat += "<b><a href='?src=\ref[L];usr=\ref[src]'[link_class]>[lang_name]</a> "
+		if(languages[L] != LANGUAGE_CAN_UNDERSTAND)
+			lang_name = "<a href='?src=\ref[L];usr=\ref[src]'[link_class]>[lang_name]</a>"
+
+		dat += "<b>[lang_name] "
 		for(var/l_key in L.key)
 			dat += "(:[l_key])"
 
