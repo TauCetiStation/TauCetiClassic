@@ -137,9 +137,7 @@ Please contact me on #coderbus IRC. ~Carn x
 #define TOTAL_LIMB_LAYERS		7
 //////////////////////////////////
 
-/obj/item/proc/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
-	var/icon_path = def_icon_path
-
+/obj/item/proc/get_standing_icon_state(sprite_sheet_slot, icon_state_appendix = null)
 	var/t_state
 	if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES || sprite_sheet_slot == SPRITE_SHEET_BELT)
 		t_state = item_state
@@ -152,7 +150,17 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(!t_state)
 		t_state = icon_state
 
+	if(icon_custom && sprite_sheet_slot != SPRITE_SHEET_HELD)
+		icon_state_appendix = "_mob"
+
+	return "[t_state][icon_state_appendix]"
+
+/obj/item/proc/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
+	var/icon_path = def_icon_path
+
 	var/datum/species/S = H.species
+
+	var/t_state = get_standing_icon_state(sprite_sheet_slot, icon_state_appendix)
 
 	if(icon_custom)
 		if(sprite_sheet_slot != SPRITE_SHEET_HELD)
@@ -169,7 +177,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		else
 			icon_path = S.sprite_sheets[sprite_sheet_slot]
 
-	var/image/I = image(icon = icon_path, icon_state = "[t_state][icon_state_appendix]", layer = layer)
+	var/image/I = image(icon = icon_path, icon_state = t_state, layer = layer)
 	I.color = color
 
 	if(dirt_overlay && bloodied_icon_state)
