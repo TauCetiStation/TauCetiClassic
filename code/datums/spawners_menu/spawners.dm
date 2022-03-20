@@ -506,67 +506,74 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/drone/spawn_ghost(mob/dead/observer/ghost)
 	ghost.dronize()
 
-/datum/spawner/podman
+/datum/spawner/living
+	name = "Свободное тело"
+	desc = "Продолжи его дело!"
+
+	ranks = list(ROLE_GHOSTLY)
+
+	var/mob/living/mob
+
+/datum/spawner/living/New(mob/living/_mob)
+	. = ..()
+
+	mob = _mob
+
+	RegisterSignal(mob, list(COMSIG_PARENT_QDELETING), .proc/on_mob_del)
+
+/datum/spawner/living/Destroy()
+	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING))
+	mob = null
+	return ..()
+
+/datum/spawner/living/proc/on_mob_del()
+	SIGNAL_HANDLER
+	qdel(src)
+
+/datum/spawner/living/jump(mob/dead/observer/ghost)
+	ghost.forceMove(get_turf(mob))
+
+/datum/spawner/living/spawn_ghost(mob/dead/observer/ghost)
+	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING))
+	mob.key = ghost.key
+
+/datum/spawner/living/podman
 	name = "Подмена"
 	desc = "Подмена умерла, да здраствует подмена."
 	wiki_ref = "Podmen"
 
-	ranks = list(ROLE_GHOSTLY)
-
-	var/mob/podman
 	var/replicant_memory
 
-/datum/spawner/podman/New(mob/_podman, _replicant_memory)
-	. = ..()
-	podman = _podman
+/datum/spawner/living/podman/New(mob/_mob, _replicant_memory)
 	replicant_memory = _replicant_memory
+	. = ..(_mob)
 
-	RegisterSignal(podman, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
+/datum/spawner/living/podman/spawn_ghost(mob/dead/observer/ghost)
+	..()
+	mob.mind.memory = replicant_memory
 
-/datum/spawner/podman/Destroy()
-	UnregisterSignal(podman, list(COMSIG_PARENT_QDELETING))
-	podman = null
-	return ..()
+	to_chat(mob, greet_message())
 
-/datum/spawner/podman/proc/on_target_del()
-	SIGNAL_HANDLER
-	qdel(src)
-
-/datum/spawner/podman/jump(mob/dead/observer/ghost)
-	ghost.forceMove(get_turf(podman))
-
-/datum/spawner/podman/spawn_ghost(mob/dead/observer/ghost)
-	UnregisterSignal(podman, list(COMSIG_PARENT_QDELETING))
-	podman.key = ghost.key
-	podman.mind.memory = replicant_memory
-
-	to_chat(podman, greet_message())
-
-/datum/spawner/podman/proc/greet_message()
+/datum/spawner/living/podman/proc/greet_message()
 	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
 	. += "<B>You are now in possession of Podmen's body. It's previous owner found it no longer appealing, by rejecting it - they brought you here. You are now, again, an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
 	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
 
-/datum/spawner/podman/podkid
+/datum/spawner/living/podman/podkid
 	name = "Подкидыш"
 	desc = "Человечка вырастили на грядке."
-	wiki_ref = "Podmen"
 
-	ranks = list(ROLE_GHOSTLY)
-
-/datum/spawner/podman/podkid/greet_message()
+/datum/spawner/living/podman/podkid/greet_message()
 	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
 	. += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
 	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
 
-/datum/spawner/podman/fake_diona
+/datum/spawner/living/podman/fake_diona
 	name = "Нимфа Дионы"
 	desc = "Диону вырастили на грядке."
 	wiki_ref = "Dionaea"
 
-	ranks = list(ROLE_GHOSTLY)
-
-/datum/spawner/podman/fake_diona/greet_message()
+/datum/spawner/living/podman/fake_diona/greet_message()
 	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
 	. += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B><BR>"
 	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"

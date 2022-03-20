@@ -8,6 +8,9 @@
 		if(!(src.ckey in stealth_keys))
 			if (SSticker && SSticker.current_state == GAME_STATE_PLAYING) //Only report this stuff if we are currently playing.
 				message_admins("Admin logout: [key_name(src)]")
+	
+	SEND_SIGNAL(src, COMSIG_LOGOUT)
+	
 	..()
 
 	return 1

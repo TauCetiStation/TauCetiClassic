@@ -242,6 +242,11 @@
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
 
 // mob signals
+/// from base of mob/Login(): ()
+#define COMSIG_LOGIN "mob_login"
+/// from base of mob/Logout(): ()
+#define COMSIG_LOGOUT "mob_logout"
+
 /// from  base of mob/ClickOn(): (atom/target, params)
 #define COMSIG_MOB_CLICK "mob_click"
 	#define COMPONENT_CANCEL_CLICK 1

@@ -30,7 +30,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	var/list/replicant_quirks
 	var/replicant_memory
 
-	var/spawner_type = /datum/spawner/podman/podkid
+	var/spawner_type = /datum/spawner/living/podman/podkid
 	var/spawner_id = "podkid_pod"
 
 /obj/item/seeds/replicapod/Destroy()
@@ -167,7 +167,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	product_type = /mob/living/carbon/monkey/diona/podman/fake
 	copycat_replica = FALSE
 
-	spawner_type = /datum/spawner/podman/fake_diona
+	spawner_type = /datum/spawner/living/podman/fake_diona
 	spawner_id = "diona_pod"
 
 	var/vine_timer

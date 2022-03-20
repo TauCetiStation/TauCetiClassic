@@ -124,6 +124,12 @@
 
 	diag_hud_set_borgcell()
 
+	AddComponent(/datum/component/self_spawners, "robot", 10 SECONDS)
+
+/mob/living/silicon/robot/Login()
+	..()
+	set_all_components(TRUE)
+
 /mob/living/silicon/robot/proc/set_ai_link(link)
 	if (connected_ai != link)
 		connected_ai = link
@@ -1126,6 +1132,14 @@
 		var/datum/robot_component/C = components[V]
 		if(C.installed)
 			C.toggled = !C.toggled
+
+/mob/living/silicon/robot/proc/set_all_components(state)
+	for(var/V in components)
+		if(V == "power cell")
+			continue
+		var/datum/robot_component/C = components[V]
+		if(C.installed)
+			C.toggled = state
 
 /mob/living/silicon/robot/swap_hand()
 	cycle_modules()

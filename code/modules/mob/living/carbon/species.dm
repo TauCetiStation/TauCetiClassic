@@ -886,7 +886,7 @@
 		return
 	var/mob/living/carbon/human/H = source
 
-	create_spawner(/datum/spawner/podman, "podman", H, H.mind.memory)
+	create_spawner(/datum/spawner/living/podman, "podman", H, H.mind.memory)
 
 /datum/species/machine
 	name = IPC

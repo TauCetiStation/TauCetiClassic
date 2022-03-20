@@ -64,6 +64,8 @@
 
 	..()
 
+	SEND_SIGNAL(src, COMSIG_LOGIN)
+
 	if(loc && !isturf(loc))
 		client.eye = loc
 		client.perspective = EYE_PERSPECTIVE
