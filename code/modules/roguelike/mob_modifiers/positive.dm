@@ -385,7 +385,7 @@
 	warp.pixel_y = -128
 
 	H.vis_contents += warp
-	H.plane = SINGULARITY_PLANE
+	H.plane = GAME_PLANE + 1
 
 	START_PROCESSING(SSmob_modifier, src)
 	RegisterSignal(H, list(COMSIG_MOB_DIED), .proc/stop_pulling)
