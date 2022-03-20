@@ -3,21 +3,18 @@
 	appearance_flags = PIXEL_SCALE
 	icon = 'icons/effects/288x288.dmi'
 	icon_state = "gravitational_lens"
-	plane = SINGULARITY_EFFECT_PLANE_1
 
 /atom/movable/singularity_swirl
 	plane = SINGULARITY_EFFECT_PLANE_1
 	appearance_flags = PIXEL_SCALE
 	icon = 'icons/effects/288x288.dmi'
 	icon_state = "gravitational_swirl"
-	plane = SINGULARITY_EFFECT_PLANE_1
 
 /atom/movable/singularity_lens
 	plane = SINGULARITY_EFFECT_PLANE_0
 	appearance_flags = PIXEL_SCALE
 	icon = 'icons/effects/288x288.dmi'
 	icon_state = "gravitational_lens"
-	plane = SINGULARITY_EFFECT_PLANE_0
 
 /obj/singularity
 	name = "gravitational singularity"
