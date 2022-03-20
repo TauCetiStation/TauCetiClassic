@@ -53,16 +53,16 @@
 	add_filter("singularity_2", 3, displacement_map_filter(render_source = SINGA_RENDER_TARGET_2, size = 400))
 	add_filter("singularity_3", 4, displacement_map_filter(render_source = SINGA_RENDER_TARGET_3, size = 700))
 
-	animate(get_filter("singulo_0"), size = -20, time = 10, easing = LINEAR_EASING, loop = -1, flags = ANIMATION_PARALLEL)
+	animate(get_filter("singularity_0"), size = -20, time = 10, easing = LINEAR_EASING, loop = -1, flags = ANIMATION_PARALLEL)
 	animate(size = -30, time = 10, easing = LINEAR_EASING, loop = -1)
 
-	animate(get_filter("singulo_1"), size = 50, time = 10, easing = LINEAR_EASING, loop = -1, flags = ANIMATION_PARALLEL)
+	animate(get_filter("singularity_1"), size = 50, time = 10, easing = LINEAR_EASING, loop = -1, flags = ANIMATION_PARALLEL)
 	animate(size = 100, time = 10, easing = LINEAR_EASING, loop = -1)
 
-	animate(get_filter("singulo_2"), size = 400, time = 10, easing = LINEAR_EASING, loop = -1, flags = ANIMATION_PARALLEL)
+	animate(get_filter("singularity_2"), size = 400, time = 10, easing = LINEAR_EASING, loop = -1, flags = ANIMATION_PARALLEL)
 	animate(size = 300, time = 10, easing = LINEAR_EASING, loop = -1)
 
-	animate(get_filter("singulo_3"), size = 750, time = 10, easing = LINEAR_EASING, loop = -1, flags = ANIMATION_PARALLEL)
+	animate(get_filter("singularity_3"), size = 750, time = 10, easing = LINEAR_EASING, loop = -1, flags = ANIMATION_PARALLEL)
 	animate(size = 600, time = 10, easing = LINEAR_EASING, loop = -1)
 
 ///everything that should be above game world. (for example, singularity, nar-si)

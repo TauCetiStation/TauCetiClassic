@@ -312,6 +312,15 @@
 	H.loc.shake_act(2 + strength)
 
 
+/atom/movable/singular_effect
+	plane = SINGULARITY_EFFECT_PLANE_0
+	appearance_flags = PIXEL_SCALE
+	icon = 'icons/effects/288x288.dmi'
+	icon_state = "gravitational_lens"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	alpha = 200
+	pixel_x = -128
+	pixel_y = -128
 
 /datum/component/mob_modifier/singular
 	modifier_name = RL_MM_SINGULAR
@@ -324,11 +333,11 @@
 	var/grav_pull = 4
 	var/pull_stage = STAGE_ONE
 
-	var/image/singularity_overlay
+	var/atom/movable/singular_effect/singular
 
 /datum/component/mob_modifier/singular/Destroy()
 	STOP_PROCESSING(SSmob_modifier, src)
-	QDEL_NULL(singularity_overlay)
+	QDEL_NULL(singular)
 	return ..()
 
 /datum/component/mob_modifier/singular/apply(update = FALSE)
@@ -358,14 +367,17 @@
 
 	var/mob/living/simple_animal/hostile/H = parent
 
-	singularity_overlay = image('icons/obj/singularity.dmi', "singularity_s1")
-	singularity_overlay.alpha = 200
-	singularity_overlay.loc = H
+	if(!singular)
+		singular = new(src)
+		singular.transform = matrix().Scale(0.01)
+
+	H.vis_contents += singular
+	animate(singular, transform = matrix().Scale(0.45), time = 25)
+
 	// AFTER BYOND 513 USE THESE
 	// singularity_filter = filter(type = "layer", render_source = I)
 
 	// H.filters += singularity_filter
-	H.add_overlay(singularity_overlay)
 
 	START_PROCESSING(SSmob_modifier, src)
 	RegisterSignal(H, list(COMSIG_MOB_DIED), .proc/stop_pulling)
@@ -374,8 +386,7 @@
 /datum/component/mob_modifier/singular/revert(update = FALSE)
 	if(!update)
 		var/mob/living/simple_animal/hostile/H = parent
-		H.cut_overlay(singularity_overlay)
-		// H.filters -= singularity_filter
+		H.vis_contents -= singular
 
 		STOP_PROCESSING(SSmob_modifier, src)
 	return ..()
