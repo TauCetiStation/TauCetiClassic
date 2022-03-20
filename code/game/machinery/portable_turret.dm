@@ -628,6 +628,9 @@ var/global/list/turret_icons
 		last_fired = TRUE
 		VARSET_IN(src, last_fired, FALSE, shot_delay)
 
+	if(!anchored)
+		return
+
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
 	if(!istype(T) || !istype(U))
