@@ -90,7 +90,7 @@
 	var/mouse_pointer
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
-	var/required_skill = /datum/skill/civ_mech/trained
+	var/required_skills = list(/datum/skill/civ_mech/trained)
 
 /obj/mecha/atom_init()
 	. = ..()
@@ -294,12 +294,12 @@
 	prev_move_dir = direction
 	if(move_result)
 		can_move = 0
-		VARSET_IN(src, can_move, TRUE, apply_skill_bonus(occupant, step_in, list(required_skill), 0.15, 0.3) * move_result)
+		VARSET_IN(src, can_move, TRUE, apply_skill_bonus(occupant, step_in, required_skills, 0.15, 0.3) * move_result)
 		return 1
 	return 0
-/obj/mecha/proc/check_fumbling(fumble_text)
-	return handle_fumbling(usr, src, SKILL_TASK_VERY_EASY, list(required_skill), SKILL_TASK_TRIVIAL, fumble_text)
 
+/obj/mecha/proc/check_fumbling(fumble_text)
+	return handle_fumbling(usr, src, SKILL_TASK_VERY_EASY, required_skills, SKILL_TASK_TRIVIAL, fumble_text)
 
 /obj/mecha/proc/mechturn(direction)
 	set_dir(direction)
