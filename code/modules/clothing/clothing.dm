@@ -26,91 +26,31 @@
 
 	var/flashbang_protection = FALSE
 
-/obj/item/clothing/atom_init()
-	. = ..()
-	if (!species_restricted_locked)
-		update_species_restrictions()
-
 /*
 	This is for the Vox among you.
 	Finds whether a sprite for this piece of clothing for a Vox exists, and if it does
 	allows Vox to wear this.
 */
 var/global/list/specie_sprite_sheet_cache = list()
-var/global/list/icon_state_allowed_cache = list()
 
 /obj/item/clothing/proc/get_sprite_sheet_icon_list(specie, overwrite_slot = null)
 	// Return list of icon states of current spirte_sheet_slot or null
-	if(!specie || !(specie in global.all_species))
-		return
 	var/slot = sprite_sheet_slot
 	if(overwrite_slot)
 		slot = overwrite_slot
+
 	var/sprite_sheet_cache_key = "[specie]|[slot]"
 	if(global.specie_sprite_sheet_cache[sprite_sheet_cache_key])
-		. = global.specie_sprite_sheet_cache[sprite_sheet_cache_key]
-	else
-		var/datum/species/S = global.all_species[specie]
-		var/i_path = S.sprite_sheets[slot]
-		// If you specified the mob as sprite_sheet_restricted, but
-		// want to use default sprite sheets for some "slots"
-		// then specify it.
-		if(i_path)
-			global.specie_sprite_sheet_cache[sprite_sheet_cache_key] = icon_states(i_path)
-			. = global.specie_sprite_sheet_cache[sprite_sheet_cache_key]
+		return global.specie_sprite_sheet_cache[sprite_sheet_cache_key]
 
-/obj/item/clothing/proc/update_species_restrictions()
-	if(!species_restricted)
-		species_restricted = list("exclude")
+	var/datum/species/S = global.all_species[specie]
 
-	var/exclusive = !("exclude" in species_restricted)
+	var/i_path = S.sprite_sheets[slot]
+	if(!i_path)
+		return null
 
-	for(var/specie in global.sprite_sheet_restricted)
-		if(exclusive)
-			species_restricted -= specie
-		else
-			species_restricted |= specie
-
-	if(!sprite_sheet_slot)
-		if(!species_restricted.len || (species_restricted.len == 1 && !exclusive))
-			species_restricted = null
-		return
-
-	for(var/specie in global.sprite_sheet_restricted)
-		var/allowed = FALSE
-		var/cache_key = "[specie]|[icon_state]"
-
-		if(global.icon_state_allowed_cache[cache_key])
-			allowed = TRUE
-		else
-			var/list/icons_exist = get_sprite_sheet_icon_list(specie)
-			if(icons_exist)
-				var/t_state
-				if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES || sprite_sheet_slot == SPRITE_SHEET_BELT)
-					t_state = item_state
-
-				if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
-					t_state = item_color
-
-				if(!t_state)
-					t_state = icon_state
-
-				if (sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
-					t_state = "[t_state]_s"
-
-				if("[t_state]" in icons_exist)
-					allowed = TRUE
-
-		if(allowed)
-			if(exclusive)
-				species_restricted |= specie
-			else
-				species_restricted -= specie
-
-			global.icon_state_allowed_cache[cache_key] = TRUE
-
-	if(!species_restricted.len || (species_restricted.len == 1 && !exclusive))
-		species_restricted = null
+	global.specie_sprite_sheet_cache[sprite_sheet_cache_key] = icon_states(i_path)
+	return global.specie_sprite_sheet_cache[sprite_sheet_cache_key]
 
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)
