@@ -498,13 +498,12 @@ var/global/list/datum/spawners_cooldown = list()
 	return ..()
 
 /datum/spawner/living/proc/add_mob_roles()
+	ranks += mob.job
+
 	if(!mob.mind)
 		return
 
 	var/datum/mind/mind = mob.mind
-
-	if(mind.assigned_role)
-		ranks += mind.assigned_role
 
 	for(var/role in mind.antag_roles)
 		ranks += role

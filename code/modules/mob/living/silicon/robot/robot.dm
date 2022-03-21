@@ -124,7 +124,7 @@
 
 	diag_hud_set_borgcell()
 
-	AddComponent(/datum/component/self_spawners, "robot", 10 SECONDS)
+	AddComponent(/datum/component/self_spawners, "robot")
 
 /mob/living/silicon/robot/Login()
 	..()
