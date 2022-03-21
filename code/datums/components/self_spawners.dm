@@ -1,15 +1,16 @@
 /datum/component/self_spawners
 	var/timer_id = null
-	var/wait
+	var/wait_short
+	var/wait_long
 	var/spawner_id
 	var/callback
 
-/datum/component/self_spawners/Initialize(id, timeout)
+/datum/component/self_spawners/Initialize(id, logout_timeout = 5 MINUTES, ghost_timeout = 10 SECONDS)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-
 	spawner_id = id
-	wait = timeout
+	wait_short = ghost_timeout
+	wait_long = logout_timeout
 	callback = CALLBACK(src, .proc/setup_spawner)
 
 	RegisterSignal(parent, COMSIG_LOGIN, .proc/del_timer)
@@ -27,7 +28,18 @@
 
 /datum/component/self_spawners/proc/logout()
 	SIGNAL_HANDLER
-	timer_id = addtimer(callback, wait, TIMER_STOPPABLE)
+	var/mob/M = parent
+	var/wait = -1
+	switch(M.logout_reason)
+		if(LOGOUT_USER)
+			wait = wait_long
+		if(LOGOUT_GHOST)
+			wait = wait_short
+
+	if(wait > 0)
+		timer_id = addtimer(callback, wait, TIMER_STOPPABLE)
+	else if(wait == 0)
+		setup_spawner()
 
 /datum/component/self_spawners/proc/setup_spawner()
 	timer_id = null
