@@ -373,7 +373,6 @@
 	name = "alien clothing"
 	desc = "This doesn't look very comfortable."
 	icon_state = "vox-casual-1"
-	item_color = "vox-casual-1"
 	item_state = "vox-casual-1"
 	body_parts_covered = LEGS
 
@@ -381,7 +380,6 @@
 	name = "alien robes"
 	desc = "Weird and flowing!"
 	icon_state = "vox-casual-2"
-	item_color = "vox-casual-2"
 	item_state = "vox-casual-2"
 
 /obj/item/clothing/gloves/yellow/vox
@@ -391,7 +389,6 @@
 	item_state = "gloves-vox"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	item_color = "gloves-vox"
 	species_restricted = list(VOX , VOX_ARMALIS)
 
 /obj/item/clothing/shoes/magboots/vox

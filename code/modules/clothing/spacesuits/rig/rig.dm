@@ -10,7 +10,6 @@
 	allowed = list(/obj/item/device/flashlight)
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
-	var/rig_variant = "engineering"
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/obj/item/clothing/suit/space/rig/rig_connect
@@ -30,6 +29,8 @@
 		SKRELL = 'icons/obj/clothing/species/skrell/hats.dmi',
 		VOX = 'icons/obj/clothing/species/vox/hats.dmi',
 		)
+
+	var/rig_variant = "engineering"
 
 /obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -108,6 +109,8 @@
 	var/list/installed_modules = list() // Power consumption/use bookkeeping.
 	var/cell_type = /obj/item/weapon/stock_parts/cell/high
 	var/obj/item/weapon/stock_parts/cell/cell // Power supply, if any.
+
+	var/rig_variant = "engineering"
 
 /obj/item/clothing/suit/space/rig/atom_init()
 	. = ..()

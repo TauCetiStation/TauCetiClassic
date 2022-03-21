@@ -4,6 +4,7 @@
 #define DYED_FINGERLESS_GLOVES "fingerless gloves"
 #define DYED_BEDSHEET "sheet"
 #define DYED_SOFTCAP "softcap"
+#define DYED_SHOES "shoes"
 
 // Crayon dyes.
 #define DYE_RED "red"

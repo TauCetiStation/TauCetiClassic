@@ -588,7 +588,6 @@
 	desc = "A golem's skin."
 	icon_state = "golem"
 	item_state = "golem"
-	item_color = "golem"
 	has_sensor = 0
 	canremove = 0
 	unacidable = 1

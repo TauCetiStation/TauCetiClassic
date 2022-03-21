@@ -96,7 +96,6 @@
 	desc = "A helmet worn by medical members of a NanoTrasen Emergency Response Team. Has white highlights. Armoured and space ready."
 	icon_state = "rig0-ert_medical"
 	item_state = "ert_medical_head"
-	item_color = "ert_medical"
 
 /obj/item/clothing/suit/space/rig/ert/medical
 	name = "emergency response team medical suit"

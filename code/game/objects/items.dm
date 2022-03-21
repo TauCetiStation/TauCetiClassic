@@ -1057,7 +1057,7 @@
 		return
 
 	var/obj/item/clothing/dye_type = dye_colors[w_color]
-	if(!dye_types)
+	if(!dye_type)
 		return
 
 	if(islist(dye_type))

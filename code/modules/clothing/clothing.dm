@@ -486,6 +486,8 @@ BLIND     // can't see anything
 
 	sprite_sheet_slot = SPRITE_SHEET_FEET
 
+	dyed_type = DYED_SHOES
+
 //Cutting shoes
 /obj/item/clothing/shoes/attackby(obj/item/I, mob/user, params)
 	if(iswirecutter(I))

@@ -72,8 +72,8 @@
 
 // Tanning.
 /obj/item/stack/sheet/hairlesshide/wash_act(w_color)
-	new/obj/item/stack/sheet/wetleather(src, HH.get_amount())
-	qdel(HH)
+	new/obj/item/stack/sheet/wetleather(src, get_amount())
+	qdel(src)
 
 /obj/item/stack/sheet/wetleather
 	name = "wet leather"
