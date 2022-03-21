@@ -155,6 +155,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	if(!key)
 		return
 
+	logout_reason = logout_reason || (can_reenter_corpse ? LOGOUT_REENTER : LOGOUT_GHOST)
+
 	if(!(ckey in admin_datums) && bancheck == TRUE && jobban_isbanned(src, "Observer"))
 		var/mob/M = mousize()
 		if((config.allow_drone_spawn) || !jobban_isbanned(src, ROLE_DRONE))
