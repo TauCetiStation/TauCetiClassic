@@ -56,7 +56,7 @@ var/global/list/dyed_item_types = list(
 
 	if(istype(crayon,/obj/item/weapon/stamp))
 		var/obj/item/weapon/stamp/ST = crayon
-		return ST.item_color
+		return ST.dye_color
 
 	return null
 
