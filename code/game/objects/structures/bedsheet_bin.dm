@@ -99,7 +99,6 @@ LINEN BINS
 	name = "head of personnel's bedsheet"
 	desc = "It is decorated with a key emblem.  For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio."
 	icon_state = "sheethop"
-	item_color = "hop"
 
 /obj/item/weapon/bedsheet/ce
 	name = "chief engineer's bedsheet"
@@ -126,20 +125,17 @@ LINEN BINS
 	name = "cultist's bedsheet"
 	desc = "You might dream of Nar'Sie if you sleep with this.  It seems rather tattered and glows of an eldritch presence."
 	icon_state = "sheetcult"
-	item_color = "cult"
 
 /obj/item/weapon/bedsheet/wiz
 	name = "wizard's bedsheet"
 	desc = "A special fabric enchanted with magic so you can have an enchanted night.  It even glows!"
 	icon_state = "sheetwiz"
-	item_color = "wiz"
 
 /obj/item/weapon/bedsheet/gar
 	name = "gar bedsheet"
 	desc = "A surprisingly soft gar bedsheet."
 	icon_state = "sheetgurren"
 	item_state = "bedsheet"
-	item_color = "gurren"
 
 
 /obj/structure/bedsheetbin

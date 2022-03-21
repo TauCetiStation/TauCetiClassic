@@ -11,6 +11,8 @@
 	var/malfunction = 0
 	var/uses = 0
 
+	var/implant_type = "b"
+
 /obj/item/weapon/implant/atom_init()
 	. = ..()
 	implant_list += src
