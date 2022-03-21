@@ -282,7 +282,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	to_chat(user, "<span class='warning'>You swipe near card and crack it to be hot.</span>")
 	return TRUE
 
-
 /obj/machinery/shower
 	name = "shower"
 	desc = "The HS-451. Installed in the 2550s by the Nanotrasen Hygiene Division."

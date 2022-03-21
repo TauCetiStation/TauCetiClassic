@@ -23,6 +23,8 @@
 
 #define STATUS_EFFECT_STASIS_BAG /datum/status_effect/incapacitating/stasis_bag // Halts biological functions like bleeding, chemical processing, blood regeneration, etc
 
+#define STATUS_EFFECT_DRY_HANDS /datum/status_effect/dry_hands
+
 /////////////
 // NEUTRAL //
 /////////////
