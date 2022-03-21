@@ -47,5 +47,4 @@
     mask = /obj/item/clothing/mask/gas/vox
     l_pocket = /obj/item/weapon/tank/nitrogen
     r_pocket = /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment
-
-     
+	
