@@ -65,7 +65,6 @@
 	name = "grey cap"
 	icon_state = "greysoft"
 	item_state = "greysoft"
-	item_color = "grey"
 	desc = "It looks like a plain hat, but upon closer inspection, there's an advanced holographic array installed inside. It seems to have a small dial inside."
 	origin_tech = "syndicate=3"
 	body_parts_covered = 0
@@ -86,7 +85,6 @@
 	desc = "It's a baseball hat in a tasteful grey colour."
 	icon_state = "greysoft"
 	item_state = "greysoft"
-	item_color = "grey"
 	update_icon()
 	update_inv_mob()
 
@@ -114,7 +112,6 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
-	item_color = A.item_color
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
 	update_inv_mob()
