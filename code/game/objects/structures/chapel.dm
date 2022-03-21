@@ -539,6 +539,13 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 	return ..()
 
+/obj/structure/stool/bed/chair/lectern/handle_rotation()
+	layer = BELOW_MOB_LAYER
+
+	if(buckled_mob)
+		buckled_mob.set_dir(dir)
+		buckled_mob.update_canmove()
+
 /obj/structure/stool/bed/chair/lectern/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
 		M.pixel_y = 12
@@ -547,8 +554,6 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	else
 		M.pixel_y = M.get_pixel_y_offset()
 		lectern_overlay.icon_state = "lectern_overlay_unbuckled"
-
-	layer = BELOW_MOB_LAYER
 
 	cut_overlay(lectern_overlay)
 	add_overlay(lectern_overlay)
