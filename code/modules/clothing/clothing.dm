@@ -88,9 +88,6 @@ var/global/list/icon_state_allowed_cache = list()
 				if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES || sprite_sheet_slot == SPRITE_SHEET_BELT)
 					t_state = item_state
 
-				if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
-					t_state = item_color
-
 				if(!t_state)
 					t_state = icon_state
 
