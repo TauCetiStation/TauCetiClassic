@@ -85,7 +85,8 @@ What is the naming convention for planes or layers?
 
 #define FLOOR_PLANE -7
 #define GAME_PLANE -4
-#define SINGULAR_MOB_PLANE -3
+
+#define SINGULAR_MOB_PLANE GAME_PLANE + 1
 
 #define BLACKNESS_PLANE   0
 

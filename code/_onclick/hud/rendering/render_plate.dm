@@ -42,7 +42,6 @@
 
 /atom/movable/screen/plane_master/rendering_plate/game_world/atom_init(mapload, ...)
 	. = ..()
-
 	apply_singularity_effects()
 
 	add_filter("anomaly", 5, displacement_map_filter(render_source = ANOMALY_RENDER_TARGET, size = 10))
