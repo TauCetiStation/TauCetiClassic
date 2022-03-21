@@ -26,10 +26,6 @@
 	var/flashbang_protection = FALSE
 
 /obj/item/clothing/atom_init()
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/item/clothing/atom_init_late()
 	. = ..()
 	if (!species_restricted_locked)
 		update_species_restrictions()
