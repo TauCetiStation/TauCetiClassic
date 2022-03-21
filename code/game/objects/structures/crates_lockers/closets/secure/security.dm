@@ -25,7 +25,6 @@
 	new /obj/item/clothing/gloves/captain(src)
 	new /obj/item/weapon/gun/energy/gun/head(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
-	new /obj/item/clothing/suit/armor/captain(src)
 	new /obj/item/weapon/melee/telebaton(src)
 	new /obj/item/clothing/under/dress/dress_cap(src)
 	new /obj/item/clothing/under/rank/capcamsole(src)
