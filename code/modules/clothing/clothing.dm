@@ -79,20 +79,30 @@ var/global/list/icon_state_allowed_cache = list()
 			species_restricted = null
 		return
 
-	var/t_state_appendix = sprite_sheet_slot == SPRITE_SHEET_UNIFORM ? "_s" : ""
-
-	var/t_state = get_standing_icon_state(sprite_sheet_slot, t_state_appendix)
-
 	for(var/specie in global.sprite_sheet_restricted)
 		var/allowed = FALSE
-		var/cache_key = "[specie]|[t_state]"
+		var/cache_key = "[specie]|[icon_state]"
 
 		if(global.icon_state_allowed_cache[cache_key])
 			allowed = TRUE
 		else
 			var/list/icons_exist = get_sprite_sheet_icon_list(specie)
-			if("[t_state]" in icons_exist)
-				allowed = TRUE
+			if(icons_exist)
+				var/t_state
+				if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES || sprite_sheet_slot == SPRITE_SHEET_BELT)
+					t_state = item_state
+
+				if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
+					t_state = item_color
+
+				if(!t_state)
+					t_state = icon_state
+
+				if (sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
+					t_state = "[t_state]_s"
+
+				if("[t_state]" in icons_exist)
+					allowed = TRUE
 
 		if(allowed)
 			if(exclusive)
