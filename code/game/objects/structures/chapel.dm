@@ -315,7 +315,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	icon = 'icons/obj/lectern.dmi'
 	icon_state = "lectern"
 
-	layer = INFRONT_MOB_LAYER
+	layer = BELOW_MOB_LAYER
 
 	density = FALSE
 	anchored = TRUE
@@ -357,8 +357,9 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	RegisterSignal(book, list(COMSIG_STORAGE_ENTERED), .proc/add_book)
 	RegisterSignal(book, list(COMSIG_STORAGE_EXITED), .proc/remove_book)
 
-	lectern_overlay = image(icon, "lectern_overlay")
+	lectern_overlay = image(icon, "lectern_overlay_unbuckled")
 	lectern_overlay.layer = INFRONT_MOB_LAYER
+	add_overlay(lectern_overlay)
 
 	book_overlay = image(icon, "book")
 	book_overlay.layer = INFRONT_MOB_LAYER
@@ -448,13 +449,11 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	return fragment
 
 /obj/structure/stool/bed/chair/lectern/proc/add_book(datum/source, obj/item/I)
-	add_overlay(book_overlay)
 	icon_state = "[initial(icon_state)]_book"
 	lectern_overlay.add_overlay(book_overlay)
 
 /obj/structure/stool/bed/chair/lectern/proc/remove_book(datum/source, obj/item/I)
 	saved_text = ""
-	cut_overlay(book_overlay)
 	icon_state = "[initial(icon_state)]"
 	lectern_overlay.cut_overlay(book_overlay)
 
@@ -540,30 +539,19 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 	return ..()
 
-/obj/structure/stool/bed/chair/lectern/handle_rotation()
-	if(dir == NORTH)
-		layer = BELOW_MOB_LAYER
-	else
-		layer = INFRONT_MOB_LAYER
-
-	if(buckled_mob)
-		buckled_mob.set_dir(dir)
-		buckled_mob.update_canmove()
-
 /obj/structure/stool/bed/chair/lectern/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
-		layer = BELOW_MOB_LAYER
 		M.pixel_y = 12
 		update_buckle_mob(M)
-		add_overlay(lectern_overlay)
-
+		lectern_overlay.icon_state = "lectern_overlay"
 	else
-		if(dir == NORTH)
-			layer = BELOW_MOB_LAYER
-		else
-			layer = INFRONT_MOB_LAYER
 		M.pixel_y = M.get_pixel_y_offset()
-		cut_overlay(lectern_overlay)
+		lectern_overlay.icon_state = "lectern_overlay_unbuckled"
+
+	layer = BELOW_MOB_LAYER
+
+	cut_overlay(lectern_overlay)
+	add_overlay(lectern_overlay)
 
 /obj/structure/stool/bed/chair/lectern/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
