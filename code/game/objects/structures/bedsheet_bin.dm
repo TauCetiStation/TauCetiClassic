@@ -16,7 +16,6 @@ LINEN BINS
 	throw_speed = 1
 	throw_range = 2
 	w_class = SIZE_TINY
-	item_color = "white"
 
 	dyed_type = DYED_BEDSHEET
 
@@ -45,69 +44,56 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"
-	item_color = "blue"
 
 /obj/item/weapon/bedsheet/green
 	icon_state = "sheetgreen"
-	item_color = "green"
 
 /obj/item/weapon/bedsheet/orange
 	icon_state = "sheetorange"
-	item_color = "orange"
 
 /obj/item/weapon/bedsheet/purple
 	icon_state = "sheetpurple"
-	item_color = "purple"
 
 /obj/item/weapon/bedsheet/rainbow
 	name = "rainbow bedsheet"
 	desc = "A multicolored blanket.  It's actually several different sheets cut up and sewn together."
 	icon_state = "sheetrainbow"
-	item_color = "rainbow"
 
 /obj/item/weapon/bedsheet/red
 	icon_state = "sheetred"
-	item_color = "red"
 
 /obj/item/weapon/bedsheet/yellow
 	icon_state = "sheetyellow"
-	item_color = "yellow"
 
 /obj/item/weapon/bedsheet/mime
 	name = "mime's blanket"
 	desc = "A very soothing striped blanket.  All the noise just seems to fade out when you're under the covers in this."
 	icon_state = "sheetmime"
-	item_color = "mime"
 
 /obj/item/weapon/bedsheet/clown
 	name = "clown's blanket"
 	desc = "A rainbow blanket with a clown mask woven in.  It smells faintly of bananas."
 	icon_state = "sheetclown"
-	item_color = "clown"
 
 /obj/item/weapon/bedsheet/captain
 	name = "captain's bedsheet"
 	desc = "It has a Nanotrasen symbol on it, and was woven with a revolutionary new kind of thread guaranteed to have 0.01% permeability for most non-chemical substances, popular among most modern captains."
 	icon_state = "sheetcaptain"
-	item_color = "captain"
 
 /obj/item/weapon/bedsheet/rd
 	name = "research director's bedsheet"
 	desc = "It appears to have a beaker emblem, and is made out of fire-resistant material, although it probably won't protect you in the event of fires you're familiar with every day."
 	icon_state = "sheetrd"
-	item_color = "director"
 
 /obj/item/weapon/bedsheet/medical
 	name = "medical blanket"
 	desc = "It's a sterilized* blanket commonly used in the Medbay.  *Sterilization is voided if a virologist is present onboard the station."
 	icon_state = "sheetmedical"
-	item_color = "medical"
 
 /obj/item/weapon/bedsheet/hos
 	name = "head of security's bedsheet"
 	desc = "It is decorated with a shield emblem.  While crime doesn't sleep, you do, but you are still THE LAW!"
 	icon_state = "sheethos"
-	item_color = "hosred"
 
 /obj/item/weapon/bedsheet/hop
 	name = "head of personnel's bedsheet"
@@ -119,27 +105,22 @@ LINEN BINS
 	name = "chief engineer's bedsheet"
 	desc = "It is decorated with a wrench emblem.  It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil."
 	icon_state = "sheetce"
-	item_color = "chief"
 
 /obj/item/weapon/bedsheet/brown
 	icon_state = "sheetbrown"
-	item_color = "brown"
 
 /obj/item/weapon/bedsheet/psych
 	icon_state = "sheetpsych"
-	item_color = "brown"
 
 /obj/item/weapon/bedsheet/centcom
 	name = "Centcom bedsheet"
 	desc = "Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials."
 	icon_state = "sheetcentcom"
-	item_color = "centcom"
 
 /obj/item/weapon/bedsheet/syndie
 	name = "syndicate bedsheet"
 	desc = "It has a syndicate emblem and it has an aura of evil."
 	icon_state = "sheetsyndie"
-	item_color = "syndie"
 
 /obj/item/weapon/bedsheet/cult
 	name = "cultist's bedsheet"

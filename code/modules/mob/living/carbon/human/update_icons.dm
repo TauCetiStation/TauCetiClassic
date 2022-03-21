@@ -144,9 +144,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!icon_custom)
 			icon_state_appendix = null
 
-	if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM || sprite_sheet_slot == SPRITE_SHEET_UNIFORM_FAT)
-		t_state = item_color
-
 	if(!t_state)
 		t_state = icon_state
 

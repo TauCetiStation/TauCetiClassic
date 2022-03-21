@@ -1,7 +1,6 @@
 /obj/item/weapon/implant/freedom
 	name = "freedom implant"
 	desc = "Use this to escape from those evil Red Shirts."
-	item_color = "r"
 	var/activation_emote = "blink"
 	uses = 1.0
 

@@ -34,7 +34,6 @@
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
-	var/item_color = null
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	var/pierce_protection = 0
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
@@ -1057,11 +1056,12 @@
 	if(!dye_colors)
 		return
 
-	var/list/dye_types = dye_colors[w_color]
-	if(!w_color)
+	var/obj/item/clothing/dye_type = dye_colors[w_color]
+	if(!dye_types)
 		return
 
-	var/obj/item/clothing/dye_type = pick(dye_types)
+	if(islist(dye_type))
+		dye_type = pick(dye_type)
 
 	name = initial(dye_type.name)
 	icon_state = initial(dye_type.icon_state)

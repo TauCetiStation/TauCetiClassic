@@ -284,7 +284,6 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
-	item_color = A.item_color
 	update_inv_mob()
 
 //********************
