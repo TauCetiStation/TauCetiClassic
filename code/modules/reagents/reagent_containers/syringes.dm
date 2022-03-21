@@ -24,9 +24,9 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/pickup(mob/living/user)
-	if(HAS_TRAIT(user, TRAIT_SYRINGE_FEAR))
-		syringe_fear_trigger(user)
 	. = ..()
+	if(HAS_TRAIT_FROM(user, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+		causes_fear(user)
 	update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/dropped(mob/user)
@@ -107,8 +107,8 @@
 						reagents.handle_reactions()
 					infect_limb(user, target)
 					user.visible_message("<span class='warning'>[user] takes a blood sample from [target].</span>", self_message = "<span class='notice'>You take a blood sample from [target]</span>", viewing_distance = 4)
-					if(HAS_TRAIT(target, TRAIT_SYRINGE_FEAR))
-						syringe_fear_trigger(target)
+					if(HAS_TRAIT_FROM(target, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+						causes_fear(target)
 
 			else //if not mob
 				if(!target.reagents.total_volume)
@@ -157,8 +157,8 @@
 					M.log_combat(user, "injected with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
 					reagents.reaction(target, INGEST)
-					if(HAS_TRAIT(target, TRAIT_SYRINGE_FEAR))
-						syringe_fear_trigger(target)
+					if(HAS_TRAIT_FROM(target, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+						causes_fear(target)
 				else
 					if(!L.try_inject(user, TRUE, TRUE))
 						return
@@ -180,6 +180,8 @@
 			else
 				trans = reagents.trans_to(target, amount_per_transfer_from_this)
 			to_chat(user, "<span class='notice'>You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>")
+			if(HAS_TRAIT_FROM(target, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+				causes_fear(target)
 			if (reagents.total_volume <= 0 && mode == SYRINGE_INJECT)
 				mode = SYRINGE_DRAW
 				update_icon()
@@ -222,8 +224,8 @@
 	add_blood(target)
 	add_fingerprint(usr)
 	update_icon()
-	if(HAS_TRAIT(user, TRAIT_SYRINGE_FEAR))
-		syringe_fear_trigger(user)
+	if(HAS_TRAIT_FROM(target, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+		causes_fear(target)
 
 /obj/item/weapon/reagent_containers/syringe/update_icon()
 	if(mode == SYRINGE_BROKEN)
@@ -281,9 +283,9 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/ld50_syringe/pickup(mob/living/user)
-	if(HAS_TRAIT(user, TRAIT_SYRINGE_FEAR))
-		return
 	. = ..()
+	if(HAS_TRAIT_FROM(user, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+		causes_fear(user)
 	update_icon()
 
 /obj/item/weapon/reagent_containers/ld50_syringe/dropped(mob/user)
@@ -465,27 +467,6 @@
 	reagents.add_reagent("mulligan", 1)
 	mode = SYRINGE_INJECT
 	update_icon()
-
-/obj/item/weapon/reagent_containers/syringe/proc/syringe_fear_trigger(mob/living/carbon/human/user)
-	to_chat(user, "<font color='red' size='7'>IT'S A SYRINGE!!!</font>")
-	if(prob(5))
-		user.eye_blind = 20
-		user.blurEyes(40)
-		to_chat(user, "<span class='warning'>Darkness closes in...</span>")
-	if(prob(5))
-		user.hallucination = max(user.hallucination, 200)
-		to_chat(user, "<span class='warning'>Ringing in your ears. The visions are coming.</span>")
-	if(prob(10))
-		user.SetSleeping(40 SECONDS)
-		to_chat(user, "<span class='warning'>Your will to fight wavers.</span>")
-	if(prob(15))
-		var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_GROIN)
-		var/obj/item/organ/external/BP = user.bodyparts_by_name[bodypart_name]
-		BP.take_damage(8, used_weapon = "Syringe") 										//half kithen-knife damage, without message for antiflud
-	if(prob(30))
-		user.Paralyse(20)
-	if(prob(40))
-		user.make_dizzy(150)
 
 /obj/item/weapon/reagent_containers/syringe/nutriment
 

@@ -10,7 +10,7 @@
 	var/charges = 10
 	var/status = 0
 	var/mob/foundmob = "" //Used in throwing proc.
-	var/agony
+	var/agony = 60
 
 	sweep_step = 2
 
@@ -87,14 +87,7 @@
 		//H.apply_effect(10, STUN, 0)
 		//H.apply_effect(10, WEAKEN, 0)
 		//H.apply_effect(10, STUTTER, 0)
-		if(HAS_TRAIT(usr, TRAIT_RANDOM_DAMAGE))
-			var/a_dice = "3d20"
-			var/r_agony = roll(a_dice)
-			agony = r_agony
-			H.apply_effect(agony,AGONY,0)
-		else
-			agony = 60
-			H.apply_effect(agony,AGONY,0)
+		H.apply_effect(agony,AGONY,0)
 		H.set_lastattacker_info(user)
 		if(isrobot(src.loc))
 			var/mob/living/silicon/robot/R = src.loc
