@@ -1,5 +1,3 @@
-var/global/list/washing_machine_color_table
-
 /obj/item/clothing
 	name = "clothing"
 	var/list/species_restricted = null //Only these species can wear this kit.
@@ -314,19 +312,6 @@ var/global/list/icon_state_allowed_cache = list()
 	if(displayed_accessories.len)
 		. += " with [get_english_list(displayed_accessories)] attached"
 
-/obj/item/clothing/wash_act(w_color)
-	. = ..()
-	var/list/wash_types = global.washing_machine_color_table["[wash_color]|[wash_type]"]
-	if(!wash_types)
-		return
-
-	var/obj/item/clothing/wash_type = pick(wash_types)
-
-	name = initial(wash_type.name)
-	icon_state = initial(wash_type.icon_state)
-	item_state = initial(wash_type.item_state)
-	desc = "The colors are a bit dodgy."
-
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
@@ -447,6 +432,8 @@ BLIND     // can't see anything
 	species_restricted = list("exclude" , UNATHI , TAJARAN, VOX, VOX_ARMALIS)
 	species_restricted_locked = TRUE
 	sprite_sheet_slot = SPRITE_SHEET_GLOVES
+
+	dyed_type = DYED_GLOVES
 
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
@@ -651,6 +638,8 @@ BLIND     // can't see anything
 	sprite_sheet_slot = SPRITE_SHEET_UNIFORM
 	valid_accessory_slots = list("utility","armband","decor")
 	restricted_accessory_slots = list("utility", "armband")
+
+	dyed_type = DYED_UNIFORM
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()

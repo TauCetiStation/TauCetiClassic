@@ -245,17 +245,6 @@
 	for(var/emote_type in subtypesof(/datum/emote))
 		global.all_emotes[emote_type] = new emote_type
 
-	global.washing_machine_color_table = list()
-	for(var/cloth_type in subtypesof(/obj/item/clothing))
-		var/obj/item/clothing/C = cloth_type
-		var/w_color = initial(C.wash_color)
-		if(!w_color)
-			continue
-		var/w_type = initial(C.wash_type)
-		if(!w_type)
-			continue
-		LAZYADDASSOCLIST(global.washing_machine_color_table, "[w_color]|[w_type]", cloth_type)
-
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!
 	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))

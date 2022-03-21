@@ -88,6 +88,8 @@
 	species_restricted_locked = FALSE
 	clipped = TRUE
 
+	dyed_type = DYED_FINGERLESS
+
 /obj/item/clothing/gloves/fingerless/red
 	name = "red fingerless gloves"
 	icon_state = "fingerless_red"

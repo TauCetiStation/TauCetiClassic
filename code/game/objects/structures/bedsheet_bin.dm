@@ -18,6 +18,7 @@ LINEN BINS
 	w_class = SIZE_TINY
 	item_color = "white"
 
+	dyed_type = DYED_BEDSHEET
 
 /obj/item/weapon/bedsheet/attack_self(mob/user)
 	user.drop_item()

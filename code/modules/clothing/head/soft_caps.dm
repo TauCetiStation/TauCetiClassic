@@ -9,6 +9,8 @@
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
+	dyed_type = DYED_SOFTCAP
+
 /obj/item/clothing/head/soft/dropped()
 	src.icon_state = "[item_color]soft"
 	src.flipped=0

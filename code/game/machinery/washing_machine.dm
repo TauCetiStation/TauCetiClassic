@@ -1,3 +1,21 @@
+var/global/list/dyed_item_types = list(
+	DYED_UNIFORM = list(
+		DYE_RED = list()
+	),
+	DYED_GLOVES = list(
+		DYE_RED = list()
+	),
+	DYED_FINGERLESS_GLOVES = list(
+		DYE_RED = list()
+	),
+	DYED_BEDSHEET = list(
+		DYE_RED = list()
+	),
+	DYED_SOFTCAP = list(
+		DYE_RED = list()
+	),
+)
+
 /obj/machinery/washing_machine
 	name = "Washing Machine"
 	desc = "Washes your bloody clothes."

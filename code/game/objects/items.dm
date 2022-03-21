@@ -79,6 +79,8 @@
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
 
+	var/dyed_type
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
@@ -1047,3 +1049,21 @@
 /obj/item/proc/wash_act(w_color)
 	decontaminate()
 	wet = 0
+
+	if(!dyed_type)
+		return
+
+	var/list/dye_colors = global.dyed_item_types[dyed_type]
+	if(!dye_colors)
+		return
+
+	var/list/dye_types = dye_colors[w_color]
+	if(!w_color)
+		return
+
+	var/obj/item/clothing/dye_type = pick(dye_types)
+
+	name = initial(dye_type.name)
+	icon_state = initial(dye_type.icon_state)
+	item_state = initial(dye_type.item_state)
+	desc = "The colors are a bit dodgy."
