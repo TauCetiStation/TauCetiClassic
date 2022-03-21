@@ -24,6 +24,32 @@
 	var/gibs_ready = 0
 	var/obj/crayon
 
+/obj/machinery/washing_machine/Destroy()
+	QDEL_NULL(crayon)
+	return ..()
+
+/obj/machinery/washing_machine/proc/get_wash_color()
+	if(!crayon)
+		return null
+
+	if(istype(crayon,/obj/item/toy/crayon))
+		var/obj/item/toy/crayon/CR = crayon
+		return CR.colourName
+
+	if(istype(crayon,/obj/item/weapon/stamp))
+		var/obj/item/weapon/stamp/ST = crayon
+		return ST.item_color
+
+	return null
+
+/obj/machinery/washing_machine/proc/wash(atom/A, w_color)
+	A.clean_blood()
+
+	if(!isitem(A))
+		return
+	var/obj/item/I = A
+	I.wash_act(w_color)
+
 /obj/machinery/washing_machine/verb/start()
 	set name = "Start Washing"
 	set category = "Object"
@@ -43,27 +69,14 @@
 	update_icon()
 	playsound(src, 'sound/items/washingmachine.ogg', VOL_EFFECTS_MASTER)
 	sleep(210)
-	for(var/atom/A in contents)
-		A.clean_blood()
 
-	for(var/obj/item/I in contents)
-		I.decontaminate()
-		I.wet = 0
+	var/w_color = get_wash_color()
 
-	//Tanning!
-	for(var/obj/item/stack/sheet/hairlesshide/HH in contents)
-		new/obj/item/stack/sheet/wetleather(src, HH.get_amount())
-		qdel(HH)
-
+	for(var/I as anything in contents)
+		wash(I, w_color)
 
 	if(crayon)
-		var/wash_color
-		if(istype(crayon,/obj/item/toy/crayon))
-			var/obj/item/toy/crayon/CR = crayon
-			wash_color = CR.colourName
-		else if(istype(crayon,/obj/item/weapon/stamp))
-			var/obj/item/weapon/stamp/ST = crayon
-			wash_color = ST.item_color
+		QDEL_NULL(crayon)
 
 		if(wash_color)
 			var/new_jumpsuit_icon_state = ""

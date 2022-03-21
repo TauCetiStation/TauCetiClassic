@@ -1043,3 +1043,7 @@
 	if(!qualities)
 		return 0
 	return qualities[quality]
+
+/obj/item/proc/wash_act(w_color)
+	decontaminate()
+	wet = 0

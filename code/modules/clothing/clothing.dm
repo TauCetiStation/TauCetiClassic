@@ -1,3 +1,4 @@
+var/global/list/washing_machine_color_table
 
 /obj/item/clothing
 	name = "clothing"
@@ -312,6 +313,19 @@ var/global/list/icon_state_allowed_cache = list()
 
 	if(displayed_accessories.len)
 		. += " with [get_english_list(displayed_accessories)] attached"
+
+/obj/item/clothing/wash_act(w_color)
+	. = ..()
+	var/list/wash_types = global.washing_machine_color_table["[wash_color]|[wash_type]"]
+	if(!wash_types)
+		return
+
+	var/obj/item/clothing/wash_type = pick(wash_types)
+
+	name = initial(wash_type.name)
+	icon_state = initial(wash_type.icon_state)
+	item_state = initial(wash_type.item_state)
+	desc = "The colors are a bit dodgy."
 
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
