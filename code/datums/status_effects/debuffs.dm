@@ -134,3 +134,24 @@
 
 /datum/status_effect/dry_hands/refresh()
 	. = ..()
+
+/datum/status_effect/clean_hands
+	id = "clean hands"
+	tick_interval = 10
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+	var/rand_duration
+
+/datum/status_effect/clean_hands/on_creation(mob/living/new_owner)
+	rand_duration = rand(3000, 6000)
+	duration = rand_duration
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_GREASY_FINGERS, QUALITY_TRAIT)
+
+/datum/status_effect/clean_hands/on_remove()
+	. = ..()
+	if(!HAS_TRAIT_FROM(owner, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
+		ADD_TRAIT(owner, TRAIT_GREASY_FINGERS, QUALITY_TRAIT)
+
+/datum/status_effect/clean_hands/refresh()
+	. = ..()

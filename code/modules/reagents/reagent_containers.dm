@@ -99,7 +99,7 @@
 	filler.color = RGB_CONTRAST(mc[1], mc[2], mc[3])		// paint in color of drink
 	return filler
 
-/obj/item/weapon/reagent_containers/proc/causes_fear(mob/living/carbon/human/user)
+/obj/item/weapon/reagent_containers/proc/cause_fear(mob/living/carbon/human/user)
 	to_chat(user, "<span class='userdanger'>IT'S A SYRINGE!!!</span>")
 	if(prob(5))
 		user.eye_blind = 20
@@ -122,4 +122,3 @@
 	if(prob(40))
 		user.make_dizzy(150)
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "scared", /datum/mood_event/scared)
-	

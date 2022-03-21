@@ -25,6 +25,8 @@
 
 #define STATUS_EFFECT_DRY_HANDS /datum/status_effect/dry_hands
 
+#define STATUS_EFFECT_CLEAN_HANDS /datum/status_effect/clean_hands
+
 /////////////
 // NEUTRAL //
 /////////////

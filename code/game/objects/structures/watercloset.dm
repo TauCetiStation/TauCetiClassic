@@ -614,8 +614,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			user:update_inv_gloves()
 		user.visible_message("<span class='notice'>[user] washes their hands using \the [src].</span>")
 		if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
-			addtimer(CALLBACK(src, .proc/makes_hands_greasy, user), rand(3000, 6000), TIMER_STOPPABLE)
-		REMOVE_TRAIT(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT)
+			var/mob/living/carbon/human/H = user
+			H.apply_status_effect(STATUS_EFFECT_CLEAN_HANDS, H)
 	else
 		busy = FALSE
 
