@@ -518,6 +518,7 @@ var/global/list/datum/spawners_cooldown = list()
 	. = ..()
 
 	mob = _mob
+	add_mob_roles()
 
 	RegisterSignal(mob, list(COMSIG_PARENT_QDELETING), .proc/on_mob_del)
 
@@ -525,6 +526,18 @@ var/global/list/datum/spawners_cooldown = list()
 	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING))
 	mob = null
 	return ..()
+
+/datum/spawner/living/proc/add_mob_roles()
+	if(!mob.mind)
+		return
+
+	var/datum/mind/mind = mob.mind
+
+	if(mind.assigned_role)
+		ranks += mind.assigned_role
+
+	for(var/role in mind.antag_roles)
+		ranks += role
 
 /datum/spawner/living/proc/on_mob_del()
 	SIGNAL_HANDLER
