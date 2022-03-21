@@ -350,36 +350,6 @@ var/global/list/datum/spawners_cooldown = list()
 	var/mob/living/simple_animal/borer/B = new(vent.loc, FALSE, 1)
 	B.transfer_personality(ghost.client)
 
-/datum/spawner/borer
-	name = "Борер"
-	desc = "Вы становитесь очередным отпрыском бореров."
-	wiki_ref = "Cortical_Borer"
-
-	ranks = list(ROLE_GHOSTLY)
-
-	var/mob/borer
-
-/datum/spawner/borer/New(_borer)
-	. = ..()
-	borer = _borer
-	RegisterSignal(borer, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
-
-/datum/spawner/borer/Destroy()
-	UnregisterSignal(borer, list(COMSIG_PARENT_QDELETING))
-	borer = null
-	return ..()
-
-/datum/spawner/borer/proc/on_target_del()
-	SIGNAL_HANDLER
-	qdel(src)
-
-/datum/spawner/borer/jump(mob/dead/observer/ghost)
-	ghost.forceMove(get_turf(borer))
-
-/datum/spawner/borer/spawn_ghost(mob/dead/observer/ghost)
-	UnregisterSignal(borer, list(COMSIG_PARENT_QDELETING))
-	borer.transfer_personality(ghost.client)
-
 /*
  * Aliens
 */
@@ -590,6 +560,15 @@ var/global/list/datum/spawners_cooldown = list()
 	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
 	. += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B><BR>"
 	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+
+/datum/spawner/living/borer
+	name = "Борер"
+	desc = "Вы становитесь очередным отпрыском бореров."
+	wiki_ref = "Cortical_Borer"
+
+/datum/spawner/living/borer/spawn_ghost(mob/dead/observer/ghost)
+	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING))
+	borer.transfer_personality(ghost.client)
 
 /datum/spawner/spy
 	name = "Агент Прослушки"
