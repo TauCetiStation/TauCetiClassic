@@ -90,7 +90,7 @@
 	var/mouse_pointer
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
-	var/required_skills = list(/datum/skill/civ_mech/trained)
+	var/list/required_skills = list(/datum/skill/civ_mech/trained)
 
 /obj/mecha/atom_init()
 	. = ..()
