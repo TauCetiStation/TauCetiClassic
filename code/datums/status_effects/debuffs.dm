@@ -131,12 +131,10 @@
 	ADD_TRAIT(owner, trait, trait_source)
 	. = ..()
 
-/datum/status_effect/remove_trait/wet_hands/on_creation()
+/datum/status_effect/remove_trait/wet_hands
 	trait = TRAIT_WET_HANDS
 	trait_source = QUALITY_TRAIT
-	. = ..()
 
-/datum/status_effect/remove_trait/greasy_hands/on_creation()
+/datum/status_effect/remove_trait/greasy_hands
 	trait = TRAIT_GREASY_FINGERS
 	trait_source = QUALITY_TRAIT
-	. = ..()
