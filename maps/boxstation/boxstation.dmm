@@ -10429,7 +10429,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "arz" = (
@@ -13302,8 +13302,7 @@
 	pixel_x = -5
 	},
 /turf/simulated/floor{
-	dir = 9;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "axp" = (
@@ -13412,8 +13411,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "axx" = (
@@ -13654,8 +13652,7 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "ayb" = (
@@ -13792,8 +13789,7 @@
 	},
 /obj/structure/closet/secure_closet/iaa,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "ayn" = (
@@ -13805,8 +13801,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "ayo" = (
@@ -14522,8 +14517,7 @@
 	},
 /obj/item/weapon/flora/pottedplant/tropicalfern,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "azE" = (
@@ -14602,8 +14596,7 @@
 	},
 /obj/structure/closet/secure_closet/iaa,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "azK" = (
@@ -33528,8 +33521,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "bhY" = (
@@ -36538,8 +36530,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "bnK" = (
@@ -43243,9 +43234,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "bzC" = (
+/obj/structure/table/reinforced,
+/obj/machinery/faxmachine{
+	department = "Internal Affairs"
+	},
+/obj/item/weapon/hand_labeler{
+	pixel_y = -8
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "bzD" = (
@@ -43323,8 +43320,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "bzJ" = (
@@ -43421,8 +43417,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "darkbluefull"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "bzR" = (
@@ -44294,14 +44291,23 @@
 /area/station/cargo/office)
 "bBw" = (
 /obj/structure/table/reinforced,
-/obj/machinery/faxmachine{
-	department = "Internal Affairs"
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
 	},
-/obj/item/weapon/hand_labeler{
-	pixel_y = -8
+/obj/item/weapon/pen/blue{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/weapon/pen/red{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/obj/item/weapon/pen{
+	pixel_x = -1;
+	pixel_y = 7
 	},
 /turf/simulated/floor{
-	icon_state = "darkbluefull"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "bBx" = (
@@ -46693,26 +46699,9 @@
 	},
 /area/station/civilian/kitchen)
 "bFP" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin{
-	pixel_y = 4
-	},
-/obj/item/weapon/pen/blue{
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/weapon/pen/red{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/item/weapon/pen{
-	pixel_x = -1;
-	pixel_y = 7
-	},
-/turf/simulated/floor{
-	icon_state = "darkbluefull"
-	},
-/area/station/security/iaa_office)
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "bFQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -47501,8 +47490,7 @@
 /obj/structure/cable,
 /obj/item/weapon/flora/pottedplant/palm,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "bHj" = (
@@ -47568,13 +47556,9 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
 "bHo" = (
-/obj/structure/sign/poster/official/random{
-	pixel_x = -32
-	},
-/obj/structure/filingcabinet/chestdrawer/black,
+/obj/machinery/photocopier,
 /turf/simulated/floor{
-	dir = 10;
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "bHp" = (
@@ -47697,7 +47681,7 @@
 	pixel_y = -28
 	},
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "bHA" = (
@@ -49831,9 +49815,9 @@
 	pixel_y = -24
 	},
 /obj/machinery/light/small,
-/obj/machinery/photocopier,
+/obj/structure/filingcabinet/chestdrawer/black,
 /turf/simulated/floor{
-	icon_state = "darkblue"
+	icon_state = "dark"
 	},
 /area/station/security/iaa_office)
 "bLz" = (
@@ -56982,10 +56966,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "ceI" = (
-/obj/structure/stool/bed/chair/metal{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/vomit,
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/three,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "ceO" = (
@@ -112132,7 +112114,7 @@ bNr
 ayr
 apx
 alZ
-ceI
+bFP
 awE
 alZ
 aYi
@@ -112386,10 +112368,10 @@ ani
 ani
 ani
 uql
-axN
-axN
-axN
-axN
+ayr
+ceI
+alZ
+aqb
 axT
 alZ
 aYi
@@ -112644,8 +112626,8 @@ aNo
 axN
 axN
 axN
-bBw
-bFP
+axN
+axN
 axN
 axN
 bzA
@@ -112902,7 +112884,7 @@ axN
 axo
 bhX
 bzC
-bzC
+bBw
 bHo
 axN
 alZ
@@ -113419,7 +113401,7 @@ bBM
 bjz
 bHz
 axN
-bLk
+alZ
 aYi
 aCu
 aCB
