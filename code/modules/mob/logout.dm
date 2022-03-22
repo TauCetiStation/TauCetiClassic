@@ -1,8 +1,8 @@
 /mob/Logout()
+	global.player_list -= src
 	set_typing_indicator(FALSE)
 	nanomanager.user_logout(src) // this is used to clean up (remove) this user's Nano UIs
 	SStgui.on_logout(src)
-	player_list -= src
 	log_access("Logout: [key_name(src)]")
 	if(admin_datums[src.ckey])
 		if(!(src.ckey in stealth_keys))

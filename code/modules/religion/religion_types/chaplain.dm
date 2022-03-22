@@ -33,7 +33,7 @@
 	)
 
 	// Is required to have a "Default" as a fallback.
-	pews_info_by_name = list(
+	emblem_info_by_name = list(
 		"Default" = "general",
 		"Christianity" = "christianity",
 		"Satanism" = "dead",
@@ -77,6 +77,11 @@
 	area_type = /area/station/civilian/chapel
 	bible_type = /obj/item/weapon/storage/bible
 	religious_tool_type = /obj/item/weapon/nullrod
+
+	binding_rites = list(
+		/datum/religion_rites/standing/consent/invite,
+		/datum/religion_rites/instant/communicate,
+	)
 
 	style_text = "piety"
 	symbol_icon_state = "nimbus"
