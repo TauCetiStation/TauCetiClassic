@@ -13,6 +13,8 @@ SUBSYSTEM_DEF(mobs)
 
 
 /datum/controller/subsystem/mobs/fire(resumed = 0)
+	SSchunks.fire()
+
 	var/seconds = wait * 0.1
 	if (!resumed)
 		src.currentrun = mob_list.Copy()

@@ -4455,12 +4455,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/mob/living/simple_animal/corgi/borgi,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/mob/living/simple_animal/corgi/borgi,
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "ahI" = (
@@ -10364,18 +10364,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
 "arq" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/turf/simulated/floor/wood,
-/area/station/civilian/library)
+/obj/structure/stool/bed/chair/lectern,
+/turf/simulated/floor/carpet/black,
+/area/station/civilian/chapel)
 "arr" = (
 /obj/machinery/light{
 	dir = 4
@@ -51944,6 +51935,19 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
+"bOT" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/simulated/floor/wood,
+/area/station/civilian/library)
 "bOV" = (
 /obj/machinery/light{
 	dir = 1
@@ -131656,7 +131660,7 @@ aGx
 cID
 aKs
 cLC
-arq
+bOT
 bNL
 cBM
 aLQ
@@ -132401,7 +132405,7 @@ aLY
 byI
 bMe
 ePF
-ePF
+arq
 mlr
 aVp
 aVp
