@@ -39,12 +39,11 @@
 	backpack_contents += list(/obj/item/device/modkit/syndie/skrell)
 
 /datum/outfit/nuclear/vox_equip()
-    backpack_contents += list(
+	backpack_contents += list(
 		/obj/item/device/modkit/syndie/vox,
-	    /obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox
-	    )
-    l_hand = /obj/item/weapon/tank/nitrogen
-    mask = /obj/item/clothing/mask/gas/vox
-    l_pocket = /obj/item/weapon/tank/nitrogen
-    r_pocket = /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox
+		)
+	mask = /obj/item/clothing/mask/gas/vox
+	l_pocket = /obj/item/weapon/tank/nitrogen
+	r_pocket = /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment
    
