@@ -541,10 +541,12 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/living/robot/syndi
 	name = "Робот синдиката"
+	roles = list(ROLE_OPERATIVE)
 
 /datum/spawner/living/robot/drone
 	name = "Дрон"
 	wiki_ref = "Maintenance_drone"
+	roles = list(ROLE_DRONE)
 
 /*
  * Religion
