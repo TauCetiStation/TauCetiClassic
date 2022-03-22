@@ -301,6 +301,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chapel"
 	icon_state = "chapel"
 	ambience = list('sound/ambience/chapel_1.ogg', 'sound/ambience/chapel_2.ogg', 'sound/ambience/chapel_3.ogg', 'sound/ambience/chapel_4.ogg')
+	blessing = 10
 
 /area/station/civilian/chapel/office
 	name = "Chapel Office"
@@ -309,14 +310,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/civilian/chapel/altar
 	name = "Altar"
 	icon_state = "altar"
+	blessing = 10
 
 /area/station/civilian/chapel/crematorium
 	name = "Crematorium"
 	icon_state = "crematorium"
+	blessing = -5
 
 /area/station/civilian/chapel/mass_driver
 	name = "Chapel Mass Driver"
 	icon_state = "massdriver"
+	blessing = -5
 
 /area/station/civilian/garden
 	name = "Garden"
@@ -452,6 +456,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Morgue"
 	icon_state = "morgue"
 	ambience = list('sound/ambience/morgue_1.ogg', 'sound/ambience/morgue_2.ogg', 'sound/ambience/morgue_3.ogg')
+	blessing = -5
 
 /area/station/medical/chemistry
 	name = "Chemistry"
@@ -502,6 +507,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/security/execution
 	name = "Execution"
 	icon_state = "execution_room"
+	blessing = -5
 
 /area/station/security/prison
 	name = "Prison Wing"

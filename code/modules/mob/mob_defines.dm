@@ -278,3 +278,5 @@
 	var/list/sound_approximations
 	// Case sensitive sound approximations.
 	var/list/sensitive_sound_approximations
+
+	var/pray_time = 0

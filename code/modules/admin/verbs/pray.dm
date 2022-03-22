@@ -2,6 +2,10 @@
 	set category = "IC"
 	set name = "Pray"
 
+	if(pray_time >= world_time)
+		to_chat(usr, "<span class='warning'>You have to wait a minute to pray again.</span>")
+		return
+
 	if(say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
@@ -95,6 +99,7 @@
 				to_chat(G, god_not_understand_msg)
 
 	pray_act(msg, speaking, alt_name, "prays")
+	pray_time = world_time + 1 MINUTES
 
 	feedback_add_details("admin_verb","PR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	//log_admin("HELP: [key_name(src)]: [msg]")
@@ -108,6 +113,9 @@
 	else
 		// Mimes, and other mute beings.
 		emote("pray")
+	var/area/A = get_area(src)
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "prayed", /datum/mood_event/pray, A.blessing)
+	A.blessing += 1
 
 /mob/proc/pray_animation()
 	return
