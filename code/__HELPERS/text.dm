@@ -188,6 +188,11 @@
 		t = replacetext(t, char, repl_chars[char])
 	return t
 
+/proc/replaceEx_characters(t, list/repl_chars)
+	for(var/char in repl_chars)
+		t = replacetextEx(t, char, repl_chars[char])
+	return t
+
 /proc/random_string(length, list/characters)
 	. = ""
 	for (var/i in 1 to length)

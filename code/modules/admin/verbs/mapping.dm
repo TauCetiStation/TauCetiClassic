@@ -395,36 +395,23 @@ var/global/movement_disabled_exception //This is the client that calls the proc,
 /client/proc/adminchangemap()
 	set category = "Server"
 	set name = "Change Map"
-	var/list/maprotatechoices = list()
-	for (var/map in config.maplist)
-		var/datum/map_config/VM = config.maplist[map]
-		var/mapname = VM.map_name
-		if (VM == config.defaultmap)
-			mapname += " (Default)"
 
-		if (VM.config_min_users > 0 || VM.config_max_users > 0)
-			mapname += " \["
-			if (VM.config_min_users > 0)
-				mapname += "[VM.config_min_users]"
-			else
-				mapname += "0"
-			mapname += "-"
-			if (VM.config_max_users > 0)
-				mapname += "[VM.config_max_users]"
-			else
-				mapname += "inf"
-			mapname += "\]"
-
-		maprotatechoices[mapname] = VM
-	if(!maprotatechoices.len)
+	if(!config.maplist.len)
 		to_chat(usr, "Map config 'config/maps.txt' is missing or empty")
 		return
 
-	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in maprotatechoices
+	var/list/maprotatechoices = list()
+	for (var/map in config.maplist)
+		var/datum/map_config/VM = config.maplist[map]
+		var/mapname = VM.GetFullMapName()
+		maprotatechoices[mapname] = VM
+
+	var/chosenmap = tgui_input_list(usr, "Choose a map to change to", "Change Map", maprotatechoices)
 	if (!chosenmap)
 		return
+
 	var/datum/map_config/VM = maprotatechoices[chosenmap]
 	message_admins("[key_name_admin(usr)] is changing the map to [VM.map_name]")
 	log_admin("[key_name(usr)] is changing the map to [VM.map_name]")
-	if (SSmapping.changemap(VM) == 0)
+	if (SSmapping.changemap(VM))
 		message_admins("[key_name_admin(usr)] has changed the map to [VM.map_name]")
