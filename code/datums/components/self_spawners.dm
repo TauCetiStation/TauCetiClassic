@@ -31,6 +31,10 @@
 /datum/component/self_spawners/proc/logout()
 	SIGNAL_HANDLER
 	var/mob/M = parent
+
+	if(M.stat == DEAD)
+		return
+
 	var/wait = -1
 	switch(M.logout_reason)
 		if(LOGOUT_USER)
@@ -45,5 +49,9 @@
 
 /datum/component/self_spawners/proc/setup_spawner()
 	timer_id = null
+	var/mob/M = parent
+
+	if(M.stat == DEAD)
+		return
 
 	create_spawner(spawner_type, null, parent)
