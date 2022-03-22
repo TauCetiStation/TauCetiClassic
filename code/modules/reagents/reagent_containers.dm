@@ -99,7 +99,7 @@
 	filler.color = RGB_CONTRAST(mc[1], mc[2], mc[3])		// paint in color of drink
 	return filler
 
-/obj/item/weapon/reagent_containers/proc/cause_fear(mob/living/carbon/human/user)
+/obj/item/weapon/reagent_containers/proc/cause_syringe_fear(mob/living/carbon/human/user) //Quality proc. Because someone didn't insert the cyanide-syringe into the syringe.dm file
 	to_chat(user, "<span class='userdanger'>IT'S A SYRINGE!!!</span>")
 	if(prob(5))
 		user.eye_blind = 20
@@ -112,11 +112,10 @@
 		user.SetSleeping(40 SECONDS)
 		to_chat(user, "<span class='warning'>Your will to fight wavers.</span>")
 	if(prob(15))
-		if(ishuman(user))
-			var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_GROIN)
-			var/obj/item/organ/external/BP = user.get_bodypart(bodypart_name)
-			BP.take_damage(8, used_weapon = "Syringe") 	//half kithen-knife damage
-			to_chat(user, "<span class='warning'>You got a cut with a syringe.</span>")
+		var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_GROIN)
+		var/obj/item/organ/external/BP = user.get_bodypart(bodypart_name)
+		BP.take_damage(8, used_weapon = "Syringe") 	//half kithen-knife damage
+		to_chat(user, "<span class='warning'>You got a cut with a syringe.</span>")
 	if(prob(30))
 		user.Paralyse(20)
 	if(prob(40))
