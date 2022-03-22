@@ -530,12 +530,15 @@
 	},
 /area/custom/tophat)
 "abf" = (
-/obj/effect/overlay/tophat_portal{
-	pixel_y = -32
+/obj/machinery/vending/tophat_vend,
+/obj/structure/sign/poster/official/cohiba_robusto_ad{
+	pixel_x = -32
 	},
-/obj/structure/torch_holder,
+/obj/structure/torch_holder{
+	dir = 8
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken"
+	icon_state = "wood-broken3"
 	},
 /area/custom/tophat)
 "abg" = (
@@ -11414,15 +11417,10 @@
 /area/shuttle/vox/arkship)
 "aAO" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_x = 7;
-	pixel_y = 10
-	},
-/obj/item/weapon/reagent_containers/glass/rag{
-	pixel_x = -6
-	},
-/obj/structure/sign/poster/contraband/red_rum{
-	pixel_x = 32
+/obj/machinery/computer/security/wooden_tv/miami{
+	name = "Magic TV";
+	network = list("beach");
+	pixel_y = 3
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -11483,12 +11481,22 @@
 	},
 /area/custom/tophat)
 "aAV" = (
-/obj/machinery/vending/tophat_vend,
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
-	pixel_x = -32
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/weapon/reagent_containers/glass/rag{
+	pixel_x = -6
+	},
+/obj/structure/sign/poster/contraband/red_rum{
+	pixel_x = 32
+	},
+/obj/structure/torch_holder{
+	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken3"
+	icon_state = "wood"
 	},
 /area/custom/tophat)
 "aAW" = (
@@ -14502,6 +14510,14 @@
 	},
 /turf/environment/space,
 /area/shuttle/administration/centcom)
+"aGS" = (
+/obj/effect/overlay/tophat_portal{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood-broken"
+	},
+/area/custom/tophat)
 "aGT" = (
 /obj/random/vending/snack,
 /turf/simulated/shuttle/floor{
@@ -27417,30 +27433,26 @@
 /turf/unsimulated/wall/log,
 /area/custom/tophat)
 "nJb" = (
+/obj/machinery/camera{
+	c_tag = "Beach";
+	invisibility = 101;
+	network = list("beach");
+	pixel_x = 10
+	},
+/turf/unsimulated/beach/sand,
+/area/custom/beach)
+"nKb" = (
 /obj/structure/table/woodentable,
 /obj/machinery/chem_dispenser/soda{
 	dispensable_reagents = list("water","ice","coffee","cream","tea","tea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","tomatojuice","banana","limejuice","watermelonjuice","berryjuice","grapejuice","lemonjuice","milk","soymilk","nothing");
 	name = "magic soda fountain";
 	pixel_y = 6
 	},
-/obj/structure/torch_holder{
-	dir = 1
-	},
 /obj/structure/sign/double/barsign{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood-broken4"
-	},
-/area/custom/tophat)
-"nKb" = (
-/obj/structure/table/woodentable,
-/obj/machinery/computer/security/wooden_tv/miami{
-	name = "Magic TV";
-	pixel_y = 3
-	},
-/turf/unsimulated/floor{
-	icon_state = "wood"
 	},
 /area/custom/tophat)
 "nLb" = (
@@ -29917,7 +29929,7 @@ nIb
 nLb
 nSb
 aAQ
-aAV
+abf
 aBd
 nIb
 nIb
@@ -30427,13 +30439,13 @@ aaM
 aaM
 aaM
 nIb
-nJb
+nKb
 nOb
 nUb
 nWb
 nMb
 aBo
-abf
+aGS
 nIb
 aaM
 aeD
@@ -30684,7 +30696,7 @@ aaM
 aaM
 aaM
 nIb
-nKb
+aAO
 nPb
 nYb
 aAU
@@ -30943,7 +30955,7 @@ aaM
 nIb
 nIb
 nRb
-aAO
+aAV
 aAT
 aBB
 aaZ
@@ -91327,7 +91339,7 @@ aVH
 aVH
 aVH
 aVH
-aVH
+nJb
 aVH
 aVH
 aYY
