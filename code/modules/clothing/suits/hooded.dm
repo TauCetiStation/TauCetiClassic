@@ -12,9 +12,8 @@
 	hood.unacidable = FALSE
 
 /obj/item/clothing/suit/hooded/Destroy()
-	qdel(hood)
+	QDEL_NULL(hood)
 	return ..()
-
 
 /obj/item/clothing/suit/hooded/ui_action_click()
 	ToggleHood()
@@ -32,7 +31,7 @@
 	hooded = !hooded
 	if(icon_suit_up)
 		icon_state = initial(icon_state)
-		usr.update_inv_wear_suit()
+		update_inv_mob()
 
 /obj/item/clothing/suit/hooded/dropped()
 	..()
