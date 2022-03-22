@@ -368,43 +368,6 @@ var/global/list/datum/spawners_cooldown = list()
 	new_xeno.key = ghost.key
 
 /*
- * Religion
-*/
-/datum/spawner/religion_familiar
-	name = "Фамильяр Религии"
-	desc = "Вы появляетесь в виде какого-то животного в подчинении определённой религии."
-
-	ranks = list(ROLE_GHOSTLY)
-
-	var/mob/animal
-	var/datum/religion/religion
-
-/datum/spawner/religion_familiar/New(mob/_animal, datum/religion/_religion)
-	. = ..()
-	animal = _animal
-	religion = _religion
-
-	desc = "Вы появляетесь в виде [animal.name] в подчинении [religion.name]."
-	RegisterSignal(animal, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
-
-/datum/spawner/religion_familiar/Destroy()
-	UnregisterSignal(animal, list(COMSIG_PARENT_QDELETING))
-	animal = null
-	return ..()
-
-/datum/spawner/religion_familiar/proc/on_target_del()
-	SIGNAL_HANDLER
-	qdel(src)
-
-/datum/spawner/religion_familiar/jump(mob/dead/observer/ghost)
-	ghost.forceMove(get_turf(animal))
-
-/datum/spawner/religion_familiar/spawn_ghost(mob/dead/observer/ghost)
-	UnregisterSignal(animal, list(COMSIG_PARENT_QDELETING))
-	animal.ckey = ghost.ckey
-	religion.add_member(animal, HOLY_ROLE_PRIEST)
-
-/*
  * Other
 */
 /datum/spawner/gladiator
@@ -515,7 +478,7 @@ var/global/list/datum/spawners_cooldown = list()
 	ghost.forceMove(get_turf(mob))
 
 /datum/spawner/living/spawn_ghost(mob/dead/observer/ghost)
-	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING))
+	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN))
 	mob.key = ghost.key
 
 /datum/spawner/living/podman
@@ -565,9 +528,12 @@ var/global/list/datum/spawners_cooldown = list()
 	wiki_ref = "Cortical_Borer"
 
 /datum/spawner/living/borer/spawn_ghost(mob/dead/observer/ghost)
-	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING))
+	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN))
 	mob.transfer_personality(ghost.client)
 
+/*
+ * Robots
+*/
 /datum/spawner/living/robot
 	name = "Робот"
 	desc = "Перезагрузка позитронки."
@@ -579,6 +545,25 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/living/robot/drone
 	name = "Дрон"
 	wiki_ref = "Maintenance_drone"
+
+/*
+ * Religion
+*/
+/datum/spawner/living/religion_familiar
+	name = "Фамильяр Религии"
+	desc = "Вы появляетесь в виде какого-то животного в подчинении определённой религии."
+
+	var/datum/religion/religion
+
+/datum/spawner/religion_familiar/New(mob/_mob, datum/religion/_religion)
+	. = ..(_mob)
+	religion = _religion
+
+	desc = "Вы появляетесь в виде [mob.name] в подчинении [religion.name]."
+
+/datum/spawner/religion_familiar/spawn_ghost(mob/dead/observer/ghost)
+	..()
+	religion.add_member(mob, HOLY_ROLE_PRIEST)
 
 /datum/spawner/spy
 	name = "Агент Прослушки"
