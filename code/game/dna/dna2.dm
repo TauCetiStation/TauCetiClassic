@@ -57,6 +57,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	var/datum/dna/new_dna = new()
 	new_dna.unique_enzymes=unique_enzymes
 	new_dna.b_type=b_type
+	new_dna.real_name=real_name
 	new_dna.species=species
 
 	if(transfer_SE)

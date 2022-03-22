@@ -379,7 +379,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		return
 	update_hair()
 	update_mutations()
-	update_mutantrace()
 	update_inv_w_uniform()
 	update_inv_wear_id()
 	update_inv_gloves()
