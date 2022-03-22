@@ -59,7 +59,6 @@ There are several things that need to be remembered:
 
 >	There are also these special cases:
 		update_mutations()	//handles updating your appearance for certain mutations.  e.g TK head-glows
-		update_mutantrace()	//handles updating your appearance after setting the mutantrace var
 		UpdateDamageIcon()	//handles damage overlays for brute/burn damage //(will rename this when I geta round to it)
 		update_body()	//Handles updating your mob's icon to reflect their gender/race/complexion etc
 		update_hair()	//Handles updating your hair overlay (used to be update_face, but mouth and
@@ -98,7 +97,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //Human Overlays Indexes/////////
 #define BODY_LAYER				27
-#define MUTANTRACE_LAYER		26
 #define MUTATIONS_LAYER			25
 #define DAMAGE_LAYER			24
 #define SURGERY_LAYER			23		//bs12 specific.
@@ -349,42 +347,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[MUTATIONS_LAYER]	= standing
 
 	apply_overlay(MUTATIONS_LAYER)
-
-
-/mob/living/carbon/human/proc/update_mutantrace()
-	remove_overlay(MUTANTRACE_LAYER)
-
-	var/list/standing = list()
-	var/fat = HAS_TRAIT(src, TRAIT_FAT) ? "fat" : null
-
-	if(dna)
-		switch(dna.mutantrace)
-			if("golem" , "shadow")
-				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_s", -MUTANTRACE_LAYER)
-
-	if(species.name == SHADOWLING && head)
-		var/image/eyes = image('icons/mob/shadowling.dmi', null, "[dna.mutantrace]_ms_s", LIGHTING_LAYER + 1)
-		eyes.plane = ABOVE_LIGHTING_PLANE
-		standing += eyes
-
-	if(iszombie(src) && stat != DEAD)
-		var/image/eyes = image(species.icobase, null, "zombie_ms_s", LIGHTING_LAYER + 1)
-		eyes.plane = ABOVE_LIGHTING_PLANE
-		standing += eyes
-
-	if(!dna || !(dna.mutantrace == "golem"))
-		update_body()
-
-	if(standing.len)
-		for(var/image/I in standing)
-			I = update_height(I)
-		overlays_standing[MUTANTRACE_LAYER]	= standing
-
-	if(species.flags[HAS_HAIR] || !(HUSK in mutations))
-		update_hair()
-
-	apply_overlay(MUTANTRACE_LAYER)
-
 
 //Call when target overlay should be added/removed
 /mob/living/carbon/human/update_targeted()
@@ -935,7 +897,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //Human Overlays Indexes/////////
 #undef BODY_LAYER
-#undef MUTANTRACE_LAYER
 #undef MUTATIONS_LAYER
 #undef DAMAGE_LAYER
 #undef SURGERY_LAYER

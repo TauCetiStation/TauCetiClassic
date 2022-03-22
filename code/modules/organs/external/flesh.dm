@@ -587,7 +587,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return FALSE
 
 /datum/bodypart_controller/proc/fracture()
-	if(BP.owner.dna && BP.owner.dna.mutantrace == "adamantine")
+	if(BP.species == GOLEM)
 		return
 
 	if(BP.status & ORGAN_BROKEN)
