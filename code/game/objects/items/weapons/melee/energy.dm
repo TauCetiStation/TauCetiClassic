@@ -93,7 +93,7 @@
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")
-			light_color = "rainbow"
+			blade_color = "rainbow"
 			if (active)
 				active = FALSE
 				icon_state = "sword0"
