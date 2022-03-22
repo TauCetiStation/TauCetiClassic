@@ -494,7 +494,9 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/living/podman/spawn_ghost(mob/dead/observer/ghost)
 	..()
-	mob.mind.memory = replicant_memory
+	
+	if(replicant_memory)
+		mob.mind.memory = replicant_memory
 
 	to_chat(mob, greet_message())
 

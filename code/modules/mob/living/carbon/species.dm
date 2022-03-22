@@ -870,23 +870,15 @@
 
 /datum/species/diona/podman/on_gain(mob/living/carbon/human/H)
 	. = ..()
-	RegisterSignal(H, list(COMSIG_MOB_GHOST), .proc/find_replacement)
+	H.AddComponent(/datum/component/self_spawners, /datum/spawner/living/podman)
 
 /datum/species/diona/podman/on_loose(mob/living/carbon/human/H)
-	UnregisterSignal(H, list(COMSIG_MOB_GHOST))
+	var/datum/component/component = H.GetComponent(/datum/component/self_spawners)
+	component.RemoveComponent()
 	return ..()
 
 /datum/species/diona/podman/handle_death(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
-
-/datum/species/diona/podman/proc/find_replacement(datum/source, can_reenter_corpse)
-	SIGNAL_HANDLER
-
-	if(can_reenter_corpse)
-		return
-	var/mob/living/carbon/human/H = source
-
-	create_spawner(/datum/spawner/living/podman, "podman", H, H.mind.memory)
 
 /datum/species/machine
 	name = IPC
