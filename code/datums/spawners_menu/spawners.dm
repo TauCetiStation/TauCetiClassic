@@ -470,10 +470,10 @@ var/global/list/datum/spawners_cooldown = list()
 	mob = _mob
 	add_mob_roles()
 
-	RegisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN), .proc/self_qdel)
+	RegisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED), .proc/self_qdel)
 
 /datum/spawner/living/Destroy()
-	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN))
+	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
 	mob = null
 	return ..()
 
@@ -494,7 +494,7 @@ var/global/list/datum/spawners_cooldown = list()
 	ghost.forceMove(get_turf(mob))
 
 /datum/spawner/living/spawn_ghost(mob/dead/observer/ghost)
-	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN))
+	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
 	mob.key = ghost.key
 
 /datum/spawner/living/podman
@@ -550,7 +550,7 @@ var/global/list/datum/spawners_cooldown = list()
 	wiki_ref = "Cortical_Borer"
 
 /datum/spawner/living/borer/spawn_ghost(mob/dead/observer/ghost)
-	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN))
+	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
 	mob.transfer_personality(ghost.client)
 
 /*

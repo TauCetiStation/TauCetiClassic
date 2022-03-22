@@ -14,12 +14,13 @@
 	wait_long = logout_timeout
 	callback = CALLBACK(src, .proc/setup_spawner)
 
-	RegisterSignal(parent, COMSIG_LOGIN, .proc/del_timer)
+	RegisterSignal(parent, list(COMSIG_LOGIN, COMSIG_MOB_DIED), .proc/del_timer)
 	RegisterSignal(parent, COMSIG_LOGOUT, .proc/logout)
 
 /datum/component/self_spawners/proc/del_timer()
 	SIGNAL_HANDLER
-	deltimer(timer_id)
+	if(timer_id)
+		deltimer(timer_id)
 	timer_id = null
 
 /datum/component/self_spawners/Destroy()
