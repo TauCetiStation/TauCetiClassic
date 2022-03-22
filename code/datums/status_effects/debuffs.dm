@@ -117,6 +117,7 @@
 /datum/status_effect/remove_trait
 	id = "remove_traits"
 	tick_interval = 10
+	alert_type = null
 	status_type = STATUS_EFFECT_REFRESH
 	var/trait
 	var/trait_source
