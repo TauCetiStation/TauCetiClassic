@@ -467,6 +467,10 @@ var/global/list/turret_icons
 /obj/machinery/porta_turret/process()
 	//the main machinery process
 
+	if(!anchored)
+		popDown()
+		return
+
 	if(stat & (NOPOWER|BROKEN))
 		//if the turret has no power or is broken, make the turret pop down if it hasn't already
 		popDown()
@@ -627,9 +631,6 @@ var/global/list/turret_icons
 			return
 		last_fired = TRUE
 		VARSET_IN(src, last_fired, FALSE, shot_delay)
-
-	if(!anchored)
-		return
 
 	var/turf/T = get_turf(src)
 	var/turf/U = get_turf(target)
