@@ -149,6 +149,7 @@ var/global/list/datum/spawners_cooldown = list()
 */
 /datum/spawner/dealer
 	name = "Контрабандист"
+	id = "dealer"
 	desc = "Вы появляетесь в космосе вблизи со станцией."
 	wiki_ref = "Families"
 
@@ -175,6 +176,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/cop
 	name = "Офицер ОБОП"
+	id = "cop"
 	desc = "Вы появляетесь на ЦК в полном обмундирование с целью прилететь на станцию и задержать всех бандитов."
 	wiki_ref = "Families"
 
@@ -214,22 +216,27 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/cop/beatcop
 	name = "Офицер ОБОП"
+	id = "c_beatcop"
 	roletype = /datum/role/cop/beatcop
 
 /datum/spawner/cop/armored
 	name = "Вооруженный Офицер ОБОП"
+	id = "c_armored"
 	roletype = /datum/role/cop/beatcop/armored
 
 /datum/spawner/cop/swat
 	name = "Боец Тактической Группы ОБОП"
+	id = "c_swat"
 	roletype = /datum/role/cop/beatcop/swat
 
 /datum/spawner/cop/fbi
 	name = "Инспектор ОБОП"
+	id = "c_fbi"
 	roletype = /datum/role/cop/beatcop/fbi
 
 /datum/spawner/cop/military
 	name = "Боец ВСНТ ОБОП"
+	id = "c_military"
 	roletype = /datum/role/cop/beatcop/military
 
 /*
@@ -246,6 +253,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/ert/New(mission)
 	..()
+	id = mission
 	important_info += mission
 
 /datum/spawner/ert/jump(mob/dead/observer/ghost)
@@ -293,6 +301,7 @@ var/global/list/datum/spawners_cooldown = list()
 */
 /datum/spawner/blob_event
 	name = "Блоб"
+	id = "blob_event"
 	desc = "Вы появляетесь в случайной точки станции в виде блоба."
 	wiki_ref = "Blob"
 
@@ -312,6 +321,7 @@ var/global/list/datum/spawners_cooldown = list()
 */
 /datum/spawner/ninja_event
 	name = "Космический Ниндзя"
+	id = "ninja_event"
 	desc = "Вы появляетесь в додзё. Из него вы можете телепортироваться на станцию."
 	wiki_ref = "Space_Ninja"
 
@@ -338,6 +348,7 @@ var/global/list/datum/spawners_cooldown = list()
 */
 /datum/spawner/borer_event
 	name = "Изначальный Борер"
+	id = "borer_event"
 	desc = "Вы появляетесь где-то в вентиляции на станции."
 	wiki_ref = "Cortical_Borer"
 
@@ -355,6 +366,7 @@ var/global/list/datum/spawners_cooldown = list()
 */
 /datum/spawner/alien_event
 	name = "Изначальный Лицехват"
+	id = "alien_event"
 	desc = "Вы появляетесь где-то в вентиляции станции и должны развить потомство."
 	wiki_ref = "Xenomorph"
 
@@ -372,6 +384,7 @@ var/global/list/datum/spawners_cooldown = list()
 */
 /datum/spawner/gladiator
 	name = "Гладиатор"
+	id = "gladiator"
 	desc = "Вы появляетесь на арене и должны выжить."
 	wiki_ref = "Starter_Guide#Арена"
 
@@ -388,6 +401,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/mouse
 	name = "Мышь"
+	id = "mouse"
 	desc = "Вы появляетесь в суровом мире людей и должны выжить."
 	wiki_ref = "Mouse"
 
@@ -405,6 +419,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/space_bum
 	name = "Космо-бомж"
+	id = "space_bum"
 	desc = "Вы появляетесь где-то на свалке."
 	wiki_ref = "Junkyard"
 
@@ -419,6 +434,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/drone
 	name = "Дрон"
+	id = "drone"
 	desc = "Вы появляетесь на дронстанции и обязаны ремонтировать станцию."
 	wiki_ref = "Drone"
 
@@ -483,6 +499,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/living/podman
 	name = "Подмена"
+	id = "podman"
 	desc = "Подмена умерла, да здраствует подмена."
 	wiki_ref = "Podmen"
 
@@ -507,6 +524,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/living/podman/podkid
 	name = "Подкидыш"
+	id = "podkid"
 	desc = "Человечка вырастили на грядке."
 
 /datum/spawner/living/podman/podkid/greet_message()
@@ -516,6 +534,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/living/podman/fake_diona
 	name = "Нимфа Дионы"
+	id = "diona_pod"
 	desc = "Диону вырастили на грядке."
 	wiki_ref = "Dionaea"
 
@@ -526,6 +545,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/living/borer
 	name = "Борер"
+	id = "borer"
 	desc = "Вы становитесь очередным отпрыском бореров."
 	wiki_ref = "Cortical_Borer"
 
@@ -538,15 +558,18 @@ var/global/list/datum/spawners_cooldown = list()
 */
 /datum/spawner/living/robot
 	name = "Робот"
+	id = "robot"
 	desc = "Перезагрузка позитронки."
 	wiki_ref = "Cyborg"
 
 /datum/spawner/living/robot/syndi
 	name = "Робот синдиката"
+	id = "robot_syndi"
 	ranks = list(ROLE_OPERATIVE)
 
 /datum/spawner/living/robot/drone
 	name = "Дрон"
+	id = "l_drone"
 	wiki_ref = "Maintenance_drone"
 	ranks = list(ROLE_DRONE)
 
@@ -561,8 +584,9 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/living/religion_familiar/New(mob/_mob, datum/religion/_religion)
 	. = ..(_mob)
-	religion = _religion
+	religion = _religion || mob.my_religion
 
+	id = "[mob.name]/[religion.name]"
 	desc = "Вы появляетесь в виде [mob.name] в подчинении [religion.name]."
 
 /datum/spawner/living/religion_familiar/spawn_ghost(mob/dead/observer/ghost)
@@ -571,6 +595,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/spy
 	name = "Агент Прослушки"
+	id = "spy"
 	desc = "Вы появляетесь на аванпосте прослушки Синдиката."
 
 	ranks = list(ROLE_GHOSTLY)
