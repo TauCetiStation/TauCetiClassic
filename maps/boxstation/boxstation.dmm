@@ -4455,12 +4455,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/mob/living/simple_animal/corgi/borgi,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/mob/living/simple_animal/corgi/borgi,
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "ahI" = (
@@ -10364,14 +10364,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
 "arq" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 8
-	},
+/obj/structure/stool/bed/chair/lectern,
 /turf/simulated/floor/carpet/black,
-/area/station/security/iaa_office)
+/area/station/civilian/chapel)
 "arr" = (
 /obj/machinery/light{
 	dir = 4
@@ -10437,6 +10432,15 @@
 /obj/item/weapon/bedsheet/brown,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"arA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/black,
+/area/station/security/iaa_office)
 "arB" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -10452,6 +10456,17 @@
 	icon_state = "redcorner"
 	},
 /area/station/security/lobby)
+"arD" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/fore)
 "arE" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -12643,16 +12658,13 @@
 	},
 /area/station/civilian/bar)
 "avQ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/sign/poster/official/obey{
+	pixel_y = -32
 	},
-/turf/simulated/floor,
-/area/station/hallway/primary/fore)
+/turf/simulated/floor{
+	icon_state = "black"
+	},
+/area/station/security/prison)
 "avR" = (
 /obj/machinery/camera{
 	c_tag = "Prison Rec Room South";
@@ -43853,14 +43865,6 @@
 	icon_state = "darkblue"
 	},
 /area/station/bridge)
-"bAF" = (
-/obj/structure/sign/poster/official/obey{
-	pixel_y = -32
-	},
-/turf/simulated/floor{
-	icon_state = "black"
-	},
-/area/station/security/prison)
 "bAG" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -113650,7 +113654,7 @@ ffD
 arl
 yjk
 auS
-bAF
+avQ
 axN
 azD
 bjH
@@ -113911,7 +113915,7 @@ avS
 axN
 azJ
 biL
-arq
+arA
 bHA
 axN
 axN
@@ -115198,7 +115202,7 @@ cdX
 cPb
 bCo
 bCL
-avQ
+arD
 bKT
 bKT
 bNy
@@ -131919,7 +131923,7 @@ aLY
 byI
 bMe
 ePF
-ePF
+arq
 mlr
 aVp
 aVp

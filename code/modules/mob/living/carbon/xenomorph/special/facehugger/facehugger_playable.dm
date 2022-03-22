@@ -38,7 +38,7 @@
 	name = "alien facehugger ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
-	a_intent = INTENT_GRAB
+	set_a_intent(INTENT_GRAB)
 	alien_list[ALIEN_FACEHUGGER] += src
 
 /mob/living/carbon/xenomorph/facehugger/Destroy()

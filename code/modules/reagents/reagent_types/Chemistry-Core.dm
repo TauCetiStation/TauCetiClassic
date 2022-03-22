@@ -426,6 +426,11 @@
 	..()
 	M.nutrition += 4 * REM
 
+/datum/reagent/sugar/on_vox_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(REAGENTS_METABOLISM * 0.5)
+	return FALSE
+
 /datum/reagent/radium
 	name = "Radium"
 	id = "radium"

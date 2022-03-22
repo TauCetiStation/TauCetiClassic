@@ -208,6 +208,12 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	attacktext = "hugs"
 	a_intent = INTENT_HELP
 
+/mob/living/simple_animal/hostile/mimic/copy/flora/atom_init(mapload)
+	var/obj/structure/flora/copy = locate() in loc
+	if (!copy)
+		return INITIALIZE_HINT_QDEL
+	return ..(mapload, copy)
+
 /mob/living/simple_animal/hostile/mimic/prophunt
 	name = "mimic"
 	real_name = "mimic"
