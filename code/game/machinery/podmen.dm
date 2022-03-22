@@ -30,7 +30,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	var/list/replicant_quirks
 	var/replicant_memory
 
-	var/spawner_type = /datum/spawner/living/podman
+	var/spawner_type = /datum/spawner/living/podman/podkid
 
 /obj/item/seeds/replicapod/Destroy()
 	QDEL_NULL(replicant_dna)
