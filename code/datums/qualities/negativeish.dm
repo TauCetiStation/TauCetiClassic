@@ -250,8 +250,9 @@ var/global/list/allergen_reagents_list
 	requirement = "Не СПУ, не Диона"
 
 /datum/quality/trypanophobia/satisfies_requirements(mob/living/carbon/human/H, latespawn)
-	if(H.species.flags[IS_SYNTHETIC] || !H.species.flags[IS_PLANT])
-		return
+	if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
+		return FALSE
+	return TRUE
 
 /datum/quality/trypanophobia/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT)

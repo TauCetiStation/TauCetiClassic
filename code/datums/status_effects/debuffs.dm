@@ -114,44 +114,28 @@
 	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
 	icon_state = "stasis"
 
-/datum/status_effect/dry_hands
-	id = "dry hands"
+/datum/status_effect/remove_trait
+	id = "remove_traits"
 	tick_interval = 10
 	status_type = STATUS_EFFECT_REFRESH
-	alert_type = null
-	var/rand_duration
+	var/trait
+	var/trait_source
 
-/datum/status_effect/dry_hands/on_creation(mob/living/new_owner)
-	rand_duration = rand(3000, 6000)
-	duration = rand_duration
+/datum/status_effect/remove_trait/on_creation(mob/living/new_owner, time_amount)
+	duration = time_amount
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_WET_HANDS, QUALITY_TRAIT)
+	REMOVE_TRAIT(owner, trait, trait_source)
 
-/datum/status_effect/dry_hands/on_remove()
-	. = ..()
-	if(!HAS_TRAIT_FROM(owner, TRAIT_WET_HANDS, QUALITY_TRAIT))
-		ADD_TRAIT(owner, TRAIT_WET_HANDS, QUALITY_TRAIT)
-
-/datum/status_effect/dry_hands/refresh()
+/datum/status_effect/remove_trait/on_remove()
+	ADD_TRAIT(owner, trait, trait_source)
 	. = ..()
 
-/datum/status_effect/clean_hands
-	id = "clean hands"
-	tick_interval = 10
-	status_type = STATUS_EFFECT_REFRESH
-	alert_type = null
-	var/rand_duration
-
-/datum/status_effect/clean_hands/on_creation(mob/living/new_owner)
-	rand_duration = rand(3000, 6000)
-	duration = rand_duration
+/datum/status_effect/remove_trait/wet_hands/on_creation()
+	trait = TRAIT_WET_HANDS
+	trait_source = QUALITY_TRAIT
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_GREASY_FINGERS, QUALITY_TRAIT)
 
-/datum/status_effect/clean_hands/on_remove()
-	. = ..()
-	if(!HAS_TRAIT_FROM(owner, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
-		ADD_TRAIT(owner, TRAIT_GREASY_FINGERS, QUALITY_TRAIT)
-
-/datum/status_effect/clean_hands/refresh()
+/datum/status_effect/remove_trait/greasy_hands/on_creation()
+	trait = TRAIT_GREASY_FINGERS
+	trait_source = QUALITY_TRAIT
 	. = ..()
