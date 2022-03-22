@@ -24,7 +24,6 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 	AddComponent(/datum/component/swiping, SCB)
-	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='warning'><b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b></span>")
@@ -45,12 +44,12 @@
 	if(!handle_fumbling(user, src, SKILL_TASK_VERY_EASY, list(/datum/skill/police/master), SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>"))
 		return
 	if(charges > 0)
-		status = !status
+		set_status(!status)
 		to_chat(user, "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>")
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		update_icon()
 	else
-		status = 0
+		set_status(0)
 		to_chat(user, "<span class='warning'>\The [src] is out of charge.</span>")
 	add_fingerprint(user)
 
@@ -101,12 +100,18 @@
 
 
 	add_fingerprint(user)
+/obj/item/weapon/melee/baton/proc/set_status(value)
+	if(value)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
+	status = value
 
 /obj/item/weapon/melee/baton/proc/discharge(amount = 1)
 	charges = max(0, charges - amount)
 	if(charges <= 0)
 		charges = 0
-		status = 0
+		set_status(0)
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		update_icon()
 
