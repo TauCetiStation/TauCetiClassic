@@ -98,6 +98,7 @@
 		var/datum/role/R = antag_roles[role]
 		R.PostMindTransfer(new_character, old_character)
 
+	old_character.logout_reason = LOGOUT_SWAP
 	if(active)
 		new_character.logout_reason = LOGOUT_SWAP
 		new_character.key = key		//now transfer the key to link the client to our new body
