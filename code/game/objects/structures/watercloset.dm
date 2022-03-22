@@ -555,21 +555,31 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		check_heat(C)
 
 /obj/machinery/shower/proc/check_heat(mob/M)
-	if(!on || watertemp == "normal") return
+	if(!on) return
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-
-		if(watertemp == "freezing")
-			C.bodytemperature = max(80, C.bodytemperature - 80)
-			to_chat(C, "<span class='warning'>The water is freezing!</span>")
-			return
-		if(watertemp == "boiling")
-			C.bodytemperature = min(500, C.bodytemperature + 35)
-			C.adjustFireLoss(5)
-			to_chat(C, "<span class='danger'>The water is searing!</span>")
-			return
-
-
+		SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "shower-time", /datum/mood_event/shower)
+		switch(watertemp)
+			if("normal")
+				C.adjustHalLoss(-1)
+				C.AdjustStunned(-1)
+				C.AdjustWeakened(-1)
+				return
+			if("freezing")
+				C.bodytemperature = max(80, C.bodytemperature - 80)
+				C.adjustHalLoss(1)
+				C.AdjustStunned(-1)
+				C.AdjustWeakened(1)
+				to_chat(C, "<span class='warning'>The water is freezing!</span>")
+				return
+			if("boiling")
+				C.bodytemperature = min(500, C.bodytemperature + 35)
+				C.adjustFireLoss(5)
+				C.adjustHalLoss(1)
+				C.AdjustStunned(-1)
+				C.AdjustWeakened(1)
+				to_chat(C, "<span class='danger'>The water is searing!</span>")
+				return
 
 /obj/item/weapon/bikehorn/rubberducky
 	name = "rubber ducky"
