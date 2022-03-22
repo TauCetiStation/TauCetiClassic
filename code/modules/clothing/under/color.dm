@@ -8,6 +8,7 @@
 	name = "feminine black jumpsuit"
 	desc = "It's very smart and in a ladies-size!"
 	icon_state = "black"
+	item_state = "blackf"
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"
