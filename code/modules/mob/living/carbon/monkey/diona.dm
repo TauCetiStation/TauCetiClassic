@@ -36,15 +36,15 @@
 	race = PODMAN
 	holder_type = /obj/item/weapon/holder/diona/podkid
 
-	spawner_args = list(/datum/spawner/living/podman/podkid)
+	spawner_args = list(/datum/spawner/living/podman/podkid, 2 MINUTES)
 
 /mob/living/carbon/monkey/diona/podman/fake
 	name = "diona nymph"
 	voice_name = "diona nymph"
 	icon_state = "nymph1"
 	holder_type = /obj/item/weapon/holder/diona
-	spawner_type = /datum/spawner/living/podman/fake_diona
-	spawner_id = "nymph"
+
+	spawner_args = list(/datum/spawner/living/podman/fake_diona, 2 MINUTES)
 
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()

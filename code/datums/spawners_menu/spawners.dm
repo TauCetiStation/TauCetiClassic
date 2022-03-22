@@ -543,12 +543,12 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/living/robot/syndi
 	name = "Робот синдиката"
-	roles = list(ROLE_OPERATIVE)
+	ranks = list(ROLE_OPERATIVE)
 
 /datum/spawner/living/robot/drone
 	name = "Дрон"
 	wiki_ref = "Maintenance_drone"
-	roles = list(ROLE_DRONE)
+	ranks = list(ROLE_DRONE)
 
 /*
  * Religion
@@ -559,13 +559,13 @@ var/global/list/datum/spawners_cooldown = list()
 
 	var/datum/religion/religion
 
-/datum/spawner/religion_familiar/New(mob/_mob, datum/religion/_religion)
+/datum/spawner/living/religion_familiar/New(mob/_mob, datum/religion/_religion)
 	. = ..(_mob)
 	religion = _religion
 
 	desc = "Вы появляетесь в виде [mob.name] в подчинении [religion.name]."
 
-/datum/spawner/religion_familiar/spawn_ghost(mob/dead/observer/ghost)
+/datum/spawner/living/religion_familiar/spawn_ghost(mob/dead/observer/ghost)
 	..()
 	religion.add_member(mob, HOLY_ROLE_PRIEST)
 
