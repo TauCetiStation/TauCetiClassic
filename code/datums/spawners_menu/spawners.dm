@@ -478,6 +478,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/living
 	name = "Свободное тело"
+	id = "living"
 	desc = "Продолжи его дело!"
 
 	ranks = list(ROLE_GHOSTLY)
@@ -498,15 +499,13 @@ var/global/list/datum/spawners_cooldown = list()
 	return ..()
 
 /datum/spawner/living/proc/add_mob_roles()
-	ranks += mob.job
+	ranks |= mob.job
 
 	if(!mob.mind)
 		return
 
 	var/datum/mind/mind = mob.mind
-
-	for(var/role in mind.antag_roles)
-		ranks += role
+	ranks |= mind.antag_roles
 
 /datum/spawner/living/proc/on_mob_del()
 	SIGNAL_HANDLER
@@ -567,7 +566,19 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/living/borer/spawn_ghost(mob/dead/observer/ghost)
 	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING))
-	borer.transfer_personality(ghost.client)
+	mob.transfer_personality(ghost.client)
+
+/datum/spawner/living/robot
+	name = "Робот"
+	desc = "Перезагрузка позитронки."
+	wiki_ref = "Cyborg"
+
+/datum/spawner/living/robot/syndi
+	name = "Робот синдиката"
+
+/datum/spawner/living/robot/drone
+	name = "Дрон"
+	wiki_ref = "Maintenance_drone"
 
 /datum/spawner/spy
 	name = "Агент Прослушки"

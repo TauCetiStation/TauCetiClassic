@@ -78,6 +78,8 @@
 	// Radial menu for choose module
 	var/static/list/choose_module
 
+	spawner_args = list(/datum/spawner/living/robot)
+
 /mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -123,8 +125,6 @@
 		cell_component.installed = 1
 
 	diag_hud_set_borgcell()
-
-	AddComponent(/datum/component/self_spawners, "robot")
 
 /mob/living/silicon/robot/Login()
 	..()

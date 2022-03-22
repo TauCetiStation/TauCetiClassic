@@ -2,13 +2,14 @@
 	var/timer_id = null
 	var/wait_short
 	var/wait_long
-	var/spawner_id
+	var/spawner_type
 	var/callback
 
-/datum/component/self_spawners/Initialize(id, logout_timeout = 5 MINUTES, ghost_timeout = 10 SECONDS)
+/datum/component/self_spawners/Initialize(_spawner_type, logout_timeout = 5 MINUTES, ghost_timeout = 10 SECONDS)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	spawner_id = id
+
+	spawner_type = _spawner_type
 	wait_short = ghost_timeout
 	wait_long = logout_timeout
 	callback = CALLBACK(src, .proc/setup_spawner)
@@ -44,4 +45,4 @@
 /datum/component/self_spawners/proc/setup_spawner()
 	timer_id = null
 
-	create_spawner(/datum/spawner/living, spawner_id, parent)
+	create_spawner(spawner_type, null, parent)
