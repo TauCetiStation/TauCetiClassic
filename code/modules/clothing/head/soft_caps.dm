@@ -35,25 +35,25 @@
 	name = "red cap"
 	desc = "It's a baseball hat in a tasteless red color."
 	icon_state = "redsoft"
-	cap_color = DYE_RED
+	cap_color = "red"
 
 /obj/item/clothing/head/soft/blue
 	name = "blue cap"
 	desc = "It's a baseball hat in a tasteless blue color."
 	icon_state = "bluesoft"
-	cap_color = DYE_BLUE
+	cap_color = "blue"
 
 /obj/item/clothing/head/soft/green
 	name = "green cap"
 	desc = "It's a baseball hat in a tasteless green color."
 	icon_state = "greensoft"
-	cap_color = DYE_GREEN
+	cap_color = "green"
 
 /obj/item/clothing/head/soft/yellow
 	name = "yellow cap"
 	desc = "It's a baseball hat in a tasteless yellow color."
 	icon_state = "yellowsoft"
-	cap_color = DYE_YELLOW
+	cap_color = "yellow"
 
 /obj/item/clothing/head/soft/grey
 	name = "grey cap"
@@ -65,25 +65,25 @@
 	name = "orange cap"
 	desc = "It's a baseball hat in a tasteless orange color."
 	icon_state = "orangesoft"
-	cap_color = DYE_ORANGE
+	cap_color = "orange"
 
 /obj/item/clothing/head/soft/mime
 	name = "white cap"
 	desc = "It's a baseball hat in a tasteless white color."
 	icon_state = "mimesoft"
-	cap_color = DYE_MIME
+	cap_color = "mime"
 
 /obj/item/clothing/head/soft/purple
 	name = "purple cap"
 	desc = "It's a baseball hat in a tasteless purple color."
 	icon_state = "purplesoft"
-	cap_color = DYE_PURPLE
+	cap_color = "purple"
 
 /obj/item/clothing/head/soft/rainbow
 	name = "rainbow cap"
 	desc = "It's a baseball hat in a bright rainbow of colors."
 	icon_state = "rainbowsoft"
-	cap_color = DYE_RAINBOW
+	cap_color = "rainbow"
 
 /obj/item/clothing/head/soft/sec
 	name = "security cap"
