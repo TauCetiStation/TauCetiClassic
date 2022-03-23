@@ -222,4 +222,4 @@
 #define LOGOUT_USER 1
 #define LOGOUT_GHOST 2
 #define LOGOUT_REENTER 3
-#define LOGOUT_SWAP 4
+#define LOGOUT_SWAP 4 // not so safe, check other things if available
