@@ -54,4 +54,4 @@
 	if(M.stat == DEAD)
 		return
 
-	create_spawner(spawner_type, null, parent)
+	create_spawner(spawner_type, parent)

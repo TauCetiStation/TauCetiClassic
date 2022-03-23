@@ -2,14 +2,14 @@ var/global/list/datum/spawners = list()
 var/global/list/datum/spawners_cooldown = list()
 
 // Don't call this proc directly! Use defines create_spawner and create_spawners
-/proc/_create_spawners(type, id, num, list/arguments)
+/proc/_create_spawners(type, num, list/arguments)
 	// arguments must have at least 1 element due to the use of arglist
 	if(!arguments.len)
 		arguments += null
 
 	for(var/i in 1 to num)
 		var/datum/spawner/spawner = new type(arglist(arguments))
-		spawner.add_to_global_list(id)
+		spawner.add_to_global_list()
 
 	for(var/mob/dead/observer/ghost in observer_list)
 		if(!ghost.client)
@@ -60,10 +60,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	return ..()
 
-/datum/spawner/proc/add_to_global_list(_id)
-	if(!isnull(_id))
-		id = _id
-
+/datum/spawner/proc/add_to_global_list()
 	LAZYADDASSOCLIST(global.spawners, id, src)
 
 	for(var/mob/dead/observer/ghost in observer_list)

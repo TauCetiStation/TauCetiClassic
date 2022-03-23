@@ -138,7 +138,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		return
 
 	else
-		create_spawner(spawner_type, null, D, replicant_memory)
+		create_spawner(spawner_type, D, replicant_memory)
 
 	user.visible_message("<span class='notice'>The pod disgorges a fully-formed plant creature!</span>")
 	qdel(src)

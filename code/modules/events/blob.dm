@@ -8,4 +8,4 @@
 		kill()
 		return
 
-	create_spawner(/datum/spawner/blob_event, null)
+	create_spawner(/datum/spawner/blob_event)

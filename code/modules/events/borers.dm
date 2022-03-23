@@ -26,4 +26,4 @@
 	if(!find_faction_by_type(/datum/faction/borers))
 		SSticker.mode.CreateFaction(/datum/faction/borers)
 
-	create_spawners(/datum/spawner/borer_event, null, spawncount)
+	create_spawners(/datum/spawner/borer_event, spawncount)
