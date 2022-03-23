@@ -558,12 +558,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	if(!on) return
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "shower-time", /datum/mood_event/shower)
 		switch(watertemp)
 			if("normal")
 				C.adjustHalLoss(-1)
 				C.AdjustStunned(-1)
 				C.AdjustWeakened(-1)
+				SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "shower-time", /datum/mood_event/shower)
 				return
 			if("freezing")
 				C.bodytemperature = max(80, C.bodytemperature - 80)
