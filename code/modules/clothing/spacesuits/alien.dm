@@ -113,7 +113,6 @@
 	desc = "Huge, bulky and absurdly heavy. It must be like wearing a tank."
 	icon_state = "unathi_breacher"
 	item_state = "unathi_breacher"
-	item_color = "unathi_breacher"
 	slowdown = 0.5
 
 // Vox space gear (vaccuum suit, low pressure armour)
