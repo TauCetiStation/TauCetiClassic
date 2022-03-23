@@ -88,8 +88,6 @@
 
 		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
-		if(S.flags[SPRITE_SHEET_RESTRICTION])
-			global.sprite_sheet_restricted += S.name
 
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 	global.chemical_reagents_list = list()
