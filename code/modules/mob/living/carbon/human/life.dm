@@ -868,17 +868,6 @@
 
 	if(get_species() == SHADOWLING)
 		var/light_amount = 0
-		if(isturf(loc))
-			var/turf/T = loc
-			light_amount = round(T.get_lumcount()*10)
-
-		if(light_amount > 2) //if there's enough light, start dying
-			take_overall_damage(1,1)
-		else if (light_amount < 2) //heal in the dark
-			heal_overall_damage(1,1)
-
-	if(get_species() == SHADOWLING)
-		var/light_amount = 0
 		nutrition = 450 //i aint never get hongry
 		if(isturf(loc))
 			var/turf/T = loc
