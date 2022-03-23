@@ -182,7 +182,7 @@
 
 		qdel(I)
 		qdel(J)
-		H.icon = HI //it was 25 before ?
+		H.icon = HI
 		H.plane = ABOVE_HUD_PLANE
 		usr.mapobjs += H
 #else
