@@ -12,6 +12,7 @@
 	var/mob/foundmob = "" //Used in throwing proc.
 	var/agony = 60
 	var/discharge_rate_per_minute = 2 //stunbaton loses it charges if not powered off
+	var/processing_rate = 2
 	sweep_step = 2
 
 	origin_tech = "combat=2"
@@ -117,7 +118,7 @@
 
 /obj/item/weapon/melee/baton/process()
 	if(status)
-		discharge(discharge_rate_per_minute / 60 * 2)
+		discharge(discharge_rate_per_minute / 60 * processing_rate)
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
