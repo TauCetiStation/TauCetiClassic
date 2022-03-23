@@ -218,7 +218,8 @@
 // #define ALLERGY_BREATH 3
 
 // logout reasons
-#define LOGOUT_USER 0
-#define LOGOUT_GHOST 1
-#define LOGOUT_REENTER 2
-#define LOGOUT_SWAP 3
+#define LOGOUT_UNKNOWN 0
+#define LOGOUT_USER 1
+#define LOGOUT_GHOST 2
+#define LOGOUT_REENTER 3
+#define LOGOUT_SWAP 4
