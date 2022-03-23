@@ -161,7 +161,7 @@
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
 	affecting = null
 	canremove = 1
-	slowdown = 1
+	slowdown = 0.5
 	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
 		n_hood.canremove=1
