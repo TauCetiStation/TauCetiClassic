@@ -86,7 +86,7 @@
 	. = ..()
 	for (var/i in 1 to 3)
 		new /obj/item/weapon/implantcase/obedience(src)
-	/obj/item/weapon/implanter/obedience(src)
+	new /obj/item/weapon/implanter/obedience(src)
 
 
 /obj/item/weapon/storage/lockbox/loyalty
