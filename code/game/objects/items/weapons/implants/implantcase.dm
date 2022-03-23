@@ -138,5 +138,5 @@
 	icon_state = "implantcase-b"
 
 /obj/item/weapon/implantcase/obedience/atom_init()
-	imp = new /obj/item/obj/item/weapon/implant/obedience(src)
+	imp = new /obj/item/weapon/implant/obedience(src)
 	. = ..()
