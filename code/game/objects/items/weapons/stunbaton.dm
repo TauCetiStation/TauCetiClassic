@@ -117,7 +117,7 @@
 
 /obj/item/weapon/melee/baton/process()
 	if(status)
-		discharge(discharge_rate_per_minute / 60)
+		discharge(discharge_rate_per_minute / 60 * 2)
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
