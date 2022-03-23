@@ -24,6 +24,7 @@
 	timer_id = null
 
 /datum/component/self_spawners/Destroy()
+	UnregisterSignal(parent, list(COMSIG_LOGIN, COMSIG_MOB_DIED, COMSIG_LOGOUT))
 	del_timer()
 	callback = null
 	return ..()
