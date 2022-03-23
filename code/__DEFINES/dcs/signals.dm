@@ -90,6 +90,8 @@
 	#define COMPONENT_CLIENTMOB_BLOCK_MOVE 1
 /// from base of client/Move, after all movement is finished(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_POSTMOVE "client_postmove"
+/// from base of mob/set_a_intent(): (new_intent)
+#define COMSIG_MOB_SET_A_INTENT "mob_set_a_intent"
 
 // /area signals
 ///from base of area/Entered(): (area/entered, atom/OldLoc)
@@ -121,6 +123,8 @@
 #define COMSIG_PARENT_EXAMINE "atom_examine"
 /// from base of mob/examinate(): (/mob)
 #define COMSIG_PARENT_POST_EXAMINE "atom_post_examine"
+/// from base of mob/examinate(): (/atom)
+#define COMSIG_PARENT_POST_EXAMINATE "atom_post_examinate"
 /// from base of atom/get_examine_name(): (/mob/user, list/override)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_get_examine_name"
 	//Positions for overrides list
@@ -161,7 +165,7 @@
 #define COMSIG_ATOM_STOP_PULL  "atom_stop_pull"
 /// from atom/movable/proc/waddle(): (waddle_angle, waddle_height)
 #define COMSIG_MOVABLE_WADDLE "movable_waddle"
-/// from mob/tryGrab(): (mob/grabber, force_state, show_warnings)
+/// from mob/tryGrab(): (/mob/grabber, force_state, show_warnings)
 #define COMSIG_MOVABLE_TRY_GRAB "movable_try_grab"
 	#define COMPONENT_PREVENT_GRAB 1
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
@@ -170,6 +174,10 @@
 #define COMSIG_ENTER_AREA "enter_area"
 ///from base of area/Exited(): (/area, /atom/NewLoc). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_EXIT_AREA "exit_area"
+/// from datum/orbit/New(): (/atom/orbiting)
+#define COMSIG_MOVABLE_ORBIT_BEGIN "orbit_begin"
+/// from datum/orbit/New(): (/atom/orbiting)
+#define COMSIG_MOVABLE_ORBIT_STOP "orbit_stop"
 
 // /obj
 /// from base of datum/religion_rites/reset_rite_wrapper(): ()
@@ -241,6 +249,8 @@
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)
 #define COMSIG_MOB_DIED "mob_died"
+///from base of mob/ghost(): (can_reenter_corpse)
+#define COMSIG_MOB_GHOST "mob_ghost"
 ///from base of mob/create_mob_hud(): ()
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 ///from base of item/equipped(): (obj/item/I, slot)

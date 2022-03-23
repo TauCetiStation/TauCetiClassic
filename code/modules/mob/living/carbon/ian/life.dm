@@ -46,10 +46,10 @@
 						movement_target.attack_animal(src)
 					else if(ishuman(movement_target.loc) )
 						if(prob(20))
-							emote("me",1,"stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
+							me_emote("stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
 
 		if(prob(1))
-			emote("me",1,pick("dances around","chases its tail"))
+			me_emote(pick("dances around", "chases its tail"))
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 				set_dir(i)
 				sleep(1)

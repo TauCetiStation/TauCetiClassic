@@ -386,10 +386,9 @@
 			if(prob(33))
 				new_gun.magazine.caliber = "999"
 
-			// 33% chance to fill it with a random amount of bullets
-			new_gun.magazine.max_ammo = rand(1,12)
+			// 33% chance to make the gun non-empty
 			if(prob(33))
-				var/num_bullets = rand(1,new_gun.magazine.max_ammo)
+				var/num_bullets = rand(1, new_gun.magazine.max_ammo)
 				new_gun.magazine.stored_ammo.len = num_bullets
 			else
 				new_gun.magazine.stored_ammo.len = 0
