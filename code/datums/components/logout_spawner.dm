@@ -5,7 +5,7 @@
 	var/spawner_type
 	var/callback
 
-/datum/component/logout_spawner/Initialize(_spawner_type, _logout_timeout = 5 MINUTES, _ghost_timeout = 10 SECONDS)
+/datum/component/logout_spawner/Initialize(_spawner_type, logout_timeout = 5 MINUTES, ghost_timeout = 10 SECONDS)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
