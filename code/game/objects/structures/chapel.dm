@@ -75,7 +75,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	pixel_x = -16
 	pixel_y = -2
 
-	layer = INFRONT_MOB_LAYER - 0.1
+	layer = BELL_LAYER
 
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 

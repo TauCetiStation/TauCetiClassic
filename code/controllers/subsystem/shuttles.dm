@@ -653,7 +653,7 @@ SUBSYSTEM_DEF(shuttle)
 	name = "star"
 	var/speed = 10
 	var/direction = SOUTH
-	layer = 2 // TURF_LAYER
+	layer = TURF_LAYER
 
 /obj/effect/bgstar/New()
 	..()
