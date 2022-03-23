@@ -106,6 +106,7 @@
 	desc = "This is a random book."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "book"
+
 /obj/random/misc/book/item_to_spawn()
 		return pick(subtypesof(/obj/item/weapon/book/manual))
 
