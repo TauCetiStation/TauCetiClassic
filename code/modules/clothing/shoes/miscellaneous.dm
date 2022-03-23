@@ -85,7 +85,7 @@
 	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
 
 /obj/item/clothing/shoes/clown_shoes/proc/stop_waddling(mob/user)
-	slowdown = SHOES_SLOWDOWN + 0.2
+	slowdown = SHOES_SLOWDOWN + 1.0
 	qdel(user.GetComponent(/datum/component/waddle))
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
