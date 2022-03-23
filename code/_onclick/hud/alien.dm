@@ -109,6 +109,7 @@
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = "act_drop"
 	using.screen_loc = ui_drop_throw
+	using.plane = HUD_PLANE
 	src.adding += using
 
 	inv_box = new /atom/movable/screen/inventory()

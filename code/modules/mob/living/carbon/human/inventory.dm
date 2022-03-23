@@ -302,6 +302,7 @@
 				var/obj/item/clothing/ears/offear/O = new(W)
 				O.loc = src
 				src.r_ear = O
+				O.plane = ABOVE_HUD_PLANE
 				O.appearance_flags = APPEARANCE_UI
 			W.equipped(src, slot)
 			update_inv_ears()
@@ -311,6 +312,7 @@
 				var/obj/item/clothing/ears/offear/O = new(W)
 				O.loc = src
 				src.l_ear = O
+				O.plane = ABOVE_HUD_PLANE
 				O.appearance_flags = APPEARANCE_UI
 			W.equipped(src, slot)
 			update_inv_ears()

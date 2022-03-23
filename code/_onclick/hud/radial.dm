@@ -277,7 +277,8 @@ var/global/list/radial_menus = list()
 	if(!M.client || !anchor)
 		return
 	current_user = M.client
-	//Blank)
+	//Blank
+	menu_holder = image(icon='icons/effects/effects.dmi',loc=anchor,icon_state="nothing")
 	menu_holder.plane = ABOVE_HUD_PLANE
 	menu_holder.appearance_flags |= (KEEP_APART|RESET_TRANSFORM|RESET_ALPHA|RESET_COLOR)
 	menu_holder.vis_contents += elements + close_button
