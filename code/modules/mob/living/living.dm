@@ -20,7 +20,7 @@
 	beauty.AddModifier("stat", additive=beauty_living)
 
 	if(spawner_args)
-		spawner_args.Insert(1, /datum/component/self_spawners)
+		spawner_args.Insert(1, /datum/component/logout_spawner)
 		AddComponent(arglist(spawner_args))
 
 /mob/living/Destroy()

@@ -870,10 +870,10 @@
 
 /datum/species/diona/podman/on_gain(mob/living/carbon/human/H)
 	. = ..()
-	H.AddComponent(/datum/component/self_spawners, /datum/spawner/living/podman)
+	H.AddComponent(/datum/component/logout_spawner, /datum/spawner/living/podman)
 
 /datum/species/diona/podman/on_loose(mob/living/carbon/human/H)
-	var/datum/component/component = H.GetComponent(/datum/component/self_spawners)
+	var/datum/component/component = H.GetComponent(/datum/component/logout_spawner)
 	qdel(component, FALSE, FALSE)
 	return ..()
 
