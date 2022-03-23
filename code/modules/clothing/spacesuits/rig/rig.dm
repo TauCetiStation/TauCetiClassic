@@ -59,8 +59,8 @@
 	desc = "A special space suit for environments that might pose hazards beyond just the vacuum of space. Provides more protection than a standard space suit."
 	icon_state = "rig-engineering"
 	item_state = "eng_hardsuit"
-	slowdown = 1
-	var/offline_slowdown = 5
+	slowdown = 0.5
+	var/offline_slowdown = 2
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 20)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -582,7 +582,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding. Heavy insulation layer adds additional weight"
 	icon_state = "rig-engineering"
 	item_state = "eng_hardsuit"
-	slowdown = 3
+	slowdown = 1.5
 	armor = list(melee = 50, bullet = 5, laser = 10,energy = 5, bomb = 65, bio = 100, rad = 80)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	siemens_coefficient = 0
@@ -604,7 +604,7 @@
 	name = "advanced hardsuit"
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	item_state = "ce_hardsuit"
-	slowdown = 1
+	slowdown = 0.5
 	armor = list(melee = 55, bullet = 5, laser = 15,energy = 10, bomb = 65, bio = 100, rad = 90)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 6
@@ -766,7 +766,7 @@
 	icon_state = "rig-syndie-space"
 	item_state = "syndie_hardsuit"
 	rig_variant = "rig-syndie"
-	slowdown = 1.4
+	slowdown = 0.7
 	allowed = list(/obj/item/device/flashlight,
 	               /obj/item/weapon/tank,
 	               /obj/item/device/suit_cooling_unit,
@@ -848,11 +848,11 @@
 	icon_state = "rig-heavy-space"
 	item_state = "syndie_hardsuit"
 	rig_variant = "rig-heavy"
-	slowdown = 1.4
+	slowdown = 0.7
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/chem_dispenser/combat)
 	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
 	space_armor = list(melee = 50, bullet = 40, laser = 40, energy = 45, bomb = 50, bio = 100, rad = 60)
-	combat_slowdown = 0.5
+	combat_slowdown = 0.2
 
 /obj/item/clothing/head/helmet/space/rig/syndi/elite
 	name = "Syndicate elite hybrid helmet"
@@ -878,10 +878,10 @@
 	icon_state = "rig-syndie_elit-space"
 	item_state = "syndicate-elite"
 	rig_variant = "rig-syndie_elit"
-	slowdown = 1.5
+	slowdown = 0.7
 	combat_armor = list(melee = 80, bullet = 75, laser = 65, energy = 65, bomb = 70, bio = 70, rad = 70)
 	space_armor = list(melee = 65, bullet = 60, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 70)
-	combat_slowdown = 0.5
+	combat_slowdown = 0.2
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/syndiemmessage)
 
 /obj/item/clothing/suit/space/rig/syndi/elite/comander
@@ -908,7 +908,7 @@
 	icon_state = "rig-hazmat-space"
 	item_state = "syndie_hazmat"
 	rig_variant = "rig-hazmat"
-	slowdown = 1.4
+	slowdown = 0.7
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	unacidable = TRUE
 	allowed = list(/obj/item/device/flashlight,
@@ -938,7 +938,7 @@
 	name = "gem-encrusted hardsuit"
 	desc = "A bizarre gem-encrusted suit that radiates magical energies."
 	item_state = "wiz_hardsuit"
-	slowdown = 1
+	slowdown = 0.5
 	unacidable = 1
 	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
 	max_mounted_devices = 4
@@ -976,7 +976,7 @@
 	name = "advanced medical hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has minor radiation shielding."
 	item_state = "cmo_hardsuit"
-	slowdown = 0.5
+	slowdown = 0.2
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/medical, /obj/item/rig_module/device/healthscanner)
 
@@ -997,7 +997,7 @@
 	armor = list(melee = 45, bullet = 30, laser = 30, energy = 30, bomb = 65, bio = 100, rad = 10)
 	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/melee/baton)
 	breach_threshold = 20
-	slowdown = 1.4
+	slowdown = 0.7
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
 
@@ -1035,7 +1035,7 @@
 	name = "advanced security hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	item_state = "hos_hardsuit"
-	slowdown = 0.7
+	slowdown = 0.3
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/grenade_launcher/flashbang)
 
@@ -1079,8 +1079,8 @@
 	armor = list(melee = 5, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 60)
 	unacidable = TRUE
 	max_mounted_devices = 6
-	slowdown = 0.5
-	offline_slowdown = 7
+	slowdown = 0.2
+	offline_slowdown = 3.5
 	initial_modules = list( /obj/item/rig_module/teleporter_stabilizer , /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer , /obj/item/rig_module/simple_ai, /obj/item/rig_module/device/anomaly_scanner)
 
 /obj/item/clothing/head/helmet/space/rig/science/rd
@@ -1112,6 +1112,6 @@
 	item_state = "rd_hardsuit"
 	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 55, bio = 100, rad = 70)
 	max_mounted_devices = 8
-	slowdown = 0.4
-	offline_slowdown = 8
+	slowdown = 0.2
+	offline_slowdown = 4
 	initial_modules = list(/obj/item/rig_module/mounted_relay, /obj/item/rig_module/teleporter_stabilizer, /obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer, /obj/item/rig_module/device/anomaly_scanner)

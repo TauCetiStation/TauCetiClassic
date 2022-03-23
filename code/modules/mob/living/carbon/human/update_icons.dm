@@ -825,7 +825,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				else
 					tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
 			var/image/standing = image("icon" = tail_s, "layer" = -TAIL_LAYER)
-			standing = human_update_offset(standing)
+			standing = human_update_offset(standing, FALSE)
 			overlays_standing[TAIL_LAYER] = standing
 
 	apply_overlay(TAIL_LAYER)

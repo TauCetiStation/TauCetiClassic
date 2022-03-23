@@ -65,7 +65,8 @@
 	name = "clown shoes"
 	icon_state = "clown"
 	item_state = "clown_shoes"
-	slowdown = SHOES_SLOWDOWN + 0.5
+	slowdown = SHOES_SLOWDOWN + 1.0
+	item_color = "clown"
 	species_restricted = null
 
 /obj/item/clothing/shoes/clown_shoes/Destroy()
@@ -178,7 +179,7 @@
 	name = "swimming fins"
 	icon_state = "flippers"
 	flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN+1
+	slowdown = SHOES_SLOWDOWN+0.5
 	species_restricted = null
 
 /obj/item/clothing/shoes/centcom
@@ -227,7 +228,7 @@
 /obj/item/clothing/shoes/heels
 	name = "Heels"
 	icon_state = "high_shoes"
-	slowdown = SHOES_SLOWDOWN + 0.5
+	slowdown = SHOES_SLOWDOWN + 0.2
 	force = 3.5
 	attack_verb = list("stabbed")
 	// It's a stab sound.
