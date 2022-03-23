@@ -33,6 +33,6 @@
 	timeout = 6 MINUTES
 
 /datum/mood_event/shower
-	description = "<span class='nicegreen'>I have had a nice shower-time.</span>"
+	description = "<span class='nicegreen'>I've had a nice shower.</span>"
 	mood_change = 2
 	timeout = 5 MINUTES
