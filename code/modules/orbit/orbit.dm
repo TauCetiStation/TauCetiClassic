@@ -16,13 +16,20 @@
 	if (orbiter.orbiting)
 		orbiter.stop_orbit()
 	orbiter.orbiting = src
-	Check()
+
+	// NEVERMIND
+	if(!Check())
+		return
+
 	lock = _lock
+
+	SEND_SIGNAL(orbiter, COMSIG_MOVABLE_ORBIT_BEGIN, orbiting)
 
 
 
 //do not qdel directly, use stop_orbit on the orbiter. (This way the orbiter can bind to the orbit stopping)
 /datum/orbit/Destroy()
+	SEND_SIGNAL(orbiter, COMSIG_MOVABLE_ORBIT_STOP, orbiting)
 	SSorbit.orbits -= src
 	if (orbiter)
 		orbiter.orbiting = null
@@ -38,10 +45,10 @@
 /datum/orbit/proc/Check(turf/targetloc)
 	if (!orbiter)
 		qdel(src)
-		return
+		return FALSE
 	if (!orbiting)
 		orbiter.stop_orbit()
-		return
+		return FALSE
 	if (!orbiter.orbiting) //admin wants to stop the orbit.
 		orbiter.orbiting = src //set it back to us first
 		orbiter.stop_orbit()
@@ -50,11 +57,12 @@
 		targetloc = get_turf(orbiting)
 	if (!targetloc || (!lock && orbiter.loc != lastloc && orbiter.loc != targetloc))
 		orbiter.stop_orbit()
-		return
+		return FALSE
 
 	orbiter.loc = targetloc
 	orbiter.update_parallax_contents()
 	lastloc = orbiter.loc
+	return TRUE
 
 
 /atom/movable/var/datum/orbit/orbiting = null

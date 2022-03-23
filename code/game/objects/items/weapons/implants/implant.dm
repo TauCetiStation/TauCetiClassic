@@ -55,6 +55,12 @@
 		C.sec_hud_set_implants()
 		part = BP
 
+/obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
+	forceMove(C)
+	imp_in = C
+	implanted = TRUE
+	C.sec_hud_set_implants()
+
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
 

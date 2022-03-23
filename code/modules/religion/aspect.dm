@@ -144,14 +144,6 @@
 
 	color = COLOR_PURPLE_GRAY
 
-//Gives mana from: allows you to accumulate mana when you beat yourself near the altar
-//Needed for: any spell in which there is damage to the chaplain or people around the altar should have this aspect.
-/datum/aspect/flagellation
-	name = ASPECT_FLAGELLATION
-	desc = "Self-flagellation, transformation of life energy into a magic"
-
-	color = COLOR_SKY_BLUE
-
 //Gives mana from: any heal near the altar
 //Needed for: spells and rituals related to the theme of heal, buff
 /datum/aspect/rescue
@@ -250,14 +242,6 @@
 	..()
 	UnregisterSignal(mover, list(COMSIG_MOB_SLIP))
 
-//Gives mana from: "silenced" spells at wizard/cult
-//Needed for: spells and rituals related to the theme of muffle the magical abilities of the wizard/cult
-/datum/aspect/absence
-	name = ASPECT_ABSENCE
-	desc = "Silence, allows you to use the power of the magician or cult as you want"
-
-	color = COLOR_GRAY80
-
 // Children of this type somehow integrate with light on tiles.
 /datum/aspect/lightbending
 	var/list/favor_for_turf
@@ -337,12 +321,3 @@
 
 /datum/aspect/greed/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	return I.get_price() * 0.05
-
-//Gives mana from: does not affect mana accumulation
-//Needed for: amassing followers, and giving them goods, mass-effect spells
-/datum/aspect/herd
-	name = ASPECT_HERD
-	desc = "Herd, consure"
-	icon_state = "aspect_herd"
-
-	color = COLOR_LUMINOL

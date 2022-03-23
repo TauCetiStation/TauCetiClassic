@@ -608,9 +608,6 @@
 	name = "Asteroid"
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "asteroid"
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
 	icon_plating = "asteroid"
 	var/dug = FALSE       //FALSE = has not yet been dug, TRUE = has already been dug
 	has_resources = TRUE

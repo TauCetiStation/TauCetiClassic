@@ -34,8 +34,7 @@
 			bodytemperature += affecting_temp / BODYTEMP_HEAT_DIVISOR
 		else if (affecting_temp < -BODYTEMP_SIGNIFICANT_CHANGE)
 			bodytemperature += affecting_temp / BODYTEMP_COLD_DIVISOR
-		else
-			bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
+		bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
 
 	if(flags & GODMODE)
 		clear_alert("temp")
@@ -45,12 +44,12 @@
 	switch(bodytemperature)
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
 			throw_alert("temp", /atom/movable/screen/alert/hot, 2)
-			adjustFireLoss(HEAT_DAMAGE_LEVEL_3)
+			adjustFireLoss(HEAT_DAMAGE_LEVEL_2)
 		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_HEAT_DAMAGE_LIMIT)
 			clear_alert("temp")
 		else
 			throw_alert("temp", /atom/movable/screen/alert/cold, 2)
-			adjustFireLoss(COLD_DAMAGE_LEVEL_3)
+			adjustFireLoss(COLD_DAMAGE_LEVEL_2)
 
 	//Account for massive pressure differences
 	switch(adjusted_pressure)
@@ -77,7 +76,7 @@
 
 	if(!. || ISDIAGONALDIR(Dir))
 		return .
-	
+
 	handle_phantom_move(NewLoc, Dir)
 	if(nutrition && stat != DEAD)
 		var/met_factor = get_metabolism_factor()
@@ -1077,3 +1076,21 @@
 			return FALSE
 
 	return ..()
+
+/mob/living/carbon/accent_sounds(txt, datum/language/speaking)
+	if(speaking && (speaking.flags & SIGNLANG))
+		return txt
+
+	var/datum/species/S = all_species[get_species()]
+	if(S && S.flags[IS_SYNTHETIC])
+		return txt
+
+	for(var/datum/language/L as anything in languages)
+		if(L == speaking)
+			continue
+
+		if(languages[L] != LANGUAGE_NATIVE)
+			continue
+
+		txt = L.accentuate(txt, speaking)
+	return txt

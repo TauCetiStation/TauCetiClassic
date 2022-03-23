@@ -88,8 +88,6 @@
 
 		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
-		if(S.flags[SPRITE_SHEET_RESTRICTION])
-			global.sprite_sheet_restricted += S.name
 
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 	global.chemical_reagents_list = list()
@@ -240,6 +238,10 @@
 	global.antag_roles = global.special_roles - ROLE_GHOSTLY
 
 	global.full_ignore_question = get_list_of_keys_from_values_as_list_from_associative_list(special_roles_ignore_question)
+
+	global.all_emotes = list()
+	for(var/emote_type in subtypesof(/datum/emote))
+		global.all_emotes[emote_type] = new emote_type
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!
