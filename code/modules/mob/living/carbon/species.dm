@@ -874,7 +874,7 @@
 
 /datum/species/diona/podman/on_loose(mob/living/carbon/human/H)
 	var/datum/component/component = H.GetComponent(/datum/component/self_spawners)
-	component.RemoveComponent()
+	qdel(component, FALSE, FALSE)
 	return ..()
 
 /datum/species/diona/podman/handle_death(mob/living/carbon/human/H)
