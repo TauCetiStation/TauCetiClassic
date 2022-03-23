@@ -240,6 +240,15 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
+/datum/supply_pack/obedience
+	name = "Obedience implant crate"
+	contains = list (/obj/item/weapon/storage/lockbox/obedience)
+	cost = 10000
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "Obedience implant crate"
+	access = access_armory
+	group = "Security"
+
 /datum/supply_pack/loyalty
 	name = "Loyalty implant crate"
 	contains = list (/obj/item/weapon/storage/lockbox/loyalty)
