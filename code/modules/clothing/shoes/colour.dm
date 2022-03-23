@@ -109,7 +109,7 @@
 		return
 	user.drop_from_inventory(cuffs, loc)
 	chained = cuffs
-	slowdown = 15
+	slowdown = 7
 	name = "shackles"
 	icon_state = "orange1"
 	item_state = "o_shoes1"
@@ -151,7 +151,7 @@
 /obj/item/clothing/shoes/orange/candals/atom_init()
 	. = ..()
 	chained = new /obj/item/weapon/handcuffs(src)
-	slowdown = 15
+	slowdown = 7
 	name = "shackles"
 	icon_state = "orange1"
 	item_state = "o_shoes1"

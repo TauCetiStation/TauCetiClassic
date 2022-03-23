@@ -487,6 +487,7 @@
 	language = LANGUAGE_VOXPIDGIN
 	additional_languages = list(LANGUAGE_TRADEBAND = LANGUAGE_CAN_SPEAK)
 	tail = "vox_prim"
+	has_gendered_icons = FALSE
 
 	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
@@ -532,12 +533,12 @@
 		SPRITE_SHEET_SUIT = 'icons/mob/species/vox/suit.dmi',
 		SPRITE_SHEET_BELT = 'icons/mob/belt.dmi',
 		SPRITE_SHEET_HEAD = 'icons/mob/species/vox/helmet.dmi',
-		SPRITE_SHEET_BACK = 'icons/mob/back.dmi',
 		SPRITE_SHEET_MASK = 'icons/mob/species/vox/masks.dmi',
 		SPRITE_SHEET_EARS = 'icons/mob/ears.dmi',
 		SPRITE_SHEET_EYES = 'icons/mob/species/vox/eyes.dmi',
 		SPRITE_SHEET_FEET = 'icons/mob/species/vox/shoes.dmi',
-		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi'
+		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi',
+		SPRITE_SHEET_BACK = 'icons/mob/species/vox/back.dmi'
 		)
 
 	survival_kit_items = list(
