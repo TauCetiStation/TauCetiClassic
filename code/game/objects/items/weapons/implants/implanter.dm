@@ -50,6 +50,14 @@
 	. = ..()
 	update()
 
+/obj/item/weapon/implanter/obedience
+	name = "implanter-obedience"
+
+/obj/item/weapon/implanter/obedience/atom_init()
+	imp = new /obj/item/weapon/implant/obedience(src)
+	. = ..()
+	update()
+
 /obj/item/weapon/implanter/explosive
 	name = "implanter (E)"
 
