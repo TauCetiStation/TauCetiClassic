@@ -256,6 +256,18 @@ REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
 ## Saves alot of initialization time, since only centcomm and testmap will be loaded. For tests where map doesn't matter.
 # SUMMON_TESTMAP
 
+## Force map not to load junkyard
+## Saves some initialization time
+NO_JUNKYARD
+
+## Force map not to load mine (asteroid)
+## Saves some initialization time
+# NO_MINE
+
+## Force map not to load ruins and empty z_levels
+## Saves some initialization time
+# NO_SPACE_LEVELS
+
 ## Enables demo recordings, works slower on windows
 # RECORD_REPLAYS
 
