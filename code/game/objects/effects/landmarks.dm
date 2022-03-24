@@ -115,17 +115,13 @@
 // Assistats
 /obj/effect/landmark/start/assistant
 	name = "Assistant"
-	icon_state = "Assistant"
+	icon_state = "Test Subject"
 
 /obj/effect/landmark/start/assistant/test_subject
 	name = "Test Subject"
 
 /obj/effect/landmark/start/assistant/waiter
 	name = "Waiter"
-
-/obj/effect/landmark/start/assistant/lawyer
-	name = "Lawyer"
-	icon_state = "Lawyer"
 
 //Civilians
 /obj/effect/landmark/start/captain
@@ -142,7 +138,7 @@
 
 /obj/effect/landmark/start/chef
 	name = "Chef"
-	icon_state = "Cook"
+	icon_state = "Chef"
 
 /obj/effect/landmark/start/botanist
 	name = "Botanist"
@@ -150,6 +146,7 @@
 
 /obj/effect/landmark/start/barber
 	name = "Barber"
+	icon_state = "Barber"
 
 /obj/effect/landmark/start/janitor
 	name = "Janitor"
@@ -157,7 +154,7 @@
 
 /obj/effect/landmark/start/librarian
 	name = "Librarian"
-	icon_state = "Curator"
+	icon_state = "Librarian"
 
 /obj/effect/landmark/start/chaplain
 	name = "Chaplain"
@@ -165,6 +162,7 @@
 
 /obj/effect/landmark/start/internal_affairs_agent
 	name = "Internal Affairs Agent"
+	icon_state = "Internal Affairs Agent"
 
 /obj/effect/landmark/start/clown
 	name = "Clown"
@@ -189,6 +187,7 @@
 
 /obj/effect/landmark/start/recycler
 	name = "Recycler"
+	icon_state = "Recycler"
 
 // Security
 /obj/effect/landmark/start/head_of_security
@@ -209,13 +208,16 @@
 
 /obj/effect/landmark/start/forensic_technician
 	name = "Forensic Technician"
+	icon_state = "Forensic Technician"
 
 /obj/effect/landmark/start/security_cadet
 	name = "Security Cadet"
+	icon_state = "Security Cadet"
 
 // Engineering
 /obj/effect/landmark/start/chief_engineer
 	name = "Chief Engineer"
+	icon_state = "Chief Engineer"
 
 /obj/effect/landmark/start/station_engineer
 	name = "Station Engineer"
@@ -227,6 +229,7 @@
 
 /obj/effect/landmark/start/technical_assistant
 	name = "Technical Assistant"
+	icon_state = "Technical Assistant"
 
 
 //Medical
@@ -240,6 +243,7 @@
 
 /obj/effect/landmark/start/paramedic
 	name = "Paramedic"
+	icon_state = "Paramedic"
 
 /obj/effect/landmark/start/chemist
 	name = "Chemist"
@@ -251,9 +255,11 @@
 
 /obj/effect/landmark/start/psychiatrist
 	name = "Psychiatrist"
+	icon_state = "Psychiatrist"
 
 /obj/effect/landmark/start/medical_intern
 	name = "Medical Intern"
+	icon_state = "Medical Intern"
 
 // Both is good
 /obj/effect/landmark/start/geneticist
@@ -271,15 +277,18 @@
 
 /obj/effect/landmark/start/xenoarchaeologist
 	name = "Xenoarchaeologist"
+	icon_state = "Xenoarchaeologist"
 
 /obj/effect/landmark/start/xenobiologist
 	name = "Xenobiologist"
+	icon_state = "Xenobiologist"
 /obj/effect/landmark/start/roboticist
 	name = "Roboticist"
 	icon_state = "Roboticist"
 
 /obj/effect/landmark/start/research_assistant
 	name = "Research Assistant"
+	icon_state = "Research Assistant"
 
 // Silicons
 /obj/effect/landmark/start/ai
