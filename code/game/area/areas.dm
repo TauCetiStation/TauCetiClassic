@@ -505,7 +505,7 @@ var/global/list/ghostteleportlocs = list()
 
 //We can add some special effects later, idk, may be blessing can make area bright for everyone or for chaplain, idk.
 //Or we can separate blessings for religions types and adjust different blessings.
-area/proc/bless(bls)
+/area/proc/bless(bls)
 	blessing += bls
 	addtimer(CALLBACK(src, .proc/de_bless, bls), bls MINUTES)
 
