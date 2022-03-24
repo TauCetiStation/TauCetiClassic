@@ -34,7 +34,8 @@
 			bodytemperature += affecting_temp / BODYTEMP_HEAT_DIVISOR
 		else if (affecting_temp < -BODYTEMP_SIGNIFICANT_CHANGE)
 			bodytemperature += affecting_temp / BODYTEMP_COLD_DIVISOR
-		bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
+		if(stat != DEAD)
+			bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
 
 	if(flags & GODMODE)
 		clear_alert("temp")
