@@ -120,6 +120,7 @@
 				pressure_adjustment_coefficient = pressure_loss
 
 	pressure_adjustment_coefficient = CLAMP01(pressure_adjustment_coefficient) //So it isn't less than 0 or larger than 1.
+	pressure_adjustment_coefficient *= 1 - species.get_pressure_protection(src)
 
 	return 1 - pressure_adjustment_coefficient	//want 0 to be bad protection, 1 to be good protection
 
@@ -454,7 +455,7 @@
 			inhaled_gas_used = inhaling * ratio * BREATH_USED_PART
 		else
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		
+
 		failed_last_breath = 1
 		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 
@@ -570,7 +571,7 @@
 		var/loc_temp = get_temperature(environment)
 
 		//Use heat transfer as proportional to the gas activity (pressure)
-		var/affecting_temp = (loc_temp - bodytemperature) * environment.total_moles / MOLES_CELLSTANDARD
+		var/affecting_temp = (loc_temp - bodytemperature) * environment.return_relative_density()
 
 		//If you're on fire, you do not heat up or cool down based on surrounding gases.
 		//Or if absolute temperature difference is too small
@@ -1470,7 +1471,7 @@
 		to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
 
 	if(shock_stage >= 30)
-		if(shock_stage == 30) emote("me",1,"is having trouble keeping their eyes open.")
+		if(shock_stage == 30) me_emote("is having trouble keeping their eyes open.")
 		blurEyes(2)
 		stuttering = max(stuttering, 5)
 
@@ -1495,7 +1496,7 @@
 			Paralyse(5)
 
 	if(shock_stage == 150)
-		emote("me",1,"can no longer stand, collapsing!")
+		me_emote("can no longer stand, collapsing!")
 		Weaken(20)
 
 	if(shock_stage >= 150)

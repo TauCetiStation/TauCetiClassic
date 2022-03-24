@@ -29,11 +29,12 @@
 	var/language                      // Default racial language, if any.
 	// Additional languages, to the primary. These can not be the forced ones.
 	// Use LANGUAGE = LANGUAGE_CAN_UNDERSTAND to give languages which a specimen can understand, but not speak.
-	var/list/additional_languages = list()
-	var/force_racial_language = FALSE // If TRUE, racial language will be forced by default when speaking.
+	var/list/additional_languages
+	var/species_common_language = FALSE // If TRUE, racial language will be forced by default when speaking.
 	var/attack_verb = "punch"         // Empty hand hurt intent verb.
 	var/punch_damage = 0              // Extra empty hand attack damage.
 	var/mutantrace                    // Safeguard due to old code.
+
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
 	// Perhaps one day make this an assoc list of BODYPART_NAME = list(drops) ? ~Luduk
 	// Is used when a bodypart of this race is butchered. Otherwise there are overrides for flesh, robot, and bone bodyparts.
@@ -150,6 +151,9 @@
 	// Bubble can be changed depending on species
 	var/typing_indicator_type = "default"
 
+	// Emotes this species grants.
+	var/list/emotes
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -225,6 +229,10 @@
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_SPECIES)
 
+	for(var/emote in emotes)
+		var/datum/emote/E = global.all_emotes[emote]
+		H.set_emote(E.key, E)
+
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
@@ -232,6 +240,9 @@
 		H.handle_socialization()
 
 	H.remove_moveset_source(MOVESET_SPECIES)
+
+	for(var/emote in emotes)
+		H.clear_emote(emote)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
 
@@ -263,6 +274,11 @@
 
 /datum/species/proc/on_life(mob/living/carbon/human/H)
 	return
+
+// For species who's skin acts as a spacesuit of sorts
+// Return a value from 0 to 1, where 1 is full protection, and 0 is full weakness
+/datum/species/proc/get_pressure_protection(mob/living/carbon/human/H)
+	return 0
 
 /datum/species/human
 	name = HUMAN
@@ -360,7 +376,7 @@
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
 	language = LANGUAGE_SIIKMAAS
-	additional_languages = list(LANGUAGE_SIIKTAJR)
+	additional_languages = list(LANGUAGE_SIIKTAJR = LANGUAGE_NATIVE)
 	tail = "tajaran"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
@@ -469,15 +485,13 @@
 	icobase = 'icons/mob/human_races/r_vox.dmi'
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = LANGUAGE_VOXPIDGIN
-	additional_languages = list(LANGUAGE_TRADEBAND)
+	additional_languages = list(LANGUAGE_TRADEBAND = LANGUAGE_CAN_SPEAK)
 	tail = "vox_prim"
+	has_gendered_icons = FALSE
 
-	force_racial_language = TRUE
+	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	dietflags = DIET_OMNI
-
-	warning_low_pressure = 50
-	hazard_low_pressure = 0
 
 	cold_level_1 = 80
 	cold_level_2 = 50
@@ -497,7 +511,6 @@
 		,NO_SCAN = TRUE
 		,FACEHUGGABLE = TRUE
 		,HAS_TAIL = TRUE
-		,SPRITE_SHEET_RESTRICTION = TRUE
 		,HAS_HAIR_COLOR = TRUE
 		,NO_FAT = TRUE
 		,IS_SOCIAL = TRUE
@@ -520,22 +533,20 @@
 		SPRITE_SHEET_SUIT = 'icons/mob/species/vox/suit.dmi',
 		SPRITE_SHEET_BELT = 'icons/mob/belt.dmi',
 		SPRITE_SHEET_HEAD = 'icons/mob/species/vox/helmet.dmi',
-		SPRITE_SHEET_BACK = 'icons/mob/back.dmi',
 		SPRITE_SHEET_MASK = 'icons/mob/species/vox/masks.dmi',
 		SPRITE_SHEET_EARS = 'icons/mob/ears.dmi',
 		SPRITE_SHEET_EYES = 'icons/mob/species/vox/eyes.dmi',
 		SPRITE_SHEET_FEET = 'icons/mob/species/vox/shoes.dmi',
-		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi'
+		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi',
+		SPRITE_SHEET_BACK = 'icons/mob/species/vox/back.dmi'
 		)
 
-	survival_kit_items = list(/obj/item/weapon/tank/emergency_nitrogen,
-							/obj/item/clothing/mask/gas/vox,
-							/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
-							/obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox
-	                          )
+	survival_kit_items = list(
+		/obj/item/weapon/tank/emergency_nitrogen,
+		/obj/item/weapon/reagent_containers/syringe/nutriment,
+	)
 
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
-
 
 	min_age = 1
 	max_age = 100
@@ -545,30 +556,14 @@
 /datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
-	replace_outfit = list(
-			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/magboots/vox
-			)
-
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
+
 	if(H.wear_mask)
 		qdel(H.wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
-	if(!H.r_store)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_R_STORE)
-		H.internal = H.r_store
-	else if(!H.l_store)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_L_STORE)
-		H.internal = H.l_store
-	else if(!H.r_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_R_HAND)
-		H.internal = H.r_hand
-	else if(!H.l_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_L_HAND)
-		H.internal = H.l_hand
-	if(H.shoes)
-		qdel(H.shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox(src), SLOT_SHOES)
+
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_vox_digest(M)
@@ -604,6 +599,22 @@
 		H.verbs -= /mob/living/carbon/human/proc/gut
 
 	..()
+
+// At 25 damage - no protection at all.
+/datum/species/vox/get_pressure_protection(mob/living/carbon/human/H)
+	var/damage = 0
+	var/static/list/cavity_parts = list(BP_HEAD, BP_CHEST, BP_GROIN)
+	for(var/bodypart in cavity_parts)
+		var/obj/item/organ/external/BP = H.get_bodypart(bodypart)
+		if(!BP)
+			// We surely are not hermetized.
+			damage += 100
+			continue
+
+		damage += BP.brute_dam + BP.burn_dam
+
+	return 1 - CLAMP01(damage / 25)
+
 
 /datum/species/vox/armalis
 	name = VOX_ARMALIS
@@ -641,7 +652,6 @@
 	,NO_BLOOD = TRUE
 	,HAS_TAIL = TRUE
 	,NO_PAIN = TRUE
-	,SPRITE_SHEET_RESTRICTION = TRUE
 	,NO_FAT = TRUE
 	,IS_SOCIAL = TRUE
 	)
@@ -782,8 +792,9 @@
 
 /datum/species/diona/handle_death(mob/living/carbon/human/H)
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
-	S.name = H.name
-	S.real_name = S.name
+	S.real_name = H.real_name
+	S.name = S.real_name
+
 	S.dna = H.dna.Clone()
 	S.dna.SetSEState(MONKEYBLOCK, 1)
 	S.dna.SetSEValueRange(MONKEYBLOCK, 0xDAC, 0xFFF)
@@ -872,7 +883,9 @@
 
 	if(can_reenter_corpse)
 		return
-	create_spawner(/datum/spawner/podman, "podman", source)
+	var/mob/living/carbon/human/H = source
+
+	create_spawner(/datum/spawner/podman, "podman", H, H.mind.memory)
 
 /datum/species/machine
 	name = IPC
@@ -967,6 +980,12 @@
 	max_age = 125
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
+
+	emotes = list(
+		/datum/emote/beep,
+		/datum/emote/ping,
+		/datum/emote/buzz,
+	)
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	..()
