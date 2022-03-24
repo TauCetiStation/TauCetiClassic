@@ -210,8 +210,7 @@
 		TC.ailock = ailock
 
 		for (var/obj/machinery/porta_turret/aTurret in control_area)
-			if(aTurret.anchored)
-				aTurret.setState(TC)
+			aTurret.setState(TC)
 
 	update_icon()
 

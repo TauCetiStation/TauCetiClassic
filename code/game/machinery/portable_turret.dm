@@ -362,12 +362,15 @@ var/global/list/turret_icons
 			//This code handles moving the turret around. After all, it's a portable turret!
 			if(!anchored)
 				anchored = TRUE
-				update_icon()
 				to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
+				update_icon()
+				START_PROCESSING(SSmachines, src)
 			else
 				anchored = FALSE
 				to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
+				popDown()
 				update_icon()
+				STOP_PROCESSING(SSmachines, src)
 
 	else if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		//Behavior lock/unlock mangement
@@ -466,10 +469,6 @@ var/global/list/turret_icons
 
 /obj/machinery/porta_turret/process()
 	//the main machinery process
-
-	if(!anchored)
-		popDown()
-		return
 
 	if(stat & (NOPOWER|BROKEN))
 		//if the turret has no power or is broken, make the turret pop down if it hasn't already
@@ -706,6 +705,8 @@ var/global/list/turret_icons
 	var/ailock
 
 /obj/machinery/porta_turret/proc/setState(datum/turret_checks/TC)
+	if(!anchored)
+		return
 	if(controllock)
 		return
 	src.enabled = TC.enabled
