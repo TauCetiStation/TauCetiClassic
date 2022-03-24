@@ -116,8 +116,8 @@ var/global/list/department_radio_keys = list(
 	//handle nonverbal and sign languages here
 	if (speaking)
 		if (speaking.flags & NONVERBAL)
-			if (prob(30))
-				custom_emote(1, "[pick(speaking.signlang_verb)].")
+			if(prob(30))
+				me_emote("[pick(speaking.signlang_verb)].", message_type=SHOWMSG_AUDIO)
 
 		if (speaking.flags & SIGNLANG)
 			say_signlang(message, pick(speaking.signlang_verb), speaking)

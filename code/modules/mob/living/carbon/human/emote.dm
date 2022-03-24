@@ -1,5 +1,5 @@
 /mob/living/carbon/human
-	var/list/default_emotes = list(
+	default_emotes = list(
 		/datum/emote/help,
 		/datum/emote/laugh,
 		/datum/emote/giggle,
@@ -41,59 +41,6 @@
 		/datum/emote/twitch,
 		/datum/emote/deathgasp,
 	)
-	var/list/current_emotes = list(
-	)
-
-	var/list/next_emote_use
-	var/list/next_audio_emote_produce
-
-/mob/living/carbon/human/atom_init()
-	. = ..()
-	for(var/emote in default_emotes)
-		var/datum/emote/E = global.all_emotes[emote]
-		set_emote(E.key, E)
-	default_emotes = null
-
-/mob/living/carbon/human/proc/get_emote(key)
-	return current_emotes[key]
-
-/mob/living/carbon/human/proc/set_emote(key, datum/emote/emo)
-	current_emotes[key] = emo
-
-/mob/living/carbon/human/proc/clear_emote(key)
-	current_emotes.Remove(key)
-
-/mob/living/carbon/human/emote(act = "", message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
-	var/datum/emote/emo = get_emote(act)
-	if(!emo)
-		return
-
-	if(!emo.can_emote(src, !auto))
-		return
-
-	emo.do_emote(src, act, !auto)
-
-// A simpler emote. Just the message, and it's type. If you want anything more complex - make a datumized emote.
-/mob/proc/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
-	log_emote("[key_name(src)] : [message]")
-
-	var/msg = "<b>[src]</b> <i>[message]</i>"
-	if(message_type & SHOWMSG_VISUAL)
-		visible_message(msg, ignored_mobs = observer_list)
-	else
-		audible_message(msg, ignored_mobs = observer_list)
-
-	for(var/mob/M as anything in observer_list)
-		if(!M.client)
-			continue
-
-		switch(M.client.prefs.chat_ghostsight)
-			if(CHAT_GHOSTSIGHT_ALL)
-				// ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
-				to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")
-			if(CHAT_GHOSTSIGHT_ALLMANUAL)
-				if(intentional)
-					to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")
 
 /mob/living/carbon/human/verb/pose()
 	set name = "Set Pose"

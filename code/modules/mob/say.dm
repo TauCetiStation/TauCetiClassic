@@ -122,9 +122,15 @@
 
 	return say_verb
 
-/mob/proc/emote(act, type, message, auto)
-	if(act == "me")
-		return custom_emote(type, message)
+/mob/emote(act = "", message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
+	var/datum/emote/emo = get_emote(act)
+	if(!emo)
+		return
+
+	if(!emo.can_emote(src, !auto))
+		return
+
+	emo.do_emote(src, act, !auto)
 
 /mob/proc/get_ear()
 	// returns an atom representing a location on the map from which this

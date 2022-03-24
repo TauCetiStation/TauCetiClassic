@@ -3,24 +3,9 @@
 		return
 
 	switch(act)
-		if("me")
-			if(silent)
-				return
-			if(client)
-				if (client.prefs.muted & MUTE_IC)
-					to_chat(src, "<span class='red'>Вы не можете отправлять IC-сообщения (muted).</span>")
-					return
-				if(client.handle_spam_prevention(message,MUTE_IC))
-					return
-			if(stat || !message)
-				return
-			return custom_emote(m_type, message)
-
 		if ("blink")
 			message = "<B>[src]</B> [pick("моргает", "быстро моргает")]."
 			m_type = SHOWMSG_VISUAL
-		if("custom")
-			return custom_emote(m_type, message)
 		if("scratch")
 			if(!restrained())
 				message = "<B>[src]</B> чешется."

@@ -6,23 +6,6 @@
 		act = copytext(act, 1, t1)
 
 	switch(act)
-		if ("me")
-			if (src.client)
-				if(client.prefs.muted & MUTE_IC)
-					to_chat(src, "You cannot send IC messages (muted).")
-					return
-				if (client.handle_spam_prevention(message,MUTE_IC))
-					return
-			if (stat)
-				return
-			if(!(message))
-				return
-			else
-				return custom_emote(m_type, message)
-
-		if ("custom")
-			return custom_emote(m_type, message)
-
 		if ("salute")
 			if (!src.buckled)
 				var/M = null

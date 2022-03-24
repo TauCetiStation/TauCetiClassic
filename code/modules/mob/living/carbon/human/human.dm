@@ -1856,7 +1856,7 @@
 		skipface |= wear_mask.flags_inv & HIDEFACE
 
 	if(!BP.disfigured && !skipface) // we still text even tho the screen may be broken or hidden
-		custom_emote(SHOWMSG_VISUAL, "отображает на экране, \"<span class=\"emojify\">[S]</span>\"")
+		me_emote("отображает на экране, \"<span class=\"emojify\">[S]</span>\"", intentional=TRUE)
 
 
 

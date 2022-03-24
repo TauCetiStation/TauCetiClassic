@@ -110,33 +110,6 @@
 
 //  ========== SPECIAL ==========
 
-		if ("custom")
-			var/input = sanitize(input("Choose an emote to display.") as text|null)
-			if (!input)
-				return
-			var/input2 = input("Is this a visible or hearable emote?") in list("Visible", "Hearable")
-			if (input2 == "Visible")
-				m_type = SHOWMSG_VISUAL
-			else if (input2 == "Hearable")
-				if(HAS_TRAIT(src, TRAIT_MUTE))
-					return
-				m_type = SHOWMSG_AUDIO
-			else
-				tgui_alert(usr, "Unable to use this emote, must be either hearable or visible.")
-				return
-			return custom_emote(m_type, message)
-		if ("me")
-			if (src.client)
-				if (client.prefs.muted & MUTE_IC)
-					to_chat(src, "<span class='danger'>You cannot send IC messages(muted).</span>")
-					return
-				if (client.handle_spam_prevention(message,MUTE_IC))
-					return
-			if (stat)
-				return
-			if(!(message))
-				return
-			return custom_emote(m_type, message)
 		if("help")
 			to_chat(src, "<span class ='notice'>SOUNDED IN <B>BOLD</B>:   <B>deathgasp</B>, dance, drool, grin, jump, <B>hiss</B>, nod, custom, <B>roar</B>, \
 			                                                              roll, scratch, shake, sit, sway, tail, twitch, <B>whimper</B>, <B>growl</B></span>")

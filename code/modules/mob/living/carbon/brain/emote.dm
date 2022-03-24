@@ -9,23 +9,6 @@
 	if(src.stat == DEAD)
 		return
 	switch(act)
-		if ("me")
-			if(silent)
-				return
-			if (src.client)
-				if (client.prefs.muted & MUTE_IC)
-					to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
-					return
-				if (client.handle_spam_prevention(message,MUTE_IC))
-					return
-			if (stat)
-				return
-			if(!(message))
-				return
-			return custom_emote(m_type, message)
-
-		if ("custom")
-			return custom_emote(m_type, message)
 		if ("alarm")
 			to_chat(src, "You sound an alarm.")
 			message = "<B>[src]</B> sounds an alarm."
