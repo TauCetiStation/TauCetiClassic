@@ -1926,7 +1926,7 @@
 	else
 		return 1
 
-/mob/living/carbon/human/proc/need_breathe()
+/mob/living/carbon/human/skip_breathe()
 	if(NO_BREATH in src.mutations)
 		return FALSE
 	if(reagents.has_reagent("lexorin"))

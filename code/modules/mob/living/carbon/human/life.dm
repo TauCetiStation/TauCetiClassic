@@ -307,81 +307,42 @@
 					if(istype(BP))
 						BP.add_autopsy_data("Radiation Poisoning", damage)
 
-/mob/living/carbon/human/proc/breathe()
-	if(!need_breathe())
-		return
+/mob/living/carbon/human/cant_breathe()
+	return (handle_drowning() || health < config.health_threshold_crit) && !reagents.has_reagent("inaprovaline") && !HAS_TRAIT(src, TRAIT_AV)
 
-	var/datum/gas_mixture/environment = loc.return_air()
-	var/datum/gas_mixture/breath
+/mob/living/carbon/human/handle_turf_pre_breathe()
+	if( \
+		!(wear_mask && (wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)) && \
+		!(glasses && (glasses.flags & BLOCK_GAS_SMOKE_EFFECT)) && \
+		!(head && (head.flags & BLOCK_GAS_SMOKE_EFFECT)) \
+		)
+		for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
+			if(smoke.reagents.total_volume)
+				smoke.reagents.reaction(src, INGEST)
+				spawn(5)
+					if(smoke)
+						smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
+				break
 
-	//First, check if we can breathe at all
-	if((handle_drowning() || health < config.health_threshold_crit) && !reagents.has_reagent("inaprovaline") && !HAS_TRAIT(src, TRAIT_AV))
-		losebreath = max(2, losebreath + 1)
+/mob/living/carbon/human/handle_external_pre_breathing(datum/gas_mixture/breath)
+	..()
 
-	if(losebreath > 0) //Suffocating so do not take a breath
-		losebreath--
-		if (prob(10)) //Gasp per 10 ticks? Sounds about right.
-			emote("gasp")
-		if(isobj(loc))
-			var/obj/location_as_object = loc
-			location_as_object.handle_internal_lifeform(src, 0)
-	else
-		//First, check for air from internal atmosphere (using an air tank and mask generally)
-		breath = get_breath_from_internal(BREATH_VOLUME) // Super hacky -- TLE
-		//breath = get_breath_from_internal(0.5) // Manually setting to old BREATH_VOLUME amount -- TLE
+	if(!is_lung_ruptured())
+		if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
+			if(prob(5))
+				rupture_lung()
 
-		if(breath)
-			if(isobj(loc)) //Still give containing object the chance to interact
-				var/obj/location_as_object = loc
-				location_as_object.handle_internal_lifeform(src, 0)
-		else //No breath from internal atmosphere so get breath from location
-			if(isobj(loc))
-				var/obj/location_as_object = loc
-				breath = location_as_object.handle_internal_lifeform(src, BREATH_MOLES)
-			else if(isturf(loc))
-				breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
-
-				// Handle smoke filtering
-				if( \
-					!(wear_mask && (wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)) && \
-					!(glasses && (glasses.flags & BLOCK_GAS_SMOKE_EFFECT)) && \
-					!(head && (head.flags & BLOCK_GAS_SMOKE_EFFECT)) \
-					)
-
-					for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
-						if(smoke.reagents.total_volume)
-							smoke.reagents.reaction(src, INGEST)
-							spawn(5)
-								if(smoke)
-									smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
-							break // If they breathe in the nasty stuff once, no need to continue checking
-
-			if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
-				var/obj/item/clothing/mask/gas/G = wear_mask
-				for(var/g in  G.filter)
-					if(breath.gas[g])
-						breath.gas[g] -= breath.gas[g] * G.gas_filter_strength
-
-				breath.update_values()
-
-			if(!is_lung_ruptured())
-				if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
-					if(prob(5))
-						rupture_lung()
-
-	handle_breath(breath)
+/mob/living/carbon/human/breathe()
+	var/datum/gas_mixture/breath = ..()
 
 	if(breath)
-		loc.assume_air(breath)
-
 		//spread some viruses while we are at it
 		if (virus2.len > 0)
 			if (prob(10) && get_infection_chance(src))
-//					log_debug("[src] : Exhaling some viruses")
 				for(var/mob/living/carbon/M in view(1,src))
 					spread_disease_to(M)
 
-/mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
+/mob/living/carbon/human/get_breath_from_internal(volume_needed)
 	if(!internal)
 		return null
 
@@ -404,7 +365,7 @@
 		playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 	return internal.remove_air_volume(volume_needed)
 
-/mob/living/carbon/human/proc/handle_breath(datum/gas_mixture/breath)
+/mob/living/carbon/human/handle_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)
 		clear_alert("oxy")
 		clear_alert("tox_in_air")
@@ -421,7 +382,7 @@
 		failed_last_breath = 1
 		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 
-		return 0
+		return
 
 	var/safe_pressure_min = 16 // Minimum safe partial pressure of breathable gas in kPa
 	//var/safe_pressure_max = 140 // Maximum safe partial pressure of breathable gas in kPa (Not used for now)
@@ -437,7 +398,7 @@
 	var/sleeping_agent = breath.gas["sleeping_agent"]
 
 	var/inhaled_gas_used = 0
-	var/breath_pressure = (breath.total_moles * R_IDEAL_GAS_EQUATION * breath.temperature) / BREATH_VOLUME
+	var/breath_pressure = breath.return_pressure()
 
 	var/inhale_pp = inhaling ? (inhaling / breath.total_moles) * breath_pressure : 0
 	var/exhaled_pp = exhaling ? (exhaling / breath.total_moles) * breath_pressure : 0
@@ -556,7 +517,7 @@
 
 	breath.update_values()
 
-	return 1
+	return
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	if(!environment)

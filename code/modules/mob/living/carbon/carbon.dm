@@ -17,6 +17,171 @@
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(80) && !IS_IN_STASIS(src))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
 
+/mob/living/carbon/proc/skip_breathe()
+	return !loc || (flags & GODMODE)	
+
+/mob/living/carbon/proc/cant_breathe()
+	return handle_drowning() || health < 0
+
+/mob/living/carbon/proc/get_breath_from_internal(volume_needed)
+	return null
+
+/mob/living/carbon/proc/handle_turf_pre_breathe()
+	if(!(wear_mask && (wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)))
+		for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
+			if(smoke.reagents.total_volume)
+				smoke.reagents.reaction(src, INGEST)
+				spawn(5)
+					if(smoke)
+						smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
+				break
+
+/mob/living/carbon/proc/handle_external_pre_breathing(datum/gas_mixture/breath)
+	if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
+		var/obj/item/clothing/mask/gas/G = wear_mask
+		for(var/g in  G.filter)
+			if(breath.gas[g])
+				breath.gas[g] -= breath.gas[g] * G.gas_filter_strength
+
+		breath.update_values()
+
+/mob/living/carbon/proc/handle_breath(datum/gas_mixture/breath)
+	if(!breath || (breath.total_moles == 0))
+		adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+		oxygen_alert = TRUE
+		return
+
+	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
+	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
+	var/safe_phoron_max = 0.5
+	var/SA_para_min = 0.5
+	var/SA_sleep_min = 5
+
+	var/oxygen = breath.gas["oxygen"]
+	var/co2 = breath.gas["co2"]
+	var/toxin = breath.gas["phoron"]
+	var/sleeping_agent = breath.gas["sleeping_agent"]
+
+	var/oxygen_used = 0
+	var/breath_pressure = breath.return_pressure()
+
+	// partial pressures
+	var/oxygen_pp = oxygen ? (oxygen / breath.total_moles) * breath_pressure : 0
+	var/co2_pp = co2 ? (co2 / breath.total_moles) * breath_pressure : 0
+	var/toxin_pp = toxin ? (toxin / breath.total_moles) * breath_pressure : 0
+	var/SA_pp = sleeping_agent ? (sleeping_agent / breath.total_moles) * breath_pressure : 0
+
+	if(oxygen_pp < safe_oxygen_min) 			// Too little oxygen
+		if(prob(20))
+			emote("gasp")
+		if (oxygen_pp > 0)
+			var/ratio = oxygen_pp / safe_oxygen_min
+
+			// Don't fuck them up too fast
+			adjustOxyLoss(HUMAN_MAX_OXYLOSS * (1 - ratio))
+			oxygen_used = oxygen * ratio * BREATH_USED_PART
+		else
+			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+	
+		oxygen_alert = TRUE
+	else // We're in safe limits
+		adjustOxyLoss(-5)
+		oxygen_used = oxygen * BREATH_USED_PART
+		oxygen_alert = FALSE
+
+	breath.adjust_gas("oxygen", oxygen_used, update = FALSE)
+	breath.adjust_gas_temp("carbon_dioxide", oxygen_used, bodytemperature, update = FALSE) //update afterwards
+
+	if(co2_pp > safe_co2_max)
+		if(!co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
+			co2overloadtime = world.time
+		else if(world.time - co2overloadtime > 120)
+			Paralyse(3)
+			adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
+			if(world.time - co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
+				adjustOxyLoss(8)
+		if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
+			emote("cough")
+
+	else
+		co2overloadtime = 0
+
+	if(toxin_pp > safe_phoron_max) // Too much phoron
+		var/ratio = (toxin_pp / safe_phoron_max) * 10
+		//adjustToxLoss(clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
+		if(reagents)
+			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+		phoron_alert = TRUE
+	else
+		phoron_alert = FALSE
+
+	// If there's some other shit in the air lets deal with it here.
+	if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
+		Paralyse(3) // 3 gives them one second to wake up and run away a bit!
+		if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
+			Sleeping(10 SECONDS)
+	else if(SA_pp > 0.01) // There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+		if(prob(20))
+			emote(pick("giggle", "laugh"))
+
+	if(breath.temperature > BODYTEMP_HEAT_DAMAGE_LIMIT) // Hot air hurts :(
+		if(prob(20))
+			to_chat(src, "<span class='warning'>You feel a searing heat in your lungs!</span>")
+		fire_alert = TRUE
+	else
+		fire_alert = FALSE
+
+	breath.update_values()
+
+	return
+
+/mob/living/carbon/proc/breathe()
+	if(skip_breathe())
+		return null
+
+	var/datum/gas_mixture/breath
+
+	//First, check if we can breathe at all
+	if(cant_breathe())
+		losebreath = max(2, losebreath + 1)
+
+	if(losebreath > 0) //Suffocating so do not take a breath
+		losebreath--
+		if (prob(10)) //Gasp per 10 ticks? Sounds about right.
+			emote("gasp")
+		if(isobj(loc))
+			var/obj/location_as_object = loc
+			location_as_object.handle_internal_lifeform(src, 0)
+	else
+		//First, check for air from internal atmosphere (using an air tank and mask generally)
+		breath = get_breath_from_internal(BREATH_VOLUME)
+
+		if(breath)
+			if(isobj(loc)) //Still give containing object the chance to interact
+				var/obj/location_as_object = loc
+				location_as_object.handle_internal_lifeform(src, 0)
+		else //No breath from internal atmosphere so get breath from location
+			if(isobj(loc))
+				var/obj/location_as_object = loc
+				breath = location_as_object.handle_internal_lifeform(src, BREATH_MOLES)
+			else if(isturf(loc))
+				var/datum/gas_mixture/environment = loc.return_air()
+				breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
+
+				handle_turf_pre_breathe()
+
+			handle_external_pre_breathing(breath)
+
+	if(breath)
+		breath.volume = BREATH_VOLUME
+
+	handle_breath(breath)
+
+	if(breath)
+		loc.assume_air(breath)
+
+	return breath
+
 /mob/living/carbon/calculate_affecting_pressure(pressure)
 	return pressure
 
