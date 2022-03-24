@@ -96,7 +96,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FACEHUGGABLE       "facehuggable"
 #define NO_EMOTION         "no_emotion"
 #define NO_DNA             "no_dna"
-#define SPRITE_SHEET_RESTRICTION "sprite_sheet_restriction" // If specie has this flag, all clothing which icon_state is in the sprite sheet will be awearable.
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.
