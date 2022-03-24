@@ -1,4 +1,5 @@
 #define PRAY_COOLDOWN 30 SECONDS
+
 /mob/verb/pray(msg as text)
 	set category = "IC"
 	set name = "Pray"
