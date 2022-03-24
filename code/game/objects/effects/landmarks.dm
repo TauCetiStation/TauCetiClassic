@@ -4,6 +4,7 @@
 	icon_state = "x2"
 	anchored = TRUE
 	layer = TURF_LAYER
+	plane = GAME_PLANE
 	unacidable = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 
@@ -86,6 +87,7 @@
 	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "x"
 	anchored = TRUE
+	layer = MOB_LAYER
 	var/delete_after_roundstart = TRUE
 
 /obj/effect/landmark/start/New()
