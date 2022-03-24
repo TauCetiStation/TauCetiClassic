@@ -2218,9 +2218,7 @@
 "afP" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/wiz,
-/obj/effect/landmark/start{
-	name = "wizard"
-	},
+/obj/effect/landmark/start/wizard,
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -2235,9 +2233,7 @@
 	},
 /area/centcom/evac)
 "afR" = (
-/obj/effect/landmark/start{
-	name = "wizard"
-	},
+/obj/effect/landmark/start/wizard,
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -2246,9 +2242,7 @@
 /obj/structure/stool/bed/chair/wood/wings{
 	dir = 8
 	},
-/obj/effect/landmark/start{
-	name = "wizard"
-	},
+/obj/effect/landmark/start/wizard,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -2258,9 +2252,7 @@
 /obj/structure/stool/bed/chair/wood/wings{
 	dir = 4
 	},
-/obj/effect/landmark/start{
-	name = "wizard"
-	},
+/obj/effect/landmark/start/wizard,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -11064,9 +11056,7 @@
 	},
 /area/velocity)
 "aAc" = (
-/obj/effect/landmark/start{
-	name = "Velocity Officer"
-	},
+/obj/effect/landmark/start/velocity_officer,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "bluefull"
@@ -18665,9 +18655,7 @@
 	},
 /area/custom/wizard_station)
 "baI" = (
-/obj/effect/landmark/start{
-	name = "wizard"
-	},
+/obj/effect/landmark/start/wizard,
 /turf/unsimulated/floor{
 	icon_state = "carpetsymbol"
 	},
@@ -18770,9 +18758,7 @@
 	},
 /area/custom/wizard_station)
 "baU" = (
-/obj/effect/landmark/start{
-	name = "wizard"
-	},
+/obj/effect/landmark/start/wizard,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
