@@ -554,13 +554,13 @@ var/global/list/datum/spawners_cooldown = list()
  * Robots
 */
 /datum/spawner/living/robot
-	name = "Робот"
+	name = "Киборг"
 	id = "robot"
-	desc = "Перезагрузка позитронки."
+	desc = "Перезагрузка позитронного мозга."
 	wiki_ref = "Cyborg"
 
 /datum/spawner/living/robot/syndi
-	name = "Робот синдиката"
+	name = "Киборг синдиката"
 	id = "robot_syndi"
 	ranks = list(ROLE_OPERATIVE)
 
