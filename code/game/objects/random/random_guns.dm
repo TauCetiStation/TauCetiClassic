@@ -82,7 +82,7 @@
 						prob(15);/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off,\
 						prob(10);/obj/item/weapon/gun/projectile/shotgun,\
 						prob(7);/obj/item/weapon/gun/projectile/shotgun/combat,\
-						prob(5);/obj/item/weapon/gun/projectile/automatic/bulldog\
+						prob(5);/obj/item/weapon/gun/projectile/automatic/udarnik\
 					)
 
 /obj/random/guns/projectile_assault

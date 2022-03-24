@@ -15,6 +15,7 @@
 /obj/item/weapon/gun/projectile/automatic/attackby(obj/item/I, mob/user, params)
 	if(..() && chambered)
 		alarmed = FALSE
+	update_inv_mob()
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Mac-10"
@@ -83,7 +84,7 @@
 	name = "L6 SAW"
 	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever, as well as '7.62x51mm'."
 	icon_state = "l6closed100"
-	item_state = "l6closedmag"
+	item_state = "l6"
 	w_class = SIZE_BIG
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
@@ -98,6 +99,11 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
+	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
+		item_state = "l6wielded"
+	else
+		item_state = "l6"
+	update_inv_mob()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
@@ -269,38 +275,30 @@
 		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	return
 
-/obj/item/weapon/gun/projectile/automatic/bulldog
-	name = "V15 Bulldog shotgun"
-	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Compatible only with specialized magazines."
-	icon_state = "bulldog"
-	item_state = "bulldog"
+/obj/item/weapon/gun/projectile/automatic/udarnik
+	name = "TOZ-222 automatic shotgun"
+	desc = "A compact, mag-fed semi-automatic shotgun also known as Udarnik - for combat in narrow corridors. Compatible only with specialized magazines."
+	icon_state = "udarnik"
+	item_state = "udarnik"
 	w_class = SIZE_SMALL
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/bulldog/atom_init()
+/obj/item/weapon/gun/projectile/automatic/udarnik/atom_init()
 	. = ..()
 	update_icon()
 
-/obj/item/weapon/gun/projectile/automatic/bulldog/proc/update_magazine()
+/obj/item/weapon/gun/projectile/automatic/udarnik/proc/update_magazine()
 	if(magazine)
 		cut_overlays()
-		add_overlay("[magazine.icon_state]_o")
+		add_overlay("[initial(magazine.icon_state)]")
 		return
 
-/obj/item/weapon/gun/projectile/automatic/bulldog/update_icon()
+/obj/item/weapon/gun/projectile/automatic/udarnik/update_icon()
 	cut_overlays()
 	update_magazine()
-	icon_state = "bulldog[chambered ? "" : "-e"]"
-	return
-
-/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target, mob/user, proximity, params)
-	..()
-	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
-		update_icon()
-		alarmed = 1
+	item_state = "udarnik[magazine ? "-mag" :""]"
 	return
 
 /obj/item/weapon/gun/projectile/automatic/a28

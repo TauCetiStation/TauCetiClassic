@@ -13,7 +13,7 @@
 	prob(5);/obj/item/toy/syndicateballoon,\
 	prob(5);/obj/item/weapon/gun/projectile/heavyrifle,\
 	prob(6);/obj/item/weapon/shield/energy,\
-	prob(6);/obj/item/weapon/gun/projectile/automatic/bulldog,\
+	prob(6);/obj/item/weapon/gun/projectile/automatic/udarnik,\
 	prob(7);/obj/item/device/radio/beacon/syndicate,\
 	prob(7);/obj/item/ammo_box/magazine/m762,\
 	prob(8);/obj/item/weapon/aiModule/freeform/syndicate,\

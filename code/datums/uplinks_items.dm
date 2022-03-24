@@ -188,10 +188,10 @@
 
 	need_wanted_level = 2
 
-/datum/uplink_item/dangerous/bulldog
-	name = "V15 Bulldog shotgun"
+/datum/uplink_item/dangerous/udarnik
+	name = "Udarnik shotgun"
 	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Uses various 12g magazines."
-	item = /obj/item/weapon/gun/projectile/automatic/bulldog
+	item = /obj/item/weapon/gun/projectile/automatic/udarnik
 	cost = 16
 	uplink_types = list("nuclear")
 
@@ -443,21 +443,21 @@
 
 /datum/uplink_item/ammo/bullbuck
 	name = "Ammo-12g Buckshot"
-	desc = "An additional  8-round buckshot magazine for use in the Bulldog shotgun."
+	desc = "An additional  8-round buckshot magazine for use in the Udarnik shotgun."
 	item = /obj/item/ammo_box/magazine/m12g
 	cost = 4
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/bullstun
 	name = "Ammo-12g Stun Shot"
-	desc = "An alternative 8-round stun shot magazine for use in the Bulldog shotgun. Accurate, reliable, powerful."
+	desc = "An alternative 8-round stun shot magazine for use in the Udarnik shotgun. Accurate, reliable, powerful."
 	item = /obj/item/ammo_box/magazine/m12g/stun
 	cost = 4
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/bullincendiary
 	name = "Ammo-12g Incendiary"
-	desc = "An alternative 8-round incendiary magazine for use in the Bulldog shotgun."
+	desc = "An alternative 8-round incendiary magazine for use in the Udarnik shotgun."
 	item = /obj/item/ammo_box/magazine/m12g/incendiary
 	cost = 5
 	uplink_types = list("nuclear")

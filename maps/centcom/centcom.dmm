@@ -21320,7 +21320,7 @@
 /area/velocity)
 "dMd" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic/bulldog,
+/obj/item/weapon/gun/projectile/automatic/udarnik,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8

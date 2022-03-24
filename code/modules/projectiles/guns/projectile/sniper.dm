@@ -2,7 +2,7 @@
 	name = "PTR-7 rifle"
 	desc = "A portable anti-armour rifle. Originally designed to used against armoured exosuits, it is capable of punching through windows with ease. Fires armor piercing 14.5mm shells."
 	icon_state = "heavyrifle"
-	item_state = "l6closednomag"
+	item_state = "heavyrifle"
 	w_class = SIZE_BIG
 	force = 10
 	slot_flags = SLOT_FLAGS_BACK
