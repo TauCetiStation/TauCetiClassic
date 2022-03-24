@@ -56,14 +56,15 @@
 				if(3.0)
 					dat += "<B>Records Maintenance</B><HR>\n<A href='?src=\ref[src];back=1'>Backup To Disk</A><BR>\n<A href='?src=\ref[src];u_load=1'>Upload From disk</A><BR>\n<A href='?src=\ref[src];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[src];screen=1'>Back</A>"
 				if(4.0)
-					var/icon/front = active1.fields["photo_f"]
-					front.Blend(mugshot,ICON_UNDERLAY,1,1)
-					var/icon/side = active1.fields["photo_s"]
-					side.Blend(mugshot,ICON_UNDERLAY,1,1)
-					user << browse_rsc(front, "front.png")
-					user << browse_rsc(side, "side.png")
 					dat += "<CENTER><B>Medical Record</B></CENTER><BR>"
 					if ((istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1)))
+						var/icon/front = active1.fields["photo_f"]
+						front.Blend(mugshot,ICON_UNDERLAY,1,1)
+						var/icon/side = active1.fields["photo_s"]
+						side.Blend(mugshot,ICON_UNDERLAY,1,1)
+						user << browse_rsc(front, "front.png")
+						user << browse_rsc(side, "side.png")
+
 						dat += "<style>img.nearest { -ms-interpolation-mode:nearest-neighbor }</style><table><tr><td>Name: [active1.fields["name"]] \
 								ID: [active1.fields["id"]]<BR>\n	\
 								Sex: <A href='?src=\ref[src];field=sex'>[active1.fields["sex"]]</A><BR>\n	\
