@@ -122,16 +122,6 @@
 
 	return say_verb
 
-/mob/emote(act = "", message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
-	var/datum/emote/emo = get_emote(act)
-	if(!emo)
-		return
-
-	if(!emo.can_emote(src, !auto))
-		return
-
-	emo.do_emote(src, act, !auto)
-
 /mob/proc/get_ear()
 	// returns an atom representing a location on the map from which this
 	// mob can hear things

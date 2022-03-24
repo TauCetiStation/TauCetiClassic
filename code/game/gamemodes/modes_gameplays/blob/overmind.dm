@@ -86,9 +86,6 @@
 		if(isobserver(M) || isanyblob(M))
 			to_chat(M, message)
 
-/mob/camera/blob/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
-	return
-
 /mob/camera/blob/blob_act()
 	return
 

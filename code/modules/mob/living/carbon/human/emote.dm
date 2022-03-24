@@ -1,46 +1,11 @@
 /mob/living/carbon/human
 	default_emotes = list(
-		/datum/emote/help,
-		/datum/emote/laugh,
-		/datum/emote/giggle,
-		/datum/emote/grunt,
-		/datum/emote/groan,
-		/datum/emote/scream,
-		/datum/emote/cough,
-		/datum/emote/hiccup,
-		/datum/emote/choke,
-		/datum/emote/snore,
-		/datum/emote/whimper,
-		/datum/emote/sniff,
-		/datum/emote/sneeze,
-		/datum/emote/gasp,
-		/datum/emote/moan,
-		/datum/emote/sigh,
-		/datum/emote/mumble,
-		/datum/emote/raisehand,
-		/datum/emote/rock,
-		/datum/emote/paper,
-		/datum/emote/scissors,
-		/datum/emote/shiver,
-		/datum/emote/collapse,
-		/datum/emote/pray,
-		/datum/emote/bow,
-		/datum/emote/yawn,
-		/datum/emote/blink,
-		/datum/emote/wink,
-		/datum/emote/grin,
-		/datum/emote/drool,
-		/datum/emote/smile,
-		/datum/emote/frown,
-		/datum/emote/eyebrow,
-		/datum/emote/shrug,
-		/datum/emote/nod,
-		/datum/emote/clap,
-		/datum/emote/wave,
-		/datum/emote/salute,
-		/datum/emote/twitch,
-		/datum/emote/deathgasp,
+		/datum/emote/pray
 	)
+
+/mob/living/carbon/human/load_default_emotes()
+	default_emotes += subtypesof(/datum/emote/human)
+	return ..()
 
 /mob/living/carbon/human/verb/pose()
 	set name = "Set Pose"

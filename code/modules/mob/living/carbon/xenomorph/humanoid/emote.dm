@@ -1,6 +1,6 @@
 #define CAN_MAKE_A_SOUND !muzzled && (last_sound_emote < world.time)
 
-/mob/living/carbon/xenomorph/humanoid/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
+/mob/living/carbon/xenomorph/humanoid/emote(act, message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
 	if(stat == DEAD && (act != "deathgasp"))
 		return
 	if(stat == UNCONSCIOUS)

@@ -254,11 +254,6 @@
 				new path(loc)
 	..()
 
-/mob/living/simple_animal/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
-	if(act)
-		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
-		..(act, m_type, message)
-
 /mob/living/simple_animal/attack_larva(mob/living/carbon/xenomorph/larva/attacker)
 	if(attacker.a_intent == INTENT_HARM && stat != DEAD)
 		var/attack_obj = attacker.get_unarmed_attack()

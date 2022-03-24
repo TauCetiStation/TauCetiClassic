@@ -1,4 +1,4 @@
-/mob/living/carbon/ian/emote(act, m_type = SHOWMSG_AUDIO, message = null, auto)
+/mob/living/carbon/ian/emote(act, message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
 	if(src.stat == DEAD && (act != "deathgasp"))
 		return
 

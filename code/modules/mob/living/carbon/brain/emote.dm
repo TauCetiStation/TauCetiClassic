@@ -1,13 +1,16 @@
-/mob/living/carbon/brain/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
-	if(!(container && isMMI(container)))//No MMI, no emotes
+/mob/living/carbon/brain
+	default_emotes = list(
+	)
+
+
+/mob/living/carbon/brain/emote(act, message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
+	// No MMI, no emotes
+	if(!container || !isMMI(container))
+		to_chat(src, "<span class='notice'>You can not emote in such state.</span>")
 		return
 
-	if (findtext(act, "-", 1))
-		var/t1 = findtext(act, "-", 1)
-		act = copytext(act, 1, t1)
+	return ..()
 
-	if(src.stat == DEAD)
-		return
 	switch(act)
 		if ("alarm")
 			to_chat(src, "You sound an alarm.")
@@ -31,35 +34,3 @@
 			to_chat(src, "You whistle.")
 			message = "<B>[src]</B> whistles."
 			m_type = SHOWMSG_AUDIO
-		if ("beep")
-			to_chat(src, "You beep.")
-			message = "<B>[src]</B> beeps."
-			m_type = SHOWMSG_AUDIO
-		if ("boop")
-			to_chat(src, "You boop.")
-			message = "<B>[src]</B> boops."
-			m_type = SHOWMSG_AUDIO
-		if ("pray")
-			m_type = SHOWMSG_VISUAL
-			message = "<b>[src]</b> prays."
-			INVOKE_ASYNC(src, /mob.proc/pray_animation)
-		if ("help")
-			to_chat(src, "alarm,alert,notice,flash,blink,whistle,beep,boop")
-		else
-			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
-
-	if (message)
-		log_emote("[key_name(src)] : [message]")
-
-		for(var/mob/M as anything in observer_list)
-			if (!M.client)
-				continue //skip leavers
-			if((M.client.prefs.chat_ghostsight != CHAT_GHOSTSIGHT_NEARBYMOBS) && !(M in viewers(src, null)))
-				to_chat(M, "[FOLLOW_LINK(M, src)] [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
-
-		if (m_type & SHOWMSG_VISUAL)
-			for (var/mob/O in viewers(src, null))
-				O.show_message(message, m_type)
-		else if (m_type & SHOWMSG_AUDIO)
-			for (var/mob/O in hearers(src.loc, null))
-				O.show_message(message, m_type)

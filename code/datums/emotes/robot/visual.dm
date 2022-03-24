@@ -1,0 +1,54 @@
+/datum/emote/robot/nod
+	key = "nod"
+
+	message_1p = "You nod."
+	message_3p = "nods."
+
+	message_type = SHOWMSG_VISUAL
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)
+
+
+/datum/emote/robot/twitch
+	key = "twitch"
+
+	message_1p = "You twitch."
+	message_3p = "twitches."
+
+	message_type = SHOWMSG_VISUAL
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)
+
+
+/datum/emote/robot/deathgasp
+	key = "deathgasp"
+
+	message_1p = "You shudder violently for a moment, then become motionless, your eyes slowly darkening..."
+
+	message_impaired_reception = "You hear a shuddering."
+
+	message_type = SHOWMSG_VISUAL
+
+	state_checks = list(
+		EMOTE_STATE(is_stat_or_not_intentional, CONSCIOUS),
+	)
+
+/datum/emote/robot/deathgasp/get_emote_message_3p(mob/living/carbon/human/user)
+	return "<b>[user]</b> shudders violently for a moment, then becomes motionless, it's eyes slowly darkening..."
+
+
+/datum/emote/robot/bow
+	key = "bow"
+
+	message_1p = "You bow."
+	message_3p = "bows."
+
+	message_type = SHOWMSG_VISUAL
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)

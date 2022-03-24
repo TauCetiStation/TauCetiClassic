@@ -44,6 +44,9 @@
 
 /mob/atom_init()
 	. = ..()
+	load_default_emotes()
+
+/mob/proc/load_default_emotes()
 	for(var/emote in default_emotes)
 		var/datum/emote/E = global.all_emotes[emote]
 		set_emote(E.key, E)
@@ -55,10 +58,10 @@
 /mob/proc/set_emote(key, datum/emote/emo)
 	LAZYSET(current_emotes, key, emo)
 
-/mob/living/carbon/human/proc/clear_emote(key)
+/mob/proc/clear_emote(key)
 	LAZYREMOVE(current_emotes, key)
 
-/mob/proc/emote(act = "", message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
+/mob/proc/emote(act, message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
 	var/datum/emote/emo = get_emote(act)
 	if(!emo)
 		return

@@ -32,9 +32,6 @@
 			if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				to_chat(M, "[FOLLOW_LINK(M, src)] The captive mind of [src] whispers, \"[message]\"")
 
-/mob/living/captive_brain/emote(act, m_type = SHOWMSG_VISUAL, message, auto)
-	return
-
 /mob/living/simple_animal/borer
 	name = "cortical borer"
 	real_name = "cortical borer"

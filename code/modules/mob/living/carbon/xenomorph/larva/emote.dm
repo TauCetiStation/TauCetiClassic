@@ -1,4 +1,4 @@
-/mob/living/carbon/xenomorph/larva/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
+/mob/living/carbon/xenomorph/larva/emote(act, message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
 	if(stat == UNCONSCIOUS)
 		return
 	if (findtext(act, "-", 1))
