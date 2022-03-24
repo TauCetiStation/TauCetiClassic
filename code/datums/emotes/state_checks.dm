@@ -6,6 +6,12 @@
 
 	return TRUE
 
+/proc/is_stat_or_not_intentional(stat, mob/M, intentional)
+	if(!intentional)
+		return TRUE
+
+	return is_stat(stat, M, intentional)
+
 /proc/is_species_not_flag(flag, mob/M, intentional)
 	var/datum/species/S = all_species[M.get_species()]
 	if(!S)
