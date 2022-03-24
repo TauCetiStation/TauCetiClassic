@@ -36,7 +36,7 @@ var/global/list/all_emotes
 	// What group does this emote belong to. By default uses emote type
 	var/cooldown_group = null
 	// Cooldown for emote usage.
-	var/cooldown = 0.8 SECOND
+	var/cooldown = 0.8 SECONDS
 	// Cooldown for the audio of the emote, if it has one.
 	var/audio_cooldown = 3 SECONDS
 
