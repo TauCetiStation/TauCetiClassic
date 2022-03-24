@@ -134,25 +134,20 @@
 	name = "Head of Personnel"
 	icon_state = "Head of Personnel"
 
-/obj/effect/landmark/start/botanist
-	name = "Botanist"
-	icon_state = "Botanist"
+/obj/effect/landmark/start/bartender
+	name = "Bartender"
+	icon_state = "Bartender"
 
 /obj/effect/landmark/start/chef
 	name = "Chef"
 	icon_state = "Cook"
 
-/obj/effect/landmark/start/bartender
-	name = "Bartender"
-	icon_state = "Bartender"
+/obj/effect/landmark/start/botanist
+	name = "Botanist"
+	icon_state = "Botanist"
 
-/obj/effect/landmark/start/clown
-	name = "Clown"
-	icon_state = "Clown"
-
-/obj/effect/landmark/start/mime
-	name = "Mime"
-	icon_state = "Mime"
+/obj/effect/landmark/start/barber
+	name = "Barber"
 
 /obj/effect/landmark/start/janitor
 	name = "Janitor"
@@ -165,6 +160,17 @@
 /obj/effect/landmark/start/chaplain
 	name = "Chaplain"
 	icon_state = "Chaplain"
+
+/obj/effect/landmark/start/internal_affairs_agent
+	name = "Internal Affairs Agent"
+
+/obj/effect/landmark/start/clown
+	name = "Clown"
+	icon_state = "Clown"
+
+/obj/effect/landmark/start/mime
+	name = "Mime"
+	icon_state = "Mime"
 
 // Cargo
 /obj/effect/landmark/start/quartermaster
@@ -179,6 +185,8 @@
 	name = "Shaft Miner"
 	icon_state = "Shaft Miner"
 
+/obj/effect/landmark/start/recycler
+	name = "Recycler"
 
 // Security
 /obj/effect/landmark/start/head_of_security
@@ -189,13 +197,19 @@
 	name = "Warden"
 	icon_state = "Warden"
 
+/obj/effect/landmark/start/detective
+	name = "Detective"
+	icon_state = "Detective"
+
 /obj/effect/landmark/start/security_officer
 	name = "Security Officer"
 	icon_state = "Security Officer"
 
-/obj/effect/landmark/start/detective
-	name = "Detective"
-	icon_state = "Detective"
+/obj/effect/landmark/start/forensic_technician
+	name = "Forensic Technician"
+
+/obj/effect/landmark/start/security_cadet
+	name = "Security Cadet"
 
 // Engineering
 /obj/effect/landmark/start/chief_engineer
@@ -209,6 +223,9 @@
 	name = "Atmospheric Technician"
 	icon_state = "Atmospheric Technician"
 
+/obj/effect/landmark/start/technical_assistant
+	name = "Technical Assistant"
+
 
 //Medical
 /obj/effect/landmark/start/chief_medical_officer
@@ -219,6 +236,9 @@
 	name = "Medical Doctor"
 	icon_state = "Medical Doctor"
 
+/obj/effect/landmark/start/paramedic
+	name = "Paramedic"
+
 /obj/effect/landmark/start/chemist
 	name = "Chemist"
 	icon_state = "Chemist"
@@ -226,6 +246,12 @@
 /obj/effect/landmark/start/virologist
 	name = "Virologist"
 	icon_state = "Virologist"
+
+/obj/effect/landmark/start/psychiatrist
+	name = "Psychiatrist"
+
+/obj/effect/landmark/start/medical_intern
+	name = "Medical Intern"
 
 // Both is good
 /obj/effect/landmark/start/geneticist
@@ -241,9 +267,17 @@
 	name = "Scientist"
 	icon_state = "Scientist"
 
+/obj/effect/landmark/start/xenoarchaeologist
+	name = "Xenoarchaeologist"
+
+/obj/effect/landmark/start/xenobiologist
+	name = "Xenobiologist"
 /obj/effect/landmark/start/roboticist
 	name = "Roboticist"
 	icon_state = "Roboticist"
+
+/obj/effect/landmark/start/research_assistant
+	name = "Research Assistant"
 
 // Silicons
 /obj/effect/landmark/start/ai
@@ -255,6 +289,13 @@
 	name = "Cyborg"
 	icon_state = "Cyborg"
 
+
+// Roles
+/obj/effect/landmark/start/wizard
+	name = "Wizard"
+
+/obj/effect/landmark/start/velocity_officer
+	name = "Velocity Officer"
 
 
 /obj/effect/landmark/cops_spawn
