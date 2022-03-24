@@ -860,6 +860,9 @@
 	body_parts_covered = 1
 	pierce_protection = HEAD
 	flags = HEADCOVERSEYES
+	flags_inv = HIDEEARS
+	siemens_coefficient = 0.3
+	flashbang_protection = TRUE
 
 /obj/item/clothing/under/henchmen
 	name = "henchmen jumpsuit"

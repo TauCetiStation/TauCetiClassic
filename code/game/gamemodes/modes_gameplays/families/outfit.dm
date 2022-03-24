@@ -72,7 +72,7 @@
 
 /datum/outfit/families_police/beatcop/fbi
 	name = "Families: Инспектор"
-	suit = /obj/item/clothing/suit/armor/laserproof
+	suit = /obj/item/clothing/suit/armor/vest/fullbody
 	back = /obj/item/weapon/storage/backpack/satchel
 	head = /obj/item/clothing/head/beret/spacepolice
 	glasses = /obj/item/clothing/glasses/sunglasses/big
@@ -87,7 +87,7 @@
 /datum/outfit/families_police/beatcop/military
 	name = "Families: Боец ВСНТ"
 	uniform = /obj/item/clothing/under/tactical/marinad
-	suit = /obj/item/clothing/suit/marinad
+	suit = /obj/item/clothing/suit/armor/marinad
 	head = /obj/item/clothing/head/helmet/tactical/marinad
 	belt = /obj/item/weapon/storage/belt/security/tactical/cops
 	gloves = /obj/item/clothing/gloves/security/marinad

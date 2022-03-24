@@ -50,7 +50,7 @@
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.set_slots(slots = 4, slot_size = SIZE_TINY)
 
-/obj/item/clothing/suit/marinad
+/obj/item/clothing/suit/armor/marinad
 	name = "marine armor"
 	desc = "This thing will protect you from any angry flora or fauna."
 	icon_state = "marinad"
