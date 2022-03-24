@@ -94,7 +94,8 @@
 	new /mob/living/carbon/slime(pos)
 	var/mob/living/simple_animal/slime/S = new /mob/living/carbon/slime(pos)
 	S.loc = pos
-	host.mind.transfer_to(S)
+	if(host.mind)
+		host.mind.transfer_to(S)
 	host.gib()
 	return
 
