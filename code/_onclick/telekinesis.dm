@@ -160,14 +160,10 @@
 	if((slot == SLOT_L_HAND) || (slot == SLOT_R_HAND))
 		return
 
-	if(!user.can_tk(level=TK_LEVEL_THREE))
-		return
-
-	if(!focus.Adjacent(user))
-		return
+	var/obj/item/to_equip = focus
 
 	qdel(src)
-	user.equip_to_slot_if_possible(focus, slot, del_on_fail = FALSE)
+	user.equip_to_slot_if_possible(to_equip, slot, del_on_fail = FALSE)
 
 /obj/item/tk_grab/attack_self(mob/user)
 	focus.attack_self_tk(user)
@@ -221,8 +217,18 @@
 /obj/item/tk_grab/attack(mob/living/M, mob/living/user, def_zone)
 	return
 
-/obj/item/tk_grab/mob_can_equip(mob/M, slot, disable_warning = 0)
-	return TRUE
+/obj/item/tk_grab/mob_can_equip(mob/M, slot, disable_warning = FALSE)
+	if(!isitem(focus))
+		return FALSE
+	var/obj/item/I = focus
+
+	if(!M.can_tk(level=TK_LEVEL_THREE, show_warnings=!disable_warning))
+		return FALSE
+
+	if(!I.Adjacent(M))
+		return FALSE
+
+	return I.mob_can_equip(M, slot, disable_warning)
 
 /obj/item/tk_grab/proc/focus_object(obj/target, mob/living/user)
 	focus = target
