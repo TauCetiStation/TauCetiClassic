@@ -31774,7 +31774,6 @@
 /area/station/rnd/hallway)
 "beY" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/intern,
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "beZ" = (
