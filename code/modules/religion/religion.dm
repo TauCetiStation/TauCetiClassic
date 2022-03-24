@@ -580,6 +580,9 @@
 	return TRUE
 
 /datum/religion/proc/on_entry(mob/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.faith = 0
 	return
 
 /datum/religion/proc/remove_member(mob/M)

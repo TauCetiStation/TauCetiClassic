@@ -1,9 +1,10 @@
+#DEFINE PRAY_COOLDOWN 30 SECONDS
 /mob/verb/pray(msg as text)
 	set category = "IC"
 	set name = "Pray"
 
-	if(pray_time >= world_time)
-		to_chat(usr, "<span class='warning'>You have to wait a minute to pray again.</span>")
+	if(pray_time >= world.time)
+		to_chat(usr, "<span class='warning'>You have to wait [PRAY_COOLDOWN] to pray again.</span>")
 		return
 
 	if(say_disabled)	//This is here to try to identify lag problems
@@ -99,7 +100,7 @@
 				to_chat(G, god_not_understand_msg)
 
 	pray_act(msg, speaking, alt_name, "prays")
-	pray_time = world_time + 1 MINUTES
+	pray_time = world.time + PRAY_COOLDOWN
 
 	feedback_add_details("admin_verb","PR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	//log_admin("HELP: [key_name(src)]: [msg]")
@@ -114,8 +115,9 @@
 		// Mimes, and other mute beings.
 		emote("pray")
 	var/area/A = get_area(src)
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "prayed", /datum/mood_event/pray, A.blessing)
-	A.blessing += 1
+	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "prayed")
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "prayed", /datum/mood_event/pray, round((A.blessing + src.faith)/2))
+	A.bless(1)
 
 /mob/proc/pray_animation()
 	return

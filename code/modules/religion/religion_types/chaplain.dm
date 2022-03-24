@@ -185,3 +185,4 @@
 	// Update the looks of the chapel.
 	update_structure_info()
 	religify(null, null, chaplain)
+	chaplain.faith = 5
