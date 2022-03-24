@@ -4,7 +4,7 @@
 	set name = "Pray"
 
 	if(pray_time >= world.time)
-		to_chat(usr, "<span class='warning'>You have to wait [PRAY_COOLDOWN] to pray again.</span>")
+		to_chat(usr, "<span class='warning'>You have to wait [PRAY_COOLDOWN/10] seconds to pray again.</span>")
 		return
 
 	if(say_disabled)	//This is here to try to identify lag problems

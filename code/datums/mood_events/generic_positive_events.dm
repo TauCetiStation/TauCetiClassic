@@ -43,9 +43,8 @@
 	timeout = 10 MINUTES
 
 /datum/mood_event/pray
-	description = "<span class='nicegreen'>I've adressed a message to the gods.</span>"
+	description = ""
 	mood_change = 0
-	timeout = 1 MINUTES
 
 /datum/mood_event/pray/add_effects(_mood_change)
 	mood_change = _mood_change
