@@ -244,7 +244,7 @@
 // mob signals
 /// from base of mob/Login(): ()
 #define COMSIG_LOGIN "mob_login"
-/// from base of mob/Logout(): ()
+/// from base of mob/Logout(): (logout_reason)
 #define COMSIG_LOGOUT "mob_logout"
 
 /// from  base of mob/ClickOn(): (atom/target, params)

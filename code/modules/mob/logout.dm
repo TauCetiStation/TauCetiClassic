@@ -12,7 +12,7 @@
 	if(key)
 		logout_reason = logout_reason || LOGOUT_USER
 
-	SEND_SIGNAL(src, COMSIG_LOGOUT)
+	SEND_SIGNAL(src, COMSIG_LOGOUT, H.logout_reason)
 	
 	..()
 
