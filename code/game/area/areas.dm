@@ -509,5 +509,5 @@ area/proc/bless(bls)
 	blessing += bls
 	addtimer(CALLBACK(src, .proc/de_bless, bls), bls MINUTES)
 
-area/proc/de_bless(bls)
+/area/proc/de_bless(bls)
 	blessing -= bls
