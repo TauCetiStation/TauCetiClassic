@@ -11554,10 +11554,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
-"atB" = (
-/obj/random/scrap/safe_even,
-/turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
 "atC" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -11590,10 +11586,6 @@
 /turf/environment/space,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
-"atG" = (
-/obj/random/scrap/safe_even,
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
 "atH" = (
 /obj/structure/object_wall/mining{
 	icon_state = "4-1"
@@ -15840,18 +15832,6 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
-"aBO" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/random/scrap/safe_even,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "aBP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -16390,12 +16370,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/chapel)
-"aCU" = (
-/obj/random/scrap/safe_even,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
 /area/station/maintenance/chapel)
 "aCV" = (
 /obj/machinery/door/airlock/external{
@@ -23817,10 +23791,6 @@
 	icon_state = "white"
 	},
 /area/station/hallway/secondary/exit)
-"aQK" = (
-/obj/random/scrap/safe_even,
-/turf/simulated/floor/plating,
-/area/station/maintenance/chapel)
 "aQL" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/simulated/wall,
@@ -24162,7 +24132,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aRt" = (
@@ -37897,7 +37866,6 @@
 /area/station/medical/surgery)
 "bpR" = (
 /obj/effect/decal/cleanable/cobweb2,
-/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -52870,10 +52838,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
-"bQH" = (
-/obj/random/scrap/safe_even,
-/turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
 "bQI" = (
 /obj/machinery/conveyor{
 	dir = 10;
@@ -67059,7 +67023,6 @@
 /area/station/aisat/antechamber_interior)
 "cFL" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cFN" = (
@@ -70005,10 +69968,6 @@
 	icon_state = "vault"
 	},
 /area/station/engineering/drone_fabrication)
-"dLO" = (
-/obj/random/scrap/safe_even,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
 "dMb" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -78481,10 +78440,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/wall,
 /area/station/maintenance/cargo)
-"nKb" = (
-/obj/random/scrap/safe_even,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "nLb" = (
 /obj/structure/table/woodentable,
 /obj/random/misc/book,
@@ -99783,7 +99738,7 @@ blO
 kdV
 bBa
 bCT
-dLO
+bEW
 aFg
 aRp
 aWV
@@ -101065,7 +101020,7 @@ beJ
 arB
 qoN
 aSP
-dLO
+bEW
 ixO
 qAF
 bEW
@@ -102609,7 +102564,7 @@ aSP
 itt
 aOY
 aSM
-dLO
+bEW
 sCd
 bDk
 eXg
@@ -103124,7 +103079,7 @@ aNi
 aNi
 aNi
 aNi
-dLO
+bEW
 gYf
 wAe
 hmR
@@ -105442,7 +105397,7 @@ bEW
 aSM
 bGv
 aSM
-dLO
+bEW
 aSM
 qcd
 bDk
@@ -107239,7 +107194,7 @@ byR
 bEW
 bEW
 tEw
-dLO
+bEW
 aSM
 aSM
 bEW
@@ -109512,7 +109467,7 @@ agO
 agO
 apl
 agO
-atG
+alZ
 atc
 alZ
 agO
@@ -109560,7 +109515,7 @@ bEW
 bEW
 tKI
 aSM
-dLO
+bEW
 nSy
 usn
 xqb
@@ -110085,10 +110040,10 @@ caq
 cbf
 caq
 cap
-bQH
+bQl
 bRo
 bQl
-bQH
+bQl
 bQl
 bQl
 mhb
@@ -110286,7 +110241,7 @@ adW
 adW
 adW
 asi
-atG
+alZ
 alZ
 arv
 bzB
@@ -110342,12 +110297,12 @@ cap
 cap
 cap
 cap
-bQH
-bQH
+bQl
+bQl
 bRo
 bQl
 bTV
-bQH
+bQl
 bQl
 tpb
 cJa
@@ -110801,7 +110756,7 @@ aBH
 adW
 aqd
 alZ
-atG
+alZ
 agO
 agO
 ceV
@@ -119534,7 +119489,7 @@ cXb
 aph
 aqo
 uUU
-atB
+aeJ
 alC
 aeJ
 cyv
@@ -127821,7 +127776,7 @@ bLg
 bLg
 bNN
 bDV
-nKb
+cak
 qVb
 bFo
 cDf
@@ -129827,7 +129782,7 @@ aaa
 aaa
 aup
 cub
-aQK
+axj
 aLx
 aAS
 aPk
@@ -130083,7 +130038,7 @@ aah
 aah
 aah
 aIj
-aQK
+axj
 axk
 aup
 aNR
@@ -131368,8 +131323,8 @@ aup
 aup
 aup
 aup
-aQK
-aCU
+axj
+azL
 aEY
 ayi
 qFO
@@ -132194,7 +132149,7 @@ bFo
 tVb
 tDb
 aFC
-nKb
+cak
 bFo
 aah
 aah
@@ -132450,7 +132405,7 @@ nab
 bFo
 lOb
 cak
-nKb
+cak
 cak
 bFo
 aaa
@@ -132705,10 +132660,10 @@ mHb
 mHb
 ngb
 bFo
-aBO
+lOb
 cak
 cak
-nKb
+cak
 bMQ
 aaa
 aaa
@@ -132962,9 +132917,9 @@ bFo
 bFo
 nkb
 bFo
-aBO
+lOb
 cES
-nKb
+cak
 jtb
 bMQ
 aaa
@@ -133991,7 +133946,7 @@ bFo
 nmb
 bFo
 rrb
-nKb
+cak
 bFo
 aaa
 aaa
@@ -134248,7 +134203,7 @@ bFo
 nlb
 bFo
 rrb
-nKb
+cak
 bFo
 aah
 aah
@@ -134454,7 +134409,7 @@ awx
 aIO
 aup
 aup
-aQK
+axj
 aRh
 aTz
 aTD
@@ -134759,10 +134714,10 @@ aVF
 lNb
 bFo
 bFo
-nKb
+cak
 bFo
-nKb
-nKb
+cak
+cak
 bFo
 aaa
 aaa

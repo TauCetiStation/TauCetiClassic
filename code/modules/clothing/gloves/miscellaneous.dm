@@ -17,7 +17,7 @@
 	siemens_coefficient = 1.0
 
 /obj/item/clothing/gloves/swat
-	desc = "These tactical gloves are somewhat fire and impact-resistant."
+	desc = "These tactical gloves are fire-resistant."
 	name = "SWAT Gloves"
 	icon_state = "black"
 	item_state = "swat_gl"
