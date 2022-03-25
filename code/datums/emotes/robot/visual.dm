@@ -1,29 +1,3 @@
-/datum/emote/robot/nod
-	key = "nod"
-
-	message_1p = "You nod."
-	message_3p = "nods."
-
-	message_type = SHOWMSG_VISUAL
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
-
-
-/datum/emote/robot/twitch
-	key = "twitch"
-
-	message_1p = "You twitch."
-	message_3p = "twitches."
-
-	message_type = SHOWMSG_VISUAL
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
-
-
 /datum/emote/robot/deathgasp
 	key = "deathgasp"
 

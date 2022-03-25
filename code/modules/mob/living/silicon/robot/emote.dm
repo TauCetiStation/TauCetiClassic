@@ -1,6 +1,11 @@
 /mob/living/silicon/robot
 	default_emotes = list(
-		/datum/emote/pray
+		/datum/emote/help,
+		/datum/emote/pray,
+		/datum/emote/nod,
+		/datum/emote/shake,
+		/datum/emote/twitch,
+		/datum/emote/deathgasp,
 	)
 
 /mob/living/silicon/robot/load_default_emotes()

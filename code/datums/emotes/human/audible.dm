@@ -210,8 +210,11 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
+		EMOTE_STATE(is_present_bodypart, BP_HEAD),
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
 	)
+
+	cloud = "cloud-gasp"
 
 
 /datum/emote/human/snore
@@ -231,26 +234,6 @@
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
-	)
-
-
-/datum/emote/human/whimper
-	key = "whimper"
-
-	message_1p = "You whimper."
-	message_3p = "whimpers."
-
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "You see someone making a sad face."
-
-	message_miming = "whimpers."
-	message_muzzled = "makes a weak noise."
-
-	message_type = SHOWMSG_AUDIO
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
 	)
 
 
@@ -311,29 +294,10 @@
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_present_bodypart, BP_HEAD),
+		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
 	)
 
 	cloud = "cloud-gasp"
-
-
-/datum/emote/human/moan
-	key = "moan"
-
-	message_1p = "You moan!"
-	message_3p = "moans!"
-
-	message_impaired_production = "moans silently."
-	message_impaired_reception = "You see someone opening their mouth wide."
-
-	message_miming = "appears to moan!"
-	message_muzzled = "moans silently!"
-
-	message_type = SHOWMSG_AUDIO
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
-	)
 
 
 /datum/emote/human/sigh

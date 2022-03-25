@@ -1,38 +1,3 @@
-/datum/emote/human/shiver
-	key = "shiver"
-
-	message_1p = "You shiver."
-	message_3p = "shivers."
-
-	message_type = SHOWMSG_VISUAL
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
-
-
-/datum/emote/human/collapse
-	key = "collapse"
-
-	message_1p = "You collapse!"
-	message_3p = "collapses!"
-
-	message_type = SHOWMSG_VISUAL
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
-
-/datum/emote/human/collapse/do_emote(mob/living/carbon/human/user, emote_key, intentional)
-	. = ..()
-	user.Paralyse(2)
-
-
-/datum/emote/human/pray/do_emote(mob/living/carbon/human/user, emote_key, intentional)
-	. = ..()
-	INVOKE_ASYNC(user, /mob.proc/pray_animation)
-
-
 /datum/emote/human/bow
 	key = "bow"
 
@@ -176,7 +141,6 @@
 	)
 
 
-
 /datum/emote/human/nod
 	key = "nod"
 
@@ -190,6 +154,23 @@
 		EMOTE_STATE(is_present_bodypart, BP_HEAD),
 		EMOTE_STATE(is_not_species, ZOMBIE),
 	)
+
+
+/datum/emote/human/shake
+	key = "shake"
+
+	message_1p = "You shake your head."
+
+	message_type = SHOWMSG_VISUAL
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+		EMOTE_STATE(is_present_bodypart, BP_HEAD),
+		EMOTE_STATE(is_not_species, ZOMBIE),
+	)
+
+/datum/emote/human/shake/get_emote_message_3p(mob/living/carbon/human/user)
+	return "<b>[user]</b> shakes [P_THEIR(user)] head."
 
 
 /datum/emote/human/twitch

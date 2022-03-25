@@ -53,7 +53,7 @@
 	default_emotes = null
 
 /mob/proc/get_emote(key)
-	return current_emotes[key]
+	return LAZYACCESS(current_emotes, key)
 
 /mob/proc/set_emote(key, datum/emote/emo)
 	LAZYSET(current_emotes, key, emo)

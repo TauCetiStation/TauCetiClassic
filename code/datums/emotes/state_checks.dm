@@ -73,7 +73,7 @@
 		return FALSE
 
 	var/mob/living/silicon/robot/R = M
-	if(!istype(R.modulle, module_type))
+	if(!istype(R.module, module_type))
 		if(intentional)
 			to_chat(R, "<span class='notice'>You do not have the required module for this emote.</span>")
 		return FALSE
