@@ -40,7 +40,7 @@
 			user.visible_message("<span class ='red'> [user.name] finished planting an explosive on [M.name]!</span>")
 		to_chat(user, "Bomb has been planted. Timer counting down from [timer].")
 		user.drop_item()
-		plant_bomb(target, user)
+		plant_bomb(target)
 
 /obj/item/weapon/plastique/proc/plant_bomb(atom/atom_target)
 	target = atom_target
