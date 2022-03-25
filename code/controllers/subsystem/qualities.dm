@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(qualities)
 		var/datum/quality/quality = new quality_type
 		qualities_pool[quality_type] = quality
 
-/datum/controller/subsystem/qualities/proc/format(datum/quality/quality, mob/M)
+/datum/controller/subsystem/qualities/proc/announce_quality(datum/quality/quality, mob/M)
 	var/hide = prob(quality.hidden_chance)
 	var/q_desc = hide ? "▉▉▉▉▉▉▉▉" : quality.desc
 	var/q_requirement = hide ? "▉▉▉▉▉▉▉▉" : quality.requirement
@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(qualities)
 	registered_clients[C.ckey] = selected_quality.type
 
 	if(C.mob && selected_quality)
-		format(selected_quality, C.mob)
+		announce_quality(selected_quality, C.mob)
 		C.prefs.have_quality = TRUE
 		C << output(TRUE, "lobbybrowser:set_quality")
 
@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(qualities)
 /datum/controller/subsystem/qualities/proc/force_give_quality(mob/living/carbon/human/H, quality_type, mob/admin)
 	var/datum/quality/quality = qualities_pool[quality_type]
 	if(quality.satisfies_requirements(H, FALSE))
-		format(quality, H)
+		announce_quality(quality, H)
 		quality.add_effect(H, FALSE)
 	else
 		to_chat(admin, "<span class='warning'>[H] не соответствует требованиям особенности.</span>")
