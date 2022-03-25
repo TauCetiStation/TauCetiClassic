@@ -892,6 +892,13 @@
 			to_chat(user, "<span class='userdanger'>Take off [M]'s clothes first!</span>")
 			return
 
+	M.adjustHalLoss(-1)
+	M.AdjustStunned(-1)
+	M.AdjustWeakened(-1)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "sauna relax", /datum/mood_event/sauna)
+
+	playsound(src, 'sound/weapons/sauna_broom.ogg', VOL_EFFECTS_MASTER)
+
 	zone = parse_zone(zone)
 	wet -= 5
 	user.visible_message("<span class='notice'>A [user] lightly Birching [M]'s [zone] with [src]!</span>",

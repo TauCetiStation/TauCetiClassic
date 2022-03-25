@@ -209,6 +209,13 @@
 			total_moles += gas[g]
 
 
+//Returns relative (to the standard) density of the gas mix.
+/datum/gas_mixture/proc/return_relative_density()
+	if(volume)
+		return (total_moles / volume) * (CELL_VOLUME / MOLES_CELLSTANDARD)
+	return 0
+
+
 //Returns the pressure of the gas mix.  Only accurate if there have been no gas modifications since update_values() has been called.
 /datum/gas_mixture/proc/return_pressure()
 	if(volume)

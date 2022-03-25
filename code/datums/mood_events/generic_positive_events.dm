@@ -31,3 +31,13 @@
 	description = "<span class='nicegreen'>I have had a smoke recently.</span>"
 	mood_change = 2
 	timeout = 6 MINUTES
+
+/datum/mood_event/shower
+	description = "<span class='nicegreen'>I've had a relaxing shower-time.</span>"
+	mood_change = 2
+	timeout = 5 MINUTES
+
+/datum/mood_event/sauna
+	description = "<span class='nicegreen'>I've had a relaxing time in sauna.</span>"
+	mood_change = 3
+	timeout = 10 MINUTES
