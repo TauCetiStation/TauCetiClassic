@@ -10493,7 +10493,7 @@
 "arG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/carpet/red,
+/turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "arH" = (
 /obj/structure/noticeboard{
@@ -12921,7 +12921,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/carpet/red,
+/turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "awj" = (
 /obj/machinery/power/apc{
@@ -18248,9 +18248,6 @@
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"aGx" = (
-/turf/simulated/floor/carpet/red,
-/area/station/civilian/library)
 "aGy" = (
 /turf/environment/space,
 /area/shuttle/arrival/station)
@@ -56592,15 +56589,16 @@
 	name = "Library Desk Door";
 	req_access = list(37)
 	},
-/obj/structure/sign/plaques/kiddie/library{
-	pixel_y = 30
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/machinery/camera{
 	c_tag = "Library North";
 	dir = 6
+	},
+/obj/machinery/windowtint{
+	id = "Library";
+	pixel_y = 28
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken7"
@@ -60865,17 +60863,14 @@
 	},
 /area/station/engineering/atmos)
 "coK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/machinery/light,
+/obj/structure/sign/plaques/kiddie/library{
+	pixel_y = -30
 	},
-/obj/structure/window/reinforced{
-	dir = 1
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
 	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/civilian/library)
+/area/station/hallway/primary/starboard)
 "coL" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -60887,11 +60882,18 @@
 /area/station/aisat/ai_chamber)
 "coM" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "Library"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 8;
+	id = "Library"
+	},
+/obj/structure/window/reinforced/polarized{
+	id = "Library"
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/library)
 "coN" = (
@@ -60903,14 +60905,14 @@
 /area/station/civilian/library)
 "coO" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "Library"
+	},
+/obj/structure/window/reinforced/polarized{
+	id = "Library"
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/library)
 "coP" = (
@@ -65703,7 +65705,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/red,
+/turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "cBB" = (
 /obj/structure/cable{
@@ -67391,10 +67393,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-"cGO" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/carpet/red,
-/area/station/civilian/library)
 "cGP" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -73129,16 +73127,20 @@
 	},
 /area/station/aisat/ai_chamber)
 "hyb" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "Library"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
+/obj/structure/window/reinforced/polarized{
+	id = "Library"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/window/reinforced/polarized{
+	dir = 4;
+	id = "Library"
 	},
-/turf/simulated/floor/carpet/red,
+/turf/simulated/floor/plating,
 /area/station/civilian/library)
 "hyd" = (
 /obj/machinery/meter,
@@ -73683,14 +73685,16 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "idb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/red,
+/turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "idy" = (
 /obj/structure/cable/yellow{
@@ -73719,7 +73723,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/carpet/red,
+/turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "ifb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -73728,7 +73732,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/red,
+/turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "igb" = (
 /obj/structure/disposalpipe/segment{
@@ -75107,13 +75111,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/red,
+/turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "jFb" = (
 /obj/effect/spawner/lootdrop/maintenance,
@@ -77456,7 +77458,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
 	},
-/turf/simulated/floor/carpet/red,
+/turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "msb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -78486,7 +78488,7 @@
 "nLb" = (
 /obj/structure/table/woodentable,
 /obj/random/misc/book,
-/turf/simulated/floor/carpet/red,
+/turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "nLo" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -81002,7 +81004,9 @@
 	req_access = list(37)
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/wood,
+/turf/simulated/floor{
+	icon_state = "cult"
+	},
 /area/station/civilian/library)
 "qXi" = (
 /obj/machinery/alarm{
@@ -131133,14 +131137,14 @@ aIU
 aIU
 bOp
 bPu
-bSs
+coK
 aKs
 aKs
 cbT
 unb
 edb
 aGc
-hyb
+idb
 arG
 awi
 jvb
@@ -131391,15 +131395,15 @@ stq
 bOs
 bPu
 bMv
-coK
+coM
 coS
 ctO
 eQZ
 bdx
 fRb
-idb
+jEb
 cBA
-aGx
+aSp
 aSu
 aKs
 cLA
@@ -131648,15 +131652,15 @@ kvU
 bOs
 bPu
 bMv
-coM
+coO
 bYC
 cuu
 uuT
 eeb
 hRb
-jEb
+iTb
 nLb
-aGx
+aSp
 cID
 aKs
 cLC
@@ -131905,7 +131909,7 @@ bMb
 bcb
 foN
 bMv
-coO
+hyb
 bYK
 ccK
 vYc
@@ -131913,7 +131917,7 @@ elw
 hVJ
 ieb
 mrb
-cGO
+ecb
 aXN
 aKs
 aKs
@@ -132169,8 +132173,8 @@ aKs
 aKs
 hWb
 ifb
-aGx
-cGO
+aSp
+ecb
 aXP
 ato
 ccq
