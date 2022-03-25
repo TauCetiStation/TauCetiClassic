@@ -206,14 +206,17 @@
 			var/emp_luck = rand(1, 20)
 			if(emp_luck > 12)
 				emp_act(1)
+				H.electrocute_act(9) 		//(10) for heart-attack
 				to_chat(H, "<span class='warning'>You pressed something and sparks appeared.</span>")
 				return 1
 			else if(emp_luck <= 2)
 				emp_act(2)
+				H.electrocute_act(15)
 				to_chat(H, "<span class='warning'>You pressed something and everything is gone.</span>")
 				return 1
 			else if(emp_luck == 10)
 				emp_act(3)
+				H.electrocute_act(20)
 				to_chat(H, "<span class='warning'>You poured water on the device.</span>") 
 				return 1
 	. = ..()
