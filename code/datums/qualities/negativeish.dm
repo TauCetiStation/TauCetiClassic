@@ -243,3 +243,13 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/dumb/add_effect(mob/living/carbon/human/H, latespawn)
 	H.adjustBrainLoss(rand(30, 99))
+
+/datum/quality/c4
+	desc = "Вы точно не знаете как это произошло, но кто-то вам подкинул активированную бомбу. Раз уж она не взорвалась в шаттле, то может вообще не взорвётся? А может взорвётся через 10 минут? А может через 20? А может через 30?"
+	requirement = "Нет."
+
+/datum/quality/c4/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='userdanger'>Я тебе кое-что не договорил, бомбу тебе действительно подкинули, но кто ж знал, что ты её так просто не снимешь с себя?</span>")
+	var/obj/item/weapon/plastique/C4 = new(H)
+	C4.timer = rand(600, 1800)
+	C4.plant_bomb(H)
