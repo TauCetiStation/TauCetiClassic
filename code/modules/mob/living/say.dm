@@ -117,7 +117,7 @@ var/global/list/department_radio_keys = list(
 	if (speaking)
 		if (speaking.flags & NONVERBAL)
 			if(prob(30))
-				me_emote("[pick(speaking.signlang_verb)].", message_type=SHOWMSG_AUDIO)
+				me_emote("[pick(speaking.signlang_verb)].", SHOWMSG_AUDIO)
 
 		if (speaking.flags & SIGNLANG)
 			say_signlang(message, pick(speaking.signlang_verb), speaking)

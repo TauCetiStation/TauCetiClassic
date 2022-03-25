@@ -144,7 +144,7 @@
 			return
 
 	if (message[1] == "*")
-		return emote(copytext(message, 2))
+		return emote(copytext(message, SHOWMSG_FEEL))
 
 	if (message[1] == ";") //Brain borer hivemind.
 		return borer_speak(message)

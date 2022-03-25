@@ -81,23 +81,23 @@
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
-							emote(pick(emote_see),1)
+							emote(pick(emote_see),SHOWMSG_AUDIO)
 						else
-							emote(pick(emote_hear),2)
+							emote(pick(emote_hear),SHOWMSG_FEEL)
 				else
 					say(pick(speak))
 			else
 				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					emote(pick(emote_see),1)
+					emote(pick(emote_see),SHOWMSG_AUDIO)
 				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
-					emote(pick(emote_hear),2)
+					emote(pick(emote_hear),SHOWMSG_FEEL)
 				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
 					var/length = emote_hear.len + emote_see.len
 					var/pick = rand(1,length)
 					if(pick <= emote_see.len)
-						emote(pick(emote_see),1)
+						emote(pick(emote_see),SHOWMSG_AUDIO)
 					else
-						emote(pick(emote_hear),2)
+						emote(pick(emote_hear),SHOWMSG_FEEL)
 
 	if (stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmobs.times_fired%4==2)

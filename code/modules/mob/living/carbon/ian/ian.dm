@@ -469,7 +469,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message,2))
+		return emote(copytext(message, SHOWMSG_FEEL))
 
 	var/verb = "says"
 
