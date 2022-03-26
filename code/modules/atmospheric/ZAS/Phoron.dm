@@ -86,7 +86,7 @@ var/global/image/contamination_overlay = image('icons/effects/contamination.dmi'
 		contaminate()
 
 	//Anything else requires them to not be dead.
-	if(stat >= 2 || species.flags[IS_SYNTHETIC])
+	if(stat == DEAD || species.flags[IS_SYNTHETIC])
 		return
 
 	//Burn skin if exposed.
@@ -99,19 +99,9 @@ var/global/image/contamination_overlay = image('icons/effects/contamination.dmi'
 
 	//Burn eyes if exposed.
 	if(vsc.plc.EYE_BURNS)
-		if(!head)
-			if(!wear_mask)
+		if(!(head && (head.body_parts_covered & EYES)))
+			if(!(wear_mask && (wear_mask.body_parts_covered & EYES)))
 				burn_eyes()
-			else
-				if(!(wear_mask.body_parts_covered & EYES))
-					burn_eyes()
-		else
-			if(!(head.body_parts_covered & EYES))
-				if(!wear_mask)
-					burn_eyes()
-				else
-					if(!(wear_mask.body_parts_covered & EYES))
-						burn_eyes()
 
 	//Genetic Corruption
 	if(vsc.plc.GENETIC_CORRUPTION)

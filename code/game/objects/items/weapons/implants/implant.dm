@@ -7,10 +7,11 @@
 	var/implanted = null
 	var/mob/imp_in = null
 	var/obj/item/organ/external/part = null
-	item_color = "b"
 	var/allow_reagents = 0
 	var/malfunction = 0
 	var/uses = 0
+
+	var/implant_type = "b"
 
 /obj/item/weapon/implant/atom_init()
 	. = ..()
@@ -54,6 +55,12 @@
 		BP.implants += src
 		C.sec_hud_set_implants()
 		part = BP
+
+/obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
+	forceMove(C)
+	imp_in = C
+	implanted = TRUE
+	C.sec_hud_set_implants()
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"

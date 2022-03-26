@@ -789,6 +789,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					var/old_icon_state1 = T.icon_state
 					var/old_icon1 = T.icon
 
+					if(locate(/obj/structure/flora) in B.contents) // cleaning trees/bushes at LZ
+						for(var/obj/structure/flora/O in B.contents)
+							qdel(O)
 
 					var/turf/X = T.MoveTurf(B)
 

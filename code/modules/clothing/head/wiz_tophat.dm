@@ -63,7 +63,7 @@ var/global/list/tophats_list = list()
 			continue
 
 		R.amount--
-		M.a_intent = INTENT_HARM
+		M.set_a_intent(INTENT_HARM)
 		M.equip_to_slot(new /obj/item/clothing/head/rabbitears(M), SLOT_HEAD)
 		break
 	return M
@@ -139,7 +139,7 @@ var/global/list/tophats_list = list()
 
 		var/matrix/M = matrix()
 		M.Scale(0.5)
-		animate(AM, pixel_y=AM.pixel_y + 32, transform=M, time=5)
+		animate(AM, pixel_y=AM.pixel_y - 32, transform=M, time=5)
 		sleep(5)
 
 		AM.visible_message("<span class='warning'>[AM] dissapears into [src]!</span>")

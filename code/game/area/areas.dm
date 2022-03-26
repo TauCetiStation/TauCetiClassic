@@ -122,7 +122,6 @@ var/global/list/ghostteleportlocs = list()
 
 /area/New() // not ready for transfer, problems with alarms raises if this part moved into init (requires more time)
 	icon_state = ""
-	layer = 10
 	uid = ++global_uid
 	all_areas += src
 	areas_by_type[type] = src

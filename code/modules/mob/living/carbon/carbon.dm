@@ -26,7 +26,7 @@
 
 	var/pressure = environment.return_pressure()
 	var/temperature = environment.temperature
-	var/affecting_temp = (temperature - bodytemperature) * environment.total_moles / MOLES_CELLSTANDARD
+	var/affecting_temp = (temperature - bodytemperature) * environment.return_relative_density()
 	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 
 	if(!on_fire)
@@ -34,7 +34,7 @@
 			bodytemperature += affecting_temp / BODYTEMP_HEAT_DIVISOR
 		else if (affecting_temp < -BODYTEMP_SIGNIFICANT_CHANGE)
 			bodytemperature += affecting_temp / BODYTEMP_COLD_DIVISOR
-		else
+		if(stat != DEAD)
 			bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
 
 	if(flags & GODMODE)
@@ -45,12 +45,12 @@
 	switch(bodytemperature)
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
 			throw_alert("temp", /atom/movable/screen/alert/hot, 2)
-			adjustFireLoss(HEAT_DAMAGE_LEVEL_3)
+			adjustFireLoss(HEAT_DAMAGE_LEVEL_2)
 		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_HEAT_DAMAGE_LIMIT)
 			clear_alert("temp")
 		else
 			throw_alert("temp", /atom/movable/screen/alert/cold, 2)
-			adjustFireLoss(COLD_DAMAGE_LEVEL_3)
+			adjustFireLoss(COLD_DAMAGE_LEVEL_2)
 
 	//Account for massive pressure differences
 	switch(adjusted_pressure)
@@ -77,7 +77,7 @@
 
 	if(!. || ISDIAGONALDIR(Dir))
 		return .
-	
+
 	handle_phantom_move(NewLoc, Dir)
 	if(nutrition && stat != DEAD)
 		var/met_factor = get_metabolism_factor()
@@ -473,22 +473,15 @@
 
 
 //Throwing stuff
+/mob/living/carbon/throw_mode_off()
+	..()
+	if(throw_icon) //in case we don't have the HUD and we use the hotkey
+		throw_icon.icon_state = "act_throw_off"
 
-/mob/living/carbon/proc/toggle_throw_mode()
-	if (src.in_throw_mode)
-		throw_mode_off()
-	else
-		throw_mode_on()
-
-/mob/living/carbon/proc/throw_mode_off()
-	src.in_throw_mode = 0
-	if(src.throw_icon) //in case we don't have the HUD and we use the hotkey
-		src.throw_icon.icon_state = "act_throw_off"
-
-/mob/living/carbon/proc/throw_mode_on()
-	src.in_throw_mode = 1
-	if(src.throw_icon)
-		src.throw_icon.icon_state = "act_throw_on"
+/mob/living/carbon/throw_mode_on()
+	..()
+	if(throw_icon)
+		throw_icon.icon_state = "act_throw_on"
 
 /mob/proc/throw_item(atom/target)
 	return
@@ -504,26 +497,10 @@
 	if(!item)
 		return
 
-	if(isitem(item))
-		var/obj/item/W = item
-		if(!W.canremove || W.flags & NODROP)
-			return
+	item = item.be_thrown(src, target)
 
-	if (istype(item, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = item
-		item = G.throw_held() //throw the person instead of the grab
-		qdel(G)
-		if(isliving(item))
-			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
-			var/turf/end_T = get_turf(target)
-			if(start_T && end_T)
-				var/mob/living/M = item
-				var/start_T_descriptor = "<font color='#6b5d00'>tile at [COORD(start_T)] in area [get_area(start_T)]</font>"
-				var/end_T_descriptor = "<font color='#6b4400'>tile at [COORD(end_T)] in area [get_area(end_T)]</font>"
-
-				M.log_combat(usr, "thrown from [start_T_descriptor] with the target [end_T_descriptor]")
-
-	if(!item) return //Grab processing has a chance of returning null
+	if(!item)
+		return // Some items may not want to be thrown
 
 	if(item.loc == src)
 		// Holder and the mob holding it.
@@ -1100,3 +1077,21 @@
 			return FALSE
 
 	return ..()
+
+/mob/living/carbon/accent_sounds(txt, datum/language/speaking)
+	if(speaking && (speaking.flags & SIGNLANG))
+		return txt
+
+	var/datum/species/S = all_species[get_species()]
+	if(S && S.flags[IS_SYNTHETIC])
+		return txt
+
+	for(var/datum/language/L as anything in languages)
+		if(L == speaking)
+			continue
+
+		if(languages[L] != LANGUAGE_NATIVE)
+			continue
+
+		txt = L.accentuate(txt, speaking)
+	return txt
