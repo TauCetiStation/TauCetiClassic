@@ -75,14 +75,13 @@
 		/datum/skill/surgery/novice,
 		/datum/skill/chemistry/novice,
 		/datum/skill/civ_mech/novice,
-		/datum/skill/atmospherics/novice
 	)
 
 /datum/skillset/intern
 	initial_skills = list(
 		/datum/skill/medical/pro,
-		/datum/skill/surgery/novice,
-		/datum/skill/chemistry/novice,
+		/datum/skill/surgery/trained,
+		/datum/skill/chemistry/trained,
 		/datum/skill/civ_mech/trained
 	)
 
@@ -278,7 +277,8 @@
 /datum/skillset/miner
 	initial_skills = list(
 		/datum/skill/civ_mech/master,
-		/datum/skill/firearms/trained
+		/datum/skill/firearms/trained,
+		/datum/skill/research/novice
 	)
 
 /datum/skillset/cargotech
