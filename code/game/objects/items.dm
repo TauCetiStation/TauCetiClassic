@@ -78,7 +78,7 @@
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
 	// Is using this item requires any specific skills?
-	var/required_skills
+	var/list/required_skills
 
 	var/dyed_type
 

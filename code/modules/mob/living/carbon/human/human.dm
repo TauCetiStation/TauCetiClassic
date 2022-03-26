@@ -1591,6 +1591,8 @@
 			var/slider_value = mind.skills.get_value(slider_id)
 			var/slider_min_value = skill.min_value
 			var/slider_max_value = mind.skills.get_max(slider_id)
+			if(slider_max_value == slider_min_value)
+				continue
 			var/slider_hint = skill.hint
 			dat += {"
 				<tr>
