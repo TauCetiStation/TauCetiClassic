@@ -142,6 +142,24 @@
 	name = "mining winter hood"
 	icon_state = "coatminer_hood"
 
+/obj/item/clothing/suit/hooded/wintercoat/wiz_blue
+	name = "Blue wizard winter coat"
+	icon_state = "coatwizblue"
+	hoodtype = /obj/item/clothing/head/wintercoat/wiz_blue
+
+/obj/item/clothing/head/wintercoat/wiz_blue
+	name = "Blue wizard winter hood"
+	icon_state = "coatwizblue_hood"
+
+/obj/item/clothing/suit/hooded/wintercoat/wiz_red
+	name = "Red wizard winter coat"
+	icon_state = "coatwizred"
+	hoodtype = /obj/item/clothing/head/wintercoat/wiz_red
+
+/obj/item/clothing/head/wintercoat/wiz_red
+	name = "Red wizard winter hood"
+	icon_state = "coatwizred_hood"
+
 /obj/item/clothing/shoes/winterboots
 	name = "winter boots"
 	desc = "Boots lined with 'synthetic' animal fur."

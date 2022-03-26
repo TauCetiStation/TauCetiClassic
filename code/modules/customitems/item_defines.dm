@@ -873,7 +873,7 @@
 	name = "Moonboots"
 	desc = "I command you to dance!"
 	icon_state = "Moonboots"
-	item_state = "Moonboots"
+	item_state = "wjboots"
 
 //////////// Sets ////////////
 

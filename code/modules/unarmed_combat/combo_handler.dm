@@ -158,7 +158,6 @@
 					CC_icon_state = "combo_element_hurt"
 			var/image/C_EL_I = image(icon='icons/mob/unarmed_combat_combos.dmi', icon_state="[CC_icon_state]_[i]")
 			C_EL_I.loc = victim
-			C_EL_I.layer = ABOVE_HUD_LAYER
 			C_EL_I.plane = ABOVE_HUD_PLANE
 			C_EL_I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 			C_EL_I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT

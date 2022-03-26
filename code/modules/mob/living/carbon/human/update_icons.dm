@@ -360,12 +360,12 @@ Please contact me on #coderbus IRC. ~Carn x
 				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_s", -MUTANTRACE_LAYER)
 
 	if(species.name == SHADOWLING && head)
-		var/image/eyes = image('icons/mob/shadowling.dmi', null, "[dna.mutantrace]_ms_s", LIGHTING_LAYER + 1)
+		var/image/eyes = image('icons/mob/shadowling.dmi', null, "[dna.mutantrace]_ms_s")
 		eyes.plane = ABOVE_LIGHTING_PLANE
 		standing += eyes
 
 	if(iszombie(src) && stat != DEAD)
-		var/image/eyes = image(species.icobase, null, "zombie_ms_s", LIGHTING_LAYER + 1)
+		var/image/eyes = image(species.icobase, null, "zombie_ms_s")
 		eyes.plane = ABOVE_LIGHTING_PLANE
 		standing += eyes
 
@@ -468,7 +468,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				to_chat(src, "<span class='warning'>You burst out of \the [U]!</span>")
 				drop_from_inventory(U)
 				return
-		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood", "_s")
+		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
 		standing = update_height(standing)
 		overlays_standing[UNIFORM_LAYER] = standing
 

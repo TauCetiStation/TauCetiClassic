@@ -503,18 +503,6 @@
 	icon_state = "tango"
 	item_state = "tango"
 
-/obj/item/clothing/under/rank/centcom_officer_old
-	desc = "It's a jumpsuit worn by Centcom Officers."
-	name = "Centcom officer's jumpsuit"
-	icon_state = "officer_old"
-	item_state = "officer_old"
-
-/obj/item/clothing/under/rank/centcom_commander_old
-	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders."
-	name = "Centcom officer's jumpsuit"
-	icon_state = "centcom_old"
-	item_state = "centcom_old"
-
 //Mafia
 /obj/item/clothing/under/mafia
 	name = "mafia outfit"
@@ -569,21 +557,18 @@
 	name = "NanoTrasen navy uniform"
 	icon_state = "officer"
 	item_state = "officer"
-	displays_id = 0
 
 /obj/item/clothing/under/rank/centcom/officer
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Lieutenant Commander\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
 	name = "NanoTrasen officers uniform"
 	icon_state = "officer"
 	item_state = "officer"
-	displays_id = 0
 
 /obj/item/clothing/under/rank/centcom/captain
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Captain\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
 	name = "NanoTrasen captains uniform"
 	icon_state = "centcom"
 	item_state = "centcom"
-	displays_id = 0
 
 /obj/item/clothing/under/roman
 	name = "roman armor"
@@ -649,20 +634,6 @@
 		body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	else if(slot == SLOT_HEAD)
 		body_parts_covered = HEAD
-
-/obj/item/clothing/under/nt_pmc_uniform
-	name = "NT PCM Uniform"
-	desc = "Uniform used by the private security corporation."
-	icon_state = "nt_pmc_uniform"
-	item_state = "nt_pmc_uniform"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-
-/obj/item/clothing/under/nt_pmc_uniform_light
-	name = "NT PCM Light Uniform"
-	desc = "Uniform used by the private security corporation. This one without sleeves."
-	icon_state = "nt_pmc_uniform"
-	item_state = "nt_pmc_uniform"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/rank/postal_dude_shirt
 	name = "blue shirt"
