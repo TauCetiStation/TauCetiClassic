@@ -450,8 +450,7 @@
 			feedback_add_details("admin_secrets_fun_used","SG")
 			for(var/obj/item/clothing/under/W in world)
 				W.icon_state = "schoolgirl"
-				W.item_state = "w_suit"
-				W.item_color = "schoolgirl"
+				W.item_state = "schoolgirl"
 			message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
 			announcement_ping.play("animes")
 		// Egalitarian Station Mode

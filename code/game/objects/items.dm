@@ -34,7 +34,6 @@
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
-	var/item_color = null
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	var/pierce_protection = 0
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
@@ -78,6 +77,8 @@
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
+
+	var/dyed_type
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -1043,3 +1044,26 @@
 	if(!qualities)
 		return 0
 	return qualities[quality]
+
+/obj/item/proc/wash_act(w_color)
+	decontaminate()
+	wet = 0
+
+	if(!dyed_type)
+		return
+
+	var/list/dye_colors = global.dyed_item_types[dyed_type]
+	if(!dye_colors)
+		return
+
+	var/obj/item/clothing/dye_type = dye_colors[w_color]
+	if(!dye_type)
+		return
+
+	if(islist(dye_type))
+		dye_type = pick(dye_type)
+
+	name = initial(dye_type.name)
+	icon_state = initial(dye_type.icon_state)
+	item_state = initial(dye_type.item_state)
+	desc = "The colors are a bit dodgy."
