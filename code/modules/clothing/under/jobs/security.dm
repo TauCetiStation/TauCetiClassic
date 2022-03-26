@@ -12,7 +12,7 @@
 	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for more robust protection. It has the word \"Warden\" written on the shoulders."
 	name = "warden's jumpsuit"
 	icon_state = "warden"
-	item_state = "r_suit"
+	item_state = "warden"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
@@ -21,7 +21,7 @@
 	name = "security officer's jumpsuit"
 	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
 	icon_state = "security"
-	item_state = "r_suit"
+	item_state = "secred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
@@ -29,6 +29,7 @@
 /obj/item/clothing/under/rank/security/skirt
 	name = "security officer's jumpskirt"
 	icon_state = "skirt_security"
+	item_state = "secskirtred"
 
 /obj/item/clothing/under/rank/dispatch
 	name = "dispatcher's uniform"
@@ -43,7 +44,7 @@
 	name = "security officer's uniform"
 	desc = "It's made of a slightly sturdier material, to allow for robust protection."
 	icon_state = "redshirt2"
-	item_state = "r_suit"
+	item_state = "redshirt2"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
@@ -81,7 +82,7 @@
 	name = "white hard-worn suit with brown pants"
 	desc = "Someone who wears this means business."
 	icon_state = "detective"
-	item_state = "det"
+	item_state = "detective"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
@@ -119,7 +120,7 @@
 	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". It has additional armor to protect the wearer."
 	name = "head of security's jumpsuit"
 	icon_state = "hos"
-	item_state = "r_suit"
+	item_state = "hosred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.8

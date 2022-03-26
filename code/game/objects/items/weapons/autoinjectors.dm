@@ -85,3 +85,35 @@
 	item_state = "bonepen"
 	volume = 30
 	list_reagents = list("nanocalcium" = 30)
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/nuka_cola
+	name = "nuka cola autoinjector"
+	desc = "Drugs, drugs never change."
+	icon_state = "autobrut"
+	item_state = "autobrut"
+	volume = 15
+	list_reagents = list("nuka_cola" = 15)
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/hippiesdelight
+	name = "hippie's delight autoinjector"
+	desc = "Drugs, drugs never change."
+	icon_state = "autoantitox"
+	item_state = "autoantitox"
+	volume = 15
+	list_reagents = list("hippiesdelight" = 15)
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/lean
+	name = "lean autoinjector"
+	desc = "Drugs, drugs never change."
+	icon_state = "autopainkiller"
+	item_state = "autopainkiller"
+	volume = 15
+	list_reagents = list("lean" = 15)
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/space_drugs
+	name = "space drugs autoinjector"
+	desc = "Drugs, drugs never change."
+	icon_state = "autonutriment"
+	item_state = "autonutriment"
+	volume = 15
+	list_reagents = list("space_drugs" = 15)

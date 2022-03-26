@@ -1027,6 +1027,11 @@
 	if(src != over)
 		remove_outline()
 
+/obj/item/be_thrown(mob/living/thrower, atom/target)
+	if(!canremove || flags & NODROP)
+		return null
+	return src
+
 /obj/item/airlock_crush_act()
 	var/qual_prying = get_quality(QUALITY_PRYING)
 	if(qual_prying <= 0)
@@ -1039,6 +1044,12 @@
 
 /obj/item/proc/display_accessories()
 	return
+
+/obj/item/taken(mob/living/user, atom/fallback)
+	if(user.Adjacent(src) && user.put_in_hands(src))
+		return TRUE
+
+	return ..()
 
 /obj/item/proc/get_quality(quality)
 	if(!qualities)

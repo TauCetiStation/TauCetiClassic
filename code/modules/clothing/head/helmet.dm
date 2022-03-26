@@ -17,6 +17,14 @@
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 	flashbang_protection = TRUE
 
+/obj/item/clothing/head/helmet/psyamp
+	name = "psychic amplifier"
+	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot."
+	icon_state = "amp"
+	item_state = "amp"
+	flags_inv = 0
+	armor = list(melee = 30, bullet = 30, laser = 30,energy = 30, bomb = 0, bio = 100, rad = 100)
+
 /obj/item/clothing/head/helmet/warden
 	name = "warden's helmet"
 	desc = "It's a special helmet issued to the Warden of a security force. Protects the head from impacts."

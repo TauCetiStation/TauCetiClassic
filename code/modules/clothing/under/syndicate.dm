@@ -22,5 +22,5 @@
 	name = "tacticool turtleneck"
 	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
 	icon_state = "tactifool"
-	item_state = "bl_suit"
+	item_state = "tactifool"
 	siemens_coefficient = 1
