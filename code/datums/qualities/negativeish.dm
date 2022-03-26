@@ -240,7 +240,8 @@ var/global/list/allergen_reagents_list
 /datum/quality/negativeish/dumb/add_effect(mob/living/carbon/human/H, latespawn)
 	H.adjustBrainLoss(rand(30, 99))
 
-/datum/quality/c4
+/datum/quality/negativeish/c4
+	name = "C4"
 	desc = "Спокойно, на Вас всего лишь повесили бомбу. \
 	<br>- ВЗОРВЁТСЯ ЛИ ОНА? \
 	<br>- Да. \
