@@ -71,6 +71,8 @@
 
 	var/can_combine = TRUE
 
+	var/blade_color
+
 /obj/item/weapon/melee/energy/sword/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/melee/energy/sword))
 		var/obj/item/weapon/melee/energy/sword/S = I
@@ -91,7 +93,7 @@
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")
-			item_color = "rainbow"
+			blade_color = "rainbow"
 			if (active)
 				active = FALSE
 				icon_state = "sword0"

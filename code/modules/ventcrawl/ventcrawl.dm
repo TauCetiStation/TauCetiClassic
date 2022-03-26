@@ -150,7 +150,6 @@ var/global/list/ventcrawl_machinery = list(
 		var/obj/machinery/atmospherics/A = X //all elements in totalMembers are necessarily of this type.
 		if(!A.pipe_image)
 			A.pipe_image = image(A, A.loc, dir = A.dir)
-		A.pipe_image.layer = HUD_LAYER
 		A.pipe_image.plane = HUD_PLANE
 		pipes_shown += A.pipe_image
 		client.images += A.pipe_image
