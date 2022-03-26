@@ -99,11 +99,17 @@
 /mob/living/silicon/robot/proc/uneq_active()
 	if(isnull(module_active))
 		return
+
+	src.visible_message("<span class='notice'>1</span>")
 	if(istype(module_active, /obj/item/weapon/gripper))
-		var/obj/item/weapon/gripper/gripper
-		if(!isnull(gripper.wrapped))
-		 drop_item(gripper)
-		 return
+		src.visible_message("<span class='notice'>2</span>")
+		var/obj/item/weapon/gripper/G = module_active
+		if(G.wrapped in G.contents)
+			src.visible_message("<span class='notice'>3</span>")
+			G.drop_item()
+			return
+	src.visible_message("<span class='notice'>4</span>")
+
 	unequip_module(module_active)
 
 /mob/living/silicon/robot/proc/uneq_all()
