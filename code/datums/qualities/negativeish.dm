@@ -243,3 +243,33 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/dumb/add_effect(mob/living/carbon/human/H, latespawn)
 	H.adjustBrainLoss(rand(30, 99))
+
+
+/datum/quality/trypanophobia
+	desc = "Вы с самого детства боитесь уколов."
+	requirement = "Не СПУ, не Диона"
+
+/datum/quality/trypanophobia/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !H.species.flags[IS_SYNTHETIC] && !H.species.flags[IS_PLANT]
+
+/datum/quality/trypanophobia/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT)
+
+
+/datum/quality/wet_hands
+	desc = "Ваши верхние конечности можно сравнить с губкой, которая впитывает в себя жидкости. Осторожнее при работе с консолями."
+	requirement = "Нет."
+
+/datum/quality/wet_hands/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_WET_HANDS, QUALITY_TRAIT)
+
+
+/datum/quality/greasy_fingers
+	desc = "Ваши пальцы часто покрываются природным жиром."
+	requirement = "Не СПУ."
+
+/datum/quality/greasy_fingers/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !H.species.flags[IS_SYNTHETIC]
+
+/datum/quality/greasy_fingers/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_GREASY_FINGERS, QUALITY_TRAIT)
