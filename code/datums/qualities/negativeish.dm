@@ -244,6 +244,18 @@ var/global/list/allergen_reagents_list
 /datum/quality/dumb/add_effect(mob/living/carbon/human/H, latespawn)
 	H.adjustBrainLoss(rand(30, 99))
 
+/datum/quality/c4
+	desc = "Спокойно, на Вас всего лишь повесили бомбу. \
+	<br>- ВЗОРВЁТСЯ ЛИ ОНА? \
+	<br>- Да. \
+	<br>- КОГДА? \
+	<br>- Ну может вообще не взорвётся, ну а может и бахнет минут через 5? 20? 40? Кто его знает?"
+	requirement = "Нет."
+
+/datum/quality/c4/add_effect(mob/living/carbon/human/H, latespawn)
+	var/obj/item/weapon/plastique/C4 = new(H)
+	C4.timer = rand(600, 1800)
+	C4.plant_bomb(H)
 
 /datum/quality/trypanophobia
 	desc = "Вы с самого детства боитесь уколов."
