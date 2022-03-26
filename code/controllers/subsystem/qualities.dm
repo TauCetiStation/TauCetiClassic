@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(qualities)
 	// there's not many QUIRKEISH qualities at all, they are given lower priority.
 	var/list/pool_distribution = list(
 		QUALITY_POOL_POSITIVEISH = 50,
-		QUALITY_POOL_QUIRKEISH = 20,
+		QUALITY_POOL_QUIRKIEISH = 20,
 		QUALITY_POOL_NEGATIVEISH = 30,
 	)
 
