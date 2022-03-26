@@ -37,7 +37,6 @@
 /obj/effect/bmode//Cleaning up the tree a bit
 	density = TRUE
 	anchored = TRUE
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	dir = NORTH
 	icon = 'icons/misc/buildmode.dmi'

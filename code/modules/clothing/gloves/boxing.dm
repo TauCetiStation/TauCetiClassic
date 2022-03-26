@@ -41,6 +41,3 @@
 /obj/item/clothing/gloves/boxing/yellow
 	icon_state = "boxingyellow"
 	item_state = "boxingyellow"
-
-/obj/item/clothing/gloves/white/redcoat
-	item_color = "redcoat"		//Exists for washing machines. Is not different from white gloves in any way.

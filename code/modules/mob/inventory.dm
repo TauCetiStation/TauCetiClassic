@@ -177,8 +177,7 @@ var/global/list/slot_equipment_priority = list(
 		if(old_loc && old_loc.loc && (src != old_loc) && (src != old_loc.loc))
 			INVOKE_ASYNC(W, /atom/movable.proc/do_pickup_animation, src, old_loc)
 
-		l_hand = W
-		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
+		l_hand = W	//TODO: move to equipped?
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
 		W.equipped(src,SLOT_L_HAND)
@@ -207,7 +206,6 @@ var/global/list/slot_equipment_priority = list(
 			INVOKE_ASYNC(W, /atom/movable.proc/do_pickup_animation, src, old_loc)
 
 		r_hand = W
-		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
 		W.equipped(src,SLOT_R_HAND)
