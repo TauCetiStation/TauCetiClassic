@@ -76,7 +76,7 @@
 					<A href='?src=\ref[src];secretsfun=securitylevel3'>Security Level - Delta</A><BR>
 					<h4>Do something stupid</h4>
 					<A href='?src=\ref[src];secretsfun=spawncompletesandwich'>Create a Complete Sandwich</A><BR>
-					<A href='?src=\ref[src];secretsfun=forcedquality'>Forced \"Random\" Quality</A><BR>
+					<A href='?src=\ref[src];secretsfun=forcedquality'>Force a \"Random\" Quality</A><BR>
 					"}
 
 		if(2) // OOC Events

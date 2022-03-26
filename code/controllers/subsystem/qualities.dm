@@ -32,12 +32,12 @@ SUBSYSTEM_DEF(qualities)
 
 /datum/controller/subsystem/qualities/proc/populate_lists()
 	for(var/quality_type in subtypesof(/datum/quality))
-		var/datum/quality/quality = new quality_type
-		by_name[name] = quality
-		by_type[quality_type] = quality
+		var/datum/quality/Q = new quality_type
+		by_name[Q.name] = Q
+		by_type[Q.quality_type] = Q
 
-		for(var/pool in quality.pools)
-			LAZYADD(by_pool[pool], quality)
+		for(var/pool in Q.pools)
+			LAZYADD(by_pool[pool], Q)
 
 /datum/controller/subsystem/qualities/proc/announce_quality(client/C, datum/quality/quality)
 	var/hide = prob(quality.hidden_chance)
