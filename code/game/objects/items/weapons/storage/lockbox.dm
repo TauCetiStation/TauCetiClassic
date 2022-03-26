@@ -1,17 +1,18 @@
 /obj/item/weapon/storage/lockbox
 	name = "lockbox"
 	desc = "A locked box."
-	icon_state = "lockbox+l"
-	item_state = "syringe_kit"
+	icon_state = "briefcase_secure_white"
+	item_state = "briefcase_secure_white"
 	w_class = SIZE_NORMAL
 	max_w_class = SIZE_SMALL
 	max_storage_space = 10 //The sum of the w_classes of all the items in this storage item.
 	req_access = list(access_armory)
 	var/locked = TRUE
 	var/broken = FALSE
-	var/icon_locked = "lockbox+l"
-	var/icon_closed = "lockbox"
-	var/icon_broken = "lockbox+b"
+	var/list/indicator_overlays = list()
+	var/icon/denied = icon('icons/obj/storage.dmi', "briefcase_denied")
+	var/icon/accepted = icon('icons/obj/storage.dmi', "briefcase_accepted")
+	var/icon/spark = icon('icons/obj/storage.dmi', "briefcase_spark")
 
 
 /obj/item/weapon/storage/lockbox/attackby(obj/item/I, mob/user, params)
@@ -22,11 +23,13 @@
 		if(allowed(user))
 			locked = !( locked )
 			if(locked)
-				icon_state = icon_locked
+				cut_overlay(accepted)
+				add_overlay(denied)
 				to_chat(user, "<span class='warning'>You lock the [src]!</span>")
 				return
 			else
-				icon_state = icon_closed
+				cut_overlay(denied)
+				add_overlay(accepted)
 				to_chat(user, "<span class='warning'>You unlock the [src]!</span>")
 				return
 		else
@@ -36,7 +39,8 @@
 		broken = TRUE
 		locked = FALSE
 		desc = "It appears to be broken."
-		icon_state = icon_broken
+		cut_overlays()
+		add_overlay(spark)
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 		spark_system.start()
@@ -56,7 +60,8 @@
 	broken = TRUE
 	locked = FALSE
 	desc = "It appears to be broken."
-	icon_state = icon_broken
+	cut_overlays()
+	add_overlay(spark)
 	user.visible_message("<span class='warning'>The locker has been broken by [] with an electromagnetic card!</span>", blind_message = "<span class='warning'>You hear a faint electrical spark.</span>", viewing_distance = 3)
 	return TRUE
 

@@ -1,8 +1,8 @@
 /obj/item/weapon/storage/briefcase
 	name = "briefcase"
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
-	icon_state = "briefcase"
-	item_state = "briefcase"
+	icon_state = "briefcase_brown"
+	item_state = "briefcase_brown"
 	flags = CONDUCT
 	force = 8.0
 	throw_speed = 1
@@ -43,5 +43,51 @@
 	return
 
 /obj/item/weapon/storage/briefcase/centcomm
-	icon_state = "briefcase-centcomm"
-	item_state = "briefcase-centcomm"
+	icon_state = "briefcase_cc"
+	item_state = "briefcase_cc"
+
+/obj/item/weapon/storage/briefcase/black
+	icon_state = "briefcase_black"
+	item_state = "briefcase_black"
+
+/obj/item/weapon/storage/briefcase/med
+	icon_state = "briefcase_med"
+	item_state = "briefcase_med"
+
+/obj/item/weapon/storage/briefcase/virology
+	icon_state = "briefcase_vir"
+	item_state = "briefcase_vir"
+
+/obj/item/weapon/storage/briefcase/inflatable
+	name = "inflatable barrier box"
+	desc = "Contains inflatable walls and doors."
+	icon_state = "briefcase_inflate"
+	item_state = "briefcase_inflate"
+	startswith = list(
+						/obj/item/inflatable/door,
+						/obj/item/inflatable/door,
+						/obj/item/inflatable/door,
+						/obj/item/inflatable,
+						/obj/item/inflatable,
+						/obj/item/inflatable,
+						/obj/item/inflatable
+					)
+
+/obj/item/weapon/storage/briefcase/engine
+	name = "engineering case"
+	desc = "Contains resource sheets."
+	icon_state = "briefcase_eng"
+	item_state = "briefcase_eng"
+	can_hold = list(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/glass, /obj/item/stack/sheet/glass/phoronglass, /obj/item/stack/sheet/rglass, /obj/item/stack/sheet/glass/phoronrglass)
+	storage_slots = 10
+
+/obj/item/weapon/storage/briefcase/engine/update_icon()
+	cut_overlays()
+	for(var/i in 1 to min(10, contents.len))
+		var/obj/item/stack/sheet/S = contents[i]
+		var/image/sheet_overlay = image(icon,"briefcase_eng_[S.icon_state]")
+		if(i <= 5 && i >= 1)
+			sheet_overlay.pixel_x = -10 + i
+		else if(i <= 10 && i >= 6)
+			sheet_overlay.pixel_x = i
+		add_overlay(sheet_overlay)

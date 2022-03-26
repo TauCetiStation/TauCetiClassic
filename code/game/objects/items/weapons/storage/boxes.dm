@@ -48,11 +48,7 @@
 /obj/item/weapon/storage/box/engineer
 	name = "emergency box"
 	desc = "It's a box, issued to every employee of NanoTrasen, contains a mask and a spare air tank. It has a ton of ads all over its back."
-
-/obj/item/weapon/storage/box/engineer/atom_init()
-	. = ..()
-	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+	startswith = list(/obj/item/clothing/mask/breath, /obj/item/weapon/tank/emergency_oxygen/engi)
 
 //Alien
 /obj/item/weapon/storage/box/alien
@@ -64,102 +60,133 @@
 	name = "box of latex gloves"
 	desc = "Contains latex and nitrile gloves. Must-have of a doctor."
 	icon_state = "latex_box"
-
-/obj/item/weapon/storage/box/gloves/atom_init()
-	. = ..()
-	for(var/i in 1 to 5)
-		new /obj/item/clothing/gloves/latex(src)
-	for(var/i in 1 to 2)
-		new /obj/item/clothing/gloves/latex/nitrile(src)
+	startswith = list(
+						/obj/item/clothing/gloves/latex,
+						/obj/item/clothing/gloves/latex,
+						/obj/item/clothing/gloves/latex,
+						/obj/item/clothing/gloves/latex,
+						/obj/item/clothing/gloves/latex,
+						/obj/item/clothing/gloves/latex/nitrile,
+						/obj/item/clothing/gloves/latex/nitrile
+					)
 
 //Masks
 /obj/item/weapon/storage/box/masks
 	name = "box of sterile masks"
 	desc = "This box contains masks of sterility."
 	icon_state = "sterile_mask_box"
-
-/obj/item/weapon/storage/box/masks/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/clothing/mask/surgical(src)
+	startswith = list(
+						/obj/item/clothing/mask/surgical,
+						/obj/item/clothing/mask/surgical,
+						/obj/item/clothing/mask/surgical,
+						/obj/item/clothing/mask/surgical,
+						/obj/item/clothing/mask/surgical,
+						/obj/item/clothing/mask/surgical,
+						/obj/item/clothing/mask/surgical
+					)
 
 //Syringes
 /obj/item/weapon/storage/box/syringes
 	name = "box of syringes"
 	desc = "A box full of syringes."
 	icon_state = "syringe_box"
-
-/obj/item/weapon/storage/box/syringes/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/reagent_containers/syringe(src)
+	startswith = list(
+						/obj/item/weapon/reagent_containers/syringe,
+						/obj/item/weapon/reagent_containers/syringe,
+						/obj/item/weapon/reagent_containers/syringe,
+						/obj/item/weapon/reagent_containers/syringe,
+						/obj/item/weapon/reagent_containers/syringe,
+						/obj/item/weapon/reagent_containers/syringe,
+						/obj/item/weapon/reagent_containers/syringe
+					)
 
 //Beakers
 /obj/item/weapon/storage/box/beakers
 	name = "box of beakers"
 	icon_state = "beaker_box"
-
-/obj/item/weapon/storage/box/beakers/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	startswith = list(
+						/obj/item/weapon/reagent_containers/glass/beaker,
+						/obj/item/weapon/reagent_containers/glass/beaker,
+						/obj/item/weapon/reagent_containers/glass/beaker,
+						/obj/item/weapon/reagent_containers/glass/beaker,
+						/obj/item/weapon/reagent_containers/glass/beaker,
+						/obj/item/weapon/reagent_containers/glass/beaker,
+						/obj/item/weapon/reagent_containers/glass/beaker
+					)
 
 //Injectors
 /obj/item/weapon/storage/box/injectors
 	name = "box of DNA injectors"
 	desc = "This box contains injectors it seems."
 	icon_state = "dnainjector_box"
-
-/obj/item/weapon/storage/box/injectors/atom_init()
-	. = ..()
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/dnainjector/h2m(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/dnainjector/m2h(src)
+	startswith = list(
+						/obj/item/weapon/dnainjector/h2m,
+						/obj/item/weapon/dnainjector/h2m,
+						/obj/item/weapon/dnainjector/h2m,
+						/obj/item/weapon/dnainjector/m2h,
+						/obj/item/weapon/dnainjector/m2h,
+						/obj/item/weapon/dnainjector/m2h
+					)
 
 //Beanbags
 /obj/item/weapon/storage/box/beanbags
 	name = "box of beanbag shells"
 	desc = "It has a picture of a gun and several warning symbols on the front.<br>WARNING: Live ammunition. Misuse may result in serious injury or death."
 	icon_state = "shotgun_ammo_beanbag"
-
-/obj/item/weapon/storage/box/beanbags/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/shotgun/beanbag(src)
+	startswith = list(
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag
+					)
 
 //Flashbangs
 /obj/item/weapon/storage/box/flashbangs
 	name = "box of flashbangs (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause blindness or deafness in repeated use.</span>"
 	icon_state = "flashbang_box"
-
-/obj/item/weapon/storage/box/flashbangs/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/grenade/flashbang(src)
+	startswith = list(
+						/obj/item/weapon/grenade/flashbang,
+						/obj/item/weapon/grenade/flashbang,
+						/obj/item/weapon/grenade/flashbang,
+						/obj/item/weapon/grenade/flashbang,
+						/obj/item/weapon/grenade/flashbang,
+						/obj/item/weapon/grenade/flashbang,
+						/obj/item/weapon/grenade/flashbang
+					)
 
 //Teargas
 /obj/item/weapon/storage/box/teargas
 	name = "box of tear gas grenades (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause blindness and skin irritation.</span>"
 	icon_state = "flashbang_box"
-
-/obj/item/weapon/storage/box/teargas/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/grenade/chem_grenade/teargas(src)
+	startswith = list(
+						/obj/item/weapon/grenade/chem_grenade/teargas,
+						/obj/item/weapon/grenade/chem_grenade/teargas,
+						/obj/item/weapon/grenade/chem_grenade/teargas,
+						/obj/item/weapon/grenade/chem_grenade/teargas,
+						/obj/item/weapon/grenade/chem_grenade/teargas,
+						/obj/item/weapon/grenade/chem_grenade/teargas,
+						/obj/item/weapon/grenade/chem_grenade/teargas
+					)
 
 //Smokegrenades
 /obj/item/weapon/storage/box/smokegrenades
 	name = "box of smoke grenades"
 	desc = "This box contains smoke grenades it seems."
 	icon_state = "flashbang_box"
-
-/obj/item/weapon/storage/box/smokegrenades/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/grenade/smokebomb(src)
+	startswith = list(
+						/obj/item/weapon/grenade/smokebomb,
+						/obj/item/weapon/grenade/smokebomb,
+						/obj/item/weapon/grenade/smokebomb,
+						/obj/item/weapon/grenade/smokebomb,
+						/obj/item/weapon/grenade/smokebomb,
+						/obj/item/weapon/grenade/smokebomb,
+						/obj/item/weapon/grenade/smokebomb
+					)
 
 /obj/item/weapon/storage/box/r4046
 	name = "box of 40x46mm rubber grenades (WARNING)"
@@ -171,148 +198,187 @@
 	name = "box of 40x46mm rubber grenades (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
 	icon_state = "4046_box(r)"
-
-/obj/item/weapon/storage/box/r4046/rubber/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/r4046(src)
+	startswith = list(
+						/obj/item/ammo_casing/r4046,
+						/obj/item/ammo_casing/r4046,
+						/obj/item/ammo_casing/r4046,
+						/obj/item/ammo_casing/r4046,
+						/obj/item/ammo_casing/r4046,
+						/obj/item/ammo_casing/r4046,
+						/obj/item/ammo_casing/r4046
+					)
 
 //Teargas 40x46mm
 /obj/item/weapon/storage/box/r4046/teargas
 	name = "box of 40x46mm teargas grenades (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
 	icon_state = "4046_box(gas)"
-
-/obj/item/weapon/storage/box/r4046/teargas/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/r4046/chem/teargas(src)
+	startswith = list(
+						/obj/item/ammo_casing/r4046/chem/teargas,
+						/obj/item/ammo_casing/r4046/chem/teargas,
+						/obj/item/ammo_casing/r4046/chem/teargas,
+						/obj/item/ammo_casing/r4046/chem/teargas,
+						/obj/item/ammo_casing/r4046/chem/teargas,
+						/obj/item/ammo_casing/r4046/chem/teargas,
+						/obj/item/ammo_casing/r4046/chem/teargas
+					)
 
 //EMP 40x46mm
 /obj/item/weapon/storage/box/r4046/EMP
 	name = "box of 40x46mm EMP grenades (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
 	icon_state = "4046_box(emp)"
-
-/obj/item/weapon/storage/box/r4046/EMP/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/r4046/chem/EMP(src)
+	startswith = list(
+						/obj/item/ammo_casing/r4046/chem/EMP,
+						/obj/item/ammo_casing/r4046/chem/EMP,
+						/obj/item/ammo_casing/r4046/chem/EMP,
+						/obj/item/ammo_casing/r4046/chem/EMP,
+						/obj/item/ammo_casing/r4046/chem/EMP,
+						/obj/item/ammo_casing/r4046/chem/EMP,
+						/obj/item/ammo_casing/r4046/chem/EMP
+					)
 
 //EMPs
 /obj/item/weapon/storage/box/emps
 	name = "box of emp grenades"
 	desc = "A box with 5 emp grenades."
 	icon_state = "flashbang_box"
-
-/obj/item/weapon/storage/box/emps/atom_init()
-	. = ..()
-	for(var/i in 1 to 5)
-		new /obj/item/weapon/grenade/empgrenade(src)
+	startswith = list(
+						/obj/item/weapon/grenade/empgrenade,
+						/obj/item/weapon/grenade/empgrenade,
+						/obj/item/weapon/grenade/empgrenade,
+						/obj/item/weapon/grenade/empgrenade,
+						/obj/item/weapon/grenade/empgrenade
+					)
 
 //Track implant
 /obj/item/weapon/storage/box/trackimp
 	name = "boxed tracking implant kit"
 	desc = "Box full of scum-bag tracking utensils."
 	icon_state = "implant_box"
-
-/obj/item/weapon/storage/box/trackimp/atom_init()
-	. = ..()
-	new /obj/item/weapon/implanter(src)
-	new /obj/item/weapon/implantpad(src)
-	new /obj/item/weapon/locator(src)
-	for(var/i in 1 to 4)
-		new /obj/item/weapon/implantcase/tracking(src)
+	startswith = list(
+						/obj/item/weapon/implanter,
+						/obj/item/weapon/implantpad,
+						/obj/item/weapon/locator,
+						/obj/item/weapon/implantcase/tracking,
+						/obj/item/weapon/implantcase/tracking,
+						/obj/item/weapon/implantcase/tracking,
+						/obj/item/weapon/implantcase/tracking
+					)
 
 //Chemical implant
 /obj/item/weapon/storage/box/chemimp
 	name = "boxed chemical implant kit"
 	desc = "Box of stuff used to implant chemicals."
 	icon_state = "implant_box"
-
-/obj/item/weapon/storage/box/chemimp/atom_init()
-	. = ..()
-	new /obj/item/weapon/implanter(src)
-	new /obj/item/weapon/implantpad(src)
-	for(var/i in 1 to 5)
-		new /obj/item/weapon/implantcase/chem(src)
+	startswith = list(
+						/obj/item/weapon/implanter,
+						/obj/item/weapon/implantpad,
+						/obj/item/weapon/implantcase/chem,
+						/obj/item/weapon/implantcase/chem,
+						/obj/item/weapon/implantcase/chem,
+						/obj/item/weapon/implantcase/chem,
+						/obj/item/weapon/implantcase/chem
+					)
 
 //Stimpack
 /obj/item/weapon/storage/box/autoinjector/stimpack
 	name = "stimpack value kit"
 	desc = "A box with several stimpack autoinjectors for the economical miner."
 	icon_state = "box"
-
-/obj/item/weapon/storage/box/autoinjector/stimpack/atom_init()
-	. = ..()
-	for(var/i in 1 to 5)
-		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+	startswith = list(
+						/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,
+						/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,
+						/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,
+						/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,
+						/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack
+					)
 
 //Prescription glasses
 /obj/item/weapon/storage/box/rxglasses
 	name = "box of prescription glasses"
 	desc = "This box contains nerd glasses."
 	icon_state = "glasses_box"
-
-/obj/item/weapon/storage/box/rxglasses/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/clothing/glasses/regular(src)
+	startswith = list(
+						/obj/item/clothing/glasses/regular,
+						/obj/item/clothing/glasses/regular,
+						/obj/item/clothing/glasses/regular,
+						/obj/item/clothing/glasses/regular,
+						/obj/item/clothing/glasses/regular,
+						/obj/item/clothing/glasses/regular,
+						/obj/item/clothing/glasses/regular
+					)
 
 //Drinking glasses
 /obj/item/weapon/storage/box/drinkingglasses
 	name = "box of drinking glasses"
 	desc = "It has a picture of drinking glasses on it."
 	icon_state = "drinking_glass_box"
-
-/obj/item/weapon/storage/box/drinkingglasses/atom_init()
-	. = ..()
-	for(var/i in 1 to 6)
-		new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass(src)
+	startswith = list(
+						/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+						/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+						/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+						/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+						/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+						/obj/item/weapon/reagent_containers/food/drinks/drinkingglass
+					)
 
 //Death alarm
 /obj/item/weapon/storage/box/cdeathalarm_kit
 	name = "Death Alarm Kit"
 	desc = "Box of stuff used to implant death alarms."
 	icon_state = "implant_box"
-
-/obj/item/weapon/storage/box/cdeathalarm_kit/atom_init()
-	. = ..()
-	new /obj/item/weapon/implanter(src)
-	for(var/i in 1 to 6)
-		new /obj/item/weapon/implantcase/death_alarm(src)
+	startswith = list(
+						/obj/item/weapon/implanter,
+						/obj/item/weapon/implantcase/death_alarm,
+						/obj/item/weapon/implantcase/death_alarm,
+						/obj/item/weapon/implantcase/death_alarm,
+						/obj/item/weapon/implantcase/death_alarm,
+						/obj/item/weapon/implantcase/death_alarm,
+						/obj/item/weapon/implantcase/death_alarm
+					)
 
 //Condiment bottles
 /obj/item/weapon/storage/box/condimentbottles
 	name = "box of condiment bottles"
 	desc = "It has a large ketchup smear on it."
-
-/obj/item/weapon/storage/box/condimentbottles/atom_init()
-	. = ..()
-	for(var/i in 1 to 6)
-		new /obj/item/weapon/reagent_containers/food/condiment(src)
+	startswith = list(
+						/obj/item/weapon/reagent_containers/food/condiment,
+						/obj/item/weapon/reagent_containers/food/condiment,
+						/obj/item/weapon/reagent_containers/food/condiment,
+						/obj/item/weapon/reagent_containers/food/condiment,
+						/obj/item/weapon/reagent_containers/food/condiment,
+						/obj/item/weapon/reagent_containers/food/condiment
+					)
 
 //Paper cups
 /obj/item/weapon/storage/box/cups
 	name = "box of paper cups"
 	desc = "It has pictures of paper cups on the front."
 	icon_state = "cups_box"
-
-/obj/item/weapon/storage/box/cups/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/reagent_containers/food/drinks/sillycup( src )
+	startswith = list(
+						/obj/item/weapon/reagent_containers/food/drinks/sillycup,
+						/obj/item/weapon/reagent_containers/food/drinks/sillycup,
+						/obj/item/weapon/reagent_containers/food/drinks/sillycup,
+						/obj/item/weapon/reagent_containers/food/drinks/sillycup,
+						/obj/item/weapon/reagent_containers/food/drinks/sillycup,
+						/obj/item/weapon/reagent_containers/food/drinks/sillycup,
+						/obj/item/weapon/reagent_containers/food/drinks/sillycup
+					)
 
 //Donk-pockets
 /obj/item/weapon/storage/box/donkpockets
 	name = "box of donk-pockets"
 	desc = "<span class='bold'>Instructions:</span> Heat in microwave. Product will cool if not eaten within seven minutes."
 	icon_state = "donk_box"
-
-/obj/item/weapon/storage/box/donkpockets/atom_init()
-	. = ..()
-	for(var/i in 1 to 6)
-		new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
+	startswith = list(
+						/obj/item/weapon/reagent_containers/food/snacks/donkpocket,
+						/obj/item/weapon/reagent_containers/food/snacks/donkpocket,
+						/obj/item/weapon/reagent_containers/food/snacks/donkpocket,
+						/obj/item/weapon/reagent_containers/food/snacks/donkpocket,
+						/obj/item/weapon/reagent_containers/food/snacks/donkpocket,
+						/obj/item/weapon/reagent_containers/food/snacks/donkpocket
+					)
 
 //Monkey cube
 /obj/item/weapon/storage/box/monkeycubes
@@ -322,107 +388,138 @@
 	icon_state = "monkeycubebox"
 	storage_slots = 7
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/monkeycube)
-
-/obj/item/weapon/storage/box/monkeycubes/atom_init()
-	. = ..()
-	for(var/i in 1 to 5)
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src)
+	startswith = list(
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped
+					)
 
 //Farwa cube
 /obj/item/weapon/storage/box/monkeycubes/farwacubes
 	name = "farwa cube box"
 	desc = "Drymate brand farwa cubes, shipped from Ahdomai. Just add water!"
-
-/obj/item/weapon/storage/box/monkeycubes/farwacubes/atom_init()
-	. = ..()
-	for(var/i in 1 to 5)
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube(src)
+	startswith = list(
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube
+					)
 
 //Stok cube
 /obj/item/weapon/storage/box/monkeycubes/stokcubes
 	name = "stok cube box"
 	desc = "Drymate brand stok cubes, shipped from Moghes. Just add water!"
-
-/obj/item/weapon/storage/box/monkeycubes/stokcubes/atom_init()
-	. = ..()
-	for(var/i in 1 to 5)
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube(src)
+	startswith = list(
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube
+					)
 
 //Neaera cube
 /obj/item/weapon/storage/box/monkeycubes/neaeracubes
 	name = "neaera cube box"
 	desc = "Drymate brand neaera cubes, shipped from Jargon 4. Just add water!"
-
-/obj/item/weapon/storage/box/monkeycubes/neaeracubes/atom_init()
-	. = ..()
-	for(var/i in 1 to 5)
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube(src)
+	startswith = list(
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube,
+						/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube
+					)
 
 //Spare IDs
 /obj/item/weapon/storage/box/ids
 	name = "box of spare IDs"
 	desc = "Has so many empty IDs."
 	icon_state = "id_box"
-
-/obj/item/weapon/storage/box/ids/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/card/id(src)
+	startswith = list(
+						/obj/item/weapon/card/id,
+						/obj/item/weapon/card/id,
+						/obj/item/weapon/card/id,
+						/obj/item/weapon/card/id,
+						/obj/item/weapon/card/id,
+						/obj/item/weapon/card/id,
+						/obj/item/weapon/card/id
+					)
 
 //R.O.B.U.S.T. Cartridges
 /obj/item/weapon/storage/box/seccarts
 	name = "box of spare R.O.B.U.S.T. Cartridges"
 	desc = "A box full of R.O.B.U.S.T. Cartridges, used by Security."
 	icon_state = "pda_box"
-
-/obj/item/weapon/storage/box/seccarts/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/cartridge/security(src)
+	startswith = list(
+						/obj/item/weapon/cartridge/security,
+						/obj/item/weapon/cartridge/security,
+						/obj/item/weapon/cartridge/security,
+						/obj/item/weapon/cartridge/security,
+						/obj/item/weapon/cartridge/security,
+						/obj/item/weapon/cartridge/security,
+						/obj/item/weapon/cartridge/security
+					)
 
 //Handcuffs
 /obj/item/weapon/storage/box/handcuffs
 	name = "box of spare handcuffs"
 	desc = "A box full of handcuffs."
 	icon_state = "handcuff_box"
-
-/obj/item/weapon/storage/box/handcuffs/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/handcuffs(src)
+	startswith = list(
+						/obj/item/weapon/handcuffs,
+						/obj/item/weapon/handcuffs,
+						/obj/item/weapon/handcuffs,
+						/obj/item/weapon/handcuffs,
+						/obj/item/weapon/handcuffs,
+						/obj/item/weapon/handcuffs,
+						/obj/item/weapon/handcuffs
+					)
 
 //Alien handcuffs
 /obj/item/weapon/storage/box/alienhandcuffs
 	name = "box of spare alien handcuffs"
 	desc = "A box full of handcuffs."
 	icon_state = "aliencuffs_box"
-
-/obj/item/weapon/storage/box/alienhandcuffs/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new	/obj/item/weapon/handcuffs/alien(src)
+	startswith = list(
+						/obj/item/weapon/handcuffs/alien,
+						/obj/item/weapon/handcuffs/alien,
+						/obj/item/weapon/handcuffs/alien,
+						/obj/item/weapon/handcuffs/alien,
+						/obj/item/weapon/handcuffs/alien,
+						/obj/item/weapon/handcuffs/alien,
+						/obj/item/weapon/handcuffs/alien
+					)
 
 //Mousetraps
 /obj/item/weapon/storage/box/mousetraps
 	name = "box of Pest-B-Gon mousetraps"
 	desc = "<FONT color='red'><B>WARNING:</B></FONT> <I>Keep out of reach of children</I>."
 	icon_state = "mousetraps_box"
-
-/obj/item/weapon/storage/box/mousetraps/atom_init()
-	. = ..()
-	for(var/i in 1 to 6)
-		new /obj/item/device/assembly/mousetrap(src)
+	startswith = list(
+						/obj/item/device/assembly/mousetrap,
+						/obj/item/device/assembly/mousetrap,
+						/obj/item/device/assembly/mousetrap,
+						/obj/item/device/assembly/mousetrap,
+						/obj/item/device/assembly/mousetrap,
+						/obj/item/device/assembly/mousetrap
+					)
 
 //Pill bottles
 /obj/item/weapon/storage/box/pillbottles
 	name = "box of pill bottles"
 	desc = "It has pictures of pill bottles on its front."
 	icon_state = "pills_box"
-
-/obj/item/weapon/storage/box/pillbottles/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/storage/pill_bottle( src )
+	startswith = list(
+						/obj/item/weapon/storage/pill_bottle,
+						/obj/item/weapon/storage/pill_bottle,
+						/obj/item/weapon/storage/pill_bottle,
+						/obj/item/weapon/storage/pill_bottle,
+						/obj/item/weapon/storage/pill_bottle,
+						/obj/item/weapon/storage/pill_bottle,
+						/obj/item/weapon/storage/pill_bottle
+					)
 
 //Snap pop
 /obj/item/weapon/storage/box/snappops
@@ -455,11 +552,6 @@
 	for(var/i in 1 to storage_slots)
 		new /obj/item/weapon/match(src)
 
-/obj/item/weapon/storage/box/matches/atom_init()
-	. = ..()
-	for(var/i in 1 to storage_slots)
-		new /obj/item/weapon/match(src)
-
 /obj/item/weapon/storage/box/matches/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/match))
 		var/obj/item/weapon/match/M = I
@@ -485,11 +577,15 @@
 	name = "box of injectors"
 	desc = "Contains autoinjectors."
 	icon_state = "syringe_box"
-
-/obj/item/weapon/storage/box/autoinjectors/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
+	startswith = list(
+						/obj/item/weapon/reagent_containers/hypospray/autoinjector,
+						/obj/item/weapon/reagent_containers/hypospray/autoinjector,
+						/obj/item/weapon/reagent_containers/hypospray/autoinjector,
+						/obj/item/weapon/reagent_containers/hypospray/autoinjector,
+						/obj/item/weapon/reagent_containers/hypospray/autoinjector,
+						/obj/item/weapon/reagent_containers/hypospray/autoinjector,
+						/obj/item/weapon/reagent_containers/hypospray/autoinjector
+					)
 
 //Replacement bulbs
 /obj/item/weapon/storage/box/lights
@@ -522,58 +618,87 @@
 /obj/item/weapon/storage/box/lights/mixed
 	name = "box of replacement lights"
 	icon_state = "lightmixed_box"
-
-/obj/item/weapon/storage/box/lights/mixed/atom_init()
-	. = ..()
-	for(var/i in 1 to 14)
-		new /obj/item/weapon/light/tube(src)
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/light/bulb(src)
+	startswith = list(
+						/obj/item/weapon/light/tube,
+						/obj/item/weapon/light/tube,
+						/obj/item/weapon/light/tube,
+						/obj/item/weapon/light/tube,
+						/obj/item/weapon/light/tube,
+						/obj/item/weapon/light/tube,
+						/obj/item/weapon/light/tube,
+						/obj/item/weapon/light/tube,
+						/obj/item/weapon/light/tube,
+						/obj/item/weapon/light/tube,
+						/obj/item/weapon/light/tube,
+						/obj/item/weapon/light/tube,
+						/obj/item/weapon/light/tube,
+						/obj/item/weapon/light/tube,
+						/obj/item/weapon/light/bulb,
+						/obj/item/weapon/light/bulb,
+						/obj/item/weapon/light/bulb,
+						/obj/item/weapon/light/bulb,
+						/obj/item/weapon/light/bulb,
+						/obj/item/weapon/light/bulb,
+						/obj/item/weapon/light/bulb
+					)
 
 //Body bags
 /obj/item/weapon/storage/box/bodybags
 	name = "body bags"
 	desc = "This box contains body bags."
 	icon_state = "bodybags_box"
-
-/obj/item/weapon/storage/box/bodybags/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/bodybag(src)
+	startswith = list(
+						/obj/item/bodybag,
+						/obj/item/bodybag,
+						/obj/item/bodybag,
+						/obj/item/bodybag,
+						/obj/item/bodybag,
+						/obj/item/bodybag,
+						/obj/item/bodybag
+					)
 
 //Holobadge
 /obj/item/weapon/storage/box/holobadge
 	name = "holobadge box"
 	desc = "A box claiming to contain holobadges."
 	icon_state = "holobadge_box"
-
-/obj/item/weapon/storage/box/holobadge/atom_init()
-	. = ..()
-	for(var/i in 1 to 4)
-		new /obj/item/clothing/accessory/holobadge(src)
-	for(var/i in 1 to 3)
-		new /obj/item/clothing/accessory/holobadge/cord(src)
+	startswith = list(
+						/obj/item/clothing/accessory/holobadge,
+						/obj/item/clothing/accessory/holobadge,
+						/obj/item/clothing/accessory/holobadge,
+						/obj/item/clothing/accessory/holobadge,
+						/obj/item/clothing/accessory/holobadge/cord,
+						/obj/item/clothing/accessory/holobadge/cord,
+						/obj/item/clothing/accessory/holobadge/cord
+					)
 
 //Evidence bag
 /obj/item/weapon/storage/box/evidence
 	name = "evidence bag box"
 	desc = "A box claiming to contain evidence bags."
 	icon_state = "evidence_box"
-
-/obj/item/weapon/storage/box/evidence/atom_init()
-	. = ..()
-	for(var/i in 1 to 6)
-		new /obj/item/weapon/evidencebag(src)
+	startswith = list(
+						/obj/item/weapon/evidencebag,
+						/obj/item/weapon/evidencebag,
+						/obj/item/weapon/evidencebag,
+						/obj/item/weapon/evidencebag,
+						/obj/item/weapon/evidencebag,
+						/obj/item/weapon/evidencebag
+					)
 
 //Solution tray
 /obj/item/weapon/storage/box/solution_trays
 	name = "solution tray box"
 	icon_state = "solution_trays_box"
-
-/obj/item/weapon/storage/box/solution_trays/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/weapon/reagent_containers/glass/solution_tray(src)
+	startswith = list(
+						/obj/item/weapon/reagent_containers/glass/solution_tray,
+						/obj/item/weapon/reagent_containers/glass/solution_tray,
+						/obj/item/weapon/reagent_containers/glass/solution_tray,
+						/obj/item/weapon/reagent_containers/glass/solution_tray,
+						/obj/item/weapon/reagent_containers/glass/solution_tray,
+						/obj/item/weapon/reagent_containers/glass/solution_tray,
+						/obj/item/weapon/reagent_containers/glass/solution_tray
+					)
 
 //Spare PDAs
 /obj/item/weapon/storage/box/PDAs
@@ -604,61 +729,107 @@
 /obj/item/weapon/storage/box/shotgun/slug
 	name = "box of shotgun shell (slug)"
 	icon_state = "shotgun_ammo_slug"
+	startswith = list(
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun,
+						/obj/item/ammo_casing/shotgun
+					)
 
 /obj/item/weapon/storage/box/shotgun/slug/atom_init()
 	. = ..()
-	for(var/i in 1 to 16)
-		new /obj/item/ammo_casing/shotgun(src)
 	make_exact_fit()
 
 
 /obj/item/weapon/storage/box/shotgun/buckshot
 	name = "box of shotgun shell (buckshot)"
 	icon_state = "shotgun_ammo_buckshot"
+	startswith = list(
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot,
+						/obj/item/ammo_casing/shotgun/buckshot
+					)
 
 /obj/item/weapon/storage/box/shotgun/buckshot/atom_init()
 	. = ..()
-	for(var/i in 1 to 16)
-		new /obj/item/ammo_casing/shotgun/buckshot(src)
 	make_exact_fit()
 
 
 /obj/item/weapon/storage/box/shotgun/beanbag
 	name = "box of shotgun shell (beanbag)"
 	icon_state = "shotgun_ammo_beanbag"
+	startswith = list(
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag,
+						/obj/item/ammo_casing/shotgun/beanbag
+					)
 
 /obj/item/weapon/storage/box/shotgun/beanbag/atom_init()
 	. = ..()
-	for(var/i in 1 to 16)
-		new /obj/item/ammo_casing/shotgun/beanbag(src)
 	make_exact_fit()
 
 //Hair sprays
 /obj/item/weapon/storage/box/hairdyes
 	name = "hair spray dye box"
 	desc = "A box full of hair spray dyes."
-
-/obj/item/weapon/storage/box/hairdyes/atom_init()
-	. = ..()
-	new /obj/item/weapon/reagent_containers/glass/bottle/hair_dye/white(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/hair_dye/red(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/hair_dye/green(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blue(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/hair_dye/black(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/hair_dye/brown(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blond(src)
+	startswith = list(
+						/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/white,
+						/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/red,
+						/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/green,
+						/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blue,
+						/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/black,
+						/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/brown,
+						/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blond
+					)
 
 /obj/item/weapon/storage/box/lipstick
 	name = "lipstick box"
 	desc = "A box full of lipstick."
-
-/obj/item/weapon/storage/box/lipstick/atom_init()
-	. = ..()
-	new /obj/item/weapon/lipstick(src)
-	new /obj/item/weapon/lipstick/purple(src)
-	new /obj/item/weapon/lipstick/jade(src)
-	new /obj/item/weapon/lipstick/black(src)
-	new /obj/item/weapon/paper(src)
+	startswith = list(
+						/obj/item/weapon/lipstick,
+						/obj/item/weapon/lipstick/purple,
+						/obj/item/weapon/lipstick/jade,
+						/obj/item/weapon/lipstick/black,
+						/obj/item/weapon/paper
+					)
 
 // Don't know where is original box itself, so just put it here.
 /obj/item/weapon/storage/box/contraband
@@ -684,15 +855,14 @@
 	name = "Ian's box"
 	desc = "It's a box with a corgi on it. YAP! Looks like somebody lost it."
 	icon_state = "corgi_box"
-
-/obj/item/weapon/storage/box/ians_box/atom_init()
-	. = ..()
-	new /obj/item/weapon/bikehorn/dogtoy(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/cookie(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/cookie(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/cookie(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/cookie(src)
-	new /obj/item/toy/plushie/girly_corgi(src)
+	startswith = list(
+						/obj/item/weapon/bikehorn/dogtoy,
+						/obj/item/weapon/reagent_containers/food/snacks/cookie,
+						/obj/item/weapon/reagent_containers/food/snacks/cookie,
+						/obj/item/weapon/reagent_containers/food/snacks/cookie,
+						/obj/item/weapon/reagent_containers/food/snacks/cookie,
+						/obj/item/toy/plushie/girly_corgi
+					)
 
 /obj/item/weapon/storage/box/mines
 	name = "box of mines"
@@ -701,26 +871,41 @@
 
 /obj/item/weapon/storage/box/mines/explosive
 	name = "box of HE mines"
+	startswith = list(
+						/obj/item/mine,
+						/obj/item/mine,
+						/obj/item/mine,
+						/obj/item/mine
+					)
 
 /obj/item/weapon/storage/box/mines/explosive/atom_init()
 	. = ..()
-	for(var/i in 1 to 4)
-		new /obj/item/mine(src)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/mines/shock
 	name = "box of shock mines"
+	startswith = list(
+						/obj/item/mine/shock,
+						/obj/item/mine/shock,
+						/obj/item/mine/shock,
+						/obj/item/mine/shock
+					)
 
 /obj/item/weapon/storage/box/mines/shock/atom_init()
 	. = ..()
-	for(var/i in 1 to 4)
-		new /obj/item/mine/shock(src)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/rare_seeds
 	name = "granny's gift"
 	desc = "XOXO! - Granny"
-	startswith = list(/obj/item/seeds/gelthi = 1, /obj/item/seeds/vale = 1, /obj/item/seeds/surik = 1, /obj/item/seeds/blackberry = 1, /obj/item/seeds/amauri = 1, /obj/item/seeds/jurlmah = 1)
+	startswith = list(
+						/obj/item/seeds/gelthi = 1,
+						/obj/item/seeds/vale = 1,
+						/obj/item/seeds/surik = 1,
+						/obj/item/seeds/blackberry = 1,
+						/obj/item/seeds/amauri = 1,
+						/obj/item/seeds/jurlmah = 1
+					)
 
 //NOT USED ANYWHERE
 /obj/item/weapon/storage/box/syndielogo_box

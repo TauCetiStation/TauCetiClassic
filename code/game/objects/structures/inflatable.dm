@@ -287,16 +287,3 @@
 /obj/item/inflatable/door/torn/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>The inflatable door is too torn to be inflated!</span>")
 	add_fingerprint(user)
-
-/obj/item/weapon/storage/briefcase/inflatable
-	name = "inflatable barrier box"
-	desc = "Contains inflatable walls and doors."
-	icon_state = "inf_box"
-	item_state = "inf_box"
-
-/obj/item/weapon/storage/briefcase/inflatable/atom_init()
-	. = ..()
-	for (var/i in 1 to 3)
-		new /obj/item/inflatable/door(src)
-	for (var/i in 1 to 4)
-		new /obj/item/inflatable(src)

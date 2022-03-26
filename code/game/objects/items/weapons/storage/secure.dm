@@ -13,9 +13,6 @@
 // -----------------------------
 /obj/item/weapon/storage/secure
 	name = "secstorage"
-	var/icon_locking = "secureb"
-	var/icon_sparking = "securespark"
-	var/icon_opened = "secure0"
 	var/locked = 1
 	var/code = ""
 	var/l_code = null
@@ -24,6 +21,10 @@
 	var/l_hacking = 0
 	var/emagged = 0
 	var/open = 0
+	var/list/indicator_overlays = list()
+	var/icon/denied = icon('icons/obj/storage.dmi', "briefcase_denied")
+	var/icon/accepted = icon('icons/obj/storage.dmi', "briefcase_accepted")
+	var/icon/spark = icon('icons/obj/storage.dmi', "briefcase_spark")
 	w_class = SIZE_SMALL
 	max_w_class = SIZE_TINY
 	max_storage_space = DEFAULT_BOX_STORAGE
@@ -44,10 +45,9 @@
 		if(istype(I, /obj/item/weapon/melee/energy/blade) && !emagged)
 			emagged = TRUE
 			user.SetNextMove(CLICK_CD_MELEE)
-			add_overlay(image('icons/obj/storage.dmi', icon_sparking))
+			add_overlay(spark)
 			sleep(6)
 			cut_overlays()
-			add_overlay(image('icons/obj/storage.dmi', icon_locking))
 			locked = 0
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
@@ -90,10 +90,9 @@
 		return FALSE
 	emagged = 1
 	user.SetNextMove(CLICK_CD_MELEE)
-	add_overlay(image('icons/obj/storage.dmi', icon_sparking))
+	add_overlay(spark)
 	sleep(6)
-	cut_overlays()
-	add_overlay(image('icons/obj/storage.dmi', icon_locking))
+	cut_overlays(spark)
 	locked = 0
 	to_chat(user, "You short out the lock on [src].")
 	return TRUE
@@ -136,7 +135,7 @@
 				else if ((code == l_code) && (emagged == 0) && (l_set == 1))
 					locked = 0
 					overlays = null
-					overlays += image('icons/obj/storage.dmi', icon_opened)
+					overlays += image('icons/obj/storage.dmi', "briefcase_accepted")
 					code = null
 				else
 					code = "ERROR"
@@ -160,18 +159,14 @@
 /obj/item/weapon/storage/secure/briefcase
 	name = "secure briefcase"
 	icon = 'icons/obj/storage.dmi'
-	icon_state = "secure"
-	item_state = "secure-r"
+	icon_state = "briefcase_secure_black"
+	item_state = "briefcase_secure_black"
 	desc = "A large briefcase with a digital locking system."
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
 	w_class = SIZE_NORMAL
-
-/obj/item/weapon/storage/secure/briefcase/atom_init()
-	. = ..()
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/pen(src)
+	startswith = list(/obj/item/weapon/paper, /obj/item/weapon/pen)
 
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
 	if ((src.loc == user) && (src.locked == 1))
@@ -190,10 +185,15 @@
 	update_icon()
 
 /obj/item/weapon/storage/secure/briefcase/update_icon()
+	cut_overlays(indicator_overlays)
+	indicator_overlays = null
+
 	if(!locked || emagged)
-		item_state = "secure-g"
+		add_overlay(accepted)
+		indicator_overlays += accepted
 	else
-		item_state = "secure-r"
+		add_overlay(denied)
+		indicator_overlays += denied
 
 	if(ismob(loc))
 		var/mob/M = loc
@@ -218,20 +218,16 @@
 	name = "secure safe"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "safe"
-	icon_opened = "safe0"
-	icon_locking = "safeb"
-	icon_sparking = "safespark"
+	denied = icon('icons/obj/storage.dmi', "safeb")
+	accepted = icon('icons/obj/storage.dmi', "safe0")
+	spark = icon('icons/obj/storage.dmi', "safespark")
 	force = 8.0
 	w_class = 8.0
 	max_w_class = 8
 	anchored = TRUE
 	density = FALSE
 	cant_hold = list(/obj/item/weapon/storage/secure/briefcase)
-
-/obj/item/weapon/storage/secure/safe/atom_init()
-	. = ..()
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/pen(src)
+	startswith = list(/obj/item/weapon/paper, /obj/item/weapon/pen)
 
 /obj/item/weapon/storage/secure/safe/attack_hand(mob/user)
 	tgui_interact(user)
