@@ -93,6 +93,8 @@
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/device/gps/cyborg(src)
+	modules += new /obj/item/weapon/robot_helper_tool(src)
+
 	emag = new /obj/item/weapon/melee/energy/sword(src)
 
 /obj/item/weapon/robot_module/standard/respawn_consumable(mob/living/silicon/robot/R)
@@ -142,6 +144,7 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/cardiopulmonary_bypass_tool(src)
 	modules += new /obj/item/stack/medical/suture(src)
+	modules += new /obj/item/weapon/robot_helper_tool(src)
 
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
@@ -190,6 +193,7 @@
 	modules += new /obj/item/weapon/gripper(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)
 	modules += new /obj/item/device/gps/cyborg(src)
+	modules += new /obj/item/weapon/robot_helper_tool(src)
 
 	emag = new /obj/item/borg/stun(src)
 
@@ -209,6 +213,8 @@
 	modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 	modules += new /obj/item/taperoll/police(src)
 	modules += new /obj/item/device/gps/cyborg(src)
+	modules += new /obj/item/weapon/robot_helper_tool(src)
+
 	emag = new /obj/item/weapon/gun/energy/laser/selfcharging/cyborg(src)
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
@@ -235,6 +241,8 @@
 	modules += new /obj/item/weapon/mop(src)
 	modules += new /obj/item/device/lightreplacer(src)
 	modules += new /obj/item/device/gps/cyborg(src)
+	modules += new /obj/item/weapon/robot_helper_tool(src)
+
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	emag.reagents.add_reagent("lube", 250)
@@ -258,6 +266,7 @@
 	modules += new /obj/item/weapon/gripper/paperwork(src)
 	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 	modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
+	modules += new /obj/item/weapon/robot_helper_tool(src)
 
 	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 	M.matter = 30
@@ -319,6 +328,8 @@
 	modules += new /obj/item/device/geoscanner(src)
 	modules += new /obj/item/weapon/shovel(src)//Need to buff borgdrill, so it can get sand instead shovel
 	modules += new /obj/item/device/gps/cyborg(src)
+	modules += new /obj/item/weapon/robot_helper_tool(src)
+
 	emag = new /obj/item/borg/stun(src)
 
 /obj/item/weapon/robot_module/syndicate
@@ -336,6 +347,7 @@
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
+	modules += new /obj/item/weapon/robot_helper_tool(src)
 
 /obj/item/weapon/robot_module/syndicate/add_languages(mob/living/silicon/robot/R)
 	//basic set+Sy-Code
@@ -361,6 +373,8 @@
 	modules += new /obj/item/borg/combat/shield(src)
 	modules += new /obj/item/borg/combat/mobility(src)
 	modules += new /obj/item/weapon/wrench(src)
+	modules += new /obj/item/weapon/robot_helper_tool(src)
+
 	emag = new /obj/item/weapon/gun/energy/lasercannon/cyborg(src)
 
 /obj/item/weapon/robot_module/science
@@ -394,6 +408,8 @@
 	modules += new /obj/item/device/multitool(src)
 	modules += new /obj/item/weapon/weldingtool/largetank(src) //To fuck and unfuck (but mostly fuck) shit up
 	modules += new /obj/item/device/gps/cyborg(src)
+
+	modules += new /obj/item/weapon/robot_helper_tool(src)
 
 	emag = new /obj/item/weapon/hand_tele(src) //To fuck people's shit up
 

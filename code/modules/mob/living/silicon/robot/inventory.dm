@@ -99,6 +99,11 @@
 /mob/living/silicon/robot/proc/uneq_active()
 	if(isnull(module_active))
 		return
+	if(istype(module_active, /obj/item/weapon/gripper))
+		var/obj/item/weapon/gripper/gripper
+		if(!isnull(gripper.wrapped))
+		 drop_item(gripper)
+		 return
 	unequip_module(module_active)
 
 /mob/living/silicon/robot/proc/uneq_all()

@@ -200,7 +200,8 @@
 		/obj/item/robot_parts/l_arm,
 		/obj/item/robot_parts/r_arm,
 		/obj/item/robot_parts/l_leg,
-		/obj/item/robot_parts/r_leg
+		/obj/item/robot_parts/r_leg,
+		/obj/item/stack/sheet/mineral/phoron,
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)
@@ -234,7 +235,7 @@
 	name = "matter decompiler"
 	desc = "Eating trash, bits of glass, or other debris will replenish your stores."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "decompiler"
+	icon_state = "gripper"
 
 	//Metal, glass, wood, plastic.
 	var/list/stored_comms = list(

@@ -236,6 +236,70 @@
 
 		user.cell.use(charge_cost)
 
+/obj/item/weapon/robot_helper_tool
+	name = "Helper tool"
+	desc = "A tool that helps organics get back on feet."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "robot_helper"
+	item_state = "robot_helper"
+	var/charge_cost = 50
+
+/obj/item/weapon/robot_helper_tool/proc/check_charge(charge_amt)
+	if(isrobot(loc))
+		var/mob/living/silicon/robot/R = loc
+		return (R.cell && R.cell.charge >= charge_amt)
+
+/obj/item/weapon/robot_helper_tool/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
+	if(!check_charge(charge_cost))
+		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
+		return FALSE
+
+	return TRUE
+
+/obj/item/weapon/robot_helper_tool/attack(mob/living/carbon/human/M, mob/living/silicon/robot/user, def_zone)
+	var/mob/living/carbon/human/H = M
+	if(!istype(H) || !can_use(user, M))
+		return
+
+	robot_help_shake(M, user)
+
+/obj/item/weapon/robot_helper_tool/proc/robot_help_shake(mob/living/carbon/human/M, mob/living/silicon/robot/user)
+	if(!user.cell || (user.cell.charge < charge_cost))
+		to_chat(user, "<span class='warning'>\The [user] doesn't have enough charge left to do that.</span>")
+		return
+
+	var/t_him = "it"
+	if (M.gender == MALE)
+		t_him = "him"
+	else if (M.gender == FEMALE)
+		t_him = "her"
+
+	if(M.lying)
+		M.AdjustSleeping(-10 SECONDS)
+		if(!M.lying)
+			if(!M.IsSleeping())
+				M.resting = FALSE
+			if(M.crawling)
+				if(M.pass_flags & PASSCRAWL)
+					M.pass_flags ^= PASSCRAWL
+					M.crawling = FALSE
+				user.visible_message("<span class='notice'>[user] shakes [M] trying to wake [t_him] up!</span>", \
+									"<span class='notice'>You shake [M] trying to wake [t_him] up!</span>")
+		else
+			if(!M.IsSleeping())
+				user.visible_message("<span class='notice'>[user] cuddles with [M] to make [t_him] feel better!</span>", \
+									"<span class='notice'>You cuddle with [M] to make [t_him] feel better!</span>")
+			else
+				user.visible_message("<span class='notice'>[user] gently touches [M] trying to wake [t_him] up!</span>", \
+									"<span class='notice'>You gently touch [M] trying to wake [t_him] up!</span>")
+	M.AdjustParalysis(-3)
+	M.AdjustStunned(-3)
+	M.AdjustWeakened(-3)
+
+	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
+
+	user.cell.use(charge_cost)
+
 /obj/item/weapon/card/emag/borg
 	name = "robotic cryptographic sequencer"
 
