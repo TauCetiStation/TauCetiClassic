@@ -230,6 +230,7 @@
 	modules += new /obj/item/weapon/storage/bag/trash(src)
 	modules += new /obj/item/weapon/mop(src)
 	modules += new /obj/item/device/lightreplacer(src)
+	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	emag.reagents.add_reagent("lube", 250)
@@ -270,6 +271,7 @@
 	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 	modules += new /obj/item/weapon/pen/robopen(src)
 	modules += new /obj/item/weapon/razor(src)
+	modules += new /obj/item/device/gps/cyborg(src)
 
 	emag = new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
 

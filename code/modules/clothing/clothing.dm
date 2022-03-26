@@ -1,4 +1,3 @@
-
 /obj/item/clothing
 	name = "clothing"
 	var/list/species_restricted = null //Only these species can wear this kit.
@@ -380,6 +379,8 @@ BLIND     // can't see anything
 	species_restricted_locked = TRUE
 	sprite_sheet_slot = SPRITE_SHEET_GLOVES
 
+	dyed_type = DYED_GLOVES
+
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
 		//why is this not part of the powercell code?
@@ -430,6 +431,8 @@ BLIND     // can't see anything
 	species_restricted = list("exclude" , UNATHI , TAJARAN, VOX, VOX_ARMALIS)
 
 	sprite_sheet_slot = SPRITE_SHEET_FEET
+
+	dyed_type = DYED_SHOES
 
 //Cutting shoes
 /obj/item/clothing/shoes/attackby(obj/item/I, mob/user, params)
@@ -502,7 +505,7 @@ BLIND     // can't see anything
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
-	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
+	species_restricted = list("exclude", DIONA, VOX_ARMALIS)
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 
 /obj/item/clothing/suit/space
@@ -526,7 +529,7 @@ BLIND     // can't see anything
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
-	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
+	species_restricted = list("exclude", DIONA, VOX_ARMALIS)
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
 
 /obj/item/clothing/suit/space/equipped(mob/M)
@@ -583,6 +586,8 @@ BLIND     // can't see anything
 	sprite_sheet_slot = SPRITE_SHEET_UNIFORM
 	valid_accessory_slots = list("utility","armband","decor")
 	restricted_accessory_slots = list("utility", "armband")
+
+	dyed_type = DYED_UNIFORM
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
@@ -684,13 +689,17 @@ BLIND     // can't see anything
 	if(usr.incapacitated())
 		return
 
-	if(copytext(item_color,-2) != "_d")
-		basecolor = item_color
+	if(copytext(item_state,-2) != "_d")
+		basecolor = item_state
 	if((basecolor + "_d_s") in icon_states('icons/mob/uniform.dmi'))
-		item_color = item_color == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
+		item_state = item_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
 		usr.update_inv_w_uniform()
 	else
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
+
+/obj/item/clothing/under/wash_act(w_color)
+	. = ..()
+	fresh_laundered_until = world.time + 5 MINUTES
 
 /obj/item/clothing/under/rank/atom_init()
 	sensor_mode = pick(SUIT_SENSOR_OFF, SUIT_SENSOR_BINARY, SUIT_SENSOR_VITAL, SUIT_SENSOR_TRACKING)
