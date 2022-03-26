@@ -908,16 +908,27 @@ body
 		if(!check_rights(R_VAREDIT))
 			return
 
-		var/mob/living/carbon/human/H = locate(href_list["give_quality"])
-		if(!istype(H))
-			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+		if(!SSticker)
+			to_chat(usr, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
 			return
+
+		var/mob/M = locate(href_list["give_quality"])
 
 		var/quality_name = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.by_name
 		if(!quality_name)
 			return
+
+		if(QDELETED(M))
+			return
+
 		var/datum/quality/Q = SSqualities.by_name[quality_name]
-		SSqualities.force_give_quality(H, Q.type, usr)
+
+		if(ishuman(M))
+			SSqualities.force_give_quality(M, Q, usr)
+		else if(SSticker.current_state == GAME_STATE_PREGAME && M.client)
+			SSqualities.force_register_client(M.client, Q)
+		else
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 
 	else if(href_list["addlanguage"])
 		if(!check_rights(R_VAREDIT))

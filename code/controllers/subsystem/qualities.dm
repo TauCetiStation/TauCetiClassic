@@ -78,8 +78,31 @@ SUBSYSTEM_DEF(qualities)
 
 	return selected_quality
 
+/datum/controller/subsystem/qualities/proc/force_register_client(client/C, datum/quality/Q)
+	if(!initialized)
+		return
+	if(!SSticker || SSticker.current_state != GAME_STATE_PREGAME)
+		return
+	if(!SSjob)
+		return
+	if(!C.prefs)
+		return
+
+	if(C.mob)
+		to_chat(C.mob, "<span class='warning'>Похоже кто-то сделал этот выбор за тебя!</span>")
+
+	registered_clients[C.ckey] = Q.type
+	announce_quality(C, Q)
+	C.prefs.selected_quality_type = Q.type
+	C << output(TRUE, "lobbybrowser:set_quality")
+
 /datum/controller/subsystem/qualities/proc/register_client(client/C)
 	if(!initialized)
+		if(C.mob)
+			to_chat(C.mob, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
+		return
+
+	if(!SSticker || SSticker.current_state != GAME_STATE_PREGAME)
 		if(C.mob)
 			to_chat(C.mob, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
 		return
@@ -105,8 +128,8 @@ SUBSYSTEM_DEF(qualities)
 		CRASH("BADMIN ALERT! QUALITY REGISTERED IS NULL. HAS SOMEONE PLAYED WITH SSqualities.forced_quality_type?")
 
 	registered_clients[C.ckey] = Q.type
-	announce_quality(C, selected_quality)
-	C.prefs.have_quality = TRUE
+	announce_quality(C, Q)
+	C.prefs.selected_quality_type = Q.type
 	C << output(TRUE, "lobbybrowser:set_quality")
 
 /datum/controller/subsystem/qualities/proc/give_all_qualities()
@@ -114,17 +137,16 @@ SUBSYSTEM_DEF(qualities)
 		SSqualities.give_quality(player, FALSE)
 
 /datum/controller/subsystem/qualities/proc/give_quality(mob/living/carbon/human/H, latespawn)
-	if(!H.client.prefs.have_quality)
+	if(!H.client.prefs.selected_quality_type)
 		return
 
 	var/datum/quality/quality = by_type[registered_clients[H.client.ckey]]
 	if(quality.satisfies_requirements(H, latespawn))
 		quality.add_effect(H, latespawn)
 
-/datum/controller/subsystem/qualities/proc/force_give_quality(mob/living/carbon/human/H, quality_type, mob/admin)
-	var/datum/quality/quality = by_type[quality_type]
-	if(quality.satisfies_requirements(H, FALSE))
-		announce_quality(quality, H)
-		quality.add_effect(H, FALSE)
+/datum/controller/subsystem/qualities/proc/force_give_quality(mob/living/carbon/human/H, datum/quality/Q, mob/admin)
+	if(Q.satisfies_requirements(H, FALSE))
+		announce_quality(Q, H)
+		Q.add_effect(H, FALSE)
 	else
 		to_chat(admin, "<span class='warning'>[H] не соответствует требованиям особенности.</span>")

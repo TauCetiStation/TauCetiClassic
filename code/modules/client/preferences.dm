@@ -133,7 +133,8 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/gen_record = ""
 
 	// Qualities
-	var/have_quality = FALSE
+	// Quality selected, changing this does not impact anything.
+	var/selected_quality_type
 	var/selecting_quality = FALSE
 
 	// Quirk list
