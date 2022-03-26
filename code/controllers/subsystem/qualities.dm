@@ -4,11 +4,11 @@ SUBSYSTEM_DEF(qualities)
 	flags = SS_NO_FIRE
 
 	// name = instance
-	var/list/datum/quality/by_name = list()
+	var/list/datum/quality/qualities_by_name = list()
 	// type = instance
-	var/list/datum/quality/by_type = list()
+	var/list/datum/quality/qualities_by_type = list()
 	// category == list of types
-	var/list/datum/quality/by_pool = list()
+	var/list/datum/quality/qualities_by_pool = list()
 
 	// Shitspawn-oriented design. Gives the ability to force the same quality on everyone.
 	var/forced_quality_type
@@ -142,7 +142,7 @@ SUBSYSTEM_DEF(qualities)
 
 /datum/controller/subsystem/qualities/proc/force_give_quality(mob/living/carbon/human/H, datum/quality/Q, mob/admin)
 	if(Q.satisfies_requirements(H, FALSE))
-		announce_quality(Q, H)
+		announce_quality(H.client, Q)
 		Q.add_effect(H, FALSE)
 	else
 		to_chat(admin, "<span class='warning'>[H] не соответствует требованиям особенности.</span>")
