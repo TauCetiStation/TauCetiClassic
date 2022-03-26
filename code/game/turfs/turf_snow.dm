@@ -2,6 +2,8 @@
 	icon = 'icons/turf/snow2.dmi'
 	name = "snow"
 	icon_state = "snow0"
+	plane = FLOOR_PLANE
+	
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	force_lighting_update = TRUE
 

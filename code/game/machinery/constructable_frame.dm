@@ -205,9 +205,8 @@
 					if(istype(P, I) && (req_components[I] > 0))
 						if(iscoil(P))
 							var/obj/item/stack/cable_coil/CP = P
-							var/cable_color = CP.item_color
 							if(CP.use(1))
-								var/obj/item/stack/cable_coil/CC = new(src, 1, cable_color)
+								var/obj/item/stack/cable_coil/CC = new(src, 1, CP.color)
 								components += CC
 								req_components[I]--
 								update_req_desc()
