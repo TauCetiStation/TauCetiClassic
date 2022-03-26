@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(qualities)
 	Q.amount += 1
 	registered_clients[C.ckey] = Q.type
 	announce_quality(C, Q)
-	C.prefs.selected_quality_type = Q.type
+	C.prefs.selected_quality_name = Q.name
 	C << output(TRUE, "lobbybrowser:set_quality")
 
 /datum/controller/subsystem/qualities/proc/force_register_client(client/C, datum/quality/Q)
@@ -132,7 +132,7 @@ SUBSYSTEM_DEF(qualities)
 		SSqualities.give_quality(player, FALSE)
 
 /datum/controller/subsystem/qualities/proc/give_quality(mob/living/carbon/human/H, latespawn)
-	if(!H.client.prefs.selected_quality_type)
+	if(!H.client.prefs.selected_quality_name)
 		return
 
 	var/datum/quality/quality = by_type[registered_clients[H.client.ckey]]

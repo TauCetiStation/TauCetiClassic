@@ -134,7 +134,7 @@ var/global/const/MAX_SAVE_SLOTS = 10
 
 	// Qualities
 	// Quality selected, changing this does not impact anything.
-	var/selected_quality_type
+	var/selected_quality_name
 	var/selecting_quality = FALSE
 
 	// Quirk list
