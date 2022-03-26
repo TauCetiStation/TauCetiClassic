@@ -10,7 +10,7 @@
 	var/charges = 10
 	var/status = 0
 	var/mob/foundmob = "" //Used in throwing proc.
-	var/agony = 60
+	var/agony
 
 	sweep_step = 2
 
@@ -116,6 +116,12 @@
 				//H.apply_effect(10, STUN, 0)
 				//H.apply_effect(10, WEAKEN, 0)
 				//H.apply_effect(10, STUTTER, 0)
+				if(HAS_TRAIT_FROM(src, TRAIT_RANDOM_DAMAGE, QUALITY_TRAIT)
+					var/dice = "3d20"
+					var/r_agony = roll(dice)
+					agony = r_agony
+				else
+					agony = 60
 				H.apply_effect(agony,AGONY,0)
 				charges--
 
