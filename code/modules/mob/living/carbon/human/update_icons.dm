@@ -146,9 +146,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(!icon_custom)
 			icon_state_appendix = null
 
-	if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM || sprite_sheet_slot == SPRITE_SHEET_UNIFORM_FAT)
-		t_state = item_color
-
 	if(!t_state)
 		t_state = icon_state
 
@@ -476,9 +473,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[UNIFORM_LAYER] = standing
 
 		for(var/obj/item/clothing/accessory/A in U.accessories)
-			var/tie_color = A.item_color
-			if(!tie_color)
-				tie_color = A.icon_state
+			var/tie_color = A.icon_state
 			var/image/tie
 			if(A.icon_custom)
 				tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -UNIFORM_LAYER + A.layer_priority)
@@ -679,9 +674,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[SUIT_LAYER] = standing
 
 		for(var/obj/item/clothing/accessory/A in S.accessories)
-			var/tie_color = A.item_color
-			if(!tie_color)
-				tie_color = A.icon_state
+			var/tie_color = A.icon_state
 			var/image/tie
 			if(A.icon_custom)
 				tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -SUIT_LAYER + A.layer_priority)
