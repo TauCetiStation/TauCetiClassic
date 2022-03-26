@@ -33192,8 +33192,16 @@
 	},
 /area/station/civilian/garden)
 "bhx" = (
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/weapon/storage/fancy/donut_box{
+	pixel_y = 12
+	},
 /obj/structure/table/woodentable,
+/obj/item/weapon/storage/briefcase/black{
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/briefcase/black{
+	pixel_y = -1
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "bhy" = (
