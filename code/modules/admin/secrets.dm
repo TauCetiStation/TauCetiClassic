@@ -516,11 +516,11 @@
 			if(!SSqualities)
 				to_chat(usr, "<span class='warning'>Please wait untill Qualities Subsystem loads</span>")
 				return
-			var/quality_name = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.by_name
+			var/quality_name = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.qualities_by_name
 			if(!quality_name)
 				return
 
-			var/datum/quality/Q = SSqualities.by_name[quality_name]
+			var/datum/quality/Q = SSqualities.qualities_by_name[quality_name]
 			SSqualities.forced_quality_type = Q.type
 
 		if("global_sound_speed")

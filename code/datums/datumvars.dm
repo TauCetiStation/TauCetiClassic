@@ -911,14 +911,14 @@ body
 
 		var/mob/M = locate(href_list["give_quality"])
 
-		var/quality_name = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.by_name
+		var/quality_name = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.qualities_by_name
 		if(!quality_name)
 			return
 
 		if(QDELETED(M))
 			return
 
-		var/datum/quality/Q = SSqualities.by_name[quality_name]
+		var/datum/quality/Q = SSqualities.qualities_by_name[quality_name]
 
 		if(ishuman(M))
 			SSqualities.force_give_quality(M, Q, usr)

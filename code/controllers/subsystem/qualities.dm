@@ -33,11 +33,11 @@ SUBSYSTEM_DEF(qualities)
 /datum/controller/subsystem/qualities/proc/populate_lists()
 	for(var/quality_type in subtypesof(/datum/quality))
 		var/datum/quality/Q = new quality_type
-		by_name[Q.name] = Q
-		by_type[Q.type] = Q
+		qualities_by_name[Q.name] = Q
+		qualities_by_type[Q.type] = Q
 
 		for(var/pool in Q.pools)
-			LAZYADD(by_pool[pool], Q)
+			LAZYADD(qualities_by_pool[pool], Q)
 
 /datum/controller/subsystem/qualities/proc/announce_quality(client/C, datum/quality/quality)
 	var/hide = prob(quality.hidden_chance)
@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(qualities)
 	var/quality_pool = roll_pool(C)
 
 	var/datum/quality/selected_quality
-	var/list/pool_qualities = by_pool[quality_pool]
+	var/list/pool_qualities = qualities_by_pool[quality_pool]
 	var/list/possible_qualities = pool_qualities.Copy()
 
 	while(possible_qualities.len)
@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(qualities)
 	if(!selected_quality)
 		if(C.mob)
 			to_chat(C.mob, "<span class='warning'>В бухгалтерии всё перепутали, и мы, к сожалению не смогли найти твою особенность. В награду за терпение, за то что ты такой крутой, держи очки.</span>")
-		selected_quality = by_type[/datum/quality/positiveish/sunglasses]
+		selected_quality = qualities_by_type[/datum/quality/positiveish/sunglasses]
 
 	return selected_quality
 
@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(qualities)
 
 	var/datum/quality/Q
 	if(forced_quality_type)
-		Q = by_type[forced_quality_type]
+		Q = qualities_by_type[forced_quality_type]
 	else
 		Q = roll_quality(C)
 
@@ -136,7 +136,7 @@ SUBSYSTEM_DEF(qualities)
 	if(!H.client.prefs.selected_quality_name)
 		return
 
-	var/datum/quality/quality = by_type[registered_clients[H.client.ckey]]
+	var/datum/quality/quality = qualities_by_type[registered_clients[H.client.ckey]]
 	if(quality.satisfies_requirements(H, latespawn))
 		quality.add_effect(H, latespawn)
 
