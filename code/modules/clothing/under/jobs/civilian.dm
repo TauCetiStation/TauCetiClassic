@@ -12,7 +12,7 @@
 	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
 	name = "captain's jumpsuit"
 	icon_state = "captain"
-	item_state = "caparmor"
+	item_state = "captain"
 	flags = ONESIZEFITSALL
 
 
@@ -36,7 +36,7 @@
 	name = "recycler's jumpsuit"
 	desc = "Stinks."
 	icon_state = "recycler"
-	item_state = "lb_suit"
+	item_state = "recycler"
 	flags = ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
@@ -44,7 +44,7 @@
 	name = "recycler's casual jumpsuit"
 	desc = "Stinks."
 	icon_state = "recyclercasual"
-	item_state = "lb_suit"
+	item_state = "recyclercasual"
 	flags = ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
@@ -81,7 +81,7 @@
 	desc = "It's a jumpsuit worn by someone who works in the position of \"Head of Personnel\"."
 	name = "head of personnel's jumpsuit"
 	icon_state = "hop"
-	item_state = "b_suit"
+	item_state = "hop"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/head_of_personnel_whimsy
@@ -96,7 +96,7 @@
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
 	name = "botanist's jumpsuit"
 	icon_state = "hydroponics"
-	item_state = "g_suit"
+	item_state = "hydroponics"
 	permeability_coefficient = 0.50
 	flags = ONESIZEFITSALL
 
