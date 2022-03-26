@@ -42,7 +42,7 @@
 	AddComponent(/datum/component/forcefield, "blood aura", 20, 5 SECONDS, 3 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
-	var/image/glow = image(icon, src, "glow_[icon_state]", LIGHTING_LAYER + 1)
+	var/image/glow = image(icon, src, "glow_[icon_state]")
 	glow.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(glow)
 

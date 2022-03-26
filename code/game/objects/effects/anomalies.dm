@@ -288,7 +288,7 @@
 			P.icon_state = "pylon_glow"
 			if(prob(30)) // activate() is return /mob/living/simple_animal/hostile/pylon and since there is dynamic typing, it works
 				P = P.activate(null, global.cult_religion)
-			var/datum/beam/B = P.Beam(src, "drainblood", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_layer = 2.9)
+			var/datum/beam/B = P.Beam(src, "drainblood", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_plane = ABOVE_LIGHTING_PLANE)
 			RegisterSignal(B, list(COMSIG_PARENT_QDELETING), .proc/remove_beam)
 			beams += B
 

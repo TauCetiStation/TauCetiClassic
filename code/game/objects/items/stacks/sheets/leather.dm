@@ -70,6 +70,11 @@
 	icon_state = "sheet-hairlesshide"
 	origin_tech = ""
 
+// Tanning.
+/obj/item/stack/sheet/hairlesshide/wash_act(w_color)
+	new/obj/item/stack/sheet/wetleather(src, get_amount())
+	qdel(src)
+
 /obj/item/stack/sheet/wetleather
 	name = "wet leather"
 	desc = "This leather has been cleaned but still needs to be dried."
