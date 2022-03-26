@@ -39,6 +39,18 @@ SUBSYSTEM_DEF(qualities)
 		for(var/pool in quality.pools)
 			LAZYADD(by_pool[pool], quality)
 
+/datum/controller/subsystem/qualities/proc/announce_quality(client/C, datum/quality/quality)
+	var/hide = prob(quality.hidden_chance)
+	var/q_desc = hide ? "▉▉▉▉▉▉▉▉" : quality.desc
+	var/q_requirement = hide ? "▉▉▉▉▉▉▉▉" : quality.requirement
+
+	var/quality_description = \
+	   "<font color='green'><b>Вы особенный.</b></font><br>\
+		<font color='green'><b>Ваша особенность:</b> [q_desc]</font><br>\
+		<font color='green'><b>Требования:</b> [q_requirement]</font>"
+
+	to_chat(C.mob, quality_description)
+
 /datum/controller/subsystem/qualities/proc/roll_pool(client/C)
 	return pickweight(pool_distribution)
 
@@ -66,20 +78,6 @@ SUBSYSTEM_DEF(qualities)
 
 	return selected_quality
 
-
-	if(C.mob && selected_quality)
-		var/mob/M = C.mob
-		var/hide = prob(selected_quality.hidden_chance)
-		var/q_desc = hide ? "▉▉▉▉▉▉▉▉" : selected_quality.desc
-		var/q_requirement = hide ? "▉▉▉▉▉▉▉▉" : selected_quality.requirement
-
-		to_chat(M, "<font color='green'><b>Вы особенный.</b></font>")
-		to_chat(M, "<font color='green'><b>Ваша особенность:</b> [q_desc]</font>")
-		to_chat(M, "<font color='green'><b>Требования:</b> [q_requirement]</font>")
-
-		C.prefs.have_quality = TRUE
-		C << output(TRUE, "lobbybrowser:set_quality")
-
 /datum/controller/subsystem/qualities/proc/register_client(client/C)
 	if(!initialized)
 		if(C.mob)
@@ -96,9 +94,20 @@ SUBSYSTEM_DEF(qualities)
 			to_chat(C.mob, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
 		return
 
-	var/datum/quality/Q = roll_quality(C)
-	registered_clients[C.ckey] = Q.type
+	var/datum/quality/Q
+	if(forced_quality_type)
+		Q = by_type[forced_quality_type]
+	else
+		Q = roll_quality(C)
 
+	// Only "legitimately" possible if `forced_quality_type` is invalid.
+	if(!Q)
+		CRASH("BADMIN ALERT! QUALITY REGISTERED IS NULL. HAS SOMEONE PLAYED WITH SSqualities.forced_quality_type?")
+
+	registered_clients[C.ckey] = Q.type
+	announce_quality(C, selected_quality)
+	C.prefs.have_quality = TRUE
+	C << output(TRUE, "lobbybrowser:set_quality")
 
 /datum/controller/subsystem/qualities/proc/give_all_qualities()
 	for(var/mob/living/carbon/human/player in player_list)
@@ -115,6 +124,7 @@ SUBSYSTEM_DEF(qualities)
 /datum/controller/subsystem/qualities/proc/force_give_quality(mob/living/carbon/human/H, quality_type, mob/admin)
 	var/datum/quality/quality = by_type[quality_type]
 	if(quality.satisfies_requirements(H, FALSE))
+		announce_quality(quality, H)
 		quality.add_effect(H, FALSE)
 	else
 		to_chat(admin, "<span class='warning'>[H] не соответствует требованиям особенности.</span>")
