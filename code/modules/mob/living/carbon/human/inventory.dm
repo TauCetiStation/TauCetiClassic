@@ -250,10 +250,6 @@
 		return
 	if(!istype(W))
 		return
-	if(!has_bodypart_for_slot(slot))
-		return
-	if(!specie_has_slot(slot))
-		return
 
 	W.screen_loc = null // will get moved if inventory is visible
 	W.loc = src
