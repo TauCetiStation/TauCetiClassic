@@ -10,7 +10,6 @@
 	allowed = list(/obj/item/device/flashlight)
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
-	item_color = "engineering" //Determines used sprites: rig[on]-[color] and rig[on]-[color]2 (lying down sprite)
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/obj/item/clothing/suit/space/rig/rig_connect
@@ -31,12 +30,14 @@
 		VOX = 'icons/obj/clothing/species/vox/hats.dmi',
 		)
 
+	var/rig_variant = "engineering"
+
 /obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
 	if(!isturf(user.loc))
 		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
 		return
 	on = !on
-	icon_state = "rig[on]-[item_color]"
+	icon_state = "rig[on]-[rig_variant]"
 //	item_state = "rig[on]-[color]"
 	usr.update_inv_head()
 
@@ -108,6 +109,8 @@
 	var/list/installed_modules = list() // Power consumption/use bookkeeping.
 	var/cell_type = /obj/item/weapon/stock_parts/cell/high
 	var/obj/item/weapon/stock_parts/cell/cell // Power supply, if any.
+
+	var/rig_variant = "engineering"
 
 /obj/item/clothing/suit/space/rig/atom_init()
 	. = ..()
@@ -592,7 +595,7 @@
 	desc = "An advanced helmet designed for work in a hazardous, low pressure environment. Shines with a high polish."
 	icon_state = "rig0-chief"
 	item_state = "ce_helm"
-	item_color = "chief"
+	rig_variant = "chief"
 	armor = list(melee = 55, bullet = 5, laser = 15,energy = 10, bomb = 65, bio = 100, rad = 90)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
@@ -613,7 +616,7 @@
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating."
 	icon_state = "rig0-mining"
 	item_state = "mining_helm"
-	item_color = "mining"
+	rig_variant = "mining"
 	armor = list(melee = 60, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
 
 /obj/item/clothing/suit/space/rig/mining
@@ -632,7 +635,7 @@
 	desc = "A special mining helmet designed for work in a hazardous, low pressure environment."
 	icon_state = "rig0-RedMiner"
 	item_state = "RedMiner_helm"
-	item_color = "RedMiner"
+	rig_variant = "RedMiner"
 	armor = list(melee = 40, bullet = 10, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
 
 /obj/item/clothing/suit/space/rig/RF_mining
@@ -640,7 +643,7 @@
 	desc = "A special suit that protects against hazardous, has reinforced plating."
 	icon_state = "RedMiner"
 	item_state = "RedMiner"
-	item_color = "RedMiner"
+	rig_variant = "RedMiner"
 	armor = list(melee = 40, bullet = 11, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 
@@ -698,7 +701,7 @@
 	if(user)
 		user.cut_overlay(lamp)
 		if(equipped_on_head && camera && on)
-			lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "[glowtype][combat_mode ? "_combat" : ""]_glow", layer = ABOVE_LIGHTING_LAYER)
+			lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "[glowtype][combat_mode ? "_combat" : ""]_glow")
 			if(ishuman(user)) //Lets Update Lamps offset because human have height
 				var/mob/living/carbon/human/H = user
 				H.human_update_offset(lamp, TRUE)
@@ -762,7 +765,7 @@
 	desc = "An advanced suit that protects against injuries during special operations. Property of Gorlex Marauders."
 	icon_state = "rig-syndie-space"
 	item_state = "syndie_hardsuit"
-	item_color = "rig-syndie"
+	rig_variant = "rig-syndie"
 	slowdown = 0.7
 	allowed = list(/obj/item/device/flashlight,
 	               /obj/item/weapon/tank,
@@ -795,7 +798,7 @@
 
 /obj/item/clothing/suit/space/rig/syndi/update_icon(mob/user)
 	..()
-	icon_state = "[item_color]-[combat_mode ? "combat" : "space"]"
+	icon_state = "[rig_variant]-[combat_mode ? "combat" : "space"]"
 	user.update_inv_wear_suit()
 
 /obj/item/clothing/suit/space/rig/syndi/ui_action_click()
@@ -844,7 +847,7 @@
 	desc = "An advanced suit that protects against injuries during special operations. Heavily armored and rarely used aside from open combat conflicts."
 	icon_state = "rig-heavy-space"
 	item_state = "syndie_hardsuit"
-	item_color = "rig-heavy"
+	rig_variant = "rig-heavy"
 	slowdown = 0.7
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/chem_dispenser/combat)
 	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
@@ -874,7 +877,7 @@
 	desc = "A hybrid suit made by the best engineers and designers on special order for elite syndicate operatives"
 	icon_state = "rig-syndie_elit-space"
 	item_state = "syndicate-elite"
-	item_color = "rig-syndie_elit"
+	rig_variant = "rig-syndie_elit"
 	slowdown = 0.7
 	combat_armor = list(melee = 80, bullet = 75, laser = 65, energy = 65, bomb = 70, bio = 70, rad = 70)
 	space_armor = list(melee = 65, bullet = 60, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 70)
@@ -886,7 +889,7 @@
 	desc = "A hybrid suit made by the best engineers and designers on special order for elite syndicate operatives"
 	icon_state = "rig-syndie_elitcom-space"
 	item_state = "syndicate-commander"
-	item_color = "rig-syndie_elitcom"
+	rig_variant = "rig-syndie_elitcom"
 
 /obj/item/clothing/head/helmet/space/rig/syndi/hazmat
 	name = "hazmat hybrid helmet"
@@ -904,7 +907,7 @@
 	desc = "Menacing space suit painted in blood-red colors resembling an outdated hazmat suit. Designed for chemical and psychological warfare."
 	icon_state = "rig-hazmat-space"
 	item_state = "syndie_hazmat"
-	item_color = "rig-hazmat"
+	rig_variant = "rig-hazmat"
 	slowdown = 0.7
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	unacidable = TRUE
@@ -926,7 +929,7 @@
 	desc = "A bizarre gem-encrusted helmet that radiates magical energies."
 	icon_state = "rig0-wiz"
 	item_state = "wiz_helm"
-	item_color = "wiz"
+	rig_variant = "wiz"
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
 	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
 
@@ -947,7 +950,7 @@
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has minor radiation shielding."
 	icon_state = "rig0-medical"
 	item_state = "medical_helm"
-	item_color = "medical"
+	rig_variant = "medical"
 	armor = list(melee = 30, bullet = 5, laser = 10,energy = 5, bomb = 25, bio = 100, rad = 50)
 
 /obj/item/clothing/suit/space/rig/medical
@@ -966,7 +969,7 @@
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has minor radiation shielding."
 	icon_state = "rig0-cmo"
 	item_state = "cmo_helm"
-	item_color = "cmo"
+	rig_variant = "cmo"
 
 /obj/item/clothing/suit/space/rig/medical/cmo
 	icon_state = "rig-cmo"
@@ -983,7 +986,7 @@
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
 	icon_state = "rig0-sec"
 	item_state = "sec_helm"
-	item_color = "sec"
+	rig_variant = "sec"
 	armor = list(melee = 45, bullet = 30, laser = 30, energy = 30, bomb = 65, bio = 100, rad = 10)
 
 /obj/item/clothing/suit/space/rig/security
@@ -1025,7 +1028,7 @@
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
 	icon_state = "rig0-hos"
 	item_state = "hos_helm"
-	item_color = "hos"
+	rig_variant = "hos"
 
 /obj/item/clothing/suit/space/rig/security/hos
 	icon_state = "rig-hos"
@@ -1044,7 +1047,7 @@
 	name = "atmospherics hardsuit helmet"
 	icon_state = "rig0-atmos"
 	item_state = "atmos_helm"
-	item_color = "atmos"
+	rig_variant = "atmos"
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 65, bio = 100, rad = 50)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
@@ -1064,7 +1067,7 @@
 	name = "science hardsuit helmet"
 	icon_state = "rig0-science"
 	item_state = "sceince_helm"
-	item_color = "science"
+	rig_variant = "science"
 	unacidable = TRUE
 	armor = list(melee = 5, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 60)
 
@@ -1085,7 +1088,7 @@
 	name = "advanced science hardsuit helmet"
 	icon_state = "rig0-rd"
 	item_state = "rd_helm"
-	item_color = "rd"
+	rig_variant = "rd"
 	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 55, bio = 100, rad = 70)
 
 /obj/item/clothing/head/helmet/space/rig/science/rd/equipped(mob/living/carbon/human/user, slot)
