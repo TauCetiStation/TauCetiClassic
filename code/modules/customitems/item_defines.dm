@@ -720,7 +720,7 @@
 	name = "white shirt"
 	desc = "VOTE FOR PEDRO."
 	icon_state = "NapoleonTshirt"
-	item_state = "ba_suit"
+	item_state = "NapoleonTshirt"
 
 /////// NT-SID Suit //Zuhayr: Jane Doe
 
@@ -873,7 +873,7 @@
 	name = "Moonboots"
 	desc = "I command you to dance!"
 	icon_state = "Moonboots"
-	item_state = "wjboots"
+	item_state = "Moonboots"
 
 //////////// Sets ////////////
 
