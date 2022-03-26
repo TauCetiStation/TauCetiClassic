@@ -13,6 +13,7 @@
 	var/datum/money_account/datum_account = null	//if money account is tied to the card and the card is inserted into the console, the account is stored here
 	required_skills = list(/datum/skill/command/pro)
 	fumbling_time = SKILL_TASK_TOUGH
+
 /obj/machinery/computer/card/proc/is_centcom()
 	return istype(src, /obj/machinery/computer/card/centcom)
 
