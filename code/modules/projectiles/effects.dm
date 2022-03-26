@@ -1,7 +1,6 @@
 /obj/effect/projectile
 	icon = 'icons/effects/projectiles.dmi'
 	icon_state = "bolt"
-	layer = LIGHTING_LAYER + 1
 	plane = ABOVE_LIGHTING_PLANE
 
 	var/time_to_live = 3

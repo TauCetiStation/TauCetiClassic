@@ -279,7 +279,6 @@
 	name = "plasma"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "plasma_bolt"
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	light_color = LIGHT_COLOR_PLASMA
 	light_power = 2
