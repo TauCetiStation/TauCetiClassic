@@ -9,7 +9,7 @@
 	var/shadeColour = "#220000" // RGB
 	var/uses = 30 // 0 for unlimited uses
 	var/instant = 0
-	var/colourName = DYE_RED // for updateIcon purposes
+	var/colourName = "red" // for updateIcon purposes
 	var/list/validSurfaces = list(/turf/simulated/floor)
 	var/edible = 1
 
@@ -212,37 +212,37 @@
 	icon_state = "crayonred"
 	colour = "#da0000"
 	shadeColour = "#810c0c"
-	colourName = DYE_RED
+	colourName = "red"
 
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
 	colour = "#ff9300"
 	shadeColour = "#a55403"
-	colourName = DYE_ORANGE
+	colourName = "orange"
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
 	colour = "#fff200"
 	shadeColour = "#886422"
-	colourName = DYE_YELLOW
+	colourName = "yellow"
 
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
 	colour = "#a8e61d"
 	shadeColour = "#61840f"
-	colourName = DYE_GREEN
+	colourName = "green"
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
 	colour = "#00b7ef"
 	shadeColour = "#0082a8"
-	colourName = DYE_BLUE
+	colourName = "blue"
 
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
 	colour = "#da00ff"
 	shadeColour = "#810cff"
-	colourName = DYE_PURPLE
+	colourName = "purple"
 
 /obj/item/toy/crayon/chalk
 	name = "white chalk"
@@ -250,14 +250,14 @@
 	icon_state = "chalk"
 	colour = "#ffffff"
 	shadeColour = "#cecece"
-	colourName = DYE_WHITE
+	colourName = "white"
 
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
 	colour = "#ffffff"
 	shadeColour = "#000000"
-	colourName = DYE_MIME
+	colourName = "mime"
 
 /obj/item/toy/crayon/mime/attack_self(mob/living/user) //inversion
 	if(colour != "#ffffff" && shadeColour != "#000000")
@@ -274,7 +274,7 @@
 	icon_state = "crayonrainbow"
 	colour = "#fff000"
 	shadeColour = "#000fff"
-	colourName = DYE_RAINBOW
+	colourName = "rainbow"
 
 /obj/item/toy/crayon/rainbow/attack_self(mob/living/user)
 	colour = input(user, "Please select the main colour.", "Crayon colour") as color

@@ -8,7 +8,7 @@
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 
-	layer = BELOW_OBJ_LAYER
+	layer = TURF_LAYER + 0.9
 
 	animate_movement = FALSE
 

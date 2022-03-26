@@ -10,7 +10,7 @@
 	throw_range = 15
 	m_amt = 60
 	hitsound = list('sound/effects/stamp.ogg') //taken from Baystation build
-	var/dye_color = DYE_CARGO
+	item_color = "cargo"
 	attack_verb = list("stamped")
 	var/stamp_message = "Stamp"
 	var/stamp_color = "#a23e3e"
@@ -20,7 +20,7 @@
 /obj/item/weapon/stamp/captain
 	name = "captain's rubber stamp"
 	icon_state = "stamp-cap"
-	dye_color = DYE_CAPTAIN
+	item_color = "captain"
 	stamp_message = "Captain"
 	stamp_color = "#3681bb"
 	stamp_border = "#1f66a0"
@@ -33,7 +33,7 @@
 /obj/item/weapon/stamp/hop
 	name = "head of personnel's rubber stamp"
 	icon_state = "stamp-hop"
-	dye_color = DYE_HOP
+	item_color = "hop"
 	stamp_message = "Head of Personnel"
 	stamp_color = "#6ec0ea"
 	stamp_border = "#1f66a0"
@@ -41,7 +41,7 @@
 /obj/item/weapon/stamp/hos
 	name = "head of security's rubber stamp"
 	icon_state = "stamp-hos"
-	dye_color = DYE_HOS
+	item_color = "hosred"
 	stamp_message = "Head of Security"
 	stamp_color = "#cc0000"
 	stamp_border = "#990000"
@@ -49,7 +49,7 @@
 /obj/item/weapon/stamp/ce
 	name = "chief engineer's rubber stamp"
 	icon_state = "stamp-ce"
-	dye_color = DYE_CE
+	item_color = "chief"
 	stamp_message = "Chief Engineer"
 	stamp_color = "#ffcc00"
 	stamp_border = "#cc9900"
@@ -57,7 +57,7 @@
 /obj/item/weapon/stamp/rd
 	name = "research director's rubber stamp"
 	icon_state = "stamp-rd"
-	dye_color = DYE_RD
+	item_color = "director"
 	stamp_message = "Research Director"
 	stamp_color = "#9361b5"
 	stamp_border = "#7f4ba2"
@@ -65,20 +65,20 @@
 /obj/item/weapon/stamp/cmo
 	name = "chief medical officer's rubber stamp"
 	icon_state = "stamp-cmo"
-	dye_color = DYE_CMO
+	item_color = "cmo"
 	stamp_message = "Chief Medical Officer"
 	stamp_color = "#00cccc"
 	stamp_border = "#3399ff"
 
 /obj/item/weapon/stamp/qm
 	name = "quartermaster's rubber stamp"
-	dye_color = DYE_QM
+	item_color = "qm"
 	stamp_message = "Quartermaster"
 
 /obj/item/weapon/stamp/approve
 	name = "APPROVED rubber stamp"
 	icon_state = "stamp-approve"
-	dye_color = DYE_GREENCOAT
+	item_color = "greencoat"
 	stamp_message = "APPROVED"
 	stamp_color = "#007b00"
 	stamp_border = "#1d5215"
@@ -87,7 +87,7 @@
 /obj/item/weapon/stamp/denied
 	name = "DENIED rubber stamp"
 	icon_state = "stamp-deny"
-	dye_color = DYE_REDCOAT
+	item_color = "redcoat"
 	stamp_message = "DENIED"
 	stamp_color = "#a23e3e"
 	stamp_border = "#660000"
@@ -96,7 +96,7 @@
 /obj/item/weapon/stamp/clown
 	name = "clown's rubber stamp"
 	icon_state = "stamp-clown"
-	dye_color = DYE_CLOWN
+	item_color = "clown"
 	stamp_message = "HONK!"
 	stamp_color = "#ff99cc"
 	stamp_border = "#ff66cc"
@@ -104,14 +104,14 @@
 
 /obj/item/weapon/stamp/law
 	name = "lawyer's rubber stamp"
-	dye_color = DYE_REDCOAT
+	item_color = "redcoat"
 	stamp_message = "Lawyer"
-	big_stamp = TRUE
+	big_stamp = TRUE	
 
 /obj/item/weapon/stamp/internalaffairs
 	name = "internal affairs rubber stamp"
 	icon_state = "stamp-intaff"
-	dye_color = DYE_IAA
+	item_color = "intaff"
 	stamp_message = "Internal Affairs"
 	stamp_color = "black"
 	stamp_border = "black"
@@ -120,7 +120,7 @@
 /obj/item/weapon/stamp/centcomm
 	name = "centcomm rubber stamp"
 	icon_state = "stamp-cent"
-	dye_color = DYE_CENTCOMM
+	item_color = "centcomm"
 	stamp_message = "Central Command"
 	stamp_color = "#006600"
 	stamp_border = "#174111"
@@ -129,7 +129,7 @@
 /obj/item/weapon/stamp/fakecentcomm
 	name = "cantcom rubber stamp"
 	icon_state = "stamp-fakecentcom"
-	dye_color = DYE_FAKECENTCOM
+	item_color = "fakecentcom"
 	stamp_message = "Central Compound"
 	stamp_color = "#006600"
 	stamp_border = "#006600"
@@ -138,7 +138,7 @@
 /obj/item/weapon/stamp/syndicate
 	name = "syndicate rubber stamp"
 	icon_state = "stamp-syndicate"
-	dye_color = DYE_SYNDICATE
+	item_color = "syndicate"
 	stamp_message = "Syndicate Command"
 	stamp_color = "#990000"
 	stamp_border = "#ff3300"

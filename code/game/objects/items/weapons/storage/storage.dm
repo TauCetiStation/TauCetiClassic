@@ -312,6 +312,7 @@
 			var/mob/M = loc
 			W.dropped(M)
 		if(ismob(new_location))
+			W.layer = ABOVE_HUD_LAYER
 			W.plane = ABOVE_HUD_PLANE
 		else
 			W.layer = initial(W.layer)

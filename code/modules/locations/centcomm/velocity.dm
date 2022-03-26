@@ -159,6 +159,7 @@
 	desc = "A clean, black nylon windbreaker with the words \"OFFICER OF THE LAW\" embroidered in gold-dyed thread on the back. \"VELOCITY\" is tastefully embroidered below in a smaller font."
 	icon_state = "retpolcoat"
 	item_state = "retpolcoat"
+	item_color = "retpolcoat"
 
 /obj/item/clothing/head/det_hat/fluff/retpolcap
 	name = "velocity officer's cap"
@@ -170,6 +171,7 @@
 	desc = "A meticulously clean guard uniform belonging to Dock-42, CITS Velocity. The word \"OFFICER OF THE LAW\" is engraved tastefully and professionally in the badge below the number, 42."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "retpoluniform"
+	item_color = "retpoluniform"
 
 /*
 	This is here since it belongs to the same author even though not thematically adherent to Velocity. ~Luduk.

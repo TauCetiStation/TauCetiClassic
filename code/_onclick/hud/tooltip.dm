@@ -5,7 +5,8 @@
 	icon = 'icons/misc/tooltip.dmi'
 	icon_state = "transparent"
 	screen_loc = TOOLTIP_NORTH
-	plane = ABOVE_HUD_PLANE
+	plane = ABOVE_HUD_PLANE + 1
+	layer = ABOVE_HUD_LAYER + 1
 	maptext_width = 999
 	maptext_x = -385
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

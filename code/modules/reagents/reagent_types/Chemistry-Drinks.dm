@@ -449,7 +449,7 @@
 	M.make_jittery(5)
 
 /datum/reagent/consumable/drink/cold/kvass
-	name = "Kvass"
+	name = "kvass"
 	id = "kvass"
 	description = "A cool refreshing drink with a taste of socialism."
 	reagent_state = LIQUID

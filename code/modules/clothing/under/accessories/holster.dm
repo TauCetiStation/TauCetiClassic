@@ -2,6 +2,7 @@
 	name = "shoulder holster"
 	desc = "A handgun holster."
 	icon_state = "holster"
+	item_color = "holster"
 	slot = "utility"
 	var/obj/item/weapon/gun/holstered = null
 
@@ -117,7 +118,7 @@
 	name = "shoulder holster"
 	desc = "A worn-out handgun holster. Perfect for concealed carry."
 	icon_state = "holster_armpit"
-	item_state = "holster"
+	item_color = "holster"
 
 /obj/item/clothing/accessory/holster/armpit/update_icon()
 	..()
@@ -127,3 +128,4 @@
 	name = "gun holster"
 	desc = "When you just HAVE to show off your guns."
 	icon_state = "mafia_holster"
+	item_color = "mafia_holster"

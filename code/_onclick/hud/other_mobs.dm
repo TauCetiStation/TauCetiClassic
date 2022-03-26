@@ -12,12 +12,14 @@
 	blobpwrdisplay.name = "blob power"
 	blobpwrdisplay.icon_state = "block"
 	blobpwrdisplay.screen_loc = ui_health
+	blobpwrdisplay.layer = ABOVE_HUD_LAYER
 	blobpwrdisplay.plane = ABOVE_HUD_PLANE
 
 	blobhealthdisplay = new /atom/movable/screen()
 	blobhealthdisplay.name = "blob health"
 	blobhealthdisplay.icon_state = "block"
 	blobhealthdisplay.screen_loc = ui_internal
+	blobpwrdisplay.layer = ABOVE_HUD_LAYER
 	blobpwrdisplay.plane = ABOVE_HUD_PLANE
 
 	mymob.client.screen = list()
@@ -34,6 +36,7 @@
 	E.voice.icon_state = "phantom_[E.self_voice ? "on" : "off"]"
 	E.voice.icon_state = "voice_off"
 	E.voice.screen_loc = ui_rhand
+	E.voice.layer = ABOVE_HUD_LAYER
 	E.voice.plane = ABOVE_HUD_PLANE
 
 	E.phantom_s = new /atom/movable/screen/essence_phantom()
@@ -41,6 +44,7 @@
 	E.phantom_s.icon = 'icons/mob/screen_gen.dmi'
 	E.phantom_s.icon_state = "phantom_[(E.phantom && E.phantom.showed) ? "on" : "off"]"
 	E.phantom_s.screen_loc = ui_lhand
+	E.phantom_s.layer = ABOVE_HUD_LAYER
 	E.phantom_s.plane = ABOVE_HUD_PLANE
 
 	mymob.internals = new /atom/movable/screen()
@@ -65,6 +69,7 @@
 	lingchemdisplay.name = "chemical storage"
 	lingchemdisplay.icon_state = "power_display"
 	lingchemdisplay.screen_loc = ui_lingchemdisplay
+	lingchemdisplay.layer = ABOVE_HUD_LAYER
 	lingchemdisplay.plane = ABOVE_HUD_PLANE
 
 	var/atom/movable/screen/using = new /atom/movable/screen/ling_abilities()

@@ -15,6 +15,7 @@ var/global/atom/movable/screen/robot_inventory
 		using.icon = 'icons/mob/screen1_robot.dmi'
 		using.icon_state = "setsensor"
 		using.screen_loc = ui_borg_sensor
+		using.layer = ABOVE_HUD_LAYER
 		using.plane = ABOVE_HUD_PLANE
 		adding += using
 
@@ -24,6 +25,7 @@ var/global/atom/movable/screen/robot_inventory
 		using.icon = 'icons/mob/screen1_robot.dmi'
 		using.icon_state = "pda"
 		using.screen_loc = ui_borg_show_pda
+		using.layer = ABOVE_HUD_LAYER
 		using.plane = ABOVE_HUD_PLANE
 		adding += using
 		var/list/screens = list("PDA - Send Message" = "pda_send", "PDA - Show Message Log" = "pda_log",\
@@ -34,6 +36,7 @@ var/global/atom/movable/screen/robot_inventory
 			ousing.name = name
 			ousing.icon = 'icons/mob/screen1_robot.dmi'
 			ousing.icon_state = screens[name]
+			ousing.layer = ABOVE_HUD_LAYER
 			ousing.plane = ABOVE_HUD_PLANE
 			ousing.screen_loc = "SOUTH+[screen_position]:6,WEST"
 			screen_position++
@@ -45,6 +48,7 @@ var/global/atom/movable/screen/robot_inventory
 		using.icon = 'icons/mob/screen1_robot.dmi'
 		using.icon_state = "photo"
 		using.screen_loc = ui_borg_show_foto
+		using.layer = ABOVE_HUD_LAYER
 		using.plane = ABOVE_HUD_PLANE
 		adding += using
 		screens = list("Take Image" = "takephoto", "View Images" = "photos", "Delete Image" = "deletthis")
@@ -54,6 +58,7 @@ var/global/atom/movable/screen/robot_inventory
 			ousing.name = name
 			ousing.icon = 'icons/mob/screen1_robot.dmi'
 			ousing.icon_state = screens[name]
+			ousing.layer = ABOVE_HUD_LAYER
 			ousing.plane = ABOVE_HUD_PLANE
 			ousing.screen_loc = "SOUTH+[screen_position]:6,WEST+1"
 			screen_position++
@@ -65,6 +70,7 @@ var/global/atom/movable/screen/robot_inventory
 		using.icon = 'icons/mob/screen1_robot.dmi'
 		using.icon_state = "changename"
 		using.screen_loc = ui_borg_namepick
+		using.layer = ABOVE_HUD_LAYER
 		using.plane = ABOVE_HUD_PLANE
 		adding += using
 
@@ -74,6 +80,7 @@ var/global/atom/movable/screen/robot_inventory
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "crewmanifest"
 	using.screen_loc = ui_borg_show_manifest
+	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
@@ -83,6 +90,7 @@ var/global/atom/movable/screen/robot_inventory
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "selfdiagnosis"
 	using.screen_loc = ui_borg_diagnostic
+	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
@@ -92,6 +100,7 @@ var/global/atom/movable/screen/robot_inventory
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "showalerts"
 	using.screen_loc = ui_borg_show_alerts
+	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
@@ -101,6 +110,7 @@ var/global/atom/movable/screen/robot_inventory
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "statelaws"
 	using.screen_loc = ui_borg_state_laws
+	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
@@ -110,6 +120,7 @@ var/global/atom/movable/screen/robot_inventory
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "showlaws"
 	using.screen_loc = ui_borg_show_laws
+	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
@@ -119,6 +130,7 @@ var/global/atom/movable/screen/robot_inventory
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "togglecompanent"
 	using.screen_loc = ui_borg_component
+	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
@@ -128,6 +140,7 @@ var/global/atom/movable/screen/robot_inventory
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "togglelights"
 	using.screen_loc = ui_borg_light
+	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	adding += using
 
@@ -137,6 +150,7 @@ var/global/atom/movable/screen/robot_inventory
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "radio"
 	using.screen_loc = ui_movi
+	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 
@@ -147,6 +161,7 @@ var/global/atom/movable/screen/robot_inventory
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "inv1"
 	using.screen_loc = ui_inv1
+	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	mymob:inv1 = using
@@ -156,6 +171,7 @@ var/global/atom/movable/screen/robot_inventory
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "inv2"
 	using.screen_loc = ui_inv2
+	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	mymob:inv2 = using
@@ -165,6 +181,7 @@ var/global/atom/movable/screen/robot_inventory
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "inv3"
 	using.screen_loc = ui_inv3
+	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	mymob:inv3 = using
@@ -177,6 +194,7 @@ var/global/atom/movable/screen/robot_inventory
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "intent_" + mymob.a_intent
 	using.screen_loc = ui_acti
+	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	action_intent = using
@@ -201,6 +219,7 @@ var/global/atom/movable/screen/robot_inventory
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "panel"
 	using.screen_loc = ui_borg_panel
+	using.layer = HUD_LAYER
 	using.plane = HUD_PLANE
 	src.adding += using
 
@@ -313,6 +332,7 @@ var/global/atom/movable/screen/robot_inventory
 					A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
 				else
 					A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
+				A.layer = ABOVE_HUD_LAYER
 				A.plane = ABOVE_HUD_PLANE
 
 				x++

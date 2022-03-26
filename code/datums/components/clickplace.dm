@@ -82,16 +82,15 @@
 	if(!click_params || !click_params[ICON_X] || !click_params[ICON_Y])
 		return
 
-	var/icon_size = world.icon_size
-	var/half_icon_size = icon_size * 0.5
+	var/half_icon_size = world.icon_size * 0.5
+
+	var/p_x = text2num(click_params[ICON_X]) - half_icon_size
+	var/p_y = text2num(click_params[ICON_Y]) - half_icon_size
 
 	var/atom/A = parent
 
-	var/p_x = text2num(click_params[ICON_X]) + A.pixel_x
-	var/p_y = text2num(click_params[ICON_Y]) + A.pixel_y
-
-	p_x = clamp(p_x, 0, icon_size) - half_icon_size - I.pixel_x
-	p_y = clamp(p_y, 0, icon_size) - half_icon_size - I.pixel_y
+	p_x += A.pixel_x - I.pixel_x
+	p_y += A.pixel_y - I.pixel_y
 
 	if(!user.drop_from_inventory(I, A.loc, additional_pixel_x=p_x, additional_pixel_y=p_y))
 		return FALSE

@@ -3,6 +3,7 @@
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
 	icon_state = "hardhat_standard"
 	item_state = "hardhat_standard"
+	item_color = "standard"
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
@@ -34,17 +35,20 @@
 	item_state = icon_state
 
 /obj/item/clothing/head/hardhat/yellow
+	item_color = "yellow"
 	icon_state = "hardhat_yellow"
 
 /obj/item/clothing/head/hardhat/yellow/visor
 	name = "visor hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight and visor, which may protect eyes."
 	icon_state = "hardhat_yellow_visor"
+	item_color = "yellow_visor"
 	body_parts_covered = HEAD|FACE|EYES
 	flags = MASKCOVERSEYES
 
 /obj/item/clothing/head/hardhat/orange
 	icon_state = "hardhat_orange"
+	item_color = "orange"
 
 /obj/item/clothing/head/hardhat/red
 	name = "firefighter helmet"
@@ -55,9 +59,11 @@
 
 /obj/item/clothing/head/hardhat/white
 	icon_state = "hardhat_white"
+	item_color = "white"
 	flags_pressure = STOPS_HIGHPRESSUREDMAGE
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/head/hardhat/dblue
 	icon_state = "hardhat_dblue"
+	item_color = "dblue"

@@ -113,28 +113,3 @@
 	name = "Stasis Bag"
 	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
 	icon_state = "stasis"
-
-/datum/status_effect/remove_trait
-	id = "remove_traits"
-	tick_interval = 10
-	alert_type = null
-	status_type = STATUS_EFFECT_REFRESH
-	var/trait
-	var/trait_source
-
-/datum/status_effect/remove_trait/on_creation(mob/living/new_owner, time_amount)
-	duration = time_amount
-	. = ..()
-	REMOVE_TRAIT(owner, trait, trait_source)
-
-/datum/status_effect/remove_trait/on_remove()
-	ADD_TRAIT(owner, trait, trait_source)
-	. = ..()
-
-/datum/status_effect/remove_trait/wet_hands
-	trait = TRAIT_WET_HANDS
-	trait_source = QUALITY_TRAIT
-
-/datum/status_effect/remove_trait/greasy_hands
-	trait = TRAIT_GREASY_FINGERS
-	trait_source = QUALITY_TRAIT

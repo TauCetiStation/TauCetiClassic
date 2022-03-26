@@ -7,11 +7,10 @@
 	var/implanted = null
 	var/mob/imp_in = null
 	var/obj/item/organ/external/part = null
+	item_color = "b"
 	var/allow_reagents = 0
 	var/malfunction = 0
 	var/uses = 0
-
-	var/implant_type = "b"
 
 /obj/item/weapon/implant/atom_init()
 	. = ..()

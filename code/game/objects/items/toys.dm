@@ -177,11 +177,6 @@
 
 	visible_message("<span class='warning'><B>[user] fires a cap gun at [target]!</B></span>", "<span class='warning'>You hear a gunshot</span>")
 
-/obj/item/toy/gun/peacemaker
-	name = "Colt SAA"
-	desc = "A legend of Wild West."
-	icon_state = "peacemaker"
-
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
 	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
