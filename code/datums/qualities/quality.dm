@@ -14,6 +14,11 @@
 	var/desc
 	// The requirement, as described to the player.
 	var/requirement
+	// The maximum amount of players that can even receive this quality.
+	var/max_amount = -1
+
+	// The amount of players that already have this quality.
+	var/amount = 0
 
 	/*
 		List of pools this quality belongs to.

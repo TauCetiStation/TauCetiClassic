@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(qualities)
 	for(var/quality_type in subtypesof(/datum/quality))
 		var/datum/quality/Q = new quality_type
 		by_name[Q.name] = Q
-		by_type[Q.quality_type] = Q
+		by_type[Q.type] = Q
 
 		for(var/pool in Q.pools)
 			LAZYADD(by_pool[pool], Q)
@@ -65,6 +65,8 @@ SUBSYSTEM_DEF(qualities)
 
 		possible_qualities -= Q
 
+		if(Q.max_amount >= 0 && Q.amount > Q.max_amount)
+			continue
 		if(!Q.satisfies_availability(C))
 			continue
 
@@ -78,12 +80,17 @@ SUBSYSTEM_DEF(qualities)
 
 	return selected_quality
 
+/datum/controller/subsystem/qualities/proc/set_quality(client/C, datum/quality/Q)
+	Q.amount += 1
+	registered_clients[C.ckey] = Q.type
+	announce_quality(C, Q)
+	C.prefs.selected_quality_type = Q.type
+	C << output(TRUE, "lobbybrowser:set_quality")
+
 /datum/controller/subsystem/qualities/proc/force_register_client(client/C, datum/quality/Q)
 	if(!initialized)
 		return
 	if(!SSticker || SSticker.current_state != GAME_STATE_PREGAME)
-		return
-	if(!SSjob)
 		return
 	if(!C.prefs)
 		return
@@ -91,10 +98,7 @@ SUBSYSTEM_DEF(qualities)
 	if(C.mob)
 		to_chat(C.mob, "<span class='warning'>Похоже кто-то сделал этот выбор за тебя!</span>")
 
-	registered_clients[C.ckey] = Q.type
-	announce_quality(C, Q)
-	C.prefs.selected_quality_type = Q.type
-	C << output(TRUE, "lobbybrowser:set_quality")
+	set_quality(C, Q)
 
 /datum/controller/subsystem/qualities/proc/register_client(client/C)
 	if(!initialized)
@@ -127,10 +131,7 @@ SUBSYSTEM_DEF(qualities)
 	if(!Q)
 		CRASH("BADMIN ALERT! QUALITY REGISTERED IS NULL. HAS SOMEONE PLAYED WITH SSqualities.forced_quality_type?")
 
-	registered_clients[C.ckey] = Q.type
-	announce_quality(C, Q)
-	C.prefs.selected_quality_type = Q.type
-	C << output(TRUE, "lobbybrowser:set_quality")
+	set_quality(C, Q)
 
 /datum/controller/subsystem/qualities/proc/give_all_qualities()
 	for(var/mob/living/carbon/human/player in player_list)
