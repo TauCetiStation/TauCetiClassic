@@ -87,7 +87,7 @@
 		var/obj/item/stack/sheet/S = contents[i]
 		var/image/sheet_overlay = image(icon,"briefcase_eng_[S.icon_state]")
 		if(i <= 5 && i >= 1)
-			sheet_overlay.pixel_x = -10 + i
+			sheet_overlay.pixel_x = i - 10
 		else if(i <= 10 && i >= 6)
-			sheet_overlay.pixel_x = i
+			sheet_overlay.pixel_x = i - 1
 		add_overlay(sheet_overlay)
