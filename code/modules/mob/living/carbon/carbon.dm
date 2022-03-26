@@ -26,7 +26,7 @@
 
 	var/pressure = environment.return_pressure()
 	var/temperature = environment.temperature
-	var/affecting_temp = (temperature - bodytemperature) * environment.total_moles / MOLES_CELLSTANDARD
+	var/affecting_temp = (temperature - bodytemperature) * environment.return_relative_density()
 	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 
 	if(!on_fire)
@@ -34,7 +34,8 @@
 			bodytemperature += affecting_temp / BODYTEMP_HEAT_DIVISOR
 		else if (affecting_temp < -BODYTEMP_SIGNIFICANT_CHANGE)
 			bodytemperature += affecting_temp / BODYTEMP_COLD_DIVISOR
-		bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
+		if(stat != DEAD)
+			bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
 
 	if(flags & GODMODE)
 		clear_alert("temp")
