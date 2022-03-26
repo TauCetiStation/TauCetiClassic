@@ -249,7 +249,7 @@ var/global/list/allergen_reagents_list
 	<br>- Ну может вообще не взорвётся, ну а может и бахнет минут через 5? 20? 40? Кто его знает?"
 	requirement = "Нет."
 
-/datum/quality/c4/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/negativeish/c4/add_effect(mob/living/carbon/human/H, latespawn)
 	var/obj/item/weapon/plastique/C4 = new(H)
 	C4.timer = rand(600, 1800)
 	C4.plant_bomb(H)
