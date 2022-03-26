@@ -58,7 +58,8 @@ SUBSYSTEM_DEF(qualities)
 	var/quality_pool = roll_pool(C)
 
 	var/datum/quality/selected_quality
-	var/list/possible_qualities = by_pool[quality_pool].Copy()
+	var/list/pool_qualities = by_pool[quality_pool]
+	var/list/possible_qualities = pool_qualities.Copy()
 
 	while(possible_qualities.len)
 		var/datum/quality/Q = pick(possible_qualities)
