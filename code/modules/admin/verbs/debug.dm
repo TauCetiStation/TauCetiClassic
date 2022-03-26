@@ -458,7 +458,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		"mime",
 		"clown",
 		"jolly gravedigger",
-		"jolly gravedigger supreme"
+		"jolly gravedigger supreme",
+		"psyops officer",
 		)
 	var/list/dresspacks_without_money = list(
 		"strip",
@@ -735,6 +736,50 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+
+		if("psyops officer")
+			M.set_species(SKRELL)
+			M.r_eyes = 102
+			M.g_eyes = 204
+			M.b_eyes = 255
+
+			var/list/skin_variations = list(
+				list(0, 0, 0),
+				list(28, 28, 28),
+				list(0, 0, 102),
+				list(63, 31, 0),
+				list(0, 51, 0),
+			)
+
+			var/list/variation = pick(skin_variations)
+
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/darkred(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/psyamp(M), SLOT_HEAD)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/fullbody/psy_robe(M), SLOT_WEAR_SUIT)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black/silence(M), SLOT_GLOVES)
+			M.equip_to_slot_or_del(new /obj/item/weapon/paper/psyops_starting_guide(M), SLOT_L_HAND)
+			M.equip_to_slot_or_del(new /obj/item/weapon/nullrod/forcefield_staff(M), SLOT_R_HAND)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment(M), SLOT_R_STORE)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/small_firstaid_kit/psyops(M), SLOT_L_STORE)
+			M.equip_to_slot_or_del(new /obj/item/clothing/ears/earmuffs(M), SLOT_L_EAR)
+
+			M.r_skin = variation[1]
+			M.g_skin = variation[2]
+			M.b_skin = variation[3]
+
+			M.r_hair = variation[1]
+			M.g_hair = variation[2]
+			M.b_hair = variation[3]
+
+			M.universal_speak = TRUE
+			M.universal_understand = TRUE
+
+			M.mutations.Add(NO_SHOCK)
+			M.mutations.Add(TK)
+			M.mutations.Add(REMOTE_TALK)
+
+			M.update_mutations()
 
 		if("velocity officer")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/det/fluff/retpoluniform(M), SLOT_W_UNIFORM)
