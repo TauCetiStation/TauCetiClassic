@@ -133,7 +133,7 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/gen_record = ""
 
 	// Qualities
-	// Quality selected, changing this does not impact anything.
+	// Quality selected.
 	var/selected_quality_name
 	var/selecting_quality = FALSE
 
