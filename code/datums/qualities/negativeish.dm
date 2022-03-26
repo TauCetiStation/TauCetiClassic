@@ -246,7 +246,7 @@ var/global/list/allergen_reagents_list
 	<br>- ВЗОРВЁТСЯ ЛИ ОНА? \
 	<br>- Да. \
 	<br>- КОГДА? \
-	<br>- Ну может вообще не взорвётся, ну а может и бахнет минут через 5? 20? 40? Кто его знает?"
+	<br>- Ну может и бахнет минут через 5? 20? 40? Кто его знает?"
 	requirement = "Нет."
 
 /datum/quality/negativeish/c4/add_effect(mob/living/carbon/human/H, latespawn)
