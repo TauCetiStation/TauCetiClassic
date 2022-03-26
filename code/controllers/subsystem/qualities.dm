@@ -90,8 +90,7 @@ SUBSYSTEM_DEF(qualities)
 /datum/controller/subsystem/qualities/proc/force_register_client(client/C, datum/quality/Q)
 	if(!initialized)
 		return
-	if(!SSticker || SSticker.current_state != GAME_STATE_PREGAME)
-		return
+
 	if(!C.prefs)
 		return
 
@@ -102,11 +101,6 @@ SUBSYSTEM_DEF(qualities)
 
 /datum/controller/subsystem/qualities/proc/register_client(client/C)
 	if(!initialized)
-		if(C.mob)
-			to_chat(C.mob, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
-		return
-
-	if(!SSticker || SSticker.current_state != GAME_STATE_PREGAME)
 		if(C.mob)
 			to_chat(C.mob, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
 		return

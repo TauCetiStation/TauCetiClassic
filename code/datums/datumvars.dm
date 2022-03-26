@@ -262,13 +262,14 @@
 		body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
 		body += "<option value='?_src_=vars;addlanguage=\ref[D]'>Add Language</option>"
 		body += "<option value='?_src_=vars;remlanguage=\ref[D]'>Remove Language</option>"
+		if(ishuman(D) || istype(D, /mob/dead/new_player))
+			body += "<option value='?_src_=vars;give_quality=\ref[D]'>Give Quality</option>"
 
 		body += "<option value='?_src_=vars;addverb=\ref[D]'>Add Verb</option>"
 		body += "<option value='?_src_=vars;remverb=\ref[D]'>Remove Verb</option>"
 		body += "<option value='?_src_=vars;setckey=\ref[D]'>Set Client</option>"
 		if(ishuman(D))
 			body += "<option value>---</option>"
-			body += "<option value='?_src_=vars;give_quality=\ref[D]'>Give Quality</option>"
 			body += "<option value='?_src_=vars;setmutantrace=\ref[D]'>Set Mutantrace</option>"
 			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
 			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
@@ -908,10 +909,6 @@ body
 		if(!check_rights(R_VAREDIT))
 			return
 
-		if(!SSticker)
-			to_chat(usr, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
-			return
-
 		var/mob/M = locate(href_list["give_quality"])
 
 		var/quality_name = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.by_name
@@ -925,7 +922,7 @@ body
 
 		if(ishuman(M))
 			SSqualities.force_give_quality(M, Q, usr)
-		else if(SSticker.current_state == GAME_STATE_PREGAME && M.client)
+		else if(istype(M, /mob/dead/new_player) && M.client)
 			SSqualities.force_register_client(M.client, Q)
 		else
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
