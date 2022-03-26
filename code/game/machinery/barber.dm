@@ -314,7 +314,7 @@ A proc that does all the animations before mix()-ing.
 			return attack_hand(user)
 		else if(ismultitool(O))
 			return attack_hand(user)
-		else if(istype(O, /obj/item/device/assembly/signaler))
+		else if(issignaler(O))
 			return attack_hand(user)
 
 	if(exchange_parts(user, O))
@@ -359,7 +359,7 @@ A proc that does all the animations before mix()-ing.
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(C.client)
-			C.eye_blurry = max(C.eye_blurry, 3)
+			C.blurEyes(3)
 			C.eye_blind = max(C.eye_blind, 1)
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C

@@ -78,13 +78,16 @@
 		uses--
 
 	if(uses < 1)
-		user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
-		var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
-		junk.add_fingerprint(user)
-		qdel(src)
+		emag_break(user)
 		return
 
 	..()
+
+/obj/item/weapon/card/emag/proc/emag_break(mob/user)
+	var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
+	junk.add_fingerprint(user)
+	user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
+	qdel(src)
 
 /obj/item/weapon/card/id
 	name = "identification card"
@@ -310,7 +313,7 @@
 	if(istype(target, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = target
 		src.access |= I.access
-		if(istype(user, /mob/living) && user.mind)
+		if(isliving(user) && user.mind)
 			if(user.mind.special_role)
 				to_chat(usr, "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")
 

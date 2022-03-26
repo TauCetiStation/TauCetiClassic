@@ -19,6 +19,7 @@
 	desc = "Can hold various tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	max_w_class = SIZE_SMALL
 	can_hold = list(
 		/obj/item/weapon/crowbar,
 		/obj/item/weapon/screwdriver,

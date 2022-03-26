@@ -23,6 +23,13 @@
 	toggled = FALSE
 	autolinkers = list("r_relay")
 
+/obj/machinery/telecomms/relay/preset/portable
+	id = "Portable Relay"
+	heatgen = 0
+	hide = TRUE
+	use_power = 0
+	active_power_usage = 0
+
 /obj/machinery/telecomms/relay/preset/centcom
 	id = "Centcom Relay"
 	hide = TRUE
@@ -44,7 +51,7 @@
 	network = "tcommsat"
 	heatgen = 0
 	autolinkers = list("hub_cent", "c_relay", "s_relay", "m_relay", "r_relay",
-	 "centcomm", "receiverCent", "broadcasterCent")
+	"centcomm", "receiverCent", "broadcasterCent")
 
 //Receivers
 

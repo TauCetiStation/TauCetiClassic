@@ -66,7 +66,7 @@
 			blood_am = I.reagents.get_reagent_amount("blood")
 		return blood_am
 
-	else if(istype(I, /obj/item/organ/external))
+	else if(isbodypart(I))
 		return 50
 
 	else if(istype(I, /obj/item/brain))
@@ -144,14 +144,6 @@
 
 	color = COLOR_PURPLE_GRAY
 
-//Gives mana from: allows you to accumulate mana when you beat yourself near the altar
-//Needed for: any spell in which there is damage to the chaplain or people around the altar should have this aspect.
-/datum/aspect/flagellation
-	name = ASPECT_FLAGELLATION
-	desc = "Self-flagellation, transformation of life energy into a magic"
-
-	color = COLOR_SKY_BLUE
-
 //Gives mana from: any heal near the altar
 //Needed for: spells and rituals related to the theme of heal, buff
 /datum/aspect/rescue
@@ -193,7 +185,7 @@
 	else if(istype(I, /obj/item/weapon/circuitboard))
 		return 30
 
-	else if(istype(I, /obj/item/device/assembly))
+	else if(isassembly(I))
 		return 10 * I.w_class
 
 	return 0
@@ -249,14 +241,6 @@
 /datum/aspect/wacky/holy_turf_exit(datum/source, atom/movable/mover, atom/newLoc)
 	..()
 	UnregisterSignal(mover, list(COMSIG_MOB_SLIP))
-
-//Gives mana from: "silenced" spells at wizard/cult
-//Needed for: spells and rituals related to the theme of muffle the magical abilities of the wizard/cult
-/datum/aspect/absence
-	name = ASPECT_ABSENCE
-	desc = "Silence, allows you to use the power of the magician or cult as you want"
-
-	color = COLOR_GRAY80
 
 // Children of this type somehow integrate with light on tiles.
 /datum/aspect/lightbending
@@ -337,12 +321,3 @@
 
 /datum/aspect/greed/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	return I.get_price() * 0.05
-
-//Gives mana from: does not affect mana accumulation
-//Needed for: amassing followers, and giving them goods, mass-effect spells
-/datum/aspect/herd
-	name = ASPECT_HERD
-	desc = "Herd, consure"
-	icon_state = "aspect_herd"
-
-	color = COLOR_LUMINOL

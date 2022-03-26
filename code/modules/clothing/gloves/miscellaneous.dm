@@ -17,7 +17,7 @@
 	siemens_coefficient = 1.0
 
 /obj/item/clothing/gloves/swat
-	desc = "These tactical gloves are somewhat fire and impact-resistant."
+	desc = "These tactical gloves are fire-resistant."
 	name = "SWAT Gloves"
 	icon_state = "black"
 	item_state = "swat_gl"
@@ -67,10 +67,10 @@
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/gloves/security														//Sec gloves
-	desc = "Heavily padded heavy-duty red security gloves."
+	desc = "Heavily padded heavy-duty black security gloves."
 	name = "security gloves"
-	icon_state = "security_red"
-	item_state = "security_red"
+	icon_state = "security_black"
+	item_state = "security_black"
 	siemens_coefficient = 0.5
 	permeability_coefficient = 0.04
 	cold_protection = ARMS

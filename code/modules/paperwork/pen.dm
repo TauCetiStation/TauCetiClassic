@@ -46,7 +46,7 @@
 		if(!entity)
 			to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
 			var/list/choices = list()
-			for(var/mob/dead/observer/D in observer_list)
+			for(var/mob/dead/observer/D as anything in observer_list)
 				if(D.started_as_observer)
 					choices += D.name
 			if(choices.len)
@@ -77,8 +77,8 @@
 				return
 			else if(istype(I, /obj/item/weapon/storage/bible))
 				var/obj/item/weapon/storage/bible/B = I
-				to_chat(user, "<span class='notice'>You feel a ceratin divine intelligence, as [capitalize(B.deity_name)] possesess \the [src].</span>")
-				entity = B.deity_name
+				entity = pick(B.religion.deity_names)
+				to_chat(user, "<span class='notice'>You feel a ceratin divine intelligence, as [entity] possesess \the [src].</span>")
 				return
 			else if(istype(I, /obj/item/weapon/photo))
 				var/obj/item/weapon/photo/P = I
@@ -164,8 +164,10 @@
 /obj/item/weapon/pen/edagger
 	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
-	tools = list()
+
+	qualities = null
 	flags = NOBLOODY
+
 	var/on = 0
 	var/hacked = 0
 
@@ -190,7 +192,7 @@
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
-		tools = list()
+		qualities = null
 	else
 		on = 1
 		force = 18
@@ -203,8 +205,8 @@
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
-		tools = list(
-			TOOL_KNIFE = 1
+		qualities = list(
+			QUALITY_CUTTING = 1
 			)
 	update_icon()
 

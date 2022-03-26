@@ -26,7 +26,7 @@
 	if(knife)
 		return ..()
 
-	if(I.tools[TOOL_KNIFE] >= 1)
+	if(I.get_quality(QUALITY_CUTTING) > 0)
 		user.drop_from_inventory(I, src)
 		playsound(user, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 		to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
@@ -49,7 +49,7 @@
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN + 1
+	slowdown = SHOES_SLOWDOWN + 0.5
 	species_restricted = null
 	clipped_status = NO_CLIPPING
 

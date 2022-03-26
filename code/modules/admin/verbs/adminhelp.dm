@@ -285,19 +285,19 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	for(var/client/X in global.admins)
 		X.mob.playsound_local(null, X.bwoink_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 		window_flash(X)
-		to_chat(X, admin_msg)
+		to_chat_admin_pm(X, admin_msg)
 
 	//show it to the person adminhelping too
-	to_chat(initiator, "<span class='adminnotice'>PM to-<b>Admins</b>: <span class='emojify linkify'>[msg]</span></span>")
+	to_chat_admin_pm(initiator, "<span class='adminnotice'>PM to-<b>Admins</b>: <span class='emojify linkify'>[msg]</span></span>")
 
 //Reopen a closed ticket
 /datum/admin_help/proc/Reopen()
 	if(state == AHELP_ACTIVE)
-		to_chat(usr, "<span class='warning'>This ticket is already open.</span>")
+		to_chat_admin_pm(usr, "<span class='warning'>This ticket is already open.</span>")
 		return
 
 	if(global.ahelp_tickets.CKey2ActiveTicket(initiator_ckey))
-		to_chat(usr, "<span class='warning'>This user already has an active ticket, cannot reopen this one.</span>")
+		to_chat_admin_pm(usr, "<span class='warning'>This user already has an active ticket, cannot reopen this one.</span>")
 		return
 
 	statclick = new(null, src)
@@ -382,9 +382,11 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 		initiator.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
-		to_chat(initiator, "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>")
-		to_chat(initiator, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")
-		to_chat(initiator, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.")
+		var/msg = "<span class='warning' size='4'><b>- AdminHelp Rejected! -</b></span><br>" + \
+			"<span class='warning'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</span><br>" + \
+			"Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting."
+	
+		to_chat_admin_pm(initiator, msg)
 
 	var/msg = "Ticket [TicketHref("#[id]")] rejected by [key_name]"
 	message_admins(msg)
@@ -402,12 +404,12 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(state != AHELP_ACTIVE)
 		return
 
-	var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue! -</b></font><br>"
-	msg += "<font color='red'><b>Losing is part of the game!</b></font><br>"
-	msg += "<font color='red'>Your character will frequently die, sometimes without even a possibility of avoiding it. Events will often be out of your control. No matter how good or prepared you are, sometimes you just lose.</font>"
+	var/msg = "<span class='warning' size='4'><b>- AdminHelp marked as IC issue! -</b></span><br>" + \
+		"<span class='warning'><b>Losing is part of the game!</b></span><br>" + \
+		"<span class='warning'>Your character will frequently die, sometimes without even a possibility of avoiding it. Events will often be out of your control. No matter how good or prepared you are, sometimes you just lose.</span>"
 
 	if(initiator)
-		to_chat(initiator, msg)
+		to_chat_admin_pm(initiator, msg)
 
 	msg = "Ticket [TicketHref("#[id]")] marked as IC by [key_name]"
 	message_admins(msg)
@@ -527,7 +529,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 /client/proc/is_ahelp_cooldown()
 	var/ahelp_cooldown_timeleft = ahelp_tickets.ckey_cooldown_holder[ckey]
 	if(ahelp_cooldown_timeleft && world.time < ahelp_cooldown_timeleft)
-		to_chat(src, "<span class='notice'>You cannot use \"Adminhelp\" so often. Please wait another [round((ahelp_cooldown_timeleft - world.time) / 10, 1)] seconds.</span>")
+		to_chat_admin_pm(src, "<span class='notice'>You cannot use \"Adminhelp\" so often. Please wait another [round((ahelp_cooldown_timeleft - world.time) / 10, 1)] seconds.</span>")
 		return TRUE
 	else
 		return FALSE
@@ -540,12 +542,12 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	set name = "Adminhelp"
 
 	if(global.say_disabled)	//This is here to try to identify lag problems
-		to_chat(src, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		to_chat_admin_pm(src, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
 	//handle muting and automuting
 	if(prefs.muted & MUTE_ADMINHELP)
-		to_chat(src, "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>")
+		to_chat_admin_pm(src, "<span class='warning'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>")
 		return
 
 	if(is_ahelp_cooldown())
@@ -568,7 +570,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 				current_ticket.TimeoutVerb()
 				return
 			else
-				to_chat(src, "<span class='warning'>Ticket not found, creating new one...</span>")
+				to_chat_admin_pm(src, "<span class='warning'>Ticket not found, creating new one...</span>")
 		else
 			current_ticket.AddInteraction("[key_name_admin(src)] opened a new ticket.")
 			current_ticket.Close()

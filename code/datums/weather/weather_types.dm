@@ -57,7 +57,7 @@
 	for(var/V in impacted_areas)
 		var/area/A = V
 		if(stage == MAIN_STAGE)
-			A.invisibility = 0
+			A.invisibility = INVISIBILITY_NONE
 			A.set_opacity(TRUE)
 			A.layer = overlay_layer
 			A.icon = 'icons/effects/weather_effects.dmi'
@@ -98,7 +98,7 @@
 /datum/weather/scrap_storm/proc/is_scrap_immune(mob/living/L)
 	if(istype(L.loc, /obj/mecha)) //Mechs are immune
 		return TRUE
-	if(istype(L.loc, /mob/living) && L.loc != L) //Matryoshka check
+	if(isliving(L.loc) && L.loc != L) //Matryoshka check
 		return is_scrap_immune(L.loc)
 	return FALSE //RIP you
 
@@ -159,7 +159,7 @@
 	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
 
 	area_type = /area
-	protected_areas = list(/area/station/maintenance, /area/station/civilian/dormitories/male, /area/station/civilian/dormitories/female, /area/station/storage/emergency, /area/station/storage/emergency2, /area/station/storage/emergency3, /area/station/storage/tech)
+	protected_areas = list(/area/station/maintenance, /area/station/civilian/dormitories/male, /area/station/civilian/dormitories/female, /area/station/storage/emergency, /area/station/storage/emergency2, /area/station/storage/emergency3, /area/station/storage/tech, /area/asteroid/mine)
 	target_ztrait = ZTRAIT_STATION
 
 	immunity_type = "rad"

@@ -11,7 +11,7 @@
 	opened = TRUE
 	locked = TRUE
 
-	var/obj/item/weapon/twohanded/fireaxe/fireaxe
+	var/obj/item/weapon/fireaxe/fireaxe
 	var/localopened = FALSE // Setting this to keep it from behaviouring like a normal closet and obstructing movement in the map. -Agouri
 	var/hitstaken = 0
 	var/smashed = FALSE
@@ -21,7 +21,7 @@
 	return ..()
 
 /obj/structure/closet/fireaxecabinet/PopulateContents()
-	fireaxe = new /obj/item/weapon/twohanded/fireaxe(src)
+	fireaxe = new /obj/item/weapon/fireaxe(src)
 
 /obj/structure/closet/fireaxecabinet/attackby(obj/item/O, mob/user)  //Marker -Agouri
 	//..() //That's very useful, Erro
@@ -58,12 +58,8 @@
 					locked = FALSE
 					localopened = TRUE
 			update_icon()
-	else if (istype(O, /obj/item/weapon/twohanded/fireaxe) && localopened)
+	else if (istype(O, /obj/item/weapon/fireaxe) && localopened)
 		if(!fireaxe)
-			var/obj/item/weapon/twohanded/fireaxe/FA = O
-			if(FA.wielded)
-				to_chat(user, "<span class='warning'>Unwield the axe first.</span>")
-				return
 			user.drop_from_inventory(O, src)
 			fireaxe = O
 			to_chat(user, "<span class='notice'>You place the fire axe back in the [src.name].</span>")

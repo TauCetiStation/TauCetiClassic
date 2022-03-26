@@ -3,8 +3,10 @@
 // fits in APC to provide backup power
 /obj/item/weapon/stock_parts/cell/atom_init()
 	. = ..()
-	charge = maxcharge
-	addtimer(CALLBACK(src, .proc/updateicon), 5)
+	if(init_full)
+		charge = maxcharge
+		if(isturf(loc))
+			updateicon()
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	cut_overlays()
@@ -164,22 +166,17 @@
 /obj/item/weapon/stock_parts/cell/ex_act(severity)
 
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				if(prob(50))
+					corrupt()
 				return
-			if (prob(50))
-				corrupt()
-		if(3.0)
-			if (prob(25))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				if(prob(25))
+					corrupt()
 				return
-			if (prob(25))
-				corrupt()
-	return
+	qdel(src)
 
 /obj/item/weapon/stock_parts/cell/blob_act()
 	if(prob(75))

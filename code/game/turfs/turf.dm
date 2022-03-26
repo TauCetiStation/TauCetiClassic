@@ -1,12 +1,13 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
-	var/turf/basetype = /turf/space
+	var/turf/basetype = /turf/environment/space
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
 	var/can_deconstruct = FALSE
 
 	//Properties for open tiles (/floor)
+	var/airless = FALSE
 	var/oxygen = 0
 	var/carbon_dioxide = 0
 	var/nitrogen = 0
@@ -27,6 +28,12 @@
 	var/has_resources
 	var/list/resources
 	var/slowdown = 0
+
+	//Footsteps
+	var/footstep
+	var/barefootstep
+	var/clawfootstep
+	var/heavyfootstep
 
 /**
   * Turf Initialize
@@ -57,6 +64,10 @@
 	if(!force)
 		return QDEL_HINT_LETMELIVE // No qdelling turfs until proper method in ChangeTurf() proc as it is in other code bases.
 	..()
+
+	vis_locs = null //clears this atom out of all viscontents
+	vis_contents.Cut()
+
 	return QDEL_HINT_HARDDEL_NOW
 
 /turf/attack_hand(mob/user)
@@ -75,7 +86,7 @@
 
 /turf/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam/pulse))
-		ex_act(2)
+		ex_act(EXPLODE_HEAVY)
 	else if(istype(Proj ,/obj/item/projectile/bullet/gyro))
 		explosion(src, -1, 0, 2)
 	..()
@@ -201,20 +212,13 @@
 /turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
 	return 0
 
-// Port from /tg/
-// We have no multi-z now, so ported only this proc ~ Pervert
-/turf/proc/make_transparent(turf/base = /turf/space)
-	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(base.icon), initial(base.icon_state), layer = TURF_LAYER-0.02, plane = PLANE_SPACE)
-	underlay_appearance.appearance_flags = RESET_ALPHA | RESET_COLOR
-	underlays += underlay_appearance
-
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
 		if(O.level == 1)
 			O.hide(src.intact)
 
-// override for space turfs, since they should never hide anything
-/turf/space/levelupdate()
+// override for environment turfs, since they should never hide anything
+/turf/environment/levelupdate()
 	for(var/obj/O in src)
 		if(O.level == 1)
 			O.hide(0)
@@ -225,7 +229,7 @@
 	if(L)
 		qdel(L)
 
-/turf/proc/empty(turf_type=/turf/space, baseturf_type, list/ignore_typecache)
+/turf/proc/empty(turf_type=/turf/environment/space, list/ignore_typecache)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark))
 	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContentsIgnoring(ignore_typecache), ignored_atoms)
@@ -235,19 +239,22 @@
 		qdel(thing, force=TRUE)
 
 	if(turf_type)
-		ChangeTurf(turf_type, baseturf_type)
+		ChangeTurf(turf_type)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
+/turf/proc/ChangeTurf(path, list/arguments = list())
 	if (!path)
 		return
-
-	if (path == type)
-		return src
 
 	/*if(istype(src, path))
 		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
 		return*/
+
+	if(ispath(path, /turf/environment/space))
+		path = SSenvironment.turf_type[z]
+
+	if (path == type)
+		return src
 
 	// Back all this data up, so we can set it after the turf replace.
 	// If you're wondering how this proc'll keep running since the turf should be "deleted":
@@ -255,6 +262,7 @@
 	// Running procs do NOT get stopped due to this.
 	var/old_opacity = opacity
 	var/old_dynamic_lighting = dynamic_lighting
+	var/old_force_lighting_update = force_lighting_update
 	var/old_affecting_lights = affecting_lights
 	var/old_lighting_object = lighting_object
 	var/old_corners = corners
@@ -335,7 +343,7 @@
 		lighting_object = old_lighting_object
 		affecting_lights = old_affecting_lights
 		corners = old_corners
-		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
+		if (force_lighting_update || old_force_lighting_update || old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
 			reconsider_lights()
 
 		if (dynamic_lighting != old_dynamic_lighting)
@@ -344,7 +352,7 @@
 			else
 				lighting_clear_overlay()
 
-		for(var/turf/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		for(var/turf/environment/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			S.update_starlight()
 
 	if(F)
@@ -368,58 +376,6 @@
 
 /turf/proc/BreakToBase()
 	ChangeTurf(basetype)
-
-//Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.
-//  If you are replacing a wall, you have increased the volume of the room without increasing the amount of gas in it.
-//  As such, this will no longer be used.
-
-//////Assimilate Air//////
-/*
-/turf/simulated/proc/Assimilate_Air()
-	var/aoxy = 0//Holders to assimilate air from nearby turfs
-	var/anitro = 0
-	var/aco = 0
-	var/atox = 0
-	var/atemp = 0
-	var/turf_count = 0
-
-	for(var/direction in cardinal)//Only use cardinals to cut down on lag
-		var/turf/T = get_step(src,direction)
-		if(istype(T,/turf/space))//Counted as no air
-			turf_count++//Considered a valid turf for air calcs
-			continue
-		else if(istype(T,/turf/simulated/floor))
-			var/turf/simulated/S = T
-			if(S.air)//Add the air's contents to the holders
-				aoxy += S.air.oxygen
-				anitro += S.air.nitrogen
-				aco += S.air.carbon_dioxide
-				atox += S.air.toxins
-				atemp += S.air.temperature
-			turf_count ++
-	air.oxygen = (aoxy/max(turf_count,1))//Averages contents of the turfs, ignoring walls and the like
-	air.nitrogen = (anitro/max(turf_count,1))
-	air.carbon_dioxide = (aco/max(turf_count,1))
-	air.toxins = (atox/max(turf_count,1))
-	air.temperature = (atemp/max(turf_count,1))//Trace gases can get bant
-	air.update_values()
-
-	//cael - duplicate the averaged values across adjacent turfs to enforce a seamless atmos change
-	for(var/direction in cardinal)//Only use cardinals to cut down on lag
-		var/turf/T = get_step(src,direction)
-		if(istype(T,/turf/space))//Counted as no air
-			continue
-		else if(istype(T,/turf/simulated/floor))
-			var/turf/simulated/S = T
-			if(S.air)//Add the air's contents to the holders
-				S.air.oxygen = air.oxygen
-				S.air.nitrogen = air.nitrogen
-				S.air.carbon_dioxide = air.carbon_dioxide
-				S.air.toxins = air.toxins
-				S.air.temperature = air.temperature
-				S.air.update_values()
-*/
-
 
 /turf/proc/ReplaceWithLattice()
 	ChangeTurf(basetype)
@@ -468,7 +424,7 @@
 				continue
 			if(O.invisibility == 101)
 				O.singularity_act()
-	ChangeTurf(/turf/space)
+	ChangeTurf(/turf/environment/space)
 	return(2)
 
 /turf/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
@@ -484,3 +440,86 @@
 		if(locate(/obj/effect/flood) in contents)
 			for(var/obj/effect/flood/F in contents)
 				qdel(F)
+
+/////////////////////
+// Tracks, cleanables
+/////////////////////
+
+/turf/proc/AddTracks(mob/M, bloodDNA, comingdir, goingdir, blooddatum = null)
+	if(flags & NOBLOODY)
+		return
+
+	var/typepath
+	if(ishuman(M))
+		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints
+	else if(isxeno(M))
+		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints/claws
+	else // can shomeone make shlime footprint shprites later pwetty pwease?
+		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints/paws
+
+	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
+	if(!tracks)
+		tracks = new typepath(src)
+	if(!blooddatum)
+		blooddatum = new /datum/dirt_cover/red_blood
+	tracks.AddTracks(bloodDNA, comingdir, goingdir, blooddatum)
+
+//returns 1 if made bloody, returns 0 otherwise
+/turf/add_blood(mob/living/carbon/human/M)
+	if (!..())
+		return 0
+
+	var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
+
+	//Species-specific blood.
+	if(M.species)
+		this.basedatum = new(M.species.blood_datum)
+	else
+		this.basedatum = new/datum/dirt_cover/red_blood()
+	this.update_icon()
+
+	this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+	this.virus2 = virus_copylist(M.virus2)
+
+	return 1 //we bloodied the floor
+
+
+// Only adds blood on the floor -- Skie
+/turf/proc/add_blood_floor(mob/living/carbon/M)
+	if(flags & NOBLOODY)
+		return
+
+	if(ismonkey(M))
+		var/mob/living/carbon/monkey/Monkey = M
+		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
+		this.blood_DNA[Monkey.dna.unique_enzymes] = Monkey.dna.b_type
+		this.basedatum = new Monkey.blood_datum
+		this.update_icon()
+
+	else if(ishuman(M))
+		add_blood(M)
+
+	else if(isxeno(M))
+		var/obj/effect/decal/cleanable/blood/xeno/this = new /obj/effect/decal/cleanable/blood/xeno(src)
+		this.blood_DNA["UNKNOWN BLOOD"] = "X*"
+
+	else if(isrobot(M))
+		new /obj/effect/decal/cleanable/blood/oil(src)
+
+/turf/proc/add_vomit_floor(mob/living/carbon/C, toxvomit = 0)
+	if(flags & NOBLOODY)
+		return
+
+	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
+	// Make toxins vomit look different
+	if(toxvomit)
+		var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in C.reagents.reagent_list
+		if(!new_color)
+			V.icon_state = "vomittox_[pick(1,4)]"
+		else
+			V.icon_state = "vomittox_nc_[pick(1,4)]"
+			V.alpha = 127
+			V.color = new_color.color
+			V.light_color = V.color
+			V.set_light(3)
+			V.stop_light()

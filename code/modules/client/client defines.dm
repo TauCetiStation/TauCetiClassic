@@ -25,8 +25,6 @@
 	var/moving			= null
 	var/adminobs		= null
 	var/area			= null
-	var/time_died_as_mouse = null //when the client last died as a mouse
-	var/time_joined_as_spacebum = null
 	var/mentorhelped = FALSE
 	var/supporter = 0
 	var/prefs_ready = FALSE
@@ -66,11 +64,6 @@
 	var/datum/tooltip/tooltips
 
 	var/list/datum/browser/browsers
-
-
-	// Their chat window, sort of important.
-	// See /goon/code/datums/browserOutput.dm
-	var/datum/chatOutput/chatOutput
 
 	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = atom/movable/screen.
 
@@ -127,3 +120,6 @@
 	var/last_ui_resource_send = 0
 
 	var/fullscreen = NONE
+
+	/// Messages currently seen by this client
+	var/list/seen_messages

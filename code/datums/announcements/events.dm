@@ -42,9 +42,8 @@
 	name = "Event: Infestation"
 	subtitle = "Тревога. Формы Жизни"
 	sound = "lifesigns"
-/datum/announcement/centcomm/aliens/play()
+/datum/announcement/centcomm/aliens/New()
 	message = "Обнаружены неопознанные формы жизни на [station_name_ru()]. Обезопасьте внешние доступы, включая трубопровод и вентиляцию."
-	..()
 
 /datum/announcement/centcomm/fungi
 	name = "Event: Fungi"
@@ -117,30 +116,28 @@
 	name = "Event: Brand Intelligence"
 	subtitle = "Тревога. Машинное обучение"
 	sound = "rampbrand"
-/datum/announcement/centcomm/brand/play()
+/datum/announcement/centcomm/brand/New()
 	message = "На борту [station_name_ru()] обнаружен неконтролируемый брендовый интеллект, приготовьтесь."
-	..()
 
 /datum/announcement/centcomm/carp
 	name = "Event: Carp Migration"
 	subtitle = "Тревога. Формы жизни"
 	sound = "carps"
-/datum/announcement/centcomm/carp/play()
+/datum/announcement/centcomm/carp/New()
 	message = "Обнаружены неизвестные формы жизни вблизи [station_name_ru()], приготовьтесь."
-	..()
 
 /datum/announcement/centcomm/carp_major
 	name = "Event: Major Carp Migration"
 	subtitle = "Тревога. Формы жизни"
 	sound = "carps"
-/datum/announcement/centcomm/carp_major/play()
+/datum/announcement/centcomm/carp_major/New()
 	message = "Обнаружена массовая миграция неизвестных форм жизни вблизи [station_name_ru()], приготовьтесь."
-	..()
 
 /datum/announcement/centcomm/comms_blackout
 	name = "Event: Communication Blackout"
 	message = "Ионносфе:%дз˝ МКаaдж^ж<.3-БЗЗЗЗЗЗТ"
-/datum/announcement/centcomm/comms_blackout/randomize_message()
+	always_random = TRUE
+/datum/announcement/centcomm/comms_blackout/randomize()
 	message = pick( \
 		"Ионносферная аномалия обнаружена. Временный сбой связи неизбежен. Пожалуйста, свяжитесь с ваши*%фж00)`5вц-БЗЗТ", \
 		"Ионносферная аномалия обнаружена. Временный сбой связи неизбе*3маг;б4;'1вдз˝-БЗЗЗЕ", \
@@ -152,17 +149,15 @@
 
 /datum/announcement/centcomm/dust
 	name = "Event: Sand Storm"
-/datum/announcement/centcomm/dust/play()
+/datum/announcement/centcomm/dust/New()
 	subtitle = "Сенсоры [station_name_ru()]"
 	message = "[station_name_ru()] сейчас проходит сквозь облако космической пыли."
-	..()
 
 /datum/announcement/centcomm/dust_passed
 	name = "Event: Sand Storm Passed"
-/datum/announcement/centcomm/dust_passed/play()
+/datum/announcement/centcomm/dust_passed/New()
 	subtitle = "Сенсоры [station_name_ru()]"
 	message = "[station_name_ru()] прошел сквозь облако космической пыли."
-	..()
 
 /datum/announcement/centcomm/estorm
 	name = "Event: Electrical Storm"
@@ -174,26 +169,23 @@
 	name = "Event: Power Failure"
 	subtitle = "Критический Сбой Электропитания"
 	sound = "poweroff"
-/datum/announcement/centcomm/grid_off/play()
+/datum/announcement/centcomm/grid_off/New()
 	message = "Обнаружена нетипичная активность в сети [station_name_ru()]. " + \
 			"В предохранительных мерах, электропитание станции будет отключено на неопределенный срок."
-	..()
 
 /datum/announcement/centcomm/grid_on
 	name = "Event: Power Restored"
 	subtitle = "Системы Электропитания в Норме"
 	sound = "poweron"
-/datum/announcement/centcomm/grid_on/play()
+/datum/announcement/centcomm/grid_on/New()
 	message = "Электропитание было восстановлено на [station_name_ru()]. Приносим извинения за доставленные неудобства."
-	..()
 
 /datum/announcement/centcomm/grid_quick
 	name = "Secret: SMES Restored"
 	subtitle = "Системы Электропитания в Норме"
 	sound = "poweron"
-/datum/announcement/centcomm/grid_quick/play()
+/datum/announcement/centcomm/grid_quick/New()
 	message = "Все СМЭХи на [station_name_ru()] будут перезаряжены. Приносим свои извинения за неудобство."
-	..()
 
 /datum/announcement/centcomm/irod
 	name = "Event: Immovable Rod"
@@ -237,32 +229,28 @@
 	name = "Event: Organ Failure"
 	subtitle = "Тревога. Биоугроза"
 	sound = "outbreak7"
-/datum/announcement/centcomm/organ_failure/play()
+/datum/announcement/centcomm/organ_failure/New()
 	message = "Подтвержден 7 уровень биологической угрозы на борту [station_name_ru()]. Персонал должен предотвратить распространение заражения."
-	..()
 
 /datum/announcement/centcomm/greytide
 	name = "Event: Grey Tide"
 	subtitle = "Тревога Безопасности"
 	sound = "greytide"
-/datum/announcement/centcomm/greytide/play()
+/datum/announcement/centcomm/greytide/New()
 	message = "В системах тюремного заключения [station_name_ru()] обнаружен [pick("Gr3y.T1d3","вредоносный троян")]. Рекомендуется привлечь ИИ."
-	..()
 
 /datum/announcement/centcomm/icarus_lost
 	name = "Event: Icarus Lost"
 	subtitle = "Тревога. Сбойные дроны"
 	sound = "icaruslost"
-/datum/announcement/centcomm/icarus_lost/randomize_message()
+	always_random = TRUE
+/datum/announcement/centcomm/icarus_lost/randomize()
 	if(prob(33))
 		message = "Боевое крыло дронов не смогло вернуться с зачистки данного сектора, при обнаружении приближаться с осторожностью."
 	else if(prob(50))
 		message = "На ВКН Икар был потерян контакт с боевым крылом дронов. При обнаружении их в этой области, приближаться с осторожностью."
 	else
 		message = "Неизвестные хакеры атаковали боевое крыло дронов, запущенное с ВКН Икар. Если обнаружите их в данной области, то приближайтесь с осторожностью."
-/datum/announcement/centcomm/icarus_lost/play()
-	randomize_message()
-	..()
 
 /datum/announcement/centcomm/icarus_recovered
 	name = "Event: Icarus Recovered"

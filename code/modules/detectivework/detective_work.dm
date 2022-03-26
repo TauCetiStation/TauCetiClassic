@@ -13,7 +13,7 @@
 			M.bloody_hands--
 	if(!suit_fibers) suit_fibers = list()
 	var/fibertext
-	var/item_multiplier = istype(src,/obj/item)?1.2:1
+	var/item_multiplier = isitem(src)?1.2:1
 	if(M.wear_suit)
 		fibertext = "Material from \a [M.wear_suit]."
 		if(prob(10*item_multiplier) && !(fibertext in suit_fibers))
@@ -48,7 +48,7 @@
 			suit_fibers += "Material from a pair of [M.gloves.name]."
 	if(!suit_fibers.len) suit_fibers = null
 
-var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_ascii(print) proc, and means about 80% of
+var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_ascii(print) proc, and means about 80% of
 								//the print must be there for it to be complete.  (Prints are 32 digits)
 
 /obj/machinery/computer/forensic_scanning

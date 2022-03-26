@@ -1,5 +1,5 @@
-var/const/TOUCH = 1
-var/const/INGEST = 2
+var/global/const/TOUCH = 1
+var/global/const/INGEST = 2
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -583,6 +583,10 @@ var/const/INGEST = 2
 		var/list/v = trans_data["virus2"]
 		trans_data["virus2"] = v.Copy()
 
+	if (trans_data["changeling_marker"])
+		var/list/v = trans_data["changeling_marker"]
+		trans_data["changeling_marker"] = v.Copy()
+
 	return trans_data
 
 /datum/reagents/Destroy()
@@ -618,8 +622,8 @@ var/const/INGEST = 2
 
 	if(!isnull(user))
 		var/turf/T = get_turf(target)
-		message_admins("[key_name_admin(user)] splashed [get_reagents()] on [target], location ([COORD(T)]) [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] splashed [get_reagents()] on [target], location ([COORD(T)])")
+		message_admins("[key_name_admin(user)] splashed [get_reagents()] on [target], location [COORD(T)] [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] splashed [get_reagents()] on [target], location [COORD(T)]")
 
 		if(ismob(target))
 			var/mob/living/L = target

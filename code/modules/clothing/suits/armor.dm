@@ -57,7 +57,7 @@
 	item_state = "marinad_armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 1
+	slowdown = 0.5
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/vest/warden
@@ -101,7 +101,7 @@
 	item_state = "swat_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 1
+	slowdown = 0.5
 	armor = list(melee = 80, bullet = 10, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 
@@ -160,7 +160,7 @@
 	permeability_coefficient = 0.01
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 1
+	slowdown = 0.5
 	armor = list(melee = 80, bullet = 70, laser = 70,energy = 70, bomb = 70, bio = 0, rad = 0)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -170,8 +170,8 @@
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
 	desc = "An armored jacket used in special operations."
-	icon_state = "detective_brown"
-	item_state = "det_suit"
+	icon_state = "detective_trenchcoat_brown"
+	item_state = "detective_trenchcoat_brown"
 	blood_overlay_type = "coat"
 	flags_inv = 0
 	body_parts_covered = UPPER_TORSO|ARMS
@@ -196,7 +196,7 @@
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
 	blood_overlay_type = "armor"
-	slowdown = 1
+	slowdown = 0.5
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/reactive/Get_shield_chance()
@@ -249,7 +249,7 @@
 	gas_transfer_coefficient = 0.90
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 3
+	slowdown = 1.5
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 0
 
@@ -280,14 +280,14 @@
 	var/obj/item/weapon/gun/holstered = null
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 1
+	slowdown = 0.5
 	armor = list(melee = 60, bullet = 65, laser = 50, energy = 60, bomb = 40, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/tactical/verb/holster()
 	set name = "Holster"
 	set category = "Object"
 	set src in usr
-	if(!istype(usr, /mob/living)) return
+	if(!isliving(usr)) return
 	if(usr.incapacitated())
 		return
 
@@ -329,12 +329,14 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/suit/armor/syndilight
-	name = "assault vest"
-	desc = "Light-weight armored vest designed for scouting and recon missions. Provides solid protection, despite all the lightness."
+	name = "recon armor"
+	desc = "Light-weight armored vest designed for scouting and recon missions. Provides solid protection, despite all the lightness. Now in fullbody format!"
 	icon_state = "lightarmor"
 	item_state = "lightarmor"
 	armor = list(melee = 50, bullet = 40, laser = 40, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/armor/m66_kevlarvest
@@ -346,3 +348,13 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 60, bullet = 80, laser = 40, energy = 50, bomb = 25, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
+
+/obj/item/clothing/suit/armor/crusader
+	name = "crusader tabard"
+	desc = "It's a chainmail with some cloth draped over. Non nobis domini and stuff."
+	icon_state = "crusader"
+	item_state = "armor"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 25, bio = 0, rad = 10)
+	siemens_coefficient = 1.2

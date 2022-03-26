@@ -104,6 +104,8 @@ var/global/list/datum/dna/gene/dna_genes[0]
 		character.f_style = "Shaved"
 	var/beard	= facial_hair_styles_list.Find(character.f_style)
 
+	var/height = heights_list.Find(character.height)
+
 	SetUIValueRange(DNA_UI_HAIR_R,    character.r_hair,    255,    1)
 	SetUIValueRange(DNA_UI_HAIR_G,    character.g_hair,    255,    1)
 	SetUIValueRange(DNA_UI_HAIR_B,    character.b_hair,    255,    1)
@@ -120,12 +122,14 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	SetUIValueRange(DNA_UI_SKIN_G,    character.g_skin,    255,    1)
 	SetUIValueRange(DNA_UI_SKIN_B,    character.b_skin,    255,    1)
 
+
 	SetUIValueRange(DNA_UI_SKIN_TONE, 35-character.s_tone, 220,    1) // Value can be negative.
 
-	SetUIState(DNA_UI_GENDER,         character.gender!=MALE,        1)
+	SetUIState(DNA_UI_GENDER,         character.gender!=MALE,      1)
 
-	SetUIValueRange(DNA_UI_HAIR_STYLE,  hair,  hair_styles_list.len,       1)
-	SetUIValueRange(DNA_UI_BEARD_STYLE, beard, facial_hair_styles_list.len,1)
+	SetUIValueRange(DNA_UI_HAIR_STYLE,  hair,  hair_styles_list.len,       	1)
+	SetUIValueRange(DNA_UI_BEARD_STYLE, beard, facial_hair_styles_list.len,	1)
+	SetUIValueRange(DNA_UI_HEIGHT,    	height,heights_list.len,    		1)
 
 	UpdateUI()
 
@@ -141,7 +145,8 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 // Get a DNA UI block's raw value.
 /datum/dna/proc/GetUIValue(block)
-	if (block<=0) return 0
+	if (block <= 0)
+		return 0
 	return UI[block]
 
 // Set a DNA UI block's value, given a value and a max possible value.
@@ -156,7 +161,8 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 // Getter version of above.
 /datum/dna/proc/GetUIValueRange(block,maxvalue)
-	if (block<=0) return 0
+	if (block <= 0)
+		return 0
 	var/value = GetUIValue(block)
 	return round(1 +(value / 4096)*maxvalue)
 
@@ -228,7 +234,8 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 // Get a DNA SE block's raw value.
 /datum/dna/proc/GetSEValue(block)
-	if (block<=0) return 0
+	if (block <= 0)
+		return 0
 	return SE[block]
 
 // Set a DNA SE block's value, given a value and a max possible value.
@@ -242,15 +249,17 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 // Getter version of above.
 /datum/dna/proc/GetSEValueRange(block,maxvalue)
-	if (block<=0) return 0
+	if (block <= 0)
+		return 0
 	var/value = GetSEValue(block)
-	return round(1 +(value / 4096)*maxvalue)
+	return round(1 + (value / 4096) * maxvalue)
 
-// Is the block "on" (1) or "off" (0)? (Un-assigned genes are always off.)
+// Is the block "on" (TRUE) or "off" (FALSE)? (Un-assigned genes are always off.)
 /datum/dna/proc/GetSEState(block)
-	if (block<=0) return 0
-	var/list/BOUNDS=GetDNABounds(block)
-	var/value=GetSEValue(block)
+	if (block <= 0)
+		return FALSE
+	var/list/BOUNDS = GetDNABounds(block)
+	var/value = GetSEValue(block)
 	return (value > BOUNDS[DNA_ON_LOWERBOUND])
 
 // Set a block "on" or "off".

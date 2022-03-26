@@ -1,12 +1,12 @@
-var/const/MUL_WIRE_POWER1    = 1    // power connections
-var/const/MUL_WIRE_POWER2    = 2
-var/const/MUL_WIRE_AVOIDANCE = 4    // mob avoidance
-var/const/MUL_WIRE_LOADCHECK = 8    // load checking (non-crate)
-var/const/MUL_WIRE_MOTOR1    = 16   // motor wires
-var/const/MUL_WIRE_MOTOR2    = 32
-var/const/MUL_WIRE_REMOTE_RX = 64   // remote recv functions
-var/const/MUL_WIRE_REMOTE_TX = 128  // remote trans status
-var/const/MUL_WIRE_BEACON_RX = 256  // beacon ping recv
+var/global/const/MUL_WIRE_POWER1    = 1    // power connections
+var/global/const/MUL_WIRE_POWER2    = 2
+var/global/const/MUL_WIRE_AVOIDANCE = 4    // mob avoidance
+var/global/const/MUL_WIRE_LOADCHECK = 8    // load checking (non-crate)
+var/global/const/MUL_WIRE_MOTOR1    = 16   // motor wires
+var/global/const/MUL_WIRE_MOTOR2    = 32
+var/global/const/MUL_WIRE_REMOTE_RX = 64   // remote recv functions
+var/global/const/MUL_WIRE_REMOTE_TX = 128  // remote trans status
+var/global/const/MUL_WIRE_BEACON_RX = 256  // beacon ping recv
 
 /datum/wires/mulebot
 	random = TRUE

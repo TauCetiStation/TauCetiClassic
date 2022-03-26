@@ -24,6 +24,7 @@
 	var/corpseidaccess = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
 	var/corpseidicon = null //For setting it to be a gold, silver, centcomm etc ID
 	var/mutantrace = "human"
+	var/specie = HUMAN //Set specie of a new corpse
 
 /obj/effect/landmark/corpse/atom_init()
 	. = ..()
@@ -31,6 +32,7 @@
 
 /obj/effect/landmark/corpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
+	M.set_species(specie)
 	M.dna.mutantrace = mutantrace
 	M.real_name = src.name
 	M.death(1) //Kills the new mob
@@ -119,7 +121,31 @@
 	corpseidjob = "Operative"
 	corpseidaccess = "Syndicate"
 
+/obj/effect/landmark/corpse/unathisoldier
+	name = "Unathi Soldier"
+	corpseback = /obj/item/weapon/storage/backpack
+	corpseuniform = /obj/item/clothing/under/tactical
+	corpseshoes = /obj/item/clothing/shoes/boots/combat/cut
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/gas/coloured
+	corpsehelmet = /obj/item/clothing/head/helmet/swat
+	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
+	corpseid = 0
+	specie = UNATHI
 
+/obj/effect/landmark/corpse/unathicommander
+	name = "Unathi Commander"
+	corpseback = /obj/item/weapon/tank/jetpack/oxygen
+	corpseuniform = /obj/item/clothing/under/syndicate/tacticool
+	corpseshoes = /obj/item/clothing/shoes/boots/combat/cut
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/gas/coloured
+	corpsehelmet = /obj/item/clothing/head/helmet/space/unathi/breacher
+	corpsesuit = /obj/item/clothing/suit/space/unathi/breacher
+	corpseid = 1
+	corpseidjob = "Unathi Commander"
+	corpseidaccess = "Captain"
+	specie = UNATHI
 
 ///////////Civilians//////////////////////
 
@@ -204,7 +230,6 @@
 	corpsemask = /obj/item/clothing/mask/breath
 	corpsehelmet = /obj/item/clothing/head/helmet/space/rig/mining
 
-
 /////////////////Officers//////////////////////
 
 /obj/effect/landmark/corpse/bridgeofficer
@@ -232,3 +257,10 @@
 	corpseid = 1
 	corpseidjob = "Commander"
 	corpseidaccess = "Captain"
+
+/obj/effect/landmark/corpse/securityofficer
+	name = "Security Officer"
+	corpseuniform = /obj/item/clothing/under/rank/security
+	corpseradio = /obj/item/device/radio/headset/headset_sec
+	corpseshoes = /obj/item/clothing/shoes/boots
+	corpseid = 0

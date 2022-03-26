@@ -150,7 +150,7 @@
 
 		if(pressure <= 75)
 			if(prob(15))
-				emote("me",1,"gasps!")
+				emote("gasp")
 
 	weakened = 0
 	if(health > 0)
@@ -173,7 +173,7 @@
 
 	for(var/mob/M in contents)
 		M.loc = src.loc
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			var/mob/living/L = M
 			L.Paralyse(15)
 			L.update_canmove()
@@ -255,6 +255,17 @@
 		playsound(D, 'sound/machines/firedoor_open.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
 		if (!is_busy() && do_after(src, 40, target = D) && D)
 			D.open(1)
+
+/mob/living/simple_animal/hulk/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+
+	if(!. || moving_diagonally)
+		return .
+	
+	var/turf/T = loc
+
+	if(isturf(T) && !(T.flags & NOSTEPSOUND) && !lying)
+		playsound(T, 'sound/effects/hulk_step.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/proc/hulk_scream(obj/target, chance)
 	if(prob(chance))

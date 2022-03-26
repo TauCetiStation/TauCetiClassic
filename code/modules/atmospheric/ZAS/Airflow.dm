@@ -4,7 +4,7 @@ Contains helper procs for airflow, handled in /connection_group.
 
 /mob/var/tmp/last_airflow_stun = 0
 /mob/proc/airflow_stun()
-	if(stat == 2)
+	if(stat == DEAD)
 		return FALSE
 	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)
 		return FALSE
@@ -65,7 +65,7 @@ Contains helper procs for airflow, handled in /connection_group.
 
 /obj/check_airflow_movable(n)
 	//if(isnull(w_class))
-	if(!istype(src, /obj/item))
+	if(!isitem(src))
 		if(n < vsc.airflow_dense_pressure)
 			return FALSE //most non-item objs don't have a w_class yet
 	else
@@ -237,7 +237,7 @@ Contains helper procs for airflow, handled in /connection_group.
 	if(airflow_speed > 0 && airflow_dest)
 		if(airborne_acceleration > 1)
 			airflow_hit(A)
-		else if(istype(src, /mob/living/carbon/human))
+		else if(ishuman(src))
 			to_chat(src, "<span class='notice'>You are pinned against [A] by airflow!</span>")
 			airborne_acceleration = 0
 	else
@@ -263,7 +263,7 @@ Contains helper procs for airflow, handled in /connection_group.
 /mob/airflow_hit(atom/A)
 	visible_message("<span class='danger'>\The [src] slams into \a [A]!</span>", blind_message = "<span class='danger'>You hear a loud slam!</span>")
 	playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, 25)
-	var/weak_amt = istype(A,/obj/item) ? A:w_class : rand(1, 5) //Heheheh
+	var/weak_amt = isitem(A) ? A:w_class : rand(1, 5) //Heheheh
 	Weaken(weak_amt)
 	. = ..()
 
@@ -285,7 +285,7 @@ Contains helper procs for airflow, handled in /connection_group.
 
 	var/b_loss = min(airflow_speed, (airborne_acceleration*2)) * vsc.airflow_damage
 	if(prob(33) && b_loss > 0)
-		loc:add_blood(src)
+		loc.add_blood(src)
 		bloody_body(src)
 
 	var/blocked = run_armor_check(BP_HEAD,"melee")

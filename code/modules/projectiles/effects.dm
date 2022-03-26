@@ -2,7 +2,7 @@
 	icon = 'icons/effects/projectiles.dmi'
 	icon_state = "bolt"
 	layer = LIGHTING_LAYER + 1
-	plane = LIGHTING_PLANE + 1
+	plane = ABOVE_LIGHTING_PLANE
 
 	var/time_to_live = 3
 	// If tracer_list is used on projectile, all projectiles without the below being TRUE are qdeled.

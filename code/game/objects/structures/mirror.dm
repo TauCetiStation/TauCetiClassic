@@ -108,7 +108,7 @@
 
 	var/mob/living/carbon/human/H = user
 
-	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "skin tone", "xenos skin",  "gender", "hair", "eyes")
+	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "skin tone", "xenos skin",  "gender", "hair", "eyes", "height")
 
 	switch(choice)
 		if("name")
@@ -243,3 +243,11 @@
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)
+		if("height")
+			var/new_height = input(H, "Choose your character's height:", "Character Height", H.height) as null|anything in heights_list
+			if(new_height)
+				H.height = new_height
+				H.update_hair()
+				H.update_body()
+				H.regenerate_icons()
+				H.check_dna(H)

@@ -297,7 +297,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_TINY
-	flags = NOSHIELD
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
 /obj/item/weapon/staff/atom_init()
@@ -341,7 +340,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_TINY
-	flags = NOSHIELD
 
 /obj/item/weapon/table_parts
 	name = "table parts"
@@ -352,6 +350,7 @@
 	m_amt = 3750
 	flags = CONDUCT
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	var/table_type = /obj/structure/table
 
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"
@@ -360,32 +359,38 @@
 	icon_state = "reinf_tableparts"
 	m_amt = 7500
 	flags = CONDUCT
+	table_type = /obj/structure/table/reinforced
 
 /obj/item/weapon/table_parts/wood
 	name = "wooden table parts"
 	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
 	flags = null
+	table_type = /obj/structure/table/woodentable
 
 /obj/item/weapon/table_parts/wood/poker
 	name = "poker table parts"
 	desc = "Keep away from fire, and keep near seedy dealers."
 	icon_state = "poker_tableparts"
 	flags = null
+	table_type = /obj/structure/table/woodentable/poker
 
 /obj/item/weapon/table_parts/wood/fancy
 	name = "fancy table parts"
 	desc = "Covered with an amazingly fancy, patterned cloth."
 	icon_state = "fancy_tableparts"
+	table_type = /obj/structure/table/woodentable/fancy
 
 /obj/item/weapon/table_parts/wood/fancy/black
 	icon_state = "fancyblack_tableparts"
+	table_type = /obj/structure/table/woodentable/fancy/black
 
 /obj/item/weapon/table_parts/glass
 	name = "glass table parts"
 	desc = "Very fragile."
 	icon_state = "glass_tableparts"
 	flags = null
+	table_type = /obj/structure/table/glass
 
 /obj/item/weapon/wire
 	desc = "This is just a simple piece of regular insulated wire."
@@ -495,7 +500,6 @@
 	throw_speed = 1
 	throw_range = 3
 	w_class = SIZE_NORMAL
-	flags = NOSHIELD
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
@@ -539,19 +543,6 @@
 
 	var/obj/machinery/machine
 
-/obj/item/weapon/plastique
-	name = "plastic explosives"
-	desc = "Used to put holes in specific areas without too much extra hole."
-	gender = PLURAL
-	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "plastic-explosive0"
-	item_state = "plasticx"
-	flags = NOBLUDGEON
-	w_class = SIZE_TINY
-	origin_tech = "syndicate=2"
-	var/timer = 10
-	var/atom/target = null
-
 ///////////////////////////////////////Stock Parts /////////////////////////////////
 
 /obj/item/weapon/storage/part_replacer
@@ -575,7 +566,7 @@
 /obj/item/weapon/storage/part_replacer/afterattack(atom/target, mob/user, proximity, params)
 	if(proximity)
 		return
-	if(!istype(target, /obj/machinery))
+	if(!ismachinery(target))
 		return
 	var/obj/machinery/T = target
 	if(works_from_distance && T.component_parts)
@@ -887,6 +878,13 @@
 		if(C.body_parts_covered & BP.body_part)
 			to_chat(user, "<span class='userdanger'>Take off [M]'s clothes first!</span>")
 			return
+
+	M.adjustHalLoss(-1)
+	M.AdjustStunned(-1)
+	M.AdjustWeakened(-1)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "sauna relax", /datum/mood_event/sauna)
+
+	playsound(src, 'sound/weapons/sauna_broom.ogg', VOL_EFFECTS_MASTER)
 
 	zone = parse_zone(zone)
 	wet -= 5

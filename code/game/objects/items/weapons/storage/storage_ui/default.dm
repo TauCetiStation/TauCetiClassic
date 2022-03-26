@@ -301,6 +301,6 @@
 		O.screen_loc = "4:[round((startpoint+endpoint)/2)],2:16"
 		O.maptext = ""
 		O.layer = ABOVE_HUD_LAYER
-		O.plane = HUD_PLANE
+		O.plane = ABOVE_HUD_PLANE
 
 	closer.screen_loc = "4:[storage_width+19],2:16"

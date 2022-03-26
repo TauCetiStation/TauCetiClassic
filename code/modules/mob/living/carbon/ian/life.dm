@@ -46,10 +46,10 @@
 						movement_target.attack_animal(src)
 					else if(ishuman(movement_target.loc) )
 						if(prob(20))
-							emote("me",1,"stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
+							me_emote("stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
 
 		if(prob(1))
-			emote("me",1,pick("dances around","chases its tail"))
+			me_emote(pick("dances around", "chases its tail"))
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 				set_dir(i)
 				sleep(1)
@@ -127,18 +127,7 @@
 	if(!..())
 		return FALSE
 
-	if (stat == DEAD || (XRAY in mutations))
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != DEAD)
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_OBJS
-		see_in_dark = 2
-		see_invisible = SEE_INVISIBLE_LIVING
+	update_sight()
 
 	if(healths)
 		if(stat != DEAD)
@@ -384,13 +373,13 @@
 
 	if (drowsyness)
 		drowsyness--
-		eye_blurry = max(2, eye_blurry)
+		blurEyes(2)
 		if (prob(5))
 			Sleeping(2 SECONDS)
 			Paralyse(5)
 
-	if(confused)
-		confused = max(0, confused - 1)
+	AdjustConfused(-1)
+	AdjustDrunkenness(-1)
 
 	stamina = min(stamina + 1, 100) //i don't want a whole new proc just for one variable, so i leave this here.
 
@@ -416,7 +405,7 @@
 			emote("twitch")
 	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
 		if (prob(10))
-			stuttering = max(10, stuttering)
+			Stuttering(10)
 
 /mob/living/carbon/ian/proc/handle_virus_updates()
 	if(status_flags & GODMODE)
@@ -460,55 +449,18 @@
 				V.dead = TRUE
 
 /mob/living/carbon/ian/handle_environment(datum/gas_mixture/environment)
-	if(!environment)
-		return
-
-	var/pressure = environment.return_pressure()
-	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
-
-	if(istype(head, /obj/item/clothing/head/helmet/space) || (adjusted_pressure < WARNING_HIGH_PRESSURE && adjusted_pressure > WARNING_LOW_PRESSURE && abs(environment.temperature - 293.15) < 20 && abs(bodytemperature - 310.14) < 0.5))
+	if(istype(head, /obj/item/clothing/head/helmet/space))
 		clear_alert("pressure")
+		clear_alert("temp")
 		return
 
-	var/environment_heat_capacity = environment.heat_capacity()
-	if(istype(get_turf(src), /turf/space))
-		var/turf/heat_turf = get_turf(src)
-		environment_heat_capacity = heat_turf.heat_capacity
-	if(!on_fire)
-		if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
-			var/transfer_coefficient = 1
-
-			handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity * transfer_coefficient)
-	if(stat == DEAD)
-		bodytemperature += 0.1 * (environment.temperature - bodytemperature) * environment_heat_capacity / (environment_heat_capacity + 270000)
-
-	//Account for massive pressure differences
-	switch(adjusted_pressure)
-		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
-		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
-		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
-			clear_alert("pressure")
-		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
-		else
-			if( !(COLD_RESISTANCE in mutations) )
-				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
-			else
-				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
+	..()
 
 /mob/living/carbon/ian/handle_fire()
 	if(..())
 		return
-	adjustFireLoss(6)
+	bodytemperature += BODYTEMP_HEATING_MAX
 	return
-
-/mob/living/carbon/ian/calculate_affecting_pressure(pressure)
-	..()
-	return pressure
 
 /mob/living/carbon/ian/updatehealth()
 	if(status_flags & GODMODE)
@@ -566,7 +518,7 @@
 			eye_blind = max(eye_blind - 1,0)
 			blinded = TRUE
 		else if(eye_blurry)			//blurry eyes heal slowly
-			eye_blurry = max(eye_blurry - 1, 0)
+			adjustBlurriness(-1)
 
 		//Ears
 		if(sdisabilities & DEAF)		//disabled-deaf, doesn't get better on its own
@@ -583,8 +535,8 @@
 		if(weakened)
 			weakened = max(weakened - 1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 
-		if(stuttering)
-			stuttering = max(stuttering - 1, 0)
+		if(stuttering > 0)
+			AdjustStuttering(-1)
 
 		if(silent)
 			silent = max(silent - 1, 0)

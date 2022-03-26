@@ -1,4 +1,4 @@
-var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
+var/global/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
 #define INITIAL_NUCLEAR_TELECRYSTALS 60
 #define TELECRYSTALS_PER_ONE_OPERATIVE 9
 
@@ -29,7 +29,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 
 /obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item))
+	if(isitem(O))
 
 		if(uplinkholder)
 			to_chat(user, "<span class='notice'>The [src] already has an uplink in it.</span>")

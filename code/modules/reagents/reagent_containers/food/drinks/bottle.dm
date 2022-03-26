@@ -55,6 +55,7 @@
 			stop_spin_bottle = FALSE
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
+	. = ..()
 	animate(src, transform = null, time = 0) //Restore bottle to its original position
 
 

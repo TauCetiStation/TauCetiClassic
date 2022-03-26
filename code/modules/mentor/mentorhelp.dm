@@ -32,7 +32,7 @@
 
 	//send this msg to all admins
 	var/admin_number_afk = 0
-	for(var/client/X in admins)
+	for(var/client/X as anything in admins)
 		if(R_ADMIN & X.holder.rights)
 			if(X.is_afk())
 				admin_number_afk++

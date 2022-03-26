@@ -7,7 +7,7 @@
 	icon_state = "robot"
 	maxHealth = 200
 	health = 200
-	hud_possible = list(ANTAG_HUD, HOLY_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
+	hud_possible = list(ANTAG_HUD, HOLY_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD, IMPOBED_HUD)
 
 	typing_indicator_type = "robot"
 
@@ -58,7 +58,7 @@
 	var/lower_mod = 0
 	var/jetpack = 0
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail = null
-	var/datum/effect/effect/system/spark_spread/spark_system//So they can initialize sparks whenever/N
+	var/datum/effect/effect/system/spark_spread/spark_system //So they can initialize sparks whenever/N
 	var/jeton = 0
 	var/killswitch = 0
 	var/killswitch_time = 60
@@ -73,6 +73,7 @@
 	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
 	var/pose
+	var/can_be_security = FALSE
 
 	// Radial menu for choose module
 	var/static/list/choose_module
@@ -152,6 +153,9 @@
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
 /mob/living/silicon/robot/Destroy()
+	if(connected_ai) // Remove robot from connected to ai robots
+		connected_ai.connected_robots -= src
+		connected_ai = null
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
@@ -250,18 +254,22 @@
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Security")
-			module = new /obj/item/weapon/robot_module/security(src)
-			module.channels = list("Security" = 1)
-			if(camera && ("Robots" in camera.network))
-				camera.add_network("Security")
-			module_sprites["Basic"] = "secborg"
-			module_sprites["Red Knight"] = "Security"
-			module_sprites["Black Knight"] = "securityrobot"
-			module_sprites["Bloodhound"] = "bloodhound"
-			module_sprites["Bloodhound - Treaded"] = "secborg+tread"
-			module_sprites["Drone"] = "drone-sec"
-			module_sprites["Acheron"] = "mechoid-Security"
-			module_sprites["Kodiak"] = "kodiak-sec"
+			if(can_be_security)
+				module = new /obj/item/weapon/robot_module/security(src)
+				module.channels = list("Security" = 1)
+				if(camera && ("Robots" in camera.network))
+					camera.add_network("Security")
+				module_sprites["Basic"] = "secborg"
+				module_sprites["Red Knight"] = "Security"
+				module_sprites["Black Knight"] = "securityrobot"
+				module_sprites["Bloodhound"] = "bloodhound"
+				module_sprites["Bloodhound - Treaded"] = "secborg+tread"
+				module_sprites["Drone"] = "drone-sec"
+				module_sprites["Acheron"] = "mechoid-Security"
+				module_sprites["Kodiak"] = "kodiak-sec"
+			else
+				to_chat(src, "<span class='warning'>#Error: Safety Protocols enabled. Security module is not allowed.</span>")
+				return
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -479,24 +487,21 @@
 	emote("buzz")
 
 /mob/living/silicon/robot/ex_act(severity)
+	if(stat == DEAD)
+		return
 	if(!blinded)
 		flash_eyes()
-
 	switch(severity)
-		if(1.0)
-			if (stat != DEAD)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-				gib()
-				return
-		if(2.0)
-			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(3.0)
-			if (stat != DEAD)
-				adjustBruteLoss(30)
-
+		if(EXPLODE_DEVASTATE)
+			adjustBruteLoss(100)
+			adjustFireLoss(100)
+			gib()
+			return
+		if(EXPLODE_HEAVY)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+		if(EXPLODE_LIGHT)
+			adjustBruteLoss(30)
 	updatehealth()
 
 /mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)
@@ -565,7 +570,7 @@
 			to_chat(user, "Need more welding fuel!")
 			return
 
-	else if(iscoil(W) && (wiresexposed || istype(src,/mob/living/silicon/robot/drone)))
+	else if(iscoil(W) && (wiresexposed || isdrone(src)))
 		if (!getFireLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
@@ -602,7 +607,7 @@
 				C.r_arm = new/obj/item/robot_parts/r_arm(C)
 				C.update_icon()
 				new/obj/item/robot_parts/chest(loc)
-				Destroy()
+				qdel(src)
 			else
 				// Okay we're not removing the cell or an MMI, but maybe something else?
 				var/list/removable_components = list()
@@ -770,9 +775,9 @@
 				to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
 				if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
 					for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
-						qdel(D)
-					src.module.modules += new /obj/item/weapon/pickaxe/drill/diamond_drill(src.module)
-					module.rebuild()
+						module.remove_item(D)
+					var/obj/item/weapon/pickaxe/drill/diamond_drill/D = new(module)
+					module.add_item(D)
 				updateicon()
 			else
 				to_chat(user, "You fail to hack [src]'s interface.")
@@ -781,7 +786,7 @@
 
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/attacker)
 	add_fingerprint(attacker)
-	if(opened && !wiresexposed && (!istype(attacker, /mob/living/silicon)))
+	if(opened && !wiresexposed && (!issilicon(attacker)))
 		var/datum/robot_component/cell_component = components["power cell"]
 		if(cell)
 			cell.updateicon()
@@ -803,12 +808,12 @@
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return 1
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
 		if(check_access(H.get_active_hand()) || check_access(H.wear_id))
 			return 1
-	else if(istype(M, /mob/living/carbon/monkey))
+	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
 		if(george.get_active_hand() && istype(george.get_active_hand(), /obj/item/weapon/card/id) && check_access(george.get_active_hand()))
@@ -1030,10 +1035,10 @@
 					if(istype(A, /obj/effect))
 						if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
 							qdel(A)
-					else if(istype(A, /obj/item))
+					else if(isitem(A))
 						var/obj/item/cleaned_item = A
 						cleaned_item.clean_blood()
-					else if(istype(A, /mob/living/carbon/human))
+					else if(ishuman(A))
 						var/mob/living/carbon/human/cleaned_human = A
 						if(cleaned_human.lying)
 							if(cleaned_human.head)

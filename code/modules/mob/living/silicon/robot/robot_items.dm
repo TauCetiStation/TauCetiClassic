@@ -29,8 +29,6 @@
 				mode = 1
 			to_chat(user, "Changed printing mode to '[mode == 2 ? "Rename Paper" : "Write Paper"]'")
 
-	return
-
 // Copied over from paper's rename verb
 // see code\modules\paperwork\paper.dm line 62
 
@@ -44,7 +42,6 @@
 	if(( get_dist(user,paper) <= 1  && user.stat == CONSCIOUS))
 		paper.name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(user)
-	return
 
 //TODO: Add prewritten forms to dispense when you work out a good way to store the strings.
 /obj/item/weapon/form_printer
@@ -133,27 +130,27 @@
 	excavation_amount = 0 + ampr/2
 	desc = "A smaller, more precise version of the pickaxe ([ampr] centimetre excavation depth)."
 
-/obj/item/weapon/twohanded/shockpaddles/robot
+/obj/item/weapon/shockpaddles/robot
 	name = "defibrillator paddles"
 	desc = "A pair of advanced shockpaddles powered by a robot's internal power cell, able to penetrate thick clothing."
 	charge_cost = 50
 	combat = TRUE
 	cooldown_time = 3 SECONDS
 
-/obj/item/weapon/twohanded/shockpaddles/robot/check_charge(charge_amt)
+/obj/item/weapon/shockpaddles/robot/check_charge(charge_amt)
 	if(isrobot(loc))
 		var/mob/living/silicon/robot/R = loc
 		return (R.cell && R.cell.charge >= charge_amt)
 
-/obj/item/weapon/twohanded/shockpaddles/robot/checked_use(charge_amt)
+/obj/item/weapon/shockpaddles/robot/checked_use(charge_amt)
 	if(isrobot(loc))
 		var/mob/living/silicon/robot/R = loc
 		return (R.cell && R.cell.use(charge_amt))
 
-/obj/item/weapon/twohanded/shockpaddles/robot/attack_self(mob/user)
+/obj/item/weapon/shockpaddles/robot/attack_self(mob/user)
 	return //No, this can't be wielded
 
-/obj/item/weapon/twohanded/shockpaddles/robot/try_revive(mob/living/carbon/human/H, mob/user)
+/obj/item/weapon/shockpaddles/robot/try_revive(mob/living/carbon/human/H, mob/user)
 	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 	if(IO.heart_status == HEART_FAILURE)
 		if(IO.damage < 50)
@@ -168,62 +165,53 @@
 			to_chat(user, "<span class='warning'>It seems [H]'s [IO] is too squishy... It doesn't beat at all!</span>")
 	..()
 
-/obj/item/weapon/AVtool
-	name = "AV tool"
-	desc = "An AV tool powered by a robot's internal power cell, able to work with masked patients."
+/obj/item/weapon/cardiopulmonary_bypass_tool
+	name = "Cardiopulmonary bypass tool"
+	desc = "A cardiopulmonary bypass tool powered by a robot's internal power cell."
 	icon = 'icons/obj/iv_drip.dmi'
-	icon_state = "avtool_idle"
-	item_state = "avtool_idle"
+	icon_state = "cpbtool_idle"
+	item_state = "cpbtool_idle"
 	var/charge_cost = 50
 	var/busy = FALSE
 
-/obj/item/weapon/AVtool/proc/check_charge(charge_amt)
+/obj/item/weapon/cardiopulmonary_bypass_tool/proc/check_charge(charge_amt)
 	if(isrobot(loc))
 		var/mob/living/silicon/robot/R = loc
 		return (R.cell && R.cell.charge >= charge_amt)
 
-/obj/item/weapon/AVtool/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
-	var/target_zone = user.get_targetzone()
+/obj/item/weapon/cardiopulmonary_bypass_tool/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
 	if(busy || user.is_busy(M))
 		to_chat(user, "<span class='warning'>You are too busy.</span>")
 		return FALSE
 
+	if(M.species && M.species.flags[NO_BLOOD])
+		to_chat(user, "<span class='notice bold'>You can not perform blood filtration on these species!</span>")
+		return
+
 	if(M.health > config.health_threshold_crit)
 		to_chat(user, "<span class='warning'>Patient's condition is not critical.</span>")
-		return FALSE
-
-	if(target_zone != O_MOUTH)
-		to_chat(user, "<span class='warning'>AV tool works only through the mouth.</span>")
-		return FALSE
-
-	if(M.wear_mask && M.wear_mask.flags & MASKCOVERSMOUTH)
-		to_chat(user, "<span class='warning'>You can't reach that! Something is covering it.</span>")
 		return FALSE
 
 	if(!check_charge(charge_cost))
 		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
 		return FALSE
 
-	if(M.species && M.species.flags[NO_BREATHE])
-		to_chat(user, "<span class='notice bold'>You can not perform AV on these species!</span>")
-		return
-
 	return TRUE
 
-/obj/item/weapon/AVtool/attack(mob/living/carbon/human/M, mob/living/silicon/robot/user, def_zone)
+/obj/item/weapon/cardiopulmonary_bypass_tool/attack(mob/living/carbon/human/M, mob/living/silicon/robot/user, def_zone)
 	var/mob/living/carbon/human/H = M
 	if(!istype(H) || !can_use(user, M))
 		return
 
 	busy = TRUE
-	icon_state = "avtool_ventilating"
+	icon_state = "cpbtool_pumping"
 
-	perform_av(M, user)
+	perform_filtration(M, user)
 
 	busy = FALSE
-	icon_state = "avtool_idle"
+	icon_state = "cpbtool_idle"
 
-/obj/item/weapon/AVtool/proc/perform_av(mob/living/carbon/human/H, mob/living/silicon/robot/user)
+/obj/item/weapon/cardiopulmonary_bypass_tool/proc/perform_filtration(mob/living/carbon/human/H, mob/living/silicon/robot/user)
 
 	while(H.health < config.health_threshold_crit)
 		var/heal_check = H.health
@@ -235,14 +223,23 @@
 			to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
 			break
 
-		var/suff = min(H.getOxyLoss(), 5)
+		var/suff = min(H.getOxyLoss(), 2)
+		var/tox = min(H.getToxLoss(), 2)
 		H.adjustOxyLoss(-suff)
-		visible_message("<span class='warning'>[user] performs AV on [H]!</span>")
-		to_chat(H, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
+		H.adjustToxLoss(-tox)
+		visible_message("<span class='warning'>[user] performs blood filtration on [H]!</span>")
 		H.updatehealth()
 
 		if(heal_check == H.health)
-			to_chat(user, "<span class='warning'>Further AV is pointless.</span>")
+			to_chat(user, "<span class='warning'>Further blood filtration is pointless.</span>")
 			break
 
 		user.cell.use(charge_cost)
+
+/obj/item/weapon/card/emag/borg
+	name = "robotic cryptographic sequencer"
+
+/obj/item/weapon/card/emag/borg/emag_break(mob/user)
+	var/mob/living/silicon/robot/R = user
+	user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
+	R.module.remove_item(src)

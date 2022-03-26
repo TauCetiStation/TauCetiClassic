@@ -55,6 +55,12 @@
 		C.sec_hud_set_implants()
 		part = BP
 
+/obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
+	forceMove(C)
+	imp_in = C
+	implanted = TRUE
+	C.sec_hud_set_implants()
+
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
 
@@ -392,6 +398,12 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	spawn(20)
 		malfunction--
 
+var/global/list/death_alarm_stealth_areas = list(
+	/area/shuttle/syndicate,
+	/area/custom/syndicate_mothership,
+	/area/shuttle/syndicate_elite,
+	/area/custom/cult,
+)
 /obj/item/weapon/implant/death_alarm
 	name = "death alarm implant"
 	desc = "An alarm which monitors host vital signs and transmits a radio message upon death."
@@ -429,7 +441,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	switch (cause)
 		if("death")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			if(istype(t, /area/shuttle/syndicate) || istype(t, /area/custom/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) || istype(t, /area/custom/cult))
+			if(is_type_in_list(t, global.death_alarm_stealth_areas))
 				//give the syndies a bit of stealth
 				a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
 			else
@@ -552,3 +564,20 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 /obj/item/weapon/implant/storage/islegal()
 	return 0
+
+/obj/item/weapon/implant/obedience
+	name = "L.E.A.S.H. obedience implant"
+	desc = "Keep your herds obedient."
+
+/obj/item/weapon/implant/obedience/get_data()
+	var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Obedience Imbuer<BR>
+<b>Life:</b> Activates upon recieveing coded signal.<BR>
+<b>Important Notes:</b> Allows to shock host via special tool.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a compact signaler that triggers microtaser upon recieveing signal.<BR>
+<b>Special Features:</b> Less-than-lethal controlled shocks.<BR>
+<b>Integrity:</b> Implant will last even after host's death, allowing re-implanting using special tools. Said tools are never delivered to station, however."}
+	return dat

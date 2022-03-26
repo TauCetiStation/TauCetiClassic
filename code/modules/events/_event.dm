@@ -167,7 +167,7 @@
 
 	event_meta = EM
 	severity = event_meta.severity
-	severity = clamp(severity, EVENT_LEVEL_ROUNDSTART, EVENT_LEVEL_MAJOR)
+	severity = clamp(severity, EVENT_LEVEL_FEATURE, EVENT_LEVEL_MAJOR)
 
 	startedAt = world.time
 
