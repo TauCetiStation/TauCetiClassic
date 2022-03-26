@@ -17405,7 +17405,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/briefcase/inflatable{
-	pixel_y = 4
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/briefcase/inflatable,
 /obj/structure/cable{
@@ -26956,9 +26956,14 @@
 	pixel_x = -30
 	},
 /obj/item/weapon/storage/briefcase/centcomm{
-	pixel_y = 6
+	pixel_y = 10
 	},
-/obj/item/weapon/storage/briefcase,
+/obj/item/weapon/storage/briefcase{
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/briefcase/black{
+	pixel_y = -2
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "aWC" = (
@@ -56729,10 +56734,7 @@
 /obj/item/stack/sheet/metal{
 	amount = 50
 	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
+/obj/item/stack/sheet/glass{
 	amount = 50
 	},
 /turf/simulated/floor{
@@ -62435,14 +62437,8 @@
 /area/station/engineering/break_room)
 "ctc" = (
 /obj/structure/table,
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
+/obj/item/weapon/storage/briefcase/engine{
+	startswith = list(/obj/item/stack/sheet/metal,/obj/item/stack/sheet/metal,/obj/item/stack/sheet/metal,/obj/item/stack/sheet/glass,/obj/item/stack/sheet/glass,/obj/item/stack/sheet/glass,/obj/item/stack/sheet/plasteel)
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -65547,6 +65543,7 @@
 /obj/item/weapon/gun/syringe,
 /obj/item/weapon/medical/teleporter,
 /obj/item/weapon/medical/teleporter,
+/obj/item/weapon/storage/briefcase/med,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -76525,6 +76522,7 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
+/obj/item/weapon/storage/briefcase/med,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -81483,6 +81481,7 @@
 	pixel_y = -22
 	},
 /obj/item/device/radio/headset/headset_med,
+/obj/item/weapon/storage/briefcase/virology,
 /turf/simulated/floor{
 	dir = 3;
 	icon_state = "whitegreen"
