@@ -913,10 +913,11 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		var/quality_type = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.qualities_pool
-		if(!quality_type)
+		var/quality_name = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.by_name
+		if(!quality_name)
 			return
-		SSqualities.force_give_quality(H, quality_type, usr)
+		var/datum/quality/Q = SSqualities.by_name[quality_name]
+		SSqualities.force_give_quality(H, Q.type, usr)
 
 	else if(href_list["addlanguage"])
 		if(!check_rights(R_VAREDIT))

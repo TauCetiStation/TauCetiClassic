@@ -76,6 +76,7 @@
 					<A href='?src=\ref[src];secretsfun=securitylevel3'>Security Level - Delta</A><BR>
 					<h4>Do something stupid</h4>
 					<A href='?src=\ref[src];secretsfun=spawncompletesandwich'>Create a Complete Sandwich</A><BR>
+					<A href='?src=\ref[src];secretsfun=forcedquality'>Forced \"Random\" Quality</A><BR>
 					"}
 
 		if(2) // OOC Events
@@ -508,6 +509,20 @@
 			feedback_add_details("admin_secrets_fun_used","DASANDWICH")
 			var/obj/item/weapon/reagent_containers/food/snacks/csandwich/CS = new(get_turf(usr))
 			CS.complete()
+		if("forcedquality")
+			if(!check_rights(R_EVENT|R_FUN))
+				to_chat(usr, "<span class='warning'>You don't have permissions for this</span>")
+				return
+			if(!SSqualities)
+				to_chat(usr, "<span class='warning'>Please wait untill Qualities Subsystem loads</span>")
+				return
+			var/quality_name = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.by_name
+			if(!quality_name)
+				return
+
+			var/datum/quality/Q = SSqualities.by_name[quality_name]
+			SSqualities.forced_quality_type = Q.type
+
 		if("global_sound_speed")
 			if(!check_rights(R_SOUNDS))
 				return
