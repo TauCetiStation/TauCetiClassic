@@ -260,23 +260,23 @@
 /atom/movable/screen/parallax_layer/layer_1
 	icon_state = "layer1"
 	speed = 0.6
-	layer = 1
+	layer = SPACE_PARALLAX_1_LAYER
 
 /atom/movable/screen/parallax_layer/layer_2
 	icon_state = "layer2"
 	speed = 1
-	layer = 2
+	layer = SPACE_PARALLAX_2_LAYER
 
 /atom/movable/screen/parallax_layer/layer_3
 	icon_state = "layer3"
 	speed = 1.2
-	layer = 3
+	layer = SPACE_PARALLAX_3_LAYER
 
 /atom/movable/screen/parallax_layer/planet
 	icon_state = "planet"
 	absolute = TRUE //Status of seperation
 	speed = 3
-	layer = 30
+	layer = SPACE_PARALLAX_PLANET_LAYER
 
 /atom/movable/screen/parallax_layer/planet/update_status(mob/M)
 	var/turf/T = get_turf(M)
