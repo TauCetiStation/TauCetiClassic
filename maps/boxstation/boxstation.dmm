@@ -11465,7 +11465,9 @@
 	name = "Officer Beepsky"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
 "att" = (
@@ -13419,9 +13421,28 @@
 	},
 /area/station/civilian/gym)
 "axh" = (
-/obj/structure/barricade/wooden,
-/turf/simulated/floor/wood,
-/area/station/maintenance/eva)
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lawyer_blast";
+	name = "Internal Affairs";
+	opacity = 0
+	},
+/obj/structure/cable,
+/turf/simulated/floor/plating,
+/area/station/security/iaa_office)
 "axi" = (
 /obj/item/device/camera_film,
 /obj/effect/decal/cleanable/cobweb2,
@@ -13572,12 +13593,12 @@
 	pixel_y = -2
 	},
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 5;
-	pixel_y = 27
-	},
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 20
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -13707,9 +13728,7 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken5"
-	},
+/turf/simulated/floor/wood,
 /area/station/maintenance/eva)
 "axK" = (
 /obj/machinery/computer/security/mining,
@@ -13745,7 +13764,6 @@
 	},
 /area/station/hallway/primary/fore)
 "axQ" = (
-/obj/item/weapon/storage/briefcase,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -13769,10 +13787,29 @@
 	},
 /area/station/hallway/secondary/exit)
 "axT" = (
-/obj/effect/spawner/lootdrop/maintenance/three,
-/obj/structure/rack,
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
+/obj/structure/table/reinforced,
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen/blue{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/weapon/pen/red{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/obj/item/weapon/pen{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = -24
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/iaa_office)
 "axU" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -13815,10 +13852,6 @@
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco{
 	pixel_x = -11;
 	pixel_y = 1
-	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 20
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -15886,13 +15919,8 @@
 	},
 /area/station/civilian/kitchen)
 "aBO" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
@@ -16435,6 +16463,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
+"aCU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/hallway/primary/fore)
 "aCV" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
@@ -18694,13 +18734,12 @@
 	},
 /area/station/civilian/fitness)
 "aHo" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/structure/stool/bed/chair/metal{
 	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/fore)
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "aHp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -18895,9 +18934,7 @@
 "aHJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
 "aHK" = (
@@ -43642,6 +43679,11 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -44506,26 +44548,14 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/office)
 "bBw" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin{
-	pixel_y = 4
-	},
-/obj/item/weapon/pen/blue{
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/weapon/pen/red{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/item/weapon/pen{
-	pixel_x = -1;
-	pixel_y = 7
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "neutralcorner"
 	},
-/area/station/security/iaa_office)
+/area/station/hallway/primary/fore)
 "bBx" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -44951,14 +44981,12 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 1;
 	name = "Internal Affairs";
 	sortType = "Internal Affairs"
 	},
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
 "bCp" = (
@@ -46861,10 +46889,7 @@
 	},
 /area/station/medical/virology)
 "bFJ" = (
-/obj/structure/closet/emcloset,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/simulated/floor/wood,
 /area/station/maintenance/eva)
 "bFK" = (
 /obj/item/device/radio/intercom/pod{
@@ -46926,7 +46951,7 @@
 	},
 /area/station/civilian/kitchen)
 "bFP" = (
-/obj/effect/decal/cleanable/vomit,
+/obj/item/weapon/storage/briefcase,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "bFQ" = (
@@ -57315,10 +57340,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "ceI" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/three,
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/fore)
 "ceO" = (
 /turf/simulated/floor/plating/airless,
 /area/station/rnd/test_area)
@@ -69252,10 +69278,8 @@
 /area/station/security/iaa_office)
 "cPb" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
 "cPF" = (
@@ -69276,9 +69300,6 @@
 "cQb" = (
 /obj/machinery/light{
 	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -110257,7 +110278,7 @@ alZ
 alZ
 arv
 bzB
-bFJ
+atc
 cfd
 cjW
 bzA
@@ -111285,7 +111306,7 @@ alZ
 alZ
 agO
 axf
-axO
+bFJ
 ayo
 agO
 bLe
@@ -111541,7 +111562,7 @@ ayr
 ayr
 ayr
 ayr
-axh
+axO
 axQ
 aKY
 agO
@@ -111798,9 +111819,9 @@ aNd
 bLn
 bMZ
 ayr
-axi
-axV
-ays
+aru
+bFP
+aKY
 agO
 bLk
 aYi
@@ -112055,9 +112076,9 @@ avG
 auS
 bNa
 ayr
-agO
-agO
-agO
+axi
+axV
+ays
 agO
 alZ
 aYi
@@ -112312,10 +112333,10 @@ aNm
 arg
 bNh
 ayr
-aqf
-asg
-cgt
-alZ
+agO
+agO
+agO
+agO
 alZ
 aYi
 aCu
@@ -112569,10 +112590,10 @@ auh
 bLx
 bNr
 ayr
-apx
 alZ
-bFP
-awE
+asg
+cgt
+alZ
 alZ
 aYi
 aCu
@@ -112826,10 +112847,10 @@ ani
 ani
 uql
 ayr
-ceI
-alZ
-aqb
-axT
+aHo
+aqf
+apx
+awE
 alZ
 aYi
 hGb
@@ -113341,7 +113362,7 @@ axN
 axo
 bhX
 bzC
-bBw
+axT
 bHo
 axN
 alZ
@@ -115140,7 +115161,7 @@ axN
 ayq
 cOb
 bzQ
-axN
+axh
 axN
 adW
 adW
@@ -115655,7 +115676,7 @@ cdX
 cPb
 bCo
 bCL
-aBO
+aCU
 bKT
 bKT
 bNy
@@ -115905,12 +115926,12 @@ ati
 ase
 aAY
 atv
-arx
-aHo
+ceI
+awF
 auT
 ayp
 cQb
-auT
+bBw
 auT
 bHS
 axR
@@ -116162,7 +116183,7 @@ ati
 aAr
 asY
 aDt
-arx
+aBO
 aZb
 aef
 aef
