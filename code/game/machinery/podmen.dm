@@ -226,7 +226,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	spawner_id = "nymph_pod"
 
 /obj/item/seeds/replicapod/real_deal/attack_self(mob/living/carbon/user)
-	if(user.get_species() == DIONA && user.a_intent == INTENT_HELP && iscarbon(user))
+	if(user.get_species() == DIONA && iscarbon(user))
 		align_gestalt(user)
 		return
 
