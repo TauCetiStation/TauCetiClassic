@@ -13752,6 +13752,7 @@
 /area/station/security/iaa_office)
 "axO" = (
 /obj/effect/decal/cleanable/blood/oil,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
 /area/station/maintenance/eva)
 "axP" = (
@@ -13764,6 +13765,7 @@
 	},
 /area/station/hallway/primary/fore)
 "axQ" = (
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -46952,7 +46954,9 @@
 /area/station/civilian/kitchen)
 "bFP" = (
 /obj/item/weapon/storage/briefcase,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
 /area/station/maintenance/eva)
 "bFQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
