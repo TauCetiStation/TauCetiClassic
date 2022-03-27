@@ -11,7 +11,6 @@
 	using.icon = ui_style
 	using.icon_state = "intent_" + mymob.a_intent
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	action_intent = using
@@ -29,7 +28,6 @@
 	using.name = INTENT_HELP
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	help_intent = using
@@ -41,7 +39,6 @@
 	using.name = INTENT_PUSH
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	push_intent = using
@@ -53,7 +50,6 @@
 	using.name = INTENT_GRAB
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	grab_intent = using
@@ -65,7 +61,6 @@
 	using.name = INTENT_HARM
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	harm_intent = using
@@ -78,7 +73,6 @@
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	move_intent = using
@@ -88,7 +82,6 @@
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = "act_drop"
 	using.screen_loc = ui_drop_throw
-	using.layer = HUD_LAYER
 	using.plane = HUD_PLANE
 	src.adding += using
 
@@ -98,7 +91,6 @@
 	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
 	inv_box.icon_state = "hand_tail_active"
 	inv_box.screen_loc = ui_rhand
-	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	inv_box.slot_id = SLOT_R_HAND
 	src.r_hand_hud_object = inv_box

@@ -66,7 +66,7 @@
 			else
 				cuffs = new type
 
-			target.equip_to_slot(cuffs, SLOT_HANDCUFFED, TRUE)
+			target.equip_to_slot_if_possible(cuffs, SLOT_HANDCUFFED)
 			target.attack_log += "\[[time_stamp()]\] <font color='orange'>[user.name] ([user.ckey]) placed on our [target.slot_id_to_name(SLOT_HANDCUFFED)] ([cuffs])</font>"
 			user.attack_log += "\[[time_stamp()]\] <font color='red'>Placed on [target.name]'s ([target.ckey]) [target.slot_id_to_name(SLOT_HANDCUFFED)] ([cuffs])</font>"
 			return TRUE
