@@ -474,7 +474,7 @@
 		"layer"=buckled.layer
 	))
 	buckled.pixel_z = carry_pixel_z
-	buckled.layer = FLY_LAYER + 0.1
+	buckled.layer = ABOVE_FLY_LAYER
 	carry_obj.update_buckle_mob(buckled)
 
 /datum/component/multi_carry/proc/on_unbuckle(datum/source, mob/buckled)
