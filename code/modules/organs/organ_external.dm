@@ -55,6 +55,8 @@
 	var/open = 0
 	var/stage = 0
 	var/cavity = 0
+	var/trauma_kit = FALSE
+	var/burn_kit = FALSE
 	var/atom/movable/applied_pressure
 
 	// Misc

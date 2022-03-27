@@ -15,7 +15,7 @@
 	max_duration = 60
 
 
-/datum/surgery_step/add_tissue/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/add_tissue/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/stack/medical/tool)
 	if(!ishuman(target))
 		return 0
 
@@ -29,14 +29,7 @@
 
 	return BP && BP.open >= 2 && BP.stage == 0
 
-/datum/surgery_step/add_tissue/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/datum/brute_to_heal = 0
-	var/datum/burn_to_heal = 0
-	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
-		brute_to_heal = 20
-	if (istype(tool, /obj/item/stack/medical/advanced/ointment))
-		burn_to_heal = 20
-
+/datum/surgery_step/add_tissue/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/stack/medical/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(BP.stage == 0)
 		user.visible_message("[user] starts applying medication to the damaged tissue in [target]'s [BP.name] with \the [tool]." , \
@@ -44,14 +37,18 @@
 	target.custom_pain("Something in your [BP.name] is causing you a lot of pain!",1)
 	..()
 
-/datum/surgery_step/add_tissue/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/add_tissue/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/stack/medical/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	if(istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
+		BP.trauma_kit = TRUE
+	else if(istype(tool, /obj/item/stack/medical/advanced/ointment))
+		BP.burn_kit = TRUE
 	user.visible_message("<span class='notice'>[user] applies some [tool] to [target]'s tissue in [BP.name]</span>", \
 		"<span class='notice'>You apply some [tool] to [target]'s tissue in [BP.name] with \the [tool].</span>")
 	tool.amount -= 1
 	BP.stage = 3
 
-/datum/surgery_step/add_tissue/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/add_tissue/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/stack/medical/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>" , \
 	"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>")
@@ -87,7 +84,12 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='notice'>[user] sets the tissue in [target]'s [BP.name] in place with \the [tool].</span>", \
 		"<span class='notice'>You set the tissue in [target]'s [BP.name] in place with \the [tool].</span>")
-	BP.heal_damage(datum.brute_to_heal, datum.burn_to_heal)
+	if(BP.trauma_kit)
+		BP.heal_damage(20, 0)
+		BP.trauma_kit = FALSE
+	if(BP.burn_kit)
+		BP.burn_kit = FALSE
+		BP.heal_damage(0, 20)
 	target.updatehealth()
 	BP.stage = 0
 
