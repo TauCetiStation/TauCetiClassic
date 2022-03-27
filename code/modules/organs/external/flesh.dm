@@ -25,7 +25,7 @@
 
 /datum/bodypart_controller/proc/adjust_pumped(value, cap=null)
 	// TO-DO: either give other species different limb types, or add some HAS_MUSCLES specie flag.
-	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
+	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL, VOX)))
 		return 0
 
 	if(isnull(cap))
@@ -587,7 +587,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return FALSE
 
 /datum/bodypart_controller/proc/fracture()
-	if(BP.owner.dna && BP.owner.dna.mutantrace == "adamantine")
+	if(BP.species == GOLEM)
 		return
 
 	if(BP.status & ORGAN_BROKEN)

@@ -59,7 +59,6 @@ There are several things that need to be remembered:
 
 >	There are also these special cases:
 		update_mutations()	//handles updating your appearance for certain mutations.  e.g TK head-glows
-		update_mutantrace()	//handles updating your appearance after setting the mutantrace var
 		UpdateDamageIcon()	//handles damage overlays for brute/burn damage //(will rename this when I geta round to it)
 		update_body()	//Handles updating your mob's icon to reflect their gender/race/complexion etc
 		update_hair()	//Handles updating your hair overlay (used to be update_face, but mouth and
@@ -98,7 +97,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //Human Overlays Indexes/////////
 #define BODY_LAYER				27
-#define MUTANTRACE_LAYER		26
 #define MUTATIONS_LAYER			25
 #define DAMAGE_LAYER			24
 #define SURGERY_LAYER			23		//bs12 specific.
@@ -141,13 +139,10 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/icon_path = def_icon_path
 
 	var/t_state
-	if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES || sprite_sheet_slot == SPRITE_SHEET_BELT)
+	if(sprite_sheet_slot in list(SPRITE_SHEET_HELD, SPRITE_SHEET_GLOVES, SPRITE_SHEET_BELT, SPRITE_SHEET_UNIFORM))
 		t_state = item_state
 		if(!icon_custom)
 			icon_state_appendix = null
-
-	if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM || sprite_sheet_slot == SPRITE_SHEET_UNIFORM_FAT)
-		t_state = item_color
 
 	if(!t_state)
 		t_state = icon_state
@@ -350,42 +345,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	apply_overlay(MUTATIONS_LAYER)
 
-
-/mob/living/carbon/human/proc/update_mutantrace()
-	remove_overlay(MUTANTRACE_LAYER)
-
-	var/list/standing = list()
-	var/fat = HAS_TRAIT(src, TRAIT_FAT) ? "fat" : null
-
-	if(dna)
-		switch(dna.mutantrace)
-			if("golem" , "shadow")
-				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_s", -MUTANTRACE_LAYER)
-
-	if(species.name == SHADOWLING && head)
-		var/image/eyes = image('icons/mob/shadowling.dmi', null, "[dna.mutantrace]_ms_s", LIGHTING_LAYER + 1)
-		eyes.plane = ABOVE_LIGHTING_PLANE
-		standing += eyes
-
-	if(iszombie(src) && stat != DEAD)
-		var/image/eyes = image(species.icobase, null, "zombie_ms_s", LIGHTING_LAYER + 1)
-		eyes.plane = ABOVE_LIGHTING_PLANE
-		standing += eyes
-
-	if(!dna || !(dna.mutantrace == "golem"))
-		update_body()
-
-	if(standing.len)
-		for(var/image/I in standing)
-			I = update_height(I)
-		overlays_standing[MUTANTRACE_LAYER]	= standing
-
-	if(species.flags[HAS_HAIR] || !(HUSK in mutations))
-		update_hair()
-
-	apply_overlay(MUTANTRACE_LAYER)
-
-
 //Call when target overlay should be added/removed
 /mob/living/carbon/human/update_targeted()
 	remove_overlay(TARGETED_LAYER)
@@ -417,7 +376,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		return
 	update_hair()
 	update_mutations()
-	update_mutantrace()
+	update_body()
 	update_inv_w_uniform()
 	update_inv_wear_id()
 	update_inv_gloves()
@@ -471,14 +430,12 @@ Please contact me on #coderbus IRC. ~Carn x
 				to_chat(src, "<span class='warning'>You burst out of \the [U]!</span>")
 				drop_from_inventory(U)
 				return
-		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood", "_s")
+		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
 		standing = update_height(standing)
 		overlays_standing[UNIFORM_LAYER] = standing
 
 		for(var/obj/item/clothing/accessory/A in U.accessories)
-			var/tie_color = A.item_color
-			if(!tie_color)
-				tie_color = A.icon_state
+			var/tie_color = A.icon_state
 			var/image/tie
 			if(A.icon_custom)
 				tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -UNIFORM_LAYER + A.layer_priority)
@@ -679,9 +636,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[SUIT_LAYER] = standing
 
 		for(var/obj/item/clothing/accessory/A in S.accessories)
-			var/tie_color = A.item_color
-			if(!tie_color)
-				tie_color = A.icon_state
+			var/tie_color = A.icon_state
 			var/image/tie
 			if(A.icon_custom)
 				tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -SUIT_LAYER + A.layer_priority)
@@ -935,7 +890,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //Human Overlays Indexes/////////
 #undef BODY_LAYER
-#undef MUTANTRACE_LAYER
 #undef MUTATIONS_LAYER
 #undef DAMAGE_LAYER
 #undef SURGERY_LAYER

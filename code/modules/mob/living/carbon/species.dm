@@ -9,6 +9,7 @@
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
 	var/damage_mask = TRUE
 	var/eyes = "eyes"                                    // Icon for eyes.
+	var/eyes_glowing = FALSE                             // To make those eyes gloooow.
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
@@ -33,7 +34,6 @@
 	var/species_common_language = FALSE // If TRUE, racial language will be forced by default when speaking.
 	var/attack_verb = "punch"         // Empty hand hurt intent verb.
 	var/punch_damage = 0              // Extra empty hand attack damage.
-	var/mutantrace                    // Safeguard due to old code.
 
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
 	// Perhaps one day make this an assoc list of BODYPART_NAME = list(drops) ? ~Luduk
@@ -1172,6 +1172,9 @@
 	dietflags = DIET_OMNI
 	flesh_color = "#ff0000"
 
+	eyes = "shadowling_ms_s"
+	eyes_glowing = TRUE
+
 	warning_low_pressure = 50
 	hazard_low_pressure = -1
 
@@ -1282,7 +1285,6 @@
 	H.prepare_huds()
 
 	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
-	H.dna.mutantrace = "adamantine"
 	H.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 
 	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
@@ -1298,7 +1300,6 @@
 
 /datum/species/golem/on_loose(mob/living/carbon/human/H, new_species)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
-	H.dna.mutantrace = null
 	H.real_name = "unknown"
 
 	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
@@ -1329,6 +1330,9 @@
 	icobase = 'icons/mob/human_races/r_zombie.dmi'
 	deform = 'icons/mob/human_races/r_zombie.dmi'
 	has_gendered_icons = FALSE
+
+	eyes = "zombie_ms_s"
+	eyes_glowing = TRUE
 
 	flags = list(
 	NO_BREATHE = TRUE
@@ -1416,7 +1420,6 @@
 	icobase = 'icons/mob/human_races/r_zombie_skrell.dmi'
 	deform = 'icons/mob/human_races/r_zombie_skrell.dmi'
 
-	eyes = "skrell_eyes"
 	blood_datum_path = /datum/dirt_cover/purple_blood
 	flesh_color = "#8cd7a3"
 	base_color = "#000000"
@@ -1467,6 +1470,8 @@
 	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT + 20
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 10
 	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
+
+	darksight = 3
 
 	flags = list(
 	 NO_BREATHE = TRUE

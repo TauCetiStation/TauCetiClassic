@@ -164,7 +164,7 @@
 /area/space_structures/robostatoin)
 "aH" = (
 /obj/structure/table/woodentable,
-/obj/item/clothing/gloves/rainbow/clown,
+/obj/item/clothing/gloves/rainbow,
 /obj/item/stack/sheet/mineral/clown,
 /obj/item/weapon/cartridge/clown,
 /obj/item/weapon/stamp/clown,

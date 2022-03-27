@@ -6,7 +6,7 @@
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 0)
 	siemens_coefficient = 0.65
-	species_restricted = list("exclude" , DIONA , VOX)
+	species_restricted = list("exclude" , DIONA)
 
 /obj/item/clothing/suit/space/sk
 	name = "ERVOS"
