@@ -5847,13 +5847,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/machinery/camera{
-	c_tag = "Security  Center";
-	dir = 1;
-	network = list("SS13","Security")
-	},
 /turf/simulated/floor{
-	dir = 8;
 	icon_state = "redcorner"
 	},
 /area/station/security/brig)
@@ -7327,46 +7321,43 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "amh" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for the brig foyer.";
-	id = "InnerBrig";
-	name = "Inner Brig Doors";
-	pixel_x = -26;
-	pixel_y = 6;
-	range = 10
-	},
-/obj/machinery/flasher_button{
-	id = "permflash";
-	name = "Prison Wing flashes";
-	pixel_x = -26;
-	pixel_y = 26;
-	req_access = list(63)
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /obj/machinery/door_control{
 	id = "Prison Gate";
 	name = "Prison Wing Lockdown";
-	pixel_x = -26;
 	pixel_y = -7;
 	req_access = list(2)
 	},
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 8
+/obj/machinery/door_control{
+	desc = "A remote control switch for the brig foyer.";
+	id = "InnerBrig";
+	name = "Inner Brig Doors";
+	pixel_y = 6;
+	range = 10
 	},
-/obj/effect/landmark/start{
-	name = "Security Cadet"
+/obj/machinery/computer/security/telescreen{
+	desc = "Used to monitor areas of the Security Division.";
+	name = "Security Monitor";
+	network = list("Security");
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/station/security/brig)
 "ami" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/machinery/camera{
+	c_tag = "Security  Center";
+	dir = 1;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "redcorner"
 	},
 /area/station/security/brig)
 "amj" = (
@@ -8548,12 +8539,11 @@
 	},
 /area/station/engineering/engine)
 "anY" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used to monitor areas of the Security Division.";
-	dir = 4;
-	name = "Security Monitor";
-	network = list("Security");
-	pixel_x = -28
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 8
+	},
+/obj/effect/landmark/start{
+	name = "Security Cadet"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -54753,6 +54743,26 @@
 /obj/random/foods/food_trash,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
+"bUk" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/flasher_button{
+	id = "permflash";
+	name = "Prison Wing flashes";
+	pixel_y = 7;
+	req_access = list(63)
+	},
+/obj/item/ashtray/plastic{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/brig)
 "bUl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -115681,7 +115691,7 @@ aeq
 aeq
 ajw
 alI
-fmb
+ajQ
 adJ
 ayr
 ayr
@@ -116709,10 +116719,10 @@ adR
 ajp
 ajx
 alK
-ajQ
+ami
 adM
-ami
-ami
+amh
+bUk
 fDS
 aoN
 ati
@@ -116968,8 +116978,8 @@ adh
 ahm
 amE
 alu
-amh
 anY
+afU
 anp
 aom
 ati
