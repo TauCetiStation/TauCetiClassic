@@ -118,7 +118,6 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 	if(copycat_replica && replicant_dna)
 		D.dna = replicant_dna.Clone()
-		D.dna.mutantrace = "plant"
 		D.real_name = D.dna.real_name
 		D.name = D.real_name
 

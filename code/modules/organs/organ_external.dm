@@ -560,11 +560,19 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	//Eyes
 	if(species && species.eyes)
-		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', species.eyes, -icon_layer)
-		if(!(HULK in owner.mutations))
-			img_eyes_s.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
-		else
+		var/eyes_layer = -icon_layer
+
+		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', species.eyes, eyes_layer)
+		if(species.eyes_glowing)
+			img_eyes_s.plane = ABOVE_LIGHTING_PLANE
+
+		if(HULK in owner.mutations)
 			img_eyes_s.color = "#ff0000"
+		else if(species.name == SHADOWLING || iszombie(owner))
+			img_eyes_s.color = null
+		else
+			img_eyes_s.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
+
 		. += img_eyes_s
 
 	//Mouth	(lipstick!)
