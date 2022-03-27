@@ -4836,7 +4836,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/prison)
+/area/station/security/lobby)
 "ain" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -6035,7 +6035,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/prison)
+/area/station/security/lobby)
 "aki" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -6623,7 +6623,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/prison)
+/area/station/security/lobby)
 "ale" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -8406,7 +8406,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/prison)
+/area/station/security/lobby)
 "anU" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -24507,7 +24507,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/prison)
+/area/station/security/lobby)
 "aRQ" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
@@ -52085,7 +52085,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/prison)
+/area/station/security/lobby)
 "bPa" = (
 /obj/machinery/door/window/northleft{
 	name = "Engineering Moniter Station";
@@ -53645,7 +53645,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/prison)
+/area/station/security/lobby)
 "bRV" = (
 /obj/structure/table,
 /obj/item/weapon/wrench{
