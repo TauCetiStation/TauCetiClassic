@@ -227,16 +227,24 @@
 
 /datum/skillset/roboticist/bio
 	initial_skills = list(
+		/datum/skill/research/pro,
 		/datum/skill/surgery/pro,
-		/datum/skill/civ_mech/trained
+		/datum/skill/medical/pro,
+		/datum/skill/construction/trained,
+		/datum/skill/engineering/novice,
+		/datum/skill/civ_mech/trained,
+		/datum/skill/combat_mech/trained
 	)
 
 /datum/skillset/roboticist/mecha
 	initial_skills = list(
+		/datum/skill/research/pro,
+		/datum/skill/surgery/novice,
+		/datum/skill/medical/novice,
 		/datum/skill/construction/pro,
-		/datum/skill/combat_mech/master,
+		/datum/skill/engineering/trained,
 		/datum/skill/civ_mech/master,
-		/datum/skill/surgery/novice
+		/datum/skill/combat_mech/master
 	)
 
 /datum/skillset/xenoarchaeologist
