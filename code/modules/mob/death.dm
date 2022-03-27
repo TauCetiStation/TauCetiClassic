@@ -58,3 +58,9 @@
 	dead_mob_list += src
 	clear_fullscreens()
 	setDrugginess(0)
+
+	for(var/mob/M as anything in remote_hearers)
+		remove_remote_hearer(M)
+
+	for(var/mob/M as anything in remote_hearing)
+		M.remove_remote_hearer(src)

@@ -14,6 +14,9 @@
 	return ..()
 
 /mob/proc/telepathy_targetable()
+	if(stat == DEAD)
+		return FALSE
+
 	var/datum/species/S = all_species[get_species()]
 	if(S && S.flags[IS_SYNTHETIC])
 		return FALSE
