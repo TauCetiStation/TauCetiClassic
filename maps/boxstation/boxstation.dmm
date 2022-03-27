@@ -13751,8 +13751,8 @@
 /turf/simulated/wall/r_wall,
 /area/station/security/iaa_office)
 "axO" = (
-/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/wood,
 /area/station/maintenance/eva)
 "axP" = (
@@ -13767,7 +13767,7 @@
 "axQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
-	icon_state = "wood-broken"
+	icon_state = "wood-broken4"
 	},
 /area/station/maintenance/eva)
 "axR" = (
