@@ -207,7 +207,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 128
 	anchored = TRUE
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/zone_sel/MouseExited(location, control, params)
@@ -768,7 +767,15 @@
 	var/mob/living/M = usr
 	M.OpenCraftingMenu()
 
+/atom/movable/screen/nuke
+	icon = 'icons/effects/station_explosion.dmi'
+	icon_state = "station_intact"
+	screen_loc = "1,0"
+	plane = SPLASHSCREEN_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 /atom/movable/screen/temp
+	plane = SPLASHSCREEN_PLANE
 	var/mob/user
 	var/delay = 0
 
@@ -786,11 +793,10 @@
 	return ..()
 
 /atom/movable/screen/temp/cult_teleportation
-	name = "crafting menu"
+	name = "cult teleportation"
 	icon = 'icons/effects/bloodTP.dmi'
 	icon_state = "cult_tp"
 	screen_loc = "1,1"
-	layer = ABOVE_HUD_LAYER + 1
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	delay = 8.5
