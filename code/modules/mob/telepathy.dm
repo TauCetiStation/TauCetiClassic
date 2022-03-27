@@ -1,4 +1,4 @@
-/mob/
+/mob
 	var/list/mob/remote_hearers
 	var/list/mob/remote_hearing
 
@@ -23,8 +23,8 @@
 
 	return TRUE
 
- /mob/living/silicon/telepathy_targetable()
- 	return FALSE
+/mob/living/silicon/telepathy_targetable()
+	return FALSE
 
 /mob/proc/telepathy_eavesdrop(atom/source, message, verb, datum/language/language = null)
 	for(var/mob/M as anything in remote_hearers)
@@ -48,22 +48,20 @@
 	if(source)
 		dist += get_dist(source, hearer)
 
-	if(!M.can_telepathy(dist))
-		continue
-
 	var/star_chance = 0
 	if(dist > CLEAR_TELEPATHY_RANGE)
 		star_chance += dist
 
 	if(remote_hearing.len > 3)
-		star_chance += M.remote_hearing.len * 5
+		star_chance += remote_hearing.len * 5
 
 	if(star_chance)
 		message = stars(message, star_chance)
 
-	if(hearer.next_telepathy_clue < world.time && prob(CLEAR_TELEPATHY_RANGE - dist))
-		to_chat(hearer, "<span class='warning'>You feel as if somebody is eavesdropping on you.</span>")
-		hearer.next_telepathy_clue = world.time + 30 SECONDS
+	var/mob/M = hearer
+	if(ismob(hearer) && M.next_telepathy_clue < world.time && prob(CLEAR_TELEPATHY_RANGE - dist))
+		to_chat(M, "<span class='warning'>You feel as if somebody is eavesdropping on you.</span>")
+		M.next_telepathy_clue = world.time + 30 SECONDS
 
 	to_chat(src, "<span class='notice'><span class='bold'>[hearer]</span> [verb]:</span> [message]")
 
@@ -151,8 +149,9 @@
 	if(star_chance)
 		msg = stars(msg, star_chance)
 
-	if(REMOTE_TALK in M.mutations)
-		to_chat(src, "<span class='notice'>You hear <b>[source.real_name]'s voice</b>:</span> [msg]")
+	var/mob/M = source
+	if(ismob(M) && (REMOTE_TALK in M.mutations))
+		to_chat(src, "<span class='notice'>You hear <b>[M.real_name]'s voice</b>:</span> [msg]")
 	else
 		to_chat(src, "<span class='notice'>You hear a voice that seems to echo around the room:</span> [msg]")
 
