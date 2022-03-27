@@ -5,8 +5,8 @@
 
 /datum/surgery_step/add_tissue
 	allowed_tools = list(
-	/obj/item/stack/medical/advanced/bruise_pack= 100,
-	/obj/item/stack/medical/advanced/ointment= 100
+	/obj/item/stack/medical/advanced/bruise_pack = 100,
+	/obj/item/stack/medical/advanced/ointment = 100
 	)
 	can_infect = 1
 	blood_level = 1
@@ -24,7 +24,7 @@
 
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 
-	if(BP.brute_dam <= 20 || BP.burn_dam <= 20)
+	if(!(BP.brute_dam > 20 || BP.burn_dam > 20))
 		return 0
 
 	return BP && BP.open >= 2 && BP.stage == 0
@@ -32,8 +32,8 @@
 /datum/surgery_step/add_tissue/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/stack/medical/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(BP.stage == 0)
-		user.visible_message("<span class='notice'>[user] начинает добавлять регенеративную мембрану к поврежденным тканям [BP.name] [target].</span>", \
-		"<span class='notice'>Вы начинаете добавлять регенеративную мембрану к поврежденным тканям [BP.name] [target].</span>")
+		user.visible_message("<span class='notice'>[user] начинает укладывать регенеративную мембрану к поврежденным тканям [BP.name] [target].</span>", \
+		"<span class='notice'>Вы начинаете укладывать регенеративную мембрану к поврежденным тканям [BP.name] [target].</span>")
 	target.custom_pain("[BP.name] ужасно болит!",1)
 	..()
 
@@ -43,15 +43,17 @@
 		BP.trauma_kit = TRUE
 	else if(istype(tool, /obj/item/stack/medical/advanced/ointment))
 		BP.burn_kit = TRUE
-	user.visible_message("<span class='notice'>[user] завершает добавлять регенеративную мембрану к поврежденным тканям [BP.name] [target].</span>", \
-		"<span class='notice'>Вы завершаете добавлять регенеративную мембрану к поврежденным тканям [BP.name] [target].</span>")
+	user.visible_message("<span class='notice'>[user] завершает укладывать регенеративную мембрану к поврежденным тканям [BP.name] [target].</span>", \
+		"<span class='notice'>Вы завершаете укладывать регенеративную мембрану к поврежденным тканям [BP.name] [target].</span>")
 	tool.amount -= 1
+	tool.update_icon()
 	BP.stage = 3
 
 /datum/surgery_step/add_tissue/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/stack/medical/tool)
 	user.visible_message("<span class='warning'>Рука [user] дрогнула, безвозвратно испортив регенеративную мембрану!</span>", \
 	"<span class='warning'>Ваша рука дрогнула, безвозвратно испортив регенеративную мембрану!</span>")
 	tool.amount -= 1
+	tool.update_icon()
 
 /datum/surgery_step/set_tissue
 	allowed_tools = list(
@@ -84,11 +86,14 @@
 	user.visible_message("<span class='notice'>[user] завершает соединять регенеративную мембрану с поврежденными тканями [BP.name] [target].</span>", \
 		"<span class='notice'>Вы завершаете соединять регенеративную мембрану с поврежденными тканями [BP.name] [target].</span>")
 	if(BP.trauma_kit)
-		BP.heal_damage(20, 0)
 		BP.trauma_kit = FALSE
+		BP.heal_damage(20)
+		BP.disinfect()
+		BP.status &= ~ORGAN_BLEEDING
 	if(BP.burn_kit)
 		BP.burn_kit = FALSE
 		BP.heal_damage(0, 20)
+		BP.salve()
 	BP.stage = 0
 
 /datum/surgery_step/set_tissue/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
