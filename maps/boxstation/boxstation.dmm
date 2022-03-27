@@ -47754,10 +47754,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/item/clothing/mask/cigarette/cigar/cohiba{
-	pixel_x = -7;
-	pixel_y = -5
-	},
 /obj/item/weapon/flora/deskferntrim{
 	icon_state = "plant-34-alternative";
 	pixel_x = -8;
