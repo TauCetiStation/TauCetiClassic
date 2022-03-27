@@ -2431,6 +2431,9 @@
 	destroyed = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/pods{
+	pixel_x = 32
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aem" = (
@@ -71185,13 +71188,15 @@
 /turf/simulated/floor/plating,
 /area/station/medical/chemistry)
 "eBb" = (
+/obj/structure/closet/emcloset,
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
 	layer = 4;
-	name = "EXTERNAL AIRLOCK"
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = 32
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "eCz" = (
 /obj/machinery/alarm{
@@ -71412,10 +71417,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/library)
-"eRb" = (
-/obj/structure/sign/warning/pods,
-/turf/simulated/wall/r_wall,
-/area/station/maintenance/dormitory)
 "eRo" = (
 /turf/simulated/floor/plating/airless{
 	dir = 5;
@@ -121845,9 +121846,9 @@ aef
 aef
 aef
 afl
-eBb
+afl
 aga
-eRb
+afl
 afl
 aqp
 aef
@@ -122102,7 +122103,7 @@ aaa
 aaa
 aaa
 afl
-afY
+eBb
 aeJ
 aib
 afl
