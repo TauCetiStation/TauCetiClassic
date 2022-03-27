@@ -51,7 +51,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 /obj/item/seeds/replicapod/proc/replicate_blood_data(list/data, mob/living/user)
 	blood_source = data["donor"]
-	if(!istype(blood_source) || !blood_source.mind || !blood_source.mind.current.client)
+	if(!istype(blood_source) || !blood_source.mind)
 		blood_source = null
 		if(user)
 			to_chat(user, "<span class='warning'>But nothing happens.</span>")
@@ -178,7 +178,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	product_type = /mob/living/carbon/monkey/diona/podman/fake
 	copycat_replica = FALSE
 
-	spawner_type = /datum/spawner/podman/fake_diona
+	spawner_type = /datum/spawner/podman/fake_nymph
 	spawner_id = "diona_pod"
 
 	var/vine_timer
@@ -203,4 +203,31 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 /obj/item/seeds/replicapod/real_deal/harvest()
 	deltimer(vine_timer)
+	return ..()
+
+/obj/item/seeds/replicapod/real_deal/proc/align_gestalt(mob/living/carbon/user)
+	var/datum/reagent/blood/B = user.take_blood(null, 0)
+	if(!B)
+		return
+
+	if(!B.data)
+		return
+
+	if(!replicate_blood_data(B.data))
+		to_chat(user, "<span class='warning'>But nothing happens.</span>")
+		return
+
+	to_chat(user, "<span class='notice'>You align the pod with the gestalt.</span>")
+
+	product_type = /mob/living/carbon/monkey/diona
+	copycat_replica = TRUE
+
+	spawner_type = /datum/spawner/podman/nymph
+	spawner_id = "nymph_pod"
+
+/obj/item/seeds/replicapod/real_deal/attack_self(mob/living/carbon/user)
+	if(user.get_species() == DIONA && user.a_intent == INTENT_HELP && iscarbon(user))
+		align_gestalt(user)
+		return
+
 	return ..()

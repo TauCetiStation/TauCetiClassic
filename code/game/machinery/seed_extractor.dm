@@ -43,10 +43,7 @@
 		var/obj/item/organ/external/IO = O
 		if(IO.species.name == DIONA)
 			to_chat(user, "<span class='notice'>You extract some seeds from \the [IO.name].</span>")
-			var/obj/item/seeds/replicapod/real_deal/RD = new /obj/item/seeds/replicapod/real_deal(loc)
-			if(IO.owner)
-				RD.copycat_replica = TRUE
-				RD.replicate_blood_data(IO.owner.take_blood(null, 0))
+			new /obj/item/seeds/replicapod/real_deal(loc)
 			qdel(IO)
 		else if(IO.species.name == PODMAN)
 			to_chat(user, "<span class='warning'>You fail to extract any seeds from \the [IO.name].</span>")

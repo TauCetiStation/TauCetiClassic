@@ -58,7 +58,7 @@
 	voice_name = "diona nymph"
 	icon_state = "nymph1"
 	holder_type = /obj/item/weapon/holder/diona
-	spawner_type = /datum/spawner/podman/fake_diona
+	spawner_type = /datum/spawner/podman/fake_nymph
 	spawner_id = "nymph"
 
 /mob/living/carbon/monkey/diona/atom_init()
