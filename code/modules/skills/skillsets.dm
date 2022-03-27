@@ -173,7 +173,8 @@
 		/datum/skill/police/trained,
 		/datum/skill/firearms/master,
 		/datum/skill/medical/novice,
-		/datum/skill/melee/trained
+		/datum/skill/surgery/novice,
+		/datum/skill/melee/trained,
 	)
 
 //science
