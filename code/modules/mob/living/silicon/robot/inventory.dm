@@ -38,7 +38,7 @@
 
 /mob/living/silicon/robot/drop_item(atom/T)
 	if(module_active)
-		return
+		return SEND_SIGNAL(module_active, COMSIG_HAND_DROP_ITEM, T, src)
 	return FALSE
 
 /mob/living/silicon/robot/remove_from_mob(obj/O, atom/T)
@@ -99,11 +99,6 @@
 /mob/living/silicon/robot/proc/uneq_active()
 	if(isnull(module_active))
 		return
-
-	if(istype(module_active, /obj/item/weapon/gripper))
-		var/obj/item/weapon/gripper/G = module_active
-		if(G.contents.len)
-			return SEND_SIGNAL(module_active, COMSIG_HAND_DROP_ITEM, src)
 
 	unequip_module(module_active)
 
