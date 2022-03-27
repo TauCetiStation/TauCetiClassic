@@ -22838,7 +22838,6 @@
 /area/station/maintenance/eva)
 "aOQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
@@ -57642,12 +57641,6 @@
 	icon_state = "warnplate"
 	},
 /area/station/rnd/test_area)
-"cdX" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor,
-/area/station/hallway/primary/fore)
 "cdY" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -69815,9 +69808,6 @@
 	},
 /area/station/security/iaa_office)
 "cPb" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
@@ -69827,6 +69817,9 @@
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
 "cPF" = (
@@ -116216,7 +116209,7 @@ bOU
 bRp
 aOQ
 aOQ
-cdX
+aOQ
 cPb
 bAD
 bCL
