@@ -12813,7 +12813,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
-/obj/effect/landmark/star/wizard,
+/obj/effect/landmark/start/wizard,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
 	icon_state = "bluecarpet7-3";
@@ -12824,7 +12824,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
 	},
-/obj/effect/landmark/star/wizard,
+/obj/effect/landmark/start/wizard,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
 	icon_state = "bluecarpet11-12";

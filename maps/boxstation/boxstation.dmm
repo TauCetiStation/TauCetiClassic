@@ -83763,7 +83763,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
-/obj/effect/landmark/star/librarian,
+/obj/effect/landmark/start/librarian,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
