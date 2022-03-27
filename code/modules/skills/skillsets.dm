@@ -164,7 +164,8 @@
 		/datum/skill/surgery/trained,
 		/datum/skill/medical/pro,
 		/datum/skill/research/novice,
-		/datum/skill/firearms/trained
+		/datum/skill/firearms/trained,
+		/datum/skill/police/trained
 	)
 
 /datum/skillset/detective
