@@ -145,7 +145,7 @@ var/global/list/debug_verbs = list (
         ,/client/proc/Zone_Info
         ,/client/proc/Test_ZAS_Connection
         ,/client/proc/debug_z_levels
-		,/client/proc/create_mapping_job_icons
+        ,/client/proc/create_mapping_job_icons
         ,/client/proc/hide_debug_verbs
 	,/client/proc/testZAScolors
 	,/client/proc/testZAScolors_remove
