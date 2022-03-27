@@ -38,7 +38,7 @@
 
 /mob/living/silicon/robot/drop_item(atom/T)
 	if(module_active)
-		return SEND_SIGNAL(module_active, COMSIG_HAND_DROP_ITEM, T, src)
+		return
 	return FALSE
 
 /mob/living/silicon/robot/remove_from_mob(obj/O, atom/T)
@@ -100,15 +100,10 @@
 	if(isnull(module_active))
 		return
 
-	src.visible_message("<span class='notice'>1</span>")
 	if(istype(module_active, /obj/item/weapon/gripper))
-		src.visible_message("<span class='notice'>2</span>")
 		var/obj/item/weapon/gripper/G = module_active
-		if(G.wrapped in G.contents)
-			src.visible_message("<span class='notice'>3</span>")
-			G.drop_item()
-			return
-	src.visible_message("<span class='notice'>4</span>")
+		if(G.contents.len)
+			return SEND_SIGNAL(module_active, COMSIG_HAND_DROP_ITEM, src)
 
 	unequip_module(module_active)
 
