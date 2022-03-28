@@ -5,6 +5,7 @@
 	icon_state = "folded_wall"
 	w_class = SIZE_SMALL
 	var/inflatable_type = /obj/structure/inflatable
+	var/flate_time = 40
 
 /obj/item/inflatable/attack_self(mob/user)
 	if(user.is_busy()) return
@@ -13,7 +14,7 @@
 		"<span class='notice'>[user] starts inflating \the [src]...</span>",
 		"<span class='notice'>You start inflating \the [src]...</span>"
 	)
-	if(do_after(user, 40, target = user))
+	if(do_after(user, flate_time, target = user))
 		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message(
 			"<span class='notice'>[user] inflated \the [src].</span>",
@@ -35,6 +36,7 @@
 	icon_state = "wall"
 
 	var/health = 50.0
+	var/deflate_time = 50
 
 
 /obj/structure/inflatable/atom_init()
@@ -139,7 +141,7 @@
 	else
 		//user << "<span class='notice'>You slowly deflate the inflatable wall.</span>"
 		visible_message("[src] slowly deflates.")
-		spawn(50)
+		spawn(deflate_time)
 			var/obj/item/inflatable/R = new /obj/item/inflatable(loc)
 			transfer_fingerprints_to(R)
 			qdel(src)
@@ -300,3 +302,57 @@
 		new /obj/item/inflatable/door(src)
 	for (var/i in 1 to 4)
 		new /obj/item/inflatable(src)
+
+
+/obj/item/inflatable/atmos
+	name = "atmostech's inflatable wall"
+	icon_state = "folded_wall_atmo"
+	inflatable_type = /obj/structure/inflatable/atmos
+	flate_time = 20
+
+/obj/structure/inflatable/atmos
+	icon_state = "wall_atmo"
+	health = 80.0
+	deflate_time = 30
+
+/obj/item/inflatable/door/atmos
+	name = "atmostech's inflatable door"
+	icon_state = "folded_door_atmo"
+	inflatable_type = /obj/structure/inflatable/door/atmos
+	flate_time = 20
+
+/obj/structure/inflatable/door/atmos
+	icon_state = "door_atmo_closed"
+	opening_state = "door_atmo_opening"
+	closing_state = "door_atmo_closing"
+	open_state = "door_atmo_open"
+	closed_state = "door_atmo_closed"
+	health = 80.0
+	deflate_time = 30
+
+/obj/item/inflatable/torn/atmos
+	icon_state = "folded_wall_atmo_torn"
+
+/obj/item/inflatable/door/torn/atmos
+	icon_state = "folded_door_atmo_torn"
+
+/obj/item/weapon/storage/fancy/atmos
+	name = "box of inflatable barrier"
+	desc = "Contains inflatable walls and doors."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "atmos_inflatable"
+	w_class = SIZE_SMALL
+	storage_slots = 5
+	can_hold = list(/obj/item/inflatable/atmos, /obj/item/inflatable/door/atmos)
+
+/obj/item/weapon/storage/fancy/atmos/atom_init()
+	. = ..()
+	for(var/i in 1 to 3)
+		new /obj/item/inflatable/atmos(src)
+	for(var/i in 1 to 2)
+		new /obj/item/inflatable/door/atmos(src)
+	update_icon()
+
+/obj/item/weapon/storage/fancy/atmos/update_icon()
+	cut_overlays()
+	add_overlay("folded-[/obj/item/inflatable in contents]")

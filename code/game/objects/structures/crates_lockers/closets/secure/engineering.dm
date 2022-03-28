@@ -135,3 +135,4 @@
 	new /obj/item/weapon/cartridge/atmos(src)
 	new /obj/item/taperoll/engineering(src)
 	new /obj/item/weapon/gun/energy/pyrometer/atmospherics(src)
+	new /obj/item/weapon/storage/fancy/atmos(src)
