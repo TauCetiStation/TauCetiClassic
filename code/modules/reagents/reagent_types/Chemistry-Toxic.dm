@@ -502,7 +502,7 @@
 					qdel(H.wear_suit)
 					H.update_inv_wear_suit()
 				else
-					to_chat(H, "<span class='warning'>Your suit protects you from the acid.</span>")
+					to_chat(H, "<span class='warning'>Your suit melts away!</span>")
 				return
 
 			if(H.w_uniform)
@@ -511,7 +511,7 @@
 					qdel(H.w_uniform)
 					H.update_inv_w_uniform()
 				else
-					to_chat(H, "<span class='warning'>Your undersuit protects you from the acid.</span>")
+					to_chat(H, "<span class='warning'>Your undersuit melts away!</span>")
 				return
 
 		else if(ismonkey(M))
