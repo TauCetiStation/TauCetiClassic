@@ -400,11 +400,9 @@
 	desc = "An officer's SS cap."
 	icon_state = "SS_cap"
 	item_state = "that"
-	item_color = "SS_cap"
 
 /obj/item/clothing/head/Nazi_Officer_Cap
 	name = "Nazi Officer Cap"
 	desc = "A nazi officer's cap."
 	icon_state = "officer_cap"
 	item_state = "that"
-	item_color = "officer_cap"

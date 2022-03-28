@@ -29,6 +29,13 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
+/obj/item/clothing/suit/armor/vest/fullbody/psy_robe
+	name = "purple robes"
+	desc = "Heavy, royal purple robes threaded with psychic amplifiers and weird, bulbous lenses. Do not machine wash."
+	icon_state = "psyamp"
+	item_state = "psyamp"
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 0, bio = 100, rad = 100)
+
 /obj/item/clothing/suit/storage/flak
 	name = "security armor"
 	desc = "An armored vest that protects against some damage. This one has four pockets for storage."
@@ -344,7 +351,6 @@
 	desc = "Black tactical kevlar vest, used by private security coropation. So tactics."
 	icon_state = "M66_KevlarVest"
 	item_state = "armor"
-	item_color = "M66_KevlarVest"
 	blood_overlay_type = "armor"
 	armor = list(melee = 60, bullet = 80, laser = 40, energy = 50, bomb = 25, bio = 0, rad = 0)
 	siemens_coefficient = 0.7

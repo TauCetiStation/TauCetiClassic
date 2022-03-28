@@ -4592,7 +4592,7 @@
 /obj/item/device/camera_film,
 /obj/item/device/camera,
 /obj/machinery/light/small,
-/obj/item/clothing/gloves/rainbow/clown,
+/obj/item/clothing/gloves/rainbow,
 /obj/random/randomtoy,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)

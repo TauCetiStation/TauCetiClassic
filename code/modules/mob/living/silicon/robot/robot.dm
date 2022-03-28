@@ -87,7 +87,6 @@
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
-	robot_modules_background.layer = HUD_LAYER	 //Objects that appear on screen are on layer 20, UI should be just below it.
 	robot_modules_background.plane = HUD_PLANE
 	ident = rand(1, 999)
 	updatename(name_prefix)
@@ -954,21 +953,18 @@
 			return
 		if(!module_state_1)
 			module_state_1 = O
-			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
 			contents += O
 			if(istype(module_state_1,/obj/item/borg/sight))
 				sight_mode |= module_state_1:sight_mode
 		else if(!module_state_2)
 			module_state_2 = O
-			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
 			contents += O
 			if(istype(module_state_2,/obj/item/borg/sight))
 				sight_mode |= module_state_2:sight_mode
 		else if(!module_state_3)
 			module_state_3 = O
-			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
 			contents += O
 			if(istype(module_state_3,/obj/item/borg/sight))
