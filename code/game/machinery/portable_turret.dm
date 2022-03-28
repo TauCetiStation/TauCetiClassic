@@ -216,7 +216,7 @@ var/global/list/turret_icons
 
 	return FALSE
 
-/obj/machinery/porta_turret/ui_interact(mob/user, ui_key = "turret_ui")
+/obj/machinery/porta_turret/ui_interact(mob/user)
 	if(isLocked(user))
 		return
 
@@ -363,8 +363,6 @@ var/global/list/turret_icons
 			if(anchored && (enabled || raised))
 				to_chat(user, "<span class='warning'>You cannot unsecure an active turret!</span>")
 				return
-			nanomanager.close_user_uis(usr, null, "turret_ui")
-			SStgui.close_user_uis(usr, null, "turret_ui")
 			if(!anchored)
 				anchored = TRUE
 				to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
