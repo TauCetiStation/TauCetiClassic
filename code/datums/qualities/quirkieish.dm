@@ -195,7 +195,7 @@
 
 /datum/quality/quirkieish/blood_translator
 	name = "Blood Translator"
-	desc = "Однажды для пополнения своей библиотеке Вы приобрели одну странную книжку, написанную на несуществующем языке. Может кто-то на станции поможет Вам с её переводом?"
+	desc = "Однажды для пополнения своей библиотеки ты приобрел одну странную книжку, написанную на несуществующем языке. Может кто-то на станции поможет тебе с её переводом?"
 	requirement = "Все, кроме капеллана, АВД, капитана, отдела СБ."
 
 	var/list/evil = list("Security Cadet", "Chaplain", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
