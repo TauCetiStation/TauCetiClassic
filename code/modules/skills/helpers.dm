@@ -16,7 +16,7 @@
 	return result
 
 /proc/do_skilled(mob/user, atom/target,  delay, required_skills, penalty = 0.5, bonus = 0.4, check_busy = TRUE)
-	if(check_busy &&user.is_busy())
+	if(check_busy && user.is_busy())
 		return FALSE
 	return do_after(user, delay = apply_skill_bonus(user, delay, required_skills, penalty, bonus), target = target)
 
