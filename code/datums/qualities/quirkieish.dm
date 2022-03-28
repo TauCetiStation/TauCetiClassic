@@ -192,3 +192,24 @@
 /datum/quality/quirkieish/obedient/add_effect(mob/living/carbon/human/H, latespawn)
 	var/obj/item/weapon/implant/obedience/O = new(H)
 	O.stealth_inject(H)
+
+/datum/quality/quirkieish/blood_translator
+	name = "Blood Translator"
+	desc = "Однажды для пополнения своей библиотеке Вы приобрели одну странную книжку, написанную на несуществующем языке. Может кто-то на станции поможет Вам с её переводом?"
+	requirement = "Все, кроме капеллана, АВД, капитана, отдела СБ."
+
+	var/list/evil = list("Security Cadet", "Chaplain", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
+
+/datum/quality/quirkieish/blood_translator/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !(H.mind.assigned_role in evil)
+
+/datum/quality/quirkieish/blood_translator/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/weapon/storage/bible/tome(H), SLOT_IN_BACKPACK)
+
+/datum/quality/quirkieish/bloodstone
+	name = "BloodStone"
+	desc = "Вы нашли красивый камень и решили оставить его с собой."
+	requirement = "Нет."
+
+/datum/quality/quirkieish/bloodstone/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/device/cult_camera(H), SLOT_IN_BACKPACK)
