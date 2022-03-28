@@ -552,6 +552,38 @@ to destroy them and players will be able to make replacements.
 	req_components = list(
 							/obj/item/weapon/stock_parts/capacitor = 1)
 
+/obj/item/weapon/circuitboard/chem_dispenser_5000
+	name = "circuit board (Chem Dispenser 5000)"
+	build_path = /obj/machinery/chem_dispenser/
+	board_type = "machine"
+	origin_tech = "materials=4;engineering=4;programming=4;phorontech=3;biotech=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/stock_parts/scanning_module = 1)
+
+/obj/item/weapon/circuitboard/booze_dispenser
+	name = "circuit board (Booze Dispenser)"
+	build_path = /obj/machinery/chem_dispenser/beer
+	board_type = "machine"
+	origin_tech = "materials=4;engineering=4;programming=4;phorontech=3;biotech=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
+
+/obj/item/weapon/circuitboard/soda_dispenser
+	name = "circuit board (Soda Dispenser)"
+	build_path = /obj/machinery/chem_dispenser/soda
+	board_type = "machine"
+	origin_tech = "materials=4;engineering=4;programming=4;phorontech=3;biotech=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
+
 /obj/item/weapon/circuitboard/chem_dispenser
 	name = "circuit board (Portable Chem Dispenser)"
 	build_path = /obj/machinery/chem_dispenser/constructable

@@ -421,6 +421,7 @@
 #include "code\datums\wires\autholathe.dm"
 #include "code\datums\wires\barber.dm"
 #include "code\datums\wires\camera.dm"
+#include "code\datums\wires\chem_dispenser.dm"
 #include "code\datums\wires\mining_drill.dm"
 #include "code\datums\wires\mulebot.dm"
 #include "code\datums\wires\nuclearbomb.dm"

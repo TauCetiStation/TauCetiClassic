@@ -17,11 +17,9 @@
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/recharged = 0
 	var/recharge_delay = 15
-	var/hackedcheck = FALSE
-	var/hackable = TRUE
 	var/msg_hack_enable = ""
 	var/msg_hack_disable = ""
-	var/list/dispensable_reagents = list(),
+	var/list/dispensable_reagents = list()
 	var/list/dispensable_reagent_tiers = list(
 		list(
 		"hydrogen", "lithium", "carbon", "nitrogen", "oxygen", "fluorine",
@@ -32,25 +30,33 @@
 		list("bicaridine","kelotane","spaceacillin", "tricordrazine")
 
 	),
-	var/list/premium_reagents = list(
+	var/list/premium_reagents = list()
+	var/list/premium_reagents_tiers = list(
 	list("toxin"),
 	list("fuel"),
 	list("orangejuice", "limejuice", "tomatojuice", "cream"),
 	list("mindbreaker")
 
 	)
+	var/list/standart_reagents_list = list()
+	var/list/full_reagents_list = list()
+	var/hacked = FALSE
+	var/disabled = FALSE
+	var/shocked = FALSE
+	var/datum/wires/chem_dispenser/wires = null
 
 /obj/machinery/chem_dispenser/atom_init()
-	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/chem_dispenser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	wires = new(src)
 	RefreshParts()
-//	recharge()
+	recharge()
 //	dispensable_reagents = sortList(dispensable_reagents)
 
 /obj/machinery/chem_dispenser/RefreshParts()
@@ -64,10 +70,15 @@
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		time += C.rating
 	recharge_delay -= time   //delay between recharges, double the usual time on lowest 50% less than usual on highest
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/weapon/stock_parts/scanning_module/M in component_parts)
 		for(i=1, i<=M.rating, i++)
 			dispensable_reagents |= dispensable_reagent_tiers[i]
 	dispensable_reagents = sortList(dispensable_reagents)
+	standart_reagents_list = dispensable_reagents
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		for(i=1, i<=M.rating, i++) premium_reagents |= premium_reagents_tiers[i]
+			premium_reagents = sortList(premium_reagents)
+	full_reagents_list = dispensable_reagents + premium_reagents
 
 
 /obj/machinery/chem_dispenser/Destroy()
@@ -116,11 +127,37 @@
 /obj/machinery/chem_dispenser/ui_interact(mob/user)
 	tgui_interact(user)
 
+/obj/machinery/chem_dispenser/proc/shock(mob/user, prb)
+	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
+		return 0
+	if(!prob(prb))
+		return 0
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	if(electrocute_mob(user, get_area(src), src, 0.7))
+		return 1
+	else
+		return 0
+
 /obj/machinery/chem_dispenser/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ChemDispenser", ui_title)
 		ui.open()
+
+/obj/machinery/chem_dispenser/tgui_status(mob/user)
+	if(disabled)
+		return STATUS_CLOSE
+	return ..()
+
+/obj/machinery/chem_dispenser/interact(mob/user)
+	if(shocked && !issilicon(user) && !isobserver(user))
+		shock(user,50)
+	if(disabled)
+		to_chat(user, "<span class='warning'>You press the button, but nothing happens.</span>")
+		return
+	..()
 
 /obj/machinery/chem_dispenser/tgui_data(mob/user)
 	var/list/data = list()
@@ -200,15 +237,6 @@
 /obj/machinery/chem_dispenser/attackby(obj/item/weapon/B, mob/user)
 //	if(isrobot(user))
 //		return
-	if(ismultitool(B) && hackable)
-		hackedcheck = !hackedcheck
-		if(hackedcheck)
-			to_chat(user, msg_hack_enable)
-			dispensable_reagents += premium_reagents
-		else
-			to_chat(user, msg_hack_disable)
-			dispensable_reagents -= premium_reagents
-		return
 	if(default_unfasten_wrench(user, B))
 		power_change()
 		return
@@ -230,11 +258,17 @@
 		to_chat(user, "You set [B] on the machine.")
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		return
-	if(default_deconstruction_screwdriver(user, "dispenser", "dispenser", B))
+	if(default_deconstruction_screwdriver(user, "dispenser-o", "dispenser", B))
+		if(hacked) dispensable_reagents = full_reagents_list
+		else dispensable_reagents = standart_reagents_list
+		updateUsrDialog()
 		return
 	if(exchange_parts(user, B))
 		return
 	if(panel_open)
+		if(is_wire_tool(B))
+			wires.interact(user)
+			return
 		if(iscrowbar(B))
 			if(beaker)
 				var/obj/item/weapon/reagent_containers/glass/Beak = beaker
@@ -296,7 +330,6 @@
 	)
 
 /obj/machinery/chem_dispenser/constructable/atom_init()
-	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/chem_dispenser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -324,16 +357,22 @@
 		for(i=1, i<=M.rating, i++)
 			dispensable_reagents |= dispensable_reagent_tiers[i]
 	dispensable_reagents = sortList(dispensable_reagents)
+	standart_reagents_list = dispensable_reagents
 
 /obj/machinery/chem_dispenser/constructable/attackby(obj/item/I, mob/user)
-	..()
 	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", I))
+		if(hacked) dispensable_reagents = full_reagents_list
+		else dispensable_reagents = standart_reagents_list
+		updateUsrDialog()
 		return
 
 	if(exchange_parts(user, I))
 		return
 
 	if(panel_open)
+		if(is_wire_tool(I))
+			wires.interact(user)
+			return
 		if(iscrowbar(I))
 			if(beaker)
 				var/obj/item/weapon/reagent_containers/glass/B = beaker
@@ -353,10 +392,74 @@
 	accept_glass = 1
 	max_energy = 100
 	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice")
-	premium_reagents = list("thirteenloko","grapesoda")
-	hackable = TRUE
+	premium_reagents = list()
+	premium_reagents_tiers = list(
+		list("thirteenloko"),
+		list("grapesoda"),
+		list("tomatojuice"),
+		list("milk")
+	)
 	msg_hack_enable = "You change the mode from 'McNano' to 'Pizza King'."
 	msg_hack_disable = "You change the mode from 'Pizza King' to 'McNano'."
+
+/obj/machinery/chem_dispenser/soda/atom_init()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/soda_dispenser(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	wires = new(src)
+	RefreshParts()
+
+/obj/machinery/chem_dispenser/soda/RefreshParts()
+	. = ..()
+	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice")
+	standart_reagents_list = dispensable_reagents
+	full_reagents_list = dispensable_reagents + premium_reagents
+
+/obj/machinery/chem_dispenser/soda/attackby(obj/item/B, mob/user)
+	if(default_unfasten_wrench(user, B))
+		power_change()
+		return
+	if(src.beaker)
+		to_chat(user, "Something is already loaded into the machine.")
+		return
+	if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B, /obj/item/weapon/reagent_containers/food))
+		if(!accept_glass && istype(B,/obj/item/weapon/reagent_containers/food))
+			to_chat(user, "<span class='notice'>This machine only accepts beakers</span>")
+			return
+		if(istype(B, /obj/item/weapon/reagent_containers/food/drinks/cans))
+			var/obj/item/weapon/reagent_containers/food/drinks/cans/C = B
+			if(!C.canopened)
+				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
+				return
+		src.beaker =  B
+		user.drop_from_inventory(B, src)
+		to_chat(user, "You set [B] on the machine.")
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+		return
+	if(default_deconstruction_screwdriver(user, "soda_dispenser-o", "soda_dispenser", B))
+		if(hacked) dispensable_reagents = full_reagents_list
+		else dispensable_reagents = standart_reagents_list
+		updateUsrDialog()
+		return
+
+	if(exchange_parts(user, B))
+		return
+
+	if(panel_open)
+		if(is_wire_tool(B))
+			wires.interact(user)
+			return
+		if(iscrowbar(B))
+			if(beaker)
+				var/obj/item/weapon/reagent_containers/glass/Beak = beaker
+				Beak.loc = loc
+				beaker = null
+			default_deconstruction_crowbar(B)
+			return 1
+
 
 /obj/machinery/chem_dispenser/beer
 	icon_state = "booze_dispenser"
@@ -367,10 +470,74 @@
 	max_energy = 100
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead")
-	premium_reagents = list("goldschlager","patron","watermelonjuice","berryjuice")
-	hackable = TRUE
+	premium_reagents = list()
+	premium_reagents_tiers = list(
+		list("goldschlager"),
+		list("patron"),
+		list("watermelonjuice"),
+		list("berryjuice")
+	)
 	msg_hack_enable = "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes."
 	msg_hack_disable = "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes."
+
+/obj/machinery/chem_dispenser/beer/atom_init()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/booze_dispenser(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	wires = new(src)
+	RefreshParts()
+
+/obj/machinery/chem_dispenser/beer/RefreshParts()
+	. = ..()
+	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead")
+	standart_reagents_list = dispensable_reagents
+	full_reagents_list = dispensable_reagents + premium_reagents
+
+/obj/machinery/chem_dispenser/beer/attackby(obj/item/B, mob/user)
+	if(default_unfasten_wrench(user, B))
+		power_change()
+		return
+
+	if(src.beaker)
+		to_chat(user, "Something is already loaded into the machine.")
+		return
+	if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B, /obj/item/weapon/reagent_containers/food))
+		if(!accept_glass && istype(B,/obj/item/weapon/reagent_containers/food))
+			to_chat(user, "<span class='notice'>This machine only accepts beakers</span>")
+			return
+		if(istype(B, /obj/item/weapon/reagent_containers/food/drinks/cans))
+			var/obj/item/weapon/reagent_containers/food/drinks/cans/C = B
+			if(!C.canopened)
+				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
+				return
+		src.beaker =  B
+		user.drop_from_inventory(B, src)
+		to_chat(user, "You set [B] on the machine.")
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+		return
+	if(default_deconstruction_screwdriver(user, "booze_dispenser-o", "booze_dispenser", B))
+		if(hacked) dispensable_reagents = full_reagents_list
+		else dispensable_reagents = standart_reagents_list
+		updateUsrDialog()
+		return
+
+	if(exchange_parts(user, B))
+		return
+
+	if(panel_open)
+		if(is_wire_tool(B))
+			wires.interact(user)
+			return
+		if(iscrowbar(B))
+			if(beaker)
+				var/obj/item/weapon/reagent_containers/glass/Beak = beaker
+				Beak.loc = loc
+				beaker = null
+			default_deconstruction_crowbar(B)
+			return 1
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
