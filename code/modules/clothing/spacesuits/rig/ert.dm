@@ -82,6 +82,7 @@
 	desc = "A helmet worn by engineering members of a NanoTrasen Emergency Response Team. Has orange highlights. Armoured and space ready."
 	icon_state = "rig0-ert_engineer"
 	item_state = "ert_engineer_head"
+	unacidable = TRUE
 	siemens_coefficient = 0
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 75)
 
