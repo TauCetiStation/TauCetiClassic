@@ -18,24 +18,62 @@
 	var/recharged = 0
 	var/recharge_delay = 15
 	var/hackedcheck = FALSE
-	var/hackable = FALSE
+	var/hackable = TRUE
 	var/msg_hack_enable = ""
 	var/msg_hack_disable = ""
-	var/list/dispensable_reagents = list(
+	var/list/dispensable_reagents = list(),
+	var/list/dispensable_reagent_tiers = list(
+		list(
 		"hydrogen", "lithium", "carbon", "nitrogen", "oxygen", "fluorine",
 		"sodium", "aluminum", "silicon", "phosphorus", "sulfur", "chlorine", "potassium", "iron",
-		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten"
+		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten"),
+		list("anti_toxin","inaprovaline"),
+		list("ammonia","diethylamine"),
+		list("bicaridine","kelotane","spaceacillin", "tricordrazine")
+
+	),
+	var/list/premium_reagents = list(
+	list("toxin"),
+	list("fuel"),
+	list("orangejuice", "limejuice", "tomatojuice", "cream"),
+	list("mindbreaker")
+
 	)
-	var/list/premium_reagents = list()
 
 /obj/machinery/chem_dispenser/atom_init()
 	. = ..()
-	recharge()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/chem_dispenser(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	RefreshParts()
+//	recharge()
+//	dispensable_reagents = sortList(dispensable_reagents)
+
+/obj/machinery/chem_dispenser/RefreshParts()
+	var/time = 0
+	var/temp_energy = 0
+	var/i
+	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+		temp_energy += M.rating
+	temp_energy -= 2
+	max_energy = 100 + temp_energy * 25  //max energy = (bin1.rating + bin2.rating - 1) * 5, 5 on lowest 25 on highest
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		time += C.rating
+	recharge_delay -= time   //delay between recharges, double the usual time on lowest 50% less than usual on highest
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		for(i=1, i<=M.rating, i++)
+			dispensable_reagents |= dispensable_reagent_tiers[i]
 	dispensable_reagents = sortList(dispensable_reagents)
+
 
 /obj/machinery/chem_dispenser/Destroy()
 	QDEL_NULL(beaker)
 	return ..()
+
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
@@ -192,6 +230,19 @@
 		to_chat(user, "You set [B] on the machine.")
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		return
+	if(default_deconstruction_screwdriver(user, "dispenser", "dispenser", B))
+		return
+	if(exchange_parts(user, B))
+		return
+	if(panel_open)
+		if(iscrowbar(B))
+			if(beaker)
+				var/obj/item/weapon/reagent_containers/glass/Beak = beaker
+				Beak.loc = loc
+				beaker = null
+			default_deconstruction_crowbar(B)
+			return 1
+
 
 /obj/machinery/chem_dispenser/old/atom_init()
 	. = ..()
@@ -208,7 +259,7 @@
 	amount = 5
 	recharge_delay = 30
 	dispensable_reagents = list()
-	var/list/dispensable_reagent_tiers = list(
+	dispensable_reagent_tiers = list(
 		list(
 				"hydrogen",
 				"oxygen",
