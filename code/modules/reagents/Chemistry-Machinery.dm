@@ -1,6 +1,8 @@
 #define MAX_PILL_SPRITE 24
 #define MAX_BOTTLE_SPRITE 3
 
+/*-------Если что, стукать @KandJX'a-------*/
+
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	density = TRUE
