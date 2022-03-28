@@ -43,6 +43,7 @@
 	desc = "A helmet worn by the commander of a NanoTrasen Emergency Response Team. Has blue highlights. Armoured and space ready."
 	icon_state = "rig0-ert_commander"
 	item_state = "ert_commander_head"
+	unacidable = 1
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 
 /obj/item/clothing/suit/space/rig/ert/commander
@@ -50,6 +51,7 @@
 	desc = "A suit worn by the commander of a NanoTrasen Emergency Response Team. Has blue highlights. Armoured, space ready, and fire resistant."
 	icon_state = "ert_commander"
 	item_state = "ert_commander"
+	unacidable = 1
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 55, bomb = 50, bio = 100, rad = 60)
 	breach_threshold = 28
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/mounted, /obj/item/rig_module/grenade_launcher/flashbang, /obj/item/rig_module/cooling_unit)
@@ -60,6 +62,7 @@
 	desc = "A helmet worn by security members of a NanoTrasen Emergency Response Team. Has red highlights. Armoured and space ready."
 	icon_state = "rig0-ert_security"
 	item_state = "ert_security_head"
+	unacidable = 1
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
 
 /obj/item/clothing/suit/space/rig/ert/security
@@ -67,6 +70,7 @@
 	desc = "A suit worn by security members of a NanoTrasen Emergency Response Team. Has red highlights. Armoured, space ready, and fire resistant."
 	icon_state = "ert_security"
 	item_state = "ert_security"
+	unacidable = 1
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
 	breach_threshold = 25
 	slowdown = 0.7
@@ -87,6 +91,7 @@
 	icon_state = "ert_engineer"
 	item_state = "ert_engineer"
 	siemens_coefficient = 0
+	unacidable = 1
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 75)
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/device/rcd, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit)
 
@@ -96,6 +101,7 @@
 	desc = "A helmet worn by medical members of a NanoTrasen Emergency Response Team. Has white highlights. Armoured and space ready."
 	icon_state = "rig0-ert_medical"
 	item_state = "ert_medical_head"
+	unacidable = 1
 
 /obj/item/clothing/suit/space/rig/ert/medical
 	name = "emergency response team medical suit"
@@ -103,6 +109,7 @@
 	icon_state = "ert_medical"
 	item_state = "ert_medical"
 	slowdown = 0.4
+	unacidable = 1
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/device/healthscanner, /obj/item/rig_module/chem_dispenser/medical/ert)
 
 /obj/item/clothing/head/helmet/space/rig/ert/stealth
@@ -110,6 +117,7 @@
 	desc = "A helmet worn by stealth members of a NanoTrasen Emergency Response Team."
 	icon_state = "rig0-ert_stealth"
 	item_state = "ert_stealth_head"
+	unacidable = 1
 	armor = list(melee = 30, bullet = 15, laser = 20,energy = 5, bomb = 20, bio = 100, rad = 100)
 	light_color = "#c388eb"
 	action_button_name = "Toggle Helmet Visor Light"
@@ -119,6 +127,7 @@
 	desc = "A suit worn by stealth members of a NanoTrasen Emergency Response Team"
 	icon_state = "ert_stealth"
 	item_state = "ert_stealth"
+	unacidable = 1
 	armor = list(melee = 40, bullet = 20, laser = 30,energy = 10, bomb = 30, bio = 100, rad = 100)
 	slowdown = 0.3
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/stealth, /obj/item/rig_module/nuclear_generator,/obj/item/rig_module/chem_dispenser/combat)
