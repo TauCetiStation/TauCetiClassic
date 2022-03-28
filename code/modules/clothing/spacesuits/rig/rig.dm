@@ -1098,7 +1098,6 @@
 	name = "advanced science hardsuit helmet"
 	icon_state = "rig0-rd"
 	item_state = "rd_helm"
-	unacidable = 1
 	rig_variant = "rd"
 	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 55, bio = 100, rad = 70)
 
@@ -1121,7 +1120,6 @@
 	icon_state = "rig-rd"
 	name = "advanced science hardsuit"
 	item_state = "rd_hardsuit"
-	unacidable = 1
 	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 55, bio = 100, rad = 70)
 	max_mounted_devices = 8
 	slowdown = 0.2
