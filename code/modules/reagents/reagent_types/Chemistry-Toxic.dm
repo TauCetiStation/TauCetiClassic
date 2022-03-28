@@ -496,6 +496,24 @@
 					qdel(H.glasses)
 					H.update_inv_glasses()
 
+			if(H.wear_suit)
+				if(prob(meltprob) && !H.wear_suit.unacidable)
+					to_chat(H, "<span class='danger'>Your suit melts away but protects you from the acid!</span>")
+					qdel(H.wear_suit)
+					H.update_inv_wear_suit()
+				else
+					to_chat(H, "<span class='warning'>Your suit protects you from the acid.</span>")
+				return
+
+			if(H.w_uniform)
+				if(prob(meltprob) && !H.w_uniform.unacidable)
+					to_chat(H, "<span class='danger'>Your undersuit melts away but protects you from the acid!</span>")
+					qdel(H.w_uniform)
+					H.update_inv_w_uniform()
+				else
+					to_chat(H, "<span class='warning'>Your undersuit protects you from the acid.</span>")
+				return
+
 		else if(ismonkey(M))
 			var/mob/living/carbon/monkey/MK = M
 			if(MK.wear_mask)
