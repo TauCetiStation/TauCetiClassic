@@ -485,4 +485,3 @@
 
 /obj/item/weapon/storage/fancy/atmos/update_icon()
 	icon_state = "[initial(icon_state)][contents.len]"
-	return
