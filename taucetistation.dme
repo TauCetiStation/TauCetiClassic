@@ -63,6 +63,7 @@
 #include "code\__DEFINES\preferences.dm"
 #include "code\__DEFINES\pronouns.dm"
 #include "code\__DEFINES\qdel.dm"
+#include "code\__DEFINES\qualities.dm"
 #include "code\__DEFINES\quirks.dm"
 #include "code\__DEFINES\religion.dm"
 #include "code\__DEFINES\research.dm"

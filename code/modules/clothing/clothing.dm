@@ -25,32 +25,6 @@
 
 	var/flashbang_protection = FALSE
 
-/*
-	This is for the Vox among you.
-	Finds whether a sprite for this piece of clothing for a Vox exists, and if it does
-	allows Vox to wear this.
-*/
-var/global/list/specie_sprite_sheet_cache = list()
-
-/obj/item/clothing/proc/get_sprite_sheet_icon_list(specie, overwrite_slot = null)
-	// Return list of icon states of current spirte_sheet_slot or null
-	var/slot = sprite_sheet_slot
-	if(overwrite_slot)
-		slot = overwrite_slot
-
-	var/sprite_sheet_cache_key = "[specie]|[slot]"
-	if(global.specie_sprite_sheet_cache[sprite_sheet_cache_key])
-		return global.specie_sprite_sheet_cache[sprite_sheet_cache_key]
-
-	var/datum/species/S = global.all_species[specie]
-
-	var/i_path = S.sprite_sheets[slot]
-	if(!i_path)
-		return null
-
-	global.specie_sprite_sheet_cache[sprite_sheet_cache_key] = icon_states(i_path)
-	return global.specie_sprite_sheet_cache[sprite_sheet_cache_key]
-
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)
 
@@ -691,7 +665,7 @@ BLIND     // can't see anything
 
 	if(copytext(item_state,-2) != "_d")
 		basecolor = item_state
-	if((basecolor + "_d_s") in icon_states('icons/mob/uniform.dmi'))
+	if((basecolor + "_d") in icon_states('icons/mob/uniform.dmi'))
 		item_state = item_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
 		usr.update_inv_w_uniform()
 	else
