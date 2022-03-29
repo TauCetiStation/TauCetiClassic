@@ -36,9 +36,9 @@ RCD
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	RCD_deconstruct_effect = image('icons/effects/effects.dmi', "disappear")
+	RCD_deconstruct_effect = image('icons/effects/effects.dmi', "RCD_disappear")
 	RCD_deconstruct_effect.plane = ABOVE_LIGHTING_PLANE
-	RCD_build_effect = image('icons/effects/effects.dmi', "appear")
+	RCD_build_effect = image('icons/effects/effects.dmi', "RCD_appear")
 	RCD_build_effect.plane = ABOVE_LIGHTING_PLANE
 
 /obj/item/weapon/rcd/Destroy()
@@ -60,6 +60,17 @@ RCD
 
 	else
 		return ..()
+
+/obj/item/weapon/rcd/proc/can_use(atom/target, mob/user)
+	if(disabled && !isrobot(user))
+		return FALSE
+	if(istype(target, /area/shuttle))
+		return FALSE
+	if(!(istype(target, /turf) || istype(target, /obj/machinery/door/airlock) || istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/structure/window) || istype(target, /obj/machinery/door/window)))
+		return FALSE
+	if(istype(target, ))
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode
@@ -88,40 +99,30 @@ RCD
 			to_chat(user, "<span class='notice'>Changed mode to 'Floor & Walls'</span>")
 			if(prob(20))
 				spark_system.start()
-/*
-/obj/item/weapon/rcd/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, act = 0,quality = null, datum/callback/extra_checks = null)
-	if(act == 1)		//building
-		target.add_overlay(RCD_build_effect)
-		INVOKE_ASYNC(src, .proc/start_welding, target)
-		var/datum/callback/checks  = CALLBACK(src, .proc/check_active_and_extra, extra_checks)
-		. = ..(target, user, delay, amount, volume, extra_checks = checks)
-		stop_welding()
-		target.cut_overlay(RCD_build_effect)
 
-	if(act == 2)		/deconstructing
-		target.add_overlay(RCD_deconstruct_effect)
-		INVOKE_ASYNC(src, .proc/start_welding, target)
-		var/datum/callback/checks  = CALLBACK(src, .proc/check_active_and_extra, extra_checks)
-		. = ..(target, user, delay, amount, volume, extra_checks = checks)
-		stop_welding()
-		target.cut_overlay(RCD_deconstruct_effect)
-*/
+/obj/item/weapon/rcd/proc/add_effect(atom/target, act = null)
+	if(!isnull(act))
+		if(act)		//building
+			target.add_overlay(RCD_build_effect)
+		else		//deconstructing
+			target.add_overlay(RCD_deconstruct_effect)
+
+/obj/item/weapon/rcd/proc/remove_effect(atom/target, act = null)
+	if(!isnull(act))
+		if(act)
+			target.cut_overlay(RCD_build_effect)
+		else
+			target.cut_overlay(RCD_deconstruct_effect)
+
 /obj/item/weapon/rcd/proc/activate()
 	playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
-
 /obj/item/weapon/rcd/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
-		return
-	if(disabled && !isrobot(user))
-		return 0
-	if(istype(target, /area/shuttle))
-		return 0
-	if(!(istype(target, /turf) || istype(target, /obj/machinery/door/airlock) || istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/structure/window) || istype(target, /obj/machinery/door/window)))
-		return 0
-	if(istype(target, ))
-		return 0
-
+		return FALSE
+	if(!can_use(target, user))
+		return FALSE
+	var/build_act = TRUE
 	switch(mode)
 		if(1)
 			if(isenvironmentturf(target))
@@ -130,130 +131,130 @@ RCD
 					to_chat(user, "Building Floor...")
 					activate()
 					T.ChangeTurf(/turf/simulated/floor/plating/airless)
-					return 1
-				return 0
 
 			if(istype(target, /turf/simulated/floor))
 				for(var/atom/AT in target)
 					if(AT.density)
 						to_chat(user, "<span class='warning'>You can't build wall here.</span>")
-						return 0
+						return FALSE
 				var/turf/simulated/floor/F = target
 				if(checkResource(3, user))
 					to_chat(user, "Building Wall ...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, 20, target = F))
+					add_effect(F, build_act)
+					if(do_after(user, 50, target = F))
 						if(!useResource(3, user))
-							return 0
+							return FALSE
 						activate()
+						remove_effect(F, build_act)
 						F.ChangeTurf(/turf/simulated/wall)
-						return 1
-				return 0
+						return TRUE
+					remove_effect(F, build_act)
+				return FALSE
 
 		if(2)
 			if(istype(target, /turf/simulated/floor))
 				for(var/atom/AT in target)
 					if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
 						to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
-						return 0
+						return FALSE
 				if(checkResource(10, user) && !user.is_busy())
 					to_chat(user, "Building Airlock...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+					add_effect(target, build_act)
 					if(do_after(user, 50, target = target))
 						if(!useResource(10, user))
-							return 0
+							return FALSE
 						activate()
+						remove_effect(target, build_act)
 						new /obj/machinery/door/airlock(target)
-						return 1
-					return 0
-				return 0
+						return TRUE
+					remove_effect(target, build_act)
+					return FALSE
+				return FALSE
 
 		if(3)
 			if(istype(target, /turf/simulated/floor))
 				for(var/atom/AT in target)
 					if(AT.density || istype(AT, /obj/machinery/door/firedoor))
 						to_chat(user, "<span class='warning'>You can't build emergency shutter here.</span>")
-						return 0
+						return FALSE
 				if(checkResource(10, user) && !user.is_busy())
 					to_chat(user, "Building Emergency Shutter...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+					add_effect(target, build_act)
 					if(do_after(user, 50, target = target))
 						if(!useResource(10, user))
-							return 0
+							return FALSE
 						activate()
+						remove_effect(target, build_act)
 						new /obj/machinery/door/firedoor(target)
-						return 1
-					return 0
-				return 0
+						return TRUE
+					remove_effect(target, build_act)
+					return FALSE
+				return FALSE
 
 		if(4)
-			if(istype(target, /turf/simulated/wall))
-				var/turf/simulated/wall/W = target
-				if(istype(W, /turf/simulated/wall/r_wall) && !canRwall)
-					return 0
-				if(checkResource(5, user) && !user.is_busy())
+			build_act = FALSE
+			if(checkResource(5, user))
+				if(istype(target, /turf/simulated/wall))
+					var/turf/simulated/wall/W = target
+					if(istype(W, /turf/simulated/wall/r_wall) && !canRwall)
+						return FALSE
 					to_chat(user, "Deconstructing Wall...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, 40, target = W))
+					add_effect(W, build_act)
+					if(do_after(user, 50, target = W))
 						if(!useResource(5, user))
-							return 0
+							remove_effect(W, build_act)
+							return FALSE
 						activate()
+						remove_effect(W, build_act)
 						W.ChangeTurf(/turf/simulated/floor/plating/airless)
-						return 1
-				return 0
+						return TRUE
+					remove_effect(W, build_act)
 
-			if(istype(target, /obj/structure/window))
-				if(checkResource(10, user))
-					to_chat(user, "Deconstructing Window...")
-					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, 50, target = target))
-						if(!useResource(10, user))
-							return 0
-						activate()
-						qdel(target)
-						return 1
-				return 0
-
-			if(istype(target, /obj/machinery/door/window))
-				if(checkResource(10, user))
-					to_chat(user, "Deconstructing Interior Door...")
-					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, 50, target = target))
-						if(!useResource(10, user))
-							return 0
-						activate()
-						qdel(target)
-						return 1
-				return 0
-
-			if(istype(target, /turf/simulated/floor))
-				var/turf/simulated/floor/F = target
-				if(checkResource(5, user) && !user.is_busy())
+				else if(istype(target, /turf/simulated/floor))
+					var/turf/simulated/floor/F = target
 					to_chat(user, "Deconstructing Floor...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+					add_effect(F, build_act)
 					if(do_after(user, 50, target = F))
 						if(!useResource(5, user))
-							return 0
+							remove_effect(F, build_act)
+							return FALSE
 						activate()
+						remove_effect(F, build_act)
 						F.BreakToBase()
-						return 1
-				return 0
+						return TRUE
+					remove_effect(F, build_act)
 
-			if(istype(target, /obj/machinery/door/airlock) || istype(target, /obj/machinery/door/firedoor))
-				if(checkResource(10, user))
-					to_chat(user, "Deconstructing Airlock...")
+				else
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+					add_effect(target, build_act)
+					if(istype(target, /obj/structure/window))
+						to_chat(user, "Deconstructing Window...")
+					if(istype(target, /obj/machinery/door/window))
+						to_chat(user, "Deconstructing Interior Door...")
+					if(istype(target, /obj/machinery/door/airlock))
+						to_chat(user, "Deconstructing Airlock...")
+					if(istype(target, /obj/machinery/door/firedoor))
+						to_chat(user, "Deconstructing Emergency Shutter...")
 					if(do_after(user, 50, target = target))
-						if(!useResource(10, user))
-							return 0
+						if(!useResource(5, user))
+							remove_effect(target, build_act)
+							return FALSE
 						activate()
+						remove_effect(target, build_act)
 						qdel(target)
-						return 1
-				return 0
-			return 0
+						return TRUE
+					remove_effect(target, build_act)
+
+				return FALSE
+			return FALSE
 		else
 			to_chat(user, "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin.")
-			return 0
+			return FALSE
 
 /obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
