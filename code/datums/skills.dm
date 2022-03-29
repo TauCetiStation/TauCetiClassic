@@ -40,8 +40,8 @@
 	update_available()
 
 /datum/skills/proc/transfer_skills(datum/mind/target)
-	LAZYADD(available_skillsets, target.skills.available_skillsets)
-	update_available()
+	for(var/datum/skillset/s as anything in target.skills.available_skillsets)
+		add_available_skillset(s)
 
 /datum/skills/proc/choose_value(skill_name,value)
 	var/datum/skill/skill = active.get_skill(skill_name)
