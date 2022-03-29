@@ -86,10 +86,9 @@
 /datum/quality/quirkieish/diggydiggyhole/add_effect(mob/living/carbon/human/H)
 	ADD_TRAIT(H, TRAIT_DWARF, QUALITY_TRAIT)
 	H.f_style = pick("Dwarf Beard", "Very Long Beard")
-	H.update_hair()
-	H.mutations.Add(SMALLSIZE)
-	H.update_mutations()
 
+	H.mutations.Add(SMALLSIZE)
+	H.regenerate_icons()
 
 	H.add_language(LANGUAGE_SHKIONDIONIOVIOION)
 
