@@ -464,7 +464,7 @@
 	return
 
 /obj/item/weapon/storage/fancy/atmos
-	name = "box of inflatable barrier"
+	name = "box of inflatable barriers"
 	desc = "Contains inflatable walls and doors."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "atmos_inflatable"
