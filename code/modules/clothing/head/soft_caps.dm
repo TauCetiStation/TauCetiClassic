@@ -3,7 +3,6 @@
 	desc = "It's a baseball hat in a tasteless yellow color."
 	icon_state = "cargosoft"
 	flags = HEADCOVERSEYES
-	item_state = "helmet"
 	var/flipped = 0
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
@@ -13,23 +12,26 @@
 	var/cap_color
 
 /obj/item/clothing/head/soft/dropped()
-	src.icon_state = "[cap_color]soft"
-	src.flipped=0
+	item_state = "[cap_color]soft"
+	flipped=0
 	..()
 
 /obj/item/clothing/head/soft/verb/flip()
 	set category = "Object"
 	set name = "Flip cap"
 	set src in usr
-	if(!usr.incapacitated())
-		src.flipped = !src.flipped
-		if(src.flipped)
-			icon_state = "[cap_color]soft_flipped"
-			to_chat(usr, "You flip the hat backwards.")
-		else
-			icon_state = "[cap_color]soft"
-			to_chat(usr, "You flip the hat back in normal position.")
-		usr.update_inv_head()	//so our mob-overlays update
+
+	if(usr.incapacitated())
+		return
+
+	flipped = !flipped
+	if(flipped)
+		item_state = "[cap_color]soft_flipped"
+		to_chat(usr, "You flip the hat backwards.")
+	else
+		item_state = "[cap_color]soft"
+		to_chat(usr, "You flip the hat back in normal position.")
+	update_inv_mob()
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"
