@@ -262,13 +262,14 @@
 		body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
 		body += "<option value='?_src_=vars;addlanguage=\ref[D]'>Add Language</option>"
 		body += "<option value='?_src_=vars;remlanguage=\ref[D]'>Remove Language</option>"
+		if(ishuman(D) || istype(D, /mob/dead/new_player))
+			body += "<option value='?_src_=vars;give_quality=\ref[D]'>Give Quality</option>"
 
 		body += "<option value='?_src_=vars;addverb=\ref[D]'>Add Verb</option>"
 		body += "<option value='?_src_=vars;remverb=\ref[D]'>Remove Verb</option>"
 		body += "<option value='?_src_=vars;setckey=\ref[D]'>Set Client</option>"
 		if(ishuman(D))
 			body += "<option value>---</option>"
-			body += "<option value='?_src_=vars;give_quality=\ref[D]'>Give Quality</option>"
 			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
 			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
 			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
@@ -885,15 +886,23 @@ body
 		if(!check_rights(R_VAREDIT))
 			return
 
-		var/mob/living/carbon/human/H = locate(href_list["give_quality"])
-		if(!istype(H))
-			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+		var/mob/M = locate(href_list["give_quality"])
+
+		var/quality_name = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.qualities_by_name
+		if(!quality_name)
 			return
 
-		var/quality_type = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.qualities_pool
-		if(!quality_type)
+		if(QDELETED(M))
 			return
-		SSqualities.force_give_quality(H, quality_type, usr)
+
+		var/datum/quality/Q = SSqualities.qualities_by_name[quality_name]
+
+		if(ishuman(M))
+			SSqualities.force_give_quality(M, Q, usr)
+		else if(istype(M, /mob/dead/new_player) && M.client)
+			SSqualities.force_register_client(M.client, Q)
+		else
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 
 	else if(href_list["addlanguage"])
 		if(!check_rights(R_VAREDIT))
