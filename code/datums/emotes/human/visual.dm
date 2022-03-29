@@ -273,7 +273,7 @@
 	message_type = SHOWMSG_VISUAL
 
 	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
+		EMOTE_STATE(is_stat_or_not_intentional, CONSCIOUS),
 	)
 
 /datum/emote/deathgasp/get_emote_message_3p(mob/living/carbon/human/user)

@@ -146,7 +146,6 @@
 /obj/item/projectile/beam/rails
 	name = "rails beam"
 	icon_state = "omnilaser"
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
 	damage = 50

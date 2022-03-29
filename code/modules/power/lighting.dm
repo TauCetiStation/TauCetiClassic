@@ -688,6 +688,7 @@
 	sleep(1)
 	qdel(src)
 
+
 // the light item
 // can be tube or bulb subtypes
 // will fit into empty /obj/machinery/light of the corresponding type
