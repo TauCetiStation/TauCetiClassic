@@ -156,13 +156,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	else if(icon_override)
 		icon_path = icon_override
 	else if(S.sprite_sheets[sprite_sheet_slot])
-		if (istype(src, /obj/item/clothing) && H.species)
-			var/obj/item/clothing/C = src
-			var/list/avaiable_icon_states = C.get_sprite_sheet_icon_list(H.species.name, sprite_sheet_slot)
-			if("[t_state][icon_state_appendix]" in avaiable_icon_states)
-				icon_path = S.sprite_sheets[sprite_sheet_slot]
-		else
-			icon_path = S.sprite_sheets[sprite_sheet_slot]
+		icon_path = S.sprite_sheets[sprite_sheet_slot]
 
 	var/image/I = image(icon = icon_path, icon_state = "[t_state][icon_state_appendix]", layer = layer)
 	I.color = color
