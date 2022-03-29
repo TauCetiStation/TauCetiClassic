@@ -24,9 +24,9 @@
 	var/list/dispensable_reagents = list()
 	var/list/dispensable_reagent_tiers = list(
 		list(
-		"hydrogen", "lithium", "carbon", "nitrogen", "oxygen", "fluorine",
-		"sodium", "aluminum", "silicon", "phosphorus", "sulfur", "chlorine", "potassium", "iron",
-		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten"),
+		"aluminum","carbon","chlorine","copper","ethanol","fluorine","hydrogen","iron","lithium","mercury",
+		"nitrogen","oxygen","phosphorus","potassium","radium","sacid","silicon","sodium","sugar","sulfur",
+		"tungsten","water"),
 		list("anti_toxin","inaprovaline"),
 		list("ammonia","diethylamine"),
 		list("bicaridine","kelotane","spaceacillin", "tricordrazine")
@@ -49,7 +49,7 @@
 
 /obj/machinery/chem_dispenser/atom_init()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/chem_dispenser(null)
+	component_parts += new /obj/item/weapon/circuitboard/chem_dispenser_5000(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
@@ -75,7 +75,7 @@
 	for(var/obj/item/weapon/stock_parts/scanning_module/M in component_parts)
 		for(i=1, i<=M.rating, i++)
 			dispensable_reagents |= dispensable_reagent_tiers[i]
-	dispensable_reagents = sortList(dispensable_reagents)
+//	dispensable_reagents = sortList(dispensable_reagents)
 	standart_reagents_list = dispensable_reagents
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		for(i=1, i<=M.rating, i++) premium_reagents |= premium_reagents_tiers[i]
