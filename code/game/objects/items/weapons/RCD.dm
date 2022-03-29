@@ -24,8 +24,11 @@ RCD
 	var/mode = 1
 	var/canRwall = 0
 	var/disabled = 0
-	var/image/RCD_deconstruct_effect    // RCD overlay for targets
+
+	// RCD overlay for targets
 	var/image/RCD_build_effect
+	var/image/RCD_deconstruct_effect
+
 	action_button_name = "Switch RCD"
 
 
@@ -36,10 +39,8 @@ RCD
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	RCD_deconstruct_effect = image('icons/effects/effects.dmi', "RCD_disappear")
-	RCD_deconstruct_effect.plane = ABOVE_LIGHTING_PLANE
 	RCD_build_effect = image('icons/effects/effects.dmi', "RCD_appear")
-	RCD_build_effect.plane = ABOVE_LIGHTING_PLANE
+	RCD_deconstruct_effect = image('icons/effects/effects.dmi', "RCD_disappear")
 
 /obj/item/weapon/rcd/Destroy()
 	rcd_list -= src
@@ -61,14 +62,14 @@ RCD
 	else
 		return ..()
 
-/obj/item/weapon/rcd/proc/can_use(atom/target, mob/user)
+/obj/item/weapon/rcd/proc/can_use(atom/target, mob/living/user)
 	if(disabled && !isrobot(user))
 		return FALSE
 	if(istype(target, /area/shuttle))
 		return FALSE
-	if(!(istype(target, /turf) || istype(target, /obj/machinery/door/airlock) || istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/structure/window) || istype(target, /obj/machinery/door/window)))
+	if(user.is_busy())
 		return FALSE
-	if(istype(target, ))
+	if(!(istype(target, /turf) || istype(target, /obj/machinery/door/airlock) || istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/structure/window) || istype(target, /obj/machinery/door/window)))
 		return FALSE
 	return TRUE
 
@@ -100,24 +101,37 @@ RCD
 			if(prob(20))
 				spark_system.start()
 
+/obj/item/weapon/rcd/proc/select_effect_plane(atom/target)
+	if(istype(target, /turf))
+		src.RCD_deconstruct_effect.plane = RCD_EFFECT_FOR_TURF_LAYER
+	else if(istype(target, /obj/machinery/door/firedoor))
+		src.RCD_deconstruct_effect.plane = RCD_EFFECT_FOR_FIREDOOR_LAYER
+	else if(istype(target, /obj/machinery/door))
+		src.RCD_deconstruct_effect.plane = RCD_EFFECT_FOR_DOOR_LAYER
+	else
+		src.RCD_deconstruct_effect.plane = ABOVE_WINDOW_LAYER
+
 /obj/item/weapon/rcd/proc/add_effect(atom/target, act = null)
 	if(!isnull(act))
 		if(act)		//building
 			target.add_overlay(RCD_build_effect)
 		else		//deconstructing
+			select_effect_plane(target)
 			target.add_overlay(RCD_deconstruct_effect)
 
 /obj/item/weapon/rcd/proc/remove_effect(atom/target, act = null)
 	if(!isnull(act))
+		select_effect_plane(target)
 		if(act)
 			target.cut_overlay(RCD_build_effect)
 		else
+			select_effect_plane(target)
 			target.cut_overlay(RCD_deconstruct_effect)
 
 /obj/item/weapon/rcd/proc/activate()
 	playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
-/obj/item/weapon/rcd/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/weapon/rcd/afterattack(atom/target, mob/living/user, proximity, params)
 	if(!proximity)
 		return FALSE
 	if(!can_use(target, user))
@@ -158,7 +172,7 @@ RCD
 					if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
 						to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
 						return FALSE
-				if(checkResource(10, user) && !user.is_busy())
+				if(checkResource(10, user))
 					to_chat(user, "Building Airlock...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 					add_effect(target, build_act)
@@ -179,12 +193,12 @@ RCD
 					if(AT.density || istype(AT, /obj/machinery/door/firedoor))
 						to_chat(user, "<span class='warning'>You can't build emergency shutter here.</span>")
 						return FALSE
-				if(checkResource(10, user) && !user.is_busy())
+				if(checkResource(5, user))
 					to_chat(user, "Building Emergency Shutter...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 					add_effect(target, build_act)
 					if(do_after(user, 50, target = target))
-						if(!useResource(10, user))
+						if(!useResource(5, user))
 							return FALSE
 						activate()
 						remove_effect(target, build_act)
