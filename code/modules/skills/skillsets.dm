@@ -160,7 +160,6 @@
 
 /datum/skillset/forensic
 	initial_skills = list(
-		/datum/skill/police/trained,
 		/datum/skill/surgery/trained,
 		/datum/skill/medical/pro,
 		/datum/skill/research/novice,
