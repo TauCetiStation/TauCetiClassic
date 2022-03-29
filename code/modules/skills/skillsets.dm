@@ -92,7 +92,6 @@
 		/datum/skill/engineering/master,
 		/datum/skill/atmospherics/master,
 		/datum/skill/civ_mech/master,
-		/datum/skill/police/trained
 	)
 
 /datum/skillset/engineer
