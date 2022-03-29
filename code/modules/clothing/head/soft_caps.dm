@@ -12,7 +12,7 @@
 	var/cap_color
 
 /obj/item/clothing/head/soft/dropped()
-	item_state = "[cap_color]soft"
+	icon_state = "[cap_color]soft"
 	flipped=0
 	..()
 
@@ -26,10 +26,10 @@
 
 	flipped = !flipped
 	if(flipped)
-		item_state = "[cap_color]soft_flipped"
+		icon_state = "[cap_color]soft_flipped"
 		to_chat(usr, "You flip the hat backwards.")
 	else
-		item_state = "[cap_color]soft"
+		icon_state = "[cap_color]soft"
 		to_chat(usr, "You flip the hat back in normal position.")
 	update_inv_mob()
 
