@@ -35,6 +35,8 @@
 	icon = 'icons/obj/inflatable.dmi'
 	icon_state = "wall"
 
+	var/inflatable_type = /obj/item/inflatable
+	var/torn_type = /obj/item/inflatable/torn
 	var/health = 50.0
 	var/deflate_time = 50
 
@@ -135,14 +137,14 @@
 	playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER)
 	if(violent)
 		visible_message("[src] rapidly deflates!")
-		var/obj/item/inflatable/torn/R = new /obj/item/inflatable/torn(loc)
+		var/obj/item/inflatable/torn/R = new torn_type(loc)
 		transfer_fingerprints_to(R)
 		qdel(src)
 	else
 		//user << "<span class='notice'>You slowly deflate the inflatable wall.</span>"
 		visible_message("[src] slowly deflates.")
 		spawn(deflate_time)
-			var/obj/item/inflatable/R = new /obj/item/inflatable(loc)
+			var/obj/item/inflatable/R = new inflatable_type(loc)
 			transfer_fingerprints_to(R)
 			qdel(src)
 
@@ -168,6 +170,8 @@
 	anchored = TRUE
 	opacity = 0
 
+	torn_type = /obj/item/inflatable/door/torn
+	inflatable_type = /obj/item/inflatable/door
 	icon = 'icons/obj/inflatable.dmi'
 	icon_state = "door_closed"
 	var/opening_state = "door_opening"
@@ -258,14 +262,14 @@
 	playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER)
 	if(violent)
 		visible_message("[src] rapidly deflates!")
-		var/obj/item/inflatable/door/torn/R = new /obj/item/inflatable/door/torn(loc)
+		var/obj/item/inflatable/door/torn/R = new torn_type(loc)
 		transfer_fingerprints_to(R)
 		qdel(src)
 	else
 		//user << "<span class='notice'>You slowly deflate the inflatable wall.</span>"
 		visible_message("[src] slowly deflates.")
-		spawn(50)
-			var/obj/item/inflatable/door/R = new /obj/item/inflatable/door(loc)
+		spawn(deflate_time)
+			var/obj/item/inflatable/door/R = new inflatable_type(loc)
 			transfer_fingerprints_to(R)
 			qdel(src)
 
@@ -314,6 +318,8 @@
 	icon_state = "wall_atmo"
 	health = 80.0
 	deflate_time = 30
+	torn_type = /obj/item/inflatable/torn/atmos
+	inflatable_type = /obj/item/inflatable/atmos
 
 /obj/item/inflatable/door/atmos
 	name = "atmostech's inflatable door"
@@ -327,6 +333,8 @@
 	closing_state = "door_atmo_closing"
 	open_state = "door_atmo_open"
 	closed_state = "door_atmo_closed"
+	torn_type = /obj/item/inflatable/door/torn/atmos
+	inflatable_type = /obj/item/inflatable/door/atmos
 	health = 80.0
 	deflate_time = 30
 
@@ -335,24 +343,3 @@
 
 /obj/item/inflatable/door/torn/atmos
 	icon_state = "folded_door_atmo_torn"
-
-/obj/item/weapon/storage/fancy/atmos
-	name = "box of inflatable barrier"
-	desc = "Contains inflatable walls and doors."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "atmos_inflatable"
-	w_class = SIZE_SMALL
-	storage_slots = 5
-	can_hold = list(/obj/item/inflatable/atmos, /obj/item/inflatable/door/atmos)
-
-/obj/item/weapon/storage/fancy/atmos/atom_init()
-	. = ..()
-	for(var/i in 1 to 3)
-		new /obj/item/inflatable/atmos(src)
-	for(var/i in 1 to 2)
-		new /obj/item/inflatable/door/atmos(src)
-	update_icon()
-
-/obj/item/weapon/storage/fancy/atmos/update_icon()
-	cut_overlays()
-	add_overlay("folded-[/obj/item/inflatable in contents]")

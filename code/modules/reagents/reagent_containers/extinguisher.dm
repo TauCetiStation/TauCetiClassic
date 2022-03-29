@@ -110,3 +110,17 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	random_overlay = FALSE
 	reagent_inside = "champagne"
 	FE_type = "golden"
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/atmo
+	name = "atmostech's fire extinguisher"
+	desc = "Compact fire extinguisher."
+	icon_state = "fire_extinguisher_atmo"
+	item_state = "fire_extinguisher_atmo"
+	throwforce = 10
+	force = 8
+	w_class = SIZE_TINY
+
+	volume = 300
+
+	random_overlay = FALSE
+	FE_type = "mini"

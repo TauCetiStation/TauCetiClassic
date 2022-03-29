@@ -462,3 +462,27 @@
 		candy_overlays += image('icons/obj/valentines.dmi', "[candy_color][candy_position]")
 	add_overlay(candy_overlays)
 	return
+
+/obj/item/weapon/storage/fancy/atmos
+	name = "box of inflatable barrier"
+	desc = "Contains inflatable walls and doors."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "atmos_inflatable"
+	w_class = SIZE_SMALL
+	max_w_class = SIZE_SMALL
+	max_storage_space = DEFAULT_BACKPACK_STORAGE
+	storage_slots = 5
+	icon_type = "atmostech's inflatable wall"
+	can_hold = list(/obj/item/inflatable/atmos, /obj/item/inflatable/door/atmos)
+
+/obj/item/weapon/storage/fancy/atmos/atom_init()
+	. = ..()
+	for(var/i in 1 to 3)
+		new /obj/item/inflatable/atmos(src)
+	for(var/i in 1 to 2)
+		new /obj/item/inflatable/door/atmos(src)
+	update_icon()
+
+/obj/item/weapon/storage/fancy/atmos/update_icon()
+	icon_state = "[initial(icon_state)][contents.len]"
+	return
