@@ -342,7 +342,7 @@ Class Procs:
 	add_fingerprint(usr)
 
 	if(!do_skill_checks(usr))
-		return TRUE
+		return FALSE
 	return FALSE
 
 /obj/machinery/proc/issilicon_allowed(mob/living/silicon/S)
