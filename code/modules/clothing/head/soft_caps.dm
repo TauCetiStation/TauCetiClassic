@@ -3,34 +3,29 @@
 	desc = "It's a baseball hat in a tasteless yellow color."
 	icon_state = "cargosoft"
 	flags = HEADCOVERSEYES
-	var/flipped = 0
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
 	dyed_type = DYED_SOFTCAP
 
+	action_button_name = "Flip Cap"
+
+	var/flipped = FALSE
 	var/cap_color
 
-/obj/item/clothing/head/soft/dropped()
+/obj/item/clothing/head/soft/atom_init()
+	. = ..()
 	icon_state = "[cap_color]soft"
-	flipped=0
-	..()
 
-/obj/item/clothing/head/soft/verb/flip()
-	set category = "Object"
-	set name = "Flip cap"
-	set src in usr
-
-	if(usr.incapacitated())
-		return
-
+/obj/item/clothing/head/soft/attack_self(mob/living/carbon/human/user)
 	flipped = !flipped
 	if(flipped)
 		icon_state = "[cap_color]soft_flipped"
-		to_chat(usr, "You flip the hat backwards.")
+		to_chat(user, "You flip the hat backwards.")
 	else
 		icon_state = "[cap_color]soft"
-		to_chat(usr, "You flip the hat back in normal position.")
+		to_chat(user, "You flip the hat back in normal position.")
+
 	update_inv_mob()
 
 /obj/item/clothing/head/soft/red
