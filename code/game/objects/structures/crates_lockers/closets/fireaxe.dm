@@ -109,7 +109,7 @@
 
 	if(localopened)
 		if(fireaxe)
-			use.try_take(fireaxe, loc)
+			user.try_take(fireaxe, loc)
 			fireaxe = null
 			to_chat(user, "<span class='notice'>You take the fire axe from the [name].</span>")
 			add_fingerprint(user)
