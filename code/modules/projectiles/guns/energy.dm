@@ -74,6 +74,8 @@
 	update_icon()
 
 /obj/item/weapon/gun/energy/update_icon()
+	if(type == /obj/item/weapon/gun/energy/taser || type == /obj/item/weapon/gun/energy/taser/cyborg)
+		return
 	var/ratio = 0
 	if(power_supply.maxcharge)
 		ratio = power_supply.charge / power_supply.maxcharge

@@ -270,7 +270,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 		fully_replace_character_name(oldname,newname)
-
+		if(role == "clown")
+			to_chat(world, "<span class='clown'>[newname] is the Clown!</span>")
 
 
 //Picks a string of symbols to display as the law number for hacked or ion laws

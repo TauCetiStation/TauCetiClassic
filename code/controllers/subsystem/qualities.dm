@@ -45,20 +45,12 @@ SUBSYSTEM_DEF(qualities)
 			to_chat(C.mob, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
 		return
 
-	var/list/possible_qualities = qualities_pool.Copy()
 	var/datum/quality/selected_quality
 
-	while(possible_qualities.len)
-		var/quality_type = pick(qualities_pool)
-		var/datum/quality/quality = qualities_pool[quality_type]
-
-		possible_qualities -= quality_type
-
-		if(!quality.satisfies_availability(C))
-			continue
-
-		selected_quality = quality
-		break
+	if(prob(90))
+		selected_quality = qualities_pool[/datum/quality/clumsy]
+	else
+		selected_quality = qualities_pool[/datum/quality/nuclear_option]
 
 	if(!selected_quality)
 		return

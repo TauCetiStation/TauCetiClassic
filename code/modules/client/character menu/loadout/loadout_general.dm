@@ -22,7 +22,7 @@
 /datum/gear/dice/ghastly
 	display_name = "Accursed Dice Pack"
 	path = /obj/item/weapon/storage/pill_bottle/ghostdice
-	allowed_roles = list("Chaplain", "Paranormal Investigator")
+	allowed_roles = list("Chaplain", "Paranormal Clown")
 
 /datum/gear/cards
 	display_name = "Deck of cards"
@@ -72,23 +72,23 @@
 	display_name = "Ghostly Gaming Kit"
 	path = /obj/item/weapon/game_kit/chaplain
 	cost = 3
-	allowed_roles = list("Chaplain", "Paranormal Investigator")
+	allowed_roles = list("Chaplain", "Paranormal Clown")
 
 /datum/gear/ghostpen
 	display_name = "One Fancy Pen"
 	path = /obj/item/weapon/pen/ghost
-	allowed_roles = list("Chaplain", "Paranormal Investigator")
+	allowed_roles = list("Chaplain", "Paranormal Clown")
 
 /datum/gear/ghostcamera
 	display_name = "Anomalous Camera"
 	path = /obj/item/device/camera/spooky
-	allowed_roles = list("Chaplain", "Paranormal Investigator")
+	allowed_roles = list("Chaplain", "Paranormal Clown")
 	cost = 3
 
 /datum/gear/blackcandle
 	display_name = "Black Candle"
 	path = /obj/item/candle/ghost
-	allowed_roles = list("Chaplain", "Paranormal Investigator")
+	allowed_roles = list("Chaplain", "Paranormal Clown")
 
 /datum/gear/pulserifle
 	display_name = "Pulse rifle"

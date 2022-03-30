@@ -30,7 +30,7 @@
 
 	else if(istype(I, /obj/item/weapon/nullrod) && isliving(user))
 		var/mob/living/L = user
-		if(L.getBrainLoss() >= 60 || (L.mind && (L.mind.holy_role || L.mind.role_alt_title == "Paranormal Investigator")))
+		if(L.getBrainLoss() >= 60 || (L.mind && (L.mind.holy_role || L.mind.role_alt_title == "Paranormal Clown")))
 			poof()
 
 	else

@@ -105,7 +105,7 @@
 /obj/item/weapon/stamp/law
 	name = "lawyer's rubber stamp"
 	dye_color = DYE_REDCOAT
-	stamp_message = "Lawyer"
+	stamp_message = "Clown Lawyer"
 	big_stamp = TRUE
 
 /obj/item/weapon/stamp/internalaffairs

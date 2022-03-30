@@ -1555,12 +1555,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 
 			var/obj/item/device/pda/pda = new(M)
 			pda.owner = M.real_name
-			pda.ownjob = "Test Subject"
+			pda.ownjob = "Clown Candidate"
 			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
 			M.equip_to_slot_or_del(pda, SLOT_BELT)
 
 			var/obj/item/weapon/card/id/W = new(M)
-			W.assignment = "Test Subject"
+			W.assignment = "Clown Candidate"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_library)
 			if(config.assistant_maint)
