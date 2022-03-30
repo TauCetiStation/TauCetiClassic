@@ -1069,7 +1069,7 @@
 		
 	if(crawling)
 		crawl_getup = TRUE
-		if(do_after(src, 100, target = src))
+		if(do_after(src, 10, target = src))
 			crawl_getup = FALSE
 			if(!crawl_can_use())
 				playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
