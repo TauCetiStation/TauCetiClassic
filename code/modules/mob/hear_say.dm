@@ -302,4 +302,4 @@
 
 	to_chat(src, heard)
 
-	telepathy_eavesdrop(speaker, message, pick("has seen", "has heard"))
+	telepathy_eavesdrop(src, message, pick("has seen", "has heard"))
