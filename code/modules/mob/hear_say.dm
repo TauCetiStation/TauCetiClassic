@@ -90,9 +90,14 @@
 		if(isliving(src))
 			message = highlight_traitor_codewords(message, src.mind)
 		if(language)
-			to_chat(src, "[track]<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [language.format_message(message, verb)]</span>")
+			message = "[track]<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [language.format_message(message, verb)]</span>"
 		else
-			to_chat(src, "[track]<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
+			message = "[track]<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>"
+
+		to_chat(src, message)
+
+		telepathy_eavesdrop(speaker, message, "has heard", language)
+
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
@@ -254,6 +259,8 @@
 	else
 		to_chat(src, "[part_a][speaker_name][part_b][formatted][part_c]")
 
+	telepathy_eavesdrop(speaker, "[speaker_name][formatted]", "has heard", language)
+
 /mob/proc/hear_signlang(message, verb = "gestures", datum/language/language, mob/speaker = null)
 	var/speaker_name = speaker.name
 	if(!client)
@@ -268,6 +275,8 @@
 		for(var/obj/item/weapon/holder/H in src.contents)
 			H.show_message(message, SHOWMSG_VISUAL)
 	show_message(message, SHOWMSG_VISUAL)
+
+	telepathy_eavesdrop(speaker, message, "has seen", language)
 
 /mob/proc/hear_sleep(message, datum/language/language)
 	var/heard = ""
@@ -292,3 +301,5 @@
 		heard = "<span class = 'game_say'>...<i>You almost hear someone talking</i>...</span>"
 
 	to_chat(src, heard)
+
+	telepathy_eavesdrop(speaker, message, pick("has seen", "has heard"))
