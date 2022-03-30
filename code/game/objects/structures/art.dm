@@ -82,7 +82,7 @@
 /obj/item/canvas/ui_interact(mob/user, datum/tgui/ui)
 	tgui_interact(user)
 
-/obj/item/canvas/tgui_interact(mob/user, datum/tgui/ui)	
+/obj/item/canvas/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Canvas", name)
@@ -160,12 +160,9 @@
 	ASSERT(isnum(width))
 	ASSERT(isnum(height))
 
-	var/count = 0; // do we really need this?
-	var/regex/r = regex(@"#[0-9a-fA-F]{6}", "g")
-	while (r.Find(data))
-		to_chat(usr, "[r.index]")
-		count++;
-	ASSERT(count == width * height)
+	var/static/regex/r = regex(@"^(?!.*#[0-9a-fA-F]{6}$).*$", "g")
+	// checks that the data string does not contain anything besides the hex colors
+	ASSERT(!r.Find(data))
 
 	world.ext_python("create_png.py", "[png_filename] [width] [height] [data]")
 	generated_icon = new(png_filename)
