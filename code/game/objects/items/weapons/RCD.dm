@@ -7,7 +7,7 @@ RCD
 	desc = "A device used to rapidly build walls/floor."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
-	opacity = 0
+	opacity = FALSE
 	density = FALSE
 	anchored = FALSE
 	flags = CONDUCT
@@ -20,10 +20,10 @@ RCD
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
-	var/working = 0
+	var/working = FALSE
 	var/mode = 1
-	var/canRwall = 0
-	var/disabled = 0
+	var/canRwall = FALSE
+	var/disabled = FALSE
 
 	action_button_name = "Switch RCD"
 
@@ -259,18 +259,18 @@ RCD
 	return matter >= amount
 /obj/item/weapon/rcd/borg/useResource(amount, mob/user)
 	if(!isrobot(user))
-		return 0
+		return FALSE
 	return user:cell:use(amount * 30)
 
 /obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
 	if(!isrobot(user))
-		return 0
+		return FALSE
 	return user:cell:charge >= (amount * 30)
 
 /obj/item/weapon/rcd/borg/atom_init()
 	. = ..()
 	desc = "A device used to rapidly build walls/floor."
-	canRwall = 1
+	canRwall = TRUE
 
 /obj/item/weapon/rcd_ammo
 	name = "compressed matter cartridge"
@@ -278,7 +278,7 @@ RCD
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "rcd"
 	item_state = "rcdammo"
-	opacity = 0
+	opacity = FALSE
 	density = FALSE
 	anchored = FALSE
 	origin_tech = "materials=2"
