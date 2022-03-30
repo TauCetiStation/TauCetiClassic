@@ -86,12 +86,12 @@
 
 	if(src in M.remote_hearers)
 		M.remove_remote_hearer(src)
-		to_chat(src, "<span class='notice'>You stop telepathically eavesdropping on [M]")
+		to_chat(src, "<span class='notice'>You stop telepathically eavesdropping on [M].</span>")
 	else
 		if(remote_hearing.len > 3)
 			return
 		M.add_remote_hearer(src)
-		to_chat(src, "<span class='notice'>You start telepathically eavesdropping on [M]")
+		to_chat(src, "<span class='notice'>You start telepathically eavesdropping on [M].</span>")
 
 /mob/proc/telepathy_say()
 	set name = "Project Mind"
