@@ -13,6 +13,10 @@
 	density = TRUE
 	var/obj/item/canvas/painting = null
 
+/obj/structure/easel/Destroy()
+	painting = null
+	. = ..()
+
 //Adding canvases
 /obj/structure/easel/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/canvas))
@@ -20,7 +24,7 @@
 		user.drop_from_inventory(canvas)
 		painting = canvas
 		canvas.forceMove(get_turf(src))
-		canvas.layer = layer+0.1
+		canvas.layer = layer + 0.1
 		user.visible_message("<span class='notice'>[user] puts \the [canvas] on \the [src].</span>", "<span class='notice'>You place \the [canvas] on \the [src].</span>")
 	else
 		return ..()
@@ -28,9 +32,11 @@
 
 //Stick to the easel like glue
 /obj/structure/easel/Move()
+	// The painting could move away from the easel while it was moving
 	var/turf/T = get_turf(src)
 	. = ..()
-	if(painting && painting.loc == T) //Only move if it's near us.
+	// So we're checking if the painting is still at the same place
+	if(painting && painting.loc == T)
 		painting.forceMove(get_turf(src))
 	else
 		painting = null
@@ -47,8 +53,7 @@
 	var/canvas_color = "#ffffff" //empty canvas color
 	var/used = FALSE
 	var/painting_name = "Untitled Artwork" //Painting name, this is set after framing.
-	var/finalized = FALSE //Blocks edits
-	var/author_ckey
+	var/finalized = FALSE //Blocks
 	var/icon_generated = FALSE
 	var/icon/generated_icon
 
@@ -118,7 +123,7 @@
 				return FALSE
 			var/x = text2num(params["x"])
 			var/y = text2num(params["y"])
-			if(!(x in 0 to width) || !(y in 0 to height))
+			if(x < 0 || x > width || y < 0 || y > height)
 				return
 
 			grid[x][y] = color
@@ -131,7 +136,6 @@
 
 /obj/item/canvas/proc/finalize(mob/user)
 	finalized = TRUE
-	author_ckey = user.ckey
 	generate_proper_overlay()
 	try_rename(user)
 
@@ -207,7 +211,7 @@
 			if("red")
 				return "#ff0000"
 		return P.colour
-	else if(istype(I, /obj/item/weapon/soap) || istype(I, /obj/item/weapon/reagent_containers/glass/rag))
+	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/soap) || istype(I, /obj/item/weapon/reagent_containers/glass/rag))
 		return canvas_color
 
 /obj/item/canvas/proc/try_rename(mob/user)
@@ -351,9 +355,7 @@
 	update_appearance()
 
 /obj/structure/sign/painting/proc/frame_canvas(mob/user, obj/item/canvas/new_canvas)
-	to_chat(user, "1")
 	if(user.drop_from_inventory(new_canvas, src))
-		to_chat(user, "2")
 		current_canvas = new_canvas
 		if(!current_canvas.finalized)
 			current_canvas.finalize(user)
@@ -397,126 +399,3 @@
 	else
 		name = initial(name)
 		desc = initial(desc)
-
-/**
- * Loads a painting from SSpersistence. Called globally by said subsystem when it inits
- *
- * Deleting paintings leaves their json, so this proc will remove the json and try again if it finds one of those.
- */
-// /obj/structure/sign/painting/proc/load_persistent()
-// 	if(!persistence_id || !SSpersistence.paintings || !SSpersistence.paintings[persistence_id])
-// 		return
-// 	var/list/painting_category = SSpersistence.paintings[persistence_id]
-// 	var/list/painting
-// 	while(!painting)
-// 		if(!length(SSpersistence.paintings[persistence_id]))
-// 			return //aborts loading anything this category has no usable paintings
-// 		var/list/chosen = pick(painting_category)
-// 		if(!fexists("cache/paintings/[persistence_id]/[chosen["md5"]].png")) //shitmin deleted this art, lets remove json entry to avoid errors
-// 			painting_category -= list(chosen)
-// 			continue //and try again
-// 		painting = chosen
-// 	var/title = painting["title"]
-// 	var/author = painting["ckey"]
-// 	var/png = "cache/paintings/[persistence_id]/[painting["md5"]].png"
-// 	if(!title)
-// 		title = "Untitled Artwork" //legacy artwork allowed null names which was bad for the json, lets fix that
-// 		painting["title"] = title
-// 	var/icon/I = new(png)
-// 	var/obj/item/canvas/new_canvas
-// 	var/w = I.Width()
-// 	var/h = I.Height()
-// 	for(var/T in typesof(/obj/item/canvas))
-// 		new_canvas = T
-// 		if(initial(new_canvas.width) == w && initial(new_canvas.height) == h)
-// 			new_canvas = new T(src)
-// 			break
-// 	new_canvas.fill_grid_from_icon(I)
-// 	new_canvas.generated_icon = I
-// 	new_canvas.icon_generated = TRUE
-// 	new_canvas.finalized = TRUE
-// 	new_canvas.painting_name = title
-// 	new_canvas.author_ckey = author
-// 	new_canvas.name = "painting - [title]"
-// 	current_canvas = new_canvas
-// 	update_icon()
-// 	update_name_and_desc()
-
-// /obj/structure/sign/painting/proc/save_persistent()
-// 	if(!persistence_id || !current_canvas)
-// 		return
-// 	if(sanitize_filename(persistence_id) != persistence_id)
-// 		stack_trace("Invalid persistence_id - [persistence_id]")
-// 		return
-// 	if(!current_canvas.painting_name)
-// 		current_canvas.painting_name = "Untitled Artwork"
-// 	var/data = current_canvas.get_data_string()
-// 	var/md5 = md5(lowertext(data))
-// 	var/list/current = SSpersistence.paintings[persistence_id]
-// 	if(!current)
-// 		current = list()
-// 	for(var/list/entry in current)
-// 		if(entry["md5"] == md5)
-// 			return
-// 	var/png_directory = "cache/paintings/[persistence_id]/"
-// 	var/png_path = png_directory + "[md5].png"
-// 	var/result = rustg_dmi_create_png(png_path, "[current_canvas.width]", "[current_canvas.height]", data)
-// 	if(result)
-// 		CRASH("Error saving persistent painting: [result]")
-// 	current += list(list("title" = current_canvas.painting_name , "md5" = md5, "ckey" = current_canvas.author_ckey))
-// 	SSpersistence.paintings[persistence_id] = current
-
-// /obj/item/canvas/proc/fill_grid_from_icon(icon/I)
-// 	var/h = I.Height() + 1
-// 	for(var/x in 1 to width)
-// 		for(var/y in 1 to height)
-// 			grid[x][y] = I.GetPixel(x, h-y)
-
-//Presets for art gallery mapping, for paintings to be shared across stations
-// /obj/structure/sign/painting/library
-// 	name = "\improper Public Painting Exhibit mounting"
-// 	desc = "For art pieces hung by the public."
-// 	desc_with_canvas = "A piece of art (or \"art\"). Anyone could've hung it."
-	// persistence_id = "library"
-
-// /obj/structure/sign/painting/library_secure
-// 	name = "\improper Curated Painting Exhibit mounting"
-// 	desc = "For masterpieces hand-picked by the curator."
-// 	desc_with_canvas = "A masterpiece hand-picked by the curator, supposedly."
-	// persistence_id = "library_secure"
-
-// /obj/structure/sign/painting/library_private // keep your smut away from prying eyes, or non-librarians at least
-// 	name = "\improper Private Painting Exhibit mounting"
-// 	desc = "For art pieces deemed too subversive or too illegal to be shared outside of curators."
-// 	desc_with_canvas = "A painting hung away from lesser minds."
-	// persistence_id = "library_private"
-
-// /obj/structure/sign/painting/vv_get_dropdown()
-// 	. = ..()
-// 	VV_DROPDOWN_OPTION(VV_HK_REMOVE_PAINTING, "Remove Persistent Painting")
-
-// /obj/structure/sign/painting/vv_do_topic(list/href_list)
-// 	. = ..()
-// 	if(href_list[VV_HK_REMOVE_PAINTING])
-// 		if(!check_rights(NONE))
-// 			return
-// 		var/mob/user = usr
-// 		if(!persistence_id || !current_canvas)
-// 			to_chat(user, "<span class='warning'>This is not a persistent painting.</span>")
-// 			return
-// 		var/md5 = md5(lowertext(current_canvas.get_data_string()))
-// 		var/author = current_canvas.author_ckey
-// 		var/list/current = SSpersistence.paintings[persistence_id]
-// 		if(current)
-// 			for(var/list/entry in current)
-// 				if(entry["md5"] == md5)
-// 					current -= entry
-// 			var/png = "cache/paintings/[persistence_id]/[md5].png"
-// 			fdel(png)
-// 		for(var/obj/structure/sign/painting/P in SSpersistence.painting_frames)
-// 			if(P.current_canvas && md5(P.current_canvas.get_data_string()) == md5)
-// 				QDEL_NULL(P.current_canvas)
-// 				P.update_icon()
-// 				P.update_name_and_desc()
-// 		log_admin("[key_name(user)] has deleted a persistent painting made by [author].")
-// 		message_admins("<span class='notice'>[key_name_admin(user)] has deleted persistent painting made by [author].</span>")
