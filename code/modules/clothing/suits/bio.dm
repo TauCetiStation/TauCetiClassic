@@ -10,6 +10,7 @@
 	body_parts_covered = HEAD|FACE|EYES
 	pierce_protection = HEAD
 	siemens_coefficient = 0.4
+	unacidable = TRUE
 
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
@@ -22,11 +23,12 @@
 	flags = PHORONGUARD
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 1.0
+	slowdown = 0.5
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/pen,/obj/item/device/flashlight/pen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	siemens_coefficient = 0.4
+	unacidable = TRUE
 
 
 //Standard biosuit, orange stripe

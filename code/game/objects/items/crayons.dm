@@ -9,13 +9,17 @@
 	var/shadeColour = "#220000" // RGB
 	var/uses = 30 // 0 for unlimited uses
 	var/instant = 0
-	var/colourName = "red" // for updateIcon purposes
+	var/colourName = DYE_RED // for updateIcon purposes
 	var/list/validSurfaces = list(/turf/simulated/floor)
 	var/edible = 1
 
 	var/list/actions
 	var/list/arrows
 	var/list/letters
+
+/obj/item/toy/crayon/atom_init()
+	. = ..()
+	RegisterSignal(src, list(COMSIG_ITEM_ALTCLICKWITH), .proc/afterattack_no_params)
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	to_chat(viewers(user), "<span class='danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>")
@@ -115,13 +119,6 @@
 		if(!Adjacent(target) || usr.get_active_hand() != i) // Some check to see if he's allowed to write
 			return
 		to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
-
-		var/list/click_params = params2list(params)
-		var/p_x
-		var/p_y
-		if(click_params && click_params[ICON_X] && click_params[ICON_Y])
-			p_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size / 2), world.icon_size / 2)
-			p_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size / 2), world.icon_size / 2)
 		if(!user.Adjacent(target))
 			to_chat(user, "<span class = 'notice'>You must stay close to your drawing if you want to draw something.</span>")
 			return
@@ -132,7 +129,15 @@
 				if(!can_claim_for_gang(user, target, gang_mode))
 					return
 				tag_for_gang(user, target, gang_mode)
+			else if(!params)
+				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 			else
+				var/list/click_params = params2list(params)
+				var/p_x
+				var/p_y
+				if(click_params && click_params[ICON_X] && click_params[ICON_Y])
+					p_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size / 2), world.icon_size / 2)
+					p_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size / 2), world.icon_size / 2)
 				var/obj/effect/decal/cleanable/crayon/Q = new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 				Q.pixel_x = p_x
 				Q.pixel_y = p_y
@@ -148,6 +153,9 @@
 				to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
 				if(!instant)
 					qdel(src)
+
+/obj/item/toy/crayon/proc/afterattack_no_params(obj/spraycan, atom/target, mob/user)
+	afterattack(target, user, TRUE)
 
 /obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target, datum/faction/gang/gang)
 	var/area/A = get_area(target)
@@ -204,37 +212,37 @@
 	icon_state = "crayonred"
 	colour = "#da0000"
 	shadeColour = "#810c0c"
-	colourName = "red"
+	colourName = DYE_RED
 
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
 	colour = "#ff9300"
 	shadeColour = "#a55403"
-	colourName = "orange"
+	colourName = DYE_ORANGE
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
 	colour = "#fff200"
 	shadeColour = "#886422"
-	colourName = "yellow"
+	colourName = DYE_YELLOW
 
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
 	colour = "#a8e61d"
 	shadeColour = "#61840f"
-	colourName = "green"
+	colourName = DYE_GREEN
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
 	colour = "#00b7ef"
 	shadeColour = "#0082a8"
-	colourName = "blue"
+	colourName = DYE_BLUE
 
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
 	colour = "#da00ff"
 	shadeColour = "#810cff"
-	colourName = "purple"
+	colourName = DYE_PURPLE
 
 /obj/item/toy/crayon/chalk
 	name = "white chalk"
@@ -242,14 +250,14 @@
 	icon_state = "chalk"
 	colour = "#ffffff"
 	shadeColour = "#cecece"
-	colourName = "white"
+	colourName = DYE_WHITE
 
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
 	colour = "#ffffff"
 	shadeColour = "#000000"
-	colourName = "mime"
+	colourName = DYE_MIME
 
 /obj/item/toy/crayon/mime/attack_self(mob/living/user) //inversion
 	if(colour != "#ffffff" && shadeColour != "#000000")
@@ -266,7 +274,7 @@
 	icon_state = "crayonrainbow"
 	colour = "#fff000"
 	shadeColour = "#000fff"
-	colourName = "rainbow"
+	colourName = DYE_RAINBOW
 
 /obj/item/toy/crayon/rainbow/attack_self(mob/living/user)
 	colour = input(user, "Please select the main colour.", "Crayon colour") as color
@@ -320,7 +328,7 @@
 		var/mob/living/carbon/C = target
 		user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
 		if(C.client)
-			C.eye_blurry = max(C.eye_blurry, 3)
+			C.blurEyes(3)
 			C.eye_blind = max(C.eye_blind, 1)
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C

@@ -24,7 +24,7 @@
 		return
 	to_chat(user, "<span class='notice'>Searching for available borg personality. Please wait 30 seconds...</span>")
 	used = TRUE
-	var/list/borg_candicates = pollGhostCandidates("Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", ROLE_OPERATIVE)
+	var/list/borg_candicates = pollGhostCandidates("Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", ROLE_OPERATIVE, IGNORE_SYNDI_BORG)
 	if(borg_candicates.len)
 		var/mob/M = pick(borg_candicates)
 		spawn_antag(M.client, get_turf(src.loc), user)

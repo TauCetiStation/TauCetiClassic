@@ -643,16 +643,16 @@
 
 /obj/machinery/light/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2.0)
-			if (prob(75))
-				broken()
-		if(3.0)
-			if (prob(50))
-				broken()
-	return
+		if(EXPLODE_HEAVY)
+			if(prob(25))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(50))
+				return
+	broken()
 
 //blob effect
 
@@ -687,6 +687,7 @@
 	explosion(T, 0, 0, 2, 2)
 	sleep(1)
 	qdel(src)
+
 
 // the light item
 // can be tube or bulb subtypes

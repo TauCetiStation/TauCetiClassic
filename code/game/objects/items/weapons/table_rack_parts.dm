@@ -40,9 +40,14 @@
 	return ..()
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
-	new /obj/structure/table( user.loc )
-	qdel(src)
-	return
+	var/turf/simulated/T = get_turf(user)
+	if (T.CanPass(null, T))
+		var/obj/structure/table/R = new table_type( T )
+		to_chat(user, "<span class='notice'>You assemble [src].</span>")
+		R.add_fingerprint(user)
+		qdel(src)
+	else
+		to_chat(user, "<span class='warning'>You can't put it here!</span>")
 
 
 /*
@@ -56,11 +61,6 @@
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/table_parts/reinforced/attack_self(mob/user)
-	new /obj/structure/table/reinforced( user.loc )
-	qdel(src)
-	return
-
 /*
  * Glass Table Parts
  */
@@ -71,10 +71,6 @@
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/table_parts/glass/attack_self(mob/user)
-	new /obj/structure/table/glass( user.loc )
-	qdel(src)
-	return
 
 /*
  * Wooden Table Parts
@@ -95,11 +91,6 @@
 
 	return FALSE
 
-/obj/item/weapon/table_parts/wood/attack_self(mob/user)
-	new /obj/structure/table/woodentable( user.loc )
-	qdel(src)
-	return
-
 /*
  * Fancy Wooden Table Parts
  */
@@ -109,17 +100,6 @@
 		qdel(src)
 		return TRUE
 	return FALSE
-
-/obj/item/weapon/table_parts/wood/fancy/attack_self(mob/user)
-	new /obj/structure/table/woodentable/fancy( user.loc )
-	qdel(src)
-	return
-
-/obj/item/weapon/table_parts/wood/fancy/black/attack_self(mob/user)
-	new /obj/structure/table/woodentable/fancy/black( user.loc )
-	qdel(src)
-	return
-
 
 /*
  * Poker Table Parts
@@ -133,11 +113,6 @@
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/table_parts/wood/poker/attack_self(mob/user)
-	new /obj/structure/table/woodentable/poker( user.loc )
-	qdel(src)
-	return
-
 /*
  * Rack Parts
  */
@@ -149,7 +124,11 @@
 	return ..()
 
 /obj/item/weapon/rack_parts/attack_self(mob/user)
-	var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
-	R.add_fingerprint(user)
-	qdel(src)
-	return
+	var/turf/simulated/T = get_turf(user)
+	if(T.CanPass(null, T))
+		var/obj/structure/rack/R = new /obj/structure/rack( T )
+		to_chat(user, "<span class='notice'>You assemble [src].</span>")
+		R.add_fingerprint(user)
+		qdel(src)
+	else
+		to_chat(user, "<span class='warning'>You can't put it here!</span>")

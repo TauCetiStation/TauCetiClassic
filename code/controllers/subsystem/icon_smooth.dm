@@ -6,6 +6,7 @@ SUBSYSTEM_DEF(icon_smooth)
 	wait = SS_WAIT_ICON_SMOOTH
 	priority = SS_PRIOTITY_ICON_SMOOTH
 	flags = SS_TICKER
+	msg_lobby = "Достраиваем станцию..."
 
 	var/list/smooth_queue = list()
 	var/list/deferred = list()
@@ -54,7 +55,7 @@ SUBSYSTEM_DEF(icon_smooth)
 /atom/proc/SliceNDice(dmifile as file)
 	var/font_size = 32
 #else
-/atom/proc/SliceNDice(dmifile, overlay)
+/atom/proc/SliceNDice(dmifile)
 #endif
 
 	var/STATE_COUNT_NORMAL = 4
@@ -454,8 +455,6 @@ SUBSYSTEM_DEF(icon_smooth)
 		I.DrawBox(null, 1, 1, sourceIconWidth, sourceIconHeight)
 		for(var/i in parts)
 			I.Blend(icon(outputIcon, i), ICON_OVERLAY)
-		if (overlay)
-			I.Blend(overlay, ICON_OVERLAY)
 		master.Insert(I, "[dir_bits]")
 		CHECK_TICK
 

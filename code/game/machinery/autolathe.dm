@@ -73,6 +73,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/weapon/reagent_containers/glass/beaker/large, CATEGORY_MEDICAL),
 	R(/obj/item/weapon/reagent_containers/glass/beaker/vial,  CATEGORY_MEDICAL),
 	R(/obj/item/weapon/reagent_containers/syringe,            CATEGORY_MEDICAL),
+	R(/obj/item/clothing/accessory/stethoscope,               CATEGORY_MEDICAL),
 	R(/obj/item/stack/cable_coil/random,             CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/stock_parts/console_screen,   CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/module/power_control,         CATEGORY_ENGINEERING),
@@ -353,7 +354,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	if (.)
 		return
 
-	if(istype(usr, /mob/living/silicon/pai))
+	if(ispAI(usr))
 		var/mob/living/silicon/pai/TempUsr = usr
 		if(TempUsr.hackobj != src)
 			return

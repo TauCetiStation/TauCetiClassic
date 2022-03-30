@@ -115,7 +115,7 @@
 	)
 
 /obj/item/stack/tgui_state(mob/user)
-	return global.hands_state
+	return global.interactive_reach_state
 
 /obj/item/stack/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
@@ -137,7 +137,7 @@
 			produce_recipe(R, multiplier, usr)
 			return TRUE
 
-/obj/item/stack/proc/produce_recipe(datum/stack_recipe/recipe, quantity, mob/user)
+/obj/item/stack/proc/produce_recipe(datum/stack_recipe/recipe, quantity, mob/living/user)
 	var/datum/stack_recipe/R = recipe
 	var/multiplier = quantity
 	if (!multiplier) multiplier = 1
@@ -159,9 +159,11 @@
 		to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
 		if (!do_after(usr, R.time, target = usr))
 			return
+	var/atom/build_loc = loc
 	if(!use(R.req_amount*multiplier))
 		return
-	var/atom/O = new R.result_type( usr.loc )
+	var/atom/movable/O = new R.result_type(build_loc)
+	user.try_take(O, build_loc)
 	O.set_dir(usr.dir)
 	if (R.max_res_amount>1)
 		var/obj/item/stack/new_item = O
@@ -188,7 +190,7 @@
 	. = (amount)
 
 /obj/item/stack/proc/is_cyborg()
-	return istype(loc, /obj/item/weapon/robot_module) || istype(loc, /mob/living/silicon)
+	return istype(loc, /obj/item/weapon/robot_module) || issilicon(loc)
 
 /obj/item/stack/use(used, transfer = FALSE)
 	if(used < 0)
@@ -235,8 +237,9 @@
 			S.use(res_list[x])
 
 /obj/item/stack/proc/zero_amount()
-	if(amount < 1 && !is_cyborg())
-		qdel(src)
+	if(amount < 1)
+		if(!is_cyborg())
+			qdel(src)
 		return TRUE
 	return FALSE
 
@@ -303,11 +306,11 @@
 			change_stack(user, stackmaterial)
 			to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>")
 
-/obj/item/stack/proc/change_stack(mob/user, amount)
-	var/obj/item/stack/F = new type(user, amount, FALSE)
+/obj/item/stack/proc/change_stack(mob/living/user, amount)
+	var/obj/item/stack/F = new type(loc, amount, FALSE)
+	user.try_take(F, loc)
 	. = F
 	F.copy_evidences(src)
-	user.put_in_hands(F)
 	add_fingerprint(user)
 	F.add_fingerprint(user)
 	use(amount, TRUE)
@@ -343,8 +346,9 @@
 	var/time = 0
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
+	var/floor_path
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, floor_path = list(/turf/simulated/floor))
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
@@ -353,6 +357,7 @@
 	src.time = time
 	src.one_per_turf = one_per_turf
 	src.on_floor = on_floor
+	src.floor_path = floor_path
 
 /*
  * Recipe list datum

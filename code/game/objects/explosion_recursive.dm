@@ -1,7 +1,7 @@
 /obj
 	var/explosion_resistance
 
-var/list/explosion_turfs = list()
+var/global/list/explosion_turfs = list()
 
 /proc/explosion_rec(turf/epicenter, power)
 	var/explosion_in_progress = 0
@@ -60,7 +60,7 @@ var/list/explosion_turfs = list()
 /turf
 	var/explosion_resistance
 
-/turf/space
+/turf/environment
 	explosion_resistance = 10
 
 /turf/simulated/floor

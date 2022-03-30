@@ -26,7 +26,7 @@
 		var/obj/item/weapon/reagent_containers/pill/P = new(user.loc)
 		P.name = "half of [name]"
 		P.icon_state = icon_state
-		P.filters += filter(type = "alpha", icon = icon(icon, "pill_half_[part]"))
+		P.add_filter("pill_alpha", 3, alpha_mask_filter(icon = icon(icon, "pill_half_[part]")))
 		P.add_overlay(icon(icon, "pill_half_border_[part]"))
 		P.halved = TRUE
 		reagents.trans_to(P.reagents, volume_half)
@@ -290,3 +290,12 @@
 	. = ..()
 	reagents.add_reagent("hyronalin", 5)
 	reagents.add_reagent("anti_toxin", 10)
+
+/obj/item/weapon/reagent_containers/pill/adminordrazine
+	name = "AB-X-7921 compound pill."
+	desc = "Experimental chemical agent which is believed to completely heal a human being of any damage upon consumption."
+	icon_state = "pillA"
+
+/obj/item/weapon/reagent_containers/pill/adminordrazine/atom_init()
+	. = ..()
+	reagents.add_reagent("adminordrazine", 1)

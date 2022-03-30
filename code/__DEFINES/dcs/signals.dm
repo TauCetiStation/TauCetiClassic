@@ -48,6 +48,12 @@
 #define COMSIG_RITE_FAILED_CHECK "rite_failed_check"
 	#define COMPONENT_CHECK_FAILED 1
 
+//from base of obj/item/weapon/storage/handle_item_insertion(): (obj/item/I, prevent_warning, NoUpdate)
+#define COMSIG_STORAGE_ENTERED "storage_entered"
+	#define COMSIG_STORAGE_PROHIBIT 1
+//from base of obj/item/weapon/storage/remove_from_storage(): (obj/item/I, atom/new_location, NoUpdate)
+#define COMSIG_STORAGE_EXITED "storage_exited"
+
 // /datum/religion signals
 /// from base of religion/add_membern(): (/mob, holy_role)
 #define COMSIG_REL_ADD_MEMBER "rel_add_member"
@@ -84,14 +90,14 @@
 	#define COMPONENT_CLIENTMOB_BLOCK_MOVE 1
 /// from base of client/Move, after all movement is finished(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_POSTMOVE "client_postmove"
+/// from base of mob/set_a_intent(): (new_intent)
+#define COMSIG_MOB_SET_A_INTENT "mob_set_a_intent"
 
 // /area signals
-///from base of area/Entered(): (atom/movable/M)
+///from base of area/Entered(): (area/entered, atom/OldLoc)
 #define COMSIG_AREA_ENTERED "area_entered"
-///from base of area/Exited(): (atom/movable/M)
+///from base of area/Exited(): (area/exited, atom/NewLoc)
 #define COMSIG_AREA_EXITED "area_exited"
-///from base of area/update_beauty()
-#define COMSIG_AREA_UPDATE_BEAUTY "area_update_beauty"
 
 // /atom signals
 ///from base of atom/Click(): (location, control, params, mob/user)
@@ -117,6 +123,8 @@
 #define COMSIG_PARENT_EXAMINE "atom_examine"
 /// from base of mob/examinate(): (/mob)
 #define COMSIG_PARENT_POST_EXAMINE "atom_post_examine"
+/// from base of mob/examinate(): (/atom)
+#define COMSIG_PARENT_POST_EXAMINATE "atom_post_examinate"
 /// from base of atom/get_examine_name(): (/mob/user, list/override)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_get_examine_name"
 	//Positions for overrides list
@@ -157,7 +165,7 @@
 #define COMSIG_ATOM_STOP_PULL  "atom_stop_pull"
 /// from atom/movable/proc/waddle(): (waddle_angle, waddle_height)
 #define COMSIG_MOVABLE_WADDLE "movable_waddle"
-/// from mob/tryGrab(): (mob/grabber, force_state, show_warnings)
+/// from mob/tryGrab(): (/mob/grabber, force_state, show_warnings)
 #define COMSIG_MOVABLE_TRY_GRAB "movable_try_grab"
 	#define COMPONENT_PREVENT_GRAB 1
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
@@ -166,6 +174,10 @@
 #define COMSIG_ENTER_AREA "enter_area"
 ///from base of area/Exited(): (/area, /atom/NewLoc). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_EXIT_AREA "exit_area"
+/// from datum/orbit/New(): (/atom/orbiting)
+#define COMSIG_MOVABLE_ORBIT_BEGIN "orbit_begin"
+/// from datum/orbit/New(): (/atom/orbiting)
+#define COMSIG_MOVABLE_ORBIT_STOP "orbit_stop"
 
 // /obj
 /// from base of datum/religion_rites/reset_rite_wrapper(): ()
@@ -180,6 +192,9 @@
 /// from base of obj/item/attack_self(): (/mob/user)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 	#define COMPONENT_NO_INTERACT 1
+///from base of obj/item/pickup(): (/mob/user)
+#define COMSIG_ITEM_PICKUP "item_pickup"
+	#define COMPONENT_ITEM_NO_PICKUP 1
 ///from base of obj/item/equipped(): (/mob/equipper, slot)
 #define COMSIG_ITEM_EQUIPPED "item_equip"
 ///from base of obj/item/dropped(): (mob/user)
@@ -204,6 +219,9 @@
 #define COMSIG_ITEM_MAKE_WET "item_make_wet"
 /// from obj/item/dry_process
 #define COMSIG_ITEM_MAKE_DRY "item_make_dry"
+/// from mob/carbon/swap_hand: (mob/user)
+#define COMSIG_ITEM_BECOME_ACTIVE "item_become_active"
+#define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
@@ -231,6 +249,8 @@
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)
 #define COMSIG_MOB_DIED "mob_died"
+///from base of mob/ghost(): (can_reenter_corpse)
+#define COMSIG_MOB_GHOST "mob_ghost"
 ///from base of mob/create_mob_hud(): ()
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 ///from base of item/equipped(): (obj/item/I, slot)
@@ -243,6 +263,10 @@
 #define COMSIG_LIVING_START_PULL "living_start_pull"
 /// from base of /mob/stop_pulling(): (/atom/movable/target)
 #define COMSIG_LIVING_STOP_PULL "living_stop_pull"
+// send this signal when mob is lying
+#define COMSIG_MOB_STATUS_LYING "mob_lying"
+// send this signal when mob is standing
+#define COMSIG_MOB_STATUS_NOT_LYING "mob_not_lying"
 /// from base of atom/movable/buckle_mob(): (mob/buckled)
 #define COMSIG_MOVABLE_BUCKLE "buckle"
 /// from base of atom/movable/unbuckle_mob(): (mob/buckled)
@@ -271,6 +295,9 @@
 #define COMSIG_LIVING_LEARN_COMBO "learn_combo"
 // from mob/living/forget_combo(): (datum/combat_combo/combo, datum/combat_moveset/moveset)
 #define COMSIG_LIVING_FORGET_COMBO "forget_combo"
+///from base of mob/living/carbon/swap_hand(): (obj/item)
+#define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
+	#define COMPONENT_BLOCK_SWAP 1
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
@@ -304,3 +331,6 @@
 #define COMSIG_START_SUPPRESSING "start_suppressing"
 // send this signal to stop suppressing in /datum/component/silence: ()
 #define COMSIG_STOP_SUPPRESSING "stop_suppressing"
+
+// send this signal to toggle zoom in /datum/component/zoom: (mob/user)
+#define COMSIG_ZOOM_TOGGLE "zoom_toggle"

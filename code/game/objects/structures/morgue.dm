@@ -22,6 +22,7 @@
 	var/obj/structure/m_tray/connected = null
 	var/check_delay = 0
 	var/beeper = TRUE // currently cooldown for sound is included with check_delay.
+	var/emagged = FALSE
 
 /obj/structure/morgue/Destroy()
 	QDEL_NULL(connected)
@@ -42,32 +43,35 @@
 	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
 
 /obj/structure/morgue/proc/update()
-	if (connected)
+	if (connected || emagged)
 		STOP_PROCESSING(SSobj, src)
+	else if (contents.len && !emagged)
+		START_PROCESSING(SSobj, src)
+
+/obj/structure/morgue/update_icon()
+	if (connected)
 		icon_state = "morgue0"
-	else
-		if (contents.len)
-			START_PROCESSING(SSobj, src)
-			icon_state = "morgue2"
+	else if (contents.len && !emagged)
+		if (has_clonable_bodies())
+			icon_state = "morgue3"
 		else
-			icon_state = "morgue1"
-	return
+			icon_state = "morgue2"
+	else
+		icon_state = "morgue1"
 
 /obj/structure/morgue/ex_act(severity)
-	var/chance = 0
 	switch(severity)
-		if(1.0)
-			chance = 100
-		if(2.0)
-			chance = 50
-		if(3.0)
-			chance = 5
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(95))
+				return
 
-	if (prob(chance))
-		for(var/atom/movable/A in src)
-			A.forceMove(loc)
-			A.ex_act(severity)
-		qdel(src)
+	for(var/atom/movable/A in src)
+		A.forceMove(loc)
+		A.ex_act(severity)
+	qdel(src)
 
 /obj/structure/morgue/alter_health()
 	return loc
@@ -99,7 +103,7 @@
 	if (has_clonable_bodies())
 		if(beeper)
 			playsound(src, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		icon_state = "morgue3"
+		update_icon()
 	else
 		update()
 
@@ -115,6 +119,7 @@
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
 		qdel(connected)
 		connected = null
+		update_icon()
 		update()
 
 /obj/structure/morgue/proc/open()
@@ -127,7 +132,7 @@
 		var/turf/T = get_step(src, dir)
 		if (T.contents.Find(connected))
 			connected.connected = src
-			icon_state = "morgue0"
+			update_icon()
 			for(var/atom/movable/A in src)
 				A.forceMove(connected.loc)
 				if(ismob(A))
@@ -169,6 +174,15 @@
 	else
 		..()
 
+/obj/structure/morgue/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	playsound(user, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+	to_chat(user, "<span class='warning'>You are overloading the body detection mechanism.</span>")
+	emagged = TRUE
+	update_icon()
+	return TRUE
+
 /obj/structure/morgue/relaymove(mob/user)
 	if (user.incapacitated())
 		return
@@ -178,7 +192,7 @@
 	var/turf/T = get_step(src, dir)
 	if (T.contents.Find(connected))
 		connected.connected = src
-		icon_state = "morgue0"
+		update_icon()
 		for(var/atom/movable/A in src)
 			A.loc = connected.loc
 		connected.icon_state = "morguet"
@@ -270,27 +284,17 @@
 
 /obj/structure/crematorium/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
-				ex_act(severity)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					ex_act(severity)
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(5))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					ex_act(severity)
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(95))
 				return
-	return
+
+	for(var/atom/movable/A as mob|obj in src)
+		A.loc = src.loc
+		ex_act(severity)
+	qdel(src)
 
 /obj/structure/crematorium/alter_health()
 	return src.loc

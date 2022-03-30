@@ -158,7 +158,6 @@
 					CC_icon_state = "combo_element_hurt"
 			var/image/C_EL_I = image(icon='icons/mob/unarmed_combat_combos.dmi', icon_state="[CC_icon_state]_[i]")
 			C_EL_I.loc = victim
-			C_EL_I.layer = ABOVE_HUD_LAYER
 			C_EL_I.plane = ABOVE_HUD_PLANE
 			C_EL_I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 			C_EL_I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -199,12 +198,14 @@
 	if(!CC.do_combo(victim, attacker, ANIM_DELAY_WINDUP + ANIM_DELAY_RETURN))
 		if(CC.heavy_animation)
 			CC.after_animation(victim, attacker)
+			CC.after_combo_finished(victim, attacker)
 		animating_combo = FALSE
 		return
 	CC.animate_combo(victim, attacker)
 
 	if(CC.heavy_animation)
 		CC.after_animation(victim, attacker)
+		CC.after_combo_finished(victim, attacker)
 
 	if(QDELING(src))
 		victim = null
@@ -232,6 +233,8 @@
 		INVOKE_ASYNC(src, .proc/do_animation, CC)
 
 		CC.execute(victim, attacker)
+		if(!CC.heavy_animation)
+			CC.after_combo_finished(victim, attacker)
 		fullness -= CC.fullness_lose_on_execute
 		set_combo_icon(null)
 		combo_elements.Cut()

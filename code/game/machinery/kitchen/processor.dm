@@ -61,7 +61,7 @@
 	output = /obj/item/weapon/reagent_containers/food/condiment/flour
 
 /datum/food_processor_process/spaghetti
-	input = /obj/item/weapon/reagent_containers/food/snacks/dough
+	input = /obj/item/weapon/reagent_containers/food/snacks/doughslice
 	output = /obj/item/weapon/reagent_containers/food/snacks/spagetti
 
 	/* mobs */

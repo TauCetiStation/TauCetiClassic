@@ -28,8 +28,11 @@
 
 	if(src.stat)
 		return FALSE
-
 	message = sanitize(message)	//made consistent with say
+
+	if(!message)
+		return FALSE
+
 	if(iszombie(src))
 		message = zombie_talk(message)
 
@@ -37,11 +40,9 @@
 		alt_name = "(as [get_id_name("Unknown")])"
 
 	//parse the language code and consume it
-	var/datum/language/speaking = parse_language(message)
-	if(speaking)
-		message = copytext(message,2+length_char(speaking.key))
-	else if(species.force_racial_language)
-		speaking = all_languages[species.language]
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
 
 	return whisper_say(message, speaking, alt_name)
 
@@ -50,7 +51,7 @@
 // Returns FALSE if speaking was not succesful.
 /mob/living/carbon/human/proc/whisper_say(message, datum/language/speaking = null, alt_name="", verb="whispers")
 	// Whispering with gestures? You mad bro?
-	if(speaking && (speaking.flags & SIGNLANG))
+	if(speaking && (speaking.flags & SIGNLANG) || !message)
 		return FALSE
 
 	var/message_range = 1
@@ -59,6 +60,7 @@
 	var/italics = 1
 
 	message = capitalize(trim(message))
+	message = add_period(message)
 
 	//TODO: handle_speech_problems for silent
 	if(!message || silent || miming || HAS_TRAIT(src, TRAIT_MUTE))
@@ -87,14 +89,14 @@
 	listening |= src
 
 	//ghosts
-	for(var/mob/M in observer_list)	//does this include players who joined as observers as well?
+	for(var/mob/M as anything in observer_list)	//does this include players who joined as observers as well?
 		if(M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 			listening |= M
 
 	//Pass whispers on to anything inside the immediate listeners.
 	for(var/mob/L in listening)
 		for(var/mob/C in L.contents)
-			if(istype(C,/mob/living))
+			if(isliving(C))
 				listening += C
 
 	//pass on the message to objects that can hear us.

@@ -1,3 +1,123 @@
+var/global/list/dyed_item_types = list(
+	DYED_UNIFORM = list(
+		DYE_RED = /obj/item/clothing/under/color/red,
+		DYE_ORANGE = /obj/item/clothing/under/color/orange,
+		DYE_YELLOW = /obj/item/clothing/under/color/yellow,
+		DYE_GREEN = /obj/item/clothing/under/color/green,
+		DYE_BLUE = /obj/item/clothing/under/color/blue,
+		DYE_PURPLE = /obj/item/clothing/under/purple,
+		DYE_WHITE = /obj/item/clothing/under/color/white,
+		DYE_MIME = /obj/item/clothing/under/mime,
+		DYE_RAINBOW = /obj/item/clothing/under/rainbow,
+		DYE_CARGO = /obj/item/clothing/under/rank/cargotech,
+		DYE_CAPTAIN = /obj/item/clothing/under/rank/captain,
+		DYE_HOP = /obj/item/clothing/under/rank/head_of_personnel,
+		DYE_HOS = /obj/item/clothing/under/rank/head_of_security,
+		DYE_CE = /obj/item/clothing/under/rank/chief_engineer,
+		DYE_RD = list(/obj/item/clothing/under/rank/research_director, /obj/item/clothing/under/rank/research_director/rdalt),
+		DYE_CMO = /obj/item/clothing/under/rank/chief_medical_officer,
+		DYE_QM = /obj/item/clothing/under/rank/cargo,
+		DYE_GREENCOAT = /obj/item/clothing/under/lawyer,
+		DYE_REDCOAT = /obj/item/clothing/under/redcoat,
+		DYE_CLOWN = /obj/item/clothing/under/rank/clown,
+		DYE_IAA = /obj/item/clothing/under/rank/internalaffairs,
+		DYE_CENTCOMM = /obj/item/clothing/under/rank/centcom/representative,
+		DYE_FAKECENTCOM = list(/obj/item/clothing/under/space, /obj/item/clothing/under/psyche),
+		DYE_SYNDICATE = /obj/item/clothing/under/syndicate,
+	),
+	DYED_GLOVES = list(
+		DYE_RED = /obj/item/clothing/gloves/red,
+		DYE_ORANGE = /obj/item/clothing/gloves/orange,
+		DYE_YELLOW = list(/obj/item/clothing/gloves/yellow, /obj/item/clothing/gloves/fyellow),
+		DYE_GREEN = /obj/item/clothing/gloves/green,
+		DYE_BLUE = /obj/item/clothing/gloves/blue,
+		DYE_PURPLE = /obj/item/clothing/gloves/purple,
+		DYE_WHITE = /obj/item/clothing/gloves/white,
+		DYE_MIME = /obj/item/clothing/gloves/latex,
+		DYE_RAINBOW = /obj/item/clothing/gloves/rainbow,
+		DYE_CARGO = /obj/item/clothing/gloves/brown,
+		DYE_CAPTAIN = /obj/item/clothing/gloves/captain,
+		DYE_HOP = /obj/item/clothing/gloves/grey,
+		DYE_HOS = /obj/item/clothing/gloves/black/hos,
+		DYE_CE = /obj/item/clothing/gloves/black/ce,
+		DYE_RD = /obj/item/clothing/gloves/grey,
+		DYE_CMO = /obj/item/clothing/gloves/latex/nitrile,
+		DYE_QM = /obj/item/clothing/gloves/brown,
+		DYE_CLOWN = /obj/item/clothing/gloves/rainbow,
+		DYE_SYNDICATE = /obj/item/clothing/gloves/combat,
+	),
+	DYED_FINGERLESS_GLOVES = list(
+		DYE_RED = /obj/item/clothing/gloves/fingerless/red,
+		DYE_ORANGE = /obj/item/clothing/gloves/fingerless/orange,
+		DYE_YELLOW = /obj/item/clothing/gloves/fingerless/yellow,
+		DYE_GREEN = /obj/item/clothing/gloves/fingerless/green,
+		DYE_BLUE = /obj/item/clothing/gloves/fingerless/blue,
+		DYE_PURPLE = /obj/item/clothing/gloves/fingerless/purple,
+		DYE_RAINBOW = /obj/item/clothing/gloves/fingerless/rainbow,
+		DYE_CENTCOMM = /obj/item/clothing/gloves/security/marinad,
+	),
+	DYED_BEDSHEET = list(
+		DYE_RED = /obj/item/weapon/bedsheet/red,
+		DYE_ORANGE = /obj/item/weapon/bedsheet/orange,
+		DYE_YELLOW = /obj/item/weapon/bedsheet/yellow,
+		DYE_GREEN = /obj/item/weapon/bedsheet/green,
+		DYE_BLUE = /obj/item/weapon/bedsheet/blue,
+		DYE_PURPLE = /obj/item/weapon/bedsheet/purple,
+		DYE_WHITE = /obj/item/weapon/bedsheet,
+		DYE_MIME = /obj/item/weapon/bedsheet/mime,
+		DYE_RAINBOW = /obj/item/weapon/bedsheet/rainbow,
+		DYE_CARGO = /obj/item/weapon/bedsheet/brown,
+		DYE_CAPTAIN = /obj/item/weapon/bedsheet/captain,
+		DYE_HOS = /obj/item/weapon/bedsheet/hos,
+		DYE_CE = /obj/item/weapon/bedsheet/ce,
+		DYE_RD = /obj/item/weapon/bedsheet/rd,
+		DYE_CMO = /obj/item/weapon/bedsheet/medical,
+		DYE_QM = /obj/item/weapon/bedsheet/brown,
+		DYE_CLOWN = /obj/item/weapon/bedsheet/clown,
+		DYE_CENTCOMM = /obj/item/weapon/bedsheet/centcom,
+		DYE_FAKECENTCOM = list(/obj/item/weapon/bedsheet/gar, /obj/item/weapon/bedsheet/cult, /obj/item/weapon/bedsheet/wiz),
+		DYE_SYNDICATE = /obj/item/weapon/bedsheet/syndie,
+	),
+	DYED_SOFTCAP = list(
+		DYE_RED = /obj/item/clothing/head/soft/red,
+		DYE_ORANGE = /obj/item/clothing/head/soft/orange,
+		DYE_YELLOW = /obj/item/clothing/head/soft/yellow,
+		DYE_GREEN = /obj/item/clothing/head/soft/green,
+		DYE_BLUE = /obj/item/clothing/head/soft/blue,
+		DYE_PURPLE = /obj/item/clothing/head/soft/purple,
+		DYE_MIME = /obj/item/clothing/head/soft/mime,
+		DYE_RAINBOW = /obj/item/clothing/head/soft/rainbow,
+		DYE_CARGO = /obj/item/clothing/head/soft,
+		DYE_CMO = /obj/item/clothing/head/soft/paramed,
+		DYE_QM = /obj/item/clothing/head/soft,
+		DYE_CLOWN = /obj/item/clothing/head/soft/rainbow,
+		DYE_CENTCOMM = /obj/item/clothing/head/soft/nt_pmc_cap,
+		DYE_FAKECENTCOM = /obj/item/clothing/head/soft/sec/corp,
+	),
+	DYED_SHOES = list(
+		DYE_RED = /obj/item/clothing/shoes/red,
+		DYE_ORANGE = /obj/item/clothing/shoes/orange,
+		DYE_YELLOW = /obj/item/clothing/shoes/yellow,
+		DYE_GREEN = /obj/item/clothing/shoes/green,
+		DYE_BLUE = /obj/item/clothing/shoes/blue,
+		DYE_PURPLE = /obj/item/clothing/shoes/purple,
+		DYE_WHITE = /obj/item/clothing/shoes/white,
+		DYE_MIME = /obj/item/clothing/shoes/mime,
+		DYE_RAINBOW = /obj/item/clothing/shoes/rainbow,
+		DYE_CARGO = /obj/item/clothing/shoes/brown,
+		DYE_CAPTAIN = /obj/item/clothing/shoes/brown,
+		DYE_HOP = /obj/item/clothing/shoes/brown,
+		DYE_HOS = /obj/item/clothing/shoes/boots,
+		DYE_CE = /obj/item/clothing/shoes/boots/work,
+		DYE_RD = /obj/item/clothing/shoes/brown,
+		DYE_CMO = /obj/item/clothing/shoes/brown,
+		DYE_QM = /obj/item/clothing/shoes/brown,
+		DYE_CLOWN = /obj/item/clothing/shoes/clown_shoes,
+		DYE_IAA = /obj/item/clothing/shoes/black,
+		DYE_CENTCOMM = /obj/item/clothing/shoes/centcom,
+	),
+)
+
 /obj/machinery/washing_machine
 	name = "Washing Machine"
 	desc = "Washes your bloody clothes."
@@ -24,12 +144,38 @@
 	var/gibs_ready = 0
 	var/obj/crayon
 
+/obj/machinery/washing_machine/Destroy()
+	QDEL_NULL(crayon)
+	return ..()
+
+/obj/machinery/washing_machine/proc/get_wash_color()
+	if(!crayon)
+		return null
+
+	if(istype(crayon,/obj/item/toy/crayon))
+		var/obj/item/toy/crayon/CR = crayon
+		return CR.colourName
+
+	if(istype(crayon,/obj/item/weapon/stamp))
+		var/obj/item/weapon/stamp/ST = crayon
+		return ST.dye_color
+
+	return null
+
+/obj/machinery/washing_machine/proc/wash(atom/A, w_color)
+	A.clean_blood()
+
+	if(!isitem(A))
+		return
+	var/obj/item/I = A
+	I.wash_act(w_color)
+
 /obj/machinery/washing_machine/verb/start()
 	set name = "Start Washing"
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(usr, /mob/living)) //ew ew ew usr, but it's the only way to check.
+	if(!isliving(usr)) //ew ew ew usr, but it's the only way to check.
 		return
 
 	if( state != 4 )
@@ -43,167 +189,14 @@
 	update_icon()
 	playsound(src, 'sound/items/washingmachine.ogg', VOL_EFFECTS_MASTER)
 	sleep(210)
-	for(var/atom/A in contents)
-		A.clean_blood()
 
-	for(var/obj/item/I in contents)
-		I.decontaminate()
-		I.wet = 0
+	var/w_color = get_wash_color()
 
-	//Tanning!
-	for(var/obj/item/stack/sheet/hairlesshide/HH in contents)
-		new/obj/item/stack/sheet/wetleather(src, HH.get_amount())
-		qdel(HH)
-
+	for(var/I as anything in contents)
+		wash(I, w_color)
 
 	if(crayon)
-		var/wash_color
-		if(istype(crayon,/obj/item/toy/crayon))
-			var/obj/item/toy/crayon/CR = crayon
-			wash_color = CR.colourName
-		else if(istype(crayon,/obj/item/weapon/stamp))
-			var/obj/item/weapon/stamp/ST = crayon
-			wash_color = ST.item_color
-
-		if(wash_color)
-			var/new_jumpsuit_icon_state = ""
-			var/new_jumpsuit_item_state = ""
-			var/new_jumpsuit_name = ""
-			var/new_glove_fingerless_item_state = ""
-			var/new_glove_fingerless_icon_state = ""
-			var/new_glove_fingerless_name = ""
-			var/new_glove_item_state = ""
-			var/new_glove_icon_state = ""
-			var/new_glove_name = ""
-			var/new_shoe_icon_state = ""
-			var/new_shoe_name = ""
-			var/new_sheet_icon_state = ""
-			var/new_sheet_name = ""
-			var/new_softcap_icon_state = ""
-			var/new_softcap_name = ""
-			var/new_desc = "The colors are a bit dodgy."
-			/*
-				ADD /proc/machine_wash TO CLOTHING AND REMOVE THIS SPAGHETTI HELL WE HAVE BEEN DOOMED TO.
-			*/
-			for(var/T in typesof(/obj/item/clothing/under))
-				var/obj/item/clothing/under/J = new T
-				//world << "DEBUG: [color] == [J.color]"
-				if(wash_color == J.item_color)
-					new_jumpsuit_icon_state = J.icon_state
-					new_jumpsuit_item_state = J.item_state
-					new_jumpsuit_name = J.name
-					qdel(J)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
-					break
-				qdel(J)
-			for(var/T in typesof(/obj/item/clothing/gloves/fingerless))
-				var/obj/item/clothing/gloves/fingerless/G = new T
-				if(wash_color == G.item_color)
-					new_glove_fingerless_icon_state = G.icon_state
-					new_glove_fingerless_item_state = G.item_state
-					new_glove_fingerless_name = G.name
-					qdel(G)
-					break
-				qdel(G)
-			for(var/T in typesof(/obj/item/clothing/gloves))
-				var/obj/item/clothing/gloves/G = new T
-				if(wash_color == G.item_color)
-					new_glove_icon_state = G.icon_state
-					new_glove_item_state = G.item_state
-					new_glove_name = G.name
-					qdel(G)
-					break
-				qdel(G)
-			for(var/T in typesof(/obj/item/clothing/shoes))
-				var/obj/item/clothing/shoes/S = new T
-				//world << "DEBUG: [color] == [J.color]"
-				if(wash_color == S.item_color)
-					new_shoe_icon_state = S.icon_state
-					new_shoe_name = S.name
-					qdel(S)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
-					break
-				qdel(S)
-			for(var/T in typesof(/obj/item/weapon/bedsheet))
-				var/obj/item/weapon/bedsheet/B = new T
-				//world << "DEBUG: [color] == [J.color]"
-				if(wash_color == B.item_color)
-					new_sheet_icon_state = B.icon_state
-					new_sheet_name = B.name
-					qdel(B)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
-					break
-				qdel(B)
-			for(var/T in typesof(/obj/item/clothing/head/soft))
-				var/obj/item/clothing/head/soft/H = new T
-				//world << "DEBUG: [color] == [J.color]"
-				if(wash_color == H.item_color)
-					new_softcap_icon_state = H.icon_state
-					new_softcap_name = H.name
-					qdel(H)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
-					break
-				qdel(H)
-			if(new_jumpsuit_icon_state && new_jumpsuit_item_state && new_jumpsuit_name)
-				for(var/obj/item/clothing/under/J in contents)
-					//world << "DEBUG: YUP! FOUND IT!"
-					J.item_state = new_jumpsuit_item_state
-					J.icon_state = new_jumpsuit_icon_state
-					J.item_color = wash_color
-					J.name = new_jumpsuit_name
-					J.desc = new_desc
-			if(new_glove_name && new_glove_item_state && new_glove_icon_state||new_glove_fingerless_name && new_glove_fingerless_item_state && new_glove_fingerless_icon_state)
-				for(var/obj/item/clothing/gloves/G in contents)
-					if(istype(G, /obj/item/clothing/gloves/fingerless))
-						if(new_glove_fingerless_name && new_glove_fingerless_item_state && new_glove_fingerless_icon_state)
-							G.item_state = new_glove_fingerless_item_state
-							G.icon_state = new_glove_fingerless_icon_state
-							G.item_color = wash_color
-							G.name = new_glove_fingerless_name
-							G.desc = new_desc
-					else
-						if (new_glove_name && new_glove_item_state && new_glove_icon_state)
-							G.item_state = new_glove_item_state
-							G.icon_state = new_glove_icon_state
-							G.item_color = wash_color
-							G.name = new_glove_name
-							G.desc = new_desc
-			if(new_shoe_icon_state && new_shoe_name)
-				for(var/obj/item/clothing/shoes/S in contents)
-					//world << "DEBUG: YUP! FOUND IT!"
-					if (istype(S,/obj/item/clothing/shoes/orange))
-						var/obj/item/clothing/shoes/orange/L = S
-						if (L.chained)
-							L.remove_cuffs()
-					if(new_shoe_icon_state == "orange1")
-						new_shoe_icon_state = "orange"
-					if(new_shoe_name == "shackles")
-						new_shoe_name = "orange shoes"
-					if(S.item_state == "o_shoes1")
-						S.item_state = "o_shoes"
-					S.icon_state = new_shoe_icon_state
-					S.item_color = wash_color
-					S.name = new_shoe_name
-					S.desc = new_desc
-			if(new_sheet_icon_state && new_sheet_name)
-				for(var/obj/item/weapon/bedsheet/B in contents)
-					//world << "DEBUG: YUP! FOUND IT!"
-					B.icon_state = new_sheet_icon_state
-					B.item_color = wash_color
-					B.name = new_sheet_name
-					B.desc = new_desc
-			if(new_softcap_icon_state && new_softcap_name)
-				for(var/obj/item/clothing/head/soft/H in contents)
-					//world << "DEBUG: YUP! FOUND IT!"
-					H.icon_state = new_softcap_icon_state
-					H.item_color = wash_color
-					H.name = new_softcap_name
-					H.desc = new_desc
-		qdel(crayon)
-		crayon = null
-
-	for(var/obj/item/clothing/under/U in contents)
-		U.fresh_laundered_until = world.time + 5 MINUTES
+		QDEL_NULL(crayon)
 
 	if( locate(/mob,contents) )
 		state = 7
@@ -241,7 +234,7 @@
 	else if(istype(W,/obj/item/weapon/grab))
 		if( (state == 1) && hacked)
 			var/obj/item/weapon/grab/G = W
-			if(ishuman(G.assailant) && iscorgi(G.affecting))
+			if(ishuman(G.assailant) && (iscorgi(G.affecting) || isIAN(G.affecting)))
 				G.affecting.loc = src
 				qdel(G)
 				state = 3

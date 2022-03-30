@@ -95,7 +95,7 @@
 		revert_cast()
 		return
 
-	cast(list(target), user)
+	perform(list(target), user=user)
 	
 /obj/effect/proc_holder/spell/blessing/cast(list/targets, mob/user = usr)
 	var/obj/item/target = targets[1]
@@ -103,8 +103,7 @@
 	target.visible_message("<span class='notice'>[target] has been blessed by [user]!</span>")
 	target.name = "blessed [target.name]"
 	target.force += divine_power
-	var/holy_outline = filter(type = "outline", size = 1, color = "#fffb00a1")
-	target.filters += holy_outline
+	target.add_filter("holy_spell_outline", 2, outline_filter(1, "#fffb00a1"))
 
 	target.blessed = divine_power
 
@@ -395,11 +394,10 @@
 		user.RemoveSpell(src)
 		return
 
-	if(user.my_religion.runes_by_mob[user])
-		var/list/L = user.my_religion.runes_by_mob[user]
-		if(L.len > user.my_religion.max_runes_on_mob)
-			to_chat(user, "<span class='warning'>Вуаль пространства не сможет сдержать больше рун!</span>")
-			return
+	var/list/L = LAZYACCESS(user.my_religion.runes_by_ckey, user.ckey)
+	if(!isnull(L) && L.len >= user.my_religion.max_runes_on_mob)
+		to_chat(user, "<span class='warning'>Ваше тело слишком слабо, чтобы выдержать ещё больше рун!</span>")
+		return
 
 	var/obj/effect/rune/R = new agent.building_type(get_turf(user), user.my_religion, user)
 	var/datum/rune/rune = new agent.rune_type(R)

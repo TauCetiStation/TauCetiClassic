@@ -53,7 +53,7 @@
 	..()
 	SSticker.nar_sie_has_risen = TRUE
 
-	new /obj/singularity/narsie/large(get_turf(AOG))
+	new /obj/singularity/narsie(get_turf(AOG), religion)
 	return TRUE
 
 /datum/religion_rites/pedestals/cult/cult_portal

@@ -83,7 +83,7 @@
 			var/ian = 0
 			//for(var/mob/M in oviewers(7, src))
 			for(var/mob/M in oview(src,7))
-				if(istype(M, /mob/living/carbon/ian))
+				if(isIAN(M))
 					if(M.client)
 						alone = 0
 						break
@@ -100,7 +100,7 @@
 
 
 		if(prob(1))
-			emote("me",1,pick("dances around","chases her tail"))
+			me_emote(pick("dances around", "chases her tail"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					set_dir(i)

@@ -64,19 +64,6 @@
 		if(show_warnings)
 			to_chat(giver, "<span class='red'>[src]'s hands are full.</span>")
 		return FALSE
-
-	var/obj/item/item_in_hand = giver.get_active_hand()
-	if(item_in_hand)
-		if(istype(item_in_hand, /obj/item/weapon/twohanded))
-			var/obj/item/weapon/twohanded/T = item_in_hand
-			if(T.wielded || T.only_twohand)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
-				return FALSE
-		if(istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))
-			var/obj/item/weapon/gun/projectile/automatic/l6_saw/T = item_in_hand
-			if(T.wielded)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
-				return FALSE
 	return TRUE
 
 /mob/living/carbon/ian/can_accept_gives(mob/giver, show_warnings = FALSE)

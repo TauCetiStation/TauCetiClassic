@@ -23,7 +23,7 @@
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "blank"
 	anchored = TRUE
-	layer = 99
+	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	unacidable = 1//Just to be sure.
 

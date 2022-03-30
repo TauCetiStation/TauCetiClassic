@@ -1,7 +1,7 @@
 // Symptoms are the effects that engineered advanced diseases do.
 
-var/list/list_symptoms = subtypesof(/datum/symptom)
-var/list/dictionary_symptoms = list()
+var/global/list/list_symptoms = subtypesof(/datum/symptom)
+var/global/list/dictionary_symptoms = list()
 
 var/global/const/SYMPTOM_ACTIVATION_PROB = 3
 

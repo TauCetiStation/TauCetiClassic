@@ -13,6 +13,9 @@
 	max_amount = 60
 	usesound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("hit", "bludgeoned", "whacked")
+	qualities = list(
+		QUALITY_PRYING = 0.5
+	)
 
 /obj/item/stack/rods/update_icon()
 	var/amount = get_amount()
@@ -44,34 +47,43 @@
 	else
 		return ..()
 
-/obj/item/stack/rods/attack_self(mob/user)
+/obj/item/stack/rods/attack_self(mob/living/user)
+	var/atom/build_loc = loc
+	if(ismob(build_loc))
+		build_loc = build_loc.loc
+
+	if(!isturf(build_loc))
+		return FALSE
+
 	add_fingerprint(user)
 
-	if(!istype(user.loc,/turf)) return 0
+	if(locate(/obj/structure/grille, build_loc))
+		for(var/obj/structure/grille/G in build_loc)
+			if(!G.destroyed)
+				return TRUE
 
-	if (locate(/obj/structure/grille, usr.loc))
-		for(var/obj/structure/grille/G in usr.loc)
-			if (G.destroyed)
-				if(!use(1))
-					continue
-				G.health = 10
-				G.density = TRUE
-				G.destroyed = 0
-				G.icon_state = "grille"
-			else
-				return 1
-	else
-		if(get_amount() < 2)
-			to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
-			return
-		if(user.is_busy(src))
-			return
-		to_chat(usr, "<span class='notice'>Assembling grille...</span>")
-		if (!use_tool(usr, usr, 10))
-			return
-		if (!use(2))
-			return
-		var/obj/structure/grille/F = new /obj/structure/grille( usr.loc )
-		to_chat(usr, "<span class='notice'>You assemble a grille.</span>")
-		F.add_fingerprint(usr)
-	return
+			if(!use(1))
+				continue
+
+			G.health = 10
+			G.density = TRUE
+			G.destroyed = FALSE
+			G.icon_state = "grille"
+
+		return FALSE
+
+
+	if(get_amount() < 2)
+		to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
+		return
+	if(user.is_busy(src))
+		return
+	to_chat(usr, "<span class='notice'>Assembling grille...</span>")
+	if (!use_tool(usr, usr, 10))
+		return
+	if (!use(2))
+		return
+	var/obj/structure/grille/F = new /obj/structure/grille(build_loc)
+	user.try_take(F, build_loc)
+	to_chat(usr, "<span class='notice'>You assemble a grille.</span>")
+	F.add_fingerprint(usr)

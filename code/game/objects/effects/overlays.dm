@@ -60,13 +60,12 @@
 	name = "Slice"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "Slice"
-	layer = LIGHTING_LAYER + 1
-	plane = LIGHTING_PLANE + 1
+	plane = ABOVE_LIGHTING_PLANE
 	anchored = TRUE
 
 /obj/effect/overlay/droppod_open
-	layer = 4
-	plane = 4
+	layer = BELOW_OBJ_LAYER
+	plane = GAME_PLANE
 	anchored = TRUE
 	icon = 'icons/obj/structures/droppod.dmi'
 	icon_state = "panel_opening"
@@ -81,7 +80,7 @@
 	icon = 'icons/mob/talk.dmi'
 	icon_state = "default0"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
 	layer = MOB_LAYER + 1
 
 /obj/effect/overlay/typing_indicator/atom_init(mapload, indi_icon)

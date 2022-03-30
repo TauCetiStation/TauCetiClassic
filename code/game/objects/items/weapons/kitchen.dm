@@ -133,8 +133,8 @@
 	m_amt = 12000
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	tools = list(
-		TOOL_KNIFE = 1
+	qualities = list(
+		QUALITY_CUTTING = 1
 		)
 	sweep_step = 2
 
@@ -241,7 +241,7 @@
 				return
 			else
 				H.visible_message("<span class='warning'>[user] tried to knock [H] unconscious!</span>", "<span class='warning'>[user] tried to knock you unconscious!</span>")
-				H.eye_blurry += 3
+				H.blurEyes(3)
 	return ..()
 
 /obj/item/weapon/storage/visuals/tray

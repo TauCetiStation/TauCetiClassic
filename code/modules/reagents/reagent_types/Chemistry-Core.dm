@@ -49,7 +49,7 @@
 		M.adjustToxLoss(rand(15,20))
 
 	var/hotspot = (locate(/obj/fire) in T)
-	if(hotspot && !istype(T, /turf/space))
+	if(hotspot && !isspaceturf(T))
 		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
@@ -59,7 +59,7 @@
 /datum/reagent/water/reaction_obj(obj/O, volume)
 	var/turf/T = get_turf(O)
 	var/hotspot = (locate(/obj/fire) in T)
-	if(hotspot && !istype(T, /turf/space))
+	if(hotspot && !isspaceturf(T))
 		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles )
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
 		lowertemp.react()
@@ -74,6 +74,11 @@
 		if(C.painted)
 			C.remove_paint_state()
 			C.color = null
+
+/datum/reagent/water/on_general_digest(mob/living/M)
+	..()
+	if(M.IsSleeping())
+		M.AdjustDrunkenness(-1)
 
 /datum/reagent/water/on_diona_digest(mob/living/M)
 	..()
@@ -99,7 +104,7 @@
 		holder.remove_reagent("unholywater", 2 * REM)
 	if(ishuman(M) && iscultist(M) && !(ASPECT_RESCUE in M.my_religion.aspects) && prob(10))
 		var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
-		C.RemoveFromRole(M.mind)
+		C.Deconvert()
 		M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>",
 				          "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
 
@@ -113,7 +118,7 @@
 		else
 			cleansed.result = G.result
 		cleansed.icon_state = "[initial(cleansed.icon_state)][cleansed.result]"
-		if(istype(O.loc, /mob/living)) // Just for the sake of me feeling better.
+		if(isliving(O.loc)) // Just for the sake of me feeling better.
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
@@ -123,21 +128,21 @@
 		if(G.lit) // Haha, but wouldn't water actually extinguish it?
 			cleansed.light("")
 		cleansed.wax = G.wax
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/game_kit/chaplain))
 		var/obj/item/weapon/game_kit/chaplain/G = O
 		var/obj/item/weapon/game_kit/random/cleansed = new /obj/item/weapon/game_kit/random(G.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/pen/ghost))
 		var/obj/item/weapon/pen/ghost/G = O
 		var/obj/item/weapon/pen/cleansed = new /obj/item/weapon/pen(G.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cleansed)
 		qdel(O)
@@ -193,7 +198,7 @@
 		else
 			cursed.result = N.result
 		cursed.icon_state = "[initial(cursed.icon_state)][cursed.result]"
-		if(istype(O.loc, /mob/living)) // Just for the sake of me feeling better.
+		if(isliving(O.loc)) // Just for the sake of me feeling better.
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
@@ -203,7 +208,7 @@
 		if(N.lit) // Haha, but wouldn't water actually extinguish it?
 			cursed.light("")
 		cursed.wax = N.wax
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
@@ -211,14 +216,14 @@
 		var/obj/item/weapon/game_kit/N = O
 		var/obj/item/weapon/game_kit/random/cursed = new /obj/item/weapon/game_kit/chaplain(N.loc)
 		cursed.board_stat = N.board_stat
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/pen) && !istype(O, /obj/item/weapon/pen/ghost))
 		var/obj/item/weapon/pen/N = O
 		var/obj/item/weapon/pen/ghost/cursed = new /obj/item/weapon/pen/ghost(N.loc)
-		if(istype(O.loc, /mob/living))
+		if(isliving(O.loc))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(cursed)
 		qdel(O)
@@ -303,7 +308,7 @@
 
 /datum/reagent/mercury/on_general_digest(mob/living/M)
 	..()
-	if(M.canmove && !M.incapacitated() && istype(M.loc, /turf/space))
+	if(M.canmove && !M.incapacitated() && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -329,7 +334,7 @@
 
 /datum/reagent/carbon/reaction_turf(turf/T, volume)
 	. = ..()
-	if(!istype(T, /turf/space))
+	if(!isspaceturf(T))
 		var/obj/effect/decal/cleanable/dirt/dirtoverlay = locate(/obj/effect/decal/cleanable/dirt, T)
 		if (!dirtoverlay)
 			dirtoverlay = new/obj/effect/decal/cleanable/dirt(T)
@@ -402,7 +407,7 @@
 
 /datum/reagent/lithium/on_general_digest(mob/living/M)
 	..()
-	if(M.canmove && !M.incapacitated() && istype(M.loc, /turf/space))
+	if(M.canmove && !M.incapacitated() && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -421,6 +426,11 @@
 	..()
 	M.nutrition += 4 * REM
 
+/datum/reagent/sugar/on_vox_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(REAGENTS_METABOLISM * 0.5)
+	return FALSE
+
 /datum/reagent/radium
 	name = "Radium"
 	id = "radium"
@@ -433,7 +443,7 @@
 	..()
 	M.apply_effect(2 * REM,IRRADIATE, 0)
 	// radium may increase your chances to cure a disease
-	if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
+	if(iscarbon(M)) // make sure to only use it on carbon mobs
 		var/mob/living/carbon/C = M
 		if(C.virus2.len)
 			for(var/ID in C.virus2)
@@ -442,7 +452,7 @@
 					if(prob(50))
 						M.radiation += 50 // curing it that way may kill you instead
 						var/mob/living/carbon/human/H
-						if(istype(C,/mob/living/carbon/human))
+						if(ishuman(C))
 							H = C
 						if(!H || (H.species && !H.species.flags[RAD_ABSORB]))
 							M.adjustToxLoss(100)
@@ -451,7 +461,7 @@
 /datum/reagent/radium/reaction_turf(turf/T, volume)
 	. = ..()
 	if(volume >= 3)
-		if(!istype(T, /turf/space))
+		if(!isspaceturf(T))
 			var/obj/effect/decal/cleanable/greenglow/glow = locate(/obj/effect/decal/cleanable/greenglow, T)
 			if(!glow)
 				new /obj/effect/decal/cleanable/greenglow(T)
@@ -500,7 +510,7 @@
 /datum/reagent/uranium/reaction_turf(turf/T, volume)
 	. = ..()
 	if(volume >= 3)
-		if(!istype(T, /turf/space))
+		if(!isspaceturf(T))
 			var/obj/effect/decal/cleanable/greenglow/glow = locate(/obj/effect/decal/cleanable/greenglow, T)
 			if(!glow)
 				new /obj/effect/decal/cleanable/greenglow(T)
