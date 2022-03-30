@@ -112,7 +112,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	FE_type = "golden"
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/atmo
-	name = "atmostech's fire extinguisher"
+	name = "Compact fire extinguisher"
 	desc = "Compact fire extinguisher."
 	icon_state = "fire_extinguisher_atmo"
 	item_state = "fire_extinguisher_atmo"

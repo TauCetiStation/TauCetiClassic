@@ -312,3 +312,24 @@
 	beakers += B1
 	beakers += B2
 	icon_state = initial(icon_state) +"_locked"
+
+///////AFFF
+/obj/item/weapon/grenade/chem_grenade/afff
+	name = "afff grenade"
+	desc = ""
+	stage = 2
+	path = 1
+
+/obj/item/weapon/grenade/chem_grenade/afff/atom_init()
+	. = ..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+
+	B1.reagents.add_reagent("aqueous_foam", 60)
+	B2.reagents.add_reagent("aqueous_foam", 60)
+
+	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
+
+	beakers += B1
+	beakers += B2
+	icon_state = initial(icon_state) +"_locked"
