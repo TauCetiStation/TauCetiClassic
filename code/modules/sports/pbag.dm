@@ -65,7 +65,7 @@
 /mob/living/pbag/UnarmedAttack(atom/A)
 	INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)
 
-/mob/living/pbag/on_lay_down()
+/mob/living/pbag/crawl()
 	drop_down()
 	return TRUE
 
