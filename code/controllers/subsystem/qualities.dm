@@ -116,11 +116,15 @@ SUBSYSTEM_DEF(qualities)
 			to_chat(C.mob, "<span class='warning'>Пожалуйста, подождите загрузки всех систем.</span>")
 		return
 
-	var/datum/quality/Q
-	if(forced_quality_type)
-		Q = qualities_by_type[forced_quality_type]
+	var/datum/quality/selected_quality
+
+	if(prob(90))
+		selected_quality = qualities_pool[/datum/quality/clumsy]
 	else
-		Q = roll_quality(C)
+		selected_quality = qualities_pool[/datum/quality/nuclear_option]
+
+	if(!selected_quality)
+		return
 
 	// Only "legitimately" possible if `forced_quality_type` is invalid.
 	if(!Q)

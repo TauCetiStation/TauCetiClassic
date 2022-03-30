@@ -1,8 +1,9 @@
 /obj/item/weapon/gun/energy/taser
 	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
-	icon_state = "taser"
-	item_state = null	//so the human update icon uses the icon_state instead.
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "watergun"
+	item_state = "watergun"	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/electrode)
 	can_be_holstered = TRUE
 	cell_type = /obj/item/weapon/stock_parts/cell/crap
@@ -10,7 +11,7 @@
 /obj/item/weapon/gun/energy/taser/cyborg
 	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
-	icon_state = "taser"
+	icon_state = "watergun"
 	fire_sound = 'sound/weapons/guns/gunpulse_Taser.ogg'
 	ammo_type = list(/obj/item/ammo_casing/energy/stun)
 	cell_type = /obj/item/weapon/stock_parts/cell/secborg
@@ -46,6 +47,7 @@
 /obj/item/weapon/gun/energy/taser/stunrevolver
 	name = "stun revolver"
 	desc = "A high-tech revolver that fires stun cartridges. The stun cartridges can be recharged using a conventional energy weapon recharger."
+	icon = 'icons/obj/gun.dmi'
 	icon_state = "stunrevolver"
 	item_state = "taser"
 	origin_tech = "combat=3;materials=3;powerstorage=2"

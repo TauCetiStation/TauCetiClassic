@@ -36,15 +36,7 @@
 /datum/quality/quirkieish/nuclear_option
 	name = "Nuclear Option"
 	desc = "Тебе известен код от бомбы."
-	requirement = "Капитан, АВД, Библиотекарь, Клоун, Мим."
-
-	jobs_required = list(
-		"Captain",
-		"Internal Affairs Agent",
-		"Librarian",
-		"Clown",
-		"Mime",
-	)
+	requirement = "Нет."
 
 /datum/quality/quirkieish/nuclear_option/add_effect(mob/living/carbon/human/H)
 	var/nukecode = "ERROR"

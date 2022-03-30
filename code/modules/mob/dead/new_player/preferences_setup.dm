@@ -190,8 +190,8 @@
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	var/datum/job/previewJob
 
-	if(job_preferences["Test Subject"] == JP_LOW)
-		previewJob = SSjob.GetJob("Test Subject")
+	if(job_preferences["Clown Candidate"] == JP_LOW)
+		previewJob = SSjob.GetJob("Clown Candidate")
 
 	if(!previewJob)
 		var/highest_pref = 0

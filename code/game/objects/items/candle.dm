@@ -184,7 +184,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 
 	if(isliving(user))
 		var/mob/living/L = user
-		if(L.getBrainLoss() >= 60 || L.mind.holy_role || L.mind.role_alt_title == "Paranormal Investigator")
+		if(L.getBrainLoss() >= 60 || L.mind.holy_role || L.mind.role_alt_title == "Paranormal Clown")
 			chaplain_check = TRUE
 
 	if(chaplain_check)

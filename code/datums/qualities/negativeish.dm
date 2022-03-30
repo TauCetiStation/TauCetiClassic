@@ -206,13 +206,10 @@
 /datum/quality/negativeish/clumsy
 	name = "Clumsy"
 	desc = "Ты - неуклюжий, криворукий дурачок. Лучше не трогать всякие опасные штуки!"
-	requirement = "Все, кроме Клоуна."
+	requirement = "Нет."
 
-/datum/quality/negativeish/clumsy/satisfies_requirements(mob/living/carbon/human/H, latespawn)
-	return H.mind.assigned_role != "Clown"
-
-/datum/quality/clumsy/add_effect(mob/living/carbon/human/H, latespawn)
-	H.mutations.Add(CLUMSY)
+/datum/quality/negativeish/clumsy/add_effect(mob/living/carbon/human/H, latespawn)
+	H.mutations |= CLUMSY
 
 
 var/global/list/allergen_reagents_list

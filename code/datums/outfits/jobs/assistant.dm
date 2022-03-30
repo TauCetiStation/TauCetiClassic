@@ -2,11 +2,13 @@
 /datum/outfit/job/assistant
 	name = OUTFIT_JOB_NAME("Assistant Gear")
 
+	mask = /obj/item/clothing/mask/gas/clown_hat
+
 	uniform = /obj/item/clothing/under/fluff/jane_sidsuit
 	shoes = /obj/item/clothing/shoes/black
 
 /datum/outfit/job/assistant/lawyer
-	name = OUTFIT_JOB_NAME("Lawyer")
+	name = OUTFIT_JOB_NAME("Clown Lawyer")
 
 	uniform = /obj/item/clothing/under/lawyer/bluesuit
 	suit = /obj/item/clothing/suit/storage/lawyer/bluejacket
@@ -15,7 +17,7 @@
 	l_hand = /obj/item/weapon/storage/briefcase
 
 /datum/outfit/job/assistant/private_eye
-	name = OUTFIT_JOB_NAME("Private Eye")
+	name = OUTFIT_JOB_NAME("Private Clown")
 
 	uniform = /obj/item/clothing/under/color/black
 	shoes = /obj/item/clothing/shoes/boots
@@ -23,7 +25,7 @@
 	l_pocket = /obj/item/weapon/lighter/zippo
 
 /datum/outfit/job/assistant/reporter
-	name = OUTFIT_JOB_NAME("Reporter")
+	name = OUTFIT_JOB_NAME("Clown Reporter")
 
 	uniform = /obj/item/clothing/under/lawyer/black
 	shoes = /obj/item/clothing/shoes/black
@@ -31,25 +33,25 @@
 	l_pocket = /obj/item/device/camera
 
 /datum/outfit/job/assistant/test_subject
-	name = OUTFIT_JOB_NAME("Test Subject")
+	name = OUTFIT_JOB_NAME("Clown Candidate")
 
 	uniform = /obj/item/clothing/under/fluff/jane_sidsuit
 	shoes = /obj/item/clothing/shoes/black
 
 /datum/outfit/job/assistant/waiter
-	name = OUTFIT_JOB_NAME("Waiter")
+	name = OUTFIT_JOB_NAME("Clown Waiter")
 
 	uniform = /obj/item/clothing/under/waiter
 	shoes = /obj/item/clothing/shoes/black
 
 /datum/outfit/job/assistant/vice_officer
-	name = OUTFIT_JOB_NAME("Vice Officer")
+	name = OUTFIT_JOB_NAME("Clown Vice Officer")
 
 	uniform = /obj/item/clothing/under/rank/vice
 	shoes = /obj/item/clothing/shoes/black
 
 /datum/outfit/job/assistant/paranormal_investigator
-	name = OUTFIT_JOB_NAME("Paranormal Investigator")
+	name = OUTFIT_JOB_NAME("Paranormal Clown")
 
 	uniform = /obj/item/clothing/under/fluff/indiana
 	shoes = /obj/item/clothing/shoes/brown

@@ -475,9 +475,9 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 /obj/item/weapon/reagent_containers/spray/watergun
 	name = "hyper soaker"
 	desc = "A water gun that uses manually-pressurized air to shoot water with great power, range, and accuracy."
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "watergun"
-	item_state = "watergun"
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "taser"
+	item_state = "taser"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = null
 	volume = 35

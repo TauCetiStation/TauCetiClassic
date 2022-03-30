@@ -710,7 +710,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["use_skirt"]             << use_skirt
 	//Write prefs
 	S["alternate_option"]      << alternate_option
-	S["job_preferences"]       << job_preferences
+
+	if(!("Clown Candidate" in job_preferences))
+		S["job_preferences"]       << job_preferences
+	if(!("Clown Candidate" in player_alt_titles))
+		S["player_alt_titles"]     << player_alt_titles
 
 	//Traits
 	S["all_quirks"]      << all_quirks
@@ -725,7 +729,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["gen_record"]        << gen_record
 	S["be_role"]           << be_role
 	S["ignore_question"]   << ignore_question
-	S["player_alt_titles"] << player_alt_titles
 	S["organ_data"]        << organ_data
 	S["ipc_head"]          << ipc_head
 	S["gear"]              << gear

@@ -1915,6 +1915,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/mob/living/simple_animal/hostile/retaliate/clown,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "adr" = (
@@ -18573,6 +18574,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/retaliate/clown,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aHi" = (
@@ -20553,6 +20555,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/mob/living/simple_animal/hostile/retaliate/clown,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aKS" = (
@@ -36045,6 +36048,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/generic,
+/mob/living/simple_animal/hostile/retaliate/clown,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bmx" = (
@@ -49402,6 +49406,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/mob/living/simple_animal/hostile/retaliate/clown,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "bKl" = (
@@ -57193,6 +57198,7 @@
 	},
 /area/station/rnd/test_area)
 "cer" = (
+/mob/living/simple_animal/hostile/retaliate/clown,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "ces" = (
@@ -57602,6 +57608,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/mob/living/simple_animal/hostile/retaliate/clown,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "cfH" = (
@@ -65544,6 +65551,7 @@
 /obj/structure/closet/hydrant{
 	pixel_x = -32
 	},
+/mob/living/simple_animal/hostile/retaliate/clown,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "cBj" = (
@@ -66712,6 +66720,7 @@
 "cEy" = (
 /obj/structure/stool,
 /obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/retaliate/clown,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "cEz" = (
@@ -66722,6 +66731,7 @@
 /area/station/tcommsat/computer)
 "cEB" = (
 /obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/retaliate/clown,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "cEC" = (
@@ -68258,6 +68268,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/mob/living/simple_animal/hostile/retaliate/clown,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "cKi" = (
@@ -71004,6 +71015,11 @@
 /obj/structure/closet/firecloset,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"eZj" = (
+/obj/effect/spawner/lootdrop/maintenance,
+/mob/living/simple_animal/hostile/retaliate/clown,
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "eZS" = (
 /obj/machinery/camera{
 	c_tag = "Cargo Office South";
@@ -71349,6 +71365,24 @@
 /obj/random/foods/food_trash,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"fxS" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/retaliate/clown,
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "fAb" = (
 /obj/machinery/camera{
 	c_tag = "Recycler External South";
@@ -71394,6 +71428,23 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
+"fCV" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/mob/living/simple_animal/hostile/retaliate/clown,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "fDb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -73724,6 +73775,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
+"igy" = (
+/mob/living/simple_animal/hostile/retaliate/clown,
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "ihb" = (
 /obj/machinery/gateway{
 	dir = 9
@@ -74880,6 +74935,24 @@
 /obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency2)
+"jsT" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/retaliate/clown,
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "jtb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -75076,6 +75149,18 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
+"jEB" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/retaliate/clown,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "jFb" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
@@ -75527,6 +75612,16 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
+"kgh" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/mob/living/simple_animal/hostile/retaliate/clown,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "kgz" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -80697,6 +80792,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
+"qIl" = (
+/obj/structure/sign/warning,
+/turf/simulated/wall,
+/area/station/storage/emergency3)
 "qJb" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -83153,6 +83252,24 @@
 	icon_state = "greencorner"
 	},
 /area/station/hallway/primary/port)
+"tqT" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/retaliate/clown,
+/turf/simulated/floor/plating,
+/area/station/maintenance/chapel)
 "tso" = (
 /obj/structure/transit_tube{
 	icon_state = "D-NE"
@@ -103081,7 +103198,7 @@ aNi
 aNi
 bEW
 gYf
-wAe
+kgh
 hmR
 bcE
 bgu
@@ -106685,7 +106802,7 @@ bDp
 bDp
 bDp
 bEW
-fDx
+fCV
 bNk
 bNk
 sqt
@@ -109467,7 +109584,7 @@ agO
 agO
 apl
 agO
-alZ
+igy
 atc
 alZ
 agO
@@ -111012,7 +111129,7 @@ aAz
 ani
 ayr
 aqd
-alZ
+igy
 alZ
 ceF
 axe
@@ -111791,7 +111908,7 @@ axT
 aKY
 agO
 bLk
-aYi
+jsT
 aCu
 aCu
 aCu
@@ -119492,7 +119609,7 @@ uUU
 aeJ
 alC
 aeJ
-cyv
+eZj
 aBe
 aOV
 aOV
@@ -123928,7 +124045,7 @@ ciT
 bUl
 abp
 bQR
-bLt
+fxS
 cdA
 cdA
 cdA
@@ -130094,8 +130211,8 @@ bFo
 bFo
 aGG
 cak
-cbz
-cbz
+qIl
+qIl
 cbz
 cbz
 cbz
@@ -130608,7 +130725,7 @@ cak
 bFo
 lOb
 cak
-cbz
+qIl
 cKv
 iUO
 cEB
@@ -130864,7 +130981,7 @@ cak
 cak
 bFo
 lOb
-cbz
+qIl
 cbz
 cEy
 cfB
@@ -131326,7 +131443,7 @@ aup
 axj
 azL
 aEY
-ayi
+tqT
 qFO
 aQD
 aRF
@@ -133174,7 +133291,7 @@ bFo
 cFs
 nlb
 bFo
-lOb
+jEB
 cak
 cak
 cFs

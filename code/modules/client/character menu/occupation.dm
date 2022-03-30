@@ -59,7 +59,7 @@
 		if(!job.is_species_permitted(user.client.prefs.species))
 			. += "<del>[rank]</del></td><td><b> \[SPECIES RESTRICTED]</b></td></tr>"
 			continue
-		if(job_preferences["Test Subject"] == JP_LOW && (rank != "Test Subject"))
+		if(job_preferences["Clown Candidate"] == JP_LOW && (rank != "Clown Candidate"))
 			. += "<font color=orange>[rank]</font></td><td></td></tr>"
 			continue
 		if((rank in command_positions) || (rank == "AI"))//Bold head jobs
@@ -71,8 +71,8 @@
 
 		. += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;text=[rank]'>"
 
-		if(rank == "Test Subject")//Assistant is special
-			if(job_preferences["Test Subject"])
+		if(rank == "Clown Candidate")//Assistant is special
+			if(job_preferences["Clown Candidate"])
 				. += " <font color=green size=2>Yes</font>"
 			else
 				. += " <font color=red size=2>No</font>"
@@ -148,8 +148,8 @@
 		if(JP_HIGH)
 			jpval = null
 
-	if(role == "Test Subject")
-		if(job_preferences["Test Subject"] == JP_LOW)
+	if(role == "Clown Candidate")
+		if(job_preferences["Clown Candidate"] == JP_LOW)
 			jpval = null
 		else
 			jpval = JP_LOW

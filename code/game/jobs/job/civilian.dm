@@ -231,8 +231,8 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	idtype = /obj/item/weapon/card/id/clown
-	access = list(access_clown, access_theatre)
+	idtype = /obj/item/weapon/card/id/clownGold
+	access = list(access_clown, access_theatre, access_heads)
 	salary = 20
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/clown
