@@ -8,7 +8,7 @@
 		hiccup()
 
 	//Feeding, chasing food, FOOOOODDDD
-	if(!incapacitated() && !resting && !buckled && !lying)
+	if(!incapacitated() && !crawling && !buckled && !lying)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			turns_since_scan = 0
@@ -56,7 +56,7 @@
 
 	//Movement - this, speaking, simple_animal_A.I. code - should be converted into A.I. datum later on, for now - dirty copypasta of simple_animal.dm Life() proc.
 	if(!client && !stop_automated_movement && wander && !anchored)
-		if(isturf(src.loc) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if(isturf(src.loc) && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Soma animals don't move when pulled
@@ -383,7 +383,7 @@
 
 	stamina = min(stamina + 1, 100) //i don't want a whole new proc just for one variable, so i leave this here.
 
-	if(resting)
+	if(crawling)
 		dizziness = max(0, dizziness - 5)
 		jitteriness = max(0, jitteriness - 5)
 	else
@@ -503,7 +503,7 @@
 				adjustHalLoss(-3)
 		else if(IsSleeping())
 			blinded = TRUE
-		else if(resting)
+		else if(crawling)
 			if(halloss > 0)
 				adjustHalLoss(-3)
 		else

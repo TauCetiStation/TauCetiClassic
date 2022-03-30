@@ -75,7 +75,7 @@
 	if(IsSleeping())
 		Paralyse(3)
 
-	if(src.resting)
+	if(src.crawling)
 		Weaken(5)
 
 	if(health < config.health_threshold_dead && src.stat != DEAD) //die only once

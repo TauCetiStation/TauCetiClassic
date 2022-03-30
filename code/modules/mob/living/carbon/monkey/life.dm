@@ -383,7 +383,7 @@
 	AdjustConfused(-1)
 	AdjustDrunkenness(-1)
 
-	if(resting)
+	if(crawling)
 		dizziness = max(0, dizziness - 5)
 	else
 		dizziness = max(0, dizziness - 1)
@@ -425,7 +425,7 @@
 				adjustHalLoss(-3)
 		else if(IsSleeping())
 			blinded = TRUE
-		else if(resting)
+		else if(crawling)
 			if(halloss > 0)
 				adjustHalLoss(-3)
 		//CONSCIOUS

@@ -87,7 +87,6 @@
 
 	var/antitoxs = null
 	var/phoron = null
-	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
 	var/was_lying = FALSE //For user of clown pda slippery

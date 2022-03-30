@@ -746,8 +746,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 
-	lying = (ko || crawling || resting) && !captured && !buckled && !pinned.len
-	canmove = !(ko || resting || stunned || captured || pinned.len)
+	lying = (ko || crawling) && !captured && !buckled && !pinned.len
+	canmove = !(ko || stunned || captured || pinned.len)
 	anchored = captured || pinned.len
 
 	if(buckled)
@@ -925,17 +925,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		paralysis = 0
 
-// ========== RESTING ==========
-/mob/proc/Resting(amount)
-	resting = max(max(resting, amount), 0)
+// ========== CRAWLING ==========
+/mob/proc/Crawling(amount)
+	crawling = max(max(crawling, amount), 0)
 	return
 
-/mob/proc/SetResting(amount)
-	resting = max(amount, 0)
+/mob/proc/SetCrawling(amount)
+	crawling = max(amount, 0)
 	return
 
-/mob/proc/AdjustResting(amount)
-	resting = max(resting + amount, 0)
+/mob/proc/AdjustCrawling(amount)
+	crawling = max(crawling + amount, 0)
 	return
 
 // ========== DRUGGINESS ==========
