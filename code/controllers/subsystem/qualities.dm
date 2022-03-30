@@ -127,10 +127,10 @@ SUBSYSTEM_DEF(qualities)
 		return
 
 	// Only "legitimately" possible if `forced_quality_type` is invalid.
-	if(!Q)
+	if(!selected_quality)
 		CRASH("BADMIN ALERT! QUALITY REGISTERED IS NULL. HAS SOMEONE PLAYED WITH SSqualities.forced_quality_type?")
 
-	set_quality(C, Q)
+	set_quality(C, selected_quality)
 
 /datum/controller/subsystem/qualities/proc/give_all_qualities()
 	for(var/mob/living/carbon/human/player in player_list)
