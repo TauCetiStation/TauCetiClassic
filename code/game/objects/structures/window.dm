@@ -172,6 +172,9 @@
 							"You knock on the [src.name].", \
 							"You hear a knocking sound.")
 
+/obj/structure/window/attack_tk(mob/user)
+	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
+	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
