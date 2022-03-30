@@ -775,6 +775,10 @@
 				C.toggle_cam(FALSE) // Do not show deactivation message, it's just paint.
 				C.triggerCameraAlarm()
 			C.color = color
+	if(istype(O, /obj/item/canvas))
+		var/obj/item/canvas/C = O
+		C.canvas_color = color
+		C.reset_grid()
 
 /datum/reagent/paint_remover
 	name = "Paint Remover"
