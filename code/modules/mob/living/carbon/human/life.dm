@@ -212,7 +212,7 @@
 			if(10 to 12)
 				if(getBrainLoss() >= 50 && !lying)
 					to_chat(src, "<span class='warning'>Your legs won't respond properly, you fall down.</span>")
-					crawling = 1
+					SetCrawling(1)
 
 			if(13 to 18)
 				if(getBrainLoss() >= 60 && !HAS_TRAIT(src, TRAIT_STRONGMIND))
