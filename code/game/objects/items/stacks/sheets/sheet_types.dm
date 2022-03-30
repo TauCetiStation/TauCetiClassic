@@ -175,7 +175,15 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
  * Cloth
  */
 var/global/list/datum/stack_recipe/cloth_recipes = list (
-	new/datum/stack_recipe("rags", /obj/item/stack/medical/bruise_pack/rags, 1, 5, 25, 15),
+	new/datum/stack_recipe("rags", /obj/item/stack/medical/bruise_pack/rags/not_old, 1, 5, 25, 15),
+	null,
+	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteen_nineteen, 3, time = 30),
+	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythree_nineteen, 4, time = 30),
+	new/datum/stack_recipe("23x23 canvas", /obj/item/canvas/twentythree_twentythree, 5, time = 30),
+	)
+
+var/global/list/datum/stack_recipe/old_cloth_recipes = list (
+	new/datum/stack_recipe("rags", /obj/item/stack/medical/bruise_pack/rags/old, 1, 5, 25, 15),
 	null,
 	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteen_nineteen, 3, time = 30),
 	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythree_nineteen, 4, time = 30),
@@ -193,6 +201,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list (
 	. = ..()
 	if(force_old || prob(old_chance))
 		make_old()
+		recipes = old_cloth_recipes
 
 /*
  * Cardboard

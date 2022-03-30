@@ -68,6 +68,12 @@
 	if(force_old || prob(old_chance))
 		make_old()
 
+/obj/item/stack/medical/bruise_pack/rags/old/atom_init(mapload, new_amount, merge, force_old, old_chance)
+	. = ..(mapload, new_amount, merge, TRUE, null)
+
+/obj/item/stack/medical/bruise_pack/rags/not_old/atom_init(mapload, new_amount, merge, force_old, old_chance)
+	. = ..(mapload, new_amount, merge, FALSE, 0)
+
 /obj/item/stack/medical/bruise_pack/rags/update_icon()
 	return
 
