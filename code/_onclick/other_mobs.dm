@@ -18,8 +18,8 @@
 	if(istype(G) && G.Touch(src, A, TRUE))
 		return
 
-	//if(!A.can_mob_interact(src)) maybe in future...
-	//	return
+	if(ismob(A) && species.flags[IS_IMMATERIAL])
+		return
 
 	A.attack_hand(src)
 

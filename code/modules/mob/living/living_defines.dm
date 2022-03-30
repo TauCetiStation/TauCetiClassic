@@ -74,3 +74,6 @@
 
 	var/beauty_living = 0.0
 	var/beauty_dead = -100.0
+
+	// Flying species use this instead of Weaken.
+	var/falling = 0.0
