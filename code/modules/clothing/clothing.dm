@@ -571,7 +571,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if(I.sharp && !ishuman(loc)) //you can cut only clothes lying on the floor
-		new /obj/item/stack/sheet/cloth(get_turf(src), 3)
+		new /obj/item/stack/sheet/cloth(get_turf(src), 3, null, crit_fail)
 		qdel(src)
 		return
 

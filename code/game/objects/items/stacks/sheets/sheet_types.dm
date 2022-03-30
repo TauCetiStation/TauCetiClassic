@@ -188,9 +188,11 @@ var/global/list/datum/stack_recipe/cloth_recipes = list (
 	icon_state = "sheet-cloth"
 	origin_tech = "materials=2"
 
-/obj/item/stack/sheet/cloth/atom_init()
+/obj/item/stack/sheet/cloth/atom_init(mapload, new_amount = null, merge = FALSE, force_old = FALSE, old_chance = 33)
 	recipes = cloth_recipes
 	. = ..()
+	if(force_old || prob(old_chance))
+		make_old()
 
 /*
  * Cardboard

@@ -348,16 +348,16 @@
 			else new/obj/item/clothing/suit/jacket/leather/overcoat(src.loc)
 		if("rags")
 			if (check_cost(40/efficiency)) return 0
-			else new/obj/item/stack/medical/bruise_pack/rags(src.loc)
+			else new/obj/item/stack/medical/bruise_pack/rags(src.loc, null, null, null, 0)
 		if("cloth")
 			if (check_cost(200/efficiency)) return 0
-			else new/obj/item/stack/sheet/cloth(src.loc)
+			else new/obj/item/stack/sheet/cloth(src.loc, null, null, null, 0)
 		if("rags5")
 			if (check_cost(200/efficiency)) return 0
-			else new/obj/item/stack/medical/bruise_pack/rags(src.loc, 5)
+			else new/obj/item/stack/medical/bruise_pack/rags(src.loc, 5, null, null, 0)
 		if("cloth5")
 			if (check_cost(1000/efficiency)) return 0
-			else new/obj/item/stack/sheet/cloth(src.loc, 5)
+			else new/obj/item/stack/sheet/cloth(src.loc, 5, null, null, 0)
 	processing = 0
 	menustat = "complete"
 	update_icon()
