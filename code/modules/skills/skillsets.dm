@@ -9,7 +9,6 @@
 		/datum/skill/chemistry/master,
 		/datum/skill/command/pro,
 		/datum/skill/civ_mech/master,
-		/datum/skill/police/trained,
 	)
 
 
@@ -93,7 +92,6 @@
 		/datum/skill/engineering/master,
 		/datum/skill/atmospherics/master,
 		/datum/skill/civ_mech/master,
-		/datum/skill/police/trained
 	)
 
 /datum/skillset/engineer
@@ -160,11 +158,10 @@
 
 /datum/skillset/forensic
 	initial_skills = list(
-		/datum/skill/police/trained,
-		/datum/skill/surgery/trained,
-		/datum/skill/medical/pro,
+		/datum/skill/surgery/pro,
+		/datum/skill/medical/trained,
 		/datum/skill/research/novice,
-		/datum/skill/firearms/trained
+		/datum/skill/chemistry/novice
 	)
 
 /datum/skillset/detective
@@ -172,7 +169,8 @@
 		/datum/skill/police/trained,
 		/datum/skill/firearms/master,
 		/datum/skill/medical/novice,
-		/datum/skill/melee/trained
+		/datum/skill/surgery/novice,
+		/datum/skill/melee/trained,
 	)
 
 //science
@@ -186,7 +184,6 @@
 		/datum/skill/medical/pro,
 		/datum/skill/civ_mech/master,
 		/datum/skill/combat_mech/master,
-		/datum/skill/police/trained,
 		/datum/skill/surgery/pro,
 		/datum/skill/engineering/master
 	)
@@ -227,16 +224,24 @@
 
 /datum/skillset/roboticist/bio
 	initial_skills = list(
+		/datum/skill/research/pro,
 		/datum/skill/surgery/pro,
-		/datum/skill/civ_mech/trained
+		/datum/skill/medical/pro,
+		/datum/skill/construction/trained,
+		/datum/skill/engineering/novice,
+		/datum/skill/civ_mech/trained,
+		/datum/skill/combat_mech/trained
 	)
 
 /datum/skillset/roboticist/mecha
 	initial_skills = list(
+		/datum/skill/research/pro,
+		/datum/skill/surgery/novice,
+		/datum/skill/medical/novice,
 		/datum/skill/construction/pro,
-		/datum/skill/combat_mech/master,
+		/datum/skill/engineering/trained,
 		/datum/skill/civ_mech/master,
-		/datum/skill/surgery/novice
+		/datum/skill/combat_mech/master
 	)
 
 /datum/skillset/xenoarchaeologist
@@ -269,7 +274,6 @@
 /datum/skillset/quartermaster
 	initial_skills = list(
 		/datum/skill/civ_mech/master,
-		/datum/skill/police/trained,
 		/datum/skill/construction/novice,
 		/datum/skill/command/trained
 	)
@@ -311,21 +315,18 @@
 /datum/skillset/hop
 	initial_skills = list(
 	/datum/skill/command/pro,
-	/datum/skill/police/trained,
 	/datum/skill/firearms/trained,
 	/datum/skill/civ_mech/trained
 	)
 
 /datum/skillset/internal_affairs
 	initial_skills = list(
-	/datum/skill/police/trained,
 	/datum/skill/command/trained
 	)
 
 /datum/skillset/bartender
 	initial_skills = list(
 	/datum/skill/firearms/trained,
-	/datum/skill/police/trained,
 	/datum/skill/chemistry/novice
 	)
 
