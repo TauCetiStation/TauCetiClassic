@@ -101,7 +101,7 @@
 
 	if(!over_object)
 		return
-	if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
+	if(over_object == usr && (Adjacent(M) || (TK in M.mutations))) // this must come before the screen objects only block
 		open(usr)
 		return
 	if (!( istype(over_object, /atom/movable/screen) ))

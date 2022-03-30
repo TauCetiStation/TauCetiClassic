@@ -8,7 +8,7 @@
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
 	var/damage_mask = TRUE
-	var/eyes = "eyes"                                    // Icon for eyes.
+	var/eyes = list("default" = "eyes")
 	var/eyes_glowing = FALSE                             // To make those eyes gloooow.
 
 	// Combat vars.
@@ -467,7 +467,7 @@
 		O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
 
-	eyes = "skrell_eyes"
+	eyes = list("default" = "skrell_eyes")
 	blood_datum_path = /datum/dirt_cover/purple_blood
 	flesh_color = "#8cd7a3"
 
@@ -501,7 +501,7 @@
 	breath_cold_level_2 = 50
 	breath_cold_level_3 = 0
 
-	eyes = "vox_eyes"
+	eyes = list("default" = "vox_eyes")
 
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
@@ -1015,6 +1015,149 @@
 		if(BP.ipc_head == "Default")
 			H.h_style = "IPC off screen"
 		H.update_hair()
+
+/datum/species/tycheon // Do keep in mind that they use nutrition as static electricity, which they can waste.
+	name = "Tycheon"
+	icobase = 'icons/mob/human_races/r_tycheon.dmi'
+	deform = 'icons/mob/human_races/r_tycheon.dmi'
+	damage_mask = FALSE
+
+	eyes = list(
+		"default" = "core",
+		"round" = "round_core",
+		"angled" = "angle_core",
+		"inner eye" = "inner_eye_core",
+		"diplopia" = "duo_core",
+		"quadruplopia" = "four_core",
+		"spider" = "spider_core",
+		"pentaplopia" = "navi_core",
+		"moonman" = "r_n_m_core",
+		"maw" = "maw_core",
+	)
+	eyes_glowing = TRUE
+
+	brute_mod = 3.0
+	burn_mod = 3.0
+	brain_mod = 0.0
+	speed_mod =  -1.0
+	siemens_coefficient = 0.0
+
+	metabolism_mod = 0.0
+
+	//language = "The Perfect Control"
+	//additional_languages = list("The Gaping Maw")
+	//force_racial_language = TRUE
+
+	butcher_drops = list()
+	taste_sensitivity = 0
+	dietflags = 0
+
+	flags = list(
+	IS_WHITELISTED = TRUE,
+	NO_BLOOD = TRUE,
+	NO_BREATHE = TRUE,
+	NO_SCAN = TRUE,
+	HAS_SKIN_COLOR = TRUE,
+	RAD_IMMUNE = TRUE,
+	VIRUS_IMMUNE = TRUE,
+	BIOHAZZARD_IMMUNE = TRUE,
+	NO_VOMIT = TRUE,
+	//IS_FLYING = TRUE,
+	//IS_IMMATERIAL = TRUE,
+	//STATICALLY_CHARGED = TRUE,
+	//NO_FAT = TRUE,
+	//EMP_HEAL = TRUE,
+	)
+
+	// ignore_gene_icons = list("All")
+	blood_datum_path = /datum/dirt_cover/tycheon_blood
+	flesh_color = "#1F1F1F"
+	base_color = "#BB1111"
+
+	body_temperature = 300 // Which is slightly lower than the normal human being. Slight deviations from Tycheon's bodytemperature may result in... Bleh.
+	cold_level_1 = 273
+	cold_level_2 = 263
+	cold_level_3 = 253
+	// Default seems to be 293.3.
+	heat_level_1 = 313
+	heat_level_2 = 323
+	heat_level_3 = 333
+
+	warning_low_pressure = 90
+	hazard_low_pressure = 70
+
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest/tycheon
+		,BP_L_ARM  = /obj/item/organ/external/l_arm/tycheon
+		,BP_R_ARM  = /obj/item/organ/external/r_arm/tycheon
+		,BP_L_LEG  = /obj/item/organ/external/l_leg/tycheon
+		,BP_R_LEG  = /obj/item/organ/external/r_leg/tycheon
+		)
+	has_organ = list(
+		O_BRAIN   = /obj/item/organ/internal/brain/tycheon
+		)
+	// Still allows them to wear rigs, and ids.
+	restricted_inventory_slots = list(
+		SLOT_BACK, SLOT_WEAR_MASK, SLOT_HANDCUFFED, SLOT_L_HAND, SLOT_R_HAND, SLOT_BELT,
+		SLOT_L_EAR, SLOT_R_EAR, SLOT_GLASSES, SLOT_GLOVES, SLOT_HEAD, SLOT_SHOES,
+		SLOT_W_UNIFORM, SLOT_L_STORE, SLOT_R_STORE, SLOT_S_STORE, SLOT_LEGCUFFED,
+	)
+
+	has_gendered_icons = FALSE
+
+/datum/species/tycheon/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_tycheon_digest(M)
+
+/datum/species/tycheon/on_gain(mob/living/carbon/human/H)
+	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
+	H.pass_flags |= PASSTABLE | PASSMOB | PASSGRILLE | PASSBLOB | PASSCRAWL
+	H.flags |= NOSLIP
+	H.mutations.Add(TK)
+	H.mutations.Add(REMOTE_TALK)
+	H.update_mutations()
+	H.ventcrawler = TRUE
+	return ..()
+
+/datum/species/tycheon/on_loose(mob/living/carbon/human/H)
+	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
+	H.pass_flags &= ~(PASSTABLE | PASSMOB | PASSGRILLE | PASSBLOB | PASSCRAWL)
+	H.flags &= ~NOSLIP
+	H.mutations.Remove(TK)
+	H.mutations.Remove(REMOTE_TALK)
+	H.update_mutations()
+	H.ventcrawler = FALSE
+	return ..()
+
+/*
+/datum/species/tycheon/on_emp_act(mob/living/carbon/human/H, emp_severity)
+	switch(emp_severity)
+		if(1.0)
+			H.heal_overall_damage(10.0, 10.0)
+		if(2.0)
+			H.heal_overall_damage(1.0, 1.0)
+*/
+
+/datum/species/tycheon/handle_death(mob/living/carbon/human/H)
+	var/core_amount = 1
+	switch(H.eyes) // Depending on how many cores we got, we drop different stuff.
+		if("duo_core")
+			core_amount = 2
+		if("four_core")
+			core_amount = 4
+		if("spider_core")
+			core_amount = 4
+		if("r_n_m_core")
+			core_amount = 5
+		if("navi_core")
+			core_amount = 5
+		if("maw_core")
+			core_amount = 6
+
+	for(var/i in 1 to core_amount)
+		var/obj/item/core = new /obj/item/weapon/reagent_containers/food/snacks/tycheon_core(H.loc)
+		core.throw_at(get_edge_target_turf(H, pick(alldirs)), 1, core.throw_speed)
+
+	H.gib()
 
 /datum/species/abductor
 	name = ABDUCTOR

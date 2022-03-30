@@ -815,7 +815,7 @@ var/global/list/admin_verbs_hideable = list(
 	if(!ishuman(M))
 		to_chat(usr, "<span class='warning'>You can only do this to humans!</span>")
 		return
-	switch(tgui_alert(usr, "Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",, list("Yes","No")))
+	switch(tgui_alert(usr, "Are you sure you wish to edit this mob's appearance? Works only for Humans.",, list("Yes","No")))
 		if("No")
 			return
 	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
@@ -836,7 +836,7 @@ var/global/list/admin_verbs_hideable = list(
 		M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
 		M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-	var/new_skin = input("Please select body color. This is for Tajaran, Unathi, and Skrell only!", "Character Generation") as color
+	var/new_skin = input("Please select body color. This is for Tajaran, Unathi, Skrell and Tycheon only (Which is most of the Xeno anyway...)!", "Character Generation") as color
 	if(new_skin)
 		M.r_skin = hex2num(copytext(new_skin, 2, 4))
 		M.g_skin = hex2num(copytext(new_skin, 4, 6))

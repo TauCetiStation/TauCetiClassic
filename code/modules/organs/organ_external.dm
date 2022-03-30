@@ -560,7 +560,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(species && species.eyes)
 		var/eyes_layer = -icon_layer
 
-		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', species.eyes, eyes_layer)
+		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', owner.eyes, eyes_layer)
 		if(species.eyes_glowing)
 			img_eyes_s.plane = ABOVE_LIGHTING_PLANE
 
@@ -686,6 +686,35 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = TRUE
 	w_class = SIZE_BIG // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
 
+
+/obj/item/organ/external/chest/tycheon
+	name = "body"
+
+/obj/item/organ/external/chest/tycheon/get_icon(icon_layer)
+	if(!owner)
+		return
+
+	update_sprite()
+	var/mutable_appearance/MA = mutable_appearance(icon, icon_state, -icon_layer)
+	MA.color = color
+	. = list(MA)
+
+	//Eyes
+	if(species && species.eyes)
+		var/eyes_layer = -icon_layer
+
+		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', owner.eyes, eyes_layer)
+		if(species.eyes_glowing)
+			img_eyes_s.plane = ABOVE_LIGHTING_PLANE
+
+		if(HULK in owner.mutations)
+			img_eyes_s.color = "#ff0000"
+		else if(species.name == SHADOWLING || iszombie(owner))
+			img_eyes_s.color = null
+		else
+			img_eyes_s.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
+
+		. += img_eyes_s
 
 /obj/item/organ/external/groin
 	name = "groin"
@@ -928,6 +957,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/l_arm/diona/podman
 	controller_type = /datum/bodypart_controller/plant
 
+/obj/item/organ/external/l_arm/tycheon
+	name = "tendril"
+
 /obj/item/organ/external/r_arm
 	name = "right arm"
 	artery_name = "basilic vein"
@@ -961,6 +993,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/r_arm/diona/podman
 	controller_type = /datum/bodypart_controller/plant
 
+/obj/item/organ/external/r_arm/tycheon
+	name = "tendril"
+
 /obj/item/organ/external/l_leg
 	name = "left leg"
 	artery_name = "femoral artery"
@@ -989,6 +1024,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/l_leg/diona/podman
 	controller_type = /datum/bodypart_controller/plant
 
+/obj/item/organ/external/l_leg/tycheon
+	name = "tendril"
+
 /obj/item/organ/external/r_leg
 	name = "right leg"
 	artery_name = "femoral artery"
@@ -1016,6 +1054,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_leg/diona/podman
 	controller_type = /datum/bodypart_controller/plant
+
+/obj/item/organ/external/r_leg/tycheon
+	name = "tendril"
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)

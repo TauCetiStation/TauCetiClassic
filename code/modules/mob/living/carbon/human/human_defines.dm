@@ -26,6 +26,8 @@
 	var/dyed_b_facial = 0
 	var/facial_painted = FALSE
 
+	// Eyes icon state.
+	var/eyes
 	//Eye colour
 	var/r_eyes = 0
 	var/g_eyes = 0

@@ -452,7 +452,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		wear_id.screen_loc = ui_id
 		if(client && hud_used)
 			client.screen += wear_id
-		var/image/standing = image("icon"='icons/mob/mob.dmi', "icon_state"="id", "layer"=-ID_LAYER)
+		var/image/standing = image("icon"='icons/mob/mob.dmi', "icon_state"=get_species() == TYCHEON ? "id_tycheon" : "id", "layer"=-ID_LAYER)
 		standing = human_update_offset(standing, TRUE)
 		overlays_standing[ID_LAYER]	= standing
 

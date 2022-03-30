@@ -246,6 +246,13 @@
 	bitesize = 3
 	list_reagents = list("nutriment" = 8, "doctorsdelight" = 8, "vitamin" = 6)
 
+/obj/item/weapon/reagent_containers/food/snacks/tycheon_core
+	name = "weird orb"
+	desc = "It probably dropped out of creature that looks like a fart."
+	icon = 'icons/obj/food.dmi'
+	icon_state = "boiledrorocore"
+	list_reagents = list("iron" = 10, "phoron" = 3)
+
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Nougat, love it or hate it."

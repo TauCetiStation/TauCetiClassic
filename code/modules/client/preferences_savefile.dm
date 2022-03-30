@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 37
+#define SAVEFILE_VERSION_MAX 38
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -245,6 +245,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/list/deleted_hairstyles = list("Skrell Long Female Tentacles", "Skrell Zeke Female Tentacles", "Gold plated Skrell Male Tentacles", "Gold chained Skrell Female Tentacles", "Cloth draped Skrell Male Tentacles", "Cloth draped Skrell Female Tentacles")
 		if(h_style in deleted_hairstyles)
 			h_style = "Skrell Long Tentacles"
+
+	if(current_version < 38)
+		S["eye_name"] << "default"
+		eye_name = "default"
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
@@ -514,6 +518,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_style_name"]   >> h_style
 	S["grad_style_name"]   >> grad_style
 	S["facial_style_name"] >> f_style
+	S["eye_name"]          >> eye_name
 	S["eyes_red"]          >> r_eyes
 	S["eyes_green"]        >> g_eyes
 	S["eyes_blue"]         >> b_eyes
@@ -571,6 +576,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(isnull(language)) language = "None"
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
+	if(isnull(eye_name))
+		eye_name = "default"
 	if(!real_name) real_name = random_name(gender)
 	if(!gear) gear = list()
 	if(!custom_items) custom_items = list()
@@ -699,6 +706,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_style_name"]       << h_style
 	S["grad_style_name"]       << grad_style
 	S["facial_style_name"]     << f_style
+	S["eye_name"]              << eye_name
 	S["eyes_red"]              << r_eyes
 	S["eyes_green"]            << g_eyes
 	S["eyes_blue"]             << b_eyes

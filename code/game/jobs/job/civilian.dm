@@ -219,7 +219,7 @@
 		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
 		~Luduk
 	*/
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX)
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, TYCHEON)
 
 
 /datum/job/clown

@@ -371,6 +371,14 @@
 /atom/proc/add_fingerprint(mob/M, ignoregloves = 0)
 	if(!M || !M.key || isAI(M)) //AI's clicks already calls add_hiddenprint from ClickOn() proc
 		return
+
+	// No Telekinetic fingerprint leaving!
+	if(!in_range(M, src))
+		// So we, badmins still know the TRUTH.
+		fingerprintshidden += "\[[time_stamp()]\]Real name: [M.real_name], Key: [M.key]"
+		fingerprintslast = M.key
+		return
+
 	if (ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)

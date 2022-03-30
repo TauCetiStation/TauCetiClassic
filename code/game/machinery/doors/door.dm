@@ -159,7 +159,8 @@ var/global/list/wedge_image_cache = list()
 
 	if(ishuman(user) && prob(40) && density)
 		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
+		// No telepathic brainloss headbanging!
+		if(H.getBrainLoss() >= 60 && in_range(src, user))
 			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				visible_message("<span class='userdanger'> [user] headbutts the [src].</span>")

@@ -499,7 +499,7 @@
 		return
 	if(usr == src)
 		return
-	if(!Adjacent(usr))
+	if(!Adjacent(usr) && !(TK in M.mutations))
 		return
 	if(isAI(M))
 		return

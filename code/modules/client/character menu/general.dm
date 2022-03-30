@@ -112,7 +112,8 @@
 			. += "<b>Facial</b>"
 			. += "<br><a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> [color_square(r_facial, g_facial, b_facial)]"
 			. += " Style: <a class='white' href='?_src_=prefs;preference=f_style_left;task=input'><</a> <a class='white' href='?_src_=prefs;preference=f_style_right;task=input'>></a> <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
-			. += "<b>Eyes</b>"
+			. += "<b>Eye model:<b> <a href='?_src_=prefs;preference=eye_model;task=input'>[eye_name]</a><br>"
+			. += "<b>Eye color</b>"
 			. += "<br><a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> [color_square(r_eyes, g_eyes, b_eyes)]<br>"
 
 			if(specie_obj.flags[HAS_SKIN_COLOR])
@@ -290,6 +291,7 @@
 					if(prev_species != species)
 						f_style = random_facial_hair_style(gender, species)
 						h_style = random_hair_style(gender, species, ipc_head)
+						eye_name = "default"
 						ResetJobs()
 						UpdateAllowedQuirks()
 						ResetQuirks()
@@ -410,6 +412,12 @@
 					var/new_socks = input(user, "Choose your character's socks:", "Character Preference", socks_options[socks]) as null|anything in socks_options
 					if(new_socks)
 						socks = socks_options.Find(new_socks)
+
+				if("eye_model")
+					var/datum/species/S = all_species[species]
+					var/new_eyes = input(user, "Choose your character's eye model:", "Character Preference") as null|anything in S.eyes
+					if(new_eyes)
+						eye_name = new_eyes
 
 				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference", rgb(r_eyes, g_eyes, b_eyes)) as color|null

@@ -79,6 +79,7 @@
 #define IPC            "Machine"
 #define VOX            "Vox"
 #define VOX_ARMALIS    "Vox Armalis"
+#define TYCHEON        "Tycheon"
 #define ABDUCTOR       "Abductor"
 #define SKELETON       "Skeleton"
 #define SHADOWLING     "Shadowling"

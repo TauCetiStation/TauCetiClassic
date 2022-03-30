@@ -45,6 +45,8 @@
 	if(species) // Just to be sure.
 		metabolism_factor = species.metabolism_mod
 		butcher_results = species.butcher_drops.Copy()
+		if(species.eyes)
+			eyes = species.eyes["default"]
 
 	dna.species = species.name
 
@@ -115,6 +117,9 @@
 /mob/living/carbon/human/machine/atom_init(mapload)
 	h_style = "blue IPC screen"
 	. = ..(mapload, IPC)
+
+/mob/living/carbon/human/tycheon/atom_init(mapload)
+	. = ..(mapload, TYCHEON)
 
 /mob/living/carbon/human/abductor/atom_init(mapload)
 	. = ..(mapload, ABDUCTOR)
@@ -608,6 +613,10 @@
 		return 0	//godmode
 	if(NO_SHOCK in src.mutations)
 		return 0 //#Z2 no shock with that mutation.
+
+	// No telepathic electroctuion!
+	if(!in_range(src, source))
+		return 0
 
 	if((HULK in mutations) && hulk_activator == ACTIVATOR_ELECTRIC_SHOCK) //for check to transformation Hulk.
 		to_chat(src, "<span class='notice'>You feel pain, but you like it!</span>")

@@ -199,7 +199,7 @@
 	else if(istype(A, /obj/structure/closet/body_bag))
 		var/obj/structure/closet/body_bag/target = A
 
-		if(get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.incapacitated() || isAI(user)) return
+		if(user.incapacitated() || isAI(user)) return
 		if(isanimal(user)) return
 		if(isessence(user))
 			return

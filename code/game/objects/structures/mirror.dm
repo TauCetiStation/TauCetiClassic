@@ -108,7 +108,7 @@
 
 	var/mob/living/carbon/human/H = user
 
-	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "skin tone", "xenos skin",  "gender", "hair", "eyes", "height")
+	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "skin tone", "xenos skin",  "gender", "hair", "eye model", "eyes", "height")
 
 	switch(choice)
 		if("name")
@@ -251,3 +251,9 @@
 				H.update_body()
 				H.regenerate_icons()
 				H.check_dna(H)
+
+		if("eye model")
+			var/new_eyes = input(user, "Choose your character's eye model:", "Character Preference") as null|anything in H.species.eyes
+			if(new_eyes)
+				H.eyes = H.species.eyes[new_eyes]
+				H.update_body()

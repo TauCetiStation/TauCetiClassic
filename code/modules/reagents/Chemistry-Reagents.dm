@@ -182,6 +182,9 @@
 /datum/reagent/proc/on_vox_digest(mob/living/M)
 	return TRUE
 
+/datum/reagent/proc/on_tycheon_digest(mob/living/M)
+	return FALSE
+
 /datum/reagent/proc/on_abductor_digest(mob/living/M)
 	return TRUE
 
