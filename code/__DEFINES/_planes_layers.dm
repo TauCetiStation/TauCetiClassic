@@ -81,7 +81,6 @@ What is the naming convention for planes or layers?
   #define BELOW_TURF_LAYER                1.9
   //efine TURF_LAYER                      2     // For easy recordkeeping; this is a byond define
   #define ABOVE_NORMAL_TURF_LAYER         2.08
-  #define RCD_EFFECT_FOR_TURF_LAYER       2.32
   #define GAS_PIPE_HIDDEN_SUPPLY_LAYER    2.33
   #define GAS_PIPE_HIDDEN_SCRUBBER_LAYER  2.34
   #define GAS_PIPE_HIDDEN_LAYER           2.35
@@ -91,11 +90,9 @@ What is the naming convention for planes or layers?
   #define GAS_PUMP_LAYER                  2.49
   #define LOW_OBJ_LAYER                   2.491 // Currently used only by unused machinery
   #define FIREDOOR_LAYER                  2.5
-  #define RCD_EFFECT_FOR_FIREDOOR_LAYER   2.51
   #define BELOW_CONTAINERS_LAYER          2.7   // Below closets, crates...
   #define CONTAINER_STRUCTURE_LAYER       2.8   // Layer for closets, crates, bags, racks, tables
   #define DOOR_LAYER                      2.82
-  #define RCD_EFFECT_FOR_DOOR_LAYER       2.83
   #define BELOW_MACHINERY_LAYER           2.83  // Currently for grilles only, because they should be below machinery
   #define DEFAULT_MACHINERY_LAYER         2.85  // Every /obj/machinery by default have this layer
   #define BELOW_OBJ_LAYER                 2.9

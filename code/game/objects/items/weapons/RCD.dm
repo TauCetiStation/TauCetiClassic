@@ -40,7 +40,9 @@ RCD
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	RCD_build_effect = image('icons/effects/effects.dmi', "RCD_appear")
+	RCD_build_effect.plane = ABOVE_LIGHTING_PLANE
 	RCD_deconstruct_effect = image('icons/effects/effects.dmi', "RCD_disappear")
+	RCD_deconstruct_effect.plane = ABOVE_LIGHTING_PLANE
 
 /obj/item/weapon/rcd/Destroy()
 	rcd_list -= src
@@ -76,31 +78,26 @@ RCD
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	if(prob(20))
+		spark_system.start()
 	switch(mode)
 		if(1)
 			mode = 2
 			to_chat(user, "<span class='notice'>Changed mode to 'Airlock'</span>")
-			if(prob(20))
-				spark_system.start()
 			return
 		if(2)
 			mode = 3
 			to_chat(user, "<span class='notice'>Changed mode to 'Emergency Shutter'</span>")
-			if(prob(20))
-				spark_system.start()
 			return
 		if(3)
 			mode = 4
 			to_chat(user, "<span class='notice'>Changed mode to 'Deconstruct'</span>")
-			if(prob(20))
-				spark_system.start()
 			return
 		if(4)
 			mode = 1
 			to_chat(user, "<span class='notice'>Changed mode to 'Floor & Walls'</span>")
-			if(prob(20))
-				spark_system.start()
-
+			return
+/*
 /obj/item/weapon/rcd/proc/select_effect_plane(atom/target)
 	if(istype(target, /turf))
 		src.RCD_deconstruct_effect.plane = RCD_EFFECT_FOR_TURF_LAYER
@@ -110,22 +107,19 @@ RCD
 		src.RCD_deconstruct_effect.plane = RCD_EFFECT_FOR_DOOR_LAYER
 	else
 		src.RCD_deconstruct_effect.plane = ABOVE_WINDOW_LAYER
-
+*/
 /obj/item/weapon/rcd/proc/add_effect(atom/target, act = null)
 	if(!isnull(act))
 		if(act)		//building
 			target.add_overlay(RCD_build_effect)
 		else		//deconstructing
-			select_effect_plane(target)
 			target.add_overlay(RCD_deconstruct_effect)
 
 /obj/item/weapon/rcd/proc/remove_effect(atom/target, act = null)
 	if(!isnull(act))
-		select_effect_plane(target)
 		if(act)
 			target.cut_overlay(RCD_build_effect)
 		else
-			select_effect_plane(target)
 			target.cut_overlay(RCD_deconstruct_effect)
 
 /obj/item/weapon/rcd/proc/activate()
@@ -272,10 +266,10 @@ RCD
 
 /obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
-		return 0
+		return FALSE
 	matter -= amount
 	desc = "A RCD. It currently holds [matter]/30 matter-units."
-	return 1
+	return TRUE
 
 /obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
 	return matter >= amount
