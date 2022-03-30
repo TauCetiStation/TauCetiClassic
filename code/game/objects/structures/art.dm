@@ -32,11 +32,9 @@
 
 //Stick to the easel like glue
 /obj/structure/easel/Move()
-	// The painting could move away from the easel while it was moving
 	var/turf/T = get_turf(src)
 	. = ..()
-	// So we're checking if the painting is still at the same place
-	if(painting && painting.loc == T)
+	if(painting && painting.loc == T && painting.Adjacent(get_turf(src), recurse = 0))
 		painting.forceMove(get_turf(src))
 	else
 		painting = null
