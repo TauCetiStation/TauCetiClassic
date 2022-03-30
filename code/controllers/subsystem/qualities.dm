@@ -119,9 +119,9 @@ SUBSYSTEM_DEF(qualities)
 	var/datum/quality/selected_quality
 
 	if(prob(90))
-		selected_quality = qualities_pool[/datum/quality/clumsy]
+		selected_quality = qualities_by_type[/datum/quality/negativeish/clumsy]
 	else
-		selected_quality = qualities_pool[/datum/quality/nuclear_option]
+		selected_quality = qualities_by_type[/datum/quality/quirkieish/nuclear_option]
 
 	if(!selected_quality)
 		return
