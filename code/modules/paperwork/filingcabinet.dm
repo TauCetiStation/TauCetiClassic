@@ -74,12 +74,6 @@
 
 	return
 
-/obj/structure/filingcabinet/attack_tk(mob/user)
-	if(anchored)
-		attack_self_tk(user)
-	else
-		..()
-
 /obj/structure/filingcabinet/attack_self_tk(mob/user)
 	if(contents.len)
 		if(prob(40 + contents.len * 5))
@@ -138,10 +132,6 @@
 	populate()
 	..()
 
-/obj/structure/filingcabinet/security/attack_tk()
-	populate()
-	..()
-
 /*
  * Medical Record Cabinets
  */
@@ -171,9 +161,5 @@
 						//before the records have been generated, so we do this inside the loop.
 
 /obj/structure/filingcabinet/medical/attack_hand()
-	populate()
-	..()
-
-/obj/structure/filingcabinet/medical/attack_tk()
 	populate()
 	..()

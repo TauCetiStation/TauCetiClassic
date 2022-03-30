@@ -194,11 +194,6 @@ var/global/list/wedge_image_cache = list()
 
 	try_open(user)
 
-/obj/machinery/door/attack_tk(mob/user)
-	if(requiresID() && !allowed(null))
-		return
-	..()
-
 /obj/machinery/door/attack_ghost(mob/user)
 	if(IsAdminGhost(user))
 		if(density)
