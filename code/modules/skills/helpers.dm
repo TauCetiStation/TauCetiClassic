@@ -15,9 +15,7 @@
 			result -= value * bonus * (user.mind.skills.get_value(skill.name) - skill.value)
 	return result
 
-/proc/do_skilled(mob/user, atom/target,  delay, required_skills, penalty = 0.5, bonus = 0.4, check_busy = TRUE)
-	if(check_busy && user.is_busy())
-		return FALSE
+/proc/do_skilled(mob/user, atom/target,  delay, required_skills, penalty = 0.5, bonus = 0.4)
 	return do_after(user, delay = apply_skill_bonus(user, delay, required_skills, penalty, bonus), target = target)
 
 /proc/handle_fumbling(mob/user, atom/target, delay, required_skills, time_bonus = SKILL_TASK_TRIVIAL, message_self = "", text_target = null, check_busy = TRUE)
