@@ -77,7 +77,7 @@ RCD
 	)
 	selection_doors = list(
 	"Solid Airlock" = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "closed_filled"),
-	"Glass Airlock" = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "closed_glassed"),
+	"Glass Airlock" = image(icon = 'icons/obj/doors/airlocks/station2/glass.dmi', icon_state = "closed_small"),
 	"Emergency Shutter" = image(icon = 'icons/obj/doors/DoorHazard.dmi', icon_state = "door_closed_small")
 	)
 
@@ -198,7 +198,7 @@ RCD
 							return FALSE
 						activate()
 						rcd_effect.end_animation()
-						new /obj/machinery/door/airlock(target, inner_material = "glass")
+						new /obj/machinery/door/airlock/glass(target)
 						return TRUE
 					qdel(rcd_effect)
 					return FALSE

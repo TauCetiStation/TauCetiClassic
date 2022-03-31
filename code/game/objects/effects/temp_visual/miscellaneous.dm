@@ -29,26 +29,25 @@
 	status = rcd_status
 	delay = rcd_delay
 	if(status == 5)
-		delay -= 11
-		icon_state = "rcd_reverse_end"
+		icon_state = "rcd_end_reverse"
 
 /obj/effect/constructing_effect/proc/update_icon_state()
 	icon_state = "rcd"
-	if(status == 5)
-		icon_state += "_reverse"
 	if(delay < 10)
 		icon_state += "_shortest"
 		return ..()
-	if (delay < 20)
+	if(delay < 20)
 		icon_state += "_shorter"
 		return ..()
-	if (delay < 37)
+	if(delay < 37)
 		icon_state += "_short"
 		return ..()
+	if(status == 5)
+		icon_state += "_reverse"
 	return ..()
 
 /obj/effect/constructing_effect/proc/end_animation()
-	if (status == 5)
+	if(status == 5)
 		qdel(src)
 	else
 		icon_state = "rcd_end"
