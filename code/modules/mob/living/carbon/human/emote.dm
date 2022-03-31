@@ -75,6 +75,9 @@
 
 // A simpler emote. Just the message, and it's type. If you want anything more complex - make a datumized emote.
 /mob/proc/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
+	if(stat)
+		return
+
 	log_emote("[key_name(src)] : [message]")
 
 	var/msg = "<b>[src]</b> <i>[message]</i>"
