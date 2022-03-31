@@ -64,6 +64,9 @@
 
 	..()
 
+	SEND_SIGNAL(src, COMSIG_LOGIN)
+	logout_reason = LOGOUT_UNKNOWN
+
 	if(loc && !isturf(loc))
 		client.eye = loc
 		client.perspective = EYE_PERSPECTIVE

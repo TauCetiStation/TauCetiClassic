@@ -278,3 +278,6 @@
 	var/list/sound_approximations
 	// Case sensitive sound approximations.
 	var/list/sensitive_sound_approximations
+
+	// Reason of logout
+	var/logout_reason

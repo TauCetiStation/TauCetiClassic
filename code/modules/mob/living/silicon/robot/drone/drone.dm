@@ -21,6 +21,8 @@
 	var/mail_destination = "" //Used for self-mailing.
 	var/eyes_overlay = "eyes-repairbot"
 
+	spawner_args = list(/datum/spawner/living/robot/drone, 2 MINUTES)
+
 /mob/living/silicon/robot/drone/atom_init()
 	. = ..()
 
