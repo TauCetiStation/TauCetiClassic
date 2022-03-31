@@ -339,7 +339,7 @@ var/global/list/blacklisted_builds = list(
 		if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. \
 		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
-	funny_admin_prefix = pick("Bored", "Boring", "Funny", "Not Funny", "Cute", "Ugly", "Evil", "Despot", "Sad", "Kind", "Smart", "Wise", "Stupid", "Dumb", "III", "Shit Spawner", "Confused", "Chaotic", "Toxic", "SSD", "Insane", "", "Golden", "Tiny", "Furry", "Holy", "Unholy", "Looser", "Foolish", "Red", "Blue")
+	funny_admin_prefix = pick("Bored", "Boring", "Funny", "Not Funny", "Cute", "Ugly", "Evil", "Despot", "Sad", "Kind", "Smart", "Wise", "Stupid", "Dumb", "III", "Shit Spawner", "Confused", "Chaotic", "Toxic", "SSD", "Insane", "", "Golden", "Tiny", "Furry", "Holy", "Unholy", "Looser", "Foolish", "Red", "Blue", "ERP")
 
 	handle_connect()
 
