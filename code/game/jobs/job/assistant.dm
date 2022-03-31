@@ -14,7 +14,7 @@
 		"Private Clown"    	   = /datum/outfit/job/assistant/private_eye,
 		"Clown Reporter"       = /datum/outfit/job/assistant/reporter,
 		"Clown Waiter"         = /datum/outfit/job/assistant/waiter,
-		"Clown Vice Officer"   = /datum/outfit/job/assistant/vice_officer,
+		"Vice Clown"   = /datum/outfit/job/assistant/vice_officer,
 		"Paranormal Clown"     = /datum/outfit/job/assistant/paranormal_investigator
 		)
 	outfit = /datum/outfit/job/assistant/test_subject

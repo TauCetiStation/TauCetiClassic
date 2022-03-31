@@ -84,17 +84,18 @@
 #define SW_COUNT      3
 #define SW_ALL_PARAMS 3 //update this, if add more params
 
-#define SW_TR(CKEY, RANK, EXTRA) "<tr><td>&emsp;[CKEY]</td><td><b>[RANK]</b></td><td>[EXTRA]</td></tr>"
+#define SW_TR(CKEY, RANK, EXTRA) "<tr><td>&emsp;[CKEY]</td><td><b>[CKEY.funny_admin_prefix] [RANK]</b></td><td>[EXTRA]</td></tr>"
+
 #define SW_INCREMENT(GROUP, CKEY, RANK, EXTRA) staffwho[GROUP][SW_WHOTEXT] += SW_TR(CKEY, RANK, EXTRA);staffwho[GROUP][SW_COUNT]++
 /client/verb/staffwho()
 	set category = "Admin"
 	set name = "Staffwho"
 
 	var/list/staffwho[SW_ALL_GROUPS][SW_ALL_PARAMS]
-	staffwho[SW_ADMINS][SW_NAME] = "Admins" // update tgui\packages\tgui-panel\styles\goon\chat-base.scss, if change this
-	staffwho[SW_MENTORS][SW_NAME] = "Mentors"
-	staffwho[SW_XENOVISORS][SW_NAME] = "Xenovisors"
-	staffwho[SW_DEVELOPERS][SW_NAME] = "Developers"
+	staffwho[SW_ADMINS][SW_NAME] = "ClownAdmins" // update tgui\packages\tgui-panel\styles\goon\chat-dark.scss, if change this
+	staffwho[SW_MENTORS][SW_NAME] = "Mimes"
+	staffwho[SW_XENOVISORS][SW_NAME] = "Clownvisors"
+	staffwho[SW_DEVELOPERS][SW_NAME] = "Janitors"
 
 	for(var/client/C as anything in admins|mentors)
 		if(C.ckey in stealth_keys)
@@ -114,7 +115,7 @@
 			if(C.is_afk())
 				extra += " (AFK - [C.inactivity2text()])"
 		if(C.ckey in mentor_ckeys)
-			SW_INCREMENT(SW_MENTORS, C, "Mentor", extra)
+			SW_INCREMENT(SW_MENTORS, C, "Mime", extra)
 		if(C.holder)
 			if(R_BAN & C.holder.rights)
 				SW_INCREMENT(SW_ADMINS, C, C.holder.rank, extra)
@@ -132,7 +133,7 @@
 		msg += "<tr><th class='[staff[SW_NAME]]' colspan='3'>[staff[SW_NAME]] — [staff[SW_COUNT] || 0]</td></tr>"
 		msg += "[staff[SW_WHOTEXT]]"
 	if(!msg)
-		msg = "<b>No Staff Online</b>"
+		msg = "<b>No Clowns Online</b>"
 	else
 		msg = "<table class='staffwho'>[msg]</table>"
 	to_chat(src, msg)

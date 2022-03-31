@@ -123,3 +123,5 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
+
+	var/funny_admin_prefix

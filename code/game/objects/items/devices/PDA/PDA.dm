@@ -87,6 +87,36 @@
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
 
+/obj/item/device/pda/proc/make_user_slip(mob/living/carbon/user)
+	user.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
+
+/obj/item/device/pda/proc/remove_user_slip(mob/living/carbon/user)
+	qdel(user.GetComponent(/datum/component/slippery))
+
+/obj/item/device/pda/equipped(mob/living/carbon/user, slot)
+	..()
+	if(slot in list(SLOT_L_STORE, SLOT_R_STORE, SLOT_BELT, SLOT_WEAR_ID))
+		slip_lying_user(user)
+		if(user.lying)
+			make_user_slip(user)
+	else
+		unslip_lying_user(user)
+		if(user.lying)
+			remove_user_slip(user)
+
+/obj/item/device/pda/proc/slip_lying_user(mob/living/carbon/user)
+	RegisterSignal(user, COMSIG_MOB_STATUS_LYING, .proc/make_user_slip)
+	RegisterSignal(user, COMSIG_MOB_STATUS_NOT_LYING, .proc/remove_user_slip)
+
+/obj/item/device/pda/proc/unslip_lying_user(mob/living/carbon/user)
+	UnregisterSignal(user, list(COMSIG_MOB_STATUS_LYING, COMSIG_MOB_STATUS_NOT_LYING))
+
+/obj/item/device/pda/dropped(mob/living/carbon/user)
+	..()
+	unslip_lying_user(user)
+	if(user.lying)
+		remove_user_slip(user)
+
 /obj/item/device/pda/Destroy()
 	PDAs -= src
 	if (id)
@@ -96,6 +126,11 @@
 		else
 			QDEL_NULL(id)
 	QDEL_NULL(pen)
+	if(slot_equipped)
+		unslip_lying_user(loc)
+		var/mob/living/carbon/human/H = loc
+		if(istype(H) && H.lying)
+			remove_user_slip(loc)
 	return ..()
 
 /obj/item/device/pda/examine(mob/user)
@@ -156,44 +191,6 @@
 	icon_state = "pda-clown"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
-
-/obj/item/device/pda/clown/Destroy()
-	if(slot_equipped)
-		unslip_lying_user(loc)
-		var/mob/living/carbon/human/H = loc
-		if(istype(H) && H.lying)
-			remove_user_slip(loc)
-	return ..()
-
-/obj/item/device/pda/clown/proc/make_user_slip(mob/living/carbon/user)
-	user.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
-
-/obj/item/device/pda/clown/proc/remove_user_slip(mob/living/carbon/user)
-	qdel(user.GetComponent(/datum/component/slippery))
-
-/obj/item/device/pda/clown/equipped(mob/living/carbon/user, slot)
-	..()
-	if(slot in list(SLOT_L_STORE, SLOT_R_STORE, SLOT_BELT, SLOT_WEAR_ID))
-		slip_lying_user(user)
-		if(user.lying)
-			make_user_slip(user)
-	else
-		unslip_lying_user(user)
-		if(user.lying)
-			remove_user_slip(user)
-
-/obj/item/device/pda/clown/proc/slip_lying_user(mob/living/carbon/user)
-	RegisterSignal(user, COMSIG_MOB_STATUS_LYING, .proc/make_user_slip)
-	RegisterSignal(user, COMSIG_MOB_STATUS_NOT_LYING, .proc/remove_user_slip)
-
-/obj/item/device/pda/clown/proc/unslip_lying_user(mob/living/carbon/user)
-	UnregisterSignal(user, list(COMSIG_MOB_STATUS_LYING, COMSIG_MOB_STATUS_NOT_LYING))
-
-/obj/item/device/pda/clown/dropped(mob/living/carbon/user)
-	..()
-	unslip_lying_user(user)
-	if(user.lying)
-		remove_user_slip(user)
 
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime

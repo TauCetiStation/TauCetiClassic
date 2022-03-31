@@ -45,7 +45,7 @@
 	shoes = /obj/item/clothing/shoes/black
 
 /datum/outfit/job/assistant/vice_officer
-	name = OUTFIT_JOB_NAME("Clown Vice Officer")
+	name = OUTFIT_JOB_NAME("Vice Clown")
 
 	uniform = /obj/item/clothing/under/rank/vice
 	shoes = /obj/item/clothing/shoes/black
