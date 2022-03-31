@@ -242,6 +242,11 @@
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
 
 // mob signals
+/// from base of mob/Login(): ()
+#define COMSIG_LOGIN "mob_login"
+/// from base of mob/Logout(): (logout_reason)
+#define COMSIG_LOGOUT "mob_logout"
+
 /// from  base of mob/ClickOn(): (atom/target, params)
 #define COMSIG_MOB_CLICK "mob_click"
 	#define COMPONENT_CANCEL_CLICK 1
@@ -249,8 +254,6 @@
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)
 #define COMSIG_MOB_DIED "mob_died"
-///from base of mob/ghost(): (can_reenter_corpse)
-#define COMSIG_MOB_GHOST "mob_ghost"
 ///from base of mob/create_mob_hud(): ()
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 ///from base of item/equipped(): (obj/item/I, slot)
