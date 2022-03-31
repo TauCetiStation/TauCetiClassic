@@ -701,8 +701,6 @@
 			if(30)
 				if(H.set_species(SLIME))
 					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
-					H.dna.mutantrace = "slime"
-					H.update_mutantrace()
 					for(var/obj/item/organ/external/BP in H.bodyparts)
 						BP.status = 0
 					for(var/obj/item/organ/internal/BP in H.organs)

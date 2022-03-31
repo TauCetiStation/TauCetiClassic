@@ -59,7 +59,6 @@ There are several things that need to be remembered:
 
 >	There are also these special cases:
 		update_mutations()	//handles updating your appearance for certain mutations.  e.g TK head-glows
-		update_mutantrace()	//handles updating your appearance after setting the mutantrace var
 		UpdateDamageIcon()	//handles damage overlays for brute/burn damage //(will rename this when I geta round to it)
 		update_body()	//Handles updating your mob's icon to reflect their gender/race/complexion etc
 		update_hair()	//Handles updating your hair overlay (used to be update_face, but mouth and
@@ -98,7 +97,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //Human Overlays Indexes/////////
 #define BODY_LAYER				27
-#define MUTANTRACE_LAYER		26
 #define MUTATIONS_LAYER			25
 #define DAMAGE_LAYER			24
 #define SURGERY_LAYER			23		//bs12 specific.
@@ -158,13 +156,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	else if(icon_override)
 		icon_path = icon_override
 	else if(S.sprite_sheets[sprite_sheet_slot])
-		if (istype(src, /obj/item/clothing) && H.species)
-			var/obj/item/clothing/C = src
-			var/list/avaiable_icon_states = C.get_sprite_sheet_icon_list(H.species.name, sprite_sheet_slot)
-			if("[t_state][icon_state_appendix]" in avaiable_icon_states)
-				icon_path = S.sprite_sheets[sprite_sheet_slot]
-		else
-			icon_path = S.sprite_sheets[sprite_sheet_slot]
+		icon_path = S.sprite_sheets[sprite_sheet_slot]
 
 	var/image/I = image(icon = icon_path, icon_state = "[t_state][icon_state_appendix]", layer = layer)
 	I.color = color
@@ -273,7 +265,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
-		if(facial_hair_style && facial_hair_style.species_allowed && (BP.species.name in facial_hair_style.species_allowed))
+		if(facial_hair_style)
 			var/mutable_appearance/facial_s = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]_s", -HAIR_LAYER)
 			if(facial_hair_style.do_colouration)
 				if(!facial_painted)
@@ -286,7 +278,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)) && !(wear_mask && (wear_mask.flags & BLOCKHEADHAIR)) && !(wear_suit && (wear_suit.flags & BLOCKHEADHAIR)) && !(w_uniform && (w_uniform.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
-		if(hair_style && hair_style.species_allowed && (BP.species.name in hair_style.species_allowed))
+		if(hair_style)
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
 			if(hair_style.do_colouration)
 				var/icon/grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = hair_gradients[grad_style])
@@ -347,42 +339,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	apply_overlay(MUTATIONS_LAYER)
 
-
-/mob/living/carbon/human/proc/update_mutantrace()
-	remove_overlay(MUTANTRACE_LAYER)
-
-	var/list/standing = list()
-	var/fat = HAS_TRAIT(src, TRAIT_FAT) ? "fat" : null
-
-	if(dna)
-		switch(dna.mutantrace)
-			if("golem" , "shadow")
-				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_s", -MUTANTRACE_LAYER)
-
-	if(species.name == SHADOWLING && head)
-		var/image/eyes = image('icons/mob/shadowling.dmi', null, "[dna.mutantrace]_ms_s")
-		eyes.plane = ABOVE_LIGHTING_PLANE
-		standing += eyes
-
-	if(iszombie(src) && stat != DEAD)
-		var/image/eyes = image(species.icobase, null, "zombie_ms_s")
-		eyes.plane = ABOVE_LIGHTING_PLANE
-		standing += eyes
-
-	if(!dna || !(dna.mutantrace == "golem"))
-		update_body()
-
-	if(standing.len)
-		for(var/image/I in standing)
-			I = update_height(I)
-		overlays_standing[MUTANTRACE_LAYER]	= standing
-
-	if(species.flags[HAS_HAIR] || !(HUSK in mutations))
-		update_hair()
-
-	apply_overlay(MUTANTRACE_LAYER)
-
-
 //Call when target overlay should be added/removed
 /mob/living/carbon/human/update_targeted()
 	remove_overlay(TARGETED_LAYER)
@@ -414,7 +370,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		return
 	update_hair()
 	update_mutations()
-	update_mutantrace()
+	update_body()
 	update_inv_w_uniform()
 	update_inv_wear_id()
 	update_inv_gloves()
@@ -928,7 +884,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //Human Overlays Indexes/////////
 #undef BODY_LAYER
-#undef MUTANTRACE_LAYER
 #undef MUTATIONS_LAYER
 #undef DAMAGE_LAYER
 #undef SURGERY_LAYER
