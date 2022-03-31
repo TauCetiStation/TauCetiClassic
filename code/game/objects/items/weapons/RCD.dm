@@ -25,6 +25,7 @@ RCD
 	var/canRwall = FALSE
 	var/disabled = FALSE
 	var/static/list/selection_modes
+	var/static/list/selection_doors
 
 	action_button_name = "Switch RCD"
 
@@ -71,29 +72,41 @@ RCD
 /obj/item/weapon/rcd/proc/populate_selection()
 	selection_modes = list(
 	"Floor & Walls" = image(icon = 'icons/turf/walls/has_false_walls/wall.dmi', icon_state = "box_plating"),
-	"Airlock" = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "closed_filled"),
-	"Emergency Shutter" = image(icon = 'icons/obj/doors/DoorHazard.dmi', icon_state = "door_closed"),
+	"Airlock" = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "closed_filled_glassed_hazarded"),
 	"Deconstruct" = image(icon = 'icons/obj/decals.dmi', icon_state = "blast")
+	)
+	selection_doors = list(
+	"Solid Airlock" = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "closed_filled"),
+	"Glass Airlock" = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "closed_glassed"),
+	"Emergency Shutter" = image(icon = 'icons/obj/doors/DoorHazard.dmi', icon_state = "door_closed_small")
 	)
 
 /obj/item/weapon/rcd/attack_self(mob/user)	//Change the mode
 	if(!selection_modes)
 		populate_selection()
-	var/selection = show_radial_menu(user, src, selection_modes, require_near = TRUE, tooltips = TRUE)
-	switch(selection)
+	var/selection_m = show_radial_menu(user, src, selection_modes, require_near = TRUE, tooltips = TRUE)
+	switch(selection_m)
 		if("Cancel")
 			return
 		if("Floor & Walls")
 			mode = 1
 			to_chat(user, "<span class='notice'>Changed mode to 'Floor & Walls'</span>")
 		if("Airlock")
-			mode = 2
-			to_chat(user, "<span class='notice'>Changed mode to 'Airlock'</span>")
-		if("Emergency Shutter")
-			mode = 3
-			to_chat(user, "<span class='notice'>Changed mode to 'Emergency Shutter'</span>")
+			var/selection_d = show_radial_menu(user, src, selection_doors, require_near = TRUE, tooltips = TRUE)
+			switch(selection_d)
+				if("Cancel")
+					return
+				if("Solid Airlock")
+					mode = 2
+					to_chat(user, "<span class='notice'>Changed mode to 'Solid Airlock'</span>")
+				if("Glass Airlock")
+					mode = 3
+					to_chat(user, "<span class='notice'>Changed mode to 'Glass Airlock'</span>")
+				if("Emergency Shutter")
+					mode = 4
+					to_chat(user, "<span class='notice'>Changed mode to 'Emergency Shutter'</span>")
 		if("Deconstruct")
-			mode = 4
+			mode = 5
 			to_chat(user, "<span class='notice'>Changed mode to 'Deconstruct'</span>")
 
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -171,6 +184,29 @@ RCD
 		if(3)
 			if(istype(target, /turf/simulated/floor))
 				for(var/atom/AT in target)
+					if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
+						to_chat(user, "<span class='warning'>You can't build glass airlock here.</span>")
+						return FALSE
+				if(checkResource(10, user))
+					var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode)
+					rcd_effect.update_icon_state()
+					to_chat(user, "Building Glass Airlock...")
+					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+					if(do_after(user, delay, target = target))
+						if(!useResource(10, user))
+							qdel(rcd_effect)
+							return FALSE
+						activate()
+						rcd_effect.end_animation()
+						new /obj/machinery/door/airlock(target, inner_material = "glass")
+						return TRUE
+					qdel(rcd_effect)
+					return FALSE
+				return FALSE
+
+		if(4)
+			if(istype(target, /turf/simulated/floor))
+				for(var/atom/AT in target)
 					if(AT.density || istype(AT, /obj/machinery/door/firedoor))
 						to_chat(user, "<span class='warning'>You can't build emergency shutter here.</span>")
 						return FALSE
@@ -191,7 +227,7 @@ RCD
 					return FALSE
 				return FALSE
 
-		if(4)
+		if(5)
 			if(checkResource(5, user))
 				if(istype(target, /turf/simulated/wall))
 					var/turf/simulated/wall/W = target
