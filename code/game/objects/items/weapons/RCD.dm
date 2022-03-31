@@ -24,6 +24,7 @@ RCD
 	var/mode = 1
 	var/canRwall = FALSE
 	var/disabled = FALSE
+	var/static/list/selection_modes
 
 	action_button_name = "Switch RCD"
 
@@ -67,28 +68,37 @@ RCD
 		return FALSE
 	return TRUE
 
-/obj/item/weapon/rcd/attack_self(mob/user)
-	//Change the mode
+/obj/item/weapon/rcd/proc/populate_selection()
+	selection_modes = list(
+	"Floor & Walls" = image(icon = 'icons/turf/walls/has_false_walls/wall.dmi', icon_state = "box_plating"),
+	"Airlock" = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "closed_filled"),
+	"Emergency Shutter" = image(icon = 'icons/obj/doors/DoorHazard.dmi', icon_state = "door_closed"),
+	"Deconstruct" = image(icon = 'icons/obj/decals.dmi', icon_state = "blast")
+	)
+
+/obj/item/weapon/rcd/attack_self(mob/user)	//Change the mode
+	if(!selection_modes)
+		populate_selection()
+	var/selection = show_radial_menu(user, src, selection_modes, require_near = TRUE, tooltips = TRUE)
+	switch(selection)
+		if("Cancel")
+			return
+		if("Floor & Walls")
+			mode = 1
+			to_chat(user, "<span class='notice'>Changed mode to 'Floor & Walls'</span>")
+		if("Airlock")
+			mode = 2
+			to_chat(user, "<span class='notice'>Changed mode to 'Airlock'</span>")
+		if("Emergency Shutter")
+			mode = 3
+			to_chat(user, "<span class='notice'>Changed mode to 'Emergency Shutter'</span>")
+		if("Deconstruct")
+			mode = 4
+			to_chat(user, "<span class='notice'>Changed mode to 'Deconstruct'</span>")
+
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	if(prob(20))
 		spark_system.start()
-	switch(mode)
-		if(1)
-			mode = 2
-			to_chat(user, "<span class='notice'>Changed mode to 'Airlock'</span>")
-			return
-		if(2)
-			mode = 3
-			to_chat(user, "<span class='notice'>Changed mode to 'Emergency Shutter'</span>")
-			return
-		if(3)
-			mode = 4
-			to_chat(user, "<span class='notice'>Changed mode to 'Deconstruct'</span>")
-			return
-		if(4)
-			mode = 1
-			to_chat(user, "<span class='notice'>Changed mode to 'Floor & Walls'</span>")
-			return
 
 /obj/item/weapon/rcd/proc/activate()
 	playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
