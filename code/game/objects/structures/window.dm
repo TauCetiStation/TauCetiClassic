@@ -162,7 +162,7 @@
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 		user.do_attack_animation(src)
 		take_damage(rand(15,25), "generic")
-	else if(user.dna && user.dna.mutantrace == "adamantine" || user.get_species() == ABOMINATION)
+	else if(user.get_species() == GOLEM || user.get_species() == ABOMINATION)
 		user.do_attack_animation(src)
 		take_damage(rand(15,25), "generic")
 	else if (user.a_intent == INTENT_HARM)

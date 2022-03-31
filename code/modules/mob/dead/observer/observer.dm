@@ -94,8 +94,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	I.plane = GHOST_ILLUSION_PLANE
 	I.alpha = 200
 	// s = short buffer
-	var/s = add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/ghost_buster, "ghost_buster", I)
-	var/datum/atom_hud/alternate_appearance/basic/ghost_buster/AA = s
+	var/s = add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/see_ghosts, "see_ghosts", I)
+	var/datum/atom_hud/alternate_appearance/basic/see_ghosts/AA = s
 	AA.set_image_layering(GHOST_ILLUSION_PLANE) // I don't want to add more arguments to the constructor
 
 /mob/dead/observer/Destroy()

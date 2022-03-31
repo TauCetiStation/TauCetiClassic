@@ -184,8 +184,9 @@
 	if(speaking && (speaking.flags & SIGNLANG))
 		return txt
 
-	. = replace_characters(txt, sound_approximations)
-	. = replaceEx_characters(txt, sensitive_sound_approximations)
+	. = txt
+	. = replace_characters(., sound_approximations)
+	. = replaceEx_characters(., sensitive_sound_approximations)
 
 /mob/proc/accent_sounds(txt, datum/language/speaking)
 	return txt

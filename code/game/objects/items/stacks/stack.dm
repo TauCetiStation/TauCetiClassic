@@ -115,7 +115,7 @@
 	)
 
 /obj/item/stack/tgui_state(mob/user)
-	return global.hands_state
+	return global.interactive_reach_state
 
 /obj/item/stack/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
@@ -137,7 +137,7 @@
 			produce_recipe(R, multiplier, usr)
 			return TRUE
 
-/obj/item/stack/proc/produce_recipe(datum/stack_recipe/recipe, quantity, mob/user)
+/obj/item/stack/proc/produce_recipe(datum/stack_recipe/recipe, quantity, mob/living/user)
 	var/datum/stack_recipe/R = recipe
 	var/multiplier = quantity
 	if (!multiplier) multiplier = 1
@@ -159,9 +159,11 @@
 		to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
 		if (!do_after(usr, R.time, target = usr))
 			return
+	var/atom/build_loc = loc
 	if(!use(R.req_amount*multiplier))
 		return
-	var/atom/O = new R.result_type( usr.loc )
+	var/atom/movable/O = new R.result_type(build_loc)
+	user.try_take(O, build_loc)
 	O.set_dir(usr.dir)
 	if (R.max_res_amount>1)
 		var/obj/item/stack/new_item = O
@@ -304,11 +306,11 @@
 			change_stack(user, stackmaterial)
 			to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>")
 
-/obj/item/stack/proc/change_stack(mob/user, amount)
-	var/obj/item/stack/F = new type(user, amount, FALSE)
+/obj/item/stack/proc/change_stack(mob/living/user, amount)
+	var/obj/item/stack/F = new type(loc, amount, FALSE)
+	user.try_take(F, loc)
 	. = F
 	F.copy_evidences(src)
-	user.put_in_hands(F)
 	add_fingerprint(user)
 	F.add_fingerprint(user)
 	use(amount, TRUE)

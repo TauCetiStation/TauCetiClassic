@@ -49,7 +49,6 @@
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()
 	gender = NEUTER
-	dna.mutantrace = "plant"
 	greaterform = DIONA
 	add_language(LANGUAGE_ROOTSPEAK)
 
