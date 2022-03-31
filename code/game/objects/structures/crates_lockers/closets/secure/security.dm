@@ -50,7 +50,6 @@
 /obj/structure/closet/secure_closet/iaa/PopulateContents()
 	new /obj/item/weapon/storage/backpack/satchel(src)
 	new /obj/item/clothing/under/suit_jacket/burgundy(src)
-	new /obj/item/clothing/under/rank/centcom/representative(src)
 	new /obj/item/clothing/shoes/leather(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/under/lawyer/female(src)

@@ -13492,7 +13492,8 @@
 	pixel_x = -5
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
 "axp" = (
@@ -13809,7 +13810,8 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
 "axU" = (
@@ -13854,6 +13856,9 @@
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco{
 	pixel_x = -11;
 	pixel_y = 1
+	},
+/obj/machinery/alarm{
+	pixel_y = 23
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -13988,10 +13993,12 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/alarm{
-	pixel_y = 23
+/obj/machinery/door_control{
+	id = "lawyer_blast";
+	name = "Privacy Shutters";
+	pixel_y = 28;
+	req_access = list(38)
 	},
-/obj/structure/closet/secure_closet/iaa,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -13999,13 +14006,9 @@
 "ayn" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/door_control{
-	id = "lawyer_blast";
-	name = "Privacy Shutters";
-	pixel_y = 28
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
 "ayo" = (
@@ -14719,7 +14722,7 @@
 /obj/machinery/camera{
 	c_tag = "Internal Affairs"
 	},
-/obj/item/weapon/flora/pottedplant/tropicalfern,
+/obj/structure/closet/secure_closet/iaa,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -14798,7 +14801,7 @@
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
-/obj/structure/closet/secure_closet/iaa,
+/obj/item/weapon/flora/pottedplant/tropicalfern,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -33766,7 +33769,8 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
 "bhY" = (
@@ -36775,7 +36779,8 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
 "bnK" = (
@@ -43505,7 +43510,8 @@
 	pixel_y = -8
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
 "bzD" = (
@@ -43583,7 +43589,8 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
 "bzJ" = (
@@ -43671,10 +43678,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/command{
-	name = "Internal Affairs";
-	req_access = list(38)
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -43686,8 +43689,19 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lawyer_blast";
+	name = "Internal Affairs";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/command{
+	name = "Internal Affairs";
+	req_access = list(38)
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkbluefull"
 	},
 /area/station/security/iaa_office)
 "bzR" = (
@@ -44970,8 +44984,8 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "bluecorner"
+	dir = 8;
+	icon_state = "blue"
 	},
 /area/station/hallway/primary/fore)
 "bCo" = (
@@ -47746,7 +47760,8 @@
 /obj/structure/cable,
 /obj/item/weapon/flora/pottedplant/palm,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
 "bHj" = (
@@ -47810,7 +47825,8 @@
 "bHo" = (
 /obj/machinery/photocopier,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
 "bHp" = (
@@ -115420,7 +115436,7 @@ avk
 aNt
 axP
 bKR
-awG
+aCF
 bCn
 awG
 avI
