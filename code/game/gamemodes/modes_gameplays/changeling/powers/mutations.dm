@@ -145,10 +145,6 @@
 		if(!A.requiresID() || A.allowed(user)) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
 			return
 
-		if(A.hasPower())
-			to_chat(user, "<span class='notice'>The airlock's motors resist our efforts to force it.</span>")
-			return
-
 		else if(A.locked)
 			to_chat(user, "<span class='notice'>The airlock's bolts prevent it from being forced.</span>")
 			return
