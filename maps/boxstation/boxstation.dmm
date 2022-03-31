@@ -1714,7 +1714,7 @@
 /obj/item/weapon/flora/random,
 /obj/machinery/light,
 /turf/simulated/floor{
-	dir = 8;
+	dir = 6;
 	icon_state = "redcorner"
 	},
 /area/station/security/main)
@@ -5068,20 +5068,6 @@
 /obj/effect/landmark/start{
 	name = "Warden"
 	},
-/obj/machinery/door_control{
-	id = "Secure Gate";
-	name = "Brig Lockdown";
-	pixel_x = 6;
-	pixel_y = -28;
-	req_access = list(2)
-	},
-/obj/machinery/door_control{
-	id = "Prison Gate";
-	name = "Prison Wing Lockdown";
-	pixel_x = -6;
-	pixel_y = -28;
-	req_access = list(2)
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5263,10 +5249,10 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/obj/item/weapon/folder/red,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/weapon/folder/red,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -5383,6 +5369,20 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/crowbar,
+/obj/machinery/door_control{
+	id = "Prison Gate";
+	name = "Prison Wing Lockdown";
+	pixel_x = -6;
+	pixel_y = 4;
+	req_access = list(2)
+	},
+/obj/machinery/door_control{
+	id = "Secure Gate";
+	name = "Brig Lockdown";
+	pixel_x = 6;
+	pixel_y = 4;
+	req_access = list(2)
+	},
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -6683,7 +6683,8 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/security/brig)
 "alj" = (
@@ -7324,7 +7325,8 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/security/brig)
 "ami" = (
@@ -7885,8 +7887,13 @@
 	id = "Detective";
 	pixel_x = -26
 	},
+/obj/item/weapon/book/manual/wiki/security_space_law{
+	pixel_y = 10
+	},
 /obj/item/device/flashlight/seclite,
-/obj/item/weapon/storage/briefcase,
+/obj/item/weapon/storage/briefcase{
+	pixel_y = -4
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -8069,7 +8076,8 @@
 	name = "Brig Desk"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/security/brig)
 "anq" = (
@@ -8293,13 +8301,21 @@
 "anI" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/photo_album{
-	pixel_y = 5
+	pixel_x = 3;
+	pixel_y = 10
+	},
+/obj/item/device/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30;
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
 /area/station/security/detectives_office)
 "anJ" = (
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "anK" = (
@@ -8990,7 +9006,8 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/security/brig)
 "aoR" = (
@@ -9081,15 +9098,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
-"aoY" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/hologram/holopad,
-/turf/simulated/floor/carpet/red,
-/area/station/security/detectives_office)
 "aoZ" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -9103,24 +9111,21 @@
 	icon_state = "redcorner"
 	},
 /area/station/security/main)
-"apb" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/red,
-/area/station/security/detectives_office)
 "apc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/station/security/prison)
 "apd" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/turf/simulated/floor/carpet/red,
+/obj/machinery/requests_console/detective{
+	pixel_y = -28
+	},
+/obj/item/weapon/flora/random,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
 /area/station/security/detectives_office)
 "ape" = (
 /turf/simulated/floor/plating/airless{
@@ -9718,10 +9723,12 @@
 /obj/machinery/light_switch{
 	pixel_y = -28
 	},
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
+/obj/structure/table/woodentable,
+/obj/item/device/taperecorder{
+	pixel_x = 2;
+	pixel_y = 9
 	},
+/obj/item/clothing/glasses/sunglasses,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -9751,12 +9758,8 @@
 /obj/item/weapon/folder/red{
 	pixel_y = 2
 	},
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30;
-	pixel_y = 4
-	},
+/obj/item/weapon/handcuffs,
+/obj/item/device/flash,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -9775,18 +9778,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
-"aqq" = (
-/obj/structure/table/woodentable,
-/obj/item/device/flash,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/weapon/handcuffs,
-/obj/machinery/requests_console/detective{
-	pixel_y = -28
-	},
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
-/area/station/security/detectives_office)
 "aqr" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor,
@@ -9916,32 +9907,22 @@
 	icon_state = "floorgrime"
 	},
 /area/station/security/prison)
-"aqA" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+"aqB" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
+/obj/machinery/light,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
 /area/station/security/detectives_office)
-"aqB" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/red,
-/area/station/security/detectives_office)
 "aqC" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/red,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
 /area/station/security/detectives_office)
 "aqD" = (
 /obj/structure/grille,
@@ -9956,10 +9937,10 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
 "aqE" = (
-/obj/structure/disposalpipe/segment{
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -10565,17 +10546,6 @@
 /obj/structure/closet/secure_closet/personal,
 /turf/simulated/floor/wood,
 /area/station/maintenance/dormitory)
-"arO" = (
-/obj/structure/table/woodentable,
-/obj/machinery/light,
-/obj/item/device/taperecorder{
-	pixel_x = -1;
-	pixel_y = 6
-	},
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
-/area/station/security/detectives_office)
 "arP" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -10703,15 +10673,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
-"arY" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/wiki/security_space_law{
-	pixel_y = 5
-	},
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
-/area/station/security/detectives_office)
 "arZ" = (
 /obj/structure/sign/double/barsign,
 /turf/simulated/wall,
@@ -11219,18 +11180,6 @@
 	icon_state = "cafeteria"
 	},
 /area/station/security/prison)
-"asV" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/table/glass,
-/obj/item/weapon/folder/red{
-	pixel_y = 2
-	},
-/turf/simulated/floor{
-	icon_state = "whiteredfull"
-	},
-/area/station/security/forensic_office)
 "asW" = (
 /obj/structure/table,
 /obj/item/device/flashlight,
@@ -54801,7 +54750,8 @@
 	},
 /obj/random/foods/donuts,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/security/brig)
 "bUl" = (
@@ -118118,7 +118068,7 @@ amj
 ana
 aoP
 aog
-aqA
+ajo
 aql
 pPF
 aef
@@ -118375,7 +118325,7 @@ anK
 aoB
 anr
 apH
-apb
+ajo
 arM
 pPF
 arz
@@ -118631,7 +118581,7 @@ afV
 amm
 aoE
 anw
-aoY
+aof
 aqC
 aqo
 pPF
@@ -118890,8 +118840,8 @@ anc
 anJ
 aof
 aqB
-arO
 pPF
+afl
 aef
 aEA
 aef
@@ -119147,9 +119097,9 @@ aoD
 bNa
 any
 apd
-aqq
 pPF
 arj
+aeJ
 arS
 aef
 aeJ
@@ -119404,8 +119354,8 @@ anf
 anI
 ajo
 aqE
-arY
 pPF
+aeJ
 ark
 arT
 aef
@@ -119661,8 +119611,8 @@ ahC
 anz
 apJ
 aph
-asV
 uUU
+afl
 asv
 aug
 aEA
