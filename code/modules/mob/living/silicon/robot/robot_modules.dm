@@ -319,6 +319,7 @@
 
 /obj/item/weapon/robot_module/miner/atom_init()
 	. = ..()
+	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/borg/sight/meson(src)
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/screwdriver(src)
@@ -382,6 +383,7 @@
 
 /obj/item/weapon/robot_module/science/atom_init()
 	. = ..()
+	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/gripper/science(src)
 	modules += new /obj/item/device/analyzer(src)
 	modules += new /obj/item/device/assembly/signaler(src)
