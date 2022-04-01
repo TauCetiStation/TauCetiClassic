@@ -35,16 +35,16 @@
 	icon_state = "rcd"
 	if(delay < 10)
 		icon_state += "_shortest"
-		return ..()
+		return
 	if(delay < 20)
 		icon_state += "_shorter"
-		return ..()
+		return
 	if(delay < 37)
 		icon_state += "_short"
-		return ..()
+		return
 	if(status == 5)
 		icon_state += "_reverse"
-	return ..()
+	return
 
 /obj/effect/constructing_effect/proc/end_animation()
 	if(status == 5)
