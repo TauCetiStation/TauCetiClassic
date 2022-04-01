@@ -287,10 +287,7 @@ Hit Procs
 	canmove = !(weakened || paralysis || stat || (status_flags & FAKEDEATH) || crawling || stunned || captured || pinned.len)
 
 /mob/living/carbon/xenomorph/crawl()
-	if(crawling)
-		SetCrawling(0)
-	else
-		SetCrawling(1)
+	SetCrawling(!crawling)
 	update_canmove()
 	to_chat(src, "<span class='notice'>You are now [crawling ? "resting" : "getting up"].</span>")
 

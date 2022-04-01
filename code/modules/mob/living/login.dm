@@ -20,6 +20,6 @@
 	client.media.update_music()
 
 	// unresting mob after ghosting
-	SetCrawling(0)
+	SetCrawling(FALSE)
 
 	return .

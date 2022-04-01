@@ -926,11 +926,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		paralysis = 0
 
 // ========== CRAWLING ==========
-/mob/proc/Crawling(amount)
-	crawling = max(max(crawling, amount), 0)
-
-/mob/proc/SetCrawling(amount)
-	crawling = max(amount, 0)
+/mob/proc/SetCrawling(value)
+	crawling = value
 
 // ========== DRUGGINESS ==========
 /mob/proc/adjustDrugginess(amount)
