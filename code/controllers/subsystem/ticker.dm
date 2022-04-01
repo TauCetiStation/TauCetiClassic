@@ -291,9 +291,7 @@ SUBSYSTEM_DEF(ticker)
 		//Cleanup some stuff
 		SSjob.fallback_landmark = null
 		for(var/obj/effect/landmark/start/S in landmarks_list)
-			//Deleting Startpoints but we need the ai point to AI-ize people later
-			if (S.name != "AI")
-				qdel(S)
+			S.after_round_start()
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()
@@ -317,7 +315,7 @@ SUBSYSTEM_DEF(ticker)
 	var/summary = "summary_selfdes"
 	if(mode && !override)
 		override = mode.name
-	cinematic = new /atom/movable/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
+	cinematic = new /atom/movable/screen/nuke(src)
 	for(var/mob/M as anything in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 		if(M.client)
 			M.client.screen += cinematic	//show every client the cinematic
@@ -543,8 +541,8 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/create_default_spawners()
 	// infinity spawners
-	create_spawner(/datum/spawner/mouse, "mouse")
-	create_spawner(/datum/spawner/drone, "drone")
+	create_spawner(/datum/spawner/mouse)
+	create_spawner(/datum/spawner/drone)
 
 /datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
 	if(!config.deathmatch_arena)

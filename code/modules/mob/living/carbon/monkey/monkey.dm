@@ -103,23 +103,17 @@
 	return ..()
 
 /mob/living/carbon/monkey/unathi/atom_init()
-
 	. = ..()
-	dna.mutantrace = "lizard"
 	greaterform = UNATHI
 	add_language(LANGUAGE_SINTAUNATHI)
 
 /mob/living/carbon/monkey/skrell/atom_init()
-
 	. = ..()
-	dna.mutantrace = "skrell"
 	greaterform = SKRELL
 	add_language(LANGUAGE_SKRELLIAN)
 
 /mob/living/carbon/monkey/tajara/atom_init()
-
 	. = ..()
-	dna.mutantrace = "tajaran"
 	greaterform = TAJARAN
 	add_language(LANGUAGE_SIIKTAJR)
 
