@@ -355,11 +355,11 @@
 				AdjustSleeping(-10 SECONDS)
 				if (!M.lying)
 					if(!IsSleeping())
-						src.SetCrawling(0)
+						SetCrawling(0)
 					if(src.crawling)
 						if(crawl_can_use() && src.pass_flags & PASSCRAWL)
 							src.pass_flags ^= PASSCRAWL
-							src.SetCrawling(0)
+							SetCrawling(0)
 					M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
 				else
