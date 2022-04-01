@@ -152,7 +152,8 @@
 		else
 			if(prob(10))
 				user.say("Heeeeeeeeeerrre's Johnny!") // ^^
-			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
+			user.visible_message("<span class='warning'>[user] start forces the door to open with \his [src]!</span>", "<span class='warning'>We attempt to force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
+			do_after(user, 20, target = A)
 			A.open(1)
 
 /obj/effect/proc_holder/changeling/weapon/shield
