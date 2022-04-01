@@ -583,13 +583,13 @@
 				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
 					temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_COLD_DIVISOR)	//this will be negative
+				temp_adj = max(temp_adj, BODYTEMP_COOLING_MAX)
 			else					//Place is hotter than we are
 				var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
 					temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_HEAT_DIVISOR)
+				temp_adj = min(temp_adj, BODYTEMP_HEATING_MAX)
 
-			temp_adj = clamp(temp_adj, BODYTEMP_COOLING_MAX, BODYTEMP_HEATING_MAX)
-			//world << "Environment: [loc_temp], [src]: [bodytemperature], Adjusting: [temp_adj]"
 			bodytemperature += temp_adj
 
 	else if(!species.flags[IS_SYNTHETIC] && !species.flags[RAD_IMMUNE])
