@@ -122,177 +122,131 @@ RCD
 	if(!can_use(target, user))
 		return FALSE
 	var/delay = 50
-	switch(mode)
-		if(1)
+
+//deconstructing
+	if(mode == 5)
+		if(checkResource(5, user))
+			if(istype(target, /turf/simulated/wall))
+				if(istype(target, /turf/simulated/wall/r_wall) && !canRwall)
+					return FALSE
+				delay = 40
+
+			to_chat(user, "Deconstructing [target.name]...")
+			var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode)
+			rcd_effect.update_icon_state()
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+			if(do_after(user, delay, target = target))
+				if(!useResource(5, user))
+					qdel(rcd_effect)
+					return FALSE
+				activate()
+				rcd_effect.end_animation()
+				if(istype(target, /turf/simulated/wall))
+					var/turf/simulated/wall/W = target
+					W.ChangeTurf(/turf/simulated/floor/plating/airless)
+				else if(istype(target, /turf/simulated/floor))
+					var/turf/simulated/floor/F = target
+					F.BreakToBase()
+				else
+					qdel(target)
+				return TRUE
+			qdel(rcd_effect)
+		return FALSE
+
+//turf building
+	else if(mode == 1)
+		if(isenvironmentturf(target))
+			if(!checkResource(1, user))
+				return FALSE
+			delay = 0
+		if(istype(target, /turf/simulated/floor))
+			if(!checkResource(3, user))
+				return FALSE
+			for(var/atom/AT in target)
+				if(AT.density)
+					to_chat(user, "<span class='warning'>You can't build wall here.</span>")
+					return FALSE
+			delay = 20
+
+		if(isenvironmentturf(target))
+			to_chat(user, "Building Floor...")
+		else
+			to_chat(user, "Building Wall...")
+		var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode)
+		rcd_effect.update_icon_state()
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+		if(do_after(user, delay, target = target))
+			if(isenvironmentturf(target))
+				if(!useResource(1, user))
+					qdel(rcd_effect)
+					return FALSE
+			else
+				if(!useResource(3, user))
+					qdel(rcd_effect)
+					return FALSE
+			activate()
+			rcd_effect.end_animation()
 			if(isenvironmentturf(target))
 				var/turf/T = target
-				if(useResource(1, user))
-					var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode)
-					rcd_effect.update_icon_state()
-					to_chat(user, "Building Floor...")
-					activate()
-					T.ChangeTurf(/turf/simulated/floor/plating/airless)
-					rcd_effect.end_animation()
-
-			if(istype(target, /turf/simulated/floor))
-				for(var/atom/AT in target)
-					if(AT.density)
-						to_chat(user, "<span class='warning'>You can't build wall here.</span>")
-						return FALSE
-				delay = 20
+				T.ChangeTurf(/turf/simulated/floor/plating/airless)
+			else if(istype(target, /turf/simulated/floor))
 				var/turf/simulated/floor/F = target
-				if(checkResource(3, user))
-					var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode)
-					rcd_effect.update_icon_state()
-					to_chat(user, "Building Wall ...")
-					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, delay, target = F))
-						if(!useResource(3, user))
-							qdel(rcd_effect)
-							return FALSE
-						activate()
-						rcd_effect.end_animation()
-						F.ChangeTurf(/turf/simulated/wall)
-						return TRUE
-					qdel(rcd_effect)
-					return FALSE
-				return FALSE
+				F.ChangeTurf(/turf/simulated/wall)
+			return TRUE
+		qdel(rcd_effect)
+		return FALSE
 
-		if(2)
-			if(istype(target, /turf/simulated/floor))
-				for(var/atom/AT in target)
-					if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
-						to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
-						return FALSE
-				if(checkResource(10, user))
-					var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode)
-					rcd_effect.update_icon_state()
-					to_chat(user, "Building Airlock...")
-					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, delay, target = target))
-						if(!useResource(10, user))
-							qdel(rcd_effect)
-							return FALSE
-						activate()
-						rcd_effect.end_animation()
-						new /obj/machinery/door/airlock(target)
-						return TRUE
-					qdel(rcd_effect)
-					return FALSE
-				return FALSE
-
-		if(3)
-			if(istype(target, /turf/simulated/floor))
-				for(var/atom/AT in target)
-					if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
-						to_chat(user, "<span class='warning'>You can't build glass airlock here.</span>")
-						return FALSE
-				if(checkResource(10, user))
-					var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode)
-					rcd_effect.update_icon_state()
-					to_chat(user, "Building Glass Airlock...")
-					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, delay, target = target))
-						if(!useResource(10, user))
-							qdel(rcd_effect)
-							return FALSE
-						activate()
-						rcd_effect.end_animation()
-						new /obj/machinery/door/airlock/glass(target)
-						return TRUE
-					qdel(rcd_effect)
-					return FALSE
-				return FALSE
-
-		if(4)
-			if(istype(target, /turf/simulated/floor))
+//airlock building
+	else
+		if(istype(target, /turf/simulated/floor))
+			if(mode == 4)
 				for(var/atom/AT in target)
 					if(AT.density || istype(AT, /obj/machinery/door/firedoor))
 						to_chat(user, "<span class='warning'>You can't build emergency shutter here.</span>")
 						return FALSE
-				if(checkResource(5, user))
-					var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode)
-					rcd_effect.update_icon_state()
-					to_chat(user, "Building Emergency Shutter...")
-					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, delay, target = target))
-						if(!useResource(5, user))
-							qdel(rcd_effect)
-							return FALSE
-						activate()
-						rcd_effect.end_animation()
-						new /obj/machinery/door/firedoor(target)
-						return TRUE
-					qdel(rcd_effect)
+				if(!checkResource(5, user))
 					return FALSE
-				return FALSE
-
-		if(5)
-			if(checkResource(5, user))
-				if(istype(target, /turf/simulated/wall))
-					var/turf/simulated/wall/W = target
-					if(istype(W, /turf/simulated/wall/r_wall) && !canRwall)
+			else
+				for(var/atom/AT in target)
+					if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
+						if(mode == 2)
+							to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
+						else
+							to_chat(user, "<span class='warning'>You can't build glass airlock here.</span>")
 						return FALSE
-					delay = 40
-					var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode)
-					rcd_effect.update_icon_state()
-					to_chat(user, "Deconstructing Wall...")
-					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, delay, target = W))
-						if(!useResource(5, user))
-							qdel(rcd_effect)
-							return FALSE
-						activate()
-						rcd_effect.end_animation()
-						W.ChangeTurf(/turf/simulated/floor/plating/airless)
-						return TRUE
-					qdel(rcd_effect)
+				if(!checkResource(10, user))
 					return FALSE
 
-				else if(istype(target, /turf/simulated/floor))
-					var/turf/simulated/floor/F = target
-					var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode)
-					rcd_effect.update_icon_state()
-					to_chat(user, "Deconstructing Floor...")
-					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(do_after(user, delay, target = F))
-						if(!useResource(5, user))
-							qdel(rcd_effect)
-							return FALSE
-						activate()
-						rcd_effect.end_animation()
-						F.BreakToBase()
-						return TRUE
-					qdel(rcd_effect)
-					return FALSE
-
+			if(mode == 2)
+				to_chat(user, "Building Airlock...")
+			else if(mode == 3)
+				to_chat(user, "Building Glass Airlock...")
+			else
+				to_chat(user, "Building Emergency Shutter...")
+			var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode)
+			rcd_effect.update_icon_state()
+			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+			if(do_after(user, delay, target = target))
+				if(mode == 4)
+					if(!useResource(5, user))
+						qdel(rcd_effect)
+						return FALSE
 				else
-					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-					if(istype(target, /obj/structure/window))
-						to_chat(user, "Deconstructing Window...")
-					if(istype(target, /obj/machinery/door/window))
-						to_chat(user, "Deconstructing Interior Door...")
-					if(istype(target, /obj/machinery/door/airlock))
-						to_chat(user, "Deconstructing Airlock...")
-					if(istype(target, /obj/machinery/door/firedoor))
-						to_chat(user, "Deconstructing Emergency Shutter...")
-					var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode)
-					rcd_effect.update_icon_state()
-					if(do_after(user, delay, target = target))
-						if(!useResource(5, user))
-							qdel(rcd_effect)
-							return FALSE
-						activate()
-						rcd_effect.end_animation()
-						qdel(target)
-						return TRUE
-					qdel(rcd_effect)
-					return FALSE
-				return FALSE
-			return FALSE
-		else
-			to_chat(user, "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin.")
-			return FALSE
+					if(!useResource(10, user))
+						qdel(rcd_effect)
+						return FALSE
+				activate()
+				rcd_effect.end_animation()
+				switch(mode)
+					if(2)
+						new /obj/machinery/door/airlock(target)
+					if(3)
+						new /obj/machinery/door/airlock/glass(target)
+					if(4)
+						new /obj/machinery/door/firedoor(target)
+				return TRUE
+			qdel(rcd_effect)
+	return FALSE
 
 /obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
