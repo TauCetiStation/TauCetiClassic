@@ -264,12 +264,6 @@
 	robot_help_shake(M, user)
 
 /obj/item/weapon/robot_helper_tool/proc/robot_help_shake(mob/living/carbon/human/M, mob/living/silicon/robot/user)
-	var/t_him = "it"
-	if (M.gender == MALE)
-		t_him = "him"
-	else if (M.gender == FEMALE)
-		t_him = "her"
-
 	if(M.lying)
 		if(!M.IsSleeping())
 			M.resting = FALSE
@@ -277,15 +271,15 @@
 			if(M.pass_flags & PASSCRAWL)
 				M.pass_flags ^= PASSCRAWL
 				M.crawling = FALSE
-		user.visible_message("<span class='notice'>[user] shakes [M] trying to wake [t_him] up!</span>", \
-							"<span class='notice'>You shake [M] trying to wake [t_him] up!</span>")
+		user.visible_message("<span class='notice'>[user] shakes [M] trying to wake [P_THEM(M.gender)] up!</span>", \
+							"<span class='notice'>You shake [M] trying to wake [P_THEM(M.gender)] up!</span>")
 	else
 		if(!M.IsSleeping())
-			user.visible_message("<span class='notice'>[user] cuddles with [M] to make [t_him] feel better!</span>", \
-								"<span class='notice'>You cuddle with [M] to make [t_him] feel better!</span>")
+			user.visible_message("<span class='notice'>[user] cuddles with [M] to make [P_THEM(M.gender)] feel better!</span>", \
+								"<span class='notice'>You cuddle with [M] to make [P_THEM(M.gender)] feel better!</span>")
 		else
-			user.visible_message("<span class='notice'>[user] gently touches [M] trying to wake [t_him] up!</span>", \
-								"<span class='notice'>You gently touch [M] trying to wake [t_him] up!</span>")
+			user.visible_message("<span class='notice'>[user] gently touches [M] trying to wake [P_THEM(M.gender)] up!</span>", \
+								"<span class='notice'>You gently touch [M] trying to wake [P_THEM(M.gender)] up!</span>")
 	M.AdjustSleeping(-10 SECONDS)
 	M.AdjustParalysis(-3)
 	M.AdjustStunned(-3)
