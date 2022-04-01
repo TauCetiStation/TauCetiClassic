@@ -26,4 +26,4 @@
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return
 
-	create_spawners(/datum/spawner/alien_event, "alien_event", spawncount)
+	create_spawners(/datum/spawner/alien_event, spawncount)

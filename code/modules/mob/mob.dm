@@ -406,7 +406,7 @@
 		return
 
 	// New life, new quality.
-	client.prefs.have_quality = FALSE
+	client.prefs.selected_quality_name = null
 
 	M.key = key
 //	M.Login()	//wat
