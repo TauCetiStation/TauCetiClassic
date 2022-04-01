@@ -169,7 +169,7 @@
 			ghost.throw_at(T, 7, 5, src) // It will say that the bad "thrown" the ghost out. Sounds fun.
 
 	can_be_pulled = TRUE
-	crawling = TRUE
+	SetCrawling(1)
 	icon_state = "pbagdown"
 	my_icon_state = "pbagdown"
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -193,7 +193,7 @@
 	icon_state = "pbag"
 	my_icon_state = "pbag"
 	pixel_y = 0
-	crawling = FALSE
+	SetCrawling(0)
 
 /mob/living/pbag/verb/user_hang()
 	set name = "Hang Bag"

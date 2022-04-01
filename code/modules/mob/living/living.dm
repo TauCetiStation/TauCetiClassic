@@ -1090,7 +1090,10 @@
 		if(!crawl_can_use())
 			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
 			return
-	crawling = !crawling
+	if(crawling)
+		SetCrawling(0)
+	else
+		SetCrawling(1)
 	pass_flags ^= PASSCRAWL
 	update_canmove()
 	to_chat(src, "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>")

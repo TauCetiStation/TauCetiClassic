@@ -98,7 +98,7 @@
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
-	C.crawling = 1
+	C.SetCrawling(1)
 	C.loc = src.loc
 	for(var/obj/O in src)
 		O.loc = src.loc
