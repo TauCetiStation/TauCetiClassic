@@ -425,6 +425,8 @@
 	target.adjustBrainLoss(bdam)
 	user.adjustBrainLoss(bdam)
 	to_chat(user, "<span class='danger'>Ваш разум перемещается в другое тело. Вы чувствуете, как частичка себя теряется в забвенье.</span>")
+	target.logout_reason = LOGOUT_SWAP
+	user.logout_reason = LOGOUT_SWAP
 	var/mob/dead/observer/ghost = target.ghostize(FALSE)
 	user.mind.transfer_to(target)
 	ghost.mind.transfer_to(user)
