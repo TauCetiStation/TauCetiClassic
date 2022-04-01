@@ -48,7 +48,7 @@
 	hotkey_keys = list("None")
 	name = "crawl"
 	full_name = "Crawl"
-	description = "crawl"
+	description = "You lay down/get up"
 
 /datum/keybinding/living/crawl/down(client/user)
 	var/mob/living/L = user.mob
