@@ -571,7 +571,7 @@
 		var/loc_temp = get_temperature(environment)
 
 		//Use heat transfer as proportional to the gas activity (pressure)
-		var/affecting_temp = (loc_temp - bodytemperature) * environment.return_relative_density()
+		var/affecting_temp = (loc_temp - bodytemperature) * min(environment.return_relative_density(), 1.)
 
 		//If you're on fire, you do not heat up or cool down based on surrounding gases.
 		//Or if absolute temperature difference is too small
