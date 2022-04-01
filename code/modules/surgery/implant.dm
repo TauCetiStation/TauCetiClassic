@@ -177,7 +177,7 @@
 	if(..())
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		if(BP.stage == 3)
-			return 0
+			return FALSE
 
 		return BP && ((BP.open == 3 && BP.body_zone == BP_CHEST) || (BP.open == 2))
 
