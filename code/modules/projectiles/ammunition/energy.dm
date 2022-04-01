@@ -15,12 +15,6 @@
 /obj/item/ammo_casing/energy/laser/cyborg
 	e_cost = 250
 
-/obj/item/ammo_casing/energy/laser_pulse
-	projectile_type = /obj/item/projectile/energy/laser
-	select_name = "kill"
-	e_cost = 50
-	fire_sound = 'sound/weapons/guns/gunpulse_laser3.ogg'
-
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/item/projectile/beam/practice
 	select_name = "practice"
