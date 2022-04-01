@@ -17817,7 +17817,7 @@
 	},
 /area/station/civilian/hydroponics)
 "aFI" = (
-/obj/machinery/portable_atmospherics/canister/hydrogen,
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -53476,10 +53476,13 @@
 	},
 /area/station/medical/medbreak)
 "bSo" = (
-/obj/machinery/space_heater,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -58288,7 +58291,7 @@
 	},
 /area/station/engineering/atmos)
 "chw" = (
-/obj/machinery/space_heater,
+/obj/machinery/portable_atmospherics/canister/hydrogen,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -59244,16 +59247,12 @@
 	},
 /area/station/rnd/xenobiology)
 "ckH" = (
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -22
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "caution"
+	icon_state = "bot"
 	},
 /area/station/engineering/atmos)
 "ckI" = (
@@ -65117,13 +65116,18 @@
 	},
 /area/station/rnd/xenobiology)
 "czX" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -22
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/space_heater,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "caution"
 	},
-/turf/simulated/floor,
 /area/station/engineering/atmos)
 "czY" = (
 /obj/item/weapon/storage/box/monkeycubes,
@@ -68170,15 +68174,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
-"cJQ" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
-/area/station/engineering/atmos)
 "cJS" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor{
@@ -79325,6 +79320,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/machinery/space_heater,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "caution"
@@ -118805,7 +118801,7 @@ xbM
 cna
 mIn
 oOd
-ckH
+czX
 odb
 cur
 fBF
@@ -119558,8 +119554,8 @@ cdP
 bLt
 bSV
 bSo
-chw
-czX
+ckH
+cbX
 bVA
 cfs
 bWM
@@ -119814,8 +119810,8 @@ cdA
 cdP
 bLt
 bSV
-cJQ
-cJQ
+bNO
+bNO
 cbX
 bSV
 akB
@@ -120071,8 +120067,8 @@ cdA
 cLk
 bLt
 bSV
-bNO
-bNO
+cdZ
+cdZ
 cKs
 bRc
 coz
@@ -120328,8 +120324,8 @@ cdA
 cLn
 geb
 bSV
-cdZ
-cdZ
+cik
+cik
 cKr
 bSV
 cMM
@@ -120585,8 +120581,8 @@ kEb
 cLm
 bPY
 bSV
-cik
-cik
+chw
+chw
 cKt
 bRd
 coF
