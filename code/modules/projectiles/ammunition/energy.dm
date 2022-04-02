@@ -180,3 +180,9 @@
 /obj/item/ammo_casing/energy/pyrometer/medical
 	projectile_type = /obj/item/projectile/pyrometer/medical
 	select_name = "non-contact thermometer (medical)"
+
+/obj/item/ammo_casing/energy/phaser
+	projectile_type = /obj/item/projectile/energy/phaser
+	select_name = "phase"
+	e_cost = 100
+	fire_sound = 'sound/weapons/guns/phaser.ogg'
