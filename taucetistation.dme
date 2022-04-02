@@ -255,6 +255,7 @@
 #include "code\datums\modules.dm"
 #include "code\datums\music_player.dm"
 #include "code\datums\mutable_appearance.dm"
+#include "code\datums\particool.dm"
 #include "code\datums\progressbar.dm"
 #include "code\datums\recipe.dm"
 #include "code\datums\runechat.dm"
