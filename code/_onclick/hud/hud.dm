@@ -177,6 +177,7 @@ var/global/list/available_ui_styles = list(
 		ai_hud()
 	else if(isrobot(mymob))
 		robot_hud()
+		reorganize_alerts()
 	else if(isobserver(mymob))
 		show_hud(HUD_STYLE_STANDARD)
 	else if(isovermind(mymob))
