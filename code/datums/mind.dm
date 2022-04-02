@@ -189,6 +189,45 @@
 	popup.set_content(out)
 	popup.open()
 
+/datum/mind/proc/edit_skills()
+	if(!SSticker || !SSticker.mode)
+		tgui_alert(usr, "Not before round-start!", "Alert")
+		return
+	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
+	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
+
+	out +="<B>Available skillsets:</B><br>"
+	if(isnull(skills.available_skillsets) || skills.available_skillsets.len == 0)
+		out +="<i>This mob has no skillsets.</i><br>"
+	for(var/datum/skillset/skillset in skills.available_skillsets)
+		out +="<i>[skillset]</i><a href='?src=\ref[src];delete_skillset=[skillset]'>-</a><br>"
+	var/i = 0
+	out += "<br><a href='?src=\ref[src];add_skillset=1'>Add skillset</a><br>"
+	out += "<B>Maximum skill values:</B><br><table>"
+	for(var/datum/skill/s as anything in skills_list)
+		var/datum/skill/skill = all_skills[s]
+		if((i%5)==0)
+			out += "</tr><tr>"
+		out +="<td>[skill.name]: [skills.get_max(skill.name)]</td>"
+		i++
+	out +="</table>"
+	i = 0
+	out += "<B>Current skill values:</B><br><table>"
+	for(var/datum/skill/s as anything in skills_list)
+		if((i%5)==0)
+			out += "</tr><tr>"
+		var/datum/skill/skill = all_skills[s]
+		out +="<td>[skill.name]: [skills.get_value(skill.name)]</td>"
+		i++
+	out +="</table><br>"
+	out += "<a href='?src=\ref[src];maximize_skills=1'>Set current skills equal to available skills</a><br>"
+	out += "<a href='?src=\ref[src];add_max=1'>Add maximal skillset</a><br>"
+	out += "<a href='?src=\ref[src];refresh=2'>Refresh</a>"
+	var/datum/browser/popup = new(usr, "window=edit_skills", "Skills", 700, 700)
+	popup.set_content(out)
+	popup.open()
+
+
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))
 		return
@@ -460,8 +499,28 @@
 			if("undress")
 				for(var/obj/item/W in current)
 					current.drop_from_inventory(W)
-
+	else if (href_list["maximize_skills"])
+		skills.maximize_active_skills()
+		return
+	else if (href_list["delete_skillset"])
+		var/to_delete = global.skillset_names_aliases[href_list["delete_skillset"]]
+		skills.remove_available_skillset(to_delete)
+		return
+	else if (href_list["add_max"])
+		skills.add_available_skillset(/datum/skillset/max)
+		return
+	else if (href_list["add_skillset"])
+		var/new_skillset = input("Select new skillset", "Skillsets selection", null) as null|anything in global.skillset_names_aliases
+		if (!new_skillset)
+			return
+		skills.add_available_skillset(skillset_names_aliases[new_skillset])
+		message_admins("[usr.key]/([usr.name]) gave \the [key]/[name] new skillset: [new_skillset]")
+		log_admin("[usr.key]/([usr.name]) gave \the [key]/[name] new skillset: [new_skillset]")
+		return
 	else if (href_list["refresh"])
+		if(href_list["refresh"]=="2")
+			edit_skills()
+			return
 		edit_memory()
 		return
 
