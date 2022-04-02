@@ -210,8 +210,8 @@
 		var/datum/skill/skill = all_skills[s]
 		sorted_max[skill.name] = skills.get_max(skill.name)
 		sorted_current[skill.name] = skills.get_value(skill.name)
-	sorted_max = sortAssoc(sorted_max)
-	sorted_current = sortAssoc(sorted_current)
+	sorted_max = sortTim(sorted_max, /proc/cmp_numeric_dsc, TRUE)
+	sorted_current = sortTim(sorted_current, /proc/cmp_numeric_dsc, TRUE)
 	for(var/skill_name in sorted_max)
 		if((i%5)==0)
 			out += "</tr><tr>"
