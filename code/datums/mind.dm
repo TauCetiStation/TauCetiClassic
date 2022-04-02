@@ -204,20 +204,26 @@
 	var/i = 0
 	out += "<br><a href='?src=\ref[src];add_skillset=1'>Add skillset</a><br>"
 	out += "<B>Maximum skill values:</B><br><table>"
+	var/sorted_max = list()
+	var/sorted_current= list()
 	for(var/datum/skill/s as anything in skills_list)
 		var/datum/skill/skill = all_skills[s]
+		sorted_max[skill.name] = skills.get_max(skill.name)
+		sorted_current[skill.name] = skills.get_value(skill.name)
+	sorted_max = sortAssoc(sorted_max)
+	sorted_current = sortAssoc(sorted_current)
+	for(var/skill_name in sorted_max)
 		if((i%5)==0)
 			out += "</tr><tr>"
-		out +="<td>[skill.name]: [skills.get_max(skill.name)]</td>"
+		out +="<td>[skill_name]: [sorted_max[skill_name]]</td>"
 		i++
 	out +="</table>"
 	i = 0
 	out += "<B>Current skill values:</B><br><table>"
-	for(var/datum/skill/s as anything in skills_list)
+	for(var/skill_name in sorted_current)
 		if((i%5)==0)
 			out += "</tr><tr>"
-		var/datum/skill/skill = all_skills[s]
-		out +="<td>[skill.name]: [skills.get_value(skill.name)]</td>"
+		out +="<td>[skill_name]: [sorted_current[skill_name]]</td>"
 		i++
 	out +="</table><br>"
 	out += "<a href='?src=\ref[src];maximize_skills=1'>Set current skills equal to available skills</a><br>"
