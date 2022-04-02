@@ -575,22 +575,19 @@
 
 		//If you're on fire, you do not heat up or cool down based on surrounding gases.
 		//Or if absolute temperature difference is too small
-		if(abs(affecting_temp) >= BODYTEMP_SIGNIFICANT_CHANGE && !on_fire)
+		if(!on_fire)
 			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
-			var/temp_adj = 0
-
-			if(affecting_temp < 0.)	//Place is colder than we are
+			
+			if(affecting_temp <= -BODYTEMP_SIGNIFICANT_CHANGE)		//Place is colder than we are
 				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
-					temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_COLD_DIVISOR)	//this will be negative
-				temp_adj = max(temp_adj, BODYTEMP_COOLING_MAX)
-			else					//Place is hotter than we are
+					var/temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_COLD_DIVISOR)	//this will be negative
+					bodytemperature += max(temp_adj, BODYTEMP_COOLING_MAX)
+			else if(affecting_temp >= BODYTEMP_SIGNIFICANT_CHANGE)	//Place is hotter than we are
 				var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
-					temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_HEAT_DIVISOR)
-				temp_adj = min(temp_adj, BODYTEMP_HEATING_MAX)
-
-			bodytemperature += temp_adj
+					var/temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_HEAT_DIVISOR)
+					bodytemperature += min(temp_adj, BODYTEMP_HEATING_MAX)
 
 	else if(!species.flags[IS_SYNTHETIC] && !species.flags[RAD_IMMUNE])
 		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
