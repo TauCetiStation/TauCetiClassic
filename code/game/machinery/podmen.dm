@@ -219,8 +219,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	product_type = /mob/living/carbon/monkey/diona
 	copycat_replica = TRUE
 
-	spawner_type = /datum/spawner/podman/nymph
-	spawner_id = "nymph_pod"
+	spawner_type = /datum/spawner/living/podman/nymph
 
 /obj/item/seeds/replicapod/real_deal/attack_self(mob/living/carbon/user)
 	if(user.get_species() == DIONA && iscarbon(user))
