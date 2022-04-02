@@ -507,13 +507,19 @@
 					current.drop_from_inventory(W)
 	else if (href_list["maximize_skills"])
 		skills.maximize_active_skills()
+		message_admins("[usr.key]/([usr.name]) set up the skills of \the [key]/[name] to their maximum.")
+		log_admin("[usr.key]/([usr.name]) set up the skills of \the [key]/[name] to their maximum.")
 		return
 	else if (href_list["delete_skillset"])
 		var/to_delete = global.skillset_names_aliases[href_list["delete_skillset"]]
 		skills.remove_available_skillset(to_delete)
+		message_admins("[usr.key]/([usr.name]) removed skillset [to_delete] from \the [key]/[name].")
+		log_admin("[usr.key]/([usr.name]) removed skillset [to_delete] from \the [key]/[name].")
 		return
 	else if (href_list["add_max"])
 		skills.add_available_skillset(/datum/skillset/max)
+		message_admins("[usr.key]/([usr.name]) gave \the [key]/[name] maximal skillset.")
+		log_admin("[usr.key]/([usr.name]) gave \the [key]/[name] maximal skillset.")
 		return
 	else if (href_list["add_skillset"])
 		var/new_skillset = input("Select new skillset", "Skillsets selection", null) as null|anything in global.skillset_names_aliases
