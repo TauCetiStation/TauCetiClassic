@@ -30,8 +30,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	var/list/replicant_quirks
 	var/replicant_memory
 
-	var/spawner_type = /datum/spawner/podman/podkid
-	var/spawner_id = "podkid_pod"
+	var/spawner_type = /datum/spawner/living/podman/podkid
 
 /obj/item/seeds/replicapod/Destroy()
 	QDEL_NULL(replicant_dna)
@@ -129,7 +128,6 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 	if(copycat_replica && replicant_dna)
 		D.dna = replicant_dna.Clone()
-		D.dna.mutantrace = "plant"
 		D.real_name = D.dna.real_name
 		D.name = D.real_name
 
@@ -150,7 +148,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		return
 
 	else
-		create_spawner(spawner_type, spawner_id, D, replicant_memory)
+		create_spawner(spawner_type, D, replicant_memory)
 
 	user.visible_message("<span class='notice'>The pod disgorges a fully-formed plant creature!</span>")
 	qdel(src)
@@ -178,8 +176,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	product_type = /mob/living/carbon/monkey/diona/podman/fake
 	copycat_replica = FALSE
 
-	spawner_type = /datum/spawner/podman/fake_nymph
-	spawner_id = "diona_pod"
+	spawner_type = /datum/spawner/living/podman/fake_nymph
 
 	var/vine_timer
 
