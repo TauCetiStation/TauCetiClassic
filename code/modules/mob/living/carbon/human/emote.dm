@@ -86,3 +86,10 @@
 	set category = "IC"
 
 	flavor_text =  sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text)
+
+/mob/living/carbon/human/can_me_emote(message_type, intentional)
+	. = ..()
+	if(. && miming && message_type == SHOWMSG_AUDIO)
+		if(intentional)
+			to_chat(src, "You are unable to make such noises.")
+		return FALSE

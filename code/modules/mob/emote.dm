@@ -82,19 +82,27 @@
 		else if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD)) // Show the emote to regular ghosts with deadchat toggled on
 			to_chat(M, message)
 
-// A simpler emote. Just the message, and it's type. If you want anything more complex - make a datumized emote.
-/mob/proc/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
+/mob/proc/can_me_emote(message_type, intentional)
 	if(stat)
 		if(intentional)
 			to_chat(src, "You are unable to emote.")
-		return
+		return FALSE
 
 	if(!me_verb_allowed && intentional)
 		to_chat(src, "You are unable to emote.")
-		return
+		return FALSE
 
-	var/muzzled = istype(wear_mask, /obj/item/clothing/mask/muzzle)
-	if(message_type == SHOWMSG_AUDIO && muzzled)
+	var/can_audio_emote = !istype(wear_mask, /obj/item/clothing/mask/muzzle) && !HAS_TRAIT(src, TRAIT_MUTE)
+	if(message_type == SHOWMSG_AUDIO && !can_audio_emote)
+		if(intentional)
+			to_chat(src, "You are unable to make such noises.")
+		return FALSE
+
+	return TRUE
+
+// A simpler emote. Just the message, and it's type. If you want anything more complex - make a datumized emote.
+/mob/proc/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
+	if(!can_me_emote(message_type, intentional))
 		return
 
 	log_emote("[key_name(src)] : [message]")
