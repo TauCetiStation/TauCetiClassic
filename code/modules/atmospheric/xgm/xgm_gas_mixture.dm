@@ -212,7 +212,7 @@
 //Returns relative (to the standard) density of the gas mix with max of 1.
 /datum/gas_mixture/proc/return_relative_density()
 	if(volume)
-		return min((total_moles / volume) * (CELL_VOLUME / MOLES_CELLSTANDARD), 1.)
+		return min((total_moles / volume) * (CELL_VOLUME / MOLES_CELLSTANDARD), 1)
 	return 0
 
 
