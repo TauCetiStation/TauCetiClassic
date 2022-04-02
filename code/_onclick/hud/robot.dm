@@ -60,7 +60,7 @@ var/global/atom/movable/screen/robot_inventory
 			other += ousing
 
 //Namepick
-		if(istype(mymob, /mob/living/silicon/robot))
+		if(isrobot(mymob))
 			var/mob/living/silicon/robot/R = mymob
 			if(!R.custom_name)
 				using = new /atom/movable/screen()
