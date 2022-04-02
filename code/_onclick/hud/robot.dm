@@ -60,16 +60,16 @@ var/global/atom/movable/screen/robot_inventory
 			other += ousing
 
 //Namepick
-		if(isrobot(mymob))
-			var/mob/living/silicon/robot/R = mymob
-			if(!R.custom_name)
-				using = new /atom/movable/screen()
-				using.name = "Namepick"
-				using.icon = 'icons/mob/screen1_robot.dmi'
-				using.icon_state = "changename"
-				using.screen_loc = ui_borg_namepick
-				using.plane = ABOVE_HUD_PLANE
-				adding += using
+
+		var/mob/living/silicon/robot/R = mymob
+		if(!R.custom_name)
+			using = new /atom/movable/screen()
+			using.name = "Namepick"
+			using.icon = 'icons/mob/screen1_robot.dmi'
+			using.icon_state = "changename"
+			using.screen_loc = ui_borg_namepick
+			using.plane = ABOVE_HUD_PLANE
+			adding += using
 
 //Manifest
 	using = new /atom/movable/screen()
