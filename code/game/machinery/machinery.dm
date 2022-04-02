@@ -562,4 +562,4 @@ Class Procs:
 /obj/machinery/proc/do_skill_checks(mob/user)
 	if (!required_skills || !user || issilicon(user) || isobserver(user))
 		return TRUE
-	return handle_fumbling(user, src, fumbling_time * 2, required_skills, time_bonus = fumbling_time)
+	return handle_fumbling(user, src, fumbling_time * 2, required_skills, time_bonus = fumbling_time, check_busy = FALSE)

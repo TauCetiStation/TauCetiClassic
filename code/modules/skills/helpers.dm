@@ -18,9 +18,11 @@
 /proc/do_skilled(mob/user, atom/target,  delay, required_skills, penalty = 0.5, bonus = 0.4)
 	return do_after(user, delay = apply_skill_bonus(user, delay, required_skills, penalty, bonus), target = target)
 
-/proc/handle_fumbling(mob/user, atom/target, delay, required_skills, time_bonus = SKILL_TASK_TRIVIAL, message_self = "", text_target = null)
+/proc/handle_fumbling(mob/user, atom/target, delay, required_skills, time_bonus = SKILL_TASK_TRIVIAL, message_self = "", text_target = null, check_busy = TRUE)
 	if(is_skill_competent(user, required_skills))
 		return TRUE
+	if(check_busy && user.is_busy())
+		return FALSE
 	var/display_message_self = message_self
 	var/used_item = target
 	if(text_target)
