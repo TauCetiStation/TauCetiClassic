@@ -226,6 +226,7 @@
 	item_state = "jetsons"
 	desc = "Very unusual version of laser gun, oldschool style"
 	origin_tech = "combat=2;magnets=1"
+	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice/jetsons)
 
 
