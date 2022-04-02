@@ -185,28 +185,24 @@
 			
 			if(HAS_TRAIT_FROM(firer, TRAIT_RANDOM_DAMAGE, QUALITY_TRAIT))
 				var/d_dice
-				var/a_dice
-				if(damage >= 10 && damage < 20)		//grenade-launcher, plasma, pyrometer, kinetic
-					d_dice = "2d8"
-				if(damage >= 25 && damage <= 40)	//laser riffle, submachine, uzi, CE-pyrometer
-					d_dice = "5d8"
-				if(damage > 40 && damage <= 60)		//upgraded laser, saw, eagle, sniper
-					d_dice = "3d20"
-				if(damage > 60)
-					d_dice = "6d20"
-				if(agony >= 20 && agony <= 36)
-					a_dice = "3d12"
-				if(agony > 36 && agony <= 60)		//taser, colt, glock
-					a_dice = "3d20"
-				if(agony > 60)						//electrode
-					a_dice = "6d20"
-				var/telekinesis_buff = 0
-				var/drugs_buff = 0
-				roll_buff_dice(telekinesis_buff, drugs_buff)
-				var/r_damage = roll(d_dice)+(telekinesis_buff+drugs_buff)
-				var/r_agony = roll(a_dice)
-				if(agony >= 20 || damage >= 10)
+				if(damage >= 10)
+					if(damage > 60)
+						d_dice = "6d20"
+					else if(damage > 40)		//upgraded laser, saw, eagle, sniper
+						d_dice = "3d20"
+					else if(damage > 25)	//laser riffle, submachine, uzi, CE-pyrometer
+						d_dice = "5d8"
+					else if(damage <= 25)		//grenade-launcher, plasma, pyrometer, kinetic
+						d_dice = "2d8"
+					var/telekinesis_buff = 0
+					var/drugs_buff = 0
+					roll_buff_dice(telekinesis_buff, drugs_buff)
+					var/r_damage = roll(d_dice)+(telekinesis_buff+drugs_buff)
 					damage = r_damage
+				
+				if(agony > 10)
+					var/a_dice = "3d20"
+					var/r_agony = roll(a_dice)
 					agony = r_agony
 
 		if(distance > 1)
