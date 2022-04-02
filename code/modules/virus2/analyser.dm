@@ -9,7 +9,7 @@
 	var/pause = 0
 
 	var/obj/item/weapon/virusdish/dish = null
-	required_skills = list(/datum/skill/research/novice)
+	required_skills = list(/datum/skill/research/trained, /datum/skill/chemistry/trained)
 
 /obj/machinery/disease2/diseaseanalyser/attackby(obj/O, mob/user)
 	if(!istype(O,/obj/item/weapon/virusdish))

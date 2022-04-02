@@ -9,7 +9,7 @@
 	var/virusing
 
 	var/obj/item/weapon/reagent_containers/container = null
-	required_skills = list(/datum/skill/chemistry/novice, /datum/skill/research/novice, /datum/skill/medical/pro)
+	required_skills = list(/datum/skill/chemistry/trained, /datum/skill/research/trained, /datum/skill/medical/pro)
 
 /obj/machinery/computer/curer/attackby(obj/I, mob/user)
 	if(istype(I,/obj/item/weapon/reagent_containers))
