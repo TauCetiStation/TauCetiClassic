@@ -20,8 +20,7 @@
 	if(adj_sleepy)
 		M.AdjustSleeping(adj_sleepy)
 	if(adj_temp)
-		if(M.bodytemperature >= BODYTEMP_COLD_DAMAGE_LIMIT && M.bodytemperature <= TEMPERATURE_DAMAGE_COEFFICIENT)
-			M.bodytemperature = clamp(M.bodytemperature + adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+		M.adjust_bodytemperature(adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
 
 /datum/reagent/consumable/drink/orangejuice
 	name = "Orange juice"
@@ -787,8 +786,7 @@
 /datum/reagent/consumable/ethanol/thirteenloko/on_general_digest(mob/living/M)
 	..()
 	M.drowsyness = max(0, M.drowsyness - 7)
-	if(M.bodytemperature > BODYTEMP_NORMAL)
-		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = BODYTEMP_NORMAL)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.make_jittery(5)
 
@@ -1122,8 +1120,7 @@
 
 /datum/reagent/consumable/ethanol/toxins_special/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < 330)
-		M.bodytemperature = min(330, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 20)
 
 /datum/reagent/consumable/ethanol/beepsky_smash
 	name = "Beepsky Smash"
@@ -1246,8 +1243,7 @@
 
 /datum/reagent/consumable/ethanol/antifreeze/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < 330)
-		M.bodytemperature = min(330, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 20)
 
 /datum/reagent/consumable/ethanol/barefoot
 	name = "Barefoot"
@@ -1345,8 +1341,7 @@
 
 /datum/reagent/consumable/ethanol/sbiten/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT)
-		M.bodytemperature = min(BODYTEMP_HEAT_DAMAGE_LIMIT, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_HEAT_DAMAGE_LIMIT)
 
 /datum/reagent/consumable/ethanol/devilskiss
 	name = "Devils Kiss"
@@ -1384,8 +1379,7 @@
 
 /datum/reagent/consumable/ethanol/iced_beer/on_general_digest(mob/living/M)
 	..()
-	if(M.bodytemperature > 270)
-		M.bodytemperature = max(270, M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = BODYTEMP_NORMAL - 40)
 
 /datum/reagent/consumable/ethanol/grog
 	name = "Grog"
