@@ -153,15 +153,15 @@
 		var/atom/movable/screen/corgi/stamina_bar/SB = hud_used.staminadisplay
 		SB.icon_state = "stam_bar_[round(stamina, 5)]"
 
-	if(oxygen_alert)
+	if(inhale_alert)
 		throw_alert("ian_oxy", /atom/movable/screen/alert/ian_oxy)
 	else
 		clear_alert("ian_oxy")
-	if(phoron_alert)
+	if(poison_alert)
 		throw_alert("ian_tox", /atom/movable/screen/alert/ian_tox)
 	else
 		clear_alert("ian_tox")
-	if(fire_alert)
+	if(hot_alert)
 		throw_alert("ian_hot", /atom/movable/screen/alert/ian_hot)
 	else
 		clear_alert("ian_hot")

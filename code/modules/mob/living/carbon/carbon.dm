@@ -17,6 +17,37 @@
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(80) && !IS_IN_STASIS(src))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
 
+/mob/living/carbon/proc/reset_alerts()
+	inhale_alert = FALSE
+	poison_alert = FALSE
+	pressure_alert = 0
+	temp_alert = 0
+
+/mob/living/carbon/proc/handle_alerts()
+	if(inhale_alert)
+		throw_alert("oxy", /atom/movable/screen/alert/oxy)
+	else
+		clear_alert("oxy")
+
+	if(poison_alert)
+		throw_alert("tox", /atom/movable/screen/alert/tox_in_air)
+	else
+		clear_alert("tox")
+
+	if(temp_alert > 0)
+		throw_alert("temp", /atom/movable/screen/alert/hot, temp_alert)
+	else if(temp_alert < 0)
+		throw_alert("temp", /atom/movable/screen/alert/cold, -temp_alert)
+	else
+		clear_alert("temp")
+
+	if(pressure_alert > 0)
+		throw_alert("pressure", /atom/movable/screen/alert/highpressure, pressure_alert)
+	else if(pressure_alert < 0)
+		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, -pressure_alert)
+	else
+		clear_alert("presssure")
+
 /mob/living/carbon/proc/is_skip_breathe()
 	return !loc || (flags & GODMODE)	
 
@@ -49,14 +80,12 @@
 	if(breath.temperature > BODYTEMP_HEAT_DAMAGE_LIMIT) // Hot air hurts :(
 		if(prob(20))
 			to_chat(src, "<span class='warning'>You feel a searing heat in your lungs!</span>")
-		fire_alert = TRUE
-	else
-		fire_alert = FALSE
+		temp_aler = 1
 
 /mob/living/carbon/proc/handle_breath(datum/gas_mixture/breath)
 	if(!breath || (breath.total_moles == 0))
 		adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		oxygen_alert = TRUE
+		inhale_alert = TRUE
 		return
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
@@ -91,11 +120,11 @@
 		else
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 	
-		oxygen_alert = TRUE
+		inhale_alert = TRUE
 	else // We're in safe limits
 		adjustOxyLoss(-5)
 		oxygen_used = oxygen * BREATH_USED_PART
-		oxygen_alert = FALSE
+		inhale_alert = FALSE
 
 	breath.adjust_gas("oxygen", oxygen_used, update = FALSE)
 	breath.adjust_gas_temp("carbon_dioxide", oxygen_used, bodytemperature, update = FALSE) //update afterwards
@@ -119,9 +148,9 @@
 		//adjustToxLoss(clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 		if(reagents)
 			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
-		phoron_alert = TRUE
+		poison_alert = TRUE
 	else
-		phoron_alert = FALSE
+		poison_alert = FALSE
 
 	// If there's some other shit in the air lets deal with it here.
 	if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
@@ -140,6 +169,8 @@
 
 /mob/living/carbon/proc/breathe()
 	if(is_skip_breathe())
+		inhale_alert = FALSE
+		poison_alert = FALSE
 		return null
 
 	var/datum/gas_mixture/breath
@@ -207,37 +238,31 @@
 			bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
 
 	if(flags & GODMODE)
-		clear_alert("temp")
-		clear_alert("pressure")
 		return
 
 	switch(bodytemperature)
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
-			throw_alert("temp", /atom/movable/screen/alert/hot, 2)
+			temp_alert = 2
 			adjustFireLoss(HEAT_DAMAGE_LEVEL_2)
-		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_HEAT_DAMAGE_LIMIT)
-			clear_alert("temp")
-		else
-			throw_alert("temp", /atom/movable/screen/alert/cold, 2)
+		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT)
+			temp_alert = -2
 			adjustFireLoss(COLD_DAMAGE_LEVEL_2)
 
 	//Account for massive pressure differences
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
+			pressure_alert = 2
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
-		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
-			clear_alert("pressure")
+			pressure_alert = 1
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
-		else
+			pressure_alert = -1
+		if(-INFINITY to HAZARD_LOW_PRESSURE)
 			if( !(COLD_RESISTANCE in mutations) )
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
+				pressure_alert = -2
 			else
-				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
+				pressure_alert = -1
 
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	var/turf/oldLoc = loc

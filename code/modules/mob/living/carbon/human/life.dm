@@ -26,7 +26,7 @@
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
 	blinded = null
-	fire_alert = 0 //Reset this here, because both breathe() and handle_environment() have a chance to set it.
+	reset_alerts()
 
 	//TODO: seperate this out
 	// update the current life tick, can be used to e.g. only do something every 4 ticks
@@ -103,6 +103,8 @@
 		species.on_life(src)
 
 	pulse = handle_pulse()
+
+	handle_alerts()
 
 
 //Much like get_heat_protection(), this returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
@@ -335,6 +337,8 @@
 /mob/living/carbon/human/breathe()
 	var/datum/gas_mixture/breath = ..()
 
+	failed_last_breath = inhale_alert
+
 	if(breath)
 		//spread some viruses while we are at it
 		if (virus2.len > 0)
@@ -396,11 +400,6 @@
 		bodytemperature += temp_adj
 
 /mob/living/carbon/human/handle_breath(datum/gas_mixture/breath)
-	if(status_flags & GODMODE)
-		clear_alert("oxy")
-		clear_alert("tox_in_air")
-		return
-
 	if(!breath || (breath.total_moles == 0) || suiciding)
 		if(suiciding)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS * 2)//If you are suiciding, you should die a little bit faster
@@ -409,8 +408,7 @@
 		else
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
-		failed_last_breath = 1
-		throw_alert("oxy", /atom/movable/screen/alert/oxy)
+		inhale_alert = TRUE
 
 		return
 
@@ -422,18 +420,25 @@
 	var/SA_sleep_min = 5
 	var/SA_giggle_min = 0.15
 
-	var/inhaling = breath.gas[species.breath_type]
-	var/exhaling = species.exhale_type ? breath.gas[species.exhale_type] : 0
-	var/poison = breath.gas[species.poison_type]
-	var/sleeping_agent = breath.gas["sleeping_agent"]
+	var/list/breath_gas = breath.gas
+	var/breath_total_moles = breath.total_moles
+
+	var/inhale_type = species.breath_type
+	var/exhale_type = species.exhale_type
+	var/poison_type = species.poison_type
+
+	var/inhaling = breath_gas[inhale_type]
+	var/exhaling = exhale_type ? breath_gas[exhale_type] : 0
+	var/poison = breath_gas[poison_type]
+	var/sleeping_agent = breath_gas["sleeping_agent"]
 
 	var/inhaled_gas_used = 0
 	var/breath_pressure = breath.return_pressure()
 
-	var/inhale_pp = inhaling ? (inhaling / breath.total_moles) * breath_pressure : 0
-	var/exhaled_pp = exhaling ? (exhaling / breath.total_moles) * breath_pressure : 0
-	var/poison_pp = poison ? (poison / breath.total_moles) * breath_pressure : 0
-	var/SA_pp = sleeping_agent ? (sleeping_agent / breath.total_moles) * breath_pressure : 0
+	var/inhale_pp = inhaling ? (inhaling / breath_total_moles) * breath_pressure : 0
+	var/exhaled_pp = exhaling ? (exhaling / breath_total_moles) * breath_pressure : 0
+	var/poison_pp = poison ? (poison / breath_total_moles) * breath_pressure : 0
+	var/SA_pp = sleeping_agent ? (sleeping_agent / breath_total_moles) * breath_pressure : 0
 
 	if(inhale_pp < safe_pressure_min)
 		if(prob(20))
@@ -447,20 +452,16 @@
 		else
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 
-		failed_last_breath = 1
-		throw_alert("oxy", /atom/movable/screen/alert/oxy)
-
+		inhale_alert = TRUE
 	else
 		// We're in safe limits
 		adjustOxyLoss(-5)
 		inhaled_gas_used = inhaling * BREATH_USED_PART
-		failed_last_breath = 0
-		clear_alert("oxy")
 
-	breath.adjust_gas(species.breath_type, -inhaled_gas_used, update = FALSE) //update afterwards
+	breath.adjust_gas(inhale_type, -inhaled_gas_used, update = FALSE) //update afterwards
 
-	if(species.exhale_type)
-		breath.adjust_gas_temp(species.exhale_type, inhaled_gas_used, bodytemperature, update = FALSE) //update afterwards
+	if(exhale_type)
+		breath.adjust_gas_temp(exhale_type, inhaled_gas_used, bodytemperature, update = FALSE) //update afterwards
 
 		// CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2,
 		// this will hurt you, but only once per 4 ticks, instead of once per tick.
@@ -491,10 +492,8 @@
 		var/ratio = (poison / safe_toxins_max) * 10
 		if(reagents)
 			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
-		breath.adjust_gas(species.poison_type, -poison * BREATH_USED_PART, update = FALSE) //update after
-		throw_alert("tox_in_air", /atom/movable/screen/alert/tox_in_air)
-	else
-		clear_alert("tox_in_air")
+		breath.adjust_gas(poison_type, -poison * BREATH_USED_PART, update = FALSE) //update after
+		poison_alert = TRUE
 
 	// If there's some other shit in the air lets deal with it here.
 	if(sleeping_agent)
@@ -512,7 +511,7 @@
 			if(prob(20))
 				emote(pick("giggle", "laugh"))
 
-		breath.adjust_gas("sleeping_agent", -breath.gas["sleeping_agent"] * BREATH_USED_PART, update = FALSE) //update after
+		breath.adjust_gas("sleeping_agent", -sleeping_agent * BREATH_USED_PART, update = FALSE) //update after
 
 	handle_breath_temperature(breath)
 
@@ -558,48 +557,33 @@
 			apply_effect(5, IRRADIATE)
 
 	if(status_flags & GODMODE)
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
-		clear_alert("temp")
-		clear_alert("pressure")
-
 		return 1	//godmode
 
 	if(bodytemperature > species.heat_level_1)
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
-
 		//Body temperature is too hot.
 		if(bodytemperature > species.heat_level_3)
-			throw_alert("temp", /atom/movable/screen/alert/hot, 3)
+			temp_alert = 3
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
 		else if(bodytemperature > species.heat_level_2)
 			if(on_fire)
-				throw_alert("temp", /atom/movable/screen/alert/hot, 3)
+				temp_alert = 3
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
 			else
-				throw_alert("temp", /atom/movable/screen/alert/hot, 2)
+				temp_alert = 2
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_2, used_weapon = "High Body Temperature")
 		else
-			throw_alert("temp", /atom/movable/screen/alert/hot, 1)
+			temp_alert = 1
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
 	else if(bodytemperature < species.cold_level_1 && !istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
-
 		if(bodytemperature < species.cold_level_3)
-			throw_alert("temp", /atom/movable/screen/alert/cold, 3)
+			temp_alert = -3
 			take_overall_damage(burn=COLD_DAMAGE_LEVEL_3, used_weapon = "Low Body Temperature")
 		else if(bodytemperature < species.cold_level_2)
-			throw_alert("temp", /atom/movable/screen/alert/cold, 2)
+			temp_alert = -2
 			take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "Low Body Temperature")
 		else
-			throw_alert("temp", /atom/movable/screen/alert/cold, 1)
+			temp_alert = -1
 			take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "Low Body Temperature")
-	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
-		clear_alert("temp")
 
 	if(bodytemperature < species.cold_level_1 && get_species() == UNATHI)
 		if(bodytemperature < species.cold_level_3)
@@ -612,20 +596,19 @@
 	// Account for massive pressure differences.  Done by Polymorph
 	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
 
-	if(adjusted_pressure >= species.hazard_high_pressure)
-		var/pressure_damage = min( ( (adjusted_pressure / species.hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE)
-		take_overall_damage(brute=pressure_damage, used_weapon = "High Pressure")
-		throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
-	else if(adjusted_pressure >= species.warning_high_pressure)
-		throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
-	else if(adjusted_pressure >= species.warning_low_pressure)
-		clear_alert("pressure")
-	else if(adjusted_pressure >= species.hazard_low_pressure)
-		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
-	else
-		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
-		apply_effect(is_in_space ? 15 : 7, AGONY, 0)
-		take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
+	switch(adjusted_pressure)
+		if(species.hazard_high_pressure to INFINITY)
+			var/pressure_damage = min( ( (adjusted_pressure / species.hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE)
+			take_overall_damage(brute=pressure_damage, used_weapon = "High Pressure")
+			pressure_alert = 2
+		if(species.warning_high_pressure to species.hazard_high_pressure)
+			pressure_alert = 1
+		if(species.hazard_low_pressure to species.warning_low_pressure)
+			pressure_alert = -1
+		if(-INFINITY to species.hazard_low_pressure)
+			pressure_alert = -2
+			apply_effect(is_in_space ? 15 : 7, AGONY, 0)
+			take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 
 	//Check for contaminants before anything else because we don't want to skip it.
 	for(var/g in environment.gas)
