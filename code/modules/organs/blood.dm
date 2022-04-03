@@ -364,7 +364,9 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 // Gets blood from mob to the container, preserving all data in it
 /mob/living/carbon/proc/take_blood(obj/item/weapon/reagent_containers/container, amount)
-	var/datum/reagent/blood/B = container.reagents.get_reagent(/datum/reagent/blood)
+	var/datum/reagent/blood/B
+	if(container)
+		container.reagents.get_reagent(/datum/reagent/blood)
 	if(!istype(B))
 		B = new /datum/reagent/blood
 	B.holder = container

@@ -24,12 +24,6 @@
 	export_types = list(/obj/item/weapon/gun/energy/gun,
 										/obj/item/weapon/gun/energy)
 
-
-/datum/export/weapon/c5
-	cost = 1400
-	unit_name = "WT-550 automatic rifle"
-	export_types = list(/obj/item/weapon/gun/projectile/automatic/c5)
-
 /datum/export/weapon/shotgun
 	cost = 350
 	unit_name = "combat shotgun"

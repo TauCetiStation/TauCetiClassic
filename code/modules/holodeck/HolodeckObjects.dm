@@ -195,17 +195,19 @@
 	flags = NOBLOODY
 	var/active = 0
 
+	var/blade_color
+
 /obj/item/weapon/holo/esword/green
 
 /obj/item/weapon/holo/esword/green/atom_init()
 	. = ..()
-	item_color = "green"
+	blade_color = "green"
 
 /obj/item/weapon/holo/esword/red
 
 /obj/item/weapon/holo/esword/red/atom_init()
 	. = ..()
-	item_color = "red"
+	blade_color = "red"
 
 /obj/item/weapon/holo/esword/Get_shield_chance()
 	if(active)
@@ -217,13 +219,13 @@
 
 /obj/item/weapon/holo/esword/atom_init()
 	. = ..()
-	item_color = pick("red","blue","green","purple")
+	blade_color = pick("red","blue","green","purple")
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user)
 	active = !active
 	if (active)
 		force = 30
-		icon_state = "sword[item_color]"
+		icon_state = "sword[blade_color]"
 		w_class = SIZE_NORMAL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
@@ -234,11 +236,7 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_mob()
 	add_fingerprint(user)
 	return
 

@@ -143,15 +143,11 @@
 /obj/item/clothing/under/dress/dress_hop/price = 654
 /obj/item/clothing/under/dress/dress_hr/price = 654
 /obj/item/clothing/under/ert/price = 777
-/obj/item/clothing/under/nt_pmc_uniform/price = 1000
-/obj/item/clothing/under/nt_pmc_uniform_light/price = 1000
 /obj/item/clothing/under/rank/price = 140
 /obj/item/clothing/under/rank/captain/price = 5500
 /obj/item/clothing/under/rank/centcom/price = 3500
 /obj/item/clothing/under/rank/centcom_commander/price = 3500
-/obj/item/clothing/under/rank/centcom_commander_old/price = 3500
 /obj/item/clothing/under/rank/centcom_officer/price = 3500
-/obj/item/clothing/under/rank/centcom_officer_old/price = 3500
 /obj/item/clothing/under/rank/head_of_personnel/price = 5000
 /obj/item/clothing/under/rank/head_of_personnel_whimsy/price = 5000
 /obj/item/clothing/under/rank/head_of_security/price = 5000
@@ -242,7 +238,7 @@
 /obj/item/weapon/gun/energy/kinetic_accelerator/price = 2760
 /obj/item/weapon/gun/energy/laser/price = 4380
 /obj/item/weapon/gun/energy/laser/selfcharging/captain/price = 13500
-/obj/item/weapon/gun/energy/laser/retro/price = 5430
+/obj/item/weapon/gun/energy/retro/price = 5430
 /obj/item/weapon/gun/energy/lasercannon/price = 6600
 /obj/item/weapon/gun/energy/sniperrifle/price = 5700
 /obj/item/weapon/gun/energy/taser/stunrevolver/price = 3200

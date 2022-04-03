@@ -759,7 +759,7 @@
 	body.cut_overlays()
 	var/image/I = image('icons/mob/shadowling.dmi', body, "shadowling_ascended")
 	body.add_overlay(I)
-	var/image/ascend = image(icon = 'icons/mob/shadowling.dmi', icon_state = "shadowling_ascended_ms", layer = LIGHTING_LAYER + 1)
+	var/image/ascend = image(icon = 'icons/mob/shadowling.dmi', icon_state = "shadowling_ascended_ms")
 	ascend.plane = ABOVE_LIGHTING_PLANE
 	body.add_overlay(ascend)
 
