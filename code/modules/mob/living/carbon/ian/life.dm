@@ -121,7 +121,8 @@
 	handle_fire()
 
 	handle_regular_status_updates()
-	handle_alerts()
+	if(client)
+		handle_alerts()
 	update_canmove()
 
 /mob/living/carbon/ian/handle_regular_hud_updates()

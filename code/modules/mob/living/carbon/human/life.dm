@@ -93,6 +93,8 @@
 
 	//Status updates, death etc.
 	handle_regular_status_updates()		//Optimized a bit
+	if(client)
+		handle_alerts()
 	update_canmove()
 
 	//Update our name based on whether our face is obscured/disfigured
@@ -104,7 +106,7 @@
 
 	pulse = handle_pulse()
 
-	handle_alerts()
+	
 
 
 //Much like get_heat_protection(), this returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
