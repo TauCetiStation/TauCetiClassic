@@ -272,9 +272,7 @@
 		owner.adjust_bodytemperature(-50)
 
 	if(temp_gain > 0)
-		owner.bodytemperature += temp_gain
-		if(owner.bodytemperature > owner.species.synth_temp_max)
-			owner.bodytemperature = owner.species.synth_temp_max
+		owner.adjust_bodytemperature(temp_gain, max_temp = owner.species.synth_temp_max)
 
 /obj/item/organ/internal/lungs/ipc/proc/add_refrigerant(volume)
 	if(refrigerant < refrigerant_max)

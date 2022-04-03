@@ -408,17 +408,17 @@
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
 			if(isslime(M))
-				M.bodytemperature -= rand(5,20)
+				M.adjust_bodytemperature(-rand(5,20))
 		if(15 to 25)
 			M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(isslime(M))
-				M.bodytemperature -= rand(10,20)
+				M.adjust_bodytemperature(-rand(10,20))
 		if(25 to INFINITY)
 			M.adjust_bodytemperature(-15 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(prob(1))
 				M.emote("shiver")
 			if(isslime(M))
-				M.bodytemperature -= rand(15,20)
+				M.adjust_bodytemperature(-rand(15,20))
 	data["ticks"]++
 
 /datum/reagent/consumable/drink/cold/milkshake/chocolate

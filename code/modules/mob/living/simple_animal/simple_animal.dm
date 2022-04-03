@@ -167,7 +167,7 @@
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
 			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
-			bodytemperature += diff
+			adjust_bodytemperature(diff)
 
 		if(istype(T,/turf/simulated))
 			var/turf/simulated/ST = T

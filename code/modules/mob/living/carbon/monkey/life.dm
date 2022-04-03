@@ -512,7 +512,7 @@
 /mob/living/carbon/monkey/handle_fire()
 	if(..())
 		return
-	bodytemperature += BODYTEMP_HEATING_MAX
+	adjust_bodytemperature(BODYTEMP_HEATING_MAX)
 	return
 //END FIRE CODE
 

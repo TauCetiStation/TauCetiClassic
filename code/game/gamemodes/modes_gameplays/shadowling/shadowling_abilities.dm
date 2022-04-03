@@ -611,7 +611,7 @@
 			to_chat(target, "<span class='userdanger'>You are hit by a blast of cold unlike anything you have ever felt. Your limbs instantly lock in place and you feel ice burns across your body!</span>")
 			target.Weaken(15)
 			if(target.bodytemperature)
-				target.bodytemperature -= INFINITY //:^)
+				target.adjust_bodytemperature(-INFINITY) //:^)
 			target.take_bodypart_damage(0, 80)
 
 
