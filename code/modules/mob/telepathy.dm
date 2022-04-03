@@ -27,7 +27,10 @@
 	return FALSE
 
 /mob/proc/telepathy_eavesdrop(atom/source, message, verb, datum/language/language = null)
+	to_chat(world, "EAVESDROPPING")
+	to_chat(world, "[src] EAVESDROPPED [source] [message] [verb] HEARERS [remote_hearers.len]")
 	for(var/mob/M as anything in remote_hearers)
+		to_chat(world, "[M] is hearing")
 		M.telepathy_hear_eavesdrop(source, src, message, verb, language)
 
 /mob/proc/telepathy_eavesdrop_sound(atom/source, sound)
@@ -38,9 +41,6 @@
 	src << sound
 
 /mob/proc/telepathy_hear_eavesdrop(atom/source, atom/hearer, message, verb, datum/language/language)
-	if(source == src)
-		return
-
 	var/dist = get_dist(src, hearer)
 	if(z != hearer.z)
 		dist += 25
@@ -68,12 +68,12 @@
 	telepathy_eavesdrop(source, message, verb, language)
 
 /mob/proc/add_remote_hearer(mob/hearer)
-	remote_hearers += hearer
-	hearer.remote_hearing += src
+	LAZYADD(remote_hearers, hearer)
+	LAZYADD(hearer.remote_hearing, src)
 
 /mob/proc/remove_remote_hearer(mob/hearer)
-	remote_hearers -= hearer
-	hearer.remote_hearing -= src
+	LAZYREMOVE(remote_hearers, hearer)
+	LAZYREMOVE(hearer.remote_hearing, src)
 
 /mob/proc/toggle_telepathy_hear(mob/M)
 	set name = "Toggle Telepathic Eavesdropping"

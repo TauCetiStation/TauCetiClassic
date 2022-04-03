@@ -1,13 +1,5 @@
-// At minimum every mob has a hear_say proc.
-
-/mob/proc/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
-	if(!client)
-		return FALSE
-
-	if(stat == UNCONSCIOUS)
-		hear_sleep(message)
-		return FALSE
-
+// Processes the message and outputs whatever the mob should actually hear
+/mob/proc/process_speech(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
 	if (language && (language.flags & NONVERBAL))
 		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in viewers(src)))
@@ -16,25 +8,14 @@
 	if(!say_understands(speaker,language))
 		var/scrambled_msg = speaker.get_scrambled_message(message, language)
 		if(!scrambled_msg)
-			return FALSE
+			return null
+
 		message = scrambled_msg
 
 	var/speaker_name = speaker.name
 	if(ishuman(speaker))
 		var/mob/living/carbon/human/H = speaker
 		speaker_name = H.GetVoice()
-
-		if(H != src && H.mind?.assigned_role == "Mime" && length(H.languages))
-			H.emote("gasp")
-			H.adjustOxyLoss(20)
-			H.Weaken(3)
-
-			H.loc.shake_act(2)
-
-			to_chat(H, "<span class='bold userdanger'>As punishment for breaking the vow, you will forget all your languages!</span>")
-
-			for(var/datum/language/L as anything in H.languages)
-				H.remove_language(L.name)
 
 	if(ishuman(src)) //zombie logic
 		var/mob/living/carbon/human/ME = src
@@ -46,7 +27,7 @@
 				if(!iszombie(H))
 					message = stars(message, 40)
 
-	if(!(sdisabilities & DEAF || ear_deaf) && client.prefs.show_runechat)
+	if(!(sdisabilities & DEAF || ear_deaf) && client && client.prefs.show_runechat)
 		var/list/span_list = list()
 		if(copytext_char(message, -2) == "!!")
 			span_list.Add("yell")
@@ -62,9 +43,10 @@
 	var/track = null
 	if(isobserver(src))
 		if(speaker && !speaker.client && !(client.prefs.chat_toggles & CHAT_GHOSTNPC) && !(speaker in view(src)))
-			return
+			return null
 		if(used_radio && (client.prefs.chat_toggles & CHAT_GHOSTRADIO))
-			return
+			return null
+
 		if(speaker_name != speaker.real_name && speaker.real_name)
 			speaker_name = "[speaker.real_name] ([speaker_name])"
 		track = "[FOLLOW_LINK(src, speaker)] "
@@ -73,19 +55,9 @@
 
 	if(sdisabilities & DEAF || ear_deaf)
 		if(speaker == src)
-			to_chat(src, "<span class='warning'>You cannot hear yourself speak!</span>")
+			message = "<span class='warning'>You cannot hear yourself speak!</span>"
 		else
-			var/pronoun = null
-			switch(speaker.gender)
-				if(MALE)
-					pronoun = "him"
-				if(FEMALE)
-					pronoun = "her"
-				if(PLURAL)
-					pronoun = "them"
-				else
-					pronoun = "it"
-			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [pronoun].")
+			message = "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [P_THEM(speaker.gender)]."
 	else
 		if(isliving(src))
 			message = highlight_traitor_codewords(message, src.mind)
@@ -94,10 +66,46 @@
 		else
 			message = "[track]<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>"
 
-		to_chat(src, message)
+	return message
 
-		telepathy_eavesdrop(speaker, message, "has heard", language)
+// At minimum every mob has a hear_say proc.
+/mob/proc/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
+	if(!client)
+		if(!remote_hearers)
+			return FALSE
 
+		message = process_speech(message, verb, language, alt_name, italics, speaker, used_radio, speech_sound, sound_vol)
+		if(message)
+			telepathy_eavesdrop(speaker, message, "has heard", language)
+
+		return FALSE
+
+	if(stat == UNCONSCIOUS)
+		hear_sleep(message)
+		return FALSE
+
+	message = process_speech(message, verb, language, alt_name, italics, speaker, used_radio, speech_sound, sound_vol)
+	if(!message)
+		return FALSE
+
+	to_chat(src, message)
+
+	if(ishuman(speaker))
+		var/mob/living/carbon/human/H = speaker
+
+		if(H != src && H.mind?.assigned_role == "Mime" && length(H.languages))
+			H.emote("gasp")
+			H.adjustOxyLoss(20)
+			H.Weaken(3)
+
+			H.loc.shake_act(2)
+
+			to_chat(H, "<span class='bold userdanger'>As punishment for breaking the vow, you will forget all your languages!</span>")
+
+			for(var/datum/language/L as anything in H.languages)
+				H.remove_language(L.name)
+
+	if(!(sdisabilities & DEAF) && !ear_deaf)
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
