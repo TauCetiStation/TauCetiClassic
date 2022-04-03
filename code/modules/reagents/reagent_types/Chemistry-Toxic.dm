@@ -274,7 +274,7 @@
 	var/mob/living/carbon/human/H = M
 
 	if(!H.species.flags[IS_PLANT])
-		if((method == INGEST) || H.wear_mask || H.skip_breathe()) // different behaviour only for inhaling
+		if((method == INGEST) || H.wear_mask || H.is_skip_breathe()) // different behaviour only for inhaling
 			return
 		H.adjustToxLoss(2 * toxpwr)
 		return

@@ -168,7 +168,7 @@
 
 	return TRUE
 
-/mob/living/carbon/ian/skip_breathe()
+/mob/living/carbon/ian/is_skip_breathe()
 	return ..() || istype(head, /obj/item/clothing/head/helmet/space) || reagents?.has_reagent("lexorin")
 
 /mob/living/carbon/ian/proc/handle_mutations_and_radiation()

@@ -184,7 +184,7 @@
 
 	return
 
-/mob/living/carbon/monkey/skip_breathe()
+/mob/living/carbon/monkey/is_skip_breathe()
 	return ..() || reagents?.has_reagent("lexorin") || istype(loc, /obj/item/weapon/holder)
 
 /mob/living/carbon/monkey/get_breath_from_internal(volume_needed)

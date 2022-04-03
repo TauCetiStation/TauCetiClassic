@@ -17,10 +17,10 @@
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(80) && !IS_IN_STASIS(src))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
 
-/mob/living/carbon/proc/skip_breathe()
+/mob/living/carbon/proc/is_skip_breathe()
 	return !loc || (flags & GODMODE)	
 
-/mob/living/carbon/proc/cant_breathe()
+/mob/living/carbon/proc/is_cant_breathe()
 	return handle_drowning() || health < 0
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
@@ -136,13 +136,13 @@
 	return
 
 /mob/living/carbon/proc/breathe()
-	if(skip_breathe())
+	if(is_skip_breathe())
 		return null
 
 	var/datum/gas_mixture/breath
 
 	//First, check if we can breathe at all
-	if(cant_breathe())
+	if(is_cant_breathe())
 		losebreath = max(2, losebreath + 1)
 
 	if(losebreath > 0) //Suffocating so do not take a breath
