@@ -46,7 +46,7 @@
 	else if(pressure_alert < 0)
 		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, -pressure_alert)
 	else
-		clear_alert("presssure")
+		clear_alert("pressure")
 
 /mob/living/carbon/proc/is_skip_breathe()
 	return !loc || (flags & GODMODE)	

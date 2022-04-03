@@ -99,6 +99,8 @@
 					else
 						emote(pick(emote_hear),2)
 
+	reset_alerts()
+
 	if (stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmobs.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
@@ -121,9 +123,10 @@
 	handle_fire()
 
 	handle_regular_status_updates()
+	update_canmove()
+
 	if(client)
 		handle_alerts()
-	update_canmove()
 
 /mob/living/carbon/ian/handle_regular_hud_updates()
 	if(!..())
@@ -323,6 +326,13 @@
 		throw_alert("temp", /atom/movable/screen/alert/ian_cold)
 	else
 		clear_alert("temp")
+
+	if(pressure_alert > 0)
+		throw_alert("pressure", /atom/movable/screen/alert/highpressure, pressure_alert)
+	else if(pressure_alert < 0)
+		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, -pressure_alert)
+	else
+		clear_alert("pressure")
 
 /mob/living/carbon/ian/handle_environment(datum/gas_mixture/environment)
 	if(istype(head, /obj/item/clothing/head/helmet/space))
