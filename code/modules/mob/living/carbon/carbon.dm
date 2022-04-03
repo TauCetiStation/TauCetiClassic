@@ -1128,7 +1128,7 @@
 /mob/living/carbon/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE, capped=TRUE)
 	// apply insulation to the amount of change
 	if(use_insulation)
-		var/protection = get_insulation_protection(amount)
+		var/protection = get_insulation_protection(bodytemperature + amount)
 		if(protection >= 1)
 			return
 		amount *= (1 - protection)
