@@ -2,6 +2,7 @@
 CONTAINS:
 RCD
 */
+
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"
 	desc = "A device used to rapidly build walls/floor."
@@ -19,7 +20,8 @@ RCD
 	m_amt = 50000
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
-	var/matter = 0
+	var/matter = 30
+	var/max_matter = 30
 	var/working = FALSE
 	var/mode = 1
 	var/canRwall = FALSE
@@ -29,11 +31,10 @@ RCD
 
 	action_button_name = "Switch RCD"
 
-
 /obj/item/weapon/rcd/atom_init()
 	. = ..()
 	rcd_list += src
-	desc = "A RCD. It currently holds [matter]/30 matter-units."
+	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -46,14 +47,15 @@ RCD
 
 /obj/item/weapon/rcd/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/rcd_ammo))
-		if((matter + 10) > 30)
+		var/obj/item/weapon/rcd_ammo/A = I
+		if((matter + A.matter) > max_matter)
 			to_chat(user, "<span class='notice'>The RCD cant hold any more matter-units.</span>")
 			return
 		qdel(I)
-		matter += 10
+		matter += A.matter
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>The RCD now holds [matter]/30 matter-units.</span>")
-		desc = "A RCD. It currently holds [matter]/30 matter-units."
+		to_chat(user, "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>")
+		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 
 	else
 		return ..()
@@ -227,23 +229,24 @@ RCD
 			rcd_effect.update_icon_state()
 			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 			if(do_after(user, delay, target = target))
-				if(mode == 4)
-					if(!useResource(5, user))
-						qdel(rcd_effect)
-						return FALSE
-				else
-					if(!useResource(10, user))
-						qdel(rcd_effect)
-						return FALSE
-				activate()
-				rcd_effect.end_animation()
 				switch(mode)
 					if(2)
+						if(!useResource(10, user))
+							qdel(rcd_effect)
+							return FALSE
 						new /obj/machinery/door/airlock(target)
 					if(3)
+						if(!useResource(10, user))
+							qdel(rcd_effect)
+							return FALSE
 						new /obj/machinery/door/airlock/glass(target)
 					if(4)
+						if(!useResource(5, user))
+							qdel(rcd_effect)
+							return FALSE
 						new /obj/machinery/door/firedoor(target)
+				activate()
+				rcd_effect.end_animation()
 				return TRUE
 			qdel(rcd_effect)
 	return FALSE
@@ -252,11 +255,12 @@ RCD
 	if(matter < amount)
 		return FALSE
 	matter -= amount
-	desc = "A RCD. It currently holds [matter]/30 matter-units."
+	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	return TRUE
 
 /obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
 	return matter >= amount
+
 /obj/item/weapon/rcd/borg/useResource(amount, mob/user)
 	if(!isrobot(user))
 		return FALSE
@@ -284,3 +288,4 @@ RCD
 	origin_tech = "materials=2"
 	m_amt = 30000
 	g_amt = 15000
+	var/matter = 10
