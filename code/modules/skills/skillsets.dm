@@ -37,7 +37,7 @@
 /datum/skillset/virologist
 	initial_skills = list(
 		/datum/skill/chemistry/trained,
-		/datum/skill/research/novice,
+		/datum/skill/research/trained,
 		/datum/skill/medical/pro,
 		/datum/skill/surgery/novice,
 		/datum/skill/civ_mech/novice
