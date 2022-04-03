@@ -49,31 +49,30 @@
 	if(up && down)
 		switch(tgui_alert(usr, "Go up or down the ladder?", "Ladder", list("Up", "Down", "Cancel")) )
 			if("Up")
-				user.visible_message("<span class='notice'>[user] climbs up \the [src]!</span>", \
-									 "<span class='notice'>You climb up \the [src]!</span>")
-				user.loc = get_turf(up)
-				up.add_fingerprint(user)
+				do_ladder_move(user, up)
 			if("Down")
-				user.visible_message("<span class='notice'>[user] climbs down \the [src]!</span>", \
-									 "<span class='notice'>You climb down \the [src]!</span>")
-				user.loc = get_turf(down)
-				down.add_fingerprint(user)
+				do_ladder_move(user, down)
 			if("Cancel")
 				return
 
 	else if(up)
-		user.visible_message("<span class='notice'>[user] climbs up \the [src]!</span>", \
-							 "<span class='notice'>You climb up \the [src]!</span>")
-		user.loc = get_turf(up)
-		up.add_fingerprint(user)
+		do_ladder_move(user, up)
 
 	else if(down)
-		user.visible_message("<span class='notice'>[user] climbs down \the [src]!</span>", \
-							 "<span class='notice'>You climb down \the [src]!</span>")
-		user.loc = get_turf(down)
-		down.add_fingerprint(user)
+		do_ladder_move(user, down)
 
 	add_fingerprint(user)
+
+/obj/structure/ladder/proc/do_ladder_move(mob/user, var/obj/structure/ladder/destination)
+	destination.add_fingerprint(user)
+	user.visible_message("<span class='notice'>[user] tries to climb the ladder.</span>")
+	destination.visible_message("<span class='warning'>Someone is trying to climb the ladder!</span>")
+	playsound(src, 'sound/effects/ladder.ogg', VOL_EFFECTS_MASTER)
+	if(!user.is_busy() && do_after(user, 15, target = src))
+		user.forceMove(get_turf(destination))
+		user.visible_message("<span class='notice'>[user] climbs the ladder.</span>")
+		if(user.pulling)
+			user.pulling.forceMove(get_turf(destination))
 
 /obj/structure/ladder/attack_paw(mob/user)
 	return attack_hand(user)
