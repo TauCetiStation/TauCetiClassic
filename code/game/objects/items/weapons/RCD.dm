@@ -115,6 +115,37 @@ RCD
 	if(prob(20))
 		spark_system.start()
 
+/obj/item/weapon/rcd/proc/check_after(atom/target, mob/living/user, mode)
+	switch(mode)
+		if(1)
+			if(istype(target, /turf/simulated/wall/r_wall) && !canRwall)
+				return FALSE
+		if(2)
+			if(istype(target, /turf/simulated/floor))
+				for(var/atom/AT in target)
+					if(AT.density)
+						to_chat(user, "<span class='warning'>You can't build wall here.</span>")
+						return FALSE
+		if(3)
+			if(istype(target, /turf/simulated/floor))
+				for(var/atom/AT in target)
+					if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
+						to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
+						return FALSE
+		if(4)
+			if(istype(target, /turf/simulated/floor))
+				for(var/atom/AT in target)
+					if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
+						to_chat(user, "<span class='warning'>You can't build glass airlock here.</span>")
+						return FALSE
+		if(5)
+			if(istype(target, /turf/simulated/floor))
+				for(var/atom/AT in target)
+					if(AT.density || istype(AT, /obj/machinery/door/firedoor))
+						to_chat(user, "<span class='warning'>You can't build emergency shutter here.</span>")
+						return FALSE
+	return TRUE
+
 /obj/item/weapon/rcd/proc/activate()
 	playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
@@ -145,7 +176,7 @@ RCD
 					return FALSE
 				delay = 0
 				to_chat(user, "Building Floor...")
-			if(istype(target, /turf/simulated/floor))
+			else if(istype(target, /turf/simulated/floor))
 				need_resource = 3
 				if(!checkResource(need_resource, user))
 					return FALSE
@@ -155,37 +186,42 @@ RCD
 						return FALSE
 				delay = 20
 				to_chat(user, "Building Wall...")
+			else
+				return FALSE
 
 		if(3)
-			if(istype(target, /turf/simulated/floor))
-				if(!checkResource(need_resource, user))
+			if(!istype(target, /turf/simulated/floor))
+				return FALSE
+			if(!checkResource(need_resource, user))
+				return FALSE
+			for(var/atom/AT in target)
+				if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
+					to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
 					return FALSE
-				for(var/atom/AT in target)
-					if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
-						to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
-						return FALSE
-				to_chat(user, "Building Airlock...")
+			to_chat(user, "Building Airlock...")
 
 		if(4)
-			if(istype(target, /turf/simulated/floor))
-				if(!checkResource(need_resource, user))
+			if(!istype(target, /turf/simulated/floor))
+				return FALSE
+			if(!checkResource(need_resource, user))
+				return FALSE
+			for(var/atom/AT in target)
+				if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
+					to_chat(user, "<span class='warning'>You can't build glass airlock here.</span>")
 					return FALSE
-				for(var/atom/AT in target)
-					if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
-						to_chat(user, "<span class='warning'>You can't build glass airlock here.</span>")
-						return FALSE
-				to_chat(user, "Building Glass Airlock...")
+			to_chat(user, "Building Glass Airlock...")
 
 		if(5)
-			if(istype(target, /turf/simulated/floor))
-				need_resource = 5
-				if(!checkResource(need_resource, user))
+			if(!istype(target, /turf/simulated/floor))
+				return FALSE
+			need_resource = 5
+			if(!checkResource(need_resource, user))
+				return FALSE
+			for(var/atom/AT in target)
+				if(AT.density || istype(AT, /obj/machinery/door/firedoor))
+					to_chat(user, "<span class='warning'>You can't build emergency shutter here.</span>")
 					return FALSE
-				for(var/atom/AT in target)
-					if(AT.density || istype(AT, /obj/machinery/door/firedoor))
-						to_chat(user, "<span class='warning'>You can't build emergency shutter here.</span>")
-						return FALSE
-				to_chat(user, "Building Emergency Shutter...")
+			to_chat(user, "Building Emergency Shutter...")
 
 	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode)
 	rcd_effect.update_icon_state()
@@ -200,6 +236,8 @@ RCD
 			return FALSE
 		activate()
 		rcd_effect.end_animation()
+		if(!check_after(target, user, mode))
+			return FALSE
 		switch(mode)
 			if(1)
 				if(istype(target, /turf/simulated/wall))
