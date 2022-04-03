@@ -158,7 +158,7 @@
 	..()
 	if(M.bodytemperature > BODYTEMP_NORMAL)
 		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = BODYTEMP_NORMAL)
-	else if(M.bodytemperature < 311)
+	else if(M.bodytemperature < BODYTEMP_NORMAL + 1)
 		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/kelotane
