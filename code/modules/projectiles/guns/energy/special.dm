@@ -29,17 +29,6 @@
 	else
 		return
 
-/obj/item/weapon/gun/energy/ionrifle/classic
-	name = "ion rifle"
-	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
-	icon_state = "oldion"
-	item_state = "oldion"
-	slot_flags = null
-
-/obj/item/weapon/gun/energy/ionrifle/tactifool
-	icon_state = "tfionrifle"
-	item_state = "tfionrifle"
-
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."

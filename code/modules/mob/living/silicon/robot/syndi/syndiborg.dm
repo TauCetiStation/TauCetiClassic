@@ -13,6 +13,8 @@
 
 	var/static/image/sword_overlay
 
+	spawner_args = list(/datum/spawner/living/robot/syndi, 2 MINUTES)
+
 /mob/living/silicon/robot/syndicate/atom_init()
 	. = ..()
 	updatename("Syndicate")
