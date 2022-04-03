@@ -45,6 +45,14 @@
 
 		breath.update_values()
 
+/mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
+	if(breath.temperature > BODYTEMP_HEAT_DAMAGE_LIMIT) // Hot air hurts :(
+		if(prob(20))
+			to_chat(src, "<span class='warning'>You feel a searing heat in your lungs!</span>")
+		fire_alert = TRUE
+	else
+		fire_alert = FALSE
+
 /mob/living/carbon/proc/handle_breath(datum/gas_mixture/breath)
 	if(!breath || (breath.total_moles == 0))
 		adjustOxyLoss(HUMAN_MAX_OXYLOSS)
@@ -124,12 +132,7 @@
 		if(prob(20))
 			emote(pick("giggle", "laugh"))
 
-	if(breath.temperature > BODYTEMP_HEAT_DAMAGE_LIMIT) // Hot air hurts :(
-		if(prob(20))
-			to_chat(src, "<span class='warning'>You feel a searing heat in your lungs!</span>")
-		fire_alert = TRUE
-	else
-		fire_alert = FALSE
+	handle_breath_temperature(breathe)
 
 	breath.update_values()
 
