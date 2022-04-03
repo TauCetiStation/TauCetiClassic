@@ -344,11 +344,6 @@
 	min_age = 25
 	max_age = 85
 
-	sprite_sheets = list(
-		SPRITE_SHEET_SUIT = 'icons/mob/species/unathi/suit.dmi',
-		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
-	)
-
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
 			)
@@ -415,11 +410,6 @@
 
 	min_age = 25
 	max_age = 85
-
-	sprite_sheets = list(
-		SPRITE_SHEET_SUIT = 'icons/mob/species/tajaran/suit.dmi',
-		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
-	)
 
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
