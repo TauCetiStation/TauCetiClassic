@@ -52,7 +52,7 @@
 	if(dist > CLEAR_TELEPATHY_RANGE)
 		star_chance += dist
 
-	if(remote_hearing.len > 3)
+	if(remote_hearing.len > CLEAR_TELEPATHY_TARGETS)
 		star_chance += remote_hearing.len * 5
 
 	if(star_chance)
@@ -87,9 +87,7 @@
 	if(src in M.remote_hearers)
 		M.remove_remote_hearer(src)
 		to_chat(src, "<span class='notice'>You stop telepathically eavesdropping on [M].</span>")
-	else
-		if(remote_hearing.len > 3)
-			return
+	else if(length(remote_hearing) < CLEAR_TELEPATHY_TARGETS)
 		M.add_remote_hearer(src)
 		to_chat(src, "<span class='notice'>You start telepathically eavesdropping on [M].</span>")
 
