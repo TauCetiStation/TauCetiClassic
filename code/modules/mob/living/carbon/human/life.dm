@@ -611,16 +611,17 @@
 	// Account for massive pressure differences.  Done by Polymorph
 	// Made it possible to actually have something that can protect against high pressure... Done by Errorage. Polymorph now has an axe sticking from his head for his previous hardcoded nonsense!
 
-	switch(adjusted_pressure)
-		if(species.hazard_high_pressure to INFINITY)
+	if(adjusted_pressure > species.warning_high_pressure)
+		if(adjusted_pressure > species.hazard_high_pressure)
 			var/pressure_damage = min( ( (adjusted_pressure / species.hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE)
 			take_overall_damage(brute=pressure_damage, used_weapon = "High Pressure")
 			pressure_alert = 2
-		if(species.warning_high_pressure to species.hazard_high_pressure)
+		else
 			pressure_alert = 1
-		if(species.hazard_low_pressure to species.warning_low_pressure)
+	else if(adjusted_pressure < species.warning_low_pressure)
+		if(adjusted_pressure >= species.hazard_low_pressure)
 			pressure_alert = -1
-		if(-INFINITY to species.hazard_low_pressure)
+		else
 			pressure_alert = -2
 			apply_effect(is_in_space ? 15 : 7, AGONY, 0)
 			take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
