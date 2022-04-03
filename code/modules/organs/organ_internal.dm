@@ -269,7 +269,7 @@
 			temp_gain -= refrigerant_spent
 
 	if(HAS_TRAIT(owner, TRAIT_COOLED) & owner.bodytemperature > 290)
-		owner.bodytemperature -= 50
+		owner.adjust_bodytemperature(-50)
 
 	if(temp_gain > 0)
 		owner.bodytemperature += temp_gain

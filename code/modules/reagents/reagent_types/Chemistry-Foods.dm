@@ -149,17 +149,17 @@
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1 to 15)
-			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(holder.has_reagent("frostoil"))
 				holder.remove_reagent("frostoil", 5)
 			if(isslime(M))
 				M.bodytemperature += rand(5,20)
 		if(15 to 25)
-			M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(isslime(M))
 				M.bodytemperature += rand(10,20)
 		if(25 to INFINITY)
-			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(isslime(M))
 				M.bodytemperature += rand(15,20)
 	data["ticks"]++

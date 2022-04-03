@@ -87,7 +87,7 @@
 		if(m_intent == "run")
 			nutrition -= met_factor * 0.01
 	if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)
-		bodytemperature += 2
+		adjust_bodytemperature(2)
 
 	// Moving around increases germ_level faster
 	if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))

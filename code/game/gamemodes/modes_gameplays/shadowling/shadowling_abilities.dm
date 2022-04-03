@@ -98,7 +98,7 @@
 			to_chat(target, "<span class='userdanger'>You are hit by a blast of paralyzingly cold air and feel goosebumps break out across your body!</span>")
 			target.Stun(2)
 			if(target.bodytemperature)
-				target.bodytemperature -= 200 //Extreme amount of initial cold
+				target.adjust_bodytemperature(-200) //Extreme amount of initial cold
 			if(target.reagents)
 				target.reagents.add_reagent("frostoil", 15) //Half of a cryosting
 

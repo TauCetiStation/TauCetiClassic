@@ -111,8 +111,8 @@
 		return
 
 	if(occupant)
-		occupant.bodytemperature += 2 * (air1.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air1.heat_capacity())
-		occupant.bodytemperature = max(occupant.bodytemperature, air1.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
+		var/affecting_temp = 2 * (air1.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air1.heat_capacity())
+		occupant.adjust_bodytemperature(affecting_temp, max_temp = air1.temperature)
 
 		/* heat_gas_contents */
 		if(air1.total_moles < 1)
