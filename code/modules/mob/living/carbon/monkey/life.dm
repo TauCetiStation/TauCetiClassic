@@ -281,6 +281,9 @@
 
 		return 0
 
+	// Set propper breath volume
+	breath.volume = BREATH_VOLUME
+
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
@@ -288,7 +291,7 @@
 	var/SA_para_min = 0.5
 	var/SA_sleep_min = 5
 	var/oxygen_used = 0
-	var/breath_pressure = (breath.total_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = breath.return_pressure()
 
 	//Partial pressure of the O2 in our breath
 	var/O2_pp = (breath.gas["oxygen"] / breath.total_moles) * breath_pressure

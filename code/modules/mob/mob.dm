@@ -978,6 +978,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/SetShockStage(amount)
 	return
 
+//======= Bodytemperature =======
+/mob/proc/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY)
+	bodytemperature = clamp(bodytemperature + amount, min_temp, max_temp)
+
 // =============================
 
 /mob/proc/get_species()

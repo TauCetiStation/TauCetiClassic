@@ -423,6 +423,8 @@
 
 		return 0
 
+	breath.volume = BREATH_VOLUME
+
 	var/safe_pressure_min = 16 // Minimum safe partial pressure of breathable gas in kPa
 	//var/safe_pressure_max = 140 // Maximum safe partial pressure of breathable gas in kPa (Not used for now)
 	var/safe_exhaled_max = 10 // Yes it's an arbitrary value who cares?
@@ -437,7 +439,7 @@
 	var/sleeping_agent = breath.gas["sleeping_agent"]
 
 	var/inhaled_gas_used = 0
-	var/breath_pressure = (breath.total_moles * R_IDEAL_GAS_EQUATION * breath.temperature) / BREATH_VOLUME
+	var/breath_pressure = breath.return_pressure()
 
 	var/inhale_pp = inhaling ? (inhaling / breath.total_moles) * breath_pressure : 0
 	var/exhaled_pp = exhaling ? (exhaling / breath.total_moles) * breath_pressure : 0
@@ -542,17 +544,9 @@
 				apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Heat")
 
 		//breathing in hot/cold air also heats/cools you a bit
-		var/temp_adj = breath.temperature - bodytemperature
-		if (temp_adj < 0)
-			temp_adj /= (BODYTEMP_COLD_DIVISOR * 5)	//don't raise temperature as much as if we were directly exposed
-		else
-			temp_adj /= (BODYTEMP_HEAT_DIVISOR * 5)	//don't raise temperature as much as if we were directly exposed
-
-		temp_adj *= breath.total_moles / (MOLES_CELLSTANDARD * BREATH_PERCENTAGE)
-		temp_adj = clamp(temp_adj, BODYTEMP_COOLING_MAX, BODYTEMP_HEATING_MAX)
-
-		//world << "Breath: [breath.temperature], [src]: [bodytemperature], Adjusting: [temp_adj]"
-		bodytemperature += temp_adj
+		var/affecting_temp = (breath.temperature - bodytemperature) * breath.return_relative_density()
+		
+		adjust_bodytemperature(affecting_temp / 5, use_insulation=TRUE, use_steps=TRUE)
 
 	breath.update_values()
 
@@ -570,24 +564,12 @@
 	if(!is_in_space) //space is not meant to change your body temperature.
 		var/loc_temp = get_temperature(environment)
 
-		//Use heat transfer as proportional to the gas activity (pressure)
-		var/affecting_temp = (loc_temp - bodytemperature) * environment.return_relative_density()
-
 		//If you're on fire, you do not heat up or cool down based on surrounding gases.
-		//Or if absolute temperature difference is too small
 		if(!on_fire)
+			//Use heat transfer as proportional to the gas activity (density)
+			var/affecting_temp = (loc_temp - bodytemperature) * environment.return_relative_density()
 			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
-			
-			if(affecting_temp <= -BODYTEMP_SIGNIFICANT_CHANGE)		//Place is colder than we are
-				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-				if(thermal_protection < 1)
-					var/temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_COLD_DIVISOR)	//this will be negative
-					bodytemperature += max(temp_adj, BODYTEMP_COOLING_MAX)
-			else if(affecting_temp >= BODYTEMP_SIGNIFICANT_CHANGE)	//Place is hotter than we are
-				var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-				if(thermal_protection < 1)
-					var/temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_HEAT_DIVISOR)
-					bodytemperature += min(temp_adj, BODYTEMP_HEATING_MAX)
+			adjust_bodytemperature(affecting_temp, use_insulation=TRUE, use_steps=TRUE)
 
 	else if(!species.flags[IS_SYNTHETIC] && !species.flags[RAD_IMMUNE])
 		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
@@ -676,7 +658,7 @@
 	if(..())
 		return
 	var/thermal_protection = get_heat_protection(30000) //If you don't have fire suit level protection, you get a temperature increase
-	if((1 - thermal_protection) > 0.0001)
+	if(thermal_protection < 1)
 		bodytemperature += BODYTEMP_HEATING_MAX
 	return
 //END FIRE CODE
@@ -754,7 +736,7 @@
 
 	return thermal_protection_flags
 
-/mob/living/carbon/human/proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
+/mob/living/carbon/human/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
 	if(RESIST_HEAT in mutations) //#Z2
 		return 1 //Fully protected from the fire. //##Z2
 
@@ -805,7 +787,7 @@
 
 	return thermal_protection_flags
 
-/mob/living/carbon/human/proc/get_cold_protection(temperature)
+/mob/living/carbon/human/get_cold_protection(temperature)
 
 	if(COLD_RESISTANCE in mutations)
 		return 1 //Fully protected from the cold.
