@@ -78,6 +78,8 @@
 	// Radial menu for choose module
 	var/static/list/choose_module
 
+	spawner_args = list(/datum/spawner/living/robot)
+
 /mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -87,7 +89,6 @@
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
-	robot_modules_background.layer = HUD_LAYER	 //Objects that appear on screen are on layer 20, UI should be just below it.
 	robot_modules_background.plane = HUD_PLANE
 	ident = rand(1, 999)
 	updatename(name_prefix)
@@ -123,6 +124,10 @@
 		cell_component.installed = 1
 
 	diag_hud_set_borgcell()
+
+/mob/living/silicon/robot/Login()
+	..()
+	set_all_components(TRUE)
 
 /mob/living/silicon/robot/proc/set_ai_link(link)
 	if (connected_ai != link)
@@ -954,21 +959,18 @@
 			return
 		if(!module_state_1)
 			module_state_1 = O
-			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
 			contents += O
 			if(istype(module_state_1,/obj/item/borg/sight))
 				sight_mode |= module_state_1:sight_mode
 		else if(!module_state_2)
 			module_state_2 = O
-			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
 			contents += O
 			if(istype(module_state_2,/obj/item/borg/sight))
 				sight_mode |= module_state_2:sight_mode
 		else if(!module_state_3)
 			module_state_3 = O
-			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
 			contents += O
 			if(istype(module_state_3,/obj/item/borg/sight))
@@ -1126,6 +1128,14 @@
 		var/datum/robot_component/C = components[V]
 		if(C.installed)
 			C.toggled = !C.toggled
+
+/mob/living/silicon/robot/proc/set_all_components(state)
+	for(var/V in components)
+		if(V == "power cell")
+			continue
+		var/datum/robot_component/C = components[V]
+		if(C.installed)
+			C.toggled = state
 
 /mob/living/silicon/robot/swap_hand()
 	cycle_modules()

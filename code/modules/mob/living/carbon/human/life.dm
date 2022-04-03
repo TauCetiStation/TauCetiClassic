@@ -532,26 +532,23 @@
 		var/loc_temp = get_temperature(environment)
 
 		//Use heat transfer as proportional to the gas activity (pressure)
-		var/affecting_temp = (loc_temp - bodytemperature) * environment.total_moles / MOLES_CELLSTANDARD
+		var/affecting_temp = (loc_temp - bodytemperature) * environment.return_relative_density()
 
 		//If you're on fire, you do not heat up or cool down based on surrounding gases.
 		//Or if absolute temperature difference is too small
-		if(abs(affecting_temp) >= BODYTEMP_SIGNIFICANT_CHANGE && !on_fire)
+		if(!on_fire)
 			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
-			var/temp_adj = 0
-
-			if(affecting_temp < 0.)	//Place is colder than we are
+			
+			if(affecting_temp <= -BODYTEMP_SIGNIFICANT_CHANGE)		//Place is colder than we are
 				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
-					temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_COLD_DIVISOR)	//this will be negative
-			else					//Place is hotter than we are
+					var/temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_COLD_DIVISOR)	//this will be negative
+					bodytemperature += max(temp_adj, BODYTEMP_COOLING_MAX)
+			else if(affecting_temp >= BODYTEMP_SIGNIFICANT_CHANGE)	//Place is hotter than we are
 				var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
-					temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_HEAT_DIVISOR)
-
-			temp_adj = clamp(temp_adj, BODYTEMP_COOLING_MAX, BODYTEMP_HEATING_MAX)
-			//world << "Environment: [loc_temp], [src]: [bodytemperature], Adjusting: [temp_adj]"
-			bodytemperature += temp_adj
+					var/temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_HEAT_DIVISOR)
+					bodytemperature += min(temp_adj, BODYTEMP_HEATING_MAX)
 
 	else if(!species.flags[IS_SYNTHETIC] && !species.flags[RAD_IMMUNE])
 		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
@@ -796,64 +793,6 @@
 
 	return min(1,thermal_protection)
 
-/*
-/mob/living/carbon/human/proc/add_fire_protection(temp)
-	var/fire_prot = 0
-	if(head)
-		if(head.protective_temperature > temp)
-			fire_prot += (head.protective_temperature/10)
-	if(wear_mask)
-		if(wear_mask.protective_temperature > temp)
-			fire_prot += (wear_mask.protective_temperature/10)
-	if(glasses)
-		if(glasses.protective_temperature > temp)
-			fire_prot += (glasses.protective_temperature/10)
-	if(ears)
-		if(ears.protective_temperature > temp)
-			fire_prot += (ears.protective_temperature/10)
-	if(wear_suit)
-		if(wear_suit.protective_temperature > temp)
-			fire_prot += (wear_suit.protective_temperature/10)
-	if(w_uniform)
-		if(w_uniform.protective_temperature > temp)
-			fire_prot += (w_uniform.protective_temperature/10)
-	if(gloves)
-		if(gloves.protective_temperature > temp)
-			fire_prot += (gloves.protective_temperature/10)
-	if(shoes)
-		if(shoes.protective_temperature > temp)
-			fire_prot += (shoes.protective_temperature/10)
-
-	return fire_prot
-
-/mob/living/carbon/human/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
-	if(nodamage)
-		return
-	//world <<"body_part = [body_part], exposed_temperature = [exposed_temperature], exposed_intensity = [exposed_intensity]"
-	var/discomfort = min(abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
-
-	if(exposed_temperature > bodytemperature)
-		discomfort *= 4
-
-	if(mutantrace == "plant")
-		discomfort *= TEMPERATURE_DAMAGE_COEFFICIENT * 2 //I don't like magic numbers. I'll make mutantraces a datum with vars sometime later. -- Urist
-	else
-		discomfort *= TEMPERATURE_DAMAGE_COEFFICIENT //Dangercon 2011 - now with less magic numbers!
-	//world <<"[discomfort]"
-
-	switch(body_part)
-		if(HEAD)
-			apply_damage(2.5*discomfort, BURN, BP_HEAD)
-		if(UPPER_TORSO)
-			apply_damage(2.5*discomfort, BURN, BP_CHEST)
-		if(LEGS)
-			apply_damage(0.6*discomfort, BURN, BP_L_LEG)
-			apply_damage(0.6*discomfort, BURN, BP_R_LEG)
-		if(ARMS)
-			apply_damage(0.4*discomfort, BURN, BP_L_ARM)
-			apply_damage(0.4*discomfort, BURN, BP_R_ARM)
-*/
-
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
 
 	if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
@@ -885,18 +824,7 @@
 					nutrition = 500 - KS.damage*5
 			species.regen(src, light_amount)
 
-	if(dna && dna.mutantrace == "shadow")
-		var/light_amount = 0
-		if(isturf(loc))
-			var/turf/T = loc
-			light_amount = round(T.get_lumcount()*10)
-
-		if(light_amount > 2) //if there's enough light, start dying
-			take_overall_damage(1,1)
-		else if (light_amount < 2) //heal in the dark
-			heal_overall_damage(1,1)
-
-	if(dna && dna.mutantrace == "shadowling")
+	if(get_species() == SHADOWLING)
 		var/light_amount = 0
 		nutrition = 450 //i aint never get hongry
 		if(isturf(loc))
@@ -907,6 +835,7 @@
 			take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
 			to_chat(src, "<span class='userdanger'>The light burns you!</span>")
 			playsound_local(null, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
 		else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 			heal_overall_damage(5,5)
 			adjustToxLoss(-3)
@@ -922,7 +851,6 @@
 			to_chat(src, "<span class='notice'>You feel fit again!</span>")
 			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 			update_body()
-			update_mutantrace()
 			update_mutations()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
@@ -932,7 +860,6 @@
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
 				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 				update_body()
-				update_mutantrace()
 				update_mutations()
 				update_inv_w_uniform()
 				update_inv_wear_suit()

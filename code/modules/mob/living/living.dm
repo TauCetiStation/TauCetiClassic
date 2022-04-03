@@ -19,6 +19,10 @@
 
 	beauty.AddModifier("stat", additive=beauty_living)
 
+	if(spawner_args)
+		spawner_args.Insert(1, /datum/component/logout_spawner)
+		AddComponent(arglist(spawner_args))
+
 /mob/living/Destroy()
 	allowed_combos = null
 	known_combos = null
@@ -1401,6 +1405,26 @@
 		return
 	AddElement(/datum/element/beauty, beauty.Get())
 
+//Throwing stuff
+/mob/living/proc/toggle_throw_mode()
+	if(in_throw_mode)
+		throw_mode_off()
+	else
+		throw_mode_on()
+
+/mob/living/proc/throw_mode_off()
+	in_throw_mode = FALSE
+
+/mob/living/proc/throw_mode_on()
+	in_throw_mode = TRUE
+
+/mob/living/in_interaction_vicinity(atom/target)
+	// Telekinetic distance is handled by the larger telekinesis system.
+	if(can_tk(level=TK_LEVEL_TWO, show_warnings=FALSE))
+		return TRUE
+
+	return ..()
+
 /mob/living/proc/AdjustDrunkenness(amount)
 	drunkenness += amount
 
@@ -1449,6 +1473,14 @@
 		if(istype(IO))
 			IO.take_damage(0.1, 1)
 		adjustToxLoss(0.1)
+
+/*
+	Try to take AM, if it's impossible
+	try to put AM into fallback.
+	If it's impossible, return FALSE.
+*/
+/mob/living/proc/try_take(atom/movable/AM, atom/fallback)
+	return AM.taken(src, fallback)
 
 /mob/living/proc/get_pumped(bodypart)
 	return 0

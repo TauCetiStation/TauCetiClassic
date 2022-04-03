@@ -132,8 +132,6 @@
 	underwear = 0
 	undershirt = 0
 	faction = "faithless"
-	dna.mutantrace = "shadowling"
-	update_mutantrace()
 	regenerate_icons()
 
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
@@ -947,15 +945,6 @@
 	return
 
 /mob/living/carbon/human/get_species()
-
-	if(!species)
-		set_species()
-
-	if(dna && dna.mutantrace == "golem")
-		return "Animated Construct"
-
-
-
 	return species.name
 
 /mob/living/carbon/human/proc/play_xylophone()
@@ -1934,8 +1923,6 @@
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return FALSE
 	if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
-		return FALSE
-	if(dna && dna.mutantrace == "adamantine")
 		return FALSE
 	if(ismob(loc))
 		return FALSE
