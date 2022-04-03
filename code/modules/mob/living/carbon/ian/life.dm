@@ -121,6 +121,7 @@
 	handle_fire()
 
 	handle_regular_status_updates()
+	handle_alerts()
 	update_canmove()
 
 /mob/living/carbon/ian/handle_regular_hud_updates()
@@ -152,19 +153,6 @@
 	if(hud_used && hud_used.staminadisplay)
 		var/atom/movable/screen/corgi/stamina_bar/SB = hud_used.staminadisplay
 		SB.icon_state = "stam_bar_[round(stamina, 5)]"
-
-	if(inhale_alert)
-		throw_alert("ian_oxy", /atom/movable/screen/alert/ian_oxy)
-	else
-		clear_alert("ian_oxy")
-	if(poison_alert)
-		throw_alert("ian_tox", /atom/movable/screen/alert/ian_tox)
-	else
-		clear_alert("ian_tox")
-	if(hot_alert)
-		throw_alert("ian_hot", /atom/movable/screen/alert/ian_hot)
-	else
-		clear_alert("ian_hot")
 
 	return TRUE
 
@@ -317,10 +305,26 @@
 			if(V.antigen & src.antibodies)
 				V.dead = TRUE
 
+/mob/living/carbon/ian/handle_alerts()
+	if(inhale_alert)
+		throw_alert("oxy", /atom/movable/screen/alert/ian_oxy)
+	else
+		clear_alert("oxy")
+
+	if(poison_alert)
+		throw_alert("tox", /atom/movable/screen/alert/ian_tox)
+	else
+		clear_alert("tox")
+
+	if(temp_alert > 0)
+		throw_alert("temp", /atom/movable/screen/alert/ian_hot)
+	else if(temp_alert < 0)
+		throw_alert("temp", /atom/movable/screen/alert/ian_cold)
+	else
+		clear_alert("temp")
+
 /mob/living/carbon/ian/handle_environment(datum/gas_mixture/environment)
 	if(istype(head, /obj/item/clothing/head/helmet/space))
-		clear_alert("pressure")
-		clear_alert("temp")
 		return
 
 	..()
