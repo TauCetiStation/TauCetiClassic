@@ -232,17 +232,18 @@ var/global/list/ghostteleportlocs = list()
 
 		if(danger_level >= 2 && atmosalm < 2)
 			for(var/obj/machinery/alarm/AA in src)
-				if(!AA.hidden_from_console)
-					var/list/cameras = list()
-					for(var/obj/machinery/camera/C in src)
-						cameras += C
-						C.add_network("Atmosphere Alarms")
-					for(var/mob/living/silicon/aiPlayer as anything in silicon_list)
-						if(!aiPlayer.client)
-							continue
-						aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
-					for(var/obj/machinery/computer/station_alert/a in station_alert_list)
-						a.triggerAlarm("Atmosphere", src, cameras, src)
+				if(AA.hidden_from_console)
+					continue
+				var/list/cameras = list()
+				for(var/obj/machinery/camera/C in src)
+					cameras += C
+					C.add_network("Atmosphere Alarms")
+				for(var/mob/living/silicon/aiPlayer as anything in silicon_list)
+					if(!aiPlayer.client)
+						continue
+					aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
+				for(var/obj/machinery/computer/station_alert/a in station_alert_list)
+					a.triggerAlarm("Atmosphere", src, cameras, src)
 			air_doors_close()
 
 		atmosalm = danger_level
