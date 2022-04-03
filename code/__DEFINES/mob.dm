@@ -239,3 +239,10 @@
 #define ALLERGY_INGESTION "ingestion"
 // can't implement rn but would be funny
 // #define ALLERGY_BREATH 3
+
+// logout reasons
+#define LOGOUT_UNKNOWN 0
+#define LOGOUT_USER 1
+#define LOGOUT_GHOST 2
+#define LOGOUT_REENTER 3
+#define LOGOUT_SWAP 4 // not so safe, check other things if available

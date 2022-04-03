@@ -256,7 +256,8 @@
 	icon_state = "weaponcrateopen";
 	opened = 1
 	},
-/obj/item/weapon/gun/energy/laser/classic,
+/obj/item/clothing/suit/chef/classic,
+/obj/item/weapon/gun/energy/laser,
 /turf/simulated/floor/plating/airless{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"

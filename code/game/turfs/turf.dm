@@ -250,8 +250,10 @@
 		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
 		return*/
 
-	if(ispath(path, /turf/environment/space))
-		path = SSenvironment.turf_type[z]
+	if(ispath(path, /turf/environment))
+		var/env_turf_type = SSenvironment.turf_type[z]
+		if(!ispath(path, env_turf_type))
+			path = env_turf_type
 
 	if (path == type)
 		return src
