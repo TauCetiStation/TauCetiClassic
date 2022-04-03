@@ -72,7 +72,7 @@
 		med_hud_set_health()
 		med_hud_set_status()
 
-/mob/living/carbon/xenomorph/heat_protection()
+/mob/living/carbon/xenomorph/get_heat_protection()
 	return heat_protection
 
 /mob/living/carbon/xenomorph/handle_environment(datum/gas_mixture/environment)

@@ -162,7 +162,7 @@
 	var/temp_delta = loc_temp - bodytemperature
 
 	if(abs(temp_delta) > 50) // If the difference is great, reduce the divisor for faster stabilization
-		divisor = 5
+		divisitor = 5
 
 	if(!on_fire)
 		adjust_bodytemperature(temp_delta / divisitor)

@@ -157,9 +157,9 @@
 /datum/reagent/leporazine/on_general_digest(mob/living/M)
 	..()
 	if(M.bodytemperature > BODYTEMP_NORMAL)
-		H.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = BODYTEMP_NORMAL)
+		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = BODYTEMP_NORMAL)
 	else if(M.bodytemperature < 311)
-		H.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
+		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/kelotane
 	name = "Kelotane"
