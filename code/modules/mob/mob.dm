@@ -980,8 +980,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 //======= Bodytemperature =======
 /mob/proc/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY)
-	if(bodytemperature >= min_temp && bodytemperature =< max_temp)
-		bodytemperature = clamp(bodytemperature + amount, min_temp, max_temp)
+	if(amount > 0)
+		if(bodytemperature < max_temp)
+			bodytemperature = min(max_temp, bodytemperature + amount)
+	else
+		if(bodytemperature > min_temp)
+			bodytemperature = max(min_temp, bodytemperature + amount)
 
 // =============================
 
