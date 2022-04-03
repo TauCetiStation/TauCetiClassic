@@ -35,36 +35,20 @@
 	icon_state = "podkid1"
 	race = PODMAN
 	holder_type = /obj/item/weapon/holder/diona/podkid
-	var/spawner_type = /datum/spawner/podkid
-	var/spawner_id = "podkid"
 
-/mob/living/carbon/monkey/diona/podman/atom_init()
-	. = ..()
-	RegisterSignal(src, list(COMSIG_MOB_GHOST), .proc/find_replacement)
-
-/mob/living/carbon/monkey/diona/podman/Destroy()
-	UnregisterSignal(src, list(COMSIG_MOB_GHOST))
-	return ..()
-
-/mob/living/carbon/monkey/diona/podman/proc/find_replacement(datum/source, can_reenter_corpse)
-	SIGNAL_HANDLER
-
-	if(can_reenter_corpse)
-		return
-	create_spawner(spawner_type, spawner_id, src)
+	spawner_args = list(/datum/spawner/living/podman/podkid, 2 MINUTES)
 
 /mob/living/carbon/monkey/diona/podman/fake
 	name = "diona nymph"
 	voice_name = "diona nymph"
 	icon_state = "nymph1"
 	holder_type = /obj/item/weapon/holder/diona
-	spawner_type = /datum/spawner/fake_diona
-	spawner_id = "nymph"
+
+	spawner_args = list(/datum/spawner/living/podman/fake_nymph, 2 MINUTES)
 
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()
 	gender = NEUTER
-	dna.mutantrace = "plant"
 	greaterform = DIONA
 	add_language(LANGUAGE_ROOTSPEAK)
 
@@ -303,7 +287,7 @@
 		mind.transfer_to(adult)
 
 	for (var/obj/item/W in contents)
-		drop_from_inventory(W)
+		drop_from_inventory(W, loc)
 	qdel(src)
 
 /mob/living/carbon/monkey/diona/verb/evolve()
@@ -393,10 +377,13 @@
 	if(stat == DEAD)
 		return say_dead(message)
 
-	var/datum/language/speaking = parse_language(message)
+	var/ending = copytext(message, -1)
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
+
 	if(speaking)
-		verb = speaking.speech_verb
-		message = trim(copytext_char(message,2+length_char(speaking.key)))
+		verb = speaking.get_spoken_verb(ending)
 
 	if(!message || stat)
 		return

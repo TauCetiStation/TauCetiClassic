@@ -17,8 +17,15 @@ map boxstation
 	default
 endmap
 
+map boxstation_snow
+endmap
+
 map gamma
 endmap
 
 map testmap
+endmap
+
+map falcon
+	maxplayers 25
 endmap

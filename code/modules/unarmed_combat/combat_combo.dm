@@ -298,7 +298,6 @@ var/global/list/combat_combos_by_name = list()
 
 /datum/combat_combo/proc/get_combo_icon()
 	var/image/I = image(icon='icons/mob/unarmed_combat_combos.dmi', icon_state=combo_icon_state)
-	I.layer = ABOVE_HUD_LAYER
 	I.plane = ABOVE_HUD_PLANE
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	I.pixel_x = 16

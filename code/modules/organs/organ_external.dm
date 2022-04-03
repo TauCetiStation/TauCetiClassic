@@ -558,11 +558,19 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	//Eyes
 	if(species && species.eyes)
-		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', species.eyes, -icon_layer)
-		if(!(HULK in owner.mutations))
-			img_eyes_s.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
-		else
+		var/eyes_layer = -icon_layer
+
+		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', species.eyes, eyes_layer)
+		if(species.eyes_glowing)
+			img_eyes_s.plane = ABOVE_LIGHTING_PLANE
+
+		if(HULK in owner.mutations)
 			img_eyes_s.color = "#ff0000"
+		else if(species.name == SHADOWLING || iszombie(owner))
+			img_eyes_s.color = null
+		else
+			img_eyes_s.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
+
 		. += img_eyes_s
 
 	//Mouth	(lipstick!)
@@ -607,11 +615,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(is_broken())
 		owner.drop_from_inventory(c_hand)
-		var/emote_scream = pick("screams in pain and", "lets out a sharp cry and", "cries out and")
-		owner.emote("grunt", SHOWMSG_VISUAL, "[(owner.species && owner.species.flags[NO_PAIN]) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
+		owner.emote("grunt")
 	if(is_malfunctioning())
 		owner.drop_from_inventory(c_hand)
-		owner.emote("grunt", SHOWMSG_VISUAL, "drops what they were holding, their [hand_name] malfunctioning!")
+		owner.emote("grunt")
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, owner)
 		spark_system.attach(owner)

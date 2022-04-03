@@ -449,7 +449,7 @@
 	M.make_jittery(5)
 
 /datum/reagent/consumable/drink/cold/kvass
-	name = "kvass"
+	name = "Kvass"
 	id = "kvass"
 	description = "A cool refreshing drink with a taste of socialism."
 	reagent_state = LIQUID
@@ -741,6 +741,8 @@
 /datum/reagent/consumable/ethanol/beer/on_general_digest(mob/living/M)
 	..()
 	M.jitteriness = max(M.jitteriness - 3,0)
+	if(HAS_TRAIT(M, TRAIT_DWARF))
+		M.heal_bodypart_damage(1, 1)
 
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"
@@ -900,6 +902,11 @@
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 1
 	taste_message = "ale"
+
+/datum/reagent/consumable/ethanol/ale/on_general_digest(mob/living/M)
+	..()
+	if(HAS_TRAIT(M, TRAIT_DWARF))
+		M.heal_bodypart_damage(1, 1)
 
 /datum/reagent/consumable/ethanol/absinthe
 	name = "Absinthe"
@@ -1147,6 +1154,11 @@
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 2
 	taste_message = "manliness"
+
+/datum/reagent/consumable/ethanol/manly_dorf/on_general_digest(mob/living/M)
+	..()
+	if(HAS_TRAIT(M, TRAIT_DWARF))
+		M.heal_bodypart_damage(3, 3)
 
 /datum/reagent/consumable/ethanol/longislandicedtea
 	name = "Long Island Iced Tea"

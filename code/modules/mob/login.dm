@@ -64,6 +64,9 @@
 
 	..()
 
+	SEND_SIGNAL(src, COMSIG_LOGIN)
+	logout_reason = LOGOUT_UNKNOWN
+
 	if(loc && !isturf(loc))
 		client.eye = loc
 		client.perspective = EYE_PERSPECTIVE
@@ -79,7 +82,6 @@
 	blocker.blend_mode = BLEND_MULTIPLY
 	blocker.color = list(1,1,1,0,1,1,1,0,1,1,1,0,0,0,0,1,0,0,0,1)
 	blocker.alpha = 255
-	blocker.layer = ABOVE_HUD_LAYER
 	blocker.plane = ABOVE_HUD_PLANE
 	blocker.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 

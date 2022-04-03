@@ -295,7 +295,7 @@
 //Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
 //movement_dir == 0 when stopping or any dir when trying to move
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
-	if(has_gravity(src))
+	if(has_gravity(src) && !(ice_slide_count && isiceturf(get_turf(src))))
 		return 1
 
 	if(pulledby)
@@ -468,6 +468,21 @@
 	var/atom/old_loc = loc
 	loc = new_loc
 	Moved(old_loc)
+
+// Return what item *should* be thrown, when a mob tries to throw us. Return null for no throw to happen.
+/atom/movable/proc/be_thrown(mob/living/thrower, atom/target)
+	return src
+
+/*
+	Handle trying to be taken by user.
+	If it's impossible to be taken by user, appear in fallback.
+	If it's impossible to resolve those two rules - return FALSE.
+*/
+/atom/movable/proc/taken(mob/living/user, atom/fallback)
+	forceMove(fallback)
+	// We failed to be taken, but still are in some mob. Drop down.
+	if(ismob(loc))
+		forceMove(loc.loc)
 
 /atom/movable/proc/jump_from_contents(rec_level=1)
 	for(var/i in 1 to rec_level)

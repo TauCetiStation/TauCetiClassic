@@ -3,6 +3,12 @@
 	name = "space"
 	icon_state = "0"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	force_lighting_update = TRUE
+
+	oxygen = 0
+	carbon_dioxide = 0
+	nitrogen = 0
+	phoron = 0
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -276,9 +282,6 @@
 				if ((A && A.loc))
 					A.loc.Entered(A)
 	return
-
-/turf/environment/space/ChangeTurf(path, force_lighting_update = 0)
-	return ..(path, TRUE)
 
 /turf/environment/space/singularity_act()
 	return

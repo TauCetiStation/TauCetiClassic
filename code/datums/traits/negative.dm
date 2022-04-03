@@ -73,7 +73,6 @@
 /datum/quirk/fatness/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.update_body()
-	H.update_mutantrace()
 	H.update_mutations()
 	H.update_inv_w_uniform()
 	H.update_inv_wear_suit()
@@ -189,13 +188,7 @@
 /datum/quirk/nyctophobia/proc/on_move(datum/source, atom/oldLoc, dir)
 	var/mob/living/carbon/human/H = quirk_holder
 
-	if(isturf(oldLoc))
-		UnregisterSignal(H, list(COMSIG_LIGHT_UPDATE_OBJECT))
-
 	check_fear(H, get_turf(H))
-
-	if(isturf(H.loc))
-		RegisterSignal(H, list(COMSIG_LIGHT_UPDATE_OBJECT), .proc/check_fear)
 
 /datum/quirk/nyctophobia/proc/become_afraid()
 	if(is_afraid)
@@ -231,7 +224,7 @@
 	value = -1
 
 	mob_trait = TRAIT_NO_CLONE
-	
+
 	req_species_flags = list(
 		NO_DNA = FALSE,
 		NO_SCAN = FALSE,

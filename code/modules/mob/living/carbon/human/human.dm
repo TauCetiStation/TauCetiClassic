@@ -132,8 +132,6 @@
 	underwear = 0
 	undershirt = 0
 	faction = "faithless"
-	dna.mutantrace = "shadowling"
-	update_mutantrace()
 	regenerate_icons()
 
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
@@ -734,9 +732,9 @@
 					visible_message("<span class='danger'>[usr] tears off \the [A] from [src]'s [S]!</span>")
 				else
 					visible_message("<span class='danger'>[usr] removed \the [A] from [src]'s [S]!</span>")
-				A.on_removed(usr)
-				S.accessories -= A
-				update_inv_w_uniform()
+
+				S.remove_accessory(usr, A)
+
 				attack_log += "\[[time_stamp()]\] <font color='orange'>Had their accessory ([A]) removed by [usr.name] ([usr.ckey])</font>"
 				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Attempted to remove [name]'s ([ckey]) accessory ([A])</font>"
 
@@ -947,15 +945,6 @@
 	return
 
 /mob/living/carbon/human/get_species()
-
-	if(!species)
-		set_species()
-
-	if(dna && dna.mutantrace == "golem")
-		return "Animated Construct"
-
-
-
 	return species.name
 
 /mob/living/carbon/human/proc/play_xylophone()
@@ -1426,7 +1415,7 @@
 		apply_recolor()
 
 	if(species.language)
-		add_language(species.language)
+		add_language(species.language, LANGUAGE_NATIVE)
 
 	if(species.additional_languages)
 		for(var/A in species.additional_languages)
@@ -1935,8 +1924,6 @@
 		return FALSE
 	if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
 		return FALSE
-	if(dna && dna.mutantrace == "adamantine")
-		return FALSE
 	if(ismob(loc))
 		return FALSE
 	return TRUE
@@ -2266,12 +2253,6 @@
 		if(istype(IO))
 			IO.take_damage(0.1, 1)
 		adjustToxLoss(0.1)
-
-/mob/living/carbon/human/get_language()
-	if(species.force_racial_language)
-		return all_languages[species.language]
-
-	return ..()
 
 // TO-DO: make it so it algo triggers a random mild virus symptom because that's funny? ~Luduk
 /mob/living/carbon/human/proc/trigger_allergy(reagent, volume)

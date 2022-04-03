@@ -20,6 +20,9 @@
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 
+	// I dont known how
+	global.player_list -= src
+
 	if(mind)
 		if(mind.current == src)
 			mind.set_current(null)
@@ -46,6 +49,7 @@
 	prepare_huds()
 	update_all_alt_apperance()
 
+	init_languages()
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -400,6 +404,9 @@
 		log_game("[key_name(usr)] AM failed due to disconnect.")
 		qdel(M)
 		return
+
+	// New life, new quality.
+	client.prefs.selected_quality_name = null
 
 	M.key = key
 //	M.Login()	//wat
@@ -1182,7 +1189,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return
 
 /mob/proc/can_pickup(obj/O)
-	return TRUE
+	return Adjacent(O)
 
 /atom/movable/proc/is_facehuggable()
 	return FALSE
@@ -1238,6 +1245,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 		spintime -= speed
 	flags &= ~IS_SPINNING
 
+/mob/proc/in_interaction_vicinity(atom/target)
+	return Adjacent(target)
+
 /mob/proc/confuse_input(dir)
 	return input_offsets["[dir]"]
 
@@ -1288,10 +1298,26 @@ note dizziness decrements automatically in the mob's Life() proc.
 		input_offsets = null
 		next_randomise_inputs = world.time
 
-/mob/proc/get_language()
+/mob/proc/parse_language(message)
 	if(forced_language)
-		return all_languages[forced_language]
-	return null
+		return list(message, all_languages[forced_language])
+
+	var/datum/language/speaking = parse_language_code(message)
+	if(speaking)
+		var/new_msg = copytext_char(message, 2 + length_char(speaking.key))
+		return list(new_msg, speaking)
+
+	if(default_language)
+		return list(message, all_languages[default_language])
+
+	var/datum/species/S = all_species[get_species()]
+	if(S && S.species_common_language)
+		return list(message, all_languages[S.language])
+
+	if(common_language)
+		return list(message, all_languages[common_language])
+
+	return list(message, null)
 
 /mob/proc/set_lastattacker_info(mob/M)
 	lastattacker_name = M.real_name
