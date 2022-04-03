@@ -238,7 +238,7 @@
 /obj/item/weapon/gun/energy/kinetic_accelerator/price = 2760
 /obj/item/weapon/gun/energy/laser/price = 4380
 /obj/item/weapon/gun/energy/laser/selfcharging/captain/price = 13500
-/obj/item/weapon/gun/energy/laser/retro/price = 5430
+/obj/item/weapon/gun/energy/retro/price = 5430
 /obj/item/weapon/gun/energy/lasercannon/price = 6600
 /obj/item/weapon/gun/energy/sniperrifle/price = 5700
 /obj/item/weapon/gun/energy/taser/stunrevolver/price = 3200
