@@ -108,7 +108,7 @@
 	//After then, it reacts to the surrounding atmosphere based on your thermal protection
 	if(!on_fire) // If you're on fire, ignore local air temperature
 		var/affecting_temp = (loc_temp - bodytemperature) * environment.return_relative_density()
-		adjust_bodytemperature(affecting_temp, use_insulation=TRUE, use_steps=TRUE)
+		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 360)

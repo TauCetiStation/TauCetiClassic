@@ -30,7 +30,7 @@
 	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 
 	if(!on_fire)
-		adjust_bodytemperature(affecting_temp, use_insulation=TRUE, use_steps=TRUE)
+		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 			
 		if(stat != DEAD)
 			adjust_bodytemperature((BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR)

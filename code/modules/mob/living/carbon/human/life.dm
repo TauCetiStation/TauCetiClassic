@@ -546,7 +546,7 @@
 		//breathing in hot/cold air also heats/cools you a bit
 		var/affecting_temp = (breath.temperature - bodytemperature) * breath.return_relative_density()
 		
-		adjust_bodytemperature(affecting_temp / 5, use_insulation=TRUE, use_steps=TRUE)
+		adjust_bodytemperature(affecting_temp / 5, use_insulation = TRUE, use_steps = TRUE)
 
 	breath.update_values()
 
@@ -569,7 +569,7 @@
 			//Use heat transfer as proportional to the gas activity (density)
 			var/affecting_temp = (loc_temp - bodytemperature) * environment.return_relative_density()
 			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
-			adjust_bodytemperature(affecting_temp, use_insulation=TRUE, use_steps=TRUE)
+			adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
 	else if(!species.flags[IS_SYNTHETIC] && !species.flags[RAD_IMMUNE])
 		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
