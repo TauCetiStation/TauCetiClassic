@@ -39,6 +39,7 @@
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
+	reset_alerts()
 	blinded = null
 
 	//Handle temperature/pressure differences between body and environment
@@ -61,6 +62,8 @@
 		if(prob(1))
 			emote(pick("scratch","jump","roll","tail"))
 	updatehealth()
+	if(client)
+		handle_alerts()
 
 /mob/living/carbon/monkey/proc/handle_disabilities()
 
