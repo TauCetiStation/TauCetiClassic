@@ -1053,6 +1053,9 @@
 	if(crawl_getup)
 		return
 	
+	if(is_busy())								//(ForceMove) strangely interacts with crawl switching
+		return
+	
 	if((status_flags & FAKEDEATH) || buckled)
 		return
 //Already crawling and have others debuffs
@@ -1076,6 +1079,8 @@
 		if(do_after(src, 10, target = src))
 			crawl_getup = FALSE
 			if(!crawl_can_use())
+				if(layer == MOB_LAYER)							//bump to some structures will reset your layer
+					layer = 2.0
 				playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
@@ -1095,7 +1100,6 @@
 			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
 			return
 	SetCrawling(!crawling)
-	pass_flags ^= PASSCRAWL
 	update_canmove()
 	to_chat(src, "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>")
 
