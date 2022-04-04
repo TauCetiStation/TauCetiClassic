@@ -79,11 +79,7 @@
 		temp_alert = 1
 
 /mob/living/carbon/proc/handle_suffocating(datum/gas_mixture/breath)
-	if(breath && breath.total_moles > 0)
-		return FALSE
-
 	adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-	return TRUE
 
 /mob/living/carbon/proc/handle_breath(datum/gas_mixture/breath)
 	var/const/safe_pressure_min = 16 // Minimum safe partial pressure of breathable gas in kPa
@@ -210,7 +206,8 @@
 			var/obj/location_as_object = loc
 			location_as_object.handle_internal_lifeform(src, 0)
 
-		handle_suffocating(null)
+		handle_suffocating()
+		inhale_alert = TRUE
 		return null
 
 	//First, check for air from internal atmosphere (using an air tank and mask generally)
@@ -239,7 +236,8 @@
 
 		handle_external_pre_breathing(breath)
 
-	if(handle_suffocating(breath))
+	if(!breath || (breath.total_moves <= 0) || suiciding)
+		handle_suffocating()
 		inhale_alert = TRUE
 		return
 	

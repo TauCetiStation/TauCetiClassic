@@ -384,15 +384,10 @@
 /mob/living/carbon/human/handle_suffocating(datum/gas_mixture/breath)
 	if(suiciding)
 		adjustOxyLoss(HUMAN_MAX_OXYLOSS * 2)//If you are suiciding, you should die a little bit faster
-	else if(breath && breath.total_moles > 0)
-		return FALSE
-
-	if(health > config.health_threshold_crit)
+	else if(health > config.health_threshold_crit)
 		adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 	else
 		adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
-
-	return TRUE
 
 /mob/living/carbon/human/handle_alerts()
 	if(inhale_alert)
