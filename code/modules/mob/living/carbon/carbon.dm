@@ -124,7 +124,6 @@
 	else // We're in safe limits
 		adjustOxyLoss(-5)
 		oxygen_used = oxygen * BREATH_USED_PART
-		inhale_alert = FALSE
 
 	breath.adjust_gas("oxygen", oxygen_used, update = FALSE)
 	breath.adjust_gas_temp("carbon_dioxide", oxygen_used, bodytemperature, update = FALSE) //update afterwards
@@ -149,8 +148,6 @@
 		if(reagents)
 			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		poison_alert = TRUE
-	else
-		poison_alert = FALSE
 
 	// If there's some other shit in the air lets deal with it here.
 	if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
@@ -169,8 +166,6 @@
 
 /mob/living/carbon/proc/breathe()
 	if(is_skip_breathe())
-		inhale_alert = FALSE
-		poison_alert = FALSE
 		return null
 
 	var/datum/gas_mixture/breath
