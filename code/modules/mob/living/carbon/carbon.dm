@@ -225,7 +225,7 @@
 			var/datum/gas_mixture/environment = loc.return_air()
 			breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
 
-			if(is_handle_smoke()))
+			if(is_handle_smoke())
 				for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
 					if(smoke.reagents.total_volume)
 						smoke.reagents.reaction(src, INGEST)
@@ -236,7 +236,7 @@
 
 		handle_external_pre_breathing(breath)
 
-	if(!breath || (breath.total_moves <= 0))
+	if(!breath || (breath.total_moles <= 0))
 		handle_suffocating()
 		inhale_alert = TRUE
 		return
