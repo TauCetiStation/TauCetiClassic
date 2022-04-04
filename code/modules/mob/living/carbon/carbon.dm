@@ -146,7 +146,7 @@
 
 /mob/living/carbon/attack_animal(mob/living/simple_animal/attacker)
 	if((iscultist(attacker)) && (iscultist(src)) && (!do_after(attacker, 20, target = src)))
-			return TRUE
+		return TRUE
 	if(istype(attacker, /mob/living/simple_animal/headcrab))
 		var/mob/living/simple_animal/headcrab/crab = attacker
 		crab.Infect(src)
