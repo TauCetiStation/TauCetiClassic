@@ -1,11 +1,39 @@
+/*
+ * A quality is a special opportunity given to a player for one round.
+ *
+ * The purpose of a quality is to provide novelty, challenge, and replayability.
+ *
+ * Qualities must not impact the gameplay too greatly, due to the nature of their acquisition.
+ * Qualities that DO impact gameplay in a big way should be ignoreable in some way, for example by being job-restricted.
+ * Qualities that provide a challenge must adequately explain to the player what the challenge at hand is.
+ */
 /datum/quality
+	// The name of a quality given to the admin.
+	var/name
+	// The description of the quality given to a player.
 	var/desc
-
+	// The requirement, as described to the player.
 	var/requirement
+	// The maximum amount of players that can even receive this quality.
+	var/max_amount = -1
 
+	// The amount of players that already have this quality.
+	var/amount = 0
+
+	/*
+		List of pools this quality belongs to.
+		Should AT LEAST be something from [QUALITY_POOL_POSITIVEISH, QUALITY_POOL_QUIRKIEISH, QUALITY_POOL_NEGATIVEISH]
+	*/
+	var/list/pools
+
+	// A chance that this quality does not announce itself.
+	// CURRENTLY UNUSED. WHENEVER A QUALITY THAT BECOMES MORE INTERESTING WHEN IT IS HIDDEN APPEARS
+	// SET THIS TO SOMETHING LIKE 20% SO THAT THE HIDDEN QUALITY CAN MASK ITSELF BEHIND ANY OTHER
 	var/hidden_chance = 0
 
+	// List of jobs, or sub-jobs required to be given this quality. Please note that `requirement` variable is not set automatically!
 	var/list/jobs_required
+	// List of xeno species required to be able to get this quality. Please note that `requirement` variable is not set automatically!
 	var/list/species_required
 
 // Whether it is even possible for this player to get this quality (job bans, xeno whitelist)
