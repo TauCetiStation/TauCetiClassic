@@ -21,7 +21,7 @@
 	var/pulse = PULSE_NORM	//current pulse level
 
 	var/inhale_gas = "oxygen"
-	var/exhale_gas = "co2"
+	var/exhale_gas = "carbon_dioxide"
 	var/toxin_gas = "phoron"
 
 	//Alerts

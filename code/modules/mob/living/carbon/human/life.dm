@@ -423,9 +423,9 @@
 	var/list/breath_gas = breath.gas
 	var/breath_total_moles = breath.total_moles
 
-	var/inhale_type = species.breath_type
-	var/exhale_type = species.exhale_type
-	var/poison_type = species.poison_type
+	var/inhale_type = inhale_gas
+	var/exhale_type = exhale_gas
+	var/poison_type = poison_gas
 
 	var/inhaling = breath_gas[inhale_type]
 	var/exhaling = exhale_type ? breath_gas[exhale_type] : 0

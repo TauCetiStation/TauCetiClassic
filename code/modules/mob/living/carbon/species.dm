@@ -226,6 +226,8 @@
 	return
 
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
+	SHOULD_CALL_PARENT(TRUE)
+
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_SPECIES)
 
@@ -233,9 +235,15 @@
 		var/datum/emote/E = global.all_emotes[emote]
 		H.set_emote(E.key, E)
 
+	H.inhale_gas = inhale_type
+	H.exhale_gas = exhale_type
+	H.poison_type = poison_type
+
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(!flags[IS_SOCIAL])
 		H.handle_socialization()
 
@@ -1539,6 +1547,7 @@
 	speed_mod_no_shoes = 5
 
 /datum/species/abomination/on_gain(mob/living/carbon/human/H)
+	..()
 	H.status_flags &= ~(CANSTUN  | CANPARALYSE | CANWEAKEN)
 
 /datum/species/abomination/call_digest_proc(mob/living/M, datum/reagent/R)
