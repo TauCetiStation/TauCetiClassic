@@ -94,7 +94,7 @@
 	var/poison_type = poison_gas
 
 	var/inhaling = breath_gas[inhale_type]
-	var/exhaling = breath_gas[exhale_type] : 0
+	var/exhaling = breath_gas[exhale_type]
 	var/poison = breath_gas[poison_type]
 	var/sleeping_agent = breath_gas["sleeping_agent"]
 
