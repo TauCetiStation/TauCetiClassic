@@ -399,17 +399,22 @@
 	//world << "Breath: [breath.temperature], [src]: [bodytemperature], Adjusting: [temp_adj]"
 	bodytemperature += temp_adj
 
+/mob/living/carbon/human/handle_suffocating(datum/gas_mixture/breath)
+	if(suiciding)
+		adjustOxyLoss(HUMAN_MAX_OXYLOSS * 2)//If you are suiciding, you should die a little bit faster
+	else if(breath && breath.total_moles > 0)
+		return FALSE
+
+	if(health > config.health_threshold_crit)
+		adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+	else
+		adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
+
+	return TRUE
+
 /mob/living/carbon/human/handle_breath(datum/gas_mixture/breath)
-	if(!breath || (breath.total_moles == 0) || suiciding)
-		if(suiciding)
-			adjustOxyLoss(HUMAN_MAX_OXYLOSS * 2)//If you are suiciding, you should die a little bit faster
-		else if(health > config.health_threshold_crit)
-			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-		else
-			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
-
+	if(handle_suffocating(breath))
 		inhale_alert = TRUE
-
 		return
 
 	var/safe_pressure_min = 16 // Minimum safe partial pressure of breathable gas in kPa
