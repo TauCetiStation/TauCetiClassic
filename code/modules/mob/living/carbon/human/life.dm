@@ -540,7 +540,7 @@
 	return temp_change
 */
 
-/mob/living/carbon/human/proc/stabilize_body_temperature()
+/mob/living/carbon/human/stabilize_body_temperature()
 	if (species.flags[IS_SYNTHETIC])
 		return
 

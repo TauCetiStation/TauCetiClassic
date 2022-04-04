@@ -336,6 +336,7 @@
 
 /mob/living/carbon/ian/handle_environment(datum/gas_mixture/environment)
 	if(istype(head, /obj/item/clothing/head/helmet/space))
+		stabilize_body_temperature()
 		return
 
 	..()

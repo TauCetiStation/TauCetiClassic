@@ -13,6 +13,9 @@
 
 	..()
 
+	if(stat != DEAD)
+		stabilize_body_temperature()
+
 	// Increase germ_level regularly
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(80) && !IS_IN_STASIS(src))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
@@ -83,10 +86,6 @@
 	return TRUE
 
 /mob/living/carbon/proc/handle_breath(datum/gas_mixture/breath)
-	if(handle_suffocating(breath))
-		inhale_alert = TRUE
-		return
-
 	var/const/safe_pressure_min = 16 // Minimum safe partial pressure of breathable gas in kPa
 	var/const/safe_exhaled_max = 10 // Yes it's an arbitrary value who cares?
 	var/const/safe_toxins_max = 0.005
@@ -210,47 +209,58 @@
 		if(isobj(loc))
 			var/obj/location_as_object = loc
 			location_as_object.handle_internal_lifeform(src, 0)
-	else
-		//First, check for air from internal atmosphere (using an air tank and mask generally)
-		breath = get_breath_from_internal(BREATH_VOLUME)
 
-		if(breath)
-			if(isobj(loc)) //Still give containing object the chance to interact
-				var/obj/location_as_object = loc
-				location_as_object.handle_internal_lifeform(src, 0)
-		else //No breath from internal atmosphere so get breath from location
-			if(isobj(loc))
-				var/obj/location_as_object = loc
-				breath = location_as_object.handle_internal_lifeform(src, BREATH_MOLES)
-			else if(isturf(loc))
-				var/datum/gas_mixture/environment = loc.return_air()
-				breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
+		handle_suffocating(null)
+		return null
 
-				if(is_handle_smoke()))
-					for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
-						if(smoke.reagents.total_volume)
-							smoke.reagents.reaction(src, INGEST)
-							spawn(5)
-								if(smoke)
-									smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
-							break
-
-			handle_external_pre_breathing(breath)
+	//First, check for air from internal atmosphere (using an air tank and mask generally)
+	breath = get_breath_from_internal(BREATH_VOLUME)
 
 	if(breath)
-		breath.volume = BREATH_VOLUME
+		if(isobj(loc)) //Still give containing object the chance to interact
+			var/obj/location_as_object = loc
+			location_as_object.handle_internal_lifeform(src, 0)
+	else //No breath from internal atmosphere so get breath from location
+		if(isobj(loc))
+			var/obj/location_as_object = loc
+			breath = location_as_object.handle_internal_lifeform(src, BREATH_MOLES)
+		else if(isturf(loc))
+			var/datum/gas_mixture/environment = loc.return_air()
+			breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
+
+			if(is_handle_smoke()))
+				for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
+					if(smoke.reagents.total_volume)
+						smoke.reagents.reaction(src, INGEST)
+						spawn(5)
+							if(smoke)
+								smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
+						break
+
+		handle_external_pre_breathing(breath)
+
+	if(handle_suffocating(breath))
+		inhale_alert = TRUE
+		return
+	
+	breath.volume = BREATH_VOLUME
 
 	handle_breath(breath)
 
-	if(breath)
-		loc.assume_air(breath)
+	loc.assume_air(breath)
 
 	return breath
 
 /mob/living/carbon/calculate_affecting_pressure(pressure)
 	return pressure
 
+/mob/living/carbon/proc/stabilize_body_temperature()
+	bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
+
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment)
+	if(stat != DEAD) // lets put this shit somewhere here
+		stabilize_body_temperature()
+	
 	if(!environment)
 		return
 
@@ -264,9 +274,6 @@
 			bodytemperature += max(affecting_temp / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
 		else if(affecting_temp >= BODYTEMP_SIGNIFICANT_CHANGE)
 			bodytemperature += min(affecting_temp / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
-			
-		if(stat != DEAD)
-			bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
 
 	if(flags & GODMODE)
 		return
