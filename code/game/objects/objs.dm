@@ -19,13 +19,6 @@
 
 	var/being_shocked = 0
 
-	var/name_1		//nominative
-	var/name_2		//genitive
-	var/name_3		//dative
-	var/name_4		//accusative
-	var/name_5		//ablative
-	var/name_6		//prepositional
-
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
 /obj/process()
