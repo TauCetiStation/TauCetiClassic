@@ -180,8 +180,6 @@
 
 	breath.update_values()
 
-	return
-
 /mob/living/carbon/proc/breathe()
 	if(is_skip_breathe())
 		return null
