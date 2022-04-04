@@ -34,6 +34,7 @@ SUBSYSTEM_DEF(qualities)
 	for(var/quality_type in subtypesof(/datum/quality))
 		var/datum/quality/Q = new quality_type
 		if(!Q.name)
+			qdel(Q)
 			continue
 
 		qualities_by_name[Q.name] = Q
