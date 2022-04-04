@@ -88,75 +88,105 @@
 		inhale_alert = TRUE
 		return
 
-	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
-	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
-	var/safe_phoron_max = 0.5
-	var/SA_para_min = 0.5
-	var/SA_sleep_min = 5
+	var/const/safe_pressure_min = 16 // Minimum safe partial pressure of breathable gas in kPa
+	var/const/safe_exhaled_max = 10 // Yes it's an arbitrary value who cares?
+	var/const/safe_toxins_max = 0.005
+	var/const/SA_para_min = 1
+	var/const/SA_sleep_min = 5
+	var/const/SA_giggle_min = 0.15
 
-	var/oxygen = breath.gas["oxygen"]
-	var/co2 = breath.gas["co2"]
-	var/toxin = breath.gas["phoron"]
-	var/sleeping_agent = breath.gas["sleeping_agent"]
+	var/list/breath_gas = breath.gas
+	var/breath_total_moles = breath.total_moles
 
-	var/oxygen_used = 0
+	var/inhale_type = inhale_gas
+	var/exhale_type = exhale_gas
+	var/poison_type = poison_gas
+
+	var/inhaling = breath_gas[inhale_type]
+	var/exhaling = exhale_type ? breath_gas[exhale_type] : 0
+	var/poison = breath_gas[poison_type]
+	var/sleeping_agent = breath_gas["sleeping_agent"]
+
+	var/inhaled_gas_used = 0
 	var/breath_pressure = breath.return_pressure()
 
-	// partial pressures
-	var/oxygen_pp = oxygen ? (oxygen / breath.total_moles) * breath_pressure : 0
-	var/co2_pp = co2 ? (co2 / breath.total_moles) * breath_pressure : 0
-	var/toxin_pp = toxin ? (toxin / breath.total_moles) * breath_pressure : 0
-	var/SA_pp = sleeping_agent ? (sleeping_agent / breath.total_moles) * breath_pressure : 0
+	var/inhale_pp = inhaling ? (inhaling / breath_total_moles) * breath_pressure : 0
+	var/exhaled_pp = exhaling ? (exhaling / breath_total_moles) * breath_pressure : 0
+	var/poison_pp = poison ? (poison / breath_total_moles) * breath_pressure : 0
+	var/SA_pp = sleeping_agent ? (sleeping_agent / breath_total_moles) * breath_pressure : 0
 
-	if(oxygen_pp < safe_oxygen_min) 			// Too little oxygen
+	if(inhale_pp < safe_pressure_min)
 		if(prob(20))
 			emote("gasp")
-		if (oxygen_pp > 0)
-			var/ratio = oxygen_pp / safe_oxygen_min
+		if(inhale_pp > 0)
+			var/ratio = inhale_pp / safe_pressure_min
 
-			// Don't fuck them up too fast
+			// Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS * (1 - ratio))
-			oxygen_used = oxygen * ratio * BREATH_USED_PART
+			inhaled_gas_used = inhaling * ratio * BREATH_USED_PART
 		else
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
-	
+
 		inhale_alert = TRUE
-	else // We're in safe limits
-		adjustOxyLoss(-5)
-		oxygen_used = oxygen * BREATH_USED_PART
-
-	breath.adjust_gas("oxygen", oxygen_used, update = FALSE)
-	breath.adjust_gas_temp("carbon_dioxide", oxygen_used, bodytemperature, update = FALSE) //update afterwards
-
-	if(co2_pp > safe_co2_max)
-		if(!co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
-			co2overloadtime = world.time
-		else if(world.time - co2overloadtime > 120)
-			Paralyse(3)
-			adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
-			if(world.time - co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
-				adjustOxyLoss(8)
-		if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
-			emote("cough")
-
 	else
-		co2overloadtime = 0
+		// We're in safe limits
+		adjustOxyLoss(-5)
+		inhaled_gas_used = inhaling * BREATH_USED_PART
 
-	if(toxin_pp > safe_phoron_max) // Too much phoron
-		var/ratio = (toxin_pp / safe_phoron_max) * 10
-		//adjustToxLoss(clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
+	breath.adjust_gas(inhale_type, -inhaled_gas_used, update = FALSE) //update afterwards
+
+	if(exhale_type)
+		breath.adjust_gas_temp(exhale_type, inhaled_gas_used, bodytemperature, update = FALSE) //update afterwards
+
+		// CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2,
+		// this will hurt you, but only once per 4 ticks, instead of once per tick.
+
+		if(exhaled_pp > safe_exhaled_max)
+
+			// If it's the first breath with too much CO2 in it, lets start a counter,
+			// then have them pass out after 12s or so.
+			if(!co2overloadtime)
+				co2overloadtime = world.time
+			else if(world.time - co2overloadtime > 120)
+				// Lets hurt em a little, let them know we mean business
+				Paralyse(3)
+				adjustOxyLoss(3)
+
+				// They've been in here 30s now, lets start to kill them for their own good!
+				if(world.time - co2overloadtime > 300)
+					adjustOxyLoss(8)
+
+			// Lets give them some chance to know somethings not right though I guess.
+			if(prob(20))
+				emote("cough")
+		else
+			co2overloadtime = null
+
+	// Too much poison in the air.
+	if(poison_pp > safe_toxins_max)
+		var/ratio = (poison / safe_toxins_max) * 10
 		if(reagents)
 			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+		breath.adjust_gas(poison_type, -poison * BREATH_USED_PART, update = FALSE) //update after
 		poison_alert = TRUE
 
 	// If there's some other shit in the air lets deal with it here.
-	if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
-		Paralyse(3) // 3 gives them one second to wake up and run away a bit!
-		if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-			Sleeping(10 SECONDS)
-	else if(SA_pp > 0.01) // There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-		if(prob(20))
-			emote(pick("giggle", "laugh"))
+	if(sleeping_agent)
+		// Enough to make us paralysed for a bit
+		if(SA_pp > SA_para_min)
+			// 3 gives them one second to wake up and run away a bit!
+			Paralyse(3)
+
+			// Enough to make us sleep as well
+			if(SA_pp > SA_sleep_min)
+				Sleeping(10 SECONDS)
+
+		// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+		else if(SA_pp > SA_giggle_min)
+			if(prob(20))
+				emote(pick("giggle", "laugh"))
+
+		breath.adjust_gas("sleeping_agent", -sleeping_agent * BREATH_USED_PART, update = FALSE) //update after
 
 	handle_breath_temperature(breath)
 

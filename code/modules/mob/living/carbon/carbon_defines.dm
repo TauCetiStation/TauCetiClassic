@@ -20,6 +20,10 @@
 
 	var/pulse = PULSE_NORM	//current pulse level
 
+	var/inhale_gas = "oxygen"
+	var/exhale_gas = "co2"
+	var/toxin_gas = "phoron"
+
 	//Alerts
 	var/inhale_alert = FALSE
 	var/poison_alert = FALSE
