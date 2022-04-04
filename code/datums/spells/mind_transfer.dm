@@ -102,6 +102,8 @@ Also, you never added distance checking after target is selected. I've went ahea
 		for(var/V in victim.mind.special_verbs)
 			victim.verbs -= V
 
+	victim.logout_reason = LOGOUT_SWAP
+	caster.logout_reason = LOGOUT_SWAP
 	var/mob/dead/observer/ghost = victim.ghostize(can_reenter_corpse = FALSE)
 	ghost.spell_list = victim.spell_list//If they have spells, transfer them. Now we basically have a backup mob.
 

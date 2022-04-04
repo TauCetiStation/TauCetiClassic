@@ -145,5 +145,5 @@
 		if(11 to 30)
 			H.custom_pain("You want to scratch your itch badly.",0)
 		if(31 to INFINITY)
-			H.me_emote(1,"shivers slightly.")
+			H.me_emote("shivers slightly.")
 			H.custom_pain("This itch makes it really hard to concentrate.",1)
