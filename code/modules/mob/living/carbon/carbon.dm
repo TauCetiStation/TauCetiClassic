@@ -189,8 +189,6 @@
 	if(is_skip_breathe())
 		return null
 
-	var/datum/gas_mixture/breath
-
 	//First, check if we can breathe at all
 	if(suiciding || is_cant_breathe())
 		losebreath = max(2, losebreath + 1)
@@ -208,7 +206,7 @@
 		return null
 
 	//First, check for air from internal atmosphere (using an air tank and mask generally)
-	breath = get_breath_from_internal(BREATH_VOLUME)
+	var/datum/gas_mixture/breath = get_breath_from_internal(BREATH_VOLUME)
 
 	if(breath)
 		if(isobj(loc)) //Still give containing object the chance to interact
