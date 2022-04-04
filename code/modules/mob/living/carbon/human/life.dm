@@ -39,10 +39,6 @@
 	if(stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmobs.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
 			breathe() 				//Only try to take a breath every 4 ticks, unless suffocating
-			if(failed_last_breath)
-				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
-			else
-				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
 		else //Still give containing object the chance to interact
 			if(isobj(loc))
@@ -525,7 +521,10 @@
 	return
 
 /mob/living/carbon/human/handle_alerts()
-	..()
+	if(inhale_alert)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
+	else
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
 	if(temp_alert > 0)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
@@ -536,6 +535,8 @@
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
+
+	..()
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
