@@ -52,7 +52,7 @@
 		clear_alert("pressure")
 
 /mob/living/carbon/proc/is_skip_breathe()
-	return !loc || (flags & GODMODE)	
+	return !loc || (flags & GODMODE)
 
 /mob/living/carbon/proc/is_cant_breathe()
 	return handle_drowning() || health < 0
@@ -195,7 +195,7 @@
 	var/datum/gas_mixture/breath
 
 	//First, check if we can breathe at all
-	if(is_cant_breathe())
+	if(suiciding || is_cant_breathe())
 		losebreath = max(2, losebreath + 1)
 
 	if(losebreath > 0) //Suffocating so do not take a breath
@@ -236,7 +236,7 @@
 
 		handle_external_pre_breathing(breath)
 
-	if(!breath || (breath.total_moves <= 0) || suiciding)
+	if(!breath || (breath.total_moves <= 0))
 		handle_suffocating()
 		inhale_alert = TRUE
 		return
