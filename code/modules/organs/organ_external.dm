@@ -672,6 +672,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/chest
 	name = "chest"
+	name_1 = "грудь"
+	name_2 = "груди"
+	name_3 = "груди"
+	name_4 = "грудь"
+	name_5 = "грудью"
+	name_6 = "груди"
 	artery_name = "aorta"
 
 	temp_coeff = 1.08
@@ -691,6 +697,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/groin
 	name = "groin"
+	name_1 = "паховая область"
+	name_2 = "паховой области"
+	name_3 = "паховой области"
+	name_4 = "паховую область"
+	name_5 = "паховой областью"
+	name_6 = "паховой области"
 	artery_name = "iliac artery"
 
 	temp_coeff = 1.06
@@ -711,6 +723,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/head
 	name = "head"
+	name_1 = "голова"
+	name_2 = "головы"
+	name_3 = "голове"
+	name_4 = "голову"
+	name_5 = "головой"
+	name_6 = "голове"
 	artery_name = "cartoid artery"
 
 	icon = 'icons/mob/human_races/r_human.dmi'
@@ -898,6 +916,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_arm
 	name = "left arm"
+	name_1 = "левая рука"
+	name_2 = "левой руки"
+	name_3 = "левой руке"
+	name_4 = "левую руку"
+	name_5 = "левой рукой"
+	name_6 = "левой руке"
 
 	icon = 'icons/mob/human_races/r_human.dmi'
 	icon_state = "l_arm"
@@ -924,6 +948,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_arm/diona
 	name = "left upper tendril"
+	name_1 = "левый верхний отросток"
+	name_2 = "левого верхнего отростка"
+	name_3 = "левому верхнему отростку"
+	name_4 = "левый верхний отросток"
+	name_5 = "левым верхним отростком"
+	name_6 = "левом верхнем отростке"
 	vital = FALSE
 	controller_type = /datum/bodypart_controller/nymph
 
@@ -932,6 +962,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_arm
 	name = "right arm"
+	name_1 = "правая рука"
+	name_2 = "правой руки"
+	name_3 = "правой руке"
+	name_4 = "правую руку"
+	name_5 = "правой рукой"
+	name_6 = "правой руке"
 	artery_name = "basilic vein"
 
 	icon = 'icons/mob/human_races/r_human.dmi'
@@ -957,6 +993,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_arm/diona
 	name = "right upper tendril"
+	name_1 = "правый верхний отросток"
+	name_2 = "правого верхнего отростка"
+	name_3 = "правому верхнему отростку"
+	name_4 = "правый верхний отросток"
+	name_5 = "правым верхним отростком"
+	name_6 = "правом верхнем отростке"
 	vital = FALSE
 	controller_type = /datum/bodypart_controller/nymph
 
@@ -965,6 +1007,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_leg
 	name = "left leg"
+	name_1 = "левая нога"
+	name_2 = "левой ноги"
+	name_3 = "левой ноге"
+	name_4 = "левую ногу"
+	name_5 = "левой ногой"
+	name_6 = "левой ноге"
 	artery_name = "femoral artery"
 
 	icon = 'icons/mob/human_races/r_human.dmi'
@@ -985,6 +1033,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_leg/diona
 	name = "left lower tendril"
+	name_1 = "левый нижний отросток"
+	name_2 = "левого нижнего отростка"
+	name_3 = "левому нижнему отростку"
+	name_4 = "левый нижний отросток"
+	name_5 = "левым нижним отростком"
+	name_6 = "левом нижнем отростке"
 	vital = FALSE
 	controller_type = /datum/bodypart_controller/nymph
 
@@ -993,6 +1047,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_leg
 	name = "right leg"
+	name_1 = "правая нога"
+	name_2 = "правой ноги"
+	name_3 = "правой ноге"
+	name_4 = "правую ногу"
+	name_5 = "правой ногой"
+	name_6 = "правой ноге"
 	artery_name = "femoral artery"
 
 	icon = 'icons/mob/human_races/r_human.dmi'
@@ -1013,6 +1073,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_leg/diona
 	name = "right lower tendril"
+	name_1 = "правый нижний отросток"
+	name_2 = "правого нижнего отростка"
+	name_3 = "правому нижнему отростку"
+	name_4 = "правый нижний отросток"
+	name_5 = "правым нижним отростком"
+	name_6 = "правом нижнем отростке"
 	vital = FALSE
 	controller_type = /datum/bodypart_controller/nymph
 

@@ -32,9 +32,9 @@
 /datum/surgery_step/add_tissue/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/stack/medical/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(BP.stage == 0)
-		user.visible_message("<span class='notice'>[user] начинает укладывать регенеративную мембрану к поврежденным тканям [BP.name] [target].</span>", \
-		"<span class='notice'>Вы начинаете укладывать регенеративную мембрану к поврежденным тканям [BP.name] [target].</span>")
-	target.custom_pain("[BP.name] ужасно болит!",1)
+		user.visible_message("<span class='notice'>[user] начинает укладывать регенеративную мембрану к поврежденным тканям [BP.name_2] [target].</span>", \
+		"<span class='notice'>Вы начинаете укладывать регенеративную мембрану к поврежденным тканям [BP.name_2] [target].</span>")
+	target.custom_pain("У вас внутри [BP.name_2] что-то движется и вызывает адскую боль!",1)
 	..()
 
 /datum/surgery_step/add_tissue/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/stack/medical/tool)
@@ -43,16 +43,16 @@
 		BP.trauma_kit = TRUE
 	else if(istype(tool, /obj/item/stack/medical/advanced/ointment))
 		BP.burn_kit = TRUE
-	user.visible_message("<span class='notice'>[user] завершает укладывать регенеративную мембрану к поврежденным тканям [BP.name] [target].</span>", \
-		"<span class='notice'>Вы завершаете укладывать регенеративную мембрану к поврежденным тканям [BP.name] [target].</span>")
-	tool.amount -= 1
+	user.visible_message("<span class='notice'>[user] завершает укладывать регенеративную мембрану к поврежденным тканям [BP.name_2] [target].</span>", \
+		"<span class='notice'>Вы завершаете укладывать регенеративную мембрану к поврежденным тканям [BP.name_2] [target].</span>")
+	tool.use(1)
 	tool.update_icon()
 	BP.stage = 3
 
 /datum/surgery_step/add_tissue/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/stack/medical/tool)
 	user.visible_message("<span class='warning'>Рука [user] дрогнула, безвозвратно испортив регенеративную мембрану!</span>", \
 	"<span class='warning'>Ваша рука дрогнула, безвозвратно испортив регенеративную мембрану!</span>")
-	tool.amount -= 1
+	tool.use(1)
 	tool.update_icon()
 
 /datum/surgery_step/set_tissue
@@ -76,15 +76,15 @@
 /datum/surgery_step/set_tissue/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(BP.stage == 3)
-		user.visible_message("<span class='notice'>[user] начинает соединять регенеративную мембрану с поврежденными тканями [BP.name] [target].</span>", \
-			"<span class='notice'>Вы начинаете соединять регенеративную мембрану с поврежденными тканями [BP.name] [target].</span>")
-	target.custom_pain("[BP.name] болит так сильно, что вы начинаете терять сознание",1)
+		user.visible_message("<span class='notice'>[user] начинает соединять регенеративную мембрану с поврежденными тканями [BP.name_2] [target].</span>", \
+			"<span class='notice'>Вы начинаете соединять регенеративную мембрану с поврежденными тканями [BP.name_2] [target].</span>")
+	target.custom_pain("Боль внутри [BP.name_2] так сильна, что вы начинаете терять сознание",1)
 	..()
 
 /datum/surgery_step/set_tissue/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='notice'>[user] завершает соединять регенеративную мембрану с поврежденными тканями [BP.name] [target].</span>", \
-		"<span class='notice'>Вы завершаете соединять регенеративную мембрану с поврежденными тканями [BP.name] [target].</span>")
+	user.visible_message("<span class='notice'>[user] завершает соединять регенеративную мембрану с поврежденными тканями [BP.name_2] [target].</span>", \
+		"<span class='notice'>Вы завершаете соединять регенеративную мембрану с поврежденными тканями [BP.name_2] [target].</span>")
 	if(BP.trauma_kit)
 		BP.trauma_kit = FALSE
 		BP.heal_damage(20)
