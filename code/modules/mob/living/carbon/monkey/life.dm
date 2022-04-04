@@ -188,19 +188,17 @@
 	return ..() || reagents?.has_reagent("lexorin") || istype(loc, /obj/item/weapon/holder)
 
 /mob/living/carbon/monkey/get_breath_from_internal(volume_needed)
-	if(internal)
-		if (!contents.Find(internal))
-			internal = null
-		if (!wear_mask || !(wear_mask.flags|MASKINTERNALS) )
-			internal = null
-		if(internal)
-			if (internals)
-				internals.icon_state = "internal1"
-			return internal.remove_air_volume(volume_needed)
-		else
-			if (internals)
-				internals.icon_state = "internal0"
-	return null
+	if(!internal)
+		return null
+	if(!(contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS)))
+		internal = null
+		if(internals)
+			internals.icon_state = "internal0"
+		return null
+		
+	if(internals)
+		internals.icon_state = "internal1"
+	return internal.remove_air_volume(volume_needed)
 
 /mob/living/carbon/monkey/proc/handle_chemicals_in_body()
 
