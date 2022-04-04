@@ -22,7 +22,7 @@
 
 	var/inhale_gas = "oxygen"
 	var/exhale_gas = "carbon_dioxide"
-	var/toxin_gas = "phoron"
+	var/poison_gas = "phoron"
 
 	//Alerts
 	var/inhale_alert = FALSE

@@ -235,9 +235,9 @@
 		var/datum/emote/E = global.all_emotes[emote]
 		H.set_emote(E.key, E)
 
-	H.inhale_gas = inhale_type
+	H.inhale_gas = breath_type
 	H.exhale_gas = exhale_type
-	H.poison_type = poison_type
+	H.poison_gas = poison_type
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 

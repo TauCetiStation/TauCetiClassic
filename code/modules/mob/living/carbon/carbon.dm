@@ -90,7 +90,7 @@
 	return TRUE
 
 /mob/living/carbon/proc/handle_breath(datum/gas_mixture/breath)
-	if(handle_suffocating(breathe))
+	if(handle_suffocating(breath))
 		inhale_alert = TRUE
 		return
 
