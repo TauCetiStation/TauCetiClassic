@@ -57,9 +57,6 @@
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	return null
 
-/mob/living/carbon/proc/is_handle_smoke()
-	return !(wear_mask && (wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT))
-
 /mob/living/carbon/proc/handle_external_pre_breathing(datum/gas_mixture/breath)
 	if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
 		var/obj/item/clothing/mask/gas/G = wear_mask
@@ -220,7 +217,7 @@
 			var/datum/gas_mixture/environment = loc.return_air()
 			breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
 
-			if(is_handle_smoke())
+			if(!(wear_mask && (wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)))
 				for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
 					if(smoke.reagents.total_volume)
 						smoke.reagents.reaction(src, INGEST)
