@@ -57,15 +57,8 @@
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	return null
 
-/mob/living/carbon/proc/handle_turf_pre_breathe()
-	if(!(wear_mask && (wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)))
-		for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
-			if(smoke.reagents.total_volume)
-				smoke.reagents.reaction(src, INGEST)
-				spawn(5)
-					if(smoke)
-						smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
-				break
+/mob/living/carbon/proc/is_handle_smoke()
+	return !(wear_mask && (wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT))
 
 /mob/living/carbon/proc/handle_external_pre_breathing(datum/gas_mixture/breath)
 	if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
@@ -233,7 +226,14 @@
 				var/datum/gas_mixture/environment = loc.return_air()
 				breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
 
-				handle_turf_pre_breathe()
+				if(is_handle_smoke()))
+					for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
+						if(smoke.reagents.total_volume)
+							smoke.reagents.reaction(src, INGEST)
+							spawn(5)
+								if(smoke)
+									smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
+							break
 
 			handle_external_pre_breathing(breath)
 

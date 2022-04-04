@@ -308,20 +308,6 @@
 /mob/living/carbon/human/is_cant_breathe()
 	return (handle_drowning() || health < config.health_threshold_crit) && !reagents.has_reagent("inaprovaline") && !HAS_TRAIT(src, TRAIT_AV)
 
-/mob/living/carbon/human/handle_turf_pre_breathe()
-	if( \
-		!(wear_mask && (wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)) && \
-		!(glasses && (glasses.flags & BLOCK_GAS_SMOKE_EFFECT)) && \
-		!(head && (head.flags & BLOCK_GAS_SMOKE_EFFECT)) \
-		)
-		for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
-			if(smoke.reagents.total_volume)
-				smoke.reagents.reaction(src, INGEST)
-				spawn(5)
-					if(smoke)
-						smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
-				break
-
 /mob/living/carbon/human/handle_external_pre_breathing(datum/gas_mixture/breath)
 	..()
 
