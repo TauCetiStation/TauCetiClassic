@@ -200,8 +200,7 @@
 		/obj/item/robot_parts/l_arm,
 		/obj/item/robot_parts/r_arm,
 		/obj/item/robot_parts/l_leg,
-		/obj/item/robot_parts/r_leg,
-		/obj/item/stack/sheet/mineral/phoron,
+		/obj/item/robot_parts/r_leg
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)
