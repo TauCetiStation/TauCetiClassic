@@ -66,6 +66,8 @@
 
 	var/last_target			//last target fired at, prevents turrets from erratically firing at all valid targets in range
 
+	var/datum/browser/popup
+
 /obj/machinery/porta_turret/station_default
 	check_n_synth = TRUE
 
@@ -262,7 +264,7 @@ var/global/list/turret_icons
 		"<A href='?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
 		"<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>")
 
-	var/datum/browser/popup = new(user, "window=autosec", "Automatic Portable Turret Installation", 400, 320)
+	popup = new(user, "window=autosec", "Automatic Portable Turret Installation", 400, 320)
 	popup.set_content(dat)
 	popup.open()
 
@@ -373,6 +375,8 @@ var/global/list/turret_icons
 				to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 				popDown()
 				update_icon()
+				popup.close()
+
 				STOP_PROCESSING(SSmachines, src)
 
 	else if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
