@@ -91,7 +91,7 @@ var/global/list/all_emotes
 		return FALSE
 	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 		return FALSE
-	if(check_cooldown(user.next_audio_emote_produce, intentional))
+	if(!check_cooldown(user.next_audio_emote_produce, intentional))
 		return FALSE
 	return TRUE
 
