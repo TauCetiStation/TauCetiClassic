@@ -81,3 +81,46 @@
 
 		else if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD)) // Show the emote to regular ghosts with deadchat toggled on
 			to_chat(M, message)
+
+/mob/proc/can_me_emote(message_type, intentional)
+	if(stat)
+		if(intentional)
+			to_chat(src, "You are unable to emote.")
+		return FALSE
+
+	if(!me_verb_allowed && intentional)
+		to_chat(src, "You are unable to emote.")
+		return FALSE
+
+	var/can_audio_emote = !istype(wear_mask, /obj/item/clothing/mask/muzzle) && !HAS_TRAIT(src, TRAIT_MUTE)
+	if(message_type == SHOWMSG_AUDIO && !can_audio_emote)
+		if(intentional)
+			to_chat(src, "You are unable to make such noises.")
+		return FALSE
+
+	return TRUE
+
+// A simpler emote. Just the message, and it's type. If you want anything more complex - make a datumized emote.
+/mob/proc/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
+	if(!can_me_emote(message_type, intentional))
+		return
+
+	log_emote("[key_name(src)] : [message]")
+
+	var/msg = "<b>[src]</b> <i>[message]</i>"
+	if(message_type & SHOWMSG_VISUAL)
+		visible_message(msg, ignored_mobs = observer_list)
+	else
+		audible_message(msg, ignored_mobs = observer_list)
+
+	for(var/mob/M as anything in observer_list)
+		if(!M.client)
+			continue
+
+		switch(M.client.prefs.chat_ghostsight)
+			if(CHAT_GHOSTSIGHT_ALL)
+				// ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
+				to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")
+			if(CHAT_GHOSTSIGHT_ALLMANUAL)
+				if(intentional)
+					to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")

@@ -739,16 +739,6 @@
 			qdel(src)
 	return
 
-/obj/machinery/hydroponics/attack_tk(mob/user)
-	if(harvest)
-		myseed.harvest(src)
-	else if(dead)
-		planted = FALSE
-		dead = FALSE
-		to_chat(user, text("You remove the dead plant from the [src]."))
-		qdel(myseed)
-		update_icon()
-
 /obj/machinery/hydroponics/attack_hand(mob/user)
 	. = ..()
 	if(.)

@@ -83,8 +83,21 @@
 	light_range = 2
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 40
-	damage_type = BURN
+
 
 /obj/item/projectile/energy/laser/atom_init()
+	. = ..()
+	proj_act_sound = SOUNDIN_LASERACT
+
+/obj/item/projectile/energy/phaser
+	name = "phaser bolt"
+	icon_state = "phaser"
+	light_color = LIGHT_COLOR_PLASMA
+	light_power = 2
+	light_range = 2
+	damage = 25
+	light_color = COLOR_PAKISTAN_GREEN
+
+/obj/item/projectile/energy/phaser/atom_init()
 	. = ..()
 	proj_act_sound = SOUNDIN_LASERACT
