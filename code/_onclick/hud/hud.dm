@@ -177,7 +177,6 @@ var/global/list/available_ui_styles = list(
 		ai_hud()
 	else if(isrobot(mymob))
 		robot_hud()
-		reorganize_alerts()
 	else if(isobserver(mymob))
 		show_hud(HUD_STYLE_STANDARD)
 	else if(isovermind(mymob))
@@ -190,6 +189,7 @@ var/global/list/available_ui_styles = list(
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)
 
+	reorganize_alerts()
 	create_parallax()
 
 	// See the comment from "/mob/living/carbon/human/create_mob_hud()"
