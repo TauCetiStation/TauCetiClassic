@@ -34,7 +34,9 @@
 	user.SetNextMove(CLICK_CD_MELEE) // animals only punching things.
 
 /mob/living/simple_animal/UnarmedAttack(atom/A)
-	..()
+	. = ..()
+	if((iscultist(A)) && (iscultist(src)) && (!do_after(src, 20, target = A)))
+		return
 	A.attack_animal(src)
 
 /*
