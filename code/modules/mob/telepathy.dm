@@ -27,18 +27,8 @@
 	return FALSE
 
 /mob/proc/telepathy_eavesdrop(atom/source, message, verb, datum/language/language = null)
-	to_chat(world, "EAVESDROPPING")
-	to_chat(world, "[src] EAVESDROPPED [source] [message] [verb] HEARERS [remote_hearers.len]")
 	for(var/mob/M as anything in remote_hearers)
-		to_chat(world, "[M] is hearing")
 		M.telepathy_hear_eavesdrop(source, src, message, verb, language)
-
-/mob/proc/telepathy_eavesdrop_sound(atom/source, sound)
-	for(var/mob/M as anything in remote_hearers)
-		M.telepathy_hear_eavesdrop_sound(source, sound)
-
-/mob/proc/telepathy_hear_eavesdrop_sound(atom/source, sound)
-	src << sound
 
 /mob/proc/telepathy_hear_eavesdrop(atom/source, atom/hearer, message, verb, datum/language/language)
 	var/dist = get_dist(src, hearer)
@@ -59,9 +49,13 @@
 		message = stars(message, star_chance)
 
 	var/mob/M = hearer
-	if(ismob(hearer) && M.next_telepathy_clue < world.time && prob(CLEAR_TELEPATHY_RANGE - dist))
-		to_chat(M, "<span class='warning'>You feel as if somebody is eavesdropping on you.</span>")
-		M.next_telepathy_clue = world.time + 30 SECONDS
+	if(ismob(hearer))
+		if(M.remote_hearers.len > CLEAR_TELEPATHY_LISTENERS)
+			star_chance += M.remote_hearers.len * 10
+
+		if(M.next_telepathy_clue < world.time && prob(CLEAR_TELEPATHY_RANGE - dist))
+			to_chat(M, "<span class='warning'>You feel as if somebody is eavesdropping on you.</span>")
+			M.next_telepathy_clue = world.time + 30 SECONDS
 
 	to_chat(src, "<span class='notice'><span class='bold'>[hearer]</span> [verb]:</span> [message]")
 
@@ -78,7 +72,10 @@
 /mob/proc/toggle_telepathy_hear(mob/M)
 	set name = "Toggle Telepathic Eavesdropping"
 	set desc = "Hear anything that mob hears."
-	set category = "Tycheon"
+	set category = "Telepathy"
+
+	if(incapacitated())
+		return
 
 	if(!M.telepathy_targetable())
 		to_chat(src, "<span class='notice'>They don't have a mind to eavesdrop on.</span>")
@@ -94,7 +91,7 @@
 /mob/proc/telepathy_say()
 	set name = "Project Mind"
 	set desc = "Make them hear what you desire."
-	set category = "Tycheon"
+	set category = "Telepathy"
 
 	if(typing)
 		return
