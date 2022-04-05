@@ -323,7 +323,7 @@ var/global/atom/movable/screen/robot_inventory
 			if(!(r.module.jetpack in r.module.modules))
 				r.module.add_item(r.module.jetpack)
 		else
-			if(r.module.jetpack in r.module.modules)
+			if(r.module.emag in r.module.modules)
 				r.module.remove_item(r.module.jetpack)
 
 		for(var/atom/movable/A in r.module.modules)
