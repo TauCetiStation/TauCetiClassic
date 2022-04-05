@@ -319,6 +319,28 @@ var/global/atom/movable/screen/robot_inventory
 				if(x == 4)
 					x = -4
 					y++
+		if(r.jetpacked)
+			if(!(r.module.jetpack in r.module.modules))
+				r.module.add_item(r.module.jetpack)
+		else
+			if(r.module.jetpack in r.module.modules)
+				r.module.remove_item(r.module.jetpack)
+
+		for(var/atom/movable/A in r.module.modules)
+			if( (A != r.module_state_1) && (A != r.module_state_2) && (A != r.module_state_3) )
+				//Module is not currently active
+				r.client.screen += A
+				if(x < 0)
+					A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
+				else
+					A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
+				A.plane = ABOVE_HUD_PLANE
+
+				x++
+				if(x == 4)
+					x = -4
+					y++
+
 
 	else
 		//Modules display is hidden
