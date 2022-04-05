@@ -437,3 +437,22 @@
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
 	)
+
+/datum/emote/help
+	key = "help"
+
+	message_1p = "You asked for help."
+	message_3p = "needs help."
+	emote_range = 3
+
+	message_type = SHOWMSG_AUDIO
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+		EMOTE_STATE(is_one_hand_usable),
+		EMOTE_STATE(is_not_species, ZOMBIE),
+	)
+
+/datum/emote/help/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+	. = ..()
+	user.request_help()

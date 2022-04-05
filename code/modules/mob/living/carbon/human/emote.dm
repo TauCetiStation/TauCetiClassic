@@ -1,6 +1,6 @@
 /mob/living/carbon/human
 	var/list/default_emotes = list(
-		/datum/emote/help,
+		/datum/emote/list_emotes,
 		/datum/emote/laugh,
 		/datum/emote/giggle,
 		/datum/emote/grunt,
@@ -40,6 +40,7 @@
 		/datum/emote/salute,
 		/datum/emote/twitch,
 		/datum/emote/deathgasp,
+		/datum/emote/help
 	)
 	var/list/current_emotes = list(
 	)

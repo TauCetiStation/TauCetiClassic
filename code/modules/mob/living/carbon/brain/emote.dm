@@ -61,9 +61,13 @@
 			message = "<b>[src]</b> prays."
 			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 		if ("help")
+			to_chat(src, "You boop.")
+			message = "<b>"
+			m_type = SHOWMSG_AUDIO			
+		if ("list")
 			to_chat(src, "alarm,alert,notice,flash,blink,whistle,beep,boop")
 		else
-			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
+			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *list for a list.</span>")
 
 	if (message)
 		log_emote("[key_name(src)] : [message]")

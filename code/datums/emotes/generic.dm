@@ -1,7 +1,7 @@
-/datum/emote/help
-	key = "help"
+/datum/emote/list_emotes
+	key = "list"
 
-/datum/emote/help/get_emote_message_1p(mob/living/carbon/human/user)
+/datum/emote/list_emotes/get_emote_message_1p(mob/living/carbon/human/user)
 	var/msg = "Available emotes, you can do them by saying \"*emote\"(\"*laugh\"):<br>"
 	var/first = TRUE
 

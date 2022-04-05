@@ -373,6 +373,7 @@
 				if(BP_R_ARM, BP_L_ARM)
 					M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
 									"<span class='notice'>You shake [src]'s hand.</span>", )
+					M.help_other(src)
 				if(BP_HEAD)
 					M.visible_message("<span class='notice'>[M] pats [src] on the head.</span>", \
 									"<span class='notice'>You pat [src] on the head.</span>", )
@@ -385,6 +386,7 @@
 				else
 					M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
 									"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
+					M.help_other(src)
 
 			AdjustParalysis(-3)
 			AdjustStunned(-3)

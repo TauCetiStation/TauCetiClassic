@@ -1,7 +1,8 @@
 /proc/is_skill_competent(mob/user, required_skills)
 	for(var/datum/skill/required_skill as anything in required_skills)
 		var/datum/skill/skill = all_skills[required_skill]
-		if(user.mind.skills.get_value(skill.name) < skill.value)
+		var/user_skill_value = user.get_skill_value_with_helpers(skill)
+		if(user_skill_value < skill.value)
 			return FALSE
 	return TRUE
 
@@ -9,10 +10,11 @@
 	var/result = value
 	for(var/datum/skill/required_skill as anything in required_skills)
 		var/datum/skill/skill = all_skills[required_skill]
-		if(user.mind.skills.get_value(skill.name) < skill.value)
-			result += value * penalty * (skill.value - user.mind.skills.get_value(skill.name))
-		if(user.mind.skills.get_value(skill.name) > skill.value)
-			result -= value * bonus * (user.mind.skills.get_value(skill.name) - skill.value)
+		var/user_skill_value = user.get_skill_value_with_helpers(skill)
+		if(user_skill_value < skill.value)
+			result += value * penalty * (skill.value - user_skill_value)
+		if(user_skill_value > skill.value)
+			result -= value * bonus * (user_skill_value - skill.value)
 	return result
 
 /proc/do_skilled(mob/user, atom/target,  delay, required_skills, penalty = 0.5, bonus = 0.4)
