@@ -33,6 +33,10 @@ SUBSYSTEM_DEF(qualities)
 /datum/controller/subsystem/qualities/proc/populate_lists()
 	for(var/quality_type in subtypesof(/datum/quality))
 		var/datum/quality/Q = new quality_type
+		if(!Q.name)
+			qdel(Q)
+			continue
+
 		qualities_by_name[Q.name] = Q
 		qualities_by_type[Q.type] = Q
 
