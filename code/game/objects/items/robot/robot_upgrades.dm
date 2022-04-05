@@ -134,15 +134,10 @@
 
 /obj/item/borg/upgrade/jetpack/action(mob/living/silicon/robot/R)
 	if(..()) return 0
-	for(var/obj/item/weapon/tank/jetpack/J in R.module.modules)
-		if(J && istype(J, /obj/item/weapon/tank/jetpack))
-			to_chat(usr, "There's no room for another jetpack!")
-			return 0
-	var/obj/item/weapon/tank/jetpack/carbondioxide/jet = new(R.module)
-	R.module.add_item(jet)
-	/*for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules) //we really need this?
-		R.internals = jet*/
-	//R.icon_state="Miner+j"
+	if(R.jetpacked == 1)
+		return 0
+
+	R.jetpacked = 1
 	return 1
 
 
