@@ -48,6 +48,7 @@
 	var/datum/wires/chem_dispenser/wires = null
 
 /obj/machinery/chem_dispenser/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/chem_dispenser_5000(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -405,6 +406,7 @@
 	msg_hack_disable = "You change the mode from 'Pizza King' to 'McNano'."
 
 /obj/machinery/chem_dispenser/soda/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/soda_dispenser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -483,6 +485,7 @@
 	msg_hack_disable = "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes."
 
 /obj/machinery/chem_dispenser/beer/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/booze_dispenser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
