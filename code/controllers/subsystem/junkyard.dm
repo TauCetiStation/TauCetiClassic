@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(junkyard)
 	if(!junkyard_initialised)
 		SSweather.eligible_zlevels.Add(zlevel) //junkyard
 
-		create_spawner(/datum/spawner/space_bum, "space_bum")
+		create_spawner(/datum/spawner/space_bum)
 
 	junkyard_initialised = TRUE
 

@@ -659,15 +659,7 @@
 		return
 	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
-	H.gender = pick(MALE, FEMALE)
-	if(H.gender == MALE)
-		H.name = pick(first_names_male)
-	else
-		H.name = pick(first_names_female)
-	H.name += " [pick(last_names)]"
-	H.real_name = H.name
-	var/datum/preferences/A = new()	//Randomize appearance for the human
-	A.randomize_appearance_for(H)
+	randomize_human(H)
 
 /datum/reagent/slimetoxin
 	name = "Mutation Toxin"
