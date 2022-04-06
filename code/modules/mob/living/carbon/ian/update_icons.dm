@@ -273,7 +273,7 @@
 
 	. = ..(TRUE)
 
-	if(buckled)
+	if(buckled || ian_sit)
 		pose_last = POSE_SIT
 	else if(stat || weakened || stunned)
 		pose_last = POSE_STAT

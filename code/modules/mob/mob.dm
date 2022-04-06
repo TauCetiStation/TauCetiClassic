@@ -747,7 +747,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 
 	lying = (ko || crawling) && !captured && !buckled && !pinned.len
-	canmove = !(ko || stunned || captured || pinned.len)
+	canmove = !(ko || stunned || captured || pinned.len || ian_sit)
 	anchored = captured || pinned.len
 
 	if(buckled)

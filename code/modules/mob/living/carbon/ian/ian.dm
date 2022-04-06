@@ -62,7 +62,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	dna.ResetUI()
 	dna.unique_enzymes = md5(name)
 	dna.SetUIState(DNA_UI_GENDER)
-
+	verbs += /mob/living/proc/ian_sit
 	. = ..()
 
 /mob/living/carbon/ian/UnarmedAttack(atom/A)

@@ -1520,3 +1520,11 @@
 
 /mob/living/proc/get_pumped(bodypart)
 	return 0
+
+/mob/living/proc/ian_sit()
+	set name = "Ian Sit"
+	set category = "IC"
+	ian_sit = !ian_sit
+	to_chat(src, "<span class='notice'>You are now [ian_sit ? "sitting" : "getting up"].</span>")
+	update_canmove()
+
