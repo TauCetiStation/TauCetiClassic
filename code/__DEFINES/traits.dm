@@ -150,7 +150,7 @@
 #define TRAIT_VACCINATED          "vaccinated"
 #define TRAIT_DWARF               "dwarf"
 #define TRAIT_NO_SOUL             "no_soul"
-#define TRAIT_GHOST_BUSTER        "ghost_buster"
+#define TRAIT_SEE_GHOSTS          "see_ghosts"
 #define TRAIT_SYRINGE_FEAR        "syringe_fear"
 #define TRAIT_WET_HANDS           "wet_hands"
 #define TRAIT_GREASY_FINGERS      "greasy_fingers"

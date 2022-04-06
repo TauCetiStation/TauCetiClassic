@@ -30,10 +30,11 @@
 	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 
 	if(!on_fire)
-		if(affecting_temp > BODYTEMP_SIGNIFICANT_CHANGE)
-			bodytemperature += affecting_temp / BODYTEMP_HEAT_DIVISOR
-		else if (affecting_temp < -BODYTEMP_SIGNIFICANT_CHANGE)
-			bodytemperature += affecting_temp / BODYTEMP_COLD_DIVISOR
+		if(affecting_temp <= -BODYTEMP_SIGNIFICANT_CHANGE)
+			bodytemperature += max(affecting_temp / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
+		else if(affecting_temp >= BODYTEMP_SIGNIFICANT_CHANGE)
+			bodytemperature += min(affecting_temp / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
+			
 		if(stat != DEAD)
 			bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
 
@@ -994,16 +995,12 @@
 
 	sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)
-	see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 
-	if(dna)
-		switch(dna.mutantrace)
-			if("slime")
-				see_in_dark = 3
-				see_invisible = SEE_INVISIBLE_LEVEL_ONE
-			if("shadow")
-				see_in_dark = 8
-				see_invisible = SEE_INVISIBLE_LEVEL_ONE
+	var/datum/species/S = all_species[get_species()]
+	if(S)
+		see_in_dark = S.darksight
+
+	see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 
 	if(changeling_aug)
 		sight |= SEE_MOBS
