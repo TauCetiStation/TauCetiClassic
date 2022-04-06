@@ -349,7 +349,7 @@
 	// 	. += "<span class='notice'>Any painting placed here will be archived at the end of the shift.</span>"
 	if(current_canvas)
 		current_canvas.ui_interact(user)
-		. += "<span class='notice'>Use wirecutters to remove the painting.</span>"
+		to_chat(user, "<span class='notice'>Use wirecutters to remove the painting.</span>")
 
 /obj/structure/sign/painting/proc/remove_canvas(mob/living/user)
 	if(!current_canvas)
