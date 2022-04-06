@@ -79,7 +79,7 @@
 	desc = "A 12 gauge slug."
 	icon_state = "blshell"
 	caliber = "shotgun"
-	projectile_type = /obj/item/projectile/bullet/slag
+	projectile_type = /obj/item/projectile/bullet/slug
 	m_amt = 3750
 
 /obj/item/ammo_casing/shotgun/buckshot

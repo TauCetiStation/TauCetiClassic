@@ -32,8 +32,8 @@
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
-/obj/item/projectile/bullet/slag
-	name = "shotgun slag"
+/obj/item/projectile/bullet/slug
+	name = "shotgun slug"
 	damage = 40
 	stoping_power = 3
 
