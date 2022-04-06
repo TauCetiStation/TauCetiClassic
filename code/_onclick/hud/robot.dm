@@ -60,7 +60,6 @@ var/global/atom/movable/screen/robot_inventory
 			other += ousing
 
 //Namepick
-
 		var/mob/living/silicon/robot/R = mymob
 		if(!R.custom_name)
 			using = new /atom/movable/screen()
