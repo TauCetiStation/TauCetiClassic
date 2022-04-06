@@ -246,6 +246,7 @@
 /obj/item/projectile/bullet/incendiary/buckshot
 	name = "incendiary shell"
 	damage = 7
+	dispersion = 2.0
 
 /obj/item/projectile/bullet/incendiary/buckshot/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(iscarbon(target))
