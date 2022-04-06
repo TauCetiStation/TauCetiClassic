@@ -23,21 +23,12 @@
 		var/obj/item/canvas/canvas = I
 		user.drop_from_inventory(canvas)
 		painting = canvas
+		painting.easel = src
 		canvas.forceMove(get_turf(src))
 		canvas.layer = layer + 0.1
 		user.visible_message("<span class='notice'>[user] puts \the [canvas] on \the [src].</span>", "<span class='notice'>You place \the [canvas] on \the [src].</span>")
 	else
 		return ..()
-
-
-//Stick to the easel like glue
-/obj/structure/easel/Move()
-	var/turf/T = get_turf(src)
-	. = ..()
-	if(painting && painting.loc == T && painting.Adjacent(get_turf(src), recurse = 0))
-		painting.forceMove(get_turf(src))
-	else
-		painting = null
 
 /obj/item/canvas
 	name = "canvas"
@@ -55,12 +46,27 @@
 	var/icon_generated = FALSE
 	var/icon/generated_icon
 
+	var/obj/structure/easel/easel
+
 	// Painting overlay offset when framed
 	var/framed_offset_x = 11
 	var/framed_offset_y = 10
 
 	pixel_x = 10
 	pixel_y = 9
+
+
+//Stick to the easel like glue
+/obj/structure/easel/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(painting)
+		painting.forceMove(loc)
+
+/obj/item/canvas/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(easel && !Adjacent(get_turf(easel), 0)) // should not be in inventory
+		easel = null
+		easel.painting = null
 
 /obj/item/canvas/atom_init()
 	. = ..()
