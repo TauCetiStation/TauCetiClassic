@@ -49,25 +49,26 @@
 	if(up && down)
 		switch(tgui_alert(usr, "Go up or down the ladder?", "Ladder", list("Up", "Down", "Cancel")) )
 			if("Up")
-				do_ladder_move(user, up)
+				climb_ladder(user, up)
 			if("Down")
-				do_ladder_move(user, down)
+				climb_ladder(user, down)
 			if("Cancel")
 				return
 
 	else if(up)
-		do_ladder_move(user, up)
+		climb_ladder(user, up)
 
 	else if(down)
-		do_ladder_move(user, down)
+		climb_ladder(user, down)
 
 	add_fingerprint(user)
 
-/obj/structure/ladder/proc/do_ladder_move(mob/user, obj/structure/ladder/destination)
+/obj/structure/ladder/proc/climb_ladder(mob/user, obj/structure/ladder/destination)
 	destination.add_fingerprint(user)
 	user.visible_message("<span class='notice'>[user] tries to climb the ladder.</span>")
 	destination.visible_message("<span class='warning'>Someone is trying to climb the ladder!</span>")
 	playsound(src, 'sound/effects/ladder.ogg', VOL_EFFECTS_MASTER)
+	playsound(destination, 'sound/effects/ladder.ogg', VOL_EFFECTS_MASTER)
 	if(!user.is_busy() && do_after(user, 15, target = src))
 		if(user.pulling)
 			user.pulling.forceMove(get_turf(destination))
@@ -77,32 +78,3 @@
 
 /obj/structure/ladder/attack_paw(mob/user)
 	return attack_hand(user)
-
-/obj/structure/ladder/attackby(obj/item/weapon/W, mob/user)
-	if(!istype(W, /obj/item/weapon/grab))
-		return attack_hand(user)
-	var/obj/item/weapon/grab/grab = W
-	if(!ismob(grab.affecting))
-		return
-	if(user.is_busy())
-		return
-	var/mob/M = grab.affecting
-	user.visible_message("<span class='notice'>[user] tries to push [M] on the ladder.</span>")
-	playsound(src, 'sound/effects/ladder.ogg', VOL_EFFECTS_MASTER)
-
-	if(do_after(user, 30, target = src))
-		if(up && down)
-			switch(tgui_alert(usr, "Push up or down the ladder?", "Ladder", list("Up", "Down", "Cancel")) )
-				if("Up")
-					M.forceMove(get_turf(up))
-				if("Down")
-					M.forceMove(get_turf(down))
-				if("Cancel")
-					return
-
-		else if(up)
-			M.forceMove(get_turf(up))
-
-		else if(down)
-			M.forceMove(get_turf(down))
-		user.visible_message("<span class='notice'>[user] pushes [M] on the ladder!</span>")
