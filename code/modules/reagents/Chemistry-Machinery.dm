@@ -85,7 +85,8 @@
 
 
 /obj/machinery/chem_dispenser/proc/recharge()
-	if(stat & (BROKEN|NOPOWER|disabled)) return
+	if(stat & (BROKEN|NOPOWER|disabled)) 
+		return
 	var/oldenergy = energy
 	energy = min(energy + addenergy, max_energy)
 	if(energy != oldenergy)
@@ -256,8 +257,10 @@
 		return
 
 	if(default_deconstruction_screwdriver(user, "dispenser-o", "dispenser", B))
-		if(hacked) dispensable_reagents = full_reagents_list
-		else dispensable_reagents = standart_reagents_list
+		if(hacked) 
+			dispensable_reagents = full_reagents_list
+		else 
+			dispensable_reagents = standart_reagents_list
 		updateUsrDialog()
 		return
 
@@ -292,7 +295,6 @@
 	max_energy = 10
 	amount = 5
 	recharge_delay = 30
-	dispensable_reagents = list()
 	dispensable_reagent_tiers = list(
 		list(
 				"hydrogen",
@@ -339,12 +341,11 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	RefreshParts()
 
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
-	var/time = 0
-	var/temp_add = 0
+	..()
 	var/temp_energy = 0
+	var/time = 0
 	var/i
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		temp_energy += M.rating
@@ -352,16 +353,14 @@
 	max_energy = temp_energy * 5  //max energy = (bin1.rating + bin2.rating - 1) * 5, 5 on lowest 25 on highest
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		time += C.rating
-		temp_add += C.rating
-	addenergy = temp_add
 	for(var/obj/item/weapon/stock_parts/cell/P in component_parts)
 		time += round(P.maxcharge, 10000) / 10000
 	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		for(i=1, i<=M.rating, i++)
 			dispensable_reagents |= dispensable_reagent_tiers[i]
-	dispensable_reagents = sortList(dispensable_reagents)
 	standart_reagents_list = dispensable_reagents
+	full_reagents_list = dispensable_reagents + premium_reagents
 
 /obj/machinery/chem_dispenser/constructable/attackby(obj/item/B, mob/user)
 	if(default_unfasten_wrench(user, B))
@@ -388,8 +387,10 @@
 		return
 
 	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", B))
-		if(hacked) dispensable_reagents = full_reagents_list
-		else dispensable_reagents = standart_reagents_list
+		if(hacked)
+			dispensable_reagents = full_reagents_list
+		else
+			dispensable_reagents = standart_reagents_list
 		updateUsrDialog()
 		return
 
@@ -415,11 +416,13 @@
 	name = "soda fountain"
 	desc = "A drink fabricating machine, capable of producing many sugary drinks with just one touch."
 	ui_title = "Soda Dispens-o-matic"
-	energy = 100
 	accept_glass = 1
-	max_energy = 100
-	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice")
-	premium_reagents = list()
+	dispensable_reagent_tiers = list(
+		list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice"),
+		list(),
+		list(),
+		list()
+	)
 	premium_reagents_tiers = list(
 		list("thirteenloko"),
 		list("grapesoda"),
@@ -435,14 +438,6 @@
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	wires = new(src)
-	RefreshParts()
-
-/obj/machinery/chem_dispenser/soda/RefreshParts()
-	. = ..()
-	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice")
-	standart_reagents_list = dispensable_reagents
-	full_reagents_list = dispensable_reagents + premium_reagents
 
 /obj/machinery/chem_dispenser/soda/attackby(obj/item/B, mob/user)
 	if(default_unfasten_wrench(user, B))
@@ -469,8 +464,10 @@
 		return
 
 	if(default_deconstruction_screwdriver(user, "soda_dispenser-o", "soda_dispenser", B))
-		if(hacked) dispensable_reagents = full_reagents_list
-		else dispensable_reagents = standart_reagents_list
+		if(hacked)
+			dispensable_reagents = full_reagents_list
+		else
+			dispensable_reagents = standart_reagents_list
 		updateUsrDialog()
 		return
 
@@ -494,12 +491,14 @@
 	icon_state = "booze_dispenser"
 	name = "booze dispenser"
 	ui_title = "Booze Portal 9001"
-	energy = 100
 	accept_glass = 1
-	max_energy = 100
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
-	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead")
-	premium_reagents = list()
+	dispensable_reagent_tiers = list(
+		list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead"),
+		list(),
+		list(),
+		list()
+	)
 	premium_reagents_tiers = list(
 		list("goldschlager"),
 		list("patron"),
@@ -515,14 +514,6 @@
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	wires = new(src)
-	RefreshParts()
-
-/obj/machinery/chem_dispenser/beer/RefreshParts()
-	. = ..()
-	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead")
-	standart_reagents_list = dispensable_reagents
-	full_reagents_list = dispensable_reagents + premium_reagents
 
 /obj/machinery/chem_dispenser/beer/attackby(obj/item/B, mob/user)
 	if(default_unfasten_wrench(user, B))
@@ -547,8 +538,10 @@
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		return
 	if(default_deconstruction_screwdriver(user, "booze_dispenser-o", "booze_dispenser", B))
-		if(hacked) dispensable_reagents = full_reagents_list
-		else dispensable_reagents = standart_reagents_list
+		if(hacked)
+			dispensable_reagents = full_reagents_list
+		else
+			dispensable_reagents = standart_reagents_list
 		updateUsrDialog()
 		return
 
