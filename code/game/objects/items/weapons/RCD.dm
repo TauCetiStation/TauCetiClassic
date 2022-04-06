@@ -1,7 +1,215 @@
 /*
 CONTAINS:
+RCD Action datum
 RCD
+Borg RCD
 */
+
+/* RCD Action datum
+ * Stores information about things that RCD can do
+ * This could've been an element probably?
+ */
+/datum/rcd
+	// Name of RCD action
+	var/name
+
+	// Icon of action in radial menu
+	var/icon/icon
+
+	// Cost of this action in matter units
+	var/cost
+
+	// Duration of that action
+	var/duration
+
+	// The RCD that possesses this action
+	var/obj/item/weapon/rcd/holder
+
+	// List of types that this action can be applied to
+	var/list/can_act_on_types = list()
+
+	// List of types that this action cannot be applied to
+	var/list/cannot_act_on_types = list()
+
+	//RCD effect of action
+	var/image/rcd_effect
+
+/datum/rcd/New(_holder)
+	holder = _holder
+
+/datum/rcd/Destroy(force, ...)
+	. = ..()
+	holder = null
+	QDEL_NULL(icon)
+
+/* action(atom/target): bool
+ * Performs some particular action on target atom.
+ * Returning TRUE means that action was successful
+ * and matter should be consumed.
+ * Otherwise, returning FALSE will not result in
+ * consumption of matter.
+*/
+/datum/rcd/proc/action(atom/target)
+	return FALSE
+
+/datum/rcd/proc/can_act_on(atom/target, mob/user)
+	var/valid_type = is_type_in_list(target, can_act_on_types) && !is_type_in_list(target, cannot_act_on_types)
+	var/enough_resources = holder.checkResource(cost, user)
+	return valid_type && enough_resources && !holder.working
+
+/datum/rcd/proc/use_matter()
+	holder.useResource(cost)
+
+/datum/rcd/proc/apply(atom/target, mob/user)
+	if(user.is_busy())
+		return
+	if(!can_act_on(target, user))
+		return
+	holder.working = TRUE
+	rcd_effect = image('icons/effects/rcd.dmi', "construction", ABOVE_LIGHTING_PLANE)
+	if(duration)
+		target.add_overlay(rcd_effect)
+	if(!do_after(user, duration, target = target))
+		holder.working = FALSE
+		target.cut_overlay(rcd_effect)
+		return
+	if(action(target))
+		use_matter()
+		holder.activate()
+	target.cut_overlay(rcd_effect)
+	holder.working = FALSE
+
+/datum/rcd/deconstruct
+	name = "Deconstruct"
+	cost = 5
+	duration = 4 SECONDS
+	can_act_on_types = list(
+		/turf/simulated/wall,
+		/turf/simulated/floor,
+		/obj/machinery/door/airlock,
+		/obj/machinery/door/firedoor,
+		/obj/structure/window,
+		/obj/machinery/door/window,
+	)
+	cannot_act_on_types = list(
+		/turf/simulated/wall/r_wall
+	)
+	icon = icon('icons/obj/decals.dmi', "blast")
+
+/datum/rcd/deconstruct/action(atom/target)
+	if(istype(target, /turf/simulated/floor))
+		var/turf/simulated/floor/F = target
+		F.BreakToBase()
+	else if(istype(target, /turf/simulated/wall))
+		var/turf/simulated/wall/W = target
+		W.ChangeTurf(/turf/simulated/floor/plating/airless)
+	else if(istype(target, /obj/machinery/door/airlock))
+		qdel(target)
+	else
+		return FALSE
+	return TRUE
+
+/datum/rcd/deconstruct/advanced
+	// Can deconstruct reinforced walls
+	cannot_act_on_types = list()
+
+/datum/rcd/wall
+	name = "Wall"
+	cost = 3
+	duration = 2 SECONDS
+	can_act_on_types = list(
+		/turf/simulated/floor,
+	)
+	icon = icon('icons/turf/walls/has_false_walls/wall.dmi', "box_small")
+
+/datum/rcd/wall/action(turf/simulated/floor/F)
+	F.ChangeTurf(/turf/simulated/wall)
+	return TRUE
+
+/datum/rcd/floor
+	name = "Floor"
+	cost = 1
+	duration = 0 SECONDS
+	can_act_on_types = list(
+		/turf/environment/space,
+	)
+	icon = icon('icons/turf/floors.dmi', "plating_small")
+
+/datum/rcd/floor/action(turf/environment/space/S)
+	S.ChangeTurf(/turf/simulated/floor/plating/airless)
+	return TRUE
+
+// These actions will act only on non-dense turfs
+/datum/rcd/nondense
+	can_act_on_types = list(
+		/turf/simulated/floor
+	)
+
+/datum/rcd/nondense/airlock/can_act_on(atom/target)
+	if(target.density)
+		return FALSE
+	for(var/atom/A in target)
+		if(A.density || (is_type_in_list(A, list(/obj/machinery/door, /obj/structure/mineral_door)) && !istype(A, /obj/machinery/door/firedoor)))
+			return FALSE
+	return ..()
+
+/datum/rcd/nondense/firedoor/can_act_on(atom/target)
+	if(target.density)
+		return FALSE
+	for(var/atom/A in target)
+		if(A.density || is_type_in_list(A, list(/obj/machinery/door/firedoor)))
+			return FALSE
+	return ..()
+
+/datum/rcd/nondense/airlock
+	name = "Airlock"
+	cost = 10
+	duration = 5 SECONDS
+	icon = icon('icons/obj/doors/airlocks/station/public.dmi', "closed_filled")
+
+/datum/rcd/nondense/airlock/action(turf/simulated/floor/F)
+	new /obj/machinery/door/airlock(F)
+	return TRUE
+
+/datum/rcd/nondense/airlock/glass
+	name = "Glass Airlock"
+	cost = 10
+	duration = 5 SECONDS
+	icon = icon('icons/obj/doors/airlocks/station2/glass.dmi', "closed_small")
+
+/datum/rcd/nondense/airlock/glass/action(turf/simulated/floor/F)
+	new /obj/machinery/door/airlock/glass(F)
+	return TRUE
+
+/datum/rcd/nondense/firedoor
+	name = "Emergency Shutter"
+	cost = 5
+	duration = 3 SECONDS
+	icon = icon('icons/obj/doors/DoorHazard.dmi', "door_closed_small")
+
+/datum/rcd/nondense/firedoor/action(turf/simulated/floor/F)
+	new /obj/machinery/door/firedoor(F)
+	return TRUE
+
+/datum/rcd/nondense/grilleglass
+	name = "Window"
+	cost = 3
+	duration = 1.5 SECONDS
+	icon = icon('icons/turf/walls/fakeglass.dmi', "grilleglass")
+	var/window_type = /obj/structure/window/basic
+
+/datum/rcd/nondense/grilleglass/action(turf/simulated/floor/F)
+	new /obj/structure/grille(F)
+	var/obj/structure/window/W = new window_type(F)
+	W.set_dir(SOUTHWEST)
+	W.ini_dir = SOUTHWEST
+
+/datum/rcd/nondense/grilleglass/reinforced
+	name = "Reinforced Window"
+	cost = 4
+	duration = 3 SECONDS
+	icon = icon('icons/turf/walls/fakeglass.dmi', "grillerglass")
+	window_type = /obj/structure/window/reinforced
 
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"
@@ -20,16 +228,27 @@ RCD
 	m_amt = 50000
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
-	var/matter = 30
 	var/max_matter = 30
+	var/matter = 0
 	var/working = FALSE
-	var/mode = 1
-	var/canRwall = FALSE
 	var/disabled = FALSE
-	var/static/list/selection_modes
-	var/static/list/selection_doors
 
+	var/list/action_types = list(
+		/datum/rcd/deconstruct,
+		/datum/rcd/nondense/airlock,
+		/datum/rcd/nondense/airlock/glass,
+		/datum/rcd/nondense/firedoor,
+		/datum/rcd/floor,
+		/datum/rcd/wall,
+		/datum/rcd/nondense/grilleglass,
+	)
+	var/list/datum/rcd/actions = list()
+	// Used by radial menu
+	var/list/action_icons = list()
+	var/list/action_by_name = list()
+	var/datum/rcd/current_action = null
 	action_button_name = "Switch RCD"
+
 
 /obj/item/weapon/rcd/atom_init()
 	. = ..()
@@ -38,12 +257,24 @@ RCD
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
+	init_actions()
 
 /obj/item/weapon/rcd/Destroy()
 	rcd_list -= src
 	qdel(spark_system)
 	spark_system = null
+	current_action = null
+	action_icons = null
+	action_by_name = null
+	QDEL_LIST(actions)
 	return ..()
+
+/obj/item/weapon/rcd/proc/init_actions()
+	for(var/action_type in action_types)
+		var/datum/rcd/A = new action_type(src)
+		actions += A
+		action_icons[A.name] = A.icon
+		action_by_name[A.name] = A
 
 /obj/item/weapon/rcd/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/rcd_ammo))
@@ -56,229 +287,36 @@ RCD
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>")
 		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
-
 	else
 		return ..()
 
-/obj/item/weapon/rcd/proc/can_use(atom/target, mob/living/user)
-	if(disabled && !isrobot(user))
-		return FALSE
-	if(istype(target, /area/shuttle))
-		return FALSE
-	if(user.is_busy())
-		return FALSE
-	if(!(istype(target, /turf) || istype(target, /obj/machinery/door/airlock) || istype(target, /obj/machinery/door/firedoor) || istype(target, /obj/structure/window) || istype(target, /obj/machinery/door/window)))
-		return FALSE
-	return TRUE
+/obj/item/weapon/rcd/attack_self(mob/user)
+	prompt_action(user)
 
-/obj/item/weapon/rcd/proc/populate_selection()
-	selection_modes = list(
-	"Floor & Walls" = image(icon = 'icons/turf/walls/has_false_walls/wall.dmi', icon_state = "box_plating"),
-	"Airlock" = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "closed_filled_glassed_hazarded"),
-	"Deconstruct" = image(icon = 'icons/obj/decals.dmi', icon_state = "blast")
-	)
-	selection_doors = list(
-	"Solid Airlock" = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "closed_filled"),
-	"Glass Airlock" = image(icon = 'icons/obj/doors/airlocks/station2/glass.dmi', icon_state = "closed_small"),
-	"Emergency Shutter" = image(icon = 'icons/obj/doors/DoorHazard.dmi', icon_state = "door_closed_small")
-	)
-
-/obj/item/weapon/rcd/attack_self(mob/user)	//Change the mode
-	if(!selection_modes)
-		populate_selection()
-	var/selection_m = show_radial_menu(user, src, selection_modes, require_near = TRUE, tooltips = TRUE)
-	switch(selection_m)
-		if("Cancel")
-			return
-		if("Deconstruct")
-			mode = 1
-			to_chat(user, "<span class='notice'>Changed mode to 'Deconstruct'</span>")
-		if("Floor & Walls")
-			mode = 2
-			to_chat(user, "<span class='notice'>Changed mode to 'Floor & Walls'</span>")
-		if("Airlock")
-			var/selection_d = show_radial_menu(user, src, selection_doors, require_near = TRUE, tooltips = TRUE)
-			switch(selection_d)
-				if("Cancel")
-					return
-				if("Solid Airlock")
-					mode = 3
-					to_chat(user, "<span class='notice'>Changed mode to 'Solid Airlock'</span>")
-				if("Glass Airlock")
-					mode = 4
-					to_chat(user, "<span class='notice'>Changed mode to 'Glass Airlock'</span>")
-				if("Emergency Shutter")
-					mode = 5
-					to_chat(user, "<span class='notice'>Changed mode to 'Emergency Shutter'</span>")
-
+/obj/item/weapon/rcd/proc/prompt_action(mob/user)
+	// we have to do some hacking cause of rig rcd module
+	var/choice = show_radial_menu(user, user, action_icons, uniqueid = "rcd\ref[user]\ref[src]", tooltips = TRUE)
+	if(!choice)
+		return
+	current_action = action_by_name[choice]
+	to_chat(user, "<span class='notice'>You switch [src] to \"[choice]\".</span>")
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	if(prob(20))
 		spark_system.start()
 
-/obj/item/weapon/rcd/proc/check_after(atom/target, mob/living/user, mode)
-	switch(mode)
-		if(1)
-			if(istype(target, /turf/simulated/wall/r_wall) && !canRwall)
-				return FALSE
-		if(2)
-			if(istype(target, /turf/simulated/floor))
-				for(var/atom/AT in target)
-					if(AT.density)
-						to_chat(user, "<span class='warning'>You can't build wall here.</span>")
-						return FALSE
-		if(3)
-			if(istype(target, /turf/simulated/floor))
-				for(var/atom/AT in target)
-					if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
-						to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
-						return FALSE
-		if(4)
-			if(istype(target, /turf/simulated/floor))
-				for(var/atom/AT in target)
-					if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
-						to_chat(user, "<span class='warning'>You can't build glass airlock here.</span>")
-						return FALSE
-		if(5)
-			if(istype(target, /turf/simulated/floor))
-				for(var/atom/AT in target)
-					if(AT.density || istype(AT, /obj/machinery/door/firedoor))
-						to_chat(user, "<span class='warning'>You can't build emergency shutter here.</span>")
-						return FALSE
-	return TRUE
-
 /obj/item/weapon/rcd/proc/activate()
 	playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
-/obj/item/weapon/rcd/afterattack(atom/target, mob/living/user, proximity, params)
+/obj/item/weapon/rcd/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
+		return
+	if(disabled && !isrobot(user))
 		return FALSE
-	if(!can_use(target, user))
+	if(istype(target, /area/shuttle))
 		return FALSE
-	var/start_mode = mode
-	var/delay = 50
-	var/need_resource = 10
 
-	switch(mode)
-		if(1)
-			need_resource = 5
-			if(!checkResource(need_resource, user))
-				return FALSE
-			if(istype(target, /turf/simulated/wall/r_wall) && !canRwall)
-				return FALSE
-			if(istype(target, /turf/simulated/wall) && !istype(target, /turf/simulated/wall/r_wall))
-				delay = 40
-			to_chat(user, "Deconstructing [target.name]...")
+	current_action?.apply(target, user)
 
-		if(2)
-			if(isenvironmentturf(target))
-				need_resource = 1
-				if(!checkResource(need_resource, user))
-					return FALSE
-				delay = 0
-				to_chat(user, "Building Floor...")
-			else if(istype(target, /turf/simulated/floor))
-				need_resource = 3
-				if(!checkResource(need_resource, user))
-					return FALSE
-				for(var/atom/AT in target)
-					if(AT.density)
-						to_chat(user, "<span class='warning'>You can't build wall here.</span>")
-						return FALSE
-				delay = 20
-				to_chat(user, "Building Wall...")
-			else
-				return FALSE
-
-		if(3)
-			if(!istype(target, /turf/simulated/floor))
-				return FALSE
-			if(!checkResource(need_resource, user))
-				return FALSE
-			for(var/atom/AT in target)
-				if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
-					to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
-					return FALSE
-			to_chat(user, "Building Airlock...")
-
-		if(4)
-			if(!istype(target, /turf/simulated/floor))
-				return FALSE
-			if(!checkResource(need_resource, user))
-				return FALSE
-			for(var/atom/AT in target)
-				if(AT.density || (istype(AT, /obj/machinery/door) && !istype(AT, /obj/machinery/door/firedoor)) || istype(AT, /obj/structure/mineral_door))
-					to_chat(user, "<span class='warning'>You can't build glass airlock here.</span>")
-					return FALSE
-			to_chat(user, "Building Glass Airlock...")
-
-		if(5)
-			if(!istype(target, /turf/simulated/floor))
-				return FALSE
-			need_resource = 5
-			if(!checkResource(need_resource, user))
-				return FALSE
-			for(var/atom/AT in target)
-				if(AT.density || istype(AT, /obj/machinery/door/firedoor))
-					to_chat(user, "<span class='warning'>You can't build emergency shutter here.</span>")
-					return FALSE
-			to_chat(user, "Building Emergency Shutter...")
-
-	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(target), delay, src.mode)
-	rcd_effect.update_icon_state()
-	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-	if(do_after(user, delay, target = target))
-		if(start_mode != mode)
-			to_chat(user, "<span class='warning'>Error... Do not switch mode while device is running.</span>")
-			qdel(rcd_effect)
-			return FALSE
-		if(!useResource(need_resource, user))
-			qdel(rcd_effect)
-			return FALSE
-		activate()
-		rcd_effect.end_animation()
-		if(!check_after(target, user, mode))
-			return FALSE
-		switch(mode)
-			if(1)
-				if(istype(target, /turf/simulated/wall))
-					var/turf/simulated/wall/W = target
-					W.ChangeTurf(/turf/simulated/floor/plating/airless)
-					return TRUE
-				else if(istype(target, /turf/simulated/floor))
-					var/turf/simulated/floor/F = target
-					F.BreakToBase()
-					return TRUE
-				else
-					qdel(target)
-					return TRUE
-
-			if(2)
-				if(isenvironmentturf(target))
-					var/turf/T = target
-					T.ChangeTurf(/turf/simulated/floor/plating/airless)
-					return TRUE
-				else if(istype(target, /turf/simulated/floor))
-					var/turf/simulated/floor/F = target
-					F.ChangeTurf(/turf/simulated/wall)
-					return TRUE
-				else
-					qdel(rcd_effect)
-					return FALSE
-
-			if(3)
-				new /obj/machinery/door/airlock(target)
-				return TRUE
-
-			if(4)
-				new /obj/machinery/door/airlock/glass(target)
-				return TRUE
-
-			if(5)
-				new /obj/machinery/door/firedoor(target)
-				return TRUE
-
-	qdel(rcd_effect)
-	return FALSE
 
 /obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
@@ -300,10 +338,17 @@ RCD
 		return FALSE
 	return user:cell:charge >= (amount * 30)
 
-/obj/item/weapon/rcd/borg/atom_init()
-	. = ..()
-	desc = "A device used to rapidly build walls/floor."
-	canRwall = TRUE
+/obj/item/weapon/rcd/borg
+	action_types = list(
+		/datum/rcd/deconstruct/advanced,
+		/datum/rcd/nondense/airlock,
+		/datum/rcd/nondense/airlock/glass,
+		/datum/rcd/nondense/firedoor,
+		/datum/rcd/floor,
+		/datum/rcd/wall,
+		/datum/rcd/nondense/grilleglass,
+		/datum/rcd/nondense/grilleglass/reinforced,
+	)
 
 /obj/item/weapon/rcd_ammo
 	name = "compressed matter cartridge"
@@ -311,7 +356,7 @@ RCD
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "rcd"
 	item_state = "rcdammo"
-	opacity = FALSE
+	opacity = 0
 	density = FALSE
 	anchored = FALSE
 	origin_tech = "materials=2"
