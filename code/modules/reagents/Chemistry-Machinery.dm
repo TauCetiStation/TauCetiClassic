@@ -31,7 +31,7 @@
 		list("ammonia","diethylamine"),
 		list("bicaridine","kelotane","spaceacillin", "tricordrazine")
 
-	),
+	)
 	var/list/premium_reagents = list()
 	var/list/premium_reagents_tiers = list(
 	list("toxin"),
