@@ -30,10 +30,11 @@
 	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 
 	if(!on_fire)
-		if(affecting_temp > BODYTEMP_SIGNIFICANT_CHANGE)
-			bodytemperature += affecting_temp / BODYTEMP_HEAT_DIVISOR
-		else if (affecting_temp < -BODYTEMP_SIGNIFICANT_CHANGE)
-			bodytemperature += affecting_temp / BODYTEMP_COLD_DIVISOR
+		if(affecting_temp <= -BODYTEMP_SIGNIFICANT_CHANGE)
+			bodytemperature += max(affecting_temp / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
+		else if(affecting_temp >= BODYTEMP_SIGNIFICANT_CHANGE)
+			bodytemperature += min(affecting_temp / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
+			
 		if(stat != DEAD)
 			bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
 

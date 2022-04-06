@@ -283,6 +283,7 @@
 	if(isatom(D))
 		body += "<option value='?_src_=vars;delthis=\ref[D]'>Delete this object</option>"
 		body += "<option value='?_src_=vars;edit_filters=\ref[D]'>Edit Filters</option>"
+		body += "<option value='?_src_=vars;edit_particles=\ref[D]'>Edit Particles</option>"
 	if(isobj(D))
 		body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 	if(isobj(D) || ismob(D) || isturf(D))
@@ -641,6 +642,12 @@ body
 			return
 		var/atom/A = locate(href_list["edit_filters"])
 		open_filter_editor(A)
+
+	else if(href_list["edit_particles"])
+		if(!check_rights(R_DEBUG|R_VAREDIT))
+			return
+		var/atom/A = locate(href_list["edit_particles"])
+		open_particles_editor(A)
 
 	else if(href_list["delthis"])
 		//Rights check are in cmd_admin_delete() proc
