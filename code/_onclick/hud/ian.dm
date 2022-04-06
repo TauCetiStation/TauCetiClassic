@@ -47,8 +47,10 @@
 	switch(icon_x)
 		if(4 to 29)
 			switch(icon_y)
-				if(4 to 29)  // lie
+				if(4 to 16)  // lie
 					IAN.crawl()
+				if(17 to 29) // sit
+					IAN.ian_sit()
 
 
 /datum/hud/proc/ian_hud()

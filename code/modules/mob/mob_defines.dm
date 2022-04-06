@@ -92,7 +92,6 @@
 	var/was_lying = FALSE //For user of clown pda slippery
 	var/lying_current = 0
 	var/crawling = 0 //For crawling
-	var/ian_sit = 0	 //For Ian
 	var/canmove = 1
 	var/lastpuke = 0
 	var/unacidable = 0

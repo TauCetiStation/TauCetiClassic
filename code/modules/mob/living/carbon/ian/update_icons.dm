@@ -287,3 +287,5 @@
 
 	if(pose_last != pose_prev)
 		update_transform()
+
+	canmove = !(weakened || paralysis || stat || (status_flags & FAKEDEATH)  || stunned || captured || pinned.len || ian_sit)
