@@ -79,7 +79,7 @@
 	desc = "A 12 gauge slug."
 	icon_state = "blshell"
 	caliber = "shotgun"
-	projectile_type = /obj/item/projectile/bullet
+	projectile_type = /obj/item/projectile/bullet/slag
 	m_amt = 3750
 
 /obj/item/ammo_casing/shotgun/buckshot
@@ -87,7 +87,7 @@
 	desc = "A 12 gauge shell."
 	icon_state = "gshell"
 	projectile_type = /obj/item/projectile/bullet/buckpellet
-	pellets = 7
+	pellets = 10
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag shell"
@@ -101,14 +101,15 @@
 	desc = "An electrified, stunning taser shell for shotguns."
 	icon_state = "stunshell"
 	projectile_type = /obj/item/projectile/bullet/stunshot
-	pellets = 3
+	pellets = 5
 	m_amt = 2500
 
 /obj/item/ammo_casing/shotgun/incendiary
 	name = "incendiary shell"
-	desc = "An incendiary slug."
+	desc = "An incendiary shell."
 	icon_state = "ishell"
-	projectile_type = /obj/item/projectile/bullet/incendiary
+	projectile_type = /obj/item/projectile/bullet/incendiary/buckshot
+	pellets = 12
 
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun darts"

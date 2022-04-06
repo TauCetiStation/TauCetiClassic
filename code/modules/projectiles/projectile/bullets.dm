@@ -32,10 +32,15 @@
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
+/obj/item/projectile/bullet/slag
+	name = "shotgun slag"
+	damage = 40
+	stoping_power = 3
+
 /obj/item/projectile/bullet/buckpellet
 	name = "buckpellet"
-	damage = 14
-	dispersion = 2.5
+	damage = 15
+	dispersion = 4.0
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
@@ -215,10 +220,10 @@
 	stun = 0
 	weaken = 0
 	stutter = 10
-	agony = 40
+	agony = 80
 	embed = 0
 	sharp = 0
-	dispersion = 1.8
+	dispersion = 2.0
 
 /obj/item/projectile/bullet/stunshot/atom_init()
 	. = ..()
@@ -236,6 +241,16 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(10)
+		M.IgniteMob()
+
+/obj/item/projectile/bullet/incendiary/buckshot
+	name = "incendiary shell"
+	damage = 7
+
+/obj/item/projectile/bullet/incendiary/buckshot/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(2)
 		M.IgniteMob()
 
 /obj/item/projectile/bullet/chameleon
