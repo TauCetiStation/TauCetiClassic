@@ -174,6 +174,7 @@
 
 	world.ext_python("create_png.py", "[png_filename] [width] [height] [data]")
 	generated_icon = new(png_filename)
+	fdel(png_filename) // don't need this anymore
 	icon_generated = TRUE
 	update_overlays()
 
