@@ -554,7 +554,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/chem_dispenser_5000
 	name = "circuit board (Chem Dispenser 5000)"
-	build_path = /obj/machinery/chem_dispenser/
+	build_path = /obj/machinery/chem_dispenser
 	board_type = "machine"
 	origin_tech = "materials=4;engineering=4;programming=4;phorontech=3;biotech=3"
 	req_components = list(
