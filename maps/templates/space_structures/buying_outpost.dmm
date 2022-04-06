@@ -1,0 +1,1189 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/environment/space,
+/area/space)
+"b" = (
+/turf/simulated/wall,
+/area/space)
+"c" = (
+/obj/structure/lattice,
+/turf/environment/space,
+/area/space)
+"d" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"e" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space)
+"f" = (
+/obj/machinery/door/airlock/gold,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space)
+"g" = (
+/obj/machinery/vending/snack{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space)
+"h" = (
+/obj/machinery/vending/donut{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space)
+"i" = (
+/obj/machinery/vending/junkfood{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space)
+"j" = (
+/obj/machinery/vending/chinese{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space)
+"k" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space)
+"l" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = -7
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"m" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = -7
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"n" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = -7
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"o" = (
+/obj/structure/lattice,
+/turf/simulated/wall,
+/area/space)
+"p" = (
+/turf/simulated/floor/carpet/orange,
+/area/space)
+"q" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space)
+"r" = (
+/obj/structure/stool/bed/chair/comfy/beige{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space)
+"s" = (
+/obj/machinery/vending/coffee{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space)
+"t" = (
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space)
+"u" = (
+/obj/machinery/door/airlock/security,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space)
+"v" = (
+/obj/machinery/vending/cola{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space)
+"w" = (
+/obj/machinery/vending/holy{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space)
+"x" = (
+/obj/machinery/vending/clothing{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space)
+"y" = (
+/obj/machinery/vending/cigarette{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space)
+"z" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/space)
+"A" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor/plating,
+/area/space)
+"B" = (
+/turf/simulated/floor/plating,
+/area/space)
+"C" = (
+/obj/machinery/power/smes,
+/turf/simulated/floor/plating,
+/area/space)
+"D" = (
+/obj/machinery/power/port_gen/pacman/money,
+/turf/simulated/floor/plating,
+/area/space)
+"E" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/space)
+"F" = (
+/obj/machinery/power/apc,
+/turf/simulated/floor/plating,
+/area/space)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+o
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+d
+d
+d
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+k
+r
+t
+r
+w
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+g
+k
+p
+p
+p
+x
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+h
+p
+p
+p
+p
+y
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+i
+p
+p
+p
+p
+k
+A
+B
+B
+A
+a
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+b
+c
+c
+c
+c
+b
+b
+e
+b
+j
+p
+p
+p
+p
+k
+A
+B
+B
+A
+a
+a
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+e
+e
+b
+k
+p
+p
+p
+k
+k
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+d
+e
+e
+f
+k
+k
+s
+k
+v
+b
+b
+D
+b
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+d
+e
+e
+b
+b
+b
+b
+u
+b
+b
+B
+E
+b
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+d
+e
+e
+e
+l
+q
+q
+q
+q
+z
+B
+F
+b
+c
+c
+c
+c
+b
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+e
+e
+e
+m
+q
+q
+q
+q
+b
+C
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+e
+e
+n
+q
+q
+q
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+d
+d
+d
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(21,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(22,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(24,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+c
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(25,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+o
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(26,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(27,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(28,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(29,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(30,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
