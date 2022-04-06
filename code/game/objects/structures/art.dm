@@ -15,7 +15,7 @@
 
 /obj/structure/easel/Destroy()
 	painting = null
-	. = ..()
+	return ..()
 
 //Adding canvases
 /obj/structure/easel/attackby(obj/item/I, mob/user, params)
@@ -195,7 +195,7 @@
 			if("pink")
 				return "#ffc0cb"
 			if("orange")
-				return "##ffa500"
+				return "#ffa500"
 			if("cyan")
 				return "#00ffff"
 			if("white")
