@@ -23,6 +23,7 @@
 		'sound/ambience/space_7.ogg',
 		'sound/ambience/space_8.ogg'
 	)
+	outdoors = TRUE
 
 /area/start            // will be unused once kurper gets his login interface patch done
 	name = "start area"
