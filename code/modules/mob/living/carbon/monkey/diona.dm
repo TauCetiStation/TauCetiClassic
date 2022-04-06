@@ -44,7 +44,7 @@
 	icon_state = "nymph1"
 	holder_type = /obj/item/weapon/holder/diona
 
-	spawner_args = list(/datum/spawner/living/podman/fake_diona, 2 MINUTES)
+	spawner_args = list(/datum/spawner/living/podman/fake_nymph, 2 MINUTES)
 
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()
