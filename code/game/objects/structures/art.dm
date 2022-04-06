@@ -65,8 +65,8 @@
 /obj/item/canvas/Moved(atom/OldLoc, Dir)
 	. = ..()
 	if(easel && !Adjacent(get_turf(easel), 0)) // should not be in inventory
-		easel = null
 		easel.painting = null
+		easel = null
 
 /obj/item/canvas/atom_init()
 	. = ..()
