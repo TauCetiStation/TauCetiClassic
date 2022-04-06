@@ -1,8 +1,7 @@
 #define MAX_PILL_SPRITE 24
 #define MAX_BOTTLE_SPRITE 3
 
-/*-------Если что, стукать @KandJX'a-------*/
-
+// Chem Dispenser 5000 ///////////////////////////////////////////////////
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	density = TRUE
@@ -13,14 +12,13 @@
 	idle_power_usage = 40
 	var/ui_title = "Chem Dispenser 5000"
 	var/energy = 100
+	var/addenergy = 0
 	var/max_energy = 100
 	var/amount = 30
 	var/accept_glass = 0
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/recharged = 0
 	var/recharge_delay = 15
-	var/msg_hack_enable = ""
-	var/msg_hack_disable = ""
 	var/list/dispensable_reagents = list()
 	var/list/dispensable_reagent_tiers = list(
 		list(
@@ -30,15 +28,13 @@
 		list("anti_toxin","inaprovaline"),
 		list("ammonia","diethylamine"),
 		list("bicaridine","kelotane","spaceacillin", "tricordrazine")
-
-	),
+	)
 	var/list/premium_reagents = list()
 	var/list/premium_reagents_tiers = list(
-	list("toxin"),
-	list("fuel"),
-	list("orangejuice", "limejuice", "tomatojuice", "cream"),
-	list("mindbreaker")
-
+		list("toxin"),
+		list("fuel"),
+		list("orangejuice", "limejuice", "tomatojuice", "cream"),
+		list("mindbreaker")
 	)
 	var/list/standart_reagents_list = list()
 	var/list/full_reagents_list = list()
@@ -60,27 +56,26 @@
 	wires = new(src)
 	RefreshParts()
 	recharge()
-//	dispensable_reagents = sortList(dispensable_reagents)
 
 /obj/machinery/chem_dispenser/RefreshParts()
-	var/time = 0
 	var/temp_energy = 0
+	var/temp_add = 0
 	var/i
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		temp_energy += M.rating
 	temp_energy -= 2
-	max_energy = 100 + temp_energy * 25  //max energy = (bin1.rating + bin2.rating - 1) * 5, 5 on lowest 25 on highest
+	max_energy = 100 + temp_energy * 25
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
-		time += C.rating
-	recharge_delay -= time   //delay between recharges, double the usual time on lowest 50% less than usual on highest
+		temp_add += C.rating
+	addenergy = temp_add
 	for(var/obj/item/weapon/stock_parts/scanning_module/M in component_parts)
 		for(i=1, i<=M.rating, i++)
 			dispensable_reagents |= dispensable_reagent_tiers[i]
-//	dispensable_reagents = sortList(dispensable_reagents)
 	standart_reagents_list = dispensable_reagents
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		for(i=1, i<=M.rating, i++) premium_reagents |= premium_reagents_tiers[i]
-			premium_reagents = sortList(premium_reagents)
+		for(i=1, i<=M.rating, i++) 
+			premium_reagents |= premium_reagents_tiers[i]
+	premium_reagents = sortList(premium_reagents)
 	full_reagents_list = dispensable_reagents + premium_reagents
 
 
@@ -90,8 +85,7 @@
 
 
 /obj/machinery/chem_dispenser/proc/recharge()
-	if(stat & (BROKEN|NOPOWER)) return
-	var/addenergy = 1
+	if(stat & (BROKEN|NOPOWER|disabled)) return
 	var/oldenergy = energy
 	energy = min(energy + addenergy, max_energy)
 	if(energy != oldenergy)
@@ -143,6 +137,14 @@
 	else
 		return 0
 
+/obj/machinery/chem_dispenser/interact(mob/user)
+	if(shocked && !issilicon(user) && !isobserver(user))
+		shock(user,50)
+	if(disabled)
+		to_chat(user, "<span class='warning'>You press the button, but nothing happens.</span>")
+		return
+	..()
+
 /obj/machinery/chem_dispenser/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -153,14 +155,6 @@
 	if(disabled)
 		return STATUS_CLOSE
 	return ..()
-
-/obj/machinery/chem_dispenser/interact(mob/user)
-	if(shocked && !issilicon(user) && !isobserver(user))
-		shock(user,50)
-	if(disabled)
-		to_chat(user, "<span class='warning'>You press the button, but nothing happens.</span>")
-		return
-	..()
 
 /obj/machinery/chem_dispenser/tgui_data(mob/user)
 	var/list/data = list()
@@ -238,8 +232,6 @@
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 
 /obj/machinery/chem_dispenser/attackby(obj/item/weapon/B, mob/user)
-//	if(isrobot(user))
-//		return
 	if(default_unfasten_wrench(user, B))
 		power_change()
 		return
@@ -247,6 +239,7 @@
 	if(src.beaker)
 		to_chat(user, "Something is already loaded into the machine.")
 		return
+
 	if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B, /obj/item/weapon/reagent_containers/food))
 		if(!accept_glass && istype(B,/obj/item/weapon/reagent_containers/food))
 			to_chat(user, "<span class='notice'>This machine only accepts beakers</span>")
@@ -261,13 +254,16 @@
 		to_chat(user, "You set [B] on the machine.")
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		return
+
 	if(default_deconstruction_screwdriver(user, "dispenser-o", "dispenser", B))
 		if(hacked) dispensable_reagents = full_reagents_list
 		else dispensable_reagents = standart_reagents_list
 		updateUsrDialog()
 		return
+
 	if(exchange_parts(user, B))
 		return
+
 	if(panel_open)
 		if(is_wire_tool(B))
 			wires.interact(user)
@@ -285,8 +281,9 @@
 	. = ..()
 	make_old()
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
+// Portable Chem Dispenser //////////////////////////////////////////////
 /obj/machinery/chem_dispenser/constructable
 	name = "portable chem dispenser"
 	icon = 'icons/obj/chemical.dmi'
@@ -346,6 +343,7 @@
 
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
 	var/time = 0
+	var/temp_add = 0
 	var/temp_energy = 0
 	var/i
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
@@ -354,6 +352,8 @@
 	max_energy = temp_energy * 5  //max energy = (bin1.rating + bin2.rating - 1) * 5, 5 on lowest 25 on highest
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		time += C.rating
+		temp_add += C.rating
+	addenergy = temp_add
 	for(var/obj/item/weapon/stock_parts/cell/P in component_parts)
 		time += round(P.maxcharge, 10000) / 10000
 	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
@@ -363,30 +363,53 @@
 	dispensable_reagents = sortList(dispensable_reagents)
 	standart_reagents_list = dispensable_reagents
 
-/obj/machinery/chem_dispenser/constructable/attackby(obj/item/I, mob/user)
-	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", I))
+/obj/machinery/chem_dispenser/constructable/attackby(obj/item/B, mob/user)
+	if(default_unfasten_wrench(user, B))
+		power_change()
+		return
+
+	if(src.beaker)
+		to_chat(user, "Something is already loaded into the machine.")
+		return
+
+	if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B, /obj/item/weapon/reagent_containers/food))
+		if(!accept_glass && istype(B,/obj/item/weapon/reagent_containers/food))
+			to_chat(user, "<span class='notice'>This machine only accepts beakers</span>")
+			return
+		if(istype(B, /obj/item/weapon/reagent_containers/food/drinks/cans))
+			var/obj/item/weapon/reagent_containers/food/drinks/cans/C = B
+			if(!C.canopened)
+				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
+				return
+		src.beaker =  B
+		user.drop_from_inventory(B, src)
+		to_chat(user, "You set [B] on the machine.")
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+		return
+
+	if(default_deconstruction_screwdriver(user, "minidispenser-o", "minidispenser", B))
 		if(hacked) dispensable_reagents = full_reagents_list
 		else dispensable_reagents = standart_reagents_list
 		updateUsrDialog()
 		return
 
-	if(exchange_parts(user, I))
+	if(exchange_parts(user, B))
 		return
 
 	if(panel_open)
-		if(is_wire_tool(I))
+		if(is_wire_tool(B))
 			wires.interact(user)
 			return
-		if(iscrowbar(I))
+		if(iscrowbar(B))
 			if(beaker)
-				var/obj/item/weapon/reagent_containers/glass/B = beaker
-				B.loc = loc
+				var/obj/item/weapon/reagent_containers/glass/Beak = beaker
+				Beak.loc = loc
 				beaker = null
-			default_deconstruction_crowbar(I)
+			default_deconstruction_crowbar(B)
 			return 1
+/////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+// Soda & Beer Dispenser ////////////////////////////////////////////////
 /obj/machinery/chem_dispenser/soda
 	icon_state = "soda_dispenser"
 	name = "soda fountain"
@@ -403,9 +426,7 @@
 		list("tomatojuice"),
 		list("milk")
 	)
-	msg_hack_enable = "You change the mode from 'McNano' to 'Pizza King'."
-	msg_hack_disable = "You change the mode from 'Pizza King' to 'McNano'."
-
+	
 /obj/machinery/chem_dispenser/soda/atom_init()
 	. = ..()
 	component_parts = list()
@@ -427,9 +448,11 @@
 	if(default_unfasten_wrench(user, B))
 		power_change()
 		return
+
 	if(src.beaker)
 		to_chat(user, "Something is already loaded into the machine.")
 		return
+
 	if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B, /obj/item/weapon/reagent_containers/food))
 		if(!accept_glass && istype(B,/obj/item/weapon/reagent_containers/food))
 			to_chat(user, "<span class='notice'>This machine only accepts beakers</span>")
@@ -444,6 +467,7 @@
 		to_chat(user, "You set [B] on the machine.")
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		return
+
 	if(default_deconstruction_screwdriver(user, "soda_dispenser-o", "soda_dispenser", B))
 		if(hacked) dispensable_reagents = full_reagents_list
 		else dispensable_reagents = standart_reagents_list
@@ -482,9 +506,7 @@
 		list("watermelonjuice"),
 		list("berryjuice")
 	)
-	msg_hack_enable = "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes."
-	msg_hack_disable = "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes."
-
+	
 /obj/machinery/chem_dispenser/beer/atom_init()
 	. = ..()
 	component_parts = list()
@@ -546,8 +568,8 @@
 			return 1
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
@@ -910,7 +932,7 @@
 	name = "CondiMaster 3000"
 	condi = 1
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_master/constructable
 	name = "ChemMaster 2999"
@@ -1610,7 +1632,7 @@
 		if(!O.reagents.total_volume)
 			remove_object(O)
 
-//Coin
+	//Coin
 	for (var/obj/item/weapon/coin/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
