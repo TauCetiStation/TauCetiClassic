@@ -134,11 +134,11 @@
 
 /obj/item/borg/upgrade/jetpack/action(mob/living/silicon/robot/R)
 	if(..()) return FALSE
-	if(R.jetpacked == TRUE)
+	if(R.has_jetpack == TRUE)
 		to_chat(usr, "There's no room for another jetpack!")
 		return FALSE
 
-	R.jetpacked = TRUE
+	R.has_jetpack = TRUE
 	return TRUE
 
 
