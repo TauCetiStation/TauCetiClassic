@@ -58,7 +58,16 @@
 				t_his = "her"
 				t_him = "her"
 
-	msg += "<EM>[src.name]"
+	msg += "<EM>[name]"
+
+	if(HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT))
+		var/species_color = species.flesh_color
+		var/species_name = get_species()
+		if(!species.is_common)
+			species_color = COLOR_GRAY
+			species_name = "unknown species"
+		msg += ", <span style='color: [species_color]'>\a [species_name]</span>"
+
 	msg += "</EM>!\n"
 
 	//uniform

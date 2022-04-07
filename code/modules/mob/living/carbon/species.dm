@@ -154,6 +154,9 @@
 	// Emotes this species grants.
 	var/list/emotes
 
+	// The usual species for the station
+	var/is_common = FALSE
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -297,11 +300,10 @@
 	,IS_SOCIAL = TRUE
 	)
 
-	//If you wanted to add a species-level ability:
-	/*abilities = list(/client/proc/test_ability)*/
-
 	min_age = 25
 	max_age = 85
+
+	is_common = TRUE
 
 /datum/species/unathi
 	name = UNATHI
@@ -343,6 +345,8 @@
 
 	min_age = 25
 	max_age = 85
+
+	is_common = TRUE
 
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
@@ -411,6 +415,8 @@
 	min_age = 25
 	max_age = 85
 
+	is_common = TRUE
+
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
 			)
@@ -463,6 +469,8 @@
 
 	min_age = 25
 	max_age = 150
+
+	is_common = TRUE
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
@@ -540,6 +548,8 @@
 
 	min_age = 1
 	max_age = 100
+
+	is_common = TRUE
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
@@ -640,6 +650,8 @@
 	eyes = null
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
+
+	is_common = TRUE
 
 	flags = list(
 	 NO_SCAN = TRUE
@@ -746,6 +758,8 @@
 
 	min_age = 1
 	max_age = 1000
+
+	is_common = TRUE
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST)
 
@@ -964,6 +978,8 @@
 
 	min_age = 1
 	max_age = 125
+
+	is_common = TRUE
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
 
@@ -1265,6 +1281,8 @@
 	min_age = 1
 	max_age = 1000
 
+	is_common = TRUE
+
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
 	..()
 	// Clothing on the Golem is created before the hud_list is generated in the atom
@@ -1472,6 +1490,8 @@
 
 	min_age = 1
 	max_age = 85
+
+	is_common = TRUE
 
 /datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_slime_digest(M)
