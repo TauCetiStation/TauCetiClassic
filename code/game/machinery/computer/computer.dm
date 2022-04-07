@@ -203,12 +203,12 @@
 				H.visible_message("<span class='danger'>[H.name] stares cluelessly at [src] and drools.</span>")
 				return 1
 		if((HAS_TRAIT_FROM(H, TRAIT_WET_HANDS, QUALITY_TRAIT)) || H.gloves?.wet)
-			var/emp_luck = rand(10, 30)
-			if(emp_luck > 22)
+			var/emp_luck = rand(1, 40)
+			if(emp_luck > 24)
 				emp_act(1)
 				to_chat(H, "<span class='warning'>You pressed something and sparks appeared.</span>")
 				return 1
-			else if(emp_luck <= 12)
+			else if(emp_luck <= 4)
 				emp_act(2)
 				to_chat(H, "<span class='warning'>You pressed something and everything is gone.</span>")
 				return 1
@@ -216,7 +216,7 @@
 				emp_act(3)
 				to_chat(H, "<span class='warning'>You poured water on the device.</span>")
 				return 1
-			if(H.gloves.wet)
+			if(H.gloves?.wet)
 				H.electrocute_act(emp_luck)
 				to_chat(H, "<span class='userdanger'>You touch [src] with a glove and get electrocuted.</span>")
 	. = ..()
