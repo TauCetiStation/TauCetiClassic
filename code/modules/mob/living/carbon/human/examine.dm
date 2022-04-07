@@ -60,7 +60,7 @@
 
 	msg += "<EM>[name]"
 
-	if(HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT))
+	if(HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT) && !(skipface && skipjumpsuit))
 		var/species_color = species.flesh_color
 		var/species_name = get_species()
 		if(!species.is_common)
