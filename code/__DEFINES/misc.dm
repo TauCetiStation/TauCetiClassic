@@ -304,3 +304,6 @@
 
 /// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
 #define MAPTEXT(text) {"<span class='maptext'>[##text]</span>"}
+
+//For crawl_can_use() in /mob/living
+#define IS_ABOVE(A, B) (A.layer > B.layer || A.plane > B.plane)

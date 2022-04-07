@@ -1035,7 +1035,11 @@
 /mob/living/proc/crawl_can_use()
 	var/turf/T = get_turf(src)
 	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) || (locate(/obj/structure/plasticflaps) in T))
-		return FALSE
+		var/obj/structure/S
+		for(S in T)
+			if(IS_ABOVE(src, S))
+				return TRUE
+			return FALSE	
 	return TRUE
 
 /mob/living/var/crawl_getup = FALSE
@@ -1049,15 +1053,13 @@
 		R.toggle_all_components()
 		to_chat(R, "<span class='notice'>You toggle all your components.</span>")
 		return
-	
+
 	if(crawl_getup)
 		return
-	
-	if(is_busy())								//(ForceMove) strangely interacts with crawl switching
-		return
-	
+
 	if((status_flags & FAKEDEATH) || buckled)
 		return
+
 //Already crawling and have others debuffs
 	if( crawling && (IsSleeping() || weakened || paralysis || stunned) )
 		to_chat(src, "<span class='rose'>You can't wake up.</span>")
@@ -1073,14 +1075,12 @@
 //Debuffs check
 	else if(!crawling && (IsSleeping() || weakened || paralysis || stunned) )
 		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
-		
+
 	if(crawling)
 		crawl_getup = TRUE
 		if(do_after(src, 10, target = src))
 			crawl_getup = FALSE
 			if(!crawl_can_use())
-				if(layer == MOB_LAYER)							//bump to some structures will reset your layer
-					layer = 2.0
 				playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
