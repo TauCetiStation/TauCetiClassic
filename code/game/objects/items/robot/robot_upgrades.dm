@@ -127,18 +127,19 @@
 	return 1
 
 /obj/item/borg/upgrade/jetpack
-	name = "Модуль маневрирования"
+	name = "robot jetpack"
 	desc = "Используется для маневрирования в зоне низкой гравитации."
 	icon_state = "cyborg_upgrade3"
-	require_module = 1
+	require_module = FALSE
 
 /obj/item/borg/upgrade/jetpack/action(mob/living/silicon/robot/R)
-	if(..()) return 0
-	if(R.jetpacked == 1)
-		return 0
+	if(..()) return FALSE
+	if(R.jetpacked == TRUE)
+		to_chat(usr, "There's no room for another jetpack!")
+		return FALSE
 
-	R.jetpacked = 1
-	return 1
+	R.jetpacked = TRUE
+	return TRUE
 
 
 /obj/item/borg/upgrade/syndicate
