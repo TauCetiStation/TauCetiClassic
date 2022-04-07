@@ -67,6 +67,12 @@
 			species_color = COLOR_GRAY
 			species_name = "unknown species"
 		msg += ", <span style='color: [species_color]'>\a [species_name]</span>"
+		if(species.is_common)
+			var/name_hash = md5("[real_name][global.round_id][global.base_commit_sha]")
+			var/accuracy = round(species.max_age / 10)
+			var/min_bound = (text2ascii(name_hash[1]) + text2ascii(name_hash[2]) + text2ascii(name_hash[3])) % accuracy
+			var/max_bound = (text2ascii(name_hash[length(name_hash)-3]) + text2ascii(name_hash[length(name_hash)-1]) + text2ascii(name_hash[length(name_hash)])) % accuracy
+			msg += ", age between [max(age - min_bound, species.min_age)] and [min(age + max_bound, species.max_age)]"
 
 	msg += "</EM>!\n"
 
@@ -562,9 +568,12 @@
 					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")
 					return
 
-	if(roundstart_quirks.len && isobserver(user))
-		var/mob/dead/observer/O = user
-		if(O.started_as_observer)
+	if(roundstart_quirks.len)
+		var/should_see_quirks = HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT)
+		if(isobserver(user))
+			var/mob/dead/observer/O = user
+			should_see_quirks = O.started_as_observer
+		if(should_see_quirks)
 			msg += "<span class='notice'>[t_He] has these traits: [get_trait_string()].</span>"
 
 	if(!isobserver(user) && user.IsAdvancedToolUser() && !HAS_TRAIT(src, TRAIT_NATURECHILD) && user != src && !check_covered_bodypart(src, LOWER_TORSO))
