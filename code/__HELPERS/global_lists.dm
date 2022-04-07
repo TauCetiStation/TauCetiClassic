@@ -79,11 +79,8 @@
 		for(var/key in L.key)
 			language_keys[":[lowertext(key)]"] = L
 
-	var/rkey = 0
 	for(var/T in subtypesof(/datum/species))
-		rkey++
 		var/datum/species/S = new T
-		S.race_key = rkey //Used in mob icon caching.
 		all_species[S.name] = S
 
 		if(S.flags[IS_WHITELISTED])
