@@ -17,7 +17,11 @@
 	var/mob/living/silicon/robot/R = loc
 
 	add_languages(R)
-
+	
+	jetpack = new /obj/item/weapon/tank/jetpack/carbondioxide(src)
+	jetpack.name = "robot jetpack"
+	
+	
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
 		for(var/obj/O in modules)
@@ -94,8 +98,6 @@
 	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/weapon/melee/energy/sword(src)
-	jetpack = new /obj/item/weapon/tank/jetpack/carbondioxide(src)
-	jetpack.name = "Модуль маневрирования"
 
 /obj/item/weapon/robot_module/standard/respawn_consumable(mob/living/silicon/robot/R)
 	..()
@@ -147,8 +149,6 @@
 
 	emag.reagents.add_reagent("pacid", 250)
 	emag.name = "Polyacid spray"
-	jetpack = new /obj/item/weapon/tank/jetpack/carbondioxide(src)
-	jetpack.name = "Модуль маневрирования"
 
 /obj/item/weapon/robot_module/medical/respawn_consumable(mob/living/silicon/robot/R)
 	if(emag)
@@ -194,9 +194,7 @@
 	modules += new /obj/item/device/gps/cyborg(src)
 
 	emag = new /obj/item/borg/stun(src)
-	jetpack = new /obj/item/weapon/tank/jetpack/carbondioxide(src)
-	jetpack.name = "Модуль маневрирования"
-
+	
 	for(var/T in stacktypes)
 		var/obj/item/stack/W = new T(src)
 		W.set_amount(stacktypes[T])
@@ -214,8 +212,7 @@
 	modules += new /obj/item/taperoll/police(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/weapon/gun/energy/laser/selfcharging/cyborg(src)
-	jetpack = new /obj/item/weapon/tank/jetpack/carbondioxide(src)
-	jetpack.name = "Модуль маневрирования"
+
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
 	..()
@@ -253,9 +250,7 @@
 	if(src.emag)
 		var/obj/item/weapon/reagent_containers/spray/S = src.emag
 		S.reagents.add_reagent("lube", 2)
-	jetpack = new /obj/item/weapon/tank/jetpack/carbondioxide(src)
-	jetpack.name = "Модуль маневрирования"
-	
+
 /obj/item/weapon/robot_module/butler
 	name = "service robot module"
 
@@ -292,8 +287,6 @@
 	R.my_atom = emag
 	R.add_reagent("beer2", 50)
 	emag.name = "Mickey Finn's Special Brew"
-	jetpack = new /obj/item/weapon/tank/jetpack/carbondioxide(src)
-	jetpack.name = "Модуль маневрирования"
 
 /obj/item/weapon/robot_module/butler/add_languages(mob/living/silicon/robot/R)
 	//full set of languages
@@ -330,8 +323,6 @@
 	modules += new /obj/item/weapon/shovel(src)//Need to buff borgdrill, so it can get sand instead shovel
 	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/borg/stun(src)
-	jetpack = new /obj/item/weapon/tank/jetpack/carbondioxide(src)
-	jetpack.name = "Модуль маневрирования"
 	
 /obj/item/weapon/robot_module/syndicate
 	name = "syndicate robot module"
@@ -374,8 +365,6 @@
 	modules += new /obj/item/borg/combat/mobility(src)
 	modules += new /obj/item/weapon/wrench(src)
 	emag = new /obj/item/weapon/gun/energy/lasercannon/cyborg(src)
-	jetpack = new /obj/item/weapon/tank/jetpack/carbondioxide(src)
-	jetpack.name = "Модуль маневрирования"
 	
 /obj/item/weapon/robot_module/science
 	name = "science robot module"
@@ -411,10 +400,7 @@
 
 	emag = new /obj/item/weapon/hand_tele(src) //To fuck people's shit up
 
-	emag.name = "Hand tele"
-	
-	jetpack = new /obj/item/weapon/tank/jetpack/carbondioxide(src)
-	jetpack.name = "Модуль маневрирования"
+	emag.name = "Hand tele"	
 	
 /obj/item/weapon/robot_module/drone
 	name = "drone module"
