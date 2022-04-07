@@ -59,9 +59,6 @@
 				t_him = "her"
 
 	msg += "<EM>[src.name]"
-	if(!(skipface && skipjumpsuit))
-		var/species_name = "[get_species()]"
-		msg += ", <span style='color: [species.flesh_color]'>\a [species_name]</span>"
 	msg += "</EM>!\n"
 
 	//uniform
