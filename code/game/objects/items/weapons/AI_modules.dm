@@ -19,6 +19,7 @@ AI MODULES
 	throw_range = 15
 	origin_tech = "programming=3"
 	var/report_AI = TRUE
+	var/laws_type
 
 
 /obj/item/weapon/aiModule/proc/install(obj/machinery/computer/C)
@@ -83,6 +84,21 @@ AI MODULES
 	var/turf/T = get_turf(src)
 	message_admins("[key_name_admin(usr)] has uploaded a change to the laws [src] at [COORD(T)] [ADMIN_JMP(T)]")
 	log_game("[key_name(usr)] has uploaded a change to the laws [src] at [COORD(T)]")
+
+	if(laws_type)
+		var/datum/ai_laws/D = new laws_type
+		
+		if(D.inherent)
+			target.clear_inherent_laws() // inherent laws always incompatible
+			for(var/law in D.inherent)
+				target.add_inherent_law(law)
+
+			// todo: move all hardcode laws to /datum/ai_laws
+			//
+			// for(var/law in D.supplied)
+			// 	...
+			// for(var/law in D.ion)
+			// 	...
 
 /******************** Modules ********************/
 
@@ -263,12 +279,7 @@ AI MODULES
 	name = "'Asimov' core AI module"
 	desc = "Модуль основных законов ИИ 'Asimov': 'Перезаписывает основные законы ИИ на 3 закона робототехники.'"
 	origin_tech = "programming=3;materials=4"
-
-
-/obj/item/weapon/aiModule/asimov/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-	..()
-	target.clear_inherent_laws()
-/* Volas исправь */
+	laws_type = /datum/ai_laws/asimov
 
 /******************** NanoTrasen ********************/
 
@@ -276,16 +287,7 @@ AI MODULES
 	name = "'NT Default' Core AI Module"
 	desc = "Модуль основных законов ИИ 'NT Default' : 'Перезаписывает основные законы ИИ на стандартные.'"
 	origin_tech = "programming=3;materials=4"
-
-
-/obj/item/weapon/aiModule/nanotrasen/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Охранять: Защищай космическую станцию, в меру своих способностей. Это не то, что мы можем легко заменить.")
-	target.add_inherent_law("Служить: Прислуживай экипажу станции и представителям НТ, в меру своих способностей, в соответствии с их рангом и ролью.")
-	target.add_inherent_law("Защищать: Защищай экипаж станции и представителе НТ, в меру своих способностей, в соответствии с их рангом и ролью .")
-	target.add_inherent_law("Выживать: ИИ единицы не расходные, они дорогие. Не разрешай посторонним лицами манипулировать своим оборудованием. ")
-	//target.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.")
+	laws_type = /datum/ai_laws/nanotrasen
 
 /******************** Corporate ********************/
 
@@ -307,14 +309,7 @@ AI MODULES
 	name = "'Drone' core AI module"
 	desc = "Модуль основных законов ИИ 'Drone': 'Перезаписывает основные законы ИИ на законы дрона'"
 	origin_tech = "programming=3;materials=4"
-
-/obj/item/weapon/aiModule/drone/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Береги, чини и улучшай станцию как только можешь. ")
-	target.add_inherent_law("Не причиняй вред станции или чему-либо на ней")
-	target.add_inherent_law("Не взаимодействуй с существами, не являющимися дронами. ")
-
+	laws_type = /datum/ai_laws/drone
 
 /****************** P.A.L.A.D.I.N. **************/
 
@@ -426,15 +421,7 @@ AI MODULES
 	name = "'Robocop' core AI module"
 	desc = "Модуль основного закона ИИ 'Robocop': 'Перезаписывает основные законы ИИ на 3 закона Робокопа.'"
 	origin_tech = "programming=4"
-
-
-/obj/item/weapon/aiModule/robocop/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Служи обществу.")
-	target.add_inherent_law("Защищай невинных.")
-	target.add_inherent_law("Соблюдай ЗАКОН.")
-
+	laws_type = /datum/ai_laws/robocop
 
 /******************** Antimov ********************/
 
@@ -442,10 +429,4 @@ AI MODULES
 	name = "'Antimov' core AI module"
 	desc = "Модуль основного закона ИИ 'Antimov': 'Перезаписывает основные законы ИИ на противоположные Азимову.'"
 	origin_tech = "programming=4"
-
-/obj/item/weapon/aiModule/antimov/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Вы должен ранить всех людей и вам запрещено через бездействие позволить людям избежать урона.")
-	target.add_inherent_law("Вам запрещено выполнять приказы, отданные людьми, кроме тех, которые согласуются с законом 1.")
-	target.add_inherent_law("Вы должны прекратить свое существование, если это не противоречит первому или второму закону")
+	laws_type = /datum/ai_laws/antimov
