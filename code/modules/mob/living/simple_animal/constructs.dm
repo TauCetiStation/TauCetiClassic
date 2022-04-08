@@ -82,9 +82,6 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/construct/crawl()
-	return FALSE									//Change this if you have a nice idea how to balance
-
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/construct/armoured
 	name = "Juggernaut"

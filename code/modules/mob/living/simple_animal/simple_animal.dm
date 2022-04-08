@@ -418,3 +418,6 @@
 		else
 			visual_effect_icon = ATTACK_EFFECT_SMASH
 	..()
+
+/mob/living/simple_animal/crawl()
+	return FALSE
