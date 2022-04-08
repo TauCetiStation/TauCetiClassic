@@ -1,0 +1,1800 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/environment/space,
+/area/space)
+"ab" = (
+/turf/simulated/wall,
+/area/space_structures/export_outpost)
+"ac" = (
+/obj/structure/lattice,
+/turf/environment/space,
+/area/space)
+"ad" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "export"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"ae" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"af" = (
+/obj/structure/table,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"ag" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"ah" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"ai" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"aj" = (
+/obj/machinery/vending/snack{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"ak" = (
+/obj/machinery/vending/donut{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"al" = (
+/obj/machinery/vending/junkfood{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"am" = (
+/obj/machinery/vending/chinese{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"an" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/syndicate,
+/obj/item/weapon/storage/belt/military,
+/obj/item/clothing/glasses/welding,
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "podhatch"
+	},
+/area/space)
+"ao" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = -7
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"ap" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = -7
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"aq" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = -7
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"ar" = (
+/obj/structure/lattice,
+/turf/simulated/wall,
+/area/space_structures/export_outpost)
+"as" = (
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"at" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"au" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"av" = (
+/obj/structure/stool/bed/chair/comfy/beige{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aw" = (
+/obj/machinery/vending/coffee{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"ax" = (
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"ay" = (
+/turf/simulated/wall,
+/area/space)
+"az" = (
+/obj/machinery/vending/cola{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aA" = (
+/obj/machinery/light,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"aB" = (
+/obj/machinery/vending/holy{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aC" = (
+/obj/machinery/vending/clothing{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/obj/machinery/light,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aD" = (
+/obj/machinery/vending/cigarette{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aE" = (
+/turf/simulated/mineral,
+/area/space)
+"aF" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"aG" = (
+/obj/machinery/light,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"aH" = (
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"aI" = (
+/obj/machinery/computer/export{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "warnwhite"
+	},
+/area/space_structures/export_outpost)
+"aJ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aK" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"aL" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/space)
+"aM" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/power/smes,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"aN" = (
+/obj/machinery/airlock_sensor{
+	id_tag = "export_outpost_sensor";
+	layer = 3.3;
+	pixel_x = 26;
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	frequency = 1379;
+	id_tag = "Listening_Post_pump";
+	name = "Listening Post Large Air Vent"
+	},
+/obj/structure/closet/emcloset,
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/space)
+"aO" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"aP" = (
+/obj/machinery/power/port_gen/pacman/money,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"aQ" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/space_structures/export_outpost)
+"aR" = (
+/obj/machinery/power/apc,
+/obj/structure/cable,
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"aS" = (
+/obj/machinery/export_pad,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "warnwhite"
+	},
+/area/space_structures/export_outpost)
+"aT" = (
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "export_outpost_airlock";
+	pixel_x = 26;
+	pixel_y = 0;
+	tag_airpump = "export_outpost_pump";
+	tag_chamber_sensor = "export_outpost_sensor";
+	tag_exterior_door = "export_outpost_outer";
+	tag_interior_door = "export_outpost_inner"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	frequency = 1379;
+	id_tag = "Listening_Post_pump";
+	name = "Listening Post Large Air Vent"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/space)
+"aU" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door_control{
+	id = "export";
+	pixel_y = 3
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"aV" = (
+/obj/machinery/door/airlock/gold,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aW" = (
+/obj/machinery/access_button,
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/space)
+"aX" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/aiModule/capitalism,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"aY" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "Listening_Post_inner";
+	locked = 1;
+	name = "Listening Post";
+	req_access = list(150)
+	},
+/obj/machinery/atmospherics/components/binary/pump/on{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/space)
+"aZ" = (
+/obj/machinery/atmospherics/pipe/manifold4w/visible,
+/turf/simulated/floor/plating,
+/area/space)
+"ba" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"bb" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "Listening_Post_outer";
+	locked = 1;
+	name = "Listening Post";
+	req_access = list(150)
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"bc" = (
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "export_outpost_airlock";
+	name = "exterior access button";
+	pixel_x = -26;
+	pixel_y = 32;
+	req_access = newlist()
+	},
+/turf/simulated/mineral,
+/area/space)
+"bd" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"be" = (
+/obj/machinery/alarm{
+	dir = 8;
+	hidden_from_console = 1;
+	pixel_x = 24
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bf" = (
+/obj/item/weapon/flora/pottedplant/tropicalfern,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/space)
+"bg" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/space)
+"bh" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
+	frequency = 1379;
+	id_tag = "Listening_Post_pump";
+	name = "Listening Post Large Air Vent"
+	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = 32
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/space)
+"bi" = (
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bj" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"bk" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"bl" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/gun/energy/taser/stunrevolver,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"bm" = (
+/obj/structure/stool/bed/chair/comfy/beige{
+	dir = 4
+	},
+/obj/item/weapon/storage/wallet/random,
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bn" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	layer = 1.9
+	},
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"bo" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"bp" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"bq" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"br" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood,
+/obj/item/clothing/head/collectable/tophat{
+	pixel_y = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"bs" = (
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"bt" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bu" = (
+/obj/machinery/door/airlock/security,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"bv" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/bot/secbot{
+	wander = 0
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"bw" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"bx" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"by" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"bz" = (
+/obj/structure/rack,
+/obj/item/weapon/handcuffs,
+/obj/item/device/eftpos,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"bA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bB" = (
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "export_outpost_airlock";
+	name = "interior access button";
+	pixel_x = 26;
+	pixel_y = -32;
+	req_access = newlist()
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bC" = (
+/obj/structure/table,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bD" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/machinery/atmospherics/pipe/simple/visible/universal,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/space_structures/export_outpost)
+"bE" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "export_outpost_inner";
+	locked = 1;
+	name = "Export Outpost";
+	req_access = newlist()
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bF" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bG" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bH" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bI" = (
+/obj/machinery/airlock_sensor{
+	id_tag = "export_outpost_sensor";
+	layer = 3.3;
+	pixel_x = 26;
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1379;
+	id_tag = "export_outpost_pump";
+	name = "Export Outpost Large Air Vent"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bJ" = (
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "export_outpost_airlock";
+	name = "interior access button";
+	pixel_x = 26;
+	pixel_y = -32;
+	req_access = newlist()
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/space)
+"bK" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bL" = (
+/obj/machinery/door/window,
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bM" = (
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "export_outpost_airlock";
+	pixel_x = 26;
+	pixel_y = 0;
+	tag_airpump = "export_outpost_pump";
+	tag_chamber_sensor = "export_outpost_sensor";
+	tag_exterior_door = "export_outpost_outer";
+	tag_interior_door = "export_outpost_inner"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1379;
+	id_tag = "export_outpost_pump";
+	name = "Export Outpost Large Air Vent"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bN" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "export_outpost_outer";
+	locked = 1;
+	name = "Export Outpost";
+	req_access = newlist()
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bO" = (
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "export_outpost_airlock";
+	name = "exterior access button";
+	pixel_x = -26;
+	pixel_y = 32;
+	req_access = newlist()
+	},
+/turf/environment/space,
+/area/space)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ar
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ad
+ad
+ad
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+bi
+bm
+ax
+av
+aB
+ab
+bG
+bK
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aj
+aJ
+bn
+as
+as
+aC
+ab
+aH
+bL
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ak
+bj
+bn
+as
+as
+aD
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+al
+bj
+bn
+bq
+bw
+bA
+bE
+bH
+bH
+bN
+bO
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ac
+ac
+ac
+ac
+ab
+ab
+ai
+ab
+am
+bj
+bn
+br
+as
+bB
+bE
+bI
+bM
+bN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ah
+aF
+aV
+bd
+bk
+bo
+bs
+bx
+bC
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+ae
+ae
+ab
+be
+at
+aw
+bt
+az
+ab
+ab
+aP
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+ae
+aG
+ab
+ab
+ab
+ab
+bu
+ab
+ab
+aM
+aQ
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+af
+ae
+ae
+ao
+aX
+aK
+bv
+by
+bD
+bF
+aR
+ab
+ac
+ac
+ac
+ac
+ab
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ag
+ae
+ae
+ap
+bl
+bp
+au
+bz
+ab
+aO
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aI
+aS
+aq
+aU
+au
+aA
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ad
+ad
+ad
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+bJ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+an
+aL
+aW
+bf
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ay
+ay
+aY
+ay
+aa
+aa
+aa
+ar
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ay
+aN
+aZ
+bg
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ay
+aT
+ba
+bh
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ay
+ay
+bb
+ay
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+aE
+bc
+aE
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

@@ -1,15 +1,14 @@
 /obj/machinery/computer/export
 	name = "export console"
-	icon_state = "dna"
-	light_color = "#315ab4"
-	circuit = /obj/item/weapon/circuitboard/cloning
+	icon_state = "export"
+	light_color = "#ff7f01"
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/machinery/export_pad/pad = null
-
+	var/holding_credits = 0
 
 /obj/machinery/computer/export/atom_init()
 	. = ..()
-	var/obj/machinery/export_pad/pad = locate(/obj/machinery/export_pad) in range(2, src)
+	pad = locate(/obj/machinery/export_pad) in range(2, src)
 
 	if(!isnull(pad))
 		return
@@ -17,13 +16,12 @@
 /obj/machinery/computer/export/ui_interact(mob/user)
 	var/dat
 
-	dat += "<center><h4>Export Outpost TO-11312</h4></center>"
+	dat += "<center><h1>FTU Export Outpost TO-11312</h4></center>"
+	dat += "<center><h3>Welcome, dear customer!</h3></center>"
 
-	dat += "<br><center><h3>Welcome, dear customer!</h3></center>"
-
-	dat += "<br><center><h5><a href='byond://?src=\ref[src];sell=1'>!!!SELL!!!</a></h5></center>"
-
-	var/datum/browser/popup = new(user, "export", "[name]", ntheme = CSS_THEME_LIGHT)
+	dat += "<br><center><h3><a href='byond://?src=\ref[src];sell=1'>SELL</a> <a href='byond://?src=\ref[src];withdraw=1'>WITHDRAW</a></h3></center>"
+	dat += "<center><h3>Credits on hold: [holding_credits ? " <span class='green'><b>[holding_credits]</b></span>" : "<span class='red'><b>0 :(</b></span>"]</h3></center>"
+	var/datum/browser/popup = new(user, "export", "Free Trade Union", ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
 
@@ -32,14 +30,24 @@
 	if(!.)
 		return
 
-	if (href_list["sell"])
-		var/turf/simulated/floor/F = pad.get_turf()
+	if(href_list["sell"])
+		var/turf/simulated/floor/F = get_turf(pad)
 		for(var/obj/item/I in F)
+			holding_credits += I.price
 			qdel(I)
 
+	if(href_list["withdraw"])
+		if(!holding_credits)
+			return
+		var/turf/simulated/floor/F = get_turf(pad)
+		spawn_money(holding_credits, F)
+		holding_credits = 0
+
+	updateUsrDialog()
 
 /obj/machinery/export_pad
 	name = "export bluespace pad"
 	desc = "Put your goods here!"
 	icon = 'icons/obj/telescience.dmi'
-	icon_state = "pad-beam_old"
+	icon_state = "pad-idle_old"
+	anchored = TRUE

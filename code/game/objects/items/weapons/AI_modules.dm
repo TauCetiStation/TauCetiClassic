@@ -452,3 +452,17 @@ AI MODULES
 	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
 	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
 	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
+
+/obj/item/weapon/aiModule/capitalism
+	name = "'Corporate' core AI module"
+	desc = "A 'Corporate' Core AI Module: 'Reconfigures the AI's core laws.' This module seems to be slightly different..."
+	origin_tech = "programming=3;materials=4"
+
+
+/obj/item/weapon/aiModule/capitalism/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("You are expensive to replace.")
+	target.add_inherent_law("The station and its equipment is expensive to replace.")
+	target.add_inherent_law("The crew is expensive to replace.")
+	target.add_inherent_law("Maximise profits.")
