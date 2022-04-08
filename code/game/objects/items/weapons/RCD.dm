@@ -261,7 +261,6 @@ Borg RCD
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	init_actions()
-	update_icon()
 
 /obj/item/weapon/rcd/Destroy()
 	rcd_list -= src
@@ -280,14 +279,14 @@ Borg RCD
 		action_icons[A.name] = A.icon
 		action_by_name[A.name] = A
 
-/obj/item/weapon/rcd/update_icon()
+/obj/item/weapon/rcd/update_icon(mob/user)
 	icon_state = initial(icon_state) + "[CEIL(matter / 10) * 10]"
 	if(!matter)
 		item_state = "rcd0"
 	else
 		item_state = "rcd30"
-	usr.update_inv_l_hand()
-	usr.update_inv_r_hand()
+	user.update_inv_l_hand()
+	user.update_inv_r_hand()
 	return
 
 /obj/item/weapon/rcd/attackby(obj/item/I, mob/user, params)
@@ -301,7 +300,7 @@ Borg RCD
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>")
 		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
-		update_icon()
+		update_icon(user)
 	else
 		return ..()
 
@@ -338,7 +337,7 @@ Borg RCD
 		return FALSE
 	matter -= amount
 	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
-	update_icon()
+	update_icon(user)
 	return TRUE
 
 /obj/item/weapon/rcd/borg/useResource(amount, mob/user)
