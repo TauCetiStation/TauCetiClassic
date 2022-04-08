@@ -16,12 +16,8 @@
 
 	var/mob/living/silicon/robot/R = loc
 
-	add_languages(R)
-	
-	jetpack = new /obj/item/weapon/tank/jetpack/carbondioxide(src)
-	jetpack.name = "robot jetpack"
-	
-	
+	add_languages(R)	
+		
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
 		for(var/obj/O in modules)
