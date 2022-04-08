@@ -133,8 +133,10 @@
 	require_module = FALSE
 
 /obj/item/borg/upgrade/jetpack/action(mob/living/silicon/robot/R)
-	if(..()) return FALSE
-	if(R.has_jetpack == TRUE)
+	if(..())
+		return FALSE
+
+	if(R.has_jetpack)
 		to_chat(usr, "There's no room for another jetpack!")
 		return FALSE
 
