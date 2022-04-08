@@ -291,14 +291,15 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	var/datum/map_template/pm = new(map=file)
 	var/bounds = pm.bounds
-	if(!bounds)
+	if(!(bounds && bounds.len))
 		return FALSE
 
 	SSmapping.add_new_zlevel(mappath, list(ZTRAIT_AWAY = TRUE, ZTRAIT_LINKAGE = linkage))
 
-	pm.loadMap(world.maxz)
+	var/loaded_stuff = pm.loadMap(world.maxz)
+
 	//initialize things that are normally initialized after map load
-	initTemplateBounds(bounds)
+	initTemplateBounds(loaded_stuff["bounds"])
 	log_game("Z-level loaded [world.maxz]")
 	return TRUE
 
