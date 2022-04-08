@@ -204,7 +204,10 @@
 				return 1
 		if((HAS_TRAIT_FROM(H, TRAIT_WET_HANDS, QUALITY_TRAIT)) || H.gloves?.wet)
 			var/emp_luck = rand(1, 40)
-			if(emp_luck > 24)
+			if(H.gloves?.wet)
+				H.electrocute_act(emp_luck)
+				to_chat(H, "<span class='userdanger'>You touch [src] with a [H.gloves] and get electrocuted.</span>")
+			else if(emp_luck > 24)
 				emp_act(1)
 				to_chat(H, "<span class='warning'>You pressed something and sparks appeared.</span>")
 				return 1
@@ -216,9 +219,6 @@
 				emp_act(3)
 				to_chat(H, "<span class='warning'>You poured water on the device.</span>")
 				return 1
-			if(H.gloves?.wet)
-				H.electrocute_act(emp_luck)
-				to_chat(H, "<span class='userdanger'>You touch [src] with a glove and get electrocuted.</span>")
 	. = ..()
 
 /obj/machinery/computer/attack_paw(mob/user)
