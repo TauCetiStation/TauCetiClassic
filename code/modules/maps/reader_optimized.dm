@@ -290,7 +290,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		return FALSE
 
 	var/datum/map_template/pm = new(map=file)
-	var/bounds = pm.bounds
+	var/list/bounds = pm.bounds
 	if(!(bounds && bounds.len))
 		return FALSE
 
