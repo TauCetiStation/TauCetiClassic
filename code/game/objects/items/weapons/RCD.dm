@@ -57,8 +57,8 @@ Borg RCD
 	var/enough_resources = holder.checkResource(cost, user)
 	return valid_type && enough_resources && !holder.working
 
-/datum/rcd/proc/use_matter()
-	holder.useResource(cost)
+/datum/rcd/proc/use_matter(mob/user)
+	holder.useResource(cost, user)
 
 /datum/rcd/proc/apply(atom/target, mob/user)
 	if(user.is_busy())
@@ -66,7 +66,10 @@ Borg RCD
 	if(!can_act_on(target, user))
 		return
 	holder.working = TRUE
-	rcd_effect = image('icons/effects/rcd.dmi', "construction", ABOVE_LIGHTING_PLANE)
+	if(istype(holder.current_action, /datum/rcd/deconstruct))
+		rcd_effect = image('icons/effects/rcd.dmi', "deconstruction", ABOVE_ALL_MOB_LAYER)
+	else
+		rcd_effect = image('icons/effects/rcd.dmi', "construction", ABOVE_ALL_MOB_LAYER)
 	if(duration)
 		target.add_overlay(rcd_effect)
 	if(!do_after(user, duration, target = target))
@@ -74,7 +77,7 @@ Borg RCD
 		target.cut_overlay(rcd_effect)
 		return
 	if(action(target))
-		use_matter()
+		use_matter(user)
 		holder.activate()
 	target.cut_overlay(rcd_effect)
 	holder.working = FALSE
@@ -103,10 +106,8 @@ Borg RCD
 	else if(istype(target, /turf/simulated/wall))
 		var/turf/simulated/wall/W = target
 		W.ChangeTurf(/turf/simulated/floor/plating/airless)
-	else if(istype(target, /obj/machinery/door/airlock))
-		qdel(target)
 	else
-		return FALSE
+		qdel(target)
 	return TRUE
 
 /datum/rcd/deconstruct/advanced
@@ -120,7 +121,7 @@ Borg RCD
 	can_act_on_types = list(
 		/turf/simulated/floor,
 	)
-	icon = icon('icons/turf/walls/has_false_walls/wall.dmi', "box_small")
+	icon = icon('icons/mob/radial_rcd.dmi', "box_small")
 
 /datum/rcd/wall/action(turf/simulated/floor/F)
 	F.ChangeTurf(/turf/simulated/wall)
@@ -133,7 +134,7 @@ Borg RCD
 	can_act_on_types = list(
 		/turf/environment/space,
 	)
-	icon = icon('icons/turf/floors.dmi', "plating_small")
+	icon = icon('icons/mob/radial_rcd.dmi', "plating_small")
 
 /datum/rcd/floor/action(turf/environment/space/S)
 	S.ChangeTurf(/turf/simulated/floor/plating/airless)
@@ -165,7 +166,7 @@ Borg RCD
 	name = "Airlock"
 	cost = 10
 	duration = 5 SECONDS
-	icon = icon('icons/obj/doors/airlocks/station/public.dmi', "closed_filled")
+	icon = icon('icons/mob/radial_rcd.dmi', "closed_filled")
 
 /datum/rcd/nondense/airlock/action(turf/simulated/floor/F)
 	new /obj/machinery/door/airlock(F)
@@ -175,7 +176,7 @@ Borg RCD
 	name = "Glass Airlock"
 	cost = 10
 	duration = 5 SECONDS
-	icon = icon('icons/obj/doors/airlocks/station2/glass.dmi', "closed_small")
+	icon = icon('icons/mob/radial_rcd.dmi', "closed_small")
 
 /datum/rcd/nondense/airlock/glass/action(turf/simulated/floor/F)
 	new /obj/machinery/door/airlock/glass(F)
@@ -185,7 +186,7 @@ Borg RCD
 	name = "Emergency Shutter"
 	cost = 5
 	duration = 3 SECONDS
-	icon = icon('icons/obj/doors/DoorHazard.dmi', "door_closed_small")
+	icon = icon('icons/mob/radial_rcd.dmi', "door_closed_small")
 
 /datum/rcd/nondense/firedoor/action(turf/simulated/floor/F)
 	new /obj/machinery/door/firedoor(F)
@@ -195,7 +196,7 @@ Borg RCD
 	name = "Window"
 	cost = 3
 	duration = 1.5 SECONDS
-	icon = icon('icons/turf/walls/fakeglass.dmi', "grilleglass")
+	icon = icon('icons/mob/radial_rcd.dmi', "grilleglass")
 	var/window_type = /obj/structure/window/basic
 
 /datum/rcd/nondense/grilleglass/action(turf/simulated/floor/F)
@@ -203,12 +204,13 @@ Borg RCD
 	var/obj/structure/window/W = new window_type(F)
 	W.set_dir(SOUTHWEST)
 	W.ini_dir = SOUTHWEST
+	return TRUE
 
 /datum/rcd/nondense/grilleglass/reinforced
 	name = "Reinforced Window"
 	cost = 4
 	duration = 3 SECONDS
-	icon = icon('icons/turf/walls/fakeglass.dmi', "grillerglass")
+	icon = icon('icons/mob/radial_rcd.dmi', "grillerglass")
 	window_type = /obj/structure/window/reinforced
 
 /obj/item/weapon/rcd
@@ -216,6 +218,7 @@ Borg RCD
 	desc = "A device used to rapidly build walls/floor."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
+	item_state = "rcd30"
 	opacity = FALSE
 	density = FALSE
 	anchored = FALSE
@@ -229,7 +232,7 @@ Borg RCD
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/max_matter = 30
-	var/matter = 0
+	var/matter = 30
 	var/working = FALSE
 	var/disabled = FALSE
 
@@ -258,6 +261,7 @@ Borg RCD
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	init_actions()
+	update_icon()
 
 /obj/item/weapon/rcd/Destroy()
 	rcd_list -= src
@@ -276,6 +280,16 @@ Borg RCD
 		action_icons[A.name] = A.icon
 		action_by_name[A.name] = A
 
+/obj/item/weapon/rcd/update_icon()
+	icon_state = initial(icon_state) + "[CEIL(matter / 10) * 10]"
+	if(!matter)
+		item_state = "rcd0"
+	else
+		item_state = "rcd30"
+	usr.update_inv_l_hand()
+	usr.update_inv_r_hand()
+	return
+
 /obj/item/weapon/rcd/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/rcd_ammo))
 		var/obj/item/weapon/rcd_ammo/A = I
@@ -287,6 +301,7 @@ Borg RCD
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>")
 		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
+		update_icon()
 	else
 		return ..()
 
@@ -323,15 +338,16 @@ Borg RCD
 		return FALSE
 	matter -= amount
 	desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
+	update_icon()
 	return TRUE
-
-/obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
-	return matter >= amount
 
 /obj/item/weapon/rcd/borg/useResource(amount, mob/user)
 	if(!isrobot(user))
 		return FALSE
 	return user:cell:use(amount * 30)
+
+/obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
+	return matter >= amount
 
 /obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
 	if(!isrobot(user))
