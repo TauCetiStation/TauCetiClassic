@@ -132,12 +132,7 @@ var/global/atom/movable/screen/robot_inventory
 	adding += using
 
 //Radio
-	using = new /atom/movable/screen()
-	using.name = "radio"
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = "radio"
-	using.screen_loc = ui_movi
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/radio()
 	src.adding += using
 
 //Module select
@@ -208,11 +203,7 @@ var/global/atom/movable/screen/robot_inventory
 	mymob.throw_icon.screen_loc = ui_borg_store
 
 //Inventory
-	robot_inventory = new /atom/movable/screen()
-	robot_inventory.name = "inventory"
-	robot_inventory.icon = 'icons/mob/screen1_robot.dmi'
-	robot_inventory.icon_state = "inventory"
-	robot_inventory.screen_loc = ui_borg_inventory
+	robot_inventory = new /atom/movable/screen/inventory()
 
 	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = 'icons/mob/screen1_robot.dmi'

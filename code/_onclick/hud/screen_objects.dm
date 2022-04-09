@@ -354,6 +354,18 @@
 	icon_state = "nomod"
 	screen_loc = ui_borg_module
 
+/atom/movable/screen/inventory
+	name = "inventory"
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "inventory"
+	screen_loc = ui_borg_inventory
+
+/atom/movable/screen/radio
+	name = "radio"
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "radio"
+	screen_loc = ui_movi
+	plane = ABOVE_HUD_PLANE
 	
 
 /atom/movable/screen/Click(location, control, params)
