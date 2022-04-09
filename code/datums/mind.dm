@@ -194,7 +194,7 @@
 		tgui_alert(usr, "Not before round-start!", "Alert")
 		return
 	var/out = "<B>[name]</B>[(current && (current.real_name != name))? " (as [current.real_name])": ""]<br>"
-	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
+	out += "Mind currently owned by key: [key] [active ? "(synced)" : "(not synced)"]<br>"
 
 	out +="<B>Available skillsets:</B><br>"
 	if(!length(skills.available_skillsets))
