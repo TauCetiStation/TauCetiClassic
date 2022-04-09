@@ -33,7 +33,7 @@
 
 	var/mob/living/simple_animal/shade/god/god = locate() in get_turf(AOG)
 	if(!istype(god))
-		if(!ishuman(AOG.buckled_mob))
+		if(!ishuman(AOG.buckled_mob) || istype(AOG.buckled_mob, /mob/living/carbon/human/homunculus))
 			to_chat(user, "<span class='warning'>Only humanoid bodies can be accepted.</span>")
 			return FALSE
 
