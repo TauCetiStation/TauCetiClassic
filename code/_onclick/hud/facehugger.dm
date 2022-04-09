@@ -72,12 +72,7 @@
 	src.adding += using
 	move_intent = using
 
-	using = new /atom/movable/screen()
-	using.name = "drop"
-	using.icon = 'icons/mob/screen1_xeno.dmi'
-	using.icon_state = "act_drop"
-	using.screen_loc = ui_drop_throw
-	using.plane = HUD_PLANE
+	using = new /atom/movable/screen/drop/alien()
 	src.adding += using
 
 	inv_box = new /atom/movable/screen/inventory()

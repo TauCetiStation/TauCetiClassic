@@ -331,6 +331,31 @@
 	icon_state = "internal0"
 	screen_loc = ui_internal
 
+/atom/movable/screen/throw
+	name = "throw"
+	icon_state = "act_throw_off"
+	screen_loc = ui_drop_throw
+
+/atom/movable/screen/throw/alien
+	icon = 'icons/mob/screen1_xeno.dmi'
+
+/atom/movable/screen/drop
+	name = "drop"
+	icon_state = "act_drop"
+	screen_loc = ui_drop_throw
+	plane = HUD_PLANE
+
+/atom/movable/screen/drop/alien
+	icon = 'icons/mob/screen1_xeno.dmi'
+
+/atom/movable/screen/module
+	name = "module"
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "nomod"
+	screen_loc = ui_borg_module
+
+	
+
 /atom/movable/screen/Click(location, control, params)
 	if(!usr)
 		return TRUE
@@ -500,9 +525,6 @@
 		if("module")
 			if(isrobot(usr))
 				var/mob/living/silicon/robot/R = usr
-//				if(R.module)
-//					R.hud_used.toggle_show_robot_modules()
-//					return TRUE
 				R.pick_module()
 
 		if("inventory")

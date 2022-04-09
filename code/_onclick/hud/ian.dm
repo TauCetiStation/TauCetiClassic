@@ -142,12 +142,8 @@
 	using.screen_loc = ui_ian_pselect
 	src.adding += using
 
-	using = new
-	using.name = "drop"
+	using = new /atom/movable/screen/drop
 	using.icon = ui_style
-	using.icon_state = "act_drop"
-	using.screen_loc = ui_drop_throw
-	using.plane = HUD_PLANE
 	src.adding += using
 
 	inv_box = new

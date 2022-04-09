@@ -70,12 +70,8 @@
 	src.adding += using
 	move_intent = using
 
-	using = new /atom/movable/screen()
-	using.name = "drop"
+	using = new /atom/movable/screen/drop()
 	using.icon = ui_style
-	using.icon_state = "act_drop"
-	using.screen_loc = ui_drop_throw
-	using.plane = HUD_PLANE
 	src.adding += using
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -136,11 +132,8 @@
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
 
-	mymob.throw_icon = new /atom/movable/screen()
+	mymob.throw_icon = new /atom/movable/screen/throw()
 	mymob.throw_icon.icon = ui_style
-	mymob.throw_icon.icon_state = "act_throw_off"
-	mymob.throw_icon.name = "throw"
-	mymob.throw_icon.screen_loc = ui_drop_throw
 
 	mymob.internals = new /atom/movable/screen/internal()
 	mymob.internals.icon = ui_style

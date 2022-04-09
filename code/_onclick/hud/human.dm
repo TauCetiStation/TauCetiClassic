@@ -77,12 +77,8 @@
 	src.adding += using
 	move_intent = using
 
-	using = new /atom/movable/screen()
-	using.name = "drop"
+	using = new /atom/movable/screen/drop()
 	using.icon = ui_style
-	using.icon_state = "act_drop"
-	using.screen_loc = ui_drop_throw
-	using.plane = HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.hotkeybuttons += using
@@ -319,11 +315,8 @@
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
 
-	mymob.throw_icon = new /atom/movable/screen()
+	mymob.throw_icon = new /atom/movable/screen/throw()
 	mymob.throw_icon.icon = ui_style
-	mymob.throw_icon.icon_state = "act_throw_off"
-	mymob.throw_icon.name = "throw"
-	mymob.throw_icon.screen_loc = ui_drop_throw
 	mymob.throw_icon.color = ui_color
 	mymob.throw_icon.alpha = ui_alpha
 	src.hotkeybuttons += mymob.throw_icon

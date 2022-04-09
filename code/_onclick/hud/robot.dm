@@ -189,11 +189,7 @@ var/global/atom/movable/screen/robot_inventory
 	mymob.healths.screen_loc = ui_borg_health
 
 //Installed Module
-	mymob.hands = new /atom/movable/screen()
-	mymob.hands.icon = 'icons/mob/screen1_robot.dmi'
-	mymob.hands.icon_state = "nomod"
-	mymob.hands.name = "module"
-	mymob.hands.screen_loc = ui_borg_module
+	mymob.hands = new /atom/movable/screen/module()
 
 //Module Panel
 	using = new /atom/movable/screen()

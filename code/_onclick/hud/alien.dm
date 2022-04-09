@@ -99,12 +99,7 @@
 	src.adding += using
 	move_intent = using
 
-	using = new /atom/movable/screen()
-	using.name = "drop"
-	using.icon = 'icons/mob/screen1_xeno.dmi'
-	using.icon_state = "act_drop"
-	using.screen_loc = ui_drop_throw
-	using.plane = HUD_PLANE
+	using = new /atom/movable/screen/drop/alien()
 	src.adding += using
 
 	inv_box = new /atom/movable/screen/inventory()
@@ -168,11 +163,7 @@
 		mymob.neurotoxin_icon.screen_loc = ui_storage1
 		src.adding += mymob.neurotoxin_icon
 
-	mymob.throw_icon = new /atom/movable/screen()
-	mymob.throw_icon.icon = 'icons/mob/screen1_xeno.dmi'
-	mymob.throw_icon.icon_state = "act_throw_off"
-	mymob.throw_icon.name = "throw"
-	mymob.throw_icon.screen_loc = ui_drop_throw
+	mymob.throw_icon = new /atom/movable/screen/throw/alien()
 
 	mymob.xenomorph_plasma_display = new /atom/movable/screen()
 	mymob.xenomorph_plasma_display.icon = 'icons/mob/screen1_xeno.dmi'
