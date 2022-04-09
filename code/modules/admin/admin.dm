@@ -1154,10 +1154,7 @@ var/global/BSACooldown = 0
 	M.mind.edit_memory()
 	feedback_add_details("admin_verb","STP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/show_skills_panel(mob/M in mob_list)
-	set category = "Admin"
-	set desc = "Edit mobs's skills."
-	set name = "Show Skill Panel"
+/datum/admins/proc/show_skills_panel(mob/M)
 
 	if(!istype(M))
 		to_chat(usr, "This can only be used on instances of type /mob")
