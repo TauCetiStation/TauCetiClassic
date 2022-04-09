@@ -653,14 +653,14 @@ BLIND     // can't see anything
 	set_sensors()
 
 /obj/item/clothing/under/proc/rollsuit()
-	if(!isliving(user) && user.incapacitated())
+	if(!isliving(usr) && usr.incapacitated())
 		return
 
 	if(copytext(item_state,-2) != "_d")
 		basecolor = item_state
 	if((basecolor + "_d") in icon_states('icons/mob/uniform.dmi'))
 		item_state = item_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
-		user.update_inv_w_uniform()
+		usr.update_inv_w_uniform()
 	else
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 
