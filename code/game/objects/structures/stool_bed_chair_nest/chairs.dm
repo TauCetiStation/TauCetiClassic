@@ -124,11 +124,7 @@
 		buckled_mob.set_dir(dir)
 		buckled_mob.update_canmove()
 
-/obj/structure/stool/bed/chair/verb/rotate()
-	set name = "Rotate Chair"
-	set category = "Object"
-	set src in oview(1)
-
+/obj/structure/stool/bed/chair/proc/rotate()
 	if(!config.ghost_interaction && isobserver(usr))
 		return
 	if(ismouse(usr))
@@ -141,6 +137,9 @@
 	set_dir(turn(src.dir, 90))
 	handle_rotation()
 	return
+
+/obj/structure/stool/bed/chair/RightClick(mob/user)
+	rotate()
 
 /obj/structure/stool/bed/chair/post_buckle_mob(mob/living/M)
 	. = ..()

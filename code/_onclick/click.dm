@@ -96,6 +96,9 @@
 	if(modifiers[CTRL_CLICK])
 		CtrlClickOn(A)
 		return
+	if(modifiers[RIGHT_CLICK])
+		RightClickOn(A)
+		return
 	if(HardsuitClickOn(A))
 		return
 	if(RegularClickOn(A))
@@ -352,6 +355,24 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
+	return
+
+
+/*
+	Right click
+*/
+/mob/proc/RightClickOn(atom/A)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CLICK_RIGHT, A) & COMPONENT_CANCEL_CLICK)
+		return
+
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_RIGHTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
+
+	A.RightClick(src)
+	return
+
+/atom/proc/RightClick(mob/user)
 	return
 
 /*

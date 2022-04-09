@@ -94,8 +94,7 @@
 	add_click_catcher()
 
 	client.screen += blocker
-
-	if(isAI(src))
-		client.show_popup_menus = 0
+	if(client.holder && (client.holder.rights & R_ADMIN))
+		client.show_popup_menus = TRUE
 	else
-		client.show_popup_menus = 1
+		client.show_popup_menus = FALSE

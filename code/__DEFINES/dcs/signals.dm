@@ -207,11 +207,15 @@
 #define COMSIG_ITEM_CTRLCLICKWITH "item_ctrlclickwith"
 /// from base of mob/AltClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_ALTCLICKWITH "item_altclickwith"
+
 /// from base of mob/CtrlShiftClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_CTRLSHIFTCLICKWITH "item_ctrlshiftclickwith"
 /// from base of mob/MiddleClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_MIDDLECLICKWITH "item_middleclickwith"
-	#define COMSIG_ITEM_CANCEL_CLICKWITH 1
+/// from base of mob/RightClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_RIGHTCLICKWITH "item_rightclickwith"
+
+#define COMSIG_ITEM_CANCEL_CLICKWITH 1
 /// from base of atom/MouseDrop(): (/atom/over, /atom/dropping, /mob/user)
 #define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"
 	// #define COMPONENT_NO_MOUSEDROP 1
@@ -281,6 +285,8 @@
 #define COMSIG_LIVING_CLICK_CTRL "living_click_ctrl"
 /// from base of mob/CtrlShiftClickOn(): (atom/target)
 #define COMSIG_LIVING_CLICK_CTRL_SHIFT "living_click_ctrl_shift"
+/// from base of mob/RightClickOn(): (atom/target)
+#define COMSIG_LIVING_CLICK_RIGHT "living_click_right"
 /// from slime CtrlClickOn(): (/mob)
 #define COMSIG_XENO_SLIME_CLICK_CTRL "xeno_slime_click_ctrl"
 /// from slime ShiftClickOn(): (/mob)
