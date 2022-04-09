@@ -209,7 +209,7 @@
 	sorted_max = sortTim(sorted_max, /proc/cmp_numeric_dsc, TRUE)
 	var/row = 0
 	for(var/skill_name in sorted_max)
-		if((row % 3)==0)
+		if(row % 3 == 0)
 			out += "</tr><tr>"
 		var/datum/skill/available_skill =  skills.available.get_skill(skill_name)
 		var/rank_name = get_skill_rank_name(available_skill, available_skill.value)
