@@ -103,7 +103,7 @@ var/global/BSACooldown = 0
 		[check_rights(R_ADMIN,0) ? "<A href='?src=\ref[src];traitor=\ref[M]'>Traitor panel</A> | " : "" ]
 		<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> |
 		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A> |
-		[check_rights(R_ADMIN,0) ? "<A href='?src=\ref[src];skills=\ref[M]'>Skills panel</A>": "" ]
+		<A href='?src=\ref[src];skills=\ref[M]'>Skills panel</A>
 	"}
 
 	if (M.client)

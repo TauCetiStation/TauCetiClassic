@@ -193,24 +193,24 @@
 	if(!SSticker || !SSticker.mode)
 		tgui_alert(usr, "Not before round-start!", "Alert")
 		return
-	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
+	var/out = "<B>[name]</B>[(current && (current.real_name != name))? " (as [current.real_name])": ""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
 
 	out +="<B>Available skillsets:</B><br>"
-	if(isnull(skills.available_skillsets) || skills.available_skillsets.len == 0)
+	if(!length(skills.available_skillsets))
 		out +="<i>This mob has no skillsets.</i><br>"
 	for(var/datum/skillset/skillset in skills.available_skillsets)
 		out +="<i>[skillset]</i><a href='?src=\ref[src];delete_skillset=[skillset]'>-</a><br>"
 	out += "<br><a href='?src=\ref[src];add_skillset=1'>Add skillset</a><br>"
 	out += "<B>Maximum skill values:</B><br><table>"
-	var/i = 0
 	var/sorted_max = list()
 	for(var/datum/skill/s as anything in skills_list)
 		var/datum/skill/skill = all_skills[s]
 		sorted_max[skill.name] = skills.get_max(skill.name)
 	sorted_max = sortTim(sorted_max, /proc/cmp_numeric_dsc, TRUE)
+	var/row = 0
 	for(var/skill_name in sorted_max)
-		if((i%3)==0)
+		if((row % 3)==0)
 			out += "</tr><tr>"
 		var/datum/skill/available_skill =  skills.available.get_skill(skill_name)
 		var/rank_name = available_skill.rank_name
@@ -219,7 +219,7 @@
 			if(skill.value == available_skill.value)
 				rank_name = skill.rank_name
 		out +="<td>[skill_name]:  [rank_name] ([available_skill.value])</td>"
-		i++
+		row++
 	out +="</table>"
 	out += "<a href='?src=\ref[src];maximize_skills=1'>Set current skills equal to available skills</a><br>"
 	out += "<a href='?src=\ref[src];add_max=1'>Add maximal skillset</a><br>"
