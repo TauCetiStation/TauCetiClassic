@@ -286,6 +286,46 @@
 	else
 		icon_state = "pull0"
 
+/atom/movable/screen/toggle
+	name = "toggle"
+	icon = ui_style
+	icon_state = "other"
+	screen_loc = ui_inventory
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/equip
+	name = "equip"
+	icon_state = "act_equip"
+	screen_loc = ui_equip
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/current_sting
+	icon = 'icons/mob/screen_gen.dmi'
+	name = "current sting"
+	screen_loc = ui_lingstingdisplay
+	plane = ABOVE_HUD_PLANE
+	invisibility = INVISIBILITY_ABSTRACT
+
+/atom/movable/screen/resist
+	name = "resist"
+	icon_state = "act_resist"
+	screen_loc = ui_pull_resist
+	plane = HUD_PLANE
+
+/atom/movable/screen/resist/ian
+	screen_loc = ui_drop_throw
+
+/atom/movable/screen/resist/alien
+	icon = 'icons/mob/screen1_xeno.dmi'
+
+/atom/movable/screen/move_intent
+	name = "mov_intent"
+	screen_loc = ui_movi
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/move_intent/alien
+	icon = 'icons/mob/screen1_xeno.dmi'
+
 /atom/movable/screen/Click(location, control, params)
 	if(!usr)
 		return TRUE

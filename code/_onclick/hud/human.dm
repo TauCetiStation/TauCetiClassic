@@ -69,12 +69,9 @@
 
 //end intent small hud objects
 
-	using = new /atom/movable/screen()
-	using.name = "mov_intent"
+	using = new /atom/movable/screen/move_intent()
 	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi
-	using.plane = ABOVE_HUD_PLANE
+	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.adding += using
@@ -227,32 +224,20 @@
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
 
-	using = new /atom/movable/screen()
-	using.name = "resist"
+	using = new/atom/movable/screen/resist()
 	using.icon = ui_style
-	using.icon_state = "act_resist"
-	using.screen_loc = ui_pull_resist
-	using.plane = HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.hotkeybuttons += using
 
-	using = new /atom/movable/screen()
-	using.name = "toggle"
+	using = new /atom/movable/screen/toggle()
 	using.icon = ui_style
-	using.icon_state = "other"
-	using.screen_loc = ui_inventory
-	using.plane = ABOVE_HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.adding += using
 
-	using = new /atom/movable/screen()
-	using.name = "equip"
+	using = new /atom/movable/screen/equip()
 	using.icon = ui_style
-	using.icon_state = "act_equip"
-	using.screen_loc = ui_equip
-	using.plane = ABOVE_HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.adding += using
@@ -385,12 +370,7 @@
 	lingchemdisplay.plane = ABOVE_HUD_PLANE
 	lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
-	lingstingdisplay = new /atom/movable/screen()
-	lingstingdisplay.icon = 'icons/mob/screen_gen.dmi'
-	lingstingdisplay.name = "current sting"
-	lingstingdisplay.screen_loc = ui_lingstingdisplay
-	lingstingdisplay.plane = ABOVE_HUD_PLANE
-	lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
+	lingstingdisplay = new /atom/movable/screen/current_sting()
 
 	mymob.pain = new /atom/movable/screen( null )
 

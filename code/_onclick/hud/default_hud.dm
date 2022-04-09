@@ -66,12 +66,9 @@
 
 //end intent small hud objects
 
-	using = new /atom/movable/screen()
-	using.name = "mov_intent"
+	using = new /atom/movable/screen/move_intent()
 	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
-	using.screen_loc = ui_movi
-	using.plane = ABOVE_HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.adding += using

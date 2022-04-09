@@ -121,19 +121,13 @@
 	src.adding += using
 	harm_intent = using
 
-	using = new
-	using.name = "resist"
+	using = new /atom/movable/screen/resist/ian
 	using.icon = ui_style
-	using.icon_state = "act_resist"
-	using.screen_loc = ui_drop_throw
-	using.plane = HUD_PLANE
 	src.hotkeybuttons += using
 
-	using = new
-	using.name = "mov_intent"
+	using = new /atom/movable/screen/move_intent
 	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi
+	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	src.adding += using
 	move_intent = using
 

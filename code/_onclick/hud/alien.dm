@@ -94,13 +94,8 @@
 
 //end intent small hud objects
 
-	using = new /atom/movable/screen()
-	using.name = "mov_intent"
-	using.set_dir(SOUTHWEST)
-	using.icon = 'icons/mob/screen1_xeno.dmi'
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/move_intent/alien()
+	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	src.adding += using
 	move_intent = using
 
@@ -160,12 +155,7 @@
 	mymob.nightvisionicon.screen_loc = ui_alien_nightvision
 	src.adding += mymob.nightvisionicon
 
-	using = new /atom/movable/screen()
-	using.name = "resist"
-	using.icon = 'icons/mob/screen1_xeno.dmi'
-	using.icon_state = "act_resist"
-	using.screen_loc = ui_pull_resist
-	using.plane = HUD_PLANE
+	using = new /atom/movable/screen/resist/alien()
 	src.adding += using
 
 	if(isxenohunter(mymob))

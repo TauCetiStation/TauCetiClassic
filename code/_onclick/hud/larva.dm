@@ -62,13 +62,8 @@
 	src.adding += using
 	harm_intent = using
 
-	using = new /atom/movable/screen()
-	using.name = "mov_intent"
-	using.set_dir(SOUTHWEST)
-	using.icon = 'icons/mob/screen1_xeno.dmi'
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/move_intent/alien()
+	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	src.adding += using
 	move_intent = using
 

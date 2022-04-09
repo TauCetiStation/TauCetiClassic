@@ -64,12 +64,9 @@
 
 //end intent small hud objects
 
-	using = new /atom/movable/screen()
-	using.name = "mov_intent"
+	using = new /atom/movable/screen/move_intent()
 	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
-	using.screen_loc = ui_movi
-	using.plane = ABOVE_HUD_PLANE
+	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	src.adding += using
 	move_intent = using
 
@@ -170,12 +167,7 @@
 	lingchemdisplay.plane = ABOVE_HUD_PLANE
 	lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
-	lingstingdisplay = new /atom/movable/screen()
-	lingstingdisplay.icon = 'icons/mob/screen_gen.dmi'
-	lingstingdisplay.name = "current sting"
-	lingstingdisplay.screen_loc = ui_lingstingdisplay
-	lingstingdisplay.plane = ABOVE_HUD_PLANE
-	lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
+	lingstingdisplay = new /atom/movable/screen/current_sting()
 
 	mymob.zone_sel = new /atom/movable/screen/zone_sel()
 	mymob.zone_sel.icon = ui_style
