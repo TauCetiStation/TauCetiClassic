@@ -365,9 +365,6 @@
 
 				C.set_m_intent(C.m_intent == MOVE_INTENT_WALK ? MOVE_INTENT_RUN : MOVE_INTENT_WALK)
 
-		if("Reset Machine")
-			usr.unset_machine()
-
 		if("internal")
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
