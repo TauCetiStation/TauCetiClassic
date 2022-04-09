@@ -78,10 +78,7 @@
 		to_chat(user, "<span class='notice'>The [src] is empty.</span>")
 
 
-/obj/machinery/pdapainter/verb/ejectpda()
-	set name = "Eject PDA"
-	set category = "Object"
-	set src in oview(1)
+/obj/machinery/pdapainter/proc/ejectpda()
 	if(usr.incapacitated())
 		return
 
@@ -92,6 +89,8 @@
 	else
 		to_chat(usr, "<span class='notice'>The [src] is empty.</span>")
 
+/obj/machinery/pdapainter/RightClick()
+	ejectpda()
 
 /obj/machinery/pdapainter/power_change()
 	..()

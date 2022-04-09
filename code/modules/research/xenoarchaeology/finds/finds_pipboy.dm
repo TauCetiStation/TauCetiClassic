@@ -30,9 +30,6 @@
 	START_PROCESSING(SSobj, src)
 	icon_state = "[initial(icon_state)]_off"
 	on = 0
-	verbs -= /obj/item/clothing/gloves/pipboy/verb/switch_off
-
-
 /obj/item/clothing/gloves/pipboy/process()
 	if(alarm_playing == 1)
 		return
@@ -69,24 +66,24 @@
 		return
 	interact(usr)
 
-/obj/item/clothing/gloves/pipboy/verb/switch_off()
-	set name = "Switch Off"
-	set category = "Object"
+/obj/item/clothing/gloves/pipboy/proc/switch_off()
 	icon_state = "[initial(icon_state)]_off"
 	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 	on = 0
 	set_light(0)
-	verbs -= /obj/item/clothing/gloves/pipboy/verb/switch_off
 
-/obj/item/clothing/gloves/pipboy/verb/toggle_output()
-	set name = "Toggle Output"
-	set category = "Object"
+/obj/item/clothing/gloves/pipboy/RightClick()
+	switch_off()
 
+/obj/item/clothing/gloves/pipboy/proc/toggle_output()
 	output_to_chat = !output_to_chat
 	if(output_to_chat)
 		to_chat(usr, "The scanner now outputs data to chat.")
 	else
 		to_chat(usr, "The scanner now outputs data in a seperate window.")
+
+/obj/item/clothing/gloves/pipboy/AltClick()
+	toggle_output()
 
 /obj/item/clothing/gloves/pipboy/attack(mob/living/M, mob/living/user, def_zone)
 	if(!health_analyze_mode || !on)
@@ -205,7 +202,6 @@
 		to_chat(user, "<span class='notice'>[bicon(src)]You blow the dust off the [name]'s screen and twist the power button. A small screen happily lights up. This device is now on.</span>")
 		set_light(2, 1, "#59f65f")
 		on = 1
-		verbs += /obj/item/clothing/gloves/pipboy/verb/switch_off
 		playsound(src, 'sound/mecha/powerup.ogg', VOL_EFFECTS_MASTER, 30)
 		return
 

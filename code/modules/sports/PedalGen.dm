@@ -170,13 +170,9 @@
 	qdel(Generator)
 	return..()
 
-/obj/structure/stool/bed/chair/pedalgen/verb/release()
-	set name = "Release Pedalgen"
-	set category = "Object"
-	set src in view(0)
-
+/obj/structure/stool/bed/chair/pedalgen/RightClick()
 	if(usr.restrained())
-		to_chat(usr, "You can't do it until you restrained")
+		to_chat(usr, "You can't get off [src], you're buckled to it!")
 		return
 
 	unbuckle_mob()

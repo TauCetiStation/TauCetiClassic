@@ -8,8 +8,6 @@
 
 	dyed_type = DYED_SOFTCAP
 
-	action_button_name = "Flip Cap"
-
 	var/flipped = FALSE
 	var/cap_color
 
@@ -27,6 +25,9 @@
 		to_chat(user, "You flip the hat back in normal position.")
 
 	update_inv_mob()
+
+/obj/item/clothing/head/soft/RightClick(mob/user)
+	attack_self(user)
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"

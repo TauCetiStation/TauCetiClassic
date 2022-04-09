@@ -602,7 +602,7 @@ BLIND     // can't see anything
 		if(SUIT_SENSOR_TRACKING)
 			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
 
-/obj/item/clothing/under/proc/set_sensors(mob/usr)
+/obj/item/clothing/under/proc/set_sensors()
 	var/mob/M = usr
 	if (istype(M, /mob/dead)) return
 	if (usr.incapacitated())
@@ -649,27 +649,23 @@ BLIND     // can't see anything
 			var/mob/living/carbon/C = src.loc
 			C.update_suit_sensors()
 
-/obj/item/clothing/under/verb/toggle()
-	set name = "Toggle Suit Sensors"
-	set category = "Object"
-	set src in usr
-	set_sensors(usr)
+/obj/item/clothing/under/AltClick()
+	set_sensors()
 
-/obj/item/clothing/under/verb/rollsuit()
-	set name = "Roll Down Jumpsuit"
-	set category = "Object"
-	set src in usr
-	if(!isliving(usr)) return
-	if(usr.incapacitated())
+/obj/item/clothing/under/proc/rollsuit()
+	if(!isliving(user) && user.incapacitated())
 		return
 
 	if(copytext(item_state,-2) != "_d")
 		basecolor = item_state
 	if((basecolor + "_d") in icon_states('icons/mob/uniform.dmi'))
 		item_state = item_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
-		usr.update_inv_w_uniform()
+		user.update_inv_w_uniform()
 	else
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
+
+/obj/item/clothing/under/RightClick()
+	rollsuit()
 
 /obj/item/clothing/under/wash_act(w_color)
 	. = ..()
@@ -678,7 +674,6 @@ BLIND     // can't see anything
 /obj/item/clothing/under/rank/atom_init()
 	sensor_mode = pick(SUIT_SENSOR_OFF, SUIT_SENSOR_BINARY, SUIT_SENSOR_VITAL, SUIT_SENSOR_TRACKING)
 	. = ..()
-
 
 /obj/item/clothing/head/festive
 	name = "festive paper hat"

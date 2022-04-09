@@ -195,12 +195,8 @@
 	pixel_y = 0
 	resting = FALSE
 
-/mob/living/pbag/verb/user_hang()
-	set name = "Hang Bag"
-	set category = "Object"
-	set src in view(1)
-
-	hang_up(usr)
+/mob/living/pbag/RightClick(mob/user)
+	hang_up(user)
 
 /mob/living/pbag/proc/hang_up(mob/living/user)
 	if(isliving(user) && !is_bigger_than(user))

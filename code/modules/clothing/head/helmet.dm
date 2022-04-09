@@ -57,11 +57,7 @@
 /obj/item/clothing/head/helmet/riot/attack_self()
 	toggle()
 
-/obj/item/clothing/head/helmet/riot/verb/toggle()
-	set category = "Object"
-	set name = "Adjust helmet visor"
-	set src in usr
-
+/obj/item/clothing/head/helmet/riot/proc/toggle()
 	if(!usr.incapacitated())
 		if(src.up)
 			src.up = !src.up
@@ -74,6 +70,9 @@
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push the visor up on")
 		usr.update_inv_head()	//so our mob-overlays update
+
+/obj/item/clothing/head/helmet/riot/RightClick()
+	toggle()
 
 /obj/item/clothing/head/helmet/bulletproof
 	name = "bulletproof helmet"
