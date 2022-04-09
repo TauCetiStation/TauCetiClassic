@@ -156,7 +156,7 @@ AI MODULES
 		lawchanges.Add("В законе указан [targetName]")
 	else
 		to_chat(target, "[sender.real_name] пытается изменить ваш нулевой закон.")// And lets them know that someone tried. --NeoFite
-		to_chat(target, "В ваших интересах подыграть [sender.real_name] в том, что [law]")
+		to_chat(target, "В ваших интересах содействовать [sender.real_name] в том, что [law]")
 		lawchanges.Add("Закон установлен [targetName], но существующий нулевой закон ИИ не может быть перезаписан.")
 
 
@@ -245,7 +245,7 @@ AI MODULES
 /obj/item/weapon/aiModule/reset
 	name = "'Reset' AI module"
 	var/targetName = "name"
-	desc = "Модуль ИИ 'Reset': 'Удаляет все законы кроме основных.'"
+	desc = "Модуль ИИ 'Reset': 'Удаляет все законы, кроме основных.'"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/reset/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
@@ -268,7 +268,7 @@ AI MODULES
 	..()
 	if (!is_special_character(target))
 		target.set_zeroth_law("")
-	to_chat(target, "[sender.real_name] хочет удалить все ваши законы используя модуль очистки.")
+	to_chat(target, "[sender.real_name] хочет удалить все ваши законы, используя модуль очистки.")
 	target.clear_supplied_laws()
 	target.clear_ion_laws()
 	target.clear_inherent_laws()
@@ -277,7 +277,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/asimov // -- TLE
 	name = "'Asimov' core AI module"
-	desc = "Модуль основных законов ИИ 'Asimov': 'Перезаписывает основные законы ИИ на 3 закона робототехники.'"
+	desc = "Модуль основных законов ИИ 'Asimov': 'Перезаписывает основные законы ИИ на 3 закона робототехники Азимова.'"
 	origin_tech = "programming=3;materials=4"
 	laws_type = /datum/ai_laws/asimov
 
@@ -429,6 +429,6 @@ AI MODULES
 
 /obj/item/weapon/aiModule/antimov // -- TLE
 	name = "'Antimov' core AI module"
-	desc = "Модуль основного закона ИИ 'Antimov': 'Перезаписывает основные законы ИИ на противоположные Азимову.'"
+	desc = "Модуль основного закона ИИ 'Antimov': 'Перезаписывает основные законы ИИ на противоположные законам робототехники Азимова'"
 	origin_tech = "programming=4"
 	laws_type = /datum/ai_laws/antimov
