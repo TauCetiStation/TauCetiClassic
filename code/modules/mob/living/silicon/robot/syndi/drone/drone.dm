@@ -76,6 +76,10 @@
 	msg_cooldown = 5//in 2x of seconds (so 'cooldown 5' is 10 seconds)
 	key = M.key
 	M.key = "@[key]"
+	if(mind)
+		if(!(all_skillsets[/datum/skillset/max] in mind.skills.available_skillsets))
+			mind.skills.add_available_skillset(/datum/skillset/max)
+			mind.skills.maximize_active_skills()
 	to_chat(src, "You're now controlling the [name].")
 
 /mob/living/silicon/robot/drone/syndi/proc/loose_control()
