@@ -326,6 +326,11 @@
 /atom/movable/screen/move_intent/alien
 	icon = 'icons/mob/screen1_xeno.dmi'
 
+/atom/movable/screen/internal
+	name = "internal"
+	icon_state = "internal0"
+	screen_loc = ui_internal
+
 /atom/movable/screen/Click(location, control, params)
 	if(!usr)
 		return TRUE

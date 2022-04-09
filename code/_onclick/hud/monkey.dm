@@ -142,11 +142,8 @@
 	mymob.throw_icon.name = "throw"
 	mymob.throw_icon.screen_loc = ui_drop_throw
 
-	mymob.internals = new /atom/movable/screen()
+	mymob.internals = new /atom/movable/screen/internal()
 	mymob.internals.icon = ui_style
-	mymob.internals.icon_state = "internal0"
-	mymob.internals.name = "internal"
-	mymob.internals.screen_loc = ui_internal
 
 	mymob.healths = new /atom/movable/screen()
 	mymob.healths.icon = ui_style

@@ -328,13 +328,10 @@
 	mymob.throw_icon.alpha = ui_alpha
 	src.hotkeybuttons += mymob.throw_icon
 
-	mymob.internals = new /atom/movable/screen()
+	mymob.internals = new /atom/movable/screen/internal()
 	mymob.internals.icon = ui_style
-	mymob.internals.icon_state = "internal0"
 	if(istype(mymob.internal, /obj/item/weapon/tank))
 		mymob.internals.icon_state = "internal1"
-	mymob.internals.name = "internal"
-	mymob.internals.screen_loc = ui_internal
 
 	mymob.healths = new /atom/movable/screen()
 	mymob.healths.icon = 'icons/mob/screen_gen.dmi'
