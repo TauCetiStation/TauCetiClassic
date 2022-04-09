@@ -150,7 +150,7 @@
 			if(!anchored)
 				if(!S.use(2))
 					return
-				to_chat(user, "<span class='notice'>Вы сделали потайную дверь! Толкните чтобы открыть или закрыть проход.</span>")
+				to_chat(user, "<span class='notice'>Вы сделали потайную дверь! Толкните, чтобы открыть или закрыть проход.</span>")
 				var/F = text2path("/obj/structure/falsewall/[M]")
 				new F (src.loc)
 				qdel(src)
