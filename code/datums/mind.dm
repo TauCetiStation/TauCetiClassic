@@ -205,16 +205,20 @@
 	out += "<B>Maximum skill values:</B><br><table>"
 	var/i = 0
 	var/sorted_max = list()
-	var/sorted_current= list()
 	for(var/datum/skill/s as anything in skills_list)
 		var/datum/skill/skill = all_skills[s]
 		sorted_max[skill.name] = skills.get_max(skill.name)
-		sorted_current[skill.name] = skills.get_value(skill.name)
 	sorted_max = sortTim(sorted_max, /proc/cmp_numeric_dsc, TRUE)
 	for(var/skill_name in sorted_max)
-		if((i%5)==0)
+		if((i%3)==0)
 			out += "</tr><tr>"
-		out +="<td>[skill_name]: [sorted_max[skill_name]]</td>"
+		var/datum/skill/available_skill =  skills.available.get_skill(skill_name)
+		var/rank_name = available_skill.rank_name
+		for(var/skill_type in subtypesof(available_skill))
+			var/datum/skill/skill = all_skills[skill_type]
+			if(skill.value == available_skill.value)
+				rank_name = skill.rank_name
+		out +="<td>[skill_name]:  [rank_name] ([available_skill.value])</td>"
 		i++
 	out +="</table>"
 	out += "<a href='?src=\ref[src];maximize_skills=1'>Set current skills equal to available skills</a><br>"
