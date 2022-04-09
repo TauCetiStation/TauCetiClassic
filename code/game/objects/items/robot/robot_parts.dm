@@ -241,6 +241,7 @@
 
 			O.job = "Cyborg"
 			O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+			O.mind.skills.maximize_active_skills()
 			O.cell = chest.cell
 			O.cell.forceMove(O)
 			I.forceMove(O) //Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
