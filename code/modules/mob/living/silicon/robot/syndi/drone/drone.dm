@@ -77,7 +77,7 @@
 	key = M.key
 	M.key = "@[key]"
 	if(mind)
-		if(!(all_skillsets[/datum/skillset/cyborg] in mind.skills.available_skillsets))
+		if(!mind.skills.has_skillset_type(/datum/skillset/cyborg))
 			mind.skills.add_available_skillset(/datum/skillset/cyborg)
 			mind.skills.maximize_active_skills()
 	to_chat(src, "You're now controlling the [name].")

@@ -531,14 +531,12 @@
 
 /datum/skillset/golem
 	initial_skills = list(
-		/datum/skill/police/master,
 		/datum/skill/engineering/pro,
 		/datum/skill/construction/trained,
 		/datum/skill/atmospherics/master,
-		/datum/skill/civ_mech/trained,
-		/datum/skill/combat_mech/trained,
 		/datum/skill/surgery/pro,
 		/datum/skill/medical/pro,
 		/datum/skill/chemistry/master,
 		/datum/skill/research/trained,
+		/datum/skill/melee/weak // beacause fuck golems
 	)
