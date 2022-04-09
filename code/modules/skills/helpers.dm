@@ -33,3 +33,16 @@
 
 	var/required_time = apply_skill_bonus(user, time_bonus, required_skills, 1, 0)
 	return do_after(user, required_time, target = target)
+
+/proc/get_skill_rank_name(skill_type, value)
+	for(var/s in subtypesof(skill_type))
+		var/datum/skill/skill = all_skills[s]
+		if(skill.value == value)
+			return skill.rank_name
+
+/proc/get_skill_rank_list(skill_type)
+	var/result = list()
+	for(var/s in subtypesof(skill_type))
+		var/datum/skill/skill = all_skills[s]
+		result += skill.rank_name
+	return result
