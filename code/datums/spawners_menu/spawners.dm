@@ -596,7 +596,7 @@ var/global/list/datum/spawners_cooldown = list()
 	H.loc = spawnloc
 	H.key = C.key
 	H.equipOutfit(/datum/outfit/spy)
-	H.mind.skills.add_available_skillset(/datum/skillset/max)
+	H.mind.skills.add_available_skillset(/datum/skillset/cyborg)
 	H.mind.skills.maximize_active_skills()
 
 	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на [station_name_ru()].</B>")

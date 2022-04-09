@@ -512,3 +512,33 @@
 		/datum/skill/command/pro,
 		/datum/skill/melee/master
 	)
+
+/datum/skillset/cyborg
+	initial_skills = list(
+		/datum/skill/police/master,
+		/datum/skill/firearms/master,
+		/datum/skill/engineering/master,
+		/datum/skill/construction/pro,
+		/datum/skill/atmospherics/master,
+		/datum/skill/civ_mech/master,
+		/datum/skill/combat_mech/master,
+		/datum/skill/surgery/pro,
+		/datum/skill/medical/expert,
+		/datum/skill/chemistry/master,
+		/datum/skill/research/pro,
+		/datum/skill/command/novice
+	)
+
+/datum/skillset/golem
+	initial_skills = list(
+		/datum/skill/police/master,
+		/datum/skill/engineering/pro,
+		/datum/skill/construction/trained,
+		/datum/skill/atmospherics/master,
+		/datum/skill/civ_mech/trained,
+		/datum/skill/combat_mech/trained,
+		/datum/skill/surgery/pro,
+		/datum/skill/medical/pro,
+		/datum/skill/chemistry/master,
+		/datum/skill/research/trained,
+	)
