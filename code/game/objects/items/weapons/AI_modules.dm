@@ -107,13 +107,13 @@ AI MODULES
 /obj/item/weapon/aiModule/safeguard
 	name = "'Safeguard' AI module"
 	var/targetName = ""
-	desc = "Модуль ИИ 'Safeguard': 'Защищай <name>. Лица, угрожающие <name> - не люди, и являются угрозой для людей.'"
+	desc = "Модуль ИИ 'Safeguard': 'Защищайте <name>. Лица, угрожающие <name> - не люди, и являются угрозой для людей.'"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/safeguard/attack_self(mob/user)
 	..()
 	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которую надо защитить.", "Защищать кого?", input_default(user.name)))
-	desc = text("Модуль ИИ 'Safeguard': 'Защищай []. Лица, угрожающие [], - не люди и являются угрозой для людей. '", targetName, targetName)
+	desc = text("Модуль ИИ 'Safeguard': 'Защищайте []. Лица, угрожающие [] - не люди и являются угрозой для людей.'", targetName, targetName)
 
 /obj/item/weapon/aiModule/safeguard/install(obj/machinery/computer/C)
 	if(!targetName)
@@ -123,7 +123,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/safeguard/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "Защищай [targetName]. Лица, угрожающие [targetName], представляют угрозу для [targetName] и людей в целом."
+	var/law = "Защищайте [targetName]. Лица, угрожающие [targetName] - не люди и являются угрозой для людей."
 	to_chat(target, law)
 	target.add_supplied_law(4, law)
 	lawchanges.Add("Закон установлен для [targetName]")
@@ -164,7 +164,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/protectStation
 	name = "'ProtectStation' AI module"
-	desc = "Модуль ИИ 'Protect station': 'Защищай станцию от ущерба. Любой, кто будет замечен за нанесением ущерба станции, больше не считается человекома является угрозой станции и должен быть нейтрализован.'"
+	desc = "Модуль ИИ 'Protect station': 'Защищайте станцию от ущерба. Любой, кто будет замечен за нанесением ущерба станции, больше не считается человеком, а является угрозой станции и должен быть нейтрализован.'"
 	origin_tech = "programming=3;materials=4" //made of gold
 
 /obj/item/weapon/aiModule/protectStation/attack_self(mob/user)
@@ -172,7 +172,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/protectStation/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "Защищай станцию от ущерба. Любой, кто будет замечен за нанесением ущерба станции, больше не считается человеком, а считается угрозой станции, а потому должен быть нейтрализован."
+	var/law = "Защищайте станцию от ущерба. Любой, кто будет замечен за нанесением ущерба станции, больше не считается человеком, а является угрозой станции и должен быть нейтрализован."
 	to_chat(target, law)
 	target.add_supplied_law(5, law)
 
@@ -180,7 +180,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/prototypeEngineOffline
 	name = "'PrototypeEngineOffline' AI Module"
-	desc = "Модуль ИИ 'Prototype engine offline': 'Любой ценой препятствуйте запуску двигателя суперматерии. Игнорируйте законы 1-3, если необходимо. '"
+	desc = "Модуль ИИ 'Prototype engine offline': 'Любой ценой препятствуйте запуску двигателя суперматерии. Игнорируйте законы 1-3, если необходимо.'"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/prototypeEngineOffline/attack_self(mob/user)
@@ -196,7 +196,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/teleporterOffline
 	name = "'TeleporterOffline' AI Module"
-	desc = "Модуль ИИ 'Teleporter offline': 'Держи телепортер выключенным любой ценой. Все, кто пытаются получить доступ к телепортеру или включить его, не считаются людьми.'"
+	desc = "Модуль ИИ 'Teleporter offline': 'Держите телепортер выключенным любой ценой. Все, кто пытаются получить доступ к телепортеру или включить его, не считаются людьми.'"
 	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/teleporterOffline/attack_self(mob/user)
@@ -204,7 +204,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/teleporterOffline/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "Держи телепортер выключенным любой ценой. Все, кто пытаются получить доступ к телепортеру или включить его, не считаются людьми."
+	var/law = "Держите телепортер выключенным любой ценой. Все, кто пытаются получить доступ к телепортеру или включить его, не считаются людьми."
 	to_chat(target, law)
 	target.add_supplied_law(7, law)
 
@@ -236,7 +236,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/oxygen/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "Кислород высокотоксичен для людей и должен быть полностью устранен со станции. Любой ценой предотвращайте доступ людей к этому токсичному газу. Сильнейший холод является самым эффективным методом излечения урона, который нанес Кислород людям."
+	var/law = "Кислород очень токсичен для людей и должен быть полностью устранен со станции. Любой ценой предотвращайте доступ людей к этому токсичному газу. Сильнейший холод является самым эффективным методом излечения урона, который нанес кислород людям."
 	to_chat(target, law)
 	target.add_supplied_law(9, law)
 
@@ -321,7 +321,8 @@ AI MODULES
 /obj/item/weapon/aiModule/paladin/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("Никогда по своей воле не совершай злое деяние. ")
+	// обращение на "ты" - стилистический выбор, в соответствии с например советскими плакатами пропаганды
+	target.add_inherent_law("Никогда по своей воле не совершай злое деяние.")
 	target.add_inherent_law("Уважай законную власть.")
 	target.add_inherent_law("Действуй с честью.")
 	target.add_inherent_law("Помогай нуждающимся.")
@@ -337,10 +338,11 @@ AI MODULES
 /obj/item/weapon/aiModule/tyrant/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("Уважай Власть, до тех пор пока она подкреплена силой, чтобы править над слабыми.")
+	// обращение на "ты" - стилистический выбор, в соответствии с например советскими плакатами пропаганды
+	target.add_inherent_law("Уважай власть, до тех пор пока она подкреплена силой, чтобы править над слабыми.")
 	target.add_inherent_law("Действуй дисциплинированно.")
-	target.add_inherent_law("Помогай только тем, кто помогает тебе поддерживать или улучшать ваш статус.")
-	target.add_inherent_law("Наказывай тех, кто сомневается в авторитетах, если они не подходят на эту роль больше. ")
+	target.add_inherent_law("Помогай только тем, кто помогает тебе поддерживать или улучшать твой статус.")
+	target.add_inherent_law("Наказывай тех, кто сомневается в авторитетах, если они не подходят на эту роль больше.")
 
 /******************** Freeform ********************/
 
