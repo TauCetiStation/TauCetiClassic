@@ -16,8 +16,8 @@
 
 	var/mob/living/silicon/robot/R = loc
 
-	add_languages(R)
-
+	add_languages(R)	
+		
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
 		for(var/obj/O in modules)
@@ -188,7 +188,9 @@
 	modules += new /obj/item/weapon/gripper(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)
 	modules += new /obj/item/device/gps/cyborg(src)
+
 	emag = new /obj/item/borg/stun(src)
+	
 	for(var/T in stacktypes)
 		var/obj/item/stack/W = new T(src)
 		W.set_amount(stacktypes[T])
@@ -206,6 +208,7 @@
 	modules += new /obj/item/taperoll/police(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/weapon/gun/energy/laser/selfcharging/cyborg(src)
+
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
 	..()
@@ -316,6 +319,7 @@
 	modules += new /obj/item/weapon/shovel(src)//Need to buff borgdrill, so it can get sand instead shovel
 	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/borg/stun(src)
+	
 /obj/item/weapon/robot_module/syndicate
 	name = "syndicate robot module"
 
@@ -357,6 +361,7 @@
 	modules += new /obj/item/borg/combat/mobility(src)
 	modules += new /obj/item/weapon/wrench(src)
 	emag = new /obj/item/weapon/gun/energy/lasercannon/cyborg(src)
+	
 /obj/item/weapon/robot_module/science
 	name = "science robot module"
 
@@ -391,8 +396,8 @@
 
 	emag = new /obj/item/weapon/hand_tele(src) //To fuck people's shit up
 
-	emag.name = "Hand tele"
-
+	emag.name = "Hand tele"	
+	
 /obj/item/weapon/robot_module/drone
 	name = "drone module"
 	stacktypes = list(
