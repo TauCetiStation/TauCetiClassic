@@ -292,12 +292,16 @@ using /obj/effect/datacore/proc/manifest_inject( ), or manifest_insert( )
 			G.fields["notes"] = H.gen_record
 		else
 			G.fields["notes"] = "No notes found."
-		if(H.mind.initial_account)
-			G.fields["acc_number"]	= H.mind.initial_account.account_number
-			G.fields["acc_datum"] = H.mind.initial_account
+
+		var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+
+		if(MA)
+			G.fields["acc_number"] = MA.account_number
+			G.fields["acc_datum"] = MA
 		else
-			G.fields["acc_number"]	= 0
-			G.fields["acc_datum"] =	0
+			G.fields["acc_number"] = 0
+			G.fields["acc_datum"] = null
+
 		general += G
 
 		//Medical Record

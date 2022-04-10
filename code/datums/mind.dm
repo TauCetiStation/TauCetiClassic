@@ -58,9 +58,6 @@
 	// the world.time since the mob has been brigged, or -1 if not at all
 	var/brigged_since = -1
 
-	//put this here for easier tracking ingame
-	var/datum/money_account/initial_account
-
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 	var/creation_roundtime
 

@@ -43,7 +43,7 @@
 	if(!can_remember())
 		return
 
-	if(lenght(mind.memories) > MEM_MAX_COUNT)
+	if(length(mind.key_memories) > MEM_MAX_COUNT)
 		to_chat(src, "<span class='warning'>You remember too much...</span>")
 		return
 

@@ -1697,20 +1697,20 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			M.apply_recolor()
 
 	if(!(dresscode in dresspacks_without_money) && M.mind)
-		if(M.mind.initial_account)
-			if(M.mind.initial_account.owner_name != M.real_name)
-				qdel(M.mind.initial_account)
-				M.mind.initial_account = null
-				create_random_account_and_store_in_mind(M)
+		var/datum/money_account/MA = get_account(M.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+		if(MA)
+			qdel(MA)
 
-				if(spawned_card)
-					spawned_card.associated_account_number = M.mind.initial_account.account_number
-			//else do nothing
-		else
-			create_random_account_and_store_in_mind(M)
+			MA = create_random_account_and_store_in_mind(M)
 
 			if(spawned_card)
-				spawned_card.associated_account_number = M.mind.initial_account.account_number
+				spawned_card.associated_account_number = MA.account_number
+
+		else
+			MA = create_random_account_and_store_in_mind(M)
+
+			if(spawned_card)
+				spawned_card.associated_account_number = MA.account_number
 
 	M.regenerate_icons()
 

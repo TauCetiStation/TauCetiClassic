@@ -87,8 +87,12 @@
 		if(M.transaction_log.len)
 			var/datum/transaction/T = M.transaction_log[1]
 			remembered_info += "<b>Your account was created:</b> [T.time], [T.date] at [T.source_terminal]<br>"
+
 		H.mind.store_memory(remembered_info)
-		H.mind.initial_account = M
+
+		H.mind.add_key_memory(MEM_ACCOUNT_NUMBER, M.account_number)
+		H.mind.add_key_memory(MEM_ACCOUNT_PIN, M.remote_access_pin)
+
 	return M
 
 /proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db, age = 10)

@@ -1548,23 +1548,29 @@
 		A.emplode(severity)
 
 /obj/item/device/pda/proc/click_to_pay(atom/target)
-	if(ishuman(target))
-		var/mob/living/carbon/human/receiver = target
-		if(receiver.mind.initial_account)
-			target_account_number = text2num(receiver.mind.initial_account.account_number)
-			mode = 7
-			pda_paymod = FALSE
-			ui_interact(usr)
-			to_chat(usr, "[bicon(src)]<span class='info'>Target account is [target_account_number]</span>")
-			return
-		else
-			to_chat(usr, "[bicon(src)]<span class='warning'>Target haven't account.</span>")
-			pda_paymod = FALSE
-			return
-	else
+	if(!ishuman(target))
 		to_chat(usr, "[bicon(src)]<span class='warning'>Incorrect target.</span>")
 		pda_paymod = FALSE
 		return
+
+	var/mob/living/carbon/human/receiver = target
+
+	if(!receiver.mind)
+		to_chat(usr, "[bicon(src)]<span class='warning'>Incorrect target.</span>")
+		pda_paymod = FALSE
+		return
+
+	var/datum/money_account/MA = get_account(receiver.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+	if(!MA)
+		to_chat(usr, "[bicon(src)]<span class='warning'>Target doesn't have an account.</span>")
+		pda_paymod = FALSE
+		return
+
+	target_account_number = text2num(MA.account_number)
+	mode = 7
+	pda_paymod = FALSE
+	ui_interact(usr)
+	to_chat(usr, "[bicon(src)]<span class='info'>Target account is [target_account_number]</span>")
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(!owner_account)
