@@ -22,6 +22,7 @@
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
+	reset_alerts()
 	blinded = null
 
 	//Handle temperature/pressure differences between body and environment
@@ -31,6 +32,9 @@
 	//Status updates, death etc.
 	handle_regular_status_updates()
 	update_canmove()
+
+	if(client)
+		handle_alerts()
 
 
 /mob/living/carbon/brain/proc/handle_mutations_and_radiation()
