@@ -397,9 +397,9 @@
 
 	if(temp_alert > 0)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hot")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 	else if(temp_alert < 0)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "cold")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
