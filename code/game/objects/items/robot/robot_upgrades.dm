@@ -141,7 +141,6 @@
 		return FALSE
 
 	R.has_jetpack = TRUE
-	new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	return TRUE
 
 
