@@ -56,7 +56,7 @@
 	var/ownrank = null // this one is rank, never alt title
 
 	//Variables for Finance Management
-	var/datum/money_account/owner_account = null
+	var/owner_account = 0
 	var/target_account_number = 0
 	var/funds_amount = 0
 	var/transfer_purpose = "Funds transfer"
@@ -469,13 +469,15 @@
 
 	var/title = "Personal Data Assistant"
 
+	var/datum/money_account/MA = get_account(owner_account)
+
 	var/data[0]  // This is the data that will be sent to the PDA
 
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob					// ...and what does he do?
 
-	data["money"] = owner_account ? owner_account.money : "error"
-	data["salary"] = owner_account ? owner_account.owner_salary : "error"
+	data["money"] = MA ? MA.money : "error"
+	data["salary"] = MA ? MA.owner_salary : "error"
 	data["target_account_number"] = target_account_number
 	data["funds_amount"] = funds_amount
 	data["purpose"] = transfer_purpose
@@ -705,17 +707,17 @@
 			ownrank = id.rank
 			check_rank(id.rank)		//check if we became the head
 			name = "PDA-[owner] ([ownjob])"
-			if(owner_account && owner_account.account_number == id.associated_account_number)
+			if(owner_account == id.associated_account_number)
 				return
 			ui.close()
 			var/datum/money_account/account = get_account(id.associated_account_number)
-			if(account)		//another account tied to the card
-				account.owner_PDA = src		//set PDA in /datum/money_account
-				owner_account = account		//bind the account to the pda
-				owner_fingerprints = list()	//remove old fingerprints
-			else	//no account was tied to a card
-				owner_account = null		//clear old account information
-				owner_fingerprints = list()	//remove old fingerprints
+			if(account) //another account tied to the card
+				account.owner_PDA = src
+				owner_account = account.account_number
+				owner_fingerprints = list()
+			else //no account was tied to a card
+				owner_account = 0
+				owner_fingerprints = list()
 		if("Eject")//Ejects the cart, only done from hub.
 			if (!isnull(cartridge))
 				var/turf/T = loc
@@ -881,8 +883,10 @@
 		if("Transaction Log")
 			mode = 72
 			trans_log = null
-			for(var/datum/transaction/T in owner_account.transaction_log)
-				trans_log += list(list("data"="[T.date]", "time"="[T.time]", "name"="[T.target_name]", "purpose"="[T.purpose]", "amount"="[T.amount]", "source"="[T.source_terminal]"))
+			var/datum/money_account/MA = get_account(owner_account)
+			if(MA)
+				for(var/datum/transaction/T in MA.transaction_log)
+					trans_log += list(list("data"="[T.date]", "time"="[T.time]", "name"="[T.target_name]", "purpose"="[T.purpose]", "amount"="[T.amount]", "source"="[T.source_terminal]"))
 
 		if("Send Money")
 			if(check_owner_fingerprints(U))
@@ -922,20 +926,24 @@
 				to_chat(U, "[bicon(src)]<span class='warning'>Communication Error</span>")
 				return
 		//==============================================================
-			if(owner_account.suspended)
+			var/datum/money_account/MA = get_account(owner_account)
+			if(!MA)
+				to_chat(U, "[bicon(src)]<span class='warning'>Your PDA is not tied to any account!</span>")
+				return
+			if(MA.suspended)
 				to_chat(U, "[bicon(src)]<span class='warning'>Your account is suspended!</span>")
 				return
 			if(funds_amount <= 0)
 				to_chat(U, "[bicon(src)]<span class='warning'>That is not a valid amount!</span>")
 				return
-			if(funds_amount > owner_account.money)
+			if(funds_amount > MA.money)
 				to_chat(U, "[bicon(src)]<span class='warning'>You don't have enough funds to do that!</span>")
 				return
-			if(target_account_number == owner_account.account_number)
+			if(target_account_number == owner_account)
 				to_chat(U, "[bicon(src)]<span class='warning'>Eror! [target_account_number] is your account number, [owner].</span>")
 				return
 			if(charge_to_account(target_account_number, target_account_number, transfer_purpose, name, funds_amount))
-				charge_to_account(owner_account.account_number, target_account_number, transfer_purpose, name, -funds_amount)
+				charge_to_account(owner_account, target_account_number, transfer_purpose, name, -funds_amount)
 			else
 				to_chat(U, "[bicon(src)]<span class='warning'>Funds transfer failed. Target account is suspended.</span>")
 			target_account_number = 0
@@ -1383,9 +1391,9 @@
 			check_rank(idcard.rank)
 			var/datum/money_account/account = get_account(idcard.associated_account_number)
 			if(account)
-				account.owner_PDA = src			//set PDA in /datum/money_account
-				owner_account = account			//bind the account to the pda
-				owner_fingerprints = list()		//remove old fingerprints
+				account.owner_PDA = src
+				owner_account = account.account_number
+				owner_fingerprints = list()
 			name = "PDA-[owner] ([ownjob])"
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
@@ -1578,19 +1586,24 @@
 	to_chat(usr, "[bicon(src)]<span class='info'>Target account is [target_account_number]</span>")
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
-	if(!owner_account)
-		tgui_alert(usr, "Eror! Account information not saved in this PDA, please insert your ID card in PDA and update the information.")
+	if(owner_account == 0)
+		tgui_alert(usr, "Error! Account information not saved in this PDA, please insert your ID card in PDA and update the information.")
 		return FALSE
 	if(!user.dna)	//just in case
-		tgui_alert(usr, "Eror! PDA can't read your fingerprints.")
+		tgui_alert(usr, "Error! PDA can't read your fingerprints.")
 		return FALSE
 	var/fingerprints = md5(user.dna.uni_identity)
 	if(fingerprints in owner_fingerprints)
 		return TRUE
 	else
+		var/datum/money_account/MA = get_account(owner_account)
+		if(!MA)
+			tgui_alert(usr, "Error! No account matching saved account number exists.")
+			return
+
 		var/tried_pin =  text2num(input(user, "[owner] please enter your account password", name) as text)
-		if(tried_pin == owner_account.remote_access_pin)
-			owner_fingerprints += fingerprints	//add new owner's fingerprints to the list
+		if(tried_pin == MA.remote_access_pin)
+			owner_fingerprints += fingerprints
 			to_chat(user, "[bicon(src)]<span class='info'>Password is correct</span>")
 			return TRUE
 		else

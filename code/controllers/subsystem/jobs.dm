@@ -605,10 +605,10 @@ SUBSYSTEM_DEF(job)
 
 		var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
 
-		pda.owner_account = MA                          //bind the account to the pda
-		pda.owner_fingerprints += C.fingerprint_hash    //save fingerprints in pda from ID card
+		pda.owner_account = MA.account_number
+		pda.owner_fingerprints += C.fingerprint_hash
 		pda.name = "PDA-[H.real_name] ([pda.ownjob])"
-		MA.owner_PDA = pda                              //add PDA in /datum/money_account
+		MA.owner_PDA = pda
 
 	return TRUE
 
