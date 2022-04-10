@@ -66,11 +66,9 @@
 
 	var/mob/living/carbon/ian/IAN = mymob //shouldn't be in anywhere else, so no type check.
 
-	using = new
-	using.name = "act_intent"
+	using = new /atom/movable/screen/act_intent()
 	using.icon = ui_style
 	using.icon_state = "intent_" + mymob.a_intent
-	using.screen_loc = ui_acti
 	src.adding += using
 	action_intent = using
 

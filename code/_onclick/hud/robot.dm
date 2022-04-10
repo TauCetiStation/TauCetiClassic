@@ -167,12 +167,8 @@ var/global/atom/movable/screen/robot_inventory
 //End of module select
 
 //Intent
-	using = new /atom/movable/screen()
-	using.name = "act_intent"
-	using.icon = 'icons/mob/screen1_robot.dmi'
+	using = new /atom/movable/screen/act_intent/robot()
 	using.icon_state = "intent_" + mymob.a_intent
-	using.screen_loc = ui_acti
-	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	action_intent = using
 

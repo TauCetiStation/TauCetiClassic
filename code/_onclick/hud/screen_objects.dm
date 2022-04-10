@@ -331,6 +331,17 @@
 	icon_state = "internal0"
 	screen_loc = ui_internal
 
+/atom/movable/screen/act_intent
+	name = "act_intent"
+	screen_loc = ui_acti
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/act_intent/alien
+	icon = 'icons/mob/screen1_xeno.dmi'
+
+/atom/movable/screen/act_intent/robot
+	icon = 'icons/mob/screen1_robot.dmi'
+
 /atom/movable/screen/throw
 	name = "throw"
 	icon_state = "act_throw_off"

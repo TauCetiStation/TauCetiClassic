@@ -8,12 +8,9 @@
 	var/atom/movable/screen/inventory/inv_box
 	var/mob/living/carbon/human/H = mymob
 
-	using = new /atom/movable/screen()
-	using.name = "act_intent"
+	using = new /atom/movable/screen/act_intent()
 	using.icon = ui_style
 	using.icon_state = "intent_" + mymob.a_intent
-	using.screen_loc = ui_acti
-	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	action_intent = using
 

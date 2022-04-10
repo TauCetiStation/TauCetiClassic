@@ -35,13 +35,8 @@
 	var/atom/movable/screen/using
 	var/atom/movable/screen/inventory/inv_box
 
-	using = new /atom/movable/screen()
-	using.name = "act_intent"
-	using.set_dir(SOUTHWEST)
-	using.icon = 'icons/mob/screen1_xeno.dmi'
+	using = new /atom/movable/screen/act_intent/alien()
 	using.icon_state = "intent_" + mymob.a_intent
-	using.screen_loc = ui_acti
-	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	action_intent = using
 
