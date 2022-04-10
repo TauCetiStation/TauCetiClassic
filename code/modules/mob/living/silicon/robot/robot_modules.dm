@@ -187,9 +187,7 @@
 	modules += new /obj/item/weapon/gripper(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)
 	modules += new /obj/item/device/gps/cyborg(src)
-
 	emag = new /obj/item/borg/stun(src)
-	
 	for(var/T in stacktypes)
 		var/obj/item/stack/W = new T(src)
 		W.set_amount(stacktypes[T])
@@ -358,7 +356,6 @@
 	modules += new /obj/item/borg/combat/mobility(src)
 	modules += new /obj/item/weapon/wrench(src)
 	emag = new /obj/item/weapon/gun/energy/lasercannon/cyborg(src)
-	
 /obj/item/weapon/robot_module/science
 	name = "science robot module"
 
