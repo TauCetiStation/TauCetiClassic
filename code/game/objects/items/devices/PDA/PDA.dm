@@ -57,7 +57,7 @@
 
 	//Variables for Finance Management
 	var/owner_account = 0
-	var/target_account_number = 0
+	var/target_account = 0
 	var/funds_amount = 0
 	var/transfer_purpose = "Funds transfer"
 	var/pda_paymod = FALSE // if TRUE, click on someone to pay
@@ -478,7 +478,7 @@
 
 	data["money"] = MA ? MA.money : "error"
 	data["salary"] = MA ? MA.owner_salary : "error"
-	data["target_account_number"] = target_account_number
+	data["target_account_number"] = target_account
 	data["funds_amount"] = funds_amount
 	data["purpose"] = transfer_purpose
 	data["trans_log"] = trans_log
@@ -890,7 +890,7 @@
 
 		if("Send Money")
 			if(check_owner_fingerprints(U))
-				target_account_number = text2num(href_list["account"])
+				target_account = text2num(href_list["account"])
 				mode = 71
 
 		if("Look for")
@@ -902,7 +902,7 @@
 			mode = 41
 
 		if("target_acc_number")
-			target_account_number = text2num(input(U, "Enter an account number", name, target_account_number) as text)	//If "as num" I can't copy text from the buffer
+			target_account = text2num(input(U, "Enter an account number", name, target_account) as text)	//If "as num" I can't copy text from the buffer
 		if("funds_amount")
 			funds_amount =  round(text2num(input(U, "Enter the amount of funds", name, funds_amount) as text), 1)
 		if("purpose")
@@ -939,14 +939,14 @@
 			if(funds_amount > MA.money)
 				to_chat(U, "[bicon(src)]<span class='warning'>You don't have enough funds to do that!</span>")
 				return
-			if(target_account_number == owner_account)
-				to_chat(U, "[bicon(src)]<span class='warning'>Eror! [target_account_number] is your account number, [owner].</span>")
+			if(target_account == owner_account)
+				to_chat(U, "[bicon(src)]<span class='warning'>Error! [target_account] is your own account number, [owner].</span>")
 				return
-			if(charge_to_account(target_account_number, target_account_number, transfer_purpose, name, funds_amount))
-				charge_to_account(owner_account, target_account_number, transfer_purpose, name, -funds_amount)
+			if(charge_to_account(target_account, target_account, transfer_purpose, name, funds_amount))
+				charge_to_account(owner_account, target_account, transfer_purpose, name, -funds_amount)
 			else
 				to_chat(U, "[bicon(src)]<span class='warning'>Funds transfer failed. Target account is suspended.</span>")
-			target_account_number = 0
+			target_account = 0
 			funds_amount = 0
 			last_trans_tick = world.time + TRANSCATION_COOLDOWN
 
@@ -1579,11 +1579,11 @@
 		pda_paymod = FALSE
 		return
 
-	target_account_number = text2num(MA.account_number)
+	target_account = text2num(MA.account_number)
 	mode = 7
 	pda_paymod = FALSE
 	ui_interact(usr)
-	to_chat(usr, "[bicon(src)]<span class='info'>Target account is [target_account_number]</span>")
+	to_chat(usr, "[bicon(src)]<span class='info'>Target account number is set to [target_account].</span>")
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(owner_account == 0)
