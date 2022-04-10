@@ -393,6 +393,19 @@
 	icon_state = "radio"
 	screen_loc = ui_movi
 	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/panel
+	name = "panel"
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "panel"
+	screen_loc = ui_borg_panel
+	plane = HUD_PLANE
+
+/atom/movable/screen/store
+	name = "store"
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "store"
+	screen_loc = ui_borg_store
 	
 
 /atom/movable/screen/Click(location, control, params)

@@ -183,20 +183,11 @@ var/global/atom/movable/screen/robot_inventory
 	mymob.hands = new /atom/movable/screen/module()
 
 //Module Panel
-	using = new /atom/movable/screen()
-	using.name = "panel"
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = "panel"
-	using.screen_loc = ui_borg_panel
-	using.plane = HUD_PLANE
+	using = new /atom/movable/screen/panel()
 	src.adding += using
 
 //Store
-	mymob.throw_icon = new /atom/movable/screen()
-	mymob.throw_icon.icon = 'icons/mob/screen1_robot.dmi'
-	mymob.throw_icon.icon_state = "store"
-	mymob.throw_icon.name = "store"
-	mymob.throw_icon.screen_loc = ui_borg_store
+	mymob.throw_icon = new /atom/movable/screen/store()
 
 //Inventory
 	robot_inventory = new /atom/movable/screen/inventory()
