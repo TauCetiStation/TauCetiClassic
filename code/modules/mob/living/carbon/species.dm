@@ -233,11 +233,6 @@
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
-	if(flags[RAND_TAIL])
-		var/list/tail_list = icon_states('icons/mob/species/tail.dmi') - "vox_armalis"
-		tail_list += ""
-		H.random_tail_holder = pick(tail_list)
-
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
 	if(!flags[IS_SOCIAL])
 		H.handle_socialization()
@@ -1586,7 +1581,6 @@
 		RAD_ABSORB = TRUE,
 		VIRUS_IMMUNE = TRUE,
 		NO_EMOTION = TRUE,
-		RAND_TAIL = TRUE,
 		HAS_TAIL = TRUE,
 		HAS_HAIR = TRUE,
 		HAS_HAIR_COLOR = TRUE,
@@ -1600,6 +1594,12 @@
 	max_age = 10
 
 	is_common = FALSE
+
+/datum/species/human/homunculus/on_gain(mob/living/carbon/human/H)
+	. = ..()
+	var/list/tail_list = icon_states('icons/mob/species/tail.dmi') - "vox_armalis"
+	tail_list += ""
+	H.random_tail_holder = pick(tail_list)
 
 /datum/species/human/homunculus/create_bodyparts(mob/living/carbon/human/H)
 	var/list/keys = get_list_of_primary_keys(global.all_species)
