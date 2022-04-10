@@ -274,8 +274,6 @@
 
 /mob/living/carbon/human/homunculus
 	name = "homunculus of god"
-	health = 70
-	maxHealth = 70
 
 /mob/living/carbon/human/homunculus/atom_init(mapload)
 	gender = pick(MALE, FEMALE)
