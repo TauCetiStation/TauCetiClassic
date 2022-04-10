@@ -80,6 +80,10 @@
 		pen = new default_pen(src)
 
 /obj/item/device/pda/Destroy()
+	var/datum/money_account/MA = get_account(owner_account)
+	if(MA)
+		MA.owner_PDA = null
+
 	PDAs -= src
 	if (id)
 		if (prob(90)) //IDs are kept in 90% of the cases
