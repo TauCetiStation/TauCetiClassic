@@ -5,39 +5,19 @@
 	var/atom/movable/screen/using
 
 //AI core
-	using = new /atom/movable/screen()
-	using.name = "AI Core"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "ai_core"
-	using.screen_loc = ui_ai_core
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/ai_core()
 	adding += using
 
 //Camera list
-	using = new /atom/movable/screen()
-	using.name = "Show Camera List"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "camera"
-	using.screen_loc = ui_ai_camera_list
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/camera_list()
 	adding += using
 
 //Track
-	using = new /atom/movable/screen()
-	using.name = "Track With Camera"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "track"
-	using.screen_loc = ui_ai_track_with_camera
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/camera_track()
 	adding += using
 
 //Camera light
-	using = new /atom/movable/screen()
-	using.name = "Toggle Camera Light"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "camera_light"
-	using.screen_loc = ui_ai_camera_light
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/camera_light()
 	adding += using
 
 //Crew Monitorting

@@ -375,6 +375,7 @@
 /atom/movable/screen/drop/alien
 	icon = 'icons/mob/screen1_xeno.dmi'
 
+// Robots
 /atom/movable/screen/module
 	name = "module"
 	icon = 'icons/mob/screen1_robot.dmi'
@@ -425,6 +426,35 @@
 	name = "module3"
 	icon_state = "inv3"
 	screen_loc = ui_inv3
+
+// AI
+/atom/movable/screen/ai_core
+	name = "AI Core"
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "ai_core"
+	screen_loc = ui_ai_core
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/camera_list
+	name = "Show Camera List"
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "camera"
+	screen_loc = ui_ai_camera_list
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/camera_track
+	name = "Track With Camera"
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "track"
+	screen_loc = ui_ai_track_with_camera
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/camera_light
+	name = "Toggle Camera Light"
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "camera_light"
+	screen_loc = ui_ai_camera_light
+	plane = ABOVE_HUD_PLANE
 	
 
 /atom/movable/screen/Click(location, control, params)
