@@ -137,30 +137,15 @@ var/global/atom/movable/screen/robot_inventory
 
 //Module select
 
-	using = new /atom/movable/screen()
-	using.name = "module1"
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = "inv1"
-	using.screen_loc = ui_inv1
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/robot_hands/first()
 	src.adding += using
 	mymob:inv1 = using
 
-	using = new /atom/movable/screen()
-	using.name = "module2"
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = "inv2"
-	using.screen_loc = ui_inv2
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/robot_hands/second()
 	src.adding += using
 	mymob:inv2 = using
 
-	using = new /atom/movable/screen()
-	using.name = "module3"
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = "inv3"
-	using.screen_loc = ui_inv3
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/robot_hands/third()
 	src.adding += using
 	mymob:inv3 = using
 

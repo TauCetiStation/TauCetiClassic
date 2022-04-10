@@ -406,6 +406,25 @@
 	icon = 'icons/mob/screen1_robot.dmi'
 	icon_state = "store"
 	screen_loc = ui_borg_store
+
+/atom/movable/screen/robo_hands
+	icon = 'icons/mob/screen1_robot.dmi'
+	using.plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/robot_hands/first
+	name = "module1"
+	icon_state = "inv1"
+	screen_loc = ui_inv1
+
+/atom/movable/screen/robot_hands/second
+	name = "module2"
+	icon_state = "inv2"
+	screen_loc = ui_inv2
+
+/atom/movable/screen/robot_hands/third
+	name = "module3"
+	icon_state = "inv3"
+	screen_loc = ui_inv3
 	
 
 /atom/movable/screen/Click(location, control, params)
