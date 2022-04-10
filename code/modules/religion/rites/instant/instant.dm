@@ -22,8 +22,8 @@
 	if(!ishuman(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>Только человек может пройти через ритуал.</span>")
 		return FALSE
-	if(istype(AOG.buckled_mob, /mob/living/carbon/human/homunculus))
-		to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
+	if(AOG.buckled_mob.get_species() == HOMUNCULUS)
+		to_chat(user, "<span class='warning'>Тело гомункула не годится.</span>")
 		return FALSE
 	return TRUE
 
@@ -148,7 +148,7 @@
 
 	var/datum/religion/cult/C = religion
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
-		if(table.buckled_mob?.stat != DEAD)
+		if(table.buckled_mob?.stat != DEAD && AOG.buckled_mob.get_species() != HOMUNCULUS)
 			return TRUE
 
 	to_chat(user, "<span class='warning'>На заряженном столе пыток должна лежать хотя бы одна жертва.</span>")
@@ -159,7 +159,7 @@
 	var/drain = 0
 	var/datum/religion/cult/C = religion
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
-		if(!table.buckled_mob || table.buckled_mob.stat == DEAD)
+		if(!table.buckled_mob || table.buckled_mob.stat == DEAD || AOG.buckled_mob.get_species() == HOMUNCULUS)
 			continue
 		var/bdrain = rand(10, 25) * divine_power
 		to_chat(table.buckled_mob, "<span class='userdanger'>Вы чувствуете слабость.</span>")
@@ -209,7 +209,7 @@
 
 	var/datum/religion/cult/C = religion
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
-		if(table.buckled_mob?.stat != DEAD)
+		if(table.buckled_mob?.stat != DEAD && AOG.buckled_mob.get_species() != HOMUNCULUS)
 			return TRUE
 
 	to_chat(user, "<span class='warning'>На заряженном столе пыток должна лежать хотя бы одна жертва.</span>")
@@ -233,7 +233,7 @@
 
 	var/w_class_sum = 0
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
-		if(!table.buckled_mob || table.buckled_mob.stat == DEAD)
+		if(!table.buckled_mob || table.buckled_mob.stat == DEAD || AOG.buckled_mob.get_species() == HOMUNCULUS)
 			continue
 		targets_on_tables += table.buckled_mob
 		w_class_sum += table.buckled_mob.w_class
@@ -274,6 +274,8 @@
 
 /mob/living/carbon/human/homunculus
 	name = "homunculus of god"
+	health = 70
+	maxHealth = 70
 
 /mob/living/carbon/human/homunculus/atom_init(mapload)
 	gender = pick(MALE, FEMALE)
@@ -281,7 +283,9 @@
 	r_eyes = rand(0, 255)
 	g_eyes = rand(0, 255)
 	b_eyes = rand(0, 255)
+
 	. = ..(mapload, HOMUNCULUS)
+
 	var/obj/item/organ/external/E = get_bodypart(BP_HEAD)
 	var/list/facials = get_valid_styles_from_cache(facial_hairs_cache, E.species, gender)
 	if(facials.len > 0)
@@ -290,18 +294,20 @@
 	if(hairs.len > 0)
 		h_style = pick(hairs)
 	update_hair()
+
 	ADD_TRAIT(src, TRAIT_SOULSTONE_IMMUNE, GENERIC_TRAIT)
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "homunculus", /datum/mood_event/homunculus)
 
 /datum/religion_rites/instant/cult/create_slave
 	name = "Создание Гомункула"
-	desc = "Создаёт гомункула, который может существовать только внутри территории религии."
+	desc = "Призыв ужаснейшего существа, существующего только благодаря силе Нар-Си."
 	ritual_length = (1 SECONDS) // plus 15 seconds of pollGhostCandidates
 	invoke_msg = "Приди же!!!"
 	favor_cost = 150
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 2,
-		ASPECT_MYSTIC = 2,
+		ASPECT_MYSTIC = 1,
 	)
 
 /datum/religion_rites/instant/cult/create_slave/invoke_effect(mob/living/user, obj/AOG)
@@ -312,7 +318,11 @@
 		return FALSE
 	playsound(AOG, 'sound/magic/manifest.ogg', VOL_EFFECTS_MASTER)
 	for(var/i in 1 to divine_power)
+		if(candidates.len < divine_power)
+			return TRUE
+
 		var/mob/M = pick(candidates)
+		candidates -= M
 		var/mob/living/carbon/human/homunculus/H = new(get_turf(AOG))
 
 		H.visible_message("<span class='userdanger'>На алтаре появляется фигура. Фигура... человека.</span>", \
@@ -389,6 +399,10 @@
 	if(!..())
 		return FALSE
 
+	if(AOG.buckled_mob.get_species() == HOMUNCULUS)
+		to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
+		return FALSE
+
 	if(!isliving(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>На алтаре должно лежать существо.</span>")
 		return FALSE
@@ -450,6 +464,10 @@
 
 /datum/religion_rites/instant/cult/give_forcearmor/can_start(mob/living/user, obj/AOG)
 	if(!..())
+		return FALSE
+
+	if(AOG.buckled_mob.get_species() == HOMUNCULUS)
+		to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
 		return FALSE
 
 	if(!ishuman(AOG.buckled_mob))

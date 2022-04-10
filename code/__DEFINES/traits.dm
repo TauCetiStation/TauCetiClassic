@@ -168,12 +168,16 @@
  */
 #define TRAIT_DOUBLE_WIELDED "double_wielded"
 
+// item trait
+#define TRAIT_CANT_SACRIFICE "religion_cant_sacrifice"
+
 // idk why this exists on TG
 #define GENERIC_TRAIT "generic"
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define QUALITY_TRAIT      "quality"
 #define TWOHANDED_TRAIT    "twohanded"
+#define RELIGION_TRAIT     "religion"
 
 // self explanatory
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"

@@ -1567,7 +1567,7 @@
 
 	brute_mod = 2
 	burn_mod = 2
-	speed_mod = 0.7
+	speed_mod = 5
 
 	has_bodypart = list(
 		 BP_CHEST = /obj/item/organ/external/chest/homunculus
@@ -1626,6 +1626,8 @@
 	)
 
 	for(var/type in has_bodypart)
+		if((type in list(BP_L_LEG, BP_R_LEG, BP_R_ARM, BP_L_ARM)) && prob(10))
+			continue
 		var/path = has_bodypart[type]
 		var/obj/item/organ/external/O = new path(null)
 		var/datum/species/part_species = bodypart_species[type]
