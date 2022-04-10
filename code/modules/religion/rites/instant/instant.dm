@@ -19,8 +19,11 @@
 	var/mob/living/silicon/S = locate() in get_turf(AOG)
 	if(S)
 		return TRUE
-	else if(!ishuman(AOG.buckled_mob) || istype(AOG.buckled_mob, /mob/living/carbon/human/homunculus))
+	if(!ishuman(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>Только человек может пройти через ритуал.</span>")
+		return FALSE
+	if(istype(AOG.buckled_mob, /mob/living/carbon/human/homunculus))
+		to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
 		return FALSE
 	return TRUE
 
@@ -274,7 +277,7 @@
 
 /mob/living/carbon/human/homunculus/atom_init()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SOULSTONE_IMMUN, GENERIC_TRAIT)
+	ADD_TRAIT(src, TRAIT_SOULSTONE_IMMUNE, GENERIC_TRAIT)
 
 /datum/religion_rites/instant/cult/create_slave
 	name = "Создание Гомункула"
@@ -288,18 +291,16 @@
 		ASPECT_MYSTIC = 2,
 	)
 
-/datum/religion_rites/instant/cult/create_slave/proc/slave_enter_area(mob/slave, area/A)
+/datum/religion_rites/instant/cult/create_slave/proc/slave_enter_area(mob/living/carbon/human/homunculus/slave, area/A)
 	if(!A.religion || !istype(slave.my_religion, A.religion.type))
-		if(ishuman(slave))
-			var/mob/living/carbon/human/H = slave
-			H.remove_from_mob(H.wear_mask)
-			H.remove_from_mob(H.w_uniform)
-			H.remove_from_mob(H.head)
-			H.remove_from_mob(H.wear_suit)
-			H.remove_from_mob(H.back)
-			H.remove_from_mob(H.shoes)
-			H.remove_from_mob(H.l_hand)
-			H.remove_from_mob(H.r_hand)
+		slave.remove_from_mob(slave.wear_mask)
+		slave.remove_from_mob(slave.w_uniform)
+		slave.remove_from_mob(slave.head)
+		slave.remove_from_mob(slave.wear_suit)
+		slave.remove_from_mob(slave.back)
+		slave.remove_from_mob(slave.shoes)
+		slave.remove_from_mob(slave.l_hand)
+		slave.remove_from_mob(slave.r_hand)
 		slave.visible_message("<span class='userdanger'>[slave] медленно превращается в пыль и кости.</span>", \
 				"<span class='userdanger'>Вы чувствуете боль, когда разрывается связь между вашей душой и этим гомункулом.</span>", \
 				"<span class='userdanger'>Вы слышите множество тихих падений песчинок.</span>")
