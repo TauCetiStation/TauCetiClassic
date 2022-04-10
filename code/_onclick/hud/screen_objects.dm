@@ -342,6 +342,22 @@
 /atom/movable/screen/act_intent/robot
 	icon = 'icons/mob/screen1_robot.dmi'
 
+/atom/movable/screen/intent
+	screen_loc = ui_acti
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/intent/help
+	name = INTENT_HELP
+
+/atom/movable/screen/intent/push
+	name = INTENT_PUSH
+
+/atom/movable/screen/intent/grab
+	name = INTENT_GRAB
+
+/atom/movable/screen/intent/harm
+	name = INTENT_HARM
+
 /atom/movable/screen/throw
 	name = "throw"
 	icon_state = "act_throw_off"

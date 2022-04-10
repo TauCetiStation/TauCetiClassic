@@ -20,44 +20,32 @@
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
-	using = new /atom/movable/screen( src )
-	using.name = INTENT_HELP
+	using = new /atom/movable/screen/intent/help()
 	using.icon = ico
-	using.screen_loc = ui_acti
-	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	help_intent = using
 
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
-	using = new /atom/movable/screen( src )
-	using.name = INTENT_PUSH
+	using = new /atom/movable/screen/intent/push()
 	using.icon = ico
-	using.screen_loc = ui_acti
-	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	push_intent = using
 
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
-	using = new /atom/movable/screen( src )
-	using.name = INTENT_GRAB
+	using = new /atom/movable/screen/intent/grab()
 	using.icon = ico
-	using.screen_loc = ui_acti
-	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	grab_intent = using
 
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
-	using = new /atom/movable/screen( src )
-	using.name = INTENT_HARM
+	using = new /atom/movable/screen/intent/harm()
 	using.icon = ico
-	using.screen_loc = ui_acti
-	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	harm_intent = using
 
