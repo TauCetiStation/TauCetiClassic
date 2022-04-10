@@ -13,6 +13,7 @@
 /obj/item/weapon/robot_module/atom_init()
 	. = ..()
 	var/mob/living/silicon/robot/R = loc
+	jetpack = new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	add_languages(R)
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
