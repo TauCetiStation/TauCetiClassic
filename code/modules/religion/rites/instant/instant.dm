@@ -275,8 +275,21 @@
 /mob/living/carbon/human/homunculus
 	name = "homunculus of god"
 
-/mob/living/carbon/human/homunculus/atom_init()
-	. = ..()
+/mob/living/carbon/human/homunculus/atom_init(mapload)
+	gender = pick(MALE, FEMALE)
+	height = pick(global.heights_list)
+	r_eyes = rand(0, 255)
+	g_eyes = rand(0, 255)
+	b_eyes = rand(0, 255)
+	. = ..(mapload, HOMUNCULUS)
+	var/obj/item/organ/external/E = get_bodypart(BP_HEAD)
+	var/list/facials = get_valid_styles_from_cache(facial_hairs_cache, E.species, gender)
+	if(facials.len > 0)
+		f_style = pick(facials)
+	var/list/hairs = get_valid_styles_from_cache(hairs_cache, E.species, gender)
+	if(hairs.len > 0)
+		h_style = pick(hairs)
+	update_hair()
 	ADD_TRAIT(src, TRAIT_SOULSTONE_IMMUNE, GENERIC_TRAIT)
 
 /datum/religion_rites/instant/cult/create_slave
@@ -284,32 +297,12 @@
 	desc = "Создаёт гомункула, который может существовать только внутри территории религии."
 	ritual_length = (1 SECONDS) // plus 15 seconds of pollGhostCandidates
 	invoke_msg = "Приди же!!!"
-	favor_cost = 300
+	favor_cost = 150
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 2,
 		ASPECT_MYSTIC = 2,
 	)
-
-/datum/religion_rites/instant/cult/create_slave/proc/slave_enter_area(mob/living/carbon/human/homunculus/slave, area/A)
-	if(!A.religion || !istype(slave.my_religion, A.religion.type))
-		slave.remove_from_mob(slave.wear_mask)
-		slave.remove_from_mob(slave.w_uniform)
-		slave.remove_from_mob(slave.head)
-		slave.remove_from_mob(slave.wear_suit)
-		slave.remove_from_mob(slave.back)
-		slave.remove_from_mob(slave.shoes)
-		slave.remove_from_mob(slave.l_hand)
-		slave.remove_from_mob(slave.r_hand)
-		slave.visible_message("<span class='userdanger'>[slave] медленно превращается в пыль и кости.</span>", \
-				"<span class='userdanger'>Вы чувствуете боль, когда разрывается связь между вашей душой и этим гомункулом.</span>", \
-				"<span class='userdanger'>Вы слышите множество тихих падений песчинок.</span>")
-		UnregisterSignal(slave, COMSIG_ENTER_AREA)
-		slave.dust()
-
-/datum/religion_rites/instant/cult/proc/remove_curse(mob/M, datum/species, new_species)
-	if(new_species == SKELETON)
-		UnregisterSignal(M, COMSIG_ENTER_AREA)
 
 /datum/religion_rites/instant/cult/create_slave/invoke_effect(mob/living/user, obj/AOG)
 	..()
@@ -328,11 +321,6 @@
 
 		H.real_name = "homunculus of [pick(religion.deity_names)] [num2roman(rand(1, 20))]"
 		H.universal_speak = TRUE
-		H.s_tone = 35
-		H.b_eyes = 200
-		H.r_eyes = 200
-		H.g_eyes = 200
-		H.underwear = 0
 		H.key = M.key
 
 		religion.add_member(H, CULT_ROLE_HIGHPRIEST)
@@ -340,9 +328,6 @@
 		to_chat(H, "<span class='[religion.style_text]'>Твоя кровь пульсирует, а голова раскалывается. Мир становится красным. Внезапно ты осознаешь ужаснейшую истину. Вуаль реальности повредилась. В твоей некогда гнившей ране пустило корни что-то зловещее.</span>")
 		to_chat(H, "<span class='[religion.style_text]'>Помогай своим собратьям в их темных делах. Их цель - твоя цель, а ваша - их. Отплати Темнейшему за свое воскрешение достойно.</span>")
 
-		slave_enter_area(H, get_area(AOG))
-		RegisterSignal(H, list(COMSIG_ENTER_AREA), .proc/slave_enter_area)
-		RegisterSignal(H, list(COMSIG_SPECIES_LOSS), .proc/remove_curse)
 	return TRUE
 
 /datum/religion_rites/instant/cult/summon_acolyt

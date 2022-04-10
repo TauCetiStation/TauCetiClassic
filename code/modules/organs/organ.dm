@@ -7,6 +7,8 @@
 	name = "organ"
 	germ_level = 0
 
+	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_APART | APPEARANCE_UI_IGNORE_ALPHA
+
 	// Strings.
 	var/parent_bodypart                // Bodypart holding this object.
 
@@ -23,12 +25,12 @@
 	// Damage vars.
 	var/min_broken_damage = 30         // Damage before becoming broken
 
-/obj/item/organ/proc/set_owner(mob/living/carbon/human/H)
+/obj/item/organ/proc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	loc = null
 	owner = H
 
-/obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
-	set_owner(H)
+/obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
+	set_owner(H, S)
 
 	STOP_PROCESSING(SSobj, src)
 
