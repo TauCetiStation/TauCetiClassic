@@ -81,12 +81,11 @@
 		if(geoip_data["countryCode"] && length(config.guard_whitelisted_country_codes) && !(geoip_data["countryCode"] in config.guard_whitelisted_country_codes))
 			geoip_weight += geoip_data["proxy"]   ? 1 : 0
 			geoip_weight += geoip_data["hosting"] ? 1 : 0
+			geoip_weight += geoip_data["mobile"]  ? 1 : 0
 		else
-			geoip_weight += geoip_data["proxy"]   ? 0.5 : 0 // low weight because false-positives
+			geoip_weight += geoip_data["proxy"]   ? 0.5 : 0 // low weight because of false-positives
 			geoip_weight += geoip_data["hosting"] ? 0.5 : 0 // same
-
-
-		geoip_weight += geoip_data["mobile"]  ? 0.2 : 0
+			geoip_weight += geoip_data["mobile"]  ? 0.2 : 0
 
 		geoip_weight += geoip_data["ipintel"]>=0.9 ? geoip_data["ipintel"] : 0
 
@@ -167,7 +166,7 @@
 		if(isnum(timeoffset) && isnum(local_time))
 			var/deviation = abs(local_time - timeoffset)
 			if(deviation >= 3600) // if local timezone differs from geoip timezone by 3600 seconds
-				var/deviation_weight = 0.5
+				var/deviation_weight = 0.7
 				new_report += "<div class='Section'><h3>Timezone deviation ([deviation_weight]).</h3></div>"
 				new_short_report += "TZ deviation (tw: [deviation_weight]); "
 				total_alert_weight += deviation_weight
