@@ -17,6 +17,7 @@
 	var/mob/living/silicon/robot/R = loc
 
 	add_languages(R)
+
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
 		for(var/obj/O in modules)
@@ -189,6 +190,7 @@
 	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/borg/stun(src)
 	for(var/T in stacktypes)
+	
 		var/obj/item/stack/W = new T(src)
 		W.set_amount(stacktypes[T])
 		modules += W
@@ -316,6 +318,7 @@
 	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/borg/stun(src)
 /obj/item/weapon/robot_module/syndicate
+
 	name = "syndicate robot module"
 
 /obj/item/weapon/robot_module/syndicate/atom_init()
@@ -357,6 +360,7 @@
 	modules += new /obj/item/weapon/wrench(src)
 	emag = new /obj/item/weapon/gun/energy/lasercannon/cyborg(src)
 /obj/item/weapon/robot_module/science
+
 	name = "science robot module"
 
 /obj/item/weapon/robot_module/science/atom_init()
