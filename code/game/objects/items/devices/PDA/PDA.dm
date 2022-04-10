@@ -949,10 +949,15 @@
 		if("Change Salary")
 			var/account_number = text2num(href_list["account"])
 			for(var/person in subordinate_staff)
-				if(account_number == person["acc_number"])
-					var/datum/money_account/account = person["acc_datum"]
-					account.change_salary(U, owner, name, ownrank)
+				if(account_number != person["account"])
+					continue
+
+				var/datum/money_account/account = get_account(person["account"])
+				if(!account)
 					break
+
+				account.change_salary(U, owner, name, ownrank)
+				break
 
 //SYNDICATE FUNCTIONS===================================
 

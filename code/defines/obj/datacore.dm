@@ -38,43 +38,44 @@ using /obj/effect/datacore/proc/manifest_inject( ), or manifest_insert( )
 		var/rank = sanitize(t.fields["rank"])
 		var/real_rank = t.fields["real_rank"]
 		var/isactive = t.fields["p_stat"]
-		var/account_number = t.fields["acc_number"]
-		var/account_datum = t.fields["acc_datum"]
+
+		var/account_number = t.fields["account"]
+
 		var/department = 0
 		var/depthead = 0 			// Department Heads will be placed at the top of their lists.
 		if(real_rank in command_positions)
-			heads[++heads.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
+			heads[++heads.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
 			department = 1
 			depthead = 1
 			if(rank=="Captain" && heads.len != 1)
 				heads.Swap(1,heads.len)
 
 		if(real_rank in security_positions)
-			sec[++sec.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
+			sec[++sec.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
 			department = 1
 			if(depthead && sec.len != 1)
 				sec.Swap(1,sec.len)
 
 		if(real_rank in engineering_positions)
-			eng[++eng.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
+			eng[++eng.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
 			department = 1
 			if(depthead && eng.len != 1)
 				eng.Swap(1,eng.len)
 
 		if(real_rank in medical_positions)
-			med[++med.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
+			med[++med.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
 			department = 1
 			if(depthead && med.len != 1)
 				med.Swap(1,med.len)
 
 		if(real_rank in science_positions)
-			sci[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
+			sci[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
 			department = 1
 			if(depthead && sci.len != 1)
 				sci.Swap(1,sci.len)
 
 		if(real_rank in civilian_positions)
-			civ[++civ.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
+			civ[++civ.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
 			department = 1
 			if(depthead && civ.len != 1)
 				civ.Swap(1,civ.len)
@@ -84,7 +85,7 @@ using /obj/effect/datacore/proc/manifest_inject( ), or manifest_insert( )
 			department = 1
 
 		if(!department && !(name in heads))
-			misc[++misc.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
+			misc[++misc.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
 
 
 	PDA_Manifest = list(\
@@ -293,14 +294,9 @@ using /obj/effect/datacore/proc/manifest_inject( ), or manifest_insert( )
 		else
 			G.fields["notes"] = "No notes found."
 
-		var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
-
-		if(MA)
-			G.fields["acc_number"] = MA.account_number
-			G.fields["acc_datum"] = MA
-		else
-			G.fields["acc_number"] = 0
-			G.fields["acc_datum"] = null
+		var/acc_number = H.mind.get_key_memory(MEM_ACCOUNT_NUMBER)
+		if(!acc_number)
+			acc_number = 0
 
 		general += G
 

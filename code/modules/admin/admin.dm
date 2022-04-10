@@ -703,8 +703,11 @@ var/global/BSACooldown = 0
 		dat += "<table>"
 		dat += "<tr><th>Name</th><th>Rank</th><th>Salary</th><th>Control</th></tr>"
 		for(var/person in crew)
+			var/datum/money_account/acc = get_account(person["account"])
+			if(!acc)
+				continue
+
 			var/color = "silver"
-			var/datum/money_account/acc = person["acc_datum"]
 			if(acc.owner_salary > acc.base_salary)
 				color = "green"
 			else if(acc.owner_salary < acc.base_salary)
