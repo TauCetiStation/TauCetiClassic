@@ -15,7 +15,7 @@
 
 
 /mob/proc/can_remember()
-	return !incapacitated() && mind
+	return stat == CONSCIOUS && mind
 
 /mob/verb/list_key_memories()
 	set name = "Key Memories"
