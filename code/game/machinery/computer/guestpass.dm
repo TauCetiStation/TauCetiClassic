@@ -142,11 +142,11 @@
 		return // everything below here requires card auth
 	switch(action)
 		if("giv_name")
-			var/nam = sanitize(input("Person pass is issued to", "Name", giv_name) as text | null)
+			var/nam = sanitize_safe(input("Person pass is issued to", "Name", giv_name) as text | null)
 			if(nam)
 				giv_name = nam
 		if("reason")
-			var/reas = sanitize(input("Reason why pass is issued", "Reason", reason) as text | null)
+			var/reas = sanitize_safe(input("Reason why pass is issued", "Reason", reason) as text | null)
 			if(reas)
 				reason = reas
 		if("duration")
