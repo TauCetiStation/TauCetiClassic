@@ -23,7 +23,9 @@
 	if(!dye_type)
 		return
 
-	cap_color = initial(dye_type.item_state)
+	var/obj/item/clothing/head/soft/S = dye_type
+
+	cap_color = initial(S.cap_color)
 	icon_state = "[cap_color][flipped ? "soft_flipped" : "soft"]"
 
 /obj/item/clothing/head/soft/attack_self(mob/living/carbon/human/user)
