@@ -321,3 +321,11 @@
 /datum/quality/positiveish/deathalarm/add_effect(mob/living/carbon/human/H, latespawn)
 	var/obj/item/weapon/implant/death_alarm/DA = new(H)
 	DA.stealth_inject(H)
+
+/datum/quality/negativeish/anatomist
+	name = "Anatomist"
+	desc = "Ты с первого взгляда можешь по походке и телосложению узнать расу гуманоида перед тобой."
+	requirement = "Нет."
+
+/datum/quality/negativeish/anatomist/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_ANATOMIST, QUALITY_TRAIT)
