@@ -1591,6 +1591,11 @@
 			var/slider_value = mind.skills.get_value(slider_id)
 			var/slider_min_value = skill.min_value
 			var/slider_max_value = mind.skills.get_max(slider_id)
+			var/rank_list = get_skill_rank_list(s)
+			var/rank_list_element = ""
+			for(var/rank in rank_list)
+				rank_list_element += "[rank]\n"
+			rank_list_element += ""
 			if(slider_max_value == slider_min_value)
 				continue
 			var/slider_hint = "Hint: [skill.hint] \n\nSkill ranks:\n[rank_list_element]"
@@ -1631,10 +1636,6 @@
 				skillUpdating = false;
 
 				document.getElementById(slider_id + "_value").innerHTML = value;
-			}
-
-			function showHint(text) {
-				document.getElementById("notice").innerHTML = '<b>Hint: ' + text + '</b>';
 			}
 			function setMaxSkills() {
 				window.location  = 'byond://?src=\ref[src];set_max_skills=1';
