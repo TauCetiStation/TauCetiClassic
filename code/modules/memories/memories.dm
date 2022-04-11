@@ -47,14 +47,14 @@
 		to_chat(src, "<span class='warning'>You remember too much...</span>")
 		return
 
-	var/key = input(src, "Key Memory", "How would you like to remember the thing?") as null|text
+	var/key = sanitize_safe(input(src, "Key Memory", "How would you like to remember the thing?") as null|text, MAX_NAME_LEN)
 	if(!key)
 		return
 
 	if(!can_remember())
 		return
 
-	var/value = input(src, "Key Memory", "What would you like to remember?") as null|text
+	var/value = sanitize(input(src, "Key Memory", "What would you like to remember?") as null|message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 
 	if(!can_remember())
 		return
