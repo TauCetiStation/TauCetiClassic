@@ -1,8 +1,7 @@
 /proc/is_skill_competent(mob/user, required_skills)
 	for(var/datum/skill/required_skill as anything in required_skills)
 		var/datum/skill/skill = all_skills[required_skill]
-		var/user_skill_value = user.get_skill_value_with_helpers(skill)
-		if(user_skill_value < skill.value)
+		if(user.mind.skills.get_value(skill.name) < skill.value)
 			return FALSE
 	return TRUE
 
@@ -31,3 +30,16 @@
 
 	var/required_time = apply_skill_bonus(user, delay, required_skills, -1) //increase time for each missing level
 	return do_after(user, required_time, target = target)
+
+/proc/get_skill_rank_name(skill_type, value)
+	for(var/s in subtypesof(skill_type))
+		var/datum/skill/skill = all_skills[s]
+		if(skill.value == value)
+			return skill.rank_name
+
+/proc/get_skill_rank_list(skill_type)
+	var/result = list()
+	for(var/s in subtypesof(skill_type))
+		var/datum/skill/skill = all_skills[s]
+		result += skill.rank_name
+	return result
