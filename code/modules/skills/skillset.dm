@@ -73,7 +73,7 @@
 		apply_effects(1,1)
 		return
 
-	visible_message("<span class='notice'>[src] puts his hand on \the [target]'s' shoulder, assisting [t_him].</span>", "<span class='notice'>You put your hand on \the [target]'s' shoulder, assisting [P_THEM(target)]. You need to stand still while doing this.</span>")
+	visible_message("<span class='notice'>[src] puts his hand on \the [target]'s' shoulder, assisting [t_him].</span>", "<span class='notice'>You put your hand on \the [target]'s' shoulder, assisting [t_him]. You need to stand still while doing this.</span>")
 	while(do_mob(src, target, SKILL_TASK_FORMIDABLE))
 		if(!(mind.skills.active in target.helpers_skillsets))
 			target.helpers_skillsets += mind.skills.active
