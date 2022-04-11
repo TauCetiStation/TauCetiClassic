@@ -182,7 +182,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	sharp = 1
 
 	var/excavation_amount = 100
-	required_skills = list(/datum/skill/engineering/novice)
 
 /obj/item/weapon/pickaxe/silver
 	name = "silver pickaxe"
