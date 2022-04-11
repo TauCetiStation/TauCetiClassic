@@ -20,7 +20,7 @@
 		return
 	if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/firearms/trained), message_self =  "<span class='notice'>You fumble around figuring out how to deploy [src]...</span>"))
 		return
-	var/planting_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/firearms/trained, /datum/skill/engineering/trained))
+	var/planting_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/firearms/trained, /datum/skill/engineering/trained), -0.1)
 	user.visible_message("<span class='notice'>[user] starts deploying [src].</span>", "<span class='notice'>You start deploying [src].</span>")
 	if(!do_after(user, planting_time, target = src))
 		user.visible_message("<span class='notice'>[user] stops deploying [src].</span>", "<span class='notice'>You stop deploying \the [src].</span>")

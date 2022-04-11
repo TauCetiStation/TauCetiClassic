@@ -135,7 +135,7 @@
 	if(ishuman(M))
 		covered = get_human_covering(M)
 
-	if(!handle_fumbling(user, M, SKILL_TASK_FORMIDABLE, list(/datum/skill/surgery/pro), SKILL_TASK_TOUGH, "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
+	if(!handle_fumbling(user, M, SKILL_TASK_FORMIDABLE, list(/datum/skill/surgery/pro), "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
 		return
 
 	for(var/datum/surgery_step/S in surgery_steps)

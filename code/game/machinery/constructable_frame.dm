@@ -158,7 +158,7 @@
 						component_check = 0
 						break
 				if(component_check)
-					if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/construction/pro), SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around, figuring out how to construct machine.</span>"))
+					if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/construction/pro), "<span class='notice'>You fumble around, figuring out how to construct machine.</span>"))
 						return
 					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 					var/obj/machinery/new_machine = new circuit.build_path(src.loc)

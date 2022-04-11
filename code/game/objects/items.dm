@@ -763,9 +763,9 @@
 	
 	//in case item have no defined default required_skill or we need to check other skills e.g. check crowbar for surgery
 	if(required_skills_override)
-		skill_bonus = apply_skill_bonus(user, 1, required_skills_override)
+		skill_bonus = apply_skill_bonus(user, 1, required_skills_override, -0.4)
 	else if(required_skills) //default check for item
-		skill_bonus = apply_skill_bonus(user, 1, required_skills)
+		skill_bonus = apply_skill_bonus(user, 1, required_skills, -0.4)
 	
 	
 	delay *= toolspeed

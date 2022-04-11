@@ -294,7 +294,7 @@
 	prev_move_dir = direction
 	if(move_result)
 		can_move = 0
-		VARSET_IN(src, can_move, TRUE, apply_skill_bonus(occupant, step_in, required_skills, 0.15, 0.3) * move_result)
+		VARSET_IN(src, can_move, TRUE, apply_skill_bonus(occupant, step_in, required_skills, -0.2) * move_result) // -20% to step_in for each level
 		return 1
 	return 0
 
