@@ -1,5 +1,6 @@
 /datum/skill
 	var/name
+	var/rank_name = "Untrained"
 	var/min_value = 0
 	var/max_value
 	var/value = 0
@@ -13,15 +14,19 @@
 	value = -2
 
 /datum/skill/civ_mech/novice
+	rank_name = "Novice"
 	value = -1
 
 /datum/skill/civ_mech/trained
+	rank_name = "Trained"
 	value = 0 //engineer, medical intern, scientist, medical doctor
 
 /datum/skill/civ_mech/pro
+	rank_name = "Professional"
 	value = 1 //cargo techincian, recycler, robotech, paramedic, mecha operator
 
 /datum/skill/civ_mech/master
+	rank_name = "Forklift certified"
 	value = 2 //RD, miner, QM, CE, CMO
 
 /datum/skill/combat_mech
@@ -32,9 +37,11 @@
 	value = -2
 
 /datum/skill/combat_mech/trained
+	rank_name = "Trained"
 	value = -1 //mecha operator, security
 
 /datum/skill/combat_mech/master
+	rank_name = "Master"
 	value = 0 //nuclear,  HoS, RD
 
 /datum/skill/police
@@ -43,9 +50,11 @@
 	hint = "Usage of tasers and flashers. Higher levels allows for faster handcuffing."
 
 /datum/skill/police/trained
+	rank_name = "Trained"
 	value = 1 //heads of staff
 
 /datum/skill/police/master
+	rank_name = "Master"
 	value = 2 //security
 
 /datum/skill/firearms
@@ -54,9 +63,11 @@
 	hint = "Affects recoil from firearms. Proficiency in firearms allows for tactical reloads. Usage of mines and explosives."
 
 /datum/skill/firearms/trained
+	rank_name = "Trained"
 	value = 1 //less recoil from firearms, usage of mines and c4
 
 /datum/skill/firearms/master
+	rank_name = "Master"
 	value = 2 //security, nuclear, ERT, gangsters
 
 /datum/skill/melee
@@ -66,12 +77,15 @@
 	hint = "Higher levels means more damage with melee weapons."
 
 /datum/skill/melee/weak
+	rank_name = "Clowny"
 	value = -1
 
 /datum/skill/melee/trained
+	rank_name = "Trained"
 	value = 1 //botanist, atmospheric techician
 
 /datum/skill/melee/master
+	rank_name = "Black belt"
 	value = 2 // chaplain, security, cook
 
 /datum/skill/atmospherics
@@ -80,12 +94,15 @@
 	hint = "Interacting with atmos related devices: pumps, scrubbers, space heaters. Usage of atmospherics computers. Faster pipes unwrenching."
 
 /datum/skill/atmospherics/novice
+	rank_name = "Novice"
 	value = 1 //scientist
 
 /datum/skill/atmospherics/trained
+	rank_name = "Trained"
 	value = 2 //engineer, RD
 
 /datum/skill/atmospherics/master
+	rank_name = "Master"
 	value = 3 //CE, atmospheric techincian
 
 /datum/skill/construction
@@ -94,15 +111,19 @@
 	hint = "Construction of walls, windows, computers and crafting."
 
 /datum/skill/construction/novice
+	rank_name = "Novice"
 	value = 1 //windows
 
 /datum/skill/construction/trained
+	rank_name = "Professional"
 	value = 2 //walls, reinforced glass, RCD usage(scientist, robotech)
 
 /datum/skill/construction/pro
+	rank_name = "Master"
 	value = 3 //computer, machine frames,  RD, engineer, reinforced walls
 
 /datum/skill/construction/master
+	rank_name = "Master"
 	value = 4 //CE - AI core and reinforced phoron windows
 
 /datum/skill/chemistry
@@ -111,12 +132,15 @@
 	hint = "Chemistry related machinery: grinders, chem dispensers and chem masters. You can recognize reagents in pills and bottles."
 
 /datum/skill/chemistry/novice
+	rank_name = "Novice"
 	value = 1 //intern, scientist, botanist
 
 /datum/skill/chemistry/trained
+	rank_name = "Trained"
 	value = 2 //medical doctor, surgeon, RD
 
 /datum/skill/chemistry/master
+	rank_name = "Master"
 	value = 3 //chemist, CMO
 
 /datum/skill/research
@@ -125,15 +149,19 @@
 	hint = "Usage of complex machinery and computers. AI law modification, xenoarcheology and xenobiology consoles, exosuit fabricators."
 
 /datum/skill/research/novice
+	rank_name = "Bachelor"
 	value = 1
 
 /datum/skill/research/trained
+	rank_name = "Bachelor"
 	value = 2 //RnD console, xenoarch consoles, genetics
 
 /datum/skill/research/pro
+	rank_name = "Professional"
 	value = 3 // AI law modification, telescience console. Scientist, roboticisit
 
 /datum/skill/research/master
+	rank_name = "Master"
 	value = 4 //AI creation, RD
 
 /datum/skill/medical
@@ -142,18 +170,23 @@
 	hint = "Faster usage of syringes. Proficiency with defibrilators, medical scanners, cryo tubes, sleepers and life support machinery."
 
 /datum/skill/medical/novice
+	rank_name = "Novice"
 	value = 1
 
 /datum/skill/medical/trained
+	rank_name = "Trained"
 	value = 2
 
 /datum/skill/medical/pro
+	rank_name = "Professional"
 	value = 3 //intern
 
 /datum/skill/medical/expert
+	rank_name = "Expert"
 	value = 4 //doctor, paramedic
 
 /datum/skill/medical/master
+	rank_name = "Master"
 	value = 5 //CMO, nurse
 
 /datum/skill/surgery
@@ -162,15 +195,19 @@
 	hint = "Higher level means faster surgical operations."
 
 /datum/skill/surgery/novice
+	rank_name = "Novice"
 	value = 1 //intern, scientist, cook
 
 /datum/skill/surgery/trained
+	rank_name = "Trained"
 	value = 2 //paramedic, roboticist
 
 /datum/skill/surgery/pro
+	rank_name = "Professional"
 	value = 3 //doctor, RD
 
 /datum/skill/surgery/master
+	rank_name = "Master"
 	value = 4 //CMO, surgeon
 
 /datum/skill/command
@@ -179,15 +216,19 @@
 	hint = "Low level means basic knowledge of paperwork. Usage of identification computers, communication consoles and fax."
 
 /datum/skill/command/novice
+	rank_name = "Novice"
 	value = 1 //officers, psychatrist, lawyer - easier paperwork, quest passes
 
 /datum/skill/command/trained
+	rank_name = "Trained"
 	value = 2 //internal affairs, QM -   auth devices, access modification
 
 /datum/skill/command/pro
+	rank_name = "Professional"
 	value = 3 //heads, cult leaders, gang leaders, ERT
 
 /datum/skill/command/master
+	rank_name = "Master"
 	value = 4  //captain, nuclear and strike team leaders
 
 /datum/skill/engineering
@@ -196,14 +237,18 @@
 	hint = "Tools usage, hacking, wall repairs and deconstruction. Engine related tasks and configuring of telecommunications."
 
 /datum/skill/engineering/novice
+	rank_name = "Novice"
 	value = 1 //hacking
 
 /datum/skill/engineering/trained
+	rank_name = "Trained"
 	value = 2 //techincal assistant, atmospheric technician
 
 /datum/skill/engineering/pro
+	rank_name = "Professional"
 	value = 3 //bubble shield generators, singularity computer ,engineer
 
 /datum/skill/engineering/master
+	rank_name = "Master"
 	value = 4 //Telecomms, CE, RD
 
