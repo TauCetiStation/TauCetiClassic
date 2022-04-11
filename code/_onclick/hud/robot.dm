@@ -327,7 +327,6 @@ var/global/atom/movable/screen/robot_inventory
 					x = -4
 					y++
 
-
 	else
 		//Modules display is hidden
 		//r.client.screen -= robot_inventory	//"store" icon
