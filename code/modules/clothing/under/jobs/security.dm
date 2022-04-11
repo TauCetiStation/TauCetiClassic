@@ -89,7 +89,7 @@
 
 /obj/item/clothing/under/det/max_payne
 	name = "white hard-worn suit with blue jeans"
-	desc = "Style suit for those who wanna revenge"
+	desc = "Style suit for those who want vengence."
 	icon_state = "max"
 	item_state = "max"
 	flags = ONESIZEFITSALL
