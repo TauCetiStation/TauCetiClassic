@@ -1,7 +1,8 @@
 /proc/is_skill_competent(mob/user, required_skills)
 	for(var/datum/skill/required_skill as anything in required_skills)
 		var/datum/skill/skill = all_skills[required_skill]
-		if(user.mind.skills.get_value(skill.name) < skill.value)
+		var/value_with_helpers = get_skill_value_with_assistance(user, skill)
+		if(value_with_helpers < skill.value)
 			return FALSE
 	return TRUE
 
@@ -9,7 +10,8 @@
 	var/result = value
 	for(var/datum/skill/required_skill as anything in required_skills)
 		var/datum/skill/skill = all_skills[required_skill]
-		result += value * multiplier * (user.mind.skills.get_value(skill.name) - skill.value)
+		var/value_with_helpers = get_skill_value_with_assistance(user, skill)
+		result += value * multiplier * (value_with_helpers - skill.value)
 	return result
 
 /proc/do_skilled(mob/user, atom/target,  delay, required_skills, multiplier)
@@ -43,3 +45,14 @@
 		var/datum/skill/skill = all_skills[s]
 		result += skill.rank_name
 	return result
+
+/proc/get_skill_value_with_assistance(mob/living/user, datum/skill/skill)
+	var/own_skill_value = user.mind.skills.get_value(skill.name)
+	if(user.helpers_skillsets.len == 0)
+		return own_skill_value
+	var/help = 0
+	var/command = 0
+	for(var/datum/skillset/skillset in user.helpers_skillsets)
+		command = max(command, skillset.get_command_modifier())
+		help += skillset.get_help_additive(skill.name)
+	return min(own_skill_value * command + help, skill.value)

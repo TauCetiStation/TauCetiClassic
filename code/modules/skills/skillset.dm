@@ -47,20 +47,33 @@
 		return skill.value - 1
 	return skill.value
 
-/mob/var/list/helpers_skillsets = list()
-/mob/var/last_help_request = 0
+/mob/living/var/list/helpers_skillsets = list()
+/mob/living/var/last_help_request = 0
 
-/mob/proc/request_help()
+/mob/living/proc/request_help()
 	if(!mind)
 		return
 	last_help_request = world.time
 
-/mob/proc/help_other(mob/target)
+/mob/living/proc/help_other(mob/living/target)
 	if(!mind)
 		return
 	if(!target.last_help_request || (world.time - target.last_help_request > 5 SECONDS))
 		return
-	visible_message("<span class='notice'>[src] puts his hand on \the [target]'s' shoulder, assisting [P_THEM(target)].</span>", "<span class='notice'>You put your hand on \the [target]'s' shoulder, assisting [P_THEM(target)]. You need to stand still while doing this.</span>")
+
+	var/t_him = "it"
+	if (target.gender == MALE)
+		t_him = "him"
+	else if (target.gender == FEMALE)
+		t_him = "her"
+
+	if(target.a_intent == INTENT_HARM)
+		visible_message("<span class='notice'>[target] pranks \the [src].</span>", "<span class='notice'>You tried to help \the [target], but he rejects your help and pranks you instead!</span>")
+		to_chat(target, "<span class='notice'>You prank \the [src]!</span>")
+		apply_effects(1,1)
+		return
+
+	visible_message("<span class='notice'>[src] puts his hand on \the [target]'s' shoulder, assisting [t_him].</span>", "<span class='notice'>You put your hand on \the [target]'s' shoulder, assisting [P_THEM(target)]. You need to stand still while doing this.</span>")
 	while(do_mob(src, target, SKILL_TASK_FORMIDABLE))
 		if(!(mind.skills.active in target.helpers_skillsets))
 			target.helpers_skillsets += mind.skills.active
@@ -68,20 +81,9 @@
 	target.helpers_skillsets -= mind.skills.active
 	visible_message("<span class='notice'>[src] removes his hand from \the [target] shoulder.</span>", "<span class='notice'>You remove your hand from \the [target] shoulder.</span>")
 
-/mob/proc/add_command_buff(mob/commander, time)
+/mob/living/proc/add_command_buff(mob/commander, time)
 	helpers_skillsets += commander.mind.skills.active
 	addtimer(CALLBACK(src, .proc/remove_command_buff, commander), time)
 
-/mob/proc/remove_command_buff(mob/commander)
+/mob/living/proc/remove_command_buff(mob/commander)
 	helpers_skillsets -= commander.mind.skills.active
-
-/mob/proc/get_skill_value_with_helpers(datum/skill/skill)
-	var/own_skill_value = mind.skills.get_value(skill.name)
-	if(helpers_skillsets.len == 0)
-		return own_skill_value
-	var/help = 0
-	var/command = 1
-	for(var/datum/skillset/skillset in helpers_skillsets)
-		command = max(command, skillset.get_command_modifier())
-		help += skillset.get_help_additive(skill.name)
-	return min(own_skill_value * command + help, skill.value)
