@@ -40,9 +40,9 @@
 
 	var/list/restricted_inventory_slots = list() // Slots that the race does not have due to biological differences.
 
-	var/breath_type = "oxygen"           // Non-oxygen gas breathed, if any.
-	var/poison_type = "phoron"           // Poisonous air.
+	var/inhale_type = "oxygen"           // Non-oxygen gas breathed, if any.
 	var/exhale_type = "carbon_dioxide"   // Exhaled gas type.
+	var/poison_type = "phoron"           // Poisonous air.
 
 	var/cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT		// Cold damage level 1 below this point.
 	var/cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 5	// Cold damage level 2 below this point.
@@ -224,6 +224,8 @@
 	return
 
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
+	SHOULD_CALL_PARENT(TRUE)
+
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_SPECIES)
 
@@ -231,9 +233,15 @@
 		var/datum/emote/E = global.all_emotes[emote]
 		H.set_emote(E.key, E)
 
+	H.inhale_gas = inhale_type
+	H.exhale_gas = exhale_type
+	H.poison_gas = poison_type
+
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(!flags[IS_SOCIAL])
 		H.handle_socialization()
 
@@ -496,7 +504,7 @@
 
 	eyes = "vox_eyes"
 
-	breath_type = "nitrogen"
+	inhale_type = "nitrogen"
 	poison_type = "oxygen"
 
 	flags = list(
@@ -643,7 +651,7 @@
 	burn_mod = 0.2
 
 	eyes = null
-	breath_type = "nitrogen"
+	inhale_type = "nitrogen"
 	poison_type = "oxygen"
 
 	is_common = TRUE
@@ -1552,6 +1560,7 @@
 	speed_mod_no_shoes = 5
 
 /datum/species/abomination/on_gain(mob/living/carbon/human/H)
+	..()
 	H.status_flags &= ~(CANSTUN  | CANPARALYSE | CANWEAKEN)
 
 /datum/species/abomination/call_digest_proc(mob/living/M, datum/reagent/R)
