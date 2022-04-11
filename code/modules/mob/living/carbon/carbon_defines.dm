@@ -26,6 +26,7 @@
 	var/co2overloadtime = null
 
 	var/metabolism_factor = METABOLISM_FACTOR
+	var/metabolism_factor_bonus = 0
 
 	var/obj/item/head
 	var/obj/item/shoes

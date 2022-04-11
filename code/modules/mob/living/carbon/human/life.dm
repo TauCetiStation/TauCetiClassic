@@ -54,10 +54,6 @@
 			handle_mutations_and_radiation()
 
 		if(stat != DEAD)
-			//Chemicals in the body
-			handle_chemicals_in_body()
-
-		if(stat != DEAD)
 			//Disabilities
 			handle_disabilities()
 
@@ -84,6 +80,11 @@
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
+
+	//Chemicals in the body
+	handle_chemicals_in_body()
+
+	handle_metabolism()
 
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)		//Optimized a good bit.
@@ -1493,6 +1494,18 @@
 				temp = PULSE_NONE
 
 	return temp
+
+/mob/living/carbon/human/proc/handle_metabolism()
+	metabolism_factor = METABOLISM_FACTOR + ((stat == DEAD) ? 0 : metabolism_factor_bonus)
+	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
+	switch(IO.heart_status)
+		if(HEART_FIBR)
+			metabolism_factor *= 0.5
+		if(HEART_FAILURE)
+			metabolism_factor *= 0
+
+	if(HAS_TRAIT(src, TRAIT_CPB))
+		metabolism_factor += 0.5
 
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes
