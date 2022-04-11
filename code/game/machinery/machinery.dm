@@ -342,7 +342,7 @@ Class Procs:
 	add_fingerprint(usr)
 
 	if(!do_skill_checks(usr))
-		return FALSE
+		return TRUE
 	return FALSE
 
 /obj/machinery/proc/issilicon_allowed(mob/living/silicon/S)
@@ -394,6 +394,10 @@ Class Procs:
 		return TRUE
 	if(!can_interact_with(user))
 		return TRUE
+	if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
+		if(prob(75))
+			to_chat(user, "<span class='notice'>Your fingers are slipping.</span>")
+			return TRUE
 
 	if(hasvar(src, "wires"))              // Lets close wires window if panel is closed.
 		var/datum/wires/DW = vars["wires"] // Wires and machinery that uses this feature actually should be refactored.
@@ -558,4 +562,4 @@ Class Procs:
 /obj/machinery/proc/do_skill_checks(mob/user)
 	if (!required_skills || !user || issilicon(user) || isobserver(user))
 		return TRUE
-	return handle_fumbling(user, src, fumbling_time * 2, required_skills, time_bonus = fumbling_time)
+	return handle_fumbling(user, src, fumbling_time * 2, required_skills, time_bonus = fumbling_time, check_busy = FALSE)

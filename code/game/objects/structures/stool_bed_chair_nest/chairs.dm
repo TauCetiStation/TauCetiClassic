@@ -101,16 +101,18 @@
 		..()
 
 /obj/structure/stool/bed/chair/user_buckle_mob(mob/living/M, mob/user)
-	if(dir == NORTH && !istype(src, /obj/structure/stool/bed/chair/schair/wagon/bench))
-		layer = FLY_LAYER
-	else
-		layer = OBJ_LAYER
 	if(flipped)
 		to_chat(usr, "<span class='notice'>You can't do it, while \the [src] is flipped.</span>")
 		if(usr != M)
 			to_chat(M, "<span class='warning'>Tried buckle you to \the [src].</span>")
+		return
+
+	if(dir == NORTH && !istype(src, /obj/structure/stool/bed/chair/schair/wagon/bench))
+		layer = FLY_LAYER
 	else
-		..()
+		layer = OBJ_LAYER
+
+	..()
 
 /obj/structure/stool/bed/chair/attack_tk(mob/user)
 	if(buckled_mob)

@@ -88,8 +88,6 @@
 
 		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
-		if(S.flags[SPRITE_SHEET_RESTRICTION])
-			global.sprite_sheet_restricted += S.name
 
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 	global.chemical_reagents_list = list()
@@ -248,6 +246,12 @@
 	global.all_skillsets = list()
 	for(var/skillset_type in subtypesof(/datum/skillset))
 		global.all_skillsets[skillset_type] = new skillset_type
+
+	global.skillset_names_aliases = list()
+	for(var/s in all_skillsets)
+		var/datum/skillset/skillset = all_skillsets[s]
+		global.skillset_names_aliases[skillset.name] = s
+
 	global.all_emotes = list()
 	for(var/emote_type in subtypesof(/datum/emote))
 		global.all_emotes[emote_type] = new emote_type

@@ -75,7 +75,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	pixel_x = -16
 	pixel_y = -2
 
-	layer = INFRONT_MOB_LAYER - 0.1
+	layer = BELL_LAYER
 
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 
@@ -449,11 +449,13 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 /obj/structure/stool/bed/chair/lectern/proc/add_book(datum/source, obj/item/I)
 	add_overlay(book_overlay)
+	icon_state = "[initial(icon_state)]_book"
 	lectern_overlay.add_overlay(book_overlay)
 
 /obj/structure/stool/bed/chair/lectern/proc/remove_book(datum/source, obj/item/I)
 	saved_text = ""
 	cut_overlay(book_overlay)
+	icon_state = "[initial(icon_state)]"
 	lectern_overlay.cut_overlay(book_overlay)
 
 /obj/structure/stool/bed/chair/lectern/AltClick(mob/user)
@@ -514,6 +516,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
+		can_buckle = !can_buckle
 		to_chat(user, "<span class='notice'>You have [anchored ? "secured" : "unsecured"] [src].</span>")
 		return
 

@@ -373,7 +373,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
-		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering/trained)))
+		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100))
 			if(mineral == "diamond")//Oh look, it's tougher
 				sleep(60)
 			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
@@ -390,7 +390,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
-		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50, required_skills_override = list(/datum/skill/engineering/trained)))
+		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
 			if(mineral == "diamond")
 				sleep(60)
 			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)

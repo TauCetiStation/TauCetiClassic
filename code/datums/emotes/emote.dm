@@ -38,7 +38,7 @@ var/global/list/all_emotes
 	// Cooldown for emote usage.
 	var/cooldown = 0.8 SECONDS
 	// Cooldown for the audio of the emote, if it has one.
-	var/audio_cooldown = 2 SECONDS
+	var/audio_cooldown = 3 SECONDS
 
 	// Visual cue with a cloud above head for some emotes.
 	var/cloud
@@ -63,26 +63,26 @@ var/global/list/all_emotes
 
 	return "<b>[user]</b> <i>[msg]</i>"
 
-/datum/emote/proc/get_cooldown_group(mob/living/carbon/human/user)
+/datum/emote/proc/get_cooldown_group()
 	if(isnull(cooldown_group))
 		return type
 
 	return cooldown_group
 
-/datum/emote/proc/check_cooldown(mob/living/carbon/human/user, list/cooldowns, intentional)
+/datum/emote/proc/check_cooldown(list/cooldowns, intentional)
 	if(!intentional)
 		return TRUE
 
 	if(!cooldowns)
 		return TRUE
 
-	return cooldowns[get_cooldown_group(user)] < world.time
+	return cooldowns[get_cooldown_group()] < world.time
 
-/datum/emote/proc/set_cooldown(mob/living/carbon/human/user, list/cooldowns, value, intentional)
+/datum/emote/proc/set_cooldown(list/cooldowns, value, intentional)
 	if(!intentional)
 		return
 
-	LAZYSET(cooldowns, get_cooldown_group(user), world.time + value)
+	LAZYSET(cooldowns, get_cooldown_group(), world.time + value)
 
 /datum/emote/proc/get_sound(mob/living/carbon/human/user, intentional)
 	return sound
@@ -91,7 +91,7 @@ var/global/list/all_emotes
 	playsound(user, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, null)
 
 /datum/emote/proc/can_emote(mob/living/carbon/human/user, intentional)
-	if(!check_cooldown(user, user.next_emote_use, intentional))
+	if(!check_cooldown(user.next_emote_use, intentional))
 		if(intentional)
 			to_chat(user, "<span class='notice'>You can't emote so much, give it a rest.</span>")
 		return FALSE
@@ -103,7 +103,8 @@ var/global/list/all_emotes
 	return TRUE
 
 /datum/emote/proc/do_emote(mob/living/carbon/human/user, emote_key, intentional)
-	set_cooldown(user, user.next_emote_use, cooldown, intentional)
+	LAZYINITLIST(user.next_emote_use)
+	set_cooldown(user.next_emote_use, cooldown, intentional)
 
 	for(var/obj/item/weapon/implant/I in user)
 		if(!I.implanted)
@@ -129,8 +130,9 @@ var/global/list/all_emotes
 		to_chat(user, msg_1p)
 
 	var/emote_sound = get_sound(user, intentional)
-	if(emote_sound && check_cooldown(user, user.next_audio_emote_produce, intentional))
-		set_cooldown(user, user.next_audio_emote_produce, audio_cooldown, intentional)
+	if(emote_sound && check_cooldown(user.next_audio_emote_produce, intentional))
+		LAZYINITLIST(user.next_audio_emote_produce)
+		set_cooldown(user.next_audio_emote_produce, audio_cooldown, intentional)
 		play_sound(user, intentional, emote_sound)
 
 	for(var/mob/M as anything in observer_list)
