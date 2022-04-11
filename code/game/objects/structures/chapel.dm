@@ -338,7 +338,6 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	var/obj/item/weapon/storage/internal/book
 
 	var/image/lectern_overlay
-	var/image/book_overlay
 	var/image/emblem_overlay
 
 /obj/structure/stool/bed/chair/lectern/atom_init()
@@ -361,17 +360,12 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	lectern_overlay.layer = INFRONT_MOB_LAYER
 	add_overlay(lectern_overlay)
 
-	book_overlay = image(icon, "book")
-	book_overlay.layer = INFRONT_MOB_LAYER
-
 	emblem_overlay = image(icon, "general")
 	emblem_overlay.layer = INFRONT_MOB_LAYER
 	lectern_overlay.add_overlay(emblem_overlay)
-	add_overlay(emblem_overlay)
 
 /obj/structure/stool/bed/chair/lectern/Destroy()
 	QDEL_NULL(lectern_overlay)
-	QDEL_NULL(book_overlay)
 	QDEL_NULL(emblem_overlay)
 	QDEL_NULL(book)
 	return ..()
@@ -450,14 +444,12 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 /obj/structure/stool/bed/chair/lectern/proc/add_book(datum/source, obj/item/I)
 	icon_state = "[initial(icon_state)]_book"
-	lectern_overlay.add_overlay(book_overlay)
-	to_chat(world, "ADDING BOOK")
+	lectern_overlay.icon_state = get_overlay_icon_state("_book")
 
 /obj/structure/stool/bed/chair/lectern/proc/remove_book(datum/source, obj/item/I)
 	saved_text = ""
 	icon_state = "[initial(icon_state)]"
-	lectern_overlay.cut_overlay(book_overlay)
-	to_chat(world, "REMOVING BOOK")
+	lectern_overlay.icon_state = get_overlay_icon_state("")
 
 /obj/structure/stool/bed/chair/lectern/AltClick(mob/user)
 	if(!ishuman(user))
@@ -548,20 +540,18 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 		buckled_mob.set_dir(dir)
 		buckled_mob.update_canmove()
 
-/obj/structure/stool/bed/chair/lectern/post_buckle_mob(mob/living/M)
-	cut_overlay(lectern_overlay)
+/obj/structure/stool/bed/chair/lectern/proc/get_overlay_icon_state(addition)
+	return "lectern_overlay[buckled_mob ? "" : "_unbuckled"][addition]"
 
+/obj/structure/stool/bed/chair/lectern/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
 		M.pixel_y = 12
 		update_buckle_mob(M)
-		lectern_overlay.icon_state = "lectern_overlay"
-		to_chat(world, "LECTERN BUCKLED [lectern_overlay.icon_state]")
+		lectern_overlay.icon_state = get_overlay_icon_state(book.contents.len ? "_book" : "")
+
 	else
 		M.pixel_y = M.get_pixel_y_offset()
-		lectern_overlay.icon_state = "lectern_overlay_unbuckled"
-		to_chat(world, "LECTERN UNBUCKLED [lectern_overlay.icon_state]")
-
-	add_overlay(lectern_overlay)
+		lectern_overlay.icon_state = get_overlay_icon_state(book.contents.len ? "_book" : "")
 
 /obj/structure/stool/bed/chair/lectern/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
