@@ -46,8 +46,8 @@
 /obj/structure/stool/bed/chair/lectern/atom_religify(datum/religion/R)
 	if(!R.emblem_icon_state || R.emblem_icon_state == icon_state)
 		return FALSE
-	emblem_overlay.icon_state = R.emblem_icon_state
 	lectern_overlay.cut_overlay(emblem_overlay)
+	emblem_overlay.icon_state = R.emblem_icon_state
 	lectern_overlay.add_overlay(emblem_overlay)
 	cut_overlay(emblem_overlay)
 	add_overlay(emblem_overlay)
