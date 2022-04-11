@@ -13,7 +13,7 @@
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
-	var/unarmed                                          // For empty hand harm-intent attack
+	var/datum/unarmed_attack/unarmed                                          // For empty hand harm-intent attack
 	var/unarmed_type = /datum/unarmed_attack
 	var/brute_mod = 1                                    // Physical damage multiplier (0 == immunity).
 	var/burn_mod = 1                                     // Burn damage multiplier.
@@ -32,8 +32,6 @@
 	// Use LANGUAGE = LANGUAGE_CAN_UNDERSTAND to give languages which a specimen can understand, but not speak.
 	var/list/additional_languages
 	var/species_common_language = FALSE // If TRUE, racial language will be forced by default when speaking.
-	var/attack_verb = "punch"         // Empty hand hurt intent verb.
-	var/punch_damage = 0              // Extra empty hand attack damage.
 
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
 	// Perhaps one day make this an assoc list of BODYPART_NAME = list(drops) ? ~Luduk
@@ -42,9 +40,9 @@
 
 	var/list/restricted_inventory_slots = list() // Slots that the race does not have due to biological differences.
 
-	var/breath_type = "oxygen"           // Non-oxygen gas breathed, if any.
-	var/poison_type = "phoron"           // Poisonous air.
+	var/inhale_type = "oxygen"           // Non-oxygen gas breathed, if any.
 	var/exhale_type = "carbon_dioxide"   // Exhaled gas type.
+	var/poison_type = "phoron"           // Poisonous air.
 
 	var/cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT		// Cold damage level 1 below this point.
 	var/cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 5	// Cold damage level 2 below this point.
@@ -74,16 +72,11 @@
 	var/hazard_low_pressure = HAZARD_LOW_PRESSURE     // Dangerously low pressure.
 
 	var/list/flags = list()       // Various specific features.
-	var/list/abilities = list()	// For species-derived or admin-given powers
 
 	var/blood_datum_path = /datum/dirt_cover/red_blood //Red.
 	var/datum/dirt_cover/blood_datum // this will contain reference and should only be used as read only.
 	var/flesh_color = "#ffc896" //Pink.
 	var/base_color      //Used when setting species.
-
-	//Used in icon caching.
-	var/race_key = 0
-	var/icon/icon_template
 
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
@@ -153,6 +146,9 @@
 
 	// Emotes this species grants.
 	var/list/emotes
+
+	// The usual species for the station
+	var/is_common = FALSE
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -226,6 +222,8 @@
 	return
 
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
+	SHOULD_CALL_PARENT(TRUE)
+
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_SPECIES)
 
@@ -233,9 +231,15 @@
 		var/datum/emote/E = global.all_emotes[emote]
 		H.set_emote(E.key, E)
 
+	H.inhale_gas = inhale_type
+	H.exhale_gas = exhale_type
+	H.poison_gas = poison_type
+
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(!flags[IS_SOCIAL])
 		H.handle_socialization()
 
@@ -297,11 +301,10 @@
 	,IS_SOCIAL = TRUE
 	)
 
-	//If you wanted to add a species-level ability:
-	/*abilities = list(/client/proc/test_ability)*/
-
 	min_age = 25
 	max_age = 85
+
+	is_common = TRUE
 
 /datum/species/unathi
 	name = UNATHI
@@ -343,6 +346,8 @@
 
 	min_age = 25
 	max_age = 85
+
+	is_common = TRUE
 
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
@@ -411,6 +416,8 @@
 	min_age = 25
 	max_age = 85
 
+	is_common = TRUE
+
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
 			)
@@ -464,6 +471,8 @@
 	min_age = 25
 	max_age = 150
 
+	is_common = TRUE
+
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
 
@@ -493,7 +502,7 @@
 
 	eyes = "vox_eyes"
 
-	breath_type = "nitrogen"
+	inhale_type = "nitrogen"
 	poison_type = "oxygen"
 
 	flags = list(
@@ -541,7 +550,13 @@
 	min_age = 1
 	max_age = 100
 
+	is_common = TRUE
+
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
+
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
+			)
 
 /datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -634,8 +649,10 @@
 	burn_mod = 0.2
 
 	eyes = null
-	breath_type = "nitrogen"
+	inhale_type = "nitrogen"
 	poison_type = "oxygen"
+
+	is_common = TRUE
 
 	flags = list(
 	 NO_SCAN = TRUE
@@ -649,7 +666,6 @@
 	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#808d11"
 	tail = "vox_armalis"
-	icon_template = 'icons/mob/human_races/r_armalis.dmi'
 
 	sprite_sheets = list(
 		SPRITE_SHEET_SUIT = 'icons/mob/species/armalis/suit.dmi',
@@ -742,6 +758,8 @@
 
 	min_age = 1
 	max_age = 1000
+
+	is_common = TRUE
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST)
 
@@ -960,6 +978,8 @@
 
 	min_age = 1
 	max_age = 125
+
+	is_common = TRUE
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
 
@@ -1261,6 +1281,8 @@
 	min_age = 1
 	max_age = 1000
 
+	is_common = TRUE
+
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
 	..()
 	// Clothing on the Golem is created before the hud_list is generated in the atom
@@ -1469,6 +1491,8 @@
 	min_age = 1
 	max_age = 85
 
+	is_common = TRUE
+
 /datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_slime_digest(M)
 
@@ -1539,6 +1563,7 @@
 	speed_mod_no_shoes = 5
 
 /datum/species/abomination/on_gain(mob/living/carbon/human/H)
+	..()
 	H.status_flags &= ~(CANSTUN  | CANPARALYSE | CANWEAKEN)
 
 /datum/species/abomination/call_digest_proc(mob/living/M, datum/reagent/R)
