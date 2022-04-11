@@ -54,7 +54,7 @@
 	if(!can_remember())
 		return
 
-	var/value = sanitize(input(src, "Key Memory", "What would you like to remember?") as null|message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+	var/value = sanitize_safe(input(src, "Key Memory", "What would you like to remember?") as null|message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 
 	if(!can_remember())
 		return
