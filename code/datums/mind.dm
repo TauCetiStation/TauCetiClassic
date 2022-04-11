@@ -706,15 +706,17 @@
 	if(mind)
 		mind.key = key
 	else
-		mind = new /datum/mind(key)
-		mind.original = src
-		if(SSticker)
-			SSticker.minds += mind
-		else
-			world.log << "## DEBUG: mind_initialize(): No SSticker ready yet! Please inform Carn"
+		create_mind()
 	if(!mind.name)	mind.name = real_name
 	mind.set_current(src)
 
+/mob/proc/create_mind()
+	mind = new /datum/mind(key)
+	mind.original = src
+	if(SSticker)
+		SSticker.minds += mind
+	else
+		world.log << "## DEBUG: mind_initialize(): No SSticker ready yet! Please inform Carn"
 
 //HUMAN
 /mob/living/carbon/human/mind_initialize()

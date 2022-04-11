@@ -224,6 +224,7 @@ var/global/list/ai_verbs_default = list(
 
 	if(mind)
 		mind.skills.add_available_skillset(/datum/skillset/max)
+		mind.skills.maximize_active_skills()
 
 /mob/living/silicon/ai/proc/announce_role()
 	to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
