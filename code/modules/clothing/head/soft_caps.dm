@@ -19,19 +19,9 @@
 
 /obj/item/clothing/head/soft/wash_act(w_color)
 	. = ..()
-	if(!dyed_type)
-		return
-
-	var/list/dye_colors = global.dyed_item_types[dyed_type]
-	if(!dye_colors)
-		return
-
-	var/obj/item/clothing/dye_type = dye_colors[w_color]
+	var/obj/item/clothing/dye_type = get_dye_type(w_color)
 	if(!dye_type)
 		return
-
-	if(islist(dye_type))
-		dye_type = pick(dye_type)
 
 	cap_color = initial(dye_type.item_state)
 	icon_state = "[cap_color][flipped ? "soft_flipped" : "soft"]"
