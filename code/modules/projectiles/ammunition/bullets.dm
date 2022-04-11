@@ -66,7 +66,7 @@
 	desc = "A .45 rubber bullet casing."
 	icon_state = "st-casing"
 	caliber = ".45"
-	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber45
+	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber
 	m_amt = 200
 
 /obj/item/ammo_casing/a12mm
@@ -86,7 +86,7 @@
 	name = "shotgun shell"
 	desc = "A 12 gauge shell."
 	icon_state = "gshell"
-	projectile_type = /obj/item/projectile/bullet/buckpellet
+	projectile_type = /obj/item/projectile/bullet/pellet
 	pellets = 7
 
 /obj/item/ammo_casing/shotgun/beanbag
