@@ -142,7 +142,7 @@
 		heart_status = HEART_FAILURE
 		deltimer(fibrillation_timer_id)
 		fibrillation_timer_id = null
-		owner.metabolism_factor.AddModifier("Heart", multiple=0)
+		owner.metabolism_factor.AddModifier("Heart", multiple = 0.0)
 	else
 		take_damage(1, 0)
 		fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
