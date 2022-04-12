@@ -134,7 +134,7 @@
 	var/failing_interval = 1 MINUTE
 	var/datum/modval/met_factor
 
-/obj/item/organ/internal/heart/insert_organ()\
+/obj/item/organ/internal/heart/insert_organ()
 	met_factor = owner.metabolism_factor
 	met_factor.AddModifier("Heart_Metabolism", multiple=1, update=TRUE)
 
