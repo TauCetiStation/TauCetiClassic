@@ -380,7 +380,7 @@
 
 	if(mind)		//TODO
 		mind.transfer_to(O)
-		O.mind.skills.add_available_skillset(/datum/skillset/max)
+		O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
 		O.mind.skills.maximize_active_skills()
 		if(O.mind.assigned_role == "Cyborg")
 			O.mind.original = O

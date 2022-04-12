@@ -33,3 +33,5 @@ var/global/list/default_skills_list = list(
 var/global/list/all_skillsets
 
 var/global/list/all_skills
+
+var/global/list/skillset_names_aliases

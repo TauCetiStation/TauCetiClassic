@@ -1,4 +1,5 @@
 /datum/skillset
+	var/name
 	var/list/skills
 	var/list/initial_skills
 
