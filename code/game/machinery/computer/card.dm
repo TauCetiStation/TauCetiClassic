@@ -211,7 +211,7 @@
 				var/new_salary = 0
 				var/datum/job/jobdatum
 				if(t1 == "Custom")
-					var/temp_t = sanitize_safe(input("Enter a custom job assignment.","Assignment"), 45)
+					var/temp_t = sanitize(input("Enter a custom job assignment.","Assignment"), 45)
 					//let custom jobs function as an impromptu alt title, mainly for sechuds
 					if(temp_t && modify)
 						modify.assignment = temp_t
@@ -232,7 +232,7 @@
 						new_salary = jobdatum.salary
 
 					modify.access = access
-					modify.assignment = t1
+					modify.assignment = sanitize(t1)
 					modify.rank = t1
 
 					if(datum_account)
