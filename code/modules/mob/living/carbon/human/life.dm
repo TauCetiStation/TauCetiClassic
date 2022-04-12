@@ -763,14 +763,6 @@
 			take_overall_damage(2,0)
 			traumatic_shock++
 
-	if (drowsyness)
-		drowsyness = max(0, drowsyness - 1)
-		blurEyes(2)
-		if(prob(5))
-			emote("yawn")
-			Sleeping(10 SECONDS)
-			Paralyse(5)
-
 	AdjustConfused(-1)
 	AdjustDrunkenness(-1)
 	// decrement dizziness counter, clamped to 0
@@ -918,6 +910,14 @@
 
 		if(druggy)
 			adjustDrugginess(-1)
+
+		if (drowsyness)
+			drowsyness = max(0, drowsyness - 1)
+			blurEyes(2)
+			if(prob(5))
+				emote("yawn")
+				Sleeping(10 SECONDS)
+				Paralyse(5)
 
 		// If you're dirty, your gloves will become dirty, too.
 		if(gloves && germ_level > gloves.germ_level && prob(10))
