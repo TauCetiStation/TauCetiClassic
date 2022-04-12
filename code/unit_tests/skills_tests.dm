@@ -44,7 +44,7 @@
     var/base_damage = 13 //combat knife
     var/list/result = list()
     for(var/mob/living/carbon/human/dummy in test_dummies)
-        result += apply_skill_bonus(dummy, base_damage, list(/datum/skill/melee), -0.2, -0.2)
+        result += apply_skill_bonus(dummy, base_damage, list(/datum/skill/melee), 0.2)
     return assert_equal_list(expected_damage, result)
 
 /datum/unit_test/skills/civ_mecha
@@ -52,10 +52,10 @@
 
 /datum/unit_test/skills/civ_mecha/start_test()
     var/list/test_dummies = create_multiple_dummies(list(/datum/skillset/test_subject, /datum/skillset/research_assistant, /datum/skillset/engineer, /datum/skillset/recycler, /datum/skillset/quartermaster))
-    var/list/expected_speeds = list(7.8, 6.9, 6, 4.2, 2.4)
+    var/list/expected_speeds = list(8.4, 7.2, 6, 4.8, 3.6)
     var/list/result = list()
     for(var/mob/living/carbon/human/dummy in test_dummies)
-        result += apply_skill_bonus(dummy, 6, list(/datum/skill/civ_mech/trained), 0.15, 0.3)
+        result += apply_skill_bonus(dummy, 6, list(/datum/skill/civ_mech/trained), -0.2)
     return assert_equal_list(expected_speeds, result)
 
 
@@ -64,10 +64,10 @@
 
 /datum/unit_test/skills/combat_mecha/start_test()
     var/list/test_dummies = create_multiple_dummies(list(/datum/skillset/test_subject, /datum/skillset/officer, /datum/skillset/hos))
-    var/list/expected_speeds = list(6.9, 6, 4.2)
+    var/list/expected_speeds = list(8.4, 7.2, 6)
     var/list/result = list()
     for(var/mob/living/carbon/human/dummy in test_dummies)
-        result += apply_skill_bonus(dummy, 6, list(/datum/skill/combat_mech/trained), 0.15, 0.3)
+        result += apply_skill_bonus(dummy, 6, list(/datum/skill/combat_mech/master), -0.2)
     return assert_equal_list(expected_speeds, result)
 
 /datum/unit_test/skills/police_handcuffs
@@ -78,15 +78,9 @@
     var/list/expected_speeds = list(HUMAN_STRIP_DELAY, 28, 16)
     var/list/result = list()
     for(var/mob/living/carbon/human/dummy in test_dummies)
-        result += apply_skill_bonus(dummy, HUMAN_STRIP_DELAY, list(/datum/skill/police), multiplier = 0.3)
+        result += apply_skill_bonus(dummy, HUMAN_STRIP_DELAY, list(/datum/skill/police), multiplier = -0.3)
     return assert_equal_list(expected_speeds, result)
 
 /datum/unit_test/skills/surgeon
 	name = "SKILLS: Surgeon is better than cyborg"
-
-/datum/unit_test/skills/surgeon/start_test()
-    var/mob/living/carbon/human/dummy_surgeon = create_dummy(/datum/skillset/doctor/surgeon)
-    var/mob/living/carbon/human/dummy_cyborg = create_dummy(/datum/skillset/cyborg)
-    assert_gt(apply_skill_bonus(dummy_surgeon, 1, list(/datum/skill/surgery)), apply_skill_bonus(dummy_cyborg, 1, list(/datum/skill/surgery)))
-    
 
