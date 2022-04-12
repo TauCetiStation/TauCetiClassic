@@ -25,7 +25,7 @@
 	var/fire_alert = 0
 	var/co2overloadtime = null
 
-	var/metabolism_factor = new/datum/modval/metabolism_factor(METABOLISM_FACTOR)
+	var/datum/modval/metabolism_factor = new/datum/modval/metabolism_factor(METABOLISM_FACTOR)
 
 	var/obj/item/head
 	var/obj/item/shoes
@@ -33,3 +33,14 @@
 	var/obj/item/mouth
 
 	var/stamina = 100 //Ian uses this for now.
+
+/datum/modval/metabolism_factor
+	value = 0.0
+
+	base_value = 0.0
+
+	base_multiplier = 1.0
+	base_additive = 0.0
+
+	multiple = 0.0
+	additive = 0.0

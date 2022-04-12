@@ -146,12 +146,12 @@
 
 /obj/machinery/life_assist/cardiopulmonary_bypass/assist(mob/living/carbon/human/H)
 	..()
-	var/datum/modval/met_factor = M.metabolism_factor
-	met_factor.AddModifier("CPB_Metabolism", base_additive=0.5, update=TRUE)
+	var/datum/modval/met_factor = H.metabolism_factor
+	met_factor.AddModifier("CPB_Metabolism", additive=0.5, update=TRUE)
 
 /obj/machinery/life_assist/cardiopulmonary_bypass/deassist(mob/living/carbon/human/H)
 	..()
-	var/datum/modval/met_factor = M.metabolism_factor
+	var/datum/modval/met_factor = H.metabolism_factor
 	met_factor.RemoveModifier("CPB_Metabolism", update=TRUE)
 
 /obj/machinery/life_assist/cardiopulmonary_bypass

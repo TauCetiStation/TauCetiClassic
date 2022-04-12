@@ -133,6 +133,10 @@
 	var/fibrillation_timer_id = null
 	var/failing_interval = 1 MINUTE
 
+/obj/item/organ/internal/heart/insert_organ()\
+	var/datum/modval/met_factor = owner.metabolism_factor
+	met_factor.AddModifier("Heart_Metabolism", multiple=1, update=TRUE)
+
 /obj/item/organ/internal/heart/proc/heart_stop()
 	if(!owner.reagents.has_reagent("inaprovaline") || owner.stat == DEAD)
 		heart_status = HEART_FAILURE
