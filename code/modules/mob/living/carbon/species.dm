@@ -253,7 +253,7 @@
 /datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
 	return
 
-/datum/species/proc/call_digest_proc(mob/living/M, datum/reagent/R) // Humans don't have a seperate proc, but need to return TRUE so general proc is called.
+/datum/species/proc/call_digest_proc(mob/living/M, datum/reagent/R, remove_amount) // Humans don't have a seperate proc, but need to return TRUE so general proc is called.
 	return TRUE
 
 /datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
@@ -357,8 +357,8 @@
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
-/datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_unathi_digest(M)
+/datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R, remove_amount)
+	return R.on_unathi_digest(M, remove_amount)
 
 /datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.unathi_equip(H)
@@ -426,8 +426,8 @@
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
-/datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_tajaran_digest(M)
+/datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R, remove_amount)
+	return R.on_tajaran_digest(M, remove_amount)
 
 /datum/species/tajaran/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.tajaran_equip(H)
@@ -473,8 +473,8 @@
 
 	is_common = TRUE
 
-/datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_skrell_digest(M)
+/datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R, remove_amount)
+	return R.on_skrell_digest(M, remove_amount)
 
 /datum/species/skrell/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.skrell_equip(H)
@@ -570,8 +570,8 @@
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
-/datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_vox_digest(M)
+/datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R, remove_amount)
+	return R.on_vox_digest(M, remove_amount)
 
 /datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.vox_equip(H)
@@ -795,8 +795,8 @@
 		H.adjustToxLoss(-(light_amount * regen_mod))
 		H.adjustOxyLoss(-(light_amount * regen_mod))
 
-/datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_diona_digest(M)
+/datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R, remove_amount)
+	return R.on_diona_digest(M, remove_amount)
 
 /datum/species/diona/handle_death(mob/living/carbon/human/H)
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
@@ -1046,8 +1046,8 @@
 
 	return ..()
 
-/datum/species/abductor/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_abductor_digest(M)
+/datum/species/abductor/call_digest_proc(mob/living/M, datum/reagent/R, remove_amount)
+	return R.on_abductor_digest(M, remove_amount)
 
 /datum/species/skeleton
 	name = SKELETON
@@ -1109,8 +1109,8 @@
 
 	return ..()
 
-/datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_skeleton_digest(M)
+/datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R, remove_amount)
+	return R.on_skeleton_digest(M, remove_amount)
 
 //Species unarmed attacks
 
@@ -1231,8 +1231,8 @@
 
 	return ..()
 
-/datum/species/shadowling/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_shadowling_digest(M)
+/datum/species/shadowling/call_digest_proc(mob/living/M, datum/reagent/R, remove_amount)
+	return R.on_shadowling_digest(M, remove_amount)
 
 /datum/species/golem
 	name = GOLEM
@@ -1322,8 +1322,8 @@
 
 	..()
 
-/datum/species/golem/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_golem_digest(M)
+/datum/species/golem/call_digest_proc(mob/living/M, datum/reagent/R, remove_amount)
+	return R.on_golem_digest(M, remove_amount)
 
 /datum/species/zombie
 	name = ZOMBIE
@@ -1493,8 +1493,8 @@
 
 	is_common = TRUE
 
-/datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
-	return R.on_slime_digest(M)
+/datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R, remove_amount)
+	return R.on_slime_digest(M, remove_amount)
 
 /datum/species/abomination
 	name = ABOMINATION
@@ -1566,5 +1566,5 @@
 	..()
 	H.status_flags &= ~(CANSTUN  | CANPARALYSE | CANWEAKEN)
 
-/datum/species/abomination/call_digest_proc(mob/living/M, datum/reagent/R)
+/datum/species/abomination/call_digest_proc(mob/living/M, datum/reagent/R, remove_amount)
 	return

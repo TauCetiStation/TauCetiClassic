@@ -12,12 +12,12 @@
 	// Most toxins use "ticks" to determine their effect. The list is initialized here to be used there later.
 	data = list()
 
-/datum/reagent/toxin/on_general_digest(mob/living/M)
+/datum/reagent/toxin/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(toxpwr)
-		M.adjustToxLoss(toxpwr * REM)
+		M.adjustToxLoss(toxpwr * REM * multiplier)
 
-/datum/reagent/toxin/on_skrell_digest(mob/living/M)
+/datum/reagent/toxin/on_skrell_digest(mob/living/M, multiplier)
 	..()
 	return !flags[IS_ORGANIC]
 
@@ -54,9 +54,9 @@
 		domutcheck(M, null)
 		M.UpdateAppearance()
 
-/datum/reagent/toxin/mutagen/on_general_digest(mob/living/M)
+/datum/reagent/toxin/mutagen/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.apply_effect(10, IRRADIATE, 0)
+	M.apply_effect(10 * multiplier, IRRADIATE, 0)
 
 /datum/reagent/toxin/phoron
 	name = "Phoron"
@@ -67,10 +67,10 @@
 	toxpwr = 3
 	flags = list()
 
-/datum/reagent/toxin/phoron/on_general_digest(mob/living/M)
+/datum/reagent/toxin/phoron/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(holder.has_reagent("inaprovaline"))
-		holder.remove_reagent("inaprovaline", 2 * REM)
+		holder.remove_reagent("inaprovaline", 2 * REM * multiplier)
 
 /datum/reagent/toxin/phoron/reaction_obj(obj/O, volume)
 	src = null
@@ -114,11 +114,11 @@
 	restrict_species = list(IPC, DIONA)
 	flags = list()
 
-/datum/reagent/toxin/lexorin/on_general_digest(mob/living/M)
+/datum/reagent/toxin/lexorin/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(prob(33))
-		M.take_bodypart_damage(1 * REM, 0)
-	M.adjustOxyLoss(3)
+		M.take_bodypart_damage(1 * REM * multiplier, 0)
+	M.adjustOxyLoss(3 * multiplier)
 	if(prob(20))
 		M.emote("gasp")
 
@@ -131,13 +131,13 @@
 	toxpwr = 0
 	flags = list(IS_ORGANIC = TRUE)
 
-/datum/reagent/toxin/slimejelly/on_general_digest(mob/living/M)
+/datum/reagent/toxin/slimejelly/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(prob(10))
 		to_chat(M, "<span class='warning'>Your insides are burning!</span>")
-		M.adjustToxLoss(rand(20,60) * REM)
+		M.adjustToxLoss(rand(20,60) * REM * multiplier)
 	else if(prob(40))
-		M.heal_bodypart_damage(5 * REM, 0)
+		M.heal_bodypart_damage(5 * REM * multiplier, 0)
 
 /datum/reagent/toxin/cyanide //Fast and Lethal
 	name = "Cyanide"
@@ -150,7 +150,7 @@
 	restrict_species = list(IPC, DIONA)
 	flags = list()
 
-/datum/reagent/toxin/cyanide/on_general_digest(mob/living/M)
+/datum/reagent/toxin/cyanide/on_general_digest(mob/living/M, multiplier)
 	..()
 	M.adjustOxyLoss(4 * REM)
 	if(!data["ticks"])
@@ -174,7 +174,7 @@
 	toxpwr = 0
 	flags = list(IS_ORGANIC = TRUE)
 
-/datum/reagent/toxin/minttoxin/on_general_digest(mob/living/M)
+/datum/reagent/toxin/minttoxin/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(HAS_TRAIT(M, TRAIT_FAT))
 		M.gib()
@@ -197,12 +197,12 @@
 	toxpwr = 0.5
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/toxin/zombiepowder/on_general_digest(mob/living/M)
+/datum/reagent/toxin/zombiepowder/on_general_digest(mob/living/M, multiplier)
 	..()
 	M.status_flags |= FAKEDEATH
-	M.adjustOxyLoss(0.5 * REM)
-	M.Weaken(10)
-	M.silent = max(M.silent, 10)
+	M.adjustOxyLoss(0.5 * REM * multiplier)
+	M.Weaken(10 * multiplier)
+	M.silent = max(M.silent, 10 * multiplier)
 	M.tod = worldtime2text()
 
 /datum/reagent/toxin/zombiepowder/Destroy()
@@ -222,9 +222,9 @@
 	overdose = REAGENTS_OVERDOSE
 	flags = list()
 
-/datum/reagent/toxin/mindbreaker/on_general_digest(mob/living/M)
+/datum/reagent/toxin/mindbreaker/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.hallucination += 10
+	M.hallucination += 10 * multiplier
 
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
@@ -321,7 +321,7 @@
 	restrict_species = list(IPC, DIONA)
 	flags = list()
 
-/datum/reagent/toxin/stoxin/on_general_digest(mob/living/M)
+/datum/reagent/toxin/stoxin/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(!data["ticks"])
 		data["ticks"] = 1
@@ -330,13 +330,13 @@
 			if(prob(5))
 				M.emote("yawn")
 		if(12 to 15)
-			M.blurEyes(10)
+			M.blurEyes(10 * multiplier)
 		if(15 to 49)
 			if(prob(50))
-				M.Weaken(2)
+				M.Weaken(2 * multiplier)
 			M.drowsyness  = max(M.drowsyness, 20)
 		if(50 to INFINITY)
-			M.Weaken(20)
+			M.Weaken(20 * multiplier)
 			M.drowsyness  = max(M.drowsyness, 30)
 	data["ticks"]++
 
@@ -353,17 +353,17 @@
 	restrict_species = list(IPC, DIONA)
 	flags = list()
 
-/datum/reagent/toxin/chloralhydrate/on_general_digest(mob/living/M)
+/datum/reagent/toxin/chloralhydrate/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1)
-			M.AdjustConfused(2)
-			M.drowsyness += 2
+			M.AdjustConfused(2 * multiplier)
+			M.drowsyness += 2 * multiplier
 		if(2 to 199)
-			M.Weaken(30)
+			M.Weaken(30 * multiplier)
 		if(200 to INFINITY)
 			M.SetSleeping(20 SECONDS)
 
@@ -377,17 +377,17 @@
 	overdose = 30
 	flags = list()
 
-/datum/reagent/toxin/potassium_chloride/on_general_digest(mob/living/M)
+/datum/reagent/toxin/potassium_chloride/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.stat != UNCONSCIOUS)
 		if(volume >= overdose)
 			if(M.losebreath >= 10)
 				M.losebreath = max(10, M.losebreath - 10)
-			M.adjustOxyLoss(2)
-			M.Weaken(10)
+			M.adjustOxyLoss(2 * multiplier)
+			M.Weaken(10 * multiplier)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.attack_heart(10, 0)
+				H.attack_heart(10 * multiplier, 0)
 
 /datum/reagent/toxin/potassium_chlorophoride
 	name = "Potassium Chlorophoride"
@@ -399,17 +399,17 @@
 	overdose = 20
 	flags = list()
 
-/datum/reagent/toxin/potassium_chlorophoride/on_general_digest(mob/living/M)
+/datum/reagent/toxin/potassium_chlorophoride/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.stat != UNCONSCIOUS)
 			if(H.losebreath >= 10)
 				H.losebreath = max(10, M.losebreath - 10)
-			H.adjustOxyLoss(2)
-			H.Weaken(10)
+			H.adjustOxyLoss(2 * multiplier)
+			H.Weaken(10 * multiplier)
 		if(volume >= overdose)
-			H.attack_heart(5, 0)
+			H.attack_heart(5 * multiplier, 0)
 
 /datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
@@ -421,19 +421,19 @@
 	overdose = REAGENTS_OVERDOSE * 0.5
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/toxin/beer2/on_general_digest(mob/living/M)
+/datum/reagent/toxin/beer2/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(!data["ticks"])
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1)
-			M.AdjustConfused(2)
-			M.drowsyness += 2
+			M.AdjustConfused(2 * multiplier)
+			M.drowsyness += 2 * multiplier
 		if(2 to 50)
 			M.SetSleeping(20 SECONDS)
 		if(51 to INFINITY)
 			M.SetSleeping(20 SECONDS)
-			M.adjustToxLoss((data["ticks"] - 50) * REM)
+			M.adjustToxLoss((data["ticks"] - 50) * REM * multiplier)
 	data["ticks"]++
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder. @ TG Port
@@ -445,7 +445,7 @@
 	toxpwr = 0
 	flags = list()
 
-/datum/reagent/toxin/mutetoxin/on_general_digest(mob/living/M)
+/datum/reagent/toxin/mutetoxin/on_general_digest(mob/living/M, multiplier)
 	..()
 	M.silent = max(M.silent, 3)
 
@@ -459,9 +459,9 @@
 	var/meltprob = 10
 	flags = list()
 
-/datum/reagent/toxin/acid/on_general_digest(mob/living/M)
+/datum/reagent/toxin/acid/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.take_bodypart_damage(0, 1 * REM)
+	M.take_bodypart_damage(0, 1 * REM * multiplier)
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/M, method=TOUCH, volume)//magic numbers everywhere
 	if(!isliving(M))
@@ -552,12 +552,12 @@
 	color = "#792300" //rgb: 121, 35, 0
 	custom_metabolism = 0.5
 
-/datum/reagent/alphaamanitin/on_general_digest(mob/living/M)
+/datum/reagent/alphaamanitin/on_general_digest(mob/living/M, multiplier)
 	..()
 
-	M.adjustToxLoss(6)
-	M.adjustOxyLoss(2)
-	M.adjustBrainLoss(2)
+	M.adjustToxLoss(6 * multiplier)
+	M.adjustOxyLoss(2 * multiplier)
+	M.adjustBrainLoss(2 * multiplier)
 
 /datum/reagent/aflatoxin
 	name = "Aflatoxin"
@@ -569,15 +569,15 @@
 
 	data = list()
 
-/datum/reagent/aflatoxin/on_general_digest(mob/living/M)
+/datum/reagent/aflatoxin/on_general_digest(mob/living/M, multiplier)
 	..()
 
 	if(!data["ticks"])
 		data["ticks"] = 1
 
 	if(data["ticks"] >= 165)
-		M.adjustToxLoss(4)
-		M.apply_effect(5*REM,IRRADIATE,0)
+		M.adjustToxLoss(4 * multiplier)
+		M.apply_effect(5*REM,IRRADIATE * multiplier,0)
 	data["ticks"]++
 
 /datum/reagent/chefspecial	//From VG. Only for traitors
@@ -592,7 +592,7 @@
 
 	data = list()
 
-/datum/reagent/chefspecial/on_general_digest(mob/living/M)
+/datum/reagent/chefspecial/on_general_digest(mob/living/M, multiplier)
 	..()
 
 	if(!data["ticks"])
@@ -613,36 +613,36 @@
 
 	data = list()
 
-/datum/reagent/dioxin/on_general_digest(mob/living/M)
+/datum/reagent/dioxin/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(!data["ticks"])
 		data["ticks"] = 1
 
 	if(data["ticks"] >= 130)
-		M.make_jittery(2)
-		M.make_dizzy(2)
+		M.make_jittery(2 * multiplier)
+		M.make_dizzy(2 * multiplier)
 		switch (volume)
 			if(10 to 20)
 				if(prob(5))
 					M.emote(pick("twitch","giggle"))
 				if(data["ticks"] >=180)
-					M.adjustToxLoss(1)
+					M.adjustToxLoss(1 * multiplier)
 			if(20 to 30)
 				if(prob(10))
 					M.emote(pick("twitch","giggle"))
-				M.adjustToxLoss(3)
-				M.adjustBrainLoss(2)
+				M.adjustToxLoss(3 * multiplier)
+				M.adjustBrainLoss(2 * multiplier)
 			if(30 to INFINITY)
 				if(prob(20))
 					M.emote(pick("twitch","giggle"))
-				M.adjustToxLoss(3)
-				M.adjustBrainLoss(2)
+				M.adjustToxLoss(3 * multiplier)
+				M.adjustBrainLoss(2 * multiplier)
 				if(ishuman(M) && prob(5))
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 					if(istype(IO))
-						IO.take_damage(10, 0)
-						H.attack_heart(20, 0)
+						IO.take_damage(10 * multiplier, 0)
+						H.attack_heart(20 * multiplier, 0)
 	data["ticks"]++
 
 /datum/reagent/mulligan
@@ -672,7 +672,7 @@
 
 	data = list()
 
-/datum/reagent/slimetoxin/on_general_digest(mob/living/M)
+/datum/reagent/slimetoxin/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -687,14 +687,14 @@
 			if(2 to 11)
 				var/obj/item/organ/external/BP = pick(H.bodyparts)
 				if(BP.is_flesh())
-					BP.take_damage(10)
+					BP.take_damage(10 * multiplier)
 					if(prob(25))
 						to_chat(H, "<span class='warning'>Your flesh is starting to melt!</span>")
 						H.emote("scream")
 						BP.sever_artery()
 			if(12 to 21)
 				var/obj/item/organ/internal/BP = H.organs_by_name[pick(H.species.has_organ)]
-				BP.take_damage(5)
+				BP.take_damage(5 * multiplier)
 				if(prob(25))
 					to_chat(H, "<span class='warning'>You feel unbearable pain inside you!</span>")
 					H.emote("scream")
@@ -706,8 +706,8 @@
 					for(var/obj/item/organ/internal/BP in H.organs)
 						BP.rejuvenate()
 			if(31 to 50)
-				M.heal_bodypart_damage(0,5)
-				M.adjustOxyLoss(-2 * REM)
+				M.heal_bodypart_damage(0,5 * multiplier)
+				M.adjustOxyLoss(-2 * REM * multiplier)
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
@@ -717,7 +717,7 @@
 	color = "#13bc5e" // rgb: 19, 188, 94
 	overdose = REAGENTS_OVERDOSE
 
-/datum/reagent/aslimetoxin/on_general_digest(mob/living/M)
+/datum/reagent/aslimetoxin/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(iscarbon(M) && M.stat != DEAD)
 		to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
@@ -758,9 +758,9 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/space_drugs/on_general_digest(mob/living/M)
+/datum/reagent/space_drugs/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustDrugginess(2)
+	M.adjustDrugginess(2 * multiplier)
 	if(isturf(M.loc) && !isspaceturf(M.loc))
 		if(M.canmove && !M.incapacitated())
 			if(prob(10))
@@ -778,7 +778,7 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/serotrotium/on_general_digest(mob/living/M)
+/datum/reagent/serotrotium/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(ishuman(M))
 		if(prob(7))
@@ -795,10 +795,10 @@
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/cryptobiolin/on_general_digest(mob/living/M)
+/datum/reagent/cryptobiolin/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.make_dizzy(1)
-	M.MakeConfused(20)
+	M.make_dizzy(1 * multiplier)
+	M.MakeConfused(20 * multiplier)
 
 /datum/reagent/impedrezene
 	name = "Impedrezene"
@@ -809,12 +809,12 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/impedrezene/on_general_digest(mob/living/M)
+/datum/reagent/impedrezene/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.jitteriness = max(M.jitteriness - 5, 0)
+	M.jitteriness = max(M.jitteriness - 5 * multiplier, 0)
 	if(prob(80))
-		M.adjustBrainLoss(1 * REM)
+		M.adjustBrainLoss(1 * REM * multiplier)
 	if(prob(50))
-		M.drowsyness = max(M.drowsyness, 3)
+		M.drowsyness = max(M.drowsyness, 3 * multiplier)
 	if(prob(10))
 		M.emote("drool")

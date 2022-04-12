@@ -344,19 +344,19 @@
 	//metabolization_rate = 100 //lel
 	custom_metabolism = 100
 
-/datum/reagent/shadowling_blindness_smoke/on_general_digest(mob/living/M)
+/datum/reagent/shadowling_blindness_smoke/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(!isshadowling(M) || !isshadowthrall(M))
 		to_chat(M, "<span class='warning bold'>You breathe in the black smoke, and your eyes burn horribly!</span>")
 		M.eye_blind = 5
 		if(prob(25))
 			M.visible_message("<b>[M]</b> claws at their eyes!")
-			M.Stun(3)
+			M.Stun(3 * multiplier)
 	else
 		to_chat(M, "<span class='notice bold'>You breathe in the black smoke, and you feel revitalized!</span>")
-		M.heal_bodypart_damage(2, 2)
-		M.adjustOxyLoss(-2)
-		M.adjustToxLoss(-2)
+		M.heal_bodypart_damage(2 * multiplier, 2 * multiplier)
+		M.adjustOxyLoss(-2 * multiplier)
+		M.adjustToxLoss(-2 * multiplier)
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech
 	name = "Sonic Screech"

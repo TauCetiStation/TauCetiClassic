@@ -75,19 +75,19 @@
 			C.remove_paint_state()
 			C.color = null
 
-/datum/reagent/water/on_general_digest(mob/living/M)
+/datum/reagent/water/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.IsSleeping())
-		M.AdjustDrunkenness(-1)
+		M.AdjustDrunkenness(-1 * multiplier)
 
-/datum/reagent/water/on_diona_digest(mob/living/M)
+/datum/reagent/water/on_diona_digest(mob/living/M, multiplier)
 	..()
-	M.nutrition += REM
+	M.nutrition += REM * multiplier
 	return FALSE
 
-/datum/reagent/water/on_slime_digest(mob/living/M)
+/datum/reagent/water/on_slime_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(REM)
+	M.adjustToxLoss(REM * multiplier)
 	return FALSE
 
 /datum/reagent/water/holywater // May not be a "core" reagent, but I decided to keep the subtypes near  their parents.
@@ -98,10 +98,10 @@
 
 	needed_aspects = list(ASPECT_RESCUE = 1)
 
-/datum/reagent/water/holywater/on_general_digest(mob/living/M)
+/datum/reagent/water/holywater/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(holder.has_reagent("unholywater"))
-		holder.remove_reagent("unholywater", 2 * REM)
+		holder.remove_reagent("unholywater", 2 * REM * multiplier)
 	if(ishuman(M) && iscultist(M) && !(ASPECT_RESCUE in M.my_religion.aspects) && prob(10))
 		var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
 		C.Deconvert()
@@ -160,18 +160,18 @@
 
 	needed_aspects = list(ASPECT_OBSCURE = 1)
 
-/datum/reagent/water/unholywater/on_general_digest(mob/living/M)
+/datum/reagent/water/unholywater/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(!data["ticks"])
 		data["ticks"] = 1
 	if(iscultist(M) && prob(10))
 		switch(data["ticks"])
 			if(1 to 30)
-				M.heal_bodypart_damage(REM, REM)
+				M.heal_bodypart_damage(REM * multiplier, REM * multiplier)
 			if(30 to 60)
-				M.heal_bodypart_damage(2 * REM, 2 * REM)
+				M.heal_bodypart_damage(2 * REM * multiplier, 2 * REM * multiplier)
 			if(60 to INFINITY)
-				M.heal_bodypart_damage(3 * REM, 3 * REM)
+				M.heal_bodypart_damage(3 * REM * multiplier, 3 * REM * multiplier)
 	else if(!iscultist(M))
 		switch(data["ticks"])
 			if(1 to 20)
@@ -240,10 +240,9 @@
 	taste_message = null
 	custom_metabolism = 0.01
 
-/datum/reagent/oxygen/on_vox_digest(mob/living/M)
+/datum/reagent/oxygen/on_vox_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(REAGENTS_METABOLISM)
-	holder.remove_reagent(id, REAGENTS_METABOLISM) //By default it slowly disappears.
+	M.adjustToxLoss(REAGENTS_METABOLISM * multiplier)
 	return FALSE
 
 /datum/reagent/copper
@@ -263,19 +262,18 @@
 	taste_message = null
 	custom_metabolism = 0.01
 
-/datum/reagent/nitrogen/on_diona_digest(mob/living/M)
+/datum/reagent/nitrogen/on_diona_digest(mob/living/M, multiplier)
 	..()
-	M.adjustBruteLoss(-REM)
-	M.adjustOxyLoss(-REM)
-	M.adjustToxLoss(-REM)
-	M.adjustFireLoss(-REM)
-	M.nutrition += REM
+	M.adjustBruteLoss(-REM * multiplier)
+	M.adjustOxyLoss(-REM * multiplier)
+	M.adjustToxLoss(-REM * multiplier)
+	M.adjustFireLoss(-REM * multiplier)
+	M.nutrition += REM * multiplier
 	return FALSE
 
-/datum/reagent/nitrogen/on_vox_digest(mob/living/M)
+/datum/reagent/nitrogen/on_vox_digest(mob/living/M, multiplier)
 	..()
-	M.adjustOxyLoss(-2 * REM)
-	holder.remove_reagent(id, REAGENTS_METABOLISM) //By default it slowly disappears.
+	M.adjustOxyLoss(-2 * REM * multiplier)
 	return FALSE
 
 /datum/reagent/hydrogen
@@ -306,13 +304,13 @@
 	taste_message = "druggie poison"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/mercury/on_general_digest(mob/living/M)
+/datum/reagent/mercury/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.canmove && !M.incapacitated() && isspaceturf(M.loc))
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
-	M.adjustBrainLoss(2)
+	M.adjustBrainLoss(2 * multiplier)
 
 /datum/reagent/sulfur
 	name = "Sulfur"
@@ -351,9 +349,9 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "characteristic taste"
 
-/datum/reagent/chlorine/on_general_digest(mob/living/M)
+/datum/reagent/chlorine/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.take_bodypart_damage(1 * REM, 0)
+	M.take_bodypart_damage(1 * REM * multiplier, 0)
 
 /datum/reagent/fluorine
 	name = "Fluorine"
@@ -364,9 +362,9 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "toothpaste"
 
-/datum/reagent/fluorine/on_general_digest(mob/living/M)
+/datum/reagent/fluorine/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(REM)
+	M.adjustToxLoss(REM * multiplier)
 
 /datum/reagent/sodium
 	name = "Sodium"
@@ -386,13 +384,13 @@
 	taste_message = "misguided choices"
 	custom_metabolism = 0.01
 
-/datum/reagent/phosphorus/on_diona_digest(mob/living/M)
+/datum/reagent/phosphorus/on_diona_digest(mob/living/M, multiplier)
 	..()
-	M.adjustBruteLoss(-REM)
-	M.adjustOxyLoss(-REM)
-	M.adjustToxLoss(-REM)
-	M.adjustFireLoss(-REM)
-	M.nutrition += REM
+	M.adjustBruteLoss(-REM * multiplier)
+	M.adjustOxyLoss(-REM * multiplier)
+	M.adjustToxLoss(-REM * multiplier)
+	M.adjustFireLoss(-REM * multiplier)
+	M.nutrition += REM * multiplier
 	return FALSE
 
 /datum/reagent/lithium
@@ -405,7 +403,7 @@
 	taste_message = "happiness"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/lithium/on_general_digest(mob/living/M)
+/datum/reagent/lithium/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.canmove && !M.incapacitated() && isspaceturf(M.loc))
 		step(M, pick(cardinal))
@@ -422,13 +420,13 @@
 
 	needed_aspects = list(ASPECT_FOOD = 1)
 
-/datum/reagent/sugar/on_general_digest(mob/living/M)
+/datum/reagent/sugar/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.nutrition += 4 * REM
+	M.nutrition += 4 * REM * multiplier
 
-/datum/reagent/sugar/on_vox_digest(mob/living/M)
+/datum/reagent/sugar/on_vox_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(REAGENTS_METABOLISM * 0.5)
+	M.adjustToxLoss(REAGENTS_METABOLISM * 0.5 * multiplier)
 	return FALSE
 
 /datum/reagent/radium
@@ -439,9 +437,9 @@
 	color = "#c7c7c7" // rgb: 199,199,199
 	taste_message = "bonehurting juice"
 
-/datum/reagent/radium/on_general_digest(mob/living/M)
+/datum/reagent/radium/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.apply_effect(2 * REM,IRRADIATE, 0)
+	M.apply_effect(2 * REM,IRRADIATE * multiplier, 0)
 	// radium may increase your chances to cure a disease
 	if(iscarbon(M)) // make sure to only use it on carbon mobs
 		var/mob/living/carbon/C = M
@@ -450,12 +448,12 @@
 				var/datum/disease2/disease/V = C.virus2[ID]
 				if(prob(5))
 					if(prob(50))
-						M.radiation += 50 // curing it that way may kill you instead
+						M.radiation += 50 * multiplier // curing it that way may kill you instead
 						var/mob/living/carbon/human/H
 						if(ishuman(C))
 							H = C
 						if(!H || (H.species && !H.species.flags[RAD_ABSORB]))
-							M.adjustToxLoss(100)
+							M.adjustToxLoss(100 * multiplier)
 					M:antibodies |= V.antigen
 
 /datum/reagent/radium/reaction_turf(turf/T, volume)
@@ -503,9 +501,9 @@
 	color = "#b8b8c0" // rgb: 184, 184, 192
 	taste_message = "bonehurting juice"
 
-/datum/reagent/uranium/on_general_digest(mob/living/M)
+/datum/reagent/uranium/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.apply_effect(1, IRRADIATE, 0)
+	M.apply_effect(1, IRRADIATE * multiplier, 0)
 
 /datum/reagent/uranium/reaction_turf(turf/T, volume)
 	. = ..()

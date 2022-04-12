@@ -133,7 +133,7 @@
 	color = "#9acd32"
 	toxpwr = 0.5
 
-/datum/reagent/toxin/spore/on_general_digest(mob/living/M)
+/datum/reagent/toxin/spore/on_general_digest(mob/living/M, multiplier)
 	..()
 	M.damageoverlaytemp = 60
-	M.blurEyes(15)
+	M.blurEyes(15 * multiplier)

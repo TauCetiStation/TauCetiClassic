@@ -33,9 +33,9 @@
 		var/mob/living/carbon/C = M
 		C.antibodies |= self.data["antibodies"]
 
-/datum/reagent/blood/on_diona_digest(mob/living/M)
+/datum/reagent/blood/on_diona_digest(mob/living/M, multiplier)
 	..() // Should be put in these procs, in case a xeno of sorts has a reaction to ALL reagents.
-	M.adjustCloneLoss(-REM)
+	M.adjustCloneLoss(-REM * multiplier)
 	return FALSE // Returning false would mean that generic digestion proc won't be used.
 
 /datum/reagent/blood/reaction_turf(turf/simulated/T, volume)//splash the blood all over the place
@@ -134,10 +134,10 @@
 	custom_metabolism = 0.01
 	taste_message = "plastic"
 
-/datum/reagent/plasticide/on_general_digest(mob/living/M)
+/datum/reagent/plasticide/on_general_digest(mob/living/M, multiplier)
 	..()
 	// Toxins are really weak, but without being treated, last very long.
-	M.adjustToxLoss(0.2)
+	M.adjustToxLoss(0.2 * multiplier)
 
 /datum/reagent/glycerol
 	name = "Glycerol"
@@ -172,9 +172,9 @@
 			W.thermite = 1
 			W.add_overlay(image('icons/effects/effects.dmi',icon_state = "#673910"))
 
-/datum/reagent/thermite/on_general_digest(mob/living/M)
+/datum/reagent/thermite/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustFireLoss(1)
+	M.adjustFireLoss(1 * multiplier)
 
 /datum/reagent/virus_food
 	name = "Virus Food"
@@ -184,13 +184,13 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#899613" // rgb: 137, 150, 19
 
-/datum/reagent/virus_food/on_general_digest(mob/living/M)
+/datum/reagent/virus_food/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.nutrition += nutriment_factor * REM
+	M.nutrition += nutriment_factor * REM * multiplier
 
-/datum/reagent/virus_vood/on_skrell_digest(mob/living/M)
+/datum/reagent/virus_vood/on_skrell_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(2 * REM)
+	M.adjustToxLoss(2 * REM * multiplier)
 	return FALSE
 
 /datum/reagent/fuel
@@ -212,9 +212,9 @@
 	. = ..()
 	new /obj/effect/decal/cleanable/liquid_fuel(T, volume)
 
-/datum/reagent/fuel/on_general_digest(mob/living/M)
+/datum/reagent/fuel/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(1)
+	M.adjustToxLoss(1 * multiplier)
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with welding fuel to make them easy to ignite!
 	if(!isliving(M))
@@ -231,9 +231,9 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "floor cleaner"
 
-/datum/reagent/space_cleaner/on_general_digest(mob/living/M)
+/datum/reagent/space_cleaner/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(0.2)
+	M.adjustToxLoss(0.2 * multiplier)
 
 	if(prob(10))
 		M.emote("hiccup")
@@ -395,9 +395,9 @@
 	reagent_state = LIQUID
 	color = "#604030" // rgb: 96, 64, 48
 
-/datum/reagent/diethylamine/on_diona_digest(mob/living/M)
+/datum/reagent/diethylamine/on_diona_digest(mob/living/M, multiplier)
 	..()
-	M.nutrition += 2 * REM
+	M.nutrition += 2 * REM * multiplier
 	return FALSE
 
 /datum/reagent/diethylamine/reaction_mob(mob/M, method = TOUCH, volume)
@@ -448,12 +448,12 @@
 	custom_metabolism = 0.2
 	taste_message = "bitterness"
 
-/datum/reagent/luminophore/on_general_digest(mob/living/M)
+/datum/reagent/luminophore/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.invoke_vomit_async()
-		H.apply_effect(1,IRRADIATE,0)
+		H.apply_effect(1 * multiplier,IRRADIATE,0)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
@@ -503,7 +503,7 @@
 
 	data = list()
 
-/datum/reagent/mednanobots/on_general_digest(mob/living/M)
+/datum/reagent/mednanobots/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(!data["ticks"])
 		data["ticks"] = 1
@@ -517,27 +517,27 @@
 					H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
 				if(H.getOxyLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.1))
-						H.adjustOxyLoss(-4)
+						H.adjustOxyLoss(-4 * multiplier)
 						holder.remove_reagent(id, 0.1)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
 
 				if(H.getBruteLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.125))
-						H.heal_bodypart_damage(5, 0)
+						H.heal_bodypart_damage(5 * multiplier, 0)
 						holder.remove_reagent(id, 0.125)
 
 				if(H.getFireLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.125))
-						H.heal_bodypart_damage(0, 5)
+						H.heal_bodypart_damage(0, 5 * multiplier)
 						holder.remove_reagent(id, 0.125)
 
 				if(H.getToxLoss() > 0 && prob(50))
 					if(holder && holder.has_reagent(id, 0.05))
-						H.adjustToxLoss(-2)
+						H.adjustToxLoss(-2 * multiplier)
 						holder.remove_reagent(id, 0.05)
 
 				if(H.getCloneLoss() > 0 && prob(60))
 					if(holder && holder.has_reagent(id, 0.05))
-						H.adjustCloneLoss(-2)
+						H.adjustCloneLoss(-2 * multiplier)
 						holder.remove_reagent(id, 0.05)
 
 				if(percent_machine > 5)
@@ -548,7 +548,7 @@
 				if(H.dizziness != 0)
 					H.dizziness = max(0, H.dizziness - 15)
 				if(H.confused != 0)
-					H.AdjustConfused(-5)
+					H.AdjustConfused(-5 * multiplier)
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
@@ -564,7 +564,7 @@
 					H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
 				if(H.getOxyLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.1))
-						H.adjustOxyLoss(-4)
+						H.adjustOxyLoss(-4 * multiplier)
 						holder.remove_reagent(id, 0.1)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
 						percent_machine += 0.5
 						if(prob(20))
@@ -572,7 +572,7 @@
 
 				if(H.getBruteLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.125))
-						H.heal_bodypart_damage(5, 0)
+						H.heal_bodypart_damage(5 * multiplier, 0)
 						holder.remove_reagent(id, 0.125)
 						percent_machine += 0.5
 						if(prob(20))
@@ -580,7 +580,7 @@
 
 				if(H.getFireLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.125))
-						H.heal_bodypart_damage(0, 5)
+						H.heal_bodypart_damage(0, 5 * multiplier)
 						holder.remove_reagent(id, 0.125)
 						percent_machine += 0.5
 						if(prob(20))
@@ -588,7 +588,7 @@
 
 				if(H.getToxLoss() > 0 && prob(50))
 					if(holder && holder.has_reagent(id, 0.05))
-						H.adjustToxLoss(-2)
+						H.adjustToxLoss(-2 * multiplier)
 						holder.remove_reagent(id, 0.05)
 						percent_machine += 0.5
 						if(prob(20))
@@ -596,7 +596,7 @@
 
 				if(H.getCloneLoss() > 0 && prob(60))
 					if(holder && holder.has_reagent(id, 0.05))
-						H.adjustCloneLoss(-2)
+						H.adjustCloneLoss(-2 * multiplier)
 						holder.remove_reagent(id, 0.05)
 						percent_machine += 0.5
 						if(prob(20))
@@ -605,7 +605,7 @@
 				if(H.dizziness != 0)
 					H.dizziness = max(0, H.dizziness - 15)
 				if(H.confused != 0)
-					H.AdjustConfused(-5)
+					H.AdjustConfused(-5 * multiplier)
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
@@ -928,44 +928,44 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 
 	needed_aspects = list(ASPECT_MYSTIC = 1)
 
-/datum/reagent/ectoplasm/on_general_digest(mob/living/M)
+/datum/reagent/ectoplasm/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(!data["ticks"])
 		data["ticks"] = 1
 	M.hallucination += 1
-	M.make_jittery(2)
+	M.make_jittery(2 * multiplier)
 	switch(data["ticks"])
 		if(1 to 15)
-			M.make_jittery(2)
-			M.hallucination = max(M.hallucination, 3)
+			M.make_jittery(2 * multiplier)
+			M.hallucination = max(M.hallucination, 3 * multiplier)
 			if(prob(1))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
-				M.Sleeping(10) // Seeing ghosts ain't an easy thing for your mind.
+				M.Sleeping(10 * multiplier) // Seeing ghosts ain't an easy thing for your mind.
 		if(15 to 45)
-			M.make_jittery(4)
-			M.adjustDrugginess(1)
-			M.hallucination = max(M.hallucination, 10)
+			M.make_jittery(4 * multiplier)
+			M.adjustDrugginess(1 * multiplier)
+			M.hallucination = max(M.hallucination, 10 * multiplier)
 			if(prob(5))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
-				M.Sleeping(10)
+				M.Sleeping(10 * multiplier)
 		if(45 to 90)
-			M.make_jittery(8)
-			M.adjustDrugginess(3)
-			M.hallucination = max(M.hallucination, 60)
+			M.make_jittery(8 * multiplier)
+			M.adjustDrugginess(3 * multiplier)
+			M.hallucination = max(M.hallucination, 60 * multiplier)
 			if(prob(10))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
-				M.Sleeping(10)
+				M.Sleeping(10 * multiplier)
 		if(90 to 180)
-			M.make_jittery(8)
-			M.adjustDrugginess(3)
-			M.hallucination = max(M.hallucination, 60)
+			M.make_jittery(8 * multiplier)
+			M.adjustDrugginess(3 * multiplier)
+			M.hallucination = max(M.hallucination, 60 * multiplier)
 			if(prob(10))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
-				M.Sleeping(10)
+				M.Sleeping(10 * multiplier)
 			if(prob(5))
-				M.adjustBrainLoss(5)
+				M.adjustBrainLoss(5 * multiplier)
 		if(180 to INFINITY)
-			M.adjustBrainLoss(100)
+			M.adjustBrainLoss(100 * multiplier)
 	data["ticks"]++
 
 /datum/reagent/aqueous_foam
@@ -984,7 +984,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	else if(!T.density)
 		new /obj/effect/effect/aqueous_foam(T)
 
-/datum/reagent/aqueous_foam/on_slime_digest(mob/living/M)
+/datum/reagent/aqueous_foam/on_slime_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(REM)
+	M.adjustToxLoss(REM * multiplier)
 	return FALSE

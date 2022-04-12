@@ -10,7 +10,7 @@
 	data = 0
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/antidepressant/methylphenidate/on_general_digest(mob/living/M)
+/datum/reagent/antidepressant/methylphenidate/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(volume <= 0.1 && data != -1)
 		data = -1
@@ -37,7 +37,7 @@
 	data = 0
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/antidepressant/citalopram/on_general_digest(mob/living/M)
+/datum/reagent/antidepressant/citalopram/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(volume <= 0.1 && data != -1)
 		data = -1
@@ -64,7 +64,7 @@
 	data = 0
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/antidepressant/paroxetine/on_general_digest(mob/living/M)
+/datum/reagent/antidepressant/paroxetine/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(volume <= 0.1 && data != -1)
 		data = -1
@@ -76,7 +76,7 @@
 				to_chat(M, "<span class='notice'>Your mind feels much more stable.</span>")
 			else
 				to_chat(M, "<span class='warning'>Your mind breaks apart.</span>")
-				M.hallucination += 200
+				M.hallucination += 200 * multiplier
 
 /datum/chemical_reaction/paroxetine
 	name = "Paroxetine"

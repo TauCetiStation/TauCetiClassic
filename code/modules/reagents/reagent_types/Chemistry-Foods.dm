@@ -8,7 +8,7 @@
 
 	data = list()
 
-/datum/reagent/consumable/on_general_digest(mob/living/M)
+/datum/reagent/consumable/on_general_digest(mob/living/M, multiplier)
 	..()
 	var/mob_met_factor = 1
 	if(iscarbon(M))
@@ -16,7 +16,7 @@
 		mob_met_factor = C.get_metabolism_factor() * 0.25
 	if(volume > last_volume)
 		var/to_add = rand(0, volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor
-		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor) - to_add)
+		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor * multiplier) - to_add)
 		if(diet_flags & DIET_ALL)
 			M.reagents.add_reagent("nutriment", to_add)
 		else if(diet_flags & DIET_MEAT)
@@ -38,7 +38,7 @@
 	color = "#664330" // rgb: 102, 67, 48
 	taste_message = "bland food"
 
-/datum/reagent/nutriment/on_general_digest(mob/living/M)
+/datum/reagent/nutriment/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(istype(M))
 		if(iscarbon(M))
@@ -46,9 +46,9 @@
 			if(C.can_eat(diet_flags))
 				C.nutrition += nutriment_factor
 				if(prob(50))
-					C.adjustBruteLoss(-1)
+					C.adjustBruteLoss(-1 * multiplier)
 		else
-			M.nutrition += nutriment_factor
+			M.nutrition += nutriment_factor * multiplier
 	return TRUE
 
 /datum/reagent/nutriment/protein // Meat-based protein, digestable by carnivores and omnivores, worthless to herbivores
@@ -58,7 +58,7 @@
 	diet_flags = DIET_MEAT
 	taste_message = "meat"
 
-/datum/reagent/nutriment/protein/on_skrell_digest(mob/living/M)
+/datum/reagent/nutriment/protein/on_skrell_digest(mob/living/M, multiplier)
 	..()
 	M.adjustToxLoss(2 * FOOD_METABOLISM)
 	return FALSE
@@ -84,10 +84,10 @@
 	color = "#ff00ff" // rgb: 255, 0, 255
 	taste_message = "sweetness"
 
-/datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
+/datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain")))
-		M.heal_bodypart_damage(1, 1)
+		M.heal_bodypart_damage(1 * multiplier, 1 * multiplier)
 
 /datum/reagent/consumable/syndicream
 	name = "Cream filling"
@@ -95,12 +95,12 @@
 	description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
 	color = "#ab7878" // rgb: 171, 120, 120
 
-/datum/reagent/consumable/syndicream/on_general_digest(mob/living/M)
+/datum/reagent/consumable/syndicream/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(ishuman(M) && M.mind && M.mind.special_role)
-		M.heal_bodypart_damage(1, 1)
+		M.heal_bodypart_damage(1 * multiplier, 1 * multiplier)
 
-/datum/reagent/nutriment/dairy/on_skrell_digest(mob/living/M) // Is not as poisonous to skrell.
+/datum/reagent/nutriment/dairy/on_skrell_digest(mob/living/M, multiplier) // Is not as poisonous to skrell.
 	..()
 	M.adjustToxLoss(1 * FOOD_METABOLISM)
 	return FALSE
@@ -143,7 +143,7 @@
 	color = "#b31008" // rgb: 179, 16, 8
 	taste_message = "<span class='warning'>HOTNESS</span>"
 
-/datum/reagent/consumable/capsaicin/on_general_digest(mob/living/M)
+/datum/reagent/consumable/capsaicin/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(!data["ticks"])
 		data["ticks"] = 1
@@ -151,7 +151,7 @@
 		if(1 to 15)
 			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("frostoil"))
-				holder.remove_reagent("frostoil", 5)
+				holder.remove_reagent("frostoil", 5 * multiplier)
 			if(isslime(M))
 				M.bodytemperature += rand(5,20)
 		if(15 to 25)
@@ -225,7 +225,7 @@
 				victim.Stun(5)
 				victim.Weaken(5)
 
-/datum/reagent/consumable/condensedcapsaicin/on_general_digest(mob/living/M)
+/datum/reagent/consumable/condensedcapsaicin/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(prob(5))
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
@@ -239,15 +239,15 @@
 	taste_message = "<font color='lightblue'>cold</font>"
 	diet_flags = DIET_PLANT
 
-/datum/reagent/consumable/frostoil/on_general_digest(mob/living/M)
+/datum/reagent/consumable/frostoil/on_general_digest(mob/living/M, multiplier)
 	..()
 	M.bodytemperature = max(M.bodytemperature - 10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0)
 	if(prob(1))
 		M.emote("shiver")
 	if(isslime(M))
 		M.bodytemperature = max(M.bodytemperature - rand(10,20), 0)
-	holder.remove_reagent("capsaicin", 5)
-	holder.remove_reagent(src.id, FOOD_METABOLISM)
+	holder.remove_reagent("capsaicin", 5 * multiplier)
+	holder.remove_reagent(src.id, FOOD_METABOLISM * multiplier)
 
 /datum/reagent/consumable/frostoil/reaction_turf(turf/simulated/T, volume)
 	. = ..()
@@ -292,7 +292,7 @@
 	taste_message = "chocolate"
 	diet_flags = DIET_PLANT
 
-/datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M)
+/datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M, multiplier)
 	..()
 	if (M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -306,29 +306,29 @@
 	custom_metabolism = FOOD_METABOLISM * 0.5
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M)
+/datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M, multiplier)
 	..()
 	M.adjustDrugginess(3)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1 to 5)
-			M.Stuttering(1)
-			M.make_dizzy(5)
+			M.Stuttering(1 * multiplier)
+			M.make_dizzy(5 * multiplier)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			M.Stuttering(1)
-			M.make_jittery(10)
-			M.make_dizzy(10)
-			M.adjustDrugginess(3)
+			M.Stuttering(1 * multiplier)
+			M.make_jittery(10 * multiplier)
+			M.make_dizzy(10 * multiplier)
+			M.adjustDrugginess(3 * multiplier)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if(10 to INFINITY)
-			M.Stuttering(1)
-			M.make_jittery(20)
-			M.make_dizzy(20)
-			M.adjustDrugginess(4)
+			M.Stuttering(1 * multiplier)
+			M.make_jittery(20 * multiplier)
+			M.make_dizzy(20 * multiplier)
+			M.adjustDrugginess(4 * multiplier)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
 	data["ticks"]++
@@ -384,7 +384,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
-/datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M)
+/datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -398,7 +398,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen with SPICY flavor"
 
-/datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
+/datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.bodytemperature < BODYTEMP_NORMAL + 40) // Not Tajaran friendly food (by the time of writing this, Tajaran has 330 heat limit, while this is 350 and human 360.
 		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -412,7 +412,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
-/datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M)
+/datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.bodytemperature < BODYTEMP_NORMAL + 40)
 		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
