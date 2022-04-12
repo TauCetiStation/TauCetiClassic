@@ -158,7 +158,7 @@
 	heart_status = HEART_NORMAL
 	deltimer(fibrillation_timer_id)
 	fibrillation_timer_id = null
-	owner.metabolism_factor.AddModifier("Heart", multiple=1)
+	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
 
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"
