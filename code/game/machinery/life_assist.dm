@@ -146,7 +146,7 @@
 
 /obj/machinery/life_assist/cardiopulmonary_bypass/assist(mob/living/carbon/human/H)
 	..()
-	H.metabolism_factor.AddModifier("CPB", additive=0.5)
+	H.metabolism_factor.AddModifier("CPB", additive = 0.5)
 
 /obj/machinery/life_assist/cardiopulmonary_bypass/deassist(mob/living/carbon/human/H)
 	..()
