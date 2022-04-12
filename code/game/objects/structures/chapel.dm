@@ -358,11 +358,11 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 	lectern_overlay = image(icon, "lectern_overlay_unbuckled")
 	lectern_overlay.layer = INFRONT_MOB_LAYER
-	add_overlay(lectern_overlay)
+	overlays += lectern_overlay
 
 	emblem_overlay = image(icon, "general")
 	emblem_overlay.layer = INFRONT_MOB_LAYER
-	lectern_overlay.add_overlay(emblem_overlay)
+	lectern_overlay.overlays += emblem_overlay
 
 /obj/structure/stool/bed/chair/lectern/Destroy()
 	QDEL_NULL(lectern_overlay)
@@ -546,8 +546,8 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 /obj/structure/stool/bed/chair/lectern/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
 		M.pixel_y = 12
-		update_buckle_mob(M)
 		lectern_overlay.icon_state = get_overlay_icon_state(book.contents.len ? "_book" : "")
+		update_buckle_mob(M)
 
 	else
 		M.pixel_y = M.get_pixel_y_offset()
