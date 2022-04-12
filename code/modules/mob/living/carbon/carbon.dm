@@ -34,7 +34,7 @@
 			bodytemperature += max(affecting_temp / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
 		else if(affecting_temp >= BODYTEMP_SIGNIFICANT_CHANGE)
 			bodytemperature += min(affecting_temp / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
-			
+
 		if(stat != DEAD)
 			bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
 
@@ -832,7 +832,7 @@
 				) * 8 // We multiply by this "magic" number, because all of these are equal to 8 nutrition.
 
 /mob/living/carbon/get_metabolism_factor()
-	. = metabolism_factor
+	. = metabolism_factor.Get()
 
 
 /mob/living/carbon/proc/perform_av(mob/living/carbon/human/user) // don't forget to INVOKE_ASYNC this proc if sleep is a problem.
