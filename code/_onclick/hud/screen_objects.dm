@@ -475,7 +475,18 @@
 	icon = 'icons/mob/screen1_robot.dmi'
 	icon_state = "crewmanifest"
 	screen_loc = ui_borg_show_manifest
-	
+
+/atom/movable/screen/alerts
+	name = "Show Alerts"
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "alerts"
+	screen_loc = ui_ai_alerts
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/alerts/robot
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "showalerts"
+	screen_loc = ui_borg_show_alerts
 
 /atom/movable/screen/Click(location, control, params)
 	if(!usr)

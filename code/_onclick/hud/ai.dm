@@ -29,12 +29,7 @@
 	adding += using
 
 //Alerts
-	using = new /atom/movable/screen()
-	using.name = "Show Alerts"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "alerts"
-	using.screen_loc = ui_ai_alerts
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/alerts()
 	adding += using
 
 //Announcement

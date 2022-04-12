@@ -84,12 +84,7 @@ var/global/atom/movable/screen/robot_inventory
 	adding += using
 
 //Alerts
-	using = new /atom/movable/screen()
-	using.name = "Show Alerts"
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = "showalerts"
-	using.screen_loc = ui_borg_show_alerts
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/alerts/robot()
 	adding += using
 
 //State Laws
