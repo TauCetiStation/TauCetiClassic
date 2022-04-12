@@ -550,7 +550,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		return
 
 	if(href_list["set_channel_name"])
-		src.channel_name = sanitize_safe(input(usr, "Название Новостного Канала", "Обработчик Сети Новостей", channel_name), MAX_LNAME_LEN)
+		src.channel_name = sanitize_safe(input(usr, "Название Новостного Канала", "Обработчик Сети Новостей", input_default(channel_name)), MAX_LNAME_LEN)
 		//update_icon()
 
 	else if(href_list["set_channel_lock"])
@@ -596,7 +596,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		src.channel_name = input(usr, "Выберите Канал", "Обработчик Сети Новостей") in available_channels
 
 	else if(href_list["set_new_message"])
-		src.msg = sanitize(input(usr, "Напишите вашу Историю", "Обработчик Сети Новостей", src.msg), extra = FALSE)
+		src.msg = sanitize(input(usr, "Напишите вашу Историю", "Обработчик Сети Новостей", input_default(src.msg)), extra = FALSE)
 
 	else if(href_list["set_attachment"])
 		AttachPhoto(usr)
@@ -653,10 +653,10 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		src.screen = 14
 
 	else if(href_list["set_wanted_name"])
-		src.channel_name = sanitize_safe(input(usr, "Укажите имя разыскиваемого лица", "Сетевой Обработчик Безопасности", channel_name), MAX_LNAME_LEN)
+		src.channel_name = sanitize(input(usr, "Укажите имя разыскиваемого лица", "Сетевой Обработчик Безопасности", input_default(channel_name)), MAX_LNAME_LEN)
 
 	else if(href_list["set_wanted_desc"])
-		src.msg = sanitize_safe(input(usr, "Укажите описание разыскиваемого лица. Это могут быть любые детали, которые вы считаете важными.", "Сетевой Обработчик Безопасности", msg), extra = FALSE)
+		src.msg = sanitize(input(usr, "Укажите описание разыскиваемого лица. Это могут быть любые детали, которые вы считаете важными.", "Сетевой Обработчик Безопасности", input_default(msg)), extra = FALSE)
 
 	else if(href_list["submit_wanted"])
 		var/input_param = text2num(href_list["submit_wanted"])
@@ -823,7 +823,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 
 	else if(href_list["leave_a_comment"])
 		var/datum/feed_message/FM = locate(href_list["leave_a_comment"])
-		src.comment_msg = sanitize(input(usr, "Напишите комментарий", "Обработчик Сети Новостей", src.comment_msg), extra = FALSE)
+		src.comment_msg = sanitize(input(usr, "Напишите комментарий", "Обработчик Сети Новостей", input_default(src.comment_msg)), extra = FALSE)
 		if(src.comment_msg == "" || src.comment_msg == null || src.scanned_user == "Unknown")
 			src.screen = 22
 		else
