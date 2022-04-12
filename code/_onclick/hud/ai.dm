@@ -21,12 +21,7 @@
 	adding += using
 
 //Crew Monitorting
-	using = new /atom/movable/screen()
-	using.name = "Radio Settings"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "radio_control"
-	using.screen_loc = ui_ai_control_integrated_radio
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/radio_settings()
 	adding += using
 
 //Crew Manifest

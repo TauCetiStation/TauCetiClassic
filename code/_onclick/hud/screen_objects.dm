@@ -455,6 +455,13 @@
 	icon_state = "camera_light"
 	screen_loc = ui_ai_camera_light
 	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/radio_settings
+	name = "Radio Settings"
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "radio_control"
+	screen_loc = ui_ai_control_integrated_radio
+	plane = ABOVE_HUD_PLANE
 	
 
 /atom/movable/screen/Click(location, control, params)
