@@ -138,6 +138,8 @@
 		heart_status = HEART_FAILURE
 		deltimer(fibrillation_timer_id)
 		fibrillation_timer_id = null
+		var/datum/modval/met_factor = owner.metabolism_factor
+		met_factor.AddModifier("Heart_Metabolism", multiple=0, update=TRUE)
 	else
 		take_damage(1, 0)
 		fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
@@ -147,11 +149,15 @@
 	if(HAS_TRAIT(owner, TRAIT_FAT))
 		failing_interval = 30 SECONDS
 	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
+	var/datum/modval/met_factor = owner.metabolism_factor
+	met_factor.AddModifier("Heart_Metabolism", multiple=0.5, update=TRUE)
 
 /obj/item/organ/internal/heart/proc/heart_normalize()
 	heart_status = HEART_NORMAL
 	deltimer(fibrillation_timer_id)
 	fibrillation_timer_id = null
+	var/datum/modval/met_factor = owner.metabolism_factor
+	met_factor.AddModifier("Heart_Metabolism", multiple=1, update=TRUE)
 
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"

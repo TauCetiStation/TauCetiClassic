@@ -84,8 +84,6 @@
 	//Chemicals in the body
 	handle_chemicals_in_body()
 
-	handle_metabolism()
-
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)		//Optimized a good bit.
 
@@ -1496,17 +1494,6 @@
 	return temp
 
 /mob/living/carbon/human/proc/handle_metabolism()
-	metabolism_factor = METABOLISM_FACTOR + ((stat == DEAD) ? 0 : metabolism_factor_bonus)
-	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
-	switch(IO.heart_status)
-		if(HEART_FIBR)
-			metabolism_factor *= 0.5
-		if(HEART_FAILURE)
-			metabolism_factor *= 0
-
-	if(HAS_TRAIT(src, TRAIT_CPB))
-		metabolism_factor += 0.5
-
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes
 	we only set those statuses and icons upon changes.  Then those HUD items will simply add those pre-made images.

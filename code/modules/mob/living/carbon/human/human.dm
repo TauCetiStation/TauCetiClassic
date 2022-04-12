@@ -43,8 +43,7 @@
 			set_species()
 
 	if(species) // Just to be sure.
-		metabolism_factor.AddModifier(
-		metabolism_factor_bonus += species.metabolism_mod
+		metabolism_factor.AddModifier("Species_Metabolism", base_multiplier=species.metabolism_mod, update=TRUE)
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
