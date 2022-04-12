@@ -686,10 +686,11 @@
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.metabolism_factor.AddModifier("Lipozine", base_additive = 0.25 * multiplier)
+		H.metabolism_factor.AddModifier("Lipozine", base_additive = 0.5 * multiplier)
 
 
 /datum/reagent/lipozine/on_last_digest(mob/living/M, multiplier)
+	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.metabolism_factor.RemoveModifier("Lipozine")
