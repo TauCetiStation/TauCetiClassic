@@ -1598,7 +1598,7 @@
 			rank_list_element += ""
 			if(slider_max_value == slider_min_value)
 				continue
-			var/slider_hint = "Hint: [skill.hint] \n\n Skill ranks:\n [rank_list_element]"
+			var/slider_hint = "Hint: [skill.hint]\n\nSkill ranks:\n[rank_list_element]"
 			dat += {"
 				<tr>
 					<td>

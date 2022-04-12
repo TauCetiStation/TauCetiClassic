@@ -18,6 +18,8 @@
 	var/on = FALSE
 	var/direction_out = 0 //0 = siphoning, 1 = releasing
 	var/target_pressure = PUMP_DEFAULT_PRESSURE
+	required_skills = list(/datum/skill/atmospherics/novice)
+
 
 /obj/machinery/portable_atmospherics/powered/pump/filled
 	start_pressure = 90 * ONE_ATMOSPHERE
