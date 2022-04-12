@@ -14,9 +14,9 @@
 /datum/reagent/consumable/drink/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(adj_dizzy)
-		M.dizziness = max(0,(M.dizziness + adj_dizzy) * multiplier)
+		M.dizziness = max(0,(M.dizziness + adj_dizzy * multiplier))
 	if(adj_drowsy)
-		M.drowsyness = max(0,(M.drowsyness + adj_drowsy) * multiplier)
+		M.drowsyness = max(0,(M.drowsyness + adj_drowsy * multiplier))
 	if(adj_sleepy)
 		M.AdjustSleeping(adj_sleepy * multiplier)
 	if(adj_temp)
@@ -646,7 +646,7 @@
 		M.stuttering = 1 * multiplier
 	if(volume >= overdose)
 		if(M.losebreath <= 3)
-			M.losebreath = max(0, (M.losebreath + 3) * multiplier)
+			M.losebreath = max(0, (M.losebreath + 3 * multiplier))
 			M.adjustOxyLoss(1 * multiplier)
 
 /*boozepwr chart
@@ -682,7 +682,7 @@
 	if(!..())
 		return
 
-	M.drowsyness = max(0, M.drowsyness + adj_drowsy)
+	M.drowsyness = max(0, M.drowsyness + adj_drowsy * multiplier)
 	M.SetSleeping(adj_sleepy)
 
 	var/drunkpwr = boozepwr
@@ -740,7 +740,7 @@
 
 /datum/reagent/consumable/ethanol/beer/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.jitteriness = max(M.jitteriness - 3,0)
+	M.jitteriness = max(M.jitteriness - 3 * multiplier,0)
 	if(HAS_TRAIT(M, TRAIT_DWARF))
 		M.heal_bodypart_damage(1 * multiplier, 1 * multiplier)
 
@@ -786,9 +786,9 @@
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.drowsyness = max(0, M.drowsyness - 7)
+	M.drowsyness = max(0, M.drowsyness - 7 * multiplier)
 	if(M.bodytemperature > BODYTEMP_NORMAL)
-		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier))
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.make_jittery(5 * multiplier)
 
@@ -801,7 +801,7 @@
 
 /datum/reagent/consumable/ethanol/vodka/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.radiation = max(M.radiation - 1,0)
+	M.radiation = max(M.radiation - 1 * multiplier,0)
 
 /datum/reagent/consumable/ethanol/bilk
 	name = "Bilk"
@@ -1226,7 +1226,7 @@
 
 /datum/reagent/consumable/ethanol/manhattan_proj/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustDrugginess(3)
+	M.adjustDrugginess(3 * multiplier)
 
 /datum/reagent/consumable/ethanol/whiskeysoda
 	name = "Whiskey Soda"

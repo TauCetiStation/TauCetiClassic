@@ -152,7 +152,7 @@
 
 /datum/reagent/toxin/cyanide/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustOxyLoss(4 * REM)
+	M.adjustOxyLoss(4 * REM * multiplier)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
@@ -382,7 +382,7 @@
 	if(M.stat != UNCONSCIOUS)
 		if(volume >= overdose)
 			if(M.losebreath >= 10)
-				M.losebreath = max(10, M.losebreath - 10)
+				M.losebreath = max(10, M.losebreath - 10 * multiplier)
 			M.adjustOxyLoss(2 * multiplier)
 			M.Weaken(10 * multiplier)
 			if(ishuman(M))
@@ -405,7 +405,7 @@
 		var/mob/living/carbon/human/H = M
 		if(H.stat != UNCONSCIOUS)
 			if(H.losebreath >= 10)
-				H.losebreath = max(10, M.losebreath - 10)
+				H.losebreath = max(10, M.losebreath - 10 * multiplier)
 			H.adjustOxyLoss(2 * multiplier)
 			H.Weaken(10 * multiplier)
 		if(volume >= overdose)
@@ -815,6 +815,6 @@
 	if(prob(80))
 		M.adjustBrainLoss(1 * REM * multiplier)
 	if(prob(50))
-		M.drowsyness = max(M.drowsyness, 3 * multiplier)
+		M.drowsyness = max(M.drowsyness, 3)
 	if(prob(10))
 		M.emote("drool")

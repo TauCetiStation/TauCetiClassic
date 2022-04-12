@@ -189,8 +189,8 @@ var/global/const/INGEST = 2
 			if(metabolize > 0)
 				var/remove_amount = metabolize*R.volume/total_volume
 				R.on_mob_life(M, remove_amount)
-				remove_reagent(R.id, remove_amount*R.volume/total_volume)
-				if(remove_amount >= R.volume)
+				remove_reagent(R.id, remove_amount)
+				if(R.volume <= 0)
 					R.on_last_digest(M, remove_amount)
 	update_total()
 

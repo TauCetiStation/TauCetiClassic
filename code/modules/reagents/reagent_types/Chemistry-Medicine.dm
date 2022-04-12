@@ -241,7 +241,7 @@
 		var/obj/item/organ/internal/lungs/IO = H.organs_by_name[O_LUNGS]
 		if(istype(IO))
 			if(IO.damage > 0 && IO.robotic < 2)
-				IO.damage = max(IO.damage - 0.7, 0)
+				IO.damage = max(IO.damage - 0.7 * multiplier, 0)
 		switch(data["ticks"])
 			if(50 to 100)
 				H.disabilities &= ~COUGHING
@@ -307,9 +307,9 @@
 
 /datum/reagent/anti_toxin/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.reagents.remove_all_type(/datum/reagent/toxin, REM, 0, 1)
-	M.drowsyness = max(M.drowsyness - 2 * REM, 0)
-	M.hallucination = max(0, M.hallucination - 5 * REM)
+	M.reagents.remove_all_type(/datum/reagent/toxin, REM * multiplier, 0, 1)
+	M.drowsyness = max(M.drowsyness - 2 * REM * multiplier, 0)
+	M.hallucination = max(0, M.hallucination - 5 * REM * multiplier)
 	M.adjustToxLoss(-2 * REM * multiplier)
 
 /datum/reagent/thermopsis
@@ -382,13 +382,13 @@
 
 /datum/reagent/synaptizine/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.drowsyness = max(M.drowsyness - 5, 0)
+	M.drowsyness = max(M.drowsyness - 5 * multiplier, 0)
 	M.AdjustParalysis(-1 * multiplier)
 	M.AdjustStunned(-1 * multiplier)
 	M.AdjustWeakened(-1 * multiplier)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5 * multiplier)
-	M.hallucination = max(0, M.hallucination - 10)
+	M.hallucination = max(0, M.hallucination - 10 * multiplier)
 	if(prob(60))
 		M.adjustToxLoss(1 * multiplier)
 
@@ -404,7 +404,7 @@
 
 /datum/reagent/hyronalin/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.radiation = max(M.radiation - 3 * REM, 0)
+	M.radiation = max(M.radiation - 3 * REM * multiplier, 0)
 
 /datum/reagent/arithrazine
 	name = "Arithrazine"
@@ -418,7 +418,7 @@
 
 /datum/reagent/arithrazine/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.radiation = max(M.radiation - 7 * REM, 0)
+	M.radiation = max(M.radiation - 7 * REM * multiplier, 0)
 	M.adjustToxLoss(-1 * REM * multiplier)
 	if(prob(15))
 		M.take_bodypart_damage(1 * multiplier, 0)
@@ -450,13 +450,13 @@
 /datum/reagent/imidazoline/on_general_digest(mob/living/M, multiplier)
 	..()
 	M.adjustBlurriness(-5 * multiplier)
-	M.eye_blind = max(M.eye_blind - 5, 0)
+	M.eye_blind = max(M.eye_blind - 5 * multiplier, 0)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(istype(IO))
 			if(IO.damage > 0 && IO.robotic < 2)
-				IO.damage = max(IO.damage - 1, 0)
+				IO.damage = max(IO.damage - 1 * multiplier, 0)
 
 /datum/reagent/aurisine
 	name = "Aurisine"
@@ -469,8 +469,8 @@
 
 /datum/reagent/aurisine/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.ear_damage = max(M.ear_damage - 1, 0)
-	M.ear_deaf = max(M.ear_deaf - 3, 0)
+	M.ear_damage = max(M.ear_damage - 1 * multiplier, 0)
+	M.ear_deaf = max(M.ear_deaf - 3 * multiplier, 0)
 
 /datum/reagent/peridaxon
 	name = "Peridaxon"
@@ -496,7 +496,7 @@
 			return
 		for(var/obj/item/organ/internal/IO in H.organs)
 			if(IO.damage > 0 && IO.robotic < 2)
-				IO.damage = max(IO.damage - (3 * custom_metabolism / damaged_organs), 0)
+				IO.damage = max(IO.damage - (3 * custom_metabolism / damaged_organs * multiplier), 0)
 
 /datum/reagent/kyphotorin
 	name = "Kyphotorin"
@@ -516,18 +516,18 @@
 	var/mob/living/carbon/human/H = M
 	if(H.nutrition < 200) // if nanites don't have enough resources, they stop working and still spend
 		H.make_jittery(100 * multiplier)
-		volume += 0.07
+		volume += 0.07 * multiplier
 		return
-	H.jitteriness = max(0,H.jitteriness - 100)
+	H.jitteriness = max(0,H.jitteriness - 100 * multiplier)
 	if(!H.regenerating_bodypart)
 		H.regenerating_bodypart = H.find_damaged_bodypart()
 	if(H.regenerating_bodypart)
 		H.nutrition -= 3 * multiplier
 		H.apply_effect(3 * multiplier, WEAKEN)
-		H.apply_damages(0,0,1,4,0,5)
+		H.apply_damages(0,0,1 * multiplier,4 * multiplier,0,5 * multiplier)
 		H.regen_bodyparts(4 * multiplier, FALSE)
 	else
-		volume += 0.07
+		volume += 0.07 * multiplier
 
 /datum/reagent/bicaridine
 	name = "Bicaridine"
@@ -686,7 +686,7 @@
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.metabolism_factor.AddModifier("Lipozine", base_additive = 0.5 * multiplier)
+		H.metabolism_factor.AddModifier("Lipozine", base_additive = 2 * multiplier)
 
 
 /datum/reagent/lipozine/on_last_digest(mob/living/M, multiplier)
@@ -707,7 +707,7 @@
 
 /datum/reagent/stimulants/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.drowsyness = max(M.drowsyness - 5, 0)
+	M.drowsyness = max(M.drowsyness - 5 * multiplier, 0)
 	M.AdjustParalysis(-3 * multiplier)
 	M.AdjustStunned(-3 * multiplier)
 	M.AdjustWeakened(-3 * multiplier)

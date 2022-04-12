@@ -44,7 +44,7 @@
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(C.can_eat(diet_flags))
-				C.nutrition += nutriment_factor
+				C.nutrition += nutriment_factor * multiplier
 				if(prob(50))
 					C.adjustBruteLoss(-1 * multiplier)
 		else
@@ -60,7 +60,7 @@
 
 /datum/reagent/nutriment/protein/on_skrell_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(2 * FOOD_METABOLISM)
+	M.adjustToxLoss(2 * FOOD_METABOLISM * multiplier)
 	return FALSE
 
 /datum/reagent/nutriment/plantmatter // Plant-based biomatter, digestable by herbivores and omnivores, worthless to carnivores
@@ -102,7 +102,7 @@
 
 /datum/reagent/nutriment/dairy/on_skrell_digest(mob/living/M, multiplier) // Is not as poisonous to skrell.
 	..()
-	M.adjustToxLoss(1 * FOOD_METABOLISM)
+	M.adjustToxLoss(1 * FOOD_METABOLISM * multiplier)
 	return FALSE
 
 /datum/reagent/consumable/soysauce
@@ -245,7 +245,7 @@
 	if(prob(1))
 		M.emote("shiver")
 	if(isslime(M))
-		M.bodytemperature = max(M.bodytemperature - rand(10,20), 0)
+		M.bodytemperature = max(M.bodytemperature - rand(10,20) * multiplier, 0)
 	holder.remove_reagent("capsaicin", 5 * multiplier)
 	holder.remove_reagent(src.id, FOOD_METABOLISM * multiplier)
 
@@ -295,7 +295,7 @@
 /datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M, multiplier)
 	..()
 	if (M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT) * multiplier)
 
 /datum/reagent/consumable/psilocybin
 	name = "Psilocybin"
@@ -308,7 +308,7 @@
 
 /datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustDrugginess(3)
+	M.adjustDrugginess(3 * multiplier)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	switch(data["ticks"])
@@ -352,7 +352,7 @@
 	var/hotspot = (locate(/obj/fire) in T)
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air(T:air:total_moles)
-		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
+		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2 * multiplier) ,0)
 		lowertemp.react()
 		T.assume_air(lowertemp)
 		qdel(hotspot)
@@ -387,7 +387,7 @@
 /datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
+		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT) * multiplier)
 
 /datum/reagent/consumable/hell_ramen
 	name = "Spicy Ramen"
@@ -401,7 +401,7 @@
 /datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.bodytemperature < BODYTEMP_NORMAL + 40) // Not Tajaran friendly food (by the time of writing this, Tajaran has 330 heat limit, while this is 350 and human 360.
-		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT))
+		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT) * multiplier)
 
 /datum/reagent/consumable/hot_hell_ramen
 	name = "Hot Spicy Ramen"
@@ -415,7 +415,7 @@
 /datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.bodytemperature < BODYTEMP_NORMAL + 40)
-		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
+		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT) * multiplier)
 
 /datum/reagent/consumable/rice
 	name = "Rice"

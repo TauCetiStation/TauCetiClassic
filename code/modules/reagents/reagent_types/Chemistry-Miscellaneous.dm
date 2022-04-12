@@ -518,35 +518,35 @@
 				if(H.getOxyLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.1))
 						H.adjustOxyLoss(-4 * multiplier)
-						holder.remove_reagent(id, 0.1)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
+						holder.remove_reagent(id, 0.1 * multiplier)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
 
 				if(H.getBruteLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.125))
 						H.heal_bodypart_damage(5 * multiplier, 0)
-						holder.remove_reagent(id, 0.125)
+						holder.remove_reagent(id, 0.125 * multiplier)
 
 				if(H.getFireLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.125))
 						H.heal_bodypart_damage(0, 5 * multiplier)
-						holder.remove_reagent(id, 0.125)
+						holder.remove_reagent(id, 0.125 * multiplier)
 
 				if(H.getToxLoss() > 0 && prob(50))
 					if(holder && holder.has_reagent(id, 0.05))
 						H.adjustToxLoss(-2 * multiplier)
-						holder.remove_reagent(id, 0.05)
+						holder.remove_reagent(id, 0.05 * multiplier)
 
 				if(H.getCloneLoss() > 0 && prob(60))
 					if(holder && holder.has_reagent(id, 0.05))
 						H.adjustCloneLoss(-2 * multiplier)
-						holder.remove_reagent(id, 0.05)
+						holder.remove_reagent(id, 0.05 * multiplier)
 
 				if(percent_machine > 5)
 					if(holder && holder.has_reagent(id))
-						percent_machine -= 1
+						percent_machine -= 1 * multiplier
 						if(prob(20))
 							to_chat(M, pick("You feel more like yourself again."))
 				if(H.dizziness != 0)
-					H.dizziness = max(0, H.dizziness - 15)
+					H.dizziness = max(0, H.dizziness - 15 * multiplier)
 				if(H.confused != 0)
 					H.AdjustConfused(-5 * multiplier)
 				if(holder && holder.has_reagent(id))
@@ -565,45 +565,45 @@
 				if(H.getOxyLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.1))
 						H.adjustOxyLoss(-4 * multiplier)
-						holder.remove_reagent(id, 0.1)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
-						percent_machine += 0.5
+						holder.remove_reagent(id, 0.1 * multiplier)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
+						percent_machine += 0.5 * multiplier
 						if(prob(20))
 							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
 				if(H.getBruteLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.125))
 						H.heal_bodypart_damage(5 * multiplier, 0)
-						holder.remove_reagent(id, 0.125)
-						percent_machine += 0.5
+						holder.remove_reagent(id, 0.125 * multiplier)
+						percent_machine += 0.5 * multiplier
 						if(prob(20))
 							to_chat(M, pick("<span class='warning'> Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
 				if(H.getFireLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.125))
 						H.heal_bodypart_damage(0, 5 * multiplier)
-						holder.remove_reagent(id, 0.125)
-						percent_machine += 0.5
+						holder.remove_reagent(id, 0.125 * multiplier)
+						percent_machine += 0.5 * multiplier
 						if(prob(20))
 							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
 				if(H.getToxLoss() > 0 && prob(50))
 					if(holder && holder.has_reagent(id, 0.05))
 						H.adjustToxLoss(-2 * multiplier)
-						holder.remove_reagent(id, 0.05)
-						percent_machine += 0.5
+						holder.remove_reagent(id, 0.05 * multiplier)
+						percent_machine += 0.5 * multiplier
 						if(prob(20))
 							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
 				if(H.getCloneLoss() > 0 && prob(60))
 					if(holder && holder.has_reagent(id, 0.05))
 						H.adjustCloneLoss(-2 * multiplier)
-						holder.remove_reagent(id, 0.05)
-						percent_machine += 0.5
+						holder.remove_reagent(id, 0.05 * multiplier)
+						percent_machine += 0.5 * multiplier
 						if(prob(20))
 							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
 				if(H.dizziness != 0)
-					H.dizziness = max(0, H.dizziness - 15)
+					H.dizziness = max(0, H.dizziness - 15 * multiplier)
 				if(H.confused != 0)
 					H.AdjustConfused(-5 * multiplier)
 				if(holder && holder.has_reagent(id))
@@ -614,7 +614,7 @@
 						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
 				if(holder && prob(percent_machine))
-					holder.add_reagent(id, 20)
+					holder.add_reagent(id, 20 * multiplier)
 					to_chat(M, pick("<b><span class='warning'>Your body lurches!</b></span>"))
 				data["ticks"] += 2
 			if(20 to INFINITY)
@@ -932,33 +932,33 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	..()
 	if(!data["ticks"])
 		data["ticks"] = 1
-	M.hallucination += 1
+	M.hallucination += 1 * multiplier
 	M.make_jittery(2 * multiplier)
 	switch(data["ticks"])
 		if(1 to 15)
 			M.make_jittery(2 * multiplier)
-			M.hallucination = max(M.hallucination, 3 * multiplier)
+			M.hallucination = max(M.hallucination, 3)
 			if(prob(1))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
 				M.Sleeping(10 * multiplier) // Seeing ghosts ain't an easy thing for your mind.
 		if(15 to 45)
 			M.make_jittery(4 * multiplier)
 			M.adjustDrugginess(1 * multiplier)
-			M.hallucination = max(M.hallucination, 10 * multiplier)
+			M.hallucination = max(M.hallucination, 10)
 			if(prob(5))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
 				M.Sleeping(10 * multiplier)
 		if(45 to 90)
 			M.make_jittery(8 * multiplier)
 			M.adjustDrugginess(3 * multiplier)
-			M.hallucination = max(M.hallucination, 60 * multiplier)
+			M.hallucination = max(M.hallucination, 60)
 			if(prob(10))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
 				M.Sleeping(10 * multiplier)
 		if(90 to 180)
 			M.make_jittery(8 * multiplier)
 			M.adjustDrugginess(3 * multiplier)
-			M.hallucination = max(M.hallucination, 60 * multiplier)
+			M.hallucination = max(M.hallucination, 60)
 			if(prob(10))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
 				M.Sleeping(10 * multiplier)

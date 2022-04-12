@@ -45,7 +45,7 @@
 
 	var/datum/modval_modifier/MM = new(base_multiplier, base_additive, multiple, additive)
 	src.base_multiplier += MM.base_multiplier
-	src.base_additive += MM.base_multiplier
+	src.base_additive += MM.base_additive
 	src.multiple += MM.multiple
 	src.additive += MM.additive
 
@@ -58,7 +58,7 @@
 	var/datum/modval_modifier/MM = modifiers[category]
 
 	base_multiplier -= MM.base_multiplier
-	base_additive -= MM.base_multiplier
+	base_additive -= MM.base_additive
 	multiple -= MM.multiple
 	additive -= MM.additive
 

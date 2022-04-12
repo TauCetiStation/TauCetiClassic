@@ -111,14 +111,14 @@
 	SEND_SIGNAL(src, COMSIG_REAGENT_REACTION_TURF, T, volume)
 	return
 
-/datum/reagent/proc/on_mob_life(mob/living/M, remove_amount = 0)
+/datum/reagent/proc/on_mob_life(mob/living/M, multiplier = 1)
 	if(!M || !holder)
 		return
 	//Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
 	// hey, so, how is your ghost runtime doing? ~Luduk
 	if(!isliving(M))
 		return
-	if(!check_digesting(M, remove_amount)) // You can't overdose on what you can't digest
+	if(!check_digesting(M, multiplier)) // You can't overdose on what you can't digest
 		return FALSE
 
 	if((overdose > 0) && (volume >= overdose))//Overdosing, wooo
@@ -150,7 +150,7 @@
 
 /// Everything under now does. end EUGH
 
-/datum/reagent/proc/check_digesting(mob/living/M, remove_amount = 0)
+/datum/reagent/proc/check_digesting(mob/living/M, multiplier = 1)
 	var/species_name = M.get_species()
 	if(restrict_species && (species_name in restrict_species))
 		return FALSE
@@ -158,10 +158,10 @@
 	var/should_general_digest = TRUE
 	if(species_name in all_species)
 		var/datum/species/specimen = all_species[species_name]
-		should_general_digest = specimen.call_digest_proc(M, src, remove_amount)
+		should_general_digest = specimen.call_digest_proc(M, src, multiplier)
 
 	if(should_general_digest)
-		on_general_digest(M, remove_amount)
+		on_general_digest(M, multiplier)
 	return TRUE
 
 /datum/reagent/proc/on_general_digest(mob/living/M, multiplier)
