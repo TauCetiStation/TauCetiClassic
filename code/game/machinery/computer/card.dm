@@ -232,7 +232,7 @@
 						new_salary = jobdatum.salary
 
 					modify.access = access
-					modify.assignment = sanitize(t1)
+					modify.assignment = t1
 					modify.rank = t1
 
 					if(datum_account)
