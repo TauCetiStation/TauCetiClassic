@@ -684,8 +684,15 @@
 
 /datum/reagent/lipozine/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.nutrition = max(M.nutrition - nutriment_factor, 0)
-	M.overeatduration = 0
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.metabolism_factor.AddModifier("Lipozine", base_additive = 0.25 * multiplier)
+
+
+/datum/reagent/lipozine/on_last_digest(mob/living/M, multiplier)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.metabolism_factor.RemoveModifier("Lipozine")
 
 /datum/reagent/stimulants
 	name = "Stimulants"

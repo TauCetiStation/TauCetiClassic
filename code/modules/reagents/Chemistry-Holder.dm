@@ -190,6 +190,8 @@ var/global/const/INGEST = 2
 				var/remove_amount = metabolize*R.volume/total_volume
 				R.on_mob_life(M, remove_amount)
 				remove_reagent(R.id, remove_amount*R.volume/total_volume)
+				if(remove_amount >= R.volume)
+					R.on_last_digest(M, remove_amount)
 	update_total()
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)

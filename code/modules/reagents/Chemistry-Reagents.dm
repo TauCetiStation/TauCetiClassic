@@ -197,6 +197,9 @@
 /datum/reagent/proc/on_slime_digest(mob/living/M, multiplier)
 	return TRUE
 
+/datum/reagent/proc/on_last_digest(mob/living/M, multiplier)
+	return TRUE
+
 // Handles holy reagents.
 /datum/reagent/proc/handle_religions()
 	if(!religion)
