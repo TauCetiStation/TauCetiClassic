@@ -1493,7 +1493,6 @@
 
 	return temp
 
-/mob/living/carbon/human/proc/handle_metabolism()
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes
 	we only set those statuses and icons upon changes.  Then those HUD items will simply add those pre-made images.
