@@ -246,6 +246,8 @@
 		destroying(user.my_religion)
 
 /obj/structure/cult/anomaly/proc/async_destroying(datum/religion/cult/C)
+	density = FALSE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	animate(src, 1 SECONDS, alpha = 0)
 	sleep(1 SECONDS)
 	qdel(src)

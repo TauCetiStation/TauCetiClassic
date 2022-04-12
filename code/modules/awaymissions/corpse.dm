@@ -142,7 +142,6 @@
 	corpsesuit = /obj/item/clothing/suit/space/unathi/breacher
 	corpseid = 1
 	corpseidjob = "Unathi Commander"
-	corpseidaccess = "Captain"
 	specie = UNATHI
 
 ///////////Civilians//////////////////////
@@ -239,7 +238,6 @@
 	corpseglasses = /obj/item/clothing/glasses/sunglasses
 	corpseid = 1
 	corpseidjob = "Bridge Officer"
-	corpseidaccess = "Captain"
 
 /obj/effect/landmark/corpse/commander
 	name = "Commander"
@@ -254,7 +252,6 @@
 	corpsepocket1 = /obj/item/weapon/lighter/zippo
 	corpseid = 1
 	corpseidjob = "Commander"
-	corpseidaccess = "Captain"
 
 /obj/effect/landmark/corpse/securityofficer
 	name = "Security Officer"
