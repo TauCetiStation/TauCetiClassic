@@ -2334,6 +2334,7 @@
 #include "code\unit_tests\power_tests.dm"
 #include "code\unit_tests\regex_tests.dm"
 #include "code\unit_tests\sizes_tests.dm"
+#include "code\unit_tests\skills_tests.dm"
 #include "code\unit_tests\subsystem_tests.dm"
 #include "code\unit_tests\unit_test.dm"
 #include "interface\interface.dm"
