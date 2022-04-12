@@ -425,7 +425,7 @@
 		//Or if absolute temperature difference is too small
 		if(!on_fire)
 			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
-			
+
 			if(affecting_temp <= -BODYTEMP_SIGNIFICANT_CHANGE)		//Place is colder than we are
 				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
@@ -666,6 +666,9 @@
 	return min(1,thermal_protection)
 
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
+
+	if(get_metabolism_factor() <=0)
+		return
 
 	if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
 		reagents.metabolize(src)
