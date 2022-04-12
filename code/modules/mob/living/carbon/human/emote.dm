@@ -40,7 +40,7 @@
 		/datum/emote/salute,
 		/datum/emote/twitch,
 		/datum/emote/deathgasp,
-		/datum/emote/help
+		/datum/emote/clickable/help
 	)
 	var/list/current_emotes = list(
 	)
