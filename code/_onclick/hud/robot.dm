@@ -71,12 +71,7 @@ var/global/atom/movable/screen/robot_inventory
 			adding += using
 
 //Manifest
-	using = new /atom/movable/screen()
-	using.name = "Show Crew Manifest"
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = "crewmanifest"
-	using.screen_loc = ui_borg_show_manifest
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/crew_manifest/robot()
 	adding += using
 
 //Diagnosis

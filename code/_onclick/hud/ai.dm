@@ -25,12 +25,7 @@
 	adding += using
 
 //Crew Manifest
-	using = new /atom/movable/screen()
-	using.name = "Show Crew Manifest"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "manifest"
-	using.screen_loc = ui_ai_crew_manifest
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/crew_manifest()
 	adding += using
 
 //Alerts

@@ -462,6 +462,19 @@
 	icon_state = "radio_control"
 	screen_loc = ui_ai_control_integrated_radio
 	plane = ABOVE_HUD_PLANE
+
+
+/atom/movable/screen/crew_manifest
+	name = "Show Crew Manifest"
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "manifest"
+	screen_loc = ui_ai_crew_manifest
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/crew_manifest/robot
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "crewmanifest"
+	screen_loc = ui_borg_show_manifest
 	
 
 /atom/movable/screen/Click(location, control, params)
