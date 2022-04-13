@@ -261,19 +261,6 @@
 					H.update_inv_shoes()
 		M.clean_blood()
 
-/datum/reagent/xenomicrobes
-	name = "Xenomicrobes"
-	id = "xenomicrobes"
-	description = "Microbes with an entirely alien cellular structure."
-	reagent_state = LIQUID
-	color = "#535e66" // rgb: 83, 94, 102
-	taste_message = "something alien"
-
-/datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, volume)
-	src = null
-	//if((prob(10) && method==TOUCH) || method==INGEST)
-	//	M.contract_disease(new /datum/disease/xeno_transformation(0),1)
-
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
 	id = "fluorosurfactant"
@@ -413,19 +400,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-/datum/reagent/nanites
-	name = "Nanomachines"
-	id = "nanites"
-	description = "Microscopic construction robots."
-	reagent_state = LIQUID
-	color = "#535e66" // rgb: 83, 94, 102
-	taste_message = "nanomachines, son"
-
-/datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, volume)
-	src = null
-	//if((prob(10) && method==TOUCH) || method==INGEST)
-	//	M.contract_disease(new /datum/disease/robotic_transformation(0), 1)
-
 /datum/reagent/nanites2
 	name = "Friendly Nanites"
 	id = "nanites2"

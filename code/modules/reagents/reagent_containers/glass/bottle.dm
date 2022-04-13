@@ -191,17 +191,10 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/lexorin
 	name = "lexorin bottle"
-	desc = "A small bottle of peridaxon."
+	desc = "A small bottle of lexorin."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle1"
 	list_reagents = list("lexorin" = 30)
-
-/obj/item/weapon/reagent_containers/glass/bottle/nanites
-	name = "nantes bottle"
-	desc = "A small bottle of peridaxon."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle2"
-	list_reagents = list("nanites" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/hair_dye
 	name = "hair dye bottle"
