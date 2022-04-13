@@ -220,7 +220,7 @@
 					return
 				else
 					free_space -= length(content)
-					src.dat += content//infiniti books?
+					src.dat += content
 			if("Author")
 				var/newauthor = sanitize(input(usr, "Write the author's name:"), MAX_NAME_LEN)
 				if(!newauthor)
