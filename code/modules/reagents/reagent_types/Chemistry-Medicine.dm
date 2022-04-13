@@ -754,6 +754,7 @@
 	reagent_state = LIQUID
 	color = "#990000"
 	restrict_species = list(IPC, DIONA)
+	overdose = 5
 
 /datum/reagent/metatrombine/on_general_digest(mob/living/M)
 	..()
