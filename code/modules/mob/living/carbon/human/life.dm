@@ -209,7 +209,7 @@
 			if(10 to 12)
 				if(getBrainLoss() >= 50 && !lying)
 					to_chat(src, "<span class='warning'>Your legs won't respond properly, you fall down.</span>")
-					resting = 1
+					SetCrawling(TRUE)
 
 			if(13 to 18)
 				if(getBrainLoss() >= 60 && !HAS_TRAIT(src, TRAIT_STRONGMIND))
@@ -766,7 +766,7 @@
 	AdjustConfused(-1)
 	AdjustDrunkenness(-1)
 	// decrement dizziness counter, clamped to 0
-	if(resting)
+	if((crawling) || (buckled))
 		dizziness = max(0, dizziness - 15)
 		jitteriness = max(0, jitteriness - 15)
 	else
@@ -847,7 +847,7 @@
 		else
 			stat = CONSCIOUS
 			if(halloss > 0)
-				if(resting)
+				if((crawling) || (buckled))
 					adjustHalLoss(-3)
 				else
 					adjustHalLoss(-1)
