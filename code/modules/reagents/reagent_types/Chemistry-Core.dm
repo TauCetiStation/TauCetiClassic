@@ -80,6 +80,15 @@
 	if(M.IsSleeping())
 		M.AdjustDrunkenness(-1 * multiplier)
 
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.metabolism_factor.AddModifier("Water", base_additive = 0.5 * multiplier)
+
+/datum/reagent/water/on_last_digest(mob/living/M, multiplier)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.metabolism_factor.RemoveModifier("Water")
+
 /datum/reagent/water/on_diona_digest(mob/living/M, multiplier)
 	..()
 	M.nutrition += REM * multiplier

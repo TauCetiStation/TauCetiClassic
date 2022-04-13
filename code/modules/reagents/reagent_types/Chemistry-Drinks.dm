@@ -221,6 +221,15 @@
 	if(adj_temp > 0 && holder.has_reagent("frostoil"))
 		holder.remove_reagent("frostoil", 10 * REAGENTS_METABOLISM * multiplier)
 
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.metabolism_factor.AddModifier("Coffee", base_additive = 1 * multiplier)
+
+/datum/reagent/consumable/drink/coffe/on_last_digest(mob/living/M, multiplier)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.metabolism_factor.RemoveModifier("Coffee")
+
 /datum/reagent/consumable/drink/coffee/icecoffee
 	name = "Iced Coffee"
 	id = "icecoffee"

@@ -204,6 +204,14 @@
 	M.Weaken(10 * multiplier)
 	M.silent = max(M.silent, 10 * multiplier)
 	M.tod = worldtime2text()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.metabolism_factor.AddModifier("Z-powder", base_additive = -0.75 * multiplier)
+
+/datum/reagent/toxin/zombiepowder/on_last_digest(mob/living/M, multiplier)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.metabolism_factor.RemoveModifier("Z-powder")
 
 /datum/reagent/toxin/zombiepowder/Destroy()
 	if(holder && ismob(holder.my_atom))
@@ -225,6 +233,14 @@
 /datum/reagent/toxin/mindbreaker/on_general_digest(mob/living/M, multiplier)
 	..()
 	M.hallucination += 10 * multiplier
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.metabolism_factor.AddModifier("Drugs", base_additive = 0.35 * multiplier)
+
+/datum/reagent/toxin/mindbreaker/on_last_digest(mob/living/M, multiplier)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.metabolism_factor.RemoveModifier("Drugs")
 
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
@@ -767,6 +783,14 @@
 				step(M, pick(cardinal))
 	if(prob(7))
 		M.emote(pick("twitch","drool","moan","giggle"))
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.metabolism_factor.AddModifier("Drugs", base_additive = 0.25 * multiplier)
+
+/datum/reagent/space_drugs/on_last_digest(mob/living/M, multiplier)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.metabolism_factor.RemoveModifier("Drugs")
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"
