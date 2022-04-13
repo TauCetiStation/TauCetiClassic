@@ -50,10 +50,6 @@
 			handle_mutations_and_radiation()
 
 		if(stat != DEAD)
-			//Chemicals in the body
-			handle_chemicals_in_body()
-
-		if(stat != DEAD)
 			//Disabilities
 			handle_disabilities()
 
@@ -80,6 +76,9 @@
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
+
+	//Chemicals in the body
+	handle_chemicals_in_body()
 
 	//Handle temperature/pressure differences between body and environment
 	handle_environment(environment)		//Optimized a good bit.
@@ -426,7 +425,7 @@
 		//Or if absolute temperature difference is too small
 		if(!on_fire)
 			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
-			
+
 			if(affecting_temp <= -BODYTEMP_SIGNIFICANT_CHANGE)		//Place is colder than we are
 				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
@@ -667,6 +666,8 @@
 	return min(1,thermal_protection)
 
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
+	if(get_metabolism_factor() <= 0)
+		return
 
 	if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
 		reagents.metabolize(src)
@@ -723,6 +724,7 @@
 		if(!has_quirk(/datum/quirk/fatness) && overeatduration < 100)
 			to_chat(src, "<span class='notice'>You feel fit again!</span>")
 			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
+			metabolism_factor.RemoveModifier("Fat")
 			update_body()
 			update_mutations()
 			update_inv_w_uniform()
@@ -732,6 +734,7 @@
 		if((has_quirk(/datum/quirk/fatness) || overeatduration >= 500) && isturf(loc))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
 				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
+				metabolism_factor.AddModifier("Fat", base_additive = -0.3)
 				update_body()
 				update_mutations()
 				update_inv_w_uniform()
@@ -748,7 +751,6 @@
 			var/pain = getHalLoss()
 			if(pain > 0)
 				nutrition = max(0, nutrition - met_factor * pain * 0.01)
-
 	if (nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
@@ -760,14 +762,6 @@
 		if(nutrition < 200)
 			take_overall_damage(2,0)
 			traumatic_shock++
-
-	if (drowsyness)
-		drowsyness = max(0, drowsyness - 1)
-		blurEyes(2)
-		if(prob(5))
-			emote("yawn")
-			Sleeping(10 SECONDS)
-			Paralyse(5)
 
 	AdjustConfused(-1)
 	AdjustDrunkenness(-1)
@@ -916,6 +910,14 @@
 
 		if(druggy)
 			adjustDrugginess(-1)
+
+		if (drowsyness)
+			drowsyness = max(0, drowsyness - 1)
+			blurEyes(2)
+			if(prob(5))
+				emote("yawn")
+				Sleeping(10 SECONDS)
+				Paralyse(5)
 
 		// If you're dirty, your gloves will become dirty, too.
 		if(gloves && germ_level > gloves.germ_level && prob(10))

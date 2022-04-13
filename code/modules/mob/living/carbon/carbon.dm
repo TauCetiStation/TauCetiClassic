@@ -230,7 +230,7 @@
 		handle_suffocating()
 		inhale_alert = TRUE
 		return
-	
+
 	breath.volume = BREATH_VOLUME
 
 	handle_breath(breath)
@@ -248,7 +248,7 @@
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment)
 	if(stat != DEAD) // lets put this shit somewhere here
 		stabilize_body_temperature()
-	
+
 	if(!environment)
 		return
 
@@ -1051,7 +1051,10 @@
 				) * 8 // We multiply by this "magic" number, because all of these are equal to 8 nutrition.
 
 /mob/living/carbon/get_metabolism_factor()
-	. = metabolism_factor
+	var/met = metabolism_factor.Get()
+	if(met < 0)
+		met = 0
+	return met
 
 
 /mob/living/carbon/proc/perform_av(mob/living/carbon/human/user) // don't forget to INVOKE_ASYNC this proc if sleep is a problem.
