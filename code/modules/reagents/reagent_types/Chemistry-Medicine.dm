@@ -563,7 +563,7 @@
 		var/mob/living/carbon/human/H = M
 		H.metabolism_factor.AddModifier("Hyperzine", base_additive = 2.5 * multiplier)
 
-/datum/reagents/hyperzine/on_last_digest(mob/living/M, multiplier)
+/datum/reagents/hyperizine/on_last_digest(mob/living/M, multiplier)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.metabolism_factor.RemoveModifier("Hyperzine")
