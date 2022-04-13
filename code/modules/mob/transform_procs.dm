@@ -82,13 +82,6 @@
 		suiciding = FALSE
 	O.set_a_intent(INTENT_HARM)
 
-	//keep viruses?
-	if(tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/datum/disease/D in O.viruses)
-			D.affected_mob = O
-
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
 		O.adjustToxLoss(getToxLoss())
@@ -216,14 +209,6 @@
 		O.suiciding = suiciding
 		suiciding = FALSE
 	O.set_a_intent(INTENT_HELP)
-
-	//keep viruses?
-	if(tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/datum/disease/D in O.viruses)
-			D.affected_mob = O
-		O.med_hud_set_status()
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)

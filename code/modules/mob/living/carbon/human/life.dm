@@ -1173,11 +1173,10 @@
 /mob/living/carbon/human/proc/handle_virus_updates()
 	if(status_flags & GODMODE)	return 0	//godmode
 	if(bodytemperature > 406)
-		for(var/datum/disease/D in viruses)
-			D.cure()
-		//for (var/ID in virus2) //disabled because of symptom that randomly ignites a mob, which triggers this
-		//	var/datum/disease2/disease/V = virus2[ID]
-		//	V.cure(src)
+		for (var/ID in virus2)
+			var/datum/disease2/disease/V = virus2[ID]
+			V.cure(src)
+
 	if(life_tick % 3) //don't spam checks over all objects in view every tick.
 		for(var/obj/effect/decal/cleanable/O in view(1,src))
 			if(istype(O,/obj/effect/decal/cleanable/blood))
