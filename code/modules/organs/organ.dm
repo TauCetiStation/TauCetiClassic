@@ -150,7 +150,7 @@
 /mob/living/carbon/human/proc/handle_stance()
 	// Don't need to process any of this if they aren't standing anyways
 	// unless their stance is damaged, and we want to check if they should stay down
-	if(!stance_damage && (lying || resting) && (life_tick % 4) != 0)
+	if(!stance_damage && (lying || crawling) && (life_tick % 4) != 0)
 		return
 
 	stance_damage = 0
@@ -191,7 +191,7 @@
 	// standing is poor
 	if(stance_damage >= 4 || (stance_damage >= 2 && prob(5)))
 		if(iszombie(src)) //zombies crawl when they can't stand
-			if(!crawling && !lying && !resting)
+			if(!crawling && !lying)
 				if(crawl_can_use())
 					crawl()
 				else
@@ -208,7 +208,7 @@
 				Weaken(5)
 			return
 
-		if(!(lying || resting))
+		if(!(lying || crawling))
 			if(species && !species.flags[NO_PAIN])
 				var/turf/T = get_turf(src)
 				var/do_we_scream = 1
