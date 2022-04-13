@@ -65,8 +65,6 @@
 
 	handcrafting = new()
 
-	verbs += /mob/living/carbon/proc/crawl
-
 	prev_gender = gender // Debug for plural genders
 	make_blood()
 	regenerate_icons()
