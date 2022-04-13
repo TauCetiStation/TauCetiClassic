@@ -101,20 +101,24 @@
 	else
 		return ..()
 
-/obj/item/organ/external/set_owner(mob/living/carbon/human/H)
+/obj/item/organ/external/set_owner(mob/living/carbon/human/H, datum/species/S)
 	..()
 
-	recolor()
+	if(!S)
+		S = H.species
+
 	controller = new controller_type(src)
 
 	if(H)
-		species = owner.species
+		species = S
 		b_type = owner.dna.b_type
 	else // Bodypart was spawned outside of the body so we need to update its sprite
 		species = all_species[HUMAN]
 		update_sprite()
 
-/obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
+	recolor()
+
+/obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	..()
 
 	owner.bodyparts += src
@@ -434,7 +438,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	owner.UpdateDamageIcon(src)
 	if(!clean && leaves_stump)
 		var/obj/item/organ/external/stump/S = new(null)
-		S.insert_organ(owner, null, src)
+		S.copy_original_limb(src)
+		S.insert_organ(owner, FALSE)
 	owner.updatehealth()
 
 	if(!should_delete)
@@ -765,7 +770,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	QDEL_NULL(brainmob)
 	return ..()
 
-/obj/item/organ/external/head/set_owner()
+/obj/item/organ/external/head/set_owner(mob/living/carbon/human/H, datum/species/S)
 	..()
 	organ_head_list += src
 
@@ -1120,5 +1125,41 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /mob/living/carbon/human/proc/apply_recolor()
 	for(var/obj/item/organ/external/BP in bodyparts)
-		BP.species = BP.owner.species
 		BP.recolor()
+
+// lol yes
+/obj/item/organ/external/chest/homunculus
+/obj/item/organ/external/chest/homunculus/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
+/obj/item/organ/external/groin/homunculus
+/obj/item/organ/external/groin/homunculus/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
+/obj/item/organ/external/head/homunculus
+/obj/item/organ/external/head/homunculus/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
+/obj/item/organ/external/l_arm/homunculus
+/obj/item/organ/external/l_arm/homunculus/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
+/obj/item/organ/external/r_arm/homunculus
+/obj/item/organ/external/r_arm/homunculus/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
+/obj/item/organ/external/l_leg/homunculus
+/obj/item/organ/external/l_leg/homunculus/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
+/obj/item/organ/external/r_leg/homunculus
+/obj/item/organ/external/r_leg/homunculus/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
