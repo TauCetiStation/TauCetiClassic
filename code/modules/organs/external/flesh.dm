@@ -37,7 +37,7 @@
 	BP.pumped = min(BP.pumped + value, cap)
 	BP.update_sprite()
 
-	if(BP.pumped <= 0)
+	if(BP.pumped <= 0 && old_pumped > 0)
 		BP.owner.metabolism_factor.RemoveModifier("Pumped_[BP.name]")
 	else
 		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.002 * BP.pumped)
