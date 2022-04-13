@@ -245,7 +245,7 @@
 	var/distance = get_dist(user,src)
 	if(isobserver(user) || user.stat == DEAD) // ghosts can see anything
 		distance = 1
-	if (src.stat || (iszombie(src) && (crawling || lying || resting)))
+	if (src.stat || (iszombie(src) && (crawling || lying)))
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((stat == DEAD || src.losebreath || iszombie(src)) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
