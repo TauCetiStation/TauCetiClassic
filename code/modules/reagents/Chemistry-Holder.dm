@@ -204,6 +204,8 @@ var/global/const/INGEST = 2
 			remove_reagent(R.id, R.metabolisation)
 			if(R.volume <= 0)
 				R.on_last_digest(M, R.metabolisation)
+	if(total_volume > 100 && prob(total_volume/10))
+		C.vomit()
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	for(var/datum/reagent/R in reagent_list)
