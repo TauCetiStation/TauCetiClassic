@@ -757,14 +757,6 @@
 	else
 		if(overeatduration > 1)
 			overeatduration -= 2 //doubled the unfat rate
-	if(nutrition < 200 && life_tick % 5)
-		var/obj/item/organ/internal/kidneys/kidneys = organs_by_name[O_KIDNEYS]
-		var/obj/item/organ/internal/kidneys/liver = organs_by_name[O_LIVER]
-		kidneys.take_damage(1, 0)
-		liver.take_damage(1, 0)
-		if(nutrition < 50)
-			kidneys.take_damage(2, 0)
-			liver.take_damage(2, 0)
 
 	if(species.flags[REQUIRE_LIGHT])
 		if(nutrition < 200)
