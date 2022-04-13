@@ -1127,35 +1127,35 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/chest/homunculus
 /obj/item/organ/external/chest/homunculus/atom_init()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CANT_SACRIFICE, RELIGION_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
 
 /obj/item/organ/external/groin/homunculus
 /obj/item/organ/external/groin/homunculus/atom_init()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CANT_SACRIFICE, RELIGION_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
 
 /obj/item/organ/external/head/homunculus
 /obj/item/organ/external/head/homunculus/atom_init()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CANT_SACRIFICE, RELIGION_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
 
 /obj/item/organ/external/l_arm/homunculus
 /obj/item/organ/external/l_arm/homunculus/atom_init()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CANT_SACRIFICE, RELIGION_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
 
 /obj/item/organ/external/r_arm/homunculus
 /obj/item/organ/external/r_arm/homunculus/atom_init()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CANT_SACRIFICE, RELIGION_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
 
 /obj/item/organ/external/l_leg/homunculus
 /obj/item/organ/external/l_leg/homunculus/atom_init()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CANT_SACRIFICE, RELIGION_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
 
 /obj/item/organ/external/r_leg/homunculus
 /obj/item/organ/external/r_leg/homunculus/atom_init()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_CANT_SACRIFICE, RELIGION_TRAIT)
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
 

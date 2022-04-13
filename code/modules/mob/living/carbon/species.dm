@@ -1595,8 +1595,6 @@
 		HAS_HAIR_COLOR = TRUE,
 		)
 
-	tail = "unathi"
-
 	has_gendered_icons = FALSE
 
 	min_age = 1

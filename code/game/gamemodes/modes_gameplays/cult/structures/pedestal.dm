@@ -69,7 +69,7 @@
 
 // Tracking items on a pedestal
 /obj/structure/pedestal/proc/put_item(atom/pedestal, obj/item/I, mob/user)
-	if(HAS_TRAIT(I, TRAIT_CANT_SACRIFICE))
+	if(HAS_TRAIT(I, TRAIT_NO_SACRIFICE))
 		return
 	lying_items += I
 

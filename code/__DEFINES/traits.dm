@@ -155,7 +155,7 @@
 #define TRAIT_WET_HANDS           "wet_hands"
 #define TRAIT_GREASY_FINGERS      "greasy_fingers"
 #define TRAIT_ANATOMIST           "anatomist"
-#define TRAIT_SOULSTONE_IMMUNE     "soulstone_immune"
+#define TRAIT_SOULSTONE_IMMUNE    "soulstone_immune"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -169,7 +169,7 @@
 #define TRAIT_DOUBLE_WIELDED "double_wielded"
 
 // item trait
-#define TRAIT_CANT_SACRIFICE "religion_cant_sacrifice"
+#define TRAIT_NO_SACRIFICE "religion_no_sacrifice"
 
 // idk why this exists on TG
 #define GENERIC_TRAIT "generic"
