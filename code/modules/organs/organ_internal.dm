@@ -135,7 +135,7 @@
 
 /obj/item/organ/internal/heart/insert_organ()
 	..()
-	owner.metabolism_factor.AddModifier("Heart", multiple=1)
+	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
 
 /obj/item/organ/internal/heart/proc/heart_stop()
 	if(!owner.reagents.has_reagent("inaprovaline") || owner.stat == DEAD)
