@@ -188,7 +188,7 @@ var/global/const/INGEST = 2
 			var/custom_metabolize = 0
 			for(var/datum/reagent/Custom in reagent_list)
 				custom_metabolize += Custom.custom_metabolism
-			var/metabolize = (R.custom_metabolism/custom_metabolize) * C.get_metabolism_factor()
+			var/metabolize = (R.custom_metabolism / custom_metabolize) * C.get_metabolism_factor()
 			if(metabolize > 0)
 				var/remove_amount = metabolize*R.volume/total_volume
 				R.on_mob_life(M, remove_amount)
