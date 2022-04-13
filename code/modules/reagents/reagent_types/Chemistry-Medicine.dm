@@ -746,3 +746,15 @@
 						E.status &= ~ORGAN_BROKEN
 						E.perma_injury = 0
 						holder.remove_reagent("nanocalcium", 10)
+
+/datum/reagent/metatrombine
+	name = "Metatrombine"
+	id = "metatrombine"
+	description = "Metatrombine is a drug that induces high plateletes production. Can be used to temporarily coagulate blood in internal bleedings."
+	reagent_state = LIQUID
+	color = "#990000"
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/metatrombine/on_general_digest(mob/living/M)
+	..()
+	M.apply_status_effect(STATUS_EFFECT_WOUND_CLOTTING)

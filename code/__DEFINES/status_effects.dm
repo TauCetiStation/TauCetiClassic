@@ -13,7 +13,7 @@
 // BUFFS //
 ///////////
 
-// line added for consistency, remove this line with first effect.
+#define STATUS_EFFECT_WOUND_CLOTTING /datum/status_effect/wound_clotting
 
 /////////////
 // DEBUFFS //

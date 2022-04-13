@@ -164,6 +164,9 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		else if(nutrition >= 200)
 			nutrition -= 3
 
+	if(has_status_effect(STATUS_EFFECT_WOUND_CLOTTING))
+		return
+
 	// Bleeding out:
 	var/blood_max = 0
 	var/list/do_spray = list()
@@ -239,6 +242,9 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 // Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
+	if(has_status_effect(STATUS_EFFECT_WOUND_CLOTTING))
+		return
+
 	if(organs_by_name[O_HEART] && blood_remove(amt))
 		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_datum)
 
