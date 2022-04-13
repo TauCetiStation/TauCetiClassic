@@ -131,7 +131,7 @@
 	description = "Liquid plastic, do not eat."
 	reagent_state = LIQUID
 	color = "#cf3600" // rgb: 207, 54, 0
-	custom_metabolism = 0.01
+	absorption = 0.01
 	taste_message = "plastic"
 
 /datum/reagent/plasticide/on_general_digest(mob/living/M, multiplier)
@@ -146,7 +146,7 @@
 	reagent_state = LIQUID
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = "sweetness"
-	custom_metabolism = 0.01
+	absorption = 0.01
 
 /datum/reagent/nitroglycerin
 	name = "Nitroglycerin"
@@ -155,7 +155,7 @@
 	reagent_state = LIQUID
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = "oil" // Wait. Is it really oil though? Or does it here mean oil, as in "?????"?
-	custom_metabolism = 0.01
+	absorption = 0.01
 
 /datum/reagent/thermite
 	name = "Thermite"
@@ -341,7 +341,7 @@
 	description = "A highly addictive stimulant extracted from the tobacco plant."
 	reagent_state = LIQUID
 	color = "#181818" // rgb: 24, 24, 24
-	custom_metabolism = 0.005
+	absorption = TOXINS_METABOLISM
 	restrict_species = list(IPC, DIONA)
 	var/alert_time = 0
 
@@ -436,7 +436,7 @@
 	reagent_state = LIQUID
 	nutriment_factor = 0.2
 	color = "#ffffff"
-	custom_metabolism = 0.2
+	absorption = DRINK_METABOLISM
 	taste_message = "bitterness"
 
 /datum/reagent/luminophore
@@ -445,7 +445,7 @@
 	description = "Uh, some kind of drink."
 	reagent_state = LIQUID
 	color = "#ffffff"
-	custom_metabolism = 0.2
+	absorption = DRINK_METABOLISM
 	taste_message = "bitterness"
 
 /datum/reagent/luminophore/on_general_digest(mob/living/M, multiplier)
@@ -495,7 +495,7 @@
 	description = "Microscopic robots intended for use in humans. Configured for rapid healing upon infiltration into the body."
 	reagent_state = LIQUID
 	color = "#593948" //rgb: 89, 57, 72
-	custom_metabolism = 0.005
+	absorption = REAGENTS_METABOLISM
 	var/spawning_horror = 0
 	var/percent_machine = 0
 	taste_message = "nanomachines, son"

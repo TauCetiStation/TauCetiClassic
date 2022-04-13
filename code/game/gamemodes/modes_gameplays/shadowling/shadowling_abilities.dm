@@ -342,7 +342,7 @@
 	description = "<::ERROR::> CANNOT ANALYZE REAGENT <::ERROR::>"
 	color = "#000000" //Complete black (RGB: 0, 0, 0)
 	//metabolization_rate = 100 //lel
-	custom_metabolism = 100
+	absorption = 100
 
 /datum/reagent/shadowling_blindness_smoke/on_general_digest(mob/living/M, multiplier)
 	..()

@@ -6,7 +6,7 @@
 	description = "Improves the ability to concentrate."
 	reagent_state = LIQUID
 	color = "#bf80bf"
-	custom_metabolism = 0.01
+	absorption = 0.01
 	data = 0
 	restrict_species = list(IPC, DIONA)
 
@@ -33,7 +33,7 @@
 	description = "Stabilizes the mind a little."
 	reagent_state = LIQUID
 	color = "#ff80ff"
-	custom_metabolism = 0.01
+	absorption = 0.01
 	data = 0
 	restrict_species = list(IPC, DIONA)
 
@@ -60,7 +60,7 @@
 	description = "Stabilizes the mind greatly, but has a chance of adverse effects."
 	reagent_state = LIQUID
 	color = "#ff80bf"
-	custom_metabolism = 0.01
+	absorption = 0.01
 	data = 0
 	restrict_species = list(IPC, DIONA)
 

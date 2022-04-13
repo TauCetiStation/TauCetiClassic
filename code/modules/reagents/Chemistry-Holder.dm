@@ -6,6 +6,8 @@ var/global/const/INGEST = 2
 /datum/reagents
 	var/list/datum/reagent/reagent_list = list()
 	var/total_volume = 0
+	var/total_absorption = 0
+	var/total_metabolism = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
 	var/proccessing_reaction_count = 0
@@ -182,20 +184,26 @@ var/global/const/INGEST = 2
 	return amount
 
 /datum/reagents/proc/metabolize(mob/M)
+	if(!M)
+		return
+
+	//currently metabolism work only for carbon, there is no need to check mob type
+	var/mob/living/carbon/C = M
+	var/metabolism = C.get_metabolism_factor()
+	total_metabolism = 0
 	for(var/datum/reagent/R in reagent_list)
-		if(M && R)
-			var/mob/living/carbon/C = M //currently metabolism work only for carbon, there is no need to check mob type
-			var/custom_metabolize = 0
-			for(var/datum/reagent/Custom in reagent_list)
-				custom_metabolize += Custom.custom_metabolism
-			var/metabolize = (R.custom_metabolism/custom_metabolize) * C.get_metabolism_factor()
-			if(metabolize > 0)
-				var/remove_amount = metabolize*R.volume/total_volume
-				R.on_mob_life(M, remove_amount)
-				remove_reagent(R.id, remove_amount)
-				if(R.volume <= 0)
-					R.on_last_digest(M, remove_amount)
-	update_total()
+		if(!R)
+			return
+		R.metabolism_sum = ((R.volume / total_volume) + (R.absorption / total_absorption))
+		total_metabolism += R.metabolism_sum
+
+	for(var/datum/reagent/R in reagent_list)
+		R.metabolisation = R.metabolism_sum / total_metabolism * metabolism
+		if(R.metabolisation > 0)
+			R.on_mob_life(M, R.metabolisation)
+			remove_reagent(R.id, R.metabolisation)
+			if(R.volume <= 0)
+				R.on_last_digest(M, R.metabolisation)
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	for(var/datum/reagent/R in reagent_list)
@@ -354,11 +362,14 @@ var/global/const/INGEST = 2
 
 /datum/reagents/proc/update_total()
 	total_volume = 0
+	total_absorption = 0
 	for(var/datum/reagent/R in reagent_list)
 		if(R.volume < 0.1)
 			del_reagent(R.id)
+			continue
 		else
 			total_volume += R.volume
+			total_absorption += R.absorption
 	return 0
 
 /datum/reagents/proc/clear_reagents()

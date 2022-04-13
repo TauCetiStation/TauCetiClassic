@@ -5,7 +5,7 @@
 	reagent_state = LIQUID
 	color = "#cf3600" // rgb: 207, 54, 0
 	var/toxpwr = 0.7 // Toxins are really weak, but without being treated, last very long.
-	custom_metabolism = 0.1
+	absorption = TOXINS_METABOLISM
 	taste_message = "bitterness"
 	flags = list(IS_ORGANIC = TRUE)
 
@@ -146,7 +146,7 @@
 	reagent_state = LIQUID
 	color = "#cf3600" // rgb: 207, 54, 0
 	toxpwr = 4
-	custom_metabolism = 0.4
+	absorption = 0.4
 	restrict_species = list(IPC, DIONA)
 	flags = list()
 
@@ -226,7 +226,7 @@
 	reagent_state = LIQUID
 	color = "#b31008" // rgb: 139, 166, 233
 	toxpwr = 0
-	custom_metabolism = 0.05
+	absorption = 0.05
 	overdose = REAGENTS_OVERDOSE
 	flags = list()
 
@@ -332,7 +332,7 @@
 	reagent_state = LIQUID
 	color = "#e895cc" // rgb: 232, 149, 204
 	toxpwr = 0
-	custom_metabolism = 0.1
+	absorption = 0.1
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 	flags = list()
@@ -363,7 +363,7 @@
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
-	custom_metabolism = 0.1 //Default 0.2
+	absorption = 0.1 //Default 0.2
 	overdose = 15
 	overdose_dam = 6
 	restrict_species = list(IPC, DIONA)
@@ -433,7 +433,7 @@
 	description = "An alcoholic beverage made from malted grains, hops, yeast, and water. The fermentation appears to be incomplete." //If the players manage to analyze this, they deserve to know something is wrong.
 	reagent_state = LIQUID
 	color = "#fbbf0d" // rgb: 251, 191, 13
-	custom_metabolism = 0.15 // Sleep toxins should always be consumed pretty fast
+	absorption = 0.15 // Sleep toxins should always be consumed pretty fast
 	overdose = REAGENTS_OVERDOSE * 0.5
 	restrict_species = list(IPC, DIONA)
 
@@ -457,7 +457,7 @@
 	id = "mutetoxin"
 	description = "A toxin that temporarily paralyzes the vocal cords."
 	color = "#f0f8ff" // rgb: 240, 248, 255
-	custom_metabolism = 0.4
+	absorption = 0.4
 	toxpwr = 0
 	flags = list()
 
@@ -566,7 +566,7 @@
 	id = "alphaamanitin"
 	description = "Deadly rapidly degrading toxin derived from certain species of mushrooms."
 	color = "#792300" //rgb: 121, 35, 0
-	custom_metabolism = 0.5
+	absorption = 0.5
 
 /datum/reagent/alphaamanitin/on_general_digest(mob/living/M, multiplier)
 	..()
@@ -581,7 +581,7 @@
 	description = "Deadly toxin delayed action. Causes general poisoning and damage the structure of DNA."
 	reagent_state = LIQUID
 	color = "#792300" //rgb: 59, 8, 5
-	custom_metabolism = 0.05
+	absorption = 0.05
 
 	data = list()
 
@@ -602,7 +602,7 @@
 	description = "An extremely toxic chemical that will surely end in death."
 	reagent_state = LIQUID
 	color = "#792300" //rgb: 207, 54, 0
-	custom_metabolism = 0.01
+	absorption = 0.01
 	taste_message = "DEATH"
 	restrict_species = list(IPC, DIONA)
 
@@ -625,7 +625,7 @@
 	description = "A powerful poison with a cumulative effect."
 	reagent_state = LIQUID
 	color = "#792300" //rgb: 207, 54, 0
-	custom_metabolism = 0 //No metabolism
+	absorption = 0 //No metabolism
 
 	data = list()
 
@@ -667,7 +667,7 @@
 	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
 	reagent_state = LIQUID
 	color = "#5eff3b" //RGB: 94, 255, 59
-	custom_metabolism = 1000
+	absorption = 1000
 
 /datum/reagent/mulligan/on_general_digest(mob/living/carbon/human/H)
 	..()
@@ -684,7 +684,7 @@
 	reagent_state = LIQUID
 	color = "#13bc5e" // rgb: 19, 188, 94
 	overdose = REAGENTS_OVERDOSE
-	custom_metabolism = 0.02
+	absorption = 0.02
 
 	data = list()
 
@@ -770,7 +770,7 @@
 	description = "An illegal chemical compound used as drug."
 	reagent_state = LIQUID
 	color = "#60a584" // rgb: 96, 165, 132
-	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	absorption = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
@@ -798,7 +798,7 @@
 	description = "A chemical compound that promotes concentrated production of the serotonin neurotransmitter in humans."
 	reagent_state = LIQUID
 	color = "#202040" // rgb: 20, 20, 40
-	custom_metabolism = REAGENTS_METABOLISM * 0.25
+	absorption = REAGENTS_METABOLISM * 0.25
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
@@ -815,7 +815,7 @@
 	reagent_state = LIQUID
 	color = "#000055" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
-	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	absorption = REAGENTS_METABOLISM * 0.5
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 

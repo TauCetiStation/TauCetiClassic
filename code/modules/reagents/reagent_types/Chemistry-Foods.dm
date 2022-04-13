@@ -1,7 +1,7 @@
 /datum/reagent/consumable
 	name = "Consumable"
 	id = "consumable"
-	custom_metabolism = FOOD_METABOLISM
+	absorption = FOOD_METABOLISM
 	nutriment_factor = 1
 	taste_message = null
 	var/last_volume = 0 // Check digestion code below.
@@ -15,8 +15,8 @@
 		var/mob/living/carbon/C = M
 		mob_met_factor = C.get_metabolism_factor() * 0.25
 	if(volume > last_volume)
-		var/to_add = rand(0, volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor
-		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor * multiplier) - to_add)
+		var/to_add = rand(0, volume - last_volume) * nutriment_factor * absorption * mob_met_factor
+		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * absorption * mob_met_factor * multiplier) - to_add)
 		if(diet_flags & DIET_ALL)
 			M.reagents.add_reagent("nutriment", to_add)
 		else if(diet_flags & DIET_MEAT)
@@ -34,7 +34,7 @@
 	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
 	nutriment_factor = 8 // 1 nutriment reagent is 10 nutrition actually, which is confusing, but it works.
-	custom_metabolism = FOOD_METABOLISM * 2 // It's balanced so you gain the nutrition, but slightly faster.
+	absorption = FOOD_METABOLISM * 2 // It's balanced so you gain the nutrition, but slightly faster.
 	color = "#664330" // rgb: 102, 67, 48
 	taste_message = "bland food"
 
@@ -303,7 +303,7 @@
 	description = "A strong psycotropic derived from certain species of mushroom."
 	color = "#e700e7" // rgb: 231, 0, 231
 	overdose = REAGENTS_OVERDOSE
-	custom_metabolism = FOOD_METABOLISM * 0.5
+	absorption = FOOD_METABOLISM * 0.5
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M, multiplier)

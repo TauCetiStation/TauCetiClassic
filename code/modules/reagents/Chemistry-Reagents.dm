@@ -1,5 +1,3 @@
-#define FOOD_METABOLISM 0.4
-#define DRINK_METABOLISM 0.8
 #define REAGENTS_OVERDOSE 30
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
@@ -17,7 +15,9 @@
 	var/volume = 0
 	var/nutriment_factor = 0
 	var/diet_flags = DIET_ALL
-	var/custom_metabolism = REAGENTS_METABOLISM
+	var/absorption = REAGENTS_METABOLISM
+	var/metabolism_sum = 0
+	var/metabolisation = 0
 	var/taste_strength = 1 //how easy it is to taste - the more the easier
 	var/taste_message = "bitterness" //life's bitter by default. Cool points for using a span class for when you're tasting <span class='userdanger'>LIQUID FUCKING DEATH</span>
 	var/list/restrict_species = list(IPC) // Species that simply can not digest this reagent.
@@ -126,7 +126,7 @@
 
 	if(allergen && allergen[ALLERGY_INGESTION] && ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.trigger_allergy(id, custom_metabolism * H.get_metabolism_factor())
+		H.trigger_allergy(id, absorption * H.get_metabolism_factor())
 		return FALSE
 
 	return TRUE

@@ -503,7 +503,7 @@
 						dat += "<B>Blood Type:</B> [A]<br>"
 						dat += "<B>DNA:</B> [B]<BR><BR><BR>"
 					var/const/P = 3 //The number of seconds between life ticks
-					var/T = initial(R.custom_metabolism) * (60 / P)
+					var/T = initial(R.absorption) * (60 / P)
 					dat += "<B>Metabolization Rate:</B> [T]u/minute<BR>"
 					dat += "<B>Overdose Threshold:</B> [initial(R.overdose) ? "[initial(R.overdose)]u" : "none"]<BR>"
 					//dat += "<B>Addiction Threshold:</B> [initial(R.addiction_threshold) ? "[initial(R.addiction_threshold)]u" : "none"]<BR><BR>"

@@ -4,7 +4,7 @@
 	description = "Uh, some kind of drink."
 	reagent_state = LIQUID
 	color = "#e78108" // rgb: 231, 129, 8
-	custom_metabolism = DRINK_METABOLISM
+	absorption = DRINK_METABOLISM
 	nutriment_factor = 0
 	var/adj_dizzy = 0
 	var/adj_drowsy = 0
@@ -472,7 +472,7 @@
 	description = "A gulp a day keeps the MediBot away. That's probably for the best."
 	reagent_state = LIQUID
 	color = "#ff8cff" // rgb: 255, 140, 255
-	custom_metabolism = FOOD_METABOLISM
+	absorption = FOOD_METABOLISM
 	nutriment_factor = 1
 	taste_message = "healthy dietary choices"
 
@@ -597,7 +597,7 @@
 	description = "You just don't get it maaaan."
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
-	custom_metabolism = FOOD_METABOLISM * 0.5
+	absorption = FOOD_METABOLISM * 0.5
 	taste_message = "peeeeeeace"
 	restrict_species = list(IPC, DIONA)
 
@@ -643,7 +643,7 @@
 	description = "An opiod-based recreational drug beverage, made using cough syrup, soft drink and some sugar."
 	reagent_state = LIQUID
 	color = "#de55ed" // rgb: 222, 85, 237
-	custom_metabolism = FOOD_METABOLISM * 0.5
+	absorption = FOOD_METABOLISM * 0.5
 	taste_message = "sweet druggy soda"
 	restrict_species = list(IPC, DIONA)
 	overdose = 20
@@ -673,7 +673,7 @@
 	reagent_state = LIQUID
 	nutriment_factor = 0 //So alcohol can fill you up! If they want to.
 	color = "#404030" // rgb: 64, 64, 48
-	custom_metabolism = DRINK_METABOLISM * 0.4
+	absorption = DRINK_METABOLISM * 0.4
 
 	var/boozepwr = 5 //higher numbers mean the booze will have an effect faster.
 
