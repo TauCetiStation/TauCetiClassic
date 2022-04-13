@@ -185,7 +185,10 @@ var/global/const/INGEST = 2
 	for(var/datum/reagent/R in reagent_list)
 		if(M && R)
 			var/mob/living/carbon/C = M //currently metabolism work only for carbon, there is no need to check mob type
-			var/metabolize = R.custom_metabolism * C.get_metabolism_factor()
+			var/custom_metabolize = 0
+			for(var/datum/reagent/Custom in reagent_list)
+				custom_metabolize += Custom.custom_metabolism
+			var/metabolize = (R.custom_metabolism/custom_metabolize) * C.get_metabolism_factor()
 			if(metabolize > 0)
 				var/remove_amount = metabolize*R.volume/total_volume
 				R.on_mob_life(M, remove_amount)
