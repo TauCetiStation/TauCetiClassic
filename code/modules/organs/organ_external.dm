@@ -662,6 +662,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	W.loc = owner
 
 /obj/item/organ/external/proc/adjust_pumped(value, cap)
+	if(cap && pumped >= cap)
+		return
+	owner.metabolism_factor.AddModifier("Pumped", base_additive = 0.002 * value)
 	return controller.adjust_pumped(value, cap)
 
 /****************************************************

@@ -667,7 +667,7 @@
 
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
 
-	if(get_metabolism_factor() <=0)
+	if(get_metabolism_factor() <= 0)
 		return
 
 	if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
@@ -725,6 +725,7 @@
 		if(!has_quirk(/datum/quirk/fatness) && overeatduration < 100)
 			to_chat(src, "<span class='notice'>You feel fit again!</span>")
 			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
+			metabolism_factor.RemoveModifier("Fat")
 			update_body()
 			update_mutations()
 			update_inv_w_uniform()
@@ -734,6 +735,7 @@
 		if((has_quirk(/datum/quirk/fatness) || overeatduration >= 500) && isturf(loc))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
 				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
+				metabolism_factor.AddModifier("Fat", base_additive = -0.3)
 				update_body()
 				update_mutations()
 				update_inv_w_uniform()
@@ -750,13 +752,20 @@
 			var/pain = getHalLoss()
 			if(pain > 0)
 				nutrition = max(0, nutrition - met_factor * pain * 0.01)
-
 	if (nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
 	else
 		if(overeatduration > 1)
 			overeatduration -= 2 //doubled the unfat rate
+	if(nutrition < 200 && life_tick % 5)
+		var/obj/item/organ/internal/kidneys/kidneys = organs_by_name[O_KIDNEYS]
+		var/obj/item/organ/internal/kidneys/liver = organs_by_name[O_LIVER]
+		kidneys.take_damage(1, 0)
+		liver.take_damage(1, 0)
+		if(nutrition < 50)
+			kidneys.take_damage(2, 0)
+			liver.take_damage(2, 0)
 
 	if(species.flags[REQUIRE_LIGHT])
 		if(nutrition < 200)
