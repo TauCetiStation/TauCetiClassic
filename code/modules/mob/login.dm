@@ -95,15 +95,7 @@
 
 	client.screen += blocker
 
-	if(abilities)
-		client.verbs |= abilities
-
 	if(isAI(src))
 		client.show_popup_menus = 0
 	else
 		client.show_popup_menus = 1
-
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.species && H.species.abilities)
-			client.verbs |= H.species.abilities

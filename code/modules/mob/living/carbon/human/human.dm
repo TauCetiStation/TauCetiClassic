@@ -43,7 +43,7 @@
 			set_species()
 
 	if(species) // Just to be sure.
-		metabolism_factor = species.metabolism_mod
+		metabolism_factor.Set(species.metabolism_mod)
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
@@ -1913,18 +1913,20 @@
 	else
 		return 1
 
-/mob/living/carbon/human/proc/need_breathe()
+/mob/living/carbon/human/is_skip_breathe()
+	if(..())
+		return TRUE
 	if(NO_BREATH in src.mutations)
-		return FALSE
+		return TRUE
 	if(reagents.has_reagent("lexorin"))
-		return FALSE
+		return TRUE
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return FALSE
+		return TRUE
 	if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
-		return FALSE
+		return TRUE
 	if(ismob(loc))
-		return FALSE
-	return TRUE
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/human/CanObtainCentcommMessage()
 	return istype(l_ear, /obj/item/device/radio/headset) || istype(r_ear, /obj/item/device/radio/headset)
