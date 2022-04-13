@@ -1054,7 +1054,7 @@
 	var/met = metabolism_factor.Get()
 	if(met < 0)
 		met = 0
-	. = met
+	return met
 
 
 /mob/living/carbon/proc/perform_av(mob/living/carbon/human/user) // don't forget to INVOKE_ASYNC this proc if sleep is a problem.
