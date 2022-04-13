@@ -666,7 +666,6 @@
 	return min(1,thermal_protection)
 
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
-
 	if(get_metabolism_factor() <= 0)
 		return
 
