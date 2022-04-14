@@ -18,7 +18,7 @@
 
 	var/list/modifiers
 
-	var/damaged = FALSE // needs recalculating
+	var/needs_updating = FALSE // needs recalculating
 
 /datum/modval/New(new_value, base_multiplier=1.0, base_additive=0.0, multiple=1.0, additive=0.0)
 	src.base_multiplier = base_multiplier
@@ -33,28 +33,34 @@
 
 /datum/modval/proc/Set(new_value)
 	base_value = new_value
-	damaged = TRUE
+	needs_updating = TRUE
 
 /datum/modval/proc/Get()
-	if(damaged)
+	if(needs_updating)
 		Update()
 	return value
 
 /datum/modval/proc/Update()
 	var/old_value = value
 	value = (base_value * base_multiplier + base_additive) * multiple + additive
-	damaged = FALSE
+	needs_updating = FALSE
 	SEND_SIGNAL(src, COMSIG_MODVAL_UPDATE, old_value)
 
-/datum/modval/proc/AddModifier(category, base_multiplier=0.0, base_additive=0.0, multiple=0.0, additive=0.0)
+/datum/modval/proc/AddModifier(category, modifier, base_multiplier=0.0, base_additive=0.0, multiple=0.0, additive=0.0)
 	if(modifiers && modifiers[category])
 		RemoveModifier(category)
 	if(!modifiers)
 		modifiers = list()
 
-	var/datum/modval_modifier/MM = new(base_multiplier, base_additive, multiple, additive)
+	var/datum/modval_modifier/MM
+	if(modifier)
+		MM = modifier
+	else
+		MM = new(base_multiplier, base_additive, multiple, additive)
 	MM.Attach(src)
 	modifiers[category] = MM
+
+	return MM
 
 /datum/modval/proc/RemoveModifier(category)
 	var/datum/modval_modifier/MM = modifiers[category]
@@ -63,6 +69,14 @@
 	modifiers -= category
 	if(modifiers.len == 0)
 		modifiers = null
+
+/datum/modval/proc/GetModifier(category)
+	if(!modifiers)
+		return null
+	return modifiers[category]
+
+/datum/modval/proc/HasModifier(category)
+	return !isnull(GetModifier(category))
 
 /datum/modval_modifier
 	var/base_multiplier = 0.0
@@ -100,7 +114,7 @@
 	holder.base_additive += base_multiplier
 	holder.multiple += multiple
 	holder.additive += additive
-	holder.damaged = TRUE
+	holder.needs_updating = TRUE
 
 /datum/modval_modifier/proc/Withdraw()
 	if(!holder)
@@ -110,7 +124,7 @@
 	holder.base_additive -= base_multiplier
 	holder.multiple -= multiple
 	holder.additive -= additive
-	holder.damaged = TRUE
+	holder.needs_updating = TRUE
 
 /datum/modval_modifier/proc/SetBaseMultiplier(base_multiplier)
 	Withdraw()
