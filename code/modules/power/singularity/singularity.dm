@@ -48,11 +48,11 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/singularity/atom_init_late()
-	for(var/obj/machinery/singularity_beacon/singubeacon in machines)
+	for(var/obj/machinery/singularity_beacon/singubeacon in singularity_beacon_list)
 		if(singubeacon.active)
 			target = singubeacon
 			break
-	for(var/mob/living/carbon/human/H in poi_list)
+	for(var/mob/living/carbon/human/H in singularity_beacon_list)
 		if(H.stat != DEAD)
 			target = H
 			break

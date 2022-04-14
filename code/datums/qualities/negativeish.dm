@@ -293,4 +293,4 @@ var/global/list/allergen_reagents_list
 	requirement = "Нет"
 
 /datum/quality/negativeish/singularly_attractive/add_effect(mob/living/carbon/human/H, latespawn)
-	poi_list += H
+	singularity_beacon_list += H

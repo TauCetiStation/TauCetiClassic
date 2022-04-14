@@ -83,7 +83,7 @@
 			to_chat(T.antag.current, "<span class='shadowling'><font size=3>Sudden realization strikes you like a truck! ONE OF OUR MASTERS HAS DIED!!!</span></font>")
 
 	for(var/obj/singularity/singulo in poi_list)
-		if(singulo.target == src)
+		if(singulo.z == z && singulo.target == src)
 			singulo.target = null
 
 	..(gibbed)

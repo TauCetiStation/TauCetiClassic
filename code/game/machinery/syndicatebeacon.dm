@@ -106,6 +106,7 @@
 		if(singulo.z == z)
 			singulo.target = src
 	icon_state = "[icontype]1"
+	singularity_beacon_list += src
 	active = 1
 	if(user)
 		to_chat(user, "<span class='notice'>You activate the beacon.</span>")
@@ -116,6 +117,7 @@
 		if(singulo.target == src)
 			singulo.target = null
 	icon_state = "[icontype]0"
+	singularity_beacon_list -= src
 	active = 0
 	if(user)
 		to_chat(user, "<span class='notice'>You deactivate the beacon.</span>")
