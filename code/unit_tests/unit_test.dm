@@ -89,36 +89,6 @@ var/global/ascii_reset = "[global.ascii_esc]\[0m"
 	fail("No check results proc")
 	return TRUE
 
-/datum/unit_test/proc/compare_numbers(A, B, precision = 0.001)
-	return abs(A - B) < precision
-
-/datum/unit_test/proc/assert_equal(A, B)
-	if(compare_numbers(A, B))
-		return TRUE
-	fail("[name] failed. Assert equal: expected [A], got [B]")
-	return FALSE
-
-/datum/unit_test/proc/assert_equal_list(A, B)
-	var/i = 1
-	var/failed = ""
-	for(var/number in A)
-		if(!compare_numbers(number, B[i]))
-			failed += "\n[name] failed. Expected [number], got [B[i]]"
-		i++
-	if(failed)	
-		fail(failed)
-		return FALSE
-	else
-		pass("Unit test '[name]' was successful.")
-		return TRUE
-
-/datum/unit_test/proc/assert_gt(A, B)
-	if(A <= B)
-		fail("[name] failed. Expected to [A] to be greater than [B]")
-	else
-		pass("[name] passed. [A] is greater than [B]")
-	return TRUE	
-
 /proc/get_test_datums()
 	var/list/tests = list()
 	for(var/test in typesof(/datum/unit_test))
