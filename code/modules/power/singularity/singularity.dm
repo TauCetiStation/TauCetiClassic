@@ -52,6 +52,10 @@
 		if(singubeacon.active)
 			target = singubeacon
 			break
+	for(var/mob/living/carbon/human/H in poi_list)
+		if(H.stat != DEAD)
+			target = H
+			break
 
 /obj/singularity/Destroy()
 	vis_contents -= singulo_effect
