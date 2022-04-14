@@ -168,7 +168,13 @@
 		to_chat(user, "<span class='warning'><b>Создание не удалось!</b>:</span> Камень душ пуст! Самое время убить кого-нибудь.")
 		return
 
+	if(!S.client || !S.ckey)
+		to_chat(user, "<span class='warning'><b>Создание не удалось!</b>:</span> У существа внутри нет души! Самое время найти новую.")
+		return
+
 	var/construct_class = show_radial_menu(user, target, class_images, require_near = TRUE, tooltips = TRUE)
+	if(!construct_class)
+		return
 
 	var/type = classes[construct_class]
 	var/mob/living/simple_animal/construct/M = new type(get_turf(target))
