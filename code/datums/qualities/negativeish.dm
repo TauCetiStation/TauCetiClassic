@@ -285,3 +285,12 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/greasy_fingers/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_GREASY_FINGERS, QUALITY_TRAIT)
+
+
+/datum/quality/negativeish/singularly_attractive
+	name = "Singularly Attractive"
+	desc = "Вы чрезвычайно привлекательны... для лорда Сингуло."
+	requirement = "Нет"
+
+/datum/quality/negativeish/singularly_attractive/add_effect(mob/living/carbon/human/H, latespawn)
+	poi_list += H
