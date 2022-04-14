@@ -38,6 +38,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		message_admins("[src] has spawned at [COORD(src)] [ADMIN_JMP(src)] [ADMIN_FLW(src)].")
 	z_original = z
 	destination = end
+	for(var/mob/living/carbon/human/H in singularity_beacon_list)
+		var/turf_H = get_turf(H)
+		destination = turf_H
 	if(end && end.z == z_original)
 		walk_towards(src, destination, 1)
 
@@ -76,6 +79,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			var/mob/living/carbon/human/H = clong
 			H.visible_message("<span class='danger'>[H.name] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
 			H.adjustBruteLoss(160)
+			for(clong in singularity_beacon_list)
+				qdel(src)
 		if(clong.density || prob(10))
 			clong.ex_act(EXPLODE_HEAVY)
 	else if(istype(clong, type))
