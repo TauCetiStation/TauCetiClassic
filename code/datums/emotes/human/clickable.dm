@@ -20,7 +20,7 @@
 	var/mob/living/carbon/human/c = clicker
 	if(c.incapacitated() || c.lying || c.crawling || c.resting || c.is_busy() || c.get_active_hand())
 		return FALSE
-	on_cloud_click(t,c)
+	on_cloud_click(t, c)
 
 	return TRUE
 
