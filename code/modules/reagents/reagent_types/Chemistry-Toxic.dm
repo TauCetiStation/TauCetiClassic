@@ -274,7 +274,7 @@
 	var/mob/living/carbon/human/H = M
 
 	if(!H.species.flags[IS_PLANT])
-		if((method == INGEST) || H.wear_mask || !H.need_breathe()) // different behaviour only for inhaling
+		if((method == INGEST) || H.wear_mask || H.is_skip_breathe()) // different behaviour only for inhaling
 			return
 		H.adjustToxLoss(2 * toxpwr)
 		return
@@ -677,15 +677,7 @@
 		return
 	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
-	H.gender = pick(MALE, FEMALE)
-	if(H.gender == MALE)
-		H.name = pick(first_names_male)
-	else
-		H.name = pick(first_names_female)
-	H.name += " [pick(last_names)]"
-	H.real_name = H.name
-	var/datum/preferences/A = new()	//Randomize appearance for the human
-	A.randomize_appearance_for(H)
+	randomize_human(H)
 
 /datum/reagent/slimetoxin
 	name = "Mutation Toxin"
@@ -727,8 +719,6 @@
 			if(30)
 				if(H.set_species(SLIME))
 					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
-					H.dna.mutantrace = "slime"
-					H.update_mutantrace()
 					for(var/obj/item/organ/external/BP in H.bodyparts)
 						BP.status = 0
 					for(var/obj/item/organ/internal/BP in H.organs)
