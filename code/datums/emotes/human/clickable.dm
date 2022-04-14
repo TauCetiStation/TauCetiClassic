@@ -44,5 +44,6 @@
 	)
 
 /datum/emote/clickable/help/on_cloud_click(mob/living/carbon/human/target, mob/living/carbon/human/clicker)
-	clicker.help_other(target)
+	if(target != clicker)
+		clicker.help_other(target)
 	
