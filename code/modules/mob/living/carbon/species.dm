@@ -169,10 +169,7 @@
 		for(var/obj/item/organ/internal/IO in H.organs)
 			qdel(IO)
 
-	for(var/type in has_bodypart)
-		var/path = has_bodypart[type]
-		var/obj/item/organ/external/O = new path(null)
-		O.insert_organ(H)
+	create_bodyparts(H)
 
 	for(var/type in has_organ)
 		var/path = has_organ[type]
@@ -183,6 +180,11 @@
 		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
 
+/datum/species/proc/create_bodyparts(mob/living/carbon/human/H)
+	for(var/type in has_bodypart)
+		var/path = has_bodypart[type]
+		var/obj/item/organ/external/O = new path(null)
+		O.insert_organ(H, FALSE, src)
 
 /**
   * Replace human clothes in [outfit] on species clothes
@@ -675,6 +677,8 @@
 		SPRITE_SHEET_HELD = 'icons/mob/species/armalis/held.dmi'
 		)
 
+	has_gendered_icons = TRUE
+
 /datum/species/diona
 	name = DIONA
 	icobase = 'icons/mob/human_races/r_diona.dmi'
@@ -940,11 +944,9 @@
 	,IS_SYNTHETIC = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,VIRUS_IMMUNE = TRUE
-	,BIOHAZZARD_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
-	,NO_MUTATION = TRUE
 	,IS_SOCIAL = TRUE
 	)
 
@@ -1080,7 +1082,6 @@
 	,NO_MINORCUTS = TRUE
 	,NO_EMOTION = TRUE
 	,NO_VOMIT = TRUE
-	,NO_MUTATION = TRUE
 	,NO_FAT = TRUE
 	)
 
@@ -1215,7 +1216,6 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
-	,NO_MUTATION = TRUE
 	)
 
 	burn_mod = 2
@@ -1262,12 +1262,10 @@
 		NO_EMBED = TRUE,
 		RAD_IMMUNE = TRUE,
 		VIRUS_IMMUNE = TRUE,
-		BIOHAZZARD_IMMUNE = TRUE,
 		NO_VOMIT = TRUE,
 		NO_FINGERPRINT = TRUE,
 		NO_MINORCUTS = TRUE,
 		NO_EMOTION = TRUE,
-		NO_MUTATION = TRUE,
 		NO_FAT = TRUE,
 		IS_SOCIAL = TRUE,
 		)
@@ -1534,7 +1532,6 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
-	,NO_MUTATION = TRUE
 	,NO_PAIN = TRUE
 	)
 
@@ -1568,3 +1565,80 @@
 
 /datum/species/abomination/call_digest_proc(mob/living/M, datum/reagent/R)
 	return
+
+/datum/species/human/homunculus
+	name = HOMUNCULUS
+
+	brute_mod = 2
+	burn_mod = 2
+	speed_mod = 5
+
+	has_bodypart = list(
+		 BP_CHEST = /obj/item/organ/external/chest/homunculus
+		,BP_GROIN = /obj/item/organ/external/groin/homunculus
+		,BP_HEAD  = /obj/item/organ/external/head/homunculus
+		,BP_L_ARM = /obj/item/organ/external/l_arm/homunculus
+		,BP_R_ARM = /obj/item/organ/external/r_arm/homunculus
+		,BP_L_LEG = /obj/item/organ/external/l_leg/homunculus
+		,BP_R_LEG = /obj/item/organ/external/r_leg/homunculus
+		)
+
+	flags = list(
+		NO_DNA = TRUE,
+		NO_SCAN = TRUE,
+		NO_PAIN = TRUE,
+		RAD_ABSORB = TRUE,
+		VIRUS_IMMUNE = TRUE,
+		NO_EMOTION = TRUE,
+		HAS_TAIL = TRUE,
+		HAS_HAIR = TRUE,
+		HAS_HAIR_COLOR = TRUE,
+		)
+
+	has_gendered_icons = FALSE
+
+	min_age = 1
+	max_age = 10
+
+	is_common = FALSE
+
+/datum/species/human/homunculus/on_gain(mob/living/carbon/human/H)
+	. = ..()
+	var/list/tail_list = icon_states('icons/mob/species/tail.dmi') - "vox_armalis"
+	tail_list += ""
+	H.random_tail_holder = pick(tail_list)
+
+/datum/species/human/homunculus/create_bodyparts(mob/living/carbon/human/H)
+	var/list/keys = get_list_of_primary_keys(global.all_species)
+	keys -= list(PODMAN, IPC, SKELETON, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
+
+	var/datum/species/head = global.all_species[pick(keys - VOX)]
+
+	var/datum/species/chest = global.all_species[pick(keys - HUMAN)]
+	var/datum/species/l_arm = global.all_species[pick(keys)]
+	var/datum/species/r_arm = global.all_species[pick(keys)]
+
+	var/datum/species/groin = global.all_species[pick(keys)]
+	var/datum/species/l_leg = global.all_species[pick(keys)]
+	var/datum/species/r_leg = global.all_species[pick(keys)]
+
+	var/list/bodypart_species = list(
+		BP_HEAD  = head,
+		BP_CHEST = chest,
+		BP_L_ARM = l_arm,
+		BP_R_ARM = r_arm,
+		BP_GROIN = groin,
+		BP_L_LEG = l_leg,
+		BP_R_LEG = r_leg,
+	)
+
+	for(var/type in has_bodypart)
+		if((type in list(BP_L_LEG, BP_R_LEG, BP_R_ARM, BP_L_ARM)) && prob(10))
+			continue
+		var/path = has_bodypart[type]
+		var/obj/item/organ/external/O = new path(null)
+		var/datum/species/part_species = bodypart_species[type]
+		O.insert_organ(H, FALSE, part_species)
+		O.adjust_pumped(rand(0, 60))
+		if(prob(80) && (part_species.name in list(UNATHI, SKRELL, TAJARAN)))
+			O.original_color = pick(list(COLOR_GREEN, COLOR_LIGHT_PINK, COLOR_ROSE_PINK, COLOR_VIOLET, COLOR_DEEP_SKY_BLUE, COLOR_RED, COLOR_LIME, COLOR_PINK))
