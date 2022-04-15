@@ -73,7 +73,6 @@
 #define ANTAG_HUD_ALIEN         "antag_hud_alien"
 #define ANTAG_HUD_DEATHCOM      "antag_hud_deathcom"
 #define ANTAG_HUD_ERT           "antag_hud_ert"
-#define ANTAG_HUD_MALF          "antag_hud_malf"
 #define ANTAG_HUD_ZOMB          "antag_hud_zomb"
 #define ANTAG_HUD_GANGSTER      "antag_hud_gangster"
 #define ANTAG_HUD_SPACECOP      "antag_hud_cop"

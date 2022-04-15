@@ -36,12 +36,10 @@ SUBSYSTEM_DEF(ticker)
 	var/atom/movable/screen/cinematic = null
 	var/datum/station_state/start_state = null
 
-	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
+	var/station_was_nuked = FALSE //see nuclearbomb.dm
 	var/explosion_in_progress = FALSE //sit back and relax
 	var/nar_sie_has_risen = FALSE //check, if there is already one god in the world who was summoned (only for tomes)
 	var/ert_call_in_progress = FALSE //when true players can join ERT
-	var/hacked_apcs = 0 //check the amount of hacked apcs either by a malf ai, or a traitor
-	var/Malf_announce_stage = 0//Used for announcement
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
@@ -325,11 +323,7 @@ SUBSYSTEM_DEF(ticker)
 
 	switch(station_missed)
 		if(0)	//station was destroyed
-			if(override == "AI malfunction")
-				screen = "intro_malf"
-				screen_time = 76
-				summary = "summary_malf"
-			else if(override == "nuclear emergency")
+			if(override == "nuclear emergency")
 				summary = "summary_nukewin"
 
 			for(var/mob/M as anything in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"

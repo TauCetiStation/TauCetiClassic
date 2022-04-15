@@ -55,20 +55,15 @@ var/global/list/ai_verbs_default = list(
 	var/allow_auto_broadcast_messages = TRUE // For disabling retransmiting
 //Hud stuff
 
-	//MALFUNCTION
-	var/processing_time = 100
 	var/list/datum/AI_Module/current_modules = list()
 	var/fire_res_on_core = 0
 
 	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click() -- TLE
-	var/malfhacking = 0 // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
 
-	var/obj/machinery/power/apc/malfhack = null
 	var/explosive = 0 //does the AI explode when it dies?
 
 	var/mob/living/silicon/ai/parent = null
 
-	var/apc_override = 0 //hack for letting the AI use its APC even when visionless
 
 	var/camera_light_on = 0	//Defines if the AI toggled the light on the camera it's looking through.
 	var/datum/trackable/track = null
@@ -228,9 +223,8 @@ var/global/list/ai_verbs_default = list(
 	to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
 	to_chat(src, "To use something, simply click on it.")
 	to_chat(src, "Use say \":b to speak to your cyborgs through binary.")
-	if(!ismalf(src))
-		show_laws()
-		to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
+	show_laws()
+	to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
 
 /mob/living/silicon/ai/Destroy()
 	connected_robots.Cut()
@@ -295,15 +289,6 @@ var/global/list/ai_verbs_default = list(
 	if(!state)
 		return
 	icon_state = name_by_state[state]
-
-// displays the malf_ai information if the AI is the malf
-/mob/living/silicon/ai/show_malf_ai()
-	var/datum/role/malfAI/M = ismalf(src)
-	if(M)
-		var/datum/faction/malf_silicons/malf = M.GetFaction()
-		if (SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE)
-			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
-
 
 /mob/living/silicon/ai/show_alerts()
 
@@ -769,16 +754,6 @@ var/global/list/ai_verbs_default = list(
 		return
 	gen_radial_holo(asnwer)
 
-/*/mob/living/silicon/ai/proc/corereturn()
-	set category = "Malfunction"
-	set name = "Return to Main Core"
-
-	var/obj/machinery/power/apc/apc = src.loc
-	if(!istype(apc))
-		to_chat(src, "<span class='notice'>You are already in your Main Core.</span>")
-		return
-	apc.malfvacate()*/
-
 //Toggles the luminosity and applies it by re-entereing the camera.
 /mob/living/silicon/ai/proc/toggle_camera_light()
 
@@ -868,21 +843,6 @@ var/global/list/ai_verbs_default = list(
 /mob/living/silicon/ai/proc/is_in_chassis()
 	return istype(loc, /turf)
 
-/mob/living/silicon/ai/proc/toggle_small_alt_click_module(new_mod_name)
-	var/datum/AI_Module/small/new_mod = current_modules[new_mod_name]
-	if(!new_mod)
-		to_chat(src, "<span class='warning'>ERROR: CAN'T FIND MODULE!</span>")
-		return
-	if(new_mod.uses)
-		if(active_module != new_mod)
-			active_module = new_mod
-			to_chat(src, "[new_mod_name] module active. Alt+click to choose a machine to overload.")
-		else
-			active_module = null
-			to_chat(src, "[new_mod_name] module deactivated.")
-	else
-		to_chat(src, "[new_mod_name] module activation failed. Out of uses.")
-
 /mob/living/silicon/ai/CanObtainCentcommMessage()
 	return TRUE
 
@@ -893,9 +853,6 @@ var/global/list/ai_verbs_default = list(
 /mob/living/silicon/ai/ghost()
 	if(istype(loc, /obj/item/device/aicard) || istype(loc, /obj/item/clothing/suit/space/space_ninja))
 		return ..()
-	if(ismalf(usr) && stat != DEAD)
-		to_chat(usr, "<span class='danger'>You cannot use this verb in malfunction. If you need to leave, please adminhelp.</span>")
-		return
 	if(stat)
 		return ..()
 

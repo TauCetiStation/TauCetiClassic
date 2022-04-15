@@ -46,7 +46,6 @@ const ApcContent = (props, context) => {
     totalLoad,
     coverLocked,
     siliconUser,
-    malfCanHack,
     nightshiftLights,
     nightshiftPreset,
     powerChannels,
@@ -150,13 +149,6 @@ const ApcContent = (props, context) => {
         title="Misc"
         buttons={!!siliconUser && (
           <>
-            {!!malfCanHack && (
-              <Button
-                icon="terminal"
-                content="Override Programming"
-                color="bad"
-                onClick={() => act('hack')} />
-            )}
             <Button
               icon="lightbulb-o"
               content="Overload"

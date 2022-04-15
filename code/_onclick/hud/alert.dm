@@ -401,7 +401,7 @@
 	desc = "Unit's power cell is running low. Reharging stations are available in robotics, the dormitory's bathrooms. and the AI satelite."
 	icon_state = "lowcell"
 
-//Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
+//Need to cover all use cases - emag, illegal upgrade module, traitor cyborg
 /atom/movable/screen/alert/hacked
 	name = "Hacked"
 	desc = "Hazardous non-standard equipment detected. Please ensure any usage of this equipment is in line with unit's laws, if any."

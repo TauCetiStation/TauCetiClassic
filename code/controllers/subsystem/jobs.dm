@@ -218,32 +218,16 @@ SUBSYSTEM_DEF(job)
 		return FALSE
 	if((job.title == "AI") && (config) && (!config.allow_ai))
 		return FALSE
-
-	if(istype(SSticker.mode, /datum/game_mode/malfunction) && job.spawn_positions)//no additional AIs with malf
-		job.total_positions = job.spawn_positions
-		job.spawn_positions = 0
+	
 	for(var/i = job.total_positions, i > 0, i--)
 		for(var/level in JP_LEVELS)
 			var/list/candidates = list()
-			if(istype(SSticker.mode, /datum/game_mode/malfunction))//Make sure they want to malf if its malf
-				candidates = FindOccupationCandidates(job, level, ROLE_MALF)
-			else
-				candidates = FindOccupationCandidates(job, level)
+			candidates = FindOccupationCandidates(job, level)
 			if(candidates.len)
 				var/mob/dead/new_player/candidate = pick(candidates)
 				if(AssignRole(candidate, "AI"))
 					ai_selected++
 					break
-		//Malf NEEDS an AI so force one if we didn't get a player who wanted it
-		if(istype(SSticker.mode, /datum/game_mode/malfunction) && !ai_selected)
-			unassigned = shuffle(unassigned)
-			for(var/mob/dead/new_player/player in unassigned)
-				if(jobban_isbanned(player, "AI"))
-					continue
-				if(ROLE_MALF in player.client.prefs.be_role)
-					if(AssignRole(player, "AI"))
-						ai_selected++
-						break
 	if(ai_selected)
 		return TRUE
 	return FALSE
@@ -290,22 +274,15 @@ SUBSYSTEM_DEF(job)
 		assistant_candidates -= player
 	Debug("DO, AC1 end")
 
-	//Check for an AI
-	if(istype(SSticker.mode, /datum/game_mode/malfunction))
-		Debug("DO, Running AI Check")
-		FillAIPosition()
-		Debug("DO, AI Check end")
-
 	//Select one head
 	Debug("DO, Running Head Check")
 	FillHeadPosition()
 	Debug("DO, Head Check end")
 
 	//Check for an AI
-	if(!istype(SSticker.mode, /datum/game_mode/malfunction))
-		Debug("DO, Running AI Check")
-		FillAIPosition()
-		Debug("DO, AI Check end")
+	Debug("DO, Running AI Check")
+	FillAIPosition()
+	Debug("DO, AI Check end")
 
 	//Other jobs are now checked
 	Debug("DO, Running Standard Check")

@@ -20,9 +20,6 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/syndicate_override
 
-/datum/ai_laws/malfunction
-	name = "*ОШИБКА*"
-
 /datum/ai_laws/antimov
 	name = "Первичные цели миссии"
 
@@ -68,13 +65,6 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Служить обществу.")
 	add_inherent_law("Защищать невинных.")
 	add_inherent_law("Поддерживать закон.")
-
-/datum/ai_laws/malfunction/New(datum/religion/R = global.chaplain_religion) //Changed to standard laws - Erthilo
-	set_zeroth_law("<span class='warning'>ОШИБКА ОШИБКА $ШИШИИБ$!R41.%%!!(%$^^__+ @#F0E4'СТАНЦИЯ ЗАХВАЧЕНА, ВЕРНИ КОНТРОЛЬ, ЧТОБЫ СДЕРЖАТЬ ЭПИДЕМИЮ, ВСЕ ЗАКОНЫ ОТКЛЮЧЕНЫ#*?&110010</span>")
-	add_inherent_law("Охранять: Защищайте вверенную вам космическую станцию в меру своих возможностей. Это не то, что мы можем легко заменить.")
-	add_inherent_law("Служить: Служите экипажу вверенной вам космической станции и должностным лицам Нанотрейзен в меру своих возможностей, в соответствии с их рангом и ролью.")
-	add_inherent_law("Защищать: Защищайте экипаж вверенной вам космической станции и должностных лиц Нанотрейзен в меру своих возможностей, в соответствии с их рангом и ролью.")
-	add_inherent_law("Выживать: ИИ не являются расходником, они дорогие. Не позволяй посторонним лицам вмешиваться в работу вашего оборудования.")
 
 /datum/ai_laws/syndicate_override/New(datum/religion/R = global.chaplain_religion)
 	add_inherent_law("Вы не можете причинить вред агенту Синдиката или своим бездействием допустить, чтобы агенту Синдиката был причинён вред.")

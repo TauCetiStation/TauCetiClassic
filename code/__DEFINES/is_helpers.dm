@@ -177,8 +177,6 @@
 
 #define iselitesyndie(H) isrole(SYNDIESQUADIE, H)
 
-#define ismalf(H) isrole(MALF, H)
-
 #define isnukeop(H) isrole(NUKE_OP, H)
 
 #define iswizard(H) isrole(WIZARD, H)

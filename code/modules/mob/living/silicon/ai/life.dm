@@ -14,13 +14,6 @@
 		update_gravity(mob_has_gravity())
 		update_action_buttons()
 
-		if (src.malfhack)
-			if (src.malfhack.aidisabled)
-				to_chat(src, "<span class='warning'>ERROR: APC access disabled, hack attempt canceled.</span>")
-				src.malfhacking = 0
-				src.malfhack = null
-
-
 		if (src.health <= config.health_threshold_dead)
 			death()
 			return
@@ -149,9 +142,7 @@
 									to_chat(src, "Receiving control information from APC.")
 									sleep(2)
 									//bring up APC dialog
-									apc_override = 1
 									theAPC.attack_ai(src)
-									apc_override = 0
 									src:aiRestorePowerRoutine = 3
 									to_chat(src, "Here are your current laws:")
 									show_laws()

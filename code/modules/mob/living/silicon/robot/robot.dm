@@ -448,20 +448,6 @@
 		return 1
 	return 0
 
-// this function shows information about the malf_ai gameplay type in the status screen
-/mob/living/silicon/robot/show_malf_ai()
-	..()
-	if(ismalf(connected_ai))
-		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
-		if(SSticker.hacked_apcs >= 3)
-			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/3), 0)] seconds")
-	else
-		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
-		if(malf?.malf_mode_declared)
-			stat(null, "Time left: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
-	return 0
-
-
 // update the status screen display
 /mob/living/silicon/robot/Stat()
 	..()

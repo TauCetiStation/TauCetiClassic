@@ -23,7 +23,7 @@
 /obj/item/device/debugger/is_used_on(obj/O, mob/user)
 	if(istype(O, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/A = O
-		if(A.emagged || A.malfhack)
+		if(A.emagged)
 			to_chat(user, "<span class='warning'>There is a software error with the device.</span>")
 			return 0
 		else
@@ -61,7 +61,7 @@
 				to_chat(user, "<span class='notice'>My time has come, please wait... Starting HackHim3000...</span>")
 				if(do_after(user, 20, target = apc))
 					to_chat(user, "<span class='notice'>Faster than light, please wait... Hack in progress...</span>")
-					if(do_after(user, 50, target = apc) && !(apc.emagged || apc.malfhack || apc.opened || apc.wiresexposed || apc.stat & (BROKEN|MAINT)))
+					if(do_after(user, 50, target = apc) && !(apc.emagged || apc.opened || apc.wiresexposed || apc.stat & (BROKEN|MAINT)))
 						flick("apc-spark", apc)
 						sleep(6)
 						apc.emagged = 1

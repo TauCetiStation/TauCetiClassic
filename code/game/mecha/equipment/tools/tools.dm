@@ -289,7 +289,7 @@
 	energy_drain = 250
 	range = MELEE|RANGED
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
-	var/disabled = 0 //malf
+	var/disabled = 0
 
 /obj/item/mecha_parts/mecha_equipment/rcd/atom_init()
 	. = ..()

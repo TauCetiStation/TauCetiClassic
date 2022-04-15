@@ -116,13 +116,6 @@
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 
-#define APC_MIN_TO_MALF_DECLARE 5
-//if malf apcs < than this, malf can't begin the takeover attempt
-
-#define MALF_SMALL_MODULE_PRICE 10
-#define MALF_LARGE_MODULE_PRICE 50
-//Malf modules prices
-
 // Maploader bounds indices
 #define MAP_MINX 1
 #define MAP_MINY 2

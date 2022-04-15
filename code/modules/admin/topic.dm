@@ -61,21 +61,16 @@
 				message_admins("[success] number of cultists made.")
 				to_chat(usr, "<span class='notice'>[success] number of cultists made.</span>")
 			if("5")
-				message_admins("[key_name(usr)] has attempted to spawn [count] malfunctioning AI.")
-				var/success = makeAntag(null, /datum/faction/malf_silicons, count, FROM_PLAYERS, stealth)
-				message_admins("[success] number of angry computer screens made.")
-				to_chat(usr, "<span class='notice'>[success] number of malf AIs made.</span>")
-			if("6")
 				message_admins("[key_name(usr)] has attempted to spawn [count] wizards.")
 				var/success = makeAntag(null, /datum/faction/wizards, count, FROM_GHOSTS, stealth)
 				message_admins("[success] number of wizards made.")
 				to_chat(usr, "<span class='notice'>[success] number of wizards made.</span>")
-			if("7")
+			if("6")
 				message_admins("[key_name(usr)] has spawned aliens.")
 				var/success = makeAntag(null, /datum/faction/infestation, count, FROM_GHOSTS, stealth)
 				message_admins("[success] number of aliens made.")
 				to_chat(usr, "<span class='notice'>[success] number of aliens made.</span>")
-			if("8")
+			if("7")
 				message_admins("[key_name(usr)] has spawned voxs.")
 				var/success = makeAntag(null, /datum/faction/heist, count, FROM_GHOSTS, stealth)
 				message_admins("[success] number of voxs made.")
@@ -727,12 +722,6 @@
 			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_BLOB];jobban4=\ref[M]'>[ROLE_BLOB]</a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_BLOB];jobban4=\ref[M]'>[ROLE_BLOB]</a></td>"
-
-		//Malfunctioning AI
-		if(jobban_isbanned(M, ROLE_MALF) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_MALF];jobban4=\ref[M]'>[ROLE_MALF]</a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_MALF];jobban4=\ref[M]'>[ROLE_MALF]</a></td>"
 
 		//Families
 		if(jobban_isbanned(M, ROLE_FAMILIES) || isbanned_dept)

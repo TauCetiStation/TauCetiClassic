@@ -7,7 +7,6 @@
 #define ROLE_OPERATIVE         "Operative"
 #define ROLE_CHANGELING        "Changeling"
 #define ROLE_WIZARD            "Wizard"
-#define ROLE_MALF              "Malf AI"
 #define ROLE_REV               "Revolutionary"
 #define ROLE_ALIEN             "Xenomorph"
 #define ROLE_CULTIST           "Cultist"
@@ -38,7 +37,6 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_OPERATIVE  = list(IGNORE_SYNDI_BORG),
 	ROLE_CHANGELING = null,
 	ROLE_WIZARD     = null,
-	ROLE_MALF       = null,
 	ROLE_REV        = null,
 	ROLE_ALIEN      = list(IGNORE_LAVRA),
 	ROLE_CULTIST    = list(IGNORE_NARSIE_SLAVE),
