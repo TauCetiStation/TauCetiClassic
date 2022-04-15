@@ -45,17 +45,6 @@
 	update_icon(STAGE_ONE)
 
 	START_PROCESSING(SSobj, src)
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/singularity/atom_init_late()
-	for(var/obj/machinery/singularity_beacon/singubeacon in singularity_beacon_list)
-		if(singubeacon.active)
-			target = singubeacon
-			break
-	for(var/mob/living/carbon/human/H in singularity_beacon_list)
-		if(H.stat != DEAD)
-			target = H
-			break
 
 /obj/singularity/Destroy()
 	vis_contents -= singulo_effect
@@ -109,7 +98,14 @@
 	eat()
 	dissipate()
 	check_energy()
-
+	for(var/obj/machinery/singularity_beacon/singubeacon in singularity_beacon_list)
+		if(singubeacon.active)
+			target = singubeacon
+			return
+	for(var/mob/living/carbon/human/H in singularity_beacon_list)
+		if(H.stat != DEAD)
+			target = H
+			return
 	return
 
 /obj/singularity/attack_ai() //to prevent ais from gibbing themselves when they click on one.
