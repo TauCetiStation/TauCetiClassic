@@ -153,10 +153,6 @@
 	icon_state = "9x19exstech-16"
 	max_ammo = 16
 
-/obj/item/ammo_box/magazine/m9mm/ex/update_icon()
-	..()
-	icon_state = "[initial(icon_state)]-[round(ammo_count(),1)]"
-
 /obj/item/ammo_box/magazine/m9mm_2
 	name = "magazine (9mm)"
 	icon_state = "9mm_mag"
