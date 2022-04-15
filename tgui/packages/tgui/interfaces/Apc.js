@@ -46,6 +46,7 @@ const ApcContent = (props, context) => {
     totalLoad,
     coverLocked,
     siliconUser,
+    malfCanHack,
     nightshiftLights,
     nightshiftPreset,
     powerChannels,
@@ -149,22 +150,19 @@ const ApcContent = (props, context) => {
         title="Misc"
         buttons={!!siliconUser && (
           <>
+            {!!malfCanHack && (
+              <Button
+                icon="terminal"
+                content="Override Programming"
+                color="bad"
+                onClick={() => act('hack')} />
+            )}
             <Button
               icon="lightbulb-o"
               content="Overload"
               onClick={() => act('overload')} />
           </>
         )}>
-        <LabeledList>
-          <LabeledList.Item
-            label="Cover Lock"
-            buttons={(
-              <Button
-                icon={coverLocked ? 'lock' : 'unlock'}
-                content={coverLocked ? 'Engaged' : 'Disengaged'}
-                disabled={isLocked}
-                onClick={() => act('cover')} />
-            )} />
           <LabeledList.Item
             label="Night Shift Lighting"
             buttons={(
