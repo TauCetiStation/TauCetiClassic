@@ -45,6 +45,9 @@
 	update_icon(STAGE_ONE)
 
 	START_PROCESSING(SSobj, src)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/singularity/atom_init_late()
 
 /obj/singularity/Destroy()
 	vis_contents -= singulo_effect
