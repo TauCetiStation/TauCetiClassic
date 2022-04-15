@@ -14722,7 +14722,7 @@
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
-/obj/item/weapon/flora/pottedplant/tropicalfern,
+/obj/item/weapon/flora/pottedplant/palm,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -47638,7 +47638,7 @@
 	pixel_y = -24
 	},
 /obj/structure/cable,
-/obj/item/weapon/flora/pottedplant/palm,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -112427,7 +112427,7 @@ auh
 bLx
 bNr
 ayr
-alZ
+aqf
 asg
 cgt
 alZ
@@ -112684,9 +112684,9 @@ ani
 ani
 uql
 ayr
-ceI
-aqf
 apx
+ceI
+alZ
 awE
 alZ
 aYi
