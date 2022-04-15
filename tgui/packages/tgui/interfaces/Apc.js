@@ -163,6 +163,16 @@ const ApcContent = (props, context) => {
               onClick={() => act('overload')} />
           </>
         )}>
+        <LabeledList>
+          <LabeledList.Item
+            label="Cover Lock"
+            buttons={(
+              <Button
+                icon={coverLocked ? 'lock' : 'unlock'}
+                content={coverLocked ? 'Engaged' : 'Disengaged'}
+                disabled={isLocked}
+                onClick={() => act('cover')} />
+            )} />
           <LabeledList.Item
             label="Night Shift Lighting"
             buttons={(
