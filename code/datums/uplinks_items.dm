@@ -140,7 +140,7 @@
 
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
-	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 8-round or 16-round magazines and is compatible \
+	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 7-round or 16-round magazines and is compatible \
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
 	cost = 6
@@ -382,7 +382,7 @@
 	name = "Speedloader-.357"
 	desc = "A speedloader that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_box/a357
-	cost = 1
+	cost = 2
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/ammo/smg
