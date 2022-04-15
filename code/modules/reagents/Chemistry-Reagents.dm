@@ -15,7 +15,7 @@
 	var/volume = 0
 	var/nutriment_factor = 0
 	var/diet_flags = DIET_ALL
-	var/absorption = REAGENTS_METABOLISM
+	var/absorption = REAGENTS_ABSORBTION
 	var/metabolisation = 0
 	var/metabolism_coeffitient = 0
 	var/taste_strength = 1 //how easy it is to taste - the more the easier

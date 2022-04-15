@@ -181,7 +181,7 @@
 	id = "virusfood"
 	description = "A mixture of water, milk, and oxygen. Virus cells can use this mixture to reproduce."
 	reagent_state = LIQUID
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2 * REAGENTS_ABSORBTION
 	color = "#899613" // rgb: 137, 150, 19
 
 /datum/reagent/virus_food/on_general_digest(mob/living/M, multiplier)
@@ -341,7 +341,7 @@
 	description = "A highly addictive stimulant extracted from the tobacco plant."
 	reagent_state = LIQUID
 	color = "#181818" // rgb: 24, 24, 24
-	absorption = TOXINS_METABOLISM
+	absorption = TOXINS_ABSORBTION
 	restrict_species = list(IPC, DIONA)
 	var/alert_time = 0
 
@@ -436,7 +436,7 @@
 	reagent_state = LIQUID
 	nutriment_factor = 0.2
 	color = "#ffffff"
-	absorption = DRINK_METABOLISM
+	absorption = DRINK_ABSORBTION
 	taste_message = "bitterness"
 
 /datum/reagent/luminophore
@@ -445,7 +445,7 @@
 	description = "Uh, some kind of drink."
 	reagent_state = LIQUID
 	color = "#ffffff"
-	absorption = DRINK_METABOLISM
+	absorption = DRINK_ABSORBTION
 	taste_message = "bitterness"
 
 /datum/reagent/luminophore/on_general_digest(mob/living/M, multiplier)
@@ -495,7 +495,7 @@
 	description = "Microscopic robots intended for use in humans. Configured for rapid healing upon infiltration into the body."
 	reagent_state = LIQUID
 	color = "#593948" //rgb: 89, 57, 72
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 	var/spawning_horror = 0
 	var/percent_machine = 0
 	taste_message = "nanomachines, son"

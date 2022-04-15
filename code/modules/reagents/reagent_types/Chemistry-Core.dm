@@ -4,7 +4,7 @@
 	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	reagent_state = LIQUID
 	color = "#0064c8" // rgb: 0, 100, 200
-	absorption = DRINK_METABOLISM
+	absorption = DRINK_ABSORBTION
 	taste_message = null
 
 /datum/reagent/water/reaction_mob(mob/M, method=TOUCH, volume)
@@ -247,11 +247,11 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = null
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 
 /datum/reagent/oxygen/on_vox_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(REAGENTS_METABOLISM * multiplier)
+	M.adjustToxLoss(REAGENTS_ABSORBTION * multiplier)
 	return FALSE
 
 /datum/reagent/copper
@@ -260,7 +260,7 @@
 	description = "A highly ductile metal."
 	color = "#6e3b08" // rgb: 110, 59, 8
 	taste_message = null
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 
 /datum/reagent/nitrogen
 	name = "Nitrogen"
@@ -269,7 +269,7 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = null
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 
 /datum/reagent/nitrogen/on_diona_digest(mob/living/M, multiplier)
 	..()
@@ -292,7 +292,7 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = null
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 
 /datum/reagent/potassium
 	name = "Potassium"
@@ -301,7 +301,7 @@
 	reagent_state = SOLID
 	color = "#a0a0a0" // rgb: 160, 160, 160
 	taste_message = "bad ideas"
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 
 /datum/reagent/mercury
 	name = "Mercury"
@@ -328,7 +328,7 @@
 	reagent_state = SOLID
 	color = "#bf8c00" // rgb: 191, 140, 0
 	taste_message = "impulsive decisions"
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 
 /datum/reagent/carbon
 	name = "Carbon"
@@ -337,7 +337,7 @@
 	reagent_state = SOLID
 	color = "#1c1300" // rgb: 30, 20, 0
 	taste_message = "like a pencil or something"
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 
 /datum/reagent/carbon/reaction_turf(turf/T, volume)
 	. = ..()
@@ -382,7 +382,7 @@
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
 	taste_message = "horrible misjudgement"
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 
 /datum/reagent/phosphorus
 	name = "Phosphorus"
@@ -391,7 +391,7 @@
 	reagent_state = SOLID
 	color = "#832828" // rgb: 131, 40, 40
 	taste_message = "misguided choices"
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 
 /datum/reagent/phosphorus/on_diona_digest(mob/living/M, multiplier)
 	..()
@@ -435,7 +435,7 @@
 
 /datum/reagent/sugar/on_vox_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(REAGENTS_METABOLISM * 0.5 * multiplier)
+	M.adjustToxLoss(REAGENTS_ABSORBTION * 0.5 * multiplier)
 	return FALSE
 
 /datum/reagent/radium

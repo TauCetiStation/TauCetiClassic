@@ -4,7 +4,7 @@
 	description = "Put people to sleep, and heals them."
 	reagent_state = LIQUID
 	color = "#c8a5dc" // rgb: 200, 165, 220
-	absorption = REAGENTS_METABOLISM * 0.5
+	absorption = REAGENTS_ABSORBTION * 0.5
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
@@ -41,7 +41,7 @@
 	description = "Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients."
 	reagent_state = LIQUID
 	color = "#00bfff" // rgb: 200, 165, 220
-	absorption = REAGENTS_METABOLISM * 0.5
+	absorption = REAGENTS_ABSORBTION * 0.5
 	overdose = REAGENTS_OVERDOSE * 2
 	restrict_species = list(IPC, DIONA)
 
@@ -52,7 +52,7 @@
 
 /datum/reagent/inaprovaline/on_vox_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(REAGENTS_METABOLISM)
+	M.adjustToxLoss(REAGENTS_ABSORBTION)
 	return FALSE // General digest proc shouldn't be called.
 
 /datum/reagent/ryetalyn
@@ -62,7 +62,7 @@
 	reagent_state = SOLID
 	color = "#004000" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
-	absorption = 2 * REAGENTS_METABOLISM
+	absorption = 2 * REAGENTS_ABSORBTION
 
 	data = list()
 
@@ -102,7 +102,7 @@
 	reagent_state = LIQUID
 	color = "#cb68fc"
 	overdose = 30
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/tramadol/on_general_digest(mob/living/M, multiplier)
@@ -117,7 +117,7 @@
 	reagent_state = LIQUID
 	color = "#800080"
 	overdose = 20
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/oxycodone/on_general_digest(mob/living/M, multiplier)
@@ -222,7 +222,7 @@
 	reagent_state = LIQUID
 	color = "#ffc0cb" // rgb: 255, 192, 203
 	overdose = 10
-	absorption = REAGENTS_METABOLISM * 0.5
+	absorption = REAGENTS_ABSORBTION * 0.5
 	taste_message = "sickening bitterness"
 	restrict_species = list(IPC, DIONA)
 
@@ -376,7 +376,7 @@
 	description = "Synaptizine is used to treat various diseases."
 	reagent_state = LIQUID
 	color = "#99ccff" // rgb: 200, 165, 220
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
@@ -398,7 +398,7 @@
 	description = "Hyronalin is a medicinal drug used to counter the effect of radiation poisoning."
 	reagent_state = LIQUID
 	color = "#408000" // rgb: 200, 165, 220
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
@@ -412,7 +412,7 @@
 	description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
 	reagent_state = LIQUID
 	color = "#008000" // rgb: 200, 165, 220
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
@@ -429,7 +429,7 @@
 	description = "Alkysine is a drug used to lessen the damage to neurological tissue after a catastrophic injury. Can heal brain tissue."
 	reagent_state = LIQUID
 	color = "#8b00ff" // rgb: 200, 165, 220
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
@@ -505,7 +505,7 @@
 	reagent_state = LIQUID
 	color = "#551a8b" // rgb: 85, 26, 139
 	overdose = 5.1
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 	taste_message = "machines"
 	restrict_species = list(IPC, DIONA)
 
@@ -549,7 +549,7 @@
 	description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
 	reagent_state = LIQUID
 	color = "#ff4f00" // rgb: 200, 165, 220
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 	overdose = REAGENTS_OVERDOSE * 0.5
 	taste_message = "speed"
 	restrict_species = list(IPC, DIONA)
@@ -640,7 +640,7 @@
 	description = "An all-purpose antiviral agent."
 	reagent_state = LIQUID
 	color = "#ffffff" // rgb: 200, 165, 220
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
@@ -687,7 +687,7 @@
 	id = "lipozine"
 	description = "A chemical compound that causes a powerful fat-burning reaction."
 	reagent_state = LIQUID
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 10 * REAGENTS_ABSORBTION
 	color = "#bbeda4" // rgb: 187, 237, 164
 	overdose = REAGENTS_OVERDOSE
 
@@ -710,7 +710,7 @@
 	description = "Stimulants to keep you up in a critical moment"
 	reagent_state = LIQUID
 	color = "#99ccff" // rgb: 200, 165, 220
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
@@ -731,7 +731,7 @@
 	reagent_state = LIQUID
 	color = "#9b3401"
 	overdose = REAGENTS_OVERDOSE
-	absorption = REAGENTS_METABOLISM
+	absorption = REAGENTS_ABSORBTION
 	taste_message = "wholeness"
 	restrict_species = list(IPC, DIONA)
 	data = list()

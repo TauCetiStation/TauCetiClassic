@@ -209,7 +209,7 @@
 		return // safe tricordrazine injection
 	if(damage > 19)
 		wearer.adjustToxLoss(1) // this will kill the wearer much faster
-	wearer.reagents.add_reagent("tricordrazine", REAGENTS_METABOLISM)
+	wearer.reagents.add_reagent("tricordrazine", REAGENTS_ABSORBTION)
 
 #define MAX_STEALTH_SPACESUIT_CHARGE 300
 

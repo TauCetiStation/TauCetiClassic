@@ -1,7 +1,7 @@
 /datum/reagent/consumable
 	name = "Consumable"
 	id = "consumable"
-	absorption = FOOD_METABOLISM
+	absorption = FOOD_ABSORBTION
 	nutriment_factor = 1
 	taste_message = null
 
@@ -9,8 +9,8 @@
 
 /datum/reagent/consumable/on_general_digest(mob/living/M, multiplier)
 	..()
-	var/to_add = rand(0, multiplier * 10) / 10 * nutriment_factor * NURTRITION_MULTIPLIER
-	M.reagents.add_reagent("nutriment", (nutriment_factor * multiplier * NURTRITION_MULTIPLIER) - to_add)
+	var/to_add = rand(0, 10) / 10 * multiplier * nutriment_factor * NURTRITION_MULTIPLIER
+	M.reagents.add_reagent("nutriment", (multiplier * nutriment_factor * NURTRITION_MULTIPLIER) - to_add)
 	if(diet_flags & DIET_ALL)
 		M.reagents.add_reagent("nutriment", to_add)
 	else if(diet_flags & DIET_MEAT)
@@ -27,7 +27,7 @@
 	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
 	nutriment_factor = 8 // 1 nutriment reagent is 10 nutrition actually, which is confusing, but it works.
-	absorption = FOOD_METABOLISM * 2 // It's balanced so you gain the nutrition, but slightly faster.
+	absorption = FOOD_ABSORBTION * 2 // It's balanced so you gain the nutrition, but slightly faster.
 	color = "#664330" // rgb: 102, 67, 48
 	taste_message = "bland food"
 
@@ -53,7 +53,7 @@
 
 /datum/reagent/nutriment/protein/on_skrell_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(2 * FOOD_METABOLISM * multiplier)
+	M.adjustToxLoss(2 * FOOD_ABSORBTION * multiplier)
 	return FALSE
 
 /datum/reagent/nutriment/plantmatter // Plant-based biomatter, digestable by herbivores and omnivores, worthless to carnivores
@@ -95,7 +95,7 @@
 
 /datum/reagent/nutriment/dairy/on_skrell_digest(mob/living/M, multiplier) // Is not as poisonous to skrell.
 	..()
-	M.adjustToxLoss(1 * FOOD_METABOLISM * multiplier)
+	M.adjustToxLoss(1 * FOOD_ABSORBTION * multiplier)
 	return FALSE
 
 /datum/reagent/consumable/soysauce
@@ -240,7 +240,7 @@
 	if(isslime(M))
 		M.bodytemperature = max(M.bodytemperature - rand(10,20) * multiplier, 0)
 	holder.remove_reagent("capsaicin", 5 * multiplier)
-	holder.remove_reagent(src.id, FOOD_METABOLISM * multiplier)
+	holder.remove_reagent(src.id, FOOD_ABSORBTION * multiplier)
 
 /datum/reagent/consumable/frostoil/reaction_turf(turf/simulated/T, volume)
 	. = ..()
@@ -296,7 +296,7 @@
 	description = "A strong psycotropic derived from certain species of mushroom."
 	color = "#e700e7" // rgb: 231, 0, 231
 	overdose = REAGENTS_OVERDOSE
-	absorption = FOOD_METABOLISM * 0.5
+	absorption = FOOD_ABSORBTION * 0.5
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M, multiplier)

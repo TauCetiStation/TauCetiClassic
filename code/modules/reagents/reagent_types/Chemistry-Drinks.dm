@@ -4,7 +4,7 @@
 	description = "Uh, some kind of drink."
 	reagent_state = LIQUID
 	color = "#e78108" // rgb: 231, 129, 8
-	absorption = DRINK_METABOLISM
+	absorption = DRINK_ABSORBTION
 	nutriment_factor = 0
 	var/adj_dizzy = 0
 	var/adj_drowsy = 0
@@ -165,7 +165,7 @@
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1 * multiplier, 0)
 	if(holder.has_reagent("capsaicin"))
-		holder.remove_reagent("capsaicin", 10 * REAGENTS_METABOLISM * multiplier)
+		holder.remove_reagent("capsaicin", 10 * REAGENTS_ABSORBTION * multiplier)
 
 /datum/reagent/consumable/drink/milk/soymilk
 	name = "Soy Milk"
@@ -219,7 +219,7 @@
 
 	M.make_jittery(5 * multiplier)
 	if(adj_temp > 0 && holder.has_reagent("frostoil"))
-		holder.remove_reagent("frostoil", 10 * REAGENTS_METABOLISM * multiplier)
+		holder.remove_reagent("frostoil", 10 * REAGENTS_ABSORBTION * multiplier)
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -472,7 +472,7 @@
 	description = "A gulp a day keeps the MediBot away. That's probably for the best."
 	reagent_state = LIQUID
 	color = "#ff8cff" // rgb: 255, 140, 255
-	absorption = FOOD_METABOLISM
+	absorption = FOOD_ABSORBTION
 	nutriment_factor = 1
 	taste_message = "healthy dietary choices"
 
@@ -497,7 +497,7 @@
 	description = "A golden yellow syrup, loaded with sugary sweetness."
 	reagent_state = LIQUID
 	color = "#feae00"
-	nutriment_factor = 15 * REAGENTS_METABOLISM
+	nutriment_factor = 15 * REAGENTS_ABSORBTION
 	taste_message = "honey"
 
 /datum/reagent/consumable/honey/on_general_digest(mob/living/M, multiplier)
@@ -597,7 +597,7 @@
 	description = "You just don't get it maaaan."
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
-	absorption = FOOD_METABOLISM * 0.5
+	absorption = FOOD_ABSORBTION * 0.5
 	taste_message = "peeeeeeace"
 	restrict_species = list(IPC, DIONA)
 
@@ -643,7 +643,7 @@
 	description = "An opiod-based recreational drug beverage, made using cough syrup, soft drink and some sugar."
 	reagent_state = LIQUID
 	color = "#de55ed" // rgb: 222, 85, 237
-	absorption = FOOD_METABOLISM * 0.5
+	absorption = FOOD_ABSORBTION * 0.5
 	taste_message = "sweet druggy soda"
 	restrict_species = list(IPC, DIONA)
 	overdose = 20
@@ -673,7 +673,7 @@
 	reagent_state = LIQUID
 	nutriment_factor = 0 //So alcohol can fill you up! If they want to.
 	color = "#404030" // rgb: 64, 64, 48
-	absorption = DRINK_METABOLISM * 0.4
+	absorption = DRINK_ABSORBTION * 0.4
 
 	var/boozepwr = 5 //higher numbers mean the booze will have an effect faster.
 

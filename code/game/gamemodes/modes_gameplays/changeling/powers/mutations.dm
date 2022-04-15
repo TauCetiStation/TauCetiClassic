@@ -244,7 +244,7 @@
 /obj/item/clothing/suit/space/changeling/process()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
-		H.reagents.add_reagent("dexalinp", REAGENTS_METABOLISM)
+		H.reagents.add_reagent("dexalinp", REAGENTS_ABSORBTION)
 		var/obj/item/organ/internal/lungs/IO = H.organs_by_name[O_LUNGS]
 		if(IO.damage >= 5)
 			IO.damage -= 5

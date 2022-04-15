@@ -5,7 +5,7 @@
 	reagent_state = LIQUID
 	color = "#cf3600" // rgb: 207, 54, 0
 	var/toxpwr = 0.7 // Toxins are really weak, but without being treated, last very long.
-	absorption = TOXINS_METABOLISM
+	absorption = TOXINS_ABSORBTION
 	taste_message = "bitterness"
 	flags = list(IS_ORGANIC = TRUE)
 
@@ -770,7 +770,7 @@
 	description = "An illegal chemical compound used as drug."
 	reagent_state = LIQUID
 	color = "#60a584" // rgb: 96, 165, 132
-	absorption = REAGENTS_METABOLISM * 0.5
+	absorption = REAGENTS_ABSORBTION * 0.5
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
@@ -798,7 +798,7 @@
 	description = "A chemical compound that promotes concentrated production of the serotonin neurotransmitter in humans."
 	reagent_state = LIQUID
 	color = "#202040" // rgb: 20, 20, 40
-	absorption = REAGENTS_METABOLISM * 0.25
+	absorption = REAGENTS_ABSORBTION * 0.25
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
@@ -815,7 +815,7 @@
 	reagent_state = LIQUID
 	color = "#000055" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
-	absorption = REAGENTS_METABOLISM * 0.5
+	absorption = REAGENTS_ABSORBTION * 0.5
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 

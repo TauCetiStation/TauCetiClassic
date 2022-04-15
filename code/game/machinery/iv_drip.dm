@@ -58,10 +58,10 @@
 		src.attached = null
 		update_icon()
 		return
-		
+
 	if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
 		return
-		
+
 	if(ishuman(over_object))
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		src.attached = over_object
@@ -99,7 +99,7 @@
 		// Give blood
 		if(mode)
 			if(src.beaker.volume > 0)
-				var/transfer_amount = REAGENTS_METABOLISM
+				var/transfer_amount = REAGENTS_ABSORBTION
 				if(istype(src.beaker, /obj/item/weapon/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 4

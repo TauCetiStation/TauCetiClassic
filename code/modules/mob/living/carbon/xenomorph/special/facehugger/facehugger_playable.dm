@@ -408,7 +408,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	if(state > GRAB_EMBRYO)
 		affecting.Paralyse(MAX_IMPREGNATION_TIME / 6)
 		if(iscarbon(affecting))
-			affecting.reagents.add_reagent("dexalinp", REAGENTS_METABOLISM)
+			affecting.reagents.add_reagent("dexalinp", REAGENTS_ABSORBTION)
 
 /obj/item/weapon/fh_grab/proc/s_click(atom/movable/screen/S)
 	if(!affecting)

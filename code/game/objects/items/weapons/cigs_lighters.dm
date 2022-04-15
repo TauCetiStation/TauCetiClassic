@@ -215,10 +215,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				if(reagents.total_volume)
 					if(prob(15)) // so it's not an instarape in case of acid
 						reagents.reaction(C, INGEST)
-					reagents.trans_to(C, REAGENTS_METABOLISM)
+					reagents.trans_to(C, REAGENTS_ABSORBTION)
 				return
 	if(reagents.total_volume)
-		reagents.remove_any(REAGENTS_METABOLISM)
+		reagents.remove_any(REAGENTS_ABSORBTION)
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
 	if(lit == 1)
