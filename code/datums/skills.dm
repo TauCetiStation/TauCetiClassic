@@ -61,25 +61,20 @@
 	if(!mind)
 		return
 
-	var/t_him = "it"
-	if (target.gender == MALE)
-		t_him = "him"
-	else if (target.gender == FEMALE)
-		t_him = "her"
 
 	if(target.a_intent == INTENT_HARM)
-		visible_message("<span class='notice'>[target] pranks \the [src].</span>", "<span class='notice'>You tried to help \the [target], but he rejects your help and pranks you instead!</span>")
+		visible_message("<span class='notice'>[target] pranks \the [src].</span>", "<span class='notice'>You tried to help \the [target], but [P_THEY(target.gender)] rejects your help and pranks you instead!</span>")
 		to_chat(target, "<span class='notice'>You prank \the [src]!</span>")
 		apply_effects(1,1)
 		return
 
-	visible_message("<span class='notice'>[src] puts his hand on \the [target]'s' shoulder, assisting [t_him].</span>", "<span class='notice'>You put your hand on \the [target]'s' shoulder, assisting [t_him]. You need to stand still while doing this.</span>")
+	visible_message("<span class='notice'>[src] puts [P_THEIR(gender)] hand on \the [target]'s shoulder, assisting [P_THEM(target.gender)].</span>", "<span class='notice'>You put your hand on \the [target]'s shoulder, assisting [P_THEM(target.gender)]. You need to stand still while doing this.</span>")
 	while(do_mob(src, target, SKILL_TASK_FORMIDABLE))
 		if(!(mind.skills.active in target.helpers_skillsets))
 			target.helpers_skillsets += mind.skills.active
 
 	target.helpers_skillsets -= mind.skills.active
-	visible_message("<span class='notice'>[src] removes his hand from \the [target] shoulder.</span>", "<span class='notice'>You remove your hand from \the [target] shoulder.</span>")
+	visible_message("<span class='notice'>[src] removes [P_THEIR(gender)] hand from \the [target]'s shoulder.</span>", "<span class='notice'>You remove your hand from \the [target]'s shoulder.</span>")
 
 /mob/living/proc/add_command_buff(mob/commander, time)
 	helpers_skillsets += commander.mind.skills.active
