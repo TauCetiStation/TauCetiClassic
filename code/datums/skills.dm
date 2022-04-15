@@ -54,7 +54,8 @@
 	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill_name] from [active.get_value(skill_name)] to [value].</span>")
 	active.set_value(skill_name, value)
 
-/mob/living/var/list/helpers_skillsets = list()
+/mob/living
+	var/list/helpers_skillsets = list()
 
 /mob/living/proc/help_other(mob/living/target)
 	if(!mind)
