@@ -60,10 +60,6 @@
 			m_type = SHOWMSG_VISUAL
 			message = "<b>[src]</b> prays."
 			INVOKE_ASYNC(src, /mob.proc/pray_animation)
-		if ("help")
-			to_chat(src, "You boop.")
-			message = "<b>"
-			m_type = SHOWMSG_AUDIO			
 		if ("list")
 			to_chat(src, "alarm,alert,notice,flash,blink,whistle,beep,boop")
 		else
