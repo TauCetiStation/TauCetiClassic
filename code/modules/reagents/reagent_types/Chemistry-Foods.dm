@@ -4,28 +4,21 @@
 	absorption = FOOD_METABOLISM
 	nutriment_factor = 1
 	taste_message = null
-	var/last_volume = 0 // Check digestion code below.
 
 	data = list()
 
 /datum/reagent/consumable/on_general_digest(mob/living/M, multiplier)
 	..()
-	var/mob_met_factor = 1
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		mob_met_factor = C.get_metabolism_factor() * 0.25
-	if(volume > last_volume)
-		var/to_add = rand(0, volume - last_volume) * nutriment_factor * absorption * mob_met_factor
-		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * absorption * mob_met_factor * multiplier) - to_add)
-		if(diet_flags & DIET_ALL)
-			M.reagents.add_reagent("nutriment", to_add)
-		else if(diet_flags & DIET_MEAT)
-			M.reagents.add_reagent("protein", to_add)
-		else if(diet_flags & DIET_PLANT)
-			M.reagents.add_reagent("plantmatter", to_add)
-		else if(diet_flags & DIET_DAIRY)
-			M.reagents.add_reagent("dairy", to_add)
-		last_volume = volume
+	var/to_add = rand(0, multiplier * 10) / 10 * nutriment_factor * NURTRITION_MULTIPLIER
+	M.reagents.add_reagent("nutriment", (nutriment_factor * multiplier * NURTRITION_MULTIPLIER) - to_add)
+	if(diet_flags & DIET_ALL)
+		M.reagents.add_reagent("nutriment", to_add)
+	else if(diet_flags & DIET_MEAT)
+		M.reagents.add_reagent("protein", to_add)
+	else if(diet_flags & DIET_PLANT)
+		M.reagents.add_reagent("plantmatter", to_add)
+	else if(diet_flags & DIET_DAIRY)
+		M.reagents.add_reagent("dairy", to_add)
 	return TRUE
 
 /datum/reagent/nutriment
@@ -380,7 +373,7 @@
 	id = "hot_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
@@ -394,7 +387,7 @@
 	id = "hell_ramen"
 	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and spicy flavored chemicals that boil in contact with water."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen with SPICY flavor"
 
@@ -408,7 +401,7 @@
 	id = "hot_hell_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 4
+	nutriment_factor = 5
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 

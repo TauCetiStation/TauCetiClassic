@@ -7,7 +7,6 @@ var/global/const/INGEST = 2
 	var/list/datum/reagent/reagent_list = list()
 	var/total_volume = 0
 	var/total_absorption = 0
-	var/total_metabolism = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
 	var/proccessing_reaction_count = 0
@@ -186,25 +185,21 @@ var/global/const/INGEST = 2
 /datum/reagents/proc/metabolize(mob/M)
 	if(!M)
 		return
-
 	//currently metabolism work only for carbon, there is no need to check mob type
 	var/mob/living/carbon/C = M
 	var/metabolism = C.get_metabolism_factor()
-	total_metabolism = 0
+
 	for(var/datum/reagent/R in reagent_list)
 		if(!R)
 			return
-		R.metabolism_sum = ((R.volume / total_volume) + (R.absorption / total_absorption))
-		total_metabolism += R.metabolism_sum
-
-	for(var/datum/reagent/R in reagent_list)
-		R.metabolisation = R.metabolism_sum / total_metabolism * metabolism
+		R.metabolisation = ((R.volume / total_volume) + (R.absorption / total_absorption)) / 2 * metabolism
 		if(R.metabolisation > 0)
 			R.on_mob_life(M, R.metabolisation)
 			remove_reagent(R.id, R.metabolisation)
 			if(R.volume <= 0)
 				R.on_last_digest(M, R.metabolisation)
 	if(total_volume > 100 && prob(total_volume/10))
+		to_chat(C, "<span class='notice'>You feel like you are full and nauseous.</span>")
 		C.vomit()
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)

@@ -167,6 +167,7 @@
 #define REAGENTS_METABOLISM 1
 #define FOOD_METABOLISM 0.1
 #define DRINK_METABOLISM 0.01
+#define NURTRITION_MULTIPLIER 2
 
 // By defining the effect multiplier this way, it'll exactly adjust
 // all effects according to how they originally were with the 0.4 metabolism
