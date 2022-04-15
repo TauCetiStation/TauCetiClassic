@@ -7,6 +7,7 @@ var/global/const/INGEST = 2
 	var/list/datum/reagent/reagent_list = list()
 	var/total_volume = 0
 	var/total_absorption = 0
+	var/total_metabolism = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
 	var/proccessing_reaction_count = 0
@@ -185,6 +186,7 @@ var/global/const/INGEST = 2
 /datum/reagents/proc/metabolize(mob/M)
 	if(!M)
 		return
+	total_metabolism = 0
 	//currently metabolism work only for carbon, there is no need to check mob type
 	var/mob/living/carbon/C = M
 	var/metabolism = C.get_metabolism_factor()
@@ -192,7 +194,11 @@ var/global/const/INGEST = 2
 	for(var/datum/reagent/R in reagent_list)
 		if(!R)
 			return
-		R.metabolisation = ((R.volume / total_volume) + (R.absorption / total_absorption)) / 2 * metabolism
+		R.metabolism_coeffitient = (R.volume / total_volume) * (R.absorption / total_absorption)
+		total_metabolism += R.metabolism_coeffitient
+
+	for(var/datum/reagent/R in reagent_list)
+		R.metabolisation = R.metabolism_coeffitient / total_metabolism * metabolism
 		if(R.metabolisation > 0)
 			R.on_mob_life(M, R.metabolisation)
 			remove_reagent(R.id, R.metabolisation)
