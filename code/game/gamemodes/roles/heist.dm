@@ -58,7 +58,6 @@
 	vox.name = vox.real_name
 	antag.name = vox.name
 	vox.age = rand(5, 15) // its fucking lore
-	vox.dna.mutantrace = "vox"
 	vox.set_species(VOX)
 	for(var/language in vox.languages)
 		vox.remove_language(language)

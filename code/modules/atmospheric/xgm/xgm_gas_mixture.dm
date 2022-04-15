@@ -209,10 +209,10 @@
 			total_moles += gas[g]
 
 
-//Returns relative (to the standard) density of the gas mix.
+//Returns relative (to the standard) density of the gas mix with max of 1.
 /datum/gas_mixture/proc/return_relative_density()
 	if(volume)
-		return (total_moles / volume) * (CELL_VOLUME / MOLES_CELLSTANDARD)
+		return min((total_moles / volume) * (CELL_VOLUME / MOLES_CELLSTANDARD), 1)
 	return 0
 
 
