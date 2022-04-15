@@ -207,7 +207,7 @@
 
 		if ("assign")
 			if (is_authenticated() && modify)
-				var/t1 = href_list["assign_target"]
+				var/t1 = sanitize(href_list["assign_target"] , 45)
 				var/new_salary = 0
 				var/datum/job/jobdatum
 				if(t1 == "Custom")

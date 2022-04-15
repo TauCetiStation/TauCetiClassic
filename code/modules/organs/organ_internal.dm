@@ -25,7 +25,7 @@
 			owner.organs_by_name -= organ_tag
 	return ..()
 
-/obj/item/organ/internal/insert_organ()
+/obj/item/organ/internal/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	..()
 
 	owner.organs += src
@@ -305,7 +305,7 @@
 	name = "accumulator"
 	var/accumulator_warning = 0
 
-/obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H)
+/obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	..()
 	new/obj/item/weapon/stock_parts/cell/crap(src)
 	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, .proc/ipc_cell_explode)
