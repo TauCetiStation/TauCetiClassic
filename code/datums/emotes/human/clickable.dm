@@ -14,15 +14,14 @@
 /datum/emote/clickable/proc/on_cloud_click_handler(target, p, location, control, params, clicker)
 	SIGNAL_HANDLER
 	if(!istype(target, /mob/living/carbon/human/) || !istype(clicker, /mob/living/carbon/human/))
-		return FALSE
+		return
 
 	var/mob/living/carbon/human/t = target
 	var/mob/living/carbon/human/c = clicker
 	if(c.incapacitated() || c.lying || c.crawling || c.resting || c.is_busy() || c.get_active_hand())
-		return FALSE
-	on_cloud_click(t, c)
+		return
 
-	return TRUE
+	on_cloud_click(t, c)
 
 /datum/emote/clickable/proc/on_cloud_click(mob/living/carbon/target, mob/living/carbon/clicker)
 	return
@@ -46,4 +45,3 @@
 /datum/emote/clickable/help/on_cloud_click(mob/living/carbon/human/target, mob/living/carbon/human/clicker)
 	if(target != clicker)
 		clicker.help_other(target)
-	

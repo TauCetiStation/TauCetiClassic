@@ -149,6 +149,7 @@ var/global/list/all_emotes
 
 	if(cloud)
 		add_cloud(user)
+
 /datum/emote/proc/add_cloud(mob/user)
 	var/image/emote_bubble = image('icons/mob/emote.dmi', user, cloud, EMOTE_LAYER)
 	emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT

@@ -1,7 +1,7 @@
 /proc/is_skill_competent(mob/user, required_skills)
 	for(var/datum/skill/required_skill as anything in required_skills)
 		var/datum/skill/skill = all_skills[required_skill]
-		var/value_with_helpers = get_skill_value_with_assistance(user, skill)
+		var/value_with_helpers = get_skill_with_assistance(user, skill)
 		if(value_with_helpers < skill.value)
 			return FALSE
 	return TRUE
@@ -10,7 +10,7 @@
 	var/result = value
 	for(var/datum/skill/required_skill as anything in required_skills)
 		var/datum/skill/skill = all_skills[required_skill]
-		var/value_with_helpers = get_skill_value_with_assistance(user, skill)
+		var/value_with_helpers = get_skill_with_assistance(user, skill)
 		result += value * multiplier * (value_with_helpers - skill.value)
 	return result
 
@@ -46,7 +46,7 @@
 		result += skill.rank_name
 	return result
 
-/proc/get_skill_value_with_assistance(mob/living/user, datum/skill/skill)
+/proc/get_skill_with_assistance(mob/living/user, datum/skill/skill)
 	var/own_skill_value = user.mind.skills.get_value(skill.name)
 	if(user.helpers_skillsets.len == 0)
 		return own_skill_value
