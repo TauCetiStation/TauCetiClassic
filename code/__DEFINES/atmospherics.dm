@@ -73,6 +73,8 @@
 // Digital T-valves
 #define PIPE_DTVALVE                52
 #define PIPE_DTVALVEM               53
+// Alert pipe
+#define PIPE_SAMPLER                54
 
 #define CONNECT_TYPE_REGULAR    1
 #define CONNECT_TYPE_SUPPLY     2
