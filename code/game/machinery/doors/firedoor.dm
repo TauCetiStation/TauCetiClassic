@@ -115,7 +115,7 @@
 		return
 
 	..()
-	if(density)
+	if(density && !blocked)
 		open()
 
 /obj/machinery/door/firedoor/attack_hand(mob/user)
