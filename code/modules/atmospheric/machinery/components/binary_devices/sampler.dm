@@ -70,13 +70,13 @@
 /obj/machinery/atmospherics/components/binary/sampler/process_atmos()
 	if(!powered())
 		if(!disabled)
-			update_icon()
 			disabled = TRUE
+			update_icon()
 		return
 
 	if(disabled)
-		update_icon()
 		disabled = FALSE
+		update_icon()
 
 	if(!COOLDOWN_FINISHED(src, last_alert))
 		return
