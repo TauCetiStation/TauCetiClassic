@@ -68134,7 +68134,7 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "cKr" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/atmospherics/components/binary/sampler/stock{
 	dir = 4
 	},
 /turf/simulated/floor{

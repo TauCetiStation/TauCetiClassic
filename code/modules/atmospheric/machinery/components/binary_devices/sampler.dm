@@ -63,6 +63,8 @@
 		add_underlay(T, node2, get_dir(src, node2), node2 ? node2.icon_connect_type : "")
 
 /obj/machinery/atmospherics/components/binary/sampler/hide(i)
+	if(level == PIPE_HIDDEN_LEVEL && istype(loc, /turf/simulated))
+		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	update_underlays()
 
 /obj/machinery/atmospherics/components/binary/sampler/process_atmos()
