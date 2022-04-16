@@ -10,6 +10,8 @@
 	idle_power_usage = 100
 	connect_types = CONNECT_TYPE_REGULAR | CONNECT_TYPE_SCRUBBER | CONNECT_TYPE_SUPPLY
 
+	level = PIPE_HIDDEN_LEVEL
+
 	// Used in radio messages to identify the device
 	var/node_name
 
@@ -19,9 +21,6 @@
 
 	COOLDOWN_DECLARE(last_alert)
 	var/obj/item/device/radio/intercom/alert
-
-	// to prevent excessive updates
-	var/disabled = FALSE
 
 	// to indicate problems on sprite
 	var/alerted = FALSE
@@ -44,7 +43,7 @@
 
 /obj/machinery/atmospherics/components/binary/sampler/update_icon()
 	. = ..()
-	if(disabled)
+	if(!powered())
 		icon_state = "sampler0"
 	else if(alerted)
 		icon_state = "sampler2"
@@ -69,14 +68,8 @@
 
 /obj/machinery/atmospherics/components/binary/sampler/process_atmos()
 	if(!powered())
-		if(!disabled)
-			disabled = TRUE
-			update_icon()
-		return
-
-	if(disabled)
-		disabled = FALSE
 		update_icon()
+		return
 
 	if(!COOLDOWN_FINISHED(src, last_alert))
 		return
@@ -99,10 +92,9 @@
 			alert.autosay("Concentration of [gas_data.name[gas_id]] exceeded its [problem] bound in node \"[node_name]\".", "Atmospherics Alert System")
 			COOLDOWN_START(src, last_alert, ALERT_COOLDOWN)
 			alerted = TRUE
-			update_icon()
 			break
 		alerted = FALSE
-		update_icon()
+	update_icon()
 
 /obj/machinery/atmospherics/components/binary/sampler/ui_interact(mob/user)
 	tgui_interact(user)
@@ -147,6 +139,5 @@
 		"sleeping_agent" = list("min" = 0.0, "max" = 0.02),
 	)
 	node_name = "distribution"
-	level = PIPE_HIDDEN_LEVEL
 
 #undef ALERT_COOLDOWN
