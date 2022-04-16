@@ -160,7 +160,7 @@
 				if(A.fire || A.air_doors_activated)
 					alarmed = 1
 					break
-			if(alarmed)
+			if(alarmed && !blocked)
 				nextstate = CLOSED
 				close()
 
