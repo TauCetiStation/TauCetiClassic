@@ -289,8 +289,14 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/singularly_attractive
 	name = "Singularly Attractive"
-	desc = "Вы чрезвычайно привлекательны... для лорда Сингуло."
+	desc = "Вы чрезвычайно привлекательны... для неприятностей."
 	requirement = "Нет."
 
 /datum/quality/negativeish/singularly_attractive/add_effect(mob/living/carbon/human/H, latespawn)
-	singularity_beacon_list += H
+	global.singularity_beacon_list += H
+	RegisterSignal(H, list(COMSIG_PARENT_QDELETING), .proc/remove)
+	RegisterSignal(H, list(COMSIG_MOB_DIED), .proc/remove)
+
+/datum/quality/negativeish/singularly_attractive/proc/remove()
+	SIGNAL_HANDLER
+	global.singularity_beacon_list -= H

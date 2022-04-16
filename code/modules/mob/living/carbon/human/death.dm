@@ -82,10 +82,6 @@
 			SEND_SIGNAL(T.antag.current, COMSIG_ADD_MOOD_EVENT, "master_died", /datum/mood_event/master_died)
 			to_chat(T.antag.current, "<span class='shadowling'><font size=3>Sudden realization strikes you like a truck! ONE OF OUR MASTERS HAS DIED!!!</span></font>")
 
-	for(var/obj/singularity/singulo in poi_list)
-		if(singulo.z == z && singulo.target == src)
-			singulo.target = null
-
 	..(gibbed)
 
 	SSStatistics.add_death_stat(src)
