@@ -8,6 +8,7 @@ export const SamplerPipe = (props, context) => {
   const {
     gases,
     nodeName,
+    locked,
   } = data;
   return (
     <Window
@@ -16,7 +17,7 @@ export const SamplerPipe = (props, context) => {
       height={400}>
       <Window.Content>
         <Section title={"Node name"}>
-          <Input fluid value={nodeName} onChange={(_, n) => act("setName", { name: n })} />
+          <Input disabled={locked} fluid value={nodeName} onChange={(_, n) => act("setName", { name: n })} />
         </Section>
         <Section title={"Gases"}>
           {gases.map(gas => (
@@ -27,6 +28,7 @@ export const SamplerPipe = (props, context) => {
                 </Stack.Item>
                 <Stack.Item>
                   <NumberInput
+                    disabled={locked}
                     width={5}
                     minValue={0}
                     maxValue={1}
@@ -41,6 +43,7 @@ export const SamplerPipe = (props, context) => {
                 </Stack.Item>
                 <Stack.Item>
                   <NumberInput
+                    disabled={locked}
                     width={5}
                     minValue={0}
                     maxValue={1}

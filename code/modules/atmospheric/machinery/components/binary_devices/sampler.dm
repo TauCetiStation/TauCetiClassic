@@ -12,6 +12,11 @@
 
 	level = PIPE_HIDDEN_LEVEL
 
+	// Prevent unauthorized usage
+	req_access = list(access_atmospherics)
+	allowed_checks = ALLOWED_CHECK_NONE
+	var/locked = TRUE
+
 	// Used in radio messages to identify the device
 	var/node_name
 
@@ -96,6 +101,35 @@
 		alerted = FALSE
 	update_icon()
 
+/obj/machinery/atmospherics/components/binary/sampler/attackby(obj/item/W, mob/user)
+	if(!powered())
+		return ..()
+
+	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda)) // trying to unlock the interface with an ID card
+		if(allowed(user))
+			locked = !locked
+			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock" ] the sampler interface.</span>")
+		return TRUE
+
+	return ..()
+
+/obj/machinery/atmospherics/components/binary/sampler/emag_act(mob/user)
+	if(!powered())
+		return FALSE
+	if(!locked)
+		return FALSE
+	locked = !locked
+	// there is no point in setting something like emagged because unwrenching and wrenching back will reset it
+	// we wait until /obj/item/pipe refactor
+	to_chat(user, "<span class='warning'>You hack the sampler interface.</span>")
+
+/obj/machinery/atmospherics/components/binary/sampler/tgui_status(mob/user)
+	. = ..()
+	if(!powered())
+		return UI_CLOSE
+	if(locked)
+		return min(., UI_UPDATE)
+
 /obj/machinery/atmospherics/components/binary/sampler/ui_interact(mob/user)
 	tgui_interact(user)
 
@@ -110,6 +144,7 @@
 	. = ..()
 	var/list/data = list()
 	data["nodeName"] = node_name
+	data["locked"] = locked
 	var/list/gases = list()
 	for(var/gas_id in thresholds)
 		gases.Add(list(list(
@@ -123,6 +158,8 @@
 /obj/machinery/atmospherics/components/binary/sampler/tgui_act(action, list/params)
 	. = ..()
 	if(.)
+		return
+	if(locked)
 		return
 	switch(action)
 		if("setBound")
