@@ -82,6 +82,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 {{:helper.link('Crew Manifest', 'contact', {'choice' : "41"}, null, 'fixedLeftWide')}}
 				<!-- {{:helper.link('News', data.new_News ? 'mail-closed' : 'mail-open', {'choice' : "6"}, null, 'fixedLeftWide')}} -->
 				{{:helper.link('Finance Management', 'suitcase', {'choice' : "Finance"}, null, 'fixedLeftWide')}}
+				{{:helper.link('Print Forms', 'suitcase', {'choice' : "Form"}, null, 'fixedLeftWide')}}
             </div>
         </div>
         <br>
@@ -1082,12 +1083,14 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
         </div>
 
 	{{else data.mode == 8}}   <!-- Paper Forms -->
-		<H1><span class="average">Print Paper Forms</span></H1>
+		<div class="item">
+            <H2>Print Paper Forms</H2>
+        </div>
 		<div class="item">
             <div class="Paper Forms">
                 <table>
                     {{for data.forms_list}}
-						<td>{{:helper.link(value.name, null, {'choice' : "Form", 'form' : value}, null, null)}}</td>
+						<tr><td>{{:helper.link(value.name, null, {'choice' : "Form", 'form' : value}, null, null)}}</td></tr>
 					{{/for}}
                 </table>
             </div>

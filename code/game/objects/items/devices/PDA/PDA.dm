@@ -538,8 +538,7 @@
 		data["cartridge"] = cartdata
 
 		if(cartridge.department)
-			cartdata["department"] = cartridge.department
-			cartdata["forms"] = cartridge.forms
+			data["forms_list"] = cartridge.forms
 
 	data["stationTime"] = worldtime2text()
 
@@ -961,9 +960,11 @@
 		if("Form")
 			mode = 8
 			var/obj/item/weapon/paper/P = href_list["form"]
+			var/new_paper = new P(src)
 			for(var/obj/machinery/printer/Printer in allprinters)
 				if((cartridge.department == "All" || Printer.department == cartridge.department) && !( Printer.stat & (BROKEN|NOPOWER) ))
-					Printer.print_item(P)
+					Printer.print_item(new_paper)
+					qdel(new_paper)
 
 //SYNDICATE FUNCTIONS===================================
 
