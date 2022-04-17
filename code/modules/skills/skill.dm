@@ -32,19 +32,19 @@
 
 /datum/skill/combat_mech
 	name = SKILL_COMBAT_MECH
-	max_value = 3
+	max_value = 2
 	hint = "Faster moving speed of piloted combat exosuits."
 
 /datum/skill/combat_mech/default
-	value = 1
+	value = 0
 
 /datum/skill/combat_mech/trained
 	rank_name = "Trained"
-	value = 2 //mecha operator, security
+	value = 1 //mecha operator, security
 
 /datum/skill/combat_mech/master
 	rank_name = "Master"
-	value = 3 //nuclear,  HoS, RD
+	value = 2 //nuclear,  HoS, RD
 
 /datum/skill/police
 	name = SKILL_POLICE

@@ -55,4 +55,4 @@
 	for(var/datum/skillset/skillset in user.helpers_skillsets)
 		command = max(command, skillset.get_command_modifier())
 		help += skillset.get_help_additive(skill.name)
-	return min(own_skill_value * command + help, skill.value)
+	return min(own_skill_value * command + help, skill.max_value)
