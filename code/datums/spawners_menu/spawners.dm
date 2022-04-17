@@ -508,7 +508,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/living/podman/spawn_ghost(mob/dead/observer/ghost)
 	..()
-	
+
 	if(replicant_memory)
 		mob.mind.memory = replicant_memory
 
@@ -529,13 +529,30 @@ var/global/list/datum/spawners_cooldown = list()
 	. += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
 	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
 
-/datum/spawner/living/podman/fake_diona
+/datum/spawner/living/podman/nymph
 	name = "Нимфа Дионы"
-	id = "diona_pod"
+	id = "nymph_pod"
 	desc = "Диону вырастили на грядке."
 	wiki_ref = "Dionaea"
 
-/datum/spawner/living/podman/fake_diona/greet_message()
+/datum/spawner/living/podman/nymph/can_spawn(mob/dead/observer/ghost)
+	if(is_alien_whitelisted_banned(ghost, DIONA) || !is_alien_whitelisted(ghost, DIONA))
+		to_chat(ghost, "<span class='warning'>Вы не можете играть за дион.</span>")
+		return FALSE
+
+	return ..()
+
+/datum/spawner/living/podman/nymph/greet_message()
+	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	. += "<B>You are now one of the Dionaea, or were you always one of us? Welcome to the Gestalt, we see you now, again.</B><BR>"
+	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+
+/datum/spawner/living/podman/fake_nymph
+	name = "Нимфа Дионы"
+	id = "fake_nymph_pod"
+	desc = "Диону вырастили на грядке."
+
+/datum/spawner/living/podman/fake_nymph/greet_message()
 	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
 	. += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B><BR>"
 	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"

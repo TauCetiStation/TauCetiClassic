@@ -273,7 +273,7 @@
 
 	. = ..(TRUE)
 
-	if(buckled || resting)
+	if(buckled || ian_sit)
 		pose_last = POSE_SIT
 	else if(stat || weakened || stunned)
 		pose_last = POSE_STAT
@@ -287,3 +287,5 @@
 
 	if(pose_last != pose_prev)
 		update_transform()
+
+	canmove = !(weakened || paralysis || stat || (status_flags & FAKEDEATH)  || stunned || captured || pinned.len || ian_sit)
