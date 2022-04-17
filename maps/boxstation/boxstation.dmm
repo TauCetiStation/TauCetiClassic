@@ -11292,7 +11292,9 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "atf" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/machinery/atmospherics/components/binary/sampler/stock{
+	node_name = "security"
+	},
 /turf/simulated/floor/plating{
 	dir = 9;
 	icon_state = "warnplate"
@@ -41381,11 +41383,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -43357,7 +43359,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -43390,6 +43392,9 @@
 "bzH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
 	},
 /turf/simulated/floor{
 	icon_state = "darkbluecorners"
@@ -75709,6 +75714,22 @@
 /obj/structure/sign/warning/detailed,
 /turf/simulated/wall/r_wall,
 /area/station/hallway/primary/central)
+"kyo" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/bridge)
 "kyH" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -83386,6 +83407,18 @@
 	icon_state = "blue"
 	},
 /area/station/medical/genetics)
+"uhl" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/sampler/stock{
+	dir = 4;
+	node_name = "bridge"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/bridge)
 "uhJ" = (
 /obj/structure/closet,
 /turf/simulated/floor{
@@ -113937,7 +113970,7 @@ aUG
 aUG
 btf
 bwj
-bzG
+uhl
 bEy
 aXf
 efb
@@ -114193,7 +114226,7 @@ aNV
 bnh
 bqi
 btl
-bwk
+kyo
 bzH
 bEz
 bbz
