@@ -191,16 +191,16 @@
 		H.remove_language(language.name)
 
 
-/datum/quality/negativeish/salarian
-	name = "Salarian"
+/datum/quality/negativeish/salackyi
+	name = "Салацькый"
 	desc = "Ну що хлопче, готовий?"
 	requirement = "Нема."
 
-/datum/quality/negativeish/salarian/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/negativeish/salackyi/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
 
-	H.add_language(LANGUAGE_SALARIAN)
-	H.common_language = LANGUAGE_SALARIAN
+	H.add_language(LANGUAGE_SALACKYI)
+	H.common_language = LANGUAGE_SALACKYI
 
 
 /datum/quality/negativeish/clumsy

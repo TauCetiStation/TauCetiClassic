@@ -140,7 +140,7 @@
 
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
-	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 8-round magazines and is compatible \
+	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 7-round or 16-round magazines and is compatible \
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
 	cost = 6
@@ -287,7 +287,7 @@
 	name = "Viscerator Delivery Grenade"
 	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred any non-operatives in the area."
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
-	cost = 7
+	cost = 5
 	uplink_types = list("nuclear")
 /*
 /datum/uplink_item/dangerous/bioterror
@@ -356,7 +356,7 @@
 	name = "Incendiary Mine"
 	desc = "A variation of many different mines, this one will set on fire anyone unfortunate to step on it."
 	item = /obj/item/mine/incendiary
-	cost = 3
+	cost = 2
 	uplink_types = list("nuclear", "traitor")
 
 // AMMUNITION
@@ -373,23 +373,23 @@
 
 /datum/uplink_item/ammo/pistol
 	name = "9mm Handgun Magazine"
-	desc = "An additional 8-round 9mm magazine; compatible with the Stechkin Pistol. These subsonic rounds \
+	desc = "An additional 16-round 9mm magazine; compatible with the Stechkin Pistol. These subsonic rounds \
 			are dirt cheap but are half as effective as .357 rounds."
-	item = /obj/item/ammo_box/magazine/m9mm
-	cost = 2
+	item = /obj/item/ammo_box/magazine/m9mm/ex
+	cost = 1
 
 /datum/uplink_item/ammo/revolver
 	name = "Speedloader-.357"
 	desc = "A speedloader that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_box/a357
-	cost = 3
+	cost = 2
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/ammo/smg
 	name = "Ammo-.45 ACP"
 	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun."
 	item = /obj/item/ammo_box/magazine/m12mm
-	cost = 3
+	cost = 2
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/uzi
@@ -424,7 +424,7 @@
 	name = "Ammo-.45 ACP High Velocity"
 	desc = "A 15-round .45 ACP HV magazine for use in the C-20r submachine gun. These rounds used to hit target almost instantly."
 	item = /obj/item/ammo_box/magazine/m12mm/hv
-	cost = 5
+	cost = 4
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/smg_imp
@@ -445,21 +445,21 @@
 	name = "Ammo-12g Buckshot"
 	desc = "An additional  8-round buckshot magazine for use in the Bulldog shotgun."
 	item = /obj/item/ammo_box/magazine/m12g
-	cost = 4
+	cost = 3
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/bullstun
 	name = "Ammo-12g Stun Shot"
 	desc = "An alternative 8-round stun shot magazine for use in the Bulldog shotgun. Accurate, reliable, powerful."
 	item = /obj/item/ammo_box/magazine/m12g/stun
-	cost = 4
+	cost = 1
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/bullincendiary
 	name = "Ammo-12g Incendiary"
 	desc = "An alternative 8-round incendiary magazine for use in the Bulldog shotgun."
 	item = /obj/item/ammo_box/magazine/m12g/incendiary
-	cost = 5
+	cost = 4
 	uplink_types = list("nuclear")
 /*
 /datum/uplink_item/ammo/pistol
@@ -494,7 +494,7 @@
 	name = "Ammo-40x46mm (EMP)"
 	desc = "A single grenade for use in underslung grenade launcher. This one creates EMP blast."
 	item = /obj/item/ammo_casing/r4046/chem/EMP
-	cost = 3
+	cost = 1
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/heavyrifle
@@ -515,7 +515,7 @@
 	name = "EMP missile"
 	desc = "A EMP missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket/emp
-	cost = 10
+	cost = 5
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/chemicals
@@ -872,7 +872,7 @@
 	desc = "The Syndicate Bomb has an adjustable timer with a minimum setting of 60 seconds. Ordering the bomb sends you a small beacon, which will teleport the explosive to your location when you activate it. \
 	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb."
 	item = /obj/item/device/radio/beacon/syndicate_bomb
-	cost = 12
+	cost = 10
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/syndicate_detonator
@@ -922,6 +922,7 @@
 	The ability for an agent to open an uplink after their posessions have been stripped from them makes this implant excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 20
+	uplink_types = list("traitor")
 
 /datum/uplink_item/implants/storage
 	name = "Compressed Implant"

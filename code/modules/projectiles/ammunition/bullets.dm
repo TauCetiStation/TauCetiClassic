@@ -1,4 +1,5 @@
 /obj/item/ammo_casing/a357
+	name = "357. bullet"
 	desc = "A .357 bullet casing."
 	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet/revbullet
