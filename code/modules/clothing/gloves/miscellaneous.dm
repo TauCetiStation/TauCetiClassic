@@ -126,3 +126,9 @@
 	name = "marine gloves"
 	icon_state = "marinad"
 	item_state = "bgloves"
+
+/obj/item/clothing/gloves/left
+	name = "left black glove"
+	desc = "The left one of a pair of black gloves. Wonder where the other one went..."
+	icon_state = "left_glove"
+	item_state = "left_glove"

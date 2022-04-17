@@ -153,7 +153,6 @@
 
 	if(prob(30))
 		var/list/misc = list(
-			/obj/item/clothing/accessory/fluff/altair_locket,
 			/obj/item/clothing/accessory/holobadge,
 			/obj/item/clothing/accessory/tie/horrible,
 			/obj/item/clothing/accessory/medal,

@@ -7338,7 +7338,7 @@
 /obj/item/weapon/paper,
 /obj/item/weapon/paper,
 /obj/item/weapon/paper,
-/obj/item/weapon/pen/fluff/fountainpen,
+/obj/item/weapon/pen/ghost,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -20176,9 +20176,9 @@
 	name = "Serif"
 	},
 /obj/item/clothing/shoes/western,
-/obj/item/clothing/under/fluff/cowboy,
-/obj/item/clothing/under/fluff/cowboy/grey,
-/obj/item/clothing/under/fluff/cowboy/brown,
+/obj/item/clothing/under/cowboy,
+/obj/item/clothing/under/cowboy/grey,
+/obj/item/clothing/under/cowboy/brown,
 /obj/item/clothing/accessory/holster/armpit,
 /obj/item/device/harmonica,
 /obj/item/toy/gun/peacemaker,
