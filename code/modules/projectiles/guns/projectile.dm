@@ -144,7 +144,7 @@
 		return
 
 	to_chat(user, "<span class='notice'>You start a tactical reload.</span>")
-	var/tac_reload_time = apply_skill_bonus(user, SKILL_TASK_TRIVIAL, list(/datum/skill/firearms/trained), multiplier = 0.5)
+	var/tac_reload_time = apply_skill_bonus(user, SKILL_TASK_TRIVIAL, list(/datum/skill/firearms/trained), multiplier = -0.5)
 	if(!do_after(user, tac_reload_time, TRUE, new_magazine, can_move = TRUE) && loc == user)
 		return
 	var/old_magazine = magazine
