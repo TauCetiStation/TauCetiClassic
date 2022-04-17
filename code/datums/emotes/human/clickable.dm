@@ -2,14 +2,18 @@
 /datum/emote/clickable
 	var/duration
 
-/datum/emote/clickable/add_cloud(mob/user)
-	var/atom/movable/emote_bubble = new()
-	emote_bubble.icon_state = cloud
-	emote_bubble.icon = 'icons/mob/emote.dmi'
-	user.vis_contents += emote_bubble
-	RegisterSignal(emote_bubble, list(COMSIG_CLICK), CALLBACK(src, .proc/on_cloud_click_handler, user))
-	QDEL_IN(emote_bubble, duration)
+/atom/movable/clickable_cloud
+	icon = 'icons/mob/emote.dmi'
 
+/atom/movable/clickable_cloud/proc/add_to_user(mob/user, duration, state)
+	icon_state = state
+	user.vis_contents += src
+	QDEL_IN(src, duration)
+
+/datum/emote/clickable/add_cloud(mob/user)
+	var/atom/movable/clickable_cloud/bubble = new()
+	bubble.add_to_user(user, duration, cloud)
+	RegisterSignal(bubble, list(COMSIG_CLICK), CALLBACK(src, .proc/on_cloud_click_handler, user))
 
 /datum/emote/clickable/proc/on_cloud_click_handler(target, p, location, control, params, clicker)
 	SIGNAL_HANDLER
