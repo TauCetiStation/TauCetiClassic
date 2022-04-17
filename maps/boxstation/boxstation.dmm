@@ -22385,7 +22385,7 @@
 	pixel_y = 24
 	},
 /obj/structure/table/woodentable,
-/obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1{
+/obj/item/weapon/lighter/zippo{
 	pixel_x = 15;
 	pixel_y = 8
 	},
@@ -30663,7 +30663,6 @@
 /obj/item/device/camera,
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
-/obj/item/clothing/under/fluff/terezi_suit,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bcG" = (
@@ -58638,7 +58637,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "ciJ" = (
-/obj/item/weapon/crowbar/fluff/zelda_creedy_1,
+/obj/item/weapon/crowbar/red,
 /obj/item/clothing/head/festive,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
@@ -64856,7 +64855,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/britcup{
 	pixel_x = -4
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/fluff/eleanor_stone,
+/obj/item/weapon/reagent_containers/glass/beaker/teapot,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
@@ -77111,7 +77110,7 @@
 "lYb" = (
 /obj/structure/rack,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/pen/fluff/fancypen,
+/obj/item/weapon/pen/ghost,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lZb" = (
