@@ -1080,9 +1080,21 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 </table></center>
             </div>
         </div>
+
+	{{else data.mode == 8}}   <!-- Paper Forms -->
+		<H1><span class="average">Print Paper Forms</span></H1>
+		<div class="item">
+            <div class="Paper Forms">
+                <table>
+                    {{for data.forms_list}}
+						<td>{{:helper.link(value.name, null, {'choice' : "Form", 'form' : value}, null, null)}}</td>
+					{{/for}}
+                </table>
+            </div>
+        </div>
     {{/if}}
 {{else}}
     <div class="wholeScreen">
-        <br><br><br><br><br><br><br>No Owner information found, please swipe ID
+        <br><br><br><br><br><br><br><br>No Owner information found, please swipe ID
     </div>
 {{/if}}

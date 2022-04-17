@@ -1,10 +1,11 @@
 var/global/list/obj/machinery/faxmachine/allfaxes = list()
 var/global/list/alldepartments = list("Central Command")
+var/global/list/obj/machinery/printer/allprinters = list()
 
 /obj/machinery/faxmachine
 	name = "fax machine"
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "fax"
+	icon = 'icons/obj/machines/printers.dmi'
+	icon_state = "fax-idle"
 	req_one_access = list(access_lawyer, access_heads)
 	anchored = TRUE
 	density = TRUE
@@ -101,7 +102,7 @@ var/global/list/alldepartments = list("Central Command")
 				sendcooldown = 1800
 				centcomm_fax(usr, tofax, src)
 			else
-				sendcooldown = 600
+				sendcooldown = 60
 				send_fax(usr, tofax, dptdest)
 
 			audible_message("Message transmitted successfully.")
@@ -114,6 +115,8 @@ var/global/list/alldepartments = list("Central Command")
 			if(!ishuman(usr))
 				to_chat(usr, "<span class='warning'>You can't do it.</span>")
 			else
+				flick("fax-receive", src)
+				sleep(12)
 				tofax.loc = usr.loc
 				usr.put_in_hands(tofax)
 				to_chat(usr, "<span class='notice'>You take the paper out of \the [src].</span>")
@@ -161,7 +164,7 @@ var/global/list/alldepartments = list("Central Command")
 			user.drop_from_inventory(O, src)
 			tofax = O
 			to_chat(user, "<span class='notice'>You insert the paper into \the [src].</span>")
-			flick("faxsend", src)
+			flick("fax-transmitt", src)
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
@@ -210,9 +213,10 @@ var/global/list/alldepartments = list("Central Command")
 	)
 
 /proc/send_fax(sender, obj/item/weapon/paper/P, department)
-	for(var/obj/machinery/faxmachine/F in allfaxes)
-		if((department == "All" || F.department == department) && !( F.stat & (BROKEN|NOPOWER) ))
-			F.print_fax(P.create_self_copy())
+
+	for(var/obj/machinery/printer/Printer in allprinters)
+		if((department == "All" || Printer.department == department) && !( Printer.stat & (BROKEN|NOPOWER) ))
+			Printer.print_item(P)
 
 	log_fax("[sender] sending [P.name] to [department]: [P.info]")
 
@@ -220,9 +224,10 @@ var/global/list/alldepartments = list("Central Command")
 	set waitfor = FALSE
 
 	playsound(src, "sound/items/polaroid1.ogg", VOL_EFFECTS_MASTER)
-	flick("faxreceive", src)
+	flick("fax-receive", src)
 
 	sleep(20)
 
 	P.loc = loc
+	P.pixel_y -= 16
 	audible_message("Received message.")

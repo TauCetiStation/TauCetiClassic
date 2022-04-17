@@ -33,6 +33,8 @@
 	var/message1	// used for status_displays
 	var/message2
 	var/list/stored_data = list()
+	var/department
+	var/forms = list()
 
 /obj/item/weapon/cartridge/Destroy()
 	QDEL_NULL(radio)
@@ -42,37 +44,63 @@
 	name = "Power-ON Cartridge"
 	icon_state = "cart-e"
 	access_engine = 1
+	department = "Engineering Common"
+
+/obj/item/weapon/cartridge/engineering/atom_init()
+	. = ..()
+	forms = engineering_forms
 
 /obj/item/weapon/cartridge/atmos
 	name = "BreatheDeep Cartridge"
 	icon_state = "cart-a"
 	access_atmos = 1
+	department = "Engineering Common"
+
+/obj/item/weapon/cartridge/atmos/atom_init()
+	. = ..()
+	forms = engineering_forms
 
 /obj/item/weapon/cartridge/medical
 	name = "Med-U Cartridge"
 	icon_state = "cart-m"
 	access_medical = 1
+	department = "Medbay Common"
+
+/obj/item/weapon/cartridge/medical/atom_init()
+	. = ..()
+	forms = medbay_forms
 
 /obj/item/weapon/cartridge/chemistry
 	name = "ChemWhiz Cartridge"
 	icon_state = "cart-chem"
 	access_reagent_scanner = 1
+	department = "Medbay Common"
+
+/obj/item/weapon/cartridge/chemistry/atom_init()
+	. = ..()
+	forms = medbay_forms
 
 /obj/item/weapon/cartridge/security
 	name = "R.O.B.U.S.T. Cartridge"
 	icon_state = "cart-s"
 	access_security = 1
+	department = "Brig Common"
 
 /obj/item/weapon/cartridge/security/atom_init()
 	. = ..()
 	radio = new /obj/item/radio/integrated/beepsky(src)
+	forms = security_forms
 
 /obj/item/weapon/cartridge/detective
 	name = "D.E.T.E.C.T. Cartridge"
 	icon_state = "cart-s"
 	access_security = 1
 	access_medical = 1
+	department = "Brig Common"
 
+/obj/item/weapon/cartridge/detective/atom_init()
+	. = ..()
+	forms = security_forms
 
 /obj/item/weapon/cartridge/janitor
 	name = "CustodiPRO Cartridge"
@@ -84,6 +112,9 @@
 	name = "P.R.O.V.E. Cartridge"
 	icon_state = "cart-s"
 	access_security = 1
+	department = "Coworking"
+	forms = list(/obj/item/weapon/paper/offence_report,
+			/obj/item/weapon/paper/third_person)
 
 /obj/item/weapon/cartridge/clown
 	name = "Honkworks 5.0"
@@ -113,6 +144,11 @@
 	icon_state = "cart-tox"
 	access_reagent_scanner = 1
 	access_atmos = 1
+	department = "RnD Common"
+
+/obj/item/weapon/cartridge/signal/science/atom_init()
+	. = ..()
+	forms = rnd_forms
 
 /obj/item/weapon/cartridge/signal/atom_init()
 	. = ..()
@@ -123,10 +159,12 @@
 	desc = "Perfect for the Quartermaster on the go!"
 	icon_state = "cart-q"
 	access_quartermaster = 1
+	department = "Qm"
 
 /obj/item/weapon/cartridge/quartermaster/atom_init()
 	. = ..()
 	radio = new /obj/item/radio/integrated/mule(src)
+	forms = cargo_forms
 
 /obj/item/weapon/cartridge/head
 	name = "Easy-Record DELUXE"
@@ -140,20 +178,24 @@
 	access_quartermaster = 1
 	access_janitor = 1
 	access_security = 1
+	department = "HoP"
 
 /obj/item/weapon/cartridge/hop/atom_init()
 	. = ..()
 	radio = new /obj/item/radio/integrated/mule(src)
+	forms = hrd_forms
 
 /obj/item/weapon/cartridge/hos
 	name = "R.O.B.U.S.T. DELUXE"
 	icon_state = "cart-hos"
 	access_status_display = 1
 	access_security = 1
+	department = "HoS"
 
 /obj/item/weapon/cartridge/hos/atom_init()
 	. = ..()
 	radio = new /obj/item/radio/integrated/beepsky(src)
+	forms = security_forms
 
 /obj/item/weapon/cartridge/ce
 	name = "Power-On DELUXE"
@@ -161,6 +203,11 @@
 	access_status_display = 1
 	access_engine = 1
 	access_atmos = 1
+	department = "CE"
+
+/obj/item/weapon/cartridge/ce/atom_init()
+	. = ..()
+	forms = engineering_forms
 
 /obj/item/weapon/cartridge/cmo
 	name = "Med-U DELUXE"
@@ -168,6 +215,11 @@
 	access_status_display = 1
 	access_reagent_scanner = 1
 	access_medical = 1
+	department = "CMO"
+
+/obj/item/weapon/cartridge/cmo/atom_init()
+	. = ..()
+	forms = medbay_forms
 
 /obj/item/weapon/cartridge/rd
 	name = "Signal Ace DELUXE"
@@ -175,10 +227,12 @@
 	access_status_display = 1
 	access_reagent_scanner = 1
 	access_atmos = 1
+	department = "RD"
 
 /obj/item/weapon/cartridge/rd/atom_init()
 	. = ..()
 	radio = new /obj/item/radio/integrated/signal(src)
+	forms = rnd_forms
 
 /obj/item/weapon/cartridge/captain
 	name = "Value-PAK Cartridge"
@@ -192,6 +246,11 @@
 	access_reagent_scanner = 1
 	access_status_display = 1
 	access_atmos = 1
+	department = "Bridge"
+
+/obj/item/weapon/cartridge/captain/atom_init()
+	. = ..()
+	forms = important_forms
 
 /obj/item/weapon/cartridge/syndicate
 	name = "Detomatix Cartridge"
@@ -522,6 +581,10 @@
 		JaniData["cleanbots"] = CbotData
 		JaniData["carts"] = CartData
 		values["janitor"] = JaniData
+
+	//Forms
+	if(mode==8)
+		values["forms_list"] = department
 
 	return values
 

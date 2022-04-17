@@ -537,6 +537,10 @@
 			cartdata["charges"] = cartridge.charges ? cartridge.charges : 0
 		data["cartridge"] = cartdata
 
+		if(cartridge.department)
+			cartdata["department"] = cartridge.department
+			cartdata["forms"] = cartridge.forms
+
 	data["stationTime"] = worldtime2text()
 
 	var/secLevelStr
@@ -953,6 +957,13 @@
 					var/datum/money_account/account = person["acc_datum"]
 					account.change_salary(U, owner, name, ownrank)
 					break
+
+		if("Form")
+			mode = 8
+			var/obj/item/weapon/paper/P = href_list["form"]
+			for(var/obj/machinery/printer/Printer in allprinters)
+				if((cartridge.department == "All" || Printer.department == cartridge.department) && !( Printer.stat & (BROKEN|NOPOWER) ))
+					Printer.print_item(P)
 
 //SYNDICATE FUNCTIONS===================================
 
