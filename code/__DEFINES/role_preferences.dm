@@ -13,7 +13,6 @@
 #define ROLE_CULTIST           "Cultist"
 #define ROLE_BLOB              "Blob"
 #define ROLE_NINJA             "Ninja"
-#define ROLE_RAIDER            "Raider"
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
 #define ROLE_FAMILIES          "Families"
@@ -44,7 +43,6 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_CULTIST    = list(IGNORE_NARSIE_SLAVE),
 	ROLE_BLOB       = list(IGNORE_EVENT_BLOB),
 	ROLE_NINJA      = null,
-	ROLE_RAIDER     = null,
 	ROLE_SHADOWLING = null,
 	ROLE_ABDUCTOR   = null,
 	ROLE_FAMILIES   = null,

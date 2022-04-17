@@ -5214,9 +5214,7 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "anf" = (
-/obj/effect/landmark{
-	name = "voxstart"
-	},
+/obj/effect/landmark/heist_spawn,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/flour,
 /turf/simulated/shuttle/floor/vox{
@@ -5566,9 +5564,7 @@
 /turf/environment/space,
 /area/shuttle/transport1/centcom)
 "anX" = (
-/obj/effect/landmark{
-	name = "voxstart"
-	},
+/obj/effect/landmark/heist_spawn,
 /obj/item/trash/syndi_cakes,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
@@ -8813,9 +8809,7 @@
 	},
 /area/shuttle/vox/arkship)
 "avc" = (
-/obj/effect/landmark{
-	name = "voxstart"
-	},
+/obj/effect/landmark/heist_spawn,
 /obj/effect/decal/cleanable/generic,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
@@ -8924,9 +8918,7 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "avq" = (
-/obj/effect/landmark{
-	name = "voxstart"
-	},
+/obj/effect/landmark/heist_spawn,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
@@ -18959,9 +18951,7 @@
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 1
 	},
-/obj/effect/landmark{
-	name = "voxstart"
-	},
+/obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -19352,9 +19342,7 @@
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 8
 	},
-/obj/effect/landmark{
-	name = "voxstart"
-	},
+/obj/effect/landmark/heist_spawn,
 /obj/machinery/light{
 	dir = 4
 	},

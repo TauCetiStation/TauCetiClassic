@@ -491,6 +491,5 @@
 
 	ckey = candidate.ckey
 
-	var/datum/faction/borers/B = find_faction_by_type(/datum/faction/borers)
-	if(B)
-		add_faction_member(B, src)
+	var/datum/faction/borers/B = create_uniq_faction(/datum/faction/borers)
+	add_faction_member(B, src)

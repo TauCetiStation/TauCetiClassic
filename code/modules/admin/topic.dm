@@ -674,11 +674,8 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
 
-		//Raider (New heist)
-		if(jobban_isbanned(M, ROLE_RAIDER) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_RAIDER];jobban4=\ref[M]'>[ROLE_RAIDER]</a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_RAIDER];jobban4=\ref[M]'>[ROLE_RAIDER]</a></td>"
+		// YOUR MODE COULD BE HERE
+		jobs += "<td width='20%'>FREE PLACE!!!</td>"
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
