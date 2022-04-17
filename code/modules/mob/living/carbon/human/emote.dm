@@ -1,6 +1,6 @@
 /mob/living/carbon/human
 	var/list/default_emotes = list(
-		/datum/emote/list_emotes,
+		/datum/emote/list,
 		/datum/emote/laugh,
 		/datum/emote/giggle,
 		/datum/emote/grunt,
