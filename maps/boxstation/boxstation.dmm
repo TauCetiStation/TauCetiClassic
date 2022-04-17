@@ -53183,6 +53183,7 @@
 /area/station/maintenance/engineering)
 "bRv" = (
 /obj/structure/closet,
+/obj/random/misc/all,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bRw" = (
@@ -55111,10 +55112,6 @@
 	icon_state = "panelscorched"
 	},
 /area/station/maintenance/cargo)
-"bVn" = (
-/obj/structure/falsewall,
-/turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
 "bVo" = (
 /turf/simulated/wall,
 /area/station/construction/assembly_line)
@@ -55769,7 +55766,9 @@
 /area/station/construction/assembly_line)
 "bWC" = (
 /obj/machinery/computer/mech_bay_power_console,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
 /area/station/cargo/recycler)
 "bWD" = (
 /obj/structure/table/glass,
@@ -56083,7 +56082,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
 /area/station/cargo/recycler)
 "bXl" = (
 /obj/structure/grille,
@@ -56562,7 +56563,9 @@
 /obj/machinery/mech_bay_recharge_port{
 	dir = 1
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
 /area/station/cargo/recycler)
 "bYo" = (
 /obj/structure/stool/bed/chair/comfy/black{
@@ -61169,6 +61172,7 @@
 /obj/structure/closet/crate,
 /obj/random/tools/tool,
 /obj/item/weapon/storage/box/lights/mixed,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "clG" = (
@@ -61510,12 +61514,6 @@
 	icon_state = "solarpanel"
 	},
 /area/station/solar/port)
-"cmx" = (
-/obj/item/stack/cable_coil/cut/red,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/station/maintenance/cargo)
 "cmz" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -74240,6 +74238,7 @@
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/item/device/multitool,
 /obj/effect/spider/stickyweb,
+/obj/effect/spawner/lootdrop/maintenance/three,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "gZb" = (
@@ -76617,10 +76616,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
-"jFb" = (
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
 "jFK" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Break Room";
@@ -77535,6 +77530,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/lootdrop/maintenance/three,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "kFe" = (
@@ -81548,6 +81544,7 @@
 /obj/item/device/flashlight,
 /obj/random/tools/tool,
 /obj/random/tools/tool,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "pOb" = (
@@ -102352,7 +102349,7 @@ aSP
 cfS
 cfq
 cgz
-cmx
+cfS
 aFg
 aSc
 aXJ
@@ -102609,7 +102606,7 @@ aSP
 cgO
 ixO
 ciO
-cgx
+cEn
 aPD
 bxz
 aXJ
@@ -108783,7 +108780,7 @@ tEw
 fpb
 aSM
 aSM
-jFb
+bEW
 moP
 mNg
 sCd
@@ -111882,7 +111879,7 @@ bRD
 bSu
 bXX
 bUJ
-bVn
+bIZ
 coV
 bXh
 mnb
