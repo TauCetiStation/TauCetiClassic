@@ -927,7 +927,7 @@ var/global/list/misc_forms = list(list("type" = /obj/item/weapon/paper/bar_menu,
 
 /obj/item/weapon/paper/customs_report
 	name = "Протокол растаможивания"
-	info = {"<center><large><b>Служба Безопасности НТС "Велосити"</b><br>
+	info = {"<center><large><b>Служба Безопасности НТС "Велосити"</b>
 			Протокол растаможивания</large></center><br>
 			<hr>Полное имя запросившего: <span class=\"paper_field\"></span><br>
 			Полное имя офицера транзитной станции: <span class=\"paper_field\"></span><br>
