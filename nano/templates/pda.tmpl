@@ -1082,16 +1082,16 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             </div>
         </div>
 
-	{{else data.mode == 8}}   <!-- Paper Forms -->
-		<div class="item">
+    {{else data.mode == 8}}   <!-- Paper Forms -->
+        <div class="item">
             <H2>Print Paper Forms</H2>
         </div>
-		<div class="item">
+        <div class="item">
             <div class="Paper Forms">
                 <table>
                     {{for data.forms_list}}
-						<tr><td>{{:helper.link(value["name"], null, {'choice' : "Form", 'form' : value["type"]}, null, null)}}</td></tr>
-					{{/for}}
+                        <tr><td>{{:helper.link(value["name"], null, {'choice' : "Form", 'form' : value["type"]}, null, null)}}</td></tr>
+                    {{/for}}
                 </table>
             </div>
         </div>

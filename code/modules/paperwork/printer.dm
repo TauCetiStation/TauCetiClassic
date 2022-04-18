@@ -10,15 +10,10 @@
 	interact_offline = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/toner = 30 //how much toner is left! woooooo~
-
-	var/obj/item/weapon/paper/print = null // what we're sending
 	var/paper = 20
-
+	var/list/printing_queue = list()
+	var/printing = FALSE
 	var/department = "Unknown" // our department
-
-	var/obj/item/weapon/paper/copypaper = null	//what's in the copier!
-	var/obj/item/weapon/photo/copyphoto = null
-	var/obj/item/weapon/paper_bundle/copybundle = null
 
 /obj/machinery/printer/atom_init()
 	. = ..()
@@ -29,9 +24,16 @@
 
 	update_icon()
 
+/obj/machinery/printer/process()
+	..()
+	if(!printing_queue.len || printing)
+		return
+	playsound(src, "sound/machines/chime.ogg", VOL_EFFECTS_MASTER)
+	playsound(src, "sound/machines/printer_startup.ogg", VOL_EFFECTS_MASTER, vary = FALSE)
+	addtimer(CALLBACK(src, .proc/print), 15)
+
 /obj/machinery/printer/Destroy()
 	allprinters -= src
-	QDEL_NULL(print)
 	return ..()
 
 /obj/machinery/printer/ex_act(severity)
@@ -67,14 +69,11 @@
 
 /obj/machinery/printer/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
-		if(!print)
-			user.drop_from_inventory(O, src)
-			paper++
-			to_chat(user, "<span class='notice'>You insert the paper into \the [src].</span>")
-			update_icon()
-			updateUsrDialog()
-		else
-			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
+		user.drop_from_inventory(O, src)
+		paper++
+		to_chat(user, "<span class='notice'>You insert the paper into \the [src].</span>")
+		update_icon()
+		updateUsrDialog()
 	else if(iswrench(O))
 		default_unfasten_wrench(user, O)
 	else if(istype(O, /obj/item/device/toner))
@@ -87,52 +86,50 @@
 		else
 			to_chat(user, "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
 
-/obj/machinery/printer/proc/get_print_delay(obj/item/I)
-	if(istype(I, /obj/item/weapon/paper))
-		return 11
+/obj/machinery/printer/proc/queue_print(obj/O)
+	printing_queue += O
 
-	if(istype(I, /obj/item/weapon/photo))
-		return 11
-
-	if(istype(I, /obj/item/weapon/paper_bundle))
-		return 11
-
-	return 0
+/obj/machinery/printer/proc/print()
+	for(var/obj/O in printing_queue)
+		if(paper <= 0 || toner <= 0)
+			visible_message("<span class='info'>Not enough paper or toner, please refresh to continue printing.</span>")
+			break
+		printing = TRUE
+		addtimer(CALLBACK(src, .proc/print_item, O), 10)
+		printing_queue -= O
+	printing = FALSE
+	playsound(src, "sound/machines/printer_endup.ogg", VOL_EFFECTS_MASTER, vary = FALSE)
 
 // Return additional delay after copying
 /obj/machinery/printer/proc/print_item(obj/O)
-	playsound(src, "sound/machines/printer_print.ogg", VOL_EFFECTS_MASTER, vary = FALSE)
 	if(paper > 1)
 		flick("printer-papers-process", src)
 	else
 		flick("printer-paper-process", src)
 
 	if(istype(O, /obj/item/weapon/paper))
-		copypaper = O
-		print(O)
-		return 0
+		printpaper(O)
 
 	if(istype(O, /obj/item/weapon/photo))
-		copyphoto = O
 		printphoto(O)
-		return 0
+		toner -= 4
 
 	if(istype(O, /obj/item/weapon/paper_bundle))
-		copybundle = O
-		var/obj/item/weapon/paper_bundle/B = printbundle(copybundle)
-		return 11 * B.pages.len
+		printbundle(O)
 
-	return 0
+	update_icon()
 
-/obj/machinery/printer/proc/printbundle(obj/item/weapon/paper_bundle/bundle, need_toner = TRUE)
+	toner--
+	paper--
+
+/obj/machinery/printer/proc/printbundle(obj/item/weapon/paper_bundle/bundle)
 	var/obj/item/weapon/paper_bundle/p = new /obj/item/weapon/paper_bundle (src)
-
 	for(var/obj/item/weapon/W in bundle.pages)
-		if(toner <= 0 && need_toner)
+		if(toner <= 0)
 			toner = 0
 			break
 		if(istype(W, /obj/item/weapon/paper))
-			W = print(W)
+			W = printpaper(W)
 		else if(istype(W, /obj/item/weapon/photo))
 			W = printphoto(W)
 		W.loc = p
@@ -147,12 +144,8 @@
 	p.pixel_y += pixel_y
 	p.pixel_x += pixel_x
 	p.pixel_y -= 8
-	update_icon()
-	return p
 
-/obj/machinery/printer/proc/print(obj/item/weapon/paper/copy)
-	if(!(paper > 0))
-		return
+/obj/machinery/printer/proc/printpaper(obj/item/weapon/paper/copy)
 	var/obj/item/weapon/paper/P = new(loc)
 	if(toner > 10)	//lots of toner, make it dark
 		P.info = "<font color = #101010>"
@@ -190,17 +183,14 @@
 		img.pixel_x = copy.offset_x[i]
 		img.pixel_y = copy.offset_y[i]
 		P.add_overlay(img)
+	var/obj/item/weapon/pen/Pen = new(src)
+	P.parsepencode(P.info, Pen)
+	qdel(Pen)
 	P.updateinfolinks()
 	P.update_icon()
-	update_icon()
-	toner--
-	paper--
-	return P
 
 
 /obj/machinery/printer/proc/printphoto(obj/item/weapon/photo/photocopy)
-	if(!(paper > 0))
-		return
 	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo(src.loc)
 	var/icon/I = icon(photocopy.icon, photocopy.icon_state)
 	var/icon/img = icon(photocopy.img)
@@ -226,7 +216,6 @@
 	paper--
 	if(toner < 0)
 		toner = 0
-	return p
 
 /obj/item/device/toner
 	name = "toner cartridge"

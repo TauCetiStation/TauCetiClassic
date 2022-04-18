@@ -213,14 +213,9 @@ var/global/list/obj/machinery/printer/allprinters = list()
 	)
 
 /proc/send_fax(sender, obj/item/weapon/paper/P, department)
-
 	for(var/obj/machinery/printer/Printer in allprinters)
 		if((department == "All" || Printer.department == department) && !( Printer.stat & (BROKEN|NOPOWER) ))
-			playsound(Printer, "sound/machines/printer_startup.ogg", VOL_EFFECTS_MASTER, vary = FALSE)
-			sleep(30)
-			Printer.print_item(P)
-			sleep(10)
-			playsound(Printer, "sound/machines/printer_endup.ogg", VOL_EFFECTS_MASTER, vary = FALSE)
+			Printer.queue_print(P)
 
 	log_fax("[sender] sending [P.name] to [department]: [P.info]")
 
