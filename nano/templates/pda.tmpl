@@ -1090,7 +1090,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             <div class="Paper Forms">
                 <table>
                     {{for data.forms_list}}
-						<tr><td>{{:helper.link(value.name, null, {'choice' : "Form", 'form' : value}, null, null)}}</td></tr>
+						<tr><td>{{:helper.link(value["name"], null, {'choice' : "Form", 'form' : value["type"]}, null, null)}}</td></tr>
 					{{/for}}
                 </table>
             </div>

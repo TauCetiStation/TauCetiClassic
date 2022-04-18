@@ -40,6 +40,10 @@
 	QDEL_NULL(radio)
 	return ..()
 
+/obj/item/weapon/cartridge/atom_init()
+	. = ..()
+	forms |= misc_forms
+
 /obj/item/weapon/cartridge/engineering
 	name = "Power-ON Cartridge"
 	icon_state = "cart-e"
@@ -47,8 +51,8 @@
 	department = "Engineering Common"
 
 /obj/item/weapon/cartridge/engineering/atom_init()
+	forms |= engineering_forms
 	. = ..()
-	forms = engineering_forms
 
 /obj/item/weapon/cartridge/atmos
 	name = "BreatheDeep Cartridge"
@@ -57,8 +61,8 @@
 	department = "Engineering Common"
 
 /obj/item/weapon/cartridge/atmos/atom_init()
+	forms |= engineering_forms
 	. = ..()
-	forms = engineering_forms
 
 /obj/item/weapon/cartridge/medical
 	name = "Med-U Cartridge"
@@ -67,8 +71,8 @@
 	department = "Medbay Common"
 
 /obj/item/weapon/cartridge/medical/atom_init()
+	forms |= medbay_forms
 	. = ..()
-	forms = medbay_forms
 
 /obj/item/weapon/cartridge/chemistry
 	name = "ChemWhiz Cartridge"
@@ -77,8 +81,8 @@
 	department = "Medbay Common"
 
 /obj/item/weapon/cartridge/chemistry/atom_init()
+	forms |= medbay_forms
 	. = ..()
-	forms = medbay_forms
 
 /obj/item/weapon/cartridge/security
 	name = "R.O.B.U.S.T. Cartridge"
@@ -87,9 +91,9 @@
 	department = "Brig Common"
 
 /obj/item/weapon/cartridge/security/atom_init()
-	. = ..()
 	radio = new /obj/item/radio/integrated/beepsky(src)
-	forms = security_forms
+	forms |= security_forms
+	. = ..()
 
 /obj/item/weapon/cartridge/detective
 	name = "D.E.T.E.C.T. Cartridge"
@@ -99,8 +103,8 @@
 	department = "Brig Common"
 
 /obj/item/weapon/cartridge/detective/atom_init()
+	forms |= security_forms
 	. = ..()
-	forms = security_forms
 
 /obj/item/weapon/cartridge/janitor
 	name = "CustodiPRO Cartridge"
@@ -113,8 +117,10 @@
 	icon_state = "cart-s"
 	access_security = 1
 	department = "Coworking"
-	forms = list(/obj/item/weapon/paper/offence_report,
-			/obj/item/weapon/paper/third_person)
+
+/obj/item/weapon/cartridge/lawyer/atom_init()
+	forms |= list(list("type" = /obj/item/weapon/paper/third_person, "name" = "Свидетельский лист"))
+	. = ..()
 
 /obj/item/weapon/cartridge/clown
 	name = "Honkworks 5.0"
@@ -147,8 +153,8 @@
 	department = "RnD Common"
 
 /obj/item/weapon/cartridge/signal/science/atom_init()
+	forms |= rnd_forms
 	. = ..()
-	forms = rnd_forms
 
 /obj/item/weapon/cartridge/signal/atom_init()
 	. = ..()
@@ -162,14 +168,19 @@
 	department = "Qm"
 
 /obj/item/weapon/cartridge/quartermaster/atom_init()
-	. = ..()
 	radio = new /obj/item/radio/integrated/mule(src)
-	forms = cargo_forms
+	forms |= cargo_forms
+	. = ..()
 
 /obj/item/weapon/cartridge/head
 	name = "Easy-Record DELUXE"
 	icon_state = "cart-h"
 	access_status_display = 1
+	department = "Bridge"
+
+/obj/item/weapon/cartridge/head/atom_init()
+	forms |= important_forms
+	. = ..()
 
 /obj/item/weapon/cartridge/hop
 	name = "HumanResources9001"
@@ -181,9 +192,9 @@
 	department = "HoP"
 
 /obj/item/weapon/cartridge/hop/atom_init()
-	. = ..()
 	radio = new /obj/item/radio/integrated/mule(src)
-	forms = hrd_forms
+	forms |= hrd_forms + important_forms
+	. = ..()
 
 /obj/item/weapon/cartridge/hos
 	name = "R.O.B.U.S.T. DELUXE"
@@ -193,9 +204,9 @@
 	department = "HoS"
 
 /obj/item/weapon/cartridge/hos/atom_init()
-	. = ..()
 	radio = new /obj/item/radio/integrated/beepsky(src)
-	forms = security_forms
+	forms |= security_forms + important_forms
+	. = ..()
 
 /obj/item/weapon/cartridge/ce
 	name = "Power-On DELUXE"
@@ -206,8 +217,8 @@
 	department = "CE"
 
 /obj/item/weapon/cartridge/ce/atom_init()
+	forms |= engineering_forms + important_forms
 	. = ..()
-	forms = engineering_forms
 
 /obj/item/weapon/cartridge/cmo
 	name = "Med-U DELUXE"
@@ -218,8 +229,8 @@
 	department = "CMO"
 
 /obj/item/weapon/cartridge/cmo/atom_init()
+	forms |= medbay_forms + important_forms
 	. = ..()
-	forms = medbay_forms
 
 /obj/item/weapon/cartridge/rd
 	name = "Signal Ace DELUXE"
@@ -230,9 +241,9 @@
 	department = "RD"
 
 /obj/item/weapon/cartridge/rd/atom_init()
-	. = ..()
 	radio = new /obj/item/radio/integrated/signal(src)
-	forms = rnd_forms
+	forms |= rnd_forms + important_forms
+	. = ..()
 
 /obj/item/weapon/cartridge/captain
 	name = "Value-PAK Cartridge"
@@ -249,8 +260,8 @@
 	department = "Bridge"
 
 /obj/item/weapon/cartridge/captain/atom_init()
+	forms |= important_forms
 	. = ..()
-	forms = important_forms
 
 /obj/item/weapon/cartridge/syndicate
 	name = "Detomatix Cartridge"

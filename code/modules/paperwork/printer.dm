@@ -12,7 +12,7 @@
 	var/toner = 30 //how much toner is left! woooooo~
 
 	var/obj/item/weapon/paper/print = null // what we're sending
-	var/paper = 15
+	var/paper = 20
 
 	var/department = "Unknown" // our department
 
@@ -101,12 +101,11 @@
 
 // Return additional delay after copying
 /obj/machinery/printer/proc/print_item(obj/O)
+	playsound(src, "sound/machines/printer_print.ogg", VOL_EFFECTS_MASTER, vary = FALSE)
 	if(paper > 1)
 		flick("printer-papers-process", src)
 	else
 		flick("printer-paper-process", src)
-
-	sleep(10)
 
 	if(istype(O, /obj/item/weapon/paper))
 		copypaper = O

@@ -54,6 +54,9 @@
 
 	update_icon()
 	update_space(info)
+	var/obj/item/weapon/pen/Pen = new(src)
+	parsepencode(info, Pen)
+	qdel(Pen)
 	updateinfolinks()
 
 /obj/item/weapon/paper/update_icon()
