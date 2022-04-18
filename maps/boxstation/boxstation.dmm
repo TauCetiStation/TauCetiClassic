@@ -7351,6 +7351,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/obj/machinery/printer{
+	department = "Brig Reception"
+	},
+/obj/structure/table/reinforced,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
