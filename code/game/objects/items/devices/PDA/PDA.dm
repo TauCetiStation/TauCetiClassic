@@ -962,7 +962,7 @@
 			if(href_list["form"])
 				var/Paper = href_list["form"]
 				var/new_paper = new Paper(src)
-				for(var/obj/machinery/printer/Printer in allprinters)
+				for(var/obj/machinery/printer/Printer as anything in allprinters)
 					if((cartridge.department == "All" || Printer.department == cartridge.department) && !( Printer.stat & (BROKEN|NOPOWER) ))
 						Printer.queue_print(new_paper)
 						qdel(new_paper)

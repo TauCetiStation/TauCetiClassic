@@ -1600,6 +1600,7 @@
 	min_age = 1
 	max_age = 10
 
+	primitive = null
 	is_common = FALSE
 
 /datum/species/human/homunculus/on_gain(mob/living/carbon/human/H)

@@ -137,12 +137,21 @@
 ///////////EXTERNAL MAGAZINES////////////////
 /obj/item/ammo_box/magazine/m9mm
 	name = "magazine (9mm)"
-	icon_state = "9x19p"
+	icon_state = "9x19stech-7"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
-	max_ammo = 8
+	max_ammo = 7
 	multiple_sprites = 2
+
+/obj/item/ammo_box/magazine/m9mm/update_icon()
+	..()
+	icon_state = "[initial(icon_state)]-[round(ammo_count(),1)]"
+
+/obj/item/ammo_box/magazine/m9mm/ex
+	name = "extended capacity magazine (9mm)"
+	icon_state = "9x19exstech-16"
+	max_ammo = 16
 
 /obj/item/ammo_box/magazine/m9mm_2
 	name = "magazine (9mm)"
