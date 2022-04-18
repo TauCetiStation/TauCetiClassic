@@ -137,7 +137,7 @@
 ///////////EXTERNAL MAGAZINES////////////////
 /obj/item/ammo_box/magazine/m9mm
 	name = "magazine (9mm)"
-	icon_state = "9x19stech-7"
+	icon_state = "9x19stech"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
@@ -148,9 +148,10 @@
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),1)]"
 
+
 /obj/item/ammo_box/magazine/m9mm/ex
 	name = "extended capacity magazine (9mm)"
-	icon_state = "9x19exstech-16"
+	icon_state = "9x19exstech"
 	max_ammo = 16
 
 /obj/item/ammo_box/magazine/m9mm_2
