@@ -146,7 +146,6 @@
 
 /datum/species/zombie/handle_death(mob/living/carbon/human/H)
 	addtimer(CALLBACK(null, .proc/prerevive_zombie, H), rand(600,700))
-	H.update_mutantrace()
 
 /proc/handle_infected_death(mob/living/carbon/human/H)
 	if(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))

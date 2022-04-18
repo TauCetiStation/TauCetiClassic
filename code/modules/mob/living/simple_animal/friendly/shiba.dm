@@ -53,7 +53,7 @@
 /mob/living/simple_animal/shiba/Life()
 	..()
 
-	if(!stat && !resting && !buckled)
+	if(!stat && !buckled)
 		if(prob(1))
 			emote(pick("chases its tail"))
 			spawn(0)
@@ -66,7 +66,7 @@
 			emote(pick("barks!","woofs loudly!","eyes [histoy] joyfully."))
 		break
 
-	if(!stat && !resting && !buckled)
+	if(!stat && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			walk_to(src,0)
