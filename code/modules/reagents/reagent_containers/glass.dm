@@ -258,7 +258,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/teapot
 	name = "teapot"
-	desc = "An elegant teapot. The engraving on the bottom reads 'ENS'"
+	desc = "An elegant teapot.
 	icon_state = "teapot"
 	item_state = "teapot"
 
