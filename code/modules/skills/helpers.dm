@@ -48,7 +48,7 @@
 
 /proc/get_skill_with_assistance(mob/living/user, datum/skill/skill)
 	var/own_skill_value = user.mind.skills.get_value(skill.name)
-	if(user.helpers_skillsets.len == 0)
+	if(!user.helpers_skillsets || user.helpers_skillsets.len == 0)
 		return own_skill_value
 	var/help = 0
 	var/command = 0

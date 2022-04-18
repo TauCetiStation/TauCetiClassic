@@ -47,7 +47,7 @@
 				var/command_power = user.mind.skills.get_value(SKILL_COMMAND) * 2 //to avoid recursive increase with help
 				var/users_heard = 0
 				for(var/mob/living/carbon/M in get_hearers_in_view(command_power, user))
-					if (users_heard <= command_power && M != user)
+					if(users_heard <= command_power && M != user)
 						M.add_command_buff(usr, cooldown)
 						users_heard++
 
