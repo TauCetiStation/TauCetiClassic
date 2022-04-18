@@ -295,7 +295,6 @@
 /obj/structure/stool/bed/psych,
 /obj/structure/cellular_biomass/core/meat,
 /obj/structure/cellular_biomass/grass/meat,
-/obj/item/clothing/mask/michael_guess_1,
 /obj/item/clothing/under/dress/dress_orange,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
