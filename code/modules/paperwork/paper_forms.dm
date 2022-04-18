@@ -916,7 +916,7 @@ var/global/list/misc_forms = list(list("type" = /obj/item/weapon/paper/bar_menu,
 			Транспортная виза</large></center><br>
 			<hr>Полное имя: <span class=\"paper_field\"></span><br>
 			Должность: <span class=\"paper_field\"></span><br>
-			<b>Корпорация Карго Индастриз</b></center><br>
+			<center><b>Корпорация Карго Индастриз</b></center><br>
 			<hr>Место отправления: НТС "Велосити"<br>
 			Место прибытия: <span class=\"paper_field\"></span><br>
 			Цель посещения: <span class=\"paper_field\"></span><br>
@@ -927,8 +927,8 @@ var/global/list/misc_forms = list(list("type" = /obj/item/weapon/paper/bar_menu,
 
 /obj/item/weapon/paper/customs_report
 	name = "Протокол растаможивания"
-	info = {"<center><large><b>Служба Безопасности НТС "Велосити"</b></center><br>
-			<center>Протокол растаможивания</large></center><br>
+	info = {"<center><large><b>Служба Безопасности НТС "Велосити"</b><br>
+			Протокол растаможивания</large></center><br>
 			<hr>Полное имя запросившего: <span class=\"paper_field\"></span><br>
 			Полное имя офицера транзитной станции: <span class=\"paper_field\"></span><br>
 			Тип предметов подлежащих растаможиванию: <span class=\"paper_field\"></span><br>
