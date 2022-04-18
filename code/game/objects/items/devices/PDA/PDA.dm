@@ -982,7 +982,7 @@
 		if("Form")
 			mode = 8
 			if(href_list["form"])
-				var/Paper = href_list["form"]
+				var/Paper = text2path("[href_list["form"]]")
 				var/new_paper = new Paper(src)
 				for(var/obj/machinery/printer/Printer as anything in allprinters)
 					if((department == "All" || Printer.department == department) && !( Printer.stat & (BROKEN|NOPOWER) ))
