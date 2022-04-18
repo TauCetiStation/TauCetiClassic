@@ -793,7 +793,7 @@ var/global/list/misc_forms = list(list("type" = /obj/item/weapon/paper/bar_menu,
 /obj/item/weapon/paper/bar_menu
 	name = "Меню бара"
 	info = {"<font size=\"4\"><center><b><span class=\"paper_field\"></span></b></center></font><br>
-			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b></b>Алкогольные напитки</b></center></font></div><br>
+			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b>Алкогольные напитки</b></center></font></div><br>
 			Space Beer<span class=\"paper_field\"></span><br>
 			Iced Space Beer<span class=\"paper_field\"></span><br>
 			Station 13 Grog<span class=\"paper_field\"></span><br>
@@ -809,7 +809,7 @@ var/global/list/misc_forms = list(list("type" = /obj/item/weapon/paper/bar_menu,
 			Robert Robust's Coffee Liqueur<span class=\"paper_field\"></span><br><br><br>
 
 
-			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b></b>Коктейли </b></center></font></div><br>
+			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b>Коктейли </b></center></font></div><br>
 			Allies Cocktail<span class=\"paper_field\"></span><br>
 			Andalusia<span class=\"paper_field\"></span><br>
 			Anti-Freeze<span class=\"paper_field\"></span><br>
@@ -836,7 +836,7 @@ var/global/list/misc_forms = list(list("type" = /obj/item/weapon/paper/bar_menu,
 			White Russian<span class=\"paper_field\"></span><br><br><br>
 
 
-			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b></b>Безалкогольные напитки</b></center></font></div><br>
+			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b>Безалкогольные напитки</b></center></font></div><br>
 			Coffee<span class=\"paper_field\"></span><br>
 			Tea<span class=\"paper_field\"></span><br>
 			Hot Chocolate<span class=\"paper_field\"></span><br>
@@ -850,23 +850,23 @@ var/global/list/misc_forms = list(list("type" = /obj/item/weapon/paper/bar_menu,
 /obj/item/weapon/paper/canteen_menu
 	name = "Меню столовой"
 	info = {"<font size=\"4\"><center><b>Меню питания</b></center></font><br>
-			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b></b>Первое блюдо</b></center></font></div><br>
+			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b>Первое блюдо</b></center></font></div><br>
 			<span class=\"paper_field\"></span><br><br><br>
 
 
-			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b></b>Гарнир</b></center></font></div><br>
+			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b>Гарнир</b></center></font></div><br>
 			<span class=\"paper_field\"></span><br><br><br>
 
 
-			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b></b>Второе горячее блюдо</b></center></font></div><br>
+			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b>Второе горячее блюдо</b></center></font></div><br>
 			<span class=\"paper_field\"></span><br><br><br>
 
 
-			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b></b>Десерт</b></center></font></div><br>
+			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b>Десерт</b></center></font></div><br>
 			<span class=\"paper_field\"></span><br><br><br>
 
 
-			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b></b>Напитки</b></center></font></div><br>
+			<hr><div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b>Напитки</b></center></font></div><br>
 			<span class=\"paper_field\"></span><br><br><br>
 
 
@@ -927,8 +927,8 @@ var/global/list/misc_forms = list(list("type" = /obj/item/weapon/paper/bar_menu,
 
 /obj/item/weapon/paper/customs_report
 	name = "Протокол растаможивания"
-	info = {"<center><large><b>Служба Безопасности НТС "Велосити"</b>
-			Протокол растаможивания</large></center><br>
+	info = {"<center><large><b>Служба Безопасности НТС "Велосити"</b><br>
+			Протокол растаможивания</large><br></center>
 			<hr>Полное имя запросившего: <span class=\"paper_field\"></span><br>
 			Полное имя офицера транзитной станции: <span class=\"paper_field\"></span><br>
 			Тип предметов подлежащих растаможиванию: <span class=\"paper_field\"></span><br>
