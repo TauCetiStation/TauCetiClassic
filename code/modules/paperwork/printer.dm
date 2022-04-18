@@ -92,6 +92,9 @@
 
 /obj/machinery/printer/proc/print()
 	for(var/obj/O in printing_queue)
+		if(!O)
+			printing_queue -= O
+			continue
 		if(paper <= 0 || toner <= 0)
 			visible_message("<span class='info'>Not enough paper or toner, please refresh to continue printing.</span>")
 			break
@@ -139,7 +142,7 @@
 		W.loc = p
 		p.pages += W
 
-	p.loc = src.loc
+	p.loc = loc
 	p.update_icon()
 	p.icon_state = "paper_words"
 	p.name = bundle.name
@@ -195,7 +198,7 @@
 
 
 /obj/machinery/printer/proc/printphoto(obj/item/weapon/photo/photocopy)
-	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo(src.loc)
+	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo(loc)
 	var/icon/I = icon(photocopy.icon, photocopy.icon_state)
 	var/icon/img = icon(photocopy.img)
 	var/icon/tiny = icon(photocopy.tiny)

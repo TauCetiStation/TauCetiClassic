@@ -810,7 +810,7 @@
 			var/obj/item/weapon/pen/Pen = new(src)
 			new_paper.parsepencode(new_paper.info, Pen)
 			qdel(Pen)
-			for(var/obj/machinery/printer/Printer in allprinters)
+			for(var/obj/machinery/printer/Printer as anything in allprinters)
 				if((department == "All" || Printer.department == department) && !( Printer.stat & (BROKEN|NOPOWER) ))
 					Printer.queue_print(new_paper)
 			qdel(new_paper)
@@ -984,7 +984,7 @@
 			if(href_list["form"])
 				var/Paper = href_list["form"]
 				var/new_paper = new Paper(src)
-				for(var/obj/machinery/printer/Printer in allprinters)
+				for(var/obj/machinery/printer/Printer as anything in allprinters)
 					if((department == "All" || Printer.department == department) && !( Printer.stat & (BROKEN|NOPOWER) ))
 						Printer.queue_print(new_paper)
 						qdel(new_paper)

@@ -94,7 +94,7 @@
 		default_unfasten_wrench(user, O)
 
 /obj/machinery/photocopier/proc/send_item()
-	for(var/obj/machinery/printer/Printer in allprinters)
+	for(var/obj/machinery/printer/Printer as anything in allprinters)
 		if((department == "All" || Printer.department == department) && !( Printer.stat & (BROKEN|NOPOWER) ))
 			for(var/A in 1 to copies)
 				Printer.queue_print(copyitem)

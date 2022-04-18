@@ -213,7 +213,7 @@ var/global/list/obj/machinery/printer/allprinters = list()
 	)
 
 /proc/send_fax(sender, obj/item/weapon/paper/P, department)
-	for(var/obj/machinery/printer/Printer in allprinters)
+	for(var/obj/machinery/printer/Printer as anything in allprinters)
 		if((department == "All" || Printer.department == department) && !( Printer.stat & (BROKEN|NOPOWER) ))
 			Printer.queue_print(P)
 
