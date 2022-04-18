@@ -25,7 +25,7 @@
 		to_chat(user, "<span class='warning'>This device has critically failed and is no longer functional!</span>")
 		return
 
-	if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/chemistry/novice, /datum/skill/medical/novice), SKILL_TASK_TRIVIAL))
+	if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/chemistry/novice, /datum/skill/medical/novice)))
 		return
 	if(!isnull(O.reagents))
 		var/dat = ""

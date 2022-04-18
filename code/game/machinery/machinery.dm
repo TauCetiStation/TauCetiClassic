@@ -455,13 +455,13 @@ Class Procs:
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(!panel_open)
-			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering/trained), SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around, figuring out how to open the maintenance hatch of [src].</span>"))
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering/trained), "<span class='notice'>You fumble around, figuring out how to open the maintenance hatch of [src].</span>"))
 				return 0
 			panel_open = 1
 			icon_state = icon_state_open
 			to_chat(user, "<span class='notice'>You open the maintenance hatch of [src].</span>")
 		else
-			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering/trained), SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around, figuring out how to close the maintenance hatch of [src].</span>"))
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering/trained), "<span class='notice'>You fumble around, figuring out how to close the maintenance hatch of [src].</span>"))
 				return 1
 			panel_open = 0
 			icon_state = icon_state_closed
