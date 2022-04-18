@@ -78,6 +78,8 @@
 	// Radial menu for choose module
 	var/static/list/choose_module
 
+	spawner_args = list(/datum/spawner/living/robot)
+
 /mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -122,6 +124,10 @@
 		cell_component.installed = 1
 
 	diag_hud_set_borgcell()
+
+/mob/living/silicon/robot/Login()
+	..()
+	set_all_components(TRUE)
 
 /mob/living/silicon/robot/proc/set_ai_link(link)
 	if (connected_ai != link)
@@ -694,6 +700,10 @@
 		else
 			if(allowed(usr))
 				locked = !locked
+				if(!locked)
+					throw_alert("not_locked", /atom/movable/screen/alert/not_locked)
+				else
+					clear_alert("not_locked")
 				to_chat(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
 				playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
 				updateicon()
@@ -1124,6 +1134,14 @@
 		var/datum/robot_component/C = components[V]
 		if(C.installed)
 			C.toggled = !C.toggled
+
+/mob/living/silicon/robot/proc/set_all_components(state)
+	for(var/V in components)
+		if(V == "power cell")
+			continue
+		var/datum/robot_component/C = components[V]
+		if(C.installed)
+			C.toggled = state
 
 /mob/living/silicon/robot/swap_hand()
 	cycle_modules()

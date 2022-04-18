@@ -87,7 +87,6 @@
 
 	var/antitoxs = null
 	var/phoron = null
-	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
 	var/was_lying = FALSE //For user of clown pda slippery
@@ -278,3 +277,6 @@
 	var/list/sound_approximations
 	// Case sensitive sound approximations.
 	var/list/sensitive_sound_approximations
+
+	// Reason of logout
+	var/logout_reason

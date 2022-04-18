@@ -73,7 +73,6 @@
 /datum/quirk/fatness/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.update_body()
-	H.update_mutantrace()
 	H.update_mutations()
 	H.update_inv_w_uniform()
 	H.update_inv_wear_suit()

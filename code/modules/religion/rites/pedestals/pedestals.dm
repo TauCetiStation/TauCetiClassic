@@ -34,7 +34,7 @@
 
 	var/cultists_around = 0
 	for(var/mob/M in AOG.mobs_around)
-		if(religion.is_member(M))
+		if(religion.is_member(M) && user.get_species() != HOMUNCULUS)
 			cultists_around++
 
 	if(cultists_around < need_members)
@@ -124,6 +124,11 @@
 	if(!ishuman(AOG.buckled_mob))
 		if(user)
 			to_chat(user, "<span class='warning'>На алтаре должен быть человек.</span>")
+		return FALSE
+
+	if(AOG.buckled_mob.get_species() == HOMUNCULUS)
+		if(user)
+			to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
 		return FALSE
 
 	var/mob/living/carbon/human/H = AOG.buckled_mob

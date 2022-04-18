@@ -87,7 +87,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IS_SYNTHETIC       "is_synthetic"
 #define RAD_IMMUNE         "rad_immune"
 #define VIRUS_IMMUNE       "virus_immune"
-#define BIOHAZZARD_IMMUNE  "biohazzard_immune"
 #define NO_VOMIT           "no_vomit"
 #define HAS_HAIR           "has_hair"
 #define NO_FINGERPRINT     "no_fingerprint"
