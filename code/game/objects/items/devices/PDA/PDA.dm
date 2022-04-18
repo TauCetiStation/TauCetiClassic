@@ -962,7 +962,7 @@
 			if(href_list["form"])
 				var/Paper = href_list["form"]
 				var/new_paper = new Paper(src)
-				for(var/obj/machinery/printer/Printer in allprinters)
+				for(var/obj/machinery/printer/Printer as anything in allprinters)
 					if((cartridge.department == "All" || Printer.department == cartridge.department) && !( Printer.stat & (BROKEN|NOPOWER) ))
 						playsound(Printer, "sound/machines/printer_startup.ogg", VOL_EFFECTS_MASTER)
 						sleep(30)
