@@ -74,7 +74,7 @@
 	if(tool.blood_DNA && tool.blood_DNA.len) //germs from blood-stained tools
 		germ_level += GERM_LEVEL_AMBIENT * 0.25
 
-	if(ishuman(user) && user.need_breathe() && !user.wear_mask) //wearing a mask helps preventing people from breathing germs into open incisions
+	if(ishuman(user) && !user.is_skip_breathe() && !user.wear_mask) //wearing a mask helps preventing people from breathing germs into open incisions
 		germ_level += user.germ_level * 0.25
 
 	BP.germ_level = max(germ_level, BP.germ_level)

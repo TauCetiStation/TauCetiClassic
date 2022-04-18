@@ -648,7 +648,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	get_template()
 	if(!used)
 		var/turf/T = get_turf(src)
-		if(istype(T.loc, /area/station) || istype(T.loc, /area/shuttle) || (!is_junkyard_level(T.z) && !istype(T.loc, /area/space))) //we don't need complete all checks
+		var/area/A = T.loc
+		if(!A.outdoors)
 			audible_message("<span class='game say'><span class='name'>[src]</span> says, \"You must use shelter at asteroid or in space! Grab this shit and shut up!\"</span>")
 			used = TRUE
 			new /obj/item/clothing/mask/breath(T)

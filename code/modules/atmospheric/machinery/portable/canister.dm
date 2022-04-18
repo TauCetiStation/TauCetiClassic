@@ -458,8 +458,6 @@ update_flag
 			if(holding)
 				if (valve_open)
 					log_investigate("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the <span class='boldannounce'>air</span><br>", INVESTIGATE_ATMOS)
-				if(istype(holding, /obj/item/weapon/tank))
-					holding.manipulated_by = usr.real_name
 				holding.forceMove(get_turf(src))
 				holding = null
 				. = TRUE
