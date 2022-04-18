@@ -28,6 +28,7 @@
 	..()
 	if(!printing_queue.len || printing)
 		return
+	visible_message("<span class='info'>New printing request recieved, starting printing sequence.</span>")
 	playsound(src, "sound/machines/chime.ogg", VOL_EFFECTS_MASTER)
 	playsound(src, "sound/machines/printer_startup.ogg", VOL_EFFECTS_MASTER, vary = FALSE)
 	addtimer(CALLBACK(src, .proc/print), 15)
@@ -102,6 +103,7 @@
 
 // Return additional delay after copying
 /obj/machinery/printer/proc/print_item(obj/O)
+	playsound(src, "sound/machines/printer_print.ogg", VOL_EFFECTS_MASTER, vary = FALSE)
 	if(paper > 1)
 		flick("printer-papers-process", src)
 	else
@@ -120,6 +122,8 @@
 	update_icon()
 
 	toner--
+	if(toner < 0)
+		toner = 0
 	paper--
 
 /obj/machinery/printer/proc/printbundle(obj/item/weapon/paper_bundle/bundle)
@@ -212,10 +216,6 @@
 	p.pixel_y += pixel_y
 	p.pixel_x += pixel_x
 	p.pixel_y -= 8
-	toner -= 5	//photos use a lot of ink!
-	paper--
-	if(toner < 0)
-		toner = 0
 
 /obj/item/device/toner
 	name = "toner cartridge"

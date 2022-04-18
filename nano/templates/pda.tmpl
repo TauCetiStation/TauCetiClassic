@@ -210,6 +210,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
         <div class="item">
             <div class="itemLabel">
                 {{:helper.link('Edit Notes', 'gear', {'choice' : "Edit"}, null, 'fixedLeft')}}
+				{{:helper.link('Print Notes', 'print', {'choice' : "Print", 'option' : "Notes"}, null, 'fixedLeft')}}
             </div>
         </div>
 
@@ -284,6 +285,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             </div>
             <div class ="itemContent">
                 {{:helper.link('Delete Conversation', 'trash', {'choice' : "Clear", 'option' : "Convo"}, null, 'fixedLeftWide')}}
+				{{:helper.link('Print Conversation', 'print', {'choice' : "Print", 'option' : "Convo"}, null, 'fixedLeftWide')}}
             </div>
         </div>
         <br>
@@ -1086,14 +1088,21 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
         <div class="item">
             <H2>Print Paper Forms</H2>
         </div>
+        <div class="itemLabel">
+            {{:helper.link('Scan Printer', 'signal-diag', {'choice' : "Scan Printer"}, null, 'fixedLeft')}}
+        </div>
         <div class="item">
             <div class="Paper Forms">
                 <table>
                     {{for data.forms_list}}
-                        <tr><td>{{:helper.link(value["name"], null, {'choice' : "Form", 'form' : value["type"]}, null, null)}}</td></tr>
+                        <tr><td>{{:helper.link(value["name"], 'print', {'choice' : "Form", 'form' : value["type"]}, null, null)}}</td></tr>
                     {{/for}}
                 </table>
             </div>
+        </div>
+    {{else data.mode == 81}}   <!--Scan Printer -->
+	    <div class="item">
+            <H2>Hit Printer to scan</H2>
         </div>
     {{/if}}
 {{else}}

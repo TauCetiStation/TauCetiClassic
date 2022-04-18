@@ -136,6 +136,9 @@
 		if(P.pda_paymod)
 			P.click_to_pay(A) //Click on someone to pay
 			return
+		if(P.pda_printerscan)
+			P.scan_printer(A)
+			return
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)

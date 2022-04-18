@@ -96,4 +96,5 @@
 /obj/machinery/photocopier/proc/send_item()
 	for(var/obj/machinery/printer/Printer in allprinters)
 		if((department == "All" || Printer.department == department) && !( Printer.stat & (BROKEN|NOPOWER) ))
-			Printer.queue_print(copyitem)
+			for(var/A in 1 to copies)
+				Printer.queue_print(copyitem)

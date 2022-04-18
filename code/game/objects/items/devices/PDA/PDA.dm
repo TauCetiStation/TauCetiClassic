@@ -61,12 +61,14 @@
 	var/funds_amount = 0
 	var/transfer_purpose = "Funds transfer"
 	var/pda_paymod = FALSE // if TRUE, click on someone to pay
+	var/pda_printerscan = FALSE
 	var/list/trans_log = list()
 	var/list/safe_pages = list(7, 71, 72, 73)
 	var/list/owner_fingerprints = list()	//fingerprint information is taken from the ID card
 	var/boss_PDA = 0	//the PDA belongs to the heads or not	(can I change the salary?)
 	var/list/subordinate_staff = list()
 	var/last_trans_tick = 0
+	var/department
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -76,6 +78,7 @@
 	PDAs = sortAtom(PDAs)
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
+		department = cartridge.department
 	if(default_pen)
 		pen = new default_pen(src)
 
@@ -539,6 +542,7 @@
 
 		if(cartridge.department)
 			data["forms_list"] = cartridge.forms
+			data["department"] = department
 
 	data["stationTime"] = worldtime2text()
 
@@ -794,6 +798,24 @@
 				note = replacetext(note, "\n", "<br>")
 			else
 				ui.close()
+		if("Print")
+			var/obj/item/weapon/paper/new_paper = new(src)
+			switch(href_list["option"])
+				if("Notes")
+					new_paper.info = note
+				if("Convo")
+					for(var/i in tnote)
+						if(i["target"] == active_conversation)
+							new_paper.info += {"[i["sent"] == 1 ? "[owner]" : "[i["owner"]]"]: [i["message"]] <br>"}
+			var/obj/item/weapon/pen/Pen = new(src)
+			new_paper.parsepencode(new_paper.info, Pen)
+			qdel(Pen)
+			for(var/obj/machinery/printer/Printer in allprinters)
+				if((department == "All" || Printer.department == department) && !( Printer.stat & (BROKEN|NOPOWER) ))
+					Printer.queue_print(new_paper)
+			qdel(new_paper)
+
+
 		if("Toggle Messenger")
 			toff = !toff
 		if("Toggle Ringer")//If viewing texts then erase them, if not then toggle silent status
@@ -826,7 +848,6 @@
 				ui.close()
 				return 0
 		if("Message")
-
 			var/obj/item/device/pda/P = locate(href_list["target"])
 			create_message(U, P, !href_list["notap"])
 			if(mode == 2)
@@ -844,6 +865,7 @@
 				if(P == n)
 					active_conversation=P
 					mode=21
+
 		if ("Send Honk")//Honk virus
 			if(istype(cartridge, /obj/item/weapon/cartridge/clown))//Cartridge checks are kind of unnecessary since everything is done through switch.
 				var/obj/item/device/pda/P = locate(href_list["target"])//Leaving it alone in case it may do something useful, I guess.
@@ -962,10 +984,13 @@
 			if(href_list["form"])
 				var/Paper = href_list["form"]
 				var/new_paper = new Paper(src)
-				for(var/obj/machinery/printer/Printer as anything in allprinters)
-					if((cartridge.department == "All" || Printer.department == cartridge.department) && !( Printer.stat & (BROKEN|NOPOWER) ))
+				for(var/obj/machinery/printer/Printer in allprinters)
+					if((department == "All" || Printer.department == department) && !( Printer.stat & (BROKEN|NOPOWER) ))
 						Printer.queue_print(new_paper)
 						qdel(new_paper)
+		if("Scan Printer")
+			mode = 81
+			pda_printerscan = TRUE
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -1375,6 +1400,7 @@
 		cartridge = I
 		user.drop_from_inventory(I, src)
 		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
+		department = cartridge.department
 		nanomanager.update_uis(src) // update all UIs attached to src
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
@@ -1578,6 +1604,13 @@
 		to_chat(usr, "[bicon(src)]<span class='warning'>Incorrect target.</span>")
 		pda_paymod = FALSE
 		return
+
+/obj/item/device/pda/proc/scan_printer(atom/target)
+	if(istype(target, /obj/machinery/printer))
+		var/obj/machinery/printer/Printer = target
+		department = Printer.department
+		mode = 8
+		pda_printerscan = FALSE
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(!owner_account)
