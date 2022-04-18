@@ -91,6 +91,7 @@
 	printing_queue += O
 
 /obj/machinery/printer/proc/print()
+	var/i = 0
 	for(var/obj/O in printing_queue)
 		if(!O)
 			printing_queue -= O
@@ -99,18 +100,25 @@
 			visible_message("<span class='info'>Not enough paper or toner, please refresh to continue printing.</span>")
 			break
 		printing = TRUE
-		if(paper > 1)
-			flick("printer-papers-process", src)
-		else
-			flick("printer-paper-process", src)
-		playsound(src, "sound/machines/printer_print.ogg", VOL_EFFECTS_MASTER, vary = FALSE)
-		addtimer(CALLBACK(src, .proc/print_item, O), 10)
+		addtimer(CALLBACK(src, .proc/print_item, O), 10*i)
+		i++
 		printing_queue -= O
-	printing = FALSE
+	addtimer(CALLBACK(src, .proc/end_print), 10*i)
+
+/obj/machinery/printer/proc/end_print()
 	playsound(src, "sound/machines/printer_endup.ogg", VOL_EFFECTS_MASTER, vary = FALSE)
+	printing = FALSE
 
 // Return additional delay after copying
 /obj/machinery/printer/proc/print_item(obj/O)
+	playsound(src, "sound/machines/printer_print.ogg", VOL_EFFECTS_MASTER, vary = FALSE)
+	if(paper > 1)
+		flick("printer-papers-process", src)
+	else
+		flick("printer-paper-process", src)
+
+	sleep(10)
+
 	if(istype(O, /obj/item/weapon/paper))
 		printpaper(O)
 
