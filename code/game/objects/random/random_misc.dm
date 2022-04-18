@@ -81,7 +81,7 @@
 		return pick(\
 						prob(100);/obj/item/weapon/storage/box/matches,\
 						prob(30);/obj/item/weapon/lighter/random,\
-						prob(10);/obj/item/weapon/lighter/zippo,\
+						prob(16);/obj/item/weapon/lighter/zippo,\
 					)
 
 
