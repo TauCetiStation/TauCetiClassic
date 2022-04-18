@@ -132,11 +132,11 @@
 	value = 1 //windows
 
 /datum/skill/construction/trained
-	rank_name = "Professional"
+	rank_name = "Trained"
 	value = 2 //walls, reinforced glass, RCD usage(scientist, robotech)
 
 /datum/skill/construction/pro
-	rank_name = "Master"
+	rank_name = "Professional"
 	value = 3 //computer, machine frames,  RD, engineer, reinforced walls
 
 /datum/skill/construction/master

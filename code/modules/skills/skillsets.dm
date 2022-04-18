@@ -10,6 +10,7 @@
 		/datum/skill/chemistry/master,
 		/datum/skill/command/pro,
 		/datum/skill/civ_mech/master,
+		/datum/skill/research/trained
 	)
 
 
