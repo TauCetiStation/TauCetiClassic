@@ -235,7 +235,7 @@
 
 /obj/item/clothing/head/helmet/police/heavy
 	name = "heavy police helmet"
-	desc = "Latest fashion of law enforcement organizations. It's big. Like, really big. Golden marks of this denote the higher rank of it's wearer."
+	desc = "Latest fashion of law enforcement organizations. It's big. Like, really big. Golden marks on this helmet denote the higher rank of it's wearer."
 	icon_state = "police_helmet_heavy"
 	armor = list(melee = 55, bullet = 50, laser = 45,energy = 25, bomb = 35, bio = 0, rad = 0)
 
