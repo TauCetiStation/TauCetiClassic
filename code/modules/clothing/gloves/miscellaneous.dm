@@ -132,3 +132,9 @@
 	desc = "The left one of a pair of black gloves. Wonder where the other one went..."
 	icon_state = "left_glove"
 	item_state = "left_glove"
+
+/obj/item/clothing/gloves/combat/police
+	desc = "Fist of the Law."
+	name = "police gloves"
+	icon_state = "police_gloves"
+	item_state = "police_gloves"
