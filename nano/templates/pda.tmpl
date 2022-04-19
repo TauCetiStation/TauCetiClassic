@@ -83,6 +83,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 <!-- {{:helper.link('News', data.new_News ? 'mail-closed' : 'mail-open', {'choice' : "6"}, null, 'fixedLeftWide')}} -->
                 {{:helper.link('Finance Management', 'suitcase', {'choice' : "Finance"}, null, 'fixedLeftWide')}}
                 {{:helper.link('Print Forms', 'suitcase', {'choice' : "Form"}, null, 'fixedLeftWide')}}
+				{{:helper.link('Photos', 'image', {'choice' : "Photos"}, null, 'fixedLeftWide')}}
             </div>
         </div>
         <br>
@@ -1101,13 +1102,46 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 </table>
             </div>
         </div>
-    {{else data.mode == 81}}   <!--Scan Printer -->
+    {{else data.mode == 81}}   <!-- Scan Printer -->
         <div class="item">
             <H2>Hit Printer to scan</H2>
+        </div>
+
+    {{else data.mode == 9}}    <!-- Photos -->
+        <div class="item">
+            <H2>Photo Album</H2>
+        </div>
+        <div class="itemLabel">
+            {{:helper.link('Take Photo', 'calendar', {'choice' : "Take Photo"}, null, 'fixedLeft')}}
+        </div>
+        <div class="item">
+            <div class="Photos List">
+                <table>
+                    {{for data.photos}}
+                        <tr><td>{{:helper.link(value["name"], 'image', {'choice' : "Photos", 'photo' : value["id"]}, null, null)}}</td></tr>
+                    {{/for}}
+                </table>
+            </div>
+        </div>
+    {{else data.mode == 91}}   <!-- Take Photo -->
+        <div class="item">
+            <H2>Hit object to take photo</H2>
+        </div>
+    {{else data.mode == 92}}   <!-- Photo -->
+        <div class="item">
+            {{if data.this_photo["type"] == "photo"}}<H2>A photo</H2><br><b>{{:data.this_photo["desc"]}}</b>{{/if}}
+            {{if data.this_photo["type"] == "document"}}<H2>A photo of document</H2><br><b>{{:data.this_photo["desc"]}}</b>{{/if}}
+            {{if data.this_photo["type"] == "picture"}}<H2>A photo of picture</H2><br><b>{{:data.this_photo["desc"]}}</b>{{/if}}
+        </div>
+        <div class="itemLabel">
+            {{:helper.link('Print Photo', 'print', {'choice' : "Print Photo"}, null, 'fixedLeft')}}
+        </div>
+        <div class="itemLabel">
+            {{:helper.link('Delete Photo', 'trash', {'choice' : "Delete Photo"}, null, 'fixedLeft')}}
         </div>
     {{/if}}
 {{else}}
     <div class="wholeScreen">
-        <br><br><br><br><br><br><br><br>No Owner information found, please swipe ID
+        <br><br><br><br><br><br><br>No Owner information found, please swipe ID
     </div>
 {{/if}}

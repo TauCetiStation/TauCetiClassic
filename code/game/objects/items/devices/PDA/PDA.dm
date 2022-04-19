@@ -62,6 +62,7 @@
 	var/transfer_purpose = "Funds transfer"
 	var/pda_paymod = FALSE // if TRUE, click on someone to pay
 	var/pda_printerscan = FALSE
+	var/pda_takephoto = FALSE
 	var/list/trans_log = list()
 	var/list/safe_pages = list(7, 71, 72, 73)
 	var/list/owner_fingerprints = list()	//fingerprint information is taken from the ID card
@@ -69,6 +70,8 @@
 	var/list/subordinate_staff = list()
 	var/last_trans_tick = 0
 	var/department
+	var/photos[0]
+	var/this_photo
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -594,6 +597,9 @@
 	if(mode==41)
 		data_core.load_manifest()
 
+	data["photos"] = photos
+	data["this_photo"] = this_photo
+
 	if(mode==3)
 		var/turf/T = get_turf(user.loc)
 		if(!isnull(T))
@@ -991,6 +997,33 @@
 		if("Scan Printer")
 			mode = 81
 			pda_printerscan = TRUE
+
+		if("Photos")
+			if(href_list["photo"])
+				var/id = href_list["photo"]
+				this_photo = photos[id]
+				mode = 92
+			else
+				mode = 9
+		if("Delete Photo")
+			var/id = this_photo["id"]
+			var/item = this_photo["item"]
+			qdel(item)
+			for(var/i in id+1 to photos.len)
+				var/list/l = photos[i]
+				l["id"]--
+				photos[i-1] = l
+			photos[photos.len] = null
+			photos.len--
+			this_photo = null
+			mode = 9
+		if("Print Photo")
+			for(var/obj/machinery/printer/Printer as anything in allprinters)
+				if((department == "All" || Printer.department == department) && !( Printer.stat & (BROKEN|NOPOWER) ))
+					Printer.queue_print(this_photo["item"])
+		if("Take Photo")
+			mode = 91
+			pda_takephoto = TRUE
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -1611,6 +1644,65 @@
 		department = Printer.department
 		mode = 8
 		pda_printerscan = FALSE
+
+/obj/item/device/pda/proc/take_photo(atom/target)
+	photos.len++
+	var/id = photos.len
+	var/name = "name"
+	var/desc = "desc"
+	var/item = null
+	var/type = null
+	if(istype(target, /obj/item/weapon/paper))
+		var/obj/item/weapon/paper/Paper = new/obj/item/weapon/paper(src)
+		var/obj/item/weapon/paper/Pap = target
+		Paper.name       = Pap.name
+		Paper.info       = Pap.info
+		Paper.info_links = Pap.info_links
+		Paper.stamp_text = Pap.stamp_text
+		Paper.fields     = Pap.fields
+		Paper.sfields    = Pap.sfields
+		Paper.stamped    = LAZYCOPY(Pap.stamped)
+		Paper.ico        = LAZYCOPY(Pap.ico)
+		Paper.offset_x   = LAZYCOPY(Pap.offset_x)
+		Paper.offset_y   = LAZYCOPY(Pap.offset_y)
+		Paper.copy_overlays(Pap, TRUE)
+		Paper.updateinfolinks()
+		Paper.update_icon()
+
+		name = Paper.name
+		desc = Paper.info
+		item = Paper
+		type = "document"
+	else
+		var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo(src)
+		if(istype(target, /obj/item/weapon/photo))
+			var/obj/item/weapon/photo/Pho = target
+			Photo.icon = Pho.icon
+			Photo.tiny = Pho.tiny
+			Photo.img = Pho.img
+			Photo.desc = Pho.desc
+			Photo.photographed_names = Pho.photographed_names
+			type = "picture"
+		else
+			Photo.img = getFlatIcon(target)
+			var/icon/temp = get_base_photo_icon(1)
+			temp.Blend("#000", ICON_OVERLAY)
+			temp.Blend(Photo.img, ICON_OVERLAY)
+			var/icon/ic = icon('icons/obj/items.dmi',"photo")
+			var/icon/pc = icon('icons/obj/bureaucracy.dmi', "photo")
+			ic.Blend(temp,ICON_OVERLAY, 13, 13)
+			pc.Blend(temp,ICON_OVERLAY, 12, 19)
+			Photo.icon = ic
+			Photo.tiny = pc
+			Photo.desc = target.name
+			Photo.photographed_names = target.desc
+			type = "photo"
+		name = Photo.desc
+		desc = Photo.photographed_names
+		item = Photo
+	photos[id] = list("id" = id,"name" = name,"desc" = desc,"item" = item, "type" = type)
+	mode = 9
+	pda_takephoto = FALSE
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(!owner_account)

@@ -14,7 +14,7 @@
 	var/department = "Unknown" // our department
 
 /obj/machinery/photocopier/Destroy()
-	copyitem.loc = loc
+	copyitem.forceMove(loc)
 	copyitem = null
 	return ..()
 

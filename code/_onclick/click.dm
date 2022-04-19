@@ -139,6 +139,9 @@
 		if(P.pda_printerscan)
 			P.scan_printer(A)
 			return
+		if(P.pda_takephoto)
+			P.take_photo(A)
+			return
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)

@@ -239,7 +239,7 @@
 				break
 		sorted.Insert(j+1, c)
 
-	var/icon/res = get_base_photo_icon()
+	var/icon/res = get_base_photo_icon(photo_size)
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
@@ -345,7 +345,7 @@
 				mobs += detail_list["mob_detail"]
 				mob_names += detail_list["names_detail"]
 
-	var/icon/temp = get_base_photo_icon()
+	var/icon/temp = get_base_photo_icon(photo_size)
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
@@ -381,7 +381,7 @@
 		user.put_in_inactive_hand(Photo)
 	Photo.construct(P)
 
-/obj/item/device/camera/proc/get_base_photo_icon()
+/proc/get_base_photo_icon(photo_size)
 	var/icon/res
 	switch(photo_size)
 		if(1)
