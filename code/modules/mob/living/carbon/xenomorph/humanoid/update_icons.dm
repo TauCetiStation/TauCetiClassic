@@ -28,7 +28,7 @@
 		icon_state = "alien[caste]_unconscious"
 	else if(leap_on_click)
 		icon_state = "alien[caste]_pounce"
-	else if(lying || crawling)
+	else if(lying || resting)
 		icon_state = "alien[caste]_sleep"
 	else if(m_intent == MOVE_INTENT_RUN)
 		icon_state = "alien[caste]_running"

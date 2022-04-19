@@ -59,22 +59,26 @@
 					user.mutations.Add(XRAY)
 					user.update_sight()
 					to_chat(user, "<span class='notice'>The walls suddenly disappear.</span>")
-				user.set_species(SHADOWLING)
+				user.dna.mutantrace = "shadow"
+				user.update_mutantrace()
 			if("Wealth")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 				to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart.")
 				new /obj/structure/closet/syndicate/resources/everything(loc)
-				user.set_species(SHADOWLING)
+				user.dna.mutantrace = "shadow"
+				user.update_mutantrace()
 			if("Immortality")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 				to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart.")
 				user.verbs += /mob/living/carbon/proc/immortality
-				user.set_species(SHADOWLING)
+				user.dna.mutantrace = "shadow"
+				user.update_mutantrace()
 			if("To Kill")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 				to_chat(user, "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart.")
 				create_and_setup_role(/datum/role/traitor/wishgranter, user)
-				user.set_species(SHADOWLING)
+				user.dna.mutantrace = "shadow"
+				user.update_mutantrace()
 			if("Peace")
 				to_chat(user, "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>")
 				to_chat(user, "You feel as if you just narrowly avoided a terrible fate...")

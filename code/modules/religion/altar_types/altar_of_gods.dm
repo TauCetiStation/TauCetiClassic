@@ -111,7 +111,7 @@
 
 	var/sacrificed = FALSE
 	for(var/obj/item/I in loc)
-		if(I.flags & ABSTRACT || HAS_TRAIT(I, TRAIT_NO_SACRIFICE))
+		if(I.flags & ABSTRACT)
 			continue
 
 		var/max_points = 0

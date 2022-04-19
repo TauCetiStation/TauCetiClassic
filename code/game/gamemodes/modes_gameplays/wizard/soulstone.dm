@@ -38,7 +38,7 @@
 		to_chat(user, "<span class='warning'>Разум этого существа сопротивляется силе камня.</span>")
 		return ..()
 
-	if(HAS_TRAIT(H, TRAIT_NO_SOUL) || HAS_TRAIT(H, TRAIT_SOULSTONE_IMMUNE))
+	if(HAS_TRAIT(H, TRAIT_NO_SOUL))
 		to_chat(user, "<span class='warning'>У этого существа нет души.</span>")
 		return ..()
 
@@ -56,11 +56,8 @@
 	user.set_machine(src)
 	var/dat = ""
 	for(var/mob/living/simple_animal/shade/A in src)
-		dat += "Захваченная душа: [A.name]"
-		if(!A.client)
-			dat += " <b>(связи с душой нет)</b>"
-		dat += "<br>"
-		dat += "<A href='byond://?src=\ref[src];choice=Summon'>Призвать Тень</A>"
+		dat += "Захваченная душа: [A.name]<br>"
+		dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Призвать Тень</A>"}
 
 	var/datum/browser/popup = new(user, "window=aicard", "Камень Душ", ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
@@ -79,11 +76,11 @@
 	if(href_list["choice"] == "Summon")
 		for(var/mob/living/simple_animal/shade/A in src)
 			A.status_flags &= ~GODMODE
-			A.canmove = TRUE
+			A.canmove = 1
 			to_chat(A, "<b>Вы были освобождены из своей тюрьмы, но вы остаётесь привязанным к [user.name] и его союзникам. Помогайте им добиться их целей любой ценой.</b>")
-			A.forceMove(user.loc)
+			A.loc = user.loc
 			A.cancel_camera()
-			icon_state = "soulstone"
+			src.icon_state = "soulstone"
 	attack_self(user)
 
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
@@ -101,9 +98,10 @@
 
 /obj/item/device/soulstone/proc/capture_victim(target, mob/user)
 	var/mob/living/carbon/human/H = target
+	var/obj/item/device/soulstone/C = src
 	if(target != user)
-		if(imprinted)
-			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> В камне душ уже запечатана душа [imprinted]!")
+		if(C.imprinted)
+			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> В камне душ уже запечатана душа [C.imprinted]!")
 			return
 		if(H.stat == CONSCIOUS)
 			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Сначала убейте или оглушите жертву!")
@@ -111,7 +109,7 @@
 		if(H.client == null)
 			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> В этой оболочке нет души.")
 			return
-		if(contents.len)
+		if(C.contents.len)
 			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Камень душ полон! Используйте или освободите душу внутри камня.")
 			return
 		if(H.species.flags[IS_SYNTHETIC])
@@ -127,7 +125,7 @@
 
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade( H.loc )
 	S.my_religion = H.my_religion
-	S.forceMove(src)
+	S.forceMove(C)
 	S.status_flags |= GODMODE //So they won't die inside the stone somehow
 	S.canmove = FALSE //Can't move out of the soul stone
 	S.name = "Shade of [H.real_name]"
@@ -135,31 +133,32 @@
 	if(H.client)
 		H.client.mob = S
 	S.cancel_camera()
-	icon_state = "soulstone_glow_blink"
-	name = "Soul Stone: [S.real_name]"
+	C.icon_state = "soulstone_glow_blink"
+	C.name = "Soul Stone: [S.real_name]"
 	to_chat(S, "Ваша душа была захвачена! Теперь вы привязаны к [user.name] и его союзникам. Помогайте им добиться их целей любой ценой..")
 	to_chat(user, "<span class='notice'><b>Захват удался!</b>:</span> Душа [H.real_name] была вырвана из его тела и помещена в камень душ.")
 	to_chat(user, "Камень душ запечатал разум [S.real_name], теперь вы не сможете захватить других душ.")
-	imprinted = "[S.name]"
+	C.imprinted = "[S.name]"
 	H.gib()
 
 /obj/item/device/soulstone/proc/capture_shade(target, mob/user)
 	var/mob/living/simple_animal/shade/S = target
+	var/obj/item/device/soulstone/stone = src
 	if(S.stat == DEAD)
 		to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Тень уже изгнана!")
 		return
-	if(contents.len)
+	if(stone.contents.len)
 		to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Камень душ полон! Используйте или освободите душу внутри камня.")
 		return
-	if(S.name != imprinted)
-		to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> В камне душ уже запечатана душа [imprinted]!")
+	if(S.name != stone.imprinted)
+		to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> В камне душ уже запечатана душа [stone.imprinted]!")
 		return
 
-	S.forceMove(src)
+	S.forceMove(stone) //put shade in stone
 	S.status_flags |= GODMODE
 	S.canmove = FALSE
 	S.health = S.maxHealth
-	icon_state = "soulstone_glow_blink"
+	stone.icon_state = "soulstone_glow_blink"
 	to_chat(S, "Ваша душа была снова захвачена в камень душ, тайная энергия опять связывает твою эфирную форму.")
 	to_chat(user, "<span class='notice'><b>Захват удался!</b>:</span> Душа [S.name] была снова захвачен в камень душ.")
 
@@ -169,13 +168,7 @@
 		to_chat(user, "<span class='warning'><b>Создание не удалось!</b>:</span> Камень душ пуст! Самое время убить кого-нибудь.")
 		return
 
-	if(!S.client)
-		to_chat(user, "<span class='warning'><b>Создание не удалось!</b>:</span> У существа внутри нет души! Самое время найти новую.")
-		return
-
 	var/construct_class = show_radial_menu(user, target, class_images, require_near = TRUE, tooltips = TRUE)
-	if(!construct_class)
-		return
 
 	var/type = classes[construct_class]
 	var/mob/living/simple_animal/construct/M = new type(get_turf(target))

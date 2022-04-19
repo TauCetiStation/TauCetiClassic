@@ -189,7 +189,6 @@ var/global/list/available_ui_styles = list(
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)
 
-	reorganize_alerts()
 	create_parallax()
 
 	// See the comment from "/mob/living/carbon/human/create_mob_hud()"

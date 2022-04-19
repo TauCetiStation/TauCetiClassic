@@ -295,12 +295,12 @@
 // Add combo points to all attackers.
 /mob/living/proc/add_combo_value_all(value)
 	for(var/datum/combo_handler/CS in combos_saved)
-		CS.points += value
+		CS.fullness += value
 
 // Add combo points to all my combo-controllers.
 /mob/living/proc/add_my_combo_value(value)
 	for(var/datum/combo_handler/CS in combos_performed)
-		CS.points += value
+		CS.fullness += value
 
 // Returns TRUE if a combo was executed.
 /mob/living/proc/try_combo(mob/living/target)

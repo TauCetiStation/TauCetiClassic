@@ -32,7 +32,7 @@
 /mob/living/simple_animal/cat/Life()
 	//MICE!
 	if((src.loc) && isturf(src.loc))
-		if(!stat && !buckled)
+		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(!M.stat)
 					M.splat()
@@ -48,7 +48,7 @@
 			emote(pick("hisses and spits!","mrowls fiercely!","eyes [snack] hungrily."))
 		break
 
-	if(!stat && !buckled)
+	if(!stat && !resting && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			walk_to(src,0)

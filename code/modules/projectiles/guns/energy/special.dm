@@ -29,6 +29,17 @@
 	else
 		return
 
+/obj/item/weapon/gun/energy/ionrifle/classic
+	name = "ion rifle"
+	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
+	icon_state = "oldion"
+	item_state = "oldion"
+	slot_flags = null
+
+/obj/item/weapon/gun/energy/ionrifle/tactifool
+	icon_state = "tfionrifle"
+	item_state = "tfionrifle"
+
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
@@ -564,17 +575,3 @@
 
 /obj/item/weapon/gun/energy/gun/portal/emp_act(severity)
 	return
-
-/obj/item/weapon/gun/energy/retro
-	name ="retro phaser"
-	icon_state = "retro"
-	item_state = null
-	desc = "An older model of the basic energy weapon, no longer used by Nanotrasen's security or military forces due to it's low projectile velocity. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
-	can_be_holstered = TRUE
-	ammo_type = list(/obj/item/ammo_casing/energy/phaser)
-
-/obj/item/weapon/gun/energy/retro/atom_init()
-	. = ..()
-	if(power_supply)
-		power_supply.maxcharge = 1500
-		power_supply.charge = 1500

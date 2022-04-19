@@ -74,5 +74,3 @@
 
 	var/beauty_living = 0.0
 	var/beauty_dead = -100.0
-
-	var/list/spawner_args = null

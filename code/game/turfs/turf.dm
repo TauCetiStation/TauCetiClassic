@@ -94,7 +94,7 @@
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		to_chat(usr, "<span class='warning'>Передвижение отключено администрацией.</span>")//This is to identify lag problems
+		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
 		return
 	if (!mover || !isturf(mover.loc))
 		return 1
@@ -250,10 +250,8 @@
 		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
 		return*/
 
-	if(ispath(path, /turf/environment))
-		var/env_turf_type = SSenvironment.turf_type[z]
-		if(!ispath(path, env_turf_type))
-			path = env_turf_type
+	if(ispath(path, /turf/environment/space))
+		path = SSenvironment.turf_type[z]
 
 	if (path == type)
 		return src

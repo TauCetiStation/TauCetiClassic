@@ -273,7 +273,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			return
 		else
 			var/mob/dead/observer/ghost = new/mob/dead/observer(M,1)
-			M.logout_reason = LOGOUT_SWAP
 			ghost.ckey = M.ckey
 	message_admins("<span class='notice'>[key_name_admin(usr)] assumed direct control of [M].</span>")
 	log_admin("[key_name(usr)] assumed direct control of [M].")

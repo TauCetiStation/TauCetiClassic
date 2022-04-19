@@ -39,7 +39,15 @@ var/global/list/junkyard_bum_list = list()     //list of all bums placements
 	for(var/obj/item/loot in contents)
 		loot.make_old()
 	qdel(CATCH)
-	randomize_human(src)
+	gender = pick(MALE, FEMALE)
+	if(gender == MALE)
+		name = pick(first_names_male)
+	else
+		name = pick(first_names_female)
+	name += " [pick(last_names)]"
+	real_name = name
+	var/datum/preferences/A = new()	//Randomize appearance for the human
+	A.randomize_appearance_for(src)
 	sight |= SEE_BLACKNESS
 	update_inv_head()
 	update_inv_wear_suit()

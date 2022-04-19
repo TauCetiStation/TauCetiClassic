@@ -628,7 +628,9 @@
 "abk" = (
 /obj/structure/stool/bed/chair/office/dark,
 /obj/structure/disposalpipe/segment,
-/obj/effect/landmark/start/security_officer,
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -1181,7 +1183,9 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
 	},
-/obj/effect/landmark/start/security_officer,
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redcorner"
@@ -1323,7 +1327,9 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/landmark/start/security_officer,
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -2946,7 +2952,9 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
-/obj/effect/landmark/start/station_engineer,
+/obj/effect/landmark/start{
+	name = "Station Engineer"
+	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "afc" = (
@@ -3611,7 +3619,9 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start{
+	name = "Scientist"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -3895,7 +3905,9 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start{
+	name = "Scientist"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -4849,7 +4861,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/effect/landmark/start/technical_assistant,
+/obj/effect/landmark/start{
+	name = "Technical Assistant"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellowcorner"
@@ -4961,7 +4975,9 @@
 	},
 /area/station/engineering/engine)
 "aiB" = (
-/obj/effect/landmark/start/security_cadet,
+/obj/effect/landmark/start{
+	name = "Security Cadet"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redcorner"
@@ -5023,7 +5039,9 @@
 /area/station/security/brig)
 "aiG" = (
 /obj/structure/stool/bed/chair/office/dark,
-/obj/effect/landmark/start/warden,
+/obj/effect/landmark/start{
+	name = "Warden"
+	},
 /obj/machinery/door_control{
 	id = "Secure Gate";
 	name = "Brig Lockdown";
@@ -6354,7 +6372,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -6517,7 +6537,9 @@
 /area/station/storage/primary)
 "akY" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /turf/simulated/floor,
 /area/station/storage/primary)
 "akZ" = (
@@ -6532,7 +6554,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /turf/simulated/floor,
 /area/station/storage/primary)
 "ala" = (
@@ -6595,7 +6619,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/security_cadet,
+/obj/effect/landmark/start{
+	name = "Security Cadet"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "red"
@@ -7557,7 +7583,9 @@
 	},
 /area/station/security/processing)
 "amD" = (
-/obj/effect/landmark/start/security_cadet,
+/obj/effect/landmark/start{
+	name = "Security Cadet"
+	},
 /obj/machinery/door_control{
 	id = "prisonexit";
 	name = "Exit Doors";
@@ -8790,7 +8818,9 @@
 /area/station/security/prison)
 "aoB" = (
 /obj/structure/stool/bed/chair/office/dark,
-/obj/effect/landmark/start/detective,
+/obj/effect/landmark/start{
+	name = "Detective"
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "aoC" = (
@@ -8835,7 +8865,9 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
-/obj/effect/landmark/start/medical_doctor,
+/obj/effect/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -9097,7 +9129,9 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
 	},
-/obj/effect/landmark/start/forensic_technician,
+/obj/effect/landmark/start{
+	name = "Forensic Technician"
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -10177,7 +10211,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/technical_assistant,
+/obj/effect/landmark/start{
+	name = "Technical Assistant"
+	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -14059,7 +14095,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/effect/landmark/start/xenobiologist,
+/obj/effect/landmark/start{
+	name = "Xenobiologist"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -14137,7 +14175,9 @@
 	},
 /area/station/storage/tech/north)
 "ayM" = (
-/obj/effect/landmark/start/xenobiologist,
+/obj/effect/landmark/start{
+	name = "Xenobiologist"
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
@@ -16131,7 +16171,9 @@
 /area/station/ai_monitored/eva)
 "aCz" = (
 /obj/structure/stool/bed/chair/office/dark,
-/obj/effect/landmark/start/quartermaster,
+/obj/effect/landmark/start{
+	name = "Quartermaster"
+	},
 /turf/simulated/floor,
 /area/station/cargo/qm)
 "aCA" = (
@@ -17857,7 +17899,9 @@
 /area/station/security/main)
 "aFQ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/effect/landmark/start/assistant/waiter,
+/obj/effect/landmark/start{
+	name = "Waiter"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -19626,7 +19670,9 @@
 	},
 /area/station/rnd/mixing)
 "aJk" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aJl" = (
@@ -21923,7 +21969,9 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
 	},
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start{
+	name = "Scientist"
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -23952,7 +24000,9 @@
 /area/station/maintenance/eva)
 "aRf" = (
 /obj/structure/stool/bed/chair/office/dark,
-/obj/effect/landmark/start/security_officer,
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -24527,7 +24577,9 @@
 	},
 /area/station/medical/hallway)
 "aSi" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -24665,7 +24717,9 @@
 /area/station/storage/primary)
 "aSw" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
@@ -25452,12 +25506,16 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aTN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aTO" = (
@@ -25591,7 +25649,9 @@
 	},
 /area/station/gateway)
 "aTZ" = (
-/obj/effect/landmark/start/research_assistant,
+/obj/effect/landmark/start{
+	name = "Research Assistant"
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "aUa" = (
@@ -26262,7 +26322,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aVm" = (
@@ -26275,7 +26337,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aVn" = (
@@ -26303,7 +26367,9 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aVp" = (
@@ -26634,7 +26700,9 @@
 /area/station/rnd/hor)
 "aVU" = (
 /obj/structure/stool/bed/chair/office/light,
-/obj/effect/landmark/start/research_director,
+/obj/effect/landmark/start{
+	name = "Research Director"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -26908,7 +26976,9 @@
 	},
 /area/station/rnd/misc_lab)
 "aWn" = (
-/obj/effect/landmark/start/chaplain,
+/obj/effect/landmark/start{
+	name = "Chaplain"
+	},
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
@@ -27134,7 +27204,9 @@
 	},
 /area/station/storage/primary)
 "aWG" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
@@ -27230,7 +27302,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -28192,7 +28266,9 @@
 /area/station/maintenance/medbay)
 "aYC" = (
 /obj/structure/flora/ausbushes/ywflowers,
-/obj/effect/landmark/start/botanist,
+/obj/effect/landmark/start{
+	name = "Botanist"
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aYD" = (
@@ -31948,6 +32024,9 @@
 /area/station/rnd/hallway)
 "beY" = (
 /obj/structure/stool,
+/obj/effect/landmark/start{
+	name = "Intern"
+	},
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "beZ" = (
@@ -32884,7 +32963,9 @@
 	},
 /area/station/hallway/primary/port)
 "bgF" = (
-/obj/effect/landmark/start/cargo_technician,
+/obj/effect/landmark/start{
+	name = "Cargo Technician"
+	},
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
 	},
@@ -34258,7 +34339,9 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
 	},
-/obj/effect/landmark/start/internal_affairs_agent,
+/obj/effect/landmark/start{
+	name = "Internal Affairs Agent"
+	},
 /turf/simulated/floor/carpet/black,
 /area/station/security/iaa_office)
 "bjA" = (
@@ -34707,7 +34790,9 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
-/obj/effect/landmark/start/captain,
+/obj/effect/landmark/start{
+	name = "Captain"
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bkx" = (
@@ -35749,7 +35834,9 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
 	},
-/obj/effect/landmark/start/chemist,
+/obj/effect/landmark/start{
+	name = "Chemist"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -36394,7 +36481,9 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "bnq" = (
-/obj/effect/landmark/start/medical_doctor,
+/obj/effect/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blue"
@@ -37159,7 +37248,9 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
 	},
-/obj/effect/landmark/start/roboticist,
+/obj/effect/landmark/start{
+	name = "Roboticist"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -37852,7 +37943,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/effect/landmark/start/cargo_technician,
+/obj/effect/landmark/start{
+	name = "Cargo Technician"
+	},
 /turf/simulated/floor,
 /area/station/cargo/office)
 "bqa" = (
@@ -40029,7 +40122,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start/cyborg,
+/obj/effect/landmark/start{
+	name = "Cyborg"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
@@ -40142,7 +40237,9 @@
 /area/station/bridge)
 "buc" = (
 /obj/structure/stool/bed/chair/office/light,
-/obj/effect/landmark/start/geneticist,
+/obj/effect/landmark/start{
+	name = "Geneticist"
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
@@ -40631,7 +40728,9 @@
 	},
 /area/station/cargo/recycleroffice)
 "buW" = (
-/obj/effect/landmark/start/bartender,
+/obj/effect/landmark/start{
+	name = "Bartender"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/wood,
@@ -40886,7 +40985,9 @@
 	},
 /area/station/medical/hallway)
 "bvu" = (
-/obj/effect/landmark/start/recycler,
+/obj/effect/landmark/start{
+	name = "Recycler"
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -42222,7 +42323,9 @@
 /area/station/cargo/storage)
 "bxD" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/recycler,
+/obj/effect/landmark/start{
+	name = "Recycler"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -43425,7 +43528,9 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
 	},
-/obj/effect/landmark/start/head_of_personnel,
+/obj/effect/landmark/start{
+	name = "Head of Personnel"
+	},
 /turf/simulated/floor,
 /area/station/bridge/hop_office)
 "bzL" = (
@@ -43552,7 +43657,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/effect/landmark/start/cyborg,
+/obj/effect/landmark/start{
+	name = "Cyborg"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -43560,7 +43667,9 @@
 	name = "Cyborg Station"
 	})
 "bzX" = (
-/obj/effect/landmark/start/cyborg,
+/obj/effect/landmark/start{
+	name = "Cyborg"
+	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -44432,7 +44541,9 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
 	},
-/obj/effect/landmark/start/internal_affairs_agent,
+/obj/effect/landmark/start{
+	name = "Internal Affairs Agent"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -44542,7 +44653,9 @@
 /area/station/rnd/lab)
 "bBO" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/janitor,
+/obj/effect/landmark/start{
+	name = "Janitor"
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -45892,7 +46005,9 @@
 /area/station/maintenance/science)
 "bEk" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/shaft_miner,
+/obj/effect/landmark/start{
+	name = "Shaft Miner"
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -45904,7 +46019,9 @@
 /area/station/cargo/miningoffice)
 "bEl" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/shaft_miner,
+/obj/effect/landmark/start{
+	name = "Shaft Miner"
+	},
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -46804,7 +46921,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/obj/effect/landmark/start/research_assistant,
+/obj/effect/landmark/start{
+	name = "Research Assistant"
+	},
 /turf/simulated/floor{
 	icon_state = "warnwhite"
 	},
@@ -47026,7 +47145,9 @@
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
-/obj/effect/landmark/start/mime,
+/obj/effect/landmark/start{
+	name = "Mime"
+	},
 /turf/simulated/floor/carpet/purple,
 /area/station/civilian/theatre)
 "bGn" = (
@@ -47281,7 +47402,9 @@
 /area/station/rnd/robotics)
 "bGH" = (
 /obj/structure/stool/bed/chair/office/light,
-/obj/effect/landmark/start/roboticist,
+/obj/effect/landmark/start{
+	name = "Roboticist"
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
@@ -47648,7 +47771,9 @@
 /obj/structure/stool/bed/chair/barber{
 	dir = 8
 	},
-/obj/effect/landmark/start/barber,
+/obj/effect/landmark/start{
+	name = "Barber"
+	},
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -47951,7 +48076,9 @@
 	},
 /area/station/civilian/cold_room)
 "bHP" = (
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start{
+	name = "Medical Intern"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -50037,7 +50164,9 @@
 	},
 /area/station/hallway/primary/starboard)
 "bLM" = (
-/obj/effect/landmark/start/research_assistant,
+/obj/effect/landmark/start{
+	name = "Research Assistant"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "purple"
@@ -50190,7 +50319,9 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
-/obj/effect/landmark/start/head_of_security,
+/obj/effect/landmark/start{
+	name = "Head of Security"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -50617,7 +50748,9 @@
 /area/station/civilian/gym)
 "bMO" = (
 /obj/machinery/hologram/holopad,
-/obj/effect/landmark/start/medical_doctor,
+/obj/effect/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -52431,7 +52564,9 @@
 	},
 /area/station/security/main)
 "bQc" = (
-/obj/effect/landmark/start/medical_doctor,
+/obj/effect/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -55048,7 +55183,9 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
-/obj/effect/landmark/start/atmospheric_technician,
+/obj/effect/landmark/start{
+	name = "Atmospheric Technician"
+	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "bXd" = (
@@ -55174,7 +55311,9 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
-/obj/effect/landmark/start/atmospheric_technician,
+/obj/effect/landmark/start{
+	name = "Atmospheric Technician"
+	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -56206,7 +56345,9 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "cbb" = (
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start{
+	name = "Medical Intern"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -56611,7 +56752,9 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 1
 	},
-/obj/effect/landmark/start/psychiatrist,
+/obj/effect/landmark/start{
+	name = "Psychiatrist"
+	},
 /obj/machinery/light_switch{
 	pixel_y = -27
 	},
@@ -57978,7 +58121,9 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
-/obj/effect/landmark/start/station_engineer,
+/obj/effect/landmark/start{
+	name = "Station Engineer"
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -59072,7 +59217,9 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "ckE" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -61067,7 +61214,9 @@
 	},
 /area/station/aisat/ai_chamber)
 "cpB" = (
-/obj/effect/landmark/start/ai,
+/obj/effect/landmark/start{
+	name = "AI"
+	},
 /obj/item/device/radio/intercom{
 	freerange = 1;
 	frequency = 1447;
@@ -62890,7 +63039,9 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
 	},
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start{
+	name = "Scientist"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
@@ -67721,7 +67872,9 @@
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
-/obj/effect/landmark/start/clown,
+/obj/effect/landmark/start{
+	name = "Clown"
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "cIu" = (
@@ -71567,7 +71720,9 @@
 	dir = 4;
 	network = list("SS13","Medical")
 	},
-/obj/effect/landmark/start/medical_doctor,
+/obj/effect/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blue"
@@ -71620,7 +71775,9 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
 	},
-/obj/effect/landmark/start/paramedic,
+/obj/effect/landmark/start{
+	name = "Paramedic"
+	},
 /obj/machinery/door_control{
 	desc = "A remote control switch for the medbay foyer.";
 	id = "MedbayFoyerOut";
@@ -72250,7 +72407,9 @@
 	},
 /area/station/medical/reception)
 "gMs" = (
-/obj/effect/landmark/start/technical_assistant,
+/obj/effect/landmark/start{
+	name = "Technical Assistant"
+	},
 /turf/simulated/floor{
 	icon_state = "yellowcorner"
 	},
@@ -75489,7 +75648,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start/paramedic,
+/obj/effect/landmark/start{
+	name = "Paramedic"
+	},
 /turf/simulated/floor{
 	icon_state = "blue"
 	},
@@ -75603,7 +75764,9 @@
 /area/station/bridge/teleporter)
 "kss" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/landmark/start/botanist,
+/obj/effect/landmark/start{
+	name = "Botanist"
+	},
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "ksR" = (
@@ -75836,7 +75999,9 @@
 	},
 /area/station/cargo/recycleroffice)
 "kFe" = (
-/obj/effect/landmark/start/botanist,
+/obj/effect/landmark/start{
+	name = "Botanist"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "green"
@@ -75871,7 +76036,9 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
 	},
-/obj/effect/landmark/start/geneticist,
+/obj/effect/landmark/start{
+	name = "Geneticist"
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -76086,7 +76253,9 @@
 /area/station/cargo/storage)
 "lac" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/landmark/start/cargo_technician,
+/obj/effect/landmark/start{
+	name = "Cargo Technician"
+	},
 /turf/simulated/floor,
 /area/station/cargo/office)
 "lar" = (
@@ -76581,7 +76750,9 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
 	},
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start{
+	name = "Scientist"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -78995,7 +79166,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/obj/effect/landmark/start/chief_medical_officer,
+/obj/effect/landmark/start{
+	name = "Chief Medical Officer"
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -80021,7 +80194,9 @@
 /area/station/civilian/hydroponics)
 "qgb" = (
 /obj/structure/stool/bed/chair/office/light,
-/obj/effect/landmark/start/chief_engineer,
+/obj/effect/landmark/start{
+	name = "Chief Engineer"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkyellow"
@@ -81940,7 +82115,9 @@
 	},
 /area/station/medical/virology)
 "slc" = (
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start{
+	name = "Chef"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -82546,7 +82723,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/landmark/start/virologist,
+/obj/effect/landmark/start{
+	name = "Virologist"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -82630,7 +82809,9 @@
 	},
 /area/station/medical/virology)
 "sVF" = (
-/obj/effect/landmark/start/recycler,
+/obj/effect/landmark/start{
+	name = "Recycler"
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -83763,7 +83944,9 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
-/obj/effect/landmark/start/librarian,
+/obj/effect/landmark/start{
+	name = "Librarian"
+	},
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -83956,7 +84139,9 @@
 /area/station/engineering/atmos)
 "vTP" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/botanist,
+/obj/effect/landmark/start{
+	name = "Botanist"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -84702,7 +84887,9 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
-/obj/effect/landmark/start/station_engineer,
+/obj/effect/landmark/start{
+	name = "Station Engineer"
+	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "xDn" = (

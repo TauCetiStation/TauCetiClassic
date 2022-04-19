@@ -42,7 +42,6 @@
 	name = "Junkyard"
 	icon_state = "away"
 	always_unpowered = 1
-	outdoors = TRUE
 
 /area/awaymission/BMPship1
 	name = "Aft Block"

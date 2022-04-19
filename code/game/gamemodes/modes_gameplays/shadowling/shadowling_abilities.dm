@@ -241,6 +241,8 @@
 		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, SLOT_GLASSES)
 		var/mob/living/carbon/human/H = usr
 		H.set_species(SHADOWLING)
+		H.dna.mutantrace = "shadowling"
+		H.update_mutantrace()
 		H.regenerate_icons()
 
 /obj/effect/proc_holder/spell/targeted/collective_mind

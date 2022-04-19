@@ -84,17 +84,6 @@ var/global/list/all_emotes
 
 	LAZYSET(cooldowns, get_cooldown_group(), world.time + value)
 
-/datum/emote/proc/can_play_sound(mob/living/carbon/human/user, intentional)
-	if(user.miming)
-		return FALSE
-	if(HAS_TRAIT(user, TRAIT_MUTE))
-		return FALSE
-	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
-		return FALSE
-	if(!check_cooldown(user.next_audio_emote_produce, intentional))
-		return FALSE
-	return TRUE
-
 /datum/emote/proc/get_sound(mob/living/carbon/human/user, intentional)
 	return sound
 
@@ -141,7 +130,7 @@ var/global/list/all_emotes
 		to_chat(user, msg_1p)
 
 	var/emote_sound = get_sound(user, intentional)
-	if(emote_sound && can_play_sound(user, intentional))
+	if(emote_sound && check_cooldown(user.next_audio_emote_produce, intentional))
 		LAZYINITLIST(user.next_audio_emote_produce)
 		set_cooldown(user.next_audio_emote_produce, audio_cooldown, intentional)
 		play_sound(user, intentional, emote_sound)

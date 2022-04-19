@@ -1,25 +1,19 @@
-// Put positive or negative-aligned quirks here. For further explanation and more reading material visit __DEFINES/qualities.dm and qualities/quality.dm
-/datum/quality/negativeish
-	pools = list(
-		QUALITY_POOL_NEGATIVEISH
-	)
+// Put negative or negative-aligned quirks here.
 
-/datum/quality/negativeish/mute
-	name = "Mute"
+/datum/quality/mute
 	desc = "Так вышло, что языка у тебя больше нет."
 	requirement = "Нет."
 
-/datum/quality/negativeish/mute/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/mute/add_effect(mob/living/carbon/human/H, latespawn)
 	H.add_quirk(QUIRK_MUTE)
 
 
 // It's 80% negative and 20% positive.
-/datum/quality/negativeish/mutant
-	name = "Mutant"
+/datum/quality/mutant
 	desc = "Тебе не повезло облучиться по пути на работу."
 	requirement = "Нет."
 
-/datum/quality/negativeish/mutant/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/mutant/add_effect(mob/living/carbon/human/H, latespawn)
 	if(prob(80))
 		randmutb(H)
 	else
@@ -27,27 +21,24 @@
 	domutcheck(H, null)
 
 
-/datum/quality/negativeish/frail
-	name = "Frail"
+/datum/quality/frail
 	desc = "Жизнь раба корпорации довела тебя до серьезной болезни. Здоровье существенно снижено."
 	requirement = "Нет."
 
-/datum/quality/negativeish/frail/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/frail/add_effect(mob/living/carbon/human/H, latespawn)
 	H.health = 50
 	H.maxHealth = 50
 
 
-/datum/quality/negativeish/depression
-	name = "Depression"
+/datum/quality/depression
 	desc = "Ты в депрессии и чувствуешь себя уныло. Так и живём."
 	requirement = "Нет."
 
-/datum/quality/negativeish/depression/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/depression/add_effect(mob/living/carbon/human/H, latespawn)
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "roundstart_depression", /datum/mood_event/depression)
 
 
-/datum/quality/negativeish/true_keeper
-	name = "True Keeper"
+/datum/quality/true_keeper
 	desc = "Ты не должен покидать бриг ЛЮБОЙ ЦЕНОЙ. Он ведь загнётся без твоего надзора!"
 	requirement = "Варден."
 
@@ -55,21 +46,20 @@
 		"Warden",
 	)
 
-/datum/quality/negativeish/true_keeper/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/true_keeper/add_effect(mob/living/carbon/human/H, latespawn)
 	RegisterSignal(H, COMSIG_ENTER_AREA, .proc/on_enter)
 	RegisterSignal(H, COMSIG_EXIT_AREA, .proc/on_exit)
 
-/datum/quality/negativeish/true_keeper/proc/on_enter(datum/source, area/A, atom/OldLoc)
+/datum/quality/true_keeper/proc/on_enter(datum/source, area/A, atom/OldLoc)
 	if(istype(A, /area/station/security))
 		SEND_SIGNAL(source, COMSIG_CLEAR_MOOD_EVENT, "true_keeper_failure")
 
-/datum/quality/negativeish/true_keeper/proc/on_exit(datum/source, area/A, atom/NewLoc)
+/datum/quality/true_keeper/proc/on_exit(datum/source, area/A, atom/NewLoc)
 	if(istype(A, /area/station/security))
 		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "true_keeper_failure", /datum/mood_event/true_keeper_failure)
 
 
-/datum/quality/negativeish/rts
-	name = "RTS"
+/datum/quality/rts
 	desc = "Ты не должен покидать мостик. Ты ведь мозг станции, а мозг должен быть в самом защищенном месте."
 	requirement = "Капитан."
 
@@ -77,26 +67,48 @@
 		"Captain",
 	)
 
-/datum/quality/negativeish/rts/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/rts/add_effect(mob/living/carbon/human/H, latespawn)
 	RegisterSignal(H, COMSIG_ENTER_AREA, .proc/on_enter)
 	RegisterSignal(H, COMSIG_EXIT_AREA, .proc/on_exit)
 
-/datum/quality/negativeish/rts/proc/on_enter(datum/source, area/A, atom/OldLoc)
+/datum/quality/rts/proc/on_enter(datum/source, area/A, atom/OldLoc)
 	if(istype(A, /area/station/bridge))
 		SEND_SIGNAL(source, COMSIG_CLEAR_MOOD_EVENT, "rts_failure")
 
-/datum/quality/negativeish/rts/proc/on_exit(datum/source, area/A, atom/NewLoc)
+/datum/quality/rts/proc/on_exit(datum/source, area/A, atom/NewLoc)
 	if(istype(A, /area/station/bridge))
 		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "rts_failure", /datum/mood_event/rts_failure)
 
 
-/datum/quality/negativeish/soulless
-	name = "Soulless"
+/datum/quality/kamikaze
+	desc = "Каким-то образом Вам вставили имплант самоуничтожения. Реанимировать после смерти Вас будет значительно сложнее..."
+	requirement = "Нет."
+
+/datum/quality/kamikaze/add_effect(mob/living/carbon/human/H, latespawn)
+	var/obj/item/weapon/implant/dexplosive/DE = new(H)
+	DE.stealth_inject(H)
+
+
+/datum/quality/obedient
+	desc = "За плохое поведение Вам ввели имплант подчинения. Лучше вести себя хорошо."
+	requirement = "Не охранник."
+
+	var/list/funpolice = list("Security Officer", "Security Cadet", "Warden")
+
+/datum/quality/obedient/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !(H.mind.assigned_role in funpolice)
+
+/datum/quality/obedient/add_effect(mob/living/carbon/human/H, latespawn)
+	var/obj/item/weapon/implant/obedience/O = new(H)
+	O.stealth_inject(H)
+
+
+/datum/quality/soulless
 	desc = "У Вас нет души."
 	requirement = "Нет."
 
 
-/datum/quality/negativeish/soulless/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/soulless/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_NO_SOUL, QUALITY_TRAIT)
 
 	H.r_hair = rand(170, 255)
@@ -109,12 +121,11 @@
 	H.b_facial = H.b_hair
 
 
-/datum/quality/negativeish/dirty
-	name = "Dirty"
-	desc = "Прекрасным ранним утром в дороге на работу ты поскользнулся и упал в глубокую лужу грязи, и полностью пропитался этой субстанцией. Времени не было и пришлось лететь на станцию в таком виде."
-	requirement = "Нет."
+/datum/quality/dirty
+	desc = "Прекрасным ранним утром в дороге на работу ты поскользнулся и упал в глубокую лужу грязи, полностью пропитавшись этой субстанцией. Времени не было и пришлось лететь на станцию в таком виде."
+	requirement = "Быть чистым. (Требований нет)"
 
-/datum/quality/negativeish/dirty/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/dirty/add_effect(mob/living/carbon/human/H, latespawn)
 	var/datum/dirt_cover/mud/dirt_config = new
 	var/dirt_r = HEX_VAL_RED(dirt_config.color)
 	var/dirt_g = HEX_VAL_GREEN(dirt_config.color)
@@ -147,22 +158,20 @@
 	H.regenerate_icons()
 
 
-/datum/quality/negativeish/non_comprende
-	name = "Non Comprende"
+/datum/quality/non_comprende
 	desc = "Ты не знаешь никаких языков кроме общего."
 	requirement = "Нет."
 
-/datum/quality/negativeish/non_comprende/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/non_comprende/add_effect(mob/living/carbon/human/H, latespawn)
 	for(var/datum/language/language as anything in H.languages)
 		H.remove_language(language.name)
 
 
-/datum/quality/negativeish/patriot
-	name = "Patriot"
+/datum/quality/patriot
 	desc = "Ты знаешь только один язык. И всегда будешь говорить только на нём."
 	requirement = "Нет."
 
-/datum/quality/negativeish/patriot/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/patriot/add_effect(mob/living/carbon/human/H, latespawn)
 	if(length(H.languages) == 0)
 		return
 
@@ -174,12 +183,11 @@
 		H.remove_language(language.name)
 
 
-/datum/quality/negativeish/shkiondioniovioion
-	name = "Shkёndёnёvёёёn"
+/datum/quality/shkiondioniovioion
 	desc = "Тё знёёшь тёлькё ёдён ёзёк. Ё всёгдё бёдёшь гёвёрёть тёлькё нё нём."
 	requirement = "Нёт."
 
-/datum/quality/negativeish/shkiondioniovioion/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/shkiondioniovioion/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
 
 	H.add_language(LANGUAGE_SHKIONDIONIOVIOION)
@@ -191,24 +199,22 @@
 		H.remove_language(language.name)
 
 
-/datum/quality/negativeish/salackyi
-	name = "Салацькый"
+/datum/quality/salarian
 	desc = "Ну що хлопче, готовий?"
 	requirement = "Нема."
 
-/datum/quality/negativeish/salackyi/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/salarian/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
 
-	H.add_language(LANGUAGE_SALACKYI)
-	H.common_language = LANGUAGE_SALACKYI
+	H.add_language(LANGUAGE_SALARIAN)
+	H.common_language = LANGUAGE_SALARIAN
 
 
-/datum/quality/negativeish/clumsy
-	name = "Clumsy"
+/datum/quality/clumsy
 	desc = "Ты - неуклюжий, криворукий дурачок. Лучше не трогать всякие опасные штуки!"
 	requirement = "Все, кроме Клоуна."
 
-/datum/quality/negativeish/clumsy/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+/datum/quality/clumsy/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	return H.mind.assigned_role != "Clown"
 
 /datum/quality/clumsy/add_effect(mob/living/carbon/human/H, latespawn)
@@ -216,72 +222,66 @@
 
 
 var/global/list/allergen_reagents_list
-/datum/quality/negativeish/allergies
-	name = "Allergies"
+/datum/quality/allergies
 	desc = "Ты - аллергик, с рождения такой. Вот только беда... А на что аллергия то?"
 	requirement = "Не синтет."
 
 	var/allergies_amount = 3
 
-/datum/quality/negativeish/allergies/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+/datum/quality/allergies/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	return !H.species.flags[IS_SYNTHETIC]
 
-/datum/quality/negativeish/allergies/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/allergies/add_effect(mob/living/carbon/human/H, latespawn)
 	for(var/i in 1 to allergies_amount)
 		var/reagent = pick(global.allergen_reagents_list)
 		LAZYSET(H.allergies, reagent, ALLERGY_UNDISCOVERED)
 
 
-/datum/quality/negativeish/dumb
-	name = "Dumb"
+/datum/quality/dumb
 	desc = "Ты несколько раз упал головой на тулбокс и отупел."
 	requirement = "Нет."
 
-/datum/quality/negativeish/dumb/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/dumb/add_effect(mob/living/carbon/human/H, latespawn)
 	H.adjustBrainLoss(rand(30, 99))
 
-/datum/quality/negativeish/c4
-	name = "C4"
+/datum/quality/c4
 	desc = "Спокойно, на Вас всего лишь повесили бомбу. \
 	<br>- ВЗОРВЁТСЯ ЛИ ОНА? \
 	<br>- Да. \
 	<br>- КОГДА? \
-	<br>- Ну может и бахнет минут через 5? 20? 40? Кто его знает?"
+	<br>- Ну может вообще не взорвётся, ну а может и бахнет минут через 5? 20? 40? Кто его знает?"
 	requirement = "Нет."
 
-/datum/quality/negativeish/c4/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/c4/add_effect(mob/living/carbon/human/H, latespawn)
 	var/obj/item/weapon/plastique/C4 = new(H)
 	C4.timer = rand(600, 1800)
 	C4.plant_bomb(H)
 
-/datum/quality/negativeish/trypanophobia
-	name = "Trypanophobia"
-	desc = "Ты с самого детства боишься уколов."
+/datum/quality/trypanophobia
+	desc = "Вы с самого детства боитесь уколов."
 	requirement = "Не СПУ, не Диона"
 
-/datum/quality/negativeish/trypanophobia/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+/datum/quality/trypanophobia/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	return !H.species.flags[IS_SYNTHETIC] && !H.species.flags[IS_PLANT]
 
-/datum/quality/negativeish/trypanophobia/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/trypanophobia/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT)
 
 
-/datum/quality/negativeish/wet_hands
-	name = "Wet Hands"
-	desc = "Твои верхние конечности можно сравнить с губкой, которая впитывает в себя жидкости. Помни, с мокрыми руками опасно работать за компьютером."
+/datum/quality/wet_hands
+	desc = "Ваши верхние конечности можно сравнить с губкой, которая впитывает в себя жидкости. Осторожнее при работе с консолями."
 	requirement = "Нет."
 
-/datum/quality/negativeish/wet_hands/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/wet_hands/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_WET_HANDS, QUALITY_TRAIT)
 
 
-/datum/quality/negativeish/greasy_fingers
-	name = "Greasy Fingers"
-	desc = "Твои пальцы часто покрываются природным жиром. Ты их хоть пробовал мыть?"
+/datum/quality/greasy_fingers
+	desc = "Ваши пальцы часто покрываются природным жиром."
 	requirement = "Не СПУ."
 
-/datum/quality/negativeish/greasy_fingers/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+/datum/quality/greasy_fingers/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	return !H.species.flags[IS_SYNTHETIC]
 
-/datum/quality/negativeish/greasy_fingers/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/greasy_fingers/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_GREASY_FINGERS, QUALITY_TRAIT)

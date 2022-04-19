@@ -1068,7 +1068,10 @@
 		return 0
 	return qualities[quality]
 
-/obj/item/proc/get_dye_type(w_color)
+/obj/item/proc/wash_act(w_color)
+	decontaminate()
+	wet = 0
+
 	if(!dyed_type)
 		return
 
@@ -1082,16 +1085,6 @@
 
 	if(islist(dye_type))
 		dye_type = pick(dye_type)
-
-	return dye_type
-
-/obj/item/proc/wash_act(w_color)
-	decontaminate()
-	wet = 0
-
-	var/obj/item/clothing/dye_type = get_dye_type(w_color)
-	if(!dye_type)
-		return
 
 	name = initial(dye_type.name)
 	icon_state = initial(dye_type.icon_state)

@@ -50,4 +50,5 @@
 
 	needed_aspects = list(
 		ASPECT_MYSTIC = 1,
+		ASPECT_RESOURCES = 1,
 	)

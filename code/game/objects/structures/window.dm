@@ -152,13 +152,17 @@
 		step(src, get_dir(AM, src))
 	take_damage(tforce)
 
+/obj/structure/window/attack_tk(mob/user)
+	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
+	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+
 /obj/structure/window/attack_hand(mob/user)	//specflags please!!
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 		user.do_attack_animation(src)
 		take_damage(rand(15,25), "generic")
-	else if(user.get_species() == GOLEM || user.get_species() == ABOMINATION)
+	else if(user.dna && user.dna.mutantrace == "adamantine" || user.get_species() == ABOMINATION)
 		user.do_attack_animation(src)
 		take_damage(rand(15,25), "generic")
 	else if (user.a_intent == INTENT_HARM)
@@ -172,9 +176,6 @@
 							"You knock on the [src.name].", \
 							"You hear a knocking sound.")
 
-/obj/structure/window/attack_tk(mob/user)
-	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
-	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)

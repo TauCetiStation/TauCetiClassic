@@ -18,11 +18,7 @@
 
 	var/list/modifiers
 
-/datum/modval/New(new_value, base_multiplier=1.0, base_additive=0.0, multiple=1.0, additive=0.0)
-	src.base_multiplier = base_multiplier
-	src.base_additive = base_additive
-	src.multiple = multiple
-	src.additive = additive
+/datum/modval/New(new_value)
 	Set(new_value)
 
 /datum/modval/proc/Set(new_value)

@@ -2,7 +2,7 @@
 	name = COMBO_DISARM
 	desc = "A move that knocks anything out of your opponent's hands."
 	combo_icon_state = "weapon_disarm"
-	cost = 10
+	fullness_lose_on_execute = 10
 	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
 
 	ignore_size = TRUE
@@ -96,7 +96,7 @@
 	name = COMBO_PUSH
 	desc = "A move that simply pushes your opponent to the ground."
 	combo_icon_state = "push"
-	cost = 40
+	fullness_lose_on_execute = 40
 	combo_elements = list(COMBO_DISARM, INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
 
 	check_bodyarmor = TRUE
@@ -120,7 +120,7 @@
 	name = COMBO_SLIDE_KICK
 	desc = "A move that makes you slide, kicking down people on your way."
 	combo_icon_state = "slide_kick"
-	cost = 40
+	fullness_lose_on_execute = 40
 	combo_elements = list(COMBO_DISARM, INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
 
 	ignore_size = TRUE
@@ -236,7 +236,7 @@
 	name = COMBO_CAPTURE
 	desc = "A move that allows you to quickly grab your opponent into a jointlock, and press them against the ground."
 	combo_icon_state = "capture"
-	cost = 75
+	fullness_lose_on_execute = 75
 	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_PUSH, INTENT_GRAB)
 
 	scale_size_exponent = 0.0
@@ -291,7 +291,7 @@
 	name = COMBO_DROPKICK
 	desc = "A move in which you jump with your both legs into opponent's belly, knocking them backwards."
 	combo_icon_state = "dropkick"
-	cost = 25
+	fullness_lose_on_execute = 25
 	combo_elements = list(INTENT_PUSH, INTENT_HARM, INTENT_PUSH, INTENT_HARM)
 
 	armor_pierce = TRUE

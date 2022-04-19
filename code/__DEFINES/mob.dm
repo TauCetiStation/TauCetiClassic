@@ -82,16 +82,14 @@
 #define ABDUCTOR       "Abductor"
 #define SKELETON       "Skeleton"
 #define SHADOWLING     "Shadowling"
+#define MONKEY         "Monkey"
 #define GOLEM          "Adamantine Golem"
-#define HOMUNCULUS     "Homunculus"
 #define ZOMBIE         "Zombie"
 #define ZOMBIE_TAJARAN "Zombie Tajaran"
 #define ZOMBIE_SKRELL  "Zombie Skrell"
 #define ZOMBIE_UNATHI  "Zombie Unathi"
 #define SLIME          "Slime"
 #define ABOMINATION    "disgusting abomination"
-
-#define MONKEY         "Monkey"
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 
@@ -241,10 +239,3 @@
 #define ALLERGY_INGESTION "ingestion"
 // can't implement rn but would be funny
 // #define ALLERGY_BREATH 3
-
-// logout reasons
-#define LOGOUT_UNKNOWN 0
-#define LOGOUT_USER 1
-#define LOGOUT_GHOST 2
-#define LOGOUT_REENTER 3
-#define LOGOUT_SWAP 4 // not so safe, check other things if available

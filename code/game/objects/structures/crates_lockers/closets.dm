@@ -240,6 +240,12 @@
 	user.SetNextMove(CLICK_CD_RAPID)
 	toggle(user)
 
+// tk grab then use on self
+/obj/structure/closet/attack_self_tk(mob/user)
+	add_fingerprint(user)
+	if(!toggle())
+		to_chat(usr, "<span class='notice'>It won't budge!</span>")
+
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in oview(1)
 	set category = "Object"

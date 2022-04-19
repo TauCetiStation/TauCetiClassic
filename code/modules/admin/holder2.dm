@@ -15,7 +15,6 @@ var/global/list/admin_datums = list()
 	var/admincaster_signature	//What you'll sign the newsfeeds as
 
 	var/datum/filter_editor/filteriffic
-	var/datum/particle_editor/particool
 
 /datum/admins/New(initial_rank = "Temporary Admin", initial_rights = 0, ckey)
 	if(!ckey)

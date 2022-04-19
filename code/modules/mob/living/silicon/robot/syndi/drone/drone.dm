@@ -13,8 +13,6 @@
 	var/operator_health_last = null
 	var/msg_cooldown = 0
 
-	spawner_args = null
-
 /mob/living/silicon/robot/drone/syndi/atom_init()
 	. = ..()
 	set_ai_link(null)

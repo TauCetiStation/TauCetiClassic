@@ -64,6 +64,11 @@
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
 	init_subtypes(/datum/dirt_cover, global.all_dirt_covers)
 
+	//Medical side effects. List all effects by their names
+	for(var/T in subtypesof(/datum/medical_effect))
+		var/datum/medical_effect/M = new T
+		side_effects[M.name] = T
+
 	//Languages and species.
 	for(var/T in subtypesof(/datum/language))
 		var/datum/language/L = new T
@@ -74,8 +79,11 @@
 		for(var/key in L.key)
 			language_keys[":[lowertext(key)]"] = L
 
+	var/rkey = 0
 	for(var/T in subtypesof(/datum/species))
+		rkey++
 		var/datum/species/S = new T
+		S.race_key = rkey //Used in mob icon caching.
 		all_species[S.name] = S
 
 		if(S.flags[IS_WHITELISTED])

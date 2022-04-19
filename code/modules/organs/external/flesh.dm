@@ -37,11 +37,6 @@
 	BP.pumped = min(BP.pumped + value, cap)
 	BP.update_sprite()
 
-	if(BP.pumped <= 0 && old_pumped > 0)
-		BP.owner.metabolism_factor.RemoveModifier("Pumped_[BP.name]")
-	else
-		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.002 * BP.pumped)
-
 	return BP.pumped - old_pumped
 
 /datum/bodypart_controller/proc/is_damageable(additional_damage = 0)
@@ -592,7 +587,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return FALSE
 
 /datum/bodypart_controller/proc/fracture()
-	if(BP.species == GOLEM)
+	if(BP.owner.dna && BP.owner.dna.mutantrace == "adamantine")
 		return
 
 	if(BP.status & ORGAN_BROKEN)

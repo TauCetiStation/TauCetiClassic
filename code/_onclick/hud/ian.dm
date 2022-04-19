@@ -50,7 +50,7 @@
 				if(4 to 16)  // lie
 					IAN.crawl()
 				if(17 to 29) // sit
-					IAN.ian_sit()
+					IAN.lay_down()
 
 
 /datum/hud/proc/ian_hud()

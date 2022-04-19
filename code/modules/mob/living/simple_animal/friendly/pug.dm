@@ -25,7 +25,7 @@
 /mob/living/simple_animal/pug/Life()
 	..()
 
-	if(!stat && !buckled)
+	if(!stat && !resting && !buckled)
 		if(prob(1))
 			emote(pick("chases its tail"))
 			spawn(0)

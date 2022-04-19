@@ -229,7 +229,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -2143,7 +2145,9 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "adJ" = (
-/obj/effect/landmark/start/ai,
+/obj/effect/landmark/start{
+	name = "AI"
+	},
 /obj/item/device/radio/intercom{
 	freerange = 1;
 	frequency = 1447;
@@ -4887,7 +4891,9 @@
 /obj/structure/sign/double/barsign{
 	pixel_y = 32
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/bar)
 "aiF" = (
@@ -6589,7 +6595,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start{
+	name = "Scientist"
+	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -10510,7 +10518,9 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start{
+	name = "Test Subject"
+	},
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
@@ -11363,7 +11373,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/medical_doctor,
+/obj/effect/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -11530,7 +11542,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/effect/landmark/start/captain,
+/obj/effect/landmark/start{
+	name = "Captain"
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bWF" = (
@@ -13043,7 +13057,9 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
 	},
-/obj/effect/landmark/start/shaft_miner,
+/obj/effect/landmark/start{
+	name = "Shaft Miner"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "dyR" = (
@@ -13122,7 +13138,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/landmark/start/chief_medical_officer,
+/obj/effect/landmark/start{
+	name = "Chief Medical Officer"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -14248,7 +14266,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start/security_officer,
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -14872,7 +14892,9 @@
 /turf/simulated/wall,
 /area/station/maintenance/medbay)
 "frG" = (
-/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start{
+	name = "Medical Intern"
+	},
 /obj/machinery/hologram/holopad{
 	pixel_x = -16;
 	pixel_y = -16
@@ -16837,7 +16859,9 @@
 	},
 /area/station/bridge)
 "huR" = (
-/obj/effect/landmark/start/chief_engineer,
+/obj/effect/landmark/start{
+	name = "Chief Engineer"
+	},
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
 	},
@@ -18730,7 +18754,9 @@
 	},
 /area/station/maintenance/science)
 "jys" = (
-/obj/effect/landmark/start/research_director,
+/obj/effect/landmark/start{
+	name = "Research Director"
+	},
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
 	},
@@ -22544,7 +22570,9 @@
 /area/asteroid/mine/dwarf)
 "ndd" = (
 /obj/structure/stool/bed/chair/comfy/brown,
-/obj/effect/landmark/start/bartender,
+/obj/effect/landmark/start{
+	name = "Bartender"
+	},
 /obj/structure/sign/monkey_painting{
 	pixel_y = 32
 	},
@@ -22616,7 +22644,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/effect/landmark/start/chaplain,
+/obj/effect/landmark/start{
+	name = "Chaplain"
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -22716,7 +22746,9 @@
 /area/station/maintenance/portsolar)
 "nkz" = (
 /obj/structure/stool/bed/chair/office/dark,
-/obj/effect/landmark/start/detective,
+/obj/effect/landmark/start{
+	name = "Detective"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -23162,7 +23194,9 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "nAz" = (
-/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start{
+	name = "Chef"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
@@ -23688,7 +23722,9 @@
 /area/station/rnd/chargebay)
 "ocx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/landmark/start/research_assistant,
+/obj/effect/landmark/start{
+	name = "Research Assistant"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkpurple"
@@ -24996,7 +25032,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/effect/landmark/start/head_of_security,
+/obj/effect/landmark/start{
+	name = "Head of Security"
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "pmJ" = (
@@ -26953,7 +26991,9 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/effect/landmark/start/security_cadet,
+/obj/effect/landmark/start{
+	name = "Security Cadet"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -28205,7 +28245,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/landmark/start/clown,
+/obj/effect/landmark/start{
+	name = "Clown"
+	},
 /turf/simulated/floor/carpet/purple,
 /area/station/civilian/theatre)
 "siO" = (
@@ -31096,7 +31138,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/landmark/start/technical_assistant,
+/obj/effect/landmark/start{
+	name = "Technical Assistant"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -32019,7 +32063,9 @@
 /area/station/maintenance/dormitory)
 "wbu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/landmark/start/cyborg,
+/obj/effect/landmark/start{
+	name = "Cyborg"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurple"
@@ -32045,7 +32091,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start/station_engineer,
+/obj/effect/landmark/start{
+	name = "Station Engineer"
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -32360,7 +32408,9 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
 	},
-/obj/effect/landmark/start/quartermaster,
+/obj/effect/landmark/start{
+	name = "Quartermaster"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -32500,7 +32550,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/landmark/start/recycler,
+/obj/effect/landmark/start{
+	name = "Recycler"
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -34392,7 +34444,9 @@
 /area/asteroid/mine/unexplored/safe)
 "yjw" = (
 /obj/structure/stool/bed/chair/comfy/teal,
-/obj/effect/landmark/start/head_of_personnel,
+/obj/effect/landmark/start{
+	name = "Head of Personnel"
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
 "yjV" = (

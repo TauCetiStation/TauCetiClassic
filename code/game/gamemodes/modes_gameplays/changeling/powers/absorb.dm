@@ -146,6 +146,7 @@
 			if(T.dna.uni_identity == D.uni_identity)
 				if(T.dna.struc_enzymes == D.struc_enzymes)
 					if(T.dna.real_name == D.real_name)
-						to_chat(U, "<span class='warning'>We already have that DNA in storage.</span>")
-						return FALSE
+						if(T.dna.mutantrace == D.mutantrace)
+							to_chat(U, "<span class='warning'>We already have that DNA in storage.</span>")
+							return FALSE
 	return TRUE

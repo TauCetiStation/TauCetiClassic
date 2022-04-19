@@ -154,7 +154,7 @@
 			iconholder = TRUE
 			reqpower = 700
 
-		if(/obj/item/weapon/gun/energy/retro)
+		if(/obj/item/weapon/gun/energy/laser/retro)
 			iconholder = TRUE
 
 		if(/obj/item/weapon/gun/energy/laser/selfcharging/captain)

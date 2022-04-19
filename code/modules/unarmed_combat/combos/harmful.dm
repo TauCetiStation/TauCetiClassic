@@ -2,7 +2,7 @@
 	name = COMBO_UPPERCUT
 	desc = "A move where you lunge your fist from below into opponent's chin, knocking their helmet off."
 	combo_icon_state = "uppercut"
-	cost = 60
+	fullness_lose_on_execute = 60
 	combo_elements = list(INTENT_HARM, INTENT_HARM, INTENT_HARM, INTENT_HARM)
 
 	ignore_size = TRUE
@@ -121,7 +121,7 @@
 	name = COMBO_SUPLEX
 	desc = "A move that lifts your opponent up, only to then throw them to the ground, harshly."
 	combo_icon_state = "suplex"
-	cost = 75
+	fullness_lose_on_execute = 75
 	combo_elements = list(INTENT_HARM, INTENT_HARM, INTENT_HARM, INTENT_GRAB)
 
 	check_bodyarmor = TRUE
@@ -218,7 +218,7 @@
 	name = COMBO_DIVING_ELBOW_DROP
 	desc = "A move in which you jump up high, and then fall onto your opponent, hitting them with your elbow."
 	combo_icon_state = "diving_elbow_drop"
-	cost = 50
+	fullness_lose_on_execute = 50
 	combo_elements = list(COMBO_SUPLEX, INTENT_HARM, INTENT_PUSH, INTENT_HARM)
 
 	// A body dropped on us! Armor ain't helping.
@@ -297,7 +297,7 @@
 	for(var/mob/living/L in victim.loc)
 		if(L == attacker)
 			continue
-		if(L.lying || L.crawling)
+		if(L.lying || L.resting || L.crawling)
 			apply_damage(28, L, attacker, attack_obj=attack_obj)
 		apply_effect(6, WEAKEN, L, attacker, attack_obj=attack_obj, min_value = 1)
 
@@ -317,7 +317,7 @@
 	name = COMBO_CHARGE
 	desc = "A move that grabs your opponent by the neck, and drives you into the closest obstacle, hitting them on it."
 	combo_icon_state = "charge"
-	cost = 75
+	fullness_lose_on_execute = 75
 	combo_elements = list(INTENT_GRAB, INTENT_HARM, INTENT_HARM, INTENT_GRAB)
 
 	check_bodyarmor = TRUE
@@ -393,7 +393,7 @@
 	name = COMBO_SPIN_THROW
 	desc = "A move in which you start to spin yourself up, and at a point you throw your opponent with immense force."
 	combo_icon_state = "spin_throw"
-	cost = 50
+	fullness_lose_on_execute = 50
 	combo_elements = list(INTENT_GRAB, INTENT_GRAB, INTENT_GRAB, INTENT_HARM)
 
 	// We threw a guy over 6 tiles distance. Armor probably ain't helping.

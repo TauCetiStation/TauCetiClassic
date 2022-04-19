@@ -44,15 +44,15 @@
 	L.drop_item()
 	return TRUE
 
-/datum/keybinding/living/crawl
+/datum/keybinding/living/rest
 	hotkey_keys = list("None")
-	name = "crawl"
-	full_name = "Crawl"
+	name = "rest"
+	full_name = "Rest"
 	description = "You lay down/get up"
 
-/datum/keybinding/living/crawl/down(client/user)
+/datum/keybinding/living/rest/down(client/user)
 	var/mob/living/L = user.mob
-	L.crawl()
+	L.lay_down()
 	return TRUE
 
 /datum/keybinding/living/swap_hands

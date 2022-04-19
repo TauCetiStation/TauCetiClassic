@@ -19,10 +19,6 @@
 
 	beauty.AddModifier("stat", additive=beauty_living)
 
-	if(spawner_args)
-		spawner_args.Insert(1, /datum/component/logout_spawner)
-		AddComponent(arglist(spawner_args))
-
 /mob/living/Destroy()
 	allowed_combos = null
 	known_combos = null
@@ -945,7 +941,7 @@
 	else if(iscarbon(L))
 		var/mob/living/carbon/CM = L
 		if(CM.on_fire)
-			if(!CM.canmove && !CM.crawling)	return
+			if(!CM.canmove && !CM.resting)	return
 			CM.fire_stacks -= 5
 			CM.weakened = 5
 			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
@@ -993,7 +989,7 @@
 						CM.drop_from_inventory(CM.handcuffed)
 
 		else if(CM.legcuffed && (CM.last_special <= world.time))
-			if(!CM.canmove && !CM.crawling)	return
+			if(!CM.canmove && !CM.resting)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
@@ -1032,20 +1028,11 @@
 						CM.drop_from_inventory(CM.legcuffed)
 
 /// What should the mob do when laying down. Return TRUE to prevent default behavior.
-/mob/living/proc/crawl_can_use()
-	var/turf/T = get_turf(src)
-	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) || (locate(/obj/structure/plasticflaps) in T))
-		var/obj/structure/S
-		for(S in T)
-			if(IS_ABOVE(src, S))
-				return TRUE
-			return FALSE	
-	return TRUE
+/mob/living/proc/on_lay_down()
+	return
 
-/mob/living/var/crawl_getup = FALSE
-
-/mob/living/verb/crawl()
-	set name = "Crawl"
+/mob/living/verb/lay_down()
+	set name = "Rest"
 	set category = "IC"
 
 	if(isrobot(usr))
@@ -1054,14 +1041,8 @@
 		to_chat(R, "<span class='notice'>You toggle all your components.</span>")
 		return
 
-	if(crawl_getup)
-		return
-
-	if((status_flags & FAKEDEATH) || buckled)
-		return
-
-//Already crawling and have others debuffs
-	if( crawling && (IsSleeping() || weakened || paralysis || stunned) )
+//Already resting and have others debuffs
+	if( resting && (IsSleeping() || weakened || paralysis || stunned) )
 		to_chat(src, "<span class='rose'>You can't wake up.</span>")
 
 //Restrained and some debuffs
@@ -1073,35 +1054,14 @@
 		to_chat(src, "<span class='rose'>You can't move.</span>")
 
 //Debuffs check
-	else if(!crawling && (IsSleeping() || weakened || paralysis || stunned) )
+	else if(!resting && (IsSleeping() || weakened || paralysis || stunned) )
 		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
 
-	if(crawling)
-		crawl_getup = TRUE
-		if(do_after(src, 10, target = src))
-			crawl_getup = FALSE
-			if(!crawl_can_use())
-				playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-				if(ishuman(src))
-					var/mob/living/carbon/human/H = src
-					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-					BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
-				else
-					take_overall_damage(5, used_weapon = "Table")
-				Stun(1)
-				to_chat(src, "<span class='danger'>Ouch!</span>")
-				return
-			layer = 4.0
-		else
-			crawl_getup = FALSE
-			return
 	else
-		if(!crawl_can_use())
-			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
+		if(on_lay_down())
 			return
-	SetCrawling(!crawling)
-	update_canmove()
-	to_chat(src, "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>")
+		resting = !resting
+		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 
 //called when the mob receives a bright flash
 /mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)

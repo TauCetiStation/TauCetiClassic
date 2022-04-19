@@ -95,6 +95,7 @@
 
 /obj/item/projectile/energy/floramut/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	var/mob/living/M = target
+//	if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
@@ -133,6 +134,7 @@
 
 /obj/item/projectile/energy/florayield/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	var/mob/M = target
+//	if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //These rays make plantmen fat.
 	if(ishuman(target)) //These rays make plantmen fat.
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))

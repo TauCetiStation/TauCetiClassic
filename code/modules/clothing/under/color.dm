@@ -1,7 +1,7 @@
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "black"
-	item_state = "black"
+	item_state = "bl_suit"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/color/blackf
@@ -13,26 +13,26 @@
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"
 	icon_state = "blue"
-	item_state = "blue"
+	item_state = "b_suit"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/color/green
 	name = "green jumpsuit"
 	icon_state = "green"
-	item_state = "green"
+	item_state = "g_suit"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
 	icon_state = "grey"
-	item_state = "grey"
+	item_state = "gy_suit"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/color/orange
 	name = "orange jumpsuit"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
 	icon_state = "orange"
-	item_state = "orange"
+	item_state = "o_suit"
 	has_sensor = 2
 	sensor_mode = SUIT_SENSOR_TRACKING
 	flags = ONESIZEFITSALL
@@ -40,25 +40,25 @@
 /obj/item/clothing/under/color/pink
 	name = "pink jumpsuit"
 	icon_state = "pink"
-	item_state = "pink"
+	item_state = "p_suit"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/color/red
 	name = "red jumpsuit"
 	icon_state = "red"
-	item_state = "red"
+	item_state = "r_suit"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/color/white
 	name = "white jumpsuit"
 	icon_state = "white"
-	item_state = "white"
+	item_state = "w_suit"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/color/yellow
 	name = "yellow jumpsuit"
 	icon_state = "yellow"
-	item_state = "yellow"
+	item_state = "y_suit"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/psyche
@@ -82,7 +82,7 @@
 	name = "purple"
 	desc = "purple"
 	icon_state = "purple"
-	item_state = "purple"
+	item_state = "p_suit"
 
 /obj/item/clothing/under/lightpurple
 	name = "lightpurple"

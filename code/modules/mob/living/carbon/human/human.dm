@@ -11,7 +11,6 @@
 	//icon_state = "body_m_s"
 
 	var/datum/species/species //Contains icon generation and language information, set during New().
-	var/random_tail_holder = "" // overrides species.tail
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
@@ -44,7 +43,7 @@
 			set_species()
 
 	if(species) // Just to be sure.
-		metabolism_factor.Set(species.metabolism_mod)
+		metabolism_factor = species.metabolism_mod
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
@@ -65,6 +64,8 @@
 		dna.real_name = real_name
 
 	handcrafting = new()
+
+	verbs += /mob/living/carbon/proc/crawl
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
@@ -131,6 +132,8 @@
 	underwear = 0
 	undershirt = 0
 	faction = "faithless"
+	dna.mutantrace = "shadowling"
+	update_mutantrace()
 	regenerate_icons()
 
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
@@ -948,6 +951,15 @@
 	return
 
 /mob/living/carbon/human/get_species()
+
+	if(!species)
+		set_species()
+
+	if(dna && dna.mutantrace == "golem")
+		return "Animated Construct"
+
+
+
 	return species.name
 
 /mob/living/carbon/human/proc/play_xylophone()
@@ -2066,20 +2078,20 @@
 	else
 		return 1
 
-/mob/living/carbon/human/is_skip_breathe()
-	if(..())
-		return TRUE
+/mob/living/carbon/human/proc/need_breathe()
 	if(NO_BREATH in src.mutations)
-		return TRUE
+		return FALSE
 	if(reagents.has_reagent("lexorin"))
-		return TRUE
+		return FALSE
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return TRUE
+		return FALSE
 	if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
-		return TRUE
+		return FALSE
+	if(dna && dna.mutantrace == "adamantine")
+		return FALSE
 	if(ismob(loc))
-		return TRUE
-	return FALSE
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/human/CanObtainCentcommMessage()
 	return istype(l_ear, /obj/item/device/radio/headset) || istype(r_ear, /obj/item/device/radio/headset)
