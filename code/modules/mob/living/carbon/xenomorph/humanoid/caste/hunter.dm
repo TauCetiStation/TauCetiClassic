@@ -30,8 +30,8 @@
 
 //Hunter verbs
 /mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_leap(message = 1)
-	if(resting)
-		lay_down()
+	if(crawling)
+		crawl()
 	leap_on_click = !leap_on_click
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
 	update_icons()
@@ -118,7 +118,7 @@
 /mob/living/carbon/xenomorph/humanoid/hunter/movement_delay()
 	return(-1 + move_delay_add + config.alien_delay)
 
-/mob/living/carbon/xenomorph/humanoid/hunter/lay_down()
+/mob/living/carbon/xenomorph/humanoid/hunter/crawl()
 	if(leap_on_click)
 		toggle_leap()
 	..()

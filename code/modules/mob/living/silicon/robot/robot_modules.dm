@@ -107,7 +107,8 @@
 		/obj/item/stack/medical/advanced/bruise_pack = 5,
 		/obj/item/stack/medical/advanced/ointment = 5,
 		/obj/item/stack/nanopaste = 5,
-		/obj/item/stack/medical/splint = 10
+		/obj/item/stack/medical/splint = 5,
+		/obj/item/stack/medical/suture = 3
 		)
 
 /obj/item/weapon/robot_module/medical/atom_init()
@@ -132,12 +133,13 @@
 	modules += new /obj/item/weapon/gripper/medical(src)
 	modules += new /obj/item/device/reagent_scanner/adv(src)
 	modules += new /obj/item/roller_holder(src)
-	modules += new /obj/item/stack/medical/splint(src, 10)
+	modules += new /obj/item/stack/medical/splint(src)
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper/robot(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	modules += new /obj/item/weapon/shockpaddles/robot(src)
 	modules += new /obj/item/device/gps/cyborg(src)
+	modules += new /obj/item/stack/medical/suture(src)
 
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
