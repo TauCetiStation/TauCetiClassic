@@ -35,6 +35,7 @@
 
 /obj/machinery/printer/Destroy()
 	allprinters -= src
+	printing_queue = null
 	return ..()
 
 /obj/machinery/printer/ex_act(severity)
@@ -103,6 +104,7 @@
 		addtimer(CALLBACK(src, .proc/print_item, O), 10*i)
 		i++
 		printing_queue -= O
+		qdel(O)
 	addtimer(CALLBACK(src, .proc/end_print), 10*i)
 
 /obj/machinery/printer/proc/end_print()

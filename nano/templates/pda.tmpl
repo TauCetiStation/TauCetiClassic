@@ -1095,7 +1095,8 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             <div class="Paper Forms">
                 <table>
                     {{for data.forms_list}}
-                        <tr><td>{{:helper.link(value["name"], 'print', {'choice' : "Form", 'form' : value["type"]}, null, null)}}</td></tr>
+                        {{if value["type"] == null}} <tr><td><H2><span class="white">{{:value["name"]}}</span></H2></td></tr> {{/if}}
+                        {{if value["type"]}} <tr><td>{{:helper.link(value["name"], 'print', {'choice' : "Form", 'form' : value["type"]}, null, null)}}</td></tr> {{/if}}
                     {{/for}}
                 </table>
             </div>

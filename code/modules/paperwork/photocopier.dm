@@ -13,6 +13,11 @@
 
 	var/department = "Unknown" // our department
 
+/obj/machinery/photocopier/Destroy()
+	copyitem.loc = loc
+	copyitem = null
+	return ..()
+
 /obj/machinery/photocopier/attack_hand(mob/user)
 	user.set_machine(src)
 

@@ -28,7 +28,8 @@
 	government = "Служба Безопасности НТС \"Велосити\""
 
 //---------------CARGO---------------
-var/global/list/cargo_forms = list(list("type" = /obj/item/weapon/paper/item_request, "name" = "Запрос в Отдел Поставок"),
+var/global/list/cargo_forms = list(list("name" = "Формы склад. работников:"),
+							list("type" = /obj/item/weapon/paper/item_request, "name" = "Запрос в Отдел Поставок"),
 							list("type" = /obj/item/weapon/paper/materials_request, "name" = "Запрос в Отдел Поставок на поставки сырья"),
 							list("type" = /obj/item/weapon/paper/post_request, "name" = "Заказ на почтовую пересылку"),
 							list("type" = /obj/item/weapon/paper/cargo_inventory, "name" = "Складская опись"),
@@ -120,7 +121,8 @@ var/global/list/cargo_forms = list(list("type" = /obj/item/weapon/paper/item_req
 			<hr><font size = \"1\">*В случае получения разрешения на заказ он должен быть отмечен штампом "Одобрено" и штампом Квартирмейстера. Заказы, не получившие разрешения со стороны Глав или Квартирмейстера, должны быть отмечены штампом "Отказано". В случае отсутствия Глав, Квартирмейстер сам может решать, что заказывать, а что нет. После заполнения, накладная должна храниться в картотеке до конца смены.</font>"}
 
 //---------------Human Resources Department---------------
-var/global/list/hrd_forms = list(list("type" = /obj/item/weapon/paper/temporary_access, "name" = "Анкета на получение временного дополнительного доступа"),
+var/global/list/hrd_forms = list(list("name" = "Формы ГП:"),
+							list("type" = /obj/item/weapon/paper/temporary_access, "name" = "Анкета на получение временного дополнительного доступа"),
 							list("type" = /obj/item/weapon/paper/permanent_access, "name" = "Анкета на получение постоянного дополнительного доступа"),
 							list("type" = /obj/item/weapon/paper/dismissal, "name" = "Анкета на увольнение/понижение"),
 							list("type" = /obj/item/weapon/paper/access_certificate, "name" = "Сертификат о выдаче дополнительного доступа"),
@@ -219,7 +221,8 @@ var/global/list/hrd_forms = list(list("type" = /obj/item/weapon/paper/temporary_
 			<hr>Место для штампов."}
 
 //---------------Medbay---------------
-var/global/list/medbay_forms = list(list("type" = /obj/item/weapon/paper/recipe, "name" = "Рецепт на медицинский препарат"),
+var/global/list/medbay_forms = list(list("name" = "Формы мед. работников:"),
+							list("type" = /obj/item/weapon/paper/recipe, "name" = "Рецепт на медицинский препарат"),
 							list("type" = /obj/item/weapon/paper/surgery_report, "name" = "Отчёт о проведённой операции"),
 							list("type" = /obj/item/weapon/paper/autopsy_report, "name" = "Отчет о вскрытии тела"),
 							list("type" = /obj/item/weapon/paper/drugs_list, "name" = "Список выдачи препаратов"),
@@ -314,7 +317,8 @@ var/global/list/medbay_forms = list(list("type" = /obj/item/weapon/paper/recipe,
 			<hr>Заказчик: <span class=\"sign_field\"></span>"}
 
 //---------------RnD---------------
-var/global/list/rnd_forms = list(list("type" = /obj/item/weapon/paper/experiment_permission, "name" = "Разрешение на проведение опасного для жизни эксперимента"),
+var/global/list/rnd_forms = list(list("name" = "Формы научн. работников:"),
+							list("type" = /obj/item/weapon/paper/experiment_permission, "name" = "Разрешение на проведение опасного для жизни эксперимента"),
 							list("type" = /obj/item/weapon/paper/genetics_permission, "name" = "Запрос на разрешение проведения экспериментальной генной терапии"),
 							list("type" = /obj/item/weapon/paper/cyborgisation_permission, "name" = "Запрос на разрешение проведения прижизненной кибернетизации"),
 							list("type" = /obj/item/weapon/paper/credit_equipment, "name" = "Займ оборудования"),
@@ -563,7 +567,8 @@ var/global/list/rnd_forms = list(list("type" = /obj/item/weapon/paper/experiment
 			<hr>Место для штампов."}
 
 //---------------Security---------------
-var/global/list/security_forms = list(list("type" = /obj/item/weapon/paper/arrest_report, "name" = "Протокол задержания"),
+var/global/list/security_forms = list(list("name" = "Формы охр. работников:"),
+							list("type" = /obj/item/weapon/paper/arrest_report, "name" = "Протокол задержания"),
 							list("type" = /obj/item/weapon/paper/criminalist_report, "name" = "Отчет криминалиста"),
 							list("type" = /obj/item/weapon/paper/search_warrant, "name" = "Ордер на обыск"),
 							list("type" = /obj/item/weapon/paper/third_person, "name" = "Свидетельский лист"),
@@ -692,7 +697,8 @@ var/global/list/security_forms = list(list("type" = /obj/item/weapon/paper/arres
 			<hr>Место для штампов."}
 
 //---------------Engineering---------------
-var/global/list/engineering_forms = list(/obj/item/weapon/paper/exploitation = "Документ по эксплуатации отсека")
+var/global/list/engineering_forms = list(list("name" = "Формы инж. работников:"),
+							list("type" = /obj/item/weapon/paper/exploitation, "name" = "Документ по эксплуатации отсека"))
 /obj/item/weapon/paper/exploitation
 	name = "Документ по эксплуатации отсека"
 	info = {"<center><large><b>Инженерный Отдел КСН "Исход"</b><br>
@@ -711,7 +717,8 @@ var/global/list/engineering_forms = list(/obj/item/weapon/paper/exploitation = "
 			<hr>Место для штампов."}
 
 //---------------Important---------------
-var/global/list/important_forms = list(list("type" = /obj/item/weapon/paper/emergency_shuttle, "name" = "Отчет по причине вызова экстренного эвакуационного шаттла"),
+var/global/list/important_forms = list(list("name" = "Формы рук. состава:"),
+							list("type" = /obj/item/weapon/paper/emergency_shuttle, "name" = "Отчет по причине вызова экстренного эвакуационного шаттла"),
 							list("type" = /obj/item/weapon/paper/ert, "name" = "Отчет вызова экстренной команды"),
 							list("type" = /obj/item/weapon/paper/delta, "name" = "Инициация кода 'Дельта'"),
 							list("type" = /obj/item/weapon/paper/incident_report, "name" = "Стандартный отчет о произошедшем инциденте"),
@@ -783,7 +790,8 @@ var/global/list/important_forms = list(list("type" = /obj/item/weapon/paper/emer
 			<hr>Место для штампов."}
 
 //---------------Misc---------------
-var/global/list/misc_forms = list(list("type" = /obj/item/weapon/paper/bar_menu, "name" = "Меню бара"),
+var/global/list/misc_forms = list(list("name" = "Формы гражд. работников:"),
+							list("type" = /obj/item/weapon/paper/bar_menu, "name" = "Меню бара"),
 							list("type" = /obj/item/weapon/paper/canteen_menu, "name" = "Меню столовой"),
 							list("type" = /obj/item/weapon/paper/offence_report, "name" = "Заявление о правонарушении"),
 							list("type" = /obj/item/weapon/paper/noname_fax_reply, "name" = "Неименной ответ на факс"),

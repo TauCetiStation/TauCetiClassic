@@ -193,7 +193,8 @@
 
 /obj/item/weapon/cartridge/hop/atom_init()
 	radio = new /obj/item/radio/integrated/mule(src)
-	forms |= hrd_forms + important_forms
+	forms |= hrd_forms
+	forms |= important_forms
 	. = ..()
 
 /obj/item/weapon/cartridge/hos
@@ -205,7 +206,8 @@
 
 /obj/item/weapon/cartridge/hos/atom_init()
 	radio = new /obj/item/radio/integrated/beepsky(src)
-	forms |= security_forms + important_forms
+	forms |= security_forms
+	forms |= important_forms
 	. = ..()
 
 /obj/item/weapon/cartridge/ce
@@ -217,7 +219,8 @@
 	department = "CE"
 
 /obj/item/weapon/cartridge/ce/atom_init()
-	forms |= engineering_forms + important_forms
+	forms |= engineering_forms
+	forms |= important_forms
 	. = ..()
 
 /obj/item/weapon/cartridge/cmo
@@ -229,7 +232,8 @@
 	department = "CMO"
 
 /obj/item/weapon/cartridge/cmo/atom_init()
-	forms |= medbay_forms + important_forms
+	forms |= medbay_forms
+	forms |= important_forms
 	. = ..()
 
 /obj/item/weapon/cartridge/rd
@@ -242,7 +246,8 @@
 
 /obj/item/weapon/cartridge/rd/atom_init()
 	radio = new /obj/item/radio/integrated/signal(src)
-	forms |= rnd_forms + important_forms
+	forms |= rnd_forms
+	forms |= important_forms
 	. = ..()
 
 /obj/item/weapon/cartridge/captain

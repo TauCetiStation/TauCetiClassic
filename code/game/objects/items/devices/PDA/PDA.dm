@@ -984,13 +984,10 @@
 			if(href_list["form"])
 				var/Paper = href_list["form"]
 				var/new_paper = new Paper(src)
-				if(!(istype(new_paper, /obj/item/weapon/paper) || istype(new_paper, /obj/item/weapon/photo) || istype(new_paper, /obj/item/weapon/paper_bundle)))
-					qdel(new_paper)
-					return
 				for(var/obj/machinery/printer/Printer as anything in allprinters)
 					if((department == "All" || Printer.department == department) && !( Printer.stat & (BROKEN|NOPOWER) ))
 						Printer.queue_print(new_paper)
-						qdel(new_paper)
+				qdel(new_paper)
 		if("Scan Printer")
 			mode = 81
 			pda_printerscan = TRUE
