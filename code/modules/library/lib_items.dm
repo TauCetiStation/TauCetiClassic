@@ -155,6 +155,8 @@
 	var/window_height
 	var/obj/item/store	//What's in the book?
 
+	var/free_space = MAX_BOOK_MESSAGE_LEN
+
 /obj/item/weapon/book/attack_self(mob/user)
 	if(carved)
 		if(store)
@@ -212,12 +214,13 @@
 					src.name = newtitle
 					src.title = newtitle
 			if("Contents")
-				var/content = sanitize(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null, MAX_BOOK_MESSAGE_LEN)
+				var/content = sanitize(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null, free_space)
 				if(!content)
 					to_chat(usr, "The content is invalid.")
 					return
 				else
-					src.dat += content//infiniti books?
+					free_space -= length(content)
+					src.dat += content
 			if("Author")
 				var/newauthor = sanitize(input(usr, "Write the author's name:"), MAX_NAME_LEN)
 				if(!newauthor)

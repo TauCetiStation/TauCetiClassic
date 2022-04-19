@@ -297,7 +297,7 @@
 	for(var/mob/living/L in victim.loc)
 		if(L == attacker)
 			continue
-		if(L.lying || L.resting || L.crawling)
+		if(L.lying || L.crawling)
 			apply_damage(28, L, attacker, attack_obj=attack_obj)
 		apply_effect(6, WEAKEN, L, attacker, attack_obj=attack_obj, min_value = 1)
 
