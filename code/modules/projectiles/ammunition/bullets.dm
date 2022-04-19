@@ -1,4 +1,5 @@
 /obj/item/ammo_casing/a357
+	name = "357. bullet"
 	desc = "A .357 bullet casing."
 	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet/revbullet
@@ -66,7 +67,7 @@
 	desc = "A .45 rubber bullet casing."
 	icon_state = "st-casing"
 	caliber = ".45"
-	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber45
+	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber
 	m_amt = 200
 
 /obj/item/ammo_casing/a12mm
@@ -86,8 +87,8 @@
 	name = "shotgun shell"
 	desc = "A 12 gauge shell."
 	icon_state = "gshell"
-	projectile_type = /obj/item/projectile/bullet/buckpellet
 	pellets = 10
+	projectile_type = /obj/item/projectile/bullet/pellet
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag shell"
