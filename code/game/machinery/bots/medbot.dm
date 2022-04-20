@@ -462,10 +462,10 @@
 	visible_message("[src] beeps, \"[message]\"")
 	return
 
-/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(is_type_in_list(Proj, taser_projectiles)) //taser_projectiles defined in projectile.dm
 		stunned = min(stunned+10,20)
-	..()
 
 /obj/machinery/bot/medbot/explode()
 	on = 0

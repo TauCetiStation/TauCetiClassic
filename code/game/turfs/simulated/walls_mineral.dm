@@ -122,25 +122,9 @@
 	if(exposed_temperature > 300)
 		PhoronBurn(exposed_temperature)
 
-/turf/simulated/wall/mineral/phoron/bullet_act(obj/item/projectile/Proj)
+/turf/simulated/wall/mineral/phoron/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(istype(Proj,/obj/item/projectile/beam))
 		PhoronBurn(2500)
 	else if(istype(Proj,/obj/item/projectile/ion))
 		PhoronBurn(500)
-	..()
-
-/*
-/turf/simulated/wall/mineral/proc/shock()
-	if (electrocute_mob(user, C, src))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
-		return 1
-	else
-		return 0
-
-/turf/simulated/wall/mineral/proc/attackby(obj/item/weapon/W, mob/user)
-	if((mineral == "gold") || (mineral == "silver"))
-		if(shocked)
-			shock()
-*/
