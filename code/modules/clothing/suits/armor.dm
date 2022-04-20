@@ -71,7 +71,7 @@
 
 /obj/item/clothing/suit/storage/flak/police/fullbody/heavy
 	name = "heavy fullbody armor"
-	desc = "A set of armor used by special weapons and tactics units of Organized Crimes Department. Justice will be served."
+	desc = "A set of armor used by special weapons and tactics units of OCD. Justice will be served."
 	icon_state = "police_armor_heavy"
 	slowdown = 0.2
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
