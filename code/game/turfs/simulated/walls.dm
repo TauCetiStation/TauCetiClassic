@@ -512,8 +512,5 @@
 	decal.pixel_x = rand(-12, 12)
 	decal.pixel_y = rand(-12, 12)
 
-	if(length(dent_decals))
-		cut_overlay(dent_decals)
-
 	LAZYADD(dent_decals, decal)
-	add_overlay(dent_decals)
+	add_overlay(decal)
