@@ -103,8 +103,7 @@
 			to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
 		return 1
 	icon_state = "[icontype]1"
-	var/weight = 8
-	LAZYSET(global.singularity_beacon_list, src, weight)
+	LAZYSET(global.singularity_beacon_list, src, 8)
 	active = 1
 	if(user)
 		to_chat(user, "<span class='notice'>You activate the beacon.</span>")
