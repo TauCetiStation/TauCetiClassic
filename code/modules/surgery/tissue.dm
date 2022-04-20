@@ -17,15 +17,15 @@
 
 /datum/surgery_step/add_tissue/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/stack/medical/tool)
 	if(!ishuman(target))
-		return 0
+		return FALSE
 
 	if(tool.amount == 0)
-		return 0
+		return FALSE
 
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 
 	if(!(BP.brute_dam > 20 || BP.burn_dam > 20))
-		return 0
+		return FALSE
 
 	return BP && BP.open >= 2 && BP.stage == 0
 
@@ -68,7 +68,7 @@
 
 /datum/surgery_step/set_tissue/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
-		return 0
+		return FALSE
 
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 
