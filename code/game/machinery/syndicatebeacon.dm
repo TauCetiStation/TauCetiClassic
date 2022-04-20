@@ -103,7 +103,8 @@
 			to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
 		return 1
 	icon_state = "[icontype]1"
-	global.singularity_beacon_list += src
+	var/weight = 8
+	LAZYSET(global.singularity_beacon_list, src, weight)
 	active = 1
 	if(user)
 		to_chat(user, "<span class='notice'>You activate the beacon.</span>")
@@ -114,7 +115,7 @@
 		if(singulo.target == src)
 			singulo.target = null
 	icon_state = "[icontype]0"
-	global.singularity_beacon_list -= src
+	LAZYREMOVE(global.singularity_beacon_list, src)
 	active = 0
 	if(user)
 		to_chat(user, "<span class='notice'>You deactivate the beacon.</span>")

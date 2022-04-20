@@ -290,13 +290,14 @@ var/global/list/allergen_reagents_list
 /datum/quality/negativeish/singularly_attractive
 	name = "Singularly Attractive"
 	desc = "Вы чрезвычайно привлекательны... для неприятностей."
-	requirement = "Нет."
+	requirement = "Нет"
 
 /datum/quality/negativeish/singularly_attractive/add_effect(mob/living/carbon/human/H, latespawn)
-	global.singularity_beacon_list += H
+	var/weight = 4
+	LAZYSET(global.singularity_beacon_list, H, weight)
 	RegisterSignal(H, list(COMSIG_PARENT_QDELETING), .proc/remove)
 	RegisterSignal(H, list(COMSIG_MOB_DIED), .proc/remove)
 
-/datum/quality/negativeish/singularly_attractive/proc/remove()
+/datum/quality/negativeish/singularly_attractive/proc/remove(mob/living/carbon/human/H)
 	SIGNAL_HANDLER
-	global.singularity_beacon_list -= H
+	LAZYREMOVE(global.singularity_beacon_list, H)
