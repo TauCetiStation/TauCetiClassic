@@ -70,6 +70,7 @@
 	else
 		botcard.access = botcard_access
 	icon_state = "medibot[on]"
+	add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/bot/medbot/turn_on()
