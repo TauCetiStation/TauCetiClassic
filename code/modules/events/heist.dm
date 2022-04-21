@@ -1,10 +1,9 @@
 /datum/event/heist
-	announceWhen	= 12
-	endWhen			= 120
+	announceWhen = 12
+	endWhen      = 120
 
 /datum/event/heist/start()
-	var/turf/T = pick(global.heiststart)
-	if(!T)
+	if(!global.heiststart.len)
 		kill()
 		return
 

@@ -120,9 +120,12 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	. = ..()
 
 /obj/machinery/computer/vox_station/ui_interact(mob/user)
+	var/time_to_move = max(lastMove + VOX_SHUTTLE_COOLDOWN - world.time, 0)
+	var/time_seconds = round(time_to_move * 0.1)
+	var/sec_word = pluralize_russian(time_seconds, "секунду", "секунды", "секунд")
 	var/dat = {"Маскировочное Поле Skipjack: [announce_vox_departure ? "<span style='color: #ff0000;font-weight: bold;'>Деактивировано!</span>" : "<span style='color: #aa00aa'>Активировано!</span>"]<br><br>
 		Локация: [curr_location]<br>
-		Готовность к полёту[max(lastMove + VOX_SHUTTLE_COOLDOWN - world.time, 0) ? " через [max(round((lastMove + VOX_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] секунд" : ": Готово"]<br><br>
+		Готовность к полёту[time_to_move ? " через [time_seconds] [sec_word]" : ": Готово"]<br><br>
 		<a href='?src=\ref[src];start=1' style='width:100%;text-align:center'>Вернуться в далёкий космос</a>
 				<table>
 			<tr>

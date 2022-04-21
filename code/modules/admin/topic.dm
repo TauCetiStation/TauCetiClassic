@@ -670,12 +670,12 @@
 
 		//Revolutionary
 		if(jobban_isbanned(M, ROLE_REV) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
+			jobs += "<td width='20%' colspan='2'><a class='red' href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
+			jobs += "<td width='20%' colspan='2'><a href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
 
-		// YOUR MODE COULD BE HERE
-		jobs += "<td width='20%'>FREE PLACE!!!</td>"
+		// YOUR MODE COULD BE HERE, don't forget to change the attribute 'colspan' above
+		// jobs += "<td width='20%'></td>"
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
