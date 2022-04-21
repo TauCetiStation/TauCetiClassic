@@ -508,7 +508,7 @@
 	if(M.species.flags[NO_BLOOD_TRAILS])
 		return FALSE
 
-	if(M.has_status_effect(STATUS_EFFECT_WOUND_CLOTTING))
+	if(M.reagents.has_reagent("metatrombine"))
 		return FALSE
 
 	if (!istype(M.dna, /datum/dna))

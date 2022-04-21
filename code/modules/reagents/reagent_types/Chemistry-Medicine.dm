@@ -755,7 +755,3 @@
 	color = "#990000"
 	restrict_species = list(IPC, DIONA)
 	overdose = 5
-
-/datum/reagent/metatrombine/on_general_digest(mob/living/M)
-	..()
-	M.apply_status_effect(STATUS_EFFECT_WOUND_CLOTTING)
