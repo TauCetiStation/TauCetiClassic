@@ -2297,3 +2297,10 @@
 		return 0
 
 	return BP.pumped
+
+/mob/living/carbon/human/get_max_pumped(bodypart)
+	var/obj/item/organ/external/BP = get_bodypart(bodypart)
+	if(!BP)
+		return 0
+
+	return BP.max_pumped

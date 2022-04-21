@@ -363,7 +363,7 @@ var/global/list/combat_combos_by_name = list()
 		return
 	var/mob/living/carbon/human/H = attacker
 
-	var/cap = victim.get_pumped(H.get_targetzone()) + 20
+	var/cap = victim.get_max_pumped(H.get_targetzone()) + 20
 
 	for(var/bodypart in pump_bodyparts)
 		var/obj/item/organ/external/BP = H.get_bodypart(bodypart)
