@@ -54434,12 +54434,6 @@
 	icon_state = "panelscorched"
 	},
 /area/station/cargo/recycler)
-"bTR" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/cargo/recycler)
 "bTS" = (
 /obj/structure/disposaloutlet{
 	dir = 4
@@ -106738,7 +106732,7 @@ atB
 bRl
 bNk
 bSH
-bTR
+bTS
 bUS
 cbB
 ciP
@@ -106995,7 +106989,7 @@ bNk
 bNk
 bNk
 aQK
-bTS
+bTZ
 bZZ
 ciP
 cbB
@@ -107252,7 +107246,7 @@ atG
 bRp
 bRS
 aQK
-bTZ
+bUf
 bTb
 ciP
 cbB
