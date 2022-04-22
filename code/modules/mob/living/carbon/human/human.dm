@@ -11,6 +11,7 @@
 	//icon_state = "body_m_s"
 
 	var/datum/species/species //Contains icon generation and language information, set during New().
+	var/random_tail_holder = "" // overrides species.tail
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
@@ -43,7 +44,7 @@
 			set_species()
 
 	if(species) // Just to be sure.
-		metabolism_factor = species.metabolism_mod
+		metabolism_factor.Set(species.metabolism_mod)
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
@@ -64,8 +65,6 @@
 		dna.real_name = real_name
 
 	handcrafting = new()
-
-	verbs += /mob/living/carbon/proc/crawl
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
@@ -1915,18 +1914,20 @@
 	else
 		return 1
 
-/mob/living/carbon/human/proc/need_breathe()
+/mob/living/carbon/human/is_skip_breathe()
+	if(..())
+		return TRUE
 	if(NO_BREATH in src.mutations)
-		return FALSE
+		return TRUE
 	if(reagents.has_reagent("lexorin"))
-		return FALSE
+		return TRUE
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return FALSE
+		return TRUE
 	if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
-		return FALSE
+		return TRUE
 	if(ismob(loc))
-		return FALSE
-	return TRUE
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/human/CanObtainCentcommMessage()
 	return istype(l_ear, /obj/item/device/radio/headset) || istype(r_ear, /obj/item/device/radio/headset)
