@@ -25,4 +25,9 @@
 	if(reagents.has_reagent_type(/datum/reagent/drug))
 		return COMPLIANCE_LEVEL_WEAK
 
+	// if we're in bad spirit we also comply passively
+	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
+	if(mood?.spirit_level == 6)
+		return COMPLIANCE_LEVEL_WEAK
+
 	return COMPLIANCE_LEVEL_NONE
