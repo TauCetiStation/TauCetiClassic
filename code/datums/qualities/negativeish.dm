@@ -302,3 +302,5 @@ var/global/list/allergen_reagents_list
 		if(singulo.target == H)
 			singulo.target = null
 	LAZYREMOVE(global.singularity_beacon_list, H)
+	UnregisterSignal(H, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DIED))
+	
