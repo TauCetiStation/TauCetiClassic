@@ -181,6 +181,9 @@
 	// The value is additive.
 	var/mood_additive_speed_modifier = 0.0
 
+	// used by Comply verb to determine if mob is currently actively complying
+	var/actively_complying = FALSE
+
 //Generic list for proc holders. Only way I can see to enable certain verbs/procs. Should be modified if needed.
 	var/proc_holder_list[] = list()//Right now unused.
 	//Also unlike the spell list, this would only store the object in contents, not an object in itself.

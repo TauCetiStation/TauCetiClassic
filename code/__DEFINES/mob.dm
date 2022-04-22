@@ -248,3 +248,8 @@
 #define LOGOUT_GHOST 2
 #define LOGOUT_REENTER 3
 #define LOGOUT_SWAP 4 // not so safe, check other things if available
+
+#define COMPLIANCE_LEVEL_NONE 0
+#define COMPLIANCE_LEVEL_WEAK 1
+#define COMPLIANCE_LEVEL_STRONG 2
+#define COMPLIANCE_LEVEL_IMPOSSIBLE 3

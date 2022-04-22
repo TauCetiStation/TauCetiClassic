@@ -76,7 +76,7 @@
 //helper for inverting armor blocked values into a multiplier
 #define blocked_mult(blocked) max(1 - (blocked / 100), 0)
 
-/proc/do_mob(mob/user , mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE, datum/callback/extra_checks = null)
+/proc/do_mob(mob/user , mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE, datum/callback/extra_checks = null, compliable = COMPLIANCE_LEVEL_WEAK)
 	if(!user || !target)
 		return FALSE
 
@@ -105,8 +105,15 @@
 	var/endtime = world.time+time
 	var/starttime = world.time
 	. = TRUE
+	var/compliance_bonus_added = user == target
 	while (world.time < endtime)
 		stoplag(1)
+		if(!compliance_bonus_added)
+			if(target?.getComplianceLevel() >= compliable)
+				var/timeleft = (endtime - world.time) / 3
+				endtime = timeleft + world.time
+				progbar?.goal = timeleft
+				compliance_bonus_added = TRUE
 		if (progress)
 			progbar.update(world.time - starttime)
 		if(QDELETED(user) || QDELETED(target))
@@ -144,6 +151,7 @@
 		user.become_not_busy(_hand = busy_hand)
 	if(target)
 		target.in_use_action = FALSE
+		target.actively_complying = FALSE
 
 /proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks)
 	if(!user || target && QDELING(target))
