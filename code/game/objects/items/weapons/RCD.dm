@@ -38,9 +38,9 @@ Borg RCD
 	holder = _holder
 
 /datum/rcd/Destroy(force, ...)
-	. = ..()
 	holder = null
 	QDEL_NULL(icon)
+	return ..()
 
 /* action(atom/target): bool
  * Performs some particular action on target atom.
@@ -281,13 +281,11 @@ Borg RCD
 
 /obj/item/weapon/rcd/update_icon(mob/user)
 	icon_state = initial(icon_state) + "[CEIL(matter / 10) * 10]"
-	if(!matter)
+	if(matter == 0)
 		item_state = "rcd0"
 	else
 		item_state = "rcd30"
-	user.update_inv_l_hand()
-	user.update_inv_r_hand()
-	return
+	user.update_inv_item()
 
 /obj/item/weapon/rcd/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/rcd_ammo))
