@@ -299,7 +299,7 @@
 /datum/religion_rites/instant/cult/create_slave
 	name = "Создание Гомункула"
 	desc = "Призыв ужаснейшего существа, существующего только благодаря силе Нар-Си."
-	ritual_length = (1 SECONDS) // plus 15 seconds of pollGhostCandidates
+	ritual_length = (1 SECONDS) // plus 10 seconds of pollGhostCandidates
 	invoke_msg = "Приди же!!!"
 	favor_cost = 150
 
@@ -310,7 +310,7 @@
 
 /datum/religion_rites/instant/cult/create_slave/invoke_effect(mob/living/user, obj/AOG)
 	..()
-	var/list/candidates = pollGhostCandidates("Не хотите ли вы стать гомункулом [religion.name]?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 15 SECONDS)
+	var/list/candidates = pollGhostCandidates("Не хотите ли вы стать гомункулом [religion.name]?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 10 SECONDS)
 	if(!candidates.len)
 		to_chat(user, "<span class='warning'>Ни одна душа не захотела вселяться в гомункула.</span>")
 		return FALSE
