@@ -177,7 +177,6 @@
 		/obj/item/weapon/circuitboard,
 		/obj/item/device/mmi,
 		/obj/item/brain,
-		/obj/item/device/mmi/posibrain,
 		/obj/item/robot_parts,
 		/obj/item/weapon/stock_parts,
 		/obj/item/device/flash
@@ -205,6 +204,8 @@
 		/obj/item/weapon/virusdish,
 		/obj/item/weapon/reagent_containers/syringe,
 		/obj/item/weapon/dnainjector,
+		/obj/item/device/mmi,
+		/obj/item/device/biocan,
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)
