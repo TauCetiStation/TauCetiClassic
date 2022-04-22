@@ -3,51 +3,56 @@
 	var/rank_name = "Untrained"
 	var/min_value = 0
 	var/max_value
-	var/value = 0
+	var/value
 	var/hint
 
 /datum/skill/civ_mech
 	name =  SKILL_CIV_MECH
-	min_value = -2
-	max_value = 2
+	max_value = 4
 	hint = "Faster moving speed of piloted civilian exosuits: Ripley and Odysseus."
-	value = -2
+
+/datum/skill/civ_mech/default
+	value = 0
 
 /datum/skill/civ_mech/novice
 	rank_name = "Novice"
-	value = -1
+	value = 1
 
 /datum/skill/civ_mech/trained
 	rank_name = "Trained"
-	value = 0 //engineer, medical intern, scientist, medical doctor
+	value = 2 //engineer, medical intern, scientist, medical doctor
 
 /datum/skill/civ_mech/pro
 	rank_name = "Professional"
-	value = 1 //cargo techincian, recycler, robotech, paramedic, mecha operator
+	value = 3 //cargo techincian, recycler, robotech, paramedic, mecha operator
 
 /datum/skill/civ_mech/master
 	rank_name = "Forklift certified"
-	value = 2 //RD, miner, QM, CE, CMO
+	value = 4 //RD, miner, QM, CE, CMO
 
 /datum/skill/combat_mech
 	name = SKILL_COMBAT_MECH
-	min_value = -2
-	max_value = 0
+	max_value = 2
 	hint = "Faster moving speed of piloted combat exosuits."
-	value = -2
+
+/datum/skill/combat_mech/default
+	value = 0
 
 /datum/skill/combat_mech/trained
 	rank_name = "Trained"
-	value = -1 //mecha operator, security
+	value = 1 //mecha operator, security
 
 /datum/skill/combat_mech/master
 	rank_name = "Master"
-	value = 0 //nuclear,  HoS, RD
+	value = 2 //nuclear,  HoS, RD
 
 /datum/skill/police
 	name = SKILL_POLICE
 	max_value = 2
 	hint = "Usage of tasers and flashers. Higher levels allows for faster handcuffing."
+
+/datum/skill/police/default
+	value = 0
 
 /datum/skill/police/trained
 	rank_name = "Trained"
@@ -61,6 +66,9 @@
 	name = SKILL_FIREARMS
 	max_value = 2
 	hint = "Affects recoil from firearms. Proficiency in firearms allows for tactical reloads. Usage of mines and explosives."
+
+/datum/skill/firearms/default
+	value = 0
 
 /datum/skill/firearms/trained
 	rank_name = "Trained"
@@ -80,6 +88,9 @@
 	rank_name = "Clowny"
 	value = -1
 
+/datum/skill/melee/default
+	value = 0
+
 /datum/skill/melee/trained
 	rank_name = "Trained"
 	value = 1 //botanist, atmospheric techician
@@ -92,6 +103,9 @@
 	name = SKILL_ATMOS
 	max_value = 3
 	hint = "Interacting with atmos related devices: pumps, scrubbers, space heaters. Usage of atmospherics computers. Faster pipes unwrenching."
+
+/datum/skill/atmospherics/default
+	value = 0
 
 /datum/skill/atmospherics/novice
 	rank_name = "Novice"
@@ -110,16 +124,19 @@
 	max_value = 4
 	hint = "Construction of walls, windows, computers and crafting."
 
+/datum/skill/construction/default
+	value = 0
+
 /datum/skill/construction/novice
 	rank_name = "Novice"
 	value = 1 //windows
 
 /datum/skill/construction/trained
-	rank_name = "Professional"
+	rank_name = "Trained"
 	value = 2 //walls, reinforced glass, RCD usage(scientist, robotech)
 
 /datum/skill/construction/pro
-	rank_name = "Master"
+	rank_name = "Professional"
 	value = 3 //computer, machine frames,  RD, engineer, reinforced walls
 
 /datum/skill/construction/master
@@ -130,6 +147,9 @@
 	name = SKILL_CHEMISTRY
 	max_value = 3
 	hint = "Chemistry related machinery: grinders, chem dispensers and chem masters. You can recognize reagents in pills and bottles."
+
+/datum/skill/chemistry/default
+	value = 0
 
 /datum/skill/chemistry/novice
 	rank_name = "Novice"
@@ -148,12 +168,15 @@
 	max_value = 4
 	hint = "Usage of complex machinery and computers. AI law modification, xenoarcheology and xenobiology consoles, exosuit fabricators."
 
+/datum/skill/research/default
+	value = 0
+
 /datum/skill/research/novice
-	rank_name = "Bachelor"
+	rank_name = "Novice"
 	value = 1
 
 /datum/skill/research/trained
-	rank_name = "Bachelor"
+	rank_name = "Trained"
 	value = 2 //RnD console, xenoarch consoles, genetics
 
 /datum/skill/research/pro
@@ -168,6 +191,9 @@
 	name = SKILL_MEDICAL
 	max_value = 5
 	hint = "Faster usage of syringes. Proficiency with defibrilators, medical scanners, cryo tubes, sleepers and life support machinery."
+
+/datum/skill/medical/default
+	value = 0
 
 /datum/skill/medical/novice
 	rank_name = "Novice"
@@ -194,6 +220,9 @@
 	max_value = 4
 	hint = "Higher level means faster surgical operations."
 
+/datum/skill/surgery/default
+	value = 0
+
 /datum/skill/surgery/novice
 	rank_name = "Novice"
 	value = 1 //intern, scientist, cook
@@ -215,6 +244,9 @@
 	max_value = 4
 	hint = "Low level means basic knowledge of paperwork. Usage of identification computers, communication consoles and fax."
 
+/datum/skill/command/default
+	value = 0
+
 /datum/skill/command/novice
 	rank_name = "Novice"
 	value = 1 //officers, psychatrist, lawyer - easier paperwork, quest passes
@@ -235,6 +267,9 @@
 	name = SKILL_ENGINEERING
 	max_value = 4
 	hint = "Tools usage, hacking, wall repairs and deconstruction. Engine related tasks and configuring of telecommunications."
+
+/datum/skill/engineering/default
+	value = 0
 
 /datum/skill/engineering/novice
 	rank_name = "Novice"

@@ -294,12 +294,12 @@
 	prev_move_dir = direction
 	if(move_result)
 		can_move = 0
-		VARSET_IN(src, can_move, TRUE, apply_skill_bonus(occupant, step_in, required_skills, 0.15, 0.3) * move_result)
+		VARSET_IN(src, can_move, TRUE, apply_skill_bonus(occupant, step_in, required_skills, -0.2) * move_result) // -20% to step_in for each level
 		return 1
 	return 0
 
 /obj/mecha/proc/check_fumbling(fumble_text)
-	return handle_fumbling(usr, src, SKILL_TASK_VERY_EASY, required_skills, SKILL_TASK_TRIVIAL, fumble_text)
+	return handle_fumbling(usr, src, SKILL_TASK_VERY_EASY, required_skills, fumble_text)
 
 /obj/mecha/proc/mechturn(direction)
 	set_dir(direction)

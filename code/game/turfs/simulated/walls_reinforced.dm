@@ -109,7 +109,7 @@
 	switch(d_state)
 		if(INTACT)
 			if (iswirecutter(W))
-				if(!handle_fumbling(user, src, SKILL_TASK_TOUGH, list(/datum/skill/engineering/pro), SKILL_TASK_VERY_EASY ,"<span class='notice'>You fumble around figuring out how to cut the outer grille.</span>"))
+				if(!handle_fumbling(user, src, SKILL_TASK_TOUGH, list(/datum/skill/engineering/pro),"<span class='notice'>You fumble around figuring out how to cut the outer grille.</span>"))
 					return
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				d_state = SUPPORT_LINES
@@ -138,7 +138,7 @@
 				var/obj/item/stack/O = W
 				if(!O.use(1))
 					return
-				if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering/pro), SKILL_TASK_VERY_EASY ,"<span class='notice'>You fumble around figuring out how to replace the outer grille.</span>"))
+				if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering/pro),"<span class='notice'>You fumble around figuring out how to replace the outer grille.</span>"))
 					return
 				d_state = INTACT
 				update_icon()

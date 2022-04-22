@@ -53,3 +53,30 @@
 		return
 	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill_name] from [active.get_value(skill_name)] to [value].</span>")
 	active.set_value(skill_name, value)
+
+/mob/living
+	var/list/helpers_skillsets
+
+/mob/living/proc/help_other(mob/living/target)
+	if(!mind)
+		return
+
+	if(target.a_intent == INTENT_HARM)
+		visible_message("<span class='notice'>[target] pranks \the [src].</span>", "<span class='notice'>You tried to help \the [target], but [P_THEY(target.gender)] rejects your help and pranks you instead!</span>")
+		to_chat(target, "<span class='notice'>You prank \the [src]!</span>")
+		apply_effects(stun = 1, weaken = 1)
+		return
+
+	visible_message("<span class='notice'>[src] puts [P_THEIR(gender)] hand on \the [target]'s shoulder, assisting [P_THEM(target.gender)].</span>", "<span class='notice'>You put your hand on \the [target]'s shoulder, assisting [P_THEM(target.gender)]. You need to stand still while doing this.</span>")
+	LAZYDISTINCTADD(target.helpers_skillsets,mind.skills.active)
+	while(do_mob(src, target, HELP_OTHER_TIME))
+		continue
+	LAZYREMOVE(target.helpers_skillsets, mind.skills.active)
+	visible_message("<span class='notice'>[src] removes [P_THEIR(gender)] hand from \the [target]'s shoulder.</span>", "<span class='notice'>You remove your hand from \the [target]'s shoulder.</span>")
+
+/mob/living/proc/add_command_buff(mob/commander, time)
+	LAZYDISTINCTADD(helpers_skillsets, commander.mind.skills.active)
+	addtimer(CALLBACK(src, .proc/remove_command_buff, commander), time)
+
+/mob/living/proc/remove_command_buff(mob/commander)
+	LAZYREMOVE(helpers_skillsets, commander.mind.skills.active)

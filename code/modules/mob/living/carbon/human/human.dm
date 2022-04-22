@@ -1586,7 +1586,7 @@
 			rank_list_element += ""
 			if(slider_max_value == slider_min_value)
 				continue
-			var/slider_hint = "Hint: [skill.hint] \n\n Skill ranks:\n [rank_list_element]"
+			var/slider_hint = "Hint: [skill.hint]\n\nSkill ranks:\n[rank_list_element]"
 			dat += {"
 				<tr>
 					<td>
@@ -1700,7 +1700,7 @@
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
 		//untrained 8 seconds, novice 6.8, trained 5.6, pro 4.4, expert 3.2 and master 2
-		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical), penalty = 0, bonus = 0.15)
+		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical/default), multiplier = -0.15) //-15% for each medical level
 		if(!instant)
 			if(hunt_injection_port) // takes additional time
 				if(!stealth)

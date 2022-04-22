@@ -67,7 +67,7 @@
 		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "self_tending", /datum/mood_event/self_tending)
 
 	var/delay = L == user ? self_delay : other_delay
-	delay = apply_skill_bonus(user, delay, required_skills, penalty = 0.2, bonus = 0.125)
+	delay = apply_skill_bonus(user, delay, required_skills, multiplier = -0.125)
 	if(delay)
 		if(!silent)
 			announce_heal(L, user)

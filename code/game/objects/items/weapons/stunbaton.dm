@@ -41,7 +41,7 @@
 		user.Weaken(30)
 		discharge()
 		return
-	if(!handle_fumbling(user, src, SKILL_TASK_VERY_EASY, list(/datum/skill/police/master), SKILL_TASK_TRIVIAL, "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>"))
+	if(!handle_fumbling(user, src, SKILL_TASK_VERY_EASY, list(/datum/skill/police/master), "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>"))
 		return
 	if(charges > 0)
 		set_status(!status)

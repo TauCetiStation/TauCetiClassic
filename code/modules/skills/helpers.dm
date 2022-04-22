@@ -1,24 +1,23 @@
 /proc/is_skill_competent(mob/user, required_skills)
 	for(var/datum/skill/required_skill as anything in required_skills)
 		var/datum/skill/skill = all_skills[required_skill]
-		if(user.mind.skills.get_value(skill.name) < skill.value)
+		var/value_with_helpers = get_skill_with_assistance(user, skill)
+		if(value_with_helpers < skill.value)
 			return FALSE
 	return TRUE
 
-/proc/apply_skill_bonus(mob/user, value, required_skills, penalty = 0.5, bonus = 0.4)
+/proc/apply_skill_bonus(mob/user, value, required_skills, multiplier)
 	var/result = value
 	for(var/datum/skill/required_skill as anything in required_skills)
 		var/datum/skill/skill = all_skills[required_skill]
-		if(user.mind.skills.get_value(skill.name) < skill.value)
-			result += value * penalty * (skill.value - user.mind.skills.get_value(skill.name))
-		if(user.mind.skills.get_value(skill.name) > skill.value)
-			result -= value * bonus * (user.mind.skills.get_value(skill.name) - skill.value)
+		var/value_with_helpers = get_skill_with_assistance(user, skill)
+		result += value * multiplier * (value_with_helpers - skill.value)
 	return result
 
-/proc/do_skilled(mob/user, atom/target,  delay, required_skills, penalty = 0.5, bonus = 0.4)
-	return do_after(user, delay = apply_skill_bonus(user, delay, required_skills, penalty, bonus), target = target)
+/proc/do_skilled(mob/user, atom/target,  delay, required_skills, multiplier)
+	return do_after(user, delay = apply_skill_bonus(user, delay, required_skills, multiplier), target = target)
 
-/proc/handle_fumbling(mob/user, atom/target, delay, required_skills, time_bonus = SKILL_TASK_TRIVIAL, message_self = "", text_target = null, check_busy = TRUE)
+/proc/handle_fumbling(mob/user, atom/target, delay, required_skills, message_self = "", text_target = null, check_busy = TRUE)
 	if(is_skill_competent(user, required_skills))
 		return TRUE
 	if(check_busy && user.is_busy())
@@ -31,7 +30,7 @@
 		display_message_self = "<span class='notice'>You fumble around figuring out how to use the [used_item].</span>"
 	to_chat(user, display_message_self)
 
-	var/required_time = apply_skill_bonus(user, time_bonus, required_skills, 1, 0)
+	var/required_time = apply_skill_bonus(user, delay, required_skills, -1) //increase time for each missing level
 	return do_after(user, required_time, target = target)
 
 /proc/get_skill_rank_name(skill_type, value)
@@ -46,3 +45,14 @@
 		var/datum/skill/skill = all_skills[s]
 		result += skill.rank_name
 	return result
+
+/proc/get_skill_with_assistance(mob/living/user, datum/skill/skill)
+	var/own_skill_value = user.mind.skills.get_value(skill.name)
+	if(!user.helpers_skillsets || user.helpers_skillsets.len == 0)
+		return own_skill_value
+	var/help = 0
+	var/command = 0
+	for(var/datum/skillset/skillset in user.helpers_skillsets)
+		command = max(command, skillset.get_command_modifier())
+		help += skillset.get_help_additive(skill.name)
+	return min(own_skill_value * command + help, skill.max_value)

@@ -7,7 +7,7 @@
 	var/time = 30                   // time in deciseconds
 	var/parts[] = list()            // type paths of items that will be placed in the result
 	var/chem_catalysts[] = list()   // like tools but for reagents
-	var/required_proficiency = 0
+	var/required_proficiency
 /datum/crafting_recipe/can_grenade_igniter
 	name = "Can Grenade (igniter)"
 	result = /obj/item/weapon/grenade/cancasing
