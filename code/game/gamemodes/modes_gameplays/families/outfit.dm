@@ -1,21 +1,9 @@
-/obj/item/weapon/storage/belt/security/cops/atom_init()
-	. = ..()
-	new /obj/item/weapon/melee/baton(src)
-	for (var/i in 1 to 2)
-		new /obj/item/weapon/grenade/flashbang(src)
-	for (var/i in 1 to 3)
-		new /obj/item/weapon/handcuffs(src)
-	new /obj/item/weapon/shield/riot/tele(src)
+/obj/item/weapon/storage/belt/security/cops
+	startswith = list(/obj/item/weapon/melee/baton = 1, /obj/item/weapon/grenade/flashbang = 2, /obj/item/weapon/handcuffs = 3, /obj/item/weapon/shield/riot/tele = 1)
 
-/obj/item/weapon/storage/belt/security/tactical/cops/atom_init()
-	. = ..()
-	new /obj/item/weapon/melee/baton(src)
-	for (var/i in 1 to 2)
-		new /obj/item/weapon/grenade/flashbang(src)
-	for (var/i in 1 to 3)
-		new /obj/item/ammo_box/magazine/m556(src)
-	for (var/i in 1 to 3)
-		new /obj/item/weapon/handcuffs(src)
+/obj/item/weapon/storage/belt/security/tactical/cops
+	startswith = list(/obj/item/weapon/melee/baton = 1, /obj/item/weapon/grenade/flashbang = 2, /obj/item/weapon/handcuffs = 3, /obj/item/ammo_box/magazine/m556 = 3)
+
 /datum/outfit/families_police/beatcop
 	name = "Families: Офицер"
 
