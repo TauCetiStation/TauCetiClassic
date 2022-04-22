@@ -130,6 +130,7 @@
 	modules += new /obj/item/stack/nanopaste(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/gripper/medical(src)
+	modules += new /obj/item/device/antibody_scanner(src)
 	modules += new /obj/item/device/reagent_scanner/adv(src)
 	modules += new /obj/item/roller_holder(src)
 	modules += new /obj/item/stack/medical/splint(src)
