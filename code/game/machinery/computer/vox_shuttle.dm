@@ -59,6 +59,12 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	var/datum/announcement/centcomm/vox/arrival/announce_arrival = new
 	var/datum/announcement/centcomm/vox/returns/announce_returns = new
 
+	// Random turfs of the transit areas for the interface
+	var/turf/NE_solars
+	var/turf/NW_solars
+	var/turf/SE_solars
+	var/turf/SW_solars
+
 /obj/machinery/computer/vox_station/atom_init()
 	. = ..()
 	curr_location = locate(/area/shuttle/vox/arkship)
@@ -120,6 +126,15 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	. = ..()
 
 /obj/machinery/computer/vox_station/ui_interact(mob/user)
+	if(!NE_solars)
+		NE_solars = pick(get_area_turfs(/area/shuttle/vox/northeast_solars, FALSE))
+		NW_solars = pick(get_area_turfs(/area/shuttle/vox/northwest_solars, FALSE))
+		SE_solars = pick(get_area_turfs(/area/shuttle/vox/southeast_solars, FALSE))
+		SW_solars = pick(get_area_turfs(/area/shuttle/vox/southwest_solars, FALSE))
+
+	// beautifully
+	var/X = "&times;"
+
 	var/time_to_move = max(lastMove + VOX_SHUTTLE_COOLDOWN - world.time, 0)
 	var/time_seconds = round(time_to_move * 0.1)
 	var/sec_word = pluralize_russian(time_seconds, "секунду", "секунды", "секунд")
@@ -127,26 +142,16 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 		Локация: [curr_location]<br>
 		Готовность к полёту[time_to_move ? " через [time_seconds] [sec_word]" : ": Готово"]<br><br>
 		<a href='?src=\ref[src];start=1' style='width:100%;text-align:center'>Вернуться в далёкий космос</a>
-				<table>
-			<tr>
-				<td><a href='?src=\ref[src];solars_fore_port=1' style='width:100%;'>Северо-запад станции</a></td>
-				<td><a style='width:100%;text-align:center'>BLOCKED</a></td>
-				<td><a href='?src=\ref[src];solars_fore_starboard=1' style='width:100%;text-align:right'>Северо-восток станции</a></td>
-			</tr>
-			<tr>
-				<td><a style='width:100%'>BLOCKED</a></td>
-				<td><a style='width:100%;text-align:center'>BLOCKED</a></td>
-				<td><a style='width:100%;text-align:right'>BLOCKED</a></td>
-			</tr>
-			<tr>
-				<td><a href='?src=\ref[src];solars_aft_port=1' style='width:100%'>Юго-запад станции</a></td>
-				<td><a style='width:100%;text-align:center'>BLOCKED</a></td>
-				<td><a href='?src=\ref[src];solars_aft_starboard=1' style='width:100%;text-align:right'>Юго-восток станции</a></td>
-			</tr>
-		</table>
+		<div class="center_div" style="position: relative;" >
+			<img src="nanomap_[SSmapping.station_image]_1.png" width="[world.maxx]px" height="[world.maxy]px">
+			<a href='?src=\ref[src];solars_fore_port=1' style='position: absolute; top: [world.maxy-NW_solars.y]px; left: [world.maxx-NW_solars.x]px;'>[X]</a>
+			<a href='?src=\ref[src];solars_fore_starboard=1' style='position: absolute; top: [world.maxy-NE_solars.y]px; left: [world.maxx-NE_solars.x]px;'>[X]</a>
+			<a href='?src=\ref[src];solars_aft_port=1' style='position: absolute; top: [world.maxy-SW_solars.y]px; left: [world.maxx-SW_solars.x]px;'>[X]</a>
+			<a href='?src=\ref[src];solars_aft_starboard=1' style='position: absolute; top: [world.maxy-SE_solars.y]px; left: [world.maxx-SE_solars.x]px;'>[X]</a>
+		</div>
 		<a href='?src=\ref[src];mining=1' style='width:100%;text-align:center'>Шахтёрский астероид</a><br><br>"}
 
-	var/datum/browser/popup = new(user, "computer", "Shuttle", 600, 300)
+	var/datum/browser/popup = new(user, "computer", "Shuttle", 500, 500)
 	popup.set_content(dat)
 	popup.open()
 
