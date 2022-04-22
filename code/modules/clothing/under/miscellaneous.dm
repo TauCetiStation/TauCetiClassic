@@ -726,18 +726,9 @@
 	item_state = "DutchUniform"
 
 /obj/item/clothing/head/spacepolice
-	name = "NanoTrasen cap"
+	name = "police cap"
 	desc = "A blue cap for patrolling the daily beat."
-	icon_state = "policecap_families"
-
-/obj/item/clothing/head/beret/spacepolice
-	name = "NanoTrasen beret"
-	desc = "An armored blue beret belonging to some low ranking officer in space police forces."
-	icon_state = "beret_cops"
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-	body_parts_covered = 1
-	pierce_protection = HEAD
-	flags = HEADCOVERSEYES
+	icon_state = "police_cap"
 
 /obj/item/clothing/under/henchmen
 	name = "henchmen jumpsuit"
