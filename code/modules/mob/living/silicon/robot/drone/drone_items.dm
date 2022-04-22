@@ -204,6 +204,7 @@
 		/obj/item/stack/sheet/mineral/phoron,
 		/obj/item/weapon/virusdish,
 		/obj/item/weapon/reagent_containers/syringe,
+		/obj/item/weapon/dnainjector,
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)
