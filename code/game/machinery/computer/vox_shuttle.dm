@@ -144,10 +144,10 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 		<a href='?src=\ref[src];start=1' style='width:100%;text-align:center'>Вернуться в далёкий космос</a>
 		<div class="center_div" style="position: relative;" >
 			<img src="nanomap_[SSmapping.station_image]_1.png" width="[world.maxx]px" height="[world.maxy]px">
-			<a href='?src=\ref[src];solars_fore_port=1' style='position: absolute; top: [world.maxy-NW_solars.y]px; left: [world.maxx-NW_solars.x]px;'>[X]</a>
-			<a href='?src=\ref[src];solars_fore_starboard=1' style='position: absolute; top: [world.maxy-NE_solars.y]px; left: [world.maxx-NE_solars.x]px;'>[X]</a>
-			<a href='?src=\ref[src];solars_aft_port=1' style='position: absolute; top: [world.maxy-SW_solars.y]px; left: [world.maxx-SW_solars.x]px;'>[X]</a>
-			<a href='?src=\ref[src];solars_aft_starboard=1' style='position: absolute; top: [world.maxy-SE_solars.y]px; left: [world.maxx-SE_solars.x]px;'>[X]</a>
+			<a href='?src=\ref[src];solars_fore_port=1' style='position: absolute; top: [world.maxy-NW_solars.y]px; left: [NW_solars.x]px;'>[X]</a>
+			<a href='?src=\ref[src];solars_fore_starboard=1' style='position: absolute; top: [world.maxy-NE_solars.y]px; left: [NE_solars.x]px;'>[X]</a>
+			<a href='?src=\ref[src];solars_aft_port=1' style='position: absolute; top: [world.maxy-SW_solars.y]px; left: [SW_solars.x]px;'>[X]</a>
+			<a href='?src=\ref[src];solars_aft_starboard=1' style='position: absolute; top: [world.maxy-SE_solars.y]px; left: [SE_solars.x]px;'>[X]</a>
 		</div>
 		<a href='?src=\ref[src];mining=1' style='width:100%;text-align:center'>Шахтёрский астероид</a><br><br>"}
 
