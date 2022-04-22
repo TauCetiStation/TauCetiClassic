@@ -89,7 +89,6 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet))
-
 		var/obj/item/stack/sheet/S = W
 		switch(S.type)
 

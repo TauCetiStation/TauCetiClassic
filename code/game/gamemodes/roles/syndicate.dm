@@ -11,6 +11,7 @@
 	logo_state = "nuke-logo"
 
 	var/nuclear_outfit = /datum/outfit/nuclear
+	skillset_type = /datum/skillset/max
 
 /datum/role/operative/New()
 	..()
