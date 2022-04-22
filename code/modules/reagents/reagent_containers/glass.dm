@@ -256,6 +256,13 @@
 	possible_transfer_amounts = list(5,10,15,25)
 	flags = OPENCONTAINER
 
+/obj/item/weapon/reagent_containers/glass/beaker/teapot
+	name = "teapot"
+	desc = "An elegant teapot."
+	icon_state = "teapot"
+	item_state = "teapot"
+
+
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone/atom_init()

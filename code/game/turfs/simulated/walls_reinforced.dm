@@ -207,7 +207,7 @@
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.use(0,user))
 
-					to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки..</span>")
+					to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки.</span>")
 					if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills_override = list(/datum/skill/engineering/pro)))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
