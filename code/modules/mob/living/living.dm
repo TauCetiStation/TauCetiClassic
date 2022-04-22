@@ -1520,6 +1520,3 @@
 
 /mob/living/proc/get_pumped(bodypart)
 	return 0
-
-/mob/living/proc/get_max_pumped(bodypart)
-	return 0
