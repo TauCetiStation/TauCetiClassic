@@ -3,12 +3,9 @@
 	var/votable = TRUE
 	var/hidden = TRUE // for mode annouce
 	var/list/possible_gamemodes = list()
-	var/list/blacklist_gamemodes = list(/datum/game_mode/malfunction)
 
 /datum/modesbundle/proc/get_gamemodes_name()
 	var/list/L = list()
-	for(var/type in blacklist_gamemodes)
-		possible_gamemodes -= type
 	for(var/type in possible_gamemodes)
 		var/datum/game_mode/M = new type()
 		if(M.potential_runnable())
@@ -90,7 +87,7 @@
 	votable = TRUE
 
 /datum/modesbundle/all/secret/New()
-	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended)
+	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended, /datum/game_mode/malfunction)
 	..()
 
 /datum/modesbundle/run_anyway
