@@ -226,7 +226,6 @@
 	popup.set_content(out)
 	popup.open()
 
-
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))
 		return
