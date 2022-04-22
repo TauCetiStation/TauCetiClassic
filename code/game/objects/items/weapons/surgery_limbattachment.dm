@@ -25,7 +25,7 @@
 				"<span class='warning'>[user] begins to attach a robotic limb where \his [BP.name] used to be with [src].</span>", \
 				"<span class='warning'>You begin to attach \the [src] where your [BP.name] used to be.</span>")
 
-		if(do_mob(user, H, 100))
+		if(do_mob(user, H, 100, compliable = COMPLIANCE_LEVEL_IMPOSSIBLE))
 			if(M != user)
 				M.visible_message( \
 					"<span class='warning'>[user] finishes attaching [H]'s new [BP.name].</span>", \

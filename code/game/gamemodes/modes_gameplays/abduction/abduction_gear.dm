@@ -235,7 +235,7 @@
 	if(user.is_busy())
 		return
 	to_chat(user, "<span class='notice'>You begin preparing [target] for transport...</span>")
-	if(do_after(user, 100, target = target))
+	if(do_mob(user, target, 100))
 		marked = target
 		to_chat(user, "<span class='notice'>You finish preparing [target] for transport.</span>")
 

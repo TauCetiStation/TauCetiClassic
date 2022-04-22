@@ -70,7 +70,7 @@
 	if(delay)
 		if(!silent)
 			announce_heal(L, user)
-		if(!do_mob(user, L, time = self_delay, check_target_zone = TRUE))
+		if(!do_mob(user, L, time = self_delay, check_target_zone = TRUE, compliable = COMPLIANCE_LEVEL_STRONG))
 			return
 
 	if(use(1) && heal(L, user) && repeating)

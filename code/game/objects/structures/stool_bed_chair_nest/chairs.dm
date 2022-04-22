@@ -314,7 +314,7 @@
 	if(buckled_mob != user)
 		user.visible_message("<span class='notice'>[user] begins to untie the noose over [buckled_mob]'s neck...</span>")
 		to_chat(user, "<span class='notice'>You begin to untie the noose over [buckled_mob]'s neck...</span>")
-		if(!do_mob(user, buckled_mob, 10 SECONDS))
+		if(!do_mob(user, buckled_mob, 10 SECONDS, compliable = COMPLIANCE_LEVEL_IMPOSSIBLE))
 			return
 		user.visible_message("<span class='notice'>[user] unties the noose over [buckled_mob]'s neck!</span>")
 		to_chat(user,"<span class='notice'>You untie the noose over [buckled_mob]'s neck!</span>")

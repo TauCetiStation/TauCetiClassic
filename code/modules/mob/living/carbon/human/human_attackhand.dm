@@ -92,7 +92,7 @@
 	BP.applied_pressure = user
 
 	//apply pressure as long as they stay still and keep grabbing
-	do_mob(user, src, INFINITY, target_zone, progress = 0)
+	do_mob(user, src, INFINITY, target_zone, progress = 0, compliable = COMPLIANCE_LEVEL_IMPOSSIBLE)
 
 	BP.applied_pressure = null
 

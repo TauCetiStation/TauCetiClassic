@@ -1019,7 +1019,7 @@
 		var/suff = min(getOxyLoss(), 2) //Pre-merge level, less healing, more prevention of dieing.
 		adjustOxyLoss(-suff)
 
-	if(do_mob(user, src, HUMAN_STRIP_DELAY))
+	if(do_mob(user, src, HUMAN_STRIP_DELAY, compliable = COMPLIANCE_LEVEL_IMPOSSIBLE))
 		 // yes, we check this after the action, allowing player to try this even if it looks wrong (for fun).
 		if(user.species && user.species.flags[NO_BREATHE])
 			to_chat(user, "<span class='notice bold'>Your species can not perform AV!</span>")

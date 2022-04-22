@@ -154,7 +154,7 @@
 	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 	if(IO.heart_status == HEART_FAILURE)
 		if(IO.damage < 50)
-			if(do_mob(user, H, 2 SECONDS))
+			if(do_mob(user, H, 2 SECONDS, compliable = COMPLIANCE_LEVEL_IMPOSSIBLE))
 				visible_message("<span class='danger'>[user] performs a heart massage on [H]!</span>")
 				if(H.health > config.health_threshold_dead)
 					IO.heart_fibrillate()

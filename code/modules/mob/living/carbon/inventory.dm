@@ -33,7 +33,7 @@
 		else
 			return
 
-	if(do_after(who, HUMAN_STRIP_DELAY, target = src))
+	if(do_mob(who, src, HUMAN_STRIP_DELAY))
 		if(slot_ref && (slot_ref_slot != slot_ref.slot_equipped || slot_ref_loc != slot_ref.loc))
 			to_chat(who, "<span class='notice'>Item you wanted to take off is moved somewhere else!</span>")
 			return

@@ -697,7 +697,7 @@
 
 		if(splints)
 			visible_message("<span class='danger'>[usr] is trying to remove [src]'s splints!</span>")
-			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
+			if(do_mob(usr, src, HUMAN_STRIP_DELAY, compliable = COMPLIANCE_LEVEL_STRONG))
 				for(var/obj/item/organ/external/BP in splints)
 					if (BP.status & ORGAN_SPLINTED)
 						var/obj/item/W = new /obj/item/stack/medical/splint(loc, 1)
@@ -1973,7 +1973,7 @@
 
 	if(wounds || has_visual_bandages)
 		visible_message("<span class='danger'>[usr] is trying to remove [src == usr ? "their" : "[src]'s"] bandages!</span>")
-		if(do_mob(usr, src, HUMAN_STRIP_DELAY))
+		if(do_mob(usr, src, HUMAN_STRIP_DELAY, compliable = COMPLIANCE_LEVEL_STRONG))
 			for(var/datum/wound/W in wounds)
 				if(W.bandaged)
 					W.bandaged = 0
@@ -2009,7 +2009,7 @@
 		return
 
 	if(Heart.heart_status == HEART_FAILURE)
-		if(do_mob(user, src, 4 SECONDS))
+		if(do_mob(user, src, 4 SECONDS, compliable = COMPLIANCE_LEVEL_IMPOSSIBLE))
 			visible_message("<span class='danger'>[user] is trying perform a heart massage on [src]!</span>")
 
 			massages_done_right = 0

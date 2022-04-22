@@ -175,7 +175,7 @@
 					to_chat(usr, "<span class='notice'>You begin rearranging [target]'s memories.</span>")
 					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
 					to_chat(target, "<span class='boldannounce'>Your head cries out. The veil of reality begins to crumple and something evil bleeds through.</span>")//Ow the edge
-			if(!do_mob(usr, target, 100)) //around 30 seconds total for enthralling
+			if(!do_mob(usr, target, 100, compliable = COMPLIANCE_LEVEL_IMPOSSIBLE)) //around 30 seconds total for enthralling
 				to_chat(usr, "<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>")
 				to_chat(target, "<span class='userdanger'>A spike of pain drives into your head. You aren't sure what's happened, but you feel a faint sense of revulsion.</span>")
 				enthralling = 0
@@ -457,7 +457,7 @@
 		if(ghost)
 			to_chat(ghost, "<span class='ghostalert'>Your masters are resuscitating you! Return to your corpse if you wish to be brought to life.</span> (Verbs -> Ghost -> Re-enter corpse)")
 			ghost.playsound_local(null, 'sound/effects/genetics.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)
-		if(!do_mob(usr, thrallToRevive, 100))
+		if(!do_mob(usr, thrallToRevive, 100, compliable = COMPLIANCE_LEVEL_IMPOSSIBLE))
 			to_chat(usr, "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>")
 			charge_counter= charge_max
 			return
