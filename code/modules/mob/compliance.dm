@@ -15,14 +15,14 @@
 	if(incapacitated())
 		return COMPLIANCE_LEVEL_WEAK
 
-	// if we are under effects of substances we also comply
-	if(reagents.has_reagent_type(/datum/reagent/drug))
-		return COMPLIANCE_LEVEL_WEAK
-
 	// actively complying return COMPLIANCE_LEVEL_STRONG
 	// because it implies actually helping the abuser with their goals
 	if(actively_complying)
 		actively_complying = FALSE
 		return COMPLIANCE_LEVEL_STRONG
+
+	// if we are under effects of substances we also comply
+	if(reagents.has_reagent_type(/datum/reagent/drug))
+		return COMPLIANCE_LEVEL_WEAK
 
 	return COMPLIANCE_LEVEL_NONE
