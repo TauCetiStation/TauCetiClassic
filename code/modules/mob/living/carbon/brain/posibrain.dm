@@ -64,8 +64,8 @@
 	to_chat(src.brainmob, "<b>Use say :b to speak to other artificial intelligences.</b>")
 	src.brainmob.mind.assigned_role = "Positronic Brain"
 
-	src.brainmob.mind.skills.add_available_skillset(/datum/skillset/cyborg)
-	src.brainmob.mind.skills.maximize_active_skills()
+	brainmob.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	brainmob.mind.skills.maximize_active_skills()
 	visible_message("<span class='notice'>\The [src] chimes quietly.</span>")
 	icon_state = "posibrain-occupied"
 
