@@ -28,7 +28,8 @@
 	grav_pull = 1
 
 /obj/singularity/academy/atom_init()
-  ..()
+	. = ..()
+	return
 
 /obj/singularity/academy/admin_investigate_setup()
 	return
