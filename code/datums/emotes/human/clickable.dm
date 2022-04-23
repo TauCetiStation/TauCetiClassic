@@ -17,7 +17,7 @@
 
 /datum/emote/clickable/proc/on_cloud_click_handler(target, p, location, control, params, clicker)
 	SIGNAL_HANDLER
-	if(!istype(target, /mob/living/carbon/human) || !istype(clicker, /mob/living/carbon/human))
+	if(!ishuman(target) || !istype(clicker, /mob/living/carbon/human))
 		return
 
 	var/mob/living/carbon/human/t = target
