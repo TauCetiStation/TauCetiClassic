@@ -96,7 +96,7 @@
 					T.attackby(W, user)
 				qdel(src)
 	else
-		to_chat(user, "<span class='notice'>Вы не можете достать до стены, сначала закройте её!</span>")
+		to_chat(user, "<span class='notice'>Вы не можете этого сделать пока стена открыта.</span>")
 	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(walltype)
