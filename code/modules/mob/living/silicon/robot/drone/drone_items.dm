@@ -177,6 +177,7 @@
 		/obj/item/weapon/circuitboard,
 		/obj/item/device/mmi,
 		/obj/item/device/biocan,
+		/obj/item/weapon/reagent_containers/syringe,
 		/obj/item/brain,
 		/obj/item/robot_parts,
 		/obj/item/weapon/stock_parts,
