@@ -27,6 +27,9 @@
 	move_self = 0
 	grav_pull = 1
 
+/obj/singularity/academy/atom_init()
+  ..()
+
 /obj/singularity/academy/admin_investigate_setup()
 	return
 
