@@ -66,7 +66,7 @@
 	if(!new_text)
 		return
 
-	free_space -= length(strip_html_properly(new_text))
+	free_space -= length(new_text)
 
 /obj/item/weapon/paper/examine(mob/user)
 	..()
