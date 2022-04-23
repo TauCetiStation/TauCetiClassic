@@ -33,7 +33,7 @@
 	chassis.visible_message("<span class='warning'>[chassis] fires [src]!</span>")
 	occupant_message("<span class='warning'>You fire [src]!</span>")
 	log_message("Fired from [src], targeting [target].")
-	set_ready_state(0)
+	set_ready_state(FALSE)
 	for(var/i = 1 to min(projectiles, projectiles_per_shot))
 		var/turf/aimloc = targloc
 		if(deviation)
