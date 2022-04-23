@@ -73,7 +73,7 @@
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user)
 	if(opening)
-		to_chat(user, "<span class='warning'>вы должны подождать пока дверь закончит движение.</span>")
+		to_chat(user, "<span class='warning'>Вы должны подождать пока дверь закончит движение.</span>")
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
 
@@ -96,7 +96,7 @@
 					T.attackby(W, user)
 				qdel(src)
 	else
-		to_chat(user, "<span class='notice'>Вы не можете достать до стены,сначала закройте её!</span>")
+		to_chat(user, "<span class='notice'>Вы не можете достать до стены, сначала закройте её!</span>")
 	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(walltype)
