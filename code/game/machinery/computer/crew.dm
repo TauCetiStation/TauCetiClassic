@@ -8,6 +8,7 @@
 	active_power_usage = 500
 	circuit = /obj/item/weapon/circuitboard/crew
 	var/obj/nano_module/crew_monitor/crew_monitor
+	required_skills = list(/datum/skill/medical/novice)
 
 /obj/machinery/computer/crew/atom_init()
 	crew_monitor = new(src)
@@ -15,4 +16,6 @@
 
 
 /obj/machinery/computer/crew/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+	if(!do_skill_checks(user))
+		return
 	crew_monitor.ui_interact(user, ui_key, ui, force_open)

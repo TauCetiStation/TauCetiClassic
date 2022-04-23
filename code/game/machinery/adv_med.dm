@@ -10,6 +10,7 @@
 	density = TRUE
 	anchored = TRUE
 	light_color = "#00ff00"
+	required_skills = list(/datum/skill/medical/novice)
 
 /obj/machinery/bodyscanner/power_change()
 	..()
@@ -53,6 +54,8 @@
 	if(target.abiotic())
 		to_chat(user, "<span class='userdanger'>Subject cannot have abiotic items on.</span>")
 		return FALSE
+	if(!do_skill_checks(user))
+		return
 	return TRUE
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, mob/user)
@@ -154,7 +157,7 @@
 	anchored = TRUE
 	var/next_print = 0
 	var/storedinfo = null
-
+	required_skills = list(/datum/skill/medical/trained)
 
 /obj/machinery/body_scanconsole/atom_init()
 	..()
@@ -167,7 +170,8 @@
 	if(!ishuman(connected.occupant))
 		to_chat(user, "<span class='warning'>This device can only scan compatible lifeforms.</span>")
 		return
-
+	if(!do_skill_checks(user))
+		return
 	var/dat
 
 	if (src.connected) //Is something connected?

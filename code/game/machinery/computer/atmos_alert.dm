@@ -7,6 +7,7 @@
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
 	var/receive_frequency = 1437
+	required_skills = list(/datum/skill/atmospherics/novice)
 
 
 /obj/machinery/computer/atmos_alert/atom_init()
