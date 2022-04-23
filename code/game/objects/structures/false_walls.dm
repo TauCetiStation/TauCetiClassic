@@ -83,7 +83,7 @@
 			to_chat(user, "<span class='warning'>Стена заблокирована!</span>")
 			return
 		if(isscrewdriver(W))
-			user.visible_message("[user] tightens some bolts on the wall.", "Вы затягивайте болты на стене.")
+			user.visible_message("[user] tightens some bolts on the wall.", "Вы затягиваете болты на стене.")
 			T.ChangeTurf(walltype)
 			qdel(src)
 
