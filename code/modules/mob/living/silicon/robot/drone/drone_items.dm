@@ -208,6 +208,7 @@
 		/obj/item/weapon/dnainjector,
 		/obj/item/device/mmi,
 		/obj/item/device/biocan,
+		/obj/item/weapon/diseasedisk
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)
