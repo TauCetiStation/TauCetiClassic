@@ -147,6 +147,19 @@
 		if (belt)
 			drop_from_inventory(belt)
 		w_uniform = null
+
+		var/update_hair = FALSE
+		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
+			update_hair = TRUE
+		else if(isitem(W))
+			var/obj/item/I = W
+			if(I.flags_inv & HIDEMASK)
+				update_hair = TRUE
+		if(update_hair)
+			update_hair()
+			update_inv_ears()
+			update_inv_wear_mask()
+
 		update_inv_w_uniform()
 		update_suit_sensors()
 	else if (W == gloves)
@@ -342,6 +355,8 @@
 		if(SLOT_W_UNIFORM)
 			playsound(src, 'sound/effects/equip_uniform.ogg', VOL_EFFECTS_MASTER, 50, FALSE, null, -5)
 			src.w_uniform = W
+			if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
+				update_hair()
 			W.equipped(src, slot)
 			update_suit_sensors()
 			update_inv_w_uniform()
