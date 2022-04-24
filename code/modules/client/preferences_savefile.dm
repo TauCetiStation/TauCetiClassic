@@ -71,7 +71,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				organ_data -= organ_name
 				S["organ_data"] -= organ_name
 
-	if(current_version < 38)
+	if(current_version < 18)
 		popup(parent, "Your character([real_name]) had old job preferences, probably incompatible with current version. Your job preferences have been reset.", "Preferences")
 		ResetJobs()
 		S["job_preferences"]	<< job_preferences
@@ -85,6 +85,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(!(species in lang.allowed_speak))
 				language = "None"
 				S["language"] << language
+
+	if(current_version < 38)
+		popup(parent, "Your character([real_name]) had old job preferences, probably incompatible with current version. Your job preferences have been reset.", "Preferences")
+		ResetJobs()
+		S["job_preferences"]	<< job_preferences
 
 	if(current_version < 21)
 		S["disabilities"] << null
