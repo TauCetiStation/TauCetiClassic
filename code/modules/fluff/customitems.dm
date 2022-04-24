@@ -16,32 +16,25 @@
 
 /obj/item/clothing/head/custom
 	name = "Custom hat"
-	body_parts_covered = 0
 
 /obj/item/clothing/under/custom
 	name = "Custom uniform"
-	body_parts_covered = 0
 
 /obj/item/clothing/suit/custom
 	name = "Custom suit"
-	body_parts_covered = 0
 
 /obj/item/clothing/mask/custom
 	name = "Custom mask"
-	body_parts_covered = 0
 
 /obj/item/clothing/glasses/custom
 	name = "Custom glasses"
-	body_parts_covered = 0
 
 /obj/item/clothing/gloves/custom
 	name = "Custom gloves"
-	body_parts_covered = 0
 	species_restricted = null
 
 /obj/item/clothing/shoes/custom
 	name = "Custom shoes"
-	body_parts_covered = 0
 	species_restricted = null
 
 /obj/item/clothing/accessory/custom
