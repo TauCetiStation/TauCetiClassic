@@ -31,6 +31,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/destination
 	var/notify = TRUE
 	var/bumped = FALSE
+	var/target_dir = FALSE
+	var/dir_mob = FALSE
 
 /obj/effect/immovable_rod/atom_init(mapload, turf/end)
 	. = ..()
@@ -42,10 +44,14 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	for(var/mob/living/carbon/human/H in global.singularity_beacon_list)
 		target_list += H
 		var/target_mob = pick(target_list)
-		var/turf_mob = get_turf(target_mob)
-		destination = turf_mob
+		dir_mob = get_dir(src, target_mob)
 	if(end && end.z == z_original)
-		walk_towards(src, destination, 1)
+		return INITIALIZE_HINT_LATELOAD
+	return
+
+/obj/effect/immovable_rod/atom_init_late()
+	target_dir = pick(dir_mob)
+	walk(src, target_dir, 1)
 
 /obj/effect/immovable_rod/Moved()
 	if(z != z_original || loc == destination)
