@@ -157,16 +157,13 @@
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && user.a_intent == INTENT_HELP)
-		if(istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))
-			usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
-			"<span class='notice'>You cut \the [C]'s restraints with \the [src]!</span>",\
-			"You hear cable being cut.")
-			QDEL_NULL(C.handcuffed)
-			if(C.buckled && C.buckled.buckle_require_restraints)
-				C.buckled.unbuckle_mob()
-			C.update_inv_handcuffed()
-		else
-			to_chat(user, "The [C.handcuffed] are too tough to cut with [src].")
+		usr.visible_message("\The [usr] cuts \the [C]'s handcuffs with \the [src]!",\
+		"<span class='notice'>You cut \the [C]'s handcuffs with \the [src]!</span>",\
+		"You hear handcuffs being cut.")
+		QDEL_NULL(C.handcuffed)
+		if(C.buckled && C.buckled.buckle_require_restraints)
+			C.buckled.unbuckle_mob()
+		C.update_inv_handcuffed()
 		return
 	else
 		..()
