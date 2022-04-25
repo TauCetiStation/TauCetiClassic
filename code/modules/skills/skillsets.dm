@@ -63,7 +63,7 @@
 	initial_skills = list(
 		/datum/skill/medical/expert,
 		/datum/skill/surgery/trained,
-		/datum/skill/civ_mech/pro,
+		/datum/skill/civ_mech/master,
 		/datum/skill/chemistry/novice
 	)
 
