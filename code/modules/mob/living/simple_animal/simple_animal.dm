@@ -421,3 +421,14 @@
 
 /mob/living/simple_animal/crawl()
 	return FALSE
+
+//proc for nongrief pest-animals (mouse, lizard)
+/mob/living/simple_animal/proc/handle_gnaw()
+	var/turf/T = get_turf(src)
+	var/count_pest_near = 0
+	for(var/mob/living/simple_animal/A in view(4,src))
+		if(A != src && (ismouse(A) || islizard(A)))
+			++count_pest_near
+	if(count_pest_near > 4)
+		for(var/obj/structure/cable/C in T)
+			qdel(C)
