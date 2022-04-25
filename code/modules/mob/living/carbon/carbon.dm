@@ -260,9 +260,6 @@
 	if(!on_fire)
 		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
-		if(stat != DEAD)
-			adjust_bodytemperature((BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR)
-
 	if(flags & GODMODE)
 		return
 
