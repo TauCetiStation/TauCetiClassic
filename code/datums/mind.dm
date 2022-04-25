@@ -507,11 +507,13 @@
 		skills.remove_available_skillset(to_delete)
 		message_admins("[usr.key]/([usr.name]) removed skillset [to_delete] from \the [key]/[name].")
 		log_admin("[usr.key]/([usr.name]) removed skillset [to_delete] from \the [key]/[name].")
+		edit_skills()
 		return
 	else if (href_list["add_max"])
 		skills.add_available_skillset(/datum/skillset/max)
 		message_admins("[usr.key]/([usr.name]) gave \the [key]/[name] maximal skillset.")
 		log_admin("[usr.key]/([usr.name]) gave \the [key]/[name] maximal skillset.")
+		edit_skills()
 		return
 	else if (href_list["add_skillset"])
 		var/new_skillset = input("Select new skillset", "Skillsets selection", null) as null|anything in global.skillset_names_aliases
@@ -520,6 +522,7 @@
 		skills.add_available_skillset(skillset_names_aliases[new_skillset])
 		message_admins("[usr.key]/([usr.name]) gave \the [key]/[name] new skillset: [new_skillset]")
 		log_admin("[usr.key]/([usr.name]) gave \the [key]/[name] new skillset: [new_skillset]")
+		edit_skills()
 		return
 	else if (href_list["refresh"])
 		if(href_list["refresh"]=="2")
