@@ -37,7 +37,7 @@
 			to_chat(user, "<span class='warning'>Только тела гуманоидов могут быть приняты.</span>")
 			return FALSE
 
-		if(istype(AOG.buckled_mob, /mob/living/carbon/human/homunculus))
+		if(AOG.buckled_mob.get_species() == HOMUNCULUS)
 			to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
 			return FALSE
 

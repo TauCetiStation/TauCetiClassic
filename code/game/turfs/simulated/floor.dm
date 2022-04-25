@@ -531,7 +531,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 					var/obj/item/stack/tile/light/L = I
 					L.on = get_lightfloor_on()
 					L.state = get_lightfloor_state()
-				to_chat(user, "<span class='warning'>Вы демонтировали светящуюся плитку.</span>")
+				to_chat(user, "<span class='warning'>Вы демонтировали плитку.</span>")
 
 		make_plating()
 		// Can't play sounds from areas. - N3X

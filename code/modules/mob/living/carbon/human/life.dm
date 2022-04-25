@@ -62,8 +62,6 @@
 
 			handle_pain()
 
-			handle_medical_side_effects()
-
 			handle_heart_beat()
 
 			//This block was in handle_regular_status_updates under != DEAD
