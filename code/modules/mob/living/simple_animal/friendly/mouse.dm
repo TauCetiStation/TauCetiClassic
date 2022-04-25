@@ -57,7 +57,7 @@
 			wander = TRUE
 		else if(prob(5))
 			emote("snuffles")
-	if(prob(1))
+	if(!client && prob(1))
 		handle_gnaw()
 
 /mob/living/simple_animal/mouse/atom_init()
