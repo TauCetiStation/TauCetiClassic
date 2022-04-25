@@ -243,7 +243,7 @@
 	return pressure
 
 /mob/living/carbon/proc/stabilize_body_temperature()
-	bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
+	adjust_bodytemperature((BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR)
 
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment)
 	if(stat != DEAD) // lets put this shit somewhere here

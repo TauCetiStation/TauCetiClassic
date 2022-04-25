@@ -370,9 +370,6 @@
 	
 	adjust_bodytemperature(affecting_temp / 5, use_insulation = TRUE, use_steps = TRUE)
 
-	//world << "Breath: [breath.temperature], [src]: [bodytemperature], Adjusting: [temp_adj]"
-	bodytemperature += temp_adj
-
 /mob/living/carbon/human/handle_suffocating(datum/gas_mixture/breath)
 	if(suiciding)
 		adjustOxyLoss(HUMAN_MAX_OXYLOSS * 2)//If you are suiciding, you should die a little bit faster
