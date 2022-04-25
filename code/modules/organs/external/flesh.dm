@@ -28,7 +28,7 @@
 	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL, VOX)))
 		return 0
 
-	if(isnull(cap))
+	if(isnull(cap) || cap > BP.max_pumped)
 		cap = BP.max_pumped
 	if(BP.pumped >= cap)
 		return 0
@@ -36,6 +36,11 @@
 	var/old_pumped = BP.pumped
 	BP.pumped = min(BP.pumped + value, cap)
 	BP.update_sprite()
+
+	if(BP.pumped <= 0 && old_pumped > 0)
+		BP.owner.metabolism_factor.RemoveModifier("Pumped_[BP.name]")
+	else
+		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.002 * BP.pumped)
 
 	return BP.pumped - old_pumped
 

@@ -23,12 +23,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
 
-/obj/item/weapon/gun/energy/laser/retro
-	name ="retro laser"
-	icon_state = "retro"
-	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
-	can_be_holstered = TRUE
-
 /obj/item/weapon/gun/energy/laser/selfcharging
 	var/charge_tick = 0
 	var/chargespeed = 0

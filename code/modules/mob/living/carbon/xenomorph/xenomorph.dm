@@ -81,7 +81,7 @@
 	if(locate(/obj/structure/alien/weeds) in loc)
 		if(health >= maxHealth)
 			adjustToxLoss(plasma_rate)
-		else if(resting)
+		else if(crawling)
 			adjustBruteLoss(-heal_rate*2)
 			adjustFireLoss(-heal_rate*2)
 			adjustOxyLoss(-heal_rate*2)
@@ -279,8 +279,13 @@ Hit Procs
 /mob/living/carbon/xenomorph/getTrail()
 	return "xltrails"
 
+/mob/living/carbon/xenomorph/update_canmove()
+	canmove = !(weakened || paralysis || stat || (status_flags & FAKEDEATH) || crawling || stunned || captured || pinned.len)
+
 /mob/living/carbon/xenomorph/crawl()
-	return
+	SetCrawling(!crawling)
+	update_canmove()
+	to_chat(src, "<span class='notice'>You are now [crawling ? "resting" : "getting up"].</span>")
 
 /mob/living/carbon/xenomorph/swap_hand()
 	var/obj/item/item_in_hand = get_active_hand()
