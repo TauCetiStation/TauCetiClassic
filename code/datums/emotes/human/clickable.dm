@@ -22,7 +22,7 @@
 
 	var/mob/living/carbon/human/t = target
 	var/mob/living/carbon/human/c = clicker
-	if(c.incapacitated() || c.crawling || c.is_busy() || c.get_active_hand())
+	if(c.incapacitated() || c.crawling || c.is_busy() || c.get_active_hand() || !c.Adjacent(t))
 		return
 
 	on_cloud_click(t, c)

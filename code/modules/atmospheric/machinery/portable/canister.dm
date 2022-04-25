@@ -28,6 +28,7 @@
 	var/canister_color = "yellow"
 	var/can_label = 1
 	var/update_flag = 0
+	required_skills = list()
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
