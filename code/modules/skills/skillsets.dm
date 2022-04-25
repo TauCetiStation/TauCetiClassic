@@ -244,7 +244,7 @@
 		/datum/skill/construction/trained,
 		/datum/skill/engineering/novice,
 		/datum/skill/civ_mech/pro,
-		/datum/skill/combat_mech/trained
+		/datum/skill/combat_mech/master
 	)
 
 /datum/skillset/roboticist/bio
