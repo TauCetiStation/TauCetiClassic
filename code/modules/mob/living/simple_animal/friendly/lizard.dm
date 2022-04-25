@@ -29,7 +29,7 @@
 
 /mob/living/simple_animal/lizard/Life()
 	..()
-	if(prob(1))
+	if(!client && prob(1))
 		handle_gnaw()
 
 /mob/living/simple_animal/lizard/death()
