@@ -57,8 +57,6 @@
 			wander = TRUE
 		else if(prob(5))
 			emote("snuffles")
-	if(!client && prob(1))
-		handle_gnaw()
 
 /mob/living/simple_animal/mouse/atom_init()
 	. = ..()
@@ -195,3 +193,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
+
+/mob/living/simple_animal/mouse/rat
+	name = "Rat"
+	desc = "It's a big pest mouse."
+	melee_damage = 1
+	ventcrawler = 0
+
+/mob/living/simple_animal/mouse/rat/Life()
+	..()
+	handle_gnaw()
