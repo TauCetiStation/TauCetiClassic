@@ -428,3 +428,6 @@
 	if(israt(src) || islizard(src))
 		for(var/obj/structure/cable/C in T)
 			C.get_health_damage()
+	if(ismouse(src))
+		for(var/obj/structure/disposalpipe/D in T)
+			D.get_health_damage()

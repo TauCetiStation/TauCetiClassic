@@ -872,6 +872,10 @@
 			health -= rand(0,15)
 	healthcheck()
 
+//for pest rats
+/obj/structure/disposalpipe/proc/get_health_damage()
+	health = health - 1
+	healthcheck()
 
 // test health for brokenness
 /obj/structure/disposalpipe/proc/healthcheck()
