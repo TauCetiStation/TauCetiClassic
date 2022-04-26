@@ -38,7 +38,7 @@
 
 /datum/gear/shoes/kung
 	display_name = "Kung shoes"
-	path = /obj/item/clothing/shoes/fluff/kung
+	path = /obj/item/clothing/shoes/kung
 
 /datum/gear/shoes/heels
 	display_name = "Red Heels"
