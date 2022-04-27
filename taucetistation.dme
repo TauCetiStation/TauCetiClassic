@@ -1285,6 +1285,7 @@
 #include "code\modules\atmospheric\machinery\components\binary_devices\dp_vent_pump.dm"
 #include "code\modules\atmospheric\machinery\components\binary_devices\passive_gate.dm"
 #include "code\modules\atmospheric\machinery\components\binary_devices\pump.dm"
+#include "code\modules\atmospheric\machinery\components\binary_devices\sampler.dm"
 #include "code\modules\atmospheric\machinery\components\binary_devices\shutoff.dm"
 #include "code\modules\atmospheric\machinery\components\binary_devices\valve.dm"
 #include "code\modules\atmospheric\machinery\components\binary_devices\volume_pump.dm"
