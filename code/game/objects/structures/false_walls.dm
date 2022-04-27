@@ -73,7 +73,7 @@
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user)
 	if(opening)
-		to_chat(user, "<span class='warning'>Вы должны подождать пока дверь закончит движение.</span>")
+		to_chat(user, "<span class='warning'>Вы должны подождать, пока дверь не закончит движение.</span>")
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
 
