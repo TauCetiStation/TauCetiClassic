@@ -57,6 +57,25 @@
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.set_slots(slots = 4, slot_size = SIZE_TINY)
 
+/obj/item/clothing/suit/storage/flak/police
+	name = "police armor"
+	desc = "An armored vest that protects against some damage. This one has four pockets for storage and a custom paintjob in colors of OCD."
+	icon_state = "police_armor"
+
+/obj/item/clothing/suit/storage/flak/police/fullbody
+	name = "police fullbody armor"
+	desc = "A set of armor covering the entire body. This variant is used by OCD and is painted accordingly."
+	icon_state = "police_armor_fullbody"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+/obj/item/clothing/suit/storage/flak/police/fullbody/heavy
+	name = "heavy fullbody armor"
+	desc = "A set of armor used by special weapons and tactics units of OCD. Justice will be served."
+	icon_state = "police_armor_heavy"
+	slowdown = 0.2
+	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
+
 /obj/item/clothing/suit/marinad
 	name = "marine armor"
 	desc = "This thing will protect you from any angry flora or fauna."
@@ -157,6 +176,12 @@
 		return 0
 	if (prob(hit_reflect_chance))
 		return 1
+
+/obj/item/clothing/suit/armor/laserproof/police
+	name = "police ablative armor"
+	desc = "An experimental model of ablative armor issued in limited numbers to special units of OCD. This set of armor protects not only against lasers but is also sturdy enough to withstand other damage types."
+	icon_state = "police_armor_inspector"
+	armor = list(melee = 35, bullet = 35, laser = 65, energy = 75, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"
