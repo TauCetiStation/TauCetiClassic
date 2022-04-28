@@ -196,10 +196,17 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 
 /mob/living/simple_animal/mouse/rat
 	name = "Rat"
-	desc = "It's a big pest mouse."
 	melee_damage = 1
 	ventcrawler = 0
 	var/structure_damage = 2
+
+/mob/living/simple_animal/mouse/rat/atom_init()
+	. = ..()
+	icon_state = "rat"
+	icon_living = "rat"
+	icon_dead = "rat_dead"
+	icon_move = "rat"
+	desc = "It's a big pest mouse."
 
 /mob/living/simple_animal/mouse/rat/Life()
 	..()
