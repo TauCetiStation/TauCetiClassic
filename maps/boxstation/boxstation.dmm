@@ -51165,9 +51165,6 @@
 /area/station/storage/tech)
 "bNA" = (
 /obj/structure/rack,
-/obj/item/weapon/circuitboard/pandemic{
-	pixel_y = 8
-	},
 /obj/item/weapon/circuitboard/rdconsole,
 /obj/item/weapon/circuitboard/rdserver{
 	pixel_y = 4

@@ -194,7 +194,6 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 	severity = EVENT_LEVEL_MODERATE
 	available_events = list(
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Nothing",                 /datum/event/nothing,                   1230),
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Appendicitis",            /datum/event/spontaneous_appendicitis,  0,     list(ASSIGNMENT_MEDICAL = 10), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Carp School",             /datum/event/carp_migration,            200,   list(ASSIGNMENT_ENGINEER = 10, ASSIGNMENT_SECURITY = 20), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Rogue Drones",            /datum/event/rogue_drone,               0,     list(ASSIGNMENT_SECURITY = 20)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Space Vines",             /datum/event/spacevine,                 250,   list(ASSIGNMENT_ENGINEER = 10)),
