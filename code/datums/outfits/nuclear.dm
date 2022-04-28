@@ -17,7 +17,7 @@
 	back = PREFERENCE_BACKPACK_FORCE
 	backpack_contents = list(
 		/obj/item/weapon/reagent_containers/pill/cyanide,
-		/obj/item/weapon/gun/projectile/automatic/pistol
+		/obj/item/weapon/gun/projectile/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm,
 		)
 	implants = list(
@@ -33,7 +33,7 @@
 	id = /obj/item/weapon/card/id/syndicate/commander
 	backpack_contents = list(
 		/obj/item/device/radio/uplink,
-		/obj/item/weapon/gun/projectile/revolver
+		/obj/item/weapon/gun/projectile/revolver,
 		/obj/item/weapon/reagent_containers/pill/cyanide,
 		/obj/item/ammo_box/a357,
 		)
