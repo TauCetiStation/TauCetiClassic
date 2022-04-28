@@ -48,6 +48,12 @@
 #define COMSIG_RITE_FAILED_CHECK "rite_failed_check"
 	#define COMPONENT_CHECK_FAILED 1
 
+//from base of obj/item/weapon/storage/handle_item_insertion(): (obj/item/I, prevent_warning, NoUpdate)
+#define COMSIG_STORAGE_ENTERED "storage_entered"
+	#define COMSIG_STORAGE_PROHIBIT 1
+//from base of obj/item/weapon/storage/remove_from_storage(): (obj/item/I, atom/new_location, NoUpdate)
+#define COMSIG_STORAGE_EXITED "storage_exited"
+
 // /datum/religion signals
 /// from base of religion/add_membern(): (/mob, holy_role)
 #define COMSIG_REL_ADD_MEMBER "rel_add_member"
@@ -84,14 +90,14 @@
 	#define COMPONENT_CLIENTMOB_BLOCK_MOVE 1
 /// from base of client/Move, after all movement is finished(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_POSTMOVE "client_postmove"
+/// from base of mob/set_a_intent(): (new_intent)
+#define COMSIG_MOB_SET_A_INTENT "mob_set_a_intent"
 
 // /area signals
 ///from base of area/Entered(): (area/entered, atom/OldLoc)
 #define COMSIG_AREA_ENTERED "area_entered"
 ///from base of area/Exited(): (area/exited, atom/NewLoc)
 #define COMSIG_AREA_EXITED "area_exited"
-///from base of area/update_beauty()
-#define COMSIG_AREA_UPDATE_BEAUTY "area_update_beauty"
 
 // /atom signals
 ///from base of atom/Click(): (location, control, params, mob/user)
@@ -117,6 +123,8 @@
 #define COMSIG_PARENT_EXAMINE "atom_examine"
 /// from base of mob/examinate(): (/mob)
 #define COMSIG_PARENT_POST_EXAMINE "atom_post_examine"
+/// from base of mob/examinate(): (/atom)
+#define COMSIG_PARENT_POST_EXAMINATE "atom_post_examinate"
 /// from base of atom/get_examine_name(): (/mob/user, list/override)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_get_examine_name"
 	//Positions for overrides list
@@ -157,7 +165,7 @@
 #define COMSIG_ATOM_STOP_PULL  "atom_stop_pull"
 /// from atom/movable/proc/waddle(): (waddle_angle, waddle_height)
 #define COMSIG_MOVABLE_WADDLE "movable_waddle"
-/// from mob/tryGrab(): (mob/grabber, force_state, show_warnings)
+/// from mob/tryGrab(): (/mob/grabber, force_state, show_warnings)
 #define COMSIG_MOVABLE_TRY_GRAB "movable_try_grab"
 	#define COMPONENT_PREVENT_GRAB 1
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
@@ -166,6 +174,10 @@
 #define COMSIG_ENTER_AREA "enter_area"
 ///from base of area/Exited(): (/area, /atom/NewLoc). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_EXIT_AREA "exit_area"
+/// from datum/orbit/New(): (/atom/orbiting)
+#define COMSIG_MOVABLE_ORBIT_BEGIN "orbit_begin"
+/// from datum/orbit/New(): (/atom/orbiting)
+#define COMSIG_MOVABLE_ORBIT_STOP "orbit_stop"
 
 // /obj
 /// from base of datum/religion_rites/reset_rite_wrapper(): ()
@@ -211,14 +223,6 @@
 #define COMSIG_ITEM_BECOME_ACTIVE "item_become_active"
 #define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
 
-// /datum/component/twohanded signals
-
-///from base of datum/component/twohanded/proc/wield(mob/living/carbon/user): (/mob/user)
-#define COMSIG_TWOHANDED_WIELD "twohanded_wield"
-	#define COMPONENT_TWOHANDED_BLOCK_WIELD 1
-///from base of datum/component/twohanded/proc/unwield(mob/living/carbon/user): (/mob/user)
-#define COMSIG_TWOHANDED_UNWIELD "twohanded_unwield"
-
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
 #define COMSIG_HAND_IS "hand_is"
@@ -238,6 +242,11 @@
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
 
 // mob signals
+/// from base of mob/Login(): ()
+#define COMSIG_LOGIN "mob_login"
+/// from base of mob/Logout(): (logout_reason)
+#define COMSIG_LOGOUT "mob_logout"
+
 /// from  base of mob/ClickOn(): (atom/target, params)
 #define COMSIG_MOB_CLICK "mob_click"
 	#define COMPONENT_CANCEL_CLICK 1
@@ -257,6 +266,10 @@
 #define COMSIG_LIVING_START_PULL "living_start_pull"
 /// from base of /mob/stop_pulling(): (/atom/movable/target)
 #define COMSIG_LIVING_STOP_PULL "living_stop_pull"
+// send this signal when mob is lying
+#define COMSIG_MOB_STATUS_LYING "mob_lying"
+// send this signal when mob is standing
+#define COMSIG_MOB_STATUS_NOT_LYING "mob_not_lying"
 /// from base of atom/movable/buckle_mob(): (mob/buckled)
 #define COMSIG_MOVABLE_BUCKLE "buckle"
 /// from base of atom/movable/unbuckle_mob(): (mob/buckled)

@@ -50,7 +50,7 @@
 				if(4 to 16)  // lie
 					IAN.crawl()
 				if(17 to 29) // sit
-					IAN.lay_down()
+					IAN.ian_sit()
 
 
 /datum/hud/proc/ian_hud()
@@ -84,7 +84,6 @@
 	using.name = INTENT_HELP
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	help_intent = using
@@ -96,7 +95,6 @@
 	using.name = INTENT_PUSH
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	push_intent = using
@@ -108,7 +106,6 @@
 	using.name = INTENT_GRAB
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	grab_intent = using
@@ -120,7 +117,6 @@
 	using.name = INTENT_HARM
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	harm_intent = using
@@ -130,7 +126,6 @@
 	using.icon = ui_style
 	using.icon_state = "act_resist"
 	using.screen_loc = ui_drop_throw
-	using.layer = HUD_LAYER
 	using.plane = HUD_PLANE
 	src.hotkeybuttons += using
 
@@ -158,7 +153,6 @@
 	using.icon = ui_style
 	using.icon_state = "act_drop"
 	using.screen_loc = ui_drop_throw
-	using.layer = HUD_LAYER
 	using.plane = HUD_PLANE
 	src.adding += using
 
@@ -168,7 +162,6 @@
 	inv_box.icon_state = "hair"
 	inv_box.screen_loc = ui_ian_head
 	inv_box.slot_id = SLOT_HEAD
-	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.other += inv_box
 
@@ -176,7 +169,6 @@
 	using.icon = ui_style
 	using.icon_state = "ability[IAN.ian_action]"
 	using.screen_loc = ui_ian_ability
-	using.layer = HUD_LAYER
 	using.plane = HUD_PLANE
 	src.adding += using
 
@@ -186,7 +178,6 @@
 	inv_box.icon_state = "mouth"
 	inv_box.screen_loc = ui_ian_mouth
 	inv_box.slot_id = SLOT_MOUTH
-	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
@@ -197,7 +188,6 @@
 	inv_box.icon_state = "id"
 	inv_box.screen_loc = ui_ian_neck
 	inv_box.slot_id = SLOT_NECK
-	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
 
@@ -207,7 +197,6 @@
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = ui_ian_back
 	inv_box.slot_id = SLOT_BACK
-	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
 

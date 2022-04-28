@@ -1,5 +1,5 @@
-var/const/TOUCH = 1
-var/const/INGEST = 2
+var/global/const/TOUCH = 1
+var/global/const/INGEST = 2
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -186,8 +186,9 @@ var/const/INGEST = 2
 		if(M && R)
 			var/mob/living/carbon/C = M //currently metabolism work only for carbon, there is no need to check mob type
 			var/remove_amount = R.custom_metabolism * C.get_metabolism_factor()
-			R.on_mob_life(M)
-			remove_reagent(R.id, remove_amount)
+			if(remove_amount > 0)
+				R.on_mob_life(M)
+				remove_reagent(R.id, remove_amount)
 	update_total()
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
@@ -582,6 +583,10 @@ var/const/INGEST = 2
 	if (trans_data["virus2"])
 		var/list/v = trans_data["virus2"]
 		trans_data["virus2"] = v.Copy()
+
+	if (trans_data["changeling_marker"])
+		var/list/v = trans_data["changeling_marker"]
+		trans_data["changeling_marker"] = v.Copy()
 
 	return trans_data
 

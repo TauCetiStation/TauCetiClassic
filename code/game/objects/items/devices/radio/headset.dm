@@ -85,7 +85,6 @@
 /obj/item/device/radio/headset/headset_sec/nt_pmc
 	name = "NT PMC Radio Headset. Works with default security frequency."
 	icon_state = "nt_pmc_earset"
-	item_color = "nt_pmc_earset"
 
 /obj/item/device/radio/headset/headset_sec/marinad
 	name = "marine headset"
@@ -254,7 +253,7 @@
 	set_frequency(1341)
 
 /obj/item/device/radio/headset/velocity
-	name = "Velocity Crew headset"
+	name = "velocity crew headset"
 	desc = "The headset, if you wish to talk to your fellow crew-nies. ; - Velocity crew channel."
 	icon_state = "vel_headset"
 	item_state = "headset"

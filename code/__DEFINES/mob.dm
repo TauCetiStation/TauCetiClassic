@@ -29,6 +29,8 @@
 #define BP_R_ARM  "r_arm"
 #define BP_L_LEG  "l_leg"
 #define BP_R_LEG  "r_leg"
+#define BP_ACTIVE_ARM "active_arm"
+#define BP_INACTIVE_ARM "inactive_arm"
 
 // Organ defines.
 #define O_MOUTH    "mouth"
@@ -73,19 +75,23 @@
 #define TAJARAN        "Tajaran"
 #define SKRELL         "Skrell"
 #define DIONA          "Diona"
+#define PODMAN         "Podman"
 #define IPC            "Machine"
 #define VOX            "Vox"
 #define VOX_ARMALIS    "Vox Armalis"
 #define ABDUCTOR       "Abductor"
 #define SKELETON       "Skeleton"
 #define SHADOWLING     "Shadowling"
-#define MONKEY         "Monkey"
 #define GOLEM          "Adamantine Golem"
+#define HOMUNCULUS     "Homunculus"
 #define ZOMBIE         "Zombie"
 #define ZOMBIE_TAJARAN "Zombie Tajaran"
 #define ZOMBIE_SKRELL  "Zombie Skrell"
 #define ZOMBIE_UNATHI  "Zombie Unathi"
 #define SLIME          "Slime"
+#define ABOMINATION    "disgusting abomination"
+
+#define MONKEY         "Monkey"
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 
@@ -118,6 +124,29 @@
 #define SPIRIT_LOW 25
 #define SPIRIT_BAD 0
 
+//Telekinesis.
+#define TK_MAXRANGE 15
+
+// Drugs increase the level by 1.
+#define TK_LEVEL_ZERO 0
+#define TK_LEVEL_ONE 1
+#define TK_LEVEL_TWO 2
+#define TK_LEVEL_THREE 3
+#define TK_LEVEL_FOUR 4
+
+#define TK_LEVEL_NORMAL 1
+#define TK_LEVEL_SKRELL 2
+
+// Being drugged improves your telekinesis by a level.
+#define TK_BONUS_DRUGGED 1
+// Being very desperate/angry/upset improves your telekinesis by a level.
+#define TK_BONUS_UPSET 1
+
+// How much resource should be wasted per tile of distance to target.
+#define TK_MANA_PER_TILE 10
+// How much resource should be wasted per upping of a size class of target.
+#define TK_MANA_PER_W_CLASS(cl) (2**cl)
+
 //Nutrition levels for humans.
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550
@@ -128,6 +157,12 @@
 
 #define NUTRITION_PERCENT_MAX 120
 #define NUTRITION_PERCENT_ZERO 0
+
+// Drunknenness levels and their effects.
+#define DRUNKENNESS_SLUR 30
+#define DRUNKENNESS_CONFUSED 150
+#define DRUNKENNESS_BLUR 400
+#define DRUNKENNESS_PASS_OUT 600
 
 // How many units of reagent are consumed per tick, by default.
 #define REAGENTS_METABOLISM 0.2
@@ -189,3 +224,27 @@
 #define SYNDICATE_PHRASES  1
 #define SYNDICATE_RESPONSE 2
 #define SYNDICATE_AWARE    3
+
+#define HUMANHEIGHT_SHORTEST "shortest height"
+#define HUMANHEIGHT_SHORT    "short height"
+#define HUMANHEIGHT_MEDIUM   "medium height"
+#define HUMANHEIGHT_TALL     "tall height"
+#define HUMANHEIGHT_TALLEST  "tallest height"
+
+// How much of the reagent needs to be ingested before moving onto the next stage.
+#define ALLERGY_NONE 0
+#define ALLERGY_UNDISCOVERED 1
+#define ALLERGY_DISCOVERED 5
+#define ALLERGY_LETHAL 7
+
+#define ALLERGY_SKIN "skin"
+#define ALLERGY_INGESTION "ingestion"
+// can't implement rn but would be funny
+// #define ALLERGY_BREATH 3
+
+// logout reasons
+#define LOGOUT_UNKNOWN 0
+#define LOGOUT_USER 1
+#define LOGOUT_GHOST 2
+#define LOGOUT_REENTER 3
+#define LOGOUT_SWAP 4 // not so safe, check other things if available

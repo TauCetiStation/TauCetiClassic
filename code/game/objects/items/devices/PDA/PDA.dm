@@ -105,6 +105,9 @@
 /obj/item/device/pda/CtrlClick(mob/user)
 	if (can_use(user))
 		remove_pen(user)
+		return
+
+	return ..()
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -155,6 +158,44 @@
 		var/obj/item/weapon/cartridge/clown/cart = cartridge
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
+
+/obj/item/device/pda/clown/Destroy()
+	if(slot_equipped)
+		unslip_lying_user(loc)
+		var/mob/living/carbon/human/H = loc
+		if(istype(H) && H.lying)
+			remove_user_slip(loc)
+	return ..()
+
+/obj/item/device/pda/clown/proc/make_user_slip(mob/living/carbon/user)
+	user.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
+
+/obj/item/device/pda/clown/proc/remove_user_slip(mob/living/carbon/user)
+	qdel(user.GetComponent(/datum/component/slippery))
+
+/obj/item/device/pda/clown/equipped(mob/living/carbon/user, slot)
+	..()
+	if(slot in list(SLOT_L_STORE, SLOT_R_STORE, SLOT_BELT, SLOT_WEAR_ID))
+		slip_lying_user(user)
+		if(user.lying)
+			make_user_slip(user)
+	else
+		unslip_lying_user(user)
+		if(user.lying)
+			remove_user_slip(user)
+
+/obj/item/device/pda/clown/proc/slip_lying_user(mob/living/carbon/user)
+	RegisterSignal(user, COMSIG_MOB_STATUS_LYING, .proc/make_user_slip)
+	RegisterSignal(user, COMSIG_MOB_STATUS_NOT_LYING, .proc/remove_user_slip)
+
+/obj/item/device/pda/clown/proc/unslip_lying_user(mob/living/carbon/user)
+	UnregisterSignal(user, list(COMSIG_MOB_STATUS_LYING, COMSIG_MOB_STATUS_NOT_LYING))
+
+/obj/item/device/pda/clown/dropped(mob/living/carbon/user)
+	..()
+	unslip_lying_user(user)
+	if(user.lying)
+		remove_user_slip(user)
 
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime
@@ -977,7 +1018,7 @@
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed. [ADMIN_JMP(U)]")
 						else
-							to_chat("<span class='notice'>Success!</span>")
+							to_chat(U, "<span class='notice'>Success!</span>")
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded. [ADMIN_JMP(U)]")
 							detonate_act(P)
@@ -1094,11 +1135,11 @@
 		j = prob(10)
 
 	if(j) //This kills the PDA
-		P.Destroy()
 		if(message)
 			message += "It melts in a puddle of plastic."
 		else
 			message += "Your [P] shatters in a thousand pieces!"
+		qdel(P)
 
 	if(M && isliving(M))
 		message = "<span class='warning'></span>" + message
@@ -1231,7 +1272,7 @@
 			var/who = src.owner
 			if(prob(50))
 				who = P.owner
-			for(var/mob/living/silicon/ai/ai in ai_list)
+			for(var/mob/living/silicon/ai/ai as anything in ai_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
 				if(ai.pda != P && ai.pda != src)
 					to_chat(ai, "<i>Intercepted message from <b>[who]</b>: <span class='emojify linkify'>[t]</span></i>")
@@ -1253,7 +1294,7 @@
 
 
 		if(L)
-			to_chat(L, "[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"<span class='message emojify linkify'>[t]</span>\" (<a href='byond://?src=\ref[P];choice=Message;notap=[istype(loc, /mob/living/silicon)];skiprefresh=1;target=\ref[src]'>Reply</a>)")
+			to_chat(L, "[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"<span class='message emojify linkify'>[t]</span>\" (<a href='byond://?src=\ref[P];choice=Message;notap=[issilicon(loc)];skiprefresh=1;target=\ref[src]'>Reply</a>)")
 			nanomanager.update_user_uis(L, P) // Update the receiving user's PDA UI so that they can see the new message
 
 		nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
@@ -1370,7 +1411,7 @@
 		return ..()
 
 /obj/item/device/pda/attack(mob/living/L, mob/living/user)
-	if (istype(L, /mob/living/carbon))
+	if (iscarbon(L))
 		var/mob/living/carbon/C = L
 		var/data_message = ""
 		switch(scanmode)
@@ -1386,7 +1427,7 @@
 				data_message += "<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>"
 				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
 					data_message += "<span class='notice'>&emsp; Time of Death: [C.tod]</span>"
-				if(istype(C, /mob/living/carbon/human))
+				if(ishuman(C))
 					var/mob/living/carbon/human/H = C
 					var/list/damaged = H.get_damaged_bodyparts(1, 1)
 					data_message += "<span class='notice'>Localized Damage, Brute/Burn:</span>"
@@ -1406,7 +1447,7 @@
 			if(2)
 				if (!istype(C.dna, /datum/dna))
 					data_message += "<span class='notice'>No fingerprints found on [C]</span>"
-				else if(istype(C, /mob/living/carbon/human))
+				else if(ishuman(C))
 					var/mob/living/carbon/human/H = C
 					if(H.gloves)
 						data_message += "<span class='notice'>No fingerprints found on [C]</span>"
@@ -1507,7 +1548,7 @@
 		A.emplode(severity)
 
 /obj/item/device/pda/proc/click_to_pay(atom/target)
-	if(istype(target, /mob/living/carbon/human))
+	if(ishuman(target))
 		var/mob/living/carbon/human/receiver = target
 		if(receiver.mind.initial_account)
 			target_account_number = text2num(receiver.mind.initial_account.account_number)

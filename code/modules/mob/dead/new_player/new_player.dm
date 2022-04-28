@@ -23,6 +23,10 @@
 	new_player_list += src
 
 /mob/dead/new_player/Destroy()
+	if(my_client)
+		hide_titlescreen()
+		my_client = null
+
 	new_player_list -= src
 	return ..()
 
@@ -81,6 +85,22 @@
 		if(SSticker && SSticker.current_state <= GAME_STATE_PREGAME)
 			ready = !ready
 			client << output(ready, "lobbybrowser:setReadyStatus")
+		return
+
+	if(href_list["lobby_be_special"])
+		if(client.prefs.selected_quality_name)
+			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
+			return
+		if(!client.prefs.selecting_quality)
+			var/datum/preferences/P = client.prefs
+			P.selecting_quality = TRUE
+			if(tgui_alert(
+				src,
+				"Вы уверенны, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.",
+				"Особенность",
+				list("ДА!!!", "Нет")) == "ДА!!!")
+				SSqualities.register_client(client)
+			P.selecting_quality = FALSE
 		return
 
 	if(href_list["lobby_observe"])
@@ -197,9 +217,12 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
+
+	SSjob.EquipRank(character, rank, 1)					//equips the human
+
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
-	SSjob.EquipRank(character, rank, 1)					//equips the human
+		SSqualities.give_quality(character, TRUE)
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")
@@ -382,7 +405,7 @@
 
 	new_character.lastarea = get_area(loc)
 	if(client.prefs.language)
-		new_character.add_language(client.prefs.language)
+		new_character.add_language(client.prefs.language, LANGUAGE_NATIVE)
 
 	if(SSticker.random_players)
 		new_character.gender = pick(MALE, FEMALE)

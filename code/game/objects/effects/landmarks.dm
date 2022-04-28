@@ -3,6 +3,8 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
 	anchored = TRUE
+	layer = TURF_LAYER
+	plane = GAME_PLANE
 	unacidable = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
 
@@ -82,14 +84,20 @@
 
 /obj/effect/landmark/start
 	name = "start"
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "x"
 	anchored = TRUE
+	layer = MOB_LAYER
+	var/delete_after_roundstart = TRUE
 
 /obj/effect/landmark/start/New()
 	..()
 	if(name != "start")
 		tag = "start*[name]"
+
+/obj/effect/landmark/start/proc/after_round_start()
+	if(delete_after_roundstart)
+		qdel(src)
 
 /obj/effect/landmark/start/new_player
 	name = "New Player"
@@ -103,6 +111,204 @@
 /obj/effect/landmark/start/new_player/atom_init(mapload)
 	..()
 	return INITIALIZE_HINT_QDEL
+
+// Assistats
+/obj/effect/landmark/start/assistant
+	name = "Assistant"
+	icon_state = "Test Subject"
+
+/obj/effect/landmark/start/assistant/test_subject
+	name = "Test Subject"
+
+/obj/effect/landmark/start/assistant/waiter
+	name = "Waiter"
+
+//Civilians
+/obj/effect/landmark/start/captain
+	name = "Captain"
+	icon_state = "Captain"
+
+/obj/effect/landmark/start/head_of_personnel
+	name = "Head of Personnel"
+	icon_state = "Head of Personnel"
+
+/obj/effect/landmark/start/bartender
+	name = "Bartender"
+	icon_state = "Bartender"
+
+/obj/effect/landmark/start/chef
+	name = "Chef"
+	icon_state = "Chef"
+
+/obj/effect/landmark/start/botanist
+	name = "Botanist"
+	icon_state = "Botanist"
+
+/obj/effect/landmark/start/barber
+	name = "Barber"
+	icon_state = "Barber"
+
+/obj/effect/landmark/start/janitor
+	name = "Janitor"
+	icon_state = "Janitor"
+
+/obj/effect/landmark/start/librarian
+	name = "Librarian"
+	icon_state = "Librarian"
+
+/obj/effect/landmark/start/chaplain
+	name = "Chaplain"
+	icon_state = "Chaplain"
+
+/obj/effect/landmark/start/internal_affairs_agent
+	name = "Internal Affairs Agent"
+	icon_state = "Internal Affairs Agent"
+
+/obj/effect/landmark/start/clown
+	name = "Clown"
+	icon_state = "Clown"
+
+/obj/effect/landmark/start/mime
+	name = "Mime"
+	icon_state = "Mime"
+
+// Cargo
+/obj/effect/landmark/start/quartermaster
+	name = "Quartermaster"
+	icon_state = "Quartermaster"
+
+/obj/effect/landmark/start/cargo_technician
+	name = "Cargo Technician"
+	icon_state = "Cargo Technician"
+
+/obj/effect/landmark/start/shaft_miner
+	name = "Shaft Miner"
+	icon_state = "Shaft Miner"
+
+/obj/effect/landmark/start/recycler
+	name = "Recycler"
+	icon_state = "Recycler"
+
+// Security
+/obj/effect/landmark/start/head_of_security
+	name = "Head of Security"
+	icon_state = "Head of Security"
+
+/obj/effect/landmark/start/warden
+	name = "Warden"
+	icon_state = "Warden"
+
+/obj/effect/landmark/start/detective
+	name = "Detective"
+	icon_state = "Detective"
+
+/obj/effect/landmark/start/security_officer
+	name = "Security Officer"
+	icon_state = "Security Officer"
+
+/obj/effect/landmark/start/forensic_technician
+	name = "Forensic Technician"
+	icon_state = "Forensic Technician"
+
+/obj/effect/landmark/start/security_cadet
+	name = "Security Cadet"
+	icon_state = "Security Cadet"
+
+// Engineering
+/obj/effect/landmark/start/chief_engineer
+	name = "Chief Engineer"
+	icon_state = "Chief Engineer"
+
+/obj/effect/landmark/start/station_engineer
+	name = "Station Engineer"
+	icon_state = "Station Engineer"
+
+/obj/effect/landmark/start/atmospheric_technician
+	name = "Atmospheric Technician"
+	icon_state = "Atmospheric Technician"
+
+/obj/effect/landmark/start/technical_assistant
+	name = "Technical Assistant"
+	icon_state = "Technical Assistant"
+
+
+//Medical
+/obj/effect/landmark/start/chief_medical_officer
+	name = "Chief Medical Officer"
+	icon_state = "Chief Medical Officer"
+
+/obj/effect/landmark/start/medical_doctor
+	name = "Medical Doctor"
+	icon_state = "Medical Doctor"
+
+/obj/effect/landmark/start/paramedic
+	name = "Paramedic"
+	icon_state = "Paramedic"
+
+/obj/effect/landmark/start/chemist
+	name = "Chemist"
+	icon_state = "Chemist"
+
+/obj/effect/landmark/start/virologist
+	name = "Virologist"
+	icon_state = "Virologist"
+
+/obj/effect/landmark/start/psychiatrist
+	name = "Psychiatrist"
+	icon_state = "Psychiatrist"
+
+/obj/effect/landmark/start/medical_intern
+	name = "Medical Intern"
+	icon_state = "Medical Intern"
+
+// Both is good
+/obj/effect/landmark/start/geneticist
+	name = "Geneticist"
+	icon_state = "Geneticist"
+
+// RnD
+/obj/effect/landmark/start/research_director
+	name = "Research Director"
+	icon_state = "Research Director"
+
+/obj/effect/landmark/start/scientist
+	name = "Scientist"
+	icon_state = "Scientist"
+
+/obj/effect/landmark/start/xenoarchaeologist
+	name = "Xenoarchaeologist"
+	icon_state = "Xenoarchaeologist"
+
+/obj/effect/landmark/start/xenobiologist
+	name = "Xenobiologist"
+	icon_state = "Xenobiologist"
+
+/obj/effect/landmark/start/roboticist
+	name = "Roboticist"
+	icon_state = "Roboticist"
+
+/obj/effect/landmark/start/research_assistant
+	name = "Research Assistant"
+	icon_state = "Research Assistant"
+
+// Silicons
+/obj/effect/landmark/start/ai
+	name = "AI"
+	icon_state = "AI"
+	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/cyborg
+	name = "Cyborg"
+	icon_state = "Cyborg"
+
+
+// Roles
+/obj/effect/landmark/start/wizard
+	name = "Wizard"
+
+/obj/effect/landmark/start/velocity_officer
+	name = "Velocity Officer"
+
 
 /obj/effect/landmark/cops_spawn
 	name = "Space Cops"
@@ -299,3 +505,12 @@
 
 /obj/effect/landmark/blockway
 	density = TRUE
+
+/obj/effect/landmark/espionage_start
+	name = "Espionage Agent Start"
+
+/obj/effect/landmark/espionage_start/atom_init(mapload)
+	..()
+	global.espionageagent_start += loc
+	create_spawner(/datum/spawner/spy)
+	return INITIALIZE_HINT_QDEL

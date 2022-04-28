@@ -13,7 +13,7 @@
 	visor = !visor
 	icon_state = "glob[visor]_[mode]"
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_head()
 
@@ -41,14 +41,13 @@
 	desc = "Has a tag: Totally not property of an enemy corporation, honest."
 	icon_state = "glob_black"
 	breach_threshold = 22
-	slowdown = 1
+	slowdown = 0.5
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
 
 /obj/item/clothing/suit/space/globose/black/pirate
 	name = "pirate space suit"
 	breach_threshold = 25
-	slowdown = 1
 	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/head/helmet/space/globose/black
@@ -72,7 +71,7 @@
 	desc = "Mining space suit that protects against low pressure environments. Has reinforced plating."
 	icon_state = "glob_mining"
 	breach_threshold = 18
-	slowdown = 2
+	slowdown = 1
 	armor = list(melee = 50, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore)
 

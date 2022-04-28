@@ -87,7 +87,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
-		if(istype(G.affecting,/mob/living))
+		if(isliving(G.affecting))
 			var/mob/living/M = G.affecting
 			var/state = G.state
 			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
@@ -192,20 +192,22 @@
 	throw_range = 5
 	throwforce = 0
 	w_class = SIZE_TINY
-	flags = NOSHIELD | NOBLOODY
+	flags = NOBLOODY
 	var/active = 0
+
+	var/blade_color
 
 /obj/item/weapon/holo/esword/green
 
 /obj/item/weapon/holo/esword/green/atom_init()
 	. = ..()
-	item_color = "green"
+	blade_color = "green"
 
 /obj/item/weapon/holo/esword/red
 
 /obj/item/weapon/holo/esword/red/atom_init()
 	. = ..()
-	item_color = "red"
+	blade_color = "red"
 
 /obj/item/weapon/holo/esword/Get_shield_chance()
 	if(active)
@@ -217,13 +219,13 @@
 
 /obj/item/weapon/holo/esword/atom_init()
 	. = ..()
-	item_color = pick("red","blue","green","purple")
+	blade_color = pick("red","blue","green","purple")
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user)
 	active = !active
 	if (active)
 		force = 30
-		icon_state = "sword[item_color]"
+		icon_state = "sword[blade_color]"
 		w_class = SIZE_NORMAL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
@@ -234,11 +236,7 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_mob()
 	add_fingerprint(user)
 	return
 
@@ -273,13 +271,13 @@
 		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
 		qdel(W)
 		return
-	else if (istype(W, /obj/item) && get_dist(src,user)<2)
+	else if (isitem(W) && get_dist(src,user)<2)
 		user.drop_item(src.loc)
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return
 
 /obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if (istype(mover,/obj/item) && mover.throwing)
+	if (isitem(mover) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
 			return

@@ -50,7 +50,7 @@
 			else
 				var/sense = 1
 				switch(T.type)
-					if(/turf/space)
+					if(/turf/environment/space)
 						colour = rgb(10,10,10)
 						sense = 0
 
@@ -183,7 +183,6 @@
 		qdel(I)
 		qdel(J)
 		H.icon = HI
-		H.layer = ABOVE_HUD_LAYER //it was 25 before ?
 		H.plane = ABOVE_HUD_PLANE
 		usr.mapobjs += H
 #else
@@ -205,7 +204,7 @@
 			else
 				var/sense = 1
 				switch(T.type)
-					if(/turf/space)
+					if(/turf/environment/space)
 						colour = rgb(10,10,10)
 						sense = 0
 
@@ -258,7 +257,7 @@
 							else
 								colour = rgb(255,128,128)
 
-						//if(istype(AM, /obj/effect/blob))
+						//if(isblob(AM))
 						//	colour = rgb(255,0,255)
 
 				var/area/A = T.loc
@@ -308,7 +307,6 @@
 
 		H.icon = I
 		qdel(I)
-		H.layer = ABOVE_HUD_LAYER
 		H.plane = ABOVE_HUD_PLANE
 		usr.mapobjs += H
 

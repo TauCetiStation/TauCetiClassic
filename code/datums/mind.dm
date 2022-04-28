@@ -62,10 +62,12 @@
 	var/datum/money_account/initial_account
 
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
+	var/creation_roundtime
 
 /datum/mind/New(key)
 	src.key = key
 	creation_time = world.time
+	creation_roundtime = roundduration2text()
 
 /datum/mind/proc/transfer_to(mob/new_character)
 	for(var/role in antag_roles)
@@ -77,7 +79,7 @@
 		current.mind = null
 
 	if(new_character.mind)		//remove any mind currently in our new body's mind variable
-		new_character.mind.current = null
+		new_character.mind.set_current(null)
 
 	nanomanager.user_transferred(current, new_character) // transfer active NanoUI instances to new user
 
@@ -96,7 +98,9 @@
 		var/datum/role/R = antag_roles[role]
 		R.PostMindTransfer(new_character, old_character)
 
+	old_character.logout_reason = LOGOUT_SWAP
 	if(active)
+		new_character.logout_reason = LOGOUT_SWAP
 		new_character.key = key		//now transfer the key to link the client to our new body
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
@@ -139,7 +143,7 @@
 
 	var/text = ""
 	var/mob/living/carbon/human/H = current
-	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
+	if (ishuman(current) || ismonkey(current))
 		/** Impanted**/
 		if(ishuman(current))
 			if(H.ismindshielded())
@@ -390,7 +394,7 @@
 			else
 				for (var/datum/objective/objective in unique_objectives_role)
 					log_admin("[usr.key]/([usr.name]) gave [key]/([name]) the objective: [objective.explanation_text]")
-		else if(istype(owner, /datum/faction))
+		else if(isfaction(owner))
 			var/datum/faction/F = owner
 			var/list/faction_objectives = F.GetObjectives()
 			var/list/prev_objectives = faction_objectives.Copy()
@@ -447,7 +451,7 @@
 					continue
 				var/datum/role/R = GetRole(type)
 				if(R)
-					R.RemoveFromRole(src)
+					R.Deconvert()
 
 			to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all evil thoughts about the company.</B></Font></span>")
 
@@ -482,13 +486,24 @@
 		return R.GetFaction()
 	return FALSE
 
+/datum/mind/proc/set_current(mob/new_current)
+	if(current)
+		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
+	current = new_current
+	if(current)
+		RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/clear_current)
+
+/datum/mind/proc/clear_current(datum/source)
+	SIGNAL_HANDLER
+	set_current(null)
+
 // check whether this mind's mob has been brigged for the given duration
 // have to call this periodically for the duration to work properly
 /datum/mind/proc/is_brigged(duration)
 	var/turf/T = current.loc
 	if(!istype(T))
 		brigged_since = -1
-		return 0
+		return FALSE
 
 	var/is_currently_brigged = 0
 
@@ -504,7 +519,7 @@
 
 	if(!is_currently_brigged)
 		brigged_since = -1
-		return 0
+		return FALSE
 
 	if(brigged_since == -1)
 		brigged_since = world.time
@@ -636,7 +651,7 @@
 		else
 			world.log << "## DEBUG: mind_initialize(): No SSticker ready yet! Please inform Carn"
 	if(!mind.name)	mind.name = real_name
-	mind.current = src
+	mind.set_current(src)
 
 //HUMAN
 /mob/living/carbon/human/mind_initialize()

@@ -49,7 +49,7 @@
 
 /obj/item/stack/sheet/wood/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/medical/bruise_pack/rags) && use(1))
-		new /obj/item/device/flashlight/flare/torch(get_turf(user))
+		new /obj/item/device/flashlight/flare/torch(get_turf(src))
 		qdel(I)
 		return
 	return ..()
@@ -206,7 +206,7 @@
 			var/mob/living/L = A
 			L.adjust_fire_stacks(fire_stack_strength)
 			L.IgniteMob()
-		else if(istype(A, /obj/item) && prob(20))
+		else if(isitem(A) && prob(20))
 			var/obj/item/O = A
 			O.microwave_act()
 */

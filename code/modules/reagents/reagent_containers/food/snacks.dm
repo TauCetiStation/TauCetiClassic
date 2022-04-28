@@ -24,14 +24,14 @@
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
-		score["foodeaten"]++
+		SSStatistics.score.foodeaten++
 		usr.drop_from_inventory(src)	//so icons update :[
 
 		if(trash)
 			if(ispath(trash,/obj/item))
 				var/obj/item/TrashItem = new trash(usr)
 				usr.put_in_hands(TrashItem)
-			else if(istype(trash,/obj/item))
+			else if(isitem(trash))
 				usr.put_in_hands(trash)
 		qdel(src)
 	return
@@ -65,7 +65,7 @@
 				to_chat(C, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
 
 		else
-			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
+			if(!isslime(M))		//If you're feeding it to someone else.
 
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
 					M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
@@ -155,7 +155,7 @@
 				var/obj/item/TrashItem
 				if(ispath(trash,/obj/item))
 					TrashItem = new trash(src)
-				else if(istype(trash,/obj/item))
+				else if(isitem(trash))
 					TrashItem = trash
 				TrashItem.forceMove(loc)
 			qdel(src)
@@ -388,41 +388,32 @@
 
 		to_chat(usr, "<span class='notice'>You color \the [src] [clr].</span>")
 		icon_state = "egg-[clr]"
-		item_color = clr
 	else
 		return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"
-	item_color = "blue"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/green
 	icon_state = "egg-green"
-	item_color = "green"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/mime
 	icon_state = "egg-mime"
-	item_color = "mime"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/orange
 	icon_state = "egg-orange"
-	item_color = "orange"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/purple
 	icon_state = "egg-purple"
-	item_color = "purple"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/rainbow
 	icon_state = "egg-rainbow"
-	item_color = "rainbow"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/red
 	icon_state = "egg-red"
-	item_color = "red"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/yellow
 	icon_state = "egg-yellow"
-	item_color = "yellow"
 
 /obj/item/weapon/reagent_containers/food/snacks/friedegg
 	name = "Fried egg"
@@ -561,16 +552,8 @@
 	desc = "The food of choice for the seasoned traitor."
 	icon_state = "donkpocket"
 	filling_color = "#dedeab"
-	var/warm = 0
+	var/warm = FALSE
 	list_reagents = list("nutriment" = 4)
-
-/obj/item/weapon/reagent_containers/food/snacks/donkpocket/proc/cooltime() //Not working, derp?
-	if (src.warm)
-		spawn( 4200 )
-			src.warm = 0
-			reagents.del_reagent("tricordrazine")
-			src.name = "donk-pocket"
-	return
 
 /obj/item/weapon/reagent_containers/food/snacks/brainburger
 	name = "brainburger"
@@ -1288,7 +1271,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/On_Consume(mob/M)
 	to_chat(M, "<span class = 'warning'>Something inside of you suddently expands!</span>")
 
-	if (istype(M, /mob/living/carbon/human))
+	if (ishuman(M))
 		//Do not try to understand.
 		var/obj/item/weapon/surprise = new/obj/item/weapon(M)
 		var/mob/living/carbon/monkey/ook = new monkey_type(null) //no other way to get access to the vars, alas
@@ -1729,7 +1712,7 @@
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return FALSE
 	var/inaccurate = 0
-	if(W.tools[TOOL_KNIFE] || W.sharp)
+	if(W.get_quality(QUALITY_CUTTING) > 0 || W.sharp)
 		inaccurate = 1
 	else
 		return FALSE

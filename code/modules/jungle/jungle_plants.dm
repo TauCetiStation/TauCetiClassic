@@ -22,7 +22,7 @@
 	if (istype(M, /mob/living/simple_animal))
 		var/mob/living/simple_animal/A = M
 		A.loc = get_turf(src)
-	else if (istype(M, /mob/living/carbon/monkey))
+	else if (ismonkey(M))
 		var/mob/living/carbon/monkey/A = M
 		A.loc = get_turf(src)
 
@@ -56,9 +56,9 @@
 // Strange, fruit-bearing plants //
 //*******************************//
 
-var/list/fruit_icon_states = list("badrecipe","kudzupod","reishi","lime","grapes","boiledrorocore","chocolateegg")
-var/list/reagent_effects = list("toxin","anti_toxin","stoxin","space_drugs","mindbreaker","zombiepowder","impedrezene")
-var/jungle_plants_init = 0
+var/global/list/fruit_icon_states = list("badrecipe","kudzupod","reishi","lime","grapes","boiledrorocore","chocolateegg")
+var/global/list/reagent_effects = list("toxin","anti_toxin","stoxin","space_drugs","mindbreaker","zombiepowder","impedrezene")
+var/global/jungle_plants_init = 0
 
 /proc/init_jungle_plants()
 	jungle_plants_init = 1

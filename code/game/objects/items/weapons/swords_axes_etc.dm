@@ -29,7 +29,7 @@
 
 /obj/item/weapon/melee/energy/sword/atom_init()
 	. = ..()
-	item_color = pick("red","blue","green","purple","yellow","pink","black")
+	blade_color = pick("red","blue","green","purple","yellow","pink","black")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
@@ -37,8 +37,8 @@
 		user.take_bodypart_damage(5, 5)
 	active = !active
 	if (active)
-		tools = list(
-			TOOL_KNIFE = 1
+		qualities = list(
+			QUALITY_KNIFE = 1
 		)
 		sharp = TRUE
 		force = 30
@@ -46,13 +46,13 @@
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
-			icon_state = "sword[item_color]"
+			icon_state = "sword[blade_color]"
 		w_class = SIZE_NORMAL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 
 	else
-		tools = list()
+		qualities = null
 		sharp = FALSE
 		force = 3
 		hitsound = initial(hitsound)
@@ -64,7 +64,7 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
@@ -190,25 +190,13 @@
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
 
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	add_fingerprint(user)
-
-	if(blood_overlay && blood_DNA && (blood_DNA.len >= 1)) //updates blood overlay, if any
-		cut_overlays()//this might delete other item overlays as well but eeeeeeeh
-
-		var/icon/I = new /icon(src.icon, src.icon_state)
-		I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD)
-		I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY)
-		blood_overlay = I
-
-		add_overlay(blood_overlay)
-
-	return
 
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)
@@ -254,31 +242,31 @@
 
 /obj/item/weapon/melee/energy/sword/green/atom_init()
 	. = ..()
-	item_color = "green"
+	blade_color = "green"
 
 /obj/item/weapon/melee/energy/sword/red/atom_init()
 	. = ..()
-	item_color = "red"
+	blade_color = "red"
 
 /obj/item/weapon/melee/energy/sword/blue/atom_init()
 	. = ..()
-	item_color = "blue"
+	blade_color = "blue"
 
 /obj/item/weapon/melee/energy/sword/purple/atom_init()
 	. = ..()
-	item_color = "purple"
+	blade_color = "purple"
 
 /obj/item/weapon/melee/energy/sword/yellow/atom_init()
 	. = ..()
-	item_color = "yellow"
+	blade_color = "yellow"
 
 /obj/item/weapon/melee/energy/sword/pink/atom_init()
 	. = ..()
-	item_color = "pink"
+	blade_color = "pink"
 
 /obj/item/weapon/melee/energy/sword/black/atom_init()
 	. = ..()
-	item_color = "black"
+	blade_color = "black"
 
 
 /obj/item/weapon/melee/energy/blade/atom_init()

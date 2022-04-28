@@ -19,7 +19,7 @@
 			else //injected
 				M.contract_disease(D, 1, 0)
 
-	if(self.data && self.data["virus2"] && istype(M, /mob/living/carbon))//infecting...
+	if(self.data && self.data["virus2"] && iscarbon(M))//infecting...
 		var/list/vlist = self.data["virus2"]
 		if(vlist.len)
 			for(var/ID in vlist)
@@ -29,7 +29,7 @@
 				else
 					infect_virus2(M,V.getcopy(),1) //injected, force infection!
 
-	if(self.data && self.data["antibodies"] && istype(M, /mob/living/carbon))//... and curing
+	if(self.data && self.data["antibodies"] && iscarbon(M))//... and curing
 		var/mob/living/carbon/C = M
 		C.antibodies |= self.data["antibodies"]
 
@@ -217,7 +217,7 @@
 	M.adjustToxLoss(1)
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with welding fuel to make them easy to ignite!
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(volume / 10)
@@ -230,6 +230,17 @@
 	color = "#a5f0ee" // rgb: 165, 240, 238
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "floor cleaner"
+
+/datum/reagent/space_cleaner/on_general_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(0.2)
+
+	if(prob(10))
+		M.emote("hiccup")
+		var/image/I = image('icons/effects/effects.dmi', M, "bubbles", MOB_LAYER + 1)
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		flick_overlay_view(I, M, 30)
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/effect/decal/cleanable))
@@ -255,7 +266,7 @@
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, volume)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(istype(M,/mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.lip_style)
 				H.lip_style = null
@@ -537,11 +548,11 @@
 				if(H.dizziness != 0)
 					H.dizziness = max(0, H.dizziness - 15)
 				if(H.confused != 0)
-					H.confused = max(0, H.confused - 5)
+					H.AdjustConfused(-5)
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
-						D.spreadtype = "Remissive"
+						D.spreadtype = DISEASE_SPREAD_REMISSIVE
 						D.stage--
 						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
@@ -594,11 +605,11 @@
 				if(H.dizziness != 0)
 					H.dizziness = max(0, H.dizziness - 15)
 				if(H.confused != 0)
-					H.confused = max(0, H.confused - 5)
+					H.AdjustConfused(-5)
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
-						D.spreadtype = "Remissive"
+						D.spreadtype = DISEASE_SPREAD_REMISSIVE
 						D.stage--
 						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
@@ -678,7 +689,7 @@
 
 /datum/reagent/paint/reaction_turf(turf/T, volume)
 	. = ..()
-	if(!istype(T) || istype(T, /turf/space))
+	if(!istype(T) || isspaceturf(T))
 		return
 	if(color_weight < 15 || volume < 5)
 		return

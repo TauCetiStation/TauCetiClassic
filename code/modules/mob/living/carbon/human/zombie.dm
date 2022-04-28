@@ -146,7 +146,6 @@
 
 /datum/species/zombie/handle_death(mob/living/carbon/human/H)
 	addtimer(CALLBACK(null, .proc/prerevive_zombie, H), rand(600,700))
-	H.update_mutantrace()
 
 /proc/handle_infected_death(mob/living/carbon/human/H)
 	if(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
@@ -232,7 +231,7 @@
 	D.uniqueID = rand(0,10000)
 	D.infectionchance = 100
 	D.antigen |= ANTIGEN_Z
-	D.spreadtype = "Blood" // not airborn and not contact, because spreading zombie virus through air or hugs is silly
+	D.spreadtype = DISEASE_SPREAD_BLOOD // not airborn and not contact, because spreading zombie virus through air or hugs is silly
 
 	infect_virus2(src, D, forced = TRUE, ignore_antibiotics = TRUE)
 
@@ -291,7 +290,7 @@
 
 	return (tally + config.human_delay)
 
-var/list/zombie_list = list()
+var/global/list/zombie_list = list()
 
 /proc/add_zombie(mob/living/carbon/human/H)
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/zombie_findbrains)
@@ -314,7 +313,7 @@ var/list/zombie_list = list()
 
 	var/datum/role/R = H.mind.GetRole(ZOMBIE)
 	if(R)
-		R.Drop()
+		R.Deconvert()
 
 /obj/effect/proc_holder/spell/targeted/zombie_findbrains
 	name = "Find brains"
@@ -331,7 +330,7 @@ var/list/zombie_list = list()
 	var/mob/living/carbon/human/target = null
 	var/min_dist = 999
 
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(H.stat == DEAD || iszombie(H) || H.z != user.z)
 			continue
 		var/turf/target_turf = get_turf(H)

@@ -205,10 +205,20 @@
 
 /mob/proc/ranged_attack_tk(atom/A)
 	var/dist = get_dist(src, A)
-	if(dist > tk_maxrange)
+	if(dist > get_tk_range())
+		to_chat(src, "<span class='notice'>Your mind won't reach that far.</span>")
 		return
-	SetNextMove(max(dist, CLICK_CD_MELEE))
-	A.attack_tk(src)
+
+	if(!try_tk(mana=dist * TK_MANA_PER_TILE))
+		return
+
+	SetNextMove(CLICK_CD_MELEE)
+
+	if(a_intent == INTENT_GRAB && ismovable(A))
+		var/atom/movable/AM = A
+		AM.telekinetic_grab(src)
+	else
+		A.attack_tk(src)
 
 /*
 	Restrained ClickOn
@@ -429,7 +439,7 @@
 
 /atom/movable/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers[MIDDLE_CLICK] && istype(usr, /mob/living/carbon))
+	if(modifiers[MIDDLE_CLICK] && iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else

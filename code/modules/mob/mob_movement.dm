@@ -9,7 +9,7 @@
 		return 1
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
-	if(mover.checkpass(PASSMOB))
+	if(mover.checkpass(PASSMOB) || checkpass(PASSMOB))
 		return 1
 	if(buckled == mover)
 		return 1
@@ -105,7 +105,7 @@
 		move_delay = world.time
 		//drunk driving
 		if(mob.confused)
-			direct = pick(cardinal)
+			direct = mob.confuse_input(direct)
 		return mob.buckled.relaymove(mob,direct)
 
 	if(!forced && !mob.canmove)
@@ -151,7 +151,7 @@
 		move_delay += add_delay
 
 		if(mob.pulledby || mob.buckled) // Wheelchair driving!
-			if(istype(mob.loc, /turf/space))
+			if(isspaceturf(mob.loc))
 				return // No wheelchair driving in space
 			if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
 				return mob.pulledby.relaymove(mob, direct)
@@ -203,16 +203,10 @@
 							M.animate_movement = 2
 							return
 
-		else if(mob.confused)
-			var/newdir = direct
-			if(mob.confused > 40)
-				newdir = pick(alldirs)
-			else if(prob(mob.confused * 1.5))
-				newdir = angle2dir(dir2angle(direct) + 180)
-			else if(prob(mob.confused * 3))
-				newdir = angle2dir(dir2angle(direct) + pick(90, -90))
-			step(mob, newdir)
 		else
+			if(mob.confused && !mob.crawling)
+				direct = mob.confuse_input(direct)
+				n = get_step(get_turf(mob), direct)
 			. = mob.SelfMove(n, direct)
 
 		for (var/obj/item/weapon/grab/G in mob.GetGrabs())
@@ -243,9 +237,14 @@
 	if(!Adjacent(machine) || !machine.can_interact_with(src))
 		return FALSE
 	var/obj/machinery/computer/security/console = machine
+
+	if(QDELETED(console.active_camera))
+		console.active_camera = null // if qdeling, set it null
+		return FALSE
+
 	var/turf/T = get_turf(console.active_camera)
 	var/list/cameras = list()
-	
+
 	for(var/cam_tag in console.camera_cache)
 		var/obj/C = console.camera_cache[cam_tag]
 		if(C == console.active_camera)
@@ -357,7 +356,7 @@
 
 		else if(isturf(A))
 			var/turf/turf = A
-			if(istype(turf,/turf/space))
+			if(isspaceturf(turf))
 				continue
 
 			if(!turf.density && !mob_negates_gravity())

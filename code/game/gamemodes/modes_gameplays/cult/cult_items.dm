@@ -15,11 +15,10 @@
 	if(iscultist(user))
 		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 		return ..()
-	else
-		user.Paralyse(5)
-		to_chat(user, "<span class='warning'>An unexplicable force powerfully repels the sword from [target]!</span>")
-		var/obj/item/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
-		BP.take_damage(rand(force / 2, force)) //random amount of damage between half of the blade's force and the full force of the blade.
+	user.Paralyse(5)
+	to_chat(user, "<span class='warning'>An unexplicable force powerfully repels the sword from [target]!</span>")
+	var/obj/item/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
+	BP.take_damage(rand(force / 2, force)) //random amount of damage between half of the blade's force and the full force of the blade.
 
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)
 	. = ..()
@@ -107,7 +106,7 @@
 	desc = "A bulky suit of armour, bristling with spikes. It looks space proof."
 	w_class = SIZE_SMALL
 	allowed = list(/obj/item/weapon/storage/bible/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/suit_cooling_unit)
-	slowdown = 1
+	slowdown = 0.5
 	armor = list(melee = 60, bullet = 25, laser = 25,energy = 15, bomb = 30, bio = 30, rad = 30)
 	siemens_coefficient = 0
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS

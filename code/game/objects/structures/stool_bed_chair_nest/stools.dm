@@ -5,6 +5,8 @@
 	icon_state = "stool"
 	anchored = TRUE
 
+	var/material = /obj/item/stack/sheet/metal
+
 /obj/structure/stool/bar
 	name = "bar stool"
 	icon = 'icons/obj/objects.dmi'
@@ -12,18 +14,13 @@
 
 /obj/structure/stool/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(5))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(95))
 				return
-	return
+	qdel(src)
 
 /obj/structure/stool/airlock_crush_act()
 	if(has_buckled_mobs())
@@ -37,7 +34,7 @@
 /obj/structure/stool/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W) && !(flags & NODECONSTRUCT))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		new /obj/item/stack/sheet/metal(loc)
+		new material(loc)
 		qdel(src)
 		return
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -51,14 +48,14 @@
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
 			if(!(flags & NODECONSTRUCT))
-				new /obj/item/stack/sheet/metal(loc)
+				new material(loc)
 			qdel(src)
 			return
 
 	else if(istype(W, /obj/item/weapon/sledgehammer))
 		var/obj/item/weapon/sledgehammer/S = W
-		if(S.wielded && !(flags & NODECONSTRUCT))
-			new /obj/item/stack/sheet/metal(loc)
+		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED) && !(flags & NODECONSTRUCT))
+			new material(loc)
 			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
 			shake_camera(user, 1, 1)
 			qdel(src)

@@ -13,11 +13,12 @@
 		names += "[DNA.real_name]"
 
 	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in names
-	if(!S)	return
+	if(!S)
+		return FALSE
 
 	var/datum/dna/chosen_dna = changeling.GetDNA(S)
 	if(!chosen_dna)
-		return
+		return FALSE
 
 	user.visible_message("<span class='warning'>[user] transforms!</span>")
 
@@ -26,4 +27,4 @@
 	user.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 	feedback_add_details("changeling_powers","LFT")
 
-	return 1
+	return TRUE

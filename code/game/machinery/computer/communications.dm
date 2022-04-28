@@ -52,7 +52,7 @@
 		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
 			return ..()
 
-	for(var/mob/living/silicon/ai/shuttlecaller in ai_list)
+	for(var/mob/living/silicon/ai/shuttlecaller as anything in ai_list)
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 

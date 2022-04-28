@@ -33,15 +33,15 @@
 	new /obj/item/weapon/shovel(src)
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/cargo
 		new /obj/item/clothing/head/santa(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 
 /**********************Shuttle Computer**************************/
 /*var/mining_shuttle_tickstomove = 10
-var/mining_shuttle_moving = 0
-var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
+var/global/mining_shuttle_moving = 0
+var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /proc/move_mining_shuttle()
 	if(mining_shuttle_moving)	return
@@ -101,7 +101,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 						shake_camera(M, 3, 1) // buckled, not a lot of shaking
 					else
 						shake_camera(M, 10, 1) // unbuckled, HOLY SHIT SHAKE THE ROOM
-			if(istype(M, /mob/living/carbon))
+			if(iscarbon(M))
 				if(!M.buckled)
 					M.Weaken(3)
 
@@ -234,11 +234,14 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	attack_verb = list("attacked", "smashed", "hit", "space assholed")
 	var/asshole_counter = 0
 	var/next_hit = 0
-	var/wielded = FALSE // track wielded status on item
 
 /obj/item/weapon/sledgehammer/atom_init()
 	. = ..()
-	AddComponent(/datum/component/twohanded, FALSE, FALSE, FALSE, FALSE, 0, 35, 15, "sledgehammer1")
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 35
+	TCB.force_unwielded = 15
+	TCB.icon_wielded = "sledgehammer1"
+	AddComponent(/datum/component/twohanded, TCB)
 
 /obj/item/weapon/sledgehammer/attack(mob/living/target, mob/living/user)
 	..()
@@ -282,6 +285,10 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
+	// Better than a rod, worse than a crowbar.
+	qualities = list(
+		QUALITY_PRYING = 0.75
+	)
 
 /obj/item/weapon/shovel/spade
 	name = "spade"
@@ -328,7 +335,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/state = 0
 	var/obj/item/weapon/stock_parts/cell/power_supply
 	var/cell_type = /obj/item/weapon/stock_parts/cell
-	var/mode = 0
+	var/mode = FALSE
+	var/initial_toolspeed
 
 /obj/item/weapon/pickaxe/drill/atom_init()
 	. = ..()
@@ -337,6 +345,9 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	else
 		power_supply = new(src)
 	power_supply.give(power_supply.maxcharge)
+	initial_toolspeed = toolspeed
+	update_mode_stats()
+
 
 /obj/item/weapon/pickaxe/drill/update_icon()
 	if(!state)
@@ -392,10 +403,17 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	mode = !mode
 
 	if(mode)
-		to_chat(user, "<span class='notice'>[src] is now standard mode.</span>")
+		to_chat(user, "<span class='notice'>[src] is now standard mode. Chance to loose some precious ore, faster digging speed.</span>")
 	else
-		to_chat(user, "<span class='notice'>[src] is now safe mode.</span>")
+		to_chat(user, "<span class='notice'>[src] is now safe mode. No ore loss, slow digging speed.</span>")
+	update_mode_stats()
 
+/obj/item/weapon/pickaxe/drill/proc/update_mode_stats()
+	if(mode)
+		initial_toolspeed = toolspeed
+		toolspeed *= 0.5
+	else
+		toolspeed = initial_toolspeed
 
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
@@ -479,7 +497,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 			if(target)
 				explosion(location, 3, 2, 2)
-				target.ex_act(1)
+				target.ex_act(EXPLODE_DEVASTATE)
 				if(src)
 					qdel(src)
 
@@ -626,7 +644,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	get_template()
 	if(!used)
 		var/turf/T = get_turf(src)
-		if(!is_mining_level(T.z) && !is_junkyard_level(T.z) && !istype(T.loc, /area/space)  && !istype(T.loc, /area/shuttle)) //we don't need complete all checks
+		var/area/A = T.loc
+		if(!A.outdoors)
 			audible_message("<span class='game say'><span class='name'>[src]</span> says, \"You must use shelter at asteroid or in space! Grab this shit and shut up!\"</span>")
 			used = TRUE
 			new /obj/item/clothing/mask/breath(T)
@@ -826,7 +845,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	return
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
-	if(istype(O, /obj/item))
+	if(isitem(O))
 		if(O.flags & NODROP || !O.canremove)
 			return 0
 		return 1

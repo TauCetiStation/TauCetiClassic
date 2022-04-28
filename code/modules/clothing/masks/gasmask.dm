@@ -96,7 +96,7 @@
 	set category = "Object"
 	set name = "HALT"
 	set src in usr
-	if(!istype(usr, /mob/living)) return
+	if(!isliving(usr)) return
 	if(usr.incapacitated())
 		return
 
@@ -301,4 +301,3 @@
 	name = "German Gas Mask"
 	desc = "Soldier's black gas mask."
 	icon_state = "German_gasmask"
-	item_color = "German_gasmask"

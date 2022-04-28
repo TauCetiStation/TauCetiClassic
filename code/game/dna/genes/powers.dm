@@ -41,7 +41,7 @@
 
 /datum/dna/gene/basic/regenerate/can_activate(mob/M,flags)
 	if((SMALLSIZE in M.mutations))
-		return 0
+		return FALSE
 	return ..(M,flags)
 
 /datum/dna/gene/basic/regenerate/OnMobLife(mob/living/carbon/human/M)
@@ -126,7 +126,7 @@
 
 /datum/dna/gene/basic/heat_resist/can_activate(mob/M,flags)
 	if(COLD_RESISTANCE in M.mutations)
-		return 0
+		return FALSE
 	return ..(M,flags)
 
 /datum/dna/gene/basic/heat_resist/OnDrawUnderlays(mob/M,g,fat)
@@ -143,7 +143,7 @@
 
 /datum/dna/gene/basic/cold_resist/can_activate(mob/M,flags)
 	if(RESIST_HEAT in M.mutations)
-		return 0
+		return FALSE
 	return ..(M,flags)
 
 /datum/dna/gene/basic/cold_resist/OnDrawUnderlays(mob/M,g,fat)
@@ -179,7 +179,7 @@
 /datum/dna/gene/basic/midget/can_activate(mob/M,flags)
 	// Can't be big, small and regenerate.
 	if( (REGEN in M.mutations)) //#Z2
-		return 0
+		return FALSE
 	return ..(M,flags)
 
 /datum/dna/gene/basic/midget/activate(mob/living/M, connected, flags)
@@ -190,12 +190,7 @@
 		H.ventcrawler = 1
 		H.update_size_class()
 		to_chat(H, "<span class='notice'><b>Ventcrawling allowed</b></span>")
-
-	var/matrix/Mx = matrix()
-	Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
-	Mx.Translate(0,-2)
-	M.transform = Mx
-	M.default_transform = Mx
+		H.regenerate_icons()
 
 /datum/dna/gene/basic/midget/deactivate(mob/living/M, connected, flags)
 	..(M,connected,flags)
@@ -204,10 +199,7 @@
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 0
 		H.update_size_class()
-
-	var/matrix/Mx = matrix()
-	M.transform = Mx
-	M.default_transform = Mx
+		H.regenerate_icons()
 
 /datum/dna/gene/basic/hulk
 	name                = "Hulk"
@@ -221,10 +213,10 @@
 /*/datum/dna/gene/basic/hulk/can_activate(mob/M,flags)
 	// Can't be big, small and regenerate.
 	if( (SMALLSIZE in M.mutations) || (REGEN in M.mutations)) //#Z2
-		return 0
+		return FALSE
 	return ..(M,flags)*/
 
-/datum/dna/gene/basic/hulk/activate(mob/living/M, connected, flags)
+/datum/dna/gene/basic/hulk/activate(mob/living/carbon/human/M, connected, flags)
 	if(!M.mind)
 		return
 	if(M.mind.hulkizing)
@@ -264,12 +256,13 @@
 
 	Monster.original_body = src
 	forceMove(Monster)
+	
+	client?.show_metahelp_greeting("hulk")
 	mind.transfer_to(Monster)
 
 	Monster.attack_log = attack_log
 	Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
 	Monster.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
-	return
 
 /datum/dna/gene/basic/xray
 	name="X-Ray Vision"

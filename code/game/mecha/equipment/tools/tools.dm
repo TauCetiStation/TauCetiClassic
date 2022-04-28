@@ -23,7 +23,7 @@
 	if(!cargo_holder) return
 	if(istype(target, /obj/structure/stool)) return
 	for(var/M in target.contents)
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			return
 
 	if(istype(target,/obj))
@@ -69,7 +69,7 @@
 				log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
 				return 1
 
-	else if(istype(target,/mob/living))
+	else if(isliving(target))
 		var/mob/living/M = target
 		if(M.stat>1) return
 		if(chassis.occupant.a_intent == INTENT_HARM)
@@ -115,10 +115,14 @@
 		if(T == chassis.loc && src == chassis.selected)
 			if(istype(target, /turf/simulated/wall/r_wall))
 				occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
-			else if(istype(target, /turf/simulated/mineral))
-				for(var/turf/simulated/mineral/M in range(chassis,1))
-					if(get_dir(chassis,M)&chassis.dir)
-						M.GetDrilled()
+			else if(istype(target, /turf/simulated/mineral) || istype(target, /obj/structure/flora/mine_rocks))
+				if(istype(target, /turf/simulated/mineral))
+					for(var/turf/simulated/mineral/M in range(chassis,1))
+						if(get_dir(chassis,M)&chassis.dir)
+							M.GetDrilled()
+				else
+					var/obj/structure/flora/mine_rocks/M = target
+					M.GetDrilled()
 				log_message("Drilled through [target]")
 				if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
@@ -138,12 +142,12 @@
 							if(get_dir(chassis,ore)&chassis.dir)
 								ore.Move(ore_box)
 			else if(target.loc == C)
-				if(istype(target,/mob/living))
+				if(isliving(target))
 					var/mob/living/M = target
 					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 
 				log_message("Drilled through [target]")
-				target.ex_act(2)
+				target.ex_act(EXPLODE_HEAVY)
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M)
@@ -179,11 +183,15 @@
 			if(istype(target, /turf/simulated/wall/r_wall))
 				if(do_after_cooldown(target))//To slow down how fast mechs can drill through the station
 					log_message("Drilled through [target]")
-					target.ex_act(3)
-			else if(istype(target, /turf/simulated/mineral))
-				for(var/turf/simulated/mineral/M in range(chassis,1))
-					if(get_dir(chassis,M)&chassis.dir)
-						M.GetDrilled()
+					target.ex_act(EXPLODE_LIGHT)
+			else if(istype(target, /turf/simulated/mineral) || istype(target, /obj/structure/flora/mine_rocks))
+				if(istype(target, /turf/simulated/mineral))
+					for(var/turf/simulated/mineral/M in range(chassis, 1))
+						if(get_dir(chassis, M) & chassis.dir)
+							M.GetDrilled()
+				else
+					var/obj/structure/flora/mine_rocks/M = target
+					M.GetDrilled()
 				log_message("Drilled through [target]")
 				if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
@@ -201,11 +209,11 @@
 						for(var/obj/item/weapon/ore/ore in range(target,1))
 							ore.Move(ore_box)
 			else if(target.loc == C)
-				if(istype(target,/mob/living))
+				if(isliving(target))
 					var/mob/living/M = target
 					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
 				log_message("Drilled through [target]")
-				target.ex_act(2)
+				target.ex_act(EXPLODE_HEAVY)
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/can_attach(obj/mecha/M)
@@ -331,7 +339,7 @@
 					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.use_power(energy_drain)
 		if(1)
-			if(istype(target, /turf/space))
+			if(isenvironmentturf(target))
 				occupant_message("Building Floor...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -492,7 +500,7 @@
 				return
 			else if(target!=locked)
 				if(locked in view(chassis))
-					locked.throw_at(target, 14, 1.5, chassis)
+					locked.throw_at(target, 14, 1.5, chassis.occupant)
 					locked = null
 					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 					set_ready_state(0)
@@ -1059,7 +1067,7 @@
 		else
 			chassis.occupant_message("<font color='red'>[target] is firmly secured.</font>")
 
-	else if(istype(target,/mob/living))
+	else if(isliving(target))
 		var/mob/living/M = target
 		if(M.stat>1) return
 		if(chassis.occupant.a_intent == INTENT_HARM)
@@ -1077,21 +1085,6 @@
 		do_after_cooldown()
 	return 1
 
-
-/********Mecha customisation kit********/
-/obj/item/weapon/paintkit //Please don't use this for anything, it's a base type for custom mech paintjobs.
-	name = "mecha customisation kit"
-	desc = "A generic kit containing all the needed tools and parts to turn a mech into another mech."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "royce_kit"
-
-	var/new_name = "mech"    //What is the variant called?
-	var/new_desc = "A mech." //How is the new mech described?
-	var/new_icon = "ripley"  //What base icon will the new mech use?
-	var/removable = null     //Can the kit be removed?
-	var/list/allowed_types = list() //Types of mech that the kit will work on.
-
-
 /********Mecha Drop System********/
 /obj/item/mecha_parts/mecha_equipment/Drop_system
 	name = "Drop System"
@@ -1103,7 +1096,7 @@
 	range = 0
 	var/uses = 1
 	var/aiming = FALSE
-	var/static/datum/droppod_allowed/allowed_areas
+	var/static/datum/droppod_vision/allowed_areas
 
 /obj/item/mecha_parts/mecha_equipment/Drop_system/atom_init()
 	. = ..()
@@ -1134,8 +1127,14 @@
 	var/area/thearea = allowed_areas.areas[A]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.density && !istype(T, /turf/space) && !T.obscured)
-			L+=T
+		if(!T.density && !isenvironmentturf(T) && !T.obscured)
+			var/clear = TRUE
+			for(var/obj/O in T)
+				if(O.density)
+					clear = FALSE
+					break
+			if(clear)
+				L+=T
 	if(isemptylist(L))
 		chassis.occupant_message("<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
 		aiming = FALSE
@@ -1168,7 +1167,7 @@
 	for(var/atom/movable/T in loc)
 		if(T != src && T != chassis.occupant && !(istype(T, /obj/structure/window) || istype(T, /obj/machinery/door/airlock) || istype(T, /obj/machinery/door/poddoor)))
 			if(T.loc != chassis)
-				T.ex_act(1)
+				T.ex_act(EXPLODE_DEVASTATE)
 	for(var/mob/living/M in oviewers(6, src))
 		shake_camera(M, 2, 2)
 	for(var/turf/simulated/floor/T in RANGE_TURFS(1, chassis))

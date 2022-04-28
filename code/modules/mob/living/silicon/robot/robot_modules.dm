@@ -57,22 +57,29 @@
 		if(!S)
 			src.modules -= null
 			S = new T(src, 1)
-			src.modules += S
+			add_item(S)
 
 		if(S.get_amount() < stacktypes[T])
 			S.add(1)
 
-/obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
-	var/list/temp_list = modules
-	modules = list()
-	for(var/obj/O in temp_list)
-		if(O)
-			modules += O
-
 /obj/item/weapon/robot_module/proc/add_languages(mob/living/silicon/robot/R)
-	R.add_language("Tradeband", 1)
-	R.add_language("Trinary", 1)
-	R.add_language("Sol Common", 1)
+	R.add_language(LANGUAGE_TRADEBAND)
+	R.add_language(LANGUAGE_TRINARY)
+	R.add_language(LANGUAGE_SOLCOMMON)
+
+/obj/item/weapon/robot_module/proc/add_item(obj/O)
+	O.forceMove(src)
+	modules += O
+	var/mob/living/silicon/robot/R = loc
+	R.hud_used.update_robot_modules_display()
+
+/obj/item/weapon/robot_module/proc/remove_item(obj/O)
+	if(!(locate(O) in modules))
+		return
+	modules -= O
+	var/mob/living/silicon/robot/R = loc
+	R.unequip_module(O)
+	qdel(O)
 
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
@@ -100,7 +107,8 @@
 		/obj/item/stack/medical/advanced/bruise_pack = 5,
 		/obj/item/stack/medical/advanced/ointment = 5,
 		/obj/item/stack/nanopaste = 5,
-		/obj/item/stack/medical/splint = 10
+		/obj/item/stack/medical/splint = 5,
+		/obj/item/stack/medical/suture = 3
 		)
 
 /obj/item/weapon/robot_module/medical/atom_init()
@@ -125,12 +133,13 @@
 	modules += new /obj/item/weapon/gripper/medical(src)
 	modules += new /obj/item/device/reagent_scanner/adv(src)
 	modules += new /obj/item/roller_holder(src)
-	modules += new /obj/item/stack/medical/splint(src, 10)
+	modules += new /obj/item/stack/medical/splint(src)
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	modules += new /obj/item/weapon/reagent_containers/dropper/robot(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	modules += new /obj/item/weapon/shockpaddles/robot(src)
 	modules += new /obj/item/device/gps/cyborg(src)
+	modules += new /obj/item/stack/medical/suture(src)
 
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
@@ -198,7 +207,7 @@
 	modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 	modules += new /obj/item/taperoll/police(src)
 	modules += new /obj/item/device/gps/cyborg(src)
-	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
+	emag = new /obj/item/weapon/gun/energy/laser/selfcharging/cyborg(src)
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
 	..()
@@ -219,10 +228,11 @@
 /obj/item/weapon/robot_module/janitor/atom_init()
 	. = ..()
 	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/weapon/soap/nanotrasen(src)
+	modules += new /obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen(src)
 	modules += new /obj/item/weapon/storage/bag/trash(src)
 	modules += new /obj/item/weapon/mop(src)
 	modules += new /obj/item/device/lightreplacer(src)
+	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 	emag.reagents.add_reagent("lube", 250)
@@ -263,6 +273,7 @@
 	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 	modules += new /obj/item/weapon/pen/robopen(src)
 	modules += new /obj/item/weapon/razor(src)
+	modules += new /obj/item/device/gps/cyborg(src)
 
 	emag = new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
 
@@ -274,15 +285,15 @@
 
 /obj/item/weapon/robot_module/butler/add_languages(mob/living/silicon/robot/R)
 	//full set of languages
-	R.add_language("Sol Common", 1)
-	R.add_language("Sinta'unathi", 1)
-	R.add_language("Siik'maas", 1)
-	R.add_language("Siik'tajr", 0)
-	R.add_language("Skrellian", 1)
-	R.add_language("Rootspeak", 1)
-	R.add_language("Tradeband", 1)
-	R.add_language("Trinary", 1)
-	R.add_language("Gutter", 1)
+	R.add_language(LANGUAGE_SOLCOMMON)
+	R.add_language(LANGUAGE_SINTAUNATHI)
+	R.add_language(LANGUAGE_SIIKMAAS)
+	R.add_language(LANGUAGE_SIIKTAJR, LANGUAGE_CAN_UNDERSTAND)
+	R.add_language(LANGUAGE_SKRELLIAN)
+	R.add_language(LANGUAGE_ROOTSPEAK)
+	R.add_language(LANGUAGE_TRADEBAND)
+	R.add_language(LANGUAGE_TRINARY)
+	R.add_language(LANGUAGE_GUTTER)
 
 /obj/item/weapon/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R)
 	..()
@@ -316,7 +327,7 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
-	modules += new /obj/item/weapon/card/emag(src)
+	modules += new /obj/item/weapon/card/emag/borg(src)
 	modules += new /obj/item/borg/sight/night(src)
 	modules += new /obj/item/weapon/gun/projectile/automatic/borg(src)
 	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
@@ -327,8 +338,14 @@
 /obj/item/weapon/robot_module/syndicate/add_languages(mob/living/silicon/robot/R)
 	//basic set+Sy-Code
 	. = ..()
+	R.add_language(LANGUAGE_SYCODE)
 
-	R.add_language("Sy-Code", TRUE)
+/obj/item/weapon/robot_module/syndidrone
+	name = "syndicate drone module"
+
+/obj/item/weapon/robot_module/syndidrone/add_languages(mob/living/silicon/robot/R)
+	. = ..()
+	R.add_language(LANGUAGE_SYCODE)
 
 /obj/item/weapon/robot_module/combat
 	name = "combat robot module"
@@ -337,7 +354,7 @@
 	. = ..()
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/borg/sight/thermal(src)
-	modules += new /obj/item/weapon/gun/energy/laser/cyborg(src)
+	modules += new /obj/item/weapon/gun/energy/laser/selfcharging/cyborg(src)
 	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
 	modules += new /obj/item/borg/combat/shield(src)
 	modules += new /obj/item/borg/combat/mobility(src)
@@ -432,7 +449,7 @@
 
 //checks whether this item is a module of the robot it is located in.
 /obj/item/proc/is_robot_module()
-	if (!istype(src.loc, /mob/living/silicon/robot))
+	if (!isrobot(src.loc))
 		return 0
 
 	var/mob/living/silicon/robot/R = src.loc

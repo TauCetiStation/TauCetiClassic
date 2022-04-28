@@ -35,6 +35,15 @@
 	var/const/signfont = "Times New Roman"
 	var/const/crayonfont = "Comic Sans MS"
 
+	///"Cache" of maximum of 100 signatures on this paper
+	var/list/signed_by
+	///"Cache" of maximum of 100 stamp messages on this paper
+	var/list/stamped_by
+	///Last world.time tick the name of this paper was changed.
+	var/last_name_change = 0
+	///Last world.time tick the contents of this paper was changed.
+	var/last_info_change = 0
+
 //lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
 
 /obj/item/weapon/paper/atom_init()
@@ -57,11 +66,11 @@
 	if(!new_text)
 		return
 
-	free_space -= length(strip_html_properly(new_text))
+	free_space -= length(new_text)
 
 /obj/item/weapon/paper/examine(mob/user)
 	..()
-	if(in_range(user, src) || istype(user, /mob/dead/observer))
+	if(in_range(user, src) || isobserver(user))
 		if(crumpled)
 			to_chat(user, "<span class='notice'>You can't read anything until it crumpled.</span>")
 			return
@@ -225,6 +234,7 @@
 		var/before = copytext(info, 1, textindex)
 		var/after = copytext(info, textindex)
 		info = before + text + after
+		last_info_change = world.time
 		updateinfolinks()
 
 /obj/item/weapon/paper/proc/updateinfolinks()
@@ -239,6 +249,7 @@
 
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
+	last_info_change = world.time
 	stamp_text = null
 	free_space = MAX_PAPER_MESSAGE_LEN
 	LAZYCLEARLIST(stamped)
@@ -274,12 +285,24 @@
 		return P.get_signature(user)
 	return (user && user.real_name) ? user.real_name : "Anonymous"
 
+/obj/item/weapon/paper/proc/add_signature(signature)
+	LAZYSET(signed_by, signature, world.time)
+	if(signed_by.len > 100)
+		signed_by.Cut(1, 2)
+
+/obj/item/weapon/paper/proc/add_stamp(stamp)
+	LAZYSET(stamped_by, stamp, world.time)
+	if(stamped_by.len > 100)
+		stamped_by.Cut(1, 2)
+
 /obj/item/weapon/paper/proc/parsepencode(t, obj/item/weapon/pen/P, mob/user, iscrayon = 0)
 	if(length(t) == 0)
 		return ""
 
 	if(findtext(t, "\[sign\]"))
-		t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[get_signature(P, user)]</i></font>")
+		var/signature = get_signature(P, user)
+		t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[signature]</i></font>")
+		add_signature(signature)
 
 	var/font = deffont
 	if(iscrayon) // If it is a crayon, and he still tries to use these, make them empty!
@@ -431,6 +454,7 @@
 			addtofield(text2num(id), t) // He wants to edit a field, let him.
 		else
 			info += t // Oh, he wants to edit to the end of the file, let him.
+			last_info_change = world.time
 			updateinfolinks()
 
 		playsound(src, pick(SOUNDIN_PEN), VOL_EFFECTS_MASTER, null, FALSE)
@@ -472,7 +496,7 @@
 		else if(I.name != "paper" && I.name != "photo")
 			B.name = I.name
 		user.drop_from_inventory(I)
-		if (istype(user, /mob/living/carbon/human))
+		if (ishuman(user))
 			var/mob/living/carbon/human/h_user = user
 			if (h_user.r_hand == src)
 				h_user.drop_from_inventory(src)
@@ -483,14 +507,12 @@
 			else if (h_user.l_store == src)
 				h_user.drop_from_inventory(src)
 				B.loc = h_user
-				B.layer = ABOVE_HUD_LAYER
 				B.plane = ABOVE_HUD_PLANE
 				h_user.l_store = B
 				h_user.update_inv_pockets()
 			else if (h_user.r_store == src)
 				h_user.drop_from_inventory(src)
 				B.loc = h_user
-				B.layer = ABOVE_HUD_LAYER
 				B.plane = ABOVE_HUD_PLANE
 				h_user.r_store = B
 				h_user.update_inv_pockets()
@@ -529,6 +551,7 @@
 
 		var/obj/item/weapon/stamp/S = I
 		S.stamp_paper(src)
+		add_stamp(S.stamp_message)
 
 		playsound(src, 'sound/effects/stamp.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
@@ -676,6 +699,25 @@
 	<br>
 	<i>Professor Galen Linkovich</i>"}
 
+/obj/item/weapon/paper/psyops_starting_guide
+	name = "Добро пожаловать в \"СИПсО\""
+	info = {"Добро пожаловать в отряд \"СИПсО\"!<br>
+	Успешно пройдя все тренировки Скрельской Инициативы Пси Операций, тобой была получена необходимая экипировка:<br>
+	- Посох с проектором силового щита<br>
+	- Набор психоактивных веществ<br>
+	- Экстренный набор еды<br>
+	- Пси-усиляющая корона<br>
+	- Перчатки тишины<br>
+	<br>
+	Напоминание о процедурах и методах работы с пси-короной:<br>
+	- Мысленный тычёк по предмету в режиме захвата - сфокусирует разум на нём.<br>
+	- Во всех остальных случаях мысленный тычёк отправит волны твоей воли для совершения действия.<br>
+	- В режиме броска мысленный тычёк по чему-либо сфокусированным объектом бросит его туда.<br>
+	- Активация фокуса, или мысленный тычёк фокуса самим по себе активирует сфокусированный объект.<br>
+	- Психологически активные вещества усиляют способности, позволяя, к примеру брать в фокус живых существ.<br>
+	- Телекинетическая активность быстро расходует запасы питательных веществ организма, особенно если не применять психоактивные вещества. Не забывайте иметь достаточный запас еды.<br>
+	- Применение психоактивных веществ позволяет взаимодействовать с миром вопреки активации силового щита.<br>
+	- Использование брони крайне нежелательно, так как может негативно влиять на ваши пси-способности.<br>"}
 
 /obj/item/weapon/paper/lovenote
 	name = "mysterious note"
@@ -747,3 +789,17 @@
 
 /obj/item/weapon/paper/lovenote/update_icon()
 	icon_state = "lovenote"
+
+/obj/item/weapon/paper/nuclear_code
+	name = "NSS Exodus Nuclear Detonation Device Code (TOP SECRET)"
+
+/obj/item/weapon/paper/nuclear_code/atom_init(mapload, nukecode)
+	. = ..()
+	name = "[station_name()] Nuclear Detonation Device Code (TOP SECRET)"
+	info = "<b>Nuclear Authentication Code:</b> [nukecode]"
+
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(src, "CentComm Security Department")
+
+	update_icon()
+	updateinfolinks()

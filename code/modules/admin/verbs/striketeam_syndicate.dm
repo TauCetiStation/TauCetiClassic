@@ -1,6 +1,6 @@
 //SYNDICATE STRIKE TEAMS
 
-var/const/syndicate_commandos_possible = 6 //if more Commandos are needed in the future
+var/global/const/syndicate_commandos_possible = 6 //if more Commandos are needed in the future
 var/global/sent_syndicate_strike_team = FALSE
 
 /client/proc/syndicate_strike_team()
@@ -160,8 +160,7 @@ var/global/sent_syndicate_strike_team = FALSE
 	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
 	equip_to_slot_or_del(R, SLOT_L_EAR)
 	var/obj/item/weapon/implant/dexplosive/DE = new(src)
-	DE.imp_in = src
-	DE.implanted = TRUE
+	DE.stealth_inject(src)
 	var/obj/item/clothing/under/syndicate/US = new (src)
 	var/obj/item/clothing/accessory/storage/syndi_vest/SV = new (US)
 	US.accessories += SV

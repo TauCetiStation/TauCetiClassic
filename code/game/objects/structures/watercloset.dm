@@ -165,6 +165,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 					H.adjustFireLoss(20)
 		busy = FALSE
 		user.visible_message("<span class='notice'>[user] dried their hands using \the [src].</span>")
+		if(HAS_TRAIT_FROM(user, TRAIT_WET_HANDS, QUALITY_TRAIT))
+			var/mob/living/carbon/human/H = user
+			var/time_amount = rand(3000, 6000)
+			H.apply_status_effect(STATUS_EFFECT_REMOVE_WET, time_amount)
 	else
 		busy = FALSE
 
@@ -200,7 +204,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		return
 
 	var/obj/item/I = O
-	if(!I || !istype(I,/obj/item))
+	if(!I || !isitem(I))
 		return
 
 	add_fingerprint(user)
@@ -555,21 +559,31 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		check_heat(C)
 
 /obj/machinery/shower/proc/check_heat(mob/M)
-	if(!on || watertemp == "normal") return
+	if(!on) return
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-
-		if(watertemp == "freezing")
-			C.bodytemperature = max(80, C.bodytemperature - 80)
-			to_chat(C, "<span class='warning'>The water is freezing!</span>")
-			return
-		if(watertemp == "boiling")
-			C.bodytemperature = min(500, C.bodytemperature + 35)
-			C.adjustFireLoss(5)
-			to_chat(C, "<span class='danger'>The water is searing!</span>")
-			return
-
-
+		switch(watertemp)
+			if("normal")
+				C.adjustHalLoss(-1)
+				C.AdjustStunned(-1)
+				C.AdjustWeakened(-1)
+				SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "shower-time", /datum/mood_event/shower)
+				return
+			if("freezing")
+				C.bodytemperature = max(80, C.bodytemperature - 80)
+				C.adjustHalLoss(1)
+				C.AdjustStunned(-1)
+				C.AdjustWeakened(1)
+				to_chat(C, "<span class='warning'>The water is freezing!</span>")
+				return
+			if("boiling")
+				C.bodytemperature = min(500, C.bodytemperature + 35)
+				C.adjustFireLoss(5)
+				C.adjustHalLoss(1)
+				C.AdjustStunned(-1)
+				C.AdjustWeakened(1)
+				to_chat(C, "<span class='danger'>The water is searing!</span>")
+				return
 
 /obj/item/weapon/bikehorn/rubberducky
 	name = "rubber ducky"
@@ -610,6 +624,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		if(ishuman(user))
 			user:update_inv_gloves()
 		user.visible_message("<span class='notice'>[user] washes their hands using \the [src].</span>")
+		if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
+			var/mob/living/carbon/human/H = user
+			var/time_amount = rand(3000, 6000)
+			H.apply_status_effect(STATUS_EFFECT_REMOVE_GREASY, time_amount)
 	else
 		busy = FALSE
 
@@ -649,7 +667,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		return
 
 	var/obj/item/I = O
-	if(!I || !istype(I,/obj/item))
+	if(!I || !isitem(I))
 		return
 
 	to_chat(usr, "<span class='notice'>You start washing \the [I].</span>")
@@ -673,7 +691,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			"<span class='notice'>You wash \a [I] using \the [src].</span>")
 	else
 		busy = FALSE
-
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"

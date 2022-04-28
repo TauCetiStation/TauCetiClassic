@@ -31,7 +31,7 @@
 	M.cut_overlays()
 	M.invisibility = 101
 
-	if(istype(M, /mob/living/silicon/robot))
+	if(isrobot(M))
 		var/mob/living/silicon/robot/Robot = M
 		if(Robot.mmi)	qdel(Robot.mmi)
 	else
@@ -117,7 +117,7 @@
 	new_mob.attack_log = M.attack_log
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
-	new_mob.a_intent = INTENT_HARM
+	new_mob.set_a_intent(INTENT_HARM)
 	if(M.mind)
 		M.mind.transfer_to(new_mob)
 	else
@@ -135,7 +135,7 @@
 
 /obj/item/projectile/magic/animate/Bump(atom/change)
 	. = ..()
-	if(istype(change, /obj/item) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
+	if(isitem(change) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
 		var/obj/O = change
 		new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
 	else if(istype(change, /mob/living/simple_animal/hostile/mimic/copy))
@@ -155,7 +155,7 @@
 	var/old_stat = C.stat
 	C.revive()
 	if(!C.ckey || !C.mind)
-		for(var/mob/dead/observer/ghost in observer_list)
+		for(var/mob/dead/observer/ghost as anything in observer_list)
 			if(C.mind == ghost.mind)
 				ghost.reenter_corpse()
 				break

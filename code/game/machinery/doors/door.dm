@@ -1,3 +1,5 @@
+var/global/list/wedge_image_cache = list()
+
 /obj/machinery/door
 	name = "Door"
 	desc = "It opens and closes."
@@ -30,6 +32,13 @@
 
 	var/dock_tag
 
+	var/obj/item/wedged_item
+
+	var/next_crush = 0
+
+	var/can_wedge_items = TRUE
+	var/wedging = FALSE
+
 /obj/machinery/door/atom_init()
 	. = ..()
 	if(density)
@@ -53,6 +62,7 @@
 	update_nearby_tiles()
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.remove_from_hud(src)
+	QDEL_NULL(wedged_item)
 	return ..()
 
 //process()
@@ -68,7 +78,7 @@
 			bumpopen(M)
 		return
 
-	if(istype(AM, /obj/machinery/bot))
+	if(isbot(AM))
 		var/obj/machinery/bot/bot = AM
 		if(check_access(bot.botcard) || emergency)
 			if(density)
@@ -94,13 +104,45 @@
 		return
 	return
 
+/obj/machinery/door/AltClick(mob/user)
+	if(user.incapacitated())
+		return
+	if(!Adjacent(user))
+		return
+	if(!user.IsAdvancedToolUser())
+		return
+
+	if(!wedged_item)
+		if(!try_wedge_item(user))
+			return ..()
+	else
+		take_out_wedged_item(user)
+
+/obj/machinery/door/proc/generate_wedge_overlay()
+	var/cache_string = "[wedged_item.icon]||[wedged_item.icon_state]||[wedged_item.overlays.len]||[wedged_item.underlays.len]"
+
+	if(!global.wedge_image_cache[cache_string])
+		var/image/I = image(wedged_item.icon, wedged_item.icon_state)
+		I.appearance = wedged_item
+
+		I.layer = layer
+		I.plane = plane
+
+		I.pixel_x = -4
+		I.pixel_y = -15
+
+		I.add_filter("half-cut", 1, alpha_mask_filter(icon=icon('icons/effects/cut.dmi', "cut_up")))
+
+		global.wedge_image_cache[cache_string] = I
+		underlays += I
+	else
+		underlays += global.wedge_image_cache[cache_string]
 
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group) return !block_air_zones
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density
-
 
 /obj/machinery/door/proc/bumpopen(mob/user)
 	if(user.last_airflow > world.time - vsc.airflow_delay) //Fakkit
@@ -146,11 +188,16 @@
 		do_animate("deny")
 
 /obj/machinery/door/attack_hand(mob/user)
+	if(user.a_intent == INTENT_GRAB && wedged_item && !user.get_active_hand())
+		take_out_wedged_item(user)
+		return
+
 	try_open(user)
 
 /obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
 		return
+
 	..()
 
 /obj/machinery/door/attack_ghost(mob/user)
@@ -178,13 +225,17 @@
 	try_open(user, I)
 
 /obj/machinery/door/emag_act(mob/user)
-	if(src.density && hasPower())
+	if(density && hasPower() && !wedged_item)
 		update_icon(AIRLOCK_EMAG)
 		sleep(6)
 		if(!open())
 			update_icon(AIRLOCK_CLOSED)
 		operating = -1
 		return TRUE
+	if(!hasPower())
+		to_chat(user, "<span class='warning'>You can't use a emag on a non-powered airlock.</span>")
+	else if(wedged_item)
+		to_chat(user, "<span class='warning'>Why would you waste your time hacking a non-blocking airlock?</span>")
 	return FALSE
 
 /obj/machinery/door/blob_act()
@@ -194,17 +245,16 @@
 
 /obj/machinery/door/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if(prob(25))
-				qdel(src)
-		if(3.0)
+		if(EXPLODE_HEAVY)
+			if(prob(75))
+				return
+		if(EXPLODE_LIGHT)
 			if(prob(80))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
-	return
+				return
+	qdel(src)
 
 
 /obj/machinery/door/update_icon()
@@ -213,6 +263,23 @@
 	else
 		icon_state = icon_state_open
 
+	if(underlays.len)
+		underlays.Cut()
+
+	if(wedged_item)
+		generate_wedge_overlay()
+
+/obj/machinery/door/MouseDrop(obj/over_object)
+	if(usr.IsAdvancedToolUser() && usr == over_object && !usr.incapacitated() && Adjacent(usr))
+		take_out_wedged_item(usr)
+		return
+
+	return ..()
+
+/obj/machinery/door/examine(mob/user)
+	. = ..()
+	if(wedged_item)
+		to_chat(user, "You can see [bicon(wedged_item)] [wedged_item] wedged into it.")
 
 /obj/machinery/door/proc/do_animate(animation)
 	switch(animation)
@@ -250,9 +317,51 @@
 		return TRUE
 	return FALSE
 
+/obj/machinery/door/proc/finish_crush_wedge_animation()
+	density = FALSE
+	do_animate("opening")
+	operating = FALSE
+	wedging = FALSE
+	update_icon()
+
+/obj/machinery/door/proc/crush_wedge_animation(obj/item/I)
+	do_animate("closing")
+	sleep(7)
+	if(QDELETED(src))
+		return
+	if(QDELETED(I))
+		finish_crush_wedge_animation()
+		return
+	if(I.loc != loc)
+		finish_crush_wedge_animation()
+		return
+	force_wedge_item(I)
+	playsound(src, 'sound/machines/airlock/creaking.ogg', VOL_EFFECTS_MASTER, rand(40, 70), TRUE)
+	//shake_animation(12, 7, move_mult = 0.4, angle_mult = 1.0)
+	sleep(7)
+	if(QDELETED(src))
+		return
+	finish_crush_wedge_animation()
+
 /obj/machinery/door/proc/close(forced = FALSE)
 	if(density)
 		return TRUE
+
+	if(!wedging && !wedged_item && can_wedge_items)
+		for(var/turf/turf in locs)
+			for(var/obj/item/I in turf)
+				if(I.w_class < SIZE_SMALL)
+					continue
+				if(I.get_quality(QUALITY_PRYING) <= 0.0)
+					continue
+
+				operating = TRUE
+				density = TRUE
+				wedging = TRUE
+
+				INVOKE_ASYNC(src, .proc/crush_wedge_animation, I)
+				return
+
 	if(close_checks(forced))
 		set_operating(TRUE)
 		do_close()
@@ -284,12 +393,83 @@
 	return FALSE
 
 /obj/machinery/door/proc/close_checks(forced)
+	if(wedged_item)
+		// we can't have nice things because somebody really wanted to do some bullshit
+		// where instead of flicking() an opening/closing animation we instead set icon_state
+		// to a non-looping animation which ends on a open/closed sprite, which of course
+		// when you in any way update the icon_state/invisibility for the airlock
+		// causes the animation to play again, which shake_animation used
+		// so we can't both have this thingy and the nice animation and I don't have the strength
+		// to replace this with flick-s() ~Luduk
+		//shake_animation(12, 7, move_mult = 0.4, angle_mult = 1.0)
+		if(next_crush < world.time)
+			visible_message("<span class='warning'>[src] crushed \the [wedged_item] wedged into it, but is not able to close</span>")
+			wedged_item.airlock_crush_act(DOOR_CRUSH_DAMAGE)
+			next_crush = world.time + 1 SECOND
+		return FALSE
+
 	if(!operating && SSticker)
 		if(!forced)
 			return normal_close_checks()
 		return TRUE
 	return FALSE
 
+/obj/machinery/door/proc/on_wedge_destroy()
+	UnregisterSignal(wedged_item, list(COMSIG_PARENT_QDELETING))
+	wedged_item = null
+	update_icon()
+
+/obj/machinery/door/proc/force_wedge_item(obj/item/I)
+	I.forceMove(src)
+	wedged_item = I
+	update_icon()
+	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), .proc/on_wedge_destroy)
+
+/obj/machinery/door/proc/try_wedge_item(mob/living/user)
+	if(!can_wedge_items)
+		return FALSE
+
+	var/obj/item/I = user.get_active_hand()
+	if(!istype(I))
+		return FALSE
+
+	if(I.w_class < SIZE_SMALL)
+		return FALSE
+
+	if(I.get_quality(QUALITY_PRYING) <= 0.0)
+		return FALSE
+
+	if(density)
+		to_chat(user, "<span class='notice'>[I] can't be wedged into [src], while [src] is closed.</span>")
+		return FALSE
+
+	if(!user.drop_from_inventory(I))
+		return FALSE
+
+	force_wedge_item(I)
+	to_chat(user, "<span class='notice'>You wedge [I] into [src].</span>")
+	return TRUE
+
+/obj/machinery/door/proc/take_out_wedged_item(mob/living/user)
+	if(!wedged_item)
+		return
+
+	if(wedging)
+		if(user)
+			to_chat(user, "<span class='notice'>It would be too dangerous to try taking out a [wedged_item] while it's being chewed up by [src].</span>")
+		return
+
+	// If some stats are added should check for agility/strength.
+	if(user && !wedged_item.use_tool(src, user, 5, quality=QUALITY_PRYING))
+		return
+	wedged_item.forceMove(loc)
+	if(user)
+		user.put_in_hands(wedged_item)
+		to_chat(user, "<span class='notice'>You took [wedged_item] out of [src].</span>")
+
+	UnregisterSignal(wedged_item, list(COMSIG_PARENT_QDELETING))
+	wedged_item = null
+	update_icon()
 
 /**
  * DO NOT CALL THIS PROC DIRECTLY!!!

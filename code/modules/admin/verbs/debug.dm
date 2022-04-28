@@ -96,7 +96,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI."
 
 	var/list/available = list()
-	for(var/mob/C in mob_list)
+	for(var/mob/C as anything in mob_list)
 		if(C.key)
 			available.Add(C)
 	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available
@@ -237,7 +237,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	if (!SSticker)
 		tgui_alert(usr, "Wait until the game starts")
 		return
-	if (istype(M, /mob/living/carbon/human))
+	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if (H.wear_id)
 			var/obj/item/weapon/card/id/id = H.wear_id
@@ -273,6 +273,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			return
 		else
 			var/mob/dead/observer/ghost = new/mob/dead/observer(M,1)
+			M.logout_reason = LOGOUT_SWAP
 			ghost.ckey = M.ckey
 	message_admins("<span class='notice'>[key_name_admin(usr)] assumed direct control of [M].</span>")
 	log_admin("[key_name(usr)] assumed direct control of [M].")
@@ -458,7 +459,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		"mime",
 		"clown",
 		"jolly gravedigger",
-		"jolly gravedigger supreme"
+		"jolly gravedigger supreme",
+		"psyops officer",
 		)
 	var/list/dresspacks_without_money = list(
 		"strip",
@@ -736,8 +738,52 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
+		if("psyops officer")
+			M.set_species(SKRELL)
+			M.r_eyes = 102
+			M.g_eyes = 204
+			M.b_eyes = 255
+
+			var/list/skin_variations = list(
+				list(0, 0, 0),
+				list(28, 28, 28),
+				list(0, 0, 102),
+				list(63, 31, 0),
+				list(0, 51, 0),
+			)
+
+			var/list/variation = pick(skin_variations)
+
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/darkred(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/psyamp(M), SLOT_HEAD)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/fullbody/psy_robe(M), SLOT_WEAR_SUIT)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(M), SLOT_SHOES)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black/silence(M), SLOT_GLOVES)
+			M.equip_to_slot_or_del(new /obj/item/weapon/paper/psyops_starting_guide(M), SLOT_L_HAND)
+			M.equip_to_slot_or_del(new /obj/item/weapon/nullrod/forcefield_staff(M), SLOT_R_HAND)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment(M), SLOT_R_STORE)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/small_firstaid_kit/psyops(M), SLOT_L_STORE)
+			M.equip_to_slot_or_del(new /obj/item/clothing/ears/earmuffs(M), SLOT_L_EAR)
+
+			M.r_skin = variation[1]
+			M.g_skin = variation[2]
+			M.b_skin = variation[3]
+
+			M.r_hair = variation[1]
+			M.g_hair = variation[2]
+			M.b_hair = variation[3]
+
+			M.universal_speak = TRUE
+			M.universal_understand = TRUE
+
+			M.mutations.Add(NO_SHOCK)
+			M.mutations.Add(TK)
+			M.mutations.Add(REMOTE_TALK)
+
+			M.update_mutations()
+
 		if("velocity officer")
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/det/fluff/retpoluniform(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/det/velocity(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/velocity(M), SLOT_L_EAR)
@@ -770,7 +816,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/velocity/chief(M), SLOT_L_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/sec/hos(M), SLOT_HEAD)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat(M), SLOT_WEAR_SUIT)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/det_suit/velocity(M), SLOT_WEAR_SUIT)
 
 			var/obj/item/weapon/storage/backpack/satchel/back_storage = new /obj/item/weapon/storage/backpack/satchel(M)
 			M.equip_to_slot_or_del(back_storage, SLOT_BACK)
@@ -778,7 +824,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			new /obj/item/device/flash(back_storage)
 			new /obj/item/weapon/storage/belt/security(back_storage)
 			new /obj/item/device/megaphone(back_storage)
-			new /obj/item/device/contraband_finder(back_storage)
+			new /obj/item/device/contraband_finder/deluxe(back_storage)
 			new /obj/item/device/reagent_scanner(back_storage)
 			new /obj/item/weapon/stamp/cargo_industries(back_storage)
 
@@ -820,7 +866,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			M.universal_understand = TRUE
 
 		if("velocity doctor")
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/det/fluff/retpoluniform(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/det/velocity(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/latex/nitrile(M), SLOT_GLOVES)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/blue(M), SLOT_WEAR_SUIT)
@@ -1549,7 +1595,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 		if("test subject")
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/jane_sidsuit(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/test_subject(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), SLOT_L_EAR)
 
@@ -1828,12 +1874,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	if(!SSticker)
 		tgui_alert(usr, "Wait until the game starts")
 		return
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		var/saved_key = M.key
 		M.dna.SetSEState(block,!M.dna.GetSEState(block))
 		//domutcheck(M,null,MUTCHK_FORCED)  //#Z2
 		genemutcheck(M,block,null,MUTCHK_FORCED) //#Z2
-		if(istype(M, /mob/living/carbon))
+		if(iscarbon(M))
 			M.update_mutations()
 			var/state="[M.dna.GetSEState(block)?"on":"off"]"
 			var/blockname=assigned_blocks[block]

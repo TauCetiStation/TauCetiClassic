@@ -63,7 +63,7 @@ var/global/list/tophats_list = list()
 			continue
 
 		R.amount--
-		M.a_intent = INTENT_HARM
+		M.set_a_intent(INTENT_HARM)
 		M.equip_to_slot(new /obj/item/clothing/head/rabbitears(M), SLOT_HEAD)
 		break
 	return M
@@ -139,7 +139,7 @@ var/global/list/tophats_list = list()
 
 		var/matrix/M = matrix()
 		M.Scale(0.5)
-		animate(AM, pixel_y=AM.pixel_y + 32, transform=M, time=5)
+		animate(AM, pixel_y=AM.pixel_y - 32, transform=M, time=5)
 		sleep(5)
 
 		AM.visible_message("<span class='warning'>[AM] dissapears into [src]!</span>")
@@ -409,10 +409,10 @@ var/global/list/tophats_list = list()
 	var/put_in_delay = 0
 	if(user == AM)
 		put_in_delay += 5 // Most of the delay will come in dive_into proc.
-	else if(istype(AM, /obj/item))
+	else if(isitem(AM))
 		var/obj/item/I = AM
 		put_in_delay += I.w_class * 2 SECONDS
-	else if(istype(AM, /obj/structure) || istype(AM, /obj/machinery))
+	else if(istype(AM, /obj/structure) || ismachinery(AM))
 		put_in_delay += 8 SECONDS
 	else if(isliving(AM))
 		var/mob/living/L = AM

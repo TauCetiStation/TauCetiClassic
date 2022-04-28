@@ -29,17 +29,6 @@
 	else
 		return
 
-/obj/item/weapon/gun/energy/ionrifle/classic
-	name = "ion rifle"
-	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
-	icon_state = "oldion"
-	item_state = "oldion"
-	slot_flags = null
-
-/obj/item/weapon/gun/energy/ionrifle/tactifool
-	icon_state = "tfionrifle"
-	item_state = "tfionrifle"
-
 /obj/item/weapon/gun/energy/decloner
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
@@ -244,7 +233,7 @@
 		return FALSE
 	if(!charge)
 		to_chat(user, "<span class='red'>Tesla Cannon is not charged!</span>")
-	else if(!istype(target, /mob/living))
+	else if(!isliving(target))
 		to_chat(user, "<span class='red'>Tesla Cannon needs to be aimed directly at living target.</span>")
 	else if(charging)
 		to_chat(user, "<span class='red'>You can't shoot while charging!</span>")
@@ -291,7 +280,7 @@
 
 /obj/item/weapon/gun/tesla/emp_act(severity)
 	if(charge)
-		if(istype(loc, /mob/living/carbon))
+		if(iscarbon(loc))
 			var/mob/living/carbon/M = loc
 			M.electrocute_act(5 * (4 - severity) * charge, src, , , 1)
 		charge = 0
@@ -375,11 +364,14 @@
 		return ..()
 
 /obj/item/weapon/gun/energy/pyrometer/emag_act(mob/user)
-	if(!emagged)
-		ammo_type += new /obj/item/ammo_casing/energy/pyrometer/emagged(src)
-		origin_tech += ";syndicate=1"
-
-		emagged = TRUE
+	if(emagged)
+		return FALSE
+	ammo_type += new /obj/item/ammo_casing/energy/pyrometer/emagged(src)
+	fire_delay = 12
+	origin_tech += ";syndicate=1"
+	emagged = TRUE
+	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
+	return TRUE
 
 /obj/item/weapon/gun/energy/pyrometer/update_icon()
 	return
@@ -467,3 +459,122 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/medical)
 
 	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/ultra
+
+/obj/item/weapon/gun/energy/gun/portal
+	name = "bluespace wormhole projector"
+	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires an anomaly core to function. Fits in a bag."
+	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
+	icon_state = "portal"
+	modifystate = 0
+	can_suicide_with = FALSE
+
+	var/obj/effect/portal/p_blue
+	var/obj/effect/portal/p_orange
+	var/obj/item/device/assembly/signaler/anomaly/firing_core = null
+
+/obj/item/weapon/gun/energy/gun/portal/Destroy()
+	qdel(p_blue)
+	qdel(p_orange)
+	qdel(firing_core)
+	return ..()
+
+/obj/item/weapon/gun/energy/gun/portal/Fire(atom/target, mob/living/user, params, reflex = 0)
+	if(!prob(reliability))
+		if(firing_core && !is_centcom_level(z))
+			to_chat(user, "<span class='warning'>The wormhole projector malfunctions, teleporting away!</span>")
+			user.drop_from_inventory(src)
+			do_teleport(src, get_turf(src), 7, asoundin = 'sound/effects/phasein.ogg')
+			return
+	..()
+
+/obj/item/weapon/gun/energy/gun/portal/special_check(mob/M, atom/target)
+	if(!firing_core)
+		return FALSE
+	return TRUE
+
+/obj/item/weapon/gun/energy/gun/portal/attackby(obj/item/C, mob/user)
+	if(istype(C, /obj/item/device/assembly/signaler/anomaly))
+		if(firing_core)
+			to_chat(user, "<span class='warning'>Wormhole projector already has an anomaly core installed!</span>")
+			playsound(user, 'sound/machines/airlock/access_denied.ogg', VOL_EFFECTS_MASTER)
+			return
+		user.drop_from_inventory(C, src)
+		to_chat(user, "<span class='notice'>You insert [C] into the wormhole projector and the weapon gently hums to life.</span>")
+		playsound(user, 'sound/weapons/guns/plasma10_load.ogg', VOL_EFFECTS_MASTER)
+		firing_core = C
+		modifystate = 2
+		update_icon()
+		update_inv_mob()
+
+	if(isscrewdriver(C))
+		if(!firing_core)
+			to_chat(user, "<span class='warning'>There is no firing core installed!</span>")
+			return
+		firing_core.forceMove(get_turf(user))
+		firing_core = null
+		to_chat(user, "<span class='notice'>You pop the anomaly core out of the projector.</span>")
+		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		icon_state = "portal"
+		modifystate = 0
+		update_icon()
+		update_inv_mob()
+
+	return ..()
+
+/obj/item/weapon/gun/energy/gun/portal/proc/on_portal_destroy(obj/effect/portal/P)
+	SIGNAL_HANDLER
+	if(P == p_blue)
+		p_blue = null
+	else if(P == p_orange)
+		p_orange = null
+
+/obj/item/weapon/gun/energy/gun/portal/proc/has_blue_portal()
+	if(istype(p_blue) && !QDELETED(p_blue))
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/gun/energy/gun/portal/proc/has_orange_portal()
+	if(istype(p_orange) && !QDELETED(p_orange))
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/gun/energy/gun/portal/proc/crosslink()
+	if(!has_blue_portal() && !has_orange_portal())
+		return
+	if(!has_blue_portal() && has_orange_portal())
+		p_orange.target = null
+		return
+	if(!has_orange_portal() && has_blue_portal())
+		p_blue.target = null
+		return
+	p_orange.target = p_blue
+	p_blue.target = p_orange
+
+/obj/item/weapon/gun/energy/gun/portal/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
+	var/obj/effect/portal/P = new /obj/effect/portal/portalgun(target, null, 10)
+	RegisterSignal(P, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
+	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
+		qdel(p_orange)
+		p_orange = P
+		P.icon_state = "portalorange"
+	else
+		qdel(p_blue)
+		p_blue = P
+	crosslink()
+
+/obj/item/weapon/gun/energy/gun/portal/emp_act(severity)
+	return
+
+/obj/item/weapon/gun/energy/retro
+	name ="retro phaser"
+	icon_state = "retro"
+	item_state = null
+	desc = "An older model of the basic energy weapon, no longer used by Nanotrasen's security or military forces due to it's low projectile velocity. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
+	can_be_holstered = TRUE
+	ammo_type = list(/obj/item/ammo_casing/energy/phaser)
+
+/obj/item/weapon/gun/energy/retro/atom_init()
+	. = ..()
+	if(power_supply)
+		power_supply.maxcharge = 1500
+		power_supply.charge = 1500

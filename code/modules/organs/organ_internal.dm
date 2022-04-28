@@ -25,7 +25,7 @@
 			owner.organs_by_name -= organ_tag
 	return ..()
 
-/obj/item/organ/internal/insert_organ()
+/obj/item/organ/internal/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	..()
 
 	owner.organs += src
@@ -131,21 +131,34 @@
 	parent_bodypart = BP_CHEST
 	var/heart_status = HEART_NORMAL
 	var/fibrillation_timer_id = null
+	var/failing_interval = 1 MINUTE
+
+/obj/item/organ/internal/heart/insert_organ()
+	..()
+	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
 
 /obj/item/organ/internal/heart/proc/heart_stop()
-	heart_status = HEART_FAILURE
+	if(!owner.reagents.has_reagent("inaprovaline") || owner.stat == DEAD)
+		heart_status = HEART_FAILURE
+		deltimer(fibrillation_timer_id)
+		fibrillation_timer_id = null
+		owner.metabolism_factor.AddModifier("Heart", multiple = 0.0)
+	else
+		take_damage(1, 0)
+		fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /obj/item/organ/internal/heart/proc/heart_fibrillate()
-	var/failing_interval = 1 MINUTE
 	heart_status = HEART_FIBR
 	if(HAS_TRAIT(owner, TRAIT_FAT))
 		failing_interval = 30 SECONDS
 	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
+	owner.metabolism_factor.AddModifier("Heart", multiple = 0.5)
 
 /obj/item/organ/internal/heart/proc/heart_normalize()
 	heart_status = HEART_NORMAL
 	deltimer(fibrillation_timer_id)
 	fibrillation_timer_id = null
+	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
 
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"
@@ -220,10 +233,10 @@
 	..()
 	if(is_bruised())
 		if(prob(2))
-			owner.emote("me", 2, "annoyingly creaks!")
+			owner.me_emote("annoyingly creaks!")
 			owner.drip(10)
 		if(prob(4))
-			owner.emote("me", 2, "smells of rot.")
+			owner.me_emote("smells of rot.")
 			owner.apply_damage(rand(1,15), TOX, BP_CHEST, 0)		//Diona's lungs are used to dispose of toxins, so when lungs are broken, diona gets intoxified.
 	if(owner.life_tick % process_accuracy == 0)
 		if(damage < 0)
@@ -292,7 +305,7 @@
 	name = "accumulator"
 	var/accumulator_warning = 0
 
-/obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H)
+/obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	..()
 	new/obj/item/weapon/stock_parts/cell/crap(src)
 	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, .proc/ipc_cell_explode)
@@ -362,7 +375,7 @@
 	var/turf/T = get_turf(owner.loc)
 	if(owner.nutrition > (C.maxcharge * 1.2))
 		explosion(T, 1, 0, 1, 1)
-		C.ex_act(1.0)
+		C.ex_act(EXPLODE_DEVASTATE)
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
@@ -420,6 +433,10 @@
 
 /obj/item/organ/internal/brain/ipc
 	name = "positronic brain"
+	parent_bodypart = BP_CHEST
+
+/obj/item/organ/internal/brain/abomination
+	name = "deformed brain"
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/internal/eyes

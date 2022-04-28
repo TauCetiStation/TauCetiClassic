@@ -1211,7 +1211,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
@@ -1233,7 +1233,7 @@
 		if(!M)	return
 
 		M.loc = prison_cell
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/prisoner = M
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), SLOT_W_UNIFORM)
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), SLOT_SHOES)
@@ -1253,7 +1253,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
@@ -1279,7 +1279,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
@@ -1305,7 +1305,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
@@ -1328,14 +1328,14 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
 		for(var/obj/item/I in M)
 			M.drop_from_inventory(I)
 
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/observer = M
 			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), SLOT_W_UNIFORM)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(observer), SLOT_SHOES)
@@ -1686,7 +1686,7 @@
 			if("No")
 				send_fax(usr, P, "[department]")
 
-		add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = input)
+		SSStatistics.add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = input)
 
 		to_chat(src.owner, "Message reply to transmitted successfully.")
 		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")
@@ -1853,7 +1853,7 @@
 				if(!marked_datum)
 					to_chat(usr, "You don't have any object marked. Abandoning spawn.")
 					return
-				else if(!istype(marked_datum,/atom))
+				else if(!isatom(marked_datum))
 					to_chat(usr, "The object you have marked cannot be used as a target. Target must be of type /atom. Abandoning spawn.")
 					return
 				else
@@ -1883,16 +1883,15 @@
 								if(istype(O,/mob))
 									var/mob/M = O
 									M.real_name = obj_name
-							if(where == "inhand" && isliving(usr) && istype(O, /obj/item))
+							if(where == "inhand" && isliving(usr) && isitem(O))
 								var/mob/living/L = usr
 								var/obj/item/I = O
 								L.put_in_hands(I)
 								if(isrobot(L))
 									var/mob/living/silicon/robot/R = L
 									if(R.module)
-										R.module.modules += I
+										R.module.add_item(I)
 										I.loc = R.module
-										R.module.rebuild()
 										R.activate_module(I)
 				if(stop_main_loop)
 					break

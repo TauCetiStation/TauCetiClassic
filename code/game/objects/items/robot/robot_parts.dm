@@ -192,7 +192,7 @@
 		else
 			to_chat(user, "<span class='info'>You need to attach a flash to [H] first!</span>")
 
-	else if(istype(I, /obj/item/device/mmi))
+	else if(isMMI(I))
 		var/obj/item/device/mmi/M = I
 		if(check_completion())
 			if(!istype(loc,/turf))

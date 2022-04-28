@@ -95,7 +95,7 @@
 	return
 
 /obj/machinery/door/firedoor/attack_paw(mob/user)
-	if(istype(user, /mob/living/carbon/xenomorph/humanoid))
+	if(isxenoadult(user))
 		if(blocked)
 			to_chat(user, "<span class='warning'>The door is sealed, it cannot be pried open.</span>")
 			return
@@ -120,6 +120,10 @@
 
 /obj/machinery/door/firedoor/attack_hand(mob/user)
 	add_fingerprint(user)
+	if(user.a_intent == INTENT_GRAB && wedged_item && !user.get_active_hand())
+		take_out_wedged_item(user)
+		return
+
 	if(operating)
 		return//Already doing something.
 
@@ -195,7 +199,7 @@
 										"You have removed the electronics from [src].")
 
 					new/obj/item/weapon/airalarm_electronics(src.loc)
-
+					take_out_wedged_item()
 					var/obj/structure/firedoor_assembly/FA = new/obj/structure/firedoor_assembly(src.loc)
 					FA.anchored = TRUE
 					FA.density = TRUE
@@ -208,7 +212,7 @@
 		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
 		return
 
-	if( iscrowbar(C) || ( istype(C,/obj/item/weapon/fireaxe) && C:wielded == 1 ) )
+	if(iscrowbar(C) || ( istype(C,/obj/item/weapon/fireaxe) && HAS_TRAIT(C, TRAIT_DOUBLE_WIELDED)))
 		if(operating)
 			return
 
@@ -301,6 +305,13 @@
 		icon_state = "door_open"
 		if(blocked)
 			add_overlay("welded_open")
+
+	if(underlays.len)
+		underlays.Cut()
+
+	if(wedged_item)
+		generate_wedge_overlay()
+
 	SSdemo.mark_dirty(src)
 
 	// CHECK PRESSURE

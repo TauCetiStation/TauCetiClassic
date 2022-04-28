@@ -64,7 +64,7 @@
 
 /obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
-	if(istype(M, /mob/living))
+	if(isliving(M))
 		to_chat(M, "<span class='warning'>You are stunned by the powerful acid of the Deathnettle!</span>")
 
 		M.log_combat(user, "stunned with [name]")

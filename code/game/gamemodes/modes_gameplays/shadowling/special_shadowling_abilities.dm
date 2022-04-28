@@ -1,5 +1,5 @@
 //In here: Hatch and Ascendance
-var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian")
+var/global/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian")
 /mob/living/carbon/human/proc/shadowling_hatch()
 	set category = "Shadowling Evolution"
 	set name = "Hatch"
@@ -119,7 +119,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				to_chat(usr, "<span class='shadowling'>After some telepathic searching, you find the reservoir of life energy from the thralls and tap into it.</span>")
 
 			sleep(50)
-			for(var/mob/M in mob_list)
+			for(var/mob/M as anything in mob_list)
 				if(isshadowthrall(M) && !faction.shadowling_ascended)
 					M.visible_message("<span class='userdanger'>[M] trembles minutely as they collapse, black smoke pouring from their disintegrating face.</span>", \
 									  "<span class='userdanger'>It's time! Your masters are ascending! Your last thoughts are happy as your body is drained of life.</span>")
@@ -154,7 +154,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			A.name = usr.real_name
 			if(A.real_name)
 				A.real_name = usr.real_name
-			usr.invisibility = 60 //This is pretty bad, but is also necessary for the shuttle call to function properly
+			usr.invisibility = INVISIBILITY_OBSERVER //This is pretty bad, but is also necessary for the shuttle call to function properly
 			usr.flags |= GODMODE
 			usr.notransform = TRUE
 			sleep(50)

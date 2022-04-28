@@ -192,7 +192,7 @@
 		if(tgui_alert(user, "Would you like to hold up \the [P] to the camera?", "Let AI see your text!", list("Yes!", "No!")) != "Yes!")
 			return
 		to_chat(user, "You hold \the [P] up to the camera...")
-		for(var/mob/living/silicon/ai/O in ai_list)
+		for(var/mob/living/silicon/ai/O as anything in ai_list)
 			if(!O.client || O.stat == DEAD)
 				continue
 			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[user];trackname=[user.name]'>[user.name]</a></b> holds \the [P] up to one of your cameras...")
@@ -277,13 +277,13 @@
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = 1
-	for(var/mob/living/silicon/S in silicon_list)
+	for(var/mob/living/silicon/S as anything in silicon_list)
 		S.triggerAlarm("Camera", get_area(src), list(src), src)
 
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = 0
-	for(var/mob/living/silicon/S in silicon_list)
+	for(var/mob/living/silicon/S as anything in silicon_list)
 		S.cancelAlarm("Camera", get_area(src), src)
 
 /obj/machinery/camera/proc/can_use(check_paint = TRUE)

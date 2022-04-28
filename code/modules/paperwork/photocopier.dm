@@ -83,6 +83,34 @@
 				toner -= 5
 			. = TRUE
 
+/obj/machinery/photocopier/proc/get_copy_delay(obj/item/I)
+	if(istype(I, /obj/item/weapon/paper))
+		return 11
+
+	if(istype(I, /obj/item/weapon/photo))
+		return 11
+
+	if(istype(I, /obj/item/weapon/paper_bundle))
+		return 11
+
+	return 0
+
+// Return additional delay after copying
+/obj/machinery/photocopier/proc/copy_item(obj/item/I)
+	if(istype(I, /obj/item/weapon/paper))
+		copy(I)
+		return 0
+
+	if(istype(I, /obj/item/weapon/photo))
+		photocopy(I)
+		return 0
+
+	if(istype(I, /obj/item/weapon/paper_bundle))
+		var/obj/item/weapon/paper_bundle/B = bundlecopy(copyitem)
+		return 11 * B.pages.len
+
+	return 0
+
 /obj/machinery/photocopier/proc/copy_operation(mob/user)
 	if(copying)
 		return FALSE
@@ -90,21 +118,24 @@
 	for(var/i = 0, i < copies, i++)
 		if(toner <= 0)
 			break
-		if (istype(copyitem, /obj/item/weapon/paper))
-			sleep(11)
-			copy(copyitem)
-		else if (istype(copyitem, /obj/item/weapon/photo))
-			sleep(11)
-			photocopy(copyitem)
-		else if (istype(copyitem, /obj/item/weapon/paper_bundle))
-			sleep(11)
-			var/obj/item/weapon/paper_bundle/B = bundlecopy(copyitem)
-			sleep(11*B.pages.len)
-		else
+		if(!copyitem)
+			break
+		var/delay = get_copy_delay(copyitem)
+		if(delay == 0)
 			to_chat(user, "<span class='warning'>\The [copyitem] can't be copied by [src].</span>")
 			break
 
+		if(user.is_busy() || !do_after(user, delay, target = src))
+			break
+
+		if(!copyitem)
+			break
+
+		delay = copy_item(copyitem)
 		use_power(active_power_usage)
+		if(user.is_busy() || !do_after(user, delay, target = src, progress = FALSE))
+			break
+
 	copying = FALSE
 
 /obj/machinery/photocopier/proc/bundlecopy(obj/item/weapon/paper_bundle/bundle, need_toner = TRUE)
@@ -151,21 +182,19 @@
 
 /obj/machinery/photocopier/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if(prob(50))
-				qdel(src)
-			else
-				if(toner > 0)
-					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
-					toner = 0
-		else
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				if(toner > 0)
 					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 					toner = 0
-	return
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(50))
+				if(toner > 0)
+					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+					toner = 0
+			return
+	qdel(src)
 
 /obj/machinery/photocopier/blob_act()
 	if(prob(50))

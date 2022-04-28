@@ -3,6 +3,7 @@
 	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20
+	immune_to_ssd = TRUE
 
 	var/icon_living = ""
 	var/icon_dead = ""
@@ -79,12 +80,6 @@
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
 
-/mob/living/simple_animal/Login()
-	..()
-	blinded = FALSE
-	stat = CONSCIOUS
-	update_canmove()
-
 /mob/living/simple_animal/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	return
 
@@ -149,7 +144,7 @@
 
 	// Movement
 	if(!client && !stop_automated_movement && wander && !anchored)
-		if(isturf(src.loc) && !resting && !buckled && canmove) // This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if(isturf(src.loc) && !buckled && canmove) // This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) // Some animals don't move when pulled
@@ -297,13 +292,13 @@
 	if(!blinded)
 		flash_eyes()
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			gib()
 
-		if(2)
+		if(EXPLODE_HEAVY)
 			adjustBruteLoss(60)
 
-		if(3)
+		if(EXPLODE_LIGHT)
 			adjustBruteLoss(30)
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
@@ -328,7 +323,7 @@
 		var/obj/mecha/M = target_mob
 		if(M.occupant)
 			return FALSE
-	if (istype(target_mob, /obj/machinery/bot))
+	if (isbot(target_mob))
 		var/obj/machinery/bot/B = target_mob
 		if(B.health > 0)
 			return FALSE
@@ -373,10 +368,13 @@
 
 	var/verb = "says"
 	var/ending = copytext(message, -1)
-	var/datum/language/speaking = parse_language(message)
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
+
 	if (speaking)
 		verb = speaking.get_spoken_verb(ending)
-		message = copytext(message, 2 + length_char(speaking.key))
+
 	else
 		verb = pick(speak_emote)
 
@@ -420,3 +418,6 @@
 		else
 			visual_effect_icon = ATTACK_EFFECT_SMASH
 	..()
+
+/mob/living/simple_animal/crawl()
+	return FALSE

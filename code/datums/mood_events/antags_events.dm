@@ -19,3 +19,13 @@
 /datum/mood_event/narsie_cultists
 	description = "<span class='bold nicegreen'>Greetings to the Lord!</span>"
 	mood_change = 666
+
+/datum/mood_event/changeling
+	description = "<span class='shadowling'>I am a monster from beyond the stars. Anything human is alien to me.</span>"
+	mood_change = 100
+	special_screen_obj = "mood_alien"
+	hidden = TRUE
+
+/datum/mood_event/homunculus
+	description = "<span class='bold nicegreen'>KILL ME PLEASE!!!</span>"
+	mood_change = 100

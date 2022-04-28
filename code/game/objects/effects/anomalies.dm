@@ -41,15 +41,49 @@
 
 ///////////////////////
 
+/atom/movable/warp_effect
+	plane = GRAVITY_PULSE_PLANE
+	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
+	icon = 'icons/effects/224x224.dmi'
+	icon_state = "emfield_s7"
+	pixel_x = -100
+	pixel_y = -100
+
+/atom/movable/warp_effect/atom_init(mapload, ...)
+	. = ..()
+	add_filter("warp_blure", 1, gauss_blur_filter(4))
+	START_PROCESSING(SSobj, src)
+
+/atom/movable/warp_effect/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/atom/movable/warp_effect/process()
+	animate(src, time = 6, transform = matrix().Scale(0.5, 0.5))
+	animate(time = 14, transform = matrix())
+
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon_state = "grav"
 	density = TRUE
 	var/boing = 0
+	///Warp effect holder for displacement filter to "pulse" the anomaly
+	var/atom/movable/warp_effect/warp
 
 /obj/effect/anomaly/grav/atom_init()
 	. = ..()
+
+	appearance_flags &= ~TILE_BOUND // no tile bound so you can see it around corners and so
+
 	aSignal.origin_tech = "magnets=8;powerstorage=4"
+
+	warp = new(src)
+	vis_contents += warp
+
+/obj/effect/anomaly/grav/Destroy()
+	vis_contents -= warp
+	QDEL_NULL(warp)
+	return ..()
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -154,7 +188,7 @@
 			O.throw_at(target, 5, 10)
 			return
 		else
-			O.ex_act(2)
+			O.ex_act(EXPLODE_HEAVY)
 
 /obj/effect/anomaly/bhole/proc/grav(r, ex_act_force, pull_chance, turf_removal_chance)
 	for(var/t = -r, t < r, t++)
@@ -234,6 +268,9 @@
 		if(M.ckey)
 			extencion_timers[M.ckey] = addtimer(CALLBACK(src, .proc/extencion, B), extencion_cd, TIMER_STOPPABLE)
 
+/obj/effect/anomaly/bluespace/cult_portal/proc/remove_beam(datum/source)
+	beams -= source
+
 /obj/effect/anomaly/bluespace/cult_portal/proc/enable()
 	for(var/i in 1 to 4)
 		var/list/L = locate(x + coord_of_pylons[1], y + coord_of_pylons[2], z)
@@ -251,7 +288,8 @@
 			P.icon_state = "pylon_glow"
 			if(prob(30)) // activate() is return /mob/living/simple_animal/hostile/pylon and since there is dynamic typing, it works
 				P = P.activate(null, global.cult_religion)
-			var/datum/beam/B = P.Beam(src, "drainblood", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_layer = 2.9)
+			var/datum/beam/B = P.Beam(src, "drainblood", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_plane = ABOVE_LIGHTING_PLANE)
+			RegisterSignal(B, list(COMSIG_PARENT_QDELETING), .proc/remove_beam)
 			beams += B
 
 		// Iterating through all possible coordinates

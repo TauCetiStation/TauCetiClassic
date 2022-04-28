@@ -97,18 +97,14 @@
 
 /obj/structure/table/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(25))
+		if(EXPLODE_LIGHT)
+			if(prob(25))
 				destroy()
-		else
-	return
+				return
+	qdel(src)
 
 /obj/structure/table/airlock_crush_act()
 	destroy()
@@ -192,10 +188,15 @@
 		return 1
 	if (get_turf(P.original) == cover)
 		var/chance = 20
+		if (!flipable)
+			chance += 20	//reinforced table covers legs so 20 common chance + lying 20 chance
 		if (ismob(P.original))
 			var/mob/M = P.original
 			if (M.lying)
-				chance += 20				//Lying down lets you catch less bullets
+				if(!flipable)
+					chance = 100				//reinforced table is REINFORCED so it cant be penetrated
+				else
+					chance += 20				//Lying down lets you catch less bullets
 		if(flipped)
 			if(get_dir(loc, from) == dir)	//Flipped tables catch mroe bullets
 				chance += 20
@@ -598,16 +599,17 @@
 
 /obj/structure/rack/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
-		if(2.0)
-			qdel(src)
+			return
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				new /obj/item/weapon/rack_parts(src.loc)
-		if(3.0)
-			if(prob(25))
-				qdel(src)
-				new /obj/item/weapon/rack_parts(src.loc)
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				return
+	qdel(src)
+	new /obj/item/weapon/rack_parts(src.loc)
 
 /obj/structure/rack/airlock_crush_act()
 	destroy()
@@ -647,7 +649,7 @@
 		can_cut = E.active
 	else if(istype(W, /obj/item/weapon/dualsaber))
 		var/obj/item/weapon/dualsaber/D = W
-		can_cut = D.wielded
+		can_cut = HAS_TRAIT(D, TRAIT_DOUBLE_WIELDED)
 
 	if(!can_cut)
 		return ..()

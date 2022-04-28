@@ -103,36 +103,19 @@
 	return ..()
 
 /mob/living/carbon/monkey/unathi/atom_init()
-
 	. = ..()
-	dna.mutantrace = "lizard"
 	greaterform = UNATHI
-	add_language("Sinta'unathi")
+	add_language(LANGUAGE_SINTAUNATHI)
 
 /mob/living/carbon/monkey/skrell/atom_init()
-
 	. = ..()
-	dna.mutantrace = "skrell"
 	greaterform = SKRELL
-	add_language("Skrellian")
+	add_language(LANGUAGE_SKRELLIAN)
 
 /mob/living/carbon/monkey/tajara/atom_init()
-
 	. = ..()
-	dna.mutantrace = "tajaran"
 	greaterform = TAJARAN
-	add_language("Siik'tajr")
-
-/mob/living/carbon/monkey/diona/atom_init()
-
-	. = ..()
-	gender = NEUTER
-	dna.mutantrace = "plant"
-	greaterform = DIONA
-	add_language("Rootspeak")
-
-/mob/living/carbon/monkey/diona/movement_delay()
-	return ..(tally = 3.5)
+	add_language(LANGUAGE_SIIKTAJR)
 
 /mob/living/carbon/monkey/movement_delay(tally = 0)
 	if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
@@ -179,16 +162,16 @@
 		flash_eyes()
 
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			if (stat != DEAD)
 				adjustBruteLoss(200)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			if (stat != DEAD)
 				adjustBruteLoss(30)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()

@@ -20,15 +20,19 @@
 
 	var/pulse = PULSE_NORM	//current pulse level
 
-	var/oxygen_alert = 0
-	var/phoron_alert = 0
-	var/fire_alert = 0
-	var/pressure_alert = 0
-	var/temperature_alert = 0
-	var/co2overloadtime = null
-	var/temperature_resistance = T0C+75
+	var/inhale_gas = "oxygen"
+	var/exhale_gas = "carbon_dioxide"
+	var/poison_gas = "phoron"
 
-	var/metabolism_factor = METABOLISM_FACTOR
+	//Alerts
+	var/inhale_alert = FALSE
+	var/poison_alert = FALSE
+	var/temp_alert = 0
+	var/pressure_alert = 0
+
+	var/co2overloadtime = null
+
+	var/datum/modval/metabolism_factor = new (METABOLISM_FACTOR, multiple = 0.0)
 
 	var/obj/item/head
 	var/obj/item/shoes

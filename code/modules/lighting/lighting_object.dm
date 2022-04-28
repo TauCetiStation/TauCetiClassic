@@ -8,11 +8,11 @@
 	color            = LIGHTING_BASE_MATRIX
 	plane            = LIGHTING_PLANE
 	mouse_opacity    = MOUSE_OPACITY_TRANSPARENT
-	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
 
 	simulated = FALSE
 	flags = NOREACT
+	flags_2 = PROHIBIT_FOR_DEMO_2 // can corrupt the demo
 
 	var/needs_update = FALSE
 	var/turf/myturf
@@ -27,7 +27,7 @@
 	myturf.lighting_object = src
 	myturf.luminosity = 0
 
-	for(var/turf/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+	for(var/turf/environment/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
 
 	needs_update = TRUE

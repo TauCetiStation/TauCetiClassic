@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 33
+#define SAVEFILE_VERSION_MAX 37
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -82,7 +82,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				language = A.name
 
 			var/datum/language/lang = all_languages[language]
-			if(!(species in lang.allowed_species))
+			if(!(species in lang.allowed_speak))
 				language = "None"
 				S["language"] << language
 
@@ -227,6 +227,25 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 33)
 		S["parallax_theme"] << null
 
+	// I missed the runtime and the code didnt work and the version of savefile has changed
+	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
+	if(current_version < 35)
+		if(ignore_question && ignore_question.len)
+			var/list/diff = ignore_question - global.full_ignore_question
+			if(diff.len)
+				S["ignore_question"] << ignore_question - diff
+
+	if(current_version < 36)
+		var/datum/job/assistant/J = new
+
+		if(player_alt_titles && (player_alt_titles[J.title] in list("Mecha Operator")))
+			player_alt_titles -= J.title
+
+	if(current_version < 37)
+		var/list/deleted_hairstyles = list("Skrell Long Female Tentacles", "Skrell Zeke Female Tentacles", "Gold plated Skrell Male Tentacles", "Gold chained Skrell Female Tentacles", "Cloth draped Skrell Male Tentacles", "Cloth draped Skrell Female Tentacles")
+		if(h_style in deleted_hairstyles)
+			h_style = "Skrell Long Tentacles"
+
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
 	if(!parent)
@@ -313,6 +332,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["outline_enabled"]   >> outline_enabled
 	S["outline_color"]     >> outline_color
 	S["eorg_enabled"]      >> eorg_enabled
+	S["show_runechat"]     >> show_runechat
 
 	// Custom hotkeys
 	S["key_bindings"] >> key_bindings
@@ -365,6 +385,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	outline_enabled = sanitize_integer(outline_enabled, 0, 1, initial(outline_enabled))
 	outline_color 	= normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
 	eorg_enabled 	= sanitize_integer(eorg_enabled, 0, 1, initial(eorg_enabled))
+	show_runechat	= sanitize_integer(show_runechat, 0, 1, initial(show_runechat))
 	if(!cid_list)
 		cid_list = list()
 	ignore_cid_warning	= sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
@@ -439,6 +460,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["outline_enabled"] << outline_enabled
 	S["outline_color"]   << outline_color
 	S["eorg_enabled"]    << eorg_enabled
+	S["show_runechat"]   << show_runechat
 	//TGUI
 	S["tgui_fancy"]		<< tgui_fancy
 	S["tgui_lock"]		<< tgui_lock
@@ -471,6 +493,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"] >> be_random_name
 	S["gender"]                >> gender
 	S["age"]                   >> age
+	S["height"]                >> height
 	S["species"]               >> species
 	S["language"]              >> language
 
@@ -554,6 +577,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, species_obj.min_age, species_obj.max_age, initial(age))
+	height			= sanitize_inlist(height, heights_list, initial(height))
 	r_hair			= sanitize_integer(r_hair, 0, 255, initial(r_hair))
 	g_hair			= sanitize_integer(g_hair, 0, 255, initial(g_hair))
 	b_hair			= sanitize_integer(b_hair, 0, 255, initial(b_hair))
@@ -656,6 +680,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"] << be_random_name
 	S["gender"]                << gender
 	S["age"]                   << age
+	S["height"]                << height
 	S["species"]               << species
 	S["language"]              << language
 	S["hair_red"]              << r_hair

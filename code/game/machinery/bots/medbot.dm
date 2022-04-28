@@ -70,6 +70,7 @@
 	else
 		botcard.access = botcard_access
 	icon_state = "medibot[on]"
+	add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/bot/medbot/turn_on()
@@ -499,7 +500,7 @@
 		if(!istype(D, /obj/machinery/door/firedoor) && D.check_access(botcard) && !istype(D,/obj/machinery/door/poddoor))
 			D.open()
 			frustration = 0
-	else if((istype(M, /mob/living)) && (!anchored))
+	else if((isliving(M)) && (!anchored))
 		loc = M.loc
 		frustration = 0
 	return

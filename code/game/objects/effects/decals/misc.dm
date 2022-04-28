@@ -3,8 +3,7 @@
 	desc = "It's an arrow hanging in mid-air. There may be a wizard about."
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "arrow"
-	plane = GAME_PLANE
-	layer = POINT_LAYER
+	plane = POINT_PLANE
 	anchored = TRUE
 
 /obj/effect/decal/point/atom_init(mapload, invisibility = 0)

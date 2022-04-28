@@ -143,7 +143,7 @@
 		var/obj/item/stack/cable_coil/C = I
 		if(C.use(5))
 			to_chat(user, "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>")
-			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)
+			var/obj/item/weapon/stock_parts/cell/potato/pocell = new(get_turf(user))
 			pocell.maxcharge = src.potency * 10
 			pocell.charge = pocell.maxcharge
 			qdel(src)
@@ -257,7 +257,7 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mtear/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
 	var/obj/item/stack/medical/ointment/tajaran/poultice = new /obj/item/stack/medical/ointment/tajaran(user.loc)
 
@@ -267,7 +267,7 @@
 	to_chat(user, "<span class='notice'>You mash the petals into a poultice.</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shand/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
 	var/obj/item/stack/medical/bruise_pack/tajaran/poultice = new /obj/item/stack/medical/bruise_pack/tajaran(user.loc)
 
@@ -632,7 +632,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/tomato_smudge(loc)
-	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato
@@ -656,7 +656,7 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
 	new /mob/living/simple_animal/hostile/tomato(user.loc, potency)
 	qdel(src)
@@ -687,7 +687,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/blood/splatter(loc)
-	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
 		reagents.reaction(A)
@@ -710,7 +710,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/blood/oil(loc)
-	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
 		reagents.reaction(A)
@@ -929,7 +929,7 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
 	new /mob/living/simple_animal/mushroom(user.loc)
 	qdel(src)
@@ -967,7 +967,7 @@
 	set_light(round(potency/10,1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
-	if(istype(user.loc,/turf/space))
+	if(isspaceturf(user.loc))
 		return
 	var/obj/effect/glowshroom/planted = new /obj/effect/glowshroom(user.loc)
 
@@ -1058,13 +1058,13 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
 		new/obj/effect/decal/cleanable/blood/oil(loc)
-		visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+		visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 		qdel(src)
 		return
 	for(var/turf/T in orange(M,outer_teleport_radius))
 		if(T in orange(M,inner_teleport_radius))
 			continue
-		if(istype(T, /turf/space))
+		if(isenvironmentturf(T))
 			continue
 		if(T.density)
 			continue
@@ -1101,5 +1101,5 @@
 				s.set_up(3, 1, A)
 				s.start()
 	new/obj/effect/decal/cleanable/blood/oil(loc)
-	visible_message("<span class='notice'>The [name] has been squashed, causing a distortion in space-time.</span>","<span class='moderate'>You hear a splat and a crackle.</span>")
+	visible_message("<span class='notice'>The [name] has been squashed, causing a distortion in space-time.</span>","<span class='notice'>You hear a splat and a crackle.</span>")
 	qdel(src)

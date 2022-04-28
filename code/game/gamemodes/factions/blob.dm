@@ -38,7 +38,7 @@
 	. = FALSE
 	var/ded = TRUE
 	for (var/datum/role/R in members)
-		if (R.antag && R.antag.current && !(R.antag.current.is_dead()))
+		if (R.antag.current && !(R.antag.current.is_dead()))
 			ded = FALSE
 
 	if(!ded)
@@ -114,10 +114,10 @@
 		if(FS_ACTIVE)
 			for(var/mob/M in player_list)
 				var/T = M.loc
-				if(istype(T, /turf/space) || istype(T, /turf) && !is_station_level(M.z))
+				if(isspaceturf(T) || isturf(T) && !is_station_level(M.z))
 					pre_escapees += M.real_name
 			send_intercept(FS_ACTIVE)
-			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
+			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				var/law = "The station is under quarantine. Do not permit anyone to leave so long as blob overminds are present. Disregard all other laws if necessary to preserve quarantine."
 				aiPlayer.set_zeroth_law(law)
 			SSshuttle.fake_recall = TRUE //Quarantine
@@ -132,7 +132,7 @@
 				if(bomb && bomb.r_code)
 					if(is_station_level(bomb.z))
 						nukecode = bomb.r_code
-			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
+			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				var/law = "Directive 7-12 has been authorized. Allow no sentient being to escape the purge. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
 				aiPlayer.set_zeroth_law(law)
 		if (FS_DEFEATED) //Cleanup time
@@ -142,7 +142,7 @@
 			send_intercept(FS_DEFEATED)
 			SSshuttle.fake_recall = FALSE
 			declared = FALSE
-			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
+			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				aiPlayer.set_zeroth_law("")
 
 /datum/faction/blob_conglomerate/proc/send_intercept(report = FS_ACTIVE)
@@ -248,9 +248,9 @@ Message ends."}
 			continue
 		else
 			var/T = M.loc
-			if (istype(T, /turf/space))
+			if (isspaceturf(T))
 				result["numSpace"]++
-			else if(istype(T, /turf))
+			else if(isturf(T))
 				if (M.z!=1)
 					result["numOffStation"]++
 				else
@@ -298,7 +298,7 @@ Message ends."}
 						grille += 1
 				else if(istype(O, /obj/machinery/door))
 					door += 1
-				else if(istype(O, /obj/machinery))
+				else if(ismachinery(O))
 					mach += 1
 
 	if(count_territories)

@@ -1,4 +1,4 @@
-var/list/ventcrawl_machinery = list(
+var/global/list/ventcrawl_machinery = list(
 	/obj/machinery/atmospherics/components/unary/vent_scrubber,
 	/obj/machinery/atmospherics/components/unary/vent_pump
 	)
@@ -91,7 +91,7 @@ var/list/ventcrawl_machinery = list(
 	to_chat(src, "You begin climbing into the ventilation system...")
 	var/time = 40
 	if(w_class)
-		time = w_class^2
+		time = w_class ** 2
 	if(!do_after(src, time, null, vent_found))
 		return
 
@@ -150,7 +150,6 @@ var/list/ventcrawl_machinery = list(
 		var/obj/machinery/atmospherics/A = X //all elements in totalMembers are necessarily of this type.
 		if(!A.pipe_image)
 			A.pipe_image = image(A, A.loc, dir = A.dir)
-		A.pipe_image.layer = HUD_LAYER
 		A.pipe_image.plane = HUD_PLANE
 		pipes_shown += A.pipe_image
 		client.images += A.pipe_image

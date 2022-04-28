@@ -24,3 +24,4 @@
 	PulseAnimation()
 
 	overmind.add_points(1)
+

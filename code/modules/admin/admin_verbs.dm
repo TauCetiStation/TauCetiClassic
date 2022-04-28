@@ -1,5 +1,5 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
-var/list/admin_verbs_default = list(
+var/global/list/admin_verbs_default = list(
 	/client/proc/deadmin_self,			//destroys our own admin datum so we can play as a regular player,
 	/client/proc/hide_verbs,			//hides all our adminverbs,
 	/client/proc/hide_most_verbs,		//hides all our hideable adminverbs,
@@ -7,7 +7,7 @@ var/list/admin_verbs_default = list(
 	/datum/admins/proc/show_player_panel,	//shows an interface for individual players, with various links (links require additional flags,
 	/client/proc/player_panel,
 	)
-var/list/admin_verbs_admin = list(
+var/global/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		//shows an interface for all players, with links to various panels,
 	/client/proc/invisimin,				//allows our mob to go invisible/visible,
 	/datum/admins/proc/toggleenter,		//toggles whether people can join the current game,
@@ -74,7 +74,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/set_bwoink_sound, // affects only the admin that put it there,
 	/client/proc/send_gods_message,
 	)
-var/list/admin_verbs_log = list(
+var/global/list/admin_verbs_log = list(
 	/client/proc/show_player_notes,
 	/client/proc/getserverlogs,			//allows us to fetch server logs (diary) for other days,
 	/client/proc/getcurrentlogs,			//allows us to fetch logs for other days,
@@ -83,23 +83,23 @@ var/list/admin_verbs_log = list(
 	/client/proc/investigate_show,		//various admintools for investigation. Such as a singulo grief-log,
 	/client/proc/view_runtimes
 	)
-var/list/admin_verbs_variables = list(
+var/global/list/admin_verbs_variables = list(
 	/client/proc/debug_variables,
 	/client/proc/add_player_age,
 	/client/proc/grand_guard_pass,
 	/client/proc/mass_apply_status_effect,
 )
-var/list/admin_verbs_ban = list(
+var/global/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
 	/client/proc/stickybanpanel,
 	)
-var/list/admin_verbs_sounds = list(
+var/global/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
 	/client/proc/play_global_sound,
 	/client/proc/stop_server_sound,
 	/client/proc/play_server_sound
 	)
-var/list/admin_verbs_fun = list(
+var/global/list/admin_verbs_fun = list(
 	/client/proc/change_title_screen,
 	/client/proc/object_talk,
 	/client/proc/cmd_admin_dress,
@@ -125,12 +125,12 @@ var/list/admin_verbs_fun = list(
 	/client/proc/centcom_barriers_toggle,
 	/client/proc/gateway_toggle
 	)
-var/list/admin_verbs_spawn = list(
+var/global/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		//allows us to spawn instances,
 	/client/proc/respawn_character,
 	/datum/admins/proc/spawn_fluid_verb
 	)
-var/list/admin_verbs_server = list(
+var/global/list/admin_verbs_server = list(
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/delay,
@@ -153,10 +153,11 @@ var/list/admin_verbs_server = list(
 	/client/proc/adminchangemap,
 	/datum/admins/proc/toggle_deathmatch_arena,
 	)
-var/list/admin_verbs_debug = list(
+var/global/list/admin_verbs_debug = list(
 	/client/proc/edit_color_matrix,
 	/client/proc/restart_controller,
 	/client/proc/generate_round_scoreboard,
+	/client/proc/save_statistics,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/forceEvent,
@@ -186,12 +187,17 @@ var/list/admin_verbs_debug = list(
 	/client/proc/debugNatureMapGenerator,
 	/datum/admins/proc/run_unit_test,
 	/client/proc/event_manager_panel,
+#ifdef REFERENCE_TRACKING
+/client/proc/find_refs,
+/client/proc/qdel_then_find_references,
+/client/proc/qdel_then_if_fail_find_references,
+#endif
 	)
-var/list/admin_verbs_possess = list(
+var/global/list/admin_verbs_possess = list(
 	/proc/possess,
 	/proc/release
 	)
-var/list/admin_verbs_permissions = list(
+var/global/list/admin_verbs_permissions = list(
 	/client/proc/edit_admin_permissions,
 	/client/proc/library_debug_remove,
 	/client/proc/library_debug_read,
@@ -199,17 +205,17 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/host_announcements,
 	/client/proc/add_round_admin,
 	)
-var/list/admin_verbs_rejuv = list(
+var/global/list/admin_verbs_rejuv = list(
 	/client/proc/cmd_admin_rejuvenate,
 	/client/proc/respawn_character
 	)
-var/list/admin_verbs_whitelist = list(
+var/global/list/admin_verbs_whitelist = list(
 	/client/proc/get_whitelist, 			//Whitelist,
 	/client/proc/add_to_whitelist,
 	/datum/admins/proc/whitelist_panel,
 	/datum/admins/proc/toggle_job_restriction
 	)
-var/list/admin_verbs_event = list(
+var/global/list/admin_verbs_event = list(
 	/client/proc/event_map_loader,
 	/client/proc/admin_crew_salary,
 	/client/proc/event_manager_panel,
@@ -217,7 +223,7 @@ var/list/admin_verbs_event = list(
 	)
 
 //verbs which can be hidden - needs work
-var/list/admin_verbs_hideable = list(
+var/global/list/admin_verbs_hideable = list(
 	/client/proc/set_global_ooc,
 	/datum/admins/proc/library_recycle_bin,
 	/client/proc/deadmin_self,
@@ -274,6 +280,7 @@ var/list/admin_verbs_hideable = list(
 	/datum/admins/proc/toggleAI,
 	/client/proc/restart_controller,
 	/client/proc/generate_round_scoreboard,
+	/client/proc/save_statistics,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
 	/datum/admins/proc/adjump,
@@ -395,7 +402,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	set name = "Aghost"
 	if(!holder)	return
-	if(istype(mob,/mob/dead/observer))
+	if(isobserver(mob))
 		//re-enter
 		var/mob/dead/observer/ghost = mob
 		ghost.can_reenter_corpse = TRUE
@@ -727,7 +734,7 @@ var/list/admin_verbs_hideable = list(
 		if("Cancel")
 			return
 
-	for(var/mob/dead/new_player/N in new_player_list)
+	for(var/mob/dead/new_player/N as anything in new_player_list)
 		N.show_titlescreen()
 
 /client/proc/object_talk(msg as text) // -- TLE
@@ -805,7 +812,7 @@ var/list/admin_verbs_hideable = list(
 	if(!check_rights(R_FUN))
 		return
 
-	if(!istype(M, /mob/living/carbon/human))
+	if(!ishuman(M))
 		to_chat(usr, "<span class='warning'>You can only do this to humans!</span>")
 		return
 	switch(tgui_alert(usr, "Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",, list("Yes","No")))
@@ -1020,7 +1027,7 @@ var/list/admin_verbs_hideable = list(
 	var/name = sanitize(input("What will you call your achievement?", "Achievement Winner", "New Achievement"))
 	var/desc = sanitize(input("What description will you give it?", "Achievement Description", "You Win"))
 
-	if(istype(winner, /mob/living))
+	if(isliving(winner))
 		achoice = tgui_alert(usr, "Give our winner his own trophy?","Achievement Trophy", list("Confirm","Cancel"))
 
 	var/glob = tgui_alert(usr, "Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", list("No!","Yes!"))
@@ -1045,7 +1052,7 @@ var/list/admin_verbs_hideable = list(
 
 	to_chat(winner, "<span class='danger'>Congratulations!</span>")
 
-	achievements += list(list("key" = winner.key, "name" = winner.name, "title" = name, "desc" = desc))
+	SSStatistics.add_achievement(winner.key, winner.name, name, desc)
 
 /client/proc/aooc()
 	set category = "Admin"
@@ -1063,7 +1070,7 @@ var/list/admin_verbs_hideable = list(
 
 	for(var/mob/M in player_list)
 		if((isanyantag(M)) || (M.client && M.client.holder))
-			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
+			to_chat(M, "<span class='antagooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span>")
 
 	log_ooc("Antag-OOC: [key_name(src)] : [msg]")
 
@@ -1176,7 +1183,7 @@ var/list/admin_verbs_hideable = list(
 //////////////////////////////
 // Velocity\Centcomm barriers
 //////////////////////////////
-var/centcom_barriers_stat = 1
+var/global/centcom_barriers_stat = 1
 
 /client/proc/centcom_barriers_toggle()
 	set category = "Event"
@@ -1205,7 +1212,7 @@ var/centcom_barriers_stat = 1
 /obj/effect/landmark/trololo/Crossed(atom/movable/AM)
 	. = ..()
 	if(!active) return
-	/*if(istype(M, /mob/living/carbon))
+	/*if(iscarbon(M))
 		M.playsound_local(null, melody, VOL_EFFECTS_MASTER, 20, FALSE, channel = lchannel, wait = TRUE, ignore_environment = TRUE)*/
 
 /obj/structure/centcom_barrier
