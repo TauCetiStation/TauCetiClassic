@@ -225,13 +225,12 @@
 /datum/skillset/scientist/phoron
 	name = "Phoron Researcher"
 	initial_skills = list(
-		/datum/skill/research/trained,
+		/datum/skill/research/pro,
 		/datum/skill/atmospherics/trained,
 		/datum/skill/construction/novice,
 		/datum/skill/engineering/novice,
 		/datum/skill/chemistry/trained,
 		/datum/skill/medical/novice,
-		/datum/skill/surgery/novice,
 		/datum/skill/civ_mech/novice
 	)
 
