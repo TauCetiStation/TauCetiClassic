@@ -558,6 +558,7 @@
 
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
+			/obj/item/clothing/mask/gas/syndicate = /obj/item/clothing/mask/gas/vox
 			)
 
 /datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)

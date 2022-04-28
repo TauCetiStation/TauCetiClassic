@@ -155,32 +155,25 @@
 	name = "Exosuit Drop System"
 	desc = "A module for exosuit, that allow you launching at Long distances"
 	item = /obj/item/mecha_parts/mecha_equipment/Drop_system
-	cost = 10
+	cost = 5
 
 /datum/intruder_tools/droppod
 	name = "Drop Pod"
 	desc = "A two-seater pod, that can fall into station, aim system can be upgraded with camera bug and simple Drop System."
 	item = /obj/item/device/drop_caller/Syndi
-	cost = 7
+	cost = 5
 
 /datum/intruder_tools/drop_aim
 	name = "Simple Drop System"
 	desc = "A simple drop system, which can be installed in pods to increase accuracy of droping"
 	item =  /obj/item/weapon/simple_drop_system
-	cost = 6
+	cost = 4
 
 /datum/intruder_tools/camera_bug
 	name = "Camera Bug"
 	desc = "Can be attached to Drop Pod to reach exemplary accuracy and allow to return to the base."
 	item = /obj/item/device/camera_bug
 	cost = 2
-
-/datum/intruder_tools/rig
-	name = "Syndi Rig"
-	desc = "The red syndicate space rig with additional armor plating.\
-	 Nanotrasen crewmembers are trained to report red space suit sightings."
-	item = /obj/item/weapon/storage/box/syndie_kit/rig
-	cost = 8
 
 /datum/intruder_tools/heavy_rig
 	name = "Heavy Syndi Rig"

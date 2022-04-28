@@ -223,6 +223,74 @@
 	)
 	refill_canister = /obj/item/weapon/vending_refill/blood
 
+/obj/machinery/vending/syndi
+	name = "KillNTVend"
+    desc = "Special items for killers, mercenaries, pirrrates and other syndicate workers. Waffle.co property."
+	icon_state = "syndivend"
+	icon_deny = "syndivend-deny"
+	product_ads = "kill corporate bastards!; Killcaptain and gutted his corpse!; Blow up the damn station!."
+	products = list(
+		/obj/item/weapon/storage/pouch/ammo = 6,
+		/obj/item/clothing/accessory/holster/armpit = 6,
+		/obj/item/device/hud_calibrator = 3,
+		/obj/item/weapon/storage/backpack/dufflebag = 3,
+		/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate = 2,
+	)
+	contraband = list(
+		/obj/item/weapon/reagent_containers/pill/cyanide = 20,
+	)
+	syndie = list(
+	/obj/item/toy/syndicateballoon = 6,
+	)
+/obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)
+	if(istype(I,/obj/item/weapon/mining_voucher/syndi))
+		RedeemVoucher(I, user)
+	return
+
+/obj/machinery/vending/syndi/proc/populate_selection()
+	selection_items = list(
+	"Scout kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "c20r"),
+	"Sniper kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "heavyrifle"),
+	"Assaultman kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "a74"),
+	"Boom-boom kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "drozd"),
+	"Melee kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "sword1"),
+	"Hacker kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "bulldog"),
+	"Machinengunner kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "l6closed100"),
+	"Custom kit" = image(icon = 'icons/obj/device.dmi', icon_state = "radio"),
+
+obj/machinery/vending/syndi/proc/RedeemVoucher(obj/voucher, redeemer)
+	if(voucher.in_use)
+		return
+	voucher.in_use = 1
+	if(!selection_items)
+		populate_selection()
+	var/selection = show_radial_menu(redeemer, src, selection_items, require_near = TRUE, tooltips = TRUE)
+	if(!selection || !Adjacent(redeemer))
+			voucher.in_use = 0
+			return
+	switch(selection)
+		if("Scout kit")
+			new /obj/item/weapon/resonator(src.loc)
+		if("Sniper kit")
+			new /obj/item/weapon/resonator(src.loc)
+		if("Assaultman kit")
+			new /obj/item/weapon/resonator(src.loc)
+		if("Boom-boom kit")
+			new /obj/item/weapon/resonator(src.loc)
+		if("Melee kit")
+			new /obj/item/weapon/resonator(src.loc)
+		if("Machinengunner kit")
+			new /obj/item/weapon/resonator(src.loc)
+		if("Hacker kit")
+			new /obj/item/weapon/resonator(src.loc)
+		if("Custom kit")
+			new /obj/item/weapon/resonator(src.loc)
+		if("Cancel")
+			voucher.in_use = 0
+			return
+	qdel(voucher)
+
+
 //from old nanotrasen
 /obj/machinery/vending/holy
 	name = "HolyVend"

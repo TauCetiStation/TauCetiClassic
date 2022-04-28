@@ -2,12 +2,22 @@
 	name = "Nuclear Agent"
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/boots/combat
+	glasses = /obj/item/clothing/glasses/night
+	mask = /obj/item/clothing/mask/gas/syndicate
+	gloves = /obj/item/clothing/gloves/combat
 	l_ear = /obj/item/device/radio/headset/syndicate
+	l_pocket = /obj/item/weapon/storage/pouch/ammo
+	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster
 	id = /obj/item/weapon/card/id/syndicate/nuker
-	belt = /obj/item/weapon/gun/projectile/automatic/pistol
+	belt = /obj/item/weapon/storage/belt/military
+	belt_contents = list(
+		/obj/item/clothing/accessory/holster
+		/obj/item/weapon/pinpointer/nukeop
+	)
 	back = PREFERENCE_BACKPACK_FORCE
 	backpack_contents = list(
 		/obj/item/weapon/reagent_containers/pill/cyanide,
+		/obj/item/weapon/gun/projectile/automatic/pistol
 		/obj/item/ammo_box/magazine/m9mm,
 		)
 	implants = list(
@@ -21,9 +31,9 @@
 /datum/outfit/nuclear/leader
 	name = "Nuclear Commander"
 	id = /obj/item/weapon/card/id/syndicate/commander
-	belt = /obj/item/weapon/gun/projectile/revolver
 	backpack_contents = list(
 		/obj/item/device/radio/uplink,
+		/obj/item/weapon/gun/projectile/revolver
 		/obj/item/weapon/reagent_containers/pill/cyanide,
 		/obj/item/ammo_box/a357,
 		)
