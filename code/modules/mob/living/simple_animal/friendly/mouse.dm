@@ -43,20 +43,7 @@
 	if(!stat && prob(speak_chance))
 		for(var/mob/M in view())
 			M.playsound_local(loc, 'sound/effects/mousesqueek.ogg', VOL_EFFECTS_MASTER)
-
-	if(!ckey && stat == CONSCIOUS && prob(0.5))
-		stat = UNCONSCIOUS
-		icon_state = "mouse_[body_color]_sleep"
-		wander = FALSE
-		speak_chance = 0
-		//snuffles
-	else if(stat == UNCONSCIOUS)
-		if(ckey || prob(1))
-			stat = CONSCIOUS
-			icon_state = "mouse_[body_color]"
-			wander = TRUE
-		else if(prob(5))
-			emote("snuffles")
+	snuffles()
 
 /mob/living/simple_animal/mouse/atom_init()
 	. = ..()
@@ -78,6 +65,20 @@
 	icon_move = "mouse_[body_color]_move"
 	desc = "It's a small [body_color] rodent, often seen hiding in maintenance areas and making a nuisance of itself."
 
+/mob/living/simple_animal/mouse/proc/snuffles()
+	if(!ckey && stat == CONSCIOUS && prob(0.5))
+		stat = UNCONSCIOUS
+		icon_state = "mouse_[body_color]_sleep"
+		wander = FALSE
+		speak_chance = 0
+		//snuffles
+	else if(stat == UNCONSCIOUS)
+		if(ckey || prob(1))
+			stat = CONSCIOUS
+			icon_state = "mouse_[body_color]"
+			wander = TRUE
+		else if(prob(5))
+			emote("snuffles")
 
 /mob/living/simple_animal/mouse/proc/splat()
 	health = 0
@@ -103,6 +104,9 @@
 	if (stat >= DEAD)
 		return
 	..()
+
+/mob/living/simple_animal/mouse/handle_gnaw()
+	. = ..()
 
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/mouse/verb/hide()
@@ -194,11 +198,11 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
 
+
 /mob/living/simple_animal/mouse/rat
 	name = "Rat"
-	melee_damage = 1
+	melee_damage = 2
 	ventcrawler = 0
-	var/structure_damage = 2
 
 /mob/living/simple_animal/mouse/rat/atom_init()
 	. = ..()
@@ -210,4 +214,19 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 
 /mob/living/simple_animal/mouse/rat/Life()
 	..()
-	handle_gnaw(structure_damage)
+	handle_gnaw()
+
+/mob/living/simple_animal/mouse/rat/handle_gnaw()
+	. = ..()
+	var/turf/T = get_turf(src)
+	for(var/obj/structure/disposalpipe/D in T)
+		D.wear_out(melee_damage)
+	return
+
+/mob/living/simple_animal/mouse/rat/splat()
+	..()
+	icon_dead = "rat_dead"
+	icon_state = "rat_dead"
+
+/mob/living/simple_animal/mouse/rat/snuffles()
+	return FALSE

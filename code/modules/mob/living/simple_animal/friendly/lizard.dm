@@ -16,21 +16,20 @@
 	layer = MOB_LAYER
 	pass_flags = PASSTABLE
 	attacktext = "gnaw"
-	melee_damage = 2
+	melee_damage = 1
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	ventcrawler = 2
 	holder_type = /obj/item/weapon/holder/lizard
 	w_class = SIZE_MINUSCULE
-	var/structure_damage = 1
 
 	has_head = TRUE
 	has_leg = TRUE
 
 /mob/living/simple_animal/lizard/Life()
 	..()
-	handle_gnaw(structure_damage)
+	handle_gnaw()
 
 /mob/living/simple_animal/lizard/death()
 	. = ..()
@@ -59,5 +58,5 @@
 		return
 	..()
 
-
-
+/mob/living/simple_animal/lizard/handle_gnaw()
+	return ..()

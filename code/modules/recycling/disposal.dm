@@ -873,8 +873,8 @@
 	healthcheck()
 
 //for pest rats
-/obj/structure/disposalpipe/proc/get_damage(structure_damage)
-	health -= structure_damage
+/obj/structure/disposalpipe/proc/wear_out(melee_damage)
+	health -= melee_damage
 	healthcheck()
 
 // test health for brokenness
