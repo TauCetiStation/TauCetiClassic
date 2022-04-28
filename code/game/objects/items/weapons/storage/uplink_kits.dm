@@ -327,7 +327,7 @@
 
 //loadouts
 
-obj/item/weapon/storage/box/syndie_kit/nuke/scout
+/obj/item/weapon/storage/box/syndie_kit/nuke/scout
 	name = "scout kit"
 
 /obj/item/weapon/storage/box/syndie_kit/nuke/scout/atom_init()
@@ -345,7 +345,7 @@ obj/item/weapon/storage/box/syndie_kit/nuke/scout
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
 	make_exact_fit()
 
-obj/item/weapon/storage/box/syndie_kit/nuke/assaultman
+/obj/item/weapon/storage/box/syndie_kit/nuke/assaultman
 	name = "assaultman kit"
 
 /obj/item/weapon/storage/box/syndie_kit/nuke/assaultman/atom_init()
@@ -360,7 +360,7 @@ obj/item/weapon/storage/box/syndie_kit/nuke/assaultman
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
 	make_exact_fit()
 
-obj/item/weapon/storage/box/syndie_kit/nuke/hacker
+/obj/item/weapon/storage/box/syndie_kit/nuke/hacker
 	name = "hacker kit"
 
 /obj/item/weapon/storage/box/syndie_kit/nuke/hacker/atom_init()
@@ -382,7 +382,7 @@ obj/item/weapon/storage/box/syndie_kit/nuke/hacker
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
 	make_exact_fit()
 
-obj/item/weapon/storage/box/syndie_kit/nuke/sniper
+/obj/item/weapon/storage/box/syndie_kit/nuke/sniper
 	name = "sniper kit"
 
 /obj/item/weapon/storage/box/syndie_kit/nuke/sniper/atom_init()
@@ -392,7 +392,7 @@ obj/item/weapon/storage/box/syndie_kit/nuke/sniper
 	new /obj/item/clothing/glasses/thermal/syndi(src)
 	new /obj/item/weapon/card/emag(src)
 	new /obj/item/weapon/pen/edagger(src)
-	new/obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/weapon/grenade/smokebomb(src)
 	new /obj/item/clothing/suit/space/rig/syndi(src)
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
 	make_exact_fit()
@@ -400,7 +400,7 @@ obj/item/weapon/storage/box/syndie_kit/nuke/sniper
 /obj/item/weapon/storage/box/syndie_kit/nuke/demo
 	name = "demolition and explosion kit"
 
-/obj/item/weapon/storage/box/syndie_kit/nuke/demo/atom_init
+/obj/item/weapon/storage/box/syndie_kit/nuke/demo/atom_init()
 	. = ..()
 	new /obj/item/ammo_casing/r4046/explosive(src)
 	new /obj/item/ammo_box/magazine/drozd127(src)
@@ -413,7 +413,7 @@ obj/item/weapon/storage/box/syndie_kit/nuke/sniper
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
 	make_exact_fit()
 
-obj/item/weapon/storage/box/syndie_kit/nuke/melee
+/obj/item/weapon/storage/box/syndie_kit/nuke/melee
 	name = "melee weapon kit"
 
 /obj/item/weapon/storage/box/syndie_kit/nuke/melee/atom_init()
@@ -431,7 +431,7 @@ obj/item/weapon/storage/box/syndie_kit/nuke/melee
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
 	make_exact_fit()
 
-obj/item/weapon/storage/box/syndie_kit/nuke/heavygunner
+/obj/item/weapon/storage/box/syndie_kit/nuke/heavygunner
 	name = "heavy machine gunner kit"
 
 /obj/item/weapon/storage/box/syndie_kit/nuke/heavygunner/atom_init()
