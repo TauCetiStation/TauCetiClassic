@@ -60,10 +60,14 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	var/datum/announcement/centcomm/vox/returns/announce_returns = new
 
 	// Random turfs of the transit areas for the interface
-	var/turf/NE_solars
-	var/turf/NW_solars
-	var/turf/SE_solars
-	var/turf/SW_solars
+	var/list/solar_coords = list()
+
+	var/list/solar_by_type = list(
+		"solars_fore_starboard" = /area/shuttle/vox/northeast_solars,
+		"solars_fore_port"      = /area/shuttle/vox/northwest_solars,
+		"solars_aft_starboard"  = /area/shuttle/vox/southeast_solars,
+		"solars_aft_port"       = /area/shuttle/vox/southwest_solars,
+	)
 
 /obj/machinery/computer/vox_station/atom_init()
 	. = ..()
@@ -126,14 +130,21 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	. = ..()
 
 /obj/machinery/computer/vox_station/ui_interact(mob/user)
-	if(!NE_solars)
-		NE_solars = pick(get_area_turfs(/area/shuttle/vox/northeast_solars, FALSE))
-		NW_solars = pick(get_area_turfs(/area/shuttle/vox/northwest_solars, FALSE))
-		SE_solars = pick(get_area_turfs(/area/shuttle/vox/southeast_solars, FALSE))
-		SW_solars = pick(get_area_turfs(/area/shuttle/vox/southwest_solars, FALSE))
+	if(!solar_coords.len)
+		for(var/ref in solar_by_type)
+			var/turf/rand = pick(get_area_turfs(solar_by_type[ref], FALSE))
+			solar_coords[ref] = list(rand.x, rand.y)
 
 	// beautifully
-	var/X = "&times;"
+	var/const/X = "&times;"
+
+	var/button_html = ""
+	for(var/ref in solar_coords)
+		button_html += {"
+		<a href='?src=\ref[src];[ref]=1'
+			style='position: absolute; top: [world.maxy-solar_coords[ref][2]]px; left: [solar_coords[ref][1]]px;'>
+			[X]
+		</a>"}
 
 	var/time_to_move = max(lastMove + VOX_SHUTTLE_COOLDOWN - world.time, 0)
 	var/time_seconds = round(time_to_move * 0.1)
@@ -144,10 +155,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 		<a href='?src=\ref[src];start=1' style='width:100%;text-align:center'>Вернуться в далёкий космос</a>
 		<div class="center_div" style="position: relative;" >
 			<img src="nanomap_[SSmapping.station_image]_1.png" width="[world.maxx]px" height="[world.maxy]px">
-			<a href='?src=\ref[src];solars_fore_port=1' style='position: absolute; top: [world.maxy-NW_solars.y]px; left: [NW_solars.x]px;'>[X]</a>
-			<a href='?src=\ref[src];solars_fore_starboard=1' style='position: absolute; top: [world.maxy-NE_solars.y]px; left: [NE_solars.x]px;'>[X]</a>
-			<a href='?src=\ref[src];solars_aft_port=1' style='position: absolute; top: [world.maxy-SW_solars.y]px; left: [SW_solars.x]px;'>[X]</a>
-			<a href='?src=\ref[src];solars_aft_starboard=1' style='position: absolute; top: [world.maxy-SE_solars.y]px; left: [SE_solars.x]px;'>[X]</a>
+			[button_html]
 		</div>
 		<a href='?src=\ref[src];mining=1' style='width:100%;text-align:center'>Шахтёрский астероид</a><br><br>"}
 
@@ -168,16 +176,15 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 				addtimer(CALLBACK(src, .proc/reset_warning), 10 SECONDS) // so, if someone accidentaly uses this, it won't stuck for a whole round.
 				return
 		vox_move_to(/area/shuttle/vox/arkship)
-	else if(href_list["solars_fore_starboard"])
-		vox_move_to(/area/shuttle/vox/northeast_solars)
-	else if(href_list["solars_fore_port"])
-		vox_move_to(/area/shuttle/vox/northwest_solars)
-	else if(href_list["solars_aft_starboard"])
-		vox_move_to(/area/shuttle/vox/southeast_solars)
-	else if(href_list["solars_aft_port"])
-		vox_move_to(/area/shuttle/vox/southwest_solars)
+
 	else if(href_list["mining"])
 		vox_move_to(/area/shuttle/vox/mining)
+
+	else
+		for(var/ref in href_list)
+			if(solar_by_type[ref])
+				vox_move_to(solar_by_type[ref])
+				break
 
 	updateUsrDialog()
 
