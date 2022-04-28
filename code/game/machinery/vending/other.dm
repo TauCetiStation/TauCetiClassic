@@ -228,6 +228,9 @@
 	desc = "Special items for killers, mercenaries, pirrrates and other syndicate workers. Waffle.co property."
 	icon_state = "syndivend"
 	icon_deny = "syndivend-deny"
+	req_access = list(150)
+	density = TRUE
+	anchored = TRUE
 	product_ads = "kill corporate bastards!; Killcaptain and gutted his corpse!; Blow up the damn station!."
 	products = list(
 		/obj/item/weapon/storage/pouch/ammo = 6,
@@ -245,8 +248,9 @@
 /obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/mining_voucher/syndi))
 		RedeemVoucher(I, user)
-	return
 
+	return
+var/static/list/selection_items
 /obj/machinery/vending/syndi/proc/populate_selection()
 	selection_items = list(
 	"Scout kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "c20r"),
@@ -266,9 +270,6 @@ obj/machinery/vending/syndi/proc/RedeemVoucher(obj/voucher, redeemer)
 	if(!selection_items)
 		populate_selection()
 	var/selection = show_radial_menu(redeemer, src, selection_items, require_near = TRUE, tooltips = TRUE)
-	if(!selection || !Adjacent(redeemer))
-			voucher.in_use = 0
-			return
 	switch(selection)
 		if("Scout kit")
 			new /obj/item/weapon/storage/box/syndie_kit/nuke/scout(src.loc)
@@ -287,7 +288,7 @@ obj/machinery/vending/syndi/proc/RedeemVoucher(obj/voucher, redeemer)
 		if("Custom kit")
 			new /obj/item/weapon/storage/box/syndie_kit/nuke/custom(src.loc)
 		if("Cancel")
-			voucher.in_use = 0
+			voucher.in_use = 1
 			return
 	qdel(voucher)
 

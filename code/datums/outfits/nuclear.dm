@@ -10,15 +10,14 @@
 	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster
 	id = /obj/item/weapon/card/id/syndicate/nuker
 	belt = /obj/item/weapon/storage/belt/military
-	belt_contents = list(
-		/obj/item/clothing/accessory/holster,
-		/obj/item/weapon/pinpointer/nukeop,
-	)
 	back = PREFERENCE_BACKPACK_FORCE
 	backpack_contents = list(
 		/obj/item/weapon/reagent_containers/pill/cyanide,
 		/obj/item/weapon/gun/projectile/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm,
+		/obj/item/clothing/accessory/holster,
+		/obj/item/weapon/pinpointer/nukeop,
+		/obj/item/weapon/mining_voucher/syndi
 		)
 	implants = list(
 		/obj/item/weapon/implant/dexplosive
@@ -36,6 +35,7 @@
 		/obj/item/weapon/gun/projectile/revolver,
 		/obj/item/weapon/reagent_containers/pill/cyanide,
 		/obj/item/ammo_box/a357,
+		/obj/item/weapon/mining_voucher/syndi
 		)
 
 /datum/outfit/nuclear/unathi_equip()
