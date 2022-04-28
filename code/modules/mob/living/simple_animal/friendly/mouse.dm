@@ -199,7 +199,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 	desc = "It's a big pest mouse."
 	melee_damage = 1
 	ventcrawler = 0
+	var/structure_damage = 2
 
 /mob/living/simple_animal/mouse/rat/Life()
 	..()
-	handle_gnaw()
+	handle_gnaw(structure_damage)

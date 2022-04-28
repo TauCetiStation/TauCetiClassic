@@ -23,13 +23,14 @@
 	ventcrawler = 2
 	holder_type = /obj/item/weapon/holder/lizard
 	w_class = SIZE_MINUSCULE
+	var/structure_damage = 1
 
 	has_head = TRUE
 	has_leg = TRUE
 
 /mob/living/simple_animal/lizard/Life()
 	..()
-	handle_gnaw()
+	handle_gnaw(structure_damage)
 
 /mob/living/simple_animal/lizard/death()
 	. = ..()

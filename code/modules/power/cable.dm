@@ -34,7 +34,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/d2 = 1   // cable direction 2 (see above)
 	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	color = COLOR_RED
-	var/healthpoints = 5
+	var/health = 5
 
 /obj/structure/cable/yellow
 	color = COLOR_YELLOW
@@ -393,9 +393,9 @@ By design, d1 is the smallest direction and d2 is the highest
 			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
 				P.disconnect_from_network() //remove from current network
 
-/obj/structure/cable/proc/get_health_damage()
-	healthpoints = healthpoints - 1
-	if(healthpoints <= 0)
+/obj/structure/cable/proc/get_damage(structure_damage)
+	health -= structure_damage
+	if(health <= 0)
 		qdel(src)
 
 ///////////////////////////////////////////////
