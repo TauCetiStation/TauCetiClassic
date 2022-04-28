@@ -11,8 +11,8 @@
 	id = /obj/item/weapon/card/id/syndicate/nuker
 	belt = /obj/item/weapon/storage/belt/military
 	belt_contents = list(
-		/obj/item/clothing/accessory/holster
-		/obj/item/weapon/pinpointer/nukeop
+		/obj/item/clothing/accessory/holster,
+		/obj/item/weapon/pinpointer/nukeop,
 	)
 	back = PREFERENCE_BACKPACK_FORCE
 	backpack_contents = list(
