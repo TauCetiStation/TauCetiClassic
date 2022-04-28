@@ -271,26 +271,28 @@ obj/machinery/vending/syndi/proc/RedeemVoucher(obj/voucher, redeemer)
 			return
 	switch(selection)
 		if("Scout kit")
-			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/weapon/storage/box/syndie_kit/nuke/scout(src.loc)
 		if("Sniper kit")
-			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/weapon/storage/box/syndie_kit/nuke/sniper(src.loc)
 		if("Assaultman kit")
-			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/weapon/storage/box/syndie_kit/nuke/assaultman(src.loc)
 		if("Boom-boom kit")
-			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/weapon/storage/box/syndie_kit/nuke/demo(src.loc)
 		if("Melee kit")
-			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/weapon/storage/box/syndie_kit/nuke/melee(src.loc)
 		if("Machinengunner kit")
-			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/weapon/storage/box/syndie_kit/nuke/heavygunner(src.loc)
 		if("Hacker kit")
-			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/weapon/storage/box/syndie_kit/nuke/hacker(src.loc)
 		if("Custom kit")
-			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/weapon/storage/box/syndie_kit/nuke/custom(src.loc)
 		if("Cancel")
 			voucher.in_use = 0
 			return
 	qdel(voucher)
 
+/obj/machinery/vending/syndi/equipment_vendor/ex_act()
+	return
 
 //from old nanotrasen
 /obj/machinery/vending/holy
