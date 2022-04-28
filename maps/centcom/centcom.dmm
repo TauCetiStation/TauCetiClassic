@@ -4586,35 +4586,6 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
-"alP" = (
-/obj/structure/closet/syndicate/nuclear,
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
-"alQ" = (
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
-"alR" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
-"alS" = (
-/obj/machinery/recharge_station,
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
 "alT" = (
 /obj/effect/step_trigger/thrower{
 	affect_ghosts = 1;
@@ -4662,12 +4633,6 @@
 /obj/machinery/computer/telecrystals/uplinker,
 /turf/unsimulated/floor{
 	dir = 1;
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
-"alY" = (
-/turf/unsimulated/floor{
-	dir = 8;
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
@@ -4724,23 +4689,12 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
-"amd" = (
-/turf/unsimulated/floor{
-	icon_state = "podhatchfull"
-	},
-/area/custom/syndicate_mothership)
 "ame" = (
 /obj/machinery/computer/telecrystals/boss{
 	req_access = list(151)
 	},
 /turf/unsimulated/floor{
 	dir = 9;
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
-"amf" = (
-/turf/unsimulated/floor{
-	dir = 4;
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
@@ -4822,13 +4776,6 @@
 	icon_state = "bar"
 	},
 /area/custom/syndicate_mothership)
-"amn" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
 "amo" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 8
@@ -4837,46 +4784,12 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
-"amp" = (
-/obj/structure/closet/syndicate/personal,
-/turf/unsimulated/floor{
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
-"amq" = (
-/obj/effect/landmark{
-	name = "Nuclear-Bomb"
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/window{
-	dir = 1;
-	name = "Secure Storage";
-	req_access = list(150)
-	},
-/turf/unsimulated/floor{
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
 "amr" = (
 /obj/machinery/recharge_station,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
-"ams" = (
-/obj/structure/table,
-/obj/item/toy/crayon/spraycan,
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
 "amt" = (
 /obj/machinery/sleeper{
 	dir = 8
@@ -16335,6 +16248,7 @@
 /obj/structure/sign/map/right{
 	pixel_y = 32
 	},
+/obj/machinery/vending/syndi,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -17314,15 +17228,6 @@
 	icon_state = "carpet"
 	},
 /area/centcom/living)
-"aSb" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Equipment Room";
-	req_access = list(150)
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/custom/syndicate_mothership)
 "aSc" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 8
@@ -20025,13 +19930,14 @@
 	},
 /area/custom/wizard_station)
 "baV" = (
-/obj/effect/landmark/blockway,
-/turf/unsimulated/floor/snow{
-	nitrogen = 100;
-	oxygen = 25;
-	temperature = 243
+/obj/machinery/light{
+	dir = 1
 	},
-/area/space)
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/custom/syndicate_mothership)
 "baW" = (
 /obj/structure/flora/tree/pine{
 	layer = 9.5
@@ -21089,6 +20995,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen,
+/obj/item/weapon/storage/box/flashbangs,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -21402,6 +21309,13 @@
 	icon_state = "grimy"
 	},
 /area/centcom/creed)
+"bMP" = (
+/obj/structure/table/reinforced,
+/obj/item/device/pda/syndicate,
+/turf/unsimulated/floor{
+	icon_state = "bar"
+	},
+/area/custom/syndicate_mothership)
 "bNb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_specops";
@@ -33806,7 +33720,7 @@ baY
 abi
 abi
 afT
-baV
+afT
 abi
 abi
 abi
@@ -87092,7 +87006,7 @@ akQ
 akQ
 akQ
 akQ
-alN
+bMP
 alW
 amZ
 aie
@@ -88110,7 +88024,7 @@ ajt
 aii
 aii
 aie
-aFb
+baV
 aIb
 aIb
 aie
@@ -88371,9 +88285,9 @@ aIb
 aIb
 aQb
 aie
-alP
-alY
-amn
+aaM
+aaM
+aaM
 aie
 ahF
 ahF
@@ -88628,9 +88542,9 @@ aFb
 aIb
 aIb
 aie
-alQ
-amd
-amp
+aaM
+aaM
+aaM
 aie
 ahF
 ahF
@@ -88885,9 +88799,9 @@ aIb
 aIb
 aIb
 aie
-alQ
-amd
-amp
+aaM
+aaM
+aaM
 aie
 ahF
 ahF
@@ -89142,9 +89056,9 @@ aIb
 aIb
 aIb
 aie
-alR
-amd
-amp
+aaM
+aaM
+aaM
 aie
 ahF
 ahF
@@ -89398,10 +89312,10 @@ aie
 aIb
 aIb
 aIb
-aSb
-alQ
-amd
-amq
+aie
+aaM
+aaM
+aaM
 aie
 ahF
 ahF
@@ -89656,9 +89570,9 @@ aIb
 aIb
 aIb
 aie
-alR
-amd
-amp
+aaM
+aaM
+aaM
 aie
 ahF
 ahF
@@ -89913,9 +89827,9 @@ aFb
 aIb
 aQb
 aie
-alQ
-amd
-amp
+aaM
+aaM
+aaM
 aie
 ahF
 ahF
@@ -90170,9 +90084,9 @@ aIb
 aIb
 aIb
 aie
-alQ
-amd
-amp
+aaM
+aaM
+aaM
 aie
 ahF
 ahF
@@ -90427,9 +90341,9 @@ aFb
 aIb
 aIb
 aie
-alS
-amf
-ams
+aaM
+aaM
+aaM
 aie
 ahF
 ahF
