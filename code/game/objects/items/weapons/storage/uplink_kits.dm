@@ -452,3 +452,13 @@
 	new /obj/item/clothing/suit/space/rig/syndi/heavy(src)
 	new	/obj/item/clothing/head/helmet/space/rig/syndi/heavy(src)
 	make_exact_fit()
+
+/obj/item/weapon/storage/box/syndie_kit/nuke/custom
+	name = "custom kit"
+
+/obj/item/weapon/storage/box/syndie_kit/nuke/custom/atom_init()
+	. = ..()
+	new /obj/item/device/radio/uplink(src)
+	new /obj/item/stack/telecrystal/twenty(src)
+	new /obj/item/clothing/suit/space/rig/syndi(src)
+	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
