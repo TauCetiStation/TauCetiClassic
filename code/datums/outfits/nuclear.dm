@@ -7,7 +7,6 @@
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol
 	back = PREFERENCE_BACKPACK_FORCE
 	backpack_contents = list(
-		/obj/item/device/radio/uplink,
 		/obj/item/weapon/reagent_containers/pill/cyanide,
 		/obj/item/ammo_box/magazine/m9mm,
 		)

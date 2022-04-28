@@ -324,3 +324,131 @@
 	var/obj/item/clothing/glasses/syndidroneRC/rc_glasses = new /obj/item/clothing/glasses/syndidroneRC(src)
 	rc_glasses.slave = new /mob/living/silicon/robot/drone/syndi(drone_holder)
 	make_exact_fit()
+
+//loadouts
+
+obj/item/weapon/storage/box/syndie_kit/nuke/scout
+	name = "scout kit"
+
+/obj/item/weapon/storage/box/syndie_kit/nuke/scout/atom_init()
+	. = ..()
+	new /obj/item/ammo_box/magazine/m12mm/hv(src)
+	new /obj/item/ammo_box/magazine/m12mm/hp(src)
+	new /obj/item/ammo_box/magazine/m12mm/imp(src)
+	for (var/i in 1 to 3)
+		new /obj/item/ammo_box/magazine/m12mm(src)
+	new /obj/item/weapon/gun/projectile/automatic/c20r(src)
+	new /obj/item/weapon/implanter/adrenaline(src)
+	new /obj/item/weapon/reagent_containers/hypospray/combat(src)
+	new /obj/item/clothing/glasses/thermal/syndi(src)
+	new	/obj/item/weapon/card/emag(src)
+	new /obj/item/clothing/suit/space/rig/syndi(src)
+	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	make_exact_fit()
+
+obj/item/weapon/storage/box/syndie_kit/nuke/assaultman
+	name = "assaultman kit"
+
+/obj/item/weapon/storage/box/syndie_kit/nuke/assaultman/atom_init()
+	. = ..()
+	for (var/i in 1 to 3)
+		new /obj/item/ammo_box/magazine/a74mm(src)
+	new /obj/item/weapon/gun/projectile/automatic/a74(src)
+	new /obj/item/weapon/shield/energy(src)	
+	for (var/i in 1 to 3)		
+		new /obj/item/weapon/grenade/flashbang(src)
+	new /obj/item/weapon/storage/firstaid/small_firstaid_kit/space(src)
+	for (var/i in 1 to 2)
+		new /obj/item/weapon/plastique(src)
+	new /obj/item/clothing/suit/space/rig/syndi(src)
+	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	make_exact_fit()
+
+obj/item/weapon/storage/box/syndie_kit/nuke/hacker
+	name = "hacker kit"
+
+/obj/item/weapon/storage/box/syndie_kit/nuke/hacker/atom_init()
+	. = ..()
+	for (var/i in 1 to 3)
+		new /obj/item/ammo_box/magazine/m12g(src)
+	new /obj/item/ammo_box/magazine/m12g/stun(src)
+	new /obj/item/ammo_box/magazine/m12g/incendiary(src)
+	new /obj/item/weapon/gun/projectile/automatic/bulldog(src)
+	new /obj/item/weapon/grenade/syndieminibomb(src)
+	new /obj/item/weapon/wrench/power(src)
+	new /obj/item/weapon/wirecutters/power(src)
+	new /obj/item/weapon/weldingtool/largetank(src)
+	new /obj/item/device/debugger(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/clothing/glasses/meson(src)
+	new	/obj/item/device/hud_calibrator(src)
+	new /obj/item/weapon/card/emag(src)
+	new /obj/item/clothing/suit/space/rig/syndi(src)
+	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	make_exact_fit()
+
+obj/item/weapon/storage/box/syndie_kit/nuke/sniper
+	name = "sniper kit"
+
+/obj/item/weapon/storage/box/syndie_kit/nuke/sniper/atom_init()
+	. = ..()
+	for (var/i in 1 to 6)
+		new /obj/item/ammo_casing/a145(src)
+	new /obj/item/weapon/gun/projectile/heavyrifle(src)
+	new /obj/item/clothing/glasses/thermal/syndi(src)
+	new /obj/item/weapon/card/emag(src)
+	new /obj/item/weapon/pen/edagger(src)
+	for (var/i in 1 to 3)
+		new/obj/item/weapon/grenade/smokebomb(src)
+	new /obj/item/clothing/suit/space/rig/syndi(src)
+	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	make_exact_fit()
+
+/obj/item/weapon/storage/box/syndie_kit/nuke/demo
+	name = "demolition and explosion kit"
+
+/obj/item/weapon/storage/box/syndie_kit/nuke/demo/atom_init
+	. = ..()
+	for (var/i in 1 to 3)
+		new /obj/item/ammo_casing/r4046/explosive(src)
+	new /obj/item/ammo_box/magazine/drozd127(src)
+	new /obj/item/weapon/gun/projectile/automatic/drozd(src)
+	for (var/i in 1 to 5)(src)
+		new /obj/item/weapon/plastique(src)
+	for (var/i in 1 to 2)
+		new /obj/item/weapon/grenade/syndieminibomb(src)
+	new /obj/item/device/radio/beacon/syndicate_bomb(src)		
+	new /obj/item/weapon/storage/box/emps(src)
+	new /obj/item/clothing/suit/space/rig/syndi(src)
+	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	make_exact_fit()
+
+obj/item/weapon/storage/box/syndie_kit/nuke/melee
+	name = "melee weapon kit"
+
+/obj/item/weapon/storage/box/syndie_kit/nuke/melee/atom_init()
+	. = ..()
+	new /obj/item/weapon/melee/energy/sword(src)
+	new	/obj/item/weapon/gun/energy/crossbow(src)
+	new /obj/item/weapon/implanter/adrenaline(src)
+	new /obj/item/weapon/implanter/emp(src)
+	new /obj/item/weapon/reagent_containers/hypospray/combat(src)
+	for (var/i in 1 to 2)
+		new /obj/item/weapon/legcuffs/bola/tactical(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/soap/syndie(src)
+	new /obj/item/weapon/card/emag(src)
+	new /obj/item/clothing/suit/space/rig/syndi(src)
+	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	make_exact_fit()
+
+obj/item/weapon/storage/box/syndie_kit/nuke/heavygunner
+	name = "heavy machine gunner kit"
+
+/obj/item/weapon/storage/box/syndie_kit/nuke/heavygunner/atom_init()
+	. = ..()
+	for (var/i in 1 to 2)
+		new /obj/item/ammo_box/magazine/m762(src)
+	new	/obj/item/weapon/gun/projectile/automatic/l6_saw(src)
+	new /obj/item/clothing/suit/space/rig/syndi/heavy(src)
+	new	/obj/item/clothing/head/helmet/space/rig/syndi/heavy(src)
+	make_exact_fit()
