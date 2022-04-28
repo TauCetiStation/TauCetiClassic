@@ -257,6 +257,7 @@
 	"Hacker kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "bulldog"),
 	"Machinengunner kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "l6closed100"),
 	"Custom kit" = image(icon = 'icons/obj/device.dmi', icon_state = "radio"),
+	)
 
 obj/machinery/vending/syndi/proc/RedeemVoucher(obj/voucher, redeemer)
 	if(voucher.in_use)
