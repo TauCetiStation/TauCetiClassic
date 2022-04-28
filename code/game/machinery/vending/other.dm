@@ -292,7 +292,7 @@ obj/machinery/vending/syndi/proc/RedeemVoucher(obj/voucher, redeemer)
 			return
 	qdel(voucher)
 
-/obj/machinery/vending/syndi/equipment_vendor/ex_act()
+/obj/machinery/vending/syndi/ex_act()
 	return
 
 //from old nanotrasen
