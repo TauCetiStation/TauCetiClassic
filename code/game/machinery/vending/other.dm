@@ -225,7 +225,7 @@
 
 /obj/machinery/vending/syndi
 	name = "KillNTVend"
-    desc = "Special items for killers, mercenaries, pirrrates and other syndicate workers. Waffle.co property."
+	desc = "Special items for killers, mercenaries, pirrrates and other syndicate workers. Waffle.co property."
 	icon_state = "syndivend"
 	icon_deny = "syndivend-deny"
 	product_ads = "kill corporate bastards!; Killcaptain and gutted his corpse!; Blow up the damn station!."
