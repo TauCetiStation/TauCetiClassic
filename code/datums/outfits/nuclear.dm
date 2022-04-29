@@ -1,3 +1,6 @@
+/obj/item/weapon/storage/backpack/nuke
+	startswith = list(/obj/item/weapon/reagent_containers/pill/cyanide, /obj/item/weapon/gun/projectile/automatic/pistol, /obj/item/ammo_box/magazine/m9mm, /obj/item/clothing/accessory/holster/armpit, /obj/item/weapon/pinpointer/nukeop, /obj/item/weapon/kitchenknife/combat, /obj/item/clothing/accessory/storage/syndi_vest, /obj/item/weapon/mining_voucher/syndi,)
+
 /datum/outfit/nuclear
 	name = "Nuclear Agent"
 	uniform = /obj/item/clothing/under/syndicate
@@ -10,17 +13,7 @@
 	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster
 	id = /obj/item/weapon/card/id/syndicate/nuker
 	belt = /obj/item/weapon/storage/belt/military
-	back = PREFERENCE_BACKPACK_FORCE
-	backpack_contents = list(
-		/obj/item/weapon/reagent_containers/pill/cyanide,
-		/obj/item/weapon/gun/projectile/automatic/pistol,
-		/obj/item/ammo_box/magazine/m9mm,
-		/obj/item/clothing/accessory/holster,
-		/obj/item/weapon/pinpointer/nukeop,
-		/obj/item/weapon/kitchenknife/combat,
-		/obj/item/clothing/accessory/storage/syndi_vest,
-		/obj/item/weapon/mining_voucher/syndi,
-		)
+	back = /obj/item/weapon/storage/backpack/nuke
 	implants = list(
 		/obj/item/weapon/implant/dexplosive
 		)
@@ -29,20 +22,15 @@
 	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 
+
+/obj/item/weapon/storage/backpack/nuke/commander
+	startswith = list(/obj/item/weapon/reagent_containers/pill/cyanide, /obj/item/weapon/gun/projectile/revolver, /obj/item/ammo_box/a357, /obj/item/clothing/accessory/holster/armpit, /obj/item/weapon/pinpointer/nukeop, /obj/item/device/radio/uplink/leader, /obj/item/weapon/kitchenknife/combat, /obj/item/clothing/accessory/storage/syndi_vest, /obj/item/weapon/mining_voucher/syndi,)
+
 /datum/outfit/nuclear/leader
 	name = "Nuclear Commander"
 	id = /obj/item/weapon/card/id/syndicate/commander
-	backpack_contents = list(
-		/obj/item/device/radio/uplink/leader,
-		/obj/item/weapon/gun/projectile/revolver,
-		/obj/item/clothing/accessory/holster,
-		/obj/item/weapon/pinpointer/nukeop,
-		/obj/item/weapon/kitchenknife/combat,
-		/obj/item/clothing/accessory/storage/syndi_vest,
-		/obj/item/weapon/reagent_containers/pill/cyanide,
-		/obj/item/ammo_box/a357,
-		/obj/item/weapon/mining_voucher/syndi,
-		)
+	back = /obj/item/weapon/storage/backpack/nuke/commander
+
 
 /datum/outfit/nuclear/unathi_equip()
 	backpack_contents += list(/obj/item/device/modkit/syndie/unathi)
