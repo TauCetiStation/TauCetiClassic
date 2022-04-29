@@ -28,6 +28,7 @@
 	)
 	var/list/premium_reagents = list()
 	required_skills = list(/datum/skill/chemistry/trained)
+	fumbling_time = 2 SECONDS
 
 /obj/machinery/chem_dispenser/atom_init()
 	. = ..()
