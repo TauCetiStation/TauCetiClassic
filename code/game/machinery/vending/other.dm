@@ -266,7 +266,7 @@
 /obj/machinery/vending/syndi/proc/RedeemVoucher(obj/voucher, redeemer)
 	if(voucher.in_use)
 		return
-	voucher.in_use = 1
+	voucher.in_use = TRUE
 	if(!selection_items)
 		populate_selection()
 	var/selection = show_radial_menu(redeemer, src, selection_items, require_near = TRUE, tooltips = TRUE)
