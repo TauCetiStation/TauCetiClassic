@@ -272,6 +272,10 @@ obj/machinery/vending/syndi/proc/RedeemVoucher(obj/voucher, redeemer)
 		populate_selection()
 	var/selection = show_radial_menu(redeemer, src, selection_items, require_near = TRUE, tooltips = TRUE)
 	switch(selection)
+	if(!selection || !Adjacent(redeemer))
+		voucher.in_use = 0
+		return
+	switch(selection)
 		if("Scout kit")
 			new /obj/item/weapon/storage/box/syndie_kit/nuke/scout(src.loc)
 		if("Sniper kit")
@@ -289,7 +293,7 @@ obj/machinery/vending/syndi/proc/RedeemVoucher(obj/voucher, redeemer)
 		if("Custom kit")
 			new /obj/item/weapon/storage/box/syndie_kit/nuke/custom(src.loc)
 		if("Cancel")
-			voucher.in_use = 1
+			voucher.in_use = 0
 			return
 	qdel(voucher)
 
