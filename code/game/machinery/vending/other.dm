@@ -248,7 +248,7 @@
 	)
 
 /obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/weapon/mining_voucher/syndi))
+	if(istype(I, /obj/item/weapon/mining_voucher/syndi))
 		RedeemVoucher(I, user)
 		return
 
