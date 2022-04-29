@@ -157,7 +157,7 @@
 		if(usr.is_busy())
 			return
 		to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
-		if (!do_skilled(usr, usr, R.time, R.required_skills, 0.2))
+		if (!do_skilled(usr, usr, R.time, R.required_skills, -0.2))
 			return
 	var/atom/build_loc = loc
 	if(!use(R.req_amount*multiplier))
