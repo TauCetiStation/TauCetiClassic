@@ -246,6 +246,7 @@
 	syndie = list(
 	/obj/item/toy/syndicateballoon = 6,
 	)
+	
 /obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/mining_voucher/syndi))
 		RedeemVoucher(I, user)
