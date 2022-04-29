@@ -4394,14 +4394,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/syndicate/start)
-"als" = (
-/obj/machinery/computer/telecrystals/uplinker,
-/obj/machinery/light,
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
 "alt" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "1,11"
@@ -4431,13 +4423,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/vox/arkship)
-"alx" = (
-/obj/machinery/computer/telecrystals/uplinker,
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
 "aly" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/syndicate,
@@ -4500,10 +4485,9 @@
 	},
 /area/shuttle/syndicate/start)
 "alF" = (
-/obj/machinery/computer/telecrystals/uplinker,
+/obj/machinery/vending/syndi,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "podhatch"
+	icon_state = "bar"
 	},
 /area/custom/syndicate_mothership)
 "alG" = (
@@ -4569,6 +4553,7 @@
 /area/shuttle/syndicate/start)
 "alN" = (
 /obj/structure/table/reinforced,
+/obj/item/toy/crayon/spraycan,
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
@@ -4630,7 +4615,7 @@
 	},
 /area/custom/syndicate_mothership)
 "alX" = (
-/obj/machinery/computer/telecrystals/uplinker,
+/obj/machinery/nuclearbomb,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "podhatch"
@@ -16248,7 +16233,6 @@
 /obj/structure/sign/map/right{
 	pixel_y = 32
 	},
-/obj/machinery/vending/syndi,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -87774,11 +87758,11 @@ aIb
 aIb
 aIb
 akQ
-alx
+akQ
 alF
-alF
-alF
-als
+akQ
+akQ
+akQ
 aie
 aie
 aaM
