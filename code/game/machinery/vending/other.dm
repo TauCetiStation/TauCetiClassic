@@ -231,7 +231,7 @@
 	req_access = list(150)
 	density = TRUE
 	anchored = TRUE
-	product_ads = "kill corporate bastards!; Killcaptain and gutted his corpse!; Blow up the damn station!."
+	product_ads = "Kill the corporate bastards!; Kill captain and gutted his corpse!; Blow up the damn station!."
 	products = list(
 		/obj/item/weapon/storage/pouch/ammo = 6,
 		/obj/item/clothing/accessory/holster/armpit = 6,
