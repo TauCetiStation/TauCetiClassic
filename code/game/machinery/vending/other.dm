@@ -231,6 +231,7 @@
 	req_access = list(150)
 	density = TRUE
 	anchored = TRUE
+	var/static/list/selection_items
 	product_ads = "Kill the corporate bastards!; Kill captain and gutted his corpse!; Blow up the damn station!."
 	products = list(
 		/obj/item/weapon/storage/pouch/ammo = 6,
@@ -250,7 +251,7 @@
 		RedeemVoucher(I, user)
 
 	return
-var/static/list/selection_items
+
 /obj/machinery/vending/syndi/proc/populate_selection()
 	selection_items = list(
 	"Scout kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "c20r"),
