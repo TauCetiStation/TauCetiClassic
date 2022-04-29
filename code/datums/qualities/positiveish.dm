@@ -109,7 +109,7 @@
 		H.equip_or_collect(new /obj/item/clothing/suit/serifcoat(H), SLOT_WEAR_SUIT)
 	else
 		H.equip_or_collect(new /obj/item/clothing/suit/poncho(H), SLOT_WEAR_SUIT)
-	H.equip_or_collect(new /obj/item/clothing/under/fluff/cowboy/brown(H), SLOT_W_UNIFORM)
+	H.equip_or_collect(new /obj/item/clothing/under/cowboy/brown(H), SLOT_W_UNIFORM)
 	H.equip_or_collect(new /obj/item/clothing/head/western/cowboy(H), SLOT_HEAD)
 	H.equip_or_collect(new /obj/item/clothing/shoes/western(H), SLOT_SHOES)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/peacemaker/detective(H), SLOT_L_HAND)
@@ -321,3 +321,11 @@
 /datum/quality/positiveish/deathalarm/add_effect(mob/living/carbon/human/H, latespawn)
 	var/obj/item/weapon/implant/death_alarm/DA = new(H)
 	DA.stealth_inject(H)
+
+/datum/quality/negativeish/anatomist
+	name = "Anatomist"
+	desc = "Ты с первого взгляда можешь по походке и телосложению узнать расу гуманоида перед тобой."
+	requirement = "Нет."
+
+/datum/quality/negativeish/anatomist/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_ANATOMIST, QUALITY_TRAIT)
