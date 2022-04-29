@@ -263,7 +263,7 @@
 	"Custom kit" = image(icon = 'icons/obj/radio.dmi', icon_state = "radio"),
 	)
 
-obj/machinery/vending/syndi/proc/RedeemVoucher(obj/voucher, redeemer)
+/obj/machinery/vending/syndi/proc/RedeemVoucher(obj/voucher, redeemer)
 	if(voucher.in_use)
 		return
 	voucher.in_use = 1
