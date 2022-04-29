@@ -271,7 +271,7 @@
 		populate_selection()
 	var/selection = show_radial_menu(redeemer, src, selection_items, require_near = TRUE, tooltips = TRUE)
 	if(!selection || !Adjacent(redeemer))
-		voucher.in_use = 0
+		voucher.in_use = FALSE
 		return
 	switch(selection)
 		if("Scout kit")
