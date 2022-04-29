@@ -250,7 +250,6 @@
 /obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/mining_voucher/syndi))
 		RedeemVoucher(I, user)
-		return
 
 /obj/machinery/vending/syndi/proc/populate_selection()
 	selection_items = list(
