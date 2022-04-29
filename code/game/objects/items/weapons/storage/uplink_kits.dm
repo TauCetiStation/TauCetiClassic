@@ -383,6 +383,7 @@
 	new /obj/item/clothing/glasses/meson(src)
 	new	/obj/item/device/hud_calibrator(src)
 	new /obj/item/weapon/card/emag(src)
+	new /obj/item/device/flashlight/emp(src)
 	new /obj/item/clothing/suit/space/rig/syndi(src)
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
 	make_exact_fit()
