@@ -405,13 +405,6 @@
 		if(spread)
 			attacker.spread_disease_to(src, DISEASE_SPREAD_CONTACT)
 
-			for(var/datum/disease/D in viruses)
-				if(D.spread_by_touch())
-					attacker.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-			for(var/datum/disease/D in attacker.viruses)
-				if(D.spread_by_touch())
-					contract_disease(D, 0, 1, CONTACT_HANDS)
 	return ..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
