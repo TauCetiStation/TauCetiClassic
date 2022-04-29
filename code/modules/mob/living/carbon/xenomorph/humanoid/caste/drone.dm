@@ -10,7 +10,7 @@
 						/obj/effect/proc_holder/spell/targeted/transfer_plasma,
 						/obj/effect/proc_holder/spell/no_target/resin,
 						/obj/effect/proc_holder/spell/no_target/air_plant,
-						/obj/effect/proc_holder/spell/no_target/xenofart,
+						/obj/effect/proc_holder/spell/no_target/xenowinds,
 						/obj/effect/proc_holder/spell/no_target/evolve_to_queen)
 
 

@@ -465,7 +465,7 @@
 	new_xeno.mind.name = new_xeno.real_name
 	qdel(user)
 
-/obj/effect/proc_holder/spell/no_target/xenofart
+/obj/effect/proc_holder/spell/no_target/xenowinds
 	name = "Эмиссия форона"
 	desc = "Выпустить небольшое облачко накопленного форона."
 	charge_max = 1200
@@ -477,7 +477,7 @@
 	plasma_cost = 120
 	action_icon_state = "rot"
 
-/obj/effect/proc_holder/spell/no_target/xenofart/cast(list/targets, mob/living/user = usr)
+/obj/effect/proc_holder/spell/no_target/xenowinds/cast(list/targets, mob/living/user = usr)
 	if(!istype(user))
 		return
 	var/turf/T = get_turf(user)
