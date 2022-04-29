@@ -28,7 +28,8 @@
 	decompiler = locate(/obj/item/weapon/matter_decompiler) in src.module
 
 	//Some tidying-up.
-	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
+	flavor_text = "Это маленький ремонтный дрон. На корпусе нанесен логотип NT и надпись: 'Рекурсивные ремонтные системы NanoTrasen: Устраним проблемы завтрашнего дня сегодня!
+'"
 	updateicon()
 
 /mob/living/silicon/robot/drone/maintenance/Destroy()
@@ -54,7 +55,7 @@
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "You cannot send IC messages (muted).")
+			to_chat(src, "Вы не можете говорить.")
 			return
 		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
@@ -72,7 +73,7 @@
 	else if(length(message) >= 2)
 		if(parse_message_mode(message, "NONE") == "dronechat")
 			if(!is_component_functioning("radio"))
-				to_chat(src, "<span class='warning'>Your radio transmitter isn't functional.</span>")
+				to_chat(src, "<span class='warning'>Ваш радиопередатчик не функционирует.</span>")
 				return
 
 			for (var/mob/living/S as anything in drone_list)
@@ -96,7 +97,7 @@
 					to_chat(M, "<b>[src]</b> transmits, \"[message]\"")
 
 /mob/living/silicon/robot/drone/maintenance/request_player()
-	var/list/candidates = pollGhostCandidates("Someone is attempting to reboot a maintenance drone. Would you like to play as one?", ROLE_GHOSTLY, IGNORE_DRONE, 100, TRUE)
+	var/list/candidates = pollGhostCandidates("Кто-то пытается перезапустить дрона. Желаете сыграть за него?", ROLE_GHOSTLY, IGNORE_DRONE, 100, TRUE)
 	for(var/mob/M in candidates) // No random
 		transfer_personality(M.client)
 		break
@@ -111,14 +112,14 @@
 		candidate.mob.mind.transfer_to(src)
 
 	lawupdate = 0
-	to_chat(src, "<b>Systems rebooted</b>. Loading base pattern maintenance protocol... <b>loaded</b>.")
+	to_chat(src, "<b>Система перезагружена</b>. Загрузка базовой модели протокола обслуживания... <b>Загрузка произведена</b>.")
 	full_law_reset()
-	to_chat(src, "<br><b>You are a maintenance drone, a tiny-brained robotic repair machine</b>.")
-	to_chat(src, "You have no individual will, no personality, and no drives or urges other than your laws.")
-	to_chat(src, "Use <b>:d</b> to talk to other drones and <b>say</b> to speak silently to your nearby fellows.")
-	to_chat(src, "Remember,  you are <b>lawed against interference with the crew</b>. Also remember, <b>you DO NOT take orders from the AI.</b>")
-	to_chat(src, "<b>Don't invade their worksites, don't steal their resources, don't tell them about the changeling in the toilets.</b>")
-	to_chat(src, "<b>If a crewmember has noticed you, <i>you are probably breaking your third law</i></b>.")
+	to_chat(src, "<br><b>Вы — дрон технического обслуживания, роботизированная ремонтная машина с маленьким мозгом </b>.")
+	to_chat(src, "У Вас нет собственной воли, личности, есть только законы, которые он обязан выполнять..")
+	to_chat(src, "Используйте <b>:d</b> для общения с другими дронами и  <b>say</b> для общения с ними на близкой дистанции.")
+	to_chat(src, "Помните, Вам <b>запрещено вмешиваться в работу экипажа</b>. А также помните, что  <b>Вы НЕ ОБЯЗАНЫ выполнять приказы ИИ.</b>")
+	to_chat(src, "<b>Не блокируйте путь, Не крадите ресурсы, не светите специально фонариком в тенелингов.</b>")
+	to_chat(src, "<b>Если вы привлекаете слишком много внимания, <i>возможно, вы нарушаете свой третий закон</i></b>.")
 
 
 //Putting the decompiler here to avoid doing list checks every tick.
@@ -156,7 +157,7 @@
 /mob/living/silicon/robot/drone/maintenance/installed_modules()
 
 	if(weapon_lock)
-		to_chat(src, "<span class='warning'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>")
+		to_chat(src, "<span class='warning'>Блокировка активирована, невозможно использовать модули! Осталось:[weaponlock_time]</span>")
 		return
 
 	if(!module)
