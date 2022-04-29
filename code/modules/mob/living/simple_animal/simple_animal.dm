@@ -427,4 +427,3 @@
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/cable/C in T)
 		C.wear_out(melee_damage)
-	return
