@@ -246,8 +246,9 @@
 	syndie = list(
 	/obj/item/toy/syndicateballoon = 6,
 	)
+
 /obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/weapon/mining_voucher/syndi))
+	if(istype(I, /obj/item/weapon/mining_voucher/syndi))
 		RedeemVoucher(I, user)
 		return
 
@@ -266,7 +267,7 @@
 /obj/machinery/vending/syndi/proc/RedeemVoucher(obj/voucher, redeemer)
 	if(voucher.in_use)
 		return
-	voucher.in_use = 1
+	voucher.in_use = TRUE
 	if(!selection_items)
 		populate_selection()
 	var/selection = show_radial_menu(redeemer, src, selection_items, require_near = TRUE, tooltips = TRUE)
@@ -291,7 +292,7 @@
 		if("Custom kit")
 			new /obj/item/weapon/storage/box/syndie_kit/nuke/custom(loc)
 		if("Cancel")
-			voucher.in_use = 0
+			voucher.in_use = FALSE
 			return
 	qdel(voucher)
 
