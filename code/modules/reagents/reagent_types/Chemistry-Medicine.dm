@@ -364,11 +364,6 @@
 	M.SetConfused(0)
 	M.SetSleeping(0)
 	M.jitteriness = 0
-	for(var/datum/disease/D in M.viruses)
-		D.spread = DISEASE_SPREAD_REMISSIVE
-		D.stage--
-		if(D.stage < 1)
-			D.cure()
 
 /datum/reagent/synaptizine
 	name = "Synaptizine"
