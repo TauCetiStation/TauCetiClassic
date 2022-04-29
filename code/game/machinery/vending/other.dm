@@ -291,7 +291,7 @@
 		if("Custom kit")
 			new /obj/item/weapon/storage/box/syndie_kit/nuke/custom(src.loc)
 		if("Cancel")
-			voucher.in_use = 0
+			voucher.in_use = FALSE
 			return
 	qdel(voucher)
 
