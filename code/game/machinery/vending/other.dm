@@ -251,6 +251,7 @@
 		RedeemVoucher(I, user)
 		return
 
+//aaaaa
 /obj/machinery/vending/syndi/proc/populate_selection()
 	selection_items = list(
 	"Scout kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "c20r"),
