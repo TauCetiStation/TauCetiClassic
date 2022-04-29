@@ -329,138 +329,110 @@
 
 /obj/item/weapon/storage/box/syndie_kit/nuke/scout
 	name = "scout kit"
-
-/obj/item/weapon/storage/box/syndie_kit/nuke/scout/atom_init()
-	. = ..()
-	new /obj/item/ammo_box/magazine/m12mm/hv(src)
-	new /obj/item/ammo_box/magazine/m12mm/hp(src)
-	new /obj/item/ammo_box/magazine/m12mm/imp(src)
-	for (var/i in 1 to 3)
-		new /obj/item/ammo_box/magazine/m12mm(src)
-	new /obj/item/weapon/gun/projectile/automatic/c20r(src)
-	new /obj/item/weapon/implanter/adrenaline(src)
-	new /obj/item/weapon/reagent_containers/hypospray/combat(src)
-	new /obj/item/clothing/glasses/thermal/syndi(src)
-	new	/obj/item/weapon/card/emag(src)
-	new /obj/item/clothing/suit/space/rig/syndi(src)
-	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	startswith = list(/obj/item/ammo_box/magazine/m12mm/hv,
+	/obj/item/ammo_box/magazine/m12mm/hp,
+	/obj/item/ammo_box/magazine/m12mm/imp,
+	/obj/item/ammo_box/magazine/m12mm = 3,
+	/obj/item/weapon/gun/projectile/automatic/c20r,
+	/obj/item/weapon/implanter/adrenaline,
+	/obj/item/weapon/reagent_containers/hypospray/combat,
+	/obj/item/clothing/glasses/thermal/syndi,
+	/obj/item/weapon/card/emag,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/nuke/assaultman
 	name = "assaultman kit"
-
-/obj/item/weapon/storage/box/syndie_kit/nuke/assaultman/atom_init()
-	. = ..()
-	for (var/i in 1 to 3)
-		new /obj/item/ammo_box/magazine/a74mm(src)
-	new /obj/item/weapon/gun/projectile/automatic/a74(src)
-	new /obj/item/weapon/shield/energy(src)
-	for (var/i in 1 to 3)
-		new /obj/item/weapon/grenade/flashbang(src)
-	new /obj/item/weapon/storage/firstaid/small_firstaid_kit/space(src)
-	for (var/i in 1 to 2)
-		new /obj/item/weapon/plastique(src)
-	new /obj/item/clothing/suit/space/rig/syndi(src)
-	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	startswith = list(/obj/item/ammo_box/magazine/a74mm = 3,
+	/obj/item/weapon/gun/projectile/automatic/a74,
+	/obj/item/weapon/shield/energy,
+	/obj/item/weapon/grenade/flashbang = 5,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+	/obj/item/weapon/plastique = 2,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/nuke/hacker
 	name = "hacker kit"
-
-/obj/item/weapon/storage/box/syndie_kit/nuke/hacker/atom_init()
-	. = ..()
-	for (var/i in 1 to 3)
-		new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/ammo_box/magazine/m12g/stun(src)
-	new /obj/item/ammo_box/magazine/m12g/incendiary(src)
-	new /obj/item/weapon/gun/projectile/automatic/bulldog(src)
-	new /obj/item/weapon/grenade/spawnergrenade/manhacks(src)
-	new /obj/item/weapon/wrench/power(src)
-	new /obj/item/weapon/wirecutters/power(src)
-	new /obj/item/weapon/weldingtool/largetank(src)
-	new /obj/item/device/debugger(src)
-	new /obj/item/device/multitool(src)
-	new /obj/item/clothing/glasses/meson(src)
-	new	/obj/item/device/hud_calibrator(src)
-	new /obj/item/weapon/card/emag(src)
-	new /obj/item/device/flashlight/emp(src)
-	new /obj/item/clothing/suit/space/rig/syndi(src)
-	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	startswith = list(/obj/item/ammo_box/magazine/m12g = 3,
+	/obj/item/ammo_box/magazine/m12g/stun,
+	/obj/item/ammo_box/magazine/m12g/incendiary,
+	/obj/item/weapon/gun/projectile/automatic/bulldog,
+	/obj/item/weapon/grenade/spawnergrenade/manhacks,
+	/obj/item/weapon/wrench/power,
+	/obj/item/weapon/wirecutters/power,
+	/obj/item/weapon/weldingtool/largetank,
+	/obj/item/device/debugger,
+	/obj/item/device/multitool,
+	/obj/item/clothing/glasses/meson,
+	/obj/item/device/hud_calibrator,
+	/obj/item/weapon/card/emag,
+	/obj/item/device/flashlight/emp,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/nuke/sniper
 	name = "sniper kit"
-
-/obj/item/weapon/storage/box/syndie_kit/nuke/sniper/atom_init()
-	. = ..()
-	for (var/i in 1 to 6)
-		new /obj/item/ammo_casing/a145(src)
-	new /obj/item/weapon/gun/projectile/heavyrifle(src)
-	new /obj/item/device/chameleon(src)
-	new /obj/item/clothing/glasses/thermal/syndi(src)
-	new /obj/item/weapon/card/emag(src)
-	new /obj/item/weapon/pen/edagger(src)
-	for (var/i in 1 to 3)
-		new /obj/item/weapon/grenade/smokebomb(src)
-	new /obj/item/clothing/suit/space/rig/syndi(src)
-	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	startswith = list(/obj/item/ammo_casing/a145 = 6,
+	/obj/item/weapon/gun/projectile/heavyrifle,
+	/obj/item/device/chameleon,
+	/obj/item/clothing/glasses/thermal/syndi,
+	/obj/item/weapon/card/emag,
+	/obj/item/weapon/pen/edagger,
+	/obj/item/weapon/grenade/smokebomb = 3,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/nuke/demo
 	name = "demolition and explosion kit"
-
-/obj/item/weapon/storage/box/syndie_kit/nuke/demo/atom_init()
-	. = ..()
-	for (var/i in 1 to 3)
-		new /obj/item/ammo_casing/r4046/explosive(src)
-	new /obj/item/ammo_box/magazine/drozd127(src)
-	new /obj/item/weapon/gun/projectile/automatic/drozd(src)
-	for (var/i in 1 to 5)
-		new /obj/item/weapon/plastique(src)
-	for (var/i in 1 to 2)
-		new /obj/item/weapon/grenade/syndieminibomb(src)
-	new /obj/item/device/radio/beacon/syndicate_bomb(src)
-	new /obj/item/weapon/storage/box/emps(src)
-	new /obj/item/clothing/suit/space/rig/syndi(src)
-	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	startswith = list(/obj/item/ammo_casing/r4046/explosive = 3,
+	/obj/item/ammo_box/magazine/drozd127,
+	/obj/item/weapon/gun/projectile/automatic/drozd,
+	/obj/item/weapon/plastique = 5,
+	/obj/item/weapon/grenade/syndieminibomb = 2,
+	/obj/item/device/radio/beacon/syndicate_bomb,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/nuke/melee
 	name = "melee weapon kit"
-
-/obj/item/weapon/storage/box/syndie_kit/nuke/melee/atom_init()
-	. = ..()
-	new /obj/item/weapon/melee/energy/sword(src)
-	new	/obj/item/weapon/gun/energy/crossbow(src)
-	new /obj/item/weapon/implanter/adrenaline(src)
-	new /obj/item/weapon/implanter/emp(src)
-	new /obj/item/weapon/reagent_containers/hypospray/combat(src)
-	for (var/i in 1 to 2)
-		new /obj/item/weapon/legcuffs/bola/tactical(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/soap/syndie(src)
-	new /obj/item/weapon/card/emag(src)
-	new /obj/item/clothing/suit/space/rig/syndi(src)
-	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	startswith = list(/obj/item/weapon/melee/energy/sword,
+	/obj/item/weapon/gun/energy/crossbow,
+	/obj/item/weapon/implanter/adrenaline,
+	/obj/item/weapon/implanter/emp,
+	/obj/item/weapon/reagent_containers/hypospray/combat,
+	/obj/item/weapon/legcuffs/bola/tactical = 2,
+	/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
+	/obj/item/weapon/card/emag,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/nuke/heavygunner
 	name = "heavy machine gunner kit"
-
-/obj/item/weapon/storage/box/syndie_kit/nuke/heavygunner/atom_init()
-	. = ..()
-	for (var/i in 1 to 2)
-		new /obj/item/ammo_box/magazine/m762(src)
-	new	/obj/item/weapon/gun/projectile/automatic/l6_saw(src)
-	new /obj/item/clothing/suit/space/rig/syndi/heavy(src)
-	new	/obj/item/clothing/head/helmet/space/rig/syndi/heavy(src)
+	startswith = list(/obj/item/ammo_box/magazine/m762 = 2,
+	/obj/item/weapon/gun/projectile/automatic/l6_saw,
+	/obj/item/clothing/suit/space/rig/syndi/heavy,
+	/obj/item/clothing/head/helmet/space/rig/syndi/heavy,
+	)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/nuke/custom
 	name = "custom kit"
-
-/obj/item/weapon/storage/box/syndie_kit/nuke/custom/atom_init()
-	. = ..()
-	new /obj/item/device/radio/uplink(src)
-	new /obj/item/stack/telecrystal/twenty(src)
-	new /obj/item/clothing/suit/space/rig/syndi(src)
-	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	startswith = list(/obj/item/device/radio/uplink,
+	/obj/item/stack/telecrystal/twenty,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
+	make_exact_fit()
