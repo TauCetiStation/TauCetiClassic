@@ -9,7 +9,6 @@
 	circuit = /obj/item/weapon/circuitboard/operating
 	var/mob/living/carbon/human/victim = null
 	var/obj/machinery/optable/table = null
-	required_skills = list(/datum/skill/surgery/trained)
 
 /obj/machinery/computer/operating/atom_init()
 	. = ..()
