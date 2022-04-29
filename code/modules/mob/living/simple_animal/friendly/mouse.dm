@@ -108,9 +108,6 @@
 		return
 	..()
 
-/mob/living/simple_animal/mouse/handle_gnaw()
-	. = ..()
-
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/mouse/verb/hide()
 	set name = "Hide"
@@ -210,27 +207,19 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 	icon_living = "rat"
 	icon_dead = "rat_dead"
 	icon_move = "rat"
+	icon_dead = "rat_dead"
+	icon_state = "rat_dead"
 	desc = "It's a big pest mouse."
-
-/mob/living/simple_animal/mouse/rat/atom_init()
 	randomize_color = FALSE
-	..()
 
 /mob/living/simple_animal/mouse/rat/Life()
 	..()
 	handle_gnaw()
 
 /mob/living/simple_animal/mouse/rat/handle_gnaw()
-	. = ..()
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/disposalpipe/D in T)
 		D.wear_out(melee_damage)
-	return
-
-/mob/living/simple_animal/mouse/rat/splat()
-	..()
-	icon_dead = "rat_dead"
-	icon_state = "rat_dead"
 
 /mob/living/simple_animal/mouse/rat/snuffles()
 	return FALSE
