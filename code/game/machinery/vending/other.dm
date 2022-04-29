@@ -248,7 +248,7 @@
 	)
 /obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/mining_voucher/syndi))
-		RedeemSVoucher(I, user)
+		RedeemVoucher(I, user)
 		return
 
 /obj/machinery/vending/syndi/proc/populate_selection()
@@ -263,7 +263,7 @@
 	"Custom kit" = image(icon = 'icons/obj/radio.dmi', icon_state = "radio"),
 	)
 
-obj/machinery/vending/syndi/proc/RedeemSVoucher(obj/voucher, redeemer)
+obj/machinery/vending/syndi/proc/RedeemVoucher(obj/voucher, redeemer)
 	if(voucher.in_use)
 		return
 	voucher.in_use = 1
