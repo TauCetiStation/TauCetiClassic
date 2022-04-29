@@ -6,6 +6,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 */
 //TG-stuff
+#define TELECRYSTALS_PER_ONE_OPERATIVE 10
+
+
 /obj/item/device/uplink
 	var/welcome = "Syndicate Uplink Console:"					// Welcoming menu message
 	var/uses = 20 						// Numbers of crystals
@@ -177,6 +180,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	if(hidden_uplink)
 		hidden_uplink.trigger(user)
 
+/obj/item/device/radio/uplink/leader
+	icon_state = "radio"
+	var/uses = 20 + TELECRYSTALS_PER_ONE_OPERATIVE
 /obj/item/device/multitool/uplink/atom_init()
 	. = ..()
 	hidden_uplink = new(src)

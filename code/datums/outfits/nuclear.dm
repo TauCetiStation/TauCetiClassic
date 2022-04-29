@@ -17,7 +17,9 @@
 		/obj/item/ammo_box/magazine/m9mm,
 		/obj/item/clothing/accessory/holster,
 		/obj/item/weapon/pinpointer/nukeop,
-		/obj/item/weapon/mining_voucher/syndi
+		/obj/item/weapon/kitchenknife/combat,
+		/obj/item/clothing/accessory/storage/syndi_vest,
+		/obj/item/weapon/mining_voucher/syndi,
 		)
 	implants = list(
 		/obj/item/weapon/implant/dexplosive
@@ -31,11 +33,15 @@
 	name = "Nuclear Commander"
 	id = /obj/item/weapon/card/id/syndicate/commander
 	backpack_contents = list(
-		/obj/item/device/radio/uplink,
+		/obj/item/device/radio/uplink/leader,
 		/obj/item/weapon/gun/projectile/revolver,
+		/obj/item/clothing/accessory/holster,
+		/obj/item/weapon/pinpointer/nukeop,
+		/obj/item/weapon/kitchenknife/combat,
+		/obj/item/clothing/accessory/storage/syndi_vest,
 		/obj/item/weapon/reagent_containers/pill/cyanide,
 		/obj/item/ammo_box/a357,
-		/obj/item/weapon/mining_voucher/syndi
+		/obj/item/weapon/mining_voucher/syndi,
 		)
 
 /datum/outfit/nuclear/unathi_equip()
