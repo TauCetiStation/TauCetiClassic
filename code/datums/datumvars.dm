@@ -283,6 +283,7 @@
 	if(isatom(D))
 		body += "<option value='?_src_=vars;delthis=\ref[D]'>Delete this object</option>"
 		body += "<option value='?_src_=vars;edit_filters=\ref[D]'>Edit Filters</option>"
+		body += "<option value='?_src_=vars;edit_particles=\ref[D]'>Edit Particles</option>"
 	if(isobj(D))
 		body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 	if(isobj(D) || ismob(D) || isturf(D))
@@ -503,18 +504,6 @@ body
 		give_spell(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
 
-	else if(href_list["give_disease"])
-		if(!check_rights(R_ADMIN|R_FUN))
-			return
-
-		var/mob/M = locate(href_list["give_disease"])
-		if(!istype(M))
-			to_chat(usr, "This can only be used on instances of type /mob")
-			return
-
-		give_disease(M)
-		href_list["datumrefresh"] = href_list["give_spell"]
-
 	else if(href_list["give_religion"])
 		if(!check_rights(R_ADMIN|R_FUN))
 			return
@@ -641,6 +630,12 @@ body
 			return
 		var/atom/A = locate(href_list["edit_filters"])
 		open_filter_editor(A)
+
+	else if(href_list["edit_particles"])
+		if(!check_rights(R_DEBUG|R_VAREDIT))
+			return
+		var/atom/A = locate(href_list["edit_particles"])
+		open_particles_editor(A)
 
 	else if(href_list["delthis"])
 		//Rights check are in cmd_admin_delete() proc

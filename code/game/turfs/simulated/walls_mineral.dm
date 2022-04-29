@@ -7,7 +7,7 @@
 
 /turf/simulated/wall/mineral/uranium
 	name = "uranium wall"
-	desc = "A wall with uranium plating. This is probably a bad idea."
+	desc = "Стена с урановым покрытием. Наверное, это плохая идея."
 	icon = 'icons/turf/walls/has_false_walls/uranium_wall.dmi'
 	mineral = "uranium"
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
@@ -41,7 +41,7 @@
 
 /turf/simulated/wall/mineral/gold
 	name = "gold wall"
-	desc = "A wall with gold plating. Swag!"
+	desc = "Стена с золотой обшивкой. Оу-eeee!"
 	icon = 'icons/turf/walls/has_false_walls/gold_wall.dmi'
 	mineral = "gold"
 	sheet_type = /obj/item/stack/sheet/mineral/gold
@@ -49,7 +49,7 @@
 
 /turf/simulated/wall/mineral/silver
 	name = "silver wall"
-	desc = "A wall with silver plating. Shiny!"
+	desc = "Стена с серебрянной обшивкой. Блестит!"
 	icon = 'icons/turf/walls/has_false_walls/silver_wall.dmi'
 	mineral = "silver"
 	sheet_type = /obj/item/stack/sheet/mineral/silver
@@ -57,7 +57,7 @@
 
 /turf/simulated/wall/mineral/diamond
 	name = "diamond wall"
-	desc = "A wall with diamond plating. You monster."
+	desc = "Стена с алмазной обшивкой. Вы чудовище."
 	icon = 'icons/turf/walls/has_false_walls/diamond_wall.dmi'
 	mineral = "diamond"
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
@@ -65,7 +65,7 @@
 
 /turf/simulated/wall/mineral/bananium
 	name = "bananium wall"
-	desc = "A wall with bananium plating. Honk!"
+	desc = "Стена с бананиумовой обшивкой. Хонк!"
 	icon = 'icons/turf/walls/has_false_walls/bananium_wall.dmi'
 	mineral = "bananium"
 //	sheet_type = /obj/item/stack/sheet/mineral/bananium
@@ -73,7 +73,7 @@
 
 /turf/simulated/wall/mineral/sandstone
 	name = "sandstone wall"
-	desc = "A wall with sandstone plating."
+	desc = "Стена с песчаной обшивкой."
 	icon = 'icons/turf/walls/has_false_walls/sandstone_wall.dmi'
 	mineral = "sandstone"
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
@@ -83,7 +83,7 @@
 
 /turf/simulated/wall/mineral/phoron
 	name = "phoron wall"
-	desc = "A wall with phoron plating. This is definately a bad idea."
+	desc = "Стена с фороновой обшивкой. Определенно плохая идея."
 	icon = 'icons/turf/walls/has_false_walls/phoron_wall.dmi'
 	mineral = "phoron"
 	sheet_type = /obj/item/stack/sheet/mineral/phoron

@@ -26,7 +26,7 @@
 	alive_mob_list -= src
 
 /mob/living/pbag/incapacitated()
-	return resting
+	return crawling
 
 /mob/living/pbag/restrained()
 	return FALSE
@@ -65,7 +65,7 @@
 /mob/living/pbag/UnarmedAttack(atom/A)
 	INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)
 
-/mob/living/pbag/on_lay_down()
+/mob/living/pbag/crawl()
 	drop_down()
 	return TRUE
 
@@ -169,7 +169,7 @@
 			ghost.throw_at(T, 7, 5, src) // It will say that the bad "thrown" the ghost out. Sounds fun.
 
 	can_be_pulled = TRUE
-	resting = TRUE
+	SetCrawling(TRUE)
 	icon_state = "pbagdown"
 	my_icon_state = "pbagdown"
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -193,7 +193,7 @@
 	icon_state = "pbag"
 	my_icon_state = "pbag"
 	pixel_y = 0
-	resting = FALSE
+	SetCrawling(FALSE)
 
 /mob/living/pbag/verb/user_hang()
 	set name = "Hang Bag"
@@ -211,8 +211,8 @@
 		else
 			rejuvenate()
 
-		user.visible_message("<span class='notice'>[user] [!resting ? "secures" : "unsecures"] \the [src].</span>",
-			"<span class='notice'>You [!resting ? "secure" : "unsecure"] \the [src].</span>",
+		user.visible_message("<span class='notice'>[user] [!crawling ? "secures" : "unsecures"] \the [src].</span>",
+			"<span class='notice'>You [!crawling ? "secure" : "unsecure"] \the [src].</span>",
 			"<span class='notice'>You hear a ratchet.</span>")
 
 /mob/living/pbag/is_usable_eyes(targetzone = null)

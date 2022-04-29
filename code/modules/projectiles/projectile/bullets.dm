@@ -32,14 +32,10 @@
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
-/obj/item/projectile/bullet/buckpellet
-	name = "buckpellet"
-	damage = 14
-	dispersion = 2.5
-
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = 20
+	damage = 14
+	dispersion = 2.5
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
@@ -48,12 +44,7 @@
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
 
-/obj/item/projectile/bullet/weakbullet/rubber45 //to manage .45 pain damage
-	name = "rubber bullet"
-	agony = 55
-
 /obj/item/projectile/bullet/smg //.45 ACP
-	name = "submachinegun bullet"
 	damage = 20
 
 /obj/item/projectile/bullet/smg_hp

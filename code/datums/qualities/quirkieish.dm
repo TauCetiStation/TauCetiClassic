@@ -155,7 +155,7 @@
 	if(new_intent != INTENT_HARM)
 		return
 
-	H.emote("scream")
+	H.emote("scream", auto = FALSE)
 
 /datum/quality/quirkieish/war_face/add_effect(mob/living/carbon/human/H, latespawn)
 	H.lip_style = "spray_face"

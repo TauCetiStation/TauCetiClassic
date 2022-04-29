@@ -53,6 +53,7 @@
 
 /mob/living/blob/death(gibbed)
 	if(key)
+		logout_reason = LOGOUT_GHOST
 		var/mob/dead/observer/ghost = new(src)
 		ghost.name = ghost_name
 		ghost.real_name = ghost_name
