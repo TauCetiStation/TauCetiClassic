@@ -57,6 +57,3 @@
 	if(stat >= DEAD)
 		return
 	..()
-
-/mob/living/simple_animal/lizard/handle_gnaw()
-	return ..()
