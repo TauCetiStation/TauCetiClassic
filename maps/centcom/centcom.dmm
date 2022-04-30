@@ -26234,6 +26234,14 @@
 	icon_state = "browncorner"
 	},
 /area/centcom/holding)
+"lpk" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "bar"
+	},
+/area/custom/syndicate_mothership)
 "lpG" = (
 /obj/effect/landmark{
 	name = "Commando"
@@ -87791,7 +87799,7 @@ cMX
 inC
 alF
 akQ
-akQ
+lpk
 sjf
 aie
 aie
