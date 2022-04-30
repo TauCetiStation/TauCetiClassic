@@ -329,7 +329,8 @@
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/scout
 	name = "scout kit"
-	startswith = list(/obj/item/ammo_box/magazine/m12mm/hv,
+	startswith = list(
+	/obj/item/ammo_box/magazine/m12mm/hv,
 	/obj/item/ammo_box/magazine/m12mm/hp,
 	/obj/item/ammo_box/magazine/m12mm/imp,
 	/obj/item/ammo_box/magazine/m12mm = 3,
@@ -344,7 +345,8 @@
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman
 	name = "assaultman kit"
-	startswith = list(/obj/item/ammo_box/magazine/a74mm = 3,
+	startswith = list(
+	/obj/item/ammo_box/magazine/a74mm = 3,
 	/obj/item/weapon/gun/projectile/automatic/a74,
 	/obj/item/weapon/shield/energy,
 	/obj/item/weapon/grenade/flashbang = 4,
@@ -355,7 +357,8 @@
 	)
 
 /obj/item/weapon/storage/belt/utility/hacker
-	startswith = list(/obj/item/weapon/wrench/power,
+	startswith = list(
+	/obj/item/weapon/wrench/power,
 	/obj/item/weapon/wirecutters/power,
 	/obj/item/weapon/weldingtool/largetank,
 	/obj/item/device/multitool,
@@ -363,7 +366,8 @@
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker
 	name = "hacker kit"
-	startswith = list(/obj/item/ammo_box/magazine/m12g = 3,
+	startswith = list(
+	/obj/item/ammo_box/magazine/m12g = 3,
 	/obj/item/ammo_box/magazine/m12g/stun,
 	/obj/item/ammo_box/magazine/m12g/incendiary,
 	/obj/item/weapon/gun/projectile/automatic/bulldog,
@@ -378,7 +382,8 @@
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/sniper
 	name = "sniper kit"
-	startswith = list(/obj/item/ammo_casing/a145 = 6,
+	startswith = list(
+	/obj/item/ammo_casing/a145 = 6,
 	/obj/item/weapon/gun/projectile/heavyrifle,
 	/obj/item/device/chameleon,
 	/obj/item/clothing/glasses/thermal/syndi,
@@ -391,7 +396,8 @@
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/demo
 	name = "demolition and explosion kit"
-	startswith = list(/obj/item/ammo_casing/r4046/explosive = 3,
+	startswith = list(
+	/obj/item/ammo_casing/r4046/explosive = 3,
 	/obj/item/ammo_box/magazine/drozd127,
 	/obj/item/weapon/gun/projectile/automatic/drozd,
 	/obj/item/weapon/plastique = 5,
@@ -403,7 +409,8 @@
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/melee
 	name = "melee weapon kit"
-	startswith = list(/obj/item/weapon/melee/energy/sword,
+	startswith = list(
+	/obj/item/weapon/melee/energy/sword,
 	/obj/item/weapon/gun/energy/crossbow,
 	/obj/item/weapon/implanter/adrenaline,
 	/obj/item/weapon/implanter/emp,
@@ -417,7 +424,8 @@
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner
 	name = "heavy machine gunner kit"
-	startswith = list(/obj/item/ammo_box/magazine/m762 = 2,
+	startswith = list(
+	/obj/item/ammo_box/magazine/m762 = 2,
 	/obj/item/weapon/gun/projectile/automatic/l6_saw,
 	/obj/item/clothing/suit/space/rig/syndi/heavy,
 	/obj/item/clothing/head/helmet/space/rig/syndi/heavy,
@@ -425,7 +433,8 @@
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/custom
 	name = "custom kit"
-	startswith = list(/obj/item/device/radio/uplink,
+	startswith = list(
+	/obj/item/device/radio/uplink,
 	/obj/item/stack/telecrystal/twenty,
 	/obj/item/clothing/suit/space/rig/syndi,
 	/obj/item/clothing/head/helmet/space/rig/syndi,

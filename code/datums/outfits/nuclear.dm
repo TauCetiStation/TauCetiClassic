@@ -1,5 +1,13 @@
 /obj/item/weapon/storage/backpack/nuke
-	startswith = list(/obj/item/weapon/reagent_containers/pill/cyanide, /obj/item/weapon/gun/projectile/automatic/pistol, /obj/item/weapon/crowbar, /obj/item/ammo_box/magazine/m9mm, /obj/item/clothing/accessory/holster/armpit, /obj/item/weapon/pinpointer/nukeop, /obj/item/weapon/kitchenknife/combat, /obj/item/clothing/accessory/storage/syndi_vest, /obj/item/weapon/mining_voucher/syndi,)
+	startswith = list(
+	/obj/item/weapon/reagent_containers/pill/cyanide,
+	/obj/item/weapon/gun/projectile/automatic/pistol, /obj/item/weapon/crowbar,
+	/obj/item/ammo_box/magazine/m9mm,
+	/obj/item/clothing/accessory/holster/armpit,
+	/obj/item/weapon/pinpointer/nukeop,
+	/obj/item/weapon/kitchenknife/combat, 
+	/obj/item/clothing/accessory/storage/syndi_vest,
+	/obj/item/weapon/mining_voucher/syndi,)
 
 /datum/outfit/nuclear
 	name = "Nuclear Agent"
@@ -24,7 +32,17 @@
 
 
 /obj/item/weapon/storage/backpack/nuke/commander
-	startswith = list(/obj/item/weapon/reagent_containers/pill/cyanide, /obj/item/weapon/crowbar, /obj/item/weapon/gun/projectile/revolver, /obj/item/ammo_box/a357, /obj/item/clothing/accessory/holster/armpit, /obj/item/weapon/pinpointer/nukeop, /obj/item/device/radio/uplink/leader, /obj/item/weapon/kitchenknife/combat, /obj/item/clothing/accessory/storage/syndi_vest, /obj/item/weapon/mining_voucher/syndi,)
+	startswith = list(
+	/obj/item/weapon/reagent_containers/pill/cyanide,
+	/obj/item/weapon/crowbar,
+	/obj/item/weapon/gun/projectile/revolver,
+	/obj/item/ammo_box/a357,
+	/obj/item/clothing/accessory/holster/armpit,
+	/obj/item/weapon/pinpointer/nukeop,
+	/obj/item/device/radio/uplink/leader,
+	/obj/item/weapon/kitchenknife/combat,
+	/obj/item/clothing/accessory/storage/syndi_vest,
+	/obj/item/weapon/mining_voucher/syndi,)
 
 /datum/outfit/nuclear/leader
 	name = "Nuclear Commander"
