@@ -89,12 +89,6 @@
 
 	tally += weight_tally
 
-	if(!chem_nullify_debuff)
-		for(var/x in list(l_hand, r_hand))
-			var/obj/item/I = x
-			if(I && !(I.flags & ABSTRACT) && I.w_class >= SIZE_SMALL)
-				tally += 0.25 * (I.w_class - 2) // (3 = 0.25) || (4 = 0.5) || (5 = 0.75)
-
 	if(shock_stage >= 10)
 		tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
 
