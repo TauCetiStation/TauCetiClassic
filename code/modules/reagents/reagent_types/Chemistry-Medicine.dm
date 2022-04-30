@@ -538,17 +538,6 @@
 	..()
 	M.heal_bodypart_damage(2 * REM, 0)
 
-/datum/reagent/hyperzine
-	name = "Hyperzine"
-	id = "hyperzine"
-	description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
-	reagent_state = LIQUID
-	color = "#ff4f00" // rgb: 200, 165, 220
-	custom_metabolism = 0.03
-	overdose = REAGENTS_OVERDOSE * 0.5
-	taste_message = "speed"
-	restrict_species = list(IPC, DIONA)
-
 /datum/reagent/hyperizine/on_general_digest(mob/living/M)
 	..()
 	if(prob(5))

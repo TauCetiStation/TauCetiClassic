@@ -68,7 +68,7 @@
 		else
 			weight_negation += BP.pumped / 100
 
-	// hyperzine removes equipment slowdowns (no blood = no chemical effects).
+	//nuke cola removes equipment slowdowns (no blood = no chemical effects).
 	var/chem_nullify_debuff = FALSE
 	if(!species.flags[NO_BLOOD] && reagents.has_reagent("nuka_cola"))
 		chem_nullify_debuff = TRUE

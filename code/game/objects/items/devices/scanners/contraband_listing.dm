@@ -322,7 +322,6 @@ var/global/list/contraband_listings
 			"cryptobiolin",
 			"impedrezene",
 			"stoxin2",
-			"hyperzine",
 			"nitroglycerin",
 			"thermite",
 			"fuel",

@@ -254,7 +254,7 @@
 	. = ..()
 	reagents.add_reagent("impedrezene", 10)
 	reagents.add_reagent("synaptizine", 5)
-	reagents.add_reagent("hyperzine", 5)
+	reagents.add_reagent("toxin", 5)
 
 /obj/item/weapon/reagent_containers/pill/lipozine
 	name = "Lipozine (15u)"
