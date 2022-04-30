@@ -262,3 +262,8 @@
 	icon_state = "wjboots"
 	item_state = "wjboots"
 	clipped_status = CLIPPABLE
+
+/obj/item/clothing/shoes/kung
+	name = "Kung shoes"
+	desc = "Pair of a high red shoes."
+	icon_state = "kung_shoes"

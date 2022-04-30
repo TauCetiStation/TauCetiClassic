@@ -781,7 +781,11 @@ Please contact me on #coderbus IRC. ~Carn x
 			else if(HULK in mutations)
 				tail_s.color = HULK_SKIN_COLOR
 			else
-				tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
+				if(species.flags[HAS_SKIN_COLOR])
+					tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
+				else if(species.flags[HAS_SKIN_TONE])
+					tail_s.color = RGB_CONTRAST(s_tone, s_tone, s_tone)
+
 			var/image/standing = image("icon" = tail_s, "layer" = -TAIL_LAYER)
 			standing = human_update_offset(standing, FALSE)
 			overlays_standing[TAIL_LAYER] = standing
