@@ -481,7 +481,7 @@
 	if(!istype(user))
 		return
 	var/turf/T = get_turf(user)
-	user.visible_message("<span class='warning'><B>[user]</B> испускает еле заметное фиолетовое облачко.</span>", "<span class='notice'>Вы испускаете немного форона.</span>")
+	user.visible_message("<span class='warning'><B>[user]</B> emits faint purple cloud.</span>", "<span class='notice'>You let some phoron out.</span>")
 	user.adjustToxLoss(-plasma_cost)
 	T.assume_gas("phoron", 25, user.bodytemperature) // give 25 moles of phoron (approx. 0.25% of air in room like Bar)
 
