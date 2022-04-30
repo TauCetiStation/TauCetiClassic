@@ -872,11 +872,6 @@
 			health -= rand(0,15)
 	healthcheck()
 
-//for pest rats
-/obj/structure/disposalpipe/proc/wear_out(melee_damage)
-	health -= melee_damage
-	healthcheck()
-
 // test health for brokenness
 /obj/structure/disposalpipe/proc/healthcheck()
 	if(health < -2)

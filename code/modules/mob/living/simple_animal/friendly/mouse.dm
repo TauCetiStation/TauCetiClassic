@@ -216,10 +216,5 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 	..()
 	handle_gnaw()
 
-/mob/living/simple_animal/mouse/rat/handle_gnaw()
-	var/turf/T = get_turf(src)
-	for(var/obj/structure/disposalpipe/D in T)
-		D.wear_out(melee_damage)
-
 /mob/living/simple_animal/mouse/rat/snuffles()
 	return FALSE
