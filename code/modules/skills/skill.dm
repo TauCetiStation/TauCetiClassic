@@ -102,7 +102,7 @@
 /datum/skill/atmospherics
 	name = SKILL_ATMOS
 	max_value = 3
-	hint = "Interacting with atmos related devices: pumps, scrubbers, space heaters. Usage of atmospherics computers. Faster pipes unwrenching."
+	hint = "Interacting with atmos related devices: pumps, scrubbers and filters. Usage of atmospherics computers. Faster pipes unwrenching."
 
 /datum/skill/atmospherics/default
 	value = 0
