@@ -26,11 +26,13 @@
 	var/used_item = target
 	if(text_target)
 		used_item = text_target
+
+	var/required_time = apply_skill_bonus(user, delay, required_skills, -1) //increase time for each missing level	
 	if(!message_self)
 		display_message_self = "<span class='notice'>You fumble around figuring out how to use the [used_item].</span>"
-	to_chat(user, display_message_self)
+	if(required_time > 0)
+		to_chat(user, display_message_self)
 
-	var/required_time = apply_skill_bonus(user, delay, required_skills, -1) //increase time for each missing level
 	return do_after(user, required_time, target = target)
 
 /proc/get_skill_rank_name(skill_type, value)
