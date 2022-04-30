@@ -48,7 +48,7 @@
 	icon_state = "mirror_broke"
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	desc = "Oh no, seven years of bad luck!"
-	vis_contents -= reflection
+	reflection.icon_state = "reflection_broken"
 
 
 /obj/structure/mirror/bullet_act(obj/item/projectile/Proj)
