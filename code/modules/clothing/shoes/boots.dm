@@ -96,3 +96,10 @@
 	heat_protection = LEGS
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = null
+
+/obj/item/clothing/shoes/boots/police
+	desc = "Nanotrasen-issue police combat boots for combat scenarios or combat situations. All combat, all the time."
+	icon_state = "police_boots"
+	item_state = "wjboots"
+	siemens_coefficient = 0.7
+	clipped_status = NO_CLIPPING

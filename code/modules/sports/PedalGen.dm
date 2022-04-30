@@ -160,11 +160,12 @@
 	else
 		animate(M, pixel_x = 0, pixel_y = 0, 2, 1, LINEAR_EASING)
 
-/obj/structure/stool/bed/chair/pedalgen/bullet_act(obj/item/projectile/Proj)
+/obj/structure/stool/bed/chair/pedalgen/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(buckled_mob)
 		if(prob(85))
 			return buckled_mob.bullet_act(Proj)
 	visible_message("<span class='warning'>[Proj] ricochets off the [src]!</span>")
+	return ..()
 
 /obj/structure/stool/bed/chair/pedalgen/Destroy()
 	qdel(Generator)
