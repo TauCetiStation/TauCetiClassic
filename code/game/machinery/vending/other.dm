@@ -236,7 +236,7 @@
 	products = list(
 		/obj/item/weapon/storage/pouch/ammo = 6,
 		/obj/item/clothing/accessory/holster/armpit = 6,
-		/obj/item/device/hud_calibrator = 3,
+		/obj/item/device/hud_calibrator = 6,
 		/obj/item/weapon/storage/backpack/dufflebag = 3,
 		/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate = 2,
 	)
@@ -276,21 +276,21 @@
 		return
 	switch(selection)
 		if("Scout kit")
-			new /obj/item/weapon/storage/box/syndie_kit/nuke/scout(loc)
+			new /obj/item/weapon/storage/backpack/dufflebag/nuke/scout(loc)
 		if("Sniper kit")
-			new /obj/item/weapon/storage/box/syndie_kit/nuke/sniper(loc)
+			new /obj/item/weapon/storage/backpack/dufflebag/nuke/sniper(loc)
 		if("Assaultman kit")
-			new /obj/item/weapon/storage/box/syndie_kit/nuke/assaultman(loc)
+			new /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman(loc)
 		if("Boom-boom kit")
-			new /obj/item/weapon/storage/box/syndie_kit/nuke/demo(loc)
+			new /obj/item/weapon/storage/backpack/dufflebag/nuke/demo(loc)
 		if("Melee kit")
-			new /obj/item/weapon/storage/box/syndie_kit/nuke/melee(loc)
+			new /obj/item/weapon/storage/backpack/dufflebag/nuke/melee(loc)
 		if("Machinengunner kit")
-			new /obj/item/weapon/storage/box/syndie_kit/nuke/heavygunner(loc)
+			new /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner(loc)
 		if("Hacker kit")
-			new /obj/item/weapon/storage/box/syndie_kit/nuke/hacker(loc)
+			new /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker(loc)
 		if("Custom kit")
-			new /obj/item/weapon/storage/box/syndie_kit/nuke/custom(loc)
+			new /obj/item/weapon/storage/backpack/dufflebag/nuke/custom(loc)
 		if("Cancel")
 			voucher.in_use = FALSE
 			return

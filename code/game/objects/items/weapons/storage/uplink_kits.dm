@@ -327,7 +327,7 @@
 
 //loadouts
 
-/obj/item/weapon/storage/box/syndie_kit/nuke/scout
+/obj/item/weapon/storage/backpack/dufflebag/nuke/scout
 	name = "scout kit"
 	startswith = list(/obj/item/ammo_box/magazine/m12mm/hv,
 	/obj/item/ammo_box/magazine/m12mm/hp,
@@ -341,43 +341,42 @@
 	/obj/item/clothing/suit/space/rig/syndi,
 	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)
-	make_exact_fit()
 
-/obj/item/weapon/storage/box/syndie_kit/nuke/assaultman
+/obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman
 	name = "assaultman kit"
 	startswith = list(/obj/item/ammo_box/magazine/a74mm = 3,
 	/obj/item/weapon/gun/projectile/automatic/a74,
 	/obj/item/weapon/shield/energy,
-	/obj/item/weapon/grenade/flashbang = 5,
+	/obj/item/weapon/grenade/flashbang = 4,
 	/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 	/obj/item/weapon/plastique = 2,
 	/obj/item/clothing/suit/space/rig/syndi,
 	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)
-	make_exact_fit()
 
-/obj/item/weapon/storage/box/syndie_kit/nuke/hacker
+/obj/item/weapon/storage/belt/utility/hacker
+	startswith = list(/obj/item/weapon/wrench/power,
+	/obj/item/weapon/wirecutters/power,
+	/obj/item/weapon/weldingtool/largetank,
+	/obj/item/device/multitool,
+	/obj/item/device/flashlight/emp,)
+
+/obj/item/weapon/storage/backpack/dufflebag/nuke/hacker
 	name = "hacker kit"
 	startswith = list(/obj/item/ammo_box/magazine/m12g = 3,
 	/obj/item/ammo_box/magazine/m12g/stun,
 	/obj/item/ammo_box/magazine/m12g/incendiary,
 	/obj/item/weapon/gun/projectile/automatic/bulldog,
 	/obj/item/weapon/grenade/spawnergrenade/manhacks,
-	/obj/item/weapon/wrench/power,
-	/obj/item/weapon/wirecutters/power,
-	/obj/item/weapon/weldingtool/largetank,
 	/obj/item/device/debugger,
-	/obj/item/device/multitool,
+	/obj/item/weapon/storage/belt/utility/hacker,
 	/obj/item/clothing/glasses/meson,
-	/obj/item/device/hud_calibrator,
 	/obj/item/weapon/card/emag,
-	/obj/item/device/flashlight/emp,
 	/obj/item/clothing/suit/space/rig/syndi,
 	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)
-	make_exact_fit()
 
-/obj/item/weapon/storage/box/syndie_kit/nuke/sniper
+/obj/item/weapon/storage/backpack/dufflebag/nuke/sniper
 	name = "sniper kit"
 	startswith = list(/obj/item/ammo_casing/a145 = 6,
 	/obj/item/weapon/gun/projectile/heavyrifle,
@@ -389,9 +388,8 @@
 	/obj/item/clothing/suit/space/rig/syndi,
 	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)
-	make_exact_fit()
 
-/obj/item/weapon/storage/box/syndie_kit/nuke/demo
+/obj/item/weapon/storage/backpack/dufflebag/nuke/demo
 	name = "demolition and explosion kit"
 	startswith = list(/obj/item/ammo_casing/r4046/explosive = 3,
 	/obj/item/ammo_box/magazine/drozd127,
@@ -402,9 +400,8 @@
 	/obj/item/clothing/suit/space/rig/syndi,
 	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)
-	make_exact_fit()
 
-/obj/item/weapon/storage/box/syndie_kit/nuke/melee
+/obj/item/weapon/storage/backpack/dufflebag/nuke/melee
 	name = "melee weapon kit"
 	startswith = list(/obj/item/weapon/melee/energy/sword,
 	/obj/item/weapon/gun/energy/crossbow,
@@ -417,22 +414,19 @@
 	/obj/item/clothing/suit/space/rig/syndi,
 	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)
-	make_exact_fit()
 
-/obj/item/weapon/storage/box/syndie_kit/nuke/heavygunner
+/obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner
 	name = "heavy machine gunner kit"
 	startswith = list(/obj/item/ammo_box/magazine/m762 = 2,
 	/obj/item/weapon/gun/projectile/automatic/l6_saw,
 	/obj/item/clothing/suit/space/rig/syndi/heavy,
 	/obj/item/clothing/head/helmet/space/rig/syndi/heavy,
 	)
-	make_exact_fit()
 
-/obj/item/weapon/storage/box/syndie_kit/nuke/custom
+/obj/item/weapon/storage/backpack/dufflebag/nuke/custom
 	name = "custom kit"
 	startswith = list(/obj/item/device/radio/uplink,
 	/obj/item/stack/telecrystal/twenty,
 	/obj/item/clothing/suit/space/rig/syndi,
 	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)
-	make_exact_fit()
