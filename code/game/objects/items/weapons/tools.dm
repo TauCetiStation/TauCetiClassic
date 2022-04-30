@@ -163,9 +163,9 @@
 			usr.visible_message("\The [usr] cuts \the [C]'s handcuffs with \the [src]!",\
 			"<span class='notice'>You cut \the [C]'s handcuffs with \the [src]!</span>",\
 			"You hear handcuffs being cut.")
-				if(C.buckled && C.buckled.buckle_require_restraints)
-					C.buckled.unbuckle_mob()
-				C.update_inv_handcuffed()
+			if(C.buckled && C.buckled.buckle_require_restraints)
+				C.buckled.unbuckle_mob()
+			C.update_inv_handcuffed()
 		return
 	else
 		..()
