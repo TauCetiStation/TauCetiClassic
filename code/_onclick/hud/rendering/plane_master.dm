@@ -124,6 +124,13 @@
 	render_target = GRAVITY_PULSE_RENDER_TARGET
 	render_relay_plane = null
 
+/atom/movable/screen/plane_master/mirr
+	name = "mirror plane"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = MIRROR_PLANE
+	render_target = MIRROR_RENDER_TARGET
+	render_relay_plane = null
+
 /atom/movable/screen/plane_master/area
 	name = "area plane"
 	plane = AREA_PLANE

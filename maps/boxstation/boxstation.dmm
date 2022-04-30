@@ -440,7 +440,8 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	pixel_x = -28
+	pixel_x = -28;
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -10368,7 +10369,8 @@
 	pixel_x = 12
 	},
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 28;
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -17888,7 +17890,8 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	pixel_x = -28
+	pixel_x = -28;
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -20960,7 +20963,8 @@
 	dir = 1
 	},
 /obj/structure/mirror{
-	pixel_x = -28
+	pixel_x = -28;
+	dir = 4
 	},
 /obj/structure/sink{
 	dir = 8;
@@ -23991,7 +23995,8 @@
 	pixel_x = 12
 	},
 /obj/structure/mirror{
-	pixel_x = 32
+	pixel_x = 32;
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -47111,7 +47116,8 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	pixel_x = -28
+	pixel_x = -28;
+	dir = 4
 	},
 /obj/structure/dryer{
 	pixel_y = 14
@@ -47712,7 +47718,8 @@
 /area/station/security/iaa_office)
 "bHp" = (
 /obj/structure/mirror{
-	pixel_x = -28
+	pixel_x = -28;
+	dir = 4
 	},
 /obj/item/weapon/haircomb,
 /obj/structure/table/glass,
@@ -58773,7 +58780,8 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	pixel_x = -28
+	pixel_x = -28;
+	dir = 4
 	},
 /obj/structure/dryer{
 	pixel_y = 20
@@ -72985,7 +72993,8 @@
 /obj/item/weapon/lipstick,
 /obj/structure/table/woodentable,
 /obj/structure/mirror{
-	pixel_x = -28
+	pixel_x = -28;
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -75229,7 +75238,8 @@
 	pixel_x = 12
 	},
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 28;
+	dir = 8
 	},
 /obj/structure/dryer{
 	pixel_y = 20
@@ -75975,7 +75985,8 @@
 /area/station/storage/emergency)
 "kLc" = (
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 28;
+	dir = 8
 	},
 /obj/structure/sink{
 	dir = 4;
@@ -81907,6 +81918,12 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
+"sfu" = (
+/obj/structure/mirror{
+	pixel_y = 32
+	},
+/turf/simulated/wall,
+/area/station/medical/medbreak)
 "sgb" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
@@ -82453,7 +82470,8 @@
 	},
 /obj/item/clothing/suit/superman,
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 28;
+	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
@@ -128462,7 +128480,7 @@ bNR
 bIw
 bCm
 chb
-bHY
+sfu
 bgd
 bgg
 bHY

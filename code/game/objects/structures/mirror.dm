@@ -7,7 +7,22 @@
 	density = FALSE
 	anchored = TRUE
 	var/shattered = 0
+	var/atom/movable/mirror/reflection
 
+/obj/structure/mirror/atom_init()
+	. = ..()
+	if(!reflection)
+		reflection = new(src)
+		reflection.icon = icon
+		reflection.icon_state = "reflection"
+		reflection.angle = dir2angle(dir) - 90
+		reflection.update_angle()
+		vis_contents += reflection
+
+/obj/structure/mirror/Destroy()
+	vis_contents -= reflection
+	QDEL_NULL(reflection)
+	return ..()
 
 /obj/structure/mirror/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -33,6 +48,7 @@
 	icon_state = "mirror_broke"
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	desc = "Oh no, seven years of bad luck!"
+	vis_contents -= reflection
 
 
 /obj/structure/mirror/bullet_act(obj/item/projectile/Proj)

@@ -252,6 +252,7 @@
 #include "code\datums\forced_movement.dm"
 #include "code\datums\map_config.dm"
 #include "code\datums\mind.dm"
+#include "code\datums\mirror.dm"
 #include "code\datums\modules.dm"
 #include "code\datums\music_player.dm"
 #include "code\datums\mutable_appearance.dm"
