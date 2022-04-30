@@ -24,8 +24,7 @@
 			user.unset_machine()
 			user << browse(null, "window=op")
 			return
-	if(!do_skill_checks(user))
-		return
+
 	var/dat = ""
 	if(src.table && (table.check_victim()))
 		src.victim = src.table.victim
