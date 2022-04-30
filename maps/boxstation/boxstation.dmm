@@ -81918,12 +81918,6 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
-"sfu" = (
-/obj/structure/mirror{
-	pixel_y = 32
-	},
-/turf/simulated/wall,
-/area/station/medical/medbreak)
 "sgb" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
@@ -128480,7 +128474,7 @@ bNR
 bIw
 bCm
 chb
-sfu
+bHY
 bgd
 bgg
 bHY

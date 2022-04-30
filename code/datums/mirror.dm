@@ -5,4 +5,4 @@
 
 /atom/movable/mirror/proc/update_angle()
 	transform = null
-	color = rgb(128 + 127*cos(angle), 128 - 127*sin(angle), 0)
+	color = rgb(128 + 127*cos(angle), 128 + 127*sin(angle), 0)
