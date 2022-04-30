@@ -6,7 +6,6 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 */
 //TG-stuff
-#define TELECRYSTALS_PER_ONE_OPERATIVE 10
 
 
 /obj/item/device/uplink
@@ -182,7 +181,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 /obj/item/device/radio/uplink/leader
 	icon_state = "radio"
-	var/uses = 20 + TELECRYSTALS_PER_ONE_OPERATIVE
+	var/uses = 25
 
 /obj/item/device/multitool/uplink/atom_init()
 	. = ..()
