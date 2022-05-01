@@ -638,7 +638,8 @@ steam.start() -- spawns the effect
 /obj/structure/foamedmetal/blob_act()
 	qdel(src)
 
-/obj/structure/foamedmetal/bullet_act()
+/obj/structure/foamedmetal/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(metal == 1 || prob(50))
 		qdel(src)
 
