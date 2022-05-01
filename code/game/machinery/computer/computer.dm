@@ -68,10 +68,10 @@
 		verbs -= x
 	set_broken()
 
-/obj/machinery/computer/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/computer/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(prob(Proj.damage))
 		set_broken()
-	..()
 
 /obj/machinery/computer/update_icon()
 	..()

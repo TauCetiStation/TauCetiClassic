@@ -37,8 +37,8 @@
 	health -= damage
 	healthcheck()
 
-/obj/effect/spider/bullet_act(obj/item/projectile/Proj)
-	..()
+/obj/effect/spider/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
 	healthcheck()
 
