@@ -872,6 +872,7 @@
 			health -= rand(0,15)
 	healthcheck()
 
+
 // test health for brokenness
 /obj/structure/disposalpipe/proc/healthcheck()
 	if(health < -2)
