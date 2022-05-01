@@ -348,7 +348,7 @@
 	var/pillsprite = 1
 	var/client/has_sprites = list()
 	var/max_pill_count = 24
-	required_skills = list(/datum/skill/chemistry/master)
+	required_skills = list(/datum/skill/chemistry/trained)
 
 
 /obj/machinery/chem_master/atom_init()

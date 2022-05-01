@@ -283,7 +283,7 @@
 	name = "Xenobiologist"
 	initial_skills = list(
 		/datum/skill/research/trained,
-		/datum/skill/surgery/novice,
+		/datum/skill/surgery/pro,
 		/datum/skill/medical/trained,
 		/datum/skill/chemistry/novice
 	)
