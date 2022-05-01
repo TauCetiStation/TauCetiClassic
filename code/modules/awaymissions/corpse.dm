@@ -23,7 +23,6 @@
 	var/corpseidjob = null // Needs to be in quotes, such as "Clown" or "Chef." This just determines what the ID reads as, not their access
 	var/corpseidaccess = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
 	var/corpseidicon = null //For setting it to be a gold, silver, centcomm etc ID
-	var/mutantrace = "human"
 	var/specie = HUMAN //Set specie of a new corpse
 
 /obj/effect/landmark/corpse/atom_init()
@@ -33,7 +32,6 @@
 /obj/effect/landmark/corpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
 	M.set_species(specie)
-	M.dna.mutantrace = mutantrace
 	M.real_name = src.name
 	M.death(1) //Kills the new mob
 	if(src.corpseuniform)
@@ -144,7 +142,6 @@
 	corpsesuit = /obj/item/clothing/suit/space/unathi/breacher
 	corpseid = 1
 	corpseidjob = "Unathi Commander"
-	corpseidaccess = "Captain"
 	specie = UNATHI
 
 ///////////Civilians//////////////////////
@@ -241,7 +238,6 @@
 	corpseglasses = /obj/item/clothing/glasses/sunglasses
 	corpseid = 1
 	corpseidjob = "Bridge Officer"
-	corpseidaccess = "Captain"
 
 /obj/effect/landmark/corpse/commander
 	name = "Commander"
@@ -256,7 +252,6 @@
 	corpsepocket1 = /obj/item/weapon/lighter/zippo
 	corpseid = 1
 	corpseidjob = "Commander"
-	corpseidaccess = "Captain"
 
 /obj/effect/landmark/corpse/securityofficer
 	name = "Security Officer"

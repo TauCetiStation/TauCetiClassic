@@ -73,27 +73,12 @@
 
 	emo.do_emote(src, act, !auto)
 
-// A simpler emote. Just the message, and it's type. If you want anything more complex - make a datumized emote.
-/mob/proc/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
-	log_emote("[key_name(src)] : [message]")
-
-	var/msg = "<b>[src]</b> <i>[message]</i>"
-	if(message_type & SHOWMSG_VISUAL)
-		visible_message(msg, ignored_mobs = observer_list)
-	else
-		audible_message(msg, ignored_mobs = observer_list)
-
-	for(var/mob/M as anything in observer_list)
-		if(!M.client)
-			continue
-
-		switch(M.client.prefs.chat_ghostsight)
-			if(CHAT_GHOSTSIGHT_ALL)
-				// ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
-				to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")
-			if(CHAT_GHOSTSIGHT_ALLMANUAL)
-				if(intentional)
-					to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")
+/mob/living/carbon/human/can_me_emote(message_type, intentional)
+	. = ..()
+	if(. && miming && message_type == SHOWMSG_AUDIO)
+		if(intentional)
+			to_chat(src, "You are unable to make such noises.")
+		return FALSE
 
 /mob/living/carbon/human/verb/pose()
 	set name = "Set Pose"
