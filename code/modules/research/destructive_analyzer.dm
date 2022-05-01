@@ -10,7 +10,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 	icon_state = "d_analyzer"
 	var/obj/item/weapon/loaded_item = null
 	var/decon_mod = 0
-	required_skills = list(/datum/skill/research/trained)
 
 /obj/machinery/r_n_d/destructive_analyzer/atom_init()
 	. = ..()
