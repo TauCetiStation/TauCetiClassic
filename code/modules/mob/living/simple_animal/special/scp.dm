@@ -197,5 +197,6 @@
 	to_chat(user, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 	visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
 
-/mob/living/simple_animal/special/scp173/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/special/scp173/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	visible_message("[Proj] ricochets off [src]!")

@@ -79,9 +79,9 @@
 		default_deconstruction_crowbar(I, 1)
 	..()
 
-/obj/machinery/hydroponics/bullet_act(obj/item/projectile/P) //Works with the Somatoray to modify plant variables.
+/obj/machinery/hydroponics/bullet_act(obj/item/projectile/P, def_zone) //Works with the Somatoray to modify plant variables.
+	. = ..()
 	if(!planted)
-		..()
 		return
 	if(istype(P, /obj/item/projectile/energy/floramut))
 		mutate()
@@ -90,9 +90,6 @@
 			adjustSYield(1 * rating)
 		else if(prob(1 / (myseed.yield * myseed.yield) *100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 			adjustSYield(1 * rating)
-	else
-		..()
-		return
 
 /obj/machinery/hydroponics/CanPass(atom/movable/mover, turf/target, height = 0, air_group = 0)
 	if(air_group || (height == 0))
