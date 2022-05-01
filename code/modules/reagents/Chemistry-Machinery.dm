@@ -69,11 +69,11 @@
 		temp_add += C.rating
 	addenergy = temp_add
 	for(var/obj/item/weapon/stock_parts/scanning_module/M in component_parts)
-		for(i=1, i<=M.rating, i++)
+		for(i = 1, i <= M.rating, i++)
 			dispensable_reagents |= dispensable_reagent_tiers[i]
 	standart_reagents_list = dispensable_reagents
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		for(i=1, i<=M.rating, i++) 
+		for(i = 1, i <= M.rating, i++) 
 			premium_reagents |= premium_reagents_tiers[i]
 	premium_reagents = sortList(premium_reagents)
 	full_reagents_list = dispensable_reagents + premium_reagents
@@ -127,16 +127,13 @@
 
 /obj/machinery/chem_dispenser/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
-		return 0
+		return
 	if(!prob(prb))
-		return 0
+		return
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if(electrocute_mob(user, get_area(src), src, 0.7))
-		return 1
-	else
-		return 0
+	electrocute_mob(user, get_area(src), src, 0.7)
 
 /obj/machinery/chem_dispenser/interact(mob/user)
 	if(shocked && !issilicon(user) && !isobserver(user))
