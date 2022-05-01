@@ -75,10 +75,10 @@ What is the naming convention for planes or layers?
 #define GRAVITY_PULSE_PLANE -11
   #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
-#define MIRROR_PLANE -10
-  #define MIRROR_RENDER_TARGET "*MIR_RENDER_TARGET"
-
 #define FLOOR_PLANE -7
+
+#define MIRROR_PLANE -5
+  #define MIRROR_RENDER_TARGET "*MIR_RENDER_TARGET"
 
 #define GAME_PLANE -4
   #define BELOW_TURF_LAYER                1.9

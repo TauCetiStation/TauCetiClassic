@@ -44,7 +44,7 @@
 	. = ..()
 	add_filter("displacer", 1, displacement_map_filter(render_source = GRAVITY_PULSE_RENDER_TARGET, size = 10))
 
-	add_filter("displacer", 1, displacement_map_filter(render_source = MIRROR_RENDER_TARGET, size = 128))
+	add_filter("displacer", 1, displacement_map_filter(render_source = MIRROR_RENDER_TARGET, size = 64))
 
 ///everything that should be above game world. (for example, singularity, nar-si)
 /atom/movable/screen/plane_master/rendering_plate/above_game_world
