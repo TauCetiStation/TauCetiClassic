@@ -83,7 +83,7 @@
 		src.damage += amount
 
 	if (!silent)
-		owner.custom_pain("What a pain! My [src.name]!", 1)
+		owner.custom_pain("What a pain! My [name]!", 1)
 
 /obj/item/organ/internal/emp_act(severity)
 	switch(robotic)
