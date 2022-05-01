@@ -215,4 +215,4 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 	handle_gnaw()
 
 /mob/living/simple_animal/mouse/rat/snuffles()
-	return FALSE
+	return
