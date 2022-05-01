@@ -8,15 +8,12 @@
 	anchored = TRUE
 	var/shattered = 0
 	var/atom/movable/mirror/reflection
+	var/mirror_power = 0.5
 
 /obj/structure/mirror/atom_init()
 	. = ..()
 	if(!reflection)
-		reflection = new(src)
-		reflection.icon = icon
-		reflection.icon_state = "reflection"
-		reflection.angle = dir2angle(dir) - 90
-		reflection.update_angle()
+		reflection = new(src, angle = dir2angle(dir) - 90, icon = icon, icon_state = icon_state + "_reflection", power = mirror_power)
 		vis_contents += reflection
 
 /obj/structure/mirror/Destroy()
@@ -45,10 +42,10 @@
 	if(shattered)
 		return
 	shattered = 1
-	icon_state = "mirror_broke"
+	icon_state = icon_state + "_broke"
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	desc = "Oh no, seven years of bad luck!"
-	reflection.icon_state = "reflection_broken"
+	reflection.icon_state = icon_state + "_reflection"
 
 
 /obj/structure/mirror/bullet_act(obj/item/projectile/Proj)
@@ -267,3 +264,19 @@
 				H.update_body()
 				H.regenerate_icons()
 				H.check_dna(H)
+
+/obj/structure/mirror/tall
+	name = "tall mirror"
+	icon_state = "tall_mirror"
+
+/obj/structure/mirror/wide
+	name = "wide mirror"
+
+/obj/structure/mirror/wide/left
+	icon_state = "wide_mirror_left"
+
+/obj/structure/mirror/wide/right
+	icon_state = "wide_mirror_right"
+
+/obj/structure/mirror/wide/center
+	icon_state = "wide_mirror_center"

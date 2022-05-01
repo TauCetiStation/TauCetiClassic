@@ -389,7 +389,8 @@
 "aaI" = (
 /obj/structure/centcom_barrier,
 /obj/structure/mirror/magic{
-	pixel_x = 30
+	pixel_x = 32;
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -1765,7 +1766,8 @@
 /area/shuttle/escape/centcom)
 "aeG" = (
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 32;
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -4351,13 +4353,14 @@
 	},
 /area/shuttle/syndicate/start)
 "aln" = (
-/obj/structure/mirror{
-	pixel_x = -30
-	},
 /obj/structure/sink{
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
+	},
+/obj/structure/mirror/wide/left{
+	dir = 1;
+	pixel_y = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -4368,6 +4371,10 @@
 /obj/structure/dryer{
 	dir = 8;
 	pixel_x = 6
+	},
+/obj/structure/mirror/wide/right{
+	dir = 1;
+	pixel_y = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -8161,7 +8168,7 @@
 	pixel_x = 11
 	},
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -13331,7 +13338,8 @@
 /obj/structure/torch_holder/magic,
 /obj/item/weapon/flora/pottedplant/mysterious,
 /obj/structure/mirror/magic{
-	pixel_y = -30
+	pixel_y = -30;
+	dir = 1
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -13341,7 +13349,8 @@
 /obj/structure/torch_holder/magic,
 /obj/item/weapon/flora/pottedplant/unusual,
 /obj/structure/mirror/magic{
-	pixel_y = -30
+	pixel_y = -30;
+	dir = 1
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood-broken2"
@@ -14214,8 +14223,10 @@
 /obj/item/clothing/glasses/eyepatch,
 /obj/item/weapon/storage/backpack/kitbag,
 /obj/structure/mirror/magic{
-	pixel_x = -25;
-	pixel_y = -3
+	pixel_x = -32;
+	pixel_y = -3;
+	mirror_power = 1;
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -14284,8 +14295,10 @@
 	},
 /obj/item/weapon/storage/bible,
 /obj/structure/mirror/magic{
-	pixel_x = -25;
-	pixel_y = -3
+	pixel_x = -32;
+	pixel_y = -3;
+	mirror_power = 1;
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -20025,13 +20038,15 @@
 	},
 /area/custom/wizard_station)
 "baV" = (
-/obj/effect/landmark/blockway,
-/turf/unsimulated/floor/snow{
-	nitrogen = 100;
-	oxygen = 25;
-	temperature = 243
+/obj/structure/mirror/wide/right{
+	pixel_y = -32;
+	dir = 1
 	},
-/area/space)
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "warning"
+	},
+/area/centcom/holding)
 "baW" = (
 /obj/structure/flora/tree/pine{
 	layer = 9.5
@@ -22715,6 +22730,14 @@
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
 /area/velocity)
+"dXg" = (
+/obj/structure/mirror/wide/center{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/holding)
 "dYb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -23430,6 +23453,19 @@
 	},
 /turf/environment/space,
 /area/shuttle/officer/velocity)
+"ftM" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 11
+	},
+/obj/structure/mirror{
+	pixel_x = 32;
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/velocity)
 "fub" = (
 /obj/structure/object_wall/velocity{
 	dir = 4;
@@ -23951,7 +23987,8 @@
 /area/centcom/specops)
 "gug" = (
 /obj/structure/mirror{
-	pixel_x = -28
+	pixel_x = -32;
+	dir = 4
 	},
 /obj/structure/sink{
 	dir = 8;
@@ -24367,6 +24404,15 @@
 	icon_state = "vault"
 	},
 /area/centcom/living)
+"haC" = (
+/obj/structure/mirror/wide/center{
+	pixel_y = -32;
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/custom/syndicate_mothership)
 "hbb" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/item/device/radio/intercom{
@@ -25983,6 +26029,15 @@
 /obj/item/weapon/storage/backpack/cultpack,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"kxS" = (
+/obj/structure/mirror/wide/right{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "warning"
+	},
+/area/centcom/holding)
 "kyb" = (
 /turf/unsimulated/floor{
 	icon_state = "neutral"
@@ -28171,6 +28226,15 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"pAF" = (
+/obj/structure/mirror/wide/left{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "warning"
+	},
+/area/centcom/holding)
 "pCb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "shuttle_escape";
@@ -28435,6 +28499,16 @@
 /obj/item/weapon/kitchenknife/ritual,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"sfd" = (
+/obj/machinery/light,
+/obj/structure/mirror/wide/center{
+	pixel_y = -32;
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/holding)
 "skC" = (
 /obj/item/weapon/reagent_containers/blood/AMinus{
 	pixel_x = -7;
@@ -28606,6 +28680,16 @@
 	icon_state = "floor4"
 	},
 /area/custom/syndicate_mothership)
+"vXh" = (
+/obj/structure/mirror/wide/left{
+	pixel_y = -32;
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "warning"
+	},
+/area/centcom/holding)
 "wfy" = (
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
@@ -33806,7 +33890,7 @@ baY
 abi
 abi
 afT
-baV
+afT
 abi
 abi
 abi
@@ -55600,8 +55684,8 @@ aaM
 aaM
 aaM
 aNs
-kub
-kub
+pAF
+vXh
 aNs
 aaM
 aaM
@@ -55857,8 +55941,8 @@ aaM
 aaM
 aaM
 aNs
-aOF
-aQE
+dXg
+sfd
 aNs
 aaM
 aaM
@@ -56114,8 +56198,8 @@ aaM
 aaM
 aaM
 aNs
-aPn
-aPn
+kxS
+baV
 aNs
 aaM
 aaM
@@ -76345,7 +76429,7 @@ atf
 atr
 aoo
 atJ
-atJ
+ftM
 aoo
 auq
 auz
@@ -91199,7 +91283,7 @@ aIb
 aie
 akR
 ald
-ald
+haC
 aie
 ahF
 ahF

@@ -440,7 +440,7 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	pixel_x = -28;
+	pixel_x = -32;
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -10369,7 +10369,7 @@
 	pixel_x = 12
 	},
 /obj/structure/mirror{
-	pixel_x = 28;
+	pixel_x = 32;
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -17890,7 +17890,7 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	pixel_x = -28;
+	pixel_x = -32;
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -20963,7 +20963,7 @@
 	dir = 1
 	},
 /obj/structure/mirror{
-	pixel_x = -28;
+	pixel_x = -32;
 	dir = 4
 	},
 /obj/structure/sink{
@@ -32676,28 +32676,28 @@
 	},
 /area/station/hallway/primary/port)
 "bgc" = (
-/obj/structure/mirror{
-	pixel_y = 32
-	},
-/obj/structure/sink{
-	pixel_y = 24
+/obj/structure/mirror/wide/left{
+	pixel_y = 34
 	},
 /obj/structure/dryer{
 	dir = 4;
 	pixel_x = -6
+	},
+/obj/structure/sink{
+	pixel_y = 24
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
 /area/station/medical/medbreak)
 "bgd" = (
-/obj/structure/mirror{
-	pixel_y = 32
+/obj/structure/mirror/wide/right{
+	pixel_y = 34
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/sink{
 	pixel_y = 24
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -45840,7 +45840,8 @@
 /obj/item/clothing/suit/santa,
 /obj/item/weapon/storage/backpack/santabag,
 /obj/structure/mirror{
-	pixel_y = 26
+	pixel_y = 32;
+	mirror_power = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
@@ -47115,16 +47116,17 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/structure/mirror{
-	pixel_x = -28;
-	dir = 4
-	},
 /obj/structure/dryer{
 	pixel_y = 14
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/structure/mirror/tall{
+	pixel_x = -32;
+	dir = 4;
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	icon_state = "purplechecker"
@@ -47718,8 +47720,9 @@
 /area/station/security/iaa_office)
 "bHp" = (
 /obj/structure/mirror{
-	pixel_x = -28;
-	dir = 4
+	pixel_x = -32;
+	dir = 4;
+	mirror_power = 1
 	},
 /obj/item/weapon/haircomb,
 /obj/structure/table/glass,
@@ -51720,6 +51723,9 @@
 /area/station/civilian/dormitories)
 "bOG" = (
 /obj/structure/stacklifter,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/civilian/gym)
 "bOH" = (
@@ -52545,6 +52551,10 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32
 	},
+/obj/structure/mirror/wide/left{
+	pixel_y = -28;
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -52559,8 +52569,9 @@
 	},
 /area/station/medical/medbreak)
 "bQj" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
+/obj/structure/mirror/wide/center{
+	pixel_y = -28;
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
@@ -52592,6 +52603,10 @@
 /area/station/civilian/chapel)
 "bQo" = (
 /mob/living/pbag,
+/obj/structure/mirror/wide/center{
+	pixel_y = -28;
+	dir = 1
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/civilian/gym)
 "bQp" = (
@@ -52648,6 +52663,10 @@
 "bQu" = (
 /obj/machinery/light,
 /obj/structure/dumbbells_rack,
+/obj/structure/mirror/wide/center{
+	pixel_y = -28;
+	dir = 1
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/civilian/gym)
 "bQv" = (
@@ -54508,6 +54527,13 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/structure/mirror/wide/left{
+	pixel_y = 32;
+	pixel_x = -18
+	},
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "bVA" = (
@@ -54896,8 +54922,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bWr" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 4
+/obj/structure/mirror/wide/center{
+	pixel_y = 32;
+	pixel_x = 12
+	},
+/obj/structure/mirror/wide/center{
+	pixel_y = 32;
+	pixel_x = -18
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
@@ -55373,12 +55404,17 @@
 	},
 /area/station/hallway/primary/central)
 "bXS" = (
-/obj/item/weapon/flora/random,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
 	pixel_x = 28
 	},
+/obj/structure/mirror/wide/right{
+	pixel_y = 32;
+	pixel_x = 12
+	},
+/obj/item/weapon/bedsheet/psych,
+/obj/structure/stool/bed/psych,
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "bXV" = (
@@ -58780,7 +58816,7 @@
 	pixel_x = -12
 	},
 /obj/structure/mirror{
-	pixel_x = -28;
+	pixel_x = -32;
 	dir = 4
 	},
 /obj/structure/dryer{
@@ -66582,8 +66618,7 @@
 	},
 /area/station/engineering/engine)
 "cEm" = (
-/obj/structure/stool/bed/psych,
-/obj/item/weapon/bedsheet/psych,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "cEn" = (
@@ -72994,7 +73029,8 @@
 /obj/structure/table/woodentable,
 /obj/structure/mirror{
 	pixel_x = -28;
-	dir = 4
+	dir = 4;
+	mirror_power = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -75237,12 +75273,13 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/structure/mirror{
-	pixel_x = 28;
-	dir = 8
-	},
 /obj/structure/dryer{
 	pixel_y = 20
+	},
+/obj/structure/mirror/tall{
+	pixel_x = 32;
+	dir = 8;
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -75341,6 +75378,19 @@
 	icon_state = "warnplate"
 	},
 /area/station/engineering/singularity)
+"kbJ" = (
+/obj/structure/stool/bed/chair/pedalgen{
+	anchored = 1;
+	dir = 8
+	},
+/obj/structure/mirror/wide/center{
+	pixel_y = -28;
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/station/civilian/gym)
 "kcb" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -82464,8 +82514,9 @@
 	},
 /obj/item/clothing/suit/superman,
 /obj/structure/mirror{
-	pixel_x = 28;
-	dir = 8
+	pixel_x = 32;
+	dir = 8;
+	mirror_power = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
@@ -84644,6 +84695,14 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/office)
+"wUQ" = (
+/mob/living/pbag,
+/obj/structure/mirror/wide/right{
+	pixel_y = -28;
+	dir = 1
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/station/civilian/gym)
 "wYU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -119943,7 +120002,7 @@ bMN
 aEG
 aEG
 evP
-evP
+kbJ
 aEa
 rrN
 tkb
@@ -120971,7 +121030,7 @@ bMS
 bOq
 bOG
 bOO
-bQo
+wUQ
 aOV
 cfy
 aGN
