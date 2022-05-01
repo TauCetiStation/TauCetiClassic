@@ -47,15 +47,6 @@
 	volume = 20
 	list_reagents = list("kelotane" = 1.5, "bicaridine" = 1.5, "paracetamol" = 10, "tricordrazine" = 7)
 
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_imp/atom_init()
-	. = ..()
-	reagents.clear_reagents()
-	reagents.add_reagent("kelotane" = 1.5)
-	reagents.add_reagent("bicaridine" = 1.5)
-	reagents.add_reagent("paracetamol", 10)
-	reagents.add_reagent("tricordrazine", 7)
-	update_icon()
-
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv
 	name = "advanced stimpack"
 	desc = "Even more ore mined"
