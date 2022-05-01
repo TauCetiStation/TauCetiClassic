@@ -285,7 +285,7 @@
 		/datum/skill/research/trained,
 		/datum/skill/surgery/pro,
 		/datum/skill/medical/trained,
-		/datum/skill/chemistry/novice
+		/datum/skill/chemistry/trained
 	)
 
 /datum/skillset/research_assistant
