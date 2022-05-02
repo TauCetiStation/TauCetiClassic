@@ -4871,6 +4871,21 @@
 	icon_state = "redcorner"
 	},
 /area/station/security/main)
+"ait" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
 "aiu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -5467,6 +5482,15 @@
 	icon_state = "redcorner"
 	},
 /area/station/security/brig)
+"ajt" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access = list(12)
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/escape)
 "aju" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -6104,6 +6128,17 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"aks" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/orange,
+/obj/effect/landmark/start/assistant/test_subject,
+/obj/structure/sign/poster/contraband/lusty_xenomorph{
+	pixel_x = 32
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/escape)
 "akt" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -6294,10 +6329,17 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "akK" = (
-/obj/effect/decal/cleanable/greenglow,
-/obj/effect/landmark/start/assistant/test_subject,
-/obj/structure/stool,
-/turf/simulated/floor/plating,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/escape)
+"akL" = (
+/obj/machinery/atmospherics/components/binary/pump/on,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/escape)
 "akM" = (
 /obj/structure/grille,
@@ -6360,6 +6402,16 @@
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"akR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/escape)
 "akS" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -6418,10 +6470,25 @@
 	icon_state = "redcorner"
 	},
 /area/station/security/brig)
-"akZ" = (
-/obj/structure/stool/bed,
-/obj/item/clothing/head/soft/grey,
+"akX" = (
+/obj/item/weapon/flora/pottedplant/dead,
 /obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/escape)
+"akY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/shard,
+/obj/effect/decal/cleanable/vomit{
+	icon_state = "vomittox_2"
+	},
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
+"akZ" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "ala" = (
@@ -14462,6 +14529,7 @@
 /obj/item/clothing/mask/gas/coloured,
 /obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/weapon/reagent_containers/spray/extinguisher,
+/obj/item/weapon/wrench,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "azw" = (
@@ -16715,25 +16783,15 @@
 	},
 /area/station/ai_monitored/eva)
 "aDH" = (
-/obj/structure/table/reinforced,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -7;
-	pixel_y = 8
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 5;
-	pixel_y = 2
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "warning"
-	},
-/area/station/ai_monitored/eva)
+/area/station/maintenance/escape)
 "aDI" = (
 /obj/machinery/vending/dinnerware,
 /obj/machinery/newscaster{
@@ -18428,6 +18486,18 @@
 	icon_state = "2-4,5,6"
 	},
 /area/shuttle/mining/station)
+"aGW" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
 "aGX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -18875,6 +18945,14 @@
 	icon_state = "wooden-2"
 	},
 /area/station/civilian/gym)
+"aHQ" = (
+/obj/structure/stool/bed,
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "floorscorched2"
+	},
+/area/station/maintenance/escape)
 "aHR" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/four,
@@ -18947,6 +19025,22 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/genetics)
+"aIb" = (
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/station/maintenance/escape)
+"aIc" = (
+/obj/effect/decal/cleanable/generic,
+/obj/effect/landmark/start/assistant/test_subject,
+/mob/living/simple_animal/mouse/gray{
+	name = "Tidey"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/escape)
 "aId" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -19597,13 +19691,7 @@
 	},
 /area/station/rnd/mixing)
 "aJk" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/blue,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/assistant/test_subject,
-/obj/structure/sign/poster/contraband/lusty_xenomorph{
-	pixel_y = 32
-	},
+/obj/structure/stool/bed/chair/metal/black,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aJl" = (
@@ -19644,6 +19732,19 @@
 	icon_state = "delivery"
 	},
 /area/station/rnd/mixing)
+"aJo" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/cigbutt{
+	pixel_x = 13
+	},
+/obj/machinery/space_heater,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/escape)
 "aJp" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -20582,7 +20683,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aKZ" = (
-/obj/effect/decal/cleanable/generic,
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aLa" = (
@@ -21683,6 +21786,14 @@
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
+"aMY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
 "aMZ" = (
 /turf/simulated/wall,
 /area/station/civilian/kitchen)
@@ -21691,6 +21802,15 @@
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"aNb" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/obj/random/foods/food_trash,
+/obj/effect/decal/cleanable/cobweb,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/escape)
 "aNc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -21979,6 +22099,12 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"aNF" = (
+/obj/structure/stool/bed/chair/metal/black,
+/obj/effect/decal/cleanable/generic,
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
 "aNG" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -22353,6 +22479,18 @@
 	icon_state = "dark"
 	},
 /area/station/ai_monitored/eva)
+"aOr" = (
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/station/maintenance/escape)
+"aOs" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/decal/cleanable/mucus,
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
 "aOt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -22371,6 +22509,25 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/mixing)
+"aOv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/decal/cleanable/molten_item,
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
+"aOw" = (
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/escape)
+"aOx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille{
+	destroyed = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
 "aOy" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -23085,8 +23242,21 @@
 	},
 /area/station/hallway/secondary/exit)
 "aPL" = (
-/obj/structure/closet/firecloset,
-/turf/simulated/floor/plating,
+/obj/structure/stool/bed,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/escape)
+"aPM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/emcloset,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/escape)
 "aPN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -23096,7 +23266,7 @@
 /area/station/hallway/secondary/entry)
 "aPO" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aPP" = (
@@ -23108,9 +23278,19 @@
 /area/station/security/vacantoffice)
 "aPQ" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
+"aPR" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 7;
+	pixel_y = 10
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aPS" = (
@@ -23684,22 +23864,34 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "aQS" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/dropper,
-/obj/machinery/light/small{
-	dir = 4
+/obj/structure/table/reinforced,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/escape)
+/obj/item/weapon/wrench,
+/obj/item/weapon/crowbar,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warning"
+	},
+/area/station/ai_monitored/eva)
 "aQT" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/turf/simulated/floor/plating,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/escape)
 "aQU" = (
-/obj/structure/stool/bed,
-/obj/item/toy/plushie/grey_cat,
-/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/escape)
+"aQV" = (
+/obj/structure/table,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aQW" = (
@@ -24345,10 +24537,10 @@
 	},
 /area/station/hallway/secondary/exit)
 "aSg" = (
-/obj/structure/urinal{
-	pixel_y = 32
+/obj/structure/girder,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aSh" = (
 /obj/machinery/camera{
@@ -24365,6 +24557,17 @@
 	icon_state = "escapecorner"
 	},
 /area/station/medical/hallway)
+"aSi" = (
+/obj/machinery/light/small,
+/obj/structure/stool/bed,
+/obj/machinery/light/small,
+/obj/effect/decal/cleanable/greenglow,
+/obj/item/weapon/bedsheet/brown,
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/escape)
 "aSj" = (
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop,
@@ -24433,6 +24636,15 @@
 	icon_state = "wood-broken3"
 	},
 /area/station/civilian/library)
+"aSr" = (
+/obj/structure/stool/bed,
+/obj/effect/decal/cleanable/dirt,
+/obj/random/foods/food_trash,
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/escape)
 "aSs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/device/radio/intercom{
@@ -24444,10 +24656,28 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
+"aSt" = (
+/obj/structure/closet,
+/obj/item/clothing/under/color/grey,
+/obj/item/clothing/under/color/grey,
+/obj/item/weapon/wrench,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/escape)
 "aSu" = (
 /obj/item/weapon/flora/pottedplant/minitree,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
+"aSv" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/purple,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/escape)
 "aSw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/assistant/test_subject,
@@ -25199,6 +25429,13 @@
 	icon_state = "whiteblue"
 	},
 /area/station/hallway/secondary/exit)
+"aTK" = (
+/obj/structure/stool/bed,
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/escape)
 "aTL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -25208,9 +25445,31 @@
 	icon_state = "whitebluecorner"
 	},
 /area/station/medical/hallway)
+"aTM" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/port)
+"aTN" = (
+/obj/structure/table,
+/obj/item/weapon/wrench,
+/turf/simulated/floor,
+/area/station/civilian/locker)
 "aTO" = (
-/obj/structure/reagent_dispensers/aqueous_foam_tank,
-/turf/simulated/floor/plating,
+/obj/random/foods/food_trash,
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/escape)
 "aTP" = (
 /obj/structure/stool/bed/chair/metal/black,
@@ -25992,13 +26251,20 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "aVl" = (
-/obj/machinery/space_heater,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 1
+/obj/effect/decal/cleanable/generic,
+/obj/effect/landmark/start/assistant/test_subject,
+/obj/item/weapon/cigbutt{
+	pixel_x = 13
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
 /area/station/maintenance/escape)
+"aVm" = (
+/obj/structure/table,
+/obj/item/weapon/crowbar,
+/turf/simulated/floor,
+/area/station/civilian/locker)
 "aVn" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -26012,6 +26278,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"aVo" = (
+/obj/structure/table,
+/obj/item/device/destTagger,
+/obj/item/weapon/wrench,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/station/cargo/office)
 "aVp" = (
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
@@ -26019,11 +26294,12 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "aVr" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/machinery/light/small{
-	dir = 4
+/obj/structure/grille{
+	destroyed = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/escape)
 "aVs" = (
 /obj/structure/closet/secure_closet/personal,
@@ -26832,19 +27108,21 @@
 /area/station/security/main)
 "aWG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/assistant/test_subject,
-/mob/living/simple_animal/mouse/gray{
-	name = "Tidey"
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aWH" = (
-/obj/effect/landmark/start/assistant/test_subject,
-/turf/simulated/floor/plating,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/closet/crate,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/escape)
 "aWI" = (
-/obj/effect/decal/cleanable/flour,
+/obj/structure/stool,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
@@ -26856,9 +27134,10 @@
 	},
 /area/station/civilian/garden)
 "aWK" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/purple,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/maintenance{
+	req_access = list(12)
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aWL" = (
@@ -26886,11 +27165,12 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/xenobiology)
 "aWN" = (
-/obj/structure/closet,
-/obj/item/clothing/under/color/grey,
-/obj/item/clothing/under/color/grey,
-/obj/item/clothing/under/color/grey,
-/turf/simulated/floor/plating,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/blue,
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/escape)
 "aWO" = (
 /obj/machinery/power/apc{
@@ -26909,9 +27189,11 @@
 	},
 /area/station/cargo/qm)
 "aWQ" = (
+/obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/fueltank,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/escape)
 "aWR" = (
 /obj/structure/closet/secure_closet/personal,
@@ -31046,6 +31328,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "bef" = (
@@ -31412,8 +31695,13 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/port)
 "beI" = (
-/obj/machinery/space_heater,
-/turf/simulated/floor/plating,
+/obj/item/weapon/bedsheet/red,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool/bed,
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/station/maintenance/escape)
 "beJ" = (
 /obj/machinery/washing_machine,
@@ -31918,8 +32206,13 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bfz" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/turf/simulated/floor/plating,
+/obj/structure/stool/bed,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
 /area/station/maintenance/escape)
 "bfA" = (
 /turf/simulated/floor{
@@ -32472,8 +32765,8 @@
 	},
 /area/station/maintenance/engineering)
 "bgz" = (
-/obj/structure/rack,
-/obj/item/device/flashlight,
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/structure/closet/firecloset,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "bgA" = (
@@ -32518,8 +32811,11 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/meeting_room)
 "bgD" = (
-/obj/machinery/atmospherics/components/binary/pump/on,
-/turf/simulated/floor/plating,
+/obj/item/weapon/scrap_lump,
+/obj/effect/landmark/start/assistant/test_subject,
+/turf/simulated/floor{
+	icon_state = "floorscorched1"
+	},
 /area/station/maintenance/escape)
 "bgE" = (
 /turf/simulated/floor{
@@ -33452,10 +33748,13 @@
 	},
 /area/station/medical/genetics)
 "biv" = (
-/obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
-/turf/simulated/floor,
-/area/station/civilian/locker)
+/obj/structure/rack,
+/obj/item/device/flashlight,
+/obj/item/weapon/wrench,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/escape)
 "biw" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
@@ -39691,6 +39990,14 @@
 /area/station/medical/hallway)
 "btV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "btW" = (
@@ -44996,13 +45303,14 @@
 	},
 /area/station/medical/medbreak)
 "bDm" = (
-/obj/structure/table,
-/obj/item/device/destTagger,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "brown"
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/scrap_lump,
+/obj/effect/landmark/start/assistant/test_subject,
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = -32
 	},
-/area/station/cargo/office)
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
 "bDn" = (
 /turf/simulated/wall,
 /area/station/civilian/theatre)
@@ -56436,11 +56744,17 @@
 	},
 /area/station/construction/assembly_line)
 "cdL" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/rainbow,
-/obj/effect/decal/cleanable/cobweb2,
-/obj/effect/landmark/start/assistant/test_subject,
-/turf/simulated/floor/plating,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/escape)
 "cdM" = (
 /obj/machinery/constructable_frame/machine_frame,
@@ -70952,7 +71266,9 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/escape)
 "fIV" = (
 /obj/machinery/door/airlock/command/glass{
@@ -96592,7 +96908,7 @@ fec
 bBv
 ofi
 glx
-bDm
+aVo
 cTO
 bHe
 bHe
@@ -101464,9 +101780,9 @@ bhj
 aqg
 bxs
 aRm
-biv
+aTN
 bfb
-biv
+aVm
 aSP
 aSM
 kFh
@@ -102477,12 +102793,12 @@ dib
 brq
 brK
 fHn
-bbn
+cdL
 bbn
 bee
 btV
-bfz
-bgD
+bgz
+akL
 bgR
 bii
 clm
@@ -102734,13 +103050,13 @@ clm
 aIs
 clm
 clm
-bdt
-cnZ
+aDH
+aQU
 bdS
-beI
-bgz
+bbf
 cnZ
-cnZ
+aQU
+bbf
 cnZ
 bik
 bbI
@@ -102991,14 +103307,14 @@ aHH
 aJU
 aUY
 clm
-clm
-bik
-clm
-clm
-clm
-clm
-clm
-clm
+aJk
+aQT
+aQT
+bbf
+aQU
+akR
+aMY
+aPM
 clm
 bbJ
 bdM
@@ -103248,14 +103564,14 @@ prb
 aJX
 aWD
 clm
-bfM
-cnZ
-aPL
-clm
+bdt
 aSg
-cnZ
-cnZ
-cnZ
+aQU
+aWQ
+biv
+clm
+clm
+clm
 clm
 bdv
 bes
@@ -103505,14 +103821,14 @@ aHe
 aKi
 atR
 clm
-cnZ
+clm
+clm
+aWK
 clm
 clm
 clm
-aKZ
-clm
-clm
-bik
+aNb
+aPR
 clm
 bdv
 bdM
@@ -103762,14 +104078,14 @@ aJR
 aMp
 atQ
 clm
-cnZ
-clm
-aPO
+aKZ
+aTO
+aSw
 akK
-cnZ
-clm
-aJk
-aWG
+ait
+akX
+aNF
+aQV
 clm
 bdo
 bdY
@@ -104019,14 +104335,14 @@ cnO
 clm
 clm
 clm
-cnZ
-clm
-aPQ
-aQS
-cnZ
-clm
-akZ
-aWH
+aPL
+aWG
+aVl
+aVr
+ajt
+aWG
+aSw
+aSi
 clm
 bbK
 bdZ
@@ -104276,14 +104592,14 @@ whb
 mjb
 nVb
 clm
-cnZ
-clm
-clm
-clm
-cnZ
-clm
-aVl
+aPO
 aWI
+aWG
+bDm
+clm
+akY
+aOr
+aSr
 aYX
 cki
 bdZ
@@ -104533,14 +104849,14 @@ whb
 avp
 avp
 clm
-aKZ
-cnZ
+aPQ
+aWH
+aWN
+akZ
+clm
+aGW
 bik
-cnZ
-cnZ
-bik
-aSw
-aWK
+clm
 aYY
 bdv
 coa
@@ -104794,10 +105110,10 @@ clm
 clm
 clm
 clm
-cnZ
 clm
-cdL
-aWN
+aHQ
+aOs
+aSt
 clm
 alz
 bdZ
@@ -105050,12 +105366,12 @@ avp
 cnt
 cnz
 clm
-aQT
-cnZ
-clm
-clm
-clm
-clm
+beI
+aWG
+aIb
+aOv
+aTO
+ajt
 bdv
 bdZ
 bmY
@@ -105307,13 +105623,13 @@ hpb
 cnu
 cnx
 clm
-aQU
-cnZ
-cnZ
-bbf
-cnZ
-bik
-bdv
+bgD
+aTO
+aIc
+aOw
+aSv
+clm
+aTM
 bep
 cjM
 aMZ
@@ -105564,11 +105880,11 @@ avp
 qJb
 cny
 clm
-beI
-aSw
-aTO
-aVr
-aWQ
+bfz
+aks
+aJo
+aOx
+aTK
 clm
 bdv
 cpJ
@@ -112243,7 +112559,7 @@ alZ
 aYi
 hGb
 aCx
-aDH
+aQS
 aBQ
 aDm
 aED
