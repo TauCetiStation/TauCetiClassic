@@ -80,18 +80,16 @@
 	qdel(src)
 	return
 
-/obj/structure/window/bullet_act(obj/item/projectile/Proj)
+/obj/structure/window/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...
-		return -1
+		return PROJECTILE_FORCE_MISS
 
+	. = ..()
 	//Tasers and the like should not damage windows.
 	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		return
 
-	..()
 	take_damage(Proj.damage, Proj.damage_type)
-	return
-
 
 /obj/structure/window/ex_act(severity)
 	switch(severity)

@@ -70,18 +70,12 @@ var/global/list/all_emotes
 	return cooldown_group
 
 /datum/emote/proc/check_cooldown(list/cooldowns, intentional)
-	if(!intentional)
-		return TRUE
-
 	if(!cooldowns)
 		return TRUE
 
 	return cooldowns[get_cooldown_group()] < world.time
 
 /datum/emote/proc/set_cooldown(list/cooldowns, value, intentional)
-	if(!intentional)
-		return
-
 	LAZYSET(cooldowns, get_cooldown_group(), world.time + value)
 
 /datum/emote/proc/can_play_sound(mob/living/carbon/human/user, intentional)

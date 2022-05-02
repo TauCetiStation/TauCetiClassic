@@ -30,14 +30,13 @@
 	..()
 	icon_state = icon_living
 
-/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
+/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P, def_zone)//Reduces damage from most projectiles to curb off-screen kills
+	. = ..()
 	if(!stat)
 		Aggro()
 	if(P.damage < 30)
 		P.damage /= 3
 		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
-
-	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
 	if(isitem(AM))
@@ -217,14 +216,13 @@
 	ore_types_eaten.Cut()
 	ore_eaten = 0
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P, def_zone)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/death()
+	. = ..()
 	alerted = FALSE
 	Reward()
-	..()
-
 
 ////////////////Hivelord////////////////
 
