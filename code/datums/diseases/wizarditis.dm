@@ -55,14 +55,13 @@ STI KALY - blind
 
 
 /datum/disease/wizarditis/proc/spawn_wizard_clothes(chance = 0)
-	if(istype(affected_mob, /mob/living/carbon/human))
+	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/H = affected_mob
 		if(prob(chance))
 			if(!istype(H.head, /obj/item/clothing/head/wizard))
 				if(H.head)
 					H.drop_from_inventory(H.head)
 				H.head = new /obj/item/clothing/head/wizard(H)
-				H.head.layer = ABOVE_HUD_LAYER
 				H.head.plane = ABOVE_HUD_PLANE
 			return
 		if(prob(chance))
@@ -70,7 +69,6 @@ STI KALY - blind
 				if(H.wear_suit)
 					H.drop_from_inventory(H.wear_suit)
 				H.wear_suit = new /obj/item/clothing/suit/wizrobe(H)
-				H.wear_suit.layer = ABOVE_HUD_LAYER
 				H.wear_suit.plane = ABOVE_HUD_PLANE
 			return
 		if(prob(chance))
@@ -78,7 +76,6 @@ STI KALY - blind
 				if(H.shoes)
 					H.drop_from_inventory(H.shoes)
 				H.shoes = new /obj/item/clothing/shoes/sandal(H)
-				H.shoes.layer = ABOVE_HUD_LAYER
 				H.shoes.plane = ABOVE_HUD_PLANE
 			return
 	else

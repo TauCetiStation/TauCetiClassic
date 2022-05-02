@@ -148,7 +148,7 @@
 		variable = "[bicon(variable)]"
 		default = "icon"
 
-	else if(istype(variable,/atom) || istype(variable,/datum))
+	else if(isatom(variable) || istype(variable,/datum))
 		to_chat(usr, "Variable appears to be <b>TYPE</b>.")
 		default = "type"
 
@@ -156,7 +156,7 @@
 		to_chat(usr, "Variable appears to be <b>LIST</b>.")
 		default = "list"
 
-	else if(istype(variable,/client))
+	else if(isclient(variable))
 		to_chat(usr, "Variable appears to be <b>CLIENT</b>.")
 		default = "cancel"
 
@@ -307,7 +307,7 @@
 				var_value = "[bicon(var_value)]"
 				class = "icon"
 
-			else if(istype(var_value,/atom) || istype(var_value,/datum))
+			else if(isatom(var_value) || istype(var_value,/datum))
 				to_chat(usr, "Variable appears to be <b>TYPE</b>.")
 				class = "type"
 
@@ -315,7 +315,7 @@
 				to_chat(usr, "Variable appears to be <b>LIST</b>.")
 				class = "list"
 
-			else if(istype(var_value,/client))
+			else if(isclient(var_value))
 				to_chat(usr, "Variable appears to be <b>CLIENT</b>.")
 				class = "cancel"
 
@@ -366,7 +366,7 @@
 			var_value = "[bicon(var_value)]"
 			default = "icon"
 
-		else if(istype(var_value,/atom) || istype(var_value,/datum))
+		else if(isatom(var_value) || istype(var_value,/datum))
 			to_chat(usr, "Variable appears to be <b>TYPE</b>.")
 			default = "type"
 
@@ -374,7 +374,7 @@
 			to_chat(usr, "Variable appears to be <b>LIST</b>.")
 			default = "list"
 
-		else if(istype(var_value,/client))
+		else if(isclient(var_value))
 			to_chat(usr, "Variable appears to be <b>CLIENT</b>.")
 			default = "cancel"
 
@@ -418,7 +418,7 @@
 
 	var/original_name
 
-	if (!istype(O, /atom))
+	if (!isatom(O))
 		original_name = "\ref[O] ([O])"
 	else
 		original_name = O:name
@@ -508,7 +508,7 @@
 					if(isnull(var_new) || var_new < 0)
 						return
 					O.vars[variable] = var_new
-					if(istype(O,/client))
+					if(isclient(O))
 						var/client/C = O
 						if(C) C.log_client_ingame_age_to_db()
 				if("stat")
@@ -535,6 +535,17 @@
 					message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.resize]")
 					log_handled = TRUE
 					O.update_transform()
+				if("height")
+					if(ishuman(O))
+						var/mob/living/carbon/human/H = O
+						var/var_new = input("Enter new height: \n(Human will gain this height from 1.6 to 2.0)", "Num", H.vars[variable]) as null|anything in heights_list
+						if(isnull(var_new))
+							return
+						H.vars[variable] = var_new
+						world.log << "### VarEdit by [src]: [H.type] [variable]=[html_encode("[H.height]")]"
+						log_admin("[key_name(src)] modified [original_name]'s [variable] to [H.height]")
+						log_handled = TRUE
+						H.regenerate_icons()
 				else
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new))

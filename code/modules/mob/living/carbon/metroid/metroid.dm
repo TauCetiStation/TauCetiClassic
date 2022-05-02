@@ -224,17 +224,17 @@
 	var/b_loss = null
 	var/f_loss = null
 	switch (severity)
-		if (1.0)
+		if(EXPLODE_DEVASTATE)
 			b_loss += 500
 			return
 
-		if (2.0)
+		if(EXPLODE_HEAVY)
 
 			b_loss += 60
 			f_loss += 60
 
 
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			b_loss += 30
 
 	adjustBruteLoss(b_loss)
@@ -257,7 +257,7 @@
 
 		//paralysis += 1
 
-	to_chat("<span class='warning'>The blob attacks you!</span>")
+	to_chat(src, "<span class='warning'>The blob attacks you!</span>")
 
 	adjustFireLoss(damage)
 
@@ -314,14 +314,14 @@
 
 /mob/living/carbon/slime/updatehealth()
 	if(status_flags & GODMODE)
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			health = 200
 		else
 			health = 150
 		stat = CONSCIOUS
 	else
 		// slimes can't suffocate unless they suicide. They are also not harmed by fire
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			health = 200 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
 		else
 			health = 150 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
@@ -498,10 +498,10 @@
 	icon_state = "bottle19"
 
 /obj/item/weapon/slimepotion/attack(mob/living/carbon/slime/M, mob/user)
-	if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+	if(!isslime(M))//If target is not a slime.
 		to_chat(user, "<span class='warning'>The potion only works on baby slimes!</span>")
 		return ..()
-	if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
+	if(isslimeadult(M)) //Can't tame adults
 		to_chat(user, "<span class='warning'>Only baby slimes can be tamed!</span>")
 		return..()
 	if(M.stat)
@@ -529,7 +529,7 @@
 	icon_state = "bottle19"
 
 /obj/item/weapon/slimepotion2/attack(mob/living/carbon/slime/adult/M, mob/user)
-	if(!istype(M, /mob/living/carbon/slime/adult))//If target is not a slime.
+	if(!isslimeadult(M))//If target is not a slime.
 		to_chat(user, "<span class='warning'>The potion only works on adult slimes!</span>")
 		return ..()
 	if(M.stat)
@@ -558,10 +558,10 @@
 	icon_state = "bottle16"
 
 /obj/item/weapon/slimesteroid/attack(mob/living/carbon/slime/M, mob/user)
-	if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+	if(!isslime(M))//If target is not a slime.
 		to_chat(user, "<span class='warning'>The steroid only works on baby slimes!</span>")
 		return ..()
-	if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
+	if(isslimeadult(M)) //Can't tame adults
 		to_chat(user, "<span class='warning'>Only baby slimes can use the steroid!</span>")
 		return..()
 	if(M.stat)
@@ -588,7 +588,6 @@
 	desc = "A golem's skin."
 	icon_state = "golem"
 	item_state = "golem"
-	item_color = "golem"
 	has_sensor = 0
 	canremove = 0
 	unacidable = 1
@@ -631,7 +630,6 @@
 /obj/item/clothing/head/helmet/space/golem
 	icon_state = "golem"
 	item_state = "dermal"
-	item_color = "dermal"
 	name = "golem's head"
 	desc = "A golem's head."
 	canremove = 0

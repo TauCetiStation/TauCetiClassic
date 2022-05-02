@@ -1,5 +1,5 @@
 //In here: Hatch and Ascendance
-var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian")
+var/global/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian")
 /mob/living/carbon/human/proc/shadowling_hatch()
 	set category = "Shadowling Evolution"
 	set name = "Hatch"
@@ -7,77 +7,77 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	if(usr.incapacitated())
 		return
 	usr.verbs -= /mob/living/carbon/human/proc/shadowling_hatch
-	switch(tgui_alert(src,"Are you sure you want to hatch? You cannot undo this!",, list("Yes","No")))
-		if("No")
-			to_chat(usr, "<span class='warning'>You decide against hatching for now.</span>")
-			usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
-			return
-		if("Yes")
-			if(!istype(usr.loc, /turf))
-				to_chat(usr, "<span class='warning'>You can't hatch here.</span>")
-				usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
-				return
-			usr.notransform = TRUE
-			usr.visible_message("<span class='warning'>[usr]'s things suddenly slip off. They hunch over and vomit up a copious amount of purple goo which begins to shape around them!</span>", \
-								"<span class='shadowling'>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you.</span>")
+	if(tgui_alert(src,"Are you sure you want to hatch? You cannot undo this!",, list("Yes","No")) != "Yes")
+		to_chat(usr, "<span class='warning'>You decide against hatching for now.</span>")
+		usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
+		return
 
-			usr.Stun(34)
-			for(var/obj/item/I in usr) //drops all items
-				usr.drop_from_inventory(I)
-			usr.regenerate_icons()
+	if(!istype(usr.loc, /turf))
+		to_chat(usr, "<span class='warning'>You can't hatch here.</span>")
+		usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
+		return
 
-			sleep(50)
-			var/turf/simulated/floor/F
-			var/turf/shadowturf = get_turf(usr)
-			for(F in orange(1, usr))
-				new /obj/structure/alien/resin/wall/shadowling(F)
-			//for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf) //extremely hacky
-			for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf)
-				qdel(R)
-				//new /obj/structure/alien/weeds/node(shadowturf) //Dim lighting in the chrysalis -- removes itself with the chrysalis
-				new /obj/structure/alien/weeds/node(shadowturf)
+	usr.notransform = TRUE
+	usr.visible_message("<span class='warning'>[usr]'s things suddenly slip off. They hunch over and vomit up a copious amount of purple goo which begins to shape around them!</span>", \
+						"<span class='shadowling'>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you.</span>")
 
-			usr.visible_message("<span class='warning'>A chrysalis forms around [usr], sealing them inside.</span>", \
-								"<span class='shadowling'>You create your chrysalis and begin to contort within.</span>")
+	usr.Stun(34)
+	for(var/obj/item/I in usr) //drops all items
+		usr.drop_from_inventory(I)
+	usr.regenerate_icons()
 
-			sleep(100)
-			usr.visible_message("<span class='warning'><b>The skin on [usr]'s back begins to split apart. Black spines slowly emerge from the divide.</b></span>", \
-								"<span class='shadowling'>Spines pierce your back. Your claws break apart your fingers. You feel excruciating pain as your true form begins its exit.</span>")
+	sleep(50)
+	var/turf/simulated/floor/F
+	var/turf/shadowturf = get_turf(usr)
+	for(F in orange(1, usr))
+		new /obj/structure/alien/resin/wall/shadowling(F)
+	//for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf) //extremely hacky
+	for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf)
+		qdel(R)
+		//new /obj/structure/alien/weeds/node(shadowturf) //Dim lighting in the chrysalis -- removes itself with the chrysalis
+		new /obj/structure/alien/weeds/node(shadowturf)
 
-			sleep(90)
-			usr.visible_message("<span class='warning'><b>[usr], skin shifting, begins tearing at the walls around them.</b></span>", \
-							"<span class='shadowling'>Your false skin slips away. You begin tearing at the fragile membrane protecting you.</span>")
+	usr.visible_message("<span class='warning'>A chrysalis forms around [usr], sealing them inside.</span>", \
+						"<span class='shadowling'>You create your chrysalis and begin to contort within.</span>")
 
-			sleep(80)
-			playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-			to_chat(usr, "<i><b>You rip and slice.</b></i>")
-			sleep(10)
-			playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
-			to_chat(usr, "<i><b>The chrysalis falls like water before you.</b></i>")
-			sleep(10)
-			playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
-			to_chat(usr, "<i><b>You are free!</b></i>")
+	sleep(100)
+	usr.visible_message("<span class='warning'><b>The skin on [usr]'s back begins to split apart. Black spines slowly emerge from the divide.</b></span>", \
+						"<span class='shadowling'>Spines pierce your back. Your claws break apart your fingers. You feel excruciating pain as your true form begins its exit.</span>")
 
-			sleep(10)
-			playsound(src, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER)
+	sleep(90)
+	usr.visible_message("<span class='warning'><b>[usr], skin shifting, begins tearing at the walls around them.</b></span>", \
+					"<span class='shadowling'>Your false skin slips away. You begin tearing at the fragile membrane protecting you.</span>")
 
-			usr.notransform = FALSE
+	sleep(80)
+	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
+	to_chat(usr, "<i><b>You rip and slice.</b></i>")
+	sleep(10)
+	playsound(src, 'sound/weapons/slashmiss.ogg', VOL_EFFECTS_MASTER)
+	to_chat(usr, "<i><b>The chrysalis falls like water before you.</b></i>")
+	sleep(10)
+	playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
+	to_chat(usr, "<i><b>You are free!</b></i>")
 
-			to_chat(usr, "<i><b><font size=3>YOU LIVE!!!</i></b></font>")
+	sleep(10)
+	playsound(src, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER)
 
-			playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
-			for(var/obj/structure/alien/resin/wall/shadowling/W in orange(usr, 1))
-				qdel(W)
-			for(var/obj/structure/alien/weeds/node/N in shadowturf)
-				qdel(N)
-			usr.visible_message("<span class='warning'>The chrysalis explodes in a shower of purple flesh and fluid!</span>")
+	usr.notransform = FALSE
 
-			var/mob/living/carbon/human/shadowling/H = new /mob/living/carbon/human/shadowling(usr.loc)
+	to_chat(usr, "<i><b><font size=3>YOU LIVE!!!</i></b></font>")
 
-			usr.mind.transfer_to(H)
-			to_chat(H, "<span class='shadowling bold italic'>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</span>")
+	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
+	for(var/obj/structure/alien/resin/wall/shadowling/W in orange(usr, 1))
+		qdel(W)
+	for(var/obj/structure/alien/weeds/node/N in shadowturf)
+		qdel(N)
+	usr.visible_message("<span class='warning'>The chrysalis explodes in a shower of purple flesh and fluid!</span>")
 
-			qdel(usr)
+	var/mob/living/carbon/human/shadowling/H = new /mob/living/carbon/human/shadowling(usr.loc)
+
+	usr.mind.transfer_to(H)
+	to_chat(H, "<span class='shadowling bold italic'>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</span>")
+
+	qdel(usr)
 
 
 
@@ -119,7 +119,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				to_chat(usr, "<span class='shadowling'>After some telepathic searching, you find the reservoir of life energy from the thralls and tap into it.</span>")
 
 			sleep(50)
-			for(var/mob/M in mob_list)
+			for(var/mob/M as anything in mob_list)
 				if(isshadowthrall(M) && !faction.shadowling_ascended)
 					M.visible_message("<span class='userdanger'>[M] trembles minutely as they collapse, black smoke pouring from their disintegrating face.</span>", \
 									  "<span class='userdanger'>It's time! Your masters are ascending! Your last thoughts are happy as your body is drained of life.</span>")
@@ -154,7 +154,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			A.name = usr.real_name
 			if(A.real_name)
 				A.real_name = usr.real_name
-			usr.invisibility = 60 //This is pretty bad, but is also necessary for the shuttle call to function properly
+			usr.invisibility = INVISIBILITY_OBSERVER //This is pretty bad, but is also necessary for the shuttle call to function properly
 			usr.flags |= GODMODE
 			usr.notransform = TRUE
 			sleep(50)

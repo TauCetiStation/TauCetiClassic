@@ -3,9 +3,9 @@
 /mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
 		to_chat(src, "<span class='warning'>You cannot afford this.</span>")
-		return 0
+		return FALSE
 	add_points(-cost)
-	return 1
+	return TRUE
 
 // Power verbs
 
@@ -47,7 +47,7 @@
 		to_chat(src, "There is no blob here!")
 		return
 
-	if(!istype(B, /obj/effect/blob/normal))
+	if(!isblobnormal(B))
 		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
@@ -76,7 +76,7 @@
 		to_chat(src, "There is no blob here!")
 		return
 
-	if(!istype(B, /obj/effect/blob/normal))
+	if(!isblobnormal(B))
 		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
@@ -113,7 +113,7 @@
 		to_chat(src, "There is no blob here!")
 		return
 
-	if(!istype(B, /obj/effect/blob/normal))
+	if(!isblobnormal(B))
 		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
@@ -145,7 +145,7 @@
 		to_chat(src, "You must be on a blob!")
 		return
 
-	if(!istype(B, /obj/effect/blob/normal))
+	if(!isblobnormal(B))
 		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
@@ -166,17 +166,17 @@
 	var/turf/T = get_turf(src)
 	remove_blob(T)
 
-/mob/camera/blob/verb/remove_blob(turf/T)	
+/mob/camera/blob/verb/remove_blob(turf/T)
 	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
 	if(!B)
 		to_chat(src, "You must be on a blob!")
 		return
 
-	if(istype(B, /obj/effect/blob/core))
+	if(isblobcore(B))
 		to_chat(src, "Unable to remove this blob.")
 		return
 
-	B.Destroy()
+	qdel(B)
 
 
 /mob/camera/blob/verb/expand_blob_power()

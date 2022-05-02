@@ -12,7 +12,7 @@
 #define ONESHOT  1
 #define DISABLED 0
 
-var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_MODERATE = "Moderate", EVENT_LEVEL_MAJOR = "Major")
+var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_MODERATE = "Moderate", EVENT_LEVEL_MAJOR = "Major")
 
 /datum/event_container
 	var/severity = -1
@@ -132,46 +132,48 @@ var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_
 	next_event = EM
 	return EM
 
-/datum/event_container/roundstart
-	severity = EVENT_LEVEL_ROUNDSTART
+/datum/event_container/feature
+	severity = EVENT_LEVEL_FEATURE
 	available_events = list(
 		// /datum/event_meta/New(event_severity, event_name, datum/event/type, event_weight, list/job_weights, is_one_shot = 0, event_enabled = 1, min_event_players = 0, min_event_weight = 0, max_event_weight = 0)
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Roundstart Nothing",      /datum/event/nothing, 1500),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Break Light",             /datum/event/roundstart/area/break_light,                        50, list(ASSIGNMENT_ENGINEER = 10, ASSIGNMENT_JANITOR = 40)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Dirt Bay",                /datum/event/roundstart/area/dirt,                               10, list(ASSIGNMENT_JANITOR = 100)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Randomize Cargo Storage", /datum/event/roundstart/area/cargo_storage,                      10),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Armory Mess",             /datum/event/roundstart/area/armory_mess,                        10),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "MineField",               /datum/event/roundstart/area/minefield,                          5,  list(ASSIGNMENT_MEDICAL = 2), , list(ASSIGNMENT_SECURITY = 2)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Lasertag ED-209",         /datum/event/roundstart/area/lasertag_ed,                        10),list(ASSIGNMENT_ANY = 2),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Stolen Weapon",           /datum/event/roundstart/area/replace/sec_weapons,                20, list(ASSIGNMENT_SECURITY = 5)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Stolen First AID",        /datum/event/roundstart/area/replace/med_storage,                10, list(ASSIGNMENT_MEDICAL = 1)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Old Morgue",              /datum/event/roundstart/area/replace/med_morgue,                 10),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Broken Airlocks",         /datum/event/roundstart/area/replace/airlock,                    10, list(ASSIGNMENT_ENGINEER = 20)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Chewed Cables",           /datum/event/roundstart/area/replace/del_cable,                  10, list(ASSIGNMENT_ENGINEER = 20)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Clondike",                /datum/event/roundstart/area/replace/vault_gold,                 10),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Deathly Sec.",            /datum/event/roundstart/area/replace/deathly_sec,                5,  list(ASSIGNMENT_CLOWN = 50)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Surgeon Tools", /datum/event/roundstart/area/replace/del_surgeon_tools,          10, list(ASSIGNMENT_MEDICAL = 2)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Anti meat",               /datum/event/roundstart/area/replace/mince_back,                 10),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Invasion In Mainteance",  /datum/event/roundstart/area/maintenance_spawn/invasion,         10, list(ASSIGNMENT_SECURITY = 50)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Sign of Antagonists",     /datum/event/roundstart/area/maintenance_spawn/antag_meta,       10, list(ASSIGNMENT_SECURITY = 50)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Headset",       /datum/event/roundstart/headset,                                 10, list(ASSIGNMENT_ANY = 5)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Survival Box",  /datum/event/roundstart/survbox,                                 10, list(ASSIGNMENT_ANY = 5)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Fueltanks",     /datum/event/roundstart/fueltank,                                10, list(ASSIGNMENT_ENGINEER = 20)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Watertanks",    /datum/event/roundstart/watertank,                               10, list(ASSIGNMENT_BOTANIST = 10)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Cleaners",      /datum/event/roundstart/cleaner,                                 10, list(ASSIGNMENT_JANITOR = 100)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Extinguishers", /datum/event/roundstart/extinguisher,                            10),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Scraps",        /datum/event/roundstart/del_scrap,                               10),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Toilets",       /datum/event/roundstart/del_toilet,                              10),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Leaked Pipe",             /datum/event/roundstart/leaked_pipe,                             10),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Die Monkey",              /datum/event/roundstart/dead_monkeys,                            10, list(ASSIGNMENT_SCIENTIST = 5)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Engine Mess",             /datum/event/roundstart/PA,                                      10, list(ASSIGNMENT_ENGINEER = 10)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgottens Tanks",        /datum/event/roundstart/tank_dispenser,                          10, list(ASSIGNMENT_ENGINEER = 5, ASSIGNMENT_SCIENTIST = 10)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Sec. Equimp.",  /datum/event/roundstart/sec_equipment,                           10, list(ASSIGNMENT_SECURITY = 10)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Products Inflation",      /datum/event/roundstart/vending_products,                        10),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "BlueScreen APC",          /datum/event/roundstart/apc,                                     10, list(ASSIGNMENT_ENGINEER = 5)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Accounting Got It Wrong", /datum/event/roundstart/salary,                                  10, list(ASSIGNMENT_ANY = 2)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Last Clown Jokes",        /datum/event/roundstart/airlock_joke,                            10, list(ASSIGNMENT_CLOWN = 50)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Chiefs Animals",          /datum/event/roundstart/head_animals,                            10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Roundstart Nothing",      /datum/event/nothing, 1500),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Break Light",             /datum/event/feature/area/break_light,                        50, list(ASSIGNMENT_ENGINEER = 10, ASSIGNMENT_JANITOR = 40)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Dirt Bay",                /datum/event/feature/area/dirt,                               10, list(ASSIGNMENT_JANITOR = 100)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Randomize Cargo Storage", /datum/event/feature/area/cargo_storage,                      10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Armory Mess",             /datum/event/feature/area/mess/armory,                        10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Bridge Mess",             /datum/event/feature/area/mess/bridge,                        10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Medical Mess",            /datum/event/feature/area/mess/med_storage,                   10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "MineField",               /datum/event/feature/area/minefield,                          5,  list(ASSIGNMENT_MEDICAL = 2), , list(ASSIGNMENT_SECURITY = 2)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Lasertag ED-209",         /datum/event/feature/area/lasertag_ed,                        10),list(ASSIGNMENT_ANY = 2),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Stolen Weapon",           /datum/event/feature/area/replace/sec_weapons,                10, list(ASSIGNMENT_SECURITY = 5)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Stolen First AID",        /datum/event/feature/area/replace/med_storage,                20, list(ASSIGNMENT_MEDICAL = 1)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Old Morgue",              /datum/event/feature/area/replace/med_morgue,                 10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Broken Airlocks",         /datum/event/feature/area/replace/airlock,                    10, list(ASSIGNMENT_ENGINEER = 20)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Chewed Cables",           /datum/event/feature/area/replace/del_cable,                  10, list(ASSIGNMENT_ENGINEER = 20)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Clondike",                /datum/event/feature/area/replace/vault_gold,                 10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Deathly Sec.",            /datum/event/feature/area/replace/deathly_sec,                10,  list(ASSIGNMENT_CLOWN = 50)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Surgeon Tools", /datum/event/feature/area/replace/del_surgeon_tools,          10, list(ASSIGNMENT_MEDICAL = 2)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Anti meat",               /datum/event/feature/area/replace/mice_attack,                 10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Invasion In Mainteance",  /datum/event/feature/area/maintenance_spawn/invasion,         10, list(ASSIGNMENT_SECURITY = 50)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Sign of Antagonists",     /datum/event/feature/area/maintenance_spawn/antag_meta,       10, list(ASSIGNMENT_SECURITY = 50)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Headset",       /datum/event/feature/headset,                                 10, list(ASSIGNMENT_ANY = 5)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Survival Box",  /datum/event/feature/survbox,                                 10, list(ASSIGNMENT_ANY = 5)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Fueltanks",     /datum/event/feature/fueltank,                                10, list(ASSIGNMENT_ENGINEER = 20)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Watertanks",    /datum/event/feature/watertank,                               10, list(ASSIGNMENT_BOTANIST = 10)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Cleaners",      /datum/event/feature/cleaner,                                 10, list(ASSIGNMENT_JANITOR = 100)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Extinguishers", /datum/event/feature/extinguisher,                            10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Toilets",       /datum/event/feature/del_toilet,                              10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Leaked Pipe",             /datum/event/feature/leaked_pipe,                             10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Die Monkey",              /datum/event/feature/dead_monkeys,                            10, list(ASSIGNMENT_SCIENTIST = 5)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Engine Mess",             /datum/event/feature/PA,                                      10, list(ASSIGNMENT_ENGINEER = 10)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgottens Tanks",        /datum/event/feature/tank_dispenser,                          10, list(ASSIGNMENT_ENGINEER = 5, ASSIGNMENT_SCIENTIST = 10)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Sec. Equimp.",  /datum/event/feature/sec_equipment,                           10, list(ASSIGNMENT_SECURITY = 10)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Products Inflation",      /datum/event/feature/vending_products,                        10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "BlueScreen APC",          /datum/event/feature/apc,                                     10, list(ASSIGNMENT_ENGINEER = 5)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Accounting Got It Wrong", /datum/event/feature/salary,                                  10, list(ASSIGNMENT_ANY = 2)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Last Clown Jokes",        /datum/event/feature/airlock_joke,                            10, list(ASSIGNMENT_CLOWN = 50)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Chiefs Animals",          /datum/event/feature/head_animals,                            10),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Nuke Journey",            /datum/event/feature/bomb_journey,                            10),
 	)
 
 /datum/event_container/mundane

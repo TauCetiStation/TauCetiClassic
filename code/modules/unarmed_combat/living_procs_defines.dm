@@ -122,8 +122,7 @@
 			visible_message("<span class='warning bold'>The [attacker] has shocked [src]!</span>")
 
 			Weaken(power)
-			if(stuttering < power)
-				stuttering = power
+			Stuttering(power)
 			Stun(power)
 
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -296,12 +295,12 @@
 // Add combo points to all attackers.
 /mob/living/proc/add_combo_value_all(value)
 	for(var/datum/combo_handler/CS in combos_saved)
-		CS.fullness += value
+		CS.points += value
 
 // Add combo points to all my combo-controllers.
 /mob/living/proc/add_my_combo_value(value)
 	for(var/datum/combo_handler/CS in combos_performed)
-		CS.fullness += value
+		CS.points += value
 
 // Returns TRUE if a combo was executed.
 /mob/living/proc/try_combo(mob/living/target)

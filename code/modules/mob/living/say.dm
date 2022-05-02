@@ -75,7 +75,7 @@ var/global/list/department_radio_keys = list(
 )
 
 /mob/living/proc/binarycheck()
-	if (istype(src, /mob/living/silicon/pai))
+	if (ispAI(src))
 		return
 	if (issilicon(src))
 		return 1
@@ -104,6 +104,8 @@ var/global/list/department_radio_keys = list(
 		message = sanitize(message)
 		if(!message)
 			return
+		message = capitalize(trim(message))
+		message = add_period(message)
 
 	var/turf/T = get_turf(src)
 
@@ -126,7 +128,7 @@ var/global/list/department_radio_keys = list(
 		italics = 1
 		message_range = 1
 
-		if (!istype(src, /mob/living/silicon/ai)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
+		if (!isAI(src)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
 			for(var/mob/living/M in hearers(5, src))
 				if(M != src)
 					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>", SHOWMSG_VISUAL|SHOWMSG_AUDIO)
@@ -145,7 +147,7 @@ var/global/list/department_radio_keys = list(
 
 			if (speech_sound)
 				sound_vol *= 0.5	//muffle the sound a bit, so it's like we're actually talking through contact
-	
+
 	//make sure we actually can hear there
 	if (T.sound_coefficient < 0.5)
 		message = Gibberish(message, (1.0 - max(0.0, T.sound_coefficient)) * 100 + 20)
@@ -163,6 +165,8 @@ var/global/list/department_radio_keys = list(
 			hearturfs += AM.locs[1]
 
 		for(var/mob/M in player_list)
+			if(QDELETED(M)) // avoid not hard-deleted mobs with client
+				continue
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 				listening |= M
 				continue
@@ -175,7 +179,7 @@ var/global/list/department_radio_keys = list(
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
 	var/image/I = image('icons/mob/talk.dmi', src, "[typing_indicator_type][say_test(message)]", MOB_LAYER + 1)
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	INVOKE_ASYNC(GLOBAL_PROC, .proc/flick_overlay, I, speech_bubble_recipients, 30)
 	for(var/mob/M in listening)
@@ -194,3 +198,12 @@ var/global/list/department_radio_keys = list(
 
 /obj/effect/speech_bubble
 	var/mob/parent
+
+/mob/living/init_languages()
+	for(var/name in all_languages)
+		var/datum/language/L = all_languages[name]
+		if(languages[L] >= LANGUAGE_CAN_SPEAK)
+			continue
+
+		for(var/sound in L.approximations)
+			add_approximation(sound, L.approximations[sound])

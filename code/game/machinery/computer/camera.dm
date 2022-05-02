@@ -45,8 +45,10 @@
 	cam_screen.del_on_map_removal = FALSE
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
-		var/atom/movable/screen/instance = new plane()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
+		var/atom/movable/screen/plane_master/instance = new plane()
+		if(instance.blend_mode_override)
+			instance.blend_mode = instance.blend_mode_override
 		instance.assigned_map = map_name
 		instance.del_on_map_removal = FALSE
 		instance.screen_loc = "[map_name]:CENTER"
@@ -225,10 +227,10 @@
 
 	return camera_cache
 
-/obj/machinery/computer/security/tgui_data()
+/obj/machinery/computer/security/tgui_data(mob/user)
 	var/list/data = list()
-	data["network"] = network
 	data["activeCamera"] = null
+	data["mapStyle"] = winget(user.client, "mapwindow.map", "style")
 	if(!QDELETED(active_camera))
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
@@ -236,7 +238,7 @@
 		)
 	return data
 
-/obj/machinery/computer/security/tgui_static_data()
+/obj/machinery/computer/security/tgui_static_data(mob/user)
 	var/list/data = list()
 	data["mapRef"] = map_name
 	var/list/cameras = get_cached_cameras()
@@ -372,7 +374,16 @@
 	icon_state = "camera_alt"
 	state_broken_preset = null
 	state_nopower_preset = null
-	network = list("SS13")
+	network = list("SS13", "SECURITY UNIT")
 	light_color = "#642850"
+
+/obj/machinery/computer/security/bodycam
+	name = "bodycam monitoring computer"
+	desc = "Used to access the security body cameras."
+	icon_state = "laptop_security"
+	state_broken_preset = "laptopb"
+	state_nopower_preset = "laptop0"
+	network = list("SECURITY UNIT")
+	req_one_access = list(access_hos)
 
 #undef DEFAULT_MAP_SIZE

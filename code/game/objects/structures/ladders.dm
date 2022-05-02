@@ -3,6 +3,7 @@
 	desc = "A sturdy metal ladder."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "ladder11"
+	anchored = TRUE
 	var/id = null
 	var/height = 0							//the 'height' of the ladder. higher numbers are considered physically higher
 	var/obj/structure/ladder/down = null	//the ladder below this one
@@ -48,34 +49,32 @@
 	if(up && down)
 		switch(tgui_alert(usr, "Go up or down the ladder?", "Ladder", list("Up", "Down", "Cancel")) )
 			if("Up")
-				user.visible_message("<span class='notice'>[user] climbs up \the [src]!</span>", \
-									 "<span class='notice'>You climb up \the [src]!</span>")
-				user.loc = get_turf(up)
-				up.add_fingerprint(user)
+				climb_ladder(user, up)
 			if("Down")
-				user.visible_message("<span class='notice'>[user] climbs down \the [src]!</span>", \
-									 "<span class='notice'>You climb down \the [src]!</span>")
-				user.loc = get_turf(down)
-				down.add_fingerprint(user)
+				climb_ladder(user, down)
 			if("Cancel")
 				return
 
 	else if(up)
-		user.visible_message("<span class='notice'>[user] climbs up \the [src]!</span>", \
-							 "<span class='notice'>You climb up \the [src]!</span>")
-		user.loc = get_turf(up)
-		up.add_fingerprint(user)
+		climb_ladder(user, up)
 
 	else if(down)
-		user.visible_message("<span class='notice'>[user] climbs down \the [src]!</span>", \
-							 "<span class='notice'>You climb down \the [src]!</span>")
-		user.loc = get_turf(down)
-		down.add_fingerprint(user)
+		climb_ladder(user, down)
 
 	add_fingerprint(user)
 
-/obj/structure/ladder/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/structure/ladder/proc/climb_ladder(mob/user, obj/structure/ladder/destination)
+	destination.add_fingerprint(user)
+	user.visible_message("<span class='notice'>[user] tries to climb the ladder.</span>")
+	destination.visible_message("<span class='warning'>Someone is trying to climb the ladder!</span>")
+	playsound(src, 'sound/effects/ladder.ogg', VOL_EFFECTS_MASTER)
+	playsound(destination, 'sound/effects/ladder.ogg', VOL_EFFECTS_MASTER)
+	if(!user.is_busy() && do_after(user, 15, target = src))
+		if(user.pulling)
+			user.pulling.forceMove(get_turf(destination))
+		user.forceMove(get_turf(destination))
+		user.visible_message("<span class='notice'>[user] climbs the ladder.</span>")
+		handle_teleport_grab(get_turf(destination), user, victim_spread = FALSE)
 
-/obj/structure/ladder/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/ladder/attack_paw(mob/user)
 	return attack_hand(user)

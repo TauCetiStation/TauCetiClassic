@@ -144,23 +144,16 @@
 // this should probably use dump_contents()
 /obj/structure/closet/ex_act(severity)
 	switch(severity)
-		if(1)
-			for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
-				A.ex_act(severity++)
-			dump_contents()
-			qdel(src)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				for (var/atom/movable/A as mob|obj in src)
-					A.ex_act(severity++)
-				dump_contents()
-				qdel(src)
-		if(3)
-			if(prob(5))
-				for(var/atom/movable/A as mob|obj in src)
-					A.ex_act(severity++)
-				dump_contents()
-				qdel(src)
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(95))
+				return
+	for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
+		A.ex_act(severity++)
+	dump_contents()
+	qdel(src)
 
 /obj/structure/closet/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
@@ -246,12 +239,6 @@
 	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
 	toggle(user)
-
-// tk grab then use on self
-/obj/structure/closet/attack_self_tk(mob/user)
-	add_fingerprint(user)
-	if(!toggle())
-		to_chat(usr, "<span class='notice'>It won't budge!</span>")
 
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in oview(1)

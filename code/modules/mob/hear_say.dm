@@ -20,9 +20,21 @@
 		message = scrambled_msg
 
 	var/speaker_name = speaker.name
-	if(istype(speaker, /mob/living/carbon/human))
+	if(ishuman(speaker))
 		var/mob/living/carbon/human/H = speaker
 		speaker_name = H.GetVoice()
+
+		if(H != src && H.mind?.assigned_role == "Mime" && length(H.languages))
+			H.emote("gasp")
+			H.adjustOxyLoss(20)
+			H.Weaken(3)
+
+			H.loc.shake_act(2)
+
+			to_chat(H, "<span class='bold userdanger'>As punishment for breaking the vow, you will forget all your languages!</span>")
+
+			for(var/datum/language/L as anything in H.languages)
+				H.remove_language(L.name)
 
 	if(ishuman(src)) //zombie logic
 		var/mob/living/carbon/human/ME = src
@@ -34,18 +46,28 @@
 				if(!iszombie(H))
 					message = stars(message, 40)
 
+	if(!(sdisabilities & DEAF || ear_deaf) && client.prefs.show_runechat)
+		var/list/span_list = list()
+		if(copytext_char(message, -2) == "!!")
+			span_list.Add("yell")
+		if(italics)
+			span_list.Add("italics")
+		if(used_radio)
+			span_list.Add("speaker")
+		show_runechat_message(speaker, language, capitalize(message), span_list)
+
 	if(italics)
 		message = "<i>[message]</i>"
 
 	var/track = null
-	if(istype(src, /mob/dead/observer))
+	if(isobserver(src))
 		if(speaker && !speaker.client && !(client.prefs.chat_toggles & CHAT_GHOSTNPC) && !(speaker in view(src)))
 			return
 		if(used_radio && (client.prefs.chat_toggles & CHAT_GHOSTRADIO))
 			return
 		if(speaker_name != speaker.real_name && speaker.real_name)
 			speaker_name = "[speaker.real_name] ([speaker_name])"
-		track = FOLLOW_LINK(src, speaker)
+		track = "[FOLLOW_LINK(src, speaker)] "
 		if((client.prefs.chat_toggles & CHAT_GHOSTEARS) && (speaker in view(src)))
 			message = "<b>[message]</b>"
 
@@ -68,13 +90,29 @@
 		if(isliving(src))
 			message = highlight_traitor_codewords(message, src.mind)
 		if(language)
-			to_chat(src, "[track] <span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [language.format_message(message, verb)]</span>")
+			to_chat(src, "[track]<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [language.format_message(message, verb)]</span>")
 		else
-			to_chat(src, "[track] <span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
+			to_chat(src, "[track]<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
-	return TRUE
+
+	. = TRUE
+
+	if(speaker == src)
+		return
+
+	if(stat != CONSCIOUS)
+		return
+
+	if(!client)
+		return
+
+	if(!ishuman(speaker))
+		return
+
+	var/mob/living/carbon/human/H = speaker
+	H.handle_socialization(src)
 
 /mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 
@@ -117,7 +155,7 @@
 	if(vname)
 		speaker_name = vname
 
-	if(istype(speaker, /mob/living/carbon/human))
+	if(ishuman(speaker))
 		var/mob/living/carbon/human/H = speaker
 		if(H.voice)
 			speaker_name = H.voice
@@ -137,7 +175,7 @@
 
 	var/changed_voice
 
-	if(istype(src, /mob/living/silicon/ai) && !hard_to_hear)
+	if(isAI(src) && !hard_to_hear)
 		var/jobname // the mob's "job"
 		var/mob/living/carbon/human/impersonating //The crewmember being impersonated, if any.
 
@@ -159,30 +197,38 @@
 
 		else if (iscarbon(speaker)) // Nonhuman carbon mob
 			jobname = "No id"
-		else if (isAI(speaker))
+		else if (isAI(speaker) || isautosay(speaker))
 			jobname = "AI"
 		else if (isrobot(speaker))
 			jobname = "Cyborg"
-		else if (istype(speaker, /mob/living/silicon/pai))
+		else if (ispAI(speaker))
 			jobname = "Personal AI"
 		else
 			jobname = "Unknown"
 
-		if(speaker.mouse_opacity && (speaker.alpha > 50))
-			if(changed_voice)
-				if(impersonating)
-					track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[impersonating]'>[speaker_name] ([jobname])</a>"
+		if(isautosay(speaker))
+			var/turf/T = get_turf(speaker)
+			if(T)
+				track = "<a href='byond://?src=\ref[src];x=[T.x];y=[T.y];z=[T.z]'>[speaker_name] ([jobname])</a>"
+		else
+			if(speaker.mouse_opacity && (speaker.alpha > 50))
+				if(changed_voice)
+					if(impersonating)
+						track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[impersonating]'>[speaker_name] ([jobname])</a>"
+					else
+						track = "[speaker_name] ([jobname])"
 				else
-					track = "[speaker_name] ([jobname])"
-			else
-				track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[speaker]'>[speaker_name] ([jobname])</a>"
+					track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[speaker]'>[speaker_name] ([jobname])</a>"
 
-	if(istype(src, /mob/dead/observer))
-		if(speaker_name != speaker.real_name && !isAI(speaker)) //Announce computer and various stuff that broadcasts doesn't use it's real name but AI's can't pretend to be other mobs.
-			speaker_name = "[speaker.real_name] ([speaker_name])"
-		if(isAI(speaker))
-			var/mob/living/silicon/ai/S = speaker
-			speaker = S.eyeobj
+	if(isobserver(src))
+		if(isautosay(speaker))
+			speaker_name = speaker.real_name
+		else
+			if(speaker_name != speaker.real_name && !isAI(speaker)) //Announce computer and various stuff that broadcasts doesn't use it's real name but AI's can't pretend to be other mobs.
+				speaker_name = "[speaker.real_name] ([speaker_name])"
+			if(isAI(speaker))
+				var/mob/living/silicon/ai/S = speaker
+				speaker = S.eyeobj
 
 		var/track_button
 		var/turf/T = get_turf(speaker)

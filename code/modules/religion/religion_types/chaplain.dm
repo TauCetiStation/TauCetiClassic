@@ -33,7 +33,7 @@
 	)
 
 	// Is required to have a "Default" as a fallback.
-	pews_info_by_name = list(
+	emblem_info_by_name = list(
 		"Default" = "general",
 		"Christianity" = "christianity",
 		"Satanism" = "dead",
@@ -76,6 +76,12 @@
 
 	area_type = /area/station/civilian/chapel
 	bible_type = /obj/item/weapon/storage/bible
+	religious_tool_type = /obj/item/weapon/nullrod
+
+	binding_rites = list(
+		/datum/religion_rites/standing/consent/invite,
+		/datum/religion_rites/instant/communicate,
+	)
 
 	style_text = "piety"
 	symbol_icon_state = "nimbus"
@@ -136,10 +142,8 @@
 	gen_bible_info()
 
 	var/obj/item/weapon/storage/bible/B = spawn_bible(chaplain)
-	if(!B.god_lore)
-		var/new_lore = sanitize_safe(input(chaplain, "You can come up with the lore of your god in [new_religion] religion.", "Lore for new god", ""), MAX_MESSAGE_LEN)
-		B.god_lore = new_lore
-		lore = new_lore
+
+	lore = sanitize_safe(input(chaplain, "You can come up with the lore of your god in [new_religion] religion.", "Lore for new god", ""), MAX_MESSAGE_LEN)
 
 	chaplain.equip_to_slot_or_del(B, SLOT_L_HAND)
 

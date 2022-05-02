@@ -8,7 +8,6 @@
 		"Traitor", "Nuke Op", "Cultist","Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Deathsquad Officer", "Ian")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 	var/painting = FALSE
-	var/lastattacker = null
 	var/static/list/coloring
 
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)

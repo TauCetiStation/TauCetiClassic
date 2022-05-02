@@ -22,6 +22,14 @@
 	max_ammo = 7
 	multiple_sprites = 1
 
+/obj/item/ammo_box/c45rubber
+	name = "speedloader (.45 rubber)"
+	desc = "A .45 speedloader."
+	icon_state = "38"
+	ammo_type = /obj/item/ammo_casing/c45r
+	max_ammo = 6
+	multiple_sprites = 1
+
 /obj/item/ammo_box/a666
 	name = "ammo box (.666)"
 	icon_state = "666"
@@ -121,7 +129,7 @@
 	icon_state = "purpleshellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/dart
 
-/obj/item/ammo_box/eight_shells/stunslug
-	name = "shotgun shells box (stunslug)"
+/obj/item/ammo_box/eight_shells/stunshot
+	name = "shotgun shells box (stunshot)"
 	icon_state = "stanshellbox"
-	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
+	ammo_type = /obj/item/ammo_casing/shotgun/stunshot

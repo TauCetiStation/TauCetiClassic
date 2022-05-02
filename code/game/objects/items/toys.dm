@@ -177,6 +177,11 @@
 
 	visible_message("<span class='warning'><B>[user] fires a cap gun at [target]!</B></span>", "<span class='warning'>You hear a gunshot</span>")
 
+/obj/item/toy/gun/peacemaker
+	name = "Colt SAA"
+	desc = "A legend of Wild West."
+	icon_state = "peacemaker"
+
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
 	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
@@ -245,7 +250,7 @@
 				step_towards(D,trg)
 
 				for(var/mob/living/M in D.loc)
-					if(!istype(M,/mob/living)) continue
+					if(!isliving(M)) continue
 					if(M == user) continue
 					visible_message("<span class='warning'>[M] was hit by the foam dart!</span>")
 					new /obj/item/toy/ammo/crossbow(M.loc)
@@ -315,7 +320,6 @@
 	item_state = "sword0"
 	var/active = 0.0
 	w_class = SIZE_TINY
-	flags = NOSHIELD
 	attack_verb = list("attacked", "struck", "hit")
 
 /obj/item/toy/sword/attack_self(mob/user)
@@ -333,7 +337,7 @@
 		src.item_state = "sword0"
 		src.w_class = SIZE_TINY
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
@@ -861,7 +865,7 @@ Owl & Griffin toys
 	if(!..())
 		playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
 		for(var/mob/M in orange(10, src))
-			if(!M.stat && !istype(M, /mob/living/silicon/ai))\
+			if(!M.stat && !isAI(M))\
 				shake_camera(M, 3, 1)
 		qdel(src)
 
@@ -920,19 +924,22 @@ Owl & Griffin toys
 	integrity += cards
 
 /obj/item/toy/cards/attack_hand(mob/user)
-	var/choice = null
 	if(cards.len == 0)
 		to_chat(user, "<span class='notice'>There are no more cards to draw.</span>")
 		return
-	var/obj/item/toy/singlecard/H = new/obj/item/toy/singlecard(user.loc)
-	choice = cards[1]
-	H.cardname = choice
-	H.parentdeck = src
-	cards -= choice
+	var/obj/item/toy/singlecard/H = remove_card()
 	H.pickup(user)
 	user.put_in_active_hand(H)
 	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
 	update_icon()
+
+/obj/item/toy/cards/proc/remove_card()
+	var/obj/item/toy/singlecard/H = new/obj/item/toy/singlecard(loc)
+	var/choice = cards[1]
+	H.cardname = choice
+	H.parentdeck = src
+	cards -= choice
+	return H
 
 /obj/item/toy/cards/attack_self(mob/user)
 	cards = shuffle(cards)
@@ -1234,7 +1241,7 @@ Owl & Griffin toys
 	to_chat(user, "<span class='notice'>You have clicked a switch behind the toy.</span>")
 	src.icon_state = "poly_companion" + pick("1","2","")
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
@@ -1252,7 +1259,7 @@ Owl & Griffin toys
 /obj/item/toy/prize/poly/polyspecial/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You have clicked a switch behind the toy.</span>")
 	src.icon_state = "poly_special" + pick("1","2","")
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
@@ -1579,7 +1586,7 @@ Owl & Griffin toys
 	var/cracked = FALSE
 
 /obj/item/toy/xmas_cracker/attack(mob/target, mob/user)
-	if( !cracked && istype(target,/mob/living/carbon/human) && (target.stat == CONSCIOUS) && !target.get_active_hand() )
+	if( !cracked && ishuman(target) && (target.stat == CONSCIOUS) && !target.get_active_hand() )
 		target.visible_message("<span class='notice'>[user] and [target] pop \an [src]! *pop*</span>", "<span class='notice'>You pull \an [src] with [target]! *pop*</span>", "<span class='notice'>You hear a *pop*.</span>")
 		var/obj/item/weapon/paper/Joke = new /obj/item/weapon/paper(user.loc)
 		Joke.name = "[pick("awful","terrible","unfunny")] joke"

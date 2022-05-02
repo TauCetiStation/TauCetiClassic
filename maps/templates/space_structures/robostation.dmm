@@ -1,13 +1,13 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/environment/space,
 /area/space)
 "ab" = (
 /obj/structure/lattice,
 /obj/structure/grille{
 	destroyed = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "ac" = (
 /mob/living/simple_animal/hostile/hivebot,
@@ -94,7 +94,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "at" = (
-/turf/space,
+/turf/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
 	},
@@ -108,7 +108,7 @@
 /turf/simulated/floor/carpet,
 /area/space_structures/robostatoin)
 "aw" = (
-/obj/item/weapon/twohanded/flora/pottedplant/unusual,
+/obj/item/weapon/flora/pottedplant/unusual,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "ax" = (
@@ -141,7 +141,7 @@
 /area/space_structures/robostatoin)
 "aC" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "aD" = (
 /obj/item/mecha_parts/part/honker_right_arm,
@@ -151,7 +151,7 @@
 "aE" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "aF" = (
 /obj/structure/ore_box,
@@ -164,7 +164,7 @@
 /area/space_structures/robostatoin)
 "aH" = (
 /obj/structure/table/woodentable,
-/obj/item/clothing/gloves/rainbow/clown,
+/obj/item/clothing/gloves/rainbow,
 /obj/item/stack/sheet/mineral/clown,
 /obj/item/weapon/cartridge/clown,
 /obj/item/weapon/stamp/clown,
@@ -281,12 +281,12 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "be" = (
-/obj/item/weapon/twohanded/fireaxe,
+/obj/item/weapon/fireaxe,
 /obj/item/clothing/head/collectable/petehat,
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "bf" = (
-/turf/space,
+/turf/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
@@ -398,7 +398,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bC" = (
-/obj/item/weapon/twohanded/flora/pottedplant/crystal,
+/obj/item/weapon/flora/pottedplant/crystal,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bD" = (
@@ -442,7 +442,7 @@
 /area/space_structures/robostatoin)
 "bL" = (
 /obj/structure/grille,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "bM" = (
 /obj/item/weapon/wirecutters,
@@ -472,11 +472,11 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/turf/space,
+/turf/environment/space,
 /area/space_structures/robostatoin)
 "bS" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/space_structures/robostatoin)
 "bT" = (
 /obj/item/weapon/circuitboard/mecha/honker/targeting,
@@ -505,7 +505,7 @@
 "bX" = (
 /obj/item/weapon/bikehorn,
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "bY" = (
 /obj/structure/table,
@@ -544,7 +544,7 @@
 /area/space_structures/robostatoin)
 "cd" = (
 /obj/item/weapon/shard,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "ce" = (
 /obj/structure/sign/warning/docking,
@@ -565,7 +565,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "ci" = (
-/turf/space,
+/turf/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f5"
 	},
@@ -624,7 +624,7 @@
 	},
 /area/space_structures/robostatoin)
 "cs" = (
-/turf/space,
+/turf/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
@@ -641,7 +641,7 @@
 "cv" = (
 /obj/item/weapon/reagent_containers/pill/cyanide,
 /turf/simulated/floor/plating,
-/turf/space,
+/turf/environment/space,
 /area/space_structures/robostatoin)
 "cw" = (
 /obj/machinery/light/small{
@@ -656,11 +656,11 @@
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
 	},
-/turf/space,
+/turf/environment/space,
 /area/space_structures/robostatoin)
 "cy" = (
 /obj/item/weapon/paper{
-	info = "August 31, 2556. This is the last entry in the log. Our ship was carrying the latest weapons to protect the sovereignty of the Clown Planet. We were supposed to arrive at the base to transfer the technology into the hands of our scientists, but we found it had been captured by an unknown enemy. Our engines are broken. There is no hope. Damn you stupid tin cans.";
+	info = "August 31, 2206. This is the last entry in the log. Our ship was carrying the latest weapons to protect the sovereignty of the Clown Planet. We were supposed to arrive at the base to transfer the technology into the hands of our scientists, but we found it had been captured by an unknown enemy. Our engines are broken. There is no hope. Damn you stupid tin cans.";
 	name = "no hope"
 	},
 /turf/simulated/floor/plating,
@@ -883,7 +883,7 @@
 /area/space_structures/robostatoin)
 "dm" = (
 /turf/simulated/floor/plating,
-/turf/space,
+/turf/environment/space,
 /area/space_structures/robostatoin)
 "dn" = (
 /obj/structure/table,
@@ -1018,7 +1018,7 @@
 "UA" = (
 /obj/structure/lattice,
 /obj/item/weapon/shard,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "XQ" = (
 /obj/structure/stool/bed/chair/comfy/beige{

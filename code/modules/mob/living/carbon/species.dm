@@ -9,10 +9,11 @@
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
 	var/damage_mask = TRUE
 	var/eyes = "eyes"                                    // Icon for eyes.
+	var/eyes_glowing = FALSE                             // To make those eyes gloooow.
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
-	var/unarmed                                          // For empty hand harm-intent attack
+	var/datum/unarmed_attack/unarmed                                          // For empty hand harm-intent attack
 	var/unarmed_type = /datum/unarmed_attack
 	var/brute_mod = 1                                    // Physical damage multiplier (0 == immunity).
 	var/burn_mod = 1                                     // Burn damage multiplier.
@@ -27,11 +28,11 @@
 	var/primitive                     // Lesser form, if any (ie. monkey for humans)
 	var/tail                          // Name of tail image in species effects icon file.
 	var/language                      // Default racial language, if any.
-	var/list/additional_languages = list() // Additional languages, to the primary. These can not be the forced ones.
-	var/force_racial_language = FALSE // If TRUE, racial language will be forced by default when speaking.
-	var/attack_verb = "punch"         // Empty hand hurt intent verb.
-	var/punch_damage = 0              // Extra empty hand attack damage.
-	var/mutantrace                    // Safeguard due to old code.
+	// Additional languages, to the primary. These can not be the forced ones.
+	// Use LANGUAGE = LANGUAGE_CAN_UNDERSTAND to give languages which a specimen can understand, but not speak.
+	var/list/additional_languages
+	var/species_common_language = FALSE // If TRUE, racial language will be forced by default when speaking.
+
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
 	// Perhaps one day make this an assoc list of BODYPART_NAME = list(drops) ? ~Luduk
 	// Is used when a bodypart of this race is butchered. Otherwise there are overrides for flesh, robot, and bone bodyparts.
@@ -39,21 +40,25 @@
 
 	var/list/restricted_inventory_slots = list() // Slots that the race does not have due to biological differences.
 
-	var/breath_type = "oxygen"           // Non-oxygen gas breathed, if any.
-	var/poison_type = "phoron"           // Poisonous air.
+	var/inhale_type = "oxygen"           // Non-oxygen gas breathed, if any.
 	var/exhale_type = "carbon_dioxide"   // Exhaled gas type.
+	var/poison_type = "phoron"           // Poisonous air.
 
-	var/cold_level_1 = 260  // Cold damage level 1 below this point.
-	var/cold_level_2 = 200  // Cold damage level 2 below this point.
-	var/cold_level_3 = 120  // Cold damage level 3 below this point.
+	var/cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT		// Cold damage level 1 below this point.
+	var/cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 5	// Cold damage level 2 below this point.
+	var/cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 10	// Cold damage level 3 below this point.
 
-	var/heat_level_1 = 360  // Heat damage level 1 above this point.
-	var/heat_level_2 = 400  // Heat damage level 2 above this point.
-	var/heat_level_3 = 1000 // Heat damage level 3 above this point.
+	var/heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT		// Heat damage level 1 above this point.
+	var/heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 40	// Heat damage level 2 above this point.
+	var/heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 640	// Heat damage level 3 above this point.
 
-	var/body_temperature = 310.15	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
-	var/synth_temp_gain = 0			//IS_SYNTHETIC species will gain this much temperature every second
-	var/synth_temp_max = 0			//IS_SYNTHETIC will cap at this value
+	var/breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 15
+	var/breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 30
+	var/breath_cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 45
+
+	var/body_temperature = BODYTEMP_NORMAL	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
+	var/synth_temp_gain = 0					//IS_SYNTHETIC species will gain this much temperature every second
+	var/synth_temp_max = 0					//IS_SYNTHETIC will cap at this value
 
 	var/metabolism_mod = METABOLISM_FACTOR // Whether the xeno has custom metabolism? Is not additive, does override.
 	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
@@ -67,16 +72,11 @@
 	var/hazard_low_pressure = HAZARD_LOW_PRESSURE     // Dangerously low pressure.
 
 	var/list/flags = list()       // Various specific features.
-	var/list/abilities = list()	// For species-derived or admin-given powers
 
 	var/blood_datum_path = /datum/dirt_cover/red_blood //Red.
 	var/datum/dirt_cover/blood_datum // this will contain reference and should only be used as read only.
 	var/flesh_color = "#ffc896" //Pink.
 	var/base_color      //Used when setting species.
-
-	//Used in icon caching.
-	var/race_key = 0
-	var/icon/icon_template
 
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
@@ -144,6 +144,12 @@
 	// Bubble can be changed depending on species
 	var/typing_indicator_type = "default"
 
+	// Emotes this species grants.
+	var/list/emotes
+
+	// The usual species for the station
+	var/is_common = FALSE
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -163,10 +169,7 @@
 		for(var/obj/item/organ/internal/IO in H.organs)
 			qdel(IO)
 
-	for(var/type in has_bodypart)
-		var/path = has_bodypart[type]
-		var/obj/item/organ/external/O = new path(null)
-		O.insert_organ(H)
+	create_bodyparts(H)
 
 	for(var/type in has_organ)
 		var/path = has_organ[type]
@@ -177,6 +180,11 @@
 		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
 
+/datum/species/proc/create_bodyparts(mob/living/carbon/human/H)
+	for(var/type in has_bodypart)
+		var/path = has_bodypart[type]
+		var/obj/item/organ/external/O = new path(null)
+		O.insert_organ(H, FALSE, src)
 
 /**
   * Replace human clothes in [outfit] on species clothes
@@ -216,13 +224,31 @@
 	return
 
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
+	SHOULD_CALL_PARENT(TRUE)
+
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_SPECIES)
+
+	for(var/emote in emotes)
+		var/datum/emote/E = global.all_emotes[emote]
+		H.set_emote(E.key, E)
+
+	H.inhale_gas = inhale_type
+	H.exhale_gas = exhale_type
+	H.poison_gas = poison_type
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(!flags[IS_SOCIAL])
+		H.handle_socialization()
+
 	H.remove_moveset_source(MOVESET_SPECIES)
+
+	for(var/emote in emotes)
+		H.clear_emote(emote)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
 
@@ -255,9 +281,14 @@
 /datum/species/proc/on_life(mob/living/carbon/human/H)
 	return
 
+// For species who's skin acts as a spacesuit of sorts
+// Return a value from 0 to 1, where 1 is full protection, and 0 is full weakness
+/datum/species/proc/get_pressure_protection(mob/living/carbon/human/H)
+	return 0
+
 /datum/species/human
 	name = HUMAN
-	language = "Sol Common"
+	language = LANGUAGE_SOLCOMMON
 	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_OMNI
@@ -269,32 +300,32 @@
 	,HAS_HAIR = TRUE
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
+	,IS_SOCIAL = TRUE
 	)
-
-	//If you wanted to add a species-level ability:
-	/*abilities = list(/client/proc/test_ability)*/
 
 	min_age = 25
 	max_age = 85
+
+	is_common = TRUE
 
 /datum/species/unathi
 	name = UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
-	language = "Sinta'unathi"
+	language = LANGUAGE_SINTAUNATHI
 	tail = "unathi"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
 
-	cold_level_1 = 280 //Default 260 - Lower is better
-	cold_level_2 = 220 //Default 200
-	cold_level_3 = 130 //Default 120
+	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT + 20
+	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT + 15
+	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT + 13
 
-	heat_level_1 = 420 //Default 360 - Higher is better
-	heat_level_2 = 480 //Default 400
-	heat_level_3 = 1100 //Default 1000
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT + 60
+	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 120
+	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 740
 
 	brute_mod = 0.80
 	burn_mod = 0.90
@@ -309,6 +340,7 @@
 	,HAS_HAIR_COLOR = TRUE
 	,NO_MINORCUTS = TRUE
 	,FACEHUGGABLE = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	flesh_color = "#34af10"
@@ -317,10 +349,7 @@
 	min_age = 25
 	max_age = 85
 
-	sprite_sheets = list(
-		SPRITE_SHEET_SUIT = 'icons/mob/species/unathi/suit.dmi',
-		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
-	)
+	is_common = TRUE
 
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
@@ -340,7 +369,7 @@
 	..()
 	M.verbs += /mob/living/carbon/human/proc/air_sample
 
-/datum/species/unathi/on_loose(mob/living/M)
+/datum/species/unathi/on_loose(mob/living/M, new_species)
 	M.verbs -= /mob/living/carbon/human/proc/air_sample
 	..()
 
@@ -348,8 +377,8 @@
 	name = TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
-	language = "Siik'maas"
-	additional_languages = list("Siik'tajr")
+	language = LANGUAGE_SIIKMAAS
+	additional_languages = list(LANGUAGE_SIIKTAJR = LANGUAGE_NATIVE)
 	tail = "tajaran"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
@@ -357,13 +386,13 @@
 	darksight = 8
 	nighteyes = 1
 
-	cold_level_1 = 200 //Default 260
-	cold_level_2 = 140 //Default 200
-	cold_level_3 = 80 //Default 120
+	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 10
+	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
+	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
 
-	heat_level_1 = 330 //Default 360
-	heat_level_2 = 380 //Default 400
-	heat_level_3 = 800 //Default 1000
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT
+	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 20
+	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 440
 
 	primitive = /mob/living/carbon/monkey/tajara
 
@@ -380,6 +409,7 @@
 	,HAS_HAIR_COLOR = TRUE
 	,HAS_HAIR = TRUE
 	,FACEHUGGABLE = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	flesh_color = "#afa59e"
@@ -388,10 +418,7 @@
 	min_age = 25
 	max_age = 85
 
-	sprite_sheets = list(
-		SPRITE_SHEET_SUIT = 'icons/mob/species/tajaran/suit.dmi',
-		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
-	)
+	is_common = TRUE
 
 	replace_outfit = list(
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
@@ -411,13 +438,14 @@
 	name = SKRELL
 	icobase = 'icons/mob/human_races/r_skrell.dmi'
 	deform = 'icons/mob/human_races/r_def_skrell.dmi'
-	language = "Skrellian"
+	language = LANGUAGE_SKRELLIAN
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_PLANT
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
+	has_gendered_icons = FALSE
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -426,6 +454,7 @@
 	,HAS_SKIN_COLOR = TRUE
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	has_organ = list(
@@ -444,6 +473,8 @@
 	min_age = 25
 	max_age = 150
 
+	is_common = TRUE
+
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
 
@@ -454,24 +485,26 @@
 	name = VOX
 	icobase = 'icons/mob/human_races/r_vox.dmi'
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
-	language = "Vox-pidgin"
-	additional_languages = list("Tradeband")
+	language = LANGUAGE_VOXPIDGIN
+	additional_languages = list(LANGUAGE_TRADEBAND = LANGUAGE_CAN_SPEAK)
 	tail = "vox_prim"
+	has_gendered_icons = FALSE
 
-	force_racial_language = TRUE
+	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	dietflags = DIET_OMNI
-
-	warning_low_pressure = 50
-	hazard_low_pressure = 0
 
 	cold_level_1 = 80
 	cold_level_2 = 50
 	cold_level_3 = 0
 
+	breath_cold_level_1 = 80
+	breath_cold_level_2 = 50
+	breath_cold_level_3 = 0
+
 	eyes = "vox_eyes"
 
-	breath_type = "nitrogen"
+	inhale_type = "nitrogen"
 	poison_type = "oxygen"
 
 	flags = list(
@@ -479,9 +512,9 @@
 		,NO_SCAN = TRUE
 		,FACEHUGGABLE = TRUE
 		,HAS_TAIL = TRUE
-		,SPRITE_SHEET_RESTRICTION = TRUE
 		,HAS_HAIR_COLOR = TRUE
 		,NO_FAT = TRUE
+		,IS_SOCIAL = TRUE
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
@@ -501,55 +534,43 @@
 		SPRITE_SHEET_SUIT = 'icons/mob/species/vox/suit.dmi',
 		SPRITE_SHEET_BELT = 'icons/mob/belt.dmi',
 		SPRITE_SHEET_HEAD = 'icons/mob/species/vox/helmet.dmi',
-		SPRITE_SHEET_BACK = 'icons/mob/back.dmi',
 		SPRITE_SHEET_MASK = 'icons/mob/species/vox/masks.dmi',
 		SPRITE_SHEET_EARS = 'icons/mob/ears.dmi',
 		SPRITE_SHEET_EYES = 'icons/mob/species/vox/eyes.dmi',
 		SPRITE_SHEET_FEET = 'icons/mob/species/vox/shoes.dmi',
-		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi'
+		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi',
+		SPRITE_SHEET_BACK = 'icons/mob/species/vox/back.dmi'
 		)
 
-	survival_kit_items = list(/obj/item/weapon/tank/emergency_nitrogen,
-							/obj/item/clothing/mask/gas/vox,
-							/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
-							/obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox
-	                          )
+	survival_kit_items = list(
+		/obj/item/weapon/tank/emergency_nitrogen,
+		/obj/item/weapon/reagent_containers/syringe/nutriment,
+	)
 
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
-
 
 	min_age = 1
 	max_age = 100
 
+	is_common = TRUE
+
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
+
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
+			)
 
 /datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
-	replace_outfit = list(
-			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/magboots/vox
-			)
-
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
+
 	if(H.wear_mask)
 		qdel(H.wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
-	if(!H.r_store)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_R_STORE)
-		H.internal = H.r_store
-	else if(!H.l_store)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_L_STORE)
-		H.internal = H.l_store
-	else if(!H.r_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_R_HAND)
-		H.internal = H.r_hand
-	else if(!H.l_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_L_HAND)
-		H.internal = H.l_hand
-	if(H.shoes)
-		qdel(H.shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox(src), SLOT_SHOES)
+
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_vox_digest(M)
@@ -572,7 +593,7 @@
 
 	..()
 
-/datum/species/vox/on_loose(mob/living/carbon/human/H)
+/datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
 	if(name != VOX_ARMALIS)
 		if(H.leap_icon)
 			if(H.hud_used)
@@ -586,12 +607,28 @@
 
 	..()
 
+// At 25 damage - no protection at all.
+/datum/species/vox/get_pressure_protection(mob/living/carbon/human/H)
+	var/damage = 0
+	var/static/list/cavity_parts = list(BP_HEAD, BP_CHEST, BP_GROIN)
+	for(var/bodypart in cavity_parts)
+		var/obj/item/organ/external/BP = H.get_bodypart(bodypart)
+		if(!BP)
+			// We surely are not hermetized.
+			damage += 100
+			continue
+
+		damage += BP.brute_dam + BP.burn_dam
+
+	return 1 - CLAMP01(damage / 25)
+
+
 /datum/species/vox/armalis
 	name = VOX_ARMALIS
 	icobase = 'icons/mob/human_races/r_armalis.dmi'
 	deform = 'icons/mob/human_races/r_armalis.dmi'
 	damage_mask = FALSE
-	language = "Vox-pidgin"
+	language = LANGUAGE_VOXPIDGIN
 	unarmed_type = /datum/unarmed_attack/claws/armalis
 	dietflags = DIET_OMNI	//should inherit this from vox, this is here just in case
 
@@ -602,6 +639,10 @@
 	cold_level_2 = 50
 	cold_level_3 = 0
 
+	breath_cold_level_1 = 80
+	breath_cold_level_2 = 50
+	breath_cold_level_3 = 0
+
 	heat_level_1 = 2000
 	heat_level_2 = 3000
 	heat_level_3 = 4000
@@ -610,22 +651,23 @@
 	burn_mod = 0.2
 
 	eyes = null
-	breath_type = "nitrogen"
+	inhale_type = "nitrogen"
 	poison_type = "oxygen"
+
+	is_common = TRUE
 
 	flags = list(
 	 NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
 	,HAS_TAIL = TRUE
 	,NO_PAIN = TRUE
-	,SPRITE_SHEET_RESTRICTION = TRUE
 	,NO_FAT = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#808d11"
 	tail = "vox_armalis"
-	icon_template = 'icons/mob/human_races/r_armalis.dmi'
 
 	sprite_sheets = list(
 		SPRITE_SHEET_SUIT = 'icons/mob/species/armalis/suit.dmi',
@@ -635,11 +677,13 @@
 		SPRITE_SHEET_HELD = 'icons/mob/species/armalis/held.dmi'
 		)
 
+	has_gendered_icons = TRUE
+
 /datum/species/diona
 	name = DIONA
 	icobase = 'icons/mob/human_races/r_diona.dmi'
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
-	language = "Rootspeak"
+	language = LANGUAGE_ROOTSPEAK
 	unarmed_type = /datum/unarmed_attack/diona
 	dietflags = 0		//Diona regenerate nutrition in light, no diet necessary
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
@@ -652,6 +696,10 @@
 	cold_level_1 = 50
 	cold_level_2 = -1
 	cold_level_3 = -1
+
+	breath_cold_level_1 = 50
+	breath_cold_level_2 = -1
+	breath_cold_level_3 = -1
 
 	heat_level_1 = 2000
 	heat_level_2 = 3000
@@ -679,16 +727,17 @@
 	,IS_PLANT = TRUE
 	,NO_VOMIT = TRUE
 	,RAD_ABSORB = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	has_bodypart = list(
 		 BP_CHEST  = /obj/item/organ/external/chest
 		,BP_GROIN  = /obj/item/organ/external/groin
 		,BP_HEAD   = /obj/item/organ/external/head/diona
-		,BP_L_ARM  = /obj/item/organ/external/l_arm
-		,BP_R_ARM  = /obj/item/organ/external/r_arm
-		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		,BP_L_ARM  = /obj/item/organ/external/l_arm/diona
+		,BP_R_ARM  = /obj/item/organ/external/r_arm/diona
+		,BP_L_LEG  = /obj/item/organ/external/l_leg/diona
+		,BP_R_LEG  = /obj/item/organ/external/r_leg/diona
 		)
 
 	has_organ = list(
@@ -714,7 +763,14 @@
 	min_age = 1
 	max_age = 1000
 
+	is_common = TRUE
+
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST)
+
+	// How fast do they regenerate. Podmen regenerate 50% slower.
+	var/regen_mod = 1.0
+	// Podmen don't.
+	var/regen_limbs = TRUE
 
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -725,45 +781,121 @@
 	if(light_amount >= 5) // If you can regen organs - do so.
 		for(var/obj/item/organ/internal/O in H.organs)
 			if(O.damage)
-				O.damage -= light_amount/5
+				O.damage -= light_amount * regen_mod / 5
 				H.nutrition -= light_amount
 				return
-	if(H.nutrition > 350 && light_amount >= 4) // If you don't need to regen organs, regen bodyparts.
+
+	if(H.nutrition > 350 && light_amount >= 4 && regen_limbs) // If you don't need to regen organs, regen bodyparts.
 		if(!H.regenerating_bodypart) // If there is none currently, go ahead, find it.
 			H.regenerating_bodypart = H.find_damaged_bodypart()
 		if(H.regenerating_bodypart) // If it did find one.
 			H.nutrition -= 1
-			H.apply_damages(0,0,1,1,0,0)
 			H.regen_bodyparts(0, TRUE)
 			return
+
 	if(light_amount >= 3) // If you don't need to regen bodyparts, fix up small things.
-		H.adjustBruteLoss(-(light_amount))
-		H.adjustToxLoss(-(light_amount))
-		H.adjustOxyLoss(-(light_amount))
+		H.adjustBruteLoss(-(light_amount * regen_mod))
+		// Dionaea don't have toxloss or oxyloss. Why is this here?
+		H.adjustToxLoss(-(light_amount * regen_mod))
+		H.adjustOxyLoss(-(light_amount * regen_mod))
 
 /datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_diona_digest(M)
 
 /datum/species/diona/handle_death(mob/living/carbon/human/H)
-
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
+	S.real_name = H.real_name
+	S.name = S.real_name
+
+	S.dna = H.dna.Clone()
+	S.dna.SetSEState(MONKEYBLOCK, 1)
+	S.dna.SetSEValueRange(MONKEYBLOCK, 0xDAC, 0xFFF)
 
 	if(H.mind)
 		H.mind.transfer_to(S)
 
-	for(var/mob/living/carbon/monkey/diona/D in H.contents)
-		if(D.client)
-			D.loc = H.loc
-		else
-			qdel(D)
+	for(var/datum/language/L as anything in H.languages)
+		S.add_language(L.name, H.languages[L])
 
+	for(var/datum/quirk/Q in H.roundstart_quirks)
+		S.saved_quirks += Q.type
+
+	for(var/mob/living/carbon/monkey/diona/D in H.contents)
+		D.splitting(H)
+
+	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
+
+/datum/species/diona/podman
+	name = PODMAN
+	icobase = 'icons/mob/human_races/r_podman.dmi'
+	deform = 'icons/mob/human_races/r_def_plant.dmi'
+
+	language = "Rootspeak"
+	unarmed_type = /datum/unarmed_attack/diona/podman
+	primitive = /mob/living/carbon/monkey/diona/podman
+
+	// Because they are less thicc than dionaea.
+	siemens_coefficient = 0.75
+
+	brute_mod = 1.3
+	burn_mod = 1.3
+	speed_mod = 2.7
+	speed_mod_no_shoes = -2
+
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,NO_BREATHE = TRUE
+	,REQUIRE_LIGHT = TRUE
+	,NO_SCAN = TRUE
+	,NO_BLOOD = TRUE
+	,NO_PAIN = TRUE
+	,IS_PLANT = TRUE
+	,NO_VOMIT = TRUE
+	,RAD_ABSORB = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_HAIR = TRUE
+	,IS_SOCIAL = TRUE
+	)
+
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head/podman
+		,BP_L_ARM  = /obj/item/organ/external/l_arm/diona/podman
+		,BP_R_ARM  = /obj/item/organ/external/r_arm/diona/podman
+		,BP_L_LEG  = /obj/item/organ/external/l_leg/diona/podman
+		,BP_R_LEG  = /obj/item/organ/external/r_leg/diona/podman
+		)
+
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart,
+		O_BRAIN   = /obj/item/organ/internal/brain,
+		O_EYES    = /obj/item/organ/internal/eyes,
+		O_LUNGS   = /obj/item/organ/internal/lungs/diona,
+		O_LIVER   = /obj/item/organ/internal/liver/diona,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/diona
+		)
+
+	regen_mod = 0.5
+	regen_limbs = FALSE
+
+/datum/species/diona/podman/on_gain(mob/living/carbon/human/H)
+	. = ..()
+	H.AddComponent(/datum/component/logout_spawner, /datum/spawner/living/podman)
+
+/datum/species/diona/podman/on_loose(mob/living/carbon/human/H)
+	var/datum/component/component = H.GetComponent(/datum/component/logout_spawner)
+	qdel(component)
+	return ..()
+
+/datum/species/diona/podman/handle_death(mob/living/carbon/human/H)
 	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
 
 /datum/species/machine
 	name = IPC
 	icobase = 'icons/mob/human_races/r_machine.dmi'
 	deform = 'icons/mob/human_races/r_machine.dmi'
-	language = "Trinary"
+	language = LANGUAGE_TRINARY
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
@@ -777,7 +909,11 @@
 	cold_level_2 = -1
 	cold_level_3 = -1
 
-	heat_level_1 = 400		//gives them about 15 seconds in space before taking damage
+	breath_cold_level_1 = 50
+	breath_cold_level_2 = -1
+	breath_cold_level_3 = -1
+
+	heat_level_1 = 400		//gives them about 25 seconds in space before taking damage
 	heat_level_2 = 1000
 	heat_level_3 = 2000
 
@@ -808,11 +944,10 @@
 	,IS_SYNTHETIC = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,VIRUS_IMMUNE = TRUE
-	,BIOHAZZARD_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
-	,NO_MUTATION = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	has_bodypart = list(
@@ -846,7 +981,15 @@
 	min_age = 1
 	max_age = 125
 
+	is_common = TRUE
+
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
+
+	emotes = list(
+		/datum/emote/beep,
+		/datum/emote/ping,
+		/datum/emote/buzz,
+	)
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	..()
@@ -857,7 +1000,7 @@
 	if(BP)
 		H.set_light(BP.screen_brightness)
 
-/datum/species/machine/on_loose(mob/living/carbon/human/H)
+/datum/species/machine/on_loose(mob/living/carbon/human/H, new_species)
 	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
 	H.verbs -= /mob/living/carbon/human/proc/IPC_toggle_screen
 	H.verbs -= /mob/living/carbon/human/proc/IPC_display_text
@@ -884,6 +1027,8 @@
 
 	icobase = 'icons/mob/human_races/r_abductor.dmi'
 	deform = 'icons/mob/human_races/r_abductor.dmi'
+
+	flesh_color = "#808080"
 
 	flags = list(
 	 NO_BREATHE = TRUE
@@ -913,6 +1058,7 @@
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
 	dietflags = DIET_ALL
+	flesh_color = "#c0c0c0"
 
 	oxy_mod = 0
 	tox_mod = 0
@@ -936,7 +1082,6 @@
 	,NO_MINORCUTS = TRUE
 	,NO_EMOTION = TRUE
 	,NO_VOMIT = TRUE
-	,NO_MUTATION = TRUE
 	,NO_FAT = TRUE
 	)
 
@@ -992,6 +1137,9 @@
 	attack_verb = list("lash", "bludgeon")
 	damage = 2
 
+/datum/unarmed_attack/diona/podman
+	damage = 1
+
 /datum/unarmed_attack/slime_glomp
 	attack_verb = list("glomp")
 	damage = 5
@@ -1014,13 +1162,21 @@
 	attack_verb = list("slash", "claw")
 	damage = 10	//they're huge! they should do a little more damage, i'd even go for 15-20 maybe...
 
+/datum/unarmed_attack/claws/abomination
+	attack_verb = list("slash", "claw", "lacerate")
+	damage = 35
+
 /datum/species/shadowling
 	name = SHADOWLING
 	icobase = 'icons/mob/human_races/r_shadowling.dmi'
 	deform = 'icons/mob/human_races/r_shadowling.dmi'
-	language = "Sol Common"
+	language = LANGUAGE_SOLCOMMON
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
+	flesh_color = "#ff0000"
+
+	eyes = "shadowling_ms_s"
+	eyes_glowing = TRUE
 
 	warning_low_pressure = 50
 	hazard_low_pressure = -1
@@ -1030,6 +1186,10 @@
 	cold_level_1 = 50
 	cold_level_2 = -1
 	cold_level_3 = -1
+
+	breath_cold_level_1 = 50
+	breath_cold_level_2 = -1
+	breath_cold_level_3 = -1
 
 	heat_level_1 = 2000
 	heat_level_2 = 3000
@@ -1056,7 +1216,6 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
-	,NO_MUTATION = TRUE
 	)
 
 	burn_mod = 2
@@ -1103,13 +1262,12 @@
 		NO_EMBED = TRUE,
 		RAD_IMMUNE = TRUE,
 		VIRUS_IMMUNE = TRUE,
-		BIOHAZZARD_IMMUNE = TRUE,
 		NO_VOMIT = TRUE,
 		NO_FINGERPRINT = TRUE,
 		NO_MINORCUTS = TRUE,
 		NO_EMOTION = TRUE,
-		NO_MUTATION = TRUE,
 		NO_FAT = TRUE,
+		IS_SOCIAL = TRUE,
 		)
 
 	has_organ = list(
@@ -1121,13 +1279,14 @@
 	min_age = 1
 	max_age = 1000
 
+	is_common = TRUE
+
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
 	..()
 	// Clothing on the Golem is created before the hud_list is generated in the atom
 	H.prepare_huds()
 
 	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
-	H.dna.mutantrace = "adamantine"
 	H.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 
 	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
@@ -1141,9 +1300,8 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, SLOT_WEAR_MASK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
 
-/datum/species/golem/on_loose(mob/living/carbon/human/H)
+/datum/species/golem/on_loose(mob/living/carbon/human/H, new_species)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
-	H.dna.mutantrace = null
 	H.real_name = "unknown"
 
 	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
@@ -1174,6 +1332,9 @@
 	icobase = 'icons/mob/human_races/r_zombie.dmi'
 	deform = 'icons/mob/human_races/r_zombie.dmi'
 	has_gendered_icons = FALSE
+
+	eyes = "zombie_ms_s"
+	eyes_glowing = TRUE
 
 	flags = list(
 	NO_BREATHE = TRUE
@@ -1212,7 +1373,7 @@
 
 	..()
 
-/datum/species/zombie/on_loose(mob/living/carbon/human/H)
+/datum/species/zombie/on_loose(mob/living/carbon/human/H, new_species)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
 
 	if(istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
@@ -1261,7 +1422,6 @@
 	icobase = 'icons/mob/human_races/r_zombie_skrell.dmi'
 	deform = 'icons/mob/human_races/r_zombie_skrell.dmi'
 
-	eyes = "skrell_eyes"
 	blood_datum_path = /datum/dirt_cover/purple_blood
 	flesh_color = "#8cd7a3"
 	base_color = "#000000"
@@ -1283,6 +1443,7 @@
 
 	flesh_color = "#34af10"
 	base_color = "#000000"
+	has_gendered_icons = FALSE
 
 	flags = list(
 	NO_BREATHE = TRUE
@@ -1308,9 +1469,11 @@
 	unarmed_type = /datum/unarmed_attack/slime_glomp
 	has_gendered_icons = FALSE
 
-	cold_level_1 = 280
-	cold_level_2 = 230
-	cold_level_3 = 150
+	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT + 20
+	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 10
+	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
+
+	darksight = 3
 
 	flags = list(
 	 NO_BREATHE = TRUE
@@ -1320,10 +1483,163 @@
 	,HAS_UNDERWEAR = TRUE
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,IS_SOCIAL = TRUE
 	)
 
 	min_age = 1
 	max_age = 85
 
+	is_common = TRUE
+
 /datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_slime_digest(M)
+
+/datum/species/abomination
+	name = ABOMINATION
+	icobase = 'icons/mob/human_races/r_abomination.dmi'
+	deform = 'icons/mob/human_races/r_abomination.dmi'
+	language = LANGUAGE_SOLCOMMON
+	unarmed_type = /datum/unarmed_attack/claws/abomination
+	dietflags = DIET_OMNI
+
+	warning_low_pressure = 50
+	hazard_low_pressure = 0
+
+	cold_level_1 = 80
+	cold_level_2 = 50
+	cold_level_3 = 0
+
+	siemens_coefficient = 0.1
+
+	cold_level_1 = 50
+	cold_level_2 = -1
+	cold_level_3 = -1
+
+	heat_level_1 = 2000
+	heat_level_2 = 3000
+	heat_level_3 = 4000
+
+	darksight = 8
+
+	restricted_inventory_slots = list(SLOT_BELT, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE, SLOT_WEAR_SUIT, SLOT_W_UNIFORM, SLOT_SHOES, SLOT_GLOVES, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_GLASSES)
+
+	flags = list(
+	 NO_BREATHE = TRUE
+	,RAD_IMMUNE = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,NO_FINGERPRINT = TRUE
+	,NO_SCAN = TRUE
+	,NO_MINORCUTS = TRUE
+	,NO_VOMIT = TRUE
+	,NO_EMOTION = TRUE
+	,NO_PAIN = TRUE
+	)
+
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head/abomination
+		,BP_L_ARM  = /obj/item/organ/external/l_arm
+		,BP_R_ARM  = /obj/item/organ/external/r_arm
+		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		)
+
+	has_organ = list(
+		O_BRAIN  = /obj/item/organ/internal/brain/abomination
+		)
+	burn_mod = 0.2
+	brute_mod = 0.2
+	brain_mod = 0
+
+	has_gendered_icons = FALSE
+
+	min_age = 1
+	max_age = 10000
+
+	speed_mod_no_shoes = 5
+
+/datum/species/abomination/on_gain(mob/living/carbon/human/H)
+	..()
+	H.status_flags &= ~(CANSTUN  | CANPARALYSE | CANWEAKEN)
+
+/datum/species/abomination/call_digest_proc(mob/living/M, datum/reagent/R)
+	return
+
+/datum/species/human/homunculus
+	name = HOMUNCULUS
+
+	brute_mod = 2
+	burn_mod = 2
+	speed_mod = 5
+
+	has_bodypart = list(
+		 BP_CHEST = /obj/item/organ/external/chest/homunculus
+		,BP_GROIN = /obj/item/organ/external/groin/homunculus
+		,BP_HEAD  = /obj/item/organ/external/head/homunculus
+		,BP_L_ARM = /obj/item/organ/external/l_arm/homunculus
+		,BP_R_ARM = /obj/item/organ/external/r_arm/homunculus
+		,BP_L_LEG = /obj/item/organ/external/l_leg/homunculus
+		,BP_R_LEG = /obj/item/organ/external/r_leg/homunculus
+		)
+
+	flags = list(
+		NO_DNA = TRUE,
+		NO_SCAN = TRUE,
+		NO_PAIN = TRUE,
+		RAD_ABSORB = TRUE,
+		VIRUS_IMMUNE = TRUE,
+		NO_EMOTION = TRUE,
+		HAS_TAIL = TRUE,
+		HAS_HAIR = TRUE,
+		HAS_HAIR_COLOR = TRUE,
+		)
+
+	has_gendered_icons = FALSE
+
+	min_age = 1
+	max_age = 10
+
+	primitive = null
+	is_common = FALSE
+
+/datum/species/human/homunculus/on_gain(mob/living/carbon/human/H)
+	. = ..()
+	var/list/tail_list = icon_states('icons/mob/species/tail.dmi') - "vox_armalis"
+	tail_list += ""
+	H.random_tail_holder = pick(tail_list)
+
+/datum/species/human/homunculus/create_bodyparts(mob/living/carbon/human/H)
+	var/list/keys = get_list_of_primary_keys(global.all_species)
+	keys -= list(PODMAN, IPC, SKELETON, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
+
+	var/datum/species/head = global.all_species[pick(keys - VOX)]
+
+	var/datum/species/chest = global.all_species[pick(keys - HUMAN)]
+	var/datum/species/l_arm = global.all_species[pick(keys)]
+	var/datum/species/r_arm = global.all_species[pick(keys)]
+
+	var/datum/species/groin = global.all_species[pick(keys)]
+	var/datum/species/l_leg = global.all_species[pick(keys)]
+	var/datum/species/r_leg = global.all_species[pick(keys)]
+
+	var/list/bodypart_species = list(
+		BP_HEAD  = head,
+		BP_CHEST = chest,
+		BP_L_ARM = l_arm,
+		BP_R_ARM = r_arm,
+		BP_GROIN = groin,
+		BP_L_LEG = l_leg,
+		BP_R_LEG = r_leg,
+	)
+
+	for(var/type in has_bodypart)
+		if((type in list(BP_L_LEG, BP_R_LEG, BP_R_ARM, BP_L_ARM)) && prob(10))
+			continue
+		var/path = has_bodypart[type]
+		var/obj/item/organ/external/O = new path(null)
+		var/datum/species/part_species = bodypart_species[type]
+		O.insert_organ(H, FALSE, part_species)
+		O.adjust_pumped(rand(0, 60))
+		if(prob(80) && (part_species.name in list(UNATHI, SKRELL, TAJARAN)))
+			O.original_color = pick(list(COLOR_GREEN, COLOR_LIGHT_PINK, COLOR_ROSE_PINK, COLOR_VIOLET, COLOR_DEEP_SKY_BLUE, COLOR_RED, COLOR_LIME, COLOR_PINK))

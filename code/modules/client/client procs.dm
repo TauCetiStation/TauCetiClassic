@@ -10,7 +10,7 @@
 
 #define UPLOAD_LIMIT		10485760	//Restricts client uploads to the server to 10MB //Boosted this thing. What's the worst that can happen?
 
-var/list/blacklisted_builds = list(
+var/global/list/blacklisted_builds = list(
 	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
 	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
 	"1428" = "bug causing right-click menus to show too many verbs that's been fixed in version 1429",
@@ -44,9 +44,6 @@ var/list/blacklisted_builds = list(
 		asset_cache_job = asset_cache_confirm_arrival(href_list["asset_cache_confirm_arrival"])
 		if(!asset_cache_job)
 			return
-
-	if(href_list["_src_"] == "chat")
-		return chatOutput.Topic(href, href_list)
 
 	//Reduces spamming of links by dropping calls that happen during the delay period
 	if (!holder && config.minutetopiclimit)
@@ -92,8 +89,10 @@ var/list/blacklisted_builds = list(
 		return
 
 	// Tgui Topic middleware
-	if(!tgui_Topic(href_list))
+	if(tgui_Topic(href_list))
 		return
+	if(href_list["reload_tguipanel"])
+		nuke_chat()
 
 	//Logs all hrefs
 	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) || [hsrc ? "[hsrc] " : ""][href]")
@@ -137,6 +136,10 @@ var/list/blacklisted_builds = list(
 			cmd_mentor_pm(C)
 			return
 		cmd_admin_pm(C,null)
+		return
+
+	if(href_list["metahelp"])
+		show_metahelp_message(href_list["metahelp"])
 		return
 
 	switch(href_list["_src_"])
@@ -209,8 +212,6 @@ var/list/blacklisted_builds = list(
 	if(!guard)
 		guard = new(src)
 
-	chatOutput = new /datum/chatOutput(src) // Right off the bat.
-
 	// Change the way they should download resources.
 	if(config.resource_urls)
 		src.preload_rsc = pick(config.resource_urls)
@@ -221,6 +222,9 @@ var/list/blacklisted_builds = list(
 
 	clients += src
 	directory[ckey] = src
+
+	// Instantiate tgui panel
+	tgui_panel = new(src)
 
 	global.ahelp_tickets?.ClientLogin(src)
 
@@ -277,8 +281,8 @@ var/list/blacklisted_builds = list(
 	if(SSinput.initialized)
 		set_macros()
 
-	spawn() // Goonchat does some non-instant checks in start()
-		chatOutput.start()
+	// Initialize tgui panel
+	tgui_panel.initialize()
 
 	connection_time = world.time
 
@@ -318,7 +322,7 @@ var/list/blacklisted_builds = list(
 
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
-		winset(src, "rpane.changelog", "font-style=bold;background-color=#B1E477")
+		winset(src, "rpane.changelog", "font-style=bold")
 
 		//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
@@ -334,6 +338,8 @@ var/list/blacklisted_builds = list(
 		to_chat(src, "<span class='warning'>Unable to access asset cache browser, \
 		if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. \
 		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
+
+	handle_connect()
 
 	spawn(50)//should wait for goonchat initialization
 		handle_autokick_reasons()
@@ -356,9 +362,13 @@ var/list/blacklisted_builds = list(
 	mentors -= src
 	clients -= src
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
-	if(movingmob != null)
-		movingmob.client_mobs_in_contents -= mob
-		UNSETEMPTY(movingmob.client_mobs_in_contents)
+	LAZYREMOVE(movingmob?.clients_in_contents, src)
+
+	handle_leave()
+
+	if(!gc_destroyed) //Clean up signals and timers.
+		Destroy()
+
 	return ..()
 
 /client/proc/handle_autokick_reasons()
@@ -656,7 +666,9 @@ var/list/blacklisted_builds = list(
 			screen |= O
 		O.appearance = MA
 		O.set_dir(D)
-		O.underlays += image('icons/turf/floors.dmi', "floor")
+		var/image/floor = image('icons/turf/floors.dmi', icon_state="floor")
+		floor.appearance_flags |= KEEP_APART
+		O.underlays += floor
 		O.screen_loc = "character_preview_map:0,[pos]"
 
 /client/proc/clear_character_previews()
@@ -731,6 +743,9 @@ var/list/blacklisted_builds = list(
 				if("Me")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=me")
 					communication_hotkeys += key
+				if("LOOC")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=looc")
+					communication_hotkeys += key
 
 	// winget() does not work for F1 and F2
 	for(var/key in communication_hotkeys)
@@ -767,9 +782,37 @@ var/list/blacklisted_builds = list(
 #undef MAXIMAZED
 #undef FULLSCREEN
 
+// ckey = datum/stat/leave_stat
+var/global/list/disconnected_ckey_by_stat = list()
+/client/proc/handle_connect()
+	if(!global.disconnected_ckey_by_stat[ckey])
+		return
+	var/datum/stat/leave_stat/stat = global.disconnected_ckey_by_stat[ckey]
+	qdel(stat)
+	global.disconnected_ckey_by_stat -= ckey
+
+/client/proc/handle_leave()
+	if(!isliving(mob) || !mob.mind)
+		return
+	if(istype(mob.loc, /obj/machinery/cryopod))
+		return
+	var/datum/stat/leave_stat/stat = SSStatistics.get_leave_stat(mob.mind, "Disconnected", roundduration2text())
+
+	global.disconnected_ckey_by_stat[ckey] = stat
+
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
 
 	view = new_size
 	mob.reload_fullscreen()
+
+/client/proc/open_filter_editor(atom/in_atom)
+	if(holder)
+		holder.filteriffic = new /datum/filter_editor(in_atom)
+		holder.filteriffic.tgui_interact(mob)
+
+/client/proc/open_particles_editor(atom/in_atom)
+	if(holder)
+		holder.particool = new /datum/particle_editor(in_atom)
+		holder.particool.tgui_interact(mob)

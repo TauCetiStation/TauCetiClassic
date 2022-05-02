@@ -18,6 +18,9 @@
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 	var/list/atom/hallucinations = list() //A list of hallucinated people that try to attack the mob. See /obj/effect/fake_attacker in hallucinations.dm
 
+	// Holly, we're drunk.
+	// Should this be in organ/liver ? ~Luduk
+	var/drunkenness = 0
 
 	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 
@@ -71,3 +74,5 @@
 
 	var/beauty_living = 0.0
 	var/beauty_dead = -100.0
+
+	var/list/spawner_args = null

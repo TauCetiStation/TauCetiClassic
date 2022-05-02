@@ -103,7 +103,7 @@
 	item_state = "engineering_tool"
 
 	storage_slots = 3
-	max_w_class = SIZE_TINY
+	max_w_class = SIZE_SMALL
 
 	can_hold = list(
 		/obj/item/weapon/crowbar,

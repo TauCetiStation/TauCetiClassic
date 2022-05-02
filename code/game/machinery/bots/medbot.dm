@@ -70,6 +70,7 @@
 	else
 		botcard.access = botcard_access
 	icon_state = "medibot[on]"
+	add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/bot/medbot/turn_on()
@@ -339,11 +340,10 @@
 		return 1
 
 	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
-	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
+	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getFireLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
 		for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
-			if(!C.reagents.has_reagent(R))
+			if(!C.reagents.has_reagent(R.id))
 				return 1
-			continue
 
 	//They're injured enough for it!
 	if((C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute)))
@@ -393,7 +393,10 @@
 
 	//Use whatever is inside the loaded beaker. If there is one.
 	if((use_beaker) && (reagent_glass) && (reagent_glass.reagents.total_volume))
-		reagent_id = "internal_beaker"
+		for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
+			if(!C.reagents.has_reagent(R.id))
+				reagent_id = "internal_beaker"
+				break
 
 	if(emagged == 2) //Emagged! Time to poison everybody.
 		reagent_id = "toxin"
@@ -497,7 +500,7 @@
 		if(!istype(D, /obj/machinery/door/firedoor) && D.check_access(botcard) && !istype(D,/obj/machinery/door/poddoor))
 			D.open()
 			frustration = 0
-	else if((istype(M, /mob/living)) && (!anchored))
+	else if((isliving(M)) && (!anchored))
 		loc = M.loc
 		frustration = 0
 	return

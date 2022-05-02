@@ -120,7 +120,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 /obj/item/stack/sheet/plasteel
 	name = "plasteel"
 	singular_name = "plasteel sheet"
-	desc = "This sheet is an alloy of iron and phoron."
+	desc = "This sheet is an alloy of steel and platinum."
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
 	m_amt = 7500
@@ -145,8 +145,8 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("wooden chair", /obj/structure/stool/bed/chair/wood/normal, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("bonfire", /obj/structure/bonfire/dynamic, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE, floor_path = list(/turf/simulated/floor, /turf/environment/snow)), \
 	new/datum/stack_recipe("wooden noticeboard", /obj/item/noticeboard_frame/wood, 10, time = 20, on_floor = TRUE), \
-	new/datum/stack_recipe("bonfire", /obj/structure/bonfire/dynamic, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("wooden picture frame", /obj/item/weapon/picture_frame/wooden, 1, time = 15)
 //	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, one_per_turf = FALSE, on_floor = FALSE)
@@ -199,6 +199,10 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 		new/datum/stack_recipe("red folder", /obj/item/weapon/folder/red), \
 		new/datum/stack_recipe("white folder", /obj/item/weapon/folder/white), \
 		new/datum/stack_recipe("yellow folder", /obj/item/weapon/folder/yellow), \
+		new/datum/stack_recipe("green folder", /obj/item/weapon/folder/green), \
+		new/datum/stack_recipe("brown folder", /obj/item/weapon/folder/brown), \
+		new/datum/stack_recipe("pink folder", /obj/item/weapon/folder/pink), \
+		new/datum/stack_recipe("purple folder", /obj/item/weapon/folder/purple), \
 		)) \
 )
 

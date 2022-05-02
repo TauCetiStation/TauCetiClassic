@@ -11,7 +11,11 @@
 	if(BP.species && BP.species.bodypart_butcher_results)
 		BP.butcher_results = BP.species.bodypart_butcher_results.Copy()
 	else if(bodypart_type == BODYPART_ORGANIC)
-		BP.butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 1)
+		var/meat_amount = 1
+		meat_amount += round(BP.pumped / 10)
+		if(HAS_TRAIT(BP.owner, TRAIT_FAT)) //fat guys are meaty
+			meat_amount += 2
+		BP.butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = meat_amount)
 	else if(bodypart_type == BODYPART_ROBOTIC)
 		BP.butcher_results = list(/obj/item/stack/sheet/plasteel = 1)
 
@@ -19,12 +23,37 @@
 	BP = null
 	return ..()
 
+/datum/bodypart_controller/proc/adjust_pumped(value, cap=null)
+	// TO-DO: either give other species different limb types, or add some HAS_MUSCLES specie flag.
+	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL, VOX)))
+		return 0
+
+	if(isnull(cap))
+		cap = BP.max_pumped
+	if(BP.pumped >= cap)
+		return 0
+
+	var/old_pumped = BP.pumped
+	BP.pumped = min(BP.pumped + value, cap)
+	BP.update_sprite()
+
+	if(BP.pumped <= 0 && old_pumped > 0)
+		BP.owner.metabolism_factor.RemoveModifier("Pumped_[BP.name]")
+	else
+		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.002 * BP.pumped)
+
+	return BP.pumped - old_pumped
+
 /datum/bodypart_controller/proc/is_damageable(additional_damage = 0)
 	//Continued damage to vital organs can kill you
 	return (BP.vital || BP.brute_dam + BP.burn_dam + additional_damage < BP.max_damage)
 
 /datum/bodypart_controller/proc/emp_act(severity)
 	return // meatbags do not care about EMP
+
+
+/mob/living/carbon/human
+	var/next_autoheal_allowed = 0 // turns off autoheal on damage for period of time
 
 // Paincrit knocks someone down once they hit 60 shock_stage, so by default make it so that close to 100 additional damage needs to be dealt,
 // so that it's similar to PAIN. Lowered it a bit since hitting paincrit takes much longer to wear off than a halloss stun.
@@ -41,6 +70,8 @@
 
 	if(BP.is_stump)
 		return 0
+
+	BP.owner.next_autoheal_allowed = world.time + 5 SECONDS
 
 	var/sharp = (damage_flags & DAM_SHARP)
 	var/edge  = (damage_flags & DAM_EDGE)
@@ -167,7 +198,7 @@
 			//Check edge eligibility
 			var/edge_eligible = 0
 			if(edge)
-				if(istype(used_weapon, /obj/item))
+				if(isitem(used_weapon))
 					var/obj/item/W = used_weapon
 					if(W.w_class >= BP.w_class)
 						edge_eligible = 1
@@ -468,6 +499,32 @@ Note that amputating the affected organ does in fact remove the infection from t
 		BP.germ_level++
 		BP.owner.adjustToxLoss(1)
 
+/datum/bodypart_controller/proc/try_autoheal(datum/wound/W)
+	// if damage >= 50 AFTER treatment then it's probably too severe to heal within the timeframe of a round.
+	if (!W.can_autoheal() || W.wound_damage() >= 50)
+		return
+
+	// slow healing
+	var/heal_amt = 0.5
+	var/mob/living/carbon/H = BP.owner
+	if(H.IsSleeping())
+		if(istype(H.buckled, /obj/structure/stool/bed))
+			heal_amt += 0.2
+		else if((locate(/obj/structure/table) in H.loc))
+			heal_amt += 0.1
+		if((locate(/obj/item/weapon/bedsheet) in H.loc))
+			heal_amt += 0.1
+
+	//we only update wounds once in [wound_update_accuracy] ticks so have to emulate realtime
+	heal_amt = heal_amt * BP.wound_update_accuracy
+	//configurable regen speed woo, no-regen hardcore or instaheal hugbox, choose your destiny
+	heal_amt = heal_amt * config.organ_regeneration_multiplier
+	// amount of healing is spread over all the wounds
+	heal_amt = heal_amt / BP.wounds.len
+	// making it look prettier on scanners
+	heal_amt = round(heal_amt, 0.1)
+	W.heal_damage(heal_amt)
+
 //Updating wounds. Handles wound natural I had some free spachealing, internal bleedings and infections
 /datum/bodypart_controller/proc/update_wounds()
 	for(var/datum/wound/W in BP.wounds)
@@ -477,30 +534,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 			continue
 			// let the GC handle the deletion of the wound
 
-		// slow healing
-		var/heal_amt = 0
-
-		// if damage >= 50 AFTER treatment then it's probably too severe to heal within the timeframe of a round.
-		if (W.can_autoheal() && W.wound_damage() < 50)
-			heal_amt += 0.5
-			var/mob/living/carbon/H = BP.owner
-			if(H.IsSleeping())
-				if(istype(H.buckled, /obj/structure/stool/bed))
-					heal_amt += 0.2
-				else if((locate(/obj/structure/table) in H.loc))
-					heal_amt += 0.1
-				if((locate(/obj/item/weapon/bedsheet) in H.loc))
-					heal_amt += 0.1
-
-		//we only update wounds once in [wound_update_accuracy] ticks so have to emulate realtime
-		heal_amt = heal_amt * BP.wound_update_accuracy
-		//configurable regen speed woo, no-regen hardcore or instaheal hugbox, choose your destiny
-		heal_amt = heal_amt * config.organ_regeneration_multiplier
-		// amount of healing is spread over all the wounds
-		heal_amt = heal_amt / (BP.wounds.len + 1)
-		// making it look prettier on scanners
-		heal_amt = round(heal_amt,0.1)
-		W.heal_damage(heal_amt)
+		if(world.time >= BP.owner.next_autoheal_allowed)
+			try_autoheal(W)
 
 		// Salving also helps against infection
 		if(W.germ_level > 0 && W.salved && prob(2))
@@ -557,7 +592,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return FALSE
 
 /datum/bodypart_controller/proc/fracture()
-	if(BP.owner.dna && BP.owner.dna.mutantrace == "adamantine")
+	if(BP.species == GOLEM)
 		return
 
 	if(BP.status & ORGAN_BROKEN)
@@ -586,7 +621,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	// This is mostly for the ninja suit to stop ninja being so crippled by breaks.
 	// TODO: consider moving this to a suit proc or process() or something during
 	// hardsuit rewrite.
-	if(!(BP.status & ORGAN_SPLINTED) && istype(BP.owner,/mob/living/carbon/human))
+	if(!(BP.status & ORGAN_SPLINTED) && ishuman(BP.owner))
 
 		var/mob/living/carbon/human/H = BP.owner
 

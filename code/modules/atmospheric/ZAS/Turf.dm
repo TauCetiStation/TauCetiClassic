@@ -4,6 +4,12 @@
 /turf/var/needs_air_update = FALSE
 /turf/var/datum/gas_mixture/air
 
+/turf/var/air_unsim_multiplier = 0
+/turf/environment/snow/air_unsim_multiplier = 45 // speeds up zone air equalization process with snow turfs
+#ifdef ZASDBG
+/turf/var/verbose = FALSE
+#endif
+
 /turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
 	if(graphic_add && graphic_add.len)
 		vis_contents += graphic_add
@@ -91,7 +97,6 @@
 				. |= dir
 
 /turf/simulated/update_air_properties()
-
 	if(zone && zone.invalid) //this turf's zone is in the process of being rebuilt
 		c_copy_air() //not very efficient :(
 		zone = null //Easier than iterating through the list at the zone.
@@ -305,11 +310,12 @@
 		return air
 
 /turf/proc/make_air()
-	air = new/datum/gas_mixture
-	air.temperature = temperature
-	air.adjust_multi("oxygen", oxygen, "carbon_dioxide", carbon_dioxide, "nitrogen", nitrogen, "phoron", phoron)
-	air.group_multiplier = 1
-	air.volume = CELL_VOLUME
+	air = new
+	if(airless)
+		air.copy_from(SSenvironment.air[z])
+	else
+		air.temperature = temperature
+		air.adjust_multi("oxygen", oxygen, "carbon_dioxide", carbon_dioxide, "nitrogen", nitrogen, "phoron", phoron)
 
 /turf/simulated/proc/c_copy_air()
 	if(!air)

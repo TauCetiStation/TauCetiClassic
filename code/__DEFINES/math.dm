@@ -10,7 +10,7 @@
 //percent_of_tick_used * (ticklag * 100(to convert to ms)) / 100(percent ratio)
 //collapsed to percent_of_tick_used * tick_lag
 #define TICK_DELTA_TO_MS(percent_of_tick_used) ((percent_of_tick_used) * world.tick_lag)
-#define TICK_USAGE_TO_MS(starting_tickusage) (TICK_DELTA_TO_MS(world.tick_usage-starting_tickusage))
+#define TICK_USAGE_TO_MS(starting_tickusage) (TICK_DELTA_TO_MS(TICK_USAGE_REAL - starting_tickusage))
 
 //time of day but automatically adjusts to the server going into the next day within the same round.
 //for when you need a reliable time number that doesn't depend on byond time.
@@ -147,7 +147,7 @@
 		gaussian_next = R2 * working
 	return (mean + stddev * R1)
 
-var/normal_next
+var/global/normal_next
 /proc/NormalDistr(mean = 0, stddev = 1) //because gaussian() looks... strange. This is Box-Muller transform
 	if(normal_next != null)
 		. = mean + normal_next * stddev
@@ -213,3 +213,6 @@ var/normal_next
 
 // Linear conversion from range of [minx, maxx] to [miny, maxy] regarding the value x. Clamps excesses.
 #define TRANSLATE_RANGE(x, minx, maxx, miny, maxy) clamp(((x - minx) * (maxy - miny) / (maxx - minx)) + miny, miny, maxy)
+
+//A parabola y = multiplier*x^2 + pike
+#define PARABOLIC_SCALING(x, pike, multiplier) (pike + multiplier * (x ** 2))

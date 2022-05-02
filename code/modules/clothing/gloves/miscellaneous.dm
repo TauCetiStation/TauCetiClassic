@@ -3,7 +3,6 @@
 	name = "captain's gloves"
 	icon_state = "captain"
 	item_state = "egloves"
-	item_color = "captain"
 	cold_protection = ARMS
 	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = ARMS
@@ -17,7 +16,7 @@
 	siemens_coefficient = 1.0
 
 /obj/item/clothing/gloves/swat
-	desc = "These tactical gloves are somewhat fire and impact-resistant."
+	desc = "These tactical gloves are fire-resistant."
 	name = "SWAT Gloves"
 	icon_state = "black"
 	item_state = "swat_gl"
@@ -48,7 +47,6 @@
 	item_state = "lgloves"
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
-	item_color = "mime"
 	germ_level = 0
 
 /obj/item/clothing/gloves/latex/nitrile
@@ -56,7 +54,6 @@
 	desc = "Sterile nitrile gloves"
 	icon_state = "nitrile"
 	item_state = "ngloves"
-	item_color = "cyan"
 
 /obj/item/clothing/gloves/botanic_leather
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
@@ -67,10 +64,10 @@
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/gloves/security														//Sec gloves
-	desc = "Heavily padded heavy-duty red security gloves."
+	desc = "Heavily padded heavy-duty black security gloves."
 	name = "security gloves"
-	icon_state = "security_red"
-	item_state = "security_red"
+	icon_state = "security_black"
+	item_state = "security_black"
 	siemens_coefficient = 0.5
 	permeability_coefficient = 0.04
 	cold_protection = ARMS
@@ -83,55 +80,55 @@
 	name = "black fingerless gloves"
 	icon_state = "fingerless_black"
 	item_state = "fingerless_black"
-	item_color="black"
 	species_restricted = list("exclude", VOX_ARMALIS)
 	species_restricted_locked = FALSE
 	clipped = TRUE
+
+	dyed_type = DYED_FINGERLESS_GLOVES
 
 /obj/item/clothing/gloves/fingerless/red
 	name = "red fingerless gloves"
 	icon_state = "fingerless_red"
 	item_state = "fingerless_red"
-	item_color = "red"
 
 /obj/item/clothing/gloves/fingerless/orange
 	name = "orange fingerless gloves"
 	icon_state = "fingerless_orange"
 	item_state = "fingerless_orange"
-	item_color = "orange"
 
 /obj/item/clothing/gloves/fingerless/green
 	name = "green fingerless gloves"
 	icon_state = "fingerless_green"
 	item_state = "fingerless_green"
-	item_color = "green"
 
 /obj/item/clothing/gloves/fingerless/blue
 	name = "blue fingerless gloves"
 	icon_state = "fingerless_blue"
 	item_state = "fingerless_blue"
-	item_color = "blue"
 
 /obj/item/clothing/gloves/fingerless/purple
 	name = "purple fingerless gloves"
 	icon_state = "fingerless_purple"
 	item_state = "fingerless_purple"
-	item_color = "purple"
 
 /obj/item/clothing/gloves/fingerless/yellow
 	name = "yellow fingerless gloves"
 	icon_state = "fingerless_yellow"
 	item_state = "fingerless_yellow"
-	item_color = "yellow"
 
 /obj/item/clothing/gloves/fingerless/rainbow
 	name = "rainbow fingerless gloves"
 	icon_state = "fingerless_rainbow"
 	item_state = "fingerless_rainbow"
-	item_color = "rainbow"
 
 /obj/item/clothing/gloves/security/marinad
 	desc = "These were made to hold a full automatic gun."
 	name = "marine gloves"
 	icon_state = "marinad"
 	item_state = "bgloves"
+
+/obj/item/clothing/gloves/left
+	name = "left black glove"
+	desc = "The left one of a pair of black gloves. Wonder where the other one went..."
+	icon_state = "left_glove"
+	item_state = "left_glove"

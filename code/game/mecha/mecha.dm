@@ -554,22 +554,17 @@
 		severity++
 		log_append_to_last("Armor saved, changing severity to [severity].")
 	switch(severity)
-		if(1.0)
-			destroy()
-		if(2.0)
-			if (prob(30))
-				destroy()
-			else
+		if(EXPLODE_HEAVY)
+			if(prob(70))
 				take_damage(initial(src.health)/2)
 				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
-		if(3.0)
-			if (prob(5))
-				destroy()
-			else
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(95))
 				take_damage(initial(src.health)/5)
 				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
-	return
-
+				return
+	destroy()
 
 /obj/mecha/blob_act()
 	take_damage(10, "brute")
@@ -612,7 +607,7 @@
 
 /obj/mecha/attackby(obj/item/weapon/W, mob/user)
 
-	if(istype(W, /obj/item/device/mmi) || istype(W, /obj/item/device/mmi/posibrain))
+	if(isMMI(W))
 		if(mmi_move_inside(W,user))
 			to_chat(user, "[src]-MMI interface initialized successfuly")
 		else
@@ -719,32 +714,6 @@
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
 		return
 
-	else if(istype(W, /obj/item/weapon/paintkit))
-
-		if(occupant)
-			to_chat(user, "You can't customize a mech while someone is piloting it - that would be unsafe!")
-			return
-
-		var/obj/item/weapon/paintkit/P = W
-		var/found = null
-
-		for(var/type in P.allowed_types)
-			if(type==src.initial_icon)
-				found = 1
-				break
-
-		if(!found)
-			to_chat(user, "That kit isn't meant for use on this class of exosuit.")
-			return
-
-		user.visible_message("[user] opens [P] and spends some quality time customising [src].")
-
-		src.name = P.new_name
-		src.desc = P.new_desc
-		src.initial_icon = P.new_icon
-		reset_icon()
-
-		qdel(P)
 	else if(istype(W, /obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/Ham = W
 		user.do_attack_animation(src)
@@ -1040,7 +1009,7 @@
 	if(ishuman(occupant))
 		mob_container = src.occupant
 		RemoveActions(occupant, human_occupant = 1)
-	else if(istype(occupant, /mob/living/carbon/brain))
+	else if(isbrain(occupant))
 		var/mob/living/carbon/brain/brain = occupant
 		RemoveActions(brain)
 		mob_container = brain.container
@@ -1054,10 +1023,10 @@
 		occupant.reset_view()
 
 		src.occupant << browse(null, "window=exosuit")
-		if(src.occupant.hud_used && src.last_user_hud && !istype(mob_container, /obj/item/device/mmi))
+		if(src.occupant.hud_used && src.last_user_hud && !isMMI(mob_container))
 			occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
 
-		if(istype(mob_container, /obj/item/device/mmi))
+		if(isMMI(mob_container))
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
 				occupant.loc = mmi

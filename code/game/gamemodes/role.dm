@@ -34,6 +34,9 @@
 	// Allows you to change the number of greeting messages for a role
 	var/list/greets = list(GREET_DEFAULT, GREET_CUSTOM)
 
+	// Type for collector of statistics by this role
+	var/datum/stat/role/stat_type = /datum/stat/role
+
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -50,6 +53,10 @@
 
 	objectives.owner = M
 	..()
+
+/datum/role/Destroy(force, ...)
+	QDEL_NULL(objectives)
+	return ..()
 
 /datum/role/proc/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
 	if(!istype(M) && !override)
@@ -71,7 +78,15 @@
 
 	return TRUE
 
-/datum/role/proc/RemoveFromRole(datum/mind/M, msg_admins = TRUE) //Called on deconvert
+/datum/role/proc/Deconvert()
+	if(!deconverted_roles[id])
+		deconverted_roles[id] = list()
+
+	deconverted_roles[id] += antag.name
+	Drop()
+
+// if role has been deconverts use Deconvert()
+/datum/role/proc/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
@@ -186,6 +201,13 @@
 		return O
 	return null
 
+/datum/role/proc/GetObjectives()
+	return objectives.GetObjectives()
+
+/datum/role/proc/calculate_completion()
+	for(var/datum/objective/O in GetObjectives())
+		O.calculate_completion()
+
 /datum/role/proc/get_logo_icon(custom)
 	if(custom)
 		return icon('icons/misc/logos.dmi', custom)
@@ -195,7 +217,7 @@
 
 /datum/role/proc/AdminPanelEntry(show_logo = FALSE, datum/mind/mind)
 	var/icon/logo = get_logo_icon()
-	var/mob/M = antag?.current
+	var/mob/M = antag.current
 	if (M)
 		return {"[show_logo ? "[bicon(logo, css = "style='position:relative; top:10;'")] " : "" ]
 	[name] <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]/[M.key]</a>[M.client ? "" : " <i> - (logged out)</i>"][M.stat == DEAD ? " <b><font color=red> - (DEAD)</font></b>" : ""]
@@ -235,7 +257,7 @@
 /datum/role/proc/IsSuccessful()
 	if(objectives.objectives.len > 0)
 		for (var/datum/objective/objective in objectives.GetObjectives())
-			if(!objective.check_completion())
+			if(objective.completed == OBJECTIVE_LOSS)
 				return FALSE
 	return TRUE
 
@@ -248,7 +270,7 @@
 	else
 		var/icon/flat = getFlatIcon(M, SOUTH, exact = 1)
 		if(M.stat == DEAD)
-			if (!istype(M, /mob/living/carbon/brain))
+			if (isbrain(M))
 				flat.Turn(90)
 			var/icon/ded = icon('icons/effects/blood.dmi', "floor_old")
 			ded.Blend(flat, ICON_OVERLAY)
@@ -277,21 +299,15 @@
 	var/win = TRUE
 	var/text = ""
 
-	if(!antag)
-		text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
-		win = FALSE
-		return text
-
 	text = printplayerwithicon(antag)
 
 	if(objectives.objectives.len > 0)
 		var/count = 1
 		text += "<ul>"
 		for(var/datum/objective/objective in objectives.GetObjectives())
-			var/successful = objective.calculate_completion()
 			text += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
 			feedback_add_details("[id]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
-			if(!successful) //If one objective fails, then you did not win.
+			if(objective.completed == OBJECTIVE_LOSS) //If one objective fails, then you did not win.
 				win = FALSE
 			if (count < objectives.objectives.len)
 				text += "<br>"
@@ -300,13 +316,11 @@
 			if(win)
 				text += "<br><font color='green'><B>\The [name] was successful!</B></font>"
 				feedback_add_details("[id]_success","SUCCESS")
-				score["roleswon"]++
+				SSStatistics.score.roleswon++
 			else
 				text += "<br><font color='red'><B>\The [name] has failed.</B></font>"
 				feedback_add_details("[id]_success","FAIL")
 		text += "</ul>"
-
-	antagonists_completion += list(list("role" = id, "html" = text))
 
 	return text
 
@@ -388,7 +402,7 @@
 			O.ShuttleDocked(state)
 
 /datum/role/proc/AnnounceObjectives()
-	if(!antag || !antag.current)
+	if(!antag.current)
 		return
 
 	var/text = ""

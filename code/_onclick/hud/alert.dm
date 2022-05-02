@@ -2,7 +2,7 @@
 	if (!user)
 		user = usr
 	if (!istype(user))
-		if (istype(user, /client))
+		if (isclient(user))
 			var/client/client = user
 			user = client.mob
 		else
@@ -30,7 +30,7 @@
 	if (!user)
 		user = usr
 	if (!istype(user))
-		if (!istype(user, /client))
+		if (!isclient(user))
 			return
 		var/client/client = user
 		user = client.mob
@@ -226,15 +226,16 @@
 /mob/proc/clear_alert(category, clear_override = FALSE)
 	var/atom/movable/screen/alert/alert = alerts[category]
 	if(!alert)
-		return 0
+		return FALSE
 	if(alert.override_alerts && !clear_override)
-		return 0
+		return FALSE
 
 	alerts -= category
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
 		client.screen -= alert
 	qdel(alert)
+	return TRUE
 
 /atom/movable/screen/alert
 	icon = 'icons/mob/screen_alert.dmi'
@@ -406,6 +407,11 @@
 	desc = "Hazardous non-standard equipment detected. Please ensure any usage of this equipment is in line with unit's laws, if any."
 	icon_state = "hacked"
 
+/atom/movable/screen/alert/not_locked
+	name = "Interface Unlocked"
+	desc = "Unit's interface has been unlocked. Somebody accidentally or intentionally left it open. Robotics may provide assistance."
+	icon_state = "not_locked"
+
 /atom/movable/screen/alert/locked
 	name = "Locked Down"
 	desc = "Unit has remotely locked down. Usage of a Robotics Control Computer like the one in the Research Director's \
@@ -443,7 +449,7 @@
 	if(!hud_shown)
 		for(var/i = 1, i <= alerts.len, i++)
 			mymob.client.screen -= alerts[alerts[i]]
-		return 1
+		return TRUE
 	for(var/i = 1, i <= alerts.len, i++)
 		var/atom/movable/screen/alert/alert = alerts[alerts[i]]
 		if(alert.icon_state == "template")
@@ -463,7 +469,7 @@
 				. = ""
 		alert.screen_loc = .
 		mymob.client.screen |= alert
-	return 1
+	return TRUE
 
 /mob
 	var/list/alerts = list() // contains /atom/movable/screen/alert only // On /mob so clientless mobs will throw alerts properly

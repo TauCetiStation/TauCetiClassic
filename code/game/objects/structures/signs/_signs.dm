@@ -22,7 +22,7 @@
 			playsound(src, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] unfastens [src].</span>",
 								 "<span class='notice'>You unfasten [src].</span>")
-			var/obj/item/sign_backing/SB = new (get_turf(user))
+			var/obj/item/sign_backing/SB = new (get_turf(src))
 			SB.icon_state = icon_state
 			SB.sign_path = type
 			qdel(src)

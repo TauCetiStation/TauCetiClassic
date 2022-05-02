@@ -52,6 +52,27 @@
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
 	new /obj/item/device/healthanalyzer(src)
 
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/psyops
+	name = "psyops small kit"
+	icon_state = "first_aid_kit_com"
+	desc = "A small kit of auto injectors with drugs. Like the real deal drugs."
+	max_w_class = SIZE_TINY
+	w_class = SIZE_TINY
+
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/psyops/atom_init()
+	. = ..()
+
+	if (empty)
+		return
+
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/nuka_cola(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/hippiesdelight(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/lean(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/space_drugs(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/nuka_cola(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/hippiesdelight(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/lean(src)
+
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space
 	name = "Space first-aid small kit"
 	icon_state = "first_aid_kit_sp"

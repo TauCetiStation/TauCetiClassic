@@ -26,7 +26,7 @@
 	return get_uristrune(bits, animated)
 
 
-var/list/uristrune_cache = list()
+var/global/list/uristrune_cache = list()
 
 /proc/get_uristrune(symbol_bits, animated = 0)
 	var/lookup = "[symbol_bits]-[animated]"

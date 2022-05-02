@@ -30,6 +30,8 @@
 #define ANTAG_HUD			"antag"
 // Implant of mindshield
 #define IMPMINDS_HUD		"impminds"
+// Obedience implant
+#define IMPOBED_HUD			"impobed"
 // Broken glasses hud
 #define BROKEN_HUD			"broken"
 // Mineral hud

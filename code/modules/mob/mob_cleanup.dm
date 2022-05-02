@@ -112,12 +112,12 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 
 	var/target_zone = pick(head_ch;1,body_ch;2,hands_ch;3,feet_ch;4)//1 - head, 2 - body, 3 - hands, 4- feet
 
-	if(istype(src, /mob/living/carbon/human))
+	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 
 		switch(target_zone)
 			if(1)
-				if(isobj(H.head) && !istype(H.head, /obj/item/weapon/paper))
+				if(istype(H.head))
 					Cl = H.head
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(H.wear_mask))
@@ -156,7 +156,7 @@ Put (mob/proc)s here that are in dire need of a code cleanup.
 					//
 					to_chat(world, "Shoes pass [passed]")
 			*/		//
-	else if(istype(src, /mob/living/carbon/monkey))
+	else if(ismonkey(src))
 		var/mob/living/carbon/monkey/M = src
 		switch(target_zone)
 			if(1)

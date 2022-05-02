@@ -252,9 +252,14 @@
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
 	if(!istype(W))
 		return FALSE
+
+	if(SEND_SIGNAL(src, COMSIG_STORAGE_ENTERED, W, prevent_warning, NoUpdate) & COMSIG_STORAGE_PROHIBIT)
+		return
+
 	if(usr)
 		usr.remove_from_mob(W)
 		usr.update_icons()	//update our overlays
+
 	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
@@ -300,12 +305,13 @@
 	if(storage_ui)
 		storage_ui.on_pre_remove(usr, W)
 
+	SEND_SIGNAL(src, COMSIG_STORAGE_EXITED, W, new_location, NoUpdate)
+
 	if(new_location)
 		if(ismob(loc))
 			var/mob/M = loc
 			W.dropped(M)
 		if(ismob(new_location))
-			W.layer = ABOVE_HUD_LAYER
 			W.plane = ABOVE_HUD_PLANE
 		else
 			W.layer = initial(W.layer)
@@ -409,7 +415,7 @@
 	finish_bulk_removal()
 
 /obj/item/weapon/storage/emp_act(severity)
-	if(!istype(src.loc, /mob/living))
+	if(!isliving(src.loc))
 		for(var/obj/O in contents)
 			O.emplode(severity)
 	..()

@@ -54,25 +54,21 @@
 
 /obj/structure/bookcase/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			for(var/obj/item/weapon/book/b in contents)
 				qdel(b)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			for(var/obj/item/weapon/book/b in contents)
-				if (prob(50)) b.loc = (get_turf(src))
-				else qdel(b)
-			qdel(src)
-			return
-		if(3.0)
-			if (prob(50))
-				for(var/obj/item/weapon/book/b in contents)
+				if(prob(50))
 					b.loc = (get_turf(src))
-				qdel(src)
-			return
-		else
-	return
+				else
+					qdel(b)
+		if(EXPLODE_LIGHT)
+			if(prob(50))
+				return
+			for(var/obj/item/weapon/book/b in contents)
+				b.loc = (get_turf(src))
+	qdel(src)
 
 /obj/structure/bookcase/update_icon()
 	if(contents.len < 5)
@@ -159,6 +155,8 @@
 	var/window_height
 	var/obj/item/store	//What's in the book?
 
+	var/free_space = MAX_BOOK_MESSAGE_LEN
+
 /obj/item/weapon/book/attack_self(mob/user)
 	if(carved)
 		if(store)
@@ -170,9 +168,17 @@
 			to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 			return
 	if(src.dat)
-		var/datum/browser/popup = new(user, "book", null, window_width, window_height, ntheme = CSS_THEME_LIGHT)
-		popup.set_content("<TT><I>Penned by [author].</I></TT> <BR>[dat]")
-		popup.open()
+		if(istype(src, /obj/item/weapon/book/manual/wiki)) // wiki books has own styling so no browser/popup
+			var/window_size
+			if(window_width && window_height)
+				window_size = "[window_width]x[window_height]"
+			//<TT><I>Penned by [author].</I></TT> <BR> // <- no place for "penned"
+			user << browse(dat, "window=book[window_size != null ? ";size=[window_size]" : ""]")
+		else
+			//var/datum/browser/popup = new(user, "book", null, window_width, window_height, ntheme = CSS_THEME_LIGHT)
+			var/datum/browser/popup = new(user, "book", "Penned by [author].", window_width, window_height, ntheme = CSS_THEME_LIGHT)
+			popup.set_content(dat)
+			popup.open()
 
 		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
 	else
@@ -208,12 +214,13 @@
 					src.name = newtitle
 					src.title = newtitle
 			if("Contents")
-				var/content = sanitize(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null, MAX_BOOK_MESSAGE_LEN)
+				var/content = sanitize(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null, free_space)
 				if(!content)
 					to_chat(usr, "The content is invalid.")
 					return
 				else
-					src.dat += content//infiniti books?
+					free_space -= length(content)
+					src.dat += content
 			if("Author")
 				var/newauthor = sanitize(input(usr, "Write the author's name:"), MAX_NAME_LEN)
 				if(!newauthor)
@@ -305,9 +312,9 @@
 			modedesc = "Scan book to local buffer, attempt to add book to general inventory."
 		else
 			modedesc = "ERROR!"
-	to_chat(user, " - Mode [mode] : [modedesc]")
+	var/msg = " - Mode [mode] : [modedesc]"
 	if(src.computer)
-		to_chat(user, "<font color=green>Computer has been associated with this unit.</font>")
+		msg += "<br><font color=green>Computer has been associated with this unit.</font>"
 	else
-		to_chat(user, "<font color=red>No associated computer found. Only local scans will function properly.</font>")
-	to_chat(user, "\n")
+		msg += "<br><font color=red>No associated computer found. Only local scans will function properly.</font>"
+	to_chat(user, "[msg]<br>")

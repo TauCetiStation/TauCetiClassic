@@ -27,25 +27,56 @@
 	holder_type = /obj/item/weapon/holder/diona
 	blood_datum = /datum/dirt_cover/green_blood
 
+	var/list/saved_quirks
+
+/mob/living/carbon/monkey/diona/podman
+	name = "podkid"
+	voice_name = "podkid"
+	icon_state = "podkid1"
+	race = PODMAN
+	holder_type = /obj/item/weapon/holder/diona/podkid
+
+	spawner_args = list(/datum/spawner/living/podman/podkid, 2 MINUTES)
+
+/mob/living/carbon/monkey/diona/podman/fake
+	name = "diona nymph"
+	voice_name = "diona nymph"
+	icon_state = "nymph1"
+	holder_type = /obj/item/weapon/holder/diona
+
+	spawner_args = list(/datum/spawner/living/podman/fake_nymph, 2 MINUTES)
+
+/mob/living/carbon/monkey/diona/atom_init()
+	. = ..()
+	gender = NEUTER
+	greaterform = DIONA
+	add_language(LANGUAGE_ROOTSPEAK)
+
+/mob/living/carbon/monkey/diona/podman/atom_init()
+	. = ..()
+	greaterform = PODMAN
+	verbs -= /mob/living/carbon/monkey/diona/verb/merge
+	verbs -= /mob/living/carbon/monkey/diona/verb/split
+	verbs -= /mob/living/carbon/monkey/diona/verb/pass_knowledge
+	verbs -= /mob/living/carbon/monkey/diona/verb/synthesize
+
+/mob/living/carbon/monkey/diona/movement_delay(tally = 0)
+	return ..(tally = 3.5)
+
+/mob/living/carbon/monkey/diona/podman/movement_delay(tally = 0)
+	return ..(tally = 0.5)
 
 /mob/living/carbon/monkey/diona/is_facehuggable()
 	return FALSE
 
 /mob/living/carbon/monkey/diona/grabReaction(mob/living/carbon/human/attacker, show_message = TRUE)
-	if(attacker.get_species() == DIONA)
+	if(attacker.get_species() == DIONA && get_species() == DIONA)
 		visible_message("<span class='notice'>[attacker] starts to merge [src] into themselves.</span>","<span class='notice'>You start merging [src] into you.</span>")
 		if(attacker.is_busy() || !do_after(attacker, 4 SECONDS, target = src))
 			return TRUE
 		merging(attacker)
 		return TRUE
 	return ..()
-
-/mob/living/carbon/monkey/diona/atom_init()
-	. = ..()
-	gender = NEUTER
-	dna.mutantrace = "plant"
-	greaterform = DIONA
-	add_language("Rootspeak")
 
 /mob/living/carbon/monkey/diona/proc/merging(mob/living/carbon/human/M)
 	var/count = 0
@@ -215,13 +246,57 @@
 	target.weedlevel = 0
 	visible_message("<span class='warning'>[src] begins rooting through [target], ripping out weeds and eating them noisily.</span>","<span class='warning'>You begin rooting through [target], ripping out weeds and eating them noisily.</span>")
 
+/mob/living/carbon/monkey/diona/proc/evolve_message()
+	visible_message(
+		"<span class='warning'>[src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.</span>",
+		"<span class='warning'>You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.</span>"
+	)
+
+/mob/living/carbon/monkey/diona/podman/evolve_message()
+	visible_message(
+		"<span class='warning'>[src] begins to shift and quiver, and erupts in a shower of shed bark.</span>",
+		"<span class='warning'>You begin to shift and quiver, feeling your go hollow. All at once, we consume our stored nutrients to surge with growth, splitting into shattered remains of nothing. I can never attain my true form.</span>"
+	)
+
+/mob/living/carbon/monkey/diona/proc/evolved_form()
+	evolve_message()
+
+	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
+	adult.set_species(get_species())
+	adult.dna = dna.Clone()
+
+	adult.UpdateAppearance()
+
+	if(istype(loc,/obj/item/weapon/holder/diona))
+		var/obj/item/weapon/holder/diona/L = loc
+		forceMove(L.loc)
+		qdel(L)
+
+	for(var/datum/language/L as anything in languages)
+		adult.add_language(L.name, languages[L])
+
+	for(var/quirk in saved_quirks)
+		new quirk(adult)
+
+	adult.regenerate_icons()
+
+	adult.name = name
+	adult.real_name = adult.name
+
+	if(mind)
+		mind.transfer_to(adult)
+
+	for (var/obj/item/W in contents)
+		drop_from_inventory(W, loc)
+	qdel(src)
+
 /mob/living/carbon/monkey/diona/verb/evolve()
 
 	set category = "Diona"
 	set name = "Evolve"
 	set desc = "Grow to a more complex form."
 
-	if(!is_alien_whitelisted(src, DIONA) && config.usealienwhitelist)
+	if(config.usealienwhitelist && get_species() == DIONA && !is_alien_whitelisted(src, DIONA))
 		to_chat(src, tgui_alert(usr, "You are currently not whitelisted to play as a full diona."))
 		return 0
 
@@ -238,27 +313,7 @@
 		return
 
 	split()
-	visible_message("<span class='warning'>[src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.</span>","<span class='warning'>You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.</span>")
-
-	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
-	adult.set_species(DIONA)
-
-	if(istype(loc,/obj/item/weapon/holder/diona))
-		var/obj/item/weapon/holder/diona/L = loc
-		src.loc = L.loc
-		qdel(L)
-
-	for(var/datum/language/L in languages)
-		adult.add_language(L.name)
-	adult.regenerate_icons()
-
-	adult.name = "diona ([rand(100,999)])"
-	adult.real_name = adult.name
-	adult.ckey = src.ckey
-
-	for (var/obj/item/W in src.contents)
-		drop_from_inventory(W)
-	qdel(src)
+	evolved_form()
 
 /mob/living/carbon/monkey/diona/verb/steal_blood()
 	set category = "Diona"
@@ -284,13 +339,11 @@
 	visible_message("<span class='warning'>[src] flicks out a feeler and neatly steals a sample of [M]'s blood.</span>","<span class='warning'>You flick out a feeler and neatly steal a sample of [M]'s blood.</span>")
 	donors += M.real_name
 	for(var/datum/language/L in M.languages)
-		languages |= L
+		add_language(L.name)
 
-	spawn(25)
-		update_progression()
+	addtimer(CALLBACK(src, .proc/update_progression), 25)
 
 /mob/living/carbon/monkey/diona/proc/update_progression()
-
 	if(!donors.len)
 		return
 
@@ -303,12 +356,11 @@
 	else
 		to_chat(src, "<span class='notice'>The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind.</span>")
 
-
 /mob/living/carbon/monkey/diona/say_understands(mob/other,datum/language/speaking = null)
-
-	if (istype(other, /mob/living/carbon/human) && !speaking)
+	if(ishuman(other) && !speaking)
 		if(languages.len >= 2) // They have sucked down some blood.
 			return 1
+
 	return ..()
 
 /mob/living/carbon/monkey/diona/say(message)
@@ -325,10 +377,13 @@
 	if(stat == DEAD)
 		return say_dead(message)
 
-	var/datum/language/speaking = parse_language(message)
+	var/ending = copytext(message, -1)
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
+
 	if(speaking)
-		verb = speaking.speech_verb
-		message = trim(copytext_char(message,2+length_char(speaking.key)))
+		verb = speaking.get_spoken_verb(ending)
 
 	if(!message || stat)
 		return

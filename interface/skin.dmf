@@ -2,31 +2,31 @@ macro "default"
 
 
 menu "menu"
-	elem
+	elem 
 		name = "&File"
 		command = ""
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Save screenshot as...\tShift+F2"
 		command = ".screenshot"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = ""
 		command = ""
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Quit"
 		command = ".quit"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Icons"
 		command = ""
 		saved-params = "is-checked"
@@ -73,7 +73,7 @@ menu "menu"
 		can-check = true
 		group = "size"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = ""
 		command = ""
 		category = "&Icons"
@@ -84,16 +84,9 @@ menu "menu"
 		category = "&Icons"
 		can-check = true
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Scaling Mode"
 		command = ""
-		saved-params = "is-checked"
-	elem "nn"
-		name = "&Nearest Neighbor"
-		command = ".winset \"mapwindow.map.zoom-mode=distort\""
-		category = "&Scaling Mode"
-		can-check = true
-		group = "scaling"
 		saved-params = "is-checked"
 	elem "ps"
 		name = "&Point Sampling"
@@ -110,20 +103,27 @@ menu "menu"
 		can-check = true
 		group = "scaling"
 		saved-params = "is-checked"
-	elem
+	elem "nn"
+		name = "&Nearest Neighbor"
+		command = ".winset \"mapwindow.map.zoom-mode=distort\""
+		category = "&Scaling Mode"
+		can-check = true
+		group = "scaling"
+		saved-params = "is-checked"
+	elem 
 		name = "&Options"
 		command = ""
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Audio"
 		command = ".showvolumecontrols"
 		category = "&Options"
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
-	elem
+	elem 
 		name = "&Admin help\tF1"
 		command = "adminhelp"
 		category = "&Help"
@@ -135,25 +135,24 @@ window "mainwindow"
 		type = MAIN
 		pos = 281,0
 		size = 640x440
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = "onresize"
 		title = "Space Station 13"
 		statusbar = false
 		is-maximized = true
 		icon = 'icons\\ss13_64.png'
 		macro = "default"
 		menu = "menu"
-		on-size = "onresize"
 	elem "asset_cache_browser"
 		type = BROWSER
 		pos = 424,208
 		size = 1x1
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		is-visible = false
-		auto-format = false
 		saved-params = ""
 	elem "mainvsplit"
 		type = CHILD
@@ -168,21 +167,20 @@ window "mainwindow"
 		type = BROWSER
 		pos = 0,0
 		size = 999x999
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		text-color = #ffffff
 		background-color = #000000
 		is-visible = false
 		saved-params = ""
-		auto-format = false
 
 window "mapwindow"
 	elem "mapwindow"
 		type = MAIN
 		pos = 281,0
 		size = 640x480
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		titlebar = false
 		statusbar = false
@@ -203,26 +201,24 @@ window "mapwindow"
 		saved-params = "icon-size;zoom-mode"
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
+		style = ".center { text-align: center; } .maptext { font-family: 'Small Fonts', 'MS Serif'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1; } .small { font-size: 6px; } .big { font-size: 8px; } .yell { font-weight: bold; } .italics { font-size: 6px; }"
 	elem "lobbybrowser"
 		type = BROWSER
 		pos = 0,0
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = none
 		is-visible = false
 		is-disabled = true
 		saved-params = ""
-		auto-format = false
 
 window "popupwindow"
 	elem "popupwindow"
 		type = MAIN
 		pos = 281,0
 		size = 120x120
-		anchor1 = none
-		anchor2 = none
-		background-color = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
@@ -233,8 +229,8 @@ window "outputwindow"
 		type = MAIN
 		pos = 281,0
 		size = 640x480
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		titlebar = false
 		statusbar = false
@@ -252,7 +248,6 @@ window "outputwindow"
 		is-visible = false
 		is-disabled = true
 		saved-params = ""
-		auto-format = false
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
@@ -276,7 +271,7 @@ window "outputwindow"
 		pos = 600,460
 		size = 40x20
 		anchor1 = 100,100
-		anchor2 = none
+		anchor2 = -1,-1
 		saved-params = "is-checked"
 		text = "Chat"
 		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\"\"saybutton.is-checked=true?mebutton.is-checked=false\""
@@ -286,7 +281,7 @@ window "outputwindow"
 		pos = 560,460
 		size = 40x20
 		anchor1 = 100,100
-		anchor2 = none
+		anchor2 = -1,-1
 		saved-params = "is-checked"
 		text = "Emote"
 		command = ".winset \"mebutton.is-checked=true?input.command=\"!me \\\"\" macrobutton.is-checked=false:input.command=\"\"mebutton.is-checked=true?saybutton.is-checked=false\""
@@ -297,8 +292,8 @@ window "preferences_window"
 		type = MAIN
 		pos = 200,20
 		size = 810x770
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		is-visible = false
 		saved-params = ""
 		statusbar = false
@@ -326,8 +321,8 @@ window "barber_window"
 		type = MAIN
 		pos = 200,20
 		size = 620x680
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		is-visible = false
 		saved-params = ""
 		statusbar = false
@@ -355,8 +350,8 @@ window "rpane"
 		type = MAIN
 		pos = 281,0
 		size = 640x480
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "rpanewindow"
@@ -372,8 +367,8 @@ window "rpane"
 		type = BUTTON
 		pos = 278,0
 		size = 60x16
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		saved-params = "is-checked"
 		text = "Rules"
 		command = "rules"
@@ -382,15 +377,16 @@ window "rpane"
 		type = BROWSER
 		pos = 392,25
 		size = 1x1
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		is-visible = false
 		saved-params = ""
 	elem "changelog"
 		type = BUTTON
 		pos = 369,0
 		size = 67x16
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "Changelog"
@@ -399,8 +395,8 @@ window "rpane"
 		type = BUTTON
 		pos = 439,0
 		size = 67x16
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		font-style = "bold"
 		text-color = #ffffff
 		background-color = #7186f0
@@ -412,8 +408,8 @@ window "rpane"
 		type = BUTTON
 		pos = 509,0
 		size = 90x16
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		font-style = "bold"
 		text-color = #ffffff
 		background-color = #df3e3e
@@ -424,8 +420,8 @@ window "rpane"
 		type = BUTTON
 		pos = 215,0
 		size = 60x16
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
@@ -434,8 +430,8 @@ window "rpane"
 		type = BUTTON
 		pos = 152,0
 		size = 60x16
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
@@ -444,8 +440,8 @@ window "rpane"
 		type = BUTTON
 		pos = 0,0
 		size = 60x16
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		is-visible = false
 		saved-params = "is-checked"
 		text = "Text"
@@ -457,8 +453,8 @@ window "rpane"
 		type = BUTTON
 		pos = 464,0
 		size = 60x16
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		is-visible = false
 		saved-params = "is-checked"
 		text = "Browser"
@@ -469,8 +465,8 @@ window "rpane"
 		type = BUTTON
 		pos = 64,0
 		size = 60x16
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		is-visible = false
 		saved-params = "is-checked"
 		text = "Info"
@@ -483,8 +479,8 @@ window "browserwindow"
 		type = MAIN
 		pos = 281,0
 		size = 640x480
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "Browser"
 		is-pane = true
@@ -505,8 +501,8 @@ window "infowindow"
 		type = MAIN
 		pos = 281,0
 		size = 640x480
-		anchor1 = none
-		anchor2 = none
+		anchor1 = -1,-1
+		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "Info"
 		is-pane = true

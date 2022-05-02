@@ -15,6 +15,15 @@
 	w_class = SIZE_SMALL
 	force = 5
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
+	flashbang_protection = TRUE
+
+/obj/item/clothing/head/helmet/psyamp
+	name = "psychic amplifier"
+	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot."
+	icon_state = "amp"
+	item_state = "amp"
+	flags_inv = 0
+	armor = list(melee = 30, bullet = 30, laser = 30,energy = 30, bomb = 0, bio = 100, rad = 100)
 
 /obj/item/clothing/head/helmet/warden
 	name = "warden's helmet"
@@ -32,14 +41,6 @@
 	siemens_coefficient = 0.8
 	force = 0
 	hitsound = list()
-
-/obj/item/clothing/head/helmet/HoS/dermal
-	name = "dermal armour patch"
-	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head."
-	icon_state = "dermal"
-	item_state = "dermal"
-	siemens_coefficient = 0.6
-	body_parts_covered = 1
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -182,14 +183,12 @@
 	desc = "Combat helmet used by the private security corporation."
 	icon_state = "m89_helmet"
 	item_state = "helmet"
-	item_color = "m89_helmet"
 
 /obj/item/clothing/head/helmet/M35_Helmet
 	name = "M35 Helmet"
 	desc = "The Basic werhmacht army helmet."
 	icon_state = "M35_Helmet"
 	item_state = "helmet"
-	item_color = "M35_Helmet"
 
 /obj/item/clothing/head/helmet/Waffen_SS_Helmet
 	name = "Waffen SS Helmet"
@@ -197,7 +196,6 @@
 
 	icon_state = "SS_Helmet"
 	item_state = "helmet"
-	item_color = "SS_Helmet"
 
 /obj/item/clothing/head/helmet/syndilight
 	name = "light helmet"
@@ -218,3 +216,12 @@
 /obj/item/clothing/head/helmet/syndiassault/alternate
 	icon_state = "assaulthelmet"
 	item_state = "assaulthelmet"
+
+/obj/item/clothing/head/helmet/crusader
+	name = "crusader topfhelm"
+	desc = "They may call you a buckethead but who'll laugh when crusade begins?"
+	icon_state = "crusader"
+	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 20, bio = 0, rad = 10)
+	siemens_coefficient = 1.2
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
