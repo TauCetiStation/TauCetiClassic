@@ -49,7 +49,7 @@
 /datum/skill/police
 	name = SKILL_POLICE
 	max_value = 2
-	hint = "Usage of tasers and flashers. Higher levels allows for faster handcuffing."
+	hint = "Usage of tasers and stun batons. Higher levels allows for faster handcuffing."
 
 /datum/skill/police/default
 	value = 0
@@ -242,7 +242,7 @@
 /datum/skill/command
 	name = SKILL_COMMAND
 	max_value = 4
-	hint = "Low level means basic knowledge of paperwork. Usage of identification computers, communication consoles and fax."
+	hint = "Usage of identification computers, communication consoles and fax."
 
 /datum/skill/command/default
 	value = 0
