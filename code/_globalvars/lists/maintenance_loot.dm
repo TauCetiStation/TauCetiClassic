@@ -64,10 +64,6 @@ var/global/list/trash_loot = list(
 //common: basic items
 var/global/list/common_loot = list(
 	list(
-		/obj/item/weapon/screwdriver = 1,
-		/obj/item/weapon/wirecutters = 1,
-		/obj/item/weapon/wrench = 1,
-		/obj/item/weapon/crowbar = 1,
 		/obj/item/device/t_scanner = 1,
 		/obj/item/device/analyzer = 1,
 		/obj/item/weapon/mop = 1,
@@ -137,8 +133,6 @@ var/global/list/common_loot = list(
 //uncommon: useful items
 var/global/list/uncommon_loot = list(
 	list(
-		/obj/item/weapon/weldingtool = 1,
-		/obj/item/device/multitool = 1,
 		/obj/item/weapon/hatchet = 1,
 		/obj/item/roller = 1,
 		/obj/item/weapon/legcuffs/bola = 1,

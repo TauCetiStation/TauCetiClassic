@@ -123,6 +123,21 @@
 /obj/effect/landmark/start/assistant/waiter
 	name = "Waiter"
 
+/obj/effect/landmark/start/assistant/lawyer
+	name = "Lawyer"
+
+/obj/effect/landmark/start/assistant/private_eye
+	name = "Private Eye"
+
+/obj/effect/landmark/start/assistant/reporter
+	name = "Reporter"
+
+/obj/effect/landmark/start/assistant/vice_officer
+	name = "Vice Officer"
+
+/obj/effect/landmark/start/assistant/paranormal_investigator
+	name = "Paranormal Investigator"
+
 //Civilians
 /obj/effect/landmark/start/captain
 	name = "Captain"
