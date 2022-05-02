@@ -25445,20 +25445,6 @@
 	icon_state = "whitebluecorner"
 	},
 /area/station/medical/hallway)
-"aTM" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/port)
 "aTN" = (
 /obj/structure/table,
 /obj/item/weapon/wrench,
@@ -105629,7 +105615,7 @@ aIc
 aOw
 aSv
 clm
-aTM
+bdv
 bep
 cjM
 aMZ
