@@ -157,9 +157,9 @@
 * camera *
 *********/
 /obj/item/device/camera
-	name = "camera"
+	name = "zenit 122"
 	icon = 'icons/obj/items.dmi'
-	desc = "A polaroid camera."
+	desc = "High quality photos, capable of installing filters."
 	icon_state = "camera"
 	item_state = "photocamera"
 	w_class = SIZE_TINY
@@ -178,11 +178,22 @@
 	var/list/effect_2 = NO_EFFECT
 	var/vignette = ""
 
+/obj/item/device/camera/polaroid
+	name = "polaroid"
+	icon = 'icons/obj/items.dmi'
+	desc = "A polaroid camera."
+	icon_state = "polaroid"
+	icon_on = "polaroid"
+	icon_off = "polaroid_off"
+	list/effect = POLAROID
+	list/effect_2 = NO_EFFECT
+	vignette = ""
+
 /obj/item/device/camera/atom_init()
 	. = ..()
 	update_desc()
 
-/obj/item/device/camera/spooky
+/obj/item/device/camera/polaroid/spooky
 	name = "camera obscura"
 	desc = "A polaroid camera, some say it can see ghosts!"
 	see_ghosts = 1
@@ -190,13 +201,35 @@
 	effect_2 = NO_EFFECT
 	vignette = "vignette"
 
-/obj/item/device/camera/detective
+/obj/item/device/camera/polaroid/detective
 	name = "detectives camera"
 	desc = "A black&white filter camera."
-	see_ghosts = 1
 	effect = BLACK&WHITE
 	effect_2 = NO_EFFECT
 	vignette = "vignette"
+
+/obj/item/device/camera/lomo
+	name = "lomo lc-a"
+	desc = "'Lomo' Kompakt Automat."
+	icon_state = "lomo"
+	icon_on = "lomo"
+	icon_off = "lomo_off"
+	pictures_left = 30
+	effect = LOMO
+	effect_2 = NO_EFFECT
+	vignette = "vignette"
+
+/obj/item/device/camera/oldcamera
+	name = "fed"
+	icon = 'icons/obj/custom_items.dmi'
+	desc = "'Felix Edmundovich Dzerzhinsky' photo camera."
+	icon_state = "fed"
+	icon_on = "fed"
+	icon_off = "fed_off"
+	pictures_left = 30
+	effect = OLD_1
+	effect_2 = OLD_2
+	vignette = "old_vignette"
 
 /obj/item/device/camera/proc/update_desc()
 	desc = "[initial(desc)]. [pictures_left ? "[pictures_left]" : "No"] photos left."
