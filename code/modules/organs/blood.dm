@@ -307,6 +307,8 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/human/proc/blood_squirt(amt, turf/sprayloc)
 	set waitfor = FALSE
 
+	if(reagents.has_reagent("metatrombine"))
+		return
 	if(amt <= 0 || !istype(sprayloc))
 		return
 
