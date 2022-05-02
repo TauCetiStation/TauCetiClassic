@@ -174,9 +174,13 @@
 	var/icon_off = "camera_off"
 	var/see_ghosts = 0 //for the spoop of it
 	var/photo_size = 3 //Default is 3x3. 1x1, 5x5, 7x7 are also options
-	var/list/effect = POLAROID
+	var/list/effect = NO_EFFECT
 	var/list/effect_2 = NO_EFFECT
 	var/vignette = ""
+
+/obj/item/device/camera/atom_init()
+	. = ..()
+	update_desc()
 
 /obj/item/device/camera/polaroid
 	name = "polaroid"
@@ -189,10 +193,6 @@
 	list/effect_2 = NO_EFFECT
 	vignette = ""
 
-/obj/item/device/camera/atom_init()
-	. = ..()
-	update_desc()
-
 /obj/item/device/camera/polaroid/spooky
 	name = "camera obscura"
 	desc = "A polaroid camera, some say it can see ghosts!"
@@ -204,7 +204,7 @@
 /obj/item/device/camera/polaroid/detective
 	name = "detectives camera"
 	desc = "A black&white filter camera."
-	effect = BLACK&WHITE
+	effect = BLACKANDWHITE
 	effect_2 = NO_EFFECT
 	vignette = "vignette"
 
@@ -221,7 +221,6 @@
 
 /obj/item/device/camera/oldcamera
 	name = "fed"
-	icon = 'icons/obj/custom_items.dmi'
 	desc = "'Felix Edmundovich Dzerzhinsky' photo camera."
 	icon_state = "fed"
 	icon_on = "fed"
