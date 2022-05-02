@@ -165,6 +165,9 @@
 	var/icon_off = "camera_off"
 	var/see_ghosts = 0 //for the spoop of it
 	var/photo_size = 3 //Default is 3x3. 1x1, 5x5, 7x7 are also options
+	var/list/effect = POLAROID
+	var/list/effect_2 = NO_EFFECT
+	var/vignette = ""
 
 /obj/item/device/camera/atom_init()
 	. = ..()
@@ -174,6 +177,17 @@
 	name = "camera obscura"
 	desc = "A polaroid camera, some say it can see ghosts!"
 	see_ghosts = 1
+	effect = INVERT
+	effect_2 = NO_EFFECT
+	vignette = "vignette"
+
+/obj/item/device/camera/detective
+	name = "detectives camera"
+	desc = "A black&white filter camera."
+	see_ghosts = 1
+	effect = BLACK&WHITE
+	effect_2 = NO_EFFECT
+	vignette = "vignette"
 
 /obj/item/device/camera/proc/update_desc()
 	desc = "[initial(desc)]. [pictures_left ? "[pictures_left]" : "No"] photos left."
@@ -340,6 +354,23 @@
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
+	//Photo Effects
+	var/icon/vign
+	switch(photo_size)
+		if(1)
+			vign = icon('icons/effects/32x32.dmi', vignette)
+		if(3)
+			vign = icon('icons/effects/96x96.dmi', vignette)
+		if(5)
+			vign = icon('icons/effects/160x160.dmi', vignette)
+	//First Flter
+	temp.MapColors(effect[1], effect[2], effect[3], effect[4], effect[5], effect[6], effect[7], effect[8], effect[9], effect[10], effect[11], effect[12], effect[13], effect[14], effect[15], effect[16], effect[17], effect[18], effect[19], effect[20])
+	//Additions
+	temp.Blend(vign, ICON_OVERLAY, 1, 1)
+	//Second Filter
+	temp.MapColors(effect_2[1], effect_2[2], effect_2[3], effect_2[4], effect_2[5], effect_2[6], effect_2[7], effect_2[8], effect_2[9], effect_2[10], effect_2[11], effect_2[12], effect_2[13], effect_2[14], effect_2[15], effect_2[16], effect_2[17], effect_2[18], effect_2[19], effect_2[20])
+
+
 	var/datum/picture/P = createpicture(user, temp, mobs, mob_names, flag)
 	printpicture(user, P)
 
@@ -352,6 +383,7 @@
 	tiny_img.Scale(4, 4)
 	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 	pc.Blend(tiny_img,ICON_OVERLAY, 12, 19)
+
 
 	var/datum/picture/P = new()
 	P.fields["author"] = user

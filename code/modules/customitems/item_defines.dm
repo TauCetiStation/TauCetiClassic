@@ -267,6 +267,9 @@
 	icon_on = "orangecamera"
 	icon_off = "camera_off"
 	pictures_left = 30
+	effect = LOMO
+	effect_2 = NO_EFFECT
+	vignette = "vignette"
 
 /obj/item/device/camera/fluff/oldcamera //magmaram: Maria Crash
 	name = "Old Camera"
@@ -276,6 +279,9 @@
 	icon_on = "oldcamera"
 	icon_off = "oldcamera_off"
 	pictures_left = 30
+	effect = OLD_1
+	effect_2 = OLD_2
+	vignette = "old_vignette"
 
 /obj/item/weapon/id_wallet/fluff/reese_mackenzie  //Reese MacKenzie - ThoseDernSquirrels
 
