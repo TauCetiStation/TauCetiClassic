@@ -35,6 +35,8 @@
 		return
 	message = (capitalize(message))
 	var/cooldown = apply_skill_bonus(user, 10 SECONDS, required_skills, 0.5) //+50% for each level
+	var/command_power = user.mind.skills.get_value(SKILL_COMMAND) * 2 + 1//to avoid recursive increase with help
+
 	if ((src.loc == user && usr.stat == CONSCIOUS))
 		if(emagged)
 			if(insults)
@@ -44,11 +46,9 @@
 				to_chat(user, "<span class='warning'>*BZZZZzzzzzt*</span>")
 		else
 			if(is_skill_competent(usr, required_skills))
-				var/command_power = user.mind.skills.get_value(SKILL_COMMAND) * 2 + 1//to avoid recursive increase with help
 				for(var/mob/living/carbon/M in get_hearers_in_view(command_power, user))
 					if(M != user)
 						M.add_command_buff(usr, cooldown)
-
 			user.audible_message("<B>[user]</B> broadcasts, <FONT size=[command_power]>\"[message]\"</FONT>")
 
 		spamcheck = 1
