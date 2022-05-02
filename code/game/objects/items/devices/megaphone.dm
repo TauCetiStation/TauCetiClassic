@@ -49,7 +49,7 @@
 				for(var/mob/living/carbon/M in get_hearers_in_view(command_power, user))
 					if(M != user)
 						M.add_command_buff(usr, cooldown)
-			user.audible_message("<B>[user]</B> broadcasts, <FONT size=[command_power]>\"[message]\"</FONT>")
+			user.audible_message("<B>[user]</B> broadcasts, <FONT size=[max(3, command_power)]>\"[message]\"</FONT>")
 
 		spamcheck = 1
 		spawn(cooldown)
