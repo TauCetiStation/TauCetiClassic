@@ -171,7 +171,7 @@
 	name = "Security Cadet"
 	initial_skills = list(
 		/datum/skill/firearms/trained,
-		/datum/skill/police/trained,
+		/datum/skill/police/master,
 		/datum/skill/melee/trained
 	)
 
