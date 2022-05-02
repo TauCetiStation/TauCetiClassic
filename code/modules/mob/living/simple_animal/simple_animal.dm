@@ -421,9 +421,3 @@
 
 /mob/living/simple_animal/crawl()
 	return FALSE
-
-//proc for pest-animals (rat, lizard)
-/mob/living/simple_animal/proc/handle_gnaw()
-	var/turf/T = get_turf(src)
-	for(var/obj/structure/cable/C in T)
-		C.wear_out(melee_damage)

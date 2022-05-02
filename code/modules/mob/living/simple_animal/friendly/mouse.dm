@@ -51,21 +51,23 @@
 	name = "[name] ([rand(1, 1000)])"
 	real_name = name
 
-	if(randomize_color)
-		if(!body_color)
-			body_color = pick( list("brown","gray","white") )
-			switch(body_color)
-				if("brown")
-					holder_type = /obj/item/weapon/holder/mouse/brown
-				if("gray")
-					holder_type = /obj/item/weapon/holder/mouse/gray
-				if("white")
-					holder_type = /obj/item/weapon/holder/mouse/white
-		icon_state = "mouse_[body_color]"
-		icon_living = "mouse_[body_color]"
-		icon_dead = "mouse_[body_color]_dead"
-		icon_move = "mouse_[body_color]_move"
-		desc = "It's a small [body_color] rodent, often seen hiding in maintenance areas and making a nuisance of itself."
+	if(!randomize_color)
+		return
+
+	if(!body_color)
+		body_color = pick( list("brown","gray","white") )
+		switch(body_color)
+			if("brown")
+				holder_type = /obj/item/weapon/holder/mouse/brown
+			if("gray")
+				holder_type = /obj/item/weapon/holder/mouse/gray
+			if("white")
+				holder_type = /obj/item/weapon/holder/mouse/white
+	icon_state = "mouse_[body_color]"
+	icon_living = "mouse_[body_color]"
+	icon_dead = "mouse_[body_color]_dead"
+	icon_move = "mouse_[body_color]_move"
+	desc = "It's a small [body_color] rodent, often seen hiding in maintenance areas and making a nuisance of itself."
 
 /mob/living/simple_animal/mouse/proc/snuffles()
 	if(!ckey && stat == CONSCIOUS && prob(0.5))
@@ -210,9 +212,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 	desc = "It's a big pest mouse."
 	randomize_color = FALSE
 
-/mob/living/simple_animal/mouse/rat/Life()
+/mob/living/simple_animal/mouse/rat/atom_init()
+	AddComponent(/datum/component/wear_out)
 	..()
-	handle_gnaw()
 
 /mob/living/simple_animal/mouse/rat/snuffles()
 	return
