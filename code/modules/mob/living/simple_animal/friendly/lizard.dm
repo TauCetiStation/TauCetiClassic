@@ -27,12 +27,12 @@
 	has_head = TRUE
 	has_leg = TRUE
 
-/mob/living/simple_animal/lizard/atom_init()
-	..()
-	AddComponent(/datum/component/wear_out)
-
 /mob/living/simple_animal/lizard/Life()
 	..()
+
+/mob/living/simple_animal/lizard/atom_init()
+	. = ..()
+	AddComponent(/datum/component/wear_out)
 
 /mob/living/simple_animal/lizard/death()
 	. = ..()
