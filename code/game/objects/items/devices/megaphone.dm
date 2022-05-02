@@ -44,14 +44,12 @@
 				to_chat(user, "<span class='warning'>*BZZZZzzzzzt*</span>")
 		else
 			if(is_skill_competent(usr, required_skills))
-				var/command_power = user.mind.skills.get_value(SKILL_COMMAND) * 2 //to avoid recursive increase with help
-				var/users_heard = 0
+				var/command_power = user.mind.skills.get_value(SKILL_COMMAND) * 2 + 1//to avoid recursive increase with help
 				for(var/mob/living/carbon/M in get_hearers_in_view(command_power, user))
-					if(users_heard <= command_power && M != user)
+					if(M != user)
 						M.add_command_buff(usr, cooldown)
-						users_heard++
 
-			user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>")
+			user.audible_message("<B>[user]</B> broadcasts, <FONT size=[command_power]>\"[message]\"</FONT>")
 
 		spamcheck = 1
 		spawn(cooldown)
