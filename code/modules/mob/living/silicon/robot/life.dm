@@ -276,6 +276,8 @@
 
 /mob/living/silicon/robot/update_fire()
 	if(on_fire)
-		add_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))
+		underlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay")
+		add_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay"))
 	else
-		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))
+		underlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay")
+		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay"))

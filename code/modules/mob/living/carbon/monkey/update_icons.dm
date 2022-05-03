@@ -1,13 +1,14 @@
 //Monkey Overlays Indexes////////
-#define M_HEAD_LAYER 			1
-#define M_MASK_LAYER			2
-#define M_BACK_LAYER			3
-#define M_HANDCUFF_LAYER		4
-#define M_L_HAND_LAYER			5
-#define M_R_HAND_LAYER			6
-#define TARGETED_LAYER			7
-#define M_FIRE_LAYER			8
-#define M_TOTAL_LAYERS			8
+#define M_FIRE_UNDERLAYER       1
+#define M_HEAD_LAYER 			2
+#define M_MASK_LAYER			3
+#define M_BACK_LAYER			4
+#define M_HANDCUFF_LAYER		5
+#define M_L_HAND_LAYER			6
+#define M_R_HAND_LAYER			7
+#define TARGETED_LAYER			8
+#define M_FIRE_LAYER			9
+#define M_TOTAL_LAYERS			9
 /////////////////////////////////
 
 /mob/living/carbon/monkey
@@ -138,15 +139,20 @@
 	if(update_icons)		update_icons()
 
 /mob/living/carbon/monkey/update_fire()
+	cut_overlay(overlays_standing[M_FIRE_UNDERLAYER])
 	cut_overlay(overlays_standing[M_FIRE_LAYER])
 	if(on_fire)
-		overlays_standing[M_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+		overlays_standing[M_FIRE_UNDERLAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay")
+		overlays_standing[M_FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay")
+		add_overlay(overlays_standing[M_FIRE_UNDERLAYER])
 		add_overlay(overlays_standing[M_FIRE_LAYER])
 		return
 	else
-		overlays_standing[M_FIRE_LAYER]		= null
+		overlays_standing[M_FIRE_UNDERLAYER] = null
+		overlays_standing[M_FIRE_LAYER]	= null
 
 //Monkey Overlays Indexes////////
+#undef M_FIRE_UNDERLAYER
 #undef M_HEAD_LAYER
 #undef M_MASK_LAYER
 #undef M_BACK_LAYER

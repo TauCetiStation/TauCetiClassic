@@ -96,6 +96,7 @@ Please contact me on #coderbus IRC. ~Carn x
 */
 
 //Human Overlays Indexes/////////
+#define FIRE_UNDERLAYER         28
 #define BODY_LAYER				27
 #define MUTATIONS_LAYER			25
 #define DAMAGE_LAYER			24
@@ -122,7 +123,7 @@ Please contact me on #coderbus IRC. ~Carn x
 #define R_HAND_LAYER			3
 #define TARGETED_LAYER			2		//BS12: Layer for the target overlay from weapon targeting system
 #define FIRE_LAYER				1
-#define TOTAL_LAYERS			27
+#define TOTAL_LAYERS			28
 //////////////////////////////////
 //Human Limb Overlays Indexes/////
 #define LIMB_HEAD_LAYER			7
@@ -352,13 +353,18 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_fire() //TG-stuff, fire layer
+	remove_overlay(FIRE_UNDERLAYER)
 	remove_overlay(FIRE_LAYER)
 
 	if(on_fire)
-		var/image/standing = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"=-FIRE_LAYER)
-		standing = update_height(standing)
-		overlays_standing[FIRE_LAYER]	= standing
+		var/image/under = image('icons/mob/OnFire.dmi', "human_underlay", "layer"=-FIRE_UNDERLAYER)
+		var/image/over = image('icons/mob/OnFire.dmi', "human_overlay", "layer"=-FIRE_LAYER)
+		under = update_height(under)
+		over = update_height(over)
+		overlays_standing[FIRE_UNDERLAYER]	= under
+		overlays_standing[FIRE_LAYER]	= over
 
+	apply_overlay(FIRE_UNDERLAYER)
 	apply_overlay(FIRE_LAYER)
 
 
@@ -889,6 +895,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	return I
 
 //Human Overlays Indexes/////////
+#undef FIRE_UNDERLAYER
 #undef BODY_LAYER
 #undef MUTATIONS_LAYER
 #undef DAMAGE_LAYER
