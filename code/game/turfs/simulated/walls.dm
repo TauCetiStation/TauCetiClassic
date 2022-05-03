@@ -496,21 +496,29 @@
 /turf/simulated/wall/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(!Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN) && prob(75))
-		add_dent(WALL_DENT_SHOT)
+		add_dent(WALL_DENT_SHOT, Proj.p_x, Proj.p_y)
 
-/turf/simulated/wall/proc/add_dent(denttype)
+/turf/simulated/wall/proc/add_dent(denttype, x, y)
 	if(length(dent_decals) >= MAX_DENT_DECALS)
 		return
 
 	var/image/decal = image('icons/effects/effects.dmi', src, "", BULLET_HOLE_LAYER)
+	if(isnull(x) || isnull(y))
+		x = rand(-12, 12)
+		y = rand(-12, 12)
+	else
+		x = clamp(x - 16, -16, 16) // because sprites are centered
+		y = clamp(y - 16, -16, 16)
+
 	switch(denttype)
 		if(WALL_DENT_SHOT)
 			decal.icon_state = "bullet_hole"
+			decal.pixel_x = clamp(x, -15, 15) // because sprite size
+			decal.pixel_y = clamp(y, -15, 15)
 		if(WALL_DENT_HIT)
 			decal.icon_state = "impact[rand(1, 3)]"
-
-	decal.pixel_x = rand(-12, 12)
-	decal.pixel_y = rand(-12, 12)
+			decal.pixel_x = clamp(x, -12, 12) // because sprite size
+			decal.pixel_y = clamp(y, -12, 12)
 
 	LAZYADD(dent_decals, decal)
 	add_overlay(decal)
