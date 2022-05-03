@@ -125,7 +125,7 @@
 
 			if("change_export_tax")
 				var/amount = input("Enter the percent you want to set a tax to", "Export Tax %") as num
-				amount = clamp(amount, 1, 100)
+				amount = clamp(amount, 0, 100)
 				CARGO_EXPORT_TAX = amount
 
 			if("remove_funds")
