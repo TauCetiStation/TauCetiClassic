@@ -43,7 +43,7 @@
 	else
 		dat += {"<BR><B>Supply shuttle</B><HR>
 		Location: [SSshuttle.moving ? "Moving to station ([SSshuttle.eta] Mins.)":SSshuttle.at_station ? "Station":"Dock"]<BR>
-		<HR>Cargo Dep credits: [department_accounts["Cargo"].money]<BR>\n<BR>"
+		<HR>Cargo Dep credits: [department_accounts["Cargo"].money]<BR>\n<BR>
 		<HR>Export tax: [CARGO_EXPORT_TAX]%<BR>\n<BR>"}
 		if(requestonly)
 			dat += "\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>"
