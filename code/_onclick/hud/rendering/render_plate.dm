@@ -39,12 +39,22 @@
 	name = "game rendering plate"
 	plane = RENDER_PLANE_GAME
 	render_relay_plane = RENDER_PLANE_MASTER
+	render_target = MIRROR_GAME_WORLD
 
 /atom/movable/screen/plane_master/rendering_plate/game_world/atom_init(mapload, ...)
 	. = ..()
 	add_filter("displacer", 1, displacement_map_filter(render_source = GRAVITY_PULSE_RENDER_TARGET, size = 10))
 
-	add_filter("displacer", 1, displacement_map_filter(render_source = MIRROR_RENDER_TARGET, size = 64))
+/atom/movable/screen/plane_master/mirrored_world
+	name = "mirrored game rendering plate"
+	plane = MIRRORED_PLANE
+	render_target = MIRROR_TO_GAME_WORLD
+	render_relay_plane = null
+
+/atom/movable/screen/plane_master/mirrored_world/atom_init()
+	. = ..()
+	add_filter("layer_mirror", 1, layering_filter(render_source = MIRROR_GAME_WORLD, flags = FILTER_UNDERLAY))
+	add_filter("mirror", 1, displacement_map_filter(render_source = MIRROR_RENDER_TARGET, size = 64))
 
 ///everything that should be above game world. (for example, singularity, nar-si)
 /atom/movable/screen/plane_master/rendering_plate/above_game_world

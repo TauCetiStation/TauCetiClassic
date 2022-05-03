@@ -114,6 +114,10 @@ What is the naming convention for planes or layers?
   #define ABOVE_FLY_LAYER                 5.1
   #define HIGHEST_GAME_LAYER              50
 
+#define MIRRORED_PLANE -3
+ #define MIRROR_GAME_WORLD "*MIRROR_GAME"
+ #define MIRROR_TO_GAME_WORLD "*MIRROR_TO_GAME"
+
 #define ABOVE_GAME_PLANE  -1
 
 #define BLACKNESS_PLANE   0

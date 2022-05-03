@@ -7,17 +7,23 @@
 	density = FALSE
 	anchored = TRUE
 	var/shattered = 0
-	var/atom/movable/mirror/reflection
+	var/atom/movable/mirror/reflection_surface
+	var/atom/movable/reflection
 	var/mirror_power = 0.5
 
 /obj/structure/mirror/atom_init()
 	. = ..()
-	if(!reflection)
-		reflection = new(src, angle = dir2angle(dir) - 90, icon = icon, icon_state = icon_state + "_reflection", power = mirror_power)
-		vis_contents += reflection
+	reflection_surface = new(src, angle = dir2angle(dir) - 90, icon = icon, icon_state = icon_state + "_reflection", power = mirror_power)
+	reflection = new(src)
+	reflection.add_filter("layer_mirror", 1, layering_filter(render_source = MIRROR_TO_GAME_WORLD))
+	reflection.add_filter("cut_mirror", 1, alpha_mask_filter(icon(icon, icon_state + "_reflection")))
+	vis_contents += reflection_surface
+	vis_contents += reflection
 
 /obj/structure/mirror/Destroy()
+	vis_contents -= reflection_surface
 	vis_contents -= reflection
+	QDEL_NULL(reflection_surface)
 	QDEL_NULL(reflection)
 	return ..()
 
