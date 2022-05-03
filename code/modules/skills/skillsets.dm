@@ -241,7 +241,7 @@
 		/datum/skill/surgery/trained,
 		/datum/skill/medical/trained,
 		/datum/skill/construction/trained,
-		/datum/skill/engineering/novice,
+		/datum/skill/engineering/trained,
 		/datum/skill/civ_mech/pro,
 		/datum/skill/combat_mech/master
 	)
@@ -253,7 +253,7 @@
 		/datum/skill/surgery/pro,
 		/datum/skill/medical/pro,
 		/datum/skill/construction/trained,
-		/datum/skill/engineering/novice,
+		/datum/skill/engineering/trained,
 		/datum/skill/civ_mech/trained,
 		/datum/skill/combat_mech/trained
 	)

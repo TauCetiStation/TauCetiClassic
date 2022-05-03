@@ -350,11 +350,11 @@
 /obj/item/weapon/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount("fuel")
 
-/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills_override)
+/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills_override, skills_speed_bonus = -0.4)
 	target.add_overlay(welding_sparks)
 	INVOKE_ASYNC(src, .proc/start_welding, target)
 	var/datum/callback/checks  = CALLBACK(src, .proc/check_active_and_extra, extra_checks)
-	. = ..(target, user, delay, amount, volume, extra_checks = checks, required_skills_override = required_skills_override)
+	. = ..(target, user, delay, amount, volume, extra_checks = checks, required_skills_override = required_skills_override, skills_speed_bonus = skills_speed_bonus)
 	stop_welding()
 	target.cut_overlay(welding_sparks)
 
