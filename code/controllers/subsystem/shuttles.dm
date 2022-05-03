@@ -504,7 +504,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(sold_atoms)
 		sold_atoms += "."
-
+	var/datum/money_account/cargo_dep = department_accounts["Cargo"]
 	for(var/a in exports_list)
 		var/datum/export/E = a
 		var/export_text = E.total_printout()
@@ -512,7 +512,8 @@ SUBSYSTEM_DEF(shuttle)
 			continue
 
 		msg += export_text + "\n"
-		SSshuttle.points += E.total_cost
+		station_account.money += E.total_cost * STATION_EXPORTS_FEE
+		cargo_dep.money += E.total_cost * (1 - STATION_EXPORTS_FEE)
 		E.export_end()
 
 	centcom_message = msg

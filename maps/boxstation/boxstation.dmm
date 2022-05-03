@@ -13666,6 +13666,9 @@
 /area/station/maintenance/auxsolarstarboard)
 "axI" = (
 /obj/machinery/computer/cargo,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -22708,9 +22711,8 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
+/obj/machinery/atm{
+	pixel_x = 32
 	},
 /turf/simulated/floor{
 	dir = 4;
