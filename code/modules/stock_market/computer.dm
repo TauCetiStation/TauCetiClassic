@@ -6,6 +6,7 @@
 	circuit = /obj/item/weapon/circuitboard/computer/stockexchange
 	var/logged_in = "Cargo Department"
 	var/vmode = 1
+	var/datum/money_account/cargo_dep
 
 /obj/machinery/computer/stockexchange/atom_init()
 	. = ..()
@@ -14,9 +15,11 @@
 /obj/machinery/computer/stockexchange/proc/balance()
 	if(!logged_in)
 		return 0
-	return SSshuttle.points
+	return cargo_dep.money
 
 /obj/machinery/computer/stockexchange/ui_interact(mob/user)
+	if(!cargo_dep)
+		cargo_dep = department_accounts["Cargo"]
 	var/dat
 	dat += "<span>Welcome, <b>[logged_in]</b></span><br>"
 	dat += "<span><b>Credits:</b> [balance()]</span><br>"
@@ -133,7 +136,7 @@
 	if(!li)
 		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return
-	var/b = SSshuttle.points
+	var/b = cargo_dep.money
 	var/avail = S.shareholders[logged_in]
 	if(!avail)
 		to_chat(user, "<span class='danger'>This account does not own any shares of [S.name]!</span>")
@@ -148,7 +151,7 @@
 		return
 	if(li != logged_in)
 		return
-	b = SSshuttle.points
+	b = cargo_dep.money
 	if(!isnum(b))
 		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return
