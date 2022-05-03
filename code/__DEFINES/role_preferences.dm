@@ -13,6 +13,7 @@
 #define ROLE_CULTIST           "Cultist"
 #define ROLE_BLOB              "Blob"
 #define ROLE_NINJA             "Ninja"
+#define ROLE_RAIDER            "Raider"
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
 #define ROLE_FAMILIES          "Families"

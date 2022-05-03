@@ -39,7 +39,7 @@ var/global/list/datum/spawners_cooldown = list()
 	// Delete spawner after use
 	var/infinity = FALSE
 	// Cooldown between the opportunity become a role
-	var/cooldown = 10 MINUTES
+	var/cooldown = 0 MINUTES
 
 	// Time to del the spawner
 	var/time_to_del
@@ -655,7 +655,7 @@ var/global/list/datum/spawners_cooldown = list()
 	desc = "Воксы-налётчики это представители расы Воксов, птице-подобных гуманоидов, дышащих азотом. Прибыли на станцию что бы украсть что-нибудь ценное."
 	wiki_ref = "Vox_Raider"
 
-	ranks = list(ROLE_GHOSTLY)
+	ranks = list(ROLE_RAIDER, ROLE_GHOSTLY)
 	time_to_del = 5 MINUTES
 
 /datum/spawner/vox/spawn_ghost(mob/dead/observer/ghost)

@@ -4,7 +4,7 @@
 /datum/role/vox_raider
 	name = VOXRAIDER
 	id = VOXRAIDER
-	required_pref = ROLE_GHOSTLY
+	required_pref = ROLE_RAIDER
 	disallow_job = TRUE
 
 	logo_state = "raider-logo"

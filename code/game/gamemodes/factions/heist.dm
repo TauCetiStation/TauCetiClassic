@@ -1,7 +1,7 @@
 /datum/faction/heist
 	name = F_HEIST
 	ID = F_HEIST
-	required_pref = ROLE_GHOSTLY
+	required_pref = ROLE_RAIDER
 
 	initroletype = /datum/role/vox_raider
 
@@ -40,7 +40,7 @@
 
 /datum/faction/heist/OnPostSetup()
 	. = ..()
-	create_spawners(/datum/spawner/vox, global.heiststart.len)
+	create_spawners(/datum/spawner/vox, max_roles)
 
 /datum/faction/heist/GetScoreboard()
 	var/list/objectives = objective_holder.GetObjectives()
