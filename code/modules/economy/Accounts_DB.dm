@@ -67,7 +67,7 @@
 	data["station_account_number"] = station_account.account_number
 	data["transactions"] = null
 	data["accounts"] = null
-	data["cargo_export_tax"] = CARGO_EXPORT_TAX
+	data["cargo_export_tax"] = global.CARGO_EXPORT_TAX
 
 	if (detailed_account_view)
 		data["account_number"] = detailed_account_view.account_number
