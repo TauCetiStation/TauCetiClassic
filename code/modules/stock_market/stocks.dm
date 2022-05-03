@@ -28,7 +28,6 @@
 	var/fluctuation_rate = 15
 	var/fluctuation_counter = 0
 	var/datum/industry/industry = null
-	var/datum/money_account/cargo_dep
 
 /datum/stock/proc/changeOptimism(dn)
 	optimism = clamp(optimism + dn, OPTIMISM_MIN, OPTIMISM_MAX)
@@ -109,11 +108,9 @@
 		fluctuate()
 
 /datum/stock/proc/modifyAccount(whose, amount)
-	if(!cargo_dep)
-		cargo_dep = department_accounts["Cargo"]
 	. = FALSE
-	if (SSshuttle && isnum(cargo_dep.money) && (amount > 0 || cargo_dep.money + amount > 0))
-		cargo_dep.money += amount
+	if (SSshuttle && isnum(department_accounts["Cargo"].money) && (amount > 0 || department_accounts["Cargo"].money + amount > 0))
+		department_accounts["Cargo"].money += amount
 		stockExchange.balanceLog(whose, amount)
 		. = TRUE
 

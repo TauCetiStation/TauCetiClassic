@@ -18,8 +18,6 @@
 		cannot transport live organisms, classified nuclear weaponry or \
 		homing beacons."
 
-	var/datum/money_account/cargo_dep
-
 /obj/machinery/computer/cargo/request
 	name = "Supply request console"
 	desc = "Used to request supplies from cargo."
@@ -37,8 +35,6 @@
 	hacked = board.hacked
 
 /obj/machinery/computer/cargo/ui_interact(mob/user)
-	if(!cargo_dep)
-		cargo_dep = department_accounts["Cargo"]
 	var/dat
 	if(!requestonly)
 		post_signal("supply")
@@ -47,7 +43,8 @@
 	else
 		dat += {"<BR><B>Supply shuttle</B><HR>
 		Location: [SSshuttle.moving ? "Moving to station ([SSshuttle.eta] Mins.)":SSshuttle.at_station ? "Station":"Dock"]<BR>
-		<HR>Cargo Dep credits: [cargo_dep.money]<BR>\n<BR>"}
+		<HR>Cargo Dep credits: [department_accounts["Cargo"].money]<BR>\n<BR>"
+		<HR>Export tax: [CARGO_EXPORT_TAX]%<BR>\n<BR>"}
 		if(requestonly)
 			dat += "\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>"
 		else
@@ -91,14 +88,14 @@
 			//all_supply_groups
 			//Request what?
 			last_viewed_group = "categories"
-			temp = "<b>Cargo Dep Creadits: [cargo_dep.money]</b><BR>"
+			temp = "<b>Cargo Dep Creadits: [department_accounts["Cargo"].money]</b><BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>"
 			temp += "<b>Select a category</b><BR><BR>"
 			for(var/supply_group_name in all_supply_groups )
 				temp += "<A href='?src=\ref[src];order=[supply_group_name]'>[supply_group_name]</A><BR>"
 		else
 			last_viewed_group = href_list["order"]
-			temp = "<b>Cargo Dep Credits: [cargo_dep.money]</b><BR>"
+			temp = "<b>Cargo Dep Credits: [department_accounts["Cargo"].money]</b><BR>"
 			temp += "<b>Request from: [last_viewed_group]</b><BR>"
 			temp += "<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR>"
 			temp += "<div class='blockCargo'>"
@@ -190,9 +187,9 @@
 			if(SO.id == ordernum)
 				O = SO
 				P = O.object
-				if(cargo_dep.money >= P.cost)
+				if(department_accounts["Cargo"].money >= P.cost)
 					SSshuttle.requestlist.Cut(i,i+1)
-					cargo_dep.money -= P.cost
+					department_accounts["Cargo"].money -= P.cost
 					SSshuttle.shoppinglist += O
 					temp = "Thanks for your order.<BR>"
 					temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"

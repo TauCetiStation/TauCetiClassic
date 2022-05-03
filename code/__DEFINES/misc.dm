@@ -307,6 +307,3 @@
 
 //For crawl_can_use() in /mob/living
 #define IS_ABOVE(A, B) (A.layer > B.layer || A.plane > B.plane)
-
-//Station fee earned when supply shuttle exports things. 0 is 0%, 1 is 100%
-#define STATION_EXPORTS_FEE 0.1
