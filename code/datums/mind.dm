@@ -553,9 +553,6 @@
 
 	if(fac_type)
 		var/datum/faction/FF = create_uniq_faction(fac_type)
-		if(!FF)
-			return FALSE
-
 		while(count > 0 && candidates.len)
 			var/mob/M = pick(candidates)
 			candidates -= M

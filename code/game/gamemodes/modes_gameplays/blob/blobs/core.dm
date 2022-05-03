@@ -99,15 +99,14 @@ var/global/list/blob_nodes = list()
 	src.overmind = B
 
 	var/datum/faction/blob_conglomerate/conglomerate = create_uniq_faction(/datum/faction/blob_conglomerate)
-	if(conglomerate) //Faction exists
-		if(!conglomerate.get_member_by_mind(B.mind)) //We are not a member yet
-			var/ded = TRUE
-			if(conglomerate.members.len)
-				for(var/datum/role/R in conglomerate.members)
-					if (R.antag.current && !(R.antag.current.is_dead()))
-						ded = FALSE
-						break
-			add_faction_member(conglomerate, B, !ded)
+	if(!conglomerate.get_member_by_mind(B.mind)) //We are not a member yet
+		var/ded = TRUE
+		if(conglomerate.members.len)
+			for(var/datum/role/R in conglomerate.members)
+				if (R.antag.current && !(R.antag.current.is_dead()))
+					ded = FALSE
+					break
+		add_faction_member(conglomerate, B, !ded)
 
 	conglomerate.declared = TRUE
 
