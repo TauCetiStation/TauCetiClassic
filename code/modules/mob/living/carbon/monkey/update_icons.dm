@@ -1,5 +1,5 @@
 //Monkey Overlays Indexes////////
-#define M_FIRE_UNDERLAYER       1
+#define M_FIRE_UNDERLAYER		1
 #define M_HEAD_LAYER 			2
 #define M_MASK_LAYER			3
 #define M_BACK_LAYER			4

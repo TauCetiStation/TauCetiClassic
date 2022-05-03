@@ -96,7 +96,7 @@ Please contact me on #coderbus IRC. ~Carn x
 */
 
 //Human Overlays Indexes/////////
-#define FIRE_UNDERLAYER         28
+#define FIRE_UNDERLAYER			28
 #define BODY_LAYER				27
 #define MUTATIONS_LAYER			25
 #define DAMAGE_LAYER			24

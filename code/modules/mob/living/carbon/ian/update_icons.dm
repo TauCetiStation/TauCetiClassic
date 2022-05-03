@@ -1,11 +1,11 @@
-#define LAYERIAN_UNDERFIRE 7
-#define LAYERIAN_BACK      6
-#define LAYERIAN_MOUTH     5
-#define LAYERIAN_HEAD      4
-#define LAYERIAN_NECKCUFF  3
-#define LAYERIAN_TARGETED  2
-#define LAYERIAN_FIRE      1
-#define LAYERIANS_TOTAL    7
+#define LAYERIAN_UNDERFIRE	7
+#define LAYERIAN_BACK		6
+#define LAYERIAN_MOUTH		5
+#define LAYERIAN_HEAD		4
+#define LAYERIAN_NECKCUFF	3
+#define LAYERIAN_TARGETED	2
+#define LAYERIAN_FIRE		1
+#define LAYERIANS_TOTAL		7
 
 /mob/living/carbon/ian/var/static/list/corgi_icons = list()
 /mob/living/carbon/ian/var/list/overlays_inv[LAYERIANS_TOTAL]

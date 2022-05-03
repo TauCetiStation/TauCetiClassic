@@ -1,5 +1,5 @@
 //Xeno Overlays Indexes//////////
-#define X_FIRE_UNDERLAYER       1
+#define X_FIRE_UNDERLAYER		1
 #define X_HEAD_LAYER			2
 #define X_SUIT_LAYER			3
 #define X_L_HAND_LAYER			4
