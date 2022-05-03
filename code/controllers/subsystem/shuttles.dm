@@ -512,8 +512,8 @@ SUBSYSTEM_DEF(shuttle)
 			continue
 
 		msg += export_text + "\n"
-		station_account.money += E.total_cost * STATION_EXPORTS_FEE
-		cargo_dep.money += E.total_cost * (1 - STATION_EXPORTS_FEE)
+		station_account.money += round(E.total_cost) * STATION_EXPORTS_FEE
+		cargo_dep.money += round(E.total_cost) * (1 - STATION_EXPORTS_FEE)
 		E.export_end()
 
 	centcom_message = msg
