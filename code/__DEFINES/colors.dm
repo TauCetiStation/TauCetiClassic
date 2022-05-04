@@ -135,11 +135,11 @@
 
 
 // FILTER EFFECTS
-//#define EFFECT_FILTER 	list(1, 0, 0, 0, \
-//                  			 0, 1, 0, 0, \
-//                				 0, 0, 1, 0, \
-//                 				 0, 0, 0, 1, \
-//                  			 0, 0, 0, 0)
+/* #define EFFECT_FILTER 	list(1, 0, 0, 0, \
+                  			   	 0, 1, 0, 0, \
+                				 0, 0, 1, 0, \
+                 				 0, 0, 0, 1, \
+                  				 0, 0, 0, 0) */
 
 #define LOMO_FILTER  list(1.6,  0.1,  0.95, 0, \
 						 -0.2,  0.7,  0,    0, \
