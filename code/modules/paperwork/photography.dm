@@ -175,7 +175,6 @@
 	var/see_ghosts = 0 //for the spoop of it
 	var/photo_size = 3 //Default is 3x3. 1x1, 5x5, 7x7 are also options
 	var/list/effect = null
-	var/list/effect_2 = null
 	var/vignette = ""
 	var/filter = null
 	var/can_put_filter = TRUE
@@ -191,8 +190,7 @@
 	icon_state = "polaroid"
 	icon_on = "polaroid"
 	icon_off = "polaroid_off"
-	effect = POLAROID_FILTER
-	vignette = ""
+	effect = list(POLAROID_FILTER, "", null)
 	filter = "polaroid"
 	can_put_filter = FALSE
 
@@ -200,16 +198,14 @@
 	name = "camera obscura"
 	desc = "A polaroid camera, some say it can see ghosts!"
 	see_ghosts = 1
-	effect = INVERT_FILTER
-	vignette = "vignette"
+	effect = list(INVERT_FILTER, "vignette", null)
 	filter = "inverse"
 	can_put_filter = FALSE
 
 /obj/item/device/camera/polar/detective
 	name = "detectives camera"
 	desc = "A black&white filter camera."
-	effect = BLACKANDWHITE_FILTER
-	vignette = "vignette"
+	effect = list(BLACKANDWHITE_FILTER, "vignette", null)
 	filter = "detective"
 	can_put_filter = FALSE
 
@@ -220,8 +216,7 @@
 	icon_on = "lomo"
 	icon_off = "lomo_off"
 	pictures_left = 30
-	effect = LOMO_FILTER
-	vignette = "vignette"
+	effect = list(LOMO_FILTER, "vignette", null)
 	filter = "lomo"
 	can_put_filter = FALSE
 
@@ -232,9 +227,7 @@
 	icon_on = "fed"
 	icon_off = "fed_off"
 	pictures_left = 30
-	effect = OLD_1_FILTER
-	effect_2 = OLD_2_FILTER
-	vignette = "old_vignette"
+	effect = list(OLD_1_FILTER, "old_vignette", OLD_2_FILTER)
 	filter = "old"
 	can_put_filter = FALSE
 
@@ -251,8 +244,7 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A LOMOgraphy filter."
 	icon_state = "lomo_filter"
-	effect = LOMO_FILTER
-	vignette = "vignette"
+	effect = list(LOMO_FILTER, "vignette", null)
 	filter = "lomo"
 
 /obj/item/device/filter/posterization
@@ -260,8 +252,7 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A poster filter."
 	icon_state = "poster_filter"
-	effect = POSTERIZATION_FILTER
-	vignette = ""
+	effect = list(POSTERIZATION_FILTER, "", null)
 	filter = "posterize"
 
 /obj/item/device/filter/grayscale
@@ -269,8 +260,7 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A gray filter."
 	icon_state = "grey_filter"
-	effect = GRAYSCALE_FILTER
-	vignette = ""
+	effect = list(GRAYSCALE_FILTER, "", null)
 	filter = "grayscale"
 
 /obj/item/device/filter/invert
@@ -278,8 +268,7 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A invert filter."
 	icon_state = "invert_filter"
-	effect = INVERT_FILTER
-	vignette = "vignette"
+	effect = list(INVERT_FILTER, "vignette", null)
 	filter = "invert"
 
 /obj/item/device/filter/sepia
@@ -287,8 +276,7 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A sepia filter."
 	icon_state = "sepia_filter"
-	effect = SEPIA_FILTER
-	vignette = ""
+	effect = list(SEPIA_FILTER, "", null)
 	filter = "sepia"
 
 /obj/item/device/filter/detective
@@ -296,8 +284,7 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A detective filter."
 	icon_state = "detective_filter"
-	effect = BLACKANDWHITE_FILTER
-	vignette = "vignette"
+	effect = list(BLACKANDWHITE_FILTER, "vignette", null)
 	filter = "detective"
 
 /obj/item/device/filter/polar
@@ -305,8 +292,7 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A Polaroid filter."
 	icon_state = "polaroid_filter"
-	list/effect = POLAROID_FILTER
-	vignette = ""
+	effect = list(POLAROID_FILTER, "", null)
 	filter = "polaroid"
 
 /obj/item/device/filter/old
@@ -314,9 +300,7 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "An old filter."
 	icon_state = "old_filter"
-	effect = OLD_1_FILTER
-	effect_2 = OLD_2_FILTER
-	vignette = "old_vignette"
+	effect = list(OLD_1_FILTER, "old_vignette", OLD_2_FILTER)
 	filter = "old"
 
 /obj/item/device/filter/rentgene
@@ -324,8 +308,7 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A rentgene filter that shows people's sceletones."
 	icon_state = "rentgene_filter"
-	effect = XRAY_FILTER
-	vignette = ""
+	effect = list(XRAY_FILTER, "", null)
 	filter = "rentgene"
 
 /obj/item/device/filter/nude
@@ -333,8 +316,7 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A red filter that shows people nude."
 	icon_state = "nude_filter"
-	effect = NUDE_FILTER
-	vignette = ""
+	effect = list(NUDE_FILTER, "", null)
 	filter = "nude"
 
 /obj/item/device/camera/proc/update_desc()
@@ -367,8 +349,6 @@
 	if(istype(I, /obj/item/device/filter) && !filter && can_put_filter)
 		var/obj/item/device/filter/F = I
 		effect = F.effect
-		effect_2 = F.effect_2
-		vignette = F.vignette
 		filter = F.filter
 		user.unEquip(F)
 		F.forceMove(src)
@@ -378,8 +358,6 @@
 	if(!(filter && can_put_filter))
 		return
 	effect = initial(effect)
-	effect_2 = initial(effect_2)
-	vignette = initial(vignette)
 	filter = initial(filter)
 	usr.put_in_hands(pick(contents))
 
@@ -567,19 +545,20 @@
 	var/icon/vign
 	switch(photo_size)
 		if(1)
-			vign = icon('icons/effects/32x32.dmi', vignette)
+			vign = icon('icons/effects/32x32.dmi', effect[2])
 		if(3)
-			vign = icon('icons/effects/96x96.dmi', vignette)
+			vign = icon('icons/effects/96x96.dmi', effect[2])
 		if(5)
-			vign = icon('icons/effects/160x160.dmi', vignette)
+			vign = icon('icons/effects/160x160.dmi', effect[2])
 	if(effect)
-		//First Flter
-		temp.MapColors(effect[1], effect[2], effect[3], effect[4], effect[5], effect[6], effect[7], effect[8], effect[9], effect[10], effect[11], effect[12], effect[13], effect[14], effect[15], effect[16], effect[17], effect[18], effect[19], effect[20])
-	//Additions
-	temp.Blend(vign, ICON_OVERLAY, 1, 1)
-	if(effect_2)
-		//Second Filter
-		temp.MapColors(effect_2[1], effect_2[2], effect_2[3], effect_2[4], effect_2[5], effect_2[6], effect_2[7], effect_2[8], effect_2[9], effect_2[10], effect_2[11], effect_2[12], effect_2[13], effect_2[14], effect_2[15], effect_2[16], effect_2[17], effect_2[18], effect_2[19], effect_2[20])
+		if(effect[1])
+			//First Flter
+			temp.MapColors(effect[1][1], effect[1][2], effect[1][3], effect[1][4], effect[1][5], effect[1][6], effect[1][7], effect[1][8], effect[1][9], effect[1][10], effect[1][11], effect[1][12], effect[1][13], effect[1][14], effect[1][15], effect[1][16], effect[1][17], effect[1][18], effect[1][19], effect[1][20])
+		//Additions
+		temp.Blend(vign, ICON_OVERLAY, 1, 1)
+		if(effect[3])
+			//Second Filter
+			temp.MapColors(effect[3][1], effect[3][2], effect[3][3], effect[3][4], effect[3][5], effect[3][6], effect[3][7], effect[3][8], effect[3][9], effect[3][10], effect[3][11], effect[3][12], effect[3][13], effect[3][14], effect[3][15], effect[3][16], effect[3][17], effect[3][18], effect[3][19], effect[3][20])
 
 
 	var/datum/picture/P = createpicture(user, temp, mobs, mob_names, flag)
