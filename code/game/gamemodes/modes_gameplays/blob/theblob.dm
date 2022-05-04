@@ -145,8 +145,8 @@
 	return
 
 
-/obj/effect/blob/bullet_act(obj/item/projectile/Proj)
-	..()
+/obj/effect/blob/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	switch(Proj.damage_type)
 	 if(BRUTE)
 		 health -= (Proj.damage/brute_resist)
@@ -154,7 +154,6 @@
 		 health -= (Proj.damage/fire_resist)
 
 	update_icon()
-	return PROJECTILE_ACTED
 
 /obj/effect/blob/Crossed(atom/movable/AM)
 	. = ..()

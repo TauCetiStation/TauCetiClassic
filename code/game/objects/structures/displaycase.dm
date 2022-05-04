@@ -28,11 +28,10 @@
 	healthcheck()
 
 
-/obj/structure/displaycase/bullet_act(obj/item/projectile/Proj)
+/obj/structure/displaycase/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
-	..()
 	healthcheck()
-	return
 
 
 /obj/structure/displaycase/blob_act()

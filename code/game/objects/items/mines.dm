@@ -43,7 +43,8 @@
 /obj/item/mine/Bumped(atom/movable/AM)
 	try_trigger(AM)
 
-/obj/item/mine/bullet_act(obj/item/projectile/Proj)
+/obj/item/mine/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	trigger_act(Proj)
 	qdel(src)
 
