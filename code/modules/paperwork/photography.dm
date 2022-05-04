@@ -431,7 +431,7 @@
 				if(ishuman(A))
 					img = icon("icons/mob/human.dmi","electrocuted_generic",A.dir)
 			if("nude")
-				if(ishuman(A)
+				if(ishuman(A))
 					img = icon('icons/effects/32x32.dmi', "")
 					var/mob/living/carbon/human/H = A
 					for(var/obj/item/organ/external/BP in H.bodyparts)
