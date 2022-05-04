@@ -34,7 +34,7 @@
 
 	var/cultists_around = 0
 	for(var/mob/M in AOG.mobs_around)
-		if(religion.is_member(M) && user.get_species() != HOMUNCULUS)
+		if(religion.is_member(M) && M.get_species() != HOMUNCULUS)
 			cultists_around++
 
 	if(cultists_around < need_members)
