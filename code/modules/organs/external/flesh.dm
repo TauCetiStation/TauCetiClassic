@@ -28,7 +28,7 @@
 	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL, VOX)))
 		return 0
 
-	if(isnull(cap))
+	if(isnull(cap) || cap > BP.max_pumped)
 		cap = BP.max_pumped
 	if(BP.pumped >= cap)
 		return 0
