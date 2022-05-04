@@ -22,7 +22,7 @@
 	if(health <= 0)
 		qdel(src)
 
-/obj/structure/alien/bullet_act(obj/item/projectile/Proj)
+/obj/structure/alien/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
@@ -252,7 +252,7 @@
 	if(exposed_temperature > 290)
 		apply_damage(15)
 
-/obj/structure/alien/weeds/bullet_act(obj/item/projectile/Proj)
+/obj/structure/alien/weeds/bullet_act(obj/item/projectile/Proj, def_zone)
 	return PROJECTILE_FORCE_MISS
 
 /obj/structure/alien/weeds/node
