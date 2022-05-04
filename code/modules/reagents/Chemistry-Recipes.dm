@@ -1199,7 +1199,7 @@
 /datum/chemical_reaction/slimefreeze/proc/do_freeze(datum/reagents/holder)
 	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 	for(var/mob/living/M in range(get_turf_loc(holder.my_atom), 7))
-		M.bodytemperature -= 140
+		M.adjust_bodytemperature(-140)
 		to_chat(M, "<span class='notice'>You feel a chill!</span>")
 
 //Orange

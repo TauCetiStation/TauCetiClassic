@@ -342,7 +342,7 @@
 /mob/living/carbon/ian/handle_fire()
 	if(..())
 		return
-	bodytemperature += BODYTEMP_HEATING_MAX
+	adjust_bodytemperature(BODYTEMP_HEATING_MAX)
 	return
 
 /mob/living/carbon/ian/updatehealth()
