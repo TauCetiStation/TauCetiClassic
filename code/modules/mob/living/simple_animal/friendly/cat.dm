@@ -253,7 +253,7 @@ var/global/cat_number = 0
 		return
 	target_mob.attack_unarmed(src)
 
-/mob/living/simple_animal/cat/runtime/bullet_act(obj/item/projectile/proj)
+/mob/living/simple_animal/cat/runtime/bullet_act(obj/item/projectile/Proj, def_zone)
 	return PROJECTILE_FORCE_MISS
 
 /mob/living/simple_animal/cat/runtime/ex_act(severity)

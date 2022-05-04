@@ -82,9 +82,8 @@
 	else
 		src.damage += amount
 
-	var/obj/item/organ/external/BP = owner.bodyparts_by_name[parent_bodypart]
 	if (!silent)
-		owner.custom_pain("Something inside your [BP.name] hurts a lot.", 1)
+		owner.custom_pain("What a pain! My [name]!", 1)
 
 /obj/item/organ/internal/emp_act(severity)
 	switch(robotic)

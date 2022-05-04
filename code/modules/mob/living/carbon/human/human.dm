@@ -1330,7 +1330,8 @@
 
 				BP.take_damage(rand(1,3), 0, 0)
 				if(!BP.is_robotic()) //There is no blood in protheses.
-					BP.status |= ORGAN_BLEEDING
+					if(!reagents.has_reagent("metatrombine")) // metatrombine just prevents bleeding, not toxication
+						BP.status |= ORGAN_BLEEDING
 					adjustToxLoss(rand(1,3))
 
 /mob/living/carbon/human/verb/check_pulse()
