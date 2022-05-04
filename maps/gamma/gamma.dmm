@@ -8367,12 +8367,12 @@
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
-/obj/item/device/camera,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/device/camera/polar,
 /turf/simulated/floor/carpet,
 /area/station/security/vacantoffice)
 "bFz" = (
@@ -35206,13 +35206,13 @@
 /obj/structure/closet{
 	name = "Evidence Closet"
 	},
-/obj/item/device/camera,
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 29
 	},
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "kdS" = (
@@ -38196,7 +38196,7 @@
 	dir = 6
 	},
 /obj/structure/table/woodentable/fancy/black,
-/obj/item/device/camera,
+/obj/item/device/camera/polar,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -49451,17 +49451,13 @@
 /obj/item/weapon/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = 30
 	},
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
 "oDj" = (
@@ -52708,12 +52704,8 @@
 /area/station/civilian/dormitories/security)
 "pHg" = (
 /obj/structure/table,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
 /obj/item/device/taperecorder,
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -54591,7 +54583,7 @@
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
-/obj/item/device/camera,
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
 "qjI" = (

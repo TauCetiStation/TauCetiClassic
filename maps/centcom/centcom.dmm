@@ -20024,14 +20024,6 @@
 	icon_state = "wood-broken"
 	},
 /area/custom/wizard_station)
-"baV" = (
-/obj/effect/landmark/blockway,
-/turf/unsimulated/floor/snow{
-	nitrogen = 100;
-	oxygen = 25;
-	temperature = 243
-	},
-/area/space)
 "baW" = (
 /obj/structure/flora/tree/pine{
 	layer = 9.5
@@ -26423,6 +26415,7 @@
 /area/centcom/holding)
 "lxb" = (
 /obj/structure/rack,
+/obj/item/device/filter/nude,
 /obj/item/device/camera,
 /turf/unsimulated/floor{
 	dir = 5;
@@ -33806,7 +33799,7 @@ baY
 abi
 abi
 afT
-baV
+afT
 abi
 abi
 abi
