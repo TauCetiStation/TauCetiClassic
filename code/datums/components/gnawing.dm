@@ -1,15 +1,13 @@
 /datum/component/gnawing
-	var/mob/living/simple_animal/animal
-	var/list/attack
 
 /datum/component/gnawing/Initialize()
 	START_PROCESSING(SSgnaw, src)
 
 /datum/component/gnawing/process()
-	animal = parent
-	attack = animal.get_unarmed_attack()
-	if(animal.stat != CONSCIOUS)
+	var/mob/living/simple_animal/animal = parent
+	if(animal.incapacitated())
 		return
+	var/list/attack = animal.get_unarmed_attack()
 	for(var/obj/structure/cable/C in animal.loc)
 		C.health -= attack["damage"]
 		C.check_health()
