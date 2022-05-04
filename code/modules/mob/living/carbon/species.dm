@@ -1566,12 +1566,13 @@
 /datum/species/abomination/call_digest_proc(mob/living/M, datum/reagent/R, multiplier)
 	return
 
-/datum/species/human/homunculus
+/datum/species/homunculus
 	name = HOMUNCULUS
+	language = LANGUAGE_SOLCOMMON
 
 	brute_mod = 2
 	burn_mod = 2
-	speed_mod = 5
+	speed_mod = 2
 
 	has_bodypart = list(
 		 BP_CHEST = /obj/item/organ/external/chest/homunculus
@@ -1602,13 +1603,13 @@
 
 	is_common = FALSE
 
-/datum/species/human/homunculus/on_gain(mob/living/carbon/human/H)
+/datum/species/homunculus/on_gain(mob/living/carbon/human/H)
 	. = ..()
 	var/list/tail_list = icon_states('icons/mob/species/tail.dmi') - "vox_armalis"
 	tail_list += ""
 	H.random_tail_holder = pick(tail_list)
 
-/datum/species/human/homunculus/create_bodyparts(mob/living/carbon/human/H)
+/datum/species/homunculus/create_bodyparts(mob/living/carbon/human/H)
 	var/list/keys = get_list_of_primary_keys(global.all_species)
 	keys -= list(PODMAN, IPC, SKELETON, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
 

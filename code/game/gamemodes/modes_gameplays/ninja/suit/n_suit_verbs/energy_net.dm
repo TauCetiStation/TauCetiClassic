@@ -62,10 +62,10 @@
 		qdel(src)
 	return
 
-/obj/effect/energy_net/bullet_act(obj/item/projectile/Proj)
+/obj/effect/energy_net/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
 	healthcheck()
-	return PROJECTILE_ACTED
 
 /obj/effect/energy_net/ex_act(severity)
 	if(severity == EXPLODE_LIGHT && prob(50))

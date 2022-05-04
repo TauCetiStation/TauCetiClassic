@@ -212,11 +212,8 @@
 		/obj/item/clothing/suit/apron/overalls = 5,
 		/obj/item/clothing/suit/chickensuit = 5,
 		/obj/item/clothing/head/chicken = 5,
-		/obj/item/clothing/under/fluff/tian_dress = 5,
-		/obj/item/clothing/under/fluff/wyatt_1 = 5,
-		/obj/item/clothing/under/fluff/olddressuniform = 5,
-		/obj/item/clothing/under/fluff/jumpsuitdown = 5,
-		/obj/item/clothing/under/fluff/jane_sidsuit = 5,
+		/obj/item/clothing/under/dress/dress_purple = 5,
+		/obj/item/clothing/under/test_subject = 5,
 		/obj/item/clothing/under/sundress = 5,
 		/obj/item/clothing/under/roman = 3,
 		/obj/item/clothing/shoes/roman = 3,
@@ -311,5 +308,5 @@
 		/obj/item/device/modkit/wizard/vox = 2,
 	)
 	contraband = list(
-		/obj/item/weapon/reagent_containers/glass/bottle/wizarditis = 1,
-	)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
+		/obj/item/weapon/reagent_containers/pill/adminordrazine = 1,
+	)
