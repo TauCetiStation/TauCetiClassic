@@ -126,11 +126,10 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/power/am_control_unit/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(Proj.flag != "bullet")
 		stability -= Proj.force
-	return 0
-
 
 /obj/machinery/power/am_control_unit/power_change()
 	..()

@@ -83,12 +83,11 @@
 		visible_message("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
 
 
-/mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(prob(65))
 		return ..()
-	else
-		visible_message("<span class='warning'><B>[src] blocks [Proj] with its shield!</B></span>")
-		return PROJECTILE_ABSORBED
+	visible_message("<span class='warning'><B>[src] blocks [Proj] with its shield!</B></span>")
+	return PROJECTILE_ABSORBED
 
 /mob/living/simple_animal/hostile/syndicate/melee/space
 	min_oxy = 0
