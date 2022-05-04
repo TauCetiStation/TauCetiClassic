@@ -219,7 +219,7 @@
 /obj/item/weapon/gripper/verb/drop_item_verb()
 	set name = "Drop Item"
 	set desc = "Release an item from your magnetic gripper."
-	set category = statpanel("Status")
+	set category = "Commands"
 
 	SEND_SIGNAL(src, COMSIG_HAND_DROP_ITEM, get_turf(src))
 
