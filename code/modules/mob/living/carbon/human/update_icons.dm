@@ -96,7 +96,7 @@ Please contact me on #coderbus IRC. ~Carn x
 */
 
 //Human Overlays Indexes/////////
-#define FIRE_UNDERLAYER			28
+#define FIRE_LAYER_1			28
 #define BODY_LAYER				27
 #define MUTATIONS_LAYER			25
 #define DAMAGE_LAYER			24
@@ -122,7 +122,7 @@ Please contact me on #coderbus IRC. ~Carn x
 #define L_HAND_LAYER			4
 #define R_HAND_LAYER			3
 #define TARGETED_LAYER			2		//BS12: Layer for the target overlay from weapon targeting system
-#define FIRE_LAYER				1
+#define FIRE_LAYER_2				1
 #define TOTAL_LAYERS			28
 //////////////////////////////////
 //Human Limb Overlays Indexes/////
@@ -353,19 +353,19 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_fire() //TG-stuff, fire layer
-	remove_overlay(FIRE_UNDERLAYER)
-	remove_overlay(FIRE_LAYER)
+	remove_overlay(FIRE_LAYER_1)
+	remove_overlay(FIRE_LAYER_2)
 
 	if(on_fire)
-		var/image/under = image('icons/mob/OnFire.dmi', "human_underlay", "layer"=-FIRE_UNDERLAYER)
-		var/image/over = image('icons/mob/OnFire.dmi', "human_overlay", "layer"=-FIRE_LAYER)
+		var/image/under = image('icons/mob/OnFire.dmi', "human_underlay", "layer"=-FIRE_LAYER_2)
+		var/image/over = image('icons/mob/OnFire.dmi', "human_overlay", "layer"=-FIRE_LAYER_1)
 		under = update_height(under)
 		over = update_height(over)
-		overlays_standing[FIRE_UNDERLAYER]	= under
-		overlays_standing[FIRE_LAYER]	= over
+		overlays_standing[FIRE_LAYER_1]	= under
+		overlays_standing[FIRE_LAYER_2]	= over
 
-	apply_overlay(FIRE_UNDERLAYER)
-	apply_overlay(FIRE_LAYER)
+	apply_overlay(FIRE_LAYER_1)
+	apply_overlay(FIRE_LAYER_2)
 
 
 /* --------------------------------------- */
@@ -895,7 +895,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	return I
 
 //Human Overlays Indexes/////////
-#undef FIRE_UNDERLAYER
+#undef FIRE_LAYER_1
 #undef BODY_LAYER
 #undef MUTATIONS_LAYER
 #undef DAMAGE_LAYER
@@ -921,5 +921,5 @@ Please contact me on #coderbus IRC. ~Carn x
 #undef L_HAND_LAYER
 #undef R_HAND_LAYER
 #undef TARGETED_LAYER
-#undef FIRE_LAYER
+#undef FIRE_LAYER_2
 #undef TOTAL_LAYERS

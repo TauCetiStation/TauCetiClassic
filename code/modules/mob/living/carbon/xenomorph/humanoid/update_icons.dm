@@ -1,11 +1,11 @@
 //Xeno Overlays Indexes//////////
-#define X_FIRE_UNDERLAYER		1
+#define X_FIRE_LAYER_1			1
 #define X_HEAD_LAYER			2
 #define X_SUIT_LAYER			3
 #define X_L_HAND_LAYER			4
 #define X_R_HAND_LAYER			5
 #define TARGETED_LAYER			6
-#define X_FIRE_LAYER			7
+#define X_FIRE_LAYER_2			7
 #define X_SHRIEC_LAYER			8
 #define X_TOTAL_LAYERS			8
 /////////////////////////////////
@@ -168,48 +168,48 @@
 		update_icons()
 
 /mob/living/carbon/xenomorph/humanoid/queen/update_fire()
-	cut_overlay(overlays_standing[X_FIRE_LAYER])
+	cut_overlay(overlays_standing[X_FIRE_LAYER_2])
 	if(on_fire)
-		overlays_standing[X_FIRE_LAYER] = image(icon = 'icons/mob/alienqueen.dmi', icon_state = "queen_fire")
-		add_overlay(overlays_standing[X_FIRE_LAYER])
+		overlays_standing[X_FIRE_LAYER_2] = image(icon = 'icons/mob/alienqueen.dmi', icon_state = "queen_fire")
+		add_overlay(overlays_standing[X_FIRE_LAYER_2])
 		return
-	overlays_standing[X_FIRE_LAYER] = null
+	overlays_standing[X_FIRE_LAYER_2] = null
 
 /mob/living/carbon/xenomorph/humanoid/queen/update_fire()
-	cut_overlay(overlays_standing[X_FIRE_UNDERLAYER])
-	cut_overlay(overlays_standing[X_FIRE_LAYER])
+	cut_overlay(overlays_standing[X_FIRE_LAYER_1])
+	cut_overlay(overlays_standing[X_FIRE_LAYER_2])
 	if(on_fire)
-		overlays_standing[X_FIRE_UNDERLAYER] = image('icons/mob/alienqueen.dmi', icon_state + "_fire")
-		overlays_standing[X_FIRE_LAYER] = image('icons/mob/alienqueen.dmi', icon_state + "_fire")
-		add_overlay(overlays_standing[X_FIRE_UNDERLAYER])
-		add_overlay(overlays_standing[X_FIRE_LAYER])
+		overlays_standing[X_FIRE_LAYER_1] = image('icons/mob/alienqueen.dmi', icon_state + "_fire", layer = X_FIRE_LAYER_1)
+		overlays_standing[X_FIRE_LAYER_2] = image('icons/mob/alienqueen.dmi', icon_state + "_fire", layer = X_FIRE_LAYER_2)
+		add_overlay(overlays_standing[X_FIRE_LAYER_1])
+		add_overlay(overlays_standing[X_FIRE_LAYER_2])
 		return
-	overlays_standing[X_FIRE_UNDERLAYER] = null
-	overlays_standing[X_FIRE_LAYER] = null
+	overlays_standing[X_FIRE_LAYER_1] = null
+	overlays_standing[X_FIRE_LAYER_2] = null
 
 /mob/living/carbon/xenomorph/humanoid/update_fire()
-	cut_overlay(overlays_standing[X_FIRE_UNDERLAYER])
-	cut_overlay(overlays_standing[X_FIRE_LAYER])
+	cut_overlay(overlays_standing[X_FIRE_LAYER_1])
+	cut_overlay(overlays_standing[X_FIRE_LAYER_2])
 	if(on_fire)
-		overlays_standing[X_FIRE_UNDERLAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "human_underlay")
-		overlays_standing[X_FIRE_LAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "human_overlay")
-		add_overlay(overlays_standing[X_FIRE_UNDERLAYER])
-		add_overlay(overlays_standing[X_FIRE_LAYER])
+		overlays_standing[X_FIRE_LAYER_1] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "human_underlay", layer = X_FIRE_LAYER_1)
+		overlays_standing[X_FIRE_LAYER_2] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "human_overlay", layer = X_FIRE_LAYER_2)
+		add_overlay(overlays_standing[X_FIRE_LAYER_1])
+		add_overlay(overlays_standing[X_FIRE_LAYER_2])
 		return
-	overlays_standing[X_FIRE_UNDERLAYER] = null
-	overlays_standing[X_FIRE_LAYER] = null
+	overlays_standing[X_FIRE_LAYER_1] = null
+	overlays_standing[X_FIRE_LAYER_2] = null
 
 /mob/living/carbon/xenomorph/update_fire()
-	cut_overlay(overlays_standing[X_FIRE_UNDERLAYER])
-	cut_overlay(overlays_standing[X_FIRE_LAYER])
+	cut_overlay(overlays_standing[X_FIRE_LAYER_1])
+	cut_overlay(overlays_standing[X_FIRE_LAYER_2])
 	if(on_fire)
-		overlays_standing[X_FIRE_UNDERLAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_underlay")
-		overlays_standing[X_FIRE_LAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_overlay")
-		add_overlay(overlays_standing[X_FIRE_UNDERLAYER])
-		add_overlay(overlays_standing[X_FIRE_LAYER])
+		overlays_standing[X_FIRE_LAYER_1] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_underlay", layer = X_FIRE_LAYER_1)
+		overlays_standing[X_FIRE_LAYER_2] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_overlay", layer = X_FIRE_LAYER_2)
+		add_overlay(overlays_standing[X_FIRE_LAYER_1])
+		add_overlay(overlays_standing[X_FIRE_LAYER_2])
 		return
-	overlays_standing[X_FIRE_UNDERLAYER] = null
-	overlays_standing[X_FIRE_LAYER] = null
+	overlays_standing[X_FIRE_LAYER_1] = null
+	overlays_standing[X_FIRE_LAYER_2] = null
 
 /mob/living/carbon/xenomorph/humanoid/proc/create_shriekwave()
 	overlays_standing[X_SHRIEC_LAYER] = image(icon = 'icons/mob/alienqueen.dmi', icon_state = "shriek_waves")
@@ -222,12 +222,12 @@
 		overlays_standing[cache_index] = null
 
 //Xeno Overlays Indexes//////////
-#undef X_FIRE_UNDERLAYER
+#undef X_FIRE_LAYER_1
 #undef X_HEAD_LAYER
 #undef X_SUIT_LAYER
 #undef X_L_HAND_LAYER
 #undef X_R_HAND_LAYER
 #undef TARGETED_LAYER
-#undef X_FIRE_LAYER
+#undef X_FIRE_LAYER_2
 #undef X_SHRIEC_LAYER
 #undef X_TOTAL_LAYERS
