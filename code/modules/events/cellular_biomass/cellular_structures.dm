@@ -33,11 +33,10 @@
 		qdel(src)
 	return
 
-/obj/structure/cellular_biomass/bullet_act(obj/item/projectile/Proj)
+/obj/structure/cellular_biomass/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
-	..()
 	healthcheck()
-	return
 
 /obj/structure/cellular_biomass/ex_act(severity)
 	health -= 100 / severity
