@@ -365,7 +365,7 @@
 /obj/item/device/camera/atom_init()
 	. = ..()
 	if(base_lense)
-		base_lense = new(src)
+		base_lense = new base_lense(src)
 	update_desc()
 
 /obj/item/device/camera/AltClick(mob/user)
@@ -375,8 +375,6 @@
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
-		return
-	if(!can_put_lense)
 		return
 
 	switch(photo_size)
@@ -441,7 +439,7 @@
 		update_desc()
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 		return
-	if(istype(I, /obj/item/device/lense) && can_put_lense && !contents)
+	if(istype(I, /obj/item/device/lense) && can_put_lense && !contents.len)
 		var/obj/item/device/lense/F = I
 		user.unEquip(F)
 		F.forceMove(src)
