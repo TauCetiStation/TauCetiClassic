@@ -177,12 +177,14 @@
 	var/list/effect = NO_EFFECT
 	var/list/effect_2 = NO_EFFECT
 	var/vignette = ""
+	var/filter = null
+	var/can_put_filter = TRUE
 
 /obj/item/device/camera/atom_init()
 	. = ..()
 	update_desc()
 
-/obj/item/device/camera/polaroid
+/obj/item/device/camera/polar
 	name = "polaroid"
 	icon = 'icons/obj/items.dmi'
 	desc = "A polaroid camera."
@@ -192,21 +194,27 @@
 	list/effect = POLAROID
 	list/effect_2 = NO_EFFECT
 	vignette = ""
+	filter = "polaroid"
+	can_put_filter = FALSE
 
-/obj/item/device/camera/polaroid/spooky
+/obj/item/device/camera/polar/spooky
 	name = "camera obscura"
 	desc = "A polaroid camera, some say it can see ghosts!"
 	see_ghosts = 1
 	effect = INVERT
 	effect_2 = NO_EFFECT
 	vignette = "vignette"
+	filter = "inverse"
+	can_put_filter = FALSE
 
-/obj/item/device/camera/polaroid/detective
+/obj/item/device/camera/polar/detective
 	name = "detectives camera"
 	desc = "A black&white filter camera."
 	effect = BLACKANDWHITE
 	effect_2 = NO_EFFECT
 	vignette = "vignette"
+	filter = "detective"
+	can_put_filter = FALSE
 
 /obj/item/device/camera/lomo
 	name = "lomo lc-a"
@@ -218,6 +226,8 @@
 	effect = LOMO
 	effect_2 = NO_EFFECT
 	vignette = "vignette"
+	filter = "lomo"
+	can_put_filter = FALSE
 
 /obj/item/device/camera/oldcamera
 	name = "fed"
@@ -229,6 +239,116 @@
 	effect = OLD_1
 	effect_2 = OLD_2
 	vignette = "old_vignette"
+	filter = "old"
+	can_put_filter = FALSE
+
+// Camera filters
+/obj/item/device/filter
+	w_class = SIZE_TINY
+	var/effect
+	var/effect_2
+	var/vignette
+	var/filter
+
+/obj/item/device/filter/lomo
+	name = "lomo filter"
+	icon = 'icons/obj/items.dmi'
+	desc = "A LOMOgraphy filter."
+	icon_state = "lomo_filter"
+	effect = LOMO
+	effect_2 = NO_EFFECT
+	vignette = "vignette"
+	filter = "lomo"
+
+/obj/item/device/filter/posterization
+	name = "poster filter"
+	icon = 'icons/obj/items.dmi'
+	desc = "A poster filter."
+	icon_state = "poster_filter"
+	effect = POSTERIZATION
+	effect_2 = NO_EFFECT
+	vignette = ""
+	filter = "posterize"
+
+/obj/item/device/filter/grayscale
+	name = "gray filter"
+	icon = 'icons/obj/items.dmi'
+	desc = "A gray filter."
+	icon_state = "grey_filter"
+	effect = GRAYSCALE
+	effect_2 = NO_EFFECT
+	vignette = ""
+	filter = "grayscale"
+
+/obj/item/device/filter/invert
+	name = "invert filter"
+	icon = 'icons/obj/items.dmi'
+	desc = "A invert filter."
+	icon_state = "invert_filter"
+	effect = INVERT
+	effect_2 = NO_EFFECT
+	vignette = "vignette"
+	filter = "invert"
+
+/obj/item/device/filter/sepia
+	name = "sepia filter"
+	icon = 'icons/obj/items.dmi'
+	desc = "A sepia filter."
+	icon_state = "sepia_filter"
+	effect = SEPIA
+	effect_2 = NO_EFFECT
+	vignette = ""
+	filter = "sepia"
+
+/obj/item/device/filter/detective
+	name = "detective filter"
+	icon = 'icons/obj/items.dmi'
+	desc = "A detective filter."
+	icon_state = "detective_filter"
+	effect = BLACKANDWHITE
+	effect_2 = NO_EFFECT
+	vignette = "vignette"
+	filter = "detective"
+
+/obj/item/device/filter/polar
+	name = "polaroid filter"
+	icon = 'icons/obj/items.dmi'
+	desc = "A Polaroid filter."
+	icon_state = "polaroid_filter"
+	list/effect = POLAROID
+	list/effect_2 = NO_EFFECT
+	vignette = ""
+	filter = "polaroid"
+
+/obj/item/device/filter/old
+	name = "old film filter"
+	icon = 'icons/obj/items.dmi'
+	desc = "An old filter."
+	icon_state = "old_filter"
+	effect = OLD_1
+	effect_2 = OLD_2
+	vignette = "old_vignette"
+	filter = "old"
+
+/obj/item/device/filter/rentgene
+	name = "rentgene filter"
+	icon = 'icons/obj/items.dmi'
+	desc = "A rentgene filter that shows people's sceletones."
+	icon_state = "rentgene_filter"
+	effect = RENTGENE
+	effect_2 = NO_EFFECT
+	vignette = ""
+	filter = "rentgene"
+
+/obj/item/device/filter/nude
+	name = "red film filter"
+	icon = 'icons/obj/items.dmi'
+	desc = "A red filter that shows people nude."
+	icon_state = "nude_filter"
+	effect = NUDE
+	effect_2 = NO_EFFECT
+	vignette = ""
+	filter = "nude"
 
 /obj/item/device/camera/proc/update_desc()
 	desc = "[initial(desc)]. [pictures_left ? "[pictures_left]" : "No"] photos left."
@@ -257,7 +377,24 @@
 		update_desc()
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 		return
+	if(istype(I, /obj/item/device/filter) && !filter && can_put_filter)
+		var/obj/item/device/filter/F = I
+		effect = F.effect
+		effect_2 = F.effect_2
+		vignette = F.vignette
+		filter = F.filter
+		user.unEquip(F)
+		F.forceMove(src)
 	return ..()
+
+/obj/item/device/camera/verb/eject_filter()
+	if(!(filter && can_put_filter))
+		return
+	effect = initial(effect)
+	effect_2 = initial(effect_2)
+	vignette = initial(vignette)
+	filter = initial(filter)
+	usr.put_in_hands(pick(contents))
 
 /obj/item/device/camera/spooky/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/occult_scanner))
@@ -289,6 +426,23 @@
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
+		switch(filter)
+			if("rentgene")
+				if(istype(A, /mob/living/carbon/human))
+					img = icon("icons/mob/human.dmi","electrocuted_generic",A.dir)
+			if("nude")
+				if(istype(A, /mob/living/carbon/human))
+					img = icon('icons/effects/32x32.dmi', "")
+					var/mob/living/carbon/human/H = A
+					for(var/obj/item/organ/external/BP in H.bodyparts)
+						if(BP.is_stump)
+							continue
+						var/icon/part = icon(BP.icon, BP.icon_state, A.dir)
+						if(H.species.flags[HAS_SKIN_COLOR])
+							part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, H.r_skin/255, H.g_skin/255, H.b_skin/255)
+						else
+							part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, H.s_tone/255, H.s_tone/255, H.s_tone/255)
+						img.Blend(part, ICON_OVERLAY)
 		if(isliving(A) && A:lying)
 			img.Turn(A:lying_current)
 
