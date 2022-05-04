@@ -174,12 +174,8 @@
 	var/icon_off = "camera_off"
 	var/see_ghosts = 0 //for the spoop of it
 	var/photo_size = 3 //Default is 3x3. 1x1, 5x5, 7x7 are also options
-	var/list/effect = null
-	var/can_put_filter = TRUE
-
-/obj/item/device/camera/atom_init()
-	. = ..()
-	update_desc()
+	var/can_put_lense = TRUE
+	var/obj/item/device/lense/base_lense
 
 /obj/item/device/camera/polar
 	name = "polaroid"
@@ -188,24 +184,21 @@
 	icon_state = "polaroid"
 	icon_on = "polaroid"
 	icon_off = "polaroid_off"
-	effect = list(POLAROID_FILTER, "", null)
-	filter = "polaroid"
-	can_put_filter = FALSE
+	can_put_lense = FALSE
+	base_lense = /obj/item/device/lense/polar
 
 /obj/item/device/camera/polar/spooky
 	name = "camera obscura"
 	desc = "A polaroid camera, some say it can see ghosts!"
 	see_ghosts = 1
-	effect = list(INVERT_FILTER, "vignette", null)
-	filter = "inverse"
-	can_put_filter = FALSE
+	can_put_lense = FALSE
+	base_lense = /obj/item/device/lense/invert
 
 /obj/item/device/camera/polar/detective
 	name = "detectives camera"
 	desc = "A black&white filter camera."
-	effect = list(BLACKANDWHITE_FILTER, "vignette", null)
-	filter = "detective"
-	can_put_filter = FALSE
+	can_put_lense = FALSE
+	base_lense = /obj/item/device/lense/detective
 
 /obj/item/device/camera/lomo
 	name = "lomo lc-a"
@@ -214,9 +207,8 @@
 	icon_on = "lomo"
 	icon_off = "lomo_off"
 	pictures_left = 30
-	effect = list(LOMO_FILTER, "vignette", null)
-	filter = "lomo"
-	can_put_filter = FALSE
+	can_put_lense = FALSE
+	base_lense = /obj/item/device/lense/lomo
 
 /obj/item/device/camera/oldcamera
 	name = "fed"
@@ -225,102 +217,201 @@
 	icon_on = "fed"
 	icon_off = "fed_off"
 	pictures_left = 30
-	effect = list(OLD_1_FILTER, "old_vignette", OLD_2_FILTER)
-	filter = "old"
-	can_put_filter = FALSE
+	can_put_lense = FALSE
+	base_lense = /obj/item/device/lense/old
+
 
 // Camera filters
-/obj/item/device/filter
+/obj/item/device/lense
 	w_class = SIZE_TINY
 	var/effect
-	var/effect_2
-	var/vignette
-	var/filter
 
-/obj/item/device/filter/lomo
-	name = "lomo filter"
+/obj/item/device/lense/lomo
+	name = "lomo filter lense"
 	icon = 'icons/obj/items.dmi'
-	desc = "A LOMOgraphy filter."
+	desc = "A LOMOgraphy filter lense."
 	icon_state = "lomo_filter"
 	effect = list(LOMO_FILTER, "vignette", null)
-	filter = "lomo"
 
-/obj/item/device/filter/posterization
-	name = "poster filter"
+/obj/item/device/lense/posterization
+	name = "poster filter lense"
 	icon = 'icons/obj/items.dmi'
-	desc = "A poster filter."
+	desc = "A poster filter lense."
 	icon_state = "poster_filter"
 	effect = list(POSTERIZATION_FILTER, "", null)
-	filter = "posterize"
 
-/obj/item/device/filter/grayscale
-	name = "gray filter"
+/obj/item/device/lense/grayscale
+	name = "gray filter lense"
 	icon = 'icons/obj/items.dmi'
-	desc = "A gray filter."
+	desc = "A gray filter lense."
 	icon_state = "grey_filter"
 	effect = list(GRAYSCALE_FILTER, "", null)
-	filter = "grayscale"
 
-/obj/item/device/filter/invert
-	name = "invert filter"
+/obj/item/device/lense/invert
+	name = "invert filter lense"
 	icon = 'icons/obj/items.dmi'
-	desc = "A invert filter."
+	desc = "A invert filter lense."
 	icon_state = "invert_filter"
 	effect = list(INVERT_FILTER, "vignette", null)
-	filter = "invert"
 
-/obj/item/device/filter/sepia
-	name = "sepia filter"
+/obj/item/device/lense/sepia
+	name = "sepia filter lense"
 	icon = 'icons/obj/items.dmi'
-	desc = "A sepia filter."
+	desc = "A sepia filter lense."
 	icon_state = "sepia_filter"
 	effect = list(SEPIA_FILTER, "", null)
-	filter = "sepia"
 
-/obj/item/device/filter/detective
-	name = "detective filter"
+/obj/item/device/lense/detective
+	name = "detective filter lense"
 	icon = 'icons/obj/items.dmi'
-	desc = "A detective filter."
+	desc = "A detective filter lense."
 	icon_state = "detective_filter"
 	effect = list(BLACKANDWHITE_FILTER, "vignette", null)
-	filter = "detective"
 
-/obj/item/device/filter/polar
-	name = "polaroid filter"
+/obj/item/device/lense/polar
+	name = "polaroid filter lense"
 	icon = 'icons/obj/items.dmi'
-	desc = "A Polaroid filter."
+	desc = "A Polaroid filter lense."
 	icon_state = "polaroid_filter"
 	effect = list(POLAROID_FILTER, "", null)
-	filter = "polaroid"
 
-/obj/item/device/filter/old
-	name = "old film filter"
+/obj/item/device/lense/old
+	name = "old film filter lense"
 	icon = 'icons/obj/items.dmi'
-	desc = "An old filter."
+	desc = "An old filter lense."
 	icon_state = "old_filter"
 	effect = list(OLD_1_FILTER, "old_vignette", OLD_2_FILTER)
-	filter = "old"
 
-/obj/item/device/filter/rentgene
-	name = "rentgene filter"
+/obj/item/device/lense/rentgene
+	name = "rentgene filter lense"
 	icon = 'icons/obj/items.dmi'
-	desc = "A rentgene filter that shows people's sceletones."
+	desc = "A rentgene filter lense that shows people's sceletones."
 	icon_state = "rentgene_filter"
 	effect = list(XRAY_FILTER, "", null)
-	filter = "rentgene"
 
-/obj/item/device/filter/nude
-	name = "red film filter"
+/obj/item/device/lense/nude
+	name = "red film filter lense"
 	icon = 'icons/obj/items.dmi'
-	desc = "A red filter that shows people nude."
+	desc = "A red filter lense that shows people nude."
 	icon_state = "nude_filter"
 	effect = list(NUDE_FILTER, "", null)
-	filter = "nude"
 
-/obj/item/device/camera/proc/update_desc()
-	desc = "[initial(desc)]. [pictures_left ? "[pictures_left]" : "No"] photos left."
+/obj/item/device/lense/proc/process_icon(atom/A)
+	return FALSE
 
-/obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
+/obj/item/device/lense/rentgene/process_icon(atom/A)
+	if(!ishuman(A))
+		return FALSE
+	return icon("icons/mob/human.dmi","electrocuted_generic",A.dir)
+
+/obj/item/device/lense/nude/process_icon(atom/A)
+	if(!ishuman(A))
+		return FALSE
+	var/icon/img = icon('icons/effects/32x32.dmi', "")
+	var/mob/living/carbon/human/H = A
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if(BP.is_stump)
+			continue
+		var/icon/part = icon(BP.icon, BP.icon_state, A.dir)
+		if(H.species.flags[HAS_SKIN_COLOR])
+			part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, H.r_skin/255, H.g_skin/255, H.b_skin/255)
+		else
+			part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, H.s_tone/255, H.s_tone/255, H.s_tone/255)
+		img.Blend(part, ICON_OVERLAY)
+	if(H.f_style)
+		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
+		if(facial_hair_style)
+			var/icon/mustage = icon(facial_hair_style.icon, "[facial_hair_style.icon_state]_s", A.dir)
+			if(facial_hair_style.do_colouration)
+				mustage.MapColors(1, 0, 0, 1, 0, 0, 0, 1, H.r_facial/255, H.g_facial/255, H.b_facial/255)
+			else
+				mustage.MapColors(1, 0, 0, 1, 0, 0, 0, 1, H.dyed_r_facial/255, H.dyed_g_facial/255, H.dyed_b_facial/255)
+			img.Blend(mustage, ICON_OVERLAY)
+	if(H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR)) && !(H.wear_mask && (H.wear_mask.flags & BLOCKHEADHAIR)) && !(H.wear_suit && (H.wear_suit.flags & BLOCKHEADHAIR)) && !(H.w_uniform && (H.w_uniform.flags & BLOCKHEADHAIR)))
+		var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
+		if(hair_style)
+			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
+			if(hair_style.do_colouration)
+				var/icon/grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = hair_gradients[H.grad_style])
+				grad_s.Blend(hair_s, ICON_AND)
+				if(!H.hair_painted)
+					hair_s.Blend(rgb(H.r_hair, H.g_hair, H.b_hair), ICON_AND)
+					grad_s.Blend(rgb(H.r_grad, H.g_grad, H.b_grad), ICON_AND)
+				else
+					hair_s.Blend(rgb(H.dyed_r_hair, H.dyed_g_hair, H.dyed_b_hair), ICON_AND)
+					grad_s.Blend(rgb(H.dyed_r_hair, H.dyed_g_hair, H.dyed_b_hair), ICON_AND)
+				hair_s.Blend(grad_s, ICON_OVERLAY)
+			img.Blend(hair_s, ICON_OVERLAY)
+	return img
+
+/obj/item/weapon/storage/box
+	name = "photo lenses box"
+	desc = "It's just an ordinary box. Nothing special."
+	icon_state = "box"
+	item_state = "lenses_kit"
+	max_storage_space = DEFAULT_BOX_STORAGE
+	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
+	startswith = list(/obj/item/device/lense/lomo,
+					/obj/item/device/lense/posterization,
+					/obj/item/device/lense/grayscale,
+					/obj/item/device/lense/invert,
+					/obj/item/device/lense/sepia,
+					/obj/item/device/lense/detective,
+					/obj/item/device/lense/polar,
+					/obj/item/device/lense/old,
+					/obj/item/device/lense/rentgene,
+					/obj/item/device/lense/nude)
+
+/obj/item/device/camera/atom_init()
+	. = ..()
+	if(base_lense)
+		base_lense = new(src)
+	update_desc()
+
+/obj/item/device/camera/AltClick(mob/user)
+	if(!Adjacent(user))
+		return
+	if(user.incapacitated())
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	if(!can_put_lense)
+		return
+
+	switch(photo_size)
+		if(1)
+			photo_size = 3
+			to_chat(user, "<span class='warning'>You set zoom level to 3.</span>")
+		if(3)
+			photo_size = 5
+			to_chat(user, "<span class='warning'>You set zoom level to 5.</span>")
+		if(5)
+			photo_size = 1
+			to_chat(user, "<span class='warning'>You set zoom level to 1.</span>")
+
+/obj/item/device/camera/CtrlClick(mob/user)
+	if(!Adjacent(user))
+		return
+	if(user.incapacitated())
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	if(!can_put_lense || !contents)
+		return
+
+	for(var/obj/item/device/lense/F in contents)
+		usr.put_in_hands(F)
+		to_chat(user, "<span class='warning'>You detach the filter out of camera's lense.</span>")
+
+/obj/item/device/camera/polar/CtrlClick(mob/user)
+	return
+
+/obj/item/device/camera/oldcamera/CtrlClick(mob/user)
+	return
+
+/obj/item/device/camera/lomo/CtrlClick(mob/user)
 	return
 
 /obj/item/device/camera/attack_self(mob/user)
@@ -330,6 +421,12 @@
 	else
 		src.icon_state = icon_off
 	to_chat(user, "You switch the camera [on ? "on" : "off"].")
+	return
+
+/obj/item/device/camera/proc/update_desc()
+	desc = "[initial(desc)]. [pictures_left ? "[pictures_left]" : "No"] photos left."
+
+/obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
 /obj/item/device/camera/attackby(obj/item/I, mob/user, params)
@@ -344,20 +441,11 @@
 		update_desc()
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 		return
-	if(istype(I, /obj/item/device/filter) && !filter && can_put_filter)
-		var/obj/item/device/filter/F = I
-		effect = F.effect
-		filter = F.filter
+	if(istype(I, /obj/item/device/lense) && can_put_lense && !contents)
+		var/obj/item/device/lense/F = I
 		user.unEquip(F)
 		F.forceMove(src)
 	return ..()
-
-/obj/item/device/camera/verb/eject_filter()
-	if(!(filter && can_put_filter))
-		return
-	effect = initial(effect)
-	filter = initial(filter)
-	usr.put_in_hands(pick(contents))
 
 /obj/item/device/camera/spooky/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/occult_scanner))
@@ -389,14 +477,9 @@
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
-		switch(filter)
-			if("rentgene")
-				if(ishuman(A))
-					img = icon("icons/mob/human.dmi","electrocuted_generic",A.dir)
-			if("nude")
-				if(ishuman(A))
-					img = apply_nude_effect(A)
-
+		for(var/obj/item/device/lense/F in contents)
+			if(F.process_icon(A))
+				img = F.process_icon(A)
 
 		if(isliving(A) && A:lying)
 			img.Turn(A:lying_current)
@@ -505,24 +588,27 @@
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
 	//Photo Effects
-	var/icon/vign
-	switch(photo_size)
-		if(1)
-			vign = icon('icons/effects/32x32.dmi', effect[2])
-		if(3)
-			vign = icon('icons/effects/96x96.dmi', effect[2])
-		if(5)
-			vign = icon('icons/effects/160x160.dmi', effect[2])
-	if(effect)
-		if(effect[1])
+	for(var/obj/item/device/lense/F in contents)
+		if(F.effect)
 			//First Flter
-			temp.MapColors(effect[1][1], effect[1][2], effect[1][3], effect[1][4], effect[1][5], effect[1][6], effect[1][7], effect[1][8], effect[1][9], effect[1][10], effect[1][11], effect[1][12], effect[1][13], effect[1][14], effect[1][15], effect[1][16], effect[1][17], effect[1][18], effect[1][19], effect[1][20])
-		//Additions
-		temp.Blend(vign, ICON_OVERLAY, 1, 1)
-		if(effect[3])
-			//Second Filter
-			temp.MapColors(effect[3][1], effect[3][2], effect[3][3], effect[3][4], effect[3][5], effect[3][6], effect[3][7], effect[3][8], effect[3][9], effect[3][10], effect[3][11], effect[3][12], effect[3][13], effect[3][14], effect[3][15], effect[3][16], effect[3][17], effect[3][18], effect[3][19], effect[3][20])
+			if(F.effect[1])
+				temp.MapColors(arglist(F.effect[1]))
 
+			//Additions
+			if(F.effect[2])
+				var/icon/vign
+				switch(photo_size)
+					if(1)
+						vign = icon('icons/effects/32x32.dmi', F.effect[2])
+					if(3)
+						vign = icon('icons/effects/96x96.dmi', F.effect[2])
+					if(5)
+						vign = icon('icons/effects/160x160.dmi', F.effect[2])
+				temp.Blend(vign, ICON_OVERLAY, 1, 1)
+
+			//Second Filter
+			if(F.effect[3])
+				temp.MapColors(arglist(F.effect[3]))
 
 	var/datum/picture/P = createpicture(user, temp, mobs, mob_names, flag)
 	printpicture(user, P)
@@ -573,48 +659,6 @@
 
 	return res
 
-/obj/item/device/camera/verb/set_zoom()
-	set name = "Set Camera Zoom"
-	set category = "Object"
-
-	if(usr.incapacitated())
-		return
-	if(usr.get_active_hand() != src && !isAI(usr))
-		to_chat(usr, "You need to hold \the [src] in your active hand.")
-		return
-
-	if(photo_size == 1)
-		photo_size = 3
-		to_chat(usr, "<span class='info'>You set the camera zoom to normal.</span>")
-	else if(photo_size == 3)
-		photo_size = 5
-		to_chat(usr, "<span class='info'>You set the camera zoom to big.</span>")
-	else
-		photo_size = 1
-		to_chat(usr, "<span class='info'>You set the camera zoom to small.</span>")
-
-/obj/item/device/camera/AltClick(mob/user)
-	if(!Adjacent(user))
-		return
-	if(user.incapacitated())
-		return
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
-		return
-	set_zoom()
-
-/obj/item/device/camera/big_photos
-	photo_size = 5
-
-/obj/item/device/camera/big_photos/set_zoom()
-	return
-
-/obj/item/device/camera/huge_photos
-	photo_size = 7
-
-/obj/item/device/camera/huge_photos/set_zoom()
-	return
-
 /obj/item/weapon/photo/proc/construct(datum/picture/P)
 	icon = P.fields["icon"]
 	tiny = P.fields["tiny"]
@@ -623,41 +667,3 @@
 	photographed_names = P.fields["mob_names"]
 	pixel_x = P.fields["pixel_x"]
 	pixel_y = P.fields["pixel_y"]
-
-/obj/item/weapon/photo/proc/apply_nude_effect(atom/A)
-	img = icon('icons/effects/32x32.dmi', "")
-	var/mob/living/carbon/human/H = A
-	for(var/obj/item/organ/external/BP in H.bodyparts)
-		if(BP.is_stump)
-			continue
-		var/icon/part = icon(BP.icon, BP.icon_state, A.dir)
-		if(H.species.flags[HAS_SKIN_COLOR])
-			part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, H.r_skin/255, H.g_skin/255, H.b_skin/255)
-		else
-			part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, H.s_tone/255, H.s_tone/255, H.s_tone/255)
-		img.Blend(part, ICON_OVERLAY)
-	if(H.f_style)
-		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
-		if(facial_hair_style)
-			var/icon/mustage = icon(facial_hair_style.icon, "[facial_hair_style.icon_state]_s", A.dir)
-			if(facial_hair_style.do_colouration)
-				mustage.MapColors(1, 0, 0, 1, 0, 0, 0, 1, H.r_facial/255, H.g_facial/255, H.b_facial/255)
-			else
-				mustage.MapColors(1, 0, 0, 1, 0, 0, 0, 1, H.dyed_r_facial/255, H.dyed_g_facial/255, H.dyed_b_facial/255)
-			img.Blend(mustage, ICON_OVERLAY)
-	if(H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR)) && !(H.wear_mask && (H.wear_mask.flags & BLOCKHEADHAIR)) && !(H.wear_suit && (H.wear_suit.flags & BLOCKHEADHAIR)) && !(H.w_uniform && (H.w_uniform.flags & BLOCKHEADHAIR)))
-		var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
-		if(hair_style)
-			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
-			if(hair_style.do_colouration)
-				var/icon/grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = hair_gradients[H.grad_style])
-				grad_s.Blend(hair_s, ICON_AND)
-				if(!H.hair_painted)
-					hair_s.Blend(rgb(H.r_hair, H.g_hair, H.b_hair), ICON_AND)
-					grad_s.Blend(rgb(H.r_grad, H.g_grad, H.b_grad), ICON_AND)
-				else
-					hair_s.Blend(rgb(H.dyed_r_hair, H.dyed_g_hair, H.dyed_b_hair), ICON_AND)
-					grad_s.Blend(rgb(H.dyed_r_hair, H.dyed_g_hair, H.dyed_b_hair), ICON_AND)
-				hair_s.Blend(grad_s, ICON_OVERLAY)
-			img.Blend(hair_s, ICON_OVERLAY)
-	return img

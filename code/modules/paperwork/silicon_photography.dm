@@ -10,7 +10,7 @@
 	var/in_camera_mode = 0
 	var/photos_taken = 0
 	var/list/aipictures = list()
-	vignette = ""
+	can_put_lense = FALSE
 
 /obj/item/device/camera/siliconcam/ai_camera //camera AI can take pictures with
 	name = "AI photo camera"
