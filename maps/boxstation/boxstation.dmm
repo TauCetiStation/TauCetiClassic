@@ -4991,11 +4991,6 @@
 /area/station/medical/cryo)
 "aiE" = (
 /obj/structure/table,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
 /obj/machinery/camera{
@@ -5004,6 +4999,7 @@
 	network = list("SS13","Security");
 	pixel_y = -18
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -10510,11 +10506,6 @@
 /area/station/security/detectives_office)
 "arL" = (
 /obj/structure/table/woodentable,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
 /obj/item/weapon/storage/photo_album{
 	pixel_y = -10
 	},
@@ -10524,6 +10515,7 @@
 	dir = 1;
 	network = list("SS13","Security")
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -12221,10 +12213,8 @@
 /obj/machinery/newscaster{
 	pixel_x = -28
 	},
-/obj/item/device/camera{
-	pixel_y = 5
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/device/camera/lomo,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "auV" = (
@@ -18519,10 +18509,10 @@
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
-/obj/item/device/camera,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
+/obj/item/device/camera/polar/list,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "aHh" = (
@@ -21017,9 +21007,9 @@
 /area/station/maintenance/chapel)
 "aLG" = (
 /obj/structure/rack,
-/obj/item/device/camera,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
+/obj/item/device/camera/lomo,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken3"
 	},
@@ -30584,9 +30574,9 @@
 /obj/structure/closet{
 	name = "Evidence Closet"
 	},
-/obj/item/device/camera,
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
+/obj/item/device/camera/polar/list,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bcG" = (
@@ -35590,6 +35580,7 @@
 /obj/item/weapon/storage/box/drinkingglasses,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /obj/structure/closet,
+/obj/item/device/camera/oldcamera,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -36111,7 +36102,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/item/device/camera,
+/obj/item/device/camera/polar/list,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -55596,6 +55587,9 @@
 /obj/item/clothing/suit/wcoat,
 /obj/item/clothing/head/beret/black,
 /obj/effect/decal/cleanable/cobweb,
+/obj/item/device/filter/posterization,
+/obj/item/device/filter/sepia,
+/obj/item/device/filter/grayscale,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -57182,11 +57176,11 @@
 /area/station/security/armoury)
 "ceV" = (
 /obj/structure/table/woodentable,
-/obj/item/device/camera,
 /obj/machinery/newscaster{
 	pixel_x = -28;
 	pixel_y = 1
 	},
+/obj/item/device/camera/oldcamera,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken7"
 	},
