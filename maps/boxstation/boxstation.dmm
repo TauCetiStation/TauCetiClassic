@@ -154,8 +154,12 @@
 	},
 /area/station/security/main)
 "aaw" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
 /turf/simulated/floor{
-	icon_state = "darkred"
+	dir = 1;
+	icon_state = "redcorner"
 	},
 /area/station/security/brig)
 "aax" = (
@@ -660,7 +664,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/security/brig)
 "abs" = (
@@ -783,8 +788,7 @@
 	network = list("SS13","Security","Interrogation")
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "abC" = (
@@ -1553,7 +1557,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/security/brig)
 "acQ" = (
@@ -1963,6 +1968,9 @@
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/sop{
 	pixel_y = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2565,12 +2573,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"aey" = (
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkred"
-	},
-/area/station/security/brig)
 "aez" = (
 /obj/machinery/door/airlock/security{
 	name = "Evidence Storage";
@@ -3304,7 +3306,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "afF" = (
@@ -4930,9 +4932,6 @@
 	dir = 8;
 	network = list("SS13","Security")
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 28
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redcorner"
@@ -5522,7 +5521,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Brig APC";
-	pixel_y = 28
+	pixel_y = 27
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -8055,8 +8054,7 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "ano" = (
@@ -82405,8 +82403,7 @@
 "rRu" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/brig)
 "rRE" = (
@@ -112402,7 +112399,7 @@ adJ
 adJ
 rRu
 abr
-aaw
+afU
 adM
 ajD
 ajc
@@ -112914,9 +112911,9 @@ aeE
 ado
 abn
 adJ
-aey
+afU
 acP
-aaw
+afU
 abF
 agF
 aje
@@ -113173,7 +113170,7 @@ abo
 adJ
 abB
 agJ
-aaw
+afU
 aiF
 ajE
 akI
@@ -113691,7 +113688,7 @@ agy
 aiI
 adh
 ajg
-adh
+aaw
 cWb
 aHJ
 mKS
