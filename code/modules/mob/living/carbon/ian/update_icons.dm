@@ -1,10 +1,10 @@
-#define LAYERIAN_UNDERFIRE	7
+#define LAYERIAN_FIRE_1		7
 #define LAYERIAN_BACK		6
 #define LAYERIAN_MOUTH		5
 #define LAYERIAN_HEAD		4
 #define LAYERIAN_NECKCUFF	3
 #define LAYERIAN_TARGETED	2
-#define LAYERIAN_FIRE		1
+#define LAYERIAN_FIRE_2		1
 #define LAYERIANS_TOTAL		7
 
 /mob/living/carbon/ian/var/static/list/corgi_icons = list()
@@ -236,23 +236,23 @@
 	apply_overlay(LAYERIAN_TARGETED)
 
 /mob/living/carbon/ian/update_fire()
-	remove_overlay(LAYERIAN_UNDERFIRE)
-	remove_overlay(LAYERIAN_FIRE)
+	remove_overlay(LAYERIAN_FIRE_1)
+	remove_overlay(LAYERIAN_FIRE_2)
 
 	if(on_fire)
-		overlays_inv[LAYERIAN_UNDERFIRE] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay", "layer"=-LAYERIAN_UNDERFIRE)
-		overlays_inv[LAYERIAN_FIRE] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay", "layer"=-LAYERIAN_FIRE)
+		overlays_inv[LAYERIAN_FIRE_1] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay", "layer"=-LAYERIAN_FIRE_1)
+		overlays_inv[LAYERIAN_FIRE_2] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay", "layer"=-LAYERIAN_FIRE_2)
 
-	apply_overlay(LAYERIAN_UNDERFIRE)
-	apply_overlay(LAYERIAN_FIRE)
+	apply_overlay(LAYERIAN_FIRE_1)
+	apply_overlay(LAYERIAN_FIRE_2)
 
-#undef LAYERIAN_UNDERFIRE
+#undef LAYERIAN_FIRE_1
 #undef LAYERIAN_BACK
 #undef LAYERIAN_MOUTH
 #undef LAYERIAN_HEAD
 #undef LAYERIAN_NECKCUFF
 #undef LAYERIAN_TARGETED
-#undef LAYERIAN_FIRE
+#undef LAYERIAN_FIRE_2
 #undef LAYERIANS_TOTAL
 
 /mob/living/carbon/ian/update_transform()
