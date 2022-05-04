@@ -253,7 +253,6 @@
 	description = "A salt made of sodium chloride. Commonly used to season food."
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255,255,255
-	overdose = REAGENTS_OVERDOSE
 	taste_message = "salt"
 
 /datum/reagent/consumable/blackpepper
@@ -295,7 +294,6 @@
 	id = "psilocybin"
 	description = "A strong psycotropic derived from certain species of mushroom."
 	color = "#e700e7" // rgb: 231, 0, 231
-	overdose = REAGENTS_OVERDOSE
 	absorption = FOOD_ABSORBTION * 0.5
 	restrict_species = list(IPC, DIONA)
 
@@ -356,7 +354,6 @@
 	description = "A universal enzyme used in the preperation of certain chemicals and foods."
 	reagent_state = LIQUID
 	color = "#365e30" // rgb: 54, 94, 48
-	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
 /datum/reagent/consumable/dry_ramen

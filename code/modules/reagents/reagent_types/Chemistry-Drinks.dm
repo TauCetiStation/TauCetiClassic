@@ -646,7 +646,6 @@
 	absorption = FOOD_ABSORBTION * 0.5
 	taste_message = "sweet druggy soda"
 	restrict_species = list(IPC, DIONA)
-	overdose = 20
 
 /datum/reagent/consumable/lean/on_general_digest(mob/living/M, multiplier)
 	..()

@@ -1,4 +1,3 @@
-#define REAGENTS_OVERDOSE 30
 #define REM REAGENTS_EFFECT_MULTIPLIER
 
 //The reaction procs must ALWAYS set src = null, this detaches the proc from the object (the reagent)
@@ -23,7 +22,7 @@
 	var/list/restrict_species = list(IPC) // Species that simply can not digest this reagent.
 	var/list/flags = list()
 
-	var/overdose = 0
+	var/overdose = REAGENTS_OVERDOSE
 	var/overdose_dam = 1
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 	var/color_weight = 1

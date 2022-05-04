@@ -5,7 +5,6 @@
 	reagent_state = LIQUID
 	color = "#c8a5dc" // rgb: 200, 165, 220
 	absorption = REAGENTS_ABSORBTION * 0.5
-	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
 	data = list()
@@ -42,7 +41,6 @@
 	reagent_state = LIQUID
 	color = "#00bfff" // rgb: 200, 165, 220
 	absorption = REAGENTS_ABSORBTION * 0.5
-	overdose = REAGENTS_OVERDOSE * 2
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/inaprovaline/on_general_digest(mob/living/M, multiplier)
@@ -61,7 +59,6 @@
 	description = "Ryetalyn can cure all genetic abnomalities via a catalytic process."
 	reagent_state = SOLID
 	color = "#004000" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE
 	absorption = 2 * REAGENTS_ABSORBTION
 
 	data = list()
@@ -87,7 +84,6 @@
 	description = "Most probably know this as Tylenol, but this chemical is a mild, simple painkiller."
 	reagent_state = LIQUID
 	color = "#c8a5dc"
-	overdose = 60
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/paracetamol/on_general_digest(mob/living/M, multiplier)
@@ -101,7 +97,6 @@
 	description = "A simple, yet effective painkiller."
 	reagent_state = LIQUID
 	color = "#cb68fc"
-	overdose = 30
 	absorption = REAGENTS_ABSORBTION
 	restrict_species = list(IPC, DIONA)
 
@@ -116,7 +111,6 @@
 	description = "An effective and very addictive painkiller."
 	reagent_state = LIQUID
 	color = "#800080"
-	overdose = 20
 	absorption = REAGENTS_ABSORBTION
 	restrict_species = list(IPC, DIONA)
 
@@ -151,7 +145,6 @@
 	description = "Leporazine can be use to stabilize an individuals body temperature."
 	reagent_state = LIQUID
 	color = "#c8a5dc" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
 /datum/reagent/leporazine/on_general_digest(mob/living/M, multiplier)
@@ -167,7 +160,6 @@
 	description = "Kelotane is a drug used to treat burns."
 	reagent_state = LIQUID
 	color = "#ffc600" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
@@ -181,7 +173,6 @@
 	description = "Dermaline is the next step in burn medication. Works twice as good as kelotane and enables the body to restore even the direst heat-damaged tissue."
 	reagent_state = LIQUID
 	color = "#ff8000" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE * 0.5
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
@@ -199,7 +190,6 @@
 	description = "Dexalin is used in the treatment of oxygen deprivation."
 	reagent_state = LIQUID
 	color = "#0080ff" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE
 	taste_message = "oxygen"
 	restrict_species = list(IPC, DIONA)
 
@@ -221,7 +211,6 @@
 	description = "Analgesic chemical that heals lung damage and coughing."
 	reagent_state = LIQUID
 	color = "#ffc0cb" // rgb: 255, 192, 203
-	overdose = 10
 	absorption = REAGENTS_ABSORBTION * 0.5
 	taste_message = "sickening bitterness"
 	restrict_species = list(IPC, DIONA)
@@ -260,7 +249,6 @@
 	description = "Dexalin Plus is used in the treatment of oxygen deprivation. It is highly effective."
 	reagent_state = LIQUID
 	color = "#0040ff" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE * 0.5
 	taste_message = "ability to breath"
 	restrict_species = list(IPC, DIONA)
 
@@ -372,7 +360,6 @@
 	reagent_state = LIQUID
 	color = "#99ccff" // rgb: 200, 165, 220
 	absorption = REAGENTS_ABSORBTION
-	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/synaptizine/on_general_digest(mob/living/M, multiplier)
@@ -394,7 +381,6 @@
 	reagent_state = LIQUID
 	color = "#408000" // rgb: 200, 165, 220
 	absorption = REAGENTS_ABSORBTION
-	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
 /datum/reagent/hyronalin/on_general_digest(mob/living/M, multiplier)
@@ -408,7 +394,6 @@
 	reagent_state = LIQUID
 	color = "#008000" // rgb: 200, 165, 220
 	absorption = REAGENTS_ABSORBTION
-	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
 /datum/reagent/arithrazine/on_general_digest(mob/living/M, multiplier)
@@ -425,7 +410,6 @@
 	reagent_state = LIQUID
 	color = "#8b00ff" // rgb: 200, 165, 220
 	absorption = REAGENTS_ABSORBTION
-	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
 /datum/reagent/alkysine/on_general_digest(mob/living/M, multiplier)
@@ -438,7 +422,6 @@
 	description = "Heals eye damage."
 	reagent_state = LIQUID
 	color = "#a0dbff" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE
 	taste_message = "carrot"
 	restrict_species = list(IPC, DIONA)
 
@@ -459,7 +442,6 @@
 	description = "Aurisine is a chemical compound used to heal ear damage."
 	reagent_state = LIQUID
 	color = "#87cefa" // rgb: 135, 206, 250
-	overdose = REAGENTS_OVERDOSE
 	taste_message = "earwax"
 
 /datum/reagent/aurisine/on_general_digest(mob/living/M, multiplier)
@@ -473,7 +455,6 @@
 	description = "Used to encourage recovery of organs and nervous systems. Medicate cautiously."
 	reagent_state = LIQUID
 	color = "#561ec3" // rgb: 200, 165, 220
-	overdose = 10
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
@@ -499,7 +480,6 @@
 	description = "Used nanites to encourage recovery of body parts and bones. Medicate cautiously."
 	reagent_state = LIQUID
 	color = "#551a8b" // rgb: 85, 26, 139
-	overdose = 5.1
 	absorption = REAGENTS_ABSORBTION
 	taste_message = "machines"
 	restrict_species = list(IPC, DIONA)
@@ -530,7 +510,6 @@
 	description = "Bicaridine is an analgesic medication and can be used to treat blunt trauma."
 	reagent_state = LIQUID
 	color = "#bf0000" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
@@ -545,7 +524,6 @@
 	reagent_state = LIQUID
 	color = "#ff4f00" // rgb: 200, 165, 220
 	absorption = REAGENTS_ABSORBTION
-	overdose = REAGENTS_OVERDOSE * 0.5
 	taste_message = "speed"
 	restrict_species = list(IPC, DIONA)
 
@@ -601,7 +579,6 @@
 	description = "A powder derived from fish toxin, this substance can effectively treat genetic damage in humanoids, though excessive consumption has side effects."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
-	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
 	data = list()
@@ -636,7 +613,6 @@
 	reagent_state = LIQUID
 	color = "#ffffff" // rgb: 200, 165, 220
 	absorption = REAGENTS_ABSORBTION
-	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
 /datum/reagent/ethylredoxrazine // FUCK YOU, ALCOHOL
@@ -645,7 +621,6 @@
 	description = "A powerful oxidizer that reacts with ethanol."
 	reagent_state = SOLID
 	color = "#605048" // rgb: 96, 80, 72
-	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
 /datum/reagent/ethylredoxrazine/on_general_digest(mob/living/M, multiplier)
@@ -684,7 +659,6 @@
 	reagent_state = LIQUID
 	nutriment_factor = 10 * REAGENTS_ABSORBTION
 	color = "#bbeda4" // rgb: 187, 237, 164
-	overdose = REAGENTS_OVERDOSE
 
 /datum/reagent/lipozine/on_general_digest(mob/living/M, multiplier)
 	..()
@@ -706,7 +680,6 @@
 	reagent_state = LIQUID
 	color = "#99ccff" // rgb: 200, 165, 220
 	absorption = REAGENTS_ABSORBTION
-	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/stimulants/on_general_digest(mob/living/M, multiplier)
@@ -725,7 +698,6 @@
 	description = "Highly advanced nanites equipped with calcium payloads designed to repair bones. Nanomachines son."
 	reagent_state = LIQUID
 	color = "#9b3401"
-	overdose = REAGENTS_OVERDOSE
 	absorption = REAGENTS_ABSORBTION
 	taste_message = "wholeness"
 	restrict_species = list(IPC, DIONA)
@@ -766,4 +738,3 @@
 	reagent_state = LIQUID
 	color = "#990000"
 	restrict_species = list(IPC, DIONA)
-	overdose = 5

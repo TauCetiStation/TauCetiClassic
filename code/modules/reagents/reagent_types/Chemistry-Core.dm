@@ -309,7 +309,6 @@
 	description = "A chemical element."
 	reagent_state = LIQUID
 	color = "#484848" // rgb: 72, 72, 72
-	overdose = REAGENTS_OVERDOSE
 	taste_message = "druggie poison"
 	restrict_species = list(IPC, DIONA)
 
@@ -355,7 +354,6 @@
 	description = "A chemical element with a characteristic odour."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
-	overdose = REAGENTS_OVERDOSE
 	taste_message = "characteristic taste"
 
 /datum/reagent/chlorine/on_general_digest(mob/living/M, multiplier)
@@ -368,7 +366,6 @@
 	description = "A highly-reactive chemical element."
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
-	overdose = REAGENTS_OVERDOSE
 	taste_message = "toothpaste"
 
 /datum/reagent/fluorine/on_general_digest(mob/living/M, multiplier)
@@ -408,7 +405,6 @@
 	description = "A chemical element, used as antidepressant."
 	reagent_state = SOLID
 	color = "#808080" // rgb: 128, 128, 128
-	overdose = REAGENTS_OVERDOSE
 	taste_message = "happiness"
 	restrict_species = list(IPC, DIONA)
 
@@ -479,7 +475,6 @@
 	description = "Pure iron is a metal."
 	reagent_state = SOLID
 	color = "#c8a5dc" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE
 	taste_message = "metal"
 
 /datum/reagent/gold

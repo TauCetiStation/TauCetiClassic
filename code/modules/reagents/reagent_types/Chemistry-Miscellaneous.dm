@@ -68,7 +68,6 @@
 	description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
 	reagent_state = LIQUID
 	color = "#009ca8" // rgb: 0, 156, 168
-	overdose = REAGENTS_OVERDOSE
 	taste_message = "oil"
 
 	needed_aspects = list(ASPECT_WACKY = 1)
@@ -154,7 +153,6 @@
 	description = "Required for welders. Flamable."
 	reagent_state = LIQUID
 	color = "#660000" // rgb: 102, 0, 0
-	overdose = REAGENTS_OVERDOSE
 	taste_message = "motor oil"
 
 /datum/reagent/fuel/reaction_obj(obj/O, volume)
@@ -183,7 +181,6 @@
 	description = "A compound used to clean things. Now with 50% more sodium hypochlorite!"
 	reagent_state = LIQUID
 	color = "#a5f0ee" // rgb: 165, 240, 238
-	overdose = REAGENTS_OVERDOSE
 	taste_message = "floor cleaner"
 
 /datum/reagent/space_cleaner/on_general_digest(mob/living/M, multiplier)

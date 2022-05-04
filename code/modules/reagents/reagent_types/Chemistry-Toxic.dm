@@ -110,7 +110,6 @@
 	reagent_state = LIQUID
 	color = "#c8a5dc" // rgb: 200, 165, 220
 	toxpwr = 0
-	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 	flags = list()
 
@@ -227,7 +226,6 @@
 	color = "#b31008" // rgb: 139, 166, 233
 	toxpwr = 0
 	absorption = 0.05
-	overdose = REAGENTS_OVERDOSE
 	flags = list()
 
 /datum/reagent/toxin/mindbreaker/on_general_digest(mob/living/M, multiplier)
@@ -333,7 +331,6 @@
 	color = "#e895cc" // rgb: 232, 149, 204
 	toxpwr = 0
 	absorption = 0.1
-	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 	flags = list()
 
@@ -364,7 +361,6 @@
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
 	absorption = 0.1 //Default 0.2
-	overdose = 15
 	overdose_dam = 6
 	restrict_species = list(IPC, DIONA)
 	flags = list()
@@ -390,7 +386,6 @@
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255,255,255
 	toxpwr = 0
-	overdose = 30
 	flags = list()
 
 /datum/reagent/toxin/potassium_chloride/on_general_digest(mob/living/M, multiplier)
@@ -412,7 +407,6 @@
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255,255,255
 	toxpwr = 2
-	overdose = 20
 	flags = list()
 
 /datum/reagent/toxin/potassium_chlorophoride/on_general_digest(mob/living/M, multiplier)
@@ -434,7 +428,6 @@
 	reagent_state = LIQUID
 	color = "#fbbf0d" // rgb: 251, 191, 13
 	absorption = 0.15 // Sleep toxins should always be consumed pretty fast
-	overdose = REAGENTS_OVERDOSE * 0.5
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/toxin/beer2/on_general_digest(mob/living/M, multiplier)
@@ -683,7 +676,6 @@
 	description = "A corruptive toxin produced by slimes."
 	reagent_state = LIQUID
 	color = "#13bc5e" // rgb: 19, 188, 94
-	overdose = REAGENTS_OVERDOSE
 	absorption = 0.02
 
 	data = list()
@@ -731,7 +723,6 @@
 	description = "An advanced corruptive toxin produced by slimes."
 	reagent_state = LIQUID
 	color = "#13bc5e" // rgb: 19, 188, 94
-	overdose = REAGENTS_OVERDOSE
 
 /datum/reagent/aslimetoxin/on_general_digest(mob/living/M, multiplier)
 	..()
@@ -771,7 +762,6 @@
 	reagent_state = LIQUID
 	color = "#60a584" // rgb: 96, 165, 132
 	absorption = REAGENTS_ABSORBTION * 0.5
-	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/space_drugs/on_general_digest(mob/living/M, multiplier)
@@ -799,7 +789,6 @@
 	reagent_state = LIQUID
 	color = "#202040" // rgb: 20, 20, 40
 	absorption = REAGENTS_ABSORBTION * 0.25
-	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/serotrotium/on_general_digest(mob/living/M, multiplier)
@@ -814,7 +803,6 @@
 	description = "Cryptobiolin causes confusion and dizzyness."
 	reagent_state = LIQUID
 	color = "#000055" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE
 	absorption = REAGENTS_ABSORBTION * 0.5
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
@@ -830,7 +818,6 @@
 	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
 	reagent_state = LIQUID
 	color = "#c8a5dc" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/impedrezene/on_general_digest(mob/living/M, multiplier)
