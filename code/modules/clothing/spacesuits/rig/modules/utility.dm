@@ -357,7 +357,7 @@
 	if (temp_adj < 0.5)
 		return passive_power_cost
 
-	H.bodytemperature -= temp_adj
+	H.adjust_bodytemperature(-temp_adj)
 	active_power_cost = round((temp_adj/max_cooling)*charge_consumption)
 	return active_power_cost
 
