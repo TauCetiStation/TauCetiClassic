@@ -1464,6 +1464,7 @@
 "acF" = (
 /obj/item/clothing/glasses/welding,
 /obj/structure/table,
+/obj/item/device/lense/nude,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "acG" = (
@@ -3584,9 +3585,9 @@
 /area/station/maintenance/science)
 "agk" = (
 /obj/structure/rack,
-/obj/item/device/camera,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
+/obj/item/device/camera/oldcamera,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "agl" = (
@@ -4586,10 +4587,10 @@
 /obj/structure/closet/theatrecloset,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
-/obj/item/device/camera,
 /obj/machinery/light/small,
 /obj/item/clothing/gloves/rainbow,
 /obj/random/randomtoy,
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "aid" = (
@@ -5321,10 +5322,6 @@
 /area/station/civilian/locker)
 "aju" = (
 /obj/structure/table,
-/obj/item/device/camera{
-	pixel_x = 5;
-	pixel_y = 5
-	},
 /obj/item/weapon/storage/box/evidence{
 	pixel_x = -3;
 	pixel_y = 2
@@ -5342,6 +5339,7 @@
 	dir = 8;
 	pixel_x = -32
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkred"
@@ -5831,6 +5829,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance/two,
+/obj/item/device/lense/posterization,
+/obj/item/device/lense/sepia,
+/obj/item/device/lense/grayscale,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "akt" = (
@@ -24740,13 +24741,6 @@
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30;
-	pixel_x = 13;
-	pixel_y = 6
-	},
 /obj/item/device/taperecorder{
 	pixel_x = -11
 	},
@@ -24754,6 +24748,7 @@
 	pixel_x = 7;
 	pixel_y = -4
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -26086,6 +26081,7 @@
 "qkv" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance/three,
+/obj/item/device/camera/lomo,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "qlo" = (
@@ -27105,6 +27101,12 @@
 	icon_state = "darkred"
 	},
 /area/station/security/checkpoint)
+"qWV" = (
+/obj/item/device/camera/lomo,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/escape)
 "qXD" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
@@ -53325,7 +53327,7 @@ akT
 all
 alG
 amc
-alS
+qWV
 akb
 gay
 crv

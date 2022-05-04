@@ -51012,7 +51012,7 @@
 /obj/item/organ/external/l_leg,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/blood/drip,
-/obj/item/device/filter/nude,
+/obj/item/device/lense/nude,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bNq" = (
@@ -55650,9 +55650,9 @@
 /obj/item/clothing/suit/wcoat,
 /obj/item/clothing/head/beret/black,
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/device/filter/posterization,
-/obj/item/device/filter/sepia,
-/obj/item/device/filter/grayscale,
+/obj/item/device/lense/posterization,
+/obj/item/device/lense/sepia,
+/obj/item/device/lense/grayscale,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},

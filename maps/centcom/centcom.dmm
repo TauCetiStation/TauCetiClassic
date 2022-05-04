@@ -26415,7 +26415,7 @@
 /area/centcom/holding)
 "lxb" = (
 /obj/structure/rack,
-/obj/item/device/filter/nude,
+/obj/item/device/lense/nude,
 /obj/item/device/camera,
 /turf/unsimulated/floor{
 	dir = 5;
