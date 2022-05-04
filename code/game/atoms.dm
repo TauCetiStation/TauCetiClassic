@@ -506,13 +506,16 @@
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M)
-	if(flags & NOBLOODY) return 0
-	.=1
+	if(flags & NOBLOODY) return FALSE
+	. = TRUE
 	if (!istype(M))
-		return 0
+		return FALSE
 
 	if(M.species.flags[NO_BLOOD_TRAILS])
-		return 0
+		return FALSE
+
+	if(M.reagents.has_reagent("metatrombine"))
+		return FALSE
 
 	if (!istype(M.dna, /datum/dna))
 		M.dna = new /datum/dna(null)

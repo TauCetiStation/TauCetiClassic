@@ -85,7 +85,6 @@
 	user.visible_message("<span class='notice'>[user] has constructed a prepared incision on and within [target]'s [BP.name] with \the [tool].</span>", \
 	"<span class='notice'>You have constructed a prepared incision on and within [target]'s [BP.name] with \the [tool].</span>",)
 	BP.open = 1
-	BP.status |= ORGAN_BLEEDING
 	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
 	BP.strap()
 	BP.open = 2
@@ -123,7 +122,9 @@
 	user.visible_message("<span class='notice'>[user] has made an incision on [target]'s [BP.name] with \the [tool].</span>", \
 	"<span class='notice'>You have made an incision on [target]'s [BP.name] with \the [tool].</span>",)
 	BP.open = 1
-	BP.status |= ORGAN_BLEEDING
+	var/datum/reagents/R = target.reagents
+	if(!R.has_reagent("metatrombine"))
+		BP.status |= ORGAN_BLEEDING
 	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/cut_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
