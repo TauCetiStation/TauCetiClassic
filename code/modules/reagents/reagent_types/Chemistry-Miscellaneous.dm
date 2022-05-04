@@ -9,15 +9,6 @@
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, volume)
 	var/datum/reagent/blood/self = src
 	src = null
-	if(self.data && self.data["viruses"])
-		for(var/datum/disease/D in self.data["viruses"])
-			// We don't spread.
-			if(D.spread_type == SPECIAL || D.spread_type == NON_CONTAGIOUS)
-				continue
-			if(method == TOUCH)
-				M.contract_disease(D)
-			else //injected
-				M.contract_disease(D, 1, 0)
 
 	if(self.data && self.data["virus2"] && iscarbon(M))//infecting...
 		var/list/vlist = self.data["virus2"]
@@ -56,11 +47,6 @@
 				else
 					blood_prop.blood_DNA[self.data["blood_DNA"]] = "O+"
 
-		for(var/datum/disease/D in self.data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
-
 		if(self.data["virus2"])
 			blood_prop.virus2 = virus_copylist(self.data["virus2"])
 
@@ -69,43 +55,12 @@
 		if(!blood_prop)
 			blood_prop = new(T)
 			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
-		for(var/datum/disease/D in self.data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
 
 	else if(istype(self.data["donor"], /mob/living/carbon/xenomorph))
 		var/obj/effect/decal/cleanable/blood/xeno/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
 			blood_prop.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
-		for(var/datum/disease/D in self.data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
-
-/datum/reagent/vaccine
-	//data must contain virus type
-	name = "Vaccine"
-	id = "vaccine"
-	reagent_state = LIQUID
-	color = "#c81040" // rgb: 200, 16, 64
-	taste_message = "health"
-
-/datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, volume)
-	var/datum/reagent/vaccine/self = src
-	src = null
-	if(self.data&&method == INGEST)
-		for(var/datum/disease/D in M.viruses)
-			if(istype(D, /datum/disease/advance))
-				var/datum/disease/advance/A = D
-				if(A.GetDiseaseID() == self.data)
-					D.cure()
-			else
-				if(D.type == self.data)
-					D.cure()
-
-			M.resistances += self.data
 
 /datum/reagent/lube
 	name = "Space Lube"
@@ -306,19 +261,6 @@
 					H.update_inv_shoes()
 		M.clean_blood()
 
-/datum/reagent/xenomicrobes
-	name = "Xenomicrobes"
-	id = "xenomicrobes"
-	description = "Microbes with an entirely alien cellular structure."
-	reagent_state = LIQUID
-	color = "#535e66" // rgb: 83, 94, 102
-	taste_message = "something alien"
-
-/datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, volume)
-	src = null
-	if((prob(10) && method==TOUCH) || method==INGEST)
-		M.contract_disease(new /datum/disease/xeno_transformation(0),1)
-
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
 	id = "fluorosurfactant"
@@ -458,19 +400,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-/datum/reagent/nanites
-	name = "Nanomachines"
-	id = "nanites"
-	description = "Microscopic construction robots."
-	reagent_state = LIQUID
-	color = "#535e66" // rgb: 83, 94, 102
-	taste_message = "nanomachines, son"
-
-/datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, volume)
-	src = null
-	if((prob(10) && method==TOUCH) || method==INGEST)
-		M.contract_disease(new /datum/disease/robotic_transformation(0), 1)
-
 /datum/reagent/nanites2
 	name = "Friendly Nanites"
 	id = "nanites2"

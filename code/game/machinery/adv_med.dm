@@ -218,10 +218,6 @@
 					dat += text("<font color='[]'>\tBicaridine: [] units</font><BR>", (occupant.reagents.get_reagent_amount("bicaridine") < 30 ? "black" : "red"), occupant.reagents.get_reagent_amount("bicaridine"))
 					dat += text("<font color='[]'>\tDexalin: [] units</font><BR>", (occupant.reagents.get_reagent_amount("dexalin") < 30 ? "black" : "red"), occupant.reagents.get_reagent_amount("dexalin"))
 
-				for(var/datum/disease/D in occupant.viruses)
-					if(!D.hidden[SCANNER])
-						dat += text("<font color='red'><B>Warning: [D.form] Detected</B>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</FONT><BR>")
-
 				dat += "<HR><A href='?src=\ref[src];print=1'>Print body parts report</A><BR>"
 				storedinfo = null
 				dat += "<HR><table border='1'>"

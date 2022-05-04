@@ -20,7 +20,7 @@
 	user.visible_message("<span class='warning'>[user] transforms!</span>")
 	to_chat(user, "<span class='warning'>Our genes cry out!</span>")
 
-	user.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
+	user.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 
 	feedback_add_details("changeling_powers","LF")
 	return TRUE

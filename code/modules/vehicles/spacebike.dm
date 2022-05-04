@@ -247,12 +247,11 @@
 	kickstand = !kickstand
 	anchored = (kickstand || on)
 
-/obj/vehicle/space/spacebike/bullet_act(obj/item/projectile/Proj)
+/obj/vehicle/space/spacebike/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(isliving(load) && prob(protection_percent))
 		var/mob/living/M = load
-		M.bullet_act(Proj)
-		return
-	..()
+		return M.bullet_act(Proj)
+	return ..()
 
 /obj/vehicle/space/spacebike/update_icon()
 	cut_overlays()

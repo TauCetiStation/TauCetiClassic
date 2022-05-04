@@ -154,13 +154,13 @@
 	..()
 	return
 
-/obj/machinery/bot/mulebot/bullet_act()
+/obj/machinery/bot/mulebot/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(prob(50) && !isnull(load))
 		unload(0)
 	if(prob(25))
 		visible_message("<span class='red'>Something shorts out inside [src]!</span>")
 		wires.random_cut()
-	..()
 
 /obj/machinery/bot/mulebot/ui_interact(mob/user)
 	var/ai = isAI(user) || isobserver(user)

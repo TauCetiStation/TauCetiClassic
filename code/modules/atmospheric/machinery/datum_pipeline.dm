@@ -249,6 +249,7 @@
 		stack_trace("[src] has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
 		return removeNullsFromList(.)
 
+// This violates principle of polymorphism and should be rewritten ~Getup1
 /datum/pipeline/proc/reconcile_air()
 //	equalize_gases(other_airs)
 
@@ -277,6 +278,9 @@
 		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)
 			if(C.connected_device)
 				GL += C.portableConnectorReturnAir()
+		for(var/obj/machinery/atmospherics/components/binary/sampler/S in P.other_atmosmch)
+			PL |= S.PARENT1
+			PL |= S.PARENT2
 
 	equalize_gases(GL)
 
