@@ -88,7 +88,7 @@
 			//all_supply_groups
 			//Request what?
 			last_viewed_group = "categories"
-			temp = "<b>Cargo Dep Creadits: [department_accounts["Cargo"].money]</b><BR>"
+			temp = "<b>Cargo Dep Credits: [department_accounts["Cargo"].money]</b><BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>"
 			temp += "<b>Select a category</b><BR><BR>"
 			for(var/supply_group_name in all_supply_groups )
