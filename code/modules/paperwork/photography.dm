@@ -443,6 +443,33 @@
 						else
 							part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, H.s_tone/255, H.s_tone/255, H.s_tone/255)
 						img.Blend(part, ICON_OVERLAY)
+
+						if(H.f_style)
+							var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
+							if(facial_hair_style)
+								var/icon/mustage = icon(facial_hair_style.icon, "[facial_hair_style.icon_state]_s", A.dir)
+								if(facial_hair_style.do_colouration)
+									mustage.MapColors(1, 0, 0, 1, 0, 0, 0, 1, H.r_facial/255, H.g_facial/255, H.b_facial/255)
+								else
+									mustage.MapColors(1, 0, 0, 1, 0, 0, 0, 1, H.dyed_r_facial/255, H.dyed_g_facial/255, H.dyed_b_facial/255)
+								img.Blend(mustage, ICON_OVERLAY)
+
+						if(H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR)) && !(H.wear_mask && (H.wear_mask.flags & BLOCKHEADHAIR)) && !(H.wear_suit && (H.wear_suit.flags & BLOCKHEADHAIR)) && !(H.w_uniform && (H.w_uniform.flags & BLOCKHEADHAIR)))
+							var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
+							if(hair_style)
+								var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
+								if(hair_style.do_colouration)
+									var/icon/grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = hair_gradients[H.grad_style])
+									grad_s.Blend(hair_s, ICON_AND)
+									if(!H.hair_painted)
+										hair_s.Blend(rgb(H.r_hair, H.g_hair, H.b_hair), ICON_AND)
+										grad_s.Blend(rgb(H.r_grad, H.g_grad, H.b_grad), ICON_AND)
+									else
+										hair_s.Blend(rgb(H.dyed_r_hair, H.dyed_g_hair, H.dyed_b_hair), ICON_AND)
+										grad_s.Blend(rgb(H.dyed_r_hair, H.dyed_g_hair, H.dyed_b_hair), ICON_AND)
+									hair_s.Blend(grad_s, ICON_OVERLAY)
+								img.Blend(hair_s, ICON_OVERLAY)
+
 		if(isliving(A) && A:lying)
 			img.Turn(A:lying_current)
 
