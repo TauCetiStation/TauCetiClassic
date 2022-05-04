@@ -81,7 +81,7 @@
 
 /datum/gear/ghostcamera
 	display_name = "Anomalous Camera"
-	path = /obj/item/device/camera/spooky
+	path = /obj/item/device/camera/polar/spooky
 	allowed_roles = list("Chaplain", "Paranormal Investigator")
 	cost = 3
 
