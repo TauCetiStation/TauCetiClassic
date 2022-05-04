@@ -20,7 +20,7 @@
 
 	if(!species.flags[NO_BLOOD_TRAILS])
 		flick("gibbed-h", animation)
-		hgibs(loc, viruses, dna, species.flesh_color, species.blood_datum)
+		hgibs(loc, dna, species.flesh_color, species.blood_datum)
 
 	spawn(15)
 		if(animation)	qdel(animation)
@@ -173,8 +173,6 @@
 	mutations.Add(HUSK)
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
 	update_body()
-	update_mutantrace()
-	return
 
 /mob/living/carbon/human/proc/Drain()
 	if(fake_death)

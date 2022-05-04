@@ -176,6 +176,12 @@
 		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, vary = FALSE)
 		cooldown = world.time
 
+/obj/item/clothing/mask/gas/sechailer/police
+	name = "police respirator"
+	desc = "A standard issue police respirator with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you detain them. Do not tamper with the device."
+	icon_state = "police_mask"
+	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+
 //Plague Dr suit can be found in clothing/suits/bio.dm
 /obj/item/clothing/mask/gas/plaguedoctor
 	name = "plague doctor mask"

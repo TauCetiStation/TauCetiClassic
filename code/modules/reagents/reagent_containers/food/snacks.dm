@@ -619,22 +619,7 @@
 	icon_state = "roburger"
 	filling_color = "#cccccc"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6)
-
-/obj/item/weapon/reagent_containers/food/snacks/roburger/atom_init()
-	. = ..()
-	if(prob(5))
-		reagents.add_reagent("nanites", 2)
-		reagents.add_reagent("vitamin", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/roburgerbig
-	name = "roburger"
-	desc = "This massive patty looks like poison. Beep."
-	icon_state = "roburger"
-	filling_color = "#cccccc"
-	volume = 100
-	bitesize = 0.1
-	list_reagents = list("nanites" = 100, "nutriment" = 6, "vitamin" = 5)
+	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/xenoburger
 	name = "xenoburger"

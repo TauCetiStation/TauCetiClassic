@@ -28,7 +28,7 @@
 	if(!(BP.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL, VOX)))
 		return 0
 
-	if(isnull(cap))
+	if(isnull(cap) || cap > BP.max_pumped)
 		cap = BP.max_pumped
 	if(BP.pumped >= cap)
 		return 0
@@ -36,6 +36,11 @@
 	var/old_pumped = BP.pumped
 	BP.pumped = min(BP.pumped + value, cap)
 	BP.update_sprite()
+
+	if(BP.pumped <= 0 && old_pumped > 0)
+		BP.owner.metabolism_factor.RemoveModifier("Pumped_[BP.name]")
+	else
+		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.002 * BP.pumped)
 
 	return BP.pumped - old_pumped
 
@@ -549,6 +554,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	BP.burn_dam = 0
 	BP.status &= ~ORGAN_BLEEDING
 	var/clamped = 0
+	var/datum/reagents/R = BP.owner.reagents
 
 	//update damage counts
 	for(var/datum/wound/W in BP.wounds)
@@ -558,8 +564,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 			BP.brute_dam += W.damage
 
 		if(W.bleeding() && (BP.owner && BP.owner.should_have_organ(O_HEART)))
-			W.bleed_timer = max(0, W.bleed_timer - 1)
-			BP.status |= ORGAN_BLEEDING
+			if(!R.has_reagent("metatrombine"))
+				W.bleed_timer = max(0, W.bleed_timer - 1)
+				BP.status |= ORGAN_BLEEDING
 
 		clamped |= W.clamped
 		BP.number_wounds += W.amount
@@ -571,7 +578,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	//things tend to bleed if they are CUT OPEN
 	if(BP.owner && BP.owner.should_have_organ(O_HEART) && (BP.open && !clamped))
-		BP.status |= ORGAN_BLEEDING
+		if(!R.has_reagent("metatrombine"))
+			BP.status |= ORGAN_BLEEDING
 
 	//Bone fractures
 	if(BP.brute_dam > BP.min_broken_damage * config.organ_health_multiplier)
@@ -587,7 +595,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return FALSE
 
 /datum/bodypart_controller/proc/fracture()
-	if(BP.owner.dna && BP.owner.dna.mutantrace == "adamantine")
+	if(BP.species == GOLEM)
 		return
 
 	if(BP.status & ORGAN_BROKEN)

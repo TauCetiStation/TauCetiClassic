@@ -95,7 +95,6 @@
 						prob(3);/obj/item/weapon/reagent_containers/glass/bottle/mutagen,\
 						prob(3);/obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate,\
 						prob(3);/obj/item/weapon/reagent_containers/glass/bottle/acid,\
-						prob(1);/obj/item/weapon/reagent_containers/glass/bottle/random\
 					)
 
 /obj/random/meds/medical_supply

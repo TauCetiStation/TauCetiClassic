@@ -137,12 +137,22 @@
 ///////////EXTERNAL MAGAZINES////////////////
 /obj/item/ammo_box/magazine/m9mm
 	name = "magazine (9mm)"
-	icon_state = "9x19p"
+	icon_state = "9x19stech"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
-	max_ammo = 8
+	max_ammo = 7
 	multiple_sprites = 2
+
+/obj/item/ammo_box/magazine/m9mm/update_icon()
+	..()
+	icon_state = "[initial(icon_state)]-[round(ammo_count(),1)]"
+
+
+/obj/item/ammo_box/magazine/m9mm/ex
+	name = "extended capacity magazine (9mm)"
+	icon_state = "9x19exstech"
+	max_ammo = 16
 
 /obj/item/ammo_box/magazine/m9mm_2
 	name = "magazine (9mm)"
@@ -340,39 +350,6 @@
 	max_ammo = 7
 	multiple_sprites = 1
 
-/obj/item/ammo_box/magazine/c5_9mm
-	name = "magazine (9mm rubber)"
-	icon_state = "c5_mag"
-	origin_tech = "combat=1"
-	ammo_type = /obj/item/ammo_casing/c9mmr
-	caliber = "9mm"
-	max_ammo = 20
-
-/obj/item/ammo_box/magazine/c5_9mm/update_icon()
-	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
-
-/obj/item/ammo_box/magazine/c5_9mm/letal
-	name = "magazine (9mm)"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c9mm
-
-/obj/item/ammo_box/magazine/at7_45
-	name = "magazine (.45 rubber)"
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "at7_mag"
-	origin_tech = "combat=1"
-	ammo_type = /obj/item/ammo_casing/c45r
-	caliber = ".45"
-	max_ammo = 8
-
-/obj/item/ammo_box/magazine/at7_45/update_icon()
-	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
-
-/obj/item/ammo_box/magazine/at7_45/letal
-	name = "magazine (.45)"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c45
-
 /obj/item/ammo_box/magazine/l13_38
 	name = "magazine (.38 rubber)"
 	icon_state = "l13_mag"
@@ -385,23 +362,6 @@
 	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
 
 /obj/item/ammo_box/magazine/l13_38/lethal
-	name = "magazine (.38)"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c38m
-
-/obj/item/ammo_box/magazine/acm38_38
-	name = "magazine (.38 rubber)"
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "38_mag"
-	origin_tech = "combat=1"
-	ammo_type = /obj/item/ammo_casing/c38
-	caliber = "38"
-	max_ammo = 12
-
-/obj/item/ammo_box/magazine/acm38_38/update_icon()
-	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
-
-/obj/item/ammo_box/magazine/acm38_38/lethal
 	name = "magazine (.38)"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c38m
