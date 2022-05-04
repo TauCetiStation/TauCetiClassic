@@ -6,7 +6,7 @@
 	light_color = "#e6ffff"
 	circuit = /obj/item/weapon/circuitboard/stationalert
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
-	required_skills = list(/datum/skill/engineering/trained)
+	required_skills = list(/datum/skill/engineering/novice, /datum/skill/command/default)
 
 /obj/machinery/computer/station_alert/atom_init()
 	. = ..()
