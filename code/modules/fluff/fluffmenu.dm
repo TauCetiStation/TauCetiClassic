@@ -100,7 +100,7 @@ var/global/list/editing_item_oldname_list = list()
 	dat += "<td>[readonly?"<b>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_hair_flags=1'>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</a>"]</td>"
 	dat += "</tr>"
 	dat += "<tr>"
-	dat += "<td>Cover default bodyparts<br>(for example: boots/gloves protection from glass)</td>"
+	dat += "<td>Cover bodyparts</td>"
 	dat += "<td>[readonly?"<b>[editing_item.cover_text]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_cover_flag=1'>[editing_item.cover_text]</a>"]</td>"
 	dat += "</tr>"
 	if(!readonly)
@@ -219,10 +219,10 @@ var/global/list/editing_item_oldname_list = list()
 		switch(new_cover_flag)
 			if("Yes")
 				editing_item.cover_text = "Yes"
-				editing_item.cover_flag = FLUFF_COVER
+				editing_item.cover_flag = TRUE
 			else
 				editing_item.cover_text = "No"
-				editing_item.cover_flag = null
+				editing_item.cover_flag = FALSE
 
 		edit_custom_item_panel(src, user)
 		return

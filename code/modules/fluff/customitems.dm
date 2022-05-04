@@ -5,7 +5,6 @@
 #define FLUFF_HAIR_HIDE_NONE 0
 #define FLUFF_HAIR_HIDE_HEAD 1 // BLOCKHEADHAIR
 #define FLUFF_HAIR_HIDE_ALL 2 // BLOCKHAIR
-#define FLUFF_COVER 1
 
 #define FLUFF_HAIR_HIDE_FLAG_TO_TEXT(flag) (flag == 1 && "Head Hair" || flag == 2 && "Head & Face Hair" || "None")
 
@@ -268,7 +267,7 @@
 			if(FLUFF_HAIR_HIDE_ALL)
 				item.flags |= BLOCKHAIR
 
-		if(!FLUFF_COVER)
+		if(!custom_item_info.cover_flag)
 			item.body_parts_covered = 0
 
 		if(custom_item_info.item_type == "small")
