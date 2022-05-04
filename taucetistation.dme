@@ -284,7 +284,7 @@
 #include "code\datums\components\multi_carry.dm"
 #include "code\datums\components\silence.dm"
 #include "code\datums\components\slippery.dm"
-#include "code\datums\components\wear_out.dm"
+#include "code\datums\components\gnawing.dm"
 #include "code\datums\components\spawn_area.dm"
 #include "code\datums\components\swiping.dm"
 #include "code\datums\components\tactical.dm"

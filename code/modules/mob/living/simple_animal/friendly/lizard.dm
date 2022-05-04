@@ -16,7 +16,7 @@
 	layer = MOB_LAYER
 	pass_flags = PASSTABLE
 	attacktext = "gnaw"
-	melee_damage = 1
+	melee_damage = 2
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
@@ -27,12 +27,9 @@
 	has_head = TRUE
 	has_leg = TRUE
 
-/mob/living/simple_animal/lizard/Life()
-	..()
-
 /mob/living/simple_animal/lizard/atom_init()
 	. = ..()
-	AddComponent(/datum/component/wear_out)
+	AddComponent(/datum/component/gnawing)
 
 /mob/living/simple_animal/lizard/death()
 	. = ..()

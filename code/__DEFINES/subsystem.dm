@@ -71,6 +71,7 @@
 #define SS_PRIORITY_GARBAGE       15
 #define SS_PRIORITY_SUN            3
 #define SS_PRIORITY_NIGHTSHIFT     3
+#define SS_PRIORITY_LOW            1
 
 
 #define SS_WAIT_INPUT         1
