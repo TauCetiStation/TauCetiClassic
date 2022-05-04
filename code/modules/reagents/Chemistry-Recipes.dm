@@ -2541,3 +2541,10 @@ TODO: Convert everything to custom hair dye,
 	if(new_color_weight >= 10)
 		chd.color_weight = new_color_weight
 		holder.remove_reagent("water", modifier)
+
+/datum/chemical_reaction/metatrombine
+	name = "Metatrombine"
+	id = "metatrombine"
+	result = "metatrombine"
+	required_reagents = list("bicaridine" = 1, "nitrogen" = 1, "potassium" = 1)
+	result_amount = 3
