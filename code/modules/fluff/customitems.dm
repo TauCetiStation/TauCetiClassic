@@ -52,6 +52,8 @@
 	var/icon_state
 
 	var/hair_flags
+	var/cover_text = "No"
+	var/is_covering = FALSE
 
 	var/status // submitted accepted rejected
 	var/moderator_message
@@ -264,6 +266,9 @@
 				item.flags |= BLOCKHEADHAIR
 			if(FLUFF_HAIR_HIDE_ALL)
 				item.flags |= BLOCKHAIR
+
+		if(!is_covering)
+			item.body_parts_covered = 0
 
 		if(custom_item_info.item_type == "small")
 			item.w_class = SIZE_TINY

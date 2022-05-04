@@ -99,6 +99,10 @@ var/global/list/editing_item_oldname_list = list()
 	dat += "<td>Hide hair<br>(for mask, hat or uniform)</td>"
 	dat += "<td>[readonly?"<b>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_hair_flags=1'>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</a>"]</td>"
 	dat += "</tr>"
+	dat += "<tr>"
+	dat += "<td>Cover default bodyparts<br>(for example: boots/gloves protection from glass)</td>"
+	dat += "<td>[readonly?"<b>[editing_item.cover_text]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_is_covering=1'>[editing_item.cover_text]</a>"]</td>"
+	dat += "</tr>"
 	if(!readonly)
 		dat += "<tr>"
 		dat += "<td>Icon</td>"
@@ -203,6 +207,22 @@ var/global/list/editing_item_oldname_list = list()
 				editing_item.hair_flags = FLUFF_HAIR_HIDE_ALL
 			else
 				editing_item.hair_flags = null
+
+		edit_custom_item_panel(src, user)
+		return
+
+	if(href_list["change_is_covering"])
+		var/new_is_covering = input("Select if item should cover bodyparts", "Text") as null|anything in list("Yes", "No")
+		if(!editing_item || !new_is_covering)
+			return
+
+		switch(new_is_covering)
+			if("Yes")
+				editing_item.cover_text = "Yes"
+				editing_item.is_covering = TRUE
+			else
+				editing_item.cover_text = "No"
+				editing_item.is_covering = FALSE
 
 		edit_custom_item_panel(src, user)
 		return
