@@ -487,7 +487,7 @@
 /mob/living/silicon/robot/verb/unlock_hatch()
 	set name = "Unlock Maintanence Hatch"
 	set src = usr
-	set category = statpanel("Status")
+	set category = "Commands"
 	if(stat == DEAD)
 		to_chat(usr, "You can`t unlock maintance hatch if you dead.</span>")	
 		return 
@@ -511,7 +511,7 @@
 /mob/living/silicon/robot/verb/open_hatch()
 	set name = "Open Maintanence Hatch"
 	set src = usr
-	set category = statpanel("Status")
+	set category = "Commands"
 		
 	if(stat == DEAD)
 		to_chat(usr, "You can`t open maintance hatch if you dead.</span>")	
