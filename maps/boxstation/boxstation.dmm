@@ -18512,7 +18512,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/item/device/camera/polar/list,
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "aHh" = (
@@ -30576,7 +30576,7 @@
 	},
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
-/obj/item/device/camera/polar/list,
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bcG" = (
@@ -36102,7 +36102,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/item/device/camera/polar/list,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -45683,6 +45682,7 @@
 	},
 /obj/item/toy/prize/honk,
 /obj/item/weapon/reagent_containers/spray/watergun,
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "bDR" = (
@@ -50947,6 +50947,7 @@
 /obj/item/organ/external/l_leg,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/blood/drip,
+/obj/item/device/filter/nude,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bNq" = (
