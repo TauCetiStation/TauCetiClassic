@@ -16666,8 +16666,8 @@
 	dir = 5
 	},
 /obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
@@ -17206,6 +17206,9 @@
 	pixel_y = 28
 	},
 /obj/machinery/computer/security,
+/obj/machinery/requests_console/security{
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "red"
@@ -17684,17 +17687,6 @@
 	icon_state = "warning"
 	},
 /area/station/ai_monitored/eva)
-"aFr" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/computer/station_alert,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/main)
 "aFs" = (
 /obj/machinery/door/airlock/glass{
 	name = "Dormitory"
@@ -20949,20 +20941,13 @@
 	},
 /area/station/rnd/mixing)
 "aLq" = (
+/obj/machinery/computer/station_alert{
+	dir = 8
+	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_y = 4
-	},
-/obj/item/weapon/pen{
-	pixel_y = 6
-	},
-/obj/machinery/requests_console/security{
-	pixel_x = 28
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -119992,8 +119977,8 @@ aah
 aaa
 cAd
 aaa
-aDr
-aFr
+aaV
+aaV
 aLq
 aWE
 abU
@@ -120249,9 +120234,9 @@ aah
 aah
 cAd
 aaa
+aaa
 aaV
-aaV
-aaV
+aDr
 aaV
 aaV
 aaV
