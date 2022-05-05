@@ -166,7 +166,7 @@
 	item_state = "ointment"
 	origin_tech = "biotech=1"
 
-	repeating = TRUE
+	repeating = FALSE
 	heal_burn = 1
 
 	required_skills = list(/datum/skill/medical/novice)
@@ -296,7 +296,7 @@
 	heal_burn = 12
 	origin_tech = "biotech=1"
 
-	repeating = TRUE
+	repeating = FALSE
 	required_skills = list(/datum/skill/medical/trained)
 
 /obj/item/stack/medical/advanced/ointment/update_icon()
