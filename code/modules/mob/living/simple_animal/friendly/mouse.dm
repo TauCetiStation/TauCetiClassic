@@ -44,7 +44,19 @@
 	if(!stat && prob(speak_chance))
 		for(var/mob/M in view())
 			M.playsound_local(loc, 'sound/effects/mousesqueek.ogg', VOL_EFFECTS_MASTER)
-	snuffles()
+	if(!ckey && stat == CONSCIOUS && prob(0.5) && randomize_color)
+		stat = UNCONSCIOUS
+		icon_state = "mouse_[body_color]_sleep"
+		wander = FALSE
+		speak_chance = 0
+		//snuffles
+	else if(stat == UNCONSCIOUS && randomize_color)
+		if(ckey || prob(1))
+			stat = CONSCIOUS
+			icon_state = "mouse_[body_color]"
+			wander = TRUE
+		else if(prob(5))
+			emote("snuffles")
 
 /mob/living/simple_animal/mouse/atom_init()
 	. = ..()
@@ -68,21 +80,6 @@
 	icon_dead = "mouse_[body_color]_dead"
 	icon_move = "mouse_[body_color]_move"
 	desc = "It's a small [body_color] rodent, often seen hiding in maintenance areas and making a nuisance of itself."
-
-/mob/living/simple_animal/mouse/proc/snuffles()
-	if(!ckey && stat == CONSCIOUS && prob(0.5))
-		stat = UNCONSCIOUS
-		icon_state = "mouse_[body_color]_sleep"
-		wander = FALSE
-		speak_chance = 0
-		//snuffles
-	else if(stat == UNCONSCIOUS)
-		if(ckey || prob(1))
-			stat = CONSCIOUS
-			icon_state = "mouse_[body_color]"
-			wander = TRUE
-		else if(prob(5))
-			emote("snuffles")
 
 /mob/living/simple_animal/mouse/proc/splat()
 	health = 0
