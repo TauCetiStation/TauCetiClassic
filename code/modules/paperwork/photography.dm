@@ -291,9 +291,7 @@
                       /obj/item/device/lens/sepia,
                       /obj/item/device/lens/detective,
                       /obj/item/device/lens/polar,
-                      /obj/item/device/lens/old,
-                      /obj/item/device/lens/rentgene,
-                      /obj/item/device/lens/nude)
+                      /obj/item/device/lens/old)
 
 /*********
 * camera *
@@ -432,7 +430,8 @@
 		return
 	if(istype(I, /obj/item/device/lens) && can_put_lens && !contents.len)
 		var/obj/item/device/lens/F = I
-		user.unEquip(F)
+		if(!user.unEquip(F))
+			return
 		F.forceMove(src)
 	return ..()
 

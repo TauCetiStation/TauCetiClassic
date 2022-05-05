@@ -4999,7 +4999,7 @@
 	network = list("SS13","Security");
 	pixel_y = -18
 	},
-/obj/item/device/camera/polar/detective,
+/obj/item/device/camera,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -53664,6 +53664,7 @@
 /obj/item/roller,
 /obj/item/device/healthanalyzer,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/device/lens/rentgene,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bSU" = (
@@ -72586,6 +72587,12 @@
 	icon_state = "darkyellowfull"
 	},
 /area/station/engineering/chiefs_office)
+"gXw" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/item/device/lens/nude,
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "gXz" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin,
@@ -110654,7 +110661,7 @@ adb
 alm
 afg
 afF
-cfP
+gXw
 adW
 dFe
 aoM
