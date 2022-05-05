@@ -3,6 +3,97 @@
 /obj/item/weapon/gripper
 	name = "magnetic gripper"
 	desc = "A simple grasping tool for synthetic assets."
+1
+//Simple borg hand.
+2
+//Limited use.
+3
+/obj/item/weapon/gripper
+4
+    name = "magnetic gripper"
+5
+    desc = "A simple grasping tool for synthetic assets."
+6
+    icon = 'icons/obj/device.dmi'
+7
+    icon_state = "gripper"
+8
+​
+9
+    //Has a list of items that it can hold.
+10
+    var/list/can_hold = list(
+11
+        /obj/item/weapon/stock_parts/cell,
+12
+        /obj/item/weapon/firealarm_electronics,
+13
+        /obj/item/weapon/airalarm_electronics,
+14
+        /obj/item/weapon/airlock_electronics,
+15
+        /obj/item/weapon/module/power_control,
+16
+        /obj/item/weapon/stock_parts,
+17
+        /obj/item/light_fixture_frame,
+18
+        /obj/item/apc_frame,
+19
+        /obj/item/alarm_frame,
+20
+        /obj/item/door_control_frame,
+21
+        /obj/item/firealarm_frame,
+22
+        /obj/item/weapon/table_parts,
+23
+        /obj/item/weapon/rack_parts,
+24
+        /obj/item/weapon/camera_assembly,
+25
+        /obj/item/weapon/tank,
+26
+        /obj/item/weapon/circuitboard,
+27
+        /obj/item/weapon/light/tube,
+28
+        /obj/item/weapon/light/bulb
+29
+        )
+30
+​
+31
+    //Item currently being held.
+32
+    var/obj/item/wrapped = null
+33
+​
+34
+​
+35
+/obj/item/weapon/gripper/atom_init()
+36
+    . = ..()
+37
+    RegisterSignal(src, list(COMSIG_HAND_IS), .proc/is_hand)
+38
+    RegisterSignal(src, list(COMSIG_HAND_ATTACK), .proc/attack_as_hand)
+39
+    RegisterSignal(src, list(COMSIG_HAND_DROP_ITEM), .proc/drop_item)
+40
+    RegisterSignal(src, list(COMSIG_HAND_PUT_IN), .proc/put_in)
+41
+    RegisterSignal(src, list(COMSIG_HAND_GET_ITEM), .proc/get_item)
+42
+​
+43
+/obj/item/weapon/gripper/Destroy()
+44
+    UnregisterSignal(src, list(COMSIG_HAND_IS, COMSIG_HAND_ATTACK,
+45
+                               COMSIG_HAND_DROP_ITEM, COMSIG_HAND_PUT_IN, COMSIG_HAND_GET_ITEM))
+
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gripper"
 
@@ -217,8 +308,8 @@
 			wrapped = null
 
 /obj/item/weapon/gripper/verb/drop_item_verb()
-	set name = "Drop Item"
-	set desc = "Release an item from your magnetic gripper."
+	set name = "Отпустить предмет"
+	set desc = "Освобождает взятый вами предмет из магнитного держателя."
 	set category = "Commands"
 
 	SEND_SIGNAL(src, COMSIG_HAND_DROP_ITEM, get_turf(src))
