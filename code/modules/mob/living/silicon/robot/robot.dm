@@ -483,58 +483,51 @@
 			stat(null, "GPS: [COORD(T)]")
 
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
-		
+
 /mob/living/silicon/robot/verb/unlock_hatch()
-	set name = "Unlock Maintanence Hatch"
+	set name = "Разблокировать интерфейс"
 	set src = usr
 	set category = "Commands"
-	if(stat == DEAD)
-		to_chat(usr, "You can`t unlock maintance hatch if you dead.</span>")	
-		return 
-	
-	if(opened)		
-		to_chat(usr, "You can`t locked opened cover.</span>")
+	if(incapacitated())
+		return
+
+	if(opened)
+		to_chat(usr, "Невозможно заблокировать интерфейс, если открыта панель.</span>")
 		emote("buzz")
 		return
-	else		
-		if(locked)
-			to_chat(usr, "You unlocked the cover.</span>")	
-			playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)	
-	
-		if(!locked)
-			to_chat(usr, "You locked the cover.</span>")
-			playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)		
-				
+
+	if(locked)
+		to_chat(usr, "Интерфейс разблокирован.</span>")
+		playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
+	else
+		to_chat(usr, "Интерфейс заблокирован.</span>")
+		playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
+
 	locked = !locked
-	update_icon() 
-			
+	update_icon()
+
 /mob/living/silicon/robot/verb/open_hatch()
-	set name = "Open Maintanence Hatch"
+	set name = "Открыть панель"
 	set src = usr
 	set category = "Commands"
-		
-	if(stat == DEAD)
-		to_chat(usr, "You can`t open maintance hatch if you dead.</span>")	
-		return 
-		
+
+	if(incapacitated())
+		return
+
 	if (locked)
-		to_chat(usr, "You can`t open locked the cover.</span>")
+		to_chat(usr, "Невозможно открыть панель, если заблокирован интерфейс.</span>")
 		emote("buzz")
 		return
-	else				
-		
-		if(opened)
-			to_chat(usr, "You close the cover.</span>")
-			playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)	
-		
-		if(!opened)
-			to_chat(usr, "You open the cover.</span>")
-			playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
-			
+
+	if(opened)
+		to_chat(usr, "Панель закрыта.</span>")
+		playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
+	else
+		to_chat(usr, "Панель открыта.</span>")
+		playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
+
 	opened = !opened
-	update_icon() 
-	   
-   		
+	update_icon()
 
 /mob/living/silicon/robot/restrained()
 	return 0
