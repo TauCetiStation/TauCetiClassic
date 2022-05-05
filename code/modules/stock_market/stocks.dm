@@ -109,7 +109,7 @@
 
 /datum/stock/proc/modifyAccount(whose, amount)
 	. = FALSE
-	if (SSshuttle && isnum(department_accounts["Cargo"].money) && (amount > 0 || department_accounts["Cargo"].money + amount > 0))
+	if (department_accounts["Cargo"] && (amount > 0 || department_accounts["Cargo"].money + amount > 0))
 		department_accounts["Cargo"].money += amount
 		stockExchange.balanceLog(whose, amount)
 		. = TRUE
