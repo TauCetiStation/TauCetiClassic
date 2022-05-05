@@ -285,6 +285,7 @@
 	footstep = FOOTSTEP_GRASS
 	barefootstep = FOOTSTEP_GRASS
 	clawfootstep = FOOTSTEP_GRASS
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/grass/atom_init()
 	icon_state = "grass[pick("1","2","3","4")]"

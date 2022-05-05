@@ -3,8 +3,8 @@
 	flag = RD
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the captain"
 	selection_color = "#ffddff"
 	idtype = /obj/item/weapon/card/id/sciGold
@@ -34,8 +34,8 @@
 	flag = SCIENTIST
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
@@ -51,8 +51,8 @@
 	flag = XENOARCHAEOLOGIST
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
@@ -75,8 +75,8 @@
 	flag = XENOBIOLOGIST
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
@@ -91,8 +91,8 @@
 	flag = ROBOTICIST
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "research director"
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
@@ -108,8 +108,8 @@
 	flag = RESEARCHASSISTANT
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "research director"
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci

@@ -28,6 +28,14 @@
 	desc = "Don't cry for me, Orithena."
 	icon_state = "metal-rod"
 
+/obj/item/weapon/arrow/harpoon
+
+	name = "Стрела"
+	desc = "Ей стреляют"
+	icon_state = "harpoon"
+	item_state = "harpoon"
+	throwforce = 10
+
 /obj/item/weapon/arrow/rod/removed(mob/user)
 	if(throwforce == 15) // The rod has been superheated - we don't want it to be useable when removed from the bow.
 		to_chat(user, "[src] shatters into a scattering of overstressed metal shards as it leaves the crossbow.")

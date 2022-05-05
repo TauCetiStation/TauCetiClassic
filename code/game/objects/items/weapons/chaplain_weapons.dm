@@ -436,9 +436,9 @@
 
 	var/image/down_overlay
 	/// Force for holy wielders.
-	var/holy_force = 10
+	var/holy_force = 26
 	/// Force for non-holy wielders.
-	var/def_force = 5
+	var/def_force = 10
 
 /obj/item/weapon/claymore/religion/atom_init()
 	. = ..()

@@ -93,3 +93,56 @@
 	icon_state = "red"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/custom/hub
+	name = "Hub"
+	icon_state = "red"
+
+/area/custom/human_hub
+	name = "HumanHub"
+	icon_state = "bluenew"
+
+/area/custom/wizard_hub
+	name = "WizardHub"
+	icon_state = "showroom"
+
+/area/custom/krigan_hub
+	name = "KriganHub"
+	icon_state = "cult-heaven"
+
+/area/custom/peasant_hub
+	name = "Peasant_hub"
+	icon_state = "blue-red-d"
+
+/area/custom/miner_hub
+	name = "Miner_hub"
+	icon_state = "blue-red-d"
+
+/area/custom/helper_hub
+	name = "Helper_hub"
+	icon_state = "blue-red-d"
+
+/area/custom/start_homm
+	name = "Start"
+	icon_state = "blue-red-d"
+
+/area/custom/start_homm/peasant
+	name = "PeasantStart"
+
+/area/custom/start_homm/smith
+	name = "SmithStart"
+
+/area/custom/start_homm/miner
+	name = "MinerStart"
+
+/area/custom/start_homm/helper
+	name = "HelperStart"
+
+/area/custom/start_homm/knight
+	name = "KnightStart"
+
+/area/custom/start_homm/monk
+	name = "MonkStart"
+
+/area/custom/start_homm/human_hero
+	name = "HumanHeroStart"

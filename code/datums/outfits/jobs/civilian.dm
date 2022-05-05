@@ -140,3 +140,71 @@
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/device/pda/chaplain
+
+/datum/outfit/job/hub
+	name = OUTFIT_JOB_NAME("Hub")
+	uniform = /obj/item/clothing/under/color/black
+	shoes = /obj/item/clothing/shoes/black
+	back = /obj/item/weapon/storage/backpack/santabag
+	l_ear = ""
+	belt = ""
+	id = ""
+
+/datum/outfit/job/hub/peasant
+	name = OUTFIT_JOB_NAME("Peasant")
+	uniform = /obj/item/clothing/under/peasant
+	shoes = /obj/item/clothing/shoes/sandal
+	l_hand =/obj/item/weapon/hatchet
+
+/datum/outfit/job/hub/smith
+	name = OUTFIT_JOB_NAME("Peasant")
+	uniform =/obj/item/clothing/under/rank/dispatch
+	shoes =/obj/item/clothing/shoes/boots/work
+	l_hand = /obj/item/weapon/smith_hammer
+	gloves = /obj/item/clothing/gloves/black
+	suit = /obj/item/clothing/suit/chef/classic
+
+/datum/outfit/job/hub/miner
+	name = OUTFIT_JOB_NAME("Peasant")
+	uniform = /obj/item/clothing/under/peasant
+	shoes = /obj/item/clothing/shoes/sandal
+	l_hand = /obj/item/weapon/pickaxe/silver
+
+/datum/outfit/job/hub/helper
+	name = OUTFIT_JOB_NAME("Peasant")
+	uniform = /obj/item/clothing/under/pants/black
+	suit = /obj/item/clothing/suit/monk_helper
+	shoes = /obj/item/clothing/shoes/sandal
+	head = /obj/item/clothing/head/monk_helper
+	l_hand = /obj/item/weapon/staff/broom/monk
+
+/datum/outfit/job/hub/knight
+	name = OUTFIT_JOB_NAME("Peasant")
+	uniform =/obj/item/clothing/under/color/grey
+	suit = /obj/item/clothing/suit/armor/crusader
+	shoes = /obj/item/clothing/shoes/boots/swat
+	gloves = /obj/item/clothing/gloves/combat
+	head = /obj/item/clothing/head/helmet/crusader
+	l_hand = /obj/item/weapon/claymore/religion
+	back = ""
+
+
+/datum/outfit/job/hub/monk
+	name = OUTFIT_JOB_NAME("Peasant")
+	uniform =/obj/item/clothing/under/color/grey
+	suit = /obj/item/clothing/suit/wizrobe/monk
+	shoes = /obj/item/clothing/shoes/sandal
+	gloves = /obj/item/clothing/gloves/combat
+	head = /obj/item/clothing/head/wizard/monk
+	l_hand = /obj/item/weapon/nullrod
+	back = ""
+
+/datum/outfit/job/hub/human_hero
+	name = OUTFIT_JOB_NAME("Peasant")
+	uniform =/obj/item/clothing/under/color/grey
+	suit = /obj/item/clothing/suit/armor/crusader
+	shoes = /obj/item/clothing/shoes/boots/swat
+	gloves = /obj/item/clothing/gloves/combat
+	head = /obj/item/clothing/head/byzantine_hat
+	r_hand = /obj/item/toy/flag
+	back = ""

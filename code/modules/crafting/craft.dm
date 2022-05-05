@@ -37,7 +37,7 @@
 
 /datum/personal_crafting/proc/get_environment(mob/user)
 	. = list()
-	for(var/obj/item/I in list(user.l_hand, user.r_hand))
+	for(var/obj/I in list(user.l_hand, user.r_hand))
 		. += I
 	if(!isturf(user.loc))
 		return

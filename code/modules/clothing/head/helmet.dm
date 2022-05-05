@@ -54,6 +54,17 @@
 	action_button_name = "Adjust helmet visor"
 	var/up = 0
 
+/obj/item/clothing/head/helmet/milita
+	name = "Шлем Ополчения"
+	desc = "Натирает нос"
+	icon_state = "milita"
+	item_state = "milita"
+	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
+	armor = list(melee = 30, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
+	flags_inv = HIDEEARS
+	siemens_coefficient = 0.3
+	var/up = 0
+
 /obj/item/clothing/head/helmet/riot/attack_self()
 	toggle()
 

@@ -206,6 +206,7 @@
 	icon_state = "Byzantine_dress"
 	item_state = "Byzantine_dress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	armor = list(melee = 60, bullet = 60, laser = 60,energy = 60, bomb = 60, bio = 60, rad = 60)
 
 /*
  * Misc
@@ -706,3 +707,9 @@
 	icon_state = "kung_jacket"
 	item_state = "kung_jacket"
 	w_class = SIZE_SMALL
+
+/obj/item/clothing/suit/monk_helper
+	name = "Роба"
+	desc = "Роба помощника монаха"
+	icon_state = "monk_helper"
+	item_state = "monk_helper"

@@ -99,6 +99,15 @@
 	item_state = "syndballoon"
 	w_class = SIZE_NORMAL
 
+
+/obj/item/toy/flag
+	name = "Флаг"
+	desc = "Флаг цвета вашей фракции"
+	force = 40
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "flag"
+	item_state = "flag"
+	w_class = SIZE_NORMAL
 /*
  * Fake telebeacon
  */

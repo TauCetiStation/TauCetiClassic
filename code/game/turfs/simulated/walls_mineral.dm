@@ -79,7 +79,21 @@
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
 	canSmoothWith = list(/turf/simulated/wall/mineral/sandstone, /obj/structure/falsewall/sandstone)
 
+/turf/simulated/wall/mineral/custle
+	name = "Стена"
+	desc = "Человеческий Оплот"
+	icon = 'icons/turf/walls/has_false_walls/custle.dmi'
+	mineral = "iron"
+	sheet_type = /obj/item/stack/sheet/mineral/iron
+	canSmoothWith = list(/turf/simulated/wall/mineral/custle)
 
+/turf/simulated/wall/mineral/wood
+	name = "Деревянная стена"
+	desc = "Признак селюков"
+	icon = 'icons/turf/walls/has_false_walls/wood.dmi'
+	mineral = "wood"
+	sheet_type = /obj/item/stack/sheet/wood
+	canSmoothWith = list(/turf/simulated/wall/mineral/wood)
 
 /turf/simulated/wall/mineral/phoron
 	name = "phoron wall"

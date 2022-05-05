@@ -1,9 +1,9 @@
 /obj/item/weapon/spear
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "spearglass0"
-	name = "spear"
-	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
-	force = 10
+	name = "Алебарда"
+	desc = "Иди снимай обратку"
+	force = 13
 	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
 	throwforce = 15
@@ -24,8 +24,8 @@
 	AddComponent(/datum/component/swiping, SCB)
 
 	var/datum/twohanded_component_builder/TCB = new
-	TCB.force_wielded = 18
-	TCB.force_unwielded = 10
+	TCB.force_wielded = 25
+	TCB.force_unwielded = 13
 	TCB.icon_wielded = "spearglass1"
 
 	AddComponent(/datum/component/twohanded, TCB)

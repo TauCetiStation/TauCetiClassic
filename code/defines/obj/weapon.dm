@@ -322,6 +322,18 @@
 	SCB.can_spin = TRUE
 	AddComponent(/datum/component/swiping, SCB)
 
+/obj/item/weapon/staff/broom/monk
+	name = "Метла"
+	desc = "Ей можно убирать грязь. А когда демоны придут, им можно ударить по башке метлой."
+	force = 10
+
+/obj/item/weapon/staff/broom/monk/afterattack(atom/target, mob/user)
+	if(istype(target,/obj/effect/decal/cleanable) && !user.is_busy(target))
+		user.visible_message("<span class='warning'>[user] begins to clean \the [target.name].</span>","<span class='notice'>You begin to clean \the [target.name].</span>")
+		if(do_after(user, 60, target = target))
+			user.visible_message("<span class='warning'>[user] scrub \the [target.name] out.</span>","<span class='notice'>You scrub \the [target.name] out.</span>")
+			qdel(target)
+
 /obj/item/weapon/staff/gentcane
 	name = "Gentlemans Cane"
 	desc = "An ebony can with an ivory tip."
@@ -458,7 +470,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "hatchet"
 	flags = CONDUCT
-	force = 12.0
+	force = 3.0
 	sharp = 1
 	edge = 1
 	w_class = SIZE_TINY
