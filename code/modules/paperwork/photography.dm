@@ -277,10 +277,9 @@
 			return
 	return
 
-/obj/item/weapon/storage/box_lenses
+/obj/item/weapon/storage/box/box_lenses
 	name = "photo lenses box"
 	desc = "It's just an ordinary box. Nothing special."
-	icon_state = "box"
 	item_state = "lenses_kit"
 	max_storage_space = DEFAULT_BOX_STORAGE
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
