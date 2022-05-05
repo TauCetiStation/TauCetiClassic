@@ -274,6 +274,28 @@
 	if(!selection || !Adjacent(redeemer))
 		voucher.in_use = 0
 		return
+
+    var/list/assortment = list(
+	"Scout kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/scout,
+	"Sniper kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/sniper,
+	"Assaultman kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman,
+	"Bomber kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/demo,
+	"Melee kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/melee,
+	"Hacker kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker,
+	"Machinengunner kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner,
+	"Custom kit" =  /obj/item/weapon/storage/backpack/dufflebag/nuke/custom,
+     )
+
+/obj/machinery/vending/syndi/proc/givekit(obj/voucher, redeemer, mob/user)
+    if(voucher.in_use)
+		return
+	voucher.in_use = TRUE
+	if(!selection_items)
+		populate_selection()
+    var/bought = new assortment[selection]
+    give_bought_to(user)
+    save_bought_to_statistics
+
 	switch(selection)
 		if("Scout kit")
 			new /obj/item/weapon/storage/backpack/dufflebag/nuke/scout(loc)
@@ -281,7 +303,7 @@
 			new /obj/item/weapon/storage/backpack/dufflebag/nuke/sniper(loc)
 		if("Assaultman kit")
 			new /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman(loc)
-		if("Boom-boom kit")
+		if("Bomber kit")
 			new /obj/item/weapon/storage/backpack/dufflebag/nuke/demo(loc)
 		if("Melee kit")
 			new /obj/item/weapon/storage/backpack/dufflebag/nuke/melee(loc)
@@ -295,6 +317,24 @@
 			voucher.in_use = FALSE
 			return
 	qdel(voucher)
+
+	if(user.mind)
+		for(var/role in user.mind.antag_roles)
+			var/datum/role/R = user.mind.antag_roles[role]
+			var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
+			if(!S)
+				continue
+			S.spent_TC += cost
+			if(istype(R, /datum/role/operative))
+				R.faction.faction_scoreboard_data += {"[name] for [cost] voucher."}
+			else
+				S.uplink_items_bought += {"[name] for [cost] voucher."}
+
+			var/datum/stat/uplink_purchase/stat = new
+			stat.bundlename = name
+			stat.cost = cost
+			stat.item_type = item
+			S.uplink_purchases += stat
 
 /obj/machinery/vending/syndi/ex_act()
 	return
