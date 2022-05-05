@@ -280,7 +280,7 @@
 /obj/item/weapon/storage/box/box_lenses
 	name = "photo lenses box"
 	desc = "It's just an ordinary box. Nothing special."
-	item_state = "lenses_kit"
+	item_state = "syringe_kit"
 	max_storage_space = DEFAULT_BOX_STORAGE
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 	startswith = list(/obj/item/device/lens/lomo,
