@@ -1464,7 +1464,7 @@
 "acF" = (
 /obj/item/clothing/glasses/welding,
 /obj/structure/table,
-/obj/item/device/lense/nude,
+/obj/item/device/lens/nude,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "acG" = (
@@ -5829,9 +5829,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/item/device/lense/posterization,
-/obj/item/device/lense/sepia,
-/obj/item/device/lense/grayscale,
+/obj/item/device/lens/posterization,
+/obj/item/device/lens/sepia,
+/obj/item/device/lens/grayscale,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "akt" = (
