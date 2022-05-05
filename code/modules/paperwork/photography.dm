@@ -285,15 +285,15 @@
 	max_storage_space = DEFAULT_BOX_STORAGE
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 	startswith = list(/obj/item/device/lens/lomo,
-					/obj/item/device/lens/posterization,
-					/obj/item/device/lens/grayscale,
-					/obj/item/device/lens/invert,
-					/obj/item/device/lens/sepia,
-					/obj/item/device/lens/detective,
-					/obj/item/device/lens/polar,
-					/obj/item/device/lens/old,
-					/obj/item/device/lens/rentgene,
-					/obj/item/device/lens/nude)
+                      /obj/item/device/lens/posterization,
+                      /obj/item/device/lens/grayscale,
+                      /obj/item/device/lens/invert,
+                      /obj/item/device/lens/sepia,
+                      /obj/item/device/lens/detective,
+                      /obj/item/device/lens/polar,
+                      /obj/item/device/lens/old,
+                      /obj/item/device/lens/rentgene,
+                      /obj/item/device/lens/nude)
 
 /*********
 * camera *
@@ -315,7 +315,7 @@
 	var/icon_on = "camera"
 	var/icon_off = "camera_off"
 	var/see_ghosts = 0 //for the spoop of it
-	var/photo_size = 3 //Default is 3x3. 1x1, 5x5, 7x7 are also options
+	var/photo_size = 3 //Default is 3x3. 1x1, 5x5 are also options
 	var/can_put_lens = TRUE
 	var/obj/item/device/lens/base_lens
 
@@ -390,27 +390,18 @@
 
 /obj/item/device/camera/CtrlClick(mob/user)
 	if(!Adjacent(user))
-		return
+		return ..()
 	if(user.incapacitated())
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 	if(!can_put_lens || !contents)
-		return
+		return ..()
 
 	for(var/obj/item/device/lens/F in contents)
 		usr.put_in_hands(F)
 		to_chat(user, "<span class='warning'>You detach the filter out of camera's lens.</span>")
-
-/obj/item/device/camera/polar/CtrlClick(mob/user)
-	return
-
-/obj/item/device/camera/oldcamera/CtrlClick(mob/user)
-	return
-
-/obj/item/device/camera/lomo/CtrlClick(mob/user)
-	return
 
 /obj/item/device/camera/attack_self(mob/user)
 	on = !on
