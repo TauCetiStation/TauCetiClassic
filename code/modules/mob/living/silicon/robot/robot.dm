@@ -488,23 +488,23 @@
 	set name = "Разблокировать интерфейс"
 	set src = usr
 	set category = "Commands"
+
 	if(incapacitated())
 		return
-
-	if(opened)
-		to_chat(usr, "Невозможно заблокировать интерфейс, если открыта панель.</span>")
+	else if(opened)
+		to_chat(usr, "<span class='warning'>Невозможно заблокировать интерфейс, если открыта панель.</span>")
 		emote("buzz")
 		return
-
+	
+	sleep(10)
+	
 	if(locked)
-		to_chat(usr, "Интерфейс разблокирован.</span>")
-		playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
+		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")		
 	else
-		to_chat(usr, "Интерфейс заблокирован.</span>")
-		playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
+		to_chat(usr, "<span class='notice'>Интерфейс заблокирован.</span>")
 
+	playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
 	locked = !locked
-	update_icon()
 
 /mob/living/silicon/robot/verb/open_hatch()
 	set name = "Открыть панель"
@@ -513,21 +513,22 @@
 
 	if(incapacitated())
 		return
-
-	if (locked)
-		to_chat(usr, "Невозможно открыть панель, если заблокирован интерфейс.</span>")
+	else if (locked)
+		to_chat(usr, "<span class='warning'>Невозможно открыть панель, если заблокирован интерфейс.</span>")
 		emote("buzz")
 		return
-
+	
+	sleep(10)
+	
 	if(opened)
-		to_chat(usr, "Панель закрыта.</span>")
+		to_chat(usr, "<span class='notice'>Панель закрыта.</span>")
 		playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
 	else
-		to_chat(usr, "Панель открыта.</span>")
+		to_chat(usr, "<span class='notice'>Панель открыта.</span>")
 		playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
-
+	
 	opened = !opened
-	update_icon()
+	updateicon()
 
 /mob/living/silicon/robot/restrained()
 	return 0
