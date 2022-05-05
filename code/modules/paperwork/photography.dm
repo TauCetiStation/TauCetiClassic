@@ -116,195 +116,90 @@
 	desc = indesc
 
 
-/**************
-* photo album *
-**************/
-/obj/item/weapon/storage/photo_album
-	name = "Photo album"
-	icon = 'icons/obj/items.dmi'
-	icon_state = "album"
-	item_state = "briefcase"
-	can_hold = list(/obj/item/weapon/photo)
-	max_storage_space = DEFAULT_BOX_STORAGE
-
-/obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
-
-	if((ishuman(usr)))
-		var/mob/M = usr
-		if(!( istype(over_object, /atom/movable/screen) ))
-			return ..()
-		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
-		if(!M.incapacitated() && M.back == src)
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-			add_fingerprint(usr)
-			return
-		if(over_object == usr && usr.Adjacent(src))
-			if(usr.s_active)
-				usr.s_active.close(usr)
-			show_to(usr)
-			return
-	return
-
-/*********
-* camera *
-*********/
-/obj/item/device/camera
-	name = "zenit 122"
-	icon = 'icons/obj/items.dmi'
-	desc = "High quality photos, capable of installing filters."
-	icon_state = "camera"
-	item_state = "photocamera"
-	w_class = SIZE_TINY
-	flags = CONDUCT
-	slot_flags = SLOT_FLAGS_BELT
-	m_amt = 2000
-	var/flash_enabled = TRUE
-	var/pictures_max = 10
-	var/pictures_left = 10
-	var/on = 1
-	var/icon_on = "camera"
-	var/icon_off = "camera_off"
-	var/see_ghosts = 0 //for the spoop of it
-	var/photo_size = 3 //Default is 3x3. 1x1, 5x5, 7x7 are also options
-	var/can_put_lense = TRUE
-	var/obj/item/device/lense/base_lense
-
-/obj/item/device/camera/polar
-	name = "polaroid"
-	icon = 'icons/obj/items.dmi'
-	desc = "A polaroid camera."
-	icon_state = "polaroid"
-	icon_on = "polaroid"
-	icon_off = "polaroid_off"
-	can_put_lense = FALSE
-	base_lense = /obj/item/device/lense/polar
-
-/obj/item/device/camera/polar/spooky
-	name = "camera obscura"
-	desc = "A polaroid camera, some say it can see ghosts!"
-	see_ghosts = 1
-	can_put_lense = FALSE
-	base_lense = /obj/item/device/lense/invert
-
-/obj/item/device/camera/polar/detective
-	name = "detectives camera"
-	desc = "A black&white filter camera."
-	can_put_lense = FALSE
-	base_lense = /obj/item/device/lense/detective
-
-/obj/item/device/camera/lomo
-	name = "lomo lc-a"
-	desc = "'Lomo' Kompakt Automat."
-	icon_state = "lomo"
-	icon_on = "lomo"
-	icon_off = "lomo_off"
-	pictures_left = 30
-	can_put_lense = FALSE
-	base_lense = /obj/item/device/lense/lomo
-
-/obj/item/device/camera/oldcamera
-	name = "fed"
-	desc = "'Felix Edmundovich Dzerzhinsky' photo camera."
-	icon_state = "fed"
-	icon_on = "fed"
-	icon_off = "fed_off"
-	pictures_left = 30
-	can_put_lense = FALSE
-	base_lense = /obj/item/device/lense/old
-
-
 // Camera filters
-/obj/item/device/lense
+/obj/item/device/lens
 	w_class = SIZE_TINY
 	var/effect
 
-/obj/item/device/lense/lomo
-	name = "lomo filter lense"
+/obj/item/device/lens/lomo
+	name = "lomo filter lens"
 	icon = 'icons/obj/items.dmi'
-	desc = "A LOMOgraphy filter lense."
+	desc = "A LOMOgraphy filter lens."
 	icon_state = "lomo_filter"
 	effect = list(LOMO_FILTER, "vignette", null)
 
-/obj/item/device/lense/posterization
-	name = "poster filter lense"
+/obj/item/device/lens/posterization
+	name = "poster filter lens"
 	icon = 'icons/obj/items.dmi'
-	desc = "A poster filter lense."
+	desc = "A poster filter lens."
 	icon_state = "poster_filter"
 	effect = list(POSTERIZATION_FILTER, "", null)
 
-/obj/item/device/lense/grayscale
-	name = "gray filter lense"
+/obj/item/device/lens/grayscale
+	name = "gray filter lens"
 	icon = 'icons/obj/items.dmi'
-	desc = "A gray filter lense."
+	desc = "A gray filter lens."
 	icon_state = "grey_filter"
 	effect = list(GRAYSCALE_FILTER, "", null)
 
-/obj/item/device/lense/invert
-	name = "invert filter lense"
+/obj/item/device/lens/invert
+	name = "invert filter lens"
 	icon = 'icons/obj/items.dmi'
-	desc = "A invert filter lense."
+	desc = "A invert filter lens."
 	icon_state = "invert_filter"
 	effect = list(INVERT_FILTER, "vignette", null)
 
-/obj/item/device/lense/sepia
-	name = "sepia filter lense"
+/obj/item/device/lens/sepia
+	name = "sepia filter lens"
 	icon = 'icons/obj/items.dmi'
-	desc = "A sepia filter lense."
+	desc = "A sepia filter lens."
 	icon_state = "sepia_filter"
 	effect = list(SEPIA_FILTER, "", null)
 
-/obj/item/device/lense/detective
-	name = "detective filter lense"
+/obj/item/device/lens/detective
+	name = "detective filter lens"
 	icon = 'icons/obj/items.dmi'
-	desc = "A detective filter lense."
+	desc = "A detective filter lens."
 	icon_state = "detective_filter"
 	effect = list(BLACKANDWHITE_FILTER, "vignette", null)
 
-/obj/item/device/lense/polar
-	name = "polaroid filter lense"
+/obj/item/device/lens/polar
+	name = "polaroid filter lens"
 	icon = 'icons/obj/items.dmi'
-	desc = "A Polaroid filter lense."
+	desc = "A Polaroid filter lens."
 	icon_state = "polaroid_filter"
 	effect = list(POLAROID_FILTER, "", null)
 
-/obj/item/device/lense/old
-	name = "old film filter lense"
+/obj/item/device/lens/old
+	name = "old film filter lens"
 	icon = 'icons/obj/items.dmi'
-	desc = "An old filter lense."
+	desc = "An old filter lens."
 	icon_state = "old_filter"
 	effect = list(OLD_1_FILTER, "old_vignette", OLD_2_FILTER)
 
-/obj/item/device/lense/rentgene
-	name = "rentgene filter lense"
+/obj/item/device/lens/rentgene
+	name = "rentgene filter lens"
 	icon = 'icons/obj/items.dmi'
-	desc = "A rentgene filter lense that shows people's sceletones."
+	desc = "A rentgene filter lens that shows people's sceletones."
 	icon_state = "rentgene_filter"
 	effect = list(XRAY_FILTER, "", null)
 
-/obj/item/device/lense/nude
-	name = "red film filter lense"
+/obj/item/device/lens/nude
+	name = "red film filter lens"
 	icon = 'icons/obj/items.dmi'
-	desc = "A red filter lense that shows people nude."
+	desc = "A red filter lens that shows people nude."
 	icon_state = "nude_filter"
 	effect = list(NUDE_FILTER, "", null)
 
-/obj/item/device/lense/proc/process_icon(atom/A)
+/obj/item/device/lens/proc/process_icon(atom/A)
 	return FALSE
 
-/obj/item/device/lense/rentgene/process_icon(atom/A)
+/obj/item/device/lens/rentgene/process_icon(atom/A)
 	if(!ishuman(A))
 		return FALSE
 	return icon("icons/mob/human.dmi","electrocuted_generic",A.dir)
 
-/obj/item/device/lense/nude/process_icon(atom/A)
+/obj/item/device/lens/nude/process_icon(atom/A)
 	if(!ishuman(A))
 		return FALSE
 	var/icon/img = icon('icons/effects/32x32.dmi', "")
@@ -344,28 +239,133 @@
 			img.Blend(hair_s, ICON_OVERLAY)
 	return img
 
-/obj/item/weapon/storage/box
+
+/**************
+* photo album *
+**************/
+/obj/item/weapon/storage/photo_album
+	name = "Photo album"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "album"
+	item_state = "briefcase"
+	can_hold = list(/obj/item/weapon/photo)
+	max_storage_space = DEFAULT_BOX_STORAGE
+
+/obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
+
+	if((ishuman(usr)))
+		var/mob/M = usr
+		if(!( istype(over_object, /atom/movable/screen) ))
+			return ..()
+		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
+		if(!M.incapacitated() && M.back == src)
+			switch(over_object.name)
+				if("r_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_r_hand(src)
+				if("l_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_l_hand(src)
+			add_fingerprint(usr)
+			return
+		if(over_object == usr && usr.Adjacent(src))
+			if(usr.s_active)
+				usr.s_active.close(usr)
+			show_to(usr)
+			return
+	return
+
+/obj/item/weapon/storage/box_lenses
 	name = "photo lenses box"
 	desc = "It's just an ordinary box. Nothing special."
 	icon_state = "box"
 	item_state = "lenses_kit"
 	max_storage_space = DEFAULT_BOX_STORAGE
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
-	startswith = list(/obj/item/device/lense/lomo,
-					/obj/item/device/lense/posterization,
-					/obj/item/device/lense/grayscale,
-					/obj/item/device/lense/invert,
-					/obj/item/device/lense/sepia,
-					/obj/item/device/lense/detective,
-					/obj/item/device/lense/polar,
-					/obj/item/device/lense/old,
-					/obj/item/device/lense/rentgene,
-					/obj/item/device/lense/nude)
+	startswith = list(/obj/item/device/lens/lomo,
+					/obj/item/device/lens/posterization,
+					/obj/item/device/lens/grayscale,
+					/obj/item/device/lens/invert,
+					/obj/item/device/lens/sepia,
+					/obj/item/device/lens/detective,
+					/obj/item/device/lens/polar,
+					/obj/item/device/lens/old,
+					/obj/item/device/lens/rentgene,
+					/obj/item/device/lens/nude)
+
+/*********
+* camera *
+*********/
+/obj/item/device/camera
+	name = "zenit 122"
+	icon = 'icons/obj/items.dmi'
+	desc = "High quality photos, capable of installing filters."
+	icon_state = "camera"
+	item_state = "photocamera"
+	w_class = SIZE_TINY
+	flags = CONDUCT
+	slot_flags = SLOT_FLAGS_BELT
+	m_amt = 2000
+	var/flash_enabled = TRUE
+	var/pictures_max = 10
+	var/pictures_left = 10
+	var/on = 1
+	var/icon_on = "camera"
+	var/icon_off = "camera_off"
+	var/see_ghosts = 0 //for the spoop of it
+	var/photo_size = 3 //Default is 3x3. 1x1, 5x5, 7x7 are also options
+	var/can_put_lens = TRUE
+	var/obj/item/device/lens/base_lens
+
+/obj/item/device/camera/polar
+	name = "polaroid"
+	icon = 'icons/obj/items.dmi'
+	desc = "A polaroid camera."
+	icon_state = "polaroid"
+	icon_on = "polaroid"
+	icon_off = "polaroid_off"
+	can_put_lens = FALSE
+	base_lens = /obj/item/device/lens/polar
+
+/obj/item/device/camera/polar/spooky
+	name = "camera obscura"
+	desc = "A polaroid camera, some say it can see ghosts!"
+	see_ghosts = 1
+	can_put_lens = FALSE
+	base_lens = /obj/item/device/lens/invert
+
+/obj/item/device/camera/polar/detective
+	name = "detectives camera"
+	desc = "A black&white filter camera."
+	can_put_lens = FALSE
+	base_lens = /obj/item/device/lens/detective
+
+/obj/item/device/camera/lomo
+	name = "lomo lc-a"
+	desc = "'Lomo' Kompakt Automat."
+	icon_state = "lomo"
+	icon_on = "lomo"
+	icon_off = "lomo_off"
+	pictures_left = 30
+	can_put_lens = FALSE
+	base_lens = /obj/item/device/lens/lomo
+
+/obj/item/device/camera/oldcamera
+	name = "fed"
+	desc = "'Felix Edmundovich Dzerzhinsky' photo camera."
+	icon_state = "fed"
+	icon_on = "fed"
+	icon_off = "fed_off"
+	pictures_left = 30
+	can_put_lens = FALSE
+	base_lens = /obj/item/device/lens/old
 
 /obj/item/device/camera/atom_init()
 	. = ..()
-	if(base_lense)
-		base_lense = new base_lense(src)
+	if(base_lens)
+		base_lens = new base_lens(src)
 	update_desc()
 
 /obj/item/device/camera/AltClick(mob/user)
@@ -396,12 +396,12 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
-	if(!can_put_lense || !contents)
+	if(!can_put_lens || !contents)
 		return
 
-	for(var/obj/item/device/lense/F in contents)
+	for(var/obj/item/device/lens/F in contents)
 		usr.put_in_hands(F)
-		to_chat(user, "<span class='warning'>You detach the filter out of camera's lense.</span>")
+		to_chat(user, "<span class='warning'>You detach the filter out of camera's lens.</span>")
 
 /obj/item/device/camera/polar/CtrlClick(mob/user)
 	return
@@ -439,8 +439,8 @@
 		update_desc()
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 		return
-	if(istype(I, /obj/item/device/lense) && can_put_lense && !contents.len)
-		var/obj/item/device/lense/F = I
+	if(istype(I, /obj/item/device/lens) && can_put_lens && !contents.len)
+		var/obj/item/device/lens/F = I
 		user.unEquip(F)
 		F.forceMove(src)
 	return ..()
@@ -475,7 +475,7 @@
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
-		for(var/obj/item/device/lense/F in contents)
+		for(var/obj/item/device/lens/F in contents)
 			if(F.process_icon(A))
 				img = F.process_icon(A)
 
@@ -586,7 +586,7 @@
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
 	//Photo Effects
-	for(var/obj/item/device/lense/F in contents)
+	for(var/obj/item/device/lens/F in contents)
 		if(F.effect)
 			//First Flter
 			if(F.effect[1])
