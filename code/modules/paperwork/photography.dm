@@ -367,23 +367,16 @@
 
 /obj/item/device/camera/AltClick(mob/user)
 	if(!Adjacent(user))
-		return
+		return ..()
 	if(user.incapacitated())
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
+	if(usr.get_active_hand() != src && !isAI(usr))
+		return ..()
 
-	switch(photo_size)
-		if(1)
-			photo_size = 3
-			to_chat(user, "<span class='warning'>You set zoom level to 3.</span>")
-		if(3)
-			photo_size = 5
-			to_chat(user, "<span class='warning'>You set zoom level to 5.</span>")
-		if(5)
-			photo_size = 1
-			to_chat(user, "<span class='warning'>You set zoom level to 1.</span>")
+	change_zoom(user)
 
 /obj/item/device/camera/CtrlClick(mob/user)
 	if(!Adjacent(user))
@@ -395,10 +388,10 @@
 		return
 	if(!can_put_lens || !contents)
 		return ..()
+	if(usr.get_active_hand() != src && !isAI(usr))
+		return ..()
 
-	for(var/obj/item/device/lens/F in contents)
-		usr.put_in_hands(F)
-		to_chat(user, "<span class='warning'>You detach the filter out of camera's lens.</span>")
+	eject_lens(user)
 
 /obj/item/device/camera/attack_self(mob/user)
 	on = !on
@@ -441,6 +434,23 @@
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 		return
 	return ..()
+
+/obj/item/device/camera/proc/change_zoom(mob/user)
+	switch(photo_size)
+		if(1)
+			photo_size = 3
+			to_chat(user, "<span class='warning'>You set zoom level to 3.</span>")
+		if(3)
+			photo_size = 5
+			to_chat(user, "<span class='warning'>You set zoom level to 5.</span>")
+		if(5)
+			photo_size = 1
+			to_chat(user, "<span class='warning'>You set zoom level to 1.</span>")
+
+/obj/item/device/camera/proc/eject_lens(mob/user)
+	for(var/obj/item/device/lens/F in contents)
+		usr.put_in_hands(F)
+		to_chat(user, "<span class='warning'>You detach the filter out of camera's lens.</span>")
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
 	var/atoms[] = list()
