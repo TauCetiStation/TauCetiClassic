@@ -103,6 +103,8 @@
 		/datum/skill/command/pro,
 		/datum/skill/engineering/master,
 		/datum/skill/atmospherics/master,
+		/datum/skill/research/novice,
+		/datum/skill/medical/novice,
 		/datum/skill/civ_mech/master,
 	)
 
@@ -143,6 +145,7 @@
 		/datum/skill/police/master,
 		/datum/skill/melee/master,
 		/datum/skill/medical/trained,
+		/datum/skill/research/novice,
 		/datum/skill/combat_mech/master
 	)
 
