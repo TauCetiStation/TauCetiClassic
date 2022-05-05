@@ -644,3 +644,13 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/spy/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(espionageagent_start)
 	ghost.forceMove(get_turf(jump_to))
+
+/datum/spawner/living/rat
+	name = "Крыса"
+	id = "rat"
+	desc = "Вы появляетесь в своём новом доме"
+
+/datum/spawner/living/rat/spawn_ghost(mob/dead/observer/ghost)
+	. = ..()
+	mob.transfer_personality(ghost.client)
+	to_chat(mob, "<B>Эта посудина теперь ваш новый дом, похазяйничайте в нём.</B>")
