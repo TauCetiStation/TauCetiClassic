@@ -110,6 +110,9 @@
 		if(!SSmapping.station_loaded)
 			to_chat(src, "<span class='red'>There is no station yet, please wait.</span>")
 			return
+		if(!(my_client in admins))
+			to_chat(src, "<span class='red'>Призраки только для членов админ-клуба.</span>")
+			return
 		if(tgui_alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup", list("Yes","No")) == "Yes")
 			if(!client)
 				return

@@ -369,7 +369,7 @@
 			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
 				to_chat(usr, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
 				return
-		var/deathtimeminutes = round(deathtime / 120)
+		var/deathtimeminutes = round(deathtime / 600)
 		var/pluralcheck = "minute"
 		if(deathtimeminutes == 0)
 			pluralcheck = ""
@@ -377,7 +377,7 @@
 			pluralcheck = " [deathtimeminutes] minute and"
 		else if(deathtimeminutes > 1)
 			pluralcheck = " [deathtimeminutes] minutes and"
-		var/deathtimeseconds = round((deathtime - deathtimeminutes * 120) / 10, 1)
+		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10, 1)
 
 		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	//Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
 			to_chat(usr, "You have been dead for[pluralcheck] [deathtimeseconds] seconds.")
@@ -416,6 +416,10 @@
 	set name = "Observe"
 	set category = "OOC"
 	var/is_admin = FALSE
+
+	if(!(client in admins))
+		to_chat(src, "<span class='red'>Призраки только для членов админ-клуба.</span>")
+		return
 
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = TRUE

@@ -588,8 +588,8 @@
 		return
 	if(prob(1))
 		new/mob/living/simple_animal/hostile/creature/troglodit(T)
-	if(prob(1))
-		new/obj/effect/glowshroom(T)
+	if(prob(3))
+		new/obj/effect/landmark/glowshroom_spawn(T)
 	var/turf/t
 	if(SSticker.current_state > GAME_STATE_SETTING_UP)
 		t = new basetype(T)
