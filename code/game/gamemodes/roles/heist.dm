@@ -68,14 +68,20 @@
 	vox.h_style = "Short Vox Quills"
 	vox.f_style = "Shaved"
 	vox.grad_style = "none"
+	vox.r_eyes = 120
+	vox.g_eyes = 255
+	vox.b_eyes = 255
+	vox.r_hair = 90
+	vox.g_hair = 3
+	vox.b_hair = 3
 	for(var/obj/item/organ/external/BP in vox.bodyparts)
 		BP.status = 0 // rejuvenate() saves prostethic limbs, so we tell it NO.
 		BP.rejuvenate()
 
 	//Now apply cortical stack.
-
 	var/obj/item/weapon/implant/cortical/I = new(vox)
 	I.inject(vox, BP_HEAD)
 
 	vox.equip_vox_raider()
 	vox.regenerate_icons()
+

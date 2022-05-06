@@ -230,6 +230,10 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		standing += BP.get_icon(BODY_LAYER)
 
+	if (species.name == VOX)
+		var/mutable_appearance/tatoo = mutable_appearance('icons/mob/human.dmi', "[rank]_s", -BODY_LAYER)
+		tatoo.color = rgb(r_eyes, g_eyes, b_eyes)
+		standing += tatoo
 	//Underwear
 	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
@@ -250,8 +254,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		I = update_height(I)
 	overlays_standing[BODY_LAYER] = standing
 	apply_overlay(BODY_LAYER)
-
-
 
 //HAIR OVERLAY
 /mob/living/carbon/human/proc/update_hair()

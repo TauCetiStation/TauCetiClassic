@@ -217,6 +217,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["citizenship"] << citizenship
 		S["faction"]     << faction
 		S["religion"]    << religion
+		S["rank"]    << rank
 
 	if(current_version < 32)
 		popup(parent, "Части тела вашего персонажа ([real_name]) несовместимы с текущей версией. Части тела данного персонажа восстановлены до обычного состояния.", "Preferences")
