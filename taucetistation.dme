@@ -440,6 +440,7 @@
 #include "code\game\Event\Hub_wormhole.dm"
 #include "code\game\Event\ladder.dm"
 #include "code\game\Event\README.dm"
+#include "code\game\Event\valhalla_deadman.dm"
 #include "code\game\Event\vilage.dm"
 #include "code\game\gamemodes\factions.dm"
 #include "code\game\gamemodes\game_mode.dm"

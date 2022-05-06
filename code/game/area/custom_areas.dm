@@ -146,3 +146,7 @@
 
 /area/custom/start_homm/human_hero
 	name = "HumanHeroStart"
+
+/area/custom/valhalla
+	name = "Valhalla"
+	icon_state = "valhalla"

@@ -10,7 +10,7 @@
 	var/list/turf/possible_tile
 	var/target
 /obj/structure/character_spawner/attack_hand(mob/user)
-	ready = tgui_alert(user, "Готовы войти в игру? Убедитесь что прочитали все подсказки и закончили выбор своей внешности.",, list("Да","Нет"))
+	ready = tgui_alert(user, "Готовы войти в игру?/n Убедитесь что прочитали все подсказки и закончили выбор своей внешности.",, list("Да","Нет"))
 	if(ready == "Нет")
 		return
 	var/mob/living/carbon/human/H = user
@@ -51,7 +51,7 @@
 	A = /area/custom/start_homm/monk
 
 /obj/structure/character_spawner/monk/attack_hand(mob/user)
-	ready = tgui_alert(user, "Готовы войти в игру? Убедитесь что прочитали все подсказки и закончили выбор своей внешности.",, list("Да","Нет"))
+	ready = tgui_alert(user, "Готовы войти в игру?/n Убедитесь что прочитали все подсказки и закончили выбор своей внешности.",, list("Да","Нет"))
 	if(ready == "Нет")
 		return
 	var/mob/living/carbon/human/H = user

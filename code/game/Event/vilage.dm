@@ -27,6 +27,7 @@
 	icon_state = "velikiy_sup"
 	name = "Котел"
 	desc = "О великий суп наварили.."
+	density = 1
 	anchored = FALSE
 	var/on = FALSE
 	var/obj/item/frying = null
