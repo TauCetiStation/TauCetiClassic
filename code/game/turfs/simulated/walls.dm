@@ -502,7 +502,7 @@
 	if(length(dent_decals) >= MAX_DENT_DECALS)
 		return
 
-	var/image/decal = image('icons/effects/effects.dmi', src, "", BULLET_HOLE_LAYER)
+	var/mutable_appearance/decal = mutable_appearance('icons/effects/effects.dmi', "", BULLET_HOLE_LAYER, plane)
 	if(isnull(x) || isnull(y))
 		x = rand(-12, 12)
 		y = rand(-12, 12)
