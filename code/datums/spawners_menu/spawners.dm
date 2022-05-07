@@ -650,5 +650,7 @@ var/global/list/datum/spawners_cooldown = list()
 	id = "mimic"
 	desc = "Вы магическим образом ожили на станции"
 
-/datum/spawner/living/mimic/spawn_ghost(mob/dead/observer/ghost)
-	. = ..()
+/datum/spawner/living/spirit_incarnate
+	name = "Дух во плоти"
+	id = "spirit_incarnate"
+	desc = "Магическая сила дала вам новое тело, оживите вновь!"
