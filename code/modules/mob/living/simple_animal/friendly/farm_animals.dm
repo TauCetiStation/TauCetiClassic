@@ -157,6 +157,20 @@
 	if(. && prob(55) && !ISDIAGONALDIR(Dir))
 		playsound(src, 'sound/misc/cowbell.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
+/mob/living/simple_animal/cow/cute_cow
+	icon = 'icons/mob/livestock.dmi'
+	icon_state = "OLDcow"
+	icon_living = "OLDcow"
+	icon_dead = "OLDcow_d"
+	icon_gib = "OLDcow_g"
+
+/mob/living/simple_animal/cow/cute_cow/atom_init()
+	. = ..()
+	if(prob(20))
+		AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball)
+	else
+		AddSpell(new /obj/effect/proc_holder/spell/no_target/rot)
+
 /mob/living/simple_animal/chick
 	name = "chick"
 	desc = "Adorable! They make such a racket though."
@@ -292,6 +306,17 @@ var/global/chicken_count = 0
 
 	has_head = TRUE
 	has_leg = TRUE
+
+/mob/living/simple_animal/pig/shadowpig
+	name = "Shadowpig"
+	icon_state = "shadowpig"
+	icon_living = "shadowpig"
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE 
+
+/mob/living/simple_animal/pig/shadowpig/atom_init()
+	. = ..()
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/veil)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/blindness_smoke)
 
 /mob/living/simple_animal/turkey
 	name = "turkey"
