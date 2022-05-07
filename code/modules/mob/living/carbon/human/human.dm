@@ -904,7 +904,7 @@
 		var/obj/item/clothing/head/welding/W = head
 		if(!W.up)
 			number += 2
-	if(istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault) && !istype(head, /obj/item/clothing/head/helmet/space/sk))
+	if(!istype(head, /obj/item/clothing/head/helmet/space/sk) && istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault))
 		number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/thermal))
 		var/obj/item/clothing/glasses/thermal/G = glasses
@@ -1330,7 +1330,8 @@
 
 				BP.take_damage(rand(1,3), 0, 0)
 				if(!BP.is_robotic()) //There is no blood in protheses.
-					BP.status |= ORGAN_BLEEDING
+					if(!reagents.has_reagent("metatrombine")) // metatrombine just prevents bleeding, not toxication
+						BP.status |= ORGAN_BLEEDING
 					adjustToxLoss(rand(1,3))
 
 /mob/living/carbon/human/verb/check_pulse()
@@ -2287,9 +2288,7 @@
 
 	adjustToxLoss(effect_coeff)
 
-	if(bodytemperature < 330)
-		//310 is the normal bodytemp. 310.055
-		bodytemperature = min(330, bodytemperature + 10 * effect_coeff * TEMPERATURE_DAMAGE_COEFFICIENT)
+	adjust_bodytemperature(10 * effect_coeff * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 20)
 
 /mob/living/carbon/human/get_pumped(bodypart)
 	var/obj/item/organ/external/BP = get_bodypart(bodypart)
