@@ -485,15 +485,14 @@
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
 
 /mob/living/silicon/robot/verb/unlock_hatch()
-	set name = "Разблокировать интерфейс"
-	set src = usr
+	set name = "Unlock maintenance hatch"
 	set category = "Commands"
 
 	if(incapacitated())
 		return
 	if(opened)
 		to_chat(usr, "<span class='warning'>Невозможно заблокировать интерфейс, если открыта панель.</span>")
-	        emote("buzz")
+		emote("buzz")
 		return
 	
 	sleep(10)
@@ -507,13 +506,12 @@
 	locked = !locked
 
 /mob/living/silicon/robot/verb/open_hatch()
-	set name = "Открыть панель"
-	set src = usr
+	set name = "Open maintenance hatch"
 	set category = "Commands"
 
 	if(incapacitated())
 		return
-	if (locked)
+	if(locked)
 		to_chat(usr, "<span class='warning'>Невозможно открыть панель, если заблокирован интерфейс.</span>")
 		emote("buzz")
 		return
