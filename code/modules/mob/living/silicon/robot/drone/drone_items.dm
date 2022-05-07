@@ -217,7 +217,7 @@
 			wrapped = null
 
 /obj/item/weapon/gripper/verb/drop_item_verb()
-	set name = "Drop item"
+	set name = "Drop Item"
 	set desc = "Освобождает взятый вами предмет из магнитного держателя."
 	set category = "Commands"
 
