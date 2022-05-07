@@ -294,7 +294,7 @@
 /datum/skillset/research_assistant
 	name = "Research Assistant"
 	initial_skills = list(
-		/datum/skill/research/novice,
+		/datum/skill/research/trained,
 		/datum/skill/medical/novice,
 		/datum/skill/surgery/novice,
 		/datum/skill/construction/novice,
