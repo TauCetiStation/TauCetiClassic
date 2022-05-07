@@ -25,7 +25,7 @@
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 	// don't have sprite for maido-queen
-	if(istype(M, /mob/living/carbon/xenomorph/humanoid/queen))
+	if(isxenoqueen(M))
 		return
 	M.notransform = TRUE
 	M.canmove = 0
