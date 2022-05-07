@@ -207,6 +207,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 	icon_dead = "rat_dead"
 	icon_move = "rat"
 	desc = "It's a big pest mouse."
+	maxHealth = 50
+	health = 50
 	randomize_color = FALSE
 
 /mob/living/simple_animal/mouse/rat/atom_init()
