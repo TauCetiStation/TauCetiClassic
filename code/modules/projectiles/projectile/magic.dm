@@ -17,9 +17,10 @@
 	name = "bolt of change"
 	icon_state = "ice_1"
 	light_color = "#00bfff"
-
+/*
 /obj/item/projectile/magic/change/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	wabbajack(target)
+*/
 
 /obj/item/projectile/magic/proc/wabbajack(mob/living/M)
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
