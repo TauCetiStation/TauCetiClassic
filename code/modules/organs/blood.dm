@@ -164,6 +164,9 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		else if(nutrition >= 200)
 			nutrition -= 3
 
+	if(reagents.has_reagent("metatrombine"))
+		return
+
 	// Bleeding out:
 	var/blood_max = 0
 	var/list/do_spray = list()
@@ -239,6 +242,9 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 // Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
+	if(reagents.has_reagent("metatrombine"))
+		return
+
 	if(organs_by_name[O_HEART] && blood_remove(amt))
 		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_datum)
 
@@ -301,6 +307,8 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/human/proc/blood_squirt(amt, turf/sprayloc)
 	set waitfor = FALSE
 
+	if(reagents.has_reagent("metatrombine"))
+		return
 	if(amt <= 0 || !istype(sprayloc))
 		return
 
