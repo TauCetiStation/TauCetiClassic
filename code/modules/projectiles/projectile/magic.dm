@@ -102,6 +102,7 @@
 		M.mind.transfer_to(new_mob)
 	else
 		new_mob.key = M.key
+		create_spawner(/datum/spawner/living/spirit_incarnate, new_mob)
 
 	to_chat(new_mob, "<B>Your form morphs into that of a [randomize].</B>")
 
