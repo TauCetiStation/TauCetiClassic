@@ -14,6 +14,7 @@
 "n" = (/obj/effect/dummy/lighting_obj,/mob/living/simple_animal/hostile/creature/ahaha,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
 "o" = (/obj/structure/ladder/lovushka_dlya_debilov_exit,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
 "p" = (/turf/simulated/floor/beach/water/waterpool,/area/space)
+"q" = (/obj/item/device/guitar,/turf/simulated/floor/beach/water/waterpool,/area/space)
 
 (1,1,1) = {"
 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
@@ -97,7 +98,7 @@ lmmggmmmmhhhmmmmgggggmmmmmmmmmmmmmmmmmgggggbbbppbbmmmmmmmmmmmmmmmmmmmmmbbbbbbbbb
 lmmmmmmmmmmmmmmmgggggmmmmmmmmmgggmmmmmgggggbpppbbbmmmmmmmmmmmmmmmmmmmmmbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 mmmmmggmmmmmmmgggggggmmmpppppmgggmmmmmgggggbpppbbbmmmmmmmmmmmmmmmmmmmmmbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 mmmmiigmppmmmmgggmppppppppppppppppmmmmmmmppppppbbbmmmmmmmmmmmmmmmmmmmmmbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-mmmmiigmmppppppmmppppmmmmmmgggmmmmmmmmmpppppppbbbbmmmmmmmmmmmmmmmmmmmmmbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+mmmmiigmmpppqppmmppppmmmmmmgggmmmmmmmmmpppppppbbbbmmmmmmmmmmmmmmmmmmmmmbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 mhhhmmiimmmmppppppmmmmmiimmgggmmmmmmmmmpppbbbbbbbbmmmmmmmmmmmmmmmmmmmmmbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 mhhhmmmmmmmmmmmmmmmmhhhiimmgggmmmmmhhmmppmbbbbbbbbmmmmmmmmmmmmmmmmmmmmmbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 mhhhmmhhhmmmmmmmmmmmhhhiimmmmmmmmmmhhmmppmbmmmmmmmmmmmmmmmmmmmmmmmmmmmmbbbbbbbbbbbbbbbbbbbbbbbbbbbbb

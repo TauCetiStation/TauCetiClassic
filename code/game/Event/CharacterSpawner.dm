@@ -10,6 +10,8 @@
 	var/area/A
 	var/target
 	var/selecting_job = FALSE
+	var/arrive_sound
+
 /obj/structure/character_spawner/attack_hand(mob/living/carbon/human/user)
 	if(!selecting_job)
 		selecting_job = TRUE
@@ -27,18 +29,23 @@
 	user.isHubMan = FALSE
 	user.loc = target
 	selecting_job = FALSE
+	if(arrive_sound)
+		playsound(user,arrive_sound, VOL_EFFECTS_MASTER)
 
 /obj/structure/character_spawner/peasant
 	outfit = /datum/outfit/job/hub/peasant
 	A =/area/custom/start_homm/peasant
+	arrive_sound = 'sound/Event/peasant.ogg'
 
 /obj/structure/character_spawner/smith
 	outfit = /datum/outfit/job/hub/smith
 	A =/area/custom/start_homm/smith
+	arrive_sound = 'sound/Event/smith.ogg'
 
 /obj/structure/character_spawner/miner
 	outfit = /datum/outfit/job/hub/miner
 	A =/area/custom/start_homm/miner
+	arrive_sound = 'sound/Event/miner.ogg'
 
 /obj/structure/character_spawner/helper
 	outfit = /datum/outfit/job/hub/helper
@@ -47,10 +54,6 @@
 /obj/structure/character_spawner/knight
 	outfit = /datum/outfit/job/hub/knight
 	A = /area/custom/start_homm/knight
-
-/obj/structure/character_spawner/human_hero
-	outfit = /datum/outfit/job/hub/human_hero
-	A = /area/custom/start_homm/human_hero
 
 /obj/structure/character_spawner/monk
 	outfit = /datum/outfit/job/hub/monk
@@ -62,3 +65,12 @@
 	user.AddSpell(new /obj/effect/proc_holder/spell/in_hand/arcane_barrage)
 	user.mutations.Add(TK)
 	user.update_mutations()
+
+/obj/structure/character_spawner/human_hero
+	outfit = /datum/outfit/job/hub/human_hero
+	A = /area/custom/start_homm/human_hero
+	arrive_sound = 'sound/Event/hero.ogg'
+
+/obj/structure/character_spawner/human_hero/attack_hand(mob/user)
+	..()
+	new/obj/vehicle/space/spacebike/horse/white(user.loc)
