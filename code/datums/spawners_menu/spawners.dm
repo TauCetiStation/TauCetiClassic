@@ -652,5 +652,4 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/living/rat/spawn_ghost(mob/dead/observer/ghost)
 	. = ..()
-	mob.transfer_personality(ghost.client)
 	to_chat(mob, "<B>Эта посудина теперь ваш новый дом, похазяйничайте в нём.</B>")
