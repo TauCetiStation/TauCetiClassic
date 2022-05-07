@@ -71,7 +71,7 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "oil"
 
-	needed_aspects = list(ASPECT_WACKY = 1)
+	needed_aspects = list(ASPECT_WACKY = 11)
 
 /datum/reagent/lube/reaction_turf(turf/simulated/T, volume)
 	. = ..()
@@ -855,7 +855,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 
 	data = list()
 
-	needed_aspects = list(ASPECT_MYSTIC = 1)
+	needed_aspects = list(ASPECT_MYSTIC = 11)
 
 /datum/reagent/ectoplasm/on_general_digest(mob/living/M)
 	..()

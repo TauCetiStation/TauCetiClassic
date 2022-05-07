@@ -24,7 +24,7 @@
 	consent_msg = "Are you ready to sacrifice your body to turn into a cyborg?"
 
 	needed_aspects = list(
-		ASPECT_TECH = 1,
+		ASPECT_TECH = 11,
 	)
 
 /datum/religion_rites/standing/consent/synthconversion/can_start(mob/living/user, obj/AOG)
@@ -100,7 +100,7 @@
 	consent_msg = "Are you ready to sacrifice your body to give strength to a deity?"
 
 	needed_aspects = list(
-		ASPECT_DEATH = 1,
+		ASPECT_DEATH = 11,
 	)
 
 /datum/religion_rites/standing/consent/sacrifice/invoke_effect(mob/living/user, obj/AOG)
@@ -148,8 +148,8 @@
 	consent_msg = "Do you feel the honk, growing, from within your body?"
 
 	needed_aspects = list(
-		ASPECT_WACKY = 1,
-		ASPECT_CHAOS = 1,
+		ASPECT_WACKY = 11,
+		ASPECT_CHAOS = 11,
 	)
 
 /datum/religion_rites/standing/consent/clownconversion/can_start(mob/living/user, obj/AOG)

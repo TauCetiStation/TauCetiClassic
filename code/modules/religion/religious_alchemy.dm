@@ -79,7 +79,7 @@
 	id = "water2holywater"
 
 	result_id = "holywater"
-	needed_aspects = list(ASPECT_RESCUE = 1)
+	needed_aspects = list(ASPECT_RESCUE = 0)
 	favor_cost = 0
 
 
@@ -92,14 +92,14 @@
 	id = "unwater2holywater"
 
 	result_id = "unholywater"
-	needed_aspects = list(ASPECT_OBSCURE = 1)
+	needed_aspects = list(ASPECT_OBSCURE = 11)
 	favor_cost = 0
 
 /datum/faith_reaction/curse/water2blood
 	id = "water2blood"
 
 	result_id = "blood"
-	needed_aspects = list(ASPECT_DEATH = 1)
+	needed_aspects = list(ASPECT_DEATH = 11)
 	// You get 1 point per unit of blood when sacrificing.
 	favor_cost = 2
 
@@ -107,7 +107,7 @@
 	id = "water2ectoplasm"
 
 	result_id = "ectoplasm"
-	needed_aspects = list(ASPECT_MYSTIC = 1)
+	needed_aspects = list(ASPECT_MYSTIC = 11)
 	favor_cost = 2
 
 
@@ -121,14 +121,14 @@
 	id = "water2gold"
 
 	result_id = "gold"
-	needed_aspects = list(ASPECT_GREED = 2)
+	needed_aspects = list(ASPECT_GREED = 12)
 	favor_cost = 10
 
 /datum/faith_reaction/convert/water2silver
 	id = "water2silver"
 
 	result_id = "silver"
-	needed_aspects = list(ASPECT_GREED = 1)
+	needed_aspects = list(ASPECT_GREED = 11)
 	favor_cost = 2
 
 
@@ -137,7 +137,7 @@
 	id = "water2sugar"
 
 	result_id = "sugar"
-	needed_aspects = list(ASPECT_FOOD = 1)
+	needed_aspects = list(ASPECT_FOOD = 11)
 	favor_cost = 0
 
 /datum/faith_reaction/water2sugar/after_reaction(atom/container, mob/user)
@@ -148,7 +148,7 @@
 	id = "water2wine"
 
 	result_id = "wine"
-	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_RESCUE = 1)
+	needed_aspects = list(ASPECT_FOOD = 0, ASPECT_RESCUE = 0)
 	favor_cost = 0
 
 /datum/faith_reaction/water2wine/after_reaction(atom/container, mob/user)
@@ -159,7 +159,7 @@
 	id = "water2pwine"
 
 	result_id = "pwine"
-	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 1)
+	needed_aspects = list(ASPECT_FOOD = 12, ASPECT_OBSCURE = 12)
 	favor_cost = 5
 
 /datum/faith_reaction/water2pwine/after_reaction(atom/container, mob/user)

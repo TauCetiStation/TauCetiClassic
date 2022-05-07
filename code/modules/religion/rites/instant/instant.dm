@@ -138,8 +138,8 @@
 	favor_cost = 100
 
 	needed_aspects = list(
-		ASPECT_OBSCURE = 1,
-		ASPECT_RESCUE = 1,
+		ASPECT_OBSCURE = 11,
+		ASPECT_RESCUE = 11,
 	)
 
 /datum/religion_rites/instant/cult/drain_torture/can_start(mob/living/user, obj/AOG)

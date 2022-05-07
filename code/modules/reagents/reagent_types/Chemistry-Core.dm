@@ -96,7 +96,7 @@
 	description = "An ashen-obsidian-water mix, this solution will alter certain sections of the brain's rationality."
 	color = "#e0e8ef" // rgb: 224, 232, 239
 
-	needed_aspects = list(ASPECT_RESCUE = 1)
+	needed_aspects = list(ASPECT_RESCUE = 0)
 
 /datum/reagent/water/holywater/on_general_digest(mob/living/M)
 	..()
@@ -158,7 +158,7 @@
 
 	data = list()
 
-	needed_aspects = list(ASPECT_OBSCURE = 1)
+	needed_aspects = list(ASPECT_OBSCURE = 11)
 
 /datum/reagent/water/unholywater/on_general_digest(mob/living/M)
 	..()
@@ -420,7 +420,7 @@
 	color = "#ffffff" // rgb: 255, 255, 255
 	taste_message = "sweetness"
 
-	needed_aspects = list(ASPECT_FOOD = 1)
+	needed_aspects = list(ASPECT_FOOD = 0)
 
 /datum/reagent/sugar/on_general_digest(mob/living/M)
 	..()
@@ -483,7 +483,7 @@
 	color = "#f7c430" // rgb: 247, 196, 48
 	taste_message = "bling"
 
-	needed_aspects = list(ASPECT_GREED = 1)
+	needed_aspects = list(ASPECT_GREED = 11)
 
 /datum/reagent/silver
 	name = "Silver"
@@ -493,7 +493,7 @@
 	color = "#d0d0d0" // rgb: 208, 208, 208
 	taste_message = "sub-par bling"
 
-	needed_aspects = list(ASPECT_GREED = 1)
+	needed_aspects = list(ASPECT_GREED = 11)
 
 /datum/reagent/uranium
 	name ="Uranium"

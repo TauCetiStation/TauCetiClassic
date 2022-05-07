@@ -15,7 +15,7 @@
 	favor_cost = 300
 
 	needed_aspects = list(
-		ASPECT_FOOD = 1,
+		ASPECT_FOOD = 0,
 	)
 
 // This proc is also used by spells/religion.dm "spawn food". Stupid architecture, gotta deal with it some time ~Luduk
@@ -66,7 +66,7 @@
 /datum/religion_rites/standing/pray
 	name = "Молитва"
 	desc = "За добрые слова вы получаете немного favor'а."
-	ritual_length = (4 MINUTES)
+	ritual_length = (1 MINUTES)
 	ritual_invocations = list("Have mercy on us, O Lord, have mercy on us...",
 							  "...for at a loss for any defense, this prayer do we sinners offer Thee as Master...",
 							  "...have mercy on us...",
@@ -82,7 +82,7 @@
 	var/adding_favor = 0
 
 	needed_aspects = list(
-		ASPECT_RESCUE = 1,
+		ASPECT_RESCUE = 0,
 	)
 
 /datum/religion_rites/standing/pray/invoke_effect(mob/living/user, obj/AOG)
@@ -122,7 +122,7 @@
 	favor_cost = 200
 
 	needed_aspects = list(
-		ASPECT_WACKY = 1,
+		ASPECT_WACKY = 11,
 	)
 
 /datum/religion_rites/standing/honk/invoke_effect(mob/living/user, obj/AOG)
@@ -157,8 +157,8 @@
 	favor_cost = 80
 
 	needed_aspects = list(
-		ASPECT_SPAWN = 1,
-		ASPECT_WEAPON = 1,
+		ASPECT_SPAWN = 0,
+		ASPECT_WEAPON = 0,
 	)
 
 /datum/religion_rites/standing/animation/on_chosen(mob/living/user, obj/AOG)
@@ -272,7 +272,7 @@
 	var/shield_icon = "at_shield2"
 
 	needed_aspects = list(
-		ASPECT_LIGHT = 1,
+		ASPECT_LIGHT = 0,
 	)
 
 /datum/religion_rites/standing/illuminate/invoke_effect(mob/living/user, obj/AOG)
@@ -330,8 +330,8 @@
 	can_talismaned = FALSE
 
 	needed_aspects = list(
-		ASPECT_SPAWN = 1,
-		ASPECT_RESCUE = 1,
+		ASPECT_SPAWN = 0,
+		ASPECT_RESCUE = 0,
 	)
 
 /datum/religion_rites/standing/revive_animal/can_start(mob/living/user, obj/AOG)
