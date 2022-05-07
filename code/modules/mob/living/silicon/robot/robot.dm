@@ -491,9 +491,9 @@
 
 	if(incapacitated())
 		return
-	else if(opened)
+	if(opened)
 		to_chat(usr, "<span class='warning'>Невозможно заблокировать интерфейс, если открыта панель.</span>")
-		emote("buzz")
+	        emote("buzz")
 		return
 	
 	sleep(10)
@@ -513,7 +513,7 @@
 
 	if(incapacitated())
 		return
-	else if (locked)
+	if (locked)
 		to_chat(usr, "<span class='warning'>Невозможно открыть панель, если заблокирован интерфейс.</span>")
 		emote("buzz")
 		return
