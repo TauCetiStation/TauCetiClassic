@@ -4,23 +4,29 @@
 	anchored = TRUE
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "start"
+	var/list/turf/possible_tile
 	var/outfit = null
 	var/ready = null
 	var/area/A
-	var/list/turf/possible_tile
 	var/target
-/obj/structure/character_spawner/attack_hand(mob/user)
-	ready = tgui_alert(user, "Готовы войти в игру?/n Убедитесь что прочитали все подсказки и закончили выбор своей внешности.",, list("Да","Нет"))
+	var/selecting_job = FALSE
+/obj/structure/character_spawner/attack_hand(mob/living/carbon/human/user)
+	if(!selecting_job)
+		selecting_job = TRUE
+		ready = tgui_alert(user, "Готовы войти в игру? Убедитесь что прочитали все подсказки и закончили выбор своей внешности.",, list("Да","Нет"))
+	else
+		return
 	if(ready == "Нет")
 		return
-	var/mob/living/carbon/human/H = user
-	for(var/obj/item/W in H)
-		H.drop_from_inventory(W)
+	for(var/obj/item/W in user)
+		user.drop_from_inventory(W)
 		qdel(W)
-	H.equipOutfit(outfit)
+	user.equipOutfit(outfit)
 	possible_tile = get_area_turfs(get_area_by_type(A))
 	target = pick(possible_tile)
-	H.loc = target
+	user.isHubMan = FALSE
+	user.loc = target
+	selecting_job = FALSE
 
 /obj/structure/character_spawner/peasant
 	outfit = /datum/outfit/job/hub/peasant
@@ -51,18 +57,8 @@
 	A = /area/custom/start_homm/monk
 
 /obj/structure/character_spawner/monk/attack_hand(mob/user)
-	ready = tgui_alert(user, "Готовы войти в игру?/n Убедитесь что прочитали все подсказки и закончили выбор своей внешности.",, list("Да","Нет"))
-	if(ready == "Нет")
-		return
-	var/mob/living/carbon/human/H = user
-	for(var/obj/item/W in H)
-		H.drop_from_inventory(W)
-		qdel(W)
-	H.equipOutfit(outfit)
-	possible_tile = get_area_turfs(get_area_by_type(A))
-	target = pick(possible_tile)
-	H.loc = target
-	INVOKE_ASYNC(global.chaplain_religion, /datum/religion/chaplain.proc/create_by_chaplain, H)
-	H.AddSpell(new /obj/effect/proc_holder/spell/in_hand/arcane_barrage)
-	H.mutations.Add(TK)
-	H.update_mutations()
+	..()
+	INVOKE_ASYNC(global.chaplain_religion, /datum/religion/chaplain.proc/create_by_chaplain, user)
+	user.AddSpell(new /obj/effect/proc_holder/spell/in_hand/arcane_barrage)
+	user.mutations.Add(TK)
+	user.update_mutations()

@@ -36,11 +36,11 @@
 
 /obj/structure/vilage/velikiy_sup/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
-		to_chat(user, "<span class='notice'>You cannot doublefry.</span>")
+		to_chat(user, "<span class='notice'>Уже сварено.</span>")
 		return
 
 	if (ishuman(user) && !(I.flags & DROPDEL))
-		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
+		to_chat(user, "<span class='notice'>Ты сунул [I] в [src].</span>")
 		on = TRUE
 		frying = I
 		user.drop_from_inventory(frying, src)

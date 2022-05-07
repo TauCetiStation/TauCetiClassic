@@ -157,6 +157,7 @@
 				return FALSE
 
 		LateChoices()
+		usr.status_flags ^= GODMODE
 		return
 
 	if(href_list["lobby_crew"])

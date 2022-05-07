@@ -13,29 +13,103 @@
 /obj/effect/portal/hub/human
 	A =/area/custom/human_hub
 	name = "Фракция Замок"
-	desc = "Королевство людей.Официальное название - Эрафия.Многоразовые профессии - Крестьянин, Шахтер, Помощник в Монастыре. Заранее отобранные игроки владеют такими профессиями как: Герой, Монахи, Рыцари, Торгаш."
+	desc = "Королевство людей в центральной части Антагарича. Самое крупное государство материка. С самого основания королевства им правила династия Грифонхартов"
 
 /obj/effect/portal/hub/wizard
 	A =/area/custom/wizard_hub
 	name = "Фракция Башня"
-	desc = "Королевство колдунов и чародеек.Официальное название - Бракада.Многоразовые профессии - Житель, Гремлин, Помощник Чародея. Заранее отобранные игроки владеют такими профессиями как: Герой, Гремлин-прораб, Чародей, Торгаш."
+	desc = ""
 
 /obj/effect/portal/hub/krigan
 	A =/area/custom/krigan_hub
 	name = "Фракция Инферно"
-	desc = "Инопланетные захватчики, которые необразованные селюки и паладины кличут - Демоны. Официальное название - Инферно. Многоразовые професии - Еретик, Бес, Пророк. Заранее отобранные игроки владеют такими профессиями как: Герой, Погонщик Бесов, Вестник Огня, Магог."
+	desc = ""
 
-/obj/effect/portal/hub/peasant
+/obj/effect/portal/hub/job_room
+	var/job_count = 0
+	var/hero_arive = FALSE
+	var/global/list/portals = list()
+
+/obj/effect/portal/hub/job_room/atom_init()
+	..()
+	portals += src
+
+/obj/effect/portal/hub/job_room/Bumped(mob/M)
+	..()
+	job_count += 1
+
+// Тир 1
+/obj/effect/portal/hub/job_room/peasant
 	A = /area/custom/peasant_hub
 	name = "Крестьянин"
 	desc = ""
 
-/obj/effect/portal/hub/miner
+/obj/effect/portal/hub/job_room/miner
 	A = /area/custom/miner_hub
 	name = "Шахтер"
 	desc = ""
 
-/obj/effect/portal/hub/helper
+/obj/effect/portal/hub/job_room/helper
 	A = /area/custom/helper_hub
 	name = "Помощник в Монастыре"
 	desc = ""
+
+/obj/effect/portal/hub/job_room/whitelist_room
+	var/obj/effect/portal/hub/job_room/room_to_check
+	var/obj/effect/portal/hub/job_room/my_room
+	var/threshold = 0 // Сколько нужно для разблокировки
+	var/mod = 0
+	var/number_of_players = 0
+	var/list/debug = list()
+
+/obj/effect/portal/hub/job_room/whitelist_room/atom_init()
+	..()
+	mod = threshold
+	for(var/P in portals)
+		debug += P
+		if(ispath(room_to_check,P))
+			my_room = P
+
+/obj/effect/portal/hub/job_room/whitelist_room/Bumped(mob/M)
+	if(hero_arive)
+		if(job_count > 0)
+			to_chat(M, "<span class='notice'> У города уже есть герой.</span>")
+			return
+	number_of_players = my_room.job_count
+	if(number_of_players < threshold)
+		to_chat(M, "<span class='notice'> Недостаточно низкоранговых профессий  для разблокировки этой комнаты.</span>")
+		return
+	else
+		INVOKE_ASYNC(src, .proc/teleport, M)
+		threshold += mod
+		job_count += 1
+
+// Тир 2
+/obj/effect/portal/hub/job_room/whitelist_room/knight
+	A = /area/custom/knight_hub
+	name = "Рыцарь"
+	desc = ""
+	room_to_check =/obj/effect/portal/hub/job_room/peasant
+	threshold = 3
+
+/obj/effect/portal/hub/job_room/whitelist_room/monk
+	A = /area/custom/monk_hub
+	name = "Монах"
+	desc = ""
+	room_to_check =/obj/effect/portal/hub/job_room/helper
+	threshold = 3
+
+/obj/effect/portal/hub/job_room/whitelist_room/smith
+	A = /area/custom/smith_hub
+	name = "Кузнец"
+	desc = ""
+	room_to_check =/obj/effect/portal/hub/job_room/miner
+	threshold = 3
+
+/obj/effect/portal/hub/job_room/whitelist_room/h_hero
+	A = /area/custom/human_hero
+	name = "Герой"
+	desc = ""
+	room_to_check =/obj/effect/portal/hub/job_room/whitelist_room/knight
+	threshold = 3
+	hero_arive = TRUE

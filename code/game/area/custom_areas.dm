@@ -110,6 +110,8 @@
 	name = "KriganHub"
 	icon_state = "cult-heaven"
 
+
+
 /area/custom/peasant_hub
 	name = "Peasant_hub"
 	icon_state = "blue-red-d"
@@ -121,6 +123,23 @@
 /area/custom/helper_hub
 	name = "Helper_hub"
 	icon_state = "blue-red-d"
+
+/area/custom/knight_hub
+	name = "Knight_hub"
+	icon_state = "blue-red-d"
+
+/area/custom/monk_hub
+	name = "Monk_hub"
+	icon_state = "blue-red-d"
+
+/area/custom/smith_hub
+	name = "Smith_hub"
+	icon_state = "blue-red-d"
+
+/area/custom/human_hero
+	name = "HumanHero_hub"
+	icon_state = "blue-red-d"
+
 
 /area/custom/start_homm
 	name = "Start"
