@@ -644,3 +644,11 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/spy/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(espionageagent_start)
 	ghost.forceMove(get_turf(jump_to))
+
+/datum/spawner/living/mimic
+	name = "Оживлённый предмет"
+	id = "mimic"
+	desc = "Вы магическим образом ожили на станции"
+
+/datum/spawner/living/mimic/spawn_ghost(mob/dead/observer/ghost)
+	. = ..()

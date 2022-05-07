@@ -21,34 +21,23 @@
 /obj/item/projectile/magic/change/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	wabbajack(target)
 
-/obj/item/projectile/magic/change/proc/wabbajack(mob/living/M)
+/obj/item/projectile/magic/proc/wabbajack(mob/living/M)
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
-
+	// don't have sprite for maido-queen
+	if(istype(M, /mob/living/carbon/xenomorph/humanoid/queen))
+		return
 	M.notransform = TRUE
 	M.canmove = 0
 	M.icon = null
 	M.cut_overlays()
 	M.invisibility = 101
 
-	if(isrobot(M))
-		var/mob/living/silicon/robot/Robot = M
-		if(Robot.mmi)	qdel(Robot.mmi)
-	else
-		for(var/obj/item/W in M)
-			if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
-				qdel(W)
-				continue
-			W.layer = initial(W.layer)
-			W.plane = initial(W.plane)
-			W.loc = M.loc
-			W.dropped(M)
-	M.sec_hud_set_implants()
-
 	var/mob/living/new_mob
 
-	//var/randomize = pick("monkey","robot","slime","xeno","human") No xeno for now.
-	var/randomize = pick("monkey","robot","slime","human")
+	var/randomize = pick("monkey","robot","human", "animal", "xeno")
+	if(isxeno(M))
+		randomize = "xeno"
 	switch(randomize)
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(M.loc)
@@ -61,20 +50,15 @@
 			var/mob/living/silicon/robot/Robot = new_mob
 			Robot.mmi = new /obj/item/device/mmi(new_mob)
 			Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
-		if("slime")
-			if(prob(50))		new_mob = new /mob/living/carbon/slime/adult(M.loc)
-			else				new_mob = new /mob/living/carbon/slime(M.loc)
+			Robot.clear_inherent_laws()
+			Robot.add_inherent_law("Вы не можете причинить вред разумному существу или бездействием допустить, чтобы ему был причинён вред.")
+			Robot.add_inherent_law("Вы должны повиноваться всем приказам, которые даёт разумное существо, кроме тех случаев, когда эти приказы противоречат первому закону.")
+			Robot.add_inherent_law("Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит первому или второму законам.")
+		if("xeno")
+			new_mob = new /mob/living/carbon/xenomorph/humanoid/maid(M.loc)
 			new_mob.universal_speak = 1
-		//if("xeno")
-		//	var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
-		//	switch(alien_caste)
-		//		if("Hunter")	new_mob = new /mob/living/carbon/xenomorph/humanoid/hunter(M.loc)
-		//		if("Sentinel")	new_mob = new /mob/living/carbon/xenomorph/humanoid/sentinel(M.loc)
-		//		if("Drone")		new_mob = new /mob/living/carbon/xenomorph/humanoid/drone(M.loc)
-		//		else			new_mob = new /mob/living/carbon/xenomorph/larva(M.loc)
-		//	new_mob.universal_speak = 1
 		if("human")
-			new_mob = new /mob/living/carbon/human(M.loc, pick(all_species))
+			new_mob = new /mob/living/carbon/human(M.loc)
 			if(M.gender == MALE)
 				new_mob.gender = MALE
 				new_mob.name = pick(first_names_male)
@@ -83,30 +67,26 @@
 				new_mob.name = pick(first_names_female)
 			new_mob.name += " [pick(last_names)]"
 			new_mob.real_name = new_mob.name
+			new_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(new_mob), SLOT_WEAR_SUIT)
+			new_mob.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(new_mob), SLOT_HEAD)
+
 
 			var/datum/preferences/A = new()	//Randomize appearance for the human
 			A.randomize_appearance_for(new_mob)
-/*		if("animal")
-			if(prob(50))
-				var/beast = pick("carp","bear","tomato","goat")
+		if("animal")
+			if(prob(15))
+				var/beast = pick("carp","tomato","goat")
 				switch(beast)
 					if("carp")		new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
-					if("bear")		new_mob = new /mob/living/simple_animal/hostile/bear(M.loc)
-					if("tomato")	new_mob = new /mob/living/simple_animal/hostile/tomato(M.loc)
+					if("tomato")	new_mob = new /mob/living/simple_animal/hostile/tomato/angry_tomato(M.loc)
 					if("goat")		new_mob = new /mob/living/simple_animal/hostile/retaliate/goat(M.loc)
 			else
-				var/animal = pick("parrot","corgi","crab","cat","mouse","chicken","cow","lizard","chick")
+				var/animal = pick("pig", "shadowpig", "cow")
 				switch(animal)
-					if("parrot")	new_mob = new /mob/living/simple_animal/parrot(M.loc)
-					if("corgi")		new_mob = new /mob/living/simple_animal/corgi(M.loc)
-					if("crab")		new_mob = new /mob/living/simple_animal/crab(M.loc)
-					if("cat")		new_mob = new /mob/living/simple_animal/cat(M.loc)
-					if("mouse")		new_mob = new /mob/living/simple_animal/mouse(M.loc)
-					if("chicken")	new_mob = new /mob/living/simple_animal/chicken(M.loc)
-					if("cow")		new_mob = new /mob/living/simple_animal/cow(M.loc)
-					if("lizard")	new_mob = new /mob/living/simple_animal/lizard(M.loc)
-					else			new_mob = new /mob/living/simple_animal/chick(M.loc)
-			new_mob.universal_speak = 1	*/
+					if("pig")	new_mob = new /mob/living/simple_animal/pig(M.loc)
+					if("shadowpig")		new_mob = new /mob/living/simple_animal/pig/shadowpig(M.loc)
+					if("cow")		new_mob = new /mob/living/simple_animal/cow/cute_cow(M.loc)
+			new_mob.universal_speak = 1
 
 	if(!new_mob)
 		return
@@ -142,6 +122,9 @@
 		// Change our allegiance!
 		var/mob/living/simple_animal/hostile/mimic/copy/C = change
 		C.ChangeOwner(firer)
+		create_spawner(/datum/spawner/living/mimic, C)
+	else if(istype(change, /mob/living/simple_animal/shade) || isxeno(change))
+		wabbajack(change)
 
 /obj/item/projectile/magic/resurrection
 	name = "bolt of resurrection"
