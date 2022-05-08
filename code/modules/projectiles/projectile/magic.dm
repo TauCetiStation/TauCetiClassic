@@ -56,7 +56,7 @@
 			Robot.mmi = new /obj/item/device/mmi(new_mob)
 			Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 			Robot.clear_inherent_laws()
-			Robot.init(laws_type = /datum/ai_laws/asimov_xenophile, ai_link = FALSE, global.chaplain_religion)
+			Robot.init(/datum/ai_laws/asimov_xenophile, FALSE, global.chaplain_religion)
 		if("xeno")
 			new_mob = new /mob/living/carbon/xenomorph/humanoid/maid(M.loc)
 			new_mob.universal_speak = 1
