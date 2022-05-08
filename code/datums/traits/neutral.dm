@@ -42,33 +42,3 @@
 		var/datum/species/S = all_species[specie_name]
 		if(S.taste_sensitivity == TASTE_SENSITIVITY_NO_TASTE)
 			. |= specie_name
-
-
-
-/datum/quirk/daltonism
-	name = QUIRK_DALTONISM
-	desc = "Вы не различаете цвета."
-	value = 0
-	mob_trait = TRAIT_DALTONISM
-	gain_text = "<span class='notice'>Вы перестали различать цвета!</span>"
-	lose_text = "<span class='notice'>Вы снова можете насладиться красками этого мира!</span>"
-
-	var/current_type = "ахроматопсия"
-
-/datum/quirk/daltonism/post_add()
-	var/mob/living/carbon/human/H = quirk_holder
-	H.daltonism = TRUE
-
-	var/list/types = list(
-		"протаномалия"  = PROTANOMALY_FILTER,
-		"протанопия"    = PROTANOPIA_FILTER,
-		"дейтраномалия" = DEUTERANOMALY_FILTER,
-		"дейтранопия"   = DEUTERANOPIA_FILTER,
-		"тританомалия"  = TRITANOMALY_FILTER,
-		"тританопия"    = TRITANOPIA_FILTER,
-		"ахроматопсия"  = ACHROMATOPSIA_FILTER
-		)
-
-	var/choose = input(H, "Выберите тип дальтонизма", "Тип") in types
-	current_type = types[choose]
-	H.sightglassesmod = current_type
