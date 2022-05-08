@@ -32,11 +32,10 @@
 
 /datum/emote/clickable/help
 	key = "help"
-
 	message_1p = "You asked for help."
 	message_3p = "needs help."
-	cooldown = 7 SECONDS
-	duration = 5 SECONDS
+	cooldown = 10 SECONDS
+	duration = 7 SECONDS
 	message_type = SHOWMSG_AUDIO
 
 	cloud = "cloud-medic"
@@ -45,6 +44,12 @@
 		EMOTE_STATE(is_one_hand_usable),
 		EMOTE_STATE(is_not_species, ZOMBIE)
 	)
+
+/datum/emote/clickable/help/add_cloud(mob/user)
+	. = ..()
+	for(var/mob/living/carbon/M in get_hearers_in_view(emote_range, user))
+		if(M != user)
+			to_chat(M, "<span class='notice'>[HELP_LINK(M, user)]</span>")
 
 /datum/emote/clickable/help/on_cloud_click(mob/living/carbon/human/target, mob/living/carbon/human/clicker)
 	if(target != clicker)

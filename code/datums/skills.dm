@@ -57,10 +57,20 @@
 /mob/living
 	var/list/helpers_skillsets
 
+
+/mob/living/carbon/human/verb/ask_for_help()
+	set category = "IC"
+	set name = "Ask for help"
+	emote("help")
+
 /mob/living/proc/help_other(mob/living/target)
 	if(!mind)
 		return
-
+	if(target == src)
+		return
+	if(incapacitated() || crawling || is_busy() || get_active_hand() || !Adjacent(target))
+		return
+	
 	if(target.a_intent == INTENT_HARM)
 		visible_message("<span class='notice'>[target] pranks \the [src].</span>", "<span class='notice'>You tried to help \the [target], but [P_THEY(target.gender)] rejects your help and pranks you instead!</span>")
 		to_chat(target, "<span class='notice'>You prank \the [src]!</span>")

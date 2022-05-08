@@ -644,6 +644,11 @@
 	if(href_list["set_max_skills"])
 		mind.skills.maximize_active_skills()
 		to_chat(usr, "<span class='notice'>You are trying your best now.</span>")
+	if(href_list["help_other"])
+		var/mob/target = locate(href_list["help_other"])
+		help_other(target)
+	if(href_list["request_help"])
+		ask_for_help()
 	if (href_list["item"])
 		var/slot = text2num(href_list["item"])
 		if(slot in check_obscured_slots())
@@ -1564,6 +1569,7 @@
 	dat += {"
 		<div class = "container">
 			<button type="submit" value="1" onclick="setMaxSkills()">Set skills values to maximum</button>
+			<button type="submit" value="1" onclick="AskHelp()">Ask others for help</button>
 		</div>
 	"}
 	for(var/category in tables_data)
@@ -1628,6 +1634,11 @@
 			}
 			function setMaxSkills() {
 				window.location  = 'byond://?src=\ref[src];set_max_skills=1';
+				setTimeout("location.reload(true);", 100);
+			}
+			function AskHelp()
+			{
+				window.location  = 'byond://?src=\ref[src];request_help=1';
 				setTimeout("location.reload(true);", 100);
 			}
 		</script>
