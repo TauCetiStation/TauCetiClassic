@@ -210,6 +210,7 @@
 				var/t1 = sanitize(href_list["assign_target"] , 45)
 				var/new_salary = 0
 				var/datum/job/jobdatum
+				var/department = "Civilian"
 				if(t1 == "Custom")
 					var/temp_t = sanitize(input("Enter a custom job assignment.","Assignment"), 45)
 					//let custom jobs function as an impromptu alt title, mainly for sechuds
@@ -230,6 +231,7 @@
 
 						access = jobdatum.get_access()
 						new_salary = jobdatum.salary
+						department = department_accounts[jobdatum.department]
 
 					modify.access = access
 					modify.assignment = t1
@@ -237,6 +239,7 @@
 
 					if(datum_account)
 						datum_account.set_salary(new_salary, jobdatum.salary_ratio)	//set the new salary equal to job
+						datum_account.department = department
 
 		if ("reg")
 			if (is_authenticated())

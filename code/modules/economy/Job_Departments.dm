@@ -1,4 +1,5 @@
 var/global/list/station_departments = list("Command", "Medical", "Engineering", "Science", "Security", "Cargo", "Civilian")
+var/global/list/departments_subsidy = list("Command" = 2000, "Medical" = 2500, "Engineering" = 2000, "Science" = 2500, "Security" = 1500, "Cargo" = 1000, "Civilian" = 1000, "Vendor" = 100)
 
 // The department the job belongs to.
 /datum/job/var/department = null

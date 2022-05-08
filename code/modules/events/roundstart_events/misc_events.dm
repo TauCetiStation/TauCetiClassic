@@ -132,6 +132,11 @@ var/global/list/sec_closets_list = list()
 			message_admins("RoundStart Event: [account1.owner_name] and [account2.owner_name] salaries has been swapped.")
 			log_game("RoundStart Event: [account1.owner_name] and [account2.owner_name] salaries has been swapped.")
 
+/datum/event/feature/station_subsidion/start()
+	global.station_subsidy_coefficient *= 0
+	message_admins("RoundStart Event: station subsidion is set to 0 credits.")
+	log_game("RoundStart Event: station subsidion is set to 0 credits.")
+
 /datum/event/feature/airlock_joke/start()
 	var/list/possible_types = list(/obj/item/weapon/bananapeel, /obj/item/device/assembly/mousetrap, /obj/item/weapon/legcuffs/beartrap, /obj/effect/decal/cleanable/blood/oil)
 	for(var/obj/machinery/door/airlock/A as anything in airlock_list)

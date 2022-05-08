@@ -68,11 +68,16 @@
 	data["transactions"] = null
 	data["accounts"] = null
 	data["cargo_export_tax"] = global.CARGO_EXPORT_TAX
+	data["change_income_tax"] = global.tax_income
 
 	if (detailed_account_view)
 		data["account_number"] = detailed_account_view.account_number
 		data["owner_name"] = detailed_account_view.owner_name
 		data["money"] = detailed_account_view.money
+		if(detailed_account_view.owner_name in global.department_accounts)
+			data["subsidy"] = num2text(detailed_account_view.subsidy)
+		else
+			data["subsidy"] = null
 		data["suspended"] = detailed_account_view.suspended
 
 		var/list/trx[0]
@@ -127,6 +132,16 @@
 				var/amount = input("Enter the percent you want to set a tax to", "Export Tax %") as num
 				amount = clamp(amount, 0, 100)
 				global.CARGO_EXPORT_TAX = amount
+
+			if("change_income_tax")
+				var/amount = input("Enter the percent you want to set a tax to", "Income Tax %") as num
+				amount = clamp(amount, 0, 100)
+				global.tax_income = amount
+
+			if("change_department_subsidy")
+				var/amount = input("Enter the department's subsidy in credits", "Subsidy Amount") as num
+				amount = clamp(amount, -10000, 10000)
+				detailed_account_view.subsidy = amount
 
 			if("remove_funds")
 				var/amount = input("Enter the amount you wish to remove", "Silently remove funds") as num

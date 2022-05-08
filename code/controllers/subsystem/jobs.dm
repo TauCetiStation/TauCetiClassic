@@ -474,7 +474,7 @@ SUBSYSTEM_DEF(job)
 			H.buckled.set_dir(H.dir)
 
 	//give them an account in the station database
-	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary
+	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary, job.head_position ? department_accounts["Command"] : department_accounts[job.department])	//starting funds = salary
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)

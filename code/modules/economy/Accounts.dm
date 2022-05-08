@@ -14,6 +14,8 @@
 	var/list/transaction_log = list()
 	var/obj/item/device/pda/owner_PDA = null	//contains a PDA linked to an account
 	var/suspended = 0
+	var/datum/money_account/department = null
+	var/subsidy = 0
 	var/security_level = 0	//0 - auto-identify from worn ID, require only account number
 							//1 - require manual login / account number and pin
 							//2 - require card and manual login
@@ -77,8 +79,8 @@
 	var/time = ""
 	var/source_terminal = ""
 
-/proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H, start_money = rand(50, 200) * 10)
-	var/datum/money_account/M = create_account(H.real_name, start_money, null, H.age)
+/proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H, start_money = rand(50, 200) * 10, datum/money_account/department_account = global.station_account)
+	var/datum/money_account/M = create_account(H.real_name, start_money, null, H.age, department_account)
 	if(H.mind)
 		var/remembered_info = ""
 		remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"
@@ -91,13 +93,14 @@
 		H.mind.initial_account = M
 	return M
 
-/proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db, age = 10)
+/proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db, age = 10, datum/money_account/department_account)
 
 	//create a new account
 	var/datum/money_account/M = new()
 	M.owner_name = new_owner_name
 	M.remote_access_pin = rand(1111, 111111)
 	M.adjust_money(starting_funds)
+	M.department = department_account
 
 	//create an entry in the account transaction log for when it was created
 	var/datum/transaction/T = new()

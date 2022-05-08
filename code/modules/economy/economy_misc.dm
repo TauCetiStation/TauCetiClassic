@@ -72,7 +72,7 @@ var/global/num_financial_terminals = 1
 var/global/next_account_number = 0
 var/global/list/all_money_accounts = list()
 var/global/economy_init = FALSE
-var/global/initial_station_money = 7500
+var/global/initial_station_money = 15000
 
 /proc/setup_economy()
 	if(economy_init)
@@ -103,6 +103,7 @@ var/global/initial_station_money = 7500
 		create_department_account(department)
 	create_department_account("Vendor")
 	vendor_account = department_accounts["Vendor"]
+	vendor_account.subsidy = 0
 
 	current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year]"
 
@@ -118,6 +119,7 @@ var/global/initial_station_money = 7500
 		station_account.account_number = rand(111111, 999999)
 		station_account.remote_access_pin = rand(1111, 111111)
 		station_account.money = global.initial_station_money
+		station_account.subsidy = 0
 
 		//create an entry in the account transaction log for when it was created
 		var/datum/transaction/T = new()
@@ -136,10 +138,11 @@ var/global/initial_station_money = 7500
 	next_account_number = rand(111111, 999999)
 
 	var/datum/money_account/department_account = new()
-	department_account.owner_name = "[department] Account"
+	department_account.owner_name = "[department]"
 	department_account.account_number = rand(111111, 999999)
 	department_account.remote_access_pin = rand(1111, 111111)
-	department_account.money = 500
+	department_account.money = global.departments_subsidy[department]
+	department_account.subsidy = global.departments_subsidy[department]
 
 	//create an entry in the account transaction log for when it was created
 	var/datum/transaction/T = new()

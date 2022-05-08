@@ -130,8 +130,9 @@
 				tried_to_add_revheads = world.time + 10 MINUTES
 
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
-		command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")
+		command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, and your station subsidy, has been halved.")
 		last_command_report = 1
+		global.station_subsidy_coefficient *= 0.5
 		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
 		for(var/datum/job/J in SSjob.occupations)
 			if(J.title in excluded_rank)
