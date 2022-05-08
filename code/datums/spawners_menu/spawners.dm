@@ -607,6 +607,16 @@ var/global/list/datum/spawners_cooldown = list()
 	..()
 	religion.add_member(mob, HOLY_ROLE_PRIEST)
 
+/datum/spawner/living/mimic
+	name = "Оживлённый предмет"
+	id = "mimic"
+	desc = "Вы магическим образом ожили на станции"
+
+/datum/spawner/living/evil_shade
+	name = "Злой Дух"
+	id = "evil_shade"
+	desc = "Магическая сила призвала вас в мир, отомстите живым за причинённые обиды!"
+
 /datum/spawner/spy
 	name = "Агент Прослушки"
 	id = "spy"
@@ -644,13 +654,3 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/spy/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(espionageagent_start)
 	ghost.forceMove(get_turf(jump_to))
-
-/datum/spawner/living/mimic
-	name = "Оживлённый предмет"
-	id = "mimic"
-	desc = "Вы магическим образом ожили на станции"
-
-/datum/spawner/living/spirit_incarnate
-	name = "Дух во плоти"
-	id = "spirit_incarnate"
-	desc = "Магическая сила дала вам новое тело, оживите вновь!"

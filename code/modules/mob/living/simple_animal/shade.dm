@@ -225,3 +225,12 @@
 	else
 		canmove = TRUE
 	return canmove
+
+/mob/living/simple_animal/shade/evil_shade
+	layer = TURF_LAYER
+	melee_damage = 1
+	incorporeal_move = 1
+	health = 15
+	icon_state = "ghost2"
+	icon_living = "ghost2"
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE

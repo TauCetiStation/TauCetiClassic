@@ -10,7 +10,14 @@
 						/obj/effect/proc_holder/spell/targeted/transfer_plasma,
 						/obj/effect/proc_holder/spell/no_target/resin,
 						/obj/effect/proc_holder/spell/no_target/air_plant,
-                        )
+						)
+	var/whitelist_items = list(/obj/item/weapon/reagent_containers/spray,
+							/obj/item/weapon/mop,
+							/obj/item/weapon/storage/bag/trash,
+							/obj/item/device/lightreplacer,
+							/obj/item/weapon/reagent_containers/glass/bucket,
+							/obj/item/weapon/reagent_containers/glass/rag
+							)
 
 
 /mob/living/carbon/xenomorph/humanoid/maid/atom_init()
@@ -31,6 +38,6 @@
 	return(1 + move_delay_add + config.alien_delay)
 
 /mob/living/carbon/xenomorph/humanoid/maid/can_pickup(obj/O)
-	if((istype(O, /obj/item/weapon/reagent_containers/spray)) || (istype(O, /obj/item/weapon/mop)) || (istype(O, /obj/item/weapon/storage/bag/trash)) || (istype(O, /obj/item/device/lightreplacer)) || (istype(O, /obj/item/weapon/reagent_containers/glass/bucket)) || (istype(O, /obj/item/weapon/reagent_containers/glass/rag)))
+	if(is_type_in_list(O, whitelist_items))
 		return TRUE
 	return FALSE

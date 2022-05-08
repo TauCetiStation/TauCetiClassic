@@ -17,17 +17,15 @@
 	name = "bolt of change"
 	icon_state = "ice_1"
 	light_color = "#00bfff"
-/*
+
 /obj/item/projectile/magic/change/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	wabbajack(target)
-*/
 
 /obj/item/projectile/magic/proc/wabbajack(mob/living/M)
-	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
+	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags) || !M.client || isxenoqueen(M))
 		return
+
 	// don't have sprite for maido-queen
-	if(isxenoqueen(M))
-		return
 	M.notransform = TRUE
 	M.canmove = 0
 	M.icon = null
@@ -42,6 +40,12 @@
 	switch(randomize)
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(M.loc)
+			var/obj/item/weapon/spellbook/new_book = new /obj/item/weapon/spellbook(M.loc)
+			if(istype(new_book, /obj/item/weapon/spellbook))
+				new_book.uses = 2
+			new_mob.equip_to_slot_or_del(new_book, SLOT_L_HAND)
+			new_mob.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(new_mob), SLOT_WEAR_MASK)
+			new_mob.name = "small Konga"
 			new_mob.universal_speak = 1
 		if("robot")
 			new_mob = new /mob/living/silicon/robot(M.loc)
@@ -52,9 +56,7 @@
 			Robot.mmi = new /obj/item/device/mmi(new_mob)
 			Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 			Robot.clear_inherent_laws()
-			Robot.add_inherent_law("Вы не можете причинить вред разумному существу или бездействием допустить, чтобы ему был причинён вред.")
-			Robot.add_inherent_law("Вы должны повиноваться всем приказам, которые даёт разумное существо, кроме тех случаев, когда эти приказы противоречат первому закону.")
-			Robot.add_inherent_law("Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит первому или второму законам.")
+			Robot.init(laws_type = /datum/ai_laws/asimov_xenophile, ai_link = FALSE)
 		if("xeno")
 			new_mob = new /mob/living/carbon/xenomorph/humanoid/maid(M.loc)
 			new_mob.universal_speak = 1
@@ -70,23 +72,19 @@
 			new_mob.real_name = new_mob.name
 			new_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(new_mob), SLOT_WEAR_SUIT)
 			new_mob.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(new_mob), SLOT_HEAD)
+			new_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(new_mob), SLOT_SHOES)
 
 
 			var/datum/preferences/A = new()	//Randomize appearance for the human
 			A.randomize_appearance_for(new_mob)
 		if("animal")
-			if(prob(15))
-				var/beast = pick("carp","tomato","goat")
-				switch(beast)
-					if("carp")		new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
-					if("tomato")	new_mob = new /mob/living/simple_animal/hostile/tomato/angry_tomato(M.loc)
-					if("goat")		new_mob = new /mob/living/simple_animal/hostile/retaliate/goat(M.loc)
-			else
-				var/animal = pick("pig", "shadowpig", "cow")
-				switch(animal)
-					if("pig")	new_mob = new /mob/living/simple_animal/pig(M.loc)
-					if("shadowpig")		new_mob = new /mob/living/simple_animal/pig/shadowpig(M.loc)
-					if("cow")		new_mob = new /mob/living/simple_animal/cow/cute_cow(M.loc)
+			var/beast = pick(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/tomato/angry_tomato, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/pig/shadowpig, /mob/living/simple_animal/cow/cute_cow)
+			switch(beast)
+				if(/mob/living/simple_animal/hostile/carp)					new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
+				if(/mob/living/simple_animal/hostile/tomato/angry_tomato)	new_mob = new /mob/living/simple_animal/hostile/tomato/angry_tomato(M.loc)
+				if(/mob/living/simple_animal/hostile/retaliate/goat)		new_mob = new /mob/living/simple_animal/hostile/retaliate/goat(M.loc)
+				if(/mob/living/simple_animal/pig/shadowpig)					new_mob = new /mob/living/simple_animal/pig/shadowpig(M.loc)
+				if(/mob/living/simple_animal/cow/cute_cow)					new_mob = new /mob/living/simple_animal/cow/cute_cow(M.loc)
 			new_mob.universal_speak = 1
 
 	if(!new_mob)
@@ -103,7 +101,6 @@
 		M.mind.transfer_to(new_mob)
 	else
 		new_mob.key = M.key
-		create_spawner(/datum/spawner/living/spirit_incarnate, new_mob)
 
 	to_chat(new_mob, "<B>Your form morphs into that of a [randomize].</B>")
 
