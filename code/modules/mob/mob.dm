@@ -1133,8 +1133,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return
 	if(preset)
-		var/datum/ColorMatrix/CM = new(preset)
-		animate(client, color = CM.matrix, time = transition_time)
+		if(islist(preset))
+			animate(client, color = preset, time = transition_time)
+		else
+			var/datum/ColorMatrix/CM = new(preset)
+			animate(client, color = CM.matrix, time = transition_time)
 	else
 		animate(client, color = null, time = transition_time)
 

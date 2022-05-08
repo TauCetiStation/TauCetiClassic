@@ -53,25 +53,22 @@
 	gain_text = "<span class='notice'>Вы перестали различать цвета!</span>"
 	lose_text = "<span class='notice'>Вы снова можете насладиться красками этого мира!</span>"
 
-	var/current_type = "greyscale"
+	var/current_type = "ахроматопсия"
 
 /datum/quirk/daltonism/post_add()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.daltonism = TRUE
 
 	var/list/types = list(
-		"Серый"            = "greyscale",
-		"Красный"             = "thermal",
-		"Синий"            = "rbg_d",
-		"Тёмно зелёный"      = "nvg_military",
-		"Зелёный"           = "meson",
-		"Оранжевый"          = "sepia",
-		"Жёлтый-синий"     = "bgr_d",
-		"Фиолетовый-жёлтый"     = "brg_d",
-		"Зелёный-синий"      = "gbr_d",
-		"Фиолетовый-красный"      = "grb_d",
+		"протаномалия"  = PROTANOMALY_FILTER,
+		"протанопия"    = PROTANOPIA_FILTER,
+		"дейтраномалия" = DEUTERANOMALY_FILTER,
+		"дейтранопия"   = DEUTERANOPIA_FILTER,
+		"тританомалия"  = TRITANOMALY_FILTER,
+		"тританопия"    = TRITANOPIA_FILTER,
+		"ахроматопсия"  = ACHROMATOPSIA_FILTER
 		)
 
-	var/choose = input(H, "Выберите тип дальтонизма", "Цвет") in types
+	var/choose = input(H, "Выберите тип дальтонизма", "Тип") in types
 	current_type = types[choose]
 	H.sightglassesmod = current_type
