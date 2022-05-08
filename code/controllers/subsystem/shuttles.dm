@@ -510,7 +510,7 @@ SUBSYSTEM_DEF(shuttle)
 			continue
 
 		msg += export_text + "\n"
-		var/tax = round(E.total_cost * global.CARGO_EXPORT_TAX * 0.01)
+		var/tax = round(E.total_cost * global.tax_cargo_export * 0.01)
 		station_account.money += tax
 		department_accounts["Cargo"].money += E.total_cost - tax
 		E.export_end()
