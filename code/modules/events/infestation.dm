@@ -73,6 +73,8 @@
 			else
 				var/spawn_type = pick(spawn_types)
 				new spawn_type(T)
+				for(var/mob/living/simple_animal/mouse/rat/rats in T)
+					create_spawner(/datum/spawner/living/rat, rats)
 
 #undef INFESTATION_LOCATIONS
 
