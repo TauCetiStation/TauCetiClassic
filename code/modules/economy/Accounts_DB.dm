@@ -67,7 +67,7 @@
 	data["station_account_number"] = station_account.account_number
 	data["transactions"] = null
 	data["accounts"] = null
-	data["cargo_export_tax"] = global.CARGO_EXPORT_TAX
+	data["cargo_export_tax"] = global.tax_cargo_export
 
 	if (detailed_account_view)
 		data["account_number"] = detailed_account_view.account_number
@@ -126,7 +126,7 @@
 			if("change_export_tax")
 				var/amount = input("Enter the percent you want to set a tax to", "Export Tax %") as num
 				amount = clamp(amount, 0, 100)
-				global.CARGO_EXPORT_TAX = amount
+				global.tax_cargo_export = amount
 
 			if("remove_funds")
 				var/amount = input("Enter the amount you wish to remove", "Silently remove funds") as num
