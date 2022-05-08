@@ -18,6 +18,14 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/ammonia = 10,
 		/obj/item/weapon/reagent_containers/glass/bottle/diethylamine = 5,
 	)
+	prices = list(
+		/obj/item/nutrient/ez = 5,
+		/obj/item/nutrient/l4z = 5,
+		/obj/item/nutrient/rh = 5,
+		/obj/item/weapon/pestspray = 5,
+		/obj/item/weapon/reagent_containers/syringe = 10,
+		/obj/item/weapon/storage/bag/plants = 25,
+	)
 	refill_canister = /obj/item/weapon/vending_refill/hydronutrients
 
 /obj/machinery/vending/hydroseeds
@@ -73,5 +81,39 @@
 	)
 	premium = list(
 		/obj/item/toy/waterflower = 1,
+	)
+	prices = list(
+		/obj/item/seeds/ambrosiavulgarisseed = 15,
+		/obj/item/seeds/appleseed = 5,
+		/obj/item/seeds/bananaseed = 5,
+		/obj/item/seeds/berryseed = 5,
+		/obj/item/seeds/cabbageseed = 5,
+		/obj/item/seeds/carrotseed = 5,
+		/obj/item/seeds/cherryseed = 5,
+		/obj/item/seeds/chantermycelium = 10,
+		/obj/item/seeds/chiliseed = 5,
+		/obj/item/seeds/cocoapodseed = 5,
+		/obj/item/seeds/cornseed = 5,
+		/obj/item/seeds/replicapod = 25,
+		/obj/item/seeds/eggplantseed = 5,
+		/obj/item/seeds/grapeseed = 5,
+		/obj/item/seeds/grassseed = 5,
+		/obj/item/seeds/lemonseed = 5,
+		/obj/item/seeds/limeseed = 5,
+		/obj/item/seeds/orangeseed = 5,
+		/obj/item/seeds/plastiseed = 5,
+		/obj/item/seeds/potatoseed = 5,
+		/obj/item/seeds/poppyseed = 5,
+		/obj/item/seeds/pumpkinseed = 5,
+		/obj/item/seeds/riceseed= 5,
+		/obj/item/seeds/soyaseed = 5,
+		/obj/item/seeds/sunflowerseed = 5,
+		/obj/item/seeds/tomatoseed = 5,
+		/obj/item/seeds/towermycelium = 10,
+		/obj/item/seeds/watermelonseed = 5,
+		/obj/item/seeds/wheatseed = 5,
+		/obj/item/seeds/whitebeetseed = 5,
+		/obj/item/seeds/blackpepper = 5,
+		/obj/item/seeds/sugarcaneseed = 5,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/hydroseeds

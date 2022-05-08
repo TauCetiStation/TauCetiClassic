@@ -15,6 +15,16 @@
 		/obj/item/weapon/cartridge/captain = 3,
 		/obj/item/weapon/cartridge/quartermaster = 10,
 	)
+	prices = list(
+		/obj/item/weapon/cartridge/medical = 25,
+		/obj/item/weapon/cartridge/engineering = 25,
+		/obj/item/weapon/cartridge/security = 25,
+		/obj/item/weapon/cartridge/janitor = 25,
+		/obj/item/weapon/cartridge/signal/science = 25,
+		/obj/item/device/pda/heads = 25,
+		/obj/item/weapon/cartridge/captain = 25,
+		/obj/item/weapon/cartridge/quartermaster = 25,
+	)
 
 /obj/machinery/vending/cigarette
 	name = "Cigarette machine" //OCD had to be uppercase to look nice with the new formating
@@ -70,6 +80,12 @@
 	syndie = list(
 		/obj/item/ammo_box/a357 = 1,
 		/obj/item/ammo_box/magazine/m9mm = 1,
+	)
+	prices = list(
+		/obj/item/weapon/handcuffs = 10,
+		/obj/item/weapon/grenade/flashbang = 15,
+		/obj/item/device/flash = 15,
+		/obj/item/weapon/storage/box/evidence = 5,
 	)
 
 /obj/machinery/vending/weirdomat
@@ -170,6 +186,16 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/hair_growth_accelerator = 3,
 		/obj/item/weapon/storage/box/lipstick = 3,
 	)
+	prices = list(
+		/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/white = 10,
+		/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/red = 10,
+		/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/green = 10,
+		/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blue = 10,
+		/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/black = 10,
+		/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/brown = 10,
+		/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blond = 10,
+		/obj/item/weapon/reagent_containers/spray/hair_color_spray = 15,
+	)
 
 /obj/machinery/vending/dinnerware
 	name = "Dinnerware"
@@ -199,6 +225,21 @@
 	syndie = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin/syndie = 1,
 	)
+	prices = list(
+		/obj/item/weapon/storage/visuals/tray = 25,
+		/obj/item/weapon/kitchen/utensil/fork = 5,
+		/obj/item/weapon/kitchenknife = 15,
+		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 5,
+		/obj/item/clothing/suit/chef/classic = 25,
+		/obj/item/weapon/kitchen/mould/bear = 5,
+		/obj/item/weapon/kitchen/mould/worm = 5,
+		/obj/item/weapon/kitchen/mould/bean = 5,
+		/obj/item/weapon/kitchen/mould/ball = 5,
+		/obj/item/weapon/kitchen/mould/cane = 5,
+		/obj/item/weapon/kitchen/mould/cash = 5,
+		/obj/item/weapon/kitchen/mould/coin = 5,
+		/obj/item/weapon/kitchen/mould/loli = 5,
+	)
 	refill_canister = /obj/item/weapon/vending_refill/dinnerware
 
 /obj/machinery/vending/blood
@@ -220,6 +261,14 @@
 	contraband = list(
 		/obj/item/weapon/reagent_containers/pill/stox = 10,
 		/obj/item/weapon/reagent_containers/blood/empty = 10,
+	)
+	prices = list(
+		/obj/item/weapon/reagent_containers/blood/APlus = 15,
+		/obj/item/weapon/reagent_containers/blood/AMinus = 15,
+		/obj/item/weapon/reagent_containers/blood/BPlus = 15,
+		/obj/item/weapon/reagent_containers/blood/BMinus = 15,
+		/obj/item/weapon/reagent_containers/blood/OPlus = 15,
+		/obj/item/weapon/reagent_containers/blood/OMinus = 15,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/blood
 

@@ -44,6 +44,49 @@
 		/obj/item/device/modkit/sec/hos/vox = 1,
 		/obj/item/device/modkit = 10,
 	)
+	prices = list(
+		/obj/item/device/modkit/engineering/tajaran = 30,
+		/obj/item/device/modkit/engineering/unathi = 30,
+		/obj/item/device/modkit/engineering/skrell = 30,
+		/obj/item/device/modkit/engineering/vox = 30,
+		/obj/item/device/modkit/atmos/tajaran = 30,
+		/obj/item/device/modkit/atmos/unathi = 30,
+		/obj/item/device/modkit/atmos/skrell = 30,
+		/obj/item/device/modkit/atmos/vox = 30,
+		/obj/item/device/modkit/med/tajaran = 30,
+		/obj/item/device/modkit/med/unathi = 30,
+		/obj/item/device/modkit/med/skrell = 30,
+		/obj/item/device/modkit/med/vox = 30,
+		/obj/item/device/modkit/sec/tajaran = 30,
+		/obj/item/device/modkit/sec/unathi = 30,
+		/obj/item/device/modkit/sec/skrell = 30,
+		/obj/item/device/modkit/sec/vox = 30,
+		/obj/item/device/modkit/mining/tajaran = 30,
+		/obj/item/device/modkit/mining/unathi = 30,
+		/obj/item/device/modkit/mining/skrell = 30,
+		/obj/item/device/modkit/mining/vox = 30,
+		/obj/item/device/modkit/science/tajaran = 30,
+		/obj/item/device/modkit/science/unathi = 30,
+		/obj/item/device/modkit/science/skrell = 30,
+		/obj/item/device/modkit/science/vox = 30,
+		/obj/item/device/modkit/science/rd/tajaran = 30,
+		/obj/item/device/modkit/science/rd/unathi = 30,
+		/obj/item/device/modkit/science/rd/skrell = 30,
+		/obj/item/device/modkit/science/rd/vox = 30,
+		/obj/item/device/modkit/engineering/chief/tajaran = 30,
+		/obj/item/device/modkit/engineering/chief/unathi = 30,
+		/obj/item/device/modkit/engineering/chief/skrell = 30,
+		/obj/item/device/modkit/engineering/chief/vox = 30,
+		/obj/item/device/modkit/med/cmo/tajaran = 30,
+		/obj/item/device/modkit/med/cmo/unathi = 30,
+		/obj/item/device/modkit/med/cmo/skrell = 30,
+		/obj/item/device/modkit/med/cmo/vox = 30,
+		/obj/item/device/modkit/sec/hos/tajaran = 30,
+		/obj/item/device/modkit/sec/hos/unathi = 30,
+		/obj/item/device/modkit/sec/hos/skrell = 30,
+		/obj/item/device/modkit/sec/hos/vox = 30,
+		/obj/item/device/modkit = 30,
+	)
 
 /obj/machinery/vending/eva/mining
 	name = "Mining Hardsuit Kits"
@@ -55,6 +98,13 @@
 		/obj/item/device/modkit/mining/skrell = 3,
 		/obj/item/device/modkit/mining/vox = 3,
 		/obj/item/device/modkit = 5,
+	)
+	prices = list(
+		/obj/item/device/modkit/mining/tajaran = 30,
+		/obj/item/device/modkit/mining/unathi = 30,
+		/obj/item/device/modkit/mining/skrell = 30,
+		/obj/item/device/modkit/mining/vox = 30,
+		/obj/item/device/modkit = 30,
 	)
 
 /obj/machinery/vending/eva/engineering
@@ -76,4 +126,19 @@
 		/obj/item/device/modkit/engineering/chief/skrell = 1,
 		/obj/item/device/modkit/engineering/chief/vox = 1,
 		/obj/item/device/modkit = 6,
+	)
+	prices = list(
+		/obj/item/device/modkit/engineering/tajaran = 30,
+		/obj/item/device/modkit/engineering/unathi = 30,
+		/obj/item/device/modkit/engineering/skrell = 30,
+		/obj/item/device/modkit/engineering/vox = 30,
+		/obj/item/device/modkit/atmos/tajaran = 30,
+		/obj/item/device/modkit/atmos/unathi = 30,
+		/obj/item/device/modkit/atmos/skrell = 30,
+		/obj/item/device/modkit/atmos/vox = 30,
+		/obj/item/device/modkit/engineering/chief/tajaran = 30,
+		/obj/item/device/modkit/engineering/chief/unathi = 30,
+		/obj/item/device/modkit/engineering/chief/skrell = 30,
+		/obj/item/device/modkit/engineering/chief/vox = 30,
+		/obj/item/device/modkit = 30,
 	)

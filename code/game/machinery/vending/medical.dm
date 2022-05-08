@@ -26,6 +26,21 @@
 		/obj/item/weapon/reagent_containers/pill/stox = 4,
 		/obj/item/weapon/reagent_containers/pill/dylovene = 6,
 	)
+	prices = list(
+		/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 10,
+		/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline = 10,
+		/obj/item/weapon/reagent_containers/glass/bottle/stoxin = 10,
+		/obj/item/weapon/reagent_containers/glass/bottle/toxin = 10,
+		/obj/item/weapon/reagent_containers/syringe/antiviral = 10,
+		/obj/item/weapon/reagent_containers/syringe = 10,
+		/obj/item/device/healthanalyzer = 10,
+		/obj/item/weapon/reagent_containers/glass/beaker = 10,
+		/obj/item/weapon/reagent_containers/dropper = 5,
+		/obj/item/stack/medical/advanced/bruise_pack = 15,
+		/obj/item/stack/medical/advanced/ointment = 15,
+		/obj/item/stack/medical/splint = 15,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine = 10,
+	)
 	refill_canister = /obj/item/weapon/vending_refill/medical
 
 /obj/machinery/vending/wallmed1
@@ -49,6 +64,13 @@
 		/obj/item/weapon/reagent_containers/syringe/antiviral = 4,
 		/obj/item/weapon/reagent_containers/pill/tox = 1,
 	)
+	prices = list(
+		/obj/item/stack/medical/bruise_pack = 15,
+		/obj/item/stack/medical/ointment = 15,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector = 10,
+		/obj/item/device/healthanalyzer = 10,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine = 10,
+	)
 
 /obj/machinery/vending/wallmed2
 	name = "NanoMed"
@@ -69,6 +91,14 @@
 	)
 	contraband = list(
 		/obj/item/weapon/reagent_containers/pill/tox = 3,
+	)
+	prices = list(
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector = 10,
+		/obj/item/weapon/reagent_containers/syringe/antitoxin = 10,
+		/obj/item/stack/medical/bruise_pack = 15,
+		/obj/item/stack/medical/ointment =15,
+		/obj/item/device/healthanalyzer = 10,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine = 10,
 	)
 
 /obj/machinery/vending/omskvend

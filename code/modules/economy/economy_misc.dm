@@ -101,9 +101,7 @@ var/global/initial_station_money = 15000
 
 	for(var/department in station_departments)
 		create_department_account(department)
-	create_department_account("Vendor")
-	vendor_account = department_accounts["Vendor"]
-	vendor_account.subsidy = 0
+	vendor_account = department_accounts["Cargo"]
 
 	current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year]"
 

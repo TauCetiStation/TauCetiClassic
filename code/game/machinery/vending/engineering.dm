@@ -10,6 +10,13 @@
 		/obj/item/device/flashlight = 5,
 		/obj/item/device/assembly/timer = 2,
 	)
+	prices = list(
+		/obj/item/device/assembly/prox_sensor = 5,
+		/obj/item/device/assembly/igniter = 5,
+		/obj/item/device/assembly/signaler = 5,
+		/obj/item/weapon/wirecutters = 10,
+		/obj/item/weapon/cartridge/signal = 25,
+	)
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 	refill_canister = /obj/item/weapon/vending_refill/assist
 
@@ -22,6 +29,13 @@
 		/obj/item/device/assembly/signaler = 6,
 		/obj/item/device/assembly/prox_sensor = 6,
 		/obj/item/device/assembly/igniter = 6,
+	)
+	prices = list(
+		/obj/item/device/transfer_valve = 5,
+		/obj/item/device/assembly/timer = 5,
+		/obj/item/device/assembly/signaler = 5,
+		/obj/item/device/assembly/prox_sensor = 5,
+		/obj/item/device/assembly/igniter = 5,
 	)
 
 /obj/machinery/vending/tool
@@ -48,6 +62,16 @@
 	premium = list(
 		/obj/item/clothing/gloves/yellow = 1,
 		/obj/item/weapon/gun/energy/pyrometer/engineering = 1,
+	)
+	prices = list(
+		/obj/item/stack/cable_coil/random = 5,
+		/obj/item/weapon/crowbar = 10,
+		/obj/item/weapon/weldingtool = 10,
+		/obj/item/weapon/wirecutters = 10,
+		/obj/item/weapon/wrench = 10,
+		/obj/item/device/analyzer = 10,
+		/obj/item/device/t_scanner = 10,
+		/obj/item/weapon/screwdriver = 10,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/tool
 
@@ -79,6 +103,21 @@
 	premium = list(
 		/obj/item/weapon/storage/belt/utility = 3,
 		/obj/item/weapon/storage/part_replacer = 1,
+	)
+	prices = list(
+		/obj/item/clothing/glasses/meson = 25,
+		/obj/item/device/multitool = 10,
+		/obj/item/weapon/gun/energy/pyrometer/engineering = 10,
+		/obj/item/weapon/airlock_electronics = 5,
+		/obj/item/weapon/module/power_control = 5,
+		/obj/item/weapon/airalarm_electronics = 5,
+		/obj/item/weapon/stock_parts/cell/high = 5,
+		/obj/item/weapon/stock_parts/scanning_module = 5,
+		/obj/item/weapon/stock_parts/micro_laser = 5,
+		/obj/item/weapon/stock_parts/capacitor = 5,
+		/obj/item/weapon/stock_parts/matter_bin = 5,
+		/obj/item/weapon/stock_parts/manipulator = 5,
+		/obj/item/weapon/stock_parts/console_screen = 5,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/engivend
 
@@ -116,6 +155,34 @@
 		/obj/item/weapon/stock_parts/console_screen = 5,
 		/obj/item/weapon/gun/energy/pyrometer/engineering = 4,
 	)
+	prices = list(
+		/obj/item/clothing/under/rank/chief_engineer = 55,
+		/obj/item/clothing/under/rank/engineer = 35,
+		/obj/item/clothing/shoes/boots/work = 20,
+		/obj/item/clothing/head/hardhat/yellow = 15,
+		/obj/item/clothing/head/hardhat/yellow/visor = 15,
+		/obj/item/weapon/storage/belt/utility = 10,
+		/obj/item/clothing/glasses/meson = 25,
+		/obj/item/clothing/gloves/yellow = 10,
+		/obj/item/weapon/screwdriver = 10,
+		/obj/item/weapon/crowbar = 10,
+		/obj/item/weapon/wirecutters = 10,
+		/obj/item/device/multitool = 10,
+		/obj/item/weapon/wrench = 10,
+		/obj/item/device/t_scanner = 10,
+		/obj/item/stack/cable_coil/heavyduty = 5,
+		/obj/item/weapon/stock_parts/cell = 5,
+		/obj/item/weapon/weldingtool = 10,
+		/obj/item/clothing/head/welding = 15,
+		/obj/item/weapon/light/tube = 5,
+		/obj/item/clothing/suit/fire = 25,
+		/obj/item/weapon/stock_parts/scanning_module = 5,
+		/obj/item/weapon/stock_parts/micro_laser = 5,
+		/obj/item/weapon/stock_parts/matter_bin = 5,
+		/obj/item/weapon/stock_parts/manipulator = 5,
+		/obj/item/weapon/stock_parts/console_screen = 5,
+		/obj/item/weapon/gun/energy/pyrometer/engineering = 10,
+	)
 	// There was an incorrect entry (cablecoil/power).  I improvised to cablecoil/heavyduty.
 	// Another invalid entry, /obj/item/weapon/circuitry.  I don't even know what that would translate to, removed it.
 	// The original products list wasn't finished.  The ones without given quantities became quantity 5.  -Sayu
@@ -139,4 +206,18 @@
 		/obj/item/clothing/mask/breath/medical = 2,
 		/obj/item/weapon/gun/energy/pyrometer/engineering/robotics = 2,
 		/obj/item/clothing/glasses/hud/diagnostic = 5,
+	)
+	prices = list(
+		/obj/item/stack/cable_coil/random = 5,
+		/obj/item/device/flash = 5,
+		/obj/item/weapon/stock_parts/cell/high = 5,
+		/obj/item/device/assembly/prox_sensor = 5,
+		/obj/item/device/assembly/signaler = 5,
+		/obj/item/device/healthanalyzer = 10,
+		/obj/item/weapon/scalpel = 10,
+		/obj/item/weapon/circular_saw = 10,
+		/obj/item/weapon/tank/anesthetic = 25,
+		/obj/item/clothing/mask/breath/medical = 5,
+		/obj/item/weapon/gun/energy/pyrometer/engineering/robotics = 10,
+		/obj/item/clothing/glasses/hud/diagnostic = 25,
 	)
