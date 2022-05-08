@@ -913,7 +913,7 @@
 		var/obj/item/clothing/head/welding/W = head
 		if(!W.up)
 			number += 2
-	if(istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault) && !istype(head, /obj/item/clothing/head/helmet/space/sk))
+	if(!istype(head, /obj/item/clothing/head/helmet/space/sk) && istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault))
 		number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/thermal))
 		var/obj/item/clothing/glasses/thermal/G = glasses

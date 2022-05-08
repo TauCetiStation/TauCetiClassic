@@ -89,6 +89,7 @@
 #include "code\__DEFINES\traits.dm"
 #include "code\__DEFINES\typeids.dm"
 #include "code\__DEFINES\varedit.dm"
+#include "code\__DEFINES\walls.dm"
 #include "code\__DEFINES\xenoarchaeology.dm"
 #include "code\__DEFINES\xenomorph.dm"
 #include "code\__DEFINES\zas.dm"
