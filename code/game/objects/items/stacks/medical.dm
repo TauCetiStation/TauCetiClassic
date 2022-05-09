@@ -163,7 +163,7 @@
 	item_state = "ointment"
 	origin_tech = "biotech=1"
 
-	repeating = TRUE
+	repeating = FALSE
 	heal_burn = 1
 
 /obj/item/stack/medical/ointment/can_heal(mob/living/L, mob/living/user)
@@ -294,7 +294,7 @@
 
 	other_delay = 10
 
-	repeating = TRUE
+	repeating = FALSE
 
 
 /obj/item/stack/medical/advanced/ointment/update_icon()

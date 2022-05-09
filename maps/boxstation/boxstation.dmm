@@ -60825,10 +60825,7 @@
 /area/station/aisat/ai_chamber)
 "coS" = (
 /obj/structure/table/woodentable,
-/obj/machinery/computer/libraryconsole/bookmanagement/old{
-	layer = 3.3;
-	pixel_y = 6
-	},
+/obj/machinery/computer/libraryconsole/bookmanagement/old,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "coT" = (
@@ -70283,15 +70280,12 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/machinery/computer/libraryconsole/old{
-	layer = 3.3;
-	pixel_y = 6
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/computer/libraryconsole/old,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "emk" = (
