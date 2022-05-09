@@ -15,4 +15,4 @@ var/global/list/tagger_locations = list()
 var/global/tax_cargo_export = 10
 var/global/tax_income = 0
 
-var/global/station_subsidy_coefficient = 1
+var/global/station_subsidy_coefficient = 1.0
