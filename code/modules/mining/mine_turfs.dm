@@ -1,7 +1,7 @@
 #define MIN_TUNNEL_LENGTH 20
 #define MAX_TUNNEL_LENGTH 60
 #define DISTANCE_BEETWEEN_MOSTERS 16
-#define CRATE_DROP_CHANCE 0.5 // 1 in 200
+#define CRATE_DROP_CHANCE 0 // 1 in 200
 
 /**********************Mineral deposits**************************/
 /turf/simulated/mineral
@@ -586,9 +586,7 @@
 
 	if(!sanity)
 		return
-	if(prob(1))
-		new/mob/living/simple_animal/hostile/creature/troglodit(T)
-	if(prob(3))
+	if(prob(5))
 		new/obj/effect/landmark/glowshroom_spawn(T)
 	var/turf/t
 	if(SSticker.current_state > GAME_STATE_SETTING_UP)
@@ -668,7 +666,7 @@
 			I.plane = FLOOR_PLANE
 			T.add_overlay(I)
 
-/turf/simulated/floor/plating/airless/asteroid/update_overlays()
+/turf/simulated/floor/plating/ironsand/update_overlays()
 	..()
 	var/turf/T
 	for(var/direction_to_check in cardinal)
@@ -692,7 +690,7 @@
 /turf/simulated/floor/plating/airless/asteroid/atom_init_late()
 	update_overlays()
 
-/turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
+/turf/simulated/floor/plating/ironsand/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_HEAVY)
 			if(prob(30))
@@ -701,7 +699,7 @@
 			return
 	gets_dug()
 
-/turf/simulated/floor/plating/airless/asteroid/attackby(obj/item/weapon/W, mob/user)
+/turf/simulated/floor/plating/ironsand/attackby(obj/item/weapon/W, mob/user)
 
 	if(!W || !user)
 		return 0
@@ -738,14 +736,14 @@
 	else
 		..()
 
-/turf/simulated/floor/plating/airless/asteroid/proc/gets_dug()
+/turf/simulated/floor/plating/ironsand/proc/gets_dug()
 	if(dug)
 		return
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/ore/glass(src)
 	dug = TRUE
-	icon_plating = "asteroid_dug"
-	icon_state = "asteroid_dug"
+	icon_plating = "ironsand1"
+	icon_state = "ironsand1"
 
 /turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M as mob|obj)
 	..()

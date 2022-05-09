@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(lighting)
 	wait          = SS_WAIT_LIGHTING
 
 	flags = SS_TICKER
-	msg_lobby = "Включаем свет..."
+	msg_lobby = "Включаем солнце..."
 
 /datum/controller/subsystem/lighting/stat_entry()
 	..("L:[global.lighting_update_lights.len]|C:[global.lighting_update_corners.len]|O:[global.lighting_update_objects.len]")

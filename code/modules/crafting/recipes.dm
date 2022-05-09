@@ -101,7 +101,7 @@
 /datum/crafting_recipe/gorget
 	name = "Горжет Ополчения"
 	reqs = list(/obj/item/stack/medical/bruise_pack/rags = 3)
-	result = /obj/item/clothing/mask/scarf/milita
+	result = /obj/item/clothing/mask/milita
 	tools = list(/obj/item/weapon/smith_hammer,/obj/structure/vilage/anvil)
 	time = 40
 
@@ -126,4 +126,10 @@
 	name = "Грибной пирожок"
 	reqs = list(/obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice = 1,/obj/item/weapon/reagent_containers/food/snacks/dough = 1,/obj/structure/vilage/velikiy_sup,/obj/structure/bonfire)
 	result =/obj/item/weapon/reagent_containers/food/snacks/plump_pie
+	time = 15
+
+/datum/crafting_recipe/uncursed_chicken
+	name = "Препарат Проктонис"
+	reqs = list(/obj/item/weapon/reagent_containers/food/snacks/dough = 1,/datum/reagent/consumable/drink/milk = 5,/obj/structure/vilage/velikiy_sup,/obj/structure/bonfire)
+	result =/obj/item/uncurs_ointment
 	time = 15

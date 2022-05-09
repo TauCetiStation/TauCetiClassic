@@ -149,6 +149,7 @@
 	l_ear = ""
 	belt = ""
 	id = ""
+	survival_box = FALSE
 
 /datum/outfit/job/deadman
 	name = OUTFIT_JOB_NAME("Hub")

@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(icon_smooth)
 	wait = SS_WAIT_ICON_SMOOTH
 	priority = SS_PRIOTITY_ICON_SMOOTH
 	flags = SS_TICKER
-	msg_lobby = "Достраиваем станцию..."
+	msg_lobby = "Строим поселение..."
 
 	var/list/smooth_queue = list()
 	var/list/deferred = list()

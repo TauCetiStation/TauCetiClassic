@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(job)
 	init_order = SS_INIT_JOBS
 
 	flags = SS_NO_FIRE
-	msg_lobby = "Размещаем вакансии..."
+	msg_lobby = "Рожаем крестьян..."
 
 	var/list/occupations = list()		//List of all jobs
 	var/list/datum/job/name_occupations = list()	//Dict of all jobs, keys are titles

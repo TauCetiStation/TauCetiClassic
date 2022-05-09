@@ -6,6 +6,9 @@
 /turf/simulated/floor/holofloor/grass
 	name = "Lush Grass"
 	icon_state = "grass1"
+	light_color = "##ffba00"
+	light_power = 2
+	light_range = 2
 	floor_type = /obj/item/stack/tile/grass
 
 /turf/simulated/floor/holofloor/grass/atom_init()

@@ -93,7 +93,7 @@
 	icon_state = "violetscarf"
 	item_state = "violetscarf"
 
-/obj/item/clothing/mask/scarf/milita
+/obj/item/clothing/mask/milita
 	name = "Горжет"
 	desc = "Сразу видно - ополченец."
 	icon_state = "milita"

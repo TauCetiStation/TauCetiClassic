@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(weather)
 
 	runlevels = RUNLEVEL_GAME
 
-	msg_lobby = "Предсказываем метеоритные дожди..."
+	msg_lobby = "Разгоняем торнадо..."
 
 	var/list/processing = list()
 	var/list/existing_weather = list()

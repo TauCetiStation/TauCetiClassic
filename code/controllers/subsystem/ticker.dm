@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(ticker)
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
-	msg_lobby = "Запускаем атомные сверхточные часы..."
+	msg_lobby = "Дергадируем..."
 
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_STARTUP
@@ -50,14 +50,7 @@ SUBSYSTEM_DEF(ticker)
 	'sound/music/clouds.s3m',\
 	'sound/music/title1.ogg',\	//disgusting
 	*/
-	'sound/music/space_oddity.ogg',\
-	'sound/music/b12_combined_start.ogg',\
-	'sound/music/title2.ogg',\
-	'sound/music/traitor.ogg',\
-	'sound/lobby/sundown.ogg',\
-	'sound/lobby/hanging_masses.ogg',\
-	'sound/lobby/admiral-station-13.ogg',\
-	'sound/lobby/robocop_gb_intro.ogg')
+	'sound/lobby/geroi-3-main-menu.ogg')
 
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)

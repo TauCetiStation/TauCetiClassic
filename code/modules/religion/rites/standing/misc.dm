@@ -66,7 +66,7 @@
 /datum/religion_rites/standing/pray
 	name = "Молитва"
 	desc = "За добрые слова вы получаете немного favor'а."
-	ritual_length = (1 MINUTES)
+	ritual_length = (0.2 MINUTES)
 	ritual_invocations = list("Have mercy on us, O Lord, have mercy on us...",
 							  "...for at a loss for any defense, this prayer do we sinners offer Thee as Master...",
 							  "...have mercy on us...",

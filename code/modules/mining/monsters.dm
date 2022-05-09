@@ -201,7 +201,7 @@
 		visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
 		var/turftype = get_turf(src)
 		if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
-			var/turf/simulated/floor/plating/airless/asteroid/A = turftype
+			var/turf/simulated/floor/plating/ironsand/A = turftype
 			A.gets_dug()
 		qdel(src)
 
@@ -443,7 +443,7 @@
 		var/turf/simulated/mineral/M = turftype
 		M.GetDrilled()
 	if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
-		var/turf/simulated/floor/plating/airless/asteroid/A = turftype
+		var/turf/simulated/floor/plating/ironsand/A = turftype
 		A.gets_dug()
 	addtimer(CALLBACK(src, .proc/Trip), 20)
 

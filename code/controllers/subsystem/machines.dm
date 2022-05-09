@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(machines)
 	name = "Machines"
-	msg_lobby = "Чиним машинерию..."
+	msg_lobby = "Чиним наковальню..."
 
 	init_order = SS_INIT_MACHINES
 

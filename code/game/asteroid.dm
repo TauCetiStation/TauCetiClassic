@@ -88,7 +88,6 @@ var/global/list/spawned_surprises = list()
 	var/valid = 0
 	var/turf/T = null
 	var/sanity = 0
-	var/list/room = null
 	var/list/turfs = null
 
 
@@ -132,25 +131,3 @@ var/global/list/spawned_surprises = list()
 
 	if(!T)
 		return 0
-
-	room = spawn_room(T,size,size,,,1)
-
-	if(room)
-		T = pick(room["floors"])
-		if(T)
-			var/surprise = null
-			valid = 0
-			while(!valid)
-				surprise = pickweight(space_surprises)
-				if(surprise in spawned_surprises)
-					if(prob(20))
-						valid++
-					else
-						continue
-				else
-					valid++
-
-			spawned_surprises.Add(surprise)
-			new surprise(T)
-
-	return 1

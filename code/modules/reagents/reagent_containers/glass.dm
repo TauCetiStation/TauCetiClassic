@@ -136,7 +136,7 @@
 				return
 
 
-	else if(reagents && reagents.total_volume)
+	else if(user.a_intent == INTENT_HARM && reagents && reagents.total_volume)
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 		reagents.standard_splash(target, user=user)
 		return

@@ -19,6 +19,7 @@
 	else
 		return
 	if(ready == "Нет")
+		selecting_job = FALSE
 		return
 	for(var/obj/item/W in user)
 		user.drop_from_inventory(W)
@@ -50,10 +51,12 @@
 /obj/structure/character_spawner/helper
 	outfit = /datum/outfit/job/hub/helper
 	A =/area/custom/start_homm/helper
+	arrive_sound = 'sound/Event/helper.ogg'
 
 /obj/structure/character_spawner/knight
 	outfit = /datum/outfit/job/hub/knight
 	A = /area/custom/start_homm/knight
+	arrive_sound = 'sound/Event/knight.ogg'
 
 /obj/structure/character_spawner/monk
 	outfit = /datum/outfit/job/hub/monk
@@ -64,6 +67,9 @@
 	INVOKE_ASYNC(global.chaplain_religion, /datum/religion/chaplain.proc/create_by_chaplain, user)
 	user.AddSpell(new /obj/effect/proc_holder/spell/in_hand/arcane_barrage)
 	user.mutations.Add(TK)
+	user.verbs += /mob/living/carbon/human/proc/remotesay
+	user.verbs += /mob/proc/toggle_telepathy_hear
+	user.verbs += /mob/proc/telepathy_say
 	user.update_mutations()
 
 /obj/structure/character_spawner/human_hero

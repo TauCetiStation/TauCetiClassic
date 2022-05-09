@@ -1430,6 +1430,12 @@
 	return
 
 /mob/living/death(gibbed)
+	if(!(client in admins) && mind)
+		var/list/turf/possible_tile = get_area_turfs(/area/custom/valhalla)
+		var/target = pick(possible_tile)
+		var/mob/living/carbon/human/deadman = new /mob/living/carbon/human/skeleton/valhalla(target)
+		mind.transfer_to(deadman)
+		deadman.equipOutfit(/datum/outfit/job/deadman)
 	beauty.AddModifier("stat", additive=beauty_dead)
 	return ..()
 

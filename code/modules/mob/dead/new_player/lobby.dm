@@ -1,8 +1,8 @@
 // Possibles title screens
-var/global/list/lobby_screens = list('icons/lobby/nss_exodus_system.gif', 'icons/lobby/standart.gif')
-var/global/list/new_year_screens = list('icons/lobby/nss_exodus_system.gif', 'icons/lobby/newyear.gif')
+var/global/list/lobby_screens = list('icons/lobby/homm_lobby.gif', 'icons/lobby/homm_lobby.gif')
+var/global/list/new_year_screens = list('icons/lobby/homm_lobby.gif', 'icons/lobby/homm_lobby.gif')
 
-var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
+var/global/current_lobby_screen = 'icons/lobby/homm_lobby.gif'
 
 #define CROSS_BOX "<span style='color:red'>☒</span>"
 #define CHECK_BOX "<span style='color:lime'>☑</span>"

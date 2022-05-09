@@ -121,67 +121,11 @@
 	reset_religion()
 
 	add_member(chaplain, HOLY_ROLE_HIGHPRIEST)
-
-	var/new_religion = sanitize_safe(input(chaplain, "You are the crew services officer. Would you like to change your religion? Default is [name], in SPACE.", "Name change", name), MAX_NAME_LEN)
-	if(!new_religion)
-		new_religion = name
-	else
-		name = new_religion
-		deity_names = deity_names_by_name[name] ? deity_names_by_name[name] : list("Space-Jesus")
-
-	feedback_set_details("religion_name","[new_religion]")
-
-	var/deity_name = pick(deity_names)
-	var/new_deity = sanitize_safe(input(chaplain, "Would you like to change your deity? Default is [deity_name].", "Name change", deity_name), MAX_NAME_LEN)
+	var/deity_names = "Оракул"
+	var/new_deity = sanitize_safe(deity_names, MAX_NAME_LEN)
 	if(!new_deity)
-		new_deity = deity_name
+		new_deity = deity_names
 	else
-		// Currently no polyteistic support. ~Luduk
 		deity_names = list(new_deity)
-
-	gen_bible_info()
-
-	var/obj/item/weapon/storage/bible/B = spawn_bible(chaplain)
-
-	lore = sanitize_safe(input(chaplain, "You can come up with the lore of your god in [new_religion] religion.", "Lore for new god", ""), MAX_MESSAGE_LEN)
-
-	chaplain.equip_to_slot_or_del(B, SLOT_L_HAND)
-
-	var/list/bible_variants = gen_pos_bible_variants()
-
-	var/accepted = FALSE
-	var/choose_timeout = world.time + 1 MINUTE
-	var/new_book_style = bible_info.name
-
-	while(!accepted)
-		if(!B)
-			break // prevents possible runtime errors
-		new_book_style = show_radial_menu(chaplain, chaplain, bible_skins, tooltips = TRUE)
-
-		var/datum/bible_info/BB = bible_variants[new_book_style]
-		if(!BB)
-			break
-
-		BB.apply_visuals_to(B)
-		bible_info = BB
-
-		chaplain.update_inv_l_hand() // so that it updates the bible's item_state in his hand
-
-		var/like = show_radial_menu(chaplain, chaplain, radial_question, tooltips = TRUE)
-		if(!like)
-			break
-
-		switch(like)
-			if("Yes")
-				accepted = TRUE
-			if("No")
-				if(choose_timeout <= world.time)
-					to_chat(chaplain, "Welp, out of time, buddy. You're stuck. Next time choose faster.")
-					accepted = TRUE
-
-	feedback_set_details("religion_deity","[new_deity]")
-	feedback_set_details("religion_book","[new_book_style]")
-
-	// Update the looks of the chapel.
-	update_structure_info()
+	name = "Эрафиянство"
 	religify(null, null, chaplain)

@@ -279,9 +279,14 @@
 	return
 
 /turf/simulated/floor/grass
-	name = "Grass patch"
+	name = "Трава"
 	icon_state = "grass1"
+	light_color = "#ffbf00"
+	light_power = 2
+	light_range = 2
 	floor_type = /obj/item/stack/tile/grass
+	can_deconstruct = FALSE
+
 	footstep = FOOTSTEP_GRASS
 	barefootstep = FOOTSTEP_GRASS
 	clawfootstep = FOOTSTEP_GRASS
@@ -369,6 +374,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	can_deconstruct = FALSE
+	var/dug = FALSE
 
 /turf/simulated/floor/plating/ironsand/ex_act()
 	return 0

@@ -3,8 +3,10 @@
 /area/asteroid
 	name = "Asteroid"
 	icon_state = "unexplored"
-
+	ambience = list('sound/ambience/cave.ogg')
+	is_force_ambience = TRUE
 	outdoors = TRUE
+
 
 /area/asteroid/artifactroom
 	name = "Asteroid - Artifact"
@@ -15,42 +17,18 @@
 /area/asteroid/mine/explored
 	name = "Mine"
 	icon_state = "explored"
-	looped_ambience = 'sound/ambience/loop_space.ogg'
-	ambience = list(
-		'sound/ambience/space_1.ogg',
-		'sound/ambience/space_2.ogg',
-		'sound/ambience/space_3.ogg',
-		'sound/ambience/space_4.ogg',
-		'sound/ambience/space_5.ogg',
-		'sound/ambience/space_6.ogg',
-		'sound/ambience/space_7.ogg',
-		'sound/ambience/space_8.ogg',
-		'sound/music/dwarf_fortress.ogg'
-	)
+	is_force_ambience = TRUE
+	ambience = null
 
 
 /area/asteroid/mine/unexplored
 	name = "Mine"
 	icon_state = "unexplored"
-	looped_ambience = 'sound/ambience/loop_space.ogg'
-	ambience = list(
-		'sound/ambience/space_1.ogg',
-		'sound/ambience/space_2.ogg',
-		'sound/ambience/space_3.ogg',
-		'sound/ambience/space_4.ogg',
-		'sound/ambience/space_5.ogg',
-		'sound/ambience/space_6.ogg',
-		'sound/ambience/space_7.ogg',
-		'sound/ambience/space_8.ogg',
-		'sound/music/dwarf_fortress.ogg'
-	)
-
-	var/static/list/mob_spawn_list = list(
-		/mob/living/simple_animal/hostile/asteroid/goliath = 5,
-		/mob/living/simple_animal/hostile/asteroid/basilisk = 4,
-		/mob/living/simple_animal/hostile/asteroid/hivelord = 3,
-		/mob/living/simple_animal/hostile/asteroid/goldgrub = 2,
-		/mob/living/simple_animal/hostile/retaliate/malf_drone/mining = 1
+	ambience = list('sound/ambience/cave.ogg')
+	is_force_ambience = TRUE
+	var/list/mob_spawn_list = list(
+		/mob/living/simple_animal/hostile/troglodit = 1,
+		/mob/living/simple_animal/hostile/beholder = 2
 	)
 
 /area/asteroid/mine/unexplored/atom_init()
@@ -73,8 +51,8 @@
 	)
 
 /area/asteroid/mine/unexplored/proc/Spawn(turf/T)
-	if(istype(T, /turf/simulated/floor/plating/airless/asteroid))
-		var/turf/simulated/floor/plating/airless/asteroid/AT = T
+	if(istype(T, /turf/simulated/floor/plating/ironsand))
+		var/turf/simulated/floor/plating/ironsand/AT = T
 		AT.gets_dug()
 
 	var/to_spawn = pickweight(mob_spawn_list)
@@ -90,7 +68,7 @@
 	qdel(M)
 
 /area/asteroid/mine/unexplored/proc/CheckSpawn(turf/T)
-	if(!istype(T, /turf/simulated/floor/plating/airless/asteroid))
+	if(!istype(T, /turf/simulated/floor/plating/ironsand))
 		return FALSE
 	if(T.icon_state == "asteroid_dug")
 		return FALSE
