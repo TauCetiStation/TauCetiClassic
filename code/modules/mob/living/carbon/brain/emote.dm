@@ -7,7 +7,7 @@
 		/datum/emote/robot/buzz,
 	)
 
-/mob/living/carbon/brain/emote(act, message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
+/mob/living/carbon/brain/emote(act, auto = TRUE)
 	// No MMI, no emotes
 	if(!container || !isMMI(container))
 		to_chat(src, "<span class='notice'>You can not emote in such state.</span>")
