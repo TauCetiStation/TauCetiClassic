@@ -286,6 +286,7 @@
 	light_range = 2
 	floor_type = /obj/item/stack/tile/grass
 	can_deconstruct = FALSE
+	explosion_resistance = 111
 
 	footstep = FOOTSTEP_GRASS
 	barefootstep = FOOTSTEP_GRASS
