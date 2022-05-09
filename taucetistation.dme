@@ -337,6 +337,7 @@
 #include "code\datums\emotes\human\audible.dm"
 #include "code\datums\emotes\human\gesture.dm"
 #include "code\datums\emotes\human\visual.dm"
+#include "code\datums\emotes\monkey\audible.dm"
 #include "code\datums\emotes\robot\audible.dm"
 #include "code\datums\emotes\robot\gesture.dm"
 #include "code\datums\emotes\robot\visual.dm"

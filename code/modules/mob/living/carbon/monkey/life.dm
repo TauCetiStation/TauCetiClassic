@@ -59,7 +59,14 @@
 			step(src, pick(cardinal))
 
 		if(prob(1))
-			emote(pick("scratch","jump","roll","tail"))
+			var/list/rand_emote = list(
+				"scratches.",
+				"jumps!",
+				"rolls.",
+				"waves his tail.",
+			)
+			var/emote_text = "<B>The [name]</B> " + pick(rand_emote)
+			me_emote(emote_text)
 	updatehealth()
 
 /mob/living/carbon/monkey/proc/handle_disabilities()

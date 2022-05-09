@@ -1,5 +1,29 @@
 #define CAN_MAKE_A_SOUND !muzzled && (last_sound_emote < world.time)
 
+/mob/living/carbon/xenomorph/humanoid
+	default_emotes = list(
+		/datum/emote/help,
+		/datum/emote/pray,
+		/datum/emote/whimper,
+		/datum/emote/roar,
+		/datum/emote/gasp,
+		/datum/emote/shiver,
+		/datum/emote/drool,
+		/datum/emote/choke,
+		/datum/emote/moan,
+		/datum/emote/nod,
+		/datum/emote/twitch,
+		/datum/emote/dance,
+		/datum/emote/shake,
+		/datum/emote/collapse,
+		/datum/emote/deathgasp,
+		/datum/emote/cough,
+	)
+
+/mob/living/carbon/xenomorph/humanoid/load_default_emotes()
+	default_emotes += subtypesof(/datum/emote/nymph)
+	return ..()
+
 /mob/living/carbon/xenomorph/humanoid/emote(act, message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
 	if(stat == DEAD && (act != "deathgasp"))
 		return

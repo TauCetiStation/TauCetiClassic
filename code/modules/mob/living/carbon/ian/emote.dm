@@ -17,4 +17,5 @@
 		/datum/emote/collapse,
 		/datum/emote/faint,
 		/datum/emote/deathgasp,
+		/datum/emote/dance,
 	)
