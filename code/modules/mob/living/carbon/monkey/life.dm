@@ -65,8 +65,7 @@
 				"rolls.",
 				"waves his tail.",
 			)
-			var/emote_text = "<B>The [name]</B> " + pick(rand_emote)
-			me_emote(emote_text)
+			me_emote(pick(rand_emote))
 	updatehealth()
 
 /mob/living/carbon/monkey/proc/handle_disabilities()

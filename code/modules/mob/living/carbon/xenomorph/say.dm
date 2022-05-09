@@ -14,7 +14,7 @@
 	var/datum/language/xeno_language = all_languages[LANGUAGE_XENOMORPH]
 
 	if(message[1] == "*")
-		return emote(copytext(message, SHOWMSG_FEEL))
+		return emote(copytext(message, 2))
 
 	if(length(message) >= 2)
 		if(parse_message_mode(message) == "alientalk")

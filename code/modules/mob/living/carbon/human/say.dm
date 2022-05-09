@@ -99,7 +99,7 @@
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message, SHOWMSG_FEEL), auto = FALSE)
+		return emote(copytext(message, 2), auto = FALSE)
 
 	//check if we are miming
 	if (miming && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))

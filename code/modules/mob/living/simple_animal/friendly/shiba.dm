@@ -63,7 +63,7 @@
 
 	for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src, 3))
 		if(prob(30))
-			emote(pick("barks!","woofs loudly!","eyes [histoy] joyfully."))
+			me_emote(pick("barks!","woofs loudly!","eyes [histoy] joyfully."))
 		break
 
 	if(!stat && !resting && !buckled)

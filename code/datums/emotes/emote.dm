@@ -114,6 +114,7 @@ var/global/list/all_emotes
 	return TRUE
 
 /datum/emote/proc/do_emote(mob/user, emote_key, intentional)
+	LAZYINITLIST(user.next_emote_use)
 	set_cooldown(user, user.next_emote_use, cooldown, intentional)
 
 	for(var/obj/item/weapon/implant/I in user)
@@ -141,6 +142,7 @@ var/global/list/all_emotes
 
 	var/emote_sound = get_sound(user, intentional)
 	if(emote_sound && check_cooldown(user, user.next_audio_emote_produce, intentional))
+		LAZYINITLIST(user.next_audio_emote_produce)
 		set_cooldown(user, user.next_audio_emote_produce, audio_cooldown, intentional)
 		if(can_play_sound(user, intentional, emote_sound))
 			play_sound(user, intentional, emote_sound)

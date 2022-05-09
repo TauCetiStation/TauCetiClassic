@@ -27,7 +27,7 @@
 
 	if(!stat && !resting && !buckled)
 		if(prob(1))
-			emote(pick("chases its tail"))
+			me_emote("chases its tail")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					set_dir(i)

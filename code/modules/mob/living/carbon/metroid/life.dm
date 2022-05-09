@@ -679,8 +679,7 @@
 			"vibrates!",
 			"jiggles!",
 		)
-		var/emote_text = "<B>The [name]</B> " + pick(rand_emote)
-		me_emote(emote_text)
+		me_emote(pick(rand_emote))
 	else
 		var/t = 10
 		var/slimes_near = 0

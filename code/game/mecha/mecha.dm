@@ -464,7 +464,7 @@
 	..()
 
 	if(attacker.melee_damage == 0)
-		attacker.emote("[attacker.friendly] [src]")
+		attacker.me_emote("[attacker.friendly] [src]")
 	else
 		if(!prob(src.deflect_chance))
 			var/damage = attacker.melee_damage

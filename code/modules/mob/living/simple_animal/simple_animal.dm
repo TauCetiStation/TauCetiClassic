@@ -232,9 +232,9 @@
 		if(1)
 			say(pick(speak))
 		if(2)
-			emote(pick(emote_hear), SHOWMSG_FEEL)
+			me_emote(pick(emote_hear), SHOWMSG_AUDIO)
 		if(3)
-			emote(pick(emote_see), SHOWMSG_AUDIO)
+			me_emote(pick(emote_see), SHOWMSG_VISUAL)
 
 /mob/living/simple_animal/rejuvenate()
 	..()
@@ -359,7 +359,7 @@
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message, SHOWMSG_FEEL))
+		return emote(copytext(message, 2))
 
 	var/verb = "says"
 	var/ending = copytext(message, -1)

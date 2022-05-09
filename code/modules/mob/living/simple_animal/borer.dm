@@ -117,7 +117,7 @@
 		if(prob(5))
 			host.adjustBrainLoss(rand(1,2))
 		if(prob(host.getBrainLoss() * 0.05))
-			host.emote("[pick(list("blink", "choke", "aflap", "drool", "twitch", "gasp"))]")
+			host.emote("[pick(list("blink", "choke", "drool", "twitch", "gasp"))]")
 
 /mob/living/simple_animal/borer/say_understands(mob/other, datum/language/speaking)
 	return host == other
@@ -144,7 +144,7 @@
 			return
 
 	if (message[1] == "*")
-		return emote(copytext(message, SHOWMSG_FEEL))
+		return emote(copytext(message, 2))
 
 	if (message[1] == ";") //Brain borer hivemind.
 		return borer_speak(message)

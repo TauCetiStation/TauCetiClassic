@@ -187,7 +187,7 @@
 			L.scp_mark = 0
 
 /mob/living/simple_animal/special/scp173/attack_animal(mob/living/simple_animal/M)
-	M.emote("[M.friendly] \the <EM>[src]</EM>")
+	M.me_emote("[M.friendly] \the <EM>[src]</EM>")
 
 /mob/living/simple_animal/special/scp173/Process_Spacemove(movement_dir = 0)
 	return 1 //copypasta from carp code

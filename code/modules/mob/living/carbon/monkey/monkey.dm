@@ -212,7 +212,7 @@
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message, SHOWMSG_FEEL))
+		return emote(copytext(message, 2))
 
 	if(speak_emote.len)
 		verb = pick(speak_emote)
