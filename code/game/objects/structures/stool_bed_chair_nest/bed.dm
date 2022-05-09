@@ -76,7 +76,7 @@
 
 /obj/structure/stool/bed/roller/CanPass(atom/movable/mover)
 	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
-		return 0
+		return TRUE
 	return ..()
 
 /obj/structure/stool/bed/roller/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
@@ -139,8 +139,7 @@
 /obj/structure/stool/bed/roller/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
 		if(M.crawling)
-			M.pass_flags &= ~PASSCRAWL
-			M.crawling = FALSE
+			M.SetCrawling(FALSE)
 			M.layer = 4.0
 		density = TRUE
 		icon_state = "up"
