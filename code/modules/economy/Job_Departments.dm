@@ -2,7 +2,7 @@ var/global/list/station_departments = list("Command", "Medical", "Engineering", 
 var/global/list/departments_subsidy = list("Command" = 2000, "Medical" = 2500, "Engineering" = 2000, "Science" = 2500, "Security" = 1500, "Cargo" = 1000, "Civilian" = 1000, "Vendor" = 100)
 
 // The department the job belongs to.
-/datum/job/var/department = null
+/datum/job/var/department = "Civilian"
 
 // Whether this is a head position
 /datum/job/var/head_position = 0
@@ -23,8 +23,6 @@ var/global/list/departments_subsidy = list("Command" = 2000, "Medical" = 2500, "
 
 /datum/job/hydro/department = "Civilian"
 
-/datum/job/mining/department = "Civilian"
-
 /datum/job/janitor/department = "Civilian"
 
 /datum/job/librarian/department = "Civilian"
@@ -33,10 +31,18 @@ var/global/list/departments_subsidy = list("Command" = 2000, "Medical" = 2500, "
 
 /datum/job/chaplain/department = "Civilian"
 
+/datum/job/clown/department = "Civilian"
+
+/datum/job/mime/department = "Civilian"
+
 /datum/job/qm/department = "Cargo"
 /datum/job/qm/head_position = 1
 
 /datum/job/cargo_tech/department = "Cargo"
+
+/datum/job/mining/department = "Cargo"
+
+/datum/job/recycler/department = "Cargo"
 
 /datum/job/chief_engineer/department = "Engineering"
 /datum/job/chief_engineer/head_position = 1
@@ -44,6 +50,8 @@ var/global/list/departments_subsidy = list("Command" = 2000, "Medical" = 2500, "
 /datum/job/engineer/department = "Engineering"
 
 /datum/job/atmos/department = "Engineering"
+
+/datum/job/technical_assistant/department = "Engineering"
 
 /datum/job/cmo/department = "Medical"
 /datum/job/cmo/head_position = 1
@@ -58,6 +66,8 @@ var/global/list/departments_subsidy = list("Command" = 2000, "Medical" = 2500, "
 
 /datum/job/psychiatrist/department = "Medical"
 
+/datum/job/intern/department = "Medical"
+
 /datum/job/rd/department = "Science"
 /datum/job/rd/head_position = 1
 
@@ -65,7 +75,11 @@ var/global/list/departments_subsidy = list("Command" = 2000, "Medical" = 2500, "
 
 /datum/job/xenoarchaeologist/department = "Science"
 
+/datum/job/xenobiologist/department = "Science"
+
 /datum/job/roboticist/department = "Science"
+
+/datum/job/research_assistant/department = "Science"
 
 /datum/job/hos/department = "Security"
 /datum/job/hos/head_position = 1
@@ -75,3 +89,7 @@ var/global/list/departments_subsidy = list("Command" = 2000, "Medical" = 2500, "
 /datum/job/detective/department = "Security"
 
 /datum/job/officer/department = "Security"
+
+/datum/job/forensic/department = "Security"
+
+/datum/job/cadet/department = "Security"
