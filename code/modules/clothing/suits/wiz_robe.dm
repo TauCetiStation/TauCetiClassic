@@ -276,3 +276,73 @@
 	item_state = "marisarobe"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/shoes/wizard/sandal
+	desc = "A pair of rather plain, wooden sandals."
+	name = "sandals"
+	icon_state = "wizard"
+	species_restricted = null
+	body_parts_covered = 0
+
+/obj/item/clothing/shoes/wizard/sandal/brown
+	name = "Brown Sandals"
+	desc = "Sweet looking brown sandals. Do not wear them with socks!"
+	icon_state = "sandals-brown"
+
+/obj/item/clothing/shoes/wizard/sandal/pink
+	name = "Pink Sandals"
+	desc = "They radiate a cheap plastic aroma like from hell ramen."
+	icon_state = "sandals-pink"
+
+/obj/item/clothing/shoes/wizard/marisa
+	desc = "A pair of magic, black shoes."
+	name = "magic shoes"
+	icon_state = "black"
+	body_parts_covered = LEGS
+
+/obj/item/clothing/shoes/wizard/boots
+	name = "jackboots"
+	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
+	icon_state = "wjboots"
+	item_state = "wjboots"
+	siemens_coefficient = 0.7
+	clipped_status = CLIPPABLE
+	var/obj/item/knife
+
+/obj/item/clothing/shoes/wizard/boots/German
+	name = "Black Boots"
+	desc = "Deutschland army boots."
+	icon_state = "Black_Boots"
+	item_state = "jackboots"
+
+/obj/item/clothing/shoes/wizard/heels
+	name = "Heels"
+	icon_state = "high_shoes"
+	slowdown = SHOES_SLOWDOWN + 0.2
+	force = 3.5
+	attack_verb = list("stabbed")
+	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
+	stab_eyes = TRUE
+
+/obj/item/clothing/shoes/wizard/heels/alternate
+	icon_state = "high_shoes2"
+
+/obj/item/clothing/shoes/wizard/western
+	name = "western boots"
+	icon_state = "western_boots"
+
+/obj/item/clothing/shoes/wizard/winterboots
+	name = "winter boots"
+	desc = "Boots lined with 'synthetic' animal fur."
+	icon_state = "winterboots"
+	item_state = "winterboots"
+	cold_protection = LEGS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_protection = LEGS
+
+/obj/item/clothing/shoes/wizard/red
+	name = "red shoes"
+	desc = "Stylish red shoes."
+	icon_state = "red"
+	item_state = "r_shoes"
+	clipped_status = CLIPPABLE

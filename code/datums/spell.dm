@@ -117,7 +117,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my robe.")
 			return FALSE
-		if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
+		if(!istype(H.shoes, /obj/item/clothing/shoes/wizard))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my sandals.")
 			return FALSE

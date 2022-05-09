@@ -13020,7 +13020,6 @@
 /obj/structure/closet/cabinet{
 	name = "Marisa"
 	},
-/obj/item/clothing/shoes/heels/alternate,
 /obj/item/clothing/suit/wizrobe/marisa,
 /obj/item/weapon/staff/broom,
 /obj/item/clothing/head/wizard/marisa,
@@ -13031,6 +13030,8 @@
 /obj/item/clothing/under/dress/dress_summer,
 /obj/item/clothing/under/pretty_dress,
 /obj/item/clothing/mask/scarf/violet,
+/obj/item/clothing/shoes/wizard/heels,
+/obj/item/clothing/shoes/wizard/heels/alternate,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -13497,10 +13498,10 @@
 /obj/structure/closet/cabinet{
 	name = "Ded moroz"
 	},
-/obj/item/clothing/shoes/winterboots,
 /obj/item/weapon/storage/backpack/santabag{
 	name = "Ded Moroz Gift Bag"
 	},
+/obj/item/clothing/shoes/wizard/winterboots,
 /obj/item/clothing/suit/wizrobe/santa{
 	name = "Ded Moroz suit"
 	},
@@ -13939,10 +13940,6 @@
 /area/custom/wizard_station)
 "aFM" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/suit/hooded/wintercoat/wiz_red,
 /obj/item/clothing/suit/hooded/wintercoat/wiz_red,
 /obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
@@ -13960,6 +13957,10 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/wizard/winterboots,
+/obj/item/clothing/shoes/wizard/winterboots,
+/obj/item/clothing/shoes/wizard/winterboots,
+/obj/item/clothing/shoes/wizard/winterboots,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -14207,7 +14208,6 @@
 /obj/structure/closet/cabinet{
 	name = "Pirate"
 	},
-/obj/item/clothing/shoes/boots,
 /obj/item/clothing/head/wizard/pirate,
 /obj/item/clothing/under/pirate,
 /obj/item/clothing/suit/wizrobe/pirate,
@@ -14217,6 +14217,7 @@
 	pixel_x = -25;
 	pixel_y = -3
 	},
+/obj/item/clothing/shoes/wizard/boots,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -14272,7 +14273,6 @@
 /obj/structure/closet/cabinet{
 	name = "Crusader"
 	},
-/obj/item/clothing/shoes/boots,
 /obj/item/clothing/suit/wizrobe/crusader,
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/head/wizard/crusader,
@@ -14287,6 +14287,7 @@
 	pixel_x = -25;
 	pixel_y = -3
 	},
+/obj/item/clothing/shoes/wizard/boots,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -19801,10 +19802,10 @@
 	icon = 'icons/obj/cult.dmi';
 	icon_state = "book"
 	},
-/obj/item/clothing/shoes/boots/German,
 /obj/item/clothing/under/color/black,
 /obj/item/clothing/suit/wizrobe/necromancer_hoodie,
 /obj/item/clothing/head/wizard/black_hood,
+/obj/item/clothing/shoes/wizard/boots/German,
 /turf/unsimulated/floor{
 	icon_state = "wood-broken"
 	},
@@ -20024,14 +20025,6 @@
 	icon_state = "wood-broken"
 	},
 /area/custom/wizard_station)
-"baV" = (
-/obj/effect/landmark/blockway,
-/turf/unsimulated/floor/snow{
-	nitrogen = 100;
-	oxygen = 25;
-	temperature = 243
-	},
-/area/space)
 "baW" = (
 /obj/structure/flora/tree/pine{
 	layer = 9.5
@@ -20163,7 +20156,6 @@
 /obj/structure/closet/cabinet{
 	name = "Serif"
 	},
-/obj/item/clothing/shoes/western,
 /obj/item/clothing/under/cowboy,
 /obj/item/clothing/under/cowboy/grey,
 /obj/item/clothing/under/cowboy/brown,
@@ -20172,6 +20164,7 @@
 /obj/item/toy/gun/peacemaker,
 /obj/item/clothing/suit/wizrobe/serifcoat,
 /obj/item/clothing/head/wizard/cowboy,
+/obj/item/clothing/shoes/wizard/western,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -20264,9 +20257,9 @@
 	},
 /obj/item/clothing/mask/gnome_beard,
 /obj/item/clothing/under/gnome_suit,
-/obj/item/clothing/shoes/red,
 /obj/item/clothing/suit/wizrobe/suspenders,
 /obj/item/clothing/gloves/white,
+/obj/item/clothing/shoes/wizard/red,
 /obj/item/clothing/head/wizard/gnome_hat,
 /turf/unsimulated/floor/snow{
 	nitrogen = 100;
@@ -33806,7 +33799,7 @@ baY
 abi
 abi
 afT
-baV
+afT
 abi
 abi
 abi

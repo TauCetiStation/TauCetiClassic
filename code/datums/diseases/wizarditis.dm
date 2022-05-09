@@ -72,10 +72,10 @@ STI KALY - blind
 				H.wear_suit.plane = ABOVE_HUD_PLANE
 			return
 		if(prob(chance))
-			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
+			if(!istype(H.shoes, /obj/item/clothing/shoes/wizard))
 				if(H.shoes)
 					H.drop_from_inventory(H.shoes)
-				H.shoes = new /obj/item/clothing/shoes/sandal(H)
+				H.shoes = new /obj/item/clothing/shoes/wizard(H)
 				H.shoes.plane = ABOVE_HUD_PLANE
 			return
 	else
