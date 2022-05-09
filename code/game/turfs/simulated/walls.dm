@@ -18,9 +18,11 @@
 
 	var/seconds_to_melt = 10 //It takes 10 seconds for thermite to melt this wall through
 
-	opacity = 1
+	var/list/dent_decals
+
+	opacity = TRUE
 	density = TRUE
-	blocks_air = 1
+	blocks_air = TRUE
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
@@ -199,8 +201,8 @@
 			take_damage(rand(0, 55))
 
 /turf/simulated/wall/blob_act()
+	add_dent(WALL_DENT_HIT)
 	take_damage(rand(75, 125))
-	return
 
 // Wall-rot effect, a nasty fungus that destroys walls.
 /turf/simulated/wall/proc/rot()
@@ -269,19 +271,19 @@
 		playsound(M, 'sound/effects/hulk_hit_wall.ogg', VOL_EFFECTS_MASTER)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash >= 3)
+				add_dent(WALL_DENT_HIT)
 				take_damage(rand(25, 75))
 				to_chat(M, "<span class='info'>Вы крушите стену.</span>")
 			else
 				to_chat(M, "<span class='info'>Стена слишком прочная, чтобы вы могли ее уничтожить.</span>")
 		else
 			if (prob(40) || rotting)
-				to_chat(M, text("<span class='notice'>Вы пробиваете стену насквозь.</span>"))
-				dismantle_wall(1)
-			else
-				take_damage(rand(25, 75))
-				to_chat(M, "<span class='info'>Вы крушите стену.</span>")
-				to_chat(M, text("<span class='notice'>Вы пробиваете стену насквозь.</span>"))
+				to_chat(M, "<span class='notice'>Вы пробиваете стену насквозь.</span>")
 				dismantle_wall(TRUE)
+			else
+				add_dent(WALL_DENT_HIT)
+				take_damage(rand(25, 75), TRUE)
+				to_chat(M, "<span class='info'>Вы крушите стену.</span>")
 
 /turf/simulated/wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -490,3 +492,33 @@
 	if(current_size == STAGE_FOUR)
 		if(prob(30))
 			dismantle_wall()
+
+/turf/simulated/wall/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
+	if(!Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN) && prob(75))
+		add_dent(WALL_DENT_SHOT, Proj.p_x, Proj.p_y)
+
+/turf/simulated/wall/proc/add_dent(denttype, x, y)
+	if(length(dent_decals) >= MAX_DENT_DECALS)
+		return
+
+	var/mutable_appearance/decal = mutable_appearance('icons/effects/effects.dmi', "", BULLET_HOLE_LAYER, plane)
+	if(isnull(x) || isnull(y))
+		x = rand(-12, 12)
+		y = rand(-12, 12)
+	else
+		x = clamp(x - 16, -16, 16) // because sprites are centered
+		y = clamp(y - 16, -16, 16)
+
+	switch(denttype)
+		if(WALL_DENT_SHOT)
+			decal.icon_state = "bullet_hole"
+			decal.pixel_x = clamp(x, -15, 15) // because sprite size
+			decal.pixel_y = clamp(y, -15, 15)
+		if(WALL_DENT_HIT)
+			decal.icon_state = "impact[rand(1, 3)]"
+			decal.pixel_x = clamp(x, -12, 12) // because sprite size
+			decal.pixel_y = clamp(y, -12, 12)
+
+	LAZYADD(dent_decals, decal)
+	add_overlay(decal)
