@@ -4,7 +4,7 @@
 	message_1p = "You whimper."
 	message_3p = "sadly whines."
 
-	message_muzzled = "shakes violently and makes a weak noise."
+	message_muzzled = "shakes violently and makes a loud noise."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -21,10 +21,10 @@
 /datum/emote/xenomorph/roar
 	key = "roar"
 
-	message_1p = "You roars."
+	message_1p = "You roar."
 	message_3p = "triumphantly roars."
 
-	message_muzzled = "shakes violently and makes a weak noise."
+	message_muzzled = "shakes violently and makes a loud noise."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -45,7 +45,7 @@
 	message_1p = "You hiss."
 	message_3p = "predatory hiss."
 
-	message_muzzled = "shakes violently and makes a weak noise."
+	message_muzzled = "shakes violently and makes a loud noise."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -66,7 +66,7 @@
 	message_1p = "You growl."
 	message_3p = "menacingly growls."
 
-	message_muzzled = "shakes violently and makes a weak noise."
+	message_muzzled = "shakes violently and makes a loud noise."
 
 	message_type = SHOWMSG_AUDIO
 

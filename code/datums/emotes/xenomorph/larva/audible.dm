@@ -15,8 +15,8 @@
 /datum/emote/larva/roar
 	key = "roar"
 
-	message_1p = "You roars."
-	message_3p = "like a little predator."
+	message_1p = "You roar."
+	message_3p = "roars like a little predator."
 
 	message_muzzled = "shakes violently and makes a very weak noise."
 
