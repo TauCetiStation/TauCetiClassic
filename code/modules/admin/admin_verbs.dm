@@ -988,7 +988,7 @@ var/global/list/admin_verbs_hideable = list(
 	set desc = "Tells everyone to man up and deal with it."
 
 	for (var/mob/T in player_list)
-		to_chat(T, "<br><center><span class='notice'><b><font size=4>Мегахорооош</font></b></span></center><br>")
+		to_chat(T, "<br><center><span class='notice'><b><font size=11>Мегахорооош</font></b></span></center><br>")
 		T.playsound_local(null, 'sound/Event/Pobeda.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
@@ -1009,7 +1009,7 @@ var/global/list/admin_verbs_hideable = list(
 	set desc = "Tells everyone to man up and deal with it."
 
 	for (var/mob/T in player_list)
-		to_chat(T, "<br><center><span class='notice'><b><font size=1>БРУХ </font></b><br>Move on.</span></center><br>")
+		to_chat(T, "<br><center><span class='notice'><b><font size=11>БРУХ </font></b></span>")
 		T.playsound_local(null, 'sound/Event/losecombat.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
 	mob.eject_from_wall()
 

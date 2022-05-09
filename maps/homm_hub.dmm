@@ -111,8 +111,8 @@
 "cg" = (/obj/structure/readme/readmeMonk,/turf/unsimulated/wall/fakeglass,/area/space)
 "ch" = (/obj/structure/readme/readmeSmith/readmeSmith1,/turf/unsimulated/wall/fakeglass,/area/space)
 "ci" = (/obj/structure/readme/readmeSmith,/turf/unsimulated/wall/fakeglass,/area/space)
-"cj" = (/obj/structure/readme/readmeHero/readmeHero1,/turf/simulated/wall/mineral/gold,/area/space)
-"ck" = (/obj/structure/readme/readmeHero,/turf/simulated/wall/mineral/gold,/area/space)
+"cj" = (/obj/structure/readme/readmeHero/readmeHero1,/turf/unsimulated/wall/fakeglass,/area/space)
+"ck" = (/obj/structure/readme/readmeHero,/turf/unsimulated/wall/fakeglass,/area/space)
 "cl" = (/obj/structure/readme/readmeMonk/r1,/turf/simulated/floor/wood,/area/space)
 "cm" = (/obj/structure/readme/readmeMonk/r2,/turf/simulated/floor/carpet/green,/area/space)
 "cn" = (/obj/structure/readme/readmeMonk/r3,/turf/simulated/floor/wood,/area/space)
@@ -139,6 +139,13 @@
 "cI" = (/obj/structure/readme/readmeHelper/r3,/turf/simulated/floor/carpet/green,/area/space)
 "cJ" = (/obj/structure/readme/readmePeasant/r4,/turf/simulated/floor/wood,/area/space)
 "cK" = (/obj/structure/sign/poster/banner,/turf/unsimulated/wall/fakeglass,/area/space)
+"cL" = (/obj/structure/statue/peasant,/turf/simulated/floor/carpet/cyan,/area/space)
+"cM" = (/obj/structure/statue/miner,/turf/simulated/floor/carpet/cyan,/area/space)
+"cN" = (/obj/structure/statue/helper,/turf/simulated/floor/carpet/cyan,/area/space)
+"cO" = (/obj/structure/statue/knight,/turf/simulated/floor/carpet/cyan,/area/space)
+"cP" = (/obj/structure/statue/monk,/turf/simulated/floor/carpet/cyan,/area/space)
+"cQ" = (/obj/structure/statue/smith,/turf/simulated/floor/carpet/cyan,/area/space)
+"cR" = (/obj/structure/statue/hero,/turf/simulated/floor/carpet/cyan,/area/space)
 
 (1,1,1) = {"
 abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
@@ -213,7 +220,7 @@ abbbalalalaebbamamamaebbanafanaeaibububuasaianananasaibBbBbBasbwbxbxbxbwalalalal
 abcbatauatcbcbatauatcbcbatauatcbbYcdaucebYbYcfaucgbYbYchaucibYbZcjbxckbZalalalalalalaladalalavatatatavatatatavatatatavawatatatawatatatawatatatawalalalalalalalalalalalalalalaladadadadadadadadadadadadab
 abaiauaxauccafauayauccafauazauccafauauauccafauauauccafauauauccafbxbxbxaialalalalalalaladalalajaAaAaAaoaAaAaAaoaAaAaAajakaBaBaBapaBaBaBapaBaBaBakalalalalalalalalalalalalalalaladadadadadadadadadadadadab
 abaiafafafbsbsafafafbsbsafafafbsbsafafafbsbsafafafbsbsafafafbsbsafafafaiadadadadadadadadadadajaoaoaoaoaoaoaoaoaoaoaoajakaCaCaCaCaCaCaCaCaCaCaCakalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiauauauasaiafafafasaiafafafasaiafafafasaiafafafasaiafafafasaiauauauaiadadadadadadadadadadajaAaAaAaoaAaAaAaoaAaAaAajakaBaBaBapaBaBaBapaBaBaBakalalalalalalalalalalalalalalaladadadadadadadadadadadadab
+abaiafcLafasaiafcMafasaiafcNafasaiafcOafasaiafcPafasaiafcQafasaiafcRafaiadadadadadadadadadadajaAaAaAaoaAaAaAaoaAaAaAajakaBaBaBapaBaBaBapaBaBaBakalalalalalalalalalalalalalalaladadadadadadadadadadadadab
 abaiauauauasaiauauauasaiauauauasaiauauauasaiauauauasaiauauauasaiaDaEaDaiadadadadadadadadadadavaoaoaoavaoaoaoavaDaEaDavawapapapawapapapawaDaEaDawalalalalalalalalalalalalalalaladadadadadadadadadadadadab
 abaiauaFauasaiauauauasaiauauauasasauauauasasauauauasaiauauauasaiaEaGaEaialalalalalalaladadadajaoaHaoajaoaoaoajaEaGaEajakapaIapakaparapakaEaGaEakalalalalalalalalalalalalalalaladadadadadadadadadadadadab
 abaiauauauasaiauauauasaiauauauasasauauauasasauauauasaiauauauasaiaDaEaDaialalalalalalaladalalajaoaoaoajaoaoaoajaDaEaDajakapapapakapapapakaDaEaDakalalalalalalalalalalalalalalaladadadadadadadadadadadadab

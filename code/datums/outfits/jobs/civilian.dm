@@ -163,7 +163,7 @@
 /datum/outfit/job/hub/peasant
 	name = OUTFIT_JOB_NAME("Peasant")
 	uniform = /obj/item/clothing/under/peasant
-	shoes = /obj/item/clothing/shoes/sandal
+	shoes = /obj/item/clothing/shoes/leather
 	l_hand =/obj/item/weapon/hatchet
 
 /datum/outfit/job/hub/smith
@@ -177,14 +177,14 @@
 /datum/outfit/job/hub/miner
 	name = OUTFIT_JOB_NAME("Miner")
 	uniform = /obj/item/clothing/under/peasant
-	shoes = /obj/item/clothing/shoes/sandal
+	shoes = /obj/item/clothing/shoes/leather
 	l_hand = /obj/item/weapon/pickaxe/silver
 
 /datum/outfit/job/hub/helper
 	name = OUTFIT_JOB_NAME("Helper")
 	uniform = /obj/item/clothing/under/pants/black
 	suit = /obj/item/clothing/suit/monk_helper
-	shoes = /obj/item/clothing/shoes/sandal
+	shoes = /obj/item/clothing/shoes/leather
 	head = /obj/item/clothing/head/monk_helper
 	l_hand = /obj/item/weapon/staff/broom/monk
 

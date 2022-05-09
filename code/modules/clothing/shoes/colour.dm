@@ -51,8 +51,8 @@
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/leather
-	name = "leather shoes"
-	desc = "A sturdy pair of leather shoes."
+	name = "Башмаки"
+	desc = "Башмаки из жопы свиньи"
 	icon_state = "leather"
 	clipped_status = CLIPPABLE
 

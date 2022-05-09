@@ -2,7 +2,7 @@
 		name = "horse"
 		desc = "≈сли тебе кажетс€ что это корова, € теб€ забаню"
 		icon_state = "horse_off"
-		land_speed = 1
+		land_speed = 2
 		bike_icon = "horse"
 		kickstand = 0
 		light_range = 0

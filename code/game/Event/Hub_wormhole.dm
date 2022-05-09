@@ -51,7 +51,7 @@
 
 /obj/effect/portal/hub/job_room/helper
 	A = /area/custom/helper_hub
-	name = "Помощник в Монастыре"
+	name = "Поcлушник"
 	desc = ""
 
 /obj/effect/portal/hub/job_room/whitelist_room

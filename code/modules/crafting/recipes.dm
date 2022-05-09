@@ -106,7 +106,7 @@
 	time = 40
 
 /datum/crafting_recipe/milita_boots
-	name = "Лучше сандалей"
+	name = "Солиднее башмаков"
 	reqs = list(/obj/item/stack/medical/bruise_pack/rags = 1)
 	result = /obj/item/clothing/shoes/boots
 	tools = list(/obj/item/weapon/smith_hammer,/obj/structure/vilage/anvil)

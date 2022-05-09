@@ -11,7 +11,7 @@
 	height = 1
 
 /obj/structure/ladder/lovushka_dlya_debilov
-	name = "Не лезь, умрешь"
+	name = "Тебе туда не надо"
 	desc = "Оттуда воняет"
 	id = 2
 	height = 2
