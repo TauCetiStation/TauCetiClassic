@@ -284,13 +284,13 @@
 	max_storage_space = DEFAULT_BOX_STORAGE
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 	startswith = list(/obj/item/device/lens/lomo,
-                      /obj/item/device/lens/posterization,
-                      /obj/item/device/lens/grayscale,
-                      /obj/item/device/lens/invert,
-                      /obj/item/device/lens/sepia,
-                      /obj/item/device/lens/detective,
-                      /obj/item/device/lens/polar,
-                      /obj/item/device/lens/old)
+					  /obj/item/device/lens/posterization,
+					  /obj/item/device/lens/grayscale,
+					  /obj/item/device/lens/invert,
+					  /obj/item/device/lens/sepia,
+					  /obj/item/device/lens/detective,
+					  /obj/item/device/lens/polar,
+					  /obj/item/device/lens/old)
 
 /*********
 * camera *
