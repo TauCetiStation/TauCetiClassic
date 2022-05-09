@@ -109,8 +109,10 @@
 	return H
 
 /obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(!isliving(target))	return 0
-	if(isanimal(target))	return 0
+	if(!isliving(target))
+		return 0
+	if(isanimal(target))
+		return 0
 	var/mob/living/L = target
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 
