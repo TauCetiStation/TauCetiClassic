@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(economy)
 						var/dep_salary = 0
 						skimming_through_personel:
 							if(!rank_table.len || rank_table.len == 0)
-									continue skimming_through_ranks //Next rank
+								continue skimming_through_ranks //Next rank
 							for(var/datum/money_account/P in rank_table)
 								if(P.owner_salary <= 0)
 									continue skimming_through_personel //Next personel
