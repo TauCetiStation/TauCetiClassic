@@ -2,7 +2,6 @@
 	default_emotes = list(
 		/datum/emote/help,
 		/datum/emote/pray,
-		/datum/emote/whistle,
 		/datum/emote/shiver,
 		/datum/emote/whimper,
 		/datum/emote/moan,
