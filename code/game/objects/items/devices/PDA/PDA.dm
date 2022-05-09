@@ -1607,12 +1607,11 @@
 		playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/device/pda/proc/transaction_failure()
-	var/mob/living/L = null
-	if(src.loc && isliving(src.loc))
-		L = src.loc
-	if(L)
-		to_chat(L, "[bicon(src)]<span class='notice'>Unable to transfer salary to your account. Not enough funds in your department. Please contact with your Command.</span>")
-		playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+	if(!can_use())
+		return
+	var/mob/living/L = src.loc
+	to_chat(L, "[bicon(src)]<span class='notice'>Unable to transfer salary to your account. Not enough funds in your department. Please contact with your Command.</span>")
+	playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/device/pda/proc/check_rank(rank)
 	if((rank in command_positions) || (rank == "Quartermaster"))
