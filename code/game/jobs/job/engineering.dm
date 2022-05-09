@@ -16,6 +16,7 @@
 		access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload, access_engineering_lobby
 	)
 	salary = 250
+	rank = "high"
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/chief_engineer
@@ -43,6 +44,7 @@
 	alt_titles = list("Maintenance Technician","Engine Technician","Electrician")
 	outfit = /datum/outfit/job/engineer
 	salary = 160
+	rank = "medium"
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
 
@@ -59,6 +61,7 @@
 	idtype = /obj/item/weapon/card/id/eng
 	access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction, access_external_airlocks, access_engineering_lobby)
 	salary = 160
+	rank = "medium"
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 600
 	outfit = /datum/outfit/job/atmos
@@ -76,6 +79,7 @@
 	idtype = /obj/item/weapon/card/id/eng
 	access = list(access_engineering_lobby, access_construction, access_maint_tunnels)
 	salary = 50
+	rank = "low"
 	outfit = /datum/outfit/job/technical_assistant
 
 

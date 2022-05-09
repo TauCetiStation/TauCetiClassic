@@ -6,8 +6,12 @@ SUBSYSTEM_DEF(economy)
 
 	var/endtime = 0 //this variable holds the sum of ticks until the next call to fire(). This is necessary to display the remaining time before salary in the PDA
 	var/payment_counter = 0
-	//Station fee earned when supply shuttle exports things. 0 is 0%, 100 is 100%
+
+	//Station fees earned when supply shuttle exports things. 0 is 0%, 100 is 100%
 	var/tax_cargo_export = 10
+	var/tax_income = 0
+	//Subsidy coefficient from CentComm
+	var/station_subsidy_coefficient = 1.0
 
 /datum/controller/subsystem/economy/fire()	//this prok is called once in "wait" minutes
 	set_endtime()
@@ -26,19 +30,37 @@ SUBSYSTEM_DEF(economy)
 					charge_to_account(global.station_account.account_number, D.account_number, "[D.owner_name] Department Penalty", global.department_accounts[D.department], -D.subsidy)
 
 				//Departments to personnel salary transactions
-				var/dep_salary = 0
-				for(var/datum/money_account/P in global.all_money_accounts)
-					if(P.owner_salary && !P.suspended && P.department == D)
-						if(P.department.money >= P.owner_salary)
-							charge_to_account(P.account_number, D.account_number, "[P.owner_name]'s Salary payment", global.department_accounts[P.department], P.owner_salary)
-							dep_salary += P.owner_salary
-							all_salaries += P.base_salary
-						else
-							P.owner_PDA.transaction_failure()
-				charge_to_account(D.account_number, D.account_number, "Salaries payment", D.owner_name, -dep_salary)
+				var/list/ranks = list("high", "medium", "low")
+				skimming_through_ranks:
+					for(var/r in ranks)
+						var/salary = null
+						var/dep_salary = 0
+						skimming_through_personel:
+							for(var/datum/money_account/P in D.salaries_rank_table[r])
+								if(D.salaries_rank_table[r].len <= 0)
+									continue skimming_through_ranks //Next rank
+								if(P.owner_salary <= 0)
+									continue skimming_through_personel //Next personel
+								if(D.money <= 0)
+									P.owner_PDA.transaction_failure()
+									continue skimming_through_personel //Error no money
+
+								if(D.salaries_per_ranks_table[r] > D.money)
+									salary = round(D.money / D.salaries_rank_table[r].len * (1 - SSeconomy.tax_income*0.01)) //Dividing money for salaries
+								else
+									salary = round(P.owner_salary * (1 - SSeconomy.tax_income*0.01)) //Pure salaries
+
+								if(salary == 0)
+									P.owner_PDA.transaction_failure()
+									continue skimming_through_personel //Error no money
+
+								charge_to_account(P.account_number, D.account_number, "[P.owner_name]'s Salary payment", global.department_accounts[P.department], salary)
+								dep_salary += salary
+								all_salaries += P.base_salary
+							charge_to_account(D.account_number, D.account_number, "Salaries of [r] rank payment", D.owner_name, -dep_salary)
 
 		//CentComm to Station Subsidion transaction
-		global.station_account.subsidy = all_salaries * global.station_subsidy_coefficient
+		global.station_account.subsidy = all_salaries * SSeconomy.station_subsidy_coefficient
 		charge_to_account(global.station_account.account_number, global.station_account.account_number, "Station Subsidion", "Central Command", global.station_account.subsidy)
 	payment_counter += 1
 

@@ -50,6 +50,8 @@
 	//salary ratio - for global salary changes
 	var/salary_ratio = 1
 
+	var/rank = "low"
+
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm

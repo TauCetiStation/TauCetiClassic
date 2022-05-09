@@ -217,6 +217,9 @@
 					if(temp_t && modify)
 						modify.assignment = temp_t
 				else
+					if(datum_account)
+						datum_account.department.salaries_rank_table[datum_account.rank] -= datum_account
+						datum_account.department.salaries_per_ranks_table[datum_account.rank] -= datum_account.owner_salary
 					var/list/access = list()
 					if(is_centcom())
 						access = get_centcom_access(t1)
@@ -232,6 +235,11 @@
 						access = jobdatum.get_access()
 						new_salary = jobdatum.salary
 						department = department_accounts[jobdatum.department]
+						if(datum_account)
+							datum_account.department = department
+							datum_account.rank = jobdatum.rank
+							datum_account.department.salaries_rank_table[datum_account.rank] += datum_account
+							datum_account.department.salaries_per_ranks_table[datum_account.rank] += jobdatum.salary
 
 					modify.access = access
 					modify.assignment = t1
@@ -239,7 +247,6 @@
 
 					if(datum_account)
 						datum_account.set_salary(new_salary, jobdatum.salary_ratio)	//set the new salary equal to job
-						datum_account.department = department
 
 		if ("reg")
 			if (is_authenticated())

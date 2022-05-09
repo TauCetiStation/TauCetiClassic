@@ -11,6 +11,7 @@
 	idtype = /obj/item/weapon/card/id/cargoGold
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
 	salary = 160
+	rank = "high"
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/qm
 	/*
@@ -35,6 +36,7 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 	salary = 50
+	rank = "medium"
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/cargo_tech
 
@@ -51,6 +53,7 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
 	salary = 80
+	rank = "medium"
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/mining
 
@@ -67,6 +70,7 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mailsorting, access_recycler)
 	salary = 60
+	rank = "medium"
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/recycler
 	/*
@@ -92,6 +96,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_bar)
 	salary = 40
+	rank = "low"
 	minimal_player_ingame_minutes = 240
 	outfit = /datum/outfit/job/bartender
 	/*
@@ -116,6 +121,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_kitchen)
 	salary = 40
+	rank = "low"
 	alt_titles = list("Cook")
 	minimal_player_ingame_minutes = 240
 	outfit = /datum/outfit/job/chef
@@ -141,6 +147,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 	salary = 60
+	rank = "low"
 	alt_titles = list("Hydroponicist")
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/hydro
@@ -158,6 +165,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_janitor, access_maint_tunnels, access_sec_doors, access_research, access_mailsorting, access_medical, access_engineering_lobby)
 	salary = 50
+	rank = "low"
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/janitor
 
@@ -175,6 +183,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_barber)
 	salary = 40
+	rank = "low"
 	alt_titles = list("Stylist" = /datum/outfit/job/stylist)
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/barber
@@ -192,6 +201,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_library)
 	salary = 40
+	rank = "low"
 	alt_titles = list("Journalist")
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/librarian
@@ -210,6 +220,7 @@
 	idtype = /obj/item/weapon/card/id/int
 	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby)
 	salary = 200
+	rank = "high"
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/lawyer
 	/*
@@ -234,6 +245,7 @@
 	idtype = /obj/item/weapon/card/id/clown
 	access = list(access_clown, access_theatre)
 	salary = 20
+	rank = "low"
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/clown
 
@@ -253,6 +265,7 @@
 	idtype = /obj/item/weapon/card/id/mime
 	access = list(access_mime, access_theatre)
 	salary = 20
+	rank = "low"
 	outfit = /datum/outfit/job/mime
 
 /datum/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

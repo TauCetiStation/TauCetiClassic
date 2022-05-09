@@ -10,9 +10,3 @@ var/global/datum/moduletypes/mods = new()
 
 // Reference list for disposal sort junctions. Filled up by sorting junction's New()
 var/global/list/tagger_locations = list()
-
-//Station fee earned when supply shuttle exports things. 0 is 0%, 100 is 100%
-var/global/tax_cargo_export = 10
-var/global/tax_income = 0
-
-var/global/station_subsidy_coefficient = 1.0
