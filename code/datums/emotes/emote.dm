@@ -89,10 +89,12 @@ var/global/list/all_emotes
 /datum/emote/proc/can_play_sound(mob/user, intentional)
 	if(HAS_TRAIT(user, TRAIT_MUTE))
 		return FALSE
-	if(silent)
-		return FALSE
 	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 		return FALSE
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.silent)
+			return FALSE
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.miming)
