@@ -33,11 +33,13 @@ SUBSYSTEM_DEF(economy)
 				var/list/ranks = list("high", "medium", "low")
 				skimming_through_ranks:
 					for(var/r in ranks)
+						var/list/rank_table = D.salaries_rank_table[r]
+						var/salary_rank = D.salaries_per_ranks_table[r]
 						var/salary = null
 						var/dep_salary = 0
 						skimming_through_personel:
-							for(var/datum/money_account/P in D.salaries_rank_table[r])
-								if(D.salaries_rank_table[r].len <= 0)
+							for(var/datum/money_account/P in rank_table)
+								if(rank_table.len <= 0)
 									continue skimming_through_ranks //Next rank
 								if(P.owner_salary <= 0)
 									continue skimming_through_personel //Next personel
@@ -45,8 +47,8 @@ SUBSYSTEM_DEF(economy)
 									P.owner_PDA.transaction_failure()
 									continue skimming_through_personel //Error no money
 
-								if(D.salaries_per_ranks_table[r] > D.money)
-									salary = round(D.money / D.salaries_rank_table[r].len * (1 - SSeconomy.tax_income*0.01)) //Dividing money for salaries
+								if(salary_rank > D.money)
+									salary = round(D.money / rank_table.len * (1 - SSeconomy.tax_income*0.01)) //Dividing money for salaries
 								else
 									salary = round(P.owner_salary * (1 - SSeconomy.tax_income*0.01)) //Pure salaries
 
