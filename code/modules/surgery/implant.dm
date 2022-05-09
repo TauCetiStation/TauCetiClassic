@@ -176,6 +176,9 @@
 /datum/surgery_step/cavity/implant_removal/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+		if(BP.stage == 3)
+			return FALSE
+
 		return BP && ((BP.open == 3 && BP.body_zone == BP_CHEST) || (BP.open == 2))
 
 /datum/surgery_step/cavity/implant_removal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
