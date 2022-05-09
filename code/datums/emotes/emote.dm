@@ -84,30 +84,25 @@ var/global/list/all_emotes
 	if(!intentional)
 		return
 
-	LAZYSET(cooldowns, get_cooldown_group(), world.time + value)
+	LAZYSET(cooldowns, get_cooldown_group(user), world.time + value)
 
-/datum/emote/proc/can_play_sound(mob/living/carbon/human/user, intentional)
-	if(user.miming)
-		return FALSE
+/datum/emote/proc/can_play_sound(mob/user, intentional)
 	if(HAS_TRAIT(user, TRAIT_MUTE))
 		return FALSE
+	if(silent)
+		return FALSE
 	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
-		return FALSE
-	if(!check_cooldown(user.next_audio_emote_produce, intentional))
-		return FALSE
-	return TRUE
-
-/datum/emote/proc/get_sound(mob/user, intentional)
-	return sound
-
-/datum/emote/proc/can_play_sound(mob/user, intentional, emote_sound)
-	if(HAS_TRAIT(user, TRAIT_MUTE) || istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 		return FALSE
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.miming)
 			return FALSE
+	if(!check_cooldown(user, user.next_audio_emote_produce, intentional))
+		return FALSE
 	return TRUE
+
+/datum/emote/proc/get_sound(mob/user, intentional)
+	return sound
 
 /datum/emote/proc/play_sound(mob/user, intentional, emote_sound)
 	playsound(user, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, null)
@@ -152,11 +147,10 @@ var/global/list/all_emotes
 		to_chat(user, msg_1p)
 
 	var/emote_sound = get_sound(user, intentional)
-	if(emote_sound && check_cooldown(user, user.next_audio_emote_produce, intentional))
+	if(emote_sound && can_play_sound(user, intentional))
 		LAZYINITLIST(user.next_audio_emote_produce)
 		set_cooldown(user, user.next_audio_emote_produce, audio_cooldown, intentional)
-		if(can_play_sound(user, intentional, emote_sound))
-			play_sound(user, intentional, emote_sound)
+		play_sound(user, intentional, emote_sound)
 
 	for(var/mob/M as anything in observer_list)
 		if(!M.client)
