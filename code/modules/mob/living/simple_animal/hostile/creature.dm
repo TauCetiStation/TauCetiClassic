@@ -76,6 +76,8 @@ mob/living/simple_animal/hostile/beholder
 
 	if(isChickenCurse)
 		var/mob/living/L = target
+		if(ispath(L,/mob/living/simple_animal/chicken))
+			return
 		if(isliving(target)&&(L.mind))
 			L.MyTrueNotChikenBody = target
 			var/mob/living/simple_animal/chicken/C = new/mob/living/simple_animal/chicken(L.loc)

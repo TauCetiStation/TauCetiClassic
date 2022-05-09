@@ -367,7 +367,7 @@
 			FF.update_icon() //so siding get updated properly
 
 /turf/simulated/floor/plating/ironsand
-	name = "Iron Sand"
+	name = "Грязь "
 	icon_state = "ironsand1"
 	basetype = /turf/simulated/floor/plating/ironsand
 	footstep = FOOTSTEP_SAND

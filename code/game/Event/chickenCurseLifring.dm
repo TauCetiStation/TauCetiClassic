@@ -7,6 +7,9 @@
 
 /obj/item/uncurs_ointment/attack(mob/living/simple_animal/chicken/C, mob/user)
 	var/mob/living/M = C
+	if(C.health == 0 )
+		to_chat(user, "<span class='notice'> Это существо мертво</span>")
+		return
 	if(!M.MyTrueNotChikenBody)
 		to_chat(user, "<span class='notice'> Это не жертва проклятия.</span>")
 		return
@@ -15,6 +18,6 @@
 	M.MyTrueNotChikenBody.health = M.health
 	M.MyTrueNotChikenBody.MyTrueNotChikenBody = null
 	playsound(M, 'sound/Event/uncursed.ogg', VOL_EFFECTS_MASTER)
-	qdel(M)
+	qdel(C)
 	qdel(src)
 

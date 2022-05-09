@@ -509,6 +509,7 @@
 /turf/simulated/floor/plating/airless/asteroid
 	basetype = /turf/simulated/floor/plating/ironsand
 	can_deconstruct = FALSE
+	name = "Глина"
 
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
