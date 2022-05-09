@@ -104,6 +104,10 @@ var/global/list/department_radio_keys = list(
 		message = sanitize(message)
 		if(!message)
 			return
+
+		if(message[1] == "*")
+			return emote(copytext(message, 2))
+
 		message = capitalize(trim(message))
 		message = add_period(message)
 

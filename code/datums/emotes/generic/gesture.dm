@@ -6,6 +6,8 @@
 
 	message_type = SHOWMSG_VISUAL
 
+	cooldown = 5 SECONDS
+
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 	)
