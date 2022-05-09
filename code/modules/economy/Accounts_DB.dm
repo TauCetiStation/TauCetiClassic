@@ -67,8 +67,8 @@
 	data["station_account_number"] = station_account.account_number
 	data["transactions"] = null
 	data["accounts"] = null
-	data["tax_cargo_export"] = global.tax_cargo_export
-	data["change_income_tax"] = global.tax_income
+	data["tax_cargo_export"] = SSeconomy.tax_cargo_export
+	data["change_income_tax"] = SSeconomy.tax_income
 
 	if (detailed_account_view)
 		data["account_number"] = detailed_account_view.account_number
@@ -131,12 +131,12 @@
 			if("change_export_tax")
 				var/amount = input("Enter the percent you want to set a tax to", "Export Tax %") as num
 				amount = clamp(amount, 0, 100)
-				global.tax_cargo_export = amount
+				SSeconomy.tax_cargo_export = amount
 
 			if("change_income_tax")
 				var/amount = input("Enter the percent you want to set a tax to", "Income Tax %") as num
 				amount = clamp(amount, 0, 100)
-				global.tax_income = amount
+				SSeconomy.tax_income = amount
 
 			if("change_department_subsidy")
 				var/amount = input("Enter the department's subsidy in credits", "Subsidy Amount") as num

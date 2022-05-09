@@ -109,8 +109,8 @@
 
 /datum/stock/proc/modifyAccount(whose, amount)
 	. = FALSE
-	if (department_accounts["Cargo"] && (amount > 0 || department_accounts["Cargo"].money + amount > 0))
-		department_accounts["Cargo"].money += amount
+	if (global.cargo_account && (amount > 0 || global.cargo_account.money + amount > 0))
+		global.cargo_account.money += amount
 		stockExchange.balanceLog(whose, amount)
 		. = TRUE
 

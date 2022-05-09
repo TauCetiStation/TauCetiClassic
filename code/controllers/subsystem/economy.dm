@@ -6,6 +6,8 @@ SUBSYSTEM_DEF(economy)
 
 	var/endtime = 0 //this variable holds the sum of ticks until the next call to fire(). This is necessary to display the remaining time before salary in the PDA
 	var/payment_counter = 0
+	//Station fee earned when supply shuttle exports things. 0 is 0%, 100 is 100%
+	var/tax_cargo_export = 10
 
 /datum/controller/subsystem/economy/fire()	//this prok is called once in "wait" minutes
 	set_endtime()
