@@ -5,7 +5,6 @@
 		/datum/emote/nod,
 		/datum/emote/shake,
 		/datum/emote/twitch,
-		/datum/emote/deathgasp,
 	)
 
 /mob/living/silicon/robot/load_default_emotes()

@@ -11,7 +11,7 @@
 		EMOTE_STATE(is_stat_or_not_intentional, CONSCIOUS),
 	)
 
-/datum/emote/robot/deathgasp/get_emote_message_3p(mob/living/carbon/human/user)
+/datum/emote/robot/deathgasp/get_emote_message_3p(mob/living/silicon/robot/user)
 	return "<b>[user]</b> shudders violently for a moment, then becomes motionless, it's eyes slowly darkening..."
 
 

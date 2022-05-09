@@ -10,7 +10,7 @@
 		EMOTE_STATE(is_stat, CONSCIOUS),
 	)
 
-/datum/emote/pray/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+/datum/emote/pray/do_emote(mob/user, emote_key, intentional)
 	. = ..()
 	INVOKE_ASYNC(user, /mob.proc/pray_animation)
 
@@ -93,8 +93,8 @@
 		EMOTE_STATE(is_not_species, ZOMBIE),
 	)
 
-/datum/emote/shake/get_emote_message_3p(mob/living/carbon/human/user)
-	return "<b>[user]</b> shakes [P_THEIR(user)] head.
+/datum/emote/shake/get_emote_message_3p(mob/user)
+	return "<b>[user]</b> shakes [P_THEIR(user)] head."
 
 
 /datum/emote/twitch
@@ -124,7 +124,7 @@
 		EMOTE_STATE(is_stat, CONSCIOUS),
 	)
 
-/datum/emote/collapse/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+/datum/emote/collapse/do_emote(mob/user, emote_key, intentional)
 	. = ..()
 	user.Paralyse(2)
 
@@ -143,9 +143,11 @@
 		EMOTE_STATE(is_stat, CONSCIOUS),
 	)
 
-/datum/emote/faint/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+/datum/emote/faint/do_emote(mob/user, emote_key, intentional)
 	. = ..()
-	SetSleeping(20 SECONDS)
+	if(isliving(user))
+		var/mob/living/L = user
+		L.SetSleeping(20 SECONDS)
 
 
 /datum/emote/deathgasp
@@ -161,5 +163,5 @@
 		EMOTE_STATE(is_stat_or_not_intentional, CONSCIOUS),
 	)
 
-/datum/emote/deathgasp/get_emote_message_3p(mob/living/carbon/human/user)
+/datum/emote/deathgasp/get_emote_message_3p(mob/user)
 	return "<b>[user]</b> seizes up and falls limp, [P_THEIR(user)] eyes dead and lifeless..."

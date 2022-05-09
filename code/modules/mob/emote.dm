@@ -61,7 +61,7 @@
 /mob/proc/clear_emote(key)
 	LAZYREMOVE(current_emotes, key)
 
-/mob/proc/emote(act, message_type = SHOWMSG_VISUAL, message = "", auto = TRUE)
+/mob/proc/emote(act, auto = TRUE)
 	var/datum/emote/emo = get_emote(act)
 	if(!emo)
 		return
@@ -72,7 +72,7 @@
 	emo.do_emote(src, act, !auto)
 
 // A simpler emote. Just the message, and it's type. If you want anything more complex - make a datumized emote.
-/mob/proc/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
+/mob/proc/me_emote(message, message_type = SHOWMSG_VISUAL, intentional = FALSE)
 	log_emote("[key_name(src)] : [message]")
 
 	var/msg = "<b>[src]</b> <i>[message]</i>"

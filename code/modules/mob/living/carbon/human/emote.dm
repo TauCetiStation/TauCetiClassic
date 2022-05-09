@@ -9,6 +9,7 @@
 		/datum/emote/twitch,
 		/datum/emote/collapse,
 		/datum/emote/faint,
+		/datum/emote/roar,
 	)
 
 /mob/living/carbon/human/load_default_emotes()
