@@ -216,10 +216,10 @@
 
 	if(is_bruised())
 		if(prob(2))
-			owner.emote("cough", message = "coughs up blood!")
+			owner.emote("cough")
 			owner.drip(10)
 		if(prob(4)  && !HAS_TRAIT(owner, TRAIT_AV))
-			owner.emote("gasp", message = "gasps for air!")
+			owner.emote("gasp")
 			owner.losebreath += 15
 
 /obj/item/organ/internal/lungs/diona/process()
