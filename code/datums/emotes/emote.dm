@@ -38,7 +38,7 @@ var/global/list/all_emotes
 	// Cooldown for emote usage.
 	var/cooldown = 0.8 SECONDS
 	// Cooldown for the audio of the emote, if it has one.
-	var/audio_cooldown = 2 SECONDS
+	var/audio_cooldown = 3 SECONDS
 
 	// Visual cue with a cloud above head for some emotes.
 	var/cloud
@@ -78,13 +78,24 @@ var/global/list/all_emotes
 	if(!cooldowns)
 		return TRUE
 
-	return cooldowns[get_cooldown_group(user)] < world.time
+	return cooldowns[get_cooldown_group()] < world.time
 
 /datum/emote/proc/set_cooldown(mob/user, list/cooldowns, value, intentional)
 	if(!intentional)
 		return
 
-	LAZYSET(cooldowns, get_cooldown_group(user), world.time + value)
+	LAZYSET(cooldowns, get_cooldown_group(), world.time + value)
+
+/datum/emote/proc/can_play_sound(mob/living/carbon/human/user, intentional)
+	if(user.miming)
+		return FALSE
+	if(HAS_TRAIT(user, TRAIT_MUTE))
+		return FALSE
+	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
+		return FALSE
+	if(!check_cooldown(user.next_audio_emote_produce, intentional))
+		return FALSE
+	return TRUE
 
 /datum/emote/proc/get_sound(mob/user, intentional)
 	return sound

@@ -82,14 +82,16 @@
 #define ABDUCTOR       "Abductor"
 #define SKELETON       "Skeleton"
 #define SHADOWLING     "Shadowling"
-#define MONKEY         "Monkey"
 #define GOLEM          "Adamantine Golem"
+#define HOMUNCULUS     "Homunculus"
 #define ZOMBIE         "Zombie"
 #define ZOMBIE_TAJARAN "Zombie Tajaran"
 #define ZOMBIE_SKRELL  "Zombie Skrell"
 #define ZOMBIE_UNATHI  "Zombie Unathi"
 #define SLIME          "Slime"
 #define ABOMINATION    "disgusting abomination"
+
+#define MONKEY         "Monkey"
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 
@@ -121,6 +123,29 @@
 #define SPIRIT_POOR 50
 #define SPIRIT_LOW 25
 #define SPIRIT_BAD 0
+
+//Telekinesis.
+#define TK_MAXRANGE 15
+
+// Drugs increase the level by 1.
+#define TK_LEVEL_ZERO 0
+#define TK_LEVEL_ONE 1
+#define TK_LEVEL_TWO 2
+#define TK_LEVEL_THREE 3
+#define TK_LEVEL_FOUR 4
+
+#define TK_LEVEL_NORMAL 1
+#define TK_LEVEL_SKRELL 2
+
+// Being drugged improves your telekinesis by a level.
+#define TK_BONUS_DRUGGED 1
+// Being very desperate/angry/upset improves your telekinesis by a level.
+#define TK_BONUS_UPSET 1
+
+// How much resource should be wasted per tile of distance to target.
+#define TK_MANA_PER_TILE 10
+// How much resource should be wasted per upping of a size class of target.
+#define TK_MANA_PER_W_CLASS(cl) (2**cl)
 
 //Nutrition levels for humans.
 #define NUTRITION_LEVEL_FAT 600
@@ -216,3 +241,10 @@
 #define ALLERGY_INGESTION "ingestion"
 // can't implement rn but would be funny
 // #define ALLERGY_BREATH 3
+
+// logout reasons
+#define LOGOUT_UNKNOWN 0
+#define LOGOUT_USER 1
+#define LOGOUT_GHOST 2
+#define LOGOUT_REENTER 3
+#define LOGOUT_SWAP 4 // not so safe, check other things if available

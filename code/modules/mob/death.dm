@@ -14,7 +14,7 @@
 	animation.master = src
 
 //	flick("gibbed-m", animation)
-	gibs(loc, viruses, dna)
+	gibs(loc, dna)
 
 	dead_mob_list -= src
 	spawn(15)
@@ -58,3 +58,9 @@
 	dead_mob_list += src
 	clear_fullscreens()
 	setDrugginess(0)
+
+	for(var/mob/M as anything in remote_hearers)
+		remove_remote_hearer(M)
+
+	for(var/mob/M as anything in remote_hearing)
+		M.remove_remote_hearer(src)

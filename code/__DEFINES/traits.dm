@@ -150,7 +150,12 @@
 #define TRAIT_VACCINATED          "vaccinated"
 #define TRAIT_DWARF               "dwarf"
 #define TRAIT_NO_SOUL             "no_soul"
-#define TRAIT_GHOST_BUSTER        "ghost_buster"
+#define TRAIT_SEE_GHOSTS          "see_ghosts"
+#define TRAIT_SYRINGE_FEAR        "syringe_fear"
+#define TRAIT_WET_HANDS           "wet_hands"
+#define TRAIT_GREASY_FINGERS      "greasy_fingers"
+#define TRAIT_ANATOMIST           "anatomist"
+#define TRAIT_SOULSTONE_IMMUNE    "soulstone_immune"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -163,12 +168,16 @@
  */
 #define TRAIT_DOUBLE_WIELDED "double_wielded"
 
+// item trait
+#define TRAIT_NO_SACRIFICE "religion_no_sacrifice"
+
 // idk why this exists on TG
 #define GENERIC_TRAIT "generic"
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define QUALITY_TRAIT      "quality"
 #define TWOHANDED_TRAIT    "twohanded"
+#define RELIGION_TRAIT     "religion"
 
 // self explanatory
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"

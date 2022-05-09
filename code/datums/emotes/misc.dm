@@ -19,7 +19,7 @@
 			key_mod += "<span class='italics'>"
 			key_mod_end += "</span>"
 
-		if(!E.check_cooldown(user, user.next_emote_use, FALSE))
+		if(!E.check_cooldown(user.next_emote_use, FALSE))
 			key_mod += "<span class='warning'>"
 			key_mod_end += "</span>"
 

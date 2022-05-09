@@ -68,10 +68,10 @@
 		verbs -= x
 	set_broken()
 
-/obj/machinery/computer/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/computer/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(prob(Proj.damage))
 		set_broken()
-	..()
 
 /obj/machinery/computer/update_icon()
 	..()
@@ -201,6 +201,20 @@
 				return 1
 			else
 				H.visible_message("<span class='danger'>[H.name] stares cluelessly at [src] and drools.</span>")
+				return 1
+		if(HAS_TRAIT_FROM(H, TRAIT_WET_HANDS, QUALITY_TRAIT))
+			var/emp_luck = rand(1, 20)
+			if(emp_luck > 12)
+				emp_act(1)
+				to_chat(H, "<span class='warning'>You pressed something and sparks appeared.</span>")
+				return 1
+			else if(emp_luck <= 2)
+				emp_act(2)
+				to_chat(H, "<span class='warning'>You pressed something and everything is gone.</span>")
+				return 1
+			else if(emp_luck == 10)
+				emp_act(3)
+				to_chat(H, "<span class='warning'>You poured water on the device.</span>") 
 				return 1
 	. = ..()
 

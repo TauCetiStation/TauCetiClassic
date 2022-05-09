@@ -469,6 +469,21 @@
 	loc = new_loc
 	Moved(old_loc)
 
+// Return what item *should* be thrown, when a mob tries to throw us. Return null for no throw to happen.
+/atom/movable/proc/be_thrown(mob/living/thrower, atom/target)
+	return src
+
+/*
+	Handle trying to be taken by user.
+	If it's impossible to be taken by user, appear in fallback.
+	If it's impossible to resolve those two rules - return FALSE.
+*/
+/atom/movable/proc/taken(mob/living/user, atom/fallback)
+	forceMove(fallback)
+	// We failed to be taken, but still are in some mob. Drop down.
+	if(ismob(loc))
+		forceMove(loc.loc)
+
 /atom/movable/proc/jump_from_contents(rec_level=1)
 	for(var/i in 1 to rec_level)
 		if(!ismovable(loc))

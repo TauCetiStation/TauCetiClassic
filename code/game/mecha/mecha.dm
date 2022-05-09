@@ -505,11 +505,10 @@
 	return
 
 
-/obj/mecha/bullet_act(obj/item/projectile/Proj) //wrapper
+/obj/mecha/bullet_act(obj/item/projectile/Proj, def_zone) //wrapper
 	log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).",1)
 	call((proc_res["dynbulletdamage"]||src), "dynbulletdamage")(Proj) //calls equipment
-	..()
-	return
+	return ..()
 
 /obj/mecha/proc/dynbulletdamage(obj/item/projectile/Proj)
 	if(prob(src.deflect_chance))
@@ -714,32 +713,6 @@
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
 		return
 
-	else if(istype(W, /obj/item/weapon/paintkit))
-
-		if(occupant)
-			to_chat(user, "You can't customize a mech while someone is piloting it - that would be unsafe!")
-			return
-
-		var/obj/item/weapon/paintkit/P = W
-		var/found = null
-
-		for(var/type in P.allowed_types)
-			if(type==src.initial_icon)
-				found = 1
-				break
-
-		if(!found)
-			to_chat(user, "That kit isn't meant for use on this class of exosuit.")
-			return
-
-		user.visible_message("[user] opens [P] and spends some quality time customising [src].")
-
-		src.name = P.new_name
-		src.desc = P.new_desc
-		src.initial_icon = P.new_icon
-		reset_icon()
-
-		qdel(P)
 	else if(istype(W, /obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/Ham = W
 		user.do_attack_animation(src)

@@ -29,6 +29,13 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
+/obj/item/clothing/suit/armor/vest/fullbody/psy_robe
+	name = "purple robes"
+	desc = "Heavy, royal purple robes threaded with psychic amplifiers and weird, bulbous lenses. Do not machine wash."
+	icon_state = "psyamp"
+	item_state = "psyamp"
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 0, bio = 100, rad = 100)
+
 /obj/item/clothing/suit/storage/flak
 	name = "security armor"
 	desc = "An armored vest that protects against some damage. This one has four pockets for storage."
@@ -49,6 +56,25 @@
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.set_slots(slots = 4, slot_size = SIZE_TINY)
+
+/obj/item/clothing/suit/storage/flak/police
+	name = "police armor"
+	desc = "An armored vest that protects against some damage. This one has four pockets for storage and a custom paintjob in colors of OCD."
+	icon_state = "police_armor"
+
+/obj/item/clothing/suit/storage/flak/police/fullbody
+	name = "police fullbody armor"
+	desc = "A set of armor covering the entire body. This variant is used by OCD and is painted accordingly."
+	icon_state = "police_armor_fullbody"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+/obj/item/clothing/suit/storage/flak/police/fullbody/heavy
+	name = "heavy fullbody armor"
+	desc = "A set of armor used by special weapons and tactics units of OCD. Justice will be served."
+	icon_state = "police_armor_heavy"
+	slowdown = 0.2
+	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/marinad
 	name = "marine armor"
@@ -96,12 +122,11 @@
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
-	desc = "A suit of armor with heavy padding to protect against melee attacks. Looks like it might impair movement."
+	desc = "A suit of armor with heavy padding to protect against melee attacks."
 	icon_state = "riot"
 	item_state = "swat_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 0.5
 	armor = list(melee = 80, bullet = 10, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 
@@ -150,6 +175,12 @@
 		return 0
 	if (prob(hit_reflect_chance))
 		return 1
+
+/obj/item/clothing/suit/armor/laserproof/police
+	name = "police ablative armor"
+	desc = "An experimental model of ablative armor issued in limited numbers to special units of OCD. This set of armor protects not only against lasers but is also sturdy enough to withstand other damage types."
+	icon_state = "police_armor_inspector"
+	armor = list(melee = 35, bullet = 35, laser = 65, energy = 75, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"
@@ -344,7 +375,6 @@
 	desc = "Black tactical kevlar vest, used by private security coropation. So tactics."
 	icon_state = "M66_KevlarVest"
 	item_state = "armor"
-	item_color = "M66_KevlarVest"
 	blood_overlay_type = "armor"
 	armor = list(melee = 60, bullet = 80, laser = 40, energy = 50, bomb = 25, bio = 0, rad = 0)
 	siemens_coefficient = 0.7

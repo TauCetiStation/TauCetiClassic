@@ -51,6 +51,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	var/facehugger = FALSE
 	var/pose_prev = 0
 	var/pose_last = 0
+	var/ian_sit = 0
 
 /mob/living/carbon/ian/atom_init()
 	reagents = new(1000)
@@ -64,8 +65,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	dna.SetUIState(DNA_UI_GENDER)
 
 	. = ..()
-
-	verbs += /mob/living/carbon/proc/crawl
 
 /mob/living/carbon/ian/UnarmedAttack(atom/A)
 	..()
@@ -398,7 +397,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 /mob/living/carbon/ian/is_usable_leg(targetzone = null)
 	return TRUE
 
-/mob/living/carbon/ian/bullet_act(obj/item/projectile/Proj)
+/mob/living/carbon/ian/bullet_act(obj/item/projectile/Proj, def_zone)
 	var/chance = 0
 	if(head && istype(head,/obj/item/clothing/head/helmet))
 		chance += 50
@@ -414,7 +413,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 		if(prob(15))
 			var/expression = pick("a resentful","a happy","an excited")
 			me_emote("looks with [expression] expression on his face and wants to play more!")
-		return
+		return PROJECTILE_ABSORBED
 
 	return ..()
 
@@ -484,3 +483,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	if(!speak.len)
 		return null
 	return pick(speak)
+
+/mob/living/carbon/ian/verb/ian_sit()
+	set name = "Ian Sit"
+	set category = "IC"
+	ian_sit = !ian_sit
+	to_chat(src, "<span class='notice'>You are now [ian_sit ? "sitting" : "getting up"].</span>")
+	update_canmove()

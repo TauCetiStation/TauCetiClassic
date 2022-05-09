@@ -405,7 +405,7 @@
 		return
 
 	// New life, new quality.
-	client.prefs.have_quality = FALSE
+	client.prefs.selected_quality_name = null
 
 	M.key = key
 //	M.Login()	//wat
@@ -745,8 +745,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 
-	lying = (ko || crawling || resting) && !captured && !buckled && !pinned.len
-	canmove = !(ko || resting || stunned || captured || pinned.len)
+	lying = (ko || crawling) && !captured && !buckled && !pinned.len
+	canmove = !(ko || stunned || captured || pinned.len)
 	anchored = captured || pinned.len
 
 	if(buckled)
@@ -924,19 +924,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		paralysis = 0
 
-// ========== RESTING ==========
-/mob/proc/Resting(amount)
-	resting = max(max(resting, amount), 0)
-	return
-
-/mob/proc/SetResting(amount)
-	resting = max(amount, 0)
-	return
-
-/mob/proc/AdjustResting(amount)
-	resting = max(resting + amount, 0)
-	return
-
+// ========== CRAWLING ==========
+/mob/proc/SetCrawling(value)
+	crawling = value
+	if(value)
+		pass_flags |= PASSCRAWL
+	else
+		pass_flags &= ~PASSCRAWL
 // ========== DRUGGINESS ==========
 /mob/proc/adjustDrugginess(amount)
 	druggy = max(druggy + amount, 0)
@@ -976,6 +970,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/SetShockStage(amount)
 	return
+
+//======= Bodytemperature =======
+/mob/proc/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY)
+	if(amount > 0)
+		if(bodytemperature < max_temp)
+			bodytemperature = min(max_temp, bodytemperature + amount)
+	else
+		if(bodytemperature > min_temp)
+			bodytemperature = max(min_temp, bodytemperature + amount)
 
 // =============================
 
@@ -1188,7 +1191,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return
 
 /mob/proc/can_pickup(obj/O)
-	return TRUE
+	return Adjacent(O)
 
 /atom/movable/proc/is_facehuggable()
 	return FALSE
@@ -1243,6 +1246,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 		set_dir(D)
 		spintime -= speed
 	flags &= ~IS_SPINNING
+
+/mob/proc/in_interaction_vicinity(atom/target)
+	return Adjacent(target)
 
 /mob/proc/confuse_input(dir)
 	return input_offsets["[dir]"]

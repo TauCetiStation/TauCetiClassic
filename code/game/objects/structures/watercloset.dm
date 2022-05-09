@@ -165,6 +165,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 					H.adjustFireLoss(20)
 		busy = FALSE
 		user.visible_message("<span class='notice'>[user] dried their hands using \the [src].</span>")
+		if(HAS_TRAIT_FROM(user, TRAIT_WET_HANDS, QUALITY_TRAIT))
+			var/mob/living/carbon/human/H = user
+			var/time_amount = rand(3000, 6000)
+			H.apply_status_effect(STATUS_EFFECT_REMOVE_WET, time_amount)
 	else
 		busy = FALSE
 
@@ -566,14 +570,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "shower-time", /datum/mood_event/shower)
 				return
 			if("freezing")
-				C.bodytemperature = max(80, C.bodytemperature - 80)
+				C.adjust_bodytemperature(-80, min_temp = 80)
 				C.adjustHalLoss(1)
 				C.AdjustStunned(-1)
 				C.AdjustWeakened(1)
 				to_chat(C, "<span class='warning'>The water is freezing!</span>")
 				return
 			if("boiling")
-				C.bodytemperature = min(500, C.bodytemperature + 35)
+				C.adjust_bodytemperature(35, max_temp = 500)
 				C.adjustFireLoss(5)
 				C.adjustHalLoss(1)
 				C.AdjustStunned(-1)
@@ -620,6 +624,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		if(ishuman(user))
 			user:update_inv_gloves()
 		user.visible_message("<span class='notice'>[user] washes their hands using \the [src].</span>")
+		if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
+			var/mob/living/carbon/human/H = user
+			var/time_amount = rand(3000, 6000)
+			H.apply_status_effect(STATUS_EFFECT_REMOVE_GREASY, time_amount)
 	else
 		busy = FALSE
 
@@ -683,7 +691,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			"<span class='notice'>You wash \a [I] using \the [src].</span>")
 	else
 		busy = FALSE
-
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"

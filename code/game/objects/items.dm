@@ -34,7 +34,6 @@
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
-	var/item_color = null
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	var/pierce_protection = 0
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
@@ -78,6 +77,8 @@
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
+
+	var/dyed_type
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -150,9 +151,6 @@
 			message += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span><br>"
 	if(M.getCloneLoss())
 		to_chat(user, "<span class='warning'>Subject appears to have been imperfectly cloned.</span>")
-	for(var/datum/disease/D in M.viruses)
-		if(!D.hidden[SCANNER])
-			message += "<span class = 'warning bold'>Warning: [D.form] Detected</span>\n<span class = 'warning'>Name: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span><br>"
 	if(M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
 		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span><br>"
 	if(M.has_brain_worms())
@@ -1026,6 +1024,11 @@
 	if(src != over)
 		remove_outline()
 
+/obj/item/be_thrown(mob/living/thrower, atom/target)
+	if(!canremove || flags & NODROP)
+		return null
+	return src
+
 /obj/item/airlock_crush_act()
 	var/qual_prying = get_quality(QUALITY_PRYING)
 	if(qual_prying <= 0)
@@ -1039,7 +1042,43 @@
 /obj/item/proc/display_accessories()
 	return
 
+/obj/item/taken(mob/living/user, atom/fallback)
+	if(user.Adjacent(src) && user.put_in_hands(src))
+		return TRUE
+
+	return ..()
+
 /obj/item/proc/get_quality(quality)
 	if(!qualities)
 		return 0
 	return qualities[quality]
+
+/obj/item/proc/get_dye_type(w_color)
+	if(!dyed_type)
+		return
+
+	var/list/dye_colors = global.dyed_item_types[dyed_type]
+	if(!dye_colors)
+		return
+
+	var/obj/item/clothing/dye_type = dye_colors[w_color]
+	if(!dye_type)
+		return
+
+	if(islist(dye_type))
+		dye_type = pick(dye_type)
+
+	return dye_type
+
+/obj/item/proc/wash_act(w_color)
+	decontaminate()
+	wet = 0
+
+	var/obj/item/clothing/dye_type = get_dye_type(w_color)
+	if(!dye_type)
+		return
+
+	name = initial(dye_type.name)
+	icon_state = initial(dye_type.icon_state)
+	item_state = initial(dye_type.item_state)
+	desc = "The colors are a bit dodgy."

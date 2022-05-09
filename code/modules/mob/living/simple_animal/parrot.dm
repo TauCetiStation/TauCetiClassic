@@ -249,7 +249,7 @@
 	return
 
 //Bullets
-/mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return

@@ -72,13 +72,16 @@
 		med_hud_set_health()
 		med_hud_set_status()
 
+/mob/living/carbon/xenomorph/get_heat_protection()
+	return heat_protection
+
 /mob/living/carbon/xenomorph/handle_environment(datum/gas_mixture/environment)
 
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in loc)
 		if(health >= maxHealth)
 			adjustToxLoss(plasma_rate)
-		else if(resting)
+		else if(crawling)
 			adjustBruteLoss(-heal_rate*2)
 			adjustFireLoss(-heal_rate*2)
 			adjustOxyLoss(-heal_rate*2)
@@ -100,19 +103,12 @@
 	var/loc_temp = get_temperature(environment)
 	var/pressure = environment.return_pressure()
 
-	//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Fire protection: [heat_protection] - Location: [loc] - src: [src]"
-
 	// Aliens are now weak to fire.
 
 	//After then, it reacts to the surrounding atmosphere based on your thermal protection
 	if(!on_fire) // If you're on fire, ignore local air temperature
-		if(loc_temp > bodytemperature)
-			//Place is hotter than we are
-			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(thermal_protection < 1)
-				bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
-		else
-			bodytemperature += 1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
+		var/affecting_temp = (loc_temp - bodytemperature) * environment.return_relative_density()
+		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 360)
@@ -283,8 +279,13 @@ Hit Procs
 /mob/living/carbon/xenomorph/getTrail()
 	return "xltrails"
 
+/mob/living/carbon/xenomorph/update_canmove()
+	canmove = !(weakened || paralysis || stat || (status_flags & FAKEDEATH) || crawling || stunned || captured || pinned.len)
+
 /mob/living/carbon/xenomorph/crawl()
-	return
+	SetCrawling(!crawling)
+	update_canmove()
+	to_chat(src, "<span class='notice'>You are now [crawling ? "resting" : "getting up"].</span>")
 
 /mob/living/carbon/xenomorph/swap_hand()
 	var/obj/item/item_in_hand = get_active_hand()
