@@ -273,6 +273,7 @@ using /obj/effect/datacore/proc/manifest_inject( ), or manifest_insert( )
 		var/icon/photo_side = new(ticon, dir = WEST)
 		var/datum/data/record/G = new()
 		G.fields["id"]			= id
+		G.fields["money_account_number"] = H.mind.initial_account.account_number
 		G.fields["name"]		= H.real_name
 		G.fields["real_rank"]	= H.mind.assigned_role
 		G.fields["rank"]		= assignment
@@ -323,6 +324,7 @@ using /obj/effect/datacore/proc/manifest_inject( ), or manifest_insert( )
 		//Security Record
 		var/datum/data/record/S = new()
 		S.fields["id"]			= id
+		S.fields["money_account_number"] = H.mind.initial_account.account_number
 		S.fields["name"]		= H.real_name
 		S.fields["criminal"]	= "None"
 		S.fields["mi_crim"]		= "None"

@@ -2,6 +2,7 @@
 	var/datum/data/record/G = new /datum/data/record()
 	G.fields["name"] = "New Record"
 	G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
+	G.fields["money_account_number"] = 000000
 	G.fields["rank"] = "Unassigned"
 	G.fields["real_rank"] = "Unassigned"
 	G.fields["sex"] = "Male"
@@ -23,6 +24,7 @@
 	var/datum/data/record/R = new /datum/data/record()
 	R.fields["name"] = name
 	R.fields["id"] = id
+	R.fields["money_account_number"] = 000000
 	R.name = text("Security Record #[id]")
 	R.fields["criminal"] = "None"
 	R.fields["mi_crim"] = "None"
@@ -101,7 +103,7 @@
  * * used_by_computer - If this function is used in a machinery, set TRUE. Needed for additional checks
  * * source - If this function is used in a machinery, pass the src
 */
-/proc/change_criminal_status(mob/user, author, target_name, security_record = null, used_by_computer = FALSE, source, criminal_status)
+/proc/change_criminal_status(mob/user, author, target_name, security_record = null, used_by_computer = FALSE, source, criminal_status, reason)
 	var/datum/data/record/S = security_record
 	if(S)
 		target_name = S.fields["name"]
@@ -114,13 +116,14 @@
 	if(!S)
 		to_chat(user, "<span class='warning'>Человек с таким именем не найден в базе данных службы безопасности.</span>")
 		return
-	if(!criminal_status)
+	if(!criminal_status && user)
 		criminal_status = input(user, "Укажите новый уголовный статус для этого человека.", "Уголовный статус", S.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Released", "Cancel")
 	if(criminal_status == "Cancel")
 		return
 	if(criminal_status == S.fields["criminal"]) //if nothing has changed
 		return
-	var/reason = sanitize(input(user, "Укажите причину:", "Причина", "не указана")  as message)
+	if(!reason && user)
+		reason = sanitize(input(user, "Укажите причину:", "Причина", "не указана")  as message)
 	if(used_by_computer)
 		if(user.incapacitated() || !(user.Adjacent(source) && isliving(user)))
 			return

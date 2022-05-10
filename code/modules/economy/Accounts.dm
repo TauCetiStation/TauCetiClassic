@@ -27,8 +27,8 @@
 	money = clamp(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
 
 	if(money < 100) //100 credits debt is allowed
-		var/mob/debtor = find_security_record("name", owner_name)
-		change_criminal_status(debtor, src, owner_name, criminal_status = "*Arrest*")
+		var/datum/data/record/debtor = find_security_record("money_account_number", account_number)
+		change_criminal_status(null, author = src, target_name = owner_name, security_record = debtor, criminal_status = "*Arrest*", reason = "Долг перед станцией превысил порог")
 
 /datum/money_account/proc/set_salary(amount, ratio = 1)
 	owner_salary = amount * ratio
