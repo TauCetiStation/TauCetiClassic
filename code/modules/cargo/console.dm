@@ -35,10 +35,10 @@ var/global/list/cargo_consoles = list()
 	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband_enabled
 	hacked = board.hacked
-	global.cargo_consoles += src
+	ADD_TO_GLOBAL_LIST(src, cargo_consoles)
 
 /obj/machinery/computer/cargo/proc/notify_tax_change(tax_old, tax_new)
-	visible_message("<span class='danger'>A Cargo Export Tax changed from [tax_old] to [tax_new]!</span>")
+	audible_message("[bicon(src)] <span class='notice'>[name] beeps, \"A Cargo Export Tax changed from [tax_old] to [tax_new]! \"")
 
 /obj/machinery/computer/cargo/ui_interact(mob/user)
 	var/dat
