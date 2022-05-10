@@ -89,6 +89,8 @@
 		if(istype(user, /obj/item/weapon/card/id))
 			var/obj/item/weapon/card/id/U = user
 			name = "[U.registered_name] ([U.assignment])"
+		if(istype(user, /datum/money_account))
+			name = "Autonomous Economic Crime Department"
 	R.fields[text("com_[counter]")] = text("<b>Made by [name] on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]:</b> <BR>[message]")
 
 /* The function changes the criminal status in the database. Used by securityHUD or machinery
@@ -99,7 +101,7 @@
  * * used_by_computer - If this function is used in a machinery, set TRUE. Needed for additional checks
  * * source - If this function is used in a machinery, pass the src
 */
-/proc/change_criminal_status(mob/user, author, target_name, security_record = null, used_by_computer = FALSE, source)
+/proc/change_criminal_status(mob/user, author, target_name, security_record = null, used_by_computer = FALSE, source, criminal_status)
 	var/datum/data/record/S = security_record
 	if(S)
 		target_name = S.fields["name"]
@@ -112,7 +114,8 @@
 	if(!S)
 		to_chat(user, "<span class='warning'>Человек с таким именем не найден в базе данных службы безопасности.</span>")
 		return
-	var/criminal_status = input(user, "Укажите новый уголовный статус для этого человека.", "Уголовный статус", S.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Released", "Cancel")
+	if(!criminal_status)
+		criminal_status = input(user, "Укажите новый уголовный статус для этого человека.", "Уголовный статус", S.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Released", "Cancel")
 	if(criminal_status == "Cancel")
 		return
 	if(criminal_status == S.fields["criminal"]) //if nothing has changed

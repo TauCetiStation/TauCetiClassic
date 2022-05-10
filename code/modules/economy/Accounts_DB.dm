@@ -131,11 +131,16 @@
 			if("change_export_tax")
 				var/amount = input("Enter the percent you want to set a tax to", "Export Tax %") as num
 				amount = clamp(amount, 0, 100)
+				for(var/obj/machinery/computer/cargo/Console in global.cargo_consoles)
+					Console.notify_tax_change(SSeconomy.tax_cargo_export, amount)
 				SSeconomy.tax_cargo_export = amount
 
 			if("change_income_tax")
 				var/amount = input("Enter the percent you want to set a tax to", "Income Tax %") as num
 				amount = clamp(amount, 0, 100)
+				for(var/datum/money_account/D in all_money_accounts)
+					if(D.owner_PDA)
+						D.owner_PDA.notify_tax_change(SSeconomy.tax_income, amount)
 				SSeconomy.tax_income = amount
 
 			if("change_department_subsidy")

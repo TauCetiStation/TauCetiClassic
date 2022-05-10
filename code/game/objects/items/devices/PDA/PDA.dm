@@ -1613,6 +1613,9 @@
 	to_chat(L, "[bicon(src)]<span class='notice'>Unable to transfer salary to your account. Not enough funds in your department. Please contact with your Command.</span>")
 	playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
+/obj/item/device/pda/proc/notify_tax_change(tax_old, tax_new)
+	visible_message("<span class='danger'>An Income Tax changed from [tax_old] to [tax_new]!</span>")
+
 /obj/item/device/pda/proc/check_rank(rank)
 	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1

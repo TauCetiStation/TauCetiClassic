@@ -26,6 +26,10 @@
 /datum/money_account/proc/adjust_money(amount)
 	money = clamp(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
 
+	if(money < 100) //100 credits debt is allowed
+		var/mob/debtor = find_security_record("name", owner_name)
+		change_criminal_status(debtor, src, owner_name, criminal_status = "*Arrest*")
+
 /datum/money_account/proc/set_salary(amount, ratio = 1)
 	owner_salary = amount * ratio
 	base_salary = amount
@@ -172,7 +176,10 @@
 			D.transaction_log.Add(T)
 
 			if(D.owner_PDA)
-				D.owner_PDA.transaction_inform(source_name, terminal_id, money)
+				if(amount >= 0)
+					D.owner_PDA.transaction_inform(source_name, terminal_id, money)
+				else
+					D.owner_PDA.transaction_inform(source_name, terminal_id, money)
 
 			return TRUE
 	return FALSE

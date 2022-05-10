@@ -43,24 +43,27 @@ SUBSYSTEM_DEF(economy)
 							if(!rank_table.len || rank_table.len == 0)
 								continue skimming_through_ranks //Next rank
 							for(var/datum/money_account/P in rank_table)
-								if(P.owner_salary <= 0)
+								if(P.owner_salary == 0)
 									continue skimming_through_personel //Next personel
-								if(D.money <= 0)
-									P.owner_PDA.transaction_failure()
-									continue skimming_through_personel //Error no money
-
-								if(salary_rank > D.money)
-									salary = round(D.money / rank_table.len * (1 - SSeconomy.tax_income*0.01)) //Dividing money for salaries
+								else if(P.owner_salary < 0)
+									charge_to_account(P.account_number, D.account_number, "[P.owner_name]'s paycheck payment", global.department_accounts[P.department], salary)
 								else
-									salary = round(P.owner_salary * (1 - SSeconomy.tax_income*0.01)) //Pure salaries
+									if(D.money <= 0 && P.owner_PDA)
+										P.owner_PDA.transaction_failure()
+										continue skimming_through_personel //Error no money
 
-								if(salary == 0)
-									P.owner_PDA.transaction_failure()
-									continue skimming_through_personel //Error no money
+									if(salary_rank > D.money)
+										salary = round(D.money / rank_table.len * (1 - SSeconomy.tax_income*0.01)) //Dividing money for salaries
+									else
+										salary = round(P.owner_salary * (1 - SSeconomy.tax_income*0.01)) //Pure salaries
 
-								charge_to_account(P.account_number, D.account_number, "[P.owner_name]'s Salary payment", global.department_accounts[P.department], salary)
-								dep_salary += salary
-								all_salaries += P.base_salary
+									if(salary == 0 && P.owner_PDA)
+										P.owner_PDA.transaction_failure()
+										continue skimming_through_personel //Error no money
+
+									charge_to_account(P.account_number, D.account_number, "[P.owner_name]'s Salary payment", global.department_accounts[P.department], salary)
+									dep_salary += salary
+									all_salaries += P.base_salary
 						charge_to_account(D.account_number, D.account_number, "Salaries of [r] rank payment", D.owner_name, -dep_salary)
 			else
 				continue

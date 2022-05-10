@@ -1,3 +1,5 @@
+var/global/list/cargo_consoles = list()
+
 /obj/machinery/computer/cargo
 	name = "Supply console"
 	desc = "Used to order supplies, approve requests, and control the shuttle."
@@ -33,6 +35,10 @@
 	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband_enabled
 	hacked = board.hacked
+	global.cargo_consoles += src
+
+/obj/machinery/computer/cargo/proc/notify_tax_change(tax_old, tax_new)
+	visible_message("<span class='danger'>A Cargo Export Tax changed from [tax_old] to [tax_new]!</span>")
 
 /obj/machinery/computer/cargo/ui_interact(mob/user)
 	var/dat
