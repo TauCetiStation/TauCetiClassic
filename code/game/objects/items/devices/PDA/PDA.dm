@@ -1611,7 +1611,7 @@
 	if(src.loc && isliving(src.loc))
 		L = src.loc
 	if(L)
-		to_chat(L, "[bicon(src)]<span class='notice'>Unable to transfer salary to your account. Not enough funds in your department. Please contact with your Command.</span>")
+		to_chat(L, "[bicon(src)]<span class='notice'>Unable to transfer salary to your account. Not enough funds in your department. Please contact your supervisors.</span>")
 		playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/device/pda/proc/check_rank(rank)
