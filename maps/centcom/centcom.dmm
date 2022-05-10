@@ -2284,14 +2284,6 @@
 	name = "grass"
 	},
 /area/custom/wizard_station)
-"afT" = (
-/obj/effect/landmark/blockway,
-/turf/unsimulated/floor/snow{
-	nitrogen = 100;
-	oxygen = 25;
-	temperature = 243
-	},
-/area/space)
 "afU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light,
@@ -13020,7 +13012,6 @@
 /obj/structure/closet/cabinet{
 	name = "Marisa"
 	},
-/obj/item/clothing/shoes/heels/alternate,
 /obj/item/clothing/suit/wizrobe/marisa,
 /obj/item/weapon/staff/broom,
 /obj/item/clothing/head/wizard/marisa,
@@ -13031,6 +13022,7 @@
 /obj/item/clothing/under/dress/dress_summer,
 /obj/item/clothing/under/pretty_dress,
 /obj/item/clothing/mask/scarf/violet,
+/obj/item/clothing/shoes/heels/alternate/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -13497,7 +13489,6 @@
 /obj/structure/closet/cabinet{
 	name = "Ded moroz"
 	},
-/obj/item/clothing/shoes/winterboots,
 /obj/item/weapon/storage/backpack/santabag{
 	name = "Ded Moroz Gift Bag"
 	},
@@ -13507,6 +13498,7 @@
 /obj/item/clothing/head/wizard/santa{
 	name = "Ded Moroz hat"
 	},
+/obj/item/clothing/shoes/winterboots/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood-broken4"
 	},
@@ -14207,7 +14199,6 @@
 /obj/structure/closet/cabinet{
 	name = "Pirate"
 	},
-/obj/item/clothing/shoes/boots,
 /obj/item/clothing/head/wizard/pirate,
 /obj/item/clothing/under/pirate,
 /obj/item/clothing/suit/wizrobe/pirate,
@@ -14217,6 +14208,7 @@
 	pixel_x = -25;
 	pixel_y = -3
 	},
+/obj/item/clothing/shoes/boots/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -14272,7 +14264,6 @@
 /obj/structure/closet/cabinet{
 	name = "Crusader"
 	},
-/obj/item/clothing/shoes/boots,
 /obj/item/clothing/suit/wizrobe/crusader,
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/head/wizard/crusader,
@@ -14287,6 +14278,7 @@
 	pixel_x = -25;
 	pixel_y = -3
 	},
+/obj/item/clothing/shoes/boots/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -19801,10 +19793,10 @@
 	icon = 'icons/obj/cult.dmi';
 	icon_state = "book"
 	},
-/obj/item/clothing/shoes/boots/German,
 /obj/item/clothing/under/color/black,
 /obj/item/clothing/suit/wizrobe/necromancer_hoodie,
 /obj/item/clothing/head/wizard/black_hood,
+/obj/item/clothing/shoes/boots/German/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood-broken"
 	},
@@ -20163,7 +20155,6 @@
 /obj/structure/closet/cabinet{
 	name = "Serif"
 	},
-/obj/item/clothing/shoes/western,
 /obj/item/clothing/under/cowboy,
 /obj/item/clothing/under/cowboy/grey,
 /obj/item/clothing/under/cowboy/brown,
@@ -20172,6 +20163,7 @@
 /obj/item/toy/gun/peacemaker,
 /obj/item/clothing/suit/wizrobe/serifcoat,
 /obj/item/clothing/head/wizard/cowboy,
+/obj/item/clothing/shoes/western/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -20264,10 +20256,10 @@
 	},
 /obj/item/clothing/mask/gnome_beard,
 /obj/item/clothing/under/gnome_suit,
-/obj/item/clothing/shoes/red,
 /obj/item/clothing/suit/wizrobe/suspenders,
 /obj/item/clothing/gloves/white,
 /obj/item/clothing/head/wizard/gnome_hat,
+/obj/item/clothing/shoes/red/wizard,
 /turf/unsimulated/floor/snow{
 	nitrogen = 100;
 	oxygen = 25;
@@ -31246,13 +31238,13 @@ abl
 baY
 abi
 abi
-afT
-afT
+baV
+baV
 aDf
-afT
-afT
-afT
-afT
+baV
+baV
+baV
+baV
 abh
 abi
 abi
@@ -31503,14 +31495,14 @@ abh
 abi
 abi
 baB
-afT
+baV
 abg
 aaY
 aaY
 aaY
 abg
-afT
-afT
+baV
+baV
 abi
 abl
 abi
@@ -31756,8 +31748,8 @@ abh
 abi
 bbx
 abi
-afT
-afT
+baV
+baV
 baW
 aCn
 abg
@@ -32011,9 +32003,9 @@ abi
 abh
 abi
 abi
-afT
+baV
 bco
-afT
+baV
 baH
 abl
 baQ
@@ -32024,10 +32016,10 @@ aDx
 aDR
 aGu
 abg
-afT
+baV
 aFU
-afT
-afT
+baV
+baV
 baB
 bbg
 abi
@@ -32265,9 +32257,9 @@ abi
 abi
 baM
 abi
-afT
+baV
 baB
-afT
+baV
 baP
 abi
 bdu
@@ -32522,7 +32514,7 @@ abi
 abh
 abi
 baP
-afT
+baV
 abi
 bbg
 aCX
@@ -32542,7 +32534,7 @@ abi
 abi
 abh
 abi
-afT
+baV
 abh
 abi
 abi
@@ -32777,8 +32769,8 @@ abh
 abi
 abi
 abi
-afT
-afT
+baV
+baV
 bbY
 aCF
 aCU
@@ -32800,7 +32792,7 @@ bbd
 baO
 abi
 baB
-afT
+baV
 bbg
 abi
 abi
@@ -33291,7 +33283,7 @@ abi
 abi
 abh
 abl
-afT
+baV
 baS
 abi
 abi
@@ -33314,7 +33306,7 @@ aGL
 abi
 baz
 abi
-afT
+baV
 aGh
 abi
 abi
@@ -33549,7 +33541,7 @@ abi
 abi
 abh
 abi
-afT
+baV
 baQ
 abi
 abi
@@ -33805,7 +33797,7 @@ abi
 baY
 abi
 abi
-afT
+baV
 baV
 abi
 abi
@@ -33828,8 +33820,8 @@ abi
 aCj
 abi
 abi
-afT
-afT
+baV
+baV
 baQ
 abi
 abi
@@ -34319,7 +34311,7 @@ abi
 abl
 afR
 abi
-afT
+baV
 baW
 abi
 abk
@@ -34342,7 +34334,7 @@ abg
 abk
 abi
 aGf
-afT
+baV
 baY
 abi
 abi
@@ -34577,7 +34569,7 @@ abi
 abi
 abh
 baO
-afT
+baV
 baw
 abi
 bbf
@@ -34833,7 +34825,7 @@ abh
 abt
 abi
 baD
-afT
+baV
 baB
 afR
 abi
@@ -34854,10 +34846,10 @@ aaY
 bcp
 bdO
 abg
-afT
+baV
 aGc
-afT
-afT
+baV
+baV
 baY
 abi
 abi
@@ -35114,8 +35106,8 @@ abg
 abg
 abg
 abg
-afT
-afT
+baV
+baV
 abh
 abi
 aeD
@@ -35346,7 +35338,7 @@ abi
 abi
 abh
 abi
-afT
+baV
 baQ
 abi
 abi
@@ -35372,7 +35364,7 @@ aBr
 aBx
 abg
 abg
-afT
+baV
 abi
 abh
 aeD
@@ -35860,7 +35852,7 @@ abi
 abi
 abh
 abi
-afT
+baV
 baQ
 abi
 abt
@@ -35886,7 +35878,7 @@ aBs
 aEx
 aGO
 abg
-afT
+baV
 abi
 abi
 aeD
@@ -36116,7 +36108,7 @@ abi
 abh
 abi
 abi
-afT
+baV
 baC
 abi
 abi
@@ -36143,7 +36135,7 @@ aFt
 aEy
 aBN
 abg
-afT
+baV
 abi
 abl
 aeD
@@ -36400,7 +36392,7 @@ aBw
 aBr
 abg
 abg
-afT
+baV
 abi
 abh
 aeD
@@ -36630,7 +36622,7 @@ abi
 abi
 abi
 abi
-afT
+baV
 baH
 abi
 abi
@@ -36656,8 +36648,8 @@ abg
 abg
 abg
 abg
-afT
-afT
+baV
+baV
 abi
 abi
 aeD
@@ -36887,9 +36879,9 @@ abi
 abh
 abi
 abk
-afT
+baV
 baN
-afT
+baV
 baB
 baO
 abi
@@ -36910,10 +36902,10 @@ aaY
 bdR
 aEU
 abg
-afT
-afT
+baV
+baV
 aFU
-afT
+baV
 abi
 abh
 abi
@@ -37147,7 +37139,7 @@ abi
 abl
 abh
 afR
-afT
+baV
 abh
 abi
 bbd
@@ -37424,7 +37416,7 @@ abg
 abg
 abg
 abi
-afT
+baV
 baB
 bbg
 abi
@@ -37660,8 +37652,8 @@ abi
 afR
 abi
 abh
-afT
-afT
+baV
+baV
 bay
 abi
 abi
@@ -37939,7 +37931,7 @@ abk
 abi
 bbz
 abi
-afT
+baV
 abh
 abi
 aGi
@@ -38174,8 +38166,8 @@ abi
 abi
 abi
 abh
-afT
-afT
+baV
+baV
 bbe
 bbd
 aCY
@@ -38197,7 +38189,7 @@ abi
 baO
 abi
 baB
-afT
+baV
 bbg
 abi
 bbf
@@ -38711,7 +38703,7 @@ abl
 abi
 aGe
 abi
-afT
+baV
 aGh
 abi
 abi
@@ -38946,7 +38938,7 @@ abi
 abi
 abi
 abh
-afT
+baV
 baM
 abi
 abi
@@ -38969,7 +38961,7 @@ abi
 afR
 abi
 baM
-afT
+baV
 baQ
 abi
 abi
@@ -39203,8 +39195,8 @@ abi
 abi
 abh
 abi
-afT
-afT
+baV
+baV
 abh
 abl
 baQ
@@ -39225,8 +39217,8 @@ abi
 abi
 abh
 bbg
-afT
-afT
+baV
+baV
 abi
 aGj
 abi
@@ -39461,8 +39453,8 @@ abi
 abi
 abi
 bau
-afT
-afT
+baV
+baV
 baB
 abi
 abi
@@ -39720,13 +39712,13 @@ abi
 abi
 abh
 abi
-afT
+baV
 baB
 abi
-afT
+baV
 baB
 aDu
-afT
+baV
 aaY
 bbk
 aDd
@@ -39737,9 +39729,9 @@ aaY
 abi
 aFw
 abk
-afT
+baV
 baB
-afT
+baV
 baQ
 abi
 abi
@@ -39978,9 +39970,9 @@ abi
 abi
 abh
 abi
-afT
+baV
 baB
-afT
+baV
 abl
 abi
 baB
@@ -39992,9 +39984,9 @@ bbi
 abg
 abg
 baB
-afT
+baV
 aGc
-afT
+baV
 abi
 baM
 abi
@@ -40240,15 +40232,15 @@ abi
 bbe
 abi
 abk
-afT
-afT
+baV
+baV
 abg
 aaY
 aaY
 aaY
 abg
-afT
-afT
+baV
+baV
 abh
 abi
 bbg
@@ -40498,13 +40490,13 @@ abi
 abh
 abi
 abi
-afT
+baV
 baB
-afT
+baV
 aET
-afT
-afT
-afT
+baV
+baV
+baV
 abi
 bbY
 abi
