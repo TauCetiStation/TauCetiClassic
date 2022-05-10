@@ -94,6 +94,7 @@
 	var/crawling = 0 //For crawling
 	var/canmove = 1
 	var/lastpuke = 0
+	var/last_move_intent = -100
 	var/unacidable = 0
 	var/list/pinned = list()            // List of things pinning this creature to walls (see living_defense.dm)
 	var/list/embedded = list()          // Embedded items, since simple mobs don't have organs.

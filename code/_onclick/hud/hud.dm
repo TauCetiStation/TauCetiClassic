@@ -228,7 +228,6 @@ var/global/list/available_ui_styles = list(
 			mymob.client.screen += mymob.internals
 			mymob.client.screen += lingstingdisplay
 			mymob.client.screen += lingchemdisplay
-			mymob.client.screen += mymob.gun_setting_icon
 
 			hidden_inventory_update()
 			persistant_inventory_update()
@@ -274,7 +273,6 @@ var/global/list/available_ui_styles = list(
 			mymob.client.screen -= mymob.internals
 			mymob.client.screen -= lingstingdisplay
 			mymob.client.screen -= lingchemdisplay
-			mymob.client.screen -= mymob.gun_setting_icon
 
 			hidden_inventory_update()
 			persistant_inventory_update()

@@ -891,14 +891,6 @@
 			icon_state = "droid-combat"
 		return
 
-//Call when target overlay should be added/removed
-/mob/living/silicon/robot/update_targeted()
-	if(!targeted_by && target_locked)
-		qdel(target_locked)
-	updateicon()
-	if (targeted_by && target_locked)
-		add_overlay(target_locked)
-
 /mob/living/silicon/robot/proc/installed_modules()
 	if(weapon_lock)
 		to_chat(src, "<span class='warning'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>")

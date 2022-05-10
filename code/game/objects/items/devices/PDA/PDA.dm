@@ -1207,7 +1207,6 @@
 /obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P, tap = 1)
 	if(tap && iscarbon(U))
 		U.visible_message("<span class='notice'>[U] taps on \his PDA's screen.</span>")
-	U.last_target_click = world.time
 	var/t = sanitize(input(U, "Please enter message", name, null) as text)
 	t = replacetext(t, "&#34;", "\"")
 

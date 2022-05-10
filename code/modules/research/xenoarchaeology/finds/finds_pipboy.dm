@@ -228,7 +228,6 @@
 /obj/item/clothing/gloves/pipboy/proc/create_personality(mob/living/U = usr)
 	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 	U.visible_message("<span class='notice'>[U] taps on \his [name]'s screen.</span>")
-	U.last_target_click = world.time
 	var/t = sanitize(input(U, "Please enter your name", name, null) as text)
 	t = replacetext(t, "&#34;", "\"")
 
@@ -250,7 +249,6 @@
 /obj/item/clothing/gloves/pipboy/proc/create_alarm_clock(mob/living/U = usr, numb_of_alarm)
 	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 	U.visible_message("<span class='notice'>[U] taps on \his [name]'s screen.</span>")
-	U.last_target_click = world.time
 	var/alarm = sanitize(input(U, "Please time for the alarm to ring(e.g. 12:00)", name, null) as text)
 	switch(numb_of_alarm)
 		if(1)

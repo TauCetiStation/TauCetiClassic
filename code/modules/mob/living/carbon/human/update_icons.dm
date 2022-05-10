@@ -339,18 +339,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	apply_overlay(MUTATIONS_LAYER)
 
-//Call when target overlay should be added/removed
-/mob/living/carbon/human/update_targeted()
-	remove_overlay(TARGETED_LAYER)
-
-	if(targeted_by && target_locked)
-		overlays_standing[TARGETED_LAYER]	= image("icon"=target_locked, "layer"=-TARGETED_LAYER)
-	else if (!targeted_by && target_locked)
-		qdel(target_locked)
-
-	apply_overlay(TARGETED_LAYER)
-
-
 /mob/living/carbon/human/update_fire() //TG-stuff, fire layer
 	remove_overlay(FIRE_LAYER)
 
