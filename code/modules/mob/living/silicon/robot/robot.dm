@@ -509,7 +509,7 @@
 			adjustBruteLoss(30)
 	updatehealth()
 
-/mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)
+/mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
@@ -698,6 +698,10 @@
 		else
 			if(allowed(usr))
 				locked = !locked
+				if(!locked)
+					throw_alert("not_locked", /atom/movable/screen/alert/not_locked)
+				else
+					clear_alert("not_locked")
 				to_chat(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
 				playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
 				updateicon()

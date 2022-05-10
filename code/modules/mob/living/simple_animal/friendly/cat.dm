@@ -32,7 +32,7 @@
 /mob/living/simple_animal/cat/Life()
 	//MICE!
 	if((src.loc) && isturf(src.loc))
-		if(!stat && !resting && !buckled)
+		if(!stat && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(!M.stat)
 					M.splat()
@@ -48,7 +48,7 @@
 			emote(pick("hisses and spits!","mrowls fiercely!","eyes [snack] hungrily."))
 		break
 
-	if(!stat && !resting && !buckled)
+	if(!stat && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			walk_to(src,0)
@@ -253,7 +253,7 @@ var/global/cat_number = 0
 		return
 	target_mob.attack_unarmed(src)
 
-/mob/living/simple_animal/cat/runtime/bullet_act(obj/item/projectile/proj)
+/mob/living/simple_animal/cat/runtime/bullet_act(obj/item/projectile/Proj, def_zone)
 	return PROJECTILE_FORCE_MISS
 
 /mob/living/simple_animal/cat/runtime/ex_act(severity)

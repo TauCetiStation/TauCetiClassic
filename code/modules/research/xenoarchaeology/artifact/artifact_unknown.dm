@@ -304,7 +304,8 @@
 			to_chat(AM, "<b>You accidentally touch [src].</b>")
 	..()
 
-/obj/machinery/artifact/bullet_act(obj/item/projectile/P)
+/obj/machinery/artifact/bullet_act(obj/item/projectile/P, def_zone)
+	. = ..()
 	if(istype(P,/obj/item/projectile/bullet) ||\
 		istype(P,/obj/item/projectile/hivebotbullet))
 		try_toggle_effects(TRIGGER_FORCE)

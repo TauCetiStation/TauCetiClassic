@@ -7,6 +7,8 @@
 	name = "organ"
 	germ_level = 0
 
+	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_APART | APPEARANCE_UI_IGNORE_ALPHA
+
 	// Strings.
 	var/parent_bodypart                // Bodypart holding this object.
 
@@ -23,12 +25,12 @@
 	// Damage vars.
 	var/min_broken_damage = 30         // Damage before becoming broken
 
-/obj/item/organ/proc/set_owner(mob/living/carbon/human/H)
+/obj/item/organ/proc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	loc = null
 	owner = H
 
-/obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
-	set_owner(H)
+/obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
+	set_owner(H, S)
 
 	STOP_PROCESSING(SSobj, src)
 
@@ -148,7 +150,7 @@
 /mob/living/carbon/human/proc/handle_stance()
 	// Don't need to process any of this if they aren't standing anyways
 	// unless their stance is damaged, and we want to check if they should stay down
-	if(!stance_damage && (lying || resting) && (life_tick % 4) != 0)
+	if(!stance_damage && (lying || crawling) && (life_tick % 4) != 0)
 		return
 
 	stance_damage = 0
@@ -189,7 +191,7 @@
 	// standing is poor
 	if(stance_damage >= 4 || (stance_damage >= 2 && prob(5)))
 		if(iszombie(src)) //zombies crawl when they can't stand
-			if(!crawling && !lying && !resting)
+			if(!crawling && !lying)
 				if(crawl_can_use())
 					crawl()
 				else
@@ -206,7 +208,7 @@
 				Weaken(5)
 			return
 
-		if(!(lying || resting))
+		if(!(lying || crawling))
 			if(species && !species.flags[NO_PAIN])
 				var/turf/T = get_turf(src)
 				var/do_we_scream = 1

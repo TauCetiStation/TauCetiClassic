@@ -264,13 +264,13 @@ update_flag
 /obj/machinery/portable_atmospherics/canister/blob_act()
 	take_damage(200)
 
-/obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		return
 
 	if(Proj.damage)
 		take_damage(round(Proj.damage / 2))
-	..()
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
@@ -458,8 +458,6 @@ update_flag
 			if(holding)
 				if (valve_open)
 					log_investigate("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the <span class='boldannounce'>air</span><br>", INVESTIGATE_ATMOS)
-				if(istype(holding, /obj/item/weapon/tank))
-					holding.manipulated_by = usr.real_name
 				holding.forceMove(get_turf(src))
 				holding = null
 				. = TRUE
