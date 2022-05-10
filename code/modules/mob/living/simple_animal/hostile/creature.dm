@@ -28,7 +28,7 @@
 
 /mob/living/simple_animal/hostile/creature/ahaha
 	name = "Землянной элементаль"
-	desc  = "Ищи себя в наебаных дермо-демонами"
+	desc  = "Ищи себя в выебаных дермо-демонами"
 	icon = 'icons/mob/amorph.dmi'
 	icon_state = "standing"
 	icon_dead = "lying"
@@ -73,18 +73,17 @@ mob/living/simple_animal/hostile/beholder
 
 /obj/item/projectile/temp/beholder/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	..()
-
+	var/mob/living/L = target
 	if(isChickenCurse)
-		var/mob/living/L = target
-		if(ispath(L,/mob/living/simple_animal/chicken))
-			return
-		if(isliving(target)&&(L.mind))
+		if(isliving(L)&&(L.mind)&&(istype(L,/mob/living/carbon/human)))
 			L.MyTrueNotChikenBody = target
 			var/mob/living/simple_animal/chicken/C = new/mob/living/simple_animal/chicken(L.loc)
 			L.mind.transfer_to(C)
 			C.MyTrueNotChikenBody = L.MyTrueNotChikenBody
 			playsound(L, 'sound/Event/cursed.ogg', VOL_EFFECTS_MASTER)
 			L.loc = null
+		else
+			return
 
 
 /obj/item/projectile/temp/beholder/atom_init()

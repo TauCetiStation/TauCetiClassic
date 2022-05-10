@@ -64,6 +64,9 @@
 
 /obj/structure/character_spawner/monk/attack_hand(mob/user)
 	..()
+	if(ready == "Нет")
+		selecting_job = FALSE
+		return
 	INVOKE_ASYNC(global.chaplain_religion, /datum/religion/chaplain.proc/create_by_chaplain, user)
 	user.AddSpell(new /obj/effect/proc_holder/spell/in_hand/arcane_barrage)
 	user.mutations.Add(TK)
