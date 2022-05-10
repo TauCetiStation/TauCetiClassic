@@ -427,7 +427,7 @@
 	icon_state = "inv3"
 	screen_loc = ui_inv3
 
-// AI
+// AI (&robot)
 /atom/movable/screen/ai_core
 	name = "AI Core"
 	icon = 'icons/mob/screen_ai.dmi'
@@ -487,6 +487,149 @@
 	icon = 'icons/mob/screen1_robot.dmi'
 	icon_state = "showalerts"
 	screen_loc = ui_borg_show_alerts
+
+/atom/movable/screen/announcement
+	name = "Announcement"
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "announcement"
+	screen_loc = ui_ai_announcement
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/call_shuttle
+	name = "Call Emergency Shuttle"
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "call_shuttle"
+	screen_loc = ui_ai_shuttle
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/state_laws
+	name = "State Laws"
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "state_laws"
+	screen_loc = ui_ai_state_laws
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/state_laws/robot
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "statelaws"
+	screen_loc = ui_borg_state_laws
+
+// Robot
+/atom/movable/screen/show_laws
+	name = "Show Laws"
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "showlaws"
+	screen_loc = ui_borg_show_laws
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/toggle_lights
+	name = "Toggle Lights"
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "togglelights"
+	screen_loc = ui_borg_light
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/self_diagnosis
+	name = "Self Diagnosis"
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "selfdiagnosis"
+	screen_loc = ui_borg_diagnostic
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/namepick
+	name = "Namepick"
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "changename"
+	screen_loc = ui_borg_namepick
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/show_pda_screens
+		name = "Show Pda Screens"
+		icon = 'icons/mob/screen1_robot.dmi'
+		icon_state = "pda"
+		screen_loc = ui_borg_show_pda
+		plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/show_photo_screens
+	name = "Show Foto Screens"
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "photo"
+	screen_loc = ui_borg_show_foto
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/toggle_components
+	name = "Toggle Components"
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "togglecompanent"
+	screen_loc = ui_borg_component
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/robot_pda
+	icon = 'icons/mob/screen1_robot.dmi'
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/robot_pda/send
+	name = "PDA - Send Message"
+	icon_state = "pda_send"
+
+/atom/movable/screen/robot_pda/send/ai
+	icon = 'icons/mob/screen_ai.dmi'
+	screen_loc = ui_ai_pda_send
+
+/atom/movable/screen/robot_pda/log
+	name = "PDA - Show Message Log"
+	icon_state = "pda_log"
+
+/atom/movable/screen/robot_pda/log/ai
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "pda_receive"
+	screen_loc = ui_ai_pda_log
+
+/atom/movable/screen/robot_pda/ringtone
+	name = "Pda - Ringtone"
+	icon_state = "ringtone"
+
+/atom/movable/screen/robot_pda/toggle
+	name = "Pda - Toggle"
+	icon_state = "toggleringer"
+
+/atom/movable/screen/robot_image
+	icon = 'icons/mob/screen1_robot.dmi'
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/robot_image/take
+	name = "Take Image"
+	icon_state = "takephoto"
+
+/atom/movable/screen/robot_image/take/ai
+	icon =  'icons/mob/screen_ai.dmi'
+	icon_state = "take_picture"
+	screen_loc = ui_ai_take_picture
+
+/atom/movable/screen/robot_image/view
+	name = "View Images"
+	icon_state = "photos"
+
+/atom/movable/screen/robot_image/view/ai
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "view_images"
+	screen_loc = ui_ai_view_images
+
+/atom/movable/screen/robot_image/delete
+	name = "Delete Image"
+	icon_state = "deletthis"
+
+/atom/movable/screen/sensor_augmentation
+	name = "Sensor Augmentation"
+	icon = 'icons/mob/screen_ai.dmi'
+	icon_state = "ai_sensor"
+	screen_loc = ui_ai_sensor
+	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/sensor_augmentation/robot
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "setsensor"
+	screen_loc = ui_borg_sensor
 
 /atom/movable/screen/Click(location, control, params)
 	if(!usr)

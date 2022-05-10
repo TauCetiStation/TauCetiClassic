@@ -33,75 +33,35 @@
 	adding += using
 
 //Announcement
-	using = new /atom/movable/screen()
-	using.name = "Announcement"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "announcement"
-	using.screen_loc = ui_ai_announcement
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/announcement()
 	adding += using
 
 //Shuttle
-	using = new /atom/movable/screen()
-	using.name = "Call Emergency Shuttle"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "call_shuttle"
-	using.screen_loc = ui_ai_shuttle
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/call_shuttle()
 	adding += using
 
 //Laws
-	using = new /atom/movable/screen()
-	using.name = "State Laws"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "state_laws"
-	using.screen_loc = ui_ai_state_laws
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/state_laws()
 	adding += using
 
 //PDA message
-	using = new /atom/movable/screen()
-	using.name = "PDA - Send Message"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "pda_send"
-	using.screen_loc = ui_ai_pda_send
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/robot_pda/send/ai()
 	adding += using
 
 //PDA log
-	using = new /atom/movable/screen()
-	using.name = "PDA - Show Message Log"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "pda_receive"
-	using.screen_loc = ui_ai_pda_log
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/robot_pda/log/ai()
 	adding += using
 
 //Take image
-	using = new /atom/movable/screen()
-	using.name = "Take Image"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "take_picture"
-	using.screen_loc = ui_ai_take_picture
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/robot_image/take/ai()
 	adding += using
 
 //View images
-	using = new /atom/movable/screen()
-	using.name = "View Images"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "view_images"
-	using.screen_loc = ui_ai_view_images
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/robot_image/view/ai()
 	adding += using
 
 //Medical/Security sensors
-	using = new /atom/movable/screen()
-	using.name = "Sensor Augmentation"
-	using.icon = 'icons/mob/screen_ai.dmi'
-	using.icon_state = "ai_sensor"
-	using.screen_loc = ui_ai_sensor
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/sensor_augmentation()
 	adding += using
 
 	mymob.client.screen += adding + other

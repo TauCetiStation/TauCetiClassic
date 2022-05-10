@@ -10,64 +10,38 @@ var/global/atom/movable/screen/robot_inventory
 
 	if(!isdrone(mymob))
 //Medical/Security sensors
-		using = new /atom/movable/screen()
-		using.name = "Sensor Augmentation"
-		using.icon = 'icons/mob/screen1_robot.dmi'
-		using.icon_state = "setsensor"
-		using.screen_loc = ui_borg_sensor
-		using.plane = ABOVE_HUD_PLANE
+		using = new /atom/movable/screen/sensor_augmentation/robot()
 		adding += using
 
 //Show PDA screens
-		using = new /atom/movable/screen()
-		using.name = "Show Pda Screens"
-		using.icon = 'icons/mob/screen1_robot.dmi'
-		using.icon_state = "pda"
-		using.screen_loc = ui_borg_show_pda
-		using.plane = ABOVE_HUD_PLANE
+		using = new /atom/movable/screen/show_pda_screens()
 		adding += using
-		var/list/screens = list("PDA - Send Message" = "pda_send", "PDA - Show Message Log" = "pda_log",\
-		"Pda - Ringtone" = "ringtone", "Pda - Toggle" = "toggleringer")
+		var/list/screens = list(
+			/atom/movable/screen/robot_pda/send, /atom/movable/screen/robot_pda/log,
+			/atom/movable/screen/robot_pda/ringtone, /atom/movable/screen/robot_pda/toggle,
+		)
 		var/screen_position = 2
-		for(var/name in screens)
-			var/atom/movable/screen/ousing = new /atom/movable/screen()
-			ousing.name = name
-			ousing.icon = 'icons/mob/screen1_robot.dmi'
-			ousing.icon_state = screens[name]
-			ousing.plane = ABOVE_HUD_PLANE
-			ousing.screen_loc = "SOUTH+[screen_position]:6,WEST"
+		for(var/screen_type in screens)
+			using = new screen_type()
+			using.screen_loc = "SOUTH+[screen_position]:6,WEST"
 			screen_position++
-			other += ousing
+			other += using
 
 //Show foto screens
-		using = new /atom/movable/screen()
-		using.name = "Show Foto Screens"
-		using.icon = 'icons/mob/screen1_robot.dmi'
-		using.icon_state = "photo"
-		using.screen_loc = ui_borg_show_foto
-		using.plane = ABOVE_HUD_PLANE
+		using = new /atom/movable/screen/show_photo_screens()
 		adding += using
-		screens = list("Take Image" = "takephoto", "View Images" = "photos", "Delete Image" = "deletthis")
+		screens = list(/atom/movable/screen/robot_image/take, /atom/movable/screen/robot_image/view, /atom/movable/screen/robot_image/delete)
 		screen_position = 2
-		for(var/name in screens)
-			var/atom/movable/screen/ousing = new /atom/movable/screen()
-			ousing.name = name
-			ousing.icon = 'icons/mob/screen1_robot.dmi'
-			ousing.icon_state = screens[name]
-			ousing.plane = ABOVE_HUD_PLANE
-			ousing.screen_loc = "SOUTH+[screen_position]:6,WEST+1"
+		for(var/screen_type in screens)
+			using = new screen_type()
+			using.screen_loc = "SOUTH+[screen_position]:6,WEST+1"
 			screen_position++
-			other += ousing
+			other += using
 
 //Namepick
 		var/mob/living/silicon/robot/R = mymob
 		if(!R.custom_name)
-			using = new /atom/movable/screen()
-			using.name = "Namepick"
-			using.icon = 'icons/mob/screen1_robot.dmi'
-			using.icon_state = "changename"
-			using.screen_loc = ui_borg_namepick
-			using.plane = ABOVE_HUD_PLANE
+			using = new /atom/movable/screen/namepick()
 			adding += using
 
 //Manifest
@@ -75,12 +49,7 @@ var/global/atom/movable/screen/robot_inventory
 	adding += using
 
 //Diagnosis
-	using = new /atom/movable/screen()
-	using.name = "Self Diagnosis"
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = "selfdiagnosis"
-	using.screen_loc = ui_borg_diagnostic
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/self_diagnosis()
 	adding += using
 
 //Alerts
@@ -88,39 +57,19 @@ var/global/atom/movable/screen/robot_inventory
 	adding += using
 
 //State Laws
-	using = new /atom/movable/screen()
-	using.name = "State Laws"
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = "statelaws"
-	using.screen_loc = ui_borg_state_laws
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/state_laws/robot()
 	adding += using
 
 // Show Laws
-	using = new /atom/movable/screen()
-	using.name = "Show Laws"
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = "showlaws"
-	using.screen_loc = ui_borg_show_laws
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/show_laws()
 	adding += using
 
 // Toggle Component
-	using = new /atom/movable/screen()
-	using.name = "Toggle Components"
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = "togglecompanent"
-	using.screen_loc = ui_borg_component
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/toggle_component()
 	adding += using
 
 // Toggle Lights
-	using = new /atom/movable/screen()
-	using.name = "Toggle Lights"
-	using.icon = 'icons/mob/screen1_robot.dmi'
-	using.icon_state = "togglelights"
-	using.screen_loc = ui_borg_light
-	using.plane = ABOVE_HUD_PLANE
+	using = new /atom/movable/screen/toggle_lights()
 	adding += using
 
 //Radio
