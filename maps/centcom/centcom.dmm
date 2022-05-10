@@ -2284,6 +2284,14 @@
 	name = "grass"
 	},
 /area/custom/wizard_station)
+"afT" = (
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	nitrogen = 100;
+	oxygen = 25;
+	temperature = 243
+	},
+/area/space)
 "afU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light,
@@ -20016,14 +20024,6 @@
 	icon_state = "wood-broken"
 	},
 /area/custom/wizard_station)
-"baV" = (
-/obj/effect/landmark/blockway,
-/turf/unsimulated/floor/snow{
-	nitrogen = 100;
-	oxygen = 25;
-	temperature = 243
-	},
-/area/space)
 "baW" = (
 /obj/structure/flora/tree/pine{
 	layer = 9.5
@@ -31238,13 +31238,13 @@ abl
 baY
 abi
 abi
-baV
-baV
+afT
+afT
 aDf
-baV
-baV
-baV
-baV
+afT
+afT
+afT
+afT
 abh
 abi
 abi
@@ -31495,14 +31495,14 @@ abh
 abi
 abi
 baB
-baV
+afT
 abg
 aaY
 aaY
 aaY
 abg
-baV
-baV
+afT
+afT
 abi
 abl
 abi
@@ -31748,8 +31748,8 @@ abh
 abi
 bbx
 abi
-baV
-baV
+afT
+afT
 baW
 aCn
 abg
@@ -32003,9 +32003,9 @@ abi
 abh
 abi
 abi
-baV
+afT
 bco
-baV
+afT
 baH
 abl
 baQ
@@ -32016,10 +32016,10 @@ aDx
 aDR
 aGu
 abg
-baV
+afT
 aFU
-baV
-baV
+afT
+afT
 baB
 bbg
 abi
@@ -32257,9 +32257,9 @@ abi
 abi
 baM
 abi
-baV
+afT
 baB
-baV
+afT
 baP
 abi
 bdu
@@ -32514,7 +32514,7 @@ abi
 abh
 abi
 baP
-baV
+afT
 abi
 bbg
 aCX
@@ -32534,7 +32534,7 @@ abi
 abi
 abh
 abi
-baV
+afT
 abh
 abi
 abi
@@ -32769,8 +32769,8 @@ abh
 abi
 abi
 abi
-baV
-baV
+afT
+afT
 bbY
 aCF
 aCU
@@ -32792,7 +32792,7 @@ bbd
 baO
 abi
 baB
-baV
+afT
 bbg
 abi
 abi
@@ -33283,7 +33283,7 @@ abi
 abi
 abh
 abl
-baV
+afT
 baS
 abi
 abi
@@ -33306,7 +33306,7 @@ aGL
 abi
 baz
 abi
-baV
+afT
 aGh
 abi
 abi
@@ -33541,7 +33541,7 @@ abi
 abi
 abh
 abi
-baV
+afT
 baQ
 abi
 abi
@@ -33797,8 +33797,8 @@ abi
 baY
 abi
 abi
-baV
-baV
+afT
+afT
 abi
 abi
 abi
@@ -33820,8 +33820,8 @@ abi
 aCj
 abi
 abi
-baV
-baV
+afT
+afT
 baQ
 abi
 abi
@@ -34311,7 +34311,7 @@ abi
 abl
 afR
 abi
-baV
+afT
 baW
 abi
 abk
@@ -34334,7 +34334,7 @@ abg
 abk
 abi
 aGf
-baV
+afT
 baY
 abi
 abi
@@ -34569,7 +34569,7 @@ abi
 abi
 abh
 baO
-baV
+afT
 baw
 abi
 bbf
@@ -34825,7 +34825,7 @@ abh
 abt
 abi
 baD
-baV
+afT
 baB
 afR
 abi
@@ -34846,10 +34846,10 @@ aaY
 bcp
 bdO
 abg
-baV
+afT
 aGc
-baV
-baV
+afT
+afT
 baY
 abi
 abi
@@ -35106,8 +35106,8 @@ abg
 abg
 abg
 abg
-baV
-baV
+afT
+afT
 abh
 abi
 aeD
@@ -35338,7 +35338,7 @@ abi
 abi
 abh
 abi
-baV
+afT
 baQ
 abi
 abi
@@ -35364,7 +35364,7 @@ aBr
 aBx
 abg
 abg
-baV
+afT
 abi
 abh
 aeD
@@ -35852,7 +35852,7 @@ abi
 abi
 abh
 abi
-baV
+afT
 baQ
 abi
 abt
@@ -35878,7 +35878,7 @@ aBs
 aEx
 aGO
 abg
-baV
+afT
 abi
 abi
 aeD
@@ -36108,7 +36108,7 @@ abi
 abh
 abi
 abi
-baV
+afT
 baC
 abi
 abi
@@ -36135,7 +36135,7 @@ aFt
 aEy
 aBN
 abg
-baV
+afT
 abi
 abl
 aeD
@@ -36392,7 +36392,7 @@ aBw
 aBr
 abg
 abg
-baV
+afT
 abi
 abh
 aeD
@@ -36622,7 +36622,7 @@ abi
 abi
 abi
 abi
-baV
+afT
 baH
 abi
 abi
@@ -36648,8 +36648,8 @@ abg
 abg
 abg
 abg
-baV
-baV
+afT
+afT
 abi
 abi
 aeD
@@ -36879,9 +36879,9 @@ abi
 abh
 abi
 abk
-baV
+afT
 baN
-baV
+afT
 baB
 baO
 abi
@@ -36902,10 +36902,10 @@ aaY
 bdR
 aEU
 abg
-baV
-baV
+afT
+afT
 aFU
-baV
+afT
 abi
 abh
 abi
@@ -37139,7 +37139,7 @@ abi
 abl
 abh
 afR
-baV
+afT
 abh
 abi
 bbd
@@ -37416,7 +37416,7 @@ abg
 abg
 abg
 abi
-baV
+afT
 baB
 bbg
 abi
@@ -37652,8 +37652,8 @@ abi
 afR
 abi
 abh
-baV
-baV
+afT
+afT
 bay
 abi
 abi
@@ -37931,7 +37931,7 @@ abk
 abi
 bbz
 abi
-baV
+afT
 abh
 abi
 aGi
@@ -38166,8 +38166,8 @@ abi
 abi
 abi
 abh
-baV
-baV
+afT
+afT
 bbe
 bbd
 aCY
@@ -38189,7 +38189,7 @@ abi
 baO
 abi
 baB
-baV
+afT
 bbg
 abi
 bbf
@@ -38703,7 +38703,7 @@ abl
 abi
 aGe
 abi
-baV
+afT
 aGh
 abi
 abi
@@ -38938,7 +38938,7 @@ abi
 abi
 abi
 abh
-baV
+afT
 baM
 abi
 abi
@@ -38961,7 +38961,7 @@ abi
 afR
 abi
 baM
-baV
+afT
 baQ
 abi
 abi
@@ -39195,8 +39195,8 @@ abi
 abi
 abh
 abi
-baV
-baV
+afT
+afT
 abh
 abl
 baQ
@@ -39217,8 +39217,8 @@ abi
 abi
 abh
 bbg
-baV
-baV
+afT
+afT
 abi
 aGj
 abi
@@ -39453,8 +39453,8 @@ abi
 abi
 abi
 bau
-baV
-baV
+afT
+afT
 baB
 abi
 abi
@@ -39712,13 +39712,13 @@ abi
 abi
 abh
 abi
-baV
+afT
 baB
 abi
-baV
+afT
 baB
 aDu
-baV
+afT
 aaY
 bbk
 aDd
@@ -39729,9 +39729,9 @@ aaY
 abi
 aFw
 abk
-baV
+afT
 baB
-baV
+afT
 baQ
 abi
 abi
@@ -39970,9 +39970,9 @@ abi
 abi
 abh
 abi
-baV
+afT
 baB
-baV
+afT
 abl
 abi
 baB
@@ -39984,9 +39984,9 @@ bbi
 abg
 abg
 baB
-baV
+afT
 aGc
-baV
+afT
 abi
 baM
 abi
@@ -40232,15 +40232,15 @@ abi
 bbe
 abi
 abk
-baV
-baV
+afT
+afT
 abg
 aaY
 aaY
 aaY
 abg
-baV
-baV
+afT
+afT
 abh
 abi
 bbg
@@ -40490,13 +40490,13 @@ abi
 abh
 abi
 abi
-baV
+afT
 baB
-baV
+afT
 aET
-baV
-baV
-baV
+afT
+afT
+afT
 abi
 bbY
 abi
