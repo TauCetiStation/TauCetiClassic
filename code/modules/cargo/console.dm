@@ -1,5 +1,6 @@
 var/global/list/cargo_consoles = list()
 
+ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 /obj/machinery/computer/cargo
 	name = "Supply console"
 	desc = "Used to order supplies, approve requests, and control the shuttle."
@@ -35,7 +36,6 @@ var/global/list/cargo_consoles = list()
 	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband_enabled
 	hacked = board.hacked
-	ADD_TO_GLOBAL_LIST(src, cargo_consoles)
 
 /obj/machinery/computer/cargo/proc/notify_tax_change(tax_old, tax_new)
 	audible_message("[bicon(src)] <span class='notice'>[name] beeps, \"A Cargo Export Tax changed from [tax_old] to [tax_new]! \"")
