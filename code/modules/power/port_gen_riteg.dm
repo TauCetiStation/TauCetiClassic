@@ -2,8 +2,8 @@
 
 /obj/machinery/power/port_gen/riteg
 	name = "C.H.E.R.N.O.B.Y.L-type Portable Emergency Generator"
-	icon_state = "gen_uranium-off"
-	icon_state_on = "gen_uranium-on"
+	icon_state = "gen_gen_chernobyl-o-off"
+	icon_state_on = "gen_gen_chernobyl-o-on"
 	power_gen = 5000
 	var/rad_cooef = 40
 	var/rad_range = 1
