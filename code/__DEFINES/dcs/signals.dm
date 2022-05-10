@@ -340,5 +340,5 @@
 
 // send this signal to check can you use this item in /datum/component/magic_item: (group_string)
 #define COMSIG_MAGIC_ITEM_CAN_USE "magic_item_can_use"
-	#define COMPONENT_BLOCK_MAGIC_ITEM 1
-	#define COMPONENT_ALLOW_MAGIC_ITEM 2
+	#define COMPONENT_BLOCK_MAGIC_ITEM (1<<0)
+	#define COMPONENT_ALLOW_MAGIC_ITEM (1<<1)
