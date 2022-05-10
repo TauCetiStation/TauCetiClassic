@@ -285,6 +285,58 @@
 	var/list/radial_chooses
 
 
+// VILAGE
+
+/obj/item/weapon/card/id/peasant
+	name = "Ключ Крестьянина"
+	access = list(access_peasant)
+	icon_state = "peasantkey"
+	desc = "Ключик"
+/obj/item/weapon/card/id/helper
+	name = "Ключ Послушника"
+	access = list(access_helper)
+	icon_state = "peasantkey"
+	desc = "Ключик"
+/obj/item/weapon/card/id/headman
+	name = "Ключ Старосты"
+	access = list(access_peasant,access_headman,access_knight,access_innkeeper,access_inn1,access_inn2,access_inn3)
+	icon_state = "peasantkey"
+	desc = "Ключик"
+/obj/item/weapon/card/id/innkeeper
+	name = "Ключ Трактирщика"
+	access = list(access_innkeeper,access_inn1,access_inn2,access_inn3)
+	icon_state = "innkeeperkey"
+	desc = "Ключик"
+/obj/item/weapon/card/id/innkeeper1
+	name = "Ключ 1 Комнаты"
+	access = list(access_innkeeper,access_inn1)
+	icon_state = "innkeeperkey"
+	desc = "Ключик"
+/obj/item/weapon/card/id/innkeeper2
+	name = "Ключ 2 Комнаты"
+	access = list(access_innkeeper,access_inn2)
+	icon_state = "innkeeperkey"
+	desc = "Ключик"
+/obj/item/weapon/card/id/innkeeper3
+	name = "Ключ 3 Комнаты"
+	access = list(access_innkeeper,access_inn3)
+	icon_state = "innkeeperkey"
+	desc = "Ключик"
+/obj/item/weapon/card/id/monk
+	name = "Ключ Монаха"
+	access = list(access_monk,access_helper)
+	icon_state = "monkkey"
+	desc = "Ключик"
+/obj/item/weapon/card/id/knight
+	name = "Ключ Рыцаря"
+	access = list(access_knight)
+	icon_state = "knightkey"
+	desc = "Ключик"
+/obj/item/weapon/card/id/hhero
+	name = "Ключ Лорда"
+	access = list(access_hero,access_peasant,access_knight,access_headman,access_innkeeper,access_inn1,access_inn2,access_inn3)
+	icon_state = "herokey"
+	desc = "Ключик"
 
 /obj/item/weapon/card/id/syndicate/atom_init()
 	. = ..()

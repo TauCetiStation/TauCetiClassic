@@ -25,7 +25,7 @@
 	projectiletype = /obj/item/projectile/magic/fireball
 	stop_automated_movement_when_pulled = FALSE
 	melee_damage = 40
-	speed = 5
+	speed = 4
 	move_to_delay = 5
 	ranged = TRUE
 	pixel_x = -16

@@ -27,7 +27,7 @@
 
 /obj/effect/portal/hub/job_room
 	var/job_count = 0
-	var/hero_arive = FALSE
+	var/solo = FALSE
 	var/global/list/portals = list()
 
 /obj/effect/portal/hub/job_room/atom_init()
@@ -35,8 +35,12 @@
 	portals += src
 
 /obj/effect/portal/hub/job_room/Bumped(mob/M)
-	..()
+	if(solo)
+		if(job_count > 0)
+			to_chat(M, "<span class='notice'>Эта профессия уникальна и уже занята</span>")
+			return
 	job_count += 1
+		..()
 
 // Тир 1
 /obj/effect/portal/hub/job_room/peasant
@@ -53,6 +57,18 @@
 	A = /area/custom/helper_hub
 	name = "Поcлушник"
 	desc = ""
+
+/obj/effect/portal/hub/job_room/headman
+	A = /area/custom/headman_hub
+	name = "Староста"
+	desc = ""
+	solo = TRUE
+
+/obj/effect/portal/hub/job_room/innkeeper
+	A = /area/custom/innkeeper_hub
+	name = "Трактирщик"
+	desc = ""
+	solo = TRUE
 
 /obj/effect/portal/hub/job_room/whitelist_room
 	var/obj/effect/portal/hub/job_room/room_to_check
@@ -71,9 +87,9 @@
 			my_room = P
 
 /obj/effect/portal/hub/job_room/whitelist_room/Bumped(mob/M)
-	if(hero_arive)
+	if(solo)
 		if(job_count > 0)
-			to_chat(M, "<span class='notice'> У города уже есть герой.</span>")
+			to_chat(M, "<span class='notice'>Эта профессия уникальна и уже занята</span>")
 			return
 	number_of_players = my_room.job_count
 	if(number_of_players < threshold)
@@ -112,4 +128,4 @@
 	desc = ""
 	room_to_check =/obj/effect/portal/hub/job_room/whitelist_room/knight
 	threshold = 3
-	hero_arive = TRUE
+	solo = TRUE

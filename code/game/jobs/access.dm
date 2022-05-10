@@ -88,6 +88,18 @@
 /var/const/access_syndicate = 150//General Syndicate Access
 /var/const/access_syndicate_commander = 151 //Syndicate Commander Access
 
+	//The Vilage
+/var/const/access_peasant = 151
+/var/const/access_headman = 152
+/var/const/access_innkeeper = 153
+/var/const/access_helper = 154
+/var/const/access_monk = 155
+/var/const/access_knight = 156
+/var/const/access_hero = 157
+
+/var/const/access_inn1 = 158
+/var/const/access_inn2 = 159
+/var/const/access_inn3 = 160
 	//MONEY
 /var/const/access_crate_cash = 200
 

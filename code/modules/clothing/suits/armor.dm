@@ -133,8 +133,8 @@
 /obj/item/clothing/suit/armor/milita
 	name = "Доспех Ополчения"
 	desc = "Не такой крепкий как у рыцарей, но зато твой."
-	icon_state = "milita"
-	item_state = "milita"
+	icon_state = "milita_armor"
+	item_state = "milita_armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 30, bullet = 10, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)

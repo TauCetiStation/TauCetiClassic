@@ -165,6 +165,7 @@
 	uniform = /obj/item/clothing/under/peasant
 	shoes = /obj/item/clothing/shoes/leather
 	l_hand =/obj/item/weapon/hatchet
+	id = /obj/item/weapon/card/id/peasant
 
 /datum/outfit/job/hub/smith
 	name = OUTFIT_JOB_NAME("Smith")
@@ -173,12 +174,14 @@
 	l_hand = /obj/item/weapon/smith_hammer
 	gloves = /obj/item/clothing/gloves/black
 	suit = /obj/item/clothing/suit/chef/classic
+	id = /obj/item/weapon/card/id/peasant
 
 /datum/outfit/job/hub/miner
 	name = OUTFIT_JOB_NAME("Miner")
 	uniform = /obj/item/clothing/under/peasant
 	shoes = /obj/item/clothing/shoes/leather
 	l_hand = /obj/item/weapon/pickaxe/silver
+	id = /obj/item/weapon/card/id/peasant
 
 /datum/outfit/job/hub/helper
 	name = OUTFIT_JOB_NAME("Helper")
@@ -187,6 +190,23 @@
 	shoes = /obj/item/clothing/shoes/leather
 	head = /obj/item/clothing/head/monk_helper
 	l_hand = /obj/item/weapon/staff/broom/monk
+	id = /obj/item/weapon/card/id/helper
+
+/datum/outfit/job/hub/headman
+	name = OUTFIT_JOB_NAME("Headman")
+	uniform = /obj/item/clothing/under/peasant
+	shoes = /obj/item/clothing/shoes/leather
+	l_hand =/obj/item/weapon/hatchet
+	id = /obj/item/weapon/card/id/headman
+	back = /obj/item/weapon/storage/backpack/satchel
+
+/datum/outfit/job/hub/innkeeper
+	name = OUTFIT_JOB_NAME("Innkeeper")
+	uniform = /obj/item/clothing/under/peasant
+	shoes = /obj/item/clothing/shoes/leather
+	l_hand =/obj/item/weapon/hatchet
+	id = /obj/item/weapon/card/id/innkeeper
+	back = /obj/item/weapon/storage/backpack/satchel
 
 /datum/outfit/job/hub/knight
 	name = OUTFIT_JOB_NAME("Knight")
@@ -197,6 +217,7 @@
 	head = /obj/item/clothing/head/helmet/crusader
 	l_hand = /obj/item/weapon/claymore/religion
 	back = ""
+	id = /obj/item/weapon/card/id/knight
 
 
 /datum/outfit/job/hub/monk
@@ -208,6 +229,7 @@
 	head = /obj/item/clothing/head/wizard/monk
 	l_hand = /obj/item/weapon/nullrod
 	back = ""
+	id = /obj/item/weapon/card/id/monk
 
 /datum/outfit/job/hub/human_hero
 	name = OUTFIT_JOB_NAME("Human Hero")
@@ -218,3 +240,4 @@
 	head = /obj/item/clothing/head/byzantine_hat
 	r_hand = /obj/item/toy/flag
 	back = ""
+	id = /obj/item/weapon/card/id/hhero

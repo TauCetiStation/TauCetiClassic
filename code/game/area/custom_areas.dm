@@ -124,6 +124,14 @@
 	name = "Helper_hub"
 	icon_state = "blue-red-d"
 
+/area/custom/headman_hub
+	name = "Headman_hub"
+	icon_state = "blue-red-d"
+
+/area/custom/innkeeper_hub
+	name = "Innkeeper_hub"
+	icon_state = "blue-red-d"
+
 /area/custom/knight_hub
 	name = "Knight_hub"
 	icon_state = "blue-red-d"
@@ -156,6 +164,12 @@
 
 /area/custom/start_homm/helper
 	name = "HelperStart"
+
+/area/custom/start_homm/headman
+	name = "HeadmanStart"
+
+/area/custom/start_homm/innkeeper
+	name = "InnkeeperStart"
 
 /area/custom/start_homm/knight
 	name = "KnightStart"

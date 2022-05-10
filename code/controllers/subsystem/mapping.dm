@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(mapping)
 	// Load templates
 	preloadTemplates()
 	// Space structures
-	spawn_space_structures()
+	//spawn_space_structures()
 
 	..()
 
@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(mapping)
 	var/y1
 	var/x2 // right-top
 	var/y2
-
+/*
 /datum/controller/subsystem/mapping/proc/spawn_space_structures()
 	if(!length(levels_by_trait(ZTRAIT_SPACE_RUINS)))
 		return
@@ -108,7 +108,7 @@ SUBSYSTEM_DEF(mapping)
 			info("[structure_id] was created in [COORD(T)]")
 			message_admins("[structure_id] was created in [COORD(T)] [ADMIN_JMP(T)]")
 #endif
-
+*/
 /datum/controller/subsystem/mapping/proc/find_spot(datum/map_template/space_structure/structure)
 	var/structure_size = CEIL(max(structure.width / 2, structure.height / 2))
 	var/structure_padding = structure_size + TRANSITIONEDGE + 5
