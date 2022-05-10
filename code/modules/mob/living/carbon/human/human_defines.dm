@@ -55,7 +55,7 @@
 	var/citizenship = ""
 	var/personal_faction = ""
 	var/religion = ""
-	var/rank = ""
+	var/vox_rank = ""
 
 	//Equipment slots
 	var/obj/item/wear_suit = null
