@@ -33,7 +33,7 @@
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
 	faction = "untouchable"
-	var/im_rat_without_sprite = FALSE
+	var/color_randomize_and_snuffles = TRUE //del this when rat will get a colorize sprite
 
 	has_head = TRUE
 	has_arm = TRUE
@@ -44,13 +44,13 @@
 	if(!stat && prob(speak_chance))
 		for(var/mob/M in view())
 			M.playsound_local(loc, 'sound/effects/mousesqueek.ogg', VOL_EFFECTS_MASTER)
-	if(!ckey && stat == CONSCIOUS && prob(0.5) && !im_rat_without_sprite)
+	if(!ckey && stat == CONSCIOUS && prob(0.5) && color_randomize_and_snuffles)
 		stat = UNCONSCIOUS
 		icon_state = "mouse_[body_color]_sleep"
 		wander = FALSE
 		speak_chance = 0
 		//snuffles
-	else if(stat == UNCONSCIOUS && !im_rat_without_sprite)
+	else if(stat == UNCONSCIOUS && color_randomize_and_snuffles)
 		if(ckey || prob(1))
 			stat = CONSCIOUS
 			icon_state = "mouse_[body_color]"
@@ -63,7 +63,7 @@
 	name = "[name] ([rand(1, 1000)])"
 	real_name = name
 
-	if(im_rat_without_sprite)
+	if(!color_randomize_and_snuffles)
 		return
 
 	if(!body_color)
@@ -84,7 +84,7 @@
 /mob/living/simple_animal/mouse/proc/splat()
 	health = 0
 	stat = DEAD
-	if(!im_rat_without_sprite)
+	if(color_randomize_and_snuffles)
 		icon_dead = "mouse_[body_color]_splat"
 		icon_state = "mouse_[body_color]_splat"
 	layer = MOB_LAYER
@@ -209,7 +209,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 	desc = "It's a big pest mouse."
 	maxHealth = 50
 	health = 50
-	im_rat_without_sprite = TRUE
+	color_randomize_and_snuffles = FALSE
+	
+	spawner_args = list(/datum/spawner/living/rat, 2 MINUTES)
 
 /mob/living/simple_animal/mouse/rat/atom_init()
 	. = ..()
