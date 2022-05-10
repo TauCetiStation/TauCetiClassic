@@ -25,7 +25,6 @@
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags) || !M.client || isxenoqueen(M))
 		return
 
-	// don't have sprite for maido-queen
 	M.notransform = TRUE
 	M.canmove = 0
 	M.icon = null
@@ -34,19 +33,10 @@
 
 	var/mob/living/new_mob
 
-	var/randomize = pick("monkey","robot","human", "animal", "xeno")
+	var/randomize = pick("robot","human", "animal", "xeno")
 	if(isxeno(M))
 		randomize = "xeno"
 	switch(randomize)
-		if("monkey")
-			new_mob = new /mob/living/carbon/monkey(M.loc)
-			var/obj/item/weapon/spellbook/new_book = new /obj/item/weapon/spellbook(M.loc)
-			if(istype(new_book, /obj/item/weapon/spellbook))
-				new_book.uses = 2
-			new_mob.equip_to_slot_or_del(new_book, SLOT_L_HAND)
-			new_mob.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(new_mob), SLOT_WEAR_MASK)
-			new_mob.name = "small Konga"
-			new_mob.universal_speak = 1
 		if("robot")
 			new_mob = new /mob/living/silicon/robot(M.loc)
 			new_mob.gender = M.gender
