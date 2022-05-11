@@ -12,7 +12,7 @@
 	animation.master = src
 
 	flick("gibbed-m", animation)
-	gibs(loc, viruses, dna)
+	gibs(loc, dna)
 
 	spawn(15)
 		if(animation)	qdel(animation)

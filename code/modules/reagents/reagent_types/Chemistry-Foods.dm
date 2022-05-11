@@ -149,19 +149,19 @@
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1 to 15)
-			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(holder.has_reagent("frostoil"))
 				holder.remove_reagent("frostoil", 5)
 			if(isslime(M))
-				M.bodytemperature += rand(5,20)
+				M.adjust_bodytemperature(rand(5,20))
 		if(15 to 25)
-			M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(isslime(M))
-				M.bodytemperature += rand(10,20)
+				M.adjust_bodytemperature(rand(10,20))
 		if(25 to INFINITY)
-			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(isslime(M))
-				M.bodytemperature += rand(15,20)
+				M.adjust_bodytemperature(rand(15,20))
 	data["ticks"]++
 
 /datum/reagent/consumable/condensedcapsaicin
@@ -241,11 +241,12 @@
 
 /datum/reagent/consumable/frostoil/on_general_digest(mob/living/M)
 	..()
-	M.bodytemperature = max(M.bodytemperature - 10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0)
 	if(prob(1))
 		M.emote("shiver")
 	if(isslime(M))
-		M.bodytemperature = max(M.bodytemperature - rand(10,20), 0)
+		M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT - rand(10, 20))
+	else
+		M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT)
 	holder.remove_reagent("capsaicin", 5)
 	holder.remove_reagent(src.id, FOOD_METABOLISM)
 
@@ -294,8 +295,7 @@
 
 /datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/consumable/psilocybin
 	name = "Psilocybin"
@@ -386,8 +386,7 @@
 
 /datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M)
 	..()
-	if(M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/consumable/hell_ramen
 	name = "Spicy Ramen"
@@ -400,8 +399,7 @@
 
 /datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
 	..()
-	if(M.bodytemperature < BODYTEMP_NORMAL + 40) // Not Tajaran friendly food (by the time of writing this, Tajaran has 330 heat limit, while this is 350 and human 360.
-		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 40)
 
 /datum/reagent/consumable/hot_hell_ramen
 	name = "Hot Spicy Ramen"
@@ -414,8 +412,7 @@
 
 /datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M)
 	..()
-	if(M.bodytemperature < BODYTEMP_NORMAL + 40)
-		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 40)
 
 /datum/reagent/consumable/rice
 	name = "Rice"

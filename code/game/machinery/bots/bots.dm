@@ -127,9 +127,9 @@
 		else
 			..()
 
-/obj/machinery/bot/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/bot/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
-	..()
 	healthcheck()
 
 /obj/machinery/bot/blob_act()

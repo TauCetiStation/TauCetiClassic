@@ -47,15 +47,17 @@
 
 	..()
 
-/obj/machinery/shield/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/shield/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
-	..()
 	if(health <=0)
 		visible_message("<span class='notice'>The [src] dissipates!</span>")
 		qdel(src)
 		return
-	opacity = 1
-	spawn(20) if(src) opacity = 0
+	opacity = TRUE
+	spawn(20)
+		if(src)
+			opacity = FALSE
 
 /obj/machinery/shield/ex_act(severity)
 	if(prob(100 - (severity * 25)))
@@ -495,11 +497,9 @@
 	attached = null
 	return ..()
 
-/obj/machinery/shieldwallgen/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/shieldwallgen/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	storedpower -= Proj.damage
-	..()
-	return
-
 
 //////////////Containment Field START
 /obj/machinery/shieldwall
@@ -549,7 +549,8 @@
 			gen_secondary.storedpower -=10
 
 
-/obj/machinery/shieldwall/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/shieldwall/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
 		if(prob(50))
@@ -557,9 +558,6 @@
 		else
 			G = gen_secondary
 		G.storedpower -= Proj.damage
-	..()
-	return
-
 
 /obj/machinery/shieldwall/ex_act(severity)
 	if(needs_power)

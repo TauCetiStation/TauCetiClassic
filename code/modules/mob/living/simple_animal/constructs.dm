@@ -114,7 +114,7 @@
 	weakened = 0
 	..()
 
-/mob/living/simple_animal/construct/armoured/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/construct/armoured/bullet_act(obj/item/projectile/P, def_zone)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
