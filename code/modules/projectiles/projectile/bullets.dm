@@ -228,23 +228,13 @@
 /obj/item/projectile/bullet/incendiary
 	name = "incendiary bullet"
 	damage = 20
-
-/obj/item/projectile/bullet/incendiary/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(10)
-		M.IgniteMob()
+	incendiary = 10
 
 /obj/item/projectile/bullet/incendiary/buckshot
 	name = "incendiary shell"
 	damage = 7
+	incendiary = 2
 	dispersion = 2.0
-
-/obj/item/projectile/bullet/incendiary/buckshot/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(2)
-		M.IgniteMob()
 
 /obj/item/projectile/bullet/chameleon
 	damage = 1 // stop trying to murderbone with a fake gun dumbass!!!
