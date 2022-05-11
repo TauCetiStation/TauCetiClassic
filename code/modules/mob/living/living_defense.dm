@@ -30,24 +30,19 @@
 		if(isturf(loc))
 			loc.add_blood(src)
 		throw_at(get_edge_target_turf(src, P.dir), P.impact_force, 1, P.firer, spin = TRUE)
-
 	if(check_shields(P, P.damage, "the [P.name]", P.dir))
 		P.on_hit(src, def_zone, 100)
 		return PROJECTILE_ABSORBED
-
+	if(P.incendiary)
+		adjust_fire_stacks(P.incendiary)
+		IgniteMob()
 	. = mob_bullet_act(P, def_zone)
 	if(. != PROJECTILE_ALL_OK)
 		return
 
 	flash_weak_pain()
-	
-//Being hit while using a deadman switch
-/mob/living/bullet_act(/obj/item/projectile/bullet/incendiary/P)
-	if(P.incendiary)
-		var/mob/living/carbon/M 
-		M.adjust_fire_stacks(incendiary)
-		M.IgniteMob()
 
+//Being hit while using a deadman switch
 
 	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
 		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
