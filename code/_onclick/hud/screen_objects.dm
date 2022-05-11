@@ -280,7 +280,8 @@
 	usr.stop_pulling()
 
 /atom/movable/screen/pull/update_icon(mob/mymob)
-	if(!mymob) return
+	if(!mymob)
+		return
 	if(mymob.pulling)
 		icon_state = "pull1"
 	else
@@ -288,16 +289,37 @@
 
 /atom/movable/screen/toggle
 	name = "toggle"
-	icon = ui_style
 	icon_state = "other"
 	screen_loc = ui_inventory
 	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screem/toggle/Click()
+	if(..())
+		return TRUE
+
+	if(usr.hud_used.inventory_shown)
+		usr.hud_used.inventory_shown = FALSE
+		usr.client.screen -= usr.hud_used.other
+	else
+		usr.hud_used.inventory_shown = TRUE
+		usr.client.screen += usr.hud_used.other
+
+	usr.hud_used.hidden_inventory_update()
+	return TRUE
 
 /atom/movable/screen/equip
 	name = "equip"
 	icon_state = "act_equip"
 	screen_loc = ui_equip
 	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screem/toggle/Click()
+	if(..() || ismecha(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+		return TRUE
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.quick_equip()
+	return TRUE
 
 /atom/movable/screen/current_sting
 	icon = 'icons/mob/screen_gen.dmi'
@@ -306,11 +328,30 @@
 	plane = ABOVE_HUD_PLANE
 	invisibility = INVISIBILITY_ABSTRACT
 
+/atom/movable/screen/current_sting/Click()
+	if(..())
+		return TRUE
+
+	if(iscarbon(usr))
+		var/mob/living/carbon/U = usr
+		U.unset_sting()
+		return TRUE
+
 /atom/movable/screen/resist
 	name = "resist"
 	icon_state = "act_resist"
 	screen_loc = ui_pull_resist
 	plane = HUD_PLANE
+
+
+/atom/movable/screen/resist/Click()
+	if(..())
+		return TRUE
+
+	if(isliving(usr))
+		var/mob/living/L = usr
+		L.resist()
+		return TRUE
 
 /atom/movable/screen/resist/ian
 	screen_loc = ui_drop_throw
@@ -323,6 +364,15 @@
 	screen_loc = ui_movi
 	plane = ABOVE_HUD_PLANE
 
+/atom/movable/screen/move_intent/Click()
+	if(..())
+		return TRUE
+
+	if(iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		C.set_m_intent(C.m_intent == MOVE_INTENT_WALK ? MOVE_INTENT_RUN : MOVE_INTENT_WALK)
+		return TRUE
+
 /atom/movable/screen/move_intent/alien
 	icon = 'icons/mob/screen1_xeno.dmi'
 
@@ -331,10 +381,107 @@
 	icon_state = "internal0"
 	screen_loc = ui_internal
 
+/atom/movable/screen/internal/update_icon(mob/living/carbon/mymob)
+	if(!istype(mymob))
+		return
+	if(mymob.internal)
+		icon_state = "internal1"
+	else
+		icon_state = "internal0"
+
+
+/atom/movable/screen/internal/Click()
+	if(..())
+		return TRUE
+
+	if(!iscarbon(usr))
+		return FALSE
+
+	var/mob/living/carbon/C = usr
+	if((C.incapacitated() && !C.weakened) || (internal_switch > world.time))
+		return TRUE
+
+	internal_switch = world.time + 16
+
+	var/internalsound
+	if(C.internal)
+		C.internal = null
+		to_chat(C, "<span class='notice'>No longer running on internals.</span>")
+		internalsound = 'sound/misc/internaloff.ogg'
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+				internalsound = 'sound/misc/riginternaloff.ogg'
+		playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
+		update_icon(C)
+		return TRUE
+
+	if(!istype(C.wear_mask, /obj/item/clothing/mask))
+		to_chat(C, "<span class='notice'>You are not wearing a mask.</span>")
+		internal_switch = world.time + 8
+		return TRUE
+
+	if(!(C.wear_mask.flags & MASKINTERNALS))
+		to_chat(C, "<span class='notice'>This mask doesn't support breathing through the tanks.</span>")
+		return TRUE
+
+	var/list/nicename
+	var/list/tankcheck
+	var/inhale_type = C.inhale_gas
+	var/poison_type = C.poison_gas
+
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
+		tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
+	else
+		nicename = list("Right Hand", "Left Hand", "Back")
+		tankcheck = list(C.r_hand, C.l_hand, C.back)
+
+	var/best = null
+	var/bestcontents = 0
+
+	for(var/i in 1 to tankcheck.len)
+		var/obj/item/weapon/tank/t = tankcheck[i]
+		if(!istype(t))
+			continue
+
+		var/datum/gas_mixture/t_gasses = t.air_contents.gas
+		var/inhale = t_gasses[inhale_type]
+
+		if(!t_gasses[poison_type] && inhale)
+			if(bestcontents < inhale)
+				best = i
+				bestcontents = inhale
+
+	//We've determined the best container now we set it as our internals
+
+	if(best)
+		to_chat(C, "<span class='notice'>You are now running on internals from [tankcheck[best]] on your [nicename[best]].</span>")
+		C.internal = tankcheck[best]
+		internalsound = 'sound/misc/internalon.ogg'
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+				internalsound = 'sound/misc/riginternalon.ogg'
+		playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
+		update_icon(C)
+	else
+		to_chat(C, "<span class='notice'>You don't have [inhale_type=="oxygen" ? "an" : "a"] [inhale_type] tank.</span>")
+	
+	return TRUE
+
 /atom/movable/screen/act_intent
 	name = "act_intent"
 	screen_loc = ui_acti
 	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/act_intent/Click()
+	if(..())
+		return TRUE
+
+	usr.a_intent_change(INTENT_HOTKEY_RIGHT)
+	return TRUE
 
 /atom/movable/screen/act_intent/alien
 	icon = 'icons/mob/screen1_xeno.dmi'
@@ -345,6 +492,13 @@
 /atom/movable/screen/intent
 	screen_loc = ui_acti
 	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/intent/Click()
+	if(..())
+		return TRUE
+
+	usr.set_a_intent(name)
+	return TRUE
 
 /atom/movable/screen/intent/help
 	name = INTENT_HELP
@@ -363,6 +517,15 @@
 	icon_state = "act_throw_off"
 	screen_loc = ui_drop_throw
 
+/atom/movable/screen/throw/Click()
+	if(..())
+		return TRUE
+
+	if(iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		C.toggle_throw_mode()
+		return TRUE
+
 /atom/movable/screen/throw/alien
 	icon = 'icons/mob/screen1_xeno.dmi'
 
@@ -371,6 +534,13 @@
 	icon_state = "act_drop"
 	screen_loc = ui_drop_throw
 	plane = HUD_PLANE
+
+/atom/movable/screen/drop/Click()
+	if(..())
+		return TRUE
+
+	usr.drop_item()
+	return TRUE
 
 /atom/movable/screen/drop/alien
 	icon = 'icons/mob/screen1_xeno.dmi'
@@ -382,11 +552,32 @@
 	icon_state = "nomod"
 	screen_loc = ui_borg_module
 
+/atom/movable/screen/module/Click()
+	if(..())
+		return TRUE
+
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		R.pick_module()
+		return TRUE
+
 /atom/movable/screen/inventory
 	name = "inventory"
 	icon = 'icons/mob/screen1_robot.dmi'
 	icon_state = "inventory"
 	screen_loc = ui_borg_inventory
+
+/atom/movable/screen/inventory/Click()
+	if(..())
+		return TRUE
+
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		if(R.module)
+			R.hud_used.toggle_show_robot_modules()
+		else
+			to_chat(R, "You haven't selected a module yet.")
+		return TRUE
 
 /atom/movable/screen/radio
 	name = "radio"
@@ -395,12 +586,29 @@
 	screen_loc = ui_movi
 	plane = ABOVE_HUD_PLANE
 
+/atom/movable/screen/inventory/Click()
+	if(..())
+		return TRUE
+
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		R.radio_menu()
+		return TRUE
+
 /atom/movable/screen/panel
 	name = "panel"
 	icon = 'icons/mob/screen1_robot.dmi'
 	icon_state = "panel"
 	screen_loc = ui_borg_panel
-	plane = HUD_PLANE
+
+/atom/movable/screen/panel/Click()
+	if(..())
+		return TRUE
+
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		R.installed_modules()
+		return TRUE
 
 /atom/movable/screen/store
 	name = "store"
@@ -408,24 +616,49 @@
 	icon_state = "store"
 	screen_loc = ui_borg_store
 
+/atom/movable/screen/store/Click()
+	if(..())
+		return TRUE
+
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		if(R.module)
+			R.uneq_active()
+		else
+			to_chat(R, "You haven't selected a module yet.")
+		return TRUE
+
 /atom/movable/screen/robo_hands
 	icon = 'icons/mob/screen1_robot.dmi'
-	using.plane = ABOVE_HUD_PLANE
+	plane = ABOVE_HUD_PLANE
+	var/module_index
+
+/atom/movable/screen/robo_hands/Click()
+	if(..())
+		return TRUE
+
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		R.toggle_module(module_index)
+		return TRUE
 
 /atom/movable/screen/robot_hands/first
 	name = "module1"
 	icon_state = "inv1"
 	screen_loc = ui_inv1
+	module_index = 1
 
 /atom/movable/screen/robot_hands/second
 	name = "module2"
 	icon_state = "inv2"
 	screen_loc = ui_inv2
+	module_index = 2
 
 /atom/movable/screen/robot_hands/third
 	name = "module3"
 	icon_state = "inv3"
 	screen_loc = ui_inv3
+	module_index = 3
 
 // AI (&robot)
 /atom/movable/screen/ai_core
@@ -638,173 +871,6 @@
 	SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 
 	switch(name)
-		if("toggle")
-			if(usr.hud_used.inventory_shown)
-				usr.hud_used.inventory_shown = 0
-				usr.client.screen -= usr.hud_used.other
-			else
-				usr.hud_used.inventory_shown = 1
-				usr.client.screen += usr.hud_used.other
-
-			usr.hud_used.hidden_inventory_update()
-
-		if("equip")
-			if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
-				return TRUE
-			if(ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				H.quick_equip()
-
-		if("current sting")
-			var/mob/living/carbon/U = usr
-			U.unset_sting()
-
-		if("resist")
-			if(isliving(usr))
-				var/mob/living/L = usr
-				L.resist()
-
-		if("mov_intent")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-
-				C.set_m_intent(C.m_intent == MOVE_INTENT_WALK ? MOVE_INTENT_RUN : MOVE_INTENT_WALK)
-
-		if("internal")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				if(!C.stat && !C.stunned && !C.paralysis && !C.restrained())
-					if(internal_switch > world.time)
-						return
-					var/internalsound
-					if(C.internal)
-						C.internal = null
-						to_chat(C, "<span class='notice'>No longer running on internals.</span>")
-						internalsound = 'sound/misc/internaloff.ogg'
-						if(ishuman(C))
-							var/mob/living/carbon/human/H = C
-							if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
-								internalsound = 'sound/misc/riginternaloff.ogg'
-						playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
-						if(C.internals)
-							C.internals.icon_state = "internal0"
-					else
-						if(!istype(C.wear_mask, /obj/item/clothing/mask))
-							to_chat(C, "<span class='notice'>You are not wearing a mask.</span>")
-							internal_switch = world.time + 8
-							return TRUE
-						else
-							if(C.wear_mask.flags & MASKINTERNALS)
-								var/list/nicename
-								var/list/tankcheck
-								var/inhale_type = C.inhale_gas
-								var/poison_type = C.poison_gas
-
-								if(ishuman(C))
-									var/mob/living/carbon/human/H = C
-									nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
-									tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
-								else
-									nicename = list("Right Hand", "Left Hand", "Back")
-									tankcheck = list(C.r_hand, C.l_hand, C.back)
-
-								var/best = null
-								var/bestcontents = 0
-
-								for(var/i in 1 to tankcheck.len)
-									var/obj/item/weapon/tank/t = tankcheck[i]
-									if(!istype(t))
-										continue
-
-									var/datum/gas_mixture/t_gasses = t.air_contents.gas
-									var/inhale = t_gasses[inhale_type]
-
-									if(!t_gasses[poison_type] && inhale)
-										if(bestcontents < inhale)
-											best = i
-											bestcontents = inhale
-
-								//We've determined the best container now we set it as our internals
-
-								if(best)
-									to_chat(C, "<span class='notice'>You are now running on internals from [tankcheck[best]] on your [nicename[best]].</span>")
-									C.internal = tankcheck[best]
-									internalsound = 'sound/misc/internalon.ogg'
-									if(ishuman(C))
-										var/mob/living/carbon/human/H = C
-										if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
-											internalsound = 'sound/misc/riginternalon.ogg'
-									playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
-
-								if(C.internal)
-									if(C.internals)
-										C.internals.icon_state = "internal1"
-								else
-									to_chat(C, "<span class='notice'>You don't have a[inhale_type=="oxygen" ? "n oxygen" : addtext(" ",inhale_type)] tank.</span>")
-							else
-								to_chat(C, "<span class='notice'>This mask doesn't support breathing through the tanks.</span>")
-					internal_switch = world.time + 16
-		if("act_intent")
-			usr.a_intent_change(INTENT_HOTKEY_RIGHT)
-		if(INTENT_HELP)
-			usr.set_a_intent(INTENT_HELP)
-			usr.hud_used.action_intent.icon_state = "intent_help"
-		if(INTENT_HARM)
-			usr.set_a_intent(INTENT_HARM)
-			usr.hud_used.action_intent.icon_state = "intent_harm"
-		if(INTENT_GRAB)
-			usr.set_a_intent(INTENT_GRAB)
-			usr.hud_used.action_intent.icon_state = "intent_grab"
-		if(INTENT_PUSH)
-			usr.set_a_intent(INTENT_PUSH)
-			usr.hud_used.action_intent.icon_state = "intent_push"
-		if("throw")
-			if(!usr.stat && isturf(usr.loc) && !usr.restrained())
-				usr:toggle_throw_mode()
-		if("drop")
-			if(usr.client)
-				usr.client.drop_item()
-
-		if("module")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				R.pick_module()
-
-		if("inventory")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				if(R.module)
-					R.hud_used.toggle_show_robot_modules()
-					return TRUE
-				else
-					to_chat(R, "You haven't selected a module yet.")
-
-		if("radio")
-			if(issilicon(usr))
-				usr:radio_menu()
-		if("panel")
-			if(issilicon(usr))
-				usr:installed_modules()
-
-		if("store")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				if(R.module)
-					R.uneq_active()
-				else
-					to_chat(R, "You haven't selected a module yet.")
-
-		if("module1")
-			if(isrobot(usr))
-				usr:toggle_module(1)
-
-		if("module2")
-			if(isrobot(usr))
-				usr:toggle_module(2)
-
-		if("module3")
-			if(isrobot(usr))
-				usr:toggle_module(3)
 
 		if("AI Core")
 			if(isAI(usr))
