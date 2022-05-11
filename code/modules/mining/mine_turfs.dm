@@ -601,7 +601,7 @@
 /**********************Asteroid**************************/
 
 /turf/simulated/floor/plating/airless/asteroid //floor piece
-	name = "Asteroid"
+	name = "Глина"
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"

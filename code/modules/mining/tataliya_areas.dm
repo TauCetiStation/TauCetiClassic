@@ -1,7 +1,7 @@
 /area/asteroid/mine/unexplored/tatalia
 	name = "Tatalia"
 	icon_state = "unexplored"
-	ambience = list(
+	looped_ambience = list(
 		'sound/ambience/tatalia.ogg',)
 	is_force_ambience = TRUE
 	mob_spawn_list = list(

@@ -286,57 +286,59 @@
 
 
 // VILAGE
-
-/obj/item/weapon/card/id/peasant
+/obj/item/weapon/card/id/key
+	desc = "Ключик"
+/obj/item/weapon/card/id/key/peasant
 	name = "Ключ Крестьянина"
 	access = list(access_peasant)
 	icon_state = "peasantkey"
-	desc = "Ключик"
-/obj/item/weapon/card/id/helper
+/obj/item/weapon/card/id/key/helper
 	name = "Ключ Послушника"
 	access = list(access_helper)
 	icon_state = "peasantkey"
-	desc = "Ключик"
-/obj/item/weapon/card/id/headman
+/obj/item/weapon/card/id/key/headman
 	name = "Ключ Старосты"
 	access = list(access_peasant,access_headman,access_knight,access_innkeeper,access_inn1,access_inn2,access_inn3)
 	icon_state = "peasantkey"
-	desc = "Ключик"
-/obj/item/weapon/card/id/innkeeper
+/obj/item/weapon/card/id/key/innkeeper
 	name = "Ключ Трактирщика"
 	access = list(access_innkeeper,access_inn1,access_inn2,access_inn3)
 	icon_state = "innkeeperkey"
-	desc = "Ключик"
-/obj/item/weapon/card/id/innkeeper1
+/obj/item/weapon/card/id/key/innkeeper1
 	name = "Ключ 1 Комнаты"
 	access = list(access_innkeeper,access_inn1)
 	icon_state = "innkeeperkey"
-	desc = "Ключик"
-/obj/item/weapon/card/id/innkeeper2
+/obj/item/weapon/card/id/key/innkeeper2
 	name = "Ключ 2 Комнаты"
 	access = list(access_innkeeper,access_inn2)
 	icon_state = "innkeeperkey"
-	desc = "Ключик"
-/obj/item/weapon/card/id/innkeeper3
+/obj/item/weapon/card/id/key/innkeeper3
 	name = "Ключ 3 Комнаты"
 	access = list(access_innkeeper,access_inn3)
 	icon_state = "innkeeperkey"
-	desc = "Ключик"
-/obj/item/weapon/card/id/monk
+/obj/item/weapon/card/id/key/monk
 	name = "Ключ Монаха"
 	access = list(access_monk,access_helper)
 	icon_state = "monkkey"
-	desc = "Ключик"
-/obj/item/weapon/card/id/knight
+/obj/item/weapon/card/id/key/knight
 	name = "Ключ Рыцаря"
 	access = list(access_knight)
 	icon_state = "knightkey"
-	desc = "Ключик"
-/obj/item/weapon/card/id/hhero
+/obj/item/weapon/card/id/key/hhero
 	name = "Ключ Лорда"
 	access = list(access_hero,access_peasant,access_knight,access_headman,access_innkeeper,access_inn1,access_inn2,access_inn3)
 	icon_state = "herokey"
-	desc = "Ключик"
+
+/obj/item/weapon/card/id/key/atom_init()
+	. = ..()
+	if(ismob(loc)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
+		var/mob/user = loc
+		registered_name = ishuman(user) ? user.real_name : user.name
+	else
+		registered_name = "Ключик"
+	name = " Ключ [registered_name]"
+
+//////
 
 /obj/item/weapon/card/id/syndicate/atom_init()
 	. = ..()
