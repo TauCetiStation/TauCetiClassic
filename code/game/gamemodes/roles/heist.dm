@@ -74,6 +74,7 @@
 	vox.r_hair = 90
 	vox.g_hair = 3
 	vox.b_hair = 3
+	vox.vox_rank = "Raider"
 	for(var/obj/item/organ/external/BP in vox.bodyparts)
 		BP.status = 0 // rejuvenate() saves prostethic limbs, so we tell it NO.
 		BP.rejuvenate()
