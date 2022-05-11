@@ -129,3 +129,15 @@
 	on_icon = "grill_on"
 	open_icon = "grill_on"
 	use_power = NO_POWER_USE
+
+
+/obj/structure/tree_of_greed
+	name = "Таки древо Мудрости"
+	desc = "Оно готово ответить тебе на вопросы, <span class='warning'> небесплатно...</span>"
+	anchored = TRUE
+	layer = 11
+	icon = 'icons/obj/flora/tree_of_greed.dmi'
+	icon_state = "tree_of_greed"
+	pixel_x = -48
+	pixel_y = -20
+	density = 1
