@@ -118,12 +118,6 @@
 			else if(force <= 40)
 				apply_effects(B.stoping_power,B.stoping_power,0,0,B.stoping_power,0,0,armor)
 
-		if(istype(P, /obj/item/projectile/bullet/incendiary))
-			if(B.incendiary)
-				var/incendiary
-				var/mob/living/carbon/M
-				M.adjust_fire_stacks(incendiary)
-				M.IgniteMob()
 
 		if(!species.flags[NO_EMBED] && P.embed && prob(20 + max(P.damage - armor, -20)) && P.damage_type == BRUTE)
 			var/obj/item/weapon/shard/shrapnel/SP = new()

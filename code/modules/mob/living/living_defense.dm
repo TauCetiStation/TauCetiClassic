@@ -40,8 +40,15 @@
 		return
 
 	flash_weak_pain()
+	
+//Being hit while using a deadman switch
+/mob/living/bullet_act(/obj/item/projectile/bullet/incendiary/P)
+	if(P.incendiary)
+		var/mob/living/carbon/M 
+		M.adjust_fire_stacks(incendiary)
+		M.IgniteMob()
 
-	//Being hit while using a deadman switch
+
 	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
 		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
 		if(signaler.deadman && prob(80))
