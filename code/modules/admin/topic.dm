@@ -2268,6 +2268,22 @@
 		else
 			to_chat(usr, "<span class='warning'><b>You have globally changed the salary of all professions by [input_rate]</b></span>")
 
+	else if(href_list["change_station_subsidy_coefficient"])
+		var/amount = input("Enter the coefficient 0 to 100%", "Subsidion coefficient %") as num
+		amount = clamp(amount, 0, 100)
+		SSeconomy.station_subsidy_coefficient = amount * 0.01
+		change_crew_salary()
+
+	else if(href_list["subsition_ubi"])
+		SSeconomy.ubi = !SSeconomy.ubi
+		change_crew_salary()
+
+	else if(href_list["change_subsition_ubi"])
+		var/amount = input("Enter the universal base income in credits -100 to 100", "Universal income:") as num
+		amount = clamp(amount, -100, 100)
+		SSeconomy.ubi_count = amount
+		change_crew_salary()
+
 	// player info stuff
 
 	if(href_list["add_player_info"])

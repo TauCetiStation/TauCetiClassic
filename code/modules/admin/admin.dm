@@ -697,6 +697,11 @@ var/global/BSACooldown = 0
 	var/dat
 
 	dat += "<A href='byond://?src=\ref[src];global_salary=1'>Globally change crew salaries</A><br>"
+	dat += "<A href='byond://?src=\ref[src];change_station_subsidy_coefficient=1'>Change station subsidy coefficient</A><br>"
+	dat += "<A href='byond://?src=\ref[src];subsition_ubi=1'>Toggle universal base income/full subsition</A><br>"
+	if(SSeconomy.ubi)
+		dat += "<A href='byond://?src=\ref[src];change_subsition_ubi=1'>Change station universal base income value</A><br>"
+
 	dat += "<small>Globally - this is a change in salary for the profession. New players will enter the round with a changed salary. To return the base salary, select 0.</small><hr>"
 	dat += "<div class='Section'>"
 	if(crew.len)

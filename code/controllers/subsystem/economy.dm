@@ -13,6 +13,9 @@ SUBSYSTEM_DEF(economy)
 	//Subsidy coefficient from CentComm
 	var/station_subsidy_coefficient = 1.0
 
+	var/ubi = FALSE
+	var/ubi_count = 42
+
 /datum/controller/subsystem/economy/fire()	//this prok is called once in "wait" minutes
 	set_endtime()
 	if(!global.economy_init)
@@ -63,7 +66,10 @@ SUBSYSTEM_DEF(economy)
 
 									charge_to_account(P.account_number, D.account_number, "[P.owner_name]'s Salary payment", global.department_accounts[P.department], salary)
 									dep_salary += salary
-									all_salaries += P.base_salary
+									if(ubi)
+										all_salaries += ubi_count
+									else
+										all_salaries += P.base_salary
 						charge_to_account(D.account_number, D.account_number, "Salaries of [r] rank payment", D.owner_name, -dep_salary)
 			else
 				continue
