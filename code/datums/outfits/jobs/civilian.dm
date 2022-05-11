@@ -190,6 +190,7 @@
 	shoes = /obj/item/clothing/shoes/leather
 	head = /obj/item/clothing/head/monk_helper
 	l_hand = /obj/item/weapon/staff/broom/monk
+	l_pocket_back = /obj/item/weapon/paper/village_law
 	id = /obj/item/weapon/card/id/key/helper
 
 /datum/outfit/job/hub/headman
@@ -197,6 +198,7 @@
 	uniform = /obj/item/clothing/under/peasant
 	shoes = /obj/item/clothing/shoes/leather
 	l_hand =/obj/item/weapon/hatchet
+	r_hand =/obj/item/weapon/paper/village_law
 	id = /obj/item/weapon/card/id/key/headman
 	back = /obj/item/weapon/storage/backpack/satchel
 
@@ -207,6 +209,7 @@
 	l_hand =/obj/item/weapon/hatchet
 	id = /obj/item/weapon/card/id/key/innkeeper
 	back = /obj/item/weapon/storage/backpack/satchel
+	l_pocket_back = /obj/item/weapon/paper/village_law
 
 /datum/outfit/job/hub/knight
 	name = OUTFIT_JOB_NAME("Knight")
@@ -216,6 +219,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/helmet/crusader
 	l_hand = /obj/item/weapon/claymore/religion
+	l_pocket_back = /obj/item/weapon/paper/village_law
 	back = ""
 	id = /obj/item/weapon/card/id/key/knight
 
@@ -227,6 +231,7 @@
 	shoes = /obj/item/clothing/shoes/sandal
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/wizard/monk
+	l_pocket_back = /obj/item/weapon/paper/village_law
 	l_hand = /obj/item/weapon/nullrod
 	back = ""
 	id = /obj/item/weapon/card/id/key/monk
@@ -238,6 +243,7 @@
 	shoes = /obj/item/clothing/shoes/boots/swat
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/byzantine_hat
+	l_pocket_back = /obj/item/weapon/paper/village_law
 	r_hand = /obj/item/toy/flag
 	back = ""
 	id = /obj/item/weapon/card/id/key/hhero

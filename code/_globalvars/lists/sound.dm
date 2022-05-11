@@ -145,7 +145,6 @@ var/global/list/barefootstep = list(
 		'sound/effects/mob/footstep/woodbarefoot1.ogg',
 		'sound/effects/mob/footstep/woodbarefoot2.ogg',
 		'sound/effects/mob/footstep/woodbarefoot3.ogg',
-		'sound/effects/mob/footstep/woodbarefoot4.ogg',
 		'sound/effects/mob/footstep/woodbarefoot5.ogg'), 100, -3),
 	FOOTSTEP_HARD_BAREFOOT = list(list(
 		'sound/effects/mob/footstep/hardbarefoot1.ogg',

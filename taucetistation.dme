@@ -442,6 +442,7 @@
 #include "code\game\Event\dragon.dm"
 #include "code\game\Event\Hub_wormhole.dm"
 #include "code\game\Event\ladder.dm"
+#include "code\game\Event\pillory.dm"
 #include "code\game\Event\README.dm"
 #include "code\game\Event\statue.dm"
 #include "code\game\Event\valhalla_deadman.dm"

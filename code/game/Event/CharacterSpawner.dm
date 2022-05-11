@@ -91,4 +91,7 @@
 
 /obj/structure/character_spawner/human_hero/attack_hand(mob/user)
 	..()
+	if(ready == "Нет")
+		selecting_job = FALSE
+		return
 	new/obj/vehicle/space/spacebike/horse/white(user.loc)

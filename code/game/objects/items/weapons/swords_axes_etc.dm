@@ -77,8 +77,8 @@
  * Classic Baton
  */
 /obj/item/weapon/melee/classic_baton
-	name = "police baton"
-	desc = "A wooden truncheon for beating criminal scum."
+	name = "Дубинка Ополчения"
+	desc = "Используется против правонарушетелей"
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "baton"
 	item_state = "classic_baton"
@@ -108,21 +108,13 @@
 			user.take_bodypart_damage(2 * force)
 		return
 
-	if (user.a_intent == INTENT_HARM)
-		if(!..()) return
-		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
-		if (!(HULK in M.mutations))
-			M.Stuttering(8)
-		M.Stun(8)
-		M.Weaken(8)
-		user.visible_message("<span class='warning'><B>[M] has been beaten with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
-	else
-		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
-		M.Stun(5)
-		M.Weaken(5)
-		add_fingerprint(user)
+	user.visible_message("<span class='warning'><B>[M] has been beaten with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
+	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
+	M.Weaken(0.1)
+	M.Stun(1)
+	add_fingerprint(user)
 
-		user.visible_message("<span class='warning'><B>[M] has been stunned with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
+	user.visible_message("<span class='warning'><B>[M] has been stunned with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)])")
 
 //Telescopic baton

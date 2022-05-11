@@ -345,6 +345,13 @@
 	name = "no NT sign"
 	desc = "Nanotrasen go home! Nanotrasen go home!"
 
+/obj/item/weapon/transparant/pillory
+	icon_state = "no_nt"
+	item_state = "no_nt"
+	name = "no NT sign"
+	desc = "Nanotrasen go home! Nanotrasen go home!"
+
+
 /obj/item/weapon/transparant/peace
 	icon_state = "peace"
 	item_state = "peace"
