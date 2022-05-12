@@ -19,9 +19,15 @@
 /obj/structure/statue/monk
 	name = "Монах"
 	icon_state = "monk"
+/obj/structure/statue/headman
+	name = "Староста"
+	icon_state = "headman"
 /obj/structure/statue/smith
 	name = "Кузнец"
 	icon_state = "smith"
+/obj/structure/statue/inn
+	name = "Трактирщик"
+	icon_state = "inn"
 /obj/structure/statue/hero
 	name = "Герой"
 	icon_state = "hero"

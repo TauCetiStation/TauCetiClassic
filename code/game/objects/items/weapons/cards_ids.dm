@@ -302,7 +302,7 @@
 	icon_state = "peasantkey"
 /obj/item/weapon/card/id/key/innkeeper
 	name = "Ключ Трактирщика"
-	access = list(access_innkeeper,access_inn1,access_inn2,access_inn3)
+	access = list(access_peasant,access_innkeeper,access_inn1,access_inn2,access_inn3)
 	icon_state = "innkeeperkey"
 /obj/item/weapon/card/id/key/innkeeper1
 	name = "Ключ 1 Комнаты"

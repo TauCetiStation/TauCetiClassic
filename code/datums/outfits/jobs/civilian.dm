@@ -195,21 +195,25 @@
 
 /datum/outfit/job/hub/headman
 	name = OUTFIT_JOB_NAME("Headman")
-	uniform = /obj/item/clothing/under/peasant
-	shoes = /obj/item/clothing/shoes/leather
-	l_hand =/obj/item/weapon/hatchet
+	uniform = /obj/item/clothing/under/color/black
+	shoes = /obj/item/clothing/shoes/laceup
+	gloves = /obj/item/clothing/gloves/latex
+	suit = /obj/item/clothing/suit/headman
+	head =/obj/item/clothing/head/headman
 	r_hand =/obj/item/weapon/paper/village_law
 	id = /obj/item/weapon/card/id/key/headman
 	back = /obj/item/weapon/storage/backpack/satchel
 
 /datum/outfit/job/hub/innkeeper
 	name = OUTFIT_JOB_NAME("Innkeeper")
-	uniform = /obj/item/clothing/under/peasant
-	shoes = /obj/item/clothing/shoes/leather
-	l_hand =/obj/item/weapon/hatchet
+	uniform = /obj/item/clothing/under/innkeeper
+	shoes = /obj/item/clothing/shoes/boots/work
 	id = /obj/item/weapon/card/id/key/innkeeper
 	back = /obj/item/weapon/storage/backpack/satchel
 	l_pocket_back = /obj/item/weapon/paper/village_law
+	r_hand = /obj/item/weapon/reagent_containers/glass/rag
+	l_hand = /obj/item/weapon/melee/classic_baton
+	head =/obj/item/clothing/head/inn
 
 /datum/outfit/job/hub/knight
 	name = OUTFIT_JOB_NAME("Knight")

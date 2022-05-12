@@ -131,14 +131,14 @@
 	use_power = NO_POWER_USE
 
 /obj/machinery/reagentgrinder/vilage
-	name = "1"
-	desc = "1"
+	name = "Ступка"
+	desc = "Для получения реагентов"
 	icon = 'icons/obj/Events/human/vilage.dmi'
-	icon_state = "grill"
+	icon_state = "reagent_grinder1"
 	use_power = NO_POWER_USE
 
 /obj/machinery/reagentgrinder/vilage/update_icon()
-	icon_state = "grill"+num2text(!isnull(beaker))
+	icon_state = "reagent_grinder"+num2text(!isnull(beaker))
 	return
 
 

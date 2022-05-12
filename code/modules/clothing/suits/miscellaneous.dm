@@ -453,6 +453,15 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
+/obj/item/clothing/suit/headman
+	name = "Пальто Старосты"
+	desc = "Самая приличная одежда на несколько десятков километров"
+	icon_state = "headman_coat"
+	item_state = "headman_coat"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	armor = list(melee = 10, bullet = 10, laser = 10, energy = 10, bomb = 10, bio = 0, rad = 0)
+
 /obj/item/clothing/suit/superman
 	name = "Superman costume"
 	desc = "Is it a bird? Is it a plane?"

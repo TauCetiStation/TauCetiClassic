@@ -367,6 +367,21 @@
 	name = "green hood"
 	icon_state = "green_hood"
 
+/obj/item/clothing/head/headman
+	name = "Шапка Старосты"
+	desc = "Вау, вот это шляпа"
+	icon_state = "headman_hat"
+	item_state = "headman_hat"
+
+
+/obj/item/clothing/head/inn
+	name = "Бандана Трактирщика"
+	desc = "На случай если вам не нравится лысина"
+	icon_state = "inn_hat"
+	item_state = "inn_hat"
+
+
+
 /obj/item/clothing/head/angel_nimb
 	name = "nimb"
 	desc = "Just a Nimb"

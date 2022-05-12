@@ -802,3 +802,9 @@
 	desc = "Дырка на жопе. И не только на жопе. И не только дырка"
 	icon_state = "peasant"
 	item_state = "peasant"
+
+/obj/item/clothing/under/innkeeper
+	name = "Одежда Трактирщика"
+	desc = "Веет уютом"
+	icon_state = "inn"
+	item_state = "inn"
