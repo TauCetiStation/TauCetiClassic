@@ -218,7 +218,7 @@
 /obj/item/projectile/magic/Arcane_barrage
 	name = "arcane barrage"
 	icon_state = "arcane_bolt"
-	damage = 20
+	damage = 10
 	nodamage = 0
 	flag = "laser"
 	damage_type = BURN
