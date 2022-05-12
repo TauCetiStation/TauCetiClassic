@@ -147,7 +147,7 @@ var/global/initial_station_money = 15000
 	department_account.subsidy = global.departments_subsidy[department]
 	var/list/ranks = list("high", "medium", "low")
 	for(var/r in ranks)
-		department_account.salaries_rank_table[r] = new/list()
+		department_account.salaries_rank_table[r] = list()
 
 	//create an entry in the account transaction log for when it was created
 	var/datum/transaction/T = new()
