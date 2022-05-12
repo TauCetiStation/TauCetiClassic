@@ -123,7 +123,7 @@
 	if(criminal_status == S.fields["criminal"]) //if nothing has changed
 		return
 	if(!reason && user)
-		reason = sanitize(input(user, "Укажите причину:", "Причина", "не указана")  as message)
+		reason = sanitize(input(user, "Укажите причину:", "Причина", "не указана") as message)
 	if(used_by_computer)
 		if(user.incapacitated() || !(user.Adjacent(source) && isliving(user)))
 			return
