@@ -1,10 +1,10 @@
 /mob/living/simple_animal/hostile/dragonfly
-	name = "Змий"
-	desc = "Летающий шланг. Опасен"
+	name = "Р—РјРёР№"
+	desc = "Р›РµС‚Р°СЋС‰РёР№ С€Р»Р°РЅРі. РћРїР°СЃРµРЅ"
 	icon_state = "dragonfly"
 	icon_dead = "dragonfly_dead"
-	speak = list("ВЖЖЖЖЖ")
-	speak_emote = list("жужит")
+	speak = list("Р’Р–Р–Р–Р–Р–")
+	speak_emote = list("Р¶СѓР¶РёС‚")
 	faction = "tataliya"
 	speak_chance = 20
 	turns_per_move = 4
@@ -13,7 +13,7 @@
 	maxHealth = 30
 	health = 30
 	melee_damage = 5
-	attacktext = "Жалит"
+	attacktext = "Р–Р°Р»РёС‚"
 	attack_sound = list('sound/weapons/bite.ogg')
 
 /mob/living/simple_animal/hostile/dragonfly/AttackingTarget()

@@ -1,10 +1,10 @@
 /mob/living/simple_animal/hostile/gorgona
-	name = "Горгона"
-	desc = "Не нужно ждать доброго от коровы с каменной кожей."
+	name = "Р“РѕСЂРіРѕРЅР°"
+	desc = "РќРµ РЅСѓР¶РЅРѕ Р¶РґР°С‚СЊ РґРѕР±СЂРѕРіРѕ РѕС‚ РєРѕСЂРѕРІС‹ СЃ РєР°РјРµРЅРЅРѕР№ РєРѕР¶РµР№."
 	icon_state = "gorgona"
 	icon_dead = "gorgona_dead"
-	speak = list("МУУУУ")
-	speak_emote = list("мычит")
+	speak = list("РњРЈРЈРЈРЈ")
+	speak_emote = list("РјС‹С‡РёС‚")
 	faction = "tataliya"
 	speak_chance = 10
 	turns_per_move = 4
@@ -13,7 +13,7 @@
 	maxHealth = 100
 	health = 100
 	melee_damage = 10
-	attacktext = "бодает"
+	attacktext = "Р±РѕРґР°РµС‚"
 	attack_sound = list('sound/voice/cowmoos.ogg')
 	var/icon/imageToCopy
 	var/datum/reagents/gorgona_udder = null
@@ -43,18 +43,18 @@
 		V.layer = L.layer
 		V.plane = L.plane
 		V.color = list(0.33, 0.33, 0.33, 0, 0.59, 0.59, 0.59, 0, 0.11, 0.11, 0.11, 0, 0,    0,    0,    1, 0,    0,    0,    0)
-		V.name = "Жертва Горгоны"
-		V.desc = "Это существо не знало или забыло, то что горгоны могут превращать взглядом в камень.."
+		V.name = "Р–РµСЂС‚РІР° Р“РѕСЂРіРѕРЅС‹"
+		V.desc = "Р­С‚Рѕ СЃСѓС‰РµСЃС‚РІРѕ РЅРµ Р·РЅР°Р»Рѕ РёР»Рё Р·Р°Р±С‹Р»Рѕ, С‚Рѕ С‡С‚Рѕ РіРѕСЂРіРѕРЅС‹ РјРѕРіСѓС‚ РїСЂРµРІСЂР°С‰Р°С‚СЊ РІР·РіР»СЏРґРѕРј РІ РєР°РјРµРЅСЊ.."
 		L.death()
 		qdel(L)
 
 /mob/living/simple_animal/hostile/gorgona/attackby(obj/item/O, mob/user)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
-		user.visible_message("<span class='notice'>[user] ДОЕТ ГОРГОНУ. НАДЕЮСЬ ЕМУ ХОТЯ БЫ НРАВИТСЯ \the [O].</span>")
+		user.visible_message("<span class='notice'>[user] Р”РћР•Рў Р“РћР Р“РћРќРЈ. РќРђР”Р•Р®РЎР¬ Р•РњРЈ РҐРћРўРЇ Р‘Р« РќР РђР’РРўРЎРЇ \the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = gorgona_udder.trans_id_to(G, "milk", rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
-			to_chat(user, "<span class='warning'>[O] заполнено молоком.</span>")
+			to_chat(user, "<span class='warning'>[O] Р·Р°РїРѕР»РЅРµРЅРѕ РјРѕР»РѕРєРѕРј.</span>")
 		if(!transfered)
 			to_chat(user, "<span class='warning'> No milk?</span>")
 	else
