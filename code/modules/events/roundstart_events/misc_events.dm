@@ -133,7 +133,7 @@ var/global/list/sec_closets_list = list()
 			log_game("RoundStart Event: [account1.owner_name] and [account2.owner_name] salaries has been swapped.")
 
 /datum/event/feature/station_subsidion/start()
-	SSeconomy.station_subsidy_coefficient *= 0
+	SSeconomy.station_subsidy_coefficient = 0
 	message_admins("RoundStart Event: station subsidion is set to 0 credits.")
 	log_game("RoundStart Event: station subsidion is set to 0 credits.")
 
