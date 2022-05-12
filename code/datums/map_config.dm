@@ -9,10 +9,10 @@
 	var/map_name = "Box Station"
 	var/map_path = "boxstation"
 	var/map_file = "boxstation.dmm"
-	var/station_name = "NSS Exodus"
-	var/station_name_ru = "КСН Исход"
-	var/system_name = "Tau Ceti"
-	var/system_name_ru = "Тау Кита"
+	var/station_name = "Enrot"
+	var/station_name_ru = "Энрот"
+	var/system_name = ""
+	var/system_name_ru = "Деградировавшая планета"
 	var/station_image = "exodus"
 
 	// Config from maps.txt
@@ -164,7 +164,7 @@
 		else
 			mapname += "inf"
 		mapname += "\]"
-	
+
 	return mapname
 
 /datum/map_config/proc/MakeNextMap()

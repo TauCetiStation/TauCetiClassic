@@ -5,13 +5,13 @@ var/global/join_motd = null
 var/global/host_announcements
 var/global/join_test_merge = null
 var/global/test_merges
-var/global/station_name = "NSS Exodus"
-var/global/station_name_ru = "КСН Исход"
-var/global/system_name = "Tau Ceti"
+var/global/station_name = "Enrot"
+var/global/station_name_ru = "Энрот"
+var/global/system_name = "Хуй знает какая система"
 var/global/system_name_ru = "Tay Кита"
-var/global/game_version = "TauCetiStation"
-var/global/game_year = (text2num(time2text(world.realtime, "YYYY")) + 200)
-var/global/gamestory_start_year = 2213
+var/global/game_version = "Хуй знает какая система"
+var/global/game_year = 413
+var/global/gamestory_start_year = 413
 var/global/changelog_hash = ""
 
 var/global/list/donators = list()
