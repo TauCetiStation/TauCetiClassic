@@ -6,7 +6,7 @@
 	invoke_msg = "Oh, holy angel, intercessor before our Lord for my soul, my body and my life. Save him from encroachment!"
 	can_talismaned = FALSE
 	needed_aspects = list(
-		ASPECT_RESCUE = 1,
+		ASPECT_RESCUE = 0,
 	)
 
 /datum/religion_rites/instant/chaplain/death_alarm/can_start(mob/living/user, obj/AOG)

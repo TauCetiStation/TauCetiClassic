@@ -188,6 +188,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
 	toolspeed = 0.9
+	force = 3
 	origin_tech = "materials=3"
 	desc = "This makes no metallurgic sense."
 

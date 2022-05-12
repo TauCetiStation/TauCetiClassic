@@ -5,7 +5,7 @@
 	charge_max = 2 MINUTES
 	favor_cost = 100
 	divine_power = 1 //count
-	needed_aspects = list(ASPECT_RESOURCES = 1, ASPECT_RESCUE = 1)
+	needed_aspects = list(ASPECT_RESOURCES = 0, ASPECT_RESCUE = 0)
 
 	clothes_req = FALSE
 
@@ -27,7 +27,7 @@
 	favor_cost = 300
 	charge_max = 1.5 MINUTES
 	divine_power = -5 //power
-	needed_aspects = list(ASPECT_RESCUE = 1, ASPECT_CHAOS = 1)
+	needed_aspects = list(ASPECT_RESCUE = 0, ASPECT_CHAOS = 0)
 
 	clothes_req = FALSE
 	range = 6
@@ -49,7 +49,7 @@
 /obj/effect/proc_holder/spell/targeted/heal/revert_cast(mob/user = usr)
 	. = ..()
 	to_chat(user, "<span class='notice'>Target not found or too far away.</span>")
-	
+
 
 /obj/effect/proc_holder/spell/targeted/heal/damage
 	name = "Punishment"
@@ -96,7 +96,7 @@
 		return
 
 	perform(list(target), user=user)
-	
+
 /obj/effect/proc_holder/spell/blessing/cast(list/targets, mob/user = usr)
 	var/obj/item/target = targets[1]
 
@@ -181,7 +181,7 @@
 	favor_cost = 250
 	charge_max = 3 MINUTES
 	divine_power = 2 //count
-	needed_aspects = list(ASPECT_SPAWN = 1 , ASPECT_FOOD = 1)
+	needed_aspects = list(ASPECT_SPAWN = 0 , ASPECT_FOOD = 0)
 
 	clothes_req = FALSE
 
@@ -202,7 +202,7 @@
 	favor_cost = 250
 	charge_max = 2 MINUTES
 	divine_power = 1 //count
-	needed_aspects = list(ASPECT_SPAWN = 1)
+	needed_aspects = list(ASPECT_SPAWN = 0)
 	summon_amt = 1
 
 	clothes_req = FALSE
@@ -248,7 +248,7 @@
 	favor_cost = 300
 	charge_max = 3 MINUTES
 	divine_power = 1 //range
-	needed_aspects = list(ASPECT_RESCUE = 1, ASPECT_OBSCURE = 1)
+	needed_aspects = list(ASPECT_RESCUE = 11, ASPECT_OBSCURE = 11)
 
 	range = 0
 	clothes_req = FALSE
@@ -298,7 +298,7 @@
 	name = "Spread a evil infection"
 	desc = "Evil infection with viruses cough and headache"
 
-	needed_aspects = list(ASPECT_DEATH = 1, ASPECT_OBSCURE = 1)
+	needed_aspects = list(ASPECT_DEATH = 11, ASPECT_OBSCURE = 11)
 
 	action_icon_state = "infection_evil"
 
@@ -350,7 +350,7 @@
 	favor_cost = 150
 	charge_max = 3 MINUTES
 	divine_power = 1 //count gibs
-	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 2)
+	needed_aspects = list(ASPECT_FOOD = 11, ASPECT_OBSCURE = 12)
 
 	clothes_req = FALSE
 

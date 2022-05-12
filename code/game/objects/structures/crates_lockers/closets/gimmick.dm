@@ -37,6 +37,14 @@
 		new /obj/item/clothing/head/ushanka(src)
 		new /obj/item/clothing/under/soviet(src)
 
+/obj/structure/closet/gimmick/tolchok
+	name = "Центральное здание поселения"
+	desc = "Важнее нет"
+	icon = 'icons/obj/tolchok.dmi'
+	icon_state = "outhouse_closed"
+	icon_closed = "outhouse_closed"
+	icon_opened = "outhouse_open"
+
 /obj/structure/closet/gimmick/tacticool
 	name = "tacticool gear closet"
 	desc = "It's a storage unit for Tacticool gear."

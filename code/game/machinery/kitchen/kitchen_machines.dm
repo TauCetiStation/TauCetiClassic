@@ -285,7 +285,7 @@
 			if (!cook_process(4))
 				abort()
 				return
-			broke()
+
 			cooked = fail()
 			cooked.loc = src.loc
 			return
@@ -317,6 +317,9 @@
 		if(byproduct)
 			new byproduct(loc)
 		SSStatistics.score.meals++
+		icon_state = open_icon
+		sleep(10)
+		icon_state = on_icon
 		return
 
 /obj/machinery/kitchen_machine/proc/cook_process(seconds)
@@ -342,7 +345,7 @@
 	src.icon_state = on_icon
 	updateUsrDialog()
 	if(on_icon == "mw1")
-		playsound(src, 'sound/machines/microwave.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
 	if(on_icon == "oven_on")
 		playsound(src, 'sound/machines/stove.ogg', VOL_EFFECTS_MASTER)
 	if(on_icon == "candymaker_on")
@@ -357,7 +360,7 @@
 	updateUsrDialog()
 
 /obj/machinery/kitchen_machine/proc/stop()
-	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
 	src.operating = 0 // Turn it off again aferwards
 	src.icon_state = off_icon
 	updateUsrDialog()

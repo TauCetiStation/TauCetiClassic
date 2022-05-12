@@ -102,8 +102,8 @@
 
 //Chef
 /obj/item/clothing/suit/chef/classic
-	name = "A classic chef's apron."
-	desc = "A basic, dull, white chef's apron."
+	name = "Кузнечный фартук"
+	desc = "Черный и модный"
 	icon_state = "apronchef"
 	item_state = "apronchef"
 	blood_overlay_type = "armor"

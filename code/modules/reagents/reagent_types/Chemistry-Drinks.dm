@@ -872,7 +872,7 @@
 	dizzy_adj = 2
 	taste_message = "wine"
 
-	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_RESCUE = 1)
+	needed_aspects = list(ASPECT_FOOD = 0, ASPECT_RESCUE = 0)
 
 /datum/reagent/consumable/ethanol/cognac
 	name = "Cognac"
@@ -925,7 +925,7 @@
 	dizzy_adj = 1
 	taste_message = "bitter wine"
 
-	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 1)
+	needed_aspects = list(ASPECT_FOOD = 11, ASPECT_OBSCURE = 11)
 
 /datum/reagent/consumable/ethanol/pwine/on_general_digest(mob/living/M)
 	..()

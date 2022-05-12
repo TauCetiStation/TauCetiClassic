@@ -12,7 +12,6 @@
 	var/sheetAmount = 7
 	var/health = 100
 	var/can_unwrench = TRUE
-
 	var/sheetType
 
 /obj/structure/mineral_door/atom_init()
@@ -24,14 +23,17 @@
 	return ..()
 
 /obj/structure/mineral_door/Bumped(atom/M)
-	if(close_state)
-		if(ismob(M))
-			if(DoorChecks() && MobChecks(M))
-				add_fingerprint(M)
-				Open()
-		else if(istype(M, /obj/mecha))
-			if(DoorChecks() && MechChecks(M))
-				Open()
+	if(allowed(M))
+		if(close_state)
+			if(ismob(M))
+				if(DoorChecks() && MobChecks(M))
+					add_fingerprint(M)
+					Open()
+			else if(istype(M, /obj/mecha))
+				if(DoorChecks() && MechChecks(M))
+					Open()
+	else
+		to_chat(M, "<span class='notice'> Заперто на ключ</span>")
 
 /obj/structure/mineral_door/attack_ai(mob/user)
 	if(isrobot(user) && get_dist(user, src) <= 1)
@@ -41,9 +43,12 @@
 	return attack_hand(user)
 
 /obj/structure/mineral_door/attack_hand(mob/user)
-	if(DoorChecks() && MobChecks(user))
-		add_fingerprint(user)
-		SwitchState()
+	if(allowed(user))
+		if(DoorChecks() && MobChecks(user))
+			add_fingerprint(user)
+			SwitchState()
+	else
+		to_chat(user, "<span class='notice'> Заперто на ключ</span>")
 
 /obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target, height = 0, air_group = 0)
 	if(air_group)
@@ -274,6 +279,54 @@
 	icon_state = "wood"
 	sheetType = /obj/item/stack/sheet/wood
 	operating_sound = 'sound/effects/doorcreaky.ogg'
+
+
+// VILAGE
+
+/obj/structure/mineral_door/wood/peasant
+	name = "Дверь Крестьянина"
+	req_one_access = list(access_peasant)
+
+/obj/structure/mineral_door/metal/barraks
+	name = "Дверь Барраков"
+	req_access = list(access_knight)
+
+/obj/structure/mineral_door/wood/mon
+	name = "Дверь Монастыря"
+	req_one_access = list(access_helper)
+
+/obj/structure/mineral_door/wood/inn
+	name = "Дверь Трактира"
+	req_one_access = list(access_innkeeper)
+
+/obj/structure/mineral_door/wood/headman
+	name = "Дверь Старосты"
+	req_one_access = list(access_headman)
+
+/obj/structure/mineral_door/metal/headman
+	name = "Оружейная"
+	req_access = list(access_headman)
+
+/obj/structure/mineral_door/wood/inn1
+	name = "Комната 1"
+	req_access = list(access_innkeeper,access_inn1)
+
+/obj/structure/mineral_door/wood/inn2
+	name = "Комната 2"
+	req_access = list(access_innkeeper,access_inn2)
+
+/obj/structure/mineral_door/wood/inn3
+	name = "Комната 3"
+	req_access = list(access_innkeeper,access_inn3)
+
+/obj/structure/mineral_door/wood/monk
+	name = "Дверь Монаха"
+	req_one_access = list(access_monk)
+
+/obj/structure/mineral_door/wood/hero
+	name = "Дверь Лорда"
+	req_one_access = list(access_hero)
+
 
 /obj/structure/mineral_door/wood/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/fireaxe))

@@ -24,11 +24,13 @@
 				"miss_sound" = retMissSound)
 
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/attacker)
+	if(isHubMan)
+		return
+
 	. = ..()
 
 	if(!.)
 		return
-
 	if(attacker.wear_suit && istype(attacker.wear_suit, /obj/item/clothing/suit))
 		var/obj/item/clothing/suit/V = attacker.wear_suit
 		V.attack_reaction(attacker, REACTION_INTERACT_UNARMED, src)

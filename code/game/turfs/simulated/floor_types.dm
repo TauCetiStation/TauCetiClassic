@@ -279,12 +279,19 @@
 	return
 
 /turf/simulated/floor/grass
-	name = "Grass patch"
+	name = "Трава"
 	icon_state = "grass1"
+	light_color = "#ffbf00"
+	light_power = 2
+	light_range = 2
 	floor_type = /obj/item/stack/tile/grass
+	can_deconstruct = FALSE
+	explosion_resistance = 111
+
 	footstep = FOOTSTEP_GRASS
 	barefootstep = FOOTSTEP_GRASS
 	clawfootstep = FOOTSTEP_GRASS
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/grass/atom_init()
 	icon_state = "grass[pick("1","2","3","4")]"
@@ -361,13 +368,14 @@
 			FF.update_icon() //so siding get updated properly
 
 /turf/simulated/floor/plating/ironsand
-	name = "Iron Sand"
+	name = "Грязь "
 	icon_state = "ironsand1"
 	basetype = /turf/simulated/floor/plating/ironsand
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	can_deconstruct = FALSE
+	var/dug = FALSE
 
 /turf/simulated/floor/plating/ironsand/ex_act()
 	return 0

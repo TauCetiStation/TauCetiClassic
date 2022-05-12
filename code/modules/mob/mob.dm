@@ -355,11 +355,13 @@
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 	set category = "OOC"
-
+	var/mob/old_mob
 	if(!abandon_allowed)
 		to_chat(usr, "<span class='notice'>Respawn is disabled.</span>")
 		return
-	if(stat != DEAD || !SSticker)
+	if(istype(usr,/mob/living/carbon/human/skeleton/valhalla))
+		old_mob = usr
+	if(stat != DEAD && !istype(usr,/mob/living/carbon/human/skeleton/valhalla) || !SSticker)
 		to_chat(usr, "<span class='notice'><B>You must be dead to use this!</B></span>")
 		return
 	else
@@ -381,14 +383,14 @@
 
 		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	//Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
 			to_chat(usr, "You have been dead for[pluralcheck] [deathtimeseconds] seconds.")
-			to_chat(usr, "You must wait 30 minutes to respawn!")
+			to_chat(usr, "You must wait 4 minutes to respawn!")
 			return
 		else
 			to_chat(usr, "You can respawn now, enjoy your new life!")
-
 	log_game("[key_name(usr)] used abandon mob.")
 
 	to_chat(usr, "<span class='notice'><B>Make sure to play a different character, and please roleplay correctly!</B></span>")
+
 
 	if(!client)
 		log_game("[key_name(usr)] AM failed due to disconnect.")
@@ -409,6 +411,8 @@
 	client.prefs.selected_quality_name = null
 
 	M.key = key
+	if(old_mob!=null)
+		qdel(old_mob)
 //	M.Login()	//wat
 	return
 
@@ -416,6 +420,10 @@
 	set name = "Observe"
 	set category = "OOC"
 	var/is_admin = FALSE
+
+	if(!(client in admins))
+		to_chat(src, "<span class='red'>Призраки только для членов админ-клуба.</span>")
+		return
 
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = TRUE

@@ -276,3 +276,18 @@
 	item_state = "marisarobe"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/wizrobe/monk
+	name = "Пси-Роба"
+	desc = "Святая!"
+	icon_state = "monk"
+	item_state = "monk"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(melee = 40, bullet = 40, laser = 40,energy = 40, bomb = 40, bio = 40, rad = 40)
+
+/obj/item/clothing/head/wizard/monk
+	name = "Пси-Роба"
+	desc = "Святая!"
+	icon_state = "monk"
+	item_state = "monk"
+	armor = list(melee = 40, bullet = 40, laser = 40,energy = 40, bomb = 40, bio = 40, rad = 40)

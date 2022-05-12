@@ -54,18 +54,8 @@
 	var/looped_ambience = null
 	var/is_force_ambience = FALSE
 	var/ambience = list(
-		'sound/ambience/general_1.ogg',
-		'sound/ambience/general_2.ogg',
-		'sound/ambience/general_3.ogg',
-		'sound/ambience/general_4.ogg',
-		'sound/ambience/general_5.ogg',
-		'sound/ambience/general_6.ogg',
-		'sound/ambience/general_7.ogg',
-		'sound/ambience/general_8.ogg',
-		'sound/ambience/general_9.ogg',
-		'sound/ambience/general_10.ogg',
-		'sound/ambience/general_11.ogg',
-		'sound/ambience/general_12.ogg'
+		'sound/ambience/homm1.ogg',
+		'sound/ambience/homm2.ogg'
 	)
 
 	/// All beauty in this area combined, only includes indoor area.

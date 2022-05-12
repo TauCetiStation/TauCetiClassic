@@ -1,7 +1,7 @@
 #define MIN_TUNNEL_LENGTH 20
 #define MAX_TUNNEL_LENGTH 60
 #define DISTANCE_BEETWEEN_MOSTERS 16
-#define CRATE_DROP_CHANCE 0.5 // 1 in 200
+#define CRATE_DROP_CHANCE 0 // 1 in 200
 
 /**********************Mineral deposits**************************/
 /turf/simulated/mineral
@@ -20,7 +20,7 @@
 	var/mineral/mineral
 	var/mined_ore = 0
 	var/next_act = 0
-	basetype = /turf/simulated/floor/plating/airless/asteroid
+	basetype = /turf/simulated/floor/plating/ironsand
 	var/datum/geosample/geologic_data
 	var/excavation_level = 0
 	var/list/finds
@@ -507,8 +507,10 @@
 
 /**********************Caves**************************/
 /turf/simulated/floor/plating/airless/asteroid
-	basetype = /turf/simulated/floor/plating/airless/asteroid
+	basetype = /turf/simulated/floor/plating/ironsand
 	can_deconstruct = FALSE
+	name = "Глина"
+	airless = FALSE
 
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
@@ -586,14 +588,8 @@
 
 	if(!sanity)
 		return
-
-	if(prob(6))
-		if(istype(loc, /area/asteroid/mine/explored))
-			return
-		for(var/obj/machinery/artifact/bluespace_crystal/BC in range(DISTANCE_BEETWEEN_MOSTERS, T)) //Lowers chance of crystal clumps
-			return
-		new /obj/machinery/artifact/bluespace_crystal(T)
-
+	if(prob(5))
+		new/obj/effect/landmark/glowshroom_spawn(T)
 	var/turf/t
 	if(SSticker.current_state > GAME_STATE_SETTING_UP)
 		t = new basetype(T)
@@ -605,7 +601,7 @@
 /**********************Asteroid**************************/
 
 /turf/simulated/floor/plating/airless/asteroid //floor piece
-	name = "Asteroid"
+	name = "Глина"
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
@@ -652,6 +648,27 @@
 			add_overlay(image('icons/turf/asteroid.dmi', "[overlay_name]", layer=6))
 
 /turf/simulated/floor/plating/airless/asteroid/update_overlays()
+	cut_overlays()
+	var/image/I
+	var/turf/T
+	for(var/direction_to_check in cardinal)
+		var/overlay_name = null
+		switch(direction_to_check)
+			if(1)
+				overlay_name = "asteroid_side_2"
+			if(2)
+				overlay_name = "asteroid_side_1"
+			if(4)
+				overlay_name = "asteroid_side_8"
+			if(8)
+				overlay_name = "asteroid_side_4"
+		I = image('icons/turf/asteroid.dmi', overlay_name, layer=6)
+		T = get_step(src, direction_to_check)
+		if(istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating/airless/asteroid))
+			I.plane = FLOOR_PLANE
+			T.add_overlay(I)
+
+/turf/simulated/floor/plating/ironsand/update_overlays()
 	..()
 	var/turf/T
 	for(var/direction_to_check in cardinal)
@@ -675,7 +692,7 @@
 /turf/simulated/floor/plating/airless/asteroid/atom_init_late()
 	update_overlays()
 
-/turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
+/turf/simulated/floor/plating/ironsand/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_HEAVY)
 			if(prob(30))
@@ -684,7 +701,7 @@
 			return
 	gets_dug()
 
-/turf/simulated/floor/plating/airless/asteroid/attackby(obj/item/weapon/W, mob/user)
+/turf/simulated/floor/plating/ironsand/attackby(obj/item/weapon/W, mob/user)
 
 	if(!W || !user)
 		return 0
@@ -721,14 +738,14 @@
 	else
 		..()
 
-/turf/simulated/floor/plating/airless/asteroid/proc/gets_dug()
+/turf/simulated/floor/plating/ironsand/proc/gets_dug()
 	if(dug)
 		return
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/ore/glass(src)
 	dug = TRUE
-	icon_plating = "asteroid_dug"
-	icon_state = "asteroid_dug"
+	icon_plating = "ironsand1"
+	icon_state = "ironsand1"
 
 /turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M as mob|obj)
 	..()

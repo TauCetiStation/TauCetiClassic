@@ -796,3 +796,9 @@
 	desc = "Pair of old jeans combined with a red tank-top"
 	icon_state = "kung_suit"
 	w_class = SIZE_SMALL
+
+/obj/item/clothing/under/peasant
+	name = "Одежда Селюка"
+	desc = "Дырка на жопе. И не только на жопе. И не только дырка"
+	icon_state = "peasant"
+	item_state = "peasant"

@@ -34,8 +34,8 @@
 	spawn_type = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 
 	needed_aspects = list(
-		ASPECT_WACKY = 1,
-		ASPECT_CHAOS = 1,
+		ASPECT_WACKY = 11,
+		ASPECT_CHAOS = 11,
 	)
 
 /datum/religion_rites/standing/spawn_item/banana/modify_item(atom/item)
@@ -112,7 +112,7 @@
 	favor_cost = 150
 
 	needed_aspects = list(
-		ASPECT_SPAWN = 1,
+		ASPECT_SPAWN = 0,
 	)
 
 	var/list/summon_type = list(/mob/living/simple_animal/corgi/puppy, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/corgi, /mob/living/simple_animal/cat, /mob/living/simple_animal/parrot, /mob/living/simple_animal/crab, /mob/living/simple_animal/cow, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken, /mob/living/simple_animal/pig, /mob/living/simple_animal/turkey, /mob/living/simple_animal/goose, /mob/living/simple_animal/seal, /mob/living/simple_animal/walrus, /mob/living/simple_animal/fox, /mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/mushroom, /mob/living/simple_animal/pug, /mob/living/simple_animal/shiba, /mob/living/simple_animal/yithian, /mob/living/simple_animal/tindalos, /mob/living/carbon/monkey, /mob/living/carbon/monkey/skrell, /mob/living/carbon/monkey/tajara, /mob/living/carbon/monkey/unathi, /mob/living/simple_animal/slime)
@@ -172,7 +172,7 @@
 	spawn_type = /obj/item/weapon/claymore/religion
 
 	needed_aspects = list(
-		ASPECT_WEAPON = 1
+		ASPECT_WEAPON = 11
 	)
 
 /datum/religion_rites/standing/spawn_item/create_sword/modify_item(atom/sword)
@@ -202,5 +202,5 @@
 	spawn_type = /obj/item/weapon/paper/talisman/chaplain
 
 	needed_aspects = list(
-		ASPECT_RESOURCES = 1,
+		ASPECT_RESOURCES = 0,
 	)

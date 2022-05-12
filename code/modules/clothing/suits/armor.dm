@@ -130,6 +130,26 @@
 	armor = list(melee = 80, bullet = 10, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/armor/milita
+	name = "Доспех Ополчения"
+	desc = "Не такой крепкий как у рыцарей, но зато твой."
+	icon_state = "milita_armor"
+	item_state = "milita_armor"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(melee = 30, bullet = 10, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
+	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/armor/riot
+	name = "riot suit"
+	desc = "A suit of armor with heavy padding to protect against melee attacks."
+	icon_state = "riot"
+	item_state = "swat_suit"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(melee = 80, bullet = 10, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
+	flags_inv = HIDEJUMPSUIT
+
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof fullbody armor"
 	desc = "A set of armor covering the entire body that excels in protecting the wearer against high-velocity solid projectiles."
@@ -380,8 +400,8 @@
 	siemens_coefficient = 0.7
 
 /obj/item/clothing/suit/armor/crusader
-	name = "crusader tabard"
-	desc = "It's a chainmail with some cloth draped over. Non nobis domini and stuff."
+	name = "Рыцарские доспехи"
+	desc = "Сине-белые. Цвета надела,к которому вы приставлены"
 	icon_state = "crusader"
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS

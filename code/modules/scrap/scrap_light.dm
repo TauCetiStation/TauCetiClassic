@@ -26,6 +26,23 @@
 /obj/item/device/flashlight/flare/torch/extinguish()
 	turn_off()
 
+/obj/item/device/flashlight/flare/afterattack(atom/target, mob/user, proximity, params)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+
+		// Suturing yourself brings much more pain.
+		var/pain_factor = H == user ? 40 : 20
+		if(H.stat == CONSCIOUS)
+			H.AdjustShockStage(pain_factor)
+		BP.status &= ~ORGAN_ARTERY_CUT
+		BP.strap()
+		user.visible_message(
+			"<span class='notice'>[user] has stitched [target]'s [BP.name] with [src].</span>",
+			"<span class='notice'>You have stitched [target]'s [BP.name] with [src].</span>")
+		return TRUE
+	return ..()
+
 /obj/item/device/flashlight/flare/torch/proc/light(mob/user)
 	// Usual checks
 	if(!fuel)

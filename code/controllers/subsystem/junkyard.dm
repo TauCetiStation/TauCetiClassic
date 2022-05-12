@@ -2,7 +2,7 @@
 SUBSYSTEM_DEF(junkyard)
 	name = "Junkyard"
 	flags = SS_NO_FIRE
-	msg_lobby = "Уничтожаем Землю..."
+	msg_lobby = "Уничтожаем Исход..."
 	var/list/junk = list()
 	var/junkyard_initialised = FALSE
 

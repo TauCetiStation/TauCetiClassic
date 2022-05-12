@@ -62,6 +62,8 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/toggledrones,
 	/client/proc/man_up,
 	/client/proc/global_man_up,
+	/client/proc/proebal,
+	/client/proc/global_proebal,
 	/client/proc/response_team, // Response Teams admin verb,
 	/client/proc/toggle_antagHUD_use,
 	/client/proc/toggle_antagHUD_restrictions,
@@ -974,9 +976,8 @@ var/global/list/admin_verbs_hideable = list(
 	set name = "Man Up"
 	set desc = "Tells mob to man up and deal with it."
 
-	to_chat(T, "<span class='notice'><b><font size=3>Man up and deal with it.</font></b></span>")
-	to_chat(T, "<span class='notice'>Move on.</span>")
-	T.playsound_local(null, 'sound/voice/ManUp1.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
+	to_chat(T, "<span class='notice'><b><font size=4>Чееел хароош</font></b></span>")
+	T.playsound_local(null, 'sound/Event/Pobeda.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
 
 	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] told [key_name(T)] to man up and deal with it.</span>")
@@ -987,11 +988,29 @@ var/global/list/admin_verbs_hideable = list(
 	set desc = "Tells everyone to man up and deal with it."
 
 	for (var/mob/T in player_list)
-		to_chat(T, "<br><center><span class='notice'><b><font size=4>Man up.<br> Deal with it.</font></b><br>Move on.</span></center><br>")
-		T.playsound_local(null, 'sound/voice/ManUp1.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
+		to_chat(T, "<br><center><span class='notice'><b><font size=11>Мегахорооош</font></b></span></center><br>")
+		T.playsound_local(null, 'sound/Event/Pobeda.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] told everyone to man up and deal with it.</span>")
+	mob.eject_from_wall()
+
+/client/proc/proebal(mob/T as mob in player_list)
+	set category = "Fun"
+	set name = "Proebal"
+	set desc = "Tells mob to man up and deal with it."
+
+	to_chat(T, "<span class='notice'><b><font size=11>БРУХ.</font></b></span>")
+	T.playsound_local(null, 'sound/Event/losecombat.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
+
+/client/proc/global_proebal()
+	set category = "Fun"
+	set name = "Proebal global"
+	set desc = "Tells everyone to man up and deal with it."
+
+	for (var/mob/T in player_list)
+		to_chat(T, "<br><center><span class='notice'><b><font size=11>БРУХ </font></b></span>")
+		T.playsound_local(null, 'sound/Event/losecombat.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
 	mob.eject_from_wall()
 
 /client/proc/achievement()

@@ -1182,7 +1182,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 /obj/item/weapon/grown/log/attackby(obj/item/I, mob/user, params)
-	if(I.sharp && I.edge && I.force > 10)
+	if(I.sharp && I.edge && I.force > 2)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "<span class='notice'>You make planks out of \the [src]!</span>")
 		for(var/i in 1 to 2)

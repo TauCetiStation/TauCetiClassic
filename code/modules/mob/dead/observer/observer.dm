@@ -189,7 +189,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
 		to_chat(src, "<span class='red'>You have been banned from observing.</span>")
 		return
-
+	if(!(client in admins))
+		to_chat(src, "<span class='red'>Призраки только для членов админ-клуба.</span>")
+		return
 	if(HAS_TRAIT(src, TRAIT_NO_SOUL))
 		to_chat(src, "<span class='red'>Вы не можете покинуть тело. У Вас нет души.</span>")
 		return

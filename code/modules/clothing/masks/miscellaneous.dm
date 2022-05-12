@@ -93,6 +93,12 @@
 	icon_state = "violetscarf"
 	item_state = "violetscarf"
 
+/obj/item/clothing/mask/milita
+	name = "Горжет"
+	desc = "Сразу видно - ополченец."
+	icon_state = "milita"
+	item_state = "milita"
+
 /obj/item/clothing/mask/scarf/attack_self(mob/user)
 
 	if(user.incapacitated())

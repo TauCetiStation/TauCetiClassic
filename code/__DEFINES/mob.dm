@@ -81,6 +81,7 @@
 #define VOX_ARMALIS    "Vox Armalis"
 #define ABDUCTOR       "Abductor"
 #define SKELETON       "Skeleton"
+#define VALHALLA       "Valhalla"
 #define SHADOWLING     "Shadowling"
 #define GOLEM          "Adamantine Golem"
 #define HOMUNCULUS     "Homunculus"

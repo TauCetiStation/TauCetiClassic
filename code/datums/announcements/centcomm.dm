@@ -1,7 +1,7 @@
 /* CENTRAL COMMAND */
 /datum/announcement/centcomm
-	title = "Оповещение Центрального Командования"
-	subtitle = "Оповещение НаноТрейзен"
+	title = "Астрологи"
+	subtitle = "Прогноз по звездам"
 	sound = "commandreport"
 	flags = ANNOUNCE_TEXT | ANNOUNCE_SOUND
 

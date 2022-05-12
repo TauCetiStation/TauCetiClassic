@@ -51,6 +51,7 @@ var/global/const/MIME				=(1<<12)
 var/global/const/ASSISTANT			=(1<<13)
 var/global/const/RECYCLER			=(1<<14)
 var/global/const/BARBER			=(1<<15)
+var/global/const/HUB			=(1<<2)
 
 var/global/list/assistant_occupations = list(
 )

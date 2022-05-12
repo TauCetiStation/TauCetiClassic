@@ -189,6 +189,15 @@
 	qdel(src)
 	user.put_in_active_hand(pryjaws)
 
+/obj/item/weapon/smith_hammer
+	name = "Кузнечный молот"
+	desc = "Очень крутой"
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "smith_hammer"
+	item_state = "sledgehammer0"
+	hitsound = 'sound/items/sledgehammer_hit.ogg'
+	force = 15
+	w_class = SIZE_TINY
 /*
  * Welding Tool
  */

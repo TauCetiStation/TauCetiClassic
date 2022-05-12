@@ -79,8 +79,8 @@
 	desc = "Tharr she blows!"
 	icon_state = "harpoon"
 	item_state = "harpoon"
-	force = 20
-	throwforce = 15
+	force = 1
+	throwforce = 35
 	w_class = SIZE_SMALL
 	attack_verb = list("jabbed","stabbed","ripped")
 
