@@ -2280,8 +2280,7 @@
 
 	else if(href_list["change_subsition_ubi"])
 		var/amount = input("Enter the universal base income in credits -100 to 100", "Universal income:") as num
-		amount = clamp(amount, -100, 100)
-		SSeconomy.ubi_count = amount
+		SSeconomy.ubi_count = clamp(amount, -100, 100)
 		change_crew_salary()
 
 	// player info stuff
