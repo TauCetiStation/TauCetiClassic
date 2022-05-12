@@ -25,7 +25,9 @@ SUBSYSTEM_DEF(economy)
 		//Station to Departments salary transactions
 		for(var/dep_name in global.department_accounts)
 			var/datum/money_account/D = department_accounts[dep_name]
-			if(!D.suspended)
+			if(D.suspended)
+				continue
+			else
 				if(!global.station_account.suspended)
 					if(global.station_account.money >= abs(D.subsidy) && D.subsidy > 0)
 						charge_to_account(D.account_number, global.station_account.account_number, "[D.owner_name] Department Subsidion", "Station Account", D.subsidy)
@@ -35,9 +37,8 @@ SUBSYSTEM_DEF(economy)
 						charge_to_account(global.station_account.account_number, D.account_number, "[D.owner_name] Department Penalty", global.department_accounts[D.department], -D.subsidy)
 
 				//Departments to personnel salary transactions
-				var/list/ranks = list("high", "medium", "low")
 				skimming_through_ranks:
-					for(var/r in ranks)
+					for(var/r in D.salaries_rank_table)
 						var/list/rank_table = D.salaries_rank_table[r]
 						var/salary_rank = D.salaries_per_ranks_table[r]
 						var/salary = null
@@ -71,11 +72,9 @@ SUBSYSTEM_DEF(economy)
 									else
 										all_salaries += P.base_salary
 						charge_to_account(D.account_number, D.account_number, "Salaries of [r] rank payment", D.owner_name, -dep_salary)
-			else
-				continue
 
 		//CentComm to Station Subsidion transaction
-		if(!global.station_account.suspended)
+		if(!global.station_account.suspended && all_salaries != 0)
 			global.station_account.subsidy = all_salaries * SSeconomy.station_subsidy_coefficient
 			charge_to_account(global.station_account.account_number, global.station_account.account_number, "Station Subsidion", "Central Command", global.station_account.subsidy)
 	payment_counter += 1

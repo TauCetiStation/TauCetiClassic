@@ -17,7 +17,7 @@
 	var/datum/money_account/department = null
 	var/subsidy = 0
 	var/rank = "low"
-	var/salaries_rank_table = list("low", "medium", "high") //Rank table for department accounts
+	var/salaries_rank_table = list("low" = list(), "medium" = list(), "high" = list()) //Rank table for department accounts
 	var/salaries_per_ranks_table = list("low" = 0, "medium" = 0, "high" = 0) //Sum of salaries based on rank
 	var/security_level = 0	//0 - auto-identify from worn ID, require only account number
 							//1 - require manual login / account number and pin

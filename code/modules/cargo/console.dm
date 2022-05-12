@@ -195,7 +195,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 				P = O.object
 				if(global.cargo_account.money >= P.cost)
 					SSshuttle.requestlist.Cut(i,i+1)
-					global.cargo_account.money -= P.cost
+					charge_to_account(cargo_account.account_number, cargo_account.account_number, "Cargo Purchase check", "Cargo shuttle", -P.cost)
 					SSshuttle.shoppinglist += O
 					temp = "Thanks for your order.<BR>"
 					temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
