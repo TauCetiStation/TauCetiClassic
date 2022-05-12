@@ -234,3 +234,8 @@
 	icon_state = "ghost2"
 	icon_living = "ghost2"
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+/mob/living/simple_animal/shade/evil_shade/attack_ghost(mob/dead/observer/user)
+	if(!client)
+		key = user.key
+	return

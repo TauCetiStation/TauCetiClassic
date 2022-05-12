@@ -33,24 +33,22 @@
 
 	var/mob/living/new_mob
 
-	var/randomize = pick("robot","human", "animal", "xeno")
+	var/randomizer = rand(1, 4)
 	if(isxeno(M))
-		randomize = "xeno"
-	switch(randomize)
-		if("robot")
-			new_mob = new /mob/living/silicon/robot(M.loc)
+		randomizer = 4
+	switch(randomizer)
+		if(1)
+			new_mob = pick(new /mob/living/simple_animal/hostile/carp(M.loc), new /mob/living/simple_animal/hostile/tomato/angry_tomato(M.loc), new /mob/living/simple_animal/hostile/retaliate/goat(M.loc), new /mob/living/simple_animal/pig/shadowpig(M.loc), new /mob/living/simple_animal/cow/cute_cow(M.loc))
+			new_mob.universal_speak = TRUE
+		if(2)
+			new_mob = new /mob/living/silicon/robot(M.loc, "Default", /datum/ai_laws/asimov_xenophile, FALSE, global.chaplain_religion)
 			new_mob.gender = M.gender
 			new_mob.invisibility = 0
 			new_mob.job = "Cyborg"
 			var/mob/living/silicon/robot/Robot = new_mob
-			Robot.mmi = new /obj/item/device/mmi(new_mob)
+			Robot.mmi = new /obj/item/device/mmi(new_mob, /datum/ai_laws/asimov_xenophile, FALSE, global.chaplain_religion)
 			Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
-			Robot.clear_inherent_laws()
-			Robot.init(/datum/ai_laws/asimov_xenophile, FALSE, global.chaplain_religion)
-		if("xeno")
-			new_mob = new /mob/living/carbon/xenomorph/humanoid/maid(M.loc)
-			new_mob.universal_speak = 1
-		if("human")
+		if(3)
 			new_mob = new /mob/living/carbon/human(M.loc)
 			if(M.gender == MALE)
 				new_mob.gender = MALE
@@ -67,16 +65,9 @@
 
 			var/datum/preferences/A = new()	//Randomize appearance for the human
 			A.randomize_appearance_for(new_mob)
-		if("animal")
-			var/beast = pick(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/tomato/angry_tomato, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/pig/shadowpig, /mob/living/simple_animal/cow/cute_cow)
-			switch(beast)
-				if(/mob/living/simple_animal/hostile/carp)					new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
-				if(/mob/living/simple_animal/hostile/tomato/angry_tomato)	new_mob = new /mob/living/simple_animal/hostile/tomato/angry_tomato(M.loc)
-				if(/mob/living/simple_animal/hostile/retaliate/goat)		new_mob = new /mob/living/simple_animal/hostile/retaliate/goat(M.loc)
-				if(/mob/living/simple_animal/pig/shadowpig)					new_mob = new /mob/living/simple_animal/pig/shadowpig(M.loc)
-				if(/mob/living/simple_animal/cow/cute_cow)					new_mob = new /mob/living/simple_animal/cow/cute_cow(M.loc)
-			new_mob.universal_speak = 1
-
+		if(4)
+			new_mob = new /mob/living/carbon/xenomorph/humanoid/maid(M.loc)
+			new_mob.universal_speak = TRUE
 	if(!new_mob)
 		return
 
