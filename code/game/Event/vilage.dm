@@ -130,6 +130,17 @@
 	open_icon = "grill_on"
 	use_power = NO_POWER_USE
 
+/obj/machinery/reagentgrinder/vilage
+	name = "1"
+	desc = "1"
+	icon = 'icons/obj/Events/human/vilage.dmi'
+	icon_state = "grill"
+	use_power = NO_POWER_USE
+
+/obj/machinery/reagentgrinder/vilage/update_icon()
+	icon_state = "grill"+num2text(!isnull(beaker))
+	return
+
 
 /obj/structure/tree_of_greed
 	name = "Таки древо Мудрости"
