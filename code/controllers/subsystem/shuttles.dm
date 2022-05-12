@@ -512,9 +512,9 @@ SUBSYSTEM_DEF(shuttle)
 		msg += export_text + "\n"
 		var/tax = round(E.total_cost * SSeconomy.tax_cargo_export * 0.01)
 		if(tax != 0)
-			charge_to_account(station_account.account_number, cargo_account.account_number, "Cargo Export tax", "Cargo shuttle", tax)
+			charge_to_account(station_account.account_number, "Cargo Shuttle", "Cargo Export tax", "Cargo shuttle", tax)
 		if(tax != E.total_cost)
-			charge_to_account(cargo_account.account_number, cargo_account.account_number, "Cargo Exports", "Cargo shuttle", E.total_cost - tax)
+			charge_to_account(cargo_account.account_number, "Cargo shuttle", "Cargo Exports", "Cargo shuttle", E.total_cost - tax)
 		E.export_end()
 
 	centcom_message = msg
