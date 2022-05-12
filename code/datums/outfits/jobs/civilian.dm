@@ -219,7 +219,7 @@
 	name = OUTFIT_JOB_NAME("Knight")
 	uniform =/obj/item/clothing/under/color/grey
 	suit = /obj/item/clothing/suit/armor/crusader
-	shoes = /obj/item/clothing/shoes/boots/swat
+	shoes = /obj/item/clothing/shoes/boots
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/helmet/crusader
 	l_hand = /obj/item/weapon/claymore/religion
@@ -244,7 +244,7 @@
 	name = OUTFIT_JOB_NAME("Human Hero")
 	uniform =/obj/item/clothing/under/color/grey
 	suit = /obj/item/clothing/suit/armor/crusader
-	shoes = /obj/item/clothing/shoes/boots/swat
+	shoes = /obj/item/clothing/shoes/boots
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/byzantine_hat
 	l_pocket_back = /obj/item/weapon/paper/village_law
