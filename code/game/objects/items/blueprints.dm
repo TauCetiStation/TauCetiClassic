@@ -23,7 +23,7 @@
 	var/const/ROOM_ERR_TOOLARGE = -2
 
 /obj/item/blueprints/attack_self(mob/M)
-	if (!istype(M,/mob/living/carbon/human))
+	if (!ishuman(M))
 		to_chat(M, "This stack of blue paper means nothing to you.")//monkeys cannot into projecting
 		return
 	interact()
@@ -129,6 +129,7 @@ move an amendment</a> to the drawing.</p>
 	A.valid_territory = 0
 	move_turfs_to_area(turfs, A)
 	A.always_unpowered = 0
+	A.update_areasize()
 
 	spawn(5)
 		//world << "DEBUG: create_area(5): <br>A.name=[A.name]<br>A.tag=[A.tag]"
@@ -156,6 +157,7 @@ move an amendment</a> to the drawing.</p>
 		return
 	set_area_machinery_title(A,str,prevname)
 	A.name = str
+	A.update_areasize()
 	to_chat(usr, "<span class='notice'>You set the area '[prevname]' title to '[str]'.</span>")
 	interact()
 	return
@@ -179,7 +181,7 @@ move an amendment</a> to the drawing.</p>
 	//TODO: much much more. Unnamed airlocks, cameras, etc.
 
 /obj/item/blueprints/proc/check_tile_is_border(turf/T2,dir)
-	if (istype(T2, /turf/space))
+	if (isenvironmentturf(T2))
 		return BORDER_SPACE //omg hull breach we all going to die here
 	if (istype(T2, /turf/simulated/shuttle))
 		return BORDER_SPACE

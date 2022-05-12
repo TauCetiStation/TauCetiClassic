@@ -5,9 +5,9 @@
 	var/can_unwrench = TRUE
 	var/health = 3000
 
-/obj/structure/cult/bullet_act(obj/item/projectile/Proj)
+/obj/structure/cult/bullet_act(obj/item/projectile/Proj, def_zone)
 	health -= Proj.damage
-	..()
+	. = ..()
 	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
 	healthcheck()
 
@@ -17,7 +17,7 @@
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-		return
+		return FALSE
 
 	. = ..()
 	if(!.)
@@ -129,17 +129,17 @@
 			C.torture_tables += src
 			religion = C
 			name = "charged [initial(name)]"
-			filters += filter(type = "outline", size = 1, color = "#990066")
+			add_filter("torture_outline", 2, outline_filter(1, "#990066"))
 			charged = TRUE
 			new /obj/effect/temp_visual/cult/sparks(loc)
-			return
+			return FALSE
 
 	if(iswrench(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-		return
+		return FALSE
 
 	return ..()
 
@@ -210,7 +210,7 @@
 	can_unwrench = FALSE
 
 /obj/structure/cult/portal_to_station/Bumped(atom/A)
-	var/area/area = findEventArea()
+	var/area/area = SSevents.findEventArea()
 	var/turf/target = get_turf(pick(get_area_turfs(area.type, FALSE)))
 	if(ismob(A))
 		var/mob/user = A
@@ -238,20 +238,22 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
 /obj/structure/cult/anomaly/attackby(obj/item/weapon/W, mob/user)
-	return
+	return FALSE
 
 /obj/structure/cult/anomaly/attack_animal(mob/living/simple_animal/user)
 	if(iscultist(user))
 		destroying(user.my_religion)
 
 /obj/structure/cult/anomaly/proc/async_destroying(datum/religion/cult/C)
+	density = FALSE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	animate(src, 1 SECONDS, alpha = 0)
 	sleep(1 SECONDS)
 	qdel(src)
 
 	C.adjust_favor(rand(1, 5))
 	// statistics!
-	score["destranomaly"]++
+	SSStatistics.score.destranomaly++
 
 /obj/structure/cult/anomaly/proc/destroying(datum/religion/cult/C)
 	INVOKE_ASYNC(src, .proc/async_destroying, C)

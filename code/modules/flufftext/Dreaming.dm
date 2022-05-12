@@ -3,26 +3,26 @@
 #define NOT_DREAMING 0
 
 var/global/list/dreams = list(
-	"an ID card","a bottle","a familiar face","a crewmember","a toolbox","a security officer","the captain",
-	"voices from all around","deep space","a doctor","the engine","a traitor","an ally","darkness",
-	"light","a scientist","a monkey","a catastrophe","a loved one","a gun","warmth","freezing","the sun",
-	"a hat","the Luna","a ruined station","a planet","phoron","air","the medical bay","the bridge","blinking lights",
-	"a blue light","an abandoned laboratory","Nanotrasen","The Syndicate","blood","healing","power","respect",
-	"riches","space","a crash","happiness","pride","a fall","water","flames","ice","melons","flying","the eggs","money",
-	"the head of personnel","the head of security","a chief engineer","a research director","a chief medical officer",
-	"the detective","the warden","a member of the internal affairs","a station engineer","the janitor","atmospheric technician",
-	"the quartermaster","a cargo technician","the botanist","a shaft miner","the psychologist","the chemist","the geneticist",
-	"the virologist","the roboticist","the chef","the barber","the bartender","the chaplain","the librarian","a mouse","an ert member",
-	"a beach","the holodeck","a smokey room","a voice","the cold","a mouse","an operating table","the bar","the rain","a skrell",
-	"a unathi","a tajaran","the ai core","the mining station","the research station","a beaker of strange liquid",
+	"идентификационная карта","бутылка","знакомое лицо","член экипажа","ящик с инструментами","офицер службы безопасности","капитан",
+	"голоса со всех сторон","глубокий космос","доктор","двигатель","предатель","союзник","темнота",
+	"свет","учёный","обезьяна","катастрофа","любимый человек","пушка","тепло","мороз","солнце",
+	"шляпа","Луна","уничтоженная станция","планета","форон","воздух","медицинский отдел","мостик","мерцающие огни",
+	"голубой свет","заброшенная лаборатория", "НаноТрейзен","Синдикат","кровь","лечение","сила","уважение",
+	"богатства","космос","крушение","счастье","гордость","падение","вода","пламя","лёд","арбузы","полёт","куриные яйца","деньги",
+	"глава персонала","глава службы безопасности","старший инженер","директор исследований","главврач",
+	"детектив","смотритель","агент внутренних дел","инженер","уборщик","атмосферный техник",
+	"завхоз","грузчик","ботаник","шахтёр","психолог","химик","генетик",
+	"вирусолог","робототехник","повар","барбер","бармен","священник","библиотекарь","мышь","член ОБР",
+	"пляж","голодек","прокуренная комната","голос","холод","мышь","операционный стол","бар","дождь","скрелл",
+	"унатх","таяран","ядро ИИ","шахтерский аванпост","научный аванпост","склянка странной жидкости",
 	)
 
 var/global/list/nightmares = list(
-	"c'thulhu","a cultist","a deity","rituals","blood","gibs","death","horror","abyss","damnation","a sign","a shadow","fear","the giant spider",
-	"darkness","voices from all around","a catastrpohe","freezing","ruins","blinking lights","flames","a voice","a pair of red eyes",
-	"the unknown","a murderer","a killer","a xeno","a criminal","visions","it","a gasmask","look","a painting","an abomination","an yellow sign","shadows",
-	"the undead","whispers","suicide","creatures","cave","eyes","a child","plague","hunger","rot","rats","a witch","screams","claws","fangs",
-	"height","knife","a corpse","guilt","singularity","a ghost"
+	"Ктулху","культист","божество","ритуалы","кровь","кишки","смерть","ужас","бездна","проклятие","знак","тень","страх","огромный паук",
+	"тьма","голоса отовсюду","катастрофа", "холод","руины","мерцающие огни","пламя","голос","пара алых глаз",
+	"неизвестный","маньяк","убийца","ксенос","преступник","видения","оно","противогаз","взгляд","картина","мерзость","желтый знак","тени",
+	"нежить","шёпот","суицид","существа","пещера","глаза","дитя","чума","голод","гниль","крысы","ведьма","крики","когти","клыки",
+	"высота","нож","труп","вина","сингулярность","призрак"
 	)
 
 /mob/living/carbon/proc/dream()

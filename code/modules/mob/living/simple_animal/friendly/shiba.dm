@@ -12,6 +12,7 @@
 	emote_see = list("shakes its head", "shivers", "looks cute")
 	speak_chance = 20
 	turns_per_move = 3
+	w_class = SIZE_BIG
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/shiba = 2)
 	response_help  = "pets the"
 	response_disarm = "bops the"
@@ -52,7 +53,7 @@
 /mob/living/simple_animal/shiba/Life()
 	..()
 
-	if(!stat && !resting && !buckled)
+	if(!stat && !buckled)
 		if(prob(1))
 			emote(pick("chases its tail"))
 			spawn(0)
@@ -65,7 +66,7 @@
 			emote(pick("barks!","woofs loudly!","eyes [histoy] joyfully."))
 		break
 
-	if(!stat && !resting && !buckled)
+	if(!stat && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			walk_to(src,0)
@@ -89,4 +90,4 @@
 				set_dir(i)
 				sleep(1)
 		if(prob(40))
-			visible_message(pick("[bicon(src)][src] joyfully plays with the toy!","[bicon(src)][src] rolls the toy back and forth!","[bicon(src)][src] happily twists and spins the toy!","[bicon(src)][src] thoroughly sniffs the toy all around!"), 2)
+			visible_message(pick("[bicon(src)][src] joyfully plays with the toy!","[bicon(src)][src] rolls the toy back and forth!","[bicon(src)][src] happily twists and spins the toy!","[bicon(src)][src] thoroughly sniffs the toy all around!"))

@@ -11,7 +11,7 @@
 /obj/item/weapon/circuitboard
 	density = FALSE
 	anchored = FALSE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
@@ -69,10 +69,6 @@
 /obj/item/weapon/circuitboard/med_data
 	name = "Circuit board (Medical Records)"
 	build_path = /obj/machinery/computer/med_data
-/obj/item/weapon/circuitboard/pandemic
-	name = "Circuit board (PanD.E.M.I.C. 2200)"
-	build_path = /obj/machinery/computer/pandemic
-	origin_tech = "programming=2;biotech=2"
 /obj/item/weapon/circuitboard/scan_consolenew
 	name = "Circuit board (DNA Machine)"
 	build_path = /obj/machinery/computer/scan_consolenew
@@ -99,7 +95,7 @@
 		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage)))
 			return ..()
 
-	for(var/mob/living/silicon/ai/shuttlecaller in ai_list)
+	for(var/mob/living/silicon/ai/shuttlecaller as anything in ai_list)
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 

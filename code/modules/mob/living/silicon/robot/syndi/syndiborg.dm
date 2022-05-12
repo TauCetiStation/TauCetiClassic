@@ -7,10 +7,13 @@
 //	designation = "Syndicate"
 	braintype = "Robot"
 	req_access = list(access_syndicate)
+	w_class = SIZE_BIG
 
 	typing_indicator_type = "syndibot"
 
 	var/static/image/sword_overlay
+
+	spawner_args = list(/datum/spawner/living/robot/syndi, 2 MINUTES)
 
 /mob/living/silicon/robot/syndicate/atom_init()
 	. = ..()

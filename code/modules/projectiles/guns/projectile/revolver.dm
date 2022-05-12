@@ -26,6 +26,8 @@
 
 /obj/item/weapon/gun/projectile/revolver/attack_self(mob/living/user)
 	var/num_unloaded = 0
+	if(istwohanded)
+		return ..()
 	while (get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
@@ -57,16 +59,17 @@
 
 /obj/item/weapon/gun/projectile/revolver/detective
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
-	name = "revolver"
+	name = "S&W Model 10"
 	icon_state = "detective"
 	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
-
+	w_class = SIZE_TINY
 
 /obj/item/weapon/gun/projectile/revolver/detective/special_check(mob/living/carbon/human/M)
 	if(magazine.caliber == initial(magazine.caliber))
 		return ..()
 	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
+		explosion(M.loc, 0, 0, 1, 1)
 		to_chat(M, "<span class='danger'>[src] blows up in your face!</span>")
 		M.take_bodypart_damage(0, 20)
 		qdel(src)
@@ -199,7 +202,7 @@
 		if(isliving(target) && isliving(user))
 			if(def_zone == BP_HEAD)
 				var/obj/item/ammo_casing/AC = chambered
-				if(AC.fire(user, user))
+				if(AC.fire(src, user, user))
 					user.apply_damage(300, BRUTE, def_zone, null, DAM_SHARP)
 					playsound(user, fire_sound, VOL_EFFECTS_MASTER)
 					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
@@ -229,6 +232,9 @@
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
+/obj/item/weapon/gun/projectile/revolver/peacemaker/detective
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45/rubber
+
 /obj/item/weapon/gun/projectile/revolver/flare
 	name = "flare gun"
 	desc = "Fires flares."
@@ -236,8 +242,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/flaregun
 
 /obj/item/weapon/gun/projectile/revolver/detective/dungeon
-	desc = "A a six-shot double-action revolver."
-	name = "Smith & Wesson Model 10"
+	desc = "A six-shot double-action revolver."
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38/dungeon
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon
@@ -245,7 +250,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
 	icon_state = "sawnshotgun"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"
 	desc = "Omar's coming!"

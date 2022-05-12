@@ -35,7 +35,7 @@
 
 /obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/carbon/M)	// Added a new proc called 'bang' that takes a location and a person to be banged.
 	to_chat(M, "<span class='warning'><B>BANG</B></span>")
-	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, null, null, 5)
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 5)
 
 //Checking for protections
 	var/eye_safety = 0
@@ -48,8 +48,10 @@
 				ear_safety += 2
 			if(HULK in M.mutations)
 				ear_safety += 1
-			if(istype(H.head, /obj/item/clothing/head/helmet))
-				ear_safety += 1
+			if(H.head)
+				var/obj/item/clothing/C = H.head
+				if(istype(C) && C.flashbang_protection)
+					ear_safety += 1
 
 //Flashing everyone
 	if(eye_safety < 1)
@@ -142,7 +144,7 @@
 	for(var/i in 1 to numspawned)
 		new /obj/item/weapon/grenade/clusterbuster/segment(loc, payload)	//Creates 'segments' that launches a few more payloads
 
-	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	qdel(src)
 
 
@@ -170,7 +172,7 @@
 		P.active = 1
 		walk_away(P,loc,rand(1,4))
 		addtimer(CALLBACK(P, /obj/item/weapon/grenade.proc/prime), rand(15,60))
-	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	qdel(src)
 
 //////////////////////////////////

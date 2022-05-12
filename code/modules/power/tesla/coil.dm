@@ -45,7 +45,7 @@
 	var/power_produced = power / power_loss
 	add_avail(power_produced*input_power_multiplier)
 	flick("coilhit", src)
-	playsound(src, 'sound/magic/LightningShock.ogg', VOL_EFFECTS_MISC, null, null, 5)
+	playsound(src, 'sound/magic/LightningShock.ogg', VOL_EFFECTS_MISC, null, FALSE, null, 5)
 	tesla_zap(src, 5, power_produced)
 	VARSET_IN(src, being_shocked, FALSE, 10)
 

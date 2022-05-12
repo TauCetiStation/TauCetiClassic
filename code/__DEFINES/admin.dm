@@ -56,6 +56,10 @@
 
 #define R_HOST			65535
 
+#define ADMIN_RANK_ROUND   "Temporary Round Admin"
+#define ADMIN_RANK_SANDBOX "Sandbox Admin"
+#define ADMIN_RANK_REMOVED "Removed"
+
 #define ADMIN_QUE(user) "(<a href='?_src_=holder;adminmoreinfo=\ref[user]'>?</a>)"
 #define ADMIN_FLW(target) "(<a href='?_src_=holder;adminplayerobservefollow=\ref[target]'>FLW</a>)"
 #define ADMIN_JMP(target) "(<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>)"

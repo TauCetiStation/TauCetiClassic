@@ -19,7 +19,7 @@
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1 to 15)
-			M.eye_blurry = max(M.eye_blurry, 10)
+			M.blurEyes(10)
 		if(15 to 25)
 			M.drowsyness  = max(M.drowsyness, 20)
 		if(25 to INFINITY)
@@ -30,8 +30,9 @@
 			M.SetParalysis(0)
 			M.dizziness = 0
 			M.drowsyness = 0
-			M.stuttering = 0
-			M.confused = 0
+			M.setStuttering(0)
+			M.SetDrunkenness(0)
+			M.SetConfused(0)
 			M.jitteriness = 0
 
 /datum/reagent/inaprovaline
@@ -122,7 +123,7 @@
 /datum/reagent/oxycodone/on_general_digest(mob/living/M)
 	..()
 	if(volume > overdose)
-		M.druggy = max(M.druggy, 10)
+		M.adjustDrugginess(1)
 		M.hallucination = max(M.hallucination, 3)
 
 /datum/reagent/sterilizine
@@ -351,7 +352,7 @@
 	M.setBrainLoss(0)
 	M.disabilities = 0
 	M.sdisabilities = 0
-	M.eye_blurry = 0
+	M.setBlurriness(0)
 	M.eye_blind = 0
 	M.SetWeakened(0)
 	M.SetStunned(0)
@@ -359,15 +360,10 @@
 	M.silent = 0
 	M.dizziness = 0
 	M.drowsyness = 0
-	M.stuttering = 0
-	M.confused = 0
+	M.setStuttering(0)
+	M.SetConfused(0)
 	M.SetSleeping(0)
 	M.jitteriness = 0
-	for(var/datum/disease/D in M.viruses)
-		D.spread = "Remissive"
-		D.stage--
-		if(D.stage < 1)
-			D.cure()
 
 /datum/reagent/synaptizine
 	name = "Synaptizine"
@@ -448,7 +444,7 @@
 
 /datum/reagent/imidazoline/on_general_digest(mob/living/M)
 	..()
-	M.eye_blurry = max(M.eye_blurry - 5, 0)
+	M.adjustBlurriness(-5)
 	M.eye_blind = max(M.eye_blind - 5, 0)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -647,8 +643,8 @@
 	..()
 	M.dizziness = 0
 	M.drowsyness = 0
-	M.stuttering = 0
-	M.confused = 0
+	M.setStuttering(0)
+	M.SetConfused(0)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1 * REM, 0, 1)
 
 /datum/reagent/vitamin //Helps to regen blood and hunger(but doesn't really regen hunger because of the commented code below).
@@ -735,7 +731,7 @@
 			if(M.reagents.has_reagent("tramadol") || M.reagents.has_reagent("oxycodone"))
 				M.adjustToxLoss(5)
 			else
-				M.confused += 2
+				M.AdjustConfused(2)
 		if(20 to 60)
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())

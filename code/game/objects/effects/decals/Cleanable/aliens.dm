@@ -4,12 +4,16 @@
 	icon = 'icons/effects/blood.dmi'
 	basedatum = /datum/dirt_cover/xeno_blood
 
+	beauty = -250
+
 /obj/effect/decal/cleanable/blood/gibs/xeno
 	name = "xeno gibs"
 	desc = "Gnarly..."
 	icon_state = "xgib1"
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
 	basedatum = /datum/dirt_cover/xeno_blood
+
+	beauty = -250
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/update_icon()
 	color = "#ffffff"
@@ -28,6 +32,3 @@
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/core
 	random_icon_states = list("xgibmid1", "xgibmid2", "xgibmid3")
-
-/obj/effect/decal/cleanable/blood/xtracks
-	basedatum = /datum/dirt_cover/xeno_blood

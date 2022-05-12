@@ -1,6 +1,7 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
+	w_class = SIZE_SMALL
 	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
 	var/item_state = null
@@ -13,7 +14,6 @@
 	var/list/hitsound = list()
 	var/usesound = null
 	var/wet = 0
-	var/w_class = ITEM_SIZE_NORMAL
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
@@ -34,8 +34,8 @@
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
-	var/item_color = null
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
+	var/pierce_protection = 0
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
@@ -57,7 +57,6 @@
 		/obj/machinery/autolathe
 	)
 	var/can_be_holstered = FALSE
-	var/uncleanable = 0
 	var/toolspeed = 1
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
@@ -69,7 +68,7 @@
 	var/list/sprite_sheets_obj = null
 
     /// A list of all tool qualities that src exhibits. To-Do: Convert all our tools to such a system.
-	var/list/tools = list()
+	var/list/qualities
 	// This thing can be used to stab eyes out.
 	var/stab_eyes = FALSE
 
@@ -79,6 +78,7 @@
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
 
+	var/dyed_type
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -120,7 +120,7 @@
 	message += "<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 		message += "<span class='notice'>Time of Death: [M.tod]</span><br>"
-	if(istype(M, /mob/living/carbon/human) && mode)
+	if(ishuman(M) && mode)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_bodyparts(1, 1)
 		message += "<span class='notice'>Localized Damage, Brute/Burn:</span><br>"
@@ -137,7 +137,7 @@
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected</span>" : "Subject bloodstream oxygen level normal"
 	message += "[OX]<br>[TX]<br>[BU]<br>[BR]<br>"
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.reagents.total_volume || C.is_infected_with_zombie_virus())
 			message += "<span class='warning'>Warning: Unknown substance detected in subject's blood.</span><br>"
@@ -151,14 +151,11 @@
 			message += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span><br>"
 	if(M.getCloneLoss())
 		to_chat(user, "<span class='warning'>Subject appears to have been imperfectly cloned.</span>")
-	for(var/datum/disease/D in M.viruses)
-		if(!D.hidden[SCANNER])
-			message += "<span class = 'warning bold'>Warning: [D.form] Detected</span>\n<span class = 'warning'>Name: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span><br>"
 	if(M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
 		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span><br>"
 	if(M.has_brain_worms())
 		message += "<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span><br>"
-	else if(M.getBrainLoss() >= 100 || (istype(M, /mob/living/carbon/human) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
+	else if(M.getBrainLoss() >= 100 || (ishuman(M) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
 		message += "<span class='warning'>Subject is brain dead.</span>"
 	else if(M.getBrainLoss() >= 60)
 		message += "<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span><br>"
@@ -220,19 +217,13 @@
 
 /obj/item/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(5))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(95))
 				return
-		else
-	return
+	qdel(src)
 
 /obj/item/blob_act()
 	return
@@ -263,25 +254,15 @@
 
 /obj/item/examine(mob/user)
 	. = ..()
-	var/size
-	switch(src.w_class)
-		if(1.0)
-			size = "tiny"
-		if(2.0)
-			size = "small"
-		if(3.0)
-			size = "normal-sized"
-		if(4.0)
-			size = "bulky"
-		if(5.0)
-			size = "huge"
-		else
 
-	var/open_span  = "[src.wet ? "<span class='wet'>" : ""]"
-	var/close_span = "[src.wet ? "</span>" : ""]"
-	var/wet_status = "[src.wet ? " wet" : ""]"
+	if(w_class || wet)
 
-	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
+		var/stat_flavor = "It is a[wet ? " wet" : ""] [w_class ? "[get_size_flavor()] sized" : ""] item."
+
+		if(wet)
+			stat_flavor = "<span class='wet'>[stat_flavor]</span>"
+
+		to_chat(user, stat_flavor)
 
 /obj/item/attack_hand(mob/user)
 	if (!user || anchored)
@@ -289,7 +270,7 @@
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
 		if(istype(src, /obj/item/weapon/melee))
-			if(src.w_class < ITEM_SIZE_LARGE)
+			if(src.w_class < SIZE_NORMAL)
 				to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
 				return
 		else if(istype(src, /obj/item/weapon/gun))
@@ -310,7 +291,7 @@
 		else if(istype(src, /obj/item/weapon/reagent_containers/food))
 			if(prob(20))
 				to_chat(user, "<span class='warning'>I LOVE FOOD!!</span>")
-		else if(src.w_class < ITEM_SIZE_LARGE)
+		else if(src.w_class < SIZE_NORMAL)
 			to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
 			return
 
@@ -331,8 +312,9 @@
 					var/obj/item/clothing/suit/V = H.wear_suit
 					V.attack_reaction(H, REACTION_ITEM_TAKEOFF)
 				if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
-					if(!user.delay_clothing_u_equip(src))
-						return 0
+					if(user.get_item_by_slot(SLOT_L_HAND) != src && user.get_item_by_slot(SLOT_R_HAND) != src) //swap item in hands have no delay
+						if(!user.delay_clothing_unequip(src))
+							return
 
 	else
 		if(isliving(src.loc))
@@ -352,7 +334,8 @@
 		return
 
 	remove_outline()
-	pickup(user)
+	if(!pickup(user))
+		return
 	add_fingerprint(user)
 
 	if(istype(src.loc, /obj/item/weapon/storage))
@@ -381,7 +364,7 @@
 		else
 			user.remove_from_mob(src)
 	else
-		if(istype(src.loc, /mob/living))
+		if(isliving(src.loc))
 			return
 
 		user.next_move = max(user.next_move+2,world.time + 2)
@@ -394,7 +377,8 @@
 		return
 
 	remove_outline()
-	pickup(user)
+	if(!pickup(user))
+		return
 	user.put_in_active_hand(src)
 	return
 
@@ -445,7 +429,10 @@
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user) & COMPONENT_ITEM_NO_PICKUP)
+		return FALSE
+	return TRUE
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/weapon/storage/S)
@@ -467,6 +454,7 @@
 /obj/item/proc/equipped(mob/user, slot)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED, src, slot)
 	set_alt_apperances_layers()
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
@@ -561,7 +549,7 @@
 					return 0
 				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.r_ear )
 					return 0
-				if( w_class < ITEM_SIZE_SMALL	)
+				if( w_class < SIZE_TINY	)
 					return 1
 				if( !(slot_flags & SLOT_FLAGS_EARS) )
 					return 0
@@ -571,7 +559,7 @@
 					return 0
 				if( (slot_flags & SLOT_FLAGS_TWOEARS) && H.l_ear )
 					return 0
-				if( w_class < ITEM_SIZE_SMALL )
+				if( w_class < SIZE_TINY )
 					return 1
 				if( !(slot_flags & SLOT_FLAGS_EARS) )
 					return 0
@@ -601,7 +589,7 @@
 					return 0
 				if(slot_flags & SLOT_FLAGS_DENYPOCKET)
 					return 0
-				if( w_class <= ITEM_SIZE_SMALL || (slot_flags & SLOT_FLAGS_POCKET) )
+				if( w_class <= SIZE_TINY || (slot_flags & SLOT_FLAGS_POCKET) )
 					return 1
 			if(SLOT_R_STORE)
 				if(H.r_store)
@@ -612,7 +600,7 @@
 					return 0
 				if(slot_flags & SLOT_FLAGS_DENYPOCKET)
 					return 0
-				if( w_class <= ITEM_SIZE_SMALL || (slot_flags & SLOT_FLAGS_POCKET) )
+				if( w_class <= SIZE_TINY || (slot_flags & SLOT_FLAGS_POCKET) )
 					return 1
 				return 0
 			if(SLOT_S_STORE)
@@ -653,7 +641,7 @@
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return FALSE
 				var/obj/item/clothing/under/uniform = H.w_uniform
-				if(uniform.accessories.len && !uniform.can_attach_accessory(src))
+				if(!uniform.can_attach_accessory(src))
 					if (!disable_warning)
 						to_chat(H, "<span class='warning'>You already have an accessory of this type attached to your [uniform].</span>")
 					return FALSE
@@ -738,7 +726,7 @@
 		return
 	if(usr.incapacitated() || !Adjacent(usr))
 		return
-	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
+	if((!iscarbon(usr)) || (isbrain(usr)))//Is humanoid, and is not a brain
 		to_chat(usr, "<span class='warning'>You can't pick things up!</span>")
 		return
 	if(src.anchored) //Object isn't anchored
@@ -757,7 +745,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, datum/callback/extra_checks)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -767,6 +755,13 @@
 		return
 
 	delay *= toolspeed
+
+	if(!isnull(quality))
+		var/qual_mod = get_quality(quality)
+		if(qual_mod <= 0)
+			return
+
+		delay *= 1 / qual_mod
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
@@ -861,7 +856,7 @@
 		to_chat(user, "<span class='warning'>You're going to need to remove the eye covering first.</span>")
 		return
 
-	if(istype(M, /mob/living/carbon/xenomorph) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
+	if(isxeno(M) || isslime(M))//Aliens don't have eyes./N     slimes also don't have eyes!
 		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
 		return
 
@@ -900,7 +895,7 @@
 				if(H.stat != DEAD)
 					to_chat(H, "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>")
 					H.drop_item()
-				H.eye_blurry += 10
+				H.adjustBlurriness(10)
 				H.Paralyse(1)
 				H.Weaken(4)
 			if (IO.damage >= IO.min_broken_damage)
@@ -911,7 +906,7 @@
 	else
 		M.take_bodypart_damage(force)
 
-	M.eye_blurry += rand(force * 0.5, force)
+	M.adjustBlurriness(rand(force * 0.5, force))
 
 /obj/item/clean_blood()
 	. = ..() // FIX: If item is `uncleanable` we shouldn't nullify `dirt_overlay`
@@ -1029,28 +1024,61 @@
 	if(src != over)
 		remove_outline()
 
+/obj/item/be_thrown(mob/living/thrower, atom/target)
+	if(!canremove || flags & NODROP)
+		return null
+	return src
 
-/client/var/list/image/outlined_item = list()
-/obj/item/proc/apply_outline(color)
-	if(anchored || !usr.client.prefs.outline_enabled)
+/obj/item/airlock_crush_act()
+	var/qual_prying = get_quality(QUALITY_PRYING)
+	if(qual_prying <= 0)
 		return
-	if(!color)
-		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
-	if(usr.client.outlined_item[src])
+
+	var/chance = w_class / (qual_prying * (m_amt + 1))
+
+	if(prob(chance * 100))
+		qdel(src)
+
+/obj/item/proc/display_accessories()
+	return
+
+/obj/item/taken(mob/living/user, atom/fallback)
+	if(user.Adjacent(src) && user.put_in_hands(src))
+		return TRUE
+
+	return ..()
+
+/obj/item/proc/get_quality(quality)
+	if(!qualities)
+		return 0
+	return qualities[quality]
+
+/obj/item/proc/get_dye_type(w_color)
+	if(!dyed_type)
 		return
 
-	if(usr.client.outlined_item.len)
-		remove_outline()
+	var/list/dye_colors = global.dyed_item_types[dyed_type]
+	if(!dye_colors)
+		return
 
-	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
-	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-	IMG.vis_contents += src
+	var/obj/item/clothing/dye_type = dye_colors[w_color]
+	if(!dye_type)
+		return
 
-	IMG.filters += filter(type = "outline", size = 1, color = color)
-	usr.client.images |= IMG
-	usr.client.outlined_item[src] = IMG
+	if(islist(dye_type))
+		dye_type = pick(dye_type)
 
+	return dye_type
 
-/obj/item/proc/remove_outline()
-	usr.client.images -= usr.client.outlined_item[src]
-	usr.client.outlined_item -= src
+/obj/item/proc/wash_act(w_color)
+	decontaminate()
+	wet = 0
+
+	var/obj/item/clothing/dye_type = get_dye_type(w_color)
+	if(!dye_type)
+		return
+
+	name = initial(dye_type.name)
+	icon_state = initial(dye_type.icon_state)
+	item_state = initial(dye_type.item_state)
+	desc = "The colors are a bit dodgy."

@@ -64,7 +64,7 @@
 	LAZYSET(resources, "hydrogen", rand(2,4))
 
 /turf/simulated/floor/plating/ironsand/junkyard
-	var/dug = 0
+	dug = 0
 	has_resources = 1
 	can_deconstruct = FALSE
 

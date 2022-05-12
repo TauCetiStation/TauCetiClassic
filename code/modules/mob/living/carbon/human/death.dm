@@ -20,7 +20,7 @@
 
 	if(!species.flags[NO_BLOOD_TRAILS])
 		flick("gibbed-h", animation)
-		hgibs(loc, viruses, dna, species.flesh_color, species.blood_datum)
+		hgibs(loc, dna, species.flesh_color, species.blood_datum)
 
 	spawn(15)
 		if(animation)	qdel(animation)
@@ -42,6 +42,9 @@
 
 	med_hud_set_health()
 	med_hud_set_status()
+
+	if(mind && is_station_level(z))
+		global.deaths_during_shift++
 
 	//Handle species-specific deaths.
 	if(species)
@@ -69,8 +72,28 @@
 	if(my_master)
 		my_master.my_golem = null
 		my_master = null
+	if(!(client in admins) && mind)
+		var/list/turf/possible_tile = get_area_turfs(/area/custom/valhalla)
+		var/target = pick(possible_tile)
+		var/mob/living/carbon/human/deadman = new /mob/living/carbon/human/skeleton/valhalla(target)
+		mind.transfer_to(deadman)
+		deadman.equipOutfit(/datum/outfit/job/deadman)
 
-	return ..(gibbed)
+
+
+
+	if(isshadowling(src))
+		var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
+		for(var/datum/role/thrall/T in faction.members)
+			if(!T.antag.current)
+				continue
+			SEND_SIGNAL(T.antag.current, COMSIG_CLEAR_MOOD_EVENT, "thralled")
+			SEND_SIGNAL(T.antag.current, COMSIG_ADD_MOOD_EVENT, "master_died", /datum/mood_event/master_died)
+			to_chat(T.antag.current, "<span class='shadowling'><font size=3>Sudden realization strikes you like a truck! ONE OF OUR MASTERS HAS DIED!!!</span></font>")
+
+	..(gibbed)
+
+	SSStatistics.add_death_stat(src)
 
 // Called right after we will lost our head
 /mob/living/carbon/human/proc/handle_decapitation(obj/item/organ/external/head/BP)
@@ -98,8 +121,16 @@
 
 	organ_head_list += BP
 
+	if(ischangeling(src))
+		var/datum/role/changeling/Host = mind.GetRoleByType(/datum/role/changeling)
+		if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
+			for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
+				crab.sting_action(src)
+			return
+
 	var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
 	if(IO && IO.parent_bodypart == BP_HEAD)
+		SSStatistics.add_death_stat(src) // because mind transfer to brain
 		BP.transfer_identity(src)
 
 		BP.name = "[real_name]'s head"
@@ -110,14 +141,6 @@
 
 			tod = null // These lines prevent reanimation if head was cut and then sewn back, you can only clone these bodies
 			timeofdeath = 0
-
-		if(BP.brainmob && ischangeling(BP.brainmob)) //cuz fuck runtimes
-			var/datum/role/changeling/Host = BP.brainmob.mind.GetRoleByType(/datum/role/changeling)
-			if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
-				for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
-					if(istype(crab))
-						crab.sting_action(BP.brainmob)
-						gib()
 
 /obj/item/organ/external/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
@@ -159,8 +182,6 @@
 	mutations.Add(HUSK)
 	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
 	update_body()
-	update_mutantrace()
-	return
 
 /mob/living/carbon/human/proc/Drain()
 	if(fake_death)

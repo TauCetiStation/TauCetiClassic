@@ -1,8 +1,7 @@
-
 /datum/artifact_effect/forcefield
-	effect_name = "Force Field"
+	log_name = "Force Field"
 	var/list/created_field = list()
-	effect_type = ARTIFACT_EFFECT_PARTICLE
+	type_name = ARTIFACT_EFFECT_PARTICLE
 
 /datum/artifact_effect/forcefield/New()
 	..()
@@ -23,9 +22,8 @@
 			E.density = TRUE
 			E.anchored = TRUE
 			E.invisibility = 0
-		spawn(10)
-			UpdateMove()
-	return 1
+		addtimer(CALLBACK(src, .proc/UpdateMove), 10)
+	return FALSE
 
 /datum/artifact_effect/forcefield/process()
 	..()

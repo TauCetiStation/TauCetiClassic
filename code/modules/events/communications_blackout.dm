@@ -2,8 +2,6 @@
 	announcement = new /datum/announcement/centcomm/comms_blackout
 
 /datum/event/communications_blackout/announce()
-	announcement.randomize_message()
-
 	for(var/mob/living/silicon/ai/A in player_list)	//AIs are always aware of communication blackouts.
 		to_chat(A, "<br>")
 		to_chat(A, "<span class='warning'><b>[announcement.message]</b></span>")

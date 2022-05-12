@@ -14,10 +14,12 @@
 	var/brainloss = 0	//'Retardation' damage caused by someone hitting you in the head with a bible or being infected with brainrot.
 	var/halloss = 0		//Hallucination damage. 'Fake' damage obtained through hallucinating or the holodeck. Sleeping should cause it to wear off.
 
-
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 	var/list/atom/hallucinations = list() //A list of hallucinated people that try to attack the mob. See /obj/effect/fake_attacker in hallucinations.dm
 
+	// Holly, we're drunk.
+	// Should this be in organ/liver ? ~Luduk
+	var/drunkenness = 0
 
 	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 
@@ -66,3 +68,12 @@
 
 	// This var is only used by a punching bag. Causes mob to not notify admins nor store who has hit it.
 	var/logs_combat = TRUE
+
+	var/datum/modval/beauty
+
+	var/beauty_living = 0.0
+	var/beauty_dead = -100.0
+
+	var/mob/living/MyTrueNotChikenBody
+
+	var/list/spawner_args = null

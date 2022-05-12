@@ -13,7 +13,7 @@
 	name = "card"
 	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/associated_account_number = 0
 
 	var/list/files = list(  )
@@ -78,13 +78,16 @@
 		uses--
 
 	if(uses < 1)
-		user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
-		var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
-		junk.add_fingerprint(user)
-		qdel(src)
+		emag_break(user)
 		return
 
 	..()
+
+/obj/item/weapon/card/emag/proc/emag_break(mob/user)
+	var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
+	junk.add_fingerprint(user)
+	user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
+	qdel(src)
 
 /obj/item/weapon/card/id
 	name = "identification card"
@@ -143,18 +146,6 @@
 			msg += "[disabilities[I]], "
 		msg += "[disabilities[disabilities.len]].</B></span>"
 		return msg
-
-/obj/item/weapon/card/id/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/id_wallet))
-		to_chat(user, "You slip [src] into [I].")
-		src.name = "[src.registered_name]'s [I.name] ([src.assignment])"
-		src.desc = I.desc
-		src.icon = I.icon
-		src.icon_state = I.icon_state
-		qdel(I)
-
-	else
-		return ..()
 
 /obj/item/weapon/card/id/verb/read()
 	set name = "Read ID Card"
@@ -294,6 +285,60 @@
 	var/list/radial_chooses
 
 
+// VILAGE
+/obj/item/weapon/card/id/key
+	desc = "Ключик"
+/obj/item/weapon/card/id/key/peasant
+	name = "Ключ Крестьянина"
+	access = list(access_peasant)
+	icon_state = "peasantkey"
+/obj/item/weapon/card/id/key/helper
+	name = "Ключ Послушника"
+	access = list(access_helper)
+	icon_state = "peasantkey"
+/obj/item/weapon/card/id/key/headman
+	name = "Ключ Старосты"
+	access = list(access_peasant,access_headman,access_knight,access_innkeeper,access_inn1,access_inn2,access_inn3)
+	icon_state = "peasantkey"
+/obj/item/weapon/card/id/key/innkeeper
+	name = "Ключ Трактирщика"
+	access = list(access_innkeeper,access_inn1,access_inn2,access_inn3)
+	icon_state = "innkeeperkey"
+/obj/item/weapon/card/id/key/innkeeper1
+	name = "Ключ 1 Комнаты"
+	access = list(access_innkeeper,access_inn1)
+	icon_state = "innkeeperkey"
+/obj/item/weapon/card/id/key/innkeeper2
+	name = "Ключ 2 Комнаты"
+	access = list(access_innkeeper,access_inn2)
+	icon_state = "innkeeperkey"
+/obj/item/weapon/card/id/key/innkeeper3
+	name = "Ключ 3 Комнаты"
+	access = list(access_innkeeper,access_inn3)
+	icon_state = "innkeeperkey"
+/obj/item/weapon/card/id/key/monk
+	name = "Ключ Монаха"
+	access = list(access_monk,access_helper)
+	icon_state = "monkkey"
+/obj/item/weapon/card/id/key/knight
+	name = "Ключ Рыцаря"
+	access = list(access_knight)
+	icon_state = "knightkey"
+/obj/item/weapon/card/id/key/hhero
+	name = "Ключ Лорда"
+	access = list(access_hero,access_peasant,access_knight,access_headman,access_innkeeper,access_inn1,access_inn2,access_inn3)
+	icon_state = "herokey"
+
+/obj/item/weapon/card/id/key/atom_init()
+	. = ..()
+	if(ismob(loc)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
+		var/mob/user = loc
+		registered_name = ishuman(user) ? user.real_name : user.name
+	else
+		registered_name = "Ключик"
+	name = " Ключ [registered_name]"
+
+//////
 
 /obj/item/weapon/card/id/syndicate/atom_init()
 	. = ..()
@@ -310,7 +355,7 @@
 	if(istype(target, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = target
 		src.access |= I.access
-		if(istype(user, /mob/living) && user.mind)
+		if(isliving(user) && user.mind)
 			if(user.mind.special_role)
 				to_chat(usr, "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")
 
@@ -436,3 +481,13 @@
 	icon_state = "ert"
 	assignment = "Emergency Response Team"
 	rank = "Emergency Response Team"
+
+/obj/item/weapon/card/id/space_police
+	assignment = "Organized Crimes Department"
+	rank = "Organized Crimes Department"
+
+	icon_state = "ert"
+
+/obj/item/weapon/card/id/space_police/atom_init()
+	. = ..()
+	access = get_all_accesses()

@@ -3,8 +3,8 @@
 	flag = CAPTAIN
 	department_flag = ENGSEC
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "Nanotrasen officials and Space law"
 	selection_color = "#ccccff"
 	idtype = /obj/item/weapon/card/id/gold
@@ -22,7 +22,7 @@
 /datum/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
 		to_chat(world, "<b>[H.real_name] is the captain!</b>")//maybe should be announcment, not OOC notification?
-		score["captain"] += H.real_name
+		SSStatistics.score.captain += H.real_name
 
 /datum/job/captain/get_access()
 	return get_all_accesses()
@@ -32,8 +32,8 @@
 	flag = HOP
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the captain"
 	selection_color = "#ddddff"
 	idtype = /obj/item/weapon/card/id/silver
@@ -43,7 +43,7 @@
 	minimal_player_ingame_minutes = 2400
 	access = list(
 		access_security, access_sec_doors, access_brig, access_forensics_lockers,
-		access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
+		access_medical, access_change_ids, access_ai_upload, access_eva, access_heads,
 		access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
 		access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
 		access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,

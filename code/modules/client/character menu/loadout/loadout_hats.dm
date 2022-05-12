@@ -21,6 +21,19 @@
 	colors["rainbow"] = /obj/item/clothing/head/soft/rainbow
 	gear_tweaks += new/datum/gear_tweak/path(colors)
 
+/datum/gear/head/ushanka
+	display_name = "Ushanka selection"
+	path = /obj/item/clothing/head/ushanka
+
+/datum/gear/head/ushanka/New()
+	..()
+	var/colors = list()
+	colors["black brown"] = /obj/item/clothing/head/ushanka
+	colors["brown"] = /obj/item/clothing/head/ushanka/brown
+	colors["black white"] = /obj/item/clothing/head/ushanka/black_white
+	colors["brown white"] = /obj/item/clothing/head/ushanka/brown_white
+	gear_tweaks += new/datum/gear_tweak/path(colors)
+
 /datum/gear/head/bandana
 	display_name = "Bandana selection"
 	path = /obj/item/clothing/head/bandana
@@ -33,7 +46,7 @@
 	bandanas["green"] = /obj/item/clothing/mask/bandana/green
 	bandanas["gold"] = /obj/item/clothing/mask/bandana/gold
 	bandanas["black"] = /obj/item/clothing/mask/bandana/black
-	bandanas["orange"] = /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
+	bandanas["orange"] = /obj/item/clothing/head/orange_bandana
 	gear_tweaks += new/datum/gear_tweak/path(bandanas)
 
 /datum/gear/head/flatcap
@@ -47,10 +60,6 @@
 /datum/gear/head/fedora
 	display_name = "Fedora"
 	path = /obj/item/clothing/head/fedora
-
-/datum/gear/head/orangebandana
-	display_name = "Orange bandana"
-	path = /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
 
 /datum/gear/head/fez
 	display_name =  "Fez"
@@ -66,7 +75,7 @@
 
 /datum/gear/head/kung
 	display_name = "Kung bandana"
-	path = /obj/item/clothing/head/det_hat/fluff/kung
+	path = /obj/item/clothing/head/kung
 	cost = 1
 
 /datum/gear/head/black_hood

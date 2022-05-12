@@ -22,7 +22,7 @@
 	if(health <= 0)
 		qdel(src)
 
-/obj/structure/alien/bullet_act(obj/item/projectile/Proj)
+/obj/structure/alien/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
@@ -168,7 +168,7 @@
 	var/obj/structure/alien/weeds/node/linked_node = null
 
 /obj/structure/alien/weeds/atom_init(mapload, node)
-	if(istype(loc, /turf/space))
+	if(isspaceturf(loc))
 		return INITIALIZE_HINT_QDEL
 
 	if(icon == initial(icon))
@@ -197,7 +197,7 @@
 /obj/structure/alien/weeds/proc/Life()
 	var/turf/U = get_turf(src)
 
-	if (istype(U, /turf/space))
+	if (isspaceturf(U))
 		qdel(src)
 		return
 
@@ -208,7 +208,7 @@
 		for(var/dirn in cardinal)
 			var/turf/T = get_step(src, dirn)
 
-			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
+			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || isspaceturf(T))
 				continue
 
 			for(var/obj/machinery/door/D in T)
@@ -225,14 +225,14 @@
 
 /obj/structure/alien/weeds/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-		if(3.0)
-			if (prob(5))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(95))
+				return
+	qdel(src)
+
 
 /obj/structure/alien/weeds/attackby(obj/item/weapon/W, mob/user)
 	. = ..()
@@ -252,7 +252,7 @@
 	if(exposed_temperature > 290)
 		apply_damage(15)
 
-/obj/structure/alien/weeds/bullet_act(obj/item/projectile/Proj)
+/obj/structure/alien/weeds/bullet_act(obj/item/projectile/Proj, def_zone)
 	return PROJECTILE_FORCE_MISS
 
 /obj/structure/alien/weeds/node
@@ -417,7 +417,7 @@
 			if(kill_fh)
 				FH.Die()
 
-/obj/structure/alien/egg/attack_ghost(mob/living/user)
+/obj/structure/alien/egg/attack_ghost(mob/dead/observer/user)
 	if(facehuggers_control_type != FACEHUGGERS_PLAYABLE)
 		to_chat(user, "<span class='notice'>You can't control the facehugger! This feature is disabled by the administrator, you can ask him to enable this feature.</span>")
 		return
@@ -432,6 +432,8 @@
 			to_chat(user, "<span class='warning'>The facehugger hasn't grown yet.</span>")
 			return
 		if(GROWN)
+			if(jobban_isbanned(user, ROLE_ALIEN) || jobban_isbanned(user, "Syndicate"))
+				return
 			var/mob/living/carbon/xenomorph/facehugger/FH = new /mob/living/carbon/xenomorph/facehugger(get_turf(src))
 			FH.key = user.key
 			to_chat(FH, "<span class='notice'>You are now a facehugger, go hug some human faces <3</span>")
@@ -499,7 +501,7 @@
 	if(prob(25))
 		var/turf/T = get_turf(src)
 
-		if(istype(T, /turf/space) || istype(T, /turf/unsimulated))
+		if(isspaceturf(T) || !istype(T, /turf/simulated))
 			qdel(src)
 
 		var/datum/gas_mixture/environment = T.return_air()

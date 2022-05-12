@@ -34,7 +34,7 @@
 
 	var/cultists_around = 0
 	for(var/mob/M in AOG.mobs_around)
-		if(religion.is_member(M))
+		if(religion.is_member(M) && M.get_species() != HOMUNCULUS)
 			cultists_around++
 
 	if(cultists_around < need_members)
@@ -53,7 +53,7 @@
 	..()
 	SSticker.nar_sie_has_risen = TRUE
 
-	new /obj/singularity/narsie/large(get_turf(AOG))
+	new /obj/singularity/narsie(get_turf(AOG), religion)
 	return TRUE
 
 /datum/religion_rites/pedestals/cult/cult_portal
@@ -91,14 +91,11 @@
 
 /datum/religion_rites/pedestals/cult/cult_portal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
-	var/spawned = FALSE
 	for(var/obj/effect/rune/R in religion.runes)
 		if(istype(R.power, /datum/rune/cult/portal_beacon))
 			new /obj/effect/anomaly/bluespace/cult_portal(R.loc, TRUE)
 			qdel(R)
-			spawned = TRUE
-	if(spawned)
-		return TRUE
+			return TRUE
 	return FALSE
 
 /datum/religion_rites/pedestals/cult/make_skeleton
@@ -129,7 +126,13 @@
 			to_chat(user, "<span class='warning'>На алтаре должен быть человек.</span>")
 		return FALSE
 
-	if(!religion.can_convert(AOG.buckled_mob))
+	if(AOG.buckled_mob.get_species() == HOMUNCULUS)
+		if(user)
+			to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
+		return FALSE
+
+	var/mob/living/carbon/human/H = AOG.buckled_mob
+	if(H.species.flags[NO_BLOOD] || jobban_isbanned(H, ROLE_CULTIST) || jobban_isbanned(H, "Syndicate") || H.ismindprotect())
 		if(user)
 			to_chat(user, "<span class='warning'>Неподходящее существо.</span>")
 		return FALSE

@@ -35,9 +35,9 @@
 	item_state = "bookbag"
 	display_contents_with_number = 0 //This would look really stupid otherwise
 	storage_slots = 7
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
-	w_class = ITEM_SIZE_LARGE //Bigger than a book because physics
+	w_class = SIZE_NORMAL //Bigger than a book because physics
 	can_hold = list(/obj/item/weapon/book, /obj/item/weapon/storage/bible, /obj/item/weapon/spellbook)
 
 // -----------------------------
@@ -50,8 +50,8 @@
 	icon_state = "trashbag"
 	item_state = "trashbag"
 
-	w_class = ITEM_SIZE_SMALL
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_TINY
+	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	can_hold = list() // any
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
@@ -82,7 +82,7 @@
 	while(base_storage_capacity(w_class) < cur_storage_space)
 		w_class++
 
-	w_class = min(ITEM_SIZE_HUGE, w_class)
+	w_class = min(SIZE_BIG, w_class)
 
 	update_icon()
 
@@ -119,8 +119,8 @@
 	icon_state = "plasticbag"
 	item_state = "plasticbag"
 
-	w_class = ITEM_SIZE_LARGE
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BOX_STORAGE
 	can_hold = list() // any
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
@@ -135,7 +135,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_POCKET
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	max_storage_space = 100
 	can_hold = list(/obj/item/weapon/ore, /obj/item/bluespace_crystal)
 
@@ -155,8 +155,8 @@
 	icon_state = "plantbag"
 	name = "Plant Bag"
 	max_storage_space = 100
-	max_w_class = ITEM_SIZE_NORMAL
-	w_class = ITEM_SIZE_SMALL
+	max_w_class = SIZE_SMALL
+	w_class = SIZE_TINY
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown)
 
 // -----------------------------
@@ -169,8 +169,8 @@
 	icon_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
 	max_storage_space = 100
-	w_class = ITEM_SIZE_NORMAL
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
+	max_w_class = SIZE_SMALL
 	can_hold = list(/obj/item/slime_extract,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/reagent_containers/blood,/obj/item/weapon/reagent_containers/food/snacks/monkeycube,/obj/item/organ)
 
 
@@ -187,7 +187,7 @@
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
 
 	var/capacity = 300; //the number of sheets it can carry.
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	storage_slots = 7
 
 	allow_quick_empty = 1 // this function is superceded
@@ -293,6 +293,6 @@
 	name = "Cash bag"
 	desc = "A bag for carrying lots of cash. It's got a big dollar sign printed on the front."
 	max_storage_space = 100
-	max_w_class = ITEM_SIZE_HUGE
-	w_class = ITEM_SIZE_SMALL
+	max_w_class = SIZE_BIG
+	w_class = SIZE_TINY
 	can_hold = list(/obj/item/weapon/coin,/obj/item/weapon/spacecash)

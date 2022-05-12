@@ -4,7 +4,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 	var/uses = 4.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "paper"
 	throw_speed = 4
 	throw_range = 20
@@ -31,7 +31,7 @@
 	if (usr.incapacitated() || src.loc != usr)
 		return
 	var/mob/living/carbon/human/H = usr
-	if (!( istype(H, /mob/living/carbon/human)))
+	if (!( ishuman(H)))
 		return 1
 	if (Adjacent(usr))
 		usr.set_machine(src)

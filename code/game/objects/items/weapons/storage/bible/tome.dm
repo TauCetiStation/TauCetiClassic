@@ -8,7 +8,7 @@
 	icon_state = "book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 	religify_cd = 5 MINUTES
 
@@ -41,14 +41,13 @@
 	if((iscultist(user) || isobserver(user)) && religion)
 		to_chat(user, "Писание Нар-Си. Содержит подробности о тёмных ритуалах, загадочных рунах и много другой странной информации. Однако, большинство из написанного не работает.")
 		to_chat(user, "Текущее количество favor: [religion.favor] piety: <span class='cult'>[religion.piety]</span>")
-		var/list/L
-		if(religion.runes_by_mob[user])
-			L = religion.runes_by_mob[user]
+		var/list/L = LAZYACCESS(religion.runes_by_ckey, user.ckey)
 		to_chat(user, "Вами нарисовано/всего <span class='cult'>[L ? L.len : "0"]</span>/[religion.max_runes_on_mob]")
 	else
 		..()
 
 /obj/item/weapon/storage/bible/tome/pickup(mob/user)
+	. = ..()
 	if(!religion && user.my_religion)
 		religion = user.my_religion
 
@@ -141,11 +140,10 @@
 		to_chat(H, "<span class='warning'>Ты сможешь разметить следующую руну через [round((rune_next[H.ckey] - world.time) * 0.1)+1] секунд!</span>")
 		return
 
-	if(religion.runes_by_mob[H])
-		var/list/L = religion.runes_by_mob[H]
-		if(L.len > religion.max_runes_on_mob)
-			to_chat(H, "<span class='warning'>Ваше тело слишком слабо, чтобы выдержать ещё больше рун!</span>")
-			return
+	var/list/L = LAZYACCESS(religion.runes_by_ckey, H.ckey)
+	if(!isnull(L) && L.len >= religion.max_runes_on_mob)
+		to_chat(H, "<span class='warning'>Ваше тело слишком слабо, чтобы выдержать ещё больше рун!</span>")
+		return
 
 	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, H))
 		return

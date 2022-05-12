@@ -15,7 +15,7 @@ RCD
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 50000
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
@@ -94,12 +94,12 @@ RCD
 
 	switch(mode)
 		if(1)
-			if(istype(target, /turf/space))
-				var/turf/space/S = target
+			if(isenvironmentturf(target))
+				var/turf/T = target
 				if(useResource(1, user))
 					to_chat(user, "Building Floor...")
 					activate()
-					S.ChangeTurf(/turf/simulated/floor/plating/airless)
+					T.ChangeTurf(/turf/simulated/floor/plating/airless)
 					return 1
 				return 0
 

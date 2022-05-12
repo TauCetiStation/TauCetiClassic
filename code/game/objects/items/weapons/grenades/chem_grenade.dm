@@ -3,7 +3,7 @@
 	icon_state = "chemg"
 	item_state = "flashbang"
 	desc = "A hand made chemical grenade."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	force = 2.0
 	var/stage = 0
 	var/state = 0
@@ -124,7 +124,7 @@
 			detonator.a_right.activate()
 			active = 1
 	if(active)
-		playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		icon_state = initial(icon_state) + "_active"
 
 		if(user)
@@ -165,7 +165,7 @@
 			if( A == src ) continue
 			reagents.reaction(A, 1, 10)
 
-	if(istype(loc, /mob/living/carbon))		//drop dat grenade if it goes off in your hand
+	if(iscarbon(loc))		//drop dat grenade if it goes off in your hand
 		var/mob/living/carbon/C = loc
 		C.drop_from_inventory(src)
 		C.throw_mode_off()

@@ -24,8 +24,8 @@
 	var/l_hacking = 0
 	var/emagged = 0
 	var/open = 0
-	w_class = ITEM_SIZE_NORMAL
-	max_w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
+	max_w_class = SIZE_TINY
 	max_storage_space = DEFAULT_BOX_STORAGE
 
 /obj/item/weapon/storage/secure/examine(mob/user)
@@ -166,7 +166,7 @@
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 
 /obj/item/weapon/storage/secure/briefcase/atom_init()
 	. = ..()
@@ -175,9 +175,9 @@
 
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
 	if ((src.loc == user) && (src.locked == 1))
-		to_chat(usr, "<span class='warning'>[src] is locked and cannot be opened!</span>")
+		to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
 	else if ((src.loc == user) && (!src.locked))
-		open(usr)
+		open(user)
 	else
 		..()
 		for(var/mob/M in range(1))

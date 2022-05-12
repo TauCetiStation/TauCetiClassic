@@ -161,11 +161,11 @@ field_generator power level display
 	else
 		..()
 
-/obj/machinery/field_generator/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/field_generator/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(Proj.flag != "bullet")
 		power += Proj.damage
 		update_icon()
-	return FALSE
 
 /obj/machinery/field_generator/proc/turn_off()
 	active = FG_OFFLINE
@@ -330,7 +330,7 @@ field_generator power level display
 				temp = FALSE
 				message_admins("<span class='danger'>A singulo exists and a containment field has failed. [ADMIN_JMP(O)]</span>")
 				log_investigate("has <font color='red'>failed</font> whilst a singulo exists.",INVESTIGATE_SINGULO)
-		O.last_warning = world.time
+			O.last_warning = world.time
 
 
 #undef FG_MAX_POWER

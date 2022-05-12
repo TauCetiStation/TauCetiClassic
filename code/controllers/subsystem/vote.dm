@@ -1,7 +1,10 @@
 SUBSYSTEM_DEF(vote)
 	name = "Vote"
+
 	wait = SS_WAIT_VOTE
-	flags = SS_FIRE_IN_LOBBY | SS_KEEP_TIMING | SS_NO_INIT
+
+	flags = SS_KEEP_TIMING | SS_NO_INIT
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/list/votes = list()  // List of all possible votes (datum/poll)
 	var/list/voters = list() //List of clients with opened vote window
@@ -57,7 +60,7 @@ SUBSYSTEM_DEF(vote)
 	log_vote(text)
 	to_chat(world, "<span class='vote'><b>[text]</b><br>Введите <b>vote</b> или нажмите <a href='?src=\ref[src]'>здесь</a>, чтобы проголосовать. <br>У вас есть [get_vote_time()] [pluralize_russian(get_vote_time(), "секунда", "секунды", "секунд")], чтобы проголосовать.</span>")
 	for(var/mob/M in player_list)
-		M.playsound_local(null, 'sound/misc/notice1.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+		M.playsound_local(null, 'sound/misc/notice1.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 	return TRUE
 

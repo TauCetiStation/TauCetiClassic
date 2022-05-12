@@ -1,13 +1,20 @@
-var/round_id = 0
-var/base_commit_sha = 0
+var/global/round_id = 0
+var/global/base_commit_sha = 0
+
+var/global/it_is_a_snow_day = FALSE
 
 /world/New()
 #ifdef DEBUG
 	enable_debugger()
 #endif
 
+	it_is_a_snow_day = prob(50)
+
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
+
+	global.bridge_secret = world.params["bridge_secret"]
+	world.params = null
 
 	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
@@ -96,6 +103,10 @@ var/base_commit_sha = 0
 	global.qdel_log  = file("[log_debug_directory]/qdel.log")
 	global.sql_error_log = file("[log_debug_directory]/sql.log")
 
+	#ifdef REFERENCE_TRACKING
+	global.gc_log  = file("[log_debug_directory]/gc_debug.log")
+	#endif
+
 	round_log("Server '[config.server_name]' starting up on [BYOND_SERVER_ADDRESS]")
 
 	var/debug_rev_message = ""
@@ -109,8 +120,8 @@ var/base_commit_sha = 0
 		info(debug_rev_message)
 		log_runtime(debug_rev_message)
 
-var/world_topic_spam_protect_ip = "0.0.0.0"
-var/world_topic_spam_protect_time = world.timeofday
+var/global/world_topic_spam_protect_ip = "0.0.0.0"
+var/global/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
 
@@ -144,7 +155,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["players"] = list()
 		s["stationtime"] = worldtime2text()
 		s["gamestate"] = SSticker.current_state
-		s["roundduration"] = roundduration2text()
+		s["roundduration"] = global.roundduration2text()
 		s["map_name"] = SSmapping.config?.map_name || "Loading..."
 		s["popcap"] = config.client_limit_panic_bunker_count ? config.client_limit_panic_bunker_count : 0
 		s["round_id"] = global.round_id
@@ -167,8 +178,12 @@ var/world_topic_spam_protect_time = world.timeofday
 
 	else if (length(T) && istext(T))
 		var/list/packet_data = params2list(T)
-		if (packet_data && packet_data["announce"] == "")
-			return receive_net_announce(packet_data, addr)
+		if (packet_data)
+			if(packet_data["announce"] == "")
+				return receive_net_announce(packet_data, addr)
+			if(packet_data["bridge"] == "" && addr == "127.0.0.1") // 
+				bridge2game(packet_data)
+				return "bridge=1" // no return data in topic, feedback should be send only through bridge
 
 	else
 		log_href("WTOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
@@ -215,13 +230,14 @@ var/world_topic_spam_protect_time = world.timeofday
 
 
 
-var/shutdown_processed = FALSE
+var/global/shutdown_processed = FALSE
 
 /world/Reboot(reason = 0, end_state)
 	PreShutdown(end_state)
 
 	for(var/client/C in clients)
 		//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+		C.tgui_panel?.send_roundrestart()
 		C << link(BYOND_JOIN_LINK)
 
 	round_log("Reboot [end_state ? ", [end_state]" : ""]")
@@ -439,7 +455,7 @@ var/shutdown_processed = FALSE
 			world.log << "New round: #[global.round_id]\n-------------------------"
 
 #define FAILED_DB_CONNECTION_CUTOFF 5
-var/failed_db_connections = 0
+var/global/failed_db_connections = 0
 
 /proc/setup_database_connection()
 
@@ -551,6 +567,10 @@ var/failed_db_connections = 0
 	if (!self || packet_data["secret"] != global.net_announcer_secret[self])
 		// log_misc("Unauthorized connection for net_announce [sender]")
 		return
+
+	packet_data["secret"] = "SECRET"
+	log_href("WTOPIC: NET ANNOUNCE: \"[list2params(packet_data)]\", from:[sender]")
+	
 	return proccess_net_announce(packet_data["type"], packet_data, sender)
 
 /world/proc/proccess_net_announce(type, list/data, sender)

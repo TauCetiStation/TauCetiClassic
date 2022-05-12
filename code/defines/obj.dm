@@ -23,7 +23,7 @@
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "blank"
 	anchored = TRUE
-	layer = 99
+	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	unacidable = 1//Just to be sure.
 
@@ -79,7 +79,7 @@
 	item_state = "beachball"
 	density = FALSE
 	anchored = FALSE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	force = 0.0
 	throwforce = 0.0
 	throw_speed = 1

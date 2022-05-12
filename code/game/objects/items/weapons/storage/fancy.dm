@@ -96,8 +96,9 @@
 	item_state = "candlebox"
 	storage_slots = 5
 	throwforce = 2
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
+	can_hold = list(/obj/item/candle)
 	var/candle_type = "white"
 
 /obj/item/weapon/storage/fancy/candle_box/atom_init()
@@ -139,7 +140,7 @@
 	item_state = "black_candlebox5"
 	storage_slots = 5
 	throwforce = 2
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 	var/cooldown = 0
 	var/teleporter_delay = 0
@@ -182,7 +183,7 @@
 					visible_message("<span class='warning'>You hear a loud pop, as [src] poofs into existence.</span>")
 					playsound(src, 'sound/effects/bubble_pop.ogg', VOL_EFFECTS_MASTER)
 					for(var/mob/living/A in viewers(3, loc))
-						A.confused += 10
+						A.AdjustConfused(10)
 						A.make_jittery(150)
 					break
 			teleporter_delay += rand(5,10) // teleporter_delay-- is ran only once half a minute. This seems reasonable.
@@ -205,7 +206,7 @@
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox_preview"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	storage_slots = 6
 	icon_type = "crayon"
 	can_hold = list(
@@ -255,7 +256,7 @@
 	desc = "A box of glowsticks (Do not eat)."
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = "sticksbox"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	storage_slots = 5
 	icon_type = "glowstick"
 	can_hold = list(
@@ -299,7 +300,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigpacket"
 	item_state = "cigpacket"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_BELT
 	storage_slots = 6
@@ -350,7 +351,7 @@
 	item_state = "Dpacket"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
-	name = "unknown"
+	name = "obscure cigarette packet"
 	desc = "An obscure brand of cigarettes."
 	icon_state = "syndie"
 
@@ -389,7 +390,7 @@
 	icon = 'icons/obj/vialbox.dmi'
 	icon_state = "vialbox0"
 	item_state = "syringe_kit"
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	can_hold = list(/obj/item/weapon/reagent_containers/glass/beaker/vial)
 	storage_slots = 6
 	req_access = list(access_virology)

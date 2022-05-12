@@ -3,7 +3,7 @@
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some rags and a plank."
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	icon_state = "torch"
 	item_state = "torch"
 	light_color = LIGHT_COLOR_FIRE
@@ -25,6 +25,23 @@
 
 /obj/item/device/flashlight/flare/torch/extinguish()
 	turn_off()
+
+/obj/item/device/flashlight/flare/afterattack(atom/target, mob/user, proximity, params)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+
+		// Suturing yourself brings much more pain.
+		var/pain_factor = H == user ? 40 : 20
+		if(H.stat == CONSCIOUS)
+			H.AdjustShockStage(pain_factor)
+		BP.status &= ~ORGAN_ARTERY_CUT
+		BP.strap()
+		user.visible_message(
+			"<span class='notice'>[user] has stitched [target]'s [BP.name] with [src].</span>",
+			"<span class='notice'>You have stitched [target]'s [BP.name] with [src].</span>")
+		return TRUE
+	return ..()
 
 /obj/item/device/flashlight/flare/torch/proc/light(mob/user)
 	// Usual checks
@@ -49,7 +66,7 @@
 
 /obj/item/stack/sheet/wood/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/medical/bruise_pack/rags) && use(1))
-		new /obj/item/device/flashlight/flare/torch(get_turf(user))
+		new /obj/item/device/flashlight/flare/torch(get_turf(src))
 		qdel(I)
 		return
 	return ..()
@@ -206,7 +223,7 @@
 			var/mob/living/L = A
 			L.adjust_fire_stacks(fire_stack_strength)
 			L.IgniteMob()
-		else if(istype(A, /obj/item) && prob(20))
+		else if(isitem(A) && prob(20))
 			var/obj/item/O = A
 			O.microwave_act()
 */

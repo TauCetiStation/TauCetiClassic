@@ -38,12 +38,12 @@
 	var/obj/item/held_item = null //Storage for single item they can hold.
 	speed = -1                    //Spiderbots gotta go fast.
 	//pass_flags = PASSTABLE      //Maybe griefy?
-	small = 1
+	w_class = SIZE_MINUSCULE
 	speak_emote = list("beeps","clicks","chirps")
 
 /mob/living/simple_animal/spiderbot/attackby(obj/item/O, mob/user)
 
-	if(istype(O, /obj/item/device/mmi) || istype(O, /obj/item/device/mmi/posibrain))
+	if(isMMI(O))
 		var/obj/item/device/mmi/B = O
 		if(src.mmi) //There's already a brain in it.
 			to_chat(user, "<span class='warning'>There's already a brain in [src]!</span>")
@@ -162,7 +162,7 @@
 
 /mob/living/simple_animal/spiderbot/update_icon()
 	if(mmi)
-		if(istype(mmi,/obj/item/device/mmi))
+		if(isMMI(mmi))
 			icon_state = "spiderbot-chassis-mmi"
 			icon_living = "spiderbot-chassis-mmi"
 		if(istype(mmi, /obj/item/device/mmi/posibrain))
@@ -208,8 +208,8 @@
 		held_item.loc = loc
 		held_item = null
 
-	robogibs(loc, viruses)
-	Destroy()
+	robogibs(loc)
+	qdel(src)
 
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/spiderbot/verb/hide()
@@ -266,7 +266,7 @@
 
 	var/list/items = list()
 	for(var/obj/item/I in view(1,src))
-		if(I.loc != src && I.w_class <= ITEM_SIZE_SMALL)
+		if(I.loc != src && I.w_class <= SIZE_TINY)
 			items.Add(I)
 
 	var/obj/selection = input("Select an item.", "Pickup") in items

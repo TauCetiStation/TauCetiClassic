@@ -111,6 +111,7 @@ Class Procs:
 			var/mob/M = AM
 			if(M.status_flags & GODMODE)
 				continue
+			INVOKE_ASYNC(M, /mob/proc/playsound_local, null, 'sound/effects/airflow.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 			M.airflow_stun()
 
 		if(AM.check_airflow_movable(differential))
@@ -210,12 +211,16 @@ Class Procs:
 
 /connection_edge/unsimulated/var/turf/B
 /connection_edge/unsimulated/var/datum/gas_mixture/air
+/connection_edge/unsimulated/var/air_share_ratio = 0
 
 /connection_edge/unsimulated/New(zone/A, turf/B)
 	src.A = A
 	src.B = B
 	A.edges.Add(src)
 	air = B.return_air()
+	if(B.air_unsim_multiplier)
+		air_share_ratio = B.air_unsim_multiplier
+
 	//id = 52*A.id
 //	log_debug("New edge from [A] to [B].")
 
@@ -223,11 +228,11 @@ Class Procs:
 /connection_edge/unsimulated/add_connection(connection/c)
 	. = ..()
 	connecting_turfs.Add(c.B)
-	air.group_multiplier = coefficient
+	air.group_multiplier = coefficient + air_share_ratio
 
 /connection_edge/unsimulated/remove_connection(connection/c)
 	connecting_turfs.Remove(c.B)
-	air.group_multiplier = coefficient
+	air.group_multiplier = coefficient + air_share_ratio
 	. = ..()
 
 /connection_edge/unsimulated/erase()

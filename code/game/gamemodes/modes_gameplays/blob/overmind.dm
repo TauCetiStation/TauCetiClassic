@@ -5,7 +5,7 @@
 	icon_state = "marker"
 
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	invisibility = INVISIBILITY_OBSERVER
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 
@@ -16,6 +16,7 @@
 	var/blob_points = 0
 	var/max_blob_points = 100
 	var/victory_in_progress = FALSE
+	var/image/ghostimage = null
 
 	var/datum/faction/blob_conglomerate/b_congl
 
@@ -23,6 +24,9 @@
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
+	ghostimage = image(icon, src, icon_state)
+	ghost_sightless_images |= ghostimage //so ghosts can see the blob eye when they disable ghost sight
+	updateallghostimages()
 	. = ..()
 
 /mob/camera/blob/Login()
@@ -78,8 +82,8 @@
 	message = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
 	message = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></font>"
 
-	for (var/mob/M in mob_list)
-		if(isovermind(M) || isobserver(M))
+	for (var/mob/M as anything in mob_list)
+		if(isobserver(M) || isanyblob(M))
 			to_chat(M, message)
 
 /mob/camera/blob/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
@@ -104,3 +108,10 @@
 	if(NewLoc && B)
 		loc = NewLoc
 		return TRUE
+
+/mob/camera/blob/Destroy()
+	if(ghostimage)
+		ghost_sightless_images -= ghostimage
+		QDEL_NULL(ghostimage)
+		updateallghostimages()
+	return ..()

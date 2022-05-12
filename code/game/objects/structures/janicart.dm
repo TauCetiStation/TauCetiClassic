@@ -14,6 +14,8 @@
 
 	roll_sound = 'sound/effects/roll.ogg'
 
+	material = /obj/item/stack/sheet/mineral/plastic
+
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/weapon/storage/bag/trash/mybag	= null
@@ -106,7 +108,7 @@
 		..()
 
 /obj/structure/stool/bed/chair/janitorialcart/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/reagent_containers/glass/rag) || istype(I, /obj/item/weapon/soap))
+	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/reagent_containers/glass/rag) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/soap))
 		if(mybucket)
 			if(I.reagents.total_volume < I.reagents.maximum_volume)
 				if(mybucket.reagents.total_volume < 1)
@@ -323,5 +325,6 @@
 	spill(100 / severity)
 	..()
 
-/obj/structure/stool/bed/chair/janitorialcart/bullet_act(obj/item/projectile/Proj)
+/obj/structure/stool/bed/chair/janitorialcart/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	spill(Proj.damage * 10)

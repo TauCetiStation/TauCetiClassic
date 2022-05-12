@@ -98,6 +98,7 @@
 		walk_link(W)
 	else
 		walk_link(user)
+	return FALSE
 
 /obj/effect/cross_action/spacetime_dist/attack_hand(mob/user)
 	walk_link(user)

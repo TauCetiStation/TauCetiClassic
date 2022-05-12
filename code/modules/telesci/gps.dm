@@ -1,4 +1,4 @@
-var/list/GPS_list = list()
+var/global/list/GPS_list = list()
 
 #define EMP_DISABLE_TIME 30 SECONDS
 #define POS_VECTOR(A) list(A.x, A.y, A.z)
@@ -14,7 +14,7 @@ var/list/GPS_list = list()
 	desc = "Helping lost spacemen find their way through the planets since 2016."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "programming=2;engineering=2"
 	/// Whether the GPS is on.

@@ -2,7 +2,6 @@
  * Gradual creation of a things.
  */
 /datum/religion_rites/standing/spawn_item
-	name = "Spawn item"
 	//Type for the item to be spawned
 	var/spawn_type
 	//Type for the item to be sacrificed. If you specify the type here, then the component itself will change spawn_type to sacrifice_type.
@@ -35,8 +34,8 @@
 	spawn_type = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 
 	needed_aspects = list(
-		ASPECT_WACKY = 1,
-		ASPECT_CHAOS = 1,
+		ASPECT_WACKY = 11,
+		ASPECT_CHAOS = 11,
 	)
 
 /datum/religion_rites/standing/spawn_item/banana/modify_item(atom/item)
@@ -113,7 +112,7 @@
 	favor_cost = 150
 
 	needed_aspects = list(
-		ASPECT_SPAWN = 1,
+		ASPECT_SPAWN = 0,
 	)
 
 	var/list/summon_type = list(/mob/living/simple_animal/corgi/puppy, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/corgi, /mob/living/simple_animal/cat, /mob/living/simple_animal/parrot, /mob/living/simple_animal/crab, /mob/living/simple_animal/cow, /mob/living/simple_animal/chick, /mob/living/simple_animal/chicken, /mob/living/simple_animal/pig, /mob/living/simple_animal/turkey, /mob/living/simple_animal/goose, /mob/living/simple_animal/seal, /mob/living/simple_animal/walrus, /mob/living/simple_animal/fox, /mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/mushroom, /mob/living/simple_animal/pug, /mob/living/simple_animal/shiba, /mob/living/simple_animal/yithian, /mob/living/simple_animal/tindalos, /mob/living/carbon/monkey, /mob/living/carbon/monkey/skrell, /mob/living/carbon/monkey/tajara, /mob/living/carbon/monkey/unathi, /mob/living/simple_animal/slime)
@@ -126,10 +125,7 @@
 	return pick(summon_type)
 
 /datum/religion_rites/standing/spawn_item/call_animal/proc/call_ghost(mob/animal)
-	var/list/candidates = pollGhostCandidates("Do you want to become the Familiar of [religion]?", ROLE_GHOSTLY, IGNORE_FAMILIAR, 10 SECONDS)
-	if(!candidates.len)
-		return
-	var/mob/M = pick(candidates)
+	create_spawner(/datum/spawner/living/religion_familiar, _mob = animal, _religion = religion)
 
 	var/god_name
 	if(religion.active_deities.len == 0)
@@ -138,13 +134,9 @@
 		var/mob/god = pick(religion.active_deities)
 		god_name = god.name
 
-	animal.ckey = M.ckey
 	animal.name = "familiar of [god_name] [num2roman(rand(1, 20))]"
 	animal.real_name = animal.name
-	religion.add_member(animal, HOLY_ROLE_PRIEST)
 	animal.universal_understand = TRUE
-	M.cancel_camera()
-	M.reset_view()
 
 /datum/religion_rites/standing/spawn_item/call_animal/modify_item(mob/animal)
 	INVOKE_ASYNC(src, .proc/call_ghost, animal)
@@ -180,7 +172,7 @@
 	spawn_type = /obj/item/weapon/claymore/religion
 
 	needed_aspects = list(
-		ASPECT_WEAPON = 1
+		ASPECT_WEAPON = 11
 	)
 
 /datum/religion_rites/standing/spawn_item/create_sword/modify_item(atom/sword)
@@ -210,5 +202,5 @@
 	spawn_type = /obj/item/weapon/paper/talisman/chaplain
 
 	needed_aspects = list(
-		ASPECT_RESOURCES = 1,
+		ASPECT_RESOURCES = 0,
 	)

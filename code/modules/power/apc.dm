@@ -170,7 +170,7 @@
 	if(malfai && operating)
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
-			GM.apcs--
+			SSticker.hacked_apcs--
 	area.apc = null
 	area.power_light = 0
 	area.power_equip = 0
@@ -540,6 +540,8 @@
 					locked = 0
 					to_chat(user, "You emag the APC interface.")
 					update_icon()
+					SSticker.hacked_apcs++
+					announce_hacker()
 				else
 					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
 
@@ -636,7 +638,7 @@
 			update_icon()
 
 	else if(opened == APC_COVER_CLOSED && wiresexposed && is_wire_tool(W))
-		if(istype(user, /mob/living/silicon))
+		if(issilicon(user))
 			return wires.interact(user)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
@@ -919,7 +921,7 @@
 	if(malfai)
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
-			operating ? GM.apcs++ : GM.apcs--
+			operating ? SSticker.hacked_apcs++ : SSticker.hacked_apcs--
 	update()
 	update_icon()
 
@@ -938,14 +940,46 @@
 		ai.malfhacking = FALSE
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
-			GM.apcs++
+			SSticker.hacked_apcs++
 		if(ai.parent)
 			malfai = ai.parent
 		else
 			malfai = ai
 		to_chat(ai, "Hack complete. The APC is now under your exclusive control.")
+		announce_hacker()
 		update_icon()
 
+/obj/machinery/power/apc/proc/announce_hacker()
+	var/hacked_amount = SSticker.hacked_apcs
+	var/lowest_treshold = 3//lowest treshold in hacked apcs for an announcement to start
+	var/datum/faction/malf_silicons/malf_ai = find_faction_by_type(/datum/faction/malf_silicons)
+	if(malf_ai && malf_ai.intercept_hacked)
+		hacked_amount += malf_ai.intercept_apcs
+		lowest_treshold += malf_ai.intercept_apcs
+	switch (SSticker.Malf_announce_stage)
+		if(0)
+			if(hacked_amount >= lowest_treshold)
+				SSticker.Malf_announce_stage = 1
+				lowest_treshold += 2
+				var/datum/announcement/centcomm/malf/first/announce_first = new
+				announce_first.play()
+		if(1)
+			if(hacked_amount >= lowest_treshold)
+				SSticker.Malf_announce_stage = 2
+				lowest_treshold += 2
+				var/datum/announcement/centcomm/malf/second/announce_second = new
+				announce_second.play()
+		if(2)
+			if(hacked_amount >= lowest_treshold)
+				SSticker.Malf_announce_stage = 3
+				lowest_treshold += 2
+				var/datum/announcement/centcomm/malf/third/announce_third = new
+				announce_third.play()
+		if(3)
+			if(hacked_amount >= lowest_treshold)
+				SSticker.Malf_announce_stage = 4
+				var/datum/announcement/centcomm/malf/fourth/announce_forth = new
+				announce_forth.play()
 ////////////////////////////////
 
 
@@ -1164,22 +1198,22 @@
 
 /obj/machinery/power/apc/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			//set_broken() //now Destroy() do what we need
 			if(cell)
-				cell.ex_act(1.0) // more lags woohoo
+				cell.ex_act(EXPLODE_DEVASTATE) // more lags woohoo
 			qdel(src)
 			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				set_broken()
 				if(cell && prob(50))
-					cell.ex_act(2.0)
-		if(3.0)
+					cell.ex_act(EXPLODE_HEAVY)
+		if(EXPLODE_LIGHT)
 			if(prob(25))
 				set_broken()
 				if(cell && prob(25))
-					cell.ex_act(3.0)
+					cell.ex_act(EXPLODE_LIGHT)
 
 /obj/machinery/power/apc/blob_act()
 	if(prob(75))
@@ -1191,7 +1225,7 @@
 	if(malfai && operating)
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
-			GM.apcs--
+			SSticker.hacked_apcs--
 	stat |= BROKEN
 	operating = 0
 	update_icon()
@@ -1264,8 +1298,6 @@
 		return
 	last_nightshift_switch = world.time
 	set_nightshift(nightshift_lights, preset)
-
-
 
 /obj/machinery/power/apc/smallcell
 	cell_type = 2500

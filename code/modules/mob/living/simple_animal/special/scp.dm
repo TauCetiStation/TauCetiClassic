@@ -6,6 +6,7 @@
 	icon = 'icons/mob/scp.dmi'
 	icon_state = "scp_173"
 	icon_living = "scp_173"
+	w_class = SIZE_MASSIVE
 	maxHealth = INFINITY
 	health = INFINITY
 	immune_to_ssd = 1
@@ -81,7 +82,7 @@
 		life_cicle = 0
 
 		for(var/turf/T in view(7, src))
-			if(istype(T,/turf/space)) continue
+			if(isspaceturf(T)) continue
 			turfs_around += T
 			for(var/obj/item/F in T.contents)
 				F.set_light(0)
@@ -113,7 +114,7 @@
 	for(var/mob/living/L in view(7,src))
 		if(L == src) continue
 		var/turf/T = get_turf(L)
-		if(istype(T,/turf/space)) continue
+		if(isspaceturf(T)) continue
 
 		var/light_amount = 0
 		light_amount = round(T.get_lumcount()*10)
@@ -196,5 +197,6 @@
 	to_chat(user, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 	visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
 
-/mob/living/simple_animal/special/scp173/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/special/scp173/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	visible_message("[Proj] ricochets off [src]!")

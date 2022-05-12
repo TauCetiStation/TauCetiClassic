@@ -6,7 +6,7 @@
 	desc = "A die with six sides. Basic and servicable."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "d6"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/sides = 6
 	var/result
 	var/accursed_type = /obj/item/weapon/dice/ghost
@@ -49,8 +49,9 @@
 		set_light(light_range, 1, "#a2fad1")
 		time--
 		sleep(1)
-	for(var/mob/living/A in viewers(3,   loc))
-		A.confused += SLIGHTLY_CONFUSED
+	for(var/mob/living/A in viewers(3, loc))
+		if(!iscultist(A))
+			A.AdjustConfused(SLIGHTLY_CONFUSED)
 	loc.visible_message("<span class='warning'>You hear a loud pop, as [src] poofs out of existence.</span>")
 	playsound(src, 'sound/effects/bubble_pop.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
@@ -179,7 +180,7 @@
 			user.adjustFireLoss(-1)
 		else
 			to_chat(user, "<span class='warning'>You suddenly feel bamboozled because of your own luck!</span>")
-			user.confused += SLIGHTLY_CONFUSED
+			user.AdjustConfused(SLIGHTLY_CONFUSED)
 	if(result == 1)
 		poof()
 
@@ -193,7 +194,7 @@
 			target.adjustFireLoss(-1)
 		else
 			to_chat(target, "<span class='warning'>You suddenly feel bamboozled because of [thrower]'s luck!</span>")
-			target.confused += SLIGHTLY_CONFUSED
+			target.AdjustConfused(SLIGHTLY_CONFUSED)
 	if(result == 1)
 		poof()
 
@@ -249,7 +250,7 @@
 		to_chat(H, "<span class='userdanger'>You really regret stepping on the accursed D4!</span>")
 		H.apply_damage(4, BRUTE, pick(BP_L_LEG , BP_R_LEG))
 		H.Weaken(3)
-		H.confused += SLIGHTLY_CONFUSED
+		H.AdjustConfused(SLIGHTLY_CONFUSED)
 		if(prob(25)) // The chance of getting 1 on a D4.
 			poof()
 

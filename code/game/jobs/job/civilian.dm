@@ -4,8 +4,8 @@
 	flag = QUARTERMASTER
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargoGold
@@ -28,8 +28,8 @@
 	flag = CARGOTECH
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
@@ -44,8 +44,8 @@
 	flag = MINER
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
@@ -60,8 +60,8 @@
 	flag = RECYCLER
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
@@ -85,8 +85,8 @@
 	flag = BARTENDER
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
@@ -109,8 +109,8 @@
 	flag = CHEF
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
@@ -134,8 +134,8 @@
 	flag = BOTANIST
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 3
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
@@ -151,8 +151,8 @@
 	flag = JANITOR
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
@@ -168,8 +168,8 @@
 	flag = BARBER
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
@@ -185,8 +185,8 @@
 	flag = LIBRARIAN
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
@@ -203,12 +203,12 @@
 	flag = LAWYER
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "The Central Command"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/int
-	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engine, access_engineering_lobby)
+	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby)
 	salary = 200
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/lawyer
@@ -227,8 +227,8 @@
 	flag = CLOWN
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/clown
@@ -246,8 +246,8 @@
 	flag = MIME
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/mime
@@ -257,8 +257,17 @@
 
 /datum/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
-		H.verbs += /client/proc/mimespeak
-		H.verbs += /client/proc/mimewall
-		H.mind.special_verbs += /client/proc/mimespeak
-		H.mind.special_verbs += /client/proc/mimewall
-		H.miming = 1
+		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall/mimewall)
+		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/mime_speak)
+		H.miming = TRUE
+
+datum/job/hub
+	title = "Hub"
+	flag = HUB
+	department_flag = CIVILIAN
+	faction = "Station"
+	total_positions = -1
+	spawn_positions = -1
+	supervisors = "FatFat"
+	selection_color = "#dddddd"
+	outfit = /datum/outfit/job/hub

@@ -26,7 +26,7 @@
 		qdel(src)
 
 /obj/item/weapon/holder/pickup(mob/living/user)
-	..()
+	. = ..()
 	user.status_flags |= PASSEMOTES
 
 /obj/item/weapon/holder/dropped(mob/living/carbon/user)
@@ -62,12 +62,26 @@
 	icon_state = "nymph"
 	origin_tech = "magnets=3;biotech=5"
 
+/obj/item/weapon/holder/diona/podkid
+	name = "podkid"
+	icon_state = "podkid"
+
 /obj/item/weapon/holder/drone
 	name = "maintenance drone"
 	desc = "It's a small maintenance robot."
 	icon_state = "drone"
 	origin_tech = "magnets=3;engineering=5"
 
+/obj/item/weapon/holder/syndi_drone
+	name = "suspicious drone"
+	desc = "It's a small maintenance robot. Why the hell do his eyes glow red?"
+	icon_state = "drone_syndi"
+	origin_tech = "programming=2;engineering=5;syndicate=5"
+
+/obj/item/weapon/holder/syndi_drone/disguised
+	name = "maintenance drone"
+	desc = "It's a small maintenance robot."
+	icon_state = "drone"
 
 /obj/item/weapon/holder/cat
 	name = "cat"
@@ -78,7 +92,7 @@
 	name = "mouse"
 	desc = "It's a small rodent."
 	icon_state = "mouse_gray"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 /obj/item/weapon/holder/mouse/gray
 	icon_state = "mouse_gray"
@@ -93,7 +107,7 @@
 	name = "lizard"
 	desc = "A cute tiny lizard."
 	icon_state = "lizard"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 /obj/item/weapon/holder/monkey
 	name = "monkey"

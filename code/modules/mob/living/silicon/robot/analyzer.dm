@@ -9,7 +9,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 5
 	throw_range = 10
 	//matter = list("metal" = 200)
@@ -38,7 +38,7 @@
 			to_chat(user, "<span class='warning'>You can't analyze non-robotic things!</span>")
 			return
 	else
-		if(!istype(M, /mob/living/silicon/robot))
+		if(!isrobot(M))
 			to_chat(user, "<span class='warning'>You can't analyze non-robotic things!</span>")
 			return
 
@@ -77,7 +77,7 @@
 	if(M.tod && M.stat == DEAD)
 		message += "<span class='notice'>Time of Disable: [M.tod]</span><br>"
 
-	if(istype(M, /mob/living/silicon/robot))
+	if(isrobot(M))
 		var/mob/living/silicon/robot/H = M
 		var/list/damaged = H.get_damaged_components(1,1,1)
 

@@ -15,6 +15,7 @@
 	icon = 'icons/obj/mafia.dmi'
 	icon_state = "board"
 	anchored = TRUE
+	flags = ABSTRACT
 	var/game_id = "mafia"
 	var/datum/mafia_controller/MF
 

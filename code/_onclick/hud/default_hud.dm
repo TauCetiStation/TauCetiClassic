@@ -10,7 +10,6 @@
 	using.icon = ui_style
 	using.icon_state = "intent_" + mymob.a_intent
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	action_intent = using
@@ -28,7 +27,6 @@
 	using.name = INTENT_HELP
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	help_intent = using
@@ -40,7 +38,6 @@
 	using.name = INTENT_PUSH
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	push_intent = using
@@ -52,7 +49,6 @@
 	using.name = INTENT_GRAB
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	grab_intent = using
@@ -64,7 +60,6 @@
 	using.name = INTENT_HARM
 	using.icon = ico
 	using.screen_loc = ui_acti
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
 	harm_intent = using
@@ -76,7 +71,6 @@
 	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 	using.screen_loc = ui_movi
-	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
@@ -95,6 +89,14 @@
 	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_pull_resist
 	src.hotkeybuttons += mymob.pullin
+
+	lingchemdisplay = new /atom/movable/screen()
+	lingchemdisplay.icon = 'icons/mob/screen_gen.dmi'
+	lingchemdisplay.name = "chemical storage"
+	lingchemdisplay.icon_state = "power_display"
+	lingchemdisplay.screen_loc = ui_lingchemdisplay
+	lingchemdisplay.plane = ABOVE_HUD_PLANE
+	lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 
 	mymob.client.screen = list()

@@ -74,7 +74,7 @@
 	if(tool.blood_DNA && tool.blood_DNA.len) //germs from blood-stained tools
 		germ_level += GERM_LEVEL_AMBIENT * 0.25
 
-	if(ishuman(user) && user.need_breathe() && !user.wear_mask) //wearing a mask helps preventing people from breathing germs into open incisions
+	if(ishuman(user) && !user.is_skip_breathe() && !user.wear_mask) //wearing a mask helps preventing people from breathing germs into open incisions
 		germ_level += user.germ_level * 0.25
 
 	BP.germ_level = max(germ_level, BP.germ_level)
@@ -103,38 +103,30 @@
 			covered |= I.body_parts_covered
 	return covered
 
+/proc/check_covered_bodypart(mob/living/carbon/human/T, covered)
+	for(var/obj/item/I in list(T.wear_suit, T.w_uniform, T.gloves, T.glasses, T.head, T.wear_mask, T.shoes))
+		if(I && I.body_parts_covered & covered)
+			return TRUE
+	return FALSE
+
 /proc/check_human_covering(mob/living/carbon/human/T, mob/living/user, covered)
-	if(!covered)
-		covered = get_human_covering(T)
-	switch(user.get_targetzone())
-		if(BP_CHEST)
-			if(covered & UPPER_TORSO)
-				return FALSE
-		if(BP_GROIN)
-			if(covered & LOWER_TORSO)
-				return FALSE
-		if(BP_L_LEG)
-			if(covered & LEG_LEFT)
-				return FALSE
-		if(BP_R_LEG)
-			if(covered & LEG_RIGHT)
-				return FALSE
-		if(BP_L_ARM)
-			if(covered & ARM_LEFT)
-				return FALSE
-		if(BP_R_ARM)
-			if(covered & ARM_RIGHT)
-				return FALSE
-		if(BP_HEAD)
-			if(covered & HEAD)
-				return FALSE
-		if(O_MOUTH)
-			if(covered & FACE)
-				return FALSE
-		if(O_EYES)
-			if(covered & EYES)
-				return FALSE
-	return TRUE
+	var/static/list/zone_by_clothing_part = list(
+		BP_CHEST = UPPER_TORSO,
+		BP_GROIN = LOWER_TORSO,
+		BP_L_LEG = LEG_LEFT,
+		BP_R_LEG = LEG_RIGHT,
+		BP_L_ARM = ARM_LEFT,
+		BP_R_ARM = ARM_RIGHT,
+		BP_HEAD = HEAD,
+		O_MOUTH = FACE,
+		O_EYES = EYES,
+	)
+
+	var/zone = zone_by_clothing_part[user.get_targetzone()]
+	if(!zone)
+		return TRUE
+
+	return !check_covered_bodypart(T, zone)
 
 /proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 	checks_for_surgery(M, user, FALSE)

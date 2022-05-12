@@ -20,7 +20,7 @@
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "sampler_empty"
 	item_state = "sampler"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	//slot_flags = SLOT_FLAGS_BELT
 	var/sampled_turf = ""
 	var/num_stored_bags = 10

@@ -1,3 +1,5 @@
+ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
+
 /obj/machinery/door/window
 	name = "interior door"
 	desc = "A strong door."
@@ -10,9 +12,14 @@
 	air_properties_vary_with_direction = 1
 	door_open_sound  = 'sound/machines/windowdoor.ogg'
 	door_close_sound = 'sound/machines/windowdoor.ogg'
+
+	can_wedge_items = FALSE
+
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/base_state = "left"
 	var/health = 150.0 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	// For use with door control buttons. Currently just that.
+	var/id = null
 
 /obj/machinery/door/window/atom_init()
 	. = ..()
@@ -200,10 +207,10 @@
 		shatter()
 		return
 
-/obj/machinery/door/window/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/door/window/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(Proj.damage)
 		take_damage(round(Proj.damage / 2))
-	..()
 
 //When an object is thrown at the window
 /obj/machinery/door/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
@@ -242,7 +249,7 @@
 	attack_generic(attacker, attacker.melee_damage)
 
 /obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user)
-	if(!istype(user, /mob/living/carbon/slime/adult))
+	if(!isslimeadult(user))
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)
@@ -344,7 +351,7 @@
 
 
 	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
-	if(iscrowbar(I) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
+	if(iscrowbar(I) || istype(I, /obj/item/weapon/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
 		if(!hasPower())
 			user.SetNextMove(CLICK_CD_INTERACT)
 			if(density)
@@ -396,7 +403,6 @@
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	req_access = list(access_security)
-	var/id = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
 
 /obj/machinery/door/window/brigdoor/atom_init()

@@ -11,7 +11,7 @@
 	opened = TRUE
 	locked = TRUE
 
-	var/obj/item/weapon/twohanded/fireaxe/fireaxe
+	var/obj/item/weapon/fireaxe/fireaxe
 	var/localopened = FALSE // Setting this to keep it from behaviouring like a normal closet and obstructing movement in the map. -Agouri
 	var/hitstaken = 0
 	var/smashed = FALSE
@@ -21,9 +21,9 @@
 	return ..()
 
 /obj/structure/closet/fireaxecabinet/PopulateContents()
-	fireaxe = new /obj/item/weapon/twohanded/fireaxe(src)
+	fireaxe = new /obj/item/weapon/fireaxe(src)
 
-/obj/structure/closet/fireaxecabinet/attackby(obj/item/O, mob/user)  //Marker -Agouri
+/obj/structure/closet/fireaxecabinet/attackby(obj/item/O, mob/living/user)  //Marker -Agouri
 	//..() //That's very useful, Erro
 
 	if (user.is_busy(src))
@@ -58,12 +58,8 @@
 					locked = FALSE
 					localopened = TRUE
 			update_icon()
-	else if (istype(O, /obj/item/weapon/twohanded/fireaxe) && localopened)
+	else if (istype(O, /obj/item/weapon/fireaxe) && localopened)
 		if(!fireaxe)
-			var/obj/item/weapon/twohanded/fireaxe/FA = O
-			if(FA.wielded)
-				to_chat(user, "<span class='warning'>Unwield the axe first.</span>")
-				return
 			user.drop_from_inventory(O, src)
 			fireaxe = O
 			to_chat(user, "<span class='notice'>You place the fire axe back in the [src.name].</span>")
@@ -102,7 +98,7 @@
 				icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
 				addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 
-/obj/structure/closet/fireaxecabinet/attack_hand(mob/user)
+/obj/structure/closet/fireaxecabinet/attack_hand(mob/living/user)
 	if(user.is_busy(src))
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -113,7 +109,7 @@
 
 	if(localopened)
 		if(fireaxe)
-			user.put_in_hands(fireaxe)
+			user.try_take(fireaxe, loc)
 			fireaxe = null
 			to_chat(user, "<span class='notice'>You take the fire axe from the [name].</span>")
 			add_fingerprint(user)
@@ -138,18 +134,6 @@
 		else
 			src.icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
 			addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
-
-/obj/structure/closet/fireaxecabinet/attack_tk(mob/user)
-	if(user.is_busy(src))
-		return
-
-	if(localopened && fireaxe)
-		fireaxe.forceMove(loc)
-		to_chat(user, "<span class='notice'>You telekinetically remove the fire axe.</span>")
-		fireaxe = null
-		update_icon()
-		return
-	attack_hand(user)
 
 /obj/structure/closet/fireaxecabinet/attack_paw(mob/user)
 	attack_hand(user)

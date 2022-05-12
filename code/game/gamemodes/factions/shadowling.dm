@@ -18,7 +18,7 @@
 	AppendObjective(/datum/objective/enthrall)
 	return TRUE
 
-/datum/faction/shadowlings/HandleRecruitedMind(datum/mind/M, override = FALSE)
+/datum/faction/shadowlings/HandleRecruitedMind(datum/mind/M, laterole)
 	var/datum/role/R = ..()
 	if(!R)
 		return null

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	hitsound = list('sound/items/misc/folder-slap.ogg')
 	icon_state = "folder"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."
@@ -25,6 +25,18 @@
 /obj/item/weapon/folder/purple
 	desc = "A purple folder."
 	icon_state = "folder_purple"
+
+/obj/item/weapon/folder/green
+	desc = "A green folder."
+	icon_state = "folder_green"
+
+/obj/item/weapon/folder/pink
+	desc = "A pink folder."
+	icon_state = "folder_pink"
+
+/obj/item/weapon/folder/brown
+	desc = "A brown folder."
+	icon_state = "folder_brown"
 
 /obj/item/weapon/folder/update_icon()
 	cut_overlays()

@@ -12,9 +12,15 @@
 		return FALSE
 	if(M.current.ismindprotect())
 		return FALSE
-	if(jobban_isbanned(M.current, ROLE_REV) || jobban_isbanned(M.current, "Syndicate"))
-		return FALSE
 	return TRUE
+
+/datum/role/rev/OnPreSetup(greeting, custom)
+	. = ..()
+	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "rev_convert", /datum/mood_event/rev)
+
+/datum/role/rev/RemoveFromRole(datum/mind/M, msg_admins)
+	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "rev_convert")
+	..()
 
 /datum/role/rev/Greet(greeting, custom)
 	. = ..()

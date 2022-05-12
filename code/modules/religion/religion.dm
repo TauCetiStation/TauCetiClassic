@@ -31,20 +31,13 @@
 	// Radial menu
 	var/list/bible_skins
 
-	/*
-	var/lecturn_icon_state
+	var/religious_tool_type
+
+	var/emblem_icon_state
 	// Is required to have a "Default" as a fallback.
-	var/static/list/lecturn_info_by_name = list(
-	)
-
+	var/list/emblem_info_by_name
 	// Radial menu
-	var/lecturn_skins
-	*/
-
-	var/pews_icon_state
-	var/list/pews_info_by_name
-	// Radial menu
-	var/list/pews_skins
+	var/list/emblem_skins
 
 	var/altar_icon_state
 	// Is required to have a "Default" as a fallback.
@@ -104,8 +97,8 @@
 
 	// All runes on map
 	var/list/obj/effect/rune/runes = list()
-	// mob = list(rune, rune, rune)
-	var/list/runes_by_mob = list()
+	// ckey = list(rune, rune, rune)
+	var/list/runes_by_ckey
 	// Max runes on mob
 	var/max_runes_on_mob
 
@@ -126,6 +119,8 @@
 	var/style_text
 	// It`s hud
 	var/symbol_icon_state
+	// String information about rituals, sects, aspects, etc.
+	var/datum/religion_interface/encyclopedia = new
 
 	/*
 		Building
@@ -162,6 +157,8 @@
 	area_types = typesof(area_type)
 	religify_area(null, null, null, TRUE)
 
+	encyclopedia.init_encyclopedia(src)
+
 /datum/religion/process()
 	if(passive_favor_gain == 0.0)
 		STOP_PROCESSING(SSreligion, src)
@@ -190,7 +187,6 @@
 
 	for(var/obj/structure/altar_of_gods/altar in altars)
 		altar.chosen_aspect = initial(altar.chosen_aspect)
-		altar.choosing_sects = initial(altar.choosing_sects)
 		altar.religion = initial(altar.religion)
 		altar.performing_rite = initial(altar.performing_rite)
 
@@ -219,10 +215,10 @@
 		I.transform = M
 		altar_skins[info] = I
 
-/datum/religion/proc/gen_pews_variants()
-	pews_skins = list()
-	for(var/info in pews_info_by_name)
-		pews_skins[info] = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "[pews_info_by_name[info]]_left")
+/datum/religion/proc/gen_emblem_variants()
+	emblem_skins = list()
+	for(var/info in emblem_info_by_name)
+		emblem_skins[info] = image(icon = 'icons/obj/lectern.dmi', icon_state = "[emblem_info_by_name[info]]")
 
 /datum/religion/proc/gen_carpet_variants()
 	carpet_skins = list()
@@ -246,7 +242,7 @@
 
 	gen_bible_info()
 	gen_altar_variants()
-	gen_pews_variants()
+	gen_emblem_variants()
 	gen_carpet_variants()
 
 	gen_agent_lists()
@@ -261,20 +257,11 @@
 	else
 		carpet_dir = 0
 
-	/*
-	// Luduk when?
-	var/lecturn_info = lecturn_info_by_name[name]
-	if(lecturn_info)
-		lecturn_icon_state = lecturn_info
+	var/emblem_info = emblem_info_by_name[name]
+	if(emblem_info)
+		emblem_icon_state = emblem_info
 	else
-		lecturn_info_state = lecturn_info_by_name["Default"]
-	*/
-
-	var/pews_info = pews_info_by_name[name]
-	if(pews_info)
-		pews_icon_state = pews_info
-	else
-		pews_icon_state = pews_info_by_name["Default"]
+		emblem_icon_state = emblem_info_by_name["Default"]
 
 	var/altar_info = altar_info_by_name[name]
 	if(altar_info)
@@ -324,15 +311,9 @@
 	return TRUE
 
 // This proc returns a bible object of this religion, spawning it at a given location.
-/datum/religion/proc/spawn_bible(atom/location, custom_type)
-	var/obj/item/weapon/storage/bible/B
-	if(custom_type)
-		B = new custom_type(location)
-	else
-		B = new bible_type(location)
+/datum/religion/proc/spawn_bible(atom/location)
+	var/obj/item/weapon/storage/bible/B = new bible_type(location)
 	bible_info.apply_to(B)
-	B.deity_name = pick(deity_names)
-	B.god_lore = lore
 	B.religion = src
 	return B
 
@@ -605,6 +586,8 @@
 	if(!is_member(M))
 		return FALSE
 
+	SEND_SIGNAL(src, COMSIG_REL_REMOVE_MEMBER, M)
+
 	members -= M
 	M.my_religion = initial(M.my_religion)
 	if(M.mind)
@@ -667,10 +650,11 @@
 				C.say(message)
 	return acolytes
 
-/datum/religion/proc/send_message_to_members(message, name) // As a god
+/datum/religion/proc/send_message_to_members(message, name, font_size = 6)
+	var/format_name = name ? "[name]: " : ""
 	for(var/mob/M in global.mob_list)
 		if(is_member(M) || isobserver(M))
-			to_chat(M, "<span class='[style_text]'><font size='6'>[name]: [message]</font></span>")
+			to_chat(M, "<span class='[style_text]'><font size='[font_size]'>[format_name][message]</font></span>")
 
 /datum/religion/proc/add_tech(tech_type)
 	var/datum/religion_tech/T = new tech_type
@@ -679,3 +663,12 @@
 
 /datum/religion/proc/get_tech(tech_id)
 	return all_techs[tech_id]
+
+/datum/religion/proc/get_runes_by_type(rune_type)
+	var/list/valid_runes = list()
+	for(var/obj/effect/rune/R as anything in runes)
+		if(!istype(R.power, rune_type))
+			continue
+		if(!is_centcom_level(R.loc.z) || istype(get_area(R), area_type))
+			valid_runes += R
+	return valid_runes

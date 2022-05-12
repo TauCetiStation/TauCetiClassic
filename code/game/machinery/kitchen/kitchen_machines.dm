@@ -114,7 +114,7 @@
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
 		if(clean_spray.reagents.has_reagent("cleaner",clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent("cleaner",clean_spray.amount_per_transfer_from_this,1)
-			playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+			playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 			user.visible_message( \
 				"<span class='notice'>[user] has cleaned [src].</span>", \
 				"<span class='notice'>You have cleaned [src].</span>" \
@@ -129,7 +129,7 @@
 			to_chat(user, "<span class='danger'>You need more space cleaner!</span>")
 			return 1
 
-	else if(istype(O, /obj/item/weapon/soap)) // If they're trying to clean it then let them
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/soap)) // If they're trying to clean it then let them
 		user.visible_message( \
 			"<span class='notice'>[user] starts to clean [src].</span>", \
 			"<span class='notice'>You start to clean [src].</span>" \
@@ -285,7 +285,7 @@
 			if (!cook_process(4))
 				abort()
 				return
-			broke()
+
 			cooked = fail()
 			cooked.loc = src.loc
 			return
@@ -316,7 +316,10 @@
 			cooked = new cooked.type(loc)
 		if(byproduct)
 			new byproduct(loc)
-		score["meals"]++
+		SSStatistics.score.meals++
+		icon_state = open_icon
+		sleep(10)
+		icon_state = on_icon
 		return
 
 /obj/machinery/kitchen_machine/proc/cook_process(seconds)
@@ -342,7 +345,7 @@
 	src.icon_state = on_icon
 	updateUsrDialog()
 	if(on_icon == "mw1")
-		playsound(src, 'sound/machines/microwave.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
 	if(on_icon == "oven_on")
 		playsound(src, 'sound/machines/stove.ogg', VOL_EFFECTS_MASTER)
 	if(on_icon == "candymaker_on")
@@ -357,7 +360,7 @@
 	updateUsrDialog()
 
 /obj/machinery/kitchen_machine/proc/stop()
-	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
 	src.operating = 0 // Turn it off again aferwards
 	src.icon_state = off_icon
 	updateUsrDialog()

@@ -2,7 +2,7 @@
 #define AI_CHECK_RADIO 2
 #define EMERGENCY_MESSAGE_COOLDOWN 300
 
-var/list/ai_verbs_default = list(
+var/global/list/ai_verbs_default = list(
 //	/mob/living/silicon/ai/proc/ai_recall_shuttle,
 	/mob/living/silicon/ai/proc/ai_goto_location,
 	/mob/living/silicon/ai/proc/ai_remove_location,
@@ -38,6 +38,7 @@ var/list/ai_verbs_default = list(
 	canmove = FALSE
 	status_flags = CANSTUN|CANPARALYSE
 	shouldnt_see = list(/obj/effect/rune)
+	w_class = SIZE_HUMAN
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/camera = null
 	var/list/connected_robots = list()
@@ -160,7 +161,7 @@ var/list/ai_verbs_default = list(
 	var/pickedName = null
 	while(!pickedName)
 		pickedName = pick(ai_names)
-		for (var/mob/living/silicon/ai/A in ai_list)
+		for (var/mob/living/silicon/ai/A as anything in ai_list)
 			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
 				possibleNames -= pickedName
 				pickedName = null
@@ -193,15 +194,15 @@ var/list/ai_verbs_default = list(
 		add_ai_verbs(src)
 
 	//Languages
-	add_language("Sol Common", 0)
-	add_language("Sinta'unathi", 0)
-	add_language("Siik'maas", 0)
-	add_language("Siik'tajr", 0)
-	add_language("Skrellian", 0)
-	add_language("Rootspeak", 0)
-	add_language("Tradeband", 1)
-	add_language("Trinary", 1)
-	add_language("Gutter", 0)
+	add_language(LANGUAGE_SOLCOMMON, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SINTAUNATHI, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SIIKMAAS, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SIIKTAJR, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SKRELLIAN, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_ROOTSPEAK, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_TRADEBAND)
+	add_language(LANGUAGE_TRINARY)
+	add_language(LANGUAGE_GUTTER, LANGUAGE_CAN_UNDERSTAND)
 
 	if(!safety) // Only used by AIize() to successfully spawn an AI.
 		if(!B)  // If there is no player/brain inside.
@@ -300,8 +301,8 @@ var/list/ai_verbs_default = list(
 	var/datum/role/malfAI/M = ismalf(src)
 	if(M)
 		var/datum/faction/malf_silicons/malf = M.GetFaction()
-		if (malf.apcs >= APC_MIN_TO_MALF_DECLARE)
-			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
+		if (SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE)
+			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
 
 
 /mob/living/silicon/ai/show_alerts()
@@ -464,24 +465,20 @@ var/list/ai_verbs_default = list(
 	..()
 
 /mob/living/silicon/ai/ex_act(severity)
+	if(stat == DEAD)
+		return
 	if(!blinded)
 		flash_eyes()
-
 	switch(severity)
-		if(1.0)
-			if (stat != DEAD)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-		if(2.0)
-			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(3.0)
-			if (stat != DEAD)
-				adjustBruteLoss(30)
-
+		if(EXPLODE_DEVASTATE)
+			adjustBruteLoss(100)
+			adjustFireLoss(100)
+		if(EXPLODE_HEAVY)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+		if(EXPLODE_LIGHT)
+			adjustBruteLoss(30)
 	updatehealth()
-
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	if(usr != src)
@@ -562,9 +559,18 @@ var/list/ai_verbs_default = list(
 
 		return
 
+	if(href_list["x"] && href_list["y"] && href_list["z"])
+		var/tx = text2num(href_list["x"])
+		var/ty = text2num(href_list["y"])
+		var/tz = text2num(href_list["z"])
+		var/turf/target = locate(tx, ty, tz)
+		if(istype(target))
+			eyeobj.forceMove(target)
+			return
+
 	return
 
-/mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)
+/mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return

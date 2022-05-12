@@ -29,7 +29,6 @@
 		/obj/machinery/dna_scannernew,
 		/obj/item/weapon/grenade/chem_grenade,
 		/obj/machinery/bot/medbot,
-		/obj/machinery/computer/pandemic,
 		/obj/item/weapon/storage/secure/safe,
 		/obj/machinery/iv_drip,
 		/obj/machinery/disease2/incubator,
@@ -137,7 +136,7 @@
 				return
 
 
-	else if(reagents && reagents.total_volume)
+	else if(user.a_intent == INTENT_HARM && reagents && reagents.total_volume)
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 		reagents.standard_splash(target, user=user)
 		return
@@ -256,6 +255,13 @@
 	possible_transfer_amounts = list(5,10,15,25)
 	flags = OPENCONTAINER
 
+/obj/item/weapon/reagent_containers/glass/beaker/teapot
+	name = "teapot"
+	desc = "An elegant teapot."
+	icon_state = "teapot"
+	item_state = "teapot"
+
+
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone/atom_init()
@@ -285,7 +291,7 @@
 	item_state = "bucket"
 	m_amt = 200
 	g_amt = 0
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70

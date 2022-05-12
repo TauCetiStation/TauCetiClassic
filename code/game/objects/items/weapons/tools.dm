@@ -21,7 +21,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	throwforce = 7.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 150
 	origin_tech = "materials=1;engineering=1"
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
@@ -70,7 +70,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -109,7 +109,7 @@
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 8
 	throw_speed = 2
 	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
@@ -137,7 +137,7 @@
 	force = 6.0
 	throw_speed = 2
 	throw_range = 9
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 80
 	origin_tech = "materials=1;engineering=1"
 	hitsound = list('sound/items/tools/wirecutters-pinch.ogg')
@@ -157,16 +157,15 @@
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && user.a_intent == INTENT_HELP)
-		if(istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))
-			usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
-			"<span class='notice'>You cut \the [C]'s restraints with \the [src]!</span>",\
-			"You hear cable being cut.")
-			QDEL_NULL(C.handcuffed)
+		var/obj/item/weapon/handcuffs/cuffs = C.handcuffed
+		if(do_mob(user, C, 2 SECONDS) && C.unEquip(cuffs))
+			QDEL_NULL(cuffs)
+			usr.visible_message("\The [usr] cuts \the [C]'s handcuffs with \the [src]!",\
+			"<span class='notice'>You cut \the [C]'s handcuffs with \the [src]!</span>",\
+			"You hear handcuffs being cut.")
 			if(C.buckled && C.buckled.buckle_require_restraints)
 				C.buckled.unbuckle_mob()
 			C.update_inv_handcuffed()
-		else
-			to_chat(user, "The [C.handcuffed] are too tough to cut with [src].")
 		return
 	else
 		..()
@@ -190,6 +189,15 @@
 	qdel(src)
 	user.put_in_active_hand(pryjaws)
 
+/obj/item/weapon/smith_hammer
+	name = "Кузнечный молот"
+	desc = "Очень крутой"
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "smith_hammer"
+	item_state = "sledgehammer0"
+	hitsound = 'sound/items/sledgehammer_hit.ogg'
+	force = 15
+	w_class = SIZE_TINY
 /*
  * Welding Tool
  */
@@ -208,7 +216,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 	m_amt = 70 // Cost to make in the autolathe
 	g_amt = 30
@@ -227,8 +235,8 @@
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
-	welding_sparks = image('icons/effects/effects.dmi', "welding_sparks", ABOVE_LIGHTING_LAYER)
-	welding_sparks.plane = LIGHTING_PLANE + 1
+	welding_sparks = image('icons/effects/effects.dmi', "welding_sparks")
+	welding_sparks.plane = ABOVE_LIGHTING_PLANE
 
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
@@ -309,7 +317,7 @@
 			var/datum/reagent/R = tank.reagents.has_reagent("fuel")
 			if(tank.reagents.trans_id_to(src, R.id, max_fuel))
 				to_chat(user, "<span class='notice'>[src] refueled by [tank].</span>")
-				playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+				playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 			return
 		else if(tank.explode(user))
 			message_admins("[key_name_admin(user)] triggered a [tank] explosion. [ADMIN_JMP(user)]")
@@ -345,7 +353,7 @@
 /obj/item/weapon/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount("fuel")
 
-/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, datum/callback/extra_checks)
+/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null)
 	target.add_overlay(welding_sparks)
 	INVOKE_ASYNC(src, .proc/start_welding, target)
 	var/datum/callback/checks  = CALLBACK(src, .proc/check_active_and_extra, extra_checks)
@@ -452,7 +460,7 @@
 /obj/item/weapon/weldingtool/proc/eyecheck(mob/user)
 	if(!iscarbon(user)) return 1
 	var/safety = user:eyecheck()
-	if(istype(user, /mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(H.species.flags[IS_SYNTHETIC])
@@ -462,7 +470,7 @@
 				to_chat(usr, "<span class='warning'>Your eyes sting a little.</span>")
 				IO.damage += rand(1, 2)
 				if(IO.damage > 12)
-					user.eye_blurry += rand(3,6)
+					user.adjustBlurriness(rand(3,6))
 			if(0)
 				to_chat(usr, "<span class='warning'>Your eyes burn.</span>")
 				IO.damage += rand(2, 4)
@@ -470,7 +478,7 @@
 					IO.damage += rand(4,10)
 			if(-1)
 				to_chat(usr, "<span class='danger'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>")
-				user.eye_blurry += rand(12,20)
+				user.adjustBlurriness(rand(12,20))
 				IO.damage += rand(12, 16)
 		if(safety<2)
 			if(IO.damage > 10)
@@ -481,7 +489,7 @@
 			else if (IO.damage >= IO.min_bruised_damage)
 				to_chat(user, "<span class='danger'>You go blind!</span>")
 				user.eye_blind = 5
-				user.eye_blurry = 5
+				user.adjustBlurriness(5)
 				user.disabilities |= NEARSIGHTED
 				spawn(100)
 					user.disabilities &= ~NEARSIGHTED
@@ -502,7 +510,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "hugewelder"
 	max_fuel = 80
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "engineering=3"
@@ -512,7 +520,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "expwelder"
 	max_fuel = 40
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 70
 	g_amt = 120
 	toolspeed = 0.5
@@ -545,12 +553,18 @@
 	force = 5.0
 	throwforce = 7.0
 	item_state = "crowbar"
-	w_class = ITEM_SIZE_SMALL
+
+	w_class = SIZE_SMALL
+
 	m_amt = 50
 	origin_tech = "engineering=1"
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Crowbar.ogg'
+
+	qualities = list(
+		QUALITY_PRYING = 1
+	)
 
 /obj/item/weapon/crowbar/red
 	icon_state = "red_crowbar"

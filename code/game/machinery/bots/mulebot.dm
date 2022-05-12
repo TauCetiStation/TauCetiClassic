@@ -145,22 +145,22 @@
 /obj/machinery/bot/mulebot/ex_act(severity)
 	unload(0)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			wires.random_cut()
 			wires.random_cut()
 			wires.random_cut()
-		if(3)
+		if(EXPLODE_LIGHT)
 			wires.random_cut()
 	..()
 	return
 
-/obj/machinery/bot/mulebot/bullet_act()
+/obj/machinery/bot/mulebot/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(prob(50) && !isnull(load))
 		unload(0)
 	if(prob(25))
 		visible_message("<span class='red'>Something shorts out inside [src]!</span>")
 		wires.random_cut()
-	..()
 
 /obj/machinery/bot/mulebot/ui_interact(mob/user)
 	var/ai = isAI(user) || isobserver(user)
@@ -665,7 +665,7 @@
 	if(!wires.mob_avoid())		//usually just bumps, but if avoidance disabled knock over mobs
 		var/mob/M = obs
 		if(ismob(M))
-			if(istype(M,/mob/living/silicon/robot))
+			if(isrobot(M))
 				visible_message("<span class='warning'>[src] bumps into [M]!</span>")
 			else
 				visible_message("<span class='warning'>[src] knocks over [M]!</span>")

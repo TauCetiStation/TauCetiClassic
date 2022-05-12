@@ -18,7 +18,7 @@
 	. = ..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
-	if(w_class < ITEM_SIZE_LARGE)
+	if(w_class < SIZE_NORMAL)
 		icon_state = "gift[w_class]"
 	else
 		icon_state = "gift[pick(1, 2, 3)]"
@@ -71,7 +71,7 @@
 		/obj/item/weapon/storage/fancy/crayons,
 		/obj/item/weapon/storage/backpack/holding,
 		/obj/item/weapon/storage/belt/champion,
-		/obj/item/weapon/soap/deluxe,
+		/obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
 		/obj/item/weapon/pickaxe/silver,
 		/obj/item/weapon/pen/invisible,
 		/obj/item/weapon/lipstick/random,
@@ -142,7 +142,7 @@
 		to_chat(user, "<span class='notice'>You MUST put the paper on a table!</span>")
 		return
 
-	if(I.w_class < ITEM_SIZE_LARGE)
+	if(I.w_class < SIZE_NORMAL)
 		if(iswirecutter(user.l_hand) || iswirecutter(user.r_hand) || istype(user.l_hand, /obj/item/weapon/scissors) || istype(user.r_hand, /obj/item/weapon/scissors))
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
@@ -179,7 +179,7 @@
 		to_chat(user, "<span class='notice'>There is about [amount] square units of paper left!</span>")
 
 /obj/item/weapon/wrapping_paper/attack(mob/target, mob/user)
-	if (!istype(target, /mob/living/carbon/human)) return
+	if (!ishuman(target)) return
 	var/mob/living/carbon/human/H = target
 
 	if (H.incapacitated())

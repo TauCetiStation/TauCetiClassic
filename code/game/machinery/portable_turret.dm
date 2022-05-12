@@ -154,7 +154,7 @@
 			iconholder = TRUE
 			reqpower = 700
 
-		if(/obj/item/weapon/gun/energy/laser/retro)
+		if(/obj/item/weapon/gun/energy/retro)
 			iconholder = TRUE
 
 		if(/obj/item/weapon/gun/energy/laser/selfcharging/captain)
@@ -180,7 +180,7 @@
 		if(/obj/item/weapon/gun/energy/gun/nuclear)
 			eshot_sound = 'sound/weapons/guns/gunpulse_laser.ogg'
 
-var/list/turret_icons
+var/global/list/turret_icons
 
 /obj/machinery/porta_turret/update_icon()
 	if(!turret_icons)
@@ -414,9 +414,9 @@ var/list/turret_icons
 	if(health <= 0)
 		die() //the death process :(
 
-/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	var/damage = Proj.damage
-
 	if(!damage)
 		return
 
@@ -424,8 +424,6 @@ var/list/turret_icons
 		if(!attacked && !emagged)
 			attacked = TRUE
 			VARSET_IN(src, attacked, FALSE, 60)
-
-	..()
 
 	take_damage(damage)
 
@@ -449,15 +447,14 @@ var/list/turret_icons
 
 /obj/machinery/porta_turret/ex_act(severity)
 	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(25))
-				qdel(src)
-			else
+		if(EXPLODE_HEAVY)
+			if(prob(75))
 				take_damage(initial(health) * 8) //should instakill most turrets
-		if(3)
+				return
+		if(EXPLODE_LIGHT)
 			take_damage(initial(health) * 8 * 0.33) // 8/3 ~ 8*0.33
+			return
+	qdel(src)
 
 /obj/machinery/porta_turret/proc/die()	//called when the turret dies, ie, health <= 0
 	health = 0
@@ -506,13 +503,16 @@ var/list/turret_icons
 	if(L.invisibility >= INVISIBILITY_LEVEL_ONE) // Cannot see him. see_invisible is a mob-var
 		return TURRET_NOT_TARGET
 
+	if(L.faction == "untouchable") //check faction that shouldn't be attacked by mobs
+		return TURRET_NOT_TARGET
+
 	if(get_dist(src, L) > 7)	//if it's too far away, why bother?
 		return TURRET_NOT_TARGET
 
 	if(!check_trajectory(L, src))	//check if we have true line of sight
 		return TURRET_NOT_TARGET
 
-	if(isAI(L) || (lethal && (locate(/mob/living/silicon/ai) in get_turf(L))))		//don't accidentally kill the AI!
+	if(isAI(L))		//don't accidentally kill the AI!
 		return TURRET_NOT_TARGET
 
 	if(L.stat)		//if the perp is dead/dying...

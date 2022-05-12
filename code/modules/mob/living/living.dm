@@ -14,6 +14,15 @@
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
 
+	beauty = new /datum/modval(0.0)
+	RegisterSignal(beauty, list(COMSIG_MODVAL_UPDATE), .proc/update_beauty)
+
+	beauty.AddModifier("stat", additive=beauty_living)
+
+	if(spawner_args)
+		spawner_args.Insert(1, /datum/component/logout_spawner)
+		AddComponent(arglist(spawner_args))
+
 /mob/living/Destroy()
 	allowed_combos = null
 	known_combos = null
@@ -81,7 +90,7 @@
 
 	if(prob(10) && iscarbon(src) && iscarbon(M))
 		var/mob/living/carbon/C = src
-		C.spread_disease_to(M, "Contact")
+		C.spread_disease_to(M, DISEASE_SPREAD_CONTACT)
 
 	if(M.pulling == src)
 		M.stop_pulling()
@@ -197,7 +206,7 @@
 			if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
 				tally -= 0.5
 		//Machinery pulling
-		if(istype(AM, /obj/machinery))
+		if(ismachinery(AM))
 			tally += 0.5
 		pull_debuff += tally
 
@@ -235,7 +244,7 @@
 
 //sort of a legacy burn method for /electrocute, /shock, and the e_chair
 /mob/living/proc/burn_skin(burn_amount)
-	if(istype(src, /mob/living/carbon/human))
+	if(ishuman(src))
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
 		if(NO_SHOCK in src.mutations) //shockproof
 			return 0
@@ -248,14 +257,14 @@
 			BP.take_damage(0, divided_damage + extradam)	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
 		H.updatehealth()
 		return 1
-	else if(istype(src, /mob/living/carbon/monkey))
+	else if(ismonkey(src))
 		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
 		var/mob/living/carbon/monkey/M = src
 		M.adjustFireLoss(burn_amount)
 		M.updatehealth()
 		return 1
-	else if(istype(src, /mob/living/silicon/ai))
+	else if(isAI(src))
 		return 0
 
 /mob/living/proc/adjustBodyTemp(actual, desired, incrementboost)
@@ -274,7 +283,7 @@
 		temperature -= change
 		if(actual < desired)
 			temperature = desired
-//	if(istype(src, /mob/living/carbon/human))
+//	if(ishuman(src))
 //		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
 	return temperature
 
@@ -375,6 +384,44 @@
 		add_combo_value_all(amount - halloss)
 	halloss = clamp(amount, 0, maxHealth * 2)
 
+// ========== BLUR ==========
+
+/**
+ * Make the mobs vision blurry
+ */
+/mob/proc/blurEyes(amount)
+	if(amount > 0)
+		eye_blurry = max(amount, eye_blurry)
+	update_eye_blur()
+
+/**
+ * Adjust the current blurriness of the mobs vision by amount
+ */
+/mob/proc/adjustBlurriness(amount)
+	eye_blurry = max(eye_blurry + amount, 0)
+	update_eye_blur()
+
+/**
+ * Set the mobs blurriness of vision to an amount
+ */
+/mob/proc/setBlurriness(amount)
+	eye_blurry = max(amount, 0)
+	update_eye_blur()
+
+/**
+ * Apply the blurry overlays to a mobs clients screen
+ */
+/mob/proc/update_eye_blur()
+	if(!client)
+		return
+	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	if(eye_blurry)
+		game_plane_master_controller.add_filter("eye_blur_angular", 1, angular_blur_filter(16, 16, clamp(eye_blurry * 0.1, 0.2, 0.6)))
+		game_plane_master_controller.add_filter("eye_blur_gauss", 1, gauss_blur_filter(clamp(eye_blurry * 0.05, 0.1, 0.25)))
+	else
+		game_plane_master_controller.remove_filter("eye_blur_angular")
+		game_plane_master_controller.remove_filter("eye_blur_gauss")
+
 // ============================================================
 
 /mob/living/proc/check_contents_for(A)
@@ -428,7 +475,7 @@
 	else if(istype(loc, /obj/structure/transit_tube_pod))
 		loc_temp = environment.temperature
 
-	else if(istype(get_turf(src), /turf/space))
+	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
 
@@ -497,6 +544,8 @@
 	if(reagents)
 		reagents.clear_reagents()
 
+	beauty.AddModifier("stat", additive=beauty_living)
+
 	// shut down various types of badness
 	setToxLoss(0)
 	setOxyLoss(0)
@@ -506,6 +555,7 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	setDrugginess(0)
 
 	// shut down ongoing problems
 	radiation = 0
@@ -525,10 +575,12 @@
 	// fix blindness and deafness
 	blinded = 0
 	eye_blind = 0
-	eye_blurry = 0
+	setBlurriness(0)
 	ear_deaf = 0
 	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
+
+	SetDrunkenness(0)
 
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -584,8 +636,7 @@
 	return
 
 /mob/living/proc/cure_all_viruses()
-	for(var/datum/disease/virus in viruses)
-		virus.cure()
+	return
 
 /mob/living/carbon/cure_all_viruses()
 	for(var/ID in virus2)
@@ -796,7 +847,7 @@
 			M.drop_from_inventory(H)
 			to_chat(M, "<span class='notice'>[H] wriggles out of your grip!</span>")
 			to_chat(src, "<span class='notice'>You wriggle out of [M]'s grip!</span>")
-		else if(istype(H.loc,/obj/item))
+		else if(isitem(H.loc))
 			to_chat(src, "<span class='notice'>You struggle free of [H.loc].</span>")
 			H.forceMove(get_turf(H))
 		return
@@ -893,7 +944,7 @@
 	else if(iscarbon(L))
 		var/mob/living/carbon/CM = L
 		if(CM.on_fire)
-			if(!CM.canmove && !CM.resting)	return
+			if(!CM.canmove && !CM.crawling)	return
 			CM.fire_stacks -= 5
 			CM.weakened = 5
 			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
@@ -941,7 +992,7 @@
 						CM.drop_from_inventory(CM.handcuffed)
 
 		else if(CM.legcuffed && (CM.last_special <= world.time))
-			if(!CM.canmove && !CM.resting)	return
+			if(!CM.canmove && !CM.crawling)	return
 			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
@@ -980,11 +1031,20 @@
 						CM.drop_from_inventory(CM.legcuffed)
 
 /// What should the mob do when laying down. Return TRUE to prevent default behavior.
-/mob/living/proc/on_lay_down()
-	return
+/mob/living/proc/crawl_can_use()
+	var/turf/T = get_turf(src)
+	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) || (locate(/obj/structure/plasticflaps) in T))
+		var/obj/structure/S
+		for(S in T)
+			if(IS_ABOVE(src, S))
+				return TRUE
+			return FALSE
+	return TRUE
 
-/mob/living/verb/lay_down()
-	set name = "Rest"
+/mob/living/var/crawl_getup = FALSE
+
+/mob/living/verb/crawl()
+	set name = "Crawl"
 	set category = "IC"
 
 	if(isrobot(usr))
@@ -993,8 +1053,14 @@
 		to_chat(R, "<span class='notice'>You toggle all your components.</span>")
 		return
 
-//Already resting and have others debuffs
-	if( resting && (IsSleeping() || weakened || paralysis || stunned) )
+	if(crawl_getup)
+		return
+
+	if((status_flags & FAKEDEATH) || buckled)
+		return
+
+//Already crawling and have others debuffs
+	if( crawling && (IsSleeping() || weakened || paralysis || stunned) )
 		to_chat(src, "<span class='rose'>You can't wake up.</span>")
 
 //Restrained and some debuffs
@@ -1006,14 +1072,35 @@
 		to_chat(src, "<span class='rose'>You can't move.</span>")
 
 //Debuffs check
-	else if(!resting && (IsSleeping() || weakened || paralysis || stunned) )
+	else if(!crawling && (IsSleeping() || weakened || paralysis || stunned) )
 		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
 
-	else
-		if(on_lay_down())
+	if(crawling)
+		crawl_getup = TRUE
+		if(do_after(src, 10, target = src))
+			crawl_getup = FALSE
+			if(!crawl_can_use())
+				playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+				if(ishuman(src))
+					var/mob/living/carbon/human/H = src
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+					BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
+				else
+					take_overall_damage(5, used_weapon = "Table")
+				Stun(1)
+				to_chat(src, "<span class='danger'>Ouch!</span>")
+				return
+			layer = 4.0
+		else
+			crawl_getup = FALSE
 			return
-		resting = !resting
-		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
+	else
+		if(!crawl_can_use())
+			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
+			return
+	SetCrawling(!crawling)
+	update_canmove()
+	to_chat(src, "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>")
 
 //called when the mob receives a bright flash
 /mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
@@ -1096,7 +1183,7 @@
 		I.color = visual_effect_color
 
 	if(I)
-		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
 		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 		flick_overlay(I,viewing,5)
@@ -1117,7 +1204,7 @@
 				viewing -= C
 
 			I = image(AA.theImage.icon, target, AA.theImage.icon_state, target.layer+1)
-			I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+			I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
 			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 			flick_overlay(I, alt_viewing, 5)
@@ -1249,7 +1336,6 @@
 		return FALSE
 
 	Stun(3)
-
 	if(nutrition < 50)
 		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but there is nothing!</span>")
 		adjustOxyLoss(3)
@@ -1257,7 +1343,7 @@
 		return FALSE
 
 	nutrition -= 50
-	eye_blurry = max(5, eye_blurry)
+	blurEyes(5)
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
 		var/list/vomitsound = list()
@@ -1296,6 +1382,7 @@
 
 	if(istype(T))
 		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "puke", /datum/mood_event/puke)
 
 	return TRUE
 
@@ -1341,3 +1428,100 @@
 
 /mob/living/proc/swap_hand()
 	return
+
+/mob/living/death(gibbed)
+	if(!(client in admins) && mind)
+		var/list/turf/possible_tile = get_area_turfs(/area/custom/valhalla)
+		var/target = pick(possible_tile)
+		var/mob/living/carbon/human/deadman = new /mob/living/carbon/human/skeleton/valhalla(target)
+		mind.transfer_to(deadman)
+		deadman.equipOutfit(/datum/outfit/job/deadman)
+	beauty.AddModifier("stat", additive=beauty_dead)
+	return ..()
+
+/mob/living/proc/update_beauty(datum/source, old_value)
+	if(old_value != 0.0)
+		RemoveElement(/datum/element/beauty, old_value)
+	if(beauty.Get() == 0.0)
+		return
+	AddElement(/datum/element/beauty, beauty.Get())
+
+//Throwing stuff
+/mob/living/proc/toggle_throw_mode()
+	if(in_throw_mode)
+		throw_mode_off()
+	else
+		throw_mode_on()
+
+/mob/living/proc/throw_mode_off()
+	in_throw_mode = FALSE
+
+/mob/living/proc/throw_mode_on()
+	in_throw_mode = TRUE
+
+/mob/living/in_interaction_vicinity(atom/target)
+	// Telekinetic distance is handled by the larger telekinesis system.
+	if(can_tk(level=TK_LEVEL_TWO, show_warnings=FALSE))
+		return TRUE
+
+	return ..()
+
+/mob/living/proc/AdjustDrunkenness(amount)
+	drunkenness += amount
+
+/mob/living/proc/SetDrunkenness(value)
+	drunkenness = value
+
+/mob/living/proc/MakeDrunkenness(value)
+	drunkenness = max(value, drunkenness)
+
+/mob/living/proc/handle_drunkenness()
+	if(drunkenness <= 0)
+		drunkenness = 0
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
+		return
+
+	if(drunkenness >= DRUNKENNESS_PASS_OUT)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk_catharsis)
+	else if(drunkenness >= DRUNKENNESS_CONFUSED)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/very_drunk)
+	else if(drunkenness >= DRUNKENNESS_SLUR)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
+
+	if(drowsyness)
+		AdjustDrunkenness(-1)
+
+	if(drunkenness >= DRUNKENNESS_PASS_OUT)
+		paralysis = max(paralysis, 3)
+		drowsyness = max(drowsyness, 3)
+		return
+
+	if(drunkenness >= DRUNKENNESS_BLUR)
+		eye_blurry = max(eye_blurry, 2)
+
+	if(drunkenness >= DRUNKENNESS_SLUR)
+		if(drowsyness)
+			drowsyness = max(drowsyness, 3)
+		slurring = max(slurring, 3)
+
+	if(drunkenness >= DRUNKENNESS_CONFUSED)
+		MakeConfused(2)
+
+/mob/living/carbon/human/handle_drunkenness()
+	. = ..()
+	if(drunkenness >= DRUNKENNESS_PASS_OUT)
+		var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
+		if(istype(IO))
+			IO.take_damage(0.1, 1)
+		adjustToxLoss(0.1)
+
+/*
+	Try to take AM, if it's impossible
+	try to put AM into fallback.
+	If it's impossible, return FALSE.
+*/
+/mob/living/proc/try_take(atom/movable/AM, atom/fallback)
+	return AM.taken(src, fallback)
+
+/mob/living/proc/get_pumped(bodypart)
+	return 0

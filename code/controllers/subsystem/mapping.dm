@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = SS_INIT_MAPPING
 	flags = SS_NO_FIRE
+	msg_lobby = "Строим крепость..."
 
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
@@ -46,7 +47,8 @@ SUBSYSTEM_DEF(mapping)
 	// Load templates
 	preloadTemplates()
 	// Space structures
-	spawn_space_structures()
+	//spawn_space_structures()
+
 	..()
 
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
@@ -64,7 +66,7 @@ SUBSYSTEM_DEF(mapping)
 	var/y1
 	var/x2 // right-top
 	var/y2
-
+/*
 /datum/controller/subsystem/mapping/proc/spawn_space_structures()
 	if(!length(levels_by_trait(ZTRAIT_SPACE_RUINS)))
 		return
@@ -106,12 +108,12 @@ SUBSYSTEM_DEF(mapping)
 			info("[structure_id] was created in [COORD(T)]")
 			message_admins("[structure_id] was created in [COORD(T)] [ADMIN_JMP(T)]")
 #endif
-
+*/
 /datum/controller/subsystem/mapping/proc/find_spot(datum/map_template/space_structure/structure)
 	var/structure_size = CEIL(max(structure.width / 2, structure.height / 2))
 	var/structure_padding = structure_size + TRANSITIONEDGE + 5
 	for (var/try_count in 1 to 10)
-		var/turf/space/T = locate(rand(structure_padding, world.maxx - structure_padding), rand(structure_padding, world.maxy - structure_padding), pick(levels_by_trait(ZTRAIT_SPACE_RUINS)))
+		var/turf/environment/T = locate(rand(structure_padding, world.maxx - structure_padding), rand(structure_padding, world.maxy - structure_padding), pick(levels_by_trait(ZTRAIT_SPACE_RUINS)))
 		if(!istype(T))
 			continue
 
@@ -204,24 +206,27 @@ SUBSYSTEM_DEF(mapping)
 	// load the station
 	station_start = world.maxz + 1
 	INIT_ANNOUNCE("Loading [config.map_name]...")
-	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
+	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, default_traits = ZTRAITS_STATION)
 	station_loaded = TRUE
 	change_lobbyscreen()
-	while (space_levels_so_far < config.space_ruin_levels)
-		++space_levels_so_far
-		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
-	for (var/i in 1 to config.space_empty_levels)
-		++space_levels_so_far
-		add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
+	if(global.config.load_space_levels)
+		while (space_levels_so_far < config.space_ruin_levels)
+			++space_levels_so_far
+			add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
+
+		for (var/i in 1 to config.space_empty_levels)
+			++space_levels_so_far
+			add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 
 	// load mining
-	if(config.minetype == "asteroid")
-		LoadGroup(FailedZs, "Asteroid", "asteroid", "asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
-	else if (!isnull(config.minetype))
-		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
+	if(global.config.load_mine)
+		if(config.minetype == "asteroid")
+			LoadGroup(FailedZs, "Asteroid", "asteroid", "asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
+		else if (!isnull(config.minetype))
+			INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
 
-	if(config.load_junkyard)
+	if(global.config.load_junkyard && config.load_junkyard)
 		LoadGroup(FailedZs, "Junkyard", "junkyard", "junkyard.dmm", default_traits = list(ZTRAIT_JUNKYARD = TRUE))
 
 	if(length(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen

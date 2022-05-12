@@ -17,6 +17,7 @@
 	response_disarm = "bops the"
 	response_harm   = "kicks the"
 	see_in_dark = 5
+	w_class = SIZE_BIG
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -54,6 +55,7 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
+	w_class = SIZE_SMALL
 
 //LISA! SQUEEEEEEEEE~
 /mob/living/simple_animal/corgi/Lisa
@@ -73,7 +75,7 @@
 /mob/living/simple_animal/corgi/Lisa/Life()
 	..()
 
-	if(!stat && !resting && !buckled)
+	if(!stat && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 15)
 			turns_since_scan = 0
@@ -81,7 +83,7 @@
 			var/ian = 0
 			//for(var/mob/M in oviewers(7, src))
 			for(var/mob/M in oview(src,7))
-				if(istype(M, /mob/living/carbon/ian))
+				if(isIAN(M))
 					if(M.client)
 						alone = 0
 						break
@@ -98,7 +100,7 @@
 
 
 		if(prob(1))
-			emote("me",1,pick("dances around","chases her tail"))
+			me_emote(pick("dances around", "chases her tail"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					set_dir(i)

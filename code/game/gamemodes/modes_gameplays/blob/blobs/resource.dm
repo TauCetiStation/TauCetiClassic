@@ -14,14 +14,14 @@
 	return
 
 /obj/effect/blob/resource/run_action()
-
+	if(QDELETED(overmind))
+		overmind = null
+		return
 	if(resource_delay > world.time)
-		return 0
+		return
 
 	resource_delay = world.time + 40 // 4 seconds
 	PulseAnimation()
 
-	if(overmind)
-		overmind.add_points(1)
-	return 0
+	overmind.add_points(1)
 

@@ -175,7 +175,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	if(new_orbit)
 		prefs.ghost_orbit = new_orbit
 		prefs.save_preferences()
-		if(istype(mob, /mob/dead/observer))
+		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
 			O.ghost_orbit = new_orbit
 
@@ -228,24 +228,6 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	if (mob && mob.hud_used)
 		mob.hud_used.update_parallax_pref()
-
-/client/verb/set_parallax_theme()
-	set name = "Set Parallax Theme"
-	set category = "Preferences"
-	set desc = "Set space parallax theme."
-
-	var/new_setting = input(src, "Parallax theme:") as null|anything in list(PARALLAX_THEME_CLASSIC, PARALLAX_THEME_TG)
-	if(!new_setting)
-		return
-
-	prefs.parallax_theme = new_setting
-	to_chat(src, "Parallax theme: [new_setting].")
-	prefs.save_preferences()
-	feedback_add_details("admin_verb","SPX")
-
-	if (mob && mob.hud_used)
-		mob.hud_used.update_parallax_pref()
-
 
 /client/verb/toggle_ghost_sight()
 	set name = "Change Ghost Sight Options"
@@ -358,6 +340,14 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	to_chat(src, "You [prefs.eorg_enabled ? "will be" : "won't be"] teleported to Thunderdome at round end.")
 	feedback_add_details("admin_verb", "ED")
+
+/client/verb/toggle_runechat()
+	set name = "Toggle Runechat (Above-Head-Speech)"
+	set category = "Preferences"
+	prefs.show_runechat = !prefs.show_runechat
+
+	to_chat(src, "Runechat is [prefs.show_runechat ? "enabled" : "disabled"].")
+	feedback_add_details("admin_verb", "TRC")
 
 /client/verb/toggle_hotkeys_mode()
 	set name = "Toggle Hotkeys Mode"

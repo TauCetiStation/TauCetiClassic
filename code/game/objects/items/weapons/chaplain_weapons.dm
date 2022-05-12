@@ -13,7 +13,7 @@
 	throwforce = 10
 	light_color = "#4c4cff"
 	light_power = 3
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 	// Deconvering mobs
 	var/deconverting = FALSE
@@ -154,7 +154,7 @@
 			to_chat(M, "<span class='danger'>Сила [src] очищает твой разум от влияния древних богов!</span>")
 
 			var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
-			C.RemoveFromRole(M.mind)
+			C.Deconvert()
 			M.Paralyse(5)
 			to_chat(M, "<span class='danger'><FONT size = 3>Незнакомый белый свет очищает твой разум от порчи и воспоминаний, когда ты был Его слугой.</span></FONT>")
 			M.mind.memory = ""
@@ -167,7 +167,7 @@
 			new /obj/effect/temp_visual/religion/pulse(user.loc)
 			user.apply_damage(50, BURN, null, used_weapon="Electrocution")
 			user.visible_message("<span class='danger'>[src] извергает свою силу [user].</span>")
-			M.confused += 10
+			M.AdjustConfused(10)
 
 /obj/item/weapon/nullrod/staff
 	name = "divine staff"
@@ -175,7 +175,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "talking_staff"
 	item_state = "talking_staff"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	req_access = list(access_chapel_office)
 
 	var/mob/living/simple_animal/shade/god/brainmob = null
@@ -280,7 +280,6 @@
 	// All of this could be made religion-dependant.
 	brainmob = new(get_turf(src))
 	brainmob.mutations.Add(XRAY) //its the god
-	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 	brainmob.status_flags |= GODMODE
 
 	var/god_name = pick(summoner.my_religion.deity_names)
@@ -303,7 +302,7 @@
 
 	summoner.my_religion.add_deity(brainmob)
 
-	for(var/datum/language/L in summoner.languages)
+	for(var/datum/language/L as anything in summoner.languages)
 		brainmob.add_language(L.name)
 
 	name = "staff of the [god_name]"
@@ -372,7 +371,7 @@
 	name = "forcefield staff"
 	desc = "Makes the wielder believe that they are protected by something, anything, really. Probably works on AA batteries."
 
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
 
 	icon_state = "godstaff"
@@ -424,7 +423,7 @@
 
 /obj/item/weapon/shield/riot/roman/religion/atom_init()
 	. = ..()
-	filters += filter(type = "outline", size = 1, color = "#fffb0064")
+	add_filter("shield_outline", 2, outline_filter(1, "#fffb0064"))
 	animate(filters[filters.len], color = "#fffb0000", time = 1 MINUTE)
 
 	QDEL_IN(src, 1 MINUTE)
@@ -437,9 +436,9 @@
 
 	var/image/down_overlay
 	/// Force for holy wielders.
-	var/holy_force = 10
+	var/holy_force = 26
 	/// Force for non-holy wielders.
-	var/def_force = 5
+	var/def_force = 10
 
 /obj/item/weapon/claymore/religion/atom_init()
 	. = ..()

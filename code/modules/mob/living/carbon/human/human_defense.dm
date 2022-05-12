@@ -41,7 +41,7 @@
 
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
-		if(check_thickmaterial(BP))
+		if(check_pierce_protection(BP))
 			visible_message("<span class='userdanger'>The [P.name] hits [src]'s armor!</span>")
 			P.agony /= 2
 		apply_effect(P.agony,AGONY,0)
@@ -51,7 +51,7 @@
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
 		return PROJECTILE_ACTED
 
-	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug))
+	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunshot))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
 		P.agony *= get_siemens_coefficient_organ(BP)
 		P.stun *= get_siemens_coefficient_organ(BP)
@@ -80,11 +80,10 @@
 				continue //Does this thing we're shooting even exist?
 			if(bp && istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
-				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
-					if(C.flags & THICKMATERIAL )
-						visible_message("<span class='userdanger'>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
-						qdel(P)
-						return PROJECTILE_ACTED
+				if(C.pierce_protection & BP.body_part) // Is that body part being targeted covered?
+					visible_message("<span class='userdanger'>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
+					qdel(P)
+					return PROJECTILE_ACTED
 
 		BP = bodyparts_by_name[check_zone(def_zone)]
 		var/armorblock = run_armor_check(BP, "energy")
@@ -107,7 +106,6 @@
 		var/delta = max(0, P.damage - (P.damage * (armor/100)))
 		if(delta)
 			apply_effect(delta,AGONY,armor)
-			P.on_hit(src, def_zone, armor)
 			//return Nope! ~Zve
 		if(delta < 10)
 			P.sharp = 0
@@ -194,6 +192,8 @@
 		return 0
 	var/protection = 0
 	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
+
+	protection += BP.pumped * 0.3
 	for(var/gear in protective_gear)
 		if(gear && istype(gear ,/obj/item/clothing))
 			var/obj/item/clothing/C = gear
@@ -227,13 +227,13 @@
 		if( (!hit_dir || is_the_opposite_dir(dir, hit_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
 			visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [r_hand.name]!</span>")
 			return 1
-	if(wear_suit && istype(wear_suit, /obj/item))
+	if(wear_suit && isitem(wear_suit))
 		var/obj/item/I = wear_suit
 		if(prob(I.Get_shield_chance() - round(damage / 3) ))
 			visible_message("<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
 			var/list/turfs = list()
 			for(var/turf/T in orange(6))
-				if(istype(T,/turf/space)) continue
+				if(isenvironmentturf(T)) continue
 				if(T.density) continue
 				if(T.x>world.maxx-6 || T.x<6)	continue
 				if(T.y>world.maxy-6 || T.y<6)	continue
@@ -336,7 +336,7 @@
 		if(prob(33))
 			bloody = 1
 			var/turf/location = loc
-			if(istype(location, /turf/simulated))
+			if(isturf(location))
 				location.add_blood(src)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
@@ -354,7 +354,7 @@
 						for(var/id in list(HEADREV, REV))
 							var/datum/role/R = mind.GetRole(id)
 							if(R)
-								R.RemoveFromRole(mind)
+								R.Deconvert()
 
 				if(bloody)//Apply blood
 					if(wear_mask)
@@ -420,23 +420,23 @@
 		w_uniform.add_blood(source)
 		update_inv_w_uniform()
 
-/mob/living/carbon/human/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood)
+/mob/living/carbon/human/crawl_in_blood(datum/dirt_cover/dirt_cover)
 	if(wear_suit)
-		wear_suit.add_dirt_cover(floor_blood.basedatum)
+		wear_suit.add_dirt_cover(dirt_cover)
 		update_inv_wear_suit()
 	if(w_uniform)
-		w_uniform.add_dirt_cover(floor_blood.basedatum)
+		w_uniform.add_dirt_cover(dirt_cover)
 		update_inv_w_uniform()
 	if (gloves)
-		gloves.add_dirt_cover(floor_blood.basedatum)
+		gloves.add_dirt_cover(dirt_cover)
 	else
-		add_dirt_cover(floor_blood.basedatum)
+		add_dirt_cover(dirt_cover)
 	update_inv_gloves()
 
-/mob/living/carbon/proc/check_thickmaterial(obj/item/organ/external/BP, target_zone)
+/mob/living/carbon/proc/check_pierce_protection(obj/item/organ/external/BP, target_zone)
 	return 0
 
-/mob/living/carbon/human/check_thickmaterial(obj/item/organ/external/BP, target_zone)
+/mob/living/carbon/human/check_pierce_protection(obj/item/organ/external/BP, target_zone)
 	if(target_zone)
 		BP = get_bodypart(target_zone)
 
@@ -445,12 +445,12 @@
 
 	var/list/items = get_equipped_items() - list(l_hand, r_hand)
 	for(var/obj/item/clothing/C in items)
-		if((C.flags & THICKMATERIAL) && (C.body_parts_covered & BP.body_part))
+		if(C.pierce_protection & BP.body_part)
 			if(C.flags & PHORONGUARD) // this means, clothes has injection port or smthing like that.
 				return PHORONGUARD // space suits and so on. (well, PHORONGUARD does not provide good readability, but i don't want to implement whole new define as this one is good, or maybe rename?)
 			else
-				return THICKMATERIAL // armors and so on.
-	return 0 // could be NOTHICKMATERIAL or smth, but zero is OK too.
+				return (NOPIERCE) // armors and so on.
+	return 0 // could be without pierce_protection or smth, but zero is OK too.
 
 /mob/living/carbon/human/proc/handle_suit_punctures(damtype, damage)
 

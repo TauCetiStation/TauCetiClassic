@@ -3,7 +3,7 @@
 	desc = "Useful for sweeping alleys."
 	icon_state = "shotgun"
 	item_state = "shotgun"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
@@ -36,12 +36,6 @@
 		recentpump = 0
 	return
 
-/obj/item/weapon/gun/projectile/shotgun/classic
-	icon_state = "oldshotgun"
-
-/obj/item/weapon/gun/projectile/shotgun/tactifool
-	icon_state = "shotgun_tg"
-
 /obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
 	playsound(M, pick('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg'), VOL_EFFECTS_MASTER, null, FALSE)
 	pumped = 0
@@ -66,7 +60,7 @@
 	item_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 
 /obj/item/weapon/gun/projectile/shotgun/combat/nonlethal
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom/nonlethal
@@ -76,7 +70,7 @@
 	desc = "A true classic."
 	icon_state = "dshotgun"
 	item_state = "shotgun"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
@@ -111,7 +105,7 @@
 		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
 		if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
 			icon_state = "sawnshotgun[open ? "-o" : ""]"
-			w_class = ITEM_SIZE_NORMAL
+			w_class = SIZE_SMALL
 			item_state = "gun"
 			slot_flags &= ~SLOT_FLAGS_BACK	//you can't sling it on your back
 			slot_flags |= SLOT_FLAGS_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
@@ -182,7 +176,7 @@
 	item_state = "repeater"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/repeater
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	slot_flags = 0
 
 /obj/item/weapon/gun/projectile/shotgun/repeater/attack_self(mob/living/user)
@@ -212,7 +206,7 @@
 	item_state = "bolt-action"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/a3006_clip
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	slot_flags = 0
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/pump(mob/M)

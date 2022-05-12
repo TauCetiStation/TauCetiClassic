@@ -5,7 +5,7 @@
 	icon_state = "crate"
 	icon_opened = "crateopen"
 	icon_closed = "crate"
-	climbable = 1
+	climbable = TRUE
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
 
@@ -30,7 +30,7 @@
 				s.start()
 				return 2
 
-	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	for(var/obj/O in src)
 		O.forceMove(get_turf(src))
 	icon_state = icon_opened
@@ -47,7 +47,7 @@
 	if(!can_close())
 		return 0
 
-	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	var/itemcount = 0
 	for(var/obj/O in get_turf(src))
 		if(itemcount >= storage_capacity)
@@ -96,23 +96,17 @@
 
 /obj/structure/closet/crate/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			for(var/obj/O in src.contents)
 				qdel(O)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			for(var/obj/O in src.contents)
 				if(prob(50))
 					qdel(O)
-			qdel(src)
-			return
-		if(3.0)
-			if (prob(50))
-				qdel(src)
-			return
-		else
-	return
+		if(EXPLODE_LIGHT)
+			if(prob(50))
+				return
+	qdel(src)
 
 /obj/structure/closet/crate/secure
 	desc = "A secure crate."
@@ -533,15 +527,18 @@
 /obj/structure/closet/crate/seized_inventory
 	name = "crate (seized inventory)"
 
+	var/contraband_listing = /datum/contraband_listing/velocity
+
 /obj/structure/closet/crate/seized_inventory/PopulateContents()
+	var/datum/contraband_listing/CL = global.contraband_listings[contraband_listing]
+
 	var/contraband_num = rand(0, 7)
-	var/obj/item/device/contraband_finder/seeker = new(null)
 
-	var/list/contraband_types = seeker.contraband_items
-	var/list/danger_types = seeker.danger_items
+	var/list/contraband_types = CL.items_to_color["yellow"]
+	var/list/danger_types = CL.items_to_color["red"]
 
-	var/list/contraband_reagents = seeker.contraband_reagents
-	var/list/danger_reagents = seeker.danger_reagents
+	var/list/contraband_reagents = CL.reagents_to_color["yellow"]
+	var/list/danger_reagents = CL.reagents_to_color["red"]
 
 	if(!length(contraband_types) && !length(danger_types))
 		return

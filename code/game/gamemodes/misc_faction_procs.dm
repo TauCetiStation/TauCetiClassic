@@ -9,7 +9,7 @@
 		return null
 
 	var/list/L = list()
-	for(var/datum/faction/F in SSticker.mode.factions)
+	for(var/F in SSticker.mode.factions)
 		if(istype(F, faction_type))
 			L += F
 
@@ -50,7 +50,7 @@
 			uniques.Add(new_objective)
 	return uniques
 
-/proc/setup_role(datum/role/R, mob/P, post_setup)
+/proc/setup_role(datum/role/R, post_setup)
 	R.Greet()
 	R.add_antag_hud()
 	R.forgeObjectives()
@@ -58,18 +58,18 @@
 	if(post_setup)
 		R.OnPostSetup()
 
-/proc/add_faction_member(datum/faction/faction, mob/M, recruit = TRUE, post_setup = FALSE)
+/proc/add_faction_member(datum/faction/faction, mob/M, recruit = TRUE, post_setup = FALSE, laterole = TRUE)
 	ASSERT(faction)
 
 	if(recruit)
-		. = faction.HandleRecruitedMind(M.mind)
+		. = faction.HandleRecruitedMind(M.mind, laterole)
 	else
-		. = faction.HandleNewMind(M.mind)
+		. = faction.HandleNewMind(M.mind, laterole)
 
 	if(.)
-		setup_role(., M, post_setup)
+		setup_role(., post_setup)
 
-/proc/create_and_setup_role(role_type, mob/M, post_setup = TRUE)
+/proc/create_and_setup_role(role_type, mob/M, post_setup = TRUE, setup_role = TRUE)
 	. = SSticker.mode.CreateRole(role_type, M)
-	if(.)
-		setup_role(., M, post_setup)
+	if(. && setup_role)
+		setup_role(., post_setup)

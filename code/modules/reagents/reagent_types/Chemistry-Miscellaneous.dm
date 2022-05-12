@@ -9,17 +9,8 @@
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, volume)
 	var/datum/reagent/blood/self = src
 	src = null
-	if(self.data && self.data["viruses"])
-		for(var/datum/disease/D in self.data["viruses"])
-			// We don't spread.
-			if(D.spread_type == SPECIAL || D.spread_type == NON_CONTAGIOUS)
-				continue
-			if(method == TOUCH)
-				M.contract_disease(D)
-			else //injected
-				M.contract_disease(D, 1, 0)
 
-	if(self.data && self.data["virus2"] && istype(M, /mob/living/carbon))//infecting...
+	if(self.data && self.data["virus2"] && iscarbon(M))//infecting...
 		var/list/vlist = self.data["virus2"]
 		if(vlist.len)
 			for(var/ID in vlist)
@@ -29,7 +20,7 @@
 				else
 					infect_virus2(M,V.getcopy(),1) //injected, force infection!
 
-	if(self.data && self.data["antibodies"] && istype(M, /mob/living/carbon))//... and curing
+	if(self.data && self.data["antibodies"] && iscarbon(M))//... and curing
 		var/mob/living/carbon/C = M
 		C.antibodies |= self.data["antibodies"]
 
@@ -56,11 +47,6 @@
 				else
 					blood_prop.blood_DNA[self.data["blood_DNA"]] = "O+"
 
-		for(var/datum/disease/D in self.data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
-
 		if(self.data["virus2"])
 			blood_prop.virus2 = virus_copylist(self.data["virus2"])
 
@@ -69,43 +55,12 @@
 		if(!blood_prop)
 			blood_prop = new(T)
 			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
-		for(var/datum/disease/D in self.data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
 
 	else if(istype(self.data["donor"], /mob/living/carbon/xenomorph))
 		var/obj/effect/decal/cleanable/blood/xeno/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
 			blood_prop.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
-		for(var/datum/disease/D in self.data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
-
-/datum/reagent/vaccine
-	//data must contain virus type
-	name = "Vaccine"
-	id = "vaccine"
-	reagent_state = LIQUID
-	color = "#c81040" // rgb: 200, 16, 64
-	taste_message = "health"
-
-/datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, volume)
-	var/datum/reagent/vaccine/self = src
-	src = null
-	if(self.data&&method == INGEST)
-		for(var/datum/disease/D in M.viruses)
-			if(istype(D, /datum/disease/advance))
-				var/datum/disease/advance/A = D
-				if(A.GetDiseaseID() == self.data)
-					D.cure()
-			else
-				if(D.type == self.data)
-					D.cure()
-
-			M.resistances += self.data
 
 /datum/reagent/lube
 	name = "Space Lube"
@@ -116,7 +71,7 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "oil"
 
-	needed_aspects = list(ASPECT_WACKY = 1)
+	needed_aspects = list(ASPECT_WACKY = 11)
 
 /datum/reagent/lube/reaction_turf(turf/simulated/T, volume)
 	. = ..()
@@ -217,7 +172,7 @@
 	M.adjustToxLoss(1)
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with welding fuel to make them easy to ignite!
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(volume / 10)
@@ -230,6 +185,17 @@
 	color = "#a5f0ee" // rgb: 165, 240, 238
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "floor cleaner"
+
+/datum/reagent/space_cleaner/on_general_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(0.2)
+
+	if(prob(10))
+		M.emote("hiccup")
+		var/image/I = image('icons/effects/effects.dmi', M, "bubbles", MOB_LAYER + 1)
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		flick_overlay_view(I, M, 30)
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/effect/decal/cleanable))
@@ -255,7 +221,7 @@
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, volume)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(istype(M,/mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.lip_style)
 				H.lip_style = null
@@ -294,19 +260,6 @@
 					H.feet_dirt_color = null
 					H.update_inv_shoes()
 		M.clean_blood()
-
-/datum/reagent/xenomicrobes
-	name = "Xenomicrobes"
-	id = "xenomicrobes"
-	description = "Microbes with an entirely alien cellular structure."
-	reagent_state = LIQUID
-	color = "#535e66" // rgb: 83, 94, 102
-	taste_message = "something alien"
-
-/datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, volume)
-	src = null
-	if((prob(10) && method==TOUCH) || method==INGEST)
-		M.contract_disease(new /datum/disease/xeno_transformation(0),1)
 
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
@@ -447,19 +400,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-/datum/reagent/nanites
-	name = "Nanomachines"
-	id = "nanites"
-	description = "Microscopic construction robots."
-	reagent_state = LIQUID
-	color = "#535e66" // rgb: 83, 94, 102
-	taste_message = "nanomachines, son"
-
-/datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, volume)
-	src = null
-	if((prob(10) && method==TOUCH) || method==INGEST)
-		M.contract_disease(new /datum/disease/robotic_transformation(0), 1)
-
 /datum/reagent/nanites2
 	name = "Friendly Nanites"
 	id = "nanites2"
@@ -537,11 +477,11 @@
 				if(H.dizziness != 0)
 					H.dizziness = max(0, H.dizziness - 15)
 				if(H.confused != 0)
-					H.confused = max(0, H.confused - 5)
+					H.AdjustConfused(-5)
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
-						D.spreadtype = "Remissive"
+						D.spreadtype = DISEASE_SPREAD_REMISSIVE
 						D.stage--
 						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
@@ -594,11 +534,11 @@
 				if(H.dizziness != 0)
 					H.dizziness = max(0, H.dizziness - 15)
 				if(H.confused != 0)
-					H.confused = max(0, H.confused - 5)
+					H.AdjustConfused(-5)
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
-						D.spreadtype = "Remissive"
+						D.spreadtype = DISEASE_SPREAD_REMISSIVE
 						D.stage--
 						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
@@ -678,7 +618,7 @@
 
 /datum/reagent/paint/reaction_turf(turf/T, volume)
 	. = ..()
-	if(!istype(T) || istype(T, /turf/space))
+	if(!istype(T) || isspaceturf(T))
 		return
 	if(color_weight < 15 || volume < 5)
 		return
@@ -702,7 +642,7 @@
 		var/hair_changes_occured = FALSE
 		var/body_changes_occured = FALSE
 		if(H.client && volume >= 5 && !H.glasses)
-			H.eye_blurry = max(H.eye_blurry, volume)
+			H.blurEyes(volume)
 			H.eye_blind = max(H.eye_blind, 1)
 		if(volume >= 10 && H.species.flags[HAS_SKIN_COLOR])
 			if(!H.wear_suit && !H.w_uniform && !H.shoes && !H.head && !H.wear_mask) // You either paint the full body, or beard/hair
@@ -915,7 +855,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 
 	data = list()
 
-	needed_aspects = list(ASPECT_MYSTIC = 1)
+	needed_aspects = list(ASPECT_MYSTIC = 11)
 
 /datum/reagent/ectoplasm/on_general_digest(mob/living/M)
 	..()
@@ -932,21 +872,21 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 				M.Sleeping(10) // Seeing ghosts ain't an easy thing for your mind.
 		if(15 to 45)
 			M.make_jittery(4)
-			M.druggy = max(M.druggy, 15)
+			M.adjustDrugginess(1)
 			M.hallucination = max(M.hallucination, 10)
 			if(prob(5))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
 				M.Sleeping(10)
 		if(45 to 90)
 			M.make_jittery(8)
-			M.druggy = max(M.druggy, 30)
+			M.adjustDrugginess(3)
 			M.hallucination = max(M.hallucination, 60)
 			if(prob(10))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
 				M.Sleeping(10)
 		if(90 to 180)
 			M.make_jittery(8)
-			M.druggy = max(M.druggy, 35)
+			M.adjustDrugginess(3)
 			M.hallucination = max(M.hallucination, 60)
 			if(prob(10))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")

@@ -393,6 +393,7 @@
 	icon_state = "Byzantine_hat"
 	item_state = "Byzantine_hat"
 	body_parts_covered = HEAD
+	armor = list(melee = 60, bullet = 60, laser = 60,energy = 60, bomb = 60, bio = 60, rad = 60)
 	flags_inv = BLOCKHAIR
 
 /obj/item/clothing/head/WAFFEN_SS_Cap
@@ -400,11 +401,27 @@
 	desc = "An officer's SS cap."
 	icon_state = "SS_cap"
 	item_state = "that"
-	item_color = "SS_cap"
 
 /obj/item/clothing/head/Nazi_Officer_Cap
 	name = "Nazi Officer Cap"
 	desc = "A nazi officer's cap."
 	icon_state = "officer_cap"
 	item_state = "that"
-	item_color = "officer_cap"
+
+/obj/item/clothing/head/orange_bandana
+	name = "orange bandana"
+	desc = "Hey, I think we're missing a hazard vest..."
+	icon_state = "orange_bandana"
+
+/obj/item/clothing/head/kung
+	name = "Kung headband"
+	desc = "Stripe of red cloth.You can wear it on your head."
+	icon_state = "kung_headband"
+	item_state = "kung_headband"
+
+/obj/item/clothing/head/monk_helper
+	name = "Простой капюшон"
+	desc = "Отстегивающийся капюшон в средневековье! Очень прогрессивно"
+	flags = HEADCOVERSEYES | BLOCKHAIR
+	icon_state = "monk_helper"
+	item_state = "monk_helper"

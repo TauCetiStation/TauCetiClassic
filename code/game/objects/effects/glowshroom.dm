@@ -69,7 +69,7 @@
 				if(prob(spreadIntoAdjacentChance))
 					spreadsIntoAdjacent = 1
 
-				for(var/turf/simulated/floor/plating/airless/asteroid/earth in view(3,src))
+				for(var/turf/simulated/floor/plating/ironsand/earth in view(3,src))
 					if(spreadsIntoAdjacent || !locate(/obj/effect/glowshroom) in view(1,earth))
 						possibleLocs += earth
 
@@ -142,19 +142,13 @@
 
 /obj/effect/glowshroom/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(5))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(95))
 				return
-		else
-	return
+	qdel(src)
 
 /obj/effect/glowshroom/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)

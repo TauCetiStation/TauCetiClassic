@@ -55,7 +55,7 @@
 	var/build_step = 0
 	var/created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/weapon/firstaid_arm_assembly/atom_init()
 	..()
@@ -70,6 +70,7 @@
 	else
 		botcard.access = botcard_access
 	icon_state = "medibot[on]"
+	add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/bot/medbot/turn_on()
@@ -339,11 +340,10 @@
 		return 1
 
 	//If they're injured, we're using a beaker, and don't have one of our WONDERCHEMS.
-	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
+	if((reagent_glass) && (use_beaker) && ((C.getBruteLoss() >= heal_threshold) || (C.getToxLoss() >= heal_threshold) || (C.getFireLoss() >= heal_threshold) || (C.getOxyLoss() >= (heal_threshold + 15))))
 		for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
-			if(!C.reagents.has_reagent(R))
+			if(!C.reagents.has_reagent(R.id))
 				return 1
-			continue
 
 	//They're injured enough for it!
 	if((C.getBruteLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_brute)))
@@ -357,13 +357,6 @@
 
 	if((C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
 		return 1
-
-
-	for(var/datum/disease/D in C.viruses)
-		if((D.stage > 1) || (D.spread_type == AIRBORNE))
-
-			if(!C.reagents.has_reagent(treatment_virus))
-				return 1 //STOP DISEASE FOREVER
 
 	return 0
 
@@ -393,18 +386,13 @@
 
 	//Use whatever is inside the loaded beaker. If there is one.
 	if((use_beaker) && (reagent_glass) && (reagent_glass.reagents.total_volume))
-		reagent_id = "internal_beaker"
+		for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
+			if(!C.reagents.has_reagent(R.id))
+				reagent_id = "internal_beaker"
+				break
 
 	if(emagged == 2) //Emagged! Time to poison everybody.
 		reagent_id = "toxin"
-
-	var/virus = 0
-	for(var/datum/disease/D in C.viruses)
-		virus = 1
-
-	if(!reagent_id && (virus))
-		if(!C.reagents.has_reagent(treatment_virus))
-			reagent_id = treatment_virus
 
 	if(!reagent_id && (C.getBruteLoss() >= heal_threshold))
 		if(!C.reagents.has_reagent(treatment_brute))
@@ -459,10 +447,10 @@
 	visible_message("[src] beeps, \"[message]\"")
 	return
 
-/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(is_type_in_list(Proj, taser_projectiles)) //taser_projectiles defined in projectile.dm
 		stunned = min(stunned+10,20)
-	..()
 
 /obj/machinery/bot/medbot/explode()
 	on = 0
@@ -497,7 +485,7 @@
 		if(!istype(D, /obj/machinery/door/firedoor) && D.check_access(botcard) && !istype(D,/obj/machinery/door/poddoor))
 			D.open()
 			frustration = 0
-	else if((istype(M, /mob/living)) && (!anchored))
+	else if((isliving(M)) && (!anchored))
 		loc = M.loc
 		frustration = 0
 	return

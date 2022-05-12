@@ -5,7 +5,7 @@
 	item_state = "syringe_0"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/obj/item/weapon/implant/imp = null
 
 /obj/item/weapon/implanter/proc/update()
@@ -105,13 +105,13 @@
 /obj/item/weapon/implanter/compressed/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(istype(target,/obj/item) && imp)
+	if(isitem(target) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if (c.scanned)
 			to_chat(user, "<span class='warning'>Something is already scanned inside the implant!</span>")
 			return
 		c.scanned = target
-		if(istype(target.loc,/mob/living/carbon/human))
+		if(ishuman(target.loc))
 			var/mob/living/carbon/human/H = target.loc
 			H.remove_from_mob(target)
 		else if(istype(target.loc,/obj/item/weapon/storage))

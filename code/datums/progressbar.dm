@@ -18,7 +18,6 @@
 	bar_icon_state = my_icon_state
 
 	bar = image('icons/effects/progessbar.dmi', target, "[bar_icon_state]_0")
-	bar.layer = ABOVE_HUD_LAYER
 	bar.plane = ABOVE_HUD_PLANE
 	bar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	bar.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -80,6 +79,7 @@
 	if(!bars.len)
 		LAZYREMOVE(user.progressbars, bar.loc)
 
+	user = null
 	if (client)
 		client.images -= bar
 

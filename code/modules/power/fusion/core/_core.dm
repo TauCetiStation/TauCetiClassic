@@ -2,7 +2,7 @@
 	TODO README
 */
 
-var/list/fusion_cores = list()
+var/global/list/fusion_cores = list()
 
 #define MAX_FIELD_STR 1000
 #define MIN_FIELD_STR 1
@@ -79,7 +79,8 @@ var/list/fusion_cores = list()
 		owned_field.AddParticles(name, quantity)
 		. = TRUE
 
-/obj/machinery/power/fusion_core/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/power/fusion_core/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(owned_field)
 		. = owned_field.bullet_act(Proj)
 

@@ -13,14 +13,9 @@
 
 	var/holy_rank = CULT_ROLE_HIGHPRIEST
 
-/datum/role/cultist/CanBeAssigned(datum/mind/M)
-	if(!..())
-		return FALSE
-
-	var/datum/faction/cult/C = faction
-	if(istype(C) && !C.is_convertable_to_cult(M))
-		return FALSE
-
+/datum/role/cultist/CanBeAssigned(datum/mind/M, laterole)
+	if(laterole == FALSE) // can be null
+		return ..() // religion has all necessary checks, but they are not applicable to mind, as here
 	return TRUE
 
 /datum/role/cultist/RemoveFromRole(datum/mind/M, msg_admins)

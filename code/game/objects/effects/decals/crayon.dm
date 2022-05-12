@@ -4,6 +4,9 @@
 	icon = 'icons/obj/rune.dmi'
 	layer = 2.1
 	anchored = TRUE
+	var/default_state = TRUE
+
+	beauty = -25
 
 /obj/effect/decal/cleanable/crayon/atom_init(mapload, main = "#ffffff", shade = "#000000", type = "rune", e_name = "rune", override_color = 0)
 	. = ..()
@@ -12,6 +15,9 @@
 		RegisterSignal(loc, list(COMSIG_MOVABLE_MOVED), .proc/update_plane)
 	RegisterSignal(loc, list(COMSIG_PARENT_QDELETING), .proc/destroy_rune)
 	update_plane()
+
+	if(!default_state)
+		return
 
 	name = e_name
 	desc = "It's \a [type]. Somebody's being naughty leaving it here."

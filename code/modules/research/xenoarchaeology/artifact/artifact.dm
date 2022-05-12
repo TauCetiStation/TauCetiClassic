@@ -24,7 +24,7 @@
 //	5;/obj/structure/constructshell,\  //
 	5;/obj/machinery/syndicate_beacon,\
 	25;/obj/machinery/power/supermatter/shard,\
-//	50;/obj/structure/cult/pylon,\ //
+	50;/obj/random/mecha/wreckage,\
 	100;/obj/machinery/auto_cloner,\
 	100;/obj/machinery/giga_drill,\
 	100;/obj/mecha/working/hoverpod,\
@@ -104,8 +104,8 @@
 				var/obj/O = new spawn_type(get_turf(src))
 				if(istype(O,/obj/machinery/artifact))
 					var/obj/machinery/artifact/A = O
-					if(A.my_effect)
-						A.my_effect.artifact_id = artifact_find.artifact_id
+					if(A.first_effect)
+						A.first_effect.artifact_id = artifact_find.artifact_id
 				visible_message("<span class='danger'>[src] suddenly crumbles away.</span>")
 			else
 				user.visible_message("<span class='danger'>[src] suddenly crumbles away.</span>",\

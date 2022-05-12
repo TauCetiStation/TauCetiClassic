@@ -3,7 +3,7 @@
 	name = "tape roll"
 	icon = 'icons/obj/tape.dmi'
 	icon_state = "rollstart"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/turf/start
 	var/turf/end
 	var/tape_type = /obj/item/tape
@@ -84,7 +84,7 @@
 		while (cur!=end && can_place)
 			if(cur.density == 1)
 				can_place = 0
-			else if (istype(cur, /turf/space))
+			else if (isspaceturf(cur))
 				can_place = 0
 			else
 				for(var/obj/O in cur)

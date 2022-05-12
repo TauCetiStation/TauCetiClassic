@@ -11,7 +11,7 @@
 
 /obj/structure/lattice/atom_init()
 	. = ..()
-	if(!istype(loc, /turf/space))
+	if(!isenvironmentturf(loc))
 		return INITIALIZE_HINT_QDEL
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
@@ -37,17 +37,8 @@
 	return
 
 /obj/structure/lattice/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			qdel(src)
-			return
-		if(3.0)
-			return
-		else
-	return
+	if(severity <= EXPLODE_HEAVY)
+		qdel(src)
 
 /obj/structure/lattice/attackby(obj/item/C, mob/user)
 
@@ -65,19 +56,15 @@
 	return
 
 /obj/structure/lattice/proc/updateOverlays()
-	//if(!(istype(src.loc, /turf/space)))
-	//	qdel(src)
 	spawn(1)
 		cut_overlays()
 
 		var/dir_sum = 0
 
 		for (var/direction in cardinal)
-			if(locate(/obj/structure/lattice, get_step(src, direction)))
+			var/turf/T = get_step(src, direction)
+			if(locate(/obj/structure/lattice, T) || !isenvironmentturf(T))
 				dir_sum += direction
-			else
-				if(!(istype(get_step(src, direction), /turf/space)))
-					dir_sum += direction
 
 		icon_state = "lattice[dir_sum]"
 		return

@@ -1,4 +1,4 @@
-var/list/admin_ranks = list()								//list of all ranks with associated rights
+var/global/list/admin_ranks = list()								//list of all ranks with associated rights
 
 //load our rank - > rights associations
 /proc/load_admin_ranks()
@@ -24,7 +24,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 		switch(rank)
 			if(null,"")
 				continue
-			if("Removed")
+			if(ADMIN_RANK_REMOVED)
 				continue				//Reserved
 
 		var/rights = 0
@@ -61,7 +61,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 /proc/load_admins()
 	//clear the datums references
 	admin_datums.Cut()
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		C.remove_admin_verbs()
 		C.holder = null
 	admins.Cut()
@@ -114,7 +114,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 		while(query.NextRow())
 			var/ckey = query.item[1]
 			var/rank = query.item[2]
-			if(rank == "Removed")
+			if(rank == ADMIN_RANK_REMOVED)
 				continue	//This person was de-adminned. They are only in the admin list for archive purposes.
 
 			var/rights = query.item[4]

@@ -157,10 +157,10 @@
 	attack_hand(user)
 	return
 
-/obj/item/clothing/mask/facehugger/bullet_act(obj/item/projectile/P)
+/obj/item/clothing/mask/facehugger/bullet_act(obj/item/projectile/P, def_zone)
+	. = ..()
 	if(P.damage)
 		Die()
-	return
 
 /obj/item/clothing/mask/facehugger/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -217,7 +217,7 @@
 		Attach(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/CanHug(mob/living/carbon/C, check = 1)
-	if(!istype(C, /mob/living/carbon)) //without this check, we will get a runtime because in C there will be a turf when throwing a facehugger
+	if(!iscarbon(C)) //without this check, we will get a runtime because in C there will be a turf when throwing a facehugger
 		return FALSE
 	if(!C.is_facehuggable() || stat || istype(C.wear_mask, src) || loc == C)
 		return FALSE

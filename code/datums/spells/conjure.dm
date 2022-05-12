@@ -87,6 +87,7 @@
 	unacidable = 1
 
 /obj/effect/forcefield/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	for(var/mob/living/M in get_turf(loc))
 		M.bullet_act(Proj, def_zone)
 
@@ -100,8 +101,8 @@
 
 /obj/effect/forcefield/magic/CanPass(atom/movable/mover, turf/target, height=0)
 	if(mover == wizard)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/effect/forcefield/cult
 	name = "Blood Shield"

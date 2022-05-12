@@ -6,7 +6,7 @@
 	icon_state = "bolt"
 	item_state = "bolt"
 	throwforce = 8
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	sharp = 1
 	edge = 0
 
@@ -28,6 +28,14 @@
 	desc = "Don't cry for me, Orithena."
 	icon_state = "metal-rod"
 
+/obj/item/weapon/arrow/harpoon
+
+	name = "Стрела"
+	desc = "Ей стреляют"
+	icon_state = "harpoon"
+	item_state = "harpoon"
+	throwforce = 10
+
 /obj/item/weapon/arrow/rod/removed(mob/user)
 	if(throwforce == 15) // The rod has been superheated - we don't want it to be useable when removed from the bow.
 		to_chat(user, "[src] shatters into a scattering of overstressed metal shards as it leaves the crossbow.")
@@ -41,11 +49,11 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 	var/tension = 0                       // Current draw on the bow.
 	var/max_tension = 3                   // Highest possible tension.

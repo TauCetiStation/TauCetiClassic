@@ -9,7 +9,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 500
 	origin_tech = "combat=1;phorontech=1"
 	var/status = 0
@@ -180,7 +180,7 @@
 		return
 
 	for(var/turf/T in turflist)
-		if(T == self_turf || istype(T, /turf/space))
+		if(T == self_turf || isspaceturf(T))
 			continue
 		if(get_dist(T, self_turf) > pressure_range)
 			break
@@ -220,7 +220,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 500
 	origin_tech = "combat=2;phorontech=1"
 	var/status = 0
@@ -309,7 +309,7 @@
 
 	operating = 1
 	for(var/turf/T in turflist)
-		if(T.density || istype(T, /turf/space))
+		if(T.density || isspaceturf(T))
 			break
 		if(!previousturf && length(turflist)>1)
 			previousturf = get_turf(src)

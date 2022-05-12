@@ -75,32 +75,6 @@
 				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
 				qdel(G)
 
-/obj/effect/proc_holder/spell/targeted/shadow_walk
-	name = "Shadow Walk"
-	desc = "Phases you into the space between worlds for a short time, allowing movement through walls and invisbility."
-	panel = "Shadowling Abilities"
-	charge_max = 600
-	clothes_req = 0
-	range = -1
-	include_user = 1
-
-/obj/effect/proc_holder/spell/targeted/shadow_walk/cast(list/targets)
-	for(var/mob/living/user in targets)
-		playsound(user, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
-		user.visible_message("<span class='warning'>[user] vanishes in a puff of black mist!</span>", "<span class='shadowling'>You enter the space between worlds as a passageway.</span>")
-		user.SetStunned(0)
-		user.SetWeakened(0)
-		user.incorporeal_move = 1
-		user.alpha = 0
-		if(user.buckled)
-			user.buckled.unbuckle_mob()
-		sleep(40) //4 seconds
-		user.visible_message("<span class='warning'>[user] suddenly manifests!</span>", "<span class='shadowling'>The pressure becomes too much and you vacate the interdimensional darkness.</span>")
-		user.incorporeal_move = 0
-		user.alpha = 255
-		user.eject_from_wall(gib = TRUE)
-
-
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
 	name = "Flash Freeze"
 	desc = "Instantly freezes the blood of nearby people, stunning them and causing burn damage."
@@ -172,6 +146,10 @@
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return
+		if(target.ismindprotect())
+			to_chat(usr, "<span class='notice'>Their mind seems to be protected!</span>")
+			charge_counter = charge_max
+			return
 		if(enthralling)
 			to_chat(usr, "<span class='warning'>You are already enthralling!</span>")
 			charge_counter = charge_max
@@ -193,18 +171,6 @@
 					to_chat(target, "<span class='boldannounce'>Your gaze is forcibly drawn into a blinding red light. You fall to the floor as conscious thought is wiped away.</span>")
 					target.Weaken(12)
 					sleep(20)
-					if(target.ismindprotect())
-						to_chat(usr, "<span class='notice'>They are enslaved by Nanotrasen. You begin to shut down the nanobot implant - this will take some time.</span>")
-						usr.visible_message("<span class='danger'>[usr] halts for a moment, then begins passing its hand over [target]'s body.</span>")
-						to_chat(target, "<span class='boldannounce'>You feel your loyalties begin to weaken!</span>")
-						sleep(150) //15 seconds - not spawn() so the enthralling takes longer
-						to_chat(usr, "<span class='notice'>The nanobots composing the loyalty implant have been rendered inert. Now to continue.</span>")
-						usr.visible_message("<span class='danger'>[usr] halts thier hand and resumes staring into [target]'s face.</span>")
-						for(var/obj/item/weapon/implant/mind_protect/L in target)
-							if(L.implanted)
-								qdel(L)
-								to_chat(target, "<span class='boldannounce'>Your unwavering volition unexpectedly falters, dims, dies. You feel a sense of true terror.</span>")
-						target.sec_hud_set_implants()
 				if(3)
 					to_chat(usr, "<span class='notice'>You begin rearranging [target]'s memories.</span>")
 					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
@@ -241,7 +207,7 @@
 		if(!text)
 			return
 		log_say("Shadowling Hivemind: [key_name(usr)] : [text]")
-		for(var/mob/M in mob_list)
+		for(var/mob/M as anything in mob_list)
 			if(isshadowling(M) || isshadowthrall(M) || isobserver(M))
 				to_chat(M, "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>")
 
@@ -275,8 +241,6 @@
 		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, SLOT_GLASSES)
 		var/mob/living/carbon/human/H = usr
 		H.set_species(SHADOWLING)
-		H.dna.mutantrace = "shadowling"
-		H.update_mutantrace()
 		H.regenerate_icons()
 
 /obj/effect/proc_holder/spell/targeted/collective_mind
@@ -418,7 +382,7 @@
 				var/mob/living/carbon/M = target
 				to_chat(M, "<span class='danger'><b>A spike of pain drives into your head and scrambles your thoughts!</b></span>")
 				M.Weaken(2)
-				M.confused += 10
+				M.AdjustConfused(10)
 				//M.setEarDamage(M.ear_damage + 3)
 				M.ear_damage += 3
 			else if(issilicon(target))
@@ -492,7 +456,7 @@
 		var/mob/dead/observer/ghost = thrallToRevive.get_ghost()
 		if(ghost)
 			to_chat(ghost, "<span class='ghostalert'>Your masters are resuscitating you! Return to your corpse if you wish to be brought to life.</span> (Verbs -> Ghost -> Re-enter corpse)")
-			ghost.playsound_local(null, 'sound/effects/genetics.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+			ghost.playsound_local(null, 'sound/effects/genetics.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)
 		if(!do_mob(usr, thrallToRevive, 100))
 			to_chat(usr, "<span class='warning'>Your concentration snaps. The flow of energy ebbs.</span>")
 			charge_counter= charge_max
@@ -666,7 +630,7 @@
 		var/text = sanitize(input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", ""))
 		if(!text)
 			return
-		for(var/mob/M in mob_list)
+		for(var/mob/M as anything in mob_list)
 			if(isshadowling(M) || isshadowthrall(M) || (M in dead_mob_list))
 				to_chat(M, "<font size=4><span class='shadowling'><b>\[Hive Chat\]<i> [usr.real_name] (ASCENDANT)</i>: [sanitize(text)]</b></font></span>")//Bigger text for ascendants.
 

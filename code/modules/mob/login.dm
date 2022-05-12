@@ -23,6 +23,29 @@
 						message_admins("<font color='red'><B>Notice: </B></font><font color='blue'><A href='?src=\ref[usr];priv_msg=\ref[src]'>[key_name_admin(src)]</A> has the same [matches] as [key_name_admin(M)] (no longer logged in). </font>", R_LOG)
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)] (no longer logged in).")
 
+/mob/proc/create_mob_hud()
+	if(!client || hud_used)
+		return FALSE
+
+	hud_used = new hud_type(src)
+	SEND_SIGNAL(src, COMSIG_MOB_HUD_CREATED)
+	update_sight()
+	return TRUE
+
+// TOTAL SHITCODE
+// PLEASE REMOVE WHEN HUD SYSTEM IS REDONE
+// IS REQUIRED BECAUSE THE ONLY THING THAT USES HUD SIGNALS IS
+// THE MOOD SYSTEM WHICH ONLY HUMANS HAVE (WHICH REQUIRES HUD UPDATE AFTERWARDS)
+// AND USING SHOW_HUD ON ANY MOB THAT ISN'T HUMAN CAUSES RUNTIMES
+// ~Luduk
+/mob/living/carbon/human/create_mob_hud()
+	. = ..()
+	if(!.)
+		return
+
+	if(hud_used.mymob)
+		hud_used.show_hud(hud_used.hud_version)
+
 /mob/Login()
 	player_list |= src
 	update_Login_details()
@@ -30,14 +53,19 @@
 
 	client.images = null				//remove the images such as AIs being unable to see runes
 	client.screen = list()				//remove hud items just in case
-	if(hud_used)
-		qdel(hud_used)		//remove the hud objects
-	hud_used = new hud_type(src)
+
+	QDEL_NULL(hud_used)		//remove the hud objects
+
+	create_mob_hud()
+
 	client.pixel_x = 0
 	client.pixel_y = 0
 	next_move = 1
 
 	..()
+
+	SEND_SIGNAL(src, COMSIG_LOGIN)
+	logout_reason = LOGOUT_UNKNOWN
 
 	if(loc && !isturf(loc))
 		client.eye = loc
@@ -54,7 +82,6 @@
 	blocker.blend_mode = BLEND_MULTIPLY
 	blocker.color = list(1,1,1,0,1,1,1,0,1,1,1,0,0,0,0,1,0,0,0,1)
 	blocker.alpha = 255
-	blocker.layer = ABOVE_HUD_LAYER
 	blocker.plane = ABOVE_HUD_PLANE
 	blocker.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
@@ -68,15 +95,7 @@
 
 	client.screen += blocker
 
-	if(abilities)
-		client.verbs |= abilities
-
-	if(istype(src, /mob/living/silicon/ai))
+	if(isAI(src))
 		client.show_popup_menus = 0
 	else
 		client.show_popup_menus = 1
-
-	if(istype(src,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = src
-		if(H.species && H.species.abilities)
-			client.verbs |= H.species.abilities

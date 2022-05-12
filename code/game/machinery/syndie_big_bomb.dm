@@ -56,7 +56,7 @@
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user)
 	if(iswrench(I))
 		if(!anchored)
-			if(!isturf(src.loc) || istype(src.loc, /turf/space))
+			if(!isturf(src.loc) || isspaceturf(src.loc))
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it</span>")
 			else
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor</span>")
@@ -159,7 +159,7 @@
 	icon = 'icons/obj/syndie_bomb_big.dmi'
 	icon_state = "bombcore"
 	item_state = "eshield0"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	origin_tech = "syndicate=6;combat=5"
 
 /obj/item/weapon/syndicatebombcore/ex_act(severity) //Little boom can chain a big boom
@@ -172,7 +172,7 @@
 	icon = 'icons/obj/syndie_bomb_big.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	origin_tech = "syndicate=2"
 	var/cooldown = 0
 	var/detonated =	0

@@ -206,14 +206,15 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if(severity == 1)
-		if(prob(50))
-			empty_content()
-			qdel(src)
-	else if(severity == 2)
-		if(prob(25))
-			empty_content()
-			qdel(src)
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			if(prob(50))
+				return
+		if(EXPLODE_HEAVY)
+			if(prob(75))
+				return
+	empty_content()
+	qdel(src)
 
 //empty the redemption machine by stacks of at most max_amount (50 at this time) size
 /obj/machinery/mineral/ore_redemption/proc/empty_content()
@@ -288,7 +289,7 @@
 	prize_list["Miscellaneous"] = list(
 		EQUIPMENT("Chili",						/obj/item/weapon/reagent_containers/food/snacks/hotchili,			100),
 		EQUIPMENT("Vodka",						/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,		150),
-		EQUIPMENT("Soap",						/obj/item/weapon/soap/nanotrasen,									150),
+		EQUIPMENT("Soap",						/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,									150),
 		EQUIPMENT("Alien toy",					/obj/item/clothing/mask/facehugger_toy,								250),
 		EQUIPMENT("Point card",					/obj/item/weapon/card/mining_point_card,							500),
 		EQUIPMENT("Space cash",					/obj/item/weapon/spacecash/c1000,									5000),
@@ -472,7 +473,7 @@
 	desc = "A token to redeem a piece of equipment. Use it on a mining equipment locker."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 
 /**********************Mining Point Card**********************/
@@ -509,7 +510,7 @@
 	icon_state = "Jaunter"
 	item_state = "electronic"
 	throwforce = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "bluespace=2"
@@ -578,7 +579,7 @@
 	icon_state = "resonator"
 	item_state = "resonator"
 	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vaccuum."
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	force = 10
 	throwforce = 10
 	var/cooldown = 0
@@ -681,6 +682,7 @@
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
+	w_class = SIZE_BIG
 	mouse_opacity = MOUSE_OPACITY_ICON
 	faction = "neutral"
 	var/emagged = 0
@@ -856,7 +858,7 @@
 	icon_state = "lazarus_hypo"
 	item_state = "hypo"
 	throwforce = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
@@ -907,7 +909,7 @@
 	icon_state = "patcher"
 	item_state = "patcher"
 	throwforce = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 5
 	var/loaded = 1
@@ -962,4 +964,3 @@
 	icon_state = "xeno_warning"
 
 #undef EQUIPMENT
-#undef MAX_NOTICES

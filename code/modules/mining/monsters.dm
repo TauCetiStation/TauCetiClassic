@@ -17,6 +17,7 @@
 	response_disarm = "shoves"
 	response_harm = "strikes"
 	status_flags = 0
+	w_class = SIZE_HUMAN
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	weather_immunities = list("ash", "acid")
@@ -29,17 +30,16 @@
 	..()
 	icon_state = icon_living
 
-/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
+/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P, def_zone)//Reduces damage from most projectiles to curb off-screen kills
+	. = ..()
 	if(!stat)
 		Aggro()
 	if(P.damage < 30)
 		P.damage /= 3
 		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
 
-	return ..()
-
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
-	if(istype(AM, /obj/item))
+	if(isitem(AM))
 		var/obj/item/T = AM
 		if(!stat)
 			Aggro()
@@ -104,11 +104,11 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			gib()
-		if(2)
+		if(EXPLODE_HEAVY)
 			adjustBruteLoss(maxHealth * 0.8)
-		if(3)
+		if(EXPLODE_LIGHT)
 			adjustBruteLoss(maxHealth * 0.4)
 
 ////////////Drone(miniBoss)/////////////
@@ -117,6 +117,7 @@
 	health = 400
 	maxHealth = 400
 	faction = "mining"
+	w_class = SIZE_HUMAN
 	projectiletype = /obj/item/projectile/beam/xray
 
 
@@ -141,6 +142,7 @@
 	health = 60
 	harm_intent_damage = 5
 	melee_damage = 0
+	w_class = SIZE_MASSIVE
 	attacktext = "barrell"
 	a_intent = INTENT_HELP
 	throw_message = "sinks in slowly, before being pushed out of "
@@ -199,7 +201,7 @@
 		visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
 		var/turftype = get_turf(src)
 		if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
-			var/turf/simulated/floor/plating/airless/asteroid/A = turftype
+			var/turf/simulated/floor/plating/ironsand/A = turftype
 			A.gets_dug()
 		qdel(src)
 
@@ -214,14 +216,13 @@
 	ore_types_eaten.Cut()
 	ore_eaten = 0
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P, def_zone)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/death()
+	. = ..()
 	alerted = FALSE
 	Reward()
-	..()
-
 
 ////////////////Hivelord////////////////
 
@@ -253,6 +254,7 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
+	w_class = SIZE_LARGE
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
@@ -389,6 +391,7 @@
 	health = 300
 	harm_intent_damage = 0
 	melee_damage = 25
+	w_class = SIZE_MASSIVE
 	attacktext = "pulveriz"
 	throw_message = "does nothing to the rocky hide of the"
 	aggro_vision_range = 9
@@ -440,7 +443,7 @@
 		var/turf/simulated/mineral/M = turftype
 		M.GetDrilled()
 	if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
-		var/turf/simulated/floor/plating/airless/asteroid/A = turftype
+		var/turf/simulated/floor/plating/ironsand/A = turftype
 		A.gets_dug()
 	addtimer(CALLBACK(src, .proc/Trip), 20)
 
@@ -475,7 +478,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	layer = 4
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity, params)

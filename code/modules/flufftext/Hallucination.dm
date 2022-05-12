@@ -52,14 +52,13 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					var/list/slots_free = list(ui_lhand,ui_rhand)
 					if(l_hand) slots_free -= ui_lhand
 					if(r_hand) slots_free -= ui_rhand
-					if(istype(src,/mob/living/carbon/human))
+					if(ishuman(src))
 						var/mob/living/carbon/human/H = src
 						if(!H.belt) slots_free += ui_belt
 						if(!H.l_store) slots_free += ui_storage1
 						if(!H.r_store) slots_free += ui_storage2
 					if(slots_free.len)
 						halitem.screen_loc = pick(slots_free)
-						halitem.layer = ABOVE_HUD_LAYER
 						halitem.plane = ABOVE_HUD_PLANE
 						switch(rand(1,6))
 							if(1) //revolver
@@ -220,7 +219,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						playsound_local(null, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE)
 						if(ishuman(src))
 							var/mob/living/carbon/human/H = src
-							H.stuttering += 15
+							H.AdjustStuttering(15)
 							H.ear_deaf += 8
 							H.Weaken(5)
 							H.Stun(8)
@@ -279,6 +278,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					hal_crit = 0
 					hal_screwyhud = 0
 
+			if(76 to 100)
+				continue
 
 	handling_hal = 0
 
@@ -376,7 +377,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					my_target.playsound_local(null, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 					my_target.show_message("<span class='warning'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", SHOWMSG_VISUAL)
 					my_target.halloss += 8
-					if(prob(20)) my_target.eye_blurry += 3
+					if(prob(20)) my_target.blurEyes(10)
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
@@ -408,7 +409,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		qdel(O)
 	return
 
-var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_box/a357,\
+var/global/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_box/a357,\
 	/obj/item/weapon/gun/energy/crossbow, /obj/item/weapon/melee/energy/sword,\
 	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
 	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\
@@ -429,7 +430,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	var/mob/living/carbon/human/clone = null
 	var/clone_weapon = null
 
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(H.incapacitated())
 			continue
 //		possible_clones += H

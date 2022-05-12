@@ -27,7 +27,7 @@
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	if(P.impact_force) // we want this to be before everything as this is unblockable type of effect at this moment. If something changes, then mob_bullet_act() won't be needed probably as separate proc.
-		if(istype(loc, /turf/simulated))
+		if(isturf(loc))
 			loc.add_blood(src)
 		throw_at(get_edge_target_turf(src, P.dir), P.impact_force, 1, P.firer, spin = TRUE)
 
@@ -65,7 +65,7 @@
 	if(!P.nodamage)
 		apply_damage(damage, P.damage_type, def_zone, absorb, flags, P)
 		if(length(P.proj_act_sound))
-			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, -5)
+			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	P.on_hit(src, def_zone, absorb)
 
 	return absorb
@@ -136,7 +136,7 @@
 	var/created_wound = apply_damage(throw_damage, dtype, zone, armor, damage_flags, O)
 
 	//thrown weapon embedded object code.
-	if(dtype == BRUTE && istype(O, /obj/item))
+	if(dtype == BRUTE && isitem(O))
 		var/obj/item/I = O
 		if(!I.can_embed || I.is_robot_module())
 			return
@@ -216,6 +216,7 @@
 		visible_message("<span class='warning'>[src] catches fire!</span>",
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
@@ -223,6 +224,7 @@
 		playsound(src, 'sound/effects/extinguish_mob.ogg', VOL_EFFECTS_MASTER)
 		on_fire = 0
 		fire_stacks = 0
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 			qdel(F)
 		update_fire()
@@ -317,19 +319,3 @@
 			return has_bodypart(targetzone)
 		else
 			return TRUE
-
-// This proc guarantees no mouse vs queen tomfuckery.
-/mob/living/proc/is_bigger_than(mob/living/target)
-	if(target.small && !small)
-		return TRUE
-	if(maxHealth > target.maxHealth)
-		return TRUE
-	return FALSE
-
-/proc/get_size_ratio(mob/living/dividend, mob/living/divisor)
-	var/ratio = dividend.maxHealth / divisor.maxHealth
-	if(dividend.small && !divisor.small)
-		ratio *= 0.5
-	else if(!dividend.small && divisor.small)
-		ratio *= 2.0
-	return ratio

@@ -58,13 +58,13 @@
 	vox.name = vox.real_name
 	antag.name = vox.name
 	vox.age = rand(5, 15) // its fucking lore
-	vox.dna.mutantrace = "vox"
 	vox.set_species(VOX)
-	vox.languages = list() // Removing language from chargen.
+	for(var/language in vox.languages)
+		vox.remove_language(language)
 	vox.flavor_text = ""
-	vox.add_language("Vox-pidgin")
+	vox.add_language(LANGUAGE_VOXPIDGIN)
 	if(faction.members.len % 2 == 0 || prob(33)) // first vox always gets Sol, everyone else by random.
-		vox.add_language("Sol Common")
+		vox.add_language(LANGUAGE_SOLCOMMON)
 	vox.h_style = "Short Vox Quills"
 	vox.f_style = "Shaved"
 	vox.grad_style = "none"
@@ -73,14 +73,9 @@
 		BP.rejuvenate()
 
 	//Now apply cortical stack.
-	var/obj/item/organ/external/BP = vox.bodyparts_by_name[BP_HEAD]
 
 	var/obj/item/weapon/implant/cortical/I = new(vox)
-	I.imp_in = vox
-	I.implanted = TRUE
-	BP.implants += I
-	vox.sec_hud_set_implants()
-	I.part = BP
+	I.inject(vox, BP_HEAD)
 
 	vox.equip_vox_raider()
 	vox.regenerate_icons()

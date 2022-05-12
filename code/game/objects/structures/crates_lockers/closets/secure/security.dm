@@ -25,17 +25,42 @@
 	new /obj/item/clothing/gloves/captain(src)
 	new /obj/item/weapon/gun/energy/gun/head(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
-	new /obj/item/clothing/suit/armor/captain(src)
 	new /obj/item/weapon/melee/telebaton(src)
 	new /obj/item/clothing/under/dress/dress_cap(src)
 	new /obj/item/clothing/under/rank/capcamsole(src)
 	new /obj/item/device/remote_device/captain(src)
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
 		new /obj/item/clothing/head/santa(src)
 		new /obj/item/clothing/shoes/winterboots(src)
+
+/obj/structure/closet/secure_closet/iaa
+	name = "Internal Affairs Agent's Locker"
+	req_access = list(access_lawyer)
+	icon_state = "iaasecure1"
+	icon_closed = "iaasecure"
+	icon_locked = "iaasecure1"
+	icon_opened = "iaasecureopen"
+	icon_broken = "iaasecurebroken"
+	icon_off = "iaasecureoff"
+
+/obj/structure/closet/secure_closet/iaa/PopulateContents()
+	new /obj/item/weapon/storage/backpack/satchel(src)
+	new /obj/item/clothing/under/suit_jacket/burgundy(src)
+	new /obj/item/clothing/shoes/leather(src)
+	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/under/lawyer/female(src)
+	new /obj/item/clothing/under/lawyer/black(src)
+	new /obj/item/clothing/under/lawyer/red(src)
+	new /obj/item/clothing/under/lawyer/bluesuit(src)
+	new /obj/item/clothing/suit/storage/lawyer/bluejacket(src)
+	new /obj/item/clothing/under/lawyer/purpsuit(src)
+	new /obj/item/clothing/suit/storage/lawyer/purpjacket(src)
+	new /obj/item/clothing/shoes/brown(src)
+	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/weapon/storage/briefcase/centcomm(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "Head of Personnel's Locker"
@@ -107,7 +132,7 @@
 	else
 		new /obj/item/weapon/storage/backpack/satchel/sec(src)
 
-	new /obj/item/clothing/head/helmet/HoS/dermal(src)
+	new /obj/item/clothing/accessory/armor/dermal(src)
 	new /obj/item/clothing/head/hos_peakedcap(src)
 	new /obj/item/device/remote_device/head_of_security(src)
 	new /obj/item/clothing/suit/armor/hos(src)
@@ -133,7 +158,7 @@
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/energy/taser(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
@@ -177,7 +202,7 @@
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/energy/taser(src)
 	new /obj/item/weapon/storage/box/mines/shock(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
@@ -217,7 +242,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/energy/taser(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/ushanka(src)
@@ -263,11 +288,16 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/clothing/suit/armor/det_suit(src)
-	for (var/i in 1 to 2)
-		new /obj/item/ammo_box/magazine/c45r(src)
+	if(prob(50))
+		new /obj/item/weapon/gun/projectile/automatic/colt1911(src)
+		for (var/i in 1 to 2)
+			new /obj/item/ammo_box/magazine/c45r(src)
+	else
+		new /obj/item/weapon/gun/projectile/revolver/detective(src)
+		for (var/i in 1 to 2)
+			new /obj/item/ammo_box/c38(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/toy/crayon/chalk(src)
-	new /obj/item/weapon/gun/projectile/automatic/colt1911(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 
@@ -362,3 +392,17 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/toy/crayon/chalk(src)
+
+/obj/structure/closet/secure_closet/pistols
+	name = "Pistol Secure Closet"
+	req_access = list(access_armory)
+	icon_state = "syndicatealtsecure1"
+	icon_closed = "syndicatealtsecure"
+	icon_locked = "syndicatealtsecure1"
+	icon_opened = "syndicatealtsecureopen"
+	icon_broken = "syndicatealtsecurebroken"
+	icon_off = "syndicatealtsecureoff"
+
+/obj/structure/closet/secure_closet/pistols/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/gun/projectile/glock(src)

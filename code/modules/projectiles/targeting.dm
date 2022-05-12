@@ -18,7 +18,10 @@
 
 //Clicking gun will still lower aim for guns that don't overwrite this
 /obj/item/weapon/gun/attack_self()
-	lower_aim()
+	if(target)
+		lower_aim()
+		return
+	return ..()
 
 //Removing the lock and the buttons.
 /obj/item/weapon/gun/dropped(mob/user)

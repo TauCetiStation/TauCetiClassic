@@ -34,6 +34,16 @@
 			return "abdominal"
 	return ""
 
+/datum/surgery_step/cavity/proc/remove_from_cavity(mob/user, mob/target, obj/obj_to_remove, obj/item/organ/external/BP, obj/tool)
+	BP.implants -= obj_to_remove
+	for(var/datum/wound/W in BP.wounds)
+		if(obj_to_remove in W.embedded_objects)
+			W.embedded_objects -= obj_to_remove
+			break
+	obj_to_remove.forceMove(get_turf(target))
+	user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
+	"<span class='notice'>You take [obj_to_remove] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
+
 /datum/surgery_step/cavity/make_space
 	allowed_tools = list(
 	/obj/item/weapon/surgicaldrill = 100,	\
@@ -177,55 +187,64 @@
 
 /datum/surgery_step/cavity/implant_removal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-
-	var/find_prob = 0
-
-	if (BP.implants.len)
-
-		var/obj/item/obj = BP.implants[1]
-
-		if(istype(obj,/obj/item/weapon/implant))
-			var/obj/item/weapon/implant/imp = obj
-			if (imp.islegal())
-				find_prob +=60
-			else
-				find_prob +=40
-		else
-			find_prob +=50
-
-		if (prob(find_prob))
-			user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
-			"<span class='notice'>You take [obj] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
-			BP.implants -= obj
-			for(var/datum/wound/W in BP.wounds)
-				if(obj in W.embedded_objects)
-					W.embedded_objects -= obj
-					break
-
-
-			//Handle possessive brain borers.
-			if(istype(obj,/mob/living/simple_animal/borer))
-				var/mob/living/simple_animal/borer/worm = obj
-				if(worm.controlling)
-					target.release_control()
-				worm.detatch()
-
-			if(obj)
-				obj.loc = get_turf(target)
-
-				if(istype(obj,/obj/item/weapon/implant))
-					var/obj/item/weapon/implant/imp = obj
+	if(BP.implants.len)
+		var/list/list_of_embed_types = list()
+		var/list/embed_object_shrapnel = list()
+		var/list/embed_object_implants = list()
+		var/list/embed_object_else = list()
+		for(var/embed_object in BP.implants)
+			if(istype(embed_object, /obj/item/weapon/shard/shrapnel))
+				embed_object_shrapnel += embed_object
+				continue
+			if(istype(embed_object, /obj/item/weapon/implant))
+				embed_object_implants += embed_object
+				continue
+			embed_object_else += embed_object
+		for(var/atom/embed_object as anything in embed_object_implants)
+			embed_object_implants[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
+		for(var/atom/embed_object as anything in embed_object_else)
+			embed_object_else[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
+		if(embed_object_shrapnel.len)
+			list_of_embed_types += list("Shrapnel" = image(icon = 'icons/obj/shards.dmi', icon_state = "shrapnellarge"))
+		if(embed_object_implants.len)
+			list_of_embed_types += list("Implants" = embed_object_implants[pick(embed_object_implants)])
+		if(embed_object_else.len)
+			list_of_embed_types += list("Else" = embed_object_else[pick(embed_object_else)])
+		var/list_to_choose = show_radial_menu(user, target, list_of_embed_types, radius = 30, require_near = TRUE, tooltips = TRUE)
+		if(!list_to_choose)
+			user.visible_message("<span class='notice'>[user] removes \the [tool] from [target]'s [BP.name].</span>", \
+			"<span class='notice'>There's something inside [target]'s [BP.name], but you decided not to touch it.</span>" )
+			return
+		switch(list_to_choose)
+			if("Shrapnel")
+				var/atom/picked_obj = pick(embed_object_shrapnel)
+				remove_from_cavity(user, target, picked_obj, BP, tool)
+			if("Implants")
+				var/choosen_object = show_radial_menu(user, target, embed_object_implants, radius = 50, require_near = TRUE, tooltips = TRUE)
+				if(choosen_object)
+					var/obj/item/weapon/implant/imp = choosen_object
+					for(var/datum/wound/W in BP.wounds)
+						if(imp in W.embedded_objects)
+							W.embedded_objects -= imp
+							break
 					imp.imp_in = null
-					imp.implanted = 0
-					if(istype(imp,/obj/item/weapon/implant/storage))
+					imp.implanted = FALSE
+					if(istype(imp, /obj/item/weapon/implant/storage))
 						var/obj/item/weapon/implant/storage/Simp = imp
 						Simp.removed()
-			playsound(target, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
-		else
-			user.visible_message("<span class='notice'>[user] removes \the [tool] from [target]'s [BP.name].</span>", \
-			"<span class='notice'>There's something inside [target]'s [BP.name], but you just missed it this time.</span>" )
+					remove_from_cavity(user, target, choosen_object, BP, tool)
+					target.sec_hud_set_implants()
+			if("Else")
+				var/choosen_object = show_radial_menu(user, target, embed_object_else, radius = 50, require_near = TRUE, tooltips = TRUE)
+				if(choosen_object)
+					if(istype(choosen_object, /mob/living/simple_animal/borer))
+						var/mob/living/simple_animal/borer/worm = choosen_object
+						if(worm.controlling)
+							target.release_control()
+						worm.detatch()
+					remove_from_cavity(user, target, choosen_object, BP, tool)
+		playsound(target, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
 
-		target.sec_hud_set_implants()
 	else if (BP.hidden)
 		user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 		"<span class='notice'>You take something out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
@@ -235,7 +254,6 @@
 		BP.hidden.blood_DNA[target.dna.unique_enzymes] = target.dna.b_type
 		BP.hidden.update_icon()
 		BP.hidden = null
-
 	else
 		user.visible_message("<span class='notice'>[user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.</span>", \
 		"<span class='notice'>You could not find anything inside [target]'s [BP.name].</span>" )
@@ -251,6 +269,6 @@
 		if (prob(fail_prob))
 			var/obj/item/weapon/implant/imp = BP.implants[1]
 			user.visible_message("<span class='warning'>Something beeps inside [target]'s [BP.name]!</span>")
-			playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+			playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 			spawn(25)
 				imp.activate()

@@ -121,7 +121,7 @@
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -206,6 +206,7 @@
 	icon_state = "Byzantine_dress"
 	item_state = "Byzantine_dress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	armor = list(melee = 60, bullet = 60, laser = 60,energy = 60, bomb = 60, bio = 60, rad = 60)
 
 /*
  * Misc
@@ -335,7 +336,6 @@
 	desc = "A black trenchcoat."
 	icon_state = "dude_coat"
 	item_state = "jensensuit"
-	item_color = "dude_coat"
 
 //pyjamas
 //originally intended to be pinstripes >.>
@@ -376,35 +376,30 @@
 	name = "pink swimsuit"
 	desc = "A rather skimpy pink swimsuit."
 	icon_state = "stripper_p"
-	item_color = "stripper_p"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/stripper_green
 	name = "green swimsuit"
 	desc = "A rather skimpy green swimsuit."
 	icon_state = "stripper_g"
-	item_color = "stripper_g"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/stripper_pink
 	name = "pink skimpy dress"
 	desc = "A rather skimpy pink dress."
 	icon_state = "stripper_p"
-	item_state = "stripper_p"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/stripper_green
 	name = "green skimpy dress"
 	desc = "A rather skimpy green dress."
 	icon_state = "stripper_g"
-	item_state = "stripper_g"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/mankini
 	name = "the mankini"
 	desc = "No honest man would wear this abomination"
 	icon_state = "mankini"
-	item_color = "mankini"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/xenos
@@ -424,35 +419,30 @@
 	name = "black swimsuit"
 	desc = "An oldfashioned black swimsuit."
 	icon_state = "swim_black"
-	item_color = "swim_black"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/blue
 	name = "blue swimsuit"
 	desc = "An oldfashioned blue swimsuit."
 	icon_state = "swim_blue"
-	item_color = "swim_blue"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/purple
 	name = "purple swimsuit"
 	desc = "An oldfashioned purple swimsuit."
 	icon_state = "swim_purp"
-	item_color = "swim_purp"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/green
 	name = "green swimsuit"
 	desc = "An oldfashioned green swimsuit."
 	icon_state = "swim_green"
-	item_color = "swim_green"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/red
 	name = "red swimsuit"
 	desc = "An oldfashioned red swimsuit."
 	icon_state = "swim_red"
-	item_color = "swim_red"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/batman
@@ -584,7 +574,6 @@
 	icon_state = "cuirass"
 	item_state = "cuirass"
 	blood_overlay_type = "armor"
-	flags = THICKMATERIAL
 	armor = list(melee = 50, bullet = 30, laser = 10, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/goodman_jacket
@@ -691,3 +680,36 @@
 	icon_state = "syndieshirt"
 	item_state = "syndieshirt"
 	body_parts_covered = UPPER_TORSO|ARMS
+
+/obj/item/clothing/suit/jacket/letterman
+	name = "letterman jacket"
+	desc = "A classic brown letterman jacket. Looks pretty hot and heavy."
+	icon_state = "letterman"
+
+/obj/item/clothing/suit/jacket/letterman_red
+	name = "red letterman jacket"
+	desc = "A letterman jacket in a sick red color. Radical."
+	icon_state = "letterman_red"
+
+/obj/item/clothing/suit/jacket/letterman_syndie
+	name = "blood-red letterman jacket"
+	desc = "Oddly, this jacket seems to have a large S on the back..."
+	icon_state = "letterman_s"
+
+/obj/item/clothing/suit/jacket/letterman_nanotrasen
+	name = "blue letterman jacket"
+	desc = "A blue letterman jacket with a proud Nanotrasen N on the back. The tag says that it was made in Space China."
+	icon_state = "letterman_n"
+
+/obj/item/clothing/suit/kung
+	name = "Kung jacket"
+	desc = "Leather jaket with an old security badge attached to it"
+	icon_state = "kung_jacket"
+	item_state = "kung_jacket"
+	w_class = SIZE_SMALL
+
+/obj/item/clothing/suit/monk_helper
+	name = "Роба"
+	desc = "Роба помощника монаха"
+	icon_state = "monk_helper"
+	item_state = "monk_helper"

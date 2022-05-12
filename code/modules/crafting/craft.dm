@@ -37,7 +37,7 @@
 
 /datum/personal_crafting/proc/get_environment(mob/user)
 	. = list()
-	for(var/obj/item/I in list(user.l_hand, user.r_hand))
+	for(var/obj/I in list(user.l_hand, user.r_hand))
 		. += I
 	if(!isturf(user.loc))
 		return
@@ -367,6 +367,6 @@
 	if(recipe_image_cache[R.result])
 		return recipe_image_cache[R.result]
 	var/obj/stored_result = new R.result
-	recipe_image_cache[R.result] = icon2base64(icon(stored_result.icon, stored_result.icon_state))
+	recipe_image_cache[R.result] = bicon_raw(icon(stored_result.icon, stored_result.icon_state))
 	qdel(stored_result)
 	return recipe_image_cache[R.result]

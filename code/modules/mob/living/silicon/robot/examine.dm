@@ -2,12 +2,12 @@
 	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>[custom_name ? ", [modtype] [braintype]" : ""]!\n"
 	msg += "<span class='warning'>"
 	if (getBruteLoss())
-		if (getBruteLoss() < 75)
+		if (getBruteLoss() < maxHealth * 0.375)
 			msg += "It looks slightly dented.\n"
 		else
 			msg += "<B>It looks severely dented!</B>\n"
 	if (getFireLoss())
-		if (getFireLoss() < 75)
+		if (getFireLoss() < maxHealth * 0.375)
 			msg += "It looks slightly charred.\n"
 		else
 			msg += "<B>It looks severely burnt and heat-warped!</B>\n"
@@ -31,6 +31,10 @@
 			if(!src.client)	msg += "It appears to be in stand-by mode.\n" //afk
 		if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responding.</span>\n"
 		if(DEAD)			msg += "<span class='deadsay'>It looks completely unsalvageable.</span>\n"
+
+	if(w_class)
+		msg += "It is a [get_size_flavor()] sized creature.\n"
+
 	msg += "*---------*</span>"
 
 	if(print_flavor_text()) msg += "\n[print_flavor_text()]\n"

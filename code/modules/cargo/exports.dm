@@ -34,7 +34,6 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/cost = 0
 
 	var/list/contents = AM.GetAllContents()
-	contents.Insert(1, AM)
 
 	// We go backwards, so it'll be innermost objects sold first
 	for(var/i in reverseRange(contents))
@@ -133,7 +132,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	total_cost = 0
 	total_amount = 0
 
-var/list/exports_list = list()
+var/global/list/exports_list = list()
 
 /proc/setupExports()
 	for(var/subtype in subtypesof(/datum/export))

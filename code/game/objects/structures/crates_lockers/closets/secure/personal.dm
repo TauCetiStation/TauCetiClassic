@@ -4,13 +4,6 @@
 	req_access = list(access_all_personal_lockers)
 	var/registered_name = null
 
-/obj/structure/closet/secure_closet/personal/PopulateContents()
-	if(prob(50))
-		new /obj/item/weapon/storage/backpack(src)
-	else
-		new /obj/item/weapon/storage/backpack/satchel/norm(src)
-	new /obj/item/device/radio/headset(src)
-
 /obj/structure/closet/secure_closet/personal/patient
 	name = "patient's closet"
 
@@ -37,10 +30,6 @@
 				icon_state = icon_closed
 		else
 			icon_state = icon_opened
-
-/obj/structure/closet/secure_closet/personal/cabinet/PopulateContents()
-	new /obj/item/weapon/storage/backpack/satchel/withwallet(src)
-	new /obj/item/device/radio/headset(src)
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user)
 	if(opened  || istype(W, /obj/item/weapon/grab))
@@ -70,7 +59,7 @@
 				src.desc = "Owned by [user_registered_name]."
 		else
 			to_chat(user, "<span class='warning'>Access Denied</span>")
-	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
+	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/dualsaber)) && !src.broken)
 		emag_act(user)
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)

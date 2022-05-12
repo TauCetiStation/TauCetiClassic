@@ -1,3 +1,16 @@
+// This file is used to test the entire build
+// To use istype-defines from this file for tests, wrap your istype in brackets
+// Example: isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
+// Bad example: isabductor(A) istype(A, /mob/living/carbon/human/abductor)
+
+// TURFS
+
+#define isenvironmentturf(A) (istype(A, /turf/environment))
+
+#define isspaceturf(A) (istype(A, /turf/environment/space))
+
+#define isiceturf(A) (istype(A, /turf/environment/snow/ice))
+
 // HUMAN
 
 #define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
@@ -77,6 +90,10 @@
 
 #define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
+#define isautosay(A) (istype(A, /mob/autosay))
+
+#define isMMI(A) (istype(A, /obj/item/device/mmi))
+
 // ELSE
 
 #define isbodypart(A) (istype(A, /obj/item/organ/external))
@@ -87,9 +104,9 @@
 
 // GOONCHAT PORT
 
-#define isatom(A) istype(A, /atom)
+#define isatom(A) (istype(A, /atom))
 
-#define isclient(A) istype(A, /client)
+#define isclient(A) (istype(A, /client))
 
 
 // ASSEMBLY HELPERS
@@ -108,19 +125,19 @@
 
 // TOOLS HELPERS
 
-#define iswrench(A) istype(A, /obj/item/weapon/wrench)
+#define iswrench(A) (istype(A, /obj/item/weapon/wrench))
 
-#define iswelder(A) istype(A, /obj/item/weapon/weldingtool)
+#define iswelder(A) (istype(A, /obj/item/weapon/weldingtool))
 
-#define iswirecutter(A) istype(A, /obj/item/weapon/wirecutters)
+#define iswirecutter(A) (istype(A, /obj/item/weapon/wirecutters))
 
-#define isscrewdriver(A) istype(A, /obj/item/weapon/screwdriver)
+#define isscrewdriver(A) (istype(A, /obj/item/weapon/screwdriver))
 
-#define iscrowbar(A) istype(A, /obj/item/weapon/crowbar)
+#define iscrowbar(A) (istype(A, /obj/item/weapon/crowbar))
 
-#define ismultitool(A) istype(A, /obj/item/device/multitool)
+#define ismultitool(A) (istype(A, /obj/item/device/multitool))
 
-#define iscoil(A) istype(A, /obj/item/stack/cable_coil)
+#define iscoil(A) (istype(A, /obj/item/stack/cable_coil))
 
 // OBJECTS
 
@@ -132,60 +149,74 @@
 
 #define isrole(type, H) (H?.mind ? H.mind.GetRole(type) : FALSE)
 
+#define isrolebytype(type, H) (H?.mind ? H.mind.GetRoleByType(type) : FALSE)
+
 #define isanyantag(H) (H?.mind && H.mind.antag_roles.len)
 
-#define isabductorsci(H) (H?.mind ? H.mind.GetRole(ABDUCTOR_SCI) : FALSE)
+#define isabductorsci(H) isrole(ABDUCTOR_SCI, H)
 
-#define isabductoragent(H) (H?.mind ? H.mind.GetRole(ABDUCTOR_AGENT) : FALSE)
+#define isabductoragent(H) isrole(ABDUCTOR_AGENT, H)
 
-#define isshadowling(H) (H?.mind ? H.mind.GetRole(SHADOW) : FALSE)
+#define isshadowling(H) isrole(SHADOW, H)
 
-#define isshadowthrall(H) (H?.mind ? H.mind.GetRole(SHADOW_THRALL) : FALSE)
+#define isshadowthrall(H) isrole(SHADOW_THRALL, H)
 
 #define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
 
-#define isvoxraider(H) (H?.mind ? H.mind.GetRole(VOXRAIDER) : FALSE)
+#define isvoxraider(H) isrole(VOXRAIDER, H)
 
-#define ischangeling(H) (H?.mind ? H.mind.GetRoleByType(/datum/role/changeling) : FALSE)
+#define ischangeling(H) isrolebytype(/datum/role/changeling, H)
 
-#define isanyrev(H) (isrevnothead(H) || isrevhead(H))
+#define isanyrev(H) (isrev(H) || isrevhead(H))
 
-#define isrev(H) (H?.mind ? H.mind.GetRole(REV) : FALSE)
+#define isrev(H) isrole(REV, H)
 
-#define isrevhead(H) (H?.mind ? H.mind.GetRole(HEADREV) : FALSE)
+#define isrevhead(H) isrole(HEADREV, H)
 
-#define istraitor(H) (H?.mind ? H.mind.GetRole(TRAITOR) : FALSE)
+#define istraitor(H) isrole(TRAITOR, H)
 
-#define iselitesyndie(H) (H?.mind ? H.mind.GetRole(SYNDIESQUADIE) : FALSE)
+#define iselitesyndie(H) isrole(SYNDIESQUADIE, H)
 
-#define ismalf(H) (H?.mind ? H.mind.GetRole(MALF) : FALSE)
+#define ismalf(H) isrole(MALF, H)
 
-#define isnukeop(H) (H?.mind ? H.mind.GetRole(NUKE_OP) : FALSE)
+#define isnukeop(H) isrole(NUKE_OP, H)
 
-#define iswizard(H) (H?.mind ? H.mind.GetRole(WIZARD) : FALSE)
+#define iswizard(H) isrole(WIZARD, H)
 
-#define isdeathsquad(H) (H?.mind ? H.mind.GetRole(DEATHSQUADIE) : FALSE)
+#define isdeathsquad(H) isrole(DEATHSQUADIE, H)
 
-#define isninja(H) (H?.mind ? H.mind.GetRole(NINJA) : FALSE)
+#define isninja(H) isrole(NINJA, H)
 
-#define isERT(H) (H?.mind ? H.mind.GetRole(RESPONDER) : FALSE)
+#define isERT(H) isrole(RESPONDER, H)
 
-#define isrolezombie(H) (H?.mind ? H.mind.GetRole(ZOMBIE) : FALSE)
+#define isrolezombie(H) isrole(ZOMBIE, H)
 
-#define isalien(H) (H?.mind ? H.mind.GetRole(XENOMORPH) : FALSE)
+#define isalien(H) isrole(XENOMORPH, H)
+
+#define isgangster(H) isrole(GANGSTER, H)
+
+#define isgangsterlead(H) isrole(GANGSTER_LEADER, H)
+
+#define isanygangster(H) isrolebytype(/datum/role/gangster, H)
+
+#define isgundealer(H) isrole(GANGSTER_DEALER, H)
+
+#define isanycop(H) isrolebytype(/datum/role/cop, H)
+
+#define isanyblob(H) isrolebytype(/datum/role/blob_overmind, H)
 
 // BLOB
 
-#define isblob(A) istype(A, /obj/effect/blob)
+#define isblob(A) (istype(A, /obj/effect/blob))
 
-#define isblobnormal(A) istype(A, /obj/effect/blob/normal)
+#define isblobnormal(A) (istype(A, /obj/effect/blob/normal))
 
-#define isblobcore(A) istype(A, /obj/effect/blob/core)
+#define isblobcore(A) (istype(A, /obj/effect/blob/core))
 
-#define isblobnode(A) istype(A, /obj/effect/blob/node)
+#define isblobnode(A) (istype(A, /obj/effect/blob/node))
 
-#define isblobfactory(A) istype(A, /obj/effect/blob/factory)
+#define isblobfactory(A) (istype(A, /obj/effect/blob/factory))
 
-#define isblobshield(A) istype(A, /obj/effect/blob/shield)
+#define isblobshield(A) (istype(A, /obj/effect/blob/shield))
 
-#define isblobresource(A) istype(A, /obj/effect/blob/resource)
+#define isblobresource(A) (istype(A, /obj/effect/blob/resource))

@@ -70,4 +70,4 @@
 		ASPECT_RESCUE = 1,
 	)
 
-	invoke_spelltype = /obj/effect/proc_holder/spell/targeted/charge/religion
+	invoke_spelltype = /obj/effect/proc_holder/spell/no_target/charge/religion

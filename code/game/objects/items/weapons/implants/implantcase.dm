@@ -5,12 +5,12 @@
 	item_state = "implantcase"
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/obj/item/weapon/implant/imp = null
 
 /obj/item/weapon/implantcase/proc/update()
 	if (src.imp)
-		src.icon_state = text("implantcase-[]", src.imp.item_color)
+		src.icon_state = "implantcase-[imp.implant_type]"
 	else
 		src.icon_state = "implantcase-0"
 	return

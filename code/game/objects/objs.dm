@@ -26,7 +26,7 @@
 	return 0
 
 /obj/Destroy()
-	if(!istype(src, /obj/machinery))
+	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	nanomanager.close_uis(src)
 	return ..()
@@ -59,7 +59,7 @@
 		return null
 
 /obj/singularity_act()
-	ex_act(1.0)
+	ex_act(EXPLODE_DEVASTATE)
 	if(src && !QDELETED(src))
 		qdel(src)
 	return 2
@@ -140,7 +140,10 @@
 		in_use = is_in_use|ai_in_use
 
 /obj/attack_ghost(mob/dead/observer/user)
-	if(user.client.machine_interactive_ghost && ui_interact(user) != -1)
+	if(user.client.machine_interactive_ghost)
+		if(ui_interact(user) != -1)
+			return
+		tgui_interact(user)
 		return
 	..()
 

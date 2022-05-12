@@ -37,6 +37,7 @@
 
 		name = "[name] - [resulting_poster.original_name]"
 
+	AddElement(/datum/element/beauty, 300)
 
 // The poster sign/structure
 

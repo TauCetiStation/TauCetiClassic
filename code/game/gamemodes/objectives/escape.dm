@@ -14,12 +14,10 @@
 	if(!location)
 		return OBJECTIVE_LOSS
 
-	if(istype(location, /turf/simulated/shuttle/floor4)) // Fails traitors if they are in the shuttle brig -- Polymorph
-		if(istype(owner.current, /mob/living/carbon))
-			var/mob/living/carbon/C = owner.current
-			if (!C.restrained())
-				return OBJECTIVE_WIN
-		return OBJECTIVE_LOSS
+	if(iscarbon(owner.current))
+		var/mob/living/carbon/C = owner.current
+		if(C.restrained())
+			return OBJECTIVE_LOSS
 
 	var/area/check_area = location.loc
 	if(istype(check_area, /area/shuttle/escape/centcom))

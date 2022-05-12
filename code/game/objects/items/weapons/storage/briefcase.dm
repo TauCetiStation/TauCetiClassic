@@ -7,8 +7,8 @@
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = ITEM_SIZE_LARGE
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 
 /obj/item/weapon/storage/briefcase/attack(mob/living/M, mob/living/user)
@@ -25,7 +25,7 @@
 	if (M.stat < 2 && M.health < 50 && prob(90))
 		var/mob/H = M
 		// ******* Check
-		if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
+		if ((ishuman(H) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
 			to_chat(M, "<span class='warning'>The helmet protects you from being hit hard in the head!</span>")
 			return
 		var/time = rand(2, 6)
@@ -38,7 +38,7 @@
 		visible_message("<span class='warning'><B>[M] has been knocked unconscious!</B></span>", blind_message = "<span class='warning'>You hear someone fall.</span>")
 	else
 		to_chat(M, text("<span class='warning'>[] tried to knock you unconcious!</span>",user))
-		M.eye_blurry += 3
+		M.blurEyes(3)
 
 	return
 

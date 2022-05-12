@@ -21,6 +21,8 @@
 /obj/effect/decal/cleanable/cellular/mine
 	icon = 'icons/obj/structures/cellular_biomass/alien.dmi'
 
+	beauty = -250
+
 /obj/structure/cellular_biomass/core/mine
 	icon = 'icons/obj/structures/cellular_biomass/alien.dmi'
 	light_color = "#710f8c"

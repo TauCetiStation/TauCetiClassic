@@ -33,7 +33,7 @@
 	icon_living = "parrot_fly"
 	icon_dead = "parrot_dead"
 	pass_flags = PASSTABLE
-	small = 1
+	w_class = SIZE_TINY
 
 	speak = list("Hi","Hello!","Cracker?","BAWWWWK george mellons griffing me")
 	speak_emote = list("squawks","says","yells")
@@ -249,7 +249,7 @@
 	return
 
 //Bullets
-/mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
@@ -364,7 +364,7 @@
 		if(!held_item && !parrot_perch) //If we've got nothing to do.. look for something to do.
 			var/atom/movable/AM = search_for_perch_and_item() //This handles checking through lists so we know it's either a perch or stealable item
 			if(AM)
-				if(istype(AM, /obj/item) || isliving(AM))	//If stealable item
+				if(isitem(AM) || isliving(AM))	//If stealable item
 					parrot_interest = AM
 					emote("turns and flies towards [parrot_interest]")
 					parrot_state = PARROT_SWOOP | PARROT_STEAL
@@ -516,14 +516,14 @@
 		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
 			continue
 
-		if(istype(AM, /obj/item))
+		if(isitem(AM))
 			var/obj/item/I = AM
-			if(I.w_class < ITEM_SIZE_SMALL)
+			if(I.w_class < SIZE_TINY)
 				return I
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if((C.l_hand && C.l_hand.w_class <= ITEM_SIZE_SMALL) || (C.r_hand && C.r_hand.w_class <= ITEM_SIZE_SMALL))
+			if((C.l_hand && C.l_hand.w_class <= SIZE_TINY) || (C.r_hand && C.r_hand.w_class <= SIZE_TINY))
 				return C
 	return null
 
@@ -545,14 +545,14 @@
 		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
 			continue
 
-		if(istype(AM, /obj/item))
+		if(isitem(AM))
 			var/obj/item/I = AM
-			if(I.w_class <= ITEM_SIZE_SMALL)
+			if(I.w_class <= SIZE_TINY)
 				return I
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if(C.l_hand && C.l_hand.w_class <= ITEM_SIZE_SMALL || C.r_hand && C.r_hand.w_class <= ITEM_SIZE_SMALL)
+			if(C.l_hand && C.l_hand.w_class <= SIZE_TINY || C.r_hand && C.r_hand.w_class <= SIZE_TINY)
 				return C
 	return null
 
@@ -574,7 +574,7 @@
 
 	for(var/obj/item/I in view(1,src))
 		//Make sure we're not already holding it and it's small enough
-		if(I.loc != src && I.w_class <= ITEM_SIZE_SMALL)
+		if(I.loc != src && I.w_class <= SIZE_TINY)
 
 			//If we have a perch and the item is sitting on it, continue
 			if(!client && parrot_perch && I.loc == parrot_perch.loc)
@@ -603,10 +603,10 @@
 	var/obj/item/stolen_item = null
 
 	for(var/mob/living/carbon/C in view(1,src))
-		if(C.l_hand && C.l_hand.w_class <= ITEM_SIZE_SMALL)
+		if(C.l_hand && C.l_hand.w_class <= SIZE_TINY)
 			stolen_item = C.l_hand
 
-		if(C.r_hand && C.r_hand.w_class <= ITEM_SIZE_SMALL)
+		if(C.r_hand && C.r_hand.w_class <= SIZE_TINY)
 			stolen_item = C.r_hand
 
 		if(stolen_item)

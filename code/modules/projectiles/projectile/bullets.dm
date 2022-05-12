@@ -32,14 +32,10 @@
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
-/obj/item/projectile/bullet/buckpellet
-	name = "buckpellet"
-	damage = 14
-	dispersion = 2.5
-
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = 20
+	damage = 14
+	dispersion = 2.5
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
@@ -48,12 +44,7 @@
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
 
-/obj/item/projectile/bullet/weakbullet/rubber45 //to manage .45 pain damage
-	name = "rubber bullet"
-	agony = 55
-
 /obj/item/projectile/bullet/smg //.45 ACP
-	name = "submachinegun bullet"
 	damage = 20
 
 /obj/item/projectile/bullet/smg_hp
@@ -109,6 +100,17 @@
 /obj/item/projectile/bullet/grenade/r4046/atom_init()
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
+
+
+/obj/item/projectile/bullet/grenade/explosive
+	name = "grenade"
+	damage = 10
+	embed = 0
+	sharp = 0
+
+/obj/item/projectile/bullet/grenade/explosive/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	explosion(target, 1, 1, 2)
+	return 1
 
 /obj/item/projectile/bullet/chem
 	damage = 5
@@ -196,18 +198,20 @@
 	embed = 0
 	edge = 1
 
-/obj/item/projectile/bullet/stunslug
-	name = "stunslug"
+/obj/item/projectile/bullet/stunshot
+	name = "stunshot"
 	icon_state = "spark"
+	flag = "energy"
 	damage = 5
 	stun = 0
 	weaken = 0
 	stutter = 10
-	agony = 60
+	agony = 40
 	embed = 0
 	sharp = 0
+	dispersion = 1.8
 
-/obj/item/projectile/bullet/stunslug/atom_init()
+/obj/item/projectile/bullet/stunshot/atom_init()
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
@@ -220,7 +224,7 @@
 	damage = 20
 
 /obj/item/projectile/bullet/incendiary/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(istype(target, /mob/living/carbon))
+	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(10)
 		M.IgniteMob()
@@ -248,7 +252,7 @@
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/flare/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(istype(target, /mob/living/carbon))
+	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(1)
 		M.IgniteMob()

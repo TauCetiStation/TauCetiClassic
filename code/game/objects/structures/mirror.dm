@@ -35,14 +35,13 @@
 	desc = "Oh no, seven years of bad luck!"
 
 
-/obj/structure/mirror/bullet_act(obj/item/projectile/Proj)
+/obj/structure/mirror/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(prob(Proj.damage * 2))
 		if(!shattered)
 			shatter()
 		else
 			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
-	..()
-
 
 /obj/structure/mirror/attackby(obj/item/I, mob/user)
 	user.do_attack_animation(src)
@@ -108,7 +107,7 @@
 
 	var/mob/living/carbon/human/H = user
 
-	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "skin tone", "xenos skin",  "gender", "hair", "eyes")
+	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "skin tone", "xenos skin",  "gender", "hair", "eyes", "height")
 
 	switch(choice)
 		if("name")
@@ -243,3 +242,11 @@
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)
+		if("height")
+			var/new_height = input(H, "Choose your character's height:", "Character Height", H.height) as null|anything in heights_list
+			if(new_height)
+				H.height = new_height
+				H.update_hair()
+				H.update_body()
+				H.regenerate_icons()
+				H.check_dna(H)

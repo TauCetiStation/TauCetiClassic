@@ -11,7 +11,7 @@
 	emote_hear = list("squeeks","squeaks","squiks")
 	emote_see = list("runs in a circle", "shakes", "scritches at something")
 	pass_flags = PASSTABLE | PASSMOB
-	small = TRUE
+	w_class = SIZE_MINUSCULE
 	speak_chance = 1
 	melee_damage = 0
 	turns_per_move = 8
@@ -86,8 +86,6 @@
 	icon_state = "mouse_[body_color]_splat"
 	layer = MOB_LAYER
 	timeofdeath = world.time
-	if(client)
-		client.time_died_as_mouse = world.time
 
 /mob/living/simple_animal/mouse/MouseDrop(atom/over_object)
 
@@ -166,8 +164,6 @@
 
 /mob/living/simple_animal/mouse/death()
 	layer = MOB_LAYER
-	if(client)
-		client.time_died_as_mouse = world.time
 	..()
 
 /*

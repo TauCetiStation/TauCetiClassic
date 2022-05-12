@@ -2,7 +2,7 @@
 	set src in oview()
 
 	if(!usr || !src)	return
-	if( (usr.sdisabilities & BLIND || usr.blinded || usr.stat) && !istype(usr,/mob/dead/observer) )
+	if( (usr.sdisabilities & BLIND || usr.blinded || usr.stat) && !isobserver(usr) )
 		to_chat(usr, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
 
@@ -38,6 +38,9 @@
 
 	if (src.digitalcamo)
 		msg += "<span class='warning'>It is moving its body in an unnatural and blatantly unsimian manner.</span>\n"
+
+	if(w_class)
+		msg += "It is a [get_size_flavor()] sized creature.\n"
 
 	msg += "*---------*</span>"
 

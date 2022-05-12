@@ -42,8 +42,8 @@
 	AddComponent(/datum/component/forcefield, "blood aura", 20, 5 SECONDS, 3 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
-	var/image/glow = image(icon, src, "glow_[icon_state]", LIGHTING_LAYER + 1)
-	glow.plane = LIGHTING_PLANE + 1
+	var/image/glow = image(icon, src, "glow_[icon_state]")
+	glow.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(glow)
 
 /mob/living/simple_animal/construct/death()
@@ -67,6 +67,10 @@
 		else
 			msg += "<B>It looks severely dented!</B>\n"
 		msg += "</span>"
+
+	if(w_class)
+		msg += "It is a [get_size_flavor()] sized creature.\n"
+
 	msg += "*---------*</span>"
 	to_chat(user, msg)
 
@@ -92,6 +96,7 @@
 	melee_damage = 25
 	attacktext = "smash"
 	speed = 3
+	w_class = SIZE_MASSIVE
 	environment_smash = 2
 	attack_sound = list('sound/weapons/punch3.ogg')
 	status_flags = 0
@@ -109,7 +114,7 @@
 	weakened = 0
 	..()
 
-/mob/living/simple_animal/construct/armoured/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/construct/armoured/bullet_act(obj/item/projectile/P, def_zone)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
@@ -148,7 +153,7 @@
 	attack_push_vis_effect = ATTACK_EFFECT_SLASH
 	attack_disarm_vis_effect = ATTACK_EFFECT_SLASH
 	construct_spells = list(
-		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift,
+		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/phaseshift,
 		)
 
 
@@ -196,6 +201,7 @@
 	attacktext = "brutally crush"
 	speed = 5
 	environment_smash = 2
+	w_class = SIZE_MASSIVE
 	attack_sound = list('sound/weapons/punch4.ogg')
 	resize = 1.2
 

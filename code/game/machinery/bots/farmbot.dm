@@ -505,7 +505,7 @@
 	icon_state = "water_arm"
 	var/build_step = 0
 	var/created_name = "Farmbot" //To preserve the name if it's a unique farmbot I guess
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/weapon/farmbot_arm_assembly/atom_init()
 	..()

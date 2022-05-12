@@ -16,7 +16,7 @@
 	icon = 'icons/obj/tabletop_assistant.dmi'
 	icon_state = "tabletop"
 	item_state = "analyzer"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5

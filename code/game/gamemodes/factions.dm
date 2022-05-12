@@ -34,11 +34,18 @@
 	// What are the goals of this faction?
 	var/datum/objective_holder/objective_holder
 
+	// Type for collector of statistics by this faction
+	var/datum/stat/faction/stat_type = /datum/stat/faction
+
 /datum/faction/New()
 	SHOULD_CALL_PARENT(TRUE)
 	..()
 	objective_holder = new
 	objective_holder.faction = src
+
+/datum/faction/Destroy(force, ...)
+	QDEL_NULL(objective_holder)
+	return ..()
 
 /datum/faction/proc/OnPostSetup()
 	SHOULD_CALL_PARENT(TRUE)
@@ -47,12 +54,10 @@
 
 // Destroy fraction and her members
 /datum/faction/proc/Dismantle()
-	for(var/datum/role/R in members)
-		var/datum/game_mode/G = SSticker.mode
-		G.orphaned_roles += R
-		remove_role(R)
-	qdel(objective_holder)
 	var/datum/game_mode/G = SSticker.mode
+	for(var/datum/role/R in members)
+		HandleRemovedRole(R)
+	qdel(objective_holder)
 	G.factions -= src
 	qdel(src)
 
@@ -98,7 +103,7 @@
 	return TRUE
 
 // Basically, they are members of the new faction
-/datum/faction/proc/HandleNewMind(datum/mind/M) //Used on faction creation
+/datum/faction/proc/HandleNewMind(datum/mind/M, laterole) //Used on faction creation
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
 		if(R.antag == M)
@@ -109,13 +114,14 @@
 		return null
 	var/role_type = get_initrole_type()
 	var/datum/role/newRole = new role_type(null, src)
-	if(!newRole.AssignToRole(M))
+	newRole.is_roundstart_role = !laterole
+	if(!newRole.AssignToRole(M, laterole = laterole))
 		newRole.Drop()
 		return null
 	return newRole
 
 // Basically, these are the new members of the faction during the round
-/datum/faction/proc/HandleRecruitedMind(datum/mind/M, override = FALSE)
+/datum/faction/proc/HandleRecruitedMind(datum/mind/M, laterole)
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
 		if(R.antag == M)
@@ -126,7 +132,7 @@
 		return (M.GetRole(late_role))
 	var/role_type = get_role_type()
 	var/datum/role/R = new role_type(null, src) // Add him to our roles
-	if(!R.AssignToRole(M, override))
+	if(!R.AssignToRole(M, laterole = laterole))
 		R.Drop()
 		return null
 	return R
@@ -172,6 +178,12 @@
 /datum/faction/proc/CheckObjectives()
 	return objective_holder.GetObjectiveString(check_success = TRUE)
 
+/datum/faction/proc/calculate_completion()
+	for(var/datum/objective/O in GetObjectives())
+		O.calculate_completion()
+	for(var/datum/role/R in members)
+		R.calculate_completion()
+
 // Numbers!!
 /datum/faction/proc/build_scorestat()
 	return
@@ -196,11 +208,11 @@
 			score_results += custom_result
 		else
 			if (IsSuccessful())
-				score_results += "<font color='green'><B>\The [capitalize(name)] was successful!</B></font>"
+				score_results += "<span class='green'><B>\The [capitalize(name)] was successful!</B></span>"
 				feedback_add_details("[ID]_success","SUCCESS")
-				score["roleswon"]++
+				SSStatistics.score.roleswon++
 			else if (minor_victory)
-				score_results += "<font color='orange'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</font>"
+				score_results += "<span class='orange'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</span>"
 				feedback_add_details("[ID]_success","HALF")
 			else
 				score_results += "<span class='red'><B>\The [capitalize(name)] has failed.</B></span>"
@@ -209,7 +221,6 @@
 		score_results += "<br><br>"
 		for (var/datum/objective/objective in objective_holder.GetObjectives())
 			objective.extra_info()
-			objective.calculate_completion()
 			score_results += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
 			feedback_add_details("[ID]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
 			count++
@@ -217,8 +228,6 @@
 				score_results += "<br>"
 
 		score_results += "</ul>"
-
-	antagonists_completion += list(list("faction" = ID, "html" = score_results))
 
 	score_results += "<ul>"
 
@@ -267,7 +276,7 @@
 /datum/faction/proc/IsSuccessful()
 	if(objective_holder.objectives.len > 0)
 		for(var/datum/objective/objective in objective_holder.GetObjectives())
-			if(!objective.check_completion())
+			if(objective.completed == OBJECTIVE_LOSS)
 				return FALSE
 	for(var/datum/role/R in members)
 		if(!R.IsSuccessful())
@@ -283,7 +292,7 @@
 
 /datum/faction/proc/GetFactionHeader() //Returns what will show when the factions objective completion is summarized
 	var/icon/logo = get_logo_icon()
-	var/header = {"<img src='data:image/png;base64, [icon2base64(logo)]' style='position:relative; top:10;'> <FONT size = 3><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10;'>"}
+	var/header = {"[bicon(logo, css = "style='position:relative; top:10;'")] <FONT size = 3><B>[capitalize(name)]</B></FONT> [bicon(logo, css = "style='position:relative; top:10;'")]"}
 	return header
 
 

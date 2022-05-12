@@ -13,7 +13,6 @@
 /obj/item/clothing/shoes/mime
 	name = "mime shoes"
 	icon_state = "mime"
-	item_color = "mime"
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/space_ninja
@@ -36,7 +35,7 @@
 	icon_state = "tourist"
 	permeability_coefficient = 1
 	species_restricted = null
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -49,13 +48,11 @@
 	name = "Brown Sandals"
 	desc = "Sweet looking brown sandals. Do not wear them with socks!"
 	icon_state = "sandals-brown"
-	item_color = "sandals-brown"
 
 /obj/item/clothing/shoes/sandal/pink
 	name = "Pink Sandals"
 	desc = "They radiate a cheap plastic aroma like from hell ramen."
 	icon_state = "sandals-pink"
-	item_color = "sandals-pink"
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic, black shoes."
@@ -68,8 +65,7 @@
 	name = "clown shoes"
 	icon_state = "clown"
 	item_state = "clown_shoes"
-	slowdown = SHOES_SLOWDOWN + 0.5
-	item_color = "clown"
+	slowdown = SHOES_SLOWDOWN + 1.0
 	species_restricted = null
 
 /obj/item/clothing/shoes/clown_shoes/Destroy()
@@ -162,14 +158,14 @@
 	icon_state = "slippers"
 	item_state = "slippers"
 	species_restricted = null
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/clothing/shoes/slippers_worn
 	name = "worn bunny slippers"
 	desc = "Fluffy..."
 	icon_state = "slippers_worn"
 	item_state = "slippers_worn"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/clothing/shoes/laceup
 	name = "laceup shoes"
@@ -182,7 +178,7 @@
 	name = "swimming fins"
 	icon_state = "flippers"
 	flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN+1
+	slowdown = SHOES_SLOWDOWN+0.5
 	species_restricted = null
 
 /obj/item/clothing/shoes/centcom
@@ -194,13 +190,11 @@
 /obj/item/clothing/shoes/rosas_shoes
 	name = "white shoes"
 	icon_state = "rosas_shoes"
-	item_color = "rosas_shoes"
 	permeability_coefficient = 0.01
 
 /obj/item/clothing/shoes/western
 	name = "western boots"
 	icon_state = "western_boots"
-	item_color = "western_boots"
 
 /obj/item/clothing/shoes/magboots/syndie
 	desc = "Light-weighted magnetic boots that have a custom syndicate paintjob for use in combat."
@@ -221,7 +215,6 @@
 	flags = NOSLIP
 	icon_state = "nt_pmc_boots"
 	item_state = "r_feet"
-	item_color = "nt_pmc_boots"
 
 /obj/item/clothing/shoes/boots/lizard_boots
 	name = "Lizard Boots"
@@ -229,13 +222,12 @@
 	flags = NOSLIP
 	icon_state = "Lizard_Boots"
 	item_state = "r_feet"
-	item_color = "Lizard_Boots"
 	species_restricted = list(UNATHI)
 
 /obj/item/clothing/shoes/heels
 	name = "Heels"
 	icon_state = "high_shoes"
-	slowdown = SHOES_SLOWDOWN + 0.5
+	slowdown = SHOES_SLOWDOWN + 0.2
 	force = 3.5
 	attack_verb = list("stabbed")
 	// It's a stab sound.
@@ -251,20 +243,17 @@
 	desc = "Deutschland army boots."
 	icon_state = "Black_Boots"
 	item_state = "jackboots"
-	item_color = "Black_Boots"
 
 /obj/item/clothing/shoes/brown_cut
 	name = "Cut Brown Boots"
 	desc = "Some shoes that was cut to fit unathi foot in it."
 	icon_state = "brown-cut"
-	item_color = "brown-cut"
 	species_restricted = null
 
 /obj/item/clothing/shoes/footwraps
 	name = "Footwraps"
 	desc = "Just some rags that you wrap around your foot to feel more comfortable. Better than nothing."
 	icon_state = "footwraps"
-	item_color = "footwraps"
 	species_restricted = null
 
 /obj/item/clothing/shoes/holoboots
@@ -272,5 +261,9 @@
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "wjboots"
 	item_state = "wjboots"
-	item_color = "hosred"
 	clipped_status = CLIPPABLE
+
+/obj/item/clothing/shoes/kung
+	name = "Kung shoes"
+	desc = "Pair of a high red shoes."
+	icon_state = "kung_shoes"

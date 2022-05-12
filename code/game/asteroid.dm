@@ -3,7 +3,7 @@ var/global/list/space_surprises = list(
 	/obj/item/weapon/pickaxe/silver					= 4,
 	/obj/item/weapon/pickaxe/drill					= 4,
 	/obj/item/weapon/pickaxe/drill/jackhammer		= 4,
-	/obj/item/weapon/twohanded/sledgehammer			= 3,
+	/obj/item/weapon/sledgehammer					= 3,
 	/obj/item/weapon/pickaxe/diamond				= 3,
 	/obj/item/weapon/pickaxe/drill/diamond_drill	= 3,
 	/obj/item/weapon/pickaxe/gold					= 3,
@@ -88,7 +88,6 @@ var/global/list/spawned_surprises = list()
 	var/valid = 0
 	var/turf/T = null
 	var/sanity = 0
-	var/list/room = null
 	var/list/turfs = null
 
 
@@ -118,7 +117,7 @@ var/global/list/spawned_surprises = list()
 			valid = 0
 			continue
 
-		if(locate(/turf/space) in surroundings)
+		if(locate(/turf/environment) in surroundings)
 			valid = 0
 			continue
 
@@ -132,25 +131,3 @@ var/global/list/spawned_surprises = list()
 
 	if(!T)
 		return 0
-
-	room = spawn_room(T,size,size,,,1)
-
-	if(room)
-		T = pick(room["floors"])
-		if(T)
-			var/surprise = null
-			valid = 0
-			while(!valid)
-				surprise = pickweight(space_surprises)
-				if(surprise in spawned_surprises)
-					if(prob(20))
-						valid++
-					else
-						continue
-				else
-					valid++
-
-			spawned_surprises.Add(surprise)
-			new surprise(T)
-
-	return 1

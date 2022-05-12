@@ -8,6 +8,7 @@
 	maxHealth = 300
 	health = 300
 	immune_to_ssd = 1
+	w_class = SIZE_MASSIVE
 
 	speak_emote = list("roars")
 	emote_hear = list("roars")
@@ -149,7 +150,7 @@
 
 		if(pressure <= 75)
 			if(prob(15))
-				emote("me",1,"gasps!")
+				emote("gasp")
 
 	weakened = 0
 	if(health > 0)
@@ -172,7 +173,7 @@
 
 	for(var/mob/M in contents)
 		M.loc = src.loc
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			var/mob/living/L = M
 			L.Paralyse(15)
 			L.update_canmove()
@@ -199,6 +200,10 @@
 		else
 			msg += "<B>It looks severely dented!</B>\n"
 		msg += "</span>"
+
+	if(w_class)
+		msg += "It is a [get_size_flavor()] creature.\n"
+
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)
@@ -221,7 +226,7 @@
 		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		visible_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
-/mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
@@ -247,9 +252,20 @@
 	if(D.density)
 		to_chat(src, "<span class='userdanger'>You force your fingers between \
 		 the doors and begin to pry them open...</span>")
-		playsound(D, 'sound/machines/firedoor_open.ogg', VOL_EFFECTS_MASTER, 30, null, -4)
+		playsound(D, 'sound/machines/firedoor_open.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
 		if (!is_busy() && do_after(src, 40, target = D) && D)
 			D.open(1)
+
+/mob/living/simple_animal/hulk/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+
+	if(!. || moving_diagonally)
+		return .
+	
+	var/turf/T = loc
+
+	if(isturf(T) && !(T.flags & NOSTEPSOUND) && !lying)
+		playsound(T, 'sound/effects/hulk_step.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/proc/hulk_scream(obj/target, chance)
 	if(prob(chance))

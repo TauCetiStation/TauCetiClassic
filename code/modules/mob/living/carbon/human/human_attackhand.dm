@@ -15,6 +15,8 @@
 	if(HULK in mutations)
 		retDam += 4
 
+	retDam += BPHand.pumped * 0.1
+
 	if(istype(gloves, /obj/item/clothing/gloves/boxing))
 		retDamType = HALLOSS
 
@@ -22,11 +24,13 @@
 				"miss_sound" = retMissSound)
 
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/attacker)
+	if(isHubMan)
+		return
+
 	. = ..()
 
 	if(!.)
 		return
-
 	if(attacker.wear_suit && istype(attacker.wear_suit, /obj/item/clothing/suit))
 		var/obj/item/clothing/suit/V = attacker.wear_suit
 		V.attack_reaction(attacker, REACTION_INTERACT_UNARMED, src)
@@ -41,7 +45,7 @@
 	if(health < (config.health_threshold_crit - 30) && target_zone == O_MOUTH)
 		INVOKE_ASYNC(src, .proc/perform_av, attacker)
 		return TRUE
-	if(stat == DEAD && Heart && Heart.parent_bodypart == target_zone)
+	if(Heart && Heart.parent_bodypart == target_zone && Heart.heart_status != HEART_NORMAL)
 		INVOKE_ASYNC(src, .proc/perform_cpr, attacker)
 		return TRUE
 	if(attacker != src || !apply_pressure(attacker, target_zone))

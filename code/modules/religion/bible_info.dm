@@ -156,3 +156,6 @@
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "book"
 	item_state = "book"
+
+	laws_type = /datum/ai_laws/faith/cult
+	borg_name = "bloodiest"
