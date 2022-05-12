@@ -67,9 +67,9 @@ SUBSYSTEM_DEF(economy)
 
 				//If a dep have enough money it will pay everything, if not - it will divide to everyone who is at the same rank.
 				if(salary_rank > D.money)
-					salary = round(D.money / rank_table.len * (1 - SSeconomy.tax_income*0.01)) //Dividing money for salaries
+					salary = round(D.money / rank_table.len * (1 - tax_income * 0.01)) //Dividing money for salaries
 				else
-					salary = round(P.owner_salary * (1 - SSeconomy.tax_income*0.01)) //Pure salaries
+					salary = round(P.owner_salary * (1 - tax_income * 0.01)) //Pure salaries
 
 				if(salary == 0 && P.owner_PDA)
 					P.owner_PDA.transaction_failure()
@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(economy)
 
 	//CentComm to Station Subsidion transaction
 	if(!global.station_account.suspended && all_salaries != 0)
-		global.station_account.subsidy = all_salaries * SSeconomy.station_subsidy_coefficient
+		global.station_account.subsidy = all_salaries * station_subsidy_coefficient
 		charge_to_account(global.station_account.account_number, global.station_account.account_number, "Station Subsidion", "Central Command", global.station_account.subsidy)
 
 	payment_counter += 1
