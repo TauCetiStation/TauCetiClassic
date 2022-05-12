@@ -104,8 +104,6 @@
 			user.SetNextMove(CLICK_CD_INTERACT)
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 			to_chat(user, "<span class='notice'>You put the key into the slot.</span>")
-			verbs += /obj/vehicle/space/spacebike/verb/remove_key
-			verbs += /obj/vehicle/space/spacebike/verb/toggle_engine
 		return
 	return ..()
 
