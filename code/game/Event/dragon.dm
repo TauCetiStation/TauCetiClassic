@@ -7,11 +7,11 @@
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
 
 /mob/living/simple_animal/hostile/dragon
-	name = "Красный дракон"
-	desc = "Не такой сильный как черный дракон, но у тебя все еще проблемы."
+	name = "РљСЂР°СЃРЅС‹Р№ РґСЂР°РєРѕРЅ"
+	desc = "РќРµ С‚Р°РєРѕР№ СЃРёР»СЊРЅС‹Р№ РєР°Рє С‡РµСЂРЅС‹Р№ РґСЂР°РєРѕРЅ, РЅРѕ Сѓ С‚РµР±СЏ РІСЃРµ РµС‰Рµ РїСЂРѕР±Р»РµРјС‹."
 	health = 500
 	maxHealth = 500
-	attacktext = "ЖРЕТ"
+	attacktext = "Р–Р Р•Рў"
 	attack_sound = 'sound/weapons/bite.ogg'
 	icon = 'icons/mob/Event/Dragon.dmi'
 	icon_state = "dragon"
@@ -19,7 +19,7 @@
 	icon_dead = "dragon_dead"
 	friendly = "stares down"
 	speak_emote = list("roars")
-	ranged_message = "дышит огнем"
+	ranged_message = "РґС‹С€РёС‚ РѕРіРЅРµРј"
 	retreat_distance = null
 	minimum_distance = null
 	projectiletype = /obj/item/projectile/magic/fireball

@@ -1,23 +1,23 @@
 /obj/structure/ladder/cave
-	name = "В шахту"
-	desc = "ОСТРОЖНО ТРОГЛОДИТЫ"
+	name = "Р’ С€Р°С…С‚Сѓ"
+	desc = "РћРЎРўР РћР–РќРћ РўР РћР“Р›РћР”РРўР«"
 	id = 1
 	height = 2
 
 /obj/structure/ladder/land
-	name = "На поверхность"
-	desc = "К свету"
+	name = "РќР° РїРѕРІРµСЂС…РЅРѕСЃС‚СЊ"
+	desc = "Рљ СЃРІРµС‚Сѓ"
 	id = 1
 	height = 1
 
 /obj/structure/ladder/lovushka_dlya_debilov
-	name = "Тебе туда не надо"
-	desc = "Оттуда воняет"
+	name = "РўРµР±Рµ С‚СѓРґР° РЅРµ РЅР°РґРѕ"
+	desc = "РћС‚С‚СѓРґР° РІРѕРЅСЏРµС‚"
 	id = 2
 	height = 2
 
 /obj/structure/ladder/lovushka_dlya_debilov_exit
-	name = "Скил Ишью"
-	desc = "И ты его не прошел"
+	name = "РЎРєРёР» РС€СЊСЋ"
+	desc = "Р С‚С‹ РµРіРѕ РЅРµ РїСЂРѕС€РµР»"
 	id = 2
 	height = 1

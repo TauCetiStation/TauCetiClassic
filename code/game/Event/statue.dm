@@ -2,26 +2,26 @@
 	anchored = TRUE
 	layer = 11
 	icon = 'icons/mob/human.dmi'
-	desc = "Внешний вид профессии"
+	desc = "Р’РЅРµС€РЅРёР№ РІРёРґ РїСЂРѕС„РµСЃСЃРёРё"
 
 /obj/structure/statue/peasant
-	name = "Крестьянин"
+	name = "РљСЂРµСЃС‚СЊСЏРЅРёРЅ"
 	icon_state = "peasant"
 /obj/structure/statue/miner
-	name = "Шахтер"
+	name = "РЁР°С…С‚РµСЂ"
 	icon_state = "peasant"
 /obj/structure/statue/helper
-	name = "Послушник"
+	name = "РџРѕСЃР»СѓС€РЅРёРє"
 	icon_state = "helper"
 /obj/structure/statue/knight
-	name = "Рыцарь"
+	name = "Р С‹С†Р°СЂСЊ"
 	icon_state = "knight"
 /obj/structure/statue/monk
-	name = "Монах"
+	name = "РњРѕРЅР°С…"
 	icon_state = "monk"
 /obj/structure/statue/smith
-	name = "Кузнец"
+	name = "РљСѓР·РЅРµС†"
 	icon_state = "smith"
 /obj/structure/statue/hero
-	name = "Герой"
+	name = "Р“РµСЂРѕР№"
 	icon_state = "hero"

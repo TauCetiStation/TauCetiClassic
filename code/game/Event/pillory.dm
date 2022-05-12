@@ -1,6 +1,6 @@
 /obj/structure/pillory
-	name = "Позорный столб"
-	desc = "Какой позор.."
+	name = "РџРѕР·РѕСЂРЅС‹Р№ СЃС‚РѕР»Р±"
+	desc = "РљР°РєРѕР№ РїРѕР·РѕСЂ.."
 	can_buckle = TRUE
 	icon = 'icons/obj/structures/scrap/bonfire.dmi'
 	icon_state = "bonfire_rod"
@@ -25,7 +25,7 @@
 		animate(M, pixel_x = 0, pixel_y = 0, 2, 1, LINEAR_EASING)
 
 /obj/item/pillory_tablet
-	name = "Преступление"
+	name = "РџСЂРµСЃС‚СѓРїР»РµРЅРёРµ"
 	icon = 'icons/obj/structures/scrap/bonfire.dmi'
 	icon_state = "tablet"
 	pixel_y = 14
@@ -34,7 +34,7 @@
 /obj/item/pillory_tablet/text
 	icon = 'icons/obj/structures/scrap/bonfire.dmi'
 	icon_state = "tablet"
-	name = "Преступление"
+	name = "РџСЂРµСЃС‚СѓРїР»РµРЅРёРµ"
 	desc = "..."
 	pixel_y = 14
 	layer = 11
@@ -42,18 +42,18 @@
 /obj/item/pillory_tablet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen))
 		var/defaultText = ""
-		var/targName = sanitize(input(usr, "Напишите преступление этого человека", "Transparant text", input_default(defaultText)))
+		var/targName = sanitize(input(usr, "РќР°РїРёС€РёС‚Рµ РїСЂРµСЃС‚СѓРїР»РµРЅРёРµ СЌС‚РѕРіРѕ С‡РµР»РѕРІРµРєР°", "Transparant text", input_default(defaultText)))
 		var/obj/item/pillory_tablet/text/W = new /obj/item/pillory_tablet/text
 		W.desc = targName
 		user.remove_from_mob(src)
 		user.put_in_hands(W)
 		qdel(src)
-		to_chat(user, "<span class='notice'> Здесь написано: <span class='emojify'>[targName]</span>.")
+		to_chat(user, "<span class='notice'> Р—РґРµСЃСЊ РЅР°РїРёСЃР°РЅРѕ: <span class='emojify'>[targName]</span>.")
 		return
 
 /obj/item/weapon/melee/whip
-	name = "Плетка"
-	desc = "Для серьезных преступлений"
+	name = "РџР»РµС‚РєР°"
+	desc = "Р”Р»СЏ СЃРµСЂСЊРµР·РЅС‹С… РїСЂРµСЃС‚СѓРїР»РµРЅРёР№"
 	icon_state = "chain"
 	item_state = "chain"
 	flags = CONDUCT
@@ -63,4 +63,4 @@
 	throwforce = 1
 	w_class = SIZE_SMALL
 	origin_tech = "combat=4"
-	attack_verb = list("выпорол")
+	attack_verb = list("РІС‹РїРѕСЂРѕР»")

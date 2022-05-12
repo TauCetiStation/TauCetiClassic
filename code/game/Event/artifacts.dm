@@ -1,14 +1,14 @@
 /obj/structure/closet/crate/miningcar/unlimited_wood
-	name = "Странная тележка"
-	desc = "Ощущается странность"
+	name = "РЎС‚СЂР°РЅРЅР°СЏ С‚РµР»РµР¶РєР°"
+	desc = "РћС‰СѓС‰Р°РµС‚СЃСЏ СЃС‚СЂР°РЅРЅРѕСЃС‚СЊ"
 
 /obj/structure/closet/crate/miningcar/unlimited_wood/open()
 	..()
 	new/obj/item/stack/sheet/wood(loc)
 
 /obj/structure/closet/crate/miningcar/unlimited_silver
-	name = "Странная тележка"
-	desc = "Ощущается странность"
+	name = "РЎС‚СЂР°РЅРЅР°СЏ С‚РµР»РµР¶РєР°"
+	desc = "РћС‰СѓС‰Р°РµС‚СЃСЏ СЃС‚СЂР°РЅРЅРѕСЃС‚СЊ"
 
 /obj/structure/closet/crate/miningcar/unlimited_silver/open()
 	..()

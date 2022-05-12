@@ -1,5 +1,5 @@
 /mob/living/carbon/human/skeleton/valhalla
-	name = "Μεπςβεφ"
+	name = "ΠΠµΡ€Ρ‚Π²ΠµΡ†"
 	status_flags = GODMODE
 	health = 50000
 	universal_understand = TRUE

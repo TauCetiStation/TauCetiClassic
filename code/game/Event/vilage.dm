@@ -7,26 +7,26 @@
 
 /obj/structure/vilage/anvil
 	icon_state = "anvil"
-	name = "Наковальня"
-	desc = "Куй железо, пока горячо"
+	name = "РќР°РєРѕРІР°Р»СЊРЅСЏ"
+	desc = "РљСѓР№ Р¶РµР»РµР·Рѕ, РїРѕРєР° РіРѕСЂСЏС‡Рѕ"
 	density = 1
 
 /obj/structure/vilage/fence
 	icon_state = "fence"
-	name = "Забор"
-	desc = "Огораживает"
+	name = "Р—Р°Р±РѕСЂ"
+	desc = "РћРіРѕСЂР°Р¶РёРІР°РµС‚"
 	density = 1
 
 /obj/structure/sign/poster/banner
 	icon = 'icons/obj/Events/human/vilage.dmi'
 	icon_state = "banner"
-	name = "Знамя"
-	desc = "Знамя этого надела"
+	name = "Р—РЅР°РјСЏ"
+	desc = "Р—РЅР°РјСЏ СЌС‚РѕРіРѕ РЅР°РґРµР»Р°"
 
 /obj/structure/vilage/velikiy_sup
 	icon_state = "velikiy_sup"
-	name = "Котел"
-	desc = "О великий суп наварили.."
+	name = "РљРѕС‚РµР»"
+	desc = "Рћ РІРµР»РёРєРёР№ СЃСѓРї РЅР°РІР°СЂРёР»Рё.."
 	density = 1
 	anchored = FALSE
 	var/on = FALSE
@@ -36,11 +36,11 @@
 
 /obj/structure/vilage/velikiy_sup/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
-		to_chat(user, "<span class='notice'>Уже сварено.</span>")
+		to_chat(user, "<span class='notice'>РЈР¶Рµ СЃРІР°СЂРµРЅРѕ.</span>")
 		return
 
 	if (ishuman(user) && !(I.flags & DROPDEL))
-		to_chat(user, "<span class='notice'>Ты сунул [I] в [src].</span>")
+		to_chat(user, "<span class='notice'>РўС‹ СЃСѓРЅСѓР» [I] РІ [src].</span>")
 		on = TRUE
 		frying = I
 		user.drop_from_inventory(frying, src)
@@ -51,9 +51,9 @@
 		fry_time++
 		if(fry_time == 30)
 			playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
-			visible_message("[src] Бульк!")
+			visible_message("[src] Р‘СѓР»СЊРє!")
 		else if (fry_time == 60)
-			visible_message("[src] Пиздато получается")
+			visible_message("[src] РџРёР·РґР°С‚Рѕ РїРѕР»СѓС‡Р°РµС‚СЃСЏ")
 
 /obj/structure/vilage/velikiy_sup/attack_hand(mob/user)
 	. = ..()
@@ -61,22 +61,22 @@
 		return
 
 	if(frying)
-		to_chat(user, "<span class='notice'>Вы достали [frying] из [src].</span>")
+		to_chat(user, "<span class='notice'>Р’С‹ РґРѕСЃС‚Р°Р»Рё [frying] РёР· [src].</span>")
 		var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/S = new(loc)
 		switch(fry_time)
 			if(0 to 15)
 				S.color = rgb(166,103,54)
-				S.name = "Легкая варка [frying.name]"
+				S.name = "Р›РµРіРєР°СЏ РІР°СЂРєР° [frying.name]"
 			if(16 to 49)
 				S.color = rgb(103,63,24)
-				S.name = "Нормально сваренно [frying.name]"
+				S.name = "РќРѕСЂРјР°Р»СЊРЅРѕ СЃРІР°СЂРµРЅРЅРѕ [frying.name]"
 			if(50 to 59)
 				S.color = rgb(63, 23, 4)
-				S.name = "[frying.name] в крутую"
+				S.name = "[frying.name] РІ РєСЂСѓС‚СѓСЋ"
 			if(60 to INFINITY)
 				S.color = rgb(33,19,9)
-				S.name = "Теперь сами жри это"
-				S.desc = "Сваришь так-же флаг героя - дам ачивку и бан"
+				S.name = "РўРµРїРµСЂСЊ СЃР°РјРё Р¶СЂРё СЌС‚Рѕ"
+				S.desc = "РЎРІР°СЂРёС€СЊ С‚Р°Рє-Р¶Рµ С„Р»Р°Рі РіРµСЂРѕСЏ - РґР°Рј Р°С‡РёРІРєСѓ Рё Р±Р°РЅ"
 		S.appearance = frying.appearance
 		S.desc = frying.desc
 		qdel(frying)
@@ -86,23 +86,23 @@
 		fry_time = 0
 
 /obj/machinery/seed_extractor/vilage
-	name = "Место изъятия семян"
-	desc = "Удобные пакетики - бонус"
+	name = "РњРµСЃС‚Рѕ РёР·СЉСЏС‚РёСЏ СЃРµРјСЏРЅ"
+	desc = "РЈРґРѕР±РЅС‹Рµ РїР°РєРµС‚РёРєРё - Р±РѕРЅСѓСЃ"
 	icon = 'icons/obj/Events/human/vilage.dmi'
 	icon_state = "seed"
 	use_power = NO_POWER_USE
 	seed_multiplier = 2
 
 /obj/machinery/processor/vilage
-	name = "Переламыватель"
-	desc = "На ручной тяге"
+	name = "РџРµСЂРµР»Р°РјС‹РІР°С‚РµР»СЊ"
+	desc = "РќР° СЂСѓС‡РЅРѕР№ С‚СЏРіРµ"
 	icon = 'icons/obj/Events/human/vilage.dmi'
 	icon_state = "processor"
 	use_power = NO_POWER_USE
 
 /obj/machinery/kitchen_machine/microwave/vilage
-	name = "Микроволновый казан"
-	desc = "А что такое микроволны?"
+	name = "РњРёРєСЂРѕРІРѕР»РЅРѕРІС‹Р№ РєР°Р·Р°РЅ"
+	desc = "Рђ С‡С‚Рѕ С‚Р°РєРѕРµ РјРёРєСЂРѕРІРѕР»РЅС‹?"
 	icon = 'icons/obj/Events/human/vilage.dmi'
 	icon_state = "microwave"
 	off_icon = "microwave"
@@ -111,8 +111,8 @@
 	use_power = NO_POWER_USE
 
 /obj/machinery/kitchen_machine/oven/vilage
-	name = "Печка"
-	desc = "С вытяжкой!"
+	name = "РџРµС‡РєР°"
+	desc = "РЎ РІС‹С‚СЏР¶РєРѕР№!"
 	icon = 'icons/obj/Events/human/vilage.dmi'
 	icon_state = "oven"
 	off_icon = "oven"
@@ -121,8 +121,8 @@
 	use_power = NO_POWER_USE
 
 /obj/machinery/kitchen_machine/grill/vilage
-	name = "Костер"
-	desc = "Маленький, специально для готовки"
+	name = "РљРѕСЃС‚РµСЂ"
+	desc = "РњР°Р»РµРЅСЊРєРёР№, СЃРїРµС†РёР°Р»СЊРЅРѕ РґР»СЏ РіРѕС‚РѕРІРєРё"
 	icon = 'icons/obj/Events/human/vilage.dmi'
 	icon_state = "grill"
 	off_icon = "grill"
@@ -143,8 +143,8 @@
 
 
 /obj/structure/tree_of_greed
-	name = "Таки древо Мудрости"
-	desc = "Оно готово ответить тебе на вопросы, <span class='warning'> небесплатно...</span>"
+	name = "РўР°РєРё РґСЂРµРІРѕ РњСѓРґСЂРѕСЃС‚Рё"
+	desc = "РћРЅРѕ РіРѕС‚РѕРІРѕ РѕС‚РІРµС‚РёС‚СЊ С‚РµР±Рµ РЅР° РІРѕРїСЂРѕСЃС‹, <span class='warning'> РЅРµР±РµСЃРїР»Р°С‚РЅРѕ...</span>"
 	anchored = TRUE
 	layer = 11
 	icon = 'icons/obj/flora/tree_of_greed.dmi'
@@ -154,5 +154,5 @@
 	density = 1
 
 /obj/structure/tree_of_greed/attack_hand(mob/living/carbon/human/user)
-	var/question = sanitize(input(user, "Задайте вопрос древу."))
+	var/question = sanitize(input(user, "Р—Р°РґР°Р№С‚Рµ РІРѕРїСЂРѕСЃ РґСЂРµРІСѓ."))
 	to_chat_admin_pm(usr,"<span class='adminsay'><span class='prefix'>TREE QUESTION:</span> <EM>[key_name(usr, 1)]</EM> (<a href='?_src_=holder;adminplayerobservejump=\ref[user]'>JMP</A>): <span class='message emojify linkify'>[question]</span></span>")

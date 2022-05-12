@@ -1,6 +1,6 @@
 /obj/item/uncurs_ointment
-	name = "Препарат Проктонис"
-	desc = "Практонис. Сглаз никому не нужен."
+	name = "РџСЂРµРїР°СЂР°С‚ РџСЂРѕРєС‚РѕРЅРёСЃ"
+	desc = "РџСЂР°РєС‚РѕРЅРёСЃ. РЎРіР»Р°Р· РЅРёРєРѕРјСѓ РЅРµ РЅСѓР¶РµРЅ."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "ointment"
 	item_state = "ointment"
@@ -8,10 +8,10 @@
 /obj/item/uncurs_ointment/attack(mob/living/simple_animal/chicken/C, mob/user)
 	var/mob/living/M = C
 	if(C.health == 0 )
-		to_chat(user, "<span class='notice'> Это существо мертво</span>")
+		to_chat(user, "<span class='notice'> Р­С‚Рѕ СЃСѓС‰РµСЃС‚РІРѕ РјРµСЂС‚РІРѕ</span>")
 		return
 	if(!M.MyTrueNotChikenBody)
-		to_chat(user, "<span class='notice'> Это не жертва проклятия.</span>")
+		to_chat(user, "<span class='notice'> Р­С‚Рѕ РЅРµ Р¶РµСЂС‚РІР° РїСЂРѕРєР»СЏС‚РёСЏ.</span>")
 		return
 	M.MyTrueNotChikenBody.loc = M.loc
 	M.mind.transfer_to(M.MyTrueNotChikenBody)

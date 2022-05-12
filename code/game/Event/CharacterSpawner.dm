@@ -1,6 +1,6 @@
 /obj/structure/character_spawner
-	name = "СТАРТ"
-	desc = "Нажми на меня если закончил выбор внешности и прочитал все таблички."
+	name = "РЎРўРђР Рў"
+	desc = "РќР°Р¶РјРё РЅР° РјРµРЅСЏ РµСЃР»Рё Р·Р°РєРѕРЅС‡РёР» РІС‹Р±РѕСЂ РІРЅРµС€РЅРѕСЃС‚Рё Рё РїСЂРѕС‡РёС‚Р°Р» РІСЃРµ С‚Р°Р±Р»РёС‡РєРё."
 	anchored = TRUE
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "start"
@@ -15,10 +15,10 @@
 /obj/structure/character_spawner/attack_hand(mob/living/carbon/human/user)
 	if(!selecting_job)
 		selecting_job = TRUE
-		ready = tgui_alert(user, "Готовы войти в игру? Убедитесь что прочитали все подсказки и закончили выбор своей внешности.",, list("Да","Нет"))
+		ready = tgui_alert(user, "Р“РѕС‚РѕРІС‹ РІРѕР№С‚Рё РІ РёРіСЂСѓ? РЈР±РµРґРёС‚РµСЃСЊ С‡С‚Рѕ РїСЂРѕС‡РёС‚Р°Р»Рё РІСЃРµ РїРѕРґСЃРєР°Р·РєРё Рё Р·Р°РєРѕРЅС‡РёР»Рё РІС‹Р±РѕСЂ СЃРІРѕРµР№ РІРЅРµС€РЅРѕСЃС‚Рё.",, list("Р”Р°","РќРµС‚"))
 	else
 		return
-	if(ready == "Нет")
+	if(ready == "РќРµС‚")
 		selecting_job = FALSE
 		return
 	for(var/obj/item/W in user)
@@ -73,7 +73,7 @@
 
 /obj/structure/character_spawner/monk/attack_hand(mob/user)
 	..()
-	if(ready == "Нет")
+	if(ready == "РќРµС‚")
 		selecting_job = FALSE
 		return
 	INVOKE_ASYNC(global.chaplain_religion, /datum/religion/chaplain.proc/create_by_chaplain, user)
@@ -91,7 +91,7 @@
 
 /obj/structure/character_spawner/human_hero/attack_hand(mob/user)
 	..()
-	if(ready == "Нет")
+	if(ready == "РќРµС‚")
 		selecting_job = FALSE
 		return
 	new/obj/vehicle/space/spacebike/horse/white(user.loc)
