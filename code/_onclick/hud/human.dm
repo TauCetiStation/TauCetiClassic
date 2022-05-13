@@ -296,8 +296,7 @@
 
 	mymob.internals = new /atom/movable/screen/internal()
 	mymob.internals.icon = ui_style
-	if(istype(mymob.internal, /obj/item/weapon/tank))
-		mymob.internals.icon_state = "internal1"
+	mymob.internals.update_icon(mymob)
 
 	mymob.healths = new /atom/movable/screen()
 	mymob.healths.icon = 'icons/mob/screen_gen.dmi'
