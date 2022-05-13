@@ -14,7 +14,6 @@
 	vis_flags = VIS_INHERIT_PLANE
 	appearance_flags = APPEARANCE_UI
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
-	var/gun_click_time = -100 //I'm lazy.
 	var/internal_switch = 0 // Cooldown for internal switching
 	var/assigned_map
 	var/del_on_map_removal = TRUE
@@ -140,28 +139,52 @@
 /atom/movable/screen/gun
 	name = "gun"
 	icon = 'icons/mob/screen1.dmi'
-	master = null
+	COOLDOWN_DECLARE(gun_click_time)
+
+/atom/movable/screen/gun/Click()
+	if(COOLDOWN_FINISHED(src, gun_click_time))
+		return FALSE
+	if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
+		to_chat(usr, "You need your gun in your active hand to do that!")
+		return FALSE
+	COOLDOWN_START(src, gun_click_time, 3 SECONDS) //give them 3 seconds between mode changes.
+	return TRUE
 
 /atom/movable/screen/gun/move
 	name = "Allow Walking"
 	icon_state = "no_walk0"
 	screen_loc = ui_gun2
 
+/atom/movable/screen/gun/move/Click()
+	if(..())
+		usr.client.AllowTargetMove()
+
 /atom/movable/screen/gun/run
 	name = "Allow Running"
 	icon_state = "no_run0"
 	screen_loc = ui_gun3
+
+/atom/movable/screen/gun/run/Click()
+	if(..())
+		usr.client.AllowTargetRun()
 
 /atom/movable/screen/gun/item
 	name = "Allow Item Use"
 	icon_state = "no_item0"
 	screen_loc = ui_gun1
 
+/atom/movable/screen/gun/item/Click()
+	if(..())
+		usr.client.AllowTargetClick()
+
 /atom/movable/screen/gun/mode
 	name = "Toggle Gun Mode"
 	icon_state = "gun0"
 	screen_loc = ui_gun_select
 	//dir = 1
+
+/atom/movable/screen/gun/mode/Click()
+	usr.client.ToggleGunMode()
 
 /atom/movable/screen/zone_sel
 	name = "damage zone"
@@ -294,9 +317,6 @@
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screem/toggle/Click()
-	if(..())
-		return TRUE
-
 	if(usr.hud_used.inventory_shown)
 		usr.hud_used.inventory_shown = FALSE
 		usr.client.screen -= usr.hud_used.other
@@ -305,7 +325,6 @@
 		usr.client.screen += usr.hud_used.other
 
 	usr.hud_used.hidden_inventory_update()
-	return TRUE
 
 /atom/movable/screen/equip
 	name = "equip"
@@ -314,12 +333,11 @@
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screem/toggle/Click()
-	if(..() || ismecha(usr.loc, /obj/mecha)) // stops inventory actions in a mech
-		return TRUE
+	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.quick_equip()
-	return TRUE
 
 /atom/movable/screen/current_sting
 	icon = 'icons/mob/screen_gen.dmi'
@@ -329,13 +347,9 @@
 	invisibility = INVISIBILITY_ABSTRACT
 
 /atom/movable/screen/current_sting/Click()
-	if(..())
-		return TRUE
-
 	if(iscarbon(usr))
 		var/mob/living/carbon/U = usr
 		U.unset_sting()
-		return TRUE
 
 /atom/movable/screen/resist
 	name = "resist"
@@ -345,13 +359,9 @@
 
 
 /atom/movable/screen/resist/Click()
-	if(..())
-		return TRUE
-
 	if(isliving(usr))
 		var/mob/living/L = usr
 		L.resist()
-		return TRUE
 
 /atom/movable/screen/resist/ian
 	screen_loc = ui_drop_throw
@@ -365,13 +375,9 @@
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/move_intent/Click()
-	if(..())
-		return TRUE
-
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.set_m_intent(C.m_intent == MOVE_INTENT_WALK ? MOVE_INTENT_RUN : MOVE_INTENT_WALK)
-		return TRUE
 
 /atom/movable/screen/move_intent/alien
 	icon = 'icons/mob/screen1_xeno.dmi'
@@ -391,15 +397,12 @@
 
 
 /atom/movable/screen/internal/Click()
-	if(..())
-		return TRUE
-
 	if(!iscarbon(usr))
-		return FALSE
+		return
 
 	var/mob/living/carbon/C = usr
 	if((C.incapacitated() && !C.weakened) || (internal_switch > world.time))
-		return TRUE
+		return
 
 	internal_switch = world.time + 16
 
@@ -414,16 +417,16 @@
 				internalsound = 'sound/misc/riginternaloff.ogg'
 		playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 		update_icon(C)
-		return TRUE
+		return
 
 	if(!istype(C.wear_mask, /obj/item/clothing/mask))
 		to_chat(C, "<span class='notice'>You are not wearing a mask.</span>")
 		internal_switch = world.time + 8
-		return TRUE
+		return
 
 	if(!(C.wear_mask.flags & MASKINTERNALS))
 		to_chat(C, "<span class='notice'>This mask doesn't support breathing through the tanks.</span>")
-		return TRUE
+		return
 
 	var/list/nicename
 	var/list/tankcheck
@@ -468,8 +471,6 @@
 		update_icon(C)
 	else
 		to_chat(C, "<span class='notice'>You don't have [inhale_type=="oxygen" ? "an" : "a"] [inhale_type] tank.</span>")
-	
-	return TRUE
 
 /atom/movable/screen/act_intent
 	name = "act_intent"
@@ -477,11 +478,8 @@
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/act_intent/Click()
-	if(..())
-		return TRUE
-
 	usr.a_intent_change(INTENT_HOTKEY_RIGHT)
-	return TRUE
+	return
 
 /atom/movable/screen/act_intent/alien
 	icon = 'icons/mob/screen1_xeno.dmi'
@@ -494,11 +492,7 @@
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/intent/Click()
-	if(..())
-		return TRUE
-
 	usr.set_a_intent(name)
-	return TRUE
 
 /atom/movable/screen/intent/help
 	name = INTENT_HELP
@@ -518,13 +512,9 @@
 	screen_loc = ui_drop_throw
 
 /atom/movable/screen/throw/Click()
-	if(..())
-		return TRUE
-
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
-		return TRUE
 
 /atom/movable/screen/throw/alien
 	icon = 'icons/mob/screen1_xeno.dmi'
@@ -536,11 +526,7 @@
 	plane = HUD_PLANE
 
 /atom/movable/screen/drop/Click()
-	if(..())
-		return TRUE
-
 	usr.drop_item()
-	return TRUE
 
 /atom/movable/screen/drop/alien
 	icon = 'icons/mob/screen1_xeno.dmi'
@@ -553,13 +539,9 @@
 	screen_loc = ui_borg_module
 
 /atom/movable/screen/module/Click()
-	if(..())
-		return TRUE
-
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.pick_module()
-		return TRUE
 
 /atom/movable/screen/inventory
 	name = "inventory"
@@ -568,16 +550,12 @@
 	screen_loc = ui_borg_inventory
 
 /atom/movable/screen/inventory/Click()
-	if(..())
-		return TRUE
-
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		if(R.module)
 			R.hud_used.toggle_show_robot_modules()
 		else
 			to_chat(R, "You haven't selected a module yet.")
-		return TRUE
 
 /atom/movable/screen/radio
 	name = "radio"
@@ -587,13 +565,9 @@
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/inventory/Click()
-	if(..())
-		return TRUE
-
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.radio_menu()
-		return TRUE
 
 /atom/movable/screen/panel
 	name = "panel"
@@ -602,13 +576,9 @@
 	screen_loc = ui_borg_panel
 
 /atom/movable/screen/panel/Click()
-	if(..())
-		return TRUE
-
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.installed_modules()
-		return TRUE
 
 /atom/movable/screen/store
 	name = "store"
@@ -617,16 +587,12 @@
 	screen_loc = ui_borg_store
 
 /atom/movable/screen/store/Click()
-	if(..())
-		return TRUE
-
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		if(R.module)
 			R.uneq_active()
 		else
 			to_chat(R, "You haven't selected a module yet.")
-		return TRUE
 
 /atom/movable/screen/robo_hands
 	icon = 'icons/mob/screen1_robot.dmi'
@@ -634,13 +600,10 @@
 	var/module_index
 
 /atom/movable/screen/robo_hands/Click()
-	if(..())
-		return TRUE
-
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.toggle_module(module_index)
-		return TRUE
+		return
 
 /atom/movable/screen/robot_hands/first
 	name = "module1"
@@ -668,12 +631,23 @@
 	screen_loc = ui_ai_core
 	plane = ABOVE_HUD_PLANE
 
+/atom/movable/screen/ai_core/Click()
+	if(isAI(usr))
+		var/mob/living/silicon/ai/AI = usr
+		AI.view_core()
+
 /atom/movable/screen/camera_list
 	name = "Show Camera List"
 	icon = 'icons/mob/screen_ai.dmi'
 	icon_state = "camera"
 	screen_loc = ui_ai_camera_list
 	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/camera_list/Click()
+	if(isAI(usr))
+		var/mob/living/silicon/ai/AI = usr
+		var/camera = input(AI) in AI.get_camera_list()
+		AI.ai_camera_list(camera)
 
 /atom/movable/screen/camera_track
 	name = "Track With Camera"
@@ -682,12 +656,23 @@
 	screen_loc = ui_ai_track_with_camera
 	plane = ABOVE_HUD_PLANE
 
+/atom/movable/screen/camera_track/Click()
+	if(isAI(usr))
+		var/mob/living/silicon/ai/AI = usr
+		var/target_name = input(AI) in AI.trackable_mobs()
+		AI.ai_camera_track(target_name)
+
 /atom/movable/screen/camera_light
 	name = "Toggle Camera Light"
 	icon = 'icons/mob/screen_ai.dmi'
 	icon_state = "camera_light"
 	screen_loc = ui_ai_camera_light
 	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/camera_light/Click()
+	if(isAI(usr))
+		var/mob/living/silicon/ai/AI = usr
+		AI.toggle_camera_light()
 
 /atom/movable/screen/radio_settings
 	name = "Radio Settings"
@@ -696,6 +681,10 @@
 	screen_loc = ui_ai_control_integrated_radio
 	plane = ABOVE_HUD_PLANE
 
+/atom/movable/screen/radio_settings/Click()
+	if(isAI(usr))
+		var/mob/living/silicon/ai/AI = usr
+		AI.control_integrated_radio()
 
 /atom/movable/screen/crew_manifest
 	name = "Show Crew Manifest"
@@ -703,6 +692,11 @@
 	icon_state = "manifest"
 	screen_loc = ui_ai_crew_manifest
 	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/crew_manifest/Click()
+	if(issilicon(usr))
+		var/mob/living/silicon/S = usr
+		S.show_station_manifest()
 
 /atom/movable/screen/crew_manifest/robot
 	icon = 'icons/mob/screen1_robot.dmi'
@@ -716,6 +710,11 @@
 	screen_loc = ui_ai_alerts
 	plane = ABOVE_HUD_PLANE
 
+/atom/movable/screen/alerts/Click()
+	if(issilicon(usr))
+		var/mob/living/silicon/S = usr
+		S.show_alerts()
+
 /atom/movable/screen/alerts/robot
 	icon = 'icons/mob/screen1_robot.dmi'
 	icon_state = "showalerts"
@@ -728,6 +727,11 @@
 	screen_loc = ui_ai_announcement
 	plane = ABOVE_HUD_PLANE
 
+/atom/movable/screen/announcement/Click()
+	if(isAI(usr))
+		var/mob/living/silicon/ai/AI = usr
+		AI.ai_announcement()
+
 /atom/movable/screen/call_shuttle
 	name = "Call Emergency Shuttle"
 	icon = 'icons/mob/screen_ai.dmi'
@@ -735,12 +739,22 @@
 	screen_loc = ui_ai_shuttle
 	plane = ABOVE_HUD_PLANE
 
+/atom/movable/screen/call_shuttle/Click()
+	if(isAI(usr))
+		var/mob/living/silicon/ai/AI = usr
+		AI.ai_call_shuttle()
+
 /atom/movable/screen/state_laws
 	name = "State Laws"
 	icon = 'icons/mob/screen_ai.dmi'
 	icon_state = "state_laws"
 	screen_loc = ui_ai_state_laws
 	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/state_laws/Click()
+	if(issilicon(usr))
+		var/mob/living/silicon/S = usr
+		S.checklaws()
 
 /atom/movable/screen/state_laws/robot
 	icon = 'icons/mob/screen1_robot.dmi'
@@ -755,12 +769,22 @@
 	screen_loc = ui_borg_show_laws
 	plane = ABOVE_HUD_PLANE
 
+/atom/movable/screen/show_laws/Click()
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		R.show_laws()
+
 /atom/movable/screen/toggle_lights
 	name = "Toggle Lights"
 	icon = 'icons/mob/screen1_robot.dmi'
 	icon_state = "togglelights"
 	screen_loc = ui_borg_light
 	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/toggle_lights/Click()
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		R.toggle_lights()
 
 /atom/movable/screen/self_diagnosis
 	name = "Self Diagnosis"
@@ -769,12 +793,22 @@
 	screen_loc = ui_borg_diagnostic
 	plane = ABOVE_HUD_PLANE
 
+/atom/movable/screen/self_diagnosis/Click()
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		R.self_diagnosis()
+
 /atom/movable/screen/namepick
 	name = "Namepick"
 	icon = 'icons/mob/screen1_robot.dmi'
 	icon_state = "changename"
 	screen_loc = ui_borg_namepick
 	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/namepick/Click()
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		R.Namepick()
 
 /atom/movable/screen/show_pda_screens
 		name = "Show Pda Screens"
@@ -783,6 +817,12 @@
 		screen_loc = ui_borg_show_pda
 		plane = ABOVE_HUD_PLANE
 
+/atom/movable/screen/show_pda_screens/Click()
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		R.shown_robot_pda = !R.shown_robot_pda
+		R.hud_used.toggle_robot_additional_screens(0, R.shown_robot_pda)
+
 /atom/movable/screen/show_photo_screens
 	name = "Show Foto Screens"
 	icon = 'icons/mob/screen1_robot.dmi'
@@ -790,12 +830,23 @@
 	screen_loc = ui_borg_show_foto
 	plane = ABOVE_HUD_PLANE
 
+/atom/movable/screen/show_photo_screens/Click()
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		R.shown_robot_foto = !R.shown_robot_foto
+		R.hud_used.toggle_robot_additional_screens(1, R.shown_robot_foto)
+
 /atom/movable/screen/toggle_components
 	name = "Toggle Components"
 	icon = 'icons/mob/screen1_robot.dmi'
 	icon_state = "togglecompanent"
 	screen_loc = ui_borg_component
 	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/toggle_components/Click()
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		R.toggle_component()
 
 /atom/movable/screen/robot_pda
 	icon = 'icons/mob/screen1_robot.dmi'
@@ -805,6 +856,11 @@
 	name = "PDA - Send Message"
 	icon_state = "pda_send"
 
+/atom/movable/screen/robot_pda/send/Click()
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		R.toggle_component()
+
 /atom/movable/screen/robot_pda/send/ai
 	icon = 'icons/mob/screen_ai.dmi'
 	screen_loc = ui_ai_pda_send
@@ -812,6 +868,12 @@
 /atom/movable/screen/robot_pda/log
 	name = "PDA - Show Message Log"
 	icon_state = "pda_log"
+
+/atom/movable/screen/robot_pda/log/Click()
+	if(issilicon(usr))
+		var/mob/living/silicon/S = usr
+		var/obj/item/device/pda/silicon/PDA = S.pda
+		PDA.cmd_show_message_log(usr)
 
 /atom/movable/screen/robot_pda/log/ai
 	icon = 'icons/mob/screen_ai.dmi'
@@ -822,9 +884,21 @@
 	name = "Pda - Ringtone"
 	icon_state = "ringtone"
 
+/atom/movable/screen/robot_pda/ringtone/Click()
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		var/obj/item/device/pda/silicon/PDA = R.pda
+		PDA.cmd_toggle_pda_silent()
+
 /atom/movable/screen/robot_pda/toggle
 	name = "Pda - Toggle"
 	icon_state = "toggleringer"
+
+/atom/movable/screen/robot_pda/toggle/Click()
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		var/obj/item/device/pda/silicon/PDA = R.pda
+		PDA.cmd_toggle_pda_receiver()
 
 /atom/movable/screen/robot_image
 	icon = 'icons/mob/screen1_robot.dmi'
@@ -833,6 +907,12 @@
 /atom/movable/screen/robot_image/take
 	name = "Take Image"
 	icon_state = "takephoto"
+
+/atom/movable/screen/robot_image/take/Click()
+	if(issilicon(usr))
+		var/mob/living/silicon/S = usr
+		var/obj/item/device/camera/siliconcam/camera = S.aiCamera
+		camera.take_image()
 
 /atom/movable/screen/robot_image/take/ai
 	icon =  'icons/mob/screen_ai.dmi'
@@ -843,6 +923,12 @@
 	name = "View Images"
 	icon_state = "photos"
 
+/atom/movable/screen/robot_image/view/Click()
+	if(issilicon(usr))
+		var/mob/living/silicon/S = usr
+		var/obj/item/device/camera/siliconcam/camera = S.aiCamera
+		camera.view_images()
+
 /atom/movable/screen/robot_image/view/ai
 	icon = 'icons/mob/screen_ai.dmi'
 	icon_state = "view_images"
@@ -852,12 +938,23 @@
 	name = "Delete Image"
 	icon_state = "deletthis"
 
+/atom/movable/screen/robot_image/delete/Click()
+	if(isrobot(usr))
+		var/mob/living/silicon/robot/R = usr
+		var/obj/item/device/camera/siliconcam/ai_camera/camera = R.aiCamera
+		camera.deletepicture(camera)
+
 /atom/movable/screen/sensor_augmentation
 	name = "Sensor Augmentation"
 	icon = 'icons/mob/screen_ai.dmi'
 	icon_state = "ai_sensor"
 	screen_loc = ui_ai_sensor
 	plane = ABOVE_HUD_PLANE
+
+/atom/movable/screen/sensor_augmentation/Click()
+	if(issilicon(usr))
+		var/mob/living/silicon/S = usr
+		S.toggle_sensor_mode()
 
 /atom/movable/screen/sensor_augmentation/robot
 	icon = 'icons/mob/screen1_robot.dmi'
@@ -870,204 +967,6 @@
 
 	SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 
-	switch(name)
-
-		if("AI Core")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.view_core()
-
-		if("Show Camera List")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				var/camera = input(AI) in AI.get_camera_list()
-				AI.ai_camera_list(camera)
-
-		if("Track With Camera")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				var/target_name = input(AI) in AI.trackable_mobs()
-				AI.ai_camera_track(target_name)
-
-		if("Toggle Camera Light")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.toggle_camera_light()
-
-		if("Radio Settings")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.control_integrated_radio()
-
-		if("Show Crew Manifest")
-			if(issilicon(usr))
-				var/mob/living/silicon/S = usr
-				S.show_station_manifest()
-
-		if("Show Alerts")
-			if(issilicon(usr))
-				var/mob/living/silicon/S = usr
-				S.show_alerts()
-
-		if("Announcement")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.ai_announcement()
-
-		if("Call Emergency Shuttle")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.ai_call_shuttle()
-
-		if("State Laws")
-			if(issilicon(usr))
-				var/mob/living/silicon/S = usr
-				S.checklaws()
-
-		if("Show Laws")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				R.show_laws()
-
-		if("Toggle Lights")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				R.toggle_lights()
-
-		if("Self Diagnosis")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				R.self_diagnosis()
-
-		if("Namepick")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				R.Namepick()
-
-		if("Show Pda Screens")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				R.shown_robot_pda = !R.shown_robot_pda
-				R.hud_used.toggle_robot_additional_screens(0, R.shown_robot_pda)
-
-		if("Show Foto Screens")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				R.shown_robot_foto = !R.shown_robot_foto
-				R.hud_used.toggle_robot_additional_screens(1, R.shown_robot_foto)
-
-		if("Toggle Components")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				R.toggle_component()
-
-		if("PDA - Send Message")
-			if(issilicon(usr))
-				var/mob/living/silicon/S = usr
-				var/obj/item/device/pda/silicon/PDA = S.pda
-				PDA.cmd_send_pdamesg(S)
-
-		if("PDA - Show Message Log")
-			if(issilicon(usr))
-				var/mob/living/silicon/S = usr
-				var/obj/item/device/pda/silicon/PDA = S.pda
-				PDA.cmd_show_message_log(usr)
-
-		if("Pda - Ringtone")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				var/obj/item/device/pda/silicon/PDA = R.pda
-				PDA.cmd_toggle_pda_silent()
-
-		if("Pda - Toggle")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				var/obj/item/device/pda/silicon/PDA = R.pda
-				PDA.cmd_toggle_pda_receiver()
-
-		if("Take Image")
-			if(issilicon(usr))
-				var/mob/living/silicon/S = usr
-				var/obj/item/device/camera/siliconcam/camera = S.aiCamera
-				camera.take_image()
-
-		if("View Images")
-			if(issilicon(usr))
-				var/mob/living/silicon/S = usr
-				var/obj/item/device/camera/siliconcam/camera = S.aiCamera
-				camera.view_images()
-
-		if("Delete Image")
-			if(isrobot(usr))
-				var/mob/living/silicon/robot/R = usr
-				var/obj/item/device/camera/siliconcam/ai_camera/camera = R.aiCamera
-				camera.deletepicture(camera)
-
-		if("Sensor Augmentation")
-			if(issilicon(usr))
-				var/mob/living/silicon/S = usr
-				S.toggle_sensor_mode()
-
-		if("Allow Walking")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
-				return
-			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
-				to_chat(usr, "You need your gun in your active hand to do that!")
-				return
-			usr.client.AllowTargetMove()
-			gun_click_time = world.time
-
-		if("Disallow Walking")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
-				return
-			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
-				to_chat(usr, "You need your gun in your active hand to do that!")
-				return
-			usr.client.AllowTargetMove()
-			gun_click_time = world.time
-
-		if("Allow Running")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
-				return
-			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
-				to_chat(usr, "You need your gun in your active hand to do that!")
-				return
-			usr.client.AllowTargetRun()
-			gun_click_time = world.time
-
-		if("Disallow Running")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
-				return
-			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
-				to_chat(usr, "You need your gun in your active hand to do that!")
-				return
-			usr.client.AllowTargetRun()
-			gun_click_time = world.time
-
-		if("Allow Item Use")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
-				return
-			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
-				to_chat(usr, "You need your gun in your active hand to do that!")
-				return
-			usr.client.AllowTargetClick()
-			gun_click_time = world.time
-
-
-		if("Disallow Item Use")
-			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
-				return
-			if(!istype(usr.get_active_hand(),/obj/item/weapon/gun))
-				to_chat(usr, "You need your gun in your active hand to do that!")
-				return
-			usr.client.AllowTargetClick()
-			gun_click_time = world.time
-
-		if("Toggle Gun Mode")
-			usr.client.ToggleGunMode()
-
-		else
-			return FALSE
 	return TRUE
 
 /atom/movable/screen/inventory/Click()
