@@ -37,10 +37,9 @@
 mob/living/simple_animal/hostile/beholder
 	name = "Злобоглаз"
 	desc = "Он сглазит тебя"
-	icon = 'icons/misc/jungle.dmi'
-	icon_state = "native1"
-	icon_living = "native1"
-	icon_dead = "native1_dead"
+	icon_state = "beholder"
+	icon_living = "beholder"
+	icon_dead = "beholder_dead"
 	faction = "Nigon"
 	speak_chance = 25
 	speak = list("РЕЕЕЕЕ")
