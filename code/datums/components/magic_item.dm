@@ -31,7 +31,6 @@
 	description = "Вы можете колдовать, используя этот предмет."
 	clothing_description = "Вы сможете колдовать, если вы наденете комплект таких вещей."
 
-// WIZARD_ITEM
 /datum/component/magic_item/wizard/can_show_tip(obj/item/source, mob/user)
 	return iswizard(user) || iswizardapprentice(user)
 
