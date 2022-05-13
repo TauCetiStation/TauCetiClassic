@@ -44,8 +44,7 @@
 	handle_actions()
 	update_action_buttons()
 
-	if(pullin)
-		pullin.icon_state = pulling ? "pull1" : "pull0"
+	pullin?.update_icon(src)
 
 	return TRUE
 
