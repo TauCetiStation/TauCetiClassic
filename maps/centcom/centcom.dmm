@@ -11182,8 +11182,8 @@
 /turf/unsimulated/wall,
 /area/centcom/living)
 "aAn" = (
-/obj/item/weapon/spacecash/c1000,
-/obj/item/weapon/spacecash/c500,
+/obj/item/weapon/spacecash/bill/c500,
+/obj/item/weapon/spacecash/bill/c200,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)

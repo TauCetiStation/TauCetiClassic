@@ -103,15 +103,17 @@
 #define MAT_PLASTIC		"plastic"
 #define MAT_BANANIUM	"bananium"
 
-#define COIN_GOLD "Gold coin"
-#define COIN_SILVER "Silver coin"
-#define COIN_DIAMOND "Diamond coin"
-#define COIN_IRON "Iron coin"
-#define COIN_PHORON "Solid phoron coin"
-#define COIN_URANIUM "Uranium coin"
+#define COIN_MERCURY "Mercury Sol"
+#define COIN_COPPER "Venus Sol"
+#define COIN_PLASTIC "Earth Sol"
+#define COIN_IRON "Mars Sol"
+#define COIN_TIN "Jupiter Sol"
+#define COIN_LEAD "Saturn Sol"
+#define COIN_URANIUM "Uranus Sol"
+#define COIN_PLATINUM "Neptune Sol"
+#define COIN_PHORON "Pluto Sol"
+#define COIN_GOLD "Sun Sol"
 #define COIN_BANANIUM "Bananium coin"
-#define COIN_PLATINUM "Platunum coin"
-#define COIN_MYTHRIL "Mythril coin"
 
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc

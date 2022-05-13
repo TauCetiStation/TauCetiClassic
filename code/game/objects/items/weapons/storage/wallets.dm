@@ -113,12 +113,13 @@
 		item2_type = pick(spawn_type1)
 
 	var/list/spawn_type2 = list(
-		/obj/item/weapon/coin/silver,
-		/obj/item/weapon/coin/silver,
-		/obj/item/weapon/coin/gold,
+		/obj/item/weapon/coin/mercury,
+		/obj/item/weapon/coin/copper,
+		/obj/item/weapon/coin/plastic,
 		/obj/item/weapon/coin/iron,
-		/obj/item/weapon/coin/iron,
-		/obj/item/weapon/coin/iron
+		/obj/item/weapon/coin/tin,
+		/obj/item/weapon/coin/lead,
+		/obj/item/weapon/coin/uranium,
 		)
 	var/item3_type = pick(spawn_type2)
 

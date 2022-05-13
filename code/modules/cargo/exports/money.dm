@@ -17,25 +17,6 @@
 	message = "worth of rare coins"
 	export_types = list(/obj/item/weapon/coin)
 
-/datum/export/coin/get_cost(obj/O, contr = 0, emag = 0)
-	var/price = 0
-	switch(O.name)
-		if(COIN_IRON)
-			price = 50
-		if(COIN_SILVER)
-			price = 100
-		if(COIN_GOLD)
-			price = 150
-		if(COIN_URANIUM)
-			price = 180
-		if(COIN_PHORON)
-			price = 220
-		if(COIN_PLATINUM, COIN_MYTHRIL)
-			price = 300
-		if(COIN_DIAMOND)
-			price = 350
-		if(COIN_BANANIUM)
-			price = 450
-		else
-			price = 1
+/datum/export/coin/get_cost(obj/item/weapon/coin/O, contr = 0, emag = 0)
+	var/price = O.price
 	return ..() * price

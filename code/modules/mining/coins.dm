@@ -6,6 +6,7 @@
 	force = 0
 	throwforce = 0
 	w_class = SIZE_MINUSCULE
+	price = 0
 	var/cmineral = null
 	var/reagent = null
 	var/string_attached
@@ -26,63 +27,74 @@
 	cmineral = "mercury"
 	reagent = "mercury"
 	icon_state = "coin_mercury_head"
+	price = 1
 
 /obj/item/weapon/coin/copper
 	name = COIN_COPPER
 	cmineral = "copper"
 	reagent = "copper"
 	icon_state = "coin_copper_head"
+	price = 2
 
 /obj/item/weapon/coin/plastic
 	name = COIN_PLASTIC
 	cmineral = "plastic"
 	reagent = "carbon"
 	icon_state = "coin_plastic_head"
+	price = 3
 
 /obj/item/weapon/coin/iron
 	name = COIN_IRON
 	cmineral = "iron"
 	reagent = "iron"
 	icon_state = "coin_iron_head"
+	price = 5
 
 /obj/item/weapon/coin/tin
 	name = COIN_TIN
 	cmineral = "tin"
 	icon_state = "coin_tin_head"
+	price = 10
 
 /obj/item/weapon/coin/lead
 	name = COIN_LEAD
 	cmineral = "lead"
 	icon_state = "coin_lead_head"
+	price = 15
 
 /obj/item/weapon/coin/uranium
 	name = COIN_URANIUM
 	cmineral = "uranium"
 	reagent = "uranium"
 	icon_state = "coin_uranium_head"
+	price = 20
 
 /obj/item/weapon/coin/platinum
 	name = COIN_PLATINUM
 	cmineral = "platinum"
 	icon_state = "coin_platinum_head"
+	price = 50
 
 /obj/item/weapon/coin/phoron
 	name = COIN_PHORON
 	cmineral = "phoron"
 	reagent = "phoron"
 	icon_state = "coin_phoron_head"
+	price = 100
 
 /obj/item/weapon/coin/gold
 	name = COIN_GOLD
 	cmineral = "gold"
 	reagent = "gold"
 	icon_state = "coin_gold_head"
+	price = 500
 
 /obj/item/weapon/coin/bananium
 	name = COIN_BANANIUM
 	cmineral = "bananium"
 	reagent = "banana"
 	icon_state = "coin_bananium_head"
+	price = 69
 
 /obj/item/weapon/coin/attackby(obj/item/I, mob/user, params)
 	if(iscoil(I))

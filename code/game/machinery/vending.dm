@@ -47,7 +47,6 @@
 	var/shoot_inventory = 0 //Fire items at customers! We're broken!
 	var/shut_up = 1 //Stop spouting those godawful pitches!
 	var/extended_inventory = 0 //can we access the hidden inventory?
-	var/obj/item/weapon/coin/coin
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
 	var/check_accounts = 1		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
@@ -82,7 +81,6 @@
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
-	QDEL_NULL(coin)
 	return ..()
 
 /obj/machinery/vending/ex_act(severity)
@@ -181,12 +179,6 @@
 	else if(is_wire_tool(W) && panel_open && wires.interact(user))
 		return
 
-	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
-		user.drop_from_inventory(W, src)
-		coin = W
-		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
-		return
-
 	else if(iswrench(W))	//unwrenching vendomats
 		var/turf/T = user.loc
 		if(user.is_busy(src))
@@ -221,6 +213,11 @@
 		var/obj/item/weapon/spacecash/bill/B = W
 		scan_cash(B)
 		playsound(src, 'sound/machines/cash_in.ogg', VOL_EFFECTS_MASTER)
+	else if(currently_vending && istype(W, /obj/item/weapon/coin))
+		var/obj/item/weapon/coin/C = W
+		scan_cash(C)
+		playsound(src, 'sound/machines/coin_in.ogg', VOL_EFFECTS_MASTER)
+		return
 
 	else if(istype(W, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
@@ -352,10 +349,20 @@
 		return
 	if(istype(I, /obj/item/weapon/spacecash/bill))
 		var/obj/item/weapon/spacecash/bill/B = I
-		visible_message("<span class='info'>[usr] inserted a [B.name] into a [src]'s validator.</span>")
 		cash += B.worth
+		visible_message("<span class='info'>[usr] inserted a [B.name] into a [src]'s validator.</span>")
 		qdel(B)
-		updateUsrDialog()
+	else
+		var/obj/item/weapon/coin/C = I
+		if(C.string_attached)
+			cash += C.price
+			visible_message("<span class='info'>[usr] inserted a [C.name] into a [src]'s validator.</span>")
+			if(prob(50))
+				to_chat(usr, "<span class='notice'>You successfully pull the coin out before the [src] could swallow it.</span>")
+			else
+				to_chat(usr, "<span class='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</span>")
+				qdel(I)
+	updateUsrDialog()
 
 /obj/machinery/vending/proc/vend_cash()
 	if(cash)
@@ -392,10 +399,11 @@
 
 	if(currently_vending)
 		var/dat
-		dat += "<b>You have selected [currently_vending.product_name] for [currently_vending.price] [CREDIT_SYMBOL]<br>Please swipe your ID or insert cash to pay for the article.</b><br>"
+		dat += "<b>You have selected [currently_vending.product_name] for [currently_vending.price] [CREDIT_SYMBOL]<br>Please swipe your ID, scan it from your belt or insert cash to pay for the article.</b><br>"
 		if(cash > 0)
 			dat += "<b>Cash inserted, credits amount: [cash][CREDIT_SYMBOL]</b><br>"
 			dat += "<a href='byond://?src=\ref[src];withdraw=1'>Withdraw</a><br>"
+		dat += "<a href='byond://?src=\ref[src];scan_card=1'>Scan a card</a><br>"
 		dat += "<a href='byond://?src=\ref[src];confirm=1'>Confirm</a><br>"
 		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
 		var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
@@ -414,15 +422,10 @@
 		dat += print_recors(product_records)
 		if(extended_inventory)
 			dat += print_recors(hidden_records)
-		if(coin)
-			dat += print_recors(coin_records)
 		if(emagged)
 			dat += print_recors(emag_records)
 		dat += "</table>"
 	dat += "</div>"
-
-	if (premium.len > 0)
-		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] <a href='byond://?src=\ref[src];remove_coin=1'>Remove</A><br>"
 
 	if (ewallet)
 		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
@@ -450,17 +453,6 @@
 	. = ..()
 	if(!.)
 		return
-
-	if(href_list["remove_coin"] && !issilicon(usr) && !isobserver(usr))
-		if(!coin)
-			to_chat(usr, "There is no coin in this machine.")
-			return FALSE
-
-		coin.loc = loc
-		if(!usr.get_active_hand())
-			usr.put_in_hands(coin)
-		to_chat(usr, "<span class='notice'>You remove the [coin] from the [src]</span>")
-		coin = null
 
 	else if(href_list["remove_ewallet"] && !issilicon(usr) && !isobserver(usr))
 		if (!ewallet)
@@ -508,6 +500,26 @@
 				updateUsrDialog()
 		return
 
+	else if (href_list["scan_card"])
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			if(H.wear_id)
+				var/obj/item/weapon/card/I = null
+				if(istype(H.wear_id, /obj/item/device/pda))
+					var/obj/item/device/pda/PDA = H.wear_id
+					if(PDA.GetID())
+						I = PDA.GetID()
+				if(istype(H.wear_id, /obj/item/weapon/card))
+					I = H.wear_id
+				if(istype(H.wear_id, /obj/item/weapon/storage/wallet))
+					var/obj/item/weapon/storage/wallet/W = H.wear_id
+					if(W.front_id)
+						I = W.front_id
+				if(I)
+					scan_card(I)
+		updateUsrDialog()
+		return
+
 	else if (href_list["confirm"])
 		if(cash > 0)
 			vend_cash()
@@ -540,19 +552,6 @@
 		flick(src.icon_deny,src)
 		return
 	src.vend_ready = 0 //One thing at a time!!
-
-	if (R in coin_records)
-		if(!coin)
-			to_chat(user, "<span class='notice'>You need to insert a coin to get this item.</span>")
-			return
-		if(coin.string_attached)
-			if(prob(50))
-				to_chat(user, "<span class='notice'>You successfully pull the coin out before the [src] could swallow it.</span>")
-			else
-				to_chat(user, "<span class='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</span>")
-				QDEL_NULL(coin)
-		else
-			QDEL_NULL(coin)
 
 	R.amount--
 
