@@ -935,7 +935,7 @@
 
 /obj/item/clothing/head/helmet/space/rig/wizard/atom_init(mapload, ...)
 	. = ..()
-	AddComponent(/datum/component/magic_item, WIZARD_ITEM)
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/suit/space/rig/wizard
 	icon_state = "rig-wiz"
@@ -950,7 +950,7 @@
 
 /obj/item/clothing/suit/space/rig/wizard/atom_init(mapload, ...)
 	. = ..()
-	AddComponent(/datum/component/magic_item, WIZARD_ITEM)
+	AddComponent(/datum/component/magic_item/wizard)
 
 //Medical Rig
 /obj/item/clothing/head/helmet/space/rig/medical

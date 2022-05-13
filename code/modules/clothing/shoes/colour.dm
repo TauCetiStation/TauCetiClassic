@@ -47,7 +47,7 @@
 
 /obj/item/clothing/shoes/red/wizard/atom_init(mapload, ...)
 	. = ..()
-	AddComponent(/datum/component/magic_item, WIZARD_ITEM)
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/shoes/white
 	name = "white shoes"

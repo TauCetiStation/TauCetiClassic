@@ -46,7 +46,7 @@
 
 /obj/item/clothing/shoes/boots/wizard/atom_init(mapload, ...)
 	. = ..()
-	AddComponent(/datum/component/magic_item, WIZARD_ITEM)
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/shoes/boots/galoshes
 	desc = "Rubber boots."

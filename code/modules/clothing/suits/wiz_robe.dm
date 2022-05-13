@@ -8,7 +8,7 @@
 
 /obj/item/clothing/head/wizard/atom_init(mapload, ...)
 	. = ..()
-	AddComponent(/datum/component/magic_item, WIZARD_ITEM)
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/head/wizard/santa
 	name = "Santa's hat"
@@ -160,7 +160,7 @@
 
 /obj/item/clothing/suit/wizrobe/atom_init(mapload, ...)
 	. = ..()
-	AddComponent(/datum/component/magic_item, WIZARD_ITEM)
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/suit/wizrobe/santa
 	name = "Santa's suit"

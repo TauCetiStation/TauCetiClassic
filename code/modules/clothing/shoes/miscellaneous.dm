@@ -46,7 +46,7 @@
 
 /obj/item/clothing/shoes/sandal/atom_init(mapload, ...)
 	. = ..()
-	AddComponent(/datum/component/magic_item, WIZARD_ITEM)
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/shoes/sandal/brown
 	name = "Brown Sandals"
@@ -204,7 +204,7 @@
 
 /obj/item/clothing/shoes/western/wizard/atom_init(mapload, ...)
 	. = ..()
-	AddComponent(/datum/component/magic_item, WIZARD_ITEM)
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/shoes/magboots/syndie
 	desc = "Light-weighted magnetic boots that have a custom syndicate paintjob for use in combat."
@@ -252,13 +252,13 @@
 
 /obj/item/clothing/shoes/heels/wizard/atom_init(mapload, ...)
 	. = ..()
-	AddComponent(/datum/component/magic_item, WIZARD_ITEM)
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/shoes/heels/alternate/wizard
 
 /obj/item/clothing/shoes/heels/alternate/wizard/atom_init(mapload, ...)
 	. = ..()
-	AddComponent(/datum/component/magic_item, WIZARD_ITEM)
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/shoes/boots/German
 	name = "Black Boots"
@@ -270,7 +270,7 @@
 
 /obj/item/clothing/shoes/boots/German/wizard/atom_init(mapload, ...)
 	. = ..()
-	AddComponent(/datum/component/magic_item, WIZARD_ITEM)
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/shoes/brown_cut
 	name = "Cut Brown Boots"

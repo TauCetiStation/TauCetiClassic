@@ -173,7 +173,7 @@
 
 /obj/item/clothing/shoes/winterboots/wizard/atom_init(mapload, ...)
 	. = ..()
-	AddComponent(/datum/component/magic_item, WIZARD_ITEM)
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/suit/storage/labcoat/winterlabcoat
 	name = "winter labcoat"
