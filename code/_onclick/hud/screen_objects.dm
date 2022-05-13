@@ -379,6 +379,9 @@
 		var/mob/living/carbon/C = usr
 		C.set_m_intent(C.m_intent == MOVE_INTENT_WALK ? MOVE_INTENT_RUN : MOVE_INTENT_WALK)
 
+/atom/movable/screen/move_intent/update_icon(var/mymob)
+	icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
+
 /atom/movable/screen/move_intent/alien
 	icon = 'icons/mob/screen1_xeno.dmi'
 
@@ -492,21 +495,52 @@
 /atom/movable/screen/intent
 	screen_loc = ui_acti
 	plane = ABOVE_HUD_PLANE
+	var/index
 
 /atom/movable/screen/intent/Click()
 	usr.set_a_intent(name)
 
+/atom/movable/screen/intent/update_icon(style)
+	var/icon/ico = new(style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	var/x1
+	var/x2
+	switch(index)
+		if(1,4)
+			x1 = 1
+			x2 = ico.Width() / 2
+		if(2, 3)
+			x1 = ico.Width() / 2 + 1
+			x2 = ico.Width()
+
+	var/y1
+	var/y2
+	switch(index)
+		if(1, 2)
+			y1 = ico.Height() / 2 + 1
+			y2 = ico.Height()
+		if(3, 4)
+			y1 = 1
+			y2 = ico.Height() / 2
+
+	ico.DrawBox(rgb(255,255,255,1), x1, y1, x2, y2)
+
+
 /atom/movable/screen/intent/help
 	name = INTENT_HELP
+	index = 1
 
 /atom/movable/screen/intent/push
 	name = INTENT_PUSH
+	index = 2
 
 /atom/movable/screen/intent/grab
 	name = INTENT_GRAB
+	index = 3
 
 /atom/movable/screen/intent/harm
 	name = INTENT_HARM
+	index = 4
 
 /atom/movable/screen/throw
 	name = "throw"

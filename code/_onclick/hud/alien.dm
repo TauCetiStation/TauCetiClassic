@@ -43,42 +43,30 @@
 //intent small hud objects
 	var/icon/ico
 
-	ico = new('icons/mob/screen1_xeno.dmi', "black")
-	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
-	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
 	using = new /atom/movable/screen/intent/help()
-	using.icon = ico
+	using.update_icon('icons/mob/screen1_xeno.dmi')
 	src.adding += using
 	help_intent = using
 
-	ico = new('icons/mob/screen1_xeno.dmi', "black")
-	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
-	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
 	using = new /atom/movable/screen/intent/push()
-	using.icon = ico
+	using.update_icon('icons/mob/screen1_xeno.dmi')
 	src.adding += using
 	push_intent = using
 
-	ico = new('icons/mob/screen1_xeno.dmi', "black")
-	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
-	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
 	using = new /atom/movable/screen/intent/grab()
-	using.icon = ico
+	using.update_icon('icons/mob/screen1_xeno.dmi')
 	src.adding += using
 	grab_intent = using
 
-	ico = new('icons/mob/screen1_xeno.dmi', "black")
-	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
-	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
 	using = new  /atom/movable/screen/intent/harm()
-	using.icon = ico
+	using.update_icon('icons/mob/screen1_xeno.dmi')
 	src.adding += using
 	harm_intent = using
 
 //end intent small hud objects
 
 	using = new /atom/movable/screen/move_intent/alien()
-	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
+	using.update_icon(mymob)
 	src.adding += using
 	move_intent = using
 
