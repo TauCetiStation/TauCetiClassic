@@ -656,7 +656,7 @@
 /area/space_structures/nt_fighter_skeora)
 "Pd" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/coin/silver,
+/obj/item/weapon/coin/plastic,
 /turf/simulated/floor/plating/airless{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"

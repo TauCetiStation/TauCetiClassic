@@ -247,7 +247,7 @@
 "aM" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/coin/silver,
+/obj/item/weapon/coin/plastic,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
