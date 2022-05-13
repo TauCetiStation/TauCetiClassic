@@ -144,7 +144,7 @@
 
 	// Movement
 	if(!client && !stop_automated_movement && wander && !anchored)
-		if(isturf(src.loc) && !resting && !buckled && canmove) // This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if(isturf(src.loc) && !buckled && canmove) // This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) // Some animals don't move when pulled
@@ -167,7 +167,7 @@
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
 			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
-			bodytemperature += diff
+			adjust_bodytemperature(diff)
 
 		if(istype(T,/turf/simulated))
 			var/turf/simulated/ST = T
@@ -368,10 +368,13 @@
 
 	var/verb = "says"
 	var/ending = copytext(message, -1)
-	var/datum/language/speaking = parse_language(message)
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
+
 	if (speaking)
 		verb = speaking.get_spoken_verb(ending)
-		message = copytext(message, 2 + length_char(speaking.key))
+
 	else
 		verb = pick(speak_emote)
 
@@ -415,3 +418,6 @@
 		else
 			visual_effect_icon = ATTACK_EFFECT_SMASH
 	..()
+
+/mob/living/simple_animal/crawl()
+	return FALSE

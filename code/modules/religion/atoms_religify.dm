@@ -37,20 +37,32 @@
 	return FALSE
 
 /obj/structure/stool/bed/chair/pew/atom_religify(datum/religion/R)
-	if(!R.pews_icon_state || R.pews_icon_state == pew_icon)
+	if(!R.emblem_icon_state || R.emblem_icon_state == pew_icon)
 		return FALSE
-	pew_icon = R.pews_icon_state
+	pew_icon = R.emblem_icon_state
 	update_icon()
 	return TRUE
 
-/obj/structure/altar_of_gods/atom_religify(datum/religion/R)
-	if(religion == R)
+/obj/structure/stool/bed/chair/lectern/atom_religify(datum/religion/R)
+	if(!R.emblem_icon_state || R.emblem_icon_state == icon_state)
 		return FALSE
-	religion = R
-	R.altars |= src
+	emblem_overlay.icon_state = R.emblem_icon_state
+	lectern_overlay.cut_overlay(emblem_overlay)
+	lectern_overlay.add_overlay(emblem_overlay)
+	cut_overlay(emblem_overlay)
+	add_overlay(emblem_overlay)
+	return TRUE
+
+/obj/structure/altar_of_gods/atom_religify(datum/religion/R)
 	if(R.altar_icon_state != icon_state)
 		icon_state = R.altar_icon_state
 		update_icon()
+
+	if(religion != R)
+		return FALSE
+
+	religion = R
+	R.altars |= src
 	return TRUE
 
 /obj/machinery/door/airlock/atom_religify(datum/religion/R)

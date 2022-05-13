@@ -144,6 +144,14 @@
 		attached.internals.icon_state = "internal0"
 		attached.internal = null
 
+/obj/machinery/life_assist/cardiopulmonary_bypass/assist(mob/living/carbon/human/H)
+	..()
+	H.metabolism_factor.AddModifier("CPB", additive = 0.5)
+
+/obj/machinery/life_assist/cardiopulmonary_bypass/deassist(mob/living/carbon/human/H)
+	..()
+	H.metabolism_factor.RemoveModifier("CPB")
+
 /obj/machinery/life_assist/cardiopulmonary_bypass
 	name = "cardiopulmonary bypass machine"
 	icon = 'icons/obj/iv_drip.dmi'

@@ -207,7 +207,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 128
 	anchored = TRUE
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/zone_sel/MouseExited(location, control, params)
@@ -354,66 +353,34 @@
 							return TRUE
 						else
 							if(C.wear_mask.flags & MASKINTERNALS)
-								var/list/nicename = null
-								var/list/tankcheck = null
-								var/breathes = "oxygen"    //default, we'll check later
-								var/list/contents = list()
+								var/list/nicename
+								var/list/tankcheck
+								var/inhale_type = C.inhale_gas
+								var/poison_type = C.poison_gas
 
 								if(ishuman(C))
 									var/mob/living/carbon/human/H = C
-									breathes = H.species.breath_type
 									nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
 									tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
-
 								else
-
 									nicename = list("Right Hand", "Left Hand", "Back")
 									tankcheck = list(C.r_hand, C.l_hand, C.back)
 
-								for(var/i=1, i<tankcheck.len+1, ++i)
-									if(istype(tankcheck[i], /obj/item/weapon/tank))
-										var/obj/item/weapon/tank/t = tankcheck[i]
-										if (!isnull(t.manipulated_by) && t.manipulated_by != C.real_name && findtext(t.desc,breathes)) // why check for desc content? just why?
-											contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
-											continue					//in it, so we're going to believe the tank is what it says it is
-										switch(breathes)
-																			//These tanks we're sure of their contents
-											if("nitrogen") 							//So we're a bit more picky about them.
-
-												if(t.air_contents.gas["nitrogen"] && !t.air_contents.gas["oxygen"])
-													contents.Add(t.air_contents.gas["nitrogen"])
-												else
-													contents.Add(0)
-
-											if ("oxygen")
-												if(t.air_contents.gas["oxygen"] && !t.air_contents.gas["phoron"])
-													contents.Add(t.air_contents.gas["oxygen"])
-												else
-													contents.Add(0)
-
-											// No races breath this, but never know about downstream servers.
-											if ("carbon dioxide")
-												if(t.air_contents.gas["carbon_dioxide"] && !t.air_contents.gas["phoron"])
-													contents.Add(t.air_contents.gas["carbon_dioxide"])
-												else
-													contents.Add(0)
-
-
-									else
-										//no tank so we set contents to 0
-										contents.Add(0)
-
-								//Alright now we know the contents of the tanks so we have to pick the best one.
-
-								var/best = 0
+								var/best = null
 								var/bestcontents = 0
-								for(var/i=1, i <  contents.len + 1 , ++i)
-									if(!contents[i])
-										continue
-									if(contents[i] > bestcontents)
-										best = i
-										bestcontents = contents[i]
 
+								for(var/i in 1 to tankcheck.len)
+									var/obj/item/weapon/tank/t = tankcheck[i]
+									if(!istype(t))
+										continue
+
+									var/datum/gas_mixture/t_gasses = t.air_contents.gas
+									var/inhale = t_gasses[inhale_type]
+
+									if(!t_gasses[poison_type] && inhale)
+										if(bestcontents < inhale)
+											best = i
+											bestcontents = inhale
 
 								//We've determined the best container now we set it as our internals
 
@@ -431,7 +398,7 @@
 									if(C.internals)
 										C.internals.icon_state = "internal1"
 								else
-									to_chat(C, "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>")
+									to_chat(C, "<span class='notice'>You don't have a[inhale_type=="oxygen" ? "n oxygen" : addtext(" ",inhale_type)] tank.</span>")
 							else
 								to_chat(C, "<span class='notice'>This mask doesn't support breathing through the tanks.</span>")
 					internal_switch = world.time + 16
@@ -768,7 +735,15 @@
 	var/mob/living/M = usr
 	M.OpenCraftingMenu()
 
+/atom/movable/screen/nuke
+	icon = 'icons/effects/station_explosion.dmi'
+	icon_state = "station_intact"
+	screen_loc = "1,0"
+	plane = SPLASHSCREEN_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 /atom/movable/screen/temp
+	plane = SPLASHSCREEN_PLANE
 	var/mob/user
 	var/delay = 0
 
@@ -786,11 +761,10 @@
 	return ..()
 
 /atom/movable/screen/temp/cult_teleportation
-	name = "crafting menu"
+	name = "cult teleportation"
 	icon = 'icons/effects/bloodTP.dmi'
 	icon_state = "cult_tp"
 	screen_loc = "1,1"
-	layer = ABOVE_HUD_LAYER + 1
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	delay = 8.5

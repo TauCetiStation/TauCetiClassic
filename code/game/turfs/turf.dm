@@ -7,6 +7,7 @@
 	var/can_deconstruct = FALSE
 
 	//Properties for open tiles (/floor)
+	var/airless = FALSE
 	var/oxygen = 0
 	var/carbon_dioxide = 0
 	var/nitrogen = 0
@@ -83,17 +84,16 @@
 /turf/ex_act(severity)
 	return 0
 
-/turf/bullet_act(obj/item/projectile/Proj)
+/turf/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(istype(Proj ,/obj/item/projectile/beam/pulse))
 		ex_act(EXPLODE_HEAVY)
 	else if(istype(Proj ,/obj/item/projectile/bullet/gyro))
 		explosion(src, -1, 0, 2)
-	..()
-	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
+		to_chat(usr, "<span class='warning'>Передвижение отключено администрацией.</span>")//This is to identify lag problems
 		return
 	if (!mover || !isturf(mover.loc))
 		return 1
@@ -241,16 +241,21 @@
 		ChangeTurf(turf_type)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
+/turf/proc/ChangeTurf(path, list/arguments = list())
 	if (!path)
 		return
-
-	if (path == type)
-		return src
 
 	/*if(istype(src, path))
 		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
 		return*/
+
+	if(ispath(path, /turf/environment))
+		var/env_turf_type = SSenvironment.turf_type[z]
+		if(!ispath(path, env_turf_type))
+			path = env_turf_type
+
+	if (path == type)
+		return src
 
 	// Back all this data up, so we can set it after the turf replace.
 	// If you're wondering how this proc'll keep running since the turf should be "deleted":
@@ -258,6 +263,7 @@
 	// Running procs do NOT get stopped due to this.
 	var/old_opacity = opacity
 	var/old_dynamic_lighting = dynamic_lighting
+	var/old_force_lighting_update = force_lighting_update
 	var/old_affecting_lights = affecting_lights
 	var/old_lighting_object = lighting_object
 	var/old_corners = corners
@@ -338,7 +344,7 @@
 		lighting_object = old_lighting_object
 		affecting_lights = old_affecting_lights
 		corners = old_corners
-		if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
+		if (force_lighting_update || old_force_lighting_update || old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
 			reconsider_lights()
 
 		if (dynamic_lighting != old_dynamic_lighting)

@@ -33,7 +33,7 @@
 	new /obj/item/weapon/shovel(src)
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/cargo
 		new /obj/item/clothing/head/santa(src)
 		new /obj/item/clothing/shoes/winterboots(src)
@@ -644,7 +644,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	get_template()
 	if(!used)
 		var/turf/T = get_turf(src)
-		if(!is_mining_level(T.z) && !is_junkyard_level(T.z) && !istype(T.loc, /area/space)  && !istype(T.loc, /area/shuttle)) //we don't need complete all checks
+		var/area/A = T.loc
+		if(!A.outdoors)
 			audible_message("<span class='game say'><span class='name'>[src]</span> says, \"You must use shelter at asteroid or in space! Grab this shit and shut up!\"</span>")
 			used = TRUE
 			new /obj/item/clothing/mask/breath(T)

@@ -67,6 +67,7 @@
 	data["station_account_number"] = station_account.account_number
 	data["transactions"] = null
 	data["accounts"] = null
+	data["cargo_export_tax"] = SSeconomy.tax_cargo_export
 
 	if (detailed_account_view)
 		data["account_number"] = detailed_account_view.account_number
@@ -121,6 +122,11 @@
 				var/amount = input("Enter the amount you wish to add", "Silently add funds") as num
 				if(detailed_account_view)
 					detailed_account_view.adjust_money(amount)
+
+			if("change_export_tax")
+				var/amount = input("Enter the percent you want to set a tax to", "Export Tax %") as num
+				amount = clamp(amount, 0, 100)
+				SSeconomy.tax_cargo_export = amount
 
 			if("remove_funds")
 				var/amount = input("Enter the amount you wish to remove", "Silently remove funds") as num

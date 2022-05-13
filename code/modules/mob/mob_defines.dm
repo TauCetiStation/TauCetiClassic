@@ -87,7 +87,6 @@
 
 	var/antitoxs = null
 	var/phoron = null
-	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
 	var/was_lying = FALSE //For user of clown pda slippery
@@ -204,10 +203,6 @@
 //Changlings, but can be used in other modes
 //	var/obj/effect/proc_holder/changpower/list/power_list = list()
 
-//List of active diseases
-
-	var/list/viruses = list() // replaces var/datum/disease/virus
-
 //Monkey/infected mode
 	var/list/resistances = list()
 	var/datum/disease/virus = null
@@ -267,4 +262,17 @@
 	var/obj/effect/overlay/typing_indicator/typing_indicator
 	var/typing_indicator_type = "default"
 
+	// Language that a mob is forced to speak instead of the Common one.
+	var/common_language
+	// Language that a mob is forced to speak and cannot choose any other one.
 	var/forced_language
+	// Language that is used by default whenever there's no language chosen.
+	var/default_language
+
+	// Some sounds that this mob can't emit, only approximate.
+	var/list/sound_approximations
+	// Case sensitive sound approximations.
+	var/list/sensitive_sound_approximations
+
+	// Reason of logout
+	var/logout_reason

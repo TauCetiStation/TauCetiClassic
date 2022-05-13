@@ -150,7 +150,7 @@
 
 		if(pressure <= 75)
 			if(prob(15))
-				emote("me",1,"gasps!")
+				emote("gasp")
 
 	weakened = 0
 	if(health > 0)
@@ -226,7 +226,7 @@
 		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		visible_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
-/mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return

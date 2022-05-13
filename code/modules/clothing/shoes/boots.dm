@@ -3,7 +3,6 @@
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "wjboots"
 	item_state = "wjboots"
-	item_color = "hosred"
 	siemens_coefficient = 0.7
 	clipped_status = CLIPPABLE
 	var/obj/item/knife
@@ -49,7 +48,7 @@
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN + 1
+	slowdown = SHOES_SLOWDOWN + 0.5
 	species_restricted = null
 	clipped_status = NO_CLIPPING
 
@@ -57,7 +56,6 @@
 	name = "work boots"
 	desc = "Boots of a simple working man."
 	icon_state = "workboots"
-	item_color = "workboots"
 	item_state = "b_shoes"  // need sprites for this
 
 /obj/item/clothing/shoes/boots/swat
@@ -91,7 +89,6 @@
 	desc = "A pair of boots worn by the followers of Nar-Sie."
 	icon_state = "cult"
 	item_state = "cult"
-	item_color = "cult"
 	clipped_status = NO_CLIPPING
 
 	cold_protection = LEGS
@@ -99,3 +96,10 @@
 	heat_protection = LEGS
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = null
+
+/obj/item/clothing/shoes/boots/police
+	desc = "Nanotrasen-issue police combat boots for combat scenarios or combat situations. All combat, all the time."
+	icon_state = "police_boots"
+	item_state = "wjboots"
+	siemens_coefficient = 0.7
+	clipped_status = NO_CLIPPING

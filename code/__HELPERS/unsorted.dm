@@ -789,6 +789,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					var/old_icon_state1 = T.icon_state
 					var/old_icon1 = T.icon
 
+					if(locate(/obj/structure/flora) in B.contents) // cleaning trees/bushes at LZ
+						for(var/obj/structure/flora/O in B.contents)
+							qdel(O)
 
 					var/turf/X = T.MoveTurf(B)
 
@@ -1192,7 +1195,7 @@ var/global/list/common_tools = list(
 
 //check if mob is lying down on something we can operate him on.
 /proc/can_operate(mob/living/carbon/M)
-	if(locate(/obj/machinery/optable, M.loc) && M.resting)
+	if(locate(/obj/machinery/optable, M.loc) && M.crawling)
 		return TRUE
 	if((M.buckled || M.lying || M.incapacitated()) && prob(get_surg_chance(M.loc)))
 		return TRUE

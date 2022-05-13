@@ -88,7 +88,7 @@
 		return
 
 	if(href_list["lobby_be_special"])
-		if(client.prefs.have_quality)
+		if(client.prefs.selected_quality_name)
 			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
 			return
 		if(!client.prefs.selecting_quality)
@@ -405,7 +405,7 @@
 
 	new_character.lastarea = get_area(loc)
 	if(client.prefs.language)
-		new_character.add_language(client.prefs.language)
+		new_character.add_language(client.prefs.language, LANGUAGE_NATIVE)
 
 	if(SSticker.random_players)
 		new_character.gender = pick(MALE, FEMALE)

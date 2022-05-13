@@ -75,7 +75,7 @@
 /mob/living/simple_animal/corgi/Lisa/Life()
 	..()
 
-	if(!stat && !resting && !buckled)
+	if(!stat && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 15)
 			turns_since_scan = 0
@@ -100,7 +100,7 @@
 
 
 		if(prob(1))
-			emote("me",1,pick("dances around","chases her tail"))
+			me_emote(pick("dances around", "chases her tail"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
 					set_dir(i)

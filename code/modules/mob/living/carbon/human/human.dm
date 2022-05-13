@@ -11,6 +11,7 @@
 	//icon_state = "body_m_s"
 
 	var/datum/species/species //Contains icon generation and language information, set during New().
+	var/random_tail_holder = "" // overrides species.tail
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
@@ -43,7 +44,7 @@
 			set_species()
 
 	if(species) // Just to be sure.
-		metabolism_factor = species.metabolism_mod
+		metabolism_factor.Set(species.metabolism_mod)
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
@@ -64,8 +65,6 @@
 		dna.real_name = real_name
 
 	handcrafting = new()
-
-	verbs += /mob/living/carbon/proc/crawl
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
@@ -132,8 +131,6 @@
 	underwear = 0
 	undershirt = 0
 	faction = "faithless"
-	dna.mutantrace = "shadowling"
-	update_mutantrace()
 	regenerate_icons()
 
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
@@ -734,9 +731,9 @@
 					visible_message("<span class='danger'>[usr] tears off \the [A] from [src]'s [S]!</span>")
 				else
 					visible_message("<span class='danger'>[usr] removed \the [A] from [src]'s [S]!</span>")
-				A.on_removed(usr)
-				S.accessories -= A
-				update_inv_w_uniform()
+
+				S.remove_accessory(usr, A)
+
 				attack_log += "\[[time_stamp()]\] <font color='orange'>Had their accessory ([A]) removed by [usr.name] ([usr.ckey])</font>"
 				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Attempted to remove [name]'s ([ckey]) accessory ([A])</font>"
 
@@ -907,7 +904,7 @@
 		var/obj/item/clothing/head/welding/W = head
 		if(!W.up)
 			number += 2
-	if(istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault) && !istype(head, /obj/item/clothing/head/helmet/space/sk))
+	if(!istype(head, /obj/item/clothing/head/helmet/space/sk) && istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault))
 		number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/thermal))
 		var/obj/item/clothing/glasses/thermal/G = glasses
@@ -947,15 +944,6 @@
 	return
 
 /mob/living/carbon/human/get_species()
-
-	if(!species)
-		set_species()
-
-	if(dna && dna.mutantrace == "golem")
-		return "Animated Construct"
-
-
-
 	return species.name
 
 /mob/living/carbon/human/proc/play_xylophone()
@@ -1342,7 +1330,8 @@
 
 				BP.take_damage(rand(1,3), 0, 0)
 				if(!BP.is_robotic()) //There is no blood in protheses.
-					BP.status |= ORGAN_BLEEDING
+					if(!reagents.has_reagent("metatrombine")) // metatrombine just prevents bleeding, not toxication
+						BP.status |= ORGAN_BLEEDING
 					adjustToxLoss(rand(1,3))
 
 /mob/living/carbon/human/verb/check_pulse()
@@ -1426,7 +1415,7 @@
 		apply_recolor()
 
 	if(species.language)
-		add_language(species.language)
+		add_language(species.language, LANGUAGE_NATIVE)
 
 	if(species.additional_languages)
 		for(var/A in species.additional_languages)
@@ -1926,20 +1915,20 @@
 	else
 		return 1
 
-/mob/living/carbon/human/proc/need_breathe()
+/mob/living/carbon/human/is_skip_breathe()
+	if(..())
+		return TRUE
 	if(NO_BREATH in src.mutations)
-		return FALSE
+		return TRUE
 	if(reagents.has_reagent("lexorin"))
-		return FALSE
+		return TRUE
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return FALSE
+		return TRUE
 	if(species && (species.flags[NO_BREATHE] || species.flags[IS_SYNTHETIC]))
-		return FALSE
-	if(dna && dna.mutantrace == "adamantine")
-		return FALSE
+		return TRUE
 	if(ismob(loc))
-		return FALSE
-	return TRUE
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/human/CanObtainCentcommMessage()
 	return istype(l_ear, /obj/item/device/radio/headset) || istype(r_ear, /obj/item/device/radio/headset)
@@ -2267,12 +2256,6 @@
 			IO.take_damage(0.1, 1)
 		adjustToxLoss(0.1)
 
-/mob/living/carbon/human/get_language()
-	if(species.force_racial_language)
-		return all_languages[species.language]
-
-	return ..()
-
 // TO-DO: make it so it algo triggers a random mild virus symptom because that's funny? ~Luduk
 /mob/living/carbon/human/proc/trigger_allergy(reagent, volume)
 	if(!allergies)
@@ -2305,9 +2288,7 @@
 
 	adjustToxLoss(effect_coeff)
 
-	if(bodytemperature < 330)
-		//310 is the normal bodytemp. 310.055
-		bodytemperature = min(330, bodytemperature + 10 * effect_coeff * TEMPERATURE_DAMAGE_COEFFICIENT)
+	adjust_bodytemperature(10 * effect_coeff * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 20)
 
 /mob/living/carbon/human/get_pumped(bodypart)
 	var/obj/item/organ/external/BP = get_bodypart(bodypart)
