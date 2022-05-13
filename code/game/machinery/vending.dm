@@ -354,14 +354,17 @@
 		qdel(B)
 	else
 		var/obj/item/weapon/coin/C = I
+		cash += C.price
+		visible_message("<span class='info'>[usr] inserted a [C.name] into a [src]'s validator.</span>")
 		if(C.string_attached)
-			cash += C.price
-			visible_message("<span class='info'>[usr] inserted a [C.name] into a [src]'s validator.</span>")
 			if(prob(50))
 				to_chat(usr, "<span class='notice'>You successfully pull the coin out before the [src] could swallow it.</span>")
 			else
 				to_chat(usr, "<span class='notice'>You weren't able to pull the coin out fast enough, the machine ate it, string and all.</span>")
 				qdel(I)
+		else
+			qdel(I)
+
 	updateUsrDialog()
 
 /obj/machinery/vending/proc/vend_cash()
