@@ -65,7 +65,7 @@ var/global/atom/movable/screen/robot_inventory
 	adding += using
 
 // Toggle Component
-	using = new /atom/movable/screen/toggle_component()
+	using = new /atom/movable/screen/toggle_components()
 	adding += using
 
 // Toggle Lights
@@ -94,7 +94,7 @@ var/global/atom/movable/screen/robot_inventory
 
 //Intent
 	using = new /atom/movable/screen/act_intent/robot()
-	using.icon_state = "intent_" + mymob.a_intent
+	using.update_icon(mymob)
 	src.adding += using
 	action_intent = using
 
@@ -116,7 +116,7 @@ var/global/atom/movable/screen/robot_inventory
 	mymob.throw_icon = new /atom/movable/screen/store()
 
 //Inventory
-	robot_inventory = new /atom/movable/screen/inventory()
+	robot_inventory = new /atom/movable/screen/robot_inventory()
 
 	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = 'icons/mob/screen1_robot.dmi'

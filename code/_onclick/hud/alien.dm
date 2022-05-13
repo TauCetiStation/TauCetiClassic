@@ -36,7 +36,7 @@
 	var/atom/movable/screen/inventory/inv_box
 
 	using = new /atom/movable/screen/act_intent/alien()
-	using.icon_state = "intent_" + mymob.a_intent
+	using.update_icon(mymob)
 	src.adding += using
 	action_intent = using
 

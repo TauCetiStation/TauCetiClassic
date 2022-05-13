@@ -7,7 +7,7 @@
 
 	using = new /atom/movable/screen/act_intent()
 	using.icon = ui_style
-	using.icon_state = "intent_" + mymob.a_intent
+	using.update_icon(mymob)
 	src.adding += using
 	action_intent = using
 

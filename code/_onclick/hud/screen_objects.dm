@@ -479,7 +479,9 @@
 
 /atom/movable/screen/act_intent/Click()
 	usr.a_intent_change(INTENT_HOTKEY_RIGHT)
-	return
+
+/atom/movable/screen/act_intent/update_icon(mob/mymob)
+	icon_state = "intent_" + mymob.a_intent
 
 /atom/movable/screen/act_intent/alien
 	icon = 'icons/mob/screen1_xeno.dmi'
@@ -543,13 +545,13 @@
 		var/mob/living/silicon/robot/R = usr
 		R.pick_module()
 
-/atom/movable/screen/inventory
+/atom/movable/screen/robot_inventory
 	name = "inventory"
 	icon = 'icons/mob/screen1_robot.dmi'
 	icon_state = "inventory"
 	screen_loc = ui_borg_inventory
 
-/atom/movable/screen/inventory/Click()
+/atom/movable/screen/robot_inventory/Click()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		if(R.module)
@@ -564,7 +566,7 @@
 	screen_loc = ui_movi
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/inventory/Click()
+/atom/movable/screen/radio/Click()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.radio_menu()
@@ -963,11 +965,11 @@
 
 /atom/movable/screen/Click(location, control, params)
 	if(!usr)
-		return TRUE
+		return
 
 	SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 
-	return TRUE
+	return
 
 /atom/movable/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
