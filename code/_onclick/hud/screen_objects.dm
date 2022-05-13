@@ -38,22 +38,20 @@
 /atom/movable/screen/close
 	name = "close"
 
-/atom/movable/screen/close/Click()
+/atom/movable/screen/close/action()
 	if(master)
 		if(istype(master, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = master
 			S.close(usr)
-	return TRUE
 
 
 /atom/movable/screen/grab
 	name = "grab"
 
-/atom/movable/screen/grab/Click()
+/atom/movable/screen/grab/action()
 	if(master)
 		var/obj/item/weapon/grab/G = master
 		G.s_click(src)
-	return TRUE
 
 /atom/movable/screen/grab/attack_hand()
 	return
@@ -70,23 +68,23 @@
 	last_outlined = null
 	return ..()
 
-/atom/movable/screen/storage/Click(location, control, params)
+/atom/movable/screen/storage/action(location, control, params)
 	if(world.time <= usr.next_move)
-		return TRUE
+		return
 	if(usr.incapacitated())
-		return TRUE
+		return
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
-		return TRUE
+		return
 	if(master)
 		var/obj/item/I = usr.get_active_hand()
 		if(I)
 			master.attackby(I, usr, params)
 			usr.next_move = world.time+2
-			return TRUE
+			return
 
 		var/obj/item/weapon/storage/S = master
 		if(!S || !S.storage_ui)
-			return TRUE
+			return
 		// Taking something out of the storage screen (including clicking on item border overlay)
 		var/list/PM = params2list(params)
 		var/list/screen_loc_params = splittext(PM[SCREEN_LOC], ",")
@@ -98,8 +96,7 @@
 				I = S.contents[i]
 				if (I)
 					I.Click(location, control, params)
-					return TRUE
-	return TRUE
+					return
 
 /atom/movable/screen/storage/MouseEntered(location, control, params)
 	. = ..()
@@ -141,7 +138,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	COOLDOWN_DECLARE(gun_click_time)
 
-/atom/movable/screen/gun/Click()
+/atom/movable/screen/gun/action()
 	if(COOLDOWN_FINISHED(src, gun_click_time))
 		return FALSE
 	if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
@@ -155,7 +152,7 @@
 	icon_state = "no_walk0"
 	screen_loc = ui_gun2
 
-/atom/movable/screen/gun/move/Click()
+/atom/movable/screen/gun/move/action()
 	if(..())
 		usr.client.AllowTargetMove()
 
@@ -164,7 +161,7 @@
 	icon_state = "no_run0"
 	screen_loc = ui_gun3
 
-/atom/movable/screen/gun/run/Click()
+/atom/movable/screen/gun/run/action()
 	if(..())
 		usr.client.AllowTargetRun()
 
@@ -173,7 +170,7 @@
 	icon_state = "no_item0"
 	screen_loc = ui_gun1
 
-/atom/movable/screen/gun/item/Click()
+/atom/movable/screen/gun/item/action()
 	if(..())
 		usr.client.AllowTargetClick()
 
@@ -183,7 +180,7 @@
 	screen_loc = ui_gun_select
 	//dir = 1
 
-/atom/movable/screen/gun/mode/Click()
+/atom/movable/screen/gun/mode/action()
 	usr.client.ToggleGunMode()
 
 /atom/movable/screen/zone_sel
@@ -194,15 +191,15 @@
 	var/static/list/hover_overlays_cache = list()
 	var/hovering
 
-/atom/movable/screen/zone_sel/Click(location, control,params)
+/atom/movable/screen/zone_sel/action(location, control, params)
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL[ICON_X])
 	var/icon_y = text2num(PL[ICON_Y])
 	var/choice = get_zone_at(icon_x, icon_y)
 	if(!choice)
-		return TRUE
+		return
 
-	return set_selected_zone(choice, usr)
+	set_selected_zone(choice, usr)
 
 /atom/movable/screen/zone_sel/MouseEntered(location, control, params)
 	MouseMove(location, control, params)
@@ -288,7 +285,6 @@
 		if(istype(L))
 			L.update_combos()
 		update_icon()
-	return TRUE
 
 /atom/movable/screen/zone_sel/update_icon()
 	cut_overlays()
@@ -299,7 +295,7 @@
 	icon = 'icons/mob/screen1_Midnight.dmi'
 	icon_state = "pull1"
 
-/atom/movable/screen/pull/Click()
+/atom/movable/screen/pull/action()
 	usr.stop_pulling()
 
 /atom/movable/screen/pull/update_icon(mob/mymob)
@@ -316,7 +312,7 @@
 	screen_loc = ui_inventory
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screem/toggle/Click()
+/atom/movable/screem/toggle/action()
 	if(usr.hud_used.inventory_shown)
 		usr.hud_used.inventory_shown = FALSE
 		usr.client.screen -= usr.hud_used.other
@@ -332,7 +328,7 @@
 	screen_loc = ui_equip
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screem/toggle/Click()
+/atom/movable/screem/toggle/action()
 	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
 		return
 	if(ishuman(usr))
@@ -346,7 +342,7 @@
 	plane = ABOVE_HUD_PLANE
 	invisibility = INVISIBILITY_ABSTRACT
 
-/atom/movable/screen/current_sting/Click()
+/atom/movable/screen/current_sting/action()
 	if(iscarbon(usr))
 		var/mob/living/carbon/U = usr
 		U.unset_sting()
@@ -358,7 +354,7 @@
 	plane = HUD_PLANE
 
 
-/atom/movable/screen/resist/Click()
+/atom/movable/screen/resist/action()
 	if(isliving(usr))
 		var/mob/living/L = usr
 		L.resist()
@@ -374,7 +370,7 @@
 	screen_loc = ui_movi
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/move_intent/Click()
+/atom/movable/screen/move_intent/action()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.set_m_intent(C.m_intent == MOVE_INTENT_WALK ? MOVE_INTENT_RUN : MOVE_INTENT_WALK)
@@ -399,7 +395,7 @@
 		icon_state = "internal0"
 
 
-/atom/movable/screen/internal/Click()
+/atom/movable/screen/internal/action()
 	if(!iscarbon(usr))
 		return
 
@@ -480,7 +476,7 @@
 	screen_loc = ui_acti
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/act_intent/Click()
+/atom/movable/screen/act_intent/action()
 	usr.a_intent_change(INTENT_HOTKEY_RIGHT)
 
 /atom/movable/screen/act_intent/update_icon(mob/mymob)
@@ -497,7 +493,7 @@
 	plane = ABOVE_HUD_PLANE
 	var/index
 
-/atom/movable/screen/intent/Click()
+/atom/movable/screen/intent/action()
 	usr.set_a_intent(name)
 
 /atom/movable/screen/intent/update_icon(style)
@@ -506,7 +502,7 @@
 	var/x1
 	var/x2
 	switch(index)
-		if(1,4)
+		if(1, 4)
 			x1 = 1
 			x2 = ico.Width() / 2
 		if(2, 3)
@@ -547,7 +543,7 @@
 	icon_state = "act_throw_off"
 	screen_loc = ui_drop_throw
 
-/atom/movable/screen/throw/Click()
+/atom/movable/screen/throw/action()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
@@ -561,7 +557,7 @@
 	screen_loc = ui_drop_throw
 	plane = HUD_PLANE
 
-/atom/movable/screen/drop/Click()
+/atom/movable/screen/drop/action()
 	usr.drop_item()
 
 /atom/movable/screen/drop/alien
@@ -574,7 +570,7 @@
 	icon_state = "nomod"
 	screen_loc = ui_borg_module
 
-/atom/movable/screen/module/Click()
+/atom/movable/screen/module/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.pick_module()
@@ -585,7 +581,7 @@
 	icon_state = "inventory"
 	screen_loc = ui_borg_inventory
 
-/atom/movable/screen/robot_inventory/Click()
+/atom/movable/screen/robot_inventory/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		if(R.module)
@@ -600,7 +596,7 @@
 	screen_loc = ui_movi
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/radio/Click()
+/atom/movable/screen/radio/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.radio_menu()
@@ -611,7 +607,7 @@
 	icon_state = "panel"
 	screen_loc = ui_borg_panel
 
-/atom/movable/screen/panel/Click()
+/atom/movable/screen/panel/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.installed_modules()
@@ -622,7 +618,7 @@
 	icon_state = "store"
 	screen_loc = ui_borg_store
 
-/atom/movable/screen/store/Click()
+/atom/movable/screen/store/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		if(R.module)
@@ -635,7 +631,7 @@
 	plane = ABOVE_HUD_PLANE
 	var/module_index
 
-/atom/movable/screen/robo_hands/Click()
+/atom/movable/screen/robo_hands/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.toggle_module(module_index)
@@ -667,7 +663,7 @@
 	screen_loc = ui_ai_core
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/ai_core/Click()
+/atom/movable/screen/ai_core/action()
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		AI.view_core()
@@ -679,7 +675,7 @@
 	screen_loc = ui_ai_camera_list
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/camera_list/Click()
+/atom/movable/screen/camera_list/action()
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		var/camera = input(AI) in AI.get_camera_list()
@@ -692,7 +688,7 @@
 	screen_loc = ui_ai_track_with_camera
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/camera_track/Click()
+/atom/movable/screen/camera_track/action()
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		var/target_name = input(AI) in AI.trackable_mobs()
@@ -705,7 +701,7 @@
 	screen_loc = ui_ai_camera_light
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/camera_light/Click()
+/atom/movable/screen/camera_light/action()
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		AI.toggle_camera_light()
@@ -717,7 +713,7 @@
 	screen_loc = ui_ai_control_integrated_radio
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/radio_settings/Click()
+/atom/movable/screen/radio_settings/action()
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		AI.control_integrated_radio()
@@ -729,7 +725,7 @@
 	screen_loc = ui_ai_crew_manifest
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/crew_manifest/Click()
+/atom/movable/screen/crew_manifest/action()
 	if(issilicon(usr))
 		var/mob/living/silicon/S = usr
 		S.show_station_manifest()
@@ -746,7 +742,7 @@
 	screen_loc = ui_ai_alerts
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/alerts/Click()
+/atom/movable/screen/alerts/action()
 	if(issilicon(usr))
 		var/mob/living/silicon/S = usr
 		S.show_alerts()
@@ -763,7 +759,7 @@
 	screen_loc = ui_ai_announcement
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/announcement/Click()
+/atom/movable/screen/announcement/action()
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		AI.ai_announcement()
@@ -775,7 +771,7 @@
 	screen_loc = ui_ai_shuttle
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/call_shuttle/Click()
+/atom/movable/screen/call_shuttle/action()
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = usr
 		AI.ai_call_shuttle()
@@ -787,7 +783,7 @@
 	screen_loc = ui_ai_state_laws
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/state_laws/Click()
+/atom/movable/screen/state_laws/action()
 	if(issilicon(usr))
 		var/mob/living/silicon/S = usr
 		S.checklaws()
@@ -805,7 +801,7 @@
 	screen_loc = ui_borg_show_laws
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/show_laws/Click()
+/atom/movable/screen/show_laws/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.show_laws()
@@ -817,7 +813,7 @@
 	screen_loc = ui_borg_light
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/toggle_lights/Click()
+/atom/movable/screen/toggle_lights/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.toggle_lights()
@@ -829,7 +825,7 @@
 	screen_loc = ui_borg_diagnostic
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/self_diagnosis/Click()
+/atom/movable/screen/self_diagnosis/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.self_diagnosis()
@@ -841,7 +837,7 @@
 	screen_loc = ui_borg_namepick
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/namepick/Click()
+/atom/movable/screen/namepick/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.Namepick()
@@ -853,7 +849,7 @@
 		screen_loc = ui_borg_show_pda
 		plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/show_pda_screens/Click()
+/atom/movable/screen/show_pda_screens/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.shown_robot_pda = !R.shown_robot_pda
@@ -866,7 +862,7 @@
 	screen_loc = ui_borg_show_foto
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/show_photo_screens/Click()
+/atom/movable/screen/show_photo_screens/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.shown_robot_foto = !R.shown_robot_foto
@@ -879,7 +875,7 @@
 	screen_loc = ui_borg_component
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/toggle_components/Click()
+/atom/movable/screen/toggle_components/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.toggle_component()
@@ -892,7 +888,7 @@
 	name = "PDA - Send Message"
 	icon_state = "pda_send"
 
-/atom/movable/screen/robot_pda/send/Click()
+/atom/movable/screen/robot_pda/send/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.toggle_component()
@@ -905,7 +901,7 @@
 	name = "PDA - Show Message Log"
 	icon_state = "pda_log"
 
-/atom/movable/screen/robot_pda/log/Click()
+/atom/movable/screen/robot_pda/log/action()
 	if(issilicon(usr))
 		var/mob/living/silicon/S = usr
 		var/obj/item/device/pda/silicon/PDA = S.pda
@@ -920,7 +916,7 @@
 	name = "Pda - Ringtone"
 	icon_state = "ringtone"
 
-/atom/movable/screen/robot_pda/ringtone/Click()
+/atom/movable/screen/robot_pda/ringtone/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		var/obj/item/device/pda/silicon/PDA = R.pda
@@ -930,7 +926,7 @@
 	name = "Pda - Toggle"
 	icon_state = "toggleringer"
 
-/atom/movable/screen/robot_pda/toggle/Click()
+/atom/movable/screen/robot_pda/toggle/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		var/obj/item/device/pda/silicon/PDA = R.pda
@@ -944,7 +940,7 @@
 	name = "Take Image"
 	icon_state = "takephoto"
 
-/atom/movable/screen/robot_image/take/Click()
+/atom/movable/screen/robot_image/take/action()
 	if(issilicon(usr))
 		var/mob/living/silicon/S = usr
 		var/obj/item/device/camera/siliconcam/camera = S.aiCamera
@@ -959,7 +955,7 @@
 	name = "View Images"
 	icon_state = "photos"
 
-/atom/movable/screen/robot_image/view/Click()
+/atom/movable/screen/robot_image/view/action()
 	if(issilicon(usr))
 		var/mob/living/silicon/S = usr
 		var/obj/item/device/camera/siliconcam/camera = S.aiCamera
@@ -974,7 +970,7 @@
 	name = "Delete Image"
 	icon_state = "deletthis"
 
-/atom/movable/screen/robot_image/delete/Click()
+/atom/movable/screen/robot_image/delete/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		var/obj/item/device/camera/siliconcam/ai_camera/camera = R.aiCamera
@@ -987,7 +983,7 @@
 	screen_loc = ui_ai_sensor
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screen/sensor_augmentation/Click()
+/atom/movable/screen/sensor_augmentation/action()
 	if(issilicon(usr))
 		var/mob/living/silicon/S = usr
 		S.toggle_sensor_mode()
@@ -997,15 +993,18 @@
 	icon_state = "setsensor"
 	screen_loc = ui_borg_sensor
 
+/atom/movable/screen/proc/action(location, control, params)
+	return
+
 /atom/movable/screen/Click(location, control, params)
 	if(!usr)
 		return
 
 	SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 
-	return
+	action(location, control, params)
 
-/atom/movable/screen/inventory/Click()
+/atom/movable/screen/inventory/action()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
@@ -1025,10 +1024,10 @@
 				var/mob/living/carbon/C = usr
 				C.activate_hand("l")
 				usr.next_move = world.time+2
-		if("swap")
-			usr:swap_hand()
-		if("hand")
-			usr:swap_hand()
+		if("swap", "hand")
+			if(iscarbon(usr))
+				var/mob/living/carbon/C = usr
+				C.swap_hand()
 		else
 			if(usr.attack_ui(slot_id))
 				usr.update_inv_l_hand()
@@ -1071,7 +1070,7 @@
 	icon_state = "craft"
 	screen_loc = ui_crafting
 
-/atom/movable/screen/inventory/craft/Click()
+/atom/movable/screen/inventory/craft/action()
 	var/mob/living/M = usr
 	M.OpenCraftingMenu()
 
