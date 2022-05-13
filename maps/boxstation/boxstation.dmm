@@ -29073,11 +29073,11 @@
 /area/station/cargo/qm)
 "aZN" = (
 /obj/structure/table,
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/coin/silver,
+/obj/item/weapon/coin/plastic,
 /obj/item/device/eftpos{
 	eftpos_name = "Quartermaster EFTPOS scanner"
 	},
@@ -38578,23 +38578,23 @@
 /turf/simulated/wall,
 /area/station/cargo/miningoffice)
 "bre" = (
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 7;
 	pixel_y = 12
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 12;
 	pixel_y = 7
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 4;
 	pixel_y = 8
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 5;
 	pixel_y = -8
 	},
@@ -51452,7 +51452,7 @@
 "bOd" = (
 /obj/structure/table,
 /obj/item/toy/cards,
-/obj/item/weapon/coin/silver,
+/obj/item/weapon/coin/plastic,
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
 "bOe" = (
@@ -67729,7 +67729,7 @@
 	},
 /area/station/maintenance/engineering)
 "cIk" = (
-/obj/item/weapon/coin/silver,
+/obj/item/weapon/coin/plastic,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/closet/crate,
 /turf/simulated/floor/plating,

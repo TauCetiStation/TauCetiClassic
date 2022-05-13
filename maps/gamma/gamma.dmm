@@ -49674,7 +49674,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/weapon/coin/silver,
+/obj/item/weapon/coin/plastic,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -53151,23 +53151,23 @@
 	},
 /area/station/hallway/secondary/entry)
 "pNO" = (
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 7;
 	pixel_y = 12
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 12;
 	pixel_y = 7
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 4;
 	pixel_y = 8
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 5;
 	pixel_y = -8
 	},
@@ -55656,7 +55656,7 @@
 /area/station/engineering)
 "qzI" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/coin/silver,
+/obj/item/weapon/coin/plastic,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "qzP" = (
@@ -55849,7 +55849,7 @@
 /area/station/maintenance/eva)
 "qDb" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/coin/silver,
+/obj/item/weapon/coin/plastic,
 /obj/item/weapon/camera_assembly,
 /obj/item/weapon/camera_assembly,
 /turf/simulated/floor/plating,
@@ -67398,7 +67398,7 @@
 /area/station/security/brig)
 "uop" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/coin/silver,
+/obj/item/weapon/coin/plastic,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "uoq" = (

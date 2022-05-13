@@ -998,7 +998,7 @@
 /area/station/civilian/kitchen)
 "abL" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = -15;
 	pixel_y = 7
 	},
@@ -19318,23 +19318,23 @@
 	},
 /area/asteroid/mine/dwarf)
 "jUa" = (
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 7;
 	pixel_y = 12
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 12;
 	pixel_y = 7
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 4;
 	pixel_y = 8
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 5;
 	pixel_y = -8
 	},
@@ -26714,8 +26714,8 @@
 "qFP" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/coin/silver,
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic,
+/obj/item/weapon/coin/plastic{
 	pixel_x = -3;
 	pixel_y = 3
 	},

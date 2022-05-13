@@ -7366,23 +7366,23 @@
 	},
 /area/awaymission/labs/command)
 "qU" = (
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 7;
 	pixel_y = 12
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 12;
 	pixel_y = 7
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 4;
 	pixel_y = 8
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 5;
 	pixel_y = -8
 	},
@@ -7428,7 +7428,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "qZ" = (
-/obj/item/weapon/coin/silver{
+/obj/item/weapon/coin/plastic{
 	pixel_x = 12;
 	pixel_y = 11
 	},
