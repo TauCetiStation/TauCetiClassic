@@ -155,7 +155,7 @@
 #define TRAIT_WET_HANDS           "wet_hands"
 #define TRAIT_GREASY_FINGERS      "greasy_fingers"
 #define TRAIT_ANATOMIST           "anatomist"
-#define TRAIT_SOULSTONE_IMMUNE     "soulstone_immune"
+#define TRAIT_SOULSTONE_IMMUNE    "soulstone_immune"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -168,12 +168,16 @@
  */
 #define TRAIT_DOUBLE_WIELDED "double_wielded"
 
+// item trait
+#define TRAIT_NO_SACRIFICE "religion_no_sacrifice"
+
 // idk why this exists on TG
 #define GENERIC_TRAIT "generic"
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define QUALITY_TRAIT      "quality"
 #define TWOHANDED_TRAIT    "twohanded"
+#define RELIGION_TRAIT     "religion"
 
 // self explanatory
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"

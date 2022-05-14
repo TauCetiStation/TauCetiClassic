@@ -60,7 +60,7 @@
 				if(4 to 16)  // lie
 					IAN.crawl()
 				if(17 to 29) // sit
-					IAN.lay_down()
+					IAN.ian_sit()
 
 /atom/movable/screen/corgi/mouth
 	name = "mouth"

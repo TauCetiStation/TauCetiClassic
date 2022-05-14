@@ -85,3 +85,11 @@
 	else
 		icon_state = "autoinjector_empty"
 		item_state = "autoinjector_empty"
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine
+	name = "metatrombine autoinjector"
+	desc = "Accelerates blood clotting."
+	icon_state = "autobrut"
+	item_state = "autobrut"
+	volume = 5
+	list_reagents = list("metatrombine" = 5)

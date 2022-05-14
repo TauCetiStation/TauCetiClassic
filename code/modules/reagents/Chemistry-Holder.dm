@@ -186,8 +186,9 @@ var/global/const/INGEST = 2
 		if(M && R)
 			var/mob/living/carbon/C = M //currently metabolism work only for carbon, there is no need to check mob type
 			var/remove_amount = R.custom_metabolism * C.get_metabolism_factor()
-			R.on_mob_life(M)
-			remove_reagent(R.id, remove_amount)
+			if(remove_amount > 0)
+				R.on_mob_life(M)
+				remove_reagent(R.id, remove_amount)
 	update_total()
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
@@ -410,27 +411,7 @@ var/global/const/INGEST = 2
 		if (R.id == reagent)
 			R.volume += amount
 
-			// Data:
-			if(R.id == "blood" && reagent == "blood")
-				if(R.data && data)
-					if(R.data["viruses"] || data["viruses"]) // mix dem viruses
-						var/list/mix1 = R.data["viruses"]
-						var/list/mix2 = data["viruses"]
-
-						// Stop issues with the list changing during mixing.
-						var/list/to_mix = list()
-						to_mix += mix1
-						to_mix += mix2
-
-						var/datum/disease/advance/AD = Advance_Mix(to_mix)
-						if(AD)
-							var/list/preserve = list(AD)
-							for(var/D in R.data["viruses"])
-								if(!istype(D, /datum/disease/advance))
-									preserve += D
-							R.data["viruses"] = preserve
-
-			else if(R.id == "customhairdye" || R.id == "paint_custom")
+			if(R.id == "customhairdye" || R.id == "paint_custom")
 				for(var/color in R.data)
 					R.data[color] = (R.data[color] + data[color]) * 0.5
 				// I am well aware of RGB_CONTRAST define, but in reagent colors everywhere else we use hex codes, so I did the thing below. ~Luduk.
@@ -451,9 +432,6 @@ var/global/const/INGEST = 2
 		R.holder = src
 		R.volume = amount
 		R.religion = _religion
-
-		// Data:
-		SetViruses(R, data) // Includes setting data
 
 		if(reagent == "customhairdye" || reagent == "paint_custom")
 			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))

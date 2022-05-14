@@ -11,6 +11,7 @@
 	//icon_state = "body_m_s"
 
 	var/datum/species/species //Contains icon generation and language information, set during New().
+	var/random_tail_holder = "" // overrides species.tail
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
@@ -43,7 +44,7 @@
 			set_species()
 
 	if(species) // Just to be sure.
-		metabolism_factor = species.metabolism_mod
+		metabolism_factor.Set(species.metabolism_mod)
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
@@ -64,8 +65,6 @@
 		dna.real_name = real_name
 
 	handcrafting = new()
-
-	verbs += /mob/living/carbon/proc/crawl
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
@@ -905,7 +904,7 @@
 		var/obj/item/clothing/head/welding/W = head
 		if(!W.up)
 			number += 2
-	if(istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault) && !istype(head, /obj/item/clothing/head/helmet/space/sk))
+	if(!istype(head, /obj/item/clothing/head/helmet/space/sk) && istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault))
 		number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/thermal))
 		var/obj/item/clothing/glasses/thermal/G = glasses
@@ -1331,7 +1330,8 @@
 
 				BP.take_damage(rand(1,3), 0, 0)
 				if(!BP.is_robotic()) //There is no blood in protheses.
-					BP.status |= ORGAN_BLEEDING
+					if(!reagents.has_reagent("metatrombine")) // metatrombine just prevents bleeding, not toxication
+						BP.status |= ORGAN_BLEEDING
 					adjustToxLoss(rand(1,3))
 
 /mob/living/carbon/human/verb/check_pulse()
@@ -2288,9 +2288,7 @@
 
 	adjustToxLoss(effect_coeff)
 
-	if(bodytemperature < 330)
-		//310 is the normal bodytemp. 310.055
-		bodytemperature = min(330, bodytemperature + 10 * effect_coeff * TEMPERATURE_DAMAGE_COEFFICIENT)
+	adjust_bodytemperature(10 * effect_coeff * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 20)
 
 /mob/living/carbon/human/get_pumped(bodypart)
 	var/obj/item/organ/external/BP = get_bodypart(bodypart)

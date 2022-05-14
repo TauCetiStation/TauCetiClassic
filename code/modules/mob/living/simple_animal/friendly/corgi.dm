@@ -75,7 +75,7 @@
 /mob/living/simple_animal/corgi/Lisa/Life()
 	..()
 
-	if(!stat && !resting && !buckled)
+	if(!stat && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 15)
 			turns_since_scan = 0

@@ -230,7 +230,7 @@
 		handle_suffocating()
 		inhale_alert = TRUE
 		return
-	
+
 	breath.volume = BREATH_VOLUME
 
 	handle_breath(breath)
@@ -243,12 +243,12 @@
 	return pressure
 
 /mob/living/carbon/proc/stabilize_body_temperature()
-	bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
+	adjust_bodytemperature((BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR)
 
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment)
 	if(stat != DEAD) // lets put this shit somewhere here
 		stabilize_body_temperature()
-	
+
 	if(!environment)
 		return
 
@@ -258,10 +258,7 @@
 	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 
 	if(!on_fire)
-		if(affecting_temp <= -BODYTEMP_SIGNIFICANT_CHANGE)
-			bodytemperature += max(affecting_temp / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
-		else if(affecting_temp >= BODYTEMP_SIGNIFICANT_CHANGE)
-			bodytemperature += min(affecting_temp / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
+		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
 	if(flags & GODMODE)
 		return
@@ -309,7 +306,7 @@
 		if(m_intent == "run")
 			nutrition -= met_factor * 0.01
 	if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)
-		bodytemperature += 2
+		adjust_bodytemperature(2)
 
 	// Moving around increases germ_level faster
 	if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
@@ -405,13 +402,6 @@
 		if(spread)
 			attacker.spread_disease_to(src, DISEASE_SPREAD_CONTACT)
 
-			for(var/datum/disease/D in viruses)
-				if(D.spread_by_touch())
-					attacker.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-			for(var/datum/disease/D in attacker.viruses)
-				if(D.spread_by_touch())
-					contract_disease(D, 0, 1, CONTACT_HANDS)
 	return ..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
@@ -574,12 +564,8 @@
 			else if(lying)
 				AdjustSleeping(-10 SECONDS)
 				if (!M.lying)
-					if(!IsSleeping())
-						src.resting = 0
-					if(src.crawling)
-						if(crawl_can_use() && src.pass_flags & PASSCRAWL)
-							src.pass_flags ^= PASSCRAWL
-							src.crawling = 0
+					if((!IsSleeping()) || ((src.crawling) && (crawl_can_use())))
+						SetCrawling(FALSE)
 					M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
 				else
@@ -611,52 +597,6 @@
 			AdjustWeakened(-3)
 
 			playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-
-/mob/living/carbon/proc/crawl_can_use()
-	var/turf/T = get_turf(src)
-	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) || (locate(/obj/structure/plasticflaps) in T))
-		return FALSE
-	return TRUE
-
-/mob/living/carbon/var/crawl_getup = FALSE
-/mob/living/carbon/proc/crawl()
-	set name = "Crawl"
-	set category = "IC"
-
-	if(incapacitated() || (status_flags & FAKEDEATH) || buckled)
-		return
-	if(crawl_getup)
-		return
-
-	if(crawling)
-		crawl_getup = TRUE
-		if(do_after(src, 10, target = src))
-			crawl_getup = FALSE
-			if(!crawl_can_use())
-				playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-				if(ishuman(src))
-					var/mob/living/carbon/human/H = src
-					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-					BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
-				else
-					take_overall_damage(5, used_weapon = "Table")
-				Stun(1)
-				to_chat(src, "<span class='danger'>Ouch!</span>")
-				return
-			layer = 4.0
-		else
-			crawl_getup = FALSE
-			return
-	else
-		if(!crawl_can_use())
-			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
-			return
-
-	pass_flags ^= PASSCRAWL
-	crawling = !crawling
-
-	to_chat(src, "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>")
-	update_canmove()
 
 /mob/living/carbon/proc/eyecheck()
 	return 0
@@ -1051,7 +991,10 @@
 				) * 8 // We multiply by this "magic" number, because all of these are equal to 8 nutrition.
 
 /mob/living/carbon/get_metabolism_factor()
-	. = metabolism_factor
+	var/met = metabolism_factor.Get()
+	if(met < 0)
+		met = 0
+	return met
 
 
 /mob/living/carbon/proc/perform_av(mob/living/carbon/human/user) // don't forget to INVOKE_ASYNC this proc if sleep is a problem.
@@ -1309,3 +1252,59 @@
 
 		txt = L.accentuate(txt, speaking)
 	return txt
+
+
+/**
+ * Get the insulation that is appropriate to the temperature you're being exposed to.
+ * All clothing, natural insulation, and traits are combined returning a single value.
+ *
+ * required temperature The Temperature that you're being exposed to
+ *
+ * return the percentage of protection as a value from 0 - 1
+**/
+/mob/living/carbon/proc/get_insulation_protection(temperature)
+	return (temperature > bodytemperature) ? get_heat_protection(temperature) : get_cold_protection(temperature)
+
+/// This returns the percentage of protection from heat as a value from 0 - 1
+/// temperature is the temperature you're being exposed to
+/mob/living/carbon/proc/get_heat_protection(temperature)
+	return 0
+
+/// This returns the percentage of protection from cold as a value from 0 - 1
+/// temperature is the temperature you're being exposed to
+/mob/living/carbon/proc/get_cold_protection(temperature)
+	return 0
+
+
+/**
+ * Adjust the body temperature of a mob
+ * expanded for carbon mobs allowing the use of insulation and change steps
+ *
+ * vars:
+ * * amount The amount of degrees to change body temperature by
+ * * min_temp (optional) The minimum body temperature after adjustment
+ * * max_temp (optional) The maximum body temperature after adjustment
+ * * use_insulation (optional) modifies the amount based on the amount of insulation the mob has
+ * * use_steps (optional) Use the body temp divisors and max change rates
+ * * capped (optional) default True used to cap step mode
+ */
+/mob/living/carbon/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE, capped=TRUE)
+	// apply insulation to the amount of change
+	if(use_insulation)
+		var/protection = get_insulation_protection(bodytemperature + amount)
+		if(protection >= 1)
+			return
+		amount *= (1 - protection)
+
+	// Use the bodytemp divisors to get the change step, with max step size
+	if(use_steps)
+		if(amount > 0)
+			amount /=  BODYTEMP_HEAT_DIVISOR
+			if(capped)
+				amount = min(amount, BODYTEMP_HEATING_MAX)
+		else
+			amount /=  BODYTEMP_COLD_DIVISOR
+			if(capped)
+				amount = max(amount, BODYTEMP_COOLING_MAX)
+
+	..(amount, min_temp, max_temp)

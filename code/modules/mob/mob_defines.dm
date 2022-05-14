@@ -87,7 +87,6 @@
 
 	var/antitoxs = null
 	var/phoron = null
-	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
 	var/was_lying = FALSE //For user of clown pda slippery
@@ -203,10 +202,6 @@
 
 //Changlings, but can be used in other modes
 //	var/obj/effect/proc_holder/changpower/list/power_list = list()
-
-//List of active diseases
-
-	var/list/viruses = list() // replaces var/datum/disease/virus
 
 //Monkey/infected mode
 	var/list/resistances = list()

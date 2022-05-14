@@ -151,9 +151,6 @@
 			message += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span><br>"
 	if(M.getCloneLoss())
 		to_chat(user, "<span class='warning'>Subject appears to have been imperfectly cloned.</span>")
-	for(var/datum/disease/D in M.viruses)
-		if(!D.hidden[SCANNER])
-			message += "<span class = 'warning bold'>Warning: [D.form] Detected</span>\n<span class = 'warning'>Name: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span><br>"
 	if(M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
 		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span><br>"
 	if(M.has_brain_worms())
@@ -1056,10 +1053,7 @@
 		return 0
 	return qualities[quality]
 
-/obj/item/proc/wash_act(w_color)
-	decontaminate()
-	wet = 0
-
+/obj/item/proc/get_dye_type(w_color)
 	if(!dyed_type)
 		return
 
@@ -1073,6 +1067,16 @@
 
 	if(islist(dye_type))
 		dye_type = pick(dye_type)
+
+	return dye_type
+
+/obj/item/proc/wash_act(w_color)
+	decontaminate()
+	wet = 0
+
+	var/obj/item/clothing/dye_type = get_dye_type(w_color)
+	if(!dye_type)
+		return
 
 	name = initial(dye_type.name)
 	icon_state = initial(dye_type.icon_state)
