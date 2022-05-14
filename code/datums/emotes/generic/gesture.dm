@@ -18,6 +18,5 @@
 
 /datum/emote/dance/proc/dance(mob/user)
 	for(var/i in 1 to 20)
-		var/list/pos_dirs = cardinal.Copy()
-		user.set_dir(pick(pos_dirs - user.dir))
+		user.set_dir(pick(global.cardinal - user.dir))
 		sleep(1)
