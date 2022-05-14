@@ -1261,3 +1261,11 @@
 /atom/movable/screen/health/robot
 	icon = 'icons/mob/screen1_robot.dmi'
 	screen_loc = ui_borg_health
+
+/atom/movable/screen/chemical_display
+	name = "chemical storage"
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "power_display"
+	screen_loc = ui_lingchemdisplay
+	plane = ABOVE_HUD_PLANE
+	invisibility = INVISIBILITY_ABSTRACT
