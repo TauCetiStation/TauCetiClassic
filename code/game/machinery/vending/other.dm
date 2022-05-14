@@ -249,7 +249,7 @@
 
 /obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mining_voucher/syndi))
-		RedeemVoucher(I, user)
+		givekit(I, user)
 		return
 
 /obj/machinery/vending/syndi/proc/populate_selection()
@@ -264,37 +264,30 @@
 	"Custom kit" = image(icon = 'icons/obj/radio.dmi', icon_state = "radio"),
 	)
 
-/obj/machinery/vending/syndi/proc/RedeemVoucher(obj/voucher, redeemer)
-	if(voucher.in_use)
-		return
-	voucher.in_use = TRUE
-	if(!selection_items)
-		populate_selection()
-	var/selection = show_radial_menu(redeemer, src, selection_items, require_near = TRUE, tooltips = TRUE)
-	if(!selection || !Adjacent(redeemer))
-		voucher.in_use = 0
-		return
-
-	var/list/assortment = list(
-	"Scout kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/scout,
-	"Sniper kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/sniper,
-	"Assaultman kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman,
-	"Bomber kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/demo,
-	"Melee kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/melee,
-	"Hacker kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker,
-	"Machinengunner kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner,
-	"Custom kit" =  /obj/item/weapon/storage/backpack/dufflebag/nuke/custom,
-     )
+var/list/assortment = list(
+"Scout kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/scout,
+"Sniper kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/sniper,
+"Assaultman kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman,
+"Bomber kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/demo,
+"Melee kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/melee,
+"Hacker kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker,
+"Machinengunner kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner,
+"Custom kit" =  /obj/item/weapon/storage/backpack/dufflebag/nuke/custom,
+ )
 
 /obj/machinery/vending/syndi/proc/givekit(obj/voucher, redeemer, mob/user)
+	var/selection = show_radial_menu(redeemer, src, selection_items, require_near = TRUE, tooltips = TRUE)
 	if(voucher.in_use)
 		return
 	voucher.in_use = TRUE
 	if(!selection_items)
 		populate_selection()
 	var/bought = new assortment[selection]
- 	var/mob/living/carbon/human/A = user
-	user.put_in_any_hand_if_possible(bought)
+	var/A = new mob/user
+	A.put_in_any_hand_if_possible(bought)
+	if(!selection || !Adjacent(redeemer))
+		voucher.in_use = 0
+		return
 
 	if(user.mind)
 		var/cost = 1
