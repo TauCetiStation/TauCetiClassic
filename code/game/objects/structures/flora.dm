@@ -215,7 +215,7 @@
 	icon_state = "plant-10"
 	var/can_be_cut = FALSE
 	var/health_flora = 40
-	var/damage_threshhold = 5
+	var/damage_threshhold = 2
 	var/cutting_sound = 'sound/weapons/bladeslice.ogg'
 	var/list/drop_on_destroy = list()
 
@@ -223,7 +223,7 @@
 	. = ..()
 	if(can_be_cut &&W.force >= damage_threshhold)
 		playsound(src, cutting_sound, VOL_EFFECTS_MASTER)
-		health_flora -= W.force
+		health_flora -= 5*W.force
 		if(health_flora <= 0)
 			visible_message("<span class='warning'>[src] is hacked into pieces!</span>")
 			if(drop_on_destroy.len)
@@ -240,7 +240,7 @@
 	pixel_x = -16
 	layer = 9
 	health_flora = 150
-	damage_threshhold = 15
+	damage_threshhold = 3
 	can_be_cut = TRUE
 	cutting_sound = 'sound/items/Axe.ogg'
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
