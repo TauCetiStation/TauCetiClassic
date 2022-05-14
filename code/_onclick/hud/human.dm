@@ -76,51 +76,30 @@
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
 
-	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "r_hand"
+	inv_box = new /atom/movable/screen/inventory/hand/r()
+	inv_box.update_icon(mymob)
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_r_inactive"
-	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
-		inv_box.icon_state = "hand_r_active"
-	inv_box.screen_loc = ui_rhand
-	inv_box.slot_id = SLOT_R_HAND
-	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
-
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 
-	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "l_hand"
+	inv_box = new /atom/movable/screen/inventory/hand/l()
+	inv_box.update_icon(mymob)
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_l_inactive"
-	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
-		inv_box.icon_state = "hand_l_active"
-	inv_box.screen_loc = ui_lhand
-	inv_box.slot_id = SLOT_L_HAND
-	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.l_hand_hud_object = inv_box
 	src.adding += inv_box
 
-	using = new /atom/movable/screen/inventory()
-	using.name = "hand"
+	using = new /atom/movable/screen/inventory/swap/first()
 	using.icon = ui_style
-	using.icon_state = "hand1"
-	using.screen_loc = ui_swaphand1
-	using.plane = HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.adding += using
 
-	using = new /atom/movable/screen/inventory()
-	using.name = "hand"
+	using = new /atom/movable/screen/inventory/swap/second()
 	using.icon = ui_style
-	using.icon_state = "hand2"
-	using.screen_loc = ui_swaphand2
-	using.plane = HUD_PLANE
 	using.color = ui_color
 	using.alpha = ui_alpha
 	src.adding += using
@@ -136,24 +115,14 @@
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
 
-	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "mask"
+	inv_box = new /atom/movable/screen/inventory/mask()
 	inv_box.icon = ui_style
-	inv_box.icon_state = "mask"
-	inv_box.screen_loc = ui_mask
-	inv_box.slot_id = SLOT_WEAR_MASK
-	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
 
-	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "back"
+	inv_box = new /atom/movable/screen/inventory/back()
 	inv_box.icon = ui_style
-	inv_box.icon_state = "back"
-	inv_box.screen_loc = ui_back
-	inv_box.slot_id = SLOT_BACK
-	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
@@ -319,7 +288,6 @@
 	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = ui_style
 	mymob.pullin.update_icon(mymob)
-	mymob.pullin.screen_loc = ui_pull_resist
 	src.hotkeybuttons += mymob.pullin
 
 	lingchemdisplay = new /atom/movable/screen()

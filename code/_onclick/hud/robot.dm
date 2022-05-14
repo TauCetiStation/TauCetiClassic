@@ -119,9 +119,7 @@ var/global/atom/movable/screen/robot_inventory
 	robot_inventory = new /atom/movable/screen/robot_inventory()
 
 	mymob.pullin = new /atom/movable/screen/pull()
-	mymob.pullin.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.pullin.update_icon(mymob)
-	mymob.pullin.screen_loc = ui_borg_pull
 
 	mymob.zone_sel = new /atom/movable/screen/zone_sel()
 	mymob.zone_sel.icon = 'icons/mob/screen1_robot.dmi'

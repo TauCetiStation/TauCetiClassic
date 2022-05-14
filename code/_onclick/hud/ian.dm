@@ -171,7 +171,6 @@
 	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = ui_style
 	mymob.pullin.update_icon(mymob)
-	mymob.pullin.screen_loc = ui_pull_resist
 
 	mymob.zone_sel = new
 	mymob.zone_sel.icon = ui_style

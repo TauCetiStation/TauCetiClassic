@@ -30,11 +30,6 @@
 	maptext_height = 480
 	maptext_width = 480
 
-
-/atom/movable/screen/inventory
-	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
-
-
 /atom/movable/screen/close
 	name = "close"
 
@@ -294,14 +289,20 @@
 	name = "stop pulling"
 	icon = 'icons/mob/screen1_Midnight.dmi'
 	icon_state = "pull1"
+	screen_loc = ui_pull_resist
 
 /atom/movable/screen/pull/action()
 	usr.stop_pulling()
 
 /atom/movable/screen/pull/update_icon(mob/mymob)
-	if(!mymob)
-		return
 	icon_state = mymob.pulling ? "pull1" : "pull0"
+
+/atom/movable/screen/pull/borg
+	icon = 'icons/mob/screen1_robot.dmi'
+	screen_loc = ui_borg_pull
+
+/atom/movable/screen/pull/alien
+	icon = 'icons/mob/screen1_xeno.dmi'
 
 /atom/movable/screen/toggle
 	name = "toggle"
@@ -1000,36 +1001,26 @@
 
 	action(location, control, params)
 
-/atom/movable/screen/inventory/action()
+/atom/movable/screen/inventory
+	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
+
+/atom/movable/screen/inventory/proc/check_state()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
-		return TRUE
+		return FALSE
 	if(usr.incapacitated())
-		return TRUE
+		return FALSE
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
-		return TRUE
-	switch(name)
-		if("r_hand")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				C.activate_hand("r")
-				usr.next_move = world.time+2
-		if("l_hand")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				C.activate_hand("l")
-				usr.next_move = world.time+2
-		if("swap", "hand")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				C.swap_hand()
-		else
-			if(usr.attack_ui(slot_id))
-				usr.update_inv_l_hand()
-				usr.update_inv_r_hand()
-				usr.next_move = world.time+6
+		return FALSE
 	return TRUE
+
+/atom/movable/screen/inventory/action()
+	if(check_state() && usr.attack_ui(slot_id))
+		usr.update_inv_l_hand()
+		usr.update_inv_r_hand()
+		usr.next_move = world.time + 6
+
 
 /atom/movable/screen/inventory/MouseEntered()
 	SHOULD_CALL_PARENT(TRUE)
@@ -1060,6 +1051,60 @@
 		return
 	inv_item.remove_outline()
 
+/atom/movable/screen/inventory/hand
+	var/hand_index
+
+/atom/movable/screen/inventory/hand/action()
+	if(check_state() && iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		C.activate_hand(hand_index)
+		usr.next_move = world.time + 2
+
+/atom/movable/screen/inventory/hand/update_icon(mob/mymob)
+	icon_state = (mymob.hand == hand_index) ? "[name]_active" : "[name]_inactive"
+
+/atom/movable/screen/inventory/hand/r
+	name = "hand_r"
+	screen_loc = ui_rhand
+	slot_id = SLOT_R_HAND
+	hand_index = 0
+
+/atom/movable/screen/inventory/hand/r/alien
+	icon = 'icons/mob/screen1_xeno.dmi'
+
+/atom/movable/screen/inventory/hand/l
+	name = "hand_l"
+	screen_loc = ui_lhand
+	slot_id = SLOT_L_HAND
+	hand_index = 1
+
+/atom/movable/screen/inventory/hand/l/alien
+	icon = 'icons/mob/screen1_xeno.dmi'
+
+/atom/movable/screen/inventory/swap
+	name = "hand"
+
+/atom/movable/screen/inventory/swap/action()
+	if(check_state() && iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		C.swap_hand()
+
+/atom/movable/screen/inventory/swap/first
+	icon_state = "hand1"
+	screen_loc = ui_swaphand1
+
+/atom/movable/screen/inventory/swap/first/alien
+	icon = 'icons/mob/screen1_xeno.dmi'
+	icon_state = "swap_1"
+
+/atom/movable/screen/inventory/swap/second
+	icon_state = "hand2"
+	screen_loc = ui_swaphand2
+
+/atom/movable/screen/inventory/swap/second/alien
+	icon = 'icons/mob/screen1_xeno.dmi'
+	icon_state = "swap_2"
+
 /atom/movable/screen/inventory/craft
 	name = "crafting menu"
 	icon = 'icons/mob/screen1_Midnight.dmi'
@@ -1067,8 +1112,25 @@
 	screen_loc = ui_crafting
 
 /atom/movable/screen/inventory/craft/action()
-	var/mob/living/M = usr
-	M.OpenCraftingMenu()
+	if(check_state())
+		var/mob/living/M = usr
+		M.OpenCraftingMenu()
+		usr.next_move = world.time + 6
+
+/atom/movable/screen/inventory/mask
+	name = "mask"
+	icon_state = "mask"
+	screen_loc = ui_mask
+	slot_id = SLOT_WEAR_MASK
+
+/atom/movable/screen/inventory/mask/monkey
+	screen_loc = ui_monkey_mask
+
+/atom/movable/screen/inventory/back
+	name = "back"
+	icon_state = "back"
+	screen_loc = ui_back
+	slot_id = SLOT_BACK
 
 /atom/movable/screen/nuke
 	icon = 'icons/effects/station_explosion.dmi'

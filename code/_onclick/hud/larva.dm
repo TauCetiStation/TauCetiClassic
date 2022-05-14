@@ -61,7 +61,6 @@
 	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = style
 	mymob.pullin.update_icon(mymob)
-	mymob.pullin.screen_loc = ui_pull_resist
 
 	mymob.zone_sel = new /atom/movable/screen/zone_sel()
 	mymob.zone_sel.cut_overlays()

@@ -4,6 +4,7 @@
 /atom/movable/screen/xenomorph/leap
 	name = "toggle leap"
 	icon_state = "leap_off"
+	screen_loc = ui_storage2
 
 /atom/movable/screen/xenomorph/leap/action()
 	if(isxenoadult(usr))
@@ -23,10 +24,21 @@
 /atom/movable/screen/xenomorph/neurotoxin
 	name = "toggle neurotoxin"
 	icon_state = "neurotoxin0"
+	screen_loc = ui_storage1
 
 /atom/movable/screen/xenomorph/neurotoxin/action()
 	var/mob/living/carbon/xenomorph/humanoid/AH = usr
 	AH.toggle_neurotoxin()
+
+/atom/movable/screen/xenomorph/plasma_display
+	name = "plasma stored"
+	icon = 'icons/mob/screen1_xeno.dmi'
+	icon_state = "power_display3"
+	screen_loc = ui_alienplasmadisplay
+
+/atom/movable/screen/xenomorph/plasma_display/update_icon(mymob)
+	var/mob/living/carbon/xenomorph/X = mymob
+	X.updatePlasmaDisplay()
 
 /datum/hud/proc/alien_hud()
 	var/style = 'icons/mob/screen1_xeno.dmi'
@@ -73,48 +85,18 @@
 	using = new /atom/movable/screen/drop/alien()
 	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "r_hand"
-	inv_box.set_dir(WEST)
-	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
-	inv_box.icon_state = "hand_r_inactive"
-	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
-		inv_box.icon_state = "hand_r_active"
-	inv_box.screen_loc = ui_rhand
-	inv_box.plane = HUD_PLANE
-	inv_box.slot_id = SLOT_R_HAND
+	inv_box = new /atom/movable/screen/inventory/hand/r/alien()
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 
-	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "l_hand"
-	inv_box.set_dir(EAST)
-	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
-	inv_box.icon_state = "hand_l_inactive"
-	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
-		inv_box.icon_state = "hand_l_active"
-	inv_box.screen_loc = ui_lhand
-	inv_box.plane = HUD_PLANE
-	inv_box.slot_id = SLOT_L_HAND
+	inv_box = new /atom/movable/screen/inventory/hand/l/alien()
 	src.l_hand_hud_object = inv_box
 	src.adding += inv_box
 
-	using = new /atom/movable/screen/inventory()
-	using.name = "hand"
-	using.set_dir(SOUTH)
-	using.icon = 'icons/mob/screen1_xeno.dmi'
-	using.icon_state = "swap_1"
-	using.screen_loc = ui_swaphand1
-	using.plane = HUD_PLANE
+	using = new /atom/movable/screen/inventory/swap/first/alien()
 	src.adding += using
 
-	using = new /atom/movable/screen/inventory()
-	using.name = "hand"
-	using.set_dir(SOUTH)
-	using.icon = 'icons/mob/screen1_xeno.dmi'
-	using.icon_state = "swap_2"
-	using.screen_loc = ui_swaphand2
-	using.plane = HUD_PLANE
+	using = new/atom/movable/screen/inventory/swap/second/alien()
 	src.adding += using
 
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
@@ -125,23 +107,17 @@
 
 	if(isxenohunter(mymob))
 		mymob.leap_icon = new /atom/movable/screen/xenomorph/leap()
-		mymob.leap_icon.screen_loc = ui_storage2
 		src.adding += mymob.leap_icon
 
 	if(locate(/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin) in mymob.verbs)
 		mymob.neurotoxin_icon = new /atom/movable/screen/xenomorph/neurotoxin()
-		mymob.neurotoxin_icon.screen_loc = ui_storage1
 		src.adding += mymob.neurotoxin_icon
 
 	mymob.throw_icon = new /atom/movable/screen/throw/alien()
 
-	mymob.xenomorph_plasma_display = new /atom/movable/screen()
-	mymob.xenomorph_plasma_display.icon = 'icons/mob/screen1_xeno.dmi'
-	mymob.xenomorph_plasma_display.icon_state = "power_display3"
-	mymob.xenomorph_plasma_display.name = "plasma stored"
-	mymob.xenomorph_plasma_display.screen_loc = ui_alienplasmadisplay
-	var/mob/living/carbon/xenomorph/X = mymob
-	X.updatePlasmaDisplay()
+	using = new /atom/movable/screen/xenomorph/plasma_display()
+	using.update_icon(mymob)
+	mymob.xenomorph_plasma_display = using
 
 	mymob.healths = new /atom/movable/screen()
 	mymob.healths.icon = 'icons/mob/screen1_xeno.dmi'
@@ -149,10 +125,8 @@
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_alien_health
 
-	mymob.pullin = new /atom/movable/screen/pull()
-	mymob.pullin.icon = 'icons/mob/screen1_xeno.dmi'
+	mymob.pullin = new /atom/movable/screen/pull/alien()
 	mymob.pullin.update_icon(mymob)
-	mymob.pullin.screen_loc = ui_pull_resist
 
 	mymob.zone_sel = new /atom/movable/screen/zone_sel()
 	mymob.zone_sel.icon = 'icons/mob/screen1_xeno.dmi'
