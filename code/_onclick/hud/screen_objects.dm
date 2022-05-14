@@ -147,6 +147,10 @@
 	icon_state = "no_walk0"
 	screen_loc = ui_gun2
 
+/atom/movable/screen/gun/move/update_icon(client/client)
+	name = "[client.target_can_move ? "Disallow" : "Allow"] Walking"
+	icon_state = "no_walk[client.target_can_move]"
+
 /atom/movable/screen/gun/move/action()
 	if(..())
 		usr.client.AllowTargetMove()
@@ -155,6 +159,10 @@
 	name = "Allow Running"
 	icon_state = "no_run0"
 	screen_loc = ui_gun3
+
+/atom/movable/screen/gun/run/update_icon(client/client)
+	name = "[client.target_can_run ? "Disallow" : "Allow"] Running"
+	icon_state = "no_run[client.target_can_run]"
 
 /atom/movable/screen/gun/run/action()
 	if(..())
@@ -165,6 +173,10 @@
 	icon_state = "no_item0"
 	screen_loc = ui_gun1
 
+/atom/movable/screen/gun/item/update_icon(client/client)
+	name = "[client.target_can_click ? "Disallow" : "Allow"] Item Use"
+	icon_state = "no_item[client.target_can_click]"
+
 /atom/movable/screen/gun/item/action()
 	if(..())
 		usr.client.AllowTargetClick()
@@ -173,10 +185,12 @@
 	name = "Toggle Gun Mode"
 	icon_state = "gun0"
 	screen_loc = ui_gun_select
-	//dir = 1
 
 /atom/movable/screen/gun/mode/action()
 	usr.client.ToggleGunMode()
+
+/atom/movable/screen/gun/mode/update_icon(mob/mymob)
+	icon_state = mymob.client.gun_mode ? "gun1" : "gun0"
 
 /atom/movable/screen/zone_sel
 	name = "damage zone"

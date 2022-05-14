@@ -122,23 +122,10 @@ var/global/atom/movable/screen/robot_inventory
 
 	//Handle the gun settings buttons
 	mymob.gun_setting_icon = new /atom/movable/screen/gun/mode(null)
-	if (mymob.client)
-		if (mymob.client.gun_mode) // If in aim mode, correct the sprite
-			mymob.gun_setting_icon.icon_state = "gun1"
-	for(var/obj/item/weapon/gun/G in mymob) // If targeting someone, display other buttons
-		if (G.target)
-			mymob.item_use_icon = new /atom/movable/screen/gun/item(null)
-			if (mymob.client.target_can_click)
-				mymob.item_use_icon.icon_state = "gun0"
-			src.adding += mymob.item_use_icon
-			mymob.gun_move_icon = new /atom/movable/screen/gun/move(null)
-			if (mymob.client.target_can_move)
-				mymob.gun_move_icon.icon_state = "gun0"
-				mymob.gun_run_icon = new /atom/movable/screen/gun/run(null)
-				if (mymob.client.target_can_run)
-					mymob.gun_run_icon.icon_state = "gun0"
-				src.adding += mymob.gun_run_icon
-			src.adding += mymob.gun_move_icon
+	mymob.gun_setting_icon.update_icon(mymob.client)
+
+	if(mymob.client.gun_mode)
+		mymob.client.add_gun_icons()
 
 	mymob.client.screen = list()
 
