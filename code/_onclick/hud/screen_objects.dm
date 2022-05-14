@@ -1141,6 +1141,15 @@
 /atom/movable/screen/inventory/back/ian
 	screen_loc = ui_ian_back
 
+/atom/movable/screen/inventory/head
+	name = "head"
+	icon_state = "hair"
+	screen_loc = ui_head
+	slot_id = SLOT_HEAD
+
+/atom/movable/screen/inventory/head/ian
+	screen_loc = ui_ian_head
+
 /atom/movable/screen/nuke
 	icon = 'icons/effects/station_explosion.dmi'
 	icon_state = "station_intact"

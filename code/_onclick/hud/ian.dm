@@ -133,13 +133,8 @@
 	using.icon = ui_style
 	src.adding += using
 
-	inv_box = new
-	inv_box.name = "head"
+	inv_box = new /atom/movable/screen/inventory/head/ian
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hair"
-	inv_box.screen_loc = ui_ian_head
-	inv_box.slot_id = SLOT_HEAD
-	inv_box.plane = HUD_PLANE
 	src.other += inv_box
 
 	using = new /atom/movable/screen/corgi/ability()

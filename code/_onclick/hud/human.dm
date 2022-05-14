@@ -222,13 +222,8 @@
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
 
-	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "head"
+	inv_box = new /atom/movable/screen/inventory/head()
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hair"
-	inv_box.screen_loc = ui_head
-	inv_box.slot_id = SLOT_HEAD
-	inv_box.plane = HUD_PLANE
 	inv_box.color = ui_color
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
