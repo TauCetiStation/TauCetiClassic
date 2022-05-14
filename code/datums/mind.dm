@@ -697,6 +697,10 @@
 	..()
 	mind.special_role = "Larva"
 
+/mob/living/carbon/xenomorph/humanoid/maid/mind_initialize()
+	..()
+	mind.special_role = "Drone"
+
 //AI
 /mob/living/silicon/ai/mind_initialize()
 	..()
