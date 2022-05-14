@@ -13,6 +13,9 @@
 /obj/structure/statue/helper
 	name = "Послушник"
 	icon_state = "helper"
+/obj/structure/statue/doctor
+	name = "Врачеватель"
+	icon_state = "doctor"
 /obj/structure/statue/knight
 	name = "Рыцарь"
 	icon_state = "knight"

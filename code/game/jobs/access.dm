@@ -96,10 +96,11 @@
 /var/const/access_monk = 155
 /var/const/access_knight = 156
 /var/const/access_hero = 157
+/var/const/access_plague = 158
 
-/var/const/access_inn1 = 158
-/var/const/access_inn2 = 159
-/var/const/access_inn3 = 160
+/var/const/access_inn1 = 159
+/var/const/access_inn2 = 160
+/var/const/access_inn3 = 161
 	//MONEY
 /var/const/access_crate_cash = 200
 

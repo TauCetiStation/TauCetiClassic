@@ -58,6 +58,12 @@
 	name = "Поcлушник"
 	desc = ""
 
+/obj/effect/portal/hub/job_room/doctor
+	A = /area/custom/plague_doctor_hub
+	name = "Врачеватель"
+	desc = ""
+	solo = TRUE
+
 /obj/effect/portal/hub/job_room/headman
 	A = /area/custom/headman_hub
 	name = "Староста"

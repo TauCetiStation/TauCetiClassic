@@ -193,6 +193,21 @@
 	l_pocket_back = /obj/item/weapon/paper/village_law
 	id = /obj/item/weapon/card/id/key/helper
 
+
+/datum/outfit/job/hub/plague_doctor
+	name = OUTFIT_JOB_NAME("Plague Doctor")
+	uniform = /obj/item/clothing/under/pants/black
+	l_pocket_back = /obj/item/weapon/paper/village_law
+	head = /obj/item/clothing/head/plaguedoctorhat
+	mask = /obj/item/clothing/mask/gas/plaguedoctor
+	suit = /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
+	shoes = /obj/item/clothing/shoes/leather
+	gloves = /obj/item/clothing/gloves/latex
+	l_hand =/obj/item/stack/medical/advanced/bruise_pack
+	r_hand = /obj/item/stack/medical/advanced/ointment
+	id = /obj/item/weapon/card/id/key/doctor
+	back = /obj/item/weapon/storage/backpack/satchel
+
 /datum/outfit/job/hub/headman
 	name = OUTFIT_JOB_NAME("Headman")
 	uniform = /obj/item/clothing/under/color/black

@@ -53,9 +53,16 @@
 	A =/area/custom/start_homm/helper
 	arrive_sound = 'sound/Event/helper.ogg'
 
+/obj/structure/character_spawner/doctor
+	outfit = /datum/outfit/job/hub/plague_doctor
+	A =/area/custom/start_homm/doctor
+	arrive_sound = 'sound/Event/doctor.ogg'
+
+
 /obj/structure/character_spawner/headman
 	outfit = /datum/outfit/job/hub/headman
 	A =/area/custom/start_homm/headman
+	arrive_sound = 'sound/Event/headman.ogg'
 
 /obj/structure/character_spawner/innkeeper
 	outfit = /datum/outfit/job/hub/innkeeper

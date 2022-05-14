@@ -296,9 +296,13 @@
 	name = "Ключ Послушника"
 	access = list(access_helper)
 	icon_state = "peasantkey"
+/obj/item/weapon/card/id/key/doctor
+	name = "Ключ Доктора"
+	access = list(access_plague,access_peasant)
+	icon_state = "peasantkey"
 /obj/item/weapon/card/id/key/headman
 	name = "Ключ Старосты"
-	access = list(access_peasant,access_headman,access_knight,access_innkeeper,access_inn1,access_inn2,access_inn3)
+	access = list(access_peasant,access_headman,access_knight,access_plague,access_innkeeper,access_inn1,access_inn2,access_inn3)
 	icon_state = "peasantkey"
 /obj/item/weapon/card/id/key/innkeeper
 	name = "Ключ Трактирщика"
@@ -326,7 +330,7 @@
 	icon_state = "knightkey"
 /obj/item/weapon/card/id/key/hhero
 	name = "Ключ Лорда"
-	access = list(access_hero,access_peasant,access_knight,access_headman,access_innkeeper,access_inn1,access_inn2,access_inn3)
+	access = list(access_hero,access_peasant,access_knight,access_headman,access_plague,access_innkeeper,access_inn1,access_inn2,access_inn3)
 	icon_state = "herokey"
 
 /obj/item/weapon/card/id/key/atom_init()
@@ -336,7 +340,7 @@
 		registered_name = ishuman(user) ? user.real_name : user.name
 	else
 		registered_name = "Ключик"
-	name = " Ключ [registered_name]"
+	name = "[name] [registered_name]"
 
 //////
 

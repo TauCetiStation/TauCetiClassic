@@ -295,6 +295,10 @@
 	name = "Дверь Монастыря"
 	req_one_access = list(access_helper)
 
+/obj/structure/mineral_door/wood/doctor
+	name = "Дверь Больницы"
+	req_one_access = list(access_plague)
+
 /obj/structure/mineral_door/wood/inn
 	name = "Дверь Трактира"
 	req_one_access = list(access_innkeeper)

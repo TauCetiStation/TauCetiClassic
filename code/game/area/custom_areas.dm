@@ -124,6 +124,10 @@
 	name = "Helper_hub"
 	icon_state = "blue-red-d"
 
+/area/custom/plague_doctor_hub
+	name = "Doctor_hub"
+	icon_state = "blue-red-d"
+
 /area/custom/headman_hub
 	name = "Headman_hub"
 	icon_state = "blue-red-d"
@@ -164,6 +168,9 @@
 
 /area/custom/start_homm/helper
 	name = "HelperStart"
+
+/area/custom/start_homm/doctor
+	name = "DoctorStart"
 
 /area/custom/start_homm/headman
 	name = "HeadmanStart"
