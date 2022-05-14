@@ -283,7 +283,7 @@ var/list/assortment = list(
 	if(!selection_items)
 		populate_selection()
 	var/bought = new assortment[selection]
-	var/A = new mob/user
+	var/mob/living/carbon/human/A = user
 	A.put_in_any_hand_if_possible(bought)
 	if(!selection || !Adjacent(redeemer))
 		voucher.in_use = 0
