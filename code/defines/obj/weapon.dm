@@ -474,7 +474,7 @@
 	sharp = 1
 	edge = 1
 	w_class = SIZE_TINY
-	throwforce = 15.0
+	throwforce = 7
 	throw_speed = 4
 	throw_range = 4
 	m_amt = 15000

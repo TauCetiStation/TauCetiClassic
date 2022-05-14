@@ -188,7 +188,7 @@
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
 	force = 3
 	w_class = SIZE_SMALL
-	throwforce = 8.0
+	throwforce = 7.0
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 12000
