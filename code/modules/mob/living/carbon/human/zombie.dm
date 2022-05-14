@@ -296,7 +296,7 @@ var/global/list/zombie_list = list()
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/zombie_findbrains)
 	zombie_list += H
 
-	var/datum/faction/zombie/Z = create_uniq_faction(/datum/faction/zombie)
+	var/datum/faction/zombie/Z = get_totally_faction(/datum/faction/zombie)
 	add_faction_member(Z, H, FALSE)
 
 /proc/remove_zombie(mob/living/carbon/human/H)

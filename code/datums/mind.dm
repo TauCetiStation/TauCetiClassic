@@ -552,7 +552,7 @@
 	candidates = shuffle(candidates)
 
 	if(fac_type)
-		var/datum/faction/FF = create_uniq_faction(fac_type)
+		var/datum/faction/FF = get_totally_faction(fac_type)
 		while(count > 0 && candidates.len)
 			var/mob/M = pick(candidates)
 			candidates -= M
@@ -664,7 +664,7 @@
 	mind.assigned_role = "Alien"
 
 	if(!isalien(src))
-		var/datum/faction/infestation/I = create_uniq_faction(/datum/faction/infestation)
+		var/datum/faction/infestation/I = get_totally_faction(/datum/faction/infestation)
 		add_faction_member(I, src, TRUE)
 
 	//XENO HUMANOID
@@ -750,5 +750,5 @@
 /mob/living/simple_animal/hostile/mimic/prophunt/mind_initialize()
 	..()
 
-	var/datum/faction/infestation/I = create_uniq_faction(/datum/faction/props)
+	var/datum/faction/infestation/I = get_totally_faction(/datum/faction/props)
 	add_faction_member(I, src, TRUE)

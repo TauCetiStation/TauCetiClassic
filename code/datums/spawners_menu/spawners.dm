@@ -196,7 +196,7 @@ var/global/list/datum/spawners_cooldown = list()
 	cop.key = C.key
 
 	//Give antag datum
-	var/datum/faction/cops/faction = create_uniq_faction(/datum/faction/cops)
+	var/datum/faction/cops/faction = get_totally_faction(/datum/faction/cops)
 
 	faction.roletype = roletype
 	add_faction_member(faction, cop, TRUE, TRUE)
@@ -331,7 +331,7 @@ var/global/list/datum/spawners_cooldown = list()
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 	new_ninja.key = ghost.key
 
-	var/datum/faction/ninja/N = create_uniq_faction(/datum/faction/ninja)
+	var/datum/faction/ninja/N = get_totally_faction(/datum/faction/ninja)
 	add_faction_member(N, new_ninja, FALSE)
 
 	set_ninja_objectives(new_ninja)
@@ -671,7 +671,7 @@ var/global/list/datum/spawners_cooldown = list()
 	var/spawnloc = pick(global.heiststart)
 	global.heiststart -= spawnloc
 
-	var/datum/faction/heist/faction = create_uniq_faction(/datum/faction/heist)
+	var/datum/faction/heist/faction = get_totally_faction(/datum/faction/heist)
 	var/mob/living/carbon/human/vox/event/vox = new(spawnloc)
 
 	vox.key = ghost.client.key

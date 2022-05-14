@@ -23,6 +23,6 @@
 		kill()
 		return
 
-	create_uniq_faction(/datum/faction/borers)
+	get_totally_faction(/datum/faction/borers)
 
 	create_spawners(/datum/spawner/borer_event, spawncount)

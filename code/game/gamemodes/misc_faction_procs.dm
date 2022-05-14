@@ -83,7 +83,7 @@
 		F.AnnounceObjectives()
 	return F
 
-/proc/create_uniq_faction(faction_type, post_setup = TRUE, give_objectives = TRUE)
+/proc/get_totally_faction(faction_type, post_setup = TRUE, give_objectives = TRUE)
 	. = find_faction_by_type(faction_type)
 	if(!.)
 		. = create_faction(faction_type, post_setup, give_objectives)

@@ -7,4 +7,4 @@
 		kill()
 		return
 
-	create_uniq_faction(/datum/faction/heist)
+	get_totally_faction(/datum/faction/heist)
