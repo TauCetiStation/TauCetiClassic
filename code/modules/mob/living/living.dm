@@ -636,8 +636,7 @@
 	return
 
 /mob/living/proc/cure_all_viruses()
-	for(var/datum/disease/virus in viruses)
-		virus.cure()
+	return
 
 /mob/living/carbon/cure_all_viruses()
 	for(var/ID in virus2)
@@ -1039,7 +1038,7 @@
 		for(S in T)
 			if(IS_ABOVE(src, S))
 				return TRUE
-			return FALSE	
+			return FALSE
 	return TRUE
 
 /mob/living/var/crawl_getup = FALSE
