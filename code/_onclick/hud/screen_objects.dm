@@ -1138,6 +1138,9 @@
 	screen_loc = ui_back
 	slot_id = SLOT_BACK
 
+/atom/movable/screen/inventory/back/ian
+	screen_loc = ui_ian_back
+
 /atom/movable/screen/nuke
 	icon = 'icons/effects/station_explosion.dmi'
 	icon_state = "station_intact"

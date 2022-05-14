@@ -45,12 +45,11 @@
 	src.adding += using
 	move_intent = using
 
-	mymob.zone_sel = new /atom/movable/screen/zone_sel( null )
+	mymob.zone_sel = new /atom/movable/screen/zone_sel()
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.color = ui_color
 	mymob.zone_sel.alpha = ui_alpha
-	mymob.zone_sel.overlays.Cut()
-	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.get_targetzone()]")
+	mymob.zone_sel.update_icon()
 
 	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = ui_style

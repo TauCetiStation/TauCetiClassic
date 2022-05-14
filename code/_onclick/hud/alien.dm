@@ -32,7 +32,6 @@
 
 /atom/movable/screen/xenomorph/plasma_display
 	name = "plasma stored"
-	icon = 'icons/mob/screen1_xeno.dmi'
 	icon_state = "power_display3"
 	screen_loc = ui_alienplasmadisplay
 
@@ -86,10 +85,12 @@
 	src.adding += using
 
 	inv_box = new /atom/movable/screen/inventory/hand/r/alien()
+	inv_box.update_icon(mymob)
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 
 	inv_box = new /atom/movable/screen/inventory/hand/l/alien()
+	inv_box.update_icon(mymob)
 	src.l_hand_hud_object = inv_box
 	src.adding += inv_box
 

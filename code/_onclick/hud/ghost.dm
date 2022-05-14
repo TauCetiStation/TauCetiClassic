@@ -7,6 +7,7 @@
 /atom/movable/screen/ghost/jumptomob
 	name = "Jump to mob"
 	icon_state = "jumptomob"
+	screen_loc = ui_ghost_jumptomob
 
 /atom/movable/screen/ghost/jumptomob/Click()
 	var/mob/dead/observer/G = usr
@@ -15,6 +16,7 @@
 /atom/movable/screen/ghost/orbit
 	name = "Orbit"
 	icon_state = "orbit"
+	screen_loc = ui_ghost_orbit
 
 /atom/movable/screen/ghost/orbit/Click()
 	var/mob/dead/observer/G = usr
@@ -23,6 +25,7 @@
 /atom/movable/screen/ghost/reenter_corpse
 	name = "Reenter corpse"
 	icon_state = "reenter_corpse"
+	screen_loc = ui_ghost_reenter_corpse
 
 /atom/movable/screen/ghost/reenter_corpse/Click()
 	var/mob/dead/observer/G = usr
@@ -31,6 +34,7 @@
 /atom/movable/screen/ghost/teleport
 	name = "Teleport"
 	icon_state = "teleport"
+	screen_loc = ui_ghost_teleport
 
 /atom/movable/screen/ghost/teleport/Click()
 	var/mob/dead/observer/G = usr
@@ -39,6 +43,7 @@
 /atom/movable/screen/ghost/mafia
 	name = "Mafia Signup"
 	icon_state = "mafia"
+	screen_loc = ui_ghost_mafia
 
 /atom/movable/screen/ghost/mafia/Click()
 	var/mob/dead/observer/G = usr
@@ -47,6 +52,7 @@
 /atom/movable/screen/ghost/spawners_menu
 	name = "Spawners menu"
 	icon_state = "spawners"
+	screen_loc = ui_ghost_spawners_menu
 
 /atom/movable/screen/ghost/spawners_menu/Click()
 	var/mob/dead/observer/observer = usr
@@ -55,6 +61,7 @@
 /atom/movable/screen/ghost/toggle_darkness
 	name = "Toggle Darkness"
 	icon_state = "toggle_darkness"
+	screen_loc = ui_ghost_toggle_darkness
 
 /atom/movable/screen/ghost/toggle_darkness/Click()
 	var/mob/dead/observer/G = usr
@@ -68,31 +75,24 @@
 	var/atom/movable/screen/using
 
 	using = new /atom/movable/screen/ghost/jumptomob()
-	using.screen_loc = ui_ghost_jumptomob
 	adding += using
 
 	using = new /atom/movable/screen/ghost/orbit()
-	using.screen_loc = ui_ghost_orbit
 	adding += using
 
 	using = new /atom/movable/screen/ghost/reenter_corpse()
-	using.screen_loc = ui_ghost_reenter_corpse
 	adding += using
 
 	using = new /atom/movable/screen/ghost/teleport()
-	using.screen_loc = ui_ghost_teleport
 	adding += using
 
 	using = new /atom/movable/screen/ghost/mafia()
-	using.screen_loc = ui_ghost_mafia
 	adding += using
 
 	spawners_menu_button = new /atom/movable/screen/ghost/spawners_menu()
-	spawners_menu_button.screen_loc = ui_ghost_spawners_menu
 	adding += spawners_menu_button
 
 	using = new /atom/movable/screen/ghost/toggle_darkness()
-	using.screen_loc = ui_ghost_toggle_darkness
 	adding += using
 
 	..()

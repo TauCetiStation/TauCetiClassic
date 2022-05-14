@@ -160,13 +160,8 @@
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
 
-	inv_box = new
-	inv_box.name = "back"
+	inv_box = new /atom/movable/screen/inventory/back/ian
 	inv_box.icon = ui_style
-	inv_box.icon_state = "back"
-	inv_box.screen_loc = ui_ian_back
-	inv_box.slot_id = SLOT_BACK
-	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
 
 	mymob.healths = new /atom/movable/screen/health
