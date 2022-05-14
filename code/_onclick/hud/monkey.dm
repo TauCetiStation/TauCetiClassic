@@ -79,11 +79,8 @@
 	mymob.internals = new /atom/movable/screen/internal()
 	mymob.internals.icon = ui_style
 
-	mymob.healths = new /atom/movable/screen()
+	mymob.healths = new /atom/movable/screen/health()
 	mymob.healths.icon = ui_style
-	mymob.healths.icon_state = "health0"
-	mymob.healths.name = "health"
-	mymob.healths.screen_loc = ui_health
 
 	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = ui_style

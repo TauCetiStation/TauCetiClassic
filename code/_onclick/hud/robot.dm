@@ -99,11 +99,7 @@ var/global/atom/movable/screen/robot_inventory
 	action_intent = using
 
 //Health
-	mymob.healths = new /atom/movable/screen()
-	mymob.healths.icon = 'icons/mob/screen1_robot.dmi'
-	mymob.healths.icon_state = "health0"
-	mymob.healths.name = "health"
-	mymob.healths.screen_loc = ui_borg_health
+	mymob.healths = new /atom/movable/screen/health/robot()
 
 //Installed Module
 	mymob.hands = new /atom/movable/screen/module()

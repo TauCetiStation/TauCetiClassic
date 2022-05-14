@@ -265,11 +265,8 @@
 	mymob.internals.icon = ui_style
 	mymob.internals.update_icon(mymob)
 
-	mymob.healths = new /atom/movable/screen()
-	mymob.healths.icon = 'icons/mob/screen_gen.dmi'
-	mymob.healths.icon_state = "health0"
-	mymob.healths.name = "health"
-	mymob.healths.screen_loc = ui_health
+	mymob.healths = new /atom/movable/screen/health()
+
 	mymob.healthdoll = new /atom/movable/screen()
 	mymob.healthdoll.icon = 'icons/mob/screen_gen.dmi'
 	mymob.healthdoll.name = "health doll"

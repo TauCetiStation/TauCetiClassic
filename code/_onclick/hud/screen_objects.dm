@@ -1235,3 +1235,17 @@
 	name = "mood"
 	icon_state = "mood5"
 	screen_loc = ui_mood
+
+/atom/movable/screen/health
+	name = "health"
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "health0"
+	screen_loc = ui_health
+
+/atom/movable/screen/health/alien
+	icon = 'icons/mob/screen1_xeno.dmi'
+	screen_loc = ui_alien_health
+
+/atom/movable/screen/health/robot
+	icon = 'icons/mob/screen1_robot.dmi'
+	screen_loc = ui_borg_health

@@ -52,14 +52,9 @@
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
 	src.adding += mymob.nightvisionicon
 
-	mymob.healths = new /atom/movable/screen()
-	mymob.healths.icon = style
-	mymob.healths.icon_state = "health0"
-	mymob.healths.name = "health"
-	mymob.healths.screen_loc = ui_alien_health
+	mymob.healths = new /atom/movable/screen/health/alien()
 
-	mymob.pullin = new /atom/movable/screen/pull()
-	mymob.pullin.icon = style
+	mymob.pullin = new /atom/movable/screen/pull/alien()
 	mymob.pullin.update_icon(mymob)
 
 	mymob.zone_sel = new /atom/movable/screen/zone_sel()

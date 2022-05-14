@@ -119,11 +119,7 @@
 	using.update_icon(mymob)
 	mymob.xenomorph_plasma_display = using
 
-	mymob.healths = new /atom/movable/screen()
-	mymob.healths.icon = 'icons/mob/screen1_xeno.dmi'
-	mymob.healths.icon_state = "health0"
-	mymob.healths.name = "health"
-	mymob.healths.screen_loc = ui_alien_health
+	mymob.healths = new /atom/movable/screen/health/alien()
 
 	mymob.pullin = new /atom/movable/screen/pull/alien()
 	mymob.pullin.update_icon(mymob)
