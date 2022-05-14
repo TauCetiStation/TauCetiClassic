@@ -301,10 +301,7 @@
 /atom/movable/screen/pull/update_icon(mob/mymob)
 	if(!mymob)
 		return
-	if(mymob.pulling)
-		icon_state = "pull1"
-	else
-		icon_state = "pull0"
+	icon_state = mymob.pulling ? "pull1" : "pull0"
 
 /atom/movable/screen/toggle
 	name = "toggle"
@@ -312,7 +309,7 @@
 	screen_loc = ui_inventory
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screem/toggle/action()
+/atom/movable/screen/toggle/action()
 	if(usr.hud_used.inventory_shown)
 		usr.hud_used.inventory_shown = FALSE
 		usr.client.screen -= usr.hud_used.other
@@ -328,7 +325,7 @@
 	screen_loc = ui_equip
 	plane = ABOVE_HUD_PLANE
 
-/atom/movable/screem/toggle/action()
+/atom/movable/screen/equip/action()
 	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
 		return
 	if(ishuman(usr))
@@ -375,7 +372,7 @@
 		var/mob/living/carbon/C = usr
 		C.set_m_intent(C.m_intent == MOVE_INTENT_WALK ? MOVE_INTENT_RUN : MOVE_INTENT_WALK)
 
-/atom/movable/screen/move_intent/update_icon(var/mymob)
+/atom/movable/screen/move_intent/update_icon(mob/mymob)
 	icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 
 /atom/movable/screen/move_intent/alien
@@ -626,16 +623,15 @@
 		else
 			to_chat(R, "You haven't selected a module yet.")
 
-/atom/movable/screen/robo_hands
+/atom/movable/screen/robot_hands
 	icon = 'icons/mob/screen1_robot.dmi'
 	plane = ABOVE_HUD_PLANE
 	var/module_index
 
-/atom/movable/screen/robo_hands/action()
+/atom/movable/screen/robot_hands/action()
 	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
 		R.toggle_module(module_index)
-		return
 
 /atom/movable/screen/robot_hands/first
 	name = "module1"

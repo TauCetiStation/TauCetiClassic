@@ -73,8 +73,6 @@
 	action_intent = using
 
 //intent small hud objects
-	var/icon/ico
-
 	using = new /atom/movable/screen/intent/help()
 	using.update_icon(ui_style)
 	src.adding += using
