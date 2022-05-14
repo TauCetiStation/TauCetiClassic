@@ -212,17 +212,13 @@ var/global/atom/movable/screen/robot_inventory
 /datum/hud/proc/toggle_robot_additional_screens(screen_type, toggled) // if screen_type is 0. it's PDA.
 	if(!isrobot(mymob))
 		return
-	var/list/screens
-	if(screen_type)
-		screens = list("Take Image", "View Images", "Delete Image")
-	else
-		screens = list("PDA - Send Message", "PDA - Show Message Log", "Pda - Ringtone", "Pda - Toggle")
+	var/screens_type = screen_type ? /atom/movable/screen/robot_image : /atom/movable/screen/robot_pda
 	var/mob/living/silicon/robot/R = mymob
 	if(toggled)
-		for(var/atom/movable/screen/using in other)
-			if(using.name in screens)
+		for(var/atom/movable/screen/using as anything in other)
+			if(istype(using, screens_type))
 				R.client.screen += using
 	else
-		for(var/atom/movable/screen/using in other)
-			if(using.name in screens)
+		for(var/atom/movable/screen/using as anything in other)
+			iif(istype(using, screens_type))
 				R.client.screen -= using
