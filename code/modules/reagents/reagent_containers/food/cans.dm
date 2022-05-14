@@ -145,8 +145,8 @@
 	"alphaamanitin", "aflatoxin", "chefspecial", "dioxin", "mulligan", "mutationtoxin", "amutationtoxin", "space_drugs",\
 	"serotrotium", "cryptobiolin", "impedrezene", "ectoplasm", "methylphenidate", "methylphenidate", "citalopram",\
 	"citalopram", "paroxetine", "paroxetine", "lube", "plasticide", "glycerol", "nitroglycerin",\
-	"thermite", "virusfood", "fuel", "cleaner", "xenomicrobes", "fluorosurfactant", "foaming_agent", "nicotine",\
-	"ammonia", "glue", "diethylamine", "luminophore","nanites", "nanites2", "nanobots", "mednanobots", "ectoplasm")
+	"thermite", "virusfood", "fuel", "cleaner", "fluorosurfactant", "foaming_agent", "nicotine",\
+	"ammonia", "glue", "diethylamine", "luminophore", "nanites2", "nanobots", "mednanobots", "ectoplasm")
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle/relic
 	desc = "A bottle of water filled with unknown liquids. It seems to be radiating some kind of energy."

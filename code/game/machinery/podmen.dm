@@ -196,6 +196,9 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 // Not harvesting them ASAP leads in to kudzumeme...
 /obj/item/seeds/replicapod/real_deal/ripen()
+	if(copycat_replica)
+		return
+
 	vine_timer = addtimer(CALLBACK(src, .proc/spawn_vine), 1 MINUTE, TIMER_STOPPABLE)
 
 /obj/item/seeds/replicapod/real_deal/harvest()

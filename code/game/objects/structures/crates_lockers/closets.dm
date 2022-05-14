@@ -155,14 +155,12 @@
 	dump_contents()
 	qdel(src)
 
-/obj/structure/closet/bullet_act(obj/item/projectile/Proj)
+/obj/structure/closet/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
-	..()
 	if(health <= 0)
 		dump_contents()
 		qdel(src)
-
-	return
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
