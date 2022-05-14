@@ -62,11 +62,17 @@
 				if(17 to 29) // sit
 					IAN.ian_sit()
 
-/atom/movable/screen/corgi/mouth
+/atom/movable/screen/inventory/corgi_mouth
 	name = "mouth"
 	icon_state = "mouth"
 	screen_loc = ui_ian_mouth
 	slot_id = SLOT_MOUTH
+
+/atom/movable/screen/inventory/corgi_neck
+	name = "neck"
+	icon_state = "id"
+	screen_loc = ui_ian_neck
+	slot_id = SLOT_NECK
 
 
 /datum/hud/proc/ian_hud()
@@ -142,17 +148,13 @@
 	using.update_icon(mymob)
 	src.adding += using
 
-	inv_box = new /atom/movable/screen/corgi/mouth
+	inv_box = new /atom/movable/screen/inventory/corgi_mouth
+	inv_box.icon = ui_style
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 
-	inv_box = new
-	inv_box.name = "neck"
+	inv_box = new /atom/movable/screen/inventory/corgi_neck
 	inv_box.icon = ui_style
-	inv_box.icon_state = "id"
-	inv_box.screen_loc = ui_ian_neck
-	inv_box.slot_id = SLOT_NECK
-	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
 
 	inv_box = new /atom/movable/screen/inventory/back/ian
