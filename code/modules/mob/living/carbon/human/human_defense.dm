@@ -125,8 +125,6 @@
 			SP.loc = BP
 			BP.embed(SP)
 
-
-
 	if(istype(wear_suit, /obj/item/clothing/suit))
 		var/obj/item/clothing/suit/V = wear_suit
 		V.attack_reaction(src, REACTION_HIT_BY_BULLET)
