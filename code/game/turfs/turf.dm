@@ -84,13 +84,12 @@
 /turf/ex_act(severity)
 	return 0
 
-/turf/bullet_act(obj/item/projectile/Proj)
+/turf/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(istype(Proj ,/obj/item/projectile/beam/pulse))
 		ex_act(EXPLODE_HEAVY)
 	else if(istype(Proj ,/obj/item/projectile/bullet/gyro))
 		explosion(src, -1, 0, 2)
-	..()
-	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)

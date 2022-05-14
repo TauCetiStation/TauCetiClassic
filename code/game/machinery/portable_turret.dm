@@ -414,9 +414,9 @@ var/global/list/turret_icons
 	if(health <= 0)
 		die() //the death process :(
 
-/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	var/damage = Proj.damage
-
 	if(!damage)
 		return
 
@@ -424,8 +424,6 @@ var/global/list/turret_icons
 		if(!attacked && !emagged)
 			attacked = TRUE
 			VARSET_IN(src, attacked, FALSE, 60)
-
-	..()
 
 	take_damage(damage)
 

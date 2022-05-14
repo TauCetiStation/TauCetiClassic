@@ -207,10 +207,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		shatter()
 		return
 
-/obj/machinery/door/window/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/door/window/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(Proj.damage)
 		take_damage(round(Proj.damage / 2))
-	..()
 
 //When an object is thrown at the window
 /obj/machinery/door/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)

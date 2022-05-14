@@ -397,7 +397,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 /mob/living/carbon/ian/is_usable_leg(targetzone = null)
 	return TRUE
 
-/mob/living/carbon/ian/bullet_act(obj/item/projectile/Proj)
+/mob/living/carbon/ian/bullet_act(obj/item/projectile/Proj, def_zone)
 	var/chance = 0
 	if(head && istype(head,/obj/item/clothing/head/helmet))
 		chance += 50
@@ -413,7 +413,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 		if(prob(15))
 			var/expression = pick("a resentful","a happy","an excited")
 			me_emote("looks with [expression] expression on his face and wants to play more!")
-		return
+		return PROJECTILE_ABSORBED
 
 	return ..()
 

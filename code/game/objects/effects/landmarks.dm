@@ -40,7 +40,7 @@
 		if("monkey")
 			monkeystart += loc
 			return INITIALIZE_HINT_QDEL
-		if("wizard")
+		if("Wizard")
 			wizardstart += loc
 			return INITIALIZE_HINT_QDEL
 		//prisoners

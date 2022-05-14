@@ -366,17 +366,9 @@
 			apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Cold")
 
 	//breathing in hot/cold air also heats/cools you a bit
-	var/temp_adj = breath.temperature - bodytemperature
-	if (temp_adj < 0)
-		temp_adj /= (BODYTEMP_COLD_DIVISOR * 5)	//don't raise temperature as much as if we were directly exposed
-	else
-		temp_adj /= (BODYTEMP_HEAT_DIVISOR * 5)	//don't raise temperature as much as if we were directly exposed
-
-	temp_adj *= breath.total_moles / (MOLES_CELLSTANDARD * BREATH_PERCENTAGE)
-	temp_adj = clamp(temp_adj, BODYTEMP_COOLING_MAX, BODYTEMP_HEATING_MAX)
-
-	//world << "Breath: [breath.temperature], [src]: [bodytemperature], Adjusting: [temp_adj]"
-	bodytemperature += temp_adj
+	var/affecting_temp = (breath.temperature - bodytemperature) * breath.return_relative_density()
+	
+	adjust_bodytemperature(affecting_temp / 5, use_insulation = TRUE, use_steps = TRUE)
 
 /mob/living/carbon/human/handle_suffocating(datum/gas_mixture/breath)
 	if(suiciding)
@@ -416,24 +408,12 @@
 	if(!is_in_space) //space is not meant to change your body temperature.
 		var/loc_temp = get_temperature(environment)
 
-		//Use heat transfer as proportional to the gas activity (pressure)
-		var/affecting_temp = (loc_temp - bodytemperature) * environment.return_relative_density()
-
 		//If you're on fire, you do not heat up or cool down based on surrounding gases.
-		//Or if absolute temperature difference is too small
 		if(!on_fire)
+			//Use heat transfer as proportional to the gas activity (density)
+			var/affecting_temp = (loc_temp - bodytemperature) * environment.return_relative_density()
 			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
-
-			if(affecting_temp <= -BODYTEMP_SIGNIFICANT_CHANGE)		//Place is colder than we are
-				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-				if(thermal_protection < 1)
-					var/temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_COLD_DIVISOR)	//this will be negative
-					bodytemperature += max(temp_adj, BODYTEMP_COOLING_MAX)
-			else if(affecting_temp >= BODYTEMP_SIGNIFICANT_CHANGE)	//Place is hotter than we are
-				var/thermal_protection = get_heat_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-				if(thermal_protection < 1)
-					var/temp_adj = (1 - thermal_protection) * (affecting_temp / BODYTEMP_HEAT_DIVISOR)
-					bodytemperature += min(temp_adj, BODYTEMP_HEATING_MAX)
+			adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
 	else if(!species.flags[IS_SYNTHETIC] && !species.flags[RAD_IMMUNE])
 		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
@@ -507,8 +487,8 @@
 	if(..())
 		return
 	var/thermal_protection = get_heat_protection(30000) //If you don't have fire suit level protection, you get a temperature increase
-	if((1 - thermal_protection) > 0.0001)
-		bodytemperature += BODYTEMP_HEATING_MAX
+	if(thermal_protection < 1)
+		adjust_bodytemperature(BODYTEMP_HEATING_MAX)
 	return
 //END FIRE CODE
 
@@ -547,18 +527,18 @@
 		var/recovery_amt = max((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
 		//world << "Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]"
 //				log_debug("Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
-		bodytemperature += recovery_amt
+		adjust_bodytemperature(recovery_amt)
 	else if(species.cold_level_1 <= bodytemperature && bodytemperature <= species.heat_level_1)
 		var/recovery_amt = body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR
 		//world << "Norm. Difference = [body_temperature_difference]. Recovering [recovery_amt]"
 //				log_debug("Norm. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
-		bodytemperature += recovery_amt
+		adjust_bodytemperature(recovery_amt)
 	else if(bodytemperature > species.heat_level_1) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
 		//We totally need a sweat system cause it totally makes sense...~
 		var/recovery_amt = min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
 		//world << "Hot. Difference = [body_temperature_difference]. Recovering [recovery_amt]"
 //				log_debug("Hot. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
-		bodytemperature += recovery_amt
+		adjust_bodytemperature(recovery_amt)
 
 //This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, UPPER_TORSO, LOWER_TORSO, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
@@ -585,7 +565,7 @@
 
 	return thermal_protection_flags
 
-/mob/living/carbon/human/proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
+/mob/living/carbon/human/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
 	if(RESIST_HEAT in mutations) //#Z2
 		return 1 //Fully protected from the fire. //##Z2
 
@@ -636,7 +616,7 @@
 
 	return thermal_protection_flags
 
-/mob/living/carbon/human/proc/get_cold_protection(temperature)
+/mob/living/carbon/human/get_cold_protection(temperature)
 
 	if(COLD_RESISTANCE in mutations)
 		return 1 //Fully protected from the cold.
@@ -1171,11 +1151,10 @@
 /mob/living/carbon/human/proc/handle_virus_updates()
 	if(status_flags & GODMODE)	return 0	//godmode
 	if(bodytemperature > 406)
-		for(var/datum/disease/D in viruses)
-			D.cure()
-		//for (var/ID in virus2) //disabled because of symptom that randomly ignites a mob, which triggers this
-		//	var/datum/disease2/disease/V = virus2[ID]
-		//	V.cure(src)
+		for (var/ID in virus2)
+			var/datum/disease2/disease/V = virus2[ID]
+			V.cure(src)
+
 	if(life_tick % 3) //don't spam checks over all objects in view every tick.
 		for(var/obj/effect/decal/cleanable/O in view(1,src))
 			if(istype(O,/obj/effect/decal/cleanable/blood))

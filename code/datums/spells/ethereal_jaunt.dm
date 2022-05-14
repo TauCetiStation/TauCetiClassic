@@ -152,8 +152,8 @@
 /obj/effect/dummy/spell_jaunt/ex_act(blah)
 	return
 
-/obj/effect/dummy/spell_jaunt/bullet_act(blah)
-	return
+/obj/effect/dummy/spell_jaunt/bullet_act(obj/item/projectile/P, def_zone)
+	return PROJECTILE_ACTED // I think bullet_act should not be called
 
 /obj/effect/dummy/spell_jaunt/Destroy()
 	for(var/atom/movable/AM in src)

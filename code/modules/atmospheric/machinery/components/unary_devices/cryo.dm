@@ -111,8 +111,9 @@
 		return
 
 	if(occupant)
-		occupant.bodytemperature += 2 * (air1.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air1.heat_capacity())
-		occupant.bodytemperature = max(occupant.bodytemperature, air1.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
+		var/affecting_temp = air1.temperature - occupant.bodytemperature
+		affecting_temp *= min(1, 2 * current_heat_capacity / (current_heat_capacity + air1.heat_capacity()))
+		occupant.adjust_bodytemperature(affecting_temp)
 
 		/* heat_gas_contents */
 		if(air1.total_moles < 1)
@@ -309,8 +310,8 @@
 			return
 		beaker = I
 		user.visible_message(
-			"[user] помещает [I] в криокамеру.",
-			"<span class='notice'>Вы помещаете [I] в криокамеру.</span>")
+			"[user] inserts [I] into cryocell.",
+			"<span class='notice'>You insert [I] into cryocell.</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
 		return

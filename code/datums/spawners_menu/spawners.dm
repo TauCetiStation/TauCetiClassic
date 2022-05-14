@@ -493,7 +493,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/living/podman
 	name = "Подмена"
 	id = "podman"
-	desc = "Подмена умерла, да здраствует подмена."
+	desc = "Подмена умерла, да здравствует подмена."
 	wiki_ref = "Podmen"
 
 	var/replicant_memory
@@ -603,10 +603,19 @@ var/global/list/datum/spawners_cooldown = list()
 	..()
 	religion.add_member(mob, HOLY_ROLE_PRIEST)
 
+/datum/spawner/living/rat
+	name = "Крыса"
+	id = "rat"
+	desc = "Вы появляетесь в своём новом доме"
+
+/datum/spawner/living/rat/spawn_ghost(mob/dead/observer/ghost)
+	. = ..()
+	to_chat(mob, "<B>Эта посудина теперь ваш новый дом, похозяйничайте в нём.</B>")
+	to_chat(mob, "<B>(Вы можете грызть провода и лампочки).</B>")
+
 /*
  * Heist
 */
-
 /datum/spawner/living/vox
 	name = "Вокс-Налётчик"
 	desc = "Воксы-налётчики это представители расы Воксов, птице-подобных гуманоидов, дышащих азотом. Прибыли на станцию что бы украсть что-нибудь ценное."
