@@ -6,8 +6,8 @@
 	name = "Placeholder Generator"	//seriously, don't use this. It can't be anchored without VV magic.
 	desc = "A portable generator for emergency backup power."
 	icon = 'icons/obj/power.dmi'
-	var/icon_state_on = "portgen1"
-	icon_state = "portgen0"
+	var/icon_state_on = "gen_generic-on"
+	icon_state = "gen_generic-off"
 	density = TRUE
 	anchored = FALSE
 	use_power = NO_POWER_USE
@@ -257,8 +257,8 @@
 
 /obj/machinery/power/port_gen/pacman/super
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type Portable Generator"
-	icon_state = "portgen1"
-	icon_state_on = "portgen1"
+	icon_state = "gen_uranium-off"
+	icon_state_on = "gen_uranium-on"
 	sheet_name = "uranium"
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
@@ -270,8 +270,8 @@
 
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "M.R.S.P.A.C.M.A.N.-type Portable Generator"
-	icon_state = "portgen2"
-	icon_state_on = "portgen2"
+	icon_state = "gen_uranium-off"
+	icon_state_on = "gen_uranium-on"
 	sheet_name = "tritium"
 	sheet_path = /obj/item/stack/sheet/mineral/tritium
 	power_gen = 40000
