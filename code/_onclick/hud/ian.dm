@@ -174,8 +174,7 @@
 
 	mymob.zone_sel = new
 	mymob.zone_sel.icon = ui_style
-	mymob.zone_sel.cut_overlays()
-	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.get_targetzone()]"))
+	mymob.zone_sel.update_icon()
 
 	mymob.client.screen = list(mymob.zone_sel, mymob.healths, mymob.pullin)
 	mymob.client.screen += adding + other + hotkeybuttons

@@ -69,11 +69,9 @@
 	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = 'icons/mob/screen1_xeno.dmi'
 	mymob.pullin.update_icon(mymob)
-	mymob.pullin.screen_loc = ui_pull_resist
 
 	mymob.zone_sel = new /atom/movable/screen/zone_sel()
-	mymob.zone_sel.cut_overlays()
-	mymob.zone_sel.add_overlay(image("icon" = 'icons/mob/zone_sel.dmi', "icon_state" = text("[]", mymob.get_targetzone())))
+	mymob.zone_sel.update_icon()
 
 	mymob.client.screen = list()
 

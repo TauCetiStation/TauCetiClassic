@@ -101,8 +101,7 @@
 
 	mymob.zone_sel = new /atom/movable/screen/zone_sel()
 	mymob.zone_sel.icon = ui_style
-	mymob.zone_sel.cut_overlays()
-	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.get_targetzone()]"))
+	mymob.zone_sel.update_icon()
 
 	//Handle the gun settings buttons
 	mymob.gun_setting_icon = new /atom/movable/screen/gun/mode(null)

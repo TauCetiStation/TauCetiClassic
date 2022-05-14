@@ -128,10 +128,8 @@
 	mymob.pullin = new /atom/movable/screen/pull/alien()
 	mymob.pullin.update_icon(mymob)
 
-	mymob.zone_sel = new /atom/movable/screen/zone_sel()
-	mymob.zone_sel.icon = 'icons/mob/screen1_xeno.dmi'
-	mymob.zone_sel.cut_overlays()
-	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.get_targetzone()]"))
+	mymob.zone_sel = new /atom/movable/screen/zone_sel/alien()
+	mymob.zone_sel.update_icon()
 
 	mymob.client.screen = list()
 
