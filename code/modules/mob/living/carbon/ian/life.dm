@@ -156,7 +156,7 @@
 
 	if(hud_used && hud_used.staminadisplay)
 		var/atom/movable/screen/corgi/stamina_bar/SB = hud_used.staminadisplay
-		SB.icon_state = "stam_bar_[round(stamina, 5)]"
+		SB.update_icon(src)
 
 	return TRUE
 

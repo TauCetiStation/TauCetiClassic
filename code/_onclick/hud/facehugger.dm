@@ -1,3 +1,11 @@
+/atom/movable/screen/inventory/tail
+	name = "tail"
+	icon = 'icons/mob/screen1_xeno.dmi'
+	icon_state = "hand_tail_active"
+	screen_loc = ui_rhand
+	slot_id = SLOT_R_HAND
+
+
 /datum/hud/proc/facehugger_hud()
 
 	src.adding = list()
@@ -46,14 +54,7 @@
 	using = new /atom/movable/screen/drop/alien()
 	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory()
-	inv_box.name = "tail"
-	inv_box.set_dir(WEST)
-	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
-	inv_box.icon_state = "hand_tail_active"
-	inv_box.screen_loc = ui_rhand
-	inv_box.plane = HUD_PLANE
-	inv_box.slot_id = SLOT_R_HAND
+	inv_box = new /atom/movable/screen/inventory/tail()
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 

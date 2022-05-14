@@ -1,8 +1,13 @@
 /atom/movable/screen/corgi/ability
 	name = "toggle licking or sniffing"
 	icon_state = "ability0"
+	screen_loc = ui_ian_ability
 
-/atom/movable/screen/corgi/ability/Click()
+/atom/movable/screen/corgi/ability/update_icon(mob/mymob)
+	var/mob/living/carbon/ian/IAN = mymob
+	icon_state = "ability[IAN.ian_action]"
+
+/atom/movable/screen/corgi/ability/action()
 	var/mob/living/carbon/ian/IAN = usr //shouldn't be in anywhere else, so no type check.
 	if(IAN.stat)
 		return
@@ -24,18 +29,23 @@
 				return
 			to_chat(IAN, "<span class='notice'>I want sniff something! (Click yourself to drop current smell)</span>")
 			IAN.ian_action = IAN_SNIFF
-	icon_state = "ability[IAN.ian_action]"
+	update_icon(IAN)
 
 /atom/movable/screen/corgi/stamina_bar
 	name = "stamina"
 	icon = 'icons/effects/staminabar.dmi'
 	icon_state = "stam_bar_100"
+	screen_loc = ui_stamina
+
+/atom/movable/screen/corgi/stamina_bar/update_icon(mob/mymob)
+	var/mob/living/carbon/ian/IAN = mymob
+	icon_state = "stam_bar_[round(IAN.stamina, 5)]"
 
 /atom/movable/screen/corgi/sit_lie
 	name = "pose selector"
 	icon_state = "sit_lie"
 
-/atom/movable/screen/corgi/sit_lie/Click(location, control,params)
+/atom/movable/screen/corgi/sit_lie/action(location, control,params)
 	var/mob/living/carbon/ian/IAN = usr //shouldn't be in anywhere else, so no type check.
 	if(IAN.stat)
 		return
@@ -51,6 +61,12 @@
 					IAN.crawl()
 				if(17 to 29) // sit
 					IAN.lay_down()
+
+/atom/movable/screen/corgi/mouth
+	name = "mouth"
+	icon_state = "mouth"
+	screen_loc = ui_ian_mouth
+	slot_id = SLOT_MOUTH
 
 
 /datum/hud/proc/ian_hud()
@@ -104,8 +120,7 @@
 	move_intent = using
 
 	using = new /atom/movable/screen/corgi/stamina_bar()
-	using.icon_state = "stam_bar_[round(((IAN.stamina / 100) * 100), 5)]"
-	using.screen_loc = ui_stamina
+	using.update_icon(mymob)
 	src.adding += using
 	staminadisplay = using
 
@@ -129,18 +144,10 @@
 
 	using = new /atom/movable/screen/corgi/ability()
 	using.icon = ui_style
-	using.icon_state = "ability[IAN.ian_action]"
-	using.screen_loc = ui_ian_ability
-	using.plane = HUD_PLANE
+	using.update_icon(mymob)
 	src.adding += using
 
-	inv_box = new
-	inv_box.name = "mouth"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "mouth"
-	inv_box.screen_loc = ui_ian_mouth
-	inv_box.slot_id = SLOT_MOUTH
-	inv_box.plane = HUD_PLANE
+	inv_box = new /atom/movable/screen/corgi/mouth
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 
@@ -162,11 +169,8 @@
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
 
-	mymob.healths = new
+	mymob.healths = new /atom/movable/screen/health
 	mymob.healths.icon = ui_style
-	mymob.healths.icon_state = "health0"
-	mymob.healths.name = "health"
-	mymob.healths.screen_loc = ui_health
 
 	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = ui_style
