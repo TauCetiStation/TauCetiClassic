@@ -275,7 +275,7 @@
 		voucher.in_use = 0
 		return
 
-    var/list/assortment = list(
+	var/list/assortment = list(
 	"Scout kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/scout,
 	"Sniper kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/sniper,
 	"Assaultman kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman,
@@ -287,14 +287,34 @@
      )
 
 /obj/machinery/vending/syndi/proc/givekit(obj/voucher, redeemer, mob/user)
-    if(voucher.in_use)
+	if(voucher.in_use)
 		return
 	voucher.in_use = TRUE
 	if(!selection_items)
 		populate_selection()
-    var/bought = new assortment[selection]
-    give_bought_to(user)
-    save_bought_to_statistics
+	var/bought = new assortment[selection]
+ 	var/mob/living/carbon/human/A = user
+	user.put_in_any_hand_if_possible(bought)
+
+	if(user.mind)
+		var/cost = 1
+		var/name = bought
+		for(var/role in user.mind.antag_roles)
+			var/datum/role/R = user.mind.antag_roles[role]
+			var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
+			if(!S)
+				continue
+			S.spent_TC += cost
+			if(istype(R, /datum/role/operative))
+				R.faction.faction_scoreboard_data += {"[name] for [cost] voucher."}
+			else
+				S.uplink_items_bought += {"[name] for [cost] voucher."}
+
+			var/datum/stat/uplink_purchase/stat = new
+			stat.bundlename = name
+			stat.cost = cost
+			S.uplink_purchases += stat
+
 
 	switch(selection)
 		if("Scout kit")
@@ -317,24 +337,6 @@
 			voucher.in_use = FALSE
 			return
 	qdel(voucher)
-
-	if(user.mind)
-		for(var/role in user.mind.antag_roles)
-			var/datum/role/R = user.mind.antag_roles[role]
-			var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
-			if(!S)
-				continue
-			S.spent_TC += cost
-			if(istype(R, /datum/role/operative))
-				R.faction.faction_scoreboard_data += {"[name] for [cost] voucher."}
-			else
-				S.uplink_items_bought += {"[name] for [cost] voucher."}
-
-			var/datum/stat/uplink_purchase/stat = new
-			stat.bundlename = name
-			stat.cost = cost
-			stat.item_type = item
-			S.uplink_purchases += stat
 
 /obj/machinery/vending/syndi/ex_act()
 	return
