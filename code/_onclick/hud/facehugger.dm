@@ -58,7 +58,6 @@
 	src.adding += inv_box
 
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
-	mymob.nightvisionicon.screen_loc = ui_alien_nightvision
 	src.adding += mymob.nightvisionicon
 
 	mymob.healths = new /atom/movable/screen()

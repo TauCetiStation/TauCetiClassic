@@ -41,7 +41,7 @@
 	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "mouth"
 	inv_box.set_dir(WEST)
-	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
+	inv_box.icon = style
 	inv_box.icon_state = "hand_larva_active"
 	inv_box.screen_loc = ui_rhand
 	inv_box.plane = HUD_PLANE
@@ -50,17 +50,16 @@
 	src.adding += inv_box
 
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
-	mymob.nightvisionicon.screen_loc = ui_alien_nightvision
 	src.adding += mymob.nightvisionicon
 
 	mymob.healths = new /atom/movable/screen()
-	mymob.healths.icon = 'icons/mob/screen1_xeno.dmi'
+	mymob.healths.icon = style
 	mymob.healths.icon_state = "health0"
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_alien_health
 
 	mymob.pullin = new /atom/movable/screen/pull()
-	mymob.pullin.icon = 'icons/mob/screen1_xeno.dmi'
+	mymob.pullin.icon = style
 	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_pull_resist
 

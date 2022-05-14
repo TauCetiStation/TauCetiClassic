@@ -5,7 +5,7 @@
 	name = "toggle leap"
 	icon_state = "leap_off"
 
-/atom/movable/screen/xenomorph/leap/Click()
+/atom/movable/screen/xenomorph/leap/action()
 	if(isxenoadult(usr))
 		var/mob/living/carbon/xenomorph/humanoid/hunter/AH = usr
 		AH.toggle_leap()
@@ -13,8 +13,9 @@
 /atom/movable/screen/xenomorph/nightvision
 	name = "toggle night-vision"
 	icon_state = "nightvision1"
+	screen_loc = ui_alien_nightvision
 
-/atom/movable/screen/xenomorph/nightvision/Click()
+/atom/movable/screen/xenomorph/nightvision/action()
 	if(isxeno(usr))
 		var/mob/living/carbon/xenomorph/A = usr
 		A.toggle_nvg()
@@ -23,11 +24,12 @@
 	name = "toggle neurotoxin"
 	icon_state = "neurotoxin0"
 
-/atom/movable/screen/xenomorph/neurotoxin/Click()
+/atom/movable/screen/xenomorph/neurotoxin/action()
 	var/mob/living/carbon/xenomorph/humanoid/AH = usr
 	AH.toggle_neurotoxin()
 
 /datum/hud/proc/alien_hud()
+	var/style = 'icons/mob/screen1_xeno.dmi'
 
 	src.adding = list()
 	src.other = list()
@@ -42,22 +44,22 @@
 
 //intent small hud objects
 	using = new /atom/movable/screen/intent/help()
-	using.update_icon('icons/mob/screen1_xeno.dmi')
+	using.update_icon(style)
 	src.adding += using
 	help_intent = using
 
 	using = new /atom/movable/screen/intent/push()
-	using.update_icon('icons/mob/screen1_xeno.dmi')
+	using.update_icon(style)
 	src.adding += using
 	push_intent = using
 
 	using = new /atom/movable/screen/intent/grab()
-	using.update_icon('icons/mob/screen1_xeno.dmi')
+	using.update_icon(style)
 	src.adding += using
 	grab_intent = using
 
 	using = new  /atom/movable/screen/intent/harm()
-	using.update_icon('icons/mob/screen1_xeno.dmi')
+	using.update_icon(style)
 	src.adding += using
 	harm_intent = using
 
@@ -116,7 +118,6 @@
 	src.adding += using
 
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
-	mymob.nightvisionicon.screen_loc = ui_alien_nightvision
 	src.adding += mymob.nightvisionicon
 
 	using = new /atom/movable/screen/resist/alien()
