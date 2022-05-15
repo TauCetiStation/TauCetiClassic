@@ -547,19 +547,19 @@
 	SUIT_TYPE = /obj/item/clothing/suit/space/globose
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	overlay_color = "#D3D3D3"
+	overlay_color = "#d3d3d3"
 
 /obj/machinery/suit_storage_unit/syndicate_unit
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/syndi
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi
 	MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
-	overlay_color = "#D04044"
+	overlay_color = "#d04044"
 
 /obj/machinery/suit_storage_unit/science
 	SUIT_TYPE = /obj/item/clothing/suit/space/globose/science
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose/science
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	overlay_color = "#AD66BE"
+	overlay_color = "#aa66be"
 
 /obj/machinery/suit_storage_unit/science/rig
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/science
@@ -577,35 +577,35 @@
 /obj/machinery/suit_storage_unit/engineering/ce
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/engineering/chief
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/engineering/chief
-	overlay_color = "#FFFFFF"
+	overlay_color = "#ffffff"
 
 /obj/machinery/suit_storage_unit/atmos
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/atmos
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/atmos
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	overlay_color = "#4F9D91"
+	overlay_color = "#4f9d91"
 
 /obj/machinery/suit_storage_unit/medical
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/medical
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	overlay_color = "#D3D3D3"
+	overlay_color = "#d3d3d3"
 
 /obj/machinery/suit_storage_unit/medical/cmo
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical/cmo
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/medical/cmo
-	overlay_color = "#99CCFF"
+	overlay_color = "#99ccff"
 
 /obj/machinery/suit_storage_unit/security
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/security
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/security
 	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
-	overlay_color = "#D04044"
+	overlay_color = "#d04044"
 
 /obj/machinery/suit_storage_unit/security/hos
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/security/hos
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/security/hos
-	overlay_color = "#1D1D23"
+	overlay_color = "#1d1d23"
 
 /obj/machinery/suit_storage_unit/mining
 	SUIT_TYPE = /obj/item/clothing/suit/space/globose/mining
@@ -616,13 +616,13 @@
 	SUIT_TYPE = /obj/item/clothing/suit/space/globose/recycler
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose/recycler
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	overlay_color = "#F56300"
+	overlay_color = "#f56300"
 
 /obj/machinery/suit_storage_unit/skrell
 	SUIT_TYPE = /obj/item/clothing/suit/space/skrell/white
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/skrell/white
 	MASK_TYPE = /obj/item/clothing/mask/breath
-	overlay_color = "#76C5B6"
+	overlay_color = "#76c5b6"
 
 /obj/machinery/suit_storage_unit/skrell/black
 	SUIT_TYPE = /obj/item/clothing/suit/space/skrell/black
@@ -631,4 +631,4 @@
 /obj/machinery/suit_storage_unit/unathi
 	SUIT_TYPE = /obj/item/clothing/suit/space/unathi/rig_cheap
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
-	overlay_color = "#2E6232"
+	overlay_color = "#2e6232"
