@@ -202,20 +202,10 @@
 
 	mymob.healths = new /atom/movable/screen/health()
 
-	mymob.healthdoll = new /atom/movable/screen()
-	mymob.healthdoll.icon = 'icons/mob/screen_gen.dmi'
-	mymob.healthdoll.name = "health doll"
-	mymob.healthdoll.screen_loc = ui_healthdoll
+	mymob.healthdoll = new /atom/movable/screen/health_doll()
 
-	mymob.nutrition_icon = new
-	if (H.species.flags[IS_SYNTHETIC])
-		mymob.nutrition_icon.icon = 'icons/mob/screen_alert.dmi'
-	else
-		mymob.nutrition_icon.icon = 'icons/mob/screen_gen.dmi'
-	mymob.nutrition_icon.icon_state = "starving"
-	mymob.nutrition_icon.name = "nutrition"
-	mymob.nutrition_icon.screen_loc = ui_nutrition
-
+	mymob.nutrition_icon = new  /atom/movable/screen/nutrition()
+	mymob.nutrition_icon.update_icon(mymob)
 
 	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = ui_style

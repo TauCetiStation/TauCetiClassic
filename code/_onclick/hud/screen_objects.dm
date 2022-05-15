@@ -1198,7 +1198,7 @@
 	name = "gloves"
 	icon_state = "gloves"
 	screen_loc = ui_gloves
-	slot_id = SLOT_GLOVESs
+	slot_id = SLOT_GLOVES
 
 /atom/movable/screen/inventory/eyes
 	name = "eyes"
@@ -1206,7 +1206,7 @@
 	screen_loc = ui_glasses
 	slot_id = SLOT_GLASSES
 
-/atom/movable/screen/inventory/l_ear()
+/atom/movable/screen/inventory/l_ear
 	name = "l_ear"
 	icon_state = "ears"
 	screen_loc = ui_l_ear
@@ -1218,7 +1218,7 @@
 	screen_loc = ui_r_ear
 	slot_id = SLOT_R_EAR
 
-/atom/movable/screen/inventory/shoes()
+/atom/movable/screen/inventory/shoes
 	name = "shoes"
 	icon_state = "shoes"
 	screen_loc = ui_shoes
@@ -1341,6 +1341,19 @@
 /atom/movable/screen/health/robot
 	icon = 'icons/mob/screen1_robot.dmi'
 	screen_loc = ui_borg_health
+
+/atom/movable/screen/health_doll
+	icon = 'icons/mob/screen_gen.dmi'
+	name = "health doll"
+	screen_loc = ui_healthdoll
+
+/atom/movable/screen/nutrition
+	name = "nutrition"
+	icon_state = "starving"
+	screen_loc = ui_nutrition
+
+/atom/movable/screen/nutrition/update_icon(mob/living/carbon/human/mymob)
+	icon = mymob.species.flags[IS_SYNTHETIC] ? 'icons/mob/screen_alert.dmi' : 'icons/mob/screen_gen.dmi'
 
 /atom/movable/screen/chemical_display
 	name = "chemical storage"
