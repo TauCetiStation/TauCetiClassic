@@ -53,10 +53,7 @@
 
 	var/looped_ambience = null
 	var/is_force_ambience = FALSE
-	var/ambience = list(
-		'sound/ambience/homm1.ogg',
-		'sound/ambience/homm2.ogg'
-	)
+	var/ambience = list()
 
 	/// All beauty in this area combined, only includes indoor area.
 	var/totalbeauty = 0

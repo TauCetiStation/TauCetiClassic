@@ -13,7 +13,7 @@
 	valid_territory = 0
 	looped_ambience = null
 	is_force_ambience = TRUE
-	looped_ambience = list(
+	ambience = list(
 		'sound/ambience/homm1.ogg',
 		'sound/ambience/homm2.ogg',
 		'sound/ambience/homm3.ogg')
