@@ -415,7 +415,7 @@
 		return
 	loc = get_turf(place ? place : host)
 	showed = TRUE
-	host.phantom_s?.update_icon()
+	host.phantom_s?.update_icon(host)
 	for(var/mob/living/M in host.changeling.essences)
 		if(!M.client)
 			continue
@@ -431,7 +431,7 @@
 		return
 	showed = FALSE
 	loc = host
-	host.phantom_s?.update_icon()
+	host.phantom_s?.update_icon(host)
 	for(var/mob/living/M in host.changeling.essences)
 		if(!M.client)
 			continue

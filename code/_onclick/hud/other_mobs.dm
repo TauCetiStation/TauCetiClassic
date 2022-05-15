@@ -21,7 +21,7 @@
 
 /datum/hud/proc/blob_hud()
 
-	blobpwrdisplay = new /atom/movable/screen()
+	blobpwrdisplay = new /atom/movable/screen/blob_power()
 
 	blobhealthdisplay = new /atom/movable/screen/blob_health()
 
