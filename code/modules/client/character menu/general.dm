@@ -154,7 +154,7 @@
 	. += 						"<br>Faction: <a href='byond://?src=\ref[user];preference=faction;task=input'>[faction]</a>"
 	. += 						"<br>Religion: <a href='byond://?src=\ref[user];preference=religion;task=input'>[religion]</a>"
 	if(species == VOX)
-		. += 						"<br>Rank: <a href='byond://?src=\ref[user];preference=rank;task=input'>[vox_rank]</a>"
+		. += 						"<br>Rank: <a href='byond://?src=\ref[user];preference=vox_rank;task=input'>[vox_rank]</a>"
 	. += 						"<br>"
 
 	if(jobban_isbanned(user, "Records"))
