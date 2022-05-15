@@ -139,7 +139,7 @@
 			return
 		attached.internal = holding
 		attached.internals?.update_icon(attached)
-	else if(attached.internals)
+	else if(attached.internal == holding)
 		attached.internal = null
 		attached.internals?.update_icon(attached)
 
