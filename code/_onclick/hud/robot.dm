@@ -220,5 +220,5 @@ var/global/atom/movable/screen/robot_inventory
 				R.client.screen += using
 	else
 		for(var/atom/movable/screen/using as anything in other)
-			iif(istype(using, screens_type))
+			if(istype(using, screens_type))
 				R.client.screen -= using
