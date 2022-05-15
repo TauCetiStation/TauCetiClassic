@@ -407,10 +407,7 @@
 /atom/movable/screen/internal/update_icon(mob/living/carbon/mymob)
 	if(!istype(mymob))
 		return
-	if(mymob.internal)
-		icon_state = "internal1"
-	else
-		icon_state = "internal0"
+	icon_state = mymob.internal ? "internal1" : "internal0"
 
 
 /atom/movable/screen/internal/action()
@@ -1160,6 +1157,78 @@
 
 /atom/movable/screen/inventory/head/ian
 	screen_loc = ui_ian_head
+
+/atom/movable/screen/inventory/uniform
+	name = "i_clothing"
+	slot_id = SLOT_W_UNIFORM
+	icon_state = "center"
+	screen_loc = ui_iclothing
+
+/atom/movable/screen/inventory/suit
+	name = "o_clothing"
+	slot_id = SLOT_WEAR_SUIT
+	icon_state = "suit"
+	screen_loc = ui_oclothing
+
+/atom/movable/screen/inventory/id
+	name = "id"
+	icon_state = "id"
+	screen_loc = ui_id
+	slot_id = SLOT_WEAR_ID
+
+/atom/movable/screen/inventory/pocket1
+	name = "storage1"
+	icon_state = "pocket"
+	screen_loc = ui_storage1
+	slot_id = SLOT_L_STORE
+
+/atom/movable/screen/inventory/pocket2
+	name = "storage2"
+	icon_state = "pocket"
+	screen_loc = ui_storage2
+	slot_id = SLOT_R_STORE
+
+/atom/movable/screen/inventory/suit_storage
+	name = "suit storage"
+	icon_state = "suitstorage"
+	screen_loc = ui_sstore1
+	slot_id = SLOT_S_STORE
+
+/atom/movable/screen/inventory/gloves
+	name = "gloves"
+	icon_state = "gloves"
+	screen_loc = ui_gloves
+	slot_id = SLOT_GLOVESs
+
+/atom/movable/screen/inventory/eyes
+	name = "eyes"
+	icon_state = "glasses"
+	screen_loc = ui_glasses
+	slot_id = SLOT_GLASSES
+
+/atom/movable/screen/inventory/l_ear()
+	name = "l_ear"
+	icon_state = "ears"
+	screen_loc = ui_l_ear
+	slot_id = SLOT_L_EAR
+
+/atom/movable/screen/inventory/r_ear
+	name = "r_ear"
+	icon_state = "ears"
+	screen_loc = ui_r_ear
+	slot_id = SLOT_R_EAR
+
+/atom/movable/screen/inventory/shoes()
+	name = "shoes"
+	icon_state = "shoes"
+	screen_loc = ui_shoes
+	slot_id = SLOT_SHOES
+
+/atom/movable/screen/inventory/belt
+	name = "belt"
+	icon_state = "belt"
+	screen_loc = ui_belt
+	slot_id = SLOT_BELT
 
 /atom/movable/screen/nuke
 	icon = 'icons/effects/station_explosion.dmi'
