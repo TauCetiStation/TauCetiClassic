@@ -1,296 +1,344 @@
 "aa" = (/turf/environment/space,/area/space)
 "ab" = (/turf/simulated/wall/mineral/diamond,/area/space)
-"ac" = (/obj/structure/readme/readme7,/turf/simulated/floor,/area/space)
 "ad" = (/turf/simulated/floor/grass,/area/space)
-"ae" = (/turf/simulated/wall/mineral/wood,/area/space)
-"af" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/wood,/area/space)
-"ag" = (/obj/structure/mirror/magic,/turf/simulated/floor/wood,/area/space)
-"ah" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/wood,/area/custom/peasant_hub)
-"ai" = (/obj/effect/dummy/lighting_obj,/turf/simulated/wall/mineral/custle,/area/space)
+"ae" = (/turf/unsimulated/floor{icon_state = "wizlava"; name = "lava"},/area/space)
+"af" = (/obj/structure/character_spawner/monk,/turf/unsimulated/floor{icon_state = "wizlava"; name = "lava"},/area/space)
+"ag" = (/turf/simulated/shuttle/floor/evac/eng2,/area/space)
+"ah" = (/obj/structure/character_spawner/smith,/turf/simulated/shuttle/floor/evac/eng2,/area/space)
+"ai" = (/turf/simulated/floor/wood,/area/space)
 "aj" = (/obj/structure/falsewall/silver,/turf/simulated/floor/grass,/area/space)
 "ak" = (/turf/simulated/wall/cult,/area/space)
-"al" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/grass,/area/space)
-"am" = (/obj/effect/dummy/lighting_obj,/turf/unsimulated/desert,/area/space)
-"an" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/carpet/green,/area/space)
-"ao" = (/obj/effect/dummy/lighting_obj,/turf/unsimulated/floor/snow,/area/space)
+"al" = (/obj/structure/character_spawner/headman,/turf/simulated/floor/wood,/area/space)
+"am" = (/turf/simulated/floor/wood{icon_state = "wood-broken7"},/area/space)
+"an" = (/turf/simulated/floor/wood{icon_state = "wood-broken"},/area/space)
+"ao" = (/turf/unsimulated/floor/snow,/area/space)
 "ap" = (/turf/simulated/floor/engine/cult,/area/space)
-"aq" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/wood,/area/custom/monk_hub)
+"aq" = (/obj/structure/character_spawner/knight,/turf/simulated/floor/wood,/area/space)
 "ar" = (/turf/simulated/floor/engine/cult/lava,/area/space)
 "as" = (/turf/simulated/wall/mineral/custle,/area/space)
-"at" = (/obj/effect/dummy/lighting_obj,/turf/unsimulated/wall/fakeglass,/area/space)
-"au" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/carpet/cyan,/area/space)
+"at" = (/obj/structure/character_spawner/helper,/turf/simulated/floor/wood,/area/space)
+"au" = (/obj/structure/readme/readmeMonk/r1{pixel_x = -32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood,/area/space)
 "av" = (/obj/structure/falsewall/diamond,/turf/simulated/floor/grass,/area/space)
 "aw" = (/turf/simulated/wall/mineral/gold,/area/space)
-"ax" = (/obj/structure/readme/readmePeasant,/turf/simulated/floor/carpet/cyan,/area/space)
-"ay" = (/obj/structure/readme/readmeMiner,/turf/simulated/floor/carpet/cyan,/area/space)
-"az" = (/obj/structure/readme/readmeHelper,/turf/simulated/floor/carpet/cyan,/area/space)
-"aA" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/carpet/blue2,/area/space)
+"ax" = (/obj/structure/readme/readmeMonk/r4{pixel_x = 32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood,/area/space)
+"ay" = (/obj/structure/readme/readmeSmith/r1{pixel_x = -32},/obj/structure/torch_holder{dir = 1},/turf/simulated/shuttle/floor/evac/eng2,/area/space)
+"az" = (/obj/structure/readme/readmeSmith/r3{pixel_x = 32},/obj/structure/torch_holder{dir = 1},/turf/simulated/shuttle/floor/evac/eng2,/area/space)
+"aA" = (/turf/simulated/floor/carpet/blue2,/area/space)
 "aB" = (/turf/simulated/floor/carpet/red,/area/space)
-"aC" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/engine/cult,/area/space)
-"aD" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/whitegreed,/area/space)
-"aE" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/pod,/area/space)
-"aF" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/carpet/cyan,/area/custom/human_hub)
+"aC" = (/obj/structure/readme/readmeHeadman/r1{pixel_x = -32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood,/area/space)
+"aD" = (/turf/simulated/floor/whitegreed,/area/space)
+"aE" = (/turf/simulated/floor/pod,/area/space)
+"aF" = (/obj/structure/readme/readmeHeadman/r3{pixel_x = 32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood,/area/space)
 "aG" = (/obj/effect/portal/hub,/turf/simulated/floor/whitegreed,/area/space)
-"aH" = (/obj/effect/dummy/lighting_obj,/turf/unsimulated/floor/snow,/area/custom/wizard_hub)
+"aH" = (/turf/unsimulated/floor/snow,/area/custom/wizard_hub)
 "aI" = (/turf/simulated/floor/engine/cult/lava,/area/custom/krigan_hub)
-"aJ" = (/obj/effect/dummy/lighting_obj,/turf/unsimulated/floor/cult/lava,/area/space)
-"aK" = (/obj/effect/portal/hub/human,/turf/simulated/floor/grass,/area/space)
-"aL" = (/obj/effect/portal/hub/wizard,/turf/unsimulated/floor/snow,/area/space)
-"aM" = (/obj/effect/portal/hub/krigan,/turf/unsimulated/floor/cult/lava,/area/space)
-"aN" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/bluegrid,/area/space)
-"aO" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor,/area/space)
-"aP" = (/obj/structure/readme/readme6,/turf/simulated/floor,/area/space)
-"aQ" = (/obj/structure/readme/readme8,/turf/simulated/floor,/area/space)
-"aR" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor,/area/custom/hub)
-"aS" = (/obj/structure/readme/readme4,/turf/simulated/floor,/area/space)
-"aT" = (/obj/structure/readme/readme5,/turf/simulated/floor,/area/space)
-"aU" = (/obj/structure/readme/readme1,/turf/simulated/floor,/area/space)
-"aV" = (/obj/structure/readme/readme2,/turf/simulated/floor,/area/space)
-"aW" = (/obj/structure/readme/readme3,/turf/simulated/floor,/area/space)
-"aX" = (/obj/effect/light_emitter,/turf/simulated/floor,/area/space)
-"aY" = (/obj/effect/landmark/latejoin,/turf/simulated/floor/bluegrid,/area/space)
-"aZ" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/carpet/green,/area/custom/monk_hub)
-"ba" = (/turf/simulated/mineral/airfull/junkyard,/area/space)
-"bb" = (/obj/effect/dummy/lighting_obj,/turf/simulated/wall/mineral/wood,/area/space)
-"bc" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
-"bd" = (/obj/structure/mirror/magic,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
-"be" = (/obj/structure/mirror/magic,/turf/simulated/floor/carpet/green,/area/space)
-"bf" = (/obj/structure/stool/bed/chair/lectern,/turf/simulated/floor/carpet/green,/area/space)
-"bg" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/plating/ironsand/junkyard,/area/custom/miner_hub)
-"bh" = (/obj/structure/stool/bed/chair/pew/left,/turf/simulated/floor/wood,/area/space)
-"bi" = (/obj/structure/stool/bed/chair/pew/right,/turf/simulated/floor/wood,/area/space)
-"bj" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/carpet/green,/area/custom/helper_hub)
-"bk" = (/obj/effect/dummy/lighting_obj,/turf/simulated/shuttle/floor/cargo,/area/custom/smith_hub)
-"bl" = (/obj/structure/character_spawner/peasant,/turf/simulated/floor/wood,/area/space)
-"bm" = (/obj/structure/character_spawner/miner,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
-"bn" = (/obj/structure/character_spawner/helper,/turf/simulated/floor/carpet/green,/area/space)
-"bo" = (/obj/structure/dresser,/turf/simulated/floor/wood,/area/space)
-"bp" = (/obj/structure/dresser,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
-"bq" = (/obj/structure/dresser,/turf/simulated/floor/carpet/green,/area/space)
-"br" = (/obj/structure/torch_holder,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
-"bs" = (/obj/structure/torch_holder,/turf/simulated/floor/wood,/area/space)
-"bt" = (/obj/structure/character_spawner/knight,/turf/simulated/floor/wood,/area/space)
-"bu" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/carpet/red,/area/space)
-"bv" = (/obj/structure/character_spawner/monk,/turf/simulated/floor/wood,/area/space)
-"bw" = (/obj/effect/dummy/lighting_obj,/turf/simulated/wall/mineral/gold,/area/space)
-"bx" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/carpet/purple,/area/space)
-"by" = (/obj/structure/torch_holder,/turf/simulated/floor/carpet/red,/area/space)
-"bz" = (/obj/structure/mirror/magic,/turf/simulated/floor/carpet/red,/area/space)
-"bA" = (/obj/structure/character_spawner/human_hero,/turf/simulated/floor/carpet/purple,/area/space)
-"bB" = (/obj/effect/dummy/lighting_obj,/turf/simulated/shuttle/floor/cargo,/area/space)
-"bC" = (/obj/structure/character_spawner/smith,/turf/simulated/shuttle/floor/cargo,/area/space)
-"bD" = (/obj/structure/torch_holder,/turf/simulated/shuttle/floor/cargo,/area/space)
-"bE" = (/obj/structure/mirror/magic,/turf/simulated/shuttle/floor/cargo,/area/space)
-"bF" = (/obj/structure/dresser,/turf/simulated/shuttle/floor/cargo,/area/space)
-"bG" = (/obj/effect/dummy/lighting_obj,/turf/unsimulated/wall/cult/runed,/area/space)
+"aJ" = (/turf/unsimulated/floor/cult/lava,/area/space)
+"aK" = (/obj/structure/readme/readmeKnight/r1{pixel_x = -32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood,/area/space)
+"aL" = (/obj/structure/readme/readmeKnight/r5{pixel_x = 32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood,/area/space)
+"aM" = (/obj/structure/readme/readmeHelper/r1{pixel_x = -32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood,/area/space)
+"aN" = (/obj/structure/sign/poster/banner,/turf/unsimulated/wall/fakeglass,/area/space)
+"aO" = (/turf/simulated/floor,/area/space)
+"aP" = (/obj/structure/readme/readmeHelper/r3{pixel_x = 32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood{icon_state = "wood-broken7"},/area/space)
+"aR" = (/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space)
+"aS" = (/turf/simulated/floor{dir = 10; icon_state = "black"},/area/custom/hub)
+"aT" = (/obj/structure/readme/readmeMonk/r2{pixel_x = -32},/turf/simulated/floor/wood{icon_state = "wood-broken4"},/area/space)
+"aU" = (/turf/simulated/floor/carpet/blue,/area/custom/monk_hub)
+"aW" = (/turf/simulated/floor{dir = 10; icon_state = "black"},/area/space)
+"aX" = (/turf/simulated/floor{dir = 8; icon_state = "black"},/area/space)
+"aY" = (/obj/structure/readme/readme3{pixel_y = 32},/turf/simulated/floor{icon_state = "black"},/area/space)
+"aZ" = (/obj/structure/readme/readmeMonk/r5{pixel_x = 32; pixel_y = 3},/turf/simulated/floor/wood{icon_state = "wood-broken7"},/area/space)
+"ba" = (/turf/simulated/shuttle/floor/evac/eng1,/area/custom/smith_hub)
+"bb" = (/turf/simulated/floor/carpet/red,/area/custom/headman_hub)
+"bc" = (/turf/simulated/floor/wood{icon_state = "wood-broken5"},/area/space)
+"bd" = (/turf/simulated/floor/carpet/blue2,/area/custom/knight_hub)
+"be" = (/turf/simulated/floor/wood{icon_state = "wood-broken4"},/area/space)
+"bf" = (/turf/simulated/floor/carpet,/area/custom/helper_hub)
+"bg" = (/obj/structure/readme/readmeMonk/r3{pixel_x = -32},/turf/simulated/floor/wood,/area/space)
+"bh" = (/obj/structure/readme/readmeMonk/r6{pixel_x = 32},/turf/simulated/floor/wood{icon_state = "wood-broken6"},/area/space)
+"bi" = (/obj/structure/readme/readmeSmith/r2{pixel_x = -32},/turf/simulated/shuttle/floor/evac/eng2,/area/space)
+"bj" = (/obj/structure/readme/readmeSmith/r4{pixel_x = 32},/turf/simulated/shuttle/floor/evac/eng2,/area/space)
+"bk" = (/obj/structure/readme/readmeHeadman/r2{pixel_x = -32},/turf/simulated/floor/wood{icon_state = "wood-broken3"},/area/space)
+"bl" = (/obj/structure/readme/readmeHeadman/r4{pixel_x = 32},/turf/simulated/floor/wood,/area/space)
+"bm" = (/obj/structure/readme/readmeKnight/r2{pixel_x = -32},/turf/simulated/floor/wood{icon_state = "wood-broken6"},/area/space)
+"bn" = (/obj/structure/readme/readmeKnight/r4{pixel_x = 32},/turf/simulated/floor/wood,/area/space)
+"bo" = (/obj/structure/readme/readmeHelper/r2{pixel_x = -32},/turf/simulated/floor/wood,/area/space)
+"bp" = (/obj/structure/readme/readmeHelper/r4{pixel_x = 32},/turf/simulated/floor/wood,/area/space)
+"bq" = (/obj/structure/dresser,/obj/structure/mirror/magic{pixel_x = -32},/obj/structure/torch_holder,/turf/simulated/floor/wood,/area/space)
+"br" = (/obj/structure/dresser,/obj/structure/mirror/magic{pixel_x = 32},/obj/structure/torch_holder,/turf/simulated/floor/wood,/area/space)
+"bs" = (/obj/structure/dresser,/obj/structure/mirror/magic{pixel_x = -32},/obj/structure/torch_holder,/turf/simulated/shuttle/floor/evac/eng2,/area/space)
+"bt" = (/obj/structure/dresser,/obj/structure/mirror/magic{pixel_x = 32},/obj/structure/torch_holder,/turf/simulated/shuttle/floor/evac/eng2,/area/space)
+"bu" = (/obj/structure/dresser,/obj/structure/mirror/magic{pixel_y = -32},/turf/unsimulated/floor{icon_state = "wizlava"; name = "lava"},/area/space)
+"bv" = (/obj/structure/dresser,/turf/unsimulated/floor{icon_state = "wizlava"; name = "lava"},/area/space)
+"bw" = (/obj/structure/dresser,/obj/structure/mirror/magic{pixel_y = -32},/turf/simulated/shuttle/floor/evac/eng2,/area/space)
+"bx" = (/obj/structure/dresser,/turf/simulated/shuttle/floor/evac/eng2,/area/space)
+"by" = (/obj/structure/dresser,/obj/structure/mirror/magic{pixel_y = -32},/turf/simulated/floor/wood,/area/space)
+"bz" = (/obj/structure/dresser,/turf/simulated/floor/wood,/area/space)
+"bA" = (/obj/structure/dresser,/obj/structure/mirror/magic{pixel_y = -32},/turf/simulated/floor/wood{icon_state = "wood-broken"},/area/space)
+"bB" = (/obj/structure/sign/poster/banner,/turf/simulated/wall/mineral/custle,/area/space)
+"bC" = (/obj/structure/dresser,/obj/structure/readme/readmeKnight/r3{pixel_y = -32},/turf/simulated/floor/wood{icon_state = "wood-broken5"},/area/space)
+"bD" = (/obj/structure/dresser,/obj/structure/mirror/magic{pixel_y = -32},/turf/simulated/floor/wood{icon_state = "wood-broken6"},/area/space)
+"bE" = (/turf/simulated/wall/mineral/wood,/area/space)
+"bF" = (/turf/simulated/mineral/airfull/junkyard,/area/space)
+"bG" = (/obj/structure/flora/ausbushes/fullgrass,/obj/structure/flora/ausbushes/brflowers,/turf/simulated/floor/grass,/area/space)
 "bH" = (/turf/unsimulated/wall/cult,/area/space)
-"bI" = (/obj/effect/dummy/lighting_obj,/turf/unsimulated/wall/cult,/area/space)
-"bJ" = (/obj/effect/dummy/lighting_obj,/turf/unsimulated/floor/cult,/area/space)
-"bK" = (/obj/effect/dummy/lighting_obj,/turf/unsimulated/wall/cult/runed/anim,/area/space)
+"bI" = (/obj/structure/character_spawner/peasant,/turf/simulated/floor/grass,/area/space)
+"bJ" = (/turf/simulated/floor{icon_state = "black"},/area/space)
+"bK" = (/turf/simulated/floor{dir = 1; icon_state = "black"},/area/space)
 "bL" = (/turf/unsimulated/wall/fakeglass,/area/space)
-"bM" = (/obj/effect/dummy/lighting_obj,/turf/unsimulated/floor/cult,/area/custom/valhalla)
-"bN" = (/obj/structure/vilage/velikiy_sup,/turf/unsimulated/floor/cult,/area/custom/valhalla)
-"bO" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/carpet/red,/area/custom/knight_hub)
-"bP" = (/obj/effect/portal/hub/job_room/peasant,/turf/simulated/floor/grass,/area/space)
-"bQ" = (/obj/effect/portal/hub/job_room/miner,/turf/unsimulated/desert,/area/space)
-"bR" = (/obj/effect/portal/hub/job_room/helper,/turf/simulated/floor/carpet/green,/area/space)
-"bS" = (/obj/effect/portal/hub/job_room/whitelist_room/knight,/turf/simulated/floor/carpet/red,/area/space)
-"bT" = (/obj/effect/portal/hub/job_room/whitelist_room/monk,/turf/simulated/floor/carpet/green,/area/space)
-"bU" = (/obj/effect/portal/hub/job_room/whitelist_room/smith,/turf/simulated/shuttle/floor/cargo,/area/space)
-"bV" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/carpet/red,/area/custom/human_hero)
-"bW" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/carpet/purple,/area/custom/human_hero)
-"bX" = (/turf/simulated/floor/carpet/purple,/area/space)
-"bY" = (/obj/structure/sign/poster/banner,/turf/simulated/wall/mineral/custle,/area/space)
-"bZ" = (/obj/structure/sign/poster/banner,/turf/simulated/wall/mineral/gold,/area/space)
-"ca" = (/obj/effect/portal/hub/job_room/whitelist_room/h_hero,/turf/simulated/floor/carpet/purple,/area/space)
-"cb" = (/obj/structure/sign/poster/banner,/turf/simulated/wall/mineral/wood,/area/space)
-"cc" = (/turf/simulated/floor/wood,/area/space)
-"cd" = (/obj/structure/readme/readmeKnight/readmeKnight1,/turf/unsimulated/wall/fakeglass,/area/space)
-"ce" = (/obj/structure/readme/readmeKnight,/turf/unsimulated/wall/fakeglass,/area/space)
-"cf" = (/obj/structure/readme/readmeMonk/readmeMonk1,/turf/unsimulated/wall/fakeglass,/area/space)
-"cg" = (/obj/structure/readme/readmeMonk,/turf/unsimulated/wall/fakeglass,/area/space)
-"ch" = (/obj/structure/readme/readmeSmith/readmeSmith1,/turf/unsimulated/wall/fakeglass,/area/space)
-"ci" = (/obj/structure/readme/readmeSmith,/turf/unsimulated/wall/fakeglass,/area/space)
-"cj" = (/obj/structure/readme/readmeHero/readmeHero1,/turf/unsimulated/wall/fakeglass,/area/space)
-"ck" = (/obj/structure/readme/readmeHero,/turf/unsimulated/wall/fakeglass,/area/space)
-"cl" = (/obj/structure/readme/readmeMonk/r1,/turf/simulated/floor/wood,/area/space)
-"cm" = (/obj/structure/readme/readmeMonk/r2,/turf/simulated/floor/carpet/green,/area/space)
-"cn" = (/obj/structure/readme/readmeMonk/r3,/turf/simulated/floor/wood,/area/space)
-"co" = (/obj/structure/readme/readmeMonk/r4,/turf/simulated/floor/carpet/green,/area/space)
-"cp" = (/obj/structure/readme/readmeMonk/r5,/turf/simulated/floor/wood,/area/space)
-"cq" = (/obj/structure/readme/readmeSmith/r1,/turf/simulated/shuttle/floor/cargo,/area/space)
-"cr" = (/obj/structure/readme/readmeSmith/r2,/turf/simulated/shuttle/floor/cargo,/area/space)
-"cs" = (/obj/structure/readme/readmeSmith/r3,/turf/simulated/shuttle/floor/cargo,/area/space)
-"ct" = (/obj/structure/readme/readmeKnight/r1,/turf/simulated/floor/wood,/area/space)
-"cu" = (/obj/structure/readme/readmeKnight/r2,/turf/simulated/floor/wood,/area/space)
-"cv" = (/obj/structure/readme/readmeKnight/r3,/turf/simulated/floor/wood,/area/space)
-"cw" = (/obj/structure/readme/readmeHero/r1,/turf/simulated/floor/carpet/purple,/area/space)
-"cx" = (/obj/structure/readme/readmeHero/r2,/turf/simulated/floor/carpet/red,/area/space)
-"cy" = (/obj/structure/readme/readmeHero/r3,/turf/simulated/floor/carpet/purple,/area/space)
-"cz" = (/obj/structure/readme/readmeSmith/r4,/turf/simulated/shuttle/floor/cargo,/area/space)
-"cA" = (/obj/structure/readme/readmePeasant/r1,/turf/simulated/floor/wood,/area/space)
-"cB" = (/obj/structure/readme/readmePeasant/r2,/turf/simulated/floor/wood,/area/space)
-"cC" = (/obj/structure/readme/readmePeasant/r3,/turf/simulated/floor/wood,/area/space)
-"cD" = (/obj/structure/readme/readmeMiner/r1,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
-"cE" = (/obj/structure/readme/readmeMiner/r2,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
-"cF" = (/obj/structure/readme/readmeMiner/r3,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
-"cG" = (/obj/structure/readme/readmeInnkeeper/r1,/turf/simulated/floor/carpet/black,/area/space)
-"cH" = (/obj/structure/readme/readmeHelper/r2,/turf/simulated/floor/carpet/green,/area/space)
-"cI" = (/obj/structure/readme/readmeHelper/r3,/turf/simulated/floor/carpet/green,/area/space)
-"cJ" = (/obj/structure/readme/readmePeasant/r4,/turf/simulated/floor/wood,/area/space)
-"cK" = (/obj/structure/sign/poster/banner,/turf/unsimulated/wall/fakeglass,/area/space)
-"cL" = (/obj/structure/statue/peasant,/turf/simulated/floor/carpet/cyan,/area/space)
-"cM" = (/obj/structure/statue/miner,/turf/simulated/floor/carpet/cyan,/area/space)
-"cN" = (/obj/structure/statue/helper,/turf/simulated/floor/carpet/cyan,/area/space)
-"cO" = (/obj/structure/statue/knight,/turf/simulated/floor/carpet/cyan,/area/space)
-"cP" = (/obj/structure/statue/monk,/turf/simulated/floor/carpet/cyan,/area/space)
-"cQ" = (/obj/structure/statue/smith,/turf/simulated/floor/carpet/cyan,/area/space)
-"cR" = (/obj/structure/statue/hero,/turf/simulated/floor/carpet/cyan,/area/space)
-"cS" = (/turf/simulated/floor/carpet/black,/area/space)
-"cT" = (/turf/simulated/floor/carpet/black,/area/custom/innkeeper_hub)
-"cU" = (/turf/simulated/floor/carpet/orange,/area/space)
-"cV" = (/turf/simulated/floor/carpet/orange,/area/custom/headman_hub)
-"cW" = (/obj/structure/character_spawner/innkeeper,/turf/simulated/floor/wood,/area/space)
-"cX" = (/obj/structure/character_spawner/headman,/turf/simulated/floor/wood,/area/space)
-"cY" = (/obj/structure/dresser,/turf/simulated/floor/carpet/purple,/area/space)
-"cZ" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/carpet/orange,/area/space)
-"da" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/carpet/black,/area/space)
-"db" = (/obj/effect/portal/hub/job_room/headman,/turf/simulated/floor/carpet/orange,/area/space)
-"dc" = (/obj/effect/portal/hub/job_room/innkeeper,/turf/simulated/floor/carpet/black,/area/space)
-"dd" = (/obj/structure/readme/readmeInnkeeper/r2,/turf/simulated/floor/carpet/black,/area/space)
-"de" = (/obj/structure/readme/readmeKnight/r4,/turf/simulated/floor/wood,/area/space)
-"df" = (/obj/structure/readme/readmeHeadman/r1,/turf/simulated/floor/carpet/orange,/area/space)
-"dg" = (/obj/structure/readme/readmeHeadman/r2,/turf/simulated/floor/carpet/orange,/area/space)
-"dh" = (/obj/structure/readme/readmeHeadman/r3,/turf/simulated/floor/carpet/orange,/area/space)
-"di" = (/obj/structure/readme/readmeHeadman/r4,/turf/simulated/floor/carpet/orange,/area/space)
-"dj" = (/obj/structure/readme/readmePeasant/r2,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
-"dk" = (/obj/structure/readme/readmeHelper/r1,/turf/simulated/floor/wood,/area/space)
-"dl" = (/obj/structure/readme/readmeHelper/r4,/turf/simulated/floor/wood,/area/space)
-"dm" = (/obj/structure/readme/readmeHeadman/readmeHeadman1,/turf/unsimulated/wall/fakeglass,/area/space)
-"dn" = (/obj/structure/readme/readmeHeadman,/turf/unsimulated/wall/fakeglass,/area/space)
-"do" = (/obj/structure/readme/readmeInnkeeper/readmeInnkeeper1,/turf/unsimulated/wall/fakeglass,/area/space)
-"dp" = (/obj/structure/readme/readmeInnkeeper,/turf/unsimulated/wall/fakeglass,/area/space)
-"dq" = (/obj/structure/readme/readmeMonk/r6,/turf/simulated/floor/carpet/green,/area/custom/monk_hub)
-"dr" = (/obj/structure/readme/readmeKnight/r5,/turf/simulated/floor/wood,/area/space)
-"ds" = (/obj/structure/readme/readmeHero/r4,/turf/simulated/floor/carpet/purple,/area/custom/human_hero)
-"dt" = (/obj/structure/statue/headman,/turf/simulated/floor/carpet/cyan,/area/space)
-"du" = (/obj/structure/statue/inn,/turf/simulated/floor/carpet/cyan,/area/space)
-"dv" = (/obj/structure/mirror/magic,/turf/simulated/floor/carpet/cyan,/area/space)
-"dw" = (/obj/structure/dresser,/turf/simulated/floor/carpet/cyan,/area/space)
-"dx" = (/obj/effect/dummy/lighting_obj,/turf/simulated/floor/carpet/cyan,/area/custom/plague_doctor_hub)
-"dy" = (/obj/effect/portal/hub/job_room/doctor,/turf/simulated/floor/carpet/cyan,/area/space)
-"dz" = (/obj/structure/character_spawner/doctor,/turf/simulated/floor/carpet/cyan,/area/space)
-"dA" = (/obj/structure/readme/readmeDoctor/r1,/turf/simulated/floor/carpet/cyan,/area/space)
-"dB" = (/obj/structure/readme/readmeDoctor/r2,/turf/simulated/floor/wood,/area/space)
-"dC" = (/obj/structure/readme/readmeDoctor/r3,/turf/simulated/floor/wood,/area/space)
-"dD" = (/obj/structure/readme/readmeDoctor/r4,/turf/simulated/floor/carpet/cyan,/area/space)
-"dE" = (/obj/structure/readme/readmeDoctor/readmeDoctor1,/turf/unsimulated/wall/fakeglass,/area/space)
-"dF" = (/obj/structure/readme/readmeDoctor,/turf/unsimulated/wall/fakeglass,/area/space)
-"dG" = (/obj/structure/statue/doctor,/turf/simulated/floor/carpet/cyan,/area/space)
+"bM" = (/obj/machinery/hydroponics/soil,/turf/simulated/floor/grass,/area/space)
+"bN" = (/obj/structure/character_spawner/doctor,/turf/simulated/floor/wood,/area/space)
+"bO" = (/turf/simulated/floor/wood{icon_state = "wood-broken6"},/area/space)
+"bP" = (/obj/structure/character_spawner/innkeeper,/turf/simulated/floor/wood,/area/space)
+"bQ" = (/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
+"bR" = (/obj/structure/character_spawner/miner,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
+"bS" = (/obj/structure/character_spawner/human_hero,/turf/simulated/floor/wood,/area/space)
+"bT" = (/obj/structure/readme/readmePeasant/r1{pixel_x = -32},/obj/structure/torch_holder{dir = 1},/obj/machinery/hydroponics/soil,/turf/simulated/floor/grass,/area/space)
+"bU" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/simulated/floor/grass,/area/space)
+"bV" = (/obj/structure/flora/ausbushes/fullgrass,/turf/simulated/floor/grass,/area/space)
+"bW" = (/obj/structure/readme/readmePeasant/r3{pixel_x = 32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/grass,/area/space)
+"bX" = (/obj/structure/readme/readmeDoctor/r1{pixel_x = -32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood,/area/space)
+"bY" = (/obj/structure/readme/readmeDoctor/r3{pixel_x = 32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood{icon_state = "wood-broken3"},/area/space)
+"bZ" = (/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood{icon_state = "wood-broken3"},/area/space)
+"ca" = (/turf/simulated/floor/wood{icon_state = "wood-broken3"},/area/space)
+"cb" = (/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood,/area/space)
+"cc" = (/obj/structure/readme/readmeMiner/r1{pixel_x = -32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
+"cd" = (/obj/structure/readme/readmeMiner/r3{pixel_x = 32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
+"ce" = (/obj/structure/readme/readmeHero/r1{pixel_x = -32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood,/area/space)
+"cf" = (/obj/structure/readme/readmeHero/r3{pixel_x = 32},/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood,/area/space)
+"cg" = (/turf/simulated/floor/grass,/area/custom/peasant_hub)
+"ch" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/simulated/floor/grass,/area/custom/peasant_hub)
+"ci" = (/obj/structure/flora/ausbushes/fullgrass,/obj/structure/flora/ausbushes/ppflowers,/turf/simulated/floor/grass,/area/space)
+"cj" = (/turf/simulated/floor/carpet/green,/area/custom/plague_doctor_hub)
+"ck" = (/obj/structure/readme/readmeInnkeeper/r1{pixel_x = -32},/turf/simulated/floor/wood,/area/space)
+"cl" = (/turf/simulated/floor/carpet/black,/area/custom/innkeeper_hub)
+"cm" = (/obj/structure/readme/readmeInnkeeper/r2{pixel_x = 32},/turf/simulated/floor/wood{icon_state = "wood-broken5"},/area/space)
+"cn" = (/turf/simulated/floor/plating/ironsand/junkyard,/area/custom/miner_hub)
+"co" = (/turf/simulated/floor/carpet/orange,/area/custom/human_hero)
+"cp" = (/obj/structure/readme/readmePeasant/r2{pixel_x = -32},/obj/structure/flora/ausbushes/fullgrass,/obj/structure/flora/ausbushes/ywflowers,/turf/simulated/floor/grass,/area/space)
+"cq" = (/obj/structure/readme/readmePeasant/r4{pixel_x = 32},/obj/machinery/hydroponics/soil,/turf/simulated/floor/grass,/area/space)
+"cr" = (/obj/structure/readme/readmeDoctor/r2{pixel_x = -32},/turf/simulated/floor/wood{icon_state = "wood-broken4"},/area/space)
+"cs" = (/obj/structure/readme/readmeDoctor/r4{pixel_x = 32},/turf/simulated/floor/wood,/area/space)
+"ct" = (/obj/structure/readme/readmeMiner/r2{pixel_x = -32},/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
+"cu" = (/obj/structure/readme/readmePeasant/r2{pixel_x = 32},/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
+"cv" = (/obj/structure/readme/readmeHero/r2{pixel_x = -32},/turf/simulated/floor/wood,/area/space)
+"cw" = (/obj/structure/readme/readmeHero/r4{pixel_x = 32},/turf/simulated/floor/wood,/area/space)
+"cx" = (/obj/structure/dresser,/obj/structure/mirror/magic{pixel_x = -32},/obj/structure/torch_holder,/turf/simulated/floor/grass,/area/space)
+"cy" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/simulated/floor/grass,/area/space)
+"cz" = (/obj/structure/dresser,/obj/structure/mirror/magic{pixel_x = 32},/obj/structure/torch_holder,/turf/simulated/floor/grass,/area/space)
+"cA" = (/obj/structure/torch_holder,/obj/structure/dresser,/obj/structure/mirror/magic{pixel_x = -32},/turf/simulated/floor/wood,/area/space)
+"cB" = (/obj/structure/torch_holder,/obj/structure/dresser,/obj/structure/mirror/magic{pixel_x = 32},/turf/simulated/floor/wood,/area/space)
+"cC" = (/obj/structure/torch_holder,/obj/structure/dresser,/obj/structure/mirror/magic{pixel_x = -32},/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
+"cD" = (/obj/structure/torch_holder,/obj/structure/dresser,/obj/structure/mirror/magic{pixel_x = 32},/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
+"cE" = (/obj/structure/dresser,/obj/structure/mirror/magic{pixel_y = -32},/turf/simulated/floor/grass,/area/space)
+"cF" = (/obj/structure/dresser,/turf/simulated/floor/grass,/area/space)
+"cG" = (/obj/structure/dresser,/turf/simulated/floor/wood{icon_state = "wood-broken6"},/area/space)
+"cH" = (/obj/structure/dresser,/obj/structure/mirror/magic{pixel_y = -32},/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
+"cI" = (/obj/structure/dresser,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
+"cJ" = (/obj/structure/dresser,/obj/structure/mirror/magic{pixel_y = -32},/turf/simulated/floor/wood{icon_state = "wood-broken5"},/area/space)
+"cK" = (/turf/simulated/floor/carpet/orange,/area/space)
+"cL" = (/obj/effect/portal/hub/job_room/whitelist_room/h_hero,/turf/simulated/floor/carpet/orange,/area/space)
+"cM" = (/obj/structure/readme/readmeHero/readmeHero1{pixel_x = -32},/obj/structure/statue/hero,/turf/simulated/floor/wood{icon_state = "wood-broken7"},/area/space)
+"cN" = (/obj/structure/readme/readmeHero{pixel_x = 32},/turf/simulated/floor/wood{icon_state = "wood-broken3"},/area/space)
+"cO" = (/obj/structure/sign/poster/banner,/turf/simulated/wall/mineral/gold,/area/space)
+"cP" = (/turf/simulated/floor{icon_state = "wood_stairs2"},/area/space)
+"cQ" = (/turf/simulated/floor{dir = 6; icon_state = "wood_stairs"},/area/space)
+"cR" = (/turf/simulated/floor{dir = 6; icon_state = "wood_stairs2"},/area/space)
+"cS" = (/obj/structure/readme/readmeHeadman/readmeHeadman1{pixel_y = 32},/obj/structure/statue/headman,/turf/simulated/floor/wood,/area/space)
+"cT" = (/turf/simulated/floor{dir = 9; icon_state = "wood_stairs2"},/area/space)
+"cU" = (/turf/simulated/floor/plating/airless/asteroid,/area/space)
+"cV" = (/obj/structure/flora/ausbushes/sparsegrass,/obj/structure/flora/ausbushes/ppflowers,/turf/simulated/floor/grass,/area/space)
+"cW" = (/turf/simulated/floor{dir = 4; icon_state = "Stairs_wide"},/area/space)
+"cX" = (/obj/effect/portal/hub/job_room/headman,/turf/simulated/floor/carpet/red,/area/space)
+"cY" = (/turf/simulated/floor{dir = 9; icon_state = "wood_stairs"},/area/space)
+"cZ" = (/turf/simulated/floor{dir = 8; icon_state = "stairs_middle"},/area/space)
+"da" = (/obj/structure/readme/readmeHeadman{pixel_y = -32},/turf/simulated/floor/wood,/area/space)
+"db" = (/turf/simulated/floor{dir = 8; icon_state = "wood_stairs2"},/area/space)
+"dc" = (/obj/structure/flora/ausbushes/sparsegrass,/obj/structure/flora/ausbushes/leafybush,/turf/simulated/floor/grass,/area/space)
+"dd" = (/turf/simulated/floor{dir = 4; icon_state = "Stairs2_wide"},/area/space)
+"de" = (/obj/structure/sign/poster/banner,/turf/simulated/wall/mineral/wood,/area/space)
+"df" = (/obj/structure/flora/ausbushes/ywflowers,/turf/simulated/floor/grass,/area/space)
+"dg" = (/obj/structure/flora/ausbushes/fullgrass,/obj/structure/flora/tree/jungle,/turf/simulated/floor/grass,/area/space)
+"dh" = (/turf/simulated/floor/plating/ironsand/junkyard{icon_state = "ironsand2"},/area/space)
+"di" = (/turf/simulated/floor/plating/ironsand/junkyard{icon_state = "ironsand3"},/area/space)
+"dj" = (/obj/structure/readme/readmeMiner{pixel_y = 32},/obj/structure/statue/miner,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
+"dk" = (/obj/structure/flora/ausbushes/sparsegrass,/obj/structure/flora/ausbushes/lavendergrass,/turf/simulated/floor/grass,/area/space)
+"dl" = (/turf/simulated/floor{dir = 4; icon_state = "wood_stairs2"},/area/space)
+"dm" = (/obj/structure/readme/readmeKnight/readmeKnight1{pixel_y = 32},/obj/structure/statue/knight,/turf/simulated/floor/wood,/area/space)
+"dn" = (/obj/effect/portal/hub/job_room/miner,/turf/simulated/floor/plating/ironsand/junkyard,/area/space)
+"do" = (/turf/simulated/floor/plating/ironsand/junkyard{icon_state = "ironsand4"},/area/space)
+"dp" = (/turf/simulated/floor{dir = 5; icon_state = "wood_stairs"},/area/space)
+"dr" = (/obj/effect/portal/hub/job_room/whitelist_room/knight,/turf/simulated/floor/carpet/blue2,/area/space)
+"ds" = (/obj/structure/flora/ausbushes/brflowers,/turf/simulated/floor/grass,/area/space)
+"dt" = (/turf/simulated/floor{dir = 5; icon_state = "wood_stairs2"},/area/space)
+"du" = (/obj/structure/readme/readmeKnight{pixel_y = -32},/turf/simulated/floor/wood{icon_state = "wood-broken4"},/area/space)
+"dv" = (/obj/structure/flora/ausbushes/fernybush,/turf/simulated/floor/grass,/area/space)
+"dw" = (/obj/structure/readme/readmePeasant{pixel_y = 32},/obj/structure/statue/peasant,/turf/simulated/floor/grass,/area/space)
+"dx" = (/obj/structure/flora/ausbushes/sparsegrass,/obj/structure/flora/ausbushes/genericbush,/obj/structure/flora/tree/jungle/small,/turf/simulated/floor/grass,/area/space)
+"dy" = (/obj/structure/statue/monk,/turf/simulated/floor/wood,/area/space)
+"dz" = (/obj/structure/readme/readmeMonk/readmeMonk1{pixel_y = 32},/turf/simulated/floor/carpet/blue,/area/space)
+"dA" = (/turf/simulated/floor/carpet/blue,/area/space)
+"dB" = (/obj/effect/portal/hub/job_room/peasant,/turf/simulated/floor/plating/airless/asteroid,/area/space)
+"dC" = (/obj/effect/portal/hub/job_room/whitelist_room/monk,/turf/simulated/floor/carpet/blue,/area/space)
+"dD" = (/obj/structure/flora/ausbushes/sparsegrass,/obj/structure/flora/ausbushes/brflowers,/turf/simulated/floor/grass,/area/space)
+"dE" = (/obj/structure/readme/readmeMonk{pixel_y = -32},/turf/simulated/floor/wood,/area/space)
+"dF" = (/obj/structure/flora/ausbushes/fullgrass,/obj/structure/flora/ausbushes/lavendergrass,/turf/simulated/floor/grass,/area/space)
+"dG" = (/obj/structure/flora/ausbushes/fullgrass,/obj/structure/flora/ausbushes/ywflowers,/turf/simulated/floor/grass,/area/space)
+"gg" = (/turf/unsimulated/wall/cult/runed/anim,/area/space)
+"jJ" = (/turf/simulated/floor{dir = 9; icon_state = "black"},/area/custom/hub)
+"jO" = (/obj/effect/portal/hub/job_room/doctor,/turf/simulated/floor/carpet/green,/area/space)
+"lg" = (/obj/effect/landmark/latejoin,/turf/simulated/floor{dir = 4; icon_state = "black"},/area/space)
+"mx" = (/turf/simulated/floor{dir = 10; icon_state = "wood_stairs"},/area/space)
+"mz" = (/obj/structure/readme/readme7{pixel_y = 32},/turf/simulated/floor{icon_state = "black"},/area/space)
+"mA" = (/obj/effect/landmark/latejoin,/turf/simulated/floor{dir = 4; icon_state = "blackcorner"},/area/space)
+"mJ" = (/obj/structure/readme/readme4{pixel_y = 32},/turf/simulated/floor{icon_state = "black"},/area/space)
+"nf" = (/obj/effect/landmark/latejoin,/turf/simulated/floor{dir = 8; icon_state = "blackcorner"},/area/space)
+"qq" = (/obj/structure/readme/readmeSmith/readmeSmith1{pixel_y = 32},/obj/structure/statue/smith,/turf/simulated/shuttle/floor/cargo,/area/space)
+"rh" = (/turf/simulated/floor/carpet/cyan,/area/space)
+"rC" = (/turf/simulated/floor{dir = 6; icon_state = "black"},/area/space)
+"rV" = (/turf/simulated/floor{dir = 10; icon_state = "wood_stairs2"},/area/space)
+"sf" = (/turf/simulated/floor{dir = 4; icon_state = "black"},/area/space)
+"tH" = (/turf/unsimulated/floor/cult,/area/custom/valhalla)
+"us" = (/obj/effect/portal/hub/job_room/helper,/turf/simulated/floor/carpet,/area/space)
+"ut" = (/turf/simulated/floor{dir = 9; icon_state = "black"},/area/space)
+"vk" = (/turf/unsimulated/floor/cult,/area/space)
+"vM" = (/obj/structure/statue/helper,/turf/simulated/floor/wood,/area/space)
+"wQ" = (/obj/structure/readme/readmeInnkeeper/readmeInnkeeper1{pixel_y = 32},/obj/structure/statue/inn,/turf/simulated/floor/wood{icon_state = "wood-broken6"},/area/space)
+"xj" = (/obj/structure/readme/readmeDoctor/readmeDoctor1{pixel_y = 32},/obj/structure/statue/doctor,/turf/simulated/floor/wood,/area/space)
+"xv" = (/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/custom/hub)
+"xC" = (/obj/effect/landmark/latejoin,/turf/simulated/floor{icon_state = "blackcorner"},/area/space)
+"xO" = (/turf/simulated/floor{dir = 1; icon_state = "wood_stairs2"},/area/space)
+"zG" = (/obj/structure/flora/ausbushes/fullgrass,/obj/structure/flora/ausbushes/grassybush,/turf/simulated/floor/grass,/area/space)
+"Bw" = (/obj/structure/readme/readmeInnkeeper{pixel_y = -32},/turf/simulated/floor/wood,/area/space)
+"DJ" = (/turf/simulated/floor/carpet,/area/space)
+"Ed" = (/obj/effect/portal/hub/human,/turf/simulated/floor/grass,/area/space)
+"Ew" = (/obj/effect/portal/hub/krigan,/turf/unsimulated/floor/cult/lava,/area/space)
+"Ft" = (/obj/structure/readme/readme2{pixel_y = 32},/turf/simulated/floor{icon_state = "black"},/area/space)
+"Fy" = (/obj/structure/readme/readme6{pixel_y = 32},/turf/simulated/floor{icon_state = "black"},/area/space)
+"GC" = (/obj/effect/landmark/latejoin,/turf/simulated/floor{dir = 8; icon_state = "black"},/area/space)
+"GI" = (/obj/structure/flora/tree/jungle/small,/turf/simulated/floor/grass,/area/space)
+"JB" = (/obj/structure/readme/readme8{pixel_y = 32},/turf/simulated/floor{icon_state = "black"},/area/space)
+"JY" = (/turf/simulated/floor/carpet/black,/area/space)
+"LS" = (/obj/effect/portal/hub/job_room/whitelist_room/smith,/turf/simulated/shuttle/floor/cargo,/area/space)
+"Mj" = (/obj/effect/landmark/latejoin,/turf/simulated/floor{dir = 1; icon_state = "blackcorner"},/area/space)
+"NS" = (/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/custom/hub)
+"PV" = (/obj/structure/readme/readmeDoctor{pixel_y = -32},/turf/simulated/floor/wood{icon_state = "wood-broken7"},/area/space)
+"PX" = (/obj/structure/vilage/velikiy_sup,/turf/unsimulated/floor/cult,/area/custom/valhalla)
+"Ql" = (/turf/simulated/floor{dir = 5; icon_state = "black"},/area/custom/hub)
+"QL" = (/obj/structure/readme/readmeHelper{pixel_x = -32},/turf/simulated/floor/wood{icon_state = "wood-broken"},/area/space)
+"Tq" = (/obj/structure/readme/readme5{pixel_y = 32},/turf/simulated/floor{icon_state = "black"},/area/space)
+"Tr" = (/turf/simulated/floor{dir = 5; icon_state = "black"},/area/space)
+"TV" = (/obj/effect/portal/hub/job_room/innkeeper,/turf/simulated/floor/carpet/black,/area/space)
+"Vj" = (/turf/simulated/floor{dir = 6; icon_state = "black"},/area/custom/hub)
+"We" = (/turf/simulated/floor{dir = 4; icon_state = "dark"},/area/space)
+"Wt" = (/turf/simulated/shuttle/floor/cargo,/area/space)
+"WB" = (/obj/effect/portal/hub/wizard,/turf/unsimulated/floor/snow,/area/space)
+"Xk" = (/turf/simulated/floor/carpet/green,/area/space)
+"YH" = (/turf/simulated/floor/carpet/cyan,/area/custom/human_hub)
+"Zx" = (/obj/structure/readme/readme1{pixel_y = 32},/turf/simulated/floor{icon_state = "black"},/area/space)
+"ZO" = (/obj/structure/readme/readmeSmith{pixel_y = -32},/turf/simulated/shuttle/floor/cargo,/area/space)
 
 (1,1,1) = {"
-abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiaiaiaiaiaiaiaiaiaiaiaiaiasasasasasaeaeaeaeaeaeaeaeaeadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiafanafbvafanafaiaibBbBbBbCbBbBbBasaecccccccWccccccaeadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaianclcmcncocpanaiaibBcqcrbBcsczbBasaecccScGcSddcSccaeadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiafanaqdqaqanafaiaibBbBbkbkbkbBbBasaecccScTcTcTcSccaeadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaianafaZaqaZafanaiaibBbBbkbkbkbBbBasaecccScTcTcTcSccaeadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiafanaqaZaqanafaiaibBbBbkbkbkbBbBasaecccScScScScSccaeadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaianbsanagbqbsanaiaibBbDbBbEbFbDbBasaeccbsccagbobsccaeadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiaiaiaiaiaiaiaiaiaiaiaiaiasasasasasaeaeaeaeaeaeaeaeaeadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiaiaiaiaiaiaiaiaibwbwbwbwawawawawawasasasasasasasasasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiafafafbtafafafaibwbwbxbubAbubxbwawascccccccXccccccasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiafctcudrcvdeafaibwbxbucwcxcybubxawasccdfdgcUdhdiccasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiafbubObObObuafaibwbubxbVdsbVbxbuawascccUcVcVcVcUccasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiafbubObObObuafaibwbxbubWbVbWbubxawascccUcVcVcVcUccasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiafafafafafafafaibwbubxbubxbubxbuawascccUcUcUcUcUccasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiafbsafagbobsafaibwbwbybxbzcYbybwawasccbsccagbobsccasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiaiaiaiaiaiaiaiaibwbwbwbwawawawawawasasasasasasasasasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaeaeaeaeaeaeaeaeaebaaebababababaaebaasasasasasasasasasaeaeaeaeaeaeaeaeaeadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaeafafafblafafafaeaebbbcbcbmbcbcbbaeasafafanbnanafafasaeafafafdzafafafaeadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaeafcAcBafcCcJafaebabccDcEbccFdjbcbaasafdkcHancIdlafasaeafdAdBaudCdDafaeadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaeafafafafafafafaebabcbrbcbcbcbrbcbaasafafanbfanafafasaeafafdxdxdxafafaeadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaeafafafahafafafaebabcbbbcbgbcbbbcbaasbhbianbjanbhbiasaeauaudxdxdxauauaeadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaeafafafafafafafaebabcbcbcbcbcbcbcbaasafafanananafafasaeafafdxdxdxafafaeadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaeafafafagafafafaebabcbcbcbdbcbcbcbaasbhbianbeanbhbiasaeafauafdvafauafaeadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaeafbsafboafbsafaeaebbbcbcbpbcbcbbaeasafbsanbqanbsafasaeafbsafdwafbsafaeadadadadadadadadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-afaeaeaeaeaeaeaeaeaebaaebababababaaebaasasasasasasasasasaeaeaeaeaeaeaeaeaeadadadadadadadadalaladadadadalalalalalalalalaladadadadadadadadadadadadalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abbbbbbbbbaebbbbbbbbaebbbbbbbbaebbbbbbbbaebbbbbbbbaebbbbbbbbaeaiaiaiaiasaiaiaiaiasaiaiaiaiasbwbwbwbwbwalalaladadadalalaladadadadadadadadadadadadalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abbbalalalaebbamamamaebbanafanaebbcZcZcZaebbdadadaaebbauafauaeaibBbBbBasaianananasaibububuasbwbxbXbxbwalalaladadadalalaladadadadadadadadadadadadalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abbbalbPalaebbambQamaebbafbRafaebbcZdbcZaebbdadcdaaebbafdyafaeaibBbUbBasaianbTanasaiafbSafasbwbxcabxbwalalaladadadalalaladadadadadadadadadadadadalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abbbalalalaebbamamamaebbanafanaebbcZcZcZaebbdadadaaebbauafauaeaibBbBbBasaianananasaibububuasbwbxbxbxbwalalaladadadalalaladadadadadadadadadadadadalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abcbatauatcbcbatauatcbcbatauatcbcbdmaudncbcbdoaudpcbcbdEafdFcbbYchaucibYbYcfaucgbYbYcdaucebYbZcjbxckbZalalaladadadalalaladadadadadadadadadadadadalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiauaxauccafauayauccafauazauccccauauauafafauauauafafauauauafafauauauccafauauauccafauauauccafbxbxbxaialalaladadadalalaladadadadadadadadadadadadalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiafafafbsbsafafafbsbsafafafbsbsafafafbsbsafafafbsbsafafafbsbsafafafbsbsafafafbsbsafafafbsbsafafafaialalaladadadalalaladadadadadadadadadadadadalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiafcLafasaiafcMafasaiafcNafasaiafdtafasaiafduafasaiafdGafasaiafcQafasaiafcPafasaiafcOafasaiafcRafaialalaladadadalalaladadadadadadadadadadadadalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiauauauasaiauauauasaiauauauasaiauauauasaiauauauasaiauauauasaiauauauasaiauauauasaiauauauasaiaDaEaDaialalaladadadalalaladadadadadadadadadadadadalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiauaFauasaiauauauasaiauauauasaiauauauasaiauauauasaiauauauasaiauauauasasauauauasasauauauasaiaEaGaEaialalaladadadalalaladadadadadadadadadadadadalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiauauauasaiauauauasaiauauauasaiauauauasaiauauauasaiauauauasaiauauauasasauauauasasauauauasaiaDaEaDaialalaladadadalalaladadadadadadadadadadadadalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abaiaiaiaiasaiaiaiaiasaiaiaiaiasaiaiaiaiasaiaiaiaiasaiaiaiaiasaiaiaiaiasasaiaiaiasasasasasasaiaiaiaiaialalaladadadalalaladadadadadadadadadadadadalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abababababababababababababababababalalalalalalalaladadadadadadadadadadadadadadadadadadadadadalalalalalalalaladadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abababalalalabaoaoaoabaJaJaJabababalalalalalalalaladadadadadadadadadadadadadadadadadadadadadalalalalaladadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abababalaKalabaoaLaoabaJaMaJabababalalalalalalalalalalalalalalaladadadadadadadadadadadadadadalalalalaladadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-abababalalalabaoaoaoabaJaJaJabababalalalalalalalalaladadadadadalalalalalalalalalalalaladadadadadadadadadadadadadadadadalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-ababaNcKaDcKaNatatataNatatataNababaladadadadadalalaladadadadadalalalalalalalalalalalaladalalalalalalalalalalalalalalalalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-ababaNaDaDaDaNaDaDaDaDaDaDaDaNababaladadadadadalalaladadadadadalalalalalalalalalalalaladalalalalalalalalalalalalalalalalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-ababaEaOaOaOaEaOaOaOaEaOaOaOaEababbGbHbHbHbHbHbIbIbIbHadadadadalalalalalalalalalalalaladalalalalalalalalalalalalalalalalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-ababaEaOaPaOaEaOacaOaEaOaQaOaEababbGaJaJaCbJbJaCaJaJbHadadadadalalalalalalalalalalalaladalalalalalalalalalalalalalalalalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-ababaEaOaOaOaEaOaOaOaEaOaOaOaEababbGaJaJaCbJbJaCaJaJbHadadadadalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-ababaNaEaEaEaNaEaEaEaNaEaEaEaNababbKbJbJbMbMbMbMbJbJbHadadadadalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaladadadadalalalalalalalalalalalalalalalalalalalalalaladadadadadadadadadadadadab
-ababaEaOaOaOaEaRaRaRaEaOaOaOaEbLbLbJbJbJbMbNbNbMbJbJbHadadadadalalalalalalalalalalalalalalalalalalalalalalalalalalalalalaladadadadalalalalalalalalajajajajajajajajajajajajajakakakakakakakakakakakakakab
-ababaEaOaTaOaEaRaRaRaEaOaSaOaEbLbLbJbJbJbMbNbNbMbJbJbIalaladadadadadalalalalalalalalalalalalalalalalalalalalalalalalalalaladadadadalalalalalalalalajaoaoaoajaoaoaoajaoaoaoajakapapapakapapapakapapapakab
-ababaEaOaOaOaEaRaRaRaEaOaOaOaEbLbLbJbJbJbMbMbMbMbJbJbIalaladadadadadalalalalalalalalalalalalalalalalalalalalalalalalalalaladadadadalalalalalalalalajaoaoaoajaoaoaoajaoaoaoajakaparapakaparapakaparapakab
-ababaNaEaEaEaNaEaEaEaNaEaEaEaNababbKaJaJaCbJbJaCaJaJbIalaladadadadadadalalalalalalalalalalalalalalalalalalalalalalalalalaladadadadalalalalalalalalajaoaoaoajaoaoaoajaoaoaoajakapapapakapapapakapapapakab
-ababaEaOaOaOaEaOaOaOaEaOaOaOaEababbGaJaJaCbJbJaCaJaJbIalaladadadadadadalalalalalalalalalalalalalalalalalalalalalalalalalaladadadadalalalalalalalalavatatatavatatatavatatatavawatatatawatatatawatatatawab
-ababaEaOaUaOaEaOaVaOaEaOaWaOaEababbGbHbHbHbHbHbIbIbIbIalaladadadadadadalalalalalalalalalalalalalalalalalalalalalalalalalaladadadadalalalalalalalalajaAaAaAaoaAaAaAaoaAaAaAajakaBaBaBapaBaBaBapaBaBaBakab
-ababaEaOaOaOaEaOaOaOaEaOaOaOaEababbGbHbHbHbHbHbIbIbIbIalalaladadadadadalalalalalalalalalalalalalalalalalalalalalalalalalaladadadadalalalalalalalalajaoaoaoaoaoaoaoaoaoaoaoajakaCaCaCaCaCaCaCaCaCaCaCakab
-ababaNaEaEaEaNaEaEaEaNaEaEaEaNababaladadadadadalalalalalalaladadadadadalalalalalalalalalalalalalalalalalalalalalalalalalaladadadadalalalalalalalalajaAaAaAaoaAaAaAaoaAaAaAajakaBaBaBapaBaBaBapaBaBaBakab
-abababaOaOaOabaOaXaOabaOaXaOabababaladadadadadalalalalalalaladadadadadalalalalalalalalalalalalalalalalalalalalalalalalalaladadadadalalalalalalalalavaoaoaoavaoaoaoavaDaEaDavawapapapawapapapawaDaEaDawab
-abababaOaYaOabaOaYaOabaOaYaOabababaladadadadadalalalalalalaladadadadadalalalalalalalalalalalalalalalalalalalalalalalalalaladadadadalalalalalalalalajaoaHaoajaoaoaoajaEaGaEajakapaIapakaparapakaEaGaEakab
-abababaOaOaOabaOaOaOabaOaOaOabababaladadadadadalalalalalalaladadadadadalalalalalalalalalalalalalalalalalalalalalalalalalaladadadadalalalalalalalalajaoaoaoajaoaoaoajaDaEaDajakapapapakapapapakaDaEaDakab
-abababababababababababababababababalalalalalalalalalalalalalalaladadadadadadadadadadadadalalalalalalalalalalalalalalalalaladadadadalalalalalalalalajajajajajajajajajajajajajakakakakakakakakakakakakakab
-abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+abasasasasasabasasasasasabasasasasasabasasasasasabasasasasasabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
+asasaeafaeasasasagahagasasasaialamasasasanaqaiasasasanataiasasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+asauanaiaiaxasayagagagazasaCanaiaiaFasaKaiaiaiaLasaMaiaiaiaPasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+asaTaUaUaUaZasagbababaagasaibbbbbbbcasaibdbdbdbeasbebfbfbfaiasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+asbgaUaUaUbhasbibabababjasbkbbbbbbblasbmbdbdbdbnasbobfbfbfbpasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+asbqaibcaibrasbsagagagbtasbqaibeaibrasbqaiaiaibrasbqbcaiaibrasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+asasbubvbuasasasbwbxbwasasasbybzbAasasasbybCbyasasasbybzbDasasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abasasasasasadasasasasasadasasasasasadasasasasasadasasasasasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abbEbEbEbEbEadbEbEbEbEbEadbEbEbEbEbEadadadbEbFbFbFbEadadawawawawawadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEbEbGbIbMbEbEbEaibNbObEbEbEambPaibEbEadbEbEbQbRbQbEbEawawaibSanawawadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEbTbUadbVbWbEbXaiaiaibYbEbZaicaaicbbEadbFccbQbQbQcdbFawceaiaiaicfawadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEbMcgcgchcibEaicjcjcjambEckclclclcmbEadbFbQcncncnbQbFawbOcococobeawadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEcpchcgcgcqbEcrcjcjcjcsbEaiclclclaibEadbFctcncncncubFawcvcocococwawadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEcxbVbVcyczbEcAaibcaicBbEbqbeaiaibrbEadbFcCbQbQbQcDbFawbqamaiaibrawadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEbEcEcFcEbEbEbEbybzbybEbEbEbycGbybEbEadbEbEcHcIcHbEbEawawbybzcJawawadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abbEbEbEbEbEadbEbEbEbEbEadbEbEbEbEbEadadadbEbFbFbFbEadadawawawawawadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadawawawawawadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadawcKcKcKawadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadawcKcLcKawadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadawcKcKcKawadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadawcMaicNawadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abbEbEbEbEbEbEcOcPcQcRcOasasasasasasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abbEaBaBaBcScTbGcUcUcUcVcWaEaDaEaDasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abbEaBcXaBancYcUcUcUcUcUcZaEaEaGaEasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abbEaBaBaBdadbbVcUcUcUdcddaEaDaEaDasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEbEbEbEbEbEdedfbVcUcUdgbBasasasasasasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEbQdhdidjbUadbUdkcUcUbVaddldmaAaAaAasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEdidnbQdocUcUcUbUcUcUcUcUdpaiaAdraAasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEdodidhbQbUcUcUcUcUbUbUdsdtduaAaAaAasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEbEbEbEbEdebUcicUcUdvdkbVbBasasasasasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEadbVbVdwbVdxcUcUcUcUcUaddldydzdAdAasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEbVdBcUcUcUcUcUcUcUcUcUcUdpbcdAdCdAasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEbUadbVbUcUdDbUcUcUbUbUbUdtdEdAdAdAasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+bEbEbEbEbEbEdedFcUcUaddGbBasasasasasasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abbEJYJYJYwQcTbVdgcUcUbUcWqqWtWtWtasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abbEJYTVJYaicYcUcUcUcUcUcZWtWtLSWtasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abbEJYJYJYBwdbdcbVcUcUbVddZOWtWtWtasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abbEbEbEbEbEbEdecVcUbVbBasasasasasasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadbEXkXkXkxjcTbVcUGIdlairhrhrhasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadbEXkjOXkaicYcUcUcUdpairhYHrhasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadbEXkXkXkPVdbcUcUzGdtcarhrhrhasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadbEbEbEbEbEderVmxxObBasasasasasadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadbEQLaivMbEadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadbEDJDJDJbEadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadbEDJusDJbEadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadbEDJDJDJbEadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadbEbEbEbEbEadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadadadadadabababababadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadabababababadadadabababababadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadabaoaoaoabadEdadabaJaJaJabadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadabaoWBaoabadadadabaJEwaJabadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadabaoaoaoabaNaRaNabaJaJaJabadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+abadadadadabbLbLbLabsfWeaXabbLbLbLabadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+ababababababsfaRaXaOsfaRaXaOsfaRaXabababababadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+adabaaaaaabLrCWeaWbJrCWeaWbJrCWeaWbLaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+adabaaaaaabLWeaRWeaRWeaRWeaRWeaRWebLaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+adabaaaaaabLTrWeutbKTrWeutbKTrWeutbLaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadab
+ababababababsfaRaXaOsfaRaXaOsfaRaXababababababadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadajajajajajajajajajajajajajakakakakakakakakakakakakakab
+abaaaaaabLbJrCWeaWbJVjNSaSbJrCWeaWbJbLaaaaaaabadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadajaoaoaoajaoaoaoajaoaoaoajakapapapakapapapakapapapakab
+abaaaaaabLaRWeaRWeaRNSxvNSaRWeaRWeaRbLaaaaaaabadadadbHbHbHbHbHadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadajaoaoaoajaoaoaoajaoaoaoajakaparapakaparapakaparapakab
+abaaaaaabLbKTrWeutbKQlNSjJbKTrWeutbKbLaaaaaaabadbHbHggvkvkvkggbHbHadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadajaoaoaoajaoaoaoajaoaoaoajakapapapakapapapakapapapakab
+ababababababsfaRaXaOsfaRaXaOsfaRaXababababababadbHaJaJvkvkvkaJaJbHadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadavbLbLbLavbLbLbLavbLbLbLavawbLbLbLawbLbLbLawbLbLbLawab
+adabaaaaaabLrCWeaWbJrCWeaWbJrCWeaWbLaaaaaaabadbHggaJtHtHPXtHtHaJggbHadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadajaAaAaAaoaAaAaAaoaAaAaAajakaBaBaBapaBaBaBapaBaBaBakab
+adabaaaaaabLWeaRWeaRWeaRWeaRWeaRWebLaaaaaaabadbHvkvktHtHtHtHtHvkvkbHadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadajaoaoaoaoaoaoaoaoaoaoaoajakapapapapapapapapapapapakab
+adabaaaaaabLbKbKbKbKTrWeutbKbKbKbKbLaaaaaaabadbHvkvkPXtHPXtHPXvkvkbHadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadajaAaAaAaoaAaAaAaoaAaAaAajakaBaBaBapaBaBaBapaBaBaBakab
+ababababababababababsfaRaXababababababababababbHvkvktHtHtHtHtHvkvkbHadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadavaoaoaoavaoaoaoavaDaEaDavawapapapawapapapawaDaEaDawab
+abxCZxFtaYmJTqFymzJBrCWeaWJBmzFyTqmJaYFtZxnfabbHggaJtHtHPXtHtHaJggbHadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadajaoaHaoajaoaoaoajaEaGaEajakapaIapakaparapakaEaGaEakab
+ablgWeaRWeaRWeaRWeaRWeaRWeaRWeaRWeaRWeaRWeGCabadbHaJaJvkvkvkaJaJbHadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadajaoaoaoajaoaoaoajaDaEaDajakapapapakapapapakaDaEaDakab
+abmAbKbKbKbKbKbKbKbKbKbKbKbKbKbKbKbKbKbKbKMjabadbHbHggvkvkvkggbHbHadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadajajajajajajajajajajajajajakakakakakakakakakakakakakab
+abababababababababababababababababababababababadadadbHbHbHbHbHadabababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab
 "}
-
 (1,1,2) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
