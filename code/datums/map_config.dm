@@ -6,9 +6,9 @@
 	var/defaulted = TRUE  // set to FALSE by LoadConfig() succeeding
 
 	// Config actually from the JSON - should default to Box
-	var/map_name = "Box Station"
-	var/map_path = "boxstation"
-	var/map_file = "boxstation.dmm"
+	var/map_name = "homm"
+	var/map_path = "homm"
+	var/map_file = "homm.dmm"
 	var/station_name = "Enrot"
 	var/station_name_ru = "Энрот"
 	var/system_name = ""
