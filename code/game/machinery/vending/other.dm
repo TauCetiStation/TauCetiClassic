@@ -257,7 +257,7 @@
 	"Scout kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "c20r"),
 	"Sniper kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "heavyrifle"),
 	"Assaultman kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "a74"),
-	"Boom-boom kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "drozd"),
+	"Bomber kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "drozd"),
 	"Melee kit" = image(icon = 'icons/obj/weapons.dmi', icon_state = "swordblue"),
 	"Hacker kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "bulldog"),
 	"Machinengunner kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "l6closed100"),
@@ -307,29 +307,6 @@ var/list/assortment = list(
 			stat.bundlename = name
 			stat.cost = cost
 			S.uplink_purchases += stat
-
-
-	switch(selection)
-		if("Scout kit")
-			new /obj/item/weapon/storage/backpack/dufflebag/nuke/scout(loc)
-		if("Sniper kit")
-			new /obj/item/weapon/storage/backpack/dufflebag/nuke/sniper(loc)
-		if("Assaultman kit")
-			new /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman(loc)
-		if("Bomber kit")
-			new /obj/item/weapon/storage/backpack/dufflebag/nuke/demo(loc)
-		if("Melee kit")
-			new /obj/item/weapon/storage/backpack/dufflebag/nuke/melee(loc)
-		if("Machinengunner kit")
-			new /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner(loc)
-		if("Hacker kit")
-			new /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker(loc)
-		if("Custom kit")
-			new /obj/item/weapon/storage/backpack/dufflebag/nuke/custom(loc)
-		if("Cancel")
-			voucher.in_use = FALSE
-			return
-	qdel(voucher)
 
 /obj/machinery/vending/syndi/ex_act()
 	return
