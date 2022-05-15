@@ -283,7 +283,7 @@ var/list/assortment = list(
 	if(!selection_items)
 		populate_selection()
 	if(!selection || !Adjacent(redeemer))
-		voucher.in_use = 0
+		voucher.in_use = FALSE
 		return
 	var/bought = new assortment[selection]
 	if(isitem(bought) && ishuman(user))
