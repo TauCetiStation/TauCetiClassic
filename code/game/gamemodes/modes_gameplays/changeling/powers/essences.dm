@@ -377,7 +377,7 @@
 	else if(href_list["toggle_voice"])
 		choosen_essence.flags_allowed ^= ESSENCE_SELF_VOICE
 		choosen_essence.self_voice = FALSE
-		choosen_essence.voice.icon_state = "voice_off"
+		choosen_essence.voice.update_icon(choosen_essence)
 	else if(href_list["toggle_phantom"])
 		choosen_essence.flags_allowed ^= ESSENCE_PHANTOM
 		choosen_essence.phantom.hide_phantom()
@@ -413,10 +413,9 @@
 		return
 	if(showed)
 		return
-	if(host.phantom_s)
-		host.phantom_s.icon_state = "phantom_on"
 	loc = get_turf(place ? place : host)
 	showed = TRUE
+	host.phantom_s?.update_icon()
 	for(var/mob/living/M in host.changeling.essences)
 		if(!M.client)
 			continue
@@ -430,9 +429,9 @@
 		return
 	if(!showed)
 		return
-	host.phantom_s.icon_state = "phantom_off"
 	showed = FALSE
 	loc = host
+	host.phantom_s?.update_icon()
 	for(var/mob/living/M in host.changeling.essences)
 		if(!M.client)
 			continue
