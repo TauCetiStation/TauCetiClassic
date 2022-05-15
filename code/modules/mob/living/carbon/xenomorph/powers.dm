@@ -1,7 +1,7 @@
 #define ALREADY_STRUCTURE_THERE(user) (locate(/obj/structure/alien/air_plant) in get_turf(user))      || (locate(/obj/structure/alien/egg) in get_turf(user)) \
                              || (locate(/obj/structure/mineral_door/resin) in get_turf(user))   || (locate(/obj/structure/alien/resin/wall) in get_turf(user)) \
                              || (locate(/obj/structure/alien/resin/membrane) in get_turf(user)) || (locate(/obj/structure/stool/bed/nest) in get_turf(user))
-                            
+
 #define CHECK_WEEDS(user) (locate(/obj/structure/alien/weeds) in get_turf(user))
 
 /mob/living/carbon/xenomorph/proc/check_enough_plasma(cost)
@@ -294,7 +294,7 @@
 		for(var/name in buildings)
 			var/obj/type = buildings[name]
 			builds_image[name] = image(icon = initial(type.icon), icon_state = initial(type.icon_state))
-	
+
 	var/choice = show_radial_menu(user, user, builds_image, tooltips = TRUE)
 	if(!choice)
 		return
@@ -464,6 +464,26 @@
 	user.mind.transfer_to(new_xeno)
 	new_xeno.mind.name = new_xeno.real_name
 	qdel(user)
+
+/obj/effect/proc_holder/spell/no_target/xenowinds
+	name = "Эмиссия форона"
+	desc = "Выпустить небольшое облачко накопленного форона."
+	charge_max = 1200
+	charge_type = "recharge"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	action_background_icon_state = "bg_alien"
+	plasma_cost = 120
+	action_icon_state = "rot"
+
+/obj/effect/proc_holder/spell/no_target/xenowinds/cast(list/targets, mob/living/user = usr)
+	if(!istype(user))
+		return
+	var/turf/T = get_turf(user)
+	user.visible_message("<span class='warning'><B>[user]</B> emits faint purple cloud.</span>", "<span class='notice'>You let some phoron out.</span>")
+	user.adjustToxLoss(-plasma_cost)
+	T.assume_gas("phoron", 25, user.bodytemperature) // give 25 moles of phoron (approx. 0.25% of air in room like Bar)
 
 #undef ALREADY_STRUCTURE_THERE
 #undef CHECK_WEEDS
