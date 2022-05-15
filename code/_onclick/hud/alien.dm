@@ -117,8 +117,8 @@
 	mymob.throw_icon = new /atom/movable/screen/throw/alien()
 
 	using = new /atom/movable/screen/xenomorph/plasma_display()
-	using.update_icon(mymob)
 	mymob.xenomorph_plasma_display = using
+	using.update_icon(mymob)
 
 	mymob.healths = new /atom/movable/screen/health/alien()
 

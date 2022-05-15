@@ -535,6 +535,7 @@
 	var/x2 = x1 + (ico.Width() / 2 - 1)
 	var/y2 = y1 + (ico.Height() / 2 - 1)
 	ico.DrawBox(rgb(255,255,255,1), x1, y1, x2, y2)
+	icon = ico
 
 /atom/movable/screen/intent/help
 	name = INTENT_HELP
