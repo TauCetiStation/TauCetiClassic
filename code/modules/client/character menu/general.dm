@@ -501,7 +501,7 @@
 						return
 					religion = choice
 
-				if("rank")
+				if("vox_rank")
 					var/choice = input(user, "Please choose a vox rank.", "Rank", vox_rank) as null|anything in rank_choices
 					if(!choice)
 						return
