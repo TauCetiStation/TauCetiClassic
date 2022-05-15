@@ -1375,7 +1375,6 @@
 	icon_state = "pwall"
 	},
 /turf/environment/space,
-/turf/environment/space,
 /area/shuttle/alien/mine)
 "df" = (
 /obj/structure/object_wall/standart{
@@ -1388,7 +1387,6 @@
 	dir = 10;
 	icon_state = "pwall"
 	},
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating,
 /area/shuttle/alien/mine)
 "dh" = (
@@ -1931,14 +1929,12 @@
 	icon_state = "pwall"
 	},
 /turf/environment/space,
-/turf/environment/space,
 /area/shuttle/alien/mine)
 "eg" = (
 /obj/structure/object_wall/standart{
 	dir = 6;
 	icon_state = "pwall"
 	},
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating,
 /area/shuttle/alien/mine)
 "eh" = (
@@ -5687,11 +5683,7 @@
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "lw" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/globose/science,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/globose/science,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/machinery/suit_storage_unit/science,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -5951,11 +5943,7 @@
 	},
 /area/asteroid/research_outpost/longtermstorage)
 "mc" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/globose/science,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/globose/science,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/machinery/suit_storage_unit/science,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -6063,6 +6051,7 @@
 /area/asteroid/research_outpost/gearstore)
 "mt" = (
 /obj/structure/closet/secure_closet/xenoarchaeologist_tools,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -7553,6 +7542,7 @@
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/xenoarchaeologist_tools,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -8634,8 +8624,8 @@
 	},
 /area/asteroid/mine/west_outpost)
 "sD" = (
-/mob/living/simple_animal/hostile/mimic/crate,
 /obj/effect/decal/cleanable/cobweb,
+/mob/living/simple_animal/hostile/mimic/crate,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sE" = (
@@ -11312,24 +11302,18 @@
 	},
 /area/asteroid/mine/eva)
 "zp" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/globose/mining,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/globose/mining,
+/obj/machinery/suit_storage_unit/mining,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
 /area/asteroid/mine/eva)
 "zq" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/globose/mining,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/globose/mining,
 /obj/machinery/alarm{
 	dir = 1;
 	locked = 0;
 	pixel_y = -24
 	},
+/obj/machinery/suit_storage_unit/mining,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -12078,20 +12062,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
-"Bw" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/globose/science,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/globose/science,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/device/radio/intercom{
-	name = "Asteroid Intercom (General)";
-	pixel_y = 24
-	},
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/asteroid/research_outpost/gearstore)
 "Bx" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -12285,10 +12255,7 @@
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/longtermstorage)
 "Dh" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/rig/science,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/science,
+/obj/machinery/suit_storage_unit/science/rig,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -51529,7 +51496,7 @@ Bb
 aW
 kf
 hp
-Bw
+mr
 mq
 nP
 nK
