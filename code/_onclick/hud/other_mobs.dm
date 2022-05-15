@@ -43,7 +43,7 @@
 	E.phantom_s.screen_loc = ui_lhand
 	E.phantom_s.plane = ABOVE_HUD_PLANE
 
-	mymob.internals = /atom/movable/screen/internal()
+	mymob.internals = new /atom/movable/screen/internal()
 	mymob.internals.icon = ui_style
 
 	mymob.healths = new /atom/movable/screen/health()
