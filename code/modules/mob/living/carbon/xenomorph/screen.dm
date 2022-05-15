@@ -3,10 +3,6 @@
 #define FONT_ACOLOR "#3f0"
 #define FONT_ASTYLE "Arial Black"
 
-/atom/movable/screen/zone_sel/alien/update_icon()
-	cut_overlays()
-	add_overlay(selecting)
-
 /mob/living/carbon/xenomorph/proc/updatePlasmaDisplay()
 	if(visual_counter)
 		if(xenomorph_plasma_display) //clientless aliens
