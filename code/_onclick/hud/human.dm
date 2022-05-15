@@ -28,12 +28,12 @@
 	src.adding += using
 	push_intent = using
 
-	using = new /atom/movable/screen/intent/grab( src )
+	using = new /atom/movable/screen/intent/grab()
 	using.update_icon(ui_style)
 	src.adding += using
 	grab_intent = using
 
-	using = new /atom/movable/screen/intent/harm( src )
+	using = new /atom/movable/screen/intent/harm()
 	using.update_icon(ui_style)
 	src.adding += using
 	harm_intent = using

@@ -86,8 +86,6 @@
 	var/atom/movable/screen/using
 	var/atom/movable/screen/inventory/inv_box
 
-	var/mob/living/carbon/ian/IAN = mymob //shouldn't be in anywhere else, so no type check.
-
 	using = new /atom/movable/screen/act_intent()
 	using.icon = ui_style
 	using.update_icon(mymob)

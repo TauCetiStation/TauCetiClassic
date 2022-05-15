@@ -134,7 +134,7 @@
 	COOLDOWN_DECLARE(gun_click_time)
 
 /atom/movable/screen/gun/action()
-	if(COOLDOWN_FINISHED(src, gun_click_time))
+	if(!COOLDOWN_FINISHED(src, gun_click_time))
 		return FALSE
 	if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
 		to_chat(usr, "You need your gun in your active hand to do that!")
@@ -189,8 +189,8 @@
 /atom/movable/screen/gun/mode/action()
 	usr.client.ToggleGunMode()
 
-/atom/movable/screen/gun/mode/update_icon(mob/mymob)
-	icon_state = mymob.client.gun_mode ? "gun1" : "gun0"
+/atom/movable/screen/gun/mode/update_icon(client/client)
+	icon_state = client.gun_mode ? "gun1" : "gun0"
 
 /atom/movable/screen/zone_sel
 	name = "damage zone"
@@ -518,27 +518,23 @@
 	var/icon/ico = new(style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	var/x1
-	var/x2
+	var/y1
+
 	switch(index)
 		if(1, 4)
 			x1 = 1
-			x2 = ico.Width() / 2
 		if(2, 3)
 			x1 = ico.Width() / 2 + 1
-			x2 = ico.Width()
 
-	var/y1
-	var/y2
 	switch(index)
 		if(1, 2)
 			y1 = ico.Height() / 2 + 1
-			y2 = ico.Height()
 		if(3, 4)
 			y1 = 1
-			y2 = ico.Height() / 2
 
+	var/x2 = x1 + (ico.Width() / 2 - 1)
+	var/y2 = y1 + (ico.Height() / 2 - 1)
 	ico.DrawBox(rgb(255,255,255,1), x1, y1, x2, y2)
-
 
 /atom/movable/screen/intent/help
 	name = INTENT_HELP
