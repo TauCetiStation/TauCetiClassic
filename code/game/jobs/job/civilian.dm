@@ -271,3 +271,4 @@ datum/job/hub
 	supervisors = "FatFat"
 	selection_color = "#dddddd"
 	outfit = /datum/outfit/job/hub
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)

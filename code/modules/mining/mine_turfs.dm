@@ -686,7 +686,8 @@
 	var/turf/A
 	for(var/newdir in cardinal)
 		A = get_step(src, newdir)
-		A.update_overlays()
+		if(A)
+			A.update_overlays()
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init_late()
