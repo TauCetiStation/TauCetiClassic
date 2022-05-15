@@ -222,7 +222,7 @@
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.color = ui_color
 	mymob.zone_sel.alpha = ui_alpha
-	mymob.update_icon()
+	mymob.zone_sel.update_icon()
 
 	if(isanycop(H) || isanygangster(H))
 		wanted_lvl = new /atom/movable/screen/wanted()
