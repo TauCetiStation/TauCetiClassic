@@ -65,7 +65,7 @@
 /obj/item/stack/proc/get_stack_name()
 	if(singular_name)
 		if(get_amount() > 1)
-			return "[singular_name]\s"
+			return "[singular_name]"
 		else
 			return "[singular_name]"
 	else
