@@ -5,7 +5,7 @@
 	adding += action_intent
 
 	var/atom/movable/screen/intent
-	var/const/list/intent_types = list(
+	var/list/intent_types = list(
 		/atom/movable/screen/intent/help, /atom/movable/screen/intent/push,
 		/atom/movable/screen/intent/grab, /atom/movable/screen/intent/harm
 		)
@@ -13,5 +13,5 @@
 	for(var/intent_type in intent_types)
 		intent = new intent_type
 		intent.update_icon(action_intent)
-		intent.screen_loc = act_intent.screen_loc
+		intent.screen_loc = action_intent.screen_loc
 		adding += intent
