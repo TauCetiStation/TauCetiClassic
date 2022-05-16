@@ -90,11 +90,7 @@
 	using.icon = ui_style
 	src.hotkeybuttons += using
 
-	using = new /atom/movable/screen/move_intent
-	using.icon = ui_style
-	using.update_icon(mymob)
-	src.adding += using
-	move_intent = using
+	add_move_intent(ui_style)
 
 	using = new /atom/movable/screen/corgi/stamina_bar()
 	using.update_icon(mymob)

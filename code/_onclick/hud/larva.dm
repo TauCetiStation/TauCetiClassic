@@ -7,18 +7,9 @@
 
 
 /datum/hud/proc/larva_hud()
-	var/atom/movable/screen/using
-
 	add_intents('icons/mob/screen1_xeno.dmi')
-
-	using = new /atom/movable/screen/move_intent/alien()
-	using.update_icon(mymob)
-	src.adding += using
-	move_intent = using
-
-	using = new /atom/movable/screen/inventory/larva_mouth()
-	src.r_hand_hud_object = using
-	src.adding += using
+	add_move_intent('icons/mob/screen1_xeno.dmi')
+	add_hands(r_type = /atom/movable/screen/inventory/larva_mouth)
 
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
 	src.adding += mymob.nightvisionicon

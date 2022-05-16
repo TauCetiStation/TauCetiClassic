@@ -45,25 +45,11 @@
 	var/atom/movable/screen/using
 
 	add_intents(style)
-
-	using = new /atom/movable/screen/move_intent/alien()
-	using.update_icon(mymob)
-	src.adding += using
-	move_intent = using
-
-	src.adding += new /atom/movable/screen/drop/alien()
-
-	using = new /atom/movable/screen/inventory/hand/r/alien()
-	using.update_icon(mymob)
-	src.r_hand_hud_object = using
-	src.adding += using
-
-	using = new /atom/movable/screen/inventory/hand/l/alien()
-	using.update_icon(mymob)
-	src.l_hand_hud_object = using
-	src.adding += using
+	add_move_intent(style)
+	add_hands(style)
 
 	var/list/types = list(
+		/atom/movable/screen/drop/alien,
 		/atom/movable/screen/inventory/swap/first/alien,
 		/atom/movable/screen/inventory/swap/second/alien,
 		/atom/movable/screen/resist/alien,
@@ -81,7 +67,7 @@
 		mymob.neurotoxin_icon = new /atom/movable/screen/xenomorph/neurotoxin()
 		src.adding += mymob.neurotoxin_icon
 
-	mymob.throw_icon = new /atom/movable/screen/throw/alien()
+	add_throw_icon(style)
 
 	using = new /atom/movable/screen/xenomorph/plasma_display()
 	mymob.xenomorph_plasma_display = using
@@ -95,4 +81,4 @@
 	mymob.zone_sel = new /atom/movable/screen/zone_sel/alien()
 	mymob.zone_sel.update_icon()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.xenomorph_plasma_display, mymob.pullin)
+	mymob.client.screen += list(mymob.zone_sel, mymob.healths, mymob.xenomorph_plasma_display, mymob.pullin)

@@ -11,17 +11,12 @@
 
 	add_intents('icons/mob/screen1_xeno.dmi')
 
-	using = new /atom/movable/screen/move_intent/alien()
-	using.update_icon(mymob)
-	src.adding += using
-	move_intent = using
+	add_move_intent('icons/mob/screen1_xeno.dmi')
 
 	using = new /atom/movable/screen/drop/alien()
 	src.adding += using
 
-	using = new /atom/movable/screen/inventory/tail()
-	src.r_hand_hud_object = using
-	src.adding += using
+	add_hands(r_type = /atom/movable/screen/inventory/tail)
 
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
 	src.adding += mymob.nightvisionicon

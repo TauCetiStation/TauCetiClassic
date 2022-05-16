@@ -396,9 +396,6 @@
 /atom/movable/screen/move_intent/update_icon(mob/mymob)
 	icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 
-/atom/movable/screen/move_intent/alien
-	icon = 'icons/mob/screen1_xeno.dmi'
-
 /atom/movable/screen/internal
 	name = "internal"
 	icon_state = "internal0"
@@ -553,9 +550,6 @@
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
-
-/atom/movable/screen/throw/alien
-	icon = 'icons/mob/screen1_xeno.dmi'
 
 /atom/movable/screen/drop
 	name = "drop"
@@ -1077,17 +1071,11 @@
 	slot_id = SLOT_R_HAND
 	hand_index = 0
 
-/atom/movable/screen/inventory/hand/r/alien
-	icon = 'icons/mob/screen1_xeno.dmi'
-
 /atom/movable/screen/inventory/hand/l
 	name = "hand_l"
 	screen_loc = ui_lhand
 	slot_id = SLOT_L_HAND
 	hand_index = 1
-
-/atom/movable/screen/inventory/hand/l/alien
-	icon = 'icons/mob/screen1_xeno.dmi'
 
 /atom/movable/screen/inventory/swap
 	name = "hand"

@@ -1,25 +1,7 @@
 /datum/hud/proc/monkey_hud()
-	var/atom/movable/screen/using
-
 	add_intents(ui_style)
-
-	using = new /atom/movable/screen/move_intent()
-	using.icon = ui_style
-	using.update_icon(mymob)
-	src.adding += using
-	move_intent = using
-
-	using = new /atom/movable/screen/inventory/hand/r()
-	using.icon = ui_style
-	using.update_icon(mymob)
-	src.r_hand_hud_object = using
-	src.adding += using
-
-	using = new /atom/movable/screen/inventory/hand/l()
-	using.icon = ui_style
-	using.update_icon(mymob)
-	src.l_hand_hud_object = using
-	src.adding += using
+	add_move_intent(ui_style)
+	add_hands(ui_style)
 
 	// hotkeys
 	var/types = list(
@@ -36,9 +18,8 @@
 	)
 	init_screens(types, ui_style, list_to = adding)
 
-	mymob.throw_icon = new /atom/movable/screen/throw()
-	mymob.throw_icon.icon = ui_style
-
+	add_throw_icon(ui_style)
+	
 	mymob.internals = new /atom/movable/screen/internal()
 	mymob.internals.icon = ui_style
 

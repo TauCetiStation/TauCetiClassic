@@ -16,19 +16,43 @@
 		intent.screen_loc = action_intent.screen_loc
 		adding += intent
 
+/datum/hud/proc/get_screen(screen_type, icon = null, color = null, alpha = null)
+	var/atom/movable/screen/screen = new screen_type
+	if(icon)
+		screen.icon = icon
+	if(color)
+		screen.color = color
+	if(alpha)
+		screen.alpha = alpha
+	return screen
+
 /datum/hud/proc/init_screens(list/types, icon = null, color = null, alpha = null, list/list_to)
 	if(!list_to)
 		list_to = list()
 
-	var/atom/movable/screen/screen
 	for(var/screen_type in types)
-		screen = new screen_type
-		if(icon)
-			screen.icon = icon
-		if(color)
-			screen.color = color
-		if(alpha)
-			screen.alpha = alpha
-		list_to += screen
+		list_to += get_screen(screen_type, icon, color, alpha)
 
 	return list_to
+
+/datum/hud/proc/add_move_intent(icon = null, color = null, alpha = null, type = /atom/movable/screen/move_intent)
+	move_intent = get_screen(type, icon, color, alpha)
+	move_intent.update_icon(mymob)
+	adding += move_intent
+
+/datum/hud/proc/add_hands(icon = null, color = null, alpha = null, r_type = /atom/movable/screen/inventory/hand/r, l_type = /atom/movable/screen/inventory/hand/l)
+	if(r_type)
+		r_hand_hud_object = get_screen(r_type, icon, color, alpha)
+		r_hand_hud_object.update_icon(mymob)
+		adding += r_hand_hud_object
+
+	if(l_type)
+		l_hand_hud_object = get_screen(l_type, icon, color, alpha)
+		l_hand_hud_object.update_icon(mymob)
+		adding += l_hand_hud_object
+
+/datum/hud/proc/add_throw_icon(icon = null, color = null, alpha = null, type = /atom/movable/screen/throw)
+	mymob.throw_icon = get_screen(type, icon, color, alpha)
+	hotkeybuttons += mymob.throw_icon
+
+	

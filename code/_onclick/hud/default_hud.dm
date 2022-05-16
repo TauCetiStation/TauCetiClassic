@@ -1,18 +1,7 @@
 /datum/hud/proc/default_hud(ui_color = "#ffffff", ui_alpha = 255)
-	var/atom/movable/screen/using
-
 	add_intents(ui_style)
-
-	using = new /atom/movable/screen/inventory/craft
-	src.adding += using
-
-	using = new /atom/movable/screen/move_intent()
-	using.icon = ui_style
-	using.update_icon(mymob)
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.adding += using
-	move_intent = using
+	add_move_intent(ui_style, ui_color, ui_alpha)
+	adding += new /atom/movable/screen/inventory/craft
 
 	mymob.zone_sel = new /atom/movable/screen/zone_sel()
 	mymob.zone_sel.icon = ui_style
@@ -27,5 +16,5 @@
 
 	lingchemdisplay = new /atom/movable/screen/chemical_display()
 
-	mymob.client.screen += list(mymob.zone_sel)
+	mymob.client.screen += list(mymob.zone_sel, lingchemdisplay)
 	inventory_shown = 0
