@@ -279,12 +279,11 @@
 	var/selection = show_radial_menu(redeemer, src, selection_items, require_near = TRUE, tooltips = TRUE)
 	if(voucher.in_use)
 		return
-	voucher.in_use = TRUE
 	if(!selection_items)
 		populate_selection()
 	if(!selection || !Adjacent(redeemer))
-		voucher.in_use = FALSE
 		return
+	voucher.in_use = TRUE
 	var/obj/item/bought = new assortment[selection]
 	if(ishuman(user))
 		var/mob/living/carbon/human/A = user
