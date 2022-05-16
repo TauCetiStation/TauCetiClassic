@@ -228,7 +228,7 @@
 	desc = "Special items for killers, mercenaries, pirrrates and other syndicate workers. Waffle.co property."
 	icon_state = "syndivend"
 	icon_deny = "syndivend-deny"
-	req_access = list(150)
+	req_access = list(150)//General Syndicate Access
 	density = TRUE
 	anchored = TRUE
 	product_ads = "Kill the corporate bastards!; Kill captain and gutted his corpse!; Blow up the damn station!."
