@@ -497,12 +497,6 @@
 /atom/movable/screen/act_intent/update_icon(mob/mymob)
 	icon_state = "intent_" + mymob.a_intent
 
-/atom/movable/screen/act_intent/alien
-	icon = 'icons/mob/screen1_xeno.dmi'
-
-/atom/movable/screen/act_intent/robot
-	icon = 'icons/mob/screen1_robot.dmi'
-
 /atom/movable/screen/intent
 	screen_loc = ui_acti
 	plane = ABOVE_HUD_PLANE

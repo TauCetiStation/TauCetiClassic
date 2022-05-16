@@ -221,7 +221,7 @@ var/global/list/available_ui_styles = list(
 			if(hotkeybuttons && !hotkey_ui_hidden)
 				mymob.client.screen += hotkeybuttons
 
-			action_intent.screen_loc = ui_acti //Restore intent selection to the original position
+			action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
 			mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
 			mymob.client.screen += mymob.healths				//As are the rest of these.
 			mymob.client.screen += mymob.healthdoll

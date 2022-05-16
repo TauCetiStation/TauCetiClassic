@@ -6,34 +6,7 @@
 	var/atom/movable/screen/using
 	var/atom/movable/screen/inventory/inv_box
 
-	using = new /atom/movable/screen/act_intent()
-	using.icon = ui_style
-	using.update_icon(mymob)
-	src.adding += using
-	action_intent = using
-
-//intent small hud objects
-	using = new /atom/movable/screen/intent/help()
-	using.update_icon(ui_style)
-	src.adding += using
-	help_intent = using
-
-	using = new /atom/movable/screen/intent/push()
-	using.update_icon(ui_style)
-	src.adding += using
-	push_intent = using
-
-	using = new /atom/movable/screen/intent/grab()
-	using.update_icon(ui_style)
-	src.adding += using
-	grab_intent = using
-
-	using = new /atom/movable/screen/intent/harm()
-	using.update_icon(ui_style)
-	src.adding += using
-	harm_intent = using
-
-//end intent small hud objects
+	add_intents(ui_style)
 
 	using = new /atom/movable/screen/move_intent()
 	using.icon = ui_style

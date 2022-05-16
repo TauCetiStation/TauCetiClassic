@@ -166,6 +166,7 @@
 #include "code\_onclick\hud\families.dm"
 #include "code\_onclick\hud\fullscreen.dm"
 #include "code\_onclick\hud\ghost.dm"
+#include "code\_onclick\hud\helpers.dm"
 #include "code\_onclick\hud\hud.dm"
 #include "code\_onclick\hud\human.dm"
 #include "code\_onclick\hud\ian.dm"

@@ -400,7 +400,7 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 /mob/proc/set_a_intent(new_intent)
 	SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, new_intent)
 	a_intent = new_intent
-	hud_used?.action_intent?.icon_state = "intent_[a_intent]"
+	hud_used?.action_intent?.update_icon(src)
 
 //change a mob's act-intent. Use the defines of style INTENT_%thingy%
 /mob/verb/a_intent_change(input as text)

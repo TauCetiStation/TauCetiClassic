@@ -93,10 +93,7 @@ var/global/atom/movable/screen/robot_inventory
 //End of module select
 
 //Intent
-	using = new /atom/movable/screen/act_intent/robot()
-	using.update_icon(mymob)
-	src.adding += using
-	action_intent = using
+	add_intents('icons/mob/screen1_robot.dmi')
 
 //Health
 	mymob.healths = new /atom/movable/screen/health/robot()
