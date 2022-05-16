@@ -19,9 +19,7 @@
 	init_screens(types, ui_style, list_to = adding)
 
 	add_throw_icon(ui_style)
-	
-	mymob.internals = new /atom/movable/screen/internal()
-	mymob.internals.icon = ui_style
+	add_internals(ui_style)
 
 	mymob.healths = new /atom/movable/screen/health()
 	mymob.healths.icon = ui_style
@@ -45,4 +43,4 @@
 	if(mymob.client.gun_mode)
 		mymob.client.add_gun_icons()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list(mymob.zone_sel, mymob.healths, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )

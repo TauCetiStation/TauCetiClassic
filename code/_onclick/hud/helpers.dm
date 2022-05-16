@@ -55,4 +55,10 @@
 	mymob.throw_icon = get_screen(type, icon, color, alpha)
 	hotkeybuttons += mymob.throw_icon
 
+/datum/hud/proc/add_internals(icon = null, type = /atom/movable/screen/internal)
+	var/atom/movable/screen/internals = get_screen(type, icon)
+	mymob.internals = internals
+	internals.update_icon(mymob)
+	mymob.client.screen += internals
+
 	

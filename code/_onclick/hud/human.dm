@@ -45,9 +45,7 @@
 
 	add_throw_icon(ui_style, ui_color, ui_alpha)
 
-	mymob.internals = new /atom/movable/screen/internal()
-	mymob.internals.icon = ui_style
-	mymob.internals.update_icon(mymob)
+	add_internals(ui_style)
 
 	mymob.healths = new /atom/movable/screen/health()
 
@@ -87,7 +85,7 @@
 	if(mymob.client.gun_mode)
 		mymob.client.add_gun_icons()
 
-	mymob.client.screen += list(mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.nutrition_icon, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list(mymob.zone_sel, mymob.healths, mymob.healthdoll, mymob.nutrition_icon, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	inventory_shown = 0
 
 

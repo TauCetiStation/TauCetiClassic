@@ -108,8 +108,7 @@
 	E.phantom_s = new /atom/movable/screen/essence_phantom()
 	E.phantom_s.update_icon(mymob)
 
-	mymob.internals = new /atom/movable/screen/internal()
-	mymob.internals.icon = ui_style
+	add_internals(ui_style)
 
 	mymob.healths = new /atom/movable/screen/health()
 
@@ -119,7 +118,7 @@
 
 	var/atom/movable/screen/using = new /atom/movable/screen/ling_abilities()
 
-	mymob.client.screen += list(mymob.internals, mymob.healths, mymob.healthdoll, E.voice, E.phantom_s, using)
+	mymob.client.screen += list(mymob.healths, mymob.healthdoll, E.voice, E.phantom_s, using)
 	if(E.is_changeling)
 		using = new /atom/movable/screen/return_to_body()
 		mymob.client.screen += using
