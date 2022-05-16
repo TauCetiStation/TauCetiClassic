@@ -110,8 +110,8 @@
 
 	user.visible_message("<span class='warning'><B>[M] has been beaten with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
 	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
-	M.Weaken(0.1)
-	M.Stun(1)
+	user.do_attack_animation(M)
+	M.apply_effect(7, AGONY, 0)
 	add_fingerprint(user)
 
 	user.visible_message("<span class='warning'><B>[M] has been stunned with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
