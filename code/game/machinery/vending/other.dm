@@ -256,6 +256,7 @@
 		"Machinengunner kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner,
 		"Custom kit" =  /obj/item/weapon/storage/backpack/dufflebag/nuke/custom,
 	)
+
 /obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mining_voucher/syndi))
 		givekit(I, user)
@@ -272,17 +273,6 @@
 	"Machinengunner kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "l6closed100"),
 	"Custom kit" = image(icon = 'icons/obj/radio.dmi', icon_state = "radio"),
 	)
-
-var/list/assortment = list(
-"Scout kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/scout,
-"Sniper kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/sniper,
-"Assaultman kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman,
-"Bomber kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/demo,
-"Melee kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/melee,
-"Hacker kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker,
-"Machinengunner kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner,
-"Custom kit" =  /obj/item/weapon/storage/backpack/dufflebag/nuke/custom,
- )
 
 /obj/machinery/vending/syndi/proc/givekit(obj/voucher, redeemer, mob/user)
 	var/selection = show_radial_menu(redeemer, src, selection_items, require_near = TRUE, tooltips = TRUE)
