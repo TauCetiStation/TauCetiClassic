@@ -505,8 +505,8 @@
 /atom/movable/screen/intent/action()
 	usr.set_a_intent(name)
 
-/atom/movable/screen/intent/update_icon(style)
-	var/icon/ico = new(style, "black")
+/atom/movable/screen/intent/update_icon(atom/movable/screen/act_intent)
+	var/icon/ico = new(act_intent.icon, act_intent.icon_state)
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	var/x1
 	var/y1

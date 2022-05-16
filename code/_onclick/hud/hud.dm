@@ -3,11 +3,6 @@
 	Uses the same visual objects for all players.
 */
 
-/datum/hud/var/atom/movable/screen/grab_intent
-/datum/hud/var/atom/movable/screen/harm_intent
-/datum/hud/var/atom/movable/screen/push_intent
-/datum/hud/var/atom/movable/screen/help_intent
-
 /*
 	The hud datum
 	Used to show and hide huds for all the different mob types,
@@ -77,10 +72,6 @@ var/global/list/available_ui_styles = list(
 	instantiate()
 
 /datum/hud/Destroy()
-	grab_intent = null
-	harm_intent = null
-	push_intent = null
-	help_intent = null
 	lingchemdisplay = null
 	wanted_lvl = null
 	blobpwrdisplay = null
