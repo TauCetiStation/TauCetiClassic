@@ -244,9 +244,18 @@
 		/obj/item/weapon/reagent_containers/pill/cyanide = 20,
 	)
 	syndie = list(
-	/obj/item/toy/syndicateballoon = 6,
+		/obj/item/toy/syndicateballoon = 6,
 	)
-
+	var/list/assortment = list(
+		"Scout kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/scout,
+		"Sniper kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/sniper,
+		"Assaultman kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman,
+		"Bomber kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/demo,
+		"Melee kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/melee,
+		"Hacker kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker,
+		"Machinengunner kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner,
+		"Custom kit" =  /obj/item/weapon/storage/backpack/dufflebag/nuke/custom,
+	)
 /obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mining_voucher/syndi))
 		givekit(I, user)
@@ -285,7 +294,7 @@ var/list/assortment = list(
 	if(!selection || !Adjacent(redeemer))
 		voucher.in_use = FALSE
 		return
-	var/bought = new assortment[selection]
+	var/obj/itembought = new assortment[selection]
 	if(isitem(bought) && ishuman(user))
 		var/mob/living/carbon/human/A = user
 		A.put_in_any_hand_if_possible(bought)
