@@ -231,7 +231,6 @@
 	req_access = list(150)
 	density = TRUE
 	anchored = TRUE
-	var/static/list/selection_items
 	product_ads = "Kill the corporate bastards!; Kill captain and gutted his corpse!; Blow up the damn station!."
 	products = list(
 		/obj/item/weapon/storage/pouch/ammo = 6,
@@ -256,6 +255,7 @@
 		"Machinengunner kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner,
 		"Custom kit" =  /obj/item/weapon/storage/backpack/dufflebag/nuke/custom,
 	)
+	var/static/list/selection_items
 
 /obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mining_voucher/syndi))
