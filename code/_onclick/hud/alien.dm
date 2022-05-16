@@ -46,7 +46,6 @@
 	src.other = list()
 
 	var/atom/movable/screen/using
-	var/atom/movable/screen/inventory/inv_box
 
 	add_intents(style)
 
@@ -58,15 +57,15 @@
 	using = new /atom/movable/screen/drop/alien()
 	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/hand/r/alien()
-	inv_box.update_icon(mymob)
-	src.r_hand_hud_object = inv_box
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/hand/r/alien()
+	using.update_icon(mymob)
+	src.r_hand_hud_object = using
+	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/hand/l/alien()
-	inv_box.update_icon(mymob)
-	src.l_hand_hud_object = inv_box
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/hand/l/alien()
+	using.update_icon(mymob)
+	src.l_hand_hud_object = using
+	src.adding += using
 
 	using = new /atom/movable/screen/inventory/swap/first/alien()
 	src.adding += using

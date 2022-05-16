@@ -84,7 +84,6 @@
 	src.other = list()
 
 	var/atom/movable/screen/using
-	var/atom/movable/screen/inventory/inv_box
 
 	add_intents(ui_style)
 
@@ -112,27 +111,27 @@
 	using.icon = ui_style
 	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/head/ian
-	inv_box.icon = ui_style
-	src.other += inv_box
+	using = new /atom/movable/screen/inventory/head/ian
+	using.icon = ui_style
+	src.other += using
 
 	using = new /atom/movable/screen/corgi/ability()
 	using.icon = ui_style
 	using.update_icon(mymob)
 	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/corgi_mouth
-	inv_box.icon = ui_style
-	src.r_hand_hud_object = inv_box
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/corgi_mouth
+	using.icon = ui_style
+	src.r_hand_hud_object = using
+	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/corgi_neck
-	inv_box.icon = ui_style
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/corgi_neck
+	using.icon = ui_style
+	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/back/ian
-	inv_box.icon = ui_style
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/back/ian
+	using.icon = ui_style
+	src.adding += using
 
 	mymob.healths = new /atom/movable/screen/health
 	mymob.healths.icon = ui_style

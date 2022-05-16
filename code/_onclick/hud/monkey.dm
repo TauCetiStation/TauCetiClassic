@@ -4,7 +4,6 @@
 	src.other = list()
 
 	var/atom/movable/screen/using
-	var/atom/movable/screen/inventory/inv_box
 
 	add_intents(ui_style)
 
@@ -18,17 +17,17 @@
 	using.icon = ui_style
 	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/hand/r()
-	inv_box.icon = ui_style
-	inv_box.update_icon(mymob)
-	src.r_hand_hud_object = inv_box
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/hand/r()
+	using.icon = ui_style
+	using.update_icon(mymob)
+	src.r_hand_hud_object = using
+	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/hand/l()
-	inv_box.icon = ui_style
-	inv_box.update_icon(mymob)
-	src.l_hand_hud_object = inv_box
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/hand/l()
+	using.icon = ui_style
+	using.update_icon(mymob)
+	src.l_hand_hud_object = using
+	src.adding += using
 
 	using = new /atom/movable/screen/inventory/swap/first()
 	using.icon = ui_style
@@ -38,13 +37,13 @@
 	using.icon = ui_style
 	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/mask/monkey()
-	inv_box.icon = ui_style
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/mask/monkey()
+	using.icon = ui_style
+	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/back()
-	inv_box.icon = ui_style
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/back()
+	using.icon = ui_style
+	src.adding += using
 
 	mymob.throw_icon = new /atom/movable/screen/throw()
 	mymob.throw_icon.icon = ui_style

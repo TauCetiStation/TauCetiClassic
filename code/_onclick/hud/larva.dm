@@ -12,7 +12,6 @@
 	src.other = list()
 
 	var/atom/movable/screen/using
-	var/atom/movable/screen/inventory/inv_box
 
 	add_intents('icons/mob/screen1_xeno.dmi')
 
@@ -21,9 +20,9 @@
 	src.adding += using
 	move_intent = using
 
-	inv_box = new /atom/movable/screen/inventory/larva_mouth()
-	src.r_hand_hud_object = inv_box
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/larva_mouth()
+	src.r_hand_hud_object = using
+	src.adding += using
 
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
 	src.adding += mymob.nightvisionicon

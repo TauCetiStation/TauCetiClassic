@@ -5,7 +5,6 @@
 	src.hotkeybuttons = list() //These can be disabled for hotkey usersx
 
 	var/atom/movable/screen/using
-	var/atom/movable/screen/inventory/inv_box
 	var/mob/living/carbon/human/H = mymob
 
 	add_intents(ui_style)
@@ -27,33 +26,33 @@
 	using.alpha = ui_alpha
 	src.hotkeybuttons += using
 
-	inv_box = new /atom/movable/screen/inventory/uniform()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.other += inv_box
+	using = new /atom/movable/screen/inventory/uniform()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.other += using
 
-	inv_box = new /atom/movable/screen/inventory/suit()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.other += inv_box
+	using = new /atom/movable/screen/inventory/suit()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.other += using
 
-	inv_box = new /atom/movable/screen/inventory/hand/r()
-	inv_box.update_icon(mymob)
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.r_hand_hud_object = inv_box
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/hand/r()
+	using.update_icon(mymob)
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.r_hand_hud_object = using
+	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/hand/l()
-	inv_box.update_icon(mymob)
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.l_hand_hud_object = inv_box
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/hand/l()
+	using.update_icon(mymob)
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.l_hand_hud_object = using
+	src.adding += using
 
 	using = new /atom/movable/screen/inventory/swap/first()
 	using.icon = ui_style
@@ -67,41 +66,41 @@
 	using.alpha = ui_alpha
 	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/id()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/id()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/mask()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.other += inv_box
+	using = new /atom/movable/screen/inventory/mask()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.other += using
 
-	inv_box = new /atom/movable/screen/inventory/back()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/back()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/pocket1()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/pocket1()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/pocket2()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/pocket2()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/suit_storage()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/suit_storage()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.adding += using
 
 	using = new/atom/movable/screen/resist()
 	using.icon = ui_style
@@ -121,47 +120,47 @@
 	using.alpha = ui_alpha
 	src.adding += using
 
-	inv_box = new /atom/movable/screen/inventory/gloves()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.other += inv_box
+	using = new /atom/movable/screen/inventory/gloves()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.other += using
 
-	inv_box = new /atom/movable/screen/inventory/eyes()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.other += inv_box
+	using = new /atom/movable/screen/inventory/eyes()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.other += using
 
-	inv_box = new /atom/movable/screen/inventory/l_ear()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.other += inv_box
+	using = new /atom/movable/screen/inventory/l_ear()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.other += using
 
-	inv_box = new /atom/movable/screen/inventory/r_ear()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.other += inv_box
+	using = new /atom/movable/screen/inventory/r_ear()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.other += using
 
-	inv_box = new /atom/movable/screen/inventory/head()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.other += inv_box
+	using = new /atom/movable/screen/inventory/head()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.other += using
 
-	inv_box = new /atom/movable/screen/inventory/shoes()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.other += inv_box
+	using = new /atom/movable/screen/inventory/shoes()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.other += using
 
-	inv_box = new /atom/movable/screen/inventory/belt()
-	inv_box.icon = ui_style
-	inv_box.color = ui_color
-	inv_box.alpha = ui_alpha
-	src.adding += inv_box
+	using = new /atom/movable/screen/inventory/belt()
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	src.adding += using
 
 	mymob.throw_icon = new /atom/movable/screen/throw()
 	mymob.throw_icon.icon = ui_style
