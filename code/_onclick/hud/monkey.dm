@@ -20,9 +20,7 @@
 
 	add_throw_icon(ui_style)
 	add_internals(ui_style)
-
-	mymob.healths = new /atom/movable/screen/health()
-	mymob.healths.icon = ui_style
+	add_healths(ui_style)
 
 	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = ui_style

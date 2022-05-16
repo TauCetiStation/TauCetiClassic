@@ -21,7 +21,7 @@
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
 	src.adding += mymob.nightvisionicon
 
-	mymob.healths = new /atom/movable/screen/health/alien()
+	add_healths(type = /atom/movable/screen/health/alien)
 
 	mymob.pullin = new /atom/movable/screen/pull/alien()
 	mymob.pullin.update_icon(mymob)
@@ -29,4 +29,4 @@
 	mymob.zone_sel = new /atom/movable/screen/zone_sel()
 	mymob.zone_sel.update_icon()
 
-	mymob.client.screen += list( mymob.zone_sel, mymob.healths, mymob.pullin)
+	mymob.client.screen += list( mymob.zone_sel, mymob.pullin)

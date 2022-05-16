@@ -61,4 +61,12 @@
 	internals.update_icon(mymob)
 	mymob.client.screen += internals
 
+/datum/hud/proc/add_healths(icon = null, type = /atom/movable/screen/health)
+	mymob.healths = new type
+	mymob.client.screen += mymob.healths
+
+/datum/hud/proc/add_health_doll(type = /atom/movable/screen/health_doll)
+	mymob.healthdoll = new type
+	mymob.client.screen += mymob.healthdoll
+
 	

@@ -83,7 +83,7 @@ var/global/atom/movable/screen/robot_inventory
 	add_intents('icons/mob/screen1_robot.dmi')
 
 //Health
-	mymob.healths = new /atom/movable/screen/health/robot()
+	add_healths(type = /atom/movable/screen/health/robot)
 
 //Installed Module
 	mymob.hands = new /atom/movable/screen/module()
@@ -107,7 +107,7 @@ var/global/atom/movable/screen/robot_inventory
 	if(mymob.client.gun_mode)
 		mymob.client.add_gun_icons()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.hands, mymob.healths, mymob.pullin, mymob.gun_setting_icon, robot_inventory) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.hands, mymob.pullin, mymob.gun_setting_icon, robot_inventory) //, mymob.rest, mymob.sleep, mymob.mach )
 
 
 /datum/hud/proc/toggle_show_robot_modules()

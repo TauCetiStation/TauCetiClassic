@@ -109,10 +109,8 @@
 	E.phantom_s.update_icon(mymob)
 
 	add_internals(ui_style)
-
-	mymob.healths = new /atom/movable/screen/health()
-
-	mymob.healthdoll = new /atom/movable/screen/health_doll()
+	add_healths()
+	add_health_doll()
 
 	lingchemdisplay = new /atom/movable/screen/chemical_display()
 
