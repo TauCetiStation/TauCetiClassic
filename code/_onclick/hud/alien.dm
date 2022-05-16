@@ -51,8 +51,7 @@
 	src.adding += using
 	move_intent = using
 
-	using = new /atom/movable/screen/drop/alien()
-	src.adding += using
+	src.adding += new /atom/movable/screen/drop/alien()
 
 	using = new /atom/movable/screen/inventory/hand/r/alien()
 	using.update_icon(mymob)
@@ -64,17 +63,15 @@
 	src.l_hand_hud_object = using
 	src.adding += using
 
-	using = new /atom/movable/screen/inventory/swap/first/alien()
-	src.adding += using
-
-	using = new/atom/movable/screen/inventory/swap/second/alien()
-	src.adding += using
+	var/list/types = list(
+		/atom/movable/screen/inventory/swap/first/alien,
+		/atom/movable/screen/inventory/swap/second/alien,
+		/atom/movable/screen/resist/alien,
+	)
+	init_screens(types, list_to = hotkeybuttons)
 
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
 	src.adding += mymob.nightvisionicon
-
-	using = new /atom/movable/screen/resist/alien()
-	src.adding += using
 
 	if(isxenohunter(mymob))
 		mymob.leap_icon = new /atom/movable/screen/xenomorph/leap()
@@ -98,4 +95,4 @@
 	mymob.zone_sel = new /atom/movable/screen/zone_sel/alien()
 	mymob.zone_sel.update_icon()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.xenomorph_plasma_display, mymob.pullin) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.xenomorph_plasma_display, mymob.pullin)

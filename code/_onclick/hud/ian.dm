@@ -44,6 +44,7 @@
 /atom/movable/screen/corgi/sit_lie
 	name = "pose selector"
 	icon_state = "sit_lie"
+	screen_loc = ui_ian_pselect
 
 /atom/movable/screen/corgi/sit_lie/action(location, control,params)
 	var/mob/living/carbon/ian/IAN = usr //shouldn't be in anywhere else, so no type check.
@@ -102,7 +103,6 @@
 
 	using = new /atom/movable/screen/corgi/sit_lie()
 	using.icon = ui_style
-	using.screen_loc = ui_ian_pselect
 	src.adding += using
 
 	using = new /atom/movable/screen/drop
@@ -123,13 +123,11 @@
 	src.r_hand_hud_object = using
 	src.adding += using
 
-	using = new /atom/movable/screen/inventory/corgi_neck
-	using.icon = ui_style
-	src.adding += using
-
-	using = new /atom/movable/screen/inventory/back/ian
-	using.icon = ui_style
-	src.adding += using
+	var/list/types = list(
+		/atom/movable/screen/inventory/corgi_neck,
+		/atom/movable/screen/inventory/back/ian
+	)
+	init_screens(types, ui_style, list_to = adding)
 
 	mymob.healths = new /atom/movable/screen/health
 	mymob.healths.icon = ui_style

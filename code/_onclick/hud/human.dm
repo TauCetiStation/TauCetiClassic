@@ -4,9 +4,6 @@
 
 	add_intents(ui_style)
 
-	using = new /atom/movable/screen/inventory/craft
-	src.adding += using
-
 	using = new /atom/movable/screen/move_intent()
 	using.icon = ui_style
 	using.update_icon(mymob)
@@ -15,23 +12,20 @@
 	src.adding += using
 	move_intent = using
 
-	using = new /atom/movable/screen/drop()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.hotkeybuttons += using
-
-	using = new /atom/movable/screen/inventory/uniform()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.other += using
-
-	using = new /atom/movable/screen/inventory/suit()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.other += using
+	// hiddable inventory
+	var/list/types = list(
+		/atom/movable/screen/inventory/uniform,
+		/atom/movable/screen/inventory/suit,
+		/atom/movable/screen/inventory/id,
+		/atom/movable/screen/inventory/mask,
+		/atom/movable/screen/inventory/gloves,
+		/atom/movable/screen/inventory/eyes,
+		/atom/movable/screen/inventory/l_ear,
+		/atom/movable/screen/inventory/r_ear,
+		/atom/movable/screen/inventory/head,
+		/atom/movable/screen/inventory/shoes,
+	)
+	init_screens(types, ui_style, ui_color, ui_alpha, other)
 
 	using = new /atom/movable/screen/inventory/hand/r()
 	using.update_icon(mymob)
@@ -49,119 +43,28 @@
 	src.l_hand_hud_object = using
 	src.adding += using
 
-	using = new /atom/movable/screen/inventory/swap/first()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.adding += using
+	// simple hotkeys
+	types = list(
+		/atom/movable/screen/drop,
+		/atom/movable/screen/inventory/swap/first,
+		/atom/movable/screen/inventory/swap/second,
+		/atom/movable/screen/resist,
+		/atom/movable/screen/equip,
+		/atom/movable/screen/throw,
+	)
+	init_screens(types, ui_style, ui_color, ui_alpha, hotkeybuttons)
 
-	using = new /atom/movable/screen/inventory/swap/second()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.adding += using
-
-	using = new /atom/movable/screen/inventory/id()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.adding += using
-
-	using = new /atom/movable/screen/inventory/mask()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.other += using
-
-	using = new /atom/movable/screen/inventory/back()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.adding += using
-
-	using = new /atom/movable/screen/inventory/pocket1()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.adding += using
-
-	using = new /atom/movable/screen/inventory/pocket2()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.adding += using
-
-	using = new /atom/movable/screen/inventory/suit_storage()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.adding += using
-
-	using = new/atom/movable/screen/resist()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.hotkeybuttons += using
-
-	using = new /atom/movable/screen/toggle()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.adding += using
-
-	using = new /atom/movable/screen/equip()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.adding += using
-
-	using = new /atom/movable/screen/inventory/gloves()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.other += using
-
-	using = new /atom/movable/screen/inventory/eyes()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.other += using
-
-	using = new /atom/movable/screen/inventory/l_ear()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.other += using
-
-	using = new /atom/movable/screen/inventory/r_ear()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.other += using
-
-	using = new /atom/movable/screen/inventory/head()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.other += using
-
-	using = new /atom/movable/screen/inventory/shoes()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.other += using
-
-	using = new /atom/movable/screen/inventory/belt()
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	src.adding += using
-
-	mymob.throw_icon = new /atom/movable/screen/throw()
-	mymob.throw_icon.icon = ui_style
-	mymob.throw_icon.color = ui_color
-	mymob.throw_icon.alpha = ui_alpha
-	src.hotkeybuttons += mymob.throw_icon
+	// visible inventory, inventory toggle and craft
+	types = list(
+		/atom/movable/screen/inventory/craft,
+		/atom/movable/screen/toggle,
+		/atom/movable/screen/inventory/back,
+		/atom/movable/screen/inventory/pocket1,
+		/atom/movable/screen/inventory/pocket2,
+		/atom/movable/screen/inventory/suit_storage,
+		/atom/movable/screen/inventory/belt,
+	)
+	init_screens(types, ui_style, ui_color, ui_alpha, adding)
 
 	mymob.internals = new /atom/movable/screen/internal()
 	mymob.internals.icon = ui_style

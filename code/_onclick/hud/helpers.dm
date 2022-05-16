@@ -15,3 +15,20 @@
 		intent.update_icon(action_intent)
 		intent.screen_loc = action_intent.screen_loc
 		adding += intent
+
+/datum/hud/proc/init_screens(list/types, icon = null, color = null, alpha = null, list/list_to)
+	if(!list_to)
+		list_to = list()
+
+	var/atom/movable/screen/screen
+	for(var/screen_type in types)
+		screen = new screen_type
+		if(icon)
+			screen.icon = icon
+		if(color)
+			screen.color = color
+		if(alpha)
+			screen.alpha = alpha
+		list_to += screen
+
+	return list_to

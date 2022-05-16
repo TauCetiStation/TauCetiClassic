@@ -71,20 +71,18 @@
 	var/atom/movable/screen/spawners_menu_button
 
 /datum/hud/ghost/New()
-	adding += new /atom/movable/screen/ghost/jumptomob()
-
-	adding += new /atom/movable/screen/ghost/orbit()
-
-	adding += new /atom/movable/screen/ghost/reenter_corpse()
-
-	adding += new /atom/movable/screen/ghost/teleport()
-
-	adding += new /atom/movable/screen/ghost/mafia()
+	var/list/types = list(
+		/atom/movable/screen/ghost/jumptomob,
+		/atom/movable/screen/ghost/orbit,
+		/atom/movable/screen/ghost/reenter_corpse,
+		/atom/movable/screen/ghost/teleport,
+		/atom/movable/screen/ghost/mafia,
+		/atom/movable/screen/ghost/toggle_darkness,
+	)
+	init_screens(types, list_to = adding)
 
 	spawners_menu_button = new /atom/movable/screen/ghost/spawners_menu()
 	adding += spawners_menu_button
-
-	adding += new /atom/movable/screen/ghost/toggle_darkness()
 
 	..()
 

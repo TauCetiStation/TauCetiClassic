@@ -28,7 +28,7 @@
 	mymob.pullin = new /atom/movable/screen/pull/alien()
 	mymob.pullin.update_icon(mymob)
 
-	mymob.zone_sel = new /atom/movable/screen/zone_sel()
+	mymob.zone_sel = new /atom/movable/screen/zone_sel/alien()
 	mymob.zone_sel.update_icon()
 
 	mymob.client.screen += list( mymob.zone_sel, mymob.healths, mymob.pullin) //, mymob.rest, mymob.sleep, mymob.mach )

@@ -4,13 +4,27 @@ var/global/atom/movable/screen/robot_inventory
 /datum/hud/proc/robot_hud()
 	var/atom/movable/screen/using
 
+	var/list/types = list(
+		/atom/movable/screen/crew_manifest/robot,
+		/atom/movable/screen/self_diagnosis,
+		/atom/movable/screen/alerts/robot,
+		/atom/movable/screen/state_laws/robot,
+		/atom/movable/screen/show_laws,
+		/atom/movable/screen/toggle_components,
+		/atom/movable/screen/toggle_lights,
+		/atom/movable/screen/radio,
+		/atom/movable/screen/panel,
+	)
 
 	if(!isdrone(mymob))
 //Medical/Security sensors
-		adding += new /atom/movable/screen/sensor_augmentation/robot()
+		types += list(
+			/atom/movable/screen/sensor_augmentation/robot,
+			/atom/movable/screen/show_pda_screens,
+			/atom/movable/screen/show_photo_screens,
+		)
 
 //Show PDA screens
-		adding += new /atom/movable/screen/show_pda_screens()
 		var/list/screens = list(
 			/atom/movable/screen/robot_pda/send, /atom/movable/screen/robot_pda/log,
 			/atom/movable/screen/robot_pda/ringtone, /atom/movable/screen/robot_pda/toggle,
@@ -23,7 +37,6 @@ var/global/atom/movable/screen/robot_inventory
 			other += using
 
 //Show foto screens
-		adding += new /atom/movable/screen/show_photo_screens()
 		screens = list(/atom/movable/screen/robot_image/take, /atom/movable/screen/robot_image/view, /atom/movable/screen/robot_image/delete)
 		screen_position = 2
 		for(var/screen_type in screens)
@@ -35,31 +48,20 @@ var/global/atom/movable/screen/robot_inventory
 //Namepick
 		var/mob/living/silicon/robot/R = mymob
 		if(!R.custom_name)
-			adding += new /atom/movable/screen/namepick()
+			types += /atom/movable/screen/namepick
 
-//Manifest
-	adding += new /atom/movable/screen/crew_manifest/robot()
-
-//Diagnosis
-	adding += new /atom/movable/screen/self_diagnosis()
-
-//Alerts
-	adding += new /atom/movable/screen/alerts/robot()
-
-//State Laws
-	adding += new /atom/movable/screen/state_laws/robot()
-
-// Show Laws
-	adding += new /atom/movable/screen/show_laws()
-
-// Toggle Component
-	adding += new /atom/movable/screen/toggle_components()
-
-// Toggle Lights
-	adding += new /atom/movable/screen/toggle_lights()
-
-//Radio
-	adding += new /atom/movable/screen/radio()
+	types += list(
+		/atom/movable/screen/crew_manifest/robot,
+		/atom/movable/screen/self_diagnosis,
+		/atom/movable/screen/alerts/robot,
+		/atom/movable/screen/state_laws/robot,
+		/atom/movable/screen/show_laws,
+		/atom/movable/screen/toggle_components,
+		/atom/movable/screen/toggle_lights,
+		/atom/movable/screen/radio,
+		/atom/movable/screen/panel,
+	)
+	init_screens(types, list_to = adding)
 
 //Module select
 
@@ -85,9 +87,6 @@ var/global/atom/movable/screen/robot_inventory
 
 //Installed Module
 	mymob.hands = new /atom/movable/screen/module()
-
-//Module Panel
-	src.adding += new /atom/movable/screen/panel()
 
 //Store
 	mymob.throw_icon = new /atom/movable/screen/store()

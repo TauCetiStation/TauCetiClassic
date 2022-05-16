@@ -9,10 +9,6 @@
 	src.adding += using
 	move_intent = using
 
-	using = new /atom/movable/screen/drop()
-	using.icon = ui_style
-	src.adding += using
-
 	using = new /atom/movable/screen/inventory/hand/r()
 	using.icon = ui_style
 	using.update_icon(mymob)
@@ -25,21 +21,20 @@
 	src.l_hand_hud_object = using
 	src.adding += using
 
-	using = new /atom/movable/screen/inventory/swap/first()
-	using.icon = ui_style
-	src.adding += using
+	// hotkeys
+	var/types = list(
+		/atom/movable/screen/drop,
+		/atom/movable/screen/inventory/swap/first,
+		/atom/movable/screen/inventory/swap/second,
+	)
+	init_screens(types, ui_style, list_to = hotkeybuttons)
 
-	using = new /atom/movable/screen/inventory/swap/second()
-	using.icon = ui_style
-	src.adding += using
-
-	using = new /atom/movable/screen/inventory/mask/monkey()
-	using.icon = ui_style
-	src.adding += using
-
-	using = new /atom/movable/screen/inventory/back()
-	using.icon = ui_style
-	src.adding += using
+	// inventory
+	types = list(
+		/atom/movable/screen/inventory/mask/monkey,
+		/atom/movable/screen/inventory/back,
+	)
+	init_screens(types, ui_style, list_to = adding)
 
 	mymob.throw_icon = new /atom/movable/screen/throw()
 	mymob.throw_icon.icon = ui_style
