@@ -290,22 +290,19 @@
 		A.put_in_any_hand_if_possible(bought)
 
 	if(user.mind)
-		var/cost = 1
-		var/name = bought
 		for(var/role in user.mind.antag_roles)
 			var/datum/role/R = user.mind.antag_roles[role]
 			var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
 			if(!S)
 				continue
-			S.spent_TC += cost
 			if(istype(R, /datum/role/operative))
-				R.faction.faction_scoreboard_data += {"[name] for [cost] voucher."}
+				R.faction.faction_scoreboard_data += {"[bought.name] for 1 voucher."}
 			else
-				S.uplink_items_bought += {"[name] for [cost] voucher."}
+				S.uplink_items_bought += {"[bought.name] for 1 voucher."}
 
 			var/datum/stat/uplink_purchase/stat = new
-			stat.bundlename = name
-			stat.cost = cost
+			stat.bundlename = bought.name
+			stat.cost = 1
 			S.uplink_purchases += stat
 
 /obj/machinery/vending/syndi/ex_act()
