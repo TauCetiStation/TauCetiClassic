@@ -3,7 +3,7 @@
 
 /obj/item/weapon/storage/box/syndicate/atom_init()
 	. = ..()
-	var/tagname = pick("bloodyspai", "stealth", "screwed", "ninja", "guns", "implant", "hacker", "smoothoperator", "poisons", "gadgets")
+	var/tagname = pick("bloodyspai", "stealth", "screwed", "ninja", "guns", "implant", "hacker", "smoothoperator", "poisons", "darklord", "gadgets")
 	switch (tagname)
 		if("bloodyspai")
 			new /obj/item/clothing/under/chameleon(src)
@@ -88,6 +88,14 @@
 			new /obj/item/clothing/gloves/black/strip(src)
 			new /obj/item/clothing/shoes/syndigaloshes(src)
 			new /obj/item/weapon/storage/backpack/satchel/flat(src)
+
+		if("darklord")
+			new /obj/item/weapon/dualsaber(src)
+			new /obj/item/clothing/suit/cultrobes(src)
+			new /obj/item/clothing/head/culthood(src)
+			new /obj/item/clothing/shoes/syndigaloshes(src)
+			new /obj/item/weapon/card/id/syndicate(src)
+			new /obj/item/weapon/dnainjector/telemut(src)
 
 		if("gadgets")
 			new /obj/item/clothing/gloves/yellow(src)
