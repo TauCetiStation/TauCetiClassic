@@ -261,6 +261,7 @@
 	if(istype(I, /obj/item/weapon/mining_voucher/syndi))
 		givekit(I, user)
 		return
+	return ..()
 
 /obj/machinery/vending/syndi/proc/populate_selection()
 	selection_items = list(
