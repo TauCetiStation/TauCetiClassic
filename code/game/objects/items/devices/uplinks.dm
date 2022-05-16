@@ -6,8 +6,6 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 
 */
 //TG-stuff
-
-
 /obj/item/device/uplink
 	var/welcome = "Syndicate Uplink Console:"					// Welcoming menu message
 	var/uses = 20 						// Numbers of crystals
