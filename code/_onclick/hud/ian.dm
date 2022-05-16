@@ -80,8 +80,6 @@
 		return
 
 	var/ui_style = 'icons/mob/screen_corgi.dmi'
-	src.adding = list()
-	src.other = list()
 
 	var/atom/movable/screen/using
 
@@ -144,5 +142,4 @@
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.update_icon()
 
-	mymob.client.screen = list(mymob.zone_sel, mymob.healths, mymob.pullin)
-	mymob.client.screen += adding + other + hotkeybuttons
+	mymob.client.screen += list(mymob.zone_sel, mymob.healths, mymob.pullin)

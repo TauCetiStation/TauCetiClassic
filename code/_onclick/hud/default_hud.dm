@@ -1,8 +1,4 @@
 /datum/hud/proc/default_hud(ui_color = "#ffffff", ui_alpha = 255)
-	src.adding = list()
-	src.other = list()
-	src.hotkeybuttons = list() //These can be disabled for hotkey usersx
-
 	var/atom/movable/screen/using
 
 	add_intents(ui_style)
@@ -31,8 +27,5 @@
 
 	lingchemdisplay = new /atom/movable/screen/chemical_display()
 
-	mymob.client.screen = list()
-
 	mymob.client.screen += list(mymob.zone_sel)
-	mymob.client.screen += src.adding + src.hotkeybuttons
 	inventory_shown = 0

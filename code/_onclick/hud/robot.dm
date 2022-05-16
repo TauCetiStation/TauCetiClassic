@@ -2,20 +2,15 @@ var/global/atom/movable/screen/robot_inventory
 
 
 /datum/hud/proc/robot_hud()
-
-	src.adding = list()
-	src.other = list()
 	var/atom/movable/screen/using
 
 
 	if(!isdrone(mymob))
 //Medical/Security sensors
-		using = new /atom/movable/screen/sensor_augmentation/robot()
-		adding += using
+		adding += new /atom/movable/screen/sensor_augmentation/robot()
 
 //Show PDA screens
-		using = new /atom/movable/screen/show_pda_screens()
-		adding += using
+		adding += new /atom/movable/screen/show_pda_screens()
 		var/list/screens = list(
 			/atom/movable/screen/robot_pda/send, /atom/movable/screen/robot_pda/log,
 			/atom/movable/screen/robot_pda/ringtone, /atom/movable/screen/robot_pda/toggle,
@@ -28,8 +23,7 @@ var/global/atom/movable/screen/robot_inventory
 			other += using
 
 //Show foto screens
-		using = new /atom/movable/screen/show_photo_screens()
-		adding += using
+		adding += new /atom/movable/screen/show_photo_screens()
 		screens = list(/atom/movable/screen/robot_image/take, /atom/movable/screen/robot_image/view, /atom/movable/screen/robot_image/delete)
 		screen_position = 2
 		for(var/screen_type in screens)
@@ -41,40 +35,31 @@ var/global/atom/movable/screen/robot_inventory
 //Namepick
 		var/mob/living/silicon/robot/R = mymob
 		if(!R.custom_name)
-			using = new /atom/movable/screen/namepick()
-			adding += using
+			adding += new /atom/movable/screen/namepick()
 
 //Manifest
-	using = new /atom/movable/screen/crew_manifest/robot()
-	adding += using
+	adding += new /atom/movable/screen/crew_manifest/robot()
 
 //Diagnosis
-	using = new /atom/movable/screen/self_diagnosis()
-	adding += using
+	adding += new /atom/movable/screen/self_diagnosis()
 
 //Alerts
-	using = new /atom/movable/screen/alerts/robot()
-	adding += using
+	adding += new /atom/movable/screen/alerts/robot()
 
 //State Laws
-	using = new /atom/movable/screen/state_laws/robot()
-	adding += using
+	adding += new /atom/movable/screen/state_laws/robot()
 
 // Show Laws
-	using = new /atom/movable/screen/show_laws()
-	adding += using
+	adding += new /atom/movable/screen/show_laws()
 
 // Toggle Component
-	using = new /atom/movable/screen/toggle_components()
-	adding += using
+	adding += new /atom/movable/screen/toggle_components()
 
 // Toggle Lights
-	using = new /atom/movable/screen/toggle_lights()
-	adding += using
+	adding += new /atom/movable/screen/toggle_lights()
 
 //Radio
-	using = new /atom/movable/screen/radio()
-	src.adding += using
+	adding += new /atom/movable/screen/radio()
 
 //Module select
 
@@ -102,8 +87,7 @@ var/global/atom/movable/screen/robot_inventory
 	mymob.hands = new /atom/movable/screen/module()
 
 //Module Panel
-	using = new /atom/movable/screen/panel()
-	src.adding += using
+	src.adding += new /atom/movable/screen/panel()
 
 //Store
 	mymob.throw_icon = new /atom/movable/screen/store()
@@ -124,13 +108,7 @@ var/global/atom/movable/screen/robot_inventory
 	if(mymob.client.gun_mode)
 		mymob.client.add_gun_icons()
 
-	mymob.client.screen = list()
-
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.hands, mymob.healths, mymob.pullin, mymob.gun_setting_icon, robot_inventory) //, mymob.rest, mymob.sleep, mymob.mach )
-	mymob.client.screen += src.adding
-	mymob.client.screen += mymob.client.void
-
-	return
 
 
 /datum/hud/proc/toggle_show_robot_modules()

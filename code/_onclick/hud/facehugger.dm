@@ -7,10 +7,6 @@
 
 
 /datum/hud/proc/facehugger_hud()
-
-	src.adding = list()
-	src.other = list()
-
 	var/atom/movable/screen/using
 
 	add_intents('icons/mob/screen1_xeno.dmi')
@@ -38,8 +34,4 @@
 	mymob.zone_sel = new /atom/movable/screen/zone_sel()
 	mymob.zone_sel.update_icon()
 
-	mymob.client.screen = list()
-
-	mymob.client.screen += list( mymob.zone_sel, mymob.healths, mymob.pullin) //, mymob.rest, mymob.sleep, mymob.mach )
-	mymob.client.screen += src.adding + src.other
-	mymob.client.screen += mymob.client.void
+	mymob.client.screen += list( mymob.zone_sel, mymob.healths, mymob.pullin)

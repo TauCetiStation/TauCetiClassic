@@ -1,68 +1,47 @@
 /datum/hud/proc/ai_hud()
-	adding = list()
-	other = list()
-
 	var/atom/movable/screen/using
 
 //AI core
-	using = new /atom/movable/screen/ai_core()
-	adding += using
+	adding += new /atom/movable/screen/ai_core()
 
 //Camera list
-	using = new /atom/movable/screen/camera_list()
-	adding += using
+	adding += new /atom/movable/screen/camera_list()
 
 //Track
-	using = new /atom/movable/screen/camera_track()
-	adding += using
+	adding += new /atom/movable/screen/camera_track()
 
 //Camera light
-	using = new /atom/movable/screen/camera_light()
-	adding += using
+	adding += new /atom/movable/screen/camera_light()
 
 //Crew Monitorting
-	using = new /atom/movable/screen/radio_settings()
-	adding += using
+	adding += new /atom/movable/screen/radio_settings()
 
 //Crew Manifest
-	using = new /atom/movable/screen/crew_manifest()
-	adding += using
+	adding += new /atom/movable/screen/crew_manifest()
 
 //Alerts
-	using = new /atom/movable/screen/alerts()
-	adding += using
+	adding += new /atom/movable/screen/alerts()
 
 //Announcement
-	using = new /atom/movable/screen/announcement()
-	adding += using
+	adding += new /atom/movable/screen/announcement()
 
 //Shuttle
-	using = new /atom/movable/screen/call_shuttle()
-	adding += using
+	adding += new /atom/movable/screen/call_shuttle()
 
 //Laws
-	using = new /atom/movable/screen/state_laws()
-	adding += using
+	adding += new /atom/movable/screen/state_laws()
 
 //PDA message
-	using = new /atom/movable/screen/robot_pda/send/ai()
-	adding += using
+	adding += new /atom/movable/screen/robot_pda/send/ai()
 
 //PDA log
-	using = new /atom/movable/screen/robot_pda/log/ai()
-	adding += using
+	adding += new /atom/movable/screen/robot_pda/log/ai()
 
 //Take image
-	using = new /atom/movable/screen/robot_image/take/ai()
-	adding += using
+	adding += new /atom/movable/screen/robot_image/take/ai()
 
 //View images
-	using = new /atom/movable/screen/robot_image/view/ai()
-	adding += using
+	adding += new /atom/movable/screen/robot_image/view/ai()
 
 //Medical/Security sensors
-	using = new /atom/movable/screen/sensor_augmentation()
-	adding += using
-
-	mymob.client.screen += adding + other
-	return
+	adding += new /atom/movable/screen/sensor_augmentation()

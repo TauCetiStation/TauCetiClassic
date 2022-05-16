@@ -40,9 +40,9 @@ var/global/list/available_ui_styles = list(
 	var/atom/movable/screen/staminadisplay
 	var/atom/movable/screen/wanted/wanted_lvl
 
-	var/list/adding
-	var/list/other
-	var/list/atom/movable/screen/hotkeybuttons
+	var/list/adding = list()
+	var/list/other = list()
+	var/list/hotkeybuttons = list()
 
 	var/atom/movable/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
@@ -142,13 +142,14 @@ var/global/list/available_ui_styles = list(
 
 
 /datum/hud/proc/instantiate()
-	if(!ismob(mymob))
-		return FALSE
-	if(!mymob.client)
+	if(!ismob(mymob) || !mymob.client)
 		return FALSE
 
 	var/ui_color = mymob.client.prefs.UI_style_color
 	var/ui_alpha = mymob.client.prefs.UI_style_alpha
+
+	// reset client screen
+	mymob.client.screen = list()
 
 	if(ishuman(mymob))
 		human_hud(ui_color, ui_alpha) // Pass the player the UI style chosen in preferences
@@ -176,6 +177,9 @@ var/global/list/available_ui_styles = list(
 		changeling_essence_hud()
 	else if(isliving(mymob))
 		default_hud(ui_color, ui_alpha)
+
+	mymob.client.screen += adding + hotkeybuttons
+	mymob.client.screen += mymob.client.void
 
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)

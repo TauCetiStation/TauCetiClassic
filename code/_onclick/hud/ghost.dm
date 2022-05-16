@@ -71,29 +71,20 @@
 	var/atom/movable/screen/spawners_menu_button
 
 /datum/hud/ghost/New()
-	adding = list()
-	var/atom/movable/screen/using
+	adding += new /atom/movable/screen/ghost/jumptomob()
 
-	using = new /atom/movable/screen/ghost/jumptomob()
-	adding += using
+	adding += new /atom/movable/screen/ghost/orbit()
 
-	using = new /atom/movable/screen/ghost/orbit()
-	adding += using
+	adding += new /atom/movable/screen/ghost/reenter_corpse()
 
-	using = new /atom/movable/screen/ghost/reenter_corpse()
-	adding += using
+	adding += new /atom/movable/screen/ghost/teleport()
 
-	using = new /atom/movable/screen/ghost/teleport()
-	adding += using
-
-	using = new /atom/movable/screen/ghost/mafia()
-	adding += using
+	adding += new /atom/movable/screen/ghost/mafia()
 
 	spawners_menu_button = new /atom/movable/screen/ghost/spawners_menu()
 	adding += spawners_menu_button
 
-	using = new /atom/movable/screen/ghost/toggle_darkness()
-	adding += using
+	adding += new /atom/movable/screen/ghost/toggle_darkness()
 
 	..()
 

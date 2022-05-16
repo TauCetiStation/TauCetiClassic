@@ -1,8 +1,4 @@
 /datum/hud/proc/monkey_hud()
-
-	src.adding = list()
-	src.other = list()
-
 	var/atom/movable/screen/using
 
 	add_intents(ui_style)
@@ -73,8 +69,4 @@
 	if(mymob.client.gun_mode)
 		mymob.client.add_gun_icons()
 
-	mymob.client.screen = list()
-
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
-	mymob.client.screen += src.adding + src.other
-	mymob.client.screen += mymob.client.void

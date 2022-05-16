@@ -1,9 +1,4 @@
 /datum/hud/proc/human_hud(ui_color = "#ffffff", ui_alpha = 255)
-
-	src.adding = list()
-	src.other = list()
-	src.hotkeybuttons = list() //These can be disabled for hotkey usersx
-
 	var/atom/movable/screen/using
 	var/mob/living/carbon/human/H = mymob
 
@@ -210,11 +205,7 @@
 	if(mymob.client.gun_mode)
 		mymob.client.add_gun_icons()
 
-	mymob.client.screen = list()
-
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.nutrition_icon, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
-	mymob.client.screen += src.adding + src.hotkeybuttons
-	mymob.client.screen += mymob.client.void
 	inventory_shown = 0
 
 

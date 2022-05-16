@@ -42,9 +42,6 @@
 /datum/hud/proc/alien_hud()
 	var/style = 'icons/mob/screen1_xeno.dmi'
 
-	src.adding = list()
-	src.other = list()
-
 	var/atom/movable/screen/using
 
 	add_intents(style)
@@ -101,8 +98,4 @@
 	mymob.zone_sel = new /atom/movable/screen/zone_sel/alien()
 	mymob.zone_sel.update_icon()
 
-	mymob.client.screen = list()
-
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.xenomorph_plasma_display, mymob.pullin) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
-	mymob.client.screen += src.adding + src.other
-	mymob.client.screen += mymob.client.void

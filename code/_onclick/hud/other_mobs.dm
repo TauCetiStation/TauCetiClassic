@@ -16,8 +16,7 @@
 
 
 /datum/hud/proc/brain_hud()
-	mymob.client.screen = list()
-	mymob.client.screen += mymob.client.void
+	return
 
 /datum/hud/proc/blob_hud()
 
@@ -25,9 +24,7 @@
 
 	blobhealthdisplay = new /atom/movable/screen/blob_health()
 
-	mymob.client.screen = list()
 	mymob.client.screen += list(blobpwrdisplay, blobhealthdisplay)
-	mymob.client.screen += mymob.client.void
 
 
 /atom/movable/screen/essence_voice
@@ -121,10 +118,8 @@
 	lingchemdisplay = new /atom/movable/screen/chemical_display()
 
 	var/atom/movable/screen/using = new /atom/movable/screen/ling_abilities()
-	mymob.client.screen += using
 
-	mymob.client.screen = list(mymob.internals, mymob.healths, mymob.healthdoll, E.voice, E.phantom_s, using)
-	mymob.client.screen += mymob.client.void
+	mymob.client.screen += list(mymob.internals, mymob.healths, mymob.healthdoll, E.voice, E.phantom_s, using)
 	if(E.is_changeling)
 		using = new /atom/movable/screen/return_to_body()
 		mymob.client.screen += using
