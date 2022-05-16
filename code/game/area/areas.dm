@@ -53,7 +53,7 @@
 
 	var/looped_ambience = null
 	var/is_force_ambience = FALSE
-	var/ambience = list()
+	var/ambience = null
 
 	/// All beauty in this area combined, only includes indoor area.
 	var/totalbeauty = 0
