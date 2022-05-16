@@ -41,6 +41,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/engineering/atmos
 	name = "Atmospherics"
 	icon_state = "atmos"
+	ambience = list('sound/ambience/atmos_1.ogg', 'sound/ambience/atmos_2.ogg')
 
 /area/station/engineering/drone_fabrication
 	name = "Drone Fabrication"
@@ -198,6 +199,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/bridge
 	name = "Bridge"
 	icon_state = "bridge"
+	ambience = list('sound/ambience/bridge_1.ogg')
 
 /area/station/bridge/meeting_room
 	name = "Heads of Staff Meeting Room"
@@ -217,6 +219,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/bridge/ai_upload
 	name = "AI Upload Chamber"
 	icon_state = "ai_upload"
+	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
 
 /area/station/bridge/comms
 	name = "Communications Relay"
@@ -225,10 +228,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/bridge/server
 	name = "Messaging Server Room"
 	icon_state = "server"
+	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
 
 /area/station/bridge/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
+	ambience = list('sound/ambience/vault_1.ogg')
 
 //Civilian
 
@@ -407,6 +412,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/medical
 	name = "Medbay"
 	icon_state = "medbay"
+	ambience = list('sound/ambience/medbay_1.ogg', 'sound/ambience/medbay_2.ogg', 'sound/ambience/medbay_3.ogg', 'sound/ambience/medbay_4.ogg', 'sound/ambience/medbay_5.ogg')
 
 //Medbay is a large area, these additional areas help level out APC load.
 /area/station/medical/hallway
@@ -456,10 +462,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/medical/chemistry
 	name = "Chemistry"
 	icon_state = "chem"
+	ambience = list('sound/ambience/chemistry_1.ogg', 'sound/ambience/chemistry_2.ogg')
 
 /area/station/medical/surgery
 	name = "Operating Theatre 1"
 	icon_state = "surgery"
+	ambience = list('sound/ambience/surgery_1.ogg', 'sound/ambience/surgery_2.ogg')
 
 /area/station/medical/surgery2
 	name = "Operating Theatre 2"
@@ -499,6 +507,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Brig"
 	icon_state = "brig"
 
+/area/station/security/interrogation
+	name = "Interrogation"
+	icon_state = "interrogation"
+	looped_ambience = 'sound/ambience/loop_interrogation.ogg'
+
 /area/station/security/execution
 	name = "Execution"
 	icon_state = "execution_room"
@@ -506,6 +519,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/security/prison
 	name = "Prison Wing"
 	icon_state = "sec_prison"
+	ambience = list('sound/ambience/prison_1.ogg')
 
 /area/station/security/warden
 	name = "Warden"
@@ -514,6 +528,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/security/armoury
 	name = "Armory"
 	icon_state = "armory"
+	looped_ambience = 'sound/ambience/loop_armory.ogg'
 
 /area/station/security/hos
 	name = "Head of Security's Office"
@@ -522,10 +537,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/security/detectives_office
 	name = "Detective's Office"
 	icon_state = "detective"
+	ambience = list('sound/ambience/detective_1.ogg')
 
 /area/station/security/forensic_office
 	name = "Forensic's Office"
 	icon_state = "detective"
+	ambience = list('sound/ambience/detective_1.ogg')
 
 /area/station/security/range
 	name = "Firing Range"
@@ -542,6 +559,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/security/vacantoffice
 	name = "Coworking"
 	icon_state = "security"
+	ambience = list('sound/ambience/vacant_1.ogg')
 
 /area/station/security/iaa_office
 	name = "Internal Affairs"
@@ -586,6 +604,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //rnd (Research and Development)
 
+/area/station/rnd
+	ambience = list('sound/ambience/rnd_1.ogg', 'sound/ambience/rnd_2.ogg')
 /area/station/rnd/lab
 	name = "Research and Development"
 	icon_state = "scilab"
@@ -633,6 +653,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/rnd/server
 	name = "Server Room"
 	icon_state = "server"
+	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
 
 /area/station/rnd/chargebay
 	name = "Mech Bay"
@@ -641,6 +662,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/rnd/robotics
 	name = "Robotics Lab"
 	icon_state = "scirobo"
+	ambience = list('sound/ambience/robotics_1.ogg', 'sound/ambience/robotics_2.ogg')
 
 /area/station/rnd/brainstorm_center
 	name = "Brainstorm Center"
@@ -684,10 +706,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/aisat
 	name = "AI Satellite Exterior"
 	icon_state = "storage"
+	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
 
 /area/station/ai_monitored/storage_secure
 	name = "Secure Storage"
 	icon_state = "storage"
+	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
 
 /area/station/aisat/ai_chamber
 	name = "AI Chamber"
@@ -708,10 +732,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 // Telecommunications Satellite
 
+/area/station/tcommsat
+	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
+	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
+
 /area/station/tcommsat/chamber
 	name = "Telecoms Central Compartment"
 	icon_state = "tcomsatcham"
-	ambience = list('sound/ambience/engine_2.ogg', 'sound/ambience/tcomms.ogg')
 
 /area/station/tcommsat/computer
 	name = "Telecoms Control Room"
