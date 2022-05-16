@@ -1,6 +1,6 @@
 var/global/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
 #define INITIAL_NUCLEAR_TELECRYSTALS 5
-#define TELECRYSTALS_PER_ONE_OPERATIVE 5
+#define TELECRYSTALS_PER_ONE_OPERATIVE 1
 
 /obj/machinery/computer/telecrystals
 	name = "Telecrystal assignment station"
@@ -140,7 +140,7 @@ var/global/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","E
 	var/danger
 	var/active_players = length(player_list)
 	var/agent_numbers = clamp((active_players / 5), 2, 6)
-	storedcrystals = agent_numbers + TELECRYSTALS_PER_ONE_OPERATIVE + INITIAL_NUCLEAR_TELECRYSTALS
+	storedcrystals = agent_numbers * TELECRYSTALS_PER_ONE_OPERATIVE + INITIAL_NUCLEAR_TELECRYSTALS
 	danger = active_players
 
 	while(!IS_MULTIPLE(++danger,10))//Just round up to the nearest multiple of ten.

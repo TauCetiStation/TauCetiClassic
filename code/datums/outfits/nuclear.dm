@@ -40,7 +40,7 @@
 	/obj/item/ammo_box/a357,
 	/obj/item/clothing/accessory/holster/armpit,
 	/obj/item/weapon/pinpointer/nukeop,
-	/obj/item/device/radio/uplink/leader,
+	/obj/item/device/radio/uplink,
 	/obj/item/weapon/kitchenknife/combat,
 	/obj/item/clothing/accessory/storage/syndi_vest,
 	/obj/item/weapon/mining_voucher/syndi,)
