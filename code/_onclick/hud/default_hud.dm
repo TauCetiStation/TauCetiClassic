@@ -3,15 +3,10 @@
 	add_move_intent(ui_style, ui_color, ui_alpha)
 	adding += new /atom/movable/screen/inventory/craft
 
-	mymob.zone_sel = new /atom/movable/screen/zone_sel()
-	mymob.zone_sel.icon = ui_style
-	mymob.zone_sel.color = ui_color
-	mymob.zone_sel.alpha = ui_alpha
-	mymob.zone_sel.update_icon()
-
+	add_zone_sel(ui_style, ui_color, ui_alpha)
 	add_pullin(ui_style)
 
 	lingchemdisplay = new /atom/movable/screen/chemical_display()
 
-	mymob.client.screen += list(mymob.zone_sel, lingchemdisplay)
+	mymob.client.screen += list(lingchemdisplay)
 	inventory_shown = 0

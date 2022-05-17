@@ -2,6 +2,7 @@ var/global/atom/movable/screen/robot_inventory
 
 
 /datum/hud/proc/robot_hud()
+	var/style = 'icons/mob/screen1_robot.dmi'
 	var/atom/movable/screen/using
 
 	var/list/types = list(
@@ -80,7 +81,7 @@ var/global/atom/movable/screen/robot_inventory
 //End of module select
 
 //Intent
-	add_intents('icons/mob/screen1_robot.dmi')
+	add_intents(style)
 
 //Health
 	add_healths(type = /atom/movable/screen/health/robot)
@@ -95,9 +96,7 @@ var/global/atom/movable/screen/robot_inventory
 	robot_inventory = new /atom/movable/screen/robot_inventory()
 
 	add_pullin(type = /atom/movable/screen/pull/robot)
-
-	mymob.zone_sel = new /atom/movable/screen/zone_sel/robot()
-	mymob.zone_sel.update_icon()
+	add_zone_sel(style)
 
 	//Handle the gun settings buttons
 	mymob.gun_setting_icon = new /atom/movable/screen/gun/mode(null)
@@ -106,7 +105,7 @@ var/global/atom/movable/screen/robot_inventory
 	if(mymob.client.gun_mode)
 		mymob.client.add_gun_icons()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.hands, mymob.gun_setting_icon, robot_inventory) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.hands, mymob.gun_setting_icon, robot_inventory) //, mymob.rest, mymob.sleep, mymob.mach )
 
 
 /datum/hud/proc/toggle_show_robot_modules()

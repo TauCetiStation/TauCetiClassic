@@ -75,8 +75,6 @@
 
 	add_healths(type = /atom/movable/screen/health/alien)
 	add_pullin(style)
+	add_zone_sel(style)
 
-	mymob.zone_sel = new /atom/movable/screen/zone_sel/alien()
-	mymob.zone_sel.update_icon()
-
-	mymob.client.screen += list(mymob.zone_sel, mymob.xenomorph_plasma_display)
+	mymob.client.screen += list(mymob.xenomorph_plasma_display)

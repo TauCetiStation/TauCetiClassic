@@ -299,12 +299,6 @@
 	cut_overlays()
 	add_overlay(image('icons/mob/zone_sel.dmi', "[selecting]"))
 
-/atom/movable/screen/zone_sel/alien
-	icon = 'icons/mob/screen1_xeno.dmi'
-
-/atom/movable/screen/zone_sel/robot
-	icon = 'icons/mob/screen1_robot.dmi'
-
 /atom/movable/screen/pull
 	name = "stop pulling"
 	icon = 'icons/mob/screen1_Midnight.dmi'

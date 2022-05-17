@@ -78,3 +78,8 @@
 	mymob.pullin = get_screen(type, icon)
 	mymob.pullin.update_icon(mymob)
 	hotkeybuttons += mymob.pullin
+
+/datum/hud/proc/add_zone_sel(icon = null, color = null, alpha = null, type = /atom/movable/screen/zone_sel)
+	mymob.zone_sel = get_screen(type, icon)
+	mymob.zone_sel.update_icon()
+	mymob.client.screen += mymob.zone_sel

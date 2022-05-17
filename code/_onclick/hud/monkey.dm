@@ -27,9 +27,7 @@
 
 	lingstingdisplay = new /atom/movable/screen/current_sting()
 
-	mymob.zone_sel = new /atom/movable/screen/zone_sel()
-	mymob.zone_sel.icon = ui_style
-	mymob.zone_sel.update_icon()
+	add_zone_sel(ui_style)
 
 	//Handle the gun settings buttons
 	mymob.gun_setting_icon = new /atom/movable/screen/gun/mode(null)
@@ -38,4 +36,4 @@
 	if(mymob.client.gun_mode)
 		mymob.client.add_gun_icons()
 
-	mymob.client.screen += list(mymob.zone_sel, mymob.healths, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list(mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )

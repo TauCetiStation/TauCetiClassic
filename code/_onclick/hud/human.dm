@@ -56,11 +56,7 @@
 
 	mymob.pain = new /atom/movable/screen( null )
 
-	mymob.zone_sel = new /atom/movable/screen/zone_sel( null )
-	mymob.zone_sel.icon = ui_style
-	mymob.zone_sel.color = ui_color
-	mymob.zone_sel.alpha = ui_alpha
-	mymob.zone_sel.update_icon()
+	add_zone_sel(ui_style, ui_color, ui_alpha)
 
 	if(isanycop(H) || isanygangster(H))
 		wanted_lvl = new /atom/movable/screen/wanted()
@@ -76,7 +72,7 @@
 	if(mymob.client.gun_mode)
 		mymob.client.add_gun_icons()
 
-	mymob.client.screen += list(mymob.zone_sel, mymob.nutrition_icon, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.nutrition_icon, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	inventory_shown = 0
 
 
