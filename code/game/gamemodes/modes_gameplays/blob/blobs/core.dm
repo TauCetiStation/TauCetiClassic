@@ -98,7 +98,7 @@ var/global/list/blob_nodes = list()
 	B.blob_core = src
 	src.overmind = B
 
-	var/datum/faction/blob_conglomerate/conglomerate = get_totally_faction(/datum/faction/blob_conglomerate)
+	var/datum/faction/blob_conglomerate/conglomerate = create_uniq_faction(/datum/faction/blob_conglomerate)
 	if(!conglomerate.get_member_by_mind(B.mind)) //We are not a member yet
 		var/ded = TRUE
 		if(conglomerate.members.len)

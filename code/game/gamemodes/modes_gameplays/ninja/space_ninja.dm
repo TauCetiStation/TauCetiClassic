@@ -30,7 +30,7 @@
 				spawn(0)
 					S.ninitialize(10, H)
 
-			var/datum/faction/ninja/N = get_totally_faction(/datum/faction/ninja)
+			var/datum/faction/ninja/N = create_uniq_faction(/datum/faction/ninja)
 			add_faction_member(N, H, FALSE)
 
 	else
