@@ -827,11 +827,11 @@
 		R.Namepick()
 
 /atom/movable/screen/show_pda_screens
-		name = "Show Pda Screens"
-		icon = 'icons/mob/screen1_robot.dmi'
-		icon_state = "pda"
-		screen_loc = ui_borg_show_pda
-		plane = ABOVE_HUD_PLANE
+	name = "Show Pda Screens"
+	icon = 'icons/mob/screen1_robot.dmi'
+	icon_state = "pda"
+	screen_loc = ui_borg_show_pda
+	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/show_pda_screens/action()
 	if(isrobot(usr))

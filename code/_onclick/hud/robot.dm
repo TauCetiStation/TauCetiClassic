@@ -100,7 +100,7 @@ var/global/atom/movable/screen/robot_inventory
 
 	add_gun_setting()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.hands, robot_inventory)
+	main += list( mymob.throw_icon, mymob.hands, robot_inventory)
 
 
 /datum/hud/proc/toggle_show_robot_modules()

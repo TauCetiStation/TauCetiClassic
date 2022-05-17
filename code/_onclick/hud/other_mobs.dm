@@ -22,7 +22,7 @@
 	blobpwrdisplay = new /atom/movable/screen/blob_power
 	blobhealthdisplay = new /atom/movable/screen/blob_health
 
-	mymob.client.screen += list(blobpwrdisplay, blobhealthdisplay)
+	main += list(blobpwrdisplay, blobhealthdisplay)
 
 /atom/movable/screen/essence_voice
 	name = "Voice"
@@ -112,7 +112,7 @@
 
 	var/atom/movable/screen/using = new /atom/movable/screen/ling_abilities()
 
-	mymob.client.screen += list(E.voice, E.phantom_s, using)
+	main += list(E.voice, E.phantom_s, using)
 	if(E.is_changeling)
 		using = new /atom/movable/screen/return_to_body()
-		mymob.client.screen += using
+		main += using

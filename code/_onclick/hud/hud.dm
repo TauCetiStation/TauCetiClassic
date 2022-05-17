@@ -40,9 +40,10 @@ var/global/list/available_ui_styles = list(
 	var/atom/movable/screen/staminadisplay
 	var/atom/movable/screen/wanted/wanted_lvl
 
+	var/list/main = list()
 	var/list/adding = list()
-	var/list/other = list()
 	var/list/hotkeybuttons = list()
+	var/list/other = list()
 
 	var/atom/movable/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
@@ -182,6 +183,7 @@ var/global/list/available_ui_styles = list(
 		ui_alpha = mymob.client.prefs.UI_style_alpha
 		default_hud()
 
+	mymob.client.screen += main
 	mymob.client.screen += adding + hotkeybuttons
 	mymob.client.screen += mymob.client.void
 
@@ -221,14 +223,8 @@ var/global/list/available_ui_styles = list(
 				mymob.client.screen += hotkeybuttons
 
 			action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
-			mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
-			mymob.client.screen += mymob.healths				//As are the rest of these.
-			mymob.client.screen += mymob.healthdoll
-			mymob.client.screen += mymob.internals
-			mymob.client.screen += lingstingdisplay
-			mymob.client.screen += lingchemdisplay
-			mymob.client.screen += mymob.gun_setting_icon
-
+			mymob.client.screen += main
+			
 			hidden_inventory_update()
 			persistant_inventory_update()
 			mymob.update_action_buttons()
@@ -243,9 +239,7 @@ var/global/list/available_ui_styles = list(
 				mymob.client.screen -= hotkeybuttons
 
 			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
-			mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.
-			mymob.client.screen -= lingstingdisplay
-			mymob.client.screen -= lingchemdisplay
+			mymob.client.screen -= main
 
 			//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
 			mymob.client.screen += l_hand_hud_object	//we want the hands to be visible
@@ -267,13 +261,7 @@ var/global/list/available_ui_styles = list(
 				mymob.client.screen -= hotkeybuttons
 
 			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
-			mymob.client.screen -= mymob.zone_sel	//zone_sel is a mob variable for some reason.
-			mymob.client.screen -= mymob.healths
-			mymob.client.screen -= mymob.healthdoll
-			mymob.client.screen -= mymob.internals
-			mymob.client.screen -= lingstingdisplay
-			mymob.client.screen -= lingchemdisplay
-			mymob.client.screen -= mymob.gun_setting_icon
+			mymob.client.screen -= main
 
 			hidden_inventory_update()
 			persistant_inventory_update()

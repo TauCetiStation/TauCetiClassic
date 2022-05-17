@@ -59,20 +59,20 @@
 	var/atom/movable/screen/internals = get_screen(type, icon)
 	mymob.internals = internals
 	internals.update_icon(mymob)
-	mymob.client.screen += internals
+	main += internals
 
 /datum/hud/proc/add_healths(icon = null, type = /atom/movable/screen/health)
 	mymob.healths = new type
-	mymob.client.screen += mymob.healths
+	main += mymob.healths
 
 /datum/hud/proc/add_health_doll(type = /atom/movable/screen/health_doll)
 	mymob.healthdoll = new type
-	mymob.client.screen += mymob.healthdoll
+	main += mymob.healthdoll
 
 /datum/hud/proc/add_nutrition_icon(type = /atom/movable/screen/nutrition)
 	mymob.nutrition_icon = new  type
 	mymob.nutrition_icon.update_icon(mymob)
-	mymob.client.screen += mymob.nutrition_icon
+	main += mymob.nutrition_icon
 
 /datum/hud/proc/add_pullin(icon = null, type = /atom/movable/screen/pull)
 	mymob.pullin = get_screen(type, icon)
@@ -82,7 +82,7 @@
 /datum/hud/proc/add_zone_sel(icon = null, color = null, alpha = null, type = /atom/movable/screen/zone_sel)
 	mymob.zone_sel = get_screen(type, icon)
 	mymob.zone_sel.update_icon()
-	mymob.client.screen += mymob.zone_sel
+	main += mymob.zone_sel
 
 /datum/hud/proc/add_gun_setting(type = /atom/movable/screen/gun/mode)
 	mymob.gun_setting_icon = new type
@@ -91,15 +91,15 @@
 	if(mymob.client.gun_mode)
 		mymob.client.add_gun_icons()
 
-	mymob.client.screen += mymob.gun_setting_icon
+	main += mymob.gun_setting_icon
 
 /datum/hud/proc/add_changeling()
 	lingchemdisplay = new /atom/movable/screen/chemical_display
-	mymob.client.screen += lingchemdisplay
+	main += lingchemdisplay
 
 	if(iscarbon(mymob))
 		lingstingdisplay = new /atom/movable/screen/current_sting
-		mymob.client.screen += lingstingdisplay
+		main += lingstingdisplay
 
 /datum/hud/proc/add_wanted_level()
 	wanted_lvl = new /atom/movable/screen/wanted

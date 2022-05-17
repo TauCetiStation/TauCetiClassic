@@ -77,4 +77,4 @@
 	add_pullin(ui_style)
 	add_zone_sel(ui_style)
 
-	mymob.client.screen += list(mymob.xenomorph_plasma_display)
+	main += list(mymob.xenomorph_plasma_display)
