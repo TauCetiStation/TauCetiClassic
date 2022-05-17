@@ -84,7 +84,7 @@
 
 	add_intents(ui_style)
 
-	var/types = list(
+	var/list/types = list(
 		/atom/movable/screen/resist/ian,
 		/atom/movable/screen/corgi/sit_lie,
 		/atom/movable/screen/drop,
@@ -99,9 +99,9 @@
 
 	add_corgi_ability(ui_style)
 
-	add_hands(ui_style, r_type = /atom/movable/screen/inventory/corgi_mouth, l_type = null)
+	add_hands(ui_style, r_type = /atom/movable/screen/inventory/corgi_mouth, l_type = FALSE)
 
-	var/list/types = list(
+	types = list(
 		/atom/movable/screen/inventory/corgi_neck,
 		/atom/movable/screen/inventory/back/ian
 	)

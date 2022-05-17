@@ -14,7 +14,7 @@
 
 	src.adding += get_screen(/atom/movable/screen/drop, ui_style)
 
-	add_hands(r_type = /atom/movable/screen/inventory/tail)
+	add_hands(r_type = /atom/movable/screen/inventory/tail, l_type = FALSE)
 
 	add_nightvision_icon()
 

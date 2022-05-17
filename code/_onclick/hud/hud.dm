@@ -210,7 +210,7 @@ var/global/list/available_ui_styles = list(
 	if(version > HUD_VERSIONS)	//If the requested version number is greater than the available versions, reset back to the first version
 		version = 1
 
-	switch(display_hud_version)
+	switch(version)
 		if(HUD_STYLE_STANDARD)	//Default HUD
 			hud_shown = TRUE	//Governs behavior of other procs
 
@@ -249,7 +249,7 @@ var/global/list/available_ui_styles = list(
 	mymob.update_action_buttons()
 	reorganize_alerts()
 
-	hud_version = display_hud_version
+	hud_version = version
 	create_parallax()
 	plane_masters_update()
 

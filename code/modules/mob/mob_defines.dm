@@ -13,16 +13,12 @@
 	var/old_y = 0
 
 	//Not in use yet
-	var/obj/effect/organstructure/organStructure = null
 
-	var/atom/movable/screen/hands = null
+	var/atom/movable/screen/module_icon = null
 	var/atom/movable/screen/pullin = null
 	var/atom/movable/screen/internals = null
-	var/atom/movable/screen/i_select = null
-	var/atom/movable/screen/m_select = null
 	var/atom/movable/screen/healths = null
 	var/atom/movable/screen/throw_icon = null
-	var/atom/movable/screen/pressure = null
 	var/atom/movable/screen/pain = null
 	var/atom/movable/screen/gun/item/item_use_icon = null
 	var/atom/movable/screen/gun/move/gun_move_icon = null

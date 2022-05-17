@@ -1,6 +1,3 @@
-var/global/atom/movable/screen/robot_inventory
-
-
 /datum/hud/proc/robot_hud()
 	ui_style = 'icons/mob/screen1_robot.dmi'
 	var/atom/movable/screen/using
@@ -65,19 +62,9 @@ var/global/atom/movable/screen/robot_inventory
 	init_screens(types, list_to = adding)
 
 //Module select
-
-	using = new /atom/movable/screen/robot_hands/first()
-	src.adding += using
-	mymob:inv1 = using
-
-	using = new /atom/movable/screen/robot_hands/second()
-	src.adding += using
-	mymob:inv2 = using
-
-	using = new /atom/movable/screen/robot_hands/third()
-	src.adding += using
-	mymob:inv3 = using
-
+	add_robot_hand_1()
+	add_robot_hand_2()
+	add_robot_hand_3()
 //End of module select
 
 //Intent
@@ -87,20 +74,19 @@ var/global/atom/movable/screen/robot_inventory
 	add_healths(type = /atom/movable/screen/health/robot)
 
 //Installed Module
-	mymob.hands = new /atom/movable/screen/module()
+	mymob.module_icon = new /atom/movable/screen/module
+	main += mymob.module_icon
 
 //Store
-	mymob.throw_icon = new /atom/movable/screen/store()
+	main += new /atom/movable/screen/store
 
 //Inventory
-	robot_inventory = new /atom/movable/screen/robot_inventory()
+	main += new /atom/movable/screen/robot_inventory
 
 	add_pullin(type = /atom/movable/screen/pull/robot)
 	add_zone_sel(ui_style)
 
 	add_gun_setting()
-
-	main += list( mymob.throw_icon, mymob.hands, robot_inventory)
 
 
 /datum/hud/proc/toggle_show_robot_modules()

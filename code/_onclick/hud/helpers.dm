@@ -128,7 +128,7 @@
 	adding += staminadisplay
 
 /datum/hud/proc/add_corgi_ability(icon)
-	var/atom/movable/screen/using = get_screen(atom/movable/screen/corgi/ability, icon)
+	var/atom/movable/screen/using = get_screen(/atom/movable/screen/corgi/ability, icon)
 	using.update_icon(mymob)
 	adding += using
 
@@ -143,3 +143,18 @@
 	E.phantom_s = new /atom/movable/screen/essence_phantom()
 	E.phantom_s.update_icon(mymob)
 	main += E.phantom_s
+
+/datum/hud/proc/add_robot_hand_1()
+	var/atom/movable/screen/robot_hands/first/using = new
+	adding += using
+	mymob:inv1 = using
+
+/datum/hud/proc/add_robot_hand_2()
+	var/atom/movable/screen/robot_hands/second/using = new
+	adding += using
+	mymob:inv2 = using
+
+/datum/hud/proc/add_robot_hand_3()
+	var/atom/movable/screen/robot_hands/third/using = new
+	adding += using
+	mymob:inv3 = using

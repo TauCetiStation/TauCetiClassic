@@ -560,6 +560,9 @@
 		var/mob/living/silicon/robot/R = usr
 		R.pick_module()
 
+/atom/movable/screen/module/update_icon(mob/living/silicon/robot/mymob)
+	icon_state = mymob.module ? lowertext(mymob.modtype) : initial(icon_state)
+
 /atom/movable/screen/robot_inventory
 	name = "inventory"
 	icon = 'icons/mob/screen1_robot.dmi'

@@ -11,7 +11,7 @@
 
 	add_intents(ui_style)
 	add_move_intent(ui_style)
-	add_hands(r_type = /atom/movable/screen/inventory/larva_mouth, l_type = null)
+	add_hands(r_type = /atom/movable/screen/inventory/larva_mouth, l_type = FALSE)
 	add_nightvision_icon()
 	add_healths(type = /atom/movable/screen/health/alien)
 	add_pullin(ui_style)
