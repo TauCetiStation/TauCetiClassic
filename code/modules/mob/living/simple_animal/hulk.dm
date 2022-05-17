@@ -47,7 +47,7 @@
 
 /mob/living/simple_animal/hulk/atom_init()
 	attack_sound = SOUNDIN_PUNCH_HEAVY
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hulk/human
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_jump,

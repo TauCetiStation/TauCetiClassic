@@ -399,7 +399,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/atom_init()
 	attack_sound = SOUNDIN_PUNCH_HEAVY
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	..()

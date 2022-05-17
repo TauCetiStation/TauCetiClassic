@@ -276,7 +276,7 @@
 
 /mob/living/simple_animal/construct/proteon/atom_init()
 	attack_sound = SOUNDIN_PUNCH_HEAVY
-	..()
+	. = ..()
 
 
 /////////////////////////////////////Charged Pylon not construct/////////////////////////////////
