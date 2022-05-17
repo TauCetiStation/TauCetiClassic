@@ -367,7 +367,7 @@
 	clothes_req = 0
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets)
-	usr.emote("scream", auto = FALSE)
+	usr.emote("scream", intentional = TRUE)
 	playsound(usr, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/turf/T in targets)
