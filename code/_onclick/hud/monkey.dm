@@ -22,13 +22,6 @@
 	add_internals(ui_style)
 	add_healths(ui_style)
 	add_pullin(ui_style)
-
-	lingchemdisplay = new /atom/movable/screen/chemical_display()
-
-	lingstingdisplay = new /atom/movable/screen/current_sting()
-
+	add_changeling()
 	add_zone_sel(ui_style)
-
 	add_gun_setting()
-
-	mymob.client.screen += list(lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )

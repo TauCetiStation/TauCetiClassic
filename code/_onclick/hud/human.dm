@@ -50,9 +50,7 @@
 	add_nutrition_icon()
 	add_pullin(ui_style)
 
-	lingchemdisplay = new /atom/movable/screen/chemical_display()
-
-	lingstingdisplay = new /atom/movable/screen/current_sting()
+	add_changeling()
 
 	mymob.pain = new /atom/movable/screen( null )
 
@@ -67,7 +65,6 @@
 
 	add_gun_setting()
 
-	mymob.client.screen += list( lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	inventory_shown = 0
 
 

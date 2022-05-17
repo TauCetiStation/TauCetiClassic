@@ -92,3 +92,11 @@
 		mymob.client.add_gun_icons()
 
 	mymob.client.screen += mymob.gun_setting_icon
+
+/datum/hud/proc/add_changeling()
+	lingchemdisplay = new /atom/movable/screen/chemical_display()
+	mymob.client.screen += lingchemdisplay
+
+	if(iscarbon(mymob))
+		lingstingdisplay = new /atom/movable/screen/current_sting()
+		mymob.client.screen += lingstingdisplay

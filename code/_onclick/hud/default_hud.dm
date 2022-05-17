@@ -6,7 +6,6 @@
 	add_zone_sel(ui_style, ui_color, ui_alpha)
 	add_pullin(ui_style)
 
-	lingchemdisplay = new /atom/movable/screen/chemical_display()
+	add_changeling()
 
-	mymob.client.screen += list(lingchemdisplay)
 	inventory_shown = 0
