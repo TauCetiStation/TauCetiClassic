@@ -371,9 +371,6 @@
 /atom/movable/screen/resist/ian
 	screen_loc = ui_drop_throw
 
-/atom/movable/screen/resist/alien
-	icon = 'icons/mob/screen1_xeno.dmi'
-
 /atom/movable/screen/move_intent
 	name = "mov_intent"
 	screen_loc = ui_movi
@@ -550,9 +547,6 @@
 
 /atom/movable/screen/drop/action()
 	usr.drop_item()
-
-/atom/movable/screen/drop/alien
-	icon = 'icons/mob/screen1_xeno.dmi'
 
 // Robots
 /atom/movable/screen/module
@@ -1081,7 +1075,6 @@
 	screen_loc = ui_swaphand1
 
 /atom/movable/screen/inventory/swap/first/alien
-	icon = 'icons/mob/screen1_xeno.dmi'
 	icon_state = "swap_1"
 
 /atom/movable/screen/inventory/swap/second
@@ -1089,7 +1082,6 @@
 	screen_loc = ui_swaphand2
 
 /atom/movable/screen/inventory/swap/second/alien
-	icon = 'icons/mob/screen1_xeno.dmi'
 	icon_state = "swap_2"
 
 /atom/movable/screen/inventory/craft

@@ -49,12 +49,12 @@
 	add_hands(style)
 
 	var/list/types = list(
-		/atom/movable/screen/drop/alien,
+		/atom/movable/screen/drop,
 		/atom/movable/screen/inventory/swap/first/alien,
 		/atom/movable/screen/inventory/swap/second/alien,
-		/atom/movable/screen/resist/alien,
+		/atom/movable/screen/resist,
 	)
-	init_screens(types, list_to = hotkeybuttons)
+	init_screens(types, style, list_to = hotkeybuttons)
 
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
 	src.adding += mymob.nightvisionicon

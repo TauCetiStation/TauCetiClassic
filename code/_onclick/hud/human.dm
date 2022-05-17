@@ -57,8 +57,7 @@
 	add_zone_sel(ui_style, ui_color, ui_alpha)
 
 	if(isanycop(H) || isanygangster(H))
-		wanted_lvl = new /atom/movable/screen/wanted()
-		adding += wanted_lvl
+		add_wanted_level()
 
 	if(mymob.leap_icon)
 		src.adding += mymob.leap_icon

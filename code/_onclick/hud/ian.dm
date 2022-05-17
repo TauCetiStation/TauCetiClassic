@@ -86,9 +86,12 @@
 
 	add_intents(ui_style)
 
-	using = new /atom/movable/screen/resist/ian
-	using.icon = ui_style
-	src.hotkeybuttons += using
+	var/types = list(
+		/atom/movable/screen/resist/ian,
+		/atom/movable/screen/corgi/sit_lie,
+		/atom/movable/screen/drop,
+	)
+	init_screens(types, ui_style, list_to = hotkeybuttons)
 
 	add_move_intent(ui_style)
 
@@ -96,14 +99,6 @@
 	using.update_icon(mymob)
 	src.adding += using
 	staminadisplay = using
-
-	using = new /atom/movable/screen/corgi/sit_lie()
-	using.icon = ui_style
-	src.adding += using
-
-	using = new /atom/movable/screen/drop
-	using.icon = ui_style
-	src.adding += using
 
 	using = new /atom/movable/screen/inventory/head/ian
 	using.icon = ui_style
@@ -114,10 +109,7 @@
 	using.update_icon(mymob)
 	src.adding += using
 
-	using = new /atom/movable/screen/inventory/corgi_mouth
-	using.icon = ui_style
-	src.r_hand_hud_object = using
-	src.adding += using
+	add_hands(ui_style, r_type = /atom/movable/screen/inventory/corgi_mouth, l_type = null)
 
 	var/list/types = list(
 		/atom/movable/screen/inventory/corgi_neck,
@@ -127,9 +119,4 @@
 
 	add_healths(ui_style)
 	add_pullin(ui_style)
-
-	mymob.zone_sel = new
-	mymob.zone_sel.icon = ui_style
-	mymob.zone_sel.update_icon()
-
-	mymob.client.screen += list(mymob.zone_sel)
+	add_zone_sel(ui_style)

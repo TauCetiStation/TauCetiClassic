@@ -94,9 +94,13 @@
 	mymob.client.screen += mymob.gun_setting_icon
 
 /datum/hud/proc/add_changeling()
-	lingchemdisplay = new /atom/movable/screen/chemical_display()
+	lingchemdisplay = new /atom/movable/screen/chemical_display
 	mymob.client.screen += lingchemdisplay
 
 	if(iscarbon(mymob))
-		lingstingdisplay = new /atom/movable/screen/current_sting()
+		lingstingdisplay = new /atom/movable/screen/current_sting
 		mymob.client.screen += lingstingdisplay
+
+/datum/hud/proc/add_wanted_level()
+	wanted_lvl = new /atom/movable/screen/wanted
+	adding += wanted_lvl
