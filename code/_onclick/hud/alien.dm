@@ -11,6 +11,9 @@
 		var/mob/living/carbon/xenomorph/humanoid/hunter/AH = usr
 		AH.toggle_leap()
 
+/atom/movable/screen/xenomorph/leap/update_icon(mob/living/carbon/xenomorph/humanoid/hunter/AH)
+	icon_state = "leap_[AH.leap_on_click ? "on":"off"]"
+
 /atom/movable/screen/xenomorph/nightvision
 	name = "toggle night-vision"
 	icon_state = "nightvision1"
