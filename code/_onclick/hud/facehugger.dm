@@ -16,8 +16,7 @@
 
 	add_hands(r_type = /atom/movable/screen/inventory/tail)
 
-	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
-	src.adding += mymob.nightvisionicon
+	add_nightvision_icon()
 
 	add_healths(type = /atom/movable/screen/health/alien)
 	add_pullin(ui_style)

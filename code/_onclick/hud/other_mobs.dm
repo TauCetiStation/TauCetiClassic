@@ -99,20 +99,15 @@
 /datum/hud/proc/changeling_essence_hud()
 	var/mob/living/parasite/essence/E = mymob
 
-	E.voice = new /atom/movable/screen/essence_voice()
-	E.voice.update_icon(mymob)
-
-	E.phantom_s = new /atom/movable/screen/essence_phantom()
-	E.phantom_s.update_icon(mymob)
+	add_essence_voice()
+	add_phantom()
 
 	add_internals(ui_style)
 	add_healths()
 	add_health_doll()
 	add_changeling()
 
-	var/atom/movable/screen/using = new /atom/movable/screen/ling_abilities()
+	main += new /atom/movable/screen/ling_abilities
 
-	main += list(E.voice, E.phantom_s, using)
 	if(E.is_changeling)
-		using = new /atom/movable/screen/return_to_body()
-		main += using
+		main += new /atom/movable/screen/return_to_body

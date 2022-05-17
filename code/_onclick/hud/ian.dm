@@ -81,7 +81,6 @@
 		return
 
 	ui_style = 'icons/mob/screen_corgi.dmi'
-	var/atom/movable/screen/using
 
 	add_intents(ui_style)
 
@@ -94,19 +93,11 @@
 
 	add_move_intent(ui_style)
 
-	using = new /atom/movable/screen/corgi/stamina_bar()
-	using.update_icon(mymob)
-	src.adding += using
-	staminadisplay = using
+	add_stamina_display()
 
-	using = new /atom/movable/screen/inventory/head/ian
-	using.icon = ui_style
-	src.other += using
+	adding += get_screen(/atom/movable/screen/inventory/head/ian, ui_style)
 
-	using = new /atom/movable/screen/corgi/ability()
-	using.icon = ui_style
-	using.update_icon(mymob)
-	src.adding += using
+	add_corgi_ability(ui_style)
 
 	add_hands(ui_style, r_type = /atom/movable/screen/inventory/corgi_mouth, l_type = null)
 

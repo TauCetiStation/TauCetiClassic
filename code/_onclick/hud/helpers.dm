@@ -104,3 +104,42 @@
 /datum/hud/proc/add_wanted_level()
 	wanted_lvl = new /atom/movable/screen/wanted
 	adding += wanted_lvl
+
+/datum/hud/proc/add_nightvision_icon()
+	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision
+	adding += mymob.nightvisionicon
+
+/datum/hud/proc/add_leap_icon()
+	mymob.leap_icon = new /atom/movable/screen/xenomorph/leap
+	adding += mymob.leap_icon
+
+/datum/hud/proc/add_neurotoxin_icon()
+	mymob.neurotoxin_icon = new /atom/movable/screen/xenomorph/neurotoxin
+	adding += mymob.neurotoxin_icon
+
+/datum/hud/proc/add_plasma_display()
+	mymob.xenomorph_plasma_display = new /atom/movable/screen/xenomorph/plasma_display
+	mymob.xenomorph_plasma_display.update_icon(mymob)
+	main += mymob.xenomorph_plasma_display
+
+/datum/hud/proc/add_stamina_display()
+	staminadisplay = new /atom/movable/screen/corgi/stamina_bar
+	staminadisplay.update_icon(mymob)
+	adding += staminadisplay
+
+/datum/hud/proc/add_corgi_ability(icon)
+	var/atom/movable/screen/using = get_screen(atom/movable/screen/corgi/ability, icon)
+	using.update_icon(mymob)
+	adding += using
+
+/datum/hud/proc/add_essence_voice()
+	var/mob/living/parasite/essence/E = mymob
+	E.voice = new /atom/movable/screen/essence_voice
+	E.voice.update_icon(mymob)
+	main += E.voice
+
+/datum/hud/proc/add_phantom()
+	var/mob/living/parasite/essence/E = mymob
+	E.phantom_s = new /atom/movable/screen/essence_phantom()
+	E.phantom_s.update_icon(mymob)
+	main += E.phantom_s

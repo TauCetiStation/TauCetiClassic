@@ -45,8 +45,6 @@
 /datum/hud/proc/alien_hud()
 	ui_style = 'icons/mob/screen1_xeno.dmi'
 
-	var/atom/movable/screen/using
-
 	add_intents(ui_style)
 	add_move_intent(ui_style)
 	add_hands(ui_style)
@@ -59,25 +57,16 @@
 	)
 	init_screens(types, ui_style, list_to = hotkeybuttons)
 
-	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
-	src.adding += mymob.nightvisionicon
+	add_nightvision_icon()
 
 	if(isxenohunter(mymob))
-		mymob.leap_icon = new /atom/movable/screen/xenomorph/leap()
-		src.adding += mymob.leap_icon
+		add_leap_icon()
 
 	if(locate(/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin) in mymob.verbs)
-		mymob.neurotoxin_icon = new /atom/movable/screen/xenomorph/neurotoxin()
-		src.adding += mymob.neurotoxin_icon
+		add_neurotoxin_icon()
 
 	add_throw_icon(ui_style)
-
-	using = new /atom/movable/screen/xenomorph/plasma_display()
-	mymob.xenomorph_plasma_display = using
-	using.update_icon(mymob)
-
+	add_plasma_display()
 	add_healths(type = /atom/movable/screen/health/alien)
 	add_pullin(ui_style)
 	add_zone_sel(ui_style)
-
-	main += list(mymob.xenomorph_plasma_display)
