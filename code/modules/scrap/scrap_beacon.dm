@@ -13,15 +13,18 @@
 	var/last_summon = -3000
 	var/active = 0
 	var/emagged = FALSE
+	var/summon_cost = 100
 
 /obj/structure/scrap_beacon/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if((last_summon + summon_cooldown) >= world.time)
 		to_chat(user, "<span class='notice'>[src.name] not charged yet.</span>")
 		return
+	var/spend = round(input(user, "How many credits you want to spend to buy scrap? 0 to [global.cargo_account.money]", 0) as num|null)
+	spend = clamp(spend, 0, global.cargo_account.money)
 	last_summon = world.time
 	if(!active)
-		start_scrap_summon()
+		start_scrap_summon(spend)
 
 /obj/structure/scrap_beacon/update_icon()
 	icon_state = "beacon[active]"
@@ -35,7 +38,7 @@
 	impact_speed = 1
 	return TRUE
 
-/obj/structure/scrap_beacon/proc/start_scrap_summon()
+/obj/structure/scrap_beacon/proc/start_scrap_summon(spend)
 	set waitfor = FALSE
 
 	active = 1
@@ -56,7 +59,24 @@
 		sleep(impact_speed)
 		var/turf/newloc = pick(flooring_near_beacon)
 		flooring_near_beacon -= newloc
-		new /obj/effect/falling_effect(newloc, /obj/random/scrap/moderate_weighted)
+		if(spend < 5)
+			continue
+		else if(spend >= 5000)
+			charge_to_account(global.cargo_account.account_number, global.cargo_account.account_number, "Scrap bought", "CentComm", -5000)
+			spend -= 5000
+			new /obj/effect/falling_effect(newloc, /obj/random/scrap/dense_weighted)
+		else if(spend >= 500)
+			charge_to_account(global.cargo_account.account_number, global.cargo_account.account_number, "Scrap bought", "CentComm", -500)
+			spend -= 500
+			new /obj/effect/falling_effect(newloc, /obj/random/scrap/moderate_weighted)
+		else if(spend >= 50)
+			charge_to_account(global.cargo_account.account_number, global.cargo_account.account_number, "Scrap bought", "CentComm", -50)
+			spend -= 50
+			new /obj/effect/falling_effect(newloc, /obj/random/scrap/sparse_weighted)
+		else if(spend >= 5)
+			charge_to_account(global.cargo_account.account_number, global.cargo_account.account_number, "Scrap bought", "CentComm", -5)
+			spend -= 5
+			new /obj/effect/falling_effect(newloc, /obj/random/scrap/safe_even)
 	active = 0
 	update_icon()
 	return

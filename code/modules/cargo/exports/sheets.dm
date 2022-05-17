@@ -148,7 +148,7 @@
 
 // Refined scrap. The coal of 26 century. The reason why you are here.
 /datum/export/stack/scrap
-	cost = 250
+	cost = 10
 	export_types = list(/obj/item/stack/sheet/refined_scrap)
 	message = "of scrap"
 
