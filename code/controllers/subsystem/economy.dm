@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(economy)
 	name = "Economy"
-	wait = 15 MINUTES
+	wait = 10 MINUTES
 	init_order = SS_INIT_DEFAULT
 	flags = SS_NO_INIT
 
