@@ -126,13 +126,10 @@
 	init_screens(types, ui_style, list_to = adding)
 
 	add_healths(ui_style)
-
-	mymob.pullin = new /atom/movable/screen/pull()
-	mymob.pullin.icon = ui_style
-	mymob.pullin.update_icon(mymob)
+	add_pullin(ui_style)
 
 	mymob.zone_sel = new
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.update_icon()
 
-	mymob.client.screen += list(mymob.zone_sel, mymob.pullin)
+	mymob.client.screen += list(mymob.zone_sel)

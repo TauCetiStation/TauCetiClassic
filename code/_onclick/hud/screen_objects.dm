@@ -317,12 +317,9 @@
 /atom/movable/screen/pull/update_icon(mob/mymob)
 	icon_state = mymob.pulling ? "pull1" : "pull0"
 
-/atom/movable/screen/pull/borg
+/atom/movable/screen/pull/robot
 	icon = 'icons/mob/screen1_robot.dmi'
 	screen_loc = ui_borg_pull
-
-/atom/movable/screen/pull/alien
-	icon = 'icons/mob/screen1_xeno.dmi'
 
 /atom/movable/screen/toggle
 	name = "toggle"

@@ -21,10 +21,7 @@
 	add_throw_icon(ui_style)
 	add_internals(ui_style)
 	add_healths(ui_style)
-
-	mymob.pullin = new /atom/movable/screen/pull()
-	mymob.pullin.icon = ui_style
-	mymob.pullin.update_icon(mymob)
+	add_pullin(ui_style)
 
 	lingchemdisplay = new /atom/movable/screen/chemical_display()
 
@@ -41,4 +38,4 @@
 	if(mymob.client.gun_mode)
 		mymob.client.add_gun_icons()
 
-	mymob.client.screen += list(mymob.zone_sel, mymob.healths, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list(mymob.zone_sel, mymob.healths, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )

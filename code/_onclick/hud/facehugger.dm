@@ -7,14 +7,12 @@
 
 
 /datum/hud/proc/facehugger_hud()
-	var/atom/movable/screen/using
+	var/style = 'icons/mob/screen1_xeno.dmi'
 
-	add_intents('icons/mob/screen1_xeno.dmi')
+	add_intents(style)
+	add_move_intent(style)
 
-	add_move_intent('icons/mob/screen1_xeno.dmi')
-
-	using = new /atom/movable/screen/drop/alien()
-	src.adding += using
+	src.adding += get_screen(/atom/movable/screen/drop, style)
 
 	add_hands(r_type = /atom/movable/screen/inventory/tail)
 
@@ -22,11 +20,9 @@
 	src.adding += mymob.nightvisionicon
 
 	add_healths(type = /atom/movable/screen/health/alien)
-
-	mymob.pullin = new /atom/movable/screen/pull/alien()
-	mymob.pullin.update_icon(mymob)
+	add_pullin(style)
 
 	mymob.zone_sel = new /atom/movable/screen/zone_sel()
 	mymob.zone_sel.update_icon()
 
-	mymob.client.screen += list( mymob.zone_sel, mymob.pullin)
+	mymob.client.screen += list( mymob.zone_sel)

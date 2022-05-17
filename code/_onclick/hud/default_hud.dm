@@ -9,10 +9,7 @@
 	mymob.zone_sel.alpha = ui_alpha
 	mymob.zone_sel.update_icon()
 
-	mymob.pullin = new /atom/movable/screen/pull()
-	mymob.pullin.icon = ui_style
-	mymob.pullin.update_icon(mymob)
-	src.hotkeybuttons += mymob.pullin
+	add_pullin(ui_style)
 
 	lingchemdisplay = new /atom/movable/screen/chemical_display()
 

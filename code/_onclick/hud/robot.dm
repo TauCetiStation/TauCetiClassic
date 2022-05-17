@@ -94,8 +94,7 @@ var/global/atom/movable/screen/robot_inventory
 //Inventory
 	robot_inventory = new /atom/movable/screen/robot_inventory()
 
-	mymob.pullin = new /atom/movable/screen/pull()
-	mymob.pullin.update_icon(mymob)
+	add_pullin(type = /atom/movable/screen/pull/robot)
 
 	mymob.zone_sel = new /atom/movable/screen/zone_sel/robot()
 	mymob.zone_sel.update_icon()
@@ -107,7 +106,7 @@ var/global/atom/movable/screen/robot_inventory
 	if(mymob.client.gun_mode)
 		mymob.client.add_gun_icons()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.hands, mymob.pullin, mymob.gun_setting_icon, robot_inventory) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.hands, mymob.gun_setting_icon, robot_inventory) //, mymob.rest, mymob.sleep, mymob.mach )
 
 
 /datum/hud/proc/toggle_show_robot_modules()

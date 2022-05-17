@@ -69,4 +69,12 @@
 	mymob.healthdoll = new type
 	mymob.client.screen += mymob.healthdoll
 
-	
+/datum/hud/proc/add_nutrition_icon(type = /atom/movable/screen/nutrition)
+	mymob.nutrition_icon = new  type
+	mymob.nutrition_icon.update_icon(mymob)
+	mymob.client.screen += mymob.nutrition_icon
+
+/datum/hud/proc/add_pullin(icon = null, type = /atom/movable/screen/pull)
+	mymob.pullin = get_screen(type, icon)
+	mymob.pullin.update_icon(mymob)
+	hotkeybuttons += mymob.pullin

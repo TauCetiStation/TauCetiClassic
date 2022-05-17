@@ -47,14 +47,8 @@
 	add_internals(ui_style)
 	add_healths(ui_style)
 	add_health_doll()
-
-	mymob.nutrition_icon = new  /atom/movable/screen/nutrition()
-	mymob.nutrition_icon.update_icon(mymob)
-
-	mymob.pullin = new /atom/movable/screen/pull()
-	mymob.pullin.icon = ui_style
-	mymob.pullin.update_icon(mymob)
-	src.hotkeybuttons += mymob.pullin
+	add_nutrition_icon()
+	add_pullin(ui_style)
 
 	lingchemdisplay = new /atom/movable/screen/chemical_display()
 
