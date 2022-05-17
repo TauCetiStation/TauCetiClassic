@@ -2285,13 +2285,11 @@
 	},
 /area/custom/wizard_station)
 "afT" = (
-/obj/effect/landmark/blockway,
-/turf/unsimulated/floor/snow{
-	nitrogen = 100;
-	oxygen = 25;
-	temperature = 243
+/obj/structure/object_wall/standart{
+	icon_state = "swall12"
 	},
-/area/space)
+/turf/environment/space,
+/area/velocity/monorailwagon)
 "afU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light,
@@ -8626,7 +8624,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "auJ" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -8912,12 +8910,12 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "avo" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "avp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -9384,7 +9382,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "aws" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -10020,7 +10018,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "axO" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,4"
@@ -22524,7 +22522,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dJb" = (
 /obj/machinery/door/airlock/glass{
 	icon_state = "door_locked";
@@ -22533,7 +22531,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dKb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall12"
@@ -22592,7 +22590,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dPb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -22602,7 +22600,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dQb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -22707,14 +22705,14 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dXb" = (
 /obj/structure/shuttle/window{
 	icon_state = "2"
 	},
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
-/area/velocity)
+/area/velocity/monorailwagon)
 "dYb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -22755,14 +22753,14 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "ebb" = (
 /obj/structure/sign/monorail_map,
 /obj/structure/object_wall/standart{
 	icon_state = "swall3"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "ecb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	icon_state = "chair_a02"
@@ -22846,7 +22844,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "ekb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -22885,13 +22883,13 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "eob" = (
 /obj/machinery/door/airlock/glass,
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "epb" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Just billboard";
@@ -22902,7 +22900,7 @@
 	icon_state = "swall12"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "eqb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall_f9"
@@ -22913,7 +22911,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "erb" = (
 /obj/structure/sign/mark{
 	icon_state = "b4"
@@ -22946,7 +22944,7 @@
 	icon_state = "swall12"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "ewb" = (
 /obj/structure/sign/mark{
 	icon_state = "b2"
@@ -24758,7 +24756,7 @@
 	dir = 8;
 	icon_state = "warnplate"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "hNb" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -24786,7 +24784,7 @@
 	dir = 8;
 	icon_state = "warnplate"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "hRb" = (
 /turf/unsimulated/floor{
 	icon_state = "warning"
@@ -28421,6 +28419,12 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"rse" = (
+/obj/structure/object_wall/standart{
+	icon_state = "swall3"
+	},
+/turf/environment/space,
+/area/velocity/monorailwagon)
 "rXM" = (
 /obj/machinery/light{
 	dir = 4
@@ -31246,13 +31250,13 @@ abl
 baY
 abi
 abi
-afT
-afT
+baV
+baV
 aDf
-afT
-afT
-afT
-afT
+baV
+baV
+baV
+baV
 abh
 abi
 abi
@@ -31503,14 +31507,14 @@ abh
 abi
 abi
 baB
-afT
+baV
 abg
 aaY
 aaY
 aaY
 abg
-afT
-afT
+baV
+baV
 abi
 abl
 abi
@@ -31756,8 +31760,8 @@ abh
 abi
 bbx
 abi
-afT
-afT
+baV
+baV
 baW
 aCn
 abg
@@ -32011,9 +32015,9 @@ abi
 abh
 abi
 abi
-afT
+baV
 bco
-afT
+baV
 baH
 abl
 baQ
@@ -32024,10 +32028,10 @@ aDx
 aDR
 aGu
 abg
-afT
+baV
 aFU
-afT
-afT
+baV
+baV
 baB
 bbg
 abi
@@ -32265,9 +32269,9 @@ abi
 abi
 baM
 abi
-afT
+baV
 baB
-afT
+baV
 baP
 abi
 bdu
@@ -32522,7 +32526,7 @@ abi
 abh
 abi
 baP
-afT
+baV
 abi
 bbg
 aCX
@@ -32542,7 +32546,7 @@ abi
 abi
 abh
 abi
-afT
+baV
 abh
 abi
 abi
@@ -32777,8 +32781,8 @@ abh
 abi
 abi
 abi
-afT
-afT
+baV
+baV
 bbY
 aCF
 aCU
@@ -32800,7 +32804,7 @@ bbd
 baO
 abi
 baB
-afT
+baV
 bbg
 abi
 abi
@@ -33291,7 +33295,7 @@ abi
 abi
 abh
 abl
-afT
+baV
 baS
 abi
 abi
@@ -33314,7 +33318,7 @@ aGL
 abi
 baz
 abi
-afT
+baV
 aGh
 abi
 abi
@@ -33549,7 +33553,7 @@ abi
 abi
 abh
 abi
-afT
+baV
 baQ
 abi
 abi
@@ -33805,7 +33809,7 @@ abi
 baY
 abi
 abi
-afT
+baV
 baV
 abi
 abi
@@ -33828,8 +33832,8 @@ abi
 aCj
 abi
 abi
-afT
-afT
+baV
+baV
 baQ
 abi
 abi
@@ -34319,7 +34323,7 @@ abi
 abl
 afR
 abi
-afT
+baV
 baW
 abi
 abk
@@ -34342,7 +34346,7 @@ abg
 abk
 abi
 aGf
-afT
+baV
 baY
 abi
 abi
@@ -34577,7 +34581,7 @@ abi
 abi
 abh
 baO
-afT
+baV
 baw
 abi
 bbf
@@ -34833,7 +34837,7 @@ abh
 abt
 abi
 baD
-afT
+baV
 baB
 afR
 abi
@@ -34854,10 +34858,10 @@ aaY
 bcp
 bdO
 abg
-afT
+baV
 aGc
-afT
-afT
+baV
+baV
 baY
 abi
 abi
@@ -35114,8 +35118,8 @@ abg
 abg
 abg
 abg
-afT
-afT
+baV
+baV
 abh
 abi
 aeD
@@ -35346,7 +35350,7 @@ abi
 abi
 abh
 abi
-afT
+baV
 baQ
 abi
 abi
@@ -35372,7 +35376,7 @@ aBr
 aBx
 abg
 abg
-afT
+baV
 abi
 abh
 aeD
@@ -35860,7 +35864,7 @@ abi
 abi
 abh
 abi
-afT
+baV
 baQ
 abi
 abt
@@ -35886,7 +35890,7 @@ aBs
 aEx
 aGO
 abg
-afT
+baV
 abi
 abi
 aeD
@@ -36116,7 +36120,7 @@ abi
 abh
 abi
 abi
-afT
+baV
 baC
 abi
 abi
@@ -36143,7 +36147,7 @@ aFt
 aEy
 aBN
 abg
-afT
+baV
 abi
 abl
 aeD
@@ -36400,7 +36404,7 @@ aBw
 aBr
 abg
 abg
-afT
+baV
 abi
 abh
 aeD
@@ -36630,7 +36634,7 @@ abi
 abi
 abi
 abi
-afT
+baV
 baH
 abi
 abi
@@ -36656,8 +36660,8 @@ abg
 abg
 abg
 abg
-afT
-afT
+baV
+baV
 abi
 abi
 aeD
@@ -36887,9 +36891,9 @@ abi
 abh
 abi
 abk
-afT
+baV
 baN
-afT
+baV
 baB
 baO
 abi
@@ -36910,10 +36914,10 @@ aaY
 bdR
 aEU
 abg
-afT
-afT
+baV
+baV
 aFU
-afT
+baV
 abi
 abh
 abi
@@ -37147,7 +37151,7 @@ abi
 abl
 abh
 afR
-afT
+baV
 abh
 abi
 bbd
@@ -37424,7 +37428,7 @@ abg
 abg
 abg
 abi
-afT
+baV
 baB
 bbg
 abi
@@ -37660,8 +37664,8 @@ abi
 afR
 abi
 abh
-afT
-afT
+baV
+baV
 bay
 abi
 abi
@@ -37939,7 +37943,7 @@ abk
 abi
 bbz
 abi
-afT
+baV
 abh
 abi
 aGi
@@ -38174,8 +38178,8 @@ abi
 abi
 abi
 abh
-afT
-afT
+baV
+baV
 bbe
 bbd
 aCY
@@ -38197,7 +38201,7 @@ abi
 baO
 abi
 baB
-afT
+baV
 bbg
 abi
 bbf
@@ -38711,7 +38715,7 @@ abl
 abi
 aGe
 abi
-afT
+baV
 aGh
 abi
 abi
@@ -38946,7 +38950,7 @@ abi
 abi
 abi
 abh
-afT
+baV
 baM
 abi
 abi
@@ -38969,7 +38973,7 @@ abi
 afR
 abi
 baM
-afT
+baV
 baQ
 abi
 abi
@@ -39203,8 +39207,8 @@ abi
 abi
 abh
 abi
-afT
-afT
+baV
+baV
 abh
 abl
 baQ
@@ -39225,8 +39229,8 @@ abi
 abi
 abh
 bbg
-afT
-afT
+baV
+baV
 abi
 aGj
 abi
@@ -39461,8 +39465,8 @@ abi
 abi
 abi
 bau
-afT
-afT
+baV
+baV
 baB
 abi
 abi
@@ -39720,13 +39724,13 @@ abi
 abi
 abh
 abi
-afT
+baV
 baB
 abi
-afT
+baV
 baB
 aDu
-afT
+baV
 aaY
 bbk
 aDd
@@ -39737,9 +39741,9 @@ aaY
 abi
 aFw
 abk
-afT
+baV
 baB
-afT
+baV
 baQ
 abi
 abi
@@ -39978,9 +39982,9 @@ abi
 abi
 abh
 abi
-afT
+baV
 baB
-afT
+baV
 abl
 abi
 baB
@@ -39992,9 +39996,9 @@ bbi
 abg
 abg
 baB
-afT
+baV
 aGc
-afT
+baV
 abi
 baM
 abi
@@ -40240,15 +40244,15 @@ abi
 bbe
 abi
 abk
-afT
-afT
+baV
+baV
 abg
 aaY
 aaY
 aaY
 abg
-afT
-afT
+baV
+baV
 abh
 abi
 bbg
@@ -40498,13 +40502,13 @@ abi
 abh
 abi
 abi
-afT
+baV
 baB
-afT
+baV
 aET
-afT
-afT
-afT
+baV
+baV
+baV
 abi
 bbY
 abi
@@ -79176,18 +79180,18 @@ atP
 atP
 atP
 dIb
-dNb
+rse
 avn
 avn
 avn
-dNb
+rse
 enb
 dIb
-dNb
+rse
 axN
 axN
 axN
-dNb
+rse
 enb
 atP
 ayt
@@ -79689,7 +79693,7 @@ dwb
 dwb
 dwb
 dwb
-dKb
+afT
 dPb
 dWb
 eab
@@ -79702,7 +79706,7 @@ dWb
 eab
 dWb
 ejb
-dKb
+afT
 dwb
 dwb
 dwb
@@ -79947,11 +79951,11 @@ atP
 atP
 atP
 auI
-dNb
+rse
 dXb
 ebb
 dXb
-dNb
+rse
 eqb
 auI
 hMb
