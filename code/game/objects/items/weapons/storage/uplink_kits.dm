@@ -90,11 +90,13 @@
 			new /obj/item/weapon/storage/backpack/satchel/flat(src)
 
 		if("darklord")
-			new /obj/item/weapon/dualsaber(src)
+			var/obj/item/weapon/dualsaber/newSaber = new(src)
+			newSaber.blade_color = "red"
+			new /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment
 			new /obj/item/clothing/suit/cultrobes(src)
 			new /obj/item/clothing/head/culthood(src)
 			new /obj/item/clothing/shoes/syndigaloshes(src)
-			new /obj/item/weapon/card/id/syndicate(src)
+			new /obj/item/clothing/gloves/combat
 			new /obj/item/weapon/dnainjector/telemut(src)
 
 		if("gadgets")
