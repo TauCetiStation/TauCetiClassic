@@ -607,6 +607,16 @@ var/global/list/datum/spawners_cooldown = list()
 	..()
 	religion.add_member(mob, HOLY_ROLE_PRIEST)
 
+/datum/spawner/living/rat
+	name = "Крыса"
+	id = "rat"
+	desc = "Вы появляетесь в своём новом доме"
+
+/datum/spawner/living/rat/spawn_ghost(mob/dead/observer/ghost)
+	. = ..()
+	to_chat(mob, "<B>Эта посудина теперь ваш новый дом, похазяйничайте в нём.</B>")
+	to_chat(mob, "<B>(Вы можете грызть провода и лампочки).</B>")
+
 /datum/spawner/spy
 	name = "Агент Прослушки"
 	id = "spy"

@@ -14,7 +14,7 @@
 /obj/machinery/computer/stockexchange/proc/balance()
 	if(!logged_in)
 		return 0
-	return SSshuttle.points
+	return global.cargo_account.money
 
 /obj/machinery/computer/stockexchange/ui_interact(mob/user)
 	var/dat
@@ -133,7 +133,7 @@
 	if(!li)
 		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return
-	var/b = SSshuttle.points
+	var/b = global.cargo_account.money
 	var/avail = S.shareholders[logged_in]
 	if(!avail)
 		to_chat(user, "<span class='danger'>This account does not own any shares of [S.name]!</span>")
@@ -148,7 +148,7 @@
 		return
 	if(li != logged_in)
 		return
-	b = SSshuttle.points
+	b = global.cargo_account.money
 	if(!isnum(b))
 		to_chat(user, "<span class='danger'>No active account on the console!</span>")
 		return

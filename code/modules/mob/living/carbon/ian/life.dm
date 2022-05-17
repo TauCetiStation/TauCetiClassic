@@ -8,7 +8,7 @@
 		hiccup()
 
 	//Feeding, chasing food, FOOOOODDDD
-	if(!incapacitated() && !crawling && !buckled && !lying)
+	if(!incapacitated() && !crawling && !buckled && !lying && !ian_sit)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			turns_since_scan = 0
@@ -342,7 +342,7 @@
 /mob/living/carbon/ian/handle_fire()
 	if(..())
 		return
-	bodytemperature += BODYTEMP_HEATING_MAX
+	adjust_bodytemperature(BODYTEMP_HEATING_MAX)
 	return
 
 /mob/living/carbon/ian/updatehealth()
