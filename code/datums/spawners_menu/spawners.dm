@@ -39,7 +39,7 @@ var/global/list/datum/spawners_cooldown = list()
 	// Delete spawner after use
 	var/infinity = FALSE
 	// Cooldown between the opportunity become a role
-	var/cooldown = 0 MINUTES
+	var/cooldown = 10 MINUTES
 
 	// Time to del the spawner
 	var/time_to_del
