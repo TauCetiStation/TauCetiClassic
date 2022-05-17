@@ -43,7 +43,8 @@
 	else
 		dat += {"<BR><B>Supply shuttle</B><HR>
 		Location: [SSshuttle.moving ? "Moving to station ([SSshuttle.eta] Mins.)":SSshuttle.at_station ? "Station":"Dock"]<BR>
-		<HR>Supply points: [SSshuttle.points]<BR>\n<BR>"}
+		<HR>Cargo Dep credits: [global.cargo_account.money]<BR>\n<BR>
+		<HR>Export tax: [SSeconomy.tax_cargo_export]%<BR>\n<BR>"}
 		if(requestonly)
 			dat += "\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>"
 		else
@@ -87,14 +88,14 @@
 			//all_supply_groups
 			//Request what?
 			last_viewed_group = "categories"
-			temp = "<b>Supply points: [SSshuttle.points]</b><BR>"
+			temp = "<b>Cargo Dep Credits: [global.cargo_account.money]</b><BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>"
 			temp += "<b>Select a category</b><BR><BR>"
 			for(var/supply_group_name in all_supply_groups )
 				temp += "<A href='?src=\ref[src];order=[supply_group_name]'>[supply_group_name]</A><BR>"
 		else
 			last_viewed_group = href_list["order"]
-			temp = "<b>Supply points: [SSshuttle.points]</b><BR>"
+			temp = "<b>Cargo Dep Credits: [global.cargo_account.money]</b><BR>"
 			temp += "<b>Request from: [last_viewed_group]</b><BR>"
 			temp += "<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR>"
 			temp += "<div class='blockCargo'>"
@@ -186,14 +187,14 @@
 			if(SO.id == ordernum)
 				O = SO
 				P = O.object
-				if(SSshuttle.points >= P.cost)
+				if(global.cargo_account.money >= P.cost)
 					SSshuttle.requestlist.Cut(i,i+1)
-					SSshuttle.points -= P.cost
+					global.cargo_account.money -= P.cost
 					SSshuttle.shoppinglist += O
 					temp = "Thanks for your order.<BR>"
 					temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 				else
-					temp = "Not enough supply points.<BR>"
+					temp = "Not enough credits.<BR>"
 					temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 				break
 
