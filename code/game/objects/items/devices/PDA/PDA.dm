@@ -1614,7 +1614,7 @@
 	playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/device/pda/proc/notify_tax_change(tax_old, tax_new)
-	audible_message("[bicon(src)] <span class='notice'>[name] beeps, \"An Incom Tax changed from [tax_old] to [tax_new]!\"</span>")
+	audible_message("[bicon(src)] <span class='notice'>[name] beeps, \"An Incom Tax changed from [tax_old]% to [tax_new]%!\"</span>")
 
 /obj/item/device/pda/proc/check_rank(rank)
 	if((rank in command_positions) || (rank == "Quartermaster"))
