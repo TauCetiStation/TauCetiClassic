@@ -4,18 +4,34 @@
 	icon = 'icons/obj/Events/human/vilage.dmi'
 	anchored = TRUE
 	layer = 11
+	density = 1
 
 /obj/structure/vilage/anvil
 	icon_state = "anvil"
 	name = "Наковальня"
 	desc = "Куй железо, пока горячо"
-	density = 1
 
 /obj/structure/vilage/fence
 	icon_state = "fence"
 	name = "Забор"
 	desc = "Огораживает"
-	density = 1
+
+/obj/structure/vilage/pillar
+	icon = 'icons/obj/Events/pillar.dmi'
+	icon_state = "pillar_1"
+	name = "Колонна"
+	desc = "Стоит"
+
+/obj/structure/vilage/pillar/blue
+	icon_state = "pillar_2"
+
+/obj/structure/vilage/sett
+	name = "Брусчатка"
+	icon = 'icons/obj/Events/sett.dmi'
+	icon_state = "sett"
+	density = 0
+	layer = 1
+	anchored = TRUE
 
 /obj/structure/sign/poster/banner
 	icon = 'icons/obj/Events/human/vilage.dmi'
