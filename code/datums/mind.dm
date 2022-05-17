@@ -98,7 +98,9 @@
 		var/datum/role/R = antag_roles[role]
 		R.PostMindTransfer(new_character, old_character)
 
+	old_character.logout_reason = LOGOUT_SWAP
 	if(active)
+		new_character.logout_reason = LOGOUT_SWAP
 		new_character.key = key		//now transfer the key to link the client to our new body
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
@@ -550,13 +552,7 @@
 	candidates = shuffle(candidates)
 
 	if(fac_type)
-		var/datum/faction/FF = find_faction_by_type(fac_type)
-		if(!FF)
-			FF = SSticker.mode.CreateFaction(fac_type, FALSE, TRUE)
-			FF.forgeObjectives()
-		if(!FF)
-			return FALSE
-
+		var/datum/faction/FF = create_uniq_faction(fac_type)
 		while(count > 0 && candidates.len)
 			var/mob/M = pick(candidates)
 			candidates -= M
@@ -668,10 +664,7 @@
 	mind.assigned_role = "Alien"
 
 	if(!isalien(src))
-		var/datum/faction/infestation/I = find_faction_by_type(/datum/faction/infestation)
-		if(!I)
-			I = SSticker.mode.CreateFaction(/datum/faction/infestation)
-			I.forgeObjectives()
+		var/datum/faction/infestation/I = create_uniq_faction(/datum/faction/infestation)
 		add_faction_member(I, src, TRUE)
 
 	//XENO HUMANOID
@@ -757,8 +750,5 @@
 /mob/living/simple_animal/hostile/mimic/prophunt/mind_initialize()
 	..()
 
-	var/datum/faction/infestation/I = find_faction_by_type(/datum/faction/props)
-	if(!I)
-		I = SSticker.mode.CreateFaction(/datum/faction/props)
-		I.forgeObjectives()
+	var/datum/faction/infestation/I = create_uniq_faction(/datum/faction/props)
 	add_faction_member(I, src, TRUE)

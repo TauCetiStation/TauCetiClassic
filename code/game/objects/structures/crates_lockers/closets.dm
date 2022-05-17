@@ -155,14 +155,12 @@
 	dump_contents()
 	qdel(src)
 
-/obj/structure/closet/bullet_act(obj/item/projectile/Proj)
+/obj/structure/closet/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
-	..()
 	if(health <= 0)
 		dump_contents()
 		qdel(src)
-
-	return
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
@@ -239,12 +237,6 @@
 	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
 	toggle(user)
-
-// tk grab then use on self
-/obj/structure/closet/attack_self_tk(mob/user)
-	add_fingerprint(user)
-	if(!toggle())
-		to_chat(usr, "<span class='notice'>It won't budge!</span>")
 
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in oview(1)

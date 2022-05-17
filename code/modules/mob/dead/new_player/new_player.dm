@@ -88,7 +88,7 @@
 		return
 
 	if(href_list["lobby_be_special"])
-		if(client.prefs.have_quality)
+		if(client.prefs.selected_quality_name)
 			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
 			return
 		if(!client.prefs.selecting_quality)

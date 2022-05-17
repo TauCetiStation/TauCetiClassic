@@ -325,5 +325,6 @@
 	spill(100 / severity)
 	..()
 
-/obj/structure/stool/bed/chair/janitorialcart/bullet_act(obj/item/projectile/Proj)
+/obj/structure/stool/bed/chair/janitorialcart/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	spill(Proj.damage * 10)

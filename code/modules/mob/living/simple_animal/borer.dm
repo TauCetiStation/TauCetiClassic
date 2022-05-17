@@ -86,7 +86,7 @@
 
 	host_brain = new/mob/living/captive_brain(src)
 	if(request_ghosts)
-		create_spawner(/datum/spawner/borer, "borer", src)
+		create_spawner(/datum/spawner/living/borer, src)
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
 	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_GHOSTLY, , show_warnings = TRUE)
@@ -491,6 +491,5 @@
 
 	ckey = candidate.ckey
 
-	var/datum/faction/borers/B = find_faction_by_type(/datum/faction/borers)
-	if(B)
-		add_faction_member(B, src)
+	var/datum/faction/borers/B = create_uniq_faction(/datum/faction/borers)
+	add_faction_member(B, src)

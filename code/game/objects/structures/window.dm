@@ -80,18 +80,16 @@
 	qdel(src)
 	return
 
-/obj/structure/window/bullet_act(obj/item/projectile/Proj)
+/obj/structure/window/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...
-		return -1
+		return PROJECTILE_FORCE_MISS
 
+	. = ..()
 	//Tasers and the like should not damage windows.
 	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		return
 
-	..()
 	take_damage(Proj.damage, Proj.damage_type)
-	return
-
 
 /obj/structure/window/ex_act(severity)
 	switch(severity)
@@ -152,10 +150,6 @@
 		step(src, get_dir(AM, src))
 	take_damage(tforce)
 
-/obj/structure/window/attack_tk(mob/user)
-	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
-	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-
 /obj/structure/window/attack_hand(mob/user)	//specflags please!!
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations)
@@ -176,6 +170,9 @@
 							"You knock on the [src.name].", \
 							"You hear a knocking sound.")
 
+/obj/structure/window/attack_tk(mob/user)
+	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
+	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
