@@ -711,3 +711,31 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	icon_state = "puddle-splash"
 	..()
 	icon_state = "puddle"
+
+
+/obj/structure/sink/fontain
+	name = "Фонтан"
+	desc = "Купаться нельзя"
+	icon = 'icons/obj/Events/fontan.dmi'
+	icon_state = "fontain"
+	density = 1
+
+/obj/structure/sink/fontain/atom_init()
+
+	if(dir in list(EAST, WEST))
+		bound_width  = 2* world.icon_size
+		bound_height = 2 * world.icon_size
+	else
+		bound_width  = 2 * world.icon_size
+		bound_height = 2* world.icon_size
+
+/obj/structure/sink/fontain/attack_hand(mob/M)
+	icon_state = "fontain"
+	..()
+	icon_state = "fontain"
+
+/obj/structure/sink/fontain/attackby(obj/item/O, mob/user)
+	icon_state = "fontain"
+	..()
+	icon_state = "fontain"
+

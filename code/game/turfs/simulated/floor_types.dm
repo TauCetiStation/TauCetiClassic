@@ -305,6 +305,16 @@
 			var/turf/simulated/floor/FF = get_step(src,direction)
 			FF.update_icon() //so siding get updated properly
 
+/turf/simulated/floor/sett
+	name = "Брусчатка"
+	icon = 'icons/obj/Events/sett.dmi'
+	icon_state = "sett"
+	can_deconstruct = FALSE
+	explosion_resistance = 111
+	light_color = "#ffbf00"
+	light_power = 2
+	light_range = 2
+
 /turf/simulated/floor/carpet
 	name = "carpet"
 	icon_state = "carpet"
