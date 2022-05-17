@@ -164,6 +164,15 @@
 	O.imp = new /obj/item/weapon/implant/uplink(O)
 	O.update()
 
+/obj/item/weapon/storage/box/syndie_kit/imp_xray
+	name = "box (X)"
+
+/obj/item/weapon/storage/box/syndie_kit/imp_xray/atom_init()
+	. = ..()
+	var/obj/item/weapon/implanter/O = new(src)
+	O.imp = new /obj/item/weapon/implant/xray(O)
+	O.update()
+
 /obj/item/weapon/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
 

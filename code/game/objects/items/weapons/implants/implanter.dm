@@ -74,6 +74,14 @@
 	. = ..()
 	update()
 
+/obj/item/weapon/implanter/xray
+	name = "implanter (X)"
+
+/obj/item/weapon/implanter/xray/atom_init()
+	imp = new /obj/item/weapon/implant/xray(src)
+	. = ..()
+	update()
+
 /obj/item/weapon/implanter/compressed
 	name = "implanter (C)"
 	icon_state = "cimplanter1"

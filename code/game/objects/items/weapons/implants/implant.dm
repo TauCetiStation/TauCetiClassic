@@ -582,3 +582,13 @@ var/global/list/death_alarm_stealth_areas = list(
 <b>Special Features:</b> Less-than-lethal controlled shocks.<BR>
 <b>Integrity:</b> Implant will last even after host's death, allowing re-implanting using special tools. Said tools are never delivered to station, however."}
 	return dat
+
+/obj/item/weapon/implant/xray
+	name = "X-RAY vision implant"
+	desc = "Ah, now I see."
+
+/obj/item/weapon/implant/xray/implanted(mob/user)
+	if (!(XRAY in user.mutations))
+		user.mutations.Add(XRAY)
+		user.update_sight()
+		return 1

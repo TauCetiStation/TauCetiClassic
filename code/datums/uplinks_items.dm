@@ -948,6 +948,12 @@
 	item = /obj/item/weapon/implanter/explosive
 	cost = 3
 
+/datum/uplink_item/implants/xray
+	name = "X-Ray Vision Implant"
+	desc = "An implant, that will grant user a power to see through walls."
+	item = /obj/item/weapon/implanter/xray
+	cost = 10
+
 // TELECRYSTALS
 
 /datum/uplink_item/telecrystals
