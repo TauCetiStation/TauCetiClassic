@@ -25,14 +25,6 @@
 /obj/structure/vilage/pillar/blue
 	icon_state = "pillar_2"
 
-/obj/structure/vilage/sett
-	name = "Брусчатка"
-	icon = 'icons/obj/Events/sett.dmi'
-	icon_state = "sett"
-	density = 0
-	layer = 1
-	anchored = TRUE
-
 /obj/structure/sign/poster/banner
 	icon = 'icons/obj/Events/human/vilage.dmi'
 	icon_state = "banner"
