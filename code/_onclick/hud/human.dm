@@ -65,14 +65,9 @@
 	if(mymob.leap_icon)
 		src.adding += mymob.leap_icon
 
-	//Handle the gun settings buttons
-	mymob.gun_setting_icon = new /atom/movable/screen/gun/mode(null)
-	mymob.gun_setting_icon.update_icon(mymob.client)
+	add_gun_setting()
 
-	if(mymob.client.gun_mode)
-		mymob.client.add_gun_icons()
-
-	mymob.client.screen += list( mymob.nutrition_icon, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	inventory_shown = 0
 
 

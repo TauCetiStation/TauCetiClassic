@@ -83,3 +83,12 @@
 	mymob.zone_sel = get_screen(type, icon)
 	mymob.zone_sel.update_icon()
 	mymob.client.screen += mymob.zone_sel
+
+/datum/hud/proc/add_gun_setting(type = /atom/movable/screen/gun/mode)
+	mymob.gun_setting_icon = new type
+	mymob.gun_setting_icon.update_icon(mymob.client)
+
+	if(mymob.client.gun_mode)
+		mymob.client.add_gun_icons()
+
+	mymob.client.screen += mymob.gun_setting_icon

@@ -98,14 +98,9 @@ var/global/atom/movable/screen/robot_inventory
 	add_pullin(type = /atom/movable/screen/pull/robot)
 	add_zone_sel(style)
 
-	//Handle the gun settings buttons
-	mymob.gun_setting_icon = new /atom/movable/screen/gun/mode(null)
-	mymob.gun_setting_icon.update_icon(mymob.client)
+	add_gun_setting()
 
-	if(mymob.client.gun_mode)
-		mymob.client.add_gun_icons()
-
-	mymob.client.screen += list( mymob.throw_icon, mymob.hands, mymob.gun_setting_icon, robot_inventory) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.hands, robot_inventory)
 
 
 /datum/hud/proc/toggle_show_robot_modules()
