@@ -202,71 +202,52 @@ var/global/list/available_ui_styles = list(
 
 //Version denotes which style should be displayed. blank or FALSE means "next version"   //khem, what? return is not used anywhere
 /datum/hud/proc/show_hud(version = 0)
-	if(!ismob(mymob))
+	if(!ismob(mymob) || !mymob.client)
 		return FALSE
-	if(!mymob.client)
-		return FALSE
-	var/display_hud_version = version
-	if(!display_hud_version)	//If 0 or blank, display the next hud version
-		display_hud_version = hud_version + 1
-	if(display_hud_version > HUD_VERSIONS)	//If the requested version number is greater than the available versions, reset back to the first version
-		display_hud_version = 1
+
+	if(!version)	//If 0 or blank, display the next hud version
+		version = hud_version + 1
+	if(version > HUD_VERSIONS)	//If the requested version number is greater than the available versions, reset back to the first version
+		version = 1
 
 	switch(display_hud_version)
 		if(HUD_STYLE_STANDARD)	//Default HUD
-			hud_shown = 1	//Governs behavior of other procs
-			if(adding)
-				mymob.client.screen += adding
-			if(other && inventory_shown)
+			hud_shown = TRUE	//Governs behavior of other procs
+
+			mymob.client.screen += adding
+
+			if(inventory_shown)
 				mymob.client.screen += other
-			if(hotkeybuttons && !hotkey_ui_hidden)
+			if(!hotkey_ui_hidden)
 				mymob.client.screen += hotkeybuttons
 
 			action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
 			mymob.client.screen += main
-			
-			hidden_inventory_update()
-			persistant_inventory_update()
-			mymob.update_action_buttons()
-			reorganize_alerts()
-		if(HUD_STYLE_REDUCED)	//Reduced HUD
-			hud_shown = 0	//Governs behavior of other procs
-			if(adding)
-				mymob.client.screen -= adding
-			if(other)
-				mymob.client.screen -= other
-			if(hotkeybuttons)
-				mymob.client.screen -= hotkeybuttons
 
-			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
+		if(HUD_STYLE_REDUCED)	//Reduced HUD
+			hud_shown = FALSE	//Governs behavior of other procs
+
+			mymob.client.screen -= adding
+			mymob.client.screen -= other
+			mymob.client.screen -= hotkeybuttons
 			mymob.client.screen -= main
 
-			//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
-			mymob.client.screen += l_hand_hud_object	//we want the hands to be visible
-			mymob.client.screen += r_hand_hud_object	//we want the hands to be visible
-			mymob.client.screen += action_intent		//we want the intent swticher visible
+			//These ones are a part of 'adding' or 'main' but we want them to stay
+			mymob.client.screen += list(l_hand_hud_object, r_hand_hud_object, action_intent)
 			action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
 
-			hidden_inventory_update()
-			persistant_inventory_update()
-			mymob.update_action_buttons()
-			reorganize_alerts()
 		if(HUD_STYLE_NOHUD)	//No HUD
-			hud_shown = 0	//Governs behavior of other procs
-			if(adding)
-				mymob.client.screen -= adding
-			if(other)
-				mymob.client.screen -= other
-			if(hotkeybuttons)
-				mymob.client.screen -= hotkeybuttons
+			hud_shown = FALSE	//Governs behavior of other procs
 
-			//These ones are not a part of 'adding', 'other' or 'hotkeybuttons' but we want them gone.
+			mymob.client.screen -= adding
+			mymob.client.screen -= other
+			mymob.client.screen -= hotkeybuttons
 			mymob.client.screen -= main
 
-			hidden_inventory_update()
-			persistant_inventory_update()
-			mymob.update_action_buttons()
-			reorganize_alerts()
+	hidden_inventory_update()
+	persistant_inventory_update()
+	mymob.update_action_buttons()
+	reorganize_alerts()
 
 	hud_version = display_hud_version
 	create_parallax()
