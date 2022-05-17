@@ -495,8 +495,6 @@
 		emote("buzz")
 		return
 	
-	sleep(10)
-	
 	if(locked)
 		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")		
 	else
@@ -515,8 +513,6 @@
 		to_chat(usr, "<span class='warning'>Невозможно открыть панель, если заблокирован интерфейс.</span>")
 		emote("buzz")
 		return
-	
-	sleep(10)
 	
 	if(opened)
 		to_chat(usr, "<span class='notice'>Панель закрыта.</span>")
