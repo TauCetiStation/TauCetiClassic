@@ -113,7 +113,7 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/faction = "None"                //Antag faction/general associated faction.
 	var/religion = "None"               //Religious association.
 	var/nanotrasen_relation = "Neutral"
-	var/vox_rank = "Servant"            //Vox ranks
+	var/vox_rank = "Larva"              //Vox ranks
 
 	//Job preferences 2.0 - indexed by job title , no key or value implies never
 	var/list/job_preferences = list()
