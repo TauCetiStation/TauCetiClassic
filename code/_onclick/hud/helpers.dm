@@ -158,3 +158,35 @@
 	var/atom/movable/screen/robot_hands/third/using = new
 	adding += using
 	mymob:inv3 = using
+
+/datum/hud/proc/add_module_icon()
+	mymob.module_icon = new /atom/movable/screen/module
+	main += mymob.module_icon
+
+/datum/hud/proc/add_sequential_list(list/types, screen_position, prefix, postfix)
+	var/atom/movable/screen/using
+	for(var/type in types)
+		using = new type
+		using.screen_loc = "[prefix][screen_position][postfix]"
+		screen_position++
+		other += using
+
+/datum/hud/proc/add_pda_screens()
+	adding += new /atom/movable/screen/show_pda_screens
+
+	var/list/screens = list(
+		/atom/movable/screen/robot_pda/send, /atom/movable/screen/robot_pda/log,
+		/atom/movable/screen/robot_pda/ringtone, /atom/movable/screen/robot_pda/toggle,
+		)
+
+	add_sequential_list(screens, 2, "SOUTH+", ":6,WEST")
+
+/datum/hud/proc/add_photo_screens()
+	adding += new /atom/movable/screen/show_photo_screens
+
+	var/list/screens = list(
+		/atom/movable/screen/robot_image/take, /atom/movable/screen/robot_image/view,
+		/atom/movable/screen/robot_image/delete
+		)
+
+	add_sequential_list(screens, 2, "SOUTH+", ":6,WEST+1")

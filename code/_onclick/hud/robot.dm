@@ -1,6 +1,6 @@
 /datum/hud/proc/robot_hud()
 	ui_style = 'icons/mob/screen1_robot.dmi'
-	var/atom/movable/screen/using
+	
 
 	var/list/types = list(
 		/atom/movable/screen/crew_manifest/robot,
@@ -16,32 +16,13 @@
 
 	if(!isdrone(mymob))
 //Medical/Security sensors
-		types += list(
-			/atom/movable/screen/sensor_augmentation/robot,
-			/atom/movable/screen/show_pda_screens,
-			/atom/movable/screen/show_photo_screens,
-		)
+		types += /atom/movable/screen/sensor_augmentation/robot
 
 //Show PDA screens
-		var/list/screens = list(
-			/atom/movable/screen/robot_pda/send, /atom/movable/screen/robot_pda/log,
-			/atom/movable/screen/robot_pda/ringtone, /atom/movable/screen/robot_pda/toggle,
-		)
-		var/screen_position = 2
-		for(var/screen_type in screens)
-			using = new screen_type()
-			using.screen_loc = "SOUTH+[screen_position]:6,WEST"
-			screen_position++
-			other += using
+		add_pda_screens()
 
 //Show foto screens
-		screens = list(/atom/movable/screen/robot_image/take, /atom/movable/screen/robot_image/view, /atom/movable/screen/robot_image/delete)
-		screen_position = 2
-		for(var/screen_type in screens)
-			using = new screen_type()
-			using.screen_loc = "SOUTH+[screen_position]:6,WEST+1"
-			screen_position++
-			other += using
+		add_photo_screens()
 
 //Namepick
 		var/mob/living/silicon/robot/R = mymob
@@ -74,8 +55,7 @@
 	add_healths(type = /atom/movable/screen/health/robot)
 
 //Installed Module
-	mymob.module_icon = new /atom/movable/screen/module
-	main += mymob.module_icon
+	add_module_icon()
 
 //Store
 	main += new /atom/movable/screen/store
