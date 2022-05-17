@@ -153,3 +153,6 @@
 
 //Families
 #define ui_wanted_lvl "NORTH,11"
+
+// Leap
+#define ui_human_leap "CENTER+3:20,SOUTH:5"
