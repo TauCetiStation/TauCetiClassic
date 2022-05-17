@@ -68,7 +68,7 @@
 	data["transactions"] = null
 	data["accounts"] = null
 	data["tax_cargo_export"] = SSeconomy.tax_cargo_export
-	data["change_income_tax"] = SSeconomy.tax_income
+	data["tax_income"] = SSeconomy.tax_income
 
 	if (detailed_account_view)
 		data["account_number"] = detailed_account_view.account_number

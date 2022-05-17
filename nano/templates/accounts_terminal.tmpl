@@ -29,10 +29,10 @@
     {{:helper.link('Print', 'print', {'choice' : 'print'}, data.creating_new_account ? 'disabled' : null, 'fixedLeft')}}
   </div>
   <div class="itemContent">
-    {{:helper.link('Export Tax%:', 'cart', {'choice' : 'change_export_tax'}, null, 'fixedLeft')}} {{:data.cargo_export_tax}}
+    {{:helper.link('Export Tax%:', 'cart', {'choice' : 'change_export_tax'}, null, 'fixedLeft')}} {{:data.tax_cargo_export}}
   </div>
   <div class="itemContent">
-    {{:helper.link('Income Tax%:', 'arrowreturn-1-n', {'choice' : 'change_income_tax'}, null, 'fixedLeft')}} {{:data.change_income_tax}}
+    {{:helper.link('Income Tax%:', 'arrowreturn-1-n', {'choice' : 'change_income_tax'}, null, 'fixedLeft')}} {{:data.tax_income}}
   </div>
 
   {{if data.creating_new_account}}
