@@ -1,4 +1,4 @@
-/datum/hud/proc/default_hud(ui_color = "#ffffff", ui_alpha = 255)
+/datum/hud/proc/default_hud()
 	add_intents(ui_style)
 	add_move_intent(ui_style, ui_color, ui_alpha)
 	adding += new /atom/movable/screen/inventory/craft

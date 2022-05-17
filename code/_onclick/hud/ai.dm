@@ -1,4 +1,6 @@
 /datum/hud/proc/ai_hud()
+	ui_style = 'icons/mob/screen_ai.dmi'
+
 	var/list/types = list(
 		/atom/movable/screen/ai_core,
 		/atom/movable/screen/camera_list,

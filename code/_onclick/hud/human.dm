@@ -1,4 +1,4 @@
-/datum/hud/proc/human_hud(ui_color = "#ffffff", ui_alpha = 255)
+/datum/hud/proc/human_hud()
 	var/mob/living/carbon/human/H = mymob
 
 	add_intents(ui_style)

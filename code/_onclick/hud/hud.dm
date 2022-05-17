@@ -52,6 +52,8 @@ var/global/list/available_ui_styles = list(
 
 	// subtypes can override this to force a specific UI style
 	var/ui_style
+	var/ui_color
+	var/ui_alpha
 
 /datum/hud/New(mob/owner)
 	mymob = owner
@@ -145,14 +147,14 @@ var/global/list/available_ui_styles = list(
 	if(!ismob(mymob) || !mymob.client)
 		return FALSE
 
-	var/ui_color = mymob.client.prefs.UI_style_color
-	var/ui_alpha = mymob.client.prefs.UI_style_alpha
-
 	// reset client screen
 	mymob.client.screen = list()
 
 	if(ishuman(mymob))
-		human_hud(ui_color, ui_alpha) // Pass the player the UI style chosen in preferences
+		 // Set the player the UI style chosen in preferences
+		ui_color = mymob.client.prefs.UI_style_color
+		ui_alpha = mymob.client.prefs.UI_style_alpha
+		human_hud()
 	else if(isIAN(mymob))
 		ian_hud()
 	else if(ismonkey(mymob))
@@ -176,7 +178,9 @@ var/global/list/available_ui_styles = list(
 	else if(isessence(mymob))
 		changeling_essence_hud()
 	else if(isliving(mymob))
-		default_hud(ui_color, ui_alpha)
+		ui_color = mymob.client.prefs.UI_style_color
+		ui_alpha = mymob.client.prefs.UI_style_alpha
+		default_hud()
 
 	mymob.client.screen += adding + hotkeybuttons
 	mymob.client.screen += mymob.client.void

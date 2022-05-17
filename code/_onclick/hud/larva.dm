@@ -7,15 +7,15 @@
 
 
 /datum/hud/proc/larva_hud()
-	var/style = 'icons/mob/screen1_xeno.dmi'
+	ui_style = 'icons/mob/screen1_xeno.dmi'
 
-	add_intents(style)
-	add_move_intent(style)
+	add_intents(ui_style)
+	add_move_intent(ui_style)
 	add_hands(r_type = /atom/movable/screen/inventory/larva_mouth, l_type = null)
 
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
 	src.adding += mymob.nightvisionicon
 
 	add_healths(type = /atom/movable/screen/health/alien)
-	add_pullin(style)
-	add_zone_sel(style)
+	add_pullin(ui_style)
+	add_zone_sel(ui_style)

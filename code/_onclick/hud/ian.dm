@@ -80,8 +80,7 @@
 	if(!(is_alien_whitelisted(mymob, "ian") || (mymob.client.supporter && !is_alien_whitelisted_banned(mymob, "ian"))))
 		return
 
-	var/ui_style = 'icons/mob/screen_corgi.dmi'
-
+	ui_style = 'icons/mob/screen_corgi.dmi'
 	var/atom/movable/screen/using
 
 	add_intents(ui_style)

@@ -40,13 +40,13 @@
 	X.updatePlasmaDisplay()
 
 /datum/hud/proc/alien_hud()
-	var/style = 'icons/mob/screen1_xeno.dmi'
+	ui_style = 'icons/mob/screen1_xeno.dmi'
 
 	var/atom/movable/screen/using
 
-	add_intents(style)
-	add_move_intent(style)
-	add_hands(style)
+	add_intents(ui_style)
+	add_move_intent(ui_style)
+	add_hands(ui_style)
 
 	var/list/types = list(
 		/atom/movable/screen/drop,
@@ -54,7 +54,7 @@
 		/atom/movable/screen/inventory/swap/second/alien,
 		/atom/movable/screen/resist,
 	)
-	init_screens(types, style, list_to = hotkeybuttons)
+	init_screens(types, ui_style, list_to = hotkeybuttons)
 
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision()
 	src.adding += mymob.nightvisionicon
@@ -67,14 +67,14 @@
 		mymob.neurotoxin_icon = new /atom/movable/screen/xenomorph/neurotoxin()
 		src.adding += mymob.neurotoxin_icon
 
-	add_throw_icon(style)
+	add_throw_icon(ui_style)
 
 	using = new /atom/movable/screen/xenomorph/plasma_display()
 	mymob.xenomorph_plasma_display = using
 	using.update_icon(mymob)
 
 	add_healths(type = /atom/movable/screen/health/alien)
-	add_pullin(style)
-	add_zone_sel(style)
+	add_pullin(ui_style)
+	add_zone_sel(ui_style)
 
 	mymob.client.screen += list(mymob.xenomorph_plasma_display)

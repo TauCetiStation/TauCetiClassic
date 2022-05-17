@@ -2,7 +2,7 @@ var/global/atom/movable/screen/robot_inventory
 
 
 /datum/hud/proc/robot_hud()
-	var/style = 'icons/mob/screen1_robot.dmi'
+	ui_style = 'icons/mob/screen1_robot.dmi'
 	var/atom/movable/screen/using
 
 	var/list/types = list(
@@ -81,7 +81,7 @@ var/global/atom/movable/screen/robot_inventory
 //End of module select
 
 //Intent
-	add_intents(style)
+	add_intents(ui_style)
 
 //Health
 	add_healths(type = /atom/movable/screen/health/robot)
@@ -96,7 +96,7 @@ var/global/atom/movable/screen/robot_inventory
 	robot_inventory = new /atom/movable/screen/robot_inventory()
 
 	add_pullin(type = /atom/movable/screen/pull/robot)
-	add_zone_sel(style)
+	add_zone_sel(ui_style)
 
 	add_gun_setting()
 
