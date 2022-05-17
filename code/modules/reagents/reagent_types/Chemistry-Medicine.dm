@@ -682,7 +682,7 @@
 	id = "lipozine"
 	description = "A chemical compound that causes a powerful fat-burning reaction."
 	reagent_state = LIQUID
-	nutriment_factor = 10 * REAGENTS_ABSORBTION
+	nutriment_factor = 3 * REAGENTS_ABSORBTION
 	color = "#bbeda4" // rgb: 187, 237, 164
 	overdose = REAGENTS_OVERDOSE
 
@@ -691,6 +691,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.metabolism_factor.AddModifier("Lipozine", base_additive = 3 * multiplier)
+		H.nutrition = max(H.nutrition - nutriment_factor * multiplier, 0)
 
 
 /datum/reagent/lipozine/on_last_digest(mob/living/M, multiplier)
