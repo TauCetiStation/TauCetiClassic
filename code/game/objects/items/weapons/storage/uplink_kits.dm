@@ -92,7 +92,7 @@
 		if("darklord")
 			var/obj/item/weapon/dualsaber/newSaber = new(src)
 			newSaber.blade_color = "red"
-			new /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment
+			new /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment(src)
 			new /obj/item/clothing/suit/cultrobes(src)
 			new /obj/item/clothing/head/culthood(src)
 			new /obj/item/clothing/shoes/syndigaloshes(src)
