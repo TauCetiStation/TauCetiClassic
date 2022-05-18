@@ -706,8 +706,9 @@
 				var/mob/living/carbon/human/H = user
 				H.human_update_offset(lamp, TRUE)
 			lamp.plane = ABOVE_LIGHTING_PLANE
-			user.add_overlay(lamp)
+			lamp.layer = ABOVE_LIGHTING_LAYER
 			lamp.alpha = 255
+			user.add_overlay(lamp)
 		user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
