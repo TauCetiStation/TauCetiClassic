@@ -1,6 +1,6 @@
 /datum/hud/proc/default_hud()
-	add_intents(ui_style)
-	add_move_intent(ui_style, ui_color, ui_alpha)
+	add_intents()
+	add_move_intent()
 	adding += new /atom/movable/screen/inventory/craft
 
 	add_zone_sel(ui_style, ui_color, ui_alpha)

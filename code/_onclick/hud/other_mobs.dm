@@ -102,7 +102,7 @@
 	add_essence_voice()
 	add_phantom()
 
-	add_internals(ui_style)
+	add_internals()
 	add_healths()
 	add_health_doll()
 	add_changeling()

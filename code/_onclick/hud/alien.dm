@@ -45,9 +45,9 @@
 /datum/hud/proc/alien_hud()
 	ui_style = 'icons/mob/screen1_xeno.dmi'
 
-	add_intents(ui_style)
-	add_move_intent(ui_style)
-	add_hands(ui_style)
+	add_intents()
+	add_move_intent()
+	add_hands()
 
 	var/list/types = list(
 		/atom/movable/screen/drop,
@@ -65,7 +65,7 @@
 	if(locate(/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin) in mymob.verbs)
 		add_neurotoxin_icon()
 
-	add_throw_icon(ui_style)
+	add_throw_icon()
 	add_plasma_display()
 	add_healths(type = /atom/movable/screen/health/alien)
 	add_pullin(ui_style)

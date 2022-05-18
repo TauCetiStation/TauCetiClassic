@@ -1,6 +1,5 @@
-/datum/hud/proc/add_intents(ui_style = null, act_intent_type = /atom/movable/screen/act_intent)
-	action_intent = new act_intent_type
-	action_intent.icon = ui_style
+/datum/hud/proc/add_intents(act_intent_type = /atom/movable/screen/act_intent)
+	action_intent = get_screen(act_intent_type, ui_style)
 	action_intent.update_icon(mymob)
 	adding += action_intent
 
@@ -35,34 +34,34 @@
 
 	return list_to
 
-/datum/hud/proc/add_move_intent(icon = null, color = null, alpha = null, type = /atom/movable/screen/move_intent)
-	move_intent = get_screen(type, icon, color, alpha)
+/datum/hud/proc/add_move_intent(type = /atom/movable/screen/move_intent)
+	move_intent = get_screen(type, ui_style, ui_color, ui_alpha)
 	move_intent.update_icon(mymob)
 	adding += move_intent
 
-/datum/hud/proc/add_hands(icon = null, color = null, alpha = null, r_type = /atom/movable/screen/inventory/hand/r, l_type = /atom/movable/screen/inventory/hand/l)
+/datum/hud/proc/add_hands(r_type = /atom/movable/screen/inventory/hand/r, l_type = /atom/movable/screen/inventory/hand/l)
 	if(r_type)
-		r_hand_hud_object = get_screen(r_type, icon, color, alpha)
+		r_hand_hud_object = get_screen(r_type, ui_style, ui_color, ui_alpha)
 		r_hand_hud_object.update_icon(mymob)
 		adding += r_hand_hud_object
 
 	if(l_type)
-		l_hand_hud_object = get_screen(l_type, icon, color, alpha)
+		l_hand_hud_object = get_screen(l_type, ui_style, ui_color, ui_alpha)
 		l_hand_hud_object.update_icon(mymob)
 		adding += l_hand_hud_object
 
-/datum/hud/proc/add_throw_icon(icon = null, color = null, alpha = null, type = /atom/movable/screen/throw)
-	mymob.throw_icon = get_screen(type, icon, color, alpha)
+/datum/hud/proc/add_throw_icon(type = /atom/movable/screen/throw)
+	mymob.throw_icon = get_screen(type, ui_style, ui_color, ui_alpha)
 	hotkeybuttons += mymob.throw_icon
 
-/datum/hud/proc/add_internals(icon = null, type = /atom/movable/screen/internal)
-	var/atom/movable/screen/internals = get_screen(type, icon)
+/datum/hud/proc/add_internals(type = /atom/movable/screen/internal)
+	var/atom/movable/screen/internals = get_screen(type, ui_style)
 	mymob.internals = internals
 	internals.update_icon(mymob)
 	main += internals
 
-/datum/hud/proc/add_healths(icon = null, type = /atom/movable/screen/health)
-	mymob.healths = new type
+/datum/hud/proc/add_healths(type = /atom/movable/screen/health)
+	mymob.healths = get_screen(type, ui_style)
 	main += mymob.healths
 
 /datum/hud/proc/add_health_doll(type = /atom/movable/screen/health_doll)

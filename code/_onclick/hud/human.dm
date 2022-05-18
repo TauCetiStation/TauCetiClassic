@@ -1,8 +1,8 @@
 /datum/hud/proc/human_hud()
 	var/mob/living/carbon/human/H = mymob
 
-	add_intents(ui_style)
-	add_move_intent(ui_style, ui_color, ui_alpha)
+	add_intents()
+	add_move_intent()
 	adding += new /atom/movable/screen/inventory/craft
 
 	// hiddable inventory
@@ -19,7 +19,7 @@
 	)
 	init_screens(types, ui_style, ui_color, ui_alpha, other)
 
-	add_hands(ui_style, ui_color, ui_alpha)
+	add_hands()
 
 	// simple hotkeys
 	types = list(
@@ -43,9 +43,9 @@
 	)
 	init_screens(types, ui_style, ui_color, ui_alpha, adding)
 
-	add_throw_icon(ui_style, ui_color, ui_alpha)
-	add_internals(ui_style)
-	add_healths(ui_style)
+	add_throw_icon()
+	add_internals()
+	add_healths()
 	add_health_doll()
 	add_nutrition_icon()
 	add_pullin(ui_style)

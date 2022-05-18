@@ -9,8 +9,8 @@
 /datum/hud/proc/facehugger_hud()
 	ui_style = 'icons/mob/screen1_xeno.dmi'
 
-	add_intents(ui_style)
-	add_move_intent(ui_style)
+	add_intents()
+	add_move_intent()
 
 	src.adding += get_screen(/atom/movable/screen/drop, ui_style)
 

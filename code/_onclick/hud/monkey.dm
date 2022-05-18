@@ -1,7 +1,7 @@
 /datum/hud/proc/monkey_hud()
-	add_intents(ui_style)
-	add_move_intent(ui_style)
-	add_hands(ui_style)
+	add_intents()
+	add_move_intent()
+	add_hands()
 
 	// hotkeys
 	var/types = list(
@@ -18,9 +18,9 @@
 	)
 	init_screens(types, ui_style, list_to = adding)
 
-	add_throw_icon(ui_style)
-	add_internals(ui_style)
-	add_healths(ui_style)
+	add_throw_icon()
+	add_internals()
+	add_healths()
 	add_pullin(ui_style)
 	add_changeling()
 	add_zone_sel(ui_style)

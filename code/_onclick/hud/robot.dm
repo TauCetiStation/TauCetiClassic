@@ -49,7 +49,7 @@
 //End of module select
 
 //Intent
-	add_intents(ui_style)
+	add_intents()
 
 //Health
 	add_healths(type = /atom/movable/screen/health/robot)
