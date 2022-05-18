@@ -17,7 +17,7 @@
 		/atom/movable/screen/inventory/head,
 		/atom/movable/screen/inventory/shoes,
 	)
-	init_screens(types, ui_style, ui_color, ui_alpha, other)
+	init_screens(types, other)
 
 	add_hands()
 
@@ -29,7 +29,7 @@
 		/atom/movable/screen/resist,
 		/atom/movable/screen/equip,
 	)
-	init_screens(types, ui_style, ui_color, ui_alpha, hotkeybuttons)
+	init_screens(types, hotkeybuttons)
 
 	// visible inventory, inventory toggle and craft
 	types = list(
@@ -41,20 +41,20 @@
 		/atom/movable/screen/inventory/suit_storage,
 		/atom/movable/screen/inventory/belt,
 	)
-	init_screens(types, ui_style, ui_color, ui_alpha, adding)
+	init_screens(types, adding)
 
 	add_throw_icon()
 	add_internals()
 	add_healths()
 	add_health_doll()
 	add_nutrition_icon()
-	add_pullin(ui_style)
+	add_pullin()
 
 	add_changeling()
 
 	mymob.pain = new /atom/movable/screen( null )
 
-	add_zone_sel(ui_style, ui_color, ui_alpha)
+	add_zone_sel()
 
 	if(isanycop(H) || isanygangster(H))
 		add_wanted_level()

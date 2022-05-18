@@ -64,7 +64,7 @@
 	main += new /atom/movable/screen/robot_inventory
 
 	add_pullin(type = /atom/movable/screen/pull/robot)
-	add_zone_sel(ui_style)
+	add_zone_sel()
 
 	add_gun_setting()
 

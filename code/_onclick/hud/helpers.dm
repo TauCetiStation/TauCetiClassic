@@ -25,12 +25,12 @@
 		screen.alpha = alpha
 	return screen
 
-/datum/hud/proc/init_screens(list/types, icon = null, color = null, alpha = null, list/list_to)
+/datum/hud/proc/init_screens(list/types, list/list_to)
 	if(!list_to)
 		list_to = list()
 
 	for(var/screen_type in types)
-		list_to += get_screen(screen_type, icon, color, alpha)
+		list_to += get_screen(screen_type, ui_style, ui_color, ui_alpha)
 
 	return list_to
 
@@ -73,13 +73,13 @@
 	mymob.nutrition_icon.update_icon(mymob)
 	main += mymob.nutrition_icon
 
-/datum/hud/proc/add_pullin(icon = null, type = /atom/movable/screen/pull)
-	mymob.pullin = get_screen(type, icon)
+/datum/hud/proc/add_pullin(type = /atom/movable/screen/pull)
+	mymob.pullin = get_screen(type, ui_style)
 	mymob.pullin.update_icon(mymob)
 	hotkeybuttons += mymob.pullin
 
-/datum/hud/proc/add_zone_sel(icon = null, color = null, alpha = null, type = /atom/movable/screen/zone_sel)
-	mymob.zone_sel = get_screen(type, icon)
+/datum/hud/proc/add_zone_sel(type = /atom/movable/screen/zone_sel)
+	mymob.zone_sel = get_screen(type, ui_style, ui_color, ui_alpha)
 	mymob.zone_sel.update_icon()
 	main += mymob.zone_sel
 
@@ -126,8 +126,8 @@
 	staminadisplay.update_icon(mymob)
 	adding += staminadisplay
 
-/datum/hud/proc/add_corgi_ability(icon)
-	var/atom/movable/screen/using = get_screen(/atom/movable/screen/corgi/ability, icon)
+/datum/hud/proc/add_corgi_ability()
+	var/atom/movable/screen/using = get_screen(/atom/movable/screen/corgi/ability)
 	using.update_icon(mymob)
 	adding += using
 

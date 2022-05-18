@@ -19,5 +19,5 @@
 	add_nightvision_icon()
 
 	add_healths(type = /atom/movable/screen/health/alien)
-	add_pullin(ui_style)
-	add_zone_sel(ui_style)
+	add_pullin()
+	add_zone_sel()

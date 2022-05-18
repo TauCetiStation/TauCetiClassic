@@ -1,5 +1,5 @@
 /datum/hud/proc/ai_hud()
-	ui_style = 'icons/mob/screen_ai.dmi'
+	ui_style = null
 
 	var/list/types = list(
 		/atom/movable/screen/ai_core,
@@ -18,4 +18,4 @@
 		/atom/movable/screen/robot_image/view/ai,
 		/atom/movable/screen/sensor_augmentation,
 	)
-	init_screens(types, list_to = adding)
+	init_screens(types, adding)

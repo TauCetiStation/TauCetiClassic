@@ -55,7 +55,7 @@
 		/atom/movable/screen/inventory/swap/second/alien,
 		/atom/movable/screen/resist,
 	)
-	init_screens(types, ui_style, list_to = hotkeybuttons)
+	init_screens(types, hotkeybuttons)
 
 	add_nightvision_icon()
 
@@ -68,5 +68,5 @@
 	add_throw_icon()
 	add_plasma_display()
 	add_healths(type = /atom/movable/screen/health/alien)
-	add_pullin(ui_style)
-	add_zone_sel(ui_style)
+	add_pullin()
+	add_zone_sel()

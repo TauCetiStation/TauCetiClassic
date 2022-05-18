@@ -9,19 +9,19 @@
 		/atom/movable/screen/inventory/swap/first,
 		/atom/movable/screen/inventory/swap/second,
 	)
-	init_screens(types, ui_style, list_to = hotkeybuttons)
+	init_screens(types, hotkeybuttons)
 
 	// inventory
 	types = list(
 		/atom/movable/screen/inventory/mask/monkey,
 		/atom/movable/screen/inventory/back,
 	)
-	init_screens(types, ui_style, list_to = adding)
+	init_screens(types, adding)
 
 	add_throw_icon()
 	add_internals()
 	add_healths()
-	add_pullin(ui_style)
+	add_pullin()
 	add_changeling()
-	add_zone_sel(ui_style)
+	add_zone_sel()
 	add_gun_setting()

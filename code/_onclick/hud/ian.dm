@@ -89,7 +89,7 @@
 		/atom/movable/screen/corgi/sit_lie,
 		/atom/movable/screen/drop,
 	)
-	init_screens(types, ui_style, list_to = hotkeybuttons)
+	init_screens(types, hotkeybuttons)
 
 	add_move_intent()
 
@@ -97,7 +97,7 @@
 
 	adding += get_screen(/atom/movable/screen/inventory/head/ian, ui_style)
 
-	add_corgi_ability(ui_style)
+	add_corgi_ability()
 
 	add_hands(r_type = /atom/movable/screen/inventory/corgi_mouth, l_type = FALSE)
 
@@ -105,8 +105,8 @@
 		/atom/movable/screen/inventory/corgi_neck,
 		/atom/movable/screen/inventory/back/ian
 	)
-	init_screens(types, ui_style, list_to = adding)
+	init_screens(types, adding)
 
 	add_healths()
-	add_pullin(ui_style)
-	add_zone_sel(ui_style)
+	add_pullin()
+	add_zone_sel()

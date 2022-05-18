@@ -71,6 +71,8 @@
 	var/atom/movable/screen/spawners_menu_button
 
 /datum/hud/ghost/New()
+	ui_style = null
+
 	var/list/types = list(
 		/atom/movable/screen/ghost/jumptomob,
 		/atom/movable/screen/ghost/orbit,
@@ -81,7 +83,7 @@
 	)
 	init_screens(types, list_to = adding)
 
-	spawners_menu_button = new /atom/movable/screen/ghost/spawners_menu()
+	spawners_menu_button = new /atom/movable/screen/ghost/spawners_menu
 	adding += spawners_menu_button
 
 	..()
