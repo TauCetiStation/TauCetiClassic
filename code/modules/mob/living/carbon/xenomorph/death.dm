@@ -53,7 +53,7 @@
 	animation.master = src
 
 	flick("gibbed-a", animation)
-	xgibs(loc, viruses)
+	xgibs(loc)
 	dead_mob_list -= src
 
 	spawn(15)

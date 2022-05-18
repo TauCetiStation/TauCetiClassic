@@ -17,15 +17,13 @@
 	)
 	smooth = SMOOTH_TRUE
 
-/obj/structure/girder/bullet_act(obj/item/projectile/Proj)
+/obj/structure/girder/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(istype(Proj, /obj/item/projectile/beam))
 		health -= Proj.damage
-		..()
 		if(health <= 0)
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			qdel(src)
-
-		return
 
 /obj/structure/girder/attackby(obj/item/W, mob/user)
 	if(user.is_busy()) return

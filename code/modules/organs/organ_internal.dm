@@ -82,9 +82,8 @@
 	else
 		src.damage += amount
 
-	var/obj/item/organ/external/BP = owner.bodyparts_by_name[parent_bodypart]
 	if (!silent)
-		owner.custom_pain("Something inside your [BP.name] hurts a lot.", 1)
+		owner.custom_pain("What a pain! My [name]!", 1)
 
 /obj/item/organ/internal/emp_act(severity)
 	switch(robotic)
@@ -276,12 +275,10 @@
 			temp_gain -= refrigerant_spent
 
 	if(HAS_TRAIT(owner, TRAIT_COOLED) & owner.bodytemperature > 290)
-		owner.bodytemperature -= 50
+		owner.adjust_bodytemperature(-50)
 
 	if(temp_gain > 0)
-		owner.bodytemperature += temp_gain
-		if(owner.bodytemperature > owner.species.synth_temp_max)
-			owner.bodytemperature = owner.species.synth_temp_max
+		owner.adjust_bodytemperature(temp_gain, max_temp = owner.species.synth_temp_max)
 
 /obj/item/organ/internal/lungs/ipc/proc/add_refrigerant(volume)
 	if(refrigerant < refrigerant_max)

@@ -2369,6 +2369,7 @@
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/rd,
 /obj/structure/curtain/open/bed,
+/obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -2385,6 +2386,7 @@
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/gar,
 /obj/structure/curtain/open/bed,
+/obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -2717,6 +2719,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
+/obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "ahh" = (
@@ -3284,6 +3287,7 @@
 /obj/item/weapon/bedsheet/hos,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/curtain/open/bed,
+/obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "aiF" = (
@@ -5113,9 +5117,6 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "anf" = (
-/obj/effect/landmark{
-	name = "voxstart"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/flour,
 /turf/simulated/shuttle/floor/vox{
@@ -5465,9 +5466,6 @@
 /turf/environment/space,
 /area/shuttle/transport1/centcom)
 "anX" = (
-/obj/effect/landmark{
-	name = "voxstart"
-	},
 /obj/item/trash/syndi_cakes,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
@@ -8711,14 +8709,6 @@
 	icon_state = "floorplating"
 	},
 /area/shuttle/vox/arkship)
-"avc" = (
-/obj/effect/landmark{
-	name = "voxstart"
-	},
-/obj/effect/decal/cleanable/generic,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/shuttle/floor/vox,
-/area/shuttle/vox/arkship)
 "avd" = (
 /obj/random/melee,
 /obj/effect/decal/cleanable/blood/gibs,
@@ -8820,13 +8810,6 @@
 "avp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/storage/toolbox/mechanical,
-/turf/simulated/shuttle/floor/vox,
-/area/shuttle/vox/arkship)
-"avq" = (
-/obj/effect/landmark{
-	name = "voxstart"
-	},
-/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "avr" = (
@@ -10501,6 +10484,7 @@
 /obj/machinery/light/small{
 	brightness_color = "#008000"
 	},
+/obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "azb" = (
@@ -18846,17 +18830,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/vox/arkship)
-"aXm" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 1
-	},
-/obj/effect/landmark{
-	name = "voxstart"
-	},
-/turf/simulated/shuttle/floor/vox{
-	icon_state = "floorplace"
-	},
-/area/shuttle/vox/arkship)
 "aXn" = (
 /obj/structure/object_wall/vox{
 	icon_state = "7,19"
@@ -19242,9 +19215,6 @@
 "aYx" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 8
-	},
-/obj/effect/landmark{
-	name = "voxstart"
 	},
 /obj/machinery/light{
 	dir = 4
@@ -19916,14 +19886,11 @@
 	},
 /area/custom/wizard_station)
 "baV" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/custom/syndicate_mothership)
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/glowshroom,
+/obj/effect/landmark/heist_spawn,
+/turf/simulated/shuttle/floor/vox,
+/area/shuttle/vox/arkship_hold)
 "baW" = (
 /obj/structure/flora/tree/pine{
 	layer = 9.5
@@ -83366,7 +83333,7 @@ ajR
 amw
 and
 ari
-avc
+aAq
 avR
 awP
 aqY
@@ -84639,7 +84606,7 @@ abu
 aWO
 aXb
 aAN
-aXm
+aYP
 aYf
 aZT
 anF
@@ -86193,7 +86160,7 @@ alu
 amT
 anm
 arm
-avq
+aYw
 aYs
 awf
 ary
@@ -92365,7 +92332,7 @@ avK
 awg
 axn
 anP
-aiF
+baV
 azp
 abu
 aaM

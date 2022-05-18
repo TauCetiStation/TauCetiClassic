@@ -326,9 +326,9 @@
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	..()
 
-/obj/structure/mineral_door/resin/bullet_act(obj/item/projectile/Proj)
+/obj/structure/mineral_door/resin/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
-	..()
 	CheckHealth()
 
 /obj/structure/mineral_door/resin/attack_hand(mob/user)
