@@ -170,22 +170,19 @@
 		screen_position++
 		other += using
 
-/datum/hud/proc/add_pda_screens()
-	adding += new /atom/movable/screen/show_pda_screens
+/datum/hud/proc/set_hud_ui(atom/movable/screen/screen)
+	if(ui_style)
+		screen.icon = ui_style
+	if(ui_color)
+		screen.color = ui_color
+	if(ui_alpha)
+		screen.alpha = ui_alpha
 
-	var/list/screens = list(
-		/atom/movable/screen/robot_pda/send, /atom/movable/screen/robot_pda/log,
-		/atom/movable/screen/robot_pda/ringtone, /atom/movable/screen/robot_pda/toggle,
-		)
-
-	add_sequential_list(screens, 2, "SOUTH+", ":6,WEST")
-
-/datum/hud/proc/add_photo_screens()
-	adding += new /atom/movable/screen/show_photo_screens
-
-	var/list/screens = list(
-		/atom/movable/screen/robot_image/take, /atom/movable/screen/robot_image/view,
-		/atom/movable/screen/robot_image/delete
-		)
-
-	add_sequential_list(screens, 2, "SOUTH+", ":6,WEST+1")
+/datum/hud/proc/add_screen_list(type, set_ui = FALSE)
+	var/atom/movable/screen/toggle_list/using = new type
+	adding += using
+	other += using.screens
+	if(set_ui)
+		set_hud_ui(using)
+		for(var/atom/movable/screen/screen as anything in using.screens)
+			set_hud_ui(screen)

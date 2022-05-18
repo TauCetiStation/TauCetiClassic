@@ -19,10 +19,10 @@
 		types += /atom/movable/screen/sensor_augmentation/robot
 
 //Show PDA screens
-		add_pda_screens()
+		add_screen_list(/atom/movable/screen/toggle_list/ordered/robot_pda)
 
 //Show foto screens
-		add_photo_screens()
+		add_screen_list(/atom/movable/screen/toggle_list/ordered/robot_image)
 
 //Namepick
 		var/mob/living/silicon/robot/R = mymob
@@ -141,17 +141,3 @@
 				r.client.screen -= A
 		r.shown_robot_modules = 0
 		r.client.screen -= r.robot_modules_background
-
-/datum/hud/proc/toggle_robot_additional_screens(screen_type, toggled) // if screen_type is 0. it's PDA.
-	if(!isrobot(mymob))
-		return
-	var/screens_type = screen_type ? /atom/movable/screen/robot_image : /atom/movable/screen/robot_pda
-	var/mob/living/silicon/robot/R = mymob
-	if(toggled)
-		for(var/atom/movable/screen/using as anything in other)
-			if(istype(using, screens_type))
-				R.client.screen += using
-	else
-		for(var/atom/movable/screen/using as anything in other)
-			if(istype(using, screens_type))
-				R.client.screen -= using

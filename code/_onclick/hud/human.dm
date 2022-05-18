@@ -6,23 +6,12 @@
 	adding += new /atom/movable/screen/inventory/craft
 
 	// hiddable inventory
-	var/list/types = list(
-		/atom/movable/screen/inventory/uniform,
-		/atom/movable/screen/inventory/suit,
-		/atom/movable/screen/inventory/mask,
-		/atom/movable/screen/inventory/gloves,
-		/atom/movable/screen/inventory/eyes,
-		/atom/movable/screen/inventory/l_ear,
-		/atom/movable/screen/inventory/r_ear,
-		/atom/movable/screen/inventory/head,
-		/atom/movable/screen/inventory/shoes,
-	)
-	init_screens(types, other)
+	add_screen_list(/atom/movable/screen/toggle_list/human, set_ui=TRUE)
 
 	add_hands()
 
 	// simple hotkeys
-	types = list(
+	var/list/types = list(
 		/atom/movable/screen/drop,
 		/atom/movable/screen/inventory/swap/first,
 		/atom/movable/screen/inventory/swap/second,
@@ -33,7 +22,6 @@
 
 	// visible inventory, inventory toggle and craft
 	types = list(
-		/atom/movable/screen/toggle,
 		/atom/movable/screen/inventory/id,
 		/atom/movable/screen/inventory/back,
 		/atom/movable/screen/inventory/pocket1,
