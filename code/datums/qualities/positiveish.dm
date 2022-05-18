@@ -157,7 +157,7 @@
 	requirement = "Нет."
 
 /datum/quality/positiveish/hygiene/add_effect(mob/living/carbon/human/H, latespawn)
-	H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/snacks/soap(H), SLOT_R_STORE)
+	H.equip_or_collect(new /obj/item/weapon/reagent_containers/food/snacks/soap/syndie(H), SLOT_R_STORE)
 
 
 /datum/quality/positiveish/vaccinated

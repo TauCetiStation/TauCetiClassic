@@ -702,6 +702,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5632,6 +5633,7 @@
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
 /obj/item/clothing/gloves/latex,
+/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitered"
@@ -18121,6 +18123,11 @@
 /obj/item/clothing/under/bathtowel,
 /obj/item/clothing/under/bathtowel,
 /obj/item/clothing/under/bathtowel,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -44093,6 +44100,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/mopbucket,
+/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,
 /obj/item/weapon/mop,
 /turf/simulated/floor,
 /area/station/civilian/janitor)
@@ -53783,6 +53791,9 @@
 "bTh" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -71475,6 +71486,7 @@
 	pixel_y = 24
 	},
 /obj/structure/drain,
+/obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -71484,6 +71496,7 @@
 /obj/machinery/shower{
 	dir = 1
 	},
+/obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},

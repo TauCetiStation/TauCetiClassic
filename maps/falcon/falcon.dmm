@@ -12592,6 +12592,10 @@
 /obj/item/weapon/bikehorn/rubberducky{
 	pixel_y = 4
 	},
+/obj/item/weapon/reagent_containers/food/snacks/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -29152,6 +29156,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "tgk" = (

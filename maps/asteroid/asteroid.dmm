@@ -11930,6 +11930,12 @@
 	icon_state = "warning"
 	},
 /area/asteroid/research_outpost/hallway)
+"AZ" = (
+/obj/structure/table,
+/obj/machinery/light/small,
+/obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
+/turf/simulated/floor/carpet,
+/area/asteroid/mine/living_quarters)
 "Ba" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -47273,7 +47279,7 @@ us
 pw
 uo
 us
-pw
+AZ
 uo
 ww
 yv

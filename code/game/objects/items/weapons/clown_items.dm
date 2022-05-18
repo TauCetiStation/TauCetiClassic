@@ -57,10 +57,6 @@
 	bitesize = 3
 	list_reagents = list("cleaner" = 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/soap/atom_init()
-	. = ..()
-	AddComponent(/datum/component/slippery, 2)
-
 /obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of phoron."
 	icon_state = "soapnt"
@@ -74,24 +70,33 @@
 	icon_state = "soapsyndie"
 	list_reagents = list("cleaner" = 3, "cyanide" = 2)
 
+/obj/item/weapon/reagent_containers/food/snacks/soap/syndie/atom_init()
+	. = ..()
+	AddComponent(/datum/component/slippery, 2)
+
 /obj/item/weapon/reagent_containers/food/snacks/soap/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity || ishuman(target)) return
+	if(!proximity || ishuman(target))
+		return
 	// I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	// So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && (target in user.client.screen))
 		to_chat(user, "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>")
-	else if(istype(target,/obj/effect/decal/cleanable))
+		return
+	if(user.is_busy(target))
+		return
+	if(!do_after(user, 10, target = target))
+		return
+	if(istype(target,/obj/effect/decal/cleanable))
 		to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
 		qdel(target)
 	else
 		to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 		target.clean_blood()
-	return
 
 /obj/item/weapon/reagent_containers/food/snacks/soap/attack(mob/target, mob/user, def_zone)
 	if(user.a_intent == INTENT_HARM)
-		..()
-	else if(target && user && ishuman(target) && ishuman(user) && !user.stat && user.zone_sel && !user.is_busy())
+		return..()
+	if(ishuman(target) && ishuman(user) && user.zone_sel && !user.is_busy())
 		var/mob/living/carbon/human/H = target
 		var/body_part_name
 		switch(def_zone)
@@ -105,7 +110,7 @@
 			user.visible_message("<span class='notice'>\the [user] starts to clean \his [body_part_name] out with soap.</span>")
 		else
 			user.visible_message("<span class='notice'>\the [user] starts to clean \the [target]'s [body_part_name] out with soap.</span>")
-		if(do_after(user, 15, target = H) && src)
+		if(do_after(user, 60, target = H))
 			switch(body_part_name)
 				if("mouth")
 					return
