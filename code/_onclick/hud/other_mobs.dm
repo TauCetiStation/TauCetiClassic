@@ -22,7 +22,7 @@
 	blobpwrdisplay = new /atom/movable/screen/blob_power
 	blobhealthdisplay = new /atom/movable/screen/blob_health
 
-	main += list(blobpwrdisplay, blobhealthdisplay)
+	adding += list(blobpwrdisplay, blobhealthdisplay)
 
 /atom/movable/screen/essence_voice
 	name = "Voice"
@@ -107,7 +107,7 @@
 	add_health_doll()
 	add_changeling()
 
-	main += new /atom/movable/screen/ling_abilities
+	adding += new /atom/movable/screen/ling_abilities
 
 	if(E.is_changeling)
-		main += new /atom/movable/screen/return_to_body
+		adding += new /atom/movable/screen/return_to_body

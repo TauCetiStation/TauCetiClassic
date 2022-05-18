@@ -58,10 +58,10 @@
 	add_module_icon()
 
 //Store
-	main += new /atom/movable/screen/store
+	adding += new /atom/movable/screen/store
 
 //Inventory
-	main += new /atom/movable/screen/robot_inventory
+	adding += new /atom/movable/screen/robot_inventory
 
 	add_pullin(type = /atom/movable/screen/pull/robot)
 	add_zone_sel()

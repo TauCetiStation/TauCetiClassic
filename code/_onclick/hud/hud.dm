@@ -230,11 +230,9 @@ var/global/list/available_ui_styles = list(
 			mymob.client.screen -= adding
 			mymob.client.screen -= other
 			mymob.client.screen -= hotkeybuttons
-			mymob.client.screen -= main
-
-			//These ones are a part of 'adding' or 'main' but we want them to stay
-			mymob.client.screen += list(l_hand_hud_object, r_hand_hud_object, action_intent)
+			
 			action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
+			mymob.client.screen += main
 
 		if(HUD_STYLE_NOHUD)	//No HUD
 			hud_shown = FALSE	//Governs behavior of other procs

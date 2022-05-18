@@ -1,7 +1,7 @@
 /datum/hud/proc/add_intents(act_intent_type = /atom/movable/screen/act_intent)
 	action_intent = get_screen(act_intent_type, ui_style)
 	action_intent.update_icon(mymob)
-	adding += action_intent
+	main += action_intent
 
 	var/atom/movable/screen/intent
 	var/list/intent_types = list(
@@ -43,12 +43,12 @@
 	if(r_type)
 		r_hand_hud_object = get_screen(r_type, ui_style, ui_color, ui_alpha)
 		r_hand_hud_object.update_icon(mymob)
-		adding += r_hand_hud_object
+		main += r_hand_hud_object
 
 	if(l_type)
 		l_hand_hud_object = get_screen(l_type, ui_style, ui_color, ui_alpha)
 		l_hand_hud_object.update_icon(mymob)
-		adding += l_hand_hud_object
+		main += l_hand_hud_object
 
 /datum/hud/proc/add_throw_icon(type = /atom/movable/screen/throw)
 	mymob.throw_icon = get_screen(type, ui_style, ui_color, ui_alpha)
@@ -58,20 +58,20 @@
 	var/atom/movable/screen/internals = get_screen(type, ui_style)
 	mymob.internals = internals
 	internals.update_icon(mymob)
-	main += internals
+	adding += internals
 
 /datum/hud/proc/add_healths(type = /atom/movable/screen/health)
 	mymob.healths = get_screen(type, ui_style)
-	main += mymob.healths
+	adding += mymob.healths
 
 /datum/hud/proc/add_health_doll(type = /atom/movable/screen/health_doll)
 	mymob.healthdoll = new type
-	main += mymob.healthdoll
+	adding += mymob.healthdoll
 
 /datum/hud/proc/add_nutrition_icon(type = /atom/movable/screen/nutrition)
 	mymob.nutrition_icon = new  type
 	mymob.nutrition_icon.update_icon(mymob)
-	main += mymob.nutrition_icon
+	adding += mymob.nutrition_icon
 
 /datum/hud/proc/add_pullin(type = /atom/movable/screen/pull)
 	mymob.pullin = get_screen(type, ui_style)
@@ -81,7 +81,7 @@
 /datum/hud/proc/add_zone_sel(type = /atom/movable/screen/zone_sel)
 	mymob.zone_sel = get_screen(type, ui_style, ui_color, ui_alpha)
 	mymob.zone_sel.update_icon()
-	main += mymob.zone_sel
+	adding += mymob.zone_sel
 
 /datum/hud/proc/add_gun_setting(type = /atom/movable/screen/gun/mode)
 	mymob.gun_setting_icon = new type
@@ -90,15 +90,15 @@
 	if(mymob.client.gun_mode)
 		mymob.client.add_gun_icons()
 
-	main += mymob.gun_setting_icon
+	adding += mymob.gun_setting_icon
 
 /datum/hud/proc/add_changeling()
 	lingchemdisplay = new /atom/movable/screen/chemical_display
-	main += lingchemdisplay
+	adding += lingchemdisplay
 
 	if(iscarbon(mymob))
 		lingstingdisplay = new /atom/movable/screen/current_sting
-		main += lingstingdisplay
+		adding += lingstingdisplay
 
 /datum/hud/proc/add_wanted_level()
 	wanted_lvl = new /atom/movable/screen/wanted
@@ -119,7 +119,7 @@
 /datum/hud/proc/add_plasma_display()
 	mymob.xenomorph_plasma_display = new /atom/movable/screen/xenomorph/plasma_display
 	mymob.xenomorph_plasma_display.update_icon(mymob)
-	main += mymob.xenomorph_plasma_display
+	adding += mymob.xenomorph_plasma_display
 
 /datum/hud/proc/add_stamina_display()
 	staminadisplay = new /atom/movable/screen/corgi/stamina_bar
@@ -135,32 +135,32 @@
 	var/mob/living/parasite/essence/E = mymob
 	E.voice = new /atom/movable/screen/essence_voice
 	E.voice.update_icon(mymob)
-	main += E.voice
+	adding += E.voice
 
 /datum/hud/proc/add_phantom()
 	var/mob/living/parasite/essence/E = mymob
 	E.phantom_s = new /atom/movable/screen/essence_phantom()
 	E.phantom_s.update_icon(mymob)
-	main += E.phantom_s
+	adding += E.phantom_s
 
 /datum/hud/proc/add_robot_hand_1()
 	var/atom/movable/screen/robot_hands/first/using = new
-	adding += using
+	main += using
 	mymob:inv1 = using
 
 /datum/hud/proc/add_robot_hand_2()
 	var/atom/movable/screen/robot_hands/second/using = new
-	adding += using
+	main += using
 	mymob:inv2 = using
 
 /datum/hud/proc/add_robot_hand_3()
 	var/atom/movable/screen/robot_hands/third/using = new
-	adding += using
+	main += using
 	mymob:inv3 = using
 
 /datum/hud/proc/add_module_icon()
 	mymob.module_icon = new /atom/movable/screen/module
-	main += mymob.module_icon
+	adding += mymob.module_icon
 
 /datum/hud/proc/add_sequential_list(list/types, screen_position, prefix, postfix)
 	var/atom/movable/screen/using
