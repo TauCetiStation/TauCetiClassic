@@ -1846,6 +1846,19 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Pizza crate"
 	group = "Hospitality"
 
+/datum/supply_pack/randomised/soap
+	num_contained = 10
+	contains = list(
+		/obj/item/weapon/reagent_containers/food/snacks/soap,
+		/obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
+		/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,
+		)
+	name = "Large set of soap"
+	cost = 1500
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Soap crate"
+	group = "Hospitality"
+
 /datum/supply_pack/randomised/costume
 	num_contained = 2
 	contains = list(/obj/item/clothing/suit/pirate,
