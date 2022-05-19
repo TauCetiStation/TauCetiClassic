@@ -29,17 +29,6 @@
 		if(!R.custom_name)
 			types += /atom/movable/screen/namepick
 
-	types += list(
-		/atom/movable/screen/crew_manifest/robot,
-		/atom/movable/screen/self_diagnosis,
-		/atom/movable/screen/alerts/robot,
-		/atom/movable/screen/state_laws/robot,
-		/atom/movable/screen/show_laws,
-		/atom/movable/screen/toggle_components,
-		/atom/movable/screen/toggle_lights,
-		/atom/movable/screen/radio,
-		/atom/movable/screen/panel,
-	)
 	init_screens(types, list_to = adding)
 
 //Module select

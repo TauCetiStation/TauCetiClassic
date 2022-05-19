@@ -18,9 +18,58 @@
 	var/assigned_map
 	var/del_on_map_removal = TRUE
 
+	var/hud_slot = "adding"
+	var/copy_flags = ALL
+
 /atom/movable/screen/Destroy()
 	master = null
 	return ..()
+
+/atom/movable/screen/proc/add_to_hud(datum/hud/hud)
+	switch(hud_slot)
+		if("adding")
+			hud.adding += src
+		if("hotkeys")
+			hud.hotkeybuttons += src
+		if("main")
+			hud.main += src
+		if("other")
+			hud.other += src
+
+	hud.mymob.client.screen += src
+	update_by_hud(hud)
+	
+/atom/movable/screen/proc/update_by_hud(datum/hud/hud)
+	if((copy_flags & 1) && hud.ui_style)
+		icon = hud.ui_style
+	if((copy_flags & 2) && hud.ui_alpha)
+		alpha = hud.ui_alpha
+	if((copy_flags & 4) && hud.ui_color)
+		color = hud.ui_color
+	
+/atom/movable/screen/proc/remove_from_hud(datum/hud/hud)
+	switch(hud_slot)
+		if("adding")
+			hud.adding -= src
+		if("hotkeys")
+			hud.hotkeybuttons -= src
+		if("main")
+			hud.main -= src
+		if("other")
+			hud.other -= src
+
+	hud.mymob.client.screen -= src
+
+/atom/movable/screen/proc/action(location, control, params)
+	return
+
+/atom/movable/screen/Click(location, control, params)
+	if(!usr)
+		return
+
+	SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
+
+	action(location, control, params)
 
 /atom/movable/screen/text
 	icon = null
@@ -133,6 +182,9 @@
 	icon = 'icons/mob/screen1.dmi'
 	COOLDOWN_DECLARE(gun_click_time)
 
+	hud_slot = "other"
+	copy_flags = NONE
+
 /atom/movable/screen/gun/action()
 	if(!COOLDOWN_FINISHED(src, gun_click_time))
 		return FALSE
@@ -185,6 +237,8 @@
 	name = "Toggle Gun Mode"
 	icon_state = "gun0"
 	screen_loc = ui_gun_select
+
+	hud_slot = "adding"
 
 /atom/movable/screen/gun/mode/action()
 	usr.client.ToggleGunMode()
@@ -305,6 +359,10 @@
 	icon_state = "pull1"
 	screen_loc = ui_pull_resist
 
+	hud_slot = "hotkeys"
+	copy_flags = 1
+
+
 /atom/movable/screen/pull/action()
 	usr.stop_pulling()
 
@@ -312,7 +370,6 @@
 	icon_state = mymob.pulling ? "pull1" : "pull0"
 
 /atom/movable/screen/pull/robot
-	icon = 'icons/mob/screen1_robot.dmi'
 	screen_loc = ui_borg_pull
 
 /atom/movable/screen/equip
@@ -320,6 +377,8 @@
 	icon_state = "act_equip"
 	screen_loc = ui_equip
 	plane = ABOVE_HUD_PLANE
+
+	hud_slot = "hotkeys"
 
 /atom/movable/screen/equip/action()
 	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
@@ -335,6 +394,8 @@
 	plane = ABOVE_HUD_PLANE
 	invisibility = INVISIBILITY_ABSTRACT
 
+	copy_flags = NONE
+
 /atom/movable/screen/current_sting/action()
 	if(iscarbon(usr))
 		var/mob/living/carbon/U = usr
@@ -346,6 +407,7 @@
 	screen_loc = ui_pull_resist
 	plane = HUD_PLANE
 
+	hud_slot = "hotkeys"
 
 /atom/movable/screen/resist/action()
 	if(isliving(usr))
@@ -372,6 +434,8 @@
 	name = "internal"
 	icon_state = "internal0"
 	screen_loc = ui_internal
+
+	copy_flags = 1
 
 /atom/movable/screen/internal/update_icon(mob/living/carbon/mymob)
 	if(!istype(mymob))
@@ -460,6 +524,9 @@
 	plane = ABOVE_HUD_PLANE
 	var/index
 
+	copy_flags = NONE
+	
+
 /atom/movable/screen/intent/action()
 	usr.set_a_intent(name)
 
@@ -507,6 +574,8 @@
 	icon_state = "act_throw_off"
 	screen_loc = ui_drop_throw
 
+	hud_slot = "hotkeys"
+
 /atom/movable/screen/throw/action()
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
@@ -517,6 +586,8 @@
 	icon_state = "act_drop"
 	screen_loc = ui_drop_throw
 	plane = HUD_PLANE
+
+	hud_slot = "hotkeys"
 
 /atom/movable/screen/drop/action()
 	usr.drop_item()
@@ -591,6 +662,8 @@
 	icon = 'icons/mob/screen1_robot.dmi'
 	plane = ABOVE_HUD_PLANE
 	var/module_index
+
+	hud_slot = "main"
 
 /atom/movable/screen/robot_hands/action()
 	if(isrobot(usr))
@@ -818,6 +891,8 @@
 	icon = 'icons/mob/screen1_robot.dmi'
 	plane = ABOVE_HUD_PLANE
 
+	hud_slot = "other"
+
 /atom/movable/screen/robot_pda/send
 	name = "PDA - Send Message"
 	icon_state = "pda_send"
@@ -869,6 +944,8 @@
 /atom/movable/screen/robot_image
 	icon = 'icons/mob/screen1_robot.dmi'
 	plane = ABOVE_HUD_PLANE
+
+	hud_slot = "other"
 
 /atom/movable/screen/robot_image/take
 	name = "Take Image"
@@ -927,17 +1004,6 @@
 	icon_state = "setsensor"
 	screen_loc = ui_borg_sensor
 
-/atom/movable/screen/proc/action(location, control, params)
-	return
-
-/atom/movable/screen/Click(location, control, params)
-	if(!usr)
-		return
-
-	SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
-
-	action(location, control, params)
-
 /atom/movable/screen/inventory
 	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
 
@@ -991,6 +1057,8 @@
 /atom/movable/screen/inventory/hand
 	var/hand_index
 
+	hud_slot = "main"
+
 /atom/movable/screen/inventory/hand/action()
 	if(check_state() && iscarbon(usr))
 		var/mob/living/carbon/C = usr
@@ -1014,6 +1082,8 @@
 
 /atom/movable/screen/inventory/swap
 	name = "hand"
+
+	hud_slot = "hotkeys"
 
 /atom/movable/screen/inventory/swap/action()
 	if(check_state() && iscarbon(usr))
@@ -1040,6 +1110,8 @@
 	icon_state = "craft"
 	screen_loc = ui_crafting
 
+	copy_flags = NONE
+
 /atom/movable/screen/inventory/craft/action()
 	if(check_state())
 		var/mob/living/M = usr
@@ -1052,8 +1124,12 @@
 	screen_loc = ui_mask
 	slot_id = SLOT_WEAR_MASK
 
+	hud_slot = "other"
+
 /atom/movable/screen/inventory/mask/monkey
 	screen_loc = ui_monkey_mask
+
+	hud_slot = "adding"
 
 /atom/movable/screen/inventory/back
 	name = "back"
@@ -1249,6 +1325,8 @@
 	icon_state = "health0"
 	screen_loc = ui_health
 
+	copy_flags = 1
+
 /atom/movable/screen/health/alien
 	icon = 'icons/mob/screen1_xeno.dmi'
 	screen_loc = ui_alien_health
@@ -1262,10 +1340,14 @@
 	name = "health doll"
 	screen_loc = ui_healthdoll
 
+	copy_flags = NONE
+
 /atom/movable/screen/nutrition
 	name = "nutrition"
 	icon_state = "starving"
 	screen_loc = ui_nutrition
+
+	copy_flags = NONE
 
 /atom/movable/screen/nutrition/update_icon(mob/living/carbon/human/mymob)
 	icon = mymob.species.flags[IS_SYNTHETIC] ? 'icons/mob/screen_alert.dmi' : 'icons/mob/screen_gen.dmi'
@@ -1278,15 +1360,22 @@
 	plane = ABOVE_HUD_PLANE
 	invisibility = INVISIBILITY_ABSTRACT
 
+	copy_flags = NONE
+
 /atom/movable/screen/complex
 	var/list/types
 	var/list/screens = list()
+	var/screens_slot = "other"
 	var/shown = FALSE
 
 /atom/movable/screen/complex/atom_init()
 	. = ..()
+	var/atom/movable/screen/screen
 	for(var/type in types)
-		screens += new type
+		screen = new type
+		screens += screen
+		if(screens_slot)
+			screen.hud_slot = screens_slot
 
 /atom/movable/screen/complex/Destroy()
 	QDEL_LIST(screens)
@@ -1298,6 +1387,24 @@
 		usr.client.screen += screens
 	else
 		usr.client.screen -= screens
+
+/atom/movable/screen/complex/add_to_hud(datum/hud/hud)
+	. = ..()
+
+	for(var/atom/movable/screen/screen as anything in screens)
+		screen.add_to_hud(hud)
+
+/atom/movable/screen/complex/update_by_hud(datum/hud/hud)
+	. = ..()
+
+	for(var/atom/movable/screen/screen as anything in screens)
+		screen.update_by_hud(hud)
+
+/atom/movable/screen/complex/remove_from_hud(datum/hud/hud)
+	. = ..()
+
+	for(var/atom/movable/screen/screen as anything in screens)
+		screen.remove_from_hud(hud)
 
 /atom/movable/screen/complex/human
 	name = "toggle"
@@ -1331,6 +1438,7 @@
 		/atom/movable/screen/intent/help, /atom/movable/screen/intent/push,
 		/atom/movable/screen/intent/grab, /atom/movable/screen/intent/harm
 	)
+	screens_slot = "adding"
 
 /atom/movable/screen/complex/act_intent/atom_init()
 	. = ..()

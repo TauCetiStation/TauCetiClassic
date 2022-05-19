@@ -83,9 +83,10 @@ var/global/list/available_ui_styles = list(
 	l_hand_hud_object = null
 	action_intent = null
 	move_intent = null
+	main = null
 	adding = null
-	other = null
 	hotkeybuttons = null
+	other = null
 	hide_actions_toggle = null
 	mymob = null
 	QDEL_LIST_ASSOC_VAL(plane_masters)
