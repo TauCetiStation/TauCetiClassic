@@ -6,7 +6,7 @@
 	adding += new /atom/movable/screen/inventory/craft
 
 	// hiddable inventory
-	add_screen_list(/atom/movable/screen/toggle_list/human, set_ui=TRUE)
+	add_screen_list(/atom/movable/screen/complex/human, set_ui=TRUE)
 
 	add_hands()
 

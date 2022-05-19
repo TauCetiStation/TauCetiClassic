@@ -1,4 +1,4 @@
-/datum/hud/proc/add_intents(act_intent_type = /atom/movable/screen/toggle_list/act_intent)
+/datum/hud/proc/add_intents(act_intent_type = /atom/movable/screen/complex/act_intent)
 	action_intent = get_screen(act_intent_type, ui_style)
 	action_intent.update_icon(mymob)
 	main += action_intent
@@ -168,7 +168,7 @@
 		screen.alpha = ui_alpha
 
 /datum/hud/proc/add_screen_list(type, set_ui = FALSE)
-	var/atom/movable/screen/toggle_list/using = new type
+	var/atom/movable/screen/complex/using = new type
 	adding += using
 	other += using.screens
 	if(set_ui)

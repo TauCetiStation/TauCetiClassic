@@ -1278,28 +1278,28 @@
 	plane = ABOVE_HUD_PLANE
 	invisibility = INVISIBILITY_ABSTRACT
 
-/atom/movable/screen/toggle_list
+/atom/movable/screen/complex
 	var/list/types
 	var/list/screens = list()
 	var/shown = FALSE
 
-/atom/movable/screen/toggle_list/atom_init()
+/atom/movable/screen/complex/atom_init()
 	. = ..()
 	for(var/type in types)
 		screens += new type
 
-/atom/movable/screen/toggle_list/Destroy()
+/atom/movable/screen/complex/Destroy()
 	QDEL_LIST(screens)
 	return ..()
 
-/atom/movable/screen/toggle_list/action()
+/atom/movable/screen/complex/action()
 	shown = !shown
 	if(shown)
 		usr.client.screen += screens
 	else
 		usr.client.screen -= screens
 
-/atom/movable/screen/toggle_list/human
+/atom/movable/screen/complex/human
 	name = "toggle"
 	icon_state = "other"
 	screen_loc = ui_inventory
@@ -1317,12 +1317,12 @@
 		/atom/movable/screen/inventory/shoes,
 	)
 
-/atom/movable/screen/toggle_list/human/action()
+/atom/movable/screen/complex/human/action()
 	..()
 	usr.hud_used.inventory_shown = shown
 	usr.hud_used.hidden_inventory_update()
 
-/atom/movable/screen/toggle_list/act_intent
+/atom/movable/screen/complex/act_intent
 	name = "act_intent"
 	screen_loc = ui_acti
 	plane = ABOVE_HUD_PLANE
@@ -1332,31 +1332,31 @@
 		/atom/movable/screen/intent/grab, /atom/movable/screen/intent/harm
 	)
 
-/atom/movable/screen/toggle_list/act_intent/atom_init()
+/atom/movable/screen/complex/act_intent/atom_init()
 	. = ..()
 	for(var/atom/movable/screen/screen as anything in screens)
 		screen.update_icon(src)
 		screen.screen_loc = src.screen_loc
 
-/atom/movable/screen/toggle_list/act_intent/action()
+/atom/movable/screen/complex/act_intent/action()
 	usr.a_intent_change(INTENT_HOTKEY_RIGHT)
 
-/atom/movable/screen/toggle_list/act_intent/update_icon(mob/mymob)
+/atom/movable/screen/complex/act_intent/update_icon(mob/mymob)
 	icon_state = "intent_" + mymob.a_intent
 
-/atom/movable/screen/toggle_list/ordered
+/atom/movable/screen/complex/ordered
 	var/loc_prefix
 	var/loc_postgix
 	var/start_position
 
-/atom/movable/screen/toggle_list/ordered/atom_init()
+/atom/movable/screen/complex/ordered/atom_init()
 	. = ..()
 	var/position = start_position
 	for(var/atom/movable/screen/screen as anything in screens)
 		screen.screen_loc = "[loc_prefix][position][loc_postgix]"
 		position++
 
-/atom/movable/screen/toggle_list/ordered/robot_pda
+/atom/movable/screen/complex/ordered/robot_pda
 	name = "Show Pda Screens"
 	icon = 'icons/mob/screen1_robot.dmi'
 	icon_state = "pda"
@@ -1371,7 +1371,7 @@
 	loc_postgix = ":6,WEST"
 	start_position = 2
 
-/atom/movable/screen/toggle_list/ordered/robot_image
+/atom/movable/screen/complex/ordered/robot_image
 	name = "Show Foto Screens"
 	icon = 'icons/mob/screen1_robot.dmi'
 	icon_state = "photo"

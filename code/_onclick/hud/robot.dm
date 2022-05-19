@@ -19,10 +19,10 @@
 		types += /atom/movable/screen/sensor_augmentation/robot
 
 //Show PDA screens
-		add_screen_list(/atom/movable/screen/toggle_list/ordered/robot_pda)
+		add_screen_list(/atom/movable/screen/complex/ordered/robot_pda)
 
 //Show foto screens
-		add_screen_list(/atom/movable/screen/toggle_list/ordered/robot_image)
+		add_screen_list(/atom/movable/screen/complex/ordered/robot_image)
 
 //Namepick
 		var/mob/living/silicon/robot/R = mymob

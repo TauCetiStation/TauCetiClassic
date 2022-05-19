@@ -35,7 +35,7 @@ var/global/list/available_ui_styles = list(
 	var/atom/movable/screen/blobhealthdisplay
 	var/atom/movable/screen/r_hand_hud_object
 	var/atom/movable/screen/l_hand_hud_object
-	var/atom/movable/screen/toggle_list/act_intent/action_intent
+	var/atom/movable/screen/complex/act_intent/action_intent
 	var/atom/movable/screen/move_intent
 	var/atom/movable/screen/staminadisplay
 	var/atom/movable/screen/wanted/wanted_lvl
