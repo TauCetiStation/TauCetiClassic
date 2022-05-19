@@ -29,35 +29,14 @@
 		skipface = TRUE
 
 	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
-	var/t_He = "It" //capitalised for use at the start of each line.
-	var/t_His = "Its"
-	var/t_his = "its"
-	var/t_him = "it"
-	var/t_has = "has"
-	var/t_is = "is"
+	var/t_He = "They" //capitalised for use at the start of each line.
+	var/t_His = "Their"
+	var/t_his = "their"
+	var/t_him = "them"
+	var/t_has = "have"
+	var/t_is = "are"
 
 	var/msg = "<span class='info'>*---------*\nThis is "
-
-	if( skipjumpsuit && skipface ) //big suits/masks/helmets make it hard to tell their gender
-		t_He = "They"
-		t_His = "Their"
-		t_his = "their"
-		t_him = "them"
-		t_has = "have"
-		t_is = "are"
-	else
-		switch(gender)
-			if(MALE)
-				t_He = "He"
-				t_His = "His"
-				t_his = "his"
-				t_him = "him"
-			if(FEMALE)
-				t_He = "She"
-				t_His = "Her"
-				t_his = "her"
-				t_him = "her"
-
 	msg += "<EM>[name]"
 
 	if(HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT) && !(skipface && skipjumpsuit))
