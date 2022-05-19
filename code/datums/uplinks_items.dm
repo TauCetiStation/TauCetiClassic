@@ -1014,6 +1014,25 @@
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 0
 
+/datum/uplink_item/badass/surplus_crate
+	name = "Syndicate Surplus Crate"
+	desc = "A crate containing 40 telecrystals worth of random syndicate leftovers."
+	item = /obj/item/weapon/storage/box/syndicate
+	cost = 20
+	var/crate_value = 40
+
+/datum/uplink_item/badass/surplus_crate/team
+	name = "Syndicate Team Surplus Crate"
+	desc = "A crate containing 100 telecrystals worth of random syndicate leftovers. Don't fight with your partner!"
+	cost = 30
+	crate_value = 100
+
+/datum/uplink_item/badass/surplus_crate/super
+	name = "Syndicate Super Surplus Crate"
+	desc = "A crate containing 140 telecrystals worth of random syndicate leftovers. For badass coopers!"
+	cost = 50
+	crate_value = 140
+
 /datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U, mob/user)
 
 	var/list/buyable_items = get_uplink_items(U)
@@ -1034,3 +1053,29 @@
 		return new I.item(loc)
 	else
 		to_chat(user, "<span class='warning'>There is no available items you could buy for [U.uses] TK.</span>")
+
+/datum/uplink_item/badass/surplus_crate/spawn_item(turf/loc, obj/item/device/uplink/U)
+	var/obj/structure/closet/crate/C = new(loc)
+	var/list/temp_uplink_list = get_uplink_items(U)
+	var/list/buyable_items = list()
+	for(var/category in temp_uplink_list)
+		buyable_items += temp_uplink_list[category]
+	var/remaining_TC = crate_value
+	var/list/bought_items = list()
+	var/list/itemlog = list()
+	U.uses -= cost
+
+	var/datum/uplink_item/I
+	while(remaining_TC)
+		I = pick(buyable_items)
+		if(I.cost > remaining_TC)
+			continue
+		if((I.item in bought_items) && prob(33)) //To prevent people from being flooded with the same thing over and over again.
+			continue
+		bought_items += I.item
+		remaining_TC -= I.cost
+		itemlog += I.name // To make the name more readable for the log compared to just i.item
+
+	for(var/item in bought_items)
+		new item(C)
+	log_game("[key_name(usr)] purchased a surplus crate with [jointext(itemlog, ", ")]")
