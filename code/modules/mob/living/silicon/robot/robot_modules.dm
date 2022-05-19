@@ -87,7 +87,6 @@
 /obj/item/weapon/robot_module/standard/atom_init()
 	. = ..()
 	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/weapon/melee/baton(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)

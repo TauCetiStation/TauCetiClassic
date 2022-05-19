@@ -95,7 +95,7 @@
 	id = "borg_armour_plating"
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_component/armour
-	materials = list(MAT_METAL=5000)
+	materials = list(MAT_METAL=5000, MAT_SILVER=2500, MAT_DIAMOND=500)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Cyborg Components")
@@ -941,15 +941,6 @@
 	materials = list(MAT_METAL=10000, MAT_PHORON=15000, MAT_URANIUM=20000)
 	construction_time = 120
 	starts_unlocked = TRUE
-	category = list("Cyborg Upgrade Modules")
-
-/datum/design/borg_upgrade_security
-	name = "Cyborg Upgrade Module (Security Module)"
-	id = "borg_upgrade_security"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/security
-	materials = list(MAT_METAL=10000, MAT_GOLD=5000, MAT_URANIUM=10000)
-	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_hud
