@@ -95,7 +95,7 @@
 	id = "borg_armour_plating"
 	build_type = MECHFAB
 	build_path = /obj/item/robot_parts/robot_component/armour
-	materials = list(MAT_METAL=5000, MAT_SILVER=2500, MAT_DIAMOND=500)
+	materials = list(MAT_METAL=5000)
 	construction_time = 200
 	starts_unlocked = TRUE
 	category = list("Cyborg Components")
