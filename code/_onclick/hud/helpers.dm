@@ -87,10 +87,6 @@
 	staminadisplay = new /atom/movable/screen/corgi/stamina_bar
 	staminadisplay.add_to_hud(src)
 
-/datum/hud/proc/add_corgi_ability()
-	var/atom/movable/screen/using = new /atom/movable/screen/corgi/ability
-	using.add_to_hud(src)
-
 /datum/hud/proc/add_essence_voice()
 	var/mob/living/parasite/essence/E = mymob
 	E.voice = new /atom/movable/screen/essence_voice
@@ -119,7 +115,3 @@
 /datum/hud/proc/add_module_icon()
 	mymob.module_icon = new /atom/movable/screen/module
 	mymob.module_icon.add_to_hud(src)
-
-/datum/hud/proc/add_screen_list(type, set_ui = FALSE)
-	var/atom/movable/screen/complex/using = new type
-	using.add_to_hud(src)

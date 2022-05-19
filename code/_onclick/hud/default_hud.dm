@@ -6,5 +6,3 @@
 	add_pullin()
 
 	add_changeling()
-
-	inventory_shown = 0

@@ -19,10 +19,10 @@
 		types += /atom/movable/screen/sensor_augmentation/robot
 
 //Show PDA screens
-		add_screen_list(/atom/movable/screen/complex/ordered/robot_pda)
+		get_screen(/atom/movable/screen/complex/ordered/robot_pda)
 
 //Show foto screens
-		add_screen_list(/atom/movable/screen/complex/ordered/robot_image)
+		get_screen(/atom/movable/screen/complex/ordered/robot_image)
 
 //Namepick
 		var/mob/living/silicon/robot/R = mymob
@@ -47,10 +47,10 @@
 	add_module_icon()
 
 //Store
-	adding += new /atom/movable/screen/store
+	get_screen(/atom/movable/screen/store)
 
 //Inventory
-	adding += new /atom/movable/screen/robot_inventory
+	get_screen(/atom/movable/screen/robot_inventory)
 
 	add_pullin(type = /atom/movable/screen/pull/robot)
 	add_zone_sel()

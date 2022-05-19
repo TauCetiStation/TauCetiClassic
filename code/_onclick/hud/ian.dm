@@ -104,9 +104,9 @@
 
 	add_stamina_display()
 
-	adding += get_screen(/atom/movable/screen/inventory/head/ian, ui_style)
+	get_screen(/atom/movable/screen/inventory/head/ian)
 
-	add_corgi_ability()
+	get_screen(/atom/movable/screen/corgi/ability)
 
 	add_hands(r_type = /atom/movable/screen/inventory/corgi_mouth, l_type = FALSE)
 

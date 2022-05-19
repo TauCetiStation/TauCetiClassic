@@ -36,7 +36,7 @@
 		if("other")
 			hud.other += src
 
-	if(hud_slot != "other")
+	if(hud.hud_shown && hud_slot != "other")
 		hud.mymob.client.screen += src
 	update_by_hud(hud)
 	
@@ -59,7 +59,7 @@
 		if("other")
 			hud.other -= src
 
-	hud.mymob.client.screen -= src
+	hud.mymob.client?.screen -= src
 
 /atom/movable/screen/proc/action(location, control, params)
 	return
@@ -1347,6 +1347,8 @@
 	name = "mood"
 	icon_state = "mood5"
 	screen_loc = ui_mood
+
+	copy_flags = NONE
 
 /atom/movable/screen/health
 	name = "health"

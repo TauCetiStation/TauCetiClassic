@@ -12,8 +12,6 @@
 	add_intents()
 	add_move_intent()
 
-	get_screen(/atom/movable/screen/drop)
-
 	add_hands(r_type = /atom/movable/screen/inventory/tail, l_type = FALSE)
 
 	add_nightvision_icon()

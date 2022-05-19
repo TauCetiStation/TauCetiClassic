@@ -3,10 +3,10 @@
 
 	add_intents()
 	add_move_intent()
-	adding += new /atom/movable/screen/inventory/craft
+	get_screen(/atom/movable/screen/inventory/craft)
 
 	// hiddable inventory
-	add_screen_list(/atom/movable/screen/complex/human, set_ui=TRUE)
+	get_screen(/atom/movable/screen/complex/human)
 
 	add_hands()
 
@@ -51,8 +51,6 @@
 		mymob.leap_icon.add_to_hud(src)
 
 	add_gun_setting()
-
-	inventory_shown = 0
 
 
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()

@@ -1,18 +1,18 @@
-/datum/hud/proc/unplayer_hud()
-	return
-
-
 /atom/movable/screen/blob_power
 	name = "blob power"
 	icon_state = "block"
 	screen_loc = ui_health
 	plane = ABOVE_HUD_PLANE
 
+	copy_flags = NONE
+
 /atom/movable/screen/blob_health
 	name = "blob health"
 	icon_state = "block"
 	screen_loc = ui_internal
 	plane = ABOVE_HUD_PLANE
+
+	copy_flags = NONE
 
 
 /datum/hud/proc/brain_hud()
@@ -29,6 +29,8 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	screen_loc = ui_rhand
 	plane = ABOVE_HUD_PLANE
+
+	copy_flags = NONE
 
 /atom/movable/screen/essence_voice/update_icon(mob/living/parasite/essence/mymob)
 	icon_state = "voice_[mymob.self_voice ? "on" : "off"]"
@@ -52,6 +54,8 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	screen_loc = ui_lhand
 	plane = ABOVE_HUD_PLANE
+
+	copy_flags = NONE
 
 /atom/movable/screen/essence_phantom/update_icon(mob/living/parasite/essence/mymob)
 	icon_state =  "phantom_[(mymob.phantom?.showed) ? "on" : "off"]"
@@ -78,6 +82,8 @@
 	icon_state = "power_list"
 	screen_loc = ui_belt
 
+	copy_flags = NONE
+
 /atom/movable/screen/ling_abilities/action()
 	var/mob/living/parasite/essence/E = usr
 	if(!E.host || !E.changeling)
@@ -97,6 +103,8 @@
 	icon_state = "facingOLD"
 	screen_loc = ui_zonesel
 
+	copy_flags = NONE
+
 /atom/movable/screen/return_to_body/action()
 	var/mob/living/parasite/essence/E = usr
 	if(!E.host)
@@ -115,7 +123,7 @@
 	add_health_doll()
 	add_changeling()
 
-	adding += new /atom/movable/screen/ling_abilities
+	get_screen(/atom/movable/screen/ling_abilities)
 
 	if(E.is_changeling)
-		adding += new /atom/movable/screen/return_to_body
+		get_screen(/atom/movable/screen/return_to_body)

@@ -23,11 +23,10 @@ var/global/list/available_ui_styles = list(
 /datum/hud
 	var/mob/mymob
 
-	var/hud_shown = 1			//Used for the HUD toggle (F12)
-	var/hud_version = 1			//Current displayed version of the HUD
-	var/inventory_shown = 1		//the inventory
-	var/show_intent_icons = 0
-	var/hotkey_ui_hidden = 0	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
+	var/hud_shown = FALSE					//Used for the HUD toggle (F12)
+	var/hud_version = HUD_STYLE_STANDARD	//Current displayed version of the HUD
+	var/inventory_shown = FALSE				//the inventory
+	var/hotkey_ui_hidden = FALSE			//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
 	var/atom/movable/screen/lingchemdisplay
 	var/atom/movable/screen/lingstingdisplay
@@ -61,7 +60,7 @@ var/global/list/available_ui_styles = list(
 
 	if (!ui_style)
 		// will fall back to the default if any of these are null
-		ui_style = ui_style2icon(mymob.client && mymob.client.prefs && mymob.client.prefs.UI_style)
+		ui_style = ui_style2icon(mymob.client?.prefs?.UI_style)
 
 	for(var/mytype in subtypesof(/atom/movable/screen/plane_master))
 		var/atom/movable/screen/plane_master/instance = new mytype()
@@ -188,6 +187,7 @@ var/global/list/available_ui_styles = list(
 
 	client.screen += main
 	client.screen += adding + hotkeybuttons
+	hud_shown = TRUE
 
 	if(client.void)
 		client.screen += client.void
@@ -236,7 +236,7 @@ var/global/list/available_ui_styles = list(
 			mymob.client.screen -= other
 			mymob.client.screen -= hotkeybuttons
 			
-			action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
+			action_intent?.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
 			mymob.client.screen += main
 
 		if(HUD_STYLE_NOHUD)	//No HUD
