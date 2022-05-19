@@ -33,20 +33,20 @@
 
 	var/mob/living/new_mob
 
-	var/randomizer = rand(1, 4)
+	var/randomizer = pick("animal", "cyborg", "human", "xeno")
 	if(isxeno(M))
-		randomizer = 4
+		randomizer = "xeno"
 	switch(randomizer)
-		if(1)
+		if("animal")
 			var/beast = pick(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/tomato/angry_tomato, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/pig/shadowpig, /mob/living/simple_animal/cow/cute_cow)
 			new_mob = new beast(M.loc)
 			new_mob.universal_speak = TRUE
-		if(2)
+		if("cyborg")
 			new_mob = new /mob/living/silicon/robot(M.loc, "Default", /datum/ai_laws/asimov_xenophile, FALSE, global.chaplain_religion)
 			new_mob.gender = M.gender
 			new_mob.invisibility = 0
 			new_mob.job = "Cyborg"
-		if(3)
+		if("human")
 			new_mob = new /mob/living/carbon/human(M.loc)
 			if(M.gender == MALE)
 				new_mob.gender = MALE
@@ -63,7 +63,7 @@
 
 			var/datum/preferences/A = new()	//Randomize appearance for the human
 			A.randomize_appearance_for(new_mob)
-		if(4)
+		if("xeno")
 			new_mob = new /mob/living/carbon/xenomorph/humanoid/maid(M.loc)
 			new_mob.universal_speak = TRUE
 	if(!new_mob)
