@@ -58,11 +58,22 @@
 				t_His = "His"
 				t_his = "his"
 				t_him = "him"
+				t_has = "has"
+				t_is = "is"
 			if(FEMALE)
 				t_He = "She"
 				t_His = "Her"
 				t_his = "her"
 				t_him = "her"
+				t_has = "has"
+				t_is = "is"
+			else
+				t_He = "It"
+				t_His = "Its"
+				t_his = "its"
+				t_him = "it"
+				t_has = "has"
+				t_is = "is"
 
 	msg += "</EM>!\n"
 
