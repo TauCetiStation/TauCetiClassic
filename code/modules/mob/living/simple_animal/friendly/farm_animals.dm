@@ -166,10 +166,7 @@
 
 /mob/living/simple_animal/cow/cute_cow/atom_init()
 	. = ..()
-	if(prob(20))
-		AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball)
-	else
-		AddSpell(new /obj/effect/proc_holder/spell/no_target/rot)
+	AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball)
 
 /mob/living/simple_animal/chick
 	name = "chick"
