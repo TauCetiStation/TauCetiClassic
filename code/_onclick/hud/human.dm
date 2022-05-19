@@ -48,7 +48,7 @@
 		add_wanted_level()
 
 	if(mymob.leap_icon)
-		src.adding += mymob.leap_icon
+		mymob.leap_icon.add_to_hud(src)
 
 	add_gun_setting()
 

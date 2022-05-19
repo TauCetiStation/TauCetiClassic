@@ -84,7 +84,7 @@
 	init_screens(types)
 
 	spawners_menu_button = new /atom/movable/screen/ghost/spawners_menu
-	adding += spawners_menu_button
+	spawners_menu_button.add_to_hud(src)
 
 	..()
 

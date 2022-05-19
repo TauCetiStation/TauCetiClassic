@@ -583,9 +583,7 @@
 		H.leap_icon = new /atom/movable/screen/leap()
 
 		if(H.hud_used)
-			H.hud_used.adding += H.leap_icon
-		if(H.client)
-			H.client.screen += H.leap_icon
+			H.leap_icon.add_to_hud(H.hud_used)
 
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
@@ -596,9 +594,7 @@
 	if(name != VOX_ARMALIS)
 		if(H.leap_icon)
 			if(H.hud_used)
-				H.hud_used.adding -= H.leap_icon
-			if(H.client)
-				H.client.screen -= H.leap_icon
+				H.leap_icon.remove_from_hud(H.hud_used)
 			QDEL_NULL(H.leap_icon)
 
 	else
