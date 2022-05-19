@@ -455,17 +455,6 @@
 	else
 		to_chat(C, "<span class='notice'>You don't have [inhale_type=="oxygen" ? "an" : "a"] [inhale_type] tank.</span>")
 
-/atom/movable/screen/act_intent
-	name = "act_intent"
-	screen_loc = ui_acti
-	plane = ABOVE_HUD_PLANE
-
-/atom/movable/screen/act_intent/action()
-	usr.a_intent_change(INTENT_HOTKEY_RIGHT)
-
-/atom/movable/screen/act_intent/update_icon(mob/mymob)
-	icon_state = "intent_" + mymob.a_intent
-
 /atom/movable/screen/intent
 	screen_loc = ui_acti
 	plane = ABOVE_HUD_PLANE
@@ -1295,7 +1284,7 @@
 	var/shown = FALSE
 
 /atom/movable/screen/toggle_list/atom_init()
-	..()
+	. = ..()
 	for(var/type in types)
 		screens += new type
 
@@ -1333,13 +1322,35 @@
 	usr.hud_used.inventory_shown = shown
 	usr.hud_used.hidden_inventory_update()
 
+/atom/movable/screen/toggle_list/act_intent
+	name = "act_intent"
+	screen_loc = ui_acti
+	plane = ABOVE_HUD_PLANE
+
+	types = list(
+		/atom/movable/screen/intent/help, /atom/movable/screen/intent/push,
+		/atom/movable/screen/intent/grab, /atom/movable/screen/intent/harm
+	)
+
+/atom/movable/screen/toggle_list/act_intent/atom_init()
+	. = ..()
+	for(var/atom/movable/screen/screen as anything in screens)
+		screen.update_icon(src)
+		screen.screen_loc = src.screen_loc
+
+/atom/movable/screen/toggle_list/act_intent/action()
+	usr.a_intent_change(INTENT_HOTKEY_RIGHT)
+
+/atom/movable/screen/toggle_list/act_intent/update_icon(mob/mymob)
+	icon_state = "intent_" + mymob.a_intent
+
 /atom/movable/screen/toggle_list/ordered
 	var/loc_prefix
 	var/loc_postgix
 	var/start_position
 
 /atom/movable/screen/toggle_list/ordered/atom_init()
-	..()
+	. = ..()
 	var/position = start_position
 	for(var/atom/movable/screen/screen as anything in screens)
 		screen.screen_loc = "[loc_prefix][position][loc_postgix]"

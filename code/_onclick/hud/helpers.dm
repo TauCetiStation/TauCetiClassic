@@ -1,19 +1,8 @@
-/datum/hud/proc/add_intents(act_intent_type = /atom/movable/screen/act_intent)
+/datum/hud/proc/add_intents(act_intent_type = /atom/movable/screen/toggle_list/act_intent)
 	action_intent = get_screen(act_intent_type, ui_style)
 	action_intent.update_icon(mymob)
 	main += action_intent
-
-	var/atom/movable/screen/intent
-	var/list/intent_types = list(
-		/atom/movable/screen/intent/help, /atom/movable/screen/intent/push,
-		/atom/movable/screen/intent/grab, /atom/movable/screen/intent/harm
-		)
-
-	for(var/intent_type in intent_types)
-		intent = new intent_type
-		intent.update_icon(action_intent)
-		intent.screen_loc = action_intent.screen_loc
-		adding += intent
+	adding += action_intent.screens
 
 /datum/hud/proc/get_screen(screen_type, icon = null, color = null, alpha = null)
 	var/atom/movable/screen/screen = new screen_type
