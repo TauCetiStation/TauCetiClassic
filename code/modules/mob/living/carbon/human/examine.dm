@@ -39,7 +39,7 @@
 	var/msg = "<span class='info'>*---------*\nThis is "
 	msg += "<EM>[name]"
 
-	if(HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT) && !(skipface && skipjumpsuit))
+	if((HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT) && !(skipface && skipjumpsuit)) || isobserver(user))
 		var/species_color = species.flesh_color
 		var/species_name = get_species()
 		if(!species.is_common)
@@ -52,6 +52,17 @@
 			var/min_bound = (text2ascii(name_hash[1]) + text2ascii(name_hash[2]) + text2ascii(name_hash[3])) % accuracy
 			var/max_bound = (text2ascii(name_hash[length(name_hash)-3]) + text2ascii(name_hash[length(name_hash)-1]) + text2ascii(name_hash[length(name_hash)])) % accuracy
 			msg += ", age between [max(age - min_bound, species.min_age)] and [min(age + max_bound, species.max_age)]"
+		switch(gender)
+			if(MALE)
+				t_He = "He"
+				t_His = "His"
+				t_his = "his"
+				t_him = "him"
+			if(FEMALE)
+				t_He = "She"
+				t_His = "Her"
+				t_his = "her"
+				t_him = "her"
 
 	msg += "</EM>!\n"
 
