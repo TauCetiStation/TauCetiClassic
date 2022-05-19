@@ -81,7 +81,7 @@
 		/atom/movable/screen/ghost/mafia,
 		/atom/movable/screen/ghost/toggle_darkness,
 	)
-	init_screens(types, list_to = adding)
+	init_screens(types)
 
 	spawners_menu_button = new /atom/movable/screen/ghost/spawners_menu
 	adding += spawners_menu_button

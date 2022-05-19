@@ -33,6 +33,10 @@
 /atom/movable/screen/essence_voice/update_icon(mob/living/parasite/essence/mymob)
 	icon_state = "voice_[mymob.self_voice ? "on" : "off"]"
 
+/atom/movable/screen/essence_voice/add_to_hud(datum/hud/hud)
+	. = ..()
+	update_icon(hud.mymob)
+
 /atom/movable/screen/essence_voice/action()
 	var/mob/living/parasite/essence/E = usr
 	if(!E.host)
@@ -51,6 +55,10 @@
 
 /atom/movable/screen/essence_phantom/update_icon(mob/living/parasite/essence/mymob)
 	icon_state =  "phantom_[(mymob.phantom?.showed) ? "on" : "off"]"
+
+/atom/movable/screen/essence_phantom/add_to_hud(datum/hud/hud)
+	. = ..()
+	update_icon(hud.mymob)
 
 /atom/movable/screen/essence_phantom/action()
 	var/mob/living/parasite/essence/E = usr

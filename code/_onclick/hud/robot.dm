@@ -29,7 +29,7 @@
 		if(!R.custom_name)
 			types += /atom/movable/screen/namepick
 
-	init_screens(types, list_to = adding)
+	init_screens(types)
 
 //Module select
 	add_robot_hand_1()

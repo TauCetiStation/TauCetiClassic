@@ -18,7 +18,7 @@
 		/atom/movable/screen/resist,
 		/atom/movable/screen/equip,
 	)
-	init_screens(types, hotkeybuttons)
+	init_screens(types)
 
 	// visible inventory, inventory toggle and craft
 	types = list(
@@ -29,7 +29,7 @@
 		/atom/movable/screen/inventory/suit_storage,
 		/atom/movable/screen/inventory/belt,
 	)
-	init_screens(types, adding)
+	init_screens(types)
 
 	add_throw_icon()
 	add_internals()

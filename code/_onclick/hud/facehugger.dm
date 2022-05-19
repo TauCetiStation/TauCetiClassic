@@ -12,7 +12,7 @@
 	add_intents()
 	add_move_intent()
 
-	src.adding += get_screen(/atom/movable/screen/drop, ui_style)
+	get_screen(/atom/movable/screen/drop)
 
 	add_hands(r_type = /atom/movable/screen/inventory/tail, l_type = FALSE)
 

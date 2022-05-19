@@ -9,14 +9,14 @@
 		/atom/movable/screen/inventory/swap/first,
 		/atom/movable/screen/inventory/swap/second,
 	)
-	init_screens(types, hotkeybuttons)
+	init_screens(types)
 
 	// inventory
 	types = list(
 		/atom/movable/screen/inventory/mask/monkey,
 		/atom/movable/screen/inventory/back,
 	)
-	init_screens(types, adding)
+	init_screens(types)
 
 	add_throw_icon()
 	add_internals()

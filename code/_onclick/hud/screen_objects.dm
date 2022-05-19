@@ -36,7 +36,8 @@
 		if("other")
 			hud.other += src
 
-	hud.mymob.client.screen += src
+	if(hud_slot != "other")
+		hud.mymob.client.screen += src
 	update_by_hud(hud)
 	
 /atom/movable/screen/proc/update_by_hud(datum/hud/hud)
@@ -246,6 +247,15 @@
 /atom/movable/screen/gun/mode/update_icon(client/client)
 	icon_state = client.gun_mode ? "gun1" : "gun0"
 
+/atom/movable/screen/gun/mode/add_to_hud(datum/hud/hud)
+	. = ..()
+	var/client/client = hud.mymob.client
+
+	update_icon(client)
+
+	if(client.gun_mode)
+		client.add_gun_icons()
+
 /atom/movable/screen/zone_sel
 	name = "damage zone"
 	icon_state = "zone_sel"
@@ -353,6 +363,10 @@
 	cut_overlays()
 	add_overlay(image('icons/mob/zone_sel.dmi', "[selecting]"))
 
+/atom/movable/screen/zone_sel/add_to_hud(datum/hud/hud)
+	. = ..()
+	update_icon()
+
 /atom/movable/screen/pull
 	name = "stop pulling"
 	icon = 'icons/mob/screen1_Midnight.dmi'
@@ -368,6 +382,10 @@
 
 /atom/movable/screen/pull/update_icon(mob/mymob)
 	icon_state = mymob.pulling ? "pull1" : "pull0"
+
+/atom/movable/screen/pull/add_to_hud(datum/hud/hud)
+	. = ..()
+	update_icon(hud.mymob)
 
 /atom/movable/screen/pull/robot
 	screen_loc = ui_borg_pull
@@ -430,6 +448,10 @@
 /atom/movable/screen/move_intent/update_icon(mob/mymob)
 	icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 
+/atom/movable/screen/move_intent/add_to_hud(datum/hud/hud)
+	. = ..()
+	update_icon(hud.mymob)
+
 /atom/movable/screen/internal
 	name = "internal"
 	icon_state = "internal0"
@@ -442,6 +464,9 @@
 		return
 	icon_state = mymob.internal ? "internal1" : "internal0"
 
+/atom/movable/screen/internal/add_to_hud(datum/hud/hud)
+	. = ..()
+	update_icon(hud.mymob)
 
 /atom/movable/screen/internal/action()
 	if(!iscarbon(usr))
@@ -1068,6 +1093,10 @@
 /atom/movable/screen/inventory/hand/update_icon(mob/mymob)
 	icon_state = (mymob.hand == hand_index) ? "[name]_active" : "[name]_inactive"
 
+/atom/movable/screen/inventory/hand/add_to_hud(datum/hud/hud)
+	. = ..()
+	update_icon(hud.mymob)
+
 /atom/movable/screen/inventory/hand/r
 	name = "hand_r"
 	screen_loc = ui_rhand
@@ -1352,6 +1381,10 @@
 /atom/movable/screen/nutrition/update_icon(mob/living/carbon/human/mymob)
 	icon = mymob.species.flags[IS_SYNTHETIC] ? 'icons/mob/screen_alert.dmi' : 'icons/mob/screen_gen.dmi'
 
+/atom/movable/screen/nutrition/add_to_hud(datum/hud/hud)
+	. = ..()
+	update_icon(hud.mymob)
+
 /atom/movable/screen/chemical_display
 	name = "chemical storage"
 	icon = 'icons/mob/screen_gen.dmi'
@@ -1434,11 +1467,15 @@
 	screen_loc = ui_acti
 	plane = ABOVE_HUD_PLANE
 
+	hud_slot = "main"
+	copy_flags = 1
+
 	types = list(
 		/atom/movable/screen/intent/help, /atom/movable/screen/intent/push,
 		/atom/movable/screen/intent/grab, /atom/movable/screen/intent/harm
 	)
-	screens_slot = "adding"
+	screens_slot = "main"
+	shown = TRUE // always shown
 
 /atom/movable/screen/complex/act_intent/atom_init()
 	. = ..()
@@ -1451,6 +1488,10 @@
 
 /atom/movable/screen/complex/act_intent/update_icon(mob/mymob)
 	icon_state = "intent_" + mymob.a_intent
+
+/atom/movable/screen/complex/act_intent/add_to_hud(datum/hud/hud)
+	. = ..()
+	update_icon(hud.mymob)
 
 /atom/movable/screen/complex/ordered
 	var/loc_prefix

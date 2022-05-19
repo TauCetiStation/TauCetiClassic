@@ -18,4 +18,4 @@
 		/atom/movable/screen/robot_image/view/ai,
 		/atom/movable/screen/sensor_augmentation,
 	)
-	init_screens(types, adding)
+	init_screens(types)

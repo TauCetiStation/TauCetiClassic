@@ -42,6 +42,10 @@
 	var/mob/living/carbon/xenomorph/X = mymob
 	X.updatePlasmaDisplay()
 
+/atom/movable/screen/xenomorph/plasma_display/add_to_hud(datum/hud/hud)
+	. = ..()
+	update_icon(hud.mymob)
+
 /datum/hud/proc/alien_hud()
 	ui_style = 'icons/mob/screen1_xeno.dmi'
 
@@ -55,7 +59,7 @@
 		/atom/movable/screen/inventory/swap/second/alien,
 		/atom/movable/screen/resist,
 	)
-	init_screens(types, hotkeybuttons)
+	init_screens(types)
 
 	add_nightvision_icon()
 

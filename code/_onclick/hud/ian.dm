@@ -7,6 +7,10 @@
 	var/mob/living/carbon/ian/IAN = mymob
 	icon_state = "ability[IAN.ian_action]"
 
+/atom/movable/screen/corgi/ability/add_to_hud(datum/hud/hud)
+	. = ..()
+	update_icon(hud.mymob)
+
 /atom/movable/screen/corgi/ability/action()
 	var/mob/living/carbon/ian/IAN = usr //shouldn't be in anywhere else, so no type check.
 	if(IAN.stat)
@@ -37,9 +41,14 @@
 	icon_state = "stam_bar_100"
 	screen_loc = ui_stamina
 
-/atom/movable/screen/corgi/stamina_bar/update_icon(mob/mymob)
-	var/mob/living/carbon/ian/IAN = mymob
-	icon_state = "stam_bar_[round(IAN.stamina, 5)]"
+	copy_flags = NONE
+
+/atom/movable/screen/corgi/stamina_bar/update_icon(mob/living/carbon/ian/mymob)
+	icon_state = "stam_bar_[round(mymob.stamina, 5)]"
+
+/atom/movable/screen/corgi/stamina_bar/add_to_hud(datum/hud/hud)
+	. = ..()
+	update_icon(hud.mymob)
 
 /atom/movable/screen/corgi/sit_lie
 	name = "pose selector"
@@ -89,7 +98,7 @@
 		/atom/movable/screen/corgi/sit_lie,
 		/atom/movable/screen/drop,
 	)
-	init_screens(types, hotkeybuttons)
+	init_screens(types)
 
 	add_move_intent()
 
@@ -105,7 +114,7 @@
 		/atom/movable/screen/inventory/corgi_neck,
 		/atom/movable/screen/inventory/back/ian
 	)
-	init_screens(types, adding)
+	init_screens(types)
 
 	add_healths()
 	add_pullin()

@@ -149,13 +149,15 @@ var/global/list/available_ui_styles = list(
 	if(!ismob(mymob) || !mymob.client)
 		return FALSE
 
+	var/client/client = mymob.client
+
 	// reset client screen
-	mymob.client.screen = list()
+	client.screen = list()
 
 	if(ishuman(mymob))
 		 // Set the player the UI style chosen in preferences
-		ui_color = mymob.client.prefs.UI_style_color
-		ui_alpha = mymob.client.prefs.UI_style_alpha
+		ui_color = client.prefs.UI_style_color
+		ui_alpha = client.prefs.UI_style_alpha
 		human_hud()
 	else if(isIAN(mymob))
 		ian_hud()
@@ -180,13 +182,15 @@ var/global/list/available_ui_styles = list(
 	else if(isessence(mymob))
 		changeling_essence_hud()
 	else if(isliving(mymob))
-		ui_color = mymob.client.prefs.UI_style_color
-		ui_alpha = mymob.client.prefs.UI_style_alpha
+		ui_color = client.prefs.UI_style_color
+		ui_alpha = client.prefs.UI_style_alpha
 		default_hud()
 
-	mymob.client.screen += main
-	mymob.client.screen += adding + hotkeybuttons
-	mymob.client.screen += mymob.client.void
+	client.screen += main
+	client.screen += adding + hotkeybuttons
+
+	if(client.void)
+		client.screen += client.void
 
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)
