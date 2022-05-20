@@ -155,9 +155,9 @@
 
 /mob/living/silicon/robot/attack_alien(mob/user)
 	var/alien_silicon_damage = 60
-	if(istype(user, /mob/living/carbon/xenomorph/humanoid/sentinel))
+	if(isxenosentinel(user))
 		alien_silicon_damage = alien_silicon_damage / 2
-	if(istype(user, /mob/living/carbon/xenomorph/humanoid/drone))
+	if(isxenodrone(user))
 		alien_silicon_damage = alien_silicon_damage / 4
 	adjustBruteLoss(alien_silicon_damage)
 	user.do_attack_animation(src)
