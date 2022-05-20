@@ -226,7 +226,7 @@ var/global/list/available_ui_styles = list(
 			if(!hotkey_ui_hidden)
 				mymob.client.screen += hotkeybuttons
 
-			action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
+			action_intent?.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
 			mymob.client.screen += main
 
 		if(HUD_STYLE_REDUCED)	//Reduced HUD
