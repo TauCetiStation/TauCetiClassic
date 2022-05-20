@@ -37,7 +37,6 @@ var/global/list/available_ui_styles = list(
 	var/atom/movable/screen/complex/act_intent/action_intent
 	var/atom/movable/screen/move_intent
 	var/atom/movable/screen/staminadisplay
-	var/atom/movable/screen/wanted/wanted_lvl
 
 	var/list/main = list()
 	var/list/adding = list()
@@ -75,7 +74,6 @@ var/global/list/available_ui_styles = list(
 
 /datum/hud/Destroy()
 	lingchemdisplay = null
-	wanted_lvl = null
 	blobpwrdisplay = null
 	blobhealthdisplay = null
 	r_hand_hud_object = null

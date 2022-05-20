@@ -64,8 +64,7 @@
 		lingstingdisplay.add_to_hud(src)
 
 /datum/hud/proc/add_wanted_level()
-	wanted_lvl = new /atom/movable/screen/wanted
-	wanted_lvl.add_to_hud(src)
+	SSticker.wanted_lvl.add_to_hud(src)
 
 /datum/hud/proc/add_nightvision_icon()
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision

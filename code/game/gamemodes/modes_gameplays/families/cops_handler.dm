@@ -122,14 +122,10 @@
 	else if (newlevel < wanted_level)
 		on_lower_wanted_level(newlevel)
 	wanted_level = newlevel
-	for(var/i in global.player_list)
-		var/mob/M = i
-		if(!M.hud_used?.wanted_lvl)
-			continue
-		var/datum/hud/H = M.hud_used
-		H.wanted_lvl.wanted_level = newlevel
-		H.wanted_lvl.cops_arrived = cops_arrived
-		H.wanted_lvl.update_icon_state()
+	var/atom/movable/screen/wanted/screen = SSticker.wanted_lvl
+	screen.wanted_level = newlevel
+	screen.cops_arrived = cops_arrived
+	screen.update_icon_state()
 
 /// Internal. Updates the end_time and sends out an announcement if the wanted level has increased. Called by update_wanted_level().
 /datum/faction/cops/proc/on_gain_wanted_level(newlevel)
