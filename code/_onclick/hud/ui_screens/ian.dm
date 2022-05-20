@@ -10,6 +10,9 @@
 	screen_loc = ui_ian_neck
 	slot_id = SLOT_NECK
 
+/atom/movable/screen/resist/ian
+	screen_loc = ui_drop_throw
+
 /atom/movable/screen/corgi/ability
 	name = "toggle licking or sniffing"
 	icon_state = "ability0"

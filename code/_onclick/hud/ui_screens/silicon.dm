@@ -67,6 +67,13 @@
 	screen_loc = ui_borg_state_laws
 
 // Robots
+/atom/movable/screen/health/robot
+	icon = 'icons/mob/screen1_robot.dmi'
+	screen_loc = ui_borg_health
+
+/atom/movable/screen/pull/robot
+	screen_loc = ui_borg_pull
+
 /atom/movable/screen/module
 	name = "module"
 	icon = 'icons/mob/screen1_robot.dmi'
