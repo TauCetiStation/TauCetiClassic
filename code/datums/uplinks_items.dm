@@ -1060,6 +1060,7 @@
 	var/list/buyable_items = list()
 	for(var/category in temp_uplink_list)
 		buyable_items += temp_uplink_list[category]
+
 	var/remaining_TC = crate_value
 	var/list/bought_items = list()
 	var/list/itemlog = list()
