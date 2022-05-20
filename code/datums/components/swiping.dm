@@ -441,7 +441,7 @@
 	if(user.get_active_hand() != parent)
 		return FALSE
 
-	if(user.is_busy() || !do_after(user, sweep_delay, target = parent, can_move = TRUE, progress = FALSE))
+	if(user.is_busy() || !do_after(user, sweep_delay, target = parent, can_move = CAN_MOVE_NO_DISTANCE, progress = FALSE))
 		return FALSE
 	return TRUE
 

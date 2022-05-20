@@ -1718,7 +1718,7 @@
 			playsound(user, 'sound/items/shard_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else
 		playsound(src, pick(SOUNDIN_KNIFE_CUTTING), VOL_EFFECTS_MASTER, null, FALSE)
-	if (do_after(user, 35, target = src, can_move = FALSE))
+	if (do_after(user, 35, target = src, can_move = CANT_MOVE))
 		if (!inaccurate)
 			user.visible_message("<span class='info'>[user] slices \the [src]!</span>", "<span class='notice'>You slice \the [src]!</span>")
 		else

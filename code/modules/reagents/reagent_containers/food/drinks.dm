@@ -168,7 +168,7 @@
 	if(!CanEat(usr, usr, src, eatverb="gulp"))
 		return
 
-	if(!do_after(usr, reagents.total_volume, target=src, can_move=FALSE))
+	if(!do_after(usr, reagents.total_volume, target=src, can_move = CANT_MOVE))
 		usr.visible_message("<span class='warning'>[usr] splashed the [src] all over!</span>", "<span class='warning'>You splashed the [src] all over!</span>")
 		reagents.standard_splash(loc, user=usr)
 		return
