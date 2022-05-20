@@ -31,6 +31,32 @@
 	name = "Знамя"
 	desc = "Знамя этого надела"
 
+/obj/structure/vilage/tablet
+	density = 0
+
+/obj/structure/vilage/tablet/bar
+	name = "Бар"
+	desc = "Тут бухают и ебуца"
+	icon_state = "woodentablet"
+
+/obj/structure/vilage/tablet/bar/metal
+	icon_state = "bartablet"
+
+/obj/structure/vilage/tablet/med
+	name = "Врачевальня"
+	desc = "Тут людей добивают"
+	icon_state = "medictablet"
+
+/obj/structure/vilage/tablet/smith
+	name = "Кузня"
+	desc = "Тут куют"
+	icon_state = "blacksmithtablet"
+
+/obj/structure/vilage/tablet/barrak
+	name = "Казарма"
+	desc = "Тут мурштруют"
+	icon_state = "barrakstablet"
+
 /obj/structure/vilage/velikiy_sup
 	icon_state = "velikiy_sup"
 	name = "Котел"
