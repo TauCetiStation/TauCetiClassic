@@ -1,11 +1,3 @@
-/atom/movable/screen/inventory/larva_mouth
-	name = "mouth"
-	icon = 'icons/mob/screen1_xeno.dmi'
-	icon_state = "hand_larva_active"
-	screen_loc = ui_rhand
-	slot_id = SLOT_R_HAND
-
-
 /datum/hud/proc/larva_hud()
 	ui_style = 'icons/mob/screen1_xeno.dmi'
 

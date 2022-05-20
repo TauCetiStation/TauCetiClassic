@@ -1,11 +1,3 @@
-/atom/movable/screen/inventory/tail
-	name = "tail"
-	icon = 'icons/mob/screen1_xeno.dmi'
-	icon_state = "hand_tail_active"
-	screen_loc = ui_rhand
-	slot_id = SLOT_R_HAND
-
-
 /datum/hud/proc/facehugger_hud()
 	ui_style = 'icons/mob/screen1_xeno.dmi'
 

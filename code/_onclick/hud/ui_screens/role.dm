@@ -1,3 +1,29 @@
+// changeling
+/atom/movable/screen/current_sting
+	icon = 'icons/mob/screen_gen.dmi'
+	name = "current sting"
+	screen_loc = ui_lingstingdisplay
+	plane = ABOVE_HUD_PLANE
+	invisibility = INVISIBILITY_ABSTRACT
+
+	copy_flags = NONE
+
+/atom/movable/screen/current_sting/action()
+	if(iscarbon(usr))
+		var/mob/living/carbon/U = usr
+		U.unset_sting()
+
+/atom/movable/screen/chemical_display
+	name = "chemical storage"
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "power_display"
+	screen_loc = ui_lingchemdisplay
+	plane = ABOVE_HUD_PLANE
+	invisibility = INVISIBILITY_ABSTRACT
+
+	copy_flags = NONE
+
+// families
 /atom/movable/screen/wanted
 	name = "NanoTrasen Alertness"
 	desc = "Shows the current level of hostility NanoTrasen is planning to rain down on you. Better be careful."
