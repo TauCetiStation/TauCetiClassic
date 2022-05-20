@@ -235,7 +235,7 @@
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_bodypart_damage(damage)
-		S.Stun(rand(2,6))
+		S.Stun(2)
 
 	if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
