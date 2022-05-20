@@ -3,25 +3,18 @@
 
 	add_intents()
 	add_move_intent()
-	get_screen(/atom/movable/screen/inventory/craft)
-
-	// hiddable inventory
-	get_screen(/atom/movable/screen/complex/human)
-
 	add_hands()
 
-	// simple hotkeys
 	var/list/types = list(
+		/atom/movable/screen/inventory/craft, // craft
+		// simple hotkeys
 		/atom/movable/screen/drop,
 		/atom/movable/screen/inventory/swap/first,
 		/atom/movable/screen/inventory/swap/second,
 		/atom/movable/screen/resist,
 		/atom/movable/screen/equip,
-	)
-	init_screens(types)
-
-	// visible inventory, inventory toggle and craft
-	types = list(
+		// inventory
+		/atom/movable/screen/complex/human, // hidden inventory
 		/atom/movable/screen/inventory/id,
 		/atom/movable/screen/inventory/back,
 		/atom/movable/screen/inventory/pocket1,

@@ -1,13 +1,3 @@
 /datum/hud/proc/facehugger_hud()
-	ui_style = 'icons/mob/screen1_xeno.dmi'
-
-	add_intents()
-	add_move_intent()
-
+	alien_base_hud()
 	add_hands(r_type = /atom/movable/screen/inventory/tail, l_type = FALSE)
-
-	add_nightvision_icon()
-
-	add_healths(type = /atom/movable/screen/health/alien)
-	add_pullin()
-	add_zone_sel()

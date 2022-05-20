@@ -42,6 +42,7 @@
 	for(var/atom/movable/screen/screen as anything in screens)
 		screen.remove_from_hud(hud)
 
+// Human inventory
 /atom/movable/screen/complex/human
 	name = "toggle"
 	icon_state = "other"
@@ -65,6 +66,7 @@
 	usr.hud_used.inventory_shown = shown
 	usr.hud_used.hidden_inventory_update()
 
+// Act intent
 /atom/movable/screen/complex/act_intent
 	name = "act_intent"
 	screen_loc = ui_acti
@@ -96,6 +98,7 @@
 	. = ..()
 	update_icon(hud.mymob)
 
+// Toggleable sequential lists
 /atom/movable/screen/complex/ordered
 	var/loc_prefix
 	var/loc_postgix

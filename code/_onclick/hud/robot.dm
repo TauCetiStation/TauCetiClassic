@@ -1,7 +1,6 @@
 /datum/hud/proc/robot_hud()
 	ui_style = 'icons/mob/screen1_robot.dmi'
 	
-
 	var/list/types = list(
 		/atom/movable/screen/crew_manifest/robot,
 		/atom/movable/screen/self_diagnosis,
@@ -12,17 +11,16 @@
 		/atom/movable/screen/toggle_lights,
 		/atom/movable/screen/radio,
 		/atom/movable/screen/panel,
+		/atom/movable/screen/store, // store selected
+		/atom/movable/screen/robot_inventory, //Inventory
 	)
 
 	if(!isdrone(mymob))
-//Medical/Security sensors
-		types += /atom/movable/screen/sensor_augmentation/robot
-
-//Show PDA screens
-		get_screen(/atom/movable/screen/complex/ordered/robot_pda)
-
-//Show foto screens
-		get_screen(/atom/movable/screen/complex/ordered/robot_image)
+		types += list(
+			/atom/movable/screen/sensor_augmentation/robot, //Medical/Security sensors
+			/atom/movable/screen/complex/ordered/robot_pda, //Show PDA screens
+			/atom/movable/screen/complex/ordered/robot_image, //Show foto screens
+		)
 
 //Namepick
 		var/mob/living/silicon/robot/R = mymob
@@ -45,12 +43,6 @@
 
 //Installed Module
 	add_module_icon()
-
-//Store
-	get_screen(/atom/movable/screen/store)
-
-//Inventory
-	get_screen(/atom/movable/screen/robot_inventory)
 
 	add_pullin(type = /atom/movable/screen/pull/robot)
 	add_zone_sel()

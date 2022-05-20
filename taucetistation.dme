@@ -184,6 +184,7 @@
 #include "code\_onclick\hud\ui_screens\alien.dm"
 #include "code\_onclick\hud\ui_screens\basic.dm"
 #include "code\_onclick\hud\ui_screens\complex.dm"
+#include "code\_onclick\hud\ui_screens\ghost.dm"
 #include "code\_onclick\hud\ui_screens\ian.dm"
 #include "code\_onclick\hud\ui_screens\inventory.dm"
 #include "code\_onclick\hud\ui_screens\role.dm"
