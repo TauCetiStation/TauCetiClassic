@@ -33,8 +33,6 @@
 
 	add_changeling()
 
-	mymob.pain = new /atom/movable/screen( null )
-
 	add_zone_sel()
 
 	if(isanycop(H) || isanygangster(H))

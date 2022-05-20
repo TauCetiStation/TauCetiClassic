@@ -1,11 +1,11 @@
 /atom/movable/screen/close
 	name = "close"
-    icon_state = "x"
+	icon_state = "x"
 
 /atom/movable/screen/close/action()
 	if(master)
-        var/obj/item/weapon/storage/S = master
-        S.close(usr)
+		var/obj/item/weapon/storage/S = master
+		S.close(usr)
 
 /atom/movable/screen/storage
 	name = "storage"
