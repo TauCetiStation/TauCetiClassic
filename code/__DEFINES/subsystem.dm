@@ -71,6 +71,7 @@
 #define SS_PRIORITY_GARBAGE       15
 #define SS_PRIORITY_SUN            3
 #define SS_PRIORITY_NIGHTSHIFT     3
+#define SS_PRIORITY_LOW            1
 
 
 #define SS_WAIT_INPUT         1
@@ -96,6 +97,7 @@
 #define SS_WAIT_DCS          10
 #define SS_WAIT_PROCESSING   10
 #define SS_WAIT_MOOD         10
+#define SS_WAIT_GNAW         20
 #define SS_WAIT_DEFAULT      20
 #define SS_WAIT_UNIT_TESTS   20
 #define SS_WAIT_SUN         600
