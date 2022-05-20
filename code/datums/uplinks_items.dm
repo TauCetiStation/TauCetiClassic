@@ -1065,9 +1065,8 @@
 	var/list/itemlog = list()
 	U.uses -= cost
 
-	var/datum/uplink_item/I
 	while(remaining_TC)
-		I = pick(buyable_items)
+		var/datum/uplink_item/I = pick(buyable_items)
 		if(I.cost > remaining_TC)
 			continue
 		if((I.item in bought_items) && prob(33)) //To prevent people from being flooded with the same thing over and over again.
