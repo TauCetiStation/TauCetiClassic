@@ -1070,9 +1070,9 @@
 		var/datum/uplink_item/I = pick(buyable_items)
 		if(I.cost > remaining_TC)
 			continue
-		if((I.item in bought_items) && prob(33)) //To prevent people from being flooded with the same thing over and over again.
+		if((I.type in bought_items) && prob(33)) //To prevent people from being flooded with the same thing over and over again.
 			continue
-		bought_items += I.item
+		bought_items += I.type
 		remaining_TC -= I.cost
 		itemlog += I.name // To make the name more readable for the log compared to just i.item
 
