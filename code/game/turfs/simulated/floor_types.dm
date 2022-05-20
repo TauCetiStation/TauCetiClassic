@@ -315,6 +315,17 @@
 	light_power = 2
 	light_range = 2
 
+/turf/simulated/floor/stone
+	name = "Плитка"
+	icon = 'icons/obj/Events/stone_floor.dmi'
+	icon_state = "floor"
+	can_deconstruct = FALSE
+	explosion_resistance = 111
+	light_color = "#ffbf00"
+	light_power = 2
+	light_range = 2
+
+
 /turf/simulated/floor/carpet
 	name = "carpet"
 	icon_state = "carpet"
