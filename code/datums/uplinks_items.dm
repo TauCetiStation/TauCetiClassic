@@ -1040,8 +1040,8 @@
 	desc = "A crate containing 40 telecrystals worth of random syndicate leftovers."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 20
-	var/crate_value = 40
 	uplink_types = list("traitor")
+	var/crate_value = 40
 
 /datum/uplink_item/badass/surplus_crate/team
 	name = "Syndicate Team Surplus Crate"
