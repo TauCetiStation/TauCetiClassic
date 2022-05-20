@@ -7,15 +7,13 @@
 
 	var/list/types = list(
 		/atom/movable/screen/inventory/craft, // craft
-		// simple hotkeys
-		/atom/movable/screen/drop,
+		/atom/movable/screen/drop, // simple hotkeys
 		/atom/movable/screen/inventory/swap/first,
 		/atom/movable/screen/inventory/swap/second,
 		/atom/movable/screen/resist,
 		/atom/movable/screen/equip,
-		// inventory
 		/atom/movable/screen/complex/human, // hidden inventory
-		/atom/movable/screen/inventory/id,
+		/atom/movable/screen/inventory/id,	// visible inventory
 		/atom/movable/screen/inventory/back,
 		/atom/movable/screen/inventory/pocket1,
 		/atom/movable/screen/inventory/pocket2,

@@ -76,7 +76,7 @@
 	icon_state = "health0"
 	screen_loc = ui_health
 
-	copy_flags = hud_copy_icon
+	copy_flags = NONE
 
 /atom/movable/screen/health_doll
 	icon = 'icons/mob/screen_gen.dmi'

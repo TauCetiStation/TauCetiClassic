@@ -7,14 +7,11 @@
 	add_intents()
 
 	var/list/types = list(
-		// hotkeys
-		/atom/movable/screen/resist/ian,
+		/atom/movable/screen/resist/ian, // hotkeys
 		/atom/movable/screen/drop,
-		// ian abilities
-		/atom/movable/screen/corgi/sit_lie,
+		/atom/movable/screen/corgi/sit_lie, // ian abilities
 		/atom/movable/screen/corgi/ability,
-		// inventory
-		/atom/movable/screen/inventory/corgi_neck,
+		/atom/movable/screen/inventory/corgi_neck, // inventory
 		/atom/movable/screen/inventory/head/ian,
 		/atom/movable/screen/inventory/back/ian,
 	)
@@ -26,6 +23,6 @@
 
 	add_hands(r_type = /atom/movable/screen/inventory/corgi_mouth, l_type = FALSE)
 
-	add_healths()
+	add_healths(/atom/movable/screen/health/ian)
 	add_pullin()
 	add_zone_sel()

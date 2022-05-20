@@ -11,6 +11,8 @@
 /datum/hud/proc/alien_hud()
 	alien_base_hud()
 
+	add_hands()
+
 	var/list/types = list(
 		/atom/movable/screen/drop,
 		/atom/movable/screen/inventory/swap/first/alien,
