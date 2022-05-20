@@ -20,12 +20,6 @@
 	tod = worldtime2text() //weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 	alive_mob_list -= src
-	
-	var/datum/effect/effect/system/smoke_spread/chem/S = new
-	S.color = "#5f0344"
-	reagents.add_reagent("pacid", 5)
-	S.set_up(reagents, 5, 0, loc)
-	S.start()
 
 	return ..(gibbed)
 
