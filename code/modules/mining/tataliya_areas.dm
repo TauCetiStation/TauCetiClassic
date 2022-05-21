@@ -3,8 +3,6 @@
 	icon_state = "unexplored"
 	ambience = list(
 		'sound/ambience/tatalia.ogg',)
-	looped_ambience = list(
-		'sound/ambience/tatalia.ogg',)
 	is_force_ambience = TRUE
 	mob_spawn_list = list(
 		/mob/living/simple_animal/hostile/gorgona = 1,
