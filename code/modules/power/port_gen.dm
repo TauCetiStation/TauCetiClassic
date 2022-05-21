@@ -162,7 +162,7 @@
 	if(amount < 1)
 		to_chat(user, "<span class='notice'>The [src.name] is full!</span>")
 		return
-	to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
+	to_chat(user, "<span class='notice'>You add [amount] sheets to the [name].</span>")
 	sheets += amount
 	addstack.use(amount)
 	updateUsrDialog()
