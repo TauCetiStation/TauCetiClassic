@@ -14,7 +14,7 @@
 		return
 
 /obj/machinery/computer/export/ui_interact(mob/user)
-	var/dat
+	var/dat = ""
 
 	dat += "<center><h1>FTU Export Outpost TO-11312</h4></center>"
 	dat += "<center><h3>Welcome, dear customer!</h3></center>"
