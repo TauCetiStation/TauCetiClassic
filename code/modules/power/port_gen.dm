@@ -166,7 +166,6 @@
 	sheets += amount
 	addstack.use(amount)
 	updateUsrDialog()
-	return
 
 /obj/machinery/power/port_gen/pacman/attackby(obj/item/O, mob/user, params)
 	if(istype(O, sheet_path))
