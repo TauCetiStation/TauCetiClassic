@@ -160,12 +160,11 @@
 	var/obj/item/stack/addstack = I
 	var/amount = min((max_sheets - sheets), addstack.get_amount())
 	if(amount < 1)
-		to_chat(user, "<span class='notice'>The [src.name] is full!</span>")
+		to_chat(user, "<span class='notice'>The [name] is full!</span>")
 		return
-	to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
+	to_chat(user, "<span class='notice'>You add [amount] sheets to the [name].</span>")
 	sheets += amount
 	addstack.use(amount)
-	return
 
 /obj/machinery/power/port_gen/pacman/attackby(obj/item/O, mob/user, params)
 	if(istype(O, sheet_path))
@@ -302,12 +301,11 @@
 	var/obj/item/weapon/spacecash/addstack = I
 	var/amount = min((max_sheets - sheets), addstack.worth)
 	if(amount < 1)
-		to_chat(user, "<span class='notice'>The [src.name] is full!</span>")
+		to_chat(user, "<span class='notice'>The [name] is full!</span>")
 		return
-	to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
+	to_chat(user, "<span class='notice'>You add [amount] sheets to the [name].</span>")
 	sheets += amount
 	qdel(addstack)
-	return
 
 /obj/machinery/power/port_gen/pacman/money/overheat()
 	visible_message("<span class='notice'>[src] overheats and quietly disintegrates. No customer should ever worry!</span>")
