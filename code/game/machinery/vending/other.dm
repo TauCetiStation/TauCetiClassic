@@ -289,6 +289,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/A = user
 		A.put_in_any_hand_if_possible(bought)
+	qdel(voucher)
 
 	for(var/role in user.mind.antag_roles)
 		var/datum/role/R = user.mind.antag_roles[role]
