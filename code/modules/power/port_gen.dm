@@ -288,14 +288,14 @@
 /obj/machinery/power/port_gen/pacman/money
 	name = "A.N.C.A.P.M.A.N.-type Portable Generator"
 	desc = "Don't simply waste your money - burn them to get power instead!"
-	icon_state = "portgenmoney"
-	icon_state_on = "portgenmoney"
+	icon_state = "gen_money-off"
+	icon_state_on = "gen_money-on"
 	sheet_name = "cash"
 	sheet_path = /obj/item/weapon/spacecash
 	power_gen = 10000
 	max_sheets = 10000
 	time_per_sheet = 5
-	board_path = /obj/item/weapon/circuitboard/pacman/mrs
+	board_path = /obj/item/weapon/circuitboard/pacman/money
 	capacity_scale_with_upgrades = FALSE
 
 /obj/machinery/power/port_gen/pacman/money/add_sheets(obj/item/I, mob/user, params)

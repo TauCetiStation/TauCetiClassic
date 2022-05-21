@@ -1,7 +1,7 @@
 /datum/map_template/space_structure
 	var/structure_id
 	var/desc // what is displayed on a sensor reading paper
-/*
+
 /datum/map_template/space_structure/clown_shuttle
 	name = "Clown Shuttle"
 	structure_id = "clown_shuttle"
@@ -151,7 +151,7 @@
 	structure_id = "broken_breacher"
 	desc = "Unknown huge object"
 	mappath = "maps/templates/space_structures/broken_breacher.dmm"
-*/
+
 
 /datum/map_template/space_structure/export_outpost
 	name = "Export Outpost"
