@@ -275,13 +275,13 @@
 	"Custom kit" = image(icon = 'icons/obj/radio.dmi', icon_state = "radio"),
 	)
 
-/obj/machinery/vending/syndi/proc/givekit(obj/voucher, redeemer, mob/user)
-	var/selection = show_radial_menu(redeemer, src, selection_items, require_near = TRUE, tooltips = TRUE)
+/obj/machinery/vending/syndi/proc/givekit(obj/voucher, mob/user)
+	var/selection = show_radial_menu(user, src, selection_items, require_near = TRUE, tooltips = TRUE)
 	if(voucher.in_use)
 		return
 	if(!selection_items)
 		populate_selection()
-	if(!selection || !Adjacent(redeemer))
+	if(!selection || !Adjacent(user))
 		return
 	voucher.in_use = TRUE
 	var/bought_type = assortment[selection]
