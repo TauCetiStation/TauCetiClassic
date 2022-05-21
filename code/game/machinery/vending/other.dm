@@ -285,7 +285,7 @@
 		return
 	voucher.in_use = TRUE
 	var/bought_type = assortment[selection]
-	var/obj/item/bought = new bought_type (loc)
+	var/obj/item/bought = new bought_type(loc)
 	if(ishuman(user))
 		var/mob/living/carbon/human/A = user
 		A.put_in_any_hand_if_possible(bought)
