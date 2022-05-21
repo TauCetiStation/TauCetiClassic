@@ -78,9 +78,9 @@
 	mymob.neurotoxin_icon = new /atom/movable/screen/xenomorph/neurotoxin
 	mymob.neurotoxin_icon.add_to_hud(src)
 
-/datum/hud/proc/add_plasma_display()
-	mymob.xenomorph_plasma_display = new /atom/movable/screen/xenomorph/plasma_display
-	mymob.xenomorph_plasma_display.add_to_hud(src)
+/datum/hud/proc/add_pwr_display(type = /atom/movable/screen/xenomorph/plasma_display)
+	mymob.pwr_display = new type
+	mymob.pwr_display.add_to_hud(src)
 
 /datum/hud/proc/add_stamina_display()
 	mymob.staminadisplay = new /atom/movable/screen/corgi/stamina_bar

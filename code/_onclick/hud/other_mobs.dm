@@ -2,10 +2,8 @@
 	return
 
 /datum/hud/proc/blob_hud()
-	blobpwrdisplay = new /atom/movable/screen/blob_power
-	blobhealthdisplay = new /atom/movable/screen/blob_health
-
-	adding += list(blobpwrdisplay, blobhealthdisplay)
+	add_pwr_display(/atom/movable/screen/blob_power)
+	add_healths(/atom/movable/screen/blob_health)
 
 /datum/hud/proc/changeling_essence_hud()
 	var/mob/living/parasite/essence/E = mymob

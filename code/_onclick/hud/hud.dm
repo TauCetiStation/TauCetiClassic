@@ -30,8 +30,6 @@ var/global/list/available_ui_styles = list(
 
 	var/atom/movable/screen/lingchemdisplay
 	var/atom/movable/screen/lingstingdisplay
-	var/atom/movable/screen/blobpwrdisplay
-	var/atom/movable/screen/blobhealthdisplay
 
 	var/list/main = list()
 	var/list/adding = list()
@@ -69,8 +67,6 @@ var/global/list/available_ui_styles = list(
 
 /datum/hud/Destroy()
 	lingchemdisplay = null
-	blobpwrdisplay = null
-	blobhealthdisplay = null
 	main = null
 	adding = null
 	hotkeybuttons = null
@@ -215,7 +211,7 @@ var/global/list/available_ui_styles = list(
 			if(!hotkey_ui_hidden)
 				mymob.client.screen += hotkeybuttons
 
-			action_intent?.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
+			mymob.action_intent?.screen_loc = initial(mymob.action_intent.screen_loc) //Restore intent selection to the original position
 			mymob.client.screen += main
 
 		if(HUD_STYLE_REDUCED)	//Reduced HUD
@@ -225,7 +221,7 @@ var/global/list/available_ui_styles = list(
 			mymob.client.screen -= other
 			mymob.client.screen -= hotkeybuttons
 			
-			action_intent?.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
+			mymob.action_intent?.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
 			mymob.client.screen += main
 
 		if(HUD_STYLE_NOHUD)	//No HUD

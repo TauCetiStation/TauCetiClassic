@@ -28,7 +28,7 @@
 	var/atom/movable/screen/l_hand_hud_object = null
 
 	var/atom/movable/screen/move_intent = null
-	var/atom/movable/screen/complex/act_intent/action_inten = null
+	var/atom/movable/screen/complex/act_intent/action_intent = null
 	var/atom/movable/screen/staminadisplay = null
 
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
@@ -43,7 +43,7 @@
 	var/atom/movable/screen/healthdoll = null
 	var/atom/movable/screen/nutrition_icon = null
 
-	var/atom/movable/screen/xenomorph_plasma_display = null
+	var/atom/movable/screen/pwr_display = null
 	var/atom/movable/screen/nightvisionicon = null
 
 	var/me_verb_allowed = TRUE //Allows all mobs to use the me verb by default, will have to manually specify they cannot

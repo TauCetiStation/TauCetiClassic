@@ -17,8 +17,8 @@
 
 // Essence
 /atom/movable/screen/essence
-    icon = 'icons/mob/screen_gen.dmi'
-    plane = ABOVE_HUD_PLANE
+	icon = 'icons/mob/screen_gen.dmi'
+	plane = ABOVE_HUD_PLANE
 
 	copy_flags = NONE
 

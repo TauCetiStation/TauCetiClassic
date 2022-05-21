@@ -28,4 +28,4 @@
 		add_neurotoxin_icon()
 
 	add_throw_icon()
-	add_plasma_display()
+	add_pwr_display()
