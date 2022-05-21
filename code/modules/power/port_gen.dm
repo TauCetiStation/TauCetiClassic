@@ -302,9 +302,9 @@
 	var/obj/item/weapon/spacecash/addstack = I
 	var/amount = min((max_sheets - sheets), addstack.worth)
 	if(amount < 1)
-		to_chat(user, "<span class='notice'>The [src.name] is full!</span>")
+		to_chat(user, "<span class='notice'>The [name] is full!</span>")
 		return
-	to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
+	to_chat(user, "<span class='notice'>You add [amount] sheets to the [name].</span>")
 	sheets += amount
 	qdel(addstack)
 	updateUsrDialog()
