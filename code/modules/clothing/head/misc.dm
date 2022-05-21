@@ -440,3 +440,9 @@
 	flags = HEADCOVERSEYES | BLOCKHAIR
 	icon_state = "monk_helper"
 	item_state = "monk_helper"
+
+/obj/item/clothing/head/lepr
+	name = "Шляпа Жадности"
+	desc = "+2 к Удаче"
+	icon_state = "lepr"
+	item_state = "lepr"

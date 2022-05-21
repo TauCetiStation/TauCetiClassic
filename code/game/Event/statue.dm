@@ -4,6 +4,8 @@
 	icon = 'icons/mob/human.dmi'
 	desc = "Внешний вид профессии"
 
+// ЭРАФИЯ
+
 /obj/structure/statue/peasant
 	name = "Крестьянин"
 	icon_state = "peasant"
@@ -34,3 +36,8 @@
 /obj/structure/statue/hero
 	name = "Герой"
 	icon_state = "hero"
+
+// НЕЙТРАЛЫ
+/obj/structure/statue/lepr
+	name = "Лепрекон"
+	icon_state = "lepr"

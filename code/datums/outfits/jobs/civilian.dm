@@ -160,6 +160,8 @@
 	belt = null
 	id = null
 
+// ЭРАФИЯ
+
 /datum/outfit/job/hub/peasant
 	name = OUTFIT_JOB_NAME("Peasant")
 	uniform = /obj/item/clothing/under/peasant
@@ -267,3 +269,15 @@
 	r_hand = /obj/item/toy/flag
 	back = null
 	id = /obj/item/weapon/card/id/key/hhero
+
+
+
+//НЕЙТРАЛЫ
+
+/datum/outfit/job/hub/lepr
+	name = OUTFIT_JOB_NAME("Лепрекон")
+	uniform =/obj/item/clothing/under/lepr
+	shoes = /obj/item/clothing/shoes/boots
+	gloves = /obj/item/clothing/gloves/latex
+	head = /obj/item/clothing/head/lepr
+	l_hand = /obj/item/weapon/cane

@@ -42,6 +42,8 @@
 	job_count += 1
 		..()
 
+//ЭРАФИЯ
+
 // Тир 1
 /obj/effect/portal/hub/job_room/peasant
 	A = /area/custom/peasant_hub
@@ -135,3 +137,9 @@
 	room_to_check =/obj/effect/portal/hub/job_room/whitelist_room/knight
 	threshold = 3
 	solo = TRUE
+
+//НЕЙТРАЛЫ
+/obj/effect/portal/hub/job_room/lepr
+	A = /area/custom/lepr
+	name = "Лепрекон"
+	desc = ""

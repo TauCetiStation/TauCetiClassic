@@ -96,9 +96,15 @@
 	if(slot_equipped == SLOT_SHOES)
 		stop_waddling(user)
 
+
 /obj/item/clothing/shoes/clown_shoes/play_unique_footstep_sound()
 	..()
 	playsound(src, pick(SOUNDIN_CLOWNSTEP), VOL_EFFECTS_MASTER)
+
+/obj/item/clothing/shoes/lepr
+	name = "Ботинки Жадности"
+	desc = "С потайными местами для заначек"
+	icon_state = "lepr"
 
 /obj/item/clothing/shoes/jolly_gravedigger
 	name = "jolly gravedigger shoes"

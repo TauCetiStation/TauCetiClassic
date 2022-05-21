@@ -112,6 +112,8 @@
 
 
 
+// ЭРАФИЯ ЗОНЫ ХАБОРВ
+
 /area/custom/peasant_hub
 	name = "Peasant_hub"
 	icon_state = "blue-red-d"
@@ -157,6 +159,8 @@
 	name = "Start"
 	icon_state = "blue-red-d"
 
+// ЭРАФИЯ СТАРТОВЫЕ ЗОНЫ
+
 /area/custom/start_homm/peasant
 	name = "PeasantStart"
 
@@ -186,6 +190,17 @@
 
 /area/custom/start_homm/human_hero
 	name = "HumanHeroStart"
+
+//НЕЙТРАЛЫ ЗОНЫ ХАБОВ
+
+/area/custom/lepr
+	name = "Leprecon_Hub"
+	icon_state = "green"
+
+//НЕЙТРАЛЫ СТАРТОВЫЕ ЗОНЫ
+
+/area/custom/start_homm/lepr
+	name = "LepreconStart"
 
 /area/custom/valhalla
 	name = "Valhalla"

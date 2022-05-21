@@ -33,6 +33,8 @@
 	if(arrive_sound)
 		playsound(user,arrive_sound, VOL_EFFECTS_MASTER)
 
+// ЭРАФИЯ
+
 /obj/structure/character_spawner/peasant
 	outfit = /datum/outfit/job/hub/peasant
 	A =/area/custom/start_homm/peasant
@@ -102,3 +104,18 @@
 		selecting_job = FALSE
 		return
 	new/obj/vehicle/space/spacebike/horse/white(user.loc)
+
+
+//НЕЙТРАЛЫ
+/obj/structure/character_spawner/lepr
+	outfit = /datum/outfit/job/hub/lepr
+	A =/area/custom/start_homm/lepr
+	arrive_sound = 'sound/Event/headman.ogg'
+
+/obj/structure/character_spawner/lepr/attack_hand(mob/user)
+	..()
+	if(ready == "Нет")
+		selecting_job = FALSE
+		return
+	user.mutations.Add(SMALLSIZE)
+	user.regenerate_icons()

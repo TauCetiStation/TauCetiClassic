@@ -808,3 +808,9 @@
 	desc = "Веет уютом"
 	icon_state = "inn"
 	item_state = "inn"
+
+/obj/item/clothing/under/lepr
+	name = "Форма Жадности"
+	desc = "2/3 бюджета всей Эрафии , в этом костюме"
+	icon_state = "lepr"
+	item_state = "lepr"
