@@ -461,9 +461,9 @@
 	item_in_hand = get_active_hand()
 	if(item_in_hand)
 		SEND_SIGNAL(item_in_hand, COMSIG_ITEM_BECOME_ACTIVE, src)
-	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
-		hud_used.l_hand_hud_object.update_icon(src)
-		hud_used.r_hand_hud_object.update_icon(src)
+	if(hud_used && l_hand_hud_object && r_hand_hud_object)
+		l_hand_hud_object.update_icon(src)
+		r_hand_hud_object.update_icon(src)
 
 	/*if (!( src.hand ))
 		src.hands.dir = NORTH

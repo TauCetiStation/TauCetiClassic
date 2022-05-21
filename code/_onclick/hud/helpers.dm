@@ -1,6 +1,6 @@
 /datum/hud/proc/add_intents(act_intent_type = /atom/movable/screen/complex/act_intent)
-	action_intent = new act_intent_type
-	action_intent.add_to_hud(src)
+	mymob.action_intent = new act_intent_type
+	mymob.action_intent.add_to_hud(src)
 
 /datum/hud/proc/get_screen(screen_type, icon = null, color = null, alpha = null)
 	var/atom/movable/screen/screen = new screen_type
@@ -11,17 +11,17 @@
 		get_screen(screen_type, ui_style, ui_color, ui_alpha)
 
 /datum/hud/proc/add_move_intent(type = /atom/movable/screen/move_intent)
-	move_intent = new type
-	move_intent.add_to_hud(src)
+	mymob.move_intent = new type
+	mymob.move_intent.add_to_hud(src)
 
 /datum/hud/proc/add_hands(r_type = /atom/movable/screen/inventory/hand/r, l_type = /atom/movable/screen/inventory/hand/l)
 	if(r_type)
-		r_hand_hud_object = new r_type
-		r_hand_hud_object.add_to_hud(src)
+		mymob.r_hand_hud_object = new r_type
+		mymob.r_hand_hud_object.add_to_hud(src)
 
 	if(l_type)
-		l_hand_hud_object = new l_type
-		l_hand_hud_object.add_to_hud(src)
+		mymob.l_hand_hud_object = new l_type
+		mymob.l_hand_hud_object.add_to_hud(src)
 
 /datum/hud/proc/add_throw_icon(type = /atom/movable/screen/throw)
 	mymob.throw_icon = new type
@@ -83,8 +83,8 @@
 	mymob.xenomorph_plasma_display.add_to_hud(src)
 
 /datum/hud/proc/add_stamina_display()
-	staminadisplay = new /atom/movable/screen/corgi/stamina_bar
-	staminadisplay.add_to_hud(src)
+	mymob.staminadisplay = new /atom/movable/screen/corgi/stamina_bar
+	mymob.staminadisplay.add_to_hud(src)
 
 /datum/hud/proc/add_essence_voice()
 	var/mob/living/parasite/essence/E = mymob

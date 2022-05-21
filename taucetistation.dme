@@ -187,6 +187,7 @@
 #include "code\_onclick\hud\ui_screens\ghost.dm"
 #include "code\_onclick\hud\ui_screens\ian.dm"
 #include "code\_onclick\hud\ui_screens\inventory.dm"
+#include "code\_onclick\hud\ui_screens\other_mobs.dm"
 #include "code\_onclick\hud\ui_screens\role.dm"
 #include "code\_onclick\hud\ui_screens\screen_objects.dm"
 #include "code\_onclick\hud\ui_screens\silicon.dm"

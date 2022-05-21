@@ -154,7 +154,8 @@
 		else
 			healths.icon_state = "health7"
 
-	hud_used?.staminadisplay?.update_icon(src)
+	if(hud_used)
+		staminadisplay?.update_icon(src)
 
 	return TRUE
 

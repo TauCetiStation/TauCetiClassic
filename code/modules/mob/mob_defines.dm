@@ -24,6 +24,13 @@
 	var/atom/movable/screen/gun/run/gun_run_icon = null
 	var/atom/movable/screen/gun/mode/gun_setting_icon = null
 
+	var/atom/movable/screen/r_hand_hud_object = null
+	var/atom/movable/screen/l_hand_hud_object = null
+
+	var/atom/movable/screen/move_intent = null
+	var/atom/movable/screen/complex/act_intent/action_inten = null
+	var/atom/movable/screen/staminadisplay = null
+
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
 	The current method unnecessarily clusters up the variable list, especially for humans (although rearranging won't really clean it up a lot but the difference will be noticable for other mobs).

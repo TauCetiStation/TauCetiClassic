@@ -1420,7 +1420,8 @@
 		return FALSE
 
 	m_intent = intent
-	hud_used?.move_intent?.update_icon(src)
+	if(hud_used)
+		move_intent?.update_icon(src)
 
 	return TRUE
 

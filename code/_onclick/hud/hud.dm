@@ -32,11 +32,6 @@ var/global/list/available_ui_styles = list(
 	var/atom/movable/screen/lingstingdisplay
 	var/atom/movable/screen/blobpwrdisplay
 	var/atom/movable/screen/blobhealthdisplay
-	var/atom/movable/screen/r_hand_hud_object
-	var/atom/movable/screen/l_hand_hud_object
-	var/atom/movable/screen/complex/act_intent/action_intent
-	var/atom/movable/screen/move_intent
-	var/atom/movable/screen/staminadisplay
 
 	var/list/main = list()
 	var/list/adding = list()
@@ -76,10 +71,6 @@ var/global/list/available_ui_styles = list(
 	lingchemdisplay = null
 	blobpwrdisplay = null
 	blobhealthdisplay = null
-	r_hand_hud_object = null
-	l_hand_hud_object = null
-	action_intent = null
-	move_intent = null
 	main = null
 	adding = null
 	hotkeybuttons = null
