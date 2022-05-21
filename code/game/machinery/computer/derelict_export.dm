@@ -1,5 +1,6 @@
 /obj/machinery/computer/export
 	name = "export console"
+	desc = "No questions asked and zero fee."
 	icon_state = "export"
 	light_color = "#ff7f01"
 	allowed_checks = ALLOWED_CHECK_NONE
