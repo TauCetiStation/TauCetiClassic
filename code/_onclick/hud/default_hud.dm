@@ -4,5 +4,3 @@
 
 	add_zone_sel()
 	add_pullin()
-
-	add_changeling()

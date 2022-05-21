@@ -1,6 +1,4 @@
 /datum/hud/proc/human_hud()
-	var/mob/living/carbon/human/H = mymob
-
 	add_intents()
 	add_move_intent()
 	add_hands()
@@ -29,12 +27,7 @@
 	add_nutrition_icon()
 	add_pullin()
 
-	add_changeling()
-
 	add_zone_sel()
-
-	if(isanycop(H) || isanygangster(H))
-		add_wanted_level()
 
 	if(mymob.leap_icon)
 		mymob.leap_icon.add_to_hud(src)

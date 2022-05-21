@@ -28,16 +28,16 @@
 	..()
 	package_spawner.Grant(antag.current)
 	package_spawner.my_gang_datum = faction
-	var/mob/living/M = antag.current
-	if(M.hud_used)
-		SSticker.wanted_lvl.add_to_hud(M.hud_used)
 
 /datum/role/gangster/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
 	package_spawner.Remove(M.current)
-	var/mob/living/L = M.current
-	if(L.hud_used)
-		SSticker.wanted_lvl.remove_from_hud(L.hud_used)
+
+/datum/role/gangster/add_ui(datum/hud/hud)
+	SSticker.wanted_lvl.add_to_hud(hud)
+
+/datum/role/gangster/remove_ui(datum/hud/hud)
+	SSticker.wanted_lvl.remove_from_hud(hud)
 
 /datum/role/gangster/Greet(laterole)
 	antag.current.playsound_local(null, 'sound/antag/thatshowfamiliesworks.ogg', VOL_EFFECTS_MASTER, null, FALSE)

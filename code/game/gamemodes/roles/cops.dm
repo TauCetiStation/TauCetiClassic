@@ -57,17 +57,15 @@
 /datum/role/cop/OnPostSetup(laterole)
 	. = ..()
 	var/mob/living/carbon/human/M = antag.current
-	if(M.hud_used)
-		SSticker.wanted_lvl.add_to_hud(M.hud_used)
 
 	if(outfit)
 		M.equipOutfit(outfit)
 
-/datum/role/cop/RemoveFromRole(datum/mind/M, msg_admins)
-	. = ..()
-	var/mob/living/L = M.current
-	if(L.hud_used)
-		SSticker.wanted_lvl.remove_from_hud(L.hud_used)
+/datum/role/cop/add_ui(datum/hud/hud)
+	SSticker.wanted_lvl.add_to_hud(hud)
+
+/datum/role/cop/remove_ui(datum/hud/hud)
+	SSticker.wanted_lvl.remove_from_hud(hud)
 
 /datum/role/cop/beatcop
 	name = "Officer"

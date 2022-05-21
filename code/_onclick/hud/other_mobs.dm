@@ -14,7 +14,6 @@
 	add_internals()
 	add_healths()
 	add_health_doll()
-	add_changeling()
 
 	get_screen(/atom/movable/screen/essence/ling_abilities)
 

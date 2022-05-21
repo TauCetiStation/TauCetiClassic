@@ -36,6 +36,7 @@
 		for(var/mob/living/parasite/essence/E in changeling.essences)
 			if(E.phantom && E.phantom.showed)
 				client.images += E.phantom.overlay
+		changeling.add_ui(hud_used)
 	if(rehost_timer_id)
 		deltimer(rehost_timer_id)
 		rehost_timer_id = 0
@@ -202,7 +203,7 @@
 	if(!host)
 		return
 	if(changeling)
-		hud_used?.lingchemdisplay.maptext = host.hud_used.lingchemdisplay.maptext
+		client.screen += changeling.lingchemdisplay
 
 	sight = host.sight
 	see_in_dark = host.see_in_dark

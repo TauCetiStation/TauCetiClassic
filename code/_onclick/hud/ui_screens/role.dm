@@ -19,7 +19,6 @@
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
 	plane = ABOVE_HUD_PLANE
-	invisibility = INVISIBILITY_ABSTRACT
 
 	copy_flags = NONE
 

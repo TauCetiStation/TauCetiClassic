@@ -91,6 +91,8 @@
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
 	remove_antag_hud()
+	if(M.current?.hud_used)
+		remove_ui(M.current.hud_used)
 	if(msg_admins)
 		message_admins("[key_name(M)] is <span class='danger'>no longer</span> \an [id].[M.current ? " [ADMIN_FLW(M.current)]" : ""]")
 		log_mode("[key_name(M)] is <span class='danger'>no longer</span> \an [id].")
@@ -175,6 +177,8 @@
 /datum/role/proc/OnPostSetup(laterole = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	add_antag_hud()
+	if(antag.current?.hud_used)
+		add_ui(antag.current.hud_used)
 	SEND_SIGNAL(src, COMSIG_ROLE_POSTSETUP, laterole)
 
 /datum/role/process()
@@ -452,3 +456,9 @@
 		var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
 		hud.leave_hud(antag.current)
 		set_antag_hud(antag.current, null)
+
+/datum/role/proc/add_ui(datum/hud/hud)
+	return
+
+/datum/role/proc/remove_ui(datum/hud/hud)
+	return

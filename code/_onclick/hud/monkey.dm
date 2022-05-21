@@ -17,6 +17,5 @@
 	add_internals()
 	add_healths()
 	add_pullin()
-	add_changeling()
 	add_zone_sel()
 	add_gun_setting()

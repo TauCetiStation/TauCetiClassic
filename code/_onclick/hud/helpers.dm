@@ -55,16 +55,12 @@
 	mymob.gun_setting_icon = new type
 	mymob.gun_setting_icon.add_to_hud(src)
 
-/datum/hud/proc/add_changeling()
-	lingchemdisplay = new /atom/movable/screen/chemical_display
-	lingchemdisplay.add_to_hud(src)
+/datum/hud/proc/add_roles()
+	var/list/antag_roles = mymob.mind.antag_roles
 
-	if(iscarbon(mymob))
-		lingstingdisplay = new /atom/movable/screen/current_sting
-		lingstingdisplay.add_to_hud(src)
-
-/datum/hud/proc/add_wanted_level()
-	SSticker.wanted_lvl.add_to_hud(src)
+	for(var/id in antag_roles)
+		var/datum/role/role = antag_roles[id]
+		role.add_ui(src)
 
 /datum/hud/proc/add_nightvision_icon()
 	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision

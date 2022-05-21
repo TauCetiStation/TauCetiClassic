@@ -28,9 +28,6 @@ var/global/list/available_ui_styles = list(
 	var/inventory_shown = FALSE				//the inventory
 	var/hotkey_ui_hidden = FALSE			//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
-	var/atom/movable/screen/lingchemdisplay
-	var/atom/movable/screen/lingstingdisplay
-
 	var/list/main = list()
 	var/list/adding = list()
 	var/list/hotkeybuttons = list()
@@ -66,7 +63,6 @@ var/global/list/available_ui_styles = list(
 	instantiate()
 
 /datum/hud/Destroy()
-	lingchemdisplay = null
 	main = null
 	adding = null
 	hotkeybuttons = null
