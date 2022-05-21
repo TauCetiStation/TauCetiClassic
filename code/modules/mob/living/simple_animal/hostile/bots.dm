@@ -19,7 +19,7 @@
 
 /mob/living/simple_animal/hostile/bot/death()
 	..()
-	new /obj/effect/gibspawner/robot(src.loc)
+	new /obj/effect/gibspawner/robot(loc)
 	visible_message("<span class='warning'>[src] blows apart!</span>")
 	qdel(src)
 
