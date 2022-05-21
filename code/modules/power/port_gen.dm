@@ -307,7 +307,6 @@
 	sheets += amount
 	qdel(addstack)
 	updateUsrDialog()
-	return
 
 /obj/machinery/power/port_gen/pacman/money/overheat()
 	visible_message("<span class='notice'>[src] overheats and quietly disintegrates. No customer should ever worry!</span>")
