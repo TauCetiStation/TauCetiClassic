@@ -1058,15 +1058,13 @@
 /datum/uplink_item/badass/surplus_crate/spawn_item(turf/loc, obj/item/device/uplink/U)
 	var/list/temp_uplink_list = get_uplink_items(U)
 	var/list/buyable_items = list()
+	var/remaining_TC = crate_value
 	for(var/category in temp_uplink_list)
 		buyable_items += temp_uplink_list[category]
 
-	var/remaining_TC = crate_value
 	var/list/bought_items = list()
-	var/list/itemlog = list()
-	U.uses -= cost
 
-	while(remaining_TC)
+	while(remaining_TC > 0)
 		var/datum/uplink_item/I = pick(buyable_items)
 		if(I.cost > remaining_TC)
 			continue
@@ -1074,8 +1072,10 @@
 			continue
 		bought_items += I.item
 		remaining_TC -= I.cost
-		itemlog += I.name // To make the name more readable for the log compared to just i.item
 
 	var/obj/structure/closet/crate/C = new(loc)
 	for(var/item in bought_items)
 		new item(C)
+
+	U.uses -= cost
+
