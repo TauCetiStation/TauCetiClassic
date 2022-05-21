@@ -24,7 +24,7 @@
 	qdel(src)
 
 /mob/living/simple_animal/hostile/bot/emp_act(severity)
-	new /obj/effect/effect/sparks(src.loc)
+	new /obj/effect/effect/sparks(loc)
 	health -= rand(10, 20)
 
 /mob/living/simple_animal/hostile/bot/secbot
