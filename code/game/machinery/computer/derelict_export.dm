@@ -24,7 +24,7 @@
 
 /obj/machinery/computer/export/Topic(href, href_list)
 	. = ..()
-	if(!.)
+	if(!. || !pad)
 		return
 
 	if(href_list["sell"])
