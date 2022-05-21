@@ -25,6 +25,11 @@
 	name = "Фракция Инферно"
 	desc = ""
 
+/obj/effect/portal/hub/neutral
+	A =/area/custom/neutral
+	name = "Нейтралы"
+	desc = "Слишком разные чтобы описать одним предложением.."
+
 /obj/effect/portal/hub/job_room
 	var/job_count = 0
 	var/solo = FALSE

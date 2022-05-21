@@ -98,6 +98,8 @@
 	name = "Hub"
 	icon_state = "red"
 
+// ХАБЫ ФРАКЦИЙ
+
 /area/custom/human_hub
 	name = "HumanHub"
 	icon_state = "bluenew"
@@ -109,6 +111,12 @@
 /area/custom/krigan_hub
 	name = "KriganHub"
 	icon_state = "cult-heaven"
+
+/area/custom/neutral
+	name = "Нейтралы"
+	icon_state = "cult-heaven"
+	icon_state = "green"
+
 
 
 
