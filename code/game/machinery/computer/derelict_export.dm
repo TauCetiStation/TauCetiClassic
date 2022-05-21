@@ -10,7 +10,6 @@
 	. = ..()
 	pad = locate(/obj/machinery/export_pad) in range(2, src)
 
-
 /obj/machinery/computer/export/ui_interact(mob/user)
 	var/dat = ""
 
