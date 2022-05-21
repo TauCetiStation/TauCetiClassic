@@ -284,7 +284,7 @@
 	if(!selection || !Adjacent(redeemer))
 		return
 	voucher.in_use = TRUE
-	var/obj/item/bought = new assortment[selection]
+	var/obj/item/bought = new assortment[selection](loc)
 	if(ishuman(user))
 		var/mob/living/carbon/human/A = user
 		A.put_in_any_hand_if_possible(bought)
