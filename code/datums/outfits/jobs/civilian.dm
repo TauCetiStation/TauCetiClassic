@@ -146,19 +146,19 @@
 	uniform = /obj/item/clothing/under/color/black
 	shoes = /obj/item/clothing/shoes/black
 	back = /obj/item/weapon/storage/backpack/santabag
-	l_ear = ""
-	belt = ""
-	id = ""
+	l_ear = null
+	belt = null
+	id = null
 	survival_box = FALSE
 
 /datum/outfit/job/deadman
 	name = OUTFIT_JOB_NAME("Hub")
 	uniform = /obj/item/clothing/under/shorts/black
 	shoes = /obj/item/clothing/shoes/sandal
-	back = ""
-	l_ear = ""
-	belt = ""
-	id = ""
+	back = null
+	l_ear = null
+	belt = null
+	id = null
 
 /datum/outfit/job/hub/peasant
 	name = OUTFIT_JOB_NAME("Peasant")
@@ -239,7 +239,7 @@
 	head = /obj/item/clothing/head/helmet/crusader
 	l_hand = /obj/item/weapon/claymore/religion
 	l_pocket_back = /obj/item/weapon/paper/village_law
-	back = ""
+	back = null
 	id = /obj/item/weapon/card/id/key/knight
 
 
@@ -252,7 +252,7 @@
 	head = /obj/item/clothing/head/wizard/monk
 	l_pocket_back = /obj/item/weapon/paper/village_law
 	l_hand = /obj/item/weapon/nullrod
-	back = ""
+	back = null
 	id = /obj/item/weapon/card/id/key/monk
 
 /datum/outfit/job/hub/human_hero
@@ -262,7 +262,8 @@
 	shoes = /obj/item/clothing/shoes/boots
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/byzantine_hat
+	mask = /obj/item/clothing/mask/lord
 	l_pocket_back = /obj/item/weapon/paper/village_law
 	r_hand = /obj/item/toy/flag
-	back = ""
+	back = null
 	id = /obj/item/weapon/card/id/key/hhero
