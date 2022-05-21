@@ -52,7 +52,7 @@
 /atom/movable/screen/inventory/hand
 	var/hand_index
 
-	hud_slot = hud_slot_main
+	hud_slot = HUD_SLOT_MAIN
 
 /atom/movable/screen/inventory/hand/action()
 	if(check_state() && iscarbon(usr))
@@ -82,7 +82,7 @@
 /atom/movable/screen/inventory/swap
 	name = "hand"
 
-	hud_slot = hud_slot_hotkeys
+	hud_slot = HUD_SLOT_HOTKEYS
 
 /atom/movable/screen/inventory/swap/action()
 	if(check_state() && iscarbon(usr))

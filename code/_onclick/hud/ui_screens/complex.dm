@@ -1,7 +1,7 @@
 /atom/movable/screen/complex
 	var/list/types
 	var/list/screens = list()
-	var/screens_slot = hud_slot_other
+	var/screens_slot = HUD_SLOT_OTHER
 	var/shown = FALSE
 
 /atom/movable/screen/complex/atom_init()
@@ -72,14 +72,14 @@
 	screen_loc = ui_acti
 	plane = ABOVE_HUD_PLANE
 
-	hud_slot = hud_slot_main
-	copy_flags = hud_copy_icon
+	hud_slot = HUD_SLOT_MAIN
+	copy_flags = HUD_COPY_ICON
 
 	types = list(
 		/atom/movable/screen/intent/help, /atom/movable/screen/intent/push,
 		/atom/movable/screen/intent/grab, /atom/movable/screen/intent/harm
 	)
-	screens_slot = hud_slot_main
+	screens_slot = HUD_SLOT_MAIN
 	shown = TRUE // always shown
 
 /atom/movable/screen/complex/act_intent/atom_init()

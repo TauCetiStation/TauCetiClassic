@@ -18,7 +18,7 @@
 	var/assigned_map
 	var/del_on_map_removal = TRUE
 
-	var/hud_slot = hud_slot_adding
+	var/hud_slot = HUD_SLOT_ADDING
 	var/copy_flags = ALL
 
 /atom/movable/screen/Destroy()
@@ -27,36 +27,36 @@
 
 /atom/movable/screen/proc/add_to_hud(datum/hud/hud)
 	switch(hud_slot)
-		if(hud_slot_adding)
+		if(HUD_SLOT_ADDING)
 			hud.adding += src
-		if(hud_slot_hotkeys)
+		if(HUD_SLOT_HOTKEYS)
 			hud.hotkeybuttons += src
-		if(hud_slot_main)
+		if(HUD_SLOT_MAIN)
 			hud.main += src
-		if(hud_slot_other)
+		if(HUD_SLOT_OTHER)
 			hud.other += src
 
-	if(hud.hud_shown && hud_slot != hud_slot_other)
+	if(hud.hud_shown && hud_slot != HUD_SLOT_OTHER)
 		hud.mymob.client.screen += src
 	update_by_hud(hud)
 	
 /atom/movable/screen/proc/update_by_hud(datum/hud/hud)
-	if((copy_flags & hud_copy_icon) && hud.ui_style)
+	if((copy_flags & HUD_COPY_ICON) && hud.ui_style)
 		icon = hud.ui_style
-	if((copy_flags & hud_copy_alpha) && hud.ui_alpha)
+	if((copy_flags & HUD_COPY_ALPHA) && hud.ui_alpha)
 		alpha = hud.ui_alpha
-	if((copy_flags & hud_copy_color) && hud.ui_color)
+	if((copy_flags & HUD_COPY_COLOR) && hud.ui_color)
 		color = hud.ui_color
 	
 /atom/movable/screen/proc/remove_from_hud(datum/hud/hud)
 	switch(hud_slot)
-		if(hud_slot_adding)
+		if(HUD_SLOT_ADDING)
 			hud.adding -= src
-		if(hud_slot_hotkeys)
+		if(HUD_SLOT_HOTKEYS)
 			hud.hotkeybuttons -= src
-		if(hud_slot_main)
+		if(HUD_SLOT_MAIN)
 			hud.main -= src
-		if(hud_slot_other)
+		if(HUD_SLOT_OTHER)
 			hud.other -= src
 
 	hud.mymob.client?.screen -= src

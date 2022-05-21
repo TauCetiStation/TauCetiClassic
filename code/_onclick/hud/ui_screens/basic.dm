@@ -5,8 +5,8 @@
 	icon_state = "pull1"
 	screen_loc = ui_pull_resist
 
-	hud_slot = hud_slot_hotkeys
-	copy_flags = hud_copy_icon
+	hud_slot = HUD_SLOT_HOTKEYS
+	copy_flags = HUD_COPY_ICON
 
 /atom/movable/screen/pull/action()
 	usr.stop_pulling()
@@ -24,7 +24,7 @@
 	screen_loc = ui_equip
 	plane = ABOVE_HUD_PLANE
 
-	hud_slot = hud_slot_hotkeys
+	hud_slot = HUD_SLOT_HOTKEYS
 
 /atom/movable/screen/equip/action()
 	if(istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
@@ -39,7 +39,7 @@
 	screen_loc = ui_pull_resist
 	plane = HUD_PLANE
 
-	hud_slot = hud_slot_hotkeys
+	hud_slot = HUD_SLOT_HOTKEYS
 
 /atom/movable/screen/resist/action()
 	if(isliving(usr))
@@ -51,7 +51,7 @@
 	icon_state = "act_throw_off"
 	screen_loc = ui_drop_throw
 
-	hud_slot = hud_slot_hotkeys
+	hud_slot = HUD_SLOT_HOTKEYS
 
 /atom/movable/screen/throw/action()
 	if(iscarbon(usr))
@@ -64,7 +64,7 @@
 	screen_loc = ui_drop_throw
 	plane = HUD_PLANE
 
-	hud_slot = hud_slot_hotkeys
+	hud_slot = HUD_SLOT_HOTKEYS
 
 /atom/movable/screen/drop/action()
 	usr.drop_item()
@@ -106,7 +106,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	COOLDOWN_DECLARE(gun_click_time)
 
-	hud_slot = hud_slot_other
+	hud_slot = HUD_SLOT_OTHER
 	copy_flags = NONE
 
 /atom/movable/screen/gun/action()
@@ -162,7 +162,7 @@
 	icon_state = "gun0"
 	screen_loc = ui_gun_select
 
-	hud_slot = hud_slot_adding
+	hud_slot = HUD_SLOT_ADDING
 
 /atom/movable/screen/gun/mode/action()
 	usr.client.ToggleGunMode()
@@ -315,7 +315,7 @@
 	icon_state = "internal0"
 	screen_loc = ui_internal
 
-	copy_flags = hud_copy_icon
+	copy_flags = HUD_COPY_ICON
 
 /atom/movable/screen/internal/update_icon(mob/living/carbon/mymob)
 	if(!istype(mymob))

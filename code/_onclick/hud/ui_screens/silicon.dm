@@ -144,7 +144,7 @@
 	plane = ABOVE_HUD_PLANE
 	var/module_index
 
-	hud_slot = hud_slot_main
+	hud_slot = HUD_SLOT_MAIN
 
 /atom/movable/screen/robot_hands/action()
 	if(isrobot(usr))

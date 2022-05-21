@@ -158,11 +158,11 @@
 #define ui_human_leap "CENTER+3:20,SOUTH:5"
 
 // Hud slots
-#define hud_slot_main		0
-#define hud_slot_adding		1
-#define hud_slot_hotkeys	2
-#define hud_slot_other		3
+#define HUD_SLOT_MAIN		0
+#define HUD_SLOT_ADDING		1
+#define HUD_SLOT_HOTKEYS	2
+#define HUD_SLOT_OTHER		3
 
-#define hud_copy_icon	1
-#define hud_copy_color	2
-#define hud_copy_alpha	4
+#define HUD_COPY_ICON	1
+#define HUD_COPY_COLOR	2
+#define HUD_COPY_ALPHA	4

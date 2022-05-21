@@ -1,5 +1,5 @@
 /atom/movable/screen/health/ian
-	copy_flags = hud_copy_icon
+	copy_flags = HUD_COPY_ICON
 
 /atom/movable/screen/inventory/corgi_mouth
 	name = "mouth"
