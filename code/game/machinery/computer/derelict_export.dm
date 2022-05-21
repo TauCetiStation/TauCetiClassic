@@ -16,9 +16,11 @@
 
 	dat += "<center><h1>FTU Export Outpost TO-11312</h4></center>"
 	dat += "<center><h3>Welcome, dear customer!</h3></center>"
-
-	dat += "<br><center><h3><a href='byond://?src=\ref[src];sell=1'>SELL</a> <a href='byond://?src=\ref[src];withdraw=1'>WITHDRAW</a></h3></center>"
-	dat += "<center><h3>Credits on hold: [holding_credits ? " <span class='green'><b>[holding_credits]</b></span>" : "<span class='red'><b>0 :(</b></span>"]</h3></center>"
+	if(!pad)
+		dat+="<center><h3><span class='red'>Bluespace export pad is missing! Contact your local maintenance technician.</span></h3></center>"
+	else
+		dat += "<br><center><h3><a href='byond://?src=\ref[src];sell=1'>SELL</a> <a href='byond://?src=\ref[src];withdraw=1'>WITHDRAW</a></h3></center>"
+		dat += "<center><h3>Credits on hold: [holding_credits ? " <span class='green'><b>[holding_credits]</b></span>" : "<span class='red'><b>0 :(</b></span>"]</h3></center>"
 	var/datum/browser/popup = new(user, "export", "Free Trade Union", ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()

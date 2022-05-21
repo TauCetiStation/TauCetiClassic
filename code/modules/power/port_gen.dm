@@ -165,12 +165,12 @@
 	to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
 	sheets += amount
 	addstack.use(amount)
-	updateUsrDialog()
 	return
 
 /obj/machinery/power/port_gen/pacman/attackby(obj/item/O, mob/user, params)
 	if(istype(O, sheet_path))
 		add_sheets(O, user, params)
+		updateUsrDialog()
 	else if(!active)
 
 		if(exchange_parts(user, O))
@@ -307,7 +307,6 @@
 	to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
 	sheets += amount
 	qdel(addstack)
-	updateUsrDialog()
 	return
 
 /obj/machinery/power/port_gen/pacman/money/overheat()
