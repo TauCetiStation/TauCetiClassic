@@ -6,8 +6,8 @@
 	var/obj/effect/essence_phantom/phantom
 	var/self_voice = FALSE
 	var/is_changeling = FALSE
-	var/atom/movable/screen/essence_voice/voice
-	var/atom/movable/screen/essence_phantom/phantom_s
+	var/atom/movable/screen/essence/voice/voice
+	var/atom/movable/screen/essence/phantom/phantom_s
 	var/rehost_timer_id = 0
 
 /mob/living/parasite/essence/atom_init(mapload, mob/living/carbon/host, mob/living/carbon/victim)

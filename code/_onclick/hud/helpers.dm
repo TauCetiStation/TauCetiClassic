@@ -88,12 +88,12 @@
 
 /datum/hud/proc/add_essence_voice()
 	var/mob/living/parasite/essence/E = mymob
-	E.voice = new /atom/movable/screen/essence_voice
+	E.voice = new /atom/movable/screen/essence/voice
 	E.voice.add_to_hud(src)
 
 /datum/hud/proc/add_phantom()
 	var/mob/living/parasite/essence/E = mymob
-	E.phantom_s = new /atom/movable/screen/essence_phantom()
+	E.phantom_s = new /atom/movable/screen/essence/phantom()
 	E.phantom_s.add_to_hud(src)
 
 /datum/hud/proc/add_robot_hand_1()

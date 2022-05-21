@@ -16,22 +16,24 @@
 	copy_flags = NONE
 
 // Essence
-/atom/movable/screen/essence_voice
-	name = "Voice"
-	icon = 'icons/mob/screen_gen.dmi'
-	screen_loc = ui_rhand
-	plane = ABOVE_HUD_PLANE
+/atom/movable/screen/essence
+    icon = 'icons/mob/screen_gen.dmi'
+    plane = ABOVE_HUD_PLANE
 
 	copy_flags = NONE
 
-/atom/movable/screen/essence_voice/update_icon(mob/living/parasite/essence/mymob)
+/atom/movable/screen/essence/voice
+	name = "Voice"
+	screen_loc = ui_rhand
+
+/atom/movable/screen/essence/voice/update_icon(mob/living/parasite/essence/mymob)
 	icon_state = "voice_[mymob.self_voice ? "on" : "off"]"
 
-/atom/movable/screen/essence_voice/add_to_hud(datum/hud/hud)
+/atom/movable/screen/essence/voice/add_to_hud(datum/hud/hud)
 	. = ..()
 	update_icon(hud.mymob)
 
-/atom/movable/screen/essence_voice/action()
+/atom/movable/screen/essence/voice/action()
 	var/mob/living/parasite/essence/E = usr
 	if(!E.host)
 		return
@@ -41,22 +43,18 @@
 	E.self_voice = !E.self_voice
 	update_icon(usr)
 
-/atom/movable/screen/essence_phantom
+/atom/movable/screen/essence/phantom
 	name = "Phantom"
-	icon = 'icons/mob/screen_gen.dmi'
 	screen_loc = ui_lhand
-	plane = ABOVE_HUD_PLANE
 
-	copy_flags = NONE
-
-/atom/movable/screen/essence_phantom/update_icon(mob/living/parasite/essence/mymob)
+/atom/movable/screen/essence/phantom/update_icon(mob/living/parasite/essence/mymob)
 	icon_state =  "phantom_[(mymob.phantom?.showed) ? "on" : "off"]"
 
-/atom/movable/screen/essence_phantom/add_to_hud(datum/hud/hud)
+/atom/movable/screen/essence/phantom/add_to_hud(datum/hud/hud)
 	. = ..()
 	update_icon(hud.mymob)
 
-/atom/movable/screen/essence_phantom/action()
+/atom/movable/screen/essence/phantom/action()
 	var/mob/living/parasite/essence/E = usr
 	if(!E.host)
 		return
@@ -68,15 +66,12 @@
 	else
 		E.phantom.show_phantom()
 
-/atom/movable/screen/ling_abilities
+/atom/movable/screen/essence/ling_abilities
 	name = "Host Abilities"
-	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "power_list"
 	screen_loc = ui_belt
 
-	copy_flags = NONE
-
-/atom/movable/screen/ling_abilities/action()
+/atom/movable/screen/essence/ling_abilities/action()
 	var/mob/living/parasite/essence/E = usr
 	if(!E.host || !E.changeling)
 		return
@@ -89,15 +84,12 @@
 	popup.set_content(dat)
 	popup.open()
 
-/atom/movable/screen/return_to_body
+/atom/movable/screen/essence/return_to_body
 	name = "Return to Body"
-	icon = 'icons/mob/screen1.dmi'
 	icon_state = "facingOLD"
 	screen_loc = ui_zonesel
 
-	copy_flags = NONE
-
-/atom/movable/screen/return_to_body/action()
+/atom/movable/screen/essence/return_to_body/action()
 	var/mob/living/parasite/essence/E = usr
 	if(!E.host)
 		return

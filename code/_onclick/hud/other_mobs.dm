@@ -18,7 +18,7 @@
 	add_health_doll()
 	add_changeling()
 
-	get_screen(/atom/movable/screen/ling_abilities)
+	get_screen(/atom/movable/screen/essence/ling_abilities)
 
 	if(E.is_changeling)
-		get_screen(/atom/movable/screen/return_to_body)
+		get_screen(/atom/movable/screen/essence/return_to_body)
