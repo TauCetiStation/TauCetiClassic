@@ -12,11 +12,11 @@
 		//testing("Cannot monkey-ify [H], type is [H.type].")
 		return
 
-	H.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
+	H.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 
 /datum/dna/gene/monkey/deactivate(mob/living/carbon/monkey/M, connected, flags)
 	if(!istype(M))
 		//testing("Cannot humanize [M], type is [M.type].")
 		return
 
-	M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
+	M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)

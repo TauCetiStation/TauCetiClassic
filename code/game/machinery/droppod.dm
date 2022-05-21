@@ -140,7 +140,7 @@
 	obscured_turfs = list()
 	for(var/A in black_list_areas)
 		for(var/turf/simulated/turf in get_area_turfs(A))
-			var/image/i = image('icons/effects/cameravis.dmi', turf, "black")
+			var/image/i = image('icons/effects/cameravis.dmi', turf, "black", ABOVE_LIGHTING_LAYER)
 			i.plane = ABOVE_LIGHTING_PLANE
 			obscured_turfs += i
 
@@ -507,7 +507,8 @@
 
 /********Damage system********/
 
-/obj/structure/droppod/bullet_act(obj/item/projectile/Proj)
+/obj/structure/droppod/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if((Proj.damage && Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='danger'>[src] was hit by [Proj].</span>")
