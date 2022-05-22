@@ -145,7 +145,7 @@
 	if(target)
 		target.in_use_action = FALSE
 
-/proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = CANT_MOVE, progress = TRUE, datum/callback/extra_checks)
+/proc/do_after(mob/user, delay, needhand = TRUE, atom/target, distance = 0, progress = TRUE, datum/callback/extra_checks)
 	if(!user || target && QDELING(target))
 		return FALSE
 
@@ -163,11 +163,9 @@
 			Tloc = target.loc
 
 	var/atom/Uloc = null
-	var/check_distance = FALSE
-	if(can_move == CANT_MOVE)
+	if(distance == 0)
 		Uloc = user.loc
-	if(can_move == CAN_MOVE_NEARBY)
-		check_distance = TRUE
+		distance = 1
 
 	var/obj/item/holding = user.get_active_hand()
 
@@ -197,13 +195,19 @@
 		if(user.stat || user.weakened || user.stunned)
 			. = FALSE
 			break
-		if(check_distance && (get_dist(user.loc, Tloc) > 1))
+
+		if(get_dist(user.loc, Tloc) > distance)
 			. = FALSE
 			break
 
-		if(Uloc && (user.loc != Uloc) || Tloc && (Tloc != target.loc))
+		if(Uloc && (user.loc != Uloc))
 			. = FALSE
 			break
+
+		if(Tloc && (Tloc != target.loc))
+			. = FALSE
+			break
+
 		if(extra_checks && !extra_checks.Invoke(user, target))
 			. = FALSE
 			break

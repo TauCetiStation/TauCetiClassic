@@ -39,7 +39,6 @@
 #include "code\__DEFINES\damage_organs.dm"
 #include "code\__DEFINES\diseases2.dm"
 #include "code\__DEFINES\DNA.dm"
-#include "code\__DEFINES\do_afters.dm"
 #include "code\__DEFINES\dyes.dm"
 #include "code\__DEFINES\emote.dm"
 #include "code\__DEFINES\explosions.dm"
