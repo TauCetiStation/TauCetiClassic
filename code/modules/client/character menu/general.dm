@@ -47,53 +47,6 @@
 			if(specie_obj.flags[HAS_SKIN_TONE])
 				. += "<br>Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
 
-		//Organs
-		if("organs")
-			. += "Limbs & Internal Organs: <a href='byond://?src=\ref[user];preference=organs;task=input'>Adjust</a>"
-
-			//(display limbs below)
-			var/ind = 0
-			for(var/name in organ_data)
-				//world << "[ind] \ [organ_data.len]"
-				var/status = organ_data[name]
-				var/organ_name = parse_zone(name)
-				switch(name)
-					if(BP_L_ARM)
-						organ_name = "left arm"
-					if(BP_R_ARM)
-						organ_name = "right arm"
-					if(BP_L_LEG)
-						organ_name = "left leg"
-					if(BP_R_LEG)
-						organ_name = "right leg"
-					if(O_HEART)
-						organ_name = "heart"
-					if(O_EYES)
-						organ_name = "eyes"
-
-				if(status == "cyborg")
-					++ind
-					. += "<li>Mechanical [organ_name] prothesis</li>"
-				else if(status == "amputated")
-					++ind
-					. += "<li>Amputated [organ_name]</li>"
-				else if(status == "mechanical")
-					++ind
-					. += "<li>Mechanical [organ_name]</li>"
-				else if(status == "assisted")
-					++ind
-					switch(organ_name)
-						if("heart")
-							. += "<li>Pacemaker-assisted [organ_name]</li>"
-						if("eyes")
-							. += "<li>Retinal overlayed [organ_name]</li>"
-						else
-							. += "<li>Mechanically assisted [organ_name]</li>"
-			if(species == IPC)
-				. += "<br>Head: <a href='byond://?src=\ref[user];preference=ipc_head;task=input'>[ipc_head]</a>"
-
-			if(!ind)
-				. += "<br>\[...\]"
 		//Appearance
 		if("appearance")
 			if(species == IPC)
