@@ -51,7 +51,7 @@
 	mymob.zone_sel = new type
 	mymob.zone_sel.add_to_hud(src)
 
-/datum/hud/proc/add_gun_setting(type = /atom/movable/screen/gun/mode)
+/datum/hud/proc/add_gun_setting(type = /atom/movable/screen/complex/gun)
 	mymob.gun_setting_icon = new type
 	mymob.gun_setting_icon.add_to_hud(src)
 

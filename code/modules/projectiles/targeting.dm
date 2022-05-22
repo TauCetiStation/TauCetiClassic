@@ -246,29 +246,21 @@
 
 //These are called by the on-screen buttons, adjusting what the victim can and cannot do.
 /client/proc/add_gun_icons()
-	if (!usr.item_use_icon)
-		usr.item_use_icon = new /atom/movable/screen/gun/item()
-		usr.item_use_icon.update_icon(src)
+	if(!usr.gun_setting_icon)
+		return // check just in case
 
-	if (!usr.gun_move_icon)
-		usr.gun_move_icon = new /atom/movable/screen/gun/move()
-		usr.gun_move_icon.update_icon(src)
-
-	if (target_can_move && !usr.gun_run_icon)
-		usr.gun_run_icon = new /atom/movable/screen/gun/run()
-		usr.gun_run_icon.update_icon(src)
-
-	screen += usr.item_use_icon
-	screen += usr.gun_move_icon
-	if (target_can_move)
-		screen += usr.gun_run_icon
+	if(!usr.gun_setting_icon.shown)
+		screen += usr.gun_setting_icon.screens
+		usr.gun_setting_icon.shown = TRUE
+	usr.gun_setting_icon.update_icon(src)
 
 /client/proc/remove_gun_icons()
-	if(!usr) return 1 // Runtime prevention on N00k agents spawning with SMG
-	screen -= usr.item_use_icon
-	screen -= usr.gun_move_icon
-	if (target_can_move)
-		screen -= usr.gun_run_icon
+	if(!usr?.gun_setting_icon)
+		return
+	if(usr.gun_setting_icon.shown)
+		screen -= usr.gun_setting_icon.screens
+		usr.gun_setting_icon.shown = FALSE
+	usr.gun_setting_icon?.update_icon(src)
 
 /client/verb/ToggleGunMode()
 	set hidden = 1
@@ -281,8 +273,6 @@
 		for(var/obj/item/weapon/gun/G in usr)
 			G.stop_aim()
 		remove_gun_icons()
-	usr.gun_setting_icon?.update_icon(src)
-
 
 /client/verb/AllowTargetMove()
 	set hidden=1
@@ -291,15 +281,10 @@
 	target_can_move = !target_can_move
 	if(target_can_move)
 		to_chat(usr, "Target may now walk.")
-		usr.gun_run_icon = new /atom/movable/screen/gun/run(null)	//adding icon for running permission
-		screen += usr.gun_run_icon
 	else
 		to_chat(usr, "Target may no longer move.")
-		target_can_run = 0
-		screen -= usr.gun_run_icon //no need for icon for running permission
 
-	//Updating walking permission button
-	usr.gun_move_icon?.update_icon(src)
+	usr.gun_setting_icon?.update_icon(src)
 
 	//Handling change for all the guns on client
 	for(var/obj/item/weapon/gun/G in usr)
@@ -324,8 +309,7 @@
 	else
 		to_chat(usr, "Target may no longer run.")
 
-	//Updating running permission button
-	usr.gun_run_icon?.update_icon(src)
+	usr.gun_setting_icon?.update_icon(src)
 
 	//Handling change for all the guns on client
 	for(var/obj/item/weapon/gun/G in mob)
@@ -347,7 +331,7 @@
 	else
 		to_chat(usr, "Target may no longer use items.")
 
-	usr.item_use_icon?.update_icon(src)
+	usr.gun_setting_icon?.update_icon(src)
 
 	//Handling change for all the guns on client
 	for(var/obj/item/weapon/gun/G in mob)

@@ -31,7 +31,7 @@ var/global/list/available_ui_styles = list(
 	var/list/main = list()
 	var/list/adding = list()
 	var/list/hotkeybuttons = list()
-	var/list/other = list()
+	var/list/complex = list()
 
 	var/atom/movable/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
@@ -66,7 +66,7 @@ var/global/list/available_ui_styles = list(
 	main = null
 	adding = null
 	hotkeybuttons = null
-	other = null
+	complex = null
 	hide_actions_toggle = null
 	mymob = null
 	QDEL_LIST_ASSOC_VAL(plane_masters)
@@ -196,37 +196,40 @@ var/global/list/available_ui_styles = list(
 	if(version > HUD_VERSIONS)	//If the requested version number is greater than the available versions, reset back to the first version
 		version = 1
 
+	var/screen = mymob.client.screen
+	var/hud_slots_shown = NONE
+	hud_shown = FALSE
+
 	switch(version)
-		if(HUD_STYLE_STANDARD)	//Default HUD
-			hud_shown = TRUE	//Governs behavior of other procs
+		if(HUD_STYLE_STANDARD)
+			hud_shown = TRUE
+			hud_slots_shown = ALL
+			mymob.action_intent?.set_screen_loc(initial(mymob.action_intent.screen_loc)) //Restore intent selection to the original position
+		if(HUD_STYLE_REDUCED)
+			hud_slots_shown = HUD_SLOT_MAIN
+			mymob.action_intent?.set_screen_loc(ui_acti_alt) //move this to the alternative position, where zone_select usually is.
 
-			mymob.client.screen += adding
+	if(hud_slots_shown & HUD_SLOT_ADDING)
+		screen += adding
+	else
+		screen -= adding
 
-			if(inventory_shown)
-				mymob.client.screen += other
-			if(!hotkey_ui_hidden)
-				mymob.client.screen += hotkeybuttons
+	if(hud_slots_shown & HUD_SLOT_HOTKEYS && !hotkey_ui_hidden)
+		screen += hotkeybuttons
+	else
+		screen -= hotkeybuttons
 
-			mymob.action_intent?.screen_loc = initial(mymob.action_intent.screen_loc) //Restore intent selection to the original position
-			mymob.client.screen += main
+	for(var/atom/movable/screen/complex/C as anything in complex)
+		if(C.shown)
+			if(hud_slots_shown & C.hud_slot)
+				screen += C.screens
+			else
+				screen -= C.screens
 
-		if(HUD_STYLE_REDUCED)	//Reduced HUD
-			hud_shown = FALSE	//Governs behavior of other procs
-
-			mymob.client.screen -= adding
-			mymob.client.screen -= other
-			mymob.client.screen -= hotkeybuttons
-			
-			mymob.action_intent?.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
-			mymob.client.screen += main
-
-		if(HUD_STYLE_NOHUD)	//No HUD
-			hud_shown = FALSE	//Governs behavior of other procs
-
-			mymob.client.screen -= adding
-			mymob.client.screen -= other
-			mymob.client.screen -= hotkeybuttons
-			mymob.client.screen -= main
+	if(hud_slots_shown & HUD_SLOT_MAIN)
+		screen += main
+	else
+		screen -= main
 
 	hidden_inventory_update()
 	persistant_inventory_update()
@@ -250,10 +253,7 @@ var/global/list/available_ui_styles = list(
 	set hidden = 1
 
 	if(hud_used && client)
-		if(ishuman(src) || isobserver(src))
-			hud_used.show_hud() //Shows the next hud preset
-			to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
-		else
-			to_chat(usr, "<span class ='warning'>Inventory hiding is currently only supported for human mobs, sorry.</span>")
+		hud_used.show_hud() //Shows the next hud preset
+		to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
 	else
 		to_chat(usr, "<span class ='warning'>This mob type does not use a HUD.</span>")

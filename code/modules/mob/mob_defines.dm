@@ -19,10 +19,7 @@
 	var/atom/movable/screen/internals = null
 	var/atom/movable/screen/healths = null
 	var/atom/movable/screen/throw_icon = null
-	var/atom/movable/screen/gun/item/item_use_icon = null
-	var/atom/movable/screen/gun/move/gun_move_icon = null
-	var/atom/movable/screen/gun/run/gun_run_icon = null
-	var/atom/movable/screen/gun/mode/gun_setting_icon = null
+	var/atom/movable/screen/complex/gun/gun_setting_icon = null
 
 	var/atom/movable/screen/r_hand_hud_object = null
 	var/atom/movable/screen/l_hand_hud_object = null

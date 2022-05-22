@@ -128,7 +128,10 @@
 	var/datum/hud/hud = usr.hud_used
 
 	//update UI
-	var/list/screens = hud.main + hud.adding + hud.other + hud.hotkeybuttons
+	var/list/screens = hud.main + hud.adding + hud.hotkeybuttons
+
+	for(var/atom/movable/screen/complex/complex as anything in complex)
+		screens += complex.screens
 
 	var/ui_style = ui_style2icon(UI_style_new)
 	var/list/icon_states = icon_states(ui_style) // so it wont break hud with dmi that has no specific icon_state.

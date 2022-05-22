@@ -106,7 +106,6 @@
 	icon = 'icons/mob/screen1.dmi'
 	COOLDOWN_DECLARE(gun_click_time)
 
-	hud_slot = HUD_SLOT_OTHER
 	copy_flags = NONE
 
 /atom/movable/screen/gun/action()
@@ -137,8 +136,12 @@
 	screen_loc = ui_gun3
 
 /atom/movable/screen/gun/run/update_icon(client/client)
-	name = "[client.target_can_run ? "Disallow" : "Allow"] Running"
-	icon_state = "no_run[client.target_can_run]"
+	if(client.target_can_move)
+		invisibility = INVISIBILITY_NONE
+		name = "[client.target_can_run ? "Disallow" : "Allow"] Running"
+		icon_state = "no_run[client.target_can_run]"
+	else
+		invisibility = INVISIBILITY_ABSTRACT
 
 /atom/movable/screen/gun/run/action()
 	if(..())
@@ -156,28 +159,6 @@
 /atom/movable/screen/gun/item/action()
 	if(..())
 		usr.client.AllowTargetClick()
-
-/atom/movable/screen/gun/mode
-	name = "Toggle Gun Mode"
-	icon_state = "gun0"
-	screen_loc = ui_gun_select
-
-	hud_slot = HUD_SLOT_ADDING
-
-/atom/movable/screen/gun/mode/action()
-	usr.client.ToggleGunMode()
-
-/atom/movable/screen/gun/mode/update_icon(client/client)
-	icon_state = client.gun_mode ? "gun1" : "gun0"
-
-/atom/movable/screen/gun/mode/add_to_hud(datum/hud/hud)
-	. = ..()
-	var/client/client = hud.mymob.client
-
-	update_icon(client)
-
-	if(client.gun_mode)
-		client.add_gun_icons()
 
 // Zone selecting
 /atom/movable/screen/zone_sel

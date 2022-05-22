@@ -33,10 +33,8 @@
 			hud.hotkeybuttons += src
 		if(HUD_SLOT_MAIN)
 			hud.main += src
-		if(HUD_SLOT_OTHER)
-			hud.other += src
 
-	if(hud.hud_shown && hud_slot != HUD_SLOT_OTHER)
+	if(hud.hud_shown)
 		hud.mymob.client.screen += src
 	update_by_hud(hud)
 	
@@ -56,8 +54,6 @@
 			hud.hotkeybuttons -= src
 		if(HUD_SLOT_MAIN)
 			hud.main -= src
-		if(HUD_SLOT_OTHER)
-			hud.other -= src
 
 	hud.mymob.client?.screen -= src
 
@@ -71,6 +67,9 @@
 	SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 
 	action(location, control, params)
+
+/atom/movable/screen/proc/set_screen_loc(new_loc)
+	screen_loc = new_loc
 
 /atom/movable/screen/text
 	icon = null

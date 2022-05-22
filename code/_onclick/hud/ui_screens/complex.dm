@@ -1,7 +1,6 @@
 /atom/movable/screen/complex
 	var/list/types
 	var/list/screens = list()
-	var/screens_slot = HUD_SLOT_OTHER
 	var/shown = FALSE
 
 /atom/movable/screen/complex/atom_init()
@@ -10,8 +9,6 @@
 	for(var/type in types)
 		screen = new type
 		screens += screen
-		if(screens_slot)
-			screen.hud_slot = screens_slot
 
 /atom/movable/screen/complex/Destroy()
 	QDEL_LIST(screens)
@@ -27,11 +24,15 @@
 /atom/movable/screen/complex/add_to_hud(datum/hud/hud)
 	. = ..()
 
-	for(var/atom/movable/screen/screen as anything in screens)
-		screen.add_to_hud(hud)
+	hud.complex += src
+
+	if(shown)
+		hud.mymob.client.screen += screens
 
 /atom/movable/screen/complex/update_by_hud(datum/hud/hud)
 	. = ..()
+
+	hud.complex -= src
 
 	for(var/atom/movable/screen/screen as anything in screens)
 		screen.update_by_hud(hud)
@@ -70,7 +71,6 @@
 /atom/movable/screen/complex/act_intent
 	name = "act_intent"
 	screen_loc = ui_acti
-	plane = ABOVE_HUD_PLANE
 
 	hud_slot = HUD_SLOT_MAIN
 	copy_flags = HUD_COPY_ICON
@@ -79,7 +79,6 @@
 		/atom/movable/screen/intent/help, /atom/movable/screen/intent/push,
 		/atom/movable/screen/intent/grab, /atom/movable/screen/intent/harm
 	)
-	screens_slot = HUD_SLOT_MAIN
 	shown = TRUE // always shown
 
 /atom/movable/screen/complex/act_intent/atom_init()
@@ -97,6 +96,12 @@
 /atom/movable/screen/complex/act_intent/add_to_hud(datum/hud/hud)
 	. = ..()
 	update_icon(hud.mymob)
+
+/atom/movable/screen/complex/act_intent/set_screen_loc(new_loc)
+	..()
+
+	for(var/atom/movable/screen/screen as anything in screens)
+		screen.screen_loc = screen_loc
 
 // Toggleable sequential lists
 /atom/movable/screen/complex/ordered
@@ -140,3 +145,35 @@
 	loc_prefix = "SOUTH+"
 	loc_postgix = ":6,WEST+1"
 	start_position = 2
+
+// Gun
+/atom/movable/screen/complex/gun
+	name = "Toggle Gun Mode"
+	icon_state = "gun0"
+	screen_loc = ui_gun_select
+	copy_flags = NONE
+
+	types = list(
+		/atom/movable/screen/gun/move,
+		/atom/movable/screen/gun/run,
+		/atom/movable/screen/gun/item,
+	)
+	
+/atom/movable/screen/complex/gun/action()
+	usr.client.ToggleGunMode()
+
+/atom/movable/screen/complex/gun/update_icon(client/client)
+	icon_state = client.gun_mode ? "gun1" : "gun0"
+	if(shown)
+		for(var/atom/movable/screen/screen as anything in screens)
+			screen.update_icon(client)
+
+/atom/movable/screen/complex/gun/add_to_hud(datum/hud/hud)
+	. = ..()
+	var/client/client = hud.mymob.client
+
+	if(client.gun_mode)
+		shown = TRUE
+		client.screen += screens
+
+	update_icon(client)
