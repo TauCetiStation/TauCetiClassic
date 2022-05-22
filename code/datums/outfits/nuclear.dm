@@ -1,12 +1,12 @@
 /obj/item/weapon/storage/backpack/nuke
 	startswith = list(
 	/obj/item/weapon/reagent_containers/pill/cyanide,
-	/obj/item/weapon/gun/projectile/automatic/pistol, 
+	/obj/item/weapon/gun/projectile/automatic/pistol,
 	/obj/item/weapon/crowbar,
 	/obj/item/ammo_box/magazine/m9mm,
 	/obj/item/clothing/accessory/holster/armpit,
 	/obj/item/weapon/pinpointer/nukeop,
-	/obj/item/weapon/kitchenknife/combat, 
+	/obj/item/weapon/kitchenknife/combat,
 	/obj/item/clothing/accessory/storage/syndi_vest,
 	/obj/item/weapon/mining_voucher/syndi,)
 
