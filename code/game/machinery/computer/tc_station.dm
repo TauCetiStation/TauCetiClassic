@@ -185,5 +185,3 @@ var/global/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","E
 
 	updateUsrDialog()
 
-#undef INITIAL_NUCLEAR_TELECRYSTALS
-#undef TELECRYSTALS_PER_ONE_OPERATIVE
