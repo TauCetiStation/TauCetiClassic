@@ -332,7 +332,6 @@
 	modules += new /obj/item/weapon/card/emag/borg(src)
 	modules += new /obj/item/borg/sight/night(src)
 	modules += new /obj/item/weapon/gun/projectile/automatic/borg(src)
-	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
