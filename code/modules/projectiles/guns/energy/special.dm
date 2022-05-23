@@ -679,10 +679,10 @@
 	qdel(dummy)
 	return 1
 
-/obj/item/weapon/gun/medbeam/proc/on_beam_hit(var/mob/living/target)
+/obj/item/weapon/gun/medbeam/proc/on_beam_hit(mob/living/target)
 	return
 
-/obj/item/weapon/gun/medbeam/proc/on_beam_tick(var/mob/living/target)
+/obj/item/weapon/gun/medbeam/proc/on_beam_tick(mob/living/target)
 	if(target.stat == 2)
 		return
 	target.adjustBruteLoss(-5)
@@ -690,7 +690,7 @@
 	target.adjustToxLoss(-2)
 	target.adjustOxyLoss(-2)
 
-/obj/item/weapon/gun/medbeam/proc/on_beam_release(var/mob/living/target)
+/obj/item/weapon/gun/medbeam/proc/on_beam_release(mob/living/target)
 	return
 
 /obj/item/weapon/gun/medbeam/syndi
