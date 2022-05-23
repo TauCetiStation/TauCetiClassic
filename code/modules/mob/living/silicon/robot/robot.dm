@@ -495,6 +495,9 @@
 		emote("buzz")
 		return
 	
+	if(!do_after(usr, 5, target = src, progress = TRUE))
+		return
+	
 	if(locked)
 		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")		
 	else
@@ -512,6 +515,9 @@
 	if(locked)
 		to_chat(usr, "<span class='warning'>Невозможно открыть панель, если заблокирован интерфейс.</span>")
 		emote("buzz")
+		return
+	
+	if(!do_after(usr, 5, target = src, progress = TRUE))
 		return
 	
 	if(opened)
