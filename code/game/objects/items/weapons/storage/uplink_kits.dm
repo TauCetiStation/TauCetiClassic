@@ -431,6 +431,19 @@
 	/obj/item/clothing/head/helmet/space/rig/syndi/heavy,
 	)
 
+/obj/item/weapon/storage/backpack/dufflebag/nuke/medic
+	name = "field medic kit"
+	startswith = list(
+	/obj/item/weapon/gun/medbeam/syndi,
+	/obj/item/clothing/glasses/hud/health/night,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+	/obj/item/weapon/storage/pouch/medical_supply/syndicate,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
+
+
 /obj/item/weapon/storage/backpack/dufflebag/nuke/custom
 	name = "custom kit"
 	startswith = list(

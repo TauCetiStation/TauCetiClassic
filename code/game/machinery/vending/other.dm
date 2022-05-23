@@ -253,6 +253,7 @@
 		"Melee kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/melee,
 		"Hacker kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker,
 		"Machinengunner kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner,
+		"Field Medic kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/medic,
 		"Custom kit" =  /obj/item/weapon/storage/backpack/dufflebag/nuke/custom,
 	)
 	var/static/list/selection_items
@@ -272,6 +273,7 @@
 	"Melee kit" = image(icon = 'icons/obj/weapons.dmi', icon_state = "swordblue"),
 	"Hacker kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "bulldog"),
 	"Machinengunner kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "l6closed100"),
+	"Field Medic kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "medigun_syndi"),
 	"Custom kit" = image(icon = 'icons/obj/radio.dmi', icon_state = "radio"),
 	)
 
