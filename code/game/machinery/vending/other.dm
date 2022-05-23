@@ -39,6 +39,7 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/peridaxon = 1000,
 		/obj/item/weapon/reagent_containers/glass/bottle/kyphotorin = 1000,
 		/obj/item/weapon/reagent_containers/glass/bottle/adminordrazine = 1000,
+		/obj/vehicle/space/spacebike/horse = 1000,
 	)
 
 	prices = list(
@@ -54,6 +55,8 @@
 	/obj/item/weapon/reagent_containers/glass/bottle/peridaxon = 500,
 	/obj/item/weapon/reagent_containers/glass/bottle/kyphotorin = 750,
 	/obj/item/weapon/reagent_containers/glass/bottle/adminordrazine = 2000,
+	/obj/vehicle/space/spacebike/horse = 750,
+
 
 	)
 

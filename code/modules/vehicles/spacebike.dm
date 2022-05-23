@@ -6,8 +6,8 @@
 
 	load_item_visible = 1
 	mob_offset_y = 5
-	health = 300
-	maxhealth = 300
+	health = 1000
+	maxhealth = 1000
 
 	fire_dam_coeff = 0.6
 	brute_dam_coeff = 0.5

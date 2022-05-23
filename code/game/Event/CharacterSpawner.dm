@@ -103,7 +103,7 @@
 	if(ready == "Нет")
 		selecting_job = FALSE
 		return
-	new/obj/vehicle/space/spacebike/horse/white(user.loc)
+	new/obj/vehicle/space/spacebike/horse/(user.loc)
 
 
 //НЕЙТРАЛЫ

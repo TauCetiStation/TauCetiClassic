@@ -201,7 +201,7 @@
 		return 0
 	if(load || C.anchored)
 		return 0
-
+	turn_on()
 	// if a create/closet, close before loading
 	var/obj/structure/closet/crate = C
 	if(istype(crate))
@@ -232,7 +232,7 @@
 		return
 
 	var/turf/dest = null
-
+	turn_off()
 	//find a turf to unload to
 	if(direction)	//if direction specified, unload in that direction
 		dest = get_step(src, direction)
