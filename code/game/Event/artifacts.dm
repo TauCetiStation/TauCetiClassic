@@ -17,8 +17,8 @@
 /obj/item/shakal_skull
 	name = "Проклятый Череп Шакала"
 	desc = "Не трогай его"
-	icon = 'icons/obj/lighting.dmi'
-	icon_state = "penlight"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "skull_shakal"
 	item_state = ""
 
 /obj/item/shakal_skull/pickup(mob/user)
