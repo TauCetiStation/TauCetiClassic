@@ -131,7 +131,7 @@
 		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/nutriment(src)
 
 /obj/item/weapon/reagent_containers/hypospray/combat/bleed
-	name = "quikclot hypospray"
+	name = "bloodloss hypospray"
 	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with reagents to stop the bleedings."
 	icon_state = "qc_hypo"
 	volume = 100
@@ -153,14 +153,14 @@
 	list_reagents = list("dexalinp" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/combat/atoxin
-	name = "atox hypospray"
+	name = "anti-toxin hypospray"
 	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with reagents that combat radioactive and regular poisoning."
 	icon_state = "atox_hypo"
 	volume = 100
 	list_reagents = list("anti_toxin" = 60, "hyronalin" = 40)
 
 /obj/item/weapon/reagent_containers/hypospray/combat/intdam
-	name = "int-dam hypospray"
+	name = "internal damage hypospray"
 	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with reagents which will restore internal organs of patient."
 	icon_state = "atox_hypo"
 	volume = 100
