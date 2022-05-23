@@ -1,5 +1,6 @@
 /mob/living/silicon/robot/syndicate
 	icon_state = "syndie_android"
+	has_jetpack = TRUE
 	lawupdate = 0
 	scrambledcodes = 1
 	modtype = "Syndicate"
