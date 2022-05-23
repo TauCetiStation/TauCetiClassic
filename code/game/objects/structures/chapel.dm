@@ -151,7 +151,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 /obj/effect/effect/bell/proc/stun_insides(force)
 	for(var/mob/living/L in get_turf(src))
-		if(L.crawling || L.resting)
+		if(L.crawling)
 			return
 
 		var/ear_safety = 0

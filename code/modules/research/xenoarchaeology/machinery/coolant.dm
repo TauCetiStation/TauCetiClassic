@@ -23,7 +23,8 @@
 	. = ..()
 	reagents.add_reagent("coolant",1000)
 
-/obj/structure/reagent_dispensers/coolanttank/bullet_act(obj/item/projectile/Proj)
+/obj/structure/reagent_dispensers/coolanttank/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 		if(!istype(Proj ,/obj/item/projectile/beam/lasertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
 			explode()

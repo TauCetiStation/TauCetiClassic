@@ -316,6 +316,11 @@
 	desc = "A flirty, little yellow dress."
 	icon_state = "dress_yellow"
 
+/obj/item/clothing/under/dress/dress_purple
+	name = "purple dress"
+	desc = "A nicely tailored purple dress made for the taller woman."
+	icon_state = "dress_purple"
+
 /obj/item/clothing/under/dress/dress_saloon
 	name = "saloon girl dress"
 	desc = "A old western inspired gown for the girl who likes to drink."
@@ -362,6 +367,23 @@
 	icon_state = "huresource"
 	flags = ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/clothing/under/dress/cheongsam // Mai Yang's pretty pretty dress.
+	name = "white cheongsam"
+	desc = "It is a white cheongsam dress."
+	icon_state = "cheongsam"
+	item_state = "cheongsam"
+
+/obj/item/clothing/under/dress/maid
+	name = "maid suit"
+	desc = "For your dirty ERP needs."
+	icon_state = "maid"
+	item_state = "maid"
+
+/obj/item/clothing/under/dress/maid/sakuya
+	desc = "For women who like to throw knives."
+	icon_state = "sakuya"
+	item_state = "sakuya"
 
 /obj/item/clothing/under/dress/plaid_blue
 	name = "blue plaid skirt"
@@ -704,18 +726,9 @@
 	item_state = "DutchUniform"
 
 /obj/item/clothing/head/spacepolice
-	name = "NanoTrasen cap"
+	name = "police cap"
 	desc = "A blue cap for patrolling the daily beat."
-	icon_state = "policecap_families"
-
-/obj/item/clothing/head/beret/spacepolice
-	name = "NanoTrasen beret"
-	desc = "An armored blue beret belonging to some low ranking officer in space police forces."
-	icon_state = "beret_cops"
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-	body_parts_covered = 1
-	pierce_protection = HEAD
-	flags = HEADCOVERSEYES
+	icon_state = "police_cap"
 
 /obj/item/clothing/under/henchmen
 	name = "henchmen jumpsuit"
@@ -748,3 +761,38 @@
 	name = "frosty hat"
 	desc = "Hee-ho!"
 	icon_state = "JackFrostHat"
+
+/obj/item/clothing/under/test_subject
+	name = "NT-SID jumpsuit"
+	desc = "A NanoTrasen Synthetic Intelligence Division jumpsuit, issued to 'volunteers'. On other people it looks fine, but right here a scientist has noted: on you it looks stupid."
+	icon_state = "test_subject"
+	item_state = "test_subject"
+	has_sensor = 2
+	sensor_mode = SUIT_SENSOR_TRACKING
+	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/indiana
+	name = "leather suit"
+	icon_state = "indiana"
+	item_state = "indiana"
+	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/cowboy
+	name = "western suit"
+	desc = "Revolver is your best friend."
+	icon_state = "cowboy"
+	item_state = "cowboy"
+
+/obj/item/clothing/under/cowboy/brown
+	icon_state = "cowboy_brown"
+	item_state = "cowboy_brown"
+
+/obj/item/clothing/under/cowboy/grey
+	icon_state = "cowboy_grey"
+	item_state = "cowboy_grey"
+
+/obj/item/clothing/under/kung
+	name = "Kung Jeans"
+	desc = "Pair of old jeans combined with a red tank-top"
+	icon_state = "kung_suit"
+	w_class = SIZE_SMALL

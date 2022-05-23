@@ -135,7 +135,7 @@
 	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "facehugger_dead"
-	else if(stat == UNCONSCIOUS || lying || resting)
+	else if(stat == UNCONSCIOUS || lying || crawling)
 		icon_state = "facehugger_inactive"
 	else
 		icon_state = "facehugger"

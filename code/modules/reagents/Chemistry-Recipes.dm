@@ -1199,7 +1199,7 @@
 /datum/chemical_reaction/slimefreeze/proc/do_freeze(datum/reagents/holder)
 	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 	for(var/mob/living/M in range(get_turf_loc(holder.my_atom), 7))
-		M.bodytemperature -= 140
+		M.adjust_bodytemperature(-140)
 		to_chat(M, "<span class='notice'>You feel a chill!</span>")
 
 //Orange
@@ -1496,7 +1496,7 @@
 	result = "tea"
 	required_reagents = list("water" = 1)
 	result_amount = 1
-	required_container = /obj/item/weapon/reagent_containers/glass/beaker/fluff/eleanor_stone
+	required_container = /obj/item/weapon/reagent_containers/glass/beaker/teapot
 
 /datum/chemical_reaction/tofu
 	name = "Tofu"
@@ -2541,3 +2541,10 @@ TODO: Convert everything to custom hair dye,
 	if(new_color_weight >= 10)
 		chd.color_weight = new_color_weight
 		holder.remove_reagent("water", modifier)
+
+/datum/chemical_reaction/metatrombine
+	name = "Metatrombine"
+	id = "metatrombine"
+	result = "metatrombine"
+	required_reagents = list("bicaridine" = 1, "nitrogen" = 1, "potassium" = 1)
+	result_amount = 3

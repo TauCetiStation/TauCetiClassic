@@ -70,18 +70,12 @@ var/global/list/all_emotes
 	return cooldown_group
 
 /datum/emote/proc/check_cooldown(list/cooldowns, intentional)
-	if(!intentional)
-		return TRUE
-
 	if(!cooldowns)
 		return TRUE
 
 	return cooldowns[get_cooldown_group()] < world.time
 
 /datum/emote/proc/set_cooldown(list/cooldowns, value, intentional)
-	if(!intentional)
-		return
-
 	LAZYSET(cooldowns, get_cooldown_group(), world.time + value)
 
 /datum/emote/proc/can_play_sound(mob/living/carbon/human/user, intentional)
@@ -91,7 +85,7 @@ var/global/list/all_emotes
 		return FALSE
 	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 		return FALSE
-	if(check_cooldown(user.next_audio_emote_produce, intentional))
+	if(!check_cooldown(user.next_audio_emote_produce, intentional))
 		return FALSE
 	return TRUE
 
