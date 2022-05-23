@@ -5,7 +5,7 @@
 	layer = 2.1
 	anchored = TRUE
 	var/default_state = TRUE
-	var/recruits followers = FALSE
+	var/recruits_followers = FALSE
 
 	beauty = -25
 
@@ -34,7 +34,7 @@
 		if("graffiti")
 			type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa") // (... ,"poseur tag")
 			if(type == "revolution")
-				recruits followers = TRUE
+				recruits_followers = TRUE
 
 	var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]",2.1)
 	var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]s",2.1)
@@ -60,7 +60,7 @@
 
 /obj/effect/decal/cleanable/crayon/examine(mob/user)
 	. = ..()
-	if(recruits followers)
+	if(recruits_followers)
 		var/mob/living/carbon/human/M = user
 		if(!isrevhead(M) && !isrev(M))
 			var/datum/faction/revolution/R = find_faction_by_type(/datum/faction/revolution)
