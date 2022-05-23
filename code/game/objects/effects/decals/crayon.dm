@@ -63,7 +63,7 @@
 	if(can_convert)
 		var/mob/living/carbon/human/M = user
 		if(!isrevhead(M) && !isrev(M) && !M.ismindprotect() && !jobban_isbanned(M, ROLE_REV) && !jobban_isbanned(M, "Syndicate"))
-			var/choice = tgui_alert(M, Do you want to join the revolution?","Join the Revolution!",list("No!","Yes!"))
+			var/choice = tgui_alert(M, "Do you want to join the revolution?","Join the Revolution!",list("No!","Yes!"))
 			if(choice == "Yes!")
 				var/datum/faction/revolution/R = find_faction_by_type(/datum/faction/revolution)
 				if(R)
