@@ -91,35 +91,17 @@ var/global/current_lobby_screen = 'icons/lobby/homm_lobby.gif'
 		</head>
 		<body>
 			<div class="container_nav">
-				<a class="menu_a" href='?src=\ref[src];lobby_setup=1'>SETUP</a>
 	"}
 
 	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
-		dat += {"<a id="ready" class="menu_a" href='?src=\ref[src];lobby_ready=1'>[ready ? MARK_READY : MARK_NOT_READY]</a>"}
+		dat += "<br>"
 	else
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'>CREW</a>"}
 		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'>JOIN</a>"}
 
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>OBSERVE</a>"}
 	dat += "<br><br>"
-	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'>CHANGELOG</a>"}
-
 	dat += "</div>"
 	dat += {"<img src="titlescreen.gif" class="back" alt="">"}
-	dat += {"
-
-	<script>
-		var ready_mark = document.getElementById("ready");
-		function setReadyStatus(isReady) {
-			ready_mark.innerHTML = Boolean(Number(isReady)) ? "[MARK_READY]" : "[MARK_NOT_READY]";
-		}
-
-		var quality_mark=document.getElementById("quality");
-		function set_quality(setQuality) {
-			quality_mark.innerHTML = Boolean(Number(setQuality)) ? "[QUALITY_READY]" : "[QUALITY_NOT_READY]";
-		}
-	</script>
-	"}
 	dat += "</body></html>"
 	return dat
 

@@ -16,6 +16,55 @@
 		/obj/item/weapon/cartridge/quartermaster = 10,
 	)
 
+/obj/machinery/vending/lepr
+	name = "Торговый Портал Лепреконов"
+	desc = "У него есть товар , если у тебя есть монеты."
+	icon = 'icons/obj/Events/portal_of_greed.dmi'
+	icon_state = "portal"
+	anchored = TRUE
+	layer = 1
+	density = TRUE
+	use_power = NO_POWER_USE
+
+	products = list(
+		/obj/item/stack/money/gold = 1000,
+		/obj/item/stack/money/silver = 1000,
+		/obj/item/stack/money/bronz = 1000,
+		/obj/item/weapon/reagent_containers/food/snacks/soap = 1000,
+		/obj/item/uncurs_ointment = 1000,
+		/obj/item/stack/medical/advanced/bruise_pack = 1000,
+		/obj/item/stack/medical/advanced/ointment = 1000,
+		/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 1000,
+		/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline = 1000,
+		/obj/item/weapon/reagent_containers/glass/bottle/peridaxon = 1000,
+		/obj/item/weapon/reagent_containers/glass/bottle/kyphotorin = 1000,
+		/obj/item/weapon/reagent_containers/glass/bottle/adminordrazine = 1000,
+		/obj/vehicle/space/spacebike/horse = 1000,
+	)
+
+	prices = list(
+	/obj/item/stack/money/gold = 100,
+	/obj/item/stack/money/silver = 10,
+	/obj/item/stack/money/bronz = 1,
+	/obj/item/weapon/reagent_containers/food/snacks/soap = 5,
+	/obj/item/uncurs_ointment = 1000,
+	/obj/item/stack/medical/advanced/bruise_pack = 250,
+	/obj/item/stack/medical/advanced/ointment = 250,
+	/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 50,
+	/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline = 100,
+	/obj/item/weapon/reagent_containers/glass/bottle/peridaxon = 500,
+	/obj/item/weapon/reagent_containers/glass/bottle/kyphotorin = 750,
+	/obj/item/weapon/reagent_containers/glass/bottle/adminordrazine = 2000,
+	/obj/vehicle/space/spacebike/horse = 750,
+
+
+	)
+
+/obj/machinery/vending/lepr/examine(mob/user)
+	..()
+	to_chat(user, "Содержит [moneyIn] единиц валюты")
+
+
 /obj/machinery/vending/cigarette
 	name = "Cigarette machine" //OCD had to be uppercase to look nice with the new formating
 	desc = "If you want to get cancer, might as well do it in style!"

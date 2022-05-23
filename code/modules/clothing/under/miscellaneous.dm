@@ -803,6 +803,13 @@
 	icon_state = "peasant"
 	item_state = "peasant"
 
+/obj/item/clothing/under/peasant_fem
+	name = "Одежда Селюка"
+	desc = "Дырка на жопе. И не только на жопе. И не только дырка"
+	icon_state = "peasant_fem"
+	item_state = "peasant_fem"
+
+
 /obj/item/clothing/under/innkeeper
 	name = "Одежда Трактирщика"
 	desc = "Веет уютом"

@@ -1,4 +1,7 @@
 /obj/item/stack/money
+	var/denomination = 0
+
+/obj/item/stack/money/gold
 	name = "Золотой Эрафубль"
 	desc = "Золотишко"
 	singular_name = "Золотых Эрафублей"
@@ -10,6 +13,7 @@
 	throw_speed = 5
 	throw_range = 20
 	max_amount = 20
+	denomination = 100
 	attack_verb = list("hit", "bludgeoned", "whacked")
 
 /obj/item/stack/money/New()
@@ -32,17 +36,7 @@
 	. = ..()
 	update_icon()
 
-/obj/item/stack/money/five
-	amount = 5
-
-
-/obj/item/stack/money/ten
-	amount = 10
-
-/obj/item/stack/money/twenty
-	amount = 20
-
-/obj/item/stack/money2
+/obj/item/stack/money/silver
 	name = "Серебряный Эрафубль"
 	desc = "Из серебра"
 	singular_name = "Серебрянных Эрафублей"
@@ -54,42 +48,12 @@
 	throw_speed = 5
 	throw_range = 20
 	max_amount = 20
+	denomination = 10
 	attack_verb = list("hit", "bludgeoned", "whacked")
 
-/obj/item/stack/money2/New()
-	..()
-	update_icon()
 
-/obj/item/stack/money2/update_icon()
-	if(!amount)//There's no more money here, so delete the handful.
-		qdel(src)
-		return
-	icon_state = "[initial(icon_state)][amount]"//If there is money then we take our initial icon_state and add the ammount of money in the stack to it.
-
-
-
-/obj/item/stack/money2/use()
-	. = ..()
-	update_icon()
-
-/obj/item/stack/money2/add()
-	. = ..()
-	update_icon()
-
-/obj/item/stack/money2/five
-	amount = 5
-
-/obj/item/stack/money2/ten
-	amount = 10
-
-
-/obj/item/stack/money2/twenty
-	amount = 20
-
-
-
-/obj/item/stack/money3
-	name = "Брозновый Эрафубль"
+/obj/item/stack/money/bronz
+	name = "Бронзовый Эрафубль"
 	desc = "Отлито из говна"
 	singular_name = "Бронзовых Эрафублей"
 	icon = 'icons/obj/Events/bronz-coin.dmi'
@@ -100,37 +64,8 @@
 	throw_speed = 5
 	throw_range = 20
 	max_amount = 20
+	denomination = 1
 	attack_verb = list("hit", "bludgeoned", "whacked")
-
-/obj/item/stack/money3/New()
-	..()
-	update_icon()
-
-/obj/item/stack/money3/update_icon()
-	if(!amount)//There's no more money here, so delete the handful.
-		qdel(src)
-		return
-	icon_state = "[initial(icon_state)][amount]"//If there is money then we take our initial icon_state and add the ammount of money in the stack to it.
-
-
-/obj/item/stack/money3/use()
-	. = ..()
-	update_icon()
-
-/obj/item/stack/money3/add()
-	. = ..()
-	update_icon()
-
-obj/item/stack/money3/five
-	amount = 5
-
-/obj/item/stack/money3/ten
-	amount = 10
-
-
-/obj/item/stack/money3/twenty
-	amount = 20
-
 
 /obj/item/money
 	name = "0 Эрафублей"

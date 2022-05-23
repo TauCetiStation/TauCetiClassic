@@ -7,12 +7,12 @@
 
 /obj/machinery/vending
 	name = "Vendomat"
-	desc = "A generic vending machine."
+	desc = ""
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
 	var/light_range_on = 3
 	var/light_power_on = 1
-	layer = 2.9
+	layer = 13
 	anchored = TRUE
 	density = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
@@ -52,6 +52,7 @@
 
 	var/check_accounts = 1		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
 	var/obj/item/weapon/spacecash/ewallet/ewallet
+	var/moneyIn = 0
 	var/datum/wires/vending/wires = null
 	var/scan_id = TRUE
 
@@ -159,7 +160,7 @@
 				break
 	return total
 
-/obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/vending/attackby(obj/item/W, mob/user)
 	if(panel_open)
 		if(default_unfasten_wrench(user, W, time = 60))
 			return
@@ -183,6 +184,18 @@
 		user.drop_from_inventory(W, src)
 		coin = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
+		return
+
+	else if(istype(W, /obj/item/stack/money))
+		var/obj/item/stack/money/M = W
+		if(M.amount < 0)
+			to_chat(usr, "<span class='notice'>Денег больше нет...</span>")
+			return
+		M.amount -= 1
+		moneyIn += M.denomination
+		to_chat(user, "<span class='notice'>[M] отправлен в [src]</span>")
+		playsound(usr, 'sound/effects/coin_ins.ogg',VOL_EFFECTS_MASTER)
+		M.update_icon()
 		return
 
 	else if(iswrench(W))	//unwrenching vendomats
@@ -351,12 +364,7 @@
 	var/vendorname = name  //import the machine's name
 
 	if(currently_vending)
-		var/dat
-		dat += "<b>You have selected [currently_vending.product_name].<br>Please swipe your ID to pay for the article.</b><br>"
-		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
-		var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
-		popup.set_content(dat)
-		popup.open()
+		check_money(currently_vending,user)
 		return
 
 	var/dat
@@ -396,7 +404,7 @@
 		dat += "<td><B>[R.product_name]</B></td>"
 		dat += "<td class='collapsing' align='center'><span class='[1 < R.amount ? "good" : R.amount == 1 ? "average" : "bad"]'>[R.amount] in stock</span></td>"
 		if (R.amount > 0)
-			dat += "<td class='collapsing' align='center'><a class='fluid' href='byond://?src=\ref[src];vend=\ref[R]'>[R.price ? "[R.price] cr." : "FREE"]</A></td>"
+			dat += "<td class='collapsing' align='center'><a class='fluid' href='byond://?src=\ref[src];vend=\ref[R]'>[R.price ? "[R.price] ЭР." : "FREE"]</A></td>"
 		else
 			dat += "<td class='collapsing' align='center'><div class='disabled fluid'>[R.price ? "[R.price] cr." : "FREE"]</div></td>"
 		dat += "</tr>"
@@ -418,14 +426,14 @@
 		to_chat(usr, "<span class='notice'>You remove the [coin] from the [src]</span>")
 		coin = null
 
-	else if(href_list["remove_ewallet"] && !issilicon(usr) && !isobserver(usr))
+	else if(href_list["remove_money"] && !issilicon(usr) && !isobserver(usr))
 		if (!ewallet)
-			to_chat(usr, "There is no charge card in this machine.")
+			to_chat(usr, "Тут нет денег")
 			return
 		ewallet.loc = loc
 		if(!usr.get_active_hand())
 			usr.put_in_hands(ewallet)
-		to_chat(usr, "<span class='notice'>You remove the [ewallet] from the [src]</span>")
+		to_chat(usr, "<span class='notice'>Вы забрали[ewallet] из [src]</span>")
 		ewallet = null
 
 	else if (href_list["vend"] && vend_ready && !currently_vending)
@@ -470,6 +478,18 @@
 		return
 
 	updateUsrDialog()
+
+/obj/machinery/vending/proc/check_money(datum/data/vending_product/R,mob/user)
+	if(R.price > moneyIn)
+		to_chat(usr, "<span class='warning'>Не хватает денег.</span>")
+		updateUsrDialog()
+		return
+	else
+		vend(src.currently_vending, usr)
+		currently_vending = null
+		moneyIn -= R.price
+		updateUsrDialog()
+
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
 	if (!allowed(user) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH

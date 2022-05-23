@@ -165,6 +165,7 @@
 /datum/outfit/job/hub/peasant
 	name = OUTFIT_JOB_NAME("Peasant")
 	uniform = /obj/item/clothing/under/peasant
+	uniform_f = /obj/item/clothing/under/peasant_fem
 	shoes = /obj/item/clothing/shoes/leather
 	l_hand =/obj/item/weapon/hatchet
 	id = /obj/item/weapon/card/id/key/peasant
