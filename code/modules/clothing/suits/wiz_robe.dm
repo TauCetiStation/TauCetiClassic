@@ -290,4 +290,5 @@
 	desc = "Святая!"
 	icon_state = "monk"
 	item_state = "monk"
+	flags = HEADCOVERSEYES | BLOCKHAIR
 	armor = list(melee = 40, bullet = 40, laser = 40,energy = 40, bomb = 40, bio = 40, rad = 40)
