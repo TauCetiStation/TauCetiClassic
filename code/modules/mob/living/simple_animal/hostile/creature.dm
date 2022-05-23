@@ -74,11 +74,12 @@ mob/living/simple_animal/hostile/beholder
 	..()
 	var/mob/living/L = target
 	if(isChickenCurse)
-		if(isliving(L)&&(L.mind)&&(istype(L,/mob/living/carbon/human)))
+		if(isliving(L)&&((istype(L,/mob/living/carbon/human))||(istype(L,/mob/living/simple_animal/hostile/beholder))))
 			L.MyTrueNotChikenBody = target
 			var/mob/living/simple_animal/chicken/C = new/mob/living/simple_animal/chicken(L.loc)
-			L.mind.transfer_to(C)
-			C.MyTrueNotChikenBody = L.MyTrueNotChikenBody
+			if(L.mind)
+				L.mind.transfer_to(C)
+				C.MyTrueNotChikenBody = L.MyTrueNotChikenBody
 			playsound(L, 'sound/Event/cursed.ogg', VOL_EFFECTS_MASTER)
 			L.loc = null
 		else
