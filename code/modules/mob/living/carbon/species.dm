@@ -390,7 +390,7 @@
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
 	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
 
-	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT - 30
 	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 20
 	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 440
 
@@ -557,7 +557,8 @@
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
 	replace_outfit = list(
-			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
+			/obj/item/clothing/mask/gas/syndicate = /obj/item/clothing/mask/gas/vox,
 			)
 
 /datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)

@@ -55,6 +55,8 @@
 	var/open = 0
 	var/stage = 0
 	var/cavity = 0
+	var/trauma_kit = FALSE
+	var/burn_kit = FALSE
 	var/atom/movable/applied_pressure
 
 	// Misc
@@ -572,6 +574,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', species.eyes, eyes_layer)
 		if(species.eyes_glowing)
 			img_eyes_s.plane = ABOVE_LIGHTING_PLANE
+			img_eyes_s.layer = ABOVE_LIGHTING_LAYER
 
 		if(HULK in owner.mutations)
 			img_eyes_s.color = "#ff0000"

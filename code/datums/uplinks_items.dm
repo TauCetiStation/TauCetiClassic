@@ -199,7 +199,7 @@
 	name = "L6 Squad Automatic Weapon"
 	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62x51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
-	cost = 45
+	cost = 30
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/heavyrifle
@@ -303,21 +303,21 @@
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent for hit-and-run style attacks. \
 	This model lacks a method of space propulsion, and therefore it is advised to repair the mothership's teleporter if you wish to make use of it."
 	item = /obj/mecha/combat/gygax/dark
-	cost = 90
+	cost = 45
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/mauler
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly Syndicate exosuit. Features long-range targetting, thrust vectoring, and deployable smoke."
 	item = /obj/mecha/combat/marauder/mauler
-	cost = 140
+	cost = 60
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/syndieborg
 	name = "Syndicate Robot"
 	desc = "A robot designed for extermination and slaved to syndicate agents. Delivered through a single-use bluespace hand teleporter and comes pre-equipped with various weapons and equipment."
 	item = /obj/item/weapon/antag_spawner/borg_tele
-	cost = 36
+	cost = 25
 	uplink_types = list("nuclear", "traitor")
 
 //for refunding the syndieborg teleporter
@@ -368,7 +368,7 @@
 	name = "Robot Ammo Box"
 	desc = "A 40-round .45 magazine for use in Robot submachine gun."
 	item = /obj/item/ammo_box/magazine/borg45
-	cost = 3
+	cost = 2
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/ammo/pistol
@@ -417,7 +417,7 @@
 	name = "Ammo-.45 ACP High Power"
 	desc = "A 15-round .45 ACP HP magazine for use in the C-20r submachine gun. These rounds have better overall damage."
 	item = /obj/item/ammo_box/magazine/m12mm/hp
-	cost = 5
+	cost = 4
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/smg_hv
@@ -431,14 +431,14 @@
 	name = "Ammo-.45 ACP Impact"
 	desc = "A 15-round .45 ACP IMP magazine for use in the C-20r submachine gun. These rounds will push enemies back and shortly stun unarmored targets."
 	item = /obj/item/ammo_box/magazine/m12mm/imp
-	cost = 5
+	cost = 4
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/a74standart
 	name = "Ammo-7.74mm"
 	desc = "A 30-round 7.74 magazine for use in the A74 assault rifle."
 	item = /obj/item/ammo_box/magazine/a74mm
-	cost = 7
+	cost = 5
 	uplink_types = list("nuclear", "dealer")
 
 /datum/uplink_item/ammo/bullbuck
@@ -555,7 +555,7 @@
 	name = "Silence gloves"
 	desc = "A pair of black gloves which silences all sounds around you."
 	item = /obj/item/clothing/gloves/black/silence
-	cost = 12
+	cost = 8
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
@@ -744,6 +744,11 @@
 	cost = 10
 	uplink_types = list("nuclear", "traitor")
 
+/datum/uplink_item/device_tools/medkit/nuke
+	cost = 15
+	uplink_types = list("nuclear")
+
+
 /datum/uplink_item/device_tools/medkit_small
 	name = "Syndicate Medical Small Kit"
 	desc = "The syndicate medkit. Included is a combat stimulant injector for rapid healing."
@@ -887,7 +892,7 @@
 	name = "Energy Shield"
 	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending against other attacks."
 	item = /obj/item/weapon/shield/energy
-	cost = 16
+	cost = 12
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/traitor_caller
@@ -1034,3 +1039,47 @@
 		return new I.item(loc)
 	else
 		to_chat(user, "<span class='warning'>There is no available items you could buy for [U.uses] TK.</span>")
+
+/datum/uplink_item/badass/surplus_crate
+	name = "Syndicate Surplus Crate"
+	desc = "A crate containing 40 telecrystals worth of random syndicate leftovers."
+	item = /obj/item/weapon/storage/box/syndicate
+	cost = 20
+	uplink_types = list("traitor")
+	var/crate_value = 40
+
+/datum/uplink_item/badass/surplus_crate/team
+	name = "Syndicate Team Surplus Crate"
+	desc = "A crate containing 80 telecrystals worth of random syndicate leftovers. Don't fight with your partner!"
+	cost = 30
+	crate_value = 80
+
+/datum/uplink_item/badass/surplus_crate/super
+	name = "Syndicate Super Surplus Crate"
+	desc = "A crate containing 160 telecrystals worth of random syndicate leftovers. For badass coopers!"
+	cost = 50
+	crate_value = 160
+
+/datum/uplink_item/badass/surplus_crate/spawn_item(turf/loc, obj/item/device/uplink/U)
+	var/list/temp_uplink_list = get_uplink_items(U)
+	var/list/buyable_items = list()
+	for(var/category in temp_uplink_list)
+		buyable_items += temp_uplink_list[category]
+
+	var/list/bought_items = list()
+	var/remaining_TC = crate_value
+	while(remaining_TC > 0)
+		var/datum/uplink_item/I = pick(buyable_items)
+		if(I.cost > remaining_TC)
+			continue
+		if((I.item in bought_items) && prob(33)) //To prevent people from being flooded with the same thing over and over again.
+			continue
+		bought_items += I.item
+		remaining_TC -= I.cost
+
+	var/obj/structure/closet/crate/C = new(loc)
+	for(var/item in bought_items)
+		new item(C)
+
+	U.uses -= cost
+
