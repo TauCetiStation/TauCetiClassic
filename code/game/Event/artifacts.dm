@@ -13,3 +13,14 @@
 /obj/structure/closet/crate/miningcar/unlimited_silver/open()
 	..()
 	new/obj/item/weapon/ore/silver(loc)
+
+/obj/item/shakal_skull
+	name = "Проклятый Череп Шакала"
+	desc = "Не трогай его"
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "penlight"
+	item_state = ""
+
+/obj/item/shakal_skull/pickup(mob/user)
+	..()
+	user.add_filter("wave_filter",1,wave_filter(0,3))
