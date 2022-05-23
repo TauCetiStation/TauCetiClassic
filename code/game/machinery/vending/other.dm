@@ -269,7 +269,7 @@
 	"Sniper kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "heavyrifle"),
 	"Assaultman kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "a74"),
 	"Bomber kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "drozd"),
-	"Melee kit" = image(icon = 'icons/obj/weapons.dmi', icon_state = "swordblue"),
+	"Melee kit" = image(icon = 'icons/obj/weapons.dmi', icon_state = "dualsaberred1"),
 	"Hacker kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "bulldog"),
 	"Machinengunner kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "l6closed100"),
 	"Custom kit" = image(icon = 'icons/obj/radio.dmi', icon_state = "radio"),
