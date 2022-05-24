@@ -624,6 +624,7 @@
 		return
 
 	current_target = target
+	RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/LoseTarget)
 	active = TRUE
 	current_beam = new(user, current_target, time = 6000, beam_icon_state = beam_state, btype = /obj/effect/ebeam/medical)
 	INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
