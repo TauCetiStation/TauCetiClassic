@@ -645,7 +645,7 @@
 
 	last_check = world.time
 
-	if(get_dist(source, current_target) > max_range || !line_of_sight_check(source, current_target))
+	if(get_dist(source, current_target) > max_range || !check_trajectory(source, current_target, pass_flags = PASSTABLE, flags = 0))
 		LoseTarget()
 		if(isliving(source))
 			to_chat(source, "<span class='warning'>You lose control of the beam!</span>")
@@ -654,37 +654,15 @@
 	if(current_target)
 		on_beam_tick(current_target)
 
-/obj/item/weapon/gun/medbeam/proc/line_of_sight_check(atom/movable/user, mob/target)
-	var/turf/user_turf = user.loc
-	if(!istype(user_turf))
-		return FALSE
-	var/obj/dummy = new(user_turf)
-	dummy.pass_flags |= PASSTABLE|PASSGLASS|PASSGRILLE //Grille/Glass so it can be used through common windows
-	for(var/turf/turf in getline(user_turf,target))
-		if(turf.density)
-			qdel(dummy)
-			return FALSE
-		for(var/atom/movable/AM in turf)
-			if(!AM.CanPass(dummy, turf, 1))
-				qdel(dummy)
-				return FALSE
-		for(var/obj/effect/ebeam/medical/B in turf) // Don't cross the str-beams!
-			if(B.owner.origin != current_beam.origin)
-				explosion(B.loc, 0, 3, 5, 8)
-				qdel(dummy)
-				return FALSE
-	qdel(dummy)
-	return TRUE
-
-/obj/item/weapon/gun/medbeam/proc/on_beam_tick(mob/living/target)
-	if(target.stat == DEAD)
+/obj/item/weapon/gun/medbeam/proc/on_beam_tick()
+	if(current_target.stat == DEAD)
 		LoseTarget()
 		return
 
-	target.adjustBruteLoss(-5)
-	target.adjustFireLoss(-5)
-	target.adjustToxLoss(-2)
-	target.adjustOxyLoss(-2)
+	current_target.adjustBruteLoss(-5)
+	current_target.adjustFireLoss(-5)
+	current_target.adjustToxLoss(-2)
+	current_target.adjustOxyLoss(-2)
 
 /obj/item/weapon/gun/medbeam/syndi
 	name = "ominous medical retrosynchronizer"
