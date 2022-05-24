@@ -1,9 +1,7 @@
 "af" = (/obj/structure/stool/bed/chair/lectern,/turf/simulated/floor/plating/airless/asteroid,/area/space)
 "aj" = (/turf/simulated/wall/mineral/custle,/area/space)
 "am" = (/turf/simulated/wall/mineral/wood,/area/space)
-"as" = (/obj/item/stack/money2,/turf/simulated/shuttle/floor/cargo,/area/space)
 "aA" = (/obj/structure/ladder/cave,/turf/simulated/floor/plating/airless/asteroid,/area/space)
-"aF" = (/obj/item/stack/money3/five,/turf/simulated/shuttle/floor/cargo,/area/space)
 "aG" = (/obj/item/stack/medical/bruise_pack/rags,/turf/simulated/floor/wood,/area/space)
 "aH" = (/obj/structure/stool/bed/psych,/obj/structure/torch_holder{dir = 1},/turf/simulated/floor/wood,/area/custom/start_homm/helper)
 "aN" = (/obj/structure/stool/bed/psych,/obj/item/stack/medical/bruise_pack/rags,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/carpet/blue,/area/custom/start_homm/peasant)
@@ -18,7 +16,6 @@
 "ca" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/wood{icon_state = "wood-broken4"},/area/space)
 "cz" = (/obj/structure/table/holotable/wooden,/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,/turf/simulated/floor/wood{icon_state = "wood-broken3"},/area/space)
 "cD" = (/obj/structure/stool/bed/psych,/turf/simulated/floor/wood,/area/custom/start_homm/doctor)
-"cI" = (/obj/item/stack/money2/twenty,/turf/simulated/shuttle/floor/cargo,/area/space)
 "cK" = (/obj/structure/torch_holder,/turf/simulated/floor/grass,/area/space)
 "cL" = (/turf/simulated/floor/wood,/area/space)
 "cV" = (/obj/structure/torch_holder{dir = 4},/turf/simulated/floor/wood{icon_state = "wood-broken"},/area/space)
@@ -62,7 +59,6 @@
 "ij" = (/turf/simulated/floor/wood{icon_state = "wood-broken4"},/area/space)
 "ik" = (/obj/structure/stool/bed/chair/wood/normal{dir = 8},/obj/structure/torch_holder,/turf/simulated/floor/wood{icon_state = "wood-broken3"},/area/space)
 "iJ" = (/obj/item/weapon/flora/pottedplant/fern,/obj/effect/decal/cleanable/cobweb,/turf/simulated/floor/wood,/area/space)
-"iK" = (/obj/item/stack/money2/five,/turf/simulated/shuttle/floor/cargo,/area/space)
 "iY" = (/obj/structure/fireplace,/obj/effect/decal/cleanable/ash,/turf/simulated/shuttle/floor/cargo,/area/space)
 "je" = (/obj/structure/weightlifter,/turf/simulated/floor/wood,/area/space)
 "jo" = (/obj/structure/flora/ausbushes/sparsegrass,/obj/structure/flora/tree/jungle,/turf/simulated/floor/grass,/area/space)
@@ -153,7 +149,6 @@
 "tQ" = (/obj/item/weapon/staff/broom/monk,/obj/structure/torch_holder{dir = 1},/turf/simulated/shuttle/floor/cargo,/area/space)
 "uk" = (/obj/structure/table/woodentable,/obj/effect/decal/cleanable/cobweb,/obj/item/stack/medical/bruise_pack/rags,/turf/simulated/floor/wood,/area/space)
 "un" = (/obj/structure/kitchenspike,/turf/simulated/floor/wood,/area/space)
-"uw" = (/obj/item/stack/money3/ten,/turf/simulated/shuttle/floor/cargo,/area/space)
 "uC" = (/obj/item/weapon/flora/pottedplant/minitree,/turf/simulated/floor/wood,/area/space)
 "uF" = (/obj/item/weapon/reagent_containers/food/snacks/soap,/turf/simulated/shuttle/floor/cargo,/area/space)
 "vb" = (/obj/structure/stool/bed/chair/pew/right,/turf/simulated/floor/carpet/green,/area/space)
@@ -183,7 +178,6 @@
 "zt" = (/obj/item/weapon/melee/whip,/obj/structure/torch_holder{dir = 8},/turf/simulated/shuttle/floor/cargo,/area/space)
 "zz" = (/mob/living/simple_animal/chicken,/turf/simulated/floor/grass,/area/space)
 "zM" = (/obj/structure/pillory,/turf/simulated/floor/plating/airless/asteroid,/area/space)
-"zQ" = (/obj/item/stack/money/five,/turf/simulated/shuttle/floor/cargo,/area/space)
 "Aa" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/pumpkinseed,/turf/simulated/floor/grass,/area/space)
 "Ae" = (/obj/structure/torch_holder{dir = 4},/turf/simulated/floor/wood{icon_state = "wood-broken6"},/area/space)
 "Ar" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/snacks/grown/potato,/turf/simulated/floor/wood,/area/space)
@@ -201,8 +195,6 @@
 "BH" = (/obj/structure/table,/obj/item/weapon/sledgehammer,/turf/simulated/shuttle/floor/cargo,/area/space)
 "BJ" = (/obj/structure/flora/ausbushes/ywflowers,/turf/simulated/floor/grass,/area/space)
 "BL" = (/obj/structure/stool/bed/chair/wood/normal{dir = 8},/turf/simulated/floor/carpet/blue,/area/space)
-"BS" = (/obj/item/stack/money/ten,/turf/simulated/shuttle/floor/cargo,/area/space)
-"Ca" = (/obj/item/stack/money3/twenty,/turf/simulated/shuttle/floor/cargo,/area/space)
 "Cp" = (/obj/structure/table/holotable/wooden,/obj/item/stack/medical/bruise_pack/rags,/turf/simulated/floor/wood,/area/space)
 "Cu" = (/obj/item/weapon/grown/log,/turf/simulated/shuttle/floor/cargo,/area/space)
 "CR" = (/obj/item/weapon/minihoe,/turf/simulated/floor/carpet/green,/area/space)
@@ -212,7 +204,6 @@
 "CZ" = (/obj/structure/table/woodentable,/obj/item/weapon/card/id/key/innkeeper1,/turf/simulated/floor/wood,/area/space)
 "Dl" = (/obj/structure/torch_holder{dir = 8},/obj/structure/stool/bed/chair/wood/normal{dir = 4},/turf/simulated/floor/wood,/area/space)
 "Du" = (/turf/simulated/floor/plating/ironsand{icon_state = "ironsand2"},/area/space)
-"DK" = (/obj/item/stack/money/twenty,/turf/simulated/shuttle/floor/cargo,/area/space)
 "DT" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/whitebeetseed,/turf/simulated/floor/grass,/area/space)
 "DZ" = (/obj/effect/decal/cleanable/cobweb,/obj/effect/decal/cleanable/dirt,/turf/simulated/shuttle/floor/cargo,/area/space)
 "Ea" = (/obj/structure/dresser,/turf/simulated/floor/wood,/area/space)
@@ -250,7 +241,6 @@
 "Jp" = (/turf/simulated/shuttle/floor/cargo,/area/space)
 "Jr" = (/obj/structure/closet/secure_closet/personal/cabinet,/turf/simulated/floor/wood{icon_state = "wood-broken3"},/area/space)
 "Jy" = (/obj/item/weapon/reagent_containers/glass/bucket,/obj/structure/torch_holder,/turf/simulated/floor/wood,/area/space)
-"JE" = (/obj/item/stack/money,/turf/simulated/shuttle/floor/cargo,/area/space)
 "JH" = (/turf/simulated/floor/plating/ironsand{icon_state = "ironsand4"},/area/space)
 "Kj" = (/obj/structure/stool/bed/chair/pew/right,/turf/simulated/floor/grass,/area/space)
 "Kp" = (/obj/item/device/flashlight/flare/torch{pixel_x = 6},/turf/simulated/floor/grass,/area/space)
@@ -313,7 +303,6 @@
 "SK" = (/obj/item/weapon/flora/pottedplant/large,/turf/simulated/floor/wood,/area/space)
 "ST" = (/obj/structure/closet/secure_closet/personal/cabinet,/turf/simulated/floor/wood{icon_state = "wood-broken5"},/area/space)
 "Tc" = (/obj/structure/flora/ausbushes/fullgrass,/obj/structure/torch_holder{dir = 4},/turf/simulated/floor/grass,/area/space)
-"Tg" = (/obj/item/stack/money2/ten,/turf/simulated/shuttle/floor/cargo,/area/space)
 "Tt" = (/obj/structure/closet/cabinet,/obj/item/weapon/minihoe,/obj/item/weapon/minihoe,/obj/item/clothing/gloves/botanic_leather,/obj/item/clothing/gloves/botanic_leather,/turf/simulated/floor/plating/airless/asteroid,/area/space)
 "TO" = (/obj/effect/decal/cleanable/blood/gibs,/turf/simulated/floor/plating/ironsand,/area/space)
 "TR" = (/obj/item/weapon/spear,/turf/simulated/shuttle/floor/cargo,/area/space)
@@ -354,7 +343,6 @@
 "Za" = (/obj/structure/torch_holder{dir = 4},/obj/structure/closet/crate/miningcar,/turf/simulated/floor/grass,/area/space)
 "Zm" = (/obj/structure/stool/bed/chair/wood/wings,/turf/simulated/floor/carpet/green,/area/space)
 "Zn" = (/obj/item/weapon/flora/pottedplant/minitree,/turf/simulated/floor/wood{icon_state = "wood-broken7"},/area/space)
-"Zw" = (/obj/item/stack/money3,/turf/simulated/shuttle/floor/cargo,/area/space)
 "Zz" = (/obj/structure/torch_holder,/turf/simulated/floor/plating/airless/asteroid,/area/space)
 "ZB" = (/turf/simulated/floor{icon_state = "wood_stairs2"},/area/space)
 "ZG" = (/turf/simulated/floor{dir = 6; icon_state = "wood_stairs"},/area/space)
@@ -413,10 +401,10 @@ hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhX
 hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXajcLVaVacLxmajhXhXhXhXhXjAjAgIMKMtznajhXhXhXhXamamamamamvRhXjAhXWcjAjAjAjAhXhXjAthjAhXjAjAjAhXWchXjAhXthjAhXhXtzhXhXhXhXhXhXYlYlhX
 hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXajbZcLcLcLxmajhXhXhXhXhXhXjAajBztGOmajhXhXhXhXamsztumVamjAhXhXjAdtGljAhXdOzkUpjAhXruzkjJhXjAjAjAhXhXjAhXjAhXhXhXamamamamamhXYlYlhX
 hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXajajjecLcLjeajhXhXhXhXhXajajajajJpajajajhXhXhXamCWkspbaRjAjAjAjAzkpajAjAkFrUzkhXjArAUpzkjAhXzkdOGlruBJjAjAjAAYamammVtummamhXYlYlhX
-hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXajajajwAajajhXhXhXhXhXajzQasuwaFCaiKajhXhXhXamPTeGcaamjAhXhXjAhXUphXhXrUhXecEZZzjAjAhXjAjAUpPAAarUrUhXBmjAhXamiJPkMtdpamhXYlYlhX
-hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXajcLAvxGajhXhXhXhXhXajZwZwcIaFJEZwajhXhXhXamQpMtBzamvRhXjAjAhXjAhXhXEZhXRsAYajvRjAhXhXjAEZhXYurULXhXEZhXjAaRcLcLbgQpamhXYlYlhX
-hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXajOmAvjFajhXhXhXhXhXajasaFCaDKTguwajhXhXhXamamJrWPamhXhXhXjAthhXjAhXjoRPhXrUrUhXzkjJjAhXwMrUEZhXhXjoEZrUhXamnLUiPNamamhXYlYlhX
-hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXajajajajajhXhXhXhXhXajajBSiKZwaFajajhXhXhXhXamamamamhXjAjAjAhXhXhXjAhXEZEZEZhXLhhXrUhXjAjAhXhXRPEZEZhXhXAYamPQgnsUamhXhXYlhXhX
+hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXajajajwAajajhXhXhXhXhXajJpJpJpJpJpJpajhXhXhXamPTeGcaamjAhXhXjAhXUphXhXrUhXecEZZzjAjAhXjAjAUpPAAarUrUhXBmjAhXamiJPkMtdpamhXYlYlhX
+hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXajcLAvxGajhXhXhXhXhXajJpJpJpJpJpJpajhXhXhXamQpMtBzamvRhXjAjAhXjAhXhXEZhXRsAYajvRjAhXhXjAEZhXYurULXhXEZhXjAaRcLcLbgQpamhXYlYlhX
+hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXajOmAvjFajhXhXhXhXhXajJpJpJpJpJpJpajhXhXhXamamJrWPamhXhXhXjAthhXjAhXjoRPhXrUrUhXzkjJjAhXwMrUEZhXhXjoEZrUhXamnLUiPNamamhXYlYlhX
+hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXajajajajajhXhXhXhXhXajajJpJpJpJpajajhXhXhXhXamamamamhXjAjAjAhXhXhXjAhXEZEZEZhXLhhXrUhXjAjAhXhXRPEZEZhXhXAYamPQgnsUamhXhXYlhXhX
 hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXajhXhXhXhXhXhXajajajajajajhXhXhXhXhXhXhXhXhXhXjAhXhXhXhXZzjAjAhXcKhXhXhXhXhXhXhXjAhXhXhXhXhXhXhXhXamamamamamhXhXYlhXhX
 hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXajhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXtzhXhXhXjAhXhXamamaRamamamamhXhXtzhXhXjAhXjAhXhXhXhXhXhXhXhXhXhXhXhXhXYlYlhXhX
 hXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXajajhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXhXjAhXjAhXhXamWPreeNtuCSamhXhXhXhXhXhXhXjAjAhXhXamamamamamamamhXhXhXYlYlhXhX
