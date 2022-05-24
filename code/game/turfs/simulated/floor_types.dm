@@ -216,6 +216,10 @@
 /turf/simulated/floor/beach/water/waterpool
 	icon_state = "seadeep"
 
+/turf/simulated/floor/beach/water/waterpool/green
+	icon_state = "green_water"
+	light_color = "#008000"
+
 /turf/simulated/floor/beach/water/waterpool/Entered(atom/movable/AM, atom/old_loc)
 	..()
 	if(!istype(old_loc, /turf/simulated/floor/beach/water/waterpool))
