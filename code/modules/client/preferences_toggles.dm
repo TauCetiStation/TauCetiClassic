@@ -130,7 +130,7 @@
 	//update UI
 	var/list/screens = hud.main + hud.adding + hud.hotkeybuttons
 
-	for(var/atom/movable/screen/complex/complex as anything in complex)
+	for(var/atom/movable/screen/complex/complex as anything in hud.complex)
 		screens += complex.screens
 
 	var/ui_style = ui_style2icon(UI_style_new)
