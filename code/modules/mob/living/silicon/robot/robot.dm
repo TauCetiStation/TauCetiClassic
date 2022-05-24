@@ -495,7 +495,7 @@
 		emote("buzz")
 		return
 	
-	if(!do_after(usr, 10, target = usr, progress = TRUE))
+	if(!do_after(usr, 10, target = usr))
 		return
 	
 	if(locked)
@@ -517,7 +517,7 @@
 		emote("buzz")
 		return
 	
-	if(!do_after(usr, 10, target = usr, progress = TRUE))
+	if(!do_after(usr, 10, target = usr))
 		return
 	
 	if(opened)
