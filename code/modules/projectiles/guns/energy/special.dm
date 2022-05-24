@@ -664,14 +664,14 @@
 	for(var/turf/turf in getline(user_turf,target))
 		if(turf.density)
 			qdel(dummy)
-			return 0
+			return FALSE
 		for(var/atom/movable/AM in turf)
-			if(!AM.CanPass(dummy,turf,1))
+			if(!AM.CanPass(dummy, turf, 1))
 				qdel(dummy)
-				return 0
-		for(var/obj/effect/ebeam/medical/B in turf)// Don't cross the str-beams!
+				return FALSE
+		for(var/obj/effect/ebeam/medical/B in turf) // Don't cross the str-beams!
 			if(B.owner.origin != current_beam.origin)
-				explosion(B.loc,0,3,5,8)
+				explosion(B.loc, 0, 3, 5, 8)
 				qdel(dummy)
 				return FALSE
 	qdel(dummy)
