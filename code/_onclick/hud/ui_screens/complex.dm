@@ -26,19 +26,16 @@
 
 	hud.complex += src
 
-	if(shown)
-		hud.mymob.client.screen += screens
-
 /atom/movable/screen/complex/update_by_hud(datum/hud/hud)
 	. = ..()
-
-	hud.complex -= src
 
 	for(var/atom/movable/screen/screen as anything in screens)
 		screen.update_by_hud(hud)
 
 /atom/movable/screen/complex/remove_from_hud(datum/hud/hud)
 	. = ..()
+
+	hud.complex -= src
 
 	for(var/atom/movable/screen/screen as anything in screens)
 		screen.remove_from_hud(hud)

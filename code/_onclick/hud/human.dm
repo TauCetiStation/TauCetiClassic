@@ -1,9 +1,11 @@
-/datum/hud/proc/human_hud()
-	default_hud()
+/mob/living/carbon/human/add_to_hud(datum/hud/hud)
+	hud.ui_color = client.prefs.UI_style_color
+	hud.ui_alpha = client.prefs.UI_style_alpha
+	
+	..()
+	hud.add_hands()
 
-	add_hands()
-
-	var/list/types = list(
+	hud.init_screens(list(
 		/atom/movable/screen/inventory/craft, // craft
 		/atom/movable/screen/drop, // simple hotkeys
 		/atom/movable/screen/inventory/swap/first,
@@ -17,20 +19,17 @@
 		/atom/movable/screen/inventory/pocket2,
 		/atom/movable/screen/inventory/suit_storage,
 		/atom/movable/screen/inventory/belt,
-	)
-	init_screens(types)
+	))
 
-	add_throw_icon()
-	add_internals()
-	add_healths()
-	add_health_doll()
-	add_nutrition_icon()
+	hud.add_throw_icon()
+	hud.add_internals()
+	hud.add_healths()
+	hud.add_health_doll()
+	hud.add_nutrition_icon()
 
-	if(mymob.leap_icon)
-		mymob.leap_icon.add_to_hud(src)
+	leap_icon?.add_to_hud(hud)
 
-	add_gun_setting()
-
+	hud.add_gun_setting()
 
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()
 	set category = "OOC"

@@ -1,5 +1,9 @@
-/datum/hud/proc/robot_hud()
-	ui_style = 'icons/mob/screen1_robot.dmi'
+/mob/living/silicon/robot/add_to_hud(datum/hud/hud)
+	hud.ui_style = 'icons/mob/screen1_robot.dmi'
+
+	hud.add_intents()
+	hud.add_pullin(type = /atom/movable/screen/pull/robot)
+	hud.add_zone_sel()
 	
 	var/list/types = list(
 		/atom/movable/screen/crew_manifest/robot,
@@ -15,7 +19,7 @@
 		/atom/movable/screen/robot_inventory, //Inventory
 	)
 
-	if(!isdrone(mymob))
+	if(!isdrone(src))
 		types += list(
 			/atom/movable/screen/sensor_augmentation/robot, //Medical/Security sensors
 			/atom/movable/screen/complex/ordered/robot_pda, //Show PDA screens
@@ -23,31 +27,24 @@
 		)
 
 //Namepick
-		var/mob/living/silicon/robot/R = mymob
-		if(!R.custom_name)
+		if(!custom_name)
 			types += /atom/movable/screen/namepick
 
-	init_screens(types)
+	hud.init_screens(types)
 
 //Module select
-	add_robot_hand_1()
-	add_robot_hand_2()
-	add_robot_hand_3()
+	hud.add_robot_hand_1()
+	hud.add_robot_hand_2()
+	hud.add_robot_hand_3()
 //End of module select
 
-//Intent
-	add_intents()
-
 //Health
-	add_healths(type = /atom/movable/screen/health/robot)
+	hud.add_healths(type = /atom/movable/screen/health/robot)
 
 //Installed Module
-	add_module_icon()
+	hud.add_module_icon()
 
-	add_pullin(type = /atom/movable/screen/pull/robot)
-	add_zone_sel()
-
-	add_gun_setting()
+	hud.add_gun_setting()
 
 
 /datum/hud/proc/toggle_show_robot_modules()

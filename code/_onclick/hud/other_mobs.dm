@@ -1,21 +1,17 @@
-/datum/hud/proc/brain_hud()
+/mob/living/carbon/brain/add_to_hud(datum/hud/hud)
 	return
 
-/datum/hud/proc/blob_hud()
-	add_pwr_display(/atom/movable/screen/blob_power)
-	add_healths(/atom/movable/screen/blob_health)
+/mob/camera/blob/add_to_hud(datum/hud/hud)
+	hud.add_pwr_display(/atom/movable/screen/blob_power)
+	hud.add_healths(/atom/movable/screen/blob_health)
 
-/datum/hud/proc/changeling_essence_hud()
-	var/mob/living/parasite/essence/E = mymob
+/mob/living/parasite/essence/add_to_hud(datum/hud/hud)
+	hud.add_essence_voice()
+	hud.add_phantom()
+	hud.add_internals()
+	hud.add_healths()
+	hud.add_health_doll()
+	hud.get_screen(/atom/movable/screen/essence/ling_abilities)
 
-	add_essence_voice()
-	add_phantom()
-
-	add_internals()
-	add_healths()
-	add_health_doll()
-
-	get_screen(/atom/movable/screen/essence/ling_abilities)
-
-	if(E.is_changeling)
-		get_screen(/atom/movable/screen/essence/return_to_body)
+	if(is_changeling)
+		hud.get_screen(/atom/movable/screen/essence/return_to_body)

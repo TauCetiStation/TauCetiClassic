@@ -134,55 +134,10 @@ var/global/list/available_ui_styles = list(
 	// reset client screen
 	client.screen = list()
 
-	if(ishuman(mymob))
-		 // Set the player the UI style chosen in preferences
-		ui_color = client.prefs.UI_style_color
-		ui_alpha = client.prefs.UI_style_alpha
-		human_hud()
-	else if(isIAN(mymob))
-		ian_hud()
-	else if(ismonkey(mymob))
-		monkey_hud()
-	else if(isbrain(mymob))
-		brain_hud()
-	else if(isfacehugger(mymob))
-		facehugger_hud()
-	else if(isxenolarva(mymob))
-		larva_hud()
-	else if(isxeno(mymob))
-		alien_hud()
-	else if(isAI(mymob))
-		ai_hud()
-	else if(isrobot(mymob))
-		robot_hud()
-	else if(isobserver(mymob))
-		show_hud(HUD_STYLE_STANDARD)
-	else if(isovermind(mymob))
-		blob_hud()
-	else if(isessence(mymob))
-		changeling_essence_hud()
-	else if(isliving(mymob))
-		ui_color = client.prefs.UI_style_color
-		ui_alpha = client.prefs.UI_style_alpha
-		default_hud()
-
-	client.screen += main
-	client.screen += adding + hotkeybuttons
-	hud_shown = TRUE
+	mymob.add_to_hud(src)
 
 	if(client.void)
 		client.screen += client.void
-
-	if(istype(mymob.loc,/obj/mecha))
-		show_hud(HUD_STYLE_REDUCED)
-
-	reorganize_alerts()
-	create_parallax()
-
-	// See the comment from "/mob/living/carbon/human/create_mob_hud()"
-	// If comment does not exist, then delete code below and this comment
-	if(!ishuman(mymob))
-		plane_masters_update()
 
 	return TRUE
 
@@ -236,11 +191,9 @@ var/global/list/available_ui_styles = list(
 	mymob.update_action_buttons()
 	reorganize_alerts()
 	create_parallax()
-
-	if(isliving(mymob)) // prevent ghosts from some updates
-		hidden_inventory_update()
-		persistant_inventory_update()
-		plane_masters_update()
+	plane_masters_update()
+	hidden_inventory_update()
+	persistant_inventory_update()
 
 	hud_version = version
 

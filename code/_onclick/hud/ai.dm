@@ -1,7 +1,7 @@
-/datum/hud/proc/ai_hud()
-	ui_style = null
+/mob/living/silicon/ai/add_to_hud(datum/hud/hud)
+	hud.ui_style = null
 
-	var/list/types = list(
+	hud.init_screens(list(
 		/atom/movable/screen/ai_core,
 		/atom/movable/screen/camera_list,
 		/atom/movable/screen/camera_track,
@@ -17,5 +17,4 @@
 		/atom/movable/screen/robot_image/take/ai,
 		/atom/movable/screen/robot_image/view/ai,
 		/atom/movable/screen/sensor_augmentation,
-	)
-	init_screens(types)
+	))

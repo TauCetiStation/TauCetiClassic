@@ -1,28 +1,36 @@
-/datum/hud/proc/alien_base_hud()
-	ui_style = 'icons/mob/screen1_xeno.dmi'
+/mob/living/carbon/xenomorph/add_to_hud(datum/hud/hud)
+	hud.ui_style = 'icons/mob/screen1_xeno.dmi'
 
-	default_hud()
-	add_nightvision_icon()
-	add_healths(type = /atom/movable/screen/health/alien)
+	..()
 
-/datum/hud/proc/alien_hud()
-	alien_base_hud()
+	hud.add_nightvision_icon()
+	hud.add_healths(type = /atom/movable/screen/health/alien)
 
-	add_hands()
+/mob/living/carbon/xenomorph/facehugger/add_to_hud(datum/hud/hud)
+	..()
+	hud.add_hands(r_type = /atom/movable/screen/inventory/tail, l_type = FALSE)
 
-	var/list/types = list(
+/mob/living/carbon/xenomorph/larva/add_to_hud(datum/hud/hud)
+	..()
+	hud.add_hands(r_type = /atom/movable/screen/inventory/larva_mouth, l_type = FALSE)
+
+/mob/living/carbon/xenomorph/humanoid/add_to_hud(datum/hud/hud)
+	..()
+
+	hud.add_hands()
+	hud.init_screens(list(
 		/atom/movable/screen/drop,
 		/atom/movable/screen/inventory/swap/first/alien,
 		/atom/movable/screen/inventory/swap/second/alien,
 		/atom/movable/screen/resist,
-	)
-	init_screens(types)
+	))
 
-	if(isxenohunter(mymob))
-		add_leap_icon()
+	if(locate(/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin) in verbs)
+		hud.add_neurotoxin_icon()
 
-	if(locate(/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin) in mymob.verbs)
-		add_neurotoxin_icon()
+	hud.add_throw_icon()
+	hud.add_pwr_display()
 
-	add_throw_icon()
-	add_pwr_display()
+/mob/living/carbon/xenomorph/humanoid/hunter/add_to_hud(datum/hud/hud)
+	..()
+	hud.add_leap_icon()

@@ -1,18 +1,17 @@
-/datum/hud/proc/monkey_hud()
-	default_hud()
-	add_hands()
+/mob/living/carbon/monkey/add_to_hud(datum/hud/hud)
+	..()
+	hud.add_hands()
 
-	var/types = list(
+	hud.init_screens(list(
 		/atom/movable/screen/drop, // hotkeys
 		/atom/movable/screen/inventory/swap/first,
 		/atom/movable/screen/inventory/swap/second,
 		/atom/movable/screen/equip,
 		/atom/movable/screen/inventory/mask/monkey, // inventory
 		/atom/movable/screen/inventory/back,
-	)
-	init_screens(types)
+	))
 
-	add_throw_icon()
-	add_internals()
-	add_healths()
-	add_gun_setting()
+	hud.add_throw_icon()
+	hud.add_internals()
+	hud.add_healths()
+	hud.add_gun_setting()
