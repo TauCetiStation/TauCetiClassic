@@ -15,15 +15,15 @@
 		/atom/movable/screen/toggle_lights,
 		/atom/movable/screen/radio,
 		/atom/movable/screen/panel,
-		/atom/movable/screen/store, // store selected
-		/atom/movable/screen/robot_inventory, //Inventory
+		/atom/movable/screen/store,
+		/atom/movable/screen/robot_inventory,
 	)
 
 	if(!isdrone(src))
 		types += list(
-			/atom/movable/screen/sensor_augmentation/robot, //Medical/Security sensors
-			/atom/movable/screen/complex/ordered/robot_pda, //Show PDA screens
-			/atom/movable/screen/complex/ordered/robot_image, //Show foto screens
+			/atom/movable/screen/sensor_augmentation/robot,
+			/atom/movable/screen/complex/ordered/robot_pda,
+			/atom/movable/screen/complex/ordered/robot_image,
 		)
 
 //Namepick

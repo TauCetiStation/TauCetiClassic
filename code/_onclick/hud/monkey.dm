@@ -3,11 +3,11 @@
 	hud.add_hands()
 
 	hud.init_screens(list(
-		/atom/movable/screen/drop, // hotkeys
+		/atom/movable/screen/drop,
 		/atom/movable/screen/inventory/swap/first,
 		/atom/movable/screen/inventory/swap/second,
 		/atom/movable/screen/equip,
-		/atom/movable/screen/inventory/mask/monkey, // inventory
+		/atom/movable/screen/inventory/mask/monkey,
 		/atom/movable/screen/inventory/back,
 	))
 

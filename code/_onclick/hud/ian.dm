@@ -7,11 +7,11 @@
 	..()
 
 	hud.init_screens(list(
-		/atom/movable/screen/resist/ian, // hotkeys
+		/atom/movable/screen/resist/ian,
 		/atom/movable/screen/drop,
-		/atom/movable/screen/corgi/sit_lie, // ian abilities
+		/atom/movable/screen/corgi/sit_lie,
 		/atom/movable/screen/corgi/ability,
-		/atom/movable/screen/inventory/corgi_neck, // inventory
+		/atom/movable/screen/inventory/corgi_neck,
 		/atom/movable/screen/inventory/head/ian,
 		/atom/movable/screen/inventory/back/ian,
 	))
