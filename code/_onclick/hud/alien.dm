@@ -20,8 +20,8 @@
 	hud.add_hands()
 	hud.init_screens(list(
 		/atom/movable/screen/drop,
-		/atom/movable/screen/inventory/swap/first/alien,
-		/atom/movable/screen/inventory/swap/second/alien,
+		/atom/movable/screen/inventory/swap/first,
+		/atom/movable/screen/inventory/swap/second,
 		/atom/movable/screen/resist,
 	))
 

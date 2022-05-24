@@ -30,12 +30,6 @@
 		A.toggle_nvg()
 
 // adult xenos screes
-/atom/movable/screen/inventory/swap/first/alien
-	icon_state = "swap_1"
-
-/atom/movable/screen/inventory/swap/second/alien
-	icon_state = "swap_2"
-
 /atom/movable/screen/xenomorph/leap
 	name = "toggle leap"
 	icon_state = "leap_off"
