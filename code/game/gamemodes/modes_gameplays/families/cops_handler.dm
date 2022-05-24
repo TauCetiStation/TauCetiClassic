@@ -11,7 +11,7 @@
 #define FIVE_STARS_LOW 8
 
 
-var/global/atom/movable/screen/wanted/wanted_lvl_screen = null
+var/global/atom/movable/screen/wanted/wanted_lvl_screen = new
 
 
 // This is not at all like on /tg/.
