@@ -446,6 +446,7 @@
 #include "code\game\Event\money.dm"
 #include "code\game\Event\pillory.dm"
 #include "code\game\Event\README.dm"
+#include "code\game\Event\spell.dm"
 #include "code\game\Event\statue.dm"
 #include "code\game\Event\valhalla_deadman.dm"
 #include "code\game\Event\vilage.dm"
