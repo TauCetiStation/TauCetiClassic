@@ -558,8 +558,14 @@
 	)
 
 /obj/item/weapon/crowbar/red
+	name = "emergency crowbar"
+	desc = "A little emergency crowbar, used to open unpowered doors and emergency shutters."
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
+	force = 4.0
+	throwforce = 5.0
+
+	w_class = SIZE_TINY
 
 /obj/item/weapon/crowbar/power
 	name = "Jaws of Life"
