@@ -1,12 +1,9 @@
 /datum/hud/proc/alien_base_hud()
 	ui_style = 'icons/mob/screen1_xeno.dmi'
 
-	add_intents()
-	add_move_intent()
+	default_hud()
 	add_nightvision_icon()
 	add_healths(type = /atom/movable/screen/health/alien)
-	add_pullin()
-	add_zone_sel()
 
 /datum/hud/proc/alien_hud()
 	alien_base_hud()

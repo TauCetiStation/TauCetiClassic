@@ -1,6 +1,5 @@
 /datum/hud/proc/default_hud()
 	add_intents()
 	add_move_intent()
-
 	add_zone_sel()
 	add_pullin()

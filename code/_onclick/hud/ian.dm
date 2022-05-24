@@ -4,7 +4,7 @@
 
 	ui_style = 'icons/mob/screen_corgi.dmi'
 
-	add_intents()
+	default_hud()
 
 	var/list/types = list(
 		/atom/movable/screen/resist/ian, // hotkeys
@@ -17,12 +17,8 @@
 	)
 	init_screens(types)
 
-	add_move_intent()
-
 	add_stamina_display()
 
 	add_hands(r_type = /atom/movable/screen/inventory/corgi_mouth, l_type = FALSE)
 
 	add_healths(/atom/movable/screen/health/ian)
-	add_pullin()
-	add_zone_sel()

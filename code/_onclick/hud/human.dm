@@ -1,6 +1,6 @@
 /datum/hud/proc/human_hud()
-	add_intents()
-	add_move_intent()
+	default_hud()
+
 	add_hands()
 
 	var/list/types = list(
@@ -25,9 +25,6 @@
 	add_healths()
 	add_health_doll()
 	add_nutrition_icon()
-	add_pullin()
-
-	add_zone_sel()
 
 	if(mymob.leap_icon)
 		mymob.leap_icon.add_to_hud(src)

@@ -1,6 +1,5 @@
 /datum/hud/proc/monkey_hud()
-	add_intents()
-	add_move_intent()
+	default_hud()
 	add_hands()
 
 	var/types = list(
@@ -16,6 +15,4 @@
 	add_throw_icon()
 	add_internals()
 	add_healths()
-	add_pullin()
-	add_zone_sel()
 	add_gun_setting()
