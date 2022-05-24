@@ -88,8 +88,11 @@
 				to_chat(user, "<span class='info'>You remove [amount_transferred]u of coolant from [src].</span>")
 				update_coolant()
 				return
-		user.drop_from_inventory(I, src)
-		scanned_item = I
+		if(!scanned_item)
+			user.drop_from_inventory(I, src)
+			scanned_item = I
+		else
+			to_chat(user, "<span class='warning'>There is already something in [src].</span>")
 
 /obj/machinery/radiocarbon_spectrometer/proc/update_coolant()
 	var/total_purity = 0
