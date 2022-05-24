@@ -18,8 +18,6 @@
 	var/bike_icon = "bike"
 	var/obj/item/weapon/key/spacebike/key
 	var/id = 0
-
-	var/datum/effect/effect/system/ion_trail_follow/ion
 	var/kickstand = 1
 
 /obj/item/weapon/key/spacebike
@@ -36,8 +34,6 @@
 
 /obj/vehicle/space/spacebike/atom_init()
 	. = ..()
-	ion = new /datum/effect/effect/system/ion_trail_follow()
-	ion.set_up(src)
 	turn_off()
 	id = rand(1,1000)
 	key = new(src)
@@ -46,7 +42,6 @@
 	icon_state = "[bike_icon]_off"
 
 /obj/vehicle/space/spacebike/Destroy()
-	QDEL_NULL(ion)
 	QDEL_NULL(key)
 	return ..()
 
@@ -164,7 +159,6 @@
 		return 0
 
 /obj/vehicle/space/spacebike/turn_on()
-	ion.start()
 	anchored = TRUE
 	update_icon()
 
@@ -174,76 +168,10 @@
 	..()
 
 /obj/vehicle/space/spacebike/turn_off()
-	ion.stop()
 	anchored = kickstand
 	update_icon()
 
 	..()
-
-/obj/vehicle/space/spacebike/verb/toggle_engine()
-	set name = "Toggle engine"
-	set category = "Vehicle"
-	set src in view(0)
-
-	if(!ishuman(usr))
-		return
-
-	if(!key)
-		return
-
-	if(!on)
-		turn_on()
-		visible_message("\The [src] rumbles to life.", "You hear something rumble deeply.")
-	else
-		turn_off()
-		visible_message("\The [src] putters before turning off.", "You hear something putter slowly.")
-
-/obj/vehicle/space/spacebike/verb/remove_key()
-	set name = "Remove key"
-	set category = "Vehicle"
-	set src in view(0)
-
-	if(!ishuman(usr))
-		return
-
-	if(!key || (load && load != usr))
-		return
-
-	if(on)
-		turn_off()
-
-	key.loc = usr.loc
-	if(!usr.get_active_hand())
-		usr.put_in_hands(key)
-	key = null
-	to_chat(usr, "<span class='notice'>You get out the key from the slot.</span>")
-
-	verbs -= /obj/vehicle/space/spacebike/verb/remove_key
-	verbs -= /obj/vehicle/space/spacebike/verb/toggle_engine
-
-/obj/vehicle/space/spacebike/verb/kickstand()
-	set name = "Toggle Kickstand"
-	set category = "Vehicle"
-	set src in view(0)
-
-	if(!ishuman(usr))
-		return
-
-	if(usr.incapacitated())
-		return
-
-	if(kickstand)
-		visible_message("[usr.name] puts up \the [src]'s kickstand.", "<span class='notice'>You put up \the [src]'s kickstand.</span>")
-	else
-		if(isspaceturf(src.loc))
-			to_chat(usr, "<span class='warning'>You don't think kickstands work in space...</span>")
-			return
-		visible_message("[usr.name] puts down \the [src]'s kickstand.", "<span class='notice'>You put down \the [src]'s kickstand.</span>")
-		if(pulledby)
-			pulledby.stop_pulling()
-
-	kickstand = !kickstand
-	anchored = (kickstand || on)
 
 /obj/vehicle/space/spacebike/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(isliving(load) && prob(protection_percent))

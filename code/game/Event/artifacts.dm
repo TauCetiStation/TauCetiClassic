@@ -26,8 +26,8 @@
 	user.add_filter("wave_filter",1,wave_filter(0,3))
 
 /obj/item/weapon/shield/magical_shit
-	name = "Волшебный щит"
-	desc = "Этот артефакт отразит любой снаряд."
+	name = "Зеркальный щит"
+	desc = "Отражает снаряды. Попробуй превратить злобоглаза в курицу."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "magical_shit"
 	force = 5.0
