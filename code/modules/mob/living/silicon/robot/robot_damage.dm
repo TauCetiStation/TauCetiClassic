@@ -154,13 +154,6 @@
 	updatehealth()
 
 /mob/living/silicon/robot/attack_alien(mob/user)
-	var/alien_silicon_damage = 60
-	if(isxenosentinel(user))
-		alien_silicon_damage = alien_silicon_damage / 2
-	if(isxenodrone(user))
-		alien_silicon_damage = alien_silicon_damage / 4
-	adjustBruteLoss(alien_silicon_damage)
-	user.do_attack_animation(src)
-	user.SetNextMove(CLICK_CD_MELEE)
-	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-	visible_message("<span class='warning'>The [user] slashes [src.name]!</span>")
+	. = ..()
+	if(isxenohunter(user))			//hunter has increased silicon damage
+		adjustBruteLoss(20)
