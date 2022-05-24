@@ -679,6 +679,7 @@
 /obj/item/weapon/gun/medbeam/proc/on_beam_tick(mob/living/target)
 	if(target.stat == DEAD)
 		LoseTarget()
+		return
 
 	target.adjustBruteLoss(-5)
 	target.adjustFireLoss(-5)
