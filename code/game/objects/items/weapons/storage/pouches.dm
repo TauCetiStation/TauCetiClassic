@@ -259,12 +259,12 @@
 	max_w_class = SIZE_SMALL
 
 	startswith = list(
-	/obj/item/weapon/reagent_containers/hypospray/combat/bleed,
-	/obj/item/weapon/reagent_containers/hypospray/combat/bruteburn,
-	/obj/item/weapon/reagent_containers/hypospray/combat/dexalin,
-	/obj/item/weapon/reagent_containers/hypospray/combat/atoxin,
-	/obj/item/weapon/reagent_containers/hypospray/combat/intdam,
-	/obj/item/weapon/reagent_containers/hypospray/combat/pain,
-	/obj/item/stack/medical/suture,
-	/obj/item/device/healthanalyzer
+		/obj/item/weapon/reagent_containers/hypospray/combat/bleed,
+		/obj/item/weapon/reagent_containers/hypospray/combat/bruteburn,
+		/obj/item/weapon/reagent_containers/hypospray/combat/dexalin,
+		/obj/item/weapon/reagent_containers/hypospray/combat/atoxin,
+		/obj/item/weapon/reagent_containers/hypospray/combat/intdam,
+		/obj/item/weapon/reagent_containers/hypospray/combat/pain,
+		/obj/item/stack/medical/suture,
+		/obj/item/device/healthanalyzer,
 	)
