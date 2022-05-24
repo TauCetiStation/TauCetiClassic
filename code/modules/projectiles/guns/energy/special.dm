@@ -642,7 +642,7 @@
 		LoseTarget()
 		return
 
-	if(world.time <= last_check+check_delay)
+	if(world.time <= last_check + check_delay)
 		return
 
 	last_check = world.time
