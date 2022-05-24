@@ -42,7 +42,7 @@
 
 	if(hud_used.hotkey_ui_hidden)
 		client.screen += hud_used.hotkeybuttons
-		hud_used.hotkey_ui_hidden = 0
+		hud_used.hotkey_ui_hidden = FALSE
 	else
 		client.screen -= hud_used.hotkeybuttons
-		hud_used.hotkey_ui_hidden = 1
+		hud_used.hotkey_ui_hidden = TRUE

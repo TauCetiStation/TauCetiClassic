@@ -82,25 +82,25 @@ var/global/list/available_ui_styles = list(
 		if(H.handcuffed)
 			H.handcuffed.screen_loc = null	//no handcuffs in my UI!
 		if(inventory_shown && hud_shown)
-			if(H.shoes)		H.shoes.screen_loc = ui_shoes
-			if(H.gloves)	H.gloves.screen_loc = ui_gloves
-			if(H.l_ear)		H.l_ear.screen_loc = ui_l_ear
-			if(H.r_ear)		H.r_ear.screen_loc = ui_r_ear
-			if(H.glasses)	H.glasses.screen_loc = ui_glasses
-			if(H.w_uniform)	H.w_uniform.screen_loc = ui_iclothing
-			if(H.wear_suit)	H.wear_suit.screen_loc = ui_oclothing
-			if(H.wear_mask)	H.wear_mask.screen_loc = ui_mask
-			if(H.head)		H.head.screen_loc = ui_head
+			H.shoes?.screen_loc = ui_shoes
+			H.gloves?.screen_loc = ui_gloves
+			H.l_ear?.screen_loc = ui_l_ear
+			H.r_ear?.screen_loc = ui_r_ear
+			H.glasses?.screen_loc = ui_glasses
+			H.w_uniform?.screen_loc = ui_iclothing
+			H.wear_suit?.screen_loc = ui_oclothing
+			H.wear_mask?.screen_loc = ui_mask
+			H.head?.screen_loc = ui_head
 		else
-			if(H.shoes)		H.shoes.screen_loc = null
-			if(H.gloves)	H.gloves.screen_loc = null
-			if(H.l_ear)		H.l_ear.screen_loc = null
-			if(H.r_ear)		H.r_ear.screen_loc = null
-			if(H.glasses)	H.glasses.screen_loc = null
-			if(H.w_uniform)	H.w_uniform.screen_loc = null
-			if(H.wear_suit)	H.wear_suit.screen_loc = null
-			if(H.wear_mask)	H.wear_mask.screen_loc = null
-			if(H.head)		H.head.screen_loc = null
+			H.shoes?.screen_loc = null
+			H.gloves?.screen_loc = null
+			H.l_ear?.screen_loc = null
+			H.r_ear?.screen_loc = null
+			H.glasses?.screen_loc = null
+			H.w_uniform?.screen_loc = null
+			H.wear_suit?.screen_loc = null
+			H.wear_mask?.screen_loc = null
+			H.head?.screen_loc = null
 
 
 /datum/hud/proc/persistant_inventory_update()
@@ -110,19 +110,19 @@ var/global/list/available_ui_styles = list(
 	if(ishuman(mymob))
 		var/mob/living/carbon/human/H = mymob
 		if(hud_shown)
-			if(H.s_store)	H.s_store.screen_loc = ui_sstore1
-			if(H.wear_id)	H.wear_id.screen_loc = ui_id
-			if(H.belt)		H.belt.screen_loc = ui_belt
-			if(H.back)		H.back.screen_loc = ui_back
-			if(H.l_store)	H.l_store.screen_loc = ui_storage1
-			if(H.r_store)	H.r_store.screen_loc = ui_storage2
+			H.s_store?.screen_loc = ui_sstore1
+			H.wear_id?.screen_loc = ui_id
+			H.belt?.screen_loc = ui_belt
+			H.back?.screen_loc = ui_back
+			H.l_store?.screen_loc = ui_storage1
+			H.r_store?.screen_loc = ui_storage2
 		else
-			if(H.s_store)	H.s_store.screen_loc = null
-			if(H.wear_id)	H.wear_id.screen_loc = null
-			if(H.belt)		H.belt.screen_loc = null
-			if(H.back)		H.back.screen_loc = null
-			if(H.l_store)	H.l_store.screen_loc = null
-			if(H.r_store)	H.r_store.screen_loc = null
+			H.s_store?.screen_loc = null
+			H.wear_id?.screen_loc = null
+			H.belt?.screen_loc = null
+			H.back?.screen_loc = null
+			H.l_store?.screen_loc = null
+			H.r_store?.screen_loc = null
 
 
 /datum/hud/proc/instantiate()
@@ -195,6 +195,8 @@ var/global/list/available_ui_styles = list(
 		version = hud_version + 1
 	if(version > HUD_VERSIONS)	//If the requested version number is greater than the available versions, reset back to the first version
 		version = 1
+	if(!main.len && version == HUD_STYLE_REDUCED) // skip reduced version if no main hud exists
+		version = HUD_STYLE_NOHUD
 
 	var/screen = mymob.client.screen
 	var/hud_slots_shown = NONE
@@ -231,14 +233,16 @@ var/global/list/available_ui_styles = list(
 	else
 		screen -= main
 
-	hidden_inventory_update()
-	persistant_inventory_update()
 	mymob.update_action_buttons()
 	reorganize_alerts()
+	create_parallax()
+
+	if(isliving(mymob)) // prevent ghosts from some updates
+		hidden_inventory_update()
+		persistant_inventory_update()
+		plane_masters_update()
 
 	hud_version = version
-	create_parallax()
-	plane_masters_update()
 
 /datum/hud/proc/plane_masters_update()
 	// Plane masters are always shown to OUR mob, never to observers
