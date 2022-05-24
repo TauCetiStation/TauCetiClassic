@@ -172,7 +172,7 @@
 
 /datum/outfit/job/hub/smith
 	name = OUTFIT_JOB_NAME("Smith")
-	uniform =/obj/item/clothing/under/rank/dispatch
+	uniform =/obj/item/clothing/under/smith
 	shoes =/obj/item/clothing/shoes/boots/work
 	l_hand = /obj/item/weapon/smith_hammer
 	gloves = /obj/item/clothing/gloves/black

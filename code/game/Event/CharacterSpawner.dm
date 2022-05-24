@@ -119,3 +119,4 @@
 		return
 	user.mutations.Add(SMALLSIZE)
 	user.regenerate_icons()
+	user.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/lepr_escape)
