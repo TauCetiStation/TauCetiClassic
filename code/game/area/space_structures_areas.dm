@@ -187,4 +187,4 @@
 	name = "TO-11312 Export Outpost"
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-	requires_power = 1
+	requires_power = TRUE
