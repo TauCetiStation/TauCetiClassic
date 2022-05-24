@@ -647,8 +647,7 @@
 
 	if(get_dist(source, current_target) > max_range || !check_trajectory(source, current_target, pass_flags = PASSTABLE, flags = 0))
 		LoseTarget()
-		if(isliving(source))
-			to_chat(source, "<span class='warning'>You lose control of the beam!</span>")
+		to_chat(source, "<span class='warning'>You lose control of the beam!</span>")
 		return
 
 	if(current_target)
