@@ -52,8 +52,8 @@
 		var/turf/current_location = get_turf(src)
 		if(use(1))
 			new /obj/item/device/flashlight/flare/torch(current_location)
-		qdel(I)
-		return
+			qdel(I)
+			return
 	return ..()
 
 /obj/item/stack/medical/bruise_pack/rags
