@@ -646,7 +646,7 @@
 
 	last_check = world.time
 
-	if(get_dist(source, current_target)>max_range || !line_of_sight_check(source, current_target))
+	if(get_dist(source, current_target) > max_range || !line_of_sight_check(source, current_target))
 		LoseTarget()
 		if(isliving(source))
 			to_chat(source, "<span class='warning'>You lose control of the beam!</span>")
