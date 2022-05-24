@@ -62,10 +62,10 @@
 		M.equipOutfit(outfit)
 
 /datum/role/cop/add_ui(datum/hud/hud)
-	SSticker.wanted_lvl.add_to_hud(hud)
+	wanted_lvl_screen.add_to_hud(hud)
 
 /datum/role/cop/remove_ui(datum/hud/hud)
-	SSticker.wanted_lvl.remove_from_hud(hud)
+	wanted_lvl_screen.remove_from_hud(hud)
 
 /datum/role/cop/beatcop
 	name = "Officer"

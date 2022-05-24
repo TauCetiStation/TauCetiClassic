@@ -34,10 +34,10 @@
 	package_spawner.Remove(M.current)
 
 /datum/role/gangster/add_ui(datum/hud/hud)
-	SSticker.wanted_lvl.add_to_hud(hud)
+	wanted_lvl_screen.add_to_hud(hud)
 
 /datum/role/gangster/remove_ui(datum/hud/hud)
-	SSticker.wanted_lvl.remove_from_hud(hud)
+	wanted_lvl_screen.remove_from_hud(hud)
 
 /datum/role/gangster/Greet(laterole)
 	antag.current.playsound_local(null, 'sound/antag/thatshowfamiliesworks.ogg', VOL_EFFECTS_MASTER, null, FALSE)

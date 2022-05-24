@@ -10,6 +10,10 @@
 #define FOUR_STARS_LOW 6
 #define FIVE_STARS_LOW 8
 
+
+var/global/atom/movable/screen/wanted/wanted_lvl_screen = null
+
+
 // This is not at all like on /tg/.
 // "Family" and "gang" used interchangeably in code.
 /datum/faction/cops
@@ -122,7 +126,7 @@
 	else if (newlevel < wanted_level)
 		on_lower_wanted_level(newlevel)
 	wanted_level = newlevel
-	var/atom/movable/screen/wanted/screen = SSticker.wanted_lvl
+	var/atom/movable/screen/wanted/screen = wanted_lvl_screen
 	screen.wanted_level = newlevel
 	screen.cops_arrived = cops_arrived
 	screen.update_icon_state()
