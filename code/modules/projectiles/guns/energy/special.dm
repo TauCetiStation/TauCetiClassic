@@ -630,7 +630,6 @@
 	user.visible_message("<span class='notice'>[user] aims their [src] at [target]!</span>")
 	playsound(user, 'sound/weapons/guns/medbeam.ogg', VOL_EFFECTS_MASTER)
 
-
 /obj/item/weapon/gun/medbeam/process()
 	var/source = loc
 	if(!isliving(source))
