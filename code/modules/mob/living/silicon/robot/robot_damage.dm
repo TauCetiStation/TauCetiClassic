@@ -152,8 +152,3 @@
 		parts -= picked
 
 	updatehealth()
-
-/mob/living/silicon/robot/attack_alien(mob/user)
-	. = ..()
-	if(isxenohunter(user))			//hunter has increased silicon damage
-		adjustBruteLoss(20)
