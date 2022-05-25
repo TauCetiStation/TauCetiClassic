@@ -55,3 +55,24 @@
 	if(prob(100) && is_the_opposite_dir(hol_dir, hit_dir))
 		return TRUE
 	return FALSE
+
+
+/obj/item/weapon/reagent_containers/glass/replenishing/vodka
+	name = "Бездонная склянка не-Ртути"
+	desc = "Че реально вечная?"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "unlim"
+	item_state = "unlim"
+	spawning_id = "vodka"
+	flags = OPENCONTAINER
+
+/obj/item/weapon/reagent_containers/glass/replenishing/vodka/update_icon()
+	cut_overlays()
+	if (!is_open_container())
+		var/image/lid = image(icon, src, "lid_unlim")
+		add_overlay(lid)
+
+/obj/item/weapon/reagent_containers/glass/replenishing/vodka/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+	spawning_id = "vodka"
