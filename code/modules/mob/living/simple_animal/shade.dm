@@ -238,9 +238,9 @@
 
 /mob/living/simple_animal/shade/atom_init()
 	. = ..()
-	wizard_shade_list += src
+	wizard_shades_list += src
 
 /mob/living/simple_animal/shade/Destroy()
-	wizard_shade_list -= src
+	wizard_shades_list -= src
 	return ..()
 	
