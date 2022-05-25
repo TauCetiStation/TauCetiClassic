@@ -24,7 +24,7 @@
 /area/asteroid/mine/unexplored
 	name = "Mine"
 	icon_state = "unexplored"
-	looped_ambience = list('sound/ambience/cave.ogg')
+	ambience = list('sound/ambience/cave.ogg')
 	is_force_ambience = TRUE
 	var/list/mob_spawn_list = list(
 		/mob/living/simple_animal/hostile/troglodit = 1,
