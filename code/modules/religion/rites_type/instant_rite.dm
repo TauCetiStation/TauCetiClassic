@@ -14,7 +14,7 @@
 	return TRUE
 
 /datum/religion_rites/instant/can_invocate(mob/living/user, obj/AOG)
-	if(!do_after(user, target = AOG, delay = ritual_length, can_move = TRUE, distance = 1)))
+	if(!do_after(user, target = AOG, delay = ritual_length, can_move = TRUE, distance = 1))
 		return FALSE
 
 	return TRUE
