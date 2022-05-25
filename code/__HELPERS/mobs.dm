@@ -145,7 +145,7 @@
 	if(target)
 		target.in_use_action = FALSE
 
-/proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks, distance = -1)
+/proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks, distance = 1)
 	if(!user || target && QDELING(target))
 		return FALSE
 
