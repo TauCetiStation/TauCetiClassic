@@ -547,14 +547,14 @@
 
 	w_class = SIZE_SMALL
 
-	m_amt = 25
+	m_amt = 50
 	origin_tech = "engineering=1"
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Crowbar.ogg'
 
 	qualities = list(
-		QUALITY_PRYING = 0.7
+		QUALITY_PRYING = 1
 	)
 
 /obj/item/weapon/crowbar/red
