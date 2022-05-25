@@ -84,7 +84,6 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/peridaxon = 1000,
 		/obj/item/weapon/reagent_containers/glass/bottle/kyphotorin = 1000,
 		/obj/item/weapon/reagent_containers/glass/bottle/adminordrazine = 1000,
-		/obj/vehicle/space/spacebike/horse = 1000,
 	)
 
 	prices = list(
@@ -92,18 +91,15 @@
 	/obj/item/stack/money/gold = 100,
 	/obj/item/stack/money/silver = 10,
 	/obj/item/stack/money/bronz = 1,
-	/obj/item/weapon/reagent_containers/food/snacks/soap = 5,
-	/obj/item/uncurs_ointment = 1000,
-	/obj/item/stack/medical/advanced/bruise_pack = 250,
-	/obj/item/stack/medical/advanced/ointment = 250,
-	/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 50,
-	/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline = 100,
-	/obj/item/weapon/reagent_containers/glass/bottle/peridaxon = 500,
-	/obj/item/weapon/reagent_containers/glass/bottle/kyphotorin = 750,
-	/obj/item/weapon/reagent_containers/glass/bottle/adminordrazine = 2000,
-	/obj/vehicle/space/spacebike/horse = 750,
-
-
+	/obj/item/weapon/reagent_containers/food/snacks/soap = 1,
+	/obj/item/uncurs_ointment = 599,
+	/obj/item/stack/medical/advanced/bruise_pack = 150,
+	/obj/item/stack/medical/advanced/ointment = 150,
+	/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 25,
+	/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline = 50,
+	/obj/item/weapon/reagent_containers/glass/bottle/peridaxon = 250,
+	/obj/item/weapon/reagent_containers/glass/bottle/kyphotorin = 500,
+	/obj/item/weapon/reagent_containers/glass/bottle/adminordrazine = 100,
 	)
 
 /obj/machinery/vending/lepr/examine(mob/user)
