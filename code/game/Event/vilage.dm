@@ -175,19 +175,3 @@
 	icon_state = "reagent_grinder"+num2text(!isnull(beaker))
 	return
 
-
-/obj/structure/tree_of_greed
-	name = "Таки древо Мудрости"
-	desc = "Оно готово ответить тебе на вопросы, <span class='warning'> небесплатно...</span>"
-	anchored = TRUE
-	layer = 11
-	icon = 'icons/obj/flora/tree_of_greed.dmi'
-	icon_state = "tree_of_greed"
-	pixel_x = -48
-	pixel_y = -20
-	density = 1
-
-/obj/structure/tree_of_greed/attack_hand(mob/living/carbon/human/user)
-	var/question = sanitize(input(user, "Задайте вопрос древу."))
-	for(var/client/X in global.admins)
-		to_chat_admin_pm(X,"<span class='adminsay'><span class='prefix'>TREE QUESTION:</span> <EM>[key_name(usr, 1)]</EM> (<a href='?_src_=holder;adminplayerobservejump=\ref[user]'>JMP</A>): <span class='message emojify linkify'>[question]</span></span>")

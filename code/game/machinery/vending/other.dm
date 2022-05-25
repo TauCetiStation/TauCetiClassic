@@ -60,9 +60,29 @@
 
 	)
 
+
+/obj/machinery/vending/lepr/ui_interact(mob/user)
+	if(tree_of_greed_approval)
+		..()
+	else
+		to_chat(user, "<span class='warning'>ДРЕВО МУДРОСТИ ОТКЛЮЧИЛО ЭТОТ АВТОМАТ ОТ БАНКОВСКОЙ СИСТЕМЫ!</span>")
+
+/obj/machinery/vending/lepr/atom_init()
+	. = ..()
+	lepr_vends_list += src // global list
+
+/obj/machinery/vending/lepr/attackby(obj/item/W, mob/user)
+	if(tree_of_greed_approval)
+		..()
+	else
+		to_chat(user, "<span class='warning'>ДРЕВО МУДРОСТИ ОТКЛЮЧИЛО ЭТОТ АВТОМАТ ОТ БАНКОВСКОЙ СИСТЕМЫ!</span>")
+
+
 /obj/machinery/vending/lepr/examine(mob/user)
 	..()
 	to_chat(user, "Содержит [moneyIn] единиц валюты")
+	if(!tree_of_greed_approval)
+		to_chat(user, "<span class='warning'>ДРЕВО МУДРОСТИ ОТКЛЮЧИЛО ЭТОТ АВТОМАТ ОТ БАНКОВСКОЙ СИСТЕМЫ!</span>")
 
 
 /obj/machinery/vending/cigarette
