@@ -163,7 +163,7 @@
 			Tloc = target.loc
 
 	var/atom/Uloc = null
-	if(can_move)
+	if(!can_move)
 		Uloc = user.loc
 
 	var/obj/item/holding = user.get_active_hand()
