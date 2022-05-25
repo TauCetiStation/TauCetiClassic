@@ -11,7 +11,7 @@
 	hud.add_internals()
 	hud.add_healths()
 	hud.add_health_doll()
-	hud.get_screen(/atom/movable/screen/essence/ling_abilities)
+	hud.init_screen(/atom/movable/screen/essence/ling_abilities)
 
 	if(is_changeling)
-		hud.get_screen(/atom/movable/screen/essence/return_to_body)
+		hud.init_screen(/atom/movable/screen/essence/return_to_body)

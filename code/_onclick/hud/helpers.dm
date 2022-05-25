@@ -2,13 +2,13 @@
 	mymob.action_intent = new act_intent_type
 	mymob.action_intent.add_to_hud(src)
 
-/datum/hud/proc/get_screen(screen_type, icon = null, color = null, alpha = null)
+/datum/hud/proc/init_screen(screen_type)
 	var/atom/movable/screen/screen = new screen_type
 	screen.add_to_hud(src)
 
 /datum/hud/proc/init_screens(list/types)
 	for(var/screen_type in types)
-		get_screen(screen_type, ui_style, ui_color, ui_alpha)
+		init_screen(screen_type, ui_style, ui_color, ui_alpha)
 
 /datum/hud/proc/add_move_intent(type = /atom/movable/screen/move_intent)
 	mymob.move_intent = new type
@@ -95,17 +95,20 @@
 /datum/hud/proc/add_robot_hand_1()
 	var/atom/movable/screen/robot_hands/first/using = new
 	using.add_to_hud(src)
-	mymob:inv1 = using
+	var/mob/living/silicon/robot/R = mymob
+	R.inv1 = using
 
 /datum/hud/proc/add_robot_hand_2()
 	var/atom/movable/screen/robot_hands/second/using = new
 	using.add_to_hud(src)
-	mymob:inv2 = using
+	var/mob/living/silicon/robot/R = mymob
+	R.inv2 = using
 
 /datum/hud/proc/add_robot_hand_3()
 	var/atom/movable/screen/robot_hands/third/using = new
 	using.add_to_hud(src)
-	mymob:inv3 = using
+	var/mob/living/silicon/robot/R = mymob
+	R.inv3 = using
 
 /datum/hud/proc/add_module_icon()
 	mymob.module_icon = new /atom/movable/screen/module
