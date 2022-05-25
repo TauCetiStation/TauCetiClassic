@@ -91,6 +91,7 @@ var/global/current_lobby_screen = 'icons/lobby/homm_lobby.gif'
 		</head>
 		<body>
 			<div class="container_nav">
+				<a class="menu_a" href='?src=\ref[src];lobby_setup=1'>SETUP</a>
 	"}
 
 	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
