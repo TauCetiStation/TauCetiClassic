@@ -159,7 +159,7 @@
 
 /obj/effect/effect/luck
 	name = "Удача!"
-	icon = 'icons/obj/effect64.dmi'
+	icon = 'icons/obj/Events/effect64.dmi'
 	icon_state = "luck"
 	anchored = TRUE
 	density = FALSE
