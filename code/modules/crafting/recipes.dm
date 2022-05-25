@@ -133,3 +133,19 @@
 	reqs = list(/obj/item/weapon/reagent_containers/food/snacks/dough = 1,/datum/reagent/consumable/drink/milk = 5,/obj/structure/vilage/velikiy_sup,/obj/structure/bonfire)
 	result =/obj/item/uncurs_ointment
 	time = 15
+
+//Money
+
+/datum/crafting_recipe/gold_coin
+	name = "Золотая фальшивая монетка"
+	reqs = list(/obj/item/weapon/ore/gold = 1)
+	result =/obj/item/stack/money/gold/fake
+	tools = /obj/structure/vilage/coin_machine
+	time = 10
+
+/datum/crafting_recipe/silver_coin
+	name = "Серебряная фальшивая монетка"
+	reqs = list(/obj/item/weapon/ore/silver = 1)
+	result =/obj/item/stack/money/silver/fake
+	tools = list(/obj/structure/vilage/coin_machine)
+	time = 10
