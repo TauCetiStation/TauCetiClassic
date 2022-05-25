@@ -28,16 +28,14 @@
 /obj/item/clover
 	name = "Трехлистный клевер"
 	desc = "Красивое, но совершенно бесполезное растение"
-	icon = 'icons/obj/homm.dmi'
+	icon = 'icons/obj/Events/lootbox.dmi'
 	icon_state = "clover"
 	w_class = SIZE_TINY
 
 /obj/item/clover/lucky
 	name = "Четырехлистный клевер удачи"
 	desc = "Увеличивает удачу носителя"
-	icon = 'icons/obj/homm.dmi'
 	icon_state = "clover4"
-	w_class = SIZE_TINY
 
 /obj/item/weapon/shield/magical_shit
 	name = "Зеркальный щит"
