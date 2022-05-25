@@ -63,6 +63,7 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/man_up,
 	/client/proc/global_man_up,
 	/client/proc/proebal,
+	/client/proc/make_someone_the_tree,
 	/client/proc/global_proebal,
 	/client/proc/response_team, // Response Teams admin verb,
 	/client/proc/toggle_antagHUD_use,
@@ -1002,6 +1003,22 @@ var/global/list/admin_verbs_hideable = list(
 
 	to_chat(T, "<span class='notice'><b><font size=11>БРУХ.</font></b></span>")
 	T.playsound_local(null, 'sound/Event/losecombat.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
+
+
+/client/proc/make_someone_the_tree()
+	set category = "Fun"
+	set name = "Сделать игрока деревом"
+	set desc = "делает игрока на той же клетке что и вы древом мудрости."
+
+	var/did_it = 0
+	for(var/obj/structure/tree_of_greed/TR in trees_of_greed_list)
+		if(!did_it && TR && (!(TR.overmind)))
+			var/mob/winner = input("Кто будет древом?", "Древо") in player_list
+			if(winner.client)
+				var/client/letspick = winner.client
+				TR.create_overmind(letspick)
+				to_chat(src, "<span class='notice'><b>Получилось![letspick.key] стал Древом Мудрости!</b></span>")
+				did_it = 1
 
 /client/proc/global_proebal()
 	set category = "Fun"

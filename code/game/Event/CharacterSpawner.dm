@@ -112,7 +112,7 @@
 	A =/area/custom/start_homm/lepr
 	arrive_sound = 'sound/Event/headman.ogg'
 
-/obj/structure/character_spawner/lepr/attack_hand(mob/user)
+/obj/structure/character_spawner/lepr/attack_hand(mob/living/carbon/human/user) // only a human can become lepr
 	..()
 	if(ready == "Нет")
 		selecting_job = FALSE
@@ -120,3 +120,5 @@
 	user.mutations.Add(SMALLSIZE)
 	user.regenerate_icons()
 	user.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/lepr_escape)
+	user.see_invisible = 34 // so he can see the tree of greed
+	user.homm_species = "lepr"

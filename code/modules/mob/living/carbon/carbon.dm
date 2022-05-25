@@ -1175,6 +1175,11 @@
 		if(!druggy)
 			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
+	if(ishuman(src)) // so he can see the tree of greed
+		var/mob/living/carbon/human/HU = src
+		if(HU.homm_species == "lepr")
+			see_invisible = 34
+
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 		var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
 		switch(O.mode)

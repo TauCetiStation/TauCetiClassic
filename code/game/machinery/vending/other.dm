@@ -60,6 +60,23 @@
 
 	)
 
+
+/obj/machinery/vending/lepr/ui_interact(mob/user)
+	if(tree_of_greed_approval || istype(src, /obj/machinery/vending/lepr/ILB))
+		..()
+	else
+		to_chat(user, "<span class='warning'>ДРЕВО МУДРОСТИ ОТКЛЮЧИЛО ЭТОТ АВТОМАТ ОТ БАНКОВСКОЙ СИСТЕМЫ!</span>")
+
+/obj/machinery/vending/lepr/atom_init()
+	. = ..()
+	lepr_vends_list += src // global list
+
+/obj/machinery/vending/lepr/attackby(obj/item/W, mob/user)
+	if(tree_of_greed_approval || istype(src, /obj/machinery/vending/lepr/ILB))
+		..()
+	else
+		to_chat(user, "<span class='warning'>ДРЕВО МУДРОСТИ ОТКЛЮЧИЛО ЭТОТ АВТОМАТ ОТ БАНКОВСКОЙ СИСТЕМЫ!</span>")
+
 /obj/machinery/vending/lepr/ILB
 	name = "Торговый портал Всемирного Леприконского Банка"
 	desc = "Для своих у ВЛБ таки кошерные скидки"
@@ -102,9 +119,12 @@
 	/obj/item/weapon/reagent_containers/glass/bottle/adminordrazine = 100,
 	)
 
+
 /obj/machinery/vending/lepr/examine(mob/user)
 	..()
 	to_chat(user, "Содержит [moneyIn] единиц валюты")
+	if(!tree_of_greed_approval)
+		to_chat(user, "<span class='warning'>ДРЕВО МУДРОСТИ ОТКЛЮЧИЛО ЭТОТ АВТОМАТ ОТ БАНКОВСКОЙ СИСТЕМЫ!</span>")
 
 
 /obj/machinery/vending/cigarette

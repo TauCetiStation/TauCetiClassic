@@ -17,6 +17,7 @@
 
 	var/metadata
 	var/gnomed = 0 // timer used by gnomecurse.dm
+	var/homm_species = 0
 	var/hulk_activator = null
 	var/isHubMan = TRUE
 
