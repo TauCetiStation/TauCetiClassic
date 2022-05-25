@@ -140,7 +140,7 @@
 	name = "Золотая фальшивая монетка"
 	reqs = list(/obj/item/weapon/ore/gold = 1)
 	result =/obj/item/stack/money/gold/fake
-	tools = /obj/structure/vilage/coin_machine
+	tools = list(/obj/structure/vilage/coin_machine)
 	time = 10
 
 /datum/crafting_recipe/silver_coin

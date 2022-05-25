@@ -200,9 +200,9 @@
 						to_chat(user, "<span class='warning'>Ваша сказочная удача, позволила вам обмануть портал.</span>")
 						new /obj/effect/effect/luck(get_turf(user))
 					else
-						to_chat(user, "<span class='warning'>Всемирный Банк Лепреконов опознал вашу фальшивую монету. Ну и ну! На этот портал наложен штраф. Слава ВБЛ.</span>")
+						to_chat(user, "<span class='warning'>Всемирный Леприконский Банк опознал вашу фальшивую монету. Ну и ну! На этот портал наложен штраф. Слава ВЛБ.</span>")
 				else
-					to_chat(user, "<span class='warning'>Всемирный Банк Лепреконов опознал вашу фальшивую монету. Ну и ну! На этот портал наложен штраф. Слава ВБЛ.</span>")
+					to_chat(user, "<span class='warning'>Всемирный Леприконский Банк опознал вашу фальшивую монету. Ну и ну! На этот портал наложен штраф. Слава ВЛБ.</span>")
 		moneyIn += M.denomination
 		to_chat(user, "<span class='notice'>[M] отправлен в [src]</span>")
 		playsound(usr, 'sound/effects/coin_ins.ogg',VOL_EFFECTS_MASTER)
