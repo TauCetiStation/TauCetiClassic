@@ -238,9 +238,9 @@
 
 /mob/living/simple_animal/shade/atom_init()
 	. = ..()
-	global.wizard_shades_list += src
+	global.wizard_shades_count++
 
 /mob/living/simple_animal/shade/Destroy()
-	global.wizard_shades_list -= src
+	global.wizard_shades_count--
 	return ..()
 	
