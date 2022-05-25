@@ -547,14 +547,14 @@
 
 	w_class = SIZE_SMALL
 
-	m_amt = 50
+	m_amt = 25
 	origin_tech = "engineering=1"
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Crowbar.ogg'
 
 	qualities = list(
-		QUALITY_PRYING = 1
+		QUALITY_PRYING = 0.7
 	)
 
 /obj/item/weapon/crowbar/red
@@ -566,6 +566,7 @@
 	throwforce = 5.0
 
 	w_class = SIZE_TINY
+	m_amt = 15
 
 /obj/item/weapon/crowbar/power
 	name = "Jaws of Life"
