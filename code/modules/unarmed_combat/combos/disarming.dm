@@ -217,7 +217,7 @@
 
 				L.visible_message("<span class='danger'>[attacker] slide-kicks [L][end_string]</span>")
 
-		if(!do_after(attacker, attacker.movement_delay() * 0.4, distance = 1, target = victim, progress = FALSE))
+		if(!do_after(attacker, attacker.movement_delay() * 0.4, can_move = TRUE, target = victim, progress = FALSE))
 			break
 
 	attacker.crawling = prev_crawling

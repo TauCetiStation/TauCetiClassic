@@ -378,7 +378,7 @@
 					apply_damage(33, L, attacker, attack_obj=attack_obj)
 				break try_steps_loop
 
-			if(!do_after(attacker, attacker.movement_delay() * 0.5, distance = 1, target = victim, progress = FALSE))
+			if(!do_after(attacker, attacker.movement_delay() * 0.5, can_move = TRUE, target = victim, progress = FALSE))
 				break try_steps_loop
 
 	destroy_grabs(victim, attacker)
