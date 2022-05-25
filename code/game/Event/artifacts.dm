@@ -28,7 +28,7 @@
 /obj/item/clover
 	name = "Трехлистный клевер"
 	desc = "Красивое, но совершенно бесполезное растение"
-	icon = 'icons/obj/lootbox.dmi'
+	icon = 'icons/obj/Events/lootbox.dmi'
 	icon_state = "clover"
 	w_class = SIZE_TINY
 

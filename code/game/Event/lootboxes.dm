@@ -1,7 +1,7 @@
 /obj/item/lootbox
 	name = "Волшебный сундучок"
 	desc = "Открыв его, вы получаете один из множества полезных призов!"
-	icon = 'icons/obj/lootbox.dmi'
+	icon = 'icons/obj/Events/lootbox.dmi'
 	icon_state = "lootbox"
 	item_state = "tile"
 	w_class = SIZE_TINY
@@ -169,6 +169,7 @@
 /obj/effect/effect/luck/atom_init()
 	. = ..()
 	playsound(get_turf(src), 'sound/effects/goodluck.ogg', VOL_EFFECTS_MASTER)
+
 	addtimer(CALLBACK(src, .proc/anim_end), 1.5 SECONDS)
 
 /obj/effect/effect/luck/proc/anim_end()

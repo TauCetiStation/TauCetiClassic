@@ -809,6 +809,11 @@
 	icon_state = "peasant_fem"
 	item_state = "peasant_fem"
 
+/obj/item/clothing/under/smith
+	name = "Одежда Кузнеца"
+	desc = "Веет уютом"
+	icon_state = "smith"
+	item_state = "smith"
 
 /obj/item/clothing/under/innkeeper
 	name = "Одежда Трактирщика"
