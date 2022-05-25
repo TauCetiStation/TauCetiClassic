@@ -57,6 +57,13 @@
 	desc = "Тут мурштруют"
 	icon_state = "barrakstablet"
 
+
+/obj/structure/vilage/coin_machine
+	icon_state = "velikiy_sup"
+	name = "Станок фальшивомонетчика"
+	desc = "Запрещено к использованию. Но я не могу остановить тебя, я же просто табличка,а не агент Всемирного Банка Лепреконов.."
+
+
 /obj/structure/vilage/velikiy_sup
 	icon_state = "velikiy_sup"
 	name = "Котел"
@@ -66,7 +73,6 @@
 	var/on = FALSE
 	var/obj/item/frying = null
 	var/fry_time = 0.0
-
 
 /obj/structure/vilage/velikiy_sup/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))

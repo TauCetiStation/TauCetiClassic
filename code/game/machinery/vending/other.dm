@@ -62,7 +62,7 @@
 
 
 /obj/machinery/vending/lepr/ui_interact(mob/user)
-	if(tree_of_greed_approval)
+	if(tree_of_greed_approval || istype(src, /obj/machinery/vending/lepr/ILB))
 		..()
 	else
 		to_chat(user, "<span class='warning'>ДРЕВО МУДРОСТИ ОТКЛЮЧИЛО ЭТОТ АВТОМАТ ОТ БАНКОВСКОЙ СИСТЕМЫ!</span>")
@@ -72,10 +72,52 @@
 	lepr_vends_list += src // global list
 
 /obj/machinery/vending/lepr/attackby(obj/item/W, mob/user)
-	if(tree_of_greed_approval)
+	if(tree_of_greed_approval || istype(src, /obj/machinery/vending/lepr/ILB))
 		..()
 	else
 		to_chat(user, "<span class='warning'>ДРЕВО МУДРОСТИ ОТКЛЮЧИЛО ЭТОТ АВТОМАТ ОТ БАНКОВСКОЙ СИСТЕМЫ!</span>")
+
+/obj/machinery/vending/lepr/ILB
+	name = "Торговый портал Всемирного Леприконского Банка"
+	desc = "Для своих у ВЛБ таки кошерные скидки"
+	icon = 'icons/obj/Events/portal_of_greed.dmi'
+	icon_state = "portal"
+	anchored = TRUE
+	layer = 1
+	density = TRUE
+	use_power = NO_POWER_USE
+
+	products = list(
+		/obj/item/lootbox = 1000,
+		/obj/item/stack/money/gold = 1000,
+		/obj/item/stack/money/silver = 1000,
+		/obj/item/stack/money/bronz = 1000,
+		/obj/item/weapon/reagent_containers/food/snacks/soap = 1000,
+		/obj/item/uncurs_ointment = 1000,
+		/obj/item/stack/medical/advanced/bruise_pack = 1000,
+		/obj/item/stack/medical/advanced/ointment = 1000,
+		/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 1000,
+		/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline = 1000,
+		/obj/item/weapon/reagent_containers/glass/bottle/peridaxon = 1000,
+		/obj/item/weapon/reagent_containers/glass/bottle/kyphotorin = 1000,
+		/obj/item/weapon/reagent_containers/glass/bottle/adminordrazine = 1000,
+	)
+
+	prices = list(
+	/obj/item/lootbox = 1,
+	/obj/item/stack/money/gold = 100,
+	/obj/item/stack/money/silver = 10,
+	/obj/item/stack/money/bronz = 1,
+	/obj/item/weapon/reagent_containers/food/snacks/soap = 1,
+	/obj/item/uncurs_ointment = 599,
+	/obj/item/stack/medical/advanced/bruise_pack = 150,
+	/obj/item/stack/medical/advanced/ointment = 150,
+	/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 25,
+	/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline = 50,
+	/obj/item/weapon/reagent_containers/glass/bottle/peridaxon = 250,
+	/obj/item/weapon/reagent_containers/glass/bottle/kyphotorin = 500,
+	/obj/item/weapon/reagent_containers/glass/bottle/adminordrazine = 100,
+	)
 
 
 /obj/machinery/vending/lepr/examine(mob/user)

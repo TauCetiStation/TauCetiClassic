@@ -96,6 +96,7 @@
 					return ", missing tool."
 				var/list/parts = del_reqs(R, user)
 				var/atom/movable/I = new R.result (get_turf(user.loc))
+				I.atom_init()
 				I.CheckParts(parts, R)
 				return 0
 			return "."

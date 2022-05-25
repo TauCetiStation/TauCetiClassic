@@ -192,6 +192,17 @@
 			to_chat(usr, "<span class='notice'>Денег больше нет...</span>")
 			return
 		M.amount -= 1
+		if(M.denomination <= 0)
+			for(var/obj/item/clover/lucky/CL in user.contents)
+				if(istype(CL, /obj/item/clover/lucky))
+					if(prob(50))
+						M.denomination =-M.denomination
+						to_chat(user, "<span class='warning'>Ваша сказочная удача, позволила вам обмануть портал.</span>")
+						new /obj/effect/effect/luck(get_turf(user))
+					else
+						to_chat(user, "<span class='warning'>Всемирный Леприконский Банк опознал вашу фальшивую монету. Ну и ну! На этот портал наложен штраф. Слава ВЛБ.</span>")
+				else
+					to_chat(user, "<span class='warning'>Всемирный Леприконский Банк опознал вашу фальшивую монету. Ну и ну! На этот портал наложен штраф. Слава ВЛБ.</span>")
 		moneyIn += M.denomination
 		to_chat(user, "<span class='notice'>[M] отправлен в [src]</span>")
 		playsound(usr, 'sound/effects/coin_ins.ogg',VOL_EFFECTS_MASTER)
@@ -365,6 +376,7 @@
 
 	if(currently_vending)
 		check_money(currently_vending,user)
+		currently_vending = null
 		return
 
 	var/dat

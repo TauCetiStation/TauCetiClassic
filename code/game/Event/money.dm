@@ -99,3 +99,17 @@
 /obj/item/money/proc/getMoneyImages()
 	if(icon_state)
 		return list(icon_state)
+
+/obj/item/stack/money/gold/fake
+	name = "Золотой Эрафубль?"
+
+/obj/item/stack/money/gold/fake/atom_init()
+	..()
+	denomination = rand(-100 , 100)
+
+/obj/item/stack/money/silver/fake
+	name = "Серебряный Эрафубль?"
+
+/obj/item/stack/money/silver/fake/atom_init()
+	..()
+	denomination = rand(-10 , 10)
