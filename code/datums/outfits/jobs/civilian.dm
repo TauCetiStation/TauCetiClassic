@@ -278,7 +278,7 @@
 /datum/outfit/job/hub/lepr
 	name = OUTFIT_JOB_NAME("Лепрекон")
 	uniform =/obj/item/clothing/under/lepr
-	shoes = /obj/item/clothing/shoes/boots
+	shoes = /obj/item/clothing/shoes/lepr
 	gloves = /obj/item/clothing/gloves/latex
 	head = /obj/item/clothing/head/lepr
 	l_hand = /obj/item/weapon/cane

@@ -23,6 +23,7 @@
 
 /obj/item/shakal_skull/pickup(mob/user)
 	..()
+	playsound(user, 'sound/Event/cursed.ogg', VOL_EFFECTS_MASTER)
 	user.add_filter("wave_filter",1,wave_filter(0,3))
 
 /obj/item/clover

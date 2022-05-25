@@ -443,6 +443,7 @@
 #include "code\game\Event\Hub_wormhole.dm"
 #include "code\game\Event\ladder.dm"
 #include "code\game\Event\lepr_area.dm"
+#include "code\game\Event\lootboxes.dm"
 #include "code\game\Event\money.dm"
 #include "code\game\Event\pillory.dm"
 #include "code\game\Event\README.dm"
