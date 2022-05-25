@@ -8,7 +8,7 @@
 
 /datum/hud/proc/init_screens(list/types)
 	for(var/screen_type in types)
-		init_screen(screen_type, ui_style, ui_color, ui_alpha)
+		init_screen(screen_type)
 
 /datum/hud/proc/add_move_intent(type = /atom/movable/screen/move_intent)
 	mymob.move_intent = new type
