@@ -33,12 +33,12 @@
 
 	var/mob/living/new_mob
 
-	var/randomizer = pick("animal", "cyborg", "human", "xeno")
+	var/randomizer = pick("animal", "cyborg", "xeno")
 	if(isxeno(M))
 		randomizer = "xeno"
 	switch(randomizer)
 		if("animal")
-			var/beast = pick(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/tomato/angry_tomato, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/pig/shadowpig, /mob/living/simple_animal/cow/cute_cow)
+			var/beast = pick(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/tomato/angry_tomato, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/pig/shadowpig)
 			new_mob = new beast(M.loc)
 			new_mob.universal_speak = TRUE
 		if("cyborg")
@@ -46,23 +46,6 @@
 			new_mob.gender = M.gender
 			new_mob.invisibility = 0
 			new_mob.job = "Cyborg"
-		if("human")
-			new_mob = new /mob/living/carbon/human(M.loc)
-			if(M.gender == MALE)
-				new_mob.gender = MALE
-				new_mob.name = pick(first_names_male)
-			else
-				new_mob.gender = FEMALE
-				new_mob.name = pick(first_names_female)
-			new_mob.name += " [pick(last_names)]"
-			new_mob.real_name = new_mob.name
-			new_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(new_mob), SLOT_WEAR_SUIT)
-			new_mob.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(new_mob), SLOT_HEAD)
-			new_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(new_mob), SLOT_SHOES)
-
-
-			var/datum/preferences/A = new()	//Randomize appearance for the human
-			A.randomize_appearance_for(new_mob)
 		if("xeno")
 			new_mob = new /mob/living/carbon/xenomorph/humanoid/maid(M.loc)
 			new_mob.universal_speak = TRUE
@@ -89,7 +72,6 @@
 	light_color = "#ff0000"
 
 /obj/item/projectile/magic/animate/Bump(atom/change)
-	. = ..()
 	if(isitem(change) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
 		var/obj/O = change
 		new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
@@ -99,7 +81,16 @@
 		C.ChangeOwner(firer)
 		create_spawner(/datum/spawner/living/mimic, C)
 	else if(istype(change, /mob/living/simple_animal/shade) || isxeno(change))
-		wabbajack(change)
+		var/mob/living/M = change
+		M = wabbajack(M)
+		if(firer)
+			var/datum/role/wizard/mage = firer.mind.GetRole(WIZARD)
+			var/datum/faction/wizards/federation = mage.GetFaction()
+			var/datum/role/wizard_apprentice/recruit = add_faction_member(federation, M, TRUE)
+			var/datum/objective/target/protect/new_objective = recruit.AppendObjective(/datum/objective/target/protect)
+			new_objective.explanation_text = "Help [firer.real_name], the Demiurgos of your new life."
+			new_objective.target = mage
+	..()
 
 /obj/item/projectile/magic/resurrection
 	name = "bolt of resurrection"

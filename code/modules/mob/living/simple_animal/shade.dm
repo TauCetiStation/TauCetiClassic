@@ -228,9 +228,19 @@
 
 /mob/living/simple_animal/shade/evil_shade
 	layer = TURF_LAYER
-	melee_damage = 1
+	melee_damage = 2
 	incorporeal_move = 1
 	health = 15
 	icon_state = "ghost2"
 	icon_living = "ghost2"
+	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+/mob/living/simple_animal/shade/atom_init()
+	. = ..()
+	wizard_shade_list += src
+
+/mob/living/simple_animal/shade/Destroy()
+	wizard_shade_list -= src
+	return ..()
+	

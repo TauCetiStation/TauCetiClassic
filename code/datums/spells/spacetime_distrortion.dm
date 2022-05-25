@@ -80,7 +80,7 @@
 		flick("purplesparkles", src)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			if(!iswizard(H) && prob(30))
+			if(!iswizard(H) && prob(30) && wizard_shade_list.len < 5)
 				var/mob/living/simple_animal/A = new /mob/living/simple_animal/shade/evil_shade(H.loc)
 				create_spawner(/datum/spawner/living/evil_shade, A)
 		linked_dist.get_walker(AM)

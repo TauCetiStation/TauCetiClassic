@@ -157,17 +157,6 @@
 	if(. && prob(55) && !ISDIAGONALDIR(Dir))
 		playsound(src, 'sound/misc/cowbell.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
-/mob/living/simple_animal/cow/cute_cow
-	icon = 'icons/mob/livestock.dmi'
-	icon_state = "OLDcow"
-	icon_living = "OLDcow"
-	icon_dead = "OLDcow_d"
-	icon_gib = "OLDcow_g"
-
-/mob/living/simple_animal/cow/cute_cow/atom_init()
-	. = ..()
-	AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball)
-
 /mob/living/simple_animal/chick
 	name = "chick"
 	desc = "Adorable! They make such a racket though."

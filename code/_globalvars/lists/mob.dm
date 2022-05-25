@@ -38,6 +38,7 @@ var/global/list/ai_eyes_list = list()
 var/global/list/drone_list = list()
 
 var/global/list/gods_list = list()
+var/global/list/wizard_shades_list = list()
 
 //feel free to add shit to lists below
 var/global/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine")	//increase heart rate
