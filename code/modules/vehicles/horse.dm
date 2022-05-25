@@ -1,6 +1,6 @@
 /obj/vehicle/space/spacebike/horse
-		name = "Лошадь"
-		desc = "Это треть бюджета всего селения"
+		name = "Р›РѕС€Р°РґСЊ"
+		desc = "Р­С‚Рѕ С‚СЂРµС‚СЊ Р±СЋРґР¶РµС‚Р° РІСЃРµРіРѕ СЃРµР»РµРЅРёСЏ"
 		icon = 'icons/obj/Events/horse.dmi'
 		icon_state = "horse_off"
 		land_speed = 2

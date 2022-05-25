@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/aoe_turf/lepr_escape
-	name = "Побег"
-	desc = "Возвращает вас в логово Жадности."
+	name = "РџРѕР±РµРі"
+	desc = "Р’РѕР·РІСЂР°С‰Р°РµС‚ РІР°СЃ РІ Р»РѕРіРѕРІРѕ Р–Р°РґРЅРѕСЃС‚Рё."
 	clothes_req = 0
 	charge_max = 50
 	var/list/turf/possible_tile
