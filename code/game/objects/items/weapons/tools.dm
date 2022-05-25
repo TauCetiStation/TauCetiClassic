@@ -568,6 +568,10 @@
 	w_class = SIZE_TINY
 	m_amt = 15
 
+	qualities = list(
+		QUALITY_PRYING = 0.7
+	)
+
 /obj/item/weapon/crowbar/power
 	name = "Jaws of Life"
 	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a prying head"
