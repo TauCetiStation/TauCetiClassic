@@ -1007,12 +1007,12 @@ var/global/list/admin_verbs_hideable = list(
 
 /client/proc/make_someone_the_tree()
 	set category = "Fun"
-	set name = "Сделать игрока деревом"
-	set desc = "делает игрока на той же клетке что и вы древом мудрости."
+	set name = "Выбрать игрока для Древа Мудрости"
+	set desc = "выбирает игрока и делает его древом мудрости."
 
 	var/did_it = 0
-	for(var/obj/structure/tree_of_greed/TR in trees_of_greed_list)
-		if(!did_it && TR && (!(TR.overmind)))
+	for(var/obj/structure/tree_of_greed_startingpoint/TR in trees_of_greed_overmind_list)
+		if(!did_it && TR)
 			var/mob/winner = input("Кто будет древом?", "Древо") in player_list
 			if(winner.client)
 				var/client/letspick = winner.client

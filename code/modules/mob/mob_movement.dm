@@ -89,6 +89,9 @@
 	if(isAI(mob))
 		return AIMove(n,direct,mob)
 
+	if(istype(mob, /mob/camera/treeofgreed))
+		return TreeMove(n,direct,mob)
+
 	if(mob.notransform)
 		return//This is sota the goto stop mobs from moving var
 

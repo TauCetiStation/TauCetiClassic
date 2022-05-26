@@ -43,7 +43,3 @@ var/global/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitr
 var/global/list/bradycardics = list("neurotoxin", "cryoxadone", "clonexadone", "space_drugs", "stoxin")					//decrease heart rate
 var/global/list/heartstopper = list("potassium_phorochloride", "zombie_powder") //this stops the heart
 var/global/list/cheartstopper = list("potassium_chloride") //this stops the heart when overdose is met -- c = conditional
-
-var/global/tree_of_greed_approval = 1
-var/global/list/lepr_vends_list = list()
-var/global/list/trees_of_greed_list = list()
