@@ -244,20 +244,6 @@
 	else
 		to_chat(src, "<span class='warning'>Порталы уже включены!</span>")
 
-/mob/camera/treeofgreed/verb/turnon_the_vends()
-	set category = "Воля Древа"
-	set name = "Включить торговые порталы"
-	set desc = "Включает все торговые порталы."
-
-	if(!tree_of_greed_approval)
-		tree_of_greed_approval = TRUE
-		for(var/obj/machinery/vending/lepr/L in lepr_vends_list)
-			if(!istype(L, /obj/machinery/vending/lepr/ILB))
-				L.icon_state = "portal"
-		to_chat(src, "<span class='notice'>Вы включили все торговые автоматы!</span>")
-	else
-		to_chat(src, "<span class='warning'>Порталы уже включены!</span>")
-
 /mob/camera/treeofgreed/verb/global_announcement_tree()
 	set category = "Воля Древа"
 	set name = "Сделать глобальное заявление"
