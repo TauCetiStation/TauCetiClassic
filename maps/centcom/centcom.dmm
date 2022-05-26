@@ -14618,7 +14618,6 @@
 /obj/effect/landmark{
 	name = "Nuclear-Bomb"
 	},
-/obj/machinery/door/window/brigdoor/northleft,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -14626,6 +14625,9 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
+/obj/machinery/door/window/brigdoor/northleft{
+	req_access = list(150)
+	},
 /turf/unsimulated/floor{
 	icon_state = "podhatch"
 	},
