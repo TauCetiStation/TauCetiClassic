@@ -106,8 +106,9 @@
 
 	for(var/wallDir in cardinal)
 		var/turf/newTurf = get_step(location,wallDir)
-		if(newTurf.density)
-			direction |= wallDir
+		if(newTurf)
+			if(newTurf.density)
+				direction |= wallDir
 
 	for(var/obj/effect/glowshroom/shroom in location)
 		if(shroom == src)

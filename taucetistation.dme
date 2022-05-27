@@ -1502,6 +1502,7 @@
 #include "code\modules\events\pda_spam.dm"
 #include "code\modules\events\prison_break.dm"
 #include "code\modules\events\radiation_storm.dm"
+#include "code\modules\events\rain.dm"
 #include "code\modules\events\rogue_drones.dm"
 #include "code\modules\events\space_ninja.dm"
 #include "code\modules\events\spacevine.dm"
