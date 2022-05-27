@@ -42,6 +42,12 @@
 	UnregisterSignal(knife, list(COMSIG_PARENT_QDELETING))
 	knife = null
 
+/obj/item/clothing/shoes/boots/wizard
+
+/obj/item/clothing/shoes/boots/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
 /obj/item/clothing/shoes/boots/galoshes
 	desc = "Rubber boots."
 	name = "galoshes"
