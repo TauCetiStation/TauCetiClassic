@@ -25,6 +25,7 @@
 	layer = 1
 	density = TRUE
 	use_power = NO_POWER_USE
+	var/serial_number = 1
 
 	products = list(
 		/obj/item/stack/money/gold = 1000,
@@ -70,6 +71,16 @@
 /obj/machinery/vending/lepr/atom_init()
 	. = ..()
 	lepr_vends_list += src // global list
+	serial_number = "MoneyScammer-[rand(1, 1000)]"
+	cameranet.cameras += src
+	cameranet.addCamera(src)
+	cameranet.updateVisibility(src, 0)
+
+/obj/machinery/vending/lepr/Destroy()
+	. = ..()
+	cameranet.cameras -= src
+	cameranet.removeCamera(src)
+
 
 /obj/machinery/vending/lepr/attackby(obj/item/W, mob/user)
 	if(tree_of_greed_approval || istype(src, /obj/machinery/vending/lepr/ILB))

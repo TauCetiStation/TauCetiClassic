@@ -23,7 +23,7 @@
 			// GOOD STUFF
 				//клевер
 				if(prob(1+(outcome_modifier/4))) //1% or 2%
-					var/obj/item/clover/C = new /obj/item/clover (get_turf(user))
+					var/obj/item/clover/C = new /obj/item/clover/lucky (get_turf(user))
 					new /obj/effect/effect/luck(get_turf(user))
 					user.visible_message("<span class='notice'>[user] открывает [src], а там... [C.name]!</span>")
 					qdel(src)
