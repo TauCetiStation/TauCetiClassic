@@ -88,7 +88,7 @@
 	end_sound = 'sound/ambience/specific/ash_storm_end.ogg'
 	end_overlay = "light_ash"
 	area_type = /area/awaymission/junkyard
-	target_ztrait = ZTRAIT_JUNKYARD
+	target_ztrait = ZTRAIT_STATION
 
 	immunity_type = "ash"
 	var/spawn_tornadoes = 1
@@ -160,7 +160,7 @@
 
 	area_type = /area
 	protected_areas = list(/area/station/maintenance, /area/station/civilian/dormitories/male, /area/station/civilian/dormitories/female, /area/station/storage/emergency, /area/station/storage/emergency2, /area/station/storage/emergency3, /area/station/storage/tech, /area/asteroid/mine)
-	target_ztrait = ZTRAIT_STATION
+	target_ztrait = 4
 
 	immunity_type = "rad"
 
@@ -219,7 +219,7 @@
 
 
 /datum/weather/acid_rain
-	name = "acid rain"
+	name = "rain"
 	desc = "Some stay dry and others feel the pain"
 
 	telegraph_duration = 400
@@ -237,7 +237,7 @@
 	end_message = "<span class='notice'>The rain starts to dissipate.</span>"
 	end_sound = 'sound/ambience/specific/acidrain_end.ogg'
 	additional_action = TRUE
-	area_type = /area/awaymission/junkyard
+	area_type = /area/space
 	target_ztrait = ZTRAIT_JUNKYARD
 
 	immunity_type = "acid" // temp
@@ -249,8 +249,6 @@
 	if(!istype(/turf, L.loc))
 		return
 	L.water_act(5)
-	if(!prob(L.getarmor(null, "bio")))
-		L.take_overall_damage(0, 1)
 
 /datum/weather/acid_rain/additional_action() //Proc for other actions?
 	if(prob(15))

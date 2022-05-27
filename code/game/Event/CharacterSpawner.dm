@@ -122,3 +122,6 @@
 	user.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/lepr_escape)
 	user.see_invisible = 34 // so he can see the tree of greed
 	user.homm_species = "lepr"
+	cameranet.cameras += user
+	cameranet.addCamera(user)
+	cameranet.updateVisibility(user, 0)

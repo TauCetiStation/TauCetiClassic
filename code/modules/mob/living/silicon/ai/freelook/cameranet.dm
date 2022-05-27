@@ -7,6 +7,7 @@ var/global/datum/cameranet/cameranet = new()
 /datum/cameranet
 	var/name = "Camera Net" // Name to show for VV and stat()
 
+	// REWORKED TO CONTAIN ALL THE LEPRECONS AND TREES OF GREED INSTEAD OF CAMERAS
 	// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Destroy().
 	var/list/cameras = list()
 	var/cameras_unsorted = 1
@@ -42,29 +43,29 @@ var/global/datum/cameranet/cameranet = new()
 
 // Updates what the aiEye can see. It is recommended you use this when the aiEye moves or it's location is set.
 
-/datum/cameranet/proc/visibility(mob/camera/Eye/ai)
+/datum/cameranet/proc/visibility(mob/camera/treeofgreed/T)
 	// 0xf = 15
-	var/x1 = max(0, ai.x - 16) & ~0xf
-	var/y1 = max(0, ai.y - 16) & ~0xf
-	var/x2 = min(world.maxx, ai.x + 16) & ~0xf
-	var/y2 = min(world.maxy, ai.y + 16) & ~0xf
+	var/x1 = max(0, T.x - 16) & ~0xf
+	var/y1 = max(0, T.y - 16) & ~0xf
+	var/x2 = min(world.maxx, T.x + 16) & ~0xf
+	var/y2 = min(world.maxy, T.y + 16) & ~0xf
 
 	var/list/visibleChunks = list()
 
 	for(var/x = x1; x <= x2; x += 16)
 		for(var/y = y1; y <= y2; y += 16)
-			visibleChunks += getCameraChunk(x, y, ai.z)
+			visibleChunks += getCameraChunk(x, y, T.z)
 
-	var/list/remove = ai.visibleCameraChunks - visibleChunks
-	var/list/add = visibleChunks - ai.visibleCameraChunks
+	var/list/remove = T.visibleCameraChunks - visibleChunks
+	var/list/add = visibleChunks - T.visibleCameraChunks
 
 	for(var/chunk in remove)
 		var/datum/camerachunk/c = chunk
-		c.remove(ai)
+		c.remove(T)
 
 	for(var/chunk in add)
 		var/datum/camerachunk/c = chunk
-		c.add(ai)
+		c.add(T)
 
 // Updates the chunks that the turf is located in. Use this when obstacles are destroyed or	when doors open.
 
@@ -83,20 +84,20 @@ var/global/datum/cameranet/cameranet = new()
 
 // Removes a camera from a chunk.
 
-/datum/cameranet/proc/removeCamera(obj/machinery/camera/c)
-	if(!c.can_use())
+/datum/cameranet/proc/removeCamera(atom/c)
+	if(!c)
 		majorChunkChange(c, 0)
 
 // Add a camera to a chunk.
 
-/datum/cameranet/proc/addCamera(obj/machinery/camera/c)
-	if(c.can_use())
+/datum/cameranet/proc/addCamera(atom/c)
+	if(c)
 		majorChunkChange(c, 1)
 
 // Used for Cyborg cameras. Since portable cameras can be in ANY chunk.
 
-/datum/cameranet/proc/updatePortableCamera(obj/machinery/camera/c)
-	if(c.can_use())
+/datum/cameranet/proc/updatePortableCamera(atom/c)
+	if(c)
 		majorChunkChange(c, 1)
 	//else
 	//	majorChunkChange(c, 0)
