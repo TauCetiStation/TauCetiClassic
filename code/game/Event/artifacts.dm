@@ -24,7 +24,7 @@
 /obj/item/shakal_skull/pickup(mob/user)
 	..()
 	playsound(user, 'sound/Event/cursed.ogg', VOL_EFFECTS_MASTER)
-	user.add_filter("wave_filter",1,wave_filter(0,3))
+	user.add_filter("ШАКАЛ",1,angular_blur_filter(1,1,7))
 
 /obj/item/clover
 	name = "Трехлистный клевер"
