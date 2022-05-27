@@ -9,7 +9,7 @@
 	icon = 'icons/obj/Events/tree_spawner.dmi'
 	icon_state = "spawnpoint"
 	density = 0
-	invisibility = SEE_INVISIBLE_OBSERVER
+	invisibility = INVISIBILITY_ABSTRACT
 	mouse_opacity = MOUSE_OPACITY_ICON
 	var/mob/camera/treeofgreed/overmind = null // tree_of_greed's overmind
 
@@ -28,6 +28,7 @@
 	B.key = C.key
 	B.tree_of_greed_core = src
 	src.overmind = B
+	src.overmind.setLoc(loc)
 	return TRUE
 
 /// СТВОЛЫ ДРЕВА
@@ -47,6 +48,9 @@
 /obj/structure/tree_of_greed/atom_init()
 	. = ..()
 	trees_of_greed_list += src
+	cameranet.cameras += src
+	cameranet.addCamera(src)
+	cameranet.updateVisibility(src, 0)
 
 /obj/structure/tree_of_greed/necropolis
 	location_name = "Некрополис"
@@ -58,6 +62,7 @@
 			if(TR.overmind)
 				to_chat(TR.overmind, "<b><span class='notice'>Кто-то в локации [src.location_name] задал вам вопрос!</span></b>")
 				to_chat(TR.overmind, "<b>Он спросил: [question]</b>")
+
 /// ВЗОР ДРЕВА
 
 /mob/camera/treeofgreed
@@ -73,6 +78,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	layer = INFRONT_MOB_LAYER
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+	universal_understand = 1
 
 	var/obj/structure/tree_of_greed/tree_of_greed_core = null // The tree overmind's core
 
@@ -82,12 +88,18 @@
 	var/cooldown = 0
 	var/acceleration = 1
 
+	var/list/visibleCameraChunks = list()
+
 /mob/camera/treeofgreed/atom_init()
 	ghostimage = image(icon, src, icon_state)
 	ghost_sightless_images |= ghostimage //so ghosts can see the blob eye when they disable ghost sight
 	updateallghostimages()
 	. = ..()
 
+/mob/camera/treeofgreed/pointed()
+	set popup_menu = 0
+	set src = usr.contents
+	return 0
 
 /client/proc/TreeMove(n, direct, mob/camera/treeofgreed/user)
 
@@ -98,7 +110,7 @@
 		user.sprint = initial
 
 	for(var/i = 0; i < max(user.sprint, initial); i += 20)
-		var/turf/step = get_turf(get_step(user, direct))
+		var/turf/step = get_step(user, direct)
 		if(step)
 			user.setLoc(step)
 
@@ -109,13 +121,18 @@
 		user.sprint = initial
 
 /mob/camera/treeofgreed/setLoc(T)
-	T = get_turf(T)
-	loc = T
-	return 1
+	if(src)
+		T = get_turf(T)
+		loc = T
+		cameranet.visibility(src)
+		if(client)
+			client.eye = src
+		update_parallax_contents()
+		return 1
 
-/*
-/mob/camera/treeofgreed/movement_delay()
-	return*/
+/mob/camera/treeofgreed/proc/getLoc()
+	if(isturf(loc))
+		return loc
 
 /mob/camera/treeofgreed/Login()
 	..()
@@ -123,11 +140,14 @@
 	treeofgreed_help()
 
 /mob/camera/treeofgreed/proc/treeofgreed_help()
+	to_chat(src, "<br>")
 	to_chat(src, "<b><span class='notice'>Вы дерево мудрости!</span></b>")
+	to_chat(src, "<br>")
 	to_chat(src, "<b>Ваш волшебный глаз могут видеть только лепреконы.</b>")
+	to_chat(src, "<b>Вы, в свою очередь, можете видеть только вокруг своих стволов, лепреконов и торговых порталов.</b>")
 	to_chat(src, "<b>Слышать вас могут все.</b>")
 	to_chat(src, "<b>У вас есть способности. Их можно посмотреть во вкладке Воля Древа.</b>")
-	to_chat(src, "<b>Вы можете телепортироваться в Логово Жадности, или к любому из своих стволов.</b>")
+	to_chat(src, "<b>Вы можете телепортироваться в Логово Жадности, а также к любому из своих стволов, торговых порталов и лепреконов.</b>")
 	to_chat(src, "<b>Вы можете открыть или закрыть торговые порталы по всему миру.</b>")
 	to_chat(src, "<b>Вы можете сделать глобальный анонс..</b>")
 
@@ -189,6 +209,7 @@
 		updateallghostimages()
 	return ..()
 
+
 // Tree verbs
 
 /mob/camera/treeofgreed/verb/transport_core()
@@ -200,9 +221,27 @@
 		src.loc = tree_of_greed_core.loc
 		to_chat(src, "<span class='notice'><b>Вы перенеслись в Логово Жадности!</b></span>")
 
+/mob/camera/treeofgreed/verb/transport_lepr()
+	set category = "Воля Древа"
+	set name = "Переместиться к одному из лепреконов"
+	set desc = "Перемещает вас к одному из лепреконов"
+
+	var/list/candidates = list()
+	for(var/mob/living/carbon/human/user in mob_list)
+		if(user.homm_species == "lepr")
+			candidates += user
+	if(!candidates)
+		to_chat(src, "<span class='notice'><b>Лепреконов нету!</b></span>")
+		return
+	var/mob/desired_mob = input("Куда переместиться?", "Лепреконы") in candidates
+	if(!desired_mob)
+		return
+	src.loc = desired_mob.loc
+	to_chat(src, "<span class='notice'><b>Вы переместились к лепрекону [desired_mob.name].</b></span>")
+
 /mob/camera/treeofgreed/verb/transport_tree()
 	set category = "Воля Древа"
-	set name = "Переместиться к одному из ваших стволов"
+	set name = "Переместиться к одному из стволов"
 	set desc = "Перемещает вас к одному из существующих Древ Мудрости"
 
 	var/list/candidates = list()
@@ -214,7 +253,25 @@
 	for(var/obj/structure/tree_of_greed/TR in trees_of_greed_list)
 		if(TR && TR.location_name == desired_loc)
 			src.loc = TR.loc
-			to_chat(src, "<span class='notice'><b>Вы переместились. Теперь вы находитесь в локации [desired_loc]</b></span>")
+			to_chat(src, "<span class='notice'><b>Вы переместились. Теперь вы находитесь в локации: [desired_loc]</b></span>")
+
+/mob/camera/treeofgreed/verb/transport_vends()
+	set category = "Воля Древа"
+	set name = "Переместиться к торговым порталам"
+	set desc = "Перемещает вас к одному из существующих Торговых Порталов"
+
+	if(lepr_vends_list.len)
+		var/list/candidates = list()
+		for(var/obj/machinery/vending/lepr/L in lepr_vends_list)
+			candidates += L.serial_number
+		var/desired_loc = input("К какому порталу переместиться?", "Серийный номер портала") in candidates
+		if(!desired_loc)
+			return
+		for(var/obj/machinery/vending/lepr/LP in lepr_vends_list)
+			if(LP && LP.serial_number == desired_loc)
+				src.loc = LP.loc
+				to_chat(src, "<span class='notice'><b>Вы переместились к торговому порталу.</b></span>")
+
 
 /mob/camera/treeofgreed/verb/turnoff_the_vends()
 	set category = "Воля Древа"
@@ -256,4 +313,4 @@
 	if(!new_msg)
 		return
 	for(var/mob/T in player_list)
-		to_chat(T, "<br><span class='notice'><b><font size=6>Голос <span class='name'>Древа Мудрости</span> звучит в вашей голове: <i>[new_msg]</i></font></b></span>")
+		to_chat(T, "<br><span class='notice'><b><font size=5>Голос <span class='name'>Древа Мудрости</span> проносится по всему Энроту: <i>[new_msg]</i></font></b></span>")
