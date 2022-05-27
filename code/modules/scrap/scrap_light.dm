@@ -48,10 +48,12 @@
 	return
 
 /obj/item/stack/sheet/wood/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/medical/bruise_pack/rags) && use(1))
-		new /obj/item/device/flashlight/flare/torch(get_turf(src))
-		qdel(I)
-		return
+	if(istype(I, /obj/item/stack/medical/bruise_pack/rags))
+		var/turf/current_location = get_turf(src)
+		if(use(1))
+			new /obj/item/device/flashlight/flare/torch(current_location)
+			qdel(I)
+			return
 	return ..()
 
 /obj/item/stack/medical/bruise_pack/rags
