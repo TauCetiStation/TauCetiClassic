@@ -690,7 +690,7 @@ var/global/list/turret_icons
 	var/ailock
 
 /obj/machinery/porta_turret/proc/setState(datum/turret_checks/TC)
-	if(controllock)
+	if(controllock || !is_operational())
 		return
 	src.enabled = TC.enabled
 	src.lethal = TC.lethal
