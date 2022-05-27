@@ -583,12 +583,65 @@ var/global/list/death_alarm_stealth_areas = list(
 <b>Integrity:</b> Implant will last even after host's death, allowing re-implanting using special tools. Said tools are never delivered to station, however."}
 	return dat
 
-/obj/item/weapon/implant/xray
+/obj/item/weapon/implant/genetics
+	name = "Experimental mod"
+	desc = "Adapt! Improve! Overcome!"
+	var/gen_mod = CLUMSY
+	var/implant_active = TRUE
+
+	action_button_name = "Adrenaline implant"
+	action_button_is_hands_free = TRUE
+
+/obj/item/weapon/implant/genetics/implanted(mob/user)
+	if (!(gen_mod in user.mutations))
+		user.mutations.Add(gen_mod)
+		to_chat(imp_in, desc)
+		return TRUE
+
+/obj/item/weapon/implant/genetics/ui_action_click()
+	if (implant_active)
+		if (!(gen_mod in imp_in.mutations))
+			imp_in.mutations.Add(gen_mod)
+	else
+		if (gen_mod in imp_in.mutations)
+			imp_in.mutations.Remove(gen_mod)
+	implant_active = !implant_active
+
+/obj/item/weapon/implant/genetics/tele
+	name = "FORCE implant"
+	desc = "Feel the Force!"
+	gen_mod = TK
+
+
+/obj/item/weapon/implant/genetics/lasereyes
+	name = "Laser implant"
+	desc = "Shot 'em all"
+	gen_mod = LASEREYES
+
+/obj/item/weapon/implant/genetics/xray
 	name = "X-RAY vision implant"
 	desc = "Ah, now I see."
+	gen_mode = XRAY
 
-/obj/item/weapon/implant/xray/implanted(mob/user)
+/obj/item/weapon/implant/genetics/xray/implanted(mob/user)
 	if (!(XRAY in user.mutations))
 		user.mutations.Add(XRAY)
+		to_chat(imp_in, desc)
 		user.update_sight()
-		return 1
+		return TRUE
+
+/obj/item/weapon/implant/genetics/xray/ui_action_click()
+	if (implant_active)
+		if (!(gen_mod in imp_in.mutations))
+			imp_in.mutations.Add(gen_mod)
+			imp_in.update_sight()
+	else
+		if (gen_mod in imp_in.mutations)
+			imp_in.mutations.Remove(gen_mod)
+			imp_in.update_sight()
+	implant_active = !implant_active
+
+
+
+
+

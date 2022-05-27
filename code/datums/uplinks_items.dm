@@ -951,7 +951,7 @@
 /datum/uplink_item/implants/xray
 	name = "X-Ray Vision Implant"
 	desc = "An implant, that will grant user a power to see through walls."
-	item = /obj/item/weapon/implanter/xray
+	item = /obj/item/weapon/implanter/genetics/xray
 	cost = 10
 
 // TELECRYSTALS

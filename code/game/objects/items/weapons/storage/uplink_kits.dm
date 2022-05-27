@@ -170,7 +170,7 @@
 /obj/item/weapon/storage/box/syndie_kit/imp_xray/atom_init()
 	. = ..()
 	var/obj/item/weapon/implanter/O = new(src)
-	O.imp = new /obj/item/weapon/implant/xray(O)
+	O.imp = new /obj/item/weapon/implant/genetics/xray(O)
 	O.update()
 
 /obj/item/weapon/storage/box/syndie_kit/space

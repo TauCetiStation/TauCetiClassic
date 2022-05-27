@@ -74,11 +74,27 @@
 	. = ..()
 	update()
 
-/obj/item/weapon/implanter/xray
+/obj/item/weapon/implanter/genetics/xray
 	name = "implanter (X)"
 
-/obj/item/weapon/implanter/xray/atom_init()
-	imp = new /obj/item/weapon/implant/xray(src)
+/obj/item/weapon/implanter/genetics/xray/atom_init()
+	imp = new /obj/item/weapon/implant/genetics/xray(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/genetics/lasereyes
+	name = "implanter (E)"
+
+/obj/item/weapon/implanter/genetics/lasereyes/atom_init()
+	imp = new /obj/item/weapon/implant/genetics/lasereyes(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/genetics/tele
+	name = "implanter (T)"
+
+/obj/item/weapon/implanter/genetics/tele/atom_init()
+	imp = new /obj/item/weapon/implant/genetics/tele(src)
 	. = ..()
 	update()
 
@@ -135,3 +151,4 @@
 /obj/item/weapon/implanter/storage/atom_init()
 	imp = new /obj/item/weapon/implant/storage(src)
 	. = ..()
+
