@@ -1,4 +1,6 @@
 /proc/is_skill_competent(mob/user, required_skills)
+	if(isobserver(user))
+		return TRUE
 	for(var/datum/skill/required_skill as anything in required_skills)
 		var/datum/skill/skill = all_skills[required_skill]
 		var/value_with_helpers = get_skill_with_assistance(user, skill)
