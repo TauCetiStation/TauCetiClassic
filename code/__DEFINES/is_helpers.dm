@@ -183,6 +183,8 @@
 
 #define iswizard(H) isrole(WIZARD, H)
 
+#define iswizardapprentice(H) isrole(WIZ_APPRENTICE, H)
+
 #define isdeathsquad(H) isrole(DEATHSQUADIE, H)
 
 #define isninja(H) isrole(NINJA, H)
