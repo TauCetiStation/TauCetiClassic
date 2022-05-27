@@ -142,6 +142,7 @@
 
 /datum/wound/proc/disinfect()
 	disinfected = TRUE
+	germ_level = 0
 
 // heal the given amount of damage, and if the given amount of damage was more
 // than what needed to be healed, return how much heal was left

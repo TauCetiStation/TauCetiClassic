@@ -65,20 +65,16 @@
 	if(!istype(user) || !istype(BP))
 		return
 
-	var/germ_level = 0
-	if(user.gloves)
-		germ_level += user.gloves.germ_level
-	else
-		germ_level += user.germ_level
+	var/g_level = user.get_germ_level("arms")
 
 	if(tool.blood_DNA && tool.blood_DNA.len) //germs from blood-stained tools
-		germ_level += GERM_LEVEL_AMBIENT * 0.25
+		g_level += GERM_LEVEL_AMBIENT * 0.25
 
 	if(ishuman(user) && !user.is_skip_breathe() && !user.wear_mask) //wearing a mask helps preventing people from breathing germs into open incisions
-		germ_level += user.germ_level * 0.25
+		g_level += user.germ_level * 0.25
 
-	BP.germ_level = max(germ_level, BP.germ_level)
-	if(BP.germ_level)
+	if(g_level > 0 && g_level > BP.get_germ_level())
+		BP.set_germ_level(g_level, user)
 		BP.owner.bad_bodyparts |= BP
 
 /proc/checks_for_surgery(mob/living/carbon/M, mob/living/user, check_covering = TRUE)

@@ -8,6 +8,7 @@
 	full_w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 20
+	germ_level = 0 // At least, by default, we suppose that these are sterile.
 
 	var/self_delay = 25
 	var/other_delay = 5
@@ -138,12 +139,13 @@
 			else
 				user.visible_message("<span class='notice'>\The [user] places bandaid over [W.desc] on [H]'s [BP.name].</span>", \
 									"<span class='notice'>You place bandaid over [W.desc] on [H]'s [BP.name].</span>")
+			var/g_level = get_germ_level()
+			var/BP_g_level = BP.get_germ_level()
 			W.bandage()
 			if(crit_fail)
-				W.germ_level += germ_level
-			else
-				W.germ_level += min(germ_level, 3)
-			break
+				W.germ_level += get_germ_level()
+			else if(g_level > 0 && g_level > BP_g_level)
+				W.germ_level += 3
 
 			BP.update_damages()
 			H.update_bandage()

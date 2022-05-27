@@ -719,14 +719,19 @@
 			to_chat(usr, "The solution dissolves the ink on the book.")
 		else
 			to_chat(usr, "It wasn't enough...")
-	return
+	O.decrease_germ_level(min(volume * boozepwr, O.get_germ_level()))
+
 /datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with ethanol isn't quite as good as fuel.
 	if(!isliving(M))
 		return
 	if(method == TOUCH)
+		M.decrease_germ_level(min(volume * boozepwr, M.get_germ_level()), null, "all")
 		M.adjust_fire_stacks(volume / 15)
 		return
 
+
+/datum/reagent/consumable/ethanol/reaction_turf(turf/T, volume)
+	T.decrease_germ_level(min(volume * boozepwr, T.get_germ_level()))
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"

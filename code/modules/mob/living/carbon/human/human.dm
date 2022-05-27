@@ -1239,12 +1239,6 @@
 		return NEUTER
 	return gender
 
-/mob/living/carbon/human/proc/increase_germ_level(n)
-	if(gloves)
-		gloves.germ_level += n
-	else
-		germ_level += n
-
 /mob/living/carbon/human/proc/is_lung_ruptured()
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
 	return IO.is_bruised()
@@ -1950,6 +1944,63 @@
 													// clamped to max 1000
 	if(jitteriness > 30 && !is_jittery)
 		INVOKE_ASYNC(src, /mob.proc/jittery_process)
+
+
+/mob/living/carbon/human/can_increase_germ_level()
+	return !species.flags[BIOHAZZARD_IMMUNE]
+
+/mob/living/carbon/human/get_germ_level(part = "")
+	switch(part)
+		if("arms")
+			if(gloves)
+				return gloves.get_germ_level()
+		if("legs")
+			if(shoes)
+				return shoes.get_germ_level()
+
+	if(species.flags[BIOHAZZARD_IMMUNE])
+		return 0
+
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(environment.temperature > GERM_LEVEL_HEAT_STERILIZATION || environment.temperature < GERM_LEVEL_COLD_STERILIZATION)
+		return 0
+
+	return germ_level
+
+/mob/living/carbon/human/increase_germ_level(amount, atom/source = null, part = "")
+	var/to_add = amount
+	switch(part)
+		if("arms")
+			if(gloves)
+				return gloves.increase_germ_level(amount, source)
+		if("legs")
+			if(shoes)
+				return shoes.increase_germ_level(amount, source)
+		if("mouth")
+			if(!can_increase_germ_level())
+				return FALSE
+			to_add *= 2 // Mouth leads to internal organs, which makes such infections more troublesome.
+			var/bio_armor = getarmor(BP_HEAD, "bio")
+			if(prob(bio_armor))
+				to_add = round(to_add * 0.5)
+			germ_level += to_add
+			return TRUE
+
+	var/bio_armor = getarmor(, "bio") // Getting armor for the entire body.
+	if(prob(bio_armor))
+		to_add = round(to_add / 2)
+	germ_level += to_add
+	return TRUE
+
+/mob/living/carbon/human/clean_blood()
+	if(gloves)
+		if(gloves.clean_blood())
+			update_inv_gloves()
+	else
+		if(bloody_hands)
+			bloody_hands = FALSE
+			update_inv_gloves()
+	. = ..()
 
 /mob/living/carbon/human/is_facehuggable()
 	return species.flags[FACEHUGGABLE] && stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)

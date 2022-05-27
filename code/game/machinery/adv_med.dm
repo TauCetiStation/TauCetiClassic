@@ -262,7 +262,7 @@
 						open = "Open:"
 					if(BP.is_rejecting)
 						rejecting = "Genetic Rejection:"
-					switch (BP.germ_level)
+					switch (BP.get_germ_level())
 						if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 							infected = "Mild Infection:"
 						if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
@@ -324,7 +324,7 @@
 						if(occupant.is_lung_ruptured())
 							organ_status = "Lung ruptured:"
 
-					switch (IO.germ_level)
+					switch (IO.get_germ_level())
 						if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 							infection = "Mild Infection:"
 						if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)

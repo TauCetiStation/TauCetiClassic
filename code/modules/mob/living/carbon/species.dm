@@ -728,6 +728,7 @@
 	,NO_VOMIT = TRUE
 	,RAD_ABSORB = TRUE
 	,IS_SOCIAL = TRUE
+	,BIOHAZZARD_IMMUNE = TRUE
 	)
 
 	has_bodypart = list(

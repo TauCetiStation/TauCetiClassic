@@ -70,6 +70,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_BLOOD           "no_blood"
 #define NO_BREATHE         "no_breathe"
 #define NO_SCAN            "no_scan"
+#define BIOHAZZARD_IMMUNE  "bio_immun"
 #define NO_PAIN            "no_pain"
 #define NO_EMBED           "no_embed"
 #define NO_FAT             "no_fatness"

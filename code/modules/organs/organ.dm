@@ -29,6 +29,10 @@
 	loc = null
 	owner = H
 
+/obj/item/organ/can_increase_germ_level()
+	return !(status & (BODYPART_ROBOTIC|ORGAN_DEAD  )) && owner.can_increase_germ_level()
+
+
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	set_owner(H, S)
 
@@ -49,16 +53,17 @@
 //Germs
 /obj/item/organ/proc/handle_antibiotics()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
+	var/g_level = get_germ_level()
 
-	if (!germ_level || antibiotics < 5)
+	if (!g_level || antibiotics < 5)
 		return
 
-	if (germ_level < INFECTION_LEVEL_ONE)
-		germ_level = 0	//cure instantly
-	else if (germ_level < INFECTION_LEVEL_TWO)
-		germ_level -= 6	//at germ_level == 500, this should cure the infection in a minute
+	if(g_level < INFECTION_LEVEL_ONE)
+		cleanse_germ_level() //cure instantly
+	else if(g_level < INFECTION_LEVEL_TWO)
+		decrease_germ_level(8) //at germ_level == 500, this should cure the infection in a minute
 	else
-		germ_level -= 2 //at germ_level == 1000, this will cure the infection in 5 minutes
+		decrease_germ_level(3) //at germ_level == 1000, this will cure the infection in 5 minutes
 
 /obj/item/organ/proc/is_preserved()
 	if(istype(loc,/obj/item/organ))
@@ -134,17 +139,17 @@
 			BP.process()
 			number_wounds += BP.number_wounds
 
-			if (!lying && world.time - l_move_time < 15)
+			if(!lying && world.time - l_move_time < 15)
 			//Moving around with fractured ribs won't do you any good
-				if (BP.is_broken() && BP.bodypart_organs.len && prob(15))
+				if(BP.is_broken() && BP.bodypart_organs.len && prob(15))
 					var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
 					custom_pain("You feel broken bones moving in your [BP.name]!", 1)
 					IO.take_damage(rand(3, 5))
 
 				//Moving makes open wounds get infected much faster
-				if (BP.wounds.len)
+				if(BP.wounds.len)
 					for(var/datum/wound/W in BP.wounds)
-						if (W.infection_check())
+						if(W.infection_check())
 							W.germ_level += 1
 
 /mob/living/carbon/human/proc/handle_stance()

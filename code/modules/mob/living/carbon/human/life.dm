@@ -323,7 +323,7 @@
 		if (virus2.len > 0)
 			if (prob(10) && get_infection_chance(src))
 				for(var/mob/living/carbon/M in view(1,src))
-					spread_disease_to(M)
+					src.spread_disease_to(M, "Airborne")
 
 /mob/living/carbon/human/get_breath_from_internal(volume_needed)
 	if(!internal)
@@ -367,7 +367,7 @@
 
 	//breathing in hot/cold air also heats/cools you a bit
 	var/affecting_temp = (breath.temperature - bodytemperature) * breath.return_relative_density()
-	
+
 	adjust_bodytemperature(affecting_temp / 5, use_insulation = TRUE, use_steps = TRUE)
 
 /mob/living/carbon/human/handle_suffocating(datum/gas_mixture/breath)
@@ -897,9 +897,26 @@
 				Sleeping(10 SECONDS)
 				Paralyse(5)
 
-		// If you're dirty, your gloves will become dirty, too.
-		if(gloves && germ_level > gloves.germ_level && prob(10))
-			gloves.germ_level += 1
+		var/datum/gas_mixture/environment = loc.return_air()
+		var/g_level = get_germ_level()
+
+		var/list/clothes = list(wear_suit, w_uniform, belt, gloves, glasses, l_ear, r_ear,
+		                        wear_id, r_store, l_store, s_store, head, shoes, mouth,
+		                        neck, mouth, l_hand, r_hand)
+
+		if(environment.temperature > GERM_LEVEL_HEAT_STERILIZATION || environment.temperature < GERM_LEVEL_COLD_STERILIZATION)
+			decrease_germ_level(3)
+
+		for(var/obj/item/I in clothes)
+			if(!I)
+				continue
+			if(environment.temperature > GERM_LEVEL_HEAT_STERILIZATION || environment.temperature < GERM_LEVEL_COLD_STERILIZATION)
+				I.decrease_germ_level(3)
+			var/I_g_level = I.get_germ_level()
+			if(I_g_level > 1 && I_g_level > g_level)
+				increase_germ_level(1(I_g_level / INFECTION_LEVEL_ONE), I)
+			else if(g_level > 0 && g_level > I_g_level && prob(20))
+				I.increase_germ_level(1(g_level / INFECTION_LEVEL_ONE), src)
 
 	return 1
 
@@ -1149,7 +1166,19 @@
 			playsound_local(src, pick(SOUNDIN_SCARYSOUNDS), VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/proc/handle_virus_updates()
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)
+		return 0	//godmode
+
+	var/g_level = get_germ_level()
+	if(g_level > INFECTION_LEVEL_TWO && !virus2.len) // We are quite dirty, we might get infected by some virus.
+		var/prob_of_virus_infection = (g_level / INFECTION_LEVEL_THREE) * 100
+		if(nutrition <= 100) // If we're hungry, our immune system works badly.
+			prob_of_virus_infection *= 1.2
+		if(prob(getarmor(, "bio"))) // We are *somehow* saved by all the holy clean attire we wear.
+			prob_of_virus_infection *= 0.5
+		if(prob(prob_of_virus_infection))
+			infect_mob_random_lesser(src, list("Blood" = 10, "None" = 90))
+
 	if(bodytemperature > 406)
 		for (var/ID in virus2)
 			var/datum/disease2/disease/V = virus2[ID]

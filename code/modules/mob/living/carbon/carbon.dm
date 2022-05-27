@@ -14,8 +14,17 @@
 	..()
 
 	// Increase germ_level regularly
-	if(germ_level < GERM_LEVEL_AMBIENT && prob(80) && !IS_IN_STASIS(src))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
-		germ_level++
+	if(get_germ_level() < GERM_LEVEL_AMBIENT && prob(80)) // If you're just standing there, you shouldn't get more germs beyond an ambient level
+		increase_germ_level(1, null, "all")
+
+	var/turf/T = get_turf(src)
+	if(T)
+		if(locate(/obj/effect/decal/cleanable/vomit) in T)
+			increase_germ_level(1, T, "legs")
+		if(locate(/obj/effect/decal/cleanable/blood) in T)
+			increase_germ_level(1, T, "legs")
+		if(locate(/obj/effect/decal/cleanable/mucus) in T)
+			increase_germ_level(1, T, "legs")
 
 /mob/living/carbon/proc/reset_alerts()
 	inhale_alert = FALSE
@@ -309,8 +318,8 @@
 		adjust_bodytemperature(2)
 
 	// Moving around increases germ_level faster
-	if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
-		germ_level++
+	if(get_germ_level() < GERM_LEVEL_MOVE_CAP && prob(8))
+		increase_germ_level(1, NewLoc, "all")
 
 	handle_rig_move(NewLoc, Dir)
 
@@ -618,17 +627,8 @@
 
 /mob/living/carbon/clean_blood()
 	. = ..()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.gloves)
-			if(H.gloves.clean_blood())
-				H.update_inv_gloves()
-			H.gloves.germ_level = 0
-		else
-			if(H.bloody_hands)
-				H.bloody_hands = 0
-				H.update_inv_gloves()
-			H.germ_level = 0
+	if(shoes && shoes.clean_blood())
+		update_inv_shoes()
 	update_icons()	//apply the now updated overlays to the mob
 
 
@@ -1136,6 +1136,39 @@
 			R.reaction(loc)
 			adjustToxLoss(-toxins_puked)
 			AdjustDrunkenness(-toxins_puked * 2)
+
+/mob/living/carbon/get_germ_level(part = "")
+	if(part == "legs" && shoes)
+		return shoes.get_germ_level()
+
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(environment.temperature > GERM_LEVEL_HEAT_STERILIZATION || environment.temperature < GERM_LEVEL_COLD_STERILIZATION)
+		return 0
+
+	return germ_level
+
+/mob/living/carbon/increase_germ_level(amount, atom/source = null, part = "")
+	var/to_add = amount
+	switch(part)
+		if("legs")
+			if(shoes)
+				return shoes.increase_germ_level(amount, source)
+		if("mouth")
+			if(!can_increase_germ_level())
+				return FALSE
+			to_add *= 2 // Mouth leads to internal organs, which makes such infections more troublesome.
+			var/bio_armor = getarmor(BP_HEAD, "bio")
+			if(prob(bio_armor))
+				to_add = round(to_add * 0.5)
+			germ_level += to_add
+			return TRUE
+
+	var/bio_armor = getarmor(, "bio") // Getting armor for the entire body.
+	if(prob(bio_armor))
+		to_add = round(to_add / 2)
+	germ_level += to_add
+	return TRUE
+
 
 /mob/living/carbon/update_stat()
 	if(stat == DEAD)

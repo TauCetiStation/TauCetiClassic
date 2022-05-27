@@ -993,6 +993,24 @@
 		if(damtype == BURN)
 			. |= DAM_LASER
 
+/obj/item/get_germ_level(part = "")
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(environment.temperature > GERM_LEVEL_HEAT_STERILIZATION || environment.temperature < GERM_LEVEL_COLD_STERILIZATION)
+		return 0
+	return germ_level * permeability_coefficient
+
+/obj/item/increase_germ_level(amount, atom/source = null, part = "")
+	if(can_increase_germ_level())
+		var/to_add = amount
+		if(prob(armor["bio"])) // We are somewhat protected.
+			to_add = round(to_add / 2)
+		if(prob(permeability_coefficient * 100) - 1)
+			to_add = round(to_add / 2)
+		germ_level += to_add
+		return TRUE
+	return FALSE
+
+
 // Is called when somebody is stripping us using the panel. Return TRUE to allow the strip, FALSE to disallow.
 /obj/item/proc/onStripPanelUnEquip(mob/living/who, strip_gloves = FALSE)
 	return TRUE
