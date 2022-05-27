@@ -59,7 +59,7 @@
 
 
 /obj/structure/vilage/coin_machine
-	icon_state = "velikiy_sup"
+	icon_state = "coinpress"
 	name = "Станок фальшивомонетчика"
 	desc = "Запрещено к использованию. Но я не могу остановить тебя, я же просто табличка,а не агент Всемирного Банка Лепреконов.."
 
