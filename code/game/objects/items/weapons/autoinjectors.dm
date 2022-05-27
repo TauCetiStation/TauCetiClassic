@@ -5,7 +5,7 @@
 	icon_state = "stimpen"
 	item_state = "autoinjector_empty"
 	volume = 15
-	list_reagents = list("doctordelight" = 5, "stimulants" = 1, "bicaridine" = 2.5, "oxycodone" = 2.5, "kelotane" = 5)
+	list_reagents = list("doctorsdelight" = 5, "stimulants" = 1, "bicaridine" = 2.5, "oxycodone" = 2.5, "kelotane" = 5)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine
 	name = "bicaridine autoinjector"
@@ -53,7 +53,7 @@
 	icon_state = "auto_minig_t3"
 	item_state = "autobrut"
 	volume = 25
-	list_reagents = list("dermaline" = 2.5, "bicaridine" = 2.5, "tramadol" = 9, "dexalinp" = 1, "doctordelight" = 10)
+	list_reagents = list("dermaline" = 2.5, "bicaridine" = 2.5, "tramadol" = 9, "dexalinp" = 1, "doctorsdelight" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine
 	name = "leporazine autoinjector"
