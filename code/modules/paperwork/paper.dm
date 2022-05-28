@@ -449,6 +449,8 @@
 			if (is_skill_competent(usr, list(/datum/skill/command/novice)) && id == "end" )
 				if(tgui_alert(usr, "You want to write text of create form?",, list("Text","Form")) == "Form")
 					select_form(usr)
+				else
+					t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
 			else
 				t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
 
