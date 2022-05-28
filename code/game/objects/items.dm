@@ -1082,3 +1082,6 @@
 	icon_state = initial(dye_type.icon_state)
 	item_state = initial(dye_type.item_state)
 	desc = "The colors are a bit dodgy."
+
+/obj/item/proc/point_with(mob/user, atom/target)
+	return

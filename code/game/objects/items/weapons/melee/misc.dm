@@ -16,16 +16,13 @@
 	to_chat(viewers(user), "<span class='warning'><b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b></span>")
 	return (OXYLOSS)
 
-/obj/item/weapon/melee/chainofcommand/afterattack(atom/target, mob/user, proximity, params)
-	user.SetNextMove(CLICK_CD_INTERACT)
-
+/obj/item/weapon/melee/chainofcommand/point_with(mob/user, atom/target)
 	if(!user.isloyal())
 		to_chat(user, "<span class='danger'[bicon(src)] SPECIAL FUNCTION DISABLED. LOYALTY IMPLANT NOT FOUND.</span>")
 		return
 	if(!ishuman(target))
 		return
 	var/mob/living/carbon/human/H = target
-	user.visible_message("<span class='notice'>[user] flails their [src] at [H]</span>")
 	if(!H.isimplantedobedience())
 		return
 	H.apply_effect(5, WEAKEN)

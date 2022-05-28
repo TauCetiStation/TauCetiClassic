@@ -342,15 +342,24 @@
 
 	point_at(A)
 
-	usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
+	if(!ishuman(src))
+		src.visible_message("<span class='notice'><b>[src]</b> points to [A].</span>")
+	else
+		var/mob/living/carbon/human/H = src
+		var/obj/item/I = H.get_active_hand()
+		if(!H.get_active_hand())
+			src.visible_message("<span class='notice'><b>[src]</b> points to [A].</span>")
+		else
+			src.visible_message("<span class='notice'><b>[src]</b> points to [A] with their [I.name].</span>")
+			I.point_with(H, A)
 
 	// TODO: replace with a "COMSIG_MOB_POINTED" signal
 	if (isliving(A))
 		for (var/mob/living/carbon/slime/S in oview())
-			if (usr in S.Friends)
+			if (src in S.Friends)
 				S.last_pointed = A
 
-	next_point_to = world.time + 1.5 SECONDS
+	next_point_to = world.time + 1 SECOND
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
