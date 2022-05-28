@@ -835,13 +835,33 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
 
+// ======STATUS_FLAGS=======
+/mob/proc/remove_status_flags(remove_flags)
+	if(remove_flags & CANSTUN)
+		stunned = 0
+	if(remove_flags & CANPARALYSE)
+		paralysis = 0
+	if(remove_flags & CANWEAKEN)
+		weakened = 0
+	if(remove_flags & (CANSTUN | CANPARALYSE | CANWEAKEN))
+		update_canmove()
+	remove_status_flags(~remove_flags
+
+/mob/proc/add_status_flags(add_flags)
+	if(add_flags & GODMODE)
+		stunned = 0
+		paralysis = 0
+		weakened = 0
+		update_canmove()
+	status_flags |= add_flags
+
 // ========== STUN ==========
 /mob/proc/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
 	if(!isnull(lock))
 		if(lock)
 			status_flags |= LOCKSTUN
 		else
-			status_flags &= ~LOCKSTUN
+			remove_status_flags(~LOCKSTUN
 	else if(status_flags & LOCKSTUN)
 		return
 
@@ -857,7 +877,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(lock)
 			status_flags |= LOCKSTUN
 		else
-			status_flags &= ~LOCKSTUN
+			remove_status_flags(~LOCKSTUN
 	else if(status_flags & LOCKSTUN)
 		return
 
@@ -873,7 +893,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(lock)
 			status_flags |= LOCKSTUN
 		else
-			status_flags &= ~LOCKSTUN
+			remove_status_flags(~LOCKSTUN
 	else if(status_flags & LOCKSTUN)
 		return
 

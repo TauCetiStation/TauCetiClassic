@@ -102,7 +102,7 @@
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
-	status_flags ^= CANPUSH
+	remove_status_flags(CANPUSH)
 	for(var/spell in hulk_powers)
 		AddSpell(new spell(src))
 

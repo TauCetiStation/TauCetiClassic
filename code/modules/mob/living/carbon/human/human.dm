@@ -1423,7 +1423,6 @@
 
 	typing_indicator_type = species.typing_indicator_type
 
-	species.handle_post_spawn(src)
 	species.on_gain(src)
 
 	regenerate_icons()
@@ -1444,7 +1443,6 @@
 	species = all_species[new_species]
 	maxHealth = species.total_health
 
-	species.handle_post_spawn(src)
 	species.on_gain(src)
 
 	regenerate_icons()
@@ -1626,7 +1624,7 @@
 		return
 
 	leap_icon.time_used = world.time + leap_icon.cooldown
-	status_flags |= LEAPING
+	add_status_flags(LEAPING)
 	stop_pulling()
 
 
@@ -1643,7 +1641,7 @@
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .proc/leap_end, prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
-	status_flags &= ~LEAPING
+	remove_status_flags(LEAPING)
 	a_intent_change(prev_intent)
 
 /mob/living/carbon/human/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

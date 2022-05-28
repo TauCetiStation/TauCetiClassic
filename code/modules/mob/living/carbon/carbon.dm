@@ -975,7 +975,7 @@
 			return
 		if(istype(thing, /mob/living/carbon/monkey/diona))
 			return
-	status_flags &= ~PASSEMOTES
+	remove_status_flags(PASSEMOTES)
 
 /mob/living/carbon/proc/can_eat(flags = 255) //I don't know how and why does it work
 	return TRUE
