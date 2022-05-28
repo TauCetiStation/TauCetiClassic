@@ -1435,3 +1435,19 @@
 	icon_state = "bottle15"
 	mutmod = 0
 	yieldmod = 2
+
+/obj/item/nutrient/compost
+	name = "compost"
+	icon = 'icons/obj/food.dmi'
+	icon_state = "badrecipe"
+	mutmod = 1
+	yieldmod = 1
+
+/obj/item/nutrient/compost/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+
+	var/obj/effect/decal/cleanable/poop = new /obj/effect/decal/cleanable/vomit(loc)
+	poop.color = "#210c02"
+
+	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a squelch.</span>")
+	qdel(src)
+	
