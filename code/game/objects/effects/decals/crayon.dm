@@ -5,7 +5,7 @@
 	layer = 2.1
 	anchored = TRUE
 	var/default_state = TRUE
-	var/recruits_followers = FALSE
+	var/can_convert = FALSE
 
 	beauty = -25
 
@@ -33,9 +33,8 @@
 			type = "rune[rand(1,6)]"
 		if("graffiti")
 			type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa") // (... ,"poseur tag")
-			if(type == "revolution")
-				recruits_followers = TRUE
-
+		if("revolution")
+			can_convert = TRUE
 	var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]",2.1)
 	var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]s",2.1)
 
@@ -59,10 +58,11 @@
 	qdel(src)
 
 /obj/effect/decal/cleanable/crayon/examine(mob/user)
-	. = ..()
-	if(recruits_followers)
+	if(can_convert)
 		var/mob/living/carbon/human/M = user
-		if(!isrevhead(M) && !isrev(M))
-			var/datum/faction/revolution/R = find_faction_by_type(/datum/faction/revolution)
-			if(R)
-				add_faction_member(R, M, TRUE)
+		if(!isrevhead(M))
+			user.hud_used.join_to_revolution.invisibility = INVISIBILITY_NONE
+			M.rev_choices = ""
+			M.del_screen(100)
+			M.update_hud()
+	return ..()

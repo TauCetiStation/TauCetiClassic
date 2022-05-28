@@ -31,6 +31,8 @@
 	beauty_dead = -1500
 
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
+	
+	var/rev_choices = "no_choice"
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
@@ -2296,3 +2298,37 @@
 		return 0
 
 	return BP.pumped
+
+/mob/living/carbon/human/proc/join_to_revolution()
+	set waitfor = FALSE
+	if(rev_choices)
+		return
+
+	var/datum/faction/revolution/R = find_faction_by_type(/datum/faction/revolution)
+	var/worker_choice
+	worker_choice = tgui_alert(src,"Do you want to support the revolution?","Join the Revolution!",list("No!","Yes!"))
+	if(worker_choice == "Yes!")
+		if(!isrev(src) && R)
+			if(add_faction_member(R, src, TRUE))
+				to_chat(src, "<span class='notice'>You join the revolution!</span>")
+		else
+			to_chat(src, "<span class='notice'><b>Revolution is coming!</b></span>")
+	else if(worker_choice == "No!")
+		if(R)
+			if(isrev(src))
+				var/datum/role/my_role = src.mind.GetRole(REV)
+				my_role.Deconvert()
+		to_chat(src, "<span class='warning'>Don't forget to install the mindshield.</span>")
+	
+	if(worker_choice)
+		rev_choices = "worker_choice"
+
+/mob/living/carbon/human/proc/del_screen(time)
+	sleep(time)
+
+	if(client)
+		for(var/atom/movable/screen/screen in client.screen)
+			if(screen.name == "Join To Revolution")
+				client.screen -= screen
+				qdel(screen)
+				break

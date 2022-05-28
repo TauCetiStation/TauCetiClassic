@@ -428,6 +428,14 @@
 				src.adding += mymob.gun_run_icon
 			src.adding += mymob.gun_move_icon
 
+	join_to_revolution = new /atom/movable/screen()
+	join_to_revolution.name = "Join To Revolution"
+	join_to_revolution.icon = 'icons/mob/screen1.dmi'
+	join_to_revolution.icon_state = "revolution"
+	join_to_revolution.screen_loc = ui_lingstingdisplay
+	join_to_revolution.plane = ABOVE_HUD_PLANE
+	join_to_revolution.invisibility = INVISIBILITY_ABSTRACT
+	src.adding += join_to_revolution
 
 	mymob.client.screen = list()
 

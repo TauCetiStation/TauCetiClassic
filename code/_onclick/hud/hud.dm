@@ -44,6 +44,7 @@ var/global/list/available_ui_styles = list(
 	var/atom/movable/screen/move_intent
 	var/atom/movable/screen/staminadisplay
 	var/atom/movable/screen/wanted/wanted_lvl
+	var/atom/movable/screen/join_to_revolution
 
 	var/list/adding
 	var/list/other
@@ -229,6 +230,7 @@ var/global/list/available_ui_styles = list(
 			mymob.client.screen += lingstingdisplay
 			mymob.client.screen += lingchemdisplay
 			mymob.client.screen += mymob.gun_setting_icon
+			mymob.client.screen += join_to_revolution
 
 			hidden_inventory_update()
 			persistant_inventory_update()
@@ -275,6 +277,7 @@ var/global/list/available_ui_styles = list(
 			mymob.client.screen -= lingstingdisplay
 			mymob.client.screen -= lingchemdisplay
 			mymob.client.screen -= mymob.gun_setting_icon
+			mymob.client.screen -= join_to_revolution
 
 			hidden_inventory_update()
 			persistant_inventory_update()

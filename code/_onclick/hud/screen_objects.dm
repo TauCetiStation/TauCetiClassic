@@ -657,7 +657,10 @@
 				return
 			usr.client.AllowTargetClick()
 			gun_click_time = world.time
-
+		if("Join To Revolution")
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.join_to_revolution()
 		if("Toggle Gun Mode")
 			usr.client.ToggleGunMode()
 

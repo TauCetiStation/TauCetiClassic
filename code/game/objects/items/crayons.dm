@@ -73,7 +73,8 @@
 			"graffiti" = "face",
 			"rune" = "rune1",
 			"letter" = "a",
-			"arrow" = "up")
+			"arrow" = "up",
+			"revolution" = "revolution")
 			for(var/action in action_icon)
 				actions[action] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = action_icon[action])
 		if(gang_mode)
