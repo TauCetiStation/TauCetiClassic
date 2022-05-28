@@ -343,14 +343,14 @@
 	point_at(A)
 
 	if(!ishuman(src))
-		src.visible_message("<span class='notice'><b>[src]</b> points to [A].</span>")
+		visible_message("<span class='notice'><b>[src]</b> points to [A].</span>")
 	else
 		var/mob/living/carbon/human/H = src
 		var/obj/item/I = H.get_active_hand()
 		if(!H.get_active_hand())
-			src.visible_message("<span class='notice'><b>[src]</b> points to [A].</span>")
+			visible_message("<span class='notice'><b>[src]</b> points to [A].</span>")
 		else
-			src.visible_message("<span class='notice'><b>[src]</b> points to [A] with their [I.name].</span>")
+			visible_message("<span class='notice'><b>[src]</b> points to [A] with their [I.name].</span>")
 			I.point_with(H, A)
 
 	// TODO: replace with a "COMSIG_MOB_POINTED" signal
