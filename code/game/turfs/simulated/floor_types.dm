@@ -218,7 +218,7 @@
 
 /turf/simulated/floor/beach/water/waterpool/green
 	icon_state = "green_water"
-	light_color = "#008000"
+	light_color = "#244e24"
 
 /turf/simulated/floor/beach/water/waterpool/Entered(atom/movable/AM, atom/old_loc)
 	..()
@@ -417,6 +417,9 @@
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
+	light_color = "#9bd2ff"
+	light_power = 2
+	light_range = 2
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
