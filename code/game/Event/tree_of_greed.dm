@@ -314,3 +314,47 @@
 		return
 	for(var/mob/T in player_list)
 		to_chat(T, "<br><span class='notice'><b><font size=5>Голос <span class='name'>Древа Мудрости</span> проносится по всему Энроту: <i>[new_msg]</i></font></b></span>")
+
+// ХАЙВМАЙНД ЛЕПРЕКОНОВ
+
+/mob/camera/treeofgreed/verb/lepr_hivemind()
+	set category = "Воля Древа"
+	set name = "Голос Рынка"
+	set desc = "Позволяет мысленно разговаривать с древом мудрости и другими лепреконами."
+
+	var/text = sanitize(input(src, "Что таки хотите сказать?", "Голос Рынка", ""))
+	if(!text)
+		return
+	log_say("Хайвмайнд Лепреконов: [key_name(src)] : [text]")
+	for(var/mob/M as anything in mob_list)
+		if(isobserver(M) || istype(M, /mob/camera/treeofgreed))
+			to_chat(M, "<span class='nicegreen'><b>\[Голос Рынка\]</b><i> [name]</i>: [text]</span>")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.homm_species == "lepr")
+				to_chat(M, "<span class='nicegreen'><b>\[Голос Рынка\]</b><i> [name]</i>: [text]</span>")
+
+
+/obj/effect/proc_holder/spell/targeted/lepr_hivemind
+	name = "Голос Рынка"
+	desc = "Позволяет мысленно разговаривать с древом мудрости и другими лепреконами."
+	action_icon_state = "lepr_hivemind"
+	charge_max = 0
+	clothes_req = 0
+	range = -1
+	include_user = 1
+
+/obj/effect/proc_holder/spell/targeted/lepr_hivemind/cast(list/targets)
+	for(var/mob/user in targets)
+		var/text = sanitize(input(user, "Что таки хотите сказать?", "Голос Рынка", ""))
+		if(!text)
+			return
+		log_say("Хайвмайнд Лепреконов: [key_name(user)] : [text]")
+		for(var/mob/M as anything in mob_list)
+			if(isobserver(M) || istype(M, /mob/camera/treeofgreed))
+				to_chat(M, "<span class='nicegreen'><b>\[Голос Рынка\]</b><i> [user.name]</i>: [text]</span>")
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.homm_species == "lepr")
+					to_chat(M, "<span class='nicegreen'><b>\[Голос Рынка\]</b><i> [user.name]</i>: [text]</span>")
+
