@@ -120,6 +120,7 @@
 	user.mutations.Add(SMALLSIZE)
 	user.regenerate_icons()
 	user.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/lepr_escape)
+	user.AddSpell(new /obj/effect/proc_holder/spell/targeted/lepr_hivemind)
 	user.see_invisible = 34 // so he can see the tree of greed
 	user.homm_species = "lepr"
 	cameranet.cameras += user
