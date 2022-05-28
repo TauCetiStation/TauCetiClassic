@@ -153,7 +153,7 @@
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	if(status_flags & GODMODE)
+	if(M.status_flags & GODMODE)
 		M.remove_status_flags(GODMODE)
 	else
 		M.add_status_flags(GODMODE)

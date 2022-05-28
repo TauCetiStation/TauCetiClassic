@@ -24,7 +24,7 @@
 	speed = 1
 	a_intent = INTENT_HARM
 	stop_automated_movement = TRUE
-	status_flags = CANPUSH
+	status_flags = NONE
 	universal_speak = 1
 	universal_understand = 1
 	attack_sound = list('sound/weapons/punch1.ogg')
@@ -102,7 +102,6 @@
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
-	remove_status_flags(CANPUSH)
 	for(var/spell in hulk_powers)
 		AddSpell(new spell(src))
 

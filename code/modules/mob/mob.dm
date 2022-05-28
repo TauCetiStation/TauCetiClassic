@@ -845,7 +845,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		weakened = 0
 	if(remove_flags & (CANSTUN | CANPARALYSE | CANWEAKEN))
 		update_canmove()
-	remove_status_flags(~remove_flags
+	status_flags &= ~remove_flags
 
 /mob/proc/add_status_flags(add_flags)
 	if(add_flags & GODMODE)
@@ -861,7 +861,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(lock)
 			status_flags |= LOCKSTUN
 		else
-			remove_status_flags(~LOCKSTUN
+			status_flags &= ~LOCKSTUN
 	else if(status_flags & LOCKSTUN)
 		return
 
@@ -877,7 +877,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(lock)
 			status_flags |= LOCKSTUN
 		else
-			remove_status_flags(~LOCKSTUN
+			status_flags &= ~LOCKSTUN
 	else if(status_flags & LOCKSTUN)
 		return
 
@@ -893,7 +893,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(lock)
 			status_flags |= LOCKSTUN
 		else
-			remove_status_flags(~LOCKSTUN
+			status_flags &= ~LOCKSTUN
 	else if(status_flags & LOCKSTUN)
 		return
 
