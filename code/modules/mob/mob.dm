@@ -839,10 +839,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/remove_status_flags(remove_flags)
 	if(remove_flags & CANSTUN)
 		stunned = 0
-	if(remove_flags & CANPARALYSE)
-		paralysis = 0
 	if(remove_flags & CANWEAKEN)
 		weakened = 0
+	if(remove_flags & CANPARALYSE)
+		paralysis = 0
 	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN))
 		update_canmove()
 	status_flags &= ~remove_flags
