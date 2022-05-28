@@ -213,3 +213,9 @@
 /area/custom/valhalla
 	name = "Valhalla"
 	icon_state = "valhalla"
+
+// Я незнаю куда это еще пихнуть
+
+/area/custom/lepr_exit
+	name = "Выход на повехность."
+	icon_state = "green"
