@@ -2320,7 +2320,7 @@
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
 #include "maps\cave.dmm"
-#include "maps\homm.dmm"
+#include "maps\homm_2.dmm"
 #include "maps\homm_hub.dmm"
 #include "maps\falcon\job_changes.dm"
 #include "maps\testmap\job_changes.dm"
