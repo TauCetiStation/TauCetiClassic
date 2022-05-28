@@ -849,11 +849,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/add_status_flags(add_flags)
 	if(add_flags & GODMODE)
-		stunned = 0
-		paralysis = 0
-		weakened = 0
 		stuttering = 0
-		update_canmove()
 	status_flags |= add_flags
 
 // ========== STUN ==========
