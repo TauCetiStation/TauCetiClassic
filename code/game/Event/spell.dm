@@ -11,9 +11,10 @@
 	possible_tile = get_area_turfs(get_area_by_type(/area/lepr))
 	target = pick(possible_tile)
 	playsound(usr, 'sound/Event/lepr_escape.ogg', VOL_EFFECTS_MASTER)
-	usr.loc = target
 	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 	smoke.set_up(5, 0, usr.loc)
-	smoke.attach(usr)
+	smoke.attach(usr.loc)
 	smoke.start()
+	usr.loc = target
+
 
