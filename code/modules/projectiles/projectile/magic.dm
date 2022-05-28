@@ -81,16 +81,16 @@
 		C.ChangeOwner(firer)
 		create_spawner(/datum/spawner/living/mimic, C)
 	else if(istype(change, /mob/living/simple_animal/shade) || isxeno(change))
-		var/mob/living/M = change
-		M = wabbajack(M)
-		if(firer)
+		var/mob/living/M = wabbajack(change)
+		if(firer && iswizard(firer))
 			var/datum/role/wizard/mage = firer.mind.GetRole(WIZARD)
 			var/datum/faction/wizards/federation = mage.GetFaction()
-			var/datum/role/wizard_apprentice/recruit = add_faction_member(federation, M, TRUE)
-			var/datum/objective/target/protect/new_objective = recruit.AppendObjective(/datum/objective/target/protect)
-			new_objective.explanation_text = "Help [firer.real_name], the Demiurgos of your new life."
-			new_objective.target = mage
-	..()
+			if(federation)
+				var/datum/role/wizard_apprentice/recruit = add_faction_member(federation, M)
+				var/datum/objective/target/protect/new_objective = recruit.AppendObjective(/datum/objective/target/protect)
+				new_objective.explanation_text = "Help [firer.real_name], the Demiurgos of your new life."
+				new_objective.target = firer.mind
+	return ..()
 
 /obj/item/projectile/magic/resurrection
 	name = "bolt of resurrection"
