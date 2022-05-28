@@ -350,7 +350,7 @@
 		if(!H.get_active_hand())
 			visible_message("<span class='notice'><b>[src]</b> points to [A].</span>")
 		else
-			visible_message("<span class='notice'><b>[src]</b> points to [A] with their [I.name].</span>")
+			visible_message("<span class='notice'><b>[src]</b> points to [A] with [P_THEIR(src)] [I.name].</span>")
 			I.point_with(H, A)
 
 	// TODO: replace with a "COMSIG_MOB_POINTED" signal
