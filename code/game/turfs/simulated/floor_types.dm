@@ -218,7 +218,7 @@
 
 /turf/simulated/floor/beach/water/waterpool/green
 	icon_state = "green_water"
-	light_color = "#008000"
+	light_color = "#244e24"
 
 /turf/simulated/floor/beach/water/waterpool/Entered(atom/movable/AM, atom/old_loc)
 	..()
