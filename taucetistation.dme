@@ -438,6 +438,7 @@
 #include "code\game\dna\genes\monkey.dm"
 #include "code\game\dna\genes\powers.dm"
 #include "code\game\Event\artifacts.dm"
+#include "code\game\Event\battle_area.dm"
 #include "code\game\Event\CharacterSpawner.dm"
 #include "code\game\Event\chickenCurseLifring.dm"
 #include "code\game\Event\dragon.dm"

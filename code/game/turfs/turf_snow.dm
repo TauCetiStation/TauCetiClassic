@@ -3,7 +3,7 @@
 	name = "snow"
 	icon_state = "snow0"
 	plane = FLOOR_PLANE
-	
+
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	force_lighting_update = TRUE
 
@@ -15,7 +15,7 @@
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
-	temperature = TM50C
+	temperature = T20C
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 
 	light_color = COLOR_BLUE

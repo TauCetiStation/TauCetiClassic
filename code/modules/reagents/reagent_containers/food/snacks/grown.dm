@@ -629,6 +629,24 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/grecka
+	seed_type = /obj/item/seeds/grecka
+	name = "Гречка"
+	desc = "Эрафийская гречка настолько суровая, что ее не надо варить. И так вкусно"
+	icon_state = "grecka"
+	filling_color = "#ff0000"
+	potency = 10
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/grecka/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 10+round((potency / 10), 1))
+	bitesize = 1+round(reagents.total_volume / 2, 1)
+
+
+
+
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/tomato_smudge(loc)

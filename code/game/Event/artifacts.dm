@@ -1,18 +1,15 @@
-/obj/structure/closet/crate/miningcar/unlimited_wood
-	name = "Странная тележка"
-	desc = "Ощущается странность"
+/obj/structure/closet/crate/miningcar/grecka
+	icon_state = "grecka"
+	icon_opened = "greckaopen"
+	icon_closed = "grecka"
+	name = "Великий Артефакт Древних"
+	desc = "Спасибо Древним за великое наследие."
 
-/obj/structure/closet/crate/miningcar/unlimited_wood/open()
+/obj/structure/closet/crate/miningcar/grecka/open()
 	..()
-	new/obj/item/stack/sheet/wood(loc)
+	new/obj/item/weapon/reagent_containers/food/snacks/grown/grecka(loc)
 
-/obj/structure/closet/crate/miningcar/unlimited_silver
-	name = "Странная тележка"
-	desc = "Ощущается странность"
 
-/obj/structure/closet/crate/miningcar/unlimited_silver/open()
-	..()
-	new/obj/item/weapon/ore/silver(loc)
 
 /obj/item/shakal_skull
 	name = "Проклятый Череп Шакала"

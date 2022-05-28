@@ -349,6 +349,24 @@
 	growthstages = 6
 	mutatelist = list(/obj/item/seeds/bluetomatoseed, /obj/item/seeds/bloodtomatoseed, /obj/item/seeds/killertomatoseed)
 
+/obj/item/seeds/grecka
+	name = "Семена гречки"
+	desc = "Ваууу"
+	icon_state = "seed-grecka"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "bluecherry"
+	plantname = "ГРЕЧА"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/grecka
+	lifespan = 25
+	endurance = 15
+	maturation = 8
+	production = 6
+	yield = 2
+	potency = 10
+	plant_type = 0
+	growthstages = 5
+
+
 /obj/item/seeds/killertomatoseed
 	name = "pack of killer-tomato seeds"
 	desc = "These seeds grow into killer-tomato plants."
