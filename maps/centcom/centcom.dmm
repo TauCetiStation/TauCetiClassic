@@ -8615,7 +8615,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "auJ" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -8901,12 +8901,12 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "avo" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "avp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -9378,7 +9378,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "aws" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -10014,7 +10014,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "axO" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,4"
@@ -13041,7 +13041,6 @@
 /obj/structure/closet/cabinet{
 	name = "Marisa"
 	},
-/obj/item/clothing/shoes/heels/alternate,
 /obj/item/clothing/suit/wizrobe/marisa,
 /obj/item/weapon/staff/broom,
 /obj/item/clothing/head/wizard/marisa,
@@ -13052,6 +13051,7 @@
 /obj/item/clothing/under/dress/dress_summer,
 /obj/item/clothing/under/pretty_dress,
 /obj/item/clothing/mask/scarf/violet,
+/obj/item/clothing/shoes/heels/alternate/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -13518,7 +13518,6 @@
 /obj/structure/closet/cabinet{
 	name = "Ded moroz"
 	},
-/obj/item/clothing/shoes/winterboots,
 /obj/item/weapon/storage/backpack/santabag{
 	name = "Ded Moroz Gift Bag"
 	},
@@ -13528,6 +13527,7 @@
 /obj/item/clothing/head/wizard/santa{
 	name = "Ded Moroz hat"
 	},
+/obj/item/clothing/shoes/winterboots/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood-broken4"
 	},
@@ -13960,10 +13960,6 @@
 /area/custom/wizard_station)
 "aFM" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/suit/hooded/wintercoat/wiz_red,
 /obj/item/clothing/suit/hooded/wintercoat/wiz_red,
 /obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
@@ -13981,6 +13977,10 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/winterboots/wizard,
+/obj/item/clothing/shoes/winterboots/wizard,
+/obj/item/clothing/shoes/winterboots/wizard,
+/obj/item/clothing/shoes/winterboots/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -14228,7 +14228,6 @@
 /obj/structure/closet/cabinet{
 	name = "Pirate"
 	},
-/obj/item/clothing/shoes/boots,
 /obj/item/clothing/head/wizard/pirate,
 /obj/item/clothing/under/pirate,
 /obj/item/clothing/suit/wizrobe/pirate,
@@ -14238,6 +14237,7 @@
 	pixel_x = -25;
 	pixel_y = -3
 	},
+/obj/item/clothing/shoes/boots/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -14293,7 +14293,6 @@
 /obj/structure/closet/cabinet{
 	name = "Crusader"
 	},
-/obj/item/clothing/shoes/boots,
 /obj/item/clothing/suit/wizrobe/crusader,
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/head/wizard/crusader,
@@ -14308,6 +14307,7 @@
 	pixel_x = -25;
 	pixel_y = -3
 	},
+/obj/item/clothing/shoes/boots/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -14618,7 +14618,6 @@
 /obj/effect/landmark{
 	name = "Nuclear-Bomb"
 	},
-/obj/machinery/door/window/brigdoor/northleft,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -14626,6 +14625,9 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
+/obj/machinery/door/window/brigdoor/northleft{
+	req_access = list(150)
+	},
 /turf/unsimulated/floor{
 	icon_state = "podhatch"
 	},
@@ -14831,6 +14833,12 @@
 	},
 /turf/simulated/shuttle/plating,
 /area/shuttle/administration/centcom)
+"aHE" = (
+/obj/structure/object_wall/standart{
+	icon_state = "swall12"
+	},
+/turf/environment/space,
+/area/velocity/monorailwagon)
 "aHG" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access = list(101)
@@ -19844,10 +19852,10 @@
 	icon = 'icons/obj/cult.dmi';
 	icon_state = "book"
 	},
-/obj/item/clothing/shoes/boots/German,
 /obj/item/clothing/under/color/black,
 /obj/item/clothing/suit/wizrobe/necromancer_hoodie,
 /obj/item/clothing/head/wizard/black_hood,
+/obj/item/clothing/shoes/boots/German/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood-broken"
 	},
@@ -20204,7 +20212,6 @@
 /obj/structure/closet/cabinet{
 	name = "Serif"
 	},
-/obj/item/clothing/shoes/western,
 /obj/item/clothing/under/cowboy,
 /obj/item/clothing/under/cowboy/grey,
 /obj/item/clothing/under/cowboy/brown,
@@ -20213,6 +20220,7 @@
 /obj/item/toy/gun/peacemaker,
 /obj/item/clothing/suit/wizrobe/serifcoat,
 /obj/item/clothing/head/wizard/cowboy,
+/obj/item/clothing/shoes/western/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -20305,10 +20313,10 @@
 	},
 /obj/item/clothing/mask/gnome_beard,
 /obj/item/clothing/under/gnome_suit,
-/obj/item/clothing/shoes/red,
 /obj/item/clothing/suit/wizrobe/suspenders,
 /obj/item/clothing/gloves/white,
 /obj/item/clothing/head/wizard/gnome_hat,
+/obj/item/clothing/shoes/red/wizard,
 /turf/unsimulated/floor/snow{
 	nitrogen = 100;
 	oxygen = 25;
@@ -22580,7 +22588,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dJb" = (
 /obj/machinery/door/airlock/glass{
 	icon_state = "door_locked";
@@ -22589,7 +22597,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dKb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall12"
@@ -22648,7 +22656,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dPb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -22658,7 +22666,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dQb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -22763,14 +22771,14 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dXb" = (
 /obj/structure/shuttle/window{
 	icon_state = "2"
 	},
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
-/area/velocity)
+/area/velocity/monorailwagon)
 "dYb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -22811,14 +22819,14 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "ebb" = (
 /obj/structure/sign/monorail_map,
 /obj/structure/object_wall/standart{
 	icon_state = "swall3"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "ecb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	icon_state = "chair_a02"
@@ -22902,7 +22910,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "ekb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -22941,13 +22949,13 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "eob" = (
 /obj/machinery/door/airlock/glass,
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "epb" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Just billboard";
@@ -22958,7 +22966,7 @@
 	icon_state = "swall12"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "eqb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall_f9"
@@ -22969,7 +22977,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "erb" = (
 /obj/structure/sign/mark{
 	icon_state = "b4"
@@ -23002,7 +23010,7 @@
 	icon_state = "swall12"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "ewb" = (
 /obj/structure/sign/mark{
 	icon_state = "b2"
@@ -24814,7 +24822,7 @@
 	dir = 8;
 	icon_state = "warnplate"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "hNb" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -24842,7 +24850,7 @@
 	dir = 8;
 	icon_state = "warnplate"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "hRb" = (
 /turf/unsimulated/floor{
 	icon_state = "warning"
@@ -28501,6 +28509,12 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"rse" = (
+/obj/structure/object_wall/standart{
+	icon_state = "swall3"
+	},
+/turf/environment/space,
+/area/velocity/monorailwagon)
 "rXM" = (
 /obj/machinery/light{
 	dir = 4
@@ -79264,18 +79278,18 @@ atP
 atP
 atP
 dIb
-dNb
+rse
 avn
 avn
 avn
-dNb
+rse
 enb
 dIb
-dNb
+rse
 axN
 axN
 axN
-dNb
+rse
 enb
 atP
 ayt
@@ -79777,7 +79791,7 @@ dwb
 dwb
 dwb
 dwb
-dKb
+aHE
 dPb
 dWb
 eab
@@ -79790,7 +79804,7 @@ dWb
 eab
 dWb
 ejb
-dKb
+aHE
 dwb
 dwb
 dwb
@@ -80035,11 +80049,11 @@ atP
 atP
 atP
 auI
-dNb
+rse
 dXb
 ebb
 dXb
-dNb
+rse
 eqb
 auI
 hMb
