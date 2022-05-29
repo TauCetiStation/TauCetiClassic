@@ -114,19 +114,17 @@ Contains helper procs for airflow, handled in /connection_group.
 
 /atom/movable/proc/AirflowDest(n, repelled)
 	set waitfor = FALSE
-	if(!airflow_dest)
-		return
-	if(airflow_speed < 0)
+	if(!airflow_dest || airflow_speed < 0)
 		return
 	if(!COOLDOWN_FINISHED(src, last_airflow))
 		return
 	if(airflow_speed)
 		airflow_speed = n / max(get_dist(src, airflow_dest), 1)
 		return
-	if(airflow_dest == loc)
-		step_away(src, loc)
 	if(!AirflowCanMove(n))
 		return
+	if(airflow_dest == loc)
+		step_away(src, loc)
 	if(ismob(src))
 		to_chat(src, "<span clas='danger'>You are [repelled ? "pushed" : "sucked"] away by airflow!</span>")
 	COOLDOWN_START(src, last_airflow, vsc.airflow_delay)
@@ -143,34 +141,30 @@ Contains helper procs for airflow, handled in /connection_group.
 	else
 		xo = airflow_dest.x - src.x
 		xy = airflow_dest.y - src.y
+
 	var/od = FALSE
 	airflow_dest = null
 	if(!density)
 		density = TRUE
 		od = TRUE
 	while(airflow_speed > 0)
-		if(airflow_speed <= 0)
-			break
-		airflow_speed = min(airflow_speed, 15)
-		airflow_speed -= vsc.airflow_speed_decay
+		airflow_speed = min(airflow_speed, 15) - vsc.airflow_speed_decay
 		if(airflow_speed > 7)
 			if(airflow_time++ >= airflow_speed - 7)
 				if(od)
 					density = FALSE
-				sleep(1 * SSAIR_TICK_MULTIPLIER)
+				sleep(SSAIR_TICK_MULTIPLIER)
 		else
 			if(od)
 				density = FALSE
 			sleep(max(1, 10 - (airflow_speed + 3)) * SSAIR_TICK_MULTIPLIER)
 		if(od)
 			density = TRUE
-		if ((!( src.airflow_dest ) || src.loc == src.airflow_dest))
-			src.airflow_dest = locate(min(max(src.x + xo, 1), world.maxx), min(max(src.y + yo, 1), world.maxy), src.z)
-		if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
+		if (!isturf(loc) || src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy)
 			break
-		if(!isturf(loc))
-			break
-		step_towards(src, src.airflow_dest)
+		if (!airflow_dest || loc == airflow_dest)
+			airflow_dest = locate(clamp(src.x + xo, 1, world.maxx), clamp(src.y + yo, 1, world.maxy), src.z)
+		step_towards(src, airflow_dest)
 		var/mob/M = src
 		if(istype(M) && M.client)
 			M.setMoveCooldown(vsc.airflow_mob_slowdown)
@@ -193,7 +187,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		airflow_speed = 0
 		airflow_time = 0
 		airborne_acceleration = 0
-		. = ..()
+	return ..()
 
 /atom/movable/proc/airflow_hit(atom/A)
 	airflow_speed = 0
@@ -203,18 +197,19 @@ Contains helper procs for airflow, handled in /connection_group.
 /obj/airflow_hit(atom/A)
 	visible_message("<span class='danger'>\The [src] slams into \a [A]!</span>", blind_message = "<span class='danger'>You hear a loud slam!</span>")
 	playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, 25)
-	. = ..()
+	..()
 
 /obj/item/airflow_hit(atom/A)
 	airflow_speed = 0
 	airflow_dest = null
+	airborne_acceleration = 0
 
 /mob/airflow_hit(atom/A)
 	visible_message("<span class='danger'>\The [src] slams into \a [A]!</span>", blind_message = "<span class='danger'>You hear a loud slam!</span>")
 	playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, 25)
 	var/weak_amt = isitem(A) ? A:w_class : rand(1, 5) //Heheheh
 	Weaken(weak_amt)
-	. = ..()
+	..()
 
 /mob/living/simple_animal/construct/airflow_hit(atom/A)
 	return
@@ -233,25 +228,27 @@ Contains helper procs for airflow, handled in /connection_group.
 		return
 
 	var/b_loss = min(airflow_speed, (airborne_acceleration*2)) * vsc.airflow_damage
-	if(prob(33) && b_loss > 0)
-		loc.add_blood(src)
-		bloody_body(src)
 
-	var/blocked = run_armor_check(BP_HEAD,"melee")
-	apply_damage(b_loss / 3, BRUTE, BP_HEAD, blocked, 0, "Airflow")
+	if(b_loss > 0)
+		if(prob(33))
+			loc.add_blood(src)
+			bloody_body(src)
 
-	blocked = run_armor_check(BP_CHEST,"melee")
-	apply_damage(b_loss / 3, BRUTE, BP_CHEST, blocked, 0, "Airflow")
+		var/blocked = run_armor_check(BP_HEAD,"melee")
+		apply_damage(b_loss / 3, BRUTE, BP_HEAD, blocked, 0, "Airflow")
 
-	blocked = run_armor_check(BP_GROIN,"melee")
-	apply_damage(b_loss / 3, BRUTE, BP_GROIN, blocked, 0, "Airflow")
+		blocked = run_armor_check(BP_CHEST,"melee")
+		apply_damage(b_loss / 3, BRUTE, BP_CHEST, blocked, 0, "Airflow")
+
+		blocked = run_armor_check(BP_GROIN,"melee")
+		apply_damage(b_loss / 3, BRUTE, BP_GROIN, blocked, 0, "Airflow")
 
 	if(airflow_speed > 10)
 		Paralyse(round(airflow_speed * vsc.airflow_stun))
 		Stun(paralysis + 3)
 	else
 		Stun(round(airflow_speed * vsc.airflow_stun / 2))
-	. = ..()
+	..()
 
 /zone/proc/movables()
 	. = list()
