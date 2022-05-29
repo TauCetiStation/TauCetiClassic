@@ -3,26 +3,15 @@
 /datum/component/karate/Initialize()
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, list(COMSIG_PUMPED_LIMIT_RICHED), .proc/strengthen_muscles)
-	RegisterSignal(parent, list(COMSIG_CAUGHT_A_BULLET), .proc/gun_fear)
+	RegisterSignal(parent, list(COMSIG_KISSED_THE_WALL), .proc/side_kick)
 
-/datum/component/karate/proc/gun_fear()
-	SIGNAL_HANDLER
-	var/mob/living/carbon/human/H = parent
-	if(H && !H.species.flags[NO_PAIN])
-		H.adjustHalLoss(99)
-		to_chat(H, "<span class='userdanger'>Oh no, it's my weakness!</span>")
-	qdel(src)
-
-/datum/component/karate/proc/strengthen_muscles(parent, obj/item/organ/external/BP)
-	SIGNAL_HANDLER
-	if(BP && BP.max_pumped)
-		if(BP.max_pumped > 0 && BP.max_pumped < 300)
-			BP.max_pumped += 10
-			to_chat(parent, "<span class='notice'>The blood pumps, the limbs obey!</span>")
-		else
-			to_chat(parent, "<span class='notice'>The blood quickens! </span>")
+/datum/component/karate/proc/side_kick(parent, mob/victim)
+	var/mob/living/carbon/human/H = victim
+	if(prob(70))
+		H.AdjustWeakened(1)
+		H.make_dizzy(10)
+		to_chat(H, "<span class='userdanger'>This power...</span>")
 
 /datum/component/karate/Destroy()
-	UnregisterSignal(parent, list(COMSIG_PUMPED_LIMIT_RICHED, COMSIG_CAUGHT_A_BULLET))
+	UnregisterSignal(parent, list(COMSIG_KISSED_THE_WALL))
 	. = ..()

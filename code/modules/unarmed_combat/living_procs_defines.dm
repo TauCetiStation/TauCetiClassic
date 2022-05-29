@@ -230,11 +230,7 @@
 		step_away(src, get_turf(attacker))
 		if(loc != to_move)
 			adjustHalLoss(4)
-			if(attacker.GetComponent(/datum/component/karate))
-				if(prob(70))
-					AdjustWeakened(1)
-				make_dizzy(10)
-				to_chat(src, "<span class='userdanger'>This power...</span>")
+			SEND_SIGNAL(attacker, COMSIG_KISSED_THE_WALL, src)
 
 	if(pulling)
 		visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [pulling]!</B></span>")

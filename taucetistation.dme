@@ -277,6 +277,7 @@
 #include "code\datums\components\bell_death_alarm.dm"
 #include "code\datums\components\bound.dm"
 #include "code\datums\components\clickplace.dm"
+#include "code\datums\components\fear_of_a_gun.dm"
 #include "code\datums\components\footstep.dm"
 #include "code\datums\components\forcefield.dm"
 #include "code\datums\components\gnawing.dm"

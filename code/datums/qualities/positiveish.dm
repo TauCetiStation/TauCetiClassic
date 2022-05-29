@@ -332,8 +332,17 @@
 
 /datum/quality/positiveish/karate_kid
 	name = "Karate Kid"
-	desc = "Ты проспал общие курсы самообороны и не знаешь даже концепции кулачного боя, полагаясь лишь на свои давние умения."
+	desc = "Ты надолго уснул впоследствии КРС, проспав новые курсы самообороны. Теперь ты можешь полагаться лишь на свои давние умения."
 	requirement = "Нет."
 
 /datum/quality/positiveish/karate_kid/add_effect(mob/living/carbon/human/H, latespawn)
 	H.AddComponent(/datum/component/karate)
+	H.AddComponent(/datum/component/fear_of_a_gun)
+
+	for(var/obj/item/organ/external/BP in H.species.has_bodypart)
+		if(H.bodyparts_by_name[BP])
+			if(BP)
+				if(BP.max_pumped)
+					if(BP.max_pumped > 0)
+						BP.max_pumped += 300
+	to_chat(H, "<span class='notice'>The blood pumps, the limbs obey!</span>")

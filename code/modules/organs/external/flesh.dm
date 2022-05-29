@@ -30,8 +30,6 @@
 
 	if(isnull(cap) || cap > BP.max_pumped)
 		cap = BP.max_pumped
-		var/mob/living/carbon/human/H = BP.owner
-		SEND_SIGNAL(H, COMSIG_PUMPED_LIMIT_RICHED, BP)
 	if(BP.pumped >= cap)
 		return 0
 
