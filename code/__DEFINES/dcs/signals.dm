@@ -337,3 +337,6 @@
 
 // send this signal to toggle zoom in /datum/component/zoom: (mob/user)
 #define COMSIG_ZOOM_TOGGLE "zoom_toggle"
+// from /datum/component/karate
+#define COMSIG_PUMPED_LIMIT_RICHED "pumped_limit_riched"
+#define COMSIG_CAUGHT_A_BULLET "caught a bullet"

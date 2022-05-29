@@ -329,3 +329,11 @@
 
 /datum/quality/negativeish/anatomist/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_ANATOMIST, QUALITY_TRAIT)
+
+/datum/quality/positiveish/karate_kid
+	name = "Karate Kid"
+	desc = "Ты проспал общие курсы самообороны и не знаешь даже концепции кулачного боя, полагаясь лишь на свои давние умения."
+	requirement = "Нет."
+
+/datum/quality/positiveish/karate_kid/add_effect(mob/living/carbon/human/H, latespawn)
+	H.AddComponent(/datum/component/karate)
