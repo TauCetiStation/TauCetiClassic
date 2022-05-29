@@ -182,64 +182,6 @@ Contains helper procs for airflow, handled in /connection_group.
 	if(od)
 		density = FALSE
 
-
-/atom/movable/proc/RepelAirflowDest(n)
-	set waitfor = FALSE
-	if(!airflow_dest)
-		return
-	if(airflow_speed < 0)
-		return
-	if(last_airflow > world.time - vsc.airflow_delay) return
-	if(airflow_speed)
-		airflow_speed = n / max(get_dist(src, airflow_dest), 1)
-		return
-	if(airflow_dest == loc)
-		step_away(src, loc)
-	if(!AirflowCanMove(n))
-		return
-	if(ismob(src))
-		to_chat(src, "<span clas='danger'>You are pushed away by airflow!</span>")
-	last_airflow = world.time
-	var/airflow_falloff = 9 - sqrt((x - airflow_dest.x) ** 2 + (y - airflow_dest.y) ** 2)
-	if(airflow_falloff < 1)
-		airflow_dest = null
-		return
-	airflow_speed = min(max(n * (9 / airflow_falloff), 1), 9)
-	var/xo = -(airflow_dest.x - src.x)
-	var/yo = -(airflow_dest.y - src.y)
-	var/od = FALSE
-	airflow_dest = null
-	if(!density)
-		density = TRUE
-		od = TRUE
-	while(airflow_speed > 0)
-		if(airflow_speed <= 0)
-			return
-		airflow_speed = min(airflow_speed, 15)
-		airflow_speed -= vsc.airflow_speed_decay
-		if(airflow_speed > 7)
-			if(airflow_time++ >= airflow_speed - 7)
-				sleep(1 * SSAIR_TICK_MULTIPLIER)
-		else
-			sleep(max(1, 10 - (airflow_speed + 3)) * SSAIR_TICK_MULTIPLIER)
-		if ((!( src.airflow_dest ) || src.loc == src.airflow_dest))
-			src.airflow_dest = locate(min(max(src.x + xo, 1), world.maxx), min(max(src.y + yo, 1), world.maxy), src.z)
-		if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
-			return
-		if(!istype(loc, /turf))
-			return
-		step_towards(src, src.airflow_dest)
-		var/mob/M = src
-		if(istype(M) && M.client)
-			M.setMoveCooldown(vsc.airflow_mob_slowdown)
-		airborne_acceleration++
-	airflow_dest = null
-	airflow_speed = 0
-	airflow_time = 0
-	airborne_acceleration = 0
-	if(od)
-		density = FALSE
-
 /atom/movable/Bump(atom/A)
 	if(airflow_speed > 0 && airflow_dest)
 		if(airborne_acceleration > 1)
