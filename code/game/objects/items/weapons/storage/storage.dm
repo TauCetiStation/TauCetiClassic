@@ -114,11 +114,11 @@
 
 	if (!usr.incapacitated())
 		switch(over_object.name)
-			if("r_hand")
+			if("hand_r")
 				if(!M.unEquip(src))
 					return
 				M.put_in_r_hand(src)
-			if("l_hand")
+			if("hand_l")
 				if(!M.unEquip(src))
 					return
 				M.put_in_l_hand(src)

@@ -81,28 +81,6 @@
 			return
 	..()
 
-/obj/item/weapon/picture_frame/MouseDrop(obj/over_object)
-	. = ..()
-	if(ishuman(usr) || ismonkey(usr))
-		var/mob/M = usr
-		if(!(src.loc == usr))
-			return
-		if(!over_object)
-			return
-
-		if(!usr.incapacitated())
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-			add_fingerprint(usr)
-	return
-
 /obj/item/weapon/picture_frame/attack_self(mob/user)
 	user.examinate(src)
 
@@ -316,16 +294,16 @@
 						M.put_in_hands(F)
 					qdel(src)
 					return
-			if(over_object.name in list("r_hand", "l_hand"))
+			if(over_object.name in list("hand_l", "hand_r"))
 				if(framed)
 					var/obj/item/I = framed
 					framed = null
 					to_chat(M,"<span class='notice'>You carefully remove the photo from \the [src].</span>")
 					update_icon()
 					switch(over_object.name)
-						if("r_hand")
+						if("hand_r")
 							M.put_in_r_hand(I)
-						if("l_hand")
+						if("hand_l")
 							M.put_in_l_hand(I)
 				else
 					to_chat(M,"<span class='notice'>There is no photo inside the \the [src].</span>")
