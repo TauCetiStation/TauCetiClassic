@@ -24,5 +24,5 @@
 			to_chat(parent, "<span class='notice'>The blood quickens! </span>")
 
 /datum/component/karate/Destroy()
-	UnregisterSignal(parent, list(COMSIG_AREA_ENTERED, COMSIG_CAUGHT_A_BULLET))
+	UnregisterSignal(parent, list(COMSIG_PUMPED_LIMIT_RICHED, COMSIG_CAUGHT_A_BULLET))
 	. = ..()
