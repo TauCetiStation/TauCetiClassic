@@ -343,7 +343,7 @@
 	point_at(A)
 
 	var/obj/item/I = get_active_hand()
-	if(!get_active_hand())
+	if(!I)
 		visible_message("<span class='notice'><b>[src]</b> points to [A].</span>")
 	else
 		visible_message("<span class='notice'><b>[src]</b> points to [A] with [P_THEIR(src)] [I.name].</span>")
