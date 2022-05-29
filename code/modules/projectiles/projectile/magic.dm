@@ -71,7 +71,8 @@
 	icon_state = "red_1"
 	light_color = "#ff0000"
 
-/obj/item/projectile/magic/animate/Bump(atom/change)
+/obj/item/projectile/magic/animate/on_impact(atom/change)
+	. = ..()
 	if(isitem(change) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
 		var/obj/O = change
 		new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
@@ -90,7 +91,6 @@
 				var/datum/objective/target/protect/new_objective = recruit.AppendObjective(/datum/objective/target/protect)
 				new_objective.explanation_text = "Help [firer.real_name], the Demiurgos of your new life."
 				new_objective.target = firer.mind
-	return ..()
 
 /obj/item/projectile/magic/resurrection
 	name = "bolt of resurrection"
