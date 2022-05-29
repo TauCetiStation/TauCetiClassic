@@ -56,10 +56,21 @@ Contains helper procs for airflow, handled in /connection_group.
 	return TRUE
 
 /mob/check_airflow_movable(n)
+	if(status_flags & GODMODE)
+		return FALSE
+	if(buckled)
+		return FALSE
 	return n >= vsc.airflow_heavy_pressure
 
 /mob/living/silicon/check_airflow_movable()
 	return FALSE
+
+/mob/living/carbon/human/check_airflow_movable(n)
+	if(shoes && (shoes.flags & NOSLIP))
+		return FALSE
+	if(wear_suit && (wear_suit.flags & NOSLIP))
+		return FALSE
+	return ..()
 
 /obj/check_airflow_movable(n)
 	if(n < vsc.airflow_dense_pressure)
@@ -95,34 +106,18 @@ Contains helper procs for airflow, handled in /connection_group.
 	COOLDOWN_DECLARE(last_airflow)
 	var/tmp/airborne_acceleration = 0
 
-/atom/movable/proc/AirflowCanMove(n)
-	return TRUE
-
-/mob/AirflowCanMove(n)
-	if(status_flags & GODMODE)
-		return FALSE
-	if(buckled)
-		return FALSE
-	return TRUE
-
-/mob/living/carbon/human/AirflowCanMove(n)
-	if(shoes && (shoes.flags & NOSLIP))
-		return FALSE
-	if(wear_suit && (wear_suit.flags & NOSLIP))
-		return FALSE
-	return ..()
-
-/atom/movable/proc/AirflowDest(n, repelled)
+/atom/movable/proc/AirflowDest(n, repelled, checks = FALSE)
 	set waitfor = FALSE
-	if(!airflow_dest || airflow_speed < 0)
-		return
-	if(!COOLDOWN_FINISHED(src, last_airflow))
-		return
-	if(airflow_speed)
-		airflow_speed = n / max(get_dist(src, airflow_dest), 1)
-		return
-	if(!AirflowCanMove(n))
-		return
+	if(checks)
+		if(!airflow_dest || airflow_speed < 0)
+			return
+		if(!COOLDOWN_FINISHED(src, last_airflow))
+			return
+		if(airflow_speed)
+			airflow_speed = n / max(get_dist(src, airflow_dest), 1)
+			return
+		if(!check_airflow_movable(n))
+			return
 	if(airflow_dest == loc)
 		step_away(src, loc)
 	if(ismob(src))
@@ -140,7 +135,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		yo = src.y - airflow_dest.y
 	else
 		xo = airflow_dest.x - src.x
-		xy = airflow_dest.y - src.y
+		yo = airflow_dest.y - src.y
 
 	var/od = FALSE
 	airflow_dest = null
