@@ -346,7 +346,7 @@
 	if(!I)
 		visible_message("<span class='notice'><b>[src]</b> points to [A].</span>")
 	else
-		visible_message("<span class='notice'><b>[src]</b> points to [A] with [P_THEIR(src)] [I.name].</span>")
+		visible_message("<span class='notice'><b>[src]</b> points to [A] with [P_THEIR(gender)] [I.name].</span>")
 		I.point_with(src, A)
 
 	// TODO: replace with a "COMSIG_MOB_POINTED" signal
