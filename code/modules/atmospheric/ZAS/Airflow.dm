@@ -2,11 +2,13 @@
 Contains helper procs for airflow, handled in /connection_group.
 */
 
-/mob/var/tmp/last_airflow_stun = 0
+/mob
+	COOLDOWN_DECLARE(last_airflow_stun)
+
 /mob/proc/airflow_stun()
 	if(stat == DEAD)
 		return FALSE
-	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)
+	if(!COOLDOWN_FINISHED(src, last_airflow_stun))
 		return FALSE
 	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
 		to_chat(src, "<span class='notice'>You stay upright as the air rushes past you.</span>")
@@ -17,7 +19,7 @@ Contains helper procs for airflow, handled in /connection_group.
 	if(!lying)
 		to_chat(src, "<span class='warning'>The sudden rush of air knocks you over!</span>")
 	Weaken(5)
-	last_airflow_stun = world.time
+	COOLDOWN_START(src, last_airflow_stun, vsc.airflow_stun_cooldown)
 
 /mob/living/silicon/airflow_stun()
 	return
@@ -45,55 +47,53 @@ Contains helper procs for airflow, handled in /connection_group.
 	..()
 
 /atom/movable/proc/check_airflow_movable(n)
-
-	if(anchored && !ismob(src))
+	if(anchored)
 		return FALSE
 
-	if(!isobj(src) && n < vsc.airflow_dense_pressure)
+	if(n < vsc.airflow_dense_pressure)
 		return FALSE
 
 	return TRUE
 
 /mob/check_airflow_movable(n)
-	if(n < vsc.airflow_heavy_pressure)
-		return FALSE
-	return TRUE
+	return n >= vsc.airflow_heavy_pressure
 
 /mob/living/silicon/check_airflow_movable()
 	return FALSE
 
-
 /obj/check_airflow_movable(n)
-	//if(isnull(w_class))
-	if(!isitem(src))
-		if(n < vsc.airflow_dense_pressure)
-			return FALSE //most non-item objs don't have a w_class yet
-	else
-		var/obj/item/I = src
-		switch(I.w_class)
-			if(1, 2)
-				if(n < vsc.airflow_lightest_pressure)
-					return FALSE
-			if(3)
-				if(n < vsc.airflow_light_pressure)
-					return FALSE
-			if(4, 5)
-				if(n < vsc.airflow_medium_pressure)
-					return FALSE
-			if(6)
-				if(n < vsc.airflow_heavy_pressure)
-					return FALSE
-			if(7 to INFINITY)
-				if(n < vsc.airflow_dense_pressure)
-					return FALSE
+	if(n < vsc.airflow_dense_pressure)
+		return FALSE //most non-item objs don't have a w_class yet
+
 	return ..()
 
+/obj/item/check_airflow_movable(n)
+	var/obj/item/I = src
+	switch(I.w_class)
+		if(1, 2)
+			if(n < vsc.airflow_lightest_pressure)
+				return FALSE
+		if(3)
+			if(n < vsc.airflow_light_pressure)
+				return FALSE
+		if(4, 5)
+			if(n < vsc.airflow_medium_pressure)
+				return FALSE
+		if(6)
+			if(n < vsc.airflow_heavy_pressure)
+				return FALSE
+		if(7 to INFINITY)
+			if(n < vsc.airflow_dense_pressure)
+				return FALSE
 
-/atom/movable/var/tmp/turf/airflow_dest
-/atom/movable/var/tmp/airflow_speed = 0
-/atom/movable/var/tmp/airflow_time = 0
-/atom/movable/var/tmp/last_airflow = 0
-/atom/movable/var/tmp/airborne_acceleration = 0
+	return ..()
+
+/atom/movable
+	var/tmp/turf/airflow_dest
+	var/tmp/airflow_speed = 0
+	var/tmp/airflow_time = 0
+	COOLDOWN_DECLARE(last_airflow)
+	var/tmp/airborne_acceleration = 0
 
 /atom/movable/proc/AirflowCanMove(n)
 	return TRUE
@@ -112,13 +112,13 @@ Contains helper procs for airflow, handled in /connection_group.
 		return FALSE
 	return ..()
 
-/atom/movable/proc/GotoAirflowDest(n)
+/atom/movable/proc/AirflowDest(n, repelled)
 	set waitfor = FALSE
 	if(!airflow_dest)
 		return
 	if(airflow_speed < 0)
 		return
-	if(last_airflow > world.time - vsc.airflow_delay)
+	if(!COOLDOWN_FINISHED(src, last_airflow))
 		return
 	if(airflow_speed)
 		airflow_speed = n / max(get_dist(src, airflow_dest), 1)
@@ -128,22 +128,29 @@ Contains helper procs for airflow, handled in /connection_group.
 	if(!AirflowCanMove(n))
 		return
 	if(ismob(src))
-		to_chat(src, "<span class='danger'>You are sucked away by airflow!</span>")
-	last_airflow = world.time
-	var/airflow_falloff = 9 - sqrt((x - airflow_dest.x) ** 2 + (y - airflow_dest.y) ** 2)
+		to_chat(src, "<span clas='danger'>You are [repelled ? "pushed" : "sucked"] away by airflow!</span>")
+	COOLDOWN_START(src, last_airflow, vsc.airflow_delay)
+	var/airflow_falloff = 9 - get_dist_euclidian(src, airflow_dest)
 	if(airflow_falloff < 1)
 		airflow_dest = null
 		return
-	airflow_speed = min(max(n * (9/airflow_falloff),1),9)
-	var/xo = airflow_dest.x - src.x
-	var/yo = airflow_dest.y - src.y
+	airflow_speed = clamp(n * (9 / airflow_falloff), 1, 9)
+	var/xo
+	var/yo
+	if(repelled)
+		xo = src.x - airflow_dest.x
+		yo = src.y - airflow_dest.y
+	else
+		xo = airflow_dest.x - src.x
+		xy = airflow_dest.y - src.y
 	var/od = FALSE
 	airflow_dest = null
 	if(!density)
 		density = TRUE
 		od = TRUE
 	while(airflow_speed > 0)
-		if(airflow_speed <= 0) break
+		if(airflow_speed <= 0)
+			break
 		airflow_speed = min(airflow_speed, 15)
 		airflow_speed -= vsc.airflow_speed_decay
 		if(airflow_speed > 7)
@@ -161,7 +168,7 @@ Contains helper procs for airflow, handled in /connection_group.
 			src.airflow_dest = locate(min(max(src.x + xo, 1), world.maxx), min(max(src.y + yo, 1), world.maxy), src.z)
 		if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
 			break
-		if(!istype(loc, /turf))
+		if(!isturf(loc))
 			break
 		step_towards(src, src.airflow_dest)
 		var/mob/M = src

@@ -128,9 +128,9 @@ Class Procs:
 
 			if(!QDELETED(AM))
 				if(repelled)
-					AM.RepelAirflowDest(differential / 5)
+					AM.AirflowDest(differential / 5, TRUE)
 				else
-					AM.GotoAirflowDest(differential / 10)
+					AM.AirflowDest(differential / 10, FALSE)
 		CHECK_TICK
 
 
