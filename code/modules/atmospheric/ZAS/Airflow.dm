@@ -37,9 +37,9 @@ Contains helper procs for airflow, handled in /connection_group.
 	return
 
 /mob/living/carbon/human/airflow_stun()
-	if(shoes && (shoes.flags & NOSLIP))
+	if(shoes?.flags & NOSLIP)
 		return FALSE
-	if(wear_suit && (wear_suit.flags & NOSLIP))
+	if(wear_suit?.flags & NOSLIP)
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		to_chat(src, "<span class='notice'>Air suddenly rushes past you!</span>")
@@ -50,15 +50,12 @@ Contains helper procs for airflow, handled in /connection_group.
 	if(anchored)
 		return FALSE
 
-	if(n < vsc.airflow_dense_pressure)
-		return FALSE
-
-	return TRUE
+	return n >= vsc.airflow_dense_pressure
 
 /mob/check_airflow_movable(n)
 	if(status_flags & GODMODE)
 		return FALSE
-	if(buckled)
+	if(buckled || anchored)
 		return FALSE
 	return n >= vsc.airflow_heavy_pressure
 
@@ -72,28 +69,22 @@ Contains helper procs for airflow, handled in /connection_group.
 		return FALSE
 	return ..()
 
-/obj/check_airflow_movable(n)
-	if(n < vsc.airflow_dense_pressure)
-		return FALSE //most non-item objs don't have a w_class yet
-
-	return ..()
-
 /obj/item/check_airflow_movable(n)
 	var/obj/item/I = src
 	switch(I.w_class)
-		if(1, 2)
+		if(SIZE_MINUSCULE, SIZE_TINY)
 			if(n < vsc.airflow_lightest_pressure)
 				return FALSE
-		if(3)
+		if(SIZE_SMALL)
 			if(n < vsc.airflow_light_pressure)
 				return FALSE
-		if(4, 5)
+		if(SIZE_NORMAL, SIZE_BIG)
 			if(n < vsc.airflow_medium_pressure)
 				return FALSE
-		if(6)
+		if(SIZE_LARGE)
 			if(n < vsc.airflow_heavy_pressure)
 				return FALSE
-		if(7 to INFINITY)
+		if(SIZE_HUMAN to INFINITY)
 			if(n < vsc.airflow_dense_pressure)
 				return FALSE
 
@@ -102,9 +93,9 @@ Contains helper procs for airflow, handled in /connection_group.
 /atom/movable
 	var/tmp/turf/airflow_dest
 	var/tmp/airflow_speed = 0
+	var/tmp/airborne_acceleration = 0
 	var/tmp/airflow_time = 0
 	COOLDOWN_DECLARE(last_airflow)
-	var/tmp/airborne_acceleration = 0
 
 /atom/movable/proc/AirflowDest(n, repelled, checks = FALSE)
 	set waitfor = FALSE
@@ -164,6 +155,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		if(istype(M) && M.client)
 			M.setMoveCooldown(vsc.airflow_mob_slowdown)
 		airborne_acceleration++
+
 	airflow_dest = null
 	airflow_speed = 0
 	airflow_time = 0
@@ -222,7 +214,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		I.deploy(src)
 		return
 
-	var/b_loss = min(airflow_speed, (airborne_acceleration*2)) * vsc.airflow_damage
+	var/b_loss = min(airflow_speed, 2*airborne_acceleration) * vsc.airflow_damage
 
 	if(b_loss > 0)
 		if(prob(33))
