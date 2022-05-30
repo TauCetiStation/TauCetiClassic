@@ -271,12 +271,12 @@
 /obj/structure/picture_frame/MouseDrop(obj/over_object)
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
 		if(framed)
-			to_chat(M,"<span class='notice'>You carefully remove the photo from \the [src].</span>")
-			over_object.MouseDrop_T(framed, M)
+			to_chat(usr, "<span class='notice'>You carefully remove the photo from \the [src].</span>")
+			over_object.MouseDrop_T(framed, usr)
 			framed = null
 			update_icon()
 		else
-			to_chat(M,"<span class='notice'>There is no photo inside the \the [src].</span>")
+			to_chat(usr, "<span class='notice'>There is no photo inside the \the [src].</span>")
 		add_fingerprint(usr)
 		return
 
