@@ -118,7 +118,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		yo = -yo
 
 	while(airflow_speed > 0 && airflow_dest)
-		airflow_speed = min(airflow_speed, 15) - vsc.airflow_speed_decay
+		airflow_speed = airflow_speed - vsc.airflow_speed_decay
 		sleep_time = 0
 		if(airflow_speed > 7)
 			if(airflow_time++ >= airflow_speed - 7)
