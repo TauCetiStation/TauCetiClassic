@@ -2322,13 +2322,3 @@
 	
 	if(worker_choice)
 		rev_choices = "worker_choice"
-
-/mob/living/carbon/human/proc/del_screen(time)
-	sleep(time)
-
-	if(client)
-		for(var/atom/movable/screen/screen in client.screen)
-			if(screen.name == "Join To Revolution")
-				client.screen -= screen
-				qdel(screen)
-				break
