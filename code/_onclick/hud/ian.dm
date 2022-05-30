@@ -17,5 +17,5 @@
 	))
 
 	hud.add_stamina_display()
-	hud.add_hands(r_type = /atom/movable/screen/inventory/corgi_mouth, l_type = FALSE)
+	hud.add_hands(r_type = /atom/movable/screen/inventory/hand/corgi, l_type = FALSE)
 	hud.add_healths(/atom/movable/screen/health/ian)

@@ -72,7 +72,7 @@
 		return
 	if(!iscarbon(user) || user.incapacitated())
 		return
-	if(!dropping.Adjacent(usr))
+	if(dropping.loc != user && !(isturf(user.loc) && dropping.Adjacent(usr)))
 		return
 	dropping.add_fingerprint(user)
 

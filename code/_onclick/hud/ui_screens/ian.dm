@@ -1,11 +1,12 @@
 /atom/movable/screen/health/ian
 	copy_flags = HUD_COPY_ICON
 
-/atom/movable/screen/inventory/corgi_mouth
+/atom/movable/screen/inventory/hand/corgi
 	name = "mouth"
 	icon_state = "mouth"
 	screen_loc = ui_ian_mouth
 	slot_id = SLOT_MOUTH
+	hand_index = 0
 
 /atom/movable/screen/inventory/corgi_neck
 	name = "neck"
