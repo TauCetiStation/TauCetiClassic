@@ -2316,7 +2316,7 @@
 	else if(worker_choice == "No!")
 		if(R)
 			if(isrev(src))
-				var/datum/role/my_role = src.mind.GetRole(REV)
+				var/datum/role/my_role = mind.GetRole(REV)
 				my_role.Deconvert()
 		to_chat(src, "<span class='warning'>Don't forget to install the mindshield.</span>")
 	
