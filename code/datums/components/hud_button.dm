@@ -30,7 +30,7 @@
 	join_to_revolution.icon_state = "revolution"
 	join_to_revolution.screen_loc = ui_lingstingdisplay
 	join_to_revolution.plane = ABOVE_HUD_PLANE
-	join_to_revolution.invisibility = INVISIBILITY_ABSTRACT
+	join_to_revolution.invisibility = INVISIBILITY_NONE
 	button.adding += join_to_revolution
 
 

@@ -62,7 +62,6 @@
 		var/mob/living/carbon/human/M = user
 		if(!isrevhead(M))
 			SEND_SIGNAL(M, COMSIG_ADD_HUD_BUTTON, 100, "Join To Revolution")
-			user.hud_used.join_to_revolution.invisibility = INVISIBILITY_NONE
 			M.rev_choices = ""
 			M.update_hud()
 	return ..()
