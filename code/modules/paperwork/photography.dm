@@ -131,7 +131,7 @@
 	if(!ishuman(usr))
 		return FALSE
 
-	if(istype(over_object, /atom/movable/screen))
+	if(istype(over_object, /atom/movable/screen/inventory/hand))
 		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 		over_object.MouseDrop_T(src, usr)
 		return TRUE

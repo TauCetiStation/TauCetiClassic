@@ -29,7 +29,7 @@
 //returns 1 if the master item's parent's MouseDrop() should be called, 0 otherwise. It's strange, but no other way of
 //doing it without the ability to call another proc's parent, really.
 /obj/item/weapon/storage/internal/proc/handle_mousedrop(mob/user, obj/over_object)
-	if (istype(over_object, /atom/movable/screen))
+	if (istype(over_object, /atom/movable/screen/inventory/hand))
 		over_object.MouseDrop_T(master_item, user)
 		return FALSE
 

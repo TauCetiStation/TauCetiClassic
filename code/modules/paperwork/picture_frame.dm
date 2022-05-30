@@ -269,6 +269,17 @@
 		return
 
 /obj/structure/picture_frame/MouseDrop(obj/over_object)
+	if(istype(over_object, /atom/movable/screen/inventory/hand))
+		if(framed)
+			to_chat(M,"<span class='notice'>You carefully remove the photo from \the [src].</span>")
+			over_object.MouseDrop_T(framed, M)
+			framed = null
+			update_icon()
+		else
+			to_chat(M,"<span class='notice'>There is no photo inside the \the [src].</span>")
+		add_fingerprint(usr)
+		return
+
 	if(ishuman(usr) || ismonkey(usr))
 		var/mob/living/carbon/M = usr
 		if(!over_object)
@@ -294,19 +305,6 @@
 						M.put_in_hands(F)
 					qdel(src)
 					return
-			if(over_object.name in list("hand_l", "hand_r"))
-				if(framed)
-					var/obj/item/I = framed
-					framed = null
-					to_chat(M,"<span class='notice'>You carefully remove the photo from \the [src].</span>")
-					update_icon()
-					switch(over_object.name)
-						if("hand_r")
-							M.put_in_r_hand(I)
-						if("hand_l")
-							M.put_in_l_hand(I)
-				else
-					to_chat(M,"<span class='notice'>There is no photo inside the \the [src].</span>")
 
 			add_fingerprint(usr)
 	return
