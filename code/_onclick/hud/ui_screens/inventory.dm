@@ -70,25 +70,7 @@
 /atom/movable/screen/inventory/hand/MouseDrop_T(obj/item/dropping, mob/user)
 	if(!istype(dropping))
 		return
-	if(!iscarbon(user) || user.incapacitated())
-		return
-	if(dropping.loc != user && !(isturf(user.loc) && dropping.Adjacent(usr)))
-		return
-	dropping.add_fingerprint(user)
-
-	if(istype(dropping, /obj/item/clothing))
-		var/obj/item/clothing/clothing = dropping
-		var/slot = clothing.slot_equipped
-		if(clothing.equip_time && slot != SLOT_R_HAND && slot != SLOT_L_HAND)
-			user.delay_clothing_unequip(clothing)
-			return
-
-	if(dropping.loc != user || user.unEquip(dropping))
-		switch(hand_index)
-			if(0)
-				user.put_in_r_hand(dropping)
-			if(1)
-				user.put_in_l_hand(dropping)
+	dropping.mob_pickup(user, hand_index)
 
 /atom/movable/screen/inventory/hand/r
 	name = "hand_r"
