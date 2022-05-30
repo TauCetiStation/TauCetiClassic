@@ -94,21 +94,10 @@ Contains helper procs for airflow, handled in /connection_group.
 	var/tmp/turf/airflow_dest
 	var/tmp/airflow_speed = 0
 	var/tmp/airborne_acceleration = 0
-	var/tmp/airflow_time = 0
 	COOLDOWN_DECLARE(last_airflow)
 
-/atom/movable/proc/AirflowDest(n, repelled, checks = FALSE)
+/atom/movable/proc/AirflowDest(n, repelled)
 	set waitfor = FALSE
-	if(checks)
-		if(!airflow_dest || airflow_speed < 0)
-			return
-		if(!COOLDOWN_FINISHED(src, last_airflow))
-			return
-		if(airflow_speed)
-			airflow_speed = n / max(get_dist(src, airflow_dest), 1)
-			return
-		if(!check_airflow_movable(n))
-			return
 	if(airflow_dest == loc)
 		step_away(src, loc)
 	if(ismob(src))
@@ -119,35 +108,34 @@ Contains helper procs for airflow, handled in /connection_group.
 		airflow_dest = null
 		return
 	airflow_speed = clamp(n * (9 / airflow_falloff), 1, 9)
+	var/od
+	var/sleep_time
+	var/airflow_time = 0
 	var/xo = airflow_dest.x - src.x
 	var/yo = airflow_dest.y - src.y
 	if(repelled)
 		xo = -xo
-		yo = yo
+		yo = -yo
 
-	var/od = FALSE
-	airflow_dest = null
-	if(!density)
-		density = TRUE
-		od = TRUE
-	while(airflow_speed > 0)
+	while(airflow_speed > 0 && airflow_dest)
 		airflow_speed = min(airflow_speed, 15) - vsc.airflow_speed_decay
+		sleep_time = 0
 		if(airflow_speed > 7)
 			if(airflow_time++ >= airflow_speed - 7)
-				if(od)
-					density = FALSE
-				sleep(SSAIR_TICK_MULTIPLIER)
+				sleep_time = SSAIR_TICK_MULTIPLIER
 		else
-			if(od)
-				density = FALSE
-			sleep(max(1, 10 - (airflow_speed + 3)) * SSAIR_TICK_MULTIPLIER)
-		if(od)
-			density = TRUE
-		if (!isturf(loc))
-			break
-		if (!airflow_dest || loc == airflow_dest)
+			sleep_time = max(1, 10 - (airflow_speed + 3)) * SSAIR_TICK_MULTIPLIER
+		if(sleep_time)
+			sleep(sleep_time)
+			if(!(isturf(loc) && airflow_dest))
+				break
+		if (loc == airflow_dest)
 			airflow_dest = locate(clamp(src.x + xo, 1, world.maxx), clamp(src.y + yo, 1, world.maxy), src.z)
+		od = !density
+		density = TRUE
 		step_towards(src, airflow_dest)
+		if(od)
+			density = FALSE
 		var/mob/M = src
 		if(istype(M) && M.client)
 			M.setMoveCooldown(vsc.airflow_mob_slowdown)
@@ -155,24 +143,19 @@ Contains helper procs for airflow, handled in /connection_group.
 
 	airflow_dest = null
 	airflow_speed = 0
-	airflow_time = 0
 	airborne_acceleration = 0
-	if(od)
-		density = FALSE
 
 /atom/movable/Bump(atom/A)
-	if(airflow_speed > 0)
+	if(airflow_speed > 0 && airflow_dest)
 		if(airborne_acceleration > 1)
 			airflow_hit(A)
 		else if(ishuman(src))
 			to_chat(src, "<span class='notice'>You are pinned against [A] by airflow!</span>")
-			airborne_acceleration = 0
+			airflow_dest = null
 	return ..()
 
 /atom/movable/proc/airflow_hit(atom/A)
-	airflow_speed = 0
 	airflow_dest = null
-	airborne_acceleration = 0
 
 /obj/airflow_hit(atom/A)
 	visible_message("<span class='danger'>\The [src] slams into \a [A]!</span>", blind_message = "<span class='danger'>You hear a loud slam!</span>")
@@ -180,9 +163,7 @@ Contains helper procs for airflow, handled in /connection_group.
 	..()
 
 /obj/item/airflow_hit(atom/A)
-	airflow_speed = 0
 	airflow_dest = null
-	airborne_acceleration = 0
 
 /mob/airflow_hit(atom/A)
 	visible_message("<span class='danger'>\The [src] slams into \a [A]!</span>", blind_message = "<span class='danger'>You hear a loud slam!</span>")
