@@ -119,14 +119,11 @@ Contains helper procs for airflow, handled in /connection_group.
 		airflow_dest = null
 		return
 	airflow_speed = clamp(n * (9 / airflow_falloff), 1, 9)
-	var/xo
-	var/yo
+	var/xo = airflow_dest.x - src.x
+	var/yo = airflow_dest.y - src.y
 	if(repelled)
-		xo = src.x - airflow_dest.x
-		yo = src.y - airflow_dest.y
-	else
-		xo = airflow_dest.x - src.x
-		yo = airflow_dest.y - src.y
+		xo = -xo
+		yo = yo
 
 	var/od = FALSE
 	airflow_dest = null
@@ -146,7 +143,7 @@ Contains helper procs for airflow, handled in /connection_group.
 			sleep(max(1, 10 - (airflow_speed + 3)) * SSAIR_TICK_MULTIPLIER)
 		if(od)
 			density = TRUE
-		if (!isturf(loc) || src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy)
+		if (!isturf(loc))
 			break
 		if (!airflow_dest || loc == airflow_dest)
 			airflow_dest = locate(clamp(src.x + xo, 1, world.maxx), clamp(src.y + yo, 1, world.maxy), src.z)
@@ -164,16 +161,12 @@ Contains helper procs for airflow, handled in /connection_group.
 		density = FALSE
 
 /atom/movable/Bump(atom/A)
-	if(airflow_speed > 0 && airflow_dest)
+	if(airflow_speed > 0)
 		if(airborne_acceleration > 1)
 			airflow_hit(A)
 		else if(ishuman(src))
 			to_chat(src, "<span class='notice'>You are pinned against [A] by airflow!</span>")
 			airborne_acceleration = 0
-	else
-		airflow_speed = 0
-		airflow_time = 0
-		airborne_acceleration = 0
 	return ..()
 
 /atom/movable/proc/airflow_hit(atom/A)

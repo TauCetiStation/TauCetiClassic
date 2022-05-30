@@ -100,7 +100,7 @@ Class Procs:
 	for(var/atom/movable/AM as anything in movable)
 
 		//If they're already being tossed, don't do it again.
-		if(!COOLDOWN_FINISHED(AM, last_airflow) || AM.airflow_speed <= 0)
+		if(!COOLDOWN_FINISHED(AM, last_airflow) || AM.airflow_speed > 0)
 			continue
 
 		//Check for knocking people over
