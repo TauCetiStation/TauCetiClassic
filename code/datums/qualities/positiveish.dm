@@ -340,10 +340,9 @@
 	H.AddComponent(/datum/component/fear_of_a_gun)
 
 	for(var/O in H.species.has_bodypart)
-		if(H.bodyparts_by_name[O])
-			var/obj/item/organ/external/BP = H.bodyparts_by_name[O]
-			if(BP)
-				if(BP.max_pumped)
-					if(BP.max_pumped > 0)
-						BP.max_pumped += 300
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[O]
+		if(BP)
+			if(BP.max_pumped)
+				if(BP.max_pumped > 0)
+					BP.max_pumped += 300
 	to_chat(H, "<span class='notice'>The blood pumps, the limbs obey!</span>")
