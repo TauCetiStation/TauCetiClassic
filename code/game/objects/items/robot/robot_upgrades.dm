@@ -33,7 +33,7 @@
 	R.sensor_huds = R.def_sensor_huds
 	R.camera.remove_networks(list("Engineering","Medical","MINE"))
 	R.updatename("Default")
-	R.add_status_flags(PUSHABLE)
+	R.add_status_flags(CANPUSH)
 	R.updateicon()
 
 	return 1

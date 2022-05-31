@@ -837,13 +837,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 // ======STATUS_FLAGS=======
 /mob/proc/remove_status_flags(remove_flags)
-	if(remove_flags & STUNNABLE)
+	if(remove_flags & CANSTUN)
 		stunned = 0
-	if(remove_flags & WEAKENNABLE)
+	if(remove_flags & CANWEAKEN)
 		weakened = 0
-	if(remove_flags & PARALYSABLE)
+	if(remove_flags & CANPARALYSE)
 		paralysis = 0
-	if(remove_flags & (STUNNABLE|PARALYSABLE|WEAKENNABLE))
+	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN))
 		update_canmove()
 	status_flags &= ~remove_flags
 
@@ -862,7 +862,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else if(status_flags & LOCKSTUN)
 		return
 
-	if(status_flags & STUNNABLE || ignore_canstun)
+	if(status_flags & CANSTUN || ignore_canstun)
 		stunned = max(max(stunned, amount), 0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
 		if(updating)
 			update_canmove()
@@ -878,7 +878,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else if(status_flags & LOCKSTUN)
 		return
 
-	if(status_flags & STUNNABLE || ignore_canstun)
+	if(status_flags & CANSTUN || ignore_canstun)
 		stunned = max(amount, 0)
 		if(updating)
 			update_canmove()
@@ -894,7 +894,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else if(status_flags & LOCKSTUN)
 		return
 
-	if(status_flags & STUNNABLE || ignore_canstun)
+	if(status_flags & CANSTUN || ignore_canstun)
 		stunned = max(stunned + amount, 0)
 		if(updating)
 			update_canmove()
@@ -903,21 +903,21 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 // ========== WEAKEN ==========
 /mob/proc/Weaken(amount)
-	if(status_flags & WEAKENNABLE)
+	if(status_flags & CANWEAKEN)
 		weakened = max(max(weakened, amount), 0)
 		update_canmove() // updates lying, canmove and icons
 	else
 		weakened = 0
 
 /mob/proc/SetWeakened(amount)
-	if(status_flags & WEAKENNABLE)
+	if(status_flags & CANWEAKEN)
 		weakened = max(amount, 0)
 		update_canmove()
 	else
 		weakened = 0
 
 /mob/proc/AdjustWeakened(amount)
-	if(status_flags & WEAKENNABLE)
+	if(status_flags & CANWEAKEN)
 		weakened = max(weakened + amount, 0)
 		update_canmove()
 	else
@@ -925,19 +925,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 // ========== PARALYSE ==========
 /mob/proc/Paralyse(amount)
-	if(status_flags & PARALYSABLE)
+	if(status_flags & CANPARALYSE)
 		paralysis = max(max(paralysis, amount), 0)
 	else
 		paralysis = 0
 
 /mob/proc/SetParalysis(amount)
-	if(status_flags & PARALYSABLE)
+	if(status_flags & CANPARALYSE)
 		paralysis = max(amount, 0)
 	else
 		paralysis = 0
 
 /mob/proc/AdjustParalysis(amount)
-	if(status_flags & PARALYSABLE)
+	if(status_flags & CANPARALYSE)
 		paralysis = max(paralysis + amount, 0)
 	else
 		paralysis = 0

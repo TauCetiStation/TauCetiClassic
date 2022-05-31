@@ -7,7 +7,7 @@
 	icon_state = "queen_s"
 	pixel_x = -16
 	layer = FLY_LAYER
-	status_flags = PARALYSABLE
+	status_flags = CANPARALYSE
 	heal_rate = 4
 	plasma_rate = 20
 	neurotoxin_delay = 10

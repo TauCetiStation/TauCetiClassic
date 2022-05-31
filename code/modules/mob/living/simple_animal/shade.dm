@@ -25,7 +25,7 @@
 	stop_automated_movement = TRUE
 	status_flags = 0
 	faction = "cult"
-	status_flags = PUSHABLE
+	status_flags = CANPUSH
 
 	animalistic = FALSE
 	has_head = TRUE

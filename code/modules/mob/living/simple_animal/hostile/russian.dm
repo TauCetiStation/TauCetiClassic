@@ -29,7 +29,7 @@
 	max_n2 = 0
 	unsuitable_atoms_damage = 15
 	faction = "russian"
-	status_flags = PUSHABLE
+	status_flags = CANPUSH
 
 	animalistic = FALSE
 	has_head = TRUE

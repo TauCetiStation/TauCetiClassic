@@ -26,7 +26,7 @@
 
 	// canstun and canweaken don't affect slimes because they ignore stun and weakened variables
 	// for the sake of cleanliness, though, here they are.
-	status_flags = PARALYSABLE|PUSHABLE
+	status_flags = CANPARALYSE|CANPUSH
 
 	var/cores = 1 // the number of /obj/item/slime_extract's the slime has left inside
 

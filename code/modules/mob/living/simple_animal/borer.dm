@@ -50,7 +50,7 @@
 	speed = 5
 	a_intent = INTENT_HARM
 	stop_automated_movement = TRUE
-	status_flags = PUSHABLE
+	status_flags = CANPUSH
 	attacktext = "nips"
 	friendly = "prods"
 	wander = FALSE

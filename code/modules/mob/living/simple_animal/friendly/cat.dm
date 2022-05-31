@@ -227,7 +227,7 @@ var/global/cat_number = 0
 		if(INTENT_GRAB)
 			if(M == src)
 				return
-			if(!(status_flags & PUSHABLE))
+			if(!(status_flags & CANPUSH))
 				return
 
 			M.visible_message("<span class='notice'>[M]'s hand passes through \the [src].</span>")

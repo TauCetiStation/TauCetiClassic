@@ -310,7 +310,7 @@
 	updatename()
 
 	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
-		remove_status_flags(PUSHABLE)
+		remove_status_flags(CANPUSH)
 
 	// Radial menu for choose icon_state
 	var/choose_icon = list()

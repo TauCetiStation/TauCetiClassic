@@ -60,7 +60,7 @@
 		if(IRRADIATE)
 			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm.", "Your clothes feel warm."))/100),0)//Rads auto check armor
 		if(STUTTER)
-			if(status_flags & STUNNABLE) // stun is usually associated with stutter
+			if(status_flags & CANSTUN) // stun is usually associated with stutter
 				Stuttering(effect * blocked)
 		if(EYE_BLUR)
 			blurEyes(effect * blocked)
