@@ -51,10 +51,10 @@
 #define OXYLOSS 	8
 
 //Bitflags defining which status effects could be or are inflicted on a mob
-#define CANSTUN		1       // Can be stunned
-#define CANWEAKEN	2       // Can be weakened
-#define CANPARALYSE	4       // Can be paralysed
-#define CANPUSH		8       // Can be pushed
+#define STUNNABLE	1       // Can be stunned
+#define WEAKENNABLE	2       // Can be weakened
+#define PARALYSABLE	4       // Can be paralysed
+#define PUSHABLE	8       // Can be pushed
 #define LEAPING		16
 #define PASSEMOTES	32      //Mob has holders inside of it that need to see emotes.
 #define LOCKSTUN	64      // if Mob has this flag, then stunned cannot be modified using Stun() SetStun() AdjustStunned() procs.
@@ -62,7 +62,7 @@
 #define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath
 #define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
 #define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
-#define MOB_STATUS_FLAGS_DEFAULT (CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH)
+#define MOB_STATUS_FLAGS_DEFAULT (STUNNABLE | WEAKENNABLE | PARALYSABLE | PUSHABLE)
 
 //Grab levels
 #define GRAB_NONE         0

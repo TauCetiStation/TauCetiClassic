@@ -146,7 +146,7 @@
 	attacktext = "barrell"
 	a_intent = INTENT_HELP
 	throw_message = "sinks in slowly, before being pushed out of "
-	status_flags = CANPUSH
+	status_flags = PUSHABLE
 	search_objects = 1
 
 	var/list/ore_types_eaten = list()

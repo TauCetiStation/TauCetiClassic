@@ -1106,7 +1106,7 @@
 /datum/species/skeleton/on_gain(mob/living/carbon/human/H)
 	..()
 	H.gender = NEUTER
-	H.remove_status_flags(CANSTUN|CANPARALYSE)
+	H.remove_status_flags(STUNNABLE|PARALYSABLE)
 
 /datum/species/skeleton/on_loose(mob/living/carbon/human/H, new_species)
 	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
@@ -1287,7 +1287,7 @@
 	// Clothing on the Golem is created before the hud_list is generated in the atom
 	H.prepare_huds()
 
-	H.remove_status_flags(CANSTUN|CANWEAKEN|CANPARALYSE)
+	H.remove_status_flags(STUNNABLE|WEAKENNABLE|PARALYSABLE)
 	H.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 
 	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
@@ -1361,7 +1361,7 @@
 /datum/species/zombie/on_gain(mob/living/carbon/human/H)
 	..()
 
-	H.remove_status_flags(CANSTUN|CANPARALYSE) //CANWEAKEN
+	H.remove_status_flags(STUNNABLE|PARALYSABLE) //WEAKENNABLE
 
 	H.drop_l_hand()
 	H.drop_r_hand()
@@ -1559,7 +1559,7 @@
 
 /datum/species/abomination/on_gain(mob/living/carbon/human/H)
 	..()
-	H.remove_status_flags(CANSTUN|CANPARALYSE|CANWEAKEN)
+	H.remove_status_flags(STUNNABLE|PARALYSABLE|WEAKENNABLE)
 
 /datum/species/abomination/call_digest_proc(mob/living/M, datum/reagent/R)
 	return

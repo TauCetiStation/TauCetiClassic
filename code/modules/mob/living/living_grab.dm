@@ -13,7 +13,7 @@
 /mob/living/carbon/human/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	if(ismob(target))
 		var/mob/M = target
-		if(!(M.status_flags & CANPUSH))
+		if(!(M.status_flags & PUSHABLE))
 			return
 		if(M.buckled)
 			if(show_warnings)
@@ -33,7 +33,7 @@
 /mob/living/carbon/xenomorph/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	if(ismob(target))
 		var/mob/M = target
-		if(!(M.status_flags & CANPUSH))
+		if(!(M.status_flags & PUSHABLE))
 			return
 		if(M.buckled)
 			if(show_warnings)

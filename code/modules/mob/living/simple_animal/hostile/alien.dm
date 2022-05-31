@@ -30,7 +30,7 @@
 	unsuitable_atoms_damage = 15
 	faction = "alien"
 	environment_smash = 1
-	status_flags = CANPUSH
+	status_flags = PUSHABLE
 	minbodytemp = 0
 	heat_damage_per_tick = 20
 

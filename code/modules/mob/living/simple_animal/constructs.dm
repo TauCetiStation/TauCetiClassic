@@ -12,7 +12,7 @@
 	speed = -1
 	a_intent = INTENT_HARM
 	stop_automated_movement = TRUE
-	status_flags = CANPUSH
+	status_flags = PUSHABLE
 	universal_speak = 1
 	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0

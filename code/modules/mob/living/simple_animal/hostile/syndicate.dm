@@ -32,7 +32,7 @@
 	unsuitable_atoms_damage = 15
 	environment_smash = 1
 	faction = "syndicate"
-	status_flags = CANPUSH
+	status_flags = PUSHABLE
 
 	animalistic = FALSE
 	has_head = TRUE

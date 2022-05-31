@@ -21,7 +21,7 @@
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/move_delay_add = 0 // movement delay to add
 
-	status_flags = CANPARALYSE|CANPUSH
+	status_flags = PARALYSABLE|PUSHABLE
 	var/heal_rate = 1
 	var/plasma_rate = 5
 
@@ -191,7 +191,7 @@
 				stat("[key]: [count]")
 
 /mob/living/carbon/xenomorph/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
-	if(status_flags & CANSTUN || ignore_canstun)
+	if(status_flags & STUNNABLE || ignore_canstun)
 		..()
 	else
 		// add some movement delay

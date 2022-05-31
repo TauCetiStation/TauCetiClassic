@@ -138,8 +138,8 @@
 		return 1
 
 	//okay, so we didn't switch. but should we push?
-	//not if he's not CANPUSH of course
-	if(!(M.status_flags & CANPUSH) )
+	//not if he's not PUSHABLE of course
+	if(!(M.status_flags & PUSHABLE) )
 		return 1
 	//anti-riot equipment is also anti-push
 	if(M.r_hand && istype(M.r_hand, /obj/item/weapon/shield/riot))
