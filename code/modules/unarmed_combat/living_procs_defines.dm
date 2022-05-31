@@ -324,7 +324,7 @@
 
 // Returns TRUE if a combo was used, so you can prevent grabbing/disarming/etc.
 /mob/living/proc/engage_combat(mob/living/target, combo_element, combo_value)
-	if(GetComponent(/datum/component/karate))
+	if(SEND_SIGNAL(src, COMSIG_ENGAGE_COMBAT) & COMPONENT_BLOCK_COMBO)
 		return FALSE
 
 	if(!updates_combat)

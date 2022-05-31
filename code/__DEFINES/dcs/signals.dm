@@ -341,3 +341,6 @@
 #define COMSIG_KISSED_THE_WALL "kissed the wall"
 // from /datum/component/fear_of_a_gun
 #define COMSIG_CAUGHT_A_BULLET "caught a bullet"
+// send this signal to /datum/component/karate for return block_combo
+#define COMSIG_ENGAGE_COMBAT "engage_combat"
+	#define COMPONENT_BLOCK_COMBO 1
