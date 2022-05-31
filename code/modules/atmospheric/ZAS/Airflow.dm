@@ -117,7 +117,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		xo = -xo
 		yo = -yo
 
-	while(airflow_speed > 0 && airflow_dest)
+	while(airflow_speed > 0)
 		airflow_speed = airflow_speed - vsc.airflow_speed_decay
 		sleep_time = 0
 		if(airflow_speed > 7)
@@ -127,7 +127,7 @@ Contains helper procs for airflow, handled in /connection_group.
 			sleep_time = max(1, 10 - (airflow_speed + 3)) * SSAIR_TICK_MULTIPLIER
 		if(sleep_time)
 			sleep(sleep_time)
-			if(!(isturf(loc) && airflow_dest))
+			if(!(isturf(loc) && airflow_speed > 0))
 				break
 		if (loc == airflow_dest)
 			airflow_dest = locate(clamp(src.x + xo, 1, world.maxx), clamp(src.y + yo, 1, world.maxy), src.z)
@@ -146,16 +146,16 @@ Contains helper procs for airflow, handled in /connection_group.
 	airborne_acceleration = 0
 
 /atom/movable/Bump(atom/A)
-	if(airflow_speed > 0 && airflow_dest)
+	if(airflow_speed > 0)
 		if(airborne_acceleration > 1)
 			airflow_hit(A)
 		else if(ishuman(src))
 			to_chat(src, "<span class='notice'>You are pinned against [A] by airflow!</span>")
-			airflow_dest = null
+			airflow_speed = 0
 	return ..()
 
 /atom/movable/proc/airflow_hit(atom/A)
-	airflow_dest = null
+	airflow_speed = 0
 
 /obj/airflow_hit(atom/A)
 	visible_message("<span class='danger'>\The [src] slams into \a [A]!</span>", blind_message = "<span class='danger'>You hear a loud slam!</span>")
@@ -163,7 +163,7 @@ Contains helper procs for airflow, handled in /connection_group.
 	..()
 
 /obj/item/airflow_hit(atom/A)
-	airflow_dest = null
+	airflow_speed = 0
 
 /mob/airflow_hit(atom/A)
 	visible_message("<span class='danger'>\The [src] slams into \a [A]!</span>", blind_message = "<span class='danger'>You hear a loud slam!</span>")
