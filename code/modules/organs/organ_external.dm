@@ -444,6 +444,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 		S.insert_organ(owner, FALSE)
 	owner.updatehealth()
 
+	if(disintegrate == DROPLIMB_EDGE)
+		if(istype(src, /obj/item/organ/external/head))
+			var/obj/item/organ/external/head/H = src
+			if(HAS_TRAIT(owner, TRAIT_NO_CLONE))
+				if(H.brainmob)
+					ADD_TRAIT(H.brainmob, TRAIT_NO_CLONE, GENERIC_TRAIT)
+
 	if(!should_delete)
 		handle_cut()
 		owner = null

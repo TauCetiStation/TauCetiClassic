@@ -30,6 +30,9 @@
 	if(H.mind)
 		H.mind.transfer_to(brainmob)
 
+	if(HAS_TRAIT(H, TRAIT_NO_CLONE))
+		ADD_TRAIT(brainmob, TRAIT_NO_CLONE, GENERIC_TRAIT)
+
 	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
 /obj/item/brain/examine(mob/user) // -- TLE
 	..()
