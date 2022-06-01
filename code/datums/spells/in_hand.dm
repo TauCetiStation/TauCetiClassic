@@ -262,6 +262,7 @@
 	animation.pixel_y = 32
 	animation.alpha = 0
 	animation.plane = ABOVE_LIGHTING_PLANE
+	animation.layer = ABOVE_LIGHTING_LAYER
 
 	animate(animation, alpha = 255, time = 10)
 	sleep(10)

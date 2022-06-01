@@ -636,6 +636,17 @@ to destroy them and players will be able to make replacements.
 	build_path = /obj/machinery/power/port_gen/pacman/mrs
 	origin_tech = "programming=3;powerstorage=5;engineering=5"
 
+/obj/item/weapon/circuitboard/pacman/money
+	name = "Circuit Board (ANCAPMAN-type Generator)"
+	build_path = /obj/machinery/power/port_gen/pacman/money
+	origin_tech = "programming=3;powerstorage=5;engineering=5"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/weapon/storage/wallet = 1)
+
 /obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (R&D Server)"
 	build_path = /obj/machinery/r_n_d/server
