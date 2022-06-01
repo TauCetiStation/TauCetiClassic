@@ -92,21 +92,21 @@
 	..()
 	hud.mymob.l_hand_hud_object = src
 
-/atom/movable/screen/inventory/swap
+/atom/movable/screen/swap
 	name = "hand"
 
 	hud_slot = HUD_SLOT_HOTKEYS
 
-/atom/movable/screen/inventory/swap/action()
-	if(check_state() && iscarbon(usr))
+/atom/movable/screen/swap/action()
+	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 
-/atom/movable/screen/inventory/swap/first
+/atom/movable/screen/swap/first
 	icon_state = "hand1"
 	screen_loc = ui_swaphand1
 
-/atom/movable/screen/inventory/swap/second
+/atom/movable/screen/swap/second
 	icon_state = "hand2"
 	screen_loc = ui_swaphand2
 
