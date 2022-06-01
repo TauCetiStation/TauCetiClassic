@@ -51,8 +51,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/base_commit_sha
 	// string, ["#pr_id #pr_id..."]
 	var/test_merges
-	// float, [0...5]
-	var/rating = 0
+	// object
+	var/datum/stat/rating/rating = new /datum/stat/rating
 
 	// string, html page
 	var/completion_html
@@ -93,6 +93,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 
 	statfile << datum2json(src)
 
+	// TODO
 	var/rounded_rating = CEIL(rating)
 	var/rating_icon = global.rating_by_icon["[rounded_rating]"]
 	to_chat(stealth ? usr : world, "<span class='info'>Средняя оценка раунда: [rating_icon] <span style='font-size: 10px'>([rating])</span></span>")
@@ -117,37 +118,18 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	test_merges = global.test_merges
 	completion_html = SSticker.mode.completition_text
 
-	var/voters = 0
+	var/list/voters = list()
 	for(var/mob/M in global.player_list)
-		if(isnum(M.client.my_rate))
-			rating += M.client.my_rate
-			voters++
-	rating = rating / voters
+		if(!length(M.client.my_rate))
+			continue
+		for(var/cat in M.client.my_rate)
+			rating.ratings[cat] += M.client.my_rate[cat]
+			voters[cat]++
+	for(var/cat in rating.ratings)
+		rating.ratings[cat] = rating.ratings[cat] / voters[cat]
 
 	for(var/datum/mind/M in SSticker.minds)
 		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles)
 
 	for(var/ckey in global.disconnected_ckey_by_stat)
 		leave_stats += global.disconnected_ckey_by_stat[ckey]
-
-#define RATING_HREF(C, rating, fa_icon) "<a href='?src=\ref[C];round_rating=[rating]'>[fa_icon]</a>"
-
-var/global/list/rating_by_icon = list(
-	"1" = "<i class=\"far fa-angry\"></i>",
-	"2" = "<i class=\"far fa-frown\"></i>",
-	"3" = "<i class=\"far fa-meh\"></i>",
-	"4" = "<i class=\"far fa-smile\"></i>",
-	"5" = "<i class=\"far fa-laugh\"></i>",
-)
-
-/datum/stat_collector/proc/announce_rating_collection()
-	for(var/mob/M in global.player_list)
-		var/string = "<br><span class='info big'>Вам понравился раунд? (от 1 до 5)<br>"
-		var/i = 0
-		for(var/rating in global.rating_by_icon)
-			i++
-			string += RATING_HREF(M.client, rating, global.rating_by_icon[rating])
-			if(global.rating_by_icon.len != i)
-				string += "  -  "
-		string += "</span><br>"
-		to_chat(M, string)

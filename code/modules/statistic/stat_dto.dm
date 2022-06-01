@@ -189,3 +189,11 @@
 	var/start_time
 	// string, [hh:mm]
 	var/leave_time
+
+/datum/stat/rating
+	// float, [0...5]
+	var/list/ratings = list(
+		"generic_rating" = 0,
+		"mode_rating" = 0,
+		"roleplay_rating" = 0,
+	)

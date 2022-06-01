@@ -125,4 +125,4 @@
 	var/list/seen_messages
 
 	// For round rating
-	var/my_rate
+	var/list/my_rate
