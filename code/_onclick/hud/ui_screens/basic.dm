@@ -96,7 +96,7 @@
 
 /atom/movable/screen/health_doll/add_to_hud(datum/hud/hud)
 	..()
-	mymob.healthdoll = src
+	hud.mymob.healthdoll = src
 
 /atom/movable/screen/nutrition
 	name = "nutrition"

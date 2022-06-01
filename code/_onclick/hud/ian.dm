@@ -15,6 +15,6 @@
 		/atom/movable/screen/inventory/head/ian,
 		/atom/movable/screen/inventory/back/ian,
 		/atom/movable/screen/corgi/stamina_bar,
-		/atom/movable/screen/inventory/hand/corgi,
+		/atom/movable/screen/inventory/hand/r/corgi,
 		/atom/movable/screen/health/ian,
 	))
