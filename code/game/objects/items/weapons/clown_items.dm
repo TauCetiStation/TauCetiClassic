@@ -320,8 +320,9 @@
 						'sound/weapons/Egloves.ogg',
 						'sound/weapons/genhit1.ogg',
 						'sound/weapons/metal_shield_hit.ogg',
-						'sound/weapons/punch1.ogg',
-						'sound/weapons/punch2.ogg',
+						'sound/effects/mob/hits/medium_1.ogg',
+						'sound/effects/mob/hits/heavy_1.ogg',
+						'sound/effects/mob/hits/veryheavy_1.ogg',
 						'sound/weapons/smash.ogg',
 						'sound/weapons/slash.ogg'),
 
