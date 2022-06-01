@@ -96,23 +96,24 @@ Contains helper procs for airflow, handled in /connection_group.
 	var/tmp/airborne_acceleration = 0
 	COOLDOWN_DECLARE(last_airflow)
 
-/atom/movable/proc/AirflowDest(n, repelled)
+/atom/movable/proc/AirflowDest(n, turf/dest, repelled)
 	set waitfor = FALSE
-	if(airflow_dest == loc)
+	if(dest == loc)
 		step_away(src, loc)
 	if(ismob(src))
 		to_chat(src, "<span clas='danger'>You are [repelled ? "pushed" : "sucked"] away by airflow!</span>")
 	COOLDOWN_START(src, last_airflow, vsc.airflow_delay)
-	var/airflow_falloff = 9 - get_dist_euclidian(src, airflow_dest)
+	var/airflow_falloff = 9 - get_dist_euclidian(src, dest)
 	if(airflow_falloff < 1)
-		airflow_dest = null
 		return
+	airflow_dest = dest
 	airflow_speed = clamp(n * (9 / airflow_falloff), 1, 9)
+	airborne_acceleration = 0
 	var/od
 	var/sleep_time
-	var/airflow_time = 0
-	var/xo = airflow_dest.x - src.x
-	var/yo = airflow_dest.y - src.y
+	var/airflow_time = 7
+	var/xo = dest.x - src.x
+	var/yo = dest.y - src.y
 	if(repelled)
 		xo = -xo
 		yo = -yo
@@ -121,7 +122,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		airflow_speed = airflow_speed - vsc.airflow_speed_decay
 		sleep_time = 0
 		if(airflow_speed > 7)
-			if(airflow_time++ >= airflow_speed - 7)
+			if(airflow_time++ >= airflow_speed)
 				sleep_time = SSAIR_TICK_MULTIPLIER
 		else
 			sleep_time = max(1, 10 - (airflow_speed + 3)) * SSAIR_TICK_MULTIPLIER

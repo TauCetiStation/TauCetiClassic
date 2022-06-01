@@ -127,11 +127,11 @@ Class Procs:
 		if(QDELETED(AM))
 			continue
 
-		AM.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
+		var/turf/dest = pick(close_turfs) //Pick a random midpoint to fly towards.
 		if(repelled)
-			AM.AirflowDest(differential / 5, TRUE)
+			AM.AirflowDest(differential / 5, dest, TRUE)
 		else
-			AM.AirflowDest(differential / 10, FALSE)
+			AM.AirflowDest(differential / 10, dest, FALSE)
 
 		CHECK_TICK
 
