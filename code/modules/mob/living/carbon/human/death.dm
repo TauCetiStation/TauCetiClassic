@@ -142,6 +142,8 @@
 		H.mind.transfer_to(brainmob)
 	brainmob.container = src
 
+	if(HAS_TRAIT(H, TRAIT_NO_CLONE))
+		ADD_TRAIT(brainmob, TRAIT_NO_CLONE, GENERIC_TRAIT)
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	if(!species || (species.name == SKELETON))
