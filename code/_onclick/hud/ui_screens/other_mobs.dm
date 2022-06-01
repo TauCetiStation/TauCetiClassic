@@ -7,13 +7,16 @@
 
 	copy_flags = NONE
 
-/atom/movable/screen/blob_health
+/atom/movable/screen/blob_power/add_to_hud(datum/hud/hud)
+	..()
+	hud.mymob.pwr_display = src
+
+/atom/movable/screen/health/blob
 	name = "blob health"
+	icon = 'icons/mob/screen1.dmi'
 	icon_state = "block"
 	screen_loc = ui_internal
 	plane = ABOVE_HUD_PLANE
-
-	copy_flags = NONE
 
 // Essence
 /atom/movable/screen/essence
@@ -30,7 +33,9 @@
 	icon_state = "voice_[mymob.self_voice ? "on" : "off"]"
 
 /atom/movable/screen/essence/voice/add_to_hud(datum/hud/hud)
-	. = ..()
+	..()
+	var/mob/living/parasite/essence/E = hud.mymob
+	E.voice = src
 	update_icon(hud.mymob)
 
 /atom/movable/screen/essence/voice/action()
@@ -51,7 +56,9 @@
 	icon_state =  "phantom_[(mymob.phantom?.showed) ? "on" : "off"]"
 
 /atom/movable/screen/essence/phantom/add_to_hud(datum/hud/hud)
-	. = ..()
+	..()
+	var/mob/living/parasite/essence/E = hud.mymob
+	E.phantom_s = src
 	update_icon(hud.mymob)
 
 /atom/movable/screen/essence/phantom/action()

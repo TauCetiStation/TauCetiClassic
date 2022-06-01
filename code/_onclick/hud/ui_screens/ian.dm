@@ -66,7 +66,8 @@
 	icon_state = "stam_bar_[round(mymob.stamina, 5)]"
 
 /atom/movable/screen/corgi/stamina_bar/add_to_hud(datum/hud/hud)
-	. = ..()
+	..()
+	hud.mymob.staminadisplay = src
 	update_icon(hud.mymob)
 
 /atom/movable/screen/corgi/sit_lie

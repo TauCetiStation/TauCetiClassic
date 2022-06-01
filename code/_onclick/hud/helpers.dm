@@ -62,36 +62,6 @@
 		var/datum/role/role = antag_roles[id]
 		role.add_ui(src)
 
-/datum/hud/proc/add_nightvision_icon()
-	mymob.nightvisionicon = new /atom/movable/screen/xenomorph/nightvision
-	mymob.nightvisionicon.add_to_hud(src)
-
-/datum/hud/proc/add_leap_icon()
-	mymob.leap_icon = new /atom/movable/screen/xenomorph/leap
-	mymob.leap_icon.add_to_hud(src)
-
-/datum/hud/proc/add_neurotoxin_icon()
-	mymob.neurotoxin_icon = new /atom/movable/screen/xenomorph/neurotoxin
-	mymob.neurotoxin_icon.add_to_hud(src)
-
-/datum/hud/proc/add_pwr_display(type = /atom/movable/screen/xenomorph/plasma_display)
-	mymob.pwr_display = new type
-	mymob.pwr_display.add_to_hud(src)
-
-/datum/hud/proc/add_stamina_display()
-	mymob.staminadisplay = new /atom/movable/screen/corgi/stamina_bar
-	mymob.staminadisplay.add_to_hud(src)
-
-/datum/hud/proc/add_essence_voice()
-	var/mob/living/parasite/essence/E = mymob
-	E.voice = new /atom/movable/screen/essence/voice
-	E.voice.add_to_hud(src)
-
-/datum/hud/proc/add_phantom()
-	var/mob/living/parasite/essence/E = mymob
-	E.phantom_s = new /atom/movable/screen/essence/phantom()
-	E.phantom_s.add_to_hud(src)
-
 /datum/hud/proc/add_robot_hand_1()
 	var/atom/movable/screen/robot_hands/first/using = new
 	using.add_to_hud(src)

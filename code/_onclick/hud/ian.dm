@@ -14,8 +14,8 @@
 		/atom/movable/screen/inventory/corgi_neck,
 		/atom/movable/screen/inventory/head/ian,
 		/atom/movable/screen/inventory/back/ian,
+		/atom/movable/screen/corgi/stamina_bar,
 	))
 
-	hud.add_stamina_display()
 	hud.add_hands(r_type = /atom/movable/screen/inventory/hand/corgi, l_type = FALSE)
 	hud.add_healths(/atom/movable/screen/health/ian)

@@ -16,7 +16,8 @@
 	X.updatePlasmaDisplay()
 
 /atom/movable/screen/xenomorph/plasma_display/add_to_hud(datum/hud/hud)
-	. = ..()
+	..()
+	hud.mymob.pwr_display = src
 	update_icon(hud.mymob)
 
 /atom/movable/screen/xenomorph/nightvision
@@ -28,6 +29,10 @@
 	if(isxeno(usr))
 		var/mob/living/carbon/xenomorph/A = usr
 		A.toggle_nvg()
+
+/atom/movable/screen/xenomorph/nightvision/add_to_hud(datum/hud/hud)
+	..()
+	hud.mymob.nightvisionicon = src
 
 // adult xenos screes
 /atom/movable/screen/xenomorph/leap
@@ -43,6 +48,10 @@
 /atom/movable/screen/xenomorph/leap/update_icon(mob/living/carbon/xenomorph/humanoid/hunter/AH)
 	icon_state = "leap_[AH.leap_on_click ? "on":"off"]"
 
+/atom/movable/screen/xenomorph/nightvision/add_to_hud(datum/hud/hud)
+	..()
+	hud.mymob.leap_icon = src
+
 /atom/movable/screen/xenomorph/neurotoxin
 	name = "toggle neurotoxin"
 	icon_state = "neurotoxin0"
@@ -51,6 +60,10 @@
 /atom/movable/screen/xenomorph/neurotoxin/action()
 	var/mob/living/carbon/xenomorph/humanoid/AH = usr
 	AH.toggle_neurotoxin()
+
+/atom/movable/screen/xenomorph/nightvision/add_to_hud(datum/hud/hud)
+	..()
+	hud.mymob.neurotoxin_icon = src
 
 // larva
 /atom/movable/screen/inventory/larva_mouth
