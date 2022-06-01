@@ -61,25 +61,3 @@
 	for(var/id in antag_roles)
 		var/datum/role/role = antag_roles[id]
 		role.add_ui(src)
-
-/datum/hud/proc/add_robot_hand_1()
-	var/atom/movable/screen/robot_hands/first/using = new
-	using.add_to_hud(src)
-	var/mob/living/silicon/robot/R = mymob
-	R.inv1 = using
-
-/datum/hud/proc/add_robot_hand_2()
-	var/atom/movable/screen/robot_hands/second/using = new
-	using.add_to_hud(src)
-	var/mob/living/silicon/robot/R = mymob
-	R.inv2 = using
-
-/datum/hud/proc/add_robot_hand_3()
-	var/atom/movable/screen/robot_hands/third/using = new
-	using.add_to_hud(src)
-	var/mob/living/silicon/robot/R = mymob
-	R.inv3 = using
-
-/datum/hud/proc/add_module_icon()
-	mymob.module_icon = new /atom/movable/screen/module
-	mymob.module_icon.add_to_hud(src)

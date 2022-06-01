@@ -17,6 +17,10 @@
 		/atom/movable/screen/panel,
 		/atom/movable/screen/store,
 		/atom/movable/screen/robot_inventory,
+		/atom/movable/screen/robot_hands/first,
+		/atom/movable/screen/robot_hands/second,
+		/atom/movable/screen/robot_hands/third,
+		/atom/movable/screen/module,
 	)
 
 	if(!isdrone(src))
@@ -32,17 +36,8 @@
 
 	hud.init_screens(types)
 
-//Module select
-	hud.add_robot_hand_1()
-	hud.add_robot_hand_2()
-	hud.add_robot_hand_3()
-//End of module select
-
 //Health
 	hud.add_healths(type = /atom/movable/screen/health/robot)
-
-//Installed Module
-	hud.add_module_icon()
 
 	hud.add_gun_setting()
 

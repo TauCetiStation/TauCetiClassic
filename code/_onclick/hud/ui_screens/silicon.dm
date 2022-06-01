@@ -88,6 +88,10 @@
 /atom/movable/screen/module/update_icon(mob/living/silicon/robot/mymob)
 	icon_state = mymob.module ? lowertext(mymob.modtype) : initial(icon_state)
 
+/atom/movable/screen/module/add_to_hud(datum/hud/hud)
+	..()
+	hud.mymob.module_icon = src
+
 /atom/movable/screen/robot_inventory
 	name = "inventory"
 	icon = 'icons/mob/screen1_robot.dmi'
@@ -157,17 +161,32 @@
 	screen_loc = ui_inv1
 	module_index = 1
 
+/atom/movable/screen/robot_hands/first/add_to_hud(datum/hud/hud)
+	..()
+	var/mob/living/silicon/robot/R = hud.mymob
+	R.inv1 = src
+
 /atom/movable/screen/robot_hands/second
 	name = "module2"
 	icon_state = "inv2"
 	screen_loc = ui_inv2
 	module_index = 2
 
+/atom/movable/screen/robot_hands/second/add_to_hud(datum/hud/hud)
+	..()
+	var/mob/living/silicon/robot/R = hud.mymob
+	R.inv2 = src
+
 /atom/movable/screen/robot_hands/third
 	name = "module3"
 	icon_state = "inv3"
 	screen_loc = ui_inv3
 	module_index = 3
+
+/atom/movable/screen/robot_hands/third/add_to_hud(datum/hud/hud)
+	..()
+	var/mob/living/silicon/robot/R = hud.mymob
+	R.inv3 = src
 
 // AI
 /atom/movable/screen/ai_core
