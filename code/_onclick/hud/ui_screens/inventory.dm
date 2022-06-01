@@ -78,11 +78,19 @@
 	slot_id = SLOT_R_HAND
 	hand_index = 0
 
+/atom/movable/screen/inventory/hand/r/add_to_hud(datum/hud/hud)
+	..()
+	hud.mymob.r_hand_hud_object = src
+
 /atom/movable/screen/inventory/hand/l
 	name = "hand_l"
 	screen_loc = ui_lhand
 	slot_id = SLOT_L_HAND
 	hand_index = 1
+
+/atom/movable/screen/inventory/hand/l/add_to_hud(datum/hud/hud)
+	..()
+	hud.mymob.l_hand_hud_object = src
 
 /atom/movable/screen/inventory/swap
 	name = "hand"

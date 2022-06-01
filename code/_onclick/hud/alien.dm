@@ -8,17 +8,18 @@
 
 /mob/living/carbon/xenomorph/facehugger/add_to_hud(datum/hud/hud)
 	..()
-	hud.add_hands(r_type = /atom/movable/screen/inventory/tail, l_type = FALSE)
+	hud.init_screen(/atom/movable/screen/inventory/tail)
 
 /mob/living/carbon/xenomorph/larva/add_to_hud(datum/hud/hud)
 	..()
-	hud.add_hands(r_type = /atom/movable/screen/inventory/larva_mouth, l_type = FALSE)
+	hud.init_screen(/atom/movable/screen/inventory/larva_mouth)
 
 /mob/living/carbon/xenomorph/humanoid/add_to_hud(datum/hud/hud)
 	..()
 
-	hud.add_hands()
 	hud.init_screens(list(
+		/atom/movable/screen/inventory/hand/r,
+		/atom/movable/screen/inventory/hand/l,
 		/atom/movable/screen/drop,
 		/atom/movable/screen/inventory/swap/first,
 		/atom/movable/screen/inventory/swap/second,

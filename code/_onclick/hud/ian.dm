@@ -15,7 +15,6 @@
 		/atom/movable/screen/inventory/head/ian,
 		/atom/movable/screen/inventory/back/ian,
 		/atom/movable/screen/corgi/stamina_bar,
+		/atom/movable/screen/inventory/hand/corgi,
+		/atom/movable/screen/health/ian,
 	))
-
-	hud.add_hands(r_type = /atom/movable/screen/inventory/hand/corgi, l_type = FALSE)
-	hud.init_screen(/atom/movable/screen/health/ian)

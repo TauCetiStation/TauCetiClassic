@@ -73,6 +73,10 @@
 	screen_loc = ui_rhand
 	slot_id = SLOT_R_HAND
 
+/atom/movable/screen/inventory/larva_mouth/add_to_hud(datum/hud/hud)
+	..()
+	hud.mymob.r_hand_hud_object = src
+
 // facehugger
 /atom/movable/screen/inventory/tail
 	name = "tail"
@@ -80,4 +84,8 @@
 	icon_state = "hand_tail_active"
 	screen_loc = ui_rhand
 	slot_id = SLOT_R_HAND
+
+/atom/movable/screen/inventory/tail/add_to_hud(datum/hud/hud)
+	..()
+	hud.mymob.r_hand_hud_object = src
 

@@ -3,9 +3,10 @@
 	hud.ui_alpha = client.prefs.UI_style_alpha
 	
 	..()
-	hud.add_hands()
 
 	hud.init_screens(list(
+		/atom/movable/screen/inventory/hand/r,
+		/atom/movable/screen/inventory/hand/l,
 		/atom/movable/screen/inventory/craft,
 		/atom/movable/screen/drop,
 		/atom/movable/screen/inventory/swap/first,
