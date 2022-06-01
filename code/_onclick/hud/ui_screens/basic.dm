@@ -15,8 +15,9 @@
 	icon_state = mymob.pulling ? "pull1" : "pull0"
 
 /atom/movable/screen/pull/add_to_hud(datum/hud/hud)
-	. = ..()
+	..()
 	update_icon(hud.mymob)
+	hud.mymob.pullin = src
 
 /atom/movable/screen/equip
 	name = "equip"
@@ -58,6 +59,10 @@
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 
+/atom/movable/screen/throw/add_to_hud(datum/hud/hud)
+	..()
+	hud.mymob.throw_icon = src
+
 /atom/movable/screen/drop
 	name = "drop"
 	icon_state = "act_drop"
@@ -78,12 +83,20 @@
 
 	copy_flags = NONE
 
+/atom/movable/screen/health/add_to_hud(datum/hud/hud)
+	..()
+	hud.mymob.healths = src
+
 /atom/movable/screen/health_doll
 	icon = 'icons/mob/screen_gen.dmi'
 	name = "health doll"
 	screen_loc = ui_healthdoll
 
 	copy_flags = NONE
+
+/atom/movable/screen/health_doll/add_to_hud(datum/hud/hud)
+	..()
+	mymob.healthdoll = src
 
 /atom/movable/screen/nutrition
 	name = "nutrition"
@@ -96,9 +109,9 @@
 	icon = mymob.species.flags[IS_SYNTHETIC] ? 'icons/mob/screen_alert.dmi' : 'icons/mob/screen_gen.dmi'
 
 /atom/movable/screen/nutrition/add_to_hud(datum/hud/hud)
-	. = ..()
+	..()
 	update_icon(hud.mymob)
-
+	hud.mymob.nutrition_icon = src
 
 // Gun screens
 /atom/movable/screen/gun
@@ -269,8 +282,9 @@
 	add_overlay(image('icons/mob/zone_sel.dmi', "[selecting]"))
 
 /atom/movable/screen/zone_sel/add_to_hud(datum/hud/hud)
-	. = ..()
+	..()
 	update_icon()
+	hud.mymob.zone_sel = src
 
 // Move intent
 /atom/movable/screen/move_intent
@@ -287,8 +301,9 @@
 	icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
 
 /atom/movable/screen/move_intent/add_to_hud(datum/hud/hud)
-	. = ..()
+	..()
 	update_icon(hud.mymob)
+	hud.mymob.move_intent = src
 
 // Internals
 /atom/movable/screen/internal
@@ -304,8 +319,9 @@
 	icon_state = mymob.internal ? "internal1" : "internal0"
 
 /atom/movable/screen/internal/add_to_hud(datum/hud/hud)
-	. = ..()
+	..()
 	update_icon(hud.mymob)
+	hud.mymob.internals = src
 
 /atom/movable/screen/internal/action()
 	if(!iscarbon(usr))

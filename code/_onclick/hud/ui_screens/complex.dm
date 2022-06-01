@@ -91,8 +91,9 @@
 	icon_state = "intent_" + mymob.a_intent
 
 /atom/movable/screen/complex/act_intent/add_to_hud(datum/hud/hud)
-	. = ..()
+	..()
 	update_icon(hud.mymob)
+	hud.mymob.action_intent = src
 
 /atom/movable/screen/complex/act_intent/set_screen_loc(new_loc)
 	..()
@@ -167,6 +168,7 @@
 
 /atom/movable/screen/complex/gun/add_to_hud(datum/hud/hud)
 	. = ..()
+	hud.mymob.gun_setting_icon = src
 	var/client/client = hud.mymob.client
 
 	if(client.gun_mode)

@@ -4,7 +4,7 @@
 	..()
 
 	hud.init_screen(/atom/movable/screen/xenomorph/nightvision)
-	hud.add_healths(type = /atom/movable/screen/health/alien)
+	hud.init_screen(/atom/movable/screen/health/alien)
 
 /mob/living/carbon/xenomorph/facehugger/add_to_hud(datum/hud/hud)
 	..()
@@ -24,12 +24,11 @@
 		/atom/movable/screen/inventory/swap/second,
 		/atom/movable/screen/resist,
 		/atom/movable/screen/xenomorph/plasma_display,
+		/atom/movable/screen/throw,
 	))
 
 	if(locate(/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin) in verbs)
 		hud.init_screens(/atom/movable/screen/xenomorph/neurotoxin)
-
-	hud.add_throw_icon()
 
 /mob/living/carbon/xenomorph/humanoid/hunter/add_to_hud(datum/hud/hud)
 	..()

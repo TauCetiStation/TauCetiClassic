@@ -12,6 +12,7 @@
 		/atom/movable/screen/inventory/swap/second,
 		/atom/movable/screen/resist,
 		/atom/movable/screen/equip,
+		/atom/movable/screen/throw,
 		/atom/movable/screen/complex/human,
 		/atom/movable/screen/inventory/id,
 		/atom/movable/screen/inventory/back,
@@ -19,17 +20,14 @@
 		/atom/movable/screen/inventory/pocket2,
 		/atom/movable/screen/inventory/suit_storage,
 		/atom/movable/screen/inventory/belt,
+		/atom/movable/screen/complex/gun,
+		/atom/movable/screen/internal,
+		/atom/movable/screen/health,
+		/atom/movable/screen/health_doll,
+		/atom/movable/screen/nutrition,
 	))
 
-	hud.add_throw_icon()
-	hud.add_internals()
-	hud.add_healths()
-	hud.add_health_doll()
-	hud.add_nutrition_icon()
-
 	leap_icon?.add_to_hud(hud)
-
-	hud.add_gun_setting()
 
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()
 	set category = "OOC"

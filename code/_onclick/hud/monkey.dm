@@ -7,11 +7,10 @@
 		/atom/movable/screen/inventory/swap/first,
 		/atom/movable/screen/inventory/swap/second,
 		/atom/movable/screen/equip,
+		/atom/movable/screen/throw,
 		/atom/movable/screen/inventory/mask/monkey,
 		/atom/movable/screen/inventory/back,
+		/atom/movable/screen/complex/gun,
+		/atom/movable/screen/internal,
+		/atom/movable/screen/health
 	))
-
-	hud.add_throw_icon()
-	hud.add_internals()
-	hud.add_healths()
-	hud.add_gun_setting()

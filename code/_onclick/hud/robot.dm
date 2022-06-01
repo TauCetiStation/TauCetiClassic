@@ -1,11 +1,10 @@
 /mob/living/silicon/robot/add_to_hud(datum/hud/hud)
 	hud.ui_style = 'icons/mob/screen1_robot.dmi'
-
-	hud.add_intents()
-	hud.add_pullin(type = /atom/movable/screen/pull/robot)
-	hud.add_zone_sel()
 	
 	var/list/types = list(
+		/atom/movable/screen/complex/act_intent,
+		/atom/movable/screen/pull/robot,
+		/atom/movable/screen/zone_sel,
 		/atom/movable/screen/crew_manifest/robot,
 		/atom/movable/screen/self_diagnosis,
 		/atom/movable/screen/alerts/robot,
@@ -21,6 +20,8 @@
 		/atom/movable/screen/robot_hands/second,
 		/atom/movable/screen/robot_hands/third,
 		/atom/movable/screen/module,
+		/atom/movable/screen/complex/gun,
+		/atom/movable/screen/health/robot
 	)
 
 	if(!isdrone(src))
@@ -35,12 +36,6 @@
 			types += /atom/movable/screen/namepick
 
 	hud.init_screens(types)
-
-//Health
-	hud.add_healths(type = /atom/movable/screen/health/robot)
-
-	hud.add_gun_setting()
-
 
 /datum/hud/proc/toggle_show_robot_modules()
 	if(!isrobot(mymob))

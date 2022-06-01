@@ -18,4 +18,4 @@
 	))
 
 	hud.add_hands(r_type = /atom/movable/screen/inventory/hand/corgi, l_type = FALSE)
-	hud.add_healths(/atom/movable/screen/health/ian)
+	hud.init_screen(/atom/movable/screen/health/ian)
