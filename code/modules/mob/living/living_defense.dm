@@ -30,12 +30,12 @@
 		if(isturf(loc))
 			loc.add_blood(src)
 		throw_at(get_edge_target_turf(src, P.dir), P.impact_force, 1, P.firer, spin = TRUE)
-	if(check_shields(P, P.damage, "the [P.name]", P.dir))
-		P.on_hit(src, def_zone, 100)
-		return PROJECTILE_ABSORBED
 	if(P.incendiary)
 		adjust_fire_stacks(P.incendiary)
 		IgniteMob()
+	if(check_shields(P, P.damage, "the [P.name]", P.dir))
+		P.on_hit(src, def_zone, 100)
+		return PROJECTILE_ABSORBED
 	. = mob_bullet_act(P, def_zone)
 	if(. != PROJECTILE_ALL_OK)
 		return
