@@ -612,7 +612,8 @@
 	if(active)
 		QDEL_NULL(current_beam)
 		active = FALSE
-	UnregisterSignal(current_target, COMSIG_PARENT_QDELETING)
+	if(current_target)
+		UnregisterSignal(current_target, COMSIG_PARENT_QDELETING)
 	current_target = null
 
 /obj/item/weapon/gun/medbeam/Fire(atom/target, mob/living/user, params, reflex = 0)
