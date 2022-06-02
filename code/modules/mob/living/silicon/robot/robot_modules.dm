@@ -15,6 +15,7 @@
 	. = ..()
 
 	var/mob/living/silicon/robot/R = loc
+
 	add_languages(R)
 
 /obj/item/weapon/robot_module/emp_act(severity)
