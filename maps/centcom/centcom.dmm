@@ -11342,11 +11342,8 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "aAD" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/item/roller/roller_holder_surg,
-/obj/item/roller/roller_holder_surg,
+/obj/structure/rack,
+/obj/item/weapon/gun/medbeam,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -11436,6 +11433,8 @@
 /obj/item/weapon/tank/anesthetic,
 /obj/item/clothing/mask/breath/medical,
 /obj/item/clothing/mask/breath/medical,
+/obj/item/roller/roller_holder_surg,
+/obj/item/roller/roller_holder_surg,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -52372,7 +52371,7 @@ aaM
 aaM
 aaM
 aAm
-aAE
+aAD
 aBk
 aBk
 aAm
@@ -52629,7 +52628,7 @@ aaM
 aaM
 aaM
 aAm
-aAD
+aCH
 aAM
 aAM
 aAm
@@ -52888,7 +52887,7 @@ aaM
 aAm
 aAK
 aAM
-aAM
+aAE
 aAm
 aAm
 aAm
