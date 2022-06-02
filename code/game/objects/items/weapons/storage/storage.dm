@@ -103,6 +103,7 @@
 		return
 	if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
 		open(usr)
+		add_fingerprint(M)
 		return
 	if (!( istype(over_object, /atom/movable/screen) ))
 		return ..()
@@ -365,6 +366,18 @@
 		if(storage_ui)
 			storage_ui.on_hand_attack(user)
 	add_fingerprint(user)
+
+/obj/item/weapon/storage/AltClick(mob/user)
+	if(user && Adjacent(user))
+		if(istype(src, /obj/item/weapon/storage/lockbox))
+			var/obj/item/weapon/storage/lockbox/L = src
+			if(L.locked)
+				to_chat(user, "<span class='warning'>It's locked!</span>")
+				return ..(user)
+		open(user)
+		add_fingerprint(user)
+		return
+	..(user)
 
 //Should be merged into attack_hand() later, i mean whole attack_paw() proc, but thats probably a lot of work.
 /obj/item/weapon/storage/attack_paw(mob/user) // so monkey, ian or something will open it, istead of unequip from back
