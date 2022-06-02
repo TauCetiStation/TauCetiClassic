@@ -300,7 +300,7 @@
 	return 0
 
 /obj/mecha/proc/check_fumbling(fumble_text)
-	return handle_fumbling(usr, src, SKILL_TASK_VERY_EASY, interface_skills, fumble_text)
+	return handle_fumbling(usr, src, SKILL_TASK_VERY_EASY, interface_skills, fumble_text, can_move = TRUE)
 
 /obj/mecha/proc/mechturn(direction)
 	set_dir(direction)

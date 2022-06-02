@@ -19,7 +19,7 @@
 /proc/do_skilled(mob/user, atom/target,  delay, required_skills, multiplier)
 	return do_after(user, delay = apply_skill_bonus(user, delay, required_skills, multiplier), target = target)
 
-/proc/handle_fumbling(mob/user, atom/target, delay, required_skills, message_self = "", text_target = null, check_busy = TRUE)
+/proc/handle_fumbling(mob/user, atom/target, delay, required_skills, message_self = "", text_target = null, check_busy = TRUE, can_move = FALSE)
 	if(is_skill_competent(user, required_skills))
 		return TRUE
 	if(check_busy && user.is_busy())
@@ -35,7 +35,7 @@
 	if(required_time > 0)
 		to_chat(user, display_message_self)
 
-	return do_after(user, required_time, target = target)
+	return do_after(user, required_time, target = target, can_move = can_move)
 
 /proc/get_skill_rank_name(skill_type, value)
 	for(var/s in subtypesof(skill_type))
