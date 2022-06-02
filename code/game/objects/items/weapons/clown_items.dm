@@ -339,7 +339,7 @@
 						'sound/effects/clang.ogg',
 						'sound/effects/clownstep1.ogg',
 						'sound/effects/curtain.ogg',
-						'sound/effects/digging.ogg',
+						'sound/effects/shovel_digging.ogg',
 						'sound/effects/electric_shock.ogg',
 						'sound/effects/EMPulse.ogg',
 						'sound/effects/Explosion1.ogg',
