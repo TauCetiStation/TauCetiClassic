@@ -2,7 +2,6 @@
 	icon_state = "syndie_android"
 	lawupdate = 0
 	scrambledcodes = 1
-	has_jetpack = TRUE
 	modtype = "Syndicate"
 	faction = "syndicate"
 //	designation = "Syndicate"
