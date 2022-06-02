@@ -76759,7 +76759,7 @@
 	},
 /area/station/rnd/hallway)
 "xlf" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/game,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "xlo" = (

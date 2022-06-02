@@ -343,3 +343,34 @@
 		/obj/item/clothing/mask/tie/golden_cross = 1000,
 		/obj/item/clothing/shoes/jolly_gravedigger = 200,
 	)
+
+/obj/machinery/vending/game
+	name = "Fun-O-Vend"
+	desc = "Fun and Games!"
+	icon_state = "games"
+	product_slogans = "Toys for ages 8 and up!"
+	product_ads = "Taste RAINBOW with our new crayons!; Fun and Games for low price! Today!; Everything 100% Fun.; Play... NOW!;"
+	products = list(
+		/obj/item/weapon/storage/pill_bottle/dice = 10,
+		/obj/item/device/tabletop_assistant = 4,
+		/obj/item/toy/cards = 10,
+		/obj/item/weapon/storage/fancy/crayons = 4,
+		/obj/item/weapon/game_kit/random = 4,
+
+	)
+	contraband = list(
+		/obj/item/weapon/storage/pill_bottle/ghostdice = 2,
+	)
+
+	syndie = list(
+		/obj/item/cardboard_cutout = 10,
+	)
+
+	prices = list(
+		/obj/item/weapon/storage/pill_bottle/dice = 15,
+		/obj/item/device/tabletop_assistant = 20,
+		/obj/item/toy/cards = 10,
+		/obj/item/weapon/storage/fancy/crayons = 25,
+		/obj/item/weapon/game_kit/random = 20,
+		/obj/item/weapon/storage/pill_bottle/ghostdice = 45
+	)

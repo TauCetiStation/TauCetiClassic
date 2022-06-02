@@ -4224,10 +4224,10 @@
 	},
 /area/station/hallway/primary/central)
 "ahH" = (
-/obj/item/weapon/flora/random,
 /obj/machinery/ai_status_display{
 	pixel_y = 32
 	},
+/obj/machinery/vending/game,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
