@@ -484,6 +484,52 @@
 
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
 
+/mob/living/silicon/robot/verb/unlock_hatch()
+	set name = "Unlock maintenance hatch"
+	set category = "Commands"
+
+	if(incapacitated())
+		return
+	if(opened)
+		to_chat(usr, "<span class='warning'>Невозможно заблокировать интерфейс, если открыта панель.</span>")
+		emote("buzz")
+		return
+	
+	if(!do_after(usr, 10, target = usr))
+		return
+	
+	if(locked)
+		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")		
+	else
+		to_chat(usr, "<span class='notice'>Интерфейс заблокирован.</span>")
+
+	playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
+	locked = !locked
+
+/mob/living/silicon/robot/verb/open_hatch()
+	set name = "Open maintenance hatch"
+	set category = "Commands"
+
+	if(incapacitated())
+		return
+	if(locked)
+		to_chat(usr, "<span class='warning'>Невозможно открыть панель, если заблокирован интерфейс.</span>")
+		emote("buzz")
+		return
+	
+	if(!do_after(usr, 10, target = usr))
+		return
+	
+	if(opened)
+		to_chat(usr, "<span class='notice'>Панель закрыта.</span>")
+		playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
+	else
+		to_chat(usr, "<span class='notice'>Панель открыта.</span>")
+		playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
+	
+	opened = !opened
+	updateicon()
+
 /mob/living/silicon/robot/restrained()
 	return 0
 
@@ -509,7 +555,7 @@
 			adjustBruteLoss(30)
 	updatehealth()
 
-/mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)
+/mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
@@ -698,6 +744,10 @@
 		else
 			if(allowed(usr))
 				locked = !locked
+				if(!locked)
+					throw_alert("not_locked", /atom/movable/screen/alert/not_locked)
+				else
+					clear_alert("not_locked")
 				to_chat(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
 				playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
 				updateicon()

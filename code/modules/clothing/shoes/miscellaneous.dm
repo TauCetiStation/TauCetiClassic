@@ -44,6 +44,10 @@
 	species_restricted = null
 	body_parts_covered = 0
 
+/obj/item/clothing/shoes/sandal/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
 /obj/item/clothing/shoes/sandal/brown
 	name = "Brown Sandals"
 	desc = "Sweet looking brown sandals. Do not wear them with socks!"
@@ -196,6 +200,12 @@
 	name = "western boots"
 	icon_state = "western_boots"
 
+/obj/item/clothing/shoes/western/wizard
+
+/obj/item/clothing/shoes/western/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
 /obj/item/clothing/shoes/magboots/syndie
 	desc = "Light-weighted magnetic boots that have a custom syndicate paintjob for use in combat."
 	name = "gorlex magboots"
@@ -238,11 +248,29 @@
 /obj/item/clothing/shoes/heels/alternate
 	icon_state = "high_shoes2"
 
+/obj/item/clothing/shoes/heels/wizard
+
+/obj/item/clothing/shoes/heels/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
+/obj/item/clothing/shoes/heels/alternate/wizard
+
+/obj/item/clothing/shoes/heels/alternate/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
 /obj/item/clothing/shoes/boots/German
 	name = "Black Boots"
 	desc = "Deutschland army boots."
 	icon_state = "Black_Boots"
 	item_state = "jackboots"
+
+/obj/item/clothing/shoes/boots/German/wizard
+
+/obj/item/clothing/shoes/boots/German/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/shoes/brown_cut
 	name = "Cut Brown Boots"
@@ -262,3 +290,8 @@
 	icon_state = "wjboots"
 	item_state = "wjboots"
 	clipped_status = CLIPPABLE
+
+/obj/item/clothing/shoes/kung
+	name = "Kung shoes"
+	desc = "Pair of a high red shoes."
+	icon_state = "kung_shoes"

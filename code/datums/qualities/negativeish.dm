@@ -191,16 +191,16 @@
 		H.remove_language(language.name)
 
 
-/datum/quality/negativeish/salarian
-	name = "Salarian"
+/datum/quality/negativeish/salackyi
+	name = "Салацькый"
 	desc = "Ну що хлопче, готовий?"
 	requirement = "Нема."
 
-/datum/quality/negativeish/salarian/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/negativeish/salackyi/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
 
-	H.add_language(LANGUAGE_SALARIAN)
-	H.common_language = LANGUAGE_SALARIAN
+	H.add_language(LANGUAGE_SALACKYI)
+	H.common_language = LANGUAGE_SALACKYI
 
 
 /datum/quality/negativeish/clumsy
@@ -285,3 +285,15 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/greasy_fingers/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_GREASY_FINGERS, QUALITY_TRAIT)
+
+
+/datum/quality/negativeish/husked
+	name = "Husked"
+	desc = "Этим утром тебя обожгло маршевыми двигателями шаттла. Ожоги вылечили, но опаленную кожу восстановить пока не удалось..."
+	requirement = "Не СПУ."
+
+/datum/quality/negativeish/husked/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !H.species.flags[IS_SYNTHETIC]
+
+/datum/quality/negativeish/husked/add_effect(mob/living/carbon/human/H, latespawn)
+	H.ChangeToHusk()

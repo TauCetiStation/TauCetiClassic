@@ -204,9 +204,9 @@
 	..(-abs(amount)) // Heals them
 	return
 
-/mob/living/carbon/slime/bullet_act(obj/item/projectile/Proj)
+/mob/living/carbon/slime/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	attacked += 10
-	return ..()
 
 /mob/living/carbon/slime/emp_act(severity)
 	powerlevel = 0 // oh no, the power!
@@ -288,12 +288,12 @@
 	if(Victim)
 		if(Victim == attacker)
 			visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
-			playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 			return FALSE
 		else
 			if(prob(30))
 				visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+				playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 				return FALSE
 
 			if(prob(90) && !client)

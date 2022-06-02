@@ -40,7 +40,7 @@
 		if("monkey")
 			monkeystart += loc
 			return INITIALIZE_HINT_QDEL
-		if("wizard")
+		if("Wizard")
 			wizardstart += loc
 			return INITIALIZE_HINT_QDEL
 		//prisoners
@@ -324,6 +324,14 @@
 /obj/effect/landmark/dealer_spawn/atom_init(mapload)
 	..()
 	global.dealerstart += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/heist_spawn
+	name = "Heist"
+
+/obj/effect/landmark/heist_spawn/atom_init(mapload)
+	..()
+	global.heiststart += loc
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/latejoin

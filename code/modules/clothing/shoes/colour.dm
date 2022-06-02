@@ -43,6 +43,12 @@
 	item_state = "r_shoes"
 	clipped_status = CLIPPABLE
 
+/obj/item/clothing/shoes/red/wizard
+
+/obj/item/clothing/shoes/red/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
 /obj/item/clothing/shoes/white
 	name = "white shoes"
 	icon_state = "white"

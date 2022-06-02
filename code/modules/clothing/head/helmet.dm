@@ -210,7 +210,7 @@
 	desc = "Stylish black and red helmet with armored protective visor."
 	icon_state = "assaulthelmet_b"
 	item_state = "assaulthelmet_b"
-	armor = list(melee = 55, bullet = 60, laser = 50, energy = 70, bomb = 50, bio = 0, rad = 50)
+	armor = list(melee = 80, bullet = 70, laser = 55, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
 
 /obj/item/clothing/head/helmet/syndiassault/alternate
@@ -225,3 +225,29 @@
 	siemens_coefficient = 1.2
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+
+/obj/item/clothing/head/helmet/police
+	name = "police helmet"
+	desc = "Latest fashion of law enforcement organizations. It's big. Like, really big."
+	icon_state = "police_helmet"
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+
+/obj/item/clothing/head/helmet/police/heavy
+	name = "heavy police helmet"
+	desc = "Latest fashion of law enforcement organizations. It's big. Like, really big. Golden marks on this helmet denote the higher rank of it's wearer."
+	icon_state = "police_helmet_heavy"
+	armor = list(melee = 55, bullet = 50, laser = 45,energy = 25, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/laserproof/police
+	name = "inspector helmet"
+	desc = "An experimental helmet that is able to reflect laser projectiles via psionic manipulations with wearer's mind or something. It's also slightly bigger than other police helmets, since big brain and all."
+	icon_state = "police_helmet_inspector"
+	armor = list(melee = 35, bullet = 35, laser = 65,energy = 75, bomb = 0, bio = 0, rad = 0)
+	siemens_coefficient = 0
+
+/obj/item/clothing/head/helmet/police/elite
+	name = "elite police helmet"
+	desc = "This is a heavily armored police helmet. The most blockiest of them all."
+	icon_state = "police_helmet_elite"
+	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)

@@ -75,7 +75,7 @@
 	if(IsSleeping())
 		Paralyse(3)
 
-	if(src.resting)
+	if(crawling)
 		Weaken(5)
 
 	if(health < config.health_threshold_dead && src.stat != DEAD) //die only once
@@ -268,6 +268,7 @@
 	if(..())
 		return
 	if(fire_stacks > 0)
+		adjustFireLoss(4)
 		fire_stacks--
 		fire_stacks = max(0, fire_stacks)
 	else

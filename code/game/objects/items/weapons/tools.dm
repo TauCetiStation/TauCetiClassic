@@ -157,16 +157,15 @@
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && user.a_intent == INTENT_HELP)
-		if(istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))
-			usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
-			"<span class='notice'>You cut \the [C]'s restraints with \the [src]!</span>",\
-			"You hear cable being cut.")
-			QDEL_NULL(C.handcuffed)
+		var/obj/item/weapon/handcuffs/cuffs = C.handcuffed
+		if(do_mob(user, C, 2 SECONDS) && C.unEquip(cuffs))
+			QDEL_NULL(cuffs)
+			usr.visible_message("\The [usr] cuts \the [C]'s handcuffs with \the [src]!",\
+			"<span class='notice'>You cut \the [C]'s handcuffs with \the [src]!</span>",\
+			"You hear handcuffs being cut.")
 			if(C.buckled && C.buckled.buckle_require_restraints)
 				C.buckled.unbuckle_mob()
 			C.update_inv_handcuffed()
-		else
-			to_chat(user, "The [C.handcuffed] are too tough to cut with [src].")
 		return
 	else
 		..()
@@ -227,7 +226,7 @@
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
-	welding_sparks = image('icons/effects/effects.dmi', "welding_sparks")
+	welding_sparks = image('icons/effects/effects.dmi', "welding_sparks", layer = ABOVE_LIGHTING_LAYER)
 	welding_sparks.plane = ABOVE_LIGHTING_PLANE
 
 /obj/item/weapon/weldingtool/examine(mob/user)
@@ -559,8 +558,19 @@
 	)
 
 /obj/item/weapon/crowbar/red
+	name = "emergency crowbar"
+	desc = "A little emergency crowbar, used to open unpowered doors and emergency shutters."
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
+	force = 4.0
+	throwforce = 5.0
+
+	w_class = SIZE_TINY
+	m_amt = 15
+
+	qualities = list(
+		QUALITY_PRYING = 0.7
+	)
 
 /obj/item/weapon/crowbar/power
 	name = "Jaws of Life"
