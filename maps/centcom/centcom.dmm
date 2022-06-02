@@ -11720,18 +11720,13 @@
 	},
 /area/custom/tophat)
 "aBj" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 1;
-	frequency = 1441;
-	listening = 0;
-	name = "Spec Ops Intercom";
-	pixel_y = 28
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/power/port_gen/riteg,
+/obj/structure/rack,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -11744,9 +11739,6 @@
 /obj/item/clothing/suit/space/rig/ert/medical,
 /obj/item/clothing/head/helmet/space/rig/ert/medical,
 /obj/item/clothing/suit/space/rig/ert/medical,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
 /obj/item/weapon/storage/backpack/ert/medical,
 /obj/item/weapon/storage/backpack/ert/medical,
 /obj/item/weapon/storage/backpack/ert/medical,
@@ -11962,6 +11954,7 @@
 /obj/item/weapon/storage/backpack/ert/commander,
 /obj/item/weapon/storage/belt/security,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/gun/projectile/glock/spec,
 /obj/item/device/remote_device/ERT,
 /turf/unsimulated/floor{
@@ -13726,9 +13719,6 @@
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -13748,12 +13738,9 @@
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/clothing/shoes/magboots,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -13785,6 +13772,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -20822,6 +20810,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -20903,6 +20892,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -20910,11 +20900,12 @@
 /area/centcom/living)
 "bfl" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/r4046,
-/obj/item/weapon/storage/box/r4046,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/weapon/storage/box/r4046/rubber,
+/obj/item/weapon/storage/box/r4046/teargas,
+/obj/item/weapon/storage/box/r4046/EMP,
 /obj/item/weapon/gun/projectile/grenade_launcher/m79,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -21024,16 +21015,19 @@
 /obj/item/weapon/gun/projectile/glock/spec,
 /obj/item/clothing/glasses/sunglasses/hud/sechud,
 /obj/item/weapon/plastique,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/centcom/living)
 "bfv" = (
 /obj/structure/rack,
+/obj/item/weapon/shield/riot,
+/obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot,
@@ -22209,6 +22203,13 @@
 /obj/item/weapon/scissors,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"cZy" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "cZN" = (
 /obj/structure/closet/wardrobe/white,
 /turf/unsimulated/floor{
@@ -24420,6 +24421,17 @@
 	icon_state = "x3"
 	},
 /turf/simulated/shuttle/floor4,
+/area/centcom/living)
+"gZm" = (
+/obj/structure/rack,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/centcom/living)
 "hab" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -27493,6 +27505,32 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
+"nFT" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/melee/baton,
+/obj/item/weapon/storage/belt/security,
+/obj/item/device/flash,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/clothing/glasses/night,
+/obj/item/weapon/gun/projectile/glock/spec,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
+/obj/item/weapon/plastique,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/structure/window/reinforced,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "nGb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -28582,6 +28620,16 @@
 	},
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
+"ssQ" = (
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 4
+	},
+/obj/effect/landmark/cops_spawn,
+/obj/item/clothing/shoes/magboots,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/living)
 "sAN" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/projectile/automatic/l6_saw,
@@ -28658,6 +28706,23 @@
 	},
 /turf/environment/space,
 /area/space)
+"uHZ" = (
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = 28
+	},
+/obj/machinery/power/port_gen/riteg,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "vak" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod2";
@@ -53104,7 +53169,7 @@ aFr
 beQ
 bfk
 aFr
-bfk
+nFT
 bfu
 aAm
 aHv
@@ -53856,8 +53921,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+aAm
+aAm
 aAm
 aAm
 aAm
@@ -54113,11 +54178,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
 aAm
 aBc
 aAM
+aBj
+cZy
 aBm
 aEl
 aFm
@@ -54370,10 +54435,10 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
 aAm
-aBj
+uHZ
+aAM
+aAM
 aAM
 aAM
 aAM
@@ -54627,11 +54692,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
 aAm
 aBc
 aAM
+gZm
+cZy
 aBG
 aEm
 aBI
@@ -54884,8 +54949,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+aAm
+aAm
 aAm
 aAm
 aAm
@@ -56949,7 +57014,7 @@ aAM
 aAM
 kEE
 aCk
-aCk
+ssQ
 kEE
 aAM
 aAM
