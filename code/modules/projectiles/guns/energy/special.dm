@@ -600,6 +600,15 @@
 	LoseTarget()
 	return ..()
 
+/obj/item/weapon/gun/medbeam/attack(mob/living/M, mob/living/user)
+	if(user.a_intent == INTENT_HELP)
+		Fire(M, user)
+	else
+		. = ..()
+
+/obj/item/weapon/gun/medbeam/attack_self(mob/living/user)
+	LoseTarget()
+
 /obj/item/weapon/gun/medbeam/dropped(mob/user)
 	..()
 	LoseTarget()
@@ -657,7 +666,7 @@
 		on_beam_tick(current_target)
 
 /obj/item/weapon/gun/medbeam/proc/on_beam_tick()
-	if(current_target.stat == DEAD)
+	if(!ishuman(current_target) || current_target.stat == DEAD)
 		LoseTarget()
 		return
 
