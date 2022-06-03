@@ -349,7 +349,7 @@
 	desc = "Fun and Games!"
 	icon_state = "games"
 	product_slogans = "Toys for ages 8 and up!"
-	product_ads = "Taste RAINBOW with our new crayons!; Fun and Games for low price! Today!; Everything 100% Fun.; Play... NOW!;"
+	product_ads = "Taste RAINBOW with our new crayons!;Fun and Games for low price! Today!;Everything 100% Fun.;Play... NOW!"
 	products = list(
 		/obj/item/weapon/storage/pill_bottle/dice = 10,
 		/obj/item/device/tabletop_assistant = 4,
