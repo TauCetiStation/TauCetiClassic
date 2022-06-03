@@ -35,7 +35,7 @@ tag_tuples = [	('<span>', re.compile('<span(.*?)>', re.IGNORECASE), re.compile('
 				('<font>', re.compile('<font(.*?)>', re.IGNORECASE), re.compile('</font>', re.IGNORECASE)),
 				('<center>', re.compile('<center>', re.IGNORECASE), re.compile('</center>', re.IGNORECASE)),
 				('<b>', re.compile('<b>', re.IGNORECASE), re.compile('</b>', re.IGNORECASE)),
-				('<i>', re.compile('<i(\s?class=[\\\'\"].*[\\\'\"])?>', re.IGNORECASE), re.compile('</i>', re.IGNORECASE))]
+				('<i>', re.compile('<i>', re.IGNORECASE), re.compile('</i>', re.IGNORECASE))]
 
 # The keys of this dictionary will be the file path of each parsed *.dm file
 # The values of this dictionary is a another dictionary with the key/value pair: tag/list of unmatched lines

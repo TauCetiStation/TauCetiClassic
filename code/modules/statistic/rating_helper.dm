@@ -38,11 +38,11 @@ var/global/datum/rating_helper/rating_helper = new
 	var/list/rating_templates = list()
 
 	var/list/rating_by_icon = list(
-		"1" = "<i class=\"far fa-angry\"></i>",
-		"2" = "<i class=\"far fa-frown\"></i>",
-		"3" = "<i class=\"far fa-meh\"></i>",
-		"4" = "<i class=\"far fa-smile\"></i>",
-		"5" = "<i class=\"far fa-laugh\"></i>",
+		"1" = "<span class=\"far fa-angry\"></span>",
+		"2" = "<span class=\"far fa-frown\"></span>",
+		"3" = "<span class=\"far fa-meh\"></span>",
+		"4" = "<span class=\"far fa-smile\"></span>",
+		"5" = "<span class=\"far fa-laugh\"></span>",
 	)
 
 	var/max_random_questions = 2
