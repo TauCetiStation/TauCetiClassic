@@ -54,6 +54,8 @@ cause a ton of data to be lost, an admin can go send it back.
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 	allowed_checks = ALLOWED_CHECK_NONE
 
+	required_skills = list(/datum/skill/research/trained)
+
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(ID)
 	var/datum/reagent/temp_reagent
 	var/return_name = null
@@ -426,7 +428,6 @@ cause a ton of data to be lost, an admin can go send it back.
 /obj/machinery/computer/rdconsole/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if((screen == "protolathe" && !linked_lathe) || (screen == "circuit_imprinter" && !linked_imprinter))
 		screen = "main" // Kick us from protolathe or imprinter screen if they were destroyed
-
 	var/list/data = list()
 	data["screen"] = screen
 	data["sync"] = sync
@@ -674,6 +675,7 @@ cause a ton of data to be lost, an admin can go send it back.
 	id = 2
 	req_access = list(29)
 	can_research = FALSE
+	required_skills = list(/datum/skill/research/trained)
 
 /obj/machinery/computer/rdconsole/robotics/atom_init()
 	. = ..()
@@ -691,6 +693,7 @@ cause a ton of data to be lost, an admin can go send it back.
 	id = 3
 	req_access = list(48)
 	can_research = FALSE
+	required_skills = list(/datum/skill/research/novice)
 
 /obj/machinery/computer/rdconsole/mining/atom_init()
 	. = ..()

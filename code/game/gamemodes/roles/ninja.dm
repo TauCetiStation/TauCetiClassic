@@ -9,6 +9,7 @@
 
 	restricted_jobs = list("Cyborg", "AI")
 	logo_state = "ninja-logo"
+	skillset_type = /datum/skillset/max
 
 /datum/role/ninja/OnPostSetup(laterole)
 	. = ..()
