@@ -31,6 +31,8 @@
 	if (crit_fail)
 		to_chat(user, "<span class='warning'>This device has critically failed and is no longer functional!</span>")
 		return
+	if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/chemistry/novice, /datum/skill/medical/novice)))
+		return
 	if(reagents.total_volume)
 		var/list/blood_traces = list()
 		for(var/datum/reagent/R in reagents.reagent_list)
