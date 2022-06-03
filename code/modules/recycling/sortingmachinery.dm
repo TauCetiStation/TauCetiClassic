@@ -309,7 +309,7 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the delivery chute.")
-			if(W.use_tool(src, user, 20, volume = 100))
+			if(W.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/atmospherics/trained)))
 				to_chat(user, "You sliced the floorweld off the delivery chute.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				C.ptype = 8 // 8 =  Delivery chute

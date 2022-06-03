@@ -106,7 +106,7 @@
 	var/retSound = null
 	if(length(attack_sound) > 0)
 		retSound = pick(attack_sound)
-	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	if(HULK in mutations)
 		retDam += 4

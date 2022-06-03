@@ -5,9 +5,15 @@
 //VELOCITY
 /area/velocity
 	name = "Velocity Dock 42"
-	icon_state = "centcom"
+	icon_state = "velocity"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	ambience = null
+	looped_ambience = 'sound/ambience/loop_velocity.ogg'
+
+/area/velocity/monorailwagon
+	name = "Velocity Monorail Wagon"
+	icon_state = "velocity_wagon"
 
 //Alien base
 /area/custom/alien

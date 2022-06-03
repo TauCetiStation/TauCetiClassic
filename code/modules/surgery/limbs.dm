@@ -216,11 +216,11 @@
 //						ROBO LIMB SURGERY						//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/ipc_limb
+/datum/surgery_step/ipc/limb
 	can_infect = FALSE
 	allowed_species = list(IPC)
 
-/datum/surgery_step/ipc_limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
 		return 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -231,7 +231,7 @@
 	return target_zone != BP_CHEST
 
 
-/datum/surgery_step/ipc_limb/cut_wires
+/datum/surgery_step/ipc/limb/cut_wires
 	allowed_tools = list(
 	/obj/item/weapon/wirecutters = 100,
 	/obj/item/weapon/kitchenknife = 75,
@@ -241,28 +241,28 @@
 	min_duration = 80
 	max_duration = 100
 
-/datum/surgery_step/ipc_limb/cut_wires/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/limb/cut_wires/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		return !target.op_stage.bodyparts[target_zone]
 
-/datum/surgery_step/ipc_limb/cut_wires/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/limb/cut_wires/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to reposition wires where [target]'s [parse_zone(target_zone)] used to be with \the [tool].",
 	"You begin to reposition wires where [target]'s [parse_zone(target_zone)] used to be with \the [tool].")
 	..()
 
-/datum/surgery_step/ipc_limb/cut_wires/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/limb/cut_wires/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] finished repositioning wires where [target]'s [parse_zone(target_zone)] used to be with \the [tool].</span>",
 	"<span class='notice'>You finished repositioning wires where [target]'s [parse_zone(target_zone)] used to be with \the [tool].</span>")
 	target.op_stage.bodyparts[target_zone] = ORGAN_CUT_AWAY
 
-/datum/surgery_step/ipc_limb/cut_wires/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/limb/cut_wires/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(BP_CHEST)
 	if (BP)
 		user.visible_message("<span class='warning'>[user]'s hand slips, cutting [target]'s [BP.name] open!</span>",
 		"<span class='warning'>Your hand slips, cutting [target]'s [BP.name] open!</span>")
 		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
 
-/datum/surgery_step/ipc_limb/ipc_prepare
+/datum/surgery_step/ipc/limb/ipc_prepare
 	allowed_tools = list(
 	/obj/item/weapon/wrench = 100,
 	/obj/item/weapon/bonesetter = 75
@@ -270,22 +270,23 @@
 
 	min_duration = 60
 	max_duration = 70
+	required_skills = list(/datum/skill/surgery/trained, /datum/skill/engineering/novice)
 
-/datum/surgery_step/ipc_limb/ipc_prepare/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/limb/ipc_prepare/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		return target.op_stage.bodyparts[target_zone] && target.op_stage.bodyparts[target_zone] == ORGAN_CUT_AWAY
 
-/datum/surgery_step/ipc_limb/ipc_prepare/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/limb/ipc_prepare/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts adjusting the area around [target]'s [parse_zone(target_zone)] with \the [tool].",
 	"You start adjusting the area around [target]'s [parse_zone(target_zone)] with \the [tool].")
 	..()
 
-/datum/surgery_step/ipc_limb/ipc_prepare/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/limb/ipc_prepare/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] has finished adjusting the area around [target]'s [parse_zone(target_zone)] with \the [tool].</span>",
 	"<span class='notice'>You have finished adjusting the area around [target]'s [parse_zone(target_zone)] with \the [tool].</span>")
 	target.op_stage.bodyparts[target_zone] = ORGAN_ATTACHABLE
 
-/datum/surgery_step/ipc_limb/ipc_prepare/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/limb/ipc_prepare/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(BP_CHEST)
 	if (BP)
 		user.visible_message("<span class='warning'>[user]'s hand slips, denting [target]'s [BP.name]!</span>",
