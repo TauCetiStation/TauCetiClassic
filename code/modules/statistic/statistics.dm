@@ -93,11 +93,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 
 	statfile << datum2json(src)
 
-	var/string = ""
-	string += global.rating_helper.get_voting_results()
-	string += "<span class='info'>Статистика по этому раунду вскоре будет доступна по ссылке [generate_url()]</span>"
-
-	to_chat(stealth ? usr : world, string)
+	to_chat(stealth ? usr : world, "<span class='info'>Статистика по этому раунду вскоре будет доступна по ссылке [generate_url()]</span>")
 
 /datum/stat_collector/proc/generate_url()
 	var/root = "https://stat.taucetistation.org/html"
