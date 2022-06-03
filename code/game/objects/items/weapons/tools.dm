@@ -232,7 +232,7 @@
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
-	welding_sparks = image('icons/effects/effects.dmi', "welding_sparks")
+	welding_sparks = image('icons/effects/effects.dmi', "welding_sparks", layer = ABOVE_LIGHTING_LAYER)
 	welding_sparks.plane = ABOVE_LIGHTING_PLANE
 
 /obj/item/weapon/weldingtool/examine(mob/user)
@@ -565,8 +565,19 @@
 	)
 
 /obj/item/weapon/crowbar/red
+	name = "emergency crowbar"
+	desc = "A little emergency crowbar, used to open unpowered doors and emergency shutters."
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
+	force = 4.0
+	throwforce = 5.0
+
+	w_class = SIZE_TINY
+	m_amt = 15
+
+	qualities = list(
+		QUALITY_PRYING = 0.7
+	)
 
 /obj/item/weapon/crowbar/power
 	name = "Jaws of Life"

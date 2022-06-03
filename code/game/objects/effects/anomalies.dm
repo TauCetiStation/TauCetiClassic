@@ -370,7 +370,7 @@
 	if(global.cult_religion)
 		global.cult_religion.add_member(C, CULT_ROLE_HIGHPRIEST)
 	else
-		SSticker.mode.CreateFaction(/datum/faction/cult)
+		create_faction(/datum/faction/cult, FALSE, FALSE)
 		global.cult_religion.add_member(C, CULT_ROLE_HIGHPRIEST)// religion was created in faction
 
 	var/rand_num = rand(1, 3)

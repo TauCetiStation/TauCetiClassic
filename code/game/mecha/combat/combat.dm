@@ -30,7 +30,7 @@
 	if(isliving(target))
 		var/mob/living/M = target
 		if(src.occupant.a_intent == INTENT_HARM)
-			playsound(src, 'sound/weapons/punch4.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_PUNCH_VERYHEAVY), VOL_EFFECTS_MASTER)
 			if(damtype == "brute")
 				step_away(M,src,15)
 			if(ishuman(target))

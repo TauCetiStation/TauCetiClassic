@@ -48,7 +48,7 @@
 /datum/aspect/proc/holy_turf_exit(datum/source, atom/movable/mover, atom/newLoc)
 	LAZYREMOVE(affecting, mover)
 
-//Gives mana from: any organs, limbs, and blood
+//Gives mana from: any organs, limbs, slabs of meat and blood
 //Needed for: spells and rituals related to the theme of death, interaction with dead body, necromancy
 /datum/aspect/death
 	name = ASPECT_DEATH
@@ -71,6 +71,9 @@
 
 	else if(istype(I, /obj/item/brain))
 		return 100
+
+	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/meat))
+		return 25
 
 	return 0
 
