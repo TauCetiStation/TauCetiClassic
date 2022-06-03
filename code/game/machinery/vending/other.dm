@@ -360,16 +360,14 @@
 	contraband = list(
 		/obj/item/weapon/storage/pill_bottle/ghostdice = 2,
 	)
-
 	syndie = list(
 		/obj/item/cardboard_cutout = 10,
 	)
-
 	prices = list(
 		/obj/item/weapon/storage/pill_bottle/dice = 15,
 		/obj/item/device/tabletop_assistant = 20,
 		/obj/item/toy/cards = 10,
 		/obj/item/weapon/storage/fancy/crayons = 25,
 		/obj/item/weapon/game_kit/random = 20,
-		/obj/item/weapon/storage/pill_bottle/ghostdice = 45
+		/obj/item/weapon/storage/pill_bottle/ghostdice = 45,
 	)
