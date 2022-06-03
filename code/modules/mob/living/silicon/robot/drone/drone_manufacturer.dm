@@ -72,7 +72,8 @@
 	time_last_drone = world.time
 	var/mob/living/silicon/robot/drone/maintenance/new_drone = new(get_turf(src))
 	new_drone.transfer_personality(player)
-
+	new_drone.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	new_drone.mind.skills.maximize_active_skills()
 	drone_progress = 0
 
 /mob/proc/dronize()

@@ -34,6 +34,10 @@
 	// Allows you to change the number of greeting messages for a role
 	var/list/greets = list(GREET_DEFAULT, GREET_CUSTOM)
 
+	var/skillset_type
+	//if set to true, users skills will be set to maximum available after he gets this role
+	var/change_to_maximum_skills = TRUE
+
 	// Type for collector of statistics by this role
 	var/datum/stat/role/stat_type = /datum/stat/role
 
@@ -69,6 +73,10 @@
 	antag = M
 	M.antag_roles[id] = src
 	objectives.owner = M
+	if(!isnull(skillset_type))
+		M.skills.add_available_skillset(skillset_type)
+	if(change_to_maximum_skills)
+		M.skills.maximize_active_skills()
 	if(msg_admins)
 		message_admins("[key_name(M)] is now \an [id].")
 		log_mode("[key_name(M)] is now \an [id].")
@@ -90,6 +98,9 @@
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
+	if(!isnull(skillset_type))
+		M.skills.remove_available_skillset(skillset_type)
+
 	remove_antag_hud()
 	if(msg_admins)
 		message_admins("[key_name(M)] is <span class='danger'>no longer</span> \an [id].[M.current ? " [ADMIN_FLW(M.current)]" : ""]")
