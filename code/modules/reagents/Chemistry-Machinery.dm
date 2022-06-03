@@ -27,6 +27,8 @@
 		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten"
 	)
 	var/list/premium_reagents = list()
+	required_skills = list(/datum/skill/chemistry/trained)
+	fumbling_time = 2 SECONDS
 
 /obj/machinery/chem_dispenser/atom_init()
 	. = ..()
@@ -187,6 +189,8 @@
 			if(!C.canopened)
 				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 				return
+		if(!do_skill_checks(user))
+			return
 		src.beaker =  B
 		user.drop_from_inventory(B, src)
 		to_chat(user, "You set [B] on the machine.")
@@ -243,6 +247,7 @@
 				"diethylamine"
 		)
 	)
+	required_skills = list(/datum/skill/chemistry/novice)
 
 /obj/machinery/chem_dispenser/constructable/atom_init()
 	. = ..()
@@ -306,6 +311,7 @@
 	hackable = TRUE
 	msg_hack_enable = "You change the mode from 'McNano' to 'Pizza King'."
 	msg_hack_disable = "You change the mode from 'Pizza King' to 'McNano'."
+	required_skills = list()
 
 /obj/machinery/chem_dispenser/beer
 	icon_state = "booze_dispenser"
@@ -320,8 +326,7 @@
 	hackable = TRUE
 	msg_hack_enable = "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes."
 	msg_hack_disable = "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes."
-
-
+	required_skills = list()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -343,6 +348,7 @@
 	var/pillsprite = 1
 	var/client/has_sprites = list()
 	var/max_pill_count = 24
+	required_skills = list(/datum/skill/chemistry/trained)
 
 
 /obj/machinery/chem_master/atom_init()
@@ -405,6 +411,7 @@
 	. = ..()
 	if(!.)
 		return
+
 	if(href_list["ejectp"])
 		if(loaded_pill_bottle)
 			loaded_pill_bottle.loc = src.loc
@@ -685,12 +692,14 @@
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	condi = 1
+	required_skills = list(/datum/skill/chemistry/novice)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_master/constructable
 	name = "ChemMaster 2999"
 	desc = "Used to seperate chemicals and distribute them in a variety of forms."
+	required_skills = list(/datum/skill/chemistry/trained)
 
 /obj/machinery/chem_master/constructable/atom_init()
 	. = ..()
@@ -813,6 +822,7 @@
 
 
 	var/list/holdingitems = list()
+	required_skills = list(/datum/skill/chemistry/novice)
 
 /obj/machinery/reagentgrinder/atom_init()
 	. = ..()
@@ -928,7 +938,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	switch(href_list["action"])
 		if ("grind")
 			grind()

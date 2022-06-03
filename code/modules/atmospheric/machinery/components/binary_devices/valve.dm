@@ -100,6 +100,7 @@
 
 	frequency = 0
 	var/id = null
+	required_skills = list(/datum/skill/atmospherics/trained)
 
 /obj/machinery/atmospherics/components/binary/valve/digital/open
 	open = TRUE
