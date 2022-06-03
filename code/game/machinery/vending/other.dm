@@ -356,7 +356,6 @@
 		/obj/item/toy/cards = 10,
 		/obj/item/weapon/storage/fancy/crayons = 4,
 		/obj/item/weapon/game_kit/random = 4,
-
 	)
 	contraband = list(
 		/obj/item/weapon/storage/pill_bottle/ghostdice = 2,
