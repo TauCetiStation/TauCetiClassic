@@ -1,6 +1,6 @@
 /mob/living/carbon/monkey
 	default_emotes = list(
-		/datum/emote/help,
+		/datum/emote/list,
 		/datum/emote/pray,
 		/datum/emote/whimper,
 		/datum/emote/roar,
