@@ -419,7 +419,7 @@ SUBSYSTEM_DEF(job)
 						metadata = H.client.prefs.gear[G.display_name]
 						if(G.slot == SLOT_WEAR_MASK || G.slot == SLOT_WEAR_SUIT || G.slot == SLOT_HEAD)
 							custom_equip_leftovers += thing
-						else if(H.equip_to_slot_or_del(G.spawn_item(H, metadata), G.slot))
+						else if(H.equip_or_collect(G.spawn_item(H, metadata), G.slot))
 							to_chat(H, "<span class='notice'>Equipping you with \the [thing]!</span>")
 							custom_equip_slots.Add(G.slot)
 						else
@@ -438,7 +438,7 @@ SUBSYSTEM_DEF(job)
 				spawn_in_storage += thing
 			else
 				metadata = H.client.prefs.gear[G.display_name]
-				if(H.equip_to_slot_or_del(G.spawn_item(H, metadata), G.slot))
+				if(H.equip_or_collect(G.spawn_item(H, metadata), G.slot))
 					to_chat(H, "<span class='notice'>Equipping you with \the [thing]!</span>")
 					custom_equip_slots.Add(G.slot)
 				else
@@ -507,16 +507,16 @@ SUBSYSTEM_DEF(job)
 				switch(H.backbag) //BS12 EDIT
 					if(2)
 						var/obj/item/weapon/storage/backpack/BPK = new(H)
-						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
+						H.equip_or_collect(BPK, SLOT_BACK,1)
 					if(3)
 						var/obj/item/weapon/storage/backpack/alt/BPK = new(H)
-						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
+						H.equip_or_collect(BPK, SLOT_BACK,1)
 					if(4)
 						var/obj/item/weapon/storage/backpack/satchel/norm/BPK = new(H)
-						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
+						H.equip_or_collect(BPK, SLOT_BACK,1)
 					if(5)
 						var/obj/item/weapon/storage/backpack/satchel/BPK = new(H)
-						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
+						H.equip_or_collect(BPK, SLOT_BACK,1)
 
 	/*
 	Placed here so the backpack that spawns if there is no job backpack has already spawned by now.
@@ -591,9 +591,9 @@ SUBSYSTEM_DEF(job)
 			C.associated_account_number = H.mind.initial_account.account_number
 			H.mind.initial_account.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
 
-		H.equip_to_slot_or_del(C, SLOT_WEAR_ID)
+		H.equip_or_collect(C, SLOT_WEAR_ID)
 
-	H.equip_to_slot_or_del(new /obj/item/device/pda(H), SLOT_BELT)
+	H.equip_or_collect(new /obj/item/device/pda(H), SLOT_BELT)
 	if(locate(/obj/item/device/pda,H))
 		var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 		pda.owner = H.real_name
