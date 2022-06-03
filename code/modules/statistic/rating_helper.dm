@@ -29,7 +29,7 @@
 
 /datum/rating_template/bugs
 	category = "bugs_rating"
-	question = "Насколько сильно баги мешали вам в этом раунде?"
+	question = "Вам сильно помешали баги?"
 	result_message = "Оценка надоедливости багов"
 
 // my fucking DTOs without systems and layers
