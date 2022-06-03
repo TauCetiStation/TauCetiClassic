@@ -102,7 +102,8 @@ var/global/BSACooldown = 0
 		<br><br>
 		[check_rights(R_ADMIN,0) ? "<A href='?src=\ref[src];traitor=\ref[M]'>Traitor panel</A> | " : "" ]
 		<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> |
-		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>
+		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A> |
+		<A href='?src=\ref[src];skills=\ref[M]'>Skills panel</A>
 	"}
 
 	if (M.client)
@@ -1153,6 +1154,17 @@ var/global/BSACooldown = 0
 	M.mind.edit_memory()
 	feedback_add_details("admin_verb","STP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/show_skills_panel(mob/M)
+
+	if(!istype(M))
+		to_chat(usr, "This can only be used on instances of type /mob")
+		return
+	if(!M.mind)
+		to_chat(usr, "This mob has no mind! So no skills!")
+		return
+
+	M.mind.edit_skills()
+	feedback_add_details("admin_verb","SKP") 
 
 /datum/admins/proc/toggletintedweldhelmets()
 	set category = "Debug"

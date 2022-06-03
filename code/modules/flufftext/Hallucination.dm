@@ -382,7 +382,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
 				else
-					my_target.playsound_local(null, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER, 35)
+					my_target.playsound_local(null, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER, 35)
 					my_target.show_message("<span class='warning'><B>[src.name] has punched [my_target]!</B></span>", SHOWMSG_VISUAL)
 					my_target.halloss += 4
 					if(prob(33))

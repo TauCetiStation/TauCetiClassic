@@ -29,7 +29,6 @@
 	status_flags = CANPUSH
 	universal_speak = 1
 	universal_understand = 1
-	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -54,6 +53,7 @@
 /turf/var/scp_was_here = 0
 
 /mob/living/simple_animal/special/scp173/atom_init()
+	attack_sound = SOUNDIN_PUNCH_MEDIUM
 	. = ..()
 	for(var/mob/living/simple_animal/special/scp173/SA in mob_list) //only 1 can exist at the same time
 		if(SA != src)
