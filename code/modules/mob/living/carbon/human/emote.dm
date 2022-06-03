@@ -1,6 +1,6 @@
 /mob/living/carbon/human
 	default_emotes = list(
-		/datum/emote/help,
+		/datum/emote/list,
 		/datum/emote/pray,
 		/datum/emote/shiver,
 		/datum/emote/whimper,

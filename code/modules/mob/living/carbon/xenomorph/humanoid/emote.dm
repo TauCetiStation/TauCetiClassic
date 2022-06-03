@@ -1,6 +1,6 @@
 /mob/living/carbon/xenomorph/humanoid
 	default_emotes = list(
-		/datum/emote/help,
+		/datum/emote/list,
 		/datum/emote/pray,
 		/datum/emote/twitch,
 		/datum/emote/drool,
