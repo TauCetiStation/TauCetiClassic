@@ -166,37 +166,3 @@
 
 	stat.set_custom_stat(F)
 	factions += stat
-
-#define RATING_HREF(C, rating, cat, fa_icon) "<a href='?src=\ref[C];round_rating=[rating];rating_cat=[cat]'>[fa_icon]</a>"
-
-var/global/list/rating_by_icon = list(
-	"1" = "<i class=\"far fa-angry\"></i>",
-	"2" = "<i class=\"far fa-frown\"></i>",
-	"3" = "<i class=\"far fa-meh\"></i>",
-	"4" = "<i class=\"far fa-smile\"></i>",
-	"5" = "<i class=\"far fa-laugh\"></i>",
-)
-
-/datum/stat_collector/proc/announce_rating_collection()
-	for(var/mob/M in global.player_list)
-		var/string = "<br><div class='rating'>"
-		for(var/cat in rating.ratings)
-			switch(cat)
-				if("generic_rating")
-					string += "<span class='rating_questions'>Вам понравился раунд в целом?</span><br>"
-				if("mode_rating")
-					string += "<span class='rating_questions'>Вам понравился режим?</span><br>"
-				if("roleplay_rating")
-					string += "<span class='rating_questions'>Вам понравился отыгрыш других игроков?</span><br>"
-			string += "<span class='rating_questions'>"
-			var/i = 0
-			for(var/rate in global.rating_by_icon)
-				i++
-				string += RATING_HREF(M.client, rate, cat, global.rating_by_icon[rate])
-				if(global.rating_by_icon.len != i)
-					string += "  -  "
-			string += "</span><br>"
-		string += "</div>"
-		to_chat(M, string)
-
-#undef RATING_HREF

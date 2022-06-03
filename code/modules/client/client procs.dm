@@ -153,14 +153,6 @@ var/global/list/blacklisted_builds = list(
 		if ("openLink")
 			src << link(href_list["link"])
 
-	if(href_list["round_rating"] && href_list["rating_cat"])
-		var/rating = text2num(href_list["round_rating"])
-		var/rating_cat = href_list["rating_cat"]
-		if(rating && isnum(rating) && (rating_cat in SSStatistics.rating.ratings))
-			rating = clamp(rating, 1, 5)
-			LAZYSET(my_rate, rating_cat, rating)
-			to_chat(mob, "<span class='info'>Ваша оценка: [rating].</span>")
-
 	..()	//redirect to hsrc.Topic()
 
 #undef ADMINSWARNED_AT

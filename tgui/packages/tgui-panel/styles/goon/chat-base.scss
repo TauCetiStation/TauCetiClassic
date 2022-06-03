@@ -413,7 +413,8 @@ em {
   padding: 5px;
   z-index: 1;
   bottom: 125%;
-  width: 90vw; /* maybe max-width ?? */
+  width: 90vw;
+  /* maybe max-width ?? */
   word-wrap: break-word;
 }
 
@@ -488,17 +489,26 @@ table.staffwho th {
 
 div.rating {
   width: 80%;
-  background: #dbdbdb;
-  outline: 2px solid #000;
-  border-radius: 10px;
+  margin: auto;
+  border-radius: 15px;
   text-align: center;
+  background: #eeeeee;
 }
 
 .rating_questions {
   font-size: x-large;
-  color: #0000cc;
+  color: #34a1c5;
 }
 
 .rating_rates {
   font-size: x-large;
+  color: #bb7d98;
+}
+
+.rating_rates a:visited {
+  color: #bb7d98;
+}
+
+.rating_rates a:hover {
+  color: #b7145b;
 }

@@ -2212,6 +2212,7 @@
 #include "code\modules\sports\wrestler.dm"
 #include "code\modules\statistic\gamemode_stat.dm"
 #include "code\modules\statistic\json_helper.dm"
+#include "code\modules\statistic\rating_helper.dm"
 #include "code\modules\statistic\stat_dto.dm"
 #include "code\modules\statistic\statistics.dm"
 #include "code\modules\statistic\statistics_helpers.dm"

@@ -479,7 +479,14 @@
 		var/datum/browser/popup = new(usr, "window=flavor [name]", "Flavor [name]", 500, 200, ntheme = CSS_THEME_LIGHT)
 		popup.set_content(flavor_text)
 		popup.open()
-	return
+
+	if(href_list["round_rating"] && href_list["rating_cat"])
+		var/rating = text2num(href_list["round_rating"])
+		var/rating_cat = href_list["rating_cat"]
+		if(rating && isnum(rating) && global.rating_helper.get_template(rating_cat))
+			rating = clamp(rating, 1, 5)
+			LAZYSET(client.my_rate, rating_cat, rating)
+			to_chat(src, "<span class='info'>Ваша оценка: [rating].</span>")
 
 
 /mob/proc/pull_damage()

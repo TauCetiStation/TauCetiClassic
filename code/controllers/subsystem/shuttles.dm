@@ -643,7 +643,7 @@ SUBSYSTEM_DEF(shuttle)
 	eta_timeofday = (REALTIMEOFDAY + flytime) % MIDNIGHT_ROLLOVER
 
 /datum/controller/subsystem/shuttle/proc/start_transit()
-	SSStatistics.announce_rating_collection()
+	global.rating_helper.announce_rating_collection()
 
 /obj/effect/bgstar
 	name = "star"

@@ -17,7 +17,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 // To ensure that if output file syntax is changed, we will still be able to process
 // new and old files
 // please increment this version whenever making changes
-#define STAT_OUTPUT_VERSION 3
+#define STAT_OUTPUT_VERSION 4
 #define STAT_FILE_NAME "stat.json"
 
 // Documentation rules:
@@ -93,11 +93,11 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 
 	statfile << datum2json(src)
 
-	// TODO
-	var/rounded_rating = CEIL(rating)
-	var/rating_icon = global.rating_by_icon["[rounded_rating]"]
-	to_chat(stealth ? usr : world, "<span class='info'>Средняя оценка раунда: [rating_icon] <span style='font-size: 10px'>([rating])</span></span>")
-	to_chat(stealth ? usr : world, "<span class='info'>Статистика по этому раунду вскоре будет доступа по ссылке [generate_url()]</span>")
+	var/string = ""
+	string += global.rating_helper.get_voting_results()
+	string += "<span class='info'>Статистика по этому раунду вскоре будет доступна по ссылке [generate_url()]</span>"
+
+	to_chat(stealth ? usr : world, string)
 
 /datum/stat_collector/proc/generate_url()
 	var/root = "https://stat.taucetistation.org/html"
@@ -117,16 +117,6 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	base_commit_sha = global.base_commit_sha
 	test_merges = global.test_merges
 	completion_html = SSticker.mode.completition_text
-
-	var/list/voters = list()
-	for(var/mob/M in global.player_list)
-		if(!length(M.client.my_rate))
-			continue
-		for(var/cat in M.client.my_rate)
-			rating.ratings[cat] += M.client.my_rate[cat]
-			voters[cat]++
-	for(var/cat in rating.ratings)
-		rating.ratings[cat] = rating.ratings[cat] / voters[cat]
 
 	for(var/datum/mind/M in SSticker.minds)
 		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles)
