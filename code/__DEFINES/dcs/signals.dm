@@ -337,5 +337,3 @@
 
 // send this signal to toggle zoom in /datum/component/zoom: (mob/user)
 #define COMSIG_ZOOM_TOGGLE "zoom_toggle"
-// for /datum/component/hud_button
-#define COMSIG_ADD_HUD_BUTTON "add_hud_button"

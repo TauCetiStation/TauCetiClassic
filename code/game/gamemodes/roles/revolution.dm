@@ -105,3 +105,20 @@
 			to_chat(M, "<span class='warning'>You reject this traitorous cause!</span>")
 			to_chat(src, "<span class='warning'><b>[M] does not support the revolution!</b></span>")
 		lead.rev_cooldown = world.time + 50
+
+/mob/living/carbon/human/proc/join_to_revolution()
+	var/datum/faction/revolution/R = find_faction_by_type(/datum/faction/revolution)
+	var/worker_choice
+	worker_choice = tgui_alert(src,"Do you want to support the revolution?","Join the Revolution!",list("No!","Yes!"))
+	if(worker_choice == "Yes!")
+		if(!isrev(src) && R)
+			if(add_faction_member(R, src, TRUE))
+				to_chat(src, "<span class='notice'>You join the revolution!</span>")
+		else
+			to_chat(src, "<span class='notice'><b>Revolution is coming!</b></span>")
+	else if(worker_choice == "No!")
+		if(R)
+			if(isrev(src))
+				var/datum/role/my_role = src.mind.GetRole(REV)
+				my_role.Deconvert()
+		to_chat(src, "<span class='warning'>Don't forget to install the mindshield.</span>")

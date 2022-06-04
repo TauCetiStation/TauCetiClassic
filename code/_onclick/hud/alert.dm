@@ -441,6 +441,12 @@
 	name = "Handcuffed"
 	desc = "You're handcuffed and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself."
 
+/atom/movable/screen/alert/revolution
+	name = "Revolution"
+	desc = "You've been invited to revolution. Shift+Click the alert to choose."
+	icon_state = "revolution"
+	timeout = 100
+
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there
@@ -480,6 +486,9 @@
 	var/paramslist = params2list(params)
 	if(paramslist["shift"]) // screen objects don't do the normal Click() stuff so we'll cheat
 		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
+		if(name == "Revolution")
+			var/mob/living/carbon/human/H = usr
+			H.join_to_revolution()
 		return
 	if(master)
 		return usr.client.Click(master, location, control, params)

@@ -61,7 +61,5 @@
 	if(can_convert)
 		var/mob/living/carbon/human/M = user
 		if(!isrevhead(M))
-			SEND_SIGNAL(M, COMSIG_ADD_HUD_BUTTON, 100, "Join To Revolution")
-			M.rev_choices = ""
-			M.update_hud()
+			M.throw_alert("revolution", /atom/movable/screen/alert/revolution)
 	return ..()
