@@ -282,6 +282,7 @@
 #include "code\datums\components\mechanic_description.dm"
 #include "code\datums\components\mood.dm"
 #include "code\datums\components\multi_carry.dm"
+#include "code\datums\components\point_and_point.dm"
 #include "code\datums\components\silence.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\spawn_area.dm"
