@@ -280,7 +280,6 @@
 #include "code\datums\components\footstep.dm"
 #include "code\datums\components\forcefield.dm"
 #include "code\datums\components\gnawing.dm"
-#include "code\datums\components\hud_button.dm"
 #include "code\datums\components\logout_spawner.dm"
 #include "code\datums\components\mechanic_description.dm"
 #include "code\datums\components\mood.dm"
