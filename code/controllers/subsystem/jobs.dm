@@ -593,7 +593,7 @@ SUBSYSTEM_DEF(job)
 
 		H.equip_or_collect(C, SLOT_WEAR_ID)
 
-	H.equip_or_collect(new /obj/item/device/pda(H), SLOT_BELT)
+	H.equip_to_slot_or_del(new /obj/item/device/pda(H), SLOT_BELT)
 	if(locate(/obj/item/device/pda,H))
 		var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
 		pda.owner = H.real_name
