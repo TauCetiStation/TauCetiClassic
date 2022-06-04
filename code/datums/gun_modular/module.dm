@@ -1,4 +1,4 @@
 /datum/configuration_module
     var/weight = 0
     var/size = 1
-    var/type
+    var/type_module

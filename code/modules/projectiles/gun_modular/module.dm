@@ -19,28 +19,52 @@
     if(istype(I, /obj/item/gun_modular/module))
 
         user.drop_item()
-        
+
         if(attach(I))
             to_chat(user, "Вы прикрепили модуль")
 
+// добавляем айди модуля в доступные для прицепления модули
+/obj/item/gun_modular/module/proc/add_allow_module(module_id)
+
+    LAZYINITLIST(allowed_module_id)
+
+    if(allowed_module_id.Find(module_id))
+        return FALSE
+
+    LAZYADD(allowed_module_id, module_id)
+
+    return TRUE
+
+// удаляем айди модуля из доступных для прицепления модулей
+/obj/item/gun_modular/module/proc/remove_allow_module(module_id)
+
+    LAZYREMOVE(allowed_module_id, module_id)
+
+    return TRUE
+
+// проверяем, доступен ли модуль для прицепления
+/obj/item/gun_modular/module/proc/check_allow_module(module_id)
+
+    return allowed_module_id.Find(module_id)
+
 // проверяем, что модуль можно прицепить к этому модулю
-/obj/item/gun_modular/module/proc/check_attach(/obj/item/gun_modular/module/M)
+/obj/item/gun_modular/module/proc/check_attach(obj/item/gun_modular/module/M)
 
     if(!M.check_attach_to_module(src))
         return FALSE
     
-    if(!allowed_module_id.Find(M.module_id))
+    if(!check_allow_module(M.module_id))
         return FALSE
     
     return TRUE
 
 // проверяем что этот модуль можно прицепить к другому
-/obj/item/gun_modular/module/proc/check_attach_to_module(/obj/item/gun_modular/module/M)
+/obj/item/gun_modular/module/proc/check_attach_to_module(obj/item/gun_modular/module/M)
 
     return TRUE
 
 // прицепляем модуль к этому
-/obj/item/gun_modular/module/proc/attach(/obj/item/gun_modular/module/M)
+/obj/item/gun_modular/module/proc/attach(obj/item/gun_modular/module/M)
 
     if(!check_attach(M))
         return FALSE
@@ -53,14 +77,14 @@
     return TRUE
 
 // прицепляем этот модуль к другому
-/obj/item/gun_modular/module/proc/attach_to_module(/obj/item/gun_modular/module/M)
+/obj/item/gun_modular/module/proc/attach_to_module(obj/item/gun_modular/module/M)
 
     previous_module = M
 
     return TRUE
 
 // отцепляем модуль от этого
-/obj/item/gun_modular/module/proc/detach(/obj/item/gun_modular/module/M)
+/obj/item/gun_modular/module/proc/detach(obj/item/gun_modular/module/M)
 
     next_module = null
     M.loc = get_turf(src.loc)
@@ -70,53 +94,75 @@
     return TRUE
 
 // отцепляем этот модуль от другого
-/obj/item/gun_modular/module/proc/detach_to_module(/obj/item/gun_modular/module/M)
+/obj/item/gun_modular/module/proc/detach_to_module(obj/item/gun_modular/module/M)
 
     previous_module = M
 
     return TRUE
 
-// производим активацию модуля в цепочке, следующий после него модуль, будет активирован после завершения рабоыт этого
-/obj/item/gun_modular/module/proc/activate(/datum/process_fire/process = null)
+// производим активацию модуля в цепочке, следующий после него модуль, будет активирован после завершения работы этого
+// когда цепочка завершится, произойдет пост активация, которая по результатам из процесса стрельбы, произведет необходимые действия
+// пример: патронник получил патрон от магазина и отправился дальше, магазин не произвел никакой активации и отправил процесс дальше, ствол принял процесс и он оказался сломан
+// из за сломанного ствола, выстрел произойти не может, но за выстрел отвечает патронник ранее, для этого нужна пост активация которая, по кторой модули могут прийти к итоговому результату и сделать действие
+/obj/item/gun_modular/module/proc/activate(datum/process_fire/process)
 
-    if(!process)
-        process = new /datum/process_fire()
+    if(!process.GetData(ACTIVE_FIRE))
+        return FALSE
     
-    return process
+    if(next_module_activate(process))
+        return post_activate(process)
+
+/obj/item/gun_modular/module/proc/next_module_activate(datum/process_fire/process)
+
+    if(next_module)
+        return next_module.activate(process)
+    
+    return TRUE
+
+/obj/item/gun_modular/module/proc/post_activate(datum/process_fire/process)
+
+    return next_module_post_activate(process)
+
+/obj/item/gun_modular/module/proc/next_module_post_activate(datum/process_fire/process)
+
+    if(next_module)
+        return next_module.post_activate(process)
+    
+    return TRUE
 
 // посылаем сигнал с запросом вперед по модулям, но никак не назад, во избежания зацикливания. 
 // если модуль может принять сигнал, то он его принимает и возвращает результат который отправляющий может использовать 
 // пример: патроннику нужен патрон, он запускает сигнал с запросом патрона, его принимает держатель магазина и если тот может, то он возвращает патрон
 // если патрон вернуть не получилось, возвращает FALSE, на что реагирует патронник. 
 // если патронник получил патрон, он его использует чтобы произвести выстрел и активировать следующий модуль, елси не получил, происходит click и цепочка прерывается
-/obj/item/gun_modular/module/proc/send_signal(/datum/process_fire/process, signal)
+/obj/item/gun_modular/module/proc/send_signal_module(datum/process_fire/process, signal)
 
     process.SetData(SIGNAL_INFO, signal)
 
-    return relaying(process)
+    return relaying_module(process)
 
 // метод на проверку наличия подходящего сигнала для модуля, если модуль может принять сигнал, он его принимает
-/obj/item/gun_modular/module/proc/check_signal(/datum/process_fire/process)
+/obj/item/gun_modular/module/proc/check_signal_module(datum/process_fire/process)
     
     return FALSE
 
 // метод приема сигнала, производит необходимые действия которые запрашивались в сигнале и возвращает результат
-/obj/item/gun_modular/module/proc/receive_signal(/datum/process_fire/process)
+/obj/item/gun_modular/module/proc/receive_signal_module(datum/process_fire/process)
 
     return FALSE
 
 // метод перенаправления, если модуль не может принять сигнал, он посылает его в следующий модуль, если следующего модуля нет, то возвращается FALSE
-/obj/item/gun_modular/module/proc/relaying(/datum/process_fire/process)
+/obj/item/gun_modular/module/proc/relaying_module(datum/process_fire/process)
 
-    if(check_signal(process))
-        return receive_signal(process)
+    if(check_signal_module(process))
+        return receive_signal_module(process)
     
-    return relay_next(process)
+    return relay_next_module(process)
 
 // метод отправки сигнала следующему модулю, вынесен на случай, если в одном модуле есть разветвление на несколько цепочек, чтобы можно было по очереди послать в них
-/obj/item/gun_modular/module/proc/relay_next(/datum/process_fire/process)
+/obj/item/gun_modular/module/proc/relay_next_module(datum/process_fire/process)
 
     if(next_module)
-        return next_module.relaying(process)
+        return next_module.relaying_module(process)
     
     return FALSE

@@ -37,4 +37,4 @@
 
     PrepareDataList()
 
-    return data.Copy
+    return data.Copy()
