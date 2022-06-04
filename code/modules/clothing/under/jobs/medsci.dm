@@ -45,6 +45,7 @@
 /obj/item/clothing/under/rank/chemist/skirt
 	name = "chemist's jumpskirt"
 	icon_state = "skirt_chemistry"
+	flags = NONE
 
 /*
  * Medical
@@ -61,6 +62,7 @@
 /obj/item/clothing/under/rank/chief_medical_officer/skirt
 	name = "chief medical officer's jumpskirt"
 	icon_state = "skirt_cmo"
+	flags = NONE
 
 /obj/item/clothing/under/rank/geneticist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."

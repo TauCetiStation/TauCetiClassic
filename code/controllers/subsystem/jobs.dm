@@ -507,16 +507,16 @@ SUBSYSTEM_DEF(job)
 				switch(H.backbag) //BS12 EDIT
 					if(2)
 						var/obj/item/weapon/storage/backpack/BPK = new(H)
-						H.equip_or_collect(BPK, SLOT_BACK,1)
+						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(3)
 						var/obj/item/weapon/storage/backpack/alt/BPK = new(H)
-						H.equip_or_collect(BPK, SLOT_BACK,1)
+						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(4)
 						var/obj/item/weapon/storage/backpack/satchel/norm/BPK = new(H)
-						H.equip_or_collect(BPK, SLOT_BACK,1)
+						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 					if(5)
 						var/obj/item/weapon/storage/backpack/satchel/BPK = new(H)
-						H.equip_or_collect(BPK, SLOT_BACK,1)
+						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 
 	/*
 	Placed here so the backpack that spawns if there is no job backpack has already spawned by now.
