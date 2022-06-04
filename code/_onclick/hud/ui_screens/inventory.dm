@@ -68,7 +68,7 @@
 	update_icon(hud.mymob)
 
 /atom/movable/screen/inventory/hand/MouseDrop_T(obj/item/dropping, mob/user)
-	if(!istype(dropping))
+	if(!istype(dropping) || user.incapacitated())
 		return
 	dropping.mob_pickup(user, hand_index)
 
