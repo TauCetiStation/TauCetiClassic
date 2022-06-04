@@ -48,7 +48,7 @@
 /atom/movable/screen/xenomorph/leap/update_icon(mob/living/carbon/xenomorph/humanoid/hunter/AH)
 	icon_state = "leap_[AH.leap_on_click ? "on":"off"]"
 
-/atom/movable/screen/xenomorph/nightvision/add_to_hud(datum/hud/hud)
+/atom/movable/screen/xenomorph/leap/add_to_hud(datum/hud/hud)
 	..()
 	hud.mymob.leap_icon = src
 
@@ -61,7 +61,7 @@
 	var/mob/living/carbon/xenomorph/humanoid/AH = usr
 	AH.toggle_neurotoxin()
 
-/atom/movable/screen/xenomorph/nightvision/add_to_hud(datum/hud/hud)
+/atom/movable/screen/xenomorph/neurotoxin/add_to_hud(datum/hud/hud)
 	..()
 	hud.mymob.neurotoxin_icon = src
 

@@ -29,7 +29,7 @@
 	))
 
 	if(locate(/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin) in verbs)
-		hud.init_screens(/atom/movable/screen/xenomorph/neurotoxin)
+		hud.init_screen(/atom/movable/screen/xenomorph/neurotoxin)
 
 /mob/living/carbon/xenomorph/humanoid/hunter/add_to_hud(datum/hud/hud)
 	..()
