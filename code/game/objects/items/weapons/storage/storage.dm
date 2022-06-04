@@ -66,10 +66,11 @@
 		remove_outline()
 	if(!(ishuman(usr) || ismonkey(usr) || isIAN(usr))) //so monkeys can take off their backpacks -- Urist
 		return
-	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+	if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
 		return
 
 	var/mob/M = usr
+	add_fingerprint(M)
 	if(isturf(over_location) && over_object != M)
 		if(M.incapacitated())
 			return
@@ -96,14 +97,12 @@
 				remove_from_storage(I, M.loc)
 				I.add_fingerprint(M)
 				step(I, dir_target)
-			add_fingerprint(M)
 		return
 
 	if(!over_object)
 		return
-	if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
-		open(usr)
-		add_fingerprint(M)
+	if(over_object == usr) // this must come before the screen objects only block
+		try_open(usr)
 		return
 	if (!( istype(over_object, /atom/movable/screen) ))
 		return ..()
@@ -127,7 +126,6 @@
 				if(!M.unEquip(src))
 					return
 				M.put_in_active_hand(src)
-		add_fingerprint(usr)
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list(  )
@@ -157,6 +155,17 @@
 	prepare_ui()
 	storage_ui.on_open(user)
 	show_to(user)
+
+// Returns TRUE if user can open the storage and opens it. Returns FALSE otherwise.
+/obj/item/weapon/storage/proc/try_open(mob/user)
+	if(!user)
+		return FALSE
+
+	if(Adjacent(user))
+		open(user)
+		return TRUE
+	else
+		return FALSE
 
 /obj/item/weapon/storage/proc/prepare_ui()
 	if(!storage_ui)
@@ -359,25 +368,20 @@
 	return
 
 /obj/item/weapon/storage/attack_hand(mob/user)
-	if (src.loc == user)
+	add_fingerprint(user)
+	if(loc == user)
 		open(user)
 	else
 		..()
 		if(storage_ui)
 			storage_ui.on_hand_attack(user)
-	add_fingerprint(user)
 
 /obj/item/weapon/storage/AltClick(mob/user)
-	if(user && Adjacent(user))
-		if(istype(src, /obj/item/weapon/storage/lockbox))
-			var/obj/item/weapon/storage/lockbox/L = src
-			if(L.locked)
-				to_chat(user, "<span class='warning'>It's locked!</span>")
-				return ..(user)
-		open(user)
-		add_fingerprint(user)
+	add_fingerprint(user)
+	if(try_open(user))
 		return
-	..(user)
+	else
+		..(user)
 
 //Should be merged into attack_hand() later, i mean whole attack_paw() proc, but thats probably a lot of work.
 /obj/item/weapon/storage/attack_paw(mob/user) // so monkey, ian or something will open it, istead of unequip from back

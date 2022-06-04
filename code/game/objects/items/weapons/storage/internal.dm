@@ -35,8 +35,8 @@
 		if (istype(user.loc,/obj/mecha)) // stops inventory actions in a mech
 			return 0
 
-		if(over_object == user && Adjacent(user)) // this must come before the screen objects only block
-			open(user)
+		if(over_object == user) // this must come before the screen objects only block
+			try_open(user)
 			return 0
 
 		if (!( istype(over_object, /atom/movable/screen) ))
