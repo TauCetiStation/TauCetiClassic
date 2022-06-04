@@ -419,7 +419,7 @@ SUBSYSTEM_DEF(job)
 						metadata = H.client.prefs.gear[G.display_name]
 						if(G.slot == SLOT_WEAR_MASK || G.slot == SLOT_WEAR_SUIT || G.slot == SLOT_HEAD)
 							custom_equip_leftovers += thing
-						else if(H.equip_or_collect(G.spawn_item(H, metadata), G.slot))
+						else if(H.equip_to_slot_or_del(G.spawn_item(H, metadata), G.slot))
 							to_chat(H, "<span class='notice'>Equipping you with \the [thing]!</span>")
 							custom_equip_slots.Add(G.slot)
 						else
