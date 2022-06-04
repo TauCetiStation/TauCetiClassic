@@ -306,6 +306,22 @@
 	icon_state = "shuttle"
 	parallax_movedir = NORTH
 
+//Labor camp shuttle
+/area/shuttle/labor
+	name = "Labor Camp Shuttle"
+
+/area/shuttle/labor/station
+	icon_state = "shuttle"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
+
+/area/shuttle/labor/camp
+	icon_state = "shuttle"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
+
+/area/shuttle/labor/transit
+	icon_state = "shuttle"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
+
 //Shuttle lists, group by areas
 // CENTCOM
 var/global/list/centcom_shuttle_areas = list (

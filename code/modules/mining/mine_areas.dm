@@ -146,3 +146,10 @@
 	icon_state = "dwarf"
 	sound_environment = SOUND_AREA_DEFAULT
 	outdoors = FALSE
+
+/**********************Labor camp areas**************************/
+/area/asteroid/labor/camp
+	name = "Labor Camp"
+	icon_state = "labor_camp"
+
+	outdoors = FALSE
