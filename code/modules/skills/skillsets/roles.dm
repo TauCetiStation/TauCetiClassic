@@ -54,7 +54,7 @@
 
 
 /datum/skillset/ERT_leader
-	name = "ERT leader"
+	name = "Emergency Response Team Leader"
 	initial_skills = list(
 		/datum/skill/police/master,
 		/datum/skill/firearms/master,
@@ -72,14 +72,14 @@
 	)
 
 /datum/skillset/ERT_medic
-	name = "ERT medic"
+	name = "Emergency Response Team"
 	initial_skills = list(
 		/datum/skill/police/master,
 		/datum/skill/firearms/master,
 		/datum/skill/melee/master,
 		/datum/skill/engineering/pro,
-		/datum/skill/construction/trained,
-		/datum/skill/atmospherics/novice,
+		/datum/skill/construction/master,
+		/datum/skill/atmospherics/master,
 		/datum/skill/civ_mech/master,
 		/datum/skill/combat_mech/master,
 		/datum/skill/surgery/pro,
@@ -88,27 +88,6 @@
 		/datum/skill/research/pro,
 		/datum/skill/command/pro
 	)
-
-/datum/skillset/ERT_engineer
-	name = "ERT medic"
-	initial_skills = list(
-		/datum/skill/police/master,
-		/datum/skill/firearms/master,
-		/datum/skill/melee/master,
-		/datum/skill/engineering/pro,
-		/datum/skill/construction/trained,
-		/datum/skill/atmospherics/novice,
-		/datum/skill/civ_mech/master,
-		/datum/skill/combat_mech/master,
-		/datum/skill/surgery/pro,
-		/datum/skill/medical/pro,
-		/datum/skill/chemistry/pro,
-		/datum/skill/research/pro,
-		/datum/skill/command/pro
-	)
-
-/datum/skillset/ERT_security
-
 
 /datum/skillset/revolutionary
 	name = REV
@@ -226,4 +205,22 @@
 		/datum/skill/chemistry/master,
 		/datum/skill/research/trained,
 		/datum/skill/melee/none // beacause fuck golems
+	)
+
+/datum/skillset/god
+	name = "Robust skillset"
+	initial_skills = list(
+		/datum/skill/police/robust,
+		/datum/skill/firearms/robust,
+		/datum/skill/melee/robust,
+		/datum/skill/engineering/robust,
+		/datum/skill/construction/robust,
+		/datum/skill/atmospherics/robust,
+		/datum/skill/civ_mech/robust,
+		/datum/skill/combat_mech/robust,
+		/datum/skill/surgery/robust,
+		/datum/skill/medical/robust,
+		/datum/skill/chemistry/robust,
+		/datum/skill/research/robust,
+		/datum/skill/command/robust
 	)

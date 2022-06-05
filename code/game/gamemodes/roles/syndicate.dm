@@ -11,7 +11,7 @@
 	logo_state = "nuke-logo"
 
 	var/nuclear_outfit = /datum/outfit/nuclear
-	skillset_type = /datum/skillset/max
+	skillset_type = /datum/skillset/nuclear_operative
 
 /datum/role/operative/proc/NukeNameAssign(datum/mind/synd_mind)
 	var/choose_name = sanitize_safe(input(synd_mind.current, "You are a Gorlex Maradeurs agent! What is your name?", "Choose a name") as text, MAX_NAME_LEN)
@@ -67,6 +67,7 @@
 	logo_state = "nuke-logo-leader"
 
 	nuclear_outfit = /datum/outfit/nuclear/leader
+	skillset_type = /datum/skillset/nuclear_operative_leader
 
 /datum/role/operative/leader/New()
 	..()
