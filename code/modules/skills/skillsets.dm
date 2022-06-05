@@ -183,7 +183,6 @@
 /datum/skillset/forensic
 	name = "Forensic Technician"
 	initial_skills = list(
-		/datum/skill/police/trained,
 		/datum/skill/surgery/pro,
 		/datum/skill/medical/trained,
 		/datum/skill/research/novice,
