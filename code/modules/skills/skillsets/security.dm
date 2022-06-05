@@ -18,15 +18,15 @@
 		/datum/skill/police/master,
 		/datum/skill/melee/master,
 		/datum/skill/medical/novice,
-		/datum/skill/combat_mech/trained
+		/datum/skill/combat_mech/pro
 	)
 
 /datum/skillset/officer
 	name = "Security Officer"
 	initial_skills = list(
 		/datum/skill/firearms/master,
-		/datum/skill/police/master,
-		/datum/skill/melee/master,
+		/datum/skill/police/pro,
+		/datum/skill/melee/pro,
 		/datum/skill/combat_mech/trained,
 		/datum/skill/command/novice
 	)
@@ -35,14 +35,16 @@
 	name = "Security Cadet"
 	initial_skills = list(
 		/datum/skill/firearms/trained,
-		/datum/skill/police/master,
-		/datum/skill/melee/trained
+		/datum/skill/police/trained,
+		/datum/skill/melee/trained,
+		/datum/skill/combat_mech/novice
+
 	)
 
 /datum/skillset/forensic
 	name = "Forensic Technician"
 	initial_skills = list(
-		/datum/skill/surgery/pro,
+		/datum/skill/surgery/trained,
 		/datum/skill/medical/trained,
 		/datum/skill/research/novice,
 		/datum/skill/chemistry/novice

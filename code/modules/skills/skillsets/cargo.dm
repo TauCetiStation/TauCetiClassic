@@ -2,7 +2,7 @@
 	name = "Quartermaster"
 	initial_skills = list(
 		/datum/skill/civ_mech/master,
-		/datum/skill/construction/novice,
+		/datum/skill/construction/trained,
 		/datum/skill/command/trained
 	)
 

@@ -241,11 +241,11 @@
 
 /datum/skill/research/master
 	rank_name = "Master's degree"
-	value = 4 // AI law modification, telescience console. Scientist, roboticisit
+	value = 4 // AI creation, RD
 
 /datum/skill/research/robust
 	rank_name = "Ph.D."
-	value = SKILL_MAX_LEVEL //AI creation, RD
+	value = SKILL_MAX_LEVEL 
 
 /datum/skill/medical
 	name = SKILL_MEDICAL
@@ -314,7 +314,7 @@
 
 /datum/skill/command/trained
 	rank_name = "Trained"
-	value = 2 // internal affairs, QM -   auth devices, access modification
+	value = 2 // internal affairs, QM - auth devices, access modification
 
 /datum/skill/command/pro
 	rank_name = "Professional"

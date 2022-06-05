@@ -1,4 +1,3 @@
-//antagonists
 /datum/skillset/max
 	name = "Maximum skillset"
 	initial_skills = list(
@@ -16,6 +15,100 @@
 		/datum/skill/research/master,
 		/datum/skill/command/master
 	)
+
+/datum/skillset/nuclear_operative_leader
+	name = NUKE_OP_LEADER
+	initial_skills = list(
+		/datum/skill/police/master,
+		/datum/skill/firearms/master,
+		/datum/skill/melee/master,
+		/datum/skill/engineering/master,
+		/datum/skill/construction/master,
+		/datum/skill/atmospherics/master,
+		/datum/skill/civ_mech/master,
+		/datum/skill/combat_mech/master,
+		/datum/skill/surgery/master,
+		/datum/skill/medical/master,
+		/datum/skill/chemistry/master,
+		/datum/skill/research/master,
+		/datum/skill/command/master
+	)
+/datum/skillset/nuclear_operative
+	name = NUKE_OP
+	initial_skills = list(
+		/datum/skill/police/master,
+		/datum/skill/firearms/master,
+		/datum/skill/melee/master,
+		/datum/skill/engineering/master,
+		/datum/skill/construction/master,
+		/datum/skill/atmospherics/master,
+		/datum/skill/civ_mech/master,
+		/datum/skill/combat_mech/master,
+		/datum/skill/surgery/master,
+		/datum/skill/medical/master,
+		/datum/skill/chemistry/master,
+		/datum/skill/research/master,
+		/datum/skill/command/pro
+	)
+
+
+
+/datum/skillset/ERT_leader
+	name = "ERT leader"
+	initial_skills = list(
+		/datum/skill/police/master,
+		/datum/skill/firearms/master,
+		/datum/skill/melee/master,
+		/datum/skill/engineering/pro,
+		/datum/skill/construction/pro,
+		/datum/skill/atmospherics/trained,
+		/datum/skill/civ_mech/master,
+		/datum/skill/combat_mech/master,
+		/datum/skill/surgery/pro,
+		/datum/skill/medical/pro,
+		/datum/skill/chemistry/pro,
+		/datum/skill/research/pro,
+		/datum/skill/command/master
+	)
+
+/datum/skillset/ERT_medic
+	name = "ERT medic"
+	initial_skills = list(
+		/datum/skill/police/master,
+		/datum/skill/firearms/master,
+		/datum/skill/melee/master,
+		/datum/skill/engineering/pro,
+		/datum/skill/construction/trained,
+		/datum/skill/atmospherics/novice,
+		/datum/skill/civ_mech/master,
+		/datum/skill/combat_mech/master,
+		/datum/skill/surgery/pro,
+		/datum/skill/medical/pro,
+		/datum/skill/chemistry/pro,
+		/datum/skill/research/pro,
+		/datum/skill/command/pro
+	)
+
+/datum/skillset/ERT_engineer
+	name = "ERT medic"
+	initial_skills = list(
+		/datum/skill/police/master,
+		/datum/skill/firearms/master,
+		/datum/skill/melee/master,
+		/datum/skill/engineering/pro,
+		/datum/skill/construction/trained,
+		/datum/skill/atmospherics/novice,
+		/datum/skill/civ_mech/master,
+		/datum/skill/combat_mech/master,
+		/datum/skill/surgery/pro,
+		/datum/skill/medical/pro,
+		/datum/skill/chemistry/pro,
+		/datum/skill/research/pro,
+		/datum/skill/command/pro
+	)
+
+/datum/skillset/ERT_security
+
 
 /datum/skillset/revolutionary
 	name = REV

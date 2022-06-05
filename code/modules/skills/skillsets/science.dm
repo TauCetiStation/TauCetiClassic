@@ -17,24 +17,24 @@
 	name = "Scientist"
 	initial_skills = list(
 		/datum/skill/research/pro,
-		/datum/skill/atmospherics/novice,
+		/datum/skill/atmospherics/trained,
 		/datum/skill/construction/trained,
 		/datum/skill/engineering/novice,
 		/datum/skill/chemistry/novice,
 		/datum/skill/medical/novice,
 		/datum/skill/surgery/novice,
-		/datum/skill/civ_mech/novice
+		/datum/skill/civ_mech/novice,
+		/datum/skill/combat_mech/novice
 	)
 /datum/skillset/scientist/phoron
 	name = "Phoron Researcher"
 	initial_skills = list(
 		/datum/skill/research/pro,
-		/datum/skill/atmospherics/trained,
+		/datum/skill/atmospherics/pro,
 		/datum/skill/construction/novice,
 		/datum/skill/engineering/novice,
 		/datum/skill/chemistry/trained,
-		/datum/skill/medical/novice,
-		/datum/skill/civ_mech/novice
+		/datum/skill/medical/novice
 	)
 
 /datum/skillset/roboticist
@@ -46,7 +46,7 @@
 		/datum/skill/construction/trained,
 		/datum/skill/engineering/trained,
 		/datum/skill/civ_mech/pro,
-		/datum/skill/combat_mech/master
+		/datum/skill/combat_mech/pro
 	)
 
 /datum/skillset/roboticist/bio
