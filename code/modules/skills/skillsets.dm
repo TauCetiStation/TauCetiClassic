@@ -111,8 +111,8 @@
 /datum/skillset/engineer
 	name = "Station Engineer"
 	initial_skills = list(
-		/datum/skill/construction/pro,
-		/datum/skill/engineering/pro,
+		/datum/skill/construction/master,
+		/datum/skill/engineering/master,
 		/datum/skill/atmospherics/trained,
 		/datum/skill/civ_mech/trained
 	)
@@ -122,7 +122,7 @@
 	initial_skills = list(
 		/datum/skill/atmospherics/master,
 		/datum/skill/construction/pro,
-		/datum/skill/engineering/trained,
+		/datum/skill/engineering/pro,
 		/datum/skill/melee/trained,
 		/datum/skill/civ_mech/trained
 	)
@@ -144,7 +144,9 @@
 		/datum/skill/command/pro,
 		/datum/skill/police/master,
 		/datum/skill/melee/master,
+		/datum/skill/surgery/pro,
 		/datum/skill/medical/trained,
+		/datum/skill/chemistry/novice,
 		/datum/skill/research/novice,
 		/datum/skill/combat_mech/master
 	)
@@ -181,6 +183,7 @@
 /datum/skillset/forensic
 	name = "Forensic Technician"
 	initial_skills = list(
+		/datum/skill/police/trained,
 		/datum/skill/surgery/pro,
 		/datum/skill/medical/trained,
 		/datum/skill/research/novice,
@@ -352,7 +355,7 @@
 /datum/skillset/hop
 	name = "Head of Personnel"
 	initial_skills = list(
-	/datum/skill/command/pro,
+	/datum/skill/command/master,
 	/datum/skill/firearms/trained,
 	/datum/skill/civ_mech/trained
 	)
@@ -426,7 +429,7 @@
 /datum/skillset/test_subject/lawyer
 	name = "Lawyer"
 	initial_skills = list(
-	/datum/skill/command/novice
+	/datum/skill/command/trained
 	)
 
 /datum/skillset/test_subject/mecha
@@ -439,27 +442,27 @@
 /datum/skillset/test_subject/detective
 	name = "Private Eye"
 	initial_skills = list(
-		/datum/skill/firearms/trained
+		/datum/skill/firearms/trained,
 	)
 
 /datum/skillset/test_subject/reporter
 	name = "Reporter"
 	initial_skills = list(
-		/datum/skill/command/novice
+		/datum/skill/command/trained
 	)
 
 /datum/skillset/test_subject/waiter
 	name = "Waiter"
 	initial_skills = list(
 		/datum/skill/chemistry/novice,
-		/datum/skill/police/trained
+		/datum/skill/medical/novice
 	)
 
 /datum/skillset/test_subject/vice_officer
 	name = "Vice Officer"
 	initial_skills = list(
 		/datum/skill/command/trained,
-		/datum/skill/police/trained
+		/datum/skill/police/master
 	)
 
 /datum/skillset/test_subject/paranormal
@@ -492,9 +495,9 @@
 /datum/skillset/revolutionary
 	name = REV
 	initial_skills = list(
-		/datum/skill/police/trained,
+		/datum/skill/police/master,
 		/datum/skill/firearms/trained,
-		/datum/skill/command/novice,
+		/datum/skill/command/trained,
 		/datum/skill/melee/trained
 	)
 
@@ -502,7 +505,8 @@
 	name = GANGSTER
 	initial_skills = list(
 		/datum/skill/firearms/master,
-		/datum/skill/melee/master
+		/datum/skill/melee/master,
+		/datum/skill/command/trained
 	)
 
 /datum/skillset/cultist
@@ -512,7 +516,8 @@
 		/datum/skill/surgery/master,
 		/datum/skill/medical/master,
 		/datum/skill/chemistry/novice,
-		/datum/skill/research/novice
+		/datum/skill/research/novice,
+		/datum/skill/command/trained
 	)
 
 /datum/skillset/cultist/leader
@@ -534,7 +539,7 @@
 		/datum/skill/firearms/master,
 		/datum/skill/police/master,
 		/datum/skill/medical/trained,
-		/datum/skill/surgery/novice,
+		/datum/skill/surgery/trained,
 		/datum/skill/research/novice
 	)
 
@@ -604,5 +609,4 @@
 		/datum/skill/medical/pro,
 		/datum/skill/chemistry/master,
 		/datum/skill/research/trained,
-		/datum/skill/melee/weak // beacause fuck golems
 	)
