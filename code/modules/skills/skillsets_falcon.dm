@@ -165,7 +165,7 @@
 		/datum/skill/surgery/pro,
 		/datum/skill/medical/pro,
 		/datum/skill/chemistry/trained,
-		/datum/skill/research/pro,
+		/datum/skill/research/master,
 		/datum/skill/command/trained
 	)
 
