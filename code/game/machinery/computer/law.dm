@@ -55,7 +55,7 @@
 	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/borgupload
 	var/mob/living/silicon/robot/current = null
-	required_skills = list(/datum/skill/command/default, /datum/skill/research/pro)
+	required_skills = list(/datum/skill/command/none, /datum/skill/research/pro)
 	fumbling_time = 7 SECONDS
 
 /obj/machinery/computer/borgupload/attackby(obj/item/weapon/aiModule/module, mob/user)
