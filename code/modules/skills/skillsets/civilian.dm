@@ -1,32 +1,32 @@
 /datum/skillset/captain
 	name = "Captain"
 	initial_skills = list(
-	/datum/skill/command/robust,
-	/datum/skill/police/pro,
-	/datum/skill/firearms/pro,
-	/datum/skill/melee/master,
-	/datum/skill/engineering/novice,
-	/datum/skill/construction/novice,
-	/datum/skill/research/novice,
-	/datum/skill/medical/novice,
-	/datum/skill/civ_mech/pro,
-	/datum/skill/combat_mech/trained
+		/datum/skill/command/robust,
+		/datum/skill/police/pro,
+		/datum/skill/firearms/pro,
+		/datum/skill/melee/master,
+		/datum/skill/engineering/novice,
+		/datum/skill/construction/novice,
+		/datum/skill/research/novice,
+		/datum/skill/medical/novice,
+		/datum/skill/civ_mech/pro,
+		/datum/skill/combat_mech/trained
 	)
 
 /datum/skillset/hop
 	name = "Head of Personnel"
 	initial_skills = list(
-	/datum/skill/command/pro,
-	/datum/skill/firearms/trained,
-	/datum/skill/civ_mech/trained,
-	/datum/skill/police/pro,
+		/datum/skill/command/pro,
+		/datum/skill/firearms/trained,
+		/datum/skill/civ_mech/trained,
+		/datum/skill/police/pro,
 	)
 
 /datum/skillset/internal_affairs
 	name = "Internal Affairs Agent"
 	initial_skills = list(
-	/datum/skill/command/trained,
-	/datum/skill/police/novice
+		/datum/skill/command/trained,
+		/datum/skill/police/novice
 	)
 
 /datum/skillset/bartender
@@ -39,25 +39,25 @@
 /datum/skillset/botanist
 	name = "Botanist"
 	initial_skills = list(
-	/datum/skill/melee/trained,
-	/datum/skill/chemistry/novice
+		/datum/skill/melee/trained,
+		/datum/skill/chemistry/novice
 	)
 
 /datum/skillset/chef
 	name = "Chef"
 	initial_skills = list(
-	/datum/skill/melee/master,
-	/datum/skill/surgery/novice,
-	/datum/skill/medical/novice,
-	/datum/skill/chemistry/novice
+		/datum/skill/melee/master,
+		/datum/skill/surgery/novice,
+		/datum/skill/medical/novice,
+		/datum/skill/chemistry/novice
 	)
 
 /datum/skillset/librarian
 	name = "Librarian"
 	initial_skills = list(
-	/datum/skill/research/novice,
-	/datum/skill/chemistry/novice,
-	/datum/skill/command/novice
+		/datum/skill/research/novice,
+		/datum/skill/chemistry/novice,
+		/datum/skill/command/novice
 	)
 
 /datum/skillset/barber
@@ -69,8 +69,8 @@
 /datum/skillset/chaplain
 	name = "Chaplain"
 	initial_skills = list(
-	/datum/skill/command/pro,
-	/datum/skill/melee/master
+		/datum/skill/command/pro,
+		/datum/skill/melee/master
 	)
 
 /datum/skillset/mime
@@ -92,7 +92,7 @@
 /datum/skillset/test_subject/lawyer
 	name = "Lawyer"
 	initial_skills = list(
-	/datum/skill/command/novice
+		/datum/skill/command/novice
 	)
 
 /datum/skillset/test_subject/mecha

@@ -17,15 +17,15 @@
 /datum/skillset/cargotech
 	name = "Cargo Technician"
 	initial_skills = list(
-	/datum/skill/civ_mech/pro,
-	/datum/skill/construction/novice,
-	/datum/skill/firearms/novice
+		/datum/skill/civ_mech/pro,
+		/datum/skill/construction/novice,
+		/datum/skill/firearms/novice
 	)
 
 /datum/skillset/recycler
 	name = "Recycler"
 	initial_skills = list(
-	/datum/skill/civ_mech/pro,
-	/datum/skill/construction/novice,
-	/datum/skill/firearms/novice
+		/datum/skill/civ_mech/pro,
+		/datum/skill/construction/novice,
+		/datum/skill/firearms/novice
 	)

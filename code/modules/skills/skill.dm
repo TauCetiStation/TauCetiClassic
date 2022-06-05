@@ -74,7 +74,7 @@
 	value = 2 // heads
 
 /datum/skill/police/pro
-	rank_name = "Professional"
+	rank_name = "Veteran"
 	value = 3 // security
 
 /datum/skill/police/master
@@ -259,8 +259,8 @@
 	value = 1 // cook
 
 /datum/skill/medical/trained
-	rank_name = "Trained"
-	value = 2 // intern
+	rank_name = "Intern"
+	value = 2
 
 /datum/skill/medical/pro
 	rank_name = "Professional"
@@ -271,7 +271,7 @@
 	value = 4  // CMO, nurse
 
 /datum/skill/medical/robust
-	rank_name = "Robust"
+	rank_name = "Asclepius"
 	value = SKILL_MAX_LEVEL 
 
 /datum/skill/surgery
