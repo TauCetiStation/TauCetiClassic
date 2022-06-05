@@ -38,12 +38,12 @@
 
 /datum/skillset/proc/get_command_modifier()
 	var/datum/skill/command = get_skill(SKILL_COMMAND)
-	return 1 + command.value / command.max_value
+	return 1 + command.value / SKILL_MAX_LEVEL
 
 /datum/skillset/proc/get_help_additive(skill_name)
 	var/datum/skill/skill = get_skill(skill_name)
-	if (skill.value == skill.min_value)
+	if (skill.value == SKILL_MIN_LEVEL)
 		return skill.value + 0.5
-	if (skill.value == skill.max_value)
+	if (skill.value == SKILL_MAX_LEVEL)
 		return skill.value - 1
 	return skill.value

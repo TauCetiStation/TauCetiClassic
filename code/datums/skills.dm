@@ -45,7 +45,7 @@
 
 /datum/skills/proc/choose_value(skill_name,value)
 	var/datum/skill/skill = active.get_skill(skill_name)
-	if (!skill || value > skill.max_value || value < skill.min_value)
+	if (!skill || value > SKILL_MAX_LEVEL || value < SKILL_MIN_LEVEL)
 		return
 	if (value > available.get_value(skill_name))
 		return

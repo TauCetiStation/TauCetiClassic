@@ -13,6 +13,8 @@
 #define SKILL_SURGERY "Surgery"
 #define SKILL_COMMAND "Command"
 
+#define SKILL_MIN_LEVEL 0
+#define SKILL_MAX_LEVEL 5
 
 #define SKILL_TASK_TRIVIAL 10
 #define SKILL_TASK_VERY_EASY 20

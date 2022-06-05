@@ -6,7 +6,7 @@
 	light_color = "#ffffff"
 	var/mob/living/silicon/ai/current = null
 	var/opened = FALSE
-	required_skills = list(/datum/skill/command/default, /datum/skill/research/pro)
+	required_skills = list(/datum/skill/command/none, /datum/skill/research/pro)
 	fumbling_time = 7 SECONDS
 
 /obj/machinery/computer/aiupload/verb/AccessInternals()

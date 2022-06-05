@@ -1,18 +1,15 @@
 /datum/skill
 	var/name
 	var/rank_name = "Untrained"
-	var/min_value = 0
-	var/max_value
 	var/value
 	var/hint
 
 /datum/skill/civ_mech
 	name =  SKILL_CIV_MECH
-	max_value = 4
 	hint = "Faster moving speed of piloted civilian exosuits: Ripley and Odysseus."
 
-/datum/skill/civ_mech/default
-	value = 0
+/datum/skill/civ_mech/none
+	value = SKILL_MAX_LEVEL
 
 /datum/skill/civ_mech/novice
 	rank_name = "Novice"
@@ -30,102 +27,151 @@
 	rank_name = "Forklift certified"
 	value = 4 //RD, miner, QM, CE, CMO
 
+/datum/skill/civ_mech/robust
+	rank_name = "Racer"
+	value = SKILL_MAX_LEVEL 
+
 /datum/skill/combat_mech
 	name = SKILL_COMBAT_MECH
-	max_value = 2
 	hint = "Faster moving speed of piloted combat exosuits."
 
-/datum/skill/combat_mech/default
-	value = 0
+/datum/skill/combat_mech/none
+	value = SKILL_MAX_LEVEL
+
+/datum/skill/combat_mech/novice
+	rank_name = "Novice"
+	value = 1
 
 /datum/skill/combat_mech/trained
 	rank_name = "Trained"
-	value = 1 //mecha operator, security
+	value = 2 //mecha operator, security
+
+/datum/skill/combat_mech/pro
+	rank_name = "Professional"
+	value = 3 // warden
 
 /datum/skill/combat_mech/master
 	rank_name = "Master"
-	value = 2 //nuclear,  HoS, RD
+	value = 4 // Hos, RD, nuclear
+
+/datum/skill/combat_mech/robust
+	rank_name = "Certified combat driver"
+	value = SKILL_MAX_LEVEL
 
 /datum/skill/police
 	name = SKILL_POLICE
-	max_value = 2
 	hint = "Usage of tasers and stun batons. Higher levels allows for faster handcuffing."
 
-/datum/skill/police/default
-	value = 0
+/datum/skill/police/none
+	value = SKILL_MAX_LEVEL
+
+/datum/skill/police/novice
+	rank_name = "Novice"
+	value = 1
 
 /datum/skill/police/trained
 	rank_name = "Trained"
-	value = 1 //heads of staff
+	value = 2 // heads
+
+/datum/skill/police/pro
+	rank_name = "Professional"
+	value = 3 // security
 
 /datum/skill/police/master
 	rank_name = "Master"
-	value = 2 //security
+	value = 4 // Hos, warden
+
+/datum/skill/police/robust
+	rank_name = "First Lieutenant"
+	value = SKILL_MAX_LEVEL
 
 /datum/skill/firearms
 	name = SKILL_FIREARMS
-	max_value = 2
 	hint = "Affects recoil from firearms. Proficiency in firearms allows for tactical reloads. Usage of mines and explosives."
 
-/datum/skill/firearms/default
-	value = 0
+/datum/skill/firearms/none
+	value = SKILL_MAX_LEVEL
+
+/datum/skill/firearms/novice
+	rank_name = "Novice"
+	value = 1
 
 /datum/skill/firearms/trained
 	rank_name = "Trained"
-	value = 1 //less recoil from firearms, usage of mines and c4
+	value = 2 // less recoil from firearms, usage of mines and c4
+
+/datum/skill/firearms/pro
+	rank_name = "Professional"
+	value = 3 
 
 /datum/skill/firearms/master
-	rank_name = "Master"
-	value = 2 //security, nuclear, ERT, gangsters
+	rank_name = "Firearms master"
+	value = 4 //security, nuclear, ERT, gangsters
+
+/datum/skill/firearms/robust
+	rank_name = "Godlike sniper"
+	value = SKILL_MAX_LEVEL 
 
 /datum/skill/melee
 	name = SKILL_MELEE
-	min_value = -1
-	max_value = 2
 	hint = "Higher levels means more damage with melee weapons."
 
-/datum/skill/melee/weak
-	rank_name = "Clowny"
-	value = -1
+/datum/skill/melee/none
+	value = SKILL_MAX_LEVEL // clown, mime, golem
 
-/datum/skill/melee/default
-	value = 0
+/datum/skill/melee/novice
+	rank_name = "Novice"
+	value = 1 
 
 /datum/skill/melee/trained
 	rank_name = "Trained"
-	value = 1 //botanist, atmospheric techician
+	value = 2 // botanist
+
+/datum/skill/melee/pro
+	rank_name = "Professional"
+	value = 3 //cook, atmospheric technician, sec officer
 
 /datum/skill/melee/master
 	rank_name = "Black belt"
-	value = 2 // chaplain, security, cook
+	value = 4 // Hos, warden 
+
+/datum/skill/melee/robust
+	rank_name = "CQC god"
+	value = SKILL_MAX_LEVEL
 
 /datum/skill/atmospherics
 	name = SKILL_ATMOS
-	max_value = 3
 	hint = "Interacting with atmos related devices: pumps, scrubbers and filters. Usage of atmospherics computers. Faster pipes unwrenching."
 
-/datum/skill/atmospherics/default
-	value = 0
+/datum/skill/atmospherics/none
+	value = SKILL_MAX_LEVEL
 
 /datum/skill/atmospherics/novice
 	rank_name = "Novice"
-	value = 1 //scientist
+	value = 1 // science assistant
 
 /datum/skill/atmospherics/trained
 	rank_name = "Trained"
-	value = 2 //engineer, RD
+	value = 2 //scientist, technical assistant
+
+/datum/skill/atmospherics/pro
+	rank_name = "Professional"
+	value = 3  //engineer, RD, phoron researcher
 
 /datum/skill/atmospherics/master
 	rank_name = "Master"
-	value = 3 //CE, atmospheric techincian
+	value = 4  //CE, atmospheric techincian
+
+/datum/skill/atmospherics/robust
+	rank_name = ""
+	value = SKILL_MAX_LEVEL
 
 /datum/skill/construction
 	name = SKILL_CONSTRUCTION
-	max_value = 4
 	hint = "Construction of walls, windows, computers and crafting."
 
-/datum/skill/construction/default
-	value = 0
+/datum/skill/construction/none
+	value = SKILL_MAX_LEVEL
 
 /datum/skill/construction/novice
 	rank_name = "Novice"
@@ -133,99 +179,111 @@
 
 /datum/skill/construction/trained
 	rank_name = "Trained"
-	value = 2 //walls, reinforced glass, RCD usage(scientist, robotech)
+	value = 2 // walls, reinforced glass, RCD usage(scientist, robotech)
 
 /datum/skill/construction/pro
 	rank_name = "Professional"
-	value = 3 //computer, machine frames,  RD, engineer, reinforced walls
+	value = 3 // computer, machine frames,  RD, engineer, reinforced walls
 
 /datum/skill/construction/master
 	rank_name = "Master"
-	value = 4 //CE - AI core and reinforced phoron windows
+	value = 4 // CE - AI core and reinforced phoron windows
+
+/datum/skill/construction/robust
+	rank_name = ""
+	value = SKILL_MAX_LEVEL 
 
 /datum/skill/chemistry
 	name = SKILL_CHEMISTRY
-	max_value = 3
-	hint = "Chemistry related machinery: grinders, chem dispensers and chem masters. You can recognize reagents in pills and bottles."
+	hint = "Chemistry related machinery: grinders, chem dispensers and chem robusts. You can recognize reagents in pills and bottles."
 
-/datum/skill/chemistry/default
-	value = 0
+/datum/skill/chemistry/none
+	value = SKILL_MAX_LEVEL
 
 /datum/skill/chemistry/novice
 	rank_name = "Novice"
-	value = 1 //intern, scientist, botanist
+	value = 1 // botanist, bartender, cook
 
 /datum/skill/chemistry/trained
 	rank_name = "Trained"
-	value = 2 //medical doctor, surgeon, RD
+	value = 2 // intern, xenoarcheologist 
+
+/datum/skill/chemistry/pro
+	rank_name = "Professional"
+	value = 3 // medical doctor, nurse, surgeon
 
 /datum/skill/chemistry/master
 	rank_name = "Master"
-	value = 3 //chemist, CMO
+	value = 4   //chemist, CMO
+
+/datum/skill/chemistry/robust
+	rank_name = ""
+	value = SKILL_MAX_LEVEL 
 
 /datum/skill/research
 	name = SKILL_RESEARCH
-	max_value = 4
 	hint = "Usage of complex machinery and computers. AI law modification, xenoarcheology and xenobiology consoles, exosuit fabricators."
 
-/datum/skill/research/default
-	value = 0
+/datum/skill/research/none
+	value = SKILL_MIN_LEVEL
 
 /datum/skill/research/novice
-	rank_name = "Novice"
+	rank_name = "High school diploma"
 	value = 1
 
 /datum/skill/research/trained
-	rank_name = "Trained"
+	rank_name = "Associate's degree"
 	value = 2 //RnD console, xenoarch consoles, genetics
 
 /datum/skill/research/pro
-	rank_name = "Professional"
+	rank_name = "Bachelor's degree"
 	value = 3 // AI law modification, telescience console. Scientist, roboticisit
 
 /datum/skill/research/master
-	rank_name = "Master"
-	value = 4 //AI creation, RD
+	rank_name = "Master's degree"
+	value = 4 // AI law modification, telescience console. Scientist, roboticisit
+
+/datum/skill/research/robust
+	rank_name = "Ph.D."
+	value = SKILL_MAX_LEVEL //AI creation, RD
 
 /datum/skill/medical
 	name = SKILL_MEDICAL
-	max_value = 5
 	hint = "Faster usage of syringes. Proficiency with defibrilators, medical scanners, cryo tubes, sleepers and life support machinery."
 
-/datum/skill/medical/default
-	value = 0
+/datum/skill/medical/none
+	value = SKILL_MAX_LEVEL
 
 /datum/skill/medical/novice
 	rank_name = "Novice"
-	value = 1
+	value = 1 // cook
 
 /datum/skill/medical/trained
 	rank_name = "Trained"
-	value = 2
+	value = 2 // intern
 
 /datum/skill/medical/pro
 	rank_name = "Professional"
-	value = 3 //intern
-
-/datum/skill/medical/expert
-	rank_name = "Expert"
-	value = 4 //doctor, paramedic
+	value = 3 // doctor, paramedic
 
 /datum/skill/medical/master
 	rank_name = "Master"
-	value = 5 //CMO, nurse
+	value = 4  // CMO, nurse
+
+/datum/skill/medical/robust
+	rank_name = ""
+	value = SKILL_MAX_LEVEL 
 
 /datum/skill/surgery
 	name = SKILL_SURGERY
-	max_value = 4
 	hint = "Higher level means faster surgical operations."
 
-/datum/skill/surgery/default
-	value = 0
+/datum/skill/surgery/none
+	value = SKILL_MAX_LEVEL
 
 /datum/skill/surgery/novice
 	rank_name = "Novice"
-	value = 1 //intern, scientist, cook
+	value = 1 // intern, scientist, cook
 
 /datum/skill/surgery/trained
 	rank_name = "Trained"
@@ -239,21 +297,24 @@
 	rank_name = "Master"
 	value = 4 //CMO, surgeon
 
+/datum/skill/surgery/robust
+	rank_name = ""
+	value = SKILL_MAX_LEVEL 
+
 /datum/skill/command
 	name = SKILL_COMMAND
-	max_value = 4
 	hint = "Usage of identification computers, communication consoles and fax."
 
-/datum/skill/command/default
-	value = 0
+/datum/skill/command/none
+	value = SKILL_MAX_LEVEL
 
 /datum/skill/command/novice
 	rank_name = "Novice"
-	value = 1 //officers, psychatrist, lawyer - easier paperwork, quest passes
+	value = 1 // officers, psychatrist, lawyer - easier paperwork
 
 /datum/skill/command/trained
 	rank_name = "Trained"
-	value = 2 //internal affairs, QM -   auth devices, access modification
+	value = 2 // internal affairs, QM -   auth devices, access modification
 
 /datum/skill/command/pro
 	rank_name = "Professional"
@@ -261,15 +322,18 @@
 
 /datum/skill/command/master
 	rank_name = "Master"
-	value = 4  //captain, nuclear and strike team leaders
+	value = 4 // HoP, nuclear and strike team leaders
+
+/datum/skill/command/robust
+	rank_name = "True leader"
+	value = SKILL_MAX_LEVEL  // captain
 
 /datum/skill/engineering
 	name = SKILL_ENGINEERING
-	max_value = 4
 	hint = "Tools usage, hacking, wall repairs and deconstruction. Engine related tasks and configuring of telecommunications."
 
-/datum/skill/engineering/default
-	value = 0
+/datum/skill/engineering/none
+	value = SKILL_MAX_LEVEL
 
 /datum/skill/engineering/novice
 	rank_name = "Novice"
@@ -277,13 +341,17 @@
 
 /datum/skill/engineering/trained
 	rank_name = "Trained"
-	value = 2 //techincal assistant, atmospheric technician
+	value = 2 // techincal assistant, atmospheric technician
 
 /datum/skill/engineering/pro
 	rank_name = "Professional"
-	value = 3 //bubble shield generators, singularity computer ,engineer
+	value = 3 // bubble shield generators, singularity computer ,engineer
 
 /datum/skill/engineering/master
 	rank_name = "Master"
-	value = 4 //Telecomms, CE, RD
+	value = 4 // Telecomms, CE, RD
+
+/datum/skill/engineering/robust
+	rank_name = "God of engineering"
+	value = SKILL_MAX_LEVEL 
 

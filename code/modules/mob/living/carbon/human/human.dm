@@ -1584,7 +1584,7 @@
 			var/datum/skill/skill = all_skills[s]
 			var/slider_id = skill.name
 			var/slider_value = mind.skills.get_value(slider_id)
-			var/slider_min_value = skill.min_value
+			var/slider_min_value = SKILL_MIN_LEVEL
 			var/slider_max_value = mind.skills.get_max(slider_id)
 			var/rank_list = get_skill_rank_list(s)
 			var/rank_list_element = ""
@@ -1712,7 +1712,7 @@
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
 		//untrained 8 seconds, novice 6.8, trained 5.6, pro 4.4, expert 3.2 and master 2
-		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical/default), multiplier = -0.15) //-15% for each medical level
+		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical/none), multiplier = -0.15) //-15% for each medical level
 		if(!instant)
 			if(hunt_injection_port) // takes additional time
 				if(!stealth)
