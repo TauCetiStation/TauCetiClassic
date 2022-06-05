@@ -13,7 +13,7 @@
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	plane = PLANE_SPACE
-	heat_capacity = 700000
+	heat_capacity = 7000
 
 	flags = NOBLOODY | NOSTEPSOUND
 
