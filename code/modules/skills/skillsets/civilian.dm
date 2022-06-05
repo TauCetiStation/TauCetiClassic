@@ -18,13 +18,15 @@
 	initial_skills = list(
 	/datum/skill/command/pro,
 	/datum/skill/firearms/trained,
-	/datum/skill/civ_mech/trained
+	/datum/skill/civ_mech/trained,
+	/datum/skill/police/pro,
 	)
 
 /datum/skillset/internal_affairs
 	name = "Internal Affairs Agent"
 	initial_skills = list(
-	/datum/skill/command/trained
+	/datum/skill/command/trained,
+	/datum/skill/police/novice
 	)
 
 /datum/skillset/bartender
@@ -97,7 +99,7 @@
 	name = "Mecha Operator"
 	initial_skills = list(
 		/datum/skill/civ_mech/master,
-		/datum/skill/combat_mech/trained
+		/datum/skill/combat_mech/pro
 	)
 
 /datum/skillset/test_subject/detective
