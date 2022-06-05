@@ -111,7 +111,7 @@
 /datum/skillset/engineer
 	name = "Station Engineer"
 	initial_skills = list(
-		/datum/skill/construction/master,
+		/datum/skill/construction/pro,
 		/datum/skill/engineering/master,
 		/datum/skill/atmospherics/trained,
 		/datum/skill/civ_mech/trained
