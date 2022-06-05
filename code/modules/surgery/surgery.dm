@@ -18,8 +18,8 @@
 
 	//Cloth check
 	var/clothless = 1
-	var/required_skills = list(/datum/skill/surgery/pro)
-	var/skills_speed_bonus = -0.4 // -40% for each surplus level 
+	var/required_skills = list(/datum/skill/surgery/trained)
+	var/skills_speed_bonus = -0.30 // -30% for each surplus level 
 
 // returns how well tool is suited for this step
 /datum/surgery_step/proc/tool_quality(obj/item/tool)
@@ -199,4 +199,4 @@
 	can_infect = FALSE
 	allowed_species = list(IPC)
 	required_skills = list(/datum/skill/engineering/trained, /datum/skill/surgery/trained)
-	skills_speed_bonus = -0.2
+	skills_speed_bonus = -0.3

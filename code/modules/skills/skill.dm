@@ -9,7 +9,7 @@
 	hint = "Faster moving speed of piloted civilian exosuits: Ripley and Odysseus."
 
 /datum/skill/civ_mech/none
-	value = SKILL_MAX_LEVEL
+	value = SKILL_MIN_LEVEL
 
 /datum/skill/civ_mech/novice
 	rank_name = "Novice"
@@ -36,7 +36,7 @@
 	hint = "Faster moving speed of piloted combat exosuits."
 
 /datum/skill/combat_mech/none
-	value = SKILL_MAX_LEVEL
+	value = SKILL_MIN_LEVEL
 
 /datum/skill/combat_mech/novice
 	rank_name = "Novice"
@@ -63,7 +63,7 @@
 	hint = "Usage of tasers and stun batons. Higher levels allows for faster handcuffing."
 
 /datum/skill/police/none
-	value = SKILL_MAX_LEVEL
+	value = SKILL_MIN_LEVEL
 
 /datum/skill/police/novice
 	rank_name = "Novice"
@@ -90,7 +90,7 @@
 	hint = "Affects recoil from firearms. Proficiency in firearms allows for tactical reloads. Usage of mines and explosives."
 
 /datum/skill/firearms/none
-	value = SKILL_MAX_LEVEL
+	value = SKILL_MIN_LEVEL
 
 /datum/skill/firearms/novice
 	rank_name = "Novice"
@@ -117,7 +117,7 @@
 	hint = "Higher levels means more damage with melee weapons."
 
 /datum/skill/melee/none
-	value = SKILL_MAX_LEVEL // clown, mime, golem
+	value = SKILL_MIN_LEVEL // clown, mime, golem
 
 /datum/skill/melee/novice
 	rank_name = "Novice"
@@ -144,7 +144,7 @@
 	hint = "Interacting with atmos related devices: pumps, scrubbers and filters. Usage of atmospherics computers. Faster pipes unwrenching."
 
 /datum/skill/atmospherics/none
-	value = SKILL_MAX_LEVEL
+	value = SKILL_MIN_LEVEL
 
 /datum/skill/atmospherics/novice
 	rank_name = "Novice"
@@ -163,7 +163,7 @@
 	value = 4  //CE, atmospheric techincian
 
 /datum/skill/atmospherics/robust
-	rank_name = ""
+	rank_name = "God of pipes"
 	value = SKILL_MAX_LEVEL
 
 /datum/skill/construction
@@ -171,7 +171,7 @@
 	hint = "Construction of walls, windows, computers and crafting."
 
 /datum/skill/construction/none
-	value = SKILL_MAX_LEVEL
+	value = SKILL_MIN_LEVEL
 
 /datum/skill/construction/novice
 	rank_name = "Novice"
@@ -190,7 +190,7 @@
 	value = 4 // CE - AI core and reinforced phoron windows
 
 /datum/skill/construction/robust
-	rank_name = ""
+	rank_name = "Robust"
 	value = SKILL_MAX_LEVEL 
 
 /datum/skill/chemistry
@@ -198,7 +198,7 @@
 	hint = "Chemistry related machinery: grinders, chem dispensers and chem robusts. You can recognize reagents in pills and bottles."
 
 /datum/skill/chemistry/none
-	value = SKILL_MAX_LEVEL
+	value = SKILL_MIN_LEVEL
 
 /datum/skill/chemistry/novice
 	rank_name = "Novice"
@@ -217,7 +217,7 @@
 	value = 4   //chemist, CMO
 
 /datum/skill/chemistry/robust
-	rank_name = ""
+	rank_name = "Robust"
 	value = SKILL_MAX_LEVEL 
 
 /datum/skill/research
@@ -252,7 +252,7 @@
 	hint = "Faster usage of syringes. Proficiency with defibrilators, medical scanners, cryo tubes, sleepers and life support machinery."
 
 /datum/skill/medical/none
-	value = SKILL_MAX_LEVEL
+	value = SKILL_MIN_LEVEL
 
 /datum/skill/medical/novice
 	rank_name = "Novice"
@@ -271,7 +271,7 @@
 	value = 4  // CMO, nurse
 
 /datum/skill/medical/robust
-	rank_name = ""
+	rank_name = "Robust"
 	value = SKILL_MAX_LEVEL 
 
 /datum/skill/surgery
@@ -279,7 +279,7 @@
 	hint = "Higher level means faster surgical operations."
 
 /datum/skill/surgery/none
-	value = SKILL_MAX_LEVEL
+	value = SKILL_MIN_LEVEL
 
 /datum/skill/surgery/novice
 	rank_name = "Novice"
@@ -298,7 +298,7 @@
 	value = 4 //CMO, surgeon
 
 /datum/skill/surgery/robust
-	rank_name = ""
+	rank_name = "Robust"
 	value = SKILL_MAX_LEVEL 
 
 /datum/skill/command
@@ -306,7 +306,7 @@
 	hint = "Usage of identification computers, communication consoles and fax."
 
 /datum/skill/command/none
-	value = SKILL_MAX_LEVEL
+	value = SKILL_MIN_LEVEL
 
 /datum/skill/command/novice
 	rank_name = "Novice"
@@ -333,7 +333,7 @@
 	hint = "Tools usage, hacking, wall repairs and deconstruction. Engine related tasks and configuring of telecommunications."
 
 /datum/skill/engineering/none
-	value = SKILL_MAX_LEVEL
+	value = SKILL_MIN_LEVEL
 
 /datum/skill/engineering/novice
 	rank_name = "Novice"
