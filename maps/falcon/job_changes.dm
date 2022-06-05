@@ -156,7 +156,7 @@
 	..()
 	MAP_JOB_CHECK
 	minimal_player_ingame_minutes = 900
-	skillsets = list("Quartermaster" = /datum/skillset/falcon/cargo)
+	skillsets = list("Quartermaster" = /datum/skillset/falcon/quartermaster)
 
 /datum/job/mining/New()
 	..()
@@ -164,7 +164,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	minimal_player_ingame_minutes = 600
-	skillsets = list("Shaft Miner" = /datum/skillset/falcon/cargo)
+	skillsets = list("Shaft Miner" = /datum/skillset/falcon/miner)
 
 /datum/job/recycler/New()
 	..()
@@ -172,7 +172,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	minimal_player_ingame_minutes = 300
-	skillsets = list("Recycler" = /datum/skillset/falcon/cargo)
+	skillsets = list("Recycler" = /datum/skillset/falcon/recycler)
 
 MAP_REMOVE_JOB(barber)
 
