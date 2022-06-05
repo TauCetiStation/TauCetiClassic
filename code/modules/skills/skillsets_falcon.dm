@@ -2,7 +2,7 @@
 //medical
 
 /datum/skillset/falcon/cmo
-	name = "Chief Medical Officer"
+	name = "Chief Medical Officer (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/trained,
 		/datum/skill/firearms/trained,
@@ -10,7 +10,6 @@
 		/datum/skill/engineering/trained,
 		/datum/skill/construction/trained,
 		/datum/skill/atmospherics/trained,
-		/datum/skill/combat_mech/trained,
 		/datum/skill/medical/master,
 		/datum/skill/surgery/master,
 		/datum/skill/chemistry/master,
@@ -20,7 +19,7 @@
 	)
 
 /datum/skillset/falcon/doctor
-	name = "Medical Doctor"
+	name = "Medical Doctor (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/trained,
 		/datum/skill/firearms/trained,
@@ -29,7 +28,6 @@
 		/datum/skill/construction/trained,
 		/datum/skill/atmospherics/trained,
 		/datum/skill/civ_mech/master,
-		/datum/skill/combat_mech/trained,
 		/datum/skill/surgery/master,
 		/datum/skill/medical/master,
 		/datum/skill/chemistry/master,
@@ -40,7 +38,7 @@
 //engineering
 
 /datum/skillset/falcon/ce
-	name = "Chief Engineer"
+	name = "Chief Engineer (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/trained,
 		/datum/skill/firearms/trained,
@@ -49,7 +47,6 @@
 		/datum/skill/construction/master,
 		/datum/skill/atmospherics/master,
 		/datum/skill/civ_mech/master,
-		/datum/skill/combat_mech/trained,
 		/datum/skill/surgery/trained,
 		/datum/skill/medical/trained,
 		/datum/skill/chemistry/trained,
@@ -58,7 +55,7 @@
 	)
 
 /datum/skillset/falcon/engineer
-	name = "Station Engineer"
+	name = "Station Engineer (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/trained,
 		/datum/skill/firearms/trained,
@@ -67,7 +64,6 @@
 		/datum/skill/construction/master,
 		/datum/skill/atmospherics/master,
 		/datum/skill/civ_mech/master,
-		/datum/skill/combat_mech/trained,
 		/datum/skill/surgery/trained,
 		/datum/skill/medical/trained,
 		/datum/skill/chemistry/trained,
@@ -78,7 +74,7 @@
 //security
 
 /datum/skillset/falcon/hos
-	name = "Head of Security"
+	name = "Head of Security (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/master,
 		/datum/skill/firearms/master,
@@ -96,7 +92,7 @@
 	)
 
 /datum/skillset/falcon/officer
-	name = "Security Officer"
+	name = "Security Officer (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/master,
 		/datum/skill/firearms/master,
@@ -114,7 +110,7 @@
 	)
 
 /datum/skillset/falcon/detective
-	name = "Detective"
+	name = "Detective (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/trained,
 		/datum/skill/firearms/master,
@@ -134,7 +130,7 @@
 //science
 
 /datum/skillset/falcon/rd
-	name = "Research Director"
+	name = "Research Director (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/trained,
 		/datum/skill/firearms/trained,
@@ -152,7 +148,7 @@
 	)
 
 /datum/skillset/falcon/scientist
-	name = "Scientist"
+	name = "Scientist (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/trained,
 		/datum/skill/firearms/trained,
@@ -172,7 +168,7 @@
 //cargo
 
 /datum/skillset/falcon/cargo
-	name = "Cargo"
+	name = "Cargo (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/trained,
 		/datum/skill/firearms/trained,
@@ -181,7 +177,6 @@
 		/datum/skill/construction/trained,
 		/datum/skill/atmospherics/trained,
 		/datum/skill/civ_mech/master,
-		/datum/skill/combat_mech/trained,
 		/datum/skill/surgery/trained,
 		/datum/skill/medical/trained,
 		/datum/skill/chemistry/trained,
@@ -192,7 +187,7 @@
 //civilians
 
 /datum/skillset/falcon/captain
-	name = "Captain"
+	name = "Captain (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/master,
 		/datum/skill/firearms/master,
@@ -210,7 +205,7 @@
 	)
 
 /datum/skillset/falcon/hop
-	name = "Head of Personnel"
+	name = "Head of Personnel (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/trained,
 		/datum/skill/firearms/trained,
@@ -219,7 +214,6 @@
 		/datum/skill/construction/trained,
 		/datum/skill/atmospherics/trained,
 		/datum/skill/civ_mech/trained,
-		/datum/skill/combat_mech/trained,
 		/datum/skill/surgery/trained,
 		/datum/skill/medical/trained,
 		/datum/skill/chemistry/trained,
@@ -228,7 +222,7 @@
 	)
 
 /datum/skillset/falcon/chef
-	name = "Chef"
+	name = "Chef (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/trained,
 		/datum/skill/firearms/trained,
@@ -237,7 +231,6 @@
 		/datum/skill/construction/trained,
 		/datum/skill/atmospherics/trained,
 		/datum/skill/civ_mech/trained,
-		/datum/skill/combat_mech/trained,
 		/datum/skill/surgery/trained,
 		/datum/skill/medical/trained,
 		/datum/skill/chemistry/trained,
@@ -246,7 +239,7 @@
 	)
 
 /datum/skillset/falcon/chaplain
-	name = "Chaplain"
+	name = "Chaplain (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/trained,
 		/datum/skill/firearms/trained,
@@ -255,7 +248,6 @@
 		/datum/skill/construction/trained,
 		/datum/skill/atmospherics/trained,
 		/datum/skill/civ_mech/trained,
-		/datum/skill/combat_mech/trained,
 		/datum/skill/surgery/trained,
 		/datum/skill/medical/trained,
 		/datum/skill/chemistry/trained,
@@ -264,7 +256,7 @@
 	)
 
 /datum/skillset/falcon/clown
-	name = "Clown"
+	name = "Clown (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/trained,
 		/datum/skill/firearms/trained,
@@ -273,7 +265,6 @@
 		/datum/skill/construction/trained,
 		/datum/skill/atmospherics/trained,
 		/datum/skill/civ_mech/trained,
-		/datum/skill/combat_mech/trained,
 		/datum/skill/surgery/trained,
 		/datum/skill/medical/trained,
 		/datum/skill/chemistry/trained,
@@ -282,7 +273,7 @@
 	)
 
 /datum/skillset/falcon/test_subject
-	name = "Test Subject"
+	name = "Test Subject (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/trained,
 		/datum/skill/firearms/trained,
@@ -291,7 +282,6 @@
 		/datum/skill/construction/trained,
 		/datum/skill/atmospherics/trained,
 		/datum/skill/civ_mech/trained,
-		/datum/skill/combat_mech/trained,
 		/datum/skill/surgery/trained,
 		/datum/skill/medical/trained,
 		/datum/skill/chemistry/trained,
@@ -300,7 +290,7 @@
 	)
 
 /datum/skillset/falcon/test_subject/mecha
-	name = "Mecha Operator"
+	name = "Mecha Operator (Falcon)"
 	initial_skills = list(
 		/datum/skill/police/trained,
 		/datum/skill/firearms/trained,
