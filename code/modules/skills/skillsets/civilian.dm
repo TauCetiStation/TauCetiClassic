@@ -105,7 +105,7 @@
 /datum/skillset/test_subject/detective
 	name = "Private Eye"
 	initial_skills = list(
-		/datum/skill/firearms/trained
+		/datum/skill/firearms/novice
 	)
 
 /datum/skillset/test_subject/reporter
@@ -118,14 +118,14 @@
 	name = "Waiter"
 	initial_skills = list(
 		/datum/skill/chemistry/novice,
-		/datum/skill/police/trained
+		/datum/skill/medical/novice
 	)
 
 /datum/skillset/test_subject/vice_officer
 	name = "Vice Officer"
 	initial_skills = list(
 		/datum/skill/command/trained,
-		/datum/skill/police/trained
+		/datum/skill/police/novice
 	)
 
 /datum/skillset/test_subject/paranormal
