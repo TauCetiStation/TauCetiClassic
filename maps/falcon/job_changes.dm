@@ -45,7 +45,7 @@
 	access += list(access_tox, access_xenoarch)
 	total_positions = 1
 	spawn_positions = 1
-	skillsets = list("Scientist" = /datum/skillset/falcon/scientist)
+	skillsets = list("Research Assistant" = /datum/skillset/falcon/scientist)
 
 /datum/job/captain/New()
 	..()
@@ -88,7 +88,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	minimal_player_ingame_minutes = 600
-	skillsets = list("Security Officer" = /datum/skillset/falcon/officer)
+	skillsets = list("Security Cadet" = /datum/skillset/falcon/officer)
 
 /datum/job/cmo/New()
 	..()
@@ -111,7 +111,7 @@
 	access += list(access_morgue, access_surgery, access_maint_tunnels, access_medbay_storage)
 	total_positions = 1
 	spawn_positions = 1
-	skillsets = list("Medical Doctor" = /datum/skillset/falcon/doctor)
+	skillsets = list("Medical Intern" = /datum/skillset/falcon/doctor)
 
 /datum/job/chief_engineer/New()
 	..()
@@ -133,7 +133,7 @@
 	access += list(access_engine, access_engine_equip, access_external_airlocks)
 	total_positions = 1
 	spawn_positions = 1
-	skillsets = list("Station Engineer" = /datum/skillset/falcon/engineer)
+	skillsets = list("Technical Assistant" = /datum/skillset/falcon/engineer)
 
 /datum/job/chef/New()
 	..()
