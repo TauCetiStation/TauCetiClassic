@@ -199,4 +199,4 @@
 	can_infect = FALSE
 	allowed_species = list(IPC)
 	required_skills = list(/datum/skill/engineering/trained, /datum/skill/surgery/trained)
-	skills_speed_bonus = -0.3
+	skills_speed_bonus = -0.2
