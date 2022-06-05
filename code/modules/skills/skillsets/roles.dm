@@ -208,7 +208,7 @@
 	)
 
 /datum/skillset/god
-	name = "Robust skillset"
+	name = "God"
 	initial_skills = list(
 		/datum/skill/police/robust,
 		/datum/skill/firearms/robust,
