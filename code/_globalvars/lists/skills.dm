@@ -15,19 +15,19 @@ var/global/list/skills_list = list(
 )
 
 var/global/list/default_skills_list = list(
-	/datum/skill/civ_mech/none,
-	/datum/skill/combat_mech/none,
-	/datum/skill/police/none,
-	/datum/skill/firearms/none,
-	/datum/skill/melee/novice,
-	/datum/skill/engineering/none,
-	/datum/skill/atmospherics/none,
-	/datum/skill/construction/none,
-	/datum/skill/medical/none,
-	/datum/skill/surgery/none,
-	/datum/skill/chemistry/none,
-	/datum/skill/research/none,
-	/datum/skill/command/none,
+	/datum/skill/civ_mech/default,
+	/datum/skill/combat_mech/default,
+	/datum/skill/police/default,
+	/datum/skill/firearms/default,
+	/datum/skill/melee/default,
+	/datum/skill/engineering/default,
+	/datum/skill/atmospherics/default,
+	/datum/skill/construction/default,
+	/datum/skill/medical/default,
+	/datum/skill/surgery/default,
+	/datum/skill/chemistry/default,
+	/datum/skill/research/default,
+	/datum/skill/command/default,
 )
 
 var/global/list/all_skillsets
