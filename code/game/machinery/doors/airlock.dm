@@ -384,6 +384,7 @@ var/global/list/airlock_overlays = list()
 	if(lights_overlay != old_lights_overlay)
 		if(lights_overlay)
 			lights_overlay.plane = ABOVE_LIGHTING_PLANE
+			lights_overlay.layer = ABOVE_LIGHTING_LAYER
 		cut_overlay(old_lights_overlay)
 		add_overlay(lights_overlay)
 		old_lights_overlay = lights_overlay
@@ -401,6 +402,7 @@ var/global/list/airlock_overlays = list()
 	if(sparks_overlay != old_sparks_overlay)
 		if(sparks_overlay)
 			sparks_overlay.plane = ABOVE_LIGHTING_PLANE
+			sparks_overlay.layer = ABOVE_LIGHTING_LAYER
 		cut_overlay(old_sparks_overlay)
 		add_overlay(sparks_overlay)
 		old_sparks_overlay = sparks_overlay
@@ -936,9 +938,11 @@ var/global/list/airlock_overlays = list()
 	if(iswelder(C) && !(operating > 0))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.use(0, user))
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY , list(/datum/skill/engineering/novice), message_self = "<span class='notice'>You fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [W]... </span>"))
+				return
 			user.visible_message("[user] begins [welded? "unwelding":"welding"] [src]'s shutters with [W].",
 			                     "<span class='notice'>You begin [welded? "remove welding from":"welding"] [src]'s shutters with [W]...</span>")
-			if(W.use_tool(src, user, 30, volume = 100))
+			if(W.use_tool(src, user, SKILL_TASK_EASY, volume = 100))
 				welded = !welded
 				update_icon()
 				user.visible_message("[user] [welded ? "welds" : "unwelds"] [src]'s shutters with [W].",
@@ -968,7 +972,7 @@ var/global/list/airlock_overlays = list()
 		if( beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
 			if(user.is_busy(src)) return
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
-			if(C.use_tool(src, user, 40, volume = 100))
+			if(C.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
 				to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 
 				take_out_wedged_item()
@@ -1215,7 +1219,7 @@ var/global/list/airlock_overlays = list()
 
 /obj/structure/door_scrap/atom_init()
 	. = ..()
-	var/image/fire_overlay = image("icon"='icons/effects/effects.dmi', "icon_state"="s_fire")
+	var/image/fire_overlay = image(icon = 'icons/effects/effects.dmi', icon_state = "s_fire", layer = ABOVE_LIGHTING_LAYER)
 	fire_overlay.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(fire_overlay)
 	START_PROCESSING(SSobj, src)

@@ -240,7 +240,8 @@
 				O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 
 			O.job = "Cyborg"
-
+			O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+			O.mind.skills.maximize_active_skills()
 			O.cell = chest.cell
 			O.cell.forceMove(O)
 			I.forceMove(O) //Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.

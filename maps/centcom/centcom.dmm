@@ -2369,6 +2369,7 @@
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/rd,
 /obj/structure/curtain/open/bed,
+/obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -2385,6 +2386,7 @@
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/gar,
 /obj/structure/curtain/open/bed,
+/obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -2717,6 +2719,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
+/obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "ahh" = (
@@ -3284,6 +3287,7 @@
 /obj/item/weapon/bedsheet/hos,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/curtain/open/bed,
+/obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "aiF" = (
@@ -4395,10 +4399,9 @@
 /turf/environment/space,
 /area/shuttle/syndicate/start)
 "als" = (
-/obj/machinery/computer/telecrystals/uplinker,
-/obj/machinery/light,
+/obj/machinery/mech_bay_recharge_port,
 /turf/unsimulated/floor{
-	dir = 10;
+	dir = 9;
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
@@ -4432,9 +4435,8 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "alx" = (
-/obj/machinery/computer/telecrystals/uplinker,
 /turf/unsimulated/floor{
-	dir = 9;
+	dir = 1;
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
@@ -4502,7 +4504,7 @@
 "alF" = (
 /obj/machinery/computer/telecrystals/uplinker,
 /turf/unsimulated/floor{
-	dir = 8;
+	dir = 10;
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
@@ -4569,6 +4571,7 @@
 /area/shuttle/syndicate/start)
 "alN" = (
 /obj/structure/table/reinforced,
+/obj/item/toy/crayon/spraycan,
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
@@ -4587,32 +4590,30 @@
 	},
 /area/shuttle/syndicate/start)
 "alP" = (
-/obj/structure/closet/syndicate/nuclear,
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 4
+	},
 /turf/unsimulated/floor{
-	dir = 9;
+	dir = 1;
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "alQ" = (
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
-"alR" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
-"alS" = (
 /obj/machinery/recharge_station,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
+"alR" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
+"alS" = (
+/turf/unsimulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/custom/syndicate_mothership)
 "alT" = (
@@ -4666,8 +4667,9 @@
 	},
 /area/custom/syndicate_mothership)
 "alY" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/unsimulated/floor{
-	dir = 8;
+	dir = 4;
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
@@ -4725,8 +4727,10 @@
 	},
 /area/shuttle/syndicate/start)
 "amd" = (
+/obj/structure/closet/syndicate,
 /turf/unsimulated/floor{
-	icon_state = "podhatchfull"
+	dir = 8;
+	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "ame" = (
@@ -4740,8 +4744,7 @@
 /area/custom/syndicate_mothership)
 "amf" = (
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "podhatch"
+	icon_state = "podblack"
 	},
 /area/custom/syndicate_mothership)
 "amg" = (
@@ -4823,9 +4826,9 @@
 	},
 /area/custom/syndicate_mothership)
 "amn" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/structure/closet/syndicate,
 /turf/unsimulated/floor{
-	dir = 10;
+	dir = 4;
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
@@ -4838,29 +4841,19 @@
 	},
 /area/shuttle/syndicate/start)
 "amp" = (
-/obj/structure/closet/syndicate/personal,
+/obj/structure/closet/syndicate,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/unsimulated/floor{
+	dir = 8;
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "amq" = (
-/obj/effect/landmark{
-	name = "Nuclear-Bomb"
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/window{
-	dir = 1;
-	name = "Secure Storage";
-	req_access = list(150)
-	},
+/obj/machinery/vending/syndi,
 /turf/unsimulated/floor{
-	icon_state = "podhatch"
+	icon_state = "podblack"
 	},
 /area/custom/syndicate_mothership)
 "amr" = (
@@ -4870,10 +4863,12 @@
 	},
 /area/shuttle/syndicate/start)
 "ams" = (
-/obj/structure/table,
-/obj/item/toy/crayon/spraycan,
+/obj/structure/closet/syndicate,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/unsimulated/floor{
-	dir = 6;
+	dir = 4;
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
@@ -5214,9 +5209,6 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "anf" = (
-/obj/effect/landmark{
-	name = "voxstart"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/flour,
 /turf/simulated/shuttle/floor/vox{
@@ -5566,9 +5558,6 @@
 /turf/environment/space,
 /area/shuttle/transport1/centcom)
 "anX" = (
-/obj/effect/landmark{
-	name = "voxstart"
-	},
 /obj/item/trash/syndi_cakes,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
@@ -8626,7 +8615,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "auJ" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -8813,13 +8802,13 @@
 	},
 /area/shuttle/vox/arkship)
 "avc" = (
-/obj/effect/landmark{
-	name = "voxstart"
+/obj/structure/table,
+/obj/item/ammo_casing/a357,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "podhatch"
 	},
-/obj/effect/decal/cleanable/generic,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/shuttle/floor/vox,
-/area/shuttle/vox/arkship)
+/area/custom/syndicate_mothership)
 "avd" = (
 /obj/random/melee,
 /obj/effect/decal/cleanable/blood/gibs,
@@ -8912,24 +8901,29 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "avo" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "avp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "avq" = (
-/obj/effect/landmark{
-	name = "voxstart"
+/obj/structure/table,
+/obj/item/weapon/stock_parts/cell/super{
+	pixel_x = 2;
+	pixel_y = 2
 	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/shuttle/floor/vox,
-/area/shuttle/vox/arkship)
+/obj/item/weapon/stock_parts/cell/super,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
 "avr" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -9384,7 +9378,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "aws" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -10020,7 +10014,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "axO" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,4"
@@ -10487,6 +10481,15 @@
 	},
 /turf/environment/space,
 /area/shuttle/specops/centcom)
+"ayM" = (
+/obj/structure/table,
+/obj/item/stack/cable_coil/random,
+/obj/item/stack/cable_coil/random,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
 "ayN" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "10,2"
@@ -10602,6 +10605,7 @@
 /obj/machinery/light/small{
 	brightness_color = "#008000"
 	},
+/obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "azb" = (
@@ -10885,6 +10889,23 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/specops/centcom)
+"azH" = (
+/obj/structure/table,
+/obj/item/toy/nuke{
+	pixel_y = 7
+	},
+/obj/item/toy/figure/syndie{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/toy/figure/syndie{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor{
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
 "azI" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -11321,11 +11342,8 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "aAD" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/item/roller/roller_holder_surg,
-/obj/item/roller/roller_holder_surg,
+/obj/structure/rack,
+/obj/item/weapon/gun/medbeam,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -11415,6 +11433,8 @@
 /obj/item/weapon/tank/anesthetic,
 /obj/item/clothing/mask/breath/medical,
 /obj/item/clothing/mask/breath/medical,
+/obj/item/roller/roller_holder_surg,
+/obj/item/roller/roller_holder_surg,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -11699,18 +11719,13 @@
 	},
 /area/custom/tophat)
 "aBj" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 1;
-	frequency = 1441;
-	listening = 0;
-	name = "Spec Ops Intercom";
-	pixel_y = 28
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/power/port_gen/riteg,
+/obj/structure/rack,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -11723,9 +11738,6 @@
 /obj/item/clothing/suit/space/rig/ert/medical,
 /obj/item/clothing/head/helmet/space/rig/ert/medical,
 /obj/item/clothing/suit/space/rig/ert/medical,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
 /obj/item/weapon/storage/backpack/ert/medical,
 /obj/item/weapon/storage/backpack/ert/medical,
 /obj/item/weapon/storage/backpack/ert/medical,
@@ -11941,6 +11953,7 @@
 /obj/item/weapon/storage/backpack/ert/commander,
 /obj/item/weapon/storage/belt/security,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/gun/projectile/glock/spec,
 /obj/item/device/remote_device/ERT,
 /turf/unsimulated/floor{
@@ -13020,7 +13033,6 @@
 /obj/structure/closet/cabinet{
 	name = "Marisa"
 	},
-/obj/item/clothing/shoes/heels/alternate,
 /obj/item/clothing/suit/wizrobe/marisa,
 /obj/item/weapon/staff/broom,
 /obj/item/clothing/head/wizard/marisa,
@@ -13031,6 +13043,7 @@
 /obj/item/clothing/under/dress/dress_summer,
 /obj/item/clothing/under/pretty_dress,
 /obj/item/clothing/mask/scarf/violet,
+/obj/item/clothing/shoes/heels/alternate/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -13497,7 +13510,6 @@
 /obj/structure/closet/cabinet{
 	name = "Ded moroz"
 	},
-/obj/item/clothing/shoes/winterboots,
 /obj/item/weapon/storage/backpack/santabag{
 	name = "Ded Moroz Gift Bag"
 	},
@@ -13507,6 +13519,7 @@
 /obj/item/clothing/head/wizard/santa{
 	name = "Ded Moroz hat"
 	},
+/obj/item/clothing/shoes/winterboots/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood-broken4"
 	},
@@ -13705,9 +13718,6 @@
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -13727,12 +13737,9 @@
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/clothing/shoes/magboots,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -13764,6 +13771,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -13939,10 +13947,6 @@
 /area/custom/wizard_station)
 "aFM" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/suit/hooded/wintercoat/wiz_red,
 /obj/item/clothing/suit/hooded/wintercoat/wiz_red,
 /obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
@@ -13960,6 +13964,10 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/winterboots/wizard,
+/obj/item/clothing/shoes/winterboots/wizard,
+/obj/item/clothing/shoes/winterboots/wizard,
+/obj/item/clothing/shoes/winterboots/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -14207,7 +14215,6 @@
 /obj/structure/closet/cabinet{
 	name = "Pirate"
 	},
-/obj/item/clothing/shoes/boots,
 /obj/item/clothing/head/wizard/pirate,
 /obj/item/clothing/under/pirate,
 /obj/item/clothing/suit/wizrobe/pirate,
@@ -14217,6 +14224,7 @@
 	pixel_x = -25;
 	pixel_y = -3
 	},
+/obj/item/clothing/shoes/boots/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -14272,7 +14280,6 @@
 /obj/structure/closet/cabinet{
 	name = "Crusader"
 	},
-/obj/item/clothing/shoes/boots,
 /obj/item/clothing/suit/wizrobe/crusader,
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/head/wizard/crusader,
@@ -14287,6 +14294,7 @@
 	pixel_x = -25;
 	pixel_y = -3
 	},
+/obj/item/clothing/shoes/boots/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -14586,10 +14594,42 @@
 "aHb" = (
 /turf/simulated/shuttle/plating,
 /area/centcom/evac)
+"aHc" = (
+/obj/structure/table,
+/obj/item/toy/sword,
+/turf/unsimulated/floor{
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
+"aHd" = (
+/obj/effect/landmark{
+	name = "Nuclear-Bomb"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/door/window/brigdoor/northleft{
+	req_access = list(150)
+	},
+/turf/unsimulated/floor{
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
 "aHe" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
+"aHf" = (
+/obj/structure/table,
+/obj/item/toy/prize/mauler,
+/turf/unsimulated/floor{
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
 "aHg" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/toxin{
@@ -14619,6 +14659,13 @@
 	},
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
+"aHj" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/turf/unsimulated/floor{
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
 "aHk" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "6,0"
@@ -14660,6 +14707,14 @@
 	},
 /turf/environment/space,
 /area/centcom/evac)
+"aHq" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
 "aHr" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
@@ -14765,6 +14820,12 @@
 	},
 /turf/simulated/shuttle/plating,
 /area/shuttle/administration/centcom)
+"aHE" = (
+/obj/structure/object_wall/standart{
+	icon_state = "swall12"
+	},
+/turf/environment/space,
+/area/velocity/monorailwagon)
 "aHG" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access = list(101)
@@ -17314,15 +17375,6 @@
 	icon_state = "carpet"
 	},
 /area/centcom/living)
-"aSb" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Equipment Room";
-	req_access = list(150)
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/custom/syndicate_mothership)
 "aSc" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 8
@@ -18955,17 +19007,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/vox/arkship)
-"aXm" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 1
-	},
-/obj/effect/landmark{
-	name = "voxstart"
-	},
-/turf/simulated/shuttle/floor/vox{
-	icon_state = "floorplace"
-	},
-/area/shuttle/vox/arkship)
 "aXn" = (
 /obj/structure/object_wall/vox{
 	icon_state = "7,19"
@@ -19351,9 +19392,6 @@
 "aYx" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 8
-	},
-/obj/effect/landmark{
-	name = "voxstart"
 	},
 /obj/machinery/light{
 	dir = 4
@@ -19801,10 +19839,10 @@
 	icon = 'icons/obj/cult.dmi';
 	icon_state = "book"
 	},
-/obj/item/clothing/shoes/boots/German,
 /obj/item/clothing/under/color/black,
 /obj/item/clothing/suit/wizrobe/necromancer_hoodie,
 /obj/item/clothing/head/wizard/black_hood,
+/obj/item/clothing/shoes/boots/German/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood-broken"
 	},
@@ -20025,13 +20063,11 @@
 	},
 /area/custom/wizard_station)
 "baV" = (
-/obj/effect/landmark/blockway,
-/turf/unsimulated/floor/snow{
-	nitrogen = 100;
-	oxygen = 25;
-	temperature = 243
-	},
-/area/space)
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/glowshroom,
+/obj/effect/landmark/heist_spawn,
+/turf/simulated/shuttle/floor/vox,
+/area/shuttle/vox/arkship_hold)
 "baW" = (
 /obj/structure/flora/tree/pine{
 	layer = 9.5
@@ -20163,7 +20199,6 @@
 /obj/structure/closet/cabinet{
 	name = "Serif"
 	},
-/obj/item/clothing/shoes/western,
 /obj/item/clothing/under/cowboy,
 /obj/item/clothing/under/cowboy/grey,
 /obj/item/clothing/under/cowboy/brown,
@@ -20172,6 +20207,7 @@
 /obj/item/toy/gun/peacemaker,
 /obj/item/clothing/suit/wizrobe/serifcoat,
 /obj/item/clothing/head/wizard/cowboy,
+/obj/item/clothing/shoes/western/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -20264,10 +20300,10 @@
 	},
 /obj/item/clothing/mask/gnome_beard,
 /obj/item/clothing/under/gnome_suit,
-/obj/item/clothing/shoes/red,
 /obj/item/clothing/suit/wizrobe/suspenders,
 /obj/item/clothing/gloves/white,
 /obj/item/clothing/head/wizard/gnome_hat,
+/obj/item/clothing/shoes/red/wizard,
 /turf/unsimulated/floor/snow{
 	nitrogen = 100;
 	oxygen = 25;
@@ -20773,6 +20809,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -20853,19 +20890,21 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/structure/window/reinforced,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/centcom/living)
 "bfl" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/r4046,
-/obj/item/weapon/storage/box/r4046,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/weapon/storage/box/r4046/rubber,
+/obj/item/weapon/storage/box/r4046/teargas,
+/obj/item/weapon/storage/box/r4046/EMP,
 /obj/item/weapon/gun/projectile/grenade_launcher/m79,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -20975,16 +21014,19 @@
 /obj/item/weapon/gun/projectile/glock/spec,
 /obj/item/clothing/glasses/sunglasses/hud/sechud,
 /obj/item/weapon/plastique,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/centcom/living)
 "bfv" = (
 /obj/structure/rack,
+/obj/item/weapon/shield/riot,
+/obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot,
@@ -21089,6 +21131,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen,
+/obj/item/weapon/storage/box/flashbangs,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -21402,6 +21445,13 @@
 	icon_state = "grimy"
 	},
 /area/centcom/creed)
+"bMP" = (
+/obj/structure/table/reinforced,
+/obj/item/device/pda/syndicate,
+/turf/unsimulated/floor{
+	icon_state = "bar"
+	},
+/area/custom/syndicate_mothership)
 "bNb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_specops";
@@ -21957,6 +22007,13 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
+"cMX" = (
+/obj/machinery/computer/telecrystals/uplinker,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
 "cNb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -22524,7 +22581,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dJb" = (
 /obj/machinery/door/airlock/glass{
 	icon_state = "door_locked";
@@ -22533,7 +22590,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dKb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall12"
@@ -22592,7 +22649,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dPb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -22602,7 +22659,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dQb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -22707,14 +22764,14 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dXb" = (
 /obj/structure/shuttle/window{
 	icon_state = "2"
 	},
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
-/area/velocity)
+/area/velocity/monorailwagon)
 "dYb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -22755,14 +22812,14 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "ebb" = (
 /obj/structure/sign/monorail_map,
 /obj/structure/object_wall/standart{
 	icon_state = "swall3"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "ecb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	icon_state = "chair_a02"
@@ -22846,7 +22903,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "ekb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -22885,13 +22942,13 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "eob" = (
 /obj/machinery/door/airlock/glass,
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "epb" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Just billboard";
@@ -22902,7 +22959,7 @@
 	icon_state = "swall12"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "eqb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall_f9"
@@ -22913,7 +22970,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "erb" = (
 /obj/structure/sign/mark{
 	icon_state = "b4"
@@ -22946,7 +23003,7 @@
 	icon_state = "swall12"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "ewb" = (
 /obj/structure/sign/mark{
 	icon_state = "b2"
@@ -24713,6 +24770,13 @@
 	icon_state = "warning"
 	},
 /area/centcom/evac)
+"hGB" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "hHb" = (
 /obj/structure/sign/mark{
 	icon_state = "rrt"
@@ -24758,7 +24822,7 @@
 	dir = 8;
 	icon_state = "warnplate"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "hNb" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -24786,7 +24850,7 @@
 	dir = 8;
 	icon_state = "warnplate"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "hRb" = (
 /turf/unsimulated/floor{
 	icon_state = "warning"
@@ -24995,6 +25059,13 @@
 	icon_state = "vault"
 	},
 /area/centcom/control)
+"inC" = (
+/obj/machinery/computer/telecrystals/uplinker,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
 "iob" = (
 /obj/machinery/light{
 	dir = 1
@@ -25213,6 +25284,23 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
+	},
+/area/centcom/living)
+"iSi" = (
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = 28
+	},
+/obj/machinery/power/port_gen/riteg,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
 	},
 /area/centcom/living)
 "iTb" = (
@@ -26320,6 +26408,14 @@
 	icon_state = "browncorner"
 	},
 /area/centcom/holding)
+"lpk" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "bar"
+	},
+/area/custom/syndicate_mothership)
 "lpG" = (
 /obj/effect/landmark{
 	name = "Commando"
@@ -26684,6 +26780,32 @@
 	icon_state = "delivery"
 	},
 /area/centcom/control)
+"lYh" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/melee/baton,
+/obj/item/weapon/storage/belt/security,
+/obj/item/device/flash,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/clothing/glasses/night,
+/obj/item/weapon/gun/projectile/glock/spec,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
+/obj/item/weapon/plastique,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "lZb" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/westright{
@@ -28140,6 +28262,15 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"puV" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Equipment Room";
+	req_access = list(150)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/custom/syndicate_mothership)
 "pvb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "10,23";
@@ -28377,6 +28508,17 @@
 	icon_state = "1,6"
 	},
 /area/shuttle/supply/velocity)
+"qiD" = (
+/obj/structure/rack,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "qnM" = (
 /obj/effect/step_trigger/thrower{
 	direction = 4;
@@ -28421,6 +28563,12 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"rse" = (
+/obj/structure/object_wall/standart{
+	icon_state = "swall3"
+	},
+/turf/environment/space,
+/area/velocity/monorailwagon)
 "rXM" = (
 /obj/machinery/light{
 	dir = 4
@@ -28435,6 +28583,14 @@
 /obj/item/weapon/kitchenknife/ritual,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"sjf" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/weapon/storage/firstaid/adv,
+/turf/unsimulated/floor{
+	icon_state = "bar"
+	},
+/area/custom/syndicate_mothership)
 "skC" = (
 /obj/item/weapon/reagent_containers/blood/AMinus{
 	pixel_x = -7;
@@ -33806,7 +33962,7 @@ baY
 abi
 abi
 afT
-baV
+afT
 abi
 abi
 abi
@@ -52215,7 +52371,7 @@ aaM
 aaM
 aaM
 aAm
-aAE
+aAD
 aBk
 aBk
 aAm
@@ -52472,7 +52628,7 @@ aaM
 aaM
 aaM
 aAm
-aAD
+aCH
 aAM
 aAM
 aAm
@@ -52731,7 +52887,7 @@ aaM
 aAm
 aAK
 aAM
-aAM
+aAE
 aAm
 aAm
 aAm
@@ -53000,7 +53156,7 @@ aFo
 aAL
 aFr
 beQ
-bfk
+lYh
 aFr
 bfk
 bfu
@@ -53754,8 +53910,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+aAm
+aAm
 aAm
 aAm
 aAm
@@ -54011,11 +54167,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
 aAm
 aBc
 aAM
+aBj
+hGB
 aBm
 aEl
 aFm
@@ -54268,10 +54424,10 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
 aAm
-aBj
+iSi
+aAM
+aAM
 aAM
 aAM
 aAM
@@ -54525,11 +54681,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
 aAm
 aBc
 aAM
+qiD
+hGB
 aBG
 aEm
 aBI
@@ -54782,8 +54938,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+aAm
+aAm
 aAm
 aAm
 aAm
@@ -79176,18 +79332,18 @@ atP
 atP
 atP
 dIb
-dNb
+rse
 avn
 avn
 avn
-dNb
+rse
 enb
 dIb
-dNb
+rse
 axN
 axN
 axN
-dNb
+rse
 enb
 atP
 ayt
@@ -79689,7 +79845,7 @@ dwb
 dwb
 dwb
 dwb
-dKb
+aHE
 dPb
 dWb
 eab
@@ -79702,7 +79858,7 @@ dWb
 eab
 dWb
 ejb
-dKb
+aHE
 dwb
 dwb
 dwb
@@ -79947,11 +80103,11 @@ atP
 atP
 atP
 auI
-dNb
+rse
 dXb
 ebb
 dXb
-dNb
+rse
 eqb
 auI
 hMb
@@ -83430,7 +83586,7 @@ ajR
 amw
 and
 ari
-avc
+aAq
 avR
 awP
 aqY
@@ -84703,7 +84859,7 @@ abu
 aWO
 aXb
 aAN
-aXm
+aYP
 aYf
 aZT
 anF
@@ -86257,7 +86413,7 @@ alu
 amT
 anm
 arm
-avq
+aYw
 aYs
 awf
 ary
@@ -87092,7 +87248,7 @@ akQ
 akQ
 akQ
 akQ
-alN
+bMP
 alW
 amZ
 aie
@@ -87859,12 +88015,12 @@ aIb
 aIb
 aIb
 aIb
+cMX
+inC
+alF
 akQ
-alx
-alF
-alF
-alF
-als
+lpk
+sjf
 aie
 aie
 aaM
@@ -88110,7 +88266,7 @@ ajt
 aii
 aii
 aie
-aFb
+aIb
 aIb
 aIb
 aie
@@ -88371,14 +88527,14 @@ aIb
 aIb
 aQb
 aie
-alP
-alY
-amn
+als
+alR
+amd
+amp
+amd
+avc
+ayM
 aie
-ahF
-ahF
-ahF
-ahF
 ahF
 ahF
 ahF
@@ -88628,14 +88784,14 @@ aFb
 aIb
 aIb
 aie
-alQ
-amd
-amp
+alx
+alS
+alS
+alS
+alS
+alS
+azH
 aie
-ahF
-ahF
-ahF
-ahF
 ahF
 ahF
 ahF
@@ -88885,14 +89041,14 @@ aIb
 aIb
 aIb
 aie
-alQ
-amd
-amp
+alP
+alS
+amf
+amf
+amf
+alS
+aHc
 aie
-ahF
-ahF
-ahF
-ahF
 ahF
 ahF
 ahF
@@ -89141,15 +89297,15 @@ aie
 aIb
 aIb
 aIb
+puV
+alx
+alS
+amf
+amq
+amf
+alS
+aHd
 aie
-alR
-amd
-amp
-aie
-ahF
-ahF
-ahF
-ahF
 ahF
 ahF
 ahF
@@ -89398,15 +89554,15 @@ aie
 aIb
 aIb
 aIb
-aSb
-alQ
-amd
-amq
 aie
-ahF
-ahF
-ahF
-ahF
+alx
+alS
+amf
+amf
+amf
+alS
+aHf
+aie
 ahF
 ahF
 ahF
@@ -89656,14 +89812,14 @@ aIb
 aIb
 aIb
 aie
-alR
-amd
-amp
+alx
+alS
+alS
+alS
+alS
+alS
+aHj
 aie
-ahF
-ahF
-ahF
-ahF
 ahF
 ahF
 ahF
@@ -89914,13 +90070,13 @@ aIb
 aQb
 aie
 alQ
-amd
-amp
+alY
+amn
+ams
+amn
+avq
+aHq
 aie
-ahF
-ahF
-ahF
-ahF
 ahF
 ahF
 ahF
@@ -90170,14 +90326,14 @@ aIb
 aIb
 aIb
 aie
-alQ
-amd
-amp
 aie
-ahF
-ahF
-ahF
-ahF
+aie
+aie
+aie
+aie
+aie
+aie
+aie
 ahF
 ahF
 ahF
@@ -90427,10 +90583,10 @@ aFb
 aIb
 aIb
 aie
-alS
-amf
-ams
-aie
+ahF
+ahF
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -90687,7 +90843,7 @@ aie
 aie
 aie
 aie
-aie
+ahF
 ahF
 ahF
 ahF
@@ -92429,7 +92585,7 @@ avK
 awg
 axn
 anP
-aiF
+baV
 azp
 abu
 aaM
