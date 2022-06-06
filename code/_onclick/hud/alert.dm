@@ -443,7 +443,7 @@
 
 /atom/movable/screen/alert/revolution
 	name = "Revolution"
-	desc = "You've been invited to revolution. Shift+Click the alert to choose."
+	desc = "You've been invited to revolution. Click the alert to choose."
 	icon_state = "revolution"
 	timeout = 100
 
