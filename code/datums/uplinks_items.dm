@@ -326,25 +326,6 @@
 	if(istype(T))
 		T.TC_cost = cost
 
-/datum/uplink_item/dangerous/light_armor
-	name = "Armor Set"
-	desc = "A set of personal armor that includes armored vest and a helmet, designed to ensure survival of gone wild agent."
-	item = /obj/item/weapon/storage/box/syndie_kit/light_armor
-	cost = 4
-	uplink_types = list("traitor")
-
-/datum/uplink_item/dangerous/light_armor/dealer
-	cost = 12
-	uplink_types = list("dealer")
-	need_wanted_level = 5
-
-/datum/uplink_item/dangerous/cheap_armor
-	name = "Standard Armor Set"
-	desc = "A set of basic armor to protect against enemies"
-	item = /obj/item/weapon/storage/box/syndie_kit/cheap_armor
-	cost = 10
-	uplink_types = list("dealer")
-
 /datum/uplink_item/dangerous/mine
 	name = "High Explosive Mine"
 	desc = "A mine that explodes upon pressure. Use multitool to disarm it."
@@ -524,6 +505,106 @@
 	item = /obj/item/device/radio/beacon/syndicate_chemicals
 	cost = 10
 	uplink_types = list("nuclear")
+
+// ARMOUR, SPACE SUITS AND MODULES
+
+/datum/uplink_item/suits_armor
+	category = "Space suits and armor"
+
+/datum/uplink_item/suits_armor/space_suit
+	name = "Syndicate Space Suit"
+	desc = "The red syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
+	item = /obj/item/weapon/storage/box/syndie_kit/space
+	cost = 4
+	uplink_types = list("traitor")
+
+/datum/uplink_item/suits_armor/light_armor
+	name = "Armor Set"
+	desc = "A set of personal armor that includes armored vest and a helmet, designed to ensure survival of gone wild agent."
+	item = /obj/item/weapon/storage/box/syndie_kit/light_armor
+	cost = 4
+	uplink_types = list("traitor")
+
+/datum/uplink_item/suits_armor/light_armor/dealer
+	cost = 12
+	uplink_types = list("dealer")
+	need_wanted_level = 5
+
+/datum/uplink_item/suits_armor/cheap_armor
+	name = "Standard Armor Set"
+	desc = "A set of basic armor to protect against enemies."
+	item = /obj/item/weapon/storage/box/syndie_kit/cheap_armor
+	cost = 10
+	uplink_types = list("dealer")
+ 
+/datum/uplink_item/suits_armor/assault_armor
+	name = "Heavy Armor Set"
+	desc = "A set of heavy assault armor."
+	item = /obj/item/weapon/storage/box/syndie_kit/armor
+	cost = 4
+	uplink_types = list("nuclear")
+
+
+/datum/uplink_item/suits_armor/spy_rig
+	name = "Hybrid Suit"
+	desc = "A universal suit, suitable for both combat and space flight, protects worse than the operatives rig."
+	item =	/obj/item/weapon/storage/box/syndie_kit/spy_rig
+	cost = 8
+	uplink_types = list("traitor")
+
+/datum/uplink_item/suits_armor/heavy_rig
+	name = "Heavy Hybrid Suit"
+	desc = "Very armored rig, in combat mode perfectly protects against all types of damage."
+	item = /obj/item/weapon/storage/box/syndie_kit/heavy_rig
+	cost = 15
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/suits_armor/combat_injector
+	name = "Combat Chemical Injector"
+	desc = "The injector allows you to inject some kinds of medicines into the rig owner's body."
+	item = /obj/item/rig_module/chem_dispenser/combat
+	cost = 3
+	uplink_types = list("traitor", "nuclear")
+
+/datum/uplink_item/suits_armor/nuclear_generator
+	name = "Nuclear Generator"
+	desc = "Mini nuclear reactor for your rig, generates energy very quickly, but can explode if damaged."
+	item = /obj/item/rig_module/nuclear_generator
+	cost = 4
+	uplink_types = list("traitor", "nuclear")
+
+/datum/uplink_item/suits_armor/stealth
+	name = "Stealth System"
+	desc = "System that makes hardsuit and you invisible."
+	item = /obj/item/rig_module/stealth
+	cost = 5
+	uplink_types = list("traitor")
+
+/datum/uplink_item/suits_armor/grenade_launcher
+	name = "Hardsuit Grenade Launcher"
+	desc = "Grenade laucher for your rig. The grenade launcher can be loaded by: flashbang, smoke grenade, EMP grenade and  syndicate minibomb"
+	item = /obj/item/rig_module/grenade_launcher
+	cost = 2
+	uplink_types = list("traitor", "nuclear")
+
+/datum/uplink_item/suits_armor/modkit
+	name = "Tajaran Hardsuit Modification Kit"
+	desc = "Modification kit for your hybrid hardsuit, allows you to upgrade your suit to fit your race."
+	item = /obj/item/device/modkit/syndie/tajaran
+	cost = 1
+	uplink_types = list("traitor", "nuclear")
+
+/datum/uplink_item/suits_armor/modkit/skrell
+	name = "Skrellian Hardsuit Modification Kit"
+	item = /obj/item/device/modkit/syndie/skrell
+
+/datum/uplink_item/suits_armor/modkit/unathi
+	name = "Unathi Hardsuit Modification Kit"
+	item = /obj/item/device/modkit/syndie/unathi
+
+/datum/uplink_item/suits_armor/modkit/vox
+	name = "Vox Hardsuit Modification Kit"
+	item = /obj/item/device/modkit/syndie/vox
 
 // STEALTHY WEAPONS
 
@@ -767,13 +848,6 @@
 	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity and appearance."
 	item = /obj/item/weapon/reagent_containers/syringe/mulligan
 	cost = 4
-
-/datum/uplink_item/device_tools/space_suit
-	name = "Syndicate Space Suit"
-	desc = "The red syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
-	item = /obj/item/weapon/storage/box/syndie_kit/space
-	cost = 4
-	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
