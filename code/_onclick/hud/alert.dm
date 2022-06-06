@@ -449,7 +449,7 @@
 
 /atom/movable/screen/alert/revolution/Click(location, control, params)
 	var/mob/living/carbon/human/H = usr
-	if(H || H.client)
+	if(istype(H))
 		H.join_to_revolution()
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
