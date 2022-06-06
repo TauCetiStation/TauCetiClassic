@@ -164,7 +164,9 @@
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
-		if(mind)	mind.transfer_to(mmi.brainmob)
+		if(mind)
+			mind.transfer_to(mmi.brainmob)
+			mmi.brainmob.mind.skills.remove_available_skillset(/datum/skillset/max)
 		mmi = null
 	return ..()
 
@@ -483,6 +485,52 @@
 			stat(null, "GPS: [COORD(T)]")
 
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
+
+/mob/living/silicon/robot/verb/unlock_hatch()
+	set name = "Unlock maintenance hatch"
+	set category = "Commands"
+
+	if(incapacitated())
+		return
+	if(opened)
+		to_chat(usr, "<span class='warning'>Невозможно заблокировать интерфейс, если открыта панель.</span>")
+		emote("buzz")
+		return
+	
+	if(!do_after(usr, 10, target = usr))
+		return
+	
+	if(locked)
+		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")		
+	else
+		to_chat(usr, "<span class='notice'>Интерфейс заблокирован.</span>")
+
+	playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
+	locked = !locked
+
+/mob/living/silicon/robot/verb/open_hatch()
+	set name = "Open maintenance hatch"
+	set category = "Commands"
+
+	if(incapacitated())
+		return
+	if(locked)
+		to_chat(usr, "<span class='warning'>Невозможно открыть панель, если заблокирован интерфейс.</span>")
+		emote("buzz")
+		return
+	
+	if(!do_after(usr, 10, target = usr))
+		return
+	
+	if(opened)
+		to_chat(usr, "<span class='notice'>Панель закрыта.</span>")
+		playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
+	else
+		to_chat(usr, "<span class='notice'>Панель открыта.</span>")
+		playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
+	
+	opened = !opened
+	updateicon()
 
 /mob/living/silicon/robot/restrained()
 	return 0

@@ -123,6 +123,7 @@
 	var/list/deployed_shields = list()
 	var/is_open = FALSE //Whether or not the wires are exposed
 	var/locked = FALSE
+	required_skills = list(/datum/skill/engineering/pro)
 
 /obj/machinery/shieldgen/Destroy()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
@@ -232,6 +233,8 @@
 	else if(iscoil(W) && malfunction && is_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if(user.is_busy(src)) return
+		if(!do_skill_checks(user))
+			return
 		to_chat(user, "<span class='notice'>You begin to replace the wires.</span>")
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
 		if(coil.use_tool(src, user, 30, amount = 1, volume = 50))
@@ -245,6 +248,10 @@
 			to_chat(user, "The bolts are covered, unlocking this would retract the covers.")
 			return
 		if(anchored)
+			if(!do_skill_checks(user))
+				return
+			if(!do_skill_checks(user))
+				return
 			to_chat(user, "<span class='notice'>You unsecure the [src] from the floor!</span>")
 			if(active)
 				to_chat(user, "<span class='notice'>The [src] shuts off!</span>")
@@ -304,6 +311,7 @@
 	var/destroyed = FALSE
 	var/obj/structure/cable/attached		// the attached cable
 	var/storedpower = 0
+	required_skills = list(/datum/skill/engineering/trained)
 
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)
@@ -448,6 +456,8 @@
 		if(state == 0)
 			state = 1
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+			if(!do_skill_checks(user))
+				return
 			to_chat(user, "You secure the external reinforcing bolts to the floor.")
 			src.anchored = TRUE
 			return
@@ -455,6 +465,8 @@
 		else if(state == 1)
 			state = 0
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+			if(!do_skill_checks(user))
+				return
 			to_chat(user, "You undo the external reinforcing bolts.")
 			src.anchored = FALSE
 			return

@@ -98,23 +98,15 @@ var/global/list/blob_nodes = list()
 	B.blob_core = src
 	src.overmind = B
 
-	var/datum/faction/blob_conglomerate/conglomerate = find_faction_by_type(/datum/faction/blob_conglomerate)
-	if(conglomerate) //Faction exists
-		if(!conglomerate.get_member_by_mind(B.mind)) //We are not a member yet
-			var/ded = TRUE
-			if(conglomerate.members.len)
-				for(var/datum/role/R in conglomerate.members)
-					if (R.antag.current && !(R.antag.current.is_dead()))
-						ded = FALSE
-						break
-			add_faction_member(conglomerate, B, !ded)
-
-	else //No faction? Make one and you're the overmind.
-		conglomerate = SSticker.mode.CreateFaction(/datum/faction/blob_conglomerate)
-		if(conglomerate)
-			conglomerate.OnPostSetup()
-			conglomerate.forgeObjectives()
-			add_faction_member(conglomerate, B, FALSE)
+	var/datum/faction/blob_conglomerate/conglomerate = create_uniq_faction(/datum/faction/blob_conglomerate)
+	if(!conglomerate.get_member_by_mind(B.mind)) //We are not a member yet
+		var/ded = TRUE
+		if(conglomerate.members.len)
+			for(var/datum/role/R in conglomerate.members)
+				if (R.antag.current && !(R.antag.current.is_dead()))
+					ded = FALSE
+					break
+		add_faction_member(conglomerate, B, !ded)
 
 	conglomerate.declared = TRUE
 
