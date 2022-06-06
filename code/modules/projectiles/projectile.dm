@@ -115,6 +115,9 @@
 	if(isanimal(target))
 		return 0
 	var/mob/living/L = target
+	if(incendiary)
+		L.adjust_fire_stacks(incendiary)
+		L.IgniteMob(target)
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 
 	//called when the projectile stops flying because it collided with something
