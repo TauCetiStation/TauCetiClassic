@@ -13,7 +13,7 @@
 	return TRUE
 
 /mob/proc/CanUseMouseDrop(atom/over, atom/with)
-	return !incapacitated() && in_interaction_vicinity(over) && in_interaction_vicinity(with) && with.Adjacent(over)
+	return !incapacitated() && in_interaction_vicinity(over) && in_interaction_vicinity(with) && over.Adjacent(with)
 
 /atom/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	if(!usr || !over)

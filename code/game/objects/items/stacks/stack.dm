@@ -157,7 +157,7 @@
 		if(usr.is_busy())
 			return
 		to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
-		if (!do_after(usr, R.time, target = usr))
+		if (!do_skilled(usr, usr, R.time, R.required_skills, -0.2))
 			return
 	var/atom/build_loc = loc
 	if(!use(R.req_amount*multiplier))
@@ -347,8 +347,9 @@
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
 	var/floor_path
+	var/list/required_skills
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, floor_path = list(/turf/simulated/floor))
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, required_skills = null, floor_path = list(/turf/simulated/floor))
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
@@ -357,6 +358,7 @@
 	src.time = time
 	src.one_per_turf = one_per_turf
 	src.on_floor = on_floor
+	src.required_skills = required_skills
 	src.floor_path = floor_path
 
 /*
