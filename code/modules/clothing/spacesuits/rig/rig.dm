@@ -834,6 +834,26 @@
 			armor = space_armor
 		update_icon(usr)
 
+/obj/item/clothing/suit/space/rig/syndi/spy
+	name = "space suit"
+	desc = "An lightly armored and unmarked hybrid suit, looks like a normal space suit."
+	rig_variant = "rig-spy"
+	icon_state = "rig-spy-space"
+	item_state = "syndie_hardsuit"
+	slowdown = 0.3
+	max_mounted_devices = 6
+	cell_type = /obj/item/weapon/stock_parts/cell/high
+	combat_armor = list(melee = 50, bullet = 55, laser = 35, energy = 45, bomb = 50, bio = 100, rad = 60)
+	space_armor = list(melee = 20, bullet = 15, laser = 5, energy = 30, bomb = 50, bio = 100, rad = 60)
+
+/obj/item/clothing/head/helmet/space/rig/syndi/spy
+	name = "space helmet"
+	desc = "An armored and unmarked hybrid helmet, looks like a normal space helmet."
+	icon_state = "rig0-spy"
+	item_state = "syndie_helm"
+	rig_type = "spy"
+
+
 /obj/item/clothing/head/helmet/space/rig/syndi/heavy
 	name = "heavy hybrid helmet"
 	desc = "An advanced helmet designed for work in special operations. Created using older design of armored hardsuits."
