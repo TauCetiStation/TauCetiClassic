@@ -401,7 +401,7 @@
 	desc = "Рабочий помост с сомнительным функционалом."
 
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 700000
+	heat_capacity = 7000
 	intact = 0
 	footstep = FOOTSTEP_CATWALK
 
