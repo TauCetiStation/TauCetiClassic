@@ -40,7 +40,6 @@
 	name = "reinforced floor"
 	icon_state = "engine"
 	thermal_conductivity = 0.025
-	heat_capacity = 325000
 	footstep = FOOTSTEP_PLATING
 
 /turf/simulated/floor/goonplaque
@@ -401,7 +400,7 @@
 	desc = "Рабочий помост с сомнительным функционалом."
 
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 7000
+	heat_capacity = HEAT_CAPACITY_VACUUM
 	intact = 0
 	footstep = FOOTSTEP_CATWALK
 
