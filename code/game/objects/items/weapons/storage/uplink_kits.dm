@@ -367,14 +367,14 @@
 /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker
 	name = "hacker kit"
 	startswith = list(
-	/obj/item/ammo_box/magazine/m12g = 3,
+	/obj/item/ammo_box/magazine/m12g = 4,
 	/obj/item/ammo_box/magazine/m12g/stun,
 	/obj/item/ammo_box/magazine/m12g/incendiary,
 	/obj/item/weapon/gun/projectile/automatic/bulldog,
+	/obj/item/weapon/aiModule/freeform/syndicate,
 	/obj/item/weapon/grenade/spawnergrenade/manhacks,
 	/obj/item/device/debugger,
 	/obj/item/weapon/storage/belt/utility/hacker,
-	/obj/item/clothing/glasses/meson,
 	/obj/item/weapon/card/emag,
 	/obj/item/clothing/suit/space/rig/syndi,
 	/obj/item/clothing/head/helmet/space/rig/syndi,
@@ -398,9 +398,10 @@
 	name = "demolition and explosion kit"
 	startswith = list(
 	/obj/item/ammo_casing/r4046/explosive = 3,
+	/obj/item/ammo_casing/r4046/chem/EMP = 3,
 	/obj/item/ammo_box/magazine/drozd127,
 	/obj/item/weapon/gun/projectile/automatic/drozd,
-	/obj/item/weapon/plastique = 5,
+	/obj/item/weapon/plastique = 4,
 	/obj/item/weapon/grenade/syndieminibomb = 2,
 	/obj/item/device/radio/beacon/syndicate_bomb,
 	/obj/item/clothing/suit/space/rig/syndi,
@@ -410,7 +411,7 @@
 /obj/item/weapon/storage/backpack/dufflebag/nuke/melee
 	name = "melee weapon kit"
 	startswith = list(
-	/obj/item/weapon/melee/energy/sword,
+	/obj/item/weapon/dualsaber,
 	/obj/item/weapon/gun/energy/crossbow,
 	/obj/item/weapon/implanter/adrenaline,
 	/obj/item/weapon/implanter/emp,
@@ -430,6 +431,19 @@
 	/obj/item/clothing/suit/space/rig/syndi/heavy,
 	/obj/item/clothing/head/helmet/space/rig/syndi/heavy,
 	)
+
+/obj/item/weapon/storage/backpack/dufflebag/nuke/medic
+	name = "field medic kit"
+	startswith = list(
+	/obj/item/weapon/gun/medbeam/syndi,
+	/obj/item/clothing/glasses/hud/health/night,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+	/obj/item/weapon/storage/pouch/medical_supply/syndicate,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
+
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/custom
 	name = "custom kit"

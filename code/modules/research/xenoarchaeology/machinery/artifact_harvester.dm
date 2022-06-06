@@ -13,6 +13,8 @@
 	var/obj/item/weapon/particles_battery/inserted_battery
 	var/obj/machinery/artifact/current_artifact
 	var/obj/machinery/artifact_scanpad/owned_scanner = null
+	required_skills = list(/datum/skill/research/trained)
+
 
 /obj/machinery/artifact_harvester/atom_init()
 	..()
@@ -43,7 +45,6 @@
 /obj/machinery/artifact_harvester/ui_interact(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-
 	var/dat = "<B>Artifact Power Harvester</B><BR>"
 	dat += "<HR><BR>"
 	//

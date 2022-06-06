@@ -81,7 +81,7 @@
 			if(W.use(0,user))
 				to_chat(user, "You start slicing the floorweld off the disposal unit.")
 
-				if(W.use_tool(src, user, 20, volume = 100))
+				if(W.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/atmospherics/trained)))
 					to_chat(user, "You sliced the floorweld off the disposal unit.")
 					var/obj/structure/disposalconstruct/C = new (src.loc)
 					transfer_fingerprints_to(C)
@@ -117,7 +117,7 @@
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(user.is_busy()) return
 			user.visible_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>")
-			if(G.use_tool(src, usr, 20))
+			if(G.use_tool(src, usr, 20, required_skills_override = list(/datum/skill/atmospherics/trained)))
 				INVOKE_ASYNC(GM, /atom/movable.proc/do_simple_move_animation, src)
 				GM.forceMove(src)
 				GM.instant_vision_update(1,src)
@@ -897,7 +897,7 @@
 		if(W.use(0,user))
 			// check if anything changed over 2 seconds
 			to_chat(user, "You start slicing the disposal pipe.")
-			if(W.use_tool(src, user, 30, volume = 100))
+			if(W.use_tool(src, user, 30, volume = 100, required_skills_override = list(/datum/skill/atmospherics/trained)))
 				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
 				welded()
 			else
@@ -1232,7 +1232,7 @@
 		if(user.is_busy()) return
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the disposal pipe.")
-			if(W.use_tool(src, user, 30, volume = 100))
+			if(W.use_tool(src, user, 30, volume = 100, required_skills_override = list(/datum/skill/atmospherics/trained)))
 				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
 				welded()
 			else
@@ -1355,7 +1355,7 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the disposal outlet.")
-			if(W.use_tool(src, user, 20, volume = 100))
+			if(W.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/atmospherics/trained)))
 				to_chat(user, "You sliced the floorweld off the disposal outlet.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				transfer_fingerprints_to(C)
