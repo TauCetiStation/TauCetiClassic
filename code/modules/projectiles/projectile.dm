@@ -52,6 +52,7 @@
 	var/eyeblur = 0
 	var/drowsy = 0
 	var/agony = 0
+	var/incendiary = 0
 	var/embed = 0 // whether or not the projectile can embed itself in the mob
 	var/impact_force = 0
 
@@ -114,6 +115,9 @@
 	if(isanimal(target))
 		return 0
 	var/mob/living/L = target
+	if(incendiary && blocked <= 100)
+		L.adjust_fire_stacks(incendiary)
+		L.IgniteMob(target)
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 
 	//called when the projectile stops flying because it collided with something
