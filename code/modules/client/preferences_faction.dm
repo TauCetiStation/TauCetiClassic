@@ -38,3 +38,12 @@ var/global/list/religion_choices = list(
 	"Agnostic",
 	"Deist"
 	)
+var/global/list/rank_choices = list(
+	"Leader",
+	"Reaver",
+	"Raider",
+	"Drone",
+	"Servitor",
+	"Scavenger",
+	"Larva"
+	)

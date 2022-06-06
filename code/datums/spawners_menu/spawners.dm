@@ -196,9 +196,7 @@ var/global/list/datum/spawners_cooldown = list()
 	cop.key = C.key
 
 	//Give antag datum
-	var/datum/faction/cops/faction = find_faction_by_type(/datum/faction/cops)
-	if(!faction)
-		faction = SSticker.mode.CreateFaction(/datum/faction/cops)
+	var/datum/faction/cops/faction = create_uniq_faction(/datum/faction/cops)
 
 	faction.roletype = roletype
 	add_faction_member(faction, cop, TRUE, TRUE)
@@ -333,9 +331,7 @@ var/global/list/datum/spawners_cooldown = list()
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 	new_ninja.key = ghost.key
 
-	var/datum/faction/ninja/N = find_faction_by_type(/datum/faction/ninja)
-	if(!N)
-		N = SSticker.mode.CreateFaction(/datum/faction/ninja)
+	var/datum/faction/ninja/N = create_uniq_faction(/datum/faction/ninja)
 	add_faction_member(N, new_ninja, FALSE)
 
 	set_ninja_objectives(new_ninja)
@@ -497,7 +493,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/living/podman
 	name = "Подмена"
 	id = "podman"
-	desc = "Подмена умерла, да здраствует подмена."
+	desc = "Подмена умерла, да здравствует подмена."
 	wiki_ref = "Podmen"
 
 	var/replicant_memory
@@ -607,6 +603,24 @@ var/global/list/datum/spawners_cooldown = list()
 	..()
 	religion.add_member(mob, HOLY_ROLE_PRIEST)
 
+/datum/spawner/living/rat
+	name = "Крыса"
+	id = "rat"
+	desc = "Вы появляетесь в своём новом доме"
+
+/datum/spawner/living/rat/spawn_ghost(mob/dead/observer/ghost)
+	. = ..()
+	to_chat(mob, "<B>Эта посудина теперь ваш новый дом, похозяйничайте в нём.</B>")
+	to_chat(mob, "<B>(Вы можете грызть провода и лампочки).</B>")
+
+/*
+ * Heist
+*/
+/datum/spawner/living/vox
+	name = "Вокс-Налётчик"
+	desc = "Воксы-налётчики это представители расы Воксов, птице-подобных гуманоидов, дышащих азотом. Прибыли на станцию что бы украсть что-нибудь ценное."
+	wiki_ref = "Vox_Raider"
+
 /datum/spawner/spy
 	name = "Агент Прослушки"
 	id = "spy"
@@ -633,6 +647,8 @@ var/global/list/datum/spawners_cooldown = list()
 	H.loc = spawnloc
 	H.key = C.key
 	H.equipOutfit(/datum/outfit/spy)
+	H.mind.skills.add_available_skillset(/datum/skillset/max)
+	H.mind.skills.maximize_active_skills()
 
 	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на [station_name_ru()].</B>")
 	if(mode_has_antags())
@@ -644,3 +660,48 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/spy/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(espionageagent_start)
 	ghost.forceMove(get_turf(jump_to))
+
+/datum/spawner/vox
+	name = "Вокс-Налётчик"
+	desc = "Воксы-налётчики это представители расы Воксов, птице-подобных гуманоидов, дышащих азотом. Прибыли на станцию что бы украсть что-нибудь ценное."
+	wiki_ref = "Vox_Raider"
+
+	ranks = list(ROLE_RAIDER, ROLE_GHOSTLY)
+	time_to_del = 5 MINUTES
+
+/datum/spawner/vox/spawn_ghost(mob/dead/observer/ghost)
+	var/spawnloc = pick(global.heiststart)
+	global.heiststart -= spawnloc
+
+	var/datum/faction/heist/faction = create_uniq_faction(/datum/faction/heist)
+	var/mob/living/carbon/human/vox/event/vox = new(spawnloc)
+
+	vox.key = ghost.client.key
+
+	var/sounds = rand(2, 8)
+	var/newname = ""
+	for(var/i in 1 to sounds)
+		newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
+
+	vox.real_name = capitalize(newname)
+	vox.name = vox.real_name
+	vox.age = rand(5, 15) // its fucking lore
+	vox.add_language(LANGUAGE_VOXPIDGIN)
+	if(faction.members.len % 2 == 0 || prob(33)) // first vox always gets Sol, everyone else by random.
+		vox.add_language(LANGUAGE_SOLCOMMON)
+	vox.h_style = "Short Vox Quills"
+	vox.f_style = "Shaved"
+	vox.grad_style = "none"
+
+	//Now apply cortical stack.
+	var/obj/item/weapon/implant/cortical/I = new(vox)
+	I.inject(vox, BP_HEAD)
+
+	vox.equip_vox_raider()
+	vox.regenerate_icons()
+
+	add_faction_member(faction, vox)
+
+/datum/spawner/vox/jump(mob/dead/observer/ghost)
+	var/jump_to = pick(global.heiststart)
+	ghost.forceMove(jump_to)
