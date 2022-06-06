@@ -202,7 +202,7 @@
 
 		air.temperature -= heat / total_heat_capacity
 		if(istype(target, /turf/simulated))
-			modeled_location.temperature += heat / modeled_location.heat_capacity
+			target.temperature += heat / target.heat_capacity
 	else
 		var/turf/simulated/modeled_location = target
 		var/datum/gas_mixture/turf_air = modeled_location.return_air()
