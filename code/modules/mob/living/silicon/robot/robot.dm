@@ -780,6 +780,7 @@
 	if(wiresexposed)
 		to_chat(user, "You must close the panel first")
 		return FALSE
+	locked = FALSE
 	sleep(6)
 	if(prob(50))
 		throw_alert("hacked", /atom/movable/screen/alert/hacked)
