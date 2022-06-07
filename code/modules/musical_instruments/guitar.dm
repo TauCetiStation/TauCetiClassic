@@ -28,7 +28,13 @@
 /obj/item/device/guitar/electric
 	name = "electric guitar"
 	desc = "Space Rock'n'Roll"
-	icon_state = "eguitar"
-	item_state = "eguitar"
+	icon_state = "eguitar_1"
+	item_state = "eguitar_1"
 
 	sound_path = "sound/musical_instruments/eguitar"
+
+/obj/item/device/guitar/electric/atom_init()
+	. = ..()
+	var/model = pick("1","2","3","4")
+	icon_state = "eguitar_[model]"
+	item_state = "eguitar_[model]"
