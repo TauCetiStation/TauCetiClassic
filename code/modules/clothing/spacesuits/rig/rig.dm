@@ -843,7 +843,7 @@
 	slowdown = 0.3
 	max_mounted_devices = 6
 	cell_type = /obj/item/weapon/stock_parts/cell/high
-	combat_armor = list(melee = 45, bullet = 55, laser = 35, energy = 45, bomb = 50, bio = 100, rad = 60)
+	combat_armor = list(melee = 45, bullet = 55, laser = 40, energy = 45, bomb = 50, bio = 100, rad = 60)
 	space_armor = list(melee = 20, bullet = 15, laser = 5, energy = 30, bomb = 50, bio = 100, rad = 60)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/spy
