@@ -148,7 +148,7 @@
 	icon_state = "4"
 	building_type = /datum/religion_tech/cult/memorizing_rune
 	favor_cost = 300
-	piety_cost = 250
+	piety_cost = 230
 
 /datum/building_agent/tech/cult/reusable_runes
 	name = "Многоразовые Руны"
@@ -156,7 +156,7 @@
 	icon_state = "1"
 	building_type = /datum/religion_tech/cult/reusable_runes
 	favor_cost = 600
-	piety_cost = 10
+	piety_cost = 50
 
 /datum/building_agent/tech/cult/build_everywhere
 	name = "Строительство Везде"
@@ -164,7 +164,7 @@
 	icon_state = "pylon"
 	building_type = /datum/religion_tech/cult/build_everywhere
 	favor_cost = 400
-	piety_cost = 50
+	piety_cost = 100
 
 /datum/building_agent/tech/cult/mirror_shield
 	name = "Зеркальный Щит"

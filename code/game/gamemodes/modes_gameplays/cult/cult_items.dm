@@ -36,14 +36,31 @@
 	desc = "An infamous shield used by eldritch sects to confuse and disorient their enemies."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "mirror_shield"
-	flags = ABSTRACT|DROPDEL
 	slot_flags = FALSE
 	var/reflect_chance = 70
+
+/obj/item/weapon/shield/riot/mirror/pickup(mob/living/user)
+	. = ..()
+	if(!iscultist(user))
+		user.make_dizzy(70)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			to_chat(user, "<span class='warning'>Тебя вдруг охватил страх, и ты схватил зеркало за острую кромку, порезавшись!</span>")
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
+			BP.take_damage(5)
+		return FALSE
 
 /obj/item/weapon/shield/riot/mirror/IsReflect(def_zone, hol_dir, hit_dir)
 	if(prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir))
 		return TRUE
 	return FALSE
+
+/obj/item/clothing/glasses/cult
+	name = "blindfold"
+	desc = "Covers the eyes, preventing sight."
+	icon_state = "blindfold"
+	item_state = "blindfold"
+	darkness_view = -1
 
 /obj/item/clothing/head/culthood
 	name = "cult hood"
