@@ -591,7 +591,7 @@
 	name = "Stealth System"
 	desc = "System that makes hardsuit and you invisible."
 	item = /obj/item/rig_module/stealth
-	cost = 5
+	cost = 2
 	uplink_types = list("traitor")
 
 /datum/uplink_item/suits_armor/grenade_launcher
@@ -605,7 +605,7 @@
 	name = "Hardsuit Laser Rifle"
 	desc = "A self-charging laser rifle built right into your rig."
 	item = /obj/item/rig_module/mounted
-	cost = 8
+	cost = 15
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/suits_armor/modkit
