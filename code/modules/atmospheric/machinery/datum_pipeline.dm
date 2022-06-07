@@ -216,8 +216,6 @@
 		var/heat = thermal_conductivity*delta_temperature* \
 			(partial_heat_capacity * sharer_heat_capacity / (partial_heat_capacity + sharer_heat_capacity))
 
-		var/sharer_temperature_delta = heat / sharer_heat_capacity
-
 		air.temperature -= heat / total_heat_capacity
 		turf_air.temperature += heat / (sharer_heat_capacity * turf_air.group_multiplier)
 
@@ -263,16 +261,6 @@
 			PL |= S.PARENT2
 
 	equalize_gases(GL)
-
-// surface must be the surface area in m^2
-/datum/pipeline/proc/radiate_heat_to_space(surface, thermal_conductivity)
-	var/gas_density = air.total_moles/air.volume
-	thermal_conductivity *= min(gas_density / ( RADIATOR_OPTIMUM_PRESSURE / (R_IDEAL_GAS_EQUATION * GAS_CRITICAL_TEMPERATURE) ), 1) //mult by density ratio
-
-	var/heat_gain = get_thermal_radiation(air.temperature, surface, RADIATOR_EXPOSED_SURFACE_AREA_RATIO, thermal_conductivity)
-
-	air.add_thermal_energy(heat_gain)
-	update = TRUE
 
 //Returns the amount of heat gained while in space due to thermal radiation (usually a negative value)
 //surface - the surface area in m^2
