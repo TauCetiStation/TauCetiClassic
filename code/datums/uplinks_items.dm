@@ -566,10 +566,24 @@
 	cost = 3
 	uplink_types = list("traitor", "nuclear")
 
+/datum/uplink_item/suits_armor/advencedai
+	name = "Advanced Diagnostic System"
+	desc = "Deagnostic system with pre-installed AI with personality. Can automatically enable some modules based on user state."
+	item = /obj/item/rig_module/simple_ai/advanced
+	cost = 1
+	uplink_types = list("traitor", "nuclear")
+
 /datum/uplink_item/suits_armor/nuclear_generator
 	name = "Nuclear Generator"
 	desc = "Mini nuclear reactor for your rig, generates energy very quickly, but can explode if damaged."
 	item = /obj/item/rig_module/nuclear_generator
+	cost = 4
+	uplink_types = list("traitor", "nuclear")
+
+/datum/uplink_item/suits_armor/rcd
+	name = "Hardsuit RCD"
+	desc = "Stolen from some RCD station, allows you to create and disassemble walls, floors and airlocks."
+	item = /obj/item/rig_module/device/rcd
 	cost = 4
 	uplink_types = list("traitor", "nuclear")
 
@@ -582,10 +596,17 @@
 
 /datum/uplink_item/suits_armor/grenade_launcher
 	name = "Hardsuit Grenade Launcher"
-	desc = "Grenade laucher for your rig. The grenade launcher can be loaded by: flashbang, smoke grenade, EMP grenade and  syndicate minibomb"
+	desc = "Grenade laucher for your rig. The grenade launcher can be loaded by: flashbang, smoke grenade, EMP grenade and  syndicate minibomb."
 	item = /obj/item/rig_module/grenade_launcher
 	cost = 2
-	uplink_types = list("traitor", "nuclear")
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/suits_armor/laser
+	name = "Hardsuit Laser Rifle"
+	desc = "A self-charging laser rifle built right into your rig."
+	item = /obj/item/rig_module/mounted
+	cost = 8
+	uplink_types = list("nuclear")
 
 /datum/uplink_item/suits_armor/modkit
 	name = "Tajaran Hardsuit Modification Kit"
