@@ -56,7 +56,7 @@
 	var/datum/robot_component/C = components["armour"]
 	if(C && C.installed == 1)
 		return C
-	return 0
+	return FALSE
 
 /mob/living/silicon/robot/heal_bodypart_damage(brute, burn)
 	var/list/datum/robot_component/parts = get_damaged_components(brute,burn)

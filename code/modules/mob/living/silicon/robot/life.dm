@@ -5,7 +5,7 @@
 	if (notransform)
 		return
 
-	src.blinded = null
+	blinded = null
 
 	//Status updates, death etc.
 	clamp_values()
@@ -16,7 +16,7 @@
 	if(client)
 		handle_regular_hud_updates()
 		update_items()
-	if (src.stat != DEAD) //still using power
+	if (stat != DEAD) //still using power
 		add_ingame_age()
 		use_power()
 		process_killswitch()
@@ -41,34 +41,34 @@
 		var/datum/robot_component/C = components[V]
 		C.update_power_state()
 
-	if ( cell && is_component_functioning("power cell") && src.cell.charge > 0 )
-		if(src.module_state_1)
+	if ( cell && is_component_functioning("power cell") && cell.charge > 0 )
+		if(module_state_1)
 			cell_use_power(50) // 50W load for every enabled tool TODO: tool-specific loads
-		if(src.module_state_2)
+		if(module_state_2)
 			cell_use_power(50)
-		if(src.module_state_3)
+		if(module_state_3)
 			cell_use_power(50)
 
 		if(lights_on)
 			cell_use_power(30) 	// 30W light. Normal lights would use ~15W, but increased for balance reasons.
 
-		src.has_power = 1
+		has_power = TRUE
 	else
-		if (src.has_power)
+		if (has_power)
 			to_chat(src, "<span class='warning'>You are now running on emergency backup power.</span>")
-		src.has_power = 0
+		has_power = FALSE
 		if(lights_on) // Light is on but there is no power!
-			lights_on = 0
+			lights_on = FALSE
 			set_light(0)
 	diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/proc/handle_regular_status_updates()
 
-	if(src.camera && !scrambledcodes)
-		if(src.stat == DEAD || wires.is_index_cut(BORG_WIRE_CAMERA))
-			src.camera.status = 0
+	if(camera && !scrambledcodes)
+		if(stat == DEAD || wires.is_index_cut(BORG_WIRE_CAMERA))
+			camera.status = FALSE
 		else
-			src.camera.status = 1
+			camera.status = TRUE
 
 	updatehealth()
 
@@ -78,78 +78,78 @@
 	if(crawling)
 		Weaken(5)
 
-	if(health < config.health_threshold_dead && src.stat != DEAD) //die only once
+	if(health < config.health_threshold_dead && stat != DEAD) //die only once
 		death()
 
-	if (src.stat != DEAD) //Alive.
-		if (src.paralysis || src.stunned || src.weakened || !src.has_power) //Stunned etc.
-			src.stat = UNCONSCIOUS
-			if (src.stunned > 0)
+	if (stat != DEAD) //Alive.
+		if (paralysis || stunned || weakened || has_power) //Stunned etc.
+			stat = UNCONSCIOUS
+			if (stunned > 0)
 				AdjustStunned(-1)
-			if (src.weakened > 0)
+			if (weakened > 0)
 				AdjustWeakened(-1)
-			if (src.paralysis > 0)
+			if (paralysis > 0)
 				AdjustParalysis(-1)
-				src.blinded = 1
+				blinded = TRUE
 			else
-				src.blinded = 0
+				blinded = FALSE
 
 		else	//Not stunned.
-			src.stat = CONSCIOUS
+			stat = CONSCIOUS
 
 	else //Dead.
-		src.blinded = 1
-		src.stat = DEAD
+		blinded = TRUE
+		stat = DEAD
 
-	if (src.stuttering > 0)
+	if (stuttering > 0)
 		AdjustStuttering(-1)
 
-	if (src.eye_blind)
-		src.eye_blind--
-		src.blinded = 1
+	if (eye_blind)
+		eye_blind--
+		blinded = TRUE
 
-	if (src.ear_deaf > 0) src.ear_deaf--
-	if (src.ear_damage < 25)
-		src.ear_damage -= 0.05
-		src.ear_damage = max(src.ear_damage, 0)
+	if (ear_deaf > 0) src.ear_deaf--
+	if (ear_damage < 25)
+		ear_damage -= 0.05
+		ear_damage = max(src.ear_damage, 0)
 
-	src.density = !( src.lying )
+	density = !lying
 
-	if ((src.sdisabilities & BLIND))
-		src.blinded = 1
-	if ((src.sdisabilities & DEAF))
-		src.ear_deaf = 1
+	if ((sdisabilities & BLIND))
+		blinded = TRUE
+	if ((sdisabilities & DEAF))
+		ear_deaf = TRUE
 
-	if (src.eye_blurry > 0)
+	if (eye_blurry > 0)
 		adjustBlurriness(-1)
 
-	if (src.druggy > 0)
-		src.druggy--
-		src.druggy = max(0, src.druggy)
+	if (druggy > 0)
+		druggy--
+		druggy = max(0, druggy)
 
 	AdjustConfused(-1)
 	AdjustDrunkenness(-1)
 
 	//update the state of modules and components here
-	if (src.stat != CONSCIOUS)
+	if (stat != CONSCIOUS)
 		uneq_all()
 
 	if(!is_component_functioning("radio"))
-		radio.on = 0
+		radio.on = FALSE
 	else
-		radio.on = 1
+		radio.on = TRUE
 
 	if(is_component_functioning("camera"))
-		if(!src.eye_blind)
-			src.blinded = 0
+		if(!eye_blind)
+			blinded = FALSE
 	else
-		src.blinded = 1
+		blinded = TRUE
 
 	if(!is_component_functioning("actuator"))
 		Paralyse(3)
 
 
-	return 1
+	return TRUE
 
 /mob/living/silicon/robot/update_sight()
 	if(!..())
@@ -178,7 +178,7 @@
 
 /mob/living/silicon/robot/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return FALSE
 
 	regular_hud_updates()
 	update_sight()
@@ -202,8 +202,8 @@
 		else
 			healths.icon_state = "health7"
 
-	if (src.cell)
-		var/cellcharge = src.cell.charge/src.cell.maxcharge
+	if(cell)
+		var/cellcharge = cell.charge/cell.maxcharge
 		switch(cellcharge)
 			if(0.75 to INFINITY)
 				clear_alert("charge")
@@ -220,29 +220,29 @@
 
 	..()
 
-	return 1
+	return TRUE
 
 /mob/living/silicon/robot/proc/update_items()
-	if (src.client)
-		src.client.screen -= src.contents
-		for(var/obj/I in src.contents)
+	if (client)
+		client.screen -= contents
+		for(var/obj/I in contents)
 			if(I && !(istype(I,/obj/item/weapon/stock_parts/cell) || istype(I,/obj/item/device/radio)  || istype(I,/obj/machinery/camera) || isMMI(I)))
-				src.client.screen += I
-	if(src.module_state_1)
-		src.module_state_1:screen_loc = ui_inv1
-	if(src.module_state_2)
-		src.module_state_2:screen_loc = ui_inv2
-	if(src.module_state_3)
-		src.module_state_3:screen_loc = ui_inv3
+				client.screen += I
+	if(module_state_1)
+		module_state_1:screen_loc = ui_inv1
+	if(module_state_2)
+		module_state_2:screen_loc = ui_inv2
+	if(module_state_3)
+		module_state_3:screen_loc = ui_inv3
 	updateicon()
 
 /mob/living/silicon/robot/proc/process_killswitch()
 	if(killswitch)
 		killswitch_time --
 		if(killswitch_time <= 0)
-			if(src.client)
+			if(client)
 				to_chat(src, "<span class='danger'>Killswitch Activated</span>")
-			killswitch = 0
+			killswitch = TRUE
 			spawn(5)
 				gib()
 
@@ -251,9 +251,9 @@
 		uneq_all()
 		weaponlock_time --
 		if(weaponlock_time <= 0)
-			if(src.client)
+			if(client)
 				to_chat(src, "<span class='danger'>Weapon Lock Timed Out!</span>")
-			weapon_lock = 0
+			weapon_lock = FALSE
 			weaponlock_time = 120
 
 /mob/living/silicon/robot/update_canmove()

@@ -66,7 +66,7 @@
 	deploy_paper(get_turf(src))
 
 /obj/item/weapon/form_printer/proc/deploy_paper(turf/T)
-	T.visible_message("<span class='notice'>\The [src.loc] dispenses a sheet of crisp white paper.</span>")
+	T.visible_message("<span class='notice'>\The [loc] dispenses a sheet of crisp white paper.</span>")
 	new /obj/item/weapon/paper(T)
 
 //Personal shielding for the combat module.
@@ -104,15 +104,15 @@
 /obj/item/device/lustmodule/attack_self(mob/user)
 	if(uses > 0)
 		for(var/mob/living/carbon/slime/slime in viewers(get_turf_loc(user), null))
-			slime.tame = 0
-			slime.rabid = 1
+			slime.tame = FALSE
+			slime.rabid = TRUE
 			user.visible_message("<span class='warning'>The [slime] is driven into a frenzy!.</span>")
 		uses -= 1
 		to_chat(user, "Bloodlust emitter sends a pulse.")
 	else
 		to_chat(user, "You have spent device's capabilities.")//To limit number of uses.
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/pickaxe/cyb
 	name = "cyborg pickaxe"

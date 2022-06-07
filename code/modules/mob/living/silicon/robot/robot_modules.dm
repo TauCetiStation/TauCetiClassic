@@ -39,10 +39,10 @@
 
 
 /obj/item/weapon/robot_module/proc/respawn_consumable(mob/living/silicon/robot/R)
-	var/obj/item/device/flash/F = locate() in src.modules
+	var/obj/item/device/flash/F = locate() in modules
 	if(F)
 		if(F.broken)
-			F.broken = 0
+			F.broken = FALSE
 			F.times_used = 0
 			F.icon_state = "flash"
 		else if(F.times_used)
@@ -51,11 +51,11 @@
 	if(!stacktypes || !stacktypes.len) return
 
 	for(var/T in stacktypes)
-		var/O = locate(T) in src.modules
+		var/O = locate(T) in modules
 		var/obj/item/stack/S = O
 
 		if(!S)
-			src.modules -= null
+			modules -= null
 			S = new T(src, 1)
 			add_item(S)
 
@@ -109,7 +109,7 @@
 
 /obj/item/weapon/robot_module/standard/respawn_consumable(mob/living/silicon/robot/R)
 	..()
-	var/obj/item/weapon/melee/baton/B = locate() in src.modules
+	var/obj/item/weapon/melee/baton/B = locate() in modules
 	if(B.charges < 10)
 		B.charges += 1
 
@@ -162,7 +162,7 @@
 	if(emag)
 		var/obj/item/weapon/reagent_containers/spray/PS = emag
 		PS.reagents.add_reagent("pacid", 2)
-	var/obj/item/weapon/reagent_containers/syringe/S = locate() in src.modules
+	var/obj/item/weapon/reagent_containers/syringe/S = locate() in modules
 	if(S.mode == 2)
 		S.reagents.clear_reagents()
 		S.mode = initial(S.mode)
@@ -223,14 +223,14 @@
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
 	..()
-	var/obj/item/weapon/gun/energy/taser/cyborg/T = locate() in src.modules
+	var/obj/item/weapon/gun/energy/taser/cyborg/T = locate() in modules
 	if(T.power_supply.charge < T.power_supply.maxcharge)
 		var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
 		T.power_supply.give(S.e_cost)
 		T.update_icon()
 	else
 		T.charge_tick = 0
-	var/obj/item/weapon/melee/baton/B = locate() in src.modules
+	var/obj/item/weapon/melee/baton/B = locate() in modules
 	if(B.charges < 10)
 		B.charges += 1
 
@@ -252,10 +252,10 @@
 
 /obj/item/weapon/robot_module/janitor/respawn_consumable(mob/living/silicon/robot/R)
 	..()
-	var/obj/item/device/lightreplacer/LR = locate() in src.modules
+	var/obj/item/device/lightreplacer/LR = locate() in modules
 	LR.Charge(R)
 	if(src.emag)
-		var/obj/item/weapon/reagent_containers/spray/S = src.emag
+		var/obj/item/weapon/reagent_containers/spray/S = emag
 		S.reagents.add_reagent("lube", 2)
 
 /obj/item/weapon/robot_module/butler
@@ -309,10 +309,10 @@
 
 /obj/item/weapon/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R)
 	..()
-	var/obj/item/weapon/reagent_containers/food/condiment/enzyme/E = locate() in src.modules
+	var/obj/item/weapon/reagent_containers/food/condiment/enzyme/E = locate() in modules
 	E.reagents.add_reagent("enzyme", 2)
-	if(src.emag)
-		var/obj/item/weapon/reagent_containers/food/drinks/bottle/beer/B = src.emag
+	if(emag)
+		var/obj/item/weapon/reagent_containers/food/drinks/bottle/beer/B = emag
 		B.reagents.add_reagent("beer2", 2)
 
 /obj/item/weapon/robot_module/miner
@@ -449,10 +449,10 @@
 	return	//not much ROM to spare in that tiny microprocessor!
 
 /obj/item/weapon/robot_module/drone/respawn_consumable(mob/living/silicon/robot/R)
-	var/obj/item/weapon/reagent_containers/spray/cleaner/C = locate() in src.modules
+	var/obj/item/weapon/reagent_containers/spray/cleaner/C = locate() in modules
 	C.reagents.add_reagent("cleaner", 3)
 
-	var/obj/item/device/lightreplacer/LR = locate() in src.modules
+	var/obj/item/device/lightreplacer/LR = locate() in modules
 	LR.Charge(R)
 
 	..()
@@ -461,9 +461,9 @@
 
 //checks whether this item is a module of the robot it is located in.
 /obj/item/proc/is_robot_module()
-	if (!isrobot(src.loc))
-		return 0
+	if (!isrobot(loc))
+		return FALSE
 
-	var/mob/living/silicon/robot/R = src.loc
+	var/mob/living/silicon/robot/R = loc
 
 	return (src in R.module.modules)

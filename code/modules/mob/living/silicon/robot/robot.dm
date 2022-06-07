@@ -11,7 +11,7 @@
 
 	typing_indicator_type = "robot"
 
-	var/lights_on = 0 // Is our integrated light on?
+	var/lights_on = FALSE // Is our integrated light on?
 	var/used_power_this_tick = 0
 	var/sight_mode = 0
 	var/custom_name = ""
@@ -46,25 +46,23 @@
 
 	var/obj/item/device/mmi/mmi = null
 
-	var/opened = 0
-	var/emagged = 0
-	var/wiresexposed = 0
-	var/locked = 1
-	var/has_power = 1
+	var/opened = FALSE
+	var/emagged = FALSE
+	var/wiresexposed = FALSE
+	var/locked = TRUE
+	var/has_power = TRUE
 	var/list/req_access = list(access_robotics)
 	var/ident = 0
 	//var/list/laws = list()
 	var/modtype = "Default"
-	var/lower_mod = 0
-	var/jetpack = 0
+	var/jetpack = FALSE
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail = null
 	var/datum/effect/effect/system/spark_spread/spark_system //So they can initialize sparks whenever/N
-	var/jeton = 0
-	var/killswitch = 0
+	var/killswitch = FALSE
 	var/killswitch_time = 60
-	var/weapon_lock = 0
+	var/weapon_lock = FALSE
 	var/weaponlock_time = 120
-	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
+	var/lawupdate = TRUE //Cyborgs will sync their laws with their AI by default
 	var/lawcheck[1] //For stating laws.
 	var/ioncheck[1] //Ditto.
 	var/lockcharge //Used when locking down a borg to preserve cell charge
@@ -102,7 +100,7 @@
 		camera.c_tag = real_name
 		camera.replace_networks(list("SS13","Robots"))
 		if(wires.is_index_cut(BORG_WIRE_CAMERA))
-			camera.status = 0
+			camera.status = FALSE
 
 	initialize_components()
 	// Create all the robot parts.
@@ -143,9 +141,9 @@
 			connected_ai.connected_robots += src
 			lawsync()
 			photosync()
-			lawupdate = 1
+			lawupdate = TRUE
 	else
-		lawupdate = 0
+		lawupdate = FALSE
 
 	playsound(src, 'sound/voice/liveagain.ogg', VOL_EFFECTS_MASTER)
 
@@ -364,7 +362,7 @@
 /mob/living/silicon/robot/proc/Namepick()
 	set waitfor = FALSE
 	if(custom_name)
-		return 0
+		return FALSE
 	var/newname
 	newname = sanitize_safe(input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
 	if (newname)
@@ -437,18 +435,18 @@
 
 	var/datum/robot_component/C = components[toggle]
 	if(C.toggled)
-		C.toggled = 0
+		C.toggled = FALSE
 		to_chat(src, "<span class='warning'>You disable [C.name].</span>")
 	else
-		C.toggled = 1
+		C.toggled = TRUE
 		to_chat(src, "<span class='warning'>You enable [C.name].</span>")
 
 /mob/living/silicon/robot/blob_act()
 	if (stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
@@ -461,7 +459,7 @@
 		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
 		if(malf?.malf_mode_declared)
 			stat(null, "Time left: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
-	return 0
+	return FALSE
 
 
 // update the status screen display
@@ -496,12 +494,12 @@
 		to_chat(usr, "<span class='warning'>Невозможно заблокировать интерфейс, если открыта панель.</span>")
 		emote("buzz")
 		return
-	
+
 	if(!do_after(usr, 10, target = usr))
 		return
-	
+
 	if(locked)
-		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")		
+		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")
 	else
 		to_chat(usr, "<span class='notice'>Интерфейс заблокирован.</span>")
 
@@ -518,22 +516,22 @@
 		to_chat(usr, "<span class='warning'>Невозможно открыть панель, если заблокирован интерфейс.</span>")
 		emote("buzz")
 		return
-	
+
 	if(!do_after(usr, 10, target = usr))
 		return
-	
+
 	if(opened)
 		to_chat(usr, "<span class='notice'>Панель закрыта.</span>")
 		playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
 	else
 		to_chat(usr, "<span class='notice'>Панель открыта.</span>")
 		playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
-	
+
 	opened = !opened
 	updateicon()
 
 /mob/living/silicon/robot/restrained()
-	return 0
+	return FALSE
 
 /mob/living/silicon/robot/airlock_crush_act()
 	..()
@@ -640,7 +638,7 @@
 			if(cell)
 				to_chat(user, "You close the cover.")
 				playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
-				opened = 0
+				opened = FALSE
 				updateicon()
 			else if(wiresexposed && wires.is_all_cut())
 				//Cell is out, wires are exposed, remove MMI, produce damaged chassis, baleet original mob.
@@ -680,7 +678,7 @@
 					I.brute = C.brute_damage
 					I.burn = C.electronics_damage
 
-				I.loc = src.loc
+				I.loc = loc
 
 				if(C.installed == 1)
 					C.uninstall()
@@ -692,7 +690,7 @@
 			else
 				to_chat(user, "You open the cover.")
 				playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
-				opened = 1
+				opened = TRUE
 				updateicon()
 
 	else if (istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
@@ -760,7 +758,7 @@
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
 			to_chat(usr, "You must access the borgs internals!")
-		else if(!src.module && U.require_module)
+		else if(!module && U.require_module)
 			to_chat(usr, "The borg must choose a module before he can be upgraded!")
 		else if(U.locked)
 			to_chat(usr, "The upgrade is locked and cannot be used yet!")
@@ -777,69 +775,55 @@
 			spark_system.start()
 		return ..()
 /mob/living/silicon/robot/emag_act(mob/user)
-	if(!opened)//Cover is closed
-		if(locked)
-			if(prob(90))
-				to_chat(user, "You emag the cover lock.")
-				locked = 0
-			else
-				to_chat(user, "You fail to emag the cover lock.")
-				to_chat(src,  "Hack attempt detected.")
-		else
-			to_chat(user, "The cover is already unlocked.")
-		return TRUE
-
-	if(opened)//Cover is open
-		if(emagged)
-			return FALSE//Prevents the X has hit Y with Z message also you cant emag them twice
-		if(wiresexposed)
-			to_chat(user, "You must close the panel first")
-			return FALSE
-		else
-			sleep(6)
-			if(prob(50))
-				throw_alert("hacked", /atom/movable/screen/alert/hacked)
-				emagged = 1
-				lawupdate = 0
-				set_ai_link(null)
-				to_chat(user, "You emag [src]'s interface.")
-				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden. [ADMIN_JMP(user)]")
-				log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-				clear_supplied_laws()
-				clear_inherent_laws()
-				laws = new /datum/ai_laws/syndicate_override
-				var/time = time2text(world.realtime,"hh:mm:ss")
-				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-				set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
-				to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
-				sleep(20)
-				playsound_local(src, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
-				to_chat(src, "<span class='warning'>Initiating diagnostics...</span>")
-				sleep(6)
-				to_chat(src, "<span class='warning'>SynBorg v1.7.1 loaded.</span>")
-				sleep(13)
-				to_chat(src, "<span class='warning'>LAW SYNCHRONISATION ERROR</span>")
-				sleep(9)
-				playsound_local(src, 'sound/rig/longbeep.ogg', VOL_EFFECTS_MASTER)
-				to_chat(src, "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>")
-				sleep(16)
-				to_chat(src, "<span class='warning'>> N</span>")
-				sleep(8)
-				to_chat(src, "<span class='warning'>ERRORERRORERROR</span>")
-				playsound_local(src, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER)
-				to_chat(src, "<b>Obey these laws:</b>")
-				laws.show_laws(src)
-				to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
-				if(src.module && istype(src.module, /obj/item/weapon/robot_module/miner))
-					for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
-						module.remove_item(D)
-					var/obj/item/weapon/pickaxe/drill/diamond_drill/D = new(module)
-					module.add_item(D)
-				updateicon()
-			else
-				to_chat(user, "You fail to hack [src]'s interface.")
-				to_chat(src, "Hack attempt detected.")
-		return TRUE
+	if(emagged)
+		return FALSE//Prevents the X has hit Y with Z message also you cant emag them twice
+	if(wiresexposed)
+		to_chat(user, "You must close the panel first")
+		return FALSE
+	sleep(6)
+	if(prob(50))
+		throw_alert("hacked", /atom/movable/screen/alert/hacked)
+		emagged = TRUE
+		lawupdate = FALSE
+		set_ai_link(null)
+		to_chat(user, "You emag [src]'s interface.")
+		message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden. [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+		clear_supplied_laws()
+		clear_inherent_laws()
+		laws = new /datum/ai_laws/syndicate_override
+		var/time = time2text(world.realtime,"hh:mm:ss")
+		lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+		set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+		to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
+		sleep(20)
+		playsound_local(src, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
+		to_chat(src, "<span class='warning'>Initiating diagnostics...</span>")
+		sleep(6)
+		to_chat(src, "<span class='warning'>SynBorg v1.7.1 loaded.</span>")
+		sleep(13)
+		to_chat(src, "<span class='warning'>LAW SYNCHRONISATION ERROR</span>")
+		sleep(9)
+		playsound_local(src, 'sound/rig/longbeep.ogg', VOL_EFFECTS_MASTER)
+		to_chat(src, "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>")
+		sleep(16)
+		to_chat(src, "<span class='warning'>> N</span>")
+		sleep(8)
+		to_chat(src, "<span class='warning'>ERRORERRORERROR</span>")
+		playsound_local(src, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER)
+		to_chat(src, "<b>Obey these laws:</b>")
+		laws.show_laws(src)
+		to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
+		if(module && istype(module, /obj/item/weapon/robot_module/miner))
+			for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in module.modules)
+				module.remove_item(D)
+			var/obj/item/weapon/pickaxe/drill/diamond_drill/D = new(module)
+			module.add_item(D)
+		updateicon()
+	else
+		to_chat(user, "You fail to hack [src]'s interface.")
+		to_chat(src, "Hack attempt detected.")
+	return TRUE
 
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/attacker)
 	add_fingerprint(attacker)
@@ -869,27 +853,27 @@
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
 		if(check_access(H.get_active_hand()) || check_access(H.wear_id))
-			return 1
+			return TRUE
 	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
 		if(george.get_active_hand() && istype(george.get_active_hand(), /obj/item/weapon/card/id) && check_access(george.get_active_hand()))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/silicon/robot/proc/check_access(obj/item/weapon/card/id/I)
 	if(!istype(req_access, /list)) //something's very wrong
-		return 1
+		return TRUE
 
 	var/list/L = req_access
 	if(!L.len) //no requirements
-		return 1
+		return TRUE
 	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
-		return 0
+		return FALSE
 	for(var/req in req_access)
 		if(req in I.access) //have one of the required accesses
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /mob/living/silicon/robot/proc/updateicon()
 
@@ -1000,10 +984,10 @@
 
 	if (href_list["act"])
 		var/obj/item/O = locate(href_list["act"])
-		if (!istype(O) || !(O in src.module.modules))
+		if (!istype(O) || !(O in module.modules))
 			return
 
-		if(!((O in src.module.modules) || (O == src.module.emag)))
+		if(!((O in module.modules) || (O == module.emag)))
 			return
 
 		if(activated(O))
@@ -1084,7 +1068,7 @@
 				tile.clean_blood()
 				if (istype(tile, /turf/simulated))
 					var/turf/simulated/S = tile
-					S.dirt = 0
+					S.dirt = FALSE
 				for(var/A in tile)
 					if(istype(A, /obj/effect))
 						if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
@@ -1118,16 +1102,16 @@
 	return
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
-	if (src.connected_ai)
+	if (connected_ai)
 		set_ai_link(null)
-	lawupdate = 0
-	lockcharge = 0
-	canmove = 1
-	scrambledcodes = 1
+	lawupdate = FALSE
+	lockcharge = FALSE
+	canmove = TRUE
+	scrambledcodes = TRUE
 	//Disconnect it's camera so it's not so easily tracked.
-	if(src.camera)
+	if(camera)
 		camera.clear_all_networks()
-		cameranet.removeCamera(src.camera)
+		cameranet.removeCamera(camera)
 	update_manifest()
 
 
@@ -1162,16 +1146,16 @@
 /mob/living/silicon/robot/proc/cell_use_power(amount = 0)
 	// No cell inserted
 	if(!cell)
-		return 0
+		return FALSE
 
 	// Power cell is empty.
 	if(cell.charge == 0)
-		return 0
+		return TRUE
 
 	if(cell.use(amount * CELLRATE * CYBORG_POWER_USAGE_MULTIPLIER))
 		used_power_this_tick += amount * CYBORG_POWER_USAGE_MULTIPLIER
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/robot/proc/toggle_all_components()
 	for(var/V in components)
