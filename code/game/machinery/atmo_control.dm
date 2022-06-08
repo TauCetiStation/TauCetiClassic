@@ -120,7 +120,7 @@
 				if(data["temperature"])
 					sensor_part += "   <B>Temperature:</B> [data["temperature"]] K<BR>"
 				if(data["oxygen"]||data["phoron"]||data["nitrogen"]||data["carbon_dioxide"])
-					sensor_part += "   <B>Gas Composition :</B>"
+					sensor_part += "   <B>Gas Composition:</B>"
 					if(data["oxygen"])
 						sensor_part += "[data["oxygen"]]% O2; "
 					if(data["nitrogen"])
