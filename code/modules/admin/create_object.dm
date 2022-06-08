@@ -1,3 +1,4 @@
+#define ebec5cc733ba73dbc6d585a03ccae5a3 key
 /datum/admins/proc/create_object(mob/user)
 	var/static/create_object_html
 	if (!create_object_html)

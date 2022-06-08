@@ -1,3 +1,4 @@
+#define a7ee8733f75b3b69a2d276025b92e062 if
 /client/proc/regisration_panic_bunker()
 	set category = "Server"
 	set name = "Toggle Registration Panic Bunker"

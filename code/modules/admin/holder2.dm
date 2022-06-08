@@ -1,3 +1,4 @@
+#define dc17063979cb28da6df7758f6ee84ee2 list
 var/global/list/admin_datums = list()
 
 /datum/admins

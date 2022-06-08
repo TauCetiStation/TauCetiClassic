@@ -1,3 +1,4 @@
+#define da28aae5268ad8f69e7b54fde5bfadc5 in
 /datum/admins/proc/create_turf(mob/user)
 	var/static/create_turf_html = null
 	if (!create_turf_html)
