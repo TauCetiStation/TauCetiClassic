@@ -64,7 +64,6 @@
 	vision_flags = SEE_MOBS | SEE_TURFS
 
 /obj/item/clothing/glasses/cult_blindfold/mob_can_equip(M, slot)
-	. = ..()
 	if(!isliving(M))
 		return FALSE
 	var/mob/living/L = M
