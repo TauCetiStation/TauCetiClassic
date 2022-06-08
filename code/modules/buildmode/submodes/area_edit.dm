@@ -22,12 +22,13 @@
 	return ..()
 
 /datum/buildmode_mode/area_edit/show_help(client/c)
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
-	to_chat(c, "<span class='notice'>Left Mouse Button on obj/turf/mob = Select corner</span>")
-	to_chat(c, "<span class='notice'>Left Mouse Button + Alt on turf/obj/mob = Paint area/span>")
-	to_chat(c, "<span class='notice'>Right Mouse Button on obj/turf/mob = Select area to paint</span>")
-	to_chat(c, "<span class='notice'>Right Mouse Button on buildmode button = Create new area</span>")
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
+	to_chat(c,
+		"<span class='notice'>***********************************************************\n\
+		Left Mouse Button on obj/turf/mob = Select corner\n\
+		Left Mouse Button + Alt on turf/obj/mob = Paint area\n\
+		Right Mouse Button on obj/turf/mob = Select area to paint\n\
+		Right Mouse Button on buildmode button = Create new area\n\
+		***********************************************************</span>")
 
 /datum/buildmode_mode/area_edit/change_settings(client/c)
 	var/target_path = input(c, "Enter typepath:", "Typepath", "/area")

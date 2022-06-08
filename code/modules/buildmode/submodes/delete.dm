@@ -2,7 +2,8 @@
 	key = "delete"
 
 /datum/buildmode_mode/delete/show_help(client/c)
-	to_chat(c, "<span class='notice'>***********************************************************\n\
+	to_chat(c,
+		"<span class='notice'>***********************************************************\n\
 		Left Mouse Button on anything to delete it. If you break it, you buy it.\n\
 		Right Mouse Button on anything to delete everything of the type. Probably don\'t do this unless you know what you are doing.\n\
 		***********************************************************</span>")

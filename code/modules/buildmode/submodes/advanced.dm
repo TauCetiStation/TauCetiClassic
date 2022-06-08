@@ -6,15 +6,16 @@
 // of the currently selected path
 
 /datum/buildmode_mode/advanced/show_help(client/c)
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
-	to_chat(c, "<span class='notice'>Right Mouse Button on buildmode button = Set object type</span>")
-	to_chat(c, "<span class='notice'>Left Mouse Button + alt on turf/obj    = Copy object type</span>")
-	to_chat(c, "<span class='notice'>Left Mouse Button on turf/obj          = Place objects</span>")
-	to_chat(c, "<span class='notice'>Right Mouse Button                     = Delete objects</span>")
-	to_chat(c, "")
-	to_chat(c, "<span class='notice'>Use the button in the upper left corner to</span>")
-	to_chat(c, "<span class='notice'>change the direction of built objects.</span>")
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
+	to_chat(c,
+		"<span class='notice'>***********************************************************\n\
+		Right Mouse Button on buildmode button = Set object type\n\
+		Left Mouse Button + alt on turf/obj    = Copy object type\n\
+		Left Mouse Button on turf/obj          = Place objects\n\
+		Right Mouse Button                     = Delete objects\n\
+		\n\
+		Use the button in the upper left corner to\n\
+		change the direction of built objects.\n\
+		***********************************************************</span>")
 
 /datum/buildmode_mode/advanced/change_settings(client/c)
 	var/target_path = input(c, "Enter typepath:", "Typepath", "/obj/structure/closet")

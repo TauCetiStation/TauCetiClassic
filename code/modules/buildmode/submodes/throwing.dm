@@ -8,10 +8,11 @@
 	return ..()
 
 /datum/buildmode_mode/throwing/show_help(client/c)
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
-	to_chat(c, "<span class='notice'>Left Mouse Button on turf/obj/mob      = Select</span>")
-	to_chat(c, "<span class='notice'>Right Mouse Button on turf/obj/mob     = Throw</span>")
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
+	to_chat(c,
+		"<span class='notice'>***********************************************************\n\
+		Left Mouse Button on turf/obj/mob      = Select\n\
+		Right Mouse Button on turf/obj/mob     = Throw\n\
+		***********************************************************</span>")
 
 /datum/buildmode_mode/throwing/handle_click(client/c, params, obj/object)
 	var/list/modifiers = params2list(params)

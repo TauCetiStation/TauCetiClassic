@@ -5,10 +5,11 @@
 	var/generator_path
 
 /datum/buildmode_mode/mapgen/show_help(client/c)
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
-	to_chat(c, "<span class='notice'>Left Mouse Button on turf/obj/mob      = Select corner</span>")
-	to_chat(c, "<span class='notice'>Right Mouse Button on buildmode button = Select generator</span>")
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
+	to_chat(c,
+		"<span class='notice'>***********************************************************\n\
+		Left Mouse Button on turf/obj/mob      = Select corner\n\
+		Right Mouse Button on buildmode button = Select generator\n\
+		***********************************************************</span>")
 
 /datum/buildmode_mode/mapgen/change_settings(client/c)
 	var/list/gen_paths = subtypesof(/datum/map_generator)

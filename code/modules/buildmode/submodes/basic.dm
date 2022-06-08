@@ -2,15 +2,16 @@
 	key = "basic"
 
 /datum/buildmode_mode/basic/show_help(client/c)
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
-	to_chat(c, "<span class='notice'>Left Mouse Button        = Construct / Upgrade</span>")
-	to_chat(c, "<span class='notice'>Right Mouse Button       = Deconstruct / Delete / Downgrade</span>")
-	to_chat(c, "<span class='notice'>Left Mouse Button + ctrl = R-Window</span>")
-	to_chat(c, "<span class='notice'>Left Mouse Button + alt  = Airlock</span>")
-	to_chat(c, "")
-	to_chat(c, "<span class='notice'>Use the button in the upper left corner to</span>")
-	to_chat(c, "<span class='notice'>change the direction of built objects.</span>")
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
+	to_chat(c,
+		"<span class='notice'>***********************************************************\n\
+		Left Mouse Button        = Construct / Upgrade\n\
+		Right Mouse Button       = Deconstruct / Delete / Downgrade\n\
+		Left Mouse Button + ctrl = R-Window\n\
+		<span class='notice'>Left Mouse Button + alt  = Airlock\n\
+		\n\
+		Use the button in the upper left corner to\n\
+		change the direction of built objects.\n\
+		***********************************************************</span>")
 
 /datum/buildmode_mode/basic/handle_click(client/c, params, obj/object)
 	var/list/modifiers = params2list(params)

@@ -7,11 +7,12 @@
 	var/atom/objholder = null
 
 /datum/buildmode_mode/fill/show_help(client/c)
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
-	to_chat(c, "<span class='notice'>Left Mouse Button on turf/obj/mob      = Select corner</span>")
-	to_chat(c, "<span class='notice'>Left Mouse Button + Alt on turf/obj/mob = Delete region</span>")
-	to_chat(c, "<span class='notice'>Right Mouse Button on buildmode button = Select object type</span>")
-	to_chat(c, "<span class='notice'>***********************************************************</span>")
+	to_chat(c,
+		"<span class='notice'>***********************************************************\n\
+		Left Mouse Button on turf/obj/mob      = Select corner\n\
+		Left Mouse Button + Alt on turf/obj/mob = Delete region\n\
+		Right Mouse Button on buildmode button = Select object type\n\
+		***********************************************************</span>")
 
 /datum/buildmode_mode/fill/change_settings(client/c)
 	var/target_path = input(c, "Enter typepath:" ,"Typepath","/obj/structure/closet")
