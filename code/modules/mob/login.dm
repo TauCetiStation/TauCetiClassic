@@ -99,3 +99,7 @@
 		client.show_popup_menus = 0
 	else
 		client.show_popup_menus = 1
+
+	if(istype(client.click_intercept, /datum/buildmode))
+		var/datum/buildmode/B = client.click_intercept
+		B.post_login()

@@ -11,7 +11,7 @@
 		/datum/craft_or_build,\
 		/datum/stack_recipe,\
 		/datum/events,\
-		/obj/effect/bmode,\
+		/atom/movable/screen/buildmode,\
 		/datum/tgui_list_input,\
 		/datum/tgui_modal,\
 	)

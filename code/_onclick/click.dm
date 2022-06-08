@@ -65,8 +65,9 @@
 	if(notransform)
 		return
 
-	if(client.buildmode)
-		build_click(src, client.buildmode, params, A)
+	if(client.click_intercept)
+		var/datum/buildmode/B = client.click_intercept
+		B.InterceptClickOn(src, params, A)
 		return
 
 	var/list/modifiers = params2list(params)
