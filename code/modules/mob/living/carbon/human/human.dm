@@ -931,6 +931,8 @@
 			number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/night/shadowling))
 		number -= 1
+	if(istype(glasses, /obj/item/clothing/glasses/cult_blindfold))
+		number += 2
 	return number
 
 

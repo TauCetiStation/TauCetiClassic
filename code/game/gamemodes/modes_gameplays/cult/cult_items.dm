@@ -55,12 +55,30 @@
 		return TRUE
 	return FALSE
 
-/obj/item/clothing/glasses/cult
+/obj/item/clothing/glasses/cult_blindfold
 	name = "blindfold"
-	desc = "Covers the eyes, preventing sight."
+	desc = "Covers the eyes, preventing sight. Altough, something wrong with this one..."
 	icon_state = "blindfold"
 	item_state = "blindfold"
-	darkness_view = -1
+	hud_types = list(DATA_HUD_MEDICAL)
+	vision_flags = SEE_MOBS | SEE_TURFS
+
+/obj/item/clothing/glasses/cult_blindfold/mob_can_equip(M, slot)
+	. = ..()
+	if(isliving(M))
+		var/mob/living/L = M
+		if(!iscultist(L) && slot == SLOT_GLASSES)
+			to_chat(L, "<span class='cult'>Глаза не нужны?!</span>")
+			L.make_dizzy(30)
+			L.apply_effects(eyeblur=45)
+			if(ishuman(L))
+				var/mob/living/carbon/human/H = L
+				var/obj/item/organ/internal/eyes/E = H.organs_by_name[O_EYES]
+				E.damage += rand(4, 8)
+			L.flash_eyes()
+			L.drop_item()
+			return FALSE
+	return ..()
 
 /obj/item/clothing/head/culthood
 	name = "cult hood"

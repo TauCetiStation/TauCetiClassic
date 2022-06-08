@@ -199,6 +199,12 @@
 	building_type = /obj/item/weapon/melee/cultblade
 	favor_cost = 100
 
+/datum/building_agent/tool/cult/cult_blindfold
+	name = "Слепое Прозрение"
+	building_type = /obj/item/clothing/glasses/cult_blindfold
+	favor_cost = 120
+	piety_cost = 30
+
 /datum/building_agent/tool/cult/space_armor
 	name = "Набор Космической Брони"
 	building_type = /obj/item/weapon/storage/backpack/cultpack/space_armor
