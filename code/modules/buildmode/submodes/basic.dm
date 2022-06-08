@@ -7,7 +7,7 @@
 		Left Mouse Button        = Construct / Upgrade\n\
 		Right Mouse Button       = Deconstruct / Delete / Downgrade\n\
 		Left Mouse Button + ctrl = R-Window\n\
-		<span class='notice'>Left Mouse Button + alt  = Airlock\n\
+		Left Mouse Button + alt  = Airlock\n\
 		\n\
 		Use the button in the upper left corner to\n\
 		change the direction of built objects.\n\

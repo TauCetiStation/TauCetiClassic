@@ -72,8 +72,8 @@
 #define ADMIN_PPJMPFLW(user) "[ADMIN_PP(user)] [ADMIN_FLW(user)] [ADMIN_JMP(user)]"
 #define ADMIN_FULLMONTY_NONAME(user) "[ADMIN_QUE(user)] [ADMIN_PP(user)] [ADMIN_VV(user)] [ADMIN_SM(user)] [ADMIN_FLW(user)] [ADMIN_TP(user)]"
 
-#define COORD(src) "[src ? src.Admin_Coordinates_Readable() : "nonexistent location"]"
-#define AREACOORD(src) "[src ? src.Admin_Coordinates_Readable(TRUE) : "nonexistent location"]"
+#define COORD(A) "[A ? A.Admin_Coordinates_Readable() : "nonexistent location"]"
+#define AREACOORD(A) "[A ? A.Admin_Coordinates_Readable(TRUE) : "nonexistent location"]"
 
 /atom/proc/Admin_Coordinates_Readable(area_name, admin_jump_ref)
 	var/turf/T = Safe_COORD_Location()
