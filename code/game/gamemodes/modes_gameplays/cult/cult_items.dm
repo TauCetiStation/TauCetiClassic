@@ -60,7 +60,7 @@
 	desc = "Covers the eyes, preventing sight. Altough, something wrong with this one..."
 	icon_state = "blindfold"
 	item_state = "blindfold"
-	hud_types = list(DATA_HUD_MEDICAL)
+	hud_types = list(DATA_HUD_MEDICAL_ADV)
 	vision_flags = SEE_MOBS | SEE_TURFS
 
 /obj/item/clothing/glasses/cult_blindfold/mob_can_equip(M, slot)
