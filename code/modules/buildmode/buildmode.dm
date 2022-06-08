@@ -41,11 +41,13 @@
 	close_switchstates()
 	holder = null
 	QDEL_NULL(mode)
+	QDEL_LIST(buttons)
 	QDEL_LIST(modeswitch_buttons)
 	QDEL_LIST(dirswitch_buttons)
 	return ..()
 
 /datum/buildmode/proc/post_login()
+	holder.show_popup_menus = FALSE
 	// since these will get wiped upon login
 	holder.screen += buttons
 	// re-open the according switch mode

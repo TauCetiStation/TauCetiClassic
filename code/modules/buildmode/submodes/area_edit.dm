@@ -5,7 +5,7 @@
 	var/image/areaimage
 
 /datum/buildmode_mode/area_edit/New()
-	areaimage = image('icons/turf/areas.dmi', null, "yellow")
+	areaimage = image('icons/area/areas_misc.dmi', null, "yellow")
 	..()
 
 /datum/buildmode_mode/area_edit/enter_mode(datum/buildmode/BM)
@@ -73,4 +73,3 @@
 		for(var/turf/T in block(get_turf(cornerA),get_turf(cornerB)))
 			storedarea.contents.Add(T)
 		log_admin("Build Mode: [key_name(c)] set the area of the region from [AREACOORD(cornerA)] through [AREACOORD(cornerB)] to [storedarea].")
-

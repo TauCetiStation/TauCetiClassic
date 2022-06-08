@@ -20,7 +20,7 @@
 	var/alt_click = LAZYACCESS(modifiers, ALT_CLICK)
 	var/ctrl_click = LAZYACCESS(modifiers, CTRL_CLICK)
 
-	if(istype(object,/turf) && left_click && !alt_click && !ctrl_click)
+	if(isturf(object) && left_click && !alt_click && !ctrl_click)
 		var/turf/T = object
 		if(isspaceturf(object))
 			T.ChangeTurf(/turf/simulated/floor/plating)
@@ -38,10 +38,10 @@
 		else if(isobj(object))
 			qdel(object)
 		return
-	else if(istype(object,/turf) && alt_click && left_click)
+	else if(isturf(object) && alt_click && left_click)
 		log_admin("Build Mode: [key_name(c)] built an airlock at [AREACOORD(object)]")
 		new/obj/machinery/door/airlock(get_turf(object))
-	else if(istype(object,/turf) && ctrl_click && left_click)
+	else if(isturf(object) && ctrl_click && left_click)
 		var/obj/structure/window/reinforced/window
 		if(ISDIAGONALDIR(BM.build_dir))
 			window = new /obj/structure/window/reinforced(get_turf(object))
