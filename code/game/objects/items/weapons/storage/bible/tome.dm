@@ -198,7 +198,7 @@
 
 	var/turf/targeted_turf = get_step(src, user.dir)
 	for(var/atom/A in targeted_turf.contents)
-		if(A.density == 1)
+		if(A.density)
 			to_chat(user, "<span class='warning'>Что-то мешает построить!</span>")
 			return FALSE
 	if(ispath(choice.building_type, /turf))
