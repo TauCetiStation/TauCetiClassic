@@ -171,7 +171,7 @@
 		P.icon_state = "pylon_glow"
 		P.can_unwrench = FALSE
 	researching = TRUE
-	var/time_reduce = 2.2*sqrt(pylon_around.len)MINUTE //https://www.desmos.com/Calculator/2kclxsb9ld 1 pylon = 2 mins, 4 pyls = 4 mins, 10=7, 45=15
+	var/time_reduce = 2.2*sqrt(pylon_around.len)MINUTE //https://www.desmos.com/Calculator/acwqntgi7v 1 pylon = 2 mins, 4 pyls = 4 mins, 10=7, 45=15
 	end_research_time = max(1, world.time + research_time - time_reduce)
 	can_unwrench = FALSE
 	tech_timer = addtimer(end_activity, research_time - time_reduce, TIMER_STOPPABLE)
