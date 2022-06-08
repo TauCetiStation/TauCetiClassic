@@ -55,6 +55,7 @@
 /area/shuttle/arrival/velocity
 	name = "NTS Velocity"
 	icon_state = "shuttle2"
+	looped_ambience = 'sound/ambience/loop_velocity.ogg'
 
 /area/shuttle/arrival/velocity/Entered(mob/M)
 	..()

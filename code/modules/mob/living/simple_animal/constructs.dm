@@ -14,7 +14,6 @@
 	stop_automated_movement = TRUE
 	status_flags = CANPUSH
 	universal_speak = 1
-	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -32,6 +31,7 @@
 	has_arm = TRUE
 
 /mob/living/simple_animal/construct/atom_init()
+	attack_sound = SOUNDIN_PUNCH_MEDIUM
 	. = ..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
@@ -42,7 +42,7 @@
 	AddComponent(/datum/component/forcefield, "blood aura", 20, 5 SECONDS, 3 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
-	var/image/glow = image(icon, src, "glow_[icon_state]")
+	var/image/glow = image(icon, src, "glow_[icon_state]", ABOVE_LIGHTING_LAYER)
 	glow.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(glow)
 
@@ -98,13 +98,13 @@
 	speed = 3
 	w_class = SIZE_MASSIVE
 	environment_smash = 2
-	attack_sound = list('sound/weapons/punch3.ogg')
 	status_flags = 0
 	construct_spells = list(
 			/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall,
 			)
 
 /mob/living/simple_animal/construct/armoured/atom_init()
+	attack_sound = SOUNDIN_PUNCH_VERYHEAVY
 	. = ..()
 	var/obj/effect/effect/forcefield/rune/R = new
 	AddComponent(/datum/component/forcefield, "strong blood aura", 80, 5 SECONDS, 6 SECONDS, R, TRUE, TRUE)
@@ -172,7 +172,6 @@
 	attacktext = "ramm"
 	speed = 0
 	environment_smash = 2
-	attack_sound = list('sound/weapons/punch2.ogg')
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
@@ -181,6 +180,7 @@
 		)
 
 /mob/living/simple_animal/construct/builder/atom_init()
+	attack_sound = SOUNDIN_PUNCH_MEDIUM
 	. = ..()
 	var/datum/atom_hud/data/medical/adv/hud = global.huds[DATA_HUD_MEDICAL_ADV]
 	hud.add_hud_to(src)
@@ -202,10 +202,10 @@
 	speed = 5
 	environment_smash = 2
 	w_class = SIZE_MASSIVE
-	attack_sound = list('sound/weapons/punch4.ogg')
 	resize = 1.2
 
 /mob/living/simple_animal/construct/behemoth/atom_init()
+	attack_sound = SOUNDIN_PUNCH_HEAVY
 	. = ..()
 	var/obj/effect/effect/forcefield/rune/R = new
 	AddComponent(/datum/component/forcefield, "strong blood aura", 500, 30 SECONDS, 10 SECONDS, R, TRUE, TRUE)
@@ -271,9 +271,13 @@
 	melee_damage = 35
 	speed = -2
 	response_harm = "pinch"
-	attack_sound = 'sound/weapons/punch2.ogg'
 
 	sight = SEE_MOBS
+
+/mob/living/simple_animal/construct/proteon/atom_init()
+	attack_sound = SOUNDIN_PUNCH_HEAVY
+	. = ..()
+
 
 /////////////////////////////////////Charged Pylon not construct/////////////////////////////////
 /mob/living/simple_animal/hostile/pylon

@@ -13,14 +13,14 @@
 		var/attack_obj = attacker.get_unarmed_attack()
 		var/damage = attack_obj["damage"] * 2
 		if(!damage)
-			playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 			visible_message("<span class='warning'><B>[attacker] has attempted to punch [H]!</B></span>")
 			return TRUE
 
 		if(attacker.engage_combat(H, attacker.a_intent, damage)) // We did a combo-wombo of some sort.
 			return TRUE
 
-		playsound(H, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
+		playsound(H, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
 
 		H.visible_message("<span class='warning'><B>[attacker] has punched [H]!</B></span>")
 

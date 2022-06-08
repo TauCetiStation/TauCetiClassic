@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 37
+#define SAVEFILE_VERSION_MAX 38
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -227,14 +227,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 33)
 		S["parallax_theme"] << null
 
-	// I missed the runtime and the code didnt work and the version of savefile has changed
-	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
-	if(current_version < 35)
-		if(ignore_question && ignore_question.len)
-			var/list/diff = ignore_question - global.full_ignore_question
-			if(diff.len)
-				S["ignore_question"] << ignore_question - diff
-
 	if(current_version < 36)
 		var/datum/job/assistant/J = new
 
@@ -245,6 +237,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/list/deleted_hairstyles = list("Skrell Long Female Tentacles", "Skrell Zeke Female Tentacles", "Gold plated Skrell Male Tentacles", "Gold chained Skrell Female Tentacles", "Cloth draped Skrell Male Tentacles", "Cloth draped Skrell Female Tentacles")
 		if(h_style in deleted_hairstyles)
 			h_style = "Skrell Long Tentacles"
+
+	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
+	if(current_version < 38)
+		if(ignore_question && ignore_question.len)
+			var/list/diff = ignore_question - global.full_ignore_question
+			if(diff.len)
+				S["ignore_question"] << ignore_question - diff
+
+	if(current_version < 38)
+		if("Raider" in be_role)
+			be_role -= "Raider"
+
+		S["be_role"] << be_role
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
@@ -551,6 +556,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["citizenship"]         >> citizenship
 	S["faction"]             >> faction
 	S["religion"]            >> religion
+	S["vox_rank"]            >> vox_rank
 
 	S["uplinklocation"]      >> uplinklocation
 
@@ -619,6 +625,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!citizenship) citizenship = "None"
 	if(!faction)     faction =     "None"
 	if(!religion)    religion =    "None"
+	if(!vox_rank)    vox_rank =    "Larva"
 
 /datum/preferences/proc/random_character()
 	if(!path)
@@ -736,6 +743,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["citizenship"]         << citizenship
 	S["faction"]             << faction
 	S["religion"]            << religion
+	S["vox_rank"]            << vox_rank
 	S["uplinklocation"]      << uplinklocation
 
 	return 1

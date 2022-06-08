@@ -277,7 +277,7 @@ Contains helper procs for airflow, handled in /connection_group.
 	return
 
 /mob/living/carbon/human/airflow_hit(atom/A)
-	playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER, 25)
+	playsound(src, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER, 25)
 	var/obj/item/airbag/I = locate() in get_contents()
 	if(I)
 		I.deploy(src)

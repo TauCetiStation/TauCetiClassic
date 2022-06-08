@@ -231,6 +231,19 @@
 
 	global.full_ignore_question = get_list_of_keys_from_values_as_list_from_associative_list(special_roles_ignore_question)
 
+	global.all_skills = list()
+	for(var/skill_type in subtypesof(/datum/skill))
+		global.all_skills[skill_type] = new skill_type
+
+	global.all_skillsets = list()
+	for(var/skillset_type in subtypesof(/datum/skillset))
+		global.all_skillsets[skillset_type] = new skillset_type
+
+	global.skillset_names_aliases = list()
+	for(var/s in all_skillsets)
+		var/datum/skillset/skillset = all_skillsets[s]
+		global.skillset_names_aliases[skillset.name] = s
+
 	global.all_emotes = list()
 	for(var/emote_type in subtypesof(/datum/emote))
 		global.all_emotes[emote_type] = new emote_type

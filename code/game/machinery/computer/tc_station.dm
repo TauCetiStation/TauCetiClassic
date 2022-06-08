@@ -1,6 +1,4 @@
 var/global/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","Foxtrot","Zero", "Niner")
-#define INITIAL_NUCLEAR_TELECRYSTALS 60
-#define TELECRYSTALS_PER_ONE_OPERATIVE 9
 
 /obj/machinery/computer/telecrystals
 	name = "Telecrystal assignment station"
@@ -120,7 +118,7 @@ var/global/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","E
 	icon_state = "tcboss"
 	var/virgin = 1
 	var/scanrange = 10
-	var/storedcrystals = 0
+	var/storedcrystals = 30
 	var/list/TCstations = list()
 	var/list/transferlog = list()
 
@@ -133,18 +131,7 @@ var/global/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","E
 			TCstations += A
 			A.linkedboss = src
 	if(virgin)
-		getDangerous()
 		virgin = 0
-
-/obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
-	var/danger
-	var/active_players = length(player_list)
-	var/agent_numbers = clamp((active_players / 5), 2, 6)
-	storedcrystals = agent_numbers * TELECRYSTALS_PER_ONE_OPERATIVE + INITIAL_NUCLEAR_TELECRYSTALS
-	danger = active_players
-
-	while(!IS_MULTIPLE(++danger,10))//Just round up to the nearest multiple of ten.
-	storedcrystals += danger
 
 /////////
 
@@ -198,5 +185,3 @@ var/global/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","E
 
 	updateUsrDialog()
 
-#undef INITIAL_NUCLEAR_TELECRYSTALS
-#undef TELECRYSTALS_PER_ONE_OPERATIVE
