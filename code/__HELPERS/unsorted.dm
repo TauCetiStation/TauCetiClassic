@@ -870,6 +870,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return TRUE
 
 
+var/global/list/duplicate_forbidden_vars = list(
+	"tag", "area", "type", "loc", "locs", "vars", "verbs", "contents",
+	"x", "y", "z", "ckey", "key", "client", "stat",
+	"parent_type", "parent", "group", "power_supply", 
+	"bodyparts", "organs", "overlays_standing", "hud_list",
+	"actions", "appearance", "managed_overlays", "managed_vis_overlays", "implants",
+	"tgui_shared_states", "datum_components", "comp_lookup", "reagents"
+	)
+
 /proc/DuplicateObject(obj/original, perfectcopy = FALSE, sameloc = FALSE, atom/newloc = null)
 	if(!original)
 		return null
@@ -881,11 +890,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	else
 		O=new original.type(newloc)
 
-	if(perfectcopy)
-		if((O) && (original))
-			for(var/V in original.vars)
-				if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key")))
-					O.vars[V] = original.vars[V]
+	if(perfectcopy && O && original)
+		for(var/V in original.vars - global.duplicate_forbidden_vars)
+			if(islist(original.vars[V]))
+				var/list/L = original.vars[V]
+				O.vars[V] = L.Copy()
+			else if(istype(original.vars[V], /datum) || ismob(original.vars[V]))
+				continue // this would reference the original's object, that will break when it is used or deleted.
+			else
+				O.vars[V] = original.vars[V]
 	return O
 
 
