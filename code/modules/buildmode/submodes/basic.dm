@@ -23,8 +23,10 @@
 
 	if(isturf(object) && left_click && !alt_click && !ctrl_click)
 		var/turf/T = object
-		if(isspaceturf(object))
+		if(isenvironmentturf(object))
 			T.ChangeTurf(/turf/simulated/floor/plating)
+		else if(isplatingturf(object))
+			T.ChangeTurf(/turf/simulated/floor)
 		else if(isfloorturf(object))
 			T.ChangeTurf(/turf/simulated/wall)
 		else if(iswallturf(object))
@@ -35,7 +37,10 @@
 		log_admin("Build Mode: [key_name(c)] deleted [object] at [AREACOORD(object)]")
 		if(isturf(object))
 			var/turf/T = object
-			T.ChangeTurf(/turf/environment)
+			if(T.density) // wall
+				T.ChangeTurf(/turf/simulated/floor/plating)
+			else
+				T.ChangeTurf(/turf/environment)
 		else if(isobj(object))
 			qdel(object)
 		return
