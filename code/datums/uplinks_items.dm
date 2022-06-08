@@ -578,7 +578,7 @@
 	desc = "Mini nuclear reactor for your rig, generates energy very quickly, but can explode if damaged."
 	item = /obj/item/rig_module/nuclear_generator
 	cost = 4
-	uplink_types = list("traitor", "nuclear")
+	uplink_types = list("nuclear")
 
 /datum/uplink_item/suits_armor/rcd
 	name = "Hardsuit RCD"
@@ -596,7 +596,7 @@
 
 /datum/uplink_item/suits_armor/grenade_launcher
 	name = "Hardsuit Grenade Launcher"
-	desc = "Grenade laucher for your rig. The grenade launcher can be loaded by: flashbang, smoke grenade, EMP grenade and  syndicate minibomb."
+	desc = "Grenade laucher for your rig. The grenade launcher can be loaded by: flashbang, smoke grenade, EMP grenade and syndicate minibomb."
 	item = /obj/item/rig_module/grenade_launcher
 	cost = 2
 	uplink_types = list("nuclear")
