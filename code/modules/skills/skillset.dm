@@ -44,6 +44,4 @@
 	var/datum/skill/skill = get_skill(skill_name)
 	if (skill.value == SKILL_MIN_LEVEL)
 		return skill.value + 0.5
-	if (skill.value >=  SKILL_MAX_LEVEL - 1)
-		return skill.value - 1
 	return skill.value
