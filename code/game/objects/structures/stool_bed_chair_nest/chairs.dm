@@ -56,7 +56,7 @@
 	occupant.apply_effect(2, STUN, 0)
 	occupant.apply_effect(2, WEAKEN, 0)
 	occupant.apply_effect(6, STUTTER, 0)
-	playsound(src, 'sound/weapons/punch1.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_PUNCH_HEAVY), VOL_EFFECTS_MASTER)
 	if(isliving(A))
 		var/mob/living/victim = A
 		victim.apply_effect(4, STUN, 0)
