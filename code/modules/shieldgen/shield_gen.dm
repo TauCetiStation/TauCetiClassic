@@ -30,6 +30,7 @@
 							//2 use active power
 	idle_power_usage = 20
 	active_power_usage = 100
+	required_skills = list(/datum/skill/engineering/pro)
 
 /obj/machinery/shield_gen/atom_init()
 	field = list()
@@ -96,6 +97,7 @@
 			user.unset_machine()
 			user << browse(null, "window=shield_generator")
 			return
+
 	var/t = ""
 	if(locked && !isobserver(user))
 		t += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"
