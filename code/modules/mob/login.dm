@@ -101,4 +101,4 @@
 		client.show_popup_menus = 1
 
 	if(client.click_intercept)
-		M.client.click_intercept.post_login()
+		client.click_intercept.post_login()
