@@ -578,3 +578,101 @@
 	if(power_supply)
 		power_supply.maxcharge = 1500
 		power_supply.charge = 1500
+
+/obj/item/weapon/gun/medbeam
+	name = "prototype medical retrosynchronizer"
+	desc = "A prototype healgun, which slowly reverts organic matter to it's previous state, 'healing' it. Don't cross the streams!"
+	icon_state = "medigun"
+	item_state = "medigun"
+	var/mob/living/current_target
+	var/last_check = 0
+	var/check_delay = 10 //Check los as often as possible, max resolution is SSobj tick though
+	var/max_range = 8
+	var/active = FALSE
+	var/beam_state = "medbeam"
+	var/datum/beam/current_beam = null
+
+/obj/item/weapon/gun/medbeam/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/gun/medbeam/Destroy()
+	LoseTarget()
+	return ..()
+
+/obj/item/weapon/gun/medbeam/dropped(mob/user)
+	..()
+	LoseTarget()
+
+/obj/item/weapon/gun/medbeam/equipped(mob/user)
+	..()
+	LoseTarget()
+
+/obj/item/weapon/gun/medbeam/proc/LoseTarget()
+	if(active)
+		QDEL_NULL(current_beam)
+		active = FALSE
+	if(current_target)
+		UnregisterSignal(current_target, COMSIG_PARENT_QDELETING)
+	current_target = null
+
+/obj/item/weapon/gun/medbeam/Fire(atom/target, mob/living/user, params, reflex = 0)
+	if(isliving(user))
+		add_fingerprint(user)
+
+	if(current_target)
+		LoseTarget()
+	if(!isliving(target))
+		return
+
+	current_target = target
+	RegisterSignal(current_target, COMSIG_PARENT_QDELETING, .proc/LoseTarget)
+	active = TRUE
+	current_beam = new(user, current_target, time = 6000, beam_icon_state = beam_state, btype = /obj/effect/ebeam/medical)
+	INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
+	user.visible_message("<span class='notice'>[user] aims their [src] at [target]!</span>")
+	playsound(user, 'sound/weapons/guns/medbeam.ogg', VOL_EFFECTS_MASTER)
+
+/obj/item/weapon/gun/medbeam/process()
+	var/source = loc
+	if(!isliving(source))
+		LoseTarget()
+		return
+
+	if(!current_target)
+		LoseTarget()
+		return
+
+	if(world.time <= last_check + check_delay)
+		return
+
+	last_check = world.time
+
+	if(get_dist(source, current_target) > max_range || !check_trajectory(source, current_target, pass_flags = PASSTABLE, flags = 0))
+		LoseTarget()
+		to_chat(source, "<span class='warning'>You lose control of the beam!</span>")
+		return
+
+	if(current_target)
+		on_beam_tick(current_target)
+
+/obj/item/weapon/gun/medbeam/proc/on_beam_tick()
+	if(current_target.stat == DEAD)
+		LoseTarget()
+		return
+
+	current_target.adjustBruteLoss(-5)
+	current_target.adjustFireLoss(-5)
+	current_target.adjustToxLoss(-2)
+	current_target.adjustOxyLoss(-2)
+
+/obj/item/weapon/gun/medbeam/syndi
+	name = "ominous medical retrosynchronizer"
+	desc = "This medigun has no difference from it's Nanotrasen counterpart apart from color scheme. Sounds familiar."
+	icon_state = "medigun_syndi"
+	item_state = "medigun_syndi"
+	beam_state = "medbeam_syndi"
+
+/obj/effect/ebeam/medical
+	name = "medical beam"
+	icon_state = "medbeam"

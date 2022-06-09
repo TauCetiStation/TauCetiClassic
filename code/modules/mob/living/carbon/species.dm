@@ -390,7 +390,7 @@
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
 	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
 
-	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT - 30
 	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 20
 	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 440
 
@@ -557,7 +557,8 @@
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
 	replace_outfit = list(
-			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
+			/obj/item/clothing/mask/gas/syndicate = /obj/item/clothing/mask/gas/vox,
 			)
 
 /datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
@@ -581,12 +582,9 @@
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
 		H.leap_icon = new /atom/movable/screen/leap()
-		H.leap_icon.screen_loc = "CENTER+3:20,SOUTH:5"
 
 		if(H.hud_used)
-			H.hud_used.adding += H.leap_icon
-		if(H.client)
-			H.client.screen += H.leap_icon
+			H.leap_icon.add_to_hud(H.hud_used)
 
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
@@ -597,9 +595,7 @@
 	if(name != VOX_ARMALIS)
 		if(H.leap_icon)
 			if(H.hud_used)
-				H.hud_used.adding -= H.leap_icon
-			if(H.client)
-				H.client.screen -= H.leap_icon
+				H.leap_icon.remove_from_hud(H.hud_used)
 			QDEL_NULL(H.leap_icon)
 
 	else
@@ -1119,13 +1115,13 @@
 	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
 	var/damage = 0						// Extra empty hand attack damage.
 	var/damType = BRUTE
-	var/miss_sound = 'sound/weapons/punchmiss.ogg'
+	var/miss_sound = 'sound/effects/mob/hits/miss_1.ogg'
 	var/sharp = FALSE
 	var/edge = FALSE
 	var/list/attack_sound
 
 /datum/unarmed_attack/New()
-	attack_sound = SOUNDIN_PUNCH
+	attack_sound = SOUNDIN_PUNCH_MEDIUM
 
 /datum/unarmed_attack/proc/damage_flags()
 	return (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)

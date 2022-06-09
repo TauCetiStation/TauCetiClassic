@@ -12,6 +12,7 @@
 	var/power_use = 25
 	var/obj/effect/suspension_field/suspension_field
 	var/list/secured_mobs = list()
+	required_skills = list(/datum/skill/research/trained)
 
 /obj/machinery/suspension_gen/atom_init()
 	cell = new/obj/item/weapon/stock_parts/cell/high(src)
