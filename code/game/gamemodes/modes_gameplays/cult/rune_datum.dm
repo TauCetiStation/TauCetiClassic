@@ -65,7 +65,7 @@
 	var/list/companions = holder.handle_teleport_grab(target, user, FALSE, GRAB_NECK)
 	LAZYINITLIST(companions)
 	user.forceMove(target)
-	user.eject_from_wall(TRUE, companions = companions)
+	user.eject_from_wall(gib = FALSE, companions = companions)
 
 	for(var/mob/M in companions + user)
 		if(M.client)
