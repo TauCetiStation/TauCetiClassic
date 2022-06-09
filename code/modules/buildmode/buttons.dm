@@ -25,7 +25,6 @@
 		bd.mode.change_settings(usr.client)
 
 	update_icon()
-	return 1
 
 /atom/movable/screen/buildmode/mode/update_icon()
 	icon_state = bd.mode.get_button_iconstate()
@@ -38,7 +37,6 @@
 
 /atom/movable/screen/buildmode/help/Click(location, control, params)
 	bd.mode.show_help(usr.client)
-	return 1
 
 /atom/movable/screen/buildmode/bdir
 	icon_state = "build"
@@ -52,7 +50,6 @@
 /atom/movable/screen/buildmode/bdir/Click()
 	bd.toggle_dirswitch()
 	update_icon()
-	return 1
 
 // used to switch between modes
 /atom/movable/screen/buildmode/modeswitch
@@ -66,7 +63,6 @@
 
 /atom/movable/screen/buildmode/modeswitch/Click()
 	bd.change_mode(modetype)
-	return 1
 
 // used to switch between dirs
 /atom/movable/screen/buildmode/dirswitch
@@ -79,7 +75,6 @@
 
 /atom/movable/screen/buildmode/dirswitch/Click()
 	bd.change_dir(dir)
-	return 1
 
 /atom/movable/screen/buildmode/quit
 	icon_state = "buildquit"
@@ -88,4 +83,3 @@
 
 /atom/movable/screen/buildmode/quit/Click()
 	bd.quit()
-	return 1

@@ -8,7 +8,7 @@
 	var/client/holder
 
 	// SECTION UI
-	var/list/buttons
+	var/list/buttons = list()
 
 	// Switching management
 	var/switch_state = BM_SWITCHSTATE_NONE
@@ -23,7 +23,6 @@
 /datum/buildmode/New(client/c)
 	mode = new /datum/buildmode_mode/basic(src)
 	holder = c
-	buttons = list()
 	holder.show_popup_menus = FALSE
 	create_buttons()
 	holder.screen += buttons
@@ -132,16 +131,12 @@
 	build_dir = newdir
 	close_dirswitch()
 	dirbutton.update_icon()
-	return 1
 
 /datum/buildmode/proc/InterceptClickOn(mob/user, params, atom/object)
 	mode.handle_click(user.client, params, object)
 	return TRUE // no doing underlying actions
 
-/proc/togglebuildmode(mob/M in player_list)
-	set name = "Toggle Build Mode"
-	set category = "Event"
-
+/proc/togglebuildmode(mob/M)
 	if(M.client)
 		if(M.client.click_intercept)
 			M.client.click_intercept.quit()

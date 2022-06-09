@@ -10,13 +10,12 @@
 
 	// would corner selection work better as a component?
 	var/use_corner_selection = FALSE
-	var/list/preview
+	var/list/preview = list()
 	var/turf/cornerA
 	var/turf/cornerB
 
 /datum/buildmode_mode/New(datum/buildmode/BM)
 	src.BM = BM
-	preview = list()
 	return ..()
 
 /datum/buildmode_mode/Destroy()
@@ -40,7 +39,6 @@
 
 /datum/buildmode_mode/proc/change_settings(client/c)
 	to_chat(c, "<span class='warning'>There is no configuration available for this mode</span>")
-	return
 
 /datum/buildmode_mode/proc/Reset()
 	deselect_region()
@@ -90,7 +88,6 @@
 		else
 			to_chat(c, "<span class='notice'>Region selection canceled!</span>")
 			deselect_region()
-	return
 
 /datum/buildmode_mode/proc/handle_selected_area(client/c, params)
 

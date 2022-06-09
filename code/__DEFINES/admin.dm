@@ -81,7 +81,7 @@
 
 // +- tg placeholder
 /atom/proc/Safe_COORD_Location()
-	return get_step(src, 0) //resolve where the thing is.
+	return get_turf(src) //resolve where the thing is.
 
 /turf/Safe_COORD_Location()
 	return src
