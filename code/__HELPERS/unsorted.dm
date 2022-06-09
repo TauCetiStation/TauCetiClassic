@@ -869,16 +869,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					continue moving
 	return TRUE
 
-
-var/global/list/duplicate_forbidden_vars = list(
-	"tag", "area", "type", "loc", "locs", "vars", "verbs", "contents",
-	"x", "y", "z", "ckey", "key", "client", "stat",
-	"parent_type", "parent", "group", "power_supply", 
-	"bodyparts", "organs", "overlays_standing", "hud_list",
-	"actions", "appearance", "managed_overlays", "managed_vis_overlays", "implants",
-	"tgui_shared_states", "datum_components", "comp_lookup", "reagents"
-	)
-
 /proc/DuplicateObject(obj/original, perfectcopy = FALSE, sameloc = FALSE, atom/newloc = null)
 	if(!original)
 		return null
