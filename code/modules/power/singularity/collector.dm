@@ -14,6 +14,7 @@ var/global/list/rad_collectors = list()
 	var/active = FALSE
 	var/locked = FALSE
 	var/drainratio = 1
+	required_skills = list(/datum/skill/engineering/trained)
 
 /obj/machinery/power/rad_collector/atom_init()
 	. = ..()
@@ -37,6 +38,9 @@ var/global/list/rad_collectors = list()
 	if(.)
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
+
+	if(!do_skill_checks(user))
+		return
 	if(anchored)
 		if(!locked || IsAdminGhost(user))
 			toggle_power()
@@ -49,6 +53,8 @@ var/global/list/rad_collectors = list()
 			return 1
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
+	if(!do_skill_checks(user))
+		return
 	if(istype(W, /obj/item/device/analyzer))
 		to_chat(user, "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>")
 		return 1

@@ -120,3 +120,50 @@
 	if (magazine)
 		boolets += magazine.ammo_count()
 	return boolets
+
+/obj/item/weapon/gun/projectile/MouseDrop_T(atom/dropping, mob/living/user)
+	if(istype(dropping, /obj/item/ammo_box/magazine))
+		tactical_reload(dropping, user)
+	return ..()
+
+/obj/item/weapon/gun/projectile/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/ammo_box/magazine) && magazine)
+		tactical_reload(I, user)
+		return
+	return ..()
+
+/obj/item/weapon/gun/projectile/proc/tactical_reload(obj/item/ammo_box/magazine/new_magazine, mob/living/user)
+	if(!istype(user) || user.incapacitated())
+		return
+	if(!is_skill_competent(user, list(/datum/skill/firearms/trained)))
+		return
+	if(!user.is_in_hands(src))
+		to_chat(user, "<span class='warning'>[src] must be in your hand to do that.</span>")
+		return
+	if(!(istype(new_magazine, mag_type) || (istype(new_magazine, mag_type2))) || mag_type == null)
+		return
+
+	to_chat(user, "<span class='notice'>You start a tactical reload.</span>")
+	var/tac_reload_time = apply_skill_bonus(user, SKILL_TASK_TRIVIAL, list(/datum/skill/firearms/trained), multiplier = -0.5)
+	if(!do_after(user, tac_reload_time, TRUE, new_magazine, can_move = TRUE) && loc == user)
+		return
+	var/old_magazine = magazine
+	if(magazine)
+		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
+		if (istype(new_magazine.loc,/obj/item/weapon/storage))
+			var/obj/item/weapon/storage/storage = new_magazine.loc
+			storage.remove_from_storage(new_magazine,src)
+		magazine.forceMove(src.loc)
+		magazine.update_icon()
+		user.drop_from_inventory(new_magazine, src)
+		magazine = new_magazine
+		playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
+		user.put_in_hands(old_magazine)
+		chamber_round()
+	else
+		user.drop_from_inventory(new_magazine, src)
+		magazine = new_magazine
+		playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
+		chamber_round()
+	update_icon()

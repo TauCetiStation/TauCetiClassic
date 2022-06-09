@@ -380,7 +380,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	var/retFlags = DAM_SHARP
 	var/retVerb = "chaw" // Since bited doesn't sound good.
 	var/retSound = 'sound/weapons/bite.ogg'
-	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	if(HULK in mutations)
 		retDam += 4

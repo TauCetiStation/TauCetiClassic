@@ -268,6 +268,7 @@
 	if(..())
 		return
 	if(fire_stacks > 0)
+		adjustFireLoss(4)
 		fire_stacks--
 		fire_stacks = max(0, fire_stacks)
 	else
