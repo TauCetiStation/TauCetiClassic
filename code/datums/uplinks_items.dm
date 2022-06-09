@@ -568,7 +568,7 @@
 
 /datum/uplink_item/suits_armor/advencedai
 	name = "Advanced Diagnostic System"
-	desc = "Deagnostic system with pre-installed AI with personality. Can automatically enable some modules based on user state."
+	desc = "Diagnostic system with pre-installed AI with personality. Can automatically enable some modules based on user state."
 	item = /obj/item/rig_module/simple_ai/advanced
 	cost = 1
 	uplink_types = list("traitor", "nuclear")
