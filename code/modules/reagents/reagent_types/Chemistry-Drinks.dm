@@ -348,7 +348,13 @@
 	description = "A delicious blend of 42 different flavours"
 	color = "#102000" // rgb: 16, 32, 0
 	adj_drowsy = -6
+	overdose = 120
 	taste_message = "cherry soda"
+
+/datum/reagent/consumable/lean/on_general_digest(mob/living/M)
+	..()
+	if(volume > overdose)
+		M.gib()
 
 /datum/reagent/consumable/drink/cold/space_up
 	name = "Space-Up"
