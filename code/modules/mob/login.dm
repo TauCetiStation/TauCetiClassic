@@ -100,6 +100,5 @@
 	else
 		client.show_popup_menus = 1
 
-	if(istype(client.click_intercept, /datum/buildmode))
-		var/datum/buildmode/B = client.click_intercept
-		B.post_login()
+	if(client.click_intercept)
+		M.client.click_intercept.post_login()

@@ -47,8 +47,7 @@
 	next_click = world.time + 1
 
 	if(client.click_intercept)
-		var/datum/buildmode/B = client.click_intercept
-		B.InterceptClickOn(src, params, A)
+		client.click_intercept.InterceptClickOn(src, params, A)
 		return
 
 	var/list/modifiers = params2list(params)

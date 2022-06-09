@@ -138,14 +138,13 @@
 	mode.handle_click(user.client, params, object)
 	return TRUE // no doing underlying actions
 
-/proc/togglebuildmode(mob/M as mob in player_list)
+/proc/togglebuildmode(mob/M in player_list)
 	set name = "Toggle Build Mode"
 	set category = "Event"
 
 	if(M.client)
-		if(istype(M.client.click_intercept,/datum/buildmode))
-			var/datum/buildmode/B = M.client.click_intercept
-			B.quit()
+		if(M.client.click_intercept)
+			M.client.click_intercept.quit()
 			log_admin("[key_name(usr)] has left build mode.")
 		else
 			new /datum/buildmode(M.client)
