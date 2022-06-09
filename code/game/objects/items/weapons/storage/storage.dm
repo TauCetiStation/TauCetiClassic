@@ -161,7 +161,7 @@
 	if(!user)
 		return FALSE
 
-	if(Adjacent(user))
+	if(user.in_interaction_vicinity(src))
 		open(user)
 		return TRUE
 	else

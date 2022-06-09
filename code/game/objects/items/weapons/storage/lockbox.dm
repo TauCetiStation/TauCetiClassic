@@ -62,7 +62,7 @@
 
 /obj/item/weapon/storage/lockbox/try_open(mob/user)
 	if(locked)
-		if(Adjacent(user))
+		if(user.in_interaction_vicinity(src))
 			to_chat(user, "<span class='warning'>Its locked!</span>")
 		return FALSE
 	else

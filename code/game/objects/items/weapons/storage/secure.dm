@@ -175,7 +175,7 @@
 
 /obj/item/weapon/storage/secure/briefcase/try_open(mob/user)
 	if(locked)
-		if(Adjacent(user))
+		if(user.in_interaction_vicinity(src))
 			to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
 		return FALSE
 	else
