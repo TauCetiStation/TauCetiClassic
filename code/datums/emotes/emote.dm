@@ -153,7 +153,10 @@ var/global/list/all_emotes
 					to_chat(M, "[FOLLOW_LINK(M, user)] [msg_3p]")
 
 	if(cloud)
-		var/image/emote_bubble = image('icons/mob/emote.dmi', user, cloud, EMOTE_LAYER)
-		emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		flick_overlay(emote_bubble, clients, 30)
-		QDEL_IN(emote_bubble, 3 SECONDS)
+		add_cloud(user)
+
+/datum/emote/proc/add_cloud(mob/user)
+	var/image/emote_bubble = image('icons/mob/emote.dmi', user, cloud, EMOTE_LAYER)
+	emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	flick_overlay(emote_bubble, clients, 30)
+	QDEL_IN(emote_bubble, 3 SECONDS)

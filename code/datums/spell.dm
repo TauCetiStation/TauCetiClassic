@@ -113,15 +113,15 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 				to_chat(user, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
 			return FALSE
 		var/mob/living/carbon/human/H = user
-		if(!is_type_in_typecache(H.wear_suit, casting_clothes))
+		if(!H.wear_suit?.GetComponent(/datum/component/magic_item/wizard))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my robe.")
 			return FALSE
-		if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
+		if(!H.shoes?.GetComponent(/datum/component/magic_item/wizard))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my sandals.")
 			return FALSE
-		if(!is_type_in_typecache(H.head, casting_clothes))
+		if(!H.head?.GetComponent(/datum/component/magic_item/wizard))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my hat.")
 			return FALSE

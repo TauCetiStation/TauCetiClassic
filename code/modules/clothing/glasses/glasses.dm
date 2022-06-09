@@ -322,6 +322,7 @@
 	action_button_name = "Toggle Goggles"
 	active = 1
 	off_state = "healthhudnight"
+	hud_types = list(DATA_HUD_MEDICAL_ADV)
 
 /obj/item/clothing/glasses/gar
 	name = "gar glasses"

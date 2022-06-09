@@ -137,11 +137,11 @@
 			if(!(message))
 				return
 			return custom_emote(m_type, message)
-		if("help")
+		if("list")
 			to_chat(src, "<span class ='notice'>SOUNDED IN <B>BOLD</B>:   <B>deathgasp</B>, dance, drool, grin, jump, <B>hiss</B>, nod, custom, <B>roar</B>, \
 			                                                              roll, scratch, shake, sit, sway, tail, twitch, <B>whimper</B>, <B>growl</B></span>")
 		else
-			to_chat(src, "<span class='notice'>This action is not provided: \"[act]\". Write \"*help\" to find out all available emotes. Write \"*custom\" to do your own emote. \
+			to_chat(src, "<span class='notice'>This action is not provided: \"[act]\". Write \"*list\" to find out all available emotes. Write \"*custom\" to do your own emote. \
 			                                   Otherwise, you can perform your action via the \"F4\" button.</span>")
 
 

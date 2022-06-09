@@ -18,6 +18,8 @@
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/loading = 0 // Nice loading text
 	var/autoprocess = 0
+	required_skills = list(/datum/skill/medical/pro, /datum/skill/research/trained)
+	fumbling_time = 3 SECONDS
 
 /obj/machinery/computer/cloning/atom_init()
 	..()
@@ -73,7 +75,6 @@
 
 /obj/machinery/computer/cloning/ui_interact(mob/user)
 	updatemodules()
-
 	var/dat = ""
 	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Refresh</a></font><br>"
 	if(scanner && pod1 && ((scanner.scan_level > 2) || (pod1.efficiency > 5)))
