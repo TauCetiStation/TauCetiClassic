@@ -497,7 +497,7 @@
 		emote("buzz")
 		return
 	
-	if(!do_after(usr, 70, target = usr))
+	if(!do_after(usr, 70, target = usr, can_move = TRUE))
 		return
 	
 	if(locked)
@@ -519,7 +519,7 @@
 		emote("buzz")
 		return
 	
-	if(!do_after(usr, 70, target = usr))
+	if(!do_after(usr, 70, target = usr, can_move = TRUE))
 		return
 	
 	if(opened)
