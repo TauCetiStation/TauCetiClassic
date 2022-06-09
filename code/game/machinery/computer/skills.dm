@@ -28,6 +28,8 @@
 	var/order = 1                            // -1 = Descending - 1 = Ascending
 	var/docname
 
+	required_skills = list(/datum/skill/command/trained)
+
 /obj/machinery/computer/skills/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		usr.drop_from_inventory(O, src)
@@ -162,7 +164,6 @@ What a mess.*/
 
 	if (!( data_core.general.Find(active1) ))
 		active1 = null
-
 	switch(href_list["choice"])
 		// SORTING!
 		if("Sorting")

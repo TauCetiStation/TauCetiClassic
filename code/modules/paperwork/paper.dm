@@ -364,6 +364,26 @@
 	var/datum/browser/popup = new(user, "paper_help", "Pen Help")
 	popup.set_content(dat)
 	popup.open()
+/obj/item/weapon/paper/proc/select_form(mob/user)
+	var/dat
+
+	for(var/department in predefined_forms_list)
+		var/color = predefined_forms_list[department]["color"]
+		var/dep_name = predefined_forms_list[department]["name"]
+		dat += "<h2>[dep_name]</h2>"
+		dat += "<table><tbody><tr>"
+		dat += "<th style='background:[color]; width:6em'>Номер</th>"
+		dat += "<th style='background:[color];'>Название</th></tr>"
+
+		for(var/premade_form in predefined_forms_list[department]["content"])
+			var/datum/form/form = new premade_form
+			dat += "<tr><th style='background-color:[color];'><A href='?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></th>"
+			dat += "<th> [form.name]</th></tr>"
+		dat +="</tbody></table>"
+
+	var/datum/browser/popup = new(user, "window=[name]", "Список форм", 700, 500, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/item/weapon/proc/burnpaper(obj/item/weapon/lighter/P, mob/user) //weapon, to use this in paper_bundle and photo
 	var/list/burnable = list(/obj/item/weapon/paper,
@@ -404,7 +424,6 @@
 	..()
 	if(!usr || usr.incapacitated())
 		return
-
 	if(href_list["write"])
 		var/id = href_list["write"]
 
@@ -417,8 +436,23 @@
 			if(tgui_alert(usr, "Are you sure you want to sign this paper?",, list("Yes","No")) == "No")
 				return
 			t = "\[sign\] "
+		else if (href_list["form"])
+			for(var/department in predefined_forms_list)
+				if(t)
+					break
+				for(var/premade_form in predefined_forms_list[department]["content"])
+					var/datum/form/form = new premade_form
+					if(form.index == href_list["form"])
+						t = sanitize(form.content, free_space, extra = FALSE)
+						break
 		else
-			t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
+			if (is_skill_competent(usr, list(/datum/skill/command/novice)) && id == "end" )
+				if(tgui_alert(usr, "You want to write text of create form?",, list("Text","Form")) == "Form")
+					select_form(usr)
+				else
+					t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
+			else
+				t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
 
 		if(!t)
 			return
