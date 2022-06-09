@@ -66,12 +66,12 @@
 /obj/item/weapon/reagent_containers/glass/pickup(mob/living/user)
 	. = ..()
 	animate(src, transform = null, time = 0) //Restore bottle to its original position
-	playsound(user, 'sound/items/glasses/bottle_take-empty.ogg', VOL_EFFECTS_MASTER, 1000, TRUE)
+	playsound(user, 'sound/items/glass_containers/bottle_take-empty.ogg', VOL_EFFECTS_MASTER, 1000, TRUE)
 
 /obj/item/weapon/reagent_containers/glass/dropped(mob/user)
 	. = ..()
 	if(isturf(loc) && (user.loc != loc))
-		playsound(user, 'sound/items/glasses/bottle_put-empty.ogg', VOL_EFFECTS_MASTER, 1000, TRUE)
+		playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER, 1000, TRUE)
 
 /obj/item/weapon/reagent_containers/glass/afterattack(atom/target, mob/user, proximity, params)
 
