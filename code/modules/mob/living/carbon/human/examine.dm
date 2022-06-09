@@ -67,13 +67,6 @@
 				t_him = "her"
 				t_has = "has"
 				t_is = "is"
-			else
-				t_He = "It"
-				t_His = "Its"
-				t_his = "its"
-				t_him = "it"
-				t_has = "has"
-				t_is = "is"
 
 	msg += "</EM>!\n"
 
