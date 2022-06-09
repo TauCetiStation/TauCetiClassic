@@ -117,10 +117,6 @@
 			to_chat(host, "<span class='notice'>You are feeling far too docile to continue controlling your host...</span>")
 			host.release_control()
 			return
-		if(prob(5))
-			host.adjustBrainLoss(rand(1,2))
-		if(prob(host.getBrainLoss() * 0.05))
-			host.emote("[pick(list("blink", "choke", "aflap", "drool", "twitch", "gasp"))]")
 
 /mob/living/simple_animal/borer/say_understands(mob/other, datum/language/speaking)
 	return host == other
@@ -250,7 +246,7 @@
 	to_chat(src, "You begin delicately adjusting your connection to the host brain...")
 	assuming = TRUE
 
-	addtimer(CALLBACK(src, .proc/take_control), 300 + (host.brainloss * 5))
+	addtimer(CALLBACK(src, .proc/take_control), 300)
 
 /mob/living/simple_animal/borer/proc/take_control()
 	assuming = FALSE
@@ -491,6 +487,5 @@
 
 	ckey = candidate.ckey
 
-	var/datum/faction/borers/B = find_faction_by_type(/datum/faction/borers)
-	if(B)
-		add_faction_member(B, src)
+	var/datum/faction/borers/B = create_uniq_faction(/datum/faction/borers)
+	add_faction_member(B, src)

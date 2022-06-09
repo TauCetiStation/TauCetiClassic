@@ -64,7 +64,7 @@ var/global/sent_strike_team = FALSE
 
 	var/is_leader_seleceted = FALSE
 
-	var/datum/faction/strike_team/deathsquad/S = SSticker.mode.CreateFaction(/datum/faction/strike_team/deathsquad)
+	var/datum/faction/strike_team/deathsquad/S = create_faction(/datum/faction/strike_team/deathsquad, FALSE, FALSE)
 	S.forgeObjectives(input)
 	// Spawns commandos and equips them.
 	for (var/obj/effect/landmark/L in landmarks_list)
@@ -120,9 +120,8 @@ var/global/sent_strike_team = FALSE
 	// Creates mind stuff
 	new_commando.mind_initialize()
 	new_commando.equip_death_commando(is_leader)
-	var/datum/faction/strike_team/deathsquad/D = find_faction_by_type(/datum/faction/strike_team/deathsquad)
-	if(D)
-		add_faction_member(D, new_commando, FALSE)
+	var/datum/faction/strike_team/deathsquad/D = create_uniq_faction(/datum/faction/strike_team/deathsquad)
+	add_faction_member(D, new_commando, FALSE)
 	return new_commando
 
 /mob/living/carbon/human/proc/equip_death_commando(is_leader)

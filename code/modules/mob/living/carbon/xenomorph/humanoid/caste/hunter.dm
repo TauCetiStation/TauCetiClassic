@@ -29,19 +29,17 @@
 	..()
 
 //Hunter verbs
-/mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_leap(message = 1)
+/mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_leap(message = TRUE)
 	if(crawling)
 		crawl()
 	leap_on_click = !leap_on_click
-	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
+	leap_icon.update_icon(src)
 	update_icons()
 	if(message)
 		if(leap_on_click)
 			to_chat(src, "<span class='noticealien'>You will now leap at enemies with a middle click!</span>")
 		else
 			to_chat(src, "<span class='noticealien'>You will no longer leap at enemies with a middle click!</span>")
-	else
-		return
 
 /mob/living/carbon/xenomorph/humanoid/hunter/MiddleClickOn(atom/A, params)
 	if(next_move <= world.time && leap_on_click)

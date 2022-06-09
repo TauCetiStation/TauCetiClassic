@@ -211,7 +211,7 @@
 			return
 		if(user.a_intent == INTENT_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
+			playsound(src, 'sound/weapons/hit_metalic.ogg', VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
 
 			if(H.wear_suit)

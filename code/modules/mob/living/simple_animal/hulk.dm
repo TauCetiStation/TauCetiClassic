@@ -27,7 +27,6 @@
 	status_flags = CANPUSH
 	universal_speak = 1
 	universal_understand = 1
-	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -45,6 +44,10 @@
 	has_head = TRUE
 	has_arm = TRUE
 	has_leg = TRUE
+
+/mob/living/simple_animal/hulk/atom_init()
+	attack_sound = SOUNDIN_PUNCH_HEAVY
+	. = ..()
 
 /mob/living/simple_animal/hulk/human
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_jump,

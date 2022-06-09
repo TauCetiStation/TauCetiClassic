@@ -153,3 +153,15 @@
 
 //Families
 #define ui_wanted_lvl "NORTH,11"
+
+// Leap
+#define ui_human_leap "CENTER+3:20,SOUTH:5"
+
+// Hud slots
+#define HUD_SLOT_MAIN		1
+#define HUD_SLOT_ADDING		2
+#define HUD_SLOT_HOTKEYS	4
+
+#define HUD_COPY_ICON	1
+#define HUD_COPY_COLOR	2
+#define HUD_COPY_ALPHA	4
