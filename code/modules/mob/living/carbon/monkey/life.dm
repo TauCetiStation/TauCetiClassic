@@ -55,7 +55,7 @@
 
 	if(!client && stat == CONSCIOUS)
 
-		if(prob(33) && canmove && isturf(loc) && !pulledby) //won't move if being pulled
+		if(prob(33) && canmove && !crawling && isturf(loc) && !pulledby) //won't move if being pulled
 
 			step(src, pick(cardinal))
 
@@ -149,8 +149,6 @@
 /mob/living/carbon/monkey/proc/handle_virus_updates()
 	if(status_flags & GODMODE)	return 0	//godmode
 	if(bodytemperature > 406)
-		for(var/datum/disease/D in viruses)
-			D.cure()
 		for (var/ID in virus2)
 			var/datum/disease2/disease/V = virus2[ID]
 			V.cure(src)
@@ -195,12 +193,10 @@
 		return null
 	if(!(contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS)))
 		internal = null
-		if(internals)
-			internals.icon_state = "internal0"
+		internals?.update_icon(src)
 		return null
 		
-	if(internals)
-		internals.icon_state = "internal1"
+	internals?.update_icon(src)
 	return internal.remove_air_volume(volume_needed)
 
 /mob/living/carbon/monkey/proc/handle_chemicals_in_body()
@@ -218,7 +214,7 @@
 	AdjustConfused(-1)
 	AdjustDrunkenness(-1)
 
-	if(resting)
+	if(crawling)
 		dizziness = max(0, dizziness - 5)
 	else
 		dizziness = max(0, dizziness - 1)
@@ -260,7 +256,7 @@
 				adjustHalLoss(-3)
 		else if(IsSleeping())
 			blinded = TRUE
-		else if(resting)
+		else if(crawling)
 			if(halloss > 0)
 				adjustHalLoss(-3)
 		//CONSCIOUS
@@ -344,7 +340,7 @@
 /mob/living/carbon/monkey/handle_fire()
 	if(..())
 		return
-	bodytemperature += BODYTEMP_HEATING_MAX
+	adjust_bodytemperature(BODYTEMP_HEATING_MAX)
 	return
 //END FIRE CODE
 

@@ -11,6 +11,8 @@
 	greets = list(GREET_SYNDBEACON, GREET_LATEJOIN, GREET_AUTOTRAITOR, GREET_ROUNDSTART, GREET_DEFAULT)
 
 	var/telecrystals = 20
+	skillset_type = /datum/skillset/max
+	change_to_maximum_skills = FALSE
 
 /datum/role/traitor/New()
 	..()

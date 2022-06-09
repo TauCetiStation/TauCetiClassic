@@ -29,7 +29,6 @@
 		/obj/machinery/dna_scannernew,
 		/obj/item/weapon/grenade/chem_grenade,
 		/obj/machinery/bot/medbot,
-		/obj/machinery/computer/pandemic,
 		/obj/item/weapon/storage/secure/safe,
 		/obj/machinery/iv_drip,
 		/obj/machinery/disease2/incubator,
@@ -255,6 +254,13 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25)
 	flags = OPENCONTAINER
+
+/obj/item/weapon/reagent_containers/glass/beaker/teapot
+	name = "teapot"
+	desc = "An elegant teapot."
+	icon_state = "teapot"
+	item_state = "teapot"
+
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
 

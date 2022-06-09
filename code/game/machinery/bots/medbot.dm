@@ -358,13 +358,6 @@
 	if((C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
 		return 1
 
-
-	for(var/datum/disease/D in C.viruses)
-		if((D.stage > 1) || (D.spread_type == AIRBORNE))
-
-			if(!C.reagents.has_reagent(treatment_virus))
-				return 1 //STOP DISEASE FOREVER
-
 	return 0
 
 /obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C)
@@ -400,14 +393,6 @@
 
 	if(emagged == 2) //Emagged! Time to poison everybody.
 		reagent_id = "toxin"
-
-	var/virus = 0
-	for(var/datum/disease/D in C.viruses)
-		virus = 1
-
-	if(!reagent_id && (virus))
-		if(!C.reagents.has_reagent(treatment_virus))
-			reagent_id = treatment_virus
 
 	if(!reagent_id && (C.getBruteLoss() >= heal_threshold))
 		if(!C.reagents.has_reagent(treatment_brute))
@@ -462,10 +447,10 @@
 	visible_message("[src] beeps, \"[message]\"")
 	return
 
-/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(is_type_in_list(Proj, taser_projectiles)) //taser_projectiles defined in projectile.dm
 		stunned = min(stunned+10,20)
-	..()
 
 /obj/machinery/bot/medbot/explode()
 	on = 0

@@ -28,6 +28,7 @@
 	var/canister_color = "yellow"
 	var/can_label = 1
 	var/update_flag = 0
+	required_skills = list()
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
@@ -264,13 +265,13 @@ update_flag
 /obj/machinery/portable_atmospherics/canister/blob_act()
 	take_damage(200)
 
-/obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		return
 
 	if(Proj.damage)
 		take_damage(round(Proj.damage / 2))
-	..()
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))

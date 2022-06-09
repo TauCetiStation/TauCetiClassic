@@ -20032,7 +20032,6 @@
 	req_access = list(64)
 	},
 /obj/item/weapon/storage/box/cups,
-/obj/item/weapon/fluff/farwadoll,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -35210,7 +35209,6 @@
 /obj/item/device/camera,
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
-/obj/item/clothing/under/fluff/terezi_suit,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 29
@@ -69876,7 +69874,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/fluff/eleanor_stone{
+/obj/item/weapon/reagent_containers/glass/beaker/teapot{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -73919,7 +73917,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "wjL" = (
-/obj/item/weapon/crowbar/fluff/zelda_creedy_1,
+/obj/item/weapon/crowbar/red,
 /obj/item/clothing/head/festive,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/simulated/floor/plating,
@@ -78068,10 +78066,6 @@
 /area/station/bridge/hop_office)
 "xHY" = (
 /obj/structure/rack,
-/obj/item/weapon/circuitboard/pandemic{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/weapon/circuitboard/rdconsole,
 /obj/item/weapon/circuitboard/rdserver{
 	pixel_x = 3;
@@ -79431,7 +79425,7 @@
 	pixel_y = 30
 	},
 /obj/structure/closet/wardrobe/chaplain_black,
-/obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1,
+/obj/item/weapon/lighter/zippo,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},

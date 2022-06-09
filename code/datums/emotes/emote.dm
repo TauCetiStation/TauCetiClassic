@@ -70,18 +70,12 @@ var/global/list/all_emotes
 	return cooldown_group
 
 /datum/emote/proc/check_cooldown(list/cooldowns, intentional)
-	if(!intentional)
-		return TRUE
-
 	if(!cooldowns)
 		return TRUE
 
 	return cooldowns[get_cooldown_group()] < world.time
 
 /datum/emote/proc/set_cooldown(list/cooldowns, value, intentional)
-	if(!intentional)
-		return
-
 	LAZYSET(cooldowns, get_cooldown_group(), world.time + value)
 
 /datum/emote/proc/can_play_sound(mob/living/carbon/human/user, intentional)
@@ -159,7 +153,10 @@ var/global/list/all_emotes
 					to_chat(M, "[FOLLOW_LINK(M, user)] [msg_3p]")
 
 	if(cloud)
-		var/image/emote_bubble = image('icons/mob/emote.dmi', user, cloud, EMOTE_LAYER)
-		emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		flick_overlay(emote_bubble, clients, 30)
-		QDEL_IN(emote_bubble, 3 SECONDS)
+		add_cloud(user)
+
+/datum/emote/proc/add_cloud(mob/user)
+	var/image/emote_bubble = image('icons/mob/emote.dmi', user, cloud, EMOTE_LAYER)
+	emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	flick_overlay(emote_bubble, clients, 30)
+	QDEL_IN(emote_bubble, 3 SECONDS)

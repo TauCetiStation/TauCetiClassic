@@ -10,6 +10,7 @@
 	density = TRUE
 	anchored = TRUE
 	light_color = "#00ff00"
+	required_skills = list(/datum/skill/medical/novice)
 
 /obj/machinery/bodyscanner/power_change()
 	..()
@@ -53,6 +54,8 @@
 	if(target.abiotic())
 		to_chat(user, "<span class='userdanger'>Subject cannot have abiotic items on.</span>")
 		return FALSE
+	if(!do_skill_checks(user))
+		return
 	return TRUE
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, mob/user)
@@ -154,7 +157,7 @@
 	anchored = TRUE
 	var/next_print = 0
 	var/storedinfo = null
-
+	required_skills = list(/datum/skill/medical/trained)
 
 /obj/machinery/body_scanconsole/atom_init()
 	..()
@@ -167,7 +170,8 @@
 	if(!ishuman(connected.occupant))
 		to_chat(user, "<span class='warning'>This device can only scan compatible lifeforms.</span>")
 		return
-
+	if(!do_skill_checks(user))
+		return
 	var/dat
 
 	if (src.connected) //Is something connected?
@@ -217,10 +221,6 @@
 					dat += text("<font color='[]'>\tDermaline: [] units</font><BR>", (occupant.reagents.get_reagent_amount("dermaline") < 30 ? "black" : "red"), occupant.reagents.get_reagent_amount("dermaline"))
 					dat += text("<font color='[]'>\tBicaridine: [] units</font><BR>", (occupant.reagents.get_reagent_amount("bicaridine") < 30 ? "black" : "red"), occupant.reagents.get_reagent_amount("bicaridine"))
 					dat += text("<font color='[]'>\tDexalin: [] units</font><BR>", (occupant.reagents.get_reagent_amount("dexalin") < 30 ? "black" : "red"), occupant.reagents.get_reagent_amount("dexalin"))
-
-				for(var/datum/disease/D in occupant.viruses)
-					if(!D.hidden[SCANNER])
-						dat += text("<font color='red'><B>Warning: [D.form] Detected</B>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</FONT><BR>")
 
 				dat += "<HR><A href='?src=\ref[src];print=1'>Print body parts report</A><BR>"
 				storedinfo = null

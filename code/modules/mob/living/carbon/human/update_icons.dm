@@ -224,6 +224,10 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		standing += BP.get_icon(BODY_LAYER)
 
+	if(species.name == VOX)
+		var/mutable_appearance/tatoo = mutable_appearance('icons/mob/human.dmi', "[vox_rank]_s", -BODY_LAYER)
+		tatoo.color = rgb(r_eyes, g_eyes, b_eyes)
+		standing += tatoo
 	//Underwear
 	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
@@ -767,19 +771,25 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/update_tail_showing()
 	remove_overlay(TAIL_LAYER)
 
-	if(species.tail && species.flags[HAS_TAIL] && !(HUSK in mutations) && bodyparts_by_name[BP_CHEST])
+	if((random_tail_holder || species.tail) && species.flags[HAS_TAIL] && !(HUSK in mutations) && bodyparts_by_name[BP_CHEST])
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
-			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = species.tail)
+			var/tail_state = species.tail
+			if(random_tail_holder)
+				tail_state = random_tail_holder
+
+			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = tail_state)
 
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
-
-			if(species.flags[HAS_SKIN_COLOR])
-				if(BP.status & ORGAN_DEAD)
-					tail_s.color = NECROSIS_COLOR_MOD
-				else if(HULK in mutations)
-					tail_s.color = HULK_SKIN_COLOR
-				else
+			if(BP.status & ORGAN_DEAD)
+				tail_s.color = NECROSIS_COLOR_MOD
+			else if(HULK in mutations)
+				tail_s.color = HULK_SKIN_COLOR
+			else
+				if(species.flags[HAS_SKIN_COLOR])
 					tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
+				else if(species.flags[HAS_SKIN_TONE])
+					tail_s.color = RGB_CONTRAST(s_tone, s_tone, s_tone)
+
 			var/image/standing = image("icon" = tail_s, "layer" = -TAIL_LAYER)
 			standing = human_update_offset(standing, FALSE)
 			overlays_standing[TAIL_LAYER] = standing

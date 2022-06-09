@@ -169,10 +169,7 @@
 		for(var/obj/item/organ/internal/IO in H.organs)
 			qdel(IO)
 
-	for(var/type in has_bodypart)
-		var/path = has_bodypart[type]
-		var/obj/item/organ/external/O = new path(null)
-		O.insert_organ(H)
+	create_bodyparts(H)
 
 	for(var/type in has_organ)
 		var/path = has_organ[type]
@@ -183,6 +180,11 @@
 		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
 
+/datum/species/proc/create_bodyparts(mob/living/carbon/human/H)
+	for(var/type in has_bodypart)
+		var/path = has_bodypart[type]
+		var/obj/item/organ/external/O = new path(null)
+		O.insert_organ(H, FALSE, src)
 
 /**
   * Replace human clothes in [outfit] on species clothes
@@ -388,7 +390,7 @@
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
 	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
 
-	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT - 30
 	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 20
 	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 440
 
@@ -555,7 +557,8 @@
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
 	replace_outfit = list(
-			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
+			/obj/item/clothing/mask/gas/syndicate = /obj/item/clothing/mask/gas/vox,
 			)
 
 /datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
@@ -579,12 +582,9 @@
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
 		H.leap_icon = new /atom/movable/screen/leap()
-		H.leap_icon.screen_loc = "CENTER+3:20,SOUTH:5"
 
 		if(H.hud_used)
-			H.hud_used.adding += H.leap_icon
-		if(H.client)
-			H.client.screen += H.leap_icon
+			H.leap_icon.add_to_hud(H.hud_used)
 
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
@@ -595,9 +595,7 @@
 	if(name != VOX_ARMALIS)
 		if(H.leap_icon)
 			if(H.hud_used)
-				H.hud_used.adding -= H.leap_icon
-			if(H.client)
-				H.client.screen -= H.leap_icon
+				H.leap_icon.remove_from_hud(H.hud_used)
 			QDEL_NULL(H.leap_icon)
 
 	else
@@ -674,6 +672,8 @@
 		SPRITE_SHEET_HEAD = 'icons/mob/species/armalis/head.dmi',
 		SPRITE_SHEET_HELD = 'icons/mob/species/armalis/held.dmi'
 		)
+
+	has_gendered_icons = TRUE
 
 /datum/species/diona
 	name = DIONA
@@ -940,11 +940,9 @@
 	,IS_SYNTHETIC = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,VIRUS_IMMUNE = TRUE
-	,BIOHAZZARD_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
-	,NO_MUTATION = TRUE
 	,IS_SOCIAL = TRUE
 	)
 
@@ -1080,7 +1078,6 @@
 	,NO_MINORCUTS = TRUE
 	,NO_EMOTION = TRUE
 	,NO_VOMIT = TRUE
-	,NO_MUTATION = TRUE
 	,NO_FAT = TRUE
 	)
 
@@ -1118,13 +1115,13 @@
 	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
 	var/damage = 0						// Extra empty hand attack damage.
 	var/damType = BRUTE
-	var/miss_sound = 'sound/weapons/punchmiss.ogg'
+	var/miss_sound = 'sound/effects/mob/hits/miss_1.ogg'
 	var/sharp = FALSE
 	var/edge = FALSE
 	var/list/attack_sound
 
 /datum/unarmed_attack/New()
-	attack_sound = SOUNDIN_PUNCH
+	attack_sound = SOUNDIN_PUNCH_MEDIUM
 
 /datum/unarmed_attack/proc/damage_flags()
 	return (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
@@ -1215,7 +1212,6 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
-	,NO_MUTATION = TRUE
 	)
 
 	burn_mod = 2
@@ -1262,12 +1258,10 @@
 		NO_EMBED = TRUE,
 		RAD_IMMUNE = TRUE,
 		VIRUS_IMMUNE = TRUE,
-		BIOHAZZARD_IMMUNE = TRUE,
 		NO_VOMIT = TRUE,
 		NO_FINGERPRINT = TRUE,
 		NO_MINORCUTS = TRUE,
 		NO_EMOTION = TRUE,
-		NO_MUTATION = TRUE,
 		NO_FAT = TRUE,
 		IS_SOCIAL = TRUE,
 		)
@@ -1534,7 +1528,6 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
-	,NO_MUTATION = TRUE
 	,NO_PAIN = TRUE
 	)
 
@@ -1568,3 +1561,81 @@
 
 /datum/species/abomination/call_digest_proc(mob/living/M, datum/reagent/R)
 	return
+
+/datum/species/homunculus
+	name = HOMUNCULUS
+	language = LANGUAGE_SOLCOMMON
+
+	brute_mod = 2
+	burn_mod = 2
+	speed_mod = 2
+
+	has_bodypart = list(
+		 BP_CHEST = /obj/item/organ/external/chest/homunculus
+		,BP_GROIN = /obj/item/organ/external/groin/homunculus
+		,BP_HEAD  = /obj/item/organ/external/head/homunculus
+		,BP_L_ARM = /obj/item/organ/external/l_arm/homunculus
+		,BP_R_ARM = /obj/item/organ/external/r_arm/homunculus
+		,BP_L_LEG = /obj/item/organ/external/l_leg/homunculus
+		,BP_R_LEG = /obj/item/organ/external/r_leg/homunculus
+		)
+
+	flags = list(
+		NO_DNA = TRUE,
+		NO_SCAN = TRUE,
+		NO_PAIN = TRUE,
+		RAD_ABSORB = TRUE,
+		VIRUS_IMMUNE = TRUE,
+		NO_EMOTION = TRUE,
+		HAS_TAIL = TRUE,
+		HAS_HAIR = TRUE,
+		HAS_HAIR_COLOR = TRUE,
+		)
+
+	has_gendered_icons = FALSE
+
+	min_age = 1
+	max_age = 10
+
+	is_common = FALSE
+
+/datum/species/homunculus/on_gain(mob/living/carbon/human/H)
+	. = ..()
+	var/list/tail_list = icon_states('icons/mob/species/tail.dmi') - "vox_armalis"
+	tail_list += ""
+	H.random_tail_holder = pick(tail_list)
+
+/datum/species/homunculus/create_bodyparts(mob/living/carbon/human/H)
+	var/list/keys = get_list_of_primary_keys(global.all_species)
+	keys -= list(PODMAN, IPC, SKELETON, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
+
+	var/datum/species/head = global.all_species[pick(keys - VOX)]
+
+	var/datum/species/chest = global.all_species[pick(keys - HUMAN)]
+	var/datum/species/l_arm = global.all_species[pick(keys)]
+	var/datum/species/r_arm = global.all_species[pick(keys)]
+
+	var/datum/species/groin = global.all_species[pick(keys)]
+	var/datum/species/l_leg = global.all_species[pick(keys)]
+	var/datum/species/r_leg = global.all_species[pick(keys)]
+
+	var/list/bodypart_species = list(
+		BP_HEAD  = head,
+		BP_CHEST = chest,
+		BP_L_ARM = l_arm,
+		BP_R_ARM = r_arm,
+		BP_GROIN = groin,
+		BP_L_LEG = l_leg,
+		BP_R_LEG = r_leg,
+	)
+
+	for(var/type in has_bodypart)
+		if((type in list(BP_L_LEG, BP_R_LEG, BP_R_ARM, BP_L_ARM)) && prob(10))
+			continue
+		var/path = has_bodypart[type]
+		var/obj/item/organ/external/O = new path(null)
+		var/datum/species/part_species = bodypart_species[type]
+		O.insert_organ(H, FALSE, part_species)
+		O.adjust_pumped(rand(0, 60))
+		if(prob(80) && (part_species.name in list(UNATHI, SKRELL, TAJARAN)))
+			O.original_color = pick(list(COLOR_GREEN, COLOR_LIGHT_PINK, COLOR_ROSE_PINK, COLOR_VIOLET, COLOR_DEEP_SKY_BLUE, COLOR_RED, COLOR_LIME, COLOR_PINK))

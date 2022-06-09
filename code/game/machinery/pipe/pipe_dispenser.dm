@@ -8,6 +8,7 @@
 	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/unwrenched = 0
 	var/wait = 0
+	required_skills = list(/datum/skill/atmospherics/trained)
 
 /obj/machinery/pipedispenser/ui_interact(user)
 	var/dat = {"
@@ -82,7 +83,6 @@
 	if(unwrenched)
 		usr << browse(null, "window=pipedispenser")
 		return FALSE
-
 	if(href_list["make"])
 		if(!wait)
 			var/p_type = text2num(href_list["make"])
@@ -194,7 +194,6 @@ Nah
 	. = ..()
 	if(!.)
 		return
-
 	if(href_list["dmake"])
 		if(unwrenched)
 			usr << browse(null, "window=pipedispenser")

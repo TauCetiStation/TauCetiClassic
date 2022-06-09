@@ -182,3 +182,9 @@
 	icon_state = "broken_breacher"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = 0
+
+/area/space_structures/export_outpost
+	name = "TO-11312 Export Outpost"
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = TRUE
