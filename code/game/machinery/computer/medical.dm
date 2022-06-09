@@ -103,15 +103,6 @@
 					dat += "\n<A href='?src=\ref[src];print_p=1'>Print Record</A><BR>\n<A href='?src=\ref[src];print_photos=1'>Print Photos</A><BR>\n<A href='?src=\ref[src];screen=2'>Back</A><BR>"
 				if(5.0)
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
-					/*	Advanced diseases is weak! Feeble! Glory to virus2!
-					for(var/Dt in typesof(/datum/disease))
-						var/datum/disease/Dis = new Dt(0)
-						if(istype(Dis, /datum/disease/advance))
-							continue // TODO (tm): Add advance diseases to the virus database which no one uses.
-						if(!Dis.desc)
-							continue
-						dat += "<br><a href='?src=\ref[src];vir=[Dt]'>[Dis.name]</a>"
-					*/
 					for (var/ID in virusDB)
 						var/datum/data/record/v = virusDB[ID]
 						dat += "<br><a href='?src=\ref[src];vir=\ref[v]'>[v.fields["name"]]</a>"
