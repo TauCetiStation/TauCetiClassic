@@ -45916,7 +45916,7 @@
 /area/station/hallway/primary/central)
 "bEe" = (
 /obj/machinery/light_switch{
-	pixel_x = 27
+	pixel_x = 25
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
