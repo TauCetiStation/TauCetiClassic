@@ -32,7 +32,7 @@
 		alarmlist[A.name] = new /datum/alarm(A, list(source), cameralist)
 
 /mob/living/silicon/proc/cancelAlarm(class, area/A, source)
-	var/cleared = 0
+	var/cleared = FALSE
 	var/list/alarmlist = alarms[class]
 
 	if (A.name in alarmlist)
@@ -40,7 +40,7 @@
 		alarm.sources -= source
 
 		if (!(alarm.sources.len))
-			cleared = 1
+			cleared = TRUE
 			alarmlist -= A.name
 
 	return !cleared

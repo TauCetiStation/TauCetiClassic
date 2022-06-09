@@ -2,8 +2,8 @@
 
 /datum/robot_component/var/name
 /datum/robot_component/var/installed = 0
-/datum/robot_component/var/powered = 0
-/datum/robot_component/var/toggled = 1
+/datum/robot_component/var/powered = FALSE
+/datum/robot_component/var/toggled = TRUE
 /datum/robot_component/var/brute_damage = 0
 /datum/robot_component/var/electronics_damage = 0
 /datum/robot_component/var/idle_usage = 0   // Amount of power used every MC tick. In joules.
@@ -18,7 +18,7 @@
 /datum/robot_component/var/obj/item/wrapped = null
 
 /datum/robot_component/New(mob/living/silicon/robot/R)
-	src.owner = R
+	owner = R
 
 /datum/robot_component/proc/install()
 /datum/robot_component/proc/uninstall()
@@ -59,14 +59,14 @@
 	return (installed == 1) && (brute_damage + electronics_damage < max_damage) && (!idle_usage || powered)
 
 /datum/robot_component/proc/update_power_state()
-	if(toggled == 0)
-		powered = 0
+	if(!toggled)
+		powered = FALSE
 		return
 	if(owner.cell && owner.cell.charge >= idle_usage)
 		owner.cell_use_power(idle_usage)
-		powered = 1
+		powered = TRUE
 	else
-		powered = 0
+		powered = FALSE
 
 
 // ARMOUR

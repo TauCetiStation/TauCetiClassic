@@ -2,7 +2,7 @@
 	//robots don't die when gibbed. instead they drop their MMI'd brain
 	var/atom/movable/overlay/animation = null
 	notransform = TRUE
-	canmove = 0
+	canmove = FALSE
 	icon = null
 	invisibility = 101
 
@@ -39,7 +39,7 @@
 
 	update_canmove()
 	if(camera)
-		camera.status = 0
+		camera.status = FALSE
 
 	update_sight()
 	updateicon()

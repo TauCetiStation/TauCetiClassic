@@ -3,7 +3,7 @@
 	if (!master_cam)
 		return
 
-	var/synced = 0
+	var/synced = FALSE
 	for(var/datum/picture/z in aiCamera.aipictures)
 		if (!(master_cam.aipictures.Find(z)))
 			aiCamera.printpicture(null, z)

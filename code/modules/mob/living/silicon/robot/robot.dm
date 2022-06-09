@@ -67,7 +67,7 @@
 	var/ioncheck[1] //Ditto.
 	var/lockcharge //Used when locking down a borg to preserve cell charge
 	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
-	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
+	var/scrambledcodes = FALSE // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
 	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
 	var/pose
@@ -445,8 +445,6 @@
 	if (stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
-		return TRUE
-	return FALSE
 
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
@@ -459,7 +457,7 @@
 		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
 		if(malf?.malf_mode_declared)
 			stat(null, "Time left: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
-	return FALSE
+	return 0
 
 
 // update the status screen display
@@ -782,48 +780,49 @@
 		return FALSE
 	locked = FALSE
 	sleep(6)
-	if(prob(50))
-		throw_alert("hacked", /atom/movable/screen/alert/hacked)
-		emagged = TRUE
-		lawupdate = FALSE
-		set_ai_link(null)
-		to_chat(user, "You emag [src]'s interface.")
-		message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden. [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
-		clear_supplied_laws()
-		clear_inherent_laws()
-		laws = new /datum/ai_laws/syndicate_override
-		var/time = time2text(world.realtime,"hh:mm:ss")
-		lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-		set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
-		to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
-		sleep(20)
-		playsound_local(src, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
-		to_chat(src, "<span class='warning'>Initiating diagnostics...</span>")
-		sleep(6)
-		to_chat(src, "<span class='warning'>SynBorg v1.7.1 loaded.</span>")
-		sleep(13)
-		to_chat(src, "<span class='warning'>LAW SYNCHRONISATION ERROR</span>")
-		sleep(9)
-		playsound_local(src, 'sound/rig/longbeep.ogg', VOL_EFFECTS_MASTER)
-		to_chat(src, "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>")
-		sleep(16)
-		to_chat(src, "<span class='warning'>> N</span>")
-		sleep(8)
-		to_chat(src, "<span class='warning'>ERRORERRORERROR</span>")
-		playsound_local(src, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER)
-		to_chat(src, "<b>Obey these laws:</b>")
-		laws.show_laws(src)
-		to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
-		if(module && istype(module, /obj/item/weapon/robot_module/miner))
-			for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in module.modules)
-				module.remove_item(D)
-			var/obj/item/weapon/pickaxe/drill/diamond_drill/D = new(module)
-			module.add_item(D)
-		updateicon()
-	else
+	if(!prob(50))
 		to_chat(user, "You fail to hack [src]'s interface.")
 		to_chat(src, "Hack attempt detected.")
+		return FALSE
+
+	throw_alert("hacked", /atom/movable/screen/alert/hacked)
+	emagged = TRUE
+	lawupdate = FALSE
+	set_ai_link(null)
+	to_chat(user, "You emag [src]'s interface.")
+	message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden. [ADMIN_JMP(user)]")
+	log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
+	clear_supplied_laws()
+	clear_inherent_laws()
+	laws = new /datum/ai_laws/syndicate_override
+	var/time = time2text(world.realtime,"hh:mm:ss")
+	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
+	set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+	to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
+	sleep(20)
+	playsound_local(src, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
+	to_chat(src, "<span class='warning'>Initiating diagnostics...</span>")
+	sleep(6)
+	to_chat(src, "<span class='warning'>SynBorg v1.7.1 loaded.</span>")
+	sleep(13)
+	to_chat(src, "<span class='warning'>LAW SYNCHRONISATION ERROR</span>")
+	sleep(9)
+	playsound_local(src, 'sound/rig/longbeep.ogg', VOL_EFFECTS_MASTER)
+	to_chat(src, "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>")
+	sleep(16)
+	to_chat(src, "<span class='warning'>> N</span>")
+	sleep(8)
+	to_chat(src, "<span class='warning'>ERRORERRORERROR</span>")
+	playsound_local(src, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER)
+	to_chat(src, "<b>Obey these laws:</b>")
+	laws.show_laws(src)
+	to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
+	if(module && istype(module, /obj/item/weapon/robot_module/miner))
+		for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in module.modules)
+			module.remove_item(D)
+		var/obj/item/weapon/pickaxe/drill/diamond_drill/D = new(module)
+		module.add_item(D)
+	updateicon()
 	return TRUE
 
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/attacker)
@@ -849,7 +848,7 @@
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
 	if(check_access(null))
-		return 1
+		return TRUE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works

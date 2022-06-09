@@ -1,6 +1,6 @@
 /mob/living/silicon
 	gender = NEUTER
-	robot_talk_understand = 1
+	robot_talk_understand = TRUE
 	voice_name = "synthesized voice"
 	hud_possible = list(ANTAG_HUD, HOLY_HUD, DIAG_STAT_HUD, DIAG_HUD)
 	typing_indicator_type = "machine"
@@ -8,7 +8,7 @@
 	var/list/sensor_huds = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY, DATA_HUD_DIAGNOSTIC)
 	var/list/def_sensor_huds
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
-	immune_to_ssd = 1
+	immune_to_ssd = TRUE
 
 	var/list/speech_synthesizer_langs = list()	//which languages can be vocalized by the speech synthesizer
 	var/obj/item/device/pda/silicon/pda = null
@@ -73,10 +73,10 @@
 	return
 
 /mob/living/silicon/IsAdvancedToolUser()
-	return 1
+	return TRUE
 
 /mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
-	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
+	return FALSE//The only effect that can hit them atm is flashes and they still directly edit so this works for now
 /*
 	if(!effect || (blocked >= 2))	return 0
 	switch(effecttype)
@@ -97,12 +97,12 @@
 	updatehealth()
 	return 1*/
 
-/proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
+/mob/living/silicon/proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
-		return 0
+		return FALSE
 	if (bot.connected_ai == ai)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 // This is a pure virtual function, it should be overwritten by all subclasses
 /mob/living/silicon/proc/show_malf_ai()

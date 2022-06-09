@@ -2,7 +2,7 @@
 	death(1)
 	var/atom/movable/overlay/animation = null
 	notransform = TRUE
-	canmove = 0
+	canmove = FALSE
 	icon = null
 	invisibility = 101
 

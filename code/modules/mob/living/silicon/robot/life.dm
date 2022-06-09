@@ -16,7 +16,7 @@
 	if(client)
 		handle_regular_hud_updates()
 		update_items()
-	if (stat != DEAD) //still using power
+	if(stat != DEAD) //still using power
 		add_ingame_age()
 		use_power()
 		process_killswitch()
@@ -41,7 +41,7 @@
 		var/datum/robot_component/C = components[V]
 		C.update_power_state()
 
-	if ( cell && is_component_functioning("power cell") && cell.charge > 0 )
+	if (cell && is_component_functioning("power cell") && cell.charge > 0)
 		if(module_state_1)
 			cell_use_power(50) // 50W load for every enabled tool TODO: tool-specific loads
 		if(module_state_2)
@@ -54,7 +54,7 @@
 
 		has_power = TRUE
 	else
-		if (has_power)
+		if(has_power)
 			to_chat(src, "<span class='warning'>You are now running on emergency backup power.</span>")
 		has_power = FALSE
 		if(lights_on) // Light is on but there is no power!
@@ -81,14 +81,14 @@
 	if(health < config.health_threshold_dead && stat != DEAD) //die only once
 		death()
 
-	if (stat != DEAD) //Alive.
+	if(stat != DEAD) //Alive.
 		if (paralysis || stunned || weakened || has_power) //Stunned etc.
 			stat = UNCONSCIOUS
-			if (stunned > 0)
+			if(stunned > 0)
 				AdjustStunned(-1)
-			if (weakened > 0)
+			if(weakened > 0)
 				AdjustWeakened(-1)
-			if (paralysis > 0)
+			if(paralysis > 0)
 				AdjustParalysis(-1)
 				blinded = TRUE
 			else
@@ -101,29 +101,30 @@
 		blinded = TRUE
 		stat = DEAD
 
-	if (stuttering > 0)
+	if(stuttering > 0)
 		AdjustStuttering(-1)
 
-	if (eye_blind)
+	if(eye_blind)
 		eye_blind--
 		blinded = TRUE
 
-	if (ear_deaf > 0) src.ear_deaf--
-	if (ear_damage < 25)
+	if(ear_deaf > 0)
+		ear_deaf--
+	if(ear_damage < 25)
 		ear_damage -= 0.05
-		ear_damage = max(src.ear_damage, 0)
+		ear_damage = max(ear_damage, 0)
 
 	density = !lying
 
-	if ((sdisabilities & BLIND))
+	if((sdisabilities & BLIND))
 		blinded = TRUE
-	if ((sdisabilities & DEAF))
+	if((sdisabilities & DEAF))
 		ear_deaf = TRUE
 
-	if (eye_blurry > 0)
+	if(eye_blurry > 0)
 		adjustBlurriness(-1)
 
-	if (druggy > 0)
+	if(druggy > 0)
 		druggy--
 		druggy = max(0, druggy)
 
@@ -131,7 +132,7 @@
 	AdjustDrunkenness(-1)
 
 	//update the state of modules and components here
-	if (stat != CONSCIOUS)
+	if(stat != CONSCIOUS)
 		uneq_all()
 
 	if(!is_component_functioning("radio"))
@@ -159,17 +160,17 @@
 	lighting_alpha = initial(lighting_alpha)
 	see_in_dark = 8
 	var/sight_modifier = null
-	if (sight_mode & BORGXRAY)
+	if(sight_mode & BORGXRAY)
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		see_invisible = SEE_INVISIBLE_OBSERVER
-	else if (sight_mode & BORGMESON)
+	else if(sight_mode & BORGMESON)
 		sight_modifier = "meson"
 		sight |= SEE_TURFS
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	else if (sight_mode & BORGNIGHT)
+	else if(sight_mode & BORGNIGHT)
 		sight_modifier = "nvg"
-	else if (sight_mode & BORGTHERM)
+	else if(sight_mode & BORGTHERM)
 		sight_modifier = "thermal"
 		sight |= SEE_MOBS
 	sight_modifier = sight_mode & BORGIGNORESIGHT ? null : sight_modifier
@@ -183,8 +184,8 @@
 	regular_hud_updates()
 	update_sight()
 
-	if (healths)
-		if (stat != DEAD)
+	if(healths)
+		if(stat != DEAD)
 			if(health >= maxHealth)
 				healths.icon_state = "health0"
 			else if(health >= maxHealth * 0.75)
@@ -223,7 +224,7 @@
 	return TRUE
 
 /mob/living/silicon/robot/proc/update_items()
-	if (client)
+	if(client)
 		client.screen -= contents
 		for(var/obj/I in contents)
 			if(I && !(istype(I,/obj/item/weapon/stock_parts/cell) || istype(I,/obj/item/device/radio)  || istype(I,/obj/machinery/camera) || isMMI(I)))
@@ -242,7 +243,7 @@
 		if(killswitch_time <= 0)
 			if(client)
 				to_chat(src, "<span class='danger'>Killswitch Activated</span>")
-			killswitch = TRUE
+			killswitch = FALSE
 			spawn(5)
 				gib()
 

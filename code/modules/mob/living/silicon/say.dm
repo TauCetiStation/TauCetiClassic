@@ -16,13 +16,13 @@
 	//These only pertain to common. Languages are handled by mob/say_understands()
 	if (!speaking)
 		if (iscarbon(other) && !isIAN(other))
-			return 1
+			return TRUE
 		if (isautosay(other))
-			return 1
+			return TRUE
 		if (issilicon(other))
-			return 1
+			return TRUE
 		if (isbrain(other))
-			return 1
+			return TRUE
 	return ..()
 
 /mob/living/silicon/say(message)
@@ -168,7 +168,7 @@
 	if (!message)
 		return
 
-	var/obj/machinery/hologram/holopad/T = src.holo
+	var/obj/machinery/hologram/holopad/T = holo
 	if(T && T.hologram && T.master == src)//If there is a hologram and its master is the user.
 
 		//Human-like, sorta, heard by those who understand humans.
@@ -216,7 +216,7 @@
 	for (var/mob/living/S in alive_mob_list)
 		if(S.robot_talk_understand && (S.robot_talk_understand == robot_talk_understand)) // This SHOULD catch everything caught by the one below, but I'm not going to change it.
 			if(istype(S , /mob/living/silicon/ai))
-				var/renderedAI = "<i><span class='binarysay'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
+				var/renderedAI = "<i><span class='binarysay'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
 				S.show_message(renderedAI, SHOWMSG_AUDIO)
 			else if(isbrain(S))
 				S.show_message(rendered, SHOWMSG_AUDIO)
@@ -232,7 +232,7 @@
 
 		else if (S.binarycheck())
 			if(istype(S , /mob/living/silicon/ai))
-				var/renderedAI = "<i><span class='binarysay'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
+				var/renderedAI = "<i><span class='binarysay'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
 				S.show_message(renderedAI, SHOWMSG_AUDIO)
 			else
 				S.show_message(rendered, SHOWMSG_AUDIO)
