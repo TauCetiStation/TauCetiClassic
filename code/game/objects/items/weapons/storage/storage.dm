@@ -380,8 +380,7 @@
 	add_fingerprint(user)
 	if(try_open(user))
 		return
-	else
-		..(user)
+	return ..(user)
 
 //Should be merged into attack_hand() later, i mean whole attack_paw() proc, but thats probably a lot of work.
 /obj/item/weapon/storage/attack_paw(mob/user) // so monkey, ian or something will open it, istead of unequip from back
