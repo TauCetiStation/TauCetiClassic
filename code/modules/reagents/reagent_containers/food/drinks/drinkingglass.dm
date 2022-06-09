@@ -5,12 +5,28 @@
 	amount_per_transfer_from_this = 5
 	volume = 25
 
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/afterattack(atom/target, mob/user, proximity, params)
+	. = ..()
+	if(target.is_open_container())
+		if(reagents.total_volume && target.reagents.maximum_volume && target.reagents.total_volume < target.reagents.maximum_volume)
+			playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
 	..()
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	reagents.standard_splash(loc)
 	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/pickup(mob/living/user)
+	. = ..()
+	animate(src, transform = null, time = 0) //Restore bottle to its original position
+	playsound(user, 'sound/items/glasses/bottle_take-empty.ogg', VOL_EFFECTS_MASTER, 1000, TRUE)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/dropped(mob/user)
+	. = ..()
+	if(isturf(loc) && (user.loc != loc))
+		playsound(user, 'sound/items/glasses/bottle_put-empty.ogg', VOL_EFFECTS_MASTER, 1000, TRUE)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	/*if(reagents.reagent_list.len > 1 )
