@@ -160,7 +160,7 @@ var/global/list/GPS_list = list()
 
 /obj/item/device/gps/medical
 	icon_state = "gps-med"
-	gpstag = "MIN0"
+	gpstag = "MED0"
 
 /obj/item/device/gps/cyborg
 	gpstag = "BORG0"
