@@ -46,5 +46,5 @@ var/global/list/duplicate_forbidden_vars = list(
 	"bodyparts", "organs", "overlays_standing", "hud_list",
 	"actions", "appearance", "managed_overlays", "managed_vis_overlays", "implants",
 	"tgui_shared_states", "datum_components", "comp_lookup", "reagents",
-	"resize_rev", "smooth_icon_initial", "current_power_usage", "current_power_area"
+	"current_power_usage", "current_power_area"
 	)
