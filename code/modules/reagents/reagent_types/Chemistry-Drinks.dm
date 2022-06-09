@@ -351,7 +351,7 @@
 	overdose = 120
 	taste_message = "cherry soda"
 
-/datum/reagent/consumable/lean/on_general_digest(mob/living/M)
+/datum/reagent/consumable/drink/cold/dr_gibb/on_general_digest(mob/living/M)
 	..()
 	if(volume > overdose)
 		M.gib()
