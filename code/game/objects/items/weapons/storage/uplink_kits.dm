@@ -38,10 +38,8 @@
 			new /obj/item/weapon/plastique(src)
 
 		if("implant")
-			var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
-			O.imp = new /obj/item/weapon/implant/freedom(O)
-			var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
-			U.imp = new /obj/item/weapon/implant/uplink(U)
+			new /obj/item/weapon/implanter/freedom(src)
+			new /obj/item/weapon/implanter/uplink(src)
 			new /obj/item/weapon/implanter/explosive(src)
 			new /obj/item/weapon/implanter/adrenaline(src)
 			new /obj/item/weapon/implanter/emp(src)
@@ -119,9 +117,7 @@
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom/atom_init()
 	. = ..()
-	var/obj/item/weapon/implanter/O = new(src)
-	O.imp = new /obj/item/weapon/implant/freedom(O)
-	O.update()
+	new /obj/item/weapon/implanter/freedom(src)
 
 /obj/item/weapon/storage/box/syndie_kit/imp_compress
 	name = "box (C)"
@@ -139,18 +135,14 @@
 
 /obj/item/weapon/storage/box/syndie_kit/imp_adrenaline/atom_init()
 	. = ..()
-	var/obj/item/weapon/implanter/O = new(src)
-	O.imp = new /obj/item/weapon/implant/adrenaline(O)
-	O.update()
+	new /obj/item/weapon/implanter/adrenaline(src)
 
 /obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
 	name = "box (A)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_emp/atom_init()
 	. = ..()
-	var/obj/item/weapon/implanter/O = new(src)
-	O.imp = new /obj/item/weapon/implant/emp(O)
-	O.update()
+	new /obj/item/weapon/implanter/emp(src)
 
 /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	name = "box (M)"
@@ -160,9 +152,7 @@
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink/atom_init()
 	. = ..()
-	var/obj/item/weapon/implanter/O = new(src)
-	O.imp = new /obj/item/weapon/implant/uplink(O)
-	O.update()
+	new /obj/item/weapon/implanter/uplink(src)
 
 /obj/item/weapon/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
@@ -324,3 +314,132 @@
 	var/obj/item/clothing/glasses/syndidroneRC/rc_glasses = new /obj/item/clothing/glasses/syndidroneRC(src)
 	rc_glasses.slave = new /mob/living/silicon/robot/drone/syndi(drone_holder)
 	make_exact_fit()
+
+//loadouts
+
+/obj/item/weapon/storage/backpack/dufflebag/nuke/scout
+	name = "scout kit"
+	startswith = list(
+	/obj/item/ammo_box/magazine/m12mm/hv,
+	/obj/item/ammo_box/magazine/m12mm/hp,
+	/obj/item/ammo_box/magazine/m12mm/imp,
+	/obj/item/ammo_box/magazine/m12mm = 3,
+	/obj/item/weapon/gun/projectile/automatic/c20r,
+	/obj/item/weapon/implanter/adrenaline,
+	/obj/item/weapon/reagent_containers/hypospray/combat,
+	/obj/item/clothing/glasses/thermal/syndi,
+	/obj/item/weapon/card/emag,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
+
+/obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman
+	name = "assaultman kit"
+	startswith = list(
+	/obj/item/ammo_box/magazine/a74mm = 3,
+	/obj/item/weapon/gun/projectile/automatic/a74,
+	/obj/item/weapon/shield/energy,
+	/obj/item/weapon/grenade/flashbang = 4,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+	/obj/item/weapon/plastique = 2,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
+
+/obj/item/weapon/storage/belt/utility/hacker
+	startswith = list(
+	/obj/item/weapon/wrench/power,
+	/obj/item/weapon/wirecutters/power,
+	/obj/item/weapon/weldingtool/largetank,
+	/obj/item/device/multitool,
+	/obj/item/device/flashlight/emp,)
+
+/obj/item/weapon/storage/backpack/dufflebag/nuke/hacker
+	name = "hacker kit"
+	startswith = list(
+	/obj/item/ammo_box/magazine/m12g = 4,
+	/obj/item/ammo_box/magazine/m12g/stun,
+	/obj/item/ammo_box/magazine/m12g/incendiary,
+	/obj/item/weapon/gun/projectile/automatic/bulldog,
+	/obj/item/weapon/aiModule/freeform/syndicate,
+	/obj/item/weapon/grenade/spawnergrenade/manhacks,
+	/obj/item/device/debugger,
+	/obj/item/weapon/storage/belt/utility/hacker,
+	/obj/item/weapon/card/emag,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
+
+/obj/item/weapon/storage/backpack/dufflebag/nuke/sniper
+	name = "sniper kit"
+	startswith = list(
+	/obj/item/ammo_casing/a145 = 6,
+	/obj/item/weapon/gun/projectile/heavyrifle,
+	/obj/item/device/chameleon,
+	/obj/item/clothing/glasses/thermal/syndi,
+	/obj/item/weapon/card/emag,
+	/obj/item/weapon/pen/edagger,
+	/obj/item/weapon/grenade/smokebomb = 3,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
+
+/obj/item/weapon/storage/backpack/dufflebag/nuke/demo
+	name = "demolition and explosion kit"
+	startswith = list(
+	/obj/item/ammo_casing/r4046/explosive = 3,
+	/obj/item/ammo_casing/r4046/chem/EMP = 3,
+	/obj/item/ammo_box/magazine/drozd127,
+	/obj/item/weapon/gun/projectile/automatic/drozd,
+	/obj/item/weapon/plastique = 4,
+	/obj/item/weapon/grenade/syndieminibomb = 2,
+	/obj/item/device/radio/beacon/syndicate_bomb,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
+
+/obj/item/weapon/storage/backpack/dufflebag/nuke/melee
+	name = "melee weapon kit"
+	startswith = list(
+	/obj/item/weapon/dualsaber,
+	/obj/item/weapon/gun/energy/crossbow,
+	/obj/item/weapon/implanter/adrenaline,
+	/obj/item/weapon/implanter/emp,
+	/obj/item/weapon/reagent_containers/hypospray/combat,
+	/obj/item/weapon/legcuffs/bola/tactical = 2,
+	/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
+	/obj/item/weapon/card/emag,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
+
+/obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner
+	name = "heavy machine gunner kit"
+	startswith = list(
+	/obj/item/ammo_box/magazine/m762 = 2,
+	/obj/item/weapon/gun/projectile/automatic/l6_saw,
+	/obj/item/clothing/suit/space/rig/syndi/heavy,
+	/obj/item/clothing/head/helmet/space/rig/syndi/heavy,
+	)
+
+/obj/item/weapon/storage/backpack/dufflebag/nuke/medic
+	name = "field medic kit"
+	startswith = list(
+	/obj/item/weapon/gun/medbeam/syndi,
+	/obj/item/clothing/glasses/hud/health/night,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+	/obj/item/weapon/storage/pouch/medical_supply/syndicate,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
+
+
+/obj/item/weapon/storage/backpack/dufflebag/nuke/custom
+	name = "custom kit"
+	startswith = list(
+	/obj/item/device/radio/uplink,
+	/obj/item/stack/telecrystal/twenty,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)

@@ -18457,6 +18457,15 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "recycler_airlock";
+	pixel_y = 28;
+	req_access = list(67);
+	tag_airpump = "recycler_pump";
+	tag_chamber_sensor = "recycler_sensor";
+	tag_exterior_door = "recycler_outer";
+	tag_interior_door = "recycler_inner"
+	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "jcU" = (
@@ -25652,15 +25661,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	id_tag = "recycler_airlock";
-	pixel_y = 28;
-	req_access = list(67);
-	tag_airpump = "recycler_pump";
-	tag_chamber_sensor = "recycler_sensor";
-	tag_exterior_door = "recycler_outer";
-	tag_interior_door = "recycler_inner"
 	},
 /obj/machinery/airlock_sensor{
 	id_tag = "recycler_sensor";

@@ -10,6 +10,7 @@
 	var/list/located = list()
 	var/screen = 0
 	var/stored_data
+	required_skills = list(/datum/skill/civ_mech/pro)
 
 /obj/machinery/computer/mecha/ui_interact(mob/user)
 	var/dat = ""

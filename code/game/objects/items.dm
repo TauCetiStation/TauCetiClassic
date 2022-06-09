@@ -77,6 +77,8 @@
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
+	// Is using this item requires any specific skills?
+	var/list/required_skills
 
 	var/dyed_type
 
@@ -745,7 +747,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null, required_skills_override = null, skills_speed_bonus = -0.4)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -754,7 +756,17 @@
 	if(!delay && !tool_start_check(user, amount))
 		return
 
+	var/skill_bonus = 1
+	
+	//in case item have no defined default required_skill or we need to check other skills e.g. check crowbar for surgery
+	if(required_skills_override)
+		skill_bonus = apply_skill_bonus(user, 1, required_skills_override, skills_speed_bonus)
+	else if(required_skills) //default check for item
+		skill_bonus = apply_skill_bonus(user, 1, required_skills, skills_speed_bonus)
+	
+	
 	delay *= toolspeed
+	delay *= skill_bonus
 
 	if(!isnull(quality))
 		var/qual_mod = get_quality(quality)
