@@ -69,7 +69,7 @@
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>You start to add cables to the frame.</span>")
-				if(P.use_tool(src, user, 20, target = src, volume = 50))
+				if(P.use_tool(src, user, SKILL_TASK_EASY, target = src, volume = 50, required_skills_override = list(/datum/skill/construction/pro)))
 					if(state == 1)
 						if(!C.use(5))
 							return
@@ -83,7 +83,7 @@
 					return
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
-				if(P.use_tool(src, user, 40, volume = 50))
+				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						var/obj/item/stack/sheet/metal/M = new (loc, 5)
@@ -94,7 +94,7 @@
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				if(P.use_tool(src, user, 40, volume = 75))
+				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 75))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 						anchored = !anchored
@@ -103,7 +103,7 @@
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				if(P.use_tool(src, user, 40, volume = 75))
+				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 75))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 					anchored = !anchored
 
@@ -158,6 +158,8 @@
 						component_check = 0
 						break
 				if(component_check)
+					if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/construction/pro), "<span class='notice'>You fumble around, figuring out how to construct machine.</span>"))
+						return
 					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 					var/obj/machinery/new_machine = new circuit.build_path(src.loc)
 					transfer_fingerprints_to(new_machine)
@@ -635,6 +637,17 @@ to destroy them and players will be able to make replacements.
 	name = "Circuit Board (MRSPACMAN-type Generator)"
 	build_path = /obj/machinery/power/port_gen/pacman/mrs
 	origin_tech = "programming=3;powerstorage=5;engineering=5"
+
+/obj/item/weapon/circuitboard/pacman/money
+	name = "Circuit Board (ANCAPMAN-type Generator)"
+	build_path = /obj/machinery/power/port_gen/pacman/money
+	origin_tech = "programming=3;powerstorage=5;engineering=5"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/weapon/storage/wallet = 1)
 
 /obj/item/weapon/circuitboard/rdserver
 	name = "Circuit Board (R&D Server)"

@@ -475,6 +475,9 @@
 	icon_state = "mining_voucher"
 	w_class = SIZE_MINUSCULE
 
+/obj/item/weapon/mining_voucher/syndi
+	name = "strange voucher"
+	desc = "A stolen and modified token to redeem a piece of equipment. Use it on KillNTVendor."
 
 /**********************Mining Point Card**********************/
 

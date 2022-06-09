@@ -42,6 +42,8 @@
 	var/radiation = 0 // 0-100 mSv
 	var/t_left_radspike = 0
 	var/rad_shield = 0
+	required_skills = list(/datum/skill/research/trained)
+
 
 /obj/machinery/radiocarbon_spectrometer/atom_init()
 	. = ..()
@@ -88,8 +90,11 @@
 				to_chat(user, "<span class='info'>You remove [amount_transferred]u of coolant from [src].</span>")
 				update_coolant()
 				return
-		user.drop_from_inventory(I, src)
-		scanned_item = I
+		if(!scanned_item)
+			user.drop_from_inventory(I, src)
+			scanned_item = I
+		else
+			to_chat(user, "<span class='warning'>There is already something in [src].</span>")
 
 /obj/machinery/radiocarbon_spectrometer/proc/update_coolant()
 	var/total_purity = 0
@@ -114,7 +119,6 @@
 
 	if(user.stat && !isobserver(user))
 		return
-
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["scanned_item"] = (scanned_item ? scanned_item.name : "")

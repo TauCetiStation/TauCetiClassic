@@ -129,11 +129,13 @@
 
 /area/asteroid/mine/maintenance
 	name = "Mining Station Communications"
+	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
 
 	outdoors = FALSE
 
 /area/asteroid/mine/west_outpost
 	name = "West Mining Outpost"
+	looped_ambience = 'sound/ambience/loop_mineoutpost.ogg'
 
 	outdoors = FALSE
 

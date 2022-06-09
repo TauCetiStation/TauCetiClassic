@@ -9,6 +9,7 @@
 	var/burning = 0
 	var/splicing = 0
 	var/scanning = 0
+	required_skills = list(/datum/skill/research/trained, /datum/skill/medical/pro, /datum/skill/chemistry/novice)
 
 /obj/machinery/computer/diseasesplicer/attackby(obj/I, mob/user)
 	if(isscrewdriver(I))
@@ -19,13 +20,16 @@
 		if (dish)
 			to_chat(user, "\The [src] is already loaded.")
 			return
-
+		if(!do_skill_checks(user))
+			return
 		dish = I
 		c.drop_from_inventory(I, src)
 		updateUsrDialog()
 		return
 
 	else if(istype(I,/obj/item/weapon/diseasedisk))
+		if(!do_skill_checks(user))
+			return
 		to_chat(user, "You upload the contents of the disk onto the buffer.")
 		memorybank = I:effect
 		species_buffer = I:species
