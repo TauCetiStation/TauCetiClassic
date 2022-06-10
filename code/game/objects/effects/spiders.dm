@@ -102,7 +102,6 @@
 	var/grow_as = null
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
-	var/list/faction = list("spiders")
 
 /obj/effect/spider/spiderling/atom_init()
 	. = ..()
@@ -119,9 +118,20 @@
 	else
 		..()
 
+/obj/effect/spider/spiderling/attack_hand(mob/living/user)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(user.a_intent == INTENT_HARM)
+		playsound(src, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
+		visible_message("<span class='alert'>\The [user] has punched [src]!</span>")
+		health -= 2
+		healthcheck()
+	else
+		to_chat(user, "<span class='notice'>You touch [src]!</span>")
+	return
+
 /obj/effect/spider/spiderling/proc/die()
 	visible_message("<span class='alert'>[src] dies!</span>")
-	new /obj/effect/decal/cleanable/spiderling_remains(src.loc)
+	new /obj/effect/decal/cleanable/spiderling_remains(get_turf(src))
 	qdel(src)
 
 /obj/effect/spider/spiderling/healthcheck()
@@ -177,12 +187,12 @@
 				visible_message("<B>[src] scrambles into the ventilation ducts!</B>", \
 							"<span class='notice'>You hear something scampering through the ventilation ducts.</span>")
 
-			addtimer(CALLBACK(src, .proc/vent_move, exit_vent), rand(20,60))
+			addtimer(CALLBACK(src, .proc/vent_move, exit_vent), rand(15,30))
 
 	//=================
 
 	else if(prob(33))
-		var/list/nearby = oview(10, src)
+		var/list/nearby = oview(3, src)
 		if(nearby.len)
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom)
@@ -190,7 +200,7 @@
 				src.visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
 	else if(prob(10))
 		//ventcrawl!
-		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(5,src))
 			if(!v.welded)
 				entry_vent = v
 				walk_to(src, entry_vent, 1)
@@ -198,10 +208,8 @@
 	if(isturf(loc))
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
-			if(!grow_as)
-				grow_as = pick(/mob/living/simple_animal/hostile/giant_spider, /mob/living/simple_animal/hostile/giant_spider/hunter, /mob/living/simple_animal/hostile/giant_spider/nurse)
-			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(src.loc)
-			S.faction = faction.Copy()
+			grow_as = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
+			new grow_as(src.loc)
 			qdel(src)
 
 /obj/effect/decal/cleanable/spiderling_remains
