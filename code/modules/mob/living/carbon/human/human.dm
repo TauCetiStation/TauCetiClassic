@@ -1739,6 +1739,9 @@
 	name = "toggle leap"
 	icon = 'icons/mob/screen1_action.dmi'
 	icon_state = "action"
+	screen_loc = ui_human_leap
+
+	copy_flags = NONE
 
 	var/on = FALSE
 	var/time_used = 0

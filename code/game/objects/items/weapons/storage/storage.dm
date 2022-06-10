@@ -104,29 +104,8 @@
 	if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
 		open(usr)
 		return
-	if (!( istype(over_object, /atom/movable/screen) ))
-		return ..()
 
-	//makes sure that the storage is equipped, so that we can't drag it into our hand from miles away.
-	//there's got to be a better way of doing this.
-	if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
-		return
-
-	if (!usr.incapacitated())
-		switch(over_object.name)
-			if("r_hand")
-				if(!M.unEquip(src))
-					return
-				M.put_in_r_hand(src)
-			if("l_hand")
-				if(!M.unEquip(src))
-					return
-				M.put_in_l_hand(src)
-			if("mouth")
-				if(!M.unEquip(src))
-					return
-				M.put_in_active_hand(src)
-		add_fingerprint(usr)
+	return ..()
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list(  )
