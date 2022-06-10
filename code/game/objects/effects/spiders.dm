@@ -98,7 +98,7 @@
 	anchored = FALSE
 	layer = 2.7
 	health = 3
-	var/amount_grown = 0
+	var/amount_grown = -1
 	var/grow_as = null
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
@@ -123,7 +123,9 @@
 	if(user.a_intent == INTENT_HARM)
 		playsound(src, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
 		visible_message("<span class='alert'>\The [user] has punched [src]!</span>")
-		health -= 2
+		var/list/damObj = user.get_unarmed_attack()
+		var/damage = damObj["damage"]
+		health -= damage
 		healthcheck()
 	else
 		to_chat(user, "<span class='notice'>You touch [src]!</span>")
