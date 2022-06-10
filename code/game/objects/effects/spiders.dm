@@ -98,9 +98,11 @@
 	anchored = FALSE
 	layer = 2.7
 	health = 3
-	var/amount_grown = -1
+	var/amount_grown = 0
+	var/grow_as = null
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
+	var/list/faction = list("spiders")
 
 /obj/effect/spider/spiderling/atom_init()
 	. = ..()
@@ -113,7 +115,7 @@
 
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
-		src.loc = user.loc
+		forceMove(user.loc)
 	else
 		..()
 
@@ -126,71 +128,80 @@
 	if(health <= 0)
 		die()
 
+/obj/effect/spider/spiderling/proc/cancel_vent_move()
+	forceMove(entry_vent)
+	entry_vent = null
+
+/obj/effect/spider/spiderling/proc/vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
+	if(QDELETED(exit_vent) || exit_vent.welded)
+		cancel_vent_move()
+		return
+
+	forceMove(exit_vent)
+	var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
+	addtimer(CALLBACK(src, .proc/do_vent_move, exit_vent, travel_time), travel_time)
+
+/obj/effect/spider/spiderling/proc/do_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent, travel_time)
+	if(QDELETED(exit_vent) || exit_vent.welded)
+		cancel_vent_move()
+		return
+
+	if(prob(50))
+		audible_message("<span class='notice'>You hear something scampering through the ventilation ducts.</span>")
+
+	addtimer(CALLBACK(src, .proc/finish_vent_move, exit_vent), travel_time)
+
+/obj/effect/spider/spiderling/proc/finish_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
+	if(QDELETED(exit_vent) || exit_vent.welded)
+		cancel_vent_move()
+		return
+	forceMove(exit_vent.loc)
+	entry_vent = null
+
 /obj/effect/spider/spiderling/process()
 	if(travelling_in_vent)
-		if(istype(src.loc, /turf))
+		if(isturf(loc))
 			travelling_in_vent = 0
 			entry_vent = null
 	else if(entry_vent)
 		if(get_dist(src, entry_vent) <= 1)
 			var/list/vents = list()
-			var/datum/pipeline/entry_vent_parent = entry_vent.PARENT1
+			var/datum/pipeline/entry_vent_parent = entry_vent.parents[1]
 			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
 				vents.Add(temp_vent)
 			if(!vents.len)
 				entry_vent = null
 				return
 			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
-			/*if(prob(50))
-				visible_message("<B>[src] scrambles into the ventillation ducts!</B>")*/
+			if(prob(50))
+				visible_message("<B>[src] scrambles into the ventilation ducts!</B>", \
+							"<span class='notice'>You hear something scampering through the ventilation ducts.</span>")
 
-			spawn(rand(20,60))
-				loc = exit_vent
-				var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
-				spawn(travel_time)
+			addtimer(CALLBACK(src, .proc/vent_move, exit_vent), rand(20,60))
 
-					if(!exit_vent || exit_vent.welded)
-						loc = entry_vent
-						entry_vent = null
-						return
-
-					if(prob(50))
-						visible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>",2)
-					sleep(travel_time)
-
-					if(!exit_vent || exit_vent.welded)
-						loc = entry_vent
-						entry_vent = null
-						return
-					loc = exit_vent.loc
-					entry_vent = null
-					var/area/new_area = get_area(loc)
-					if(new_area)
-						new_area.Entered(src)
 	//=================
 
-	else if(prob(25))
-		var/list/nearby = oview(5, src)
+	else if(prob(33))
+		var/list/nearby = oview(10, src)
 		if(nearby.len)
 			var/target_atom = pick(nearby)
-			walk_to(src, target_atom, 5)
-			if(prob(25))
-				visible_message("<span class='notice'>\the [src] skitters[pick(" away"," around","")].</span>")
-	else if(prob(5))
+			walk_to(src, target_atom)
+			if(prob(40))
+				src.visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
+	else if(prob(10))
 		//ventcrawl!
 		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
 			if(!v.welded)
 				entry_vent = v
-				walk_to(src, entry_vent, 5)
+				walk_to(src, entry_vent, 1)
 				break
-
-	if(prob(1))
-		visible_message("<span class='notice'>\the [src] chitters.</span>")
-	if(isturf(loc) && amount_grown > 0)
+	if(isturf(loc))
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
-			var/spawn_type = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
-			new spawn_type(src.loc)
+			if(!grow_as)
+				grow_as = pick(/mob/living/simple_animal/hostile/giant_spider, /mob/living/simple_animal/hostile/giant_spider/hunter, /mob/living/simple_animal/hostile/giant_spider/nurse)
+			var/mob/living/simple_animal/hostile/giant_spider/S = new grow_as(src.loc)
+			S.faction = faction.Copy()
 			qdel(src)
 
 /obj/effect/decal/cleanable/spiderling_remains
