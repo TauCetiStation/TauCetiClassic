@@ -122,7 +122,7 @@
 		return
 
 	if(fon)
-		fon = 0
+		fon = FALSE
 		set_light(0)
 	else
 		fon = TRUE
