@@ -263,8 +263,19 @@
 	latetoggle()
 
 /obj/machinery/door/firedoor/do_afterclose()
-	for(var/mob/living/L in get_turf(src))
-		try_move_adjacent(L)
+	var/turf/T = get_turf(src)
+	for(var/atom/A in T)
+		if(istype(A, /obj/structure/closet))
+			if(!try_move_adjacent(C))
+				C.welded = TRUE
+				C.update_icon()
+		if(isliving(A))
+			if(!try_move_adjacent(A))
+				A.airlock_crush_act()
+		if(istype(A, /obj/machinery/porta_turret))
+			if(!try_move_adjacent(A))
+				var/obj/machinery/porta_turret/turret = A
+				turret.die()
 	..()
 
 /obj/machinery/door/firedoor/do_open()
