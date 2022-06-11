@@ -347,7 +347,8 @@
 	var/turf/T = get_turf(AM)
 	for(var/direction in cardinal)
 		if(AM.Move(get_step(T, direction)))
-			break
+			return TRUE
+		return FALSE
 
 /proc/get_mob_by_key(key)
 	for(var/mob/M as anything in mob_list)
