@@ -70,6 +70,8 @@
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
+	action_button_name = "Toggle light"
+
 /obj/item/device/pda/atom_init()
 	. = ..()
 	PDAs += src
@@ -108,6 +110,23 @@
 		return
 
 	return ..()
+
+/obj/item/device/pda/ui_action_click()
+	toggle_light()
+
+/obj/item/device/pda/verb/toggle_light()
+	set name = "Toggle light"
+	set category = "Object"
+
+	if(usr.incapacitated())
+		return
+
+	if(fon)
+		fon = 0
+		set_light(0)
+	else
+		fon = 1
+		set_light(f_lum)
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
