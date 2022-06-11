@@ -125,7 +125,7 @@
 		fon = 0
 		set_light(0)
 	else
-		fon = 1
+		fon = TRUE
 		set_light(f_lum)
 
 /obj/item/device/pda/medical
