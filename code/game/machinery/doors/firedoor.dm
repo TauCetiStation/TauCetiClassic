@@ -266,6 +266,7 @@
 	var/turf/T = get_turf(src)
 	for(var/atom/A in T)
 		if(istype(A, /obj/structure/closet))
+			var/obj/structure/closet/C = A
 			if(!try_move_adjacent(C))
 				C.welded = TRUE
 				C.update_icon()
@@ -273,8 +274,8 @@
 			if(!try_move_adjacent(A))
 				A.airlock_crush_act()
 		if(istype(A, /obj/machinery/porta_turret))
-			if(!try_move_adjacent(A))
-				var/obj/machinery/porta_turret/turret = A
+			var/obj/machinery/porta_turret/turret = A
+			if(!try_move_adjacent(turret))
 				turret.die()
 	..()
 
