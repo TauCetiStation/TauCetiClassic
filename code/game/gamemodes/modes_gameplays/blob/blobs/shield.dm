@@ -23,6 +23,7 @@
 	name = "reflective blob"
 	icon_state = "blob_glow"
 	desc = "Some blob creature thingy."
+	max_health = 30
 	health = 30 //Normal blob
 	brute_resist = 2 //Normal is 4
 	fire_resist = 1 //2 welder hits

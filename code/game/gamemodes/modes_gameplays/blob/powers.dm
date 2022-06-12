@@ -64,6 +64,59 @@
 		B.change_to(/obj/effect/blob/shield)
 		to_chat(src, "<span class='warning'>You secrete a thick substanse over the blob, allowing it to withstand more damage!</span></span>")
 
+/mob/camera/blob/verb/blobbernaut_power()
+	set category = "Blob"
+	set name = "Create Blobbernaut (40)"
+	set desc = "Create a shield blob. Use it again on existing shield blob to upgrade it into a reflective blob."
+
+	create_blobbernaut()
+
+/mob/camera/blob/proc/create_blobbernaut()
+	var/turf/T = get_turf(src)
+	var/obj/effect/blob/factory/B = locate(/obj/effect/blob/factory) in T
+	if(!B)
+		to_chat(src, "<span class='warning'>You must be on a factory blob!</span>")
+		return
+	if(B.naut) //if it already made a blobbernaut, it can't do it again
+		to_chat(src, "<span class='warning'>This factory blob is already sustaining a blobbernaut.</span>")
+		return
+	if(B.health < B.max_health * 0.5)
+		to_chat(src, "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>")
+		return
+	if(blob_points < 40)
+		to_chat(src, "<span class='warning'>You cannot afford this.</span>")
+		return FALSE
+
+	B.naut = TRUE //temporary placeholder to prevent creation of more than one per factory.
+	to_chat(src, "<span class='notice'>You attempt to produce a blobbernaut.</span>")
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50) //players must answer rapidly
+	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
+		B.max_health = B.max_health * 0.25 //factories that produced a blobbernaut have much lower health
+		//B.update_appearance()
+		B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
+		playsound(B.loc, 'sound/effects/splat.ogg', 50, TRUE)
+		var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
+		flick("blobbernaut_produce", blobber)
+		B.naut = blobber
+		blobber.factory = B
+		blobber.overmind = src
+		blobber.update_icons()
+		blobber.health = blobber.maxHealth * 0.5
+		//blob_mobs += blobber
+		var/mob/dead/observer/C = pick(candidates)
+		blobber.key = C.key
+		playsound(blobber, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
+		playsound(blobber, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
+		to_chat(blobber, "<b>You are a blobbernaut!</b>")
+		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='danger'but will slowly die if not near the blob </span> or if the factory that made you is killed.")
+		to_chat(blobber, "You can communicate with other blobbernauts and overminds via <b>:b</b>")
+		//to_chat(blobber, "Your overmind's blob reagent is: <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font>!")
+		//to_chat(blobber, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> reagent [blobstrain.shortdesc ? "[blobstrain.shortdesc]" : "[blobstrain.description]"]")
+		add_points(-40)
+	else
+		to_chat(src, "<span class='warning'>You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later.")
+		B.naut = null
+
 /mob/camera/blob/verb/create_resource_power()
 	set category = "Blob"
 	set name = "Create Resource Blob (40)"
@@ -233,7 +286,7 @@
 	if(!surrounding_turfs.len)
 		return
 
-	for(var/mob/living/simple_animal/hostile/blobspore/BS in alive_mob_list)
+	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in alive_mob_list)
 		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)

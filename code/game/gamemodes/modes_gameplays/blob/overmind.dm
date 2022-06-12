@@ -48,6 +48,8 @@
 
 /mob/camera/blob/proc/update_health_hud()
 	if(blob_core && hud_used)
+		healths.icon = 'icons/mob/blob.dmi'
+		healths.icon_state = "corehealth"
 		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
 
 /mob/camera/blob/proc/add_points(points)
