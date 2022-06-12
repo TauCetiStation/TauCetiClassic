@@ -151,9 +151,8 @@
 		else
 			healths.icon_state = "health7"
 
-	if(hud_used && hud_used.staminadisplay)
-		var/atom/movable/screen/corgi/stamina_bar/SB = hud_used.staminadisplay
-		SB.icon_state = "stam_bar_[round(stamina, 5)]"
+	if(hud_used)
+		staminadisplay?.update_icon(src)
 
 	return TRUE
 

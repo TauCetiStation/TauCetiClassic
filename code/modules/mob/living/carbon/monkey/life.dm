@@ -199,12 +199,10 @@
 		return null
 	if(!(contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS)))
 		internal = null
-		if(internals)
-			internals.icon_state = "internal0"
+		internals?.update_icon(src)
 		return null
-
-	if(internals)
-		internals.icon_state = "internal1"
+		
+	internals?.update_icon(src)
 	return internal.remove_air_volume(volume_needed)
 
 /mob/living/carbon/monkey/proc/handle_chemicals_in_body()

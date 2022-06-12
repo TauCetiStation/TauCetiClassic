@@ -461,13 +461,9 @@
 	item_in_hand = get_active_hand()
 	if(item_in_hand)
 		SEND_SIGNAL(item_in_hand, COMSIG_ITEM_BECOME_ACTIVE, src)
-	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
-		if(hand)	//This being 1 means the left hand is in use
-			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
-		else
-			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
+	if(hud_used && l_hand_hud_object && r_hand_hud_object)
+		l_hand_hud_object.update_icon(src)
+		r_hand_hud_object.update_icon(src)
 
 	/*if (!( src.hand ))
 		src.hands.dir = NORTH
@@ -1075,8 +1071,7 @@
 				if (internal)
 					internal.add_fingerprint(usr)
 					internal = null
-					if (internals)
-						internals.icon_state = "internal0"
+					internals?.update_icon(src)
 					internalsound = 'sound/misc/internaloff.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
@@ -1086,8 +1081,7 @@
 				else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 					internal = ITEM
 					internal.add_fingerprint(usr)
-					if (internals)
-						internals.icon_state = "internal1"
+					internals?.update_icon(src)
 					internalsound = 'sound/misc/internalon.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
