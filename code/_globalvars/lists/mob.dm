@@ -27,8 +27,7 @@ var/global/list/alien_list = list(
 									ALIEN_SENTINEL = list(),
 									ALIEN_HUNTER = list(),
 									ALIEN_LARVA = list(),
-									ALIEN_FACEHUGGER = list(),
-									ALIEN_MAID = list()
+									ALIEN_FACEHUGGER = list()
 								)
 var/global/list/human_list = list()
 var/global/list/monkey_list = list()

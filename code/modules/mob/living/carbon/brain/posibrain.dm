@@ -63,8 +63,6 @@
 	to_chat(src.brainmob, "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>")
 	src.brainmob.mind.assigned_role = "Positronic Brain"
 
-	brainmob.mind.skills.add_available_skillset(/datum/skillset/cyborg)
-	brainmob.mind.skills.maximize_active_skills()
 	visible_message("<span class='notice'>\The [src] chimes quietly.</span>")
 	icon_state = "posibrain-occupied"
 

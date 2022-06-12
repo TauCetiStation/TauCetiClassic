@@ -8,12 +8,12 @@
 /atom/proc/CanMouseDrop(atom/over, mob/user = usr)
 	if(!user || !over)
 		return FALSE
-	return user.CanUseMouseDrop(over, src)
+	if(!user.CanUseMouseDrop(over, src))
+		return FALSE
+	return TRUE
 
 /mob/proc/CanUseMouseDrop(atom/over, atom/with)
-	if(istype(over, /atom/movable/screen)) // let hud check everything
-		return TRUE
-	return !incapacitated() && in_interaction_vicinity(over) && in_interaction_vicinity(with) && over.Adjacent(with)
+	return !incapacitated() && in_interaction_vicinity(over) && in_interaction_vicinity(with) && with.Adjacent(over)
 
 /atom/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	if(!usr || !over)

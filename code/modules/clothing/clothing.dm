@@ -98,6 +98,41 @@
 	else
 		icon = initial(icon)
 
+/obj/item/clothing/MouseDrop(obj/over_object)
+	. = ..()
+	if (ishuman(usr) || ismonkey(usr))
+		var/mob/M = usr
+		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
+		if (loc != usr)
+			return
+		if (!over_object)
+			return
+		if (usr.incapacitated())
+			return
+		add_fingerprint(usr)
+		if(!equip_time)
+			switch(over_object.name)
+				if("r_hand")
+					if(M.unEquip(src))
+						M.put_in_r_hand(src)
+				if("l_hand")
+					if(M.unEquip(src))
+						M.put_in_l_hand(src)
+		else
+			switch(over_object.name)
+				if("r_hand")
+					if(slot_equipped == SLOT_L_HAND) //item swap
+						if(M.unEquip(src))
+							M.put_in_r_hand(src)
+					else
+						usr.delay_clothing_unequip(src)
+				if("l_hand")
+					if(slot_equipped == SLOT_R_HAND) //item swap
+						if(M.unEquip(src))
+							M.put_in_l_hand(src)
+					else
+						usr.delay_clothing_unequip(src)
+
 /obj/item/clothing/emp_act(severity)
 	..()
 	for(var/obj/item/clothing/accessory/A in accessories)

@@ -78,7 +78,7 @@ var/global/list/SOUNDIN_GENHIT = list('sound/weapons/genhit1.ogg', 'sound/weapon
 
 // ----- Items -----
 // Medical
-var/global/list/SOUNDIN_BANDAGE = list('sound/items/bandage1.ogg', 'sound/items/bandage2.ogg')
+var/global/list/SOUNDIN_BANDAGE = list('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
 var/global/list/SOUNDIN_KNIFE_CUTTING = list('sound/items/knife_cutting1.ogg', 'sound/items/knife_cutting2.ogg', 'sound/items/knife_cutting3.ogg')
 
 // ----- Footsteps -----

@@ -22,6 +22,10 @@
 	return//No talking for you
 
 
+/mob/living/blob/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
+	return
+
+
 /mob/living/blob/Life()
 	set invisibility = 0
 	//set background = 1

@@ -1,4 +1,4 @@
-/datum/emote/human/laugh
+/datum/emote/laugh
 	key = "laugh"
 
 	message_1p = "You laugh."
@@ -16,7 +16,7 @@
 		EMOTE_STATE(is_stat, CONSCIOUS)
 	)
 
-/datum/emote/human/laugh/get_sound(mob/living/carbon/human/user, intentional)
+/datum/emote/laugh/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/laugh_by_gender_species = list(
 		"[SKRELL][FEMALE]" = SOUNDIN_LAUGH_SKRELL_FEMALE,
 		"[SKRELL][MALE]" = SOUNDIN_LAUGH_SKRELL_MALE,
@@ -33,14 +33,14 @@
 
 	return pick(SOUNDIN_LAUGH_MALE)
 
-/datum/emote/human/laugh/play_sound(mob/living/carbon/human/user, intentional, emote_sound)
+/datum/emote/laugh/play_sound(mob/living/carbon/human/user, intentional, emote_sound)
 	var/voice_frequency = TRANSLATE_RANGE(user.age, user.species.min_age, user.species.max_age, 0.85, 1.05)
 	var/sound_frequency = 1.05 - (voice_frequency - 0.85)
 
 	playsound(user, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
 
 
-/datum/emote/human/giggle
+/datum/emote/giggle
 	key = "giggle"
 
 	message_1p = "You giggle."
@@ -59,7 +59,7 @@
 	)
 
 
-/datum/emote/human/grunt
+/datum/emote/grunt
 	key = "grunt"
 
 	message_1p = "You grunt."
@@ -80,15 +80,15 @@
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
 	)
 
-/datum/emote/human/grunt/get_sound(mob/living/carbon/human/user, intentional)
+/datum/emote/grunt/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_FEMALE_LIGHT_PAIN : SOUNDIN_MALE_LIGHT_PAIN)
 
-/datum/emote/human/grunt/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+/datum/emote/grunt/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
 	user.add_combo_value_all(10)
 
 
-/datum/emote/human/groan
+/datum/emote/groan
 	key = "groan"
 
 	message_1p = "You groan."
@@ -109,18 +109,18 @@
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
 	)
 
-/datum/emote/human/groan/get_sound(mob/living/carbon/human/user, intentional)
+/datum/emote/groan/get_sound(mob/living/carbon/human/user, intentional)
 	if(user.get_species() != SKRELL && HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(66))
 		return pick(user.gender == FEMALE ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN)
 
 	return pick(user.gender == FEMALE ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN)
 
-/datum/emote/human/groan/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+/datum/emote/groan/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
 	user.add_combo_value_all(10)
 
 
-/datum/emote/human/scream
+/datum/emote/scream
 	key = "scream"
 
 	message_1p = "You scream!"
@@ -141,15 +141,15 @@
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
 	)
 
-/datum/emote/human/scream/get_sound(mob/living/carbon/human/user, intentional)
+/datum/emote/scream/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_FEMALE_HEAVY_PAIN : SOUNDIN_MALE_HEAVY_PAIN)
 
-/datum/emote/human/scream/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+/datum/emote/scream/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
 	user.add_combo_value_all(10)
 
 
-/datum/emote/human/cough
+/datum/emote/cough
 	key = "cough"
 
 	message_1p = "You cough."
@@ -168,11 +168,11 @@
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
 	)
 
-/datum/emote/human/cough/get_sound(mob/living/carbon/human/user, intentional)
+/datum/emote/cough/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_FBCOUGH : SOUNDIN_MBCOUGH)
 
 
-/datum/emote/human/hiccup
+/datum/emote/hiccup
 	key = "hiccup"
 
 	message_1p = "You hiccup."
@@ -194,7 +194,70 @@
 	)
 
 
-/datum/emote/human/choke
+/datum/emote/beep
+	key = "beep"
+
+	message_1p = "You beep."
+	message_3p = "beeps."
+
+	message_impaired_production = "makes a weak noise."
+	message_impaired_reception = "You see someone open their mouth quickly."
+
+	message_miming = "makes robot noises."
+	message_muzzled = "makes a weak noise."
+
+	message_type = SHOWMSG_AUDIO
+
+	sound = 'sound/machines/twobeep.ogg'
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)
+
+
+/datum/emote/ping
+	key = "ping"
+
+	message_1p = "You ping."
+	message_3p = "pings."
+
+	message_impaired_production = "makes a weak noise."
+	message_impaired_reception = "You see someone opening and closing their mouth."
+
+	message_miming = "makes robot noises."
+	message_muzzled = "makes a weak noise."
+
+	message_type = SHOWMSG_AUDIO
+
+	sound = 'sound/machines/ping.ogg'
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)
+
+
+/datum/emote/buzz
+	key = "buzz"
+
+	message_1p = "You buzz."
+	message_3p = "buzzes."
+
+	message_impaired_production = "makes a weak noise."
+	message_impaired_reception = "You see someone clenching their teeth."
+
+	message_miming = "makes robot noises."
+	message_muzzled = "makes a weak noise."
+
+	message_type = SHOWMSG_AUDIO
+
+	sound = 'sound/machines/buzz-sigh.ogg'
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)
+
+
+/datum/emote/choke
 	key = "choke"
 
 	message_1p = "You choke."
@@ -210,14 +273,11 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_present_bodypart, BP_HEAD),
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
 	)
 
-	cloud = "cloud-gasp"
 
-
-/datum/emote/human/snore
+/datum/emote/snore
 	key = "snore"
 
 	message_1p = "You snore."
@@ -237,8 +297,28 @@
 	)
 
 
+/datum/emote/whimper
+	key = "whimper"
+
+	message_1p = "You whimper."
+	message_3p = "whimpers."
+
+	message_impaired_production = "makes a weak noise."
+	message_impaired_reception = "You see someone making a sad face."
+
+	message_miming = "whimpers."
+	message_muzzled = "makes a weak noise."
+
+	message_type = SHOWMSG_AUDIO
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
+	)
+
+
 // TO-DO: make so intentional sniffing reveals how a reagent solution held in hand smells?
-/datum/emote/human/sniff
+/datum/emote/sniff
 	key = "sniff"
 
 	message_1p = "You sniff."
@@ -257,7 +337,7 @@
 	)
 
 
-/datum/emote/human/sneeze
+/datum/emote/sneeze
 	key = "sneeze"
 
 	message_1p = "You sneeze."
@@ -277,7 +357,7 @@
 	)
 
 
-/datum/emote/human/gasp
+/datum/emote/gasp
 	key = "gasp"
 
 	message_1p = "You gasp!"
@@ -294,13 +374,32 @@
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_present_bodypart, BP_HEAD),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
 	)
 
 	cloud = "cloud-gasp"
 
 
-/datum/emote/human/sigh
+/datum/emote/moan
+	key = "moan"
+
+	message_1p = "You moan!"
+	message_3p = "moans!"
+
+	message_impaired_production = "moans silently."
+	message_impaired_reception = "You see someone opening their mouth wide."
+
+	message_miming = "appears to moan!"
+	message_muzzled = "moans silently!"
+
+	message_type = SHOWMSG_AUDIO
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
+	)
+
+
+/datum/emote/sigh
 	key = "sigh"
 
 	message_1p = "You sigh."
@@ -320,7 +419,7 @@
 	)
 
 
-/datum/emote/human/mumble
+/datum/emote/mumble
 	key = "mumble"
 
 	message_1p = "You mumble."

@@ -8,6 +8,7 @@
 	var/list/minor_alarms = list()
 	var/receive_frequency = 1437
 
+
 /obj/machinery/computer/atmos_alert/atom_init()
 	. = ..()
 	set_frequency(receive_frequency)

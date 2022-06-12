@@ -43,6 +43,7 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
+
 	M.log_combat(user, "flashed (attempt) with [name]")
 
 	if(!clown_check(user))	return
@@ -123,6 +124,7 @@
 	if(broken)
 		to_chat(user, "<span class='warning'>The [src.name] is broken</span>")
 		return
+
 	flash_recharge()
 
 	//spamming the flash before it's fully charged (60seconds) increases the chance of it  breaking

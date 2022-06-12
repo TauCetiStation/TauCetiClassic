@@ -74,7 +74,7 @@
 
 				new_syndicate_commando.key = theghost.key
 				new_syndicate_commando.internal = new_syndicate_commando.s_store
-				new_syndicate_commando.internals.update_icon(new_syndicate_commando)
+				new_syndicate_commando.internals.icon_state = "internal1"
 
 				//So they don't forget their code or mission.
 

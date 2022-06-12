@@ -49,7 +49,10 @@
 							me_emote("stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
 
 		if(prob(1))
-			emote("dance")
+			me_emote(pick("dances around", "chases its tail"))
+			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
+				set_dir(i)
+				sleep(1)
 
 	//Movement - this, speaking, simple_animal_A.I. code - should be converted into A.I. datum later on, for now - dirty copypasta of simple_animal.dm Life() proc.
 	if(!client && !stop_automated_movement && wander && !anchored)
@@ -78,23 +81,23 @@
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
-							me_emote(pick(emote_see), SHOWMSG_VISUAL)
+							emote(pick(emote_see),1)
 						else
-							me_emote(pick(emote_hear), SHOWMSG_AUDIO)
+							emote(pick(emote_hear),2)
 				else
 					say(pick(speak))
 			else
 				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					me_emote(pick(emote_see), SHOWMSG_VISUAL)
+					emote(pick(emote_see),1)
 				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
-					me_emote(pick(emote_hear), SHOWMSG_AUDIO)
+					emote(pick(emote_hear),2)
 				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
 					var/length = emote_hear.len + emote_see.len
 					var/pick = rand(1,length)
 					if(pick <= emote_see.len)
-						me_emote(pick(emote_see), SHOWMSG_VISUAL)
+						emote(pick(emote_see),1)
 					else
-						me_emote(pick(emote_hear), SHOWMSG_AUDIO)
+						emote(pick(emote_hear),2)
 
 	reset_alerts()
 
@@ -151,8 +154,9 @@
 		else
 			healths.icon_state = "health7"
 
-	if(hud_used)
-		staminadisplay?.update_icon(src)
+	if(hud_used && hud_used.staminadisplay)
+		var/atom/movable/screen/corgi/stamina_bar/SB = hud_used.staminadisplay
+		SB.icon_state = "stam_bar_[round(stamina, 5)]"
 
 	return TRUE
 

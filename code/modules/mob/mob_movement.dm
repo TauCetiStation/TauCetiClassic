@@ -37,6 +37,11 @@
 /client/East()
 	..()
 
+/client/verb/drop_item()
+	set hidden = 1
+	if(!isrobot(mob) && mob.stat == CONSCIOUS && isturf(mob.loc))
+		return mob.drop_item()
+	return
 /client/proc/Move_object(direct)
 	if(mob && mob.control_object)
 		if(mob.control_object.density)

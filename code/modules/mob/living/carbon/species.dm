@@ -582,9 +582,12 @@
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
 		H.leap_icon = new /atom/movable/screen/leap()
+		H.leap_icon.screen_loc = "CENTER+3:20,SOUTH:5"
 
 		if(H.hud_used)
-			H.leap_icon.add_to_hud(H.hud_used)
+			H.hud_used.adding += H.leap_icon
+		if(H.client)
+			H.client.screen += H.leap_icon
 
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
@@ -595,7 +598,9 @@
 	if(name != VOX_ARMALIS)
 		if(H.leap_icon)
 			if(H.hud_used)
-				H.leap_icon.remove_from_hud(H.hud_used)
+				H.hud_used.adding -= H.leap_icon
+			if(H.client)
+				H.client.screen -= H.leap_icon
 			QDEL_NULL(H.leap_icon)
 
 	else
@@ -982,9 +987,9 @@
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
 
 	emotes = list(
-		/datum/emote/robot/beep,
-		/datum/emote/robot/ping,
-		/datum/emote/robot/buzz,
+		/datum/emote/beep,
+		/datum/emote/ping,
+		/datum/emote/buzz,
 	)
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)

@@ -39,6 +39,8 @@
 	if(. != PROJECTILE_ALL_OK)
 		return
 
+	flash_weak_pain()
+
 	//Being hit while using a deadman switch
 	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
 		var/obj/item/device/assembly/signaler/signaler = get_active_hand()

@@ -331,7 +331,8 @@
 
 	if(!(HAS_TRAIT(src, TRAIT_AV) || (contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS))))
 		internal = null
-		internals?.update_icon(src)
+		if(internals)
+			internals.icon_state = "internal0"
 		return null
 
 	//internal breath sounds

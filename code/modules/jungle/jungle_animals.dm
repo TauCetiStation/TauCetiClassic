@@ -84,7 +84,7 @@
 /mob/living/simple_animal/hostile/panther/FindTarget()
 	. = ..()
 	if(.)
-		me_emote("nashes at [.]")
+		emote("nashes at [.]")
 
 /mob/living/simple_animal/hostile/panther/AttackingTarget()
 	. =..()
@@ -142,7 +142,7 @@
 /mob/living/simple_animal/hostile/snake/FindTarget()
 	. = ..()
 	if(.)
-		me_emote("hisses wickedly")
+		emote("hisses wickedly")
 
 /mob/living/simple_animal/hostile/snake/AttackingTarget()
 	. =..()

@@ -167,7 +167,7 @@
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms-developed submachine gun that fires .45 ACP automatic rounds with a 20-round magazine. Has large variety of ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
-	cost = 10
+	cost = 12
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/mini_uzi
@@ -192,7 +192,7 @@
 	name = "V15 Bulldog shotgun"
 	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Uses various 12g magazines."
 	item = /obj/item/weapon/gun/projectile/automatic/bulldog
-	cost = 15
+	cost = 16
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/machinegun
@@ -206,14 +206,14 @@
 	name = "PTR-7 heavy rifle"
 	desc = "A portable anti-armour bolt-action rifle. Originally designed to used against armoured exosuits. Fires armor piercing 14.5mm shells."
 	item = /obj/item/weapon/gun/projectile/heavyrifle
-	cost = 15
+	cost = 20
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/bazooka
 	name = "Goliath missile launcher"
 	desc = "The Goliath is a single-shot shoulder-fired multipurpose missile launcher."
 	item = /obj/item/weapon/gun/projectile/revolver/rocketlauncher
-	cost = 20
+	cost = 35
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/a74
@@ -229,7 +229,7 @@
 	name = "Drozd OTs-114 Assault Carbine"
 	desc = "Semiauto assault rifle equipped with an underslung grenade launcher. Has a small mag full of high power ammo. Uses 12-round magazine of 12.7 ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/drozd
-	cost = 15
+	cost = 20
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/crossbow
@@ -287,7 +287,7 @@
 	name = "Viscerator Delivery Grenade"
 	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred any non-operatives in the area."
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
-	cost = 3
+	cost = 5
 	uplink_types = list("nuclear")
 /*
 /datum/uplink_item/dangerous/bioterror
@@ -303,7 +303,7 @@
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent for hit-and-run style attacks. \
 	This model lacks a method of space propulsion, and therefore it is advised to repair the mothership's teleporter if you wish to make use of it."
 	item = /obj/mecha/combat/gygax/dark
-	cost = 40
+	cost = 45
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/mauler
@@ -370,7 +370,7 @@
 	name = "Ammo-.45 ACP"
 	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun."
 	item = /obj/item/ammo_box/magazine/m12mm
-	cost = 1
+	cost = 2
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/uzi
@@ -398,21 +398,21 @@
 	name = "Ammo-.45 ACP High Power"
 	desc = "A 15-round .45 ACP HP magazine for use in the C-20r submachine gun. These rounds have better overall damage."
 	item = /obj/item/ammo_box/magazine/m12mm/hp
-	cost = 2
+	cost = 4
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/smg_hv
 	name = "Ammo-.45 ACP High Velocity"
 	desc = "A 15-round .45 ACP HV magazine for use in the C-20r submachine gun. These rounds used to hit target almost instantly."
 	item = /obj/item/ammo_box/magazine/m12mm/hv
-	cost = 2
+	cost = 4
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/smg_imp
 	name = "Ammo-.45 ACP Impact"
 	desc = "A 15-round .45 ACP IMP magazine for use in the C-20r submachine gun. These rounds will push enemies back and shortly stun unarmored targets."
 	item = /obj/item/ammo_box/magazine/m12mm/imp
-	cost = 2
+	cost = 4
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/a74standart
@@ -454,14 +454,14 @@
 	name = "Ammo-7.62x51mm"
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
-	cost = 10
+	cost = 14
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/drozd
 	name = "Ammo-12.7mm"
 	desc = "A 12-round magazine of 12.7 ammunition for use in the Drozd OTs-114 automatic rifle. Small and dangerous."
 	item = /obj/item/ammo_box/magazine/drozd127
-	cost = 2
+	cost = 4
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/grenade_launcher
@@ -482,21 +482,21 @@
 	name = "A 14.5mm shell."
 	desc = "A 14.5mm shell for use with PTR-7 heavy rifle. One shot, one kill, no luck, just skill."
 	item = /obj/item/ammo_casing/a145
-	cost = 1
+	cost = 2
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/rocket
 	name = "HE missile"
 	desc = "A high explosive missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket
-	cost = 5
+	cost = 10
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/rocket_emp
 	name = "EMP missile"
 	desc = "A EMP missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket/emp
-	cost = 2
+	cost = 5
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/chemicals
@@ -768,7 +768,7 @@
 	name = "Syndicate Silencer"
 	desc = "A universal small-arms silencer favored by stealth operatives, this will make shots quieter when equipped onto any low-caliber weapon."
 	item = /obj/item/weapon/silencer
-	cost = 1
+	cost = 2
 
 /datum/uplink_item/stealthy_weapons/throwingweapons
 	name = "Box of Throwing Weapons"
@@ -844,6 +844,11 @@
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 10
 	uplink_types = list("nuclear", "traitor")
+
+/datum/uplink_item/device_tools/medkit/nuke
+	cost = 15
+	uplink_types = list("nuclear")
+
 
 /datum/uplink_item/device_tools/medkit_small
 	name = "Syndicate Medical Small Kit"
@@ -988,7 +993,7 @@
 	name = "Traitor Caller"
 	desc = "Allows you to request an additional agent selected from the stealthy traitors."
 	item = /obj/item/device/traitor_caller
-	cost = 35
+	cost = 55
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/syndidrone

@@ -51,6 +51,8 @@
 
 	closer = new /atom/movable/screen/close(  )
 	closer.master = storage
+	closer.icon_state = "x"
+	closer.plane = HUD_PLANE
 
 /datum/storage_ui/default/Destroy()
 	close_all()

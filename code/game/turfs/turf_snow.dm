@@ -92,12 +92,12 @@
 		return
 	if(user.is_busy())
 		return
-	playsound(src, 'sound/effects/shovel_digging.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
 	var/type = src.type
 	if(!do_after(user, 20 SECONDS, target = src) || type != src.type)
 		return
 	new /obj/effect/overlay/ice_hole(src)
-	playsound(src, 'sound/effects/shovel_digging.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
 
 /atom/movable
 	var/ice_slide_count = 0

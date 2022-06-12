@@ -60,13 +60,7 @@
 			step(src, pick(cardinal))
 
 		if(prob(1))
-			var/list/rand_emote = list(
-				"scratches.",
-				"jumps!",
-				"rolls.",
-				"waves his tail.",
-			)
-			me_emote(pick(rand_emote))
+			emote(pick("scratch","jump","roll","tail"))
 	updatehealth()
 	if(client)
 		handle_alerts()
@@ -199,10 +193,12 @@
 		return null
 	if(!(contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS)))
 		internal = null
-		internals?.update_icon(src)
+		if(internals)
+			internals.icon_state = "internal0"
 		return null
-		
-	internals?.update_icon(src)
+
+	if(internals)
+		internals.icon_state = "internal1"
 	return internal.remove_air_volume(volume_needed)
 
 /mob/living/carbon/monkey/proc/handle_chemicals_in_body()

@@ -145,9 +145,6 @@
 
 /obj/item/device/soulstone/proc/capture_shade(target, mob/user)
 	var/mob/living/simple_animal/shade/S = target
-	if(istype(S, /mob/living/simple_animal/shade/evil_shade))
-		to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Эта душа не может вам подчинится!")
-		return
 	if(S.stat == DEAD)
 		to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Тень уже изгнана!")
 		return
