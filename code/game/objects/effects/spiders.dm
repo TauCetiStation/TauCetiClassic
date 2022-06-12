@@ -120,16 +120,15 @@
 
 /obj/effect/spider/spiderling/attack_hand(mob/living/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(user.a_intent == INTENT_HARM)
-		playsound(src, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
-		visible_message("<span class='alert'>\The [user] has punched [src]!</span>")
-		var/list/damObj = user.get_unarmed_attack()
-		var/damage = damObj["damage"]
-		health -= damage
-		healthcheck()
-	else
+	if(user.a_intent != INTENT_HARM)
 		to_chat(user, "<span class='notice'>You touch [src]!</span>")
-	return
+		return
+	playsound(src, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
+	visible_message("<span class='alert'>\The [user] has punched [src]!</span>")
+	var/list/damObj = user.get_unarmed_attack()
+	var/damage = damObj["damage"]
+	health -= damage
+	healthcheck()
 
 /obj/effect/spider/spiderling/proc/die()
 	visible_message("<span class='alert'>[src] dies!</span>")
@@ -211,7 +210,7 @@
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
 			grow_as = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
-			new grow_as(src.loc)
+			new grow_as(loc)
 			qdel(src)
 
 /obj/effect/decal/cleanable/spiderling_remains
