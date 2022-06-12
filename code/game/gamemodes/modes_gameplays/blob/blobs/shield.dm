@@ -22,7 +22,7 @@
 /obj/effect/blob/shield/reflective
 	name = "reflective blob"
 	icon_state = "blob_glow"
-	desc = "Some blob creature thingy. Shiny one."
+	desc = "A solid wall of slightly twitching tendrils with a reflective glow."
 	health = 30 //Normal blob
 	brute_resist = 1 //Normal is 4
 	fire_resist = 1 //2 welder hits
