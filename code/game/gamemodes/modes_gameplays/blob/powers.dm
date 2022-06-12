@@ -70,9 +70,6 @@
 	if(!B)
 		to_chat(src, "<span class='warning'>You must be on a blob node!</span>")
 		return
-	if(!blob_core)
-		to_chat(src, "<span class='warning'>You have no core and are about to die! May you rest in peace.</span>")
-		return
 	if(isspaceturf(T))
 		to_chat(src, "<span class='warning'>You cannot relocate your core here!</span>")
 		return
