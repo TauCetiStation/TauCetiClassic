@@ -57,6 +57,31 @@
 
 	B.change_to(/obj/effect/blob/shield)
 
+/mob/camera/blob/verb/relocate_core_power()
+	set category = "Blob"
+	set name = "Relocate Core (70)"
+	set desc = "Swaps a node and your core."
+
+	relocate_core()
+
+/mob/camera/blob/proc/relocate_core()
+	var/turf/T = get_turf(src)
+	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
+	if(!B)
+		to_chat(src, "<span class='warning'>You must be on a blob node!</span>")
+		return
+	if(!blob_core)
+		to_chat(src, "<span class='warning'>You have no core and are about to die! May you rest in peace.</span>")
+		return
+	if(isspaceturf(T))
+		to_chat(src, "<span class='warning'>You cannot relocate your core here!</span>")
+		return
+	if(!can_buy(70))
+		return
+	var/turf/old_turf = get_turf(blob_core)
+	blob_core.forceMove(T)
+	B.forceMove(old_turf)
+
 /mob/camera/blob/verb/create_resource_power()
 	set category = "Blob"
 	set name = "Create Resource Blob (40)"
