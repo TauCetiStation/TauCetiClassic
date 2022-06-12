@@ -83,15 +83,27 @@
 
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
+	stacktypes = list(
+		/obj/item/stack/medical/ointment = 5,
+		/obj/item/stack/medical/bruise_pack = 5,
+		/obj/item/stack/medical/suture = 3
+		)
 
 /obj/item/weapon/robot_module/standard/atom_init()
 	. = ..()
 	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/weapon/melee/baton(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
+	modules += new /obj/item/weapon/weldingtool(src)
+	modules += new /obj/item/weapon/screwdriver(src)
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/wirecutters(src)
+	modules += new /obj/item/stack/medical/ointment(src)
+	modules += new /obj/item/stack/medical/bruise_pack(src)
+	modules += new /obj/item/stack/medical/suture(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/medical(src)
 	modules += new /obj/item/device/healthanalyzer(src)
+	modules += new /obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 	emag = new /obj/item/weapon/melee/energy/sword(src)
 

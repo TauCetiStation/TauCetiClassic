@@ -83,7 +83,7 @@
 /mob/living/simple_animal/hostile/tribesman/FindTarget()
 	. = ..()
 	if(.)
-		emote("waves a spear at [.]")
+		me_emote("waves a spear at [.]")
 
 /mob/living/simple_animal/hostile/tribesman/OpenFire(target_mob)
 	visible_message("<span class='warning'><b>[src]</b> throws a spear at [target_mob]!</span>")
