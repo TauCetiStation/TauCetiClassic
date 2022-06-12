@@ -38,4 +38,4 @@
 			var/turf/curloc = get_turf(src)
 			P.redirect(new_x, new_y, curloc) //Stolen from armor' deflection
 			return PROJECTILE_FORCE_MISS
-	. = ..()
+	return ..()
