@@ -139,11 +139,12 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/icon_path = def_icon_path
 
 	var/t_state
-	if(sprite_sheet_slot == SPRITE_SHEET_HELD)
+	if(sprite_sheet_slot in list(SPRITE_SHEET_HELD, SPRITE_SHEET_GLOVES, SPRITE_SHEET_BELT, SPRITE_SHEET_UNIFORM, SPRITE_SHEET_UNIFORM_FAT))
 		t_state = item_state
 		if(!icon_custom)
 			icon_state_appendix = null
-	else
+
+	if(!t_state)
 		t_state = icon_state
 
 	var/datum/species/S = H.species
