@@ -26,10 +26,11 @@
 	health = 30 //Normal blob
 	brute_resist = 1 //Normal is 4
 	fire_resist = 1 //2 welder hits
+	var/list/static/reflects = list(/obj/item/projectile/energy, /obj/item/projectile/beam, /obj/item/projectile/pyrometer,
+		/obj/item/projectile/plasma, /obj/item/projectile/bullet/stunshot)
 
 /obj/effect/blob/shield/reflective/bullet_act(obj/item/projectile/P, def_zone)
-	if(is_type_in_list(P,list(/obj/item/projectile/energy, /obj/item/projectile/beam, /obj/item/projectile/pyrometer,
-		/obj/item/projectile/plasma, /obj/item/projectile/bullet/stunshot)))
+	if(is_type_in_list(P,reflects))
 	//Basically all of energy type projes...
 		if(P.starting)
 			var/new_x = P.starting.x + pick(0, 0, 0, 0, -1, 1, -2, 2, -3, 3)
