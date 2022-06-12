@@ -38,10 +38,8 @@
 			new /obj/item/weapon/plastique(src)
 
 		if("implant")
-			var/obj/item/weapon/implanter/O = new /obj/item/weapon/implanter(src)
-			O.imp = new /obj/item/weapon/implant/freedom(O)
-			var/obj/item/weapon/implanter/U = new /obj/item/weapon/implanter(src)
-			U.imp = new /obj/item/weapon/implant/uplink(U)
+			new /obj/item/weapon/implanter/freedom(src)
+			new /obj/item/weapon/implanter/uplink(src)
 			new /obj/item/weapon/implanter/explosive(src)
 			new /obj/item/weapon/implanter/adrenaline(src)
 			new /obj/item/weapon/implanter/emp(src)
@@ -119,9 +117,7 @@
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom/atom_init()
 	. = ..()
-	var/obj/item/weapon/implanter/O = new(src)
-	O.imp = new /obj/item/weapon/implant/freedom(O)
-	O.update()
+	new /obj/item/weapon/implanter/freedom(src)
 
 /obj/item/weapon/storage/box/syndie_kit/imp_compress
 	name = "box (C)"
@@ -139,18 +135,14 @@
 
 /obj/item/weapon/storage/box/syndie_kit/imp_adrenaline/atom_init()
 	. = ..()
-	var/obj/item/weapon/implanter/O = new(src)
-	O.imp = new /obj/item/weapon/implant/adrenaline(O)
-	O.update()
+	new /obj/item/weapon/implanter/adrenaline(src)
 
 /obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
 	name = "box (A)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_emp/atom_init()
 	. = ..()
-	var/obj/item/weapon/implanter/O = new(src)
-	O.imp = new /obj/item/weapon/implant/emp(O)
-	O.update()
+	new /obj/item/weapon/implanter/emp(src)
 
 /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	name = "box (M)"
@@ -160,9 +152,7 @@
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink/atom_init()
 	. = ..()
-	var/obj/item/weapon/implanter/O = new(src)
-	O.imp = new /obj/item/weapon/implant/uplink(O)
-	O.update()
+	new /obj/item/weapon/implanter/uplink(src)
 
 /obj/item/weapon/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
@@ -359,14 +349,14 @@
 /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker
 	name = "hacker kit"
 	startswith = list(
-	/obj/item/ammo_box/magazine/m12g = 3,
+	/obj/item/ammo_box/magazine/m12g = 4,
 	/obj/item/ammo_box/magazine/m12g/stun,
 	/obj/item/ammo_box/magazine/m12g/incendiary,
 	/obj/item/weapon/gun/projectile/automatic/bulldog,
+	/obj/item/weapon/aiModule/freeform/syndicate,
 	/obj/item/weapon/grenade/spawnergrenade/manhacks,
 	/obj/item/device/debugger,
 	/obj/item/weapon/storage/belt/utility/hacker,
-	/obj/item/clothing/glasses/meson,
 	/obj/item/weapon/card/emag,
 	/obj/item/clothing/suit/space/rig/syndi,
 	/obj/item/clothing/head/helmet/space/rig/syndi,
@@ -390,9 +380,10 @@
 	name = "demolition and explosion kit"
 	startswith = list(
 	/obj/item/ammo_casing/r4046/explosive = 3,
+	/obj/item/ammo_casing/r4046/chem/EMP = 3,
 	/obj/item/ammo_box/magazine/drozd127,
 	/obj/item/weapon/gun/projectile/automatic/drozd,
-	/obj/item/weapon/plastique = 5,
+	/obj/item/weapon/plastique = 4,
 	/obj/item/weapon/grenade/syndieminibomb = 2,
 	/obj/item/device/radio/beacon/syndicate_bomb,
 	/obj/item/clothing/suit/space/rig/syndi,
@@ -402,7 +393,7 @@
 /obj/item/weapon/storage/backpack/dufflebag/nuke/melee
 	name = "melee weapon kit"
 	startswith = list(
-	/obj/item/weapon/melee/energy/sword,
+	/obj/item/weapon/dualsaber,
 	/obj/item/weapon/gun/energy/crossbow,
 	/obj/item/weapon/implanter/adrenaline,
 	/obj/item/weapon/implanter/emp,

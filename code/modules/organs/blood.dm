@@ -30,7 +30,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	var/datum/reagent/blood/B = blood_get()
 	if(istype(B))
 		if(clean)
-			B.data = list("donor" = src, "viruses" = null, "blood_DNA" = dna.unique_enzymes,
+			B.data = list("donor" = src, "blood_DNA" = dna.unique_enzymes,
 						"blood_type" = dna.b_type, "resistances" = null, "trace_chem" = null,
 						"virus2" = null, "antibodies" = null, "changeling_marker" = null)
 		else // Change DNA to ours, left the rest intact

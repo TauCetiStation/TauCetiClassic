@@ -103,7 +103,7 @@
 			return
 
 		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
-		if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
+		if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50, required_skills_override = list(/datum/skill/firearms/trained)))
 			icon_state = "sawnshotgun[open ? "-o" : ""]"
 			w_class = SIZE_SMALL
 			item_state = "gun"

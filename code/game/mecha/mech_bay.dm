@@ -21,6 +21,7 @@
 	var/on = 0
 	var/repairability = 0
 	var/turf/recharging_turf = null
+	required_skills = list(/datum/skill/civ_mech/trained)
 
 /obj/machinery/mech_bay_recharge_port/atom_init()
 	. = ..()

@@ -138,7 +138,6 @@
 // WHY this self_message/blind_message/deaf_message so inconsistent as positional args!
 // todo:
 // * need to combine visible_message/audible_message to one proc (something like show_message) (maybe it will be a mess because of *_distance ?)
-// * replace show_message in /emote()'s & custom_emote()
 // * need some version combined with playsound (one cycle for audio message and sound)
 /mob/visible_message(message, self_message, blind_message, viewing_distance = world.view, list/ignored_mobs)
 	for(var/mob/M in (viewers(get_turf(src), viewing_distance) - ignored_mobs)) //todo: get_hearers_in_view() (tg)
@@ -986,9 +985,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/get_species()
 	return ""
 
-/mob/proc/flash_weak_pain()
-	flick("weak_pain",pain)
-
 /mob/proc/get_visible_implants(class = 0)
 	var/list/visible_implants = list()
 	for(var/obj/item/O in embedded)
@@ -1033,7 +1029,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		to_chat(U, "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>")
 
-	if(!do_after(U, 80, target = S))
+	if(!do_skilled(U, S, SKILL_TASK_DIFFICULT, list(/datum/skill/medical/trained), -0.2))
 		return
 	if(!selection || !S || !U)
 		return
