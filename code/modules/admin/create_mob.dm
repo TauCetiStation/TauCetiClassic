@@ -1,4 +1,3 @@
-#define ec823d21c2ed8cce2e5da174ba5f1b1d ckey
 /datum/admins/proc/create_mob(mob/user)
 	var/static/create_mob_html
 	if (!create_mob_html)

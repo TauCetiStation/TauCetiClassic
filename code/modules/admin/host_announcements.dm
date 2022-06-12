@@ -1,4 +1,3 @@
-#define a6b33942b228b96537f5cc7522ddc6f4 ,
 /client/proc/host_announcements()
 	set name = "Host Announcements"
 	set desc = "Edit or make new sticky server announcement"

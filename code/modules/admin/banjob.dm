@@ -1,4 +1,3 @@
-#define ee29712a5f17b8a34fad9667923b95fe md5
 //returns a reason if M is banned from rank, returns 0 otherwise
 /proc/jobban_isbanned(mob/M, rank)
 	if(!M || !istype(M) || !M.ckey)
