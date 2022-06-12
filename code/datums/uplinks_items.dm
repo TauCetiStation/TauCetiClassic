@@ -544,7 +544,6 @@
 	cost = 4
 	uplink_types = list("nuclear")
 
-
 /datum/uplink_item/suits_armor/spy_rig
 	name = "Hybrid Suit"
 	desc = "A universal suit, suitable for both combat and space flight, protects worse than the operatives rig."
