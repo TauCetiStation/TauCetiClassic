@@ -55,7 +55,7 @@
 		return
 
 	if(isblobshield(B))
-		if(B.health < initial(B.health)/2)
+		if(B.health < initial(B.health) / 2)
 			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified!</span>")
 			return
 		B.change_to(/obj/effect/blob/shield/reflective)
