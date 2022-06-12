@@ -3,9 +3,11 @@ var/global/list/possible_items_for_steal = list()
 #define ADD_TO_POIFS_LIST(type) ADD_TO_GLOBAL_LIST(type, possible_items_for_steal)
 ADD_TO_POIFS_LIST(/obj/item/weapon/gun/energy/laser/selfcharging/captain)
 ADD_TO_POIFS_LIST(/obj/item/weapon/hand_tele)
-ADD_TO_POIFS_LIST(/obj/item/weapon/tank/jetpack/oxygen)
+ADD_TO_POIFS_LIST(/obj/item/weapon/rcd)
+ADD_TO_POIFS_LIST(/obj/item/weapon/tank/jetpack)
 ADD_TO_POIFS_LIST(/obj/item/clothing/under/rank/captain)
 ADD_TO_POIFS_LIST(/obj/item/device/aicard)
+ADD_TO_POIFS_LIST(/obj/item/clothing/shoes/magboots)
 ADD_TO_POIFS_LIST(/obj/item/blueprints)
 ADD_TO_POIFS_LIST(/obj/item/clothing/suit/space/nasavoid)
 ADD_TO_POIFS_LIST(/obj/item/weapon/tank)
@@ -36,9 +38,11 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 	var/static/possible_items[] = list(
 		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/selfcharging/captain,
 		"a hand teleporter" = /obj/item/weapon/hand_tele,
-		"a captain's jetpack" = /obj/item/weapon/tank/jetpack/oxygen,
+		"an RCD" = /obj/item/weapon/rcd,
+		"a jetpack" = /obj/item/weapon/tank/jetpack,
 		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
 		"a functional AI" = /obj/item/device/aicard,
+		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
 		"the station blueprints" = /obj/item/blueprints,
 		"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
 		"28 moles of phoron (full tank)" = /obj/item/weapon/tank,

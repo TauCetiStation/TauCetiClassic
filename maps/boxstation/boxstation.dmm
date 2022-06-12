@@ -5024,15 +5024,15 @@
 /obj/structure/table,
 /obj/item/weapon/folder/white,
 /obj/item/clothing/accessory/stethoscope,
-/obj/machinery/door_control{
-	id = "Medical_Room2";
-	name = "Privacy Shutters";
-	pixel_x = 25
-	},
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
-	pixel_y = -30
+	pixel_x = 28
+	},
+/obj/machinery/door_control{
+	id = "Medical_Room2";
+	name = "Privacy Shutters";
+	pixel_y = -25
 	},
 /turf/simulated/floor{
 	icon_state = "whiteblue"
@@ -7468,6 +7468,11 @@
 /area/station/security/processing)
 "amv" = (
 /obj/structure/disposalpipe/segment,
+/obj/item/device/radio/intercom{
+	frequency = 1475;
+	name = "Station Intercom (Security)";
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
@@ -7475,10 +7480,6 @@
 /area/station/security/lobby)
 "amw" = (
 /obj/structure/stool/bed,
-/obj/machinery/flasher{
-	id = "Cell 1";
-	pixel_x = 28
-	},
 /turf/simulated/floor{
 	icon_state = "red"
 	},
@@ -8240,6 +8241,10 @@
 	id = "Cell 1";
 	name = "Cell 1 Locker"
 	},
+/obj/machinery/flasher{
+	id = "Cell 1";
+	pixel_x = 28
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "anI" = (
@@ -8918,13 +8923,11 @@
 /area/station/security/lobby)
 "aoO" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/sign/warning/electricshock{
+	pixel_x = -32
+	},
 /obj/machinery/light{
 	dir = 8
-	},
-/obj/item/device/radio/intercom{
-	frequency = 1475;
-	name = "Station Intercom (Security)";
-	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -10688,9 +10691,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
-	},
-/obj/structure/sign/warning/electricshock{
-	pixel_x = -32
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -32273,6 +32273,9 @@
 	},
 /area/station/rnd/hallway)
 "bfp" = (
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -33573,7 +33576,7 @@
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
-	pixel_y = 21
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -33629,7 +33632,7 @@
 	},
 /obj/machinery/computer/guestpass{
 	dir = 1;
-	pixel_y = 26
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -36008,9 +36011,6 @@
 	},
 /area/station/hallway/primary/central)
 "bmq" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 28
@@ -37409,6 +37409,15 @@
 /area/station/rnd/server)
 "bpb" = (
 /obj/structure/closet/l3closet/scientist,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Telescience Research APC";
+	pixel_x = -25
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -37425,13 +37434,13 @@
 	},
 /area/station/tcommsat/chamber)
 "bpd" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 8;
+	icon_state = "1-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warning"
@@ -38926,15 +38935,6 @@
 /area/station/rnd/server)
 "brM" = (
 /obj/machinery/suit_storage_unit/science,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Telescience Research APC";
-	pixel_x = -25
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -38969,11 +38969,6 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -44762,12 +44757,14 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "bCe" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -44777,6 +44774,12 @@
 "bCf" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /obj/item/clothing/under/patient_gown,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/machinery/light_switch{
+	pixel_x = 27
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -44919,6 +44922,11 @@
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/structure/table,
+/obj/item/device/radio/intercom{
+	dir = 0;
+	name = "Station Intercom (General)";
+	pixel_x = 27
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -45304,15 +45312,15 @@
 	},
 /area/station/civilian/chapel/mass_driver)
 "bCZ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/power/apc{
-	dir = 8;
-	level = 4;
-	name = "Patient Room Two APC";
-	pixel_x = -25
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -45908,7 +45916,7 @@
 /area/station/hallway/primary/central)
 "bEe" = (
 /obj/machinery/light_switch{
-	pixel_x = 25
+	pixel_x = 27
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -46413,11 +46421,15 @@
 /area/station/maintenance/cargo)
 "bFb" = (
 /obj/structure/stool/bed/chair/metal/blue,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
+/obj/machinery/power/apc{
+	dir = 4;
+	level = 4;
+	name = "Patient Room Two APC";
+	pixel_x = 25
 	},
-/obj/machinery/light_switch{
-	pixel_x = 27
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -46515,11 +46527,15 @@
 /area/station/medical/hallway)
 "bFj" = (
 /obj/structure/stool/bed/chair/metal/blue,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
+/obj/machinery/power/apc{
+	dir = 8;
+	level = 4;
+	name = "Patient Room One APC";
+	pixel_x = -25
 	},
-/obj/machinery/light_switch{
-	pixel_x = -27
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -46600,6 +46616,7 @@
 	name = "Delivery Office";
 	req_access = list(50)
 	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -47019,15 +47036,11 @@
 "bGi" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /obj/item/clothing/under/patient_gown,
-/obj/machinery/power/apc{
-	dir = 8;
-	level = 4;
-	name = "Patient Room One APC";
-	pixel_x = -25
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/machinery/light_switch{
+	pixel_x = -27
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -47278,8 +47291,10 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -47434,8 +47449,10 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -48118,11 +48135,6 @@
 "bIa" = (
 /obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
-/obj/item/device/radio/intercom{
-	dir = 0;
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
@@ -48249,12 +48261,12 @@
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
-	pixel_y = -30
+	pixel_x = -28
 	},
 /obj/machinery/door_control{
 	id = "Medical_Room1";
 	name = "Privacy Shutters";
-	pixel_x = -25
+	pixel_y = -25
 	},
 /turf/simulated/floor{
 	icon_state = "whiteblue"
@@ -51869,9 +51881,6 @@
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/obj/machinery/light_switch{
-	pixel_y = -25
-	},
 /turf/simulated/floor/carpet/red,
 /area/station/civilian/dormitories/dormtwo)
 "bOY" = (
@@ -51937,6 +51946,9 @@
 	},
 /area/station/hallway/primary/starboard)
 "bPh" = (
+/obj/machinery/light_switch{
+	pixel_y = -25
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -59403,9 +59415,6 @@
 "clq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/machinery/firealarm{
-	pixel_y = 24
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -74790,6 +74799,10 @@
 /area/station/maintenance/medbay)
 "juo" = (
 /obj/item/weapon/flora/random,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 27
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -76913,6 +76926,9 @@
 /area/station/engineering/break_room)
 "lSb" = (
 /obj/structure/table/glass,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /obj/item/weapon/cartridge/medical{
 	pixel_x = -4;
 	pixel_y = 6
@@ -77053,9 +77069,6 @@
 	},
 /obj/item/device/megaphone,
 /obj/item/weapon/defibrillator/compact/loaded,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -80006,18 +80019,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/cargo)
-"pXY" = (
-/obj/structure/window/reinforced,
-/obj/item/weapon/flora/random,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 27
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/civilian/chapel)
 "pZm" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -80763,7 +80764,7 @@
 /area/station/maintenance/cargo)
 "qTb" = (
 /obj/machinery/light_switch{
-	pixel_y = -26
+	pixel_y = -28
 	},
 /turf/simulated/floor{
 	icon_state = "yellow"
@@ -96555,9 +96556,9 @@ baq
 bis
 biV
 bkB
-bis
-iDb
 bmq
+iDb
+bOA
 bis
 bTp
 bbT
@@ -133306,7 +133307,7 @@ wMu
 rjR
 aIU
 juo
-pXY
+stq
 bOs
 bcb
 bhQ
