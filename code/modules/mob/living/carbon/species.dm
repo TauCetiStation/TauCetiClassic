@@ -982,9 +982,9 @@
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
 
 	emotes = list(
-		/datum/emote/beep,
-		/datum/emote/ping,
-		/datum/emote/buzz,
+		/datum/emote/robot/beep,
+		/datum/emote/robot/ping,
+		/datum/emote/robot/buzz,
 	)
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)

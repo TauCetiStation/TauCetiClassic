@@ -60,7 +60,13 @@
 			step(src, pick(cardinal))
 
 		if(prob(1))
-			emote(pick("scratch","jump","roll","tail"))
+			var/list/rand_emote = list(
+				"scratches.",
+				"jumps!",
+				"rolls.",
+				"waves his tail.",
+			)
+			me_emote(pick(rand_emote))
 	updatehealth()
 	if(client)
 		handle_alerts()
