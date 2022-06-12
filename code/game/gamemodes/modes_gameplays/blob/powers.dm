@@ -59,10 +59,8 @@
 			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified!</span>")
 			return
 		B.change_to(/obj/effect/blob/shield/reflective)
-		to_chat(src, "<span class='warning'>You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced integrity.</span>")
 	else
 		B.change_to(/obj/effect/blob/shield)
-		to_chat(src, "<span class='warning'>You secrete a thick substanse over the blob, allowing it to withstand more damage!</span>")
 
 /mob/camera/blob/verb/create_resource_power()
 	set category = "Blob"
