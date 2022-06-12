@@ -168,7 +168,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/afterattack(atom/target, mob/user, proximity, params)
 	. = ..()
 	if(target.is_open_container())
-		if(reagents.total_volume && target.reagents.maximum_volume && target.reagents.total_volume < target.reagents.maximum_volume)
+		if(reagents.total_volume && target.reagents.total_volume < target.reagents.maximum_volume)
 			playsound(user, 'sound/items/glass_containers/bottle_pouring.ogg', VOL_EFFECTS_MASTER, 800)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
