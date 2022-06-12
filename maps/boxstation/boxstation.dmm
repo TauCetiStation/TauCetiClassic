@@ -7911,6 +7911,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -8254,10 +8257,10 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "anK" = (
-/obj/item/weapon/storage/secure/safe{
-	pixel_y = 28
-	},
 /obj/machinery/computer/secure_data/detective_computer,
+/obj/structure/noticeboard{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "anL" = (

@@ -356,7 +356,6 @@
 		for(var/mob/living/M in range(src, 200))
 			to_chat(M, "<span class='danger'>[pick("A high pitched [pick("keening","wailing","whistle")]","A rumbling noise like [pick("thunder","heavy machinery")]")] somehow penetrates your mind before fading away!</span>")
 			if(pain)
-				flick("pain",M.pain)
 				if(prob(50))
 					M.adjustBruteLoss(5)
 			else
