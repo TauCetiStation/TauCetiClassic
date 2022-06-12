@@ -26,7 +26,7 @@
 	health = 30 //Normal blob
 	brute_resist = 1 //Normal is 4
 	fire_resist = 1 //2 welder hits
-	var/list/static/reflects = list(/obj/item/projectile/energy, /obj/item/projectile/beam, /obj/item/projectile/pyrometer,
+	var/static/list/reflects = list(/obj/item/projectile/energy, /obj/item/projectile/beam, /obj/item/projectile/pyrometer,
 		/obj/item/projectile/plasma, /obj/item/projectile/bullet/stunshot)
 
 /obj/effect/blob/shield/reflective/bullet_act(obj/item/projectile/P, def_zone)
