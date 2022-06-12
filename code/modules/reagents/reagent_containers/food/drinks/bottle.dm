@@ -49,7 +49,7 @@
 					sleep_not_stacking = 25
 
 			stop_spin_bottle = TRUE
-			playsound(src, 'sound/items/glass_containers/bottle_spin.ogg', VOL_EFFECTS_MASTER, 1000, TRUE)
+			playsound(src, 'sound/items/glass_containers/bottle_spin.ogg', VOL_EFFECTS_MASTER)
 			SpinAnimation(speed, loops, pick(0, 1)) //SpinAnimation(speed, loops, clockwise, segments)
 			transform = turn(matrix(), dir2angle(pick(alldirs)))
 			sleep(sleep_not_stacking) //Not stacking
@@ -59,17 +59,17 @@
 	. = ..()
 	animate(src, transform = null, time = 0) //Restore bottle to its original position
 	if(reagents.total_volume > 0)
-		playsound(user, 'sound/items/glass_containers/bottle_take-liquid.ogg', VOL_EFFECTS_MASTER, 1000, TRUE)
+		playsound(user, 'sound/items/glass_containers/bottle_take-liquid.ogg', VOL_EFFECTS_MASTER)
 	else
-		playsound(user, 'sound/items/glass_containers/bottle_take-empty.ogg', VOL_EFFECTS_MASTER, 1000, TRUE)
+		playsound(user, 'sound/items/glass_containers/bottle_take-empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/dropped(mob/user)
 	. = ..()
 	if(isturf(loc) && (user.loc != loc))
 		if(reagents.total_volume > 0)
-			playsound(user, 'sound/items/glass_containers/bottle_put-liquid.ogg', VOL_EFFECTS_MASTER, 1000, TRUE)
+			playsound(user, 'sound/items/glass_containers/bottle_put-liquid.ogg', VOL_EFFECTS_MASTER)
 		else
-			playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER, 1000, TRUE)
+			playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
@@ -169,7 +169,7 @@
 	. = ..()
 	if(target.is_open_container())
 		if(reagents.total_volume && target.reagents.maximum_volume && target.reagents.total_volume < target.reagents.maximum_volume)
-			playsound(user, 'sound/items/glass_containers/bottle_pouring.ogg', VOL_EFFECTS_MASTER, 800, TRUE)
+			playsound(user, 'sound/items/glass_containers/bottle_pouring.ogg', VOL_EFFECTS_MASTER, 800)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
 	..()

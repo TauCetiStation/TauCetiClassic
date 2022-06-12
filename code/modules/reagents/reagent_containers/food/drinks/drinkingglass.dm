@@ -9,7 +9,7 @@
 	. = ..()
 	if(target.is_open_container())
 		if(reagents.total_volume && target.reagents.maximum_volume && target.reagents.total_volume < target.reagents.maximum_volume)
-			playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+			playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
 	..()
@@ -20,13 +20,12 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/pickup(mob/living/user)
 	. = ..()
-	animate(src, transform = null, time = 0) //Restore bottle to its original position
-	playsound(user, 'sound/items/glass_containers/bottle_take-empty.ogg', VOL_EFFECTS_MASTER, 1000, TRUE)
+	playsound(user, 'sound/items/glass_containers/bottle_take-empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/dropped(mob/user)
 	. = ..()
 	if(isturf(loc) && (user.loc != loc))
-		playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER, 1000, TRUE)
+		playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	/*if(reagents.reagent_list.len > 1 )
