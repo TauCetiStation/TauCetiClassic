@@ -43,10 +43,8 @@
 		healths.icon_state = "health7"
 		return
 
-	var/healthpercent = (health / maxHealth) * 100
-
 	var/severity
-	switch(healthpercent)
+	switch(100 * health / maxHealth)
 		if(100 to INFINITY)
 			severity = 0
 		if(80 to 100)
