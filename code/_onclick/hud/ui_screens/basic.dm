@@ -88,7 +88,7 @@
 	hud.mymob.healths = src
 
 /atom/movable/screen/health/living
-	icon_state = "living0"
+	icon = 'icons/hud/living.dmi'
 
 /atom/movable/screen/health/living/add_to_hud(datum/hud/hud)
 	..()

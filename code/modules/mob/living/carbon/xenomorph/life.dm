@@ -109,29 +109,6 @@
 			SetConfused(0)
 	return 1
 
-
-/mob/living/carbon/xenomorph/update_health_hud()
-	if(!healths)
-		return
-	
-	if(stat == DEAD)
-		healths.icon_state = "health7"
-	else switch((health / maxHealth) * 100)
-		if(90 to 100)
-			healths.icon_state = "health0"
-		if(72 to 90)
-			healths.icon_state = "health1"
-		if(54 to 72)
-			healths.icon_state = "health2"
-		if(36 to 54)
-			healths.icon_state = "health3"
-		if(18 to 36)
-			healths.icon_state = "health4"
-		if(0 to 18)
-			healths.icon_state = "health5"
-		else
-			healths.icon_state = "health6"
-
 /mob/living/carbon/xenomorph/update_sight()
 	if(!..())
 		return FALSE

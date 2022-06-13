@@ -40,7 +40,7 @@
 		return
 
 	if(stat == DEAD)
-		healths.icon_state = "living7"
+		healths.icon_state = "health7"
 		return
 
 	var/healthpercent = (health / maxHealth) * 100
@@ -62,7 +62,7 @@
 		else
 			severity = 6
 
-	healths.icon_state = "living[severity]"
+	healths.icon_state = "health[severity]"
 
 /mob/living/proc/handle_regular_hud_updates()
 	if(!client)
