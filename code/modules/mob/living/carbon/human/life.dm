@@ -918,9 +918,21 @@
 				continue
 
 			var/damage = BP.burn_dam + BP.brute_dam
-			var/icon_num = 0
-			if(damage > 0)
-				icon_num = min(round(damage * 5 / BP.max_damage), 4) + 1
+			var/icon_num
+
+			if(damage <= 0)
+				icon_num = 0
+			else switch(damage / BP.max_damage)
+				if(0 to 0.2)
+					icon_num = 1
+				if(0.2 to 0.4)
+					icon_num = 2
+				if(0.4 to 0.6)
+					icon_num = 3
+				if(0.6 to 0.8)
+					icon_num = 4
+				else
+					icon_num = 5
 
 			healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 
