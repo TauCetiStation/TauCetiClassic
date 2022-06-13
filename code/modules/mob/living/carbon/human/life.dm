@@ -905,7 +905,9 @@
 /mob/living/carbon/human/update_health_hud()
 	if(stat == DEAD)
 		healths?.icon_state = "health7"	//DEAD healthmeter
-		healthdoll?.icon_state = "healthdoll_DEAD"
+		if(healthdoll)
+			healthdoll.icon_state = "healthdoll_DEAD"
+			healthdoll.cut_overlays()
 		return
 
 	if(healthdoll)
