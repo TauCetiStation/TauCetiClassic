@@ -87,6 +87,22 @@
 	..()
 	hud.mymob.healths = src
 
+/atom/movable/screen/health/living
+	icon_state = "living0"
+
+/atom/movable/screen/health/living/add_to_hud(datum/hud/hud)
+	..()
+	var/mob/mymob = hud.mymob
+	var/icon/mob_mask = icon(mymob.icon, mymob.icon_state)
+	if(mob_mask.Height() > world.icon_size || mob_mask.Width() > world.icon_size)
+		if(mob_mask.Height() > mob_mask.Width())
+			mob_mask.Scale(mob_mask.Width() * world.icon_size / mob_mask.Height(), world.icon_size)
+		else
+			mob_mask.Scale(world.icon_size, mob_mask.Height() * world.icon_size / mob_mask.Width())
+			
+	add_filter("mob_shape_mask", 1, alpha_mask_filter(icon = mob_mask))
+	add_filter("inset_drop_shadow", 2, drop_shadow_filter(size = -1))
+
 /atom/movable/screen/health_doll
 	icon = 'icons/mob/screen_gen.dmi'
 	name = "health doll"
