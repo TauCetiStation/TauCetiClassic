@@ -7,10 +7,15 @@
 	force = 30
 	throwforce = 10
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	var/obj/item/weapon/shield/riot/mirror/secondary/shield //For spawned shield component, so we know it's source
 
 /obj/item/weapon/melee/cultblade/proc/only_cultists(datum/source, mob/M)
 	return iscultist(M)
+/obj/item/weapon/melee/cultblade/examine(mob/user)
+	. = ..()
+	if(iscultist(user))
+		var/datum/religion/cult/C = user.my_religion
+		if(C.get_tech(RTECH_MIRROR_SHIELD))
+			to_chat(user, "С помощью меча можно призвать щит-зеркало на защиту!")
 
 /obj/item/weapon/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(iscultist(user))
@@ -26,35 +31,20 @@
 	if(iscultist(user))
 		var/datum/religion/cult/C = user.my_religion
 		if(!GetComponent(/datum/component/self_effect) && C.get_tech(RTECH_MIRROR_SHIELD))
-			var/shield_type = /obj/item/weapon/shield/riot/mirror/secondary
-			var/datum/component/self_effect/shield_comp = AddComponent(/datum/component/self_effect, shield_type, "#51106bff", CALLBACK(src, .proc/only_cultists), 2 MINUTE, 30 SECONDS, 2 MINUTE)
-			if(shield_comp) //Do we have it in the first place?
-				if(istype(shield_comp.effect_type,/obj/item/weapon)) //Is it even an atom?
-					shield = shield_comp.effect_type //Let's write it in
+			var/shield_type = /obj/item/weapon/shield/riot/mirror
+			AddComponent(/datum/component/self_effect, shield_type, "#51106bff", CALLBACK(src, .proc/only_cultists), 2 MINUTE, 30 SECONDS, 2 MINUTE)
 	else
 		to_chat(user, "<span class='warning'>Ошеломляющее чувство страха охватывает тебя при поднятии красного меча, было бы разумно поскорее избавиться от него.</span>")
 		user.make_dizzy(120)
-
-/obj/item/weapon/melee/cultblade/attack_self(mob/user)
-	. = ..()
-	if(shield)
-		shield.Destroy()
-		shield = null
-
-/obj/item/weapon/melee/cultblade/dropped(mob/user)
-	. = ..()
-	if(shield)
-		shield.Destroy()
-		shield = null
 
 /obj/item/weapon/shield/riot/mirror
 	name = "mirror shield"
 	desc = "An infamous shield used by eldritch sects to confuse and disorient their enemies."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "mirror_shield"
+	flags = DROPDEL
 	slot_flags = FALSE
 	var/reflect_chance = 70
-	block_chance = 30 //It's a mirror, after all, not actual shield
 
 /obj/item/weapon/shield/riot/mirror/pickup(mob/living/user)
 	. = ..()
@@ -72,13 +62,6 @@
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/shield/riot/mirror/secondary
-	flags = NODROP
-
-/obj/item/weapon/shield/riot/mirror/secondary/dropped(mob/user) //Sword's pair
-	. = ..()
-	Destroy()
-
 /obj/item/clothing/glasses/cult_blindfold
 	name = "blindfold"
 	desc = "Covers the eyes, preventing sight. Altough, something wrong with this one..."
@@ -87,7 +70,6 @@
 	vision_flags = SEE_TURFS
 	darkness_view = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	var/flags2remove
 
 /obj/item/clothing/glasses/cult_blindfold/mob_can_equip(M, slot)
 	if(!isliving(M))
