@@ -927,10 +927,6 @@
 	if(!healths)
 		return
 
-	if(analgesic)
-		healths.icon_state = "health_health_numb"
-		return
-
 	switch(hal_screwyhud)
 		if(1)
 			healths.icon_state = "health6"

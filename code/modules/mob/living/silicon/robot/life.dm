@@ -180,7 +180,6 @@
 	if(!healths)
 		return
 
-	
 	if (stat == DEAD)
 		healths.icon_state = "health7"
 	else switch((health / maxHealth) * 100)
@@ -201,7 +200,7 @@
 
 /mob/living/silicon/robot/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return
 
 	regular_hud_updates()
 	update_sight()
@@ -223,8 +222,6 @@
 		throw_alert("charge", /atom/movable/screen/alert/nocell)
 
 	..()
-
-	return 1
 
 /mob/living/silicon/robot/proc/update_items()
 	if (src.client)
