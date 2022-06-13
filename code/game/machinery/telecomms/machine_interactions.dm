@@ -26,7 +26,6 @@
 			return
 
 	var/obj/item/device/multitool/P = get_multitool(user)
-
 	var/dat
 	dat = "<font face = \"Courier\">"
 	dat += "<br>[temp]<br>"

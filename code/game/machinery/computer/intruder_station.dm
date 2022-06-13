@@ -117,7 +117,7 @@
 	name = "Shuttle Unlocker"
 	desc = "An unlocker of the Shuttle, which Parked near your base. In Bonus aboard, will be instruments. Caution. You'll have to buy spacesuit's in addition."
 	delete_dat_after_buying = TRUE
-	cost = 30
+	cost = 25
 
 /datum/intruder_tools/shuttle_unlocker/buy(obj/machinery/computer/intruder_station/console, mob/living/user)
 	var/area/cur_area = get_area(console)
@@ -143,7 +143,7 @@
 	After Hack, you can switch entering through gateway."
 	item = /obj/item/device/gateway_locker
 	delete_dat_after_buying = TRUE
-	cost = 15
+	cost = 25
 
 /datum/intruder_tools/gateway_locker/buy(obj/machinery/computer/intruder_station/console, mob/living/user)
 	..()

@@ -1747,6 +1747,17 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 		show_traitor_panel(M)
+	else if(href_list["skills"])
+		if(!check_rights(R_ADMIN))
+			return
+		if(!SSticker || !SSticker.mode)
+			tgui_alert(usr, "The game hasn't started yet!")
+			return
+		var/mob/M = locate(href_list["skills"])
+		if(!ismob(M))
+			to_chat(usr, "This can only be used on instances of type /mob.")
+			return
+		show_skills_panel(M)
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return

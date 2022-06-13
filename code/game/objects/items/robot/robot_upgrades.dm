@@ -26,10 +26,10 @@
 /obj/item/borg/upgrade/reset/action(mob/living/silicon/robot/R)
 	if(..()) return 0
 	R.uneq_all()
-	R.hands.icon_state = "nomod"
 	R.icon_state = "robot"
 	qdel(R.module)
 	R.module = null
+	R.module_icon.update_icon(R)
 	R.sensor_huds = R.def_sensor_huds
 	R.camera.remove_networks(list("Engineering","Medical","MINE"))
 	R.updatename("Default")
