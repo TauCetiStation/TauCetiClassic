@@ -39,6 +39,10 @@
 	if(!healths)
 		return
 
+	if(stat == DEAD)
+		healths.icon_state = "living7"
+		return
+
 	var/healthpercent = (health / maxHealth) * 100
 
 	var/severity
@@ -53,7 +57,7 @@
 			severity = 3
 		if(20 to 40)
 			severity = 4
-		if(1 to 20)
+		if(0 to 20)
 			severity = 5
 		else
 			severity = 6
