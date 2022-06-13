@@ -441,8 +441,6 @@
 /mob/living/carbon/ian/death(gibbed)
 	if(stat == DEAD)
 		return
-	if(healths)
-		healths.icon_state = "health5"
 
 	stat = DEAD
 
