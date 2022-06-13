@@ -1109,6 +1109,59 @@
 /datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skeleton_digest(M)
 
+/datum/species/skeleton/unathi
+	name = SKELETON_UNATHI
+	icobase = 'icons/mob/human_races/r_skeleton_lizard.dmi'
+	deform = 'icons/mob/human_races/r_skeleton_lizard.dmi'
+	tail = "unathi_skeleton"
+
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,NO_DNA = TRUE
+	,NO_SCAN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,NO_FINGERPRINT = TRUE
+	,NO_BLOOD_TRAILS = TRUE
+	,NO_PAIN = TRUE
+	,RAD_IMMUNE = TRUE
+	,NO_EMBED = TRUE
+	,NO_MINORCUTS = TRUE
+	,NO_EMOTION = TRUE
+	,NO_VOMIT = TRUE
+	,NO_FAT = TRUE
+	,HAS_TAIL = TRUE
+	)
+
+/datum/species/skeleton/tajaran
+	name = SKELETON_TAJARAN
+	icobase = 'icons/mob/human_races/r_skeleton_tajaran.dmi'
+	deform = 'icons/mob/human_races/r_skeleton_tajaran.dmi'
+	tail = "tajaran_skeleton"
+
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,NO_DNA = TRUE
+	,NO_SCAN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,NO_FINGERPRINT = TRUE
+	,NO_BLOOD_TRAILS = TRUE
+	,NO_PAIN = TRUE
+	,RAD_IMMUNE = TRUE
+	,NO_EMBED = TRUE
+	,NO_MINORCUTS = TRUE
+	,NO_EMOTION = TRUE
+	,NO_VOMIT = TRUE
+	,NO_FAT = TRUE
+	,HAS_TAIL = TRUE
+	)
+
+/datum/species/skeleton/skrell
+	name = SKELETON_SKRELL
+	icobase = 'icons/mob/human_races/r_skeleton_skrell.dmi'
+	deform = 'icons/mob/human_races/r_skeleton_skrell.dmi'
+
 //Species unarmed attacks
 
 /datum/unarmed_attack
@@ -1607,7 +1660,7 @@
 
 /datum/species/homunculus/create_bodyparts(mob/living/carbon/human/H)
 	var/list/keys = get_list_of_primary_keys(global.all_species)
-	keys -= list(PODMAN, IPC, SKELETON, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
+	keys -= list(PODMAN, IPC, SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
 
 	var/datum/species/head = global.all_species[pick(keys - VOX)]
 

@@ -537,7 +537,7 @@
 			if(roundstart_quirks.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
 
-			if(H.species && (H.species.name == SKELETON) && !H.w_uniform && !H.wear_suit)
+			if((H.get_species() == SKELETON || H.get_species() == SKELETON_UNATHI || H.get_species() == SKELETON_TAJARAN || H.get_species() == SKELETON_SKRELL) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			var/t_him = "it"

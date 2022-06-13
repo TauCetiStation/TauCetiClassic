@@ -144,14 +144,22 @@
 
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(!species || (species.name == SKELETON))
+	if(!species || (get_species() == SKELETON) || (get_species() == SKELETON_UNATHI) || (get_species() == SKELETON_SKRELL) || (get_species() == SKELETON_TAJARAN))
 		return
 	if(f_style)
 		f_style = "Shaved"
 	if(h_style)
 		h_style = "Bald"
 
-	set_species(SKELETON)
+	var/skeleton_type = SKELETON
+	switch(get_species())
+		if(UNATHI)
+			skeleton_type = SKELETON_UNATHI
+		if(TAJARAN)
+			skeleton_type = SKELETON_TAJARAN
+		if(SKRELL)
+			skeleton_type = SKELETON_SKRELL
+	set_species(skeleton_type)
 	status_flags |= DISFIGURED
 	regenerate_icons()
 	return
