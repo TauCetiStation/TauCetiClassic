@@ -176,31 +176,35 @@
 	set_EyesVision(sight_modifier)
 	return TRUE
 
+/mob/living/silicon/robot/update_health_hud()
+	if(!healths)
+		return
+
+	
+	if (stat == DEAD)
+		healths.icon_state = "health7"
+	else switch((health / maxHealth) * 100)
+		if(100 to INFINITY)
+			healths.icon_state = "health0"
+		if(80 to 100)
+			healths.icon_state = "health1"
+		if(60 to 80)
+			healths.icon_state = "health2"
+		if(40 to 60)
+			healths.icon_state = "health3"
+		if(20 to 40)
+			healths.icon_state = "health4"
+		if(0 to 20)
+			healths.icon_state = "health5"
+		else
+			healths.icon_state = "health6"
+
 /mob/living/silicon/robot/handle_regular_hud_updates()
 	if(!client)
 		return 0
 
 	regular_hud_updates()
 	update_sight()
-
-	if (healths)
-		if (stat != DEAD)
-			if(health >= maxHealth)
-				healths.icon_state = "health0"
-			else if(health >= maxHealth * 0.75)
-				healths.icon_state = "health1"
-			else if(health >= maxHealth * 0.5)
-				healths.icon_state = "health2"
-			else if(health >= maxHealth * 0.25)
-				healths.icon_state = "health3"
-			else if(health >= 0)
-				healths.icon_state = "health4"
-			else if(health >= config.health_threshold_dead)
-				healths.icon_state = "health5"
-			else
-				healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
 
 	if (src.cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge
