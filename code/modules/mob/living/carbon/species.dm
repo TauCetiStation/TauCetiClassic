@@ -150,6 +150,9 @@
 	// The usual species for the station
 	var/is_common = FALSE
 
+	// The type of skeleton species they would be turned into. default is human
+	var/skeleton_type = SKELETON
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -355,6 +358,8 @@
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
 			)
 
+	skeleton_type = SKELETON_UNATHI
+
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
@@ -424,6 +429,8 @@
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
 			)
 
+	skeleton_type = SKELETON_TAJARAN
+
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
@@ -474,6 +481,8 @@
 	max_age = 150
 
 	is_common = TRUE
+
+	skeleton_type = SKELETON_SKRELL
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
@@ -560,6 +569,8 @@
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
 			/obj/item/clothing/mask/gas/syndicate = /obj/item/clothing/mask/gas/vox,
 			)
+
+	skeleton_type = SKELETON_VOX
 
 /datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -1162,6 +1173,30 @@
 	icobase = 'icons/mob/human_races/r_skeleton_skrell.dmi'
 	deform = 'icons/mob/human_races/r_skeleton_skrell.dmi'
 
+/datum/species/skeleton/vox
+	name = SKELETON_VOX
+	icobase = 'icons/mob/human_races/r_skeleton_vox.dmi'
+	deform = 'icons/mob/human_races/r_skeleton_vox.dmi'
+	tail = "vox_skeleton"
+
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,NO_DNA = TRUE
+	,NO_SCAN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,NO_FINGERPRINT = TRUE
+	,NO_BLOOD_TRAILS = TRUE
+	,NO_PAIN = TRUE
+	,RAD_IMMUNE = TRUE
+	,NO_EMBED = TRUE
+	,NO_MINORCUTS = TRUE
+	,NO_EMOTION = TRUE
+	,NO_VOMIT = TRUE
+	,NO_FAT = TRUE
+	,HAS_TAIL = TRUE
+	)
+
 //Species unarmed attacks
 
 /datum/unarmed_attack
@@ -1660,7 +1695,7 @@
 
 /datum/species/homunculus/create_bodyparts(mob/living/carbon/human/H)
 	var/list/keys = get_list_of_primary_keys(global.all_species)
-	keys -= list(PODMAN, IPC, SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
+	keys -= list(PODMAN, IPC, SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
 
 	var/datum/species/head = global.all_species[pick(keys - VOX)]
 

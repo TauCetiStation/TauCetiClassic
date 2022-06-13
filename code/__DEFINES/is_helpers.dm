@@ -17,7 +17,7 @@
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
-#define isskeleton(A) (A.get_species() == SKELETON || A.get_species() == SKELETON_UNATHI || A.get_species() == SKELETON_TAJARAN || A.get_species() == SKELETON_SKRELL)
+#define isskeleton(A) (A.get_species() == SKELETON || A.get_species() == SKELETON_UNATHI || A.get_species() == SKELETON_TAJARAN || A.get_species() == SKELETON_SKRELL || A.get_species() == SKELETON_VOX)
 
 
 // CARBON

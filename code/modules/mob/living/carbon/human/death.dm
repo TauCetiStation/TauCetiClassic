@@ -150,16 +150,7 @@
 		f_style = "Shaved"
 	if(h_style)
 		h_style = "Bald"
-
-	var/skeleton_type = SKELETON
-	switch(get_species())
-		if(UNATHI)
-			skeleton_type = SKELETON_UNATHI
-		if(TAJARAN)
-			skeleton_type = SKELETON_TAJARAN
-		if(SKRELL)
-			skeleton_type = SKELETON_SKRELL
-	set_species(skeleton_type)
+	set_species(species.skeleton_type)
 	status_flags |= DISFIGURED
 	regenerate_icons()
 	return

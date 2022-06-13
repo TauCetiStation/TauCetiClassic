@@ -84,6 +84,7 @@
 #define SKELETON_UNATHI	 "Skeleton Unathi"
 #define SKELETON_TAJARAN "Skeleton Tajaran"
 #define SKELETON_SKRELL	 "Skeleton Skrell"
+#define SKELETON_VOX	 "Skeleton Vox"
 #define SHADOWLING     	 "Shadowling"
 #define GOLEM          	 "Adamantine Golem"
 #define HOMUNCULUS     	 "Homunculus"
