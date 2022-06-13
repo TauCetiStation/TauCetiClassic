@@ -28,7 +28,7 @@
 	if(M.stat != DEAD)
 		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
 		return
-	if(M.get_species() == SKELETON || M.get_species() == SKELETON_UNATHI || M.get_species() == SKELETON_TAJARAN || M.get_species() == SKELETON_SKRELL)
+	if(isskeleton(M))
 		to_chat(user, "<span class='warning'>This body has been already dried!</span>")
 		return
 

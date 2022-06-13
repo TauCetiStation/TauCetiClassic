@@ -144,7 +144,7 @@
 
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(!species || (get_species() == SKELETON) || (get_species() == SKELETON_UNATHI) || (get_species() == SKELETON_SKRELL) || (get_species() == SKELETON_TAJARAN))
+	if(!species || (isskeleton(src)))
 		return
 	if(f_style)
 		f_style = "Shaved"
