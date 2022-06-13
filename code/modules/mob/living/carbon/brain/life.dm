@@ -177,5 +177,3 @@
 	update_sight()
 
 	..()
-
-	return
