@@ -886,10 +886,6 @@
 	//resisting grabs (as if it helps anyone...)
 	if (!L.incapacitated())
 		var/resisting = 0
-		for(var/obj/O in L.requests)
-			L.requests.Remove(O)
-			qdel(O)
-			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
 			switch(G.state)

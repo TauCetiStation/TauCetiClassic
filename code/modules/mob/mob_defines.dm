@@ -49,16 +49,12 @@
 	var/lastattacker_name = ""
 	var/lastattacker_key = ""
 	var/attack_log = list( )
-	var/already_placed = 0.0
 	var/obj/machinery/machine = null
 	var/other_mobs = null
-	var/memory = ""
-	var/poll_answer = 0.0
 	var/sdisabilities = 0	//Carbon
 	var/disabilities = 0	//Carbon
 	var/atom/movable/pulling = null
 	var/next_move = null
-	var/other = 0.0
 	var/notransform = null	//Carbon
 	var/hand = 0            //active hand; 0 is right hand, 1 is left hand //todo: we need defines for this...
 	var/eye_blind = null	//Carbon
@@ -82,8 +78,6 @@
 	var/next_randomise_inputs = 0
 	var/randomise_inputs_cooldown = 30 SECONDS
 
-	var/antitoxs = null
-	var/phoron = null
 	var/lying = 0
 	var/lying_prev = 0
 	var/was_lying = FALSE //For user of clown pda slippery
@@ -95,7 +89,6 @@
 	var/list/pinned = list()            // List of things pinning this creature to walls (see living_defense.dm)
 	var/list/embedded = list()          // Embedded items, since simple mobs don't have organs.
 	var/list/languages = list()         // For speaking/listening.
-	var/list/abilities = list()         // For species-derived or admin-given powers.
 	var/list/speak_emote = list("says") // Verbs used when speaking. Defaults to 'say' if speak_emote is null.
 	var/emote_type = 1		// Define emote default type, 1 for seen emotes, 2 for heard emotes
 	var/floating = 0
@@ -111,7 +104,6 @@
 	var/is_dizzy = 0
 	var/is_jittery = 0
 	var/jitteriness = 0//Carbon
-	var/charges = 0.0
 	var/nutrition = 400.0//Carbon
 	var/dna_inject_count = 0
 
@@ -120,9 +112,7 @@
 	var/stunned = 0.0
 	var/weakened = 0.0
 	var/losebreath = 0.0//Carbon
-	var/intent = null//Living
 	var/a_intent = INTENT_HELP //Living
-	var/m_int = null//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living
@@ -137,7 +127,6 @@
 	var/datum/hud/hud_used = null
 
 	var/list/grabbed_by = list(  )
-	var/list/requests = list(  )
 
 	var/list/mapobjs = list()
 
@@ -147,13 +136,7 @@
 
 	var/next_point_to = 0
 
-	var/music_lastplayed = "null"
-
 	var/job = null//Living
-
-	var/const/blindness = 1//Carbon
-	var/const/deafness = 2//Carbon
-	var/const/muteness = 4//Carbon
 
 	var/datum/dna/dna = null//Carbon
 	var/radiation = 0.0//Carbon
