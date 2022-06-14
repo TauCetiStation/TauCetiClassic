@@ -204,27 +204,19 @@
 	new /obj/item/toy/crayon/rainbow (src)
 	make_exact_fit()
 
-/obj/item/weapon/storage/box/syndie_kit/rig
-	name = "box (J)"
-
-/obj/item/weapon/storage/box/syndie_kit/rig/atom_init()
-	. = ..()
-
-	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
-	new /obj/item/clothing/suit/space/rig/syndi(src)
-	new /obj/item/clothing/shoes/magboots/syndie(src)
-	make_exact_fit()
-
 /obj/item/weapon/storage/box/syndie_kit/heavy_rig
 	name = "box (H)"
+	startswith = list(
+	/obj/item/clothing/head/helmet/space/rig/syndi/heavy,
+	/obj/item/clothing/suit/space/rig/syndi/heavy,
+	)
 
-/obj/item/weapon/storage/box/syndie_kit/heavy_rig/atom_init()
-	. = ..()
-
-	new /obj/item/clothing/head/helmet/space/rig/syndi/heavy(src)
-	new /obj/item/clothing/suit/space/rig/syndi/heavy(src)
-	new /obj/item/clothing/shoes/magboots/syndie(src)
-	make_exact_fit()
+obj/item/weapon/storage/box/syndie_kit/spy_rig
+	name = "box (SR)"
+	startswith = list(
+	/obj/item/clothing/head/helmet/space/rig/syndi/spy,
+	/obj/item/clothing/suit/space/rig/syndi/spy,
+	)
 
 /obj/item/weapon/storage/box/syndie_kit/armor
 	name = "box (K)"
