@@ -439,7 +439,7 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 	reagents.add_reagent("gold", 1+round((potency / 5), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
-	throwforce = 16+((potency / 4)*2)
+	throwforce = 16+(potency / 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/plant_analyzer))
