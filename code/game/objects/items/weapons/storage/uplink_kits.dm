@@ -211,7 +211,7 @@
 	/obj/item/clothing/suit/space/rig/syndi/heavy,
 	)
 
-obj/item/weapon/storage/box/syndie_kit/spy_rig
+/obj/item/weapon/storage/box/syndie_kit/spy_rig
 	name = "box (SR)"
 	startswith = list(
 	/obj/item/clothing/head/helmet/space/rig/syndi/spy,
