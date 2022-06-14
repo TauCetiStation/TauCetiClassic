@@ -55,9 +55,7 @@
 
 
 /mob/living/carbon/brain/update_canmove()
-	if(in_contents_of(/obj/mecha))
-		canmove = 1
-	else							canmove = 0
+	canmove = in_contents_of(/obj/mecha)
 	return canmove
 
 /mob/living/carbon/brain/update_hud()
