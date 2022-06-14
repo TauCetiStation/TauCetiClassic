@@ -180,10 +180,6 @@
 
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
 
-	var/list/radar_blips = list() // list of screen objects, radar blips
-	var/radar_open = 0 	// nonzero is radar is open
-
-
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 
 	var/atom/movable/remote_control //Calls relay_move() to whatever this is set to when the mob tries to move
@@ -194,7 +190,6 @@
 	var/robot_talk_understand = 0
 	var/alien_talk_understand = 0
 
-	var/has_limbs = 1 //Whether this mob have any limbs he can move with
 	var/stance_damage = 1 //Whether this mob's ability to stand has been affected
 
 	var/immune_to_ssd = 0
