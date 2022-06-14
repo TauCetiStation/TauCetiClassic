@@ -414,8 +414,12 @@ var/global/const/INGEST = 2
 			// Data:
 			if(R.id == "blood" && reagent == "blood")
 				if(R.data && R.data["virus2"])
-					R.data["virus2"] += virus_copylist(data["virus2"])
-					R.data["antibodies"] = data["antibodies"]
+					for(var/ID in data["virus2"])
+						var/datum/disease2/disease/V = data["virus2"][ID]
+						if(!(ID in R.data["virus2"]))
+							R.data["virus2"][ID] = V.getcopy()
+				if(R.data && R.data["antibodies"])
+					R.data["antibodies"] |= data["antibodies"]
 
 			else if(R.id == "customhairdye" || R.id == "paint_custom")
 				for(var/color in R.data)
@@ -443,6 +447,7 @@ var/global/const/INGEST = 2
 		if(data)
 			if(data["virus2"])
 				R.data["virus2"] = virus_copylist(data["virus2"])
+			if(data["antibodies"])
 				R.data["antibodies"] = data["antibodies"]
 			else
 				R.data = data
