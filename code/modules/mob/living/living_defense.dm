@@ -174,7 +174,6 @@
 
 		visible_message("<span class='warning'>[src] is pinned to the [T] by [I]!</span>",
 			"<span class='danger'>You are pinned to the wall by [I]!</span>")
-		anchored = TRUE
 		pinned += I
 		update_canmove() // instant update, no need to wait Life() tick
 
