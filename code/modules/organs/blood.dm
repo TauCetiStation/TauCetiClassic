@@ -31,7 +31,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	if(istype(B))
 		if(clean)
 			B.data = list("donor" = src, "blood_DNA" = dna.unique_enzymes,
-						"blood_type" = dna.b_type, "resistances" = null, "trace_chem" = null,
+						"blood_type" = dna.b_type, "trace_chem" = null,
 						"virus2" = null, "antibodies" = null, "changeling_marker" = null)
 		else // Change DNA to ours, left the rest intact
 			B.data["donor"] = src
@@ -389,11 +389,6 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	B.data["blood_DNA"] = dna.unique_enzymes // todo: for some reason we ignore original blood datum and all his data here, refactoring needed
 	B.data["blood_type"] = dna.b_type
 	B.data["time"] = world.time
-	if(resistances && resistances.len)
-		if(B.data["resistances"])
-			B.data["resistances"] |= resistances.Copy()
-		else
-			B.data["resistances"] = resistances.Copy()
 
 	if (mind)
 		// Changeling blood has unique marker like DNA but invisible for scanners

@@ -167,12 +167,6 @@
 //Wizard mode, but can be used in other modes thanks to the brand new "Give Spell" badmin button
 	var/list/obj/effect/proc_holder/spell/spell_list = list()
 
-//Changlings, but can be used in other modes
-//	var/obj/effect/proc_holder/changpower/list/power_list = list()
-
-//Monkey/infected mode
-	var/list/resistances = list()
-
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 	var/update_icon = 0 //Set to 1 to trigger regenerate_icons() at the next life() call
