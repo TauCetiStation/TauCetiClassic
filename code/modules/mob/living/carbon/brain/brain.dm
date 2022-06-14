@@ -56,7 +56,6 @@
 
 /mob/living/carbon/brain/update_canmove()
 	canmove = in_contents_of(/obj/mecha)
-	return canmove
 
 /mob/living/carbon/brain/update_hud()
 	reload_fullscreen()

@@ -742,7 +742,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 // Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 // We need speed out of this proc, thats why using incapacitated() helper here is a bad idea.
 /mob/proc/update_canmove(no_transform = FALSE)
-
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 
 	anchored = captured || pinned.len
@@ -792,7 +791,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(update_icon)	//forces a full overlay update
 		update_icon = FALSE
 		regenerate_icons()
-	return canmove
 
 
 /mob/proc/facedir(ndir)

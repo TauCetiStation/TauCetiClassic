@@ -258,7 +258,6 @@
 
 /mob/living/silicon/robot/update_canmove()
 	canmove = !(paralysis || stunned || weakened || buckled || lockcharge || pinned.len)
-	return canmove
 
 //Robots on fire
 /mob/living/silicon/robot/handle_fire()

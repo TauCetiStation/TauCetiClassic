@@ -270,8 +270,7 @@
 	update_inv_back()
 
 /mob/living/carbon/ian/update_canmove()
-
-	. = ..(TRUE)
+	..(TRUE)
 
 	if(buckled || ian_sit)
 		pose_last = POSE_SIT
@@ -288,4 +287,4 @@
 	if(pose_last != pose_prev)
 		update_transform()
 
-	canmove = !(weakened || paralysis || stat || (status_flags & FAKEDEATH)  || stunned || captured || pinned.len || ian_sit)
+	canmove = canmove && !ian_sit
