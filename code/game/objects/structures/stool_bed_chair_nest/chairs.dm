@@ -173,13 +173,15 @@
 		else
 			offset_y = -4
 			offset_x = -2
-		flipped = 1
+		flipped = TRUE
+		buckle_lying = TRUE
 		anchored = FALSE		// can be pulled
 		buckle_movable = 0
 		playsound(src, 'sound/items/chair_fall.ogg', VOL_EFFECTS_MASTER, 25)
 	else
 		M.TurnTo(flip_angle,0)
-		flipped = 0
+		flipped = FALSE
+		buckle_lying = FALSE
 		anchored = initial(anchored)
 		buckle_movable = initial(buckle_movable)
 

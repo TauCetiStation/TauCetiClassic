@@ -745,9 +745,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 
-	lying = (ko || crawling) && !captured && !buckled && !pinned.len
-	canmove = !(ko || stunned || captured || pinned.len)
 	anchored = captured || pinned.len
+	lying = (ko || crawling) && !(buckled || anchored)
+	canmove = !(ko || stunned || anchored)
 
 	if(buckled)
 		if(buckled.buckle_lying != -1)
@@ -761,11 +761,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 				V.unload(src)
 			else
 				pixel_y = V.mob_offset_y
-		else
-			if(istype(buckled, /obj/structure/stool/bed/chair))
-				var/obj/structure/stool/bed/chair/C = buckled
-				if(C.flipped)
-					lying = 1
 
 	density = !lying
 
