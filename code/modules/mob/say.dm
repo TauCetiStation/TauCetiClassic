@@ -122,10 +122,6 @@
 
 	return say_verb
 
-/mob/proc/emote(act, type, message, auto)
-	if(act == "me")
-		return custom_emote(type, message)
-
 /mob/proc/get_ear()
 	// returns an atom representing a location on the map from which this
 	// mob can hear things

@@ -273,8 +273,7 @@
 		apply_fingerprints(H)
 		if(internals_slot)
 			H.internal = H.get_equipped_item(internals_slot)
-			if(H.internals)
-				H.internals.icon_state = "internal1"
+			H.internals?.update_icon(H)
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/weapon/implant/I = new implant_type(H)
