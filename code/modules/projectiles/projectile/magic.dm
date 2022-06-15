@@ -33,12 +33,12 @@
 
 	var/mob/living/new_mob
 
-	var/randomizer = pick("animal", "cyborg", "xeno")
+	var/randomizer = pick("animal", "cyborg", "xeno", "shadow")
 	if(isxeno(M))
 		randomizer = "xeno"
 	switch(randomizer)
 		if("animal")
-			var/beast = pick(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/tomato/angry_tomato, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/pig/shadowpig)
+			var/beast = pick(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/tomato/angry_tomato, /mob/living/simple_animal/hostile/retaliate/goat)
 			new_mob = new beast(M.loc)
 			new_mob.universal_speak = TRUE
 		if("cyborg")
@@ -48,6 +48,9 @@
 			new_mob.job = "Cyborg"
 		if("xeno")
 			new_mob = new /mob/living/carbon/xenomorph/humanoid/maid(M.loc)
+			new_mob.universal_speak = TRUE
+		if("shadow")
+			new_mob = new /mob/living/simple_animal/pig/shadowpig(M.loc, FALSE)
 			new_mob.universal_speak = TRUE
 	if(!new_mob)
 		return

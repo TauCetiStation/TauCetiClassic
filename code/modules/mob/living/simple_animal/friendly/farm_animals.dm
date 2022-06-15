@@ -297,12 +297,18 @@ var/global/chicken_count = 0
 	name = "Shadowpig"
 	icon_state = "shadowpig"
 	icon_living = "shadowpig"
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE 
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
-/mob/living/simple_animal/pig/shadowpig/atom_init()
+/mob/living/simple_animal/pig/shadowpig/atom_init(mapload, shitspawn = TRUE)
 	. = ..()
+	if(shitspawn)
+		return INITIALIZE_HINT_LATELOAD
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/veil)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/blindness_smoke)
+
+/mob/living/simple_animal/pig/shadowpig/atom_init_late()
+	playsound(src, 'sound/misc/sadtrombone.ogg', VOL_EFFECTS_MASTER)
+	qdel(src)
 
 /mob/living/simple_animal/turkey
 	name = "turkey"
