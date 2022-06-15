@@ -31,7 +31,7 @@
 		return FALSE
 	if(M.buckled || buckled_mob)
 		return FALSE
-	if(M.pinned.len)
+	if(M.anchored)
 		return FALSE
 	if(buckle_require_restraints && !M.restrained())
 		return FALSE

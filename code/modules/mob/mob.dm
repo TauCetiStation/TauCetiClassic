@@ -1086,7 +1086,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(O == selection)
 			pinned -= O
 		if(!pinned.len)
-			anchored = FALSE
+			update_canmove()
 	return 1
 
 ///Get the ghost of this mob (from the mind)

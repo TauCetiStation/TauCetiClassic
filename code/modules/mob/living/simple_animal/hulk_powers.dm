@@ -19,7 +19,7 @@
 			if(M.pulling == usr)
 				M.stop_pulling()
 
-		if(usr.pinned.len)
+		if(usr.anchored)
 			failure = 1
 
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> takes a huge leap!</span>")
@@ -144,7 +144,7 @@
 			if(M.pulling == usr)
 				M.stop_pulling()
 
-		if(usr.pinned.len)
+		if(usr.anchored)
 			failure = 1
 
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> dashes forward!</span>")
