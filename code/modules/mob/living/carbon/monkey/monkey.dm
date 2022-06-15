@@ -63,6 +63,9 @@
 	if(name == initial(name)) //To stop Pun-Pun becoming generic.
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
+	
+	metabolism_factor.multiple = 1.0
+	metabolism_factor.Update()
 
 	if (!(dna))
 		if(gender == NEUTER)
