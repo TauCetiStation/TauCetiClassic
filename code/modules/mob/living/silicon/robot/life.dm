@@ -257,7 +257,7 @@
 			weaponlock_time = 120
 
 /mob/living/silicon/robot/update_canmove()
-	canmove = !(paralysis || stunned || weakened || buckled || lockcharge || HAS_TRAIT(TRAIT_ANCHORED))
+	canmove = !(paralysis || stunned || weakened || buckled || lockcharge || HAS_TRAIT(src, TRAIT_ANCHORED))
 
 //Robots on fire
 /mob/living/silicon/robot/handle_fire()
