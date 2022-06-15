@@ -1018,11 +1018,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	var/mob/S = src
 	var/mob/U = usr
-	var/list/valid_objects = list()
-	var/self = FALSE
-
-	if(S == U)
-		self = TRUE // Removing object from yourself.
+	var/list/valid_objects
+	var/self = S == U // Removing object from yourself.
 
 	valid_objects = get_visible_implants(1)
 	if(!valid_objects.len)
@@ -1041,17 +1038,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(!do_skilled(U, S, SKILL_TASK_DIFFICULT, list(/datum/skill/medical/trained), -0.2))
 		return
-	if(!selection || !S || !U)
+	if(QDELETED(S) || QDELETED(U) || selection.loc != S)
 		return
 
 	if(self)
 		visible_message("<span class='warning'><b>[src] rips [selection] out of their body.</b></span>","<span class='warning'><b>You rip [selection] out of your body.</b></span>")
 	else
 		visible_message("<span class='warning'><b>[usr] rips [selection] out of [src]'s body.</b></span>","<span class='warning'><b>[usr] rips [selection] out of your body.</b></span>")
-	valid_objects = get_visible_implants(0)
-	if(valid_objects.len == 1) //Yanking out last object - removing verb.
-		src.verbs -= /mob/proc/yank_out_object
-		clear_alert("embeddedobject")
 
 	embedded -= selection
 
@@ -1061,9 +1054,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 		var/obj/item/organ/external/BP
 
 		for(var/obj/item/organ/external/limb in H.bodyparts) //Grab the organ holding the implant.
-			for(var/obj/item/weapon/O in limb.implants)
-				if(O == selection)
-					BP = limb
+			if(selection in limb.implants)
+				BP = limb
+				break
 
 		BP.implants -= selection
 		H.sec_hud_set_implants()
@@ -1082,12 +1075,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	selection.loc = get_turf(src)
 
-	for(var/obj/item/weapon/O in pinned)
-		if(O == selection)
-			pinned -= O
+	if(selection in pinned)
+		pinned -= selection
 		if(!pinned.len)
 			update_canmove()
-	return 1
+
+	valid_objects = get_visible_implants(1)
+	if(!valid_objects.len) //Yanked out last object - removing verb.
+		src.verbs -= /mob/proc/yank_out_object
+		clear_alert("embeddedobject")
 
 ///Get the ghost of this mob (from the mind)
 /mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
