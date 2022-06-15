@@ -2063,7 +2063,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/item/ammo_box/c45,
+/obj/item/ammo_box/c45rubber,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -8543,7 +8543,7 @@
 /area/awaymission/labs/medical)
 "tQ" = (
 /obj/structure/rack,
-/obj/item/ammo_box/c45,
+/obj/item/ammo_box/c45rubber,
 /obj/item/weapon/gun/projectile/automatic/silenced{
 	desc = "A sidearm commonly favored by terrestrial security forces.";
 	icon_state = "g115 Pistol";
@@ -8564,7 +8564,7 @@
 /area/awaymission/labs/security)
 "tS" = (
 /obj/structure/rack,
-/obj/item/ammo_box/c45,
+/obj/item/ammo_box/c45rubber,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
