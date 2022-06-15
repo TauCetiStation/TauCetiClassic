@@ -230,7 +230,7 @@
 		step_away(src, get_turf(attacker))
 		if(loc != to_move)
 			adjustHalLoss(4)
-			SEND_SIGNAL(attacker, COMSIG_KISSED_THE_WALL, src)
+			SEND_SIGNAL(attacker, COMSIG_FACED, src)
 
 	if(pulling)
 		visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [pulling]!</B></span>")
