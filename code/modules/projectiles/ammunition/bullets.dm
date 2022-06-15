@@ -5,6 +5,11 @@
 	projectile_type = /obj/item/projectile/bullet/revbullet
 	m_amt = 1000
 
+/obj/item/ammo_casing/a357/weak
+	desc = "A less powerful .357 bullet casing."
+	projectile_type = /obj/item/projectile/bullet/weakrevbullet
+	m_amt = 2500
+
 /obj/item/ammo_casing/a50
 	desc = "A .50AE bullet casing."
 	caliber = ".50"

@@ -53,11 +53,11 @@
 	max_ammo = 12
 	multiple_sprites = 2
 
-/obj/item/ammo_box/c45
-	name = "Ammunition Box (.45)"
+/obj/item/ammo_box/c357
+	name = "Ammunition Box (.357 weakened)"
 	icon_state = "c45"
 	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c45
+	ammo_type = /obj/item/ammo_casing/a357/weak
 	max_ammo = 7
 	multiple_sprites = 2
 

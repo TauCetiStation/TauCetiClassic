@@ -75,6 +75,10 @@
 	damage = 35
 	stoping_power = 8
 
+/obj/item/projectile/bullet/weakrevbullet
+	damage = 25
+	stoping_power = 1
+
 /obj/item/projectile/bullet/rifle1
 	damage = 40
 	embed = 0

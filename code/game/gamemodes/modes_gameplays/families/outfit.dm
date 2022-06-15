@@ -23,8 +23,7 @@
 	survival_box = TRUE
 
 	backpack_contents = list(
-		/obj/item/ammo_box/magazine/c45r = 3,
-		/obj/item/ammo_box/c45 = 2,
+		/obj/item/ammo_box/magazine/c45r = 5,
 		/obj/item/weapon/gun/projectile/automatic/colt1911 = 1,
 	)
 
