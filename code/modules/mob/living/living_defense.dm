@@ -64,7 +64,7 @@
 
 	if(!P.nodamage)
 		apply_damage(damage, P.damage_type, def_zone, absorb, flags, P)
-		SEND_SIGNAL(src, COMSIG_CAUGHT_A_BULLET)
+		SEND_SIGNAL(src, COMSIG_TAKE_BULLET_DAMAGE)
 		if(length(P.proj_act_sound))
 			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	P.on_hit(src, def_zone, absorb)
