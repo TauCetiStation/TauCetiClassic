@@ -1073,10 +1073,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			var/mob/living/carbon/human/human_user = U
 			human_user.bloody_hands(H)
 
-	selection.loc = get_turf(S)
-	if(HAS_TRAIT_FROM(S, TRAIT_ANCHORED, selection))
-		REMOVE_TRAIT(S, TRAIT_ANCHORED, selection)
-		update_canmove()
+	selection.forceMove(get_turf(S))
 
 	valid_objects = get_visible_implants(1)
 	if(!valid_objects.len) //Yanked out last object - removing verb.

@@ -572,11 +572,6 @@
 	fire_stacks = 0
 	suiciding = FALSE
 
-	if(pinned.len)
-		for(var/obj/O in pinned)
-			O.forceMove(loc)
-		pinned.Cut()
-
 	// fix blindness and deafness
 	blinded = 0
 	eye_blind = 0

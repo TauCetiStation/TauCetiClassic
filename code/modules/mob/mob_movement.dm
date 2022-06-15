@@ -127,8 +127,8 @@
 				else
 					M.stop_pulling()
 
-		if(mob.pinned.len)
-			to_chat(src, "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>")
+		if(mob.anchored)
+			to_chat(src, "<span class='notice'>You're anchored!</span>")
 			return 0
 
 		//We are now going to move
@@ -269,12 +269,6 @@
 			minDist = dist
 	console.jump_on_click(src, minCam)
 	return TRUE
-
-/mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	if (pinned.len)
-		return FALSE
-
-	return ..()
 
 ///Process_Incorpmove
 ///Called by client/Move()
