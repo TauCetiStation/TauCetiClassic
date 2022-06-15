@@ -326,6 +326,41 @@
 /datum/language/shkiondioniovioion/scramble(input)
 	return replace_characters(input, replacements)
 
+/datum/language/salackyi
+	name = LANGUAGE_SALACKYI
+	desc = "One of the most prominent space-slavic languages out there. Consists of many funny sounds, as well as deep, melodic structure."
+	speech_verb = "says"
+	ask_verb = "asks"
+	exclaim_verb = "exclaims"
+	colour = "body"
+	key = list("x", "ч")
+	syllables = list("на", "ня", "ні", "нає", "ма", "мі", "та", "тя", "ко", "нко", "ля", "ла", "ша", "шо", "ха", "хо", "хи", "ги", "ґи", "юк", "як")
+
+	approximations = list(
+		"і" = "и",
+	)
+
+	var/list/replacements
+
+/datum/language/salackyi/New()
+	var/list/lowercase_letters = list(
+		"и" = "і",
+		"ы" = "и",
+		"э" = "е",
+		"е" = "є",
+		"ё" = "йо",
+		"г" = "ґ",
+		"чт" = "ш",
+	)
+
+	replacements = list()
+	for(var/letter in lowercase_letters)
+		var/replacement = lowercase_letters[letter]
+		replacements[letter] = replacement
+
+/datum/language/salackyi/scramble(input)
+	return replace_characters(input, replacements)
+
 // Language handling.
 /mob/proc/add_language(language, flags=LANGUAGE_CAN_SPEAK)
 	if(isnull(flags))
