@@ -240,20 +240,6 @@ var/global/list/allergen_reagents_list
 /datum/quality/negativeish/dumb/add_effect(mob/living/carbon/human/H, latespawn)
 	H.adjustBrainLoss(rand(30, 99))
 
-/datum/quality/negativeish/c4
-	name = "C4"
-	desc = "Спокойно, на Вас всего лишь повесили бомбу. \
-	<br>- ВЗОРВЁТСЯ ЛИ ОНА? \
-	<br>- Да. \
-	<br>- КОГДА? \
-	<br>- Ну может и бахнет минут через 5? 20? 40? Кто его знает?"
-	requirement = "Нет."
-
-/datum/quality/negativeish/c4/add_effect(mob/living/carbon/human/H, latespawn)
-	var/obj/item/weapon/plastique/C4 = new(H)
-	C4.timer = rand(600, 1800)
-	C4.plant_bomb(H)
-
 /datum/quality/negativeish/trypanophobia
 	name = "Trypanophobia"
 	desc = "Ты с самого детства боишься уколов."
