@@ -337,11 +337,10 @@
 
 /datum/quality/positiveish/karate_kid/add_effect(mob/living/carbon/human/H, latespawn)
 	H.AddComponent(/datum/component/karate)
-	H.AddComponent(/datum/component/fear_of_a_gun)
+	H.AddComponent(/datum/component/bullet_fear)
 
 	for(var/O in H.species.has_bodypart)
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[O]
 		if(BP)
-			if(BP.max_pumped > 0)
-				BP.max_pumped += 300
+			BP.max_pumped += 300
 	to_chat(H, "<span class='notice'>The blood pumps, the limbs obey!</span>")

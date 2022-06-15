@@ -301,6 +301,11 @@
 ///from base of mob/living/carbon/swap_hand(): (obj/item)
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
 	#define COMPONENT_BLOCK_SWAP 1
+// send this signal, after calculation apply_damage() in bullet_act
+#define COMSIG_TAKE_BULLET_DAMAGE "take_bullet_damage"
+// send this signal when trying earn combat-points, return block_combo if dont need them
+#define COMSIG_ENGAGE_COMBAT "engage_combat"
+	#define COMPONENT_BLOCK_COMBO 1
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
@@ -338,9 +343,4 @@
 // send this signal to toggle zoom in /datum/component/zoom: (mob/user)
 #define COMSIG_ZOOM_TOGGLE "zoom_toggle"
 // from /datum/component/karate
-#define COMSIG_KISSED_THE_WALL "kissed the wall"
-// from /datum/component/fear_of_a_gun
-#define COMSIG_CAUGHT_A_BULLET "caught a bullet"
-// send this signal to /datum/component/karate for return block_combo
-#define COMSIG_ENGAGE_COMBAT "engage_combat"
-	#define COMPONENT_BLOCK_COMBO 1
+#define COMSIG_FACED "faced"
