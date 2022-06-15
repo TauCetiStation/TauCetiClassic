@@ -744,7 +744,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/update_canmove(no_transform = FALSE)
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 
-	anchored = captured || pinned.len
+	anchored = HAS_TRAIT(src, TRAIT_ANCHORED) || pinned.len
 	lying = (ko || crawling) && !anchored
 	canmove = !(ko || stunned || anchored)
 
