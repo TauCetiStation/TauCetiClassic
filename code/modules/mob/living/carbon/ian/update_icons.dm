@@ -6,8 +6,9 @@
 #define LAYERIAN_FIRE     1
 #define LAYERIANS_TOTAL   6
 
-/mob/living/carbon/ian/var/static/list/corgi_icons = list()
-/mob/living/carbon/ian/var/list/overlays_inv[LAYERIANS_TOTAL]
+/mob/living/carbon/ian
+	var/static/list/corgi_icons = list()
+	var/list/overlays_inv[LAYERIANS_TOTAL]
 
 /mob/living/carbon/ian/proc/apply_overlay(index)
 	var/image/I = overlays_inv[index]
