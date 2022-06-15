@@ -119,13 +119,13 @@
 	if(isturf(mob.loc))
 
 		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
-			for(var/mob/M in range(mob, 1))
-				if(M.pulling == mob)
-					if(!M.incapacitated() && M.canmove && mob.Adjacent(M))
-						to_chat(src, "<span class='notice'>You're incapacitated! You can't move!</span>")
-						return 0
-					else
-						M.stop_pulling()
+			var/mob/M = mob.pulledby
+			if(M)
+				if(!M.incapacitated() && M.canmove && mob.Adjacent(M))
+					to_chat(src, "<span class='notice'>You're incapacitated! You can't move!</span>")
+					return 0
+				else
+					M.stop_pulling()
 
 		if(mob.pinned.len)
 			to_chat(src, "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>")
