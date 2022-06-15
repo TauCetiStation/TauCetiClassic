@@ -1129,23 +1129,9 @@
 	deform = 'icons/mob/human_races/r_skeleton_lizard.dmi'
 	tail = "unathi_skeleton"
 
-	flags = list(
-	 NO_BREATHE = TRUE
-	,NO_BLOOD = TRUE
-	,NO_DNA = TRUE
-	,NO_SCAN = TRUE
-	,VIRUS_IMMUNE = TRUE
-	,NO_FINGERPRINT = TRUE
-	,NO_BLOOD_TRAILS = TRUE
-	,NO_PAIN = TRUE
-	,RAD_IMMUNE = TRUE
-	,NO_EMBED = TRUE
-	,NO_MINORCUTS = TRUE
-	,NO_EMOTION = TRUE
-	,NO_VOMIT = TRUE
-	,NO_FAT = TRUE
-	,HAS_TAIL = TRUE
-	)
+/datum/species/skeleton/unathi/New()
+	.=..()
+	flags[HAS_TAIL]=TRUE
 
 /datum/species/skeleton/tajaran
 	name = SKELETON_TAJARAN
@@ -1153,23 +1139,9 @@
 	deform = 'icons/mob/human_races/r_skeleton_tajaran.dmi'
 	tail = "tajaran_skeleton"
 
-	flags = list(
-	 NO_BREATHE = TRUE
-	,NO_BLOOD = TRUE
-	,NO_DNA = TRUE
-	,NO_SCAN = TRUE
-	,VIRUS_IMMUNE = TRUE
-	,NO_FINGERPRINT = TRUE
-	,NO_BLOOD_TRAILS = TRUE
-	,NO_PAIN = TRUE
-	,RAD_IMMUNE = TRUE
-	,NO_EMBED = TRUE
-	,NO_MINORCUTS = TRUE
-	,NO_EMOTION = TRUE
-	,NO_VOMIT = TRUE
-	,NO_FAT = TRUE
-	,HAS_TAIL = TRUE
-	)
+/datum/species/skeleton/tajaran/New()
+	.=..()
+	flags[HAS_TAIL]=TRUE
 
 /datum/species/skeleton/skrell
 	name = SKELETON_SKRELL
@@ -1182,23 +1154,9 @@
 	deform = 'icons/mob/human_races/r_skeleton_vox.dmi'
 	tail = "vox_skeleton"
 
-	flags = list(
-	 NO_BREATHE = TRUE
-	,NO_BLOOD = TRUE
-	,NO_DNA = TRUE
-	,NO_SCAN = TRUE
-	,VIRUS_IMMUNE = TRUE
-	,NO_FINGERPRINT = TRUE
-	,NO_BLOOD_TRAILS = TRUE
-	,NO_PAIN = TRUE
-	,RAD_IMMUNE = TRUE
-	,NO_EMBED = TRUE
-	,NO_MINORCUTS = TRUE
-	,NO_EMOTION = TRUE
-	,NO_VOMIT = TRUE
-	,NO_FAT = TRUE
-	,HAS_TAIL = TRUE
-	)
+/datum/species/skeleton/vox/New()
+	.=..()
+	flags[HAS_TAIL]=TRUE
 
 //Species unarmed attacks
 
