@@ -337,7 +337,7 @@
 	L.AdjustWeakened(5)
 	unbuckle_mob(L)
 
-/obj/structure/stool/bed/chair/noose/user_buckle_mob(mob/living/carbon/human/M, mob/user)
+/obj/structure/stool/bed/chair/noose/can_user_buckle(mob/living/carbon/human/M, mob/user)
 	if(!Adjacent(user) || user.stat || user.restrained() || !ishuman(M) || user.is_busy())
 		return FALSE
 
@@ -353,30 +353,35 @@
 		to_chat(user, "<span class='notice'>You need to have a stool or a chair under the noose to hang someone</span>")
 		return FALSE
 
+	return TRUE
+
+/obj/structure/stool/bed/chair/noose/user_buckle_mob(mob/living/carbon/human/M, mob/user)
+	if(!can_user_buckle(M, user))
+		return
+
 	add_fingerprint(user)
 	message_admins("[key_name_admin(user)] attempted to hang [key_name(M)]. [ADMIN_JMP(M)]")
-	M.visible_message("<span class='danger'>[user] attempts to tie \the [src] over [M]'s neck!</span>")
-	if(user != M)
-		to_chat(user, "<span class='notice'>It will take 15 seconds and you have to stand still.</span>")
-	if(do_mob(user, M, user == M ? 3 : 15 SECONDS))
-		if(buckle_mob(M))
-			user.visible_message("<span class='warning'>[user] ties \the [src] over [M]'s neck!</span>")
-			if(user == M)
-				to_chat(M, "<span class='userdanger'>You tie \the [src] over your neck!</span>")
-			else
-				to_chat(M, "<span class='userdanger'>[user] ties \the [src] over your neck!</span>")
-			playsound(src, 'sound/effects/noosed.ogg', VOL_EFFECTS_MASTER)
-			message_admins("[key_name_admin(M)] was hanged by [key_name(user)]. [ADMIN_JMP(M)]")
-			for(var/alert in M.alerts)
-				var/atom/movable/screen/alert/A = M.alerts[alert]
-				if(A.master.icon_state == "noose") // our alert icon is terrible, let's build a new one
-					A.cut_overlays()
-					A.add_overlay(image(icon, "noose"))
-					A.add_overlay(image(icon, "noose_overlay"))
-			return TRUE
-	user.visible_message("<span class='warning'>[user] fails to tie \the [src] over [M]'s neck!</span>")
-	to_chat(user, "<span class='warning'>You fail to tie \the [src] over [M]'s neck!</span>")
-	return FALSE
+	M.visible_message(\
+		"<span class='danger'>[user] attempts to tie \the [src] over [M]'s neck!</span>",\
+		user != M ? "<span class='notice'>It will take 15 seconds and you have to stand still.</span>" : null)
+	if(!(do_mob(user, M, (user == M ? 3 : 15) SECONDS) && buckle_mob(M)))
+		user.visible_message(\
+			"<span class='warning'>[user] fails to tie \the [src] over [M]'s neck!</span>",\
+			"<span class='warning'>You fail to tie \the [src] over [M]'s neck!</span>")
+		return FALSE
+
+	M.visible_message(\
+		"<span class='warning'>[user] ties \the [src] over [M]'s neck!</span>",\
+		"<span class='userdanger'>[user == M ? "You tie" : "[user] ties"] \the [src] over your neck!</span>")
+	playsound(src, 'sound/effects/noosed.ogg', VOL_EFFECTS_MASTER)
+	message_admins("[key_name_admin(M)] was hanged by [key_name(user)]. [ADMIN_JMP(M)]")
+	for(var/alert in M.alerts)
+		var/atom/movable/screen/alert/A = M.alerts[alert]
+		if(A.master.icon_state == "noose") // our alert icon is terrible, let's build a new one
+			A.cut_overlays()
+			A.add_overlay(image(icon, "noose"))
+			A.add_overlay(image(icon, "noose_overlay"))
+	return TRUE
 
 /obj/structure/stool/bed/chair/noose/process()
 	if(!has_buckled_mobs())
