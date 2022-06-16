@@ -44,7 +44,7 @@
 			return
 		to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
 		new /obj/item/stack/rods(loc, 4)
-		var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
+		var/obj/F = new /obj/structure/kitchenspike_frame(loc)
 		transfer_fingerprints_to(F)
 		qdel(src)
 		return

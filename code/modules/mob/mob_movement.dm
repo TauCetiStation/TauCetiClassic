@@ -127,10 +127,6 @@
 				else
 					M.stop_pulling()
 
-		if(mob.anchored)
-			to_chat(src, "<span class='notice'>You're anchored!</span>")
-			return 0
-
 		//We are now going to move
 		var/add_delay
 		move_delay = world.time//set move delay
