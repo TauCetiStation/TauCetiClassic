@@ -53,35 +53,37 @@
 
 		var/obj/item/weapon/grab/G = I
 		if(isliving(G.affecting))
-			if(!buckled_mob)
-				if(do_mob(user, src, 120))
-					if(buckled_mob) //to prevent spam/queing up attacks
-						return
-					if(G.affecting.buckled)
-						return
-					var/mob/living/H = G.affecting
-					playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, 25)
-					H.visible_message("<span class='danger'>[user] slams [G.affecting] onto the meat spike!</span>", \
-					                  "<span class='userdanger'>[user] slams you onto the meat spike!</span>", \
-					                  "<span class='notice'>You hear a squishy wet noise.</span>")
-					H.forceMove(src.loc)
-					H.emote("scream")
-					if(iscarbon(H)) //So you don't get human blood when you spike a giant spidere
-						var/turf/pos = get_turf(H)
-						pos.add_blood_floor(H)
-					H.adjustBruteLoss(30)
-					H.buckled = src
-					H.set_dir(2)
-					buckled_mob = H
-					var/matrix/m = matrix(H.transform)
-					m.Turn(180)
-					animate(H, transform = m, time = 3)
-					H.pixel_y = H.default_pixel_y
-					qdel(G)
+			var/mob/living/H = G.affecting
+			if(!(can_buckle(H) && do_mob(user, src, 12 SECONDS)))
+				return
+
+			H.forceMove(loc)
+
+			if(buckle_mob(H))
+				H.visible_message("<span class='danger'>[user] slams [G.affecting] onto the meat spike!</span>", \
+									"<span class='userdanger'>[user] slams you onto the meat spike!</span>", \
+									"<span class='notice'>You hear a squishy wet noise.</span>")
 		else
 			to_chat(user, "<span class='danger'>You can't use that on the spike!</span>")
 	else
 		..()
+
+/obj/structure/kitchenspike/buckle_mob(mob/living/M)
+	if(!..())
+		return FALSE
+
+	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, 25)
+	H.emote("scream")
+	if(iscarbon(H)) //So you don't get human blood when you spike a giant spidere
+		var/turf/pos = get_turf(H)
+		pos.add_blood_floor(H)
+	H.adjustBruteLoss(30)
+	H.set_dir(2)
+	var/matrix/m = matrix(H.transform)
+	m.Turn(180)
+	animate(H, transform = m, time = 3)
+	H.pixel_y = H.default_pixel_y
+	return TRUE
 
 /obj/structure/kitchenspike/user_buckle_mob(mob/living/M, mob/living/user) //Don't want them getting put on the rack other than by spiking
 	return
