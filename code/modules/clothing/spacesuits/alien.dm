@@ -43,7 +43,7 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list(SKRELL)
+	species_restricted = list(SKRELL, HUMAN, PODMAN)
 
 /obj/item/clothing/suit/space/skrell/white
 	icon_state = "skrell_suit_white"
