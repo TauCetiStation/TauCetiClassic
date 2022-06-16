@@ -34,28 +34,25 @@
 			add_fingerprint(user)
 	return
 
-/obj/structure/stool/bed/nest/user_buckle_mob(mob/M, mob/user)
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled || ispAI(user) )
-		return
-
+/obj/structure/stool/bed/nest/can_user_buckle(mob/living/M, mob/user)
+	if(isxeno(M) || !isxenoadult(user))
+		return FALSE
+	if(!user.Adjacent(M) || user.incapacitated() || user.lying)
+		return FALSE
 	if(user.is_busy())
-		return
+		to_chat(user, "<span class='warning'>You can't buckle [M] while doing something.</span>")
+		return FALSE
+	return TRUE
 
-	if(isxeno(M))
-		return
-	if(!isxenoadult(user))
-		return
-
-	if(M == usr)
-		return
-	else
+/obj/structure/stool/bed/nest/user_buckle_mob(mob/M, mob/user)
+	if(can_user_buckle(M, user) && buckle_mob(M))
 		M.visible_message(\
 			"<span class='notice'>[user.name] secretes a thick vile goo, securing [M.name] into [src]!</span>",\
 			"<span class='warning'>[user.name] drenches you in a foul-smelling resin, trapping you in the [src]!</span>",\
 			"<span class='notice'>You hear squelching...</span>")
-		buckle_mob(M)
 		M.pixel_y = 2
-	return
+		return TRUE
+	return FALSE
 
 /obj/structure/stool/bed/nest/attackby(obj/item/weapon/W, mob/user)
 	var/aforce = W.force

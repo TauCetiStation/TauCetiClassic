@@ -80,28 +80,34 @@
 /atom/movable/proc/post_buckle_mob(mob/living/M)
 	return
 
-/atom/movable/proc/user_buckle_mob(mob/living/M, mob/user)
+/atom/movable/proc/can_user_buckle(mob/living/M, mob/user)
 	if(!SSticker)
 		to_chat(user, "<span class='warning'>You can't buckle anyone in before the game starts.</span>")
-		return
+		return FALSE
 
 	if(!user.Adjacent(M) || user.incapacitated() || user.lying || ispAI(user) || ismouse(user))
-		return
+		return FALSE
 
 	if(user.is_busy())
 		to_chat(user, "<span class='warning'>You can't buckle [M] while doing something.</span>")
-		return
+		return FALSE
 
 	if(istype(M, /mob/living/simple_animal/construct))
 		to_chat(user, "<span class='warning'>The [M] is floating in the air and can't be buckled.</span>")
-		return
+		return FALSE
 
 	if(isslime(M))
 		to_chat(user, "<span class='warning'>The [M] is too squishy to buckle in.</span>")
-		return
+		return FALSE
 
 	if(issilicon(M))
 		to_chat(user, "<span class='warning'>The [M] is too heavy to buckle in.</span>")
+		return FALSE
+
+	return TRUE
+
+/atom/movable/proc/user_buckle_mob(mob/living/M, mob/user)
+	if(!can_user_buckle(M, user))
 		return
 
 	add_fingerprint(user)
@@ -140,7 +146,5 @@
 	return M
 
 /atom/movable/proc/has_buckled_mobs()
-	if(!buckled_mob)
-		return FALSE
-	if(buckled_mob)
-		return TRUE
+	return istype(buckled_mob)
+
