@@ -89,9 +89,12 @@
 	message = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
 	message = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></font>"
 
-	for (var/mob/M as anything in mob_list)
-		if(isobserver(M) || isanyblob(M))
+	for(var/M in mob_list)
+		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
 			to_chat(M, message)
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, src)
+			to_chat(M, "[link] [message]")
 
 /mob/camera/blob/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 	return

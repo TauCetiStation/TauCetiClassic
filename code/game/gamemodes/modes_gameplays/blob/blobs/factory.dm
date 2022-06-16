@@ -84,7 +84,6 @@
 /mob/living/simple_animal/hostile/blob
 	icon = 'icons/mob/blob.dmi'
 	pass_flags = PASSBLOB
-	faction = list(ROLE_BLOB)
 	speak_emote = null //so we use verb_yell/verb_say/etc
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -111,6 +110,14 @@
 		overmind.blob_mobs -= src
 	return ..()
 
+/mob/living/simple_animal/hostile/blob/Stat()
+	..()
+	if(statpanel("Status") && !independent)
+		if(overmind)
+			if(overmind.blob_core)
+				stat(null, "Core Health: [overmind.blob_core.health]")
+			stat(null, "Progress: [blobs.len]/[overmind.b_congl.blobwincount]")
+
 /mob/living/simple_animal/hostile/blob/blob_act(/obj/effect/blob/B)
 	if(stat != DEAD && health < maxHealth)
 		health += maxHealth*0.0125
@@ -128,12 +135,16 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/say(message)
+	if (!message)
+		return
+
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
 		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
+
 	if (stat)
 		return
 
@@ -148,9 +159,12 @@
 	message = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
 	message = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></font>"
 
-	for (var/mob/M as anything in mob_list)
-		if(isobserver(M) || isanyblob(M))
+	for(var/M in mob_list)
+		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
 			to_chat(M, message)
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, src)
+			to_chat(M, "[link] [message]")
 
 ////////////////
 // BLOB SPORE //
@@ -272,8 +286,13 @@
 	melee_damage = 20
 	attack_sound = 'sound/effects/blobattack.ogg'
 	environment_smash = 1
-	speed = 4 //Faster jugger
+	speed = 3 //Bots
 	sight = SEE_TURFS | SEE_MOBS
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/atom_init()
+	var/new_name = "[initial(name)] ([rand(1, 999)])"
+	name = new_name
+	real_name = new_name
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/add_to_hud(datum/hud/hud)
 	. = ..()//. = ..()
