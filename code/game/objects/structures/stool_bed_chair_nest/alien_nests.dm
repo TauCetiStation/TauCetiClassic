@@ -9,30 +9,27 @@
 	layer = 2.55
 
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
-	if(buckled_mob)
-		if(user.is_busy())
+	if(!buckled_mob || user.is_busy())
+		return
+	var/mob/living/L = buckled_mob
+	add_fingerprint(user)
+	if(L != user)
+		L.visible_message(\
+			"<span class='notice'>[user.name] pulls [L.name] free from the sticky nest!</span>",\
+			"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",\
+			"<span class='notice'>You hear squelching...</span>")
+		
+	else
+		L.visible_message(\
+			"<span class='warning'>[L.name] struggles to break free of the gelatinous resin...</span>",\
+			"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",\
+			"<span class='notice'>You hear squelching...</span>")
+		
+		if(!(do_after(L, 5 MINUTES, target = L) && buckle_mob == L))
 			return
 
-		if(buckled_mob.buckled == src)
-			if(buckled_mob != user)
-				buckled_mob.visible_message(\
-					"<span class='notice'>[user.name] pulls [buckled_mob.name] free from the sticky nest!</span>",\
-					"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",\
-					"<span class='notice'>You hear squelching...</span>")
-				buckled_mob.pixel_y = 0
-				unbuckle_mob()
-			else
-				if(user.is_busy()) return
-				buckled_mob.visible_message(\
-					"<span class='warning'>[buckled_mob.name] struggles to break free of the gelatinous resin...</span>",\
-					"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",\
-					"<span class='notice'>You hear squelching...</span>")
-				if(do_after(buckled_mob, 3000, target = user))
-					if(user && buckled_mob && user.buckled == src)
-						buckled_mob.pixel_y = 0
-						unbuckle_mob()
-			add_fingerprint(user)
-	return
+	L.pixel_y = default_pixel_y
+	unbuckle_mob()
 
 /obj/structure/stool/bed/nest/can_user_buckle(mob/living/M, mob/user)
 	if(isxeno(M) || !isxenoadult(user))

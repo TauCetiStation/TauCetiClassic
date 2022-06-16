@@ -93,6 +93,7 @@
 		return
 
 	var/mob/living/L = buckled_mob
+	add_fingerprint(user)
 	if(L != user)
 		L.visible_message(\
 			"<span class='notice'>[user.name] tries to pull [L.name] free of the [src]!</span>",\

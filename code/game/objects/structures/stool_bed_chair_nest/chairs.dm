@@ -296,7 +296,7 @@
 	return ..()
 
 /obj/structure/stool/bed/chair/noose/post_buckle_mob(mob/living/M)
-	if(has_buckled_mobs())
+	if(buckled_mob)
 		layer = MOB_LAYER
 		START_PROCESSING(SSobj, src)
 		M.dir = SOUTH
@@ -309,36 +309,33 @@
 		M.pixel_y = M.lying ? -6 : initial(M.pixel_y)
 
 /obj/structure/stool/bed/chair/noose/user_unbuckle_mob(mob/living/user)
-	if(!has_buckled_mobs())
+	if(!buckled_mob || user.is_busy())
 		return
-	if(user.is_busy())
-		return
-	if(buckled_mob != user)
-		user.visible_message("<span class='notice'>[user] begins to untie the noose over [buckled_mob]'s neck...</span>")
-		to_chat(user, "<span class='notice'>You begin to untie the noose over [buckled_mob]'s neck...</span>")
-		if(!do_mob(user, buckled_mob, 10 SECONDS))
-			return
-		user.visible_message("<span class='notice'>[user] unties the noose over [buckled_mob]'s neck!</span>")
-		to_chat(user,"<span class='notice'>You untie the noose over [buckled_mob]'s neck!</span>")
-	else
-		buckled_mob.visible_message("<span class='warning'>[buckled_mob] struggles to untie the noose over their neck!</span>")
-		to_chat(buckled_mob,"<span class='notice'>You struggle to untie the noose over your neck... (Stay still for 15 seconds.)</span>")
-		if(!do_after(buckled_mob, 15 SECONDS, target = src))
-			if(buckled_mob && buckled_mob.buckled)
-				to_chat(buckled_mob, "<span class='warning'>You fail to untie yourself!</span>")
-			return
-		if(!buckled_mob.buckled)
-			return
-		buckled_mob.visible_message("<span class='warning'>[buckled_mob] unties the noose over their neck!</span>")
-		to_chat(buckled_mob,"<span class='notice'>You untie the noose over your neck!</span>")
-	if(buckled_mob)
-		buckled_mob.pixel_z = initial(buckled_mob.pixel_z)
-		buckled_mob.pixel_x = initial(buckled_mob.pixel_x)
-		buckled_mob.AdjustWeakened(5)
-		unbuckle_mob(buckled_mob)
-	pixel_z = initial(pixel_z)
-	pixel_x = initial(pixel_x)
+	var/mob/living/L = buckled_mob
 	add_fingerprint(user)
+	if(L != user)
+		user.visible_message(\
+			"<span class='notice'>[user] begins to untie the noose over [L]'s neck...</span>",\
+			"<span class='notice'>You begin to untie the noose over [L]'s neck...</span>")
+		if(!(do_mob(user, L, 10 SECONDS) && buckled_mob == L))
+			return
+		user.visible_message(\
+			"<span class='notice'>[user] unties the noose over [L]'s neck!</span>",\
+			"<span class='notice'>You untie the noose over [L]'s neck!</span>")
+	else
+		L.visible_message("<span class='warning'>[L] struggles to untie the noose over their neck!</span>")
+		to_chat(L,"<span class='notice'>You struggle to untie the noose over your neck... (Stay still for 15 seconds.)</span>")
+		if(!do_after(L, 15 SECONDS, target = src))
+			if(buckled_mob == L)
+				to_chat(L, "<span class='warning'>You fail to untie yourself!</span>")
+			return
+		if(buckled_mob != L)
+			return
+		L.visible_message(\
+			"<span class='warning'>[L] unties the noose over their neck!</span>",\
+			"<span class='notice'>You untie the noose over your neck!</span>")
+	L.AdjustWeakened(5)
+	unbuckle_mob(L)
 
 /obj/structure/stool/bed/chair/noose/user_buckle_mob(mob/living/carbon/human/M, mob/user)
 	if(!Adjacent(user) || user.stat || user.restrained() || !ishuman(M) || user.is_busy())
