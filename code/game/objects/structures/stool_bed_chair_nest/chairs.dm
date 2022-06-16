@@ -314,25 +314,26 @@
 	var/mob/living/L = buckled_mob
 	add_fingerprint(user)
 	if(L != user)
-		user.visible_message(\
-			"<span class='notice'>[user] begins to untie the noose over [L]'s neck...</span>",\
+		user.visible_message(
+			"<span class='notice'>[user] begins to untie the noose over [L]'s neck...</span>",
 			"<span class='notice'>You begin to untie the noose over [L]'s neck...</span>")
 		if(!(do_mob(user, L, 10 SECONDS) && buckled_mob == L))
 			return
-		user.visible_message(\
-			"<span class='notice'>[user] unties the noose over [L]'s neck!</span>",\
+		user.visible_message(
+			"<span class='notice'>[user] unties the noose over [L]'s neck!</span>",
 			"<span class='notice'>You untie the noose over [L]'s neck!</span>")
 	else
-		L.visible_message("<span class='warning'>[L] struggles to untie the noose over their neck!</span>")
-		to_chat(L,"<span class='notice'>You struggle to untie the noose over your neck... (Stay still for 15 seconds.)</span>")
+		L.visible_message(
+			"<span class='warning'>[L] struggles to untie the noose over their neck!</span>",
+			"<span class='notice'>You struggle to untie the noose over your neck... (Stay still for 15 seconds.)</span>")
 		if(!do_after(L, 15 SECONDS, target = src))
 			if(buckled_mob == L)
 				to_chat(L, "<span class='warning'>You fail to untie yourself!</span>")
 			return
 		if(buckled_mob != L)
 			return
-		L.visible_message(\
-			"<span class='warning'>[L] unties the noose over their neck!</span>",\
+		L.visible_message(
+			"<span class='warning'>[L] unties the noose over their neck!</span>",
 			"<span class='notice'>You untie the noose over your neck!</span>")
 	L.AdjustWeakened(5)
 	unbuckle_mob(L)
@@ -361,17 +362,17 @@
 
 	add_fingerprint(user)
 	message_admins("[key_name_admin(user)] attempted to hang [key_name(M)]. [ADMIN_JMP(M)]")
-	M.visible_message(\
-		"<span class='danger'>[user] attempts to tie \the [src] over [M]'s neck!</span>",\
+	M.visible_message(
+		"<span class='danger'>[user] attempts to tie \the [src] over [M]'s neck!</span>",
 		user != M ? "<span class='notice'>It will take 15 seconds and you have to stand still.</span>" : null)
 	if(!(do_mob(user, M, (user == M ? 3 : 15) SECONDS) && buckle_mob(M)))
-		user.visible_message(\
-			"<span class='warning'>[user] fails to tie \the [src] over [M]'s neck!</span>",\
+		user.visible_message(
+			"<span class='warning'>[user] fails to tie \the [src] over [M]'s neck!</span>",
 			"<span class='warning'>You fail to tie \the [src] over [M]'s neck!</span>")
 		return FALSE
 
-	M.visible_message(\
-		"<span class='warning'>[user] ties \the [src] over [M]'s neck!</span>",\
+	M.visible_message(
+		"<span class='warning'>[user] ties \the [src] over [M]'s neck!</span>",
 		"<span class='userdanger'>[user == M ? "You tie" : "[user] ties"] \the [src] over your neck!</span>")
 	playsound(src, 'sound/effects/noosed.ogg', VOL_EFFECTS_MASTER)
 	message_admins("[key_name_admin(M)] was hanged by [key_name(user)]. [ADMIN_JMP(M)]")

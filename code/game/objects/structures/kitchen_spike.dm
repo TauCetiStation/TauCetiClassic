@@ -95,21 +95,21 @@
 	var/mob/living/L = buckled_mob
 	add_fingerprint(user)
 	if(L != user)
-		L.visible_message(\
-			"<span class='notice'>[user.name] tries to pull [L.name] free of the [src]!</span>",\
-			"<span class='warning'>[user.name] is trying to pull you off the [src], opening up fresh wounds!</span>",\
+		L.visible_message(
+			"<span class='notice'>[user.name] tries to pull [L.name] free of the [src]!</span>",
+			"<span class='warning'>[user.name] is trying to pull you off the [src], opening up fresh wounds!</span>",
 			"<span class='italics'>You hear a squishy wet noise.</span>")
 		if(!do_after(user, 30 SECONDS, target = user))
 			if(buckled_mob == L)
-				L.visible_message(\
-					"<span class'notice'>[user.name] fails to free [L.name]!</span>",\
+				L.visible_message(
+					"<span class'notice'>[user.name] fails to free [L.name]!</span>",
 					"<span class='warning'>[user.name] fails to pull you off of the [src].</span>")
 			return
 
 	else
-		L.visible_message(\
-			"<span class='warning'>[L.name] struggles to break free from the [src]!</span>",\
-			"<span class='notice'>You struggle to break free from the [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
+		L.visible_message(
+			"<span class='warning'>[L.name] struggles to break free from the [src]!</span>",
+			"<span class='notice'>You struggle to break free from the [src], exacerbating your wounds! (Stay still for two minutes.)</span>",
 			"<span class='italics'>You hear a wet squishing noise..</span>")
 		L.adjustBruteLoss(15)
 		if(!do_after(L, 2 MINUTES, target = src))
@@ -125,7 +125,7 @@
 	animate(L, transform = m, time = 3)
 	L.pixel_y = L.default_pixel_y
 	L.adjustBruteLoss(15)
-	visible_message(text("<span class='danger'>[L] falls free of the [src]!</span>"))
+	visible_message("<span class='danger'>[L] falls free of the [src]!</span>")
 	unbuckle_mob()
 	L.emote("scream")
 	L.AdjustWeakened(10)

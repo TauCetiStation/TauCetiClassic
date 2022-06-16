@@ -14,15 +14,15 @@
 	var/mob/living/L = buckled_mob
 	add_fingerprint(user)
 	if(L != user)
-		L.visible_message(\
-			"<span class='notice'>[user.name] pulls [L.name] free from the sticky nest!</span>",\
-			"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",\
+		L.visible_message(
+			"<span class='notice'>[user.name] pulls [L.name] free from the sticky nest!</span>",
+			"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",
 			"<span class='notice'>You hear squelching...</span>")
 		
 	else
-		L.visible_message(\
-			"<span class='warning'>[L.name] struggles to break free of the gelatinous resin...</span>",\
-			"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",\
+		L.visible_message(
+			"<span class='warning'>[L.name] struggles to break free of the gelatinous resin...</span>",
+			"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",
 			"<span class='notice'>You hear squelching...</span>")
 		
 		if(!(do_after(L, 5 MINUTES, target = L) && buckle_mob == L))
@@ -43,9 +43,9 @@
 
 /obj/structure/stool/bed/nest/user_buckle_mob(mob/M, mob/user)
 	if(can_user_buckle(M, user) && buckle_mob(M))
-		M.visible_message(\
-			"<span class='notice'>[user.name] secretes a thick vile goo, securing [M.name] into [src]!</span>",\
-			"<span class='warning'>[user.name] drenches you in a foul-smelling resin, trapping you in the [src]!</span>",\
+		M.visible_message(
+			"<span class='notice'>[user.name] secretes a thick vile goo, securing [M.name] into [src]!</span>",
+			"<span class='warning'>[user.name] drenches you in a foul-smelling resin, trapping you in the [src]!</span>",
 			"<span class='notice'>You hear squelching...</span>")
 		M.pixel_y = 2
 		return TRUE
