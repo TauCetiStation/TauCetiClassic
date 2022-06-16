@@ -102,7 +102,7 @@
 		blobber.overmind = src
 		blobber.update_icons()
 		blobber.health = blobber.maxHealth * 0.5
-		//blob_mobs += blobber
+		blob_mobs += blobber
 		var/mob/dead/observer/C = pick(candidates)
 		blobber.key = C.key
 		playsound(blobber, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
@@ -216,7 +216,8 @@
 	if(!can_buy(60))
 		return
 
-	B.change_to(/obj/effect/blob/factory)
+	var/obj/effect/blob/factory/F = B.change_to(/obj/effect/blob/factory)
+	F.overmind = src
 
 /mob/camera/blob/verb/revert()
 	set category = "Blob"
@@ -286,7 +287,7 @@
 	if(!surrounding_turfs.len)
 		return
 
-	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in alive_mob_list)
+	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in blob_mobs)
 		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)

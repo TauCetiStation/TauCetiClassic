@@ -13,6 +13,7 @@
 	faction = "blob"
 
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
+	var/list/blob_mobs = list()
 	var/blob_points = 0
 	var/max_blob_points = 100
 	var/victory_in_progress = FALSE
@@ -51,6 +52,9 @@
 		healths.icon = 'icons/mob/blob.dmi'
 		healths.icon_state = "corehealth"
 		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
+		for(var/mob/living/simple_animal/hostile/blob/blobbernaut/B in blob_mobs)
+			if(B.hud_used && B.pwr_display)
+				B.pwr_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
 
 /mob/camera/blob/proc/add_points(points)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
@@ -117,4 +121,9 @@
 		ghost_sightless_images -= ghostimage
 		QDEL_NULL(ghostimage)
 		updateallghostimages()
+	for(var/BLO in blob_mobs)
+		var/mob/living/simple_animal/hostile/blob/BM = BLO
+		if(BM)
+			BM.overmind = null
+	blob_mobs = null
 	return ..()

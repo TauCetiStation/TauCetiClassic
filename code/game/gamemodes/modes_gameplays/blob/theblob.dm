@@ -9,7 +9,6 @@
 	light_range = 3
 	desc = "Some blob creature thingy."
 	density = FALSE
-	opacity = TRUE
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	var/max_health = 30
@@ -183,6 +182,8 @@
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	..()
+	if(M.faction == "blob") //No friendly slams
+		return
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	visible_message("<span class='danger'>The [src.name] has been attacked by \the [M].</span>")
 	var/damage = M.melee_damage
@@ -196,8 +197,9 @@
 /obj/effect/blob/proc/change_to(type)
 	if(!ispath(type))
 		error("[type] is an invalid type for the blob.")
-	new type(src.loc)
+	var/obj/effect/blob/B = new type(src.loc)
 	qdel(src)
+	return B
 
 /obj/effect/blob/normal
 	icon_state = "blob"

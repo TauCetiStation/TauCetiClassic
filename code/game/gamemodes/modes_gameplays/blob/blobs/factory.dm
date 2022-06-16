@@ -9,6 +9,7 @@
 	var/max_spores = 3
 	var/spore_delay = 0
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
+	var/mob/camera/blob/overmind = null
 
 /obj/effect/blob/factory/update_icon()
 	if(health <= 0)
@@ -21,6 +22,8 @@
 	return ..()
 
 /obj/effect/blob/factory/run_action()
+	if(naut)
+		return
 	if(spores.len >= max_spores)
 		return
 	if(spore_delay > world.time)
@@ -29,7 +32,10 @@
 	spore_delay = world.time + 100 // 10 seconds
 	PulseAnimation()
 
-	new/mob/living/simple_animal/hostile/blob/blobspore(src.loc, src)
+	var/mob/living/simple_animal/hostile/blob/blobspore/S = new (loc, src)
+	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
+		S.overmind = overmind
+		overmind.blob_mobs.Add(S)
 
 /obj/effect/blob/factory/blobbernaut/New(loc, ...)
 	. = ..()
@@ -53,16 +59,18 @@
 		flick("blobbernaut_produce", blobber)
 		B.naut = blobber
 		blobber.factory = B
-		blobber.overmind = src
+		for(var/mob/camera/blob/C in range(5))
+			overmind = C
+			blobber.overmind = C
+			C.blob_mobs += blobber
 		blobber.update_icons()
 		blobber.health = blobber.maxHealth * 0.5
-		//blob_mobs += blobber
 		var/mob/dead/observer/C = pick(candidates)
 		blobber.key = C.key
 		playsound(blobber, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
 		playsound(blobber, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 		to_chat(blobber, "<b>You are a blobbernaut!</b>")
-		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='danger'but will slowly die if not near the blob </span> or if the factory that made you is killed.")
+		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='danger'>but will slowly die if not near the blob </span> or if the factory that made you is killed.")
 		to_chat(blobber, "You can communicate with other blobbernauts and overminds via <b>:b</b>")
 	else
 		to_chat(src, "<span class='warning'>You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later.")
@@ -115,20 +123,20 @@
 		remove_verb(src, /mob/living/verb/pulled)
 	else
 		pass_flags &= ~PASSBLOB
-
+*/
 /mob/living/simple_animal/hostile/blob/Destroy()
 	if(overmind)
 		overmind.blob_mobs -= src
 	return ..()
-*/
+
 
 /* /mob/living/simple_animal/hostile/blob/Stat()
 	..()
 	if(statpanel("Status") && !independent)
-		if(overmind)
-			if(overmind.blob_core)
+		if(overmind != null)
+			if(overmind.blob_core != null)
 				stat(null, "Core Health: [overmind.blob_core.health]")
-			stat(null, "Progress: [blobs.len]/[overmind.b_congl.blobwincount]") */
+			stat(null, "Progress: [blobs.len]/[overmind.b_congl.blobwincount]")*/
 
 /mob/living/simple_animal/hostile/blob/blob_act(/obj/effect/blob/B)
 	if(stat != DEAD && health < maxHealth)
@@ -253,6 +261,11 @@
 	is_zombie = 1
 	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
 
+/mob/living/simple_animal/hostile/blob/blobspore/CanAttack(atom/the_target)
+	if(faction == "blob") //This means spores can't attack blob, but blob can
+		return FALSE
+	. = ..()
+
 /mob/living/simple_animal/hostile/blob/blobspore/death()
 // On death, create a small smoke of harmful gas (s-Acid)
 	var/datum/effect/effect/system/smoke_spread/chem/S = new
@@ -302,43 +315,62 @@
 	health = 200
 	maxHealth = 200
 	attacktext = "slams"
-	//damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	melee_damage = 20
-	//obj_damage = BLOBMOB_BLOBBERNAUT_DMG_OBJ
-	//attack_verb_continuous = "slams"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	environment_smash = 1
-	speed = 1
-	//mob_size = MOB_SIZE_LARGE
-	//hud_type = /datum/hud/living/blobbernaut
+	speed = 4 //Faster jugger
+	sight = SEE_TURFS | SEE_MOBS
 
-/*/mob/living/simple_animal/hostile/blob/blobbernaut/add_to_hud(datum/hud/hud)
-	hud.init_screens(list(/atom/movable/screen/health/blob))
+/mob/living/simple_animal/hostile/blob/blobbernaut/add_to_hud(datum/hud/hud)
+	. = ..()//. = ..()
+	hud.init_screens(list(
+		/atom/movable/screen/health/blob,
+		/atom/movable/screen/blob_power,
+		))
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Login()
+	..()
+	update_hud()
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/proc/update_health_hud() //ONLY healths
+	if(!hud_used) //Yes, we really need it
+		return
+	if(healths)
+		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(health)]</font></div>"
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/update_hud() //Basically called only once per join
+	if(!hud_used) //Yes, we really need it
+		return
+	if(healths)
+		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(health)]</font></div>"
+		pwr_display.name = "Healths"
+	if(independent) //Is it came with blob or not
+		return
+	if(overmind.blob_core && pwr_display) //Just in case, otherwise it is looped runtime
+		pwr_display.icon = 'icons/mob/blob.dmi'
+		pwr_display.icon_state = "corehealth"
+		pwr_display.name = "Core health"
+		pwr_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(overmind.blob_core.health)]</font></div>"
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/attack_animal(mob/user)
+	if(faction == user.faction) //To avoid blobbernaut vs blobbernaut and spore's kills
+		return
+	..()
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/adjustBruteLoss(damage) //I hate it. Where is my AdjustHealth?
+	. = ..()
+	update_health_hud()
+/mob/living/simple_animal/hostile/blob/blobbernaut/adjustFireLoss(damage)
+	. = ..()
+	update_health_hud()
+/mob/living/simple_animal/hostile/blob/blobbernaut/ex_act(severity)
+	. = ..()
 	update_health_hud()
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/proc/update_health_hud()
-	//if(overmind.blob_core && hud_used)
-	//	overmind.healths.icon = 'icons/mob/blob.dmi'
-	//	healths.icon_state = corehealth
-	//	healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(health)]</font></div>"
-	healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(health)]</font></div>"
-		//healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(health)]</font></div>"
-		*/
-/*/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
-	. = ..()
-	add_cell_sample()
-
-/mob/living/simple_animal/hostile/blob/blobbernaut/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-*/
-
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
-	if(!..())
-		return
+	. = ..()
 	if(independent)
-		return // strong independent blobbernaut that don't need no blob
+		return // strong independent blobbernaut that don't need blob
 	var/list/blobs_in_area = range(2, src)
 	var/damagesources = 0
 	if(!(locate(/obj/effect/blob) in blobs_in_area))
@@ -349,43 +381,20 @@
 	else
 		if(locate(/obj/effect/blob/core) in blobs_in_area)
 			health += maxHealth*0.05 //* 0.5
-			/*var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
-			if(overmind)
-				H.color = overmind.blobstrain.complementary_color
-			else
-				H.color = "#000000"*/
+			update_health_hud()
 		if(locate(/obj/effect/blob/node) in blobs_in_area)
 			health += maxHealth*0.025 //* 0.5
-			/*var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
-			if(overmind)
-				H.color = overmind.blobstrain.complementary_color
-			else
-				H.color = "#000000"*/
+			update_health_hud()
 
 	if(damagesources)
 		health -= maxHealth * 0.0125 * damagesources * 0.5 //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
+		update_health_hud()
 		var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 		I.appearance_flags = RESET_COLOR
-		//if(overmind)
-		//	I.color = overmind.blobstrain.complementary_color
 		flick_overlay_view(I, src, 8)
-/*
-/mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
-	. = ..()
-	if(. && isliving(target) && overmind)
-		overmind.blobstrain.blobbernaut_attack(target, src)
+	if(stat != DEAD)
+		return 1
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/update_icons()
-	..()
-	if(overmind) //if we have an overmind, we're doing chemical reactions instead of pure damage
-		melee_damage_lower = BLOBMOB_BLOBBERNAUT_DMG_LOWER
-		melee_damage_upper = BLOBMOB_BLOBBERNAUT_DMG_UPPER
-		attack_verb_continuous = overmind.blobstrain.blobbernaut_message
-	else
-		melee_damage_lower = initial(melee_damage_lower)
-		melee_damage_upper = initial(melee_damage_upper)
-		attack_verb_continuous = initial(attack_verb_continuous)
-*/
 /mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
 	..(gibbed)
 	if(factory)
@@ -395,5 +404,3 @@
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/independent
 	independent = TRUE
-	//gold_core_spawnable = HOSTILE_SPAWN
-
