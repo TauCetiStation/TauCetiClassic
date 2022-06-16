@@ -290,6 +290,7 @@
 	sight = SEE_TURFS | SEE_MOBS
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/atom_init()
+	. = ..()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
