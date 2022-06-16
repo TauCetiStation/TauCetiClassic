@@ -536,12 +536,8 @@
 
 /obj/structure/window/reinforced/polarized/proc/toggle()
 	if(opacity)
-		icon_state = "twindow"
-		basestate = "twindow"
 		set_opacity(0)
 	else
-		icon_state = "twindowold"
-		basestate = "twindowold"
 		set_opacity(1)
 
 /obj/structure/window/reinforced/polarized/fastened_change()
