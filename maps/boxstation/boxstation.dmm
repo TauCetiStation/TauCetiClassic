@@ -75316,7 +75316,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/libraryscanner,
+/obj/machinery/photocopier,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
