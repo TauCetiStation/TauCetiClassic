@@ -251,7 +251,7 @@
 	src.emagged = 1
 	if(syndie.len)
 		to_chat(user, "You short out the product lock on [src] and reveal hidden products.")
-	else(!syndie.len)
+	else
 		to_chat(user, "You short out the product lock on [src].")
 	return TRUE
 
