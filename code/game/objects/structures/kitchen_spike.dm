@@ -37,52 +37,58 @@
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user)
 	if(iscrowbar(I))
-		if(!src.buckled_mob)
-			if(user.is_busy()) return
-			if(I.use_tool(src, user, 20, volume = 100))
-				to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
-				new /obj/item/stack/rods(loc, 4)
-				var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
-				transfer_fingerprints_to(F)
-				qdel(src)
-		else
+		if(buckled_mob)
 			to_chat(user, "<span class='notice'>You can't do that while something's on the spike!</span>")
+			return
+		if(user.is_busy() || !I.use_tool(src, user, 2 SECONDS, volume = 100))
+			return
+		to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
+		new /obj/item/stack/rods(loc, 4)
+		var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
+		transfer_fingerprints_to(F)
+		qdel(src)
+		return
+
 	else if(istype(I, /obj/item/weapon/grab))
 		if(user.is_busy())
 			return
 
 		var/obj/item/weapon/grab/G = I
-		if(isliving(G.affecting))
-			var/mob/living/H = G.affecting
-			if(!(can_buckle(H) && do_mob(user, src, 12 SECONDS)))
-				return
-
-			H.forceMove(loc)
-
-			if(buckle_mob(H))
-				H.visible_message("<span class='danger'>[user] slams [G.affecting] onto the meat spike!</span>", \
-									"<span class='userdanger'>[user] slams you onto the meat spike!</span>", \
-									"<span class='notice'>You hear a squishy wet noise.</span>")
-		else
+		if(!isliving(G.affecting))
 			to_chat(user, "<span class='danger'>You can't use that on the spike!</span>")
-	else
-		..()
+			return
+
+		var/mob/living/M = G.affecting
+		if(M.buckled || M.anchored || buckled_mob || !do_mob(user, src, 12 SECONDS))
+			return
+
+		M.forceMove(loc)
+
+		if(buckle_mob(M))
+			M.visible_message(
+				"<span class='danger'>[user] slams [M] onto the meat spike!</span>",
+				"<span class='userdanger'>[user] slams you onto the meat spike!</span>",
+				"<span class='notice'>You hear a squishy wet noise.</span>")
+
+		return
+
+	..()
 
 /obj/structure/kitchenspike/buckle_mob(mob/living/M)
 	if(!..())
 		return FALSE
 
 	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, 25)
-	H.emote("scream")
-	if(iscarbon(H)) //So you don't get human blood when you spike a giant spidere
-		var/turf/pos = get_turf(H)
-		pos.add_blood_floor(H)
-	H.adjustBruteLoss(30)
-	H.set_dir(2)
-	var/matrix/m = matrix(H.transform)
+	M.emote("scream")
+	if(iscarbon(M)) //So you don't get human blood when you spike a giant spidere
+		var/turf/pos = get_turf(M)
+		pos.add_blood_floor(M)
+	M.adjustBruteLoss(30)
+	M.set_dir(2)
+	var/matrix/m = matrix(M.transform)
 	m.Turn(180)
-	animate(H, transform = m, time = 3)
-	H.pixel_y = H.default_pixel_y
+	animate(M, transform = m, time = 3)
+	M.pixel_y = M.default_pixel_y
 	return TRUE
 
 /obj/structure/kitchenspike/user_buckle_mob(mob/living/M, mob/living/user) //Don't want them getting put on the rack other than by spiking

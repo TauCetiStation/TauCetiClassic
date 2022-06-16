@@ -25,10 +25,10 @@
 			"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",
 			"<span class='notice'>You hear squelching...</span>")
 		
-		if(!(do_after(L, 5 MINUTES, target = L) && buckle_mob == L))
+		if(!(do_after(L, 5 MINUTES, target = L) && buckled_mob == L))
 			return
 
-	L.pixel_y = default_pixel_y
+	L.pixel_y = L.default_pixel_y
 	unbuckle_mob()
 
 /obj/structure/stool/bed/nest/can_user_buckle(mob/living/M, mob/user)
