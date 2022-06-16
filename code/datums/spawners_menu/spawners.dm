@@ -603,6 +603,16 @@ var/global/list/datum/spawners_cooldown = list()
 	..()
 	religion.add_member(mob, HOLY_ROLE_PRIEST)
 
+/datum/spawner/living/mimic
+	name = "Оживлённый предмет"
+	id = "mimic"
+	desc = "Вы магическим образом ожили на станции"
+
+/datum/spawner/living/evil_shade
+	name = "Злой Дух"
+	id = "evil_shade"
+	desc = "Магическая сила призвала вас в мир, отомстите живым за причинённые обиды!"
+
 /datum/spawner/living/rat
 	name = "Крыса"
 	id = "rat"

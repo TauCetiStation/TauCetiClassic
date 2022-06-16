@@ -411,7 +411,12 @@ var/global/const/INGEST = 2
 		if (R.id == reagent)
 			R.volume += amount
 
-			if(R.id == "customhairdye" || R.id == "paint_custom")
+			// Data:
+			if(R.id == "blood" && reagent == "blood")
+				if(R.data && R.data["virus2"])
+					R.data["virus2"] += virus_copylist(data["virus2"])
+
+			else if(R.id == "customhairdye" || R.id == "paint_custom")
 				for(var/color in R.data)
 					R.data[color] = (R.data[color] + data[color]) * 0.5
 				// I am well aware of RGB_CONTRAST define, but in reagent colors everywhere else we use hex codes, so I did the thing below. ~Luduk.
@@ -432,6 +437,13 @@ var/global/const/INGEST = 2
 		R.holder = src
 		R.volume = amount
 		R.religion = _religion
+
+		// Data:
+		if(data)
+			if(data["virus2"])
+				R.data["virus2"] = virus_copylist(data["virus2"])
+			else
+				R.data = data
 
 		if(reagent == "customhairdye" || reagent == "paint_custom")
 			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
