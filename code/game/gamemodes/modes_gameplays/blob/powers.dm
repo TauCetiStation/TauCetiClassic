@@ -33,8 +33,8 @@
 
 /mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
-	set name = "Create/Upgrade Shield Blob (10)"
-	set desc = "Create a shield blob. Use it again on existing shield blob to upgrade it into a reflective blob."
+	set name = "Create Shield Blob (10)"
+	set desc = "Create a shield blob."
 
 	var/turf/T = get_turf(src)
 	create_shield(T)
@@ -47,22 +47,15 @@
 		to_chat(src, "There is no blob here!")
 		return
 
-	if(!isblobnormal(B) && !isblobshield(B)) //Not special blob nor shield to upgrade
+	if(!isblobnormal(B))
 		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
 	if(!can_buy(10))
 		return
 
-	if(isblobshield(B))
-		if(B.health < initial(B.health)/2)
-			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified!</span>")
-			return
-		B.change_to(/obj/effect/blob/shield/reflective)
-		to_chat(src, "<span class='warning'>You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced integrity.</span>")
-	else
-		B.change_to(/obj/effect/blob/shield)
-		to_chat(src, "<span class='warning'>You secrete a thick substanse over the blob, allowing it to withstand more damage!</span></span>")
+
+	B.change_to(/obj/effect/blob/shield)
 
 /mob/camera/blob/verb/blobbernaut_power()
 	set category = "Blob"
