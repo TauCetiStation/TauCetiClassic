@@ -120,14 +120,6 @@
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
 //mob traits
-/// Forces the user to stay unconscious.
-#define TRAIT_KNOCKEDOUT "knockedout"
-/// Prevents voluntary movement.
-#define TRAIT_IMMOBILIZED "immobilized"
-/// Prevents voluntary standing or staying up on its own.
-#define TRAIT_FLOORED "floored"
-/// Forces user to stay standing
-#define TRAIT_FORCED_STANDING "forcedstanding"
 /// Forces user to be unmovable
 #define TRAIT_ANCHORED "anchored"
 
