@@ -142,11 +142,12 @@
 		return FALSE
 	return M.stat != DEAD
 
-/obj/effect/spacevine/user_buckle_mob(mob/living/M)
+/obj/effect/spacevine/user_buckle_mob(mob/living/M, mob/user)
 	return
 
 /obj/effect/spacevine/buckle_mob(mob/living/M)
-	if(..())
+	. = ..()
+	if(.)
 		to_chat(M, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
 
 /obj/effect/spacevine/proc/spread()
