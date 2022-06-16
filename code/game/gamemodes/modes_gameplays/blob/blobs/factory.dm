@@ -85,17 +85,12 @@
 	icon = 'icons/mob/blob.dmi'
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
-	//bubble_icon = "blob"
 	speak_emote = null //so we use verb_yell/verb_say/etc
-	//atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	pass_flags = PASSBLOB
-	//unique_name = 1
-	//combat_mode = TRUE
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	//initial_language_holder = /datum/language_holder/empty
 	faction = "blob"
 	min_oxy = 0
 	max_oxy = 0
@@ -111,41 +106,13 @@
 	var/obj/effect/blob/factory/factory = null
 	var/independent = FALSE
 
-/*/mob/living/simple_animal/hostile/blob/update_icons()
-	if(overmind)
-		add_atom_colour(overmind.blobstrain.color, FIXED_COLOUR_PRIORITY)
-	else
-		remove_atom_colour(FIXED_COLOUR_PRIORITY)
-
-/mob/living/simple_animal/hostile/blob/Initialize()
-	. = ..()
-	if(!independent) //no pulling people deep into the blob
-		remove_verb(src, /mob/living/verb/pulled)
-	else
-		pass_flags &= ~PASSBLOB
-*/
 /mob/living/simple_animal/hostile/blob/Destroy()
 	if(overmind)
 		overmind.blob_mobs -= src
 	return ..()
 
-
-/* /mob/living/simple_animal/hostile/blob/Stat()
-	..()
-	if(statpanel("Status") && !independent)
-		if(overmind != null)
-			if(overmind.blob_core != null)
-				stat(null, "Core Health: [overmind.blob_core.health]")
-			stat(null, "Progress: [blobs.len]/[overmind.b_congl.blobwincount]")*/
-
 /mob/living/simple_animal/hostile/blob/blob_act(/obj/effect/blob/B)
 	if(stat != DEAD && health < maxHealth)
-		/*for(var/i in 1 to 2)
-			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
-			if(overmind)
-				H.color = overmind.blobstrain.complementary_color
-			else
-				H.color = "#000000"*/
 		health += maxHealth*0.0125
 
 /mob/living/simple_animal/hostile/blob/fire_act(exposed_temperature, exposed_volume)
@@ -155,25 +122,12 @@
 	else
 		adjustFireLoss(5)
 
-/*/mob/living/simple_animal/hostile/blob/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(istype(mover, /obj/effect/blob))
-		return TRUE
-*/
 /mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0)
 	for(var/obj/effect/blob/B in range(1, src))
 		return 1
 	return ..()
 
 /mob/living/simple_animal/hostile/blob/say(message)
-	/*var/spanned_message = say_quote(message)
-	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
-	for(var/M in GLOB.mob_list)
-		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
-			to_chat(M, rendered)
-		if(isobserver(M))
-			var/link = FOLLOW_LINK(M, src)
-			to_chat(M, "[link] [rendered]")*/
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
