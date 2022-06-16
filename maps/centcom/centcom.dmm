@@ -510,7 +510,7 @@
 /obj/machinery/vending/snack{
 	name = "Magic Getmore Chocolate Corp";
 	prices = list();
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 10, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 10, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 10, /obj/item/weapon/reagent_containers/food/snacks/chips = 10, /obj/item/weapon/reagent_containers/food/snacks/sosjerky = 10, /obj/item/weapon/reagent_containers/food/snacks/no_raisin = 10, /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 10, /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 10, /obj/item/weapon/reagent_containers/food/snacks/candy_corn = 10, /obj/item/weapon/reagent_containers/food/snacks/cracker = 20)
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar=10,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen=10,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen=10,/obj/item/weapon/reagent_containers/food/snacks/chips=10,/obj/item/weapon/reagent_containers/food/snacks/sosjerky=10,/obj/item/weapon/reagent_containers/food/snacks/no_raisin=10,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie=10,/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers=10,/obj/item/weapon/reagent_containers/food/snacks/candy_corn=10,/obj/item/weapon/reagent_containers/food/snacks/cracker=20)
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -520,7 +520,7 @@
 /obj/machinery/vending/cigarette{
 	name = "Magic Cigarette machine";
 	prices = list();
-	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10, /obj/item/weapon/storage/fancy/cigarettes/menthol = 5, /obj/item/weapon/storage/box/matches = 10, /obj/item/weapon/lighter/random = 4, /obj/item/clothing/mask/ecig = 4, /obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 5, /obj/item/weapon/lighter/zippo = 5, /obj/item/clothing/mask/cigarette/cigar/havana = 5)
+	products = list(/obj/item/weapon/storage/fancy/cigarettes=10,/obj/item/weapon/storage/fancy/cigarettes/menthol=5,/obj/item/weapon/storage/box/matches=10,/obj/item/weapon/lighter/random=4,/obj/item/clothing/mask/ecig=4,/obj/item/weapon/storage/fancy/cigarettes/dromedaryco=5,/obj/item/weapon/lighter/zippo=5,/obj/item/clothing/mask/cigarette/cigar/havana=5)
 	},
 /obj/structure/sign/poster/contraband/space_up{
 	pixel_x = 32
@@ -2144,16 +2144,6 @@
 	icon_state = "swall_f10"
 	},
 /turf/simulated/shuttle/plating,
-/area/centcom/evac)
-"afC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor,
 /area/centcom/evac)
 "afD" = (
 /obj/structure/object_wall/evac{
@@ -3858,30 +3848,8 @@
 	},
 /turf/environment/space,
 /area/shuttle/syndicate/start)
-"akb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "syndieshutters";
-	name = "Blast Shutters";
-	opacity = 0
-	},
-/turf/simulated/shuttle/plating,
-/area/shuttle/syndicate/start)
 "akc" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
@@ -3889,23 +3857,8 @@
 	name = "Blast Shutters";
 	opacity = 0
 	},
-/turf/simulated/shuttle/plating,
-/area/shuttle/syndicate/start)
-"akd" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "syndieshutters";
-	name = "Blast Shutters";
-	opacity = 0
+	dir = 5
 	},
 /turf/simulated/shuttle/plating,
 /area/shuttle/syndicate/start)
@@ -4782,15 +4735,8 @@
 "amj" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 5
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -12067,22 +12013,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
-"aBR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/specops)
 "aBS" = (
 /turf/unsimulated/floor{
 	icon_state = "asteroid6";
@@ -12301,33 +12231,10 @@
 	icon_state = "floor"
 	},
 /area/centcom/specops)
-"aCt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor,
-/area/centcom/specops)
 "aCu" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor,
-/area/centcom/specops)
-"aCv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/centcom/specops)
@@ -12482,48 +12389,20 @@
 "aCM" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 5
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/specops)
-"aCN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
 /area/centcom/specops)
 "aCO" = (
-/obj/structure/window/reinforced,
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 5
 	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
-	},
-/area/centcom/specops)
-"aCP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor{
-	name = "plating"
 	},
 /area/centcom/specops)
 "aCQ" = (
@@ -12865,41 +12744,6 @@
 	temperature = 243
 	},
 /area/space)
-"aDF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/specops)
-"aDG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/specops)
-"aDH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/specops)
 "aDI" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Creed's Office";
@@ -12908,31 +12752,6 @@
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
-	},
-/area/centcom/specops)
-"aDJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/specops)
-"aDK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	name = "plating"
 	},
 /area/centcom/specops)
 "aDL" = (
@@ -13093,18 +12912,6 @@
 	name = "grass"
 	},
 /area/centcom/specops)
-"aEc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/specops)
 "aEd" = (
 /obj/effect/landmark/trololo,
 /turf/unsimulated/floor{
@@ -13245,31 +13052,6 @@
 "aEq" = (
 /turf/unsimulated/wall,
 /area/centcom/creed)
-"aEr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/centcom_barrier,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/creed)
-"aEs" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/centcom_barrier,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/creed)
 "aEt" = (
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
@@ -13278,25 +13060,10 @@
 /area/centcom/creed)
 "aEu" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
 /obj/structure/centcom_barrier,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/creed)
-"aEv" = (
-/obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 5
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -14930,36 +14697,6 @@
 	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
-"aIc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor,
-/area/centcom/evac)
-"aId" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
-"aIe" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "aIf" = (
 /obj/machinery/door/airlock{
 	name = "Unit 1"
@@ -15280,20 +15017,6 @@
 	},
 /turf/unsimulated/wall,
 /area/centcom/control)
-"aJz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/shuttle/plating,
-/area/centcom/evac)
 "aJA" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /turf/simulated/shuttle/floor{
@@ -15312,19 +15035,6 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/centcom/evac)
-"aJC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/shuttle/plating,
 /area/centcom/evac)
 "aJD" = (
 /obj/random/vending/snack,
@@ -15434,17 +15144,6 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/centcom/evac)
-"aJY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/shuttle/plating,
 /area/centcom/evac)
 "aJZ" = (
 /obj/machinery/vending/coffee,
@@ -15653,17 +15352,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
-"aKF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/shuttle/plating,
-/area/centcom/evac)
 "aKG" = (
 /obj/structure/table,
 /turf/simulated/shuttle/floor,
@@ -16034,33 +15722,10 @@
 	icon_state = "engine"
 	},
 /area/centcom/control)
-"aLX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/shuttle/plating,
-/area/centcom/evac)
 "aLY" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/shuttle/plating,
-/area/centcom/evac)
-"aLZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
+	dir = 5
 	},
 /turf/simulated/shuttle/plating,
 /area/centcom/evac)
@@ -17096,30 +16761,8 @@
 	icon_state = "wood"
 	},
 /area/centcom/living)
-"aQN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "ck_comf_blast";
-	name = "Conference Room Blast Doors";
-	opacity = 0
-	},
-/turf/unsimulated/floor,
-/area/centcom/living)
 "aQO" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -17127,23 +16770,8 @@
 	name = "Conference Room Blast Doors";
 	opacity = 0
 	},
-/turf/unsimulated/floor,
-/area/centcom/living)
-"aQP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "ck_comf_blast";
-	name = "Conference Room Blast Doors";
-	opacity = 0
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/centcom/living)
@@ -17439,93 +17067,10 @@
 	icon_state = "bot"
 	},
 /area/centcom/control)
-"aSp" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/living)
-"aSq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/living)
-"aSr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/living)
 "aSs" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/living)
-"aSt" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "ck_office_blast";
-	name = "Office Blast Doors";
-	opacity = 0
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/living)
-"aSu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "ck_office_blast";
-	name = "Office Blast Doors";
-	opacity = 0
+	dir = 5
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -17540,41 +17085,17 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
-"aSw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "ck_office_blast";
-	name = "Office Blast Doors";
-	opacity = 0
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/living)
 "aSx" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "ck_office_blast";
 	name = "Office Blast Doors";
 	opacity = 0
+	},
+/obj/structure/window/reinforced{
+	dir = 5
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -19332,19 +18853,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
-"aYp" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "aYs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil,
@@ -27591,7 +27099,7 @@
 	},
 /obj/machinery/vending/boozeomat{
 	name = "Magic Booze-O-Mat";
-	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/gin = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/wine = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/cognac = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/beer = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/ale = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/tonic = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/cola = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/sodawater = 15, /obj/item/weapon/reagent_containers/food/drinks/flask/barflask = 5, /obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask = 5, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 50, /obj/item/weapon/reagent_containers/food/drinks/ice = 15, /obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/champagne = 10);
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/gin=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/beer=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/ale=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/cream=10,/obj/item/weapon/reagent_containers/food/drinks/cans/tonic=10,/obj/item/weapon/reagent_containers/food/drinks/cans/cola=10,/obj/item/weapon/reagent_containers/food/drinks/cans/sodawater=15,/obj/item/weapon/reagent_containers/food/drinks/flask/barflask=5,/obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask=5,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass=50,/obj/item/weapon/reagent_containers/food/drinks/ice=15,/obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne=10);
 	req_access = list()
 	},
 /turf/unsimulated/floor{
@@ -27947,12 +27455,8 @@
 "oDb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 4
+	dir = 5
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "oEb" = (
@@ -42630,7 +42134,7 @@ hCb
 hCb
 hCb
 hDb
-aJz
+aLY
 hCb
 hCb
 hCb
@@ -43410,7 +42914,7 @@ hEb
 aLk
 aKG
 aLG
-aLX
+aLY
 aaM
 aaM
 aaM
@@ -43658,11 +43162,11 @@ aIs
 aHU
 aIZ
 hFb
-aJC
-aJY
+aLY
+aLY
 irb
-aJC
-aKF
+aLY
+aLY
 hEb
 aHW
 aHs
@@ -44438,7 +43942,7 @@ hEb
 aLl
 aLy
 aLK
-aLZ
+aLY
 aaM
 aaM
 aaM
@@ -45200,7 +44704,7 @@ hCb
 aGN
 hCb
 hCb
-aJz
+aLY
 hCb
 hCb
 aGN
@@ -51363,7 +50867,7 @@ aID
 aID
 aHv
 hWb
-aIc
+oDb
 aIy
 aIy
 aIy
@@ -51373,7 +50877,7 @@ hgb
 aIy
 aIy
 aIy
-aIc
+oDb
 hWb
 aHv
 aLL
@@ -51620,7 +51124,7 @@ aaM
 aaM
 aHv
 hWb
-aId
+oDb
 aIB
 aIy
 aIy
@@ -51630,7 +51134,7 @@ hgb
 aIy
 aIy
 aIB
-aId
+oDb
 hWb
 aHv
 iLb
@@ -52134,7 +51638,7 @@ aaM
 aaM
 aHv
 hWb
-aIc
+oDb
 aIC
 hGb
 hGb
@@ -52391,7 +51895,7 @@ aaM
 aaM
 aHv
 hWb
-aIe
+oDb
 aIy
 aIy
 aIy
@@ -52648,7 +52152,7 @@ aaM
 aaM
 aHv
 hWb
-aIe
+oDb
 aIy
 aIy
 aIy
@@ -52905,7 +52409,7 @@ aAm
 aAm
 aHv
 hWb
-aId
+oDb
 aIB
 aIO
 aIO
@@ -53215,11 +52719,11 @@ abn
 abn
 abn
 aHv
-aYp
-afC
-afC
-afC
-afC
+oDb
+oDb
+oDb
+oDb
+oDb
 oDb
 aHv
 abn
@@ -53419,7 +52923,7 @@ aAM
 aAM
 aAm
 hWb
-aIc
+oDb
 aIC
 aIy
 aIy
@@ -53429,7 +52933,7 @@ hgb
 aIy
 aIy
 aIC
-aIc
+oDb
 hWb
 aHv
 aHv
@@ -53676,7 +53180,7 @@ aAM
 aEp
 aAm
 hWb
-aId
+oDb
 aIy
 aIy
 aIy
@@ -53686,7 +53190,7 @@ hgb
 aIy
 aIy
 aIy
-aId
+oDb
 hWb
 aHv
 aaM
@@ -59061,7 +58565,7 @@ aBP
 fWb
 aCM
 aDq
-aDF
+aCM
 aEa
 aBp
 aAm
@@ -59316,9 +58820,9 @@ brb
 aBp
 aBO
 aCq
-aCN
+aCM
 aDq
-aDG
+aCM
 aEb
 aEq
 aEq
@@ -59573,11 +59077,11 @@ bib
 aBp
 aBP
 aCq
-aCN
+aCM
 aDq
-aDG
+aCM
 aEa
-aEr
+aEu
 aEM
 aFh
 aEO
@@ -59830,11 +59334,11 @@ bib
 aBp
 lpG
 aCq
-aCN
+aCM
 aDq
-aDH
-aEc
-aEs
+aCM
+aCM
+aEu
 aEN
 aEO
 aEO
@@ -60344,10 +59848,10 @@ bib
 aBp
 aBO
 aCq
-aCN
+aCM
 aDq
-aDJ
-aEc
+aCM
+aCM
 aEu
 aEP
 aEO
@@ -60601,11 +60105,11 @@ bjb
 aBp
 aBQ
 aCr
-aCP
+aCM
 aDq
-aDK
+aCM
 aEe
-aEv
+aEu
 aEQ
 aEO
 aEO
@@ -60856,7 +60360,7 @@ bkb
 bib
 bkb
 aBp
-aBR
+aCM
 aBp
 aBp
 aDr
@@ -63434,7 +62938,7 @@ gtb
 gtb
 gtb
 gUb
-aCt
+aCu
 aFz
 aFW
 aFW
@@ -63948,7 +63452,7 @@ gtb
 gtb
 gtb
 gUb
-aCv
+aCu
 aFB
 aFW
 aFW
@@ -66298,7 +65802,7 @@ aAm
 lkb
 aBK
 aRW
-aSp
+aSs
 aSN
 aTr
 aTO
@@ -66555,7 +66059,7 @@ aAm
 lkb
 aBK
 aRW
-aSq
+aSs
 lLb
 aTs
 aTP
@@ -67069,7 +66573,7 @@ aQM
 lkb
 aBK
 aRW
-aSr
+aSs
 aSP
 aTs
 aTQ
@@ -67322,7 +66826,7 @@ aOe
 aOY
 aOY
 aQn
-aQN
+aQO
 lkb
 aBK
 aRW
@@ -67836,11 +67340,11 @@ aOe
 aOY
 aPE
 aQn
-aQP
+aQO
 lkb
 aBK
 aRW
-aSt
+aSx
 aSQ
 aTu
 aKm
@@ -68097,7 +67601,7 @@ aQM
 lkb
 aBK
 aRW
-aSu
+aSx
 aSR
 aQv
 aQn
@@ -68611,7 +68115,7 @@ aAm
 lkb
 aBK
 aRW
-aSw
+aSx
 aSS
 aOY
 aQn
@@ -69382,7 +68886,7 @@ aAm
 lkb
 aBK
 aRW
-aSp
+aSs
 aSU
 aTx
 aTR
@@ -69639,7 +69143,7 @@ aAm
 lkb
 aBK
 aRW
-aSq
+aSs
 lLb
 aTs
 aTP
@@ -70153,7 +69657,7 @@ aQR
 lkb
 aBK
 aRW
-aSr
+aSs
 aSP
 aTs
 aTQ
@@ -70924,7 +70428,7 @@ aMH
 lkb
 aBK
 aRW
-aSp
+aSs
 aSV
 aTz
 aTS
@@ -71181,7 +70685,7 @@ aQR
 lkb
 aBK
 aRW
-aSq
+aSs
 aSW
 aTA
 aTz
@@ -71695,7 +71199,7 @@ aAm
 lkb
 aBK
 aRW
-aSr
+aSs
 aSX
 aSX
 aTT
@@ -83633,7 +83137,7 @@ ahF
 ahF
 ahF
 abu
-akb
+akc
 aih
 akM
 akM
@@ -84147,7 +83651,7 @@ ahF
 ahF
 aaM
 abu
-akd
+akc
 akw
 akM
 alb

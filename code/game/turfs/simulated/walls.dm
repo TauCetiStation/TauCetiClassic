@@ -63,6 +63,13 @@
 		/obj/machinery/door/airlock/atmos/glass,
 		/obj/machinery/door/airlock/science/glass,
 		/obj/machinery/door/airlock/science/neutral,
+		/obj/structure/window/basic,
+		/obj/structure/window/phoronbasic,
+		/obj/structure/window/reinforced,
+		/obj/structure/window/phoronreinforced,
+		/obj/structure/window/reinforced/polarized,
+		/obj/structure/window/reinforced/tinted,
+		/obj/structure/window/reinforced/tinted/frosted
 		)
 	smooth = SMOOTH_TRUE
 

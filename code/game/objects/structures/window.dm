@@ -385,8 +385,6 @@
 
 	health = maxhealth
 
-	color = color_windows()
-
 	update_nearby_tiles(need_rebuild = 1)
 	update_nearby_icons()
 
@@ -436,10 +434,13 @@
 
 		var/junction = 0 //will be used to determine from which side the window is connected to other windows
 		if(anchored)
-			for(var/obj/structure/window/W in orange(src,1))
-				if(W.anchored && W.density && W.is_fulltile() && W.can_merge) //Only counts anchored, not-destroyed fill-tile windows.
-					if(abs(x-W.x)-abs(y-W.y) ) 		//doesn't count windows, placed diagonally to src
-						junction |= get_dir(src,W)
+			for(var/obj/structure/window/W in orange(src, 1))
+				if(W.anchored && W.density && W.is_fulltile() && W.can_merge) //Only counts anchored, not-destroyed full-tile windows.
+					if(abs(x - W.x) - abs(y - W.y)) 		//doesn't count windows, placed diagonally to src
+						junction |= get_dir(src, W)
+			for(var/turf/simulated/wall/W in orange(src, 1))
+				if(abs(x - W.x) - abs(y - W.y))             //doesn't count walls, placed diagonally to src
+					junction |= get_dir(src, W)
 		icon_state = "[basestate][junction]"
 
 		var/ratio = health / maxhealth
@@ -507,8 +508,8 @@
 /obj/structure/window/reinforced/tinted/frosted //Actually, there is no icon for this!!
 	name = "frosted window"
 	desc = "It looks rather strong and frosted over. Looks like it might take a few less hits then a normal reinforced window."
-	icon_state = "fwindow"
-	basestate = "fwindow"
+	icon_state = "twindow"
+	basestate = "twindow"
 	maxhealth = 30.0
 	damage_threshold = 0
 
@@ -529,14 +530,14 @@
 /obj/structure/window/reinforced/polarized
 	name = "electrochromic window"
 	desc = "Adjusts its tint with voltage. Might take a few good hits to shatter it."
-	icon_state = "fwindow"
-	basestate = "fwindow"
+	icon_state = "twindow"
+	basestate = "twindow"
 	var/id
 
 /obj/structure/window/reinforced/polarized/proc/toggle()
 	if(opacity)
-		icon_state = "fwindow"
-		basestate = "fwindow"
+		icon_state = "twindow"
+		basestate = "twindow"
 		set_opacity(0)
 	else
 		icon_state = "twindowold"
