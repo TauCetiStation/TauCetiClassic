@@ -89,44 +89,42 @@
 	return
 
 /obj/structure/kitchenspike/user_unbuckle_mob(mob/living/carbon/human/user)
-	if(buckled_mob)
-		if(user.is_busy())
-			return
+	if(!buckled_mob || user.is_busy())
+		return
 
-		var/mob/living/L = buckled_mob
-		if(L != user)
-			if(user.is_busy()) return
-			L.visible_message(\
-				"<span class='notice'>[user.name] tries to pull [L.name] free of the [src]!</span>",\
-				"<span class='warning'>[user.name] is trying to pull you off the [src], opening up fresh wounds!</span>",\
-				"<span class='italics'>You hear a squishy wet noise.</span>")
-			if(!do_after(user, 300, target = user))
-				if(L && L.buckled)
-					L.visible_message(\
+	var/mob/living/L = buckled_mob
+	if(L != user)
+		L.visible_message(\
+			"<span class='notice'>[user.name] tries to pull [L.name] free of the [src]!</span>",\
+			"<span class='warning'>[user.name] is trying to pull you off the [src], opening up fresh wounds!</span>",\
+			"<span class='italics'>You hear a squishy wet noise.</span>")
+		if(!do_after(user, 30 SECONDS, target = user))
+			if(buckled_mob == L)
+				L.visible_message(\
 					"<span class'notice'>[user.name] fails to free [L.name]!</span>",\
 					"<span class='warning'>[user.name] fails to pull you off of the [src].</span>")
-				return
+			return
 
-		else
-			L.visible_message(\
+	else
+		L.visible_message(\
 			"<span class='warning'>[L.name] struggles to break free from the [src]!</span>",\
 			"<span class='notice'>You struggle to break free from the [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
 			"<span class='italics'>You hear a wet squishing noise..</span>")
-			L.adjustBruteLoss(15)
-			if(!do_after(L, 1200, target = src))
-				if(L && L.buckled)
-					to_chat(L, "<span class='warning'>You fail to free yourself!</span>")
-				return
-
-		if(!L.buckled)
+		L.adjustBruteLoss(15)
+		if(!do_after(L, 2 MINUTES, target = src))
+			if(buckled_mob == L)
+				to_chat(L, "<span class='warning'>You fail to free yourself!</span>")
 			return
 
-		var/matrix/m = matrix(L.transform)
-		m.Turn(180)
-		animate(L, transform = m, time = 3)
-		L.pixel_y = L.default_pixel_y
-		L.adjustBruteLoss(15)
-		visible_message(text("<span class='danger'>[L] falls free of the [src]!</span>"))
-		unbuckle_mob()
-		L.emote("scream")
-		L.AdjustWeakened(10)
+	if(buckled_mob != L)
+		return
+
+	var/matrix/m = matrix(L.transform)
+	m.Turn(180)
+	animate(L, transform = m, time = 3)
+	L.pixel_y = L.default_pixel_y
+	L.adjustBruteLoss(15)
+	visible_message(text("<span class='danger'>[L] falls free of the [src]!</span>"))
+	unbuckle_mob()
+	L.emote("scream")
+	L.AdjustWeakened(10)
