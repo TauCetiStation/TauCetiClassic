@@ -42,14 +42,14 @@
 	return TRUE
 
 /obj/structure/stool/bed/nest/user_buckle_mob(mob/M, mob/user)
-	if(can_user_buckle(M, user) && buckle_mob(M))
-		M.visible_message(
-			"<span class='notice'>[user.name] secretes a thick vile goo, securing [M.name] into [src]!</span>",
-			"<span class='warning'>[user.name] drenches you in a foul-smelling resin, trapping you in the [src]!</span>",
-			"<span class='notice'>You hear squelching...</span>")
-		M.pixel_y = 2
-		return TRUE
-	return FALSE
+	if(!(can_user_buckle(M, user) && buckle_mob(M)))
+		return FALSE
+	M.visible_message(
+		"<span class='notice'>[user.name] secretes a thick vile goo, securing [M.name] into [src]!</span>",
+		"<span class='warning'>[user.name] drenches you in a foul-smelling resin, trapping you in the [src]!</span>",
+		"<span class='notice'>You hear squelching...</span>")
+	M.pixel_y = 2
+	return TRUE
 
 /obj/structure/stool/bed/nest/attackby(obj/item/weapon/W, mob/user)
 	var/aforce = W.force
