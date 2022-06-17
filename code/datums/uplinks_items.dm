@@ -590,7 +590,7 @@
 	name = "Stealth System"
 	desc = "System that makes hardsuit and you invisible."
 	item = /obj/item/rig_module/stealth
-	cost = 2
+	cost = 4
 	uplink_types = list("traitor")
 
 /datum/uplink_item/suits_armor/grenade_launcher
