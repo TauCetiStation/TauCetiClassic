@@ -422,7 +422,7 @@
 	return attack_hand(user)
 
 /obj/structure/girder/attack_hand(mob/user)
-	if(!HULK in user.mutations)
+	if(!(HULK in user.mutations))
 		return
 
 	user.SetNextMove(CLICK_CD_MELEE)
