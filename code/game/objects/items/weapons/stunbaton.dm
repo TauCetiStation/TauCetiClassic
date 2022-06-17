@@ -11,7 +11,7 @@
 	var/status = 0
 	var/mob/foundmob = "" //Used in throwing proc.
 	var/agony = 60
-
+	var/discharge_rate_per_minute = 2 //stunbaton loses it charges if not powered off
 	sweep_step = 2
 
 	origin_tech = "combat=2"
@@ -39,18 +39,17 @@
 	if(status && (CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>You grab the [src] on the wrong side.</span>")
 		user.Weaken(30)
-		charges--
-		if(charges < 1)
-			status = 0
-			update_icon()
+		discharge()
+		return
+	if(!handle_fumbling(user, src, SKILL_TASK_VERY_EASY, list(/datum/skill/police/master), "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>", can_move = TRUE))
 		return
 	if(charges > 0)
-		status = !status
+		set_status(!status)
 		to_chat(user, "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>")
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		update_icon()
 	else
-		status = 0
+		set_status(0)
 		to_chat(user, "<span class='warning'>\The [src] is out of charge.</span>")
 	add_fingerprint(user)
 
@@ -58,10 +57,7 @@
 	if(status && (CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with the [src]!</span>")
 		user.Weaken(30)
-		charges--
-		if(charges < 1)
-			status = 0
-			update_icon()
+		discharge()
 		return
 
 	if(isrobot(M))
@@ -94,18 +90,33 @@
 			if(R && R.cell)
 				R.cell.use(50)
 		else
-			charges--
+			discharge()
 		H.visible_message("<span class='danger'>[M] has been attacked with the [src] by [user]!</span>")
 
 		if(!(user.a_intent == INTENT_HARM))
 			H.log_combat(user, "stunned (attempt) with [name]")
 
 		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
-		if(charges < 1)
-			status = 0
-			update_icon()
+
 
 	add_fingerprint(user)
+/obj/item/weapon/melee/baton/proc/set_status(value)
+	if(value)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
+	status = value
+
+/obj/item/weapon/melee/baton/proc/discharge(amount = 1)
+	charges = max(0, charges - amount)
+	if(charges <= 0)
+		charges = 0
+		set_status(0)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+		update_icon()
+
+/obj/item/weapon/melee/baton/process()
+	discharge(2 * discharge_rate_per_minute / 60)
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -117,8 +128,7 @@
 				//H.apply_effect(10, WEAKEN, 0)
 				//H.apply_effect(10, STUTTER, 0)
 				H.apply_effect(agony,AGONY,0)
-				charges--
-
+				discharge()
 				for(var/mob/M in player_list) if(M.key == src.fingerprintslast)
 					foundmob = M
 					break
@@ -129,11 +139,4 @@
 				msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]", H)
 
 /obj/item/weapon/melee/baton/emp_act(severity)
-	switch(severity)
-		if(1)
-			charges = 0
-		if(2)
-			charges = max(0, charges - 5)
-	if(charges < 1)
-		status = 0
-		update_icon()
+	discharge(severity * 5)

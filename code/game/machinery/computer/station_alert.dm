@@ -6,6 +6,7 @@
 	light_color = "#e6ffff"
 	circuit = /obj/item/weapon/circuitboard/stationalert
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
+	required_skills = list(/datum/skill/engineering/novice, /datum/skill/command/default)
 
 /obj/machinery/computer/station_alert/atom_init()
 	. = ..()
@@ -16,6 +17,8 @@
 	return ..()
 
 /obj/machinery/computer/station_alert/ui_interact(mob/user)
+	if(!do_skill_checks(user))
+		return
 	var/dat = ""
 	for (var/cat in src.alarms)
 		dat += text("<B>[]</B><BR>\n", cat)

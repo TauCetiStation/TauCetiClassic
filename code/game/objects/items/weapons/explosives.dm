@@ -12,6 +12,8 @@
 	var/atom/target = null
 
 /obj/item/weapon/plastique/attack_self(mob/user)
+	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL, list(/datum/skill/firearms/trained), message_self = "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>"))
+		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(newtime < 10)
 		newtime = 10
@@ -33,7 +35,8 @@
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target.name]</font>"
 		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [target.name]", user)
 
-	if(do_after(user, 50, target = target) && user.Adjacent(target))
+	var/planting_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/firearms/master, /datum/skill/engineering/pro), -0.1)
+	if(do_after(user, planting_time, target = target) && user.Adjacent(target))
 		if(ismob(target))
 			var/mob/living/M = target
 			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"

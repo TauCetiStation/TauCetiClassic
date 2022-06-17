@@ -13,6 +13,7 @@
 	var/obj/machinery/power/am_engine/engine/connected_E = null
 	var/obj/machinery/power/am_engine/injector/connected_I = null
 	var/state = STATE_DEFAULT
+	required_skills = list(/datum/skill/engineering/pro)
 
 /obj/machinery/computer/am_engine/atom_init()
 	..()

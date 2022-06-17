@@ -8615,7 +8615,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "auJ" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -8901,12 +8901,12 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "avo" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "avp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -9378,7 +9378,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "aws" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -10014,7 +10014,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "axO" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,4"
@@ -11342,11 +11342,8 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "aAD" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/item/roller/roller_holder_surg,
-/obj/item/roller/roller_holder_surg,
+/obj/structure/rack,
+/obj/item/weapon/gun/medbeam,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -11436,6 +11433,8 @@
 /obj/item/weapon/tank/anesthetic,
 /obj/item/clothing/mask/breath/medical,
 /obj/item/clothing/mask/breath/medical,
+/obj/item/roller/roller_holder_surg,
+/obj/item/roller/roller_holder_surg,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -11720,18 +11719,13 @@
 	},
 /area/custom/tophat)
 "aBj" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 1;
-	frequency = 1441;
-	listening = 0;
-	name = "Spec Ops Intercom";
-	pixel_y = 28
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/power/port_gen/riteg,
+/obj/structure/rack,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -11744,9 +11738,6 @@
 /obj/item/clothing/suit/space/rig/ert/medical,
 /obj/item/clothing/head/helmet/space/rig/ert/medical,
 /obj/item/clothing/suit/space/rig/ert/medical,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
 /obj/item/weapon/storage/backpack/ert/medical,
 /obj/item/weapon/storage/backpack/ert/medical,
 /obj/item/weapon/storage/backpack/ert/medical,
@@ -11962,6 +11953,7 @@
 /obj/item/weapon/storage/backpack/ert/commander,
 /obj/item/weapon/storage/belt/security,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/gun/projectile/glock/spec,
 /obj/item/device/remote_device/ERT,
 /turf/unsimulated/floor{
@@ -13726,9 +13718,6 @@
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -13748,12 +13737,9 @@
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/clothing/shoes/magboots,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -13785,6 +13771,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -14618,7 +14605,6 @@
 /obj/effect/landmark{
 	name = "Nuclear-Bomb"
 	},
-/obj/machinery/door/window/brigdoor/northleft,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -14626,6 +14612,9 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
+/obj/machinery/door/window/brigdoor/northleft{
+	req_access = list(150)
+	},
 /turf/unsimulated/floor{
 	icon_state = "podhatch"
 	},
@@ -14831,6 +14820,12 @@
 	},
 /turf/simulated/shuttle/plating,
 /area/shuttle/administration/centcom)
+"aHE" = (
+/obj/structure/object_wall/standart{
+	icon_state = "swall12"
+	},
+/turf/environment/space,
+/area/velocity/monorailwagon)
 "aHG" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access = list(101)
@@ -20814,6 +20809,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -20894,19 +20890,21 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/structure/window/reinforced,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/centcom/living)
 "bfl" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/r4046,
-/obj/item/weapon/storage/box/r4046,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/weapon/storage/box/r4046/rubber,
+/obj/item/weapon/storage/box/r4046/teargas,
+/obj/item/weapon/storage/box/r4046/EMP,
 /obj/item/weapon/gun/projectile/grenade_launcher/m79,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -21016,16 +21014,19 @@
 /obj/item/weapon/gun/projectile/glock/spec,
 /obj/item/clothing/glasses/sunglasses/hud/sechud,
 /obj/item/weapon/plastique,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/centcom/living)
 "bfv" = (
 /obj/structure/rack,
+/obj/item/weapon/shield/riot,
+/obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot,
@@ -22580,7 +22581,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dJb" = (
 /obj/machinery/door/airlock/glass{
 	icon_state = "door_locked";
@@ -22589,7 +22590,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dKb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall12"
@@ -22648,7 +22649,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dPb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -22658,7 +22659,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dQb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -22763,14 +22764,14 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dXb" = (
 /obj/structure/shuttle/window{
 	icon_state = "2"
 	},
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
-/area/velocity)
+/area/velocity/monorailwagon)
 "dYb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -22811,14 +22812,14 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "ebb" = (
 /obj/structure/sign/monorail_map,
 /obj/structure/object_wall/standart{
 	icon_state = "swall3"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "ecb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	icon_state = "chair_a02"
@@ -22902,7 +22903,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "ekb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -22941,13 +22942,13 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "eob" = (
 /obj/machinery/door/airlock/glass,
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "epb" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Just billboard";
@@ -22958,7 +22959,7 @@
 	icon_state = "swall12"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "eqb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall_f9"
@@ -22969,7 +22970,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "erb" = (
 /obj/structure/sign/mark{
 	icon_state = "b4"
@@ -23002,7 +23003,7 @@
 	icon_state = "swall12"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "ewb" = (
 /obj/structure/sign/mark{
 	icon_state = "b2"
@@ -24769,6 +24770,13 @@
 	icon_state = "warning"
 	},
 /area/centcom/evac)
+"hGB" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "hHb" = (
 /obj/structure/sign/mark{
 	icon_state = "rrt"
@@ -24814,7 +24822,7 @@
 	dir = 8;
 	icon_state = "warnplate"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "hNb" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -24842,7 +24850,7 @@
 	dir = 8;
 	icon_state = "warnplate"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "hRb" = (
 /turf/unsimulated/floor{
 	icon_state = "warning"
@@ -25276,6 +25284,23 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
+	},
+/area/centcom/living)
+"iSi" = (
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = 28
+	},
+/obj/machinery/power/port_gen/riteg,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
 	},
 /area/centcom/living)
 "iTb" = (
@@ -26755,6 +26780,32 @@
 	icon_state = "delivery"
 	},
 /area/centcom/control)
+"lYh" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/melee/baton,
+/obj/item/weapon/storage/belt/security,
+/obj/item/device/flash,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/clothing/glasses/night,
+/obj/item/weapon/gun/projectile/glock/spec,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
+/obj/item/weapon/plastique,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "lZb" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/westright{
@@ -28457,6 +28508,17 @@
 	icon_state = "1,6"
 	},
 /area/shuttle/supply/velocity)
+"qiD" = (
+/obj/structure/rack,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "qnM" = (
 /obj/effect/step_trigger/thrower{
 	direction = 4;
@@ -28501,6 +28563,12 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"rse" = (
+/obj/structure/object_wall/standart{
+	icon_state = "swall3"
+	},
+/turf/environment/space,
+/area/velocity/monorailwagon)
 "rXM" = (
 /obj/machinery/light{
 	dir = 4
@@ -52303,7 +52371,7 @@ aaM
 aaM
 aaM
 aAm
-aAE
+aAD
 aBk
 aBk
 aAm
@@ -52560,7 +52628,7 @@ aaM
 aaM
 aaM
 aAm
-aAD
+aCH
 aAM
 aAM
 aAm
@@ -52819,7 +52887,7 @@ aaM
 aAm
 aAK
 aAM
-aAM
+aAE
 aAm
 aAm
 aAm
@@ -53088,7 +53156,7 @@ aFo
 aAL
 aFr
 beQ
-bfk
+lYh
 aFr
 bfk
 bfu
@@ -53842,8 +53910,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+aAm
+aAm
 aAm
 aAm
 aAm
@@ -54099,11 +54167,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
 aAm
 aBc
 aAM
+aBj
+hGB
 aBm
 aEl
 aFm
@@ -54356,10 +54424,10 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
 aAm
-aBj
+iSi
+aAM
+aAM
 aAM
 aAM
 aAM
@@ -54613,11 +54681,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
 aAm
 aBc
 aAM
+qiD
+hGB
 aBG
 aEm
 aBI
@@ -54870,8 +54938,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+aAm
+aAm
 aAm
 aAm
 aAm
@@ -79264,18 +79332,18 @@ atP
 atP
 atP
 dIb
-dNb
+rse
 avn
 avn
 avn
-dNb
+rse
 enb
 dIb
-dNb
+rse
 axN
 axN
 axN
-dNb
+rse
 enb
 atP
 ayt
@@ -79777,7 +79845,7 @@ dwb
 dwb
 dwb
 dwb
-dKb
+aHE
 dPb
 dWb
 eab
@@ -79790,7 +79858,7 @@ dWb
 eab
 dWb
 ejb
-dKb
+aHE
 dwb
 dwb
 dwb
@@ -80035,11 +80103,11 @@ atP
 atP
 atP
 auI
-dNb
+rse
 dXb
 ebb
 dXb
-dNb
+rse
 eqb
 auI
 hMb

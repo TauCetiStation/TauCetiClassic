@@ -641,7 +641,14 @@
 	if (to_say)
 		say (to_say)
 	else if(prob(1))
-		emote(pick("bounce","sway","light","vibrate","jiggle"))
+		var/list/rand_emote = list(
+			"bounces in place.",
+			"sways around dizzily.",
+			"lights up for a bit, then stops.",
+			"vibrates!",
+			"jiggles!",
+		)
+		me_emote(pick(rand_emote))
 	else
 		var/t = 10
 		var/slimes_near = 0

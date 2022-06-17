@@ -25,8 +25,6 @@
 	var/atom/movable/screen/inv3 = null
 
 	var/shown_robot_modules = 0 //Used to determine whether they have the module menu shown or not
-	var/shown_robot_pda = 0
-	var/shown_robot_foto = 0
 	var/atom/movable/screen/robot_modules_background
 
 //3 Modules can be activated at any one time.
@@ -164,7 +162,9 @@
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
-		if(mind)	mind.transfer_to(mmi.brainmob)
+		if(mind)
+			mind.transfer_to(mmi.brainmob)
+			mmi.brainmob.mind.skills.remove_available_skillset(/datum/skillset/max)
 		mmi = null
 	return ..()
 
@@ -305,12 +305,12 @@
 			module_sprites["Kodiak"] = "kodiak-combat"
 			module.channels = list("Security" = 1)
 
-	hands.icon_state = lowertext(modtype)
+	module_icon.update_icon(src)
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
 
 	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
-		status_flags &= ~CANPUSH
+		remove_status_flags(CANPUSH)
 
 	// Radial menu for choose icon_state
 	var/choose_icon = list()

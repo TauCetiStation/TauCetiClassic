@@ -59,6 +59,8 @@ RCD
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction/trained)))
+		return
 	switch(mode)
 		if(1)
 			mode = 2

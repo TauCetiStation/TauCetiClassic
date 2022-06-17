@@ -137,6 +137,7 @@
 	var/static/list/status_overlays_equipment
 	var/static/list/status_overlays_lighting
 	var/static/list/status_overlays_environ
+	required_skills = list()
 
 
 /obj/machinery/power/apc/atom_init(mapload, ndir, building = 0)
@@ -954,7 +955,6 @@
 	var/lowest_treshold = 3//lowest treshold in hacked apcs for an announcement to start
 	var/datum/faction/malf_silicons/malf_ai = find_faction_by_type(/datum/faction/malf_silicons)
 	if(malf_ai && malf_ai.intercept_hacked)
-		hacked_amount += malf_ai.intercept_apcs
 		lowest_treshold += malf_ai.intercept_apcs
 	switch (SSticker.Malf_announce_stage)
 		if(0)

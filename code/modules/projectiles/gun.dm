@@ -56,8 +56,10 @@
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
-	if(recoil)
-		shake_camera(user, recoil + 1, recoil)
+
+	var/skill_recoil = max(0, apply_skill_bonus(user, recoil, list(/datum/skill/firearms/trained), multiplier = -1))
+	if(skill_recoil)
+		shake_camera(user, skill_recoil + 1, skill_recoil)
 
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)

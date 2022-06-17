@@ -109,7 +109,7 @@
 		return
 
 
-	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state")
+	var/list/locked = list("vars", "key", "ckey", "client", "icon", "icon_state")
 	var/list/names = sortList(L)
 
 	var/variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)"

@@ -19,6 +19,7 @@
 	var/volume_rate = SCRUBBER_DEFAULT_RATE
 
 	var/list/scrubbing_gas
+	required_skills = list(/datum/skill/atmospherics/trained)
 
 /obj/machinery/portable_atmospherics/powered/scrubber/atom_init()
 	. = ..()
@@ -127,8 +128,10 @@
 
 /obj/machinery/portable_atmospherics/powered/scrubber/tgui_act(action, params)
 	. = ..()
+
 	if(.)
 		return
+
 	switch(action)
 		if("power")
 			on = !on

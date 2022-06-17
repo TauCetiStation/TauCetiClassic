@@ -106,7 +106,7 @@
 	var/retSound = null
 	if(length(attack_sound) > 0)
 		retSound = pick(attack_sound)
-	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	if(HULK in mutations)
 		retDam += 4
@@ -232,9 +232,9 @@
 		if(1)
 			say(pick(speak))
 		if(2)
-			emote(pick(emote_hear), 2)
+			me_emote(pick(emote_hear), SHOWMSG_AUDIO)
 		if(3)
-			emote(pick(emote_see), 1)
+			me_emote(pick(emote_see), SHOWMSG_VISUAL)
 
 /mob/living/simple_animal/rejuvenate()
 	..()
@@ -253,11 +253,6 @@
 			for(var/i = 1 to butcher_results[path])
 				new path(loc)
 	..()
-
-/mob/living/simple_animal/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
-	if(act)
-		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
-		..(act, m_type, message)
 
 /mob/living/simple_animal/attack_larva(mob/living/carbon/xenomorph/larva/attacker)
 	if(attacker.a_intent == INTENT_HARM && stat != DEAD)
@@ -364,7 +359,7 @@
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message,2))
+		return emote(copytext(message, 2))
 
 	var/verb = "says"
 	var/ending = copytext(message, -1)
