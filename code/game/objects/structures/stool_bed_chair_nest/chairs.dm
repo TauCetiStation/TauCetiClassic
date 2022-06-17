@@ -303,10 +303,10 @@
 		animate(M, pixel_y = M.lying ? initial(pixel_y) + 14 : initial(pixel_y) + 8, time = 8, easing = LINEAR_EASING)
 	else
 		layer = initial(layer)
-		STOP_PROCESSING(SSobj, src)
-		M.pixel_x = initial(M.pixel_x)
 		pixel_x = initial(pixel_x)
-		M.pixel_y = M.lying ? -6 : initial(M.pixel_y)
+		STOP_PROCESSING(SSobj, src)
+		M.pixel_x = M.default_pixel_x
+		M.pixel_y = M.default_pixel_y
 
 /obj/structure/stool/bed/chair/noose/user_unbuckle_mob(mob/living/user)
 	if(!buckled_mob || user.is_busy())

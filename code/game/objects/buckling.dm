@@ -29,9 +29,7 @@
 		return FALSE
 	if(!istype(M) || (M.loc != loc))
 		return FALSE
-	if(M.buckled || buckled_mob)
-		return FALSE
-	if(M.anchored)
+	if(M.buckled || buckled_mob || M.anchored)
 		return FALSE
 	if(buckle_require_restraints && !M.restrained())
 		return FALSE
@@ -60,17 +58,19 @@
 	return TRUE
 
 /atom/movable/proc/unbuckle_mob()
-	if(buckled_mob && buckled_mob.buckled == src && buckled_mob.can_unbuckle(usr))
-		. = buckled_mob
-		buckled_mob.buckled = null
-		buckled_mob.anchored = initial(buckled_mob.anchored)
-		buckled_mob.update_canmove()
-		buckled_mob.clear_alert("buckled")
-		correct_pixel_shift(buckled_mob)
-		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob)
-		buckled_mob = null
+	if(!(buckled_mob && buckled_mob.buckled == src && buckled_mob.can_unbuckle(usr)))
+		return
 
-		post_buckle_mob(.)
+	. = buckled_mob
+	buckled_mob.buckled = null
+	buckled_mob.update_canmove()
+	buckled_mob.clear_alert("buckled")
+	buckled_mob = null
+
+	correct_pixel_shift(.)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, .)
+
+	post_buckle_mob(.)
 
 /atom/movable/proc/correct_pixel_shift(mob/living/carbon/C)
 	if(!istype(C))

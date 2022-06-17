@@ -407,7 +407,7 @@ var/global/bomb_set
 	if(M == buckled_mob)
 		M.pixel_y = 10
 	else
-		M.pixel_y = 0
+		M.pixel_y = M.default_pixel_y
 
 /obj/machinery/nuclearbomb/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()

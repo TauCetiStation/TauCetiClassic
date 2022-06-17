@@ -1157,7 +1157,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M)
 	if(M.buckled)
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
@@ -1165,7 +1165,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		var/can_step = step_towards(M, T)
 		density = old_density
 		if(!can_step)
-			return 0
+			return FALSE
 	return ..()
 
 //Default buckling shift visual for mobs
@@ -1175,12 +1175,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(M.layer < layer)
 			M.layer = layer + 0.1
 	else //post unbuckling
-		M.layer = initial(M.layer)
-		M.plane = initial(M.plane)
-		M.pixel_y = initial(M.pixel_y)
+		M.layer = M.default_layer
+		M.pixel_y = M.default_pixel_y
 
 /mob/proc/can_unbuckle(mob/user)
-	return 1
+	return TRUE
 
 /mob/proc/get_targetzone()
 	return null

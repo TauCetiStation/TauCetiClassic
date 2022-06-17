@@ -119,7 +119,7 @@
 
 
 /obj/structure/stool/bed/chair/pedalgen/post_buckle_mob(mob/user)
-	update_mob(user,1)
+	update_mob(user, TRUE)
 
 /obj/structure/stool/bed/chair/pedalgen/handle_rotation()
 	if(dir == SOUTH)
@@ -158,7 +158,7 @@
 			M.pixel_x = new_pixel_x
 			M.pixel_y = new_pixel_y
 	else
-		animate(M, pixel_x = 0, pixel_y = 0, 2, 1, LINEAR_EASING)
+		animate(M, pixel_x = M.default_pixel_x, pixel_y = M.default_pixel_y, 2, 1, LINEAR_EASING)
 
 /obj/structure/stool/bed/chair/pedalgen/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(buckled_mob)
