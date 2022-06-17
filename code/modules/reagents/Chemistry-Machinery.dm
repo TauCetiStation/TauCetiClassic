@@ -818,6 +818,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = list("poisonberryjuice" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/greengrapes = list("grapejuice" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/grapes = list("grapejuice" = 0),
+		/obj/item/brain = list("brainjuice" = 0)
 	)
 
 
@@ -1150,6 +1151,11 @@
 		O.reagents.trans_to(beaker, amount)
 		if(!O.reagents.total_volume)
 			remove_object(O)
+	for (var/obj/item/brain/brain in holdingitems)
+		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+			break
+		beaker.reagents.add_reagent("brainjuice", BRAIN_JUICE_AMOUNT, list("brainmob" = brain.brainmob))
+		remove_object(brain)
 
 //Coin
 	for (var/obj/item/weapon/coin/O in holdingitems)
