@@ -151,7 +151,7 @@
 	dir = 8;
 	icon_state = "heater1"
 	},
-/obj/structure/window/shuttle{
+/obj/structure/window/reinforced/shuttle{
 	icon_state = "window_gray";
 	name = "skipjack window"
 	},

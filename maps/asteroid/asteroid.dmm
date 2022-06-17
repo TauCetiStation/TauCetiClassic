@@ -99,7 +99,7 @@
 "as" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -7288,7 +7288,7 @@
 "pE" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -8629,7 +8629,7 @@
 /area/asteroid/mine/dwarf)
 "tr" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/structure/window/phoronbasic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -9623,7 +9623,7 @@
 "vK" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -9730,7 +9730,7 @@
 "vY" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -10702,7 +10702,7 @@
 /obj/structure/grille,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -11289,7 +11289,7 @@
 "Ao" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -11453,7 +11453,7 @@
 "AT" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/phoronbasic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -11479,7 +11479,7 @@
 "AX" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -11621,7 +11621,7 @@
 "Bx" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -11702,7 +11702,7 @@
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/visible,
-/obj/structure/window/reinforced{
+/obj/structure/window/phoronreinforced{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -12701,7 +12701,7 @@
 "Sb" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/phoronreinforced{
 	dir = 5
 	},
 /turf/simulated/floor/plating,

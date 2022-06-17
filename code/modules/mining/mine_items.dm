@@ -768,7 +768,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		icon_state = "[basestate][junction]"
 
 //Window
-/obj/structure/window/shuttle/survival_pod
+/obj/structure/window/reinforced/shuttle/survival_pod
 	name = "pod window"
 	icon = 'icons/obj/survwindows.dmi'
 	icon_state = "window"

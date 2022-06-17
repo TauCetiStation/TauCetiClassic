@@ -3,12 +3,12 @@
 	desc = "A window."
 	icon = 'icons/obj/window.dmi'
 	density = TRUE
-	layer = 3.2//Just above doors
+	layer = 3.2   //Just above doors
 	anchored = TRUE
 	flags = ON_BORDER
 	can_be_unanchored = TRUE
 
-	var/maxhealth = 14.0
+	var/maxhealth = 150.0
 	var/health
 	var/ini_dir = null
 	var/state = 2
@@ -17,33 +17,16 @@
 	var/can_merge = 1	//Sometimes it's needed
 	var/shardtype = /obj/item/weapon/shard
 	var/image/crack_overlay
-	var/damage_threshold = 5	//This will be deducted from any physical damage source.
-//	var/silicate = 0 // number of units of silicate
-//	var/icon/silicateIcon = null // the silicated icon
 
 /obj/structure/window/proc/take_damage(damage = 0, damage_type = BRUTE, sound_effect = 1)
 	var/initialhealth = health
 	var/message = 1
-	var/fulltile = 0
-
-	//if(silicate)
-	//	damage = damage * (1 - silicate / 200)
-
-	if(is_fulltile())
-		message = 0
-		fulltile = 1
-
-	if(fulltile && damage_threshold)
-		switch(damage_type)
-			if(BRUTE)
-				damage = max(0, damage - damage_threshold)
-			if(BURN)
-				damage *= 0.3
-			if("generic")
-				damage *= 0.5
 
 	if(!damage)
 		return
+
+	if(is_fulltile())
+		message = 0
 
 	health = max(0, health - damage)
 
@@ -144,7 +127,7 @@
 		tforce = I.throwforce
 	if(reinf)
 		tforce *= 0.25
-	if(health - tforce <= 7 && !reinf)
+	if(health - tforce <= 5 && !reinf)
 		anchored = FALSE
 		update_nearby_icons()
 		step(src, get_dir(AM, src))
@@ -291,7 +274,7 @@
 	else if(user.a_intent == INTENT_HARM)
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force, W.damtype)
-			if(health <= 7)
+			if(health <= 5)
 				anchored = FALSE
 				update_nearby_icons()
 				fastened_change()
@@ -496,7 +479,22 @@
 	basestate = "rwindow"
 	maxhealth = 100.0
 	reinf = 1
-	damage_threshold = 15
+	var/damage_threshold = 15	//This will be deducted from any physical damage source.
+
+/obj/structure/window/reinforced/take_damage(damage, damage_type, sound_effect)
+	if(is_fulltile())
+		switch(damage_type)
+			if(BRUTE)
+				damage = max(0, damage - damage_threshold)
+			if(BURN)
+				damage *= 0.3
+			if("generic")
+				damage *= 0.5
+
+	if(!damage)
+		return
+
+	..(damage, damage_type, sound_effect)
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
@@ -513,18 +511,17 @@
 	maxhealth = 30.0
 	damage_threshold = 0
 
-/obj/structure/window/shuttle
+/obj/structure/window/reinforced/shuttle
 	name = "shuttle window"
 	desc = "It looks rather strong. Might take a few good hits to shatter it."
 	icon = 'icons/obj/podwindows.dmi'
 	icon_state = "window"
 	basestate = "window"
 	maxhealth = 150.0
-	reinf = 1
 	dir = 5
 	damage_threshold = 30
 
-/obj/structure/window/shuttle/update_icon() //icon_state has to be set manually
+/obj/structure/window/reinforced/shuttle/update_icon() //icon_state has to be set manually
 	return
 
 /obj/structure/window/reinforced/polarized

@@ -4607,7 +4607,7 @@
 "aig" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -6460,7 +6460,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -6548,12 +6548,12 @@
 /area/station/maintenance/escape)
 "ami" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/machinery/door/firedoor,
+/obj/structure/window/basic{
 	dir = 5
 	},
-/obj/structure/barricade/wooden,
 /turf/simulated/floor/plating,
-/area/station/maintenance/escape)
+/area/station/hallway/primary/central)
 "amj" = (
 /obj/structure/grille,
 /turf/simulated/floor/plating,
@@ -6644,7 +6644,7 @@
 "amw" = (
 /obj/structure/grille,
 /obj/structure/barricade/wooden,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -9514,7 +9514,7 @@
 /area/station/rnd/hallway)
 "arG" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -12268,7 +12268,7 @@
 "cWy" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -12823,17 +12823,10 @@
 /area/station/hallway/primary/central)
 "dyg" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/basic{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "dyn" = (
@@ -14144,17 +14137,7 @@
 /area/station/hallway/primary/central)
 "ePz" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -14162,6 +14145,9 @@
 	id = "Secure Gate";
 	name = "Security Blast Door";
 	opacity = 0
+	},
+/obj/structure/window/reinforced{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
@@ -14529,7 +14515,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/engine,
@@ -17069,7 +17055,7 @@
 "hYy" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -17695,7 +17681,7 @@
 "iDh" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -17783,6 +17769,14 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"iHa" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/basic{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/surgeryobs)
 "iHf" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -20890,7 +20884,7 @@
 "lIK" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -22689,10 +22683,10 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/sign/departments/cargo,
+/obj/structure/window/basic{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "nsB" = (
@@ -24235,16 +24229,12 @@
 /area/station/hallway/primary/central)
 "oRV" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/basic{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
-/area/station/civilian/dormitories)
+/area/station/civilian/gym)
 "oSq" = (
 /obj/machinery/gibber,
 /obj/machinery/alarm{
@@ -28098,7 +28088,7 @@
 /area/station/engineering/atmos)
 "swa" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -29715,21 +29705,14 @@
 /area/station/hallway/primary/central)
 "tZJ" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/window/basic{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
@@ -30903,7 +30886,7 @@
 "voD" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -32343,7 +32326,7 @@
 "wMu" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -32417,16 +32400,12 @@
 /area/station/security/main)
 "wPs" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/basic{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
-/area/station/civilian/dormitories)
+/area/station/cargo/storage)
 "wQx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -54371,7 +54350,7 @@ akv
 akV
 alo
 alM
-ami
+amw
 amw
 akb
 akb
@@ -57186,7 +57165,7 @@ qcu
 ahY
 doQ
 aia
-ajP
+oRV
 aiw
 akD
 akD
@@ -57443,7 +57422,7 @@ qcu
 aiA
 doQ
 ajB
-ajP
+oRV
 sMI
 ajh
 ajj
@@ -57700,7 +57679,7 @@ qcu
 ahT
 doQ
 aim
-ajP
+oRV
 aiw
 akD
 akD
@@ -58215,12 +58194,12 @@ aiC
 aiU
 qcu
 aik
-ajP
+oRV
 ajP
 aik
 knb
-ajP
-ajP
+oRV
+oRV
 aik
 akL
 alh
@@ -58967,7 +58946,7 @@ fRN
 nfC
 lDB
 abI
-abM
+iHa
 vmd
 frG
 gBX
@@ -61803,7 +61782,7 @@ fLl
 neq
 vxn
 ifz
-oRV
+dyg
 xvp
 uDr
 yeS
@@ -62060,7 +62039,7 @@ fOO
 eJe
 mXM
 vNm
-wPs
+dyg
 suB
 sQD
 suB
@@ -64399,7 +64378,7 @@ ifz
 jcU
 nYR
 mGI
-aiy
+wPs
 xFt
 ggc
 xQe
@@ -64910,10 +64889,10 @@ afX
 oQo
 xwG
 ifz
-pTS
+ami
 wji
 ygZ
-aiy
+wPs
 eJt
 ykW
 dyA
