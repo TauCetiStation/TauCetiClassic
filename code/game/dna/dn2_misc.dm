@@ -193,14 +193,14 @@
 			if(i < 7)
 				if(iswallturf(T))
 					hit = 1
-				else if(istype(T,/turf/simulated/floor))
+				else if(isfloorturf(T))
 					for(var/obj/structure/S in T.contents)
 						if(istype(S,/obj/structure/window))
 							hit = 1
 						if(istype(S,/obj/structure/grille))
 							hit = 1
 			else if(i > 6)
-				if(istype(T,/turf/simulated/floor))
+				if(isfloorturf(T))
 					for(var/obj/structure/S in T.contents)
 						if(istype(S,/obj/structure/window))
 							S.ex_act(EXPLODE_HEAVY)

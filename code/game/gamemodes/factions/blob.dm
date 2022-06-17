@@ -270,7 +270,7 @@ Message ends."}
 /datum/station_state/proc/count(count_territories)
 	for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		for(var/turf/T in block(locate(1, 1, Z), locate(world.maxx, world.maxy, Z)))
-			if(istype(T,/turf/simulated/floor))
+			if(isfloorturf(T))
 				var/turf/simulated/floor/F = T
 				if(!F.burnt)
 					floor += 12

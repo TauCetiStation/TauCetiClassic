@@ -309,7 +309,7 @@
 				var/image/I = image(initial(type.icon), A, initial(type.icon_state))
 				H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-wall-[H.name]", I, H)
 
-		else if(istype(A, /turf/simulated/floor))
+		else if(isfloorturf(A))
 			if(religion.floor_types)
 				var/atom/type = pick(religion.floor_types)
 				var/image/I = image(initial(type.icon), A, initial(type.icon_state))

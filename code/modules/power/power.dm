@@ -149,7 +149,7 @@
 
 		var/turf/T = user.loc
 
-		if(T.intact || !istype(T, /turf/simulated/floor))
+		if(T.intact || !isfloorturf(T))
 			return
 
 		if(!Adjacent(user))
@@ -380,7 +380,7 @@
 // return a knot cable (O-X) if one is present in the turf
 // null if there's none
 /turf/proc/get_cable_node()
-	if(!istype(src, /turf/simulated/floor))
+	if(!isfloorturf(src))
 		return null
 	for(var/obj/structure/cable/C in src)
 		if(C.d1 == 0)

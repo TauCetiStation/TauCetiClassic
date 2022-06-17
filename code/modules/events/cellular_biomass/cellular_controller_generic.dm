@@ -18,7 +18,7 @@
 
 /obj/effect/cellular_biomass_controller/atom_init()
 	. = ..()
-	if(!istype(loc, /turf/simulated/floor))
+	if(!isfloorturf(loc))
 		return INITIALIZE_HINT_QDEL
 	spawn_cellular_biomass_core(loc)
 	spawn_cellular_biomass_piece(loc)

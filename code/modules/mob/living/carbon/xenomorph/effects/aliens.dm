@@ -320,7 +320,7 @@
 		if(iswallturf(target))
 			var/turf/simulated/wall/W = target
 			W.dismantle_wall(1)
-		else if(istype(target, /turf/simulated/floor))
+		else if(isfloorturf(target))
 			var/turf/simulated/floor/F = target
 			F.make_plating()
 		else if(is_type_in_list(target, ventcrawl_machinery))

@@ -126,7 +126,7 @@
 		qdel(A)
 		return
 
-	if(istype(A, /turf/simulated/floor))
+	if(isfloorturf(A))
 		var/turf/T = A
 		if(prob(50))
 			T.ChangeTurf(pick(my_religion.floor_types))

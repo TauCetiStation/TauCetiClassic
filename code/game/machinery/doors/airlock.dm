@@ -688,7 +688,7 @@ var/global/list/airlock_overlays = list()
 		var/turf/target = user.loc
 		open()
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		if(istype(target,/turf/simulated/floor))
+		if(isfloorturf(target))
 			var/turf/simulated/floor/tile = target
 			tile.break_tile()
 		for(var/i in 1 to 2)

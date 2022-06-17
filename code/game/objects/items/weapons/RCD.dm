@@ -103,7 +103,7 @@ RCD
 					return 1
 				return 0
 
-			if(istype(target, /turf/simulated/floor) && !user.is_busy())
+			if(isfloorturf(target) && !user.is_busy())
 				var/turf/simulated/floor/F = target
 				if(checkResource(3, user))
 					to_chat(user, "Building Wall ...")
@@ -117,7 +117,7 @@ RCD
 				return 0
 
 		if(2)
-			if(istype(target, /turf/simulated/floor))
+			if(isfloorturf(target))
 				for(var/atom/AT in target)
 					if(AT.density || istype(AT, /obj/machinery/door) || istype(AT, /obj/structure/mineral_door))
 						to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
@@ -150,7 +150,7 @@ RCD
 						return 1
 				return 0
 
-			if(istype(target, /turf/simulated/floor))
+			if(isfloorturf(target))
 				var/turf/simulated/floor/F = target
 				if(checkResource(5, user) && !user.is_busy())
 					to_chat(user, "Deconstructing Floor...")
