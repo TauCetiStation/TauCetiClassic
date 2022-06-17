@@ -368,7 +368,7 @@
 		else
 			to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
 			if(WT.use_tool(src, user, 100, 3, 100))
-				if(!istype(src, /turf/simulated/wall))
+				if(!iswallturf(src))
 					return
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
@@ -380,7 +380,7 @@
 		if(W.use_tool(src, user, 60, volume = 100))
 			if(mineral == "diamond")//Oh look, it's tougher
 				sleep(60)
-			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
+			if(!iswallturf(src) || !user || !W || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
@@ -397,7 +397,7 @@
 		if(W.use_tool(src, user, 60, volume = 50))
 			if(mineral == "diamond")
 				sleep(60)
-			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
+			if(!iswallturf(src) || !user || !W || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
@@ -416,7 +416,7 @@
 		if(W.use_tool(src, user, 70))
 			if(mineral == "diamond")
 				sleep(70)
-			if(!istype(src, /turf/simulated/wall) || !user || !EB || !T)
+			if(!iswallturf(src) || !user || !EB || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)

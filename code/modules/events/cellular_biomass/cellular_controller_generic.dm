@@ -111,7 +111,7 @@
 	var/turf/S = get_step(T,pick(1,2,4,8))
 	if(locate(/obj/structure/cellular_biomass, S))
 		return
-	if(istype(S,/turf/simulated/wall) || istype(S,/turf/simulated/mineral))
+	if(iswallturf(S) || istype(S,/turf/simulated/mineral))
 		if(calcEnergy(S)==3)
 			S.blob_act()
 		return

@@ -277,7 +277,7 @@ Message ends."}
 				else
 					floor += 1
 
-			if(istype(T, /turf/simulated/wall))
+			if(iswallturf(T))
 				if(T.intact)
 					wall += 2
 				else

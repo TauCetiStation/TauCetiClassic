@@ -352,7 +352,7 @@
 					return
 			if(maketiles)
 				for(var/obj/item/stack/sheet/metal/M in view(7, src))
-					if(M.get_amount() == 1 && !(istype(M.loc, /turf/simulated/wall)))
+					if(M.get_amount() == 1 && !(iswallturf(M.loc)))
 						state = FLOORBOT_MOVING_TO_PICKUP
 						boringness = 0
 						target = M

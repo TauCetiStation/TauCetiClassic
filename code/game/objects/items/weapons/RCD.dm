@@ -135,7 +135,7 @@ RCD
 				return 0
 
 		if(3)
-			if(istype(target, /turf/simulated/wall))
+			if(iswallturf(target))
 				var/turf/simulated/wall/W = target
 				if(istype(W, /turf/simulated/wall/r_wall) && !canRwall)
 					return 0

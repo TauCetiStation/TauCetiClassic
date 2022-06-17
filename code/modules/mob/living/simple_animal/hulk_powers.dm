@@ -169,7 +169,7 @@
 			var/hit = 0
 			T = get_turf(get_step(usr,usr.dir))
 			if(i < 7)
-				if(istype(T,/turf/simulated/wall))
+				if(iswallturf(T))
 					hit = 1
 				else if(istype(T,/turf/simulated/floor))
 					for(var/obj/structure/S in T.contents)
@@ -184,7 +184,7 @@
 							S.ex_act(EXPLODE_HEAVY)
 						if(istype(S,/obj/structure/grille))
 							qdel(S)
-				if(istype(T,/turf/simulated/wall))
+				if(iswallturf(T))
 					var/turf/simulated/wall/W = T
 					var/mob/living/carbon/human/H = usr
 					if(istype(T,/turf/simulated/wall/r_wall))
@@ -323,7 +323,7 @@
 			to_chat(usr, "<span class='warning'><B>Ouch!</B> This wall is too strong.</span>")
 			var/mob/living/carbon/human/H = usr
 			H.take_overall_damage(25, used_weapon = "reinforced wall")
-		else if(istype(W,/turf/simulated/wall))
+		else if(iswallturf(W))
 			W.take_damage(50)
 		for(var/mob/living/M in T.contents)
 			if(M != usr)
