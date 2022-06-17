@@ -168,6 +168,11 @@
 		/obj/item/toy/ammo/gun
 		)
 
+/obj/item/weapon/storage/pouch/ammo/revolverammo // for gun kit
+	startswith = list(
+	/obj/item/ammo_box/a357 = 3,
+	)
+
 /obj/item/weapon/storage/pouch/flare
 	name = "flares pouch"
 	desc = "Can hold about five flares in. In fact, anything cylindrical and small... Makes you think."
