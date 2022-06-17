@@ -118,7 +118,7 @@
 			update_mob(buckled_mob)
 
 
-/obj/structure/stool/bed/chair/pedalgen/post_buckle_mob(mob/user)
+/obj/structure/stool/bed/chair/pedalgen/post_buckle_mob(mob/living/user)
 	update_mob(user, TRUE)
 
 /obj/structure/stool/bed/chair/pedalgen/handle_rotation()
@@ -134,7 +134,7 @@
 		update_mob(buckled_mob)
 
 
-/obj/structure/stool/bed/chair/pedalgen/proc/update_mob(mob/M, buckling = 0)
+/obj/structure/stool/bed/chair/pedalgen/proc/update_mob(mob/living/M, buckling = 0)
 	if(M == buckled_mob)
 		M.set_dir(dir)
 		var/new_pixel_x = 0
