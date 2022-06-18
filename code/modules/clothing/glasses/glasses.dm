@@ -69,9 +69,11 @@
 	icon_state = "night"
 	item_state = "glasses"
 	origin_tech = "magnets=2"
+	invisa_view = 2
 	darkness_view = 7
 	toggleable = 1
 	sightglassesmod = "nvg"
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	action_button_name = "Toggle Goggles"
 	active = 1
 	off_state = "night"
