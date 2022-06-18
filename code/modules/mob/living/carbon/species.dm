@@ -703,6 +703,7 @@
 	heat_level_3 = 4000
 
 	burn_mod = 1.3
+	oxy_mod = 0
 	speed_mod = 7
 	speed_mod_no_shoes = -2
 
@@ -778,6 +779,8 @@
 		for(var/obj/item/organ/internal/O in H.organs)
 			if(O.damage)
 				O.damage -= light_amount * regen_mod / 5
+				if(O.damage < 0)
+					O.damage = 0
 				H.nutrition -= light_amount
 				return
 
