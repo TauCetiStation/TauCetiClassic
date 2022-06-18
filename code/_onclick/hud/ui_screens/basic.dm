@@ -350,8 +350,12 @@
 		to_chat(C, "<span class='notice'>You are not wearing a mask.</span>")
 		internal_switch = world.time + 8
 		return
-
+	if(istype(C.wear_mask, /obj/item/clothing/mask/breath))
+		var/obj/item/clothing/mask/breath/M = C.wear_mask
+		if(M.hanging) // if mask on face but pushed down
+			M.attack_self() // adjust it back
 	if(!(C.wear_mask.flags & MASKINTERNALS))
+
 		to_chat(C, "<span class='notice'>This mask doesn't support breathing through the tanks.</span>")
 		return
 
