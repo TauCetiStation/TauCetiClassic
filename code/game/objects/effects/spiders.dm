@@ -206,7 +206,7 @@
 				entry_vent = v
 				walk_to(src, entry_vent, 1)
 				break
-	if(isturf(loc))
+	if(isturf(loc) && amount_grown > 0)
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
 			grow_as = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
