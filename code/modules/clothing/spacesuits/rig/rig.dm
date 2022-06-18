@@ -767,7 +767,7 @@
 	icon_state = "rig-syndie-space"
 	item_state = "syndie_hardsuit"
 	rig_variant = "rig-syndie"
-	slowdown = 0.7
+	slowdown = 0.9
 	allowed = list(/obj/item/device/flashlight,
 	               /obj/item/weapon/tank,
 	               /obj/item/device/suit_cooling_unit,
@@ -784,7 +784,7 @@
 	cell_type = /obj/item/weapon/stock_parts/cell/super
 	var/combat_mode = FALSE
 	var/combat_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
-	var/space_armor = list(melee = 40, bullet = 30, laser = 30, energy = 30, bomb = 50, bio = 100, rad = 60)
+	var/space_armor = list(melee = 30, bullet = 20, laser = 20, energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/combat_slowdown = 0
 
 /obj/item/clothing/suit/space/rig/syndi/atom_init()
@@ -849,11 +849,11 @@
 	icon_state = "rig-heavy-space"
 	item_state = "syndie_hardsuit"
 	rig_variant = "rig-heavy"
-	slowdown = 0.7
+	slowdown = 1.2
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/chem_dispenser/combat)
 	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
-	space_armor = list(melee = 50, bullet = 40, laser = 40, energy = 45, bomb = 50, bio = 100, rad = 60)
-	combat_slowdown = 0.2
+	space_armor = list(melee = 45, bullet = 30, laser = 30, energy = 45, bomb = 50, bio = 100, rad = 60)
+	combat_slowdown = 0.5
 
 /obj/item/clothing/head/helmet/space/rig/syndi/elite
 	name = "Syndicate elite hybrid helmet"
@@ -922,7 +922,7 @@
 	               /obj/item/weapon/melee/energy/sword,
 	               /obj/item/weapon/handcuffs)
 	combat_armor = list(melee = 55, bullet = 60, laser = 50, energy = 55, bomb = 100, bio = 100, rad = 100)
-	space_armor = list(melee = 40, bullet = 30, laser = 30, energy = 45, bomb = 80, bio = 100, rad = 80)
+	space_armor = list(melee = 30, bullet = 20, laser = 20, energy = 45, bomb = 80, bio = 100, rad = 80)
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
@@ -996,14 +996,14 @@
 	icon_state = "rig0-sec"
 	item_state = "sec_helm"
 	rig_variant = "sec"
-	armor = list(melee = 45, bullet = 30, laser = 30, energy = 30, bomb = 65, bio = 100, rad = 10)
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 30, bomb = 65, bio = 100, rad = 10)
 
 /obj/item/clothing/suit/space/rig/security
 	icon_state = "rig-sec"
 	name = "security hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	item_state = "sec_hardsuit"
-	armor = list(melee = 45, bullet = 30, laser = 30, energy = 30, bomb = 65, bio = 100, rad = 10)
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 30, bomb = 65, bio = 100, rad = 10)
 	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/melee/baton)
 	breach_threshold = 20
 	slowdown = 0.7
