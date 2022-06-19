@@ -44,10 +44,7 @@
 	underlays += filler
 
 /obj/structure/window/check_can_smooth()
-	if(is_fulltile())
-		return TRUE
-	else
-		return FALSE
+	return is_fulltile()
 
 /obj/structure/window/proc/take_damage(damage = 0, damage_type = BRUTE, sound_effect = 1)
 	var/initialhealth = health
