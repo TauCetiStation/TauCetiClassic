@@ -37,5 +37,5 @@
 	mood_change = 100
 
 /datum/mood_event/undead
-	description = "<span class='bold nicegreen'>I'm dead.</span>"
+	description = "<span class='shadowling'>I'm the dead guy.</span>"
 	mood_change = 100
