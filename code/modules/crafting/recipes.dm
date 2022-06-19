@@ -232,3 +232,22 @@
 	result = /obj/item/weapon/storage/pneumatic
 	time = 45
 	required_proficiency = /datum/skill/construction/pro
+
+// TrashRifle craft
+/datum/crafting_recipe/bolt
+	name = "Bolt action for rifle"
+	reqs = list(/obj/item/stack/sheet/metal = 3)
+	tools = list(/obj/item/weapon/weldingtool)
+	result = /obj/item/weapon/bolt
+	time = 35
+
+/datum/crafting_recipe/trashrifle
+	name = "Single-shot rifle"
+	reqs = list(/obj/item/stack/sheet/wood = 3,
+				/obj/item/weapon/bolt = 1,
+				/obj/item/stack/sheet/metal = 12)
+	tools = list(/obj/item/weapon/weldingtool,
+				 /obj/item/weapon/wrench,
+				 /obj/item/weapon/screwdriver)
+	result = /obj/item/weapon/gun/projectile/heavyrifle/trashriflee
+	time = 120
