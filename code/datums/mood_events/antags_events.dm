@@ -35,3 +35,7 @@
 /datum/mood_event/homunculus
 	description = "<span class='bold nicegreen'>KILL ME PLEASE!!!</span>"
 	mood_change = 100
+
+/datum/mood_event/undead
+	description = "<span class='bold nicegreen'>I'm dead.</span>"
+	mood_change = 100

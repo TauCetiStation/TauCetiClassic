@@ -1102,9 +1102,11 @@
 	..()
 	H.gender = NEUTER
 	H.remove_status_flags(CANSTUN|CANPARALYSE)
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, SKELETON, /datum/mood_event/undead)
 
 /datum/species/skeleton/on_loose(mob/living/carbon/human/H, new_species)
 	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
+	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, SKELETON)
 	..()
 
 /datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)
@@ -1364,6 +1366,8 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
 
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, ZOMBIE, /datum/mood_event/undead)
+
 	add_zombie(H)
 
 /datum/species/zombie/on_loose(mob/living/carbon/human/H, new_species)
@@ -1376,6 +1380,8 @@
 		qdel(H.r_hand)
 
 	remove_zombie(H)
+
+	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, ZOMBIE)
 
 	..()
 
