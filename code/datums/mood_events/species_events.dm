@@ -13,8 +13,3 @@
 /datum/mood_event/golem
     description = "<span class='nicegreen'>I live to serve my master!</span>"
     mood_change = 100
-
-/datum/mood_event/no_emotion
-    description = "<span class='nicegreen'>I have no emotions. Is nice.</span>"
-    mood_change = 100
-    hidden = TRUE
