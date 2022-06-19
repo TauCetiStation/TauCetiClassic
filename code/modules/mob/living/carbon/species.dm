@@ -1109,6 +1109,9 @@
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, SKELETON)
 	..()
 
+/datum/species/skeleton/regen(mob/living/carbon/human/H)
+	H.nutrition = NUTRITION_LEVEL_NORMAL
+
 /datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skeleton_digest(M)
 
@@ -1385,6 +1388,8 @@
 
 	..()
 
+/datum/species/zombie/regen(mob/living/carbon/human/H)
+	H.nutrition = NUTRITION_LEVEL_NORMAL
 
 /datum/species/zombie/tajaran
 	name = ZOMBIE_TAJARAN

@@ -177,7 +177,7 @@
 	H.SetParalysis(0)
 	H.SetStunned(0)
 	H.SetWeakened(0)
-	H.nutrition = 400
+	H.nutrition = NUTRITION_LEVEL_NORMAL
 	H.SetSleeping(0)
 	H.radiation = 0
 	H.heal_overall_damage(H.getBruteLoss(), H.getFireLoss())
