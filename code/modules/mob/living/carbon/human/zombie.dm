@@ -170,7 +170,10 @@
 		return
 	if(!iszombie(H))
 		H.zombify()
-	//H.rejuvenate()
+
+	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)  // restore every thing in this dumb head (brain and eyes)
+		IO.rejuvenate()
+
 	H.setCloneLoss(0)
 	H.setBrainLoss(0)
 	H.setHalLoss(0)
