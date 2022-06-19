@@ -281,7 +281,7 @@
 			if(a_type == target_turf.type)
 				return target_turf
 			A = locate(a_type) in target_turf
-			if(A && A.type == a_type)
+			if(A && A.type == a_type && A.check_can_smooth())
 				return A
 		return null
 	else
@@ -289,6 +289,9 @@
 			return source.type == target_turf.type ? target_turf : null
 		var/atom/A = locate(source.type) in target_turf
 		return A && A.type == source.type ? A : null
+
+/atom/proc/check_can_smooth() // override this if you want to change the smoothing logic depending on situations
+	return TRUE
 
 //Icon smoothing helpers
 /proc/smooth_zlevel(zlevel, now = FALSE)

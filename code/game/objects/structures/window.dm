@@ -3,12 +3,13 @@
 	desc = "A window."
 	icon = 'icons/obj/window.dmi'
 	density = TRUE
-	layer = 3.2   //Just above doors
+	layer = 2.84   //Just above grilles and under buttons
 	anchored = TRUE
 	flags = ON_BORDER
 	can_be_unanchored = TRUE
 
 	var/maxhealth = 150.0
+	var/current_color
 	var/health
 	var/ini_dir = null
 	var/state = 2
@@ -17,6 +18,36 @@
 	var/can_merge = 1	//Sometimes it's needed
 	var/shardtype = /obj/item/weapon/shard
 	var/image/crack_overlay
+
+
+/obj/structure/window/proc/update_color(color)
+	var/static/list/windows_icon_cache = list()
+
+	var/cached_icon_string = "[is_fulltile() ? "" : dir][color]||[icon_state]"
+	var/image/filler
+
+	if(cached_icon_string in windows_icon_cache)
+		filler = windows_icon_cache[cached_icon_string]
+	else
+		var/icon/I = is_fulltile() ? new('icons/obj/window.dmi', "[icon_state]-filler") : new('icons/obj/window.dmi', "[icon_state]-filler", dir)
+
+		var/list/mc = ReadRGB(color)
+		filler = image(I, icon_state)
+		filler.color = RGB_CONTRAST(mc[1], mc[2], mc[3])
+
+		windows_icon_cache[cached_icon_string] = filler
+
+	filler.alpha = 140
+	current_color = filler.color
+
+	underlays.Cut()
+	underlays += filler
+
+/obj/structure/window/check_can_smooth()
+	if(is_fulltile())
+		return TRUE
+	else
+		return FALSE
 
 /obj/structure/window/proc/take_damage(damage = 0, damage_type = BRUTE, sound_effect = 1)
 	var/initialhealth = health
@@ -303,7 +334,7 @@
 	if(!Adjacent(usr) || !W.use(1))
 		return
 	else
-		color = new_color
+		update_color(new_color)
 
 /obj/structure/window/verb/rotate()
 	set name = "Rotate Window Counter-Clockwise"
@@ -434,6 +465,7 @@
 			return
 		crack_overlay = image('icons/obj/window.dmi',"damage[ratio]",-(layer+0.1))
 		add_overlay(crack_overlay)
+		update_color(current_color)
 
 /obj/structure/window/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 800)
@@ -460,6 +492,9 @@
 		take_damage(round(exposed_volume / 1000), BURN, 0)
 	..()
 
+/obj/structure/window/phoronbasic/update_color(color)
+	return
+
 /obj/structure/window/phoronreinforced
 	name = "reinforced phoron window"
 	desc = "A phoron-glass alloy window, with rods supporting it. It looks hopelessly tough to break. It also looks completely fireproof, considering how basic phoron windows are insanely fireproof."
@@ -470,6 +505,9 @@
 	maxhealth = 160.0
 
 /obj/structure/window/phoronreinforced/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return
+
+/obj/structure/window/phoronreinforced/update_color(color)
 	return
 
 /obj/structure/window/reinforced
@@ -503,6 +541,9 @@
 	basestate = "twindow"
 	opacity = 1
 
+/obj/structure/window/reinforced/tinted/update_color(color)
+	return
+
 /obj/structure/window/reinforced/tinted/frosted //Actually, there is no icon for this!!
 	name = "frosted window"
 	desc = "It looks rather strong and frosted over. Looks like it might take a few less hits then a normal reinforced window."
@@ -524,12 +565,18 @@
 /obj/structure/window/reinforced/shuttle/update_icon() //icon_state has to be set manually
 	return
 
+/obj/structure/window/reinforced/shuttle/update_color(color)
+	return
+
 /obj/structure/window/reinforced/polarized
 	name = "electrochromic window"
 	desc = "Adjusts its tint with voltage. Might take a few good hits to shatter it."
 	icon_state = "twindow"
 	basestate = "twindow"
 	var/id
+
+/obj/structure/window/reinforced/polarized/update_color(color)
+	return
 
 /obj/structure/window/reinforced/polarized/proc/toggle()
 	if(opacity)

@@ -77,6 +77,7 @@
 					<h4>Do something stupid</h4>
 					<A href='?src=\ref[src];secretsfun=spawncompletesandwich'>Create a Complete Sandwich</A><BR>
 					<A href='?src=\ref[src];secretsfun=forcedquality'>Force a \"Random\" Quality</A><BR>
+					<A href='?src=\ref[src];secretsfun=window_colors'>Change window colors (laggy) </A><BR>
 					"}
 
 		if(2) // OOC Events
@@ -522,6 +523,16 @@
 			var/datum/quality/Q = SSqualities.qualities_by_name[quality_name]
 			SSqualities.forced_quality_type = Q.type
 
+		if("window_colors")
+			if(check_rights(R_EVENT|R_FUN))
+				var/cred = input(usr, "Write rgb for red (security) windows, or nothing to leave it default", "Changing colors", "") as text|null
+				var/cbar = input(usr, "Write rgb for bar windows, or nothing to leave it default:", "Changing colors", "") as text|null
+				var/cprl = input(usr, "Write rgb for purple (science) windows, or nothing to leave it default:", "Changing colors", "") as text|null
+				var/cbrwn = input(usr, "Write rgb for brown (cargo) windows, or nothing to leave it default:", "Changing colors", "") as text|null
+				var/cgrn = input(usr, "Write rgb for green (hydro) windows, or nothing to leave it default:", "Changing colors", "") as text|null
+				var/cbl = input(usr, "Write rgb for blue (medbay) windows, or nothing to leave it default:", "Changing colors", "") as text|null
+
+				color_windows_init(cred, cbar, cprl, cbrwn, cgrn, cbl)
 		if("global_sound_speed")
 			if(!check_rights(R_SOUNDS))
 				return

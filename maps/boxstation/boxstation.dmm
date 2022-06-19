@@ -6516,15 +6516,8 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -9022,7 +9015,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "apz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -9936,10 +9929,6 @@
 	icon_state = "floorgrime"
 	},
 /area/station/security/prison)
-"arh" = (
-/obj/structure/window/reinforced,
-/turf/simulated/wall,
-/area/station/security/brig)
 "arj" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet,
@@ -10843,7 +10832,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "asT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -13369,7 +13358,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "axT" = (
 /obj/item/weapon/storage/briefcase,
 /turf/simulated/floor/plating{
@@ -13900,7 +13889,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "ayW" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/machinery/camera{
@@ -14953,16 +14942,6 @@
 /area/station/storage/tech/north)
 "aAW" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -14970,6 +14949,9 @@
 	id = "Secure Gate";
 	name = "Security Blast Door";
 	opacity = 0
+	},
+/obj/structure/window/reinforced{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/security/lobby)
@@ -17936,7 +17918,7 @@
 	dir = 5;
 	icon_state = "darkredfull"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "aGU" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -21557,15 +21539,8 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -26791,8 +26766,14 @@
 	},
 /area/station/rnd/hallway)
 "aXn" = (
-/turf/simulated/wall,
-/area/station/bridge)
+/obj/machinery/computer/scan_consolenew,
+/obj/machinery/alarm{
+	pixel_y = 23
+	},
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/station/medical/genetics)
 "aXo" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -27256,7 +27237,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "aYh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -27745,7 +27726,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "aZa" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -28792,7 +28773,7 @@
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "baS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -28810,7 +28791,7 @@
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "baV" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
@@ -31135,7 +31116,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "bfa" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -31384,9 +31365,6 @@
 	name = "Meeting Room Window Shields";
 	opacity = 0
 	},
-/obj/structure/window/reinforced{
-	dir = 5
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -31397,6 +31375,9 @@
 	},
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge/meeting_room)
 "bft" = (
@@ -33339,7 +33320,7 @@
 	dir = 1;
 	icon_state = "red"
 	},
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "bjq" = (
 /obj/structure/object_wall/mining{
 	icon_state = "5-7"
@@ -33814,7 +33795,7 @@
 	dir = 5;
 	icon_state = "red"
 	},
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "bkr" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/book/manual/wiki/security_space_law,
@@ -35102,7 +35083,7 @@
 	dir = 4;
 	icon_state = "red"
 	},
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "bmw" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -35757,7 +35738,7 @@
 	dir = 4;
 	icon_state = "red"
 	},
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "bnS" = (
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop,
@@ -35977,9 +35958,6 @@
 /area/station/cargo/office)
 "bon" = (
 /obj/machinery/dna_scannernew,
-/obj/machinery/alarm{
-	pixel_y = 23
-	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -36031,7 +36009,7 @@
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "bov" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/three,
@@ -36114,7 +36092,7 @@
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "boA" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave,
@@ -36857,7 +36835,7 @@
 	dir = 4;
 	icon_state = "red"
 	},
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "bqc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -36921,7 +36899,7 @@
 	dir = 1;
 	icon_state = "warndark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "bqi" = (
 /obj/machinery/light{
 	dir = 8
@@ -37012,7 +36990,7 @@
 	dir = 1;
 	icon_state = "warndark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "bqs" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -37214,7 +37192,7 @@
 	dir = 1;
 	icon_state = "warndark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "bqH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -37407,7 +37385,7 @@
 	dir = 1;
 	icon_state = "warndark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "bqX" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
@@ -37926,12 +37904,12 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "brW" = (
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "brX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -38051,7 +38029,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "bsh" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/lights/mixed,
@@ -39642,7 +39620,7 @@
 	dir = 4;
 	icon_state = "darkredcorners"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "bvf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -39652,7 +39630,7 @@
 	dir = 1;
 	icon_state = "darkred"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "bvg" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
@@ -39779,7 +39757,7 @@
 	dir = 1;
 	icon_state = "darkredcorners"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "bvs" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -44939,10 +44917,6 @@
 /turf/simulated/floor/carpet/purple,
 /area/station/civilian/theatre)
 "bEG" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12
-	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitepurple"
@@ -57452,14 +57426,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
-"cjY" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/turf/simulated/floor/plating,
-/area/station/civilian/library)
 "cjZ" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -57791,12 +57757,6 @@
 	icon_state = "darkyellow"
 	},
 /area/station/engineering/chiefs_office)
-"ckX" = (
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/turf/simulated/floor/grass,
-/area/station/civilian/garden)
 "cla" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench,
 /turf/simulated/floor{
@@ -62244,7 +62204,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "cwN" = (
 /turf/simulated/floor/plating/airless{
 	dir = 6;
@@ -66378,8 +66338,7 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "cJO" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/grass,
@@ -66798,7 +66757,7 @@
 /area/station/maintenance/atmos)
 "cLl" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/structure/window/basic{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
@@ -68786,7 +68745,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "eDP" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -68886,7 +68845,7 @@
 	dir = 8;
 	icon_state = "red"
 	},
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "eKs" = (
 /obj/machinery/door/firedoor,
 /obj/structure/extinguisher_cabinet{
@@ -69409,7 +69368,7 @@
 /turf/simulated/floor{
 	icon_state = "red"
 	},
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "fub" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 4;
@@ -69861,7 +69820,7 @@
 	dir = 10
 	},
 /turf/simulated/floor,
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "fUg" = (
 /obj/machinery/newscaster{
 	pixel_y = -28
@@ -69959,16 +69918,9 @@
 	},
 /area/station/rnd/tox_launch)
 "gab" = (
-/obj/machinery/door/airlock/security{
-	name = "Security Checkpoint";
-	req_access = list(1)
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "redfull"
-	},
-/area/station/medical/reception)
+/obj/machinery/status_display,
+/turf/simulated/wall,
+/area/station/security/checkpoint)
 "gbb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -70638,7 +70590,7 @@
 	dir = 10;
 	icon_state = "red"
 	},
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "gRB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -73141,7 +73093,7 @@
 	dir = 8;
 	icon_state = "red"
 	},
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "jCR" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -73258,7 +73210,7 @@
 	dir = 9;
 	icon_state = "red"
 	},
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "jKb" = (
 /obj/structure/table,
 /obj/item/ashtray/glass,
@@ -73471,7 +73423,7 @@
 	dir = 8;
 	icon_state = "red"
 	},
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "jXv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -73568,7 +73520,7 @@
 	dir = 6;
 	icon_state = "red"
 	},
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "kdQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -75748,32 +75700,6 @@
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
-"mKS" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Prison Gate";
-	name = "Security Blast Door";
-	opacity = 0
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/security/brig)
 "mLb" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/item/weapon/reagent_containers/glass/bucket,
@@ -76577,7 +76503,7 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/medical/reception)
+/area/station/security/checkpoint)
 "nNV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -81706,7 +81632,7 @@
 	name = "KEEP CLEAR: DOCKING AREA"
 	},
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "uul" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -81744,7 +81670,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "uwT" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -82862,14 +82788,8 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "xxA" = (
-/obj/structure/window/basic{
-	dir = 5
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/station/cargo/office)
+/turf/simulated/floor,
+/area/station/security/checkpoint)
 "xAL" = (
 /obj/machinery/alarm{
 	dir = 8;
@@ -83171,15 +83091,8 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -96192,7 +96105,7 @@ bkW
 bkW
 bkW
 eFk
-xxA
+buD
 cri
 bkW
 jOv
@@ -97460,14 +97373,14 @@ aah
 aah
 aah
 aah
-aRn
-asP
-asP
+aFG
+eDb
+eDb
 usq
-aRn
-aRn
-aRn
-apT
+aFG
+aFG
+aFG
+aFG
 aWu
 bbd
 xrW
@@ -97717,14 +97630,14 @@ aRn
 aRn
 aRn
 aRn
-aRn
+aFG
 apy
 apy
 baR
 bqh
 apy
 uvb
-apT
+aFG
 buZ
 bbd
 xrW
@@ -97974,14 +97887,14 @@ bqO
 bqs
 hQb
 brm
-aRn
+aFG
 bve
 asS
 baU
 bqr
 brV
 aYZ
-apT
+aFG
 bvT
 bbd
 bdB
@@ -98238,7 +98151,7 @@ bou
 bqG
 brW
 beZ
-apT
+aFG
 btx
 bbd
 xrW
@@ -98488,14 +98401,14 @@ aVq
 aVq
 aVq
 btd
-aRn
+aFG
 bvr
 ayV
 boz
 bqW
 bsg
 aYg
-apT
+aFG
 bsY
 bbd
 xrW
@@ -98745,14 +98658,14 @@ aYe
 aYe
 aVq
 tWb
-aRn
-aRn
-aRn
-aRn
-aRn
-tPb
-aRn
-apT
+aFG
+aFG
+aFG
+aFG
+aFG
+gab
+aFG
+aFG
 apT
 bbv
 cEp
@@ -109773,7 +109686,7 @@ ajc
 aih
 alE
 amA
-mKS
+aNF
 tSN
 anT
 anl
@@ -110582,7 +110495,7 @@ bbo
 aGZ
 aaa
 aaa
-aMR
+aNU
 iPb
 aSY
 iZb
@@ -110839,7 +110752,7 @@ bbo
 aGZ
 aaa
 aaa
-aXn
+aUG
 azV
 aTc
 aAk
@@ -111572,7 +111485,7 @@ adM
 ajq
 akf
 amD
-arh
+adM
 ani
 ani
 ani
@@ -112857,7 +112770,7 @@ adM
 ajv
 akh
 akw
-mKS
+aNF
 anH
 amw
 anl
@@ -116493,7 +116406,7 @@ aRR
 aGZ
 aaa
 aaa
-aXn
+aUG
 azV
 baV
 aAk
@@ -116750,7 +116663,7 @@ aRR
 aGZ
 aaa
 aaa
-aMR
+aNU
 iSb
 aSE
 oIb
@@ -118038,8 +117951,8 @@ bfA
 bfA
 bfA
 bfA
-bhN
 bfA
+bhN
 jeb
 aPE
 aKx
@@ -118295,7 +118208,7 @@ bjy
 bjy
 bBs
 bBs
-bjy
+bBs
 bjy
 bjy
 bFG
@@ -118826,7 +118739,7 @@ qsb
 bvF
 bFh
 bKf
-bIS
+aRS
 bLS
 bCa
 bIU
@@ -122413,13 +122326,13 @@ bjt
 bNd
 bcb
 coo
-bjk
+aFG
 eDb
 eDb
 eDb
-gab
-bjk
-bjk
+afW
+aFG
+aFG
 bjk
 mgb
 bti
@@ -122670,7 +122583,7 @@ bjt
 bNd
 bcb
 cpX
-bjk
+aFG
 jJb
 jXb
 eKb
@@ -122927,10 +122840,10 @@ bjt
 bNd
 bcb
 cpi
-bjk
+aFG
 bjp
 cwM
-cwC
+xxA
 fUb
 ftb
 nNb
@@ -123184,7 +123097,7 @@ bjt
 bNd
 bcb
 cpX
-bjk
+aFG
 bkq
 bmv
 bnR
@@ -123441,13 +123354,13 @@ bjd
 bNd
 bcb
 bRF
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
-bjk
+aFG
+aFG
+aFG
+aFG
+aFG
+aFG
+aFG
 aOO
 aOO
 aOO
@@ -123742,7 +123655,7 @@ ryb
 aky
 rUb
 sdb
-ckA
+sib
 sib
 sCb
 ckA
@@ -123959,8 +123872,8 @@ bjd
 bXr
 tyb
 eEb
-bVa
-blb
+bqm
+aXn
 kHb
 kqb
 buc
@@ -124216,7 +124129,7 @@ bqm
 bqm
 dYb
 uhb
-bqm
+bVa
 bon
 kIb
 mPb
@@ -128067,7 +127980,7 @@ aup
 azm
 bPu
 bMv
-cjY
+gPg
 bXV
 cbR
 cxk
@@ -128838,7 +128751,7 @@ aIU
 bHE
 bPu
 bMv
-cjY
+gPg
 coN
 czO
 coQ
@@ -131925,15 +131838,15 @@ bSW
 bWu
 bZb
 ccQ
-ckX
+cJO
 cwP
 cxc
-ckX
+cJO
 cdc
-ckX
+cJO
 cIN
 cCf
-ckX
+cJO
 ccQ
 bZp
 bFo
