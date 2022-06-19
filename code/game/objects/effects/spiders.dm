@@ -140,7 +140,7 @@
 		die()
 
 /obj/effect/spider/spiderling/proc/cancel_vent_move()
-	forceMove(entry_vent)
+	forceMove(entry_vent.loc)
 	entry_vent = null
 
 /obj/effect/spider/spiderling/proc/vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
@@ -148,7 +148,7 @@
 		cancel_vent_move()
 		return
 
-	forceMove(exit_vent)
+	forceMove(exit_vent.loc)
 	var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
 	addtimer(CALLBACK(src, .proc/do_vent_move, exit_vent, travel_time), travel_time)
 
@@ -177,7 +177,7 @@
 	else if(entry_vent)
 		if(get_dist(src, entry_vent) <= 1)
 			var/list/vents = list()
-			var/datum/pipeline/entry_vent_parent = entry_vent.parents[1]
+			var/datum/pipeline/entry_vent_parent = entry_vent.PARENT1
 			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
 				vents.Add(temp_vent)
 			if(!vents.len)
