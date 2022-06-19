@@ -150,6 +150,8 @@
 	// The usual species for the station
 	var/is_common = FALSE
 
+	var/default_mood_event
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -239,6 +241,9 @@
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
+	if(default_mood_event)
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "species", default_mood_event)
+
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -251,6 +256,7 @@
 		H.clear_emote(emote)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
+	SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "species")
 
 /datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
 	return
@@ -999,6 +1005,8 @@
 		/datum/emote/robot/buzz,
 	)
 
+	default_mood_event = /datum/mood_event/machine
+
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	..()
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
@@ -1110,15 +1118,15 @@
 	min_age = 1
 	max_age = 1000
 
+	default_mood_event = /datum/mood_event/undead
+
 /datum/species/skeleton/on_gain(mob/living/carbon/human/H)
 	..()
 	H.gender = NEUTER
 	H.remove_status_flags(CANSTUN|CANPARALYSE)
-	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, SKELETON, /datum/mood_event/undead)
 
 /datum/species/skeleton/on_loose(mob/living/carbon/human/H, new_species)
 	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
-	SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, SKELETON)
 	..()
 
 /datum/species/skeleton/regen(mob/living/carbon/human/H)
@@ -1316,6 +1324,8 @@
 
 	is_common = TRUE
 
+	default_mood_event = /datum/mood_event/golem
+
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
 	..()
 	// Clothing on the Golem is created before the hud_list is generated in the atom
@@ -1392,6 +1402,8 @@
 	min_age = 25
 	max_age = 85
 
+	default_mood_event = /datum/mood_event/undead
+
 /datum/species/zombie/on_gain(mob/living/carbon/human/H)
 	..()
 
@@ -1402,8 +1414,6 @@
 
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
-
-	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, ZOMBIE, /datum/mood_event/undead)
 
 	add_zombie(H)
 
@@ -1417,8 +1427,6 @@
 		qdel(H.r_hand)
 
 	remove_zombie(H)
-
-	SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, ZOMBIE)
 
 	..()
 
@@ -1637,6 +1645,8 @@
 	max_age = 10
 
 	is_common = FALSE
+
+	default_mood_event = /datum/mood_event/homunculus
 
 /datum/species/homunculus/on_gain(mob/living/carbon/human/H)
 	..()

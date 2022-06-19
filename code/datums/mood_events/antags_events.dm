@@ -31,11 +31,3 @@
 	mood_change = 100
 	special_screen_obj = "mood_alien"
 	hidden = TRUE
-
-/datum/mood_event/homunculus
-	description = "<span class='bold nicegreen'>KILL ME PLEASE!!!</span>"
-	mood_change = 100
-
-/datum/mood_event/undead
-	description = "<span class='shadowling'>I'm the dead guy.</span>"
-	mood_change = 100
