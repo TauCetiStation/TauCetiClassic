@@ -245,7 +245,7 @@
 	projectile_type = /obj/item/projectile/bullet/rifle2
 
 /obj/item/ammo_casing/c763mm
-	name = "A 7.63 bullet casing."
+	name = "7.63"
 	desc = "7.63"
 	icon = 'icons/obj/ammo.dmi'
 	caliber = "7.63mm"
