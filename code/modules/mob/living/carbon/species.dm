@@ -1422,9 +1422,6 @@
 
 	..()
 
-/datum/species/zombie/regen(mob/living/carbon/human/H)
-	H.nutrition = NUTRITION_LEVEL_NORMAL
-
 /datum/species/zombie/tajaran
 	name = ZOMBIE_TAJARAN
 
