@@ -20,6 +20,7 @@
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/move_delay_add = 0 // movement delay to add
+	var/speed_mod = 0
 
 	status_flags = CANPARALYSE|CANPUSH
 	var/heal_rate = 1
@@ -46,6 +47,9 @@
 	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
 	hud.remove_hud_from(src)
 	return ..()
+
+/mob/living/carbon/xenomorph/movement_delay()
+	return (move_delay_add + config.alien_delay + speed_mod)
 
 /mob/living/carbon/xenomorph/adjustToxLoss(amount)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0

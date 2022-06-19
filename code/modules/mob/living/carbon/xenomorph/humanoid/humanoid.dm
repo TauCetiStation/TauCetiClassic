@@ -39,9 +39,6 @@
 	real_name = name
 	. = ..()
 
-/mob/living/carbon/xenomorph/humanoid/movement_delay()
-	return (move_delay_add + config.alien_delay)
-
 /mob/living/carbon/xenomorph/humanoid/can_pickup(obj/O)
 	return FALSE
 
