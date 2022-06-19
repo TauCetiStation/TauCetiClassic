@@ -1421,8 +1421,7 @@
 
 	m_intent = intent
 	if(hud_used)
-		if(hud_used.move_intent)
-			hud_used.move_intent.icon_state = intent == MOVE_INTENT_WALK ? "walking" : "running"
+		move_intent?.update_icon(src)
 
 	return TRUE
 
