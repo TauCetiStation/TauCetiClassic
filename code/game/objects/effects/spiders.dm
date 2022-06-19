@@ -184,7 +184,7 @@
 				entry_vent = null
 				return
 			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
-			if(prob(50))
+			if(prob(40))
 				visible_message("<B>[src] scrambles into the ventilation ducts!</B>", \
 							"<span class='notice'>You hear something scampering through the ventilation ducts.</span>")
 
@@ -193,7 +193,7 @@
 	//=================
 
 	else if(prob(33))
-		var/list/nearby = oview(2, src)
+		var/list/nearby = oview(1, src)
 		if(nearby.len)
 			var/target_atom = pick(nearby)
 			walk_to(src, target_atom)
@@ -201,7 +201,7 @@
 				visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
 	else if(prob(10))
 		//ventcrawl!
-		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(5,src))
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(3,src))
 			if(!v.welded)
 				entry_vent = v
 				walk_to(src, entry_vent, 1)
