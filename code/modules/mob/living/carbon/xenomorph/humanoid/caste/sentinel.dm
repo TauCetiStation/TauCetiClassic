@@ -5,7 +5,7 @@
 	health = 200
 	storedPlasma = 150
 	max_plasma = 300
-	speed_mod = 1
+	speed = 1
 	icon_state = "aliens_s"
 	plasma_rate = 10
 

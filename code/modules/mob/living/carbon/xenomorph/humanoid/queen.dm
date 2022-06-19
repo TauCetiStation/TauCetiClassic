@@ -10,7 +10,7 @@
 	status_flags = CANPARALYSE
 	heal_rate = 4
 	plasma_rate = 20
-	speed_mod = 3
+	speed = 3
 	neurotoxin_delay = 10
 	ventcrawler = 0
 	w_class = SIZE_GYGANT

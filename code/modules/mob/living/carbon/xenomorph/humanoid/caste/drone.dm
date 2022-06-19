@@ -5,7 +5,7 @@
 	health = 160
 	icon_state = "aliend_s"
 	plasma_rate = 15
-	speed_mod = 1
+	speed = 1
 	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds,
 						/obj/effect/proc_holder/spell/targeted/xeno_whisp,
 						/obj/effect/proc_holder/spell/targeted/transfer_plasma,

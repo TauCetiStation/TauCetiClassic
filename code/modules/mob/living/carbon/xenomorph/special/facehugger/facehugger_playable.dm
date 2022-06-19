@@ -19,7 +19,7 @@
 	storedPlasma = 50
 	max_plasma = 50
 
-	speed_mod = -1
+	speed = -1
 
 	density = FALSE
 	w_class = SIZE_SMALL
