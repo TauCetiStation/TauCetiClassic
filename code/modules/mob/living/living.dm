@@ -946,7 +946,8 @@
 		if(CM.on_fire)
 			if(!CM.canmove && !CM.crawling)	return
 			CM.fire_stacks -= 5
-			CM.weakened = 5
+			CM.Stun(5, FALSE)
+			CM.Weaken(5)
 			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
 				"<span class='rose'>You stop, drop, and roll!</span>")
 			if(fire_stacks <= 0)

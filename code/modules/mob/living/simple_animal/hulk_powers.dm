@@ -88,8 +88,8 @@
 		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(usr, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
-			usr.weakened += 10
-			usr.stunned += 5
+			usr.AdjustStunned(5, FALSE)
+			usr.AdjustWeakened(10)
 
 		usr.density = TRUE
 		usr.canmove = 1
@@ -101,8 +101,8 @@
 	if (istype(usr.loc,/obj))
 		var/obj/container = usr.loc
 		to_chat(usr, "<span class='warning'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-		usr.paralysis += 3
-		usr.weakened += 5
+		usr.AdjustParalysis(3)
+		usr.AdjustWeakened(5)
 		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
 		playsound(usr, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		var/wiggle = 6
@@ -261,8 +261,8 @@
 		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(usr, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
-			usr.weakened += 10
-			usr.stunned += 5
+			usr.AdjustStunned(5, FALSE)
+			usr.AdjustWeakened(10)
 
 		usr.density = TRUE
 		usr.canmove = 1
@@ -274,8 +274,8 @@
 	if (istype(usr.loc,/obj))
 		var/obj/container = usr.loc
 		to_chat(usr, "<span class='warning'>You dash and slam your head against the inside of [container]! Ouch!</span>")
-		usr.paralysis += 3
-		usr.weakened += 5
+		usr.AdjustParalysis(3)
+		usr.AdjustWeakened(5)
 		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
 		playsound(usr, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		var/wiggle = 6
