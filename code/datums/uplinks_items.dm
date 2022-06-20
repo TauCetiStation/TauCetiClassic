@@ -657,6 +657,12 @@
 	item = /obj/item/device/chameleon
 	cost = 5
 
+/datum/uplink_item/stealthy_tools/binoculars
+	name = "Binoculars"
+	desc = "Optical device for observing remote objects"
+	item = /obj/item/device/binoculars
+	cost = 2
+
 /datum/uplink_item/stealthy_tools/camera_bug
 	name = "Camera Bug"
 	desc = "Enables you to view all cameras on the network and track a target. Bugging cameras allows you to disable them remotely"
