@@ -79,6 +79,9 @@
 		to_chat(user, "<span class='warning'>На стене растет грибок.</span>")
 
 /turf/simulated/wall/update_icon()
+	queue_smooth_neighbors(src)
+	queue_smooth(src)
+
 	if(!damage_overlays[1]) //list hasn't been populated
 		generate_overlays()
 

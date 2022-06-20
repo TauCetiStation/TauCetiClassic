@@ -23,13 +23,18 @@
 /obj/structure/window/proc/update_color(color)
 	var/static/list/windows_icon_cache = list()
 
-	var/cached_icon_string = "[is_fulltile() ? "" : dir][color]||[icon_state]"
+	if(!is_fulltile() || !color)
+		underlays.Cut()
+		current_color = src.color = color
+		return
+
+	var/cached_icon_string = "[color]||[icon_state]"
 	var/image/filler
 
 	if(cached_icon_string in windows_icon_cache)
 		filler = windows_icon_cache[cached_icon_string]
 	else
-		var/icon/I = is_fulltile() ? new('icons/obj/window.dmi', "[icon_state]-filler") : new('icons/obj/window.dmi', "[icon_state]-filler", dir)
+		var/icon/I = new('icons/obj/window.dmi', "[icon_state]-filler")
 
 		var/list/mc = ReadRGB(color)
 		filler = image(I, icon_state)
@@ -38,13 +43,13 @@
 		windows_icon_cache[cached_icon_string] = filler
 
 	filler.alpha = 140
-	current_color = filler.color
+	current_color = color
 
 	underlays.Cut()
 	underlays += filler
 
 /obj/structure/window/check_can_smooth()
-	return is_fulltile()
+	return is_fulltile() && anchored
 
 /obj/structure/window/proc/take_damage(damage = 0, damage_type = BRUTE, sound_effect = 1)
 	var/initialhealth = health
@@ -231,14 +236,14 @@
 		change_paintjob(W, user)
 
 	else if(isscrewdriver(W))
-		if(reinf && state >= 1)
+		if(state >= 1)
 			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction/trained), message_self = "<span class='notice'>You fumble around, figuring out how to [state == 1 ? "fasten the window to the frame." : "unfasten the window from the frame."]</span>" ))
 				return
 			state = 3 - state
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>"))
 
-		else if(reinf && state == 0)
+		else if(state == 0)
 			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction/trained), message_self = "<span class='notice'>You fumble around, figuring out how to [anchored ? "unfasten the frame from the floor." : "fasten the frame to the floor."]</span>" ))
 				return
 			anchored = !anchored
@@ -247,16 +252,7 @@
 			to_chat(user, (anchored ? "<span class='notice'>You have fastened the frame to the floor.</span>" : "<span class='notice'>You have unfastened the frame from the floor.</span>"))
 			fastened_change()
 
-		else if(!reinf)
-			if(!handle_fumbling(user, src, SKILL_TASK_EASY,list(/datum/skill/construction/trained), message_self = "<span class='notice'>You fumble around, figuring out how to [anchored ? "fasten the window to the floor." : "unfasten the window."]</span>" ))
-				return
-			anchored = !anchored
-			update_nearby_icons()
-			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-			to_chat(user, (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>"))
-			fastened_change()
-
-	else if(iscrowbar(W) && reinf && state <= 1)
+	else if(iscrowbar(W) && state <= 1)
 		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction/trained), message_self = "<span class='notice'>You fumble around, figuring out how to [state ? "pry the window out of the frame." : "pry the window into the frame."]</span>" ))
 			return
 		state = 1 - state
@@ -452,7 +448,13 @@
 			for(var/turf/simulated/wall/W in orange(src, 1))
 				if(abs(x - W.x) - abs(y - W.y))             //doesn't count walls, placed diagonally to src
 					junction |= get_dir(src, W)
+					W.update_icon()
+		else
+			for(var/turf/simulated/wall/W in orange(src, 1))
+				if(abs(x - W.x) - abs(y - W.y))
+					W.update_icon()
 		icon_state = "[basestate][junction]"
+		update_color(current_color)
 
 		var/ratio = health / maxhealth
 		ratio = CEIL(ratio * 4) * 25
@@ -462,7 +464,6 @@
 			return
 		crack_overlay = image('icons/obj/window.dmi',"damage[ratio]",-(layer+0.1))
 		add_overlay(crack_overlay)
-		update_color(current_color)
 
 /obj/structure/window/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 800)
