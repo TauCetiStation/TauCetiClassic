@@ -145,7 +145,6 @@
 		if(field_type == "iron")
 			for(var/mob/living/silicon/M in T)
 				M.Stun(3)
-				M.Weaken(3)
 				cell.charge -= power_use
 				if(prob(5))
 					to_chat(M, "<span class='notice'>[pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]</span>")
@@ -247,7 +246,6 @@
 			success = 1
 			for(var/mob/living/silicon/R in T)
 				R.AdjustStunned(5)
-				R.AdjustWeakened(5)
 				R.visible_message("<span class='notice'>[bicon(R)] [R] begins to float in the air!</span>","You feel tingly and light, but it is difficult to move.")
 			//
 	//in case we have a bad field type
