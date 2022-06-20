@@ -89,7 +89,7 @@
 		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(usr, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
-			usr.AdjustStunned(5, FALSE)
+			usr.AdjustStunned(5)
 			usr.AdjustWeakened(10)
 
 		usr.density = TRUE
@@ -266,7 +266,7 @@
 		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(usr, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
-			usr.AdjustStunned(5, FALSE)
+			usr.AdjustStunned(5)
 			usr.AdjustWeakened(10)
 
 		usr.density = TRUE
