@@ -4445,6 +4445,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = 29
 	},
+/obj/item/device/binoculars,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurple"

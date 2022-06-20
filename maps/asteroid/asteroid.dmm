@@ -3109,6 +3109,13 @@
 	icon_state = "white"
 	},
 /area/asteroid/research_outpost/hallway)
+"gq" = (
+/obj/structure/table,
+/obj/random/tools/tech_supply,
+/obj/random/tools/tech_supply,
+/obj/item/device/binoculars,
+/turf/simulated/floor,
+/area/asteroid/mine/living_quarters)
 "gr" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -6867,6 +6874,7 @@
 	req_access = list(65)
 	},
 /obj/structure/rack,
+/obj/item/device/binoculars,
 /obj/item/weapon/wrench{
 	pixel_x = 3
 	},
@@ -7138,6 +7146,7 @@
 	req_access = list(65)
 	},
 /obj/structure/rack,
+/obj/item/device/binoculars,
 /obj/item/weapon/wrench{
 	pixel_x = 3
 	},
@@ -49328,7 +49337,7 @@ uo
 zF
 qv
 Au
-Au
+gq
 vq
 uo
 wn
@@ -49584,7 +49593,7 @@ lA
 uo
 wr
 qv
-Au
+gq
 Au
 vq
 zb

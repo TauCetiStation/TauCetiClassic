@@ -9208,6 +9208,9 @@
 /obj/item/weapon/mining_charge,
 /obj/item/weapon/mining_charge,
 /obj/item/weapon/mining_charge,
+/obj/item/device/binoculars{
+	pixel_y = 4
+	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidwarning"
 	},
@@ -26415,16 +26418,16 @@
 /obj/item/bluespace_crystal/artificial,
 /obj/item/bluespace_crystal/artificial,
 /obj/item/bluespace_crystal/artificial,
-/obj/item/clothing/glasses/science{
-	pixel_x = 2;
+/obj/item/device/gps/science{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/device/gps/science{
 	pixel_y = 6
 	},
-/obj/item/clothing/glasses/science{
-	pixel_x = 2;
-	pixel_y = 6
-	},
-/obj/item/device/gps/science,
-/obj/item/device/gps/science,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
+/obj/item/device/binoculars,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
