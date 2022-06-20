@@ -246,6 +246,7 @@
 		if (radiation > 100)
 			radiation = 100
 			if(!species.flags[RAD_ABSORB])
+				Stun(5)
 				Weaken(10)
 				if(!lying)
 					to_chat(src, "<span class='warning'>You feel weak.</span>")
@@ -809,6 +810,7 @@
 				if(prob(3))
 					Paralyse(10)
 				else
+					Stun(5)
 					Weaken(10)
 				setHalLoss(99)
 
@@ -1222,11 +1224,13 @@
 			visible_message("<span class='name'>[src]'s</span> body becomes limp.")
 		if (prob(2))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
+			Stun(10)
 			Weaken(20)
 
 	if(shock_stage >= 80)
 		if (prob(5))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
+			Stun(10)
 			Weaken(20)
 
 	if(shock_stage >= 120)
@@ -1236,9 +1240,11 @@
 
 	if(shock_stage == 150)
 		me_emote("can no longer stand, collapsing!")
+		Stun(10)
 		Weaken(20)
 
 	if(shock_stage >= 150)
+		Stun(10)
 		Weaken(20)
 
 /mob/living/carbon/human/proc/handle_heart_beat()

@@ -79,6 +79,7 @@
 					if(snd)
 						snd = 0
 						playsound(M, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
+					M.Stun(1)
 					M.Weaken(2)
 					for(var/i=0, i<6, i++)
 						spawn(i)
@@ -190,6 +191,7 @@
 					if(istype(T,/turf/simulated/wall/r_wall))
 						playsound(H, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 						hit = 1
+						H.Stun(5)
 						H.Weaken(10)
 						H.take_overall_damage(25, used_weapon = "reinforced wall")
 					else
@@ -201,10 +203,12 @@
 							else
 								hit = 1
 								W.take_damage(50)
+								H.Stun(2)
 								H.Weaken(5)
 						else
 							hit = 1
 							W.take_damage(25)
+							H.Stun(2)
 							H.Weaken(5)
 			if(i > 20)
 				usr.canmove = 0
@@ -234,6 +238,7 @@
 			else if(i > 6)
 				for(var/mob/living/M in T.contents)
 					playsound(M, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
+					H.Stun(2)
 					M.Weaken(5)
 			if(usr.lying)
 				break
@@ -372,6 +377,7 @@
 		for(var/mob/living/M in range(2, T))
 			if( (M != usr) && !M.lying)
 				playsound(M, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
+				M.Stun(1)
 				M.Weaken(2)
 		for(var/obj/structure/S in range(2, T))
 			if(prob(40))
@@ -457,6 +463,7 @@
 				M.take_overall_damage(1.5, used_weapon = "Tail")
 			playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 			if(prob(3))
+				M.Stun(1)
 				M.Weaken(2)
 		sleep(1)
 
@@ -515,6 +522,7 @@
 /obj/item/projectile/energy/hulkspit/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
+		M.Stun(1)
 		M.Weaken(2)
 		M.adjust_fire_stacks(20)
 		M.IgniteMob()
@@ -678,6 +686,7 @@
 					continue
 			M.AdjustStuttering(2)
 			M.ear_deaf += 2
+			M.Stun(1)
 			M.Weaken(2)
 			M.make_jittery(500)
 

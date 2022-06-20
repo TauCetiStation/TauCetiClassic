@@ -16,6 +16,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		return FALSE
 	if(!lying)
 		to_chat(src, "<span class='warning'>The sudden rush of air knocks you over!</span>")
+	Stun(1)
 	Weaken(5)
 	last_airflow_stun = world.time
 
@@ -263,7 +264,13 @@ Contains helper procs for airflow, handled in /connection_group.
 /mob/airflow_hit(atom/A)
 	visible_message("<span class='danger'>\The [src] slams into \a [A]!</span>", blind_message = "<span class='danger'>You hear a loud slam!</span>")
 	playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, 25)
-	var/weak_amt = isitem(A) ? A:w_class : rand(1, 5) //Heheheh
+	var/weak_amt
+	if(isitem(A))
+		var/obj/item/I = A
+		weak_amt = I.w_class
+	else
+		weak_amt = rand(1, 5)
+	Stun(weak_amt * 0.5)
 	Weaken(weak_amt)
 	. = ..()
 

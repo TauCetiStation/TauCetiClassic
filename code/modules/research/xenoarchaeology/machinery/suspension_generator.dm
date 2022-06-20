@@ -136,7 +136,7 @@
 		var/turf/T = get_turf(suspension_field)
 		if(field_type == "carbon")
 			for(var/mob/living/carbon/M in T)
-				M.Stun(3, FALSE)
+				M.Stun(3)
 				M.Weaken(3)
 				cell.charge -= power_use
 				if(prob(5))
@@ -144,7 +144,7 @@
 
 		if(field_type == "iron")
 			for(var/mob/living/silicon/M in T)
-				M.Stun(3, FALSE)
+				M.Stun(3)
 				M.Weaken(3)
 				cell.charge -= power_use
 				if(prob(5))
@@ -157,7 +157,7 @@
 			I.loc = suspension_field
 
 		for(var/mob/living/simple_animal/M in T)
-			M.Stun(3, FALSE)
+			M.Stun(3)
 			M.Weaken(3)
 			cell.charge -= power_use
 			if(prob(5))

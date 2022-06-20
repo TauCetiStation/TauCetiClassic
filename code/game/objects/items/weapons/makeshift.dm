@@ -151,7 +151,7 @@
 /obj/item/weapon/melee/cattleprod/attack(mob/M, mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with [src]!</span>")
-		user.Weaken(stunforce*3)
+		user.apply_effect(120, AGONY, 0)
 		deductcharge(hitcost)
 		return
 
