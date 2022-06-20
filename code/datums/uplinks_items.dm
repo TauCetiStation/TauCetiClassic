@@ -661,7 +661,7 @@
 	name = "Binoculars"
 	desc = "Optical device for observing remote objects"
 	item = /obj/item/device/binoculars
-	cost = 2
+	cost = 1
 
 /datum/uplink_item/stealthy_tools/camera_bug
 	name = "Camera Bug"
