@@ -38,7 +38,9 @@
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>You grab the [src] on the wrong side.</span>")
-		user.apply_effect(agony * 2, AGONY, 0)
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.apply_effect(agony * 2, AGONY, 0)
 		discharge()
 		return
 	if(!handle_fumbling(user, src, SKILL_TASK_VERY_EASY, list(/datum/skill/police/master), "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>", can_move = TRUE))
@@ -56,7 +58,9 @@
 /obj/item/weapon/melee/baton/attack(mob/M, mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with the [src]!</span>")
-		user.apply_effect(agony * 2, AGONY, 0)
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.apply_effect(agony * 2, AGONY, 0)
 		discharge()
 		return
 

@@ -269,7 +269,7 @@
 					M.log_combat(user, "slammed against [name]")
 				if(2)
 					if (prob(50))
-						M.stun(1)
+						M.Stun(1)
 						M.Weaken(1)
 					M.apply_damage(8)
 					take_damage(9)

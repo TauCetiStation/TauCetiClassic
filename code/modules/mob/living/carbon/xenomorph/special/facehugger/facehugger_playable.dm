@@ -274,7 +274,7 @@ This is chestburster mechanic for damaging
 			last_bite = world.time
 			M.adjustBruteLoss(rand(35, 65))
 			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
-			H.Stun(8)
+			M.Stun(8)
 			M.Weaken(8)
 
 /obj/item/weapon/larva_bite/proc/confirm()

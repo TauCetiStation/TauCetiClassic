@@ -238,7 +238,7 @@
 			else if(i > 6)
 				for(var/mob/living/M in T.contents)
 					playsound(M, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
-					H.Stun(2)
+					M.Stun(2)
 					M.Weaken(5)
 			if(usr.lying)
 				break
