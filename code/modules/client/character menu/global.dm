@@ -24,7 +24,6 @@
 	//	if(unlock_content)
 	//		. += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
 	//		. += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
-	//		. += "<B>Ghost Orbit: </B> <a href='?_src_=prefs;task=input;preference=ghostorbit'>[ghost_orbit]</a><br>"
 	. += 			"</table>"
 	. += 		"</td>"
 	. += 		"<td>"
@@ -110,12 +109,6 @@
 				var/new_metadata = sanitize(input(user, "Enter any OOC information you'd like others to see:", "Game Preference", input_default(metadata)) as message|null)
 				if(new_metadata)
 					metadata = new_metadata
-
-			//if(href_list["preference"] == "ghostorbit")
-			//	if(unlock_content)
-			//		var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null) as null|anything in ghost_orbits
-			//		if(new_orbit)
-			//			ghost_orbit = new_orbit
 
 		if("reset")
 			UI_style_color = initial(UI_style_color)
