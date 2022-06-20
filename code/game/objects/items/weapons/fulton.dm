@@ -36,7 +36,7 @@
 	var/image/balloon
 	if(isliving(AM))
 		var/mob/living/M = AM
-		W.Stun(16)
+		M.Stun(16)
 		M.Weaken(16) // Keep them from moving during the duration of the extraction.
 		if(M && M.buckled)
 			M.buckled.unbuckle_mob()
