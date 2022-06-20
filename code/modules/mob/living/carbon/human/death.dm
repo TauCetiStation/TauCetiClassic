@@ -152,7 +152,7 @@
 		h_style = "Bald"
 
 	set_species(SKELETON)
-	status_flags |= DISFIGURED
+	add_status_flags(DISFIGURED)
 	regenerate_icons()
 	return
 
@@ -171,7 +171,7 @@
 
 	update_hair()
 	mutations.Add(HUSK)
-	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
+	add_status_flags(DISFIGURED)	//makes them unknown without fucking up other stuff like admintools
 	update_body()
 
 /mob/living/carbon/human/proc/Drain()

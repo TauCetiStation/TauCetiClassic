@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 38
+#define SAVEFILE_VERSION_MAX 39
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -250,6 +250,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			be_role -= "Raider"
 
 		S["be_role"] << be_role
+	
+	if(current_version < 39)
+		S["ghost_orbit"] << null
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
@@ -323,7 +326,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["default_slot"]      >> default_slot
 	S["chat_toggles"]      >> chat_toggles
 	S["toggles"]           >> toggles
-	S["ghost_orbit"]       >> ghost_orbit
 	S["chat_ghostsight"]   >> chat_ghostsight
 	S["randomslot"]        >> randomslot
 	S["permamuted"]        >> permamuted
@@ -373,7 +375,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
-	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
 	chat_ghostsight	= sanitize_integer(chat_ghostsight, CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_NEARBYMOBS, CHAT_GHOSTSIGHT_ALL)
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
@@ -446,7 +447,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["default_slot"]      << default_slot
 	S["toggles"]           << toggles
 	S["chat_toggles"]      << chat_toggles
-	S["ghost_orbit"]       << ghost_orbit
 	S["chat_ghostsight"]   << chat_ghostsight
 	S["randomslot"]        << randomslot
 	S["permamuted"]        << permamuted

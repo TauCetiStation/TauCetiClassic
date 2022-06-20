@@ -138,7 +138,6 @@
 // WHY this self_message/blind_message/deaf_message so inconsistent as positional args!
 // todo:
 // * need to combine visible_message/audible_message to one proc (something like show_message) (maybe it will be a mess because of *_distance ?)
-// * replace show_message in /emote()'s & custom_emote()
 // * need some version combined with playsound (one cycle for audio message and sound)
 /mob/visible_message(message, self_message, blind_message, viewing_distance = world.view, list/ignored_mobs)
 	for(var/mob/M in (viewers(get_turf(src), viewing_distance) - ignored_mobs)) //todo: get_hearers_in_view() (tg)
@@ -834,6 +833,23 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
+
+// ======STATUS_FLAGS=======
+/mob/proc/remove_status_flags(remove_flags)
+	if(remove_flags & CANSTUN)
+		stunned = 0
+	if(remove_flags & CANWEAKEN)
+		weakened = 0
+	if(remove_flags & CANPARALYSE)
+		paralysis = 0
+	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN))
+		update_canmove()
+	status_flags &= ~remove_flags
+
+/mob/proc/add_status_flags(add_flags)
+	if(add_flags & GODMODE)
+		stuttering = 0
+	status_flags |= add_flags
 
 // ========== STUN ==========
 /mob/proc/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
