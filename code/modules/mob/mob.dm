@@ -743,9 +743,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 // We need speed out of this proc, thats why using incapacitated() helper here is a bad idea.
 /mob/proc/update_canmove(no_transform = FALSE)
 
-	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+	var/ko = paralysis || stat || (status_flags & FAKEDEATH)
 
-	lying = (ko || crawling) && !captured && !buckled && !pinned.len
+	lying = (ko || weakened || crawling) && !captured && !buckled && !pinned.len
 	canmove = !(ko || stunned || captured || pinned.len)
 	anchored = captured || pinned.len
 
