@@ -4,8 +4,6 @@
 	if(check_rights(R_ADMIN, 0))
 		has_unlimited_silicon_privilege = 1
 
-	ghost_orbit = client.prefs.ghost_orbit
-
 	updateghostimages()
 
 	if(client.media)

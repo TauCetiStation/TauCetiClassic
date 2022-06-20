@@ -1,3 +1,6 @@
+/mob/living/carbon/human/vox/event
+	spawner_args = list(/datum/spawner/living/vox, 2 MINUTES)
+
 /datum/role/vox_raider
 	name = VOXRAIDER
 	id = VOXRAIDER
@@ -5,6 +8,7 @@
 	disallow_job = TRUE
 
 	logo_state = "raider-logo"
+	skillset_type = /datum/skillset/max
 
 /datum/role/vox_raider/Greet(greeting, custom)
 	. = ..()
@@ -40,42 +44,3 @@
 	var/datum/browser/popup = new(antag.current, "window=vxrd", nwidth = 600, nheight = 300)
 	popup.set_content(output_text)
 	popup.open()
-
-/datum/role/vox_raider/OnPostSetup(laterole)
-	. = ..()
-
-	var/sounds = rand(2, 8)
-	var/i = 0
-	var/newname = ""
-
-	while(i <= sounds)
-		i++
-		newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
-
-	var/mob/living/carbon/human/vox = antag.current
-
-	vox.real_name = capitalize(newname)
-	vox.name = vox.real_name
-	antag.name = vox.name
-	vox.age = rand(5, 15) // its fucking lore
-	vox.set_species(VOX)
-	for(var/language in vox.languages)
-		vox.remove_language(language)
-	vox.flavor_text = ""
-	vox.add_language(LANGUAGE_VOXPIDGIN)
-	if(faction.members.len % 2 == 0 || prob(33)) // first vox always gets Sol, everyone else by random.
-		vox.add_language(LANGUAGE_SOLCOMMON)
-	vox.h_style = "Short Vox Quills"
-	vox.f_style = "Shaved"
-	vox.grad_style = "none"
-	for(var/obj/item/organ/external/BP in vox.bodyparts)
-		BP.status = 0 // rejuvenate() saves prostethic limbs, so we tell it NO.
-		BP.rejuvenate()
-
-	//Now apply cortical stack.
-
-	var/obj/item/weapon/implant/cortical/I = new(vox)
-	I.inject(vox, BP_HEAD)
-
-	vox.equip_vox_raider()
-	vox.regenerate_icons()

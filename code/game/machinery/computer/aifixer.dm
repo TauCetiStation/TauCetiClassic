@@ -8,6 +8,8 @@
 	var/mob/living/silicon/ai/occupier = null
 	var/active = 0
 	circuit = /obj/item/weapon/circuitboard/aifixer
+	required_skills = list(/datum/skill/research/master)
+	fumbling_time = 7 SECONDS
 
 /obj/machinery/computer/aifixer/atom_init()
 	add_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))
@@ -71,7 +73,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	if (href_list["fix"])
 		src.active = 1
 		add_overlay(image('icons/obj/computer.dmi', "ai-fixer-on"))

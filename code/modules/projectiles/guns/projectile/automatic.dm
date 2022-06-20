@@ -332,7 +332,7 @@
 	icon_state = "drozd"
 	item_state = "drozd"
 	mag_type = /obj/item/ammo_box/magazine/drozd127
-	w_class = SIZE_NORMAL
+	w_class = SIZE_SMALL
 	fire_sound = 'sound/weapons/guns/gunshot_drozd.ogg'
 	action_button_name = "Toggle GL"
 	fire_delay = 7

@@ -288,12 +288,12 @@
 	if(Victim)
 		if(Victim == attacker)
 			visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
-			playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 			return FALSE
 		else
 			if(prob(30))
 				visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+				playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 				return FALSE
 
 			if(prob(90) && !client)
@@ -744,6 +744,8 @@
 
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [H], and assist them in completing their goals at any cost.")
 	G.mind.memory += "<B>[H]</B> - your master."
+	G.mind.skills.add_available_skillset(/datum/skillset/golem)
+	G.mind.skills.maximize_active_skills()
 	qdel(src)
 
 /obj/effect/golemrune/proc/announce_to_ghosts()

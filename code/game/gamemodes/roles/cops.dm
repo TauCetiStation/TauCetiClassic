@@ -13,6 +13,7 @@
 					/obj/item/clothing/under/rank/security/beatcop,
 					/obj/item/clothing/head/spacepolice,
 					)
+	skillset_type = /datum/skillset/undercover
 
 /datum/role/cop/undercover/OnPostSetup(laterole)
 	. = ..()
@@ -53,26 +54,20 @@
 	logo_state = "space_cop"
 
 	var/outfit
+	skillset_type = /datum/skillset/cop
 
 /datum/role/cop/OnPostSetup(laterole)
 	. = ..()
 	var/mob/living/carbon/human/M = antag.current
-	if(M.hud_used && M.client)
-		var/datum/hud/H = M.hud_used
-		var/atom/movable/screen/wanted/giving_wanted_lvl = new /atom/movable/screen/wanted()
-		H.wanted_lvl = giving_wanted_lvl
-		H.mymob.client.screen += giving_wanted_lvl
 
 	if(outfit)
 		M.equipOutfit(outfit)
 
-/datum/role/cop/RemoveFromRole(datum/mind/M, msg_admins)
-	. = ..()
-	var/mob/living/L = M.current
-	if(L.hud_used && L.client)
-		var/datum/hud/H = L.hud_used
-		H.mymob.client.screen -= H.wanted_lvl
-		QDEL_NULL(H.wanted_lvl)
+/datum/role/cop/add_ui(datum/hud/hud)
+	wanted_lvl_screen.add_to_hud(hud)
+
+/datum/role/cop/remove_ui(datum/hud/hud)
+	wanted_lvl_screen.remove_from_hud(hud)
 
 /datum/role/cop/beatcop
 	name = "Officer"

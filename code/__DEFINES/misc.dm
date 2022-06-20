@@ -9,12 +9,6 @@
 // and at the same time the empty condition do nothing.
 #define SWITCH_PASS ;
 
-//Ghost orbit types:
-#define GHOST_ORBIT_CIRCLE		"circle"
-#define GHOST_ORBIT_TRIANGLE	"triangle"
-#define GHOST_ORBIT_HEXAGON		"hexagon"
-#define GHOST_ORBIT_SQUARE		"square"
-#define GHOST_ORBIT_PENTAGON	"pentagon"
 
 #define TRANSITIONEDGE		7 //Distance from edge to move to another z-level
 

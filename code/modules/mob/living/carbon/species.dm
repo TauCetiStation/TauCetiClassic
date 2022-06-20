@@ -390,7 +390,7 @@
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
 	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
 
-	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT - 30
 	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 20
 	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 440
 
@@ -557,10 +557,12 @@
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
 	replace_outfit = list(
-			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
+			/obj/item/clothing/mask/gas/syndicate = /obj/item/clothing/mask/gas/vox,
 			)
 
-/datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
+/datum/species/vox/on_gain(mob/living/carbon/human/H)
+	..()
 	H.gender = NEUTER
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
@@ -581,12 +583,9 @@
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
 		H.leap_icon = new /atom/movable/screen/leap()
-		H.leap_icon.screen_loc = "CENTER+3:20,SOUTH:5"
 
 		if(H.hud_used)
-			H.hud_used.adding += H.leap_icon
-		if(H.client)
-			H.client.screen += H.leap_icon
+			H.leap_icon.add_to_hud(H.hud_used)
 
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
@@ -597,9 +596,7 @@
 	if(name != VOX_ARMALIS)
 		if(H.leap_icon)
 			if(H.hud_used)
-				H.hud_used.adding -= H.leap_icon
-			if(H.client)
-				H.client.screen -= H.leap_icon
+				H.leap_icon.remove_from_hud(H.hud_used)
 			QDEL_NULL(H.leap_icon)
 
 	else
@@ -772,10 +769,9 @@
 	// Podmen don't.
 	var/regen_limbs = TRUE
 
-/datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
+/datum/species/diona/on_gain(mob/living/carbon/human/H)
+	..()
 	H.gender = NEUTER
-
-	return ..()
 
 /datum/species/diona/regen(mob/living/carbon/human/H, light_amount)
 	if(light_amount >= 5) // If you can regen organs - do so.
@@ -986,9 +982,9 @@
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
 
 	emotes = list(
-		/datum/emote/beep,
-		/datum/emote/ping,
-		/datum/emote/buzz,
+		/datum/emote/robot/beep,
+		/datum/emote/robot/ping,
+		/datum/emote/robot/buzz,
 	)
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
@@ -1043,10 +1039,9 @@
 	min_age = 100
 	max_age = 500
 
-/datum/species/abductor/handle_post_spawn(mob/living/carbon/human/H)
+/datum/species/abductor/on_gain(mob/living/carbon/human/H)
+	..()
 	H.gender = NEUTER
-
-	return ..()
 
 /datum/species/abductor/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_abductor_digest(M)
@@ -1103,12 +1098,14 @@
 	min_age = 1
 	max_age = 1000
 
-/datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
+/datum/species/skeleton/on_gain(mob/living/carbon/human/H)
+	..()
 	H.gender = NEUTER
+	H.remove_status_flags(CANSTUN|CANPARALYSE)
 
-	H.status_flags &= ~(CANSTUN | CANPARALYSE)
-
-	return ..()
+/datum/species/skeleton/on_loose(mob/living/carbon/human/H, new_species)
+	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
+	..()
 
 /datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skeleton_digest(M)
@@ -1119,13 +1116,13 @@
 	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
 	var/damage = 0						// Extra empty hand attack damage.
 	var/damType = BRUTE
-	var/miss_sound = 'sound/weapons/punchmiss.ogg'
+	var/miss_sound = 'sound/effects/mob/hits/miss_1.ogg'
 	var/sharp = FALSE
 	var/edge = FALSE
 	var/list/attack_sound
 
 /datum/unarmed_attack/New()
-	attack_sound = SOUNDIN_PUNCH
+	attack_sound = SOUNDIN_PUNCH_MEDIUM
 
 /datum/unarmed_attack/proc/damage_flags()
 	return (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
@@ -1226,10 +1223,9 @@
 	min_age = 1
 	max_age = 10000
 
-/datum/species/shadowling/handle_post_spawn(mob/living/carbon/human/H)
+/datum/species/shadowling/on_gain(mob/living/carbon/human/H)
+	..()
 	H.gender = NEUTER
-
-	return ..()
 
 /datum/species/shadowling/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_shadowling_digest(M)
@@ -1286,7 +1282,7 @@
 	// Clothing on the Golem is created before the hud_list is generated in the atom
 	H.prepare_huds()
 
-	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
+	H.remove_status_flags(CANSTUN|CANWEAKEN|CANPARALYSE)
 	H.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 
 	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
@@ -1301,7 +1297,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
 
 /datum/species/golem/on_loose(mob/living/carbon/human/H, new_species)
-	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
+	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
 	H.real_name = "unknown"
 
 	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
@@ -1357,11 +1353,10 @@
 	min_age = 25
 	max_age = 85
 
-/datum/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
-	return ..()
-
 /datum/species/zombie/on_gain(mob/living/carbon/human/H)
-	H.status_flags &= ~(CANSTUN  | CANPARALYSE) //CANWEAKEN
+	..()
+
+	H.remove_status_flags(CANSTUN|CANPARALYSE) //CANWEAKEN
 
 	H.drop_l_hand()
 	H.drop_r_hand()
@@ -1371,10 +1366,8 @@
 
 	add_zombie(H)
 
-	..()
-
 /datum/species/zombie/on_loose(mob/living/carbon/human/H, new_species)
-	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
+	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
 
 	if(istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
 		qdel(H.l_hand)
@@ -1561,7 +1554,7 @@
 
 /datum/species/abomination/on_gain(mob/living/carbon/human/H)
 	..()
-	H.status_flags &= ~(CANSTUN  | CANPARALYSE | CANWEAKEN)
+	H.remove_status_flags(CANSTUN|CANPARALYSE|CANWEAKEN)
 
 /datum/species/abomination/call_digest_proc(mob/living/M, datum/reagent/R)
 	return
@@ -1604,7 +1597,7 @@
 	is_common = FALSE
 
 /datum/species/homunculus/on_gain(mob/living/carbon/human/H)
-	. = ..()
+	..()
 	var/list/tail_list = icon_states('icons/mob/species/tail.dmi') - "vox_armalis"
 	tail_list += ""
 	H.random_tail_holder = pick(tail_list)

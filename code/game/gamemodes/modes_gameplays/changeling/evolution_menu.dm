@@ -390,9 +390,8 @@ var/global/list/sting_paths
 			for(var/obj/effect/proc_holder/changeling/p in C.purchasedpowers)
 				if(!(p.genomecost == 0 && keep_free_powers))
 					C.purchasedpowers -= p
-		if(hud_used)
-			hud_used.lingstingdisplay.icon_state = null
-			hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
+			if(hud_used)
+				C.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /datum/role/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
 	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
