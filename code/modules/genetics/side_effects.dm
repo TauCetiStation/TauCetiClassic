@@ -109,5 +109,6 @@
 	sleep(S.duration)
 	if(!H || !istype(H))
 		return
+	H.SetStunned(0)
 	H.SetWeakened(0)
 	S.finish(H)

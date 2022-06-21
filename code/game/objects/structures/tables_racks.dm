@@ -446,6 +446,7 @@
 		return FALSE
 
 	if(has_gravity(M) && ishuman(M))
+		M.Stun(2)
 		M.Weaken(5)
 		shatter()
 		return TRUE
@@ -456,6 +457,7 @@
 	var/mob/living/assailant = G.assailant
 	var/mob/living/victim = G.affecting
 
+	victim.Stun(2)
 	victim.Weaken(5)
 	visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [src], breaking it!</span>")
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)

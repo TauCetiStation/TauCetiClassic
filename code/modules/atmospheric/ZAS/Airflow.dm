@@ -16,7 +16,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		return FALSE
 	if(!lying)
 		to_chat(src, "<span class='warning'>The sudden rush of air knocks you over!</span>")
-	Stun(1)
+	Stun(2)
 	Weaken(5)
 	last_airflow_stun = world.time
 

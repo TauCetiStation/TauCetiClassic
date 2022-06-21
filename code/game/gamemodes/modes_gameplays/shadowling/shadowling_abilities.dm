@@ -392,7 +392,7 @@
 				var/datum/effect/effect/system/spark_spread/sp = new /datum/effect/effect/system/spark_spread
 				sp.set_up(5, 1, S)
 				sp.start()
-				S.Weaken(6)
+				S.Stun(6)
 		for(var/obj/structure/window/W in T.contents)
 			W.take_damage(rand(80, 100))
 

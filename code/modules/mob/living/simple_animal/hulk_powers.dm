@@ -364,6 +364,7 @@
 		for(var/mob/living/M in range(1, T))
 			if( (M != usr) && !M.lying)
 				playsound(M, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
+				M.Stun(2)
 				M.Weaken(5)
 		for(var/obj/structure/S in range(1, T))
 			if(istype(S,/obj/structure/window))
