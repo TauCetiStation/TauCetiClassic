@@ -10,6 +10,9 @@
 	damage_absorption = list("brute"=0.7,"fire"=1,"bullet"=0.7,"laser"=0.85,"energy"=1,"bomb"=0.8)
 	var/am = "d3c2fbcadca903a41161ccc9df9cf948"
 	var/animated = 0
+	speed_skills = list(/datum/skill/combat_mech/master)
+	interface_skills = list(/datum/skill/combat_mech/trained)
+
 
 /*
 /obj/mecha/combat/range_action(target)
@@ -27,7 +30,7 @@
 	if(isliving(target))
 		var/mob/living/M = target
 		if(src.occupant.a_intent == INTENT_HARM)
-			playsound(src, 'sound/weapons/punch4.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_PUNCH_VERYHEAVY), VOL_EFFECTS_MASTER)
 			if(damtype == "brute")
 				step_away(M,src,15)
 			if(ishuman(target))

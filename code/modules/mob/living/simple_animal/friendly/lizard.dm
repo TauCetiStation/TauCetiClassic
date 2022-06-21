@@ -27,6 +27,10 @@
 	has_head = TRUE
 	has_leg = TRUE
 
+/mob/living/simple_animal/lizard/atom_init()
+	. = ..()
+	AddComponent(/datum/component/gnawing)
+
 /mob/living/simple_animal/lizard/death()
 	. = ..()
 	desc = "It doesn't hiss anymore."
@@ -53,6 +57,3 @@
 	if(stat >= DEAD)
 		return
 	..()
-
-
-

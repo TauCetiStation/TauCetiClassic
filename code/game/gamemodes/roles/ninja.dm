@@ -9,6 +9,7 @@
 
 	restricted_jobs = list("Cyborg", "AI")
 	logo_state = "ninja-logo"
+	skillset_type = /datum/skillset/max
 
 /datum/role/ninja/OnPostSetup(laterole)
 	. = ..()
@@ -17,7 +18,7 @@
 	ninja.dna.ready_dna(ninja)
 	ninja.equip_space_ninja(TRUE)
 	ninja.internal = ninja.s_store
-	ninja.internals.icon_state = "internal1"
+	ninja.internals.update_icon(ninja)
 	if(ninja.wear_suit && istype(ninja.wear_suit,/obj/item/clothing/suit/space/space_ninja))
 		var/obj/item/clothing/suit/space/space_ninja/S = ninja.wear_suit
 		S.randomize_param()

@@ -8,7 +8,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		return FALSE
 	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)
 		return FALSE
-	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
+	if(!(status_flags & CANWEAKEN))
 		to_chat(src, "<span class='notice'>You stay upright as the air rushes past you.</span>")
 		return FALSE
 	if(buckled)
@@ -277,7 +277,7 @@ Contains helper procs for airflow, handled in /connection_group.
 	return
 
 /mob/living/carbon/human/airflow_hit(atom/A)
-	playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER, 25)
+	playsound(src, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER, 25)
 	var/obj/item/airbag/I = locate() in get_contents()
 	if(I)
 		I.deploy(src)

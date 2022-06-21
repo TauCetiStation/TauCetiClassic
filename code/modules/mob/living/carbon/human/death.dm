@@ -51,7 +51,7 @@
 		species.handle_death(src)
 
 	//Check for heist mode kill count.
-	if(SSticker.mode && ( istype( SSticker.mode,/datum/game_mode/heist) ) )
+	if(find_faction_by_type(/datum/faction/heist))
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
 
 	if(!gibbed)
@@ -152,7 +152,7 @@
 		h_style = "Bald"
 
 	set_species(SKELETON)
-	status_flags |= DISFIGURED
+	add_status_flags(DISFIGURED)
 	regenerate_icons()
 	return
 
@@ -171,7 +171,7 @@
 
 	update_hair()
 	mutations.Add(HUSK)
-	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
+	add_status_flags(DISFIGURED)	//makes them unknown without fucking up other stuff like admintools
 	update_body()
 
 /mob/living/carbon/human/proc/Drain()
