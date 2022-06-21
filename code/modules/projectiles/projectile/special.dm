@@ -218,6 +218,7 @@
 	icon_state = "energy2"
 	damage = 5
 	weaken = 10
+	stun = 10
 	damage_type = TOX
 	flag = "bio"
 
