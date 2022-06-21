@@ -161,6 +161,9 @@
 /obj/structure/reagent_dispensers/ex_act()
 	explode()
 
+/obj/structure/reagent_dispensers/thermitemelt()
+	explode()
+
 /obj/structure/reagent_dispensers/proc/explode(mob/user)
 	var/fuel_am = reagents.get_reagent_amount("fuel") + reagents.get_reagent_amount("phoron") * 5
 	if(fuel_am > 0)
@@ -328,4 +331,3 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 	reagents.add_reagent("fuel", 200)
 	reagents.add_reagent("condensedcapsaicin", 200)
 	reagents.add_reagent("stoxin", 200)
-

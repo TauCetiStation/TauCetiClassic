@@ -55,6 +55,8 @@
 		lowertemp.react()
 		T.assume_air(lowertemp)
 		qdel(hotspot)
+	if(volume >= 30)
+		T.remove_thermite()
 
 /datum/reagent/water/reaction_obj(obj/O, volume)
 	var/turf/T = get_turf(O)
@@ -74,6 +76,8 @@
 		if(C.painted)
 			C.remove_paint_state()
 			C.color = null
+	if(volume >= 30)
+		O.remove_thermite()
 
 /datum/reagent/water/on_general_digest(mob/living/M)
 	..()

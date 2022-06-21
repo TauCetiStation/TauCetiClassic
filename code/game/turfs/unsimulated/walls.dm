@@ -6,6 +6,7 @@
 	opacity = 1
 	density = TRUE
 	smooth = SMOOTH_TRUE
+	seconds_to_melt = -1
 
 /turf/unsimulated/wall/iron
 	icon = 'icons/turf/walls/iron.dmi'
@@ -24,6 +25,7 @@
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "alien1"
 	smooth = FALSE
+	seconds_to_melt = -1
 
 /turf/unsimulated/wall/fakealien
 	name = "alien wall"

@@ -122,10 +122,11 @@
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
 	. = ..()
 	if(volume >= 30)
-		if(istype(T, /turf/simulated/wall))
-			var/turf/simulated/wall/W = T
-			W.thermite = 1
-			W.add_overlay(image('icons/effects/effects.dmi',icon_state = "#673910"))
+		T.add_thermite()
+
+/datum/reagent/thermite/reaction_obj(obj/O, volume)
+	if(volume >= 30)
+		O.add_thermite()
 
 /datum/reagent/thermite/on_general_digest(mob/living/M)
 	..()
@@ -203,6 +204,8 @@
 	else
 		if(O)
 			O.clean_blood()
+			if(volume >= 15)
+				O.remove_thermite()
 
 /datum/reagent/space_cleaner/reaction_turf(turf/T, volume)
 	. = ..()
@@ -217,6 +220,9 @@
 
 		for(var/mob/living/carbon/slime/M in T)
 			M.adjustToxLoss(rand(5,10))
+
+		if(volume >= 15)
+			T.remove_thermite()
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, volume)
 	if(iscarbon(M))

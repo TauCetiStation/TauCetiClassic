@@ -307,6 +307,8 @@
 		location.hotspot_expose(700, 5, src)
 
 /obj/item/weapon/weldingtool/afterattack(atom/target, mob/user, proximity, params)
+	if(target.has_thermite)
+		target.thermitemelt(target.seconds_to_melt)
 	if(!proximity) return
 	if(istype(target, /obj/structure/reagent_dispensers) && target.reagents.has_reagent("fuel"))
 		var/obj/structure/reagent_dispensers/tank = target

@@ -296,3 +296,10 @@
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open()
+
+/obj/structure/closet/thermitemelt(seconds_to_melt)
+	for(var/mob/living/M in src)
+		M.adjustFireLoss(rand(30, 60))
+		M.Stun(5)
+	src.dump_contents()
+	..()

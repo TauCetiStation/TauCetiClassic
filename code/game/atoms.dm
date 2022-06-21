@@ -56,6 +56,11 @@
 	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
 	var/chat_color_darkened
 
+	//thermite stuff
+	var/has_thermite = 0
+	var/seconds_to_melt = 5 //set to negative/zero if you don't want for your atom to be melted at all
+	var/old_color = "" //light_color which atom had before thermite was applied
+
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
@@ -504,6 +509,20 @@
 		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin	A.fingerprintslast = fingerprintslast
 
 
+/atom/proc/add_thermite()
+	if(has_thermite)
+		return
+	old_color = light_color
+	light_color = "#585144"
+	has_thermite = 1
+	update_icon()
+
+/atom/proc/remove_thermite()
+	if(!has_thermite)
+		return
+	light_color = old_color
+	has_thermite = 0
+
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M)
 	if(flags & NOBLOODY) return FALSE
@@ -787,3 +806,22 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
+
+/atom/proc/thermitemelt(seconds_to_melt)
+	var/obj/effect/overlay/O = new/obj/effect/overlay(src)
+	O.name = "Термит"
+	O.desc = "Выглядит горячим."
+	O.icon = 'icons/effects/fire.dmi'
+	O.icon_state = "2"
+	O.anchored = 1
+	O.density = 1
+	O.layer = 5
+
+	if(seconds_to_melt > 0)
+		visible_message("<span class='warning'>Thermite starts melting [src]. </span>")
+		src.loc.hotspot_explose(1000, 10, src)
+		qdel(src)
+		QDEL_IN(O, seconds_to_melt SECONDS)
+	else
+		visible_message("<span class='warning'>Thermite isn't strong enough to melt [src]! </span>")
+		qdel(O)
