@@ -47,6 +47,19 @@
 	name = "circuit board (Slime management console)"
 	build_path = /obj/machinery/computer/camera_advanced/xenobio
 	origin_tech = "biotech=3;bluespace=3"
+/obj/item/weapon/circuitboard/camera_advanced/medical
+	name = "circuit board (Medical Advanced Camera Laptop)"
+	build_path = /obj/machinery/computer/camera_advanced/medical
+/obj/item/weapon/circuitboard/camera_advanced/engineering
+	name = "circuit board (Engineering Advanced Camera Laptop)"
+	build_path = /obj/machinery/computer/camera_advanced/engineering
+/obj/item/weapon/circuitboard/camera_advanced/science
+	name = "circuit board (Science Advanced Camera Laptop)"
+	build_path = /obj/machinery/computer/camera_advanced/science
+/obj/item/weapon/circuitboard/camera_advanced/security
+	name = "circuit board (Security Advanced Camera Laptop)"
+	build_path = /obj/machinery/computer/camera_advanced/security
+
 /obj/item/weapon/circuitboard/security
 	name = "Circuit board (Security)"
 	build_path = /obj/machinery/computer/security

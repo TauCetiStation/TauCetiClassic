@@ -228,3 +228,70 @@
 	var/obj/machinery/camera/final = T[camera]
 	if(final)
 		remote_eye.setLoc(get_turf(final))
+
+
+/mob/camera/Eye/remote/medical
+	allowed_area_type = /area/station/medical
+
+/obj/machinery/computer/camera_advanced/medical
+	name = "Medical advanced camera laptop"
+	icon_state = "laptop_medical"
+	networks = list("Medical")
+	circuit = /obj/item/weapon/circuitboard/camera_advanced/medical
+	light_color = "#1593a9"
+	state_broken_preset = "laptopb"
+	state_nopower_preset = "laptop0"
+
+/obj/machinery/computer/camera_advanced/medical/CreateEye()
+	eyeobj = new /mob/camera/Eye/remote/medical(get_turf(src))
+	eyeobj.origin = src
+
+
+/mob/camera/Eye/remote/science
+	allowed_area_type = /area/station/rnd
+
+/obj/machinery/computer/camera_advanced/science
+	name = "Science advanced camera laptop"
+	icon_state = "laptop_science"
+	networks = list("Research","Toxins Test Area","Robots","Anomaly Isolation")
+	circuit = /obj/item/weapon/circuitboard/camera_advanced/science
+	light_color = "#9d15a9"
+	state_broken_preset = "laptopb"
+	state_nopower_preset = "laptop0"
+
+/obj/machinery/computer/camera_advanced/science/CreateEye()
+	eyeobj = new /mob/camera/Eye/remote/science(get_turf(src))
+	eyeobj.origin = src
+
+
+/mob/camera/Eye/remote/engineering
+	allowed_area_type = /area/station/engineering
+
+/obj/machinery/computer/camera_advanced/engineering
+	name = "Engineering advanced camera laptop"
+	icon_state = "laptop_engineering"
+	networks = list("Engineering","Engineering Robots")
+	circuit = /obj/item/weapon/circuitboard/camera_advanced/engineering
+	light_color = "#a94415"
+	state_broken_preset = "laptopb"
+	state_nopower_preset = "laptop0"
+
+/obj/machinery/computer/camera_advanced/engineering/CreateEye()
+	eyeobj = new /mob/camera/Eye/remote/engineering(get_turf(src))
+	eyeobj.origin = src
+
+
+/mob/camera/Eye/remote/security
+	allowed_area_type = /area/station/security
+
+/obj/machinery/computer/camera_advanced/security
+	name = "Security advanced camera laptop"
+	icon_state = "laptop_security"
+	networks = list("Security","Prison")
+	circuit = /obj/item/weapon/circuitboard/camera_advanced/security
+	state_broken_preset = "laptopb"
+	state_nopower_preset = "laptop0"
+
+/obj/machinery/computer/camera_advanced/security/CreateEye()
+	eyeobj = new /mob/camera/Eye/remote/security(get_turf(src))
+	eyeobj.origin = src

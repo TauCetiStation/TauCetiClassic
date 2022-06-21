@@ -21372,14 +21372,12 @@
 /area/station/security/armoury)
 "fID" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/skills{
-	icon_state = "medlaptop"
-	},
 /obj/item/weapon/lighter/zippo,
 /obj/item/weapon/storage/fancy/cigarettes,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/computer/camera_advanced/engineering,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -66890,11 +66888,8 @@
 /area/station/maintenance/science)
 "ugH" = (
 /obj/structure/table,
-/obj/machinery/computer/skills{
-	dir = 8;
-	icon_state = "medlaptop"
-	},
 /obj/item/weapon/paper/space_structures,
+/obj/machinery/computer/camera_advanced/science,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -67479,12 +67474,9 @@
 /turf/environment/space,
 /area/space)
 "upp" = (
-/obj/machinery/computer/skills{
-	dir = 4;
-	icon_state = "medlaptop"
-	},
 /obj/structure/table/woodentable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/computer/camera_advanced/security,
 /turf/simulated/floor/carpet,
 /area/station/security/hos)
 "upF" = (
@@ -72695,7 +72687,6 @@
 	},
 /area/station/rnd/mixing)
 "vRq" = (
-/obj/machinery/computer/skills,
 /obj/structure/table/glass,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
@@ -72706,6 +72697,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/computer/camera_advanced/medical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
