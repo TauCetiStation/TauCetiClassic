@@ -22,6 +22,37 @@
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
 		owner.update_stat()
 
+//STUN
+/datum/status_effect/incapacitating/stun
+	id = "stun"
+
+/datum/status_effect/incapacitating/stun/on_apply()
+	. = ..()
+	if(!.)
+		return
+	owner.stunned = TRUE
+	
+
+/datum/status_effect/incapacitating/stun/on_remove()
+	owner.stunned = FALSE
+	return ..()
+
+
+//PARALYZED
+/datum/status_effect/incapacitating/paralyzed
+	id = "paralyzed"
+
+/datum/status_effect/incapacitating/paralyzed/on_apply()
+	. = ..()
+	if(!.)
+		return
+	owner.paralysis = TRUE
+
+/datum/status_effect/incapacitating/paralyzed/on_remove()
+	owner.paralysis = FALSE
+	return ..()
+
+
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"

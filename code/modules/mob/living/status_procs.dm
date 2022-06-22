@@ -21,16 +21,28 @@
 
 
 /* STUN */
-/mob/living/proc/IsStun() //If we're stunned
+
+// placeholders
+/mob/proc/IsStun()
+
+/mob/proc/AmountStun()
+
+/mob/proc/Stun(amount, ignore_canstun = FALSE)
+
+/mob/proc/SetStunned(amount, ignore_canstun = FALSE)
+
+/mob/proc/AdjustStunned(amount, ignore_canstun = FALSE)
+
+/mob/living/IsStun() //If we're stunned
 	return has_status_effect(/datum/status_effect/incapacitating/stun)
 
-/mob/living/proc/AmountStun() //How many deciseconds remain in our stun
+/mob/living/AmountStun() //How many deciseconds remain in our stun
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
 	if(S)
 		return S.duration - world.time
 	return 0
 
-/mob/living/proc/Stun(amount, ignore_canstun = FALSE) //Can't go below remaining duration
+/mob/living/Stun(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
@@ -41,7 +53,7 @@
 		S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
 	return S
 
-/mob/living/proc/SetStun(amount, ignore_canstun = FALSE) //Sets remaining duration
+/mob/living/SetStunned(amount, ignore_canstun = FALSE) //Sets remaining duration
 	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
@@ -56,7 +68,7 @@
 			S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
 	return S
 
-/mob/living/proc/AdjustStun(amount, ignore_canstun = FALSE) //Adds to remaining duration
+/mob/living/AdjustStunned(amount, ignore_canstun = FALSE) //Adds to remaining duration
 	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
@@ -68,16 +80,27 @@
 	return S
 
 /* PARALYZED */
-/mob/living/proc/IsParalyzed() //If we're paralyzed
+// placeholders
+/mob/proc/IsParalyzed()
+
+/mob/proc/AmountParalyzed()
+
+/mob/proc/Paralyse(amount, ignore_canstun = FALSE)
+
+/mob/proc/SetParalysis(amount, ignore_canstun = FALSE)
+
+/mob/proc/AdjustParalysis(amount, ignore_canstun = FALSE)
+
+/mob/living/IsParalyzed() //If we're paralyzed
 	return has_status_effect(/datum/status_effect/incapacitating/paralyzed)
 
-/mob/living/proc/AmountParalyzed() //How many deciseconds remain in our Paralyzed status effect
+/mob/living/AmountParalyzed() //How many deciseconds remain in our Paralyzed status effect
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
 	if(P)
 		return P.duration - world.time
 	return 0
 
-/mob/living/proc/Paralyze(amount, ignore_canstun = FALSE) //Can't go below remaining duration
+/mob/living/Paralyse(amount, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
@@ -88,9 +111,7 @@
 		P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
 	return P
 
-/mob/living/proc/SetParalyzed(amount, ignore_canstun = FALSE) //Sets remaining duration
-	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
-		return
+/mob/living/SetParalysis(amount, ignore_canstun = FALSE) //Sets remaining duration
 	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
@@ -99,15 +120,13 @@
 			qdel(P)
 	else
 		amount *= SS_WAIT_DEFAULT
-		if(absorb_stun(amount, ignore_canstun))
-			return
 		if(P)
 			P.duration = world.time + amount
 		else
 			P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
 	return P
 
-/mob/living/proc/AdjustParalyzed(amount, ignore_canstun = FALSE) //Adds to remaining duration
+/mob/living/AdjustParalysis(amount, ignore_canstun = FALSE) //Adds to remaining duration
 	if(IS_STUN_IMMUNE(src, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
