@@ -119,6 +119,10 @@
 		: FALSE)
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
+
+/// Prevents voluntary movement.
+#define TRAIT_IMMOBILIZED "immobilized"
+
 //mob traits
 /// Forces user to be unmovable
 #define TRAIT_ANCHORED "anchored"
