@@ -844,55 +844,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		stuttering = 0
 	status_flags |= add_flags
 
-// ========== STUN ==========
-/mob/proc/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
-	if(!isnull(lock))
-		if(lock)
-			status_flags |= LOCKSTUN
-		else
-			status_flags &= ~LOCKSTUN
-	else if(status_flags & LOCKSTUN)
-		return
-
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(max(stunned, amount), 0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		if(updating)
-			update_canmove()
-	else
-		stunned = 0
-
-/mob/proc/SetStunned(amount, updating = 1, ignore_canstun = 0, lock = null) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(!isnull(lock))
-		if(lock)
-			status_flags |= LOCKSTUN
-		else
-			status_flags &= ~LOCKSTUN
-	else if(status_flags & LOCKSTUN)
-		return
-
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(amount, 0)
-		if(updating)
-			update_canmove()
-	else
-		stunned = 0
-
-/mob/proc/AdjustStunned(amount, updating = 1, ignore_canstun = 0, lock = null)
-	if(!isnull(lock))
-		if(lock)
-			status_flags |= LOCKSTUN
-		else
-			status_flags &= ~LOCKSTUN
-	else if(status_flags & LOCKSTUN)
-		return
-
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(stunned + amount, 0)
-		if(updating)
-			update_canmove()
-	else
-		stunned = 0
-
 // ========== WEAKEN ==========
 /mob/proc/Weaken(amount)
 	if(status_flags & CANWEAKEN)
@@ -914,25 +865,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		update_canmove()
 	else
 		weakened = 0
-
-// ========== PARALYSE ==========
-/mob/proc/Paralyse(amount)
-	if(status_flags & CANPARALYSE)
-		paralysis = max(max(paralysis, amount), 0)
-	else
-		paralysis = 0
-
-/mob/proc/SetParalysis(amount)
-	if(status_flags & CANPARALYSE)
-		paralysis = max(amount, 0)
-	else
-		paralysis = 0
-
-/mob/proc/AdjustParalysis(amount)
-	if(status_flags & CANPARALYSE)
-		paralysis = max(paralysis + amount, 0)
-	else
-		paralysis = 0
 
 // ========== CRAWLING ==========
 /mob/proc/SetCrawling(value)

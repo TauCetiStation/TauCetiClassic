@@ -181,9 +181,8 @@
 
 /mob/living/carbon/human/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
 	if(HULK in mutations)
-		stunned = 0
-	else
-		..()
+		amount = 0
+	..()
 
 /mob/living/carbon/human/Weaken(amount)
 	if(HULK in mutations)
@@ -193,9 +192,8 @@
 
 /mob/living/carbon/human/Paralyse(amount)
 	if(HULK in mutations)
-		paralysis = 0
-	else
-		..()
+		amount = 0
+	..()
 
 // =============================================
 
