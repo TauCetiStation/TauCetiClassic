@@ -136,12 +136,8 @@
 	if(client)
 		handle_regular_hud_updates()
 
-	if(stunned)
-		AdjustStunned(-1)
 	if(weakened)
 		AdjustWeakened(-1)
-	if(paralysis)
-		AdjustParalysis(-1)
 
 	// Movement
 	if(!client && !stop_automated_movement && wander && !anchored)

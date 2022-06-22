@@ -229,7 +229,7 @@
 
 /mob/living/carbon/ian/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
-		if (prob(1) && paralysis < 10)
+		if (prob(1))
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
@@ -355,7 +355,6 @@
 			setHalLoss(99)
 
 		if(paralysis)
-			AdjustParalysis(-1)
 			blinded = TRUE
 			stat = UNCONSCIOUS
 			if(halloss > 0)

@@ -57,7 +57,6 @@
 		if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
 			Paralyse(3)
 		if(paralysis)
-			AdjustParalysis(-1)
 			blinded = 1
 			stat = UNCONSCIOUS
 		else if(IsSleeping())

@@ -26,7 +26,7 @@
 /mob/living/silicon/robot/proc/clamp_values()
 
 //	SetStunned(min(stunned, 30))
-	SetParalysis(min(paralysis, 30))
+	SetParalysis(min(AmountParalyzed(), 30))
 //	SetWeakened(min(weakened, 20))
 	SetSleeping(0)
 	adjustBruteLoss(0)
@@ -84,12 +84,9 @@
 	if (src.stat != DEAD) //Alive.
 		if (src.paralysis || src.stunned || src.weakened || !src.has_power) //Stunned etc.
 			src.stat = UNCONSCIOUS
-			if (src.stunned > 0)
-				AdjustStunned(-1)
 			if (src.weakened > 0)
 				AdjustWeakened(-1)
 			if (src.paralysis > 0)
-				AdjustParalysis(-1)
 				src.blinded = 1
 			else
 				src.blinded = 0

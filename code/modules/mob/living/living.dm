@@ -1482,7 +1482,7 @@
 		AdjustDrunkenness(-1)
 
 	if(drunkenness >= DRUNKENNESS_PASS_OUT)
-		paralysis = max(paralysis, 3)
+		Paralyse(3)
 		drowsyness = max(drowsyness, 3)
 		return
 

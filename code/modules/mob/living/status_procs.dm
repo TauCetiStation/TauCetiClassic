@@ -97,7 +97,7 @@
 /mob/living/AmountParalyzed() //How many deciseconds remain in our Paralyzed status effect
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
 	if(P)
-		return P.duration - world.time
+		return (P.duration - world.time) / SS_WAIT_DEFAULT
 	return 0
 
 /mob/living/Paralyse(amount, ignore_canstun = FALSE) //Can't go below remaining duration
