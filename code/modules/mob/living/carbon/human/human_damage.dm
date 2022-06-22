@@ -179,7 +179,7 @@
 
 // =============================================
 
-/mob/living/carbon/human/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
+/mob/living/carbon/human/Stun(amount, ignore_canstun = 0)
 	if(HULK in mutations)
 		amount = 0
 	..()

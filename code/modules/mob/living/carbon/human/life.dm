@@ -832,7 +832,6 @@
 		//Other
 		if(stunned)
 			speech_problem_flag = 1
-			AdjustStunned(-1)
 
 		if(weakened)
 			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times

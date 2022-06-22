@@ -190,7 +190,7 @@
 			if(count)
 				stat("[key]: [count]")
 
-/mob/living/carbon/xenomorph/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
+/mob/living/carbon/xenomorph/Stun(amount, ignore_canstun = 0)
 	if(status_flags & CANSTUN || ignore_canstun)
 		..()
 	else
