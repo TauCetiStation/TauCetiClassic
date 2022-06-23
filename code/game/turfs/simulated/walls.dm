@@ -213,11 +213,6 @@
 		for(var/i=0, i<number_rots, i++)
 			new /obj/effect/overlay/wall_rot(src)
 
-/turf/simulated/wall/thermitemelt(seconds_to_melt)
-	if(mineral == "diamond")
-		return
-	..()
-
 //Interactions
 
 /turf/simulated/wall/attack_paw(mob/user)

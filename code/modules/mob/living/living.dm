@@ -1523,5 +1523,5 @@
 	adjustFireLoss(rand(30, 60))
 	fire_stacks += 2
 	IgniteMob()
-	has_thermite = 0
+	remove_thermite()
 	return

@@ -62,6 +62,7 @@
 	mineral = "diamond"
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	canSmoothWith = list(/turf/simulated/wall/mineral/diamond, /obj/structure/falsewall/diamond)
+	seconds_to_melt = -1 //can't melt it with thermite
 
 /turf/simulated/wall/mineral/bananium
 	name = "bananium wall"

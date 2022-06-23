@@ -301,7 +301,7 @@
 		open()
 
 /obj/structure/closet/thermitemelt(seconds_to_melt)
-	for(var/mob/living/M in src)
-		M.thermitemelt()
+	for(var/atom/A in src)
+		A.thermitemelt(A.seconds_to_melt)
 	dump_contents()
 	..()

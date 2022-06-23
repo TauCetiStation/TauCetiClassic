@@ -1102,3 +1102,5 @@
 	desc = "The colors are a bit dodgy."
 
 /obj/item/thermitemelt(seconds_to_melt)
+	remove_thermite()
+	return

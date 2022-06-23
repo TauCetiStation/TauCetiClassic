@@ -59,7 +59,7 @@
 	//thermite stuff
 	var/has_thermite = 0
 	var/seconds_to_melt = 30 //set to negative/zero if you don't want for your atom to be melted at all
-	var/old_color = "" //light_color which atom had before thermite was applied
+	var/old_color = "" //color which atom had before thermite was applied
 
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -518,8 +518,8 @@
 /atom/proc/add_thermite()
 	if(has_thermite)
 		return
-	old_color = light_color
-	light_color = "#585144"
+	old_color = color
+	color = "#585144"
 	has_thermite = 1
 	update_icon()
 
@@ -815,16 +815,16 @@
 	return TRUE
 
 /atom/proc/thermitemelt(seconds_to_melt)
-	var/obj/effect/overlay/O = new/obj/effect/overlay(src)
-	O.name = "Термит"
-	O.desc = "Выглядит горячим."
-	O.icon = 'icons/effects/fire.dmi'
-	O.icon_state = "2"
-	O.anchored = 1
-	O.density = 1
-	O.layer = 5
-
 	if(seconds_to_melt > 0)
+		var/obj/effect/overlay/O = new/obj/effect/overlay(src)
+		O.name = "Термит"
+		O.desc = "Выглядит горячим."
+		O.icon = 'icons/effects/fire.dmi'
+		O.icon_state = "2"
+		O.anchored = 1
+		O.density = 1
+		O.layer = 5
+
 		visible_message("<span class='warning'>Thermite starts melting [src]. </span>")
 		var/turf/L = src.loc
 		L.hotspot_expose(1000, 10, src)
@@ -832,4 +832,6 @@
 		QDEL_IN(O, seconds_to_melt SECONDS)
 	else
 		visible_message("<span class='warning'>Thermite isn't strong enough to melt [src]! </span>")
-		qdel(O)
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
+		s.set_up(3, 1, src)
+		s.start()
