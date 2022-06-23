@@ -212,6 +212,55 @@
 		else
 			to_chat(U, "<span class='warning'>Their battery has run dry of power. You must find another source.</span>")
 
+	else if (istype(target, /obj/machinery/computer/secure_data))
+		if(U.is_busy())
+			return
+		var/obj/machinery/computer/secure_data/D = target
+		D.AI_notify_hack()
+		if(do_after(U, 200, target = D))
+			for(var/datum/data/record/rec in sortRecord(data_core.general, D.sortBy, D.order))
+				for(var/datum/data/record/security_record in data_core.security)
+					security_record.fields["criminal"] = "*Arrest*"
+			var/datum/role/ninja/ninja_antag = U.mind.GetRole(NINJA)
+			if(!ninja_antag)
+				return
+			var/datum/objective/target/security_scramble/objective = locate() in ninja_antag.objectives.FindObjective(/datum/objective/target/security_scramble)
+			if(objective)
+				objective.completed = OBJECTIVE_WIN
+			to_chat(U,"<span class='notice'>Everyone in arrest</span>")
+	else if (istype(target, /obj/machinery/computer/communications))
+		if(U.is_busy())
+			return
+		var/obj/machinery/computer/communications/C = target
+		if(G.communication_console_hack)
+			return //No two-threat calls
+		C.AI_notify_hack()
+		if(do_after(U, 300, target = C))
+			var/announcement_pick = rand(0, 2)
+			var/mes
+			switch(announcement_pick)
+				if(0)
+					mes = "Attention crew, it appears that someone on your station has made unexpected communication with an alien device in nearby space."
+					var/datum/event/heist/H = new
+					H.start()
+				if(1)
+					mes = "Attention crew, it appears that someone on your station has made unexpected communication with an abandoned ship in nearby space."
+					var/datum/event/alien_infestation/A = new
+					A.start()
+				if(2)
+					mes = "Attention crew, it appears that someone on your station has made unexpected communication with an unknown wreckage in nearby space."
+					var/datum/event/meteor_shower/K = new
+					K.setup()
+			var/datum/announcement/centcomm/custom/announcement = new(mes)
+			announcement.play()
+			G.communication_console_hack = TRUE
+			var/datum/role/ninja/ninja_antag = U.mind.GetRole(NINJA)
+			if(!ninja_antag)
+				return
+			var/datum/objective/target/terror_message/objective = locate() in ninja_antag.objectives.FindObjective(/datum/objective/target/terror_message)
+			if(objective)
+				objective.completed = OBJECTIVE_WIN
+
 	else if (ismachinery(target)) //Can be applied to generically to all powered machinery. I'm leaving this alone for now.
 		var/obj/machinery/A = target
 

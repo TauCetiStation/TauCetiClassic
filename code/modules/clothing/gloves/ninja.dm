@@ -19,6 +19,7 @@
 	var/candrain = FALSE
 	var/mindrain = 200
 	var/maxdrain = 400
+	var/communication_console_hack = FALSE
 	species_restricted = null
 
 var/global/list/drain_atoms = list(
@@ -27,7 +28,9 @@ var/global/list/drain_atoms = list(
 	/obj/structure/cable,
 	/obj/machinery/power/smes,
 	/obj/mecha,
-	/obj/machinery/computer/rdconsole
+	/obj/machinery/computer/rdconsole,
+	/obj/machinery/computer/secure_data,
+	/obj/machinery/computer/communications
 )
 
 /*

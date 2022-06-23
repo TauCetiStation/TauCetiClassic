@@ -60,3 +60,8 @@ var/global/list/target_objectives = list()
 /datum/objective/target/proc/format_explanation()
 	return "Somebody didn't override the format explanation text here. Objective type is [type]. Target is [target.name], have fun."
 
+/datum/objective/target/security_scramble/format_explanation()
+	return "Use your gloves on a security console to set everyone to arrest at least once. Note that the AI will be alerted once you begin!"
+
+/datum/objective/target/terror_message/format_explanation()
+	return "Use your gloves on a communication console in order to bring another threat to the station.  Note that the AI will be alerted once you begin!"

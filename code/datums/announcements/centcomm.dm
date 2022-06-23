@@ -28,3 +28,8 @@
 	sound = "yesert"
 /datum/announcement/centcomm/noert/New()
 	message = "Похоже, отряд быстрого реагирования был запрошен на [station_name_ru()]. К сожалению, мы не сможем его отправить сейчас."
+
+/datum/announcement/centcomm/custom/New(var/mes)
+	if(mes)
+		message = mes
+	. = ..()
