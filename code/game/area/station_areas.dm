@@ -219,6 +219,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/bridge/ai_upload
 	name = "AI Upload Chamber"
 	icon_state = "ai_upload"
+	ambience = null
 	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
 
 /area/station/bridge/comms
@@ -228,11 +229,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/bridge/server
 	name = "Messaging Server Room"
 	icon_state = "server"
+	is_force_ambience = TRUE
 	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
 
 /area/station/bridge/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
+	is_force_ambience = TRUE
 	ambience = list('sound/ambience/vault_1.ogg')
 
 //Civilian
@@ -326,6 +329,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/civilian/garden
 	name = "Garden"
 	icon_state = "garden"
+	looped_ambience = 'sound/ambience/loop_garden.ogg'
 
 /area/station/civilian/janitor
 	name = "Custodial Closet"
@@ -519,6 +523,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/security/prison
 	name = "Prison Wing"
 	icon_state = "sec_prison"
+	is_force_ambience = TRUE
 	ambience = list('sound/ambience/prison_1.ogg')
 
 /area/station/security/warden
@@ -653,6 +658,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/rnd/server
 	name = "Server Room"
 	icon_state = "server"
+	is_force_ambience = TRUE
 	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
 
 /area/station/rnd/chargebay
@@ -733,6 +739,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 // Telecommunications Satellite
 
 /area/station/tcommsat
+	is_force_ambience = TRUE
 	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
 	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
 
