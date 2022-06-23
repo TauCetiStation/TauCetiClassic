@@ -1,12 +1,19 @@
 /obj/item/weapon/storage/food
 
+/obj/item/weapon/storage/food/update_icon()
+	if (contents.len == 0)
+		icon_state = "[initial(icon_state)]0"
+	else
+		icon_state = "[initial(icon_state)]"
+	return
+
 /obj/item/weapon/storage/food/small
     w_class = SIZE_TINY
     max_w_class = SIZE_TINY
     max_storage_space = 3
 
 /obj/item/weapon/storage/food/small/chips
-	name = "small bag of chips"
+	name = "small pack of chips"
 	desc = "Commander Riker's What-The-Crisps"
 	icon_state = "chips_small"
 	startswith = list(/obj/item/weapon/reagent_containers/food/snacks/chips = 4)
@@ -17,7 +24,7 @@
     max_storage_space = 6
 
 /obj/item/weapon/storage/food/normal/chips
-	name = "bag of chips"
+	name = "pack of chips"
 	desc = "Commander Riker's What-The-Crisps"
 	icon_state = "chips"
 	startswith = list(/obj/item/weapon/reagent_containers/food/snacks/chips = 8)
