@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 38
+#define SAVEFILE_VERSION_MAX 40
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -86,7 +86,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				language = "None"
 				S["language"] << language
 
-if(current_version < 38 && species == TAJARAN)
+if(current_version < 40 && species == TAJARAN)
 		popup(parent, "Your character([real_name]) had invalid job preferences, probably incompatible with current version. Some of Your job preferences have been reset.", "Preferences")
 		job_preferences -= "Detective"
 		S["job_preferences"] << job_preferences
