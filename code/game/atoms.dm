@@ -58,7 +58,7 @@
 
 	//thermite stuff
 	var/has_thermite = 0
-	var/seconds_to_melt = 5 //set to negative/zero if you don't want for your atom to be melted at all
+	var/seconds_to_melt = 30 //set to negative/zero if you don't want for your atom to be melted at all
 	var/old_color = "" //light_color which atom had before thermite was applied
 
 /atom/New(loc, ...)
@@ -296,6 +296,12 @@
 	if(visible_desc)
 		msg += "<br>[visible_desc]"
 
+	if(has_thermite)
+		msg += "<br><span class='warning'>It is covered with thermite!</span>"
+
+	if(seconds_to_melt < 0)
+		msg += "<br>Looks like it's made of heat-resistant materials, it would probably be able to withstand thermite."
+
 	// *****RM
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
 		msg += "<br>It contains:"
@@ -522,6 +528,7 @@
 		return
 	light_color = old_color
 	has_thermite = 0
+	update_icon()
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M)
@@ -819,7 +826,8 @@
 
 	if(seconds_to_melt > 0)
 		visible_message("<span class='warning'>Thermite starts melting [src]. </span>")
-		src.loc.hotspot_explose(1000, 10, src)
+		var/turf/L = src.loc
+		L.hotspot_expose(1000, 10, src)
 		qdel(src)
 		QDEL_IN(O, seconds_to_melt SECONDS)
 	else

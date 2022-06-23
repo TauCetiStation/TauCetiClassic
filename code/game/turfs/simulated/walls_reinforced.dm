@@ -10,7 +10,7 @@
 
 	sheet_type = /obj/item/stack/sheet/plasteel
 
-	seconds_to_melt = 60
+	seconds_to_melt = 120
 
 	var/d_state = INTACT
 

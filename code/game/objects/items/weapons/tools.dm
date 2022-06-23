@@ -307,9 +307,12 @@
 		location.hotspot_expose(700, 5, src)
 
 /obj/item/weapon/weldingtool/afterattack(atom/target, mob/user, proximity, params)
-	if(target.has_thermite)
-		target.thermitemelt(target.seconds_to_melt)
 	if(!proximity) return
+
+	if(target.has_thermite && isOn())
+		target.thermitemelt(target.seconds_to_melt) //kinda dumb to put it here, but it's the most sane way to do it, I think
+		return
+
 	if(istype(target, /obj/structure/reagent_dispensers) && target.reagents.has_reagent("fuel"))
 		var/obj/structure/reagent_dispensers/tank = target
 		if (!active)
@@ -323,6 +326,7 @@
 			log_game("[key_name(user)] triggered a [tank] explosion.")
 			to_chat(user, "<span class='rose'>That was stupid of you.</span>")
 			return
+
 	if (isOn())
 		use(1)
 		var/turf/location = get_turf(user)
@@ -339,10 +343,10 @@
 	return
 
 /obj/item/weapon/weldingtool/attack(mob/living/M, mob/living/user, def_zone)
-	. = ..()
 	if (isOn() && M)
 		use(1)
 		M.IgniteMob()
+	. = ..()
 
 /obj/item/weapon/weldingtool/attack_self(mob/user)
 	toggle()

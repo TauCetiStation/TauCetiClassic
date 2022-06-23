@@ -763,14 +763,14 @@
 		return
 
 	var/skill_bonus = 1
-	
+
 	//in case item have no defined default required_skill or we need to check other skills e.g. check crowbar for surgery
 	if(required_skills_override)
 		skill_bonus = apply_skill_bonus(user, 1, required_skills_override, skills_speed_bonus)
 	else if(required_skills) //default check for item
 		skill_bonus = apply_skill_bonus(user, 1, required_skills, skills_speed_bonus)
-	
-	
+
+
 	delay *= toolspeed
 	delay *= skill_bonus
 
@@ -1100,3 +1100,5 @@
 	icon_state = initial(dye_type.icon_state)
 	item_state = initial(dye_type.item_state)
 	desc = "The colors are a bit dodgy."
+
+/obj/item/thermitemelt(seconds_to_melt)

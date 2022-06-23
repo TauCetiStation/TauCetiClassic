@@ -186,6 +186,9 @@
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
 
+	else if(istype(W, /obj/item/weapon/reagent_containers))
+		return
+
 	else
 		attack_hand(user)
 
@@ -299,7 +302,6 @@
 
 /obj/structure/closet/thermitemelt(seconds_to_melt)
 	for(var/mob/living/M in src)
-		M.adjustFireLoss(rand(30, 60))
-		M.Stun(5)
-	src.dump_contents()
+		M.thermitemelt()
+	dump_contents()
 	..()
