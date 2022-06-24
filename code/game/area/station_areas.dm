@@ -296,7 +296,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/civilian/cold_room
 	name = "Cold Room"
 	icon_state = "coldroom"
-	sound_environment = SOUND_AREA_SMALL_METALLIC
+	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/civilian/barbershop
 	name = "Barbershop"
@@ -521,7 +521,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/security/main
 	name = "Security Office"
 	icon_state = "security"
-	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/station/security/lobby
 	name = "Security lobby"
@@ -648,27 +647,23 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/rnd/xenobiology
 	name = "Xenobiology Lab"
 	icon_state = "scixeno"
-	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/rnd/storage
 	name = "Toxins Storage"
 	icon_state = "toxstorage"
-	sound_environment = SOUND_AREA_SMALL_METALLIC
+	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/rnd/test_area
 	name = "Toxins Test Site"
 	icon_state = "toxtest"
-	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/rnd/mixing
 	name = "Toxins Mixing Room"
 	icon_state = "toxmix"
-	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/rnd/misc_lab
 	name = "Miscellaneous Research"
 	icon_state = "scimisc"
-	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/rnd/telesci
 	name = "Telescience Lab"
@@ -695,7 +690,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/rnd/chargebay
 	name = "Mech Bay"
 	icon_state = "mechbay"
-	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/rnd/robotics
 	name = "Robotics Lab"

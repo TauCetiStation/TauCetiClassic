@@ -142,5 +142,5 @@
 /area/asteroid/mine/dwarf
 	name = "Dwarf"
 	icon_state = "dwarf"
-	sound_environment = SOUND_AREA_STATION_HALLWAY
+	sound_environment = SOUND_AREA_DEFAULT
 	outdoors = FALSE
