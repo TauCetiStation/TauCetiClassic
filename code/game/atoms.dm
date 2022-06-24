@@ -828,7 +828,7 @@
 		visible_message("<span class='warning'>Thermite starts melting [src]. </span>")
 		var/turf/L = src.loc
 		L.hotspot_expose(1000, 10, src)
-		qdel(src)
+		QDEL_IN(src, seconds_to_melt SECONDS)
 		QDEL_IN(O, seconds_to_melt SECONDS)
 	else
 		visible_message("<span class='warning'>Thermite isn't strong enough to melt [src]! </span>")

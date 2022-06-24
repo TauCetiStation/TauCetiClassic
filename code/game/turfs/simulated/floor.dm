@@ -48,6 +48,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	can_deconstruct = TRUE
+	seconds_to_melt = 60
 
 	var/datum/holy_turf/holy
 
@@ -660,6 +661,12 @@ var/global/list/wood_icons = list("wood","wood-broken")
 					viewing_distance = 5)
 				new /obj/item/stack/tile/plasteel(src)
 				ReplaceWithLattice()
+
+/turf/simulated/floor/thermitemelt(seconds_to_melt)
+	..()
+	sleep(seconds_to_melt SECONDS)
+	BreakToBase()
+
 #undef LIGHTFLOOR_ON_BIT
 
 #undef LIGHTFLOOR_STATE_OK

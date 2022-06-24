@@ -1090,6 +1090,7 @@
 
 /obj/item/proc/wash_act(w_color)
 	decontaminate()
+	remove_thermite()
 	wet = 0
 
 	var/obj/item/clothing/dye_type = get_dye_type(w_color)
@@ -1102,5 +1103,10 @@
 	desc = "The colors are a bit dodgy."
 
 /obj/item/thermitemelt(seconds_to_melt)
-	remove_thermite()
-	return
+	if(seconds_to_melt > 0)
+		visible_message("<span class='warning'>Thermite instantly melts [src] turning it into molten mess. </span>")
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
+		s.set_up(3, 1, src)
+		s.start()
+		var/obj/item/trash/thermitemess = new /obj/item/trash/thermitemess(src.loc)
+		Destroy()
