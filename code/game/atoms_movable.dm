@@ -403,6 +403,8 @@
 
 /atom/movable/proc/get_size_flavor()
 	switch(w_class)
+		if(SIZE_MIDGET)
+			. = "midget"
 		if(SIZE_MINUSCULE)
 			. = "minuscule"
 		if(SIZE_TINY)

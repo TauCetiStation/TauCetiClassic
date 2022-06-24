@@ -1,5 +1,9 @@
 /obj/item/weapon/storage/food
 
+/obj/item/weapon/storage/food/atom_init()
+	. = ..()
+	use_sound = 'sound/items/snack.ogg'
+
 /obj/item/weapon/storage/food/update_icon()
 	if (contents.len == 0)
 		icon_state = "[initial(icon_state)]0"
@@ -33,7 +37,16 @@
 	name = "Cheesie Honkers"
 	desc = "Bite sized cheesie snacks that will honk all over your mouth."
 	icon_state = "cheesie_honkers"
-	startswith = list(/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 8)
+
+/obj/item/weapon/storage/food/normal/honkers/atom_init()
+	. = ..()
+	if (pick(1, 2, 3, 4) == 1)
+		for(var/i in 1 to 5)
+			new /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers(src)
+		new /obj/random/randomfigure(src)
+	else
+		for(var/i in 1 to 8)
+			new /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers(src)
 
 /obj/item/weapon/storage/food/normal/syndi_cakes
 	name = "Syndi-Cakes"

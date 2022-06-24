@@ -271,10 +271,11 @@
 /obj/item/weapon/reagent_containers/food/snacks/chips
 	name = "chips"
 	desc = "Commander Riker's What-The-Crisps"
+	eat_sound = 'sound/items/chips_bite.ogg'
 	w_class = SIZE_MIDGET
 	icon_state = "chips-1"
 	filling_color = "#e8c31e"
-	bitesize = 1
+	bitesize = 2
 	list_reagents = list("nutriment"= 1, "sodiumchloride" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/chips/atom_init()
@@ -879,6 +880,7 @@
 	name = "Cheesie Honkers"
 	icon_state = "cheesie_honkers-1"
 	desc = "Bite sized cheesie snacks that will honk all over your mouth."
+	eat_sound = 'sound/items/chips_bite.ogg'
 	w_class = SIZE_MIDGET
 	filling_color = "#ffa305"
 	bitesize = 2
