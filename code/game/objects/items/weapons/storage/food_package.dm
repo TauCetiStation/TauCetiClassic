@@ -40,7 +40,7 @@
 
 /obj/item/weapon/storage/food/normal/honkers/atom_init()
 	. = ..()
-	if (pick(1, 2, 3, 4) == 1)
+	if (prob(25))
 		for(var/i in 1 to 5)
 			new /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers(src)
 		new /obj/random/randomfigure(src)
