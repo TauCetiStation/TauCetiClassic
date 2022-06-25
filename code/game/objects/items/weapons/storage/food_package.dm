@@ -20,6 +20,7 @@
 	name = "small pack of chips"
 	desc = "Commander Riker's What-The-Crisps"
 	icon_state = "chips_small"
+	item_state = "chips"
 	startswith = list(/obj/item/weapon/reagent_containers/food/snacks/chips = 4)
 
 /obj/item/weapon/storage/food/normal
@@ -31,6 +32,7 @@
 	name = "pack of chips"
 	desc = "Commander Riker's What-The-Crisps"
 	icon_state = "chips"
+	item_state = "chips"
 	startswith = list(/obj/item/weapon/reagent_containers/food/snacks/chips = 8)
 
 /obj/item/weapon/storage/food/normal/honkers
@@ -76,4 +78,5 @@
 	name = "huge bag of chips"
 	desc = "Commander Riker's What-The-Crisps"
 	icon_state = "chips_huge"
+	item_state = "chips"
 	startswith = list(/obj/item/weapon/reagent_containers/food/snacks/chips = 36)
