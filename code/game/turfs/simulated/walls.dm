@@ -16,7 +16,7 @@
 
 	var/max_temperature = 2200 //K, walls will take damage if they're next to a fire hotter than this
 
-	seconds_to_melt = 60 //It takes 30 seconds for thermite to melt this wall through
+	seconds_to_melt = 120 //It takes 30 seconds for thermite to melt this wall through
 
 	var/list/dent_decals
 

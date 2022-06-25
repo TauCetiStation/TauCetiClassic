@@ -923,3 +923,37 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	..()
 	M.adjustToxLoss(REM)
 	return FALSE
+
+/datum/reagent/compressed_helium
+	name = "Сжатый гелий"
+	id = "compressed_helium"
+	description = "Сжатый, охлаждённый гелий. Способен сильно понизить температуру комнаты."
+	reagent_state = LIQUID
+	taste_message = "coolness"
+	color = "#738594" //rgb: 45, 52, 58
+
+/datum/reagent/compressed_helium/reaction_turf(turf/T, method=TOUCH, volume)
+	var/hotspot = locate(/obj/fire) in T //little bit of copypasta from foam
+	if(hotspot && istype(T, /turf/simulated))
+		var/turf/simulated/sim_T = T
+		var/datum/gas_mixture/lowertemp = sim_T.remove_air(sim_T.air.total_moles)
+		lowertemp.temperature = lowertemp.temperature - (rand(1, 10)*volume)
+		lowertemp.react()
+		T.assume_air(lowertemp)
+		qdel(hotspot)
+
+	T.extinguish_thermite()
+
+/datum/reagent/compressed_helium/reaction_obj(obj/O, volume)
+	var/turf/T = get_turf(src)
+
+	var/hotspot = locate(/obj/fire) in T
+	if(hotspot && istype(T, /turf/simulated))
+		var/turf/simulated/sim_T = T
+		var/datum/gas_mixture/lowertemp = sim_T.remove_air(sim_T.air.total_moles)
+		lowertemp.temperature = lowertemp.temperature - 10 * volume
+		lowertemp.react()
+		T.assume_air(lowertemp)
+		qdel(hotspot)
+
+	O.extinguish_thermite()

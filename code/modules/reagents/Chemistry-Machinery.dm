@@ -24,7 +24,7 @@
 	var/list/dispensable_reagents = list(
 		"hydrogen", "lithium", "carbon", "nitrogen", "oxygen", "fluorine",
 		"sodium", "aluminum", "silicon", "phosphorus", "sulfur", "chlorine", "potassium", "iron",
-		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten"
+		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten", "helium"
 	)
 	var/list/premium_reagents = list()
 	required_skills = list(/datum/skill/chemistry/trained)

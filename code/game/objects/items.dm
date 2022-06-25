@@ -1105,8 +1105,11 @@
 /obj/item/thermitemelt(seconds_to_melt)
 	if(seconds_to_melt > 0)
 		visible_message("<span class='warning'>Thermite instantly melts [src] turning it into molten mess. </span>")
+
+	else
+		visible_message("<span class='warning'>Thermite isn't strong enough to melt [src]. </span>")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 		s.set_up(3, 1, src)
 		s.start()
-		var/obj/item/trash/thermitemess = new /obj/item/trash/thermitemess(src.loc)
-		Destroy()
+		new /obj/item/trash/thermitemess(src.loc)
+		qdel(src)

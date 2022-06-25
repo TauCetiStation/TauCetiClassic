@@ -312,9 +312,6 @@
 	if(target.has_thermite)
 		if(isOn())
 			target.thermitemelt(target.seconds_to_melt) //kinda dumb to put it here, but it's the most sane way to do it, I think
-			return
-		else
-			return
 
 	if(istype(target, /obj/structure/reagent_dispensers) && target.reagents.has_reagent("fuel"))
 		var/obj/structure/reagent_dispensers/tank = target

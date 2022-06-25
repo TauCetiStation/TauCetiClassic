@@ -58,8 +58,11 @@
 
 	//thermite stuff
 	var/has_thermite = 0
-	var/seconds_to_melt = 30 //set to negative/zero if you don't want for your atom to be melted at all
-	var/old_color = "" //color which atom had before thermite was applied
+	var/seconds_to_melt = 60 //set to negative/zero if you don't want for your atom to be melted at all
+	var/old_color //color which atom had before thermite was applied
+	var/thermite_timer_id //used to extinguish thermite
+	var/thermiteoverlay_timer_id
+	var/obj/effect/overlay/thermite_overlay
 
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -300,7 +303,7 @@
 		msg += "<br><span class='warning'>It is covered with thermite!</span>"
 
 	if(seconds_to_melt < 0)
-		msg += "<br>Looks like it's made of heat-resistant materials, it would probably be able to withstand thermite."
+		msg += "<br>Looks like it's made of extremely heat-resistant materials, it would probably be able to withstand thermite."
 
 	// *****RM
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
@@ -516,7 +519,7 @@
 
 
 /atom/proc/add_thermite()
-	if(has_thermite)
+	if(has_thermite || thermite_timer_id != null)
 		return
 	old_color = color
 	color = "#585144"
@@ -524,11 +527,22 @@
 	update_icon()
 
 /atom/proc/remove_thermite()
-	if(!has_thermite)
+	if(!has_thermite || thermite_timer_id != null)
 		return
 	light_color = old_color
 	has_thermite = 0
 	update_icon()
+
+/atom/proc/extinguish_thermite()
+	if(thermite_timer_id != null)
+		deltimer(thermite_timer_id)
+		thermite_timer_id = null
+		deltimer(thermiteoverlay_timer_id)
+		thermiteoverlay_timer_id = null
+		qdel(thermite_overlay)
+		thermite_overlay = null
+
+	remove_thermite()
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M)
@@ -816,22 +830,19 @@
 
 /atom/proc/thermitemelt(seconds_to_melt)
 	if(seconds_to_melt > 0)
-		var/obj/effect/overlay/O = new/obj/effect/overlay(src)
-		O.name = "Термит"
-		O.desc = "Выглядит горячим."
-		O.icon = 'icons/effects/fire.dmi'
-		O.icon_state = "2"
-		O.anchored = 1
-		O.density = 1
-		O.layer = 5
+		thermite_overlay = new /obj/effect/overlay/thermite(src)
 
 		visible_message("<span class='warning'>Thermite starts melting [src]. </span>")
-		var/turf/L = src.loc
+		var/turf/L = get_turf(src)
 		L.hotspot_expose(1000, 10, src)
-		QDEL_IN(src, seconds_to_melt SECONDS)
-		QDEL_IN(O, seconds_to_melt SECONDS)
+
+		thermiteoverlay_timer_id = QDEL_IN(thermite_overlay, seconds_to_melt SECONDS)
+		thermitemelt_destroy()
 	else
 		visible_message("<span class='warning'>Thermite isn't strong enough to melt [src]! </span>")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 		s.set_up(3, 1, src)
 		s.start()
+
+/atom/proc/thermitemelt_destroy() //to not copypast overlay code and shit if you need to use something different from qdel (i.e. turfs)
+	thermite_timer_id = QDEL_IN(src, seconds_to_melt SECONDS)
