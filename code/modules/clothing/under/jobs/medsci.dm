@@ -47,7 +47,7 @@
 	icon_state = "skirt_chemistry"
 	item_state = "skirt_chemistry"
 	flags = NONE
-  
+
 /*
  * Medical
  */
