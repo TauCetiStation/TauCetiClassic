@@ -24953,7 +24953,7 @@
 /area/station/maintenance/medbay)
 "pjl" = (
 /obj/structure/closet/secure_closet/RD,
-/obj/item/clothing/glasses/welding/superior,
+/obj/item/clothing/glasses/meson/superior,
 /obj/item/weapon/cartridge/signal/science,
 /obj/machinery/camera{
 	c_tag = "RnD RD Office";

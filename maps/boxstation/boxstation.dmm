@@ -25884,7 +25884,6 @@
 	pixel_x = 4;
 	pixel_y = 6
 	},
-/obj/item/clothing/glasses/welding/superior,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -25893,6 +25892,7 @@
 	dir = 4
 	},
 /obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/item/clothing/glasses/meson/superior,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -26315,7 +26315,7 @@
 	pixel_y = -30
 	},
 /obj/item/device/sensor_device,
-/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health/night,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"

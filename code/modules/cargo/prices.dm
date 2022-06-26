@@ -87,7 +87,7 @@
 /obj/item/clothing/glasses/thermal/dealer/price = 5000
 /obj/item/clothing/glasses/night/hos_nights/price = 14000
 /obj/item/clothing/glasses/welding/price = 287
-/obj/item/clothing/glasses/welding/superior/price = 6200
+/obj/item/clothing/glasses/meson/superior/price = 6200
 
 /obj/item/clothing/gloves/boxing/price = 63
 /obj/item/clothing/gloves/combat/price = 880

@@ -921,6 +921,8 @@
 			number -= 1
 	if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
 		number += 1
+	if(istype(glasses, /obj/item/clothing/glasses/meson/superior))
+		number += 2
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/welding))
 		var/obj/item/clothing/mask/gas/welding/W = wear_mask
 		if(!W.up)

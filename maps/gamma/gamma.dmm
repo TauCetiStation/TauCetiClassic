@@ -50129,7 +50129,7 @@
 	pixel_x = 4;
 	pixel_y = 6
 	},
-/obj/item/clothing/glasses/welding/superior,
+/obj/item/clothing/glasses/meson/superior,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;

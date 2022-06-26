@@ -1809,8 +1809,8 @@
 #include "code\modules\mob\living\carbon\xenomorph\humanoid\update_icons.dm"
 #include "code\modules\mob\living\carbon\xenomorph\humanoid\caste\drone.dm"
 #include "code\modules\mob\living\carbon\xenomorph\humanoid\caste\hunter.dm"
-#include "code\modules\mob\living\carbon\xenomorph\humanoid\caste\sentinel.dm"
 #include "code\modules\mob\living\carbon\xenomorph\humanoid\caste\maid.dm"
+#include "code\modules\mob\living\carbon\xenomorph\humanoid\caste\sentinel.dm"
 #include "code\modules\mob\living\carbon\xenomorph\larva\emote.dm"
 #include "code\modules\mob\living\carbon\xenomorph\larva\inventory.dm"
 #include "code\modules\mob\living\carbon\xenomorph\larva\larva.dm"
@@ -2337,4 +2337,5 @@
 #include "maps\centcom\centcom.dmm"
 #include "maps\falcon\job_changes.dm"
 #include "maps\testmap\job_changes.dm"
+#include "maps\testmap\testmap.dmm"
 // END_INCLUDE
