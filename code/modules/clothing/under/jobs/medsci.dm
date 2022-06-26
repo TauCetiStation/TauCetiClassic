@@ -46,7 +46,8 @@
 	name = "chemist's jumpskirt"
 	icon_state = "skirt_chemistry"
 	item_state = "skirt_chemistry"
-
+	flags = NONE
+  
 /*
  * Medical
  */
@@ -63,6 +64,7 @@
 	name = "chief medical officer's jumpskirt"
 	icon_state = "skirt_cmo"
 	item_state = "skirt_cmo"
+	flags = NONE
 
 /obj/item/clothing/under/rank/geneticist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a genetics rank stripe on it."
@@ -77,6 +79,7 @@
 	name = "geneticist's jumpskirt"
 	icon_state = "skirt_genetics"
 	item_state = "skirt_genetics"
+	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
 
 /obj/item/clothing/under/rank/virologist
 	desc = "It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it."
@@ -91,6 +94,7 @@
 	name = "virologist's jumpskirt"
 	icon_state = "skirt_virology"
 	item_state = "skirt_virology"
+	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
 
 /obj/item/clothing/under/rank/nursesuit
 	desc = "It's a jumpsuit commonly worn by nursing staff in the medical department."
@@ -132,6 +136,7 @@
 	name = "medical doctor's jumpskirt"
 	icon_state = "skirt_medical"
 	item_state = "skirt_medical"
+	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
 
 /obj/item/clothing/under/rank/medical/blue
 	name = "medical scrubs"
@@ -166,6 +171,7 @@
 	name = "psychologist's turtleneck"
 	icon_state = "psychturtle"
 	item_state = "psychturtle"
+	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
 
 
 /*
