@@ -125,7 +125,7 @@
 	name = "Mining Station EVA"
 	icon_state = "mining_eva"
 	looped_ambience = 'sound/ambience/loop_mineeva.ogg'
-  sound_environment = SOUND_AREA_DEFAULT
+	sound_environment = SOUND_AREA_DEFAULT
 	outdoors = FALSE
 
 /area/asteroid/mine/maintenance
