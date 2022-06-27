@@ -12,6 +12,7 @@
 /area/asteroid/research_outpost/gearstore
 	name = "Expedition Preparation"
 	icon_state = "anog"
+	looped_ambience = 'sound/ambience/loop_mineeva.ogg'
 
 /area/asteroid/research_outpost/power
 	name = "Research Outpost Power"
