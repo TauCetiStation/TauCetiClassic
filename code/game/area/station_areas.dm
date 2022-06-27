@@ -350,7 +350,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Garden"
 	icon_state = "garden"
 	looped_ambience = 'sound/ambience/loop_garden.ogg'
-  sound_environment = SOUND_ENVIRONMENT_ALLEY
+	sound_environment = SOUND_ENVIRONMENT_ALLEY
 
 /area/station/civilian/janitor
 	name = "Custodial Closet"
