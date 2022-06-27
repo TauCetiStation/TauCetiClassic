@@ -691,7 +691,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			template.load(T, centered = TRUE)
 			var/turf/UTurf = get_turf(user)
 			var/area/UArea = UTurf.loc
-			UArea.update_ambience(L)
+			UArea.update_ambience(user)
 			
 
 		new /datum/effect/effect/system/smoke_spread(T)
