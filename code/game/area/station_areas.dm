@@ -523,7 +523,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/security/prison
 	name = "Prison Wing"
 	icon_state = "sec_prison"
-	is_force_ambience = TRUE
 	ambience = list('sound/ambience/prison_1.ogg')
 
 /area/station/security/warden
