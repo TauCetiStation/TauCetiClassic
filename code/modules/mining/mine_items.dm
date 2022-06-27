@@ -691,8 +691,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			template.load(T, centered = TRUE)
 			var/turf/UTurf = get_turf(user)
 			var/area/UArea = UTurf.loc
-			user.client.sound_old_looped_ambience = UArea.looped_ambience
-			user.playsound_music(UArea.looped_ambience, VOL_AMBIENT, TRUE, null, CHANNEL_AMBIENT_LOOP)
+			UArea.update_ambience(L)
+			
 
 		new /datum/effect/effect/system/smoke_spread(T)
 		qdel(src)
