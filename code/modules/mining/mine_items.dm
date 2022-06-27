@@ -614,6 +614,11 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	has_gravity = 1
+	looped_ambience = 'sound/ambience/loop_mineoutpost.ogg'
+
+/area/custom/survivalpod/bar
+	name = "Emergency Bar"
+	looped_ambience = null
 
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"
