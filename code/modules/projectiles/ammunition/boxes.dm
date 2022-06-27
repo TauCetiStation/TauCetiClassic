@@ -58,7 +58,7 @@
 
 /obj/item/ammo_box/c357
 	name = "Ammunition Box (.357 weakened)"
-  caliber = "357"
+	caliber = "357"
 	icon_state = "c45"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/a357/weak
