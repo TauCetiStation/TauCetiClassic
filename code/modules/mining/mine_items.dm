@@ -689,10 +689,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 				message_admins("[key_name_admin(usr)] [ADMIN_QUE(usr)] [ADMIN_FLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
 				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [COORD(T)]")
 			template.load(T, centered = TRUE)
-			var/turf/UTurf = get_turf(user)
-			var/area/UArea = UTurf.loc
-			UArea.update_ambience(user)
-			
 
 		new /datum/effect/effect/system/smoke_spread(T)
 		qdel(src)

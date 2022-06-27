@@ -445,7 +445,19 @@ var/global/list/ghostteleportlocs = list()
 	if (!L.client || old_area == src)
 		return
 
-	update_ambience(L)
+	if (looped_ambience == null)
+		L.client.sound_old_looped_ambience = null
+		L.playsound_stop(CHANNEL_AMBIENT_LOOP)
+	else if (L.client.sound_old_looped_ambience != looped_ambience)
+		L.client.sound_old_looped_ambience = looped_ambience
+		L.playsound_music(looped_ambience, VOL_AMBIENT, TRUE, null, CHANNEL_AMBIENT_LOOP)
+
+	if (!compare_list(old_area.ambience, new_area.ambience))
+		L.playsound_stop(CHANNEL_AMBIENT)
+
+	if (ambience != null && (is_force_ambience || (prob(50) && L.client.sound_next_ambience_play <= world.time)))
+		L.client.sound_next_ambience_play = world.time + rand(3, 6) MINUTES
+		L.playsound_music(pick(ambience), VOL_AMBIENT, null, null, CHANNEL_AMBIENT)
 
 /**
   * Called when an atom exits an area
@@ -490,22 +502,3 @@ var/global/list/ghostteleportlocs = list()
 		return FALSE
 	var/area/A = get_area(T)
 	return A?.has_gravity // Areas which always has gravity
-
-/area/proc/update_ambience(mob)
-	var/mob/living/L = mob
-
-	if (looped_ambience == null)
-		L.client.sound_old_looped_ambience = null
-		L.playsound_stop(CHANNEL_AMBIENT_LOOP)
-	else if (L.client.sound_old_looped_ambience != looped_ambience)
-		L.client.sound_old_looped_ambience = looped_ambience
-		L.playsound_music(looped_ambience, VOL_AMBIENT, TRUE, null, CHANNEL_AMBIENT_LOOP)
-	
-	var/area/old_area = L.lastarea
-	var/area/new_area = get_area(L.loc)
-	if (!compare_list(old_area.ambience, new_area.ambience))
-		L.playsound_stop(CHANNEL_AMBIENT)
-
-	if (ambience != null && (is_force_ambience || (prob(50) && L.client.sound_next_ambience_play <= world.time)))
-		L.client.sound_next_ambience_play = world.time + rand(3, 6) MINUTES
-		L.playsound_music(pick(ambience), VOL_AMBIENT, null, null, CHANNEL_AMBIENT)
