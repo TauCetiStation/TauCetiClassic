@@ -363,8 +363,8 @@
 		nutrition += light_amount
 		traumatic_shock -= light_amount
 
-		if(nutrition > 400)
-			nutrition = 400
+		if(nutrition > NUTRITION_LEVEL_NORMAL)
+			nutrition = NUTRITION_LEVEL_NORMAL
 		if(light_amount > 2) //if there's enough light, heal
 			adjustBruteLoss(-1)
 			adjustToxLoss(-1)
