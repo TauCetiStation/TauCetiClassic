@@ -470,3 +470,71 @@ var/global/bomb_set
 
 #undef TIMER_MIN
 #undef TIMER_MAX
+
+
+/obj/machinery/nuclearbomb/fake/atom_init()
+	. = ..()
+	r_code = "HONK"
+
+/obj/machinery/nuclearbomb/fake/explode()
+	playsound(src, 'sound/effects/scary_honk.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 5)
+
+/obj/machinery/nuclearbomb/fake/examine(mob/user, distance)
+	. = ..()
+	if(user.mind)
+		for(var/role in user.mind.antag_roles)
+			var/datum/role/R = user.mind.antag_roles[role]
+			if(istype(R, /datum/role/operative) || isobserver(user))
+				to_chat(user, "<span class ='boldwarning'>This is a fake one!</span>")
+
+/obj/item/nuke_teleporter
+	name = "Recaller"
+	desc = "A really strange thing"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "hand_tele"
+	item_state = "electronic"
+	throwforce = 5
+	w_class = SIZE_TINY
+	throw_speed = 3
+	throw_range = 5
+	m_amt = 10000
+	origin_tech = "magnets=3;bluespace=4;syndicate=2"
+
+/obj/item/nuke_teleporter/examine(mob/user, distance)
+	. = ..()
+	if(user.mind)
+		for(var/role in user.mind.antag_roles)
+			var/datum/role/R = user.mind.antag_roles[role]
+			if(istype(R, /datum/role/operative) || isobserver(user))
+				to_chat(user, "<span class ='notice'>Nuke teleporter. If activated, it'll bring to you a nuke. Of course, if it wasn't destroyed.</span>")
+
+/obj/item/nuke_teleporter/attack_self(mob/user)
+	. = ..()
+	if(user.mind)
+		for(var/role in user.mind.antag_roles)
+			var/datum/role/R = user.mind.antag_roles[role]
+			if(istype(R, /datum/role/operative))
+				to_chat(user, "<span class ='warning'>Начало калибровки устройства. <span class='boldnotice'>1/5</span></span>")
+				if(do_after(user,100,target = src))
+					to_chat(user, "<span class ='warning'>Поиск ядерного заряда. <span class='boldnotice'>2/5</span></span>")
+					for(var/obj/machinery/nuclearbomb/N in poi_list)
+						if(N.nuketype == "Syndi")
+							var/datum/effect/effect/system/spark_spread/spark_system = new
+							spark_system.set_up(1, 0, N.loc)
+							spark_system.set_up(2, 0, loc)
+							to_chat(user, "<span class ='warning'>Заряд найден. Инициализация блюспейс протоколов. <span class='boldnotice'>3/5</span></span>")
+							if(do_after(user,100,target = src))
+								spark_system.set_up(2, 0, N.loc)
+								spark_system.set_up(3, 0, loc)
+								to_chat(user, "<span class ='warning'>Протоколы активны. Вычисление возможных координат для телепорта. <span class='boldnotice'>4/5</span></span>")
+								if(do_after(user,100,target = src))
+									spark_system.set_up(3, 0, N.loc)
+									spark_system.set_up(4, 0, loc)
+									to_chat(user, "<span class ='warning'>Вычеслено. Инициализация перемещения. <span class='boldnotice'>5/5</span>")
+									if(do_after(user,100,target = src))
+										spark_system.set_up(5, 0, N.loc)
+										spark_system.set_up(5, 0, loc)
+										N.forceMove(get_turf(src))
+										to_chat(user, "<span class ='warning'>Перемещение завершено, оперативник.</span>")
+						return
+					to_chat(user, "<span class ='warning'>Внимание! Бомба не найдена! Предположительная причина: Бомба уничтожена.</span>")
