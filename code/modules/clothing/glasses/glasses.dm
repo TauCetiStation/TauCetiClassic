@@ -77,14 +77,6 @@
 	off_state = "night"
 	activation_sound = 'sound/effects/glasses_on.ogg'
 
-/obj/item/clothing/glasses/night/hos_nights
-	name = "augmented shades"
-	desc = "Polarized bioneural eyewear, designed to augment your vision."
-	icon_state = "hos_shades"
-	item_state = "hos_shades"
-	toggleable = FALSE
-	action_button_name = null
-
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
 	desc = "Yarr."
@@ -323,6 +315,18 @@
 	active = 1
 	off_state = "healthhudnight"
 	hud_types = list(DATA_HUD_MEDICAL_ADV)
+
+/obj/item/clothing/glasses/sunglasses/hud/sechud/night
+	name = "night vision HUDsunglasses"
+	desc = "Advanced security HUDsunglasses designed to search for criminal scum in pitch darkness."
+	icon_state = "sunhudnight"
+	darkness_view = 7
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	toggleable = TRUE
+	sightglassesmod = "nvg_military"
+	action_button_name = "Toggle Goggles"
+	active = 1
+	off_state = "sunhud"
 
 /obj/item/clothing/glasses/gar
 	name = "gar glasses"
