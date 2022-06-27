@@ -438,7 +438,7 @@ SUBSYSTEM_DEF(job)
 				spawn_in_storage += thing
 			else
 				metadata = H.client.prefs.gear[G.display_name]
-				if(H.equip_to_slot_or_del(G.spawn_item(H, metadata), G.slot))
+				if(H.equip_or_collect(G.spawn_item(H, metadata), G.slot))
 					to_chat(H, "<span class='notice'>Equipping you with \the [thing]!</span>")
 					custom_equip_slots.Add(G.slot)
 				else
@@ -591,7 +591,7 @@ SUBSYSTEM_DEF(job)
 			C.associated_account_number = H.mind.initial_account.account_number
 			H.mind.initial_account.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
 
-		H.equip_to_slot_or_del(C, SLOT_WEAR_ID)
+		H.equip_or_collect(C, SLOT_WEAR_ID)
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda(H), SLOT_BELT)
 	if(locate(/obj/item/device/pda,H))

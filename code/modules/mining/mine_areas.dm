@@ -124,11 +124,13 @@
 /area/asteroid/mine/eva
 	name = "Mining Station EVA"
 	icon_state = "mining_eva"
+	looped_ambience = 'sound/ambience/loop_mineeva.ogg'
 
 	outdoors = FALSE
 
 /area/asteroid/mine/maintenance
 	name = "Mining Station Communications"
+	is_force_ambience = TRUE
 	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
 
 	outdoors = FALSE
