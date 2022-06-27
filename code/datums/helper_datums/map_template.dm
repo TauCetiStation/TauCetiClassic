@@ -62,7 +62,7 @@
 
 	if(forcemove_mobs) // if we need to register change of area/loc
 		for(var/mob/M in mobs)
-			M.forceMove(M.loc)
+			M.forceMove(M.loc, keep_buckled = TRUE)
 
 /datum/map_template/proc/load(turf/T, centered = FALSE, initBounds = TRUE)
 	if(centered)
