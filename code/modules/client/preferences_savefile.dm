@@ -574,7 +574,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_character(needs_update, S) // needs_update == savefile_version if we need an update (positive integer)
-		repetitive_updates_character(current_version, S)
+		repetitive_updates_character(needs_update, S)
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
