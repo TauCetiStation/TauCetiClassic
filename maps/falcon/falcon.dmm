@@ -24638,6 +24638,8 @@
 	dir = 8;
 	pixel_x = -28
 	},
+/obj/item/device/gps/medical,
+/obj/item/device/gps/medical,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"

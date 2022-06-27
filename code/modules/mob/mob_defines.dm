@@ -103,7 +103,7 @@
 	var/is_dizzy = 0
 	var/is_jittery = 0
 	var/jitteriness = 0//Carbon
-	var/nutrition = 400.0//Carbon
+	var/nutrition = NUTRITION_LEVEL_NORMAL//Carbon
 	var/dna_inject_count = 0
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
