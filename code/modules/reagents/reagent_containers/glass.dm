@@ -73,6 +73,7 @@
 		playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/glass/afterattack(atom/target, mob/user, proximity, params)
+	to_chat(user, "called!!!")
 
 	if (!is_open_container() || !proximity)
 		return

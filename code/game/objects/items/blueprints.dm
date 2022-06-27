@@ -22,6 +22,8 @@
 	var/const/ROOM_ERR_SPACE = -1
 	var/const/ROOM_ERR_TOOLARGE = -2
 
+	seconds_to_melt = -1
+
 /obj/item/blueprints/attack_self(mob/M)
 	if (!ishuman(M))
 		to_chat(M, "This stack of blue paper means nothing to you.")//monkeys cannot into projecting

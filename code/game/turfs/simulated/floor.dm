@@ -663,7 +663,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 				ReplaceWithLattice()
 
 /turf/simulated/floor/thermitemelt_destroy(seconds_to_melt)
-	thermite_timer_id = addtimer(CALLBACK(src, .proc/BreakToBase()), seconds_to_melt SECONDS)
+	thermite_timer_id = addtimer(CALLBACK(src, .proc/BreakToBase), seconds_to_melt SECONDS, TIMER_STOPPABLE)
 
 #undef LIGHTFLOOR_ON_BIT
 

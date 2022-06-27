@@ -79,6 +79,7 @@
 	origin_tech = null
 	can_be_holstered = TRUE
 	chargespeed = 1
+	seconds_to_melt = -1
 
 /obj/item/weapon/gun/energy/laser/selfcharging/alien
 	name = "Alien blaster"

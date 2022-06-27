@@ -96,3 +96,5 @@
 	anchored = 1
 	density = 1
 	layer = 5
+	light_color = "#e0ff8c" //rgb: 88, 100, 55
+	light_power = 1

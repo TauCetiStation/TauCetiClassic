@@ -402,6 +402,9 @@
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/I, mob/user, params)
+	if((istype(I, /obj/item/weapon/reagent_containers)|| istype(I, /obj/item/weapon/weldingtool)) && user.a_intent == INTENT_HARM) //for splashing and igniting
+		return
+
 	if(istype(I, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = I
 		if(S.use_to_pickup)
@@ -438,7 +441,7 @@
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user) & COMPONENT_ITEM_NO_PICKUP)
+	if((SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user) & COMPONENT_ITEM_NO_PICKUP) || thermite_timer_id != null)
 		return FALSE
 	return TRUE
 
@@ -1103,13 +1106,19 @@
 	desc = "The colors are a bit dodgy."
 
 /obj/item/thermitemelt(seconds_to_melt)
-	if(seconds_to_melt > 0)
+	if(seconds_to_melt > 0) //using seconds_to_melt only as bool
 		visible_message("<span class='warning'>Thermite instantly melts [src] turning it into molten mess. </span>")
+		var/obj/item/trash/thermitemess/M = new /obj/item/trash/thermitemess(get_turf(src))
 
+		var/image/welding_sparks = image('icons/effects/effects.dmi', "welding_sparks", layer = ABOVE_LIGHTING_LAYER)
+		welding_sparks.plane = ABOVE_LIGHTING_PLANE
+
+		M.add_overlay(welding_sparks)
+		qdel(src)
+		sleep(2 SECONDS)
+		M.cut_overlay(welding_sparks)
 	else
 		visible_message("<span class='warning'>Thermite isn't strong enough to melt [src]. </span>")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 		s.set_up(3, 1, src)
 		s.start()
-		new /obj/item/trash/thermitemess(src.loc)
-		qdel(src)

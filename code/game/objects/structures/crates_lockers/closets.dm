@@ -186,9 +186,6 @@
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
 
-	else if(istype(W, /obj/item/weapon/reagent_containers))
-		return
-
 	else
 		attack_hand(user)
 
@@ -300,8 +297,9 @@
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open()
 
-/obj/structure/closet/thermitemelt(seconds_to_melt)
+/obj/structure/closet/thermitemelt_destroy(seconds_to_melt)
 	for(var/atom/A in src)
-		A.thermitemelt(A.seconds_to_melt)
+		if(rand(1,3) == 3 || istype(A, /mob/living))
+			A.thermitemelt(A.seconds_to_melt)
 	dump_contents()
-	..()
+	qdel(src)

@@ -309,7 +309,7 @@
 /obj/item/weapon/weldingtool/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 
-	if(target.has_thermite)
+	if(target.has_thermite && user.a_intent == INTENT_HARM)
 		if(isOn())
 			target.thermitemelt(target.seconds_to_melt) //kinda dumb to put it here, but it's the most sane way to do it, I think
 
