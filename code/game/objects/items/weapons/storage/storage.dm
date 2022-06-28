@@ -140,12 +140,11 @@
 /obj/item/weapon/storage/proc/try_open(mob/user)
 	if(!user)
 		return FALSE
-
-	if(user.in_interaction_vicinity(src))
-		open(user)
-		return TRUE
-	else
+	if(!user.in_interaction_vicinity(src))
 		return FALSE
+
+	open(user)
+	return TRUE
 
 /obj/item/weapon/storage/proc/prepare_ui()
 	if(!storage_ui)

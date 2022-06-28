@@ -35,9 +35,9 @@
 	if(require_opened && !opened)
 		to_chat(user, "<span class='notice'>You can't view [src]'s inventory without opening it up!</span>")
 		return FALSE
-	else
-		open(user)
-		return TRUE
+	
+	open(user)
+	return TRUE
 
 /obj/item/weapon/storage/visuals/can_be_inserted(obj/item/W, stop_messages = FALSE)
 	if(require_opened && !opened)
