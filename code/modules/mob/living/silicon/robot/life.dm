@@ -275,6 +275,7 @@
 		return TRUE
 
 /mob/living/silicon/robot/update_fire()
+	underlays.Cut()
 	if(on_fire)
 		underlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay")
 		add_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay"))

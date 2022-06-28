@@ -1,11 +1,11 @@
-#define LAYERIAN_FIRE_1		7
-#define LAYERIAN_BACK		6
-#define LAYERIAN_MOUTH		5
-#define LAYERIAN_HEAD		4
-#define LAYERIAN_NECKCUFF	3
-#define LAYERIAN_TARGETED	2
-#define LAYERIAN_FIRE_2		1
-#define LAYERIANS_TOTAL		7
+//#define LAYERIAN_LOWER_FIRE      * // --should be in underlays (underlays bad); or we need to make BODY part as overlays layer too (like humans); or remove
+#define LAYERIAN_BACK              6
+#define LAYERIAN_MOUTH             5
+#define LAYERIAN_HEAD              4
+#define LAYERIAN_NECKCUFF          3
+#define LAYERIAN_UPPER_FIRE        2
+#define LAYERIAN_TARGETED          1
+#define LAYERIANS_TOTAL            6
 
 /mob/living/carbon/ian/var/static/list/corgi_icons = list()
 /mob/living/carbon/ian/var/list/overlays_inv[LAYERIANS_TOTAL]
@@ -21,6 +21,7 @@
 		overlays_inv[index] = null
 
 /mob/living/carbon/ian/regenerate_icons()
+	update_fire_underlay()
 	update_inv_head()
 	update_inv_mouth()
 	update_inv_neck()
@@ -236,23 +237,30 @@
 	apply_overlay(LAYERIAN_TARGETED)
 
 /mob/living/carbon/ian/update_fire()
-	remove_overlay(LAYERIAN_FIRE_1)
-	remove_overlay(LAYERIAN_FIRE_2)
+	update_fire_underlay()
+	//remove_overlay(LAYERIAN_LOWER_FIRE)
+	remove_overlay(LAYERIAN_UPPER_FIRE)
 
 	if(on_fire)
-		overlays_inv[LAYERIAN_FIRE_1] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay", "layer"=-LAYERIAN_FIRE_1)
-		overlays_inv[LAYERIAN_FIRE_2] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay", "layer"=-LAYERIAN_FIRE_2)
+		//overlays_inv[LAYERIAN_LOWER_FIRE] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay", "layer"=-LAYERIAN_LOWER_FIRE)
+		overlays_inv[LAYERIAN_UPPER_FIRE] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay", "layer"=-LAYERIAN_UPPER_FIRE)
 
-	apply_overlay(LAYERIAN_FIRE_1)
-	apply_overlay(LAYERIAN_FIRE_2)
+	//apply_overlay(LAYERIAN_LOWER_FIRE)
+	apply_overlay(LAYERIAN_UPPER_FIRE)
 
-#undef LAYERIAN_FIRE_1
+/mob/living/carbon/ian/proc/update_fire_underlay()
+	underlays.Cut()
+
+	if(on_fire)
+		underlays += image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_underlay")
+
+//#undef LAYERIAN_LOWER_FIRE
 #undef LAYERIAN_BACK
 #undef LAYERIAN_MOUTH
 #undef LAYERIAN_HEAD
 #undef LAYERIAN_NECKCUFF
+#undef LAYERIAN_UPPER_FIRE
 #undef LAYERIAN_TARGETED
-#undef LAYERIAN_FIRE_2
 #undef LAYERIANS_TOTAL
 
 /mob/living/carbon/ian/update_transform()
