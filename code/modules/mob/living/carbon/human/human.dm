@@ -2052,7 +2052,17 @@
 	for(var/mob/M in viewers(src))
 		if(M.client)
 			viewing += M.client
-	var/image/I = image(icon,src,"electrocuted_generic",MOB_LAYER+1)
+	var/electrocuted_sprite = "electrocuted_generic"
+	switch(get_species())
+		if(UNATHI)
+			electrocuted_sprite += "_unathi"
+		if(TAJARAN)
+			electrocuted_sprite += "_tajaran"
+		if(SKRELL)
+			electrocuted_sprite += "_skrell"
+		if(VOX)
+			electrocuted_sprite += "_vox"
+	var/image/I = image(icon, src, electrocuted_sprite, MOB_LAYER+1)
 	I = update_height(I)
 	flick_overlay(I, viewing, anim_duration)
 
