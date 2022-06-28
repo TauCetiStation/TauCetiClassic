@@ -144,14 +144,13 @@
 
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(!species || (species.name == SKELETON))
+	if(!species || (isskeleton(src)))
 		return
 	if(f_style)
 		f_style = "Shaved"
 	if(h_style)
 		h_style = "Bald"
-
-	set_species(SKELETON)
+	set_species(species.skeleton_type)
 	add_status_flags(DISFIGURED)
 	regenerate_icons()
 	return
