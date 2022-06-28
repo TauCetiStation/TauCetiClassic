@@ -153,6 +153,9 @@
 	// The type of skeleton species they would be turned into. default is human
 	var/skeleton_type = SKELETON
 
+	var/default_mood_event
+
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -242,6 +245,9 @@
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
+	if(default_mood_event)
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "species", default_mood_event)
+
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -254,6 +260,7 @@
 		H.clear_emote(emote)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
+	SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "species")
 
 /datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
 	return
@@ -786,7 +793,22 @@
 	..()
 	H.gender = NEUTER
 
-/datum/species/diona/regen(mob/living/carbon/human/H, light_amount)
+/datum/species/diona/regen(mob/living/carbon/human/H)
+	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
+	if(isturf(H.loc)) //else, there's considered to be no light
+		var/turf/T = H.loc
+		light_amount = round(10 * T.get_lumcount() - 5)
+
+	if(H.is_type_organ(O_LIVER, /obj/item/organ/internal/liver/diona) && !H.is_bruised_organ(O_LIVER)) // Specie may require light, but only plants, with chlorophyllic plasts can produce nutrition out of light!
+		H.nutrition += light_amount
+
+	if(H.is_type_organ(O_KIDNEYS, /obj/item/organ/internal/kidneys/diona)) // Diona's kidneys contain all the nutritious elements. Damaging them means they aren't held.
+		var/obj/item/organ/internal/kidneys/KS = H.organs_by_name[O_KIDNEYS]
+		if(!KS)
+			H.nutrition = 0
+		else if(H.nutrition > (500 - KS.damage*5))
+			H.nutrition = 500 - KS.damage*5
+
 	if(light_amount >= 5) // If you can regen organs - do so.
 		for(var/obj/item/organ/internal/O in H.organs)
 			if(O.damage)
@@ -804,9 +826,6 @@
 
 	if(light_amount >= 3) // If you don't need to regen bodyparts, fix up small things.
 		H.adjustBruteLoss(-(light_amount * regen_mod))
-		// Dionaea don't have toxloss or oxyloss. Why is this here?
-		H.adjustToxLoss(-(light_amount * regen_mod))
-		H.adjustOxyLoss(-(light_amount * regen_mod))
 
 /datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_diona_digest(M)
@@ -1000,6 +1019,8 @@
 		/datum/emote/robot/buzz,
 	)
 
+	default_mood_event = /datum/mood_event/machine
+
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	..()
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
@@ -1111,6 +1132,8 @@
 	min_age = 1
 	max_age = 1000
 
+	default_mood_event = /datum/mood_event/undead
+
 /datum/species/skeleton/on_gain(mob/living/carbon/human/H)
 	..()
 	H.gender = NEUTER
@@ -1119,6 +1142,9 @@
 /datum/species/skeleton/on_loose(mob/living/carbon/human/H, new_species)
 	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
 	..()
+
+/datum/species/skeleton/regen(mob/living/carbon/human/H)
+	H.nutrition = NUTRITION_LEVEL_NORMAL
 
 /datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skeleton_digest(M)
@@ -1275,6 +1301,28 @@
 	..()
 	H.gender = NEUTER
 
+/datum/species/shadowling/regen(mob/living/carbon/human/H)
+	H.nutrition = NUTRITION_LEVEL_NORMAL //i aint never get hongry
+	
+	var/light_amount = 0
+	if(isturf(H.loc))
+		var/turf/T = H.loc
+		light_amount = round(10 * T.get_lumcount())
+
+	if(light_amount > LIGHT_DAM_THRESHOLD)
+		H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)
+		to_chat(H, "<span class='userdanger'>The light burns you!</span>")
+		H.playsound_local(null, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+	else if(light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
+		H.heal_overall_damage(5, 5)
+		H.adjustToxLoss(-3)
+		H.adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
+		H.adjustCloneLoss(-1)
+		H.adjustOxyLoss(-10)
+		H.SetWeakened(0)
+		H.SetStunned(0)
+
 /datum/species/shadowling/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_shadowling_digest(M)
 
@@ -1324,6 +1372,8 @@
 	max_age = 1000
 
 	is_common = TRUE
+
+	default_mood_event = /datum/mood_event/golem
 
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
 	..()
@@ -1401,6 +1451,8 @@
 	min_age = 25
 	max_age = 85
 
+	default_mood_event = /datum/mood_event/undead
+
 /datum/species/zombie/on_gain(mob/living/carbon/human/H)
 	..()
 
@@ -1426,7 +1478,6 @@
 	remove_zombie(H)
 
 	..()
-
 
 /datum/species/zombie/tajaran
 	name = ZOMBIE_TAJARAN
@@ -1643,6 +1694,8 @@
 	max_age = 10
 
 	is_common = FALSE
+
+	default_mood_event = /datum/mood_event/homunculus
 
 /datum/species/homunculus/on_gain(mob/living/carbon/human/H)
 	..()

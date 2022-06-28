@@ -657,44 +657,7 @@
 
 	if(status_flags & GODMODE)	return 0	//godmode
 
-	if(species.flags[REQUIRE_LIGHT])
-		var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-		if(isturf(loc)) //else, there's considered to be no light
-			var/turf/T = loc
-			light_amount = round((T.get_lumcount()*10)-5)
-
-		if(is_type_organ(O_LIVER, /obj/item/organ/internal/liver/diona) && !is_bruised_organ(O_LIVER)) // Specie may require light, but only plants, with chlorophyllic plasts can produce nutrition out of light!
-			nutrition += light_amount
-
-		if(species.flags[IS_PLANT])
-			if(is_type_organ(O_KIDNEYS, /obj/item/organ/internal/kidneys/diona)) // Diona's kidneys contain all the nutritious elements. Damaging them means they aren't held.
-				var/obj/item/organ/internal/kidneys/KS = organs_by_name[O_KIDNEYS]
-				if(!KS)
-					nutrition = 0
-				else if(nutrition > (500 - KS.damage*5))
-					nutrition = 500 - KS.damage*5
-			species.regen(src, light_amount)
-
-	if(get_species() == SHADOWLING)
-		var/light_amount = 0
-		nutrition = 450 //i aint never get hongry
-		if(isturf(loc))
-			var/turf/T = loc
-			light_amount = round(T.get_lumcount()*10)
-
-		if(light_amount > LIGHT_DAM_THRESHOLD)
-			take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
-			to_chat(src, "<span class='userdanger'>The light burns you!</span>")
-			playsound_local(null, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-		else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
-			heal_overall_damage(5,5)
-			adjustToxLoss(-3)
-			adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
-			adjustCloneLoss(-1)
-			adjustOxyLoss(-10)
-			SetWeakened(0)
-			SetStunned(0)
+	species.regen(src)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
