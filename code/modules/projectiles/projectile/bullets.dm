@@ -32,10 +32,16 @@
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
+
+/obj/item/projectile/bullet/slug
+	name = "shotgun slug"
+	damage = 40
+	stoping_power = 3
+
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = 14
-	dispersion = 2.5
+	damage = 15
+	dispersion = 4.0
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
@@ -206,10 +212,10 @@
 	stun = 0
 	weaken = 0
 	stutter = 10
-	agony = 40
+	agony = 80
 	embed = 0
 	sharp = 0
-	dispersion = 1.8
+	dispersion = 2.0
 
 /obj/item/projectile/bullet/stunshot/atom_init()
 	. = ..()
@@ -222,12 +228,13 @@
 /obj/item/projectile/bullet/incendiary
 	name = "incendiary bullet"
 	damage = 20
+	incendiary = 10
 
-/obj/item/projectile/bullet/incendiary/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.adjust_fire_stacks(10)
-		M.IgniteMob()
+/obj/item/projectile/bullet/incendiary/buckshot
+	name = "incendiary shell"
+	damage = 7
+	incendiary = 2
+	dispersion = 2.0
 
 /obj/item/projectile/bullet/chameleon
 	damage = 1 // stop trying to murderbone with a fake gun dumbass!!!

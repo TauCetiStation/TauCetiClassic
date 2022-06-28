@@ -14,6 +14,7 @@
 	var/datum/disease2/disease/virus2 = null
 	var/datum/data/record/entry = null
 	var/obj/item/weapon/reagent_containers/syringe/sample = null
+	required_skills = list(/datum/skill/chemistry/trained, /datum/skill/research/trained, /datum/skill/medical/pro)
 
 /obj/machinery/disease2/isolator/update_icon()
 	if (stat & (BROKEN|NOPOWER))
@@ -36,7 +37,8 @@
 	if(sample)
 		to_chat(user, "\The [src] is already loaded.")
 		return
-
+	if(!do_skill_checks(user))
+		return
 	sample = S
 	user.drop_from_inventory(S, src)
 
@@ -118,6 +120,7 @@
 	var/mob/user = usr
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 
+
 	if (href_list["close"])
 		user.unset_machine(src)
 		ui.close()
@@ -164,6 +167,8 @@
 		return TRUE
 
 /obj/machinery/disease2/isolator/proc/print(mob/user)
+	if(!do_skill_checks(user))
+		return
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(loc)
 
 	switch (state)

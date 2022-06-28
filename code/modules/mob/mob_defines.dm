@@ -13,21 +13,20 @@
 	var/old_y = 0
 
 	//Not in use yet
-	var/obj/effect/organstructure/organStructure = null
 
-	var/atom/movable/screen/hands = null
+	var/atom/movable/screen/module_icon = null
 	var/atom/movable/screen/pullin = null
 	var/atom/movable/screen/internals = null
-	var/atom/movable/screen/i_select = null
-	var/atom/movable/screen/m_select = null
 	var/atom/movable/screen/healths = null
 	var/atom/movable/screen/throw_icon = null
-	var/atom/movable/screen/pressure = null
-	var/atom/movable/screen/pain = null
-	var/atom/movable/screen/gun/item/item_use_icon = null
-	var/atom/movable/screen/gun/move/gun_move_icon = null
-	var/atom/movable/screen/gun/run/gun_run_icon = null
-	var/atom/movable/screen/gun/mode/gun_setting_icon = null
+	var/atom/movable/screen/complex/gun/gun_setting_icon = null
+
+	var/atom/movable/screen/r_hand_hud_object = null
+	var/atom/movable/screen/l_hand_hud_object = null
+
+	var/atom/movable/screen/move_intent = null
+	var/atom/movable/screen/complex/act_intent/action_intent = null
+	var/atom/movable/screen/staminadisplay = null
 
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
@@ -40,9 +39,8 @@
 	var/atom/movable/screen/neurotoxin_icon = null
 	var/atom/movable/screen/healthdoll = null
 	var/atom/movable/screen/nutrition_icon = null
-	var/atom/movable/screen/charge_icon = null
 
-	var/atom/movable/screen/xenomorph_plasma_display = null
+	var/atom/movable/screen/pwr_display = null
 	var/atom/movable/screen/nightvisionicon = null
 
 	var/me_verb_allowed = TRUE //Allows all mobs to use the me verb by default, will have to manually specify they cannot
@@ -115,7 +113,7 @@
 	var/is_jittery = 0
 	var/jitteriness = 0//Carbon
 	var/charges = 0.0
-	var/nutrition = 400.0//Carbon
+	var/nutrition = NUTRITION_LEVEL_NORMAL//Carbon
 	var/dna_inject_count = 0
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
@@ -205,7 +203,6 @@
 
 //Monkey/infected mode
 	var/list/resistances = list()
-	var/datum/disease/virus = null
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 

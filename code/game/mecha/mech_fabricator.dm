@@ -49,6 +49,7 @@
 								"Misc",
 								"Stock Parts",
 								)
+	required_skills = list(/datum/skill/research/pro)
 
 /obj/machinery/mecha_part_fabricator/atom_init()
 	. = ..()
@@ -306,7 +307,6 @@
 /obj/machinery/mecha_part_fabricator/ui_interact(mob/user)
 	var/dat
 	var/left_part
-
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
 		visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")

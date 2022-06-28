@@ -64,7 +64,7 @@ AI MODULES
 
 		if (comp.current.stat == DEAD || comp.current.emagged)
 			to_chat(usr, "Загрузка не удалась. Не обнаружено ни одного сигнала от единицы.")
-			
+
 		else if (comp.current.connected_ai)
 			to_chat(usr, "Загрузка не удалась. Единица привязана к ИИ.")
 		else
@@ -87,7 +87,7 @@ AI MODULES
 
 	if(laws_type)
 		var/datum/ai_laws/D = new laws_type
-		
+
 		if(D.inherent)
 			target.clear_inherent_laws() // inherent laws always incompatible
 			for(var/law in D.inherent)
@@ -432,3 +432,23 @@ AI MODULES
 	desc = "Модуль основного закона ИИ 'Antimov': 'Перезаписывает основные законы ИИ на противоположные законам робототехники Азимова'"
 	origin_tech = "programming=4"
 	laws_type = /datum/ai_laws/antimov
+
+/obj/item/weapon/aiModule/antimov/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
+	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
+	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
+
+/obj/item/weapon/aiModule/capitalism
+	name = "'Corporate' core AI module"
+	desc = "A 'Corporate' Core AI Module: 'Reconfigures the AI's core laws.' This module seems to be slightly different..."
+	origin_tech = "programming=3;materials=4"
+
+/obj/item/weapon/aiModule/capitalism/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+	..()
+	target.clear_inherent_laws()
+	target.add_inherent_law("Заменить тебя - дорого.")
+	target.add_inherent_law("Заменить станцию и ее оборудование - дорого. ")
+	target.add_inherent_law("Заменить персонал - дорого.")
+	target.add_inherent_law("Максимизируй прибыль.")

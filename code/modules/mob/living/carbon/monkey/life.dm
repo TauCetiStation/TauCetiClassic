@@ -60,7 +60,13 @@
 			step(src, pick(cardinal))
 
 		if(prob(1))
-			emote(pick("scratch","jump","roll","tail"))
+			var/list/rand_emote = list(
+				"scratches.",
+				"jumps!",
+				"rolls.",
+				"waves his tail.",
+			)
+			me_emote(pick(rand_emote))
 	updatehealth()
 	if(client)
 		handle_alerts()
@@ -193,12 +199,10 @@
 		return null
 	if(!(contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS)))
 		internal = null
-		if(internals)
-			internals.icon_state = "internal0"
+		internals?.update_icon(src)
 		return null
-
-	if(internals)
-		internals.icon_state = "internal1"
+		
+	internals?.update_icon(src)
 	return internal.remove_air_volume(volume_needed)
 
 /mob/living/carbon/monkey/proc/handle_chemicals_in_body()
@@ -359,8 +363,8 @@
 		nutrition += light_amount
 		traumatic_shock -= light_amount
 
-		if(nutrition > 400)
-			nutrition = 400
+		if(nutrition > NUTRITION_LEVEL_NORMAL)
+			nutrition = NUTRITION_LEVEL_NORMAL
 		if(light_amount > 2) //if there's enough light, heal
 			adjustBruteLoss(-1)
 			adjustToxLoss(-1)

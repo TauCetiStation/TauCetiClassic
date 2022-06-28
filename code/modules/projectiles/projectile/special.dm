@@ -235,10 +235,12 @@
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_bodypart_damage(damage)
+		S.Stun(2)
 
 	if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(damage)
+		M.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
@@ -248,7 +250,7 @@
 			if(istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
-					if(prob(30))
+					if(prob(60))
 						C.make_old()
 						if(bp == H.head)
 							H.update_inv_head()

@@ -236,9 +236,9 @@
 					new type(SK)
 
 			if(H.backbag == 1)
-				H.equip_to_slot_or_del(SK, SLOT_R_HAND)
+				H.equip_or_collect(SK, SLOT_R_HAND)
 			else
-				H.equip_to_slot_or_del(SK, SLOT_IN_BACKPACK)
+				H.equip_or_collect(SK, SLOT_IN_BACKPACK)
 
 		if(back)
 			if(l_pocket_back)
@@ -256,12 +256,12 @@
 					if(!isnum(number))//Default to 1
 						number = 1
 					for(var/i in 1 to number)
-						H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK)
+						H.equip_or_collect(new path(H), SLOT_IN_BACKPACK)
 		else
 			if(l_pocket_back)
-				H.equip_to_slot_or_del(new l_pocket_back(H), SLOT_L_STORE)
+				H.equip_or_collect(new l_pocket_back(H), SLOT_L_STORE)
 			if(r_pocket_back)
-				H.equip_to_slot_or_del(new r_pocket_back(H), SLOT_R_STORE)
+				H.equip_or_collect(new r_pocket_back(H), SLOT_R_STORE)
 			if(l_hand_back)
 				H.put_in_l_hand(new l_hand_back(H))
 			if(r_hand_back)
@@ -273,8 +273,7 @@
 		apply_fingerprints(H)
 		if(internals_slot)
 			H.internal = H.get_equipped_item(internals_slot)
-			if(H.internals)
-				H.internals.icon_state = "internal1"
+			H.internals?.update_icon(H)
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/weapon/implant/I = new implant_type(H)
@@ -290,7 +289,7 @@
 		var/slot_type = slot2type[slot]
 		if(!slot_type)
 			continue
-		H.equip_to_slot_or_del(new slot_type(H), text2num(slot))
+		H.equip_or_collect(new slot_type(H), text2num(slot))
 
 /**
   * Apply a fingerprint from the passed in human to all items in the outfit
