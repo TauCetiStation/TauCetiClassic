@@ -33,6 +33,7 @@
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
+	AddComponent(/datum/component/mood)
 
 	dna = new
 	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
@@ -56,7 +57,6 @@
 	. = ..()
 
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
-	AddComponent(/datum/component/mood)
 	human_list += src
 
 	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), .proc/mood_item_equipped)
