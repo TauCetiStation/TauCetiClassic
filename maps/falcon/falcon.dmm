@@ -9917,6 +9917,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	pixel_x = -10;
+	pixel_y = -29
+	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
