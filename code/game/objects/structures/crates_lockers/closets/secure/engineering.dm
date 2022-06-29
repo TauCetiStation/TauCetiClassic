@@ -86,16 +86,6 @@
 	icon_off = "secureengoff"
 
 /obj/structure/closet/secure_closet/engineering_personal/PopulateContents()
-	if (prob(50))
-		new /obj/item/weapon/storage/backpack/industrial(src)
-	else
-		new /obj/item/weapon/storage/backpack/satchel/eng(src)
-
-	if (prob(70))
-		new /obj/item/clothing/accessory/storage/brown_vest(src)
-	else
-		new /obj/item/clothing/accessory/storage/webbing(src)
-
 	new /obj/item/weapon/storage/toolbox/mechanical(src)
 	new /obj/item/device/radio/headset/headset_eng(src)
 	new /obj/item/clothing/suit/storage/hazardvest(src)
@@ -116,16 +106,6 @@
 	icon_off = "secureatmoff"
 
 /obj/structure/closet/secure_closet/atmos_personal/PopulateContents()
-	if (prob(50))
-		new /obj/item/weapon/storage/backpack/industrial(src)
-	else
-		new /obj/item/weapon/storage/backpack/satchel/eng(src)
-
-	if (prob(70))
-		new /obj/item/clothing/accessory/storage/brown_vest(src)
-	else
-		new /obj/item/clothing/accessory/storage/webbing(src)
-
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/device/flashlight(src)
 	new /obj/item/weapon/reagent_containers/spray/extinguisher(src)

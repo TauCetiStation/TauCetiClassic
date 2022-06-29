@@ -66,33 +66,21 @@
 
 // Common materials.
 
-// Metal. Common building material.
-/datum/export/stack/metal
-	cost = 5
-	message = "of metal"
-	export_types = list(/obj/item/stack/sheet/metal)
-
-// Glass. Common building material.
-/datum/export/stack/glass
-	cost = 5
-	message = "of glass"
-	export_types = list(/obj/item/stack/sheet/glass)
-
 // Plasteel. Lightweight, strong and contains some plasma too.
 /datum/export/stack/plasteel
-	cost = 85
+	cost = 5
 	message = "of plasteel"
 	export_types = list(/obj/item/stack/sheet/plasteel)
 
 // Reinforced Glass. Common building material. 1 glass + 0.5 metal, cost is rounded up.
 /datum/export/stack/rglass
-	cost = 8
+	cost = 3
 	message = "of reinforced glass"
 	export_types = list(/obj/item/stack/sheet/rglass)
 
 // Wood. Quite expensive in the grim and dark 26 century.
 /datum/export/stack/wood
-	cost = 15
+	cost = 3
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/wood)
 
@@ -125,19 +113,19 @@
 	return 0
 
 /datum/export/stack/bananium
-	cost = 5000
+	cost = 2000
 	export_types = list(/obj/item/stack/sheet/mineral/clown)
 	message = "of bananium"
 
 // Diamonds. Rare and expensive.
 /datum/export/stack/diamond
-	cost = 2500
+	cost = 25
 	export_types = list(/obj/item/stack/sheet/mineral/diamond)
 	message = "of diamonds"
 
 // Phoron. The oil of 26 century. The reason why you are here.
 /datum/export/stack/phoron
-	cost = 350
+	cost = 5
 	export_types = list(/obj/item/stack/sheet/mineral/phoron)
 	message = "of phoron"
 
@@ -148,41 +136,41 @@
 
 // Refined scrap. The coal of 26 century. The reason why you are here.
 /datum/export/stack/scrap
-	cost = 250
+	cost = 10
 	export_types = list(/obj/item/stack/sheet/refined_scrap)
 	message = "of scrap"
 
 // Uranium. Still useful for both power generation and nuclear annihilation.
 /datum/export/stack/uranium
-	cost = 400
+	cost = 3
 	export_types = list(/obj/item/stack/sheet/mineral/uranium)
 	message = "of uranium"
 
 // Gold. Used in electronics and corrosion-resistant plating.
 /datum/export/stack/gold
-	cost = 250
+	cost = 3
 	export_types = list(/obj/item/stack/sheet/mineral/gold)
 	message = "of gold"
 
 // Silver.
 /datum/export/stack/silver
-	cost = 100
+	cost = 2
 	export_types = list(/obj/item/stack/sheet/mineral/silver)
 	message = "of silver"
 
 // Plastic.
 /datum/export/stack/plastic
-	cost = 20
+	cost = 1
 	export_types = list(/obj/item/stack/sheet/mineral/plastic)
 	message = "of plastic"
 
 // Platinum.
 /datum/export/stack/platinum
-	cost = 1000
+	cost = 10
 	message = "of platinum"
 	export_types = list(/obj/item/stack/sheet/mineral/platinum)
 
 /datum/export/stack/nanopaste
-	cost = 80
+	cost = 2
 	message = "of nanopaste"
 	export_types = list(/obj/item/stack/nanopaste)

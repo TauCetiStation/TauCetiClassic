@@ -6,6 +6,7 @@
 	uniform_f = /obj/item/clothing/under/rank/cargo_fem
 	shoes =  /obj/item/clothing/shoes/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
+	l_pocket = /obj/item/device/export_scanner
 
 	l_ear =  /obj/item/device/radio/headset/headset_cargo
 	belt = /obj/item/device/pda/quartermaster

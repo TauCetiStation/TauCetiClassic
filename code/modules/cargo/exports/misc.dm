@@ -11,6 +11,6 @@
 	export_types = list(/obj/item/candle)
 
 /datum/export/misc/headset
-	cost = 40
+	cost = 10
 	unit_name = "headset"
 	export_types = list(/obj/item/device/radio/headset)

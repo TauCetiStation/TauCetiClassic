@@ -219,11 +219,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	icon_off = "secoff"
 
 /obj/structure/closet/secure_closet/security/PopulateContents()
-	if(prob(50))
-		new /obj/item/weapon/storage/backpack/security(src)
-	else
-		new /obj/item/weapon/storage/backpack/satchel/sec(src)
-
 	new /obj/item/clothing/gloves/security(src)
 	new /obj/item/clothing/suit/storage/flak(src)
 	new /obj/item/clothing/head/helmet(src)

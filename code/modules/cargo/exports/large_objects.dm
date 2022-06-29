@@ -2,7 +2,7 @@
 
 // Crates, boxes, lockers.
 /datum/export/large/crate
-	cost = 500
+	cost = 20
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
 	exclude_types = list(/obj/structure/closet/crate/large)
@@ -13,7 +13,7 @@
 		. += " Thanks for participating in Nanotrasen Crates Recycling Program."
 
 /datum/export/large/crate/wooden
-	cost = 100
+	cost = 20
 	unit_name = "wooden crate"
 	export_types = list(/obj/structure/closet/crate/large)
 	exclude_types = list()
@@ -37,7 +37,7 @@
 /datum/export/large/reagent_dispenser/water
 	unit_name = "watertank"
 	export_types = list(/obj/structure/reagent_dispensers/watertank)
-	contents_cost = 200
+	contents_cost = 10
 
 /datum/export/large/reagent_dispenser/fuel
 	unit_name = "fueltank"
@@ -45,51 +45,51 @@
 
 /datum/export/large/reagent_dispenser/beer
 	unit_name = "beer keg"
-	contents_cost = 700
+	contents_cost = 500
 	export_types = list(/obj/structure/reagent_dispensers/beerkeg)
 
 /datum/export/large/reagent_dispenser/kvass
 	unit_name = "kvass tank"
-	cost = 400
-	contents_cost = 200
+	cost = 100
+	contents_cost = 50
 	export_types = list(/obj/structure/reagent_dispensers/kvasstank)
 
 
 
 // Heavy engineering equipment. Singulo/Tesla parts mostly.
 /datum/export/large/emitter
-	cost = 400
+	cost = 20
 	unit_name = "emitter"
 	export_types = list(/obj/machinery/power/emitter)
 
 /datum/export/large/field_generator
-	cost = 400
+	cost = 30
 	unit_name = "field generator"
 	export_types = list(/obj/machinery/field_generator)
 
 /datum/export/large/collector
-	cost = 250
+	cost = 30
 	unit_name = "collector"
 	export_types = list(/obj/machinery/power/rad_collector)
 
 /datum/export/large/collector/pa
-	cost = 450
+	cost = 30
 	unit_name = "particle accelerator part"
 	export_types = list(/obj/structure/particle_accelerator)
 
 /datum/export/large/collector/pa/controls
-	cost = 500
+	cost = 30
 	unit_name = "particle accelerator control console"
 	export_types = list(/obj/machinery/particle_accelerator/control_box)
 
 /datum/export/large/pipedispenser
-	cost = 500
+	cost = 40
 	unit_name = "pipe dispenser"
 	export_types = list(/obj/machinery/pipedispenser)
 
 
 /datum/export/large/singularitygen
-	cost = 1000 // If you have one left after engine setup, sell it.
+	cost = 40 // If you have one left after engine setup, sell it.
 	unit_name = "unused gravitational singularity generator"
 	export_types = list(/obj/machinery/the_singularitygen)
 	include_subtypes = FALSE
@@ -101,11 +101,11 @@
 
 // Misc
 /datum/export/large/iv
-	cost = 300
+	cost = 20
 	unit_name = "iv drip"
 	export_types = list(/obj/machinery/iv_drip)
 
 /datum/export/large/barrier
-	cost = 325
+	cost = 15
 	unit_name = "security barrier"
 	export_types = list(/obj/machinery/deployable/barrier)

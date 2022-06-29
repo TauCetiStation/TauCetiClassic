@@ -1,10 +1,10 @@
 // Space Cash. Now it isn't that useless.
-/datum/export/stack/cash
+/datum/export/cash
 	cost = 1 // Multiplied both by value of each bill and by amount of bills in stack.
 	unit_name = "credit chip"
 	export_types = list(/obj/item/weapon/spacecash)
 
-/datum/export/stack/cash/get_amount(obj/O)
+/datum/export/cash/get_amount(obj/O)
 	var/obj/item/weapon/spacecash/C = O
 	return ..() * C.worth
 
@@ -21,21 +21,21 @@
 	var/price = 0
 	switch(O.name)
 		if(COIN_IRON)
-			price = 50
+			price = 10
 		if(COIN_SILVER)
-			price = 100
+			price = 22
 		if(COIN_GOLD)
-			price = 150
+			price = 50
 		if(COIN_URANIUM)
-			price = 180
+			price = 100
 		if(COIN_PHORON)
-			price = 220
+			price = 200
 		if(COIN_PLATINUM, COIN_MYTHRIL)
-			price = 300
+			price = 250
 		if(COIN_DIAMOND)
-			price = 350
+			price = 500
 		if(COIN_BANANIUM)
-			price = 450
+			price = 300
 		else
 			price = 1
 	return ..() * price

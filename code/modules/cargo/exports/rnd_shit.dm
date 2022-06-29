@@ -1,18 +1,18 @@
 //Items from RnD. NOT techs!
 
 /datum/export/rnd/bluespace_crystal
-	cost = 10000
+	cost = 500
 	include_subtypes = FALSE
 	unit_name = "bluespace crystal"
 	export_types = list(/obj/item/bluespace_crystal)
 
 /datum/export/rnd/artificial_bluespace_crystal
-	cost = 3000
+	cost = 99
 	unit_name = "artificial bluespace crystal"
 	export_types = list(/obj/item/bluespace_crystal/artificial)
 
 /datum/export/rnd/synthetic_flash
-	cost = 100
+	cost = 50
 	unit_name = "synthetic flash"
 	export_types = list(/obj/item/device/flash/synthetic)
 
@@ -28,7 +28,7 @@
 	export_types = list(/obj/item/device/mass_spectrometer/adv)
 
 /datum/export/rnd/slime_extract
-	cost = 150
+	cost = 50
 	unit_name = "slime extract"
 	export_types = list(/obj/item/slime_extract)
 	exclude_types = list(/obj/item/slime_extract/adamantine,
@@ -39,13 +39,19 @@
 	return SI.uses
 
 /datum/export/rnd/slime_extract/adamantine
-	cost = 1000
+	cost = 150
 	unit_name = "adamantine slime extract"
 	export_types = list(/obj/item/slime_extract/adamantine)
 	exclude_types = list()
 
 /datum/export/rnd/slime_extract/bluespace
-	cost = 1400
+	cost = 300
 	unit_name = "bluespace slime extract"
 	export_types = list(/obj/item/slime_extract/bluespace)
+	exclude_types = list()
+
+/datum/export/rnd/slime_extract/rainbow
+	cost = 2500
+	unit_name = "bluespace slime extract"
+	export_types = list(/obj/item/slime_extract/rainbow)
 	exclude_types = list()

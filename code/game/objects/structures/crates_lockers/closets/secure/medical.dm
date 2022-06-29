@@ -49,10 +49,6 @@
 	icon_off = "securemedoff"
 
 /obj/structure/closet/secure_closet/medical3/PopulateContents()
-	if(prob(50))
-		new /obj/item/weapon/storage/backpack/medic(src)
-	else
-		new /obj/item/weapon/storage/backpack/satchel/med(src)
 
 	for (var/i in 1 to 2)
 		switch(pick("blue", "green", "purple"))
