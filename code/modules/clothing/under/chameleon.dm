@@ -113,13 +113,8 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
-	if(A.flags & BLOCKHAIR)
-		flags |= BLOCKHAIR
-	else if(A.flags & BLOCKHEADHAIR)
-		flags |= BLOCKHEADHAIR
-		flags &= ~BLOCKHAIR
-	else
-		flags &= ~BLOCKHAIR & ~BLOCKHEADHAIR
+	flags = initial(flags)
+	flags |= (A.flags & (BLOCKHAIR | BLOCKHEADHAIR))
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
 	update_inv_mob()
