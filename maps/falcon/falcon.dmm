@@ -16609,6 +16609,7 @@
 /area/station/hallway/primary/central)
 "hde" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/mob/living/simple_animal/cat/dusty,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
