@@ -13134,6 +13134,9 @@
 	},
 /obj/item/weapon/storage/firstaid/regular,
 /obj/structure/table/glass,
+/obj/machinery/light_switch{
+	pixel_y = -26
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -28531,6 +28534,10 @@
 	dir = 8;
 	network = list("SS13","Engineering")
 	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 21
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "szr" = (
@@ -30618,6 +30625,9 @@
 	name = "Shower cabin"
 	},
 /obj/structure/curtain/open/shower,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
