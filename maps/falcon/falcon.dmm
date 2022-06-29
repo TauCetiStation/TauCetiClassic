@@ -12795,7 +12795,6 @@
 "dqs" = (
 /obj/structure/table/glass,
 /obj/item/weapon/pen,
-/obj/item/weapon/storage/box/bodybags,
 /obj/item/weapon/scalpel,
 /obj/item/weapon/autopsy_scanner{
 	pixel_x = 1;
