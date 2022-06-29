@@ -67510,20 +67510,6 @@
 	icon_state = "yellowcorner"
 	},
 /area/station/hallway/primary/aft)
-"cGn" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/medical/hallway)
 "cGo" = (
 /obj/machinery/porta_turret/station_default{
 	dir = 4
@@ -68039,9 +68025,9 @@
 	},
 /area/station/maintenance/engineering)
 "cHZ" = (
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "delivery"
+	dir = 4;
+	icon_state = "escapecorner"
 	},
 /area/station/medical/hallway)
 "cIb" = (
@@ -68476,8 +68462,7 @@
 "cJS" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "escapecorner"
+	icon_state = "white"
 	},
 /area/station/medical/hallway)
 "cJT" = (
@@ -126787,8 +126772,8 @@ bSQ
 aFY
 aFY
 aaM
+aFY
 cCh
-cGn
 cJT
 cKz
 bkI
@@ -127044,8 +127029,8 @@ qub
 bTK
 bUF
 bRs
+bTK
 cEK
-cHZ
 bxi
 cLH
 cKy
