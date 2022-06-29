@@ -799,9 +799,7 @@
 	if(light_amount >= 5) // If you can regen organs - do so.
 		for(var/obj/item/organ/internal/O in H.organs)
 			if(O.damage)
-				O.damage -= light_amount * regen_mod / 5
-				if(O.damage < 0)
-					O.damage = 0
+				O.damage = max(0, O.damage - light_amount * regen_mod / 5)
 				H.nutrition -= light_amount
 				return
 
