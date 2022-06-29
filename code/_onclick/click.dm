@@ -132,9 +132,8 @@
 			P.click_to_pay(A) //Click on someone to pay
 			return
 
-	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)
-	if(A == loc || (A.loc == loc) || (sdepth != -1 && sdepth <= 1))
+	if(A == loc || (A.loc == loc) || (sdepth != -1 && sdepth <= MAX_STORAGE_DEEP_LEVEL))
 
 		// No adjacency needed
 		if(W)
@@ -150,9 +149,9 @@
 			ranged_attack_tk(A)
 		return
 
-	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
+	// Allows you to click on a box's contents, if that box is on the ground
 	sdepth = A.storage_depth_turf()
-	if(isturf(A) || isturf(A.loc) || (sdepth != -1 && sdepth <= 1))
+	if(isturf(A) || isturf(A.loc) || (sdepth != -1 && sdepth <= MAX_STORAGE_DEEP_LEVEL))
 
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
