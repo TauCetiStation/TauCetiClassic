@@ -4112,6 +4112,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atm{
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	icon_state = "asteroid2"
 	},
@@ -4702,9 +4705,6 @@
 /area/station/hallway/secondary/exit)
 "ain" = (
 /obj/structure/stool/bar,
-/obj/machinery/atm{
-	pixel_x = -28
-	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken4"
 	},
@@ -9807,6 +9807,13 @@
 /obj/structure/ore_box,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/eva)
+"asa" = (
+/obj/machinery/vending/eva,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "yellow"
+	},
+/area/station/hallway/primary/central)
 "asi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -10482,13 +10489,12 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
 "aXD" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/atm{
-	pixel_x = -28
+	pixel_x = 28
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	dir = 4;
+	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
 "aXH" = (
@@ -10990,9 +10996,6 @@
 	},
 /area/station/civilian/kitchen)
 "bwm" = (
-/obj/machinery/atm{
-	pixel_x = -28
-	},
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
 	icon_state = "grass1"
@@ -12200,6 +12203,9 @@
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=Arrival1";
 	location = "Bar2"
+	},
+/obj/machinery/atm{
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -16478,7 +16484,7 @@
 	dir = 4
 	},
 /obj/machinery/light_switch{
-	pixel_x = -28
+	pixel_x = -23
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -22500,13 +22506,12 @@
 	},
 /area/station/hallway/primary/central)
 "nbE" = (
-/obj/machinery/vending/eva,
 /obj/machinery/atm{
 	pixel_x = -28
 	},
 /turf/simulated/floor{
-	dir = 10;
-	icon_state = "yellow"
+	dir = 8;
+	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
 "nbW" = (
@@ -28870,9 +28875,6 @@
 /obj/machinery/camera{
 	c_tag = "Central Hallway East";
 	dir = 4
-	},
-/obj/machinery/atm{
-	pixel_x = -28
 	},
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
@@ -58947,10 +58949,10 @@ btl
 rDG
 gfT
 xCy
-aXD
+nif
 afL
 jPS
-eQw
+nbE
 ahG
 aiF
 pyi
@@ -59223,7 +59225,7 @@ eQw
 eQw
 eQw
 eQw
-nbE
+asa
 uGd
 rDL
 kbG
@@ -69239,7 +69241,7 @@ gJE
 gvw
 gJE
 vdX
-vAK
+aXD
 xaV
 irA
 nif
