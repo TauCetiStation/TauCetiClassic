@@ -559,7 +559,7 @@
 
 	// shut down ongoing problems
 	radiation = 0
-	nutrition = 400
+	nutrition = NUTRITION_LEVEL_NORMAL
 	bodytemperature = T20C
 	sdisabilities = 0
 	disabilities = 0
@@ -1430,6 +1430,7 @@
 
 /mob/living/death(gibbed)
 	beauty.AddModifier("stat", additive=beauty_dead)
+	update_health_hud()
 	return ..()
 
 /mob/living/proc/update_beauty(datum/source, old_value)

@@ -585,7 +585,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		var/datum/role/R = new_character.mind.GetRole(role)
 		R.OnPostSetup()
 
-	SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
+	SSjob.EquipRank(new_character, new_character.mind.assigned_role, TRUE)
 
 	//Announces the character on all the systems, based on the record.
 	if(!issilicon(new_character))//If they are not a cyborg/AI.

@@ -49899,6 +49899,7 @@
 /obj/item/weapon/storage/belt/medical,
 /obj/item/clothing/glasses/hud/health,
 /obj/structure/window/reinforced,
+/obj/item/device/gps/medical,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -52054,6 +52055,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/device/gps/medical,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -75361,7 +75363,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/libraryscanner,
+/obj/machinery/photocopier,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
