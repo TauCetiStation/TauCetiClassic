@@ -16,7 +16,7 @@
 		qdel(src)
 
 /obj/effect/blob/factory/Destroy()
-	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in spores)
+	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore as anything in spores)
 		if(spore.factory == src)
 			spore.factory = null
 	return ..()
@@ -107,8 +107,10 @@
 
 /mob/living/simple_animal/hostile/blob/Destroy()
 	if(overmind)
-		overmind.blob_mobs -= src
-	return ..()
+		overmind.blob_mobs.Remove(src)
+		overmind = null
+		factory = null
+		return ..()
 
 /mob/living/simple_animal/hostile/blob/Stat()
 	..()
@@ -155,7 +157,6 @@
 	if (!message)
 		return
 
-	//var/message_a = say_quote(message)
 	message = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
 	message = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></font>"
 
@@ -181,10 +182,6 @@
 	attacktext = "attack"
 	attack_sound = list('sound/weapons/genhit1.ogg')
 	var/is_zombie = 0
-
-/mob/living/simple_animal/hostile/blob/blobspore/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	..()
-	adjustBruteLoss(clamp(0.01 * exposed_temperature, 1, 5))
 
 /mob/living/simple_animal/hostile/blob/blobspore/blob_act()
 	return
@@ -228,11 +225,6 @@
 	H.loc = src
 	is_zombie = 1
 	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
-
-/mob/living/simple_animal/hostile/blob/blobspore/CanAttack(atom/the_target)
-	if(faction == "blob") //This means spores can't attack blob, but blob can
-		return FALSE
-	. = ..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/death()
 // On death, create a small smoke of harmful gas (s-Acid)
@@ -296,10 +288,10 @@
 	real_name = new_name
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/add_to_hud(datum/hud/hud)
-	. = ..()//. = ..()
+	. = ..()
 	hud.init_screens(list(
-		/atom/movable/screen/health/blob,
-		/atom/movable/screen/blob_power,
+		/atom/movable/screen/health/blob/blobbernaut,
+		/atom/movable/screen/blob_power/blobbernaut,
 		))
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Login()
@@ -317,13 +309,10 @@
 		return
 	if(healths)
 		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(health)]</font></div>"
-		pwr_display.name = "Healths"
+		healths.name = "Healths"
 	if(independent) //Is it came with blob or not
 		return
 	if(overmind.blob_core && pwr_display) //Just in case, otherwise it is looped runtime
-		pwr_display.icon = 'icons/mob/blob.dmi'
-		pwr_display.icon_state = "corehealth"
-		pwr_display.name = "Core health"
 		pwr_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(overmind.blob_core.health)]</font></div>"
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/attack_animal(mob/user)

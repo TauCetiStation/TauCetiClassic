@@ -49,8 +49,6 @@
 
 /mob/camera/blob/proc/update_health_hud()
 	if(blob_core && hud_used)
-		healths.icon = 'icons/mob/blob.dmi'
-		healths.icon_state = "corehealth"
 		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
 		for(var/mob/living/simple_animal/hostile/blob/blobbernaut/B in blob_mobs)
 			if(B.hud_used && B.pwr_display)
@@ -85,7 +83,6 @@
 	if (!message)
 		return
 
-	//var/message_a = say_quote(message)
 	message = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
 	message = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></font>"
 
@@ -121,7 +118,7 @@
 		ghost_sightless_images -= ghostimage
 		QDEL_NULL(ghostimage)
 		updateallghostimages()
-	for(var/BLO in blob_mobs)
+	for(var/BLO as anything in blob_mobs)
 		var/mob/living/simple_animal/hostile/blob/BM = BLO
 		if(BM)
 			BM.overmind = null

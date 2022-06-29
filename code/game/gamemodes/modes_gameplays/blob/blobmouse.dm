@@ -23,7 +23,6 @@
 	if (!message)
 		return
 
-	//var/message_a = say_quote(message)
 	message = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
 	message = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></font>"
 
