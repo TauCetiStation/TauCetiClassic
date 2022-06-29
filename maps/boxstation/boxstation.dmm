@@ -19810,12 +19810,10 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aJh" = (
@@ -32168,7 +32166,7 @@
 /area/station/civilian/locker)
 "beX" = (
 /obj/machinery/camera{
-	c_tag = "Research Division Mid";
+	c_tag = "Research Division Mid-West";
 	dir = 1;
 	network = list("SS13","Research")
 	},
@@ -59189,15 +59187,15 @@
 /area/station/rnd/mixing)
 "cjD" = (
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "cjE" = (
@@ -67343,6 +67341,9 @@
 /obj/item/weapon/storage/belt/utility,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/closet,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "cFR" = (
@@ -70864,9 +70865,15 @@
 	},
 /area/station/civilian/chapel)
 "eoP" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -78893,7 +78900,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Research Division Mid";
+	c_tag = "Research Division Mid-East";
 	dir = 1;
 	network = list("SS13","Research")
 	},
@@ -123380,8 +123387,8 @@ pTR
 pTR
 pTR
 pTR
-cjD
 eoP
+aHT
 aSK
 aUf
 aVz
@@ -123632,7 +123639,7 @@ aKO
 aQN
 ayh
 aOV
-fRX
+cjD
 aHS
 aHS
 aHS
