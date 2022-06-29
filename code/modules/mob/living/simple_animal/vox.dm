@@ -9,7 +9,7 @@
 	maxHealth = 500
 	health = 500
 	response_harm = "slashes at the"
-	harm_intent_damage = 0
+	damage_resistance_percent = 0
 	melee_damage_lower = 30
 	melee_damage_upper = 40
 	attacktext = "slammed its enormous claws into"

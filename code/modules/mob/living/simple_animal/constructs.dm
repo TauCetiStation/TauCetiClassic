@@ -92,7 +92,7 @@
 	maxHealth = 200
 	health = 200
 	response_harm = "harmlessly punches"
-	harm_intent_damage = 0
+	damage_resistance_percent = 0
 	melee_damage = 25
 	attacktext = "smash"
 	speed = 3
@@ -167,7 +167,7 @@
 	maxHealth = 50
 	health = 50
 	response_harm = "viciously beats"
-	harm_intent_damage = 5
+	damage_resistance_percent = 50
 	melee_damage = 10
 	attacktext = "ramm"
 	speed = 0
@@ -196,7 +196,7 @@
 	health = 10
 	speak_emote = list("rumbles")
 	response_harm = "harmlessly punches"
-	harm_intent_damage = 0
+	damage_resistance_percent = 0
 	melee_damage = 50
 	attacktext = "brutally crush"
 	speed = 5

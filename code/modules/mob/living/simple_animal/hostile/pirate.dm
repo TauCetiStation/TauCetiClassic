@@ -14,7 +14,7 @@
 	maxHealth = 100
 	health = 100
 
-	harm_intent_damage = 5
+	damage_resistance_percent = 50
 	melee_damage = 30
 	attacktext = "slash"
 	attack_sound = list('sound/weapons/bladeslice.ogg')

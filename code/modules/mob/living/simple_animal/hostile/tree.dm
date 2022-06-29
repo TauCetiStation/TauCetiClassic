@@ -18,7 +18,7 @@
 
 	pixel_x = -16
 
-	harm_intent_damage = 5
+	damage_resistance_percent = 50
 	melee_damage = 10
 	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/bite.ogg')

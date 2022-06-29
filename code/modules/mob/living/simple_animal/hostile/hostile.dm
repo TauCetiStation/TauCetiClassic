@@ -92,17 +92,11 @@
 
 /mob/living/simple_animal/hostile/proc/FindTarget()//Step 2, filter down possible targets to things we actually care about
 	var/list/Targets = list()
-	var/Target
 	for(var/atom/A in ListTargets())
-		if(Found(A))//Just in case people want to override targetting
-			var/list/FoundTarget = list()
-			FoundTarget += A
-			Targets = FoundTarget
-			break
 		if(CanAttack(A))//Can we attack it?
 			Targets += A
 			continue
-	Target = PickTarget(Targets)
+	var/Target = PickTarget(Targets)
 	return Target //We now have a target
 
 /mob/living/simple_animal/hostile/proc/Found(atom/A)//This is here as a potential override to pick a specific target if available
@@ -115,8 +109,10 @@
 			var/possible_target_distance = get_dist(src, A)
 			if(target_dist < possible_target_distance)
 				Targets -= A
-	if(!Targets.len)//We didnt find nothin!
+
+	if(!length(Targets))//We didnt find nothin!
 		return
+
 	var/chosen_target = pick(Targets)//Pick the remaining targets (if any) at random
 	return chosen_target
 
@@ -137,6 +133,8 @@
 	if(isobj(the_target))
 		if(the_target.type in wanted_objects)
 			return TRUE
+		if(Found(the_target)) //Just in case people want to override targetting
+			return TRUE
 		if(istype(the_target, /obj/mecha) && search_objects < 2)
 			var/obj/mecha/M = the_target
 			if(M.occupant)//Just so we don't attack empty mechs
@@ -149,7 +147,6 @@
 	if(target != null)
 		Aggro()
 		stance = HOSTILE_STANCE_ATTACK
-	return
 
 /mob/living/simple_animal/hostile/proc/MoveToTarget()//Step 5, handle movement between us and our target
 	stop_automated_movement = TRUE
@@ -196,22 +193,22 @@
 			var/new_target = FindTarget()
 			GiveTarget(new_target)
 		if(stance == HOSTILE_STANCE_ATTACK)//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
-			if(target != null && prob(25))
+			if(target != null)
 				var/new_target = FindTarget()
 				GiveTarget(new_target)
 
 /mob/living/simple_animal/hostile/proc/AttackTarget()
-
 	stop_automated_movement = TRUE
+
 	if(!target || !CanAttack(target))
 		LoseTarget()
-		return 0
+		return FALSE
 	if(!(target in ListTargets()))
 		LostTarget()
-		return 0
+		return FALSE
 	if(isturf(loc) && target.Adjacent(src))
 		AttackingTarget()
-		return 1
+		return TRUE
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, target)
@@ -258,15 +255,15 @@
 		Shoot(tturf, src.loc, src)
 		if(casingtype)
 			new casingtype(get_turf(src))
-		sleep(4)
+		sleep(rand(3, 5))
 
-/mob/living/simple_animal/hostile/proc/Shoot(target, start, user, bullet = 0)
+/mob/living/simple_animal/hostile/proc/Shoot(atom/target, turf/start, mob/user)
 	if(target == start)
 		return
 
 	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_SHOOT, target)
 
-	var/obj/item/projectile/A = new projectiletype(user:loc)
+	var/obj/item/projectile/A = new projectiletype(user.loc)
 	playsound(user, projectilesound, VOL_EFFECTS_MASTER)
 	if(!A)
 		return
@@ -278,8 +275,8 @@
 	A.current = target
 	A.starting = get_turf(src)
 	A.original = get_turf(target)
-	A.yo = target:y - start:y
-	A.xo = target:x - start:x
+	A.yo = target.y - start.y
+	A.xo = target.x - start.x
 	spawn(0)
 		A.process()
 

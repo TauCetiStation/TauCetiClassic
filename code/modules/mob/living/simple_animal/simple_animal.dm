@@ -26,7 +26,7 @@
 	var/response_help   = "tries to help"
 	var/response_disarm = "tries to disarm"
 	var/response_harm   = "tries to hurt"
-	var/harm_intent_damage = 3
+	var/damage_resistance_percent = 30
 
 	// Temperature effect
 	var/minbodytemp = 250
@@ -302,7 +302,7 @@
 			adjustBruteLoss(30)
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
-	var/perc_block = (10 - harm_intent_damage) / 10 // #define MAX_HARM_INTENT_DAMAGE 10. Turn harm_intent_damage into armor or something. ~Luduk
+	var/perc_block = (100 - damage_resistance_percent) / 100 // #define MAX_HARM_INTENT_DAMAGE 100. Turn damage_resistance_percent into armor or something. ~Luduk
 	damage *= perc_block
 
 	health = clamp(health - damage, 0, maxHealth)

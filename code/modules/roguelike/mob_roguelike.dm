@@ -12,7 +12,8 @@
 	for(var/loot_type in loot_list)
 		var/spawn_am = round(loot_list[loot_type] * loot_mod)
 		for(var/am in 1 to spawn_am)
-			new loot_type(loc)
+			var/atom/loot = new loot_type(loc)
+			loot.layer = layer + 0.1
 
 /mob/living/simple_animal/hostile/proc/gen_modifiers(special_prob = 30, min_mod_am = 1, max_mod_am = 3, min_rarity_cost = 2, max_rarity_cost = 6)
 	return

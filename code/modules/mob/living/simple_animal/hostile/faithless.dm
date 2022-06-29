@@ -14,7 +14,7 @@
 	health = 80
 	environment_smash = 1
 
-	harm_intent_damage = 10
+	damage_resistance_percent = 100
 	melee_damage = 15
 	attacktext = "grips"
 	attack_sound = list('sound/voice/growl1.ogg')

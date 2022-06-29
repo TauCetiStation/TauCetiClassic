@@ -132,12 +132,12 @@
 		return
 	else
 		if(prob(15))
-			ore_amount = rand(6,9)
+			ore_amount = rand(7, 9)
 		else if(prob(45))
-			ore_amount = rand(4,6)
+			ore_amount = rand(5, 7)
 		else
-			ore_amount = rand(3,5)
-	if(ore_amount >= 8)
+			ore_amount = rand(3, 5)
+	if(ore_amount >= 7)
 		name = "[mineral.display_name] rich deposit"
 		cut_overlays()
 		add_overlay("rock_[mineral.name]")
@@ -186,7 +186,7 @@
 		var/obj/item/weapon/sledgehammer/S = W
 		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED))
 			to_chat(user, "<span class='notice'>You successfully break [name].</span>")
-			GetDrilled(artifact_fail = 1)
+			GetDrilled(artifact_fail = 1, mineral_drop_koef = 0.7)
 		else
 			to_chat(user, "<span class='warning'>You need to take it with both hands to break it!</span>")
 
@@ -276,9 +276,9 @@
 					B = new(src)
 
 				if(B)
-					GetDrilled(0)
+					GetDrilled(0, mineral_drop_koef = P.mineral_multiply_koef)
 				else
-					GetDrilled(1)
+					GetDrilled(1, mineral_drop_koef = P.mineral_multiply_koef)
 				return
 
 			excavation_level += P.excavation_amount
@@ -338,13 +338,13 @@
 	return O
 
 
-/turf/simulated/mineral/proc/GetDrilled(artifact_fail = 0)
+/turf/simulated/mineral/proc/GetDrilled(artifact_fail = 0, mineral_drop_koef = 1)
 	playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)
 	// var/destroyed = 0 //used for breaking strange rocks
 	if (mineral && ore_amount)
-
+		
 		// if the turf has already been excavated, some of it's ore has been removed
-		for (var/i = 1 to ore_amount - mined_ore)
+		for (var/i = 1 to round((ore_amount - mined_ore) * mineral_drop_koef, 1))
 			DropMineral()
 
 	// destroyed artifacts have weird, unpleasant effects
@@ -503,7 +503,7 @@
 /turf/simulated/mineral/attack_animal(mob/living/simple_animal/user)
 	..()
 	if(user.environment_smash >= 2)
-		GetDrilled()
+		GetDrilled(mineral_drop_koef = 0.5)
 
 /**********************Caves**************************/
 /turf/simulated/floor/plating/airless/asteroid
@@ -620,9 +620,6 @@
 	var/proper_name = name
 	..()
 	name = proper_name
-	//if (prob(50))
-	//	seedName = pick(list("1","2","3","4"))
-	//	seedAmt = rand(1,4)
 	if(prob(20))
 		icon_state = "asteroid_stone_[rand(1, 10)]"
 
@@ -724,13 +721,13 @@
 /turf/simulated/floor/plating/airless/asteroid/proc/gets_dug()
 	if(dug)
 		return
-	for(var/i in 1 to 5)
+	for(var/i in 1 to rand(3, 6))
 		new /obj/item/weapon/ore/glass(src)
 	dug = TRUE
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
 
-/turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M as mob|obj)
+/turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M)
 	..()
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M

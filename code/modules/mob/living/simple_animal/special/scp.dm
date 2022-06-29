@@ -18,7 +18,7 @@
 	response_disarm = "pushes the"
 	response_harm   = "hits the"
 
-	harm_intent_damage = 0
+	damage_resistance_percent = 0
 	melee_damage = 0
 	attacktext = "brutally crush"
 	environment_smash = 0

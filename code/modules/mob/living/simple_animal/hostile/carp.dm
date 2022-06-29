@@ -17,7 +17,7 @@
 	maxHealth = 40
 	health = 40
 
-	harm_intent_damage = 8
+	damage_resistance_percent = 80
 	melee_damage = 15
 	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/bite.ogg')

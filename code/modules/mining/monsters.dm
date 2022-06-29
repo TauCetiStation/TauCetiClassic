@@ -30,13 +30,16 @@
 	..()
 	icon_state = icon_living
 
-/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P, def_zone)//Reduces damage from most projectiles to curb off-screen kills
-	. = ..()
-	if(!stat)
-		Aggro()
-	if(P.damage < 30)
-		P.damage /= 3
-		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
+/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/Proj, def_zone)
+	var/signal_val = SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_BEEN_SHOOTED)
+	if(signal_val & PROJECTILE_FORCE_MISS)
+		return mance()
+	return ..()
+
+/mob/living/simple_animal/hostile/proc/mance()
+	if(isliving(target))
+		step(src, turn(get_dir(src.loc, target.loc), pick(45, -45, 90, -90))) // moving to the side from target
+	return PROJECTILE_FORCE_MISS
 
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
 	if(isitem(AM))
@@ -73,7 +76,7 @@
 	speed = 3
 	maxHealth = 200
 	health = 200
-	harm_intent_damage = 5
+	damage_resistance_percent = 35
 	melee_damage = 12
 	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/bladeslice.ogg')
@@ -88,8 +91,10 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
+	step_delay = 1.5 // give chance to evade
 	flag = "energy"
 	temperature = 50
+	proj_impact_sound = 'sound/effects/projectiles_acts/freezing.ogg'
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	target = new_target
@@ -114,8 +119,8 @@
 ////////////Drone(miniBoss)/////////////
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/mining
-	health = 400
-	maxHealth = 400
+	health = 320
+	maxHealth = 320
 	faction = "mining"
 	w_class = SIZE_HUMAN
 	projectiletype = /obj/item/projectile/beam/xray
@@ -132,97 +137,155 @@
 	icon_aggro = "Goldgrub_alert"
 	icon_dead = "Goldgrub_dead"
 	icon_gib = "syndicate_gib"
-	vision_range = 3
+	vision_range = 5
 	aggro_vision_range = 9
-	idle_vision_range = 3
-	loot_list = list(/obj/item/weapon/ore/gold = 4)
-	move_to_delay = 3
+	idle_vision_range = 5
+	loot_list = list(/obj/item/goldgrub_core = 1)
+	move_to_delay = 2
 	friendly = "harmlessly rolls into"
 	maxHealth = 60
 	health = 60
-	harm_intent_damage = 5
-	melee_damage = 0
+	damage_resistance_percent = 50
 	w_class = SIZE_MASSIVE
 	attacktext = "barrell"
 	a_intent = INTENT_HELP
 	throw_message = "sinks in slowly, before being pushed out of "
 	status_flags = CANPUSH
-	search_objects = 1
+	search_objects = 2
 
-	var/list/ore_types_eaten = list()
-	var/alerted = FALSE
-	var/ore_eaten = 1
-	var/chase_time = 100
+	var/bonus_health_per_ore = 2
+	var/chase_time = 4 SECOND
+	var/running_away_now = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/atom_init()
 	. = ..()
 	wanted_objects = subtypesof(/obj/item/weapon/ore)
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
-	target = new_target
-	if(target != null)
-		if(istype(target, /obj/item/weapon/ore))
-			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
-			stance = HOSTILE_STANCE_ATTACK
-			return
+/mob/living/simple_animal/hostile/asteroid/goldgrub/MobBump(mob/living/L)
+	if(ishuman(L))
+		L.Weaken(3)
+		L.take_overall_damage(5 + sqrt(maxHealth), 0)
 
-		if(isliving(target) && !search_objects)
-			Aggro()
-			stance = HOSTILE_STANCE_ATTACK
-			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
-			retreat_distance = 10
-			minimum_distance = 10
-			Burrow()
+/mob/living/simple_animal/hostile/asteroid/goldgrub/ex_act(severity)
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			gib()
+		if(EXPLODE_HEAVY)
+			adjustBruteLoss(maxHealth * 0.95)
+		if(EXPLODE_LIGHT)
+			adjustBruteLoss(maxHealth * 0.6)
 
+/mob/living/simple_animal/hostile/asteroid/goldgrub/adjustBruteLoss(damage)
+	. = ..()
+	if(stat != DEAD)
+		start_chase()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
-		EatOre(target)
-		return
-	..()
+		EatFromFloor()
+	else if(istype(target, /obj/structure/ore_box))
+		EatFromOrebox()
+	if(target)
+		return ..()
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/targeted_ore)
-	for(var/obj/item/weapon/ore/O in targeted_ore.loc)
-		ore_eaten++
-		if(!(O.type in ore_types_eaten))
-			ore_types_eaten += O.type
-		qdel(O)
-	if(ore_eaten > 5)//Limit the scope of the reward you can get, or else things might get silly
-		ore_eaten = 5
+/mob/living/simple_animal/hostile/asteroid/goldgrub/Found(atom/A)
+	if(istype(A, /obj/structure/ore_box)) // now we hunting for oreboxeees!
+		if(!length(A.contents))
+			return FALSE // we don't want to hunt for empty oreboxes
+		return TRUE
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatFromOrebox()
+	for(var/i in 1 to rand(2, 5))
+		if(!length(target.contents))
+			LoseTarget() // if orebox is empty
+			break
+
+		var/obj/item/weapon/ore/picked_ore = pick(target.contents)
+		picked_ore.forceMove(src)
+		maxHealth += bonus_health_per_ore // Goldgrub becomes healthier from eating ore
+		health += bonus_health_per_ore
+
+	visible_message("<span class='warning'>[src.name] eat ore from orebox!</span>")
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatFromFloor()
+	for(var/obj/item/weapon/ore/O in target.loc)
+		O.forceMove(src)
+		maxHealth += bonus_health_per_ore // Goldgrub becomes healthier from eating ore
+		health += bonus_health_per_ore
+
 	visible_message("<span class='notice'>The ore was swallowed whole!</span>")
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
-	if(!alerted)
-		alerted = TRUE
+/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/start_chase() // Begin the chase
+	Aggro()
+	stance = HOSTILE_STANCE_ATTACK
+	retreat_distance = 15
+	minimum_distance = 15
+	if(!running_away_now)
+		running_away_now = TRUE
 		addtimer(CALLBACK(src, .proc/burrow_check), chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/burrow_check()
-	if(alerted)
-		visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
+	if(stat == DEAD)
+		return
+	
+	if(health < maxHealth * 0.4) // if we are badly wounded, we burrow
 		var/turftype = get_turf(src)
 		if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
 			var/turf/simulated/floor/plating/airless/asteroid/A = turftype
 			A.gets_dug()
-		qdel(src)
+
+		move_to_delay = 20 //stop Goldgrub
+		walk(src, 0)
+		flick("Goldgrub_borrow", src)
+		QDEL_IN(src, 1.5 SECOND)
+
+	else // calm down
+		LoseTarget()
+		retreat_distance = initial(retreat_distance)
+		minimum_distance = initial(minimum_distance)
+		search_objects = initial(search_objects)
+		running_away_now = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Reward()
-	if(!ore_eaten || !ore_types_eaten.len)
-		return
 	visible_message("<span class='danger'>[src] spits up the contents of its stomach before dying!</span>")
-	var/counter
-	for(var/R in ore_types_eaten)
-		for(counter=0, counter < ore_eaten, counter++)
-			new R(src.loc)
-	ore_types_eaten.Cut()
-	ore_eaten = 0
+
+	for(var/obj/item/weapon/ore/O in contents)
+		O.forceMove(get_turf(src))
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P, def_zone)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/death()
-	. = ..()
-	alerted = FALSE
 	Reward()
+	return ..()
+
+/obj/item/goldgrub_core
+	name = "Goldgrub core"
+	desc = "Магическое ядро жадного и голодного червя."
+	icon = 'icons/mob/monsters.dmi'
+	icon_state = "Goldgrub_core"
+
+/obj/item/goldgrub_core/attack_self(mob/user)
+	playsound(src, 'sound/magic/magic_effect.ogg', VOL_EFFECTS_MASTER)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.flash_eyes()
+
+	visible_message("<span class='notice'>Ядро червя раскалывает породу вокруг и исчезает!</span>")
+	for(var/turf/simulated/mineral/M in range(2, get_turf(user)))
+		M.GetDrilled(mineral_drop_koef = 3)
+
+	qdel(src)
+
+/obj/item/goldgrub_core/afterattack(atom/target, mob/user, proximity)
+	if(!proximity)
+		return
+
+	if(istype(target, /obj/item/weapon/pickaxe))
+		var/obj/item/weapon/pickaxe/P = target
+		P.mineral_multiply_koef += 0.25
+		to_chat(user, "<span class='info'>Вы внедрили ядро червя в [target]!</span>")
+		qdel(src)
 
 ////////////////Hivelord////////////////
 
@@ -244,7 +307,7 @@
 	speed = 3
 	maxHealth = 75
 	health = 75
-	harm_intent_damage = 5
+	damage_resistance_percent = 50
 	melee_damage = 0
 	attacktext = "lash"
 	throw_message = "falls right through the strange body of the"
@@ -302,7 +365,7 @@
 
 /obj/item/asteroid/hivelord_core/atom_init()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/make_inert), 1200)
+	addtimer(CALLBACK(src, .proc/make_inert), 2 MINUTES)
 
 /obj/item/asteroid/hivelord_core/proc/make_inert()
 	inert = TRUE
@@ -346,7 +409,7 @@
 	speed = 3
 	maxHealth = 1
 	health = 1
-	harm_intent_damage = 5
+	damage_resistance_percent = 50
 	melee_damage = 2
 	attacktext = "slash"
 	throw_message = "falls right through the strange body of the"
@@ -358,7 +421,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/atom_init_late()
-	QDEL_IN(src, 100)
+	QDEL_IN(src, 10 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
 	qdel(src)
@@ -379,7 +442,7 @@
 	icon_gib = "syndicate_gib"
 	attack_sound = list('sound/weapons/punch4.ogg')
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
-	move_to_delay = 40
+	move_to_delay = 37
 	ranged = TRUE
 	ranged_cooldown = 2 //By default, start the Goliath with his cooldown off so that people can run away quickly on first sight
 	ranged_cooldown_cap = 8
@@ -389,7 +452,7 @@
 	speed = 2
 	maxHealth = 300
 	health = 300
-	harm_intent_damage = 0
+	damage_resistance_percent = 10
 	melee_damage = 25
 	w_class = SIZE_MASSIVE
 	attacktext = "pulveriz"
@@ -418,6 +481,11 @@
 		icon_state = icon_aggro
 		pre_attack = 0
 
+/mob/living/simple_animal/hostile/asteroid/goliath/attackby(obj/item/O, mob/user)
+	if(stat != DEAD && prob(50))
+		new /obj/effect/goliath_tentacle(get_turf(user), melee_damage / 2)
+	return ..()
+
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(damage)
 	ranged_cooldown--
 	handle_preattack()
@@ -434,6 +502,7 @@
 	icon = 'icons/mob/monsters.dmi'
 	icon_state = "Goliath_tentacle"
 	var/strength
+	anchored = TRUE
 
 /obj/effect/goliath_tentacle/atom_init(mapload, mob_damage)
 	. = ..()
@@ -445,7 +514,7 @@
 	if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
 		var/turf/simulated/floor/plating/airless/asteroid/A = turftype
 		A.gets_dug()
-	addtimer(CALLBACK(src, .proc/Trip), 20)
+	addtimer(CALLBACK(src, .proc/Trip), 1.7 SECOND)
 
 /obj/effect/goliath_tentacle/original
 
@@ -470,7 +539,7 @@
 	if(isliving(AM))
 		Trip()
 		return
-	. = ..()
+	return ..()
 
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"
@@ -481,36 +550,47 @@
 	w_class = SIZE_SMALL
 	layer = 4
 
+/obj/item/asteroid/goliath_hide/attack(mob/living/M, mob/living/user, proximity)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(istype(H.wear_suit, /obj/item/clothing/suit/space))
+			var/obj/item/clothing/suit/space/C = H.wear_suit
+			return afterattack(C, user, proximity)
+
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity, params)
-	if(proximity)
-		if(istype(target, /obj/item/clothing/suit/space) || istype(target, /obj/item/clothing/head/helmet/space))
-			var/obj/item/clothing/C = target
-			var/list/current_armor = C.armor
-			if(current_armor["melee"] < 80)
-				current_armor["melee"] = min(current_armor["melee"] + 10, 80)
-				if(istype(C, /obj/item/clothing/suit/space))
-					var/obj/item/clothing/suit/space/S = C
-					S.breach_threshold = min(S.breach_threshold + 2, 24)
-				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
-				qdel(src)
+	if(!proximity)
+		return
+
+	if(istype(target, /obj/item/clothing/suit/space) || istype(target, /obj/item/clothing/head/helmet/space))
+		var/obj/item/clothing/C = target
+		var/list/current_armor = C.armor
+		if(current_armor["melee"] < 80)
+			current_armor["melee"] = min(current_armor["melee"] + 10, 80)
+			if(istype(C, /obj/item/clothing/suit/space))
+				var/obj/item/clothing/suit/space/S = C
+				S.breach_threshold = min(S.breach_threshold + 2, 24)
+				S.repair_breaches(BRUTE, 8, user)
+			to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
+			qdel(src)
+		else
+			to_chat(user, "<span class='warning'>You can't improve [C] any further!</span>")
+			return
+
+	if(istype(target, /obj/mecha/working/ripley))
+		var/obj/mecha/working/ripley/D = target
+		var/list/damage_absorption = D.damage_absorption
+		if(D.hides < 3)
+			D.hides++
+			damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
+			damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
+			damage_absorption["fire"] = damage_absorption["fire"] - 0.05
+			damage_absorption["laser"] = damage_absorption["laser"] - 0.025
+			to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
+			D.update_icon()
+			if(D.hides == 3)
+				D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
 			else
-				to_chat(user, "<span class='warning'>You can't improve [C] any further!</span>")
-				return
-		if(istype(target, /obj/mecha/working/ripley))
-			var/obj/mecha/working/ripley/D = target
-			var/list/damage_absorption = D.damage_absorption
-			if(D.hides < 3)
-				D.hides++
-				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
-				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
-				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
-				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
-				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
-				D.update_icon()
-				if(D.hides == 3)
-					D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
-				else
-					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
-				qdel(src)
-			else
-				to_chat(user, "<span class='warning'>You can't improve [D] any further!</span>")
+				D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
+			qdel(src)
+		else
+			to_chat(user, "<span class='warning'>You can't improve [D] any further!</span>")

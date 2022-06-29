@@ -342,16 +342,16 @@
 			grav_pull = 4
 		if(2)
 			pull_stage = STAGE_TWO
-			grav_pull = 6
+			grav_pull = 5
 		if(3)
 			pull_stage = STAGE_THREE
-			grav_pull = 8
+			grav_pull = 6
 		if(4)
 			pull_stage = STAGE_FOUR
-			grav_pull = 10
+			grav_pull = 7
 		else
 			pull_stage = STAGE_FIVE
-			grav_pull = 10
+			grav_pull = 8
 
 	if(update)
 		return
@@ -542,11 +542,53 @@
 		return
 
 	var/obj/effect/effect/forcefield/eva/F = new
-	AddComponent(/datum/component/forcefield, "AT field", 20, 5 SECONDS, 3 SECONDS, F, TRUE, TRUE)
+	AddComponent(/datum/component/forcefield, "AT field", 40, 8 SECONDS, 2 SECONDS, F, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, parent)
 
 /datum/component/mob_modifier/angelic/revert(update = FALSE)
 	if(!update)
 		qdel(GetComponent(/datum/component/forcefield))
+
+	return ..()
+
+/datum/component/mob_modifier/agility
+	modifier_name = RL_MM_AGILITY
+	name_modifier_type = /datum/name_modifier/prefix/agility
+
+	rarity_cost = 2
+
+	max_strength = 2
+
+/datum/component/mob_modifier/agility/apply(update = FALSE)
+	. = ..()
+	if(!.)
+		return
+
+	var/mob/living/simple_animal/hostile/H = parent
+
+	H.loot_mod *= 1.5 * strength
+	H.move_to_delay *= strength * 9 / 10 // 10% or 20% acceleration
+	
+	RegisterSignal(H, list(COMSIG_LIVING_REJUVENATE), .proc/start_mancing, override = TRUE)
+	RegisterSignal(H, list(COMSIG_MOB_DIED), .proc/stop_mancing, override = TRUE)
+	RegisterSignal(H, list(COMSIG_MOB_HOSTILE_BEEN_SHOOTED), .proc/try_mance, override = TRUE)
+
+/datum/component/mob_modifier/agility/proc/try_mance()
+	if(prob(21 * strength))
+		return PROJECTILE_FORCE_MISS
+
+/datum/component/mob_modifier/agility/proc/stop_mancing()
+	var/mob/living/simple_animal/hostile/H = parent
+	UnregisterSignal(H, list(COMSIG_MOB_HOSTILE_BEEN_SHOOTED))
+
+/datum/component/mob_modifier/agility/proc/start_mancing()
+	var/mob/living/simple_animal/hostile/H = parent
+	RegisterSignal(H, list(COMSIG_MOB_HOSTILE_BEEN_SHOOTED), .proc/try_mance, override = TRUE)
+
+/datum/component/mob_modifier/agility/revert(update = FALSE)
+	var/mob/living/simple_animal/hostile/H = parent
+
+	H.loot_mod *= 1 / (1.5 * strength)
+	H.move_to_delay *= 10 / 9
 
 	return ..()

@@ -14,7 +14,7 @@
 	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 100
 	health = 100
-	harm_intent_damage = 5
+	damage_resistance_percent = 50
 	melee_damage = 15
 	attacktext = "punch"
 	var/corpse = /obj/effect/landmark/mobcorpse/russian

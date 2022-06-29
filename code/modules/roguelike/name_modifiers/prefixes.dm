@@ -43,3 +43,8 @@
 
 /datum/name_modifier/prefix/angelic
 	text = "angelic"
+
+/datum/name_modifier/prefix/agility
+	text = "agility"
+	
+	priority = 2

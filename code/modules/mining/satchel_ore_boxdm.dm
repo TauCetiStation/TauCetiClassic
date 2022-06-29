@@ -7,7 +7,6 @@
 	name = "Ore Box"
 	desc = "A heavy box used for storing ore."
 	density = TRUE
-	var/last_update = 0
 	var/list/stored_ore = list()
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user)
@@ -23,26 +22,33 @@
 
 /obj/structure/ore_box/Entered(atom/movable/ORE)
 	if(istype(ORE, /obj/item/weapon/ore))
-		stored_ore[ORE.name]++
+		// stored ore is association list: ore sprite -> quantity
+		stored_ore[bicon(ORE, "style='position: relative; width:40px; height:40px; top:15px'")]++
+		//stored_ore[ORE.name] = ORE.type
 
 /obj/structure/ore_box/Exited(atom/movable/ORE)
 	if(istype(ORE, /obj/item/weapon/ore))
-		stored_ore[ORE.name]--
+		stored_ore[bicon(ORE, "style='position: relative; width:40px; height:40px; top:15px'")]--
 	if(!contents.len)
 		stored_ore = list()
 
 /obj/structure/ore_box/attack_hand(mob/user)
 	var/dat = ""
+	var/num_of_columns = 0
 	for(var/ore in stored_ore)
-		dat += "[ore]: [stored_ore[ore]]<br>"
+		if(!(num_of_columns % 4) && num_of_columns > 0)
+			dat += "<br>"
+		num_of_columns++
+		dat += "[ore]x[stored_ore[ore]]"
 
-	dat += "<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>"
+	if(length(contents))
+		dat += "<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>"
+	else
+		dat += "The box is empty"
 
-	var/datum/browser/popup = new(user, "orebox", "The contents of the ore box reveal...")
+	var/datum/browser/popup = new(user, "orebox", "The contents of the ore box reveal...", 280, 400)
 	popup.set_content(dat)
 	popup.open()
-
-	return
 
 /obj/structure/ore_box/examine(mob/user)
 	..()
@@ -62,8 +68,7 @@
 
 	to_chat(user, "It holds:")
 	for(var/ore in stored_ore)
-		to_chat(user, "- [stored_ore[ore]] [ore]")
-	return
+		to_chat(user, "- [ore]x[stored_ore[ore]]")
 
 /obj/structure/ore_box/Topic(href, href_list)
 	if(..())
@@ -71,11 +76,8 @@
 	usr.set_machine(src)
 	add_fingerprint(usr)
 	if(href_list["removeall"])
-		for (var/obj/item/weapon/ore/O in contents)
-			O.Move(src.loc)
-		to_chat(usr, "<span class='notice'>You empty the box</span>")
+		empty_box()
 	updateUsrDialog()
-	return
 
 /obj/structure/ore_box/verb/empty_box()
 	set name = "Empty Ore Box"
@@ -100,8 +102,7 @@
 		return
 
 	for (var/obj/item/weapon/ore/O in contents)
-		O.Move(src.loc)
+		O.forceMove(src.loc)
 
 	to_chat(usr, "<span class='notice'>You empty the ore box</span>")
 
-	return

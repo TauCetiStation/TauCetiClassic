@@ -16,7 +16,7 @@
 	response_disarm = "flails at"
 	response_harm   = "punches"
 
-	harm_intent_damage = 7
+	damage_resistance_percent = 70
 	melee_damage = 13
 	attacktext = "brutally crush"
 	environment_smash = 2

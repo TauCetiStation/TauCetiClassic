@@ -67,7 +67,7 @@
 	health = 50
 	w_class = SIZE_HUMAN
 
-	harm_intent_damage = 8
+	damage_resistance_percent = 80
 	melee_damage = 15
 	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/bite.ogg')
@@ -125,7 +125,7 @@
 	health = 25
 	w_class = SIZE_HUMAN
 
-	harm_intent_damage = 2
+	damage_resistance_percent = 20
 	melee_damage = 7
 	attacktext = "gnaw"
 	attack_sound = list('sound/weapons/bite.ogg')

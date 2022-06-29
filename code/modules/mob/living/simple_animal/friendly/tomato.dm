@@ -14,7 +14,7 @@
 	response_help  = "prods the"
 	response_disarm = "pushes aside the"
 	response_harm   = "smacks the"
-	harm_intent_damage = 5
+	damage_resistance_percent = 50
 	melee_damage = 3
 
 	has_head = TRUE

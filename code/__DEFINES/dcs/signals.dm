@@ -307,6 +307,8 @@
 #define COMSIG_MOB_HOSTILE_ATTACKINGTARGET "mob_hostile_attackingtarget"
 /// from simple_animal/hostile/proc/Shoot(): (atom/target)
 #define COMSIG_MOB_HOSTILE_SHOOT "mob_hostile_shoot"
+/// from simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/Proj, def_zone)
+#define COMSIG_MOB_HOSTILE_BEEN_SHOOTED "mob_hostile_been_shooted"
 
 // Component specific signals.
 /// send this signal to remove a list of tip ids(use tip_names as tip ids): (/list/tip_ids_to_remove)

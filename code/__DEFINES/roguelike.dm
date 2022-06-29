@@ -8,6 +8,7 @@
 #define RL_MM_SINGULAR "Singular"
 #define RL_MM_INVISIBLE "Invisible"
 #define RL_MM_ANGELIC "Angelic"
+#define RL_MM_AGILITY "Agility"
 
 /// name_modifier related defines.
 #define RL_GROUP_PREFIX "prefix"

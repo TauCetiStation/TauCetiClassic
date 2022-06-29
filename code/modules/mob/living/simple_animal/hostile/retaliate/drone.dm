@@ -14,14 +14,15 @@
 	response_help = "pokes the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
-	speak = list("ТРЕВОГА!",
+	speak = list("Тревога!",
 	"Обнар-р-р-ружены вражде-б-б-бные существа.",
 	"Установлены па-раметр-рр-ры потенциальной уг-г-грозыы.",
 	"Перевод под-под-подсистемы в боевой режим. Тревога аль-ф-фа.",
 	"Поиск враж-ж-ждебных единиц...")
 	emote_see = list("beeps menacingly","whirrs threateningly","scans its immediate vicinity")
-	health = 300
-	maxHealth = 300
+	health = 250
+	maxHealth = 250
+	damage_resistance_percent = 20
 	retreat_distance = 3
 	minimum_distance = 3
 	speed = 8

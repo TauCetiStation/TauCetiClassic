@@ -16,7 +16,7 @@
 	maxHealth = 150
 	health = 150
 
-	harm_intent_damage = 5
+	damage_resistance_percent = 50
 	melee_damage = 10
 	attacktext = "attack"
 	attack_sound = list('sound/weapons/bite.ogg')
@@ -226,7 +226,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	maxHealth = 100
 	health = 100
 	speed = 2
-	harm_intent_damage = 5
+	damage_resistance_percent = 50
 	melee_damage = 5
 
 	universal_understand = TRUE

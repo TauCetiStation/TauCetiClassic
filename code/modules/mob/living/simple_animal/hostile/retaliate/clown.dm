@@ -17,7 +17,7 @@
 	maxHealth = 75
 	health = 75
 	speed = -1
-	harm_intent_damage = 8
+	damage_resistance_percent = 80
 	melee_damage = 10
 	attacktext = "attacks"
 	attack_sound = list('sound/items/bikehorn.ogg')
@@ -59,7 +59,7 @@
 	maxHealth = 75
 	health = 75
 	speed = -1
-	harm_intent_damage = 8
+	damage_resistance_percent = 80
 	melee_damage = 10
 	attacktext = "honk"
 	attack_sound = list('sound/items/bikehorn.ogg')

@@ -585,16 +585,32 @@
 	w_class = SIZE_SMALL
 	force = 10
 	throwforce = 10
-	var/cooldown = 0
+	var/recharge_time = 2 SECONDS
+	var/max_charges = 3
+	var/charges = 3
+	var/now_recharging = FALSE
+
+
+/obj/item/weapon/resonator/proc/recharge()
+	if(charges < max_charges)
+		charges++
+
+	if(charges >= max_charges)
+		now_recharging = FALSE
+		return
+	else
+		addtimer(CALLBACK(src, /obj/item/weapon/resonator.proc/recharge), recharge_time)
 
 /obj/item/weapon/resonator/proc/CreateResonance(target, creator)
-	if(cooldown <= 0)
+	if(charges >= 1)
+		charges--
 		playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER)
 		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
 		R.creator = creator
-		cooldown = 1
-		spawn(20)
-			cooldown = 0
+
+		if(!now_recharging)
+			now_recharging = TRUE
+			addtimer(CALLBACK(src, .proc/recharge), recharge_time)
 
 /obj/item/weapon/resonator/attack_self(mob/user)
 	CreateResonance(src, user)
@@ -627,9 +643,8 @@
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
 		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
-		M.GetDrilled()
-		spawn(5)
-			qdel(src)
+		M.GetDrilled(mineral_drop_koef = 1.25) // the resonator is efficient for mining ore
+		QDEL_IN(src, 5)
 	else
 		var/datum/gas_mixture/environment = proj_turf.return_air()
 		var/pressure = environment.return_pressure()
@@ -702,11 +717,12 @@
 	minbodytemp = 0
 	wander = FALSE
 	idle_vision_range = 6
-	move_to_delay = 7
+	move_to_delay = 5
 	retreat_distance = 2
 	minimum_distance = 3
-	health = 140
-	maxHealth = 140
+	health = 150
+	maxHealth = 150
+	damage_resistance_percent = 20
 	melee_damage = 18
 	environment_smash = 0
 	attacktext = "drill"
@@ -730,7 +746,7 @@
 			else
 				to_chat(user, "<span class='info'>You begin to weld some cracks on the [src].</span>")
 				if(W.use_tool(src, user, 20, volume = 50))
-					health += 15
+					health += maxHealth * 0.15 // heal for 15%
 					to_chat(user, "<span class='info'>You have repaired [src]'s armor.</span>")
 			return
 	..()
@@ -782,8 +798,17 @@
 /mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
 		CollectOre()
+		target = null
+		var/new_target = FindTarget() // immediately looking for the next ore
+		GiveTarget(new_target)
+		Goto(new_target, move_to_delay, minimum_distance) // go to the ore
 		return
-	..()
+	return ..()
+
+/mob/living/simple_animal/hostile/mining_drone/Move(turf/T)
+	for(var/obj/item/weapon/ore/O in T)
+		O.loc = src
+	return ..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/CollectOre()
 	var/obj/item/weapon/ore/O
@@ -793,7 +818,6 @@
 		var/turf/T = get_step(src,dir)
 		for(O in T)
 			O.loc = src
-	return
 
 /mob/living/simple_animal/hostile/mining_drone/proc/DropOre()
 	if(!contents.len)
@@ -801,7 +825,6 @@
 	for(var/obj/item/weapon/ore/O in contents)
 		contents -= O
 		O.loc = src.loc
-	return
 
 /mob/living/simple_animal/hostile/mining_drone/adjustBruteLoss()
 	if(search_objects)
@@ -820,6 +843,7 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
+
 	if(Adjacent(user))
 		to_chat(user, "<span class='notice'>You unloaded ore to the floor.</span>")
 		DropOre()

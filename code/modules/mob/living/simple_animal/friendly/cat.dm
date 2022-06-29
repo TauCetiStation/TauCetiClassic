@@ -177,7 +177,7 @@ var/global/cat_number = 0
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 
-	harm_intent_damage = 10
+	damage_resistance_percent = 100
 	melee_damage = 10
 	attacktext = "slashed"
 	attack_sound = 'sound/weapons/bladeslice.ogg'

@@ -15,7 +15,7 @@
 	response_disarm = "flails at"
 	response_harm   = "punches the"
 
-	harm_intent_damage = 2
+	damage_resistance_percent = 20
 
 	maxHealth = 30
 	health = 30
