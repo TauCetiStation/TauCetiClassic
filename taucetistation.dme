@@ -456,7 +456,6 @@
 #include "code\game\area\shuttle_areas.dm"
 #include "code\game\area\space_structures_areas.dm"
 #include "code\game\area\station_areas.dm"
-#include "code\game\dna\dn2_misc.dm"
 #include "code\game\dna\dna2.dm"
 #include "code\game\dna\dna2_domutcheck.dm"
 #include "code\game\dna\dna2_helpers.dm"

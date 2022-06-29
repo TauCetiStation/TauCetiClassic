@@ -14813,10 +14813,12 @@
 	},
 /area/station/maintenance/science)
 "azL" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
+/obj/machinery/alarm{
+	pixel_y = 24
 	},
-/area/station/maintenance/chapel)
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "azM" = (
 /obj/machinery/computer/mech_bay_power_console,
 /turf/simulated/floor/bluegrid,
@@ -24309,11 +24311,9 @@
 	},
 /area/station/rnd/hor)
 "aRs" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
-/area/station/maintenance/chapel)
+/area/station/maintenance/dormitory)
 "aRt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -36609,10 +36609,10 @@
 	},
 /area/station/hallway/secondary/exit)
 "bnl" = (
-/obj/machinery/alarm{
-	pixel_y = 24
+/obj/random/scrap/safe_even,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
 	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "bnm" = (
 /obj/item/weapon/flora/pottedplant{
@@ -38014,11 +38014,9 @@
 /turf/simulated/floor/plating,
 /area/station/medical/surgery)
 "bpR" = (
-/obj/effect/decal/cleanable/cobweb2,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/station/maintenance/engineering)
+/obj/random/scrap/safe_even,
+/turf/simulated/floor/plating,
+/area/station/maintenance/chapel)
 "bpS" = (
 /obj/machinery/computer/med_data/laptop,
 /obj/structure/table/woodentable,
@@ -43640,11 +43638,12 @@
 	},
 /area/station/bridge)
 "bzF" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
-/area/station/maintenance/escape)
+/area/station/maintenance/chapel)
 "bzG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -44662,21 +44661,9 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/office)
 "bBw" = (
-/obj/structure/stool/bed/chair/metal,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/obj/machinery/alarm{
-	pixel_y = 23
-	},
-/mob/living/simple_animal/mouse,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/area/station/maintenance/cargo)
 "bBx" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -44815,12 +44802,21 @@
 	},
 /area/station/hallway/primary/aft)
 "bBL" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
+/obj/structure/stool/bed/chair/metal,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/alarm{
+	pixel_y = 23
+	},
+/mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating,
-/area/station/maintenance/eva)
+/area/station/maintenance/medbay)
 "bBM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -46983,13 +46979,9 @@
 	},
 /area/station/medical/virology)
 "bFJ" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
+/area/station/maintenance/engineering)
 "bFK" = (
 /obj/item/device/radio/intercom/pod{
 	dir = 4;
@@ -47050,9 +47042,9 @@
 	},
 /area/station/civilian/kitchen)
 "bFP" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
+/area/station/maintenance/medbay)
 "bFQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -52053,13 +52045,17 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bOU" = (
-/obj/machinery/alarm{
-	pixel_y = 24
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/environment/space,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
+/area/station/maintenance/medbay)
 "bOV" = (
 /obj/machinery/light{
 	dir = 1
@@ -52112,14 +52108,10 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "bOZ" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/station/maintenance/science)
+/obj/effect/decal/cleanable/cobweb,
+/obj/random/scrap/safe_even,
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "bPa" = (
 /obj/machinery/door/window/northleft{
 	name = "Engineering Moniter Station";
@@ -52580,12 +52572,12 @@
 	},
 /area/station/rnd/hallway)
 "bPN" = (
-/obj/machinery/alarm{
-	pixel_y = 24
+/obj/effect/decal/cleanable/cobweb2,
+/obj/random/scrap/safe_even,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
+/area/station/maintenance/engineering)
 "bPO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -53448,12 +53440,38 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"bRz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
+"bRA" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
+"bRB" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "bRC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
 /area/station/cargo/miningoffice)
+"bRD" = (
+/obj/machinery/alarm{
+	pixel_y = 24
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/environment/space,
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "bRE" = (
 /obj/machinery/power/smes,
 /obj/structure/cable{
@@ -53534,6 +53552,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"bRL" = (
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/station/maintenance/science)
 "bRM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -53596,6 +53623,12 @@
 /obj/structure/sign/warning/securearea,
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
+"bRR" = (
+/obj/machinery/alarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/chapel)
 "bRT" = (
 /obj/machinery/pipedispenser/disposal,
 /obj/machinery/alarm{
@@ -67315,9 +67348,9 @@
 /turf/simulated/wall/r_wall,
 /area/station/aisat/antechamber_interior)
 "cFL" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
+/area/station/maintenance/eva)
 "cFN" = (
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -101581,7 +101614,7 @@ blO
 kdV
 bBa
 bCT
-bEW
+bBw
 aFg
 aRp
 aWV
@@ -102863,7 +102896,7 @@ beJ
 arB
 qoN
 aSP
-bEW
+bBw
 ixO
 qAF
 bEW
@@ -104407,7 +104440,7 @@ aSP
 itt
 aOY
 aSM
-bEW
+bBw
 sCd
 xjn
 eXg
@@ -104922,7 +104955,7 @@ aNi
 aNi
 aNi
 aNi
-bEW
+bBw
 gYf
 oUI
 hmR
@@ -105399,7 +105432,7 @@ apM
 apm
 atI
 asB
-bzF
+bRz
 cnZ
 cnZ
 kGr
@@ -111310,7 +111343,7 @@ agO
 agO
 apl
 agO
-alZ
+cFL
 atc
 alZ
 agO
@@ -111358,7 +111391,7 @@ bEW
 bEW
 tKI
 aSM
-bEW
+bBw
 nSy
 usn
 xqb
@@ -111883,10 +111916,10 @@ caq
 cbf
 caq
 cap
-bQl
+bFJ
 bRo
 bQl
-bQl
+bFJ
 bQl
 bQl
 mhb
@@ -112084,7 +112117,7 @@ adW
 adW
 adW
 asi
-bBL
+cFL
 bOQ
 arv
 bzB
@@ -112141,11 +112174,11 @@ cap
 cap
 cap
 bQl
-bQl
+bFJ
 bRo
 bQl
 bTV
-bQl
+bFJ
 bQl
 tpb
 cJa
@@ -112599,7 +112632,7 @@ aBH
 adW
 aqd
 alZ
-alZ
+cFL
 agO
 agO
 ceV
@@ -113694,7 +113727,7 @@ bQl
 bQl
 aNE
 bIZ
-cFL
+bOZ
 bZw
 bIZ
 cLZ
@@ -113959,7 +113992,7 @@ bIZ
 bZm
 cIh
 bIZ
-bpR
+bPN
 odC
 bQl
 bQl
@@ -119794,7 +119827,7 @@ asZ
 aEi
 avF
 aef
-bFP
+bRB
 bOR
 awT
 azx
@@ -120051,7 +120084,7 @@ aef
 aEA
 aef
 aef
-bPN
+azL
 btk
 awT
 awQ
@@ -121332,7 +121365,7 @@ cXb
 aph
 aqo
 uUU
-aeJ
+aRs
 alC
 ahl
 cyv
@@ -122103,7 +122136,7 @@ uUU
 apj
 uUU
 uUU
-bOU
+bRD
 btk
 ahl
 aeJ
@@ -122605,7 +122638,7 @@ afN
 afN
 afN
 afN
-bFJ
+bRA
 aCr
 alT
 aef
@@ -122617,7 +122650,7 @@ apI
 aeJ
 aeJ
 ahl
-bFP
+bRB
 byk
 aOV
 awJ
@@ -125964,7 +125997,7 @@ aaa
 bFH
 azM
 aAE
-bOZ
+bRL
 aCk
 bFH
 aES
@@ -129619,7 +129652,7 @@ bLg
 bLg
 bNN
 bDV
-cak
+bFP
 qVb
 bFo
 cDf
@@ -131625,7 +131658,7 @@ aaa
 aaa
 aup
 cub
-axj
+bpR
 aLx
 dBf
 dgJ
@@ -131881,7 +131914,7 @@ aah
 aah
 aah
 aIj
-axj
+bpR
 axk
 aup
 aNR
@@ -133166,8 +133199,8 @@ aup
 aup
 aup
 aup
-axj
-azL
+bpR
+bnl
 aEY
 ayi
 qFO
@@ -133992,7 +134025,7 @@ bFo
 tVb
 baG
 aFC
-cak
+bFP
 bFo
 aah
 aah
@@ -134188,7 +134221,7 @@ aaa
 aaa
 aaa
 aup
-bnl
+bRR
 hCB
 axl
 aup
@@ -134248,7 +134281,7 @@ nab
 bFo
 lOb
 cak
-cak
+bFP
 cak
 bFo
 aaa
@@ -134503,10 +134536,10 @@ mHb
 mHb
 ngb
 bFo
-iDQ
+bOU
 lyo
 cak
-cak
+bFP
 bMQ
 aaa
 aaa
@@ -134760,7 +134793,7 @@ bFo
 bFo
 nkb
 bFo
-lOb
+bOU
 cES
 cak
 jtb
@@ -135019,7 +135052,7 @@ nlb
 bFo
 lOb
 cak
-cak
+bFP
 cFs
 bFo
 aah
@@ -135789,7 +135822,7 @@ bFo
 nlb
 bFo
 vuR
-vbo
+bFP
 bFo
 aaa
 aaa
@@ -135996,7 +136029,7 @@ aIS
 axj
 aup
 aup
-aRs
+bzF
 aTA
 aVB
 aup
@@ -136046,7 +136079,7 @@ bFo
 nlb
 bFo
 rrb
-cak
+bFP
 bFo
 aah
 aah
@@ -136252,7 +136285,7 @@ awx
 aIO
 aup
 aup
-axj
+bpR
 aRh
 aTz
 aTD
@@ -136557,10 +136590,10 @@ aVF
 lNb
 bFo
 bFo
-cak
+bFP
 bFo
-cak
-cak
+bFP
+bFP
 bFo
 aaa
 aaa
@@ -137326,7 +137359,7 @@ bAJ
 blC
 bJh
 aVF
-bBw
+bBL
 kRM
 mIb
 qmb
