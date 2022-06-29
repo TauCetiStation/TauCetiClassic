@@ -17482,14 +17482,6 @@
 	},
 /area/station/security/range)
 "aEP" = (
-/obj/machinery/door/airlock/research{
-	autoclose = 0;
-	frequency = 1379;
-	id_tag = "xeno_airlock_exterior";
-	locked = 1;
-	name = "Xenobiology External Airlock";
-	req_access = list(55)
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -17512,6 +17504,14 @@
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/research{
+	autoclose = 0;
+	frequency = 1379;
+	id_tag = "xeno_airlock_exterior";
+	locked = 1;
+	name = "Xenobiology External Airlock";
+	req_access = list(55)
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -19985,10 +19985,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/maintenance{
-	name = "Science Maintenance";
-	req_access = list(47)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
@@ -19997,6 +19993,10 @@
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Science Maintenance";
+	req_access = list(47)
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -35343,10 +35343,6 @@
 /area/station/maintenance/science)
 "blf" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/maintenance{
-	name = "Science Maintenance";
-	req_access = list(47)
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -35356,6 +35352,10 @@
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Science Maintenance";
+	req_access = list(47)
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/hallway)
@@ -40522,10 +40522,6 @@
 	},
 /area/station/hallway/secondary/entry)
 "buq" = (
-/obj/machinery/door/airlock/research{
-	name = "Research Division Access";
-	req_access = list(47)
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -40535,6 +40531,10 @@
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/research{
+	name = "Research Division Access";
+	req_access = list(47)
 	},
 /turf/simulated/floor,
 /area/station/rnd/hallway)
