@@ -119,13 +119,13 @@
 
 // Diamonds. Rare and expensive.
 /datum/export/stack/diamond
-	cost = 25
+	cost = 50
 	export_types = list(/obj/item/stack/sheet/mineral/diamond)
 	message = "of diamonds"
 
 // Phoron. The oil of 26 century. The reason why you are here.
 /datum/export/stack/phoron
-	cost = 5
+	cost = 9
 	export_types = list(/obj/item/stack/sheet/mineral/phoron)
 	message = "of phoron"
 
@@ -148,7 +148,7 @@
 
 // Gold. Used in electronics and corrosion-resistant plating.
 /datum/export/stack/gold
-	cost = 3
+	cost = 15
 	export_types = list(/obj/item/stack/sheet/mineral/gold)
 	message = "of gold"
 
@@ -166,7 +166,7 @@
 
 // Platinum.
 /datum/export/stack/platinum
-	cost = 10
+	cost = 50
 	message = "of platinum"
 	export_types = list(/obj/item/stack/sheet/mineral/platinum)
 
