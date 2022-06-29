@@ -52050,10 +52050,13 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/random/scrap/safe_even,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/random/scrap/safe_even,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bOV" = (
@@ -53629,6 +53632,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
+"bRS" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/random/scrap/safe_even,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "bRT" = (
 /obj/machinery/pipedispenser/disposal,
 /obj/machinery/alarm{
@@ -53642,6 +53660,13 @@
 	icon_state = "bot"
 	},
 /area/station/engineering/atmos)
+"bRU" = (
+/obj/item/weapon/shard,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "bRV" = (
 /obj/structure/table,
 /obj/item/weapon/wrench{
@@ -78646,9 +78671,13 @@
 	},
 /area/station/engineering/atmos)
 "mJb" = (
-/obj/item/weapon/shard,
+/obj/random/scrap/safe_even,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/area/station/maintenance/eva)
 "mKa" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
@@ -112117,7 +112146,7 @@ adW
 adW
 adW
 asi
-cFL
+mJb
 bOQ
 arv
 bzB
@@ -134793,7 +134822,7 @@ bFo
 bFo
 nkb
 bFo
-bOU
+bRS
 cES
 cak
 jtb
@@ -135564,8 +135593,8 @@ bFo
 jhb
 nlb
 bFo
-rrb
-mJb
+vuR
+bRU
 bFo
 aaa
 aaa
@@ -135821,7 +135850,7 @@ bFo
 bFo
 nlb
 bFo
-vuR
+rrb
 bFP
 bFo
 aaa
