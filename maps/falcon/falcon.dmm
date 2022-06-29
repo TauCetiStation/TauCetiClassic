@@ -5938,6 +5938,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/mob/living/simple_animal/parrot/Poly,
 /turf/simulated/floor{
 	icon_state = "darkyellow"
 	},
