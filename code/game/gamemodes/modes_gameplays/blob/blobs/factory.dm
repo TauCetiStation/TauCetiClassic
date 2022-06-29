@@ -287,7 +287,7 @@
 	name = new_name
 	real_name = new_name
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/add_to_hud(datum/hud/hud)
+/mob/living/simple_animal/hostile/blob/blobbernaut/add_to_hud(datum/hud/hud, add_health=FALSE)
 	. = ..()
 	hud.init_screens(list(
 		/atom/movable/screen/health/blob/blobbernaut,
@@ -298,7 +298,7 @@
 	..()
 	update_hud()
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/proc/update_health_hud() //ONLY healths
+/mob/living/simple_animal/hostile/blob/blobbernaut/update_health_hud() //ONLY healths
 	if(!hud_used) //Yes, we really need it
 		return
 	if(healths)

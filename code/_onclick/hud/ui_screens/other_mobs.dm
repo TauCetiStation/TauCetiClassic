@@ -12,6 +12,7 @@
 	hud.mymob.pwr_display = src
 
 /atom/movable/screen/blob_power/blobbernaut //Actually core healths
+	name = "core healths"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "corehealth"
 
