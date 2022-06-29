@@ -53410,6 +53410,24 @@
 /obj/item/device/flashlight,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"bRx" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "bRy" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil/red{
@@ -123114,7 +123132,7 @@ aef
 aef
 aef
 aef
-asz
+bRx
 aOV
 awX
 ayI
