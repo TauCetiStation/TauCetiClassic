@@ -230,7 +230,6 @@
 /obj/machinery/computer/security/tgui_data(mob/user)
 	var/list/data = list()
 	data["activeCamera"] = null
-	data["mapStyle"] = winget(user.client, "mapwindow.map", "style")
 	if(!QDELETED(active_camera))
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,

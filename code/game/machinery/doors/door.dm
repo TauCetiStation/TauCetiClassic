@@ -145,7 +145,7 @@ var/global/list/wedge_image_cache = list()
 	return !density
 
 /obj/machinery/door/proc/bumpopen(mob/user)
-	if(user.last_airflow > world.time - vsc.airflow_delay) //Fakkit
+	if(!COOLDOWN_FINISHED(user, last_airflow)) //Fakkit
 		return
 	if(!density)
 		return
