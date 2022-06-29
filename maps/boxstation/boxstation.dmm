@@ -70732,6 +70732,11 @@
 	icon_state = "whitered"
 	},
 /area/station/medical/reception)
+"eSP" = (
+/obj/structure/rack,
+/obj/item/clothing/gloves/fyellow,
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "eTw" = (
 /obj/machinery/light{
 	dir = 1
@@ -74646,6 +74651,7 @@
 /area/station/engineering/atmos)
 "job" = (
 /obj/structure/table,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "jpb" = (
@@ -112323,8 +112329,8 @@ bQl
 bQl
 uoD
 nQw
-crH
-crH
+bQl
+eSP
 crH
 cyj
 eqG
