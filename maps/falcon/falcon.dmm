@@ -9277,9 +9277,7 @@
 	},
 /area/station/engineering/drone_fabrication)
 "ari" = (
-/obj/machinery/artifact_analyser{
-	pixel_x = 3
-	},
+/obj/machinery/artifact_analyser,
 /obj/structure/table,
 /obj/item/device/radio/intercom{
 	dir = 4;
