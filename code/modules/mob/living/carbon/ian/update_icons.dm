@@ -7,8 +7,9 @@
 #define LAYERIAN_TARGETED          1
 #define LAYERIANS_TOTAL            6
 
-/mob/living/carbon/ian/var/static/list/corgi_icons = list()
-/mob/living/carbon/ian/var/list/overlays_inv[LAYERIANS_TOTAL]
+/mob/living/carbon/ian
+	var/static/list/corgi_icons = list()
+	var/list/overlays_inv[LAYERIANS_TOTAL]
 
 /mob/living/carbon/ian/proc/apply_overlay(index)
 	var/image/I = overlays_inv[index]
@@ -283,8 +284,7 @@
 	update_inv_back()
 
 /mob/living/carbon/ian/update_canmove()
-
-	. = ..(TRUE)
+	..(TRUE)
 
 	if(buckled || ian_sit)
 		pose_last = POSE_SIT
@@ -301,4 +301,4 @@
 	if(pose_last != pose_prev)
 		update_transform()
 
-	canmove = !(weakened || paralysis || stat || (status_flags & FAKEDEATH)  || stunned || captured || pinned.len || ian_sit)
+	canmove = canmove && !ian_sit
