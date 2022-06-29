@@ -178,29 +178,10 @@
 
 /mob/living/silicon/robot/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return
 
 	regular_hud_updates()
 	update_sight()
-
-	if (healths)
-		if (stat != DEAD)
-			if(health >= maxHealth)
-				healths.icon_state = "health0"
-			else if(health >= maxHealth * 0.75)
-				healths.icon_state = "health1"
-			else if(health >= maxHealth * 0.5)
-				healths.icon_state = "health2"
-			else if(health >= maxHealth * 0.25)
-				healths.icon_state = "health3"
-			else if(health >= 0)
-				healths.icon_state = "health4"
-			else if(health >= config.health_threshold_dead)
-				healths.icon_state = "health5"
-			else
-				healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
 
 	if (src.cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge
@@ -219,8 +200,6 @@
 		throw_alert("charge", /atom/movable/screen/alert/nocell)
 
 	..()
-
-	return 1
 
 /mob/living/silicon/robot/proc/update_items()
 	if (src.client)
