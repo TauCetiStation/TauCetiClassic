@@ -98,6 +98,8 @@
 			return TRUE
 	return FALSE
 
+/*
+
 /datum/religion_rites/pedestals/cult/make_skeleton
 	name = "Скелетофикация"
 	desc = "Превращает человека на алтаре в бессмертного скелета."
@@ -163,4 +165,6 @@
 					"<span class='cult'>Вы чувствуете, как с вас буквально содрали всю кожу, хотя у тебя теперь нет и нервов.</span>")
 	H.regenerate_icons()
 
-	return TRUE
+	return TRUE 
+
+	*/
