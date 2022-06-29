@@ -2333,12 +2333,12 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/obj/item/weapon/storage/box/flashbangs,
 /obj/item/weapon/storage/box/teargas,
 /obj/item/weapon/storage/box/teargas,
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
+/obj/item/weapon/storage/box/teargas,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -15993,6 +15993,11 @@
 	pixel_y = -24
 	},
 /obj/machinery/light,
+/obj/structure/table,
+/obj/item/device/plant_analyzer,
+/obj/item/weapon/minihoe{
+	force = 1
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -16142,11 +16147,6 @@
 /turf/simulated/wall/r_wall,
 /area/station/hallway/primary/fore)
 "aCs" = (
-/obj/structure/table,
-/obj/item/device/plant_analyzer,
-/obj/item/weapon/minihoe{
-	force = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -16155,6 +16155,7 @@
 	name = "Station Intercom (Brig Radio)";
 	pixel_y = -28
 	},
+/obj/machinery/seed_extractor,
 /turf/simulated/floor,
 /area/station/security/prison)
 "aCt" = (
@@ -32810,26 +32811,6 @@
 "bgj" = (
 /turf/environment/space,
 /area/shuttle/specops/station)
-"bgk" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/grille{
-	destroyed = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/atmos)
 "bgl" = (
 /obj/structure/closet/l3closet/general,
 /obj/structure/sign/warning/biohazard{
@@ -48356,12 +48337,12 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "bIq" = (
-/obj/item/weapon/storage/fancy/donut_box,
 /obj/structure/table/glass,
 /obj/machinery/windowtint{
 	id = "Patients";
 	pixel_x = -27
 	},
+/obj/item/weapon/storage/box/donkpockets,
 /turf/simulated/floor/carpet/green,
 /area/station/medical/patients_rooms)
 "bIr" = (
@@ -56385,9 +56366,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "cbx" = (
-/obj/structure/stool/bed/roller,
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/structure/stool/bed/chair/metal/blue{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -72689,10 +72672,6 @@
 /area/station/hallway/secondary/exit)
 "hga" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -2;
-	pixel_y = 4
-	},
 /obj/item/bodybag/cryobag,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
@@ -72701,6 +72680,7 @@
 	network = list("Engineering");
 	pixel_x = 28
 	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -77151,10 +77131,12 @@
 	},
 /area/station/maintenance/engineering)
 "mib" = (
-/obj/structure/stool/bed/roller,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 24
+	},
+/obj/structure/stool/bed/chair/metal/blue{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -122056,7 +122038,7 @@ cdR
 cdE
 cdA
 cyG
-bgk
+bPY
 cdA
 aah
 aah
