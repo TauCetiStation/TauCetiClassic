@@ -24233,9 +24233,6 @@
 	},
 /area/station/rnd/hor)
 "aRv" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 4
-	},
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -25
@@ -24245,6 +24242,7 @@
 	dir = 4;
 	network = list("SS13","Research")
 	},
+/obj/machinery/gas_analyzer,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -25086,8 +25084,10 @@
 	},
 /area/station/hallway/primary/central)
 "aSZ" = (
-/obj/machinery/atmospherics/pipe/manifold4w/visible,
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -55514,6 +55514,11 @@
 /area/station/maintenance/engineering)
 "bYp" = (
 /obj/structure/closet/crate,
+/obj/machinery/camera{
+	c_tag = "Atmospherics West";
+	dir = 5;
+	network = list("SS13","Engineering")
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -57677,6 +57682,9 @@
 /area/station/engineering/atmos)
 "cgg" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -59895,15 +59903,7 @@
 	},
 /area/station/aisat/antechamber_interior)
 "cmE" = (
-/obj/machinery/portable_atmospherics/powered/scrubber,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/camera{
-	c_tag = "Atmospherics West";
-	dir = 5;
-	network = list("SS13","Engineering")
-	},
+/obj/machinery/gas_analyzer,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -60054,13 +60054,9 @@
 	},
 /area/station/medical/virology)
 "cna" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/closet/firecloset,
+/obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "caution"
+	icon_state = "bot"
 	},
 /area/station/engineering/atmos)
 "cng" = (
@@ -77537,13 +77533,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "mIn" = (
-/obj/machinery/light{
-	dir = 8
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/structure/closet/firecloset,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/structure/closet/firecloset,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "caution"
@@ -79214,6 +79213,7 @@
 	},
 /area/station/civilian/kitchen)
 "oOd" = (
+/obj/structure/closet/firecloset,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -118708,9 +118708,9 @@ cBw
 bYp
 cmE
 cgg
-xbM
-xbM
 cna
+xbM
+xbM
 mIn
 oOd
 ckH

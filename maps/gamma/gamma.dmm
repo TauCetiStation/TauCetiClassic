@@ -2354,6 +2354,12 @@
 	icon_state = "siding1"
 	},
 /area/station/civilian/chapel)
+"adO" = (
+/obj/machinery/gas_analyzer,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/rnd/mixing)
 "adP" = (
 /turf/simulated/floor/engine/vacuum,
 /turf/simulated/floor{
@@ -69227,6 +69233,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/machinery/gas_analyzer,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "caution"
@@ -127224,7 +127231,7 @@ pYY
 plf
 plf
 iQO
-uFD
+adO
 uFD
 uFD
 sIx

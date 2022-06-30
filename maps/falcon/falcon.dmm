@@ -3051,7 +3051,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warningcorner"
@@ -7822,7 +7821,7 @@
 	},
 /area/station/rnd/telesci)
 "aoD" = (
-/obj/structure/closet/emcloset,
+/obj/machinery/gas_analyzer,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkpurple"
@@ -8875,6 +8874,7 @@
 	},
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/device/gps/engineering,
+/obj/item/weapon/storage/briefcase/inflatable,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -8908,6 +8908,7 @@
 	dir = 4
 	},
 /obj/item/device/gps/engineering,
+/obj/item/weapon/storage/briefcase/inflatable,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -12459,6 +12460,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -24415,17 +24417,12 @@
 	},
 /area/station/medical/reception)
 "oKp" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/briefcase/inflatable{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/weapon/storage/briefcase/inflatable,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/gas_analyzer,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -25650,6 +25647,7 @@
 	},
 /area/station/security/lobby)
 "pMW" = (
+/obj/structure/closet/emcloset,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkpurple"
