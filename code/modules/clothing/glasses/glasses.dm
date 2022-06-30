@@ -239,7 +239,7 @@
 	icon_state = "sunhud"
 	hud_types = list(DATA_HUD_SECURITY)
 
-/obj/item/clothing/glasses/hos_aug/hud
+/obj/item/clothing/glasses/hud/hos_aug
 	name = "augmented shades"
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
 	icon_state = "hos_shades"
@@ -252,10 +252,10 @@
 
 	hud_types = list(DATA_HUD_SECURITY)
 
-/obj/item/clothing/glasses/hos_aug/hud/attack_self(mob/user)
+/obj/item/clothing/glasses/hud/hos_aug/attack_self(mob/user)
 	switch_shade()
 
-/obj/item/clothing/glasses/hos_aug/hud/verb/switch_shade()
+/obj/item/clothing/glasses//hud/hos_aug/verb/switch_shade()
 
 	set name = "Switch Shades Mode"
 	set category = "Object"
