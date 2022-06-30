@@ -41,8 +41,8 @@
 	var/spacecash_l_type = pick(money_types)
 	var/spacecash_r_type = pick(money_types)
 
-	H.equip_to_slot_or_del(new spacecash_l_type(H), SLOT_L_STORE)
-	H.equip_to_slot_or_del(new spacecash_r_type(H), SLOT_R_STORE)
+	H.equip_or_collect(new spacecash_l_type(H), SLOT_L_STORE)
+	H.equip_or_collect(new spacecash_r_type(H), SLOT_R_STORE)
 
 
 /datum/quality/positiveish/wonder_doctor

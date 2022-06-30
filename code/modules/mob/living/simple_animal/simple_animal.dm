@@ -1,5 +1,6 @@
 /mob/living/simple_animal
 	name = "animal"
+	desc = "Just simple animal"
 	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20
@@ -23,9 +24,9 @@
 	var/stop_automated_movement_when_pulled = TRUE // When set to 1 this stops the animal from moving when someone is pulling it.
 
 	// Interaction
-	var/response_help   = "tries to help"
-	var/response_disarm = "tries to disarm"
-	var/response_harm   = "tries to hurt"
+	var/response_help   = "pets the"
+	var/response_disarm = "gently pushes aside the"
+	var/response_harm   = "kicks the"
 	var/harm_intent_damage = 3
 
 	// Temperature effect
@@ -49,7 +50,7 @@
 	// LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
 	var/melee_damage = 0
 	var/melee_damtype = BRUTE
-	var/attacktext = "attacks"
+	var/attacktext = "kicks"
 	var/list/attack_sound = list()
 	var/friendly = "nuzzles" // If the mob does no damage with it's attack
 	var/environment_smash = 0 // Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls

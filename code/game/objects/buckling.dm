@@ -29,9 +29,7 @@
 		return FALSE
 	if(!istype(M) || (M.loc != loc))
 		return FALSE
-	if(M.buckled || buckled_mob)
-		return FALSE
-	if(M.pinned.len)
+	if(M.buckled || buckled_mob || M.anchored)
 		return FALSE
 	if(buckle_require_restraints && !M.restrained())
 		return FALSE
@@ -60,17 +58,19 @@
 	return TRUE
 
 /atom/movable/proc/unbuckle_mob()
-	if(buckled_mob && buckled_mob.buckled == src && buckled_mob.can_unbuckle(usr))
-		. = buckled_mob
-		buckled_mob.buckled = null
-		buckled_mob.anchored = initial(buckled_mob.anchored)
-		buckled_mob.update_canmove()
-		buckled_mob.clear_alert("buckled")
-		correct_pixel_shift(buckled_mob)
-		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob)
-		buckled_mob = null
+	if(!(buckled_mob && buckled_mob.buckled == src && buckled_mob.can_unbuckle(usr)))
+		return
 
-		post_buckle_mob(.)
+	. = buckled_mob
+	buckled_mob.buckled = null
+	buckled_mob.update_canmove()
+	buckled_mob.clear_alert("buckled")
+	buckled_mob = null
+
+	correct_pixel_shift(.)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, .)
+
+	post_buckle_mob(.)
 
 /atom/movable/proc/correct_pixel_shift(mob/living/carbon/C)
 	if(!istype(C))
@@ -80,28 +80,34 @@
 /atom/movable/proc/post_buckle_mob(mob/living/M)
 	return
 
-/atom/movable/proc/user_buckle_mob(mob/living/M, mob/user)
+/atom/movable/proc/can_user_buckle(mob/living/M, mob/user)
 	if(!SSticker)
 		to_chat(user, "<span class='warning'>You can't buckle anyone in before the game starts.</span>")
-		return
+		return FALSE
 
 	if(!user.Adjacent(M) || user.incapacitated() || user.lying || ispAI(user) || ismouse(user))
-		return
+		return FALSE
 
 	if(user.is_busy())
 		to_chat(user, "<span class='warning'>You can't buckle [M] while doing something.</span>")
-		return
+		return FALSE
 
 	if(istype(M, /mob/living/simple_animal/construct))
 		to_chat(user, "<span class='warning'>The [M] is floating in the air and can't be buckled.</span>")
-		return
+		return FALSE
 
 	if(isslime(M))
 		to_chat(user, "<span class='warning'>The [M] is too squishy to buckle in.</span>")
-		return
+		return FALSE
 
 	if(issilicon(M))
 		to_chat(user, "<span class='warning'>The [M] is too heavy to buckle in.</span>")
+		return FALSE
+
+	return TRUE
+
+/atom/movable/proc/user_buckle_mob(mob/living/M, mob/user)
+	if(!can_user_buckle(M, user))
 		return
 
 	add_fingerprint(user)
@@ -109,14 +115,14 @@
 
 	if(buckle_mob(M))
 		if(M == user)
-			M.visible_message(\
-				"<span class='notice'>[M.name] buckles themselves to [src].</span>",\
-				"<span class='notice'>You buckle yourself to [src].</span>",\
+			M.visible_message(
+				"<span class='notice'>[M.name] buckles themselves to [src].</span>",
+				"<span class='notice'>You buckle yourself to [src].</span>",
 				"<span class='notice'>You hear metal clanking.</span>")
 		else
-			M.visible_message(\
-				"<span class='danger'>[M.name] is buckled to [src] by [user.name]!</span>",\
-				"<span class='danger'>You are buckled to [src] by [user.name]!</span>",\
+			M.visible_message(
+				"<span class='danger'>[M.name] is buckled to [src] by [user.name]!</span>",
+				"<span class='danger'>You are buckled to [src] by [user.name]!</span>",
 				"<span class='notice'>You hear metal clanking.</span>")
 
 /atom/movable/proc/user_unbuckle_mob(mob/user)
@@ -127,20 +133,18 @@
 	var/mob/living/M = unbuckle_mob()
 	if(M)
 		if(M != user)
-			M.visible_message(\
-				"<span class='notice'>[M.name] was unbuckled by [user.name]!</span>",\
-				"<span class='notice'>You were unbuckled from [src] by [user.name].</span>",\
+			M.visible_message(
+				"<span class='notice'>[M.name] was unbuckled by [user.name]!</span>",
+				"<span class='notice'>You were unbuckled from [src] by [user.name].</span>",
 				"<span class='notice'>You hear metal clanking.</span>")
 		else
-			M.visible_message(\
-				"<span class='notice'>[M.name] unbuckled themselves!</span>",\
-				"<span class='notice'>You unbuckle yourself from [src].</span>",\
+			M.visible_message(
+				"<span class='notice'>[M.name] unbuckled themselves!</span>",
+				"<span class='notice'>You unbuckle yourself from [src].</span>",
 				"<span class='notice'>You hear metal clanking.</span>")
 		add_fingerprint(user)
 	return M
 
 /atom/movable/proc/has_buckled_mobs()
-	if(!buckled_mob)
-		return FALSE
-	if(buckled_mob)
-		return TRUE
+	return istype(buckled_mob)
+
