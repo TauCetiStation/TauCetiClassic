@@ -538,7 +538,7 @@
 	if(thermite_timer_id != null)
 		deltimer(thermite_timer_id)
 		thermite_timer_id = null
-		qdel(thermite_overlay)
+	qdel(thermite_overlay)
 
 	remove_thermite()
 
