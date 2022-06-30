@@ -252,6 +252,8 @@
 	if (path == type)
 		return src
 
+	extinguish_thermite()
+
 	// Back all this data up, so we can set it after the turf replace.
 	// If you're wondering how this proc'll keep running since the turf should be "deleted":
 	// BYOND never deletes turfs, when you "delete" a turf, it actually morphs the turf into a new one.

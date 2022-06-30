@@ -402,7 +402,7 @@
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/I, mob/user, params)
-	if((istype(I, /obj/item/weapon/reagent_containers)|| istype(I, /obj/item/weapon/weldingtool)) && user.a_intent == INTENT_HARM) //for splashing and igniting
+	if((istype(I, /obj/item/weapon/reagent_containers)|| iswelder(I)) && user.a_intent == INTENT_HARM) //for splashing and igniting
 		return
 
 	if(istype(I, /obj/item/weapon/storage))
@@ -1106,6 +1106,10 @@
 	desc = "The colors are a bit dodgy."
 
 /obj/item/thermitemelt(seconds_to_melt)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
+	s.set_up(3, 1, src)
+	s.start()
+
 	if(seconds_to_melt > 0) //using seconds_to_melt only as bool
 		visible_message("<span class='warning'>Thermite instantly melts [src] turning it into molten mess. </span>")
 		var/obj/item/trash/thermitemess/M = new /obj/item/trash/thermitemess(get_turf(src))
@@ -1115,10 +1119,8 @@
 
 		M.add_overlay(welding_sparks)
 		qdel(src)
-		sleep(2 SECONDS)
+		sleep(3 SECONDS)
 		M.cut_overlay(welding_sparks)
 	else
 		visible_message("<span class='warning'>Thermite isn't strong enough to melt [src]. </span>")
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-		s.set_up(3, 1, src)
-		s.start()
+		remove_thermite()

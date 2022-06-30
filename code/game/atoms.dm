@@ -61,7 +61,6 @@
 	var/seconds_to_melt = 60 //set to negative/zero if you don't want for your atom to be melted at all
 	var/old_color //color which atom had before thermite was applied
 	var/thermite_timer_id //used to extinguish thermite
-	var/thermiteoverlay_timer_id
 	var/obj/effect/overlay/thermite_overlay
 
 /atom/New(loc, ...)
@@ -134,6 +133,8 @@
 
 	var/area/A = get_area(src)
 	A?.Exited(src, null)
+
+	extinguish_thermite()
 
 	return ..()
 
@@ -537,10 +538,7 @@
 	if(thermite_timer_id != null)
 		deltimer(thermite_timer_id)
 		thermite_timer_id = null
-		deltimer(thermiteoverlay_timer_id)
-		thermiteoverlay_timer_id = null
 		qdel(thermite_overlay)
-		thermite_overlay = null
 
 	remove_thermite()
 
@@ -832,11 +830,15 @@
 	if(seconds_to_melt > 0)
 		thermite_overlay = new /obj/effect/overlay/thermite(src)
 
+		visible_message("####")
+		visible_message("src: [src]")
+		visible_message("src.loc: [src.loc]")
+		visible_message("get_turf(src): [get_turf(src)]")
+
 		visible_message("<span class='warning'>Thermite starts melting [src]. </span>")
 		var/turf/L = get_turf(src)
 		L.hotspot_expose(1000, 10, src)
 
-		thermiteoverlay_timer_id = QDEL_IN(thermite_overlay, seconds_to_melt SECONDS)
 		thermitemelt_destroy()
 	else
 		visible_message("<span class='warning'>Thermite isn't strong enough to melt [src]! </span>")

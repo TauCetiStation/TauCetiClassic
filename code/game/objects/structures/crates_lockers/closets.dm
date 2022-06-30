@@ -298,8 +298,10 @@
 		open()
 
 /obj/structure/closet/thermitemelt_destroy(seconds_to_melt)
+	thermite_timer_id = QDEL_IN(src, seconds_to_melt SECONDS)
+
 	for(var/atom/A in src)
-		if(rand(1,3) == 3 || istype(A, /mob/living))
+		if(istype(A, /obj/effect/overlay/thermite))
+			continue
+		if(rand(1,3) == 3 || isliving(A))
 			A.thermitemelt(A.seconds_to_melt)
-	dump_contents()
-	qdel(src)
