@@ -111,7 +111,7 @@ effective or pretty fucking useless.
 					if(!do_after(user,100,target = src)) return
 					spark(3, 0, N.loc)
 					spark(4, 0, loc)
-					to_chat(user, "<span class ='warning'>Вычислено. Инициализация перемещения. <span class='boldnotice'>5/5</span>")
+					to_chat(user, "<span class ='warning'>Вычислено. Инициализация перемещения. <span class='boldnotice'>5/5</span></span>")
 
 					if(!do_after(user,100,target = src))
 						return
