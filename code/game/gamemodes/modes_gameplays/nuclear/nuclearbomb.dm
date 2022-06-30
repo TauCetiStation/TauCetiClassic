@@ -481,10 +481,5 @@ var/global/bomb_set
 
 /obj/machinery/nuclearbomb/fake/examine(mob/user, distance)
 	. = ..()
-	if(user.mind)
-		for(var/role in user.mind.antag_roles)
-			var/datum/role/R = user.mind.antag_roles[role]
-			if(istype(R, /datum/role/operative))
-				to_chat(user, "<span class ='boldwarning'>This is a fake one!</span>")
-	if(isobserver(user))
+	if(isnukeop(user) || isobserver(user))
 		to_chat(user, "<span class ='boldwarning'>This is a fake one!</span>")

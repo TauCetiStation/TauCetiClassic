@@ -905,7 +905,6 @@
 	cost = 14
 	uplink_types = list("nuclear", "traitor")
 
-
 /datum/uplink_item/dangerous/fake_nuke
 	name = "Fake Nuke"
 	desc = "The most common nuclear bomb. With one but: it doesn't explode."

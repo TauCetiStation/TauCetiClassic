@@ -74,54 +74,45 @@ effective or pretty fucking useless.
 
 /obj/item/nuke_teleporter/examine(mob/user, distance)
 	. = ..()
-	if(user.mind)
-		for(var/role in user.mind.antag_roles)
-			var/datum/role/R = user.mind.antag_roles[role]
-			if(istype(R, /datum/role/operative))
-				to_chat(user, "<span class ='notice'>Nuke teleporter. Teleports a bomb to you after activation. Of course, if the bomb was not destroyed.</span>")
-	if(isobserver(user))
+	if(isnukeop(user) || isobserver(user))
 		to_chat(user, "<span class ='notice'>Nuke teleporter. Teleports a bomb to you after activation. Of course, if the bomb was not destroyed.</span>")
 
 /obj/item/nuke_teleporter/attack_self(mob/user)
 	. = ..()
-	if(!user.mind)
-		return
-	for(var/role in user.mind.antag_roles)
-		var/datum/role/R = user.mind.antag_roles[role]
-		if(istype(R, /datum/role/operative))
-			to_chat(user, "<span class ='warning'>Начало калибровки устройства. <span class='boldnotice'>1/5</span></span>")
-			if(!do_after(user,100,target = src))
-				return
-			spark(1, 0, loc)
-			to_chat(user, "<span class ='warning'>Поиск ядерного заряда. <span class='boldnotice'>2/5</span></span>")
-			if(!do_after(user,100,target = src))
-				return
-			for(var/obj/machinery/nuclearbomb/N in poi_list)
-				if(N.nuketype == "Syndi")
-					spark(1, 0, N.loc)
-					spark(2, 0, loc)
-					to_chat(user, "<span class ='warning'>Заряд найден. Инициализация блюспейс протоколов. <span class='boldnotice'>3/5</span></span>")
+	if(isnukeop(user) || isobserver(user))
+		to_chat(user, "<span class ='warning'>Начало калибровки устройства. <span class='boldnotice'>1/5</span></span>")
+		if(!do_after(user,100,target = src))
+			return
+		spark(1, 0, loc)
+		to_chat(user, "<span class ='warning'>Поиск ядерного заряда. <span class='boldnotice'>2/5</span></span>")
+		if(!do_after(user,100,target = src))
+			return
+		for(var/obj/machinery/nuclearbomb/N in poi_list)
+			if(N.nuketype == "Syndi")
+				spark(1, 0, N.loc)
+				spark(2, 0, loc)
+				to_chat(user, "<span class ='warning'>Заряд найден. Инициализация блюспейс протоколов. <span class='boldnotice'>3/5</span></span>")
 
-					if(!do_after(user,100,target = src))
-						return
-					spark(2, 0, N.loc)
-					spark(3, 0, loc)
-					to_chat(user, "<span class ='warning'>Протоколы активны. Вычисление возможных координат для телепорта. <span class='boldnotice'>4/5</span></span>")
-
-					if(!do_after(user,100,target = src)) return
-					spark(3, 0, N.loc)
-					spark(4, 0, loc)
-					to_chat(user, "<span class ='warning'>Вычислено. Инициализация перемещения. <span class='boldnotice'>5/5</span></span>")
-
-					if(!do_after(user,100,target = src))
-						return
-					spark(5, 0, N.loc)
-					spark(5, 0, loc)
-
-					N.forceMove(get_turf(src))
-					to_chat(user, "<span class ='warning'>Перемещение завершено.</span>")
+				if(!do_after(user,100,target = src))
 					return
-			to_chat(user, "<span class ='warning'>Внимание! Бомба не найдена! Предположительная причина: Бомба уничтожена.</span>")
+				spark(2, 0, N.loc)
+				spark(3, 0, loc)
+				to_chat(user, "<span class ='warning'>Протоколы активны. Вычисление возможных координат для телепорта. <span class='boldnotice'>4/5</span></span>")
+
+				if(!do_after(user,100,target = src)) return
+				spark(3, 0, N.loc)
+				spark(4, 0, loc)
+				to_chat(user, "<span class ='warning'>Вычислено. Инициализация перемещения. <span class='boldnotice'>5/5</span></span>")
+
+				if(!do_after(user,100,target = src))
+					return
+				spark(5, 0, N.loc)
+				spark(5, 0, loc)
+
+				N.forceMove(get_turf(src))
+				to_chat(user, "<span class ='warning'>Перемещение завершено.</span>")
+				return
+		to_chat(user, "<span class ='warning'>Внимание! Бомба не найдена! Предположительная причина: Бомба уничтожена.</span>")
 
 /obj/item/nuke_teleporter/proc/spark(value = 1, cardinals = 0, location = src)
 	var/datum/effect/effect/system/spark_spread/spark_system = new
