@@ -830,11 +830,6 @@
 	if(seconds_to_melt > 0)
 		thermite_overlay = new /obj/effect/overlay/thermite(src)
 
-		visible_message("####")
-		visible_message("src: [src]")
-		visible_message("src.loc: [src.loc]")
-		visible_message("get_turf(src): [get_turf(src)]")
-
 		visible_message("<span class='warning'>Thermite starts melting [src]. </span>")
 		var/turf/L = get_turf(src)
 		L.hotspot_expose(1000, 10, src)
