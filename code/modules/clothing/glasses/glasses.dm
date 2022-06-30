@@ -255,7 +255,7 @@
 /obj/item/clothing/glasses/hud/hos_aug/attack_self(mob/user)
 	switch_shade()
 
-/obj/item/clothing/glasses//hud/hos_aug/verb/switch_shade()
+/obj/item/clothing/glasses/hud/hos_aug/verb/switch_shade()
 
 	set name = "Switch Shades Mode"
 	set category = "Object"
