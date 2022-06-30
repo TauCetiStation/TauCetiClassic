@@ -123,7 +123,7 @@ effective or pretty fucking useless.
 					return
 			to_chat(user, "<span class ='warning'>Внимание! Бомба не найдена! Предположительная причина: Бомба уничтожена.</span>")
 
-/obj/item/nuke_teleporter/proc/spark(var/value = 1, var/cardinals = 0, var/location)
+/obj/item/nuke_teleporter/proc/spark(value = 1, cardinals = 0, location = src)
 	var/datum/effect/effect/system/spark_spread/spark_system = new
 	spark_system.set_up(value, cardinals, location)
 	spark_system.start()
