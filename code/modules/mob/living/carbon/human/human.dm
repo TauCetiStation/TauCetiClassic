@@ -921,8 +921,8 @@
 			number -= 1
 	if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
 		number += 1
-	if(istype(glasses, /obj/item/clothing/glasses/hud/aug_shades))
-		var/obj/item/clothing/glasses/hud/aug_shades/G = glasses
+	if(istype(glasses, /obj/item/clothing/glasses/hud/hos_aug))
+		var/obj/item/clothing/glasses/hud/hos_aug/G = glasses
 		if(G.mode)
 			number += 1
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/welding))
