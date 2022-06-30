@@ -7,6 +7,9 @@
 	action_icon_state = "mime_speech"
 	action_background_icon_state = "bg_mime"
 
+/obj/effect/proc_holder/spell/no_target/mime_speak/can_cast(mob/living/carbon/human/user = usr)
+	return istype(user) && ..()
+
 /obj/effect/proc_holder/spell/no_target/mime_speak/cast(list/targets, mob/living/carbon/human/user = usr)
 	user.miming = !user.miming
 	if(!user.miming)
@@ -27,12 +30,8 @@
 	action_icon_state = "invisible_wall"
 	action_background_icon_state = "bg_mime"
 
-/obj/effect/proc_holder/spell/targeted/forcewall/mimewall/can_cast(mob/user = usr)
-	. = ..()
-	if(.)
-		var/mob/living/carbon/human/caster = user
-		if(!caster.miming)
-			return FALSE
+/obj/effect/proc_holder/spell/targeted/forcewall/mimewall/can_cast(mob/living/carbon/human/user = usr)
+	return istype(user) && user.miming && ..()
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mimewall/perform(list/targets, recharge, mob/living/carbon/human/user = usr)
 	if(!user.miming)

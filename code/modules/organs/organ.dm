@@ -1,7 +1,8 @@
-/mob/living/carbon/human/var/list/obj/item/organ/external/bodyparts = list()
-/mob/living/carbon/human/var/list/obj/item/organ/external/bodyparts_by_name = list()
-/mob/living/carbon/human/var/list/obj/item/organ/internal/organs = list()
-/mob/living/carbon/human/var/list/obj/item/organ/internal/organs_by_name = list()
+/mob/living/carbon/human
+	var/list/obj/item/organ/external/bodyparts = list()
+	var/list/obj/item/organ/external/bodyparts_by_name = list()
+	var/list/obj/item/organ/internal/organs = list()
+	var/list/obj/item/organ/internal/organs_by_name = list()
 
 /obj/item/organ
 	name = "organ"

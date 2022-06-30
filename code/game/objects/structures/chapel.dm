@@ -564,7 +564,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 			layer = BELOW_MOB_LAYER
 		else
 			layer = INFRONT_MOB_LAYER
-		M.pixel_y = M.get_pixel_y_offset()
+		M.pixel_y = M.default_pixel_y
 		cut_overlay(lectern_overlay)
 
 /obj/structure/stool/bed/chair/lectern/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)

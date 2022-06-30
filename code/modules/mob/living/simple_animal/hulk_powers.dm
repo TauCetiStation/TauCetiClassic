@@ -19,7 +19,7 @@
 			if(M.pulling == usr)
 				M.stop_pulling()
 
-		if(usr.pinned.len)
+		if(usr.anchored)
 			failure = 1
 
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> takes a huge leap!</span>")
@@ -145,7 +145,7 @@
 			if(M.pulling == usr)
 				M.stop_pulling()
 
-		if(usr.pinned.len)
+		if(usr.anchored)
 			failure = 1
 
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> dashes forward!</span>")
@@ -424,6 +424,27 @@
 		else
 			to_chat(user, text("<span class='notice'>You punch the girder.</span>"))
 	return
+
+/obj/structure/girder/attack_paw(mob/user)
+	return attack_hand(user)
+
+/obj/structure/girder/attack_hand(mob/user)
+	if(!(HULK in user.mutations))
+		return
+
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='notice'>You push the girder but nothing happens!</span>")
+		return
+
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+	if (prob(75))
+		to_chat(user, text("<span class='notice'>You destroy that girder!</span>"))
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		new /obj/item/stack/sheet/metal(loc)
+		qdel(src)
+	else
+		to_chat(user, text("<span class='notice'>You punch the girder.</span>"))
 
 ///////////////////////////////////////////////////////
 ////////////////// Z  I  L  L  A /////////////////////
