@@ -138,6 +138,8 @@
 		return
 	if(src.occupant)
 		if(get_charge() > 0)
+			if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to [!thrusters_active? "en" : "dis"]able thrusters.</span>"))
+				return
 			thrusters_active = !thrusters_active
 			log_message("Toggled thrusters.")
 			occupant_message("<font color='[src.thrusters_active? "blue" : "red"]'>Thrusters [thrusters_active? "en" : "dis"]abled.</font>")
@@ -147,6 +149,8 @@
 	if(usr != src.occupant)
 		return
 	if(smoke_ready && smoke>0)
+		if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to use smoke system.</span>"))
+			return
 		smoke_system.start()
 		smoke--
 		smoke_ready = 0
@@ -158,6 +162,8 @@
 	if(usr != src.occupant)
 		return
 	if(src.occupant.client)
+		if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to [!zoom_mode?"en":"dis"]able zoom mode.</span>"))
+			return
 		src.zoom_mode = !src.zoom_mode
 		log_message("Toggled zoom mode.")
 		occupant_message("<font color='[src.zoom_mode?"blue":"red"]'>Zoom mode [zoom_mode?"en":"dis"]abled.</font>")
