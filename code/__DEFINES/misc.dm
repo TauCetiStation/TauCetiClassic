@@ -80,6 +80,13 @@
 #define EVENT_LEVEL_MODERATE 3
 #define EVENT_LEVEL_MAJOR 4
 
+// shows STORAGE levels deep:
+// 1 lvl: item in backpack in src
+// 2 lvl: item in box in backpack in src
+// 3 lvl: item in matchbox in box in backpack in src
+// and so on
+#define MAX_STORAGE_DEEP_LEVEL 2
+
 //defines
 #define RESIZE_DEFAULT_SIZE 1
 
