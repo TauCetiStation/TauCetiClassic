@@ -636,7 +636,7 @@
 			new /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian(T)
 			new /obj/item/clothing/suit/space/cheap(T)
 			new /obj/item/clothing/head/helmet/space/cheap(T)
-			playsound(T, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
+			playsound(T, 'sound/misc/fart.ogg', VOL_EFFECTS_MASTER)
 		else
 			visible_message("<span class='warning'>\The [src] begins to shake.</span>")
 			audible_message("<span class='game say'><span class='name'>[src]</span> says, \"Stand back!\"</span>")
