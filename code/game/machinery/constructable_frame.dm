@@ -606,6 +606,15 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/manipulator = 2,
 							/obj/item/weapon/reagent_containers/glass/beaker = 2)
 
+/obj/item/weapon/circuitboard/gas_analyzer
+	name = "Circuit board (Gas analyzer)"
+	build_path = /obj/machinery/gas_analyzer
+	board_type = "machine"
+	origin_tech = "engineering=2;programming=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/scanning_module = 2,
+							/obj/item/weapon/stock_parts/micro_laser = 1)
 
 /obj/item/weapon/circuitboard/circuit_imprinter
 	name = "Circuit board (Circuit Imprinter)"
