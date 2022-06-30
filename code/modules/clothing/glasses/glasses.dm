@@ -77,14 +77,6 @@
 	off_state = "night"
 	activation_sound = 'sound/effects/glasses_on.ogg'
 
-/obj/item/clothing/glasses/night/hos_nights
-	name = "augmented shades"
-	desc = "Polarized bioneural eyewear, designed to augment your vision."
-	icon_state = "hos_shades"
-	item_state = "hos_shades"
-	toggleable = FALSE
-	action_button_name = null
-
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
 	desc = "Yarr."
@@ -246,6 +238,43 @@
 	desc = "Sunglasses with a HUD."
 	icon_state = "sunhud"
 	hud_types = list(DATA_HUD_SECURITY)
+
+/obj/item/clothing/glasses/hos_aug/hud
+	name = "augmented shades"
+	desc = "Polarized bioneural eyewear, designed to augment your vision."
+	icon_state = "hos_shades"
+	item_state = "hos_shades"
+	off_state = "hos_shades_ngv"
+
+	action_button_name = "Switch Shades Mode"
+	toggleable = TRUE
+	var/mode = TRUE
+
+	hud_types = list(DATA_HUD_SECURITY)
+
+/obj/item/clothing/glasses/hos_aug/hud/attack_self(mob/user)
+	switch_shade()
+
+/obj/item/clothing/glasses/hos_aug/hud/verb/switch_shade()
+
+	set name = "Switch Shades Mode"
+	set category = "Object"
+
+	if (mode)
+		icon_state = off_state
+		playsound(src, 'sound/effects/glasses_switch.ogg', VOL_EFFECTS_MASTER)
+		lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+		sightglassesmod  = "sepia"
+		darkness_view = 7		
+	else
+		icon_state = initial(icon_state)
+		playsound(src, 'sound/effects/glasses_switch.ogg', VOL_EFFECTS_MASTER)
+		lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+		sightglassesmod = null
+		darkness_view = -1
+		
+	mode = !mode
+	to_chat(usr, "<span class='notice'>You switch the augmented shades [mode ? "on sunglasses." : "on night vision."]</span>")
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
 	name = "tactical HUD"
