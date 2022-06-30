@@ -1,11 +1,5 @@
 #define JOB_MODIFICATION_MAP_NAME "Falcon Station"
 
-/datum/job/assistant/New()
-	..()
-	MAP_JOB_CHECK
-	total_positions = 3
-	spawn_positions = 3
-
 /datum/job/cyborg/New()
 	..()
 	MAP_JOB_CHECK
