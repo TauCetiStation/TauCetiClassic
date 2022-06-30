@@ -167,6 +167,7 @@
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
+	usesound = 'sound/effects/shovel_digging.ogg'
 	// Better than a rod, worse than a crowbar.
 	qualities = list(
 		QUALITY_PRYING = 0.75
@@ -352,6 +353,8 @@
 	var/power = 5
 
 /obj/item/weapon/mining_charge/attack_self(mob/user)
+	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms/trained), message_self = "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>"))
+		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(newtime < 5)
 		newtime = 5
@@ -366,9 +369,10 @@
 		return
 	if(user.is_busy(src))
 		return
-	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
-	if(do_after(user, 50, target = target))
+	to_chat(user, "<span class='notice'>Planting explosives...</span>")
+	var/planting_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/firearms/master, /datum/skill/engineering/pro), -0.1)
+	if(do_after(user, planting_time, target = target))
 		user.drop_item()
 		target = target
 		loc = null
@@ -593,6 +597,11 @@
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	has_gravity = 1
+	looped_ambience = 'sound/ambience/loop_mineoutpost.ogg'
+
+/area/custom/survivalpod/bar
+	name = "Emergency Bar"
+	looped_ambience = null
 
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"

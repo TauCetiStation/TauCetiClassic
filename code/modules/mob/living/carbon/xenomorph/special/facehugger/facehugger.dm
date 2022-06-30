@@ -315,7 +315,7 @@
 			new_xeno.key = FH.key
 			qdel(current_hugger)
 		target.unEquip(src)
-		target.status_flags |= XENO_HOST
+		target.add_status_flags(XENO_HOST)
 		target.med_hud_set_status()
 
 	else
@@ -346,7 +346,9 @@
 	STOP_PROCESSING(SSobj, src)
 
 	playsound(src, 'sound/voice/xenomorph/facehugger_dies.ogg', VOL_EFFECTS_MASTER)
-	visible_message("<span class='warning'>[src] curls up into a ball!</span>")
+	visible_message("<span class='warning'>[src] curls up into a ball and exudes a strange substance!</span>")
+	for(var/mob/living/carbon/human/H in view(2, src))
+		H.invoke_vomit_async()
 
 /obj/item/clothing/mask/facehugger/verb/hide_fh()
 	set name = "Спрятать"

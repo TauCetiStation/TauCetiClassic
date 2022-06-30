@@ -26,7 +26,6 @@
 		if(HALLOSS)
 			adjustHalLoss(damage * blocked_mult(blocked))
 
-	flash_weak_pain()
 	updatehealth()
 	return TRUE
 

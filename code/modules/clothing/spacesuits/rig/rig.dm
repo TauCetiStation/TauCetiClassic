@@ -934,6 +934,10 @@
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 25, bomb = 33, bio = 100, rad = 66)
 
+/obj/item/clothing/head/helmet/space/rig/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
 /obj/item/clothing/suit/space/rig/wizard
 	icon_state = "rig-wiz"
 	name = "gem-encrusted hardsuit"
@@ -944,6 +948,10 @@
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 25, bomb = 33, bio = 100, rad = 66)
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai)
+
+/obj/item/clothing/suit/space/rig/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
 
 //Medical Rig
 /obj/item/clothing/head/helmet/space/rig/medical
