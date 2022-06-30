@@ -279,17 +279,20 @@
 		EQUIPMENT("leporazine autoinjector",	/obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine,			300),
 		EQUIPMENT("Stimpack Bundle",			/obj/item/weapon/storage/box/autoinjector/stimpack,								400),
 		EQUIPMENT("Space first-aid kit",		/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,						1000),
-		EQUIPMENT("Standart capsule",			/obj/item/weapon/survivalcapsule,												500),
-		EQUIPMENT("Improved capsule",			/obj/item/weapon/survivalcapsule/improved,										1000),
-		EQUIPMENT("Elite capsule(Bar)",			/obj/item/weapon/survivalcapsule/elite,											1500),
+		EQUIPMENT("Standart capsule",			/obj/item/weapon/survivalcapsule,												1250),
+		EQUIPMENT("Improved capsule",			/obj/item/weapon/survivalcapsule/improved,										1500),
+		EQUIPMENT("Elite capsule(Bar)",			/obj/item/weapon/survivalcapsule/elite,											3000),
 	)
 	prize_list["Digging Tools"] = list(
-		EQUIPMENT("Accelerator upgrade",			/obj/item/kinetic_upgrade/speed,	2500),
+		EQUIPMENT("Accelerator damage upgrade",			/obj/item/kinetic_upgrade/damage,		1850),
+		EQUIPMENT("Accelerator recharge upgrade",		/obj/item/kinetic_upgrade/speed,		1850),
+		EQUIPMENT("Accelerator range upgrade",			/obj/item/kinetic_upgrade/range,		1850),
+		EQUIPMENT("Accelerator resources upgrade",		/obj/item/kinetic_upgrade/resources,	1850),
 	)
 	prize_list["Miscellaneous"] = list(
 		EQUIPMENT("Chili",						/obj/item/weapon/reagent_containers/food/snacks/hotchili,			100),
 		EQUIPMENT("Vodka",						/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,		150),
-		EQUIPMENT("Soap",						/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,									150),
+		EQUIPMENT("Soap",						/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,	150),
 		EQUIPMENT("Alien toy",					/obj/item/clothing/mask/facehugger_toy,								250),
 		EQUIPMENT("Point card",					/obj/item/weapon/card/mining_point_card,							500),
 		EQUIPMENT("Space cash",					/obj/item/weapon/spacecash/c1000,									5000),
@@ -394,6 +397,7 @@
 
 			remove_points(inserted_id, prize.cost)
 			new prize.equipment_path(loc)
+			playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
 		else
 			return FALSE
 	add_fingerprint()
