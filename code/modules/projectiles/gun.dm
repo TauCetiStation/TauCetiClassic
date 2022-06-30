@@ -109,22 +109,27 @@
 /obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0, point_blank = FALSE)//TODO: go over this
 	//Exclude lasertag guns from the CLUMSY check.
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
+		to_chat(user, "<span class='red'>Вы не можете сообразить как это сделать!</span>")
 		return
 	if(isliving(user))
 		var/mob/living/M = user
 		if (HULK in M.mutations)
-			to_chat(M, "<span class='red'>Your meaty finger is much too large for the trigger guard!</span>")
+			to_chat(M, "<span class='red'>Ваши большие пальцы не вмещаются в спусковую скобу!</span>")
 			return
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.species.name == SHADOWLING || H.species.name == ABOMINATION)
-				to_chat(H, "<span class='notice'>Your fingers don't fit in the trigger guard!</span>")
+				to_chat(H, "<span class='notice'>Ваши пальцы не вмещаются в спусковую скобу!</span>")
 				return
 
 			if(user.get_species() == GOLEM)
-				to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
+				to_chat(user, "<span class='red'>Ваши металлические пальцы не вмещаются в спусковую скобу!</span>")
 				return
+
+			if(isskeleton(H))
+				to_chat(user, "<span class='red'>Ваши костяные пальцы не в силах нажать на спусковой крючек!</span>")
+				return
+			
 			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
 				var/obj/item/clothing/suit/V = H.wear_suit
 				V.attack_reaction(H, REACTION_GUN_FIRE)
