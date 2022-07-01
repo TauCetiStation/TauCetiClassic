@@ -453,6 +453,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/door/window{
+	name = "AI Core Door";
+	req_access = list(16)
+	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "aaM" = (
@@ -1989,23 +1993,12 @@
 	},
 /area/station/aisat/ai_chamber)
 "ady" = (
-/obj/machinery/door/window{
-	dir = 1;
-	name = "AI Core Door";
-	req_access = list(16)
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "AI Blast Door";
 	name = "AI Blast Door";
 	opacity = 0
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -2261,10 +2254,6 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "adQ" = (
-/obj/machinery/door/window{
-	name = "AI Core Door";
-	req_access = list(16)
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -2276,12 +2265,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2431,6 +2414,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/door/window{
+	dir = 1;
+	name = "AI Core Door";
+	req_access = list(16)
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
