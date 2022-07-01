@@ -28497,6 +28497,10 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 22
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "svM" = (
