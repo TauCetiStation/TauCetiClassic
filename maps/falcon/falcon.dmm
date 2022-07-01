@@ -2120,8 +2120,8 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/largecell{
-	dir = 8;
+/obj/machinery/power/apc{
+	name = "AI Chamber APC";
 	pixel_x = -28
 	},
 /turf/simulated/floor/whitegreed,
