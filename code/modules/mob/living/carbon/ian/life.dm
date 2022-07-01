@@ -49,10 +49,7 @@
 							me_emote("stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
 
 		if(prob(1))
-			me_emote(pick("dances around", "chases its tail"))
-			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-				set_dir(i)
-				sleep(1)
+			emote("dance")
 
 	//Movement - this, speaking, simple_animal_A.I. code - should be converted into A.I. datum later on, for now - dirty copypasta of simple_animal.dm Life() proc.
 	if(!client && !stop_automated_movement && wander && !anchored)
@@ -81,23 +78,23 @@
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
-							emote(pick(emote_see),1)
+							me_emote(pick(emote_see), SHOWMSG_VISUAL)
 						else
-							emote(pick(emote_hear),2)
+							me_emote(pick(emote_hear), SHOWMSG_AUDIO)
 				else
 					say(pick(speak))
 			else
 				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					emote(pick(emote_see),1)
+					me_emote(pick(emote_see), SHOWMSG_VISUAL)
 				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
-					emote(pick(emote_hear),2)
+					me_emote(pick(emote_hear), SHOWMSG_AUDIO)
 				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
 					var/length = emote_hear.len + emote_see.len
 					var/pick = rand(1,length)
 					if(pick <= emote_see.len)
-						emote(pick(emote_see),1)
+						me_emote(pick(emote_see), SHOWMSG_VISUAL)
 					else
-						emote(pick(emote_hear),2)
+						me_emote(pick(emote_hear), SHOWMSG_AUDIO)
 
 	reset_alerts()
 
@@ -129,36 +126,15 @@
 		handle_alerts()
 
 /mob/living/carbon/ian/handle_regular_hud_updates()
-	if(!..())
-		return FALSE
+	if(!client)
+		return
 
 	update_sight()
 
-	if(healths)
-		if(stat != DEAD)
-			switch(health)
-				if(100 to INFINITY)
-					healths.icon_state = "health0"
-				if(80 to 100)
-					healths.icon_state = "health1"
-				if(60 to 80)
-					healths.icon_state = "health2"
-				if(40 to 60)
-					healths.icon_state = "health3"
-				if(20 to 40)
-					healths.icon_state = "health4"
-				if(0 to 20)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
+	if(hud_used)
+		staminadisplay?.update_icon(src)
 
-	if(hud_used && hud_used.staminadisplay)
-		var/atom/movable/screen/corgi/stamina_bar/SB = hud_used.staminadisplay
-		SB.icon_state = "stam_bar_[round(stamina, 5)]"
-
-	return TRUE
+	..()
 
 /mob/living/carbon/ian/is_skip_breathe()
 	return ..() || istype(head, /obj/item/clothing/head/helmet/space) || reagents?.has_reagent("lexorin")
@@ -443,8 +419,6 @@
 /mob/living/carbon/ian/death(gibbed)
 	if(stat == DEAD)
 		return
-	if(healths)
-		healths.icon_state = "health5"
 
 	stat = DEAD
 

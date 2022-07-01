@@ -90,14 +90,6 @@
 	else
 		..()
 
-/mob/living/simple_animal
-	name = "animal"
-	desc = "Just simple animal"
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "kicks"
-
 //cow
 /mob/living/simple_animal/cow
 	name = "cow"
@@ -292,6 +284,17 @@ var/global/chicken_count = 0
 
 	has_head = TRUE
 	has_leg = TRUE
+
+/mob/living/simple_animal/pig/shadowpig
+	name = "Shadowpig"
+	icon_state = "shadowpig"
+	icon_living = "shadowpig"
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE 
+
+/mob/living/simple_animal/pig/shadowpig/atom_init()
+	. = ..()
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/veil)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/blindness_smoke)
 
 /mob/living/simple_animal/turkey
 	name = "turkey"

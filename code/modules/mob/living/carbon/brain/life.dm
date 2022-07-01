@@ -115,7 +115,7 @@
 					ear_deaf = 1
 					silent = 1
 					if(!alert)//Sounds an alarm, but only once per 'level'
-						emote("alarm")
+						emote("buzz")
 						to_chat(src, "<span class='warning'>Major electrical distruption detected: System rebooting.</span>")
 						alert = 1
 					if(prob(75))
@@ -131,7 +131,7 @@
 					blurEyes(1)
 					ear_damage = 1
 					if(!alert)
-						emote("alert")
+						emote("buzz")
 						to_chat(src, "<span class='warning'>Primary systems are now online.</span>")
 						alert = 1
 					if(prob(50))
@@ -143,7 +143,7 @@
 					emp_damage -= 1
 				if(2 to 9)//Low level of EMP damage, has few effects(handled elsewhere)
 					if(!alert)
-						emote("notice")
+						emote("ping")
 						to_chat(src, "<span class='warning'>System reboot nearly complete.</span>")
 						alert = 1
 					if(prob(25))
@@ -172,30 +172,8 @@
 
 /mob/living/carbon/brain/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return
 
 	update_sight()
 
-	if (healths)
-		if (stat != DEAD)
-			switch(health)
-				if(100 to INFINITY)
-					healths.icon_state = "health0"
-				if(80 to 100)
-					healths.icon_state = "health1"
-				if(60 to 80)
-					healths.icon_state = "health2"
-				if(40 to 60)
-					healths.icon_state = "health3"
-				if(20 to 40)
-					healths.icon_state = "health4"
-				if(0 to 20)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
-
 	..()
-
-	return 1
