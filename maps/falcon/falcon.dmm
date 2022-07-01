@@ -13172,9 +13172,6 @@
 	},
 /obj/item/weapon/storage/firstaid/regular,
 /obj/structure/table/glass,
-/obj/machinery/light_switch{
-	pixel_y = -26
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -16266,6 +16263,9 @@
 	},
 /obj/item/weapon/storage/firstaid/fire,
 /obj/structure/table/glass,
+/obj/machinery/light_switch{
+	pixel_y = -28
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -19983,6 +19983,9 @@
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -21
+	},
+/obj/machinery/light_switch{
+	pixel_y = -28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
