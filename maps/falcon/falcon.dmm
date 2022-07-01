@@ -9956,10 +9956,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light_switch{
-	pixel_x = -10;
-	pixel_y = -29
-	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
@@ -12279,10 +12275,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/light_switch{
-	pixel_x = -13;
-	pixel_y = 25
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -12760,7 +12752,7 @@
 /area/station/maintenance/cargo)
 "dns" = (
 /obj/machinery/light_switch{
-	pixel_y = -25
+	pixel_y = -28
 	},
 /obj/structure/closet/crate{
 	name = "Camera Assembly Crate"
@@ -24246,6 +24238,9 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Bridge Teleporter"
+	},
+/obj/machinery/light_switch{
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	dir = 1;
