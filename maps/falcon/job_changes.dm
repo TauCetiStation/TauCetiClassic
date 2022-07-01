@@ -3,8 +3,6 @@
 /datum/job/assistant/New()
 	..()
 	MAP_JOB_CHECK
-	total_positions = 3
-	spawn_positions = 3
 	skillsets = list(
 		"Test Subject" = /datum/skillset/falcon/test_subject,
 		"Mecha Operator" = /datum/skillset/falcon/test_subject/mecha
