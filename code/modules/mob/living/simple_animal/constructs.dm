@@ -331,4 +331,4 @@
 		return ..()
 
 /mob/living/simple_animal/hostile/pylon/update_canmove()
-	return FALSE
+	return

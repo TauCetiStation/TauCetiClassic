@@ -17,6 +17,7 @@
 	nitrogen = MOLES_N2STANDARD
 	temperature = TM50C
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
+	heat_capacity = 12000 // ~6 snow tiles
 
 	light_color = COLOR_BLUE
 
