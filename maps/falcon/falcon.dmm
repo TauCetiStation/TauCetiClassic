@@ -12628,6 +12628,9 @@
 /obj/item/weapon/bikehorn/rubberducky{
 	pixel_y = 4
 	},
+/obj/machinery/door/window{
+	name = "Shower cabin"
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -30648,12 +30651,9 @@
 /obj/structure/drain{
 	drainage = 2
 	},
+/obj/structure/curtain/open/shower,
 /obj/machinery/door/window{
 	name = "Shower cabin"
-	},
-/obj/structure/curtain/open/shower,
-/obj/structure/window/reinforced{
-	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
