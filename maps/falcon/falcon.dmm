@@ -9814,6 +9814,36 @@
 	icon_state = "yellow"
 	},
 /area/station/hallway/primary/central)
+"asb" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "arrival_escape";
+	locked = 1;
+	name = "Escape Airlock";
+	req_access = list(1)
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
+"asc" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/station/security/checkpoint)
+"asd" = (
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
+	name = "KEEP CLEAR: DOCKING AREA"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
 "asi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -31330,14 +31360,13 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "vob" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "arrival_escape";
-	locked = 1;
-	name = "Escape Airlock";
-	req_access = list(1)
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint)
 "voe" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -52278,9 +52307,9 @@ dpV
 dpV
 xbS
 gay
-xbS
 vob
-sUp
+asb
+asd
 vrL
 vrL
 gay
@@ -52535,9 +52564,9 @@ uJN
 pmJ
 xbS
 gay
-xbS
-djq
-xbS
+vob
+asc
+vob
 crv
 gay
 crv
