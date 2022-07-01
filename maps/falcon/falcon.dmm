@@ -2318,10 +2318,6 @@
 	},
 /obj/structure/closet/malf/suits,
 /obj/item/clothing/glasses/night,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/machinery/turretid/stun/AI_special{
 	control_area = "Telecoms Control Room";
 	dir = 8;
