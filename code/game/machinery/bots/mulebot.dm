@@ -329,7 +329,7 @@
 /obj/machinery/bot/mulebot/proc/has_power()
 	return !open && cell && cell.charge>0 && wires.has_power()
 
-/obj/machinery/bot/mulebot/proc/buzz(type)
+/obj/machinery/bot/mulebot/proc/buzzing(type)
 	switch(type)
 		if(SIGH)
 			visible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
@@ -381,7 +381,7 @@
 		CRATE = AM
 	else
 		if(wires.load_check())
-			buzz(SIGH)
+			buzzing(SIGH)
 			return		// if not emagged, only allow crates to be loaded
 
 	if(CRATE) // if it's a crate, close before loading
@@ -390,7 +390,7 @@
 	if(isobj(AM))
 		var/obj/O = AM
 		if(O.buckled_mob || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
-			buzz(SIGH)
+			buzzing(SIGH)
 			return
 
 	if(isliving(AM))
@@ -550,22 +550,22 @@
 						blockcount++
 						mode = 4
 						if(blockcount == 3)
-							buzz(ANNOYED)
+							buzzing(ANNOYED)
 
 						if(blockcount > 5)	// attempt 5 times before recomputing
 							// find new path excluding blocked turf
-							buzz(SIGH)
+							buzzing(SIGH)
 
 							spawn(2)
 								calc_path(next)
 								if(path.len > 0)
-									buzz(DELIGHT)
+									buzzing(DELIGHT)
 								mode = 4
 							mode =6
 							return
 						return
 				else
-					buzz(ANNOYED)
+					buzzing(ANNOYED)
 					mode = 5
 					return
 			else
@@ -581,10 +581,10 @@
 				if(path.len > 0)
 					blockcount = 0
 					mode = 4
-					buzz(DELIGHT)
+					buzzing(DELIGHT)
 
 				else
-					buzz(SIGH)
+					buzzing(SIGH)
 
 					mode = 7
 	return

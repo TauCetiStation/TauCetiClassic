@@ -78,7 +78,7 @@
 	if(holding)
 		scan()
 	else
-		state("Для запуска процесса сканирования необходим баллон с газом.")
+		buzz("\The [src] buzzes, \"Для запуска процесса сканирования необходим баллон с газом.\"")
 
 /obj/machinery/gas_analyzer/AltClick(mob/user)
 	if(operating)
@@ -95,7 +95,7 @@
 	update_icon()
 
 /obj/machinery/gas_analyzer/proc/scan()
-	state("Процесс сканирования запущен, ожидайте результата.")
+	state("\The [src] states, \"Процесс сканирования запущен, ожидайте результата.\"")
 	use_power(1000)
 	visible_message("<span class='danger'>Сканер начинает протяжно гудеть и трястись.</span>")
 	operating = TRUE
@@ -124,7 +124,9 @@
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(loc)
 	P.name = "Gas scanning result"
 	P.info = "<center><h4>Результат сканирования газа:</h4></center><br>"
-	if(M)
+	if(round(M.return_pressure(), 0.1) == 0)
+		P.info = "Загруженный баллон пуст!"
+	else
 		P.info += "<b> Давление </b> = [round(M.return_pressure(), 0.1)] kPa <br>"
 		P.info += "<b> Температура </b> = [round(M.temperature-T0C)]&deg;C / [round(M.temperature)]K <br>"
 		for(var/mix in M.gas)
@@ -141,6 +143,4 @@
 				P.info += "Способен осядать на тканях.<br>"
 			if(gas_data.flags[mix] & XGM_GAS_FUSION_FUEL)
 				P.info += "Может быть использован для подпитки реакции синтеза.<br>"
-	else
-		P.info = "Загруженный баллон пуст!"
 	P.update_icon()

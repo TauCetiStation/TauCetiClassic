@@ -548,6 +548,13 @@ Class Procs:
 	state(text, "blue")
 	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
+/obj/machinery/proc/buzz(text=null)
+	if (!text)
+		text = "\The [src] buzzes."
+
+	state(text, "red")
+	playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
 /obj/machinery/tesla_act(power)
 	..()
 	if(prob(85))
