@@ -1,6 +1,6 @@
 /obj/machinery/gas_analyzer
 	name = "Gas Analyzer"
-	desc = ""
+	desc = "Агрегат для анализа различных газов."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "gas_analyzer"
 	density = TRUE
