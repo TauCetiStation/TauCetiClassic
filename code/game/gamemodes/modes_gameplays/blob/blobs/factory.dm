@@ -110,7 +110,7 @@
 		overmind.blob_mobs.Remove(src)
 		overmind = null
 		factory = null
-		return ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/blob/Stat()
 	..()
