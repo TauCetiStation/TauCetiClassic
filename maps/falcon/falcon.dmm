@@ -453,10 +453,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/window{
-	name = "AI Core Door";
-	req_access = list(16)
-	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "aaM" = (
@@ -2000,13 +1996,21 @@
 	name = "AI Blast Door";
 	opacity = 0
 	},
-/obj/structure/cable{
-	d2 = 4;
-	dir = 8;
-	icon_state = "0-4"
+/obj/machinery/door/window{
+	dir = 1;
+	name = "AI Core Door";
+	req_access = list(16)
 	},
-/obj/machinery/power/apc{
-	name = "AI Chamber APC";
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/turretid/stun/AI_special{
+	control_area = "Telecoms Control Room";
+	dir = 8;
+	name = "AI Satellite Antechamber";
 	pixel_x = -28
 	},
 /turf/simulated/floor/whitegreed,
@@ -2118,15 +2122,16 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/turretid/stun/AI_special{
-	control_area = "Telecoms Control Room";
-	dir = 8;
-	name = "AI Satellite Antechamber";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 4;
+	freerange = 1;
+	name = "Common Channel";
+	pixel_x = -20
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2140,10 +2145,9 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable{
-	d1 = 2;
+	d1 = 4;
 	d2 = 8;
-	dir = 8;
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2162,12 +2166,13 @@
 	name = "Custom Channel";
 	pixel_y = -20
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 8;
-	freerange = 1;
-	name = "Common Channel";
-	pixel_x = 20
+/obj/machinery/power/apc{
+	name = "AI Chamber APC";
+	pixel_x = 28
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2265,6 +2270,16 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/door/window{
+	name = "AI Core Door";
+	req_access = list(16)
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2414,11 +2429,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
-	},
-/obj/machinery/door/window{
-	dir = 1;
-	name = "AI Core Door";
-	req_access = list(16)
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -17337,10 +17347,6 @@
 /obj/structure/safe,
 /obj/item/clothing/under/color/yellow,
 /obj/item/toy/katana,
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -19863,11 +19869,6 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
 	req_access = list(71)
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -28482,11 +28483,6 @@
 	},
 /area/station/civilian/dormitories)
 "svD" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
 	},
@@ -28550,11 +28546,6 @@
 	},
 /area/station/security/prison)
 "syP" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
