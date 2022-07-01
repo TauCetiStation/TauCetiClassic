@@ -766,6 +766,7 @@
 	dir = 8;
 	pixel_x = 21
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "chapel"
@@ -2329,6 +2330,7 @@
 	pixel_x = 28
 	},
 /obj/structure/stool/bed/chair/comfy/brown,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/dormitories/dormone)
 "adV" = (
@@ -3703,6 +3705,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -4172,6 +4175,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -4185,6 +4189,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -4761,6 +4766,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -5180,6 +5186,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/carpet/blue,
 /area/station/civilian/locker)
 "ajf" = (
@@ -5222,6 +5229,7 @@
 /area/station/civilian/gym)
 "ajj" = (
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/gym)
 "ajk" = (
@@ -5488,6 +5496,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "chapel"
@@ -5560,6 +5569,7 @@
 	dir = 4
 	},
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/carpet/blue,
 /area/station/civilian/locker)
 "ajP" = (
@@ -5604,6 +5614,7 @@
 /area/station/civilian/chapel/office)
 "ajS" = (
 /obj/structure/stool/bed/chair/pew/left,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "chapel"
@@ -5640,6 +5651,7 @@
 /area/station/maintenance/escape)
 "ajW" = (
 /obj/structure/stool/bed/chair/pew/right,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "chapel"
 	},
@@ -6090,6 +6102,7 @@
 /area/station/maintenance/escape)
 "ala" = (
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -6106,6 +6119,7 @@
 	dir = 1
 	},
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/gym)
 "ald" = (
@@ -7331,6 +7345,7 @@
 	pixel_y = -28
 	},
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -10613,6 +10628,7 @@
 /area/asteroid/mine/dwarf)
 "bez" = (
 /obj/structure/stool/bed/chair/metal/black,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11609,6 +11625,7 @@
 "ccc" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "asteroid"
 	},
@@ -12215,6 +12232,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/dormitories/dormone)
 "cMi" = (
@@ -13398,6 +13416,7 @@
 /area/asteroid/research_outpost/spectro)
 "dNp" = (
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "asteroid"
 	},
@@ -19694,6 +19713,7 @@
 /area/station/medical/reception)
 "kjB" = (
 /obj/structure/stool/bed/chair/pew/left,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "chapel"
@@ -23946,6 +23966,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredfull"
@@ -27753,6 +27774,7 @@
 "rGx" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "asteroid7"
 	},
@@ -28589,6 +28611,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "chapel"
@@ -28891,6 +28914,7 @@
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredfull"
@@ -29420,6 +29444,7 @@
 /area/station/maintenance/medbay)
 "twE" = (
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "grass1"
 	},
@@ -32169,6 +32194,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -34335,6 +34361,7 @@
 /obj/structure/stool/bed/chair/metal/yellow{
 	dir = 8
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
