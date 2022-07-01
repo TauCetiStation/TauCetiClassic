@@ -178,21 +178,6 @@
 	to_chat(src, "You will [(prefs.toggles & SHOW_PROGBAR) ? "now" : "no longer"] see progress bars.")
 	feedback_add_details("admin_verb","PRB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON)
-
-/client/verb/pick_ghost_orbit()
-	set name = "Choose Ghost Orbit"
-	set category = "Preferences"
-	set desc = "Choose your preferred ghostly orbit."
-
-	var/new_orbit = input(src, "Choose your ghostly orbit:") as null|anything in ghost_orbits
-	if(new_orbit)
-		prefs.ghost_orbit = new_orbit
-		prefs.save_preferences()
-		if(isobserver(mob))
-			var/mob/dead/observer/O = mob
-			O.ghost_orbit = new_orbit
-
 /client/verb/set_ckey_show()
 	set name = "Show/Hide Ckey"
 	set desc = "Toggle between showing your Ckey in LOOC and dead chat."

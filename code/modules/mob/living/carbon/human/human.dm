@@ -33,6 +33,7 @@
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
+	AddComponent(/datum/component/mood)
 
 	dna = new
 	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
@@ -56,7 +57,6 @@
 	. = ..()
 
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
-	AddComponent(/datum/component/mood)
 	human_list += src
 
 	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), .proc/mood_item_equipped)
@@ -1432,7 +1432,6 @@
 
 	typing_indicator_type = species.typing_indicator_type
 
-	species.handle_post_spawn(src)
 	species.on_gain(src)
 
 	regenerate_icons()
@@ -1453,7 +1452,6 @@
 	species = all_species[new_species]
 	maxHealth = species.total_health
 
-	species.handle_post_spawn(src)
 	species.on_gain(src)
 
 	regenerate_icons()
@@ -1787,12 +1785,12 @@
 		to_chat(src, "<span class='notice'>It is unsafe to leap without gravity!</span>")
 		return
 
-	if(incapacitated(LEGS) || buckled || pinned.len || stance_damage >= 4) //because you need !restrained legs to leap
+	if(incapacitated(LEGS) || buckled || anchored || stance_damage >= 4) //because you need !restrained legs to leap
 		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
 		return
 
 	leap_icon.time_used = world.time + leap_icon.cooldown
-	status_flags |= LEAPING
+	add_status_flags(LEAPING)
 	stop_pulling()
 
 
@@ -1809,7 +1807,7 @@
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .proc/leap_end, prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
-	status_flags &= ~LEAPING
+	remove_status_flags(LEAPING)
 	a_intent_change(prev_intent)
 
 /mob/living/carbon/human/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -2011,7 +2009,7 @@
 		skipface |= wear_mask.flags_inv & HIDEFACE
 
 	if(!BP.disfigured && !skipface) // we still text even tho the screen may be broken or hidden
-		custom_emote(SHOWMSG_VISUAL, "отображает на экране, \"<span class=\"emojify\">[S]</span>\"")
+		me_emote("отображает на экране, \"<span class=\"emojify\">[S]</span>\"", intentional=TRUE)
 
 
 
@@ -2054,7 +2052,17 @@
 	for(var/mob/M in viewers(src))
 		if(M.client)
 			viewing += M.client
-	var/image/I = image(icon,src,"electrocuted_generic",MOB_LAYER+1)
+	var/electrocuted_sprite = "electrocuted_generic"
+	switch(get_species())
+		if(UNATHI)
+			electrocuted_sprite += "_unathi"
+		if(TAJARAN)
+			electrocuted_sprite += "_tajaran"
+		if(SKRELL)
+			electrocuted_sprite += "_skrell"
+		if(VOX)
+			electrocuted_sprite += "_vox"
+	var/image/I = image(icon, src, electrocuted_sprite, MOB_LAYER+1)
 	I = update_height(I)
 	flick_overlay(I, viewing, anim_duration)
 
