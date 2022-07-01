@@ -2356,7 +2356,6 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4
 	},
@@ -7942,11 +7941,12 @@
 	dir = 8;
 	network = list("MiniSat")
 	},
-/obj/machinery/power/apc/largecell{
-	dir = 4;
-	pixel_x = 27
-	},
 /obj/machinery/power/port_gen/pacman,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "AI Satellite APC";
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -18608,12 +18608,13 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/largecell{
-	dir = 4;
-	pixel_x = 27
-	},
 /obj/machinery/ai_status_display{
 	pixel_y = 32
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Telecoms Sat. Control APC";
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -22730,10 +22731,10 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/telecomms/bus/preset_three,
-/obj/machinery/power/apc/largecell{
-	dir = 1;
-	name = "Engineering APC";
-	pixel_y = 25
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Telecoms Sat. Central Compartment APC";
+	pixel_y = 28
 	},
 /turf/simulated/floor/bluegrid{
 	name = "Server Base";
