@@ -875,6 +875,8 @@ var/global/bridge_secret = null
 				currentmap.config_min_users = text2num(data)
 			if ("maxplayers","maxplayer")
 				currentmap.config_max_users = text2num(data)
+			if ("votable")
+				currentmap.votable = TRUE
 			if ("default","defaultmap")
 				defaultmap = currentmap
 			if ("endmap")

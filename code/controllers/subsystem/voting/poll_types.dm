@@ -204,6 +204,57 @@
 		master_mode = new_gamemode
 		world.save_mode(new_gamemode)
 
+/*********************
+	Map
+**********************/
+/datum/poll/nextmap
+	name = "Карта на следующий раунд"
+	question = "Выберите карту для следующего раунда"
+	choice_types = list()
+	minimum_voters = 0 // todo: server vote need to change map at any cost, meanwhile for player vote minimum will be good
+	only_admin = FALSE
+
+	multiple_votes = TRUE
+	can_revote = TRUE
+	can_unvote = TRUE
+	detailed_result = TRUE
+
+	vote_period = 600 // same as ticker.restart_timeout
+
+	description = "Некоторые карты могут быть не доступны в голосовании из-за ограничений на количество игроков или других настроек сервера."
+
+/datum/poll/nextmap/get_force_blocking_reason()
+	. = ..()
+	if(!world.has_round_finished())
+		return "Доступно только по окончанию раунда"
+	if(!config.maplist.len)
+		return "Отсутствует конфиг карт"
+
+/datum/poll/nextmap/init_choices()
+	for (var/map in config.maplist)
+		var/datum/map_config/VM = config.maplist[map]
+		
+		if (!VM.votable)
+			continue
+
+		if (VM.config_min_users > 0 && length(player_list) < VM.config_min_users)
+			continue
+
+		if (VM.config_max_users > 0 && length(player_list) > VM.config_max_users)
+			continue
+
+		var/datum/vote_choice/nextmap/vc = new
+		vc.text = VM.GetFullMapName()
+		vc.mapname = VM.map_name
+		choices.Add(vc)
+
+/datum/vote_choice/nextmap
+	text = "Box Station"
+	var/mapname = "Box Station"
+
+/datum/vote_choice/nextmap/on_win()
+	var/datum/map_config/VM = config.maplist[mapname]
+	SSmapping.changemap(VM)
 
 /*********************
 	Custom

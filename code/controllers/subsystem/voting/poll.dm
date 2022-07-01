@@ -35,6 +35,8 @@
 	var/next_vote = 0 //When will we next be allowed to call it again?
 	//You can set this time to a nonzero value to force a minimum roundtime before the vote can be called
 
+	var/vote_period = null //overrides default config.vote_period
+
 /datum/poll/proc/init_choices()
 	for(var/ch in choice_types)
 		choices.Add(new ch)
