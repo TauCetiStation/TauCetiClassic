@@ -153,7 +153,7 @@
 /mob/living/IsWeaken() //If we're knocked down
 	return has_status_effect(/datum/status_effect/incapacitating/weakened)
 
-/mob/living/proc/AmountWeaken() //How many deciseconds remain in our knockdown
+/mob/living/AmountWeaken() //How many deciseconds remain in our knockdown
 	var/datum/status_effect/incapacitating/weakened/K = IsWeaken()
 	if(K)
 		return (K.duration - world.time) / SS_WAIT_DEFAULT
@@ -177,8 +177,6 @@
 		if(K)
 			qdel(K)
 	else
-		if(absorb_stun(amount, ignore_canstun))
-			return
 		if(K)
 			K.duration = world.time + amount
 		else
