@@ -1,9 +1,6 @@
 /obj/item/robot_parts/attack(mob/living/carbon/human/M, mob/living/carbon/user, def_zone)
 
-	if(!ishuman(M))
-		return ..()
-
-	if(!((M.lying || M.stat) && prob(get_surg_chance(M.loc))))
+	if(!(ishuman(M) || can_operate(M)))
 		return ..()
 
 	if(user.get_targetzone() != part)
