@@ -136,9 +136,6 @@
 	if(client)
 		handle_regular_hud_updates()
 
-	if(weakened)
-		AdjustWeakened(-1)
-
 	// Movement
 	if(!client && !stop_automated_movement && wander && !anchored)
 		if(isturf(src.loc) && !buckled && canmove) // This is so it only moves if it's not inside a closet, gentics machine, etc.
