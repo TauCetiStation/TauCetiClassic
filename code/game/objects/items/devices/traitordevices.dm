@@ -71,7 +71,7 @@ effective or pretty fucking useless.
 	throw_range = 5
 	m_amt = 10000
 	origin_tech = "magnets=3;bluespace=4;syndicate=2"
-	var/a_cooldown
+	COOLDOWN_DECLARE(announce)
 
 /obj/item/nuke_teleporter/examine(mob/user, distance)
 	. = ..()
@@ -80,57 +80,64 @@ effective or pretty fucking useless.
 
 /obj/item/nuke_teleporter/attack_self(mob/user)
 	. = ..()
-	if(a_cooldown + 3 MINUTES > world.time) //Internal cooldown to prevent announce spam
+	if(!COOLDOWN_FINISHED(src, announce)) //Internal cooldown to prevent announce spam
 		to_chat(user, "<span class ='warning'>Отмена. Устройство перегружено.</span>")
 		return
 	if(bomb_set) //If bomb activated
-		to_chat(user, "<span class ='warning'>Внимание! Отмена! Перемещение невозможно из-за снятого механизма защиты. Телепортация не возможно, отмена!</span>")
+		to_chat(user, "<span class ='warning'>Внимание! Отмена! Перемещение невозможна из-за снятого механизма защиты. Телепортация не возможно, отмена!</span>")
+		return
+	if(!isnukeop(user))
 		return
 
-	if(isnukeop(user))
-		to_chat(user, "<span class ='warning'>Начало калибровки устройства. <span class='boldnotice'>1/5</span></span>")
-		if(!do_after(user,300,target = src))
+	to_chat(user, "<span class ='warning'>Начало калибровки устройства. <span class='boldnotice'>1/5</span></span>")
+	if(!do_after(user, 40 SECONDS,target = src))
+		return
+	spark(1, 0, loc)
+	COOLDOWN_START(src, announce, 3 MINUTES) //Set cooldown
+	to_chat(user, "<span class ='warning'>Поиск ядерного заряда. <span class='boldnotice'>2/5</span></span>")
+	if(!do_after(user, 35 SECONDS,target = src))
+		return
+	for(var/obj/machinery/nuclearbomb/N in poi_list)
+		if(N.nuketype != "Syndi")
+			continue
+		spark(2, 0, N.loc, loc)
+		to_chat(user, "<span class ='warning'>Заряд найден. Инициализация блюспейс протоколов. <span class='boldnotice'>3/5</span></span>")
+
+		if(!do_after(user, 30 SECONDS,target = src))
 			return
-		spark(1, 0, loc)
-		a_cooldown = world.time //Set cooldown
-		to_chat(user, "<span class ='warning'>Поиск ядерного заряда. <span class='boldnotice'>2/5</span></span>")
-		if(!do_after(user,250,target = src))
+		spark(3, 0, N.loc, loc)
+		to_chat(user, "<span class ='warning'>Протоколы активны. Вычисление возможных координат для телепорта. <span class='boldnotice'>4/5</span></span>")
+
+		var/datum/announcement/station/nuke_teleport/A = new
+		var/area/new_loc = get_area(loc)
+		var/area/old_loc = get_area(N.loc)
+		A.play(new_loc, old_loc)
+
+		if(!do_after(user, 25 SECONDS,target = src)) return
+		spark(4, 0, N.loc, loc)
+		to_chat(user, "<span class ='warning'>Вычислено. Инициализация перемещения. <span class='boldnotice'>5/5</span></span>")
+
+		if(!do_after(user, 20 SECONDS,target = src))
 			return
-		for(var/obj/machinery/nuclearbomb/N in poi_list)
-			if(N.nuketype == "Syndi")
-				spark(1, 0, N.loc)
-				spark(2, 0, loc)
-				to_chat(user, "<span class ='warning'>Заряд найден. Инициализация блюспейс протоколов. <span class='boldnotice'>3/5</span></span>")
 
-				if(!do_after(user,200,target = src))
-					return
-				spark(2, 0, N.loc)
-				spark(3, 0, loc)
-				to_chat(user, "<span class ='warning'>Протоколы активны. Вычисление возможных координат для телепорта. <span class='boldnotice'>4/5</span></span>")
+		if(bomb_set) //NO-NO-NO
+			to_chat(user, "<span class ='warning'>Внимание! Отмена! Перемещение невозможно из-за снятого механизма защиты. Телепортация невозможна, отмена!</span>")
+			return
 
-				var/datum/announcement/station/nuke_teleport/A = new
-				var/area/new_loc = get_area(loc)
-				var/area/old_loc = get_area(N.loc)
-				A.play(new_loc, old_loc)
+		spark(5, 0, N.loc, loc)
+		N.forceMove(get_turf(src))
+		to_chat(user, "<span class ='warning'>Перемещение завершено.</span>")
+		return
+	to_chat(user, "<span class ='warning'>Внимание! Бомба не найдена! Предположительная причина: Бомба уничтожена.</span>")
 
-				if(!do_after(user,150,target = src)) return
-				spark(3, 0, N.loc)
-				spark(4, 0, loc)
-				to_chat(user, "<span class ='warning'>Вычислено. Инициализация перемещения. <span class='boldnotice'>5/5</span></span>")
-
-				if(!do_after(user,100,target = src))
-					return
-				spark(5, 0, N.loc)
-				spark(5, 0, loc)
-
-				N.forceMove(get_turf(src))
-				to_chat(user, "<span class ='warning'>Перемещение завершено.</span>")
-				return
-		to_chat(user, "<span class ='warning'>Внимание! Бомба не найдена! Предположительная причина: Бомба уничтожена.</span>")
-
-/obj/item/nuke_teleporter/proc/spark(value = 1, cardinals = 0, location = src)
+/obj/item/nuke_teleporter/proc/spark(value = 1, cardinals = 0, location = src, location2)
 	var/datum/effect/effect/system/spark_spread/spark_system = new
 	spark_system.set_up(value, cardinals, location)
+	spark_system.start()
+
+	if(!location2)
+		return
+	spark_system.set_up(value+1, cardinals, location2)
 	spark_system.start()
 
 

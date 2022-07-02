@@ -905,14 +905,14 @@
 	cost = 14
 	uplink_types = list("nuclear", "traitor")
 
-/datum/uplink_item/dangerous/fake_nuke
+/datum/uplink_item/device_tools/fake_nuke
 	name = "Fake Nuke"
-	desc = "The most common nuclear bomb. With one but: it doesn't explode."
+	desc = "The most common nuclear bomb. With one but: it doesn't explode. You can <activate> it by double deploying."
 	item = /obj/machinery/nuclearbomb/fake
-	cost = 2
+	cost = 4
 	uplink_types = list("nuclear")
 
-/datum/uplink_item/dangerous/nuke_teleporter
+/datum/uplink_item/device_tools/nuke_teleporter
 	name = "Nuke Recaller"
 	desc = "A device that can teleport a nuclear bomb directly to the user. It takes a lot of time to activate. There will be an announce upon activation."
 	item = /obj/item/nuke_teleporter
