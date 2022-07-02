@@ -1826,7 +1826,7 @@
 
 	else if(hit_atom.density)
 		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
-		weakened = 2
+		Weaken(2)
 
 	update_canmove()
 

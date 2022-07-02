@@ -884,14 +884,6 @@
 	M.log_combat(user, "eyestabbed with [name]")
 
 	add_fingerprint(user)
-	//if((CLUMSY in user.mutations) && prob(50))
-	//	M = user
-		/*
-		to_chat(M, "<span class='warning'>You stab yourself in the eye.</span>")
-		M.sdisabilities |= BLIND
-		M.weakened += 4
-		M.adjustBruteLoss(10)
-		*/
 	if(M != user)
 		visible_message("<span class='warning'>[M] has been stabbed in the eye with [src] by [user].</span>", ignored_mobs = list(user, M))
 		to_chat(M, "<span class='warning'>[user] stabs you in the eye with [src]!</span>")
