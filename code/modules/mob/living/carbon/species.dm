@@ -150,7 +150,11 @@
 	// The usual species for the station
 	var/is_common = FALSE
 
+	// The type of skeleton species they would be turned into. default is human
+	var/skeleton_type = SKELETON
+
 	var/default_mood_event
+
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -361,6 +365,8 @@
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
 			)
 
+	skeleton_type = SKELETON_UNATHI
+
 /datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
@@ -430,6 +436,8 @@
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
 			)
 
+	skeleton_type = SKELETON_TAJARAN
+
 /datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
@@ -480,6 +488,8 @@
 	max_age = 150
 
 	is_common = TRUE
+
+	skeleton_type = SKELETON_SKRELL
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
@@ -566,6 +576,8 @@
 			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
 			/obj/item/clothing/mask/gas/syndicate = /obj/item/clothing/mask/gas/vox,
 			)
+
+	skeleton_type = SKELETON_VOX
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	..()
@@ -681,6 +693,8 @@
 		)
 
 	has_gendered_icons = TRUE
+
+	skeleton_type = SKELETON_VOX
 
 /datum/species/diona
 	name = DIONA
@@ -1134,6 +1148,41 @@
 
 /datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skeleton_digest(M)
+
+/datum/species/skeleton/unathi
+	name = SKELETON_UNATHI
+	icobase = 'icons/mob/human_races/r_skeleton_lizard.dmi'
+	deform = 'icons/mob/human_races/r_skeleton_lizard.dmi'
+	tail = "unathi_skeleton"
+
+/datum/species/skeleton/unathi/New()
+	.=..()
+	flags[HAS_TAIL]=TRUE
+
+/datum/species/skeleton/tajaran
+	name = SKELETON_TAJARAN
+	icobase = 'icons/mob/human_races/r_skeleton_tajaran.dmi'
+	deform = 'icons/mob/human_races/r_skeleton_tajaran.dmi'
+	tail = "tajaran_skeleton"
+
+/datum/species/skeleton/tajaran/New()
+	.=..()
+	flags[HAS_TAIL]=TRUE
+
+/datum/species/skeleton/skrell
+	name = SKELETON_SKRELL
+	icobase = 'icons/mob/human_races/r_skeleton_skrell.dmi'
+	deform = 'icons/mob/human_races/r_skeleton_skrell.dmi'
+
+/datum/species/skeleton/vox
+	name = SKELETON_VOX
+	icobase = 'icons/mob/human_races/r_skeleton_vox.dmi'
+	deform = 'icons/mob/human_races/r_skeleton_vox.dmi'
+	tail = "vox_skeleton"
+
+/datum/species/skeleton/vox/New()
+	.=..()
+	flags[HAS_TAIL]=TRUE
 
 //Species unarmed attacks
 
@@ -1656,7 +1705,7 @@
 
 /datum/species/homunculus/create_bodyparts(mob/living/carbon/human/H)
 	var/list/keys = get_list_of_primary_keys(global.all_species)
-	keys -= list(PODMAN, IPC, SKELETON, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
+	keys -= list(PODMAN, IPC, SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
 
 	var/datum/species/head = global.all_species[pick(keys - VOX)]
 

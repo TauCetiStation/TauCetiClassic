@@ -181,8 +181,7 @@ var/global/BSACooldown = 0
 				Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A>
 				<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A>
 				<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A>
-				<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>|
-				<A href='?src=\ref[src];simplemake=meme;mob=\ref[M]'>Meme</A>
+				<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>
 				<br>
 			"}
 			body += "</div>"

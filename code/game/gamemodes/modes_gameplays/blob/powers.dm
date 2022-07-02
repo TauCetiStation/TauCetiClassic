@@ -33,8 +33,8 @@
 
 /mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
-	set name = "Create Shield Blob (10)"
-	set desc = "Create a shield blob."
+	set name = "Create/Upgrade Shield Blob (10)"
+	set desc = "Create a shield blob. Use it again on existing shield blob to upgrade it into a reflective blob."
 
 	var/turf/T = get_turf(src)
 	create_shield(T)
@@ -47,15 +47,42 @@
 		to_chat(src, "There is no blob here!")
 		return
 
-	if(!isblobnormal(B))
+	if(!isblobnormal(B) && !isblobshield(B)) //Not special blob nor shield to upgrade
 		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
 	if(!can_buy(10))
 		return
 
+	if(isblobshield(B))
+		if(B.health < initial(B.health) / 2)
+			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified!</span>")
+			return
+		B.change_to(/obj/effect/blob/shield/reflective)
+	else
+		B.change_to(/obj/effect/blob/shield)
 
-	B.change_to(/obj/effect/blob/shield)
+/mob/camera/blob/verb/relocate_core_power()
+	set category = "Blob"
+	set name = "Relocate Core (70)"
+	set desc = "Swaps a node and your core."
+
+	relocate_core()
+
+/mob/camera/blob/proc/relocate_core()
+	var/turf/T = get_turf(src)
+	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
+	if(!B)
+		to_chat(src, "<span class='warning'>You must be on a blob node!</span>")
+		return
+	if(isspaceturf(T))
+		to_chat(src, "<span class='warning'>You cannot relocate your core here!</span>")
+		return
+	if(!can_buy(70))
+		return
+	var/turf/old_turf = get_turf(blob_core)
+	blob_core.forceMove(T)
+	B.forceMove(old_turf)
 
 /mob/camera/blob/verb/create_resource_power()
 	set category = "Blob"
