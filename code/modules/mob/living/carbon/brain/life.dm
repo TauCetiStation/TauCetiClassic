@@ -154,7 +154,6 @@
 					emp_damage -= 1
 
 		//Other
-
 		if(stuttering)
 			AdjustStuttering(-1)
 

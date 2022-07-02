@@ -31,12 +31,10 @@
 	if(!.)
 		return
 	owner.stunned = TRUE
-	
 
 /datum/status_effect/incapacitating/stun/on_remove()
 	owner.stunned = FALSE
 	return ..()
-
 
 //PARALYZED
 /datum/status_effect/incapacitating/paralyzed
@@ -65,7 +63,6 @@
 /datum/status_effect/incapacitating/weakened/on_remove()
 	owner.weakened = FALSE
 	return ..()
-
 
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping

@@ -33,7 +33,6 @@
 
 
 /mob/living/blob/proc/clamp_values()
-	AdjustWeakened(0)
 	SetSleeping(0)
 	if(stat)
 		stat = CONSCIOUS

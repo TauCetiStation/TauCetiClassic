@@ -84,7 +84,7 @@
 				emote("cough")
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
-		if ((prob(10) && !paralysis))
+		if (prob(10) && !paralysis)
 			Stun(10)
 			spawn( 0 )
 				emote("twitch")

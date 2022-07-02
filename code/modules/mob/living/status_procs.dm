@@ -23,7 +23,6 @@
 
 
 /* STUN */
-
 // placeholders
 /mob/proc/IsStun()
 
@@ -140,7 +139,6 @@
 	return P
 
 /* WEAKEN */
-
 // placeholders
 /mob/proc/IsWeaken()
 

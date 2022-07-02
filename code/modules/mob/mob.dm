@@ -832,7 +832,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(remove_flags & CANSTUN)
 		SetStunned(0, TRUE)
 	if(remove_flags & CANWEAKEN)
-		weakened = 0
+		SetWeakened(0, TRUE)
 	if(remove_flags & CANPARALYSE)
 		SetParalysis(0, TRUE)
 	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN))
