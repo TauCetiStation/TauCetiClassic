@@ -746,7 +746,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	anchored = HAS_TRAIT(src, TRAIT_ANCHORED)
 	lying = (ko || crawling) && !anchored
-	canmove = !(ko || stunned || anchored || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
+	canmove = !(ko || anchored || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 
 	if(buckled)
 		if(buckled.buckle_lying != -1)

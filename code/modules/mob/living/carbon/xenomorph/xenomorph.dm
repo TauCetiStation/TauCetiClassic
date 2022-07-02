@@ -281,7 +281,7 @@ Hit Procs
 
 /mob/living/carbon/xenomorph/update_canmove()
 	anchored = HAS_TRAIT(src, TRAIT_ANCHORED)
-	canmove = !(weakened || paralysis || crawling || stunned || anchored || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
+	canmove = !(crawling || anchored || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 
 /mob/living/carbon/xenomorph/crawl()
 	SetCrawling(!crawling)

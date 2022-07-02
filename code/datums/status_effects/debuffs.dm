@@ -31,9 +31,13 @@
 	if(!.)
 		return
 	owner.stunned = TRUE
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
 
 /datum/status_effect/incapacitating/stun/on_remove()
 	owner.stunned = FALSE
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
 	return ..()
 
 //PARALYZED
@@ -45,9 +49,13 @@
 	if(!.)
 		return
 	owner.paralysis = TRUE
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
 
 /datum/status_effect/incapacitating/paralyzed/on_remove()
 	owner.paralysis = FALSE
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
 	return ..()
 
 //WEAKENED
@@ -59,8 +67,12 @@
 	if(!.)
 		return
 	owner.weakened = TRUE
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
 
 /datum/status_effect/incapacitating/weakened/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
 	owner.weakened = FALSE
 	return ..()
 

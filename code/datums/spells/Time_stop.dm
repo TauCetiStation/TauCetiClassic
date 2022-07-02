@@ -71,6 +71,7 @@ var/global/timestop_count = 0
 				H.LoseTarget()
 
 			ADD_TRAIT(M, TRAIT_IMMOBILIZED, src)
+			ADD_TRAIT(M, TRAIT_INCAPACITATED, src)
 			M.update_canmove()
 
 			M.silent += duration
@@ -104,6 +105,7 @@ var/global/timestop_count = 0
 			var/mob/living/M = AM
 			M.silent = max(M.silent - duration, 0)
 			REMOVE_TRAIT(M, TRAIT_IMMOBILIZED, src)
+			REMOVE_TRAIT(M, TRAIT_INCAPACITATED, src)
 			M.update_canmove()
 
 		if(istype(AM, /obj/item/projectile))

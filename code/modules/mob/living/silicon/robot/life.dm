@@ -226,7 +226,7 @@
 
 /mob/living/silicon/robot/update_canmove()
 	anchored = HAS_TRAIT(src, TRAIT_ANCHORED)
-	canmove = !(paralysis || stunned || weakened || buckled || anchored || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
+	canmove = !(buckled || anchored || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 
 //Robots on fire
 /mob/living/silicon/robot/handle_fire()

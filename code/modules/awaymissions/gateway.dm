@@ -194,6 +194,7 @@
 	if(isliving(entered))
 		var/mob/living/M = entered
 		ADD_TRAIT(M, TRAIT_IMMOBILIZED, src)
+		ADD_TRAIT(M, TRAIT_INCAPACITATED, src)
 		M.update_canmove()
 		var/atom/movable/screen/cinematic = new /atom/movable/screen{icon='icons/effects/gateway_entry.dmi'; icon_state="entry"; layer=21; mouse_opacity = MOUSE_OPACITY_TRANSPARENT; screen_loc="1,0"; } (src)
 		if(M.client)
@@ -213,6 +214,7 @@
 			M.client.screen -= cinematic
 		qdel(cinematic)
 		REMOVE_TRAIT(M, TRAIT_IMMOBILIZED, src)
+		REMOVE_TRAIT(M, TRAIT_INCAPACITATED, src)
 		M.update_canmove()
 	entered.freeze_movement = FALSE
 	entered.forceMove(target)

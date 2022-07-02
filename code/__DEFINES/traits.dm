@@ -125,6 +125,8 @@
 #define TRAIT_ANCHORED "anchored"
 /// Prevents voluntary movement.
 #define TRAIT_IMMOBILIZED "immobilized"
+/// Prevents hands and legs usage
+#define TRAIT_INCAPACITATED "incapacitated"
 
 #define TRAIT_ALCOHOL_TOLERANCE   "alcohol_tolerance"
 #define TRAIT_BLIND               "blind"
