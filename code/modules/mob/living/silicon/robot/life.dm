@@ -25,9 +25,7 @@
 
 /mob/living/silicon/robot/proc/clamp_values()
 
-//	SetStunned(min(stunned, 30))
 	SetParalysis(min(AmountParalyzed(), 30))
-//	SetWeakened(min(weakened, 20))
 	SetSleeping(0)
 	adjustBruteLoss(0)
 	adjustToxLoss(0)
@@ -227,7 +225,8 @@
 			weaponlock_time = 120
 
 /mob/living/silicon/robot/update_canmove()
-	canmove = !(paralysis || stunned || weakened || buckled || lockcharge || HAS_TRAIT(src, TRAIT_ANCHORED))
+	anchored = HAS_TRAIT(src, TRAIT_ANCHORED)
+	canmove = !(paralysis || stunned || weakened || buckled || anchored || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 
 //Robots on fire
 /mob/living/silicon/robot/handle_fire()

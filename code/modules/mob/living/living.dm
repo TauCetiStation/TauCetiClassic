@@ -932,7 +932,7 @@
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(loc && istype(loc, /obj) && !isturf(loc))
-		if(L.stat == CONSCIOUS && !L.stunned && !L.weakened && !L.paralysis)
+		if(!L.incapacitated(NONE))
 			var/obj/C = loc
 			C.container_resist(L)
 
@@ -1055,21 +1055,12 @@
 	if((status_flags & FAKEDEATH) || buckled)
 		return
 
-//Already crawling and have others debuffs
-	if( crawling && (IsSleeping() || weakened || paralysis || stunned) )
-		to_chat(src, "<span class='rose'>You can't wake up.</span>")
-
-//Restrained and some debuffs
-	else if( restrained() && (paralysis || stunned) )
-		to_chat(src, "<span class='rose'>You can't move.</span>")
-
-//Restrained and lying on optable or simple table
-	else if( restrained() && can_operate(src) )	//TO DO: Refactor OpTable code to /bed subtype or "Rest" verb
-		to_chat(src, "<span class='rose'>You can't move.</span>")
-
-//Debuffs check
-	else if(!crawling && (IsSleeping() || weakened || paralysis || stunned) )
-		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
+	if(incapacitated(NONE))
+		if(crawling)
+			to_chat(src, "<span class='rose'>You can't wake up.</span>")
+		else
+			to_chat(src, "<span class='rose'>You can't control yourself.</span>")
+		return
 
 	if(crawling)
 		crawl_getup = TRUE
