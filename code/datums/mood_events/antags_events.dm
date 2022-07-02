@@ -25,3 +25,9 @@
 	mood_change = 100
 	special_screen_obj = "mood_alien"
 	hidden = TRUE
+
+/datum/mood_event/abductor
+	description = "<span class='shadowling'>I am the supreme being. My perfect mind doesn't need emotions.</span>"
+	mood_change = 100
+	special_screen_obj = "mood_alien"
+	hidden = TRUE

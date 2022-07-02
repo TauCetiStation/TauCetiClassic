@@ -706,8 +706,9 @@
 				var/mob/living/carbon/human/H = user
 				H.human_update_offset(lamp, TRUE)
 			lamp.plane = ABOVE_LIGHTING_PLANE
-			user.add_overlay(lamp)
+			lamp.layer = ABOVE_LIGHTING_LAYER
 			lamp.alpha = 255
+			user.add_overlay(lamp)
 		user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
@@ -921,7 +922,7 @@
 	               /obj/item/weapon/melee/energy/sword,
 	               /obj/item/weapon/handcuffs)
 	combat_armor = list(melee = 55, bullet = 60, laser = 50, energy = 55, bomb = 100, bio = 100, rad = 100)
-	space_armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
+	space_armor = list(melee = 40, bullet = 30, laser = 30, energy = 45, bomb = 80, bio = 100, rad = 80)
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
@@ -931,7 +932,11 @@
 	item_state = "wiz_helm"
 	rig_variant = "wiz"
 	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
-	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 25, bomb = 33, bio = 100, rad = 66)
+
+/obj/item/clothing/head/helmet/space/rig/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/suit/space/rig/wizard
 	icon_state = "rig-wiz"
@@ -940,9 +945,13 @@
 	item_state = "wiz_hardsuit"
 	slowdown = 0.5
 	unacidable = 1
-	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
+	armor = list(melee = 60, bullet = 50, laser = 30,energy = 25, bomb = 33, bio = 100, rad = 66)
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai)
+
+/obj/item/clothing/suit/space/rig/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
 
 //Medical Rig
 /obj/item/clothing/head/helmet/space/rig/medical

@@ -344,7 +344,7 @@
 
 /datum/disease2/effect/heal/coma/proc/coma(mob/living/carbon/human/M)
 	//M.emote("deathgasp")
-	M.status_flags |= FAKEDEATH
+	M.add_status_flags(FAKEDEATH)
 	M.SetSleeping(999 SECONDS) //Well, I hope its good enough
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
 
@@ -352,7 +352,7 @@
 	if(!active_coma)
 		return
 	active_coma = FALSE
-	M.status_flags &= ~FAKEDEATH
+	M.remove_status_flags(FAKEDEATH)
 	M.SetSleeping(0)
 
 /datum/disease2/effect/heal/coma/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
@@ -970,7 +970,7 @@
 	level = 2
 	max_stage = 3
 	cooldown = 10
-	var/target_nutrition = 400
+	var/target_nutrition = NUTRITION_LEVEL_NORMAL
 
 /datum/disease2/effect/weight_even/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 	var/speed = 0

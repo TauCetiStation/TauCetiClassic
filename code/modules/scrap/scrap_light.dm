@@ -48,10 +48,12 @@
 	return
 
 /obj/item/stack/sheet/wood/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/medical/bruise_pack/rags) && use(1))
-		new /obj/item/device/flashlight/flare/torch(get_turf(src))
-		qdel(I)
-		return
+	if(istype(I, /obj/item/stack/medical/bruise_pack/rags))
+		var/turf/current_location = get_turf(src)
+		if(use(1))
+			new /obj/item/device/flashlight/flare/torch(current_location)
+			qdel(I)
+			return
 	return ..()
 
 /obj/item/stack/medical/bruise_pack/rags
@@ -240,10 +242,6 @@
 		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 
-//obj/structure/bonfire/buckle_mob(mob/living/M)
-//	if(..())
-//		M.pixel_y += 13
-
 
 /obj/structure/bonfire/post_buckle_mob(mob/living/M)
 	if(buckled_mob == M)
@@ -251,8 +249,8 @@
 		M.layer = 5.1
 	else
 		if(M.pixel_y == 13)
-			M.pixel_y = 0
-		M.layer = initial(M.layer)
+			M.pixel_y = M.default_pixel_y
+		M.layer = M.default_layer
 
 /obj/structure/bonfire/dynamic
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."

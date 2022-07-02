@@ -6,6 +6,7 @@
 	antag_hud_name = "abductor"
 
 	logo_state = "abductor-logo"
+	skillset_type = /datum/skillset/abductor
 
 /datum/role/abductor/Greet(greeting, custom)
 	if(!..())
@@ -40,7 +41,8 @@
 	equip_common(H)
 	equip_class()
 	H.regenerate_icons()
-
+	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "abductor", /datum/mood_event/abductor)
+	
 	return TRUE
 
 /datum/role/abductor/proc/get_team_num()
@@ -50,6 +52,7 @@
 /datum/role/abductor/agent
 	name = "Agent"
 	id = ABDUCTOR_AGENT
+	skillset_type = /datum/skillset/abductor/agent
 
 /datum/role/abductor/agent/Greet(greeting, custom)
 	if(!..())
@@ -78,6 +81,7 @@
 /datum/role/abductor/scientist
 	name = "Scientist"
 	id = ABDUCTOR_SCI
+	skillset_type = /datum/skillset/abductor/scientist
 
 /datum/role/abductor/scientist/Greet(greeting, custom)
 	if(!..())

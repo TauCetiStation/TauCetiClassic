@@ -41,8 +41,8 @@
 	var/spacecash_l_type = pick(money_types)
 	var/spacecash_r_type = pick(money_types)
 
-	H.equip_to_slot_or_del(new spacecash_l_type(H), SLOT_L_STORE)
-	H.equip_to_slot_or_del(new spacecash_r_type(H), SLOT_R_STORE)
+	H.equip_or_collect(new spacecash_l_type(H), SLOT_L_STORE)
+	H.equip_or_collect(new spacecash_r_type(H), SLOT_R_STORE)
 
 
 /datum/quality/positiveish/wonder_doctor
@@ -109,7 +109,7 @@
 		H.equip_or_collect(new /obj/item/clothing/suit/serifcoat(H), SLOT_WEAR_SUIT)
 	else
 		H.equip_or_collect(new /obj/item/clothing/suit/poncho(H), SLOT_WEAR_SUIT)
-	H.equip_or_collect(new /obj/item/clothing/under/fluff/cowboy/brown(H), SLOT_W_UNIFORM)
+	H.equip_or_collect(new /obj/item/clothing/under/cowboy/brown(H), SLOT_W_UNIFORM)
 	H.equip_or_collect(new /obj/item/clothing/head/western/cowboy(H), SLOT_HEAD)
 	H.equip_or_collect(new /obj/item/clothing/shoes/western(H), SLOT_SHOES)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/peacemaker/detective(H), SLOT_L_HAND)

@@ -241,6 +241,7 @@ SUBSYSTEM_DEF(ticker)
 
 	setup_economy()
 	create_religion(/datum/religion/chaplain)
+	setup_hud_objects()
 
 	//start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
@@ -377,7 +378,6 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in player_list)
-		//sleep(1)//Maybe remove??
 		if(player && player.ready && player.mind)
 			joined_player_list += player.ckey
 			if(player.mind.assigned_role=="AI")
@@ -387,7 +387,7 @@ SUBSYSTEM_DEF(ticker)
 			//	continue
 			else
 				player.create_character()
-		CHECK_TICK // comment/remove this and uncomment sleep, if crashes at round start will come back.
+		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)
@@ -403,7 +403,7 @@ SUBSYSTEM_DEF(ticker)
 				captainless=0
 			SSquirks.AssignQuirks(player, player.client, TRUE)
 			if(player.mind.assigned_role != "MODE")
-				SSjob.EquipRank(player, player.mind.assigned_role, 0)
+				SSjob.EquipRank(player, player.mind.assigned_role, FALSE)
 	if(captainless)
 		for(var/mob/M as anything in player_list)
 			if(!isnewplayer(M))
@@ -562,6 +562,8 @@ SUBSYSTEM_DEF(ticker)
 	L.equipOutfit(/datum/outfit/arena)
 	L.name = L.key
 	L.real_name = L.name
+	L.mind.skills.add_available_skillset(/datum/skillset/max)
+	L.mind.skills.maximize_active_skills()
 	to_chat(L, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>")
 
 /datum/controller/subsystem/ticker/proc/achievement_declare_completion()

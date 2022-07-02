@@ -107,9 +107,9 @@
 		healthcheck()
 		return ..()
 
-/obj/vehicle/bullet_act(obj/item/projectile/Proj)
+/obj/vehicle/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
-	..()
 	healthcheck()
 
 /obj/vehicle/blob_act()

@@ -34,7 +34,7 @@
 
 	var/cultists_around = 0
 	for(var/mob/M in AOG.mobs_around)
-		if(religion.is_member(M))
+		if(religion.is_member(M) && M.get_species() != HOMUNCULUS)
 			cultists_around++
 
 	if(cultists_around < need_members)
@@ -126,6 +126,11 @@
 			to_chat(user, "<span class='warning'>На алтаре должен быть человек.</span>")
 		return FALSE
 
+	if(AOG.buckled_mob.get_species() == HOMUNCULUS)
+		if(user)
+			to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
+		return FALSE
+
 	var/mob/living/carbon/human/H = AOG.buckled_mob
 	if(H.species.flags[NO_BLOOD] || jobban_isbanned(H, ROLE_CULTIST) || jobban_isbanned(H, "Syndicate") || H.ismindprotect())
 		if(user)
@@ -152,7 +157,7 @@
 
 	religion.add_member(H, CULT_ROLE_HIGHPRIEST)
 
-	H.set_species(SKELETON)
+	H.makeSkeleton()
 	H.revive()
 	H.visible_message("<span class='warning'>После того, как дым развеялся, на алтаре виден скелет человека.</span>",
 					"<span class='cult'>Вы чувствуете, как с вас буквально содрали всю кожу, хотя у тебя теперь нет и нервов.</span>")

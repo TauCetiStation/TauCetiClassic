@@ -1195,7 +1195,7 @@ var/global/list/common_tools = list(
 
 //check if mob is lying down on something we can operate him on.
 /proc/can_operate(mob/living/carbon/M)
-	if(locate(/obj/machinery/optable, M.loc) && M.resting)
+	if(locate(/obj/machinery/optable, M.loc) && M.crawling)
 		return TRUE
 	if((M.buckled || M.lying || M.incapacitated()) && prob(get_surg_chance(M.loc)))
 		return TRUE

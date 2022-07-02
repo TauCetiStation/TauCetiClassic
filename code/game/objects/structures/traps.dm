@@ -76,7 +76,7 @@
 /obj/structure/trap/chill/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'>You're frozen solid!</span>")
 	L.Weaken(1)
-	L.bodytemperature -= 300
+	L.adjust_bodytemperature(-300)
 	L.reagents.add_reagent("frostoil", 15)
 
 /obj/structure/trap/damage

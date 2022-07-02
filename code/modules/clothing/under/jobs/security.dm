@@ -30,6 +30,7 @@
 	name = "security officer's jumpskirt"
 	icon_state = "skirt_security"
 	item_state = "secskirtred"
+	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
 
 /obj/item/clothing/under/rank/dispatch
 	name = "dispatcher's uniform"
@@ -89,11 +90,15 @@
 
 /obj/item/clothing/under/det/max_payne
 	name = "white hard-worn suit with blue jeans"
+	desc = "Style suit for those who want vengence."
 	icon_state = "max"
+	item_state = "max"
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/det/black
 	name = "black hard-worn suit"
 	icon_state = "detective2"
+	item_state = "detective2"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/det/slob
@@ -129,7 +134,7 @@
 	name = "head of security's turtleneck"
 	icon_state = "hos_turtleneck"
 	item_state = "hos_turtleneck"
-	flags = 0
+	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
 
 /obj/item/clothing/under/rank/head_of_security/corp
 	icon_state = "hos_corporate"

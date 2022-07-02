@@ -80,18 +80,16 @@
 	qdel(src)
 	return
 
-/obj/structure/window/bullet_act(obj/item/projectile/Proj)
+/obj/structure/window/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...
-		return -1
+		return PROJECTILE_FORCE_MISS
 
+	. = ..()
 	//Tasers and the like should not damage windows.
 	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		return
 
-	..()
 	take_damage(Proj.damage, Proj.damage_type)
-	return
-
 
 /obj/structure/window/ex_act(severity)
 	switch(severity)
@@ -223,11 +221,15 @@
 
 	else if(isscrewdriver(W))
 		if(reinf && state >= 1)
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction/trained), message_self = "<span class='notice'>You fumble around, figuring out how to [state == 1 ? "fasten the window to the frame." : "unfasten the window from the frame."]</span>" ))
+				return
 			state = 3 - state
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>"))
 
 		else if(reinf && state == 0)
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction/trained), message_self = "<span class='notice'>You fumble around, figuring out how to [anchored ? "unfasten the frame from the floor." : "fasten the frame to the floor."]</span>" ))
+				return
 			anchored = !anchored
 			update_nearby_icons()
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -235,6 +237,8 @@
 			fastened_change()
 
 		else if(!reinf)
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY,list(/datum/skill/construction/trained), message_self = "<span class='notice'>You fumble around, figuring out how to [anchored ? "fasten the window to the floor." : "unfasten the window."]</span>" ))
+				return
 			anchored = !anchored
 			update_nearby_icons()
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -242,6 +246,8 @@
 			fastened_change()
 
 	else if(iscrowbar(W) && reinf && state <= 1)
+		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction/trained), message_self = "<span class='notice'>You fumble around, figuring out how to [state ? "pry the window out of the frame." : "pry the window into the frame."]</span>" ))
+			return
 		state = 1 - state
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>"))

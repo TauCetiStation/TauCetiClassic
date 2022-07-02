@@ -2,7 +2,7 @@
 /datum/outfit/job/assistant
 	name = OUTFIT_JOB_NAME("Assistant Gear")
 
-	uniform = /obj/item/clothing/under/fluff/jane_sidsuit
+	uniform = /obj/item/clothing/under/test_subject
 	shoes = /obj/item/clothing/shoes/black
 
 /datum/outfit/job/assistant/lawyer
@@ -33,7 +33,7 @@
 /datum/outfit/job/assistant/test_subject
 	name = OUTFIT_JOB_NAME("Test Subject")
 
-	uniform = /obj/item/clothing/under/fluff/jane_sidsuit
+	uniform = /obj/item/clothing/under/test_subject
 	shoes = /obj/item/clothing/shoes/black
 
 /datum/outfit/job/assistant/waiter
@@ -51,7 +51,7 @@
 /datum/outfit/job/assistant/paranormal_investigator
 	name = OUTFIT_JOB_NAME("Paranormal Investigator")
 
-	uniform = /obj/item/clothing/under/fluff/indiana
+	uniform = /obj/item/clothing/under/indiana
 	shoes = /obj/item/clothing/shoes/brown
 	head = /obj/item/clothing/head/indiana
 	l_pocket = /obj/item/device/occult_scanner

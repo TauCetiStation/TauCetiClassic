@@ -249,7 +249,7 @@
 	return
 
 //Bullets
-/mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
@@ -344,7 +344,7 @@
 			//Search for item to steal
 			parrot_interest = search_for_item()
 			if(parrot_interest)
-				emote("looks in [parrot_interest]'s direction and takes flight")
+				me_emote("looks in [parrot_interest]'s direction and takes flight")
 				parrot_state = PARROT_SWOOP | PARROT_STEAL
 				icon_state = "parrot_fly"
 			return
@@ -366,7 +366,7 @@
 			if(AM)
 				if(isitem(AM) || isliving(AM))	//If stealable item
 					parrot_interest = AM
-					emote("turns and flies towards [parrot_interest]")
+					me_emote("turns and flies towards [parrot_interest]")
 					parrot_state = PARROT_SWOOP | PARROT_STEAL
 					return
 				else	//Else it's a perch
@@ -481,11 +481,11 @@
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(pick(parrot_dam_zone))]
 
 				H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP)
-				emote(pick("pecks [H]'s [BP.name]", "cuts [H]'s [BP.name] with its talons"))
+				me_emote(pick("pecks [H]'s [BP.name]", "cuts [H]'s [BP.name] with its talons"))
 
 			else
 				L.adjustBruteLoss(damage)
-				emote(pick("pecks at [L]", "claws [L]"))
+				me_emote(pick("pecks at [L]", "claws [L]"))
 			return
 
 		//Otherwise, fly towards the mob!

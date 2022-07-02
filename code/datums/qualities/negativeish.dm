@@ -191,16 +191,19 @@
 		H.remove_language(language.name)
 
 
-/datum/quality/negativeish/salarian
-	name = "Salarian"
+/datum/quality/negativeish/salackyi
+	name = "Салацькый"
 	desc = "Ну що хлопче, готовий?"
-	requirement = "Нема."
+	requirement = "Все, кроме СБ и глав."
 
-/datum/quality/negativeish/salarian/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/negativeish/salackyi/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !(H.mind.assigned_role in global.command_positions) && !(H.mind.assigned_role in global.security_positions)
+
+/datum/quality/negativeish/salackyi/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
 
-	H.add_language(LANGUAGE_SALARIAN)
-	H.common_language = LANGUAGE_SALARIAN
+	H.add_language(LANGUAGE_SALACKYI)
+	H.common_language = LANGUAGE_SALACKYI
 
 
 /datum/quality/negativeish/clumsy
@@ -240,20 +243,6 @@ var/global/list/allergen_reagents_list
 /datum/quality/negativeish/dumb/add_effect(mob/living/carbon/human/H, latespawn)
 	H.adjustBrainLoss(rand(30, 99))
 
-/datum/quality/negativeish/c4
-	name = "C4"
-	desc = "Спокойно, на Вас всего лишь повесили бомбу. \
-	<br>- ВЗОРВЁТСЯ ЛИ ОНА? \
-	<br>- Да. \
-	<br>- КОГДА? \
-	<br>- Ну может и бахнет минут через 5? 20? 40? Кто его знает?"
-	requirement = "Нет."
-
-/datum/quality/negativeish/c4/add_effect(mob/living/carbon/human/H, latespawn)
-	var/obj/item/weapon/plastique/C4 = new(H)
-	C4.timer = rand(600, 1800)
-	C4.plant_bomb(H)
-
 /datum/quality/negativeish/trypanophobia
 	name = "Trypanophobia"
 	desc = "Ты с самого детства боишься уколов."
@@ -285,3 +274,15 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/greasy_fingers/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_GREASY_FINGERS, QUALITY_TRAIT)
+
+
+/datum/quality/negativeish/husked
+	name = "Husked"
+	desc = "Этим утром тебя обожгло маршевыми двигателями шаттла. Ожоги вылечили, но опаленную кожу восстановить пока не удалось..."
+	requirement = "Не СПУ."
+
+/datum/quality/negativeish/husked/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return !H.species.flags[IS_SYNTHETIC]
+
+/datum/quality/negativeish/husked/add_effect(mob/living/carbon/human/H, latespawn)
+	H.ChangeToHusk()

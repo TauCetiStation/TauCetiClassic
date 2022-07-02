@@ -24,10 +24,9 @@
 	speed = 1
 	a_intent = INTENT_HARM
 	stop_automated_movement = TRUE
-	status_flags = CANPUSH
+	status_flags = NONE
 	universal_speak = 1
 	universal_understand = 1
-	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -45,6 +44,10 @@
 	has_head = TRUE
 	has_arm = TRUE
 	has_leg = TRUE
+
+/mob/living/simple_animal/hulk/atom_init()
+	attack_sound = SOUNDIN_PUNCH_HEAVY
+	. = ..()
 
 /mob/living/simple_animal/hulk/human
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_jump,
@@ -102,7 +105,6 @@
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
-	status_flags ^= CANPUSH
 	for(var/spell in hulk_powers)
 		AddSpell(new spell(src))
 
@@ -226,7 +228,7 @@
 		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		visible_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
-/mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
