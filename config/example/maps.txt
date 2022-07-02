@@ -20,6 +20,7 @@ endmap
 
 map boxstation_snow
 	votable
+	voteweight 0.7
 endmap
 
 map gamma
@@ -32,4 +33,5 @@ endmap
 map falcon
 	votable
 	maxplayers 25
+	voteweight 2
 endmap

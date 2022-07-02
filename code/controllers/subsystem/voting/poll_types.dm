@@ -33,12 +33,14 @@
 	. = ..()
 	if(.)
 		return
+	if(world.has_round_finished())
+		return "Раунд закончен"
 	for(var/client/C as anything in admins)
 		if((C.holder.rights & R_ADMIN) && !C.holder.fakekey && !C.is_afk())
 			return "Администрация сейчас в сети"
 
-/datum/poll/restart/get_vote_power(client/C)
-	return get_vote_power_by_role(C)
+/datum/poll/restart/get_vote_power(client/C, datum/vote_choice/choice)
+	return get_vote_power_by_role(C) * choice.vote_weight
 
 /datum/vote_choice/restart
 	text = "Рестарт"
@@ -102,8 +104,8 @@
 	if(security_level >= SEC_LEVEL_RED)
 		return "Код безопасности КРАСНЫЙ или выше"
 
-/datum/poll/crew_transfer/get_vote_power(client/C)
-	return get_vote_power_by_role(C)
+/datum/poll/crew_transfer/get_vote_power(client/C, datum/vote_choice/choice)
+	return get_vote_power_by_role(C) * choice.vote_weight
 
 /datum/vote_choice/crew_transfer
 	text = "Конец смены"
@@ -245,7 +247,10 @@
 
 		var/datum/vote_choice/nextmap/vc = new
 		vc.text = VM.GetFullMapName()
+		if(VM.voteweight != 1)
+			vc.text += "\[vote weight: [VM.voteweight]\]"
 		vc.mapname = VM.map_name
+		vc.vote_weight = VM.voteweight
 		choices.Add(vc)
 
 /datum/vote_choice/nextmap
