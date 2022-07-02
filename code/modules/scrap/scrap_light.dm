@@ -232,10 +232,6 @@
 		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 
-//obj/structure/bonfire/buckle_mob(mob/living/M)
-//	if(..())
-//		M.pixel_y += 13
-
 
 /obj/structure/bonfire/post_buckle_mob(mob/living/M)
 	if(buckled_mob == M)
@@ -243,8 +239,8 @@
 		M.layer = 5.1
 	else
 		if(M.pixel_y == 13)
-			M.pixel_y = 0
-		M.layer = initial(M.layer)
+			M.pixel_y = M.default_pixel_y
+		M.layer = M.default_layer
 
 /obj/structure/bonfire/dynamic
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
