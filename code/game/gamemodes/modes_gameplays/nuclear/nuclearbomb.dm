@@ -479,7 +479,6 @@ var/global/bomb_set
 	. = ..()
 	r_code = "HONK"
 
-///This should happen ever only by hacking
 /obj/machinery/nuclearbomb/fake/explode()
 	if(safety)
 		timing = 0

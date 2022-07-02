@@ -139,6 +139,3 @@ effective or pretty fucking useless.
 		return
 	spark_system.set_up(value+1, cardinals, location2)
 	spark_system.start()
-
-
-
