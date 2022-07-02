@@ -498,7 +498,6 @@ var/global/bomb_set
 	. = ..()
 	if(isnukeop(user) || isobserver(user))
 		to_chat(user, "<span class ='boldwarning'>This is a fake one!</span>")
-		src.detonated = 1
 
 /obj/machinery/nuclearbomb/fake/process() //Yes, it's alike normal, but not exactly
 	if(timing > 0) // because explode() sets it to -1, which is TRUE.
