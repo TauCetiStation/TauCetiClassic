@@ -52,6 +52,20 @@
 	owner.paralysis = FALSE
 	return ..()
 
+//WEAKENED
+/datum/status_effect/incapacitating/weakened
+	id = "weakened"
+
+/datum/status_effect/incapacitating/weakened/on_apply()
+	. = ..()
+	if(!.)
+		return
+	owner.weakened = TRUE
+
+/datum/status_effect/incapacitating/weakened/on_remove()
+	owner.weakened = FALSE
+	return ..()
+
 
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping

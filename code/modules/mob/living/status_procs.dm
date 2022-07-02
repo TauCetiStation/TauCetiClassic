@@ -1,4 +1,6 @@
 #define IS_STUN_IMMUNE(source, ignore_canstun) (!(source.status_flags & CANSTUN || ignore_canstun))
+#define IS_PARALYSE_IMMUNE(source, ignore_canstun) (!(source.status_flags & CANPARALYSE || ignore_canstun))
+#define IS_WEAKEN_IMMUNE(source, ignore_canstun) (!(source.status_flags & CANWEAKEN || ignore_canstun))
 
 
 /mob/living/proc/add_quirk(quirk, spawn_effects)
@@ -101,7 +103,7 @@
 	return 0
 
 /mob/living/Paralyse(amount, ignore_canstun = FALSE) //Can't go below remaining duration
-	if(IS_STUN_IMMUNE(src, ignore_canstun))
+	if(IS_PARALYSE_IMMUNE(src, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
 	amount *= SS_WAIT_DEFAULT
@@ -112,7 +114,7 @@
 	return P
 
 /mob/living/SetParalysis(amount, ignore_canstun = FALSE) //Sets remaining duration
-	if(IS_STUN_IMMUNE(src, ignore_canstun))
+	if(IS_PARALYSE_IMMUNE(src, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
 	if(amount <= 0)
@@ -127,7 +129,7 @@
 	return P
 
 /mob/living/AdjustParalysis(amount, ignore_canstun = FALSE) //Adds to remaining duration
-	if(IS_STUN_IMMUNE(src, ignore_canstun))
+	if(IS_PARALYSE_IMMUNE(src, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/paralyzed/P = IsParalyzed()
 	amount *= SS_WAIT_DEFAULT
@@ -136,6 +138,64 @@
 	else if(amount > 0)
 		P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
 	return P
+
+/* WEAKEN */
+
+// placeholders
+/mob/proc/IsWeaken()
+
+/mob/proc/AmountWeaken()
+
+/mob/proc/Weaken(amount, ignore_canstun = FALSE)
+
+/mob/proc/SetWeakened(amount, ignore_canstun = FALSE)
+
+/mob/proc/AdjustWeakened(amount, ignore_canstun = FALSE)
+
+/mob/living/IsWeaken() //If we're knocked down
+	return has_status_effect(/datum/status_effect/incapacitating/weakened)
+
+/mob/living/proc/AmountWeaken() //How many deciseconds remain in our knockdown
+	var/datum/status_effect/incapacitating/weakened/K = IsWeaken()
+	if(K)
+		return K.duration - world.time
+	return 0
+
+/mob/living/Weaken(amount, ignore_canstun = FALSE) //Can't go below remaining duration
+	if(IS_WEAKEN_IMMUNE(src, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/weakened/K = IsWeaken()
+	if(K)
+		K.duration = max(world.time + amount, K.duration)
+	else if(amount > 0)
+		K = apply_status_effect(/datum/status_effect/incapacitating/weakened, amount)
+	return K
+
+/mob/living/SetWeakened(amount, ignore_canstun = FALSE) //Sets remaining duration
+	if(IS_WEAKEN_IMMUNE(src, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/weakened/K = IsWeaken()
+	if(amount <= 0)
+		if(K)
+			qdel(K)
+	else
+		if(absorb_stun(amount, ignore_canstun))
+			return
+		if(K)
+			K.duration = world.time + amount
+		else
+			K = apply_status_effect(/datum/status_effect/incapacitating/weakened, amount)
+	return K
+
+/mob/living/AdjustWeakened(amount, ignore_canstun = FALSE) //Adds to remaining duration
+	if(IS_WEAKEN_IMMUNE(src, ignore_canstun))
+		return
+	var/datum/status_effect/incapacitating/weakened/K = IsWeaken()
+	if(K)
+		K.duration += amount
+	else if(amount > 0)
+		K = apply_status_effect(/datum/status_effect/incapacitating/weakened, amount)
+	return K
 
 /////////////////////////////////// SLEEPING ////////////////////////////////////
 

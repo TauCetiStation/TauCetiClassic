@@ -844,28 +844,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		stuttering = 0
 	status_flags |= add_flags
 
-// ========== WEAKEN ==========
-/mob/proc/Weaken(amount)
-	if(status_flags & CANWEAKEN)
-		weakened = max(max(weakened, amount), 0)
-		update_canmove() // updates lying, canmove and icons
-	else
-		weakened = 0
-
-/mob/proc/SetWeakened(amount)
-	if(status_flags & CANWEAKEN)
-		weakened = max(amount, 0)
-		update_canmove()
-	else
-		weakened = 0
-
-/mob/proc/AdjustWeakened(amount)
-	if(status_flags & CANWEAKEN)
-		weakened = max(weakened + amount, 0)
-		update_canmove()
-	else
-		weakened = 0
-
 // ========== CRAWLING ==========
 /mob/proc/SetCrawling(value)
 	crawling = value
