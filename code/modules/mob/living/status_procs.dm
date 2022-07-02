@@ -163,6 +163,7 @@
 	if(IS_WEAKEN_IMMUNE(src, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/weakened/K = IsWeaken()
+	amount *= SS_WAIT_DEFAULT
 	if(K)
 		K.duration = max(world.time + amount, K.duration)
 	else if(amount > 0)
@@ -177,6 +178,7 @@
 		if(K)
 			qdel(K)
 	else
+		amount *= SS_WAIT_DEFAULT
 		if(K)
 			K.duration = world.time + amount
 		else
@@ -187,6 +189,7 @@
 	if(IS_WEAKEN_IMMUNE(src, ignore_canstun))
 		return
 	var/datum/status_effect/incapacitating/weakened/K = IsWeaken()
+	amount *= SS_WAIT_DEFAULT
 	if(K)
 		K.duration += amount
 	else if(amount > 0)
