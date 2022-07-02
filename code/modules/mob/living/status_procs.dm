@@ -41,7 +41,7 @@
 /mob/living/AmountStun() //How many deciseconds remain in our stun
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
 	if(S)
-		return S.duration - world.time
+		return (S.duration - world.time) / SS_WAIT_DEFAULT
 	return 0
 
 /mob/living/Stun(amount, ignore_canstun = FALSE) //Can't go below remaining duration
@@ -158,7 +158,7 @@
 /mob/living/proc/AmountWeaken() //How many deciseconds remain in our knockdown
 	var/datum/status_effect/incapacitating/weakened/K = IsWeaken()
 	if(K)
-		return K.duration - world.time
+		return (K.duration - world.time) / SS_WAIT_DEFAULT
 	return 0
 
 /mob/living/Weaken(amount, ignore_canstun = FALSE) //Can't go below remaining duration
