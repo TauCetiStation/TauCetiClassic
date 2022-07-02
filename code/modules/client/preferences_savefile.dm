@@ -4,11 +4,12 @@
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 #define SAVEFILE_VERSION_MAX 39
 
-// !!!
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
-//When change bump also SAVEFILE_VERSION_MAX
-#define SAVEFILE_VERSION_SPECIES_JOBS 30
-#define SAVEFILE_VERSION_QUIRKS 30
+//set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
+#define SAVEFILE_VERSION_SPECIES_JOBS 30 // job preferences after breaking changes to any /datum/job/
+#define SAVEFILE_VERSION_QUIRKS 30 // quirks preferences after breaking changes to any /datum/quirk/
+//breaking changes is when you remove any existing quirk/job or change their restrictions
+//Don't forget to bump SAVEFILE_VERSION_MAX too
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -186,25 +187,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		S["be_role"] << be_role
 
-/datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
-
-	if(current_version < SAVEFILE_VERSION_SPECIES_JOBS)
-		if(species != HUMAN)
-			for(var/datum/job/job in SSjob.occupations)
-				if(!job.is_species_permitted(species))
-					SetJobPreferenceLevel(job, 0)
-			S["job_preferences"] << job_preferences
-
-	if(current_version < SAVEFILE_VERSION_QUIRKS)
-		for(var/quirk_name in all_quirks)
-			// If the quirk isn't even hypothetically allowed, pref can't have it.
-			// If IsAllowedQuirk() for some reason ever becomes more computationally
-			// difficult than (quirk_name in allowed_quirks), please change to the latter. ~Luduk
-			if(!IsAllowedQuirk(quirk_name))
-				popup(parent, "Your character([real_name]) had incompatible quirks on them. This character's quirks have been reset.", "Preferences")
-				ResetQuirks()
-				break
-
 	if(current_version < 31)
 		flavor_text = fix_cyrillic(flavor_text)
 		med_record  = fix_cyrillic(med_record)
@@ -261,6 +243,26 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	
 	if(current_version < 39)
 		S["ghost_orbit"] << null
+
+// 
+/datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
+
+	if(current_version < SAVEFILE_VERSION_SPECIES_JOBS)
+		if(species != HUMAN)
+			for(var/datum/job/job in SSjob.occupations)
+				if(!job.is_species_permitted(species))
+					SetJobPreferenceLevel(job, 0)
+			S["job_preferences"] << job_preferences
+
+	if(current_version < SAVEFILE_VERSION_QUIRKS)
+		for(var/quirk_name in all_quirks)
+			// If the quirk isn't even hypothetically allowed, pref can't have it.
+			// If IsAllowedQuirk() for some reason ever becomes more computationally
+			// difficult than (quirk_name in allowed_quirks), please change to the latter. ~Luduk
+			if(!IsAllowedQuirk(quirk_name))
+				popup(parent, "Your character([real_name]) had incompatible quirks on them. This character's quirks have been reset.", "Preferences")
+				ResetQuirks()
+				break
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
