@@ -1648,13 +1648,18 @@
 	popup.open()
 
 /mob/living/carbon/human/proc/update_skills(href_list)
-	var/skill = href_list["skill"]
+	var/skill_name = href_list["skill"]
 	var/value = text2num(href_list["value"])
-	if(!isnum(value) || !istext(skill))
+	if(!isnum(value) || !istext(skill_name))
 		return
 	if(!mind)
 		return
-	mind.skills.choose_value(skill, value)
+	for(var/skill_type in all_skills)
+		var/datum/skill/skill = all_skills[skill_type]
+		if(skill.name == skill_name)
+			mind.skills.choose_value(skill_type, value)
+			return
+
 
 /mob/living/carbon/human/verb/examine_ooc()
 	set name = "Examine OOC"

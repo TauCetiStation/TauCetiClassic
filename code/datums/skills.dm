@@ -40,15 +40,18 @@
 	LAZYADD(available_skillsets, target.skills.available_skillsets)
 	update_available()
 
-/datum/skills/proc/choose_value(datum/skill/skill, value)
+/datum/skills/proc/choose_value(skill_type, value)
 	if (value > SKILL_LEVEL_MAX || value < SKILL_LEVEL_MIN)
 		return
-	if (value > available.get_value(skill))
+	if (value > available.get_value(skill_type))
 		return
-	if (value == get_value(skill))
+	if (value == get_value(skill_type))
 		return
-	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill] from [active.get_value(skill)] to [value].</span>")
-	active.set_value(skill, value)
+	var/datum/skill/skill = all_skills[skill_type]
+	var/prev_rank = skill.custom_ranks[active.get_value(skill_type) + 1]
+	var/new_rank = skill.custom_ranks[value + 1]
+	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill] from [prev_rank] to [new_rank].</span>")
+	active.set_value(skill_type, value)
 
 /mob/living
 	var/list/helpers_skillsets
