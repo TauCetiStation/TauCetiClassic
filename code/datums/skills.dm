@@ -41,7 +41,7 @@
 	update_available()
 
 /datum/skills/proc/choose_value(datum/skill/skill, value)
-	if (value > SKILL_MAX_LEVEL || value < SKILL_MIN_LEVEL)
+	if (value > SKILL_LEVEL_MAX || value < SKILL_LEVEL_MIN)
 		return
 	if (value > available.get_value(skill))
 		return

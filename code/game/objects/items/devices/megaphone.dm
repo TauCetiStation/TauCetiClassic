@@ -12,7 +12,7 @@
 	var/emagged = 0
 	var/insults = 0
 	var/list/insultmsg = list("FUCK EVERYONE!", "I'M A TATER!", "ALL SECURITY TO SHOOT ME ON SIGHT!", "I HAVE A BOMB!", "CAPTAIN IS A COMDOM!", "FOR THE SYNDICATE!")
-	required_skills = list(/datum/skill/command/novice)
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE)
 
 /obj/item/device/megaphone/attack_self(mob/living/user)
 	if (user.client)

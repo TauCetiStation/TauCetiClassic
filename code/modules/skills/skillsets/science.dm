@@ -1,103 +1,103 @@
 /datum/skillset/rd
 	name = "Research Director"
 	initial_skills = list(
-		/datum/skill/research/master,
-		/datum/skill/command/pro,
-		/datum/skill/atmospherics/trained,
-		/datum/skill/construction/pro,
-		/datum/skill/chemistry/trained,
-		/datum/skill/medical/pro,
-		/datum/skill/civ_mech/master,
-		/datum/skill/combat_mech/master,
-		/datum/skill/surgery/pro,
-		/datum/skill/engineering/master
+		/datum/skill/research = SKILL_LEVEL_MASTER,
+		/datum/skill/command = SKILL_LEVEL_PRO,
+		/datum/skill/atmospherics = SKILL_LEVEL_TRAINED,
+		/datum/skill/construction = SKILL_LEVEL_PRO,
+		/datum/skill/chemistry = SKILL_LEVEL_TRAINED,
+		/datum/skill/medical = SKILL_LEVEL_PRO,
+		/datum/skill/civ_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/combat_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/surgery = SKILL_LEVEL_PRO,
+		/datum/skill/engineering = SKILL_LEVEL_MASTER
 	)
 
 /datum/skillset/scientist
 	name = "Scientist"
 	initial_skills = list(
-		/datum/skill/research/pro,
-		/datum/skill/atmospherics/trained,
-		/datum/skill/construction/trained,
-		/datum/skill/engineering/novice,
-		/datum/skill/chemistry/novice,
-		/datum/skill/medical/novice,
-		/datum/skill/surgery/novice,
-		/datum/skill/civ_mech/novice,
-		/datum/skill/combat_mech/novice
+		/datum/skill/research = SKILL_LEVEL_PRO,
+		/datum/skill/atmospherics = SKILL_LEVEL_TRAINED,
+		/datum/skill/construction = SKILL_LEVEL_TRAINED,
+		/datum/skill/engineering = SKILL_LEVEL_NOVICE,
+		/datum/skill/chemistry = SKILL_LEVEL_NOVICE,
+		/datum/skill/medical = SKILL_LEVEL_NOVICE,
+		/datum/skill/surgery = SKILL_LEVEL_NOVICE,
+		/datum/skill/civ_mech = SKILL_LEVEL_NOVICE,
+		/datum/skill/combat_mech = SKILL_LEVEL_NOVICE
 	)
 /datum/skillset/scientist/phoron
 	name = "Phoron Researcher"
 	initial_skills = list(
-		/datum/skill/research/pro,
-		/datum/skill/atmospherics/pro,
-		/datum/skill/construction/novice,
-		/datum/skill/engineering/novice,
-		/datum/skill/chemistry/trained,
-		/datum/skill/medical/novice
+		/datum/skill/research = SKILL_LEVEL_PRO,
+		/datum/skill/atmospherics = SKILL_LEVEL_PRO,
+		/datum/skill/construction = SKILL_LEVEL_NOVICE,
+		/datum/skill/engineering = SKILL_LEVEL_NOVICE,
+		/datum/skill/chemistry = SKILL_LEVEL_TRAINED,
+		/datum/skill/medical = SKILL_LEVEL_NOVICE
 	)
 
 /datum/skillset/roboticist
 	name = "Roboticist"
 	initial_skills = list(
-		/datum/skill/research/pro,
-		/datum/skill/surgery/trained,
-		/datum/skill/medical/trained,
-		/datum/skill/construction/trained,
-		/datum/skill/engineering/trained,
-		/datum/skill/civ_mech/pro,
-		/datum/skill/combat_mech/pro
+		/datum/skill/research = SKILL_LEVEL_PRO,
+		/datum/skill/surgery = SKILL_LEVEL_TRAINED,
+		/datum/skill/medical = SKILL_LEVEL_TRAINED,
+		/datum/skill/construction = SKILL_LEVEL_TRAINED,
+		/datum/skill/engineering = SKILL_LEVEL_TRAINED,
+		/datum/skill/civ_mech = SKILL_LEVEL_PRO,
+		/datum/skill/combat_mech = SKILL_LEVEL_PRO
 	)
 
 /datum/skillset/roboticist/bio
 	name = "Biomechanical Engineer"
 	initial_skills = list(
-		/datum/skill/research/pro,
-		/datum/skill/surgery/pro,
-		/datum/skill/medical/pro,
-		/datum/skill/construction/trained,
-		/datum/skill/engineering/trained,
-		/datum/skill/civ_mech/trained,
-		/datum/skill/combat_mech/trained
+		/datum/skill/research = SKILL_LEVEL_PRO,
+		/datum/skill/surgery = SKILL_LEVEL_PRO,
+		/datum/skill/medical = SKILL_LEVEL_PRO,
+		/datum/skill/construction = SKILL_LEVEL_TRAINED,
+		/datum/skill/engineering = SKILL_LEVEL_TRAINED,
+		/datum/skill/civ_mech = SKILL_LEVEL_TRAINED,
+		/datum/skill/combat_mech = SKILL_LEVEL_TRAINED
 	)
 
 /datum/skillset/roboticist/mecha
 	name = "Mechatronic Engineer"
 	initial_skills = list(
-		/datum/skill/research/pro,
-		/datum/skill/surgery/novice,
-		/datum/skill/medical/novice,
-		/datum/skill/construction/pro,
-		/datum/skill/engineering/trained,
-		/datum/skill/civ_mech/master,
-		/datum/skill/combat_mech/master
+		/datum/skill/research = SKILL_LEVEL_PRO,
+		/datum/skill/surgery = SKILL_LEVEL_NOVICE,
+		/datum/skill/medical = SKILL_LEVEL_NOVICE,
+		/datum/skill/construction = SKILL_LEVEL_PRO,
+		/datum/skill/engineering = SKILL_LEVEL_TRAINED,
+		/datum/skill/civ_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/combat_mech = SKILL_LEVEL_MASTER
 	)
 
 /datum/skillset/xenoarchaeologist
 	name = "Xenoarchaeologist"
 	initial_skills = list(
-		/datum/skill/chemistry/trained,
-		/datum/skill/research/trained,
-		/datum/skill/civ_mech/trained,
-		/datum/skill/medical/trained
+		/datum/skill/chemistry = SKILL_LEVEL_TRAINED,
+		/datum/skill/research = SKILL_LEVEL_TRAINED,
+		/datum/skill/civ_mech = SKILL_LEVEL_TRAINED,
+		/datum/skill/medical = SKILL_LEVEL_TRAINED
 	)
 
 /datum/skillset/xenobiologist
 	name = "Xenobiologist"
 	initial_skills = list(
-		/datum/skill/research/trained,
-		/datum/skill/surgery/pro,
-		/datum/skill/medical/trained,
-		/datum/skill/chemistry/trained
+		/datum/skill/research = SKILL_LEVEL_TRAINED,
+		/datum/skill/surgery = SKILL_LEVEL_PRO,
+		/datum/skill/medical = SKILL_LEVEL_TRAINED,
+		/datum/skill/chemistry = SKILL_LEVEL_TRAINED
 	)
 
 /datum/skillset/research_assistant
 	name = "Research Assistant"
 	initial_skills = list(
-		/datum/skill/research/trained,
-		/datum/skill/medical/novice,
-		/datum/skill/surgery/novice,
-		/datum/skill/construction/novice,
-		/datum/skill/engineering/novice,
-		/datum/skill/civ_mech/novice
+		/datum/skill/research = SKILL_LEVEL_TRAINED,
+		/datum/skill/medical = SKILL_LEVEL_NOVICE,
+		/datum/skill/surgery = SKILL_LEVEL_NOVICE,
+		/datum/skill/construction = SKILL_LEVEL_NOVICE,
+		/datum/skill/engineering = SKILL_LEVEL_NOVICE,
+		/datum/skill/civ_mech = SKILL_LEVEL_NOVICE
 	)

@@ -4,7 +4,7 @@
 	for(var/datum/skill/required_skill as anything in required_skills)
 		var/datum/skill/skill = all_skills[required_skill]
 		var/value_with_helpers = get_skill_with_assistance(user, skill)
-		if(value_with_helpers < skill.value)
+		if(value_with_helpers < required_skills[required_skills])
 			return FALSE
 	return TRUE
 
@@ -13,7 +13,7 @@
 	for(var/datum/skill/required_skill as anything in required_skills)
 		var/datum/skill/skill = all_skills[required_skill]
 		var/value_with_helpers = get_skill_with_assistance(user, skill)
-		result += value * multiplier * (value_with_helpers - skill.value)
+		result += value * multiplier * (value_with_helpers - required_skills[required_skill])
 	return result
 
 /proc/do_skilled(mob/user, atom/target,  delay, required_skills, multiplier)
@@ -29,7 +29,7 @@
 	if(text_target)
 		used_item = text_target
 
-	var/required_time = apply_skill_bonus(user, delay, required_skills, -1) //increase time for each missing level	
+	var/required_time = apply_skill_bonus(user, delay, required_skills, -1) //increase time for each missing level
 	if(!message_self)
 		display_message_self = "<span class='notice'>You fumble around figuring out how to use the [used_item].</span>"
 	if(required_time > 0)
@@ -37,18 +37,10 @@
 
 	return do_after(user, required_time, target = target, can_move = can_move)
 
-/proc/get_skill_rank_name(skill_type, value)
-	for(var/s in subtypesof(skill_type))
-		var/datum/skill/skill = all_skills[s]
-		if(skill.value == value)
-			return skill.rank_name
-
-/proc/get_skill_rank_list(skill_type)
-	var/result = list()
-	for(var/s in subtypesof(skill_type))
-		var/datum/skill/skill = all_skills[s]
-		result += skill.rank_name
-	return result
+/proc/get_skill_rank_name(datum/skill/skill, value)
+	for(var/skill_rank in skill.custom_ranks)
+		if(skill.custom_ranks[skill_rank] == value)
+			return skill_rank
 
 /proc/get_skill_with_assistance(mob/living/user, datum/skill/skill)
 	var/own_skill_value = user.mind.skills.get_value(skill.name)
@@ -59,4 +51,4 @@
 	for(var/datum/skillset/skillset in user.helpers_skillsets)
 		command = max(command, skillset.get_command_modifier())
 		help += skillset.get_help_additive(skill.name)
-	return min(own_skill_value * command + help, SKILL_MAX_LEVEL)
+	return min(own_skill_value * command + help, SKILL_LEVEL_MAX)

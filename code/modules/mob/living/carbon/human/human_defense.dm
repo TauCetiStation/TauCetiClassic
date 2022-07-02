@@ -305,7 +305,7 @@
 		return FALSE
 
 	//Apply weapon damage
-	var/force_with_melee_skill = apply_skill_bonus(user, I.force, list(/datum/skill/melee/novice), 0.15) // +15% for each melee level
+	var/force_with_melee_skill = apply_skill_bonus(user, I.force, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // +15% for each melee level
 	var/damage_flags = I.damage_flags()
 	if(prob(armor))
 		damage_flags &= ~(DAM_SHARP | DAM_EDGE)

@@ -26,10 +26,10 @@
 	LAZYSET(skills, skill, value)
 
 /datum/skillset/proc/get_command_modifier()
-	return 1 + get_value(/datum/skill/command) / SKILL_MAX_LEVEL
+	return 1 + get_value(/datum/skill/command) / SKILL_LEVEL_MAX
 
 /datum/skillset/proc/get_help_additive(skill)
 	var/skill_value = get_value(skill)
-	if (skill_value == SKILL_MIN_LEVEL)
+	if (skill_value == SKILL_LEVEL_MIN)
 		return skill_value + 0.5
 	return skill_value

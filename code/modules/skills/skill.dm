@@ -1,14 +1,3 @@
-#define SKILL_LEVEL_MIN 0
-#define SKILL_LEVEL_MAX 5
-
-#define SKILL_LEVEL_NONE 0
-#define SKILL_LEVEL_NOVICE 1
-#define SKILL_LEVEL_TRAINED 2
-#define SKILL_LEVEL_PRO 3
-#define SKILL_LEVEL_MASTER 4
-#define SKILL_LEVEL_ROBUST 5
-
-
 /datum/skill
 	var/name
 	var/hint

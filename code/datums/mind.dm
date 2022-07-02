@@ -207,15 +207,14 @@
 	var/sorted_max = list()
 	for(var/datum/skill/s as anything in skills_list)
 		var/datum/skill/skill = all_skills[s]
-		sorted_max[skill.name] = skills.get_max(skill.name)
+		sorted_max[skill] = skills.get_max(skill.name)
 	sorted_max = sortTim(sorted_max, /proc/cmp_numeric_dsc, TRUE)
 	var/row = 0
-	for(var/skill_name in sorted_max)
+	for(var/datum/skill/skill in sorted_max)
 		if(row % 3 == 0)
 			out += "</tr><tr>"
-		var/datum/skill/available_skill =  skills.available.get_skill(skill_name)
-		var/rank_name = get_skill_rank_name(available_skill, available_skill.value)
-		out +="<td>[skill_name]:  [rank_name] ([available_skill.value])</td>"
+		var/rank_name = get_skill_rank_name(skill, skills.available.get_value(skill))
+		out +="<td>[skill]:  [rank_name] ([skills.available.get_value(skill)])</td>"
 		row++
 	out +="</table>"
 	out += "<br><a href='?src=\ref[src];add_skillset=1'>Add skillset</a><br>"
