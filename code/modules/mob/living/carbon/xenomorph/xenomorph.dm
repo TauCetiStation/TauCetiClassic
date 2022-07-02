@@ -280,7 +280,7 @@ Hit Procs
 	return "xltrails"
 
 /mob/living/carbon/xenomorph/update_canmove()
-	canmove = !(weakened || paralysis || stat || (status_flags & FAKEDEATH) || crawling || stunned || HAS_TRAIT(src, TRAIT_ANCHORED))
+	canmove = !(weakened || paralysis || stat || (status_flags & FAKEDEATH) || crawling || stunned || HAS_TRAIT(src, TRAIT_ANCHORED) || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 
 /mob/living/carbon/xenomorph/crawl()
 	SetCrawling(!crawling)
