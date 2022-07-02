@@ -172,7 +172,7 @@
 	// checks that the data string does not contain anything besides the hex colors
 	ASSERT(!r.Find(data))
 
-	world.ext_python("create_png.py", "[png_filename] [width] [height] [data]")
+	world.ext_python("create_png.py", "'[png_filename]' '[width]' '[height]' '[data]'")
 	generated_icon = new(png_filename)
 	fdel(png_filename) // don't need this anymore
 	icon_generated = TRUE
