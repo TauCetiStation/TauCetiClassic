@@ -4,8 +4,6 @@
 
 	var/list/available_skillsets
 
-/datum/skills/New()
-	active.skills = active.copy_skills() // new instance of skills because we will change the skills in active skillset
 
 /datum/skills/proc/get_value(skill)
 	return active.get_value(skill)
@@ -15,7 +13,6 @@
 
 /datum/skills/proc/update_available()
 	var/datum/skillset/temporary = new
-	temporary.skills = temporary.copy_skills() //we want different instance beceause of merging proc
 	if(length(available_skillsets) == 1)
 		temporary = LAZYACCESS(available_skillsets, 1)
 	for(var/datum/skillset/sk_set as anything in available_skillsets)
@@ -43,16 +40,15 @@
 	LAZYADD(available_skillsets, target.skills.available_skillsets)
 	update_available()
 
-/datum/skills/proc/choose_value(skill_name,value)
-	var/datum/skill/skill = active.get_skill(skill_name)
-	if (!skill || value > SKILL_MAX_LEVEL || value < SKILL_MIN_LEVEL)
+/datum/skills/proc/choose_value(datum/skill/skill, value)
+	if (value > SKILL_MAX_LEVEL || value < SKILL_MIN_LEVEL)
 		return
-	if (value > available.get_value(skill_name))
+	if (value > available.get_value(skill))
 		return
-	if (value == get_value(skill_name))
+	if (value == get_value(skill))
 		return
-	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill_name] from [active.get_value(skill_name)] to [value].</span>")
-	active.set_value(skill_name, value)
+	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill] from [active.get_value(skill)] to [value].</span>")
+	active.set_value(skill, value)
 
 /mob/living
 	var/list/helpers_skillsets

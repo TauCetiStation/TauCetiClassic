@@ -4,44 +4,32 @@
 	var/list/initial_skills
 
 /datum/skillset/New()
-	for(var/datum/skill/s as anything in initial_skills)
+	for(var/datum/skill/s in initial_skills)
 		var/datum/skill/original = all_skills[s]
-		LAZYSET(skills, original.name, all_skills[s])
-	for(var/datum/skill/skill as anything in default_skills_list)
+		LAZYSET(skills, original, initial_skills[s])
+	for(var/datum/skill/skill in all_skills)
 		var/datum/skill/default = all_skills[skill]
 		if(!(default.name in skills))
-			LAZYSET(skills, default.name, default)
+			LAZYSET(skills, default, SKILL_LEVEL_MIN)
 
 /datum/skillset/proc/merge(datum/skillset/other_skillset)
 	for(var/skill in skills)
 		var/new_value = max(other_skillset.get_value(skill), get_value(skill))
 		set_value(skill, new_value)
 
-/datum/skillset/proc/get_value(skill)
-	var/datum/skill/s = get_skill(skill)
-	return s.value
-
-/datum/skillset/proc/set_value(skill, value)
-	var/datum/skill/s = get_skill(skill)
-	s.value = value
-
-/datum/skillset/proc/get_skill(skill)
+/datum/skillset/proc/get_value(datum/skill/skill)
 	return skills[skill]
 
-/datum/skillset/proc/copy_skills()
-	var/result = list()
-	for(var/skill_name in skills)
-		var/datum/skill/original = get_skill(skill_name)
-		var/datum/skill/skill_copy = new original.type
-		result[skill_name] = skill_copy
-	return result
+/datum/skillset/proc/set_value(datum/skill/skill, value)
+	if(value > SKILL_LEVEL_MAX || value < SKILL_LEVEL_MIN)
+		throw "Skill level must be in range from [SKILL_LEVEL_MIN] to [SKILL_LEVEL_MAX]"
+	LAZYSET(skills, skill, value)
 
 /datum/skillset/proc/get_command_modifier()
-	var/datum/skill/command = get_skill(SKILL_COMMAND)
-	return 1 + command.value / SKILL_MAX_LEVEL
+	return 1 + get_value(/datum/skill/command) / SKILL_MAX_LEVEL
 
-/datum/skillset/proc/get_help_additive(skill_name)
-	var/datum/skill/skill = get_skill(skill_name)
-	if (skill.value == SKILL_MIN_LEVEL)
-		return skill.value + 0.5
-	return skill.value
+/datum/skillset/proc/get_help_additive(skill)
+	var/skill_value = get_value(skill)
+	if (skill_value == SKILL_MIN_LEVEL)
+		return skill_value + 0.5
+	return skill_value
