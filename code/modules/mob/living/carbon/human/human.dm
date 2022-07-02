@@ -1581,10 +1581,10 @@
 		for(var/datum/skill/s as anything in sliders_data)
 			var/datum/skill/skill = all_skills[s]
 			var/slider_id = skill.name
-			var/slider_value = mind.skills.get_value(slider_id)
+			var/slider_value = mind.skills.get_value(s)
 			var/slider_min_value = SKILL_LEVEL_MIN
-			var/slider_max_value = mind.skills.get_max(slider_id)
-			var/rank_list = s.custom_ranks
+			var/slider_max_value = mind.skills.get_max(s)
+			var/rank_list = skill.custom_ranks
 			var/rank_list_element = ""
 			for(var/rank in rank_list)
 				rank_list_element += "[rank]\n"

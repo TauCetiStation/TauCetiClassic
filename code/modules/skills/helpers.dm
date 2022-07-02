@@ -37,11 +37,6 @@
 
 	return do_after(user, required_time, target = target, can_move = can_move)
 
-/proc/get_skill_rank_name(datum/skill/skill, value)
-	for(var/skill_rank in skill.custom_ranks)
-		if(skill.custom_ranks[skill_rank] == value)
-			return skill_rank
-
 /proc/get_skill_with_assistance(mob/living/user, datum/skill/skill)
 	var/own_skill_value = user.mind.skills.get_value(skill.name)
 	if(!user.helpers_skillsets || user.helpers_skillsets.len == 0)

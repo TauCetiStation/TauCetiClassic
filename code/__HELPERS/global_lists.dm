@@ -231,9 +231,6 @@
 
 	global.full_ignore_question = get_list_of_keys_from_values_as_list_from_associative_list(special_roles_ignore_question)
 
-	global.all_skills = list()
-	for(var/skill_type in subtypesof(/datum/skill))
-		global.all_skills[skill_type] = new skill_type
 
 	global.all_skillsets = list()
 	for(var/skillset_type in subtypesof(/datum/skillset))
