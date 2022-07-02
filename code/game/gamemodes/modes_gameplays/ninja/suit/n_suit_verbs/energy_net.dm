@@ -29,7 +29,7 @@
 	if(health <= 0)
 		qdel(src)
 
-/obj/effect/energy_net/process(mob/living/carbon/M)
+/obj/effect/energy_net/proc/start_cooldown(mob/living/carbon/M)
 	set waitfor = FALSE
 
 	affecting = M
