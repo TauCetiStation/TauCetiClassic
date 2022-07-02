@@ -901,7 +901,7 @@
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				if(GRAB_NECK)
-					if(prob(5 - L.stunned * 2))
+					if(prob(5 - L.AmountStun() * 2))
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
 						qdel(G)
 		if(resisting)

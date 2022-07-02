@@ -84,11 +84,7 @@
 	if (src.stat != DEAD) //Alive.
 		if (src.paralysis || src.stunned || src.weakened || !src.has_power) //Stunned etc.
 			src.stat = UNCONSCIOUS
-			if (src.paralysis > 0)
-				src.blinded = 1
-			else
-				src.blinded = 0
-
+			blinded = paralysis
 		else	//Not stunned.
 			src.stat = CONSCIOUS
 
