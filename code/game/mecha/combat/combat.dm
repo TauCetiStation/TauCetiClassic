@@ -86,7 +86,7 @@
 				if(istype(target, target_type) && hascall(target, "attackby"))
 					occupant_message("You hit [target].")
 					visible_message("<font color='red'><b>[name] hits [target]</b></font>")
-					if(istype(target, /turf/simulated/wall))
+					if(iswallturf(target))
 						var/turf/simulated/wall/W = target
 						W.add_dent(WALL_DENT_HIT)
 						if(prob(5))

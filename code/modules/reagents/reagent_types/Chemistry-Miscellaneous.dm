@@ -122,7 +122,7 @@
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
 	. = ..()
 	if(volume >= 30)
-		if(istype(T, /turf/simulated/wall))
+		if(iswallturf(T))
 			var/turf/simulated/wall/W = T
 			W.thermite = 1
 			W.add_overlay(image('icons/effects/effects.dmi',icon_state = "#673910"))
