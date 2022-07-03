@@ -18,7 +18,10 @@
 
 	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		var/turf/T = get_turf(object)
-		if(stored)
+		if(!stored)
+			to_chat(c, "<span class='warning'>Select target first.</span>")
+			return
+		else
 			DuplicateObject(stored, perfectcopy=TRUE, sameloc=FALSE, newloc=T)
 			log_admin("Build Mode: [key_name(c)] copied [stored] to [AREACOORD(object)]")
 	else if(LAZYACCESS(modifiers, RIGHT_CLICK))

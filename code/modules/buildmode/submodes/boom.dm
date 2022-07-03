@@ -17,6 +17,7 @@
 /datum/buildmode_mode/boom/show_help(client/c)
 	to_chat(c,
 		"<span class='notice'>***********************************************************\n\
+		Right Mouse Button on buildmode button = Set explosion parameters\n\
 		Mouse Button on obj  = Kaboom\n\
 		***********************************************************</span>")
 
@@ -35,6 +36,7 @@
 			value_valid = TRUE
 			break
 	if (!value_valid)
+		to_chat(c, "<span class='warning'>You need to setup parameters first.</span>")
 		return
 
 	if(LAZYACCESS(modifiers, LEFT_CLICK))
