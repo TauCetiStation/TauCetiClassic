@@ -10,8 +10,6 @@
 
 	sheet_type = /obj/item/stack/sheet/plasteel
 
-	seconds_to_melt = 60
-
 	var/d_state = INTACT
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user)
@@ -63,29 +61,6 @@
 		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
 			to_chat(user, "<span class='notice'>Укрепленная стена рассыпется от удара [W.name].</span>")
 			dismantle_wall()
-			return
-
-	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
-	if(thermite)
-		if(iswelder(W))
-			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.use(0,user))
-				thermitemelt(user, seconds_to_melt)
-				return
-
-		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-			thermitemelt(user, seconds_to_melt)
-			return
-
-		else if(istype(W, /obj/item/weapon/melee/energy/blade))
-			var/obj/item/weapon/melee/energy/blade/EB = W
-
-			EB.spark_system.start()
-			to_chat(user, "<span class='notice'>Вы бьете укрепленную стену энергетическим мечом; термит вспыхивает!</span>")
-			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-
-			thermitemelt(user, seconds_to_melt)
 			return
 
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
