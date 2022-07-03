@@ -368,7 +368,7 @@
 		else
 			to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
 			if(WT.use_tool(src, user, SKILL_TASK_DIFFICULT, 3, 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
-				if(!istype(src, /turf/simulated/wall))
+				if(!iswallturf(src))
 					return
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
