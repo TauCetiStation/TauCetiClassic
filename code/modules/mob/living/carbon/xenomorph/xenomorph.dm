@@ -280,8 +280,11 @@ Hit Procs
 	return "xltrails"
 
 /mob/living/carbon/xenomorph/update_canmove()
-	anchored = HAS_TRAIT(src, TRAIT_ANCHORED)
-	canmove = !(crawling || anchored || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
+	..()
+
+	if(lying)
+		canmove = FALSE
+
 
 /mob/living/carbon/xenomorph/crawl()
 	SetCrawling(!crawling)
