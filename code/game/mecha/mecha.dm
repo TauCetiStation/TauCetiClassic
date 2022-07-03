@@ -300,7 +300,7 @@
 	return 0
 
 /obj/mecha/proc/check_fumbling(fumble_text)
-	return handle_fumbling(occupant, occupant, SKILL_TASK_VERY_EASY, interface_skills, fumble_text, can_move = TRUE)
+	return handle_fumbling(occupant, occupant, SKILL_TASK_VERY_EASY, interface_skills, fumble_text, can_move = TRUE, check_busy = FALSE)
 
 /obj/mecha/proc/mechturn(direction)
 	set_dir(direction)

@@ -35,7 +35,7 @@
 		return
 	message = (capitalize(message))
 	var/cooldown = apply_skill_bonus(user, 10 SECONDS, required_skills, 0.5) //+50% for each level
-	var/command_power = user.mind.skills.get_value(SKILL_COMMAND) * 2 + 1//to avoid recursive increase with help
+	var/command_power = user.mind.skills.get_value(/datum/skill/command) * 2 + 1//to avoid recursive increase with help
 
 	if ((src.loc == user && usr.stat == CONSCIOUS))
 		if(emagged)

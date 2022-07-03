@@ -2,17 +2,15 @@
 	if(isobserver(user))
 		return TRUE
 	for(var/datum/skill/required_skill as anything in required_skills)
-		var/datum/skill/skill = all_skills[required_skill]
-		var/value_with_helpers = get_skill_with_assistance(user, skill)
-		if(value_with_helpers < required_skills[required_skills])
+		var/value_with_helpers = get_skill_with_assistance(user, required_skill)
+		if(value_with_helpers < required_skills[required_skill])
 			return FALSE
 	return TRUE
 
 /proc/apply_skill_bonus(mob/user, value, required_skills, multiplier)
 	var/result = value
 	for(var/datum/skill/required_skill as anything in required_skills)
-		var/datum/skill/skill = all_skills[required_skill]
-		var/value_with_helpers = get_skill_with_assistance(user, skill)
+		var/value_with_helpers = get_skill_with_assistance(user, required_skill)
 		result += value * multiplier * (value_with_helpers - required_skills[required_skill])
 	return result
 
@@ -38,12 +36,12 @@
 	return do_after(user, required_time, target = target, can_move = can_move)
 
 /proc/get_skill_with_assistance(mob/living/user, datum/skill/skill)
-	var/own_skill_value = user.mind.skills.get_value(skill.name)
+	var/own_skill_value = user.mind.skills.get_value(skill)
 	if(!user.helpers_skillsets || user.helpers_skillsets.len == 0)
 		return own_skill_value
 	var/help = 0
 	var/command = 0
 	for(var/datum/skillset/skillset in user.helpers_skillsets)
 		command = max(command, skillset.get_command_modifier())
-		help += skillset.get_help_additive(skill.name)
+		help += skillset.get_help_additive(skill)
 	return min(own_skill_value * command + help, SKILL_LEVEL_MAX)
