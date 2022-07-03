@@ -98,9 +98,9 @@
 		var/mob/dead/observer/C = pick(candidates)
 		blobber.key = C.key
 		playsound(blobber, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-		to_chat(blobber, "<b>You are a blobbernaut!</b>")
-		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='danger'but will slowly die if not near the blob </span> or if the factory that made you is killed.")
-		to_chat(blobber, "You can communicate with other blobbernauts and overminds")
+		to_chat(blobber, "<b>You are a blobbernaut!</b> \
+		<br>You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='danger'but will slowly die if not near the blob </span> or if the factory that made you is killed. \
+		<br>You can communicate with other blobbernauts and overminds<BR>")
 		add_points(-40)
 	else
 		to_chat(src, "<span class='warning'>You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later.</span>")
