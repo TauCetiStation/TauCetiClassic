@@ -455,7 +455,7 @@
 				target_search:
 					for(var/i in 1 to 7)
 						target = get_step(target, attacker.dir)
-						if(istype(target, /turf/simulated/wall))
+						if(iswallturf(target))
 							break target_search
 
 				if(!target || !victim_G)

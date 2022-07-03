@@ -869,8 +869,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					continue moving
 	return TRUE
 
-
-/proc/DuplicateObject(obj/original, perfectcopy = 0 , sameloc = 0)
+/proc/DuplicateObject(obj/original, perfectcopy = FALSE, sameloc = FALSE, atom/newloc = null)
 	if(!original)
 		return null
 
@@ -879,13 +878,30 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(sameloc)
 		O=new original.type(original.loc)
 	else
-		O=new original.type(locate(0,0,0))
+		O=new original.type(newloc)
 
-	if(perfectcopy)
-		if((O) && (original))
-			for(var/V in original.vars)
-				if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key")))
-					O.vars[V] = original.vars[V]
+	if(perfectcopy && O && original)
+		for(var/V in original.vars - global.duplicate_forbidden_vars)
+			var/smt = original.vars[V]
+			if(O.vars[V] == smt)
+				continue // check for consts
+			if(islist(smt))
+				var/list/L = smt
+				O.vars[V] = L.Copy()
+			else if(istype(smt, /datum) || ismob(smt))
+				continue // this would reference the original's object, that will break when it is used or deleted.
+			else
+				O.vars[V] = smt
+
+	if(ismachinery(O))
+		var/obj/machinery/M = O
+		M.power_change()
+
+	if(ismob(O)) //Overlays are carried over despite disallowing them, if a fix is found remove this.
+		var/mob/M = O
+		M.cut_overlays()
+		M.regenerate_icons()
+	
 	return O
 
 

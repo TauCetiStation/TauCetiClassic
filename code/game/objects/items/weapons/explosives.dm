@@ -57,7 +57,7 @@
 	var/location = target
 	if(ismob(target) || isobj(target))
 		location = target.loc
-	if(istype(target, /turf/simulated/wall))
+	if(iswallturf(target))
 		var/turf/simulated/wall/W = target
 		W.dismantle_wall(1)
 	else
