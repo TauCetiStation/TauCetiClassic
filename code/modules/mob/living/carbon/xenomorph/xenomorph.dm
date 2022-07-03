@@ -284,6 +284,8 @@ Hit Procs
 
 	if(lying)
 		canmove = FALSE
+	if(density)
+		density = initial(density)
 
 
 /mob/living/carbon/xenomorph/crawl()
