@@ -97,7 +97,6 @@
 		blob_mobs += blobber
 		var/mob/dead/observer/C = pick(candidates)
 		blobber.key = C.key
-		playsound(blobber, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
 		playsound(blobber, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 		to_chat(blobber, "<b>You are a blobbernaut!</b>")
 		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='danger'but will slowly die if not near the blob </span> or if the factory that made you is killed.")
