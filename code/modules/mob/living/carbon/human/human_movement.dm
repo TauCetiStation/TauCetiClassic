@@ -1,7 +1,4 @@
 /mob/living/carbon/human/movement_delay()
-	if(iszombie(src))
-		return zombie_movement_delay()
-
 	var/tally = 0
 	var/nullify_debuffs = FALSE
 
@@ -10,6 +7,8 @@
 		if(C.strained_muscles)
 			tally -= 2
 			nullify_debuffs = TRUE
+	else if(iszombie(src))
+		nullify_debuffs = TRUE
 
 	if(!has_gravity(src))
 		return tally - 1 // It's hard to be slowed down in space by... anything
@@ -19,7 +18,7 @@
 	if(RUN in mutations)
 		tally -= 0.5
 
-	if(crawling)
+	if(lying)
 		tally += 7
 
 	if(!nullify_debuffs)
@@ -58,9 +57,6 @@
 
 	// Movement delay coming from heavy items being carried.
 	var/weight_tally = 0
-	// Currently there is a meme that `slowdown` var is not really weight, it's just a speed modifier
-	// So you can have items causing you to go faster, and thus we need a seperate counter of weight negation
-	// to not negate weight that is not there. ~Luduk
 	var/weight_negation = 0
 
 	var/bp_tally = 0
@@ -84,6 +80,9 @@
 	if(!species.flags[NO_BLOOD] && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
 		chem_nullify_debuff = TRUE
 
+	// Currently there is a meme that `slowdown` var is not really weight, it's just a speed modifier
+	// So you can have items causing you to go faster, and thus we need a seperate counter of weight negation
+	// to not negate weight that is not there. ~Luduk
 	var/item_slowdown = wear_suit?.slowdown
 	if(item_slowdown)
 		if(item_slowdown < 0)
@@ -109,7 +108,7 @@
 		tally += species.speed_mod_no_shoes
 
 	if(weight_tally > 0)
-		tally += weight_tally - weight_negation
+		tally += max(weight_tally - weight_negation, 0)
 
 	if(!chem_nullify_debuff)
 		for(var/x in list(l_hand, r_hand))
