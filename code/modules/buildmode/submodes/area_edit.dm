@@ -33,17 +33,19 @@
 /datum/buildmode_mode/area_edit/change_settings(client/c)
 	var/target_path = input(c, "Enter typepath:", "Typepath", "/area")
 	var/areatype = text2path(target_path)
-	if(ispath(areatype,/area))
-		var/areaname = input(c, "Enter area name:", "Area name", "Area")
-		if(!areaname || !length(areaname))
-			return
-		storedarea = new areatype
-		storedarea.power_equip = 0
-		storedarea.power_light = 0
-		storedarea.power_environ = 0
-		storedarea.always_unpowered = 0
-		storedarea.name = areaname
-		areaimage.loc = storedarea // color our area
+	if(!ispath(areatype, /area))
+		tgui_alert(usr, "No area has been selected.")
+		return
+	var/areaname = input(c, "Enter area name:", "Area name", "Area")
+	if(!areaname || !length(areaname))
+		return
+	storedarea = new areatype
+	storedarea.power_equip = 0
+	storedarea.power_light = 0
+	storedarea.power_environ = 0
+	storedarea.always_unpowered = 0
+	storedarea.name = areaname
+	areaimage.loc = storedarea // color our area
 
 /datum/buildmode_mode/area_edit/handle_click(client/c, params, object)
 	var/list/modifiers = params2list(params)
