@@ -51,7 +51,7 @@
 	if(S)
 		S.duration = max(world.time + amount, S.duration)
 	else if(amount > 0)
-		S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
+		S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount, TRUE)
 	return S
 
 /mob/living/SetStunned(amount, ignore_canstun = FALSE) //Sets remaining duration
@@ -66,7 +66,7 @@
 		if(S)
 			S.duration = world.time + amount
 		else
-			S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
+			S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount, TRUE)
 	return S
 
 /mob/living/AdjustStunned(amount, ignore_canstun = FALSE) //Adds to remaining duration
@@ -77,7 +77,7 @@
 	if(S)
 		S.duration += amount
 	else if(amount > 0)
-		S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount)
+		S = apply_status_effect(/datum/status_effect/incapacitating/stun, amount, TRUE)
 	return S
 
 /* PARALYZED */
@@ -109,7 +109,7 @@
 	if(P)
 		P.duration = max(world.time + amount, P.duration)
 	else if(amount > 0)
-		P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
+		P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount, TRUE)
 	return P
 
 /mob/living/SetParalysis(amount, ignore_canstun = FALSE) //Sets remaining duration
@@ -124,7 +124,7 @@
 		if(P)
 			P.duration = world.time + amount
 		else
-			P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
+			P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount, TRUE)
 	return P
 
 /mob/living/AdjustParalysis(amount, ignore_canstun = FALSE) //Adds to remaining duration
@@ -135,7 +135,7 @@
 	if(P)
 		P.duration += amount
 	else if(amount > 0)
-		P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount)
+		P = apply_status_effect(/datum/status_effect/incapacitating/paralyzed, amount, TRUE)
 	return P
 
 /* WEAKEN */
@@ -151,7 +151,7 @@
 /mob/proc/AdjustWeakened(amount, ignore_canstun = FALSE)
 
 /mob/living/IsWeaken() //If we're knocked down
-	return has_status_effect(/datum/status_effect/incapacitating/weakened)
+	return has_status_effect(/datum/status_effect/incapacitating/weakened, TRUE)
 
 /mob/living/AmountWeaken() //How many deciseconds remain in our knockdown
 	var/datum/status_effect/incapacitating/weakened/K = IsWeaken()
@@ -167,7 +167,7 @@
 	if(K)
 		K.duration = max(world.time + amount, K.duration)
 	else if(amount > 0)
-		K = apply_status_effect(/datum/status_effect/incapacitating/weakened, amount)
+		K = apply_status_effect(/datum/status_effect/incapacitating/weakened, amount, TRUE)
 	return K
 
 /mob/living/SetWeakened(amount, ignore_canstun = FALSE) //Sets remaining duration
@@ -182,7 +182,7 @@
 		if(K)
 			K.duration = world.time + amount
 		else
-			K = apply_status_effect(/datum/status_effect/incapacitating/weakened, amount)
+			K = apply_status_effect(/datum/status_effect/incapacitating/weakened, amount, TRUE)
 	return K
 
 /mob/living/AdjustWeakened(amount, ignore_canstun = FALSE) //Adds to remaining duration
@@ -193,7 +193,7 @@
 	if(K)
 		K.duration += amount
 	else if(amount > 0)
-		K = apply_status_effect(/datum/status_effect/incapacitating/weakened, amount)
+		K = apply_status_effect(/datum/status_effect/incapacitating/weakened, amount, TRUE)
 	return K
 
 /////////////////////////////////// SLEEPING ////////////////////////////////////
