@@ -150,7 +150,7 @@
 /mob/living/carbon/human/proc/handle_stance()
 	// Don't need to process any of this if they aren't standing anyways
 	// unless their stance is damaged, and we want to check if they should stay down
-	if(!stance_damage && (lying || crawling) && (life_tick % 4) != 0)
+	if(!stance_damage && lying && (life_tick % 4) != 0)
 		return
 
 	stance_damage = 0
@@ -161,7 +161,7 @@
 
 	for(var/limb_tag in list(BP_L_LEG, BP_R_LEG))
 		var/obj/item/organ/external/E = bodyparts_by_name[limb_tag]
-		if(!E || !E.is_usable())
+		if(!E?.is_usable())
 			stance_damage += 2 // let it fail even if just foot&leg
 		else if(E.is_malfunctioning())
 			//malfunctioning only happens intermittently so treat it as a missing limb when it procs
@@ -188,34 +188,23 @@
 	if (r_hand && istype(r_hand, /obj/item/weapon/cane))
 		stance_damage -= 2
 
-	// standing is poor
-	if(stance_damage >= 4 || (stance_damage >= 2 && prob(5)))
-		if(iszombie(src)) //zombies crawl when they can't stand
-			if(!crawling && !lying)
-				if(crawl_can_use())
-					crawl()
-				else
-					emote("collapse")
-					Weaken(5)
+	// standing is good
+	if(stance_damage < 2 || (stance_damage < 4 && prob(95)))
+		return
+	
+	if(!lying)
+		if(species && !species.flags[NO_PAIN])
+			var/turf/T = get_turf(src)
+			emote("scream")
+		emote("collapse")
+	Weaken(5) //can't emote while weakened, apparently.
 
-			var/has_arm = FALSE
-			for(var/limb_tag in list(BP_L_ARM, BP_R_ARM))
-				var/obj/item/organ/external/E = bodyparts_by_name[limb_tag]
-				if(E && E.is_usable())
-					has_arm = TRUE
-					break
-			if(!has_arm) //need atleast one hand to crawl
-				Weaken(5)
-			return
-
-		if(!(lying || crawling))
-			if(species && !species.flags[NO_PAIN])
-				var/turf/T = get_turf(src)
-				var/do_we_scream = 1
-				for(var/obj/O in T.contents)
-					if(!(istype(O, /obj/structure/stool/bed/chair)))
-						do_we_scream = 0
-				if(do_we_scream)
-					emote("scream")
-			emote("collapse")
-		Weaken(5) //can't emote while weakened, apparently.
+	if(lying)
+		var/has_arm = FALSE
+		for(var/limb_tag in list(BP_L_ARM, BP_R_ARM))
+			var/obj/item/organ/external/E = bodyparts_by_name[limb_tag]
+			if(E?.is_usable())
+				has_arm = TRUE
+				break
+		if(!has_arm) //need atleast one hand to crawl
+			Stun(5)
