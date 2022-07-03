@@ -196,8 +196,6 @@
 #define PROJECTILE_ABSORBED 2
 #define PROJECTILE_ALL_OK 3
 
-#define COORD(A) "([A.x],[A.y],[A.z])"
-
 #define RUNE_WORDS list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
 
 //Error handler defines
