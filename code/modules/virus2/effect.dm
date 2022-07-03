@@ -970,7 +970,7 @@
 	level = 2
 	max_stage = 3
 	cooldown = 10
-	var/target_nutrition = 400
+	var/target_nutrition = NUTRITION_LEVEL_NORMAL
 
 /datum/disease2/effect/weight_even/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 	var/speed = 0
