@@ -274,7 +274,7 @@
 		return
 	var/turf/T = get_turf(usr)
 	var/area/A = get_area(T)
-	if(!istype(T, /turf/simulated/floor))
+	if(!isfloorturf(T))
 		to_chat(usr, "<span class='warning'>You cannot place [src] on this spot!</span>")
 		return
 
