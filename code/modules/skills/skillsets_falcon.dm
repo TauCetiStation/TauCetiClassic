@@ -82,7 +82,7 @@
 	initial_skills = list(
 		/datum/skill/police = SKILL_LEVEL_MASTER,
 		/datum/skill/firearms = SKILL_LEVEL_MASTER,
-		/datum/skill/melee = SKILL_LEVEL_MASTER,
+		/datum/skill/melee = SKILL_LEVEL_PRO,
 		/datum/skill/engineering = SKILL_LEVEL_TRAINED,
 		/datum/skill/construction = SKILL_LEVEL_TRAINED,
 		/datum/skill/atmospherics = SKILL_LEVEL_TRAINED,

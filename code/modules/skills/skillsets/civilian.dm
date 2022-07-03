@@ -39,7 +39,7 @@
 /datum/skillset/botanist
 	name = "Botanist"
 	initial_skills = list(
-		/datum/skill/melee = SKILL_LEVEL_TRAINED,
+		/datum/skill/melee = SKILL_LEVEL_PRO,
 		/datum/skill/chemistry = SKILL_LEVEL_NOVICE
 	)
 
