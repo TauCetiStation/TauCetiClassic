@@ -87,14 +87,3 @@
 /obj/effect/overlay/typing_indicator/atom_init(mapload, indi_icon)
 	. = ..()
 	icon_state = indi_icon
-
-/obj/effect/overlay/thermite
-	name = "Термит"
-	desc = "Выглядит горячим."
-	icon = 'icons/effects/fire.dmi'
-	icon_state = "2"
-	anchored = 1
-	density = 1
-	layer = 5
-	light_color = "#e0ff8c" //rgb: 88, 100, 55
-	light_power = 1

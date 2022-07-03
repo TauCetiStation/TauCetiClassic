@@ -1518,10 +1518,3 @@
 
 /mob/living/proc/get_pumped(bodypart)
 	return 0
-
-/mob/living/thermitemelt()
-	adjustFireLoss(rand(30, 60))
-	fire_stacks += 2
-	IgniteMob()
-	remove_thermite()
-	return

@@ -12,7 +12,6 @@ var/global/bomb_set
 	can_buckle = 1
 	use_power = NO_POWER_USE
 	unacidable = TRUE	//aliens can't destroy the bomb
-	seconds_to_melt = -1 //neither can thermite
 	var/deployable = 0.0
 	var/extended = 0.0
 	var/lighthack = 0
@@ -446,7 +445,6 @@ var/global/bomb_set
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
-	seconds_to_melt = -1
 
 /obj/item/weapon/disk/nuclear/atom_init()
 	. = ..()

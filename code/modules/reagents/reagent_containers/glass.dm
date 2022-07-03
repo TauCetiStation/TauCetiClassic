@@ -73,10 +73,15 @@
 		playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/glass/afterattack(atom/target, mob/user, proximity, params)
+
 	if (!is_open_container() || !proximity)
 		return
 
-	else if(ismob(target) && target.reagents && reagents.total_volume && user.a_intent == INTENT_HARM) //checking splashing first
+	for(var/type in src.can_be_placed_into)
+		if(istype(target, type))
+			return
+
+	if(ismob(target) && target.reagents && reagents.total_volume)
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 
 		var/mob/living/M = target
@@ -91,16 +96,7 @@
 		reagents.standard_splash(target, user=user)
 		return
 
-	else if(reagents && reagents.total_volume && user.a_intent == INTENT_HARM)
-		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
-		reagents.standard_splash(target, user=user)
-		return
-
-	for(var/type in src.can_be_placed_into)
-		if(istype(target, type))
-			return
-
-	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us. Or FROM us TO it.
+	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us. Or FROM us TO it.
 		var/obj/structure/reagent_dispensers/T = target
 		if(T.transfer_from)
 			T.try_transfer(T, src, user)
@@ -148,6 +144,11 @@
 				to_chat(user, "<span class='warning'>You try to fill [user.a_intent == INTENT_GRAB ? "[src] up from a tank" : "a tank up"], but find it is absent.</span>")
 				return
 
+
+	else if(reagents && reagents.total_volume)
+		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
+		reagents.standard_splash(target, user=user)
+		return
 
 /obj/item/weapon/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/device/flashlight/pen))

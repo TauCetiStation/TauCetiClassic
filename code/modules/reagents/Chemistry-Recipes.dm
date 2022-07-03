@@ -2136,10 +2136,3 @@ TODO: Convert everything to custom hair dye,
 	result = "metatrombine"
 	required_reagents = list("bicaridine" = 1, "nitrogen" = 1, "potassium" = 1)
 	result_amount = 3
-
-/datum/chemical_reaction/compressed_helium
-	name = "Сжатый гелий"
-	id = "compressed_helium"
-	result = "compressed_helium"
-	required_reagents = list("helium" = 10)
-	result_amount = 1

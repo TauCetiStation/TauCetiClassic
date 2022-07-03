@@ -26,7 +26,6 @@
 	icon_state = "hosgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/ion/small)
 	origin_tech = "combat=4;magnets=3"
-	seconds_to_melt = -1
 
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "Advanced Energy Gun"

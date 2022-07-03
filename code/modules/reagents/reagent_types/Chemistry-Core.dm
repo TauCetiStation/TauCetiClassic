@@ -55,8 +55,6 @@
 		lowertemp.react()
 		T.assume_air(lowertemp)
 		qdel(hotspot)
-	if(volume >= 30)
-		T.remove_thermite()
 
 /datum/reagent/water/reaction_obj(obj/O, volume)
 	var/turf/T = get_turf(O)
@@ -76,8 +74,6 @@
 		if(C.painted)
 			C.remove_paint_state()
 			C.color = null
-	if(volume >= 30)
-		O.remove_thermite()
 
 /datum/reagent/water/on_general_digest(mob/living/M)
 	..()
@@ -534,10 +530,3 @@
 	reagent_state = SOLID
 	color = "#a8a8a8" // rgb: 168, 168, 168
 	taste_message = "a CPU"
-
-/datum/reagent/helium
-	name = "Helium"
-	id = "helium"
-	description = "Бесцветный, безвкусный, химически инертный газ. Легче воздуха."
-	reagent_state = GAS
-	color = "#808080" // rgb: 128, 128, 128

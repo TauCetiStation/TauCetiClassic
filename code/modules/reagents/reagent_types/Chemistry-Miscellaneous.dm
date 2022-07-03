@@ -122,11 +122,10 @@
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
 	. = ..()
 	if(volume >= 30)
-		T.add_thermite()
-
-/datum/reagent/thermite/reaction_obj(obj/O, volume)
-	if(volume >= 30)
-		O.add_thermite()
+		if(istype(T, /turf/simulated/wall))
+			var/turf/simulated/wall/W = T
+			W.thermite = 1
+			W.add_overlay(image('icons/effects/effects.dmi',icon_state = "#673910"))
 
 /datum/reagent/thermite/on_general_digest(mob/living/M)
 	..()
@@ -204,8 +203,6 @@
 	else
 		if(O)
 			O.clean_blood()
-			if(volume >= 15)
-				O.remove_thermite()
 
 /datum/reagent/space_cleaner/reaction_turf(turf/T, volume)
 	. = ..()
@@ -220,9 +217,6 @@
 
 		for(var/mob/living/carbon/slime/M in T)
 			M.adjustToxLoss(rand(5,10))
-
-		if(volume >= 15)
-			T.remove_thermite()
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, volume)
 	if(iscarbon(M))
@@ -923,37 +917,3 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	..()
 	M.adjustToxLoss(REM)
 	return FALSE
-
-/datum/reagent/compressed_helium
-	name = "Сжатый гелий"
-	id = "compressed_helium"
-	description = "Сжатый, охлаждённый гелий. Способен сильно понизить температуру комнаты."
-	reagent_state = LIQUID
-	taste_message = "coolness"
-	color = "#738594" //rgb: 45, 52, 58
-
-/datum/reagent/compressed_helium/reaction_turf(turf/T, method=TOUCH, volume)
-	var/hotspot = locate(/obj/fire) in T //little bit of copypasta from foam
-	if(hotspot && istype(T, /turf/simulated))
-		var/turf/simulated/sim_T = T
-		var/datum/gas_mixture/lowertemp = sim_T.remove_air(sim_T.air.total_moles)
-		lowertemp.temperature = lowertemp.temperature - (rand(1, 10)*volume)
-		lowertemp.react()
-		T.assume_air(lowertemp)
-		qdel(hotspot)
-
-	T.extinguish_thermite()
-
-/datum/reagent/compressed_helium/reaction_obj(obj/O, volume)
-	var/turf/T = get_turf(src)
-
-	var/hotspot = locate(/obj/fire) in T
-	if(hotspot && istype(T, /turf/simulated))
-		var/turf/simulated/sim_T = T
-		var/datum/gas_mixture/lowertemp = sim_T.remove_air(sim_T.air.total_moles)
-		lowertemp.temperature = lowertemp.temperature - 10 * volume
-		lowertemp.react()
-		T.assume_air(lowertemp)
-		qdel(hotspot)
-
-	O.extinguish_thermite()

@@ -96,10 +96,6 @@
 	name = "Space Fries"
 	icon_state = "fries"
 
-/obj/item/trash/thermitemess
-	name = "Расплавленное месиво"
-	icon_state = "thermitemess"
-	desc = "Смесь из сплавленных вместе при огромной температуре металла, стекла, пластика, и бог весть чего ещё. До сих пор немного тёплая."
 
 /obj/item/trash/candle/ghost/attackby(obj/item/I, mob/user, params)
 	var/chaplain_check = FALSE

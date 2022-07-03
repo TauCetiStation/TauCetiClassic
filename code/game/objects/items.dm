@@ -402,9 +402,6 @@
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/I, mob/user, params)
-	if((istype(I, /obj/item/weapon/reagent_containers)|| iswelder(I)) && user.a_intent == INTENT_HARM) //for splashing and igniting
-		return
-
 	if(istype(I, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = I
 		if(S.use_to_pickup)
@@ -441,7 +438,7 @@
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
-	if((SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user) & COMPONENT_ITEM_NO_PICKUP) || thermite_timer_id != null)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user) & COMPONENT_ITEM_NO_PICKUP)
 		return FALSE
 	return TRUE
 
@@ -766,14 +763,14 @@
 		return
 
 	var/skill_bonus = 1
-
+	
 	//in case item have no defined default required_skill or we need to check other skills e.g. check crowbar for surgery
 	if(required_skills_override)
 		skill_bonus = apply_skill_bonus(user, 1, required_skills_override, skills_speed_bonus)
 	else if(required_skills) //default check for item
 		skill_bonus = apply_skill_bonus(user, 1, required_skills, skills_speed_bonus)
-
-
+	
+	
 	delay *= toolspeed
 	delay *= skill_bonus
 
@@ -1093,7 +1090,6 @@
 
 /obj/item/proc/wash_act(w_color)
 	decontaminate()
-	remove_thermite()
 	wet = 0
 
 	var/obj/item/clothing/dye_type = get_dye_type(w_color)
@@ -1104,23 +1100,3 @@
 	icon_state = initial(dye_type.icon_state)
 	item_state = initial(dye_type.item_state)
 	desc = "The colors are a bit dodgy."
-
-/obj/item/thermitemelt(seconds_to_melt)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-	s.set_up(3, 1, src)
-	s.start()
-
-	if(seconds_to_melt > 0) //using seconds_to_melt only as bool
-		visible_message("<span class='warning'>Thermite instantly melts [src] turning it into molten mess. </span>")
-		var/obj/item/trash/thermitemess/M = new /obj/item/trash/thermitemess(get_turf(src))
-
-		var/image/welding_sparks = image('icons/effects/effects.dmi', "welding_sparks", layer = ABOVE_LIGHTING_LAYER)
-		welding_sparks.plane = ABOVE_LIGHTING_PLANE
-
-		M.add_overlay(welding_sparks)
-		qdel(src)
-		sleep(3 SECONDS)
-		M.cut_overlay(welding_sparks)
-	else
-		visible_message("<span class='warning'>Thermite isn't strong enough to melt [src]. </span>")
-		remove_thermite()
