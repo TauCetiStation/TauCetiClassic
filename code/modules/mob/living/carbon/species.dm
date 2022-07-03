@@ -1011,7 +1011,7 @@
 
 	is_common = TRUE
 
-	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST)
 
 	emotes = list(
 		/datum/emote/robot/beep,
@@ -1303,7 +1303,7 @@
 
 /datum/species/shadowling/regen(mob/living/carbon/human/H)
 	H.nutrition = NUTRITION_LEVEL_NORMAL //i aint never get hongry
-	
+
 	var/light_amount = 0
 	if(isturf(H.loc))
 		var/turf/T = H.loc
