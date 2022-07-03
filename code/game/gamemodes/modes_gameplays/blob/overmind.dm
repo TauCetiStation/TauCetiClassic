@@ -49,12 +49,10 @@
 
 /mob/camera/blob/proc/update_health_hud()
 	if(blob_core && hud_used)
-		healths.icon = 'icons/mob/blob.dmi'
-		healths.icon_state = "corehealth"
 		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
 		for(var/mob/living/simple_animal/hostile/blob/blobbernaut/B in blob_mobs)
 			if(B.hud_used && B.pwr_display)
-				B.pwr_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
+				B.pwr_display.maptext = healths.maptext
 
 /mob/camera/blob/proc/add_points(points)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
@@ -85,9 +83,8 @@
 	if (!message)
 		return
 
-	//var/message_a = say_quote(message)
 	message = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
-	message = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></font>"
+	message = "<span style='color:#EE4000'><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></span>"
 
 	for(var/M in mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
@@ -121,7 +118,7 @@
 		ghost_sightless_images -= ghostimage
 		QDEL_NULL(ghostimage)
 		updateallghostimages()
-	for(var/BLO in blob_mobs)
+	for(var/BLO as anything in blob_mobs)
 		var/mob/living/simple_animal/hostile/blob/BM = BLO
 		if(BM)
 			BM.overmind = null
