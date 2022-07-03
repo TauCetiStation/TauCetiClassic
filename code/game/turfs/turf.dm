@@ -322,7 +322,7 @@
 	W.resources = temp_res
 
 	if(ispath(path, /turf/simulated/floor))
-		if (istype(W, /turf/simulated/floor))
+		if (isfloorturf(W))
 			W.RemoveLattice()
 
 	if(SSair)
