@@ -311,7 +311,7 @@
 			update_health_hud()
 
 	if(damagesources)
-		health -= maxHealth * 0.0125 * damagesources * 0.5 //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
+		health -= maxHealth * 0.0125 * damagesources //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
 		update_health_hud()
 		var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 		I.appearance_flags = RESET_COLOR
