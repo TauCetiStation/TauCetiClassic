@@ -149,9 +149,7 @@
 // How much resource should be wasted per tile of distance to target.
 #define TK_MANA_PER_TILE 1
 // How much resource should be wasted per upping of a size class of target.
-#define TK_MANA_PER_W_CLASS(cl) (2**cl) * 0.25
-// How much resource should be wasted per tk attack_self/attackby.
-#define TK_MANA_PER_ATTACK 1
+#define TK_MANA_PER_W_CLASS(cl) (2**cl)
 
 //Nutrition levels for humans.
 #define NUTRITION_LEVEL_FAT 600
