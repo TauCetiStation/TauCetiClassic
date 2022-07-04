@@ -100,7 +100,7 @@
 	return
 
 /obj/item/attack_self_tk(mob/living/user)
-	if(!user.can_tk(level=TK_LEVEL_TWO))
+	if(!user.try_tk(mana=TK_MANA_PER_ATTACK, level=TK_LEVEL_TWO))
 		return
 	attack_self(user)
 
@@ -113,7 +113,7 @@
 	return
 
 /obj/item/afterattack_tk(mob/living/user, atom/target, params)
-	if(!user.can_tk(level=TK_LEVEL_TWO))
+	if(!user.try_tk(mana=TK_MANA_PER_ATTACK, level=TK_LEVEL_TWO))
 		return
 
 	// TG calls this a "melee attack chain"
