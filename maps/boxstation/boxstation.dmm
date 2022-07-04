@@ -26414,7 +26414,7 @@
 	pixel_y = -30
 	},
 /obj/item/device/sensor_device,
-/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/sunglasses/hud/med,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
