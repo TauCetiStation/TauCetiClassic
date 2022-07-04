@@ -203,16 +203,20 @@
 		to_chat(src, "<span class='notice'>Your mind won't reach that far.</span>")
 		return
 
-	if(!try_tk(mana=dist * TK_MANA_PER_TILE))
-		return
+	var/mana = dist * TK_MANA_PER_TILE / get_tk_level()
 
-	SetNextMove(CLICK_CD_MELEE)
+	if(!can_tk(mana))
+		return
 
 	if(a_intent == INTENT_GRAB && ismovable(A))
 		var/atom/movable/AM = A
-		AM.telekinetic_grab(src)
+		. = AM.telekinetic_grab(src)
 	else
-		A.attack_tk(src)
+		. = A.attack_tk(src)
+
+	if(.)
+		SetNextMove(CLICK_CD_MELEE)
+		resolve_tk(mana)
 
 /*
 	Restrained ClickOn

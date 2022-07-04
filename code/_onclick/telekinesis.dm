@@ -64,6 +64,10 @@
 */
 /atom/proc/attack_tk(mob/living/user)
 	user.UnarmedAttack(src)
+	return TRUE
+
+/turf/attack_tk(mob/living/user)
+	return FALSE
 
 /*
 	Telekinetic grab:
@@ -74,10 +78,11 @@
 	var/obj/item/tk_grab/O = new(src)
 	O.focus_object(src)
 	user.put_in_active_hand(O)
+	return TRUE
 
 /mob/telekinetic_grab(mob/living/user)
 	if(!user.can_tk(level=TK_LEVEL_THREE))
-		return
+		return FALSE
 
 	return ..()
 
