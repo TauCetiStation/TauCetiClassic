@@ -100,8 +100,9 @@
 		on_place.Invoke(A, I, user)
 
 	A.add_fingerprint(user)
-	// Prevent hitting the thing if we're just putting it.
-	return COMPONENT_NO_AFTERATTACK
+	// Prevent hitting the thing if we're just putting it (but not on harm, if we want to splash table with beaker for i.e).
+	if(user.a_intent != INTENT_HARM)
+		return COMPONENT_NO_AFTERATTACK
 
 /datum/component/clickplace/proc/jump_out(obj/item/I, atom/target, rec_limit = 3)
 	if(I.loc == target || rec_limit == 0)

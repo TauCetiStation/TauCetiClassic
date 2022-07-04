@@ -115,17 +115,15 @@
 /datum/reagent/thermite
 	name = "Thermite"
 	id = "thermite"
-	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
+	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt various objects."
 	reagent_state = SOLID
 	color = "#673910" // rgb: 103, 57, 16
 
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
-	. = ..()
-	if(volume >= 30)
-		if(istype(T, /turf/simulated/wall))
-			var/turf/simulated/wall/W = T
-			W.thermite = 1
-			W.add_overlay(image('icons/effects/effects.dmi',icon_state = "#673910"))
+	T.AddComponent(/datum/component/thermite, volume, T.min_thermite_amount, T.max_thermite_time, T.min_thermite_time)
+
+/datum/reagent/thermite/reaction_obj(obj/O, volume)
+	O.AddComponent(/datum/component/thermite, volume, O.min_thermite_amount, O.max_thermite_time, O.min_thermite_time)
 
 /datum/reagent/thermite/on_general_digest(mob/living/M)
 	..()

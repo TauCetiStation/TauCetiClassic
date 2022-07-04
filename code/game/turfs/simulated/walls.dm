@@ -472,3 +472,8 @@
 
 	LAZYADD(dent_decals, decal)
 	add_overlay(decal)
+
+/turf/simulated/wall/thermite_burn()
+	ChangeTurf(/turf/simulated/floor/plating)
+	var/turf/simulated/floor/F = src
+	F.burn_tile()

@@ -56,6 +56,13 @@
 	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
 	var/chat_color_darkened
 
+	//thermite vars - see /datum/component/thermite
+	var/min_thermite_amount = 30
+	var/min_thermite_time = 5
+	var/max_thermite_time = 60
+
+
+
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
@@ -787,3 +794,15 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
+
+//called from thermite component
+//if you want special behaviour for your atom when it's melted by thermite (like different overlay/time/etc.), put it here
+//should return burn overlay or false if no overload is available
+/atom/proc/thermite_melt()
+	return TRUE
+
+//called from thermite component
+//if you want special behaviour for your atom when it is destroyed by thermite (like spawning burnt mess/exploding/etc.), put it here
+//should return false if no overload is available
+/atom/proc/thermite_burn()
+	return FALSE

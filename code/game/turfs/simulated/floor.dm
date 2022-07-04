@@ -660,6 +660,10 @@ var/global/list/wood_icons = list("wood","wood-broken")
 					viewing_distance = 5)
 				new /obj/item/stack/tile/plasteel(src)
 				ReplaceWithLattice()
+
+/turf/simulated/floor/thermite_burn()
+	BreakToBase()
+	return TRUE
 #undef LIGHTFLOOR_ON_BIT
 
 #undef LIGHTFLOOR_STATE_OK
