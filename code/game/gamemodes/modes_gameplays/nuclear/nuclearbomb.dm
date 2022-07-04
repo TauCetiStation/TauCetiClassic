@@ -478,6 +478,10 @@ var/global/bomb_set
 /obj/machinery/nuclearbomb/fake/atom_init()
 	. = ..()
 	r_code = "HONK"
+	if(SSticker)
+		//var/datum/faction/nuclear/N = find_faction_by_type(/datum/faction/nuclear)
+		var/image/I = image('icons/obj/items.dmi', src, "banana")
+		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/faction, "fake_nuke", I, /datum/faction/nuclear)
 
 /obj/machinery/nuclearbomb/fake/explode()
 	if(safety)
