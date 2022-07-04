@@ -35,16 +35,13 @@
 		return FALSE
 	return TRUE
 
-/mob/proc/resolve_tk(mana=0, level=TK_LEVEL_NORMAL)
-	spend_tk_power(mana)
-
 /mob/proc/try_tk(mana=0, level=TK_LEVEL_NORMAL)
 	mana = mana / get_tk_level()
 
 	if(!can_tk(mana, level))
 		return FALSE
 
-	resolve_tk(mana, level)
+	spend_tk_power(mana)
 	return TRUE
 
 /*
@@ -68,6 +65,11 @@
 
 /turf/attack_tk(mob/living/user)
 	return FALSE
+
+/atom/movable/attack_tk(mob/living/user)
+	if(user.a_intent == INTENT_GRAB)
+		return telekinetic_grab(user)
+	return ..()
 
 /*
 	Telekinetic grab:

@@ -208,15 +208,9 @@
 	if(!can_tk(mana))
 		return
 
-	if(a_intent == INTENT_GRAB && ismovable(A))
-		var/atom/movable/AM = A
-		. = AM.telekinetic_grab(src)
-	else
-		. = A.attack_tk(src)
-
-	if(.)
+	if(A.attack_tk(src))
 		SetNextMove(CLICK_CD_MELEE)
-		resolve_tk(mana)
+		spend_tk_power(mana)
 
 /*
 	Restrained ClickOn
