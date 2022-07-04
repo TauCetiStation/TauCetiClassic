@@ -385,6 +385,44 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	for(var/areatype in areas_without_camera)
 		to_chat(world, "* [areatype]")
 
+/client/proc/robust_dress_shop()
+	var/list/baseoutfits = list("Naked", "Custom", "As Job...")
+	var/list/outfits = list()
+	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)
+
+	for(var/datum/outfit/O as anything in paths)
+		outfits[initial(O.name)] = O
+
+	var/dresscode = input("Select outfit", "Robust quick dress shop") as null|anything in baseoutfits + sort_list(outfits)
+	if(isnull(dresscode))
+		return
+
+	if(outfits[dresscode])
+		dresscode = outfits[dresscode]
+
+	else if(dresscode == "As Job...")
+		var/list/job_paths = subtypesof(/datum/outfit/job)
+		var/list/job_outfits = list()
+		for(var/datum/outfit/O as anything in job_paths)
+			job_outfits[initial(O.name)] = O
+
+		dresscode = input("Select job equipment", "Robust quick dress shop") as null|anything in sort_list(job_outfits)
+		dresscode = job_outfits[dresscode]
+		if(isnull(dresscode))
+			return
+	/*
+	else if(dresscode == "Custom")
+		var/list/custom_names = list()
+		for(var/datum/outfit/D in custom_outfits)
+			custom_names[D.name] = D
+		var/selected_name = input("Select outfit", "Robust quick dress shop") as null|anything in sort_list(custom_names)
+		dresscode = custom_names[selected_name]
+		if(isnull(dresscode))
+			return
+	*/
+
+	return dresscode
+
 //todo: this proc should use /datum/outfit
 /client/proc/cmd_admin_dress(mob/living/carbon/human/M in mob_list)
 	set category = "Fun"

@@ -437,3 +437,19 @@
 /obj/item/weapon/card/id/space_police/atom_init()
 	. = ..()
 	access = get_all_accesses()
+
+/obj/item/weapon/card/id/clown/tunnel
+	assignment = "Tunnel Clown!"
+	rank = "Tunnel Clown!"
+
+/obj/item/weapon/card/id/clown/tunnel/atom_init()
+	. = ..()
+	access = get_all_accesses()
+
+/obj/item/weapon/card/id/syndicate/reaper
+	assignment = "Reaper"
+	rank = "Reaper"
+
+/obj/item/weapon/card/id/syndicate/reaper/atom_init()
+	. = ..()
+	access = get_all_accesses()
