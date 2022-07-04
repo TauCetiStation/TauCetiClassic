@@ -25,6 +25,8 @@
 	return
 
 /mob/proc/can_tk(mana=0, level=TK_LEVEL_NORMAL, show_warnings=TRUE)
+	if(!(TK in mutations))
+		return FALSE
 	if(get_tk_level() < level)
 		if(show_warnings)
 			to_chat(src, "<span class='warning'>Such an action would require vastly superior psychokinetic skills.</span>")
