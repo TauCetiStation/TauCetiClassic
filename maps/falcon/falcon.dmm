@@ -24369,6 +24369,7 @@
 	pixel_y = 2
 	},
 /obj/structure/rack,
+/obj/item/clothing/suit/straight_jacket,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
