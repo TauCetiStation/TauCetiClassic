@@ -28,3 +28,9 @@
 	sound = "yesert"
 /datum/announcement/centcomm/noert/New()
 	message = "Похоже, отряд быстрого реагирования был запрошен на [station_name_ru()]. К сожалению, мы не сможем его отправить сейчас."
+
+/datum/announcement/centcomm/summon
+	name = "Central Command Higher Dimensional Affairs"
+	subtitle = "Центральное Командование"
+/datum/announcement/centcomm/summon/New(mob/user)
+	message = "Зафиксирован призыв дрвеного бога, проводимый [user? user.name : "неизвестными"] в [get_area(user)] из неизвестного измерения. Прервите ритуал любой ценой!"

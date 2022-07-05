@@ -5,9 +5,10 @@
 /datum/religion_rites/pedestals/cult/narsie
 	name = "Призыв Нар-Си"
 	desc = "Призывает древнего бога, не бойтесь пожертвовать частями тела своего друга, вам всё сочтётся."
-	ritual_length = (1 MINUTE)
+	ritual_length = (3 MINUTE)
 	invoke_msg = "Venit ad nos!"
 	favor_cost = 2000
+	var/datum/announcement/centcomm/summon/A //New should be called only on summon!
 
 	rules = list(
 		/obj/item/organ/external/r_arm = 3,
@@ -17,6 +18,31 @@
 	)
 
 	var/need_members = 4
+
+/datum/religion_rites/pedestals/cult/narsie/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+	var/datum/faction/cult/C = find_faction_by_type(/datum/faction/cult)
+	var/datum/objective/target/sacrifice/O = C.objective_holder.FindObjective(/datum/objective/target/sacrifice)
+	if(O)
+		if(O.check_completion() != OBJECTIVE_WIN)
+			to_chat(user, "<span class='warning'>Жертвоприношение не было проведено! Порталу не хватит мощи на раскрытие, если вы попытаетесь провести ритуал!</span>")
+			return FALSE
+
+	var/datum/objective/cult/summon_narsie/S = C.objective_holder.FindObjective(/datum/objective/cult/summon_narsie)
+	if(!S)
+		to_chat(user, "<span class='cult'>Я не желаю к вам приходить!</span>")
+		return FALSE
+
+	var/confirm_final = tgui_alert(user, "Это ФИНАЛЬНЫЙ шаг к призыву Нар'Си; это очень долгий и сложный ритуал, а также экипаж определённо узнает о вашей попытке призыва", "Вы готовы к последнему бою?", list("Моя жизнь за Нар'Си!", "Нет"))
+	if(confirm_final == "Нет")
+		to_chat(user, "<span class='cult'>Вы решили подготовиться перед началом ритуала</span>")
+		return FALSE
+
+	playsound_frequency_admin = 0.92 //Something is coming
+	A = new(user)
+	A.play()
+
+	return TRUE
 
 /datum/religion_rites/pedestals/cult/narsie/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
@@ -36,7 +62,6 @@
 	for(var/mob/M in AOG.mobs_around)
 		if(religion.is_member(M) && M.get_species() != HOMUNCULUS)
 			cultists_around++
-
 	if(cultists_around < need_members)
 		if(user)
 			to_chat(user, "<span class='warning'>Недостаточно последователей вокруг алтаря.</span>")
@@ -49,10 +74,18 @@
 
 	return TRUE
 
+/datum/religion_rites/pedestals/cult/narsie/reset_rite()
+	. = ..()
+	playsound_frequency_admin = 1
+
 /datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
 	SSticker.nar_sie_has_risen = TRUE
-
+	playsound_frequency_admin = 1
+	for(var/mob/M in player_list)
+		if(!isnewplayer(M))
+			M.playsound_local(null, 'sound/effects/dimensional_rend.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	sleep(40)
 	new /obj/singularity/narsie(get_turf(AOG), religion)
 	return TRUE
 
