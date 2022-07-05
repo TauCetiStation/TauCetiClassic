@@ -683,7 +683,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
-	speak = list("Поли хочет кррекер!", ":e Прроверьте сингулярность, лоботррясы!", ":e Подключайте солнечные панели, ленивые даррмоеды!",":e КТО ВЗЯЛ ГРРЁБАНЫЕ РРИГИ?",":e О БОЖЕ, ОНА СБЕЖАЛА! ВЫЗЫВАЙТЕ ШАТТЛ!")
+	speak = list("Поли хочет кррекер!", ":e Прроверьте сингулярность, лоботррясы!", ":e Подключайте солнечные панели, ленивые даррмоеды!", ":e КТО ВЗЯЛ ГРРЁБАНЫЕ РРИГИ?", ":e О БОЖЕ, ОНА СБЕЖАЛА! ВЫЗЫВАЙТЕ ШАТТЛ!")
 	speak_chance = 3
 	var/memory_saved = 0
 	var/rounds_survived = 0
@@ -695,7 +695,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	available_channels = list(":e")
 	Read_Memory()
 	if(rounds_survived == longest_survival)
-		speak += pick("...[longest_survival].", "Я это уже видел!", "Я прожил так много жизней!", "Кто ты?")
+		speak += pick("...[longest_survival].", "Чего я только не видал!", "Я прожил так много жизней!", "Что ты предо мной?")
 		desc += " Old as sin, and just as loud. Claimed to be [rounds_survived]."
 		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
 		color = "#eeee22"
@@ -707,7 +707,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 		speak += pick("...снова?", "Нет, всё было кончено!", "Выпустите меня!", "Это никогда не закончится!")
 		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"
 	else
-		speak += pick("...я жив?", "Это не птичий ррай!", "Я живу, умирраю, и снова живу!", "Пустота увядает!")
+		speak += pick("...я жив?", "Это не птичий ррай!", "Я живу, умирраю, и снова живу!", "Пустота исчезает!")
 	. = ..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
