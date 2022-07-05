@@ -5948,7 +5948,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/mob/living/simple_animal/parrot/Poly,
 /turf/simulated/floor{
 	icon_state = "darkyellow"
 	},
@@ -7415,6 +7414,7 @@
 	},
 /area/station/civilian/kitchen)
 "anC" = (
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -7789,10 +7789,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "aox" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 21
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/station/maintenance/science)
 "aoy" = (
 /obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
@@ -9760,6 +9765,12 @@
 	},
 /turf/environment/space,
 /area/space)
+"arV" = (
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/cargo)
 "arW" = (
 /obj/machinery/camera{
 	c_tag = "MiniSat South";
@@ -9811,6 +9822,11 @@
 	icon_state = "yellow"
 	},
 /area/station/hallway/primary/central)
+"asb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/maintenance/science)
 "asi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -10216,6 +10232,7 @@
 	dir = 6
 	},
 /obj/machinery/hologram/holopad,
+/mob/living/simple_animal/parrot/Poly,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11111,6 +11128,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bCq" = (
@@ -12396,6 +12414,10 @@
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/effect/decal/cleanable/cobweb2,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 21
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cUq" = (
@@ -22923,6 +22945,7 @@
 	dir = 1
 	},
 /mob/living/simple_animal/corgi/borgi,
+/obj/structure/stool/bed/chair/comfy/black,
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "npY" = (
@@ -24347,6 +24370,7 @@
 	},
 /area/station/hallway/primary/central)
 "oHF" = (
+/obj/item/clothing/suit/straight_jacket,
 /obj/item/weapon/gun/syringe,
 /obj/item/weapon/medical/teleporter,
 /obj/item/weapon/medical/teleporter,
@@ -26292,6 +26316,7 @@
 /obj/item/weapon/storage/firstaid/adv,
 /obj/item/weapon/storage/firstaid/adv,
 /obj/structure/closet/crate/medical,
+/obj/item/weapon/reagent_containers/food/snacks/soap,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -28879,9 +28904,6 @@
 /obj/machinery/camera{
 	c_tag = "Central Hallway East";
 	dir = 4
-	},
-/obj/machinery/atm{
-	pixel_x = -28
 	},
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
@@ -33260,9 +33282,12 @@
 	},
 /area/station/maintenance/science)
 "xjt" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 22
+	},
 /turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
+	icon_state = "panelscorched"
 	},
 /area/station/maintenance/science)
 "xjz" = (
@@ -66972,8 +66997,8 @@ rNw
 rNw
 rNw
 rNw
-aoo
-aox
+arV
+rsV
 rsV
 aoI
 uJq
@@ -71088,8 +71113,8 @@ dtJ
 jcg
 isF
 isF
-xhK
-ahn
+asb
+eTS
 lUt
 hvD
 hvD
@@ -73644,8 +73669,8 @@ vmc
 ahn
 rzi
 xKK
-bRr
 xjt
+aox
 sVi
 abf
 abq
