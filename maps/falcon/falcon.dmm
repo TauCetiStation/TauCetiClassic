@@ -29704,7 +29704,6 @@
 /area/station/medical/storage)
 "tHA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/space_heater,
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
