@@ -766,6 +766,7 @@
 	dir = 8;
 	pixel_x = 21
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "chapel"
@@ -2330,6 +2331,7 @@
 	pixel_x = 28
 	},
 /obj/structure/stool/bed/chair/comfy/brown,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/dormitories/dormone)
 "adV" = (
@@ -3699,6 +3701,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -4171,6 +4174,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -4184,6 +4188,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -4760,6 +4765,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -5179,6 +5185,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/carpet/blue,
 /area/station/civilian/locker)
 "ajf" = (
@@ -5221,6 +5228,7 @@
 /area/station/civilian/gym)
 "ajj" = (
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/gym)
 "ajk" = (
@@ -5487,6 +5495,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "chapel"
@@ -5559,6 +5568,7 @@
 	dir = 4
 	},
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/carpet/blue,
 /area/station/civilian/locker)
 "ajP" = (
@@ -5603,6 +5613,7 @@
 /area/station/civilian/chapel/office)
 "ajS" = (
 /obj/structure/stool/bed/chair/pew/left,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "chapel"
@@ -5639,6 +5650,7 @@
 /area/station/maintenance/escape)
 "ajW" = (
 /obj/structure/stool/bed/chair/pew/right,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "chapel"
 	},
@@ -6090,6 +6102,7 @@
 /area/station/maintenance/escape)
 "ala" = (
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -6106,6 +6119,7 @@
 	dir = 1
 	},
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/gym)
 "ald" = (
@@ -7332,6 +7346,7 @@
 	pixel_y = -28
 	},
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -9796,36 +9811,6 @@
 	icon_state = "yellow"
 	},
 /area/station/hallway/primary/central)
-"asb" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "arrival_escape";
-	locked = 1;
-	name = "Escape Airlock";
-	req_access = list(1)
-	},
-/turf/simulated/floor/plating,
-/area/station/security/checkpoint)
-"asc" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor/plating{
-	dir = 8;
-	icon_state = "warnplate"
-	},
-/area/station/security/checkpoint)
-"asd" = (
-/obj/machinery/door/firedoor,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
-	name = "KEEP CLEAR: DOCKING AREA"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/checkpoint)
 "asi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -10632,6 +10617,7 @@
 /area/asteroid/mine/dwarf)
 "bez" = (
 /obj/structure/stool/bed/chair/metal/black,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11620,6 +11606,7 @@
 "ccc" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "asteroid"
 	},
@@ -12226,6 +12213,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/dormitories/dormone)
 "cMi" = (
@@ -13401,6 +13389,7 @@
 /area/asteroid/research_outpost/spectro)
 "dNp" = (
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "asteroid"
 	},
@@ -18570,6 +18559,18 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
+"jju" = (
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
+	name = "KEEP CLEAR: DOCKING AREA"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
 "jki" = (
 /obj/machinery/computer/telecomms/server,
 /obj/structure/cable{
@@ -19698,6 +19699,7 @@
 /area/station/medical/reception)
 "kjB" = (
 /obj/structure/stool/bed/chair/pew/left,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "chapel"
@@ -20024,6 +20026,15 @@
 "kzz" = (
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/bar)
+"kzW" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/station/security/checkpoint)
 "kAH" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -22991,6 +23002,14 @@
 /obj/structure/sign/departments/cargo,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
+"nsB" = (
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
 "nsG" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
@@ -23923,6 +23942,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredfull"
@@ -27728,6 +27748,7 @@
 "rGx" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "asteroid7"
 	},
@@ -28562,6 +28583,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "chapel"
@@ -28858,9 +28880,13 @@
 	c_tag = "Central Hallway East";
 	dir = 4
 	},
+/obj/machinery/atm{
+	pixel_x = -28
+	},
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredfull"
@@ -29390,6 +29416,7 @@
 /area/station/maintenance/medbay)
 "twE" = (
 /obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "grass1"
 	},
@@ -31314,10 +31341,11 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "vob" = (
-/obj/machinery/door/firedoor,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/machinery/door/airlock/external{
+	dock_tag = "arrival_escape";
+	locked = 1;
+	name = "Escape Airlock";
+	req_access = list(1)
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint)
@@ -32143,6 +32171,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -34317,6 +34346,7 @@
 /obj/structure/stool/bed/chair/metal/yellow{
 	dir = 8
 	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -52269,9 +52299,9 @@ dpV
 dpV
 xbS
 gay
+nsB
 vob
-asb
-asd
+jju
 vrL
 vrL
 gay
@@ -52526,9 +52556,9 @@ uJN
 pmJ
 xbS
 gay
-vob
-asc
-vob
+nsB
+kzW
+nsB
 crv
 gay
 crv

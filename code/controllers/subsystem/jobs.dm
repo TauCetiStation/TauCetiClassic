@@ -438,7 +438,7 @@ SUBSYSTEM_DEF(job)
 				spawn_in_storage += thing
 			else
 				metadata = H.client.prefs.gear[G.display_name]
-				if(H.equip_or_collect(G.spawn_item(H, metadata), G.slot))
+				if(H.equip_to_slot_or_del(G.spawn_item(H, metadata), G.slot))
 					to_chat(H, "<span class='notice'>Equipping you with \the [thing]!</span>")
 					custom_equip_slots.Add(G.slot)
 				else

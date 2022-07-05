@@ -51,6 +51,8 @@
 
 	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
 
+	var/sound_environment = SOUND_AREA_DEFAULT // Used to decide what kind of reverb the area makes sound have
+
 	var/looped_ambience = null
 	var/is_force_ambience = FALSE
 	var/ambience = list(

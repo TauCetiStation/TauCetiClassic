@@ -569,7 +569,7 @@
 		// Restore air in your zone
 		if("restore_air") // this is unproper way to restore turfs default gas values, since you can delete sleeping agent for example.
 			var/turf/simulated/T = get_turf(usr)
-			if((istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor)) && T.zone.air)
+			if((isfloorturf(T) || istype(T, /turf/simulated/shuttle/floor)) && T.zone.air)
 				var/datum/gas_mixture/GM = T.zone.air
 
 				for(var/g in gas_data.gases)

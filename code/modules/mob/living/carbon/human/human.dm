@@ -931,6 +931,8 @@
 			number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/night/shadowling))
 		number -= 1
+	if(istype(glasses, /obj/item/clothing/glasses/cult_blindfold))
+		number += 2
 	return number
 
 
@@ -1785,7 +1787,7 @@
 		to_chat(src, "<span class='notice'>It is unsafe to leap without gravity!</span>")
 		return
 
-	if(incapacitated(LEGS) || buckled || pinned.len || stance_damage >= 4) //because you need !restrained legs to leap
+	if(incapacitated(LEGS) || buckled || anchored || stance_damage >= 4) //because you need !restrained legs to leap
 		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
 		return
 

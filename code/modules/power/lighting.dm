@@ -37,7 +37,7 @@
 	if (!(ndir in cardinal))
 		return
 	var/turf/loc = get_turf_loc(usr)
-	if (!istype(loc, /turf/simulated/floor))
+	if (!isfloorturf(loc))
 		to_chat(usr, "<span class='warning'>[src.name] cannot be placed on this spot.</span>")
 		return
 	to_chat(usr, "Attaching [src] to the wall.")
