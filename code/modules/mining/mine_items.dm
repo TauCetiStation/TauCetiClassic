@@ -559,7 +559,7 @@
 	var/additional_koef = 0.25 // 25%
 
 /obj/item/kinetic_upgrade/resources/atom_init()
-	desc += "Повышает <span class='notice'><B>эффективность добычи ресурсов<B></span> на <span class='notice'><B>[additional_koef * 100]%</B></span>. "
+	desc += "Повышает <span class='notice'><B>эффективность добычи ресурсов</B></span> на <span class='notice'><B>[additional_koef * 100]%</B></span>. "
 	return ..()
 /obj/item/kinetic_upgrade/range
 	name = "accelerator upgrade(range)"
