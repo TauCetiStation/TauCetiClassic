@@ -215,7 +215,7 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(P.use_tool(src, user, 50, volume = 70))
+		if(P.use_tool(src, user, 5 SECONDS, volume = 100))
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
@@ -223,8 +223,8 @@
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
-				for(var/turf/simulated/mineral/M in range(user,1))
-					if(get_dir(user,M) & user.dir)
+				for(var/turf/simulated/mineral/M in range(user, 1))
+					if(get_dir(user, M) & user.dir)
 						M.GetDrilled(mineral_drop_koef = P.mineral_multiply_koef)
 				return
 

@@ -38,7 +38,7 @@
 
 /mob/living/simple_animal/hostile/proc/mance()
 	if(isliving(target))
-		step(src, turn(get_dir(src.loc, target.loc), pick(45, -45, 90, -90))) // moving to the side from target
+		step(src, turn(get_dir(loc, target.loc), pick(45, -45, 90, -90))) // moving to the side from target
 	return PROJECTILE_FORCE_MISS
 
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
@@ -119,8 +119,8 @@
 ////////////Drone(miniBoss)/////////////
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/mining
-	health = 320
-	maxHealth = 320
+	health = 340
+	maxHealth = 340
 	faction = "mining"
 	w_class = SIZE_HUMAN
 	projectiletype = /obj/item/projectile/beam/xray
@@ -170,7 +170,7 @@
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			gib()
-		if(EXPLODE_HEAVY)
+		if(EXPLODE_HEAVY) // so hurt..
 			adjustBruteLoss(maxHealth * 0.95)
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(maxHealth * 0.6)
@@ -283,7 +283,7 @@
 
 	if(istype(target, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/P = target
-		P.mineral_multiply_koef += 0.25
+		P.mineral_multiply_koef += 0.30 // +30%
 		to_chat(user, "<span class='info'>Вы внедрили ядро червя в [target]!</span>")
 		qdel(src)
 

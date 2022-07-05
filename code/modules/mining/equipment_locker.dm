@@ -745,7 +745,7 @@
 			if(stance != HOSTILE_STANCE_IDLE)
 				to_chat(user, "<span class='info'>You can't repair the [src] while it is moving!</span>")
 				return
-			if(maxHealth == health)
+			if(health >= maxHealth)
 				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
 			else
 				to_chat(user, "<span class='info'>You begin to weld some cracks on the [src].</span>")

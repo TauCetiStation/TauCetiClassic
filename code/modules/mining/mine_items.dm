@@ -63,7 +63,7 @@
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 	usesound = 'sound/items/pickaxe.ogg'
 	var/drill_verb = "picking"
-	var/mineral_multiply_koef = 1
+	var/mineral_multiply_koef = 1 // default
 	sharp = 1
 
 	var/excavation_amount = 100
@@ -81,7 +81,7 @@
 	icon_state = "gpickaxe"
 	item_state = "gpickaxe"
 	toolspeed = 0.2 // hi minecraft golden pickaxe
-	mineral_multiply_koef = 0.5 // for speed balance
+	mineral_multiply_koef = 0.6 // for speed balance
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
 
@@ -104,7 +104,7 @@
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	toolspeed = 0.3
+	toolspeed = 0.25
 	mineral_multiply_koef = 1.3
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
@@ -498,7 +498,7 @@
 	damage_type = BRUTE
 	flag = "bomb"
 	var/range = 3
-	var/mineral_multiply_koef = 1
+	var/mineral_multiply_koef = 1 // default
 
 /obj/item/projectile/kinetic/atom_init()
 	. = ..()
