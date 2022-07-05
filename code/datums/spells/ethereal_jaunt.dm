@@ -26,7 +26,7 @@
 		var/obj/effect/dummy/spell_jaunt/holder = new(mobloc)
 		holder.modifier_delay = movement_cooldown
 		target.ExtinguishMob()			//This spell can extinguish mob
-		target.status_flags ^= GODMODE	//Protection from any kind of damage, caused you in astral world
+		target.add_status_flags(GODMODE) //Protection from any kind of damage, caused you in astral world
 
 		var/remove_xray = FALSE
 		if(!(XRAY in target.mutations))
@@ -39,7 +39,7 @@
 		if(companions)
 			for(var/M in companions)
 				var/mob/living/L = M
-				L.status_flags ^= GODMODE
+				L.add_status_flags(GODMODE)
 				L.ExtinguishMob()
 		var/image/I = image('icons/mob/blob.dmi', holder, "marker")
 		I.plane = HUD_PLANE
@@ -65,14 +65,14 @@
 		if(target.client)
 			target.client.images -= I
 			target.client.eye = target
-		target.status_flags ^= GODMODE	//Turn off this cheat
+		target.remove_status_flags(GODMODE)	//Turn off this cheat
 		if(remove_xray)
 			target.mutations -= XRAY
 			target.update_sight()
 		if(companions)
 			for(var/M in companions)
 				var/mob/living/L = M
-				L.status_flags ^= GODMODE
+				L.remove_status_flags(GODMODE)
 		target.eject_from_wall(gib = TRUE, companions = companions)
 		qdel(holder)
 

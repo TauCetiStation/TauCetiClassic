@@ -122,7 +122,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							if(ishuman(src))
 								var/mob/living/carbon/human/H = src
 								if(!H.stat)
-									H.emote(pick("scream", "cry", "laugh"))
+									H.emote(pick("scream", "laugh"))
 						if(client)
 							client.images += halimage
 						spawn(rand(10,50)) //Only seen for a brief moment.
@@ -167,7 +167,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						if(ishuman(src))
 							var/mob/living/carbon/human/H = src
 							if(!H.stat)
-								H.emote(pick("scream", "cry", "laugh"))
+								H.emote(pick("scream", "laugh"))
 					if(7) // GUNSHOTS
 						var/list/gunsound_list = list('sound/weapons/guns/gunshot_heavy.ogg',
 						                              'sound/weapons/guns/gunshot_ak74.ogg',

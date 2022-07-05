@@ -222,39 +222,11 @@
 
 	if(is_bruised())
 		if(prob(2))
-			owner.emote("cough", message = "coughs up blood!")
+			owner.emote("cough")
 			owner.drip(10)
 		if(prob(4)  && !HAS_TRAIT(owner, TRAIT_AV))
-			owner.emote("gasp", message = "gasps for air!")
+			owner.emote("gasp")
 			owner.losebreath += 15
-
-/obj/item/organ/internal/lungs/diona/process()
-	..()
-	if(is_bruised())
-		if(prob(2))
-			owner.me_emote("annoyingly creaks!")
-			owner.drip(10)
-		if(prob(4))
-			owner.me_emote("smells of rot.")
-			owner.apply_damage(rand(1,15), TOX, BP_CHEST, 0)		//Diona's lungs are used to dispose of toxins, so when lungs are broken, diona gets intoxified.
-	if(owner.life_tick % process_accuracy == 0)
-		if(damage < 0)
-			damage = 0
-
-		if(owner.getToxLoss() >= 60 && !owner.reagents.has_reagent("anti_toxin"))
-			if(damage < min_broken_damage)
-				damage += 0.2 * process_accuracy
-			else
-				var/obj/item/organ/internal/IO = pick(owner.organs)
-				if(IO)
-					IO.damage += 0.2  * process_accuracy
-
-		if(damage >= min_bruised_damage)
-			for(var/datum/reagent/R in owner.reagents.reagent_list)
-				if(istype(R, /datum/reagent/consumable/ethanol))
-					owner.adjustToxLoss(0.1 * process_accuracy)
-				if(istype(R, /datum/reagent/toxin))
-					owner.adjustToxLoss(0.3 * process_accuracy)
 
 /obj/item/organ/internal/lungs/ipc/process()
 	if(owner.nutrition < 1)
@@ -385,13 +357,6 @@
 /obj/item/organ/internal/kidneys/diona
 	name = "vacuole"
 	parent_bodypart = BP_GROIN
-
-/obj/item/organ/internal/kidneys/diona/process()
-	if(damage)
-		if(prob(10))
-			damage -= 1
-		if(prob(2))
-			to_chat(owner, "<span class='warning'>You notice slight discomfort in your groin.</span>")
 
 /obj/item/organ/internal/kidneys/ipc
 	name = "self-diagnosis unit"

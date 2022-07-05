@@ -11,7 +11,7 @@
 		/datum/craft_or_build,\
 		/datum/stack_recipe,\
 		/datum/events,\
-		/obj/effect/bmode,\
+		/atom/movable/screen/buildmode,\
 		/datum/tgui_list_input,\
 		/datum/tgui_modal,\
 	)
@@ -38,3 +38,13 @@
 /* hidden variables */
 #define VE_HIDDEN_LOG \
 	list("address", "computer_id", "guard", "related_accounts_ip", "related_accounts_cid", "lastKnownIP", "telemetry_connections")
+
+var/global/list/duplicate_forbidden_vars = list(
+	"tag", "area", "type", "loc", "locs", "vars", "verbs", "contents",
+	"x", "y", "z", "key", "ckey", "client", "stat",
+	"parent_type", "parent", "group", "power_supply",
+	"bodyparts", "organs", "overlays_standing", "hud_list",
+	"actions", "appearance", "managed_overlays", "managed_vis_overlays", "implants",
+	"tgui_shared_states", "datum_components", "comp_lookup", "reagents",
+	"current_power_usage", "current_power_area"
+	)

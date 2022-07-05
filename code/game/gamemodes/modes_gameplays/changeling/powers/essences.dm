@@ -148,11 +148,11 @@
 
 	return host.whisper(message)
 
-/mob/living/parasite/essence/me_verb(message as text)
-	set name = "Me"
-	if(!host)
+/mob/living/parasite/essence/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
+	if(!host && intentional)
 		to_chat(src, "<span class='userdanger'>You can't speak without host!</span>")
 		return
+
 	if(host.stat == DEAD)
 		return
 
@@ -160,7 +160,7 @@
 		to_chat(src, "<span class='userdanger'>Your host forbade you emoting!</span>")
 		return
 
-	return host.custom_emote(1, message)
+	return host.me_emote(message, message_type, intentional)
 
 /mob/living/parasite/essence/say_understands(mob/other, datum/language/speaking)
 	if(!host)
