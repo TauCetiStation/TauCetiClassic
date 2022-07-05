@@ -1539,18 +1539,13 @@
 	},
 /area/station/cargo/recycler)
 "acO" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/toolbox/mechanical,
 /obj/machinery/turretid/stun/AI_special{
 	control_area = "Telecoms Control Room";
 	dir = 8;
 	name = "AI Satellite Antechamber";
 	pixel_x = -26
 	},
-/obj/item/stack/sheet/mineral/phoron{
-	amount = 25
-	},
-/obj/item/device/radio/off,
+/obj/machinery/space_heater,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -2124,11 +2119,11 @@
 	dir = 8;
 	pixel_x = -28
 	},
-/obj/machinery/power/smes/inputting,
 /obj/machinery/camera/motion{
 	c_tag = "AI Chamber Center";
 	network = list("RD","MiniSat")
 	},
+/obj/machinery/power/smes/fullcharge,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "adI" = (
@@ -2411,12 +2406,8 @@
 	name = "AI Chamber";
 	req_access = list(16)
 	},
-/turf/simulated/floor/bluegrid{
-	icon_state = "dark";
-	name = "Server Walkway";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/station/aisat/ai_chamber)
 "aea" = (
@@ -29713,6 +29704,7 @@
 /area/station/medical/storage)
 "tHA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/space_heater,
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
@@ -34122,7 +34114,6 @@
 /area/station/cargo/storage)
 "xVf" = (
 /obj/item/weapon/storage/toolbox/electrical,
-/obj/structure/rack,
 /obj/item/device/multitool,
 /obj/machinery/light/small{
 	dir = 8
@@ -34131,6 +34122,12 @@
 	pixel_x = -32
 	},
 /obj/item/device/aicard,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/stack/sheet/mineral/phoron{
+	amount = 25
+	},
+/obj/item/device/radio/off,
+/obj/structure/closet/crate/engi,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
