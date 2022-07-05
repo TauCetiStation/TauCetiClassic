@@ -205,8 +205,7 @@
 	if(!can_buy(60))
 		return
 
-	var/obj/effect/blob/factory/F = B.change_to(/obj/effect/blob/factory)
-	F.overmind = src
+	B.change_to(/obj/effect/blob/factory,src)
 
 /mob/camera/blob/verb/revert()
 	set category = "Blob"
