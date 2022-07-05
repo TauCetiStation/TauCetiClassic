@@ -169,8 +169,8 @@
 	convert_opener = "May the Darkness lead your way."
 	aspect_preset = list(
 		/datum/aspect/lightbending/darkness = 3,
-		/datum/aspect/technology = 2,
-		/datum/aspect/resources = 1,
+		/datum/aspect/weapon = 2,
+		/datum/aspect/technology = 1,
 	)
 
 /datum/religion_sect/custom/cult
