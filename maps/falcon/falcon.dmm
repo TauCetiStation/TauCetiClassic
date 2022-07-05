@@ -5320,11 +5320,11 @@
 /obj/structure/table,
 /obj/item/device/camera{
 	pixel_x = 5;
-	pixel_y = 5
+	pixel_y = 9
 	},
 /obj/item/weapon/storage/box/evidence{
 	pixel_x = -3;
-	pixel_y = 2
+	pixel_y = 4
 	},
 /obj/item/device/taperecorder,
 /obj/structure/cable{
@@ -5365,12 +5365,11 @@
 /area/station/civilian/chapel)
 "ajx" = (
 /obj/structure/dresser,
-/obj/machinery/light_switch{
-	pixel_x = -24;
-	pixel_y = -4
-	},
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/machinery/light_switch{
+	pixel_x = -24
 	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
@@ -8447,13 +8446,13 @@
 	dir = 1;
 	pixel_y = -21
 	},
-/obj/structure/table/reinforced,
 /obj/item/device/taperecorder{
 	pixel_x = -3
 	},
 /obj/item/device/camera{
 	pixel_x = 13
 	},
+/obj/structure/table,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurplefull"
@@ -8480,7 +8479,6 @@
 	pixel_y = -22
 	},
 /obj/machinery/light,
-/obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
 	pixel_x = 6;
 	pixel_y = 4
@@ -8489,6 +8487,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
+/obj/structure/table,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurplefull"
@@ -8812,7 +8811,6 @@
 	},
 /area/station/construction/assembly_line)
 "aqv" = (
-/obj/structure/table,
 /obj/item/stack/cable_coil/red{
 	pixel_x = 3;
 	pixel_y = 3
@@ -8839,6 +8837,7 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/glasses/science,
+/obj/structure/rack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11166,17 +11165,28 @@
 /area/station/bridge/hop_office)
 "bDS" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/paper_bin,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/stamp/captain{
+	pixel_y = 8
+	},
 /obj/item/weapon/pen/blue{
-	pixel_x = -5;
-	pixel_y = -1
+	pixel_x = 2;
+	pixel_y = 6
 	},
 /obj/item/weapon/pen/red{
-	pixel_x = -1;
-	pixel_y = 3
+	pixel_x = -5;
+	pixel_y = 6
 	},
-/obj/item/weapon/pen,
-/obj/item/weapon/stamp/captain,
+/obj/item/weapon/pen{
+	pixel_y = 6
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bEv" = (
@@ -12727,9 +12737,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "dns" = (
-/obj/machinery/light_switch{
-	pixel_y = -28
-	},
 /obj/structure/closet/crate{
 	name = "Camera Assembly Crate"
 	},
@@ -13568,7 +13575,9 @@
 /area/station/maintenance/dormitory)
 "dXb" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law{
+	pixel_y = 6
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -13624,9 +13633,6 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "ebe" = (
-/obj/machinery/light_switch{
-	pixel_y = -27
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -13634,6 +13640,9 @@
 	c_tag = "Medbay Cloning";
 	dir = 10;
 	network = list("SS13","Medical")
+	},
+/obj/machinery/light_switch{
+	pixel_y = -24
 	},
 /turf/simulated/floor{
 	icon_state = "whiteblue"
@@ -16443,11 +16452,11 @@
 /obj/item/weapon/stamp/ce{
 	pixel_y = 13
 	},
-/obj/item/device/megaphone{
-	pixel_y = -17
-	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
+	},
+/obj/item/device/megaphone{
+	pixel_y = -17
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -16516,8 +16525,13 @@
 /area/station/medical/reception)
 "gYd" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/wiki/possible_threats,
-/obj/item/device/megaphone,
+/obj/item/weapon/book/manual/wiki/possible_threats{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/device/megaphone{
+	pixel_x = 7
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
 "gYN" = (
@@ -16675,7 +16689,7 @@
 /obj/item/weapon/defibrillator/compact/loaded,
 /obj/structure/cable,
 /obj/machinery/light_switch{
-	pixel_y = -25
+	pixel_y = -24
 	},
 /obj/machinery/power/apc{
 	dir = 4;
@@ -17171,13 +17185,13 @@
 /area/station/engineering/atmos)
 "hPK" = (
 /obj/structure/table/woodentable,
-/obj/item/device/megaphone{
-	pixel_y = 14
-	},
 /obj/machinery/recharger/wallcharger{
 	pixel_x = 31
 	},
 /obj/item/weapon/folder/blue,
+/obj/item/device/megaphone{
+	pixel_y = 14
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "hQW" = (
@@ -18517,7 +18531,9 @@
 /area/station/engineering/atmos)
 "jfm" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/flora/deskferntrim,
+/obj/item/weapon/flora/deskferntrim{
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "jfo" = (
@@ -19072,7 +19088,7 @@
 	},
 /obj/item/ashtray/bronze{
 	pixel_x = 12;
-	pixel_y = -4
+	pixel_y = -2
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -22248,8 +22264,12 @@
 /area/station/engineering/atmos)
 "mPz" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/folder/blue,
-/obj/item/toy/figure/ian,
+/obj/item/weapon/folder/blue{
+	pixel_y = 4
+	},
+/obj/item/toy/figure/ian{
+	pixel_y = 6
+	},
 /obj/structure/sign/poster/official/ian{
 	pixel_x = 32
 	},
@@ -23138,27 +23158,26 @@
 /area/station/engineering/break_room)
 "nwI" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/blue{
-	pixel_x = -4
-	},
-/obj/item/weapon/pen/red{
-	pixel_x = -1;
-	pixel_y = 3
-	},
-/obj/item/weapon/pen{
-	pixel_x = 2;
-	pixel_y = 6
-	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
-	pixel_x = -15;
-	pixel_y = 10
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen/blue{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/weapon/pen/red{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/weapon/pen{
+	pixel_y = 6
+	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -23934,8 +23953,12 @@
 /area/station/bridge)
 "onJ" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/packageWrap,
-/obj/item/weapon/hand_labeler,
+/obj/item/weapon/packageWrap{
+	pixel_y = 4
+	},
+/obj/item/weapon/hand_labeler{
+	pixel_y = 3
+	},
 /obj/machinery/newscaster/security_unit{
 	pixel_y = -28
 	},
@@ -25166,17 +25189,6 @@
 	},
 /area/station/maintenance/medbay)
 "puN" = (
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
-/obj/item/weapon/pen/blue{
-	pixel_x = -5;
-	pixel_y = -1
-	},
-/obj/item/weapon/pen/red{
-	pixel_x = -1;
-	pixel_y = 3
-	},
-/obj/item/weapon/stamp/hop,
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
@@ -25188,6 +25200,24 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen/blue{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/weapon/pen/red{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/weapon/pen{
+	pixel_y = 6
+	},
+/obj/item/weapon/stamp/hop{
+	pixel_x = 12;
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -26485,7 +26515,7 @@
 	dir = 8
 	},
 /obj/machinery/light_switch{
-	pixel_y = -27
+	pixel_y = -24
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -26734,7 +26764,9 @@
 /area/space)
 "qFP" = (
 /obj/structure/table,
-/obj/item/weapon/clipboard,
+/obj/item/weapon/clipboard{
+	pixel_y = 4
+	},
 /obj/item/weapon/coin/silver,
 /obj/item/weapon/coin/silver{
 	pixel_x = -3;
@@ -27004,6 +27036,9 @@
 /area/station/security/main)
 "qQB" = (
 /obj/machinery/computer/aifixer,
+/obj/machinery/light_switch{
+	pixel_y = 26
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -27933,7 +27968,9 @@
 	name = "Shutters Control";
 	pixel_y = -28
 	},
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law{
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -30122,7 +30159,6 @@
 	},
 /area/station/rnd/hallway)
 "tYE" = (
-/obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
 	empty = 1;
 	name = "First-Aid (empty)";
@@ -30144,6 +30180,7 @@
 /obj/machinery/requests_console/science{
 	pixel_x = 28
 	},
+/obj/structure/rack,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warndarkcorners"
@@ -31083,6 +31120,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/light_switch{
+	pixel_y = 24
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
@@ -31436,14 +31476,18 @@
 	network = list("Medical");
 	pixel_y = 25
 	},
-/obj/item/weapon/paper_bin,
 /obj/item/weapon/stamp/cmo{
 	pixel_x = 12;
 	pixel_y = 6
 	},
-/obj/item/weapon/pen,
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen{
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -31955,7 +31999,6 @@
 	},
 /area/station/hallway/primary/central)
 "vYN" = (
-/obj/structure/table,
 /obj/item/device/mmi/posibrain{
 	pixel_y = 14
 	},
@@ -31982,6 +32025,7 @@
 /obj/machinery/newscaster{
 	pixel_x = 28
 	},
+/obj/structure/rack,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warndark"
@@ -33810,7 +33854,13 @@
 /area/station/maintenance/medbay)
 "xHu" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen/red{
+	pixel_x = 2;
+	pixel_y = 6
+	},
 /obj/item/weapon/stamp/approve{
 	pixel_x = -3;
 	pixel_y = 3
@@ -33819,7 +33869,6 @@
 	pixel_x = 4;
 	pixel_y = -2
 	},
-/obj/item/weapon/pen/red,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
