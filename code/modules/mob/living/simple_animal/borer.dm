@@ -32,9 +32,6 @@
 			if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				to_chat(M, "[FOLLOW_LINK(M, src)] The captive mind of [src] whispers, \"[message]\"")
 
-/mob/living/captive_brain/emote(act, m_type = SHOWMSG_VISUAL, message, auto)
-	return
-
 /mob/living/simple_animal/borer
 	name = "cortical borer"
 	real_name = "cortical borer"
@@ -86,7 +83,7 @@
 
 	host_brain = new/mob/living/captive_brain(src)
 	if(request_ghosts)
-		create_spawner(/datum/spawner/borer, "borer", src)
+		create_spawner(/datum/spawner/living/borer, src)
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
 	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_GHOSTLY, , show_warnings = TRUE)
@@ -120,7 +117,7 @@
 		if(prob(5))
 			host.adjustBrainLoss(rand(1,2))
 		if(prob(host.getBrainLoss() * 0.05))
-			host.emote("[pick(list("blink", "choke", "aflap", "drool", "twitch", "gasp"))]")
+			host.emote("[pick(list("blink", "choke", "drool", "twitch", "gasp"))]")
 
 /mob/living/simple_animal/borer/say_understands(mob/other, datum/language/speaking)
 	return host == other

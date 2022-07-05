@@ -262,14 +262,14 @@
 		body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
 		body += "<option value='?_src_=vars;addlanguage=\ref[D]'>Add Language</option>"
 		body += "<option value='?_src_=vars;remlanguage=\ref[D]'>Remove Language</option>"
+		if(ishuman(D) || istype(D, /mob/dead/new_player))
+			body += "<option value='?_src_=vars;give_quality=\ref[D]'>Give Quality</option>"
 
 		body += "<option value='?_src_=vars;addverb=\ref[D]'>Add Verb</option>"
 		body += "<option value='?_src_=vars;remverb=\ref[D]'>Remove Verb</option>"
 		body += "<option value='?_src_=vars;setckey=\ref[D]'>Set Client</option>"
 		if(ishuman(D))
 			body += "<option value>---</option>"
-			body += "<option value='?_src_=vars;give_quality=\ref[D]'>Give Quality</option>"
-			body += "<option value='?_src_=vars;setmutantrace=\ref[D]'>Set Mutantrace</option>"
 			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
 			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
 			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
@@ -283,6 +283,7 @@
 	if(isatom(D))
 		body += "<option value='?_src_=vars;delthis=\ref[D]'>Delete this object</option>"
 		body += "<option value='?_src_=vars;edit_filters=\ref[D]'>Edit Filters</option>"
+		body += "<option value='?_src_=vars;edit_particles=\ref[D]'>Edit Particles</option>"
 	if(isobj(D))
 		body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 	if(isobj(D) || ismob(D) || isturf(D))
@@ -503,18 +504,6 @@ body
 		give_spell(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
 
-	else if(href_list["give_disease"])
-		if(!check_rights(R_ADMIN|R_FUN))
-			return
-
-		var/mob/M = locate(href_list["give_disease"])
-		if(!istype(M))
-			to_chat(usr, "This can only be used on instances of type /mob")
-			return
-
-		give_disease(M)
-		href_list["datumrefresh"] = href_list["give_spell"]
-
 	else if(href_list["give_religion"])
 		if(!check_rights(R_ADMIN|R_FUN))
 			return
@@ -641,6 +630,12 @@ body
 			return
 		var/atom/A = locate(href_list["edit_filters"])
 		open_filter_editor(A)
+
+	else if(href_list["edit_particles"])
+		if(!check_rights(R_DEBUG|R_VAREDIT))
+			return
+		var/atom/A = locate(href_list["edit_particles"])
+		open_particles_editor(A)
 
 	else if(href_list["delthis"])
 		//Rights check are in cmd_admin_delete() proc
@@ -861,28 +856,6 @@ body
 			return
 		holder.Topic(href, list("makeai"=href_list["makeai"]))
 
-	else if(href_list["setmutantrace"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/living/carbon/human/H = locate(href_list["setmutantrace"])
-		if(!istype(H))
-			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
-			return
-
-		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","adamantine","golem","shadow","shadowling","slime")
-		switch(new_mutantrace)
-			if(null)
-				return
-			if("NONE")
-				new_mutantrace = ""
-		if(!H)
-			to_chat(usr, "Mob doesn't exist anymore")
-			return
-		if(H.dna)
-			H.dna.mutantrace = new_mutantrace
-			H.update_mutantrace()
-
 	else if(href_list["setspecies"])
 		if(!check_rights(R_SPAWN))
 			return
@@ -908,15 +881,23 @@ body
 		if(!check_rights(R_VAREDIT))
 			return
 
-		var/mob/living/carbon/human/H = locate(href_list["give_quality"])
-		if(!istype(H))
-			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+		var/mob/M = locate(href_list["give_quality"])
+
+		var/quality_name = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.qualities_by_name
+		if(!quality_name)
 			return
 
-		var/quality_type = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.qualities_pool
-		if(!quality_type)
+		if(QDELETED(M))
 			return
-		SSqualities.force_give_quality(H, quality_type, usr)
+
+		var/datum/quality/Q = SSqualities.qualities_by_name[quality_name]
+
+		if(ishuman(M))
+			SSqualities.force_give_quality(M, Q, usr)
+		else if(istype(M, /mob/dead/new_player) && M.client)
+			SSqualities.force_register_client(M.client, Q)
+		else
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 
 	else if(href_list["addlanguage"])
 		if(!check_rights(R_VAREDIT))

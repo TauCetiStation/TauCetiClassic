@@ -177,6 +177,11 @@
 
 	visible_message("<span class='warning'><B>[user] fires a cap gun at [target]!</B></span>", "<span class='warning'>You hear a gunshot</span>")
 
+/obj/item/toy/gun/peacemaker
+	name = "Colt SAA"
+	desc = "A legend of Wild West."
+	icon_state = "peacemaker"
+
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
 	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
@@ -969,29 +974,14 @@ Owl & Griffin toys
 /obj/item/toy/cards/MouseDrop(atom/over_object)
 	. = ..()
 	var/mob/M = usr
-	if(!ishuman(usr) || usr.incapacitated())
-		return
-	if(Adjacent(usr))
-		if(over_object == M)
+	if(over_object == M && iscarbon(usr) && !usr.incapacitated())
+		if(Adjacent(usr))
 			M.put_in_hands(src)
-			to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
+		else
+			to_chat(usr, "<span class='notice'>You can't reach it from here.</span>")
 
-		else if(istype(over_object, /atom/movable/screen))
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-					to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-					to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
-	else
-		to_chat(usr, "<span class='notice'>You can't reach it from here.</span>")
-
-
+	if(M.l_hand == src || M.r_hand == src)
+		to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
 
 /obj/item/toy/cardhand
 	name = "hand of cards"

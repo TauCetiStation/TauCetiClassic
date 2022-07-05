@@ -134,8 +134,8 @@
 	icon_state = "bola"
 	breakouttime = 35 //easy to apply, easy to break out of
 	origin_tech = "engineering=3;combat=1"
-	throw_speed = 5
-	var/weaken = 0.8
+	throw_speed = 0.8
+	var/weaken = 0
 
 /obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
 	..()
@@ -160,7 +160,9 @@
 	icon_state = "bola_r"
 	breakouttime = 70
 	origin_tech = "engineering=4;combat=3"
-	weaken = 6
+	weaken = 2
+	throw_range = 5
+	throw_speed = 2
 
 
 /obj/item/weapon/caution
@@ -543,19 +545,6 @@
 
 	var/obj/machinery/machine
 
-/obj/item/weapon/plastique
-	name = "plastic explosives"
-	desc = "Used to put holes in specific areas without too much extra hole."
-	gender = PLURAL
-	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "plastic-explosive0"
-	item_state = "plasticx"
-	flags = NOBLUDGEON
-	w_class = SIZE_TINY
-	origin_tech = "syndicate=2"
-	var/timer = 10
-	var/atom/target = null
-
 ///////////////////////////////////////Stock Parts /////////////////////////////////
 
 /obj/item/weapon/storage/part_replacer
@@ -891,6 +880,13 @@
 		if(C.body_parts_covered & BP.body_part)
 			to_chat(user, "<span class='userdanger'>Take off [M]'s clothes first!</span>")
 			return
+
+	M.adjustHalLoss(-1)
+	M.AdjustStunned(-1)
+	M.AdjustWeakened(-1)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "sauna relax", /datum/mood_event/sauna)
+
+	playsound(src, 'sound/weapons/sauna_broom.ogg', VOL_EFFECTS_MASTER)
 
 	zone = parse_zone(zone)
 	wet -= 5

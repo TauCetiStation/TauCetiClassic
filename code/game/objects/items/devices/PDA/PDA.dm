@@ -70,6 +70,8 @@
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
+	action_button_name = "Toggle light"
+
 /obj/item/device/pda/atom_init()
 	. = ..()
 	PDAs += src
@@ -108,6 +110,23 @@
 		return
 
 	return ..()
+
+/obj/item/device/pda/ui_action_click()
+	toggle_light()
+
+/obj/item/device/pda/verb/toggle_light()
+	set name = "Toggle light"
+	set category = "Object"
+
+	if(usr.incapacitated())
+		return
+
+	if(fon)
+		fon = FALSE
+		set_light(0)
+	else
+		fon = TRUE
+		set_light(f_lum)
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -1436,10 +1455,6 @@
 							data_message += text("<span class='notice'>&emsp; []: []-[]</span>",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.brute_dam]</span>":0,(BP.burn_dam > 0)?"<span class='warning'>[BP.burn_dam]</span>":0)
 					else
 						data_message += "<span class='notice'>&emsp; Limbs are OK.</span>"
-
-				for(var/datum/disease/D in C.viruses)
-					if(!D.hidden[SCANNER])
-						data_message += "<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"
 
 				visible_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>")
 				to_chat(user, data_message)

@@ -81,13 +81,7 @@
 		return pick(\
 						prob(100);/obj/item/weapon/storage/box/matches,\
 						prob(30);/obj/item/weapon/lighter/random,\
-						prob(10);/obj/item/weapon/lighter/zippo,\
-						prob(1);/obj/item/weapon/lighter/zippo/fluff/li_matsuda_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/fluff/michael_guess_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/fluff/fay_sullivan_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/fluff/executivekill_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/fluff/naples_1\
+						prob(16);/obj/item/weapon/lighter/zippo,\
 					)
 
 
@@ -101,7 +95,14 @@
 /obj/random/misc/toy/item_to_spawn()
 		return pick(subtypesof(/obj/item/toy))
 
+/obj/random/misc/book
+	name = "Random Book"
+	desc = "This is a random book."
+	icon = 'icons/obj/library.dmi'
+	icon_state = "book"
 
+/obj/random/misc/book/item_to_spawn()
+		return pick(subtypesof(/obj/item/weapon/book/manual))
 
 /obj/random/misc/lightsource
 	name = "Random Medkit"
@@ -131,5 +132,6 @@
 						prob(40);/obj/random/misc/lighters,\
 						prob(40);/obj/random/misc/smokes,\
 						prob(90);/obj/random/misc/storage,\
+						prob(40);/obj/random/misc/book,\
 						prob(1);/obj/random/misc/musical\
 					)

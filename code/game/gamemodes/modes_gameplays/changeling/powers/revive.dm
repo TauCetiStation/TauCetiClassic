@@ -19,8 +19,6 @@
 	user.reagents.clear_reagents()
 	user.rejuvenate()
 	to_chat(user, "<span class='notice'>We have regenerated.</span>")
-	//user.status_flags &= ~(FAKEDEATH)
-	//user.update_canmove()
 	feedback_add_details("changeling_powers","CR")
 	return TRUE
 

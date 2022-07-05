@@ -127,3 +127,19 @@
 /obj/item/weapon/implanter/storage/atom_init()
 	imp = new /obj/item/weapon/implant/storage(src)
 	. = ..()
+
+/obj/item/weapon/implanter/freedom
+	name = "implanter (F)"
+
+/obj/item/weapon/implanter/freedom/atom_init()
+	imp = new /obj/item/weapon/implant/freedom(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/uplink
+	name = "implanter (U)"
+
+/obj/item/weapon/implanter/uplink/atom_init()
+	imp = new /obj/item/weapon/implant/uplink(src)
+	. = ..()
+	update()

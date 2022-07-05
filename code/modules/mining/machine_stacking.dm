@@ -7,14 +7,13 @@
 	density = TRUE
 	anchored = TRUE
 	var/obj/machinery/mineral/stacking_machine/machine = null
-	var/machinedir = SOUTHEAST
 
 /obj/machinery/mineral/stacking_unit_console/atom_init()
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/mineral/stacking_unit_console/atom_init_late()
-	machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
+	machine = locate(/obj/machinery/mineral/stacking_machine) in range(5, src)
 	if (machine)
 		machine.console = src
 	else

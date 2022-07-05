@@ -14,15 +14,41 @@
 	var/colour = "body"         // CSS style to use for strings in this language.
 	var/list/key = list()                    // Character used to speak in language eg. :o for Unathi.
 	var/flags = 0                    // Various language flags.
-	var/native                       // If set, non-native speakers will have trouble speaking.
 	var/list/syllables               // Used when scrambling text for a non-speaker.
 	var/list/space_chance = 55 // Likelihood of getting a space in the random scramble string.
+
+	// Symbols(sounds) exclusively available to (native speakers) of this language, and their approximations for those who can't pronounce them
+	var/list/approximations
+	// Special symbol combinations to produce exclusive to native speakers sounds.
+	var/list/special_symbols
+	// Approximations, but which carriers of the language produce when not speaking in this language.
+	var/list/accents
 
 	// Names of species in both of these.
 	// What species can understand but can't speak
 	// var/list/allowed_understand
 	// What species can speak(and thus understand). Is used in loadout language choosing.
 	var/list/allowed_speak
+
+/datum/language/Topic(href, href_list)
+	var/mob/M = locate(href_list["usr"])
+	if(!istype(M))
+		return
+
+	// Can't speak and not native.
+	if(M.languages[src] == LANGUAGE_CAN_UNDERSTAND)
+		return
+
+	if(M.default_language == name)
+		// Please make Galactic Common a language one day? ~Luduk
+		to_chat(M, "<span class='notice'>Now speaking in Galactic Common by default.</span>")
+		M.default_language = null
+		M.check_languages()
+		return
+
+	to_chat(M, "<span class='notice'>Now speaking in [name] by default.</span>")
+	M.default_language = name
+	M.check_languages()
 
 /datum/language/proc/color_message(message)
 	return "<span class='message'><span class='[colour]'>[capitalize(message)]</span></span>"
@@ -32,6 +58,12 @@
 
 /datum/language/proc/format_message_radio(message, verb)
 	return "[verb], <span class='[colour]'>\"[capitalize(message)]\"</span>"
+
+// How the bearer of this language pronounces stuff in their non-native language.
+/datum/language/proc/accentuate(input, datum/language/speaking)
+	if(!accents)
+		return input
+	return replace_characters(input, accents)
 
 /datum/language/proc/scramble(input)
 
@@ -77,8 +109,21 @@
 	exclaim_verb = "roars"
 	colour = "soghun"
 	key = list("o", "щ")
+	syllables = list("çs","ss","ss","ꚗs","skak","seeki","resh","las","esi","kor","sh")
+	approximations = list(
+		"ç" = "с",
+		"ꚗ" = "ш",
+	)
+	special_symbols = list(
+		"*С" = "Ç",
+		"*с" = "ç",
+		"*Ш" = "Ꚗ",
+		"*ш" = "ꚗ",
+	)
+	accents = list(
+		"с" = "сс",
+	)
 	allowed_speak = list(IPC)
-	syllables = list("ss","ss","ss","ss","skak","seeki","resh","las","esi","kor","sh")
 
 /datum/language/tajaran
 	name = LANGUAGE_SIIKMAAS
@@ -90,9 +135,27 @@
 	allowed_speak = list(IPC)
 	key = list("j", "о")
 	syllables = list("rr","rr","tajr","kir","raj","kii","mir","kra","ahk","nal","vah","khaz","jri","ran","darr", \
-	"mi","jri","dynh","manq","rhe","zar","rrhaz","kal","chur","eech","thaa","dra","jurl","mah","sanu","dra","ii'r", \
-	"ka","aasi","far","wa","baq","ara","qara","zir","sam","mak","hrar","nja","rir","khan","jun","dar","rik","kah", \
-	"hal","ket","jurl","mah","tul","cresh","azu","ragh")
+	"mi","jri","dynh","manq","rhe","zar","rrhaz","kal","chur","eech","thaa","dra","jurl","mæh","sænu","dra","ii'r", \
+	"ka","aasi","far","wa","baq","ara","qara","zir","sam","mæk","hrar","nja","rir","khan","jun","dar","rik","kah", \
+	"hal","kət","jurl","mah","tul","cresh","azu","ragh")
+	approximations = list(
+		"æ" = "ae",
+		"ə" = "e",
+	)
+	special_symbols = list(
+		"*А" = "Æ",
+		"*а" = "æ",
+		"*Е" = "Ə",
+		"*е" = "ə",
+	)
+	accents = list(
+		"р" = "рр",
+	)
+
+/datum/language/tajaran/accentuate(input, datum/language/speaking)
+	if(speaking && speaking.name == LANGUAGE_SIIKTAJR)
+		return input
+	return ..()
 
 /datum/language/tajaran_sign
 	name = LANGUAGE_SIIKTAJR
@@ -114,7 +177,7 @@
 	colour = "skrell"
 	key = list("k", "л")
 	allowed_speak = list(IPC)
-	syllables = list("qr","qrr","xuq","qil","quun","xuqn","rol","xrin","zaoo","qu-uu","qix","qoo","zix","*","!")
+	syllables = list("qr","qrr","xuq","qil","quun","xuqn","rol","xrin","zaoo","qu-uu","qix","qoo","zix","*","!","♭","♮","♯")
 
 /datum/language/vox
 	name = LANGUAGE_VOXPIDGIN
@@ -163,7 +226,7 @@
 	ask_verb = "beeps"
 	exclaim_verb = "boops"
 	colour = "ipc"
-	key = list("x", "ч") //only "dpz" left.
+	key = list("p", "з")
 	syllables = list("000", "111", "222", "001", "010", "100", "002", "020", "200", "011", "101", "110", "022", "202", "220", "112", "121", "211", "122", "212", "221", "012", "021", "120", "210", "102", "201")
 
 // Galactic common languages (systemwide accepted standards).
@@ -182,6 +245,9 @@
 					 "voluptate", "velit", "esse", "cillum", "dolore", "eu", "fugiat", "nulla",
 					 "pariatur", "excepteur", "sint", "occaecat", "cupidatat", "non", "proident", "sunt",
 					 "in", "culpa", "qui", "officia", "deserunt", "mollit", "anim", "id", "est", "laborum")
+	accents = list(
+		"ё" = "ю",
+	)
 
 /datum/language/gutter
 	name = LANGUAGE_GUTTER
@@ -190,8 +256,10 @@
 	colour = "rough"
 	key = list("3")
 	allowed_speak = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
-	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
-
+	syllables = list ("gra","ba","ba","breg","bra","rag","dur","ra","ro","gro","go","ber","bar","geg","gra")
+	accents = list(
+		"х" = "г",
+	)
 
 /datum/language/syndi
 	name = LANGUAGE_SYCODE
@@ -239,10 +307,9 @@
 
 /datum/language/shkiondioniovioion/New()
 	var/list/lowercase_vowels = list()
-	lowercase_vowels = list()
 
 	for(var/vowel in ENGLISH_VOWELS)
-		lowercase_vowels[vowel] = "ё"
+		lowercase_vowels += vowel
 
 	var/list/ru_vowels = RUSSIAN_VOWELS
 	// Define problems
@@ -250,18 +317,17 @@
 	ru_vowels.Remove("ё")
 
 	for(var/vowel in ru_vowels)
-		lowercase_vowels[vowel] = "ё"
+		lowercase_vowels += vowel
 
 	replacements = list()
 	for(var/vowel in lowercase_vowels)
 		replacements[vowel] = "ё"
-		replacements[uppertext(vowel)] = "Ё"
 
 /datum/language/shkiondioniovioion/scramble(input)
 	return replace_characters(input, replacements)
 
-/datum/language/salarian
-	name = LANGUAGE_SALARIAN
+/datum/language/salackyi
+	name = LANGUAGE_SALACKYI
 	desc = "One of the most prominent space-slavic languages out there. Consists of many funny sounds, as well as deep, melodic structure."
 	speech_verb = "says"
 	ask_verb = "asks"
@@ -270,9 +336,13 @@
 	key = list("x", "ч")
 	syllables = list("на", "ня", "ні", "нає", "ма", "мі", "та", "тя", "ко", "нко", "ля", "ла", "ша", "шо", "ха", "хо", "хи", "ги", "ґи", "юк", "як")
 
+	approximations = list(
+		"і" = "и",
+	)
+
 	var/list/replacements
 
-/datum/language/salarian/New()
+/datum/language/salackyi/New()
 	var/list/lowercase_letters = list(
 		"и" = "і",
 		"ы" = "и",
@@ -284,13 +354,11 @@
 	)
 
 	replacements = list()
-	replacements["Чт"] = "Ш"
 	for(var/letter in lowercase_letters)
 		var/replacement = lowercase_letters[letter]
 		replacements[letter] = replacement
-		replacements[uppertext(letter)] = uppertext(replacement)
 
-/datum/language/salarian/scramble(input)
+/datum/language/salackyi/scramble(input)
 	return replace_characters(input, replacements)
 
 // Language handling.
@@ -299,19 +367,40 @@
 		flags = LANGUAGE_CAN_SPEAK
 
 	var/datum/language/new_language = all_languages[language]
+	if(!new_language)
+		return FALSE
 
-	if(!istype(new_language))
-		return 0
+	if((new_language in languages) && languages[new_language] >= flags)
+		return FALSE
 
-	if((new_language in languages) && flags == LANGUAGE_CAN_UNDERSTAND)
-		return 0
+	if(flags != LANGUAGE_CAN_UNDERSTAND)
+		for(var/sound in new_language.approximations)
+			remove_approximation(sound)
+
+		for(var/sound in new_language.special_symbols)
+			add_approximation(sound, new_language.special_symbols[sound], case_sensitive=TRUE)
 
 	languages[new_language] = flags
-	return 1
+	return TRUE
 
 /mob/proc/remove_language(language, flags)
-	languages.Remove(all_languages[language])
-	return 0
+	var/datum/language/L = all_languages[language]
+	if(!L)
+		return FALSE
+
+	if(languages[L] != LANGUAGE_CAN_UNDERSTAND)
+		for(var/sound in L.approximations)
+			add_approximation(sound, L.approximations[sound])
+
+		for(var/sound in L.special_symbols)
+			remove_approximation(sound, case_sensitive=TRUE)
+
+	languages.Remove(L)
+
+	if(default_language == L.name)
+		default_language = null
+
+	return TRUE
 
 /mob/proc/can_understand(datum/language/speaking)
 	return universal_understand || (speaking in languages)
@@ -324,7 +413,7 @@
 	if(!languages)
 		return FALSE
 
-	return languages[speaking] == LANGUAGE_CAN_SPEAK
+	return languages[speaking] >= LANGUAGE_CAN_SPEAK
 
 //TBD
 /mob/verb/check_languages()
@@ -335,18 +424,40 @@
 	var/dat = ""
 
 	for(var/datum/language/L in languages)
-		dat += "<b>[L.name] "
+		var/lang_name = L.name
+		var/link_class = ""
+		if(L.name == default_language)
+			link_class = "class='good'"
+
+		if(languages[L] != LANGUAGE_CAN_UNDERSTAND)
+			lang_name = "<a href='?src=\ref[L];usr=\ref[src]'[link_class]>[lang_name]</a>"
+
+		dat += "<b>[lang_name] "
 		for(var/l_key in L.key)
 			dat += "(:[l_key])"
+
+		if(languages[L] != LANGUAGE_CAN_UNDERSTAND)
+			var/sound_macros = ""
+			var/first_macro = TRUE
+			for(var/m_key in L.special_symbols)
+				if(m_key == uppertext(m_key))
+					continue
+				if(!first_macro)
+					sound_macros += ", "
+				first_macro = FALSE
+				sound_macros += "[m_key]"
+
+			if(sound_macros != "")
+				dat += " ([sound_macros])"
+
 		var/remark = ""
 		if(languages[L] == LANGUAGE_CAN_UNDERSTAND)
-			remark = " <i>(can't speak)</i>"
+			remark += " <i>(can't speak)</i>"
+
 		dat += " </b><br/>[L.desc][remark]<br/><br/>"
 
 	var/datum/browser/popup = new(src, "checklanguage", "Known Languages")
 	popup.set_content(dat)
 	popup.open()
-
-	return
 
 #undef MESSAGE_LIMIT

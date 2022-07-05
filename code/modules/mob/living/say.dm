@@ -104,6 +104,10 @@ var/global/list/department_radio_keys = list(
 		message = sanitize(message)
 		if(!message)
 			return
+
+		if(message[1] == "*")
+			return emote(copytext(message, 2))
+
 		message = capitalize(trim(message))
 		message = add_period(message)
 
@@ -116,8 +120,8 @@ var/global/list/department_radio_keys = list(
 	//handle nonverbal and sign languages here
 	if (speaking)
 		if (speaking.flags & NONVERBAL)
-			if (prob(30))
-				custom_emote(1, "[pick(speaking.signlang_verb)].")
+			if(prob(30))
+				me_emote("[pick(speaking.signlang_verb)].", SHOWMSG_AUDIO)
 
 		if (speaking.flags & SIGNLANG)
 			say_signlang(message, pick(speaking.signlang_verb), speaking)
@@ -198,3 +202,12 @@ var/global/list/department_radio_keys = list(
 
 /obj/effect/speech_bubble
 	var/mob/parent
+
+/mob/living/init_languages()
+	for(var/name in all_languages)
+		var/datum/language/L = all_languages[name]
+		if(languages[L] >= LANGUAGE_CAN_SPEAK)
+			continue
+
+		for(var/sound in L.approximations)
+			add_approximation(sound, L.approximations[sound])

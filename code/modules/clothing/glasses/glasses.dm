@@ -77,6 +77,14 @@
 	off_state = "night"
 	activation_sound = 'sound/effects/glasses_on.ogg'
 
+/obj/item/clothing/glasses/night/hos_nights
+	name = "augmented shades"
+	desc = "Polarized bioneural eyewear, designed to augment your vision."
+	icon_state = "hos_shades"
+	item_state = "hos_shades"
+	toggleable = FALSE
+	action_button_name = null
+
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
 	desc = "Yarr."
@@ -300,14 +308,6 @@
 	icon_state = "thermalimplants"
 	item_state = "syringe_kit"
 
-/obj/item/clothing/glasses/thermal/hos_thermals
-	name = "augmented shades"
-	desc = "Polarized bioneural eyewear, designed to augment your vision."
-	icon_state = "hos_shades"
-	item_state = "hos_shades"
-	toggleable = 0
-	action_button_name = null
-
 /obj/item/clothing/glasses/rosas_eyepatch
 	name = "white eyepatch"
 	icon_state = "rosas_eye"
@@ -322,6 +322,7 @@
 	action_button_name = "Toggle Goggles"
 	active = 1
 	off_state = "healthhudnight"
+	hud_types = list(DATA_HUD_MEDICAL_ADV)
 
 /obj/item/clothing/glasses/gar
 	name = "gar glasses"

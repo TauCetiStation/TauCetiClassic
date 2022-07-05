@@ -79,13 +79,7 @@
 			to_chat(src, "<span class='userdanger'>You cannot speak in IC (Muted).</span>")
 			return
 
-	//Meme stuff
-	if(!speech_allowed && usr == src)
-		to_chat(usr, "<span class='userdanger'>You can't speak.</span>")
-		return
-
 	message =  sanitize(message)
-
 	if(!message)
 		return
 
@@ -100,7 +94,7 @@
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message, 2), auto = FALSE)
+		return emote(copytext(message, 2), intentional = TRUE)
 
 	//check if we are miming
 	if (miming && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
@@ -120,12 +114,9 @@
 			return
 
 	//parse the language code and consume it or use default racial language if forced.
-	var/datum/language/speaking = parse_language(message)
-	var/has_lang_prefix = !!speaking
-	if(!has_lang_prefix && HAS_TRAIT(src, TRAIT_MUTE))
-		var/datum/language/USL = all_languages[LANGUAGE_USL]
-		if(can_speak(USL))
-			speaking = USL
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
 
 	//check if we're muted and not using gestures
 	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
@@ -140,28 +131,17 @@
 			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
 			return
 
-	if (has_lang_prefix)
-		message = copytext(message,2+length_char(speaking.key))
-		if(!message)
-			return
+	message = approximate_sounds(message, speaking)
+	if(!message)
+		return
 
-	else
-		speaking = get_language()
+	message = accent_sounds(message, speaking)
 
 	if(!speaking)
 		switch(species.name)
-			if(TAJARAN)
-				message = replacetextEx_char(message, "р", pick(list("ррр" , "рр")))
-				message = replacetextEx_char(message, "Р", pick(list("Ррр" , "Рр")))
-			if(UNATHI)
-				message = replacetextEx_char(message, "с", pick(list("ссс" , "сс")))
-				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
-				message = replacetextEx_char(message, "С", pick(list("Ссс" , "Сс")))
 			if(PODMAN)
-				message = replacetextEx_char(message, "ж", pick(list("ш", "хш")))
-				message = replacetextEx_char(message, "Ж", pick(list("Ш", "Хш")))
-				message = replacetextEx_char(message, "з", pick(list("с", "хс")))
-				message = replacetextEx_char(message, "З", pick(list("С", "Хс")))
+				message = replacetext(message, "ж", pick(list("ш", "хш")))
+				message = replacetext(message, "з", pick(list("с", "хс")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
@@ -197,7 +177,7 @@
 			verb = "asks"
 
 	if(speech_problem_flag)
-		var/list/handle_r = handle_speech_problems(message, message_mode)
+		var/list/handle_r = handle_speech_problems(message, message_mode, verb)
 		//var/list/handle_r = handle_speech_problems(message)
 		message = handle_r[1]
 		verb = handle_r[2]
@@ -391,9 +371,8 @@
 
 
 //mob/living/carbon/human/proc/handle_speech_problems(message)
-/mob/living/carbon/human/proc/handle_speech_problems(message, message_mode)
+/mob/living/carbon/human/proc/handle_speech_problems(message, message_mode, verb)
 	var/list/returns[5]
-	var/verb = "says"
 	var/handled = 0
 	var/sound/speech_sound = null
 	var/sound_vol = 50

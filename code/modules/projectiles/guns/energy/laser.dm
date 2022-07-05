@@ -23,38 +23,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
 
-/obj/item/weapon/gun/energy/laser/classic
-	name = "laser carbine"
-	desc = "J10 carbine, pretty old model of corporate security laser weaponry with constant cooling issues. Faster firerate but reduced damage."
-	icon_state = "oldlaser"
-	icon_custom = null
-	fire_delay = 5
-
-/obj/item/weapon/gun/energy/laser/tactifool
-	name = "laser rifle"
-	desc = "T6 impulse laser rifle"
-	icon_state = "lasor"
-	icon_custom = null
-	fire_delay = 0
-	ammo_type = list(/obj/item/ammo_casing/energy/laser_pulse)
-
-
-/obj/item/weapon/gun/energy/laser/classic/newshot()
-	if (!ammo_type || !power_supply)	return
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if (!power_supply.use(shot.e_cost))	return
-	chambered = shot
-	if(chambered && chambered.BB)
-		chambered.BB.damage -= 10
-	chambered.newshot()
-	return
-
-/obj/item/weapon/gun/energy/laser/retro
-	name ="retro laser"
-	icon_state = "retro"
-	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
-	can_be_holstered = TRUE
-
 /obj/item/weapon/gun/energy/laser/selfcharging
 	var/charge_tick = 0
 	var/chargespeed = 0

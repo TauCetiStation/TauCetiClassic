@@ -1,28 +1,34 @@
 //This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_hand()
-	if(istype(W))
-		if(isIAN(src))
-			switch(slot)
-				if(SLOT_HEAD, SLOT_BACK)
-					to_chat(src, "<span class='notice'>You have no idea how humans do this.</span>")
-					return
-		if(iscarbon(src))
-			var/mob/living/carbon/C = src
-			if(slot in C.check_obscured_slots())
-				to_chat(C, "<span class='warning'>You can't reach that! Something is covering it.</span>")
+	if(!istype(W))
+		return
+
+	if(istype(W, /obj/item/tk_grab))
+		equip_to_slot_if_possible(W, slot)
+		return
+
+	if(isIAN(src))
+		switch(slot)
+			if(SLOT_HEAD, SLOT_BACK)
+				to_chat(src, "<span class='notice'>You have no idea how humans do this.</span>")
 				return
-		if (istype(W, /obj/item/clothing))
-			var/obj/item/clothing/C = W
-			if(C.rig_restrict_helmet)
-				to_chat(src, "<span class='red'>You must fasten the helmet to a hardsuit first. (Target the head)</span>")// Stop eva helms equipping.
-			else
-				if(C.equip_time > 0)
-					delay_clothing_equip_to_slot_if_possible(C, slot)
-				else
-					equip_to_slot_if_possible(C, slot)
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		if(slot in C.check_obscured_slots())
+			to_chat(C, "<span class='warning'>You can't reach that! Something is covering it.</span>")
+			return
+	if (istype(W, /obj/item/clothing))
+		var/obj/item/clothing/C = W
+		if(C.rig_restrict_helmet)
+			to_chat(src, "<span class='red'>You must fasten the helmet to a hardsuit first. (Target the head)</span>")// Stop eva helms equipping.
 		else
-			equip_to_slot_if_possible(W, slot)
+			if(C.equip_time > 0)
+				delay_clothing_equip_to_slot_if_possible(C, slot)
+			else
+				equip_to_slot_if_possible(C, slot)
+	else
+		equip_to_slot_if_possible(W, slot)
 
 /mob/proc/put_in_any_hand_if_possible(obj/item/W, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
 	if(equip_to_slot_if_possible(W, SLOT_L_HAND, del_on_fail, disable_warning, redraw_mob))
@@ -177,8 +183,7 @@ var/global/list/slot_equipment_priority = list(
 		if(old_loc && old_loc.loc && (src != old_loc) && (src != old_loc.loc))
 			INVOKE_ASYNC(W, /atom/movable.proc/do_pickup_animation, src, old_loc)
 
-		l_hand = W
-		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
+		l_hand = W	//TODO: move to equipped?
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
 		W.equipped(src,SLOT_L_HAND)
@@ -207,7 +212,6 @@ var/global/list/slot_equipment_priority = list(
 			INVOKE_ASYNC(W, /atom/movable.proc/do_pickup_animation, src, old_loc)
 
 		r_hand = W
-		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
 		W.equipped(src,SLOT_R_HAND)
@@ -520,7 +524,7 @@ var/global/list/slot_equipment_priority = list(
 		return ..()
 
 /mob/proc/CanUseTopicInventory(mob/target)
-	if(is_busy() || isdrone(src) || incapacitated() || !isturf(target.loc) || !Adjacent(target))
+	if(is_busy() || isdrone(src) || incapacitated() || !isturf(target.loc) || !in_interaction_vicinity(target))
 		return FALSE
 
 	if(ishuman(src) || isrobot(src) || ismonkey(src) || isIAN(src) || isxenoadult(src))
@@ -528,8 +532,8 @@ var/global/list/slot_equipment_priority = list(
 
 //Create delay for unequipping
 /mob/proc/delay_clothing_unequip(obj/item/clothing/C)
-	if(!istype(C))
-		return FALSE
+	if(!istype(C) || !C.equip_time || C.slot_equipped == SLOT_R_HAND || C.slot_equipped == SLOT_L_HAND)
+		return TRUE // clothing have no eqip delay or currently in hands
 	if(usr.is_busy())
 		return FALSE
 	if(C.equipping) // Item is already being (un)equipped
@@ -543,7 +547,6 @@ var/global/list/slot_equipment_priority = list(
 		to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
 		return FALSE
 	C.equipping = FALSE
-	remove_from_mob(C)
 	to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
 	return TRUE
 

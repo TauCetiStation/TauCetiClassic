@@ -15,7 +15,7 @@
 	var/static/list/category_images = list()
 
 	var/researching = FALSE
-	var/research_time = 18 MINUTES
+	var/research_time = 15 MINUTES
 	var/end_research_time
 
 	var/current_research = "Ничего"
@@ -171,7 +171,7 @@
 		P.icon_state = "pylon_glow"
 		P.can_unwrench = FALSE
 	researching = TRUE
-	var/time_reduce = sqrt(pylon_around.len)MINUTE
+	var/time_reduce = 2.2*sqrt(pylon_around.len)MINUTE //https://www.desmos.com/Calculator/acwqntgi7v 1 pylon = 2 mins, 4 pyls = 4 mins, 10=7, 45=15
 	end_research_time = max(1, world.time + research_time - time_reduce)
 	can_unwrench = FALSE
 	tech_timer = addtimer(end_activity, research_time - time_reduce, TIMER_STOPPABLE)

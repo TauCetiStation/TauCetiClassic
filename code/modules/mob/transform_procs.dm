@@ -1,4 +1,4 @@
-/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
+/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
 	if (notransform)
 		return
 
@@ -82,13 +82,6 @@
 		suiciding = FALSE
 	O.set_a_intent(INTENT_HARM)
 
-	//keep viruses?
-	if(tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/datum/disease/D in O.viruses)
-			D.affected_mob = O
-
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
 		O.adjustToxLoss(getToxLoss())
@@ -105,9 +98,7 @@
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/Y in stored_implants)
 			var/obj/item/weapon/implant/IMP = Y
-			IMP.loc = O
-			IMP.imp_in = O
-			IMP.implanted = TRUE
+			IMP.stealth_inject(O)
 		O.sec_hud_set_implants()
 
 	//transfer stuns
@@ -144,7 +135,7 @@
 //////////////////////////           Humanize               //////////////////////////////
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
-/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
+/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
 	if (notransform)
 		return
 
@@ -219,14 +210,6 @@
 		suiciding = FALSE
 	O.set_a_intent(INTENT_HELP)
 
-	//keep viruses?
-	if(tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/datum/disease/D in O.viruses)
-			D.affected_mob = O
-		O.med_hud_set_status()
-
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
 		O.adjustToxLoss(getToxLoss())
@@ -243,13 +226,9 @@
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/Y in stored_implants)
 			var/obj/item/weapon/implant/IMP = Y
-			IMP.loc = O
-			IMP.imp_in = O
-			IMP.implanted = TRUE
 			var/obj/item/organ/external/BP = pick(O.bodyparts)
 			if(BP)
-				IMP.part = BP
-				BP.implants += IMP
+				IMP.inject(O, BP)
 		O.sec_hud_set_implants()
 
 	//transfer stuns
@@ -344,6 +323,8 @@
 	if(mind)
 		mind.transfer_to(O)
 		O.mind.original = O
+		O.mind.skills.add_available_skillset(/datum/skillset/max)
+		O.mind.skills.maximize_active_skills()
 	else
 		O.key = key
 
@@ -384,6 +365,8 @@
 
 	if(mind)		//TODO
 		mind.transfer_to(O)
+		O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+		O.mind.skills.maximize_active_skills()
 		if(O.mind.assigned_role == "Cyborg")
 			O.mind.original = O
 		else if(mind && mind.special_role)

@@ -12,6 +12,7 @@
 	var/power_use = 25
 	var/obj/effect/suspension_field/suspension_field
 	var/list/secured_mobs = list()
+	required_skills = list(/datum/skill/research/trained)
 
 /obj/machinery/suspension_gen/atom_init()
 	cell = new/obj/item/weapon/stock_parts/cell/high(src)
@@ -266,7 +267,7 @@
 		suspension_field.add_overlay("shield2")
 		visible_message("<span class='notice'>[bicon(suspension_field)] [suspension_field] gently absconds [collected > 1 ? "something" : "several things"].</span>")
 	else
-		if(istype(T,/turf/simulated/mineral) || istype(T,/turf/simulated/wall))
+		if(istype(T,/turf/simulated/mineral) || iswallturf(T))
 			suspension_field.icon_state = "shieldsparkles"
 		else
 			suspension_field.icon_state = "shield2"

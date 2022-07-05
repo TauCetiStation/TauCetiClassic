@@ -5,9 +5,7 @@
 
 /turf/simulated/floor/mech_bay_recharge_floor/airless
 	icon_state = "recharge_floor_asteroid"
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
+	airless = TRUE
 
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
@@ -23,6 +21,7 @@
 	var/on = 0
 	var/repairability = 0
 	var/turf/recharging_turf = null
+	required_skills = list(/datum/skill/civ_mech/trained)
 
 /obj/machinery/mech_bay_recharge_port/atom_init()
 	. = ..()

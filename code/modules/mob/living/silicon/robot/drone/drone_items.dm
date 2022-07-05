@@ -200,7 +200,8 @@
 		/obj/item/robot_parts/l_arm,
 		/obj/item/robot_parts/r_arm,
 		/obj/item/robot_parts/l_leg,
-		/obj/item/robot_parts/r_leg
+		/obj/item/robot_parts/r_leg,
+		/obj/item/stack/sheet/mineral/phoron,
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)
@@ -217,8 +218,8 @@
 
 /obj/item/weapon/gripper/verb/drop_item_verb()
 	set name = "Drop Item"
-	set desc = "Release an item from your magnetic gripper."
-	set category = "Drone"
+	set desc = "Освобождает взятый вами предмет из магнитного держателя."
+	set category = "Commands"
 
 	SEND_SIGNAL(src, COMSIG_HAND_DROP_ITEM, get_turf(src))
 

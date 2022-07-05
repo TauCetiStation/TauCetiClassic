@@ -2,7 +2,7 @@
 	name = "flash"
 	desc = "Used for blinding and being an asshole."
 	icon_state = "flash"
-	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
+	item_state = "flash"
 	throwforce = 5
 	w_class = SIZE_TINY
 	throw_speed = 4
@@ -43,7 +43,6 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
-
 	M.log_combat(user, "flashed (attempt) with [name]")
 
 	if(!clown_check(user))	return
@@ -124,7 +123,6 @@
 	if(broken)
 		to_chat(user, "<span class='warning'>The [src.name] is broken</span>")
 		return
-
 	flash_recharge()
 
 	//spamming the flash before it's fully charged (60seconds) increases the chance of it  breaking
@@ -184,6 +182,7 @@
 	name = "synthetic flash"
 	desc = "When a problem arises, SCIENCE is the solution."
 	icon_state = "sflash"
+	item_state = "sflash"
 	origin_tech = "magnets=2;combat=1"
 
 /obj/item/device/flash/synthetic/attack(mob/living/M, mob/user)

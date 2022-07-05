@@ -98,7 +98,7 @@
 			to_chat(target, "<span class='userdanger'>You are hit by a blast of paralyzingly cold air and feel goosebumps break out across your body!</span>")
 			target.Stun(2)
 			if(target.bodytemperature)
-				target.bodytemperature -= 200 //Extreme amount of initial cold
+				target.adjust_bodytemperature(-200) //Extreme amount of initial cold
 			if(target.reagents)
 				target.reagents.add_reagent("frostoil", 15) //Half of a cryosting
 
@@ -241,8 +241,6 @@
 		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, SLOT_GLASSES)
 		var/mob/living/carbon/human/H = usr
 		H.set_species(SHADOWLING)
-		H.dna.mutantrace = "shadowling"
-		H.update_mutantrace()
 		H.regenerate_icons()
 
 /obj/effect/proc_holder/spell/targeted/collective_mind
@@ -369,8 +367,7 @@
 	clothes_req = 0
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets)
-	//usr.audible_message("<span class='warning'><b>[usr] lets out a horrible scream!</b></span>")
-	usr.emote("scream", SHOWMSG_AUDIO, message = "<span class='warning'><b>lets out a horrible scream!</b></span>", auto = FALSE)
+	usr.emote("scream", intentional = TRUE)
 	playsound(usr, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/turf/T in targets)
@@ -613,7 +610,7 @@
 			to_chat(target, "<span class='userdanger'>You are hit by a blast of cold unlike anything you have ever felt. Your limbs instantly lock in place and you feel ice burns across your body!</span>")
 			target.Weaken(15)
 			if(target.bodytemperature)
-				target.bodytemperature -= INFINITY //:^)
+				target.adjust_bodytemperature(-INFINITY) //:^)
 			target.take_bodypart_damage(0, 80)
 
 

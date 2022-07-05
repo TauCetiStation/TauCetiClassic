@@ -36,12 +36,6 @@
 		recentpump = 0
 	return
 
-/obj/item/weapon/gun/projectile/shotgun/classic
-	icon_state = "oldshotgun"
-
-/obj/item/weapon/gun/projectile/shotgun/tactifool
-	icon_state = "shotgun_tg"
-
 /obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
 	playsound(M, pick('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg'), VOL_EFFECTS_MASTER, null, FALSE)
 	pumped = 0
@@ -110,7 +104,7 @@
 			return
 
 		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
-		if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
+		if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50, required_skills_override = list(/datum/skill/firearms/trained)))
 			icon_state = "sawnshotgun[open ? "-o" : ""]"
 			w_class = SIZE_SMALL
 			item_state = "gun"

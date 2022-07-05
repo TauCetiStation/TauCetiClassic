@@ -146,7 +146,6 @@
 
 /datum/species/zombie/handle_death(mob/living/carbon/human/H)
 	addtimer(CALLBACK(null, .proc/prerevive_zombie, H), rand(600,700))
-	H.update_mutantrace()
 
 /proc/handle_infected_death(mob/living/carbon/human/H)
 	if(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
@@ -171,14 +170,17 @@
 		return
 	if(!iszombie(H))
 		H.zombify()
-	//H.rejuvenate()
+
+	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)  // restore every thing in this dumb head (brain and eyes)
+		IO.rejuvenate()
+
 	H.setCloneLoss(0)
 	H.setBrainLoss(0)
 	H.setHalLoss(0)
 	H.SetParalysis(0)
 	H.SetStunned(0)
 	H.SetWeakened(0)
-	H.nutrition = 400
+	H.nutrition = NUTRITION_LEVEL_NORMAL
 	H.SetSleeping(0)
 	H.radiation = 0
 	H.heal_overall_damage(H.getBruteLoss(), H.getFireLoss())
@@ -297,13 +299,7 @@ var/global/list/zombie_list = list()
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/zombie_findbrains)
 	zombie_list += H
 
-	var/datum/faction/zombie/Z = find_faction_by_type(/datum/faction/zombie)
-	if(!Z)
-		Z = SSticker.mode.CreateFaction(/datum/faction/zombie)
-		Z.OnPostSetup()
-		Z.forgeObjectives()
-		Z.AnnounceObjectives()
-
+	var/datum/faction/zombie/Z = create_uniq_faction(/datum/faction/zombie)
 	add_faction_member(Z, H, FALSE)
 
 /proc/remove_zombie(mob/living/carbon/human/H)

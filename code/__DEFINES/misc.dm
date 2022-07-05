@@ -9,12 +9,6 @@
 // and at the same time the empty condition do nothing.
 #define SWITCH_PASS ;
 
-//Ghost orbit types:
-#define GHOST_ORBIT_CIRCLE		"circle"
-#define GHOST_ORBIT_TRIANGLE	"triangle"
-#define GHOST_ORBIT_HEXAGON		"hexagon"
-#define GHOST_ORBIT_SQUARE		"square"
-#define GHOST_ORBIT_PENTAGON	"pentagon"
 
 #define TRANSITIONEDGE		7 //Distance from edge to move to another z-level
 
@@ -85,6 +79,13 @@
 #define EVENT_LEVEL_MUNDANE 2
 #define EVENT_LEVEL_MODERATE 3
 #define EVENT_LEVEL_MAJOR 4
+
+// shows STORAGE levels deep:
+// 1 lvl: item in backpack in src
+// 2 lvl: item in box in backpack in src
+// 3 lvl: item in matchbox in box in backpack in src
+// and so on
+#define MAX_STORAGE_DEEP_LEVEL 2
 
 //defines
 #define RESIZE_DEFAULT_SIZE 1
@@ -195,8 +196,6 @@
 #define PROJECTILE_ABSORBED 2
 #define PROJECTILE_ALL_OK 3
 
-#define COORD(A) "([A.x],[A.y],[A.z])"
-
 #define RUNE_WORDS list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
 
 //Error handler defines
@@ -304,3 +303,6 @@
 
 /// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
 #define MAPTEXT(text) {"<span class='maptext'>[##text]</span>"}
+
+//For crawl_can_use() in /mob/living
+#define IS_ABOVE(A, B) (A.layer > B.layer || A.plane > B.plane)

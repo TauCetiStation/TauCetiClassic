@@ -61,7 +61,7 @@
 
 /obj/effect/spacevine_controller/atom_init()
 	. = ..()
-	if(!istype(loc, /turf/simulated/floor))
+	if(!isfloorturf(loc))
 		return INITIALIZE_HINT_QDEL
 
 	spawn_spacevine_piece(src.loc)
@@ -111,7 +111,10 @@
 			if(prob(20))
 				SV.grow()
 		else //If tile is fully grown
-			SV.buckle_mob()
+			if(prob(25))
+				var/mob/living/carbon/C = locate() in SV.loc
+				if(C)
+					SV.buckle_mob(C)
 
 		//if(prob(25))
 		SV.spread()
@@ -133,21 +136,24 @@
 		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
 		energy = 2
 
-/obj/effect/spacevine/buckle_mob()
-	if(!buckled_mob && prob(25))
-		for(var/mob/living/carbon/V in src.loc)
-			if((V.stat != DEAD)  && (V.buckled != src)) //if mob not dead or captured
-				V.buckled = src
-				V.loc = src.loc
-				V.update_canmove()
-				src.buckled_mob = V
-				to_chat(V, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
-				break //only capture one mob at a time.
+// simpler checks and removed user buckle
+/obj/effect/spacevine/can_buckle(mob/living/M)
+	if(M.buckled || buckled_mob)
+		return FALSE
+	return M.stat != DEAD
+
+/obj/effect/spacevine/user_buckle_mob(mob/living/M, mob/user)
+	return
+
+/obj/effect/spacevine/buckle_mob(mob/living/M)
+	. = ..()
+	if(.)
+		to_chat(M, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
 
 /obj/effect/spacevine/proc/spread()
 	var/direction = pick(cardinal)
 	var/step = get_step(src,direction)
-	if(istype(step,/turf/simulated/floor))
+	if(isfloorturf(step))
 		var/turf/simulated/floor/F = step
 		if(!locate(/obj/effect/spacevine,F))
 			if(F.Enter(src))
