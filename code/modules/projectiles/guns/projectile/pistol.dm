@@ -165,47 +165,6 @@
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/sec_pistol
-	name = "pistol"
-	desc = "AT-7 .45 caliber pistol."
-	icon_state = "at7"
-	fire_sound = 'sound/weapons/guns/gunshot_at7.ogg'
-	mag_type = /obj/item/ammo_box/magazine/at7_45
-
-/obj/item/weapon/gun/projectile/sec_pistol/atom_init()
-	. = ..()
-	update_icon()
-
-/obj/item/weapon/gun/projectile/sec_pistol/proc/update_magazine()
-	if(magazine)
-		cut_overlays()
-		add_overlay(image('icons/obj/gun.dmi', "at7-mag"))
-		return
-
-/obj/item/weapon/gun/projectile/sec_pistol/update_icon(load = 0)
-	cut_overlays()
-	update_magazine()
-	if(load)
-		icon_state = "[initial(icon_state)]"
-		return
-	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
-	return
-
-/obj/item/weapon/gun/projectile/sec_pistol/acm38
-	name = "pistol"
-	desc = "Seegert ACM38 pistol - when you need be TACTICOOL."
-	icon_state = "acm38"
-	item_state = "colt"
-	fire_sound = 'sound/weapons/guns/gunshot_acm38.ogg'
-	mag_type = /obj/item/ammo_box/magazine/acm38_38
-
-/obj/item/weapon/gun/projectile/sec_pistol/update_icon(load = 0)
-	if(load)
-		icon_state = "[initial(icon_state)]"
-		return
-	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
-	return
-
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer
 	name = "\improper Derringer"
 	desc = "A small pocket pistol and your best friend. Manufactured by Hephaestus Industries without much changes from the earliest designs. Chambered in .38."
@@ -229,4 +188,4 @@
 	force = 5
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer/syndicate
 	recoil = 3
-	fire_soumd = 'sound/weapons/guns/gunshot_heavy.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'

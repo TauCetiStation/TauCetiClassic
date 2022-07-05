@@ -85,7 +85,7 @@
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer
 	name = "derringer internal magazine"
 	desc = "This doesn't even exist!"
-	ammo_type = /obj/item/ammo_casing/c38
+	ammo_type = /obj/item/ammo_casing/c38m
 	caliber = "38"
 	max_ammo = 2
 	multiload = 0
