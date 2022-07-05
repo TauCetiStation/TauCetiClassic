@@ -91,9 +91,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
 /mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -305,6 +302,9 @@
 /obj/effect/landmark{
 	name = "xeno_spawn";
 	pixel_x = -1
+	},
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = -32
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -1602,15 +1602,14 @@
 	},
 /area/station/cargo/storage)
 "acT" = (
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
 /obj/machinery/power/smes/fullcharge,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 21
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -1740,18 +1739,14 @@
 	},
 /area/station/tcommsat/computer)
 "ade" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/flasher{
+	id = "misclab"
 	},
-/turf/simulated/floor/bluegrid{
-	name = "Server Base";
-	nitrogen = 500;
-	oxygen = 0;
-	temperature = 80
+/obj/effect/landmark{
+	name = "xeno_spawn"
 	},
-/area/station/tcommsat/chamber)
+/turf/simulated/floor/engine,
+/area/asteroid/research_outpost/outpost_misc_lab)
 "adf" = (
 /turf/simulated/floor/bluegrid{
 	name = "Server Base";
@@ -1989,6 +1984,11 @@
 	},
 /area/station/aisat/ai_chamber)
 "ady" = (
+/obj/machinery/door/window{
+	dir = 1;
+	name = "AI Core Door";
+	req_access = list(16)
+	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -1996,22 +1996,11 @@
 	name = "AI Blast Door";
 	opacity = 0
 	},
-/obj/machinery/door/window{
-	dir = 1;
-	name = "AI Core Door";
-	req_access = list(16)
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/turretid/stun/AI_special{
-	control_area = "Telecoms Control Room";
-	dir = 8;
-	name = "AI Satellite Antechamber";
-	pixel_x = -28
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2113,11 +2102,15 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "adH" = (
-/obj/machinery/power/smes/fullcharge,
 /obj/machinery/door_control{
 	id = "AI Blast Door";
 	name = "AI Blast Door";
 	pixel_y = -32
+	},
+/obj/machinery/turretid/stun/AI_special{
+	dir = 1;
+	name = "AI Chamber turret control";
+	pixel_y = 32
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -2126,12 +2119,14 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 4;
-	freerange = 1;
-	name = "Common Channel";
-	pixel_x = -20
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	pixel_x = -28
+	},
+/obj/machinery/power/smes/inputting,
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber Center";
+	network = list("RD","MiniSat")
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2145,9 +2140,9 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable{
-	d1 = 4;
+	d1 = 2;
 	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2166,13 +2161,12 @@
 	name = "Custom Channel";
 	pixel_y = -20
 	},
-/obj/machinery/power/apc{
-	name = "AI Chamber APC";
-	pixel_x = 28
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 8;
+	freerange = 1;
+	name = "Common Channel";
+	pixel_x = 20
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -2259,6 +2253,10 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "adQ" = (
+/obj/machinery/door/window{
+	name = "AI Core Door";
+	req_access = list(16)
+	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -2270,10 +2268,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/machinery/door/window{
-	name = "AI Core Door";
-	req_access = list(16)
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -4706,6 +4700,9 @@
 /area/station/hallway/secondary/exit)
 "ain" = (
 /obj/structure/stool/bar,
+/obj/machinery/atm{
+	pixel_x = -28
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken4"
 	},
@@ -6802,7 +6799,6 @@
 	pixel_x = -2;
 	pixel_y = 3
 	},
-/obj/item/device/transfer_valve,
 /obj/random/science,
 /obj/random/science,
 /obj/machinery/light_switch{
@@ -6920,20 +6916,19 @@
 	},
 /area/station/rnd/hallway)
 "amL" = (
-/obj/machinery/power/smes,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
+	},
+/obj/machinery/power/smes/fullcharge,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -7944,10 +7939,9 @@
 	network = list("MiniSat")
 	},
 /obj/machinery/power/port_gen/pacman,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "AI Satellite APC";
-	pixel_x = 28
+/obj/machinery/power/apc/largecell{
+	dir = 4;
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8045,12 +8039,6 @@
 /obj/machinery/telecomms/processor/preset_one,
 /obj/machinery/light{
 	dir = 1
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1447;
-	name = "Private AI Channel";
-	pixel_y = 22
 	},
 /turf/simulated/floor/bluegrid{
 	name = "Server Base";
@@ -8302,10 +8290,6 @@
 /area/asteroid/mine/eva)
 "apC" = (
 /obj/machinery/artifact_scanpad,
-/obj/machinery/alarm{
-	dir = 1;
-	pixel_y = -21
-	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkpurple"
@@ -9291,6 +9275,10 @@
 	pixel_x = -22;
 	pixel_y = 0
 	},
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -21
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurplefull"
@@ -9756,14 +9744,6 @@
 	req_access = list(13)
 	},
 /turf/environment/space,
-/area/space)
-"arV" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "arW" = (
 /obj/machinery/camera{
@@ -11059,6 +11039,14 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/machinery/power/apc{
+	dir = 4;
+	pixel_x = 28
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "bxU" = (
@@ -11380,14 +11368,6 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	name = "Fore Port Solar APC";
-	pixel_y = -28
-	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -11491,11 +11471,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -12232,9 +12207,6 @@
 	codes_txt = "patrol;next_patrol=Arrival1";
 	location = "Bar2"
 	},
-/obj/machinery/atm{
-	pixel_x = 28
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -12893,11 +12865,6 @@
 	},
 /area/station/bridge)
 "dtz" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/machinery/telecomms/processor/preset_three,
 /turf/simulated/floor/bluegrid{
 	name = "Server Base";
@@ -15042,11 +15009,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "fCc" = (
@@ -15062,8 +15024,7 @@
 	},
 /obj/structure/cable{
 	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
@@ -15882,12 +15843,16 @@
 /area/station/bridge)
 "guD" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /obj/machinery/light,
 /obj/machinery/flasher_button{
 	id = "escapeshutflash";
 	pixel_y = -28
+	},
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen{
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	icon_state = "darkred"
@@ -16154,6 +16119,11 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
@@ -16511,7 +16481,7 @@
 	dir = 4
 	},
 /obj/machinery/light_switch{
-	pixel_x = -23
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -17819,6 +17789,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "ivd" = (
@@ -18604,10 +18579,9 @@
 /obj/machinery/ai_status_display{
 	pixel_y = 32
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Telecoms Sat. Control APC";
-	pixel_x = 28
+/obj/machinery/power/apc/largecell{
+	dir = 4;
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -18785,6 +18759,11 @@
 "jyy" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/bluegrid{
 	icon_state = "dark";
@@ -19987,9 +19966,6 @@
 	dir = 4;
 	pixel_x = -21
 	},
-/obj/machinery/light_switch{
-	pixel_y = -28
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -20153,14 +20129,13 @@
 	},
 /area/station/security/checkpoint)
 "kGN" = (
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 0
-	},
 /obj/machinery/power/solar{
 	id = "portsolar";
 	name = "Port Solar Array"
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
@@ -21784,16 +21759,22 @@
 	},
 /area/station/bridge)
 "mqs" = (
-/obj/machinery/power/smes/fullcharge,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/visible/cyan{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkblue"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/area/station/tcommsat/computer)
+/turf/simulated/floor/bluegrid{
+	icon_state = "dark";
+	name = "Server Walkway";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
 "mrk" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
@@ -22717,16 +22698,7 @@
 	},
 /area/station/hallway/primary/central)
 "njt" = (
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/telecomms/bus/preset_three,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Telecoms Sat. Central Compartment APC";
-	pixel_y = 28
-	},
 /turf/simulated/floor/bluegrid{
 	name = "Server Base";
 	nitrogen = 500;
@@ -24369,7 +24341,6 @@
 	pixel_y = 2
 	},
 /obj/structure/rack,
-/obj/item/clothing/suit/straight_jacket,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -25823,15 +25794,16 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "pUb" = (
-/obj/machinery/flasher{
-	id = "misclab"
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/visible/cyan{
+	dir = 1
 	},
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
+/obj/machinery/power/smes/fullcharge,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
 	},
-/turf/simulated/floor/engine,
-/area/asteroid/research_outpost/outpost_misc_lab)
+/area/station/tcommsat/computer)
 "pUC" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -26995,11 +26967,6 @@
 	},
 /area/station/security/main)
 "qQB" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/machinery/computer/aifixer,
 /turf/simulated/floor{
 	dir = 1;
@@ -27018,11 +26985,11 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/item/weapon/flora/random,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -27382,11 +27349,6 @@
 /area/station/civilian/hydroponics)
 "rox" = (
 /obj/machinery/hologram/holopad,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -30212,6 +30174,11 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -32772,13 +32739,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "wLc" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/bluegrid{
 	icon_state = "dark";
@@ -33161,6 +33128,14 @@
 	c_tag = "Telecom Central Compartment North";
 	dir = 6;
 	network = list("Tcomsat")
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	pixel_y = 28
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/bluegrid{
 	name = "Server Base";
@@ -51554,8 +51529,8 @@ aeq
 aeq
 aex
 aqI
-arV
 aeD
+azF
 crv
 gay
 gay
@@ -52061,7 +52036,7 @@ vlu
 jki
 adD
 bIJ
-mqs
+pUb
 pyj
 vlu
 aew
@@ -52571,7 +52546,7 @@ crv
 crv
 sCX
 dtz
-ade
+adf
 wLc
 pAi
 qpe
@@ -52829,7 +52804,7 @@ gay
 sCX
 njt
 adf
-uFO
+mqs
 rzG
 qUn
 rzG
@@ -71850,7 +71825,7 @@ ahi
 isF
 ang
 vzv
-pUb
+ade
 hEq
 isF
 aoU
