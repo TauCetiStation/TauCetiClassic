@@ -105,10 +105,6 @@ RCD
 
 			if(istype(target, /turf/simulated/floor) && !user.is_busy())
 				var/turf/simulated/floor/F = target
-				for(var/atom/AT in target)
-					if(AT.density || istype(AT, /obj/machinery/door) || istype(AT, /obj/structure/mineral_door))
-						to_chat(user, "<span class='warning'>You can't build Wall here.</span>")
-						return 0
 				if(checkResource(3, user))
 					to_chat(user, "Building Wall ...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
