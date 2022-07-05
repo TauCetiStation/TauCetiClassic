@@ -16,7 +16,6 @@
 	var/health_timestamp = 0
 	var/brute_resist = 4
 	var/fire_resist = 1
-	var/mob/camera/blob/OV //Optional
 
 /obj/effect/blob/atom_init()
 	blobs += src
@@ -195,13 +194,12 @@
 	update_icon()
 	return
 
-/obj/effect/blob/proc/change_to(type, overmind)
+/obj/effect/blob/proc/change_to(type)
 	if(!ispath(type))
 		error("[type] is an invalid type for the blob.")
 	var/obj/effect/blob/B = new type(src.loc)
-	if(overmind)
-		B.OV = overmind
 	qdel(src)
+	return B
 
 /obj/effect/blob/normal
 	icon_state = "blob"
