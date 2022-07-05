@@ -90,33 +90,19 @@
 	GetDrilled()
 /turf/simulated/mineral/Bumped(AM)
 	. = ..()
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
-			if(istype(H.l_hand,/obj/item/weapon/pickaxe/drill))
-				var/obj/item/weapon/pickaxe/drill/D = H.l_hand
-				if(!D.mode)
-					return
-			attackby(H.l_hand,H)
-		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
-			if(istype(H.r_hand,/obj/item/weapon/pickaxe/drill))
-				var/obj/item/weapon/pickaxe/drill/D = H.r_hand
-				if(!D.mode)
-					return
-			attackby(H.r_hand,H)
 
-	else if(isrobot(AM))
+	if(isrobot(AM))
 		var/mob/living/silicon/robot/R = AM
-		if(istype(R.module_active,/obj/item/weapon/pickaxe))
-			attackby(R.module_active,R)
+		if(istype(R.module_active, /obj/item/weapon/pickaxe))
+			attackby(R.module_active, R)
 
-	else if(istype(AM,/obj/mecha))
+	else if(istype(AM, /obj/mecha))
 		var/obj/mecha/M = AM
-		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
+		if(istype(M.selected, /obj/item/mecha_parts/mecha_equipment/drill))
 			M.selected.action(src)
 
 /turf/simulated/mineral/proc/MineralSpread()
-	if(mineral && mineral.spread)
+	if(mineral?.spread)
 		for(var/trydir in cardinal)
 			if(prob(mineral.spread_chance))
 				var/turf/simulated/mineral/random/target_turf = get_step(src, trydir)
@@ -160,6 +146,9 @@
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
+	if(user.is_busy(src))
+		return
+
 	user.SetNextMove(CLICK_CD_RAPID)
 
 	if (istype(W, /obj/item/device/core_sampler))
@@ -192,13 +181,10 @@
 
 	if (istype(W, /obj/item/weapon/pickaxe))
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if (!isturf(T))
 			return
 
 		var/obj/item/weapon/pickaxe/P = W
-		if(next_act > world.time)//prevents message spam
-			return
-		next_act = world.time + 50 * P.toolspeed
 
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
 			var/obj/item/weapon/pickaxe/drill/D = P
@@ -206,17 +192,13 @@
 				if(D.state)
 					to_chat(user, "<span class='danger'>[D] is not ready!</span>")
 					return
-				if(!D.power_supply || !D.power_supply.use(D.drill_cost))
+				if(!D.power_supply?.use(D.drill_cost))
 					to_chat(user, "<span class='danger'>No power!</span>")
 					return
-				if(D.mode)
-					if(mineral)
-						mined_ore = mineral.ore_loss
-				D.power_supply.use(D.drill_cost)
 
 		// handle any archaeological finds we might uncover
 		var/fail_message
-		if(finds && finds.len)
+		if(finds?.len)
 			var/datum/find/F = finds[1]
 			if(excavation_level + P.excavation_amount > F.excavation_required)
 				// Chance to destroy / extract any finds here
@@ -233,7 +215,7 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(!user.is_busy(src) && P.use_tool(src, user, 50, volume = 70))
+		if(P.use_tool(src, user, 50, volume = 70))
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
@@ -243,7 +225,7 @@
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
 				for(var/turf/simulated/mineral/M in range(user,1))
 					if(get_dir(user,M) & user.dir)
-						M.GetDrilled()
+						M.GetDrilled(mineral_drop_koef = P.mineral_multiply_koef)
 				return
 
 			if(finds && finds.len)
@@ -307,13 +289,6 @@
 				var/excav_quadrant = round(excavation_level / 25) + 1
 				excav_overlay = "overlay_excv[excav_quadrant]_[rand(1,3)]"
 				add_overlay(excav_overlay)
-
-			/* Nope.
-			//extract pesky minerals while we're excavating
-			while(excavation_minerals.len && excavation_level > excavation_minerals[excavation_minerals.len])
-				DropMineral()
-				pop(excavation_minerals)
-				mineralAmt-- */
 
 			// drop some rocks
 			next_rock += P.excavation_amount * 10
@@ -450,7 +425,7 @@
 	name = "Mineral deposit"
 	icon_state = "rock"
 
-	var/mineralSpawnChanceList = list("Uranium" = 10, "Platinum" = 10, "Iron" = 20, "Coal" = 15, "Diamond" = 5, "Gold" = 15, "Silver" = 15, "Phoron" = 25,)
+	var/mineralSpawnChanceList = list("Phoron" = 25, "Iron" = 20, "Coal" = 15, "Silver" = 15, "Gold" = 15, "Uranium" = 10, "Platinum" = 10, "Diamond" = 5)
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
 /turf/simulated/mineral/random/atom_init()
@@ -476,7 +451,7 @@
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 40
-	mineralSpawnChanceList = list("Uranium" = 35, "Platinum" = 45, "Diamond" = 30, "Gold" = 45, "Silver" = 50, "Phoron" = 50)
+	mineralSpawnChanceList = list("Phoron" = 50, "Silver" = 50, "Gold" = 45, "Platinum" = 45, "Uranium" = 35, "Diamond" = 30)
 
 /turf/simulated/mineral/random/high_chance/atom_init()
 	icon_state = "rock"
@@ -485,14 +460,14 @@
 /turf/simulated/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 5
-	mineralSpawnChanceList = list("Uranium" = 1, "Platinum" = 1, "Iron" = 50, "Coal" = 20, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Phoron" = 1)
+	mineralSpawnChanceList = list("Uranium" = 2, "Platinum" = 2, "Iron" = 40, "Coal" = 20, "Diamond" = 2, "Gold" = 2, "Silver" = 2, "Phoron" = 2)
 
 /turf/simulated/mineral/random/low_chance/atom_init()
 	icon_state = "rock"
 	. = ..()
 
 /turf/simulated/mineral/random/labormineral
-	mineralSpawnChanceList = list("Uranium" = 1, "Platinum" = 1, "Iron" = 60, "Coal" = 30, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Phoron" = 2)
+	mineralSpawnChanceList = list("Uranium" = 3, "Platinum" = 2, "Iron" = 45, "Coal" = 30, "Diamond" = 2, "Gold" = 2, "Silver" = 2, "Phoron" = 5)
 	icon_state = "rock_labor"
 
 /turf/simulated/mineral/random/labormineral/atom_init()
@@ -696,18 +671,18 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='warning'>You start digging.</span>")
-		if(W.use_tool(src, user, 40, volume = 100))
+		if(W.use_tool(src, user, 4 SECONDS, volume = 100))
 			if((user.loc == T && user.get_active_hand() == W))
 				to_chat(user, "<span class='notice'>You dug a hole.</span>")
 				gets_dug()
 
-	else if(istype(W,/obj/item/weapon/storage/bag/ore))
+	else if(istype(W, /obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
 		if(S.collection_mode)
 			for(var/obj/item/weapon/ore/O in contents)
 				O.attackby(W,user)
 				return
-	else if(istype(W,/obj/item/weapon/storage/bag/fossils))
+	else if(istype(W, /obj/item/weapon/storage/bag/fossils))
 		var/obj/item/weapon/storage/bag/fossils/S = W
 		if(S.collection_mode)
 			for(var/obj/item/weapon/fossil/F in contents)

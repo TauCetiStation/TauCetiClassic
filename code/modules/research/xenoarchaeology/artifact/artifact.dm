@@ -78,13 +78,9 @@
 	if (istype(W, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/P = W
 
-		if(last_act + 50 * P.toolspeed > world.time)//prevents message spam
-			return
-		last_act = world.time
-
 		to_chat(user, "<span class='warning'>You start [P.drill_verb] [src].</span>")
 
-		if(!W.use_tool(src, user, 50, volume = 100))
+		if(!W.use_tool(src, user, 3 SECONDS, volume = 100))
 			return
 
 		to_chat(user, "<span class='notice'>You finish [P.drill_verb] [src].</span>")
@@ -114,19 +110,12 @@
 
 /obj/structure/boulder/Bumped(AM)
 	. = ..()
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
-			attackby(H.l_hand,H)
-		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
-			attackby(H.r_hand,H)
-
-	else if(isrobot(AM))
+	if(isrobot(AM))
 		var/mob/living/silicon/robot/R = AM
-		if(istype(R.module_active,/obj/item/weapon/pickaxe))
-			attackby(R.module_active,R)
+		if(istype(R.module_active, /obj/item/weapon/pickaxe))
+			attackby(R.module_active, R)
 
 	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM
-		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
+		if(istype(M.selected, /obj/item/mecha_parts/mecha_equipment/drill))
 			M.selected.action(src)

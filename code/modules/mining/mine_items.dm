@@ -72,7 +72,7 @@
 	name = "silver pickaxe"
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
-	toolspeed = 0.8
+	toolspeed = 0.7
 	origin_tech = "materials=3"
 	desc = "This makes no metallurgic sense."
 
@@ -92,7 +92,7 @@
 	w_class = SIZE_SMALL //it is smaller than the pickaxe
 	damtype = "fire"
 	toolspeed = 0.4 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
-	mineral_multiply_koef = 1.4
+	mineral_multiply_koef = 1.5
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	drill_verb = "cutting"
@@ -105,7 +105,7 @@
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
 	toolspeed = 0.3
-	mineral_multiply_koef = 1.2
+	mineral_multiply_koef = 1.3
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 
@@ -213,14 +213,13 @@
 	usesound = 'sound/items/drill.ogg'
 	hitsound = list('sound/items/drill_hit.ogg')
 	drill_verb = "drill"
-	toolspeed = 0.6
-	mineral_multiply_koef = 1.1
-	var/drill_cost = 15
+	toolspeed = 0.5
+	mineral_multiply_koef = 1
+	var/drill_cost = 35
 	var/state = 0
 	var/obj/item/weapon/stock_parts/cell/power_supply
-	var/cell_type = /obj/item/weapon/stock_parts/cell
-	var/mode = FALSE
-	var/initial_toolspeed
+	var/cell_type = /obj/item/weapon/stock_parts/cell/high
+	var/effectively_mode = FALSE
 
 /obj/item/weapon/pickaxe/drill/atom_init()
 	. = ..()
@@ -229,8 +228,6 @@
 	else
 		power_supply = new(src)
 	power_supply.give(power_supply.maxcharge)
-	initial_toolspeed = toolspeed
-	update_mode_stats()
 
 
 /obj/item/weapon/pickaxe/drill/update_icon()
@@ -281,29 +278,32 @@
 			power_supply.updateicon()
 			power_supply = null
 			to_chat(user, "<span class='notice'>You pull the powercell out of \the [src].</span>")
-		return
 
 /obj/item/weapon/pickaxe/drill/attack_self(mob/user)
-	mode = !mode
+	effectively_mode = !effectively_mode
 
-	if(mode)
-		to_chat(user, "<span class='notice'>[src] is now standard mode. Chance to loose some precious ore, faster digging speed.</span>")
+	if(effectively_mode)
+		to_chat(user, "<span class='notice'>[src] is now effectively mode. The speed is lowered and the cost of drilling is increased, but the amount of minerals is greater.</span>")
 	else
-		to_chat(user, "<span class='notice'>[src] is now safe mode. No ore loss, slow digging speed.</span>")
+		to_chat(user, "<span class='notice'>[src] is now standart drilling mode.</span>")
 	update_mode_stats()
 
 /obj/item/weapon/pickaxe/drill/proc/update_mode_stats()
-	if(mode)
-		initial_toolspeed = toolspeed
-		toolspeed *= 0.5
+	if(effectively_mode)
+		toolspeed *= 1.25 // slow down drilling speed
+		drill_cost *= 2
+		mineral_multiply_koef += 0.25
 	else
-		toolspeed = initial_toolspeed
+		toolspeed = initial(toolspeed)
+		drill_cost = initial(drill_cost)
+		mineral_multiply_koef -= 0.25
 
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
 	toolspeed = 0.8 //Drills 3 tiles in front of user
+	mineral_multiply_koef = 0.75
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"

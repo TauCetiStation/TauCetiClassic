@@ -279,8 +279,8 @@
 		EQUIPMENT("leporazine autoinjector",	/obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine,			300),
 		EQUIPMENT("Stimpack Bundle",			/obj/item/weapon/storage/box/autoinjector/stimpack,								400),
 		EQUIPMENT("Space first-aid kit",		/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,						1000),
-		EQUIPMENT("Standart capsule",			/obj/item/weapon/survivalcapsule,												1250),
-		EQUIPMENT("Improved capsule",			/obj/item/weapon/survivalcapsule/improved,										1500),
+		EQUIPMENT("Standart capsule",			/obj/item/weapon/survivalcapsule,												1150),
+		EQUIPMENT("Improved capsule",			/obj/item/weapon/survivalcapsule/improved,										1750),
 		EQUIPMENT("Elite capsule(Bar)",			/obj/item/weapon/survivalcapsule/elite,											3000),
 	)
 	prize_list["Digging Tools"] = list(
