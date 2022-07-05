@@ -786,7 +786,7 @@
 			AM.pipe_eject(0)
 		qdel(H)
 		return
-	if(T.intact && istype(T,/turf/simulated/floor)) //intact floor, pop the tile
+	if(T.intact && isfloorturf(T)) //intact floor, pop the tile
 		var/turf/simulated/floor/F = T
 		//F.health	= 100
 		F.burnt	= 1

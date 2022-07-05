@@ -10,6 +10,7 @@
 	throw_range = 7
 	w_class = SIZE_SMALL
 	origin_tech = "combat=5;powerstorage=3;syndicate=3"
+	can_embed = FALSE
 	var/base_force = 0
 	var/fisto_setting = 1
 	var/gasperfist = 3

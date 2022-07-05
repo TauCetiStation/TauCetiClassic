@@ -19,7 +19,7 @@
 			if(M.pulling == usr)
 				M.stop_pulling()
 
-		if(usr.pinned.len)
+		if(usr.anchored)
 			failure = 1
 
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> takes a huge leap!</span>")
@@ -144,7 +144,7 @@
 			if(M.pulling == usr)
 				M.stop_pulling()
 
-		if(usr.pinned.len)
+		if(usr.anchored)
 			failure = 1
 
 		usr.visible_message("<span class='warning'><b>[usr.name]</b> dashes forward!</span>")
@@ -169,22 +169,22 @@
 			var/hit = 0
 			T = get_turf(get_step(usr,usr.dir))
 			if(i < 7)
-				if(istype(T,/turf/simulated/wall))
+				if(iswallturf(T))
 					hit = 1
-				else if(istype(T,/turf/simulated/floor))
+				else if(isfloorturf(T))
 					for(var/obj/structure/S in T.contents)
 						if(istype(S,/obj/structure/window))
 							hit = 1
 						if(istype(S,/obj/structure/grille))
 							hit = 1
 			else if(i > 6)
-				if(istype(T,/turf/simulated/floor))
+				if(isfloorturf(T))
 					for(var/obj/structure/S in T.contents)
 						if(istype(S,/obj/structure/window))
 							S.ex_act(EXPLODE_HEAVY)
 						if(istype(S,/obj/structure/grille))
 							qdel(S)
-				if(istype(T,/turf/simulated/wall))
+				if(iswallturf(T))
 					var/turf/simulated/wall/W = T
 					var/mob/living/carbon/human/H = usr
 					if(istype(T,/turf/simulated/wall/r_wall))
@@ -323,7 +323,7 @@
 			to_chat(usr, "<span class='warning'><B>Ouch!</B> This wall is too strong.</span>")
 			var/mob/living/carbon/human/H = usr
 			H.take_overall_damage(25, used_weapon = "reinforced wall")
-		else if(istype(W,/turf/simulated/wall))
+		else if(iswallturf(W))
 			W.take_damage(50)
 		for(var/mob/living/M in T.contents)
 			if(M != usr)
@@ -417,6 +417,27 @@
 		else
 			to_chat(user, text("<span class='notice'>You punch the girder.</span>"))
 	return
+
+/obj/structure/girder/attack_paw(mob/user)
+	return attack_hand(user)
+
+/obj/structure/girder/attack_hand(mob/user)
+	if(!(HULK in user.mutations))
+		return
+
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='notice'>You push the girder but nothing happens!</span>")
+		return
+
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+	if (prob(75))
+		to_chat(user, text("<span class='notice'>You destroy that girder!</span>"))
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		new /obj/item/stack/sheet/metal(loc)
+		qdel(src)
+	else
+		to_chat(user, text("<span class='notice'>You punch the girder.</span>"))
 
 ///////////////////////////////////////////////////////
 ////////////////// Z  I  L  L  A /////////////////////

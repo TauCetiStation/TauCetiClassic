@@ -33,11 +33,10 @@ LINEN BINS
 		if(!ishuman(user))
 			to_chat(user, "<span class='notice'>You try, but you can't.</span>")
 			return
-		user.visible_message("<span class='notice'>[user] starts tearing \the [src] into rags.</span>", "<span class='notice'>You start tearing \the [src] into rags.</span>")
+		user.visible_message("<span class='notice'>[user] starts cutting \the [src] into cloth.</span>", "<span class='notice'>You start cutting \the [src] into cloth.</span>")
 		if(do_after(user, 40, target = src))
-			user.visible_message("<span class='notice'>[user] tears \the [src] into rags using [I].</span>", "<span class='notice'>You finish tearing \the [src] into rags.</span>")
-			var/obj/item/stack/medical/bruise_pack/rags/R = new(get_turf(src))
-			R.amount = 3
+			user.visible_message("<span class='notice'>[user] cuts \the [src] into cloth using [I].</span>", "<span class='notice'>You finish cutting \the [src] into cloth.</span>")
+			new /obj/item/stack/sheet/cloth(get_turf(src), 3)
 			qdel(src)
 		return
 	return ..()
