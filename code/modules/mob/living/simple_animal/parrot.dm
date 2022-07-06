@@ -35,7 +35,7 @@
 	pass_flags = PASSTABLE
 	w_class = SIZE_TINY
 
-	speak = list("Прривет","Здаррова!","Кррекер?","БВААААК! Жора Аррбузов дрразнит меня!")
+	speak = list("Прривет","Здаррова!","Кррекер?","БВААААК! Джамес Морган дрразнит меня!")
 	speak_emote = list("squawks","says","yells")
 	emote_hear = list("squawks","bawks")
 	emote_see = list("flutters its wings")
