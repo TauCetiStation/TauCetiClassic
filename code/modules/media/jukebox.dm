@@ -362,3 +362,12 @@ var/global/loopModeNames=list(
 	use_power = NO_POWER_USE
 	invisibility=101
 	autoplay = 1
+
+/obj/machinery/media/jukebox/syndi
+	emagged = TRUE
+
+/obj/machinery/media/jukebox/syndi/attackby(obj/item/W, mob/user, params)
+	if(iswrench(W))
+		return
+	else
+		..()
