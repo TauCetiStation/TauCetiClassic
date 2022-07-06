@@ -317,9 +317,9 @@
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
 	var/mob/living/carbon/human/H = src
-	if(H.head && H.head.flags_inv && HIDEEYES)
+	if(ishuman(src) && H.head && H.head.flags_inv && HIDEEYES)
 		return
-	if(H.wear_mask && H.wear_mask.flags_inv && HIDEEYES)
+	if(ishuman(src) && H.wear_mask && H.wear_mask.flags_inv && HIDEEYES)
 		return
 	if(!A.z)
 		return
