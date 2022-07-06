@@ -16480,6 +16480,7 @@
 	name = "Station Intercom (Medbay)";
 	pixel_y = 22
 	},
+/obj/item/clothing/under/patient_gown,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitecorner"
@@ -16685,7 +16686,7 @@
 "hfa" = (
 /obj/structure/closet/secure_closet/CMO,
 /obj/item/device/sensor_device,
-/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/sunglasses/hud/med,
 /obj/item/weapon/defibrillator/compact/loaded,
 /obj/structure/cable,
 /obj/machinery/light_switch{
@@ -32999,6 +33000,7 @@
 /area/station/engineering/atmos)
 "wUD" = (
 /obj/structure/closet/secure_closet/personal/patient,
+/obj/item/clothing/under/patient_gown,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
