@@ -15,7 +15,7 @@
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
-	var/heat_capacity = 1
+	var/heat_capacity = 0
 
 	//Properties for both
 	var/temperature = T20C
@@ -322,7 +322,7 @@
 	W.resources = temp_res
 
 	if(ispath(path, /turf/simulated/floor))
-		if (istype(W, /turf/simulated/floor))
+		if (isfloorturf(W))
 			W.RemoveLattice()
 
 	if(SSair)

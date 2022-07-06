@@ -238,7 +238,7 @@
 // Clear off wallrot fungi
 /datum/reagent/toxin/plantbgone/reaction_turf(turf/T, volume)
 	. = ..()
-	if(istype(T, /turf/simulated/wall))
+	if(iswallturf(T))
 		var/turf/simulated/wall/W = T
 		if(W.rotting)
 			W.rotting = 0

@@ -436,10 +436,10 @@
 		to_chat(usr, "<span class='warning'>Door Control cannot be placed in this area.</span>")
 		return
 
-	if(istype(target, /turf/simulated/wall))
+	if(iswallturf(target))
 		var/turf/loc = get_turf_loc(usr)
 
-		if(!istype(loc, /turf/simulated/floor))
+		if(!isfloorturf(loc))
 			to_chat(usr, "<span class='warning'>Door Control cannot be placed on this spot.</span>")
 			return
 
@@ -452,7 +452,7 @@
 	else if(istype(target, /obj/structure/table/reinforced))
 		var/turf/loc = get_turf_loc(target)
 
-		if (!istype(loc, /turf/simulated/floor))
+		if (!isfloorturf(loc))
 			to_chat(usr, "<span class='warning'>Door Control cannot be placed on this spot.</span>")
 			return
 

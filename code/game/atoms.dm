@@ -227,11 +227,8 @@
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
-		if(istype(src.loc, container))
-			return 1
-	else if(src in container)
-		return 1
-	return
+		return istype(src.loc, container)
+	return src in container
 
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)
