@@ -209,7 +209,7 @@
 	l_ear = /obj/item/device/radio/headset/deathsquad
 	uniform = /obj/item/clothing/under/color/green
 	shoes = /obj/item/clothing/shoes/boots/swat
-	suit = /obj/item/clothing/suit/combat // TODO
+	suit = /obj/item/clothing/suit/armor/swat
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/helmet/space/deathsquad
 	mask = /obj/item/clothing/mask/gas/swat
@@ -318,118 +318,107 @@
 	head = /obj/item/clothing/head/helmet/space/rig/syndi/elite/commander
 	id = /obj/item/weapon/card/id/syndicate/strike/leader
 
+/datum/outfit/nanotrasen
+	name = null
+	var/ownjob
 
+/datum/outfit/nanotrasen/post_equip(mob/living/carbon/human/H)
+	var/obj/item/device/pda/pda = locate() in H
+	if(pda)
+		pda.owner = H.real_name
+		pda.ownjob = ownjob
+		pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 
+	var/obj/item/weapon/card/id/id = locate() in H
+	if(id)
+		id.assignment = ownjob
+		id.name = "[H.real_name]'s ID Card ([id.assignment])"
+		id.registered_name = H.real_name
 
+/datum/outfit/nanotrasen/representatives
 	name = "nanotrasen representative"
-		/obj/item/clothing/under/rank/centcom/representative(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/shoes/centcom(M), SLOT_SHOES)
-		/obj/item/clothing/gloves/white(M), SLOT_GLOVES)
-		/obj/item/device/radio/headset/heads/hop(M), SLOT_L_EAR)
+	ownjob = "NanoTrasen Navy Representative"
+	
+	uniform = /obj/item/clothing/under/rank/centcom/representative
+	shoes = /obj/item/clothing/shoes/centcom
+	gloves = /obj/item/clothing/gloves/white
+	l_ear = /obj/item/device/radio/headset/heads/hop
+	r_pocket = /obj/item/device/pda/heads
+	l_pocket = /obj/item/clothing/glasses/sunglasses
+	belt = /obj/item/weapon/clipboard
+	id = /obj/item/weapon/card/id/centcom
 
-			var/obj/item/device/pda/heads/pda = new(M)
-			pda.owner = M.real_name
-			pda.ownjob = "NanoTrasen Navy Representative"
-			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
-
-			M.equip_to_slot_or_del(pda, SLOT_R_STORE)
-		/obj/item/clothing/glasses/sunglasses(M), SLOT_L_STORE)
-		/obj/item/weapon/clipboard(M), SLOT_BELT)
-
-			var/obj/item/weapon/card/id/centcom/W = new(M)
-			W.assignment = "NanoTrasen Navy Representative"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.registered_name = M.real_name
-			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
-
+/datum/outfit/nanotrasen/officer
 	name = "nanotrasen officer"
-		/obj/item/clothing/under/rank/centcom/officer(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/shoes/centcom(M), SLOT_SHOES)
-		/obj/item/clothing/gloves/white(M), SLOT_GLOVES)
-		/obj/item/device/radio/headset/heads/captain(M), SLOT_L_EAR)
-		/obj/item/clothing/head/beret/centcomofficer(M), SLOT_HEAD)
+	ownjob = "NanoTrasen Navy Officer"
 
-			var/obj/item/device/pda/heads/pda = new(M)
-			pda.owner = M.real_name
-			pda.ownjob = "NanoTrasen Navy Officer"
-			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+	uniform = /obj/item/clothing/under/rank/centcom/officer
+	shoes = /obj/item/clothing/shoes/centcom
+	gloves = /obj/item/clothing/gloves/white
+	l_ear = /obj/item/device/radio/headset/heads/captain
+	head = /obj/item/clothing/head/beret/centcomofficer
+	r_pocket = /obj/item/device/pda/heads
+	l_pocket = /obj/item/clothing/glasses/sunglasses
+	belt = /obj/item/weapon/gun/energy
+	id = /obj/item/weapon/card/id/centcom
 
-			M.equip_to_slot_or_del(pda, SLOT_R_STORE)
-		/obj/item/clothing/glasses/sunglasses(M), SLOT_L_STORE)
-		/obj/item/weapon/gun/energy(M), SLOT_BELT)
-
-			var/obj/item/weapon/card/id/centcom/W = new(M)
-			W.assignment = "NanoTrasen Navy Officer"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.registered_name = M.real_name
-			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
-
-
+/datum/outfit/nanotrasen/captain
 	name = "nanotrasen captain"
-		/obj/item/clothing/under/rank/centcom/captain(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/shoes/centcom(M), SLOT_SHOES)
-		/obj/item/clothing/gloves/white(M), SLOT_GLOVES)
-		/obj/item/device/radio/headset/heads/captain(M), SLOT_L_EAR)
-		/obj/item/clothing/head/beret/centcomcaptain(M), SLOT_HEAD)
+	ownjob = "NanoTrasen Navy Captain"
 
-			var/obj/item/device/pda/heads/pda = new(M)
-			pda.owner = M.real_name
-			pda.ownjob = "NanoTrasen Navy Captain"
-			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+	uniform = /obj/item/clothing/under/rank/centcom/captain
+	shoes = /obj/item/clothing/shoes/centcom
+	gloves = /obj/item/clothing/gloves/white
+	l_ear = /obj/item/device/radio/headset/heads/captain
+	head = /obj/item/clothing/head/beret/centcomcaptain
+	r_pocket = /obj/item/device/pda/heads
+	l_pocket = /obj/item/clothing/glasses/sunglasses
+	belt = /obj/item/weapon/gun/energy
+	id = /obj/item/weapon/card/id/centcom
 
-			M.equip_to_slot_or_del(pda, SLOT_R_STORE)
-		/obj/item/clothing/glasses/sunglasses(M), SLOT_L_STORE)
-		/obj/item/weapon/gun/energy(M), SLOT_BELT)
-
-			var/obj/item/weapon/card/id/centcom/W = new(M)
-			W.assignment = "NanoTrasen Navy Captain"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.registered_name = M.real_name
-			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
-
+/datum/outfit/psyops_officer
 	name = "psyops officer"
-			M.set_species(SKRELL)
-			M.r_eyes = 102
-			M.g_eyes = 204
-			M.b_eyes = 255
 
-			var/list/skin_variations = list(
-				list(0, 0, 0),
-				list(28, 28, 28),
-				list(0, 0, 102),
-				list(63, 31, 0),
-				list(0, 51, 0),
-			)
+	uniform = /obj/item/clothing/under/darkred
+	head = /obj/item/clothing/head/helmet/psyamp
+	suit = /obj/item/clothing/suit/armor/vest/fullbody/psy_robe
+	shoes = /obj/item/clothing/shoes/boots/combat
+	gloves = /obj/item/clothing/gloves/black/silence
+	l_hand = /obj/item/weapon/paper/psyops_starting_guide
+	r_hand = /obj/item/weapon/nullrod/forcefield_staff
+	r_pocket = /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment
+	l_pocket = /obj/item/weapon/storage/firstaid/small_firstaid_kit/psyops
+	l_ear = /obj/item/clothing/ears/earmuffs(M), SLOT_L_EAR)
 
-			var/list/variation = pick(skin_variations)
+/datum/outfit/psyops_officer/post_equip(mob/living/carbon/human/H)
+		H.set_species(SKRELL)
+		H.r_eyes = 102
+		H.g_eyes = 204
+		H.b_eyes = 255
 
-		/obj/item/clothing/under/darkred(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/head/helmet/psyamp(M), SLOT_HEAD)
-		/obj/item/clothing/suit/armor/vest/fullbody/psy_robe(M), SLOT_WEAR_SUIT)
-		/obj/item/clothing/shoes/boots/combat(M), SLOT_SHOES)
-		/obj/item/clothing/gloves/black/silence(M), SLOT_GLOVES)
-		/obj/item/weapon/paper/psyops_starting_guide(M), SLOT_L_HAND)
-		/obj/item/weapon/nullrod/forcefield_staff(M), SLOT_R_HAND)
-		/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment(M), SLOT_R_STORE)
-		/obj/item/weapon/storage/firstaid/small_firstaid_kit/psyops(M), SLOT_L_STORE)
-		/obj/item/clothing/ears/earmuffs(M), SLOT_L_EAR)
+		var/list/skin_variations = list(
+			list(0, 0, 0),
+			list(28, 28, 28),
+			list(0, 0, 102),
+			list(63, 31, 0),
+			list(0, 51, 0),
+		)
 
-			M.r_skin = variation[1]
-			M.g_skin = variation[2]
-			M.b_skin = variation[3]
+		var/list/variation = pick(skin_variations)
 
-			M.r_hair = variation[1]
-			M.g_hair = variation[2]
-			M.b_hair = variation[3]
+		H.r_skin = variation[1]
+		H.g_skin = variation[2]
+		H.b_skin = variation[3]
 
-			M.universal_speak = TRUE
-			M.universal_understand = TRUE
+		H.r_hair = variation[1]
+		H.g_hair = variation[2]
+		H.b_hair = variation[3]
 
-			M.mutations.Add(NO_SHOCK)
-			M.mutations.Add(TK)
-			M.mutations.Add(REMOTE_TALK)
+		H.universal_speak = TRUE
+		H.universal_understand = TRUE
 
-			M.update_mutations()
+		M.mutations += list(NO_SHOCK, TK, REMOTE_TALK)
+		M.update_mutations()
 
 	name = "velocity officer"
 		/obj/item/clothing/under/det/velocity(M), SLOT_W_UNIFORM)
