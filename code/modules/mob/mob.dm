@@ -316,6 +316,14 @@
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
+	var/mob/living/carbon/human/H = src
+	if(H.head && H.head.flags_inv && HIDEEYES)
+		return
+	if(H.wear_mask && H.wear_mask.flags_inv && HIDEEYES)
+		return
+	if(!A.z)
+		return
+	visible_message("<font size='0.5'><b>[src]</b> looks at <b>[A]</b></font>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
