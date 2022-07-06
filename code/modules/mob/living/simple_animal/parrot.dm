@@ -35,7 +35,7 @@
 	pass_flags = PASSTABLE
 	w_class = SIZE_TINY
 
-	speak = list("Прривет","Здаррова!","Кррекер?","БВААААК! Джамес Морган дрразнит меня!")
+	speak = list("Прривет","Здаррова!","Кррекер?","БВААААА! Джамес Морган дрразнит меня!")
 	speak_emote = list("squawks","says","yells")
 	emote_hear = list("squawks","bawks")
 	emote_see = list("flutters its wings")
@@ -150,9 +150,9 @@
 				if("ears")
 					if(ears)
 						if(available_channels.len)
-							say("[pick(available_channels)] БВАААААК! ОСТАВЬ НАУШНИК! БВАААК!")
+							say("[pick(available_channels)] БВААААА! ОСТАВЬ НАУШНИК! БВААААА!")
 						else
-							say("БВАААААК! ОСТАВЬ НАУШНИК! БВАААК!")
+							say("БВААААА! ОСТАВЬ НАУШНИК! БВААААА!")
 						ears.loc = src.loc
 						ears = null
 						for(var/possible_phrase in speak)
