@@ -3782,8 +3782,7 @@
 	opacity = 0
 	},
 /obj/structure/window/shuttle{
-	icon_state = "window_gray_w";
-	name = "skipjack window"
+	icon_state = "window_gray_w"
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -3819,8 +3818,7 @@
 	opacity = 0
 	},
 /obj/structure/window/shuttle{
-	icon_state = "window_gray_e";
-	name = "skipjack window"
+	icon_state = "window_gray_e"
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -4347,8 +4345,7 @@
 	opacity = 0
 	},
 /obj/structure/window/shuttle{
-	icon_state = "window_gray_we";
-	name = "skipjack window"
+	icon_state = "window_gray_we"
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -4701,13 +4698,14 @@
 	},
 /area/custom/syndicate_mothership)
 "alP" = (
-/obj/machinery/vending/snack{
-	name = "hacked Getmore Chocolate Corp";
-	prices = list()
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = -32
 	},
+/obj/machinery/light/small,
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "black"
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet9-4";
+	name = "black carpet"
 	},
 /area/custom/syndicate_mothership)
 "alQ" = (
@@ -4772,7 +4770,7 @@
 /area/custom/syndicate_mothership)
 "alV" = (
 /obj/machinery/washing_machine,
-/obj/machinery/light{
+/obj/machinery/light/small{
 	dir = 1
 	},
 /turf/unsimulated/floor{
@@ -4959,12 +4957,12 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
-/turf/simulated/floor{
+/turf/unsimulated/floor{
 	icon_state = "Stairs2_wide"
 	},
 /area/custom/syndicate_mothership)
 "amm" = (
-/turf/simulated/floor{
+/turf/unsimulated/floor{
 	icon_state = "stairs_middle"
 	},
 /area/custom/syndicate_mothership)
@@ -5136,7 +5134,10 @@
 	},
 /area/shuttle/syndicate/start)
 "amH" = (
-/obj/structure/closet/crate/bin,
+/obj/machinery/vending/snack{
+	name = "Hacked Getmore Chocolate Corp";
+	prices = list()
+	},
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "black"
@@ -5629,7 +5630,7 @@
 /obj/structure/sign/poster/contraband/energy_swords{
 	pixel_x = -32
 	},
-/turf/simulated/floor{
+/turf/unsimulated/floor{
 	icon_state = "Stairs_wide"
 	},
 /area/custom/syndicate_mothership)
@@ -15132,21 +15133,13 @@
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aHZ" = (
-/obj/item/weapon/reagent_containers/food/snacks/syndicake{
-	pixel_x = -5;
-	pixel_y = 9
-	},
-/obj/item/weapon/reagent_containers/food/snacks/syndicake,
+/turf/unsimulated/wall/fakeglass,
+/area/space)
+"aIa" = (
 /obj/structure/table/woodentable,
+/obj/item/weapon/storage/fancy/donut_box/traitor,
 /turf/unsimulated/floor{
 	icon_state = "wood"
-	},
-/area/custom/syndicate_mothership)
-"aIa" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet7-3";
-	name = "black carpet"
 	},
 /area/custom/syndicate_mothership)
 "aIb" = (
@@ -15198,7 +15191,7 @@
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
+	icon_state = "blackcarpet7-3";
 	name = "black carpet"
 	},
 /area/custom/syndicate_mothership)
@@ -15299,8 +15292,8 @@
 	},
 /area/custom/syndicate_mothership)
 "aIu" = (
-/obj/structure/stool,
 /obj/effect/decal/cleanable/blood,
+/obj/structure/stool/bar,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -15421,12 +15414,9 @@
 	},
 /area/centcom/evac)
 "aIK" = (
-/obj/item/weapon/storage/box/drinkingglasses{
-	pixel_y = 4
-	},
-/obj/structure/table/woodentable,
 /turf/unsimulated/floor{
-	icon_state = "wood"
+	dir = 4;
+	icon_state = "red"
 	},
 /area/custom/syndicate_mothership)
 "aIL" = (
@@ -15437,25 +15427,30 @@
 	},
 /area/custom/syndicate_mothership)
 "aIM" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 4
+/obj/item/weapon/reagent_containers/food/snacks/syndicake{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/snacks/syndicake{
+	pixel_y = -7
 	},
 /turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet13-5";
-	name = "black carpet"
+	icon_state = "wood"
 	},
 /area/custom/syndicate_mothership)
 "aIN" = (
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
-	pixel_x = -4
-	},
 /obj/structure/table/woodentable,
+/obj/item/weapon/storage/box/drinkingglasses{
+	pixel_x = -3;
+	pixel_y = 9
+	},
+/obj/item/weapon/reagent_containers/food/drinks/flask/barflask{
+	pixel_x = 4;
+	pixel_y = -5
+	},
 /turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet13-5";
-	name = "black carpet"
+	icon_state = "wood"
 	},
 /area/custom/syndicate_mothership)
 "aIO" = (
@@ -15470,12 +15465,14 @@
 	},
 /area/centcom/evac)
 "aIQ" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 8
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = -4
 	},
+/obj/structure/table/woodentable,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet9-4";
+	icon_state = "blackcarpet";
 	name = "black carpet"
 	},
 /area/custom/syndicate_mothership)
@@ -15712,6 +15709,7 @@
 /turf/unsimulated/wall,
 /area/centcom/control)
 "aJv" = (
+/obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
 	icon_state = "wood-broken2"
 	},
@@ -15816,11 +15814,10 @@
 	},
 /area/centcom/evac)
 "aJH" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken4"
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet13-5";
+	name = "black carpet"
 	},
 /area/custom/syndicate_mothership)
 "aJI" = (
@@ -21775,7 +21772,7 @@
 /obj/machinery/chem_dispenser/soda{
 	pixel_y = 6
 	},
-/obj/machinery/light{
+/obj/machinery/light/small{
 	dir = 8
 	},
 /turf/unsimulated/floor{
@@ -86453,12 +86450,12 @@ ahF
 ahF
 ahJ
 ahJ
-ahJ
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+aHZ
+aHZ
+aHZ
+aHZ
+aHZ
 aaN
 atb
 aaN
@@ -86710,12 +86707,12 @@ ahF
 ahF
 aie
 aaN
-aaN
-aaN
-aaN
-aaN
-aaN
-aaN
+aie
+ajy
+aki
+aki
+aki
+aki
 aaN
 aii
 aaN
@@ -86968,11 +86965,11 @@ aie
 aie
 ail
 ajc
-ajy
-aki
-aki
-aki
-aki
+aIK
+aIK
+aIK
+aIK
+aIK
 aaN
 alI
 aaN
@@ -90567,7 +90564,7 @@ ajG
 ajO
 ajk
 aky
-alP
+alY
 alY
 amM
 aly
@@ -91087,9 +91084,9 @@ alk
 aie
 ams
 bsb
-aHZ
-aIK
-aHd
+aIM
+aIN
+aIa
 aie
 ahF
 ahF
@@ -91343,9 +91340,9 @@ aIb
 amJ
 aie
 amv
-ayM
-aIa
-aIL
+aJw
+aJw
+aJw
 aJv
 aie
 ahF
@@ -91600,10 +91597,10 @@ aIb
 amJ
 ama
 amy
-azH
+ayM
 aIg
-aIM
-aJw
+aIg
+aIL
 aie
 ahF
 ahF
@@ -91859,8 +91856,8 @@ amc
 amz
 azH
 aIi
-aIN
-aJw
+aIQ
+aJH
 aie
 ahF
 ahF
@@ -92116,8 +92113,8 @@ anD
 anb
 aHc
 aIj
-aIQ
-aJH
+aIj
+alP
 aie
 ahF
 ahF
