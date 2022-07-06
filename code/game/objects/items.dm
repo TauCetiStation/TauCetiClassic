@@ -410,8 +410,11 @@
 					S.gather_all(loc, user)
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
-			return FALSE
-	return ..()
+
+	if(user.a_intent == INTENT_HARM & !istype(I, /obj/item/weapon/reagent_containers))
+		return ..()
+	else
+		return
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.

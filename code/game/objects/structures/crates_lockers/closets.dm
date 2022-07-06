@@ -296,3 +296,9 @@
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open()
+
+/obj/structure/closet/thermite_burn()
+	for(var/atom/A in src)
+		if(prob(25))
+			var/datum/component/thermite/T = A.AddComponent(/datum/component/thermite, A.min_thermite_amount, A.min_thermite_amount, A.max_thermite_time, A.min_thermite_time) //we're kinda duping thermite, but I think it's fine
+			T.ignite()

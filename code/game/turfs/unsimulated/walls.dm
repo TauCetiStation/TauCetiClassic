@@ -7,6 +7,8 @@
 	density = TRUE
 	smooth = SMOOTH_TRUE
 
+	min_thermite_amount = -1
+
 /turf/unsimulated/wall/iron
 	icon = 'icons/turf/walls/iron.dmi'
 

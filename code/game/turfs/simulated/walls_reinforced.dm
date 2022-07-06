@@ -12,6 +12,10 @@
 
 	var/d_state = INTACT
 
+	min_thermite_amount = 60
+	min_thermite_time = 10
+	max_thermite_time = 120
+
 /turf/simulated/wall/r_wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2

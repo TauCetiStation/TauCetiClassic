@@ -21,10 +21,10 @@
 	var/min_amount
 
 	//maximal time for burning parent, decreases with more thermite applied
-	var/max_time = 30
+	var/max_time
 
 	//minimal time for burning parent, so you can't melt wall instantly with 999 units of thermite
-	var/min_time = 5
+	var/min_time
 
 	//storing overlay for deletion
 	var/burn_overlay
@@ -71,12 +71,14 @@
 		A.visible_message("<span class='warning'>Thermite isn't strong enough to melt [src]! </span>")
 		var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread()
 		S.set_up(1, 1, parent)
+		qdel(src)
 		return FALSE
 
 	else if(amount < min_amount)
 		A.visible_message("<span class='warning'>There isn't enough thermite to melt [src]! </span>")
 		var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread()
 		S.set_up(1, 1, parent)
+		qdel(src)
 		return FALSE
 
 	var/time = max_time * (min_amount / amount)
@@ -90,14 +92,16 @@
 	var/atom/A = parent
 	var/r = A.thermite_melt()
 
+	var/overlay_loc = isturf(A) ? A : A.loc
+
 	if(r == FALSE) //we don't have special overload for parent, so do the default melting
 		var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread()
 		S.set_up(3, 1, parent)
-		burn_overlay = new /obj/effect/overlay/thermite(parent)
+		burn_overlay = new /obj/effect/overlay/thermite(overlay_loc)
 		A.visible_message("<span class='warning'>Thermite starts melting [parent]. </span>")
 
-		var/turf/L = get_turf(parent)
-		L.hotspot_expose(1000, 10, parent)
+		var/turf/L = isturf(A) ? A : get_turf(parent)
+		L.hotspot_expose(3200, 10, parent)
 
 		burn_timer = addtimer(CALLBACK(src, .proc/burn), time SECONDS, TIMER_STOPPABLE)
 	else
@@ -115,21 +119,19 @@
 	if(burn_overlay != null)
 		qdel(burn_overlay)
 
-/datum/component/thermite/proc/attack_reaction(var/obj/item/W, var/mob/living/U, params)
+/datum/component/thermite/proc/attack_reaction(datum/source, obj/item/I,  mob/living/user, params)
 	var/atom/A = parent
-	A.visible_message("checking...")
-	var/datum/gas_mixture/env = W.return_air()
+	var/datum/gas_mixture/env = I.return_air()
 	var/temp = 0.0
 
-	temp = (env.temperature + W.get_current_temperature()) - T0C
-	A.visible_message("temp: [temp]")
+	temp = (env.temperature + I.get_current_temperature()) - T0C
 	if(temp > 1920)
-		A.visible_message("igniting")
-		ignite(U)
+		ignite(user)
 
-	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/soap))
-		A.visible_message("cleaning")
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/soap))
 		qdel(src)
+
+	return COMPONENT_NO_AFTERATTACK
 
 
 

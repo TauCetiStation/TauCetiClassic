@@ -120,9 +120,11 @@
 	color = "#673910" // rgb: 103, 57, 16
 
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
+	. = ..()
 	T.AddComponent(/datum/component/thermite, volume, T.min_thermite_amount, T.max_thermite_time, T.min_thermite_time)
 
 /datum/reagent/thermite/reaction_obj(obj/O, volume)
+	..()
 	O.AddComponent(/datum/component/thermite, volume, O.min_thermite_amount, O.max_thermite_time, O.min_thermite_time)
 
 /datum/reagent/thermite/on_general_digest(mob/living/M)

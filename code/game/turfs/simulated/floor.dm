@@ -49,6 +49,10 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	can_deconstruct = TRUE
 
+	min_thermite_amount = 60
+	min_thermite_time = 10
+	max_thermite_time = 120
+
 	var/datum/holy_turf/holy
 
 /turf/simulated/floor/proc/get_lightfloor_state()

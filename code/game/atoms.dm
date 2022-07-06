@@ -799,7 +799,7 @@
 //if you want special behaviour for your atom when it's melted by thermite (like different overlay/time/etc.), put it here
 //should return burn overlay or false if no overload is available
 /atom/proc/thermite_melt()
-	return TRUE
+	return FALSE
 
 //called from thermite component
 //if you want special behaviour for your atom when it is destroyed by thermite (like spawning burnt mess/exploding/etc.), put it here

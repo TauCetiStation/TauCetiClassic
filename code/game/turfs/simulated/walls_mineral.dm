@@ -62,6 +62,7 @@
 	mineral = "diamond"
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	canSmoothWith = list(/turf/simulated/wall/mineral/diamond, /obj/structure/falsewall/diamond)
+	min_thermite_amount = -1
 
 /turf/simulated/wall/mineral/bananium
 	name = "bananium wall"
