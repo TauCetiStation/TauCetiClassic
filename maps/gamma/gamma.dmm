@@ -29731,6 +29731,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/device/gps/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -43074,6 +43075,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/device/gps/medical,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
@@ -78066,10 +78068,6 @@
 /area/station/bridge/hop_office)
 "xHY" = (
 /obj/structure/rack,
-/obj/item/weapon/circuitboard/pandemic{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/weapon/circuitboard/rdconsole,
 /obj/item/weapon/circuitboard/rdserver{
 	pixel_x = 3;

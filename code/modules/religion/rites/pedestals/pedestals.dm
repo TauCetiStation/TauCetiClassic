@@ -34,7 +34,7 @@
 
 	var/cultists_around = 0
 	for(var/mob/M in AOG.mobs_around)
-		if(religion.is_member(M) && user.get_species() != HOMUNCULUS)
+		if(religion.is_member(M) && M.get_species() != HOMUNCULUS)
 			cultists_around++
 
 	if(cultists_around < need_members)
@@ -157,7 +157,7 @@
 
 	religion.add_member(H, CULT_ROLE_HIGHPRIEST)
 
-	H.set_species(SKELETON)
+	H.makeSkeleton()
 	H.revive()
 	H.visible_message("<span class='warning'>После того, как дым развеялся, на алтаре виден скелет человека.</span>",
 					"<span class='cult'>Вы чувствуете, как с вас буквально содрали всю кожу, хотя у тебя теперь нет и нервов.</span>")

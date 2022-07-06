@@ -199,7 +199,7 @@
 
 /datum/reagent/toxin/zombiepowder/on_general_digest(mob/living/M)
 	..()
-	M.status_flags |= FAKEDEATH
+	M.add_status_flags(FAKEDEATH)
 	M.adjustOxyLoss(0.5 * REM)
 	M.Weaken(10)
 	M.silent = max(M.silent, 10)
@@ -208,7 +208,7 @@
 /datum/reagent/toxin/zombiepowder/Destroy()
 	if(holder && ismob(holder.my_atom))
 		var/mob/M = holder.my_atom
-		M.status_flags &= ~FAKEDEATH
+		M.remove_status_flags(FAKEDEATH)
 	return ..()
 
 /datum/reagent/toxin/mindbreaker
@@ -238,7 +238,7 @@
 // Clear off wallrot fungi
 /datum/reagent/toxin/plantbgone/reaction_turf(turf/T, volume)
 	. = ..()
-	if(istype(T, /turf/simulated/wall))
+	if(iswallturf(T))
 		var/turf/simulated/wall/W = T
 		if(W.rotting)
 			W.rotting = 0

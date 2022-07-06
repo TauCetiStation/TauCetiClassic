@@ -16,6 +16,7 @@
 	var/health_timestamp = 0
 	var/brute_resist = 4
 	var/fire_resist = 1
+	var/mob/camera/blob/OV //Optional
 
 /obj/effect/blob/atom_init()
 	blobs += src
@@ -145,8 +146,8 @@
 	return
 
 
-/obj/effect/blob/bullet_act(obj/item/projectile/Proj)
-	..()
+/obj/effect/blob/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	switch(Proj.damage_type)
 	 if(BRUTE)
 		 health -= (Proj.damage/brute_resist)
@@ -154,7 +155,6 @@
 		 health -= (Proj.damage/fire_resist)
 
 	update_icon()
-	return PROJECTILE_ACTED
 
 /obj/effect/blob/Crossed(atom/movable/AM)
 	. = ..()
@@ -193,10 +193,12 @@
 	update_icon()
 	return
 
-/obj/effect/blob/proc/change_to(type)
+/obj/effect/blob/proc/change_to(type, overmind)
 	if(!ispath(type))
 		error("[type] is an invalid type for the blob.")
-	new type(src.loc)
+	var/obj/effect/blob/B = new type(src.loc)
+	if(overmind)
+		B.OV = overmind
 	qdel(src)
 
 /obj/effect/blob/normal

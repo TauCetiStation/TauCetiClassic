@@ -14,7 +14,7 @@
 	animation.master = src
 
 //	flick("gibbed-m", animation)
-	gibs(loc, viruses, dna)
+	gibs(loc, dna)
 
 	dead_mob_list -= src
 	spawn(15)
@@ -29,7 +29,7 @@
 	flick(I, animation)
 
 	playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
-	emote("scream",,, 1)
+	emote("scream")
 	death(1)
 	notransform = TRUE
 	canmove = 0

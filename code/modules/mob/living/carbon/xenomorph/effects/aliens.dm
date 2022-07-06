@@ -22,7 +22,7 @@
 	if(health <= 0)
 		qdel(src)
 
-/obj/structure/alien/bullet_act(obj/item/projectile/Proj)
+/obj/structure/alien/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
@@ -252,7 +252,7 @@
 	if(exposed_temperature > 290)
 		apply_damage(15)
 
-/obj/structure/alien/weeds/bullet_act(obj/item/projectile/Proj)
+/obj/structure/alien/weeds/bullet_act(obj/item/projectile/Proj, def_zone)
 	return PROJECTILE_FORCE_MISS
 
 /obj/structure/alien/weeds/node
@@ -299,7 +299,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/alien/acid/atom_init_late()
-	if(istype(target, /turf/simulated/wall))
+	if(iswallturf(target))
 		target_strength = 8
 	else if(is_type_in_list(target, ventcrawl_machinery))
 		target_strength = 2
@@ -317,10 +317,10 @@
 
 		audible_message("<span class='notice'><B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B></span>")
 
-		if(istype(target, /turf/simulated/wall))
+		if(iswallturf(target))
 			var/turf/simulated/wall/W = target
 			W.dismantle_wall(1)
-		else if(istype(target, /turf/simulated/floor))
+		else if(isfloorturf(target))
 			var/turf/simulated/floor/F = target
 			F.make_plating()
 		else if(is_type_in_list(target, ventcrawl_machinery))

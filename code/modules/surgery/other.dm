@@ -167,6 +167,7 @@
 
 	min_duration = 70
 	max_duration = 90
+	required_skills = list(/datum/skill/surgery/trained, /datum/skill/engineering/novice)
 
 /datum/surgery_step/groin_organs/fixing_robot/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())

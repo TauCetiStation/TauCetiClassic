@@ -79,7 +79,8 @@ var/global/list/fusion_cores = list()
 		owned_field.AddParticles(name, quantity)
 		. = TRUE
 
-/obj/machinery/power/fusion_core/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/power/fusion_core/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(owned_field)
 		. = owned_field.bullet_act(Proj)
 
