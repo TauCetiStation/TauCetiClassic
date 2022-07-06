@@ -453,3 +453,13 @@
 /obj/item/weapon/card/id/syndicate/reaper/atom_init()
 	. = ..()
 	access = get_all_accesses()
+
+/obj/item/weapon/card/id/syndicate/strike
+	icon_state = "syndicate"
+	assignment = "Syndicate Commando"
+
+/obj/item/weapon/card/id/syndicate/strike/leader
+	icon_state = "syndicate-command"
+	assignment = "Syndicate Commando Leader"
+
+

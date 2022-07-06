@@ -1,57 +1,57 @@
 /datum/outfit/space_gear
-    name = "standard space gear"
+	name = "standard space gear"
 
-    uniform = /obj/item/clothing/under/color/grey
-    shoes = /obj/item/clothing/shoes/black
+	uniform = /obj/item/clothing/under/color/grey
+	shoes = /obj/item/clothing/shoes/black
 
-    head = /obj/item/clothing/head/helmet/space/globose
-    suit = /obj/item/clothing/suit/space/globose
+	head = /obj/item/clothing/head/helmet/space/globose
+	suit = /obj/item/clothing/suit/space/globose
 
-    back = /obj/item/weapon/tank/jetpack/oxygen
-    mask = /obj/item/clothing/mask/breath
+	back = /obj/item/weapon/tank/jetpack/oxygen
+	mask = /obj/item/clothing/mask/breath
 
 /datum/outfit/space_gear/post_equip()
-    var/obj/item/weapon/tank/jetpack/J = back
-    J.toggle()
-    J.Topic(null, list("stat" = 1))
+	var/obj/item/weapon/tank/jetpack/J = back
+	J.toggle()
+	J.Topic(null, list("stat" = 1))
 
 /datum/outfit/tournament
-    name = "tournament standard red"
+	name = "tournament standard red"
 
-    uniform = /obj/item/clothing/under/color/red
-    shoes = /obj/item/clothing/shoes/black
+	uniform = /obj/item/clothing/under/color/red
+	shoes = /obj/item/clothing/shoes/black
 
-    suit = /obj/item/clothing/suit/armor/vest
-    head = /obj/item/clothing/head/helmet/thunderdome
+	suit = /obj/item/clothing/suit/armor/vest
+	head = /obj/item/clothing/head/helmet/thunderdome
 
-    r_hand = /obj/item/weapon/gun/energy/pulse_rifle/destroyer
-    l_hand = /obj/item/weapon/kitchenknife
-    r_pocket = /obj/item/weapon/grenade/smokebomb
+	r_hand = /obj/item/weapon/gun/energy/pulse_rifle/destroyer
+	l_hand = /obj/item/weapon/kitchenknife
+	r_pocket = /obj/item/weapon/grenade/smokebomb
 
 /datum/outfit/tournament/green
-    name = "tournament standard green"
+	name = "tournament standard green"
 
-    uniform = /obj/item/clothing/under/color/green
+	uniform = /obj/item/clothing/under/color/green
 
 /datum/outfit/tournament_ganster
-    name = "tournament gangster"
+	name = "tournament gangster"
 
-    uniform = /obj/item/clothing/under/det
-    shoes = /obj/item/clothing/shoes/black
-    
-    suit = /obj/item/clothing/suit/storage/det_suit
-    glasses = /obj/item/clothing/glasses/thermal/monocle\
-    head = /obj/item/clothing/head/det_hat
+	uniform = /obj/item/clothing/under/det
+	shoes = /obj/item/clothing/shoes/black
+	
+	suit = /obj/item/clothing/suit/storage/det_suit
+	glasses = /obj/item/clothing/glasses/thermal/monocle\
+	head = /obj/item/clothing/head/det_hat
 
-    r_hand = /obj/item/weapon/gun/projectile
-    l_pocket = /obj/item/ammo_box/a357
+	r_hand = /obj/item/weapon/gun/projectile
+	l_pocket = /obj/item/ammo_box/a357
 
 /datum/outfit/tournament_chief
 	name = "tournament chef"
 	
-    uniform = /obj/item/clothing/under/rank/chef
-    shoes = /obj/item/clothing/shoes/black
-    head = /obj/item/clothing/head/chefhat
+	uniform = /obj/item/clothing/under/rank/chef
+	shoes = /obj/item/clothing/shoes/black
+	head = /obj/item/clothing/head/chefhat
 
 	r_hand = /obj/item/weapon/kitchen/rollingpin
 	l_hand = /obj/item/weapon/kitchenknife
@@ -60,46 +60,46 @@
 
 /datum/outfit/tournament_janitor
 	name = "tournament janitor"
-    
-    uniform = /obj/item/clothing/under/rank/janitor
-    shoes = /obj/item/clothing/shoes/black
-    backpack = /obj/item/weapon/storage/backpack
+	
+	uniform = /obj/item/clothing/under/rank/janitor
+	shoes = /obj/item/clothing/shoes/black
+	backpack = /obj/item/weapon/storage/backpack
 
 	r_hand = /obj/item/weapon/mop
-    l_hand = /obj/item/weapon/reagent_containers/glass/bucket/full
+	l_hand = /obj/item/weapon/reagent_containers/glass/bucket/full
 
 	r_pocket = /obj/item/weapon/grenade/chem_grenade/cleaner
 	l_pocket = /obj/item/weapon/grenade/chem_grenade/cleaner
-    backpack_contents = list(
-        /obj/item/stack/tile/plasteel,
-        /obj/item/stack/tile/plasteel,
-        /obj/item/stack/tile/plasteel,
-        /obj/item/stack/tile/plasteel,
-        /obj/item/stack/tile/plasteel,
-        /obj/item/stack/tile/plasteel,
-        /obj/item/stack/tile/plasteel,
-        /obj/item/stack/tile/plasteel,
-    )
+	backpack_contents = list(
+		/obj/item/stack/tile/plasteel,
+		/obj/item/stack/tile/plasteel,
+		/obj/item/stack/tile/plasteel,
+		/obj/item/stack/tile/plasteel,
+		/obj/item/stack/tile/plasteel,
+		/obj/item/stack/tile/plasteel,
+		/obj/item/stack/tile/plasteel,
+		/obj/item/stack/tile/plasteel,
+	)
 
 /datum/outfit/pirate
 	name = "pirate"
 
-    uniform = /obj/item/clothing/under/pirate
-    shoes = /obj/item/clothing/shoes/brown
-    head = /obj/item/clothing/head/bandana
-    glasses = /obj/item/clothing/glasses/eyepatch
-    r_hand = /obj/item/weapon/melee/energy/sword/pirate
+	uniform = /obj/item/clothing/under/pirate
+	shoes = /obj/item/clothing/shoes/brown
+	head = /obj/item/clothing/head/bandana
+	glasses = /obj/item/clothing/glasses/eyepatch
+	r_hand = /obj/item/weapon/melee/energy/sword/pirate
 
 /datum/outfit/pirate/space
 	name = "space pirate"
 
-    suit = /obj/item/clothing/suit/space/pirate
-    head = /obj/item/clothing/head/helmet/space/pirate
+	suit = /obj/item/clothing/suit/space/pirate
+	head = /obj/item/clothing/head/helmet/space/pirate
 
 /datum/outfit/soviet_soldier
 	name = "soviet soldier"
 		
-    uniform = /obj/item/clothing/under/soviet
+	uniform = /obj/item/clothing/under/soviet
 	shoes = /obj/item/clothing/shoes/black
 	head = /obj/item/clothing/head/ushanka
 
@@ -116,19 +116,19 @@
 	suit = /obj/item/clothing/suit/chaplain_hoodie
 	l_pocket = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	r_pocket = /obj/item/weapon/bikehorn
-    id = /obj/item/weapon/card/id/clown/tunnel
+	id = /obj/item/weapon/card/id/clown/tunnel
 	r_hand = /obj/item/weapon/fireaxe
 
 /datum/outfit/tunnel_clown/post_equip(mob/living/carbon/human/H)
-    var/obj/item/weapon/card/id/W = id
-    if(istype(W))
-        W.name = "[H.real_name]'s ID Card ([W.assignment])"
-        W.registered_name = H.real_name
+	var/obj/item/weapon/card/id/W = id
+	if(istype(W))
+		W.name = "[H.real_name]'s ID Card ([W.assignment])"
+		W.registered_name = H.real_name
 
 /datum/outfit/masked_killer
 	name = "masked killer"
 	
-    uniform = /obj/item/clothing/under/overalls
+	uniform = /obj/item/clothing/under/overalls
 	shoes = /obj/item/clothing/shoes/white
 	gloves = /obj/item/clothing/gloves/latex
 	mask = /obj/item/clothing/mask/surgical
@@ -141,125 +141,185 @@
 	r_hand = /obj/item/weapon/fireaxe/fire_axe
 
 /datum/outfit/masked_killer/post_equip(mob/living/carbon/human/H)
-    for(var/obj/item/carried_item in H.contents)
-        if(!istype(carried_item, /obj/item/weapon/implant)
-            carried_item.add_blood(H)//Oh yes, there will be blood...
+	for(var/obj/item/carried_item in H.contents)
+		if(!istype(carried_item, /obj/item/weapon/implant)
+			carried_item.add_blood(H)//Oh yes, there will be blood...
 
 /datum/outfit/assasin
 	name = "assassin"
 	
-    uniform = /obj/item/clothing/under/suit_jacket
+	uniform = /obj/item/clothing/under/suit_jacket
 	shoes = /obj/item/clothing/shoes/black
 	gloves = /obj/item/clothing/gloves/black
 	l_ear = /obj/item/device/radio/headset
 	glasses = /obj/item/clothing/glasses/sunglasses
 	suit = /obj/item/clothing/suit/wcoat
 	l_pocket = /obj/item/weapon/melee/energy/sword
-    l_hand = /item/weapon/storage/secure/briefcase
-    belt = /obj/item/device/pda/heads
-    id = /obj/item/weapon/card/id/syndicate/reaper
+	l_hand = /item/weapon/storage/secure/briefcase
+	belt = /obj/item/device/pda/heads
+	id = /obj/item/weapon/card/id/syndicate/reaper
 
 /datum/outfit/assasin/post_equip(mob/living/carbon/human/H)
 	var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = l_hand
-    for(var/obj/item/briefcase_item in sec_briefcase)
-        qdel(briefcase_item)
-    for(var/i in 1 to 3)
-        sec_briefcase.contents += new /obj/item/weapon/spacecash/c1000
-    sec_briefcase.contents += list(
-        new /obj/item/weapon/gun/energy/crossbow,
-        new /obj/item/weapon/gun/projectile/revolver/mateba,
-        new /obj/item/ammo_box/a357,
-        new /obj/item/weapon/plastique,
-    )
+	for(var/obj/item/briefcase_item in sec_briefcase)
+		qdel(briefcase_item)
+	for(var/i in 1 to 3)
+		sec_briefcase.contents += new /obj/item/weapon/spacecash/c1000
+	sec_briefcase.contents += list(
+		new /obj/item/weapon/gun/energy/crossbow,
+		new /obj/item/weapon/gun/projectile/revolver/mateba,
+		new /obj/item/ammo_box/a357,
+		new /obj/item/weapon/plastique,
+	)
 
-    var/obj/item/device/pda/heads/pda = belt
-    if(istype(pda))
-        pda.owner = H.real_name
-        pda.ownjob = "Reaper"
-        pda.name = "PDA-[H.real_name] ([pda.ownjob])"
+	var/obj/item/device/pda/heads/pda = belt
+	if(istype(pda))
+		pda.owner = H.real_name
+		pda.ownjob = "Reaper"
+		pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 
-    var/obj/item/weapon/card/id/W = id
-    if(istype(W))
-        W.name = "[H.real_name]'s ID Card ([W.assignment])"
-        W.registered_name = H.real_name
-    
+	var/obj/item/weapon/card/id/W = id
+	if(istype(W))
+		W.name = "[H.real_name]'s ID Card ([W.assignment])"
+		W.registered_name = H.real_name
+	
 /datum/outfit/preparation
 	name = "preparation"
 
-    uniform = /obj/item/clothing/under/color/black
-    shoes = /obj/item/clothing/shoes/boots
-    glasses = /obj/item/clothing/glasses/sunglasses
-    l_ear = /obj/item/device/radio/headset
-    back = /obj/item/weapon/storage/backpack/satchel/norm
-    l_pocket = /obj/item/device/flashlight
-    gloves = /obj/item/clothing/gloves/black
-    id = /obj/item/weapon/card/id/syndicate
+	uniform = /obj/item/clothing/under/color/black
+	shoes = /obj/item/clothing/shoes/boots
+	glasses = /obj/item/clothing/glasses/sunglasses
+	l_ear = /obj/item/device/radio/headset
+	back = /obj/item/weapon/storage/backpack/satchel/norm
+	l_pocket = /obj/item/device/flashlight
+	gloves = /obj/item/clothing/gloves/black
+	id = /obj/item/weapon/card/id/syndicate
 
 /datum/outfit/preparation/post_equip(mob/living/carbon/human/H)
-    var/obj/item/weapon/card/id/syndicate/W = id
-    if(istype(W))
-        W.assignment = "Unknown"
-        W.name = "[H.real_name]'s ID Card ([W.assignment])"
-        W.access = get_all_accesses()
-        W.registered_name = H.real_name
+	var/obj/item/weapon/card/id/syndicate/W = id
+	if(istype(W))
+		W.assignment = "Unknown"
+		W.name = "[H.real_name]'s ID Card ([W.assignment])"
+		W.access = get_all_accesses()
+		W.registered_name = H.real_name
 
 /datum/outfit/death_squad
 	name = "death squad"
 
-    l_ear = /obj/item/device/radio/headset/deathsquad
-    uniform = /obj/item/clothing/under/color/green
-    shoes = /obj/item/clothing/shoes/boots/swat
-    suit = /obj/item/clothing/gloves/combat
-    gloves = /obj/item/clothing/gloves/combat
-    head = /obj/item/clothing/head/helmet/space/deathsquad
-    mask = /obj/item/clothing/mask/gas/swat
-    glasses = /obj/item/clothing/glasses/thermal
-    back = /obj/item/weapon/storage/backpack/security
+	l_ear = /obj/item/device/radio/headset/deathsquad
+	uniform = /obj/item/clothing/under/color/green
+	shoes = /obj/item/clothing/shoes/boots/swat
+	suit = /obj/item/clothing/suit/combat // TODO
+	gloves = /obj/item/clothing/gloves/combat
+	head = /obj/item/clothing/head/helmet/space/deathsquad
+	mask = /obj/item/clothing/mask/gas/swat
+	glasses = /obj/item/clothing/glasses/thermal
+	back = /obj/item/weapon/storage/backpack/security
 
-    backpack_contents = list(
-        /obj/item/weapon/storage/box,
-        /obj/item/ammo_box/a357,
-        /obj/item/weapon/storage/firstaid/regular,
-        /obj/item/weapon/storage/box/flashbangs,
-        /obj/item/device/flashlight,
-        /obj/item/weapon/plastique,
-    )
+	backpack_contents = list(
+		/obj/item/weapon/storage/box,
+		/obj/item/ammo_box/a357,
+		/obj/item/weapon/storage/firstaid/regular,
+		/obj/item/weapon/storage/box/flashbangs,
+		/obj/item/device/flashlight,
+		/obj/item/weapon/plastique,
+	)
 
-    l_pocket = /obj/item/weapon/melee/energy/sword
-    r_pocket = /obj/item/weapon/grenade/flashbang
-    suit_store = /obj/item/weapon/tank/emergency_oxygen
-    belt = /obj/item/weapon/gun/projectile/revolver/mateba
+	l_pocket = /obj/item/weapon/melee/energy/sword
+	r_pocket = /obj/item/weapon/grenade/flashbang
+	suit_store = /obj/item/weapon/tank/emergency_oxygen
+	belt = /obj/item/weapon/gun/projectile/revolver/mateba
 
-    r_hand = /obj/item/weapon/gun/energy/pulse_rifle
-    implants = list(/obj/item/weapon/implant/mind_protect/loyalty)
-    id = /obj/item/weapon/card/id/centcom
+	r_hand = /obj/item/weapon/gun/energy/pulse_rifle
+	implants = list(/obj/item/weapon/implant/mind_protect/loyalty)
+	id = /obj/item/weapon/card/id/centcom
 
 /datum/outfit/death_squad/post_equip(mob/living/carbon/human/H)
-    var/obj/item/weapon/card/id/W = id
-    if(istype(W))
-        W.name = "[H.real_name]'s ID Card"
-	    W.registered_name = H.real_name
+	var/obj/item/weapon/card/id/W = id
+	if(istype(W))
+		W.name = "[H.real_name]'s ID Card"
+		W.registered_name = H.real_name
 
-/datum/outfit/death_squad/commando
-    name = "death squad commando"
-    
-    uniform = /obj/item/clothing/under/rank/centcom_officer
+/datum/outfit/death_squad/leader
+	name = "death squad leader"
+	
+	uniform = /obj/item/clothing/under/rank/centcom_officer
 
-    backpack_contents = list(
-        /obj/item/weapon/storage/box,
-        /obj/item/ammo_box/a357,
-        /obj/item/weapon/storage/firstaid/regular,
-        /obj/item/weapon/storage/box/flashbangs,
-        /obj/item/device/flashlight,
-        /obj/item/weapon/pinpointer,
-        /obj/item/weapon/disk/nuclear,
-    )
+	backpack_contents = list(
+		/obj/item/weapon/storage/box,
+		/obj/item/ammo_box/a357,
+		/obj/item/weapon/storage/firstaid/regular,
+		/obj/item/weapon/storage/box/flashbangs,
+		/obj/item/device/flashlight,
+		/obj/item/weapon/pinpointer,
+		/obj/item/weapon/disk/nuclear,
+	)
 
+/datum/outfit/syndicate_commando
 	name = "syndicate commando"
-			M.equip_syndicate_commando(FALSE)
+	
+	l_ear = /obj/item/device/radio/headset/syndicate
 
+	uniform = /obj/item/clothing/under/syndicate
+	implants = list(/obj/item/weapon/implant/dexplosive)
+	shoes = /obj/item/clothing/shoes/boots/combat
+	gloves = /obj/item/clothing/gloves/combat
+	mask = /obj/item/clothing/mask/gas/syndicate
+	glasses = /obj/item/clothing/glasses/thermal
+	back = /obj/item/weapon/storage/backpack/security
+	l_pocket = /obj/item/weapon/melee/energy/sword
+	r_pocket = /obj/item/weapon/grenade/empgrenade
+	belt = /obj/item/weapon/gun/projectile/automatic/silenced
+
+	backpack_contents = list(
+		/obj/item/weapon/storage/box,
+		/obj/item/ammo_box/magazine/sm45,
+		/obj/item/ammo_box/magazine/sm45,
+		/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
+		/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
+		/obj/item/device/radio/uplink/strike,
+	)
+
+	suit = /obj/item/clothing/suit/space/rig/syndi/elite
+	head = /obj/item/clothing/head/helmet/space/rig/syndi/elite
+	suit_store = /obj/item/weapon/tank/oxygen/red
+	id = /obj/item/weapon/card/id/syndicate/strike
+
+/datum/outfit/syndicate_commando/post_equip(mob/living/carbon/human/H)
+	var/obj/item/clothing/under/syndicate/US = H.w_uniform
+	if(istype(US))
+		var/obj/item/clothing/accessory/storage/syndi_vest/SV = new (US)
+		US.accessories += SV
+		SV.on_attached(US, H, TRUE)
+		new /obj/item/weapon/screwdriver/power(SV.hold)
+		new /obj/item/weapon/wirecutters/power(SV.hold)
+		new /obj/item/weapon/weldingtool/largetank(SV.hold)
+		new /obj/item/device/multitool(SV.hold)
+
+	var/obj/item/weapon/card/id/syndicate/W = id
+	if(istype(W))
+		W.name = "[H.real_name]'s ID Card"
+		W.registered_name = H.real_name
+
+/datum/outfit/syndicate_commando/leader
 	name = "syndicate commando comander"
-			M.equip_syndicate_commando(TRUE)
+	
+	backpack_contents = list(
+		/obj/item/weapon/storage/box,
+		/obj/item/ammo_box/magazine/sm45,
+		/obj/item/ammo_box/magazine/sm45,
+		/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
+		/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
+		/obj/item/device/radio/uplink/strike_leader,
+		/obj/item/weapon/pinpointer/advpinpointer,
+	)
+
+	suit = /obj/item/clothing/suit/space/rig/syndi/elite/commander
+	head = /obj/item/clothing/head/helmet/space/rig/syndi/elite/commander
+	id = /obj/item/weapon/card/id/syndicate/strike/leader
+
+
+
 
 	name = "nanotrasen representative"
 		/obj/item/clothing/under/rank/centcom/representative(M), SLOT_W_UNIFORM)
