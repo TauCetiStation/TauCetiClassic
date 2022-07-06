@@ -5,7 +5,7 @@
 	if(!SSjob)
 		return
 	. = "<tt><center>"
-
+	. += "<script type='text/javascript'>function setJobPrefRedirect(level, rank) { window.location.href='?_src_=prefs;preference=job;task=setJobLevel;level=' + level + ';text=' + encodeURIComponent(rank); return false; }</script>"
 	switch(alternate_option)
 		if(GET_RANDOM_JOB)
 			. += "<u><a href='?_src_=prefs;preference=job;task=random'><font color=green>\[Get random job if preferences unavailable\]</font></a></u>"
@@ -69,8 +69,23 @@
 
 		. += "</td><td width='40%'>"
 
-		. += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;text=[rank]'>"
-
+		//. += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;text=[rank]'>"
+		var/prefUpperLevel = -1 // level to assign on left click
+		var/prefLowerLevel = -1 // level to assign on right click
+		switch(job_preferences[job.title])
+			if(JP_HIGH)
+				prefUpperLevel = 4
+				prefLowerLevel = 2
+			if(JP_MEDIUM)
+				prefUpperLevel = 1
+				prefLowerLevel = 3
+			if(JP_LOW)
+				prefUpperLevel = 2
+				prefLowerLevel = 4
+			else
+				prefUpperLevel = 3
+				prefLowerLevel = 1
+		. += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 		if(rank == "Test Subject")//Assistant is special
 			if(job_preferences["Test Subject"])
 				. += " <font color=green size=2>Yes</font>"
@@ -119,7 +134,7 @@
 					if(choice)
 						SetPlayerAltTitle(job, choice)
 			if("setJobLevel")
-				UpdateJobPreference(user, href_list["text"])
+				UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
 
 /datum/preferences/proc/GetPlayerAltTitle(datum/job/job)
 	return player_alt_titles.Find(job.title) > 0 \
@@ -134,19 +149,24 @@
 	if(job.title != new_title)
 		player_alt_titles[job.title] = new_title
 
-/datum/preferences/proc/UpdateJobPreference(mob/user, role)
+/datum/preferences/proc/UpdateJobPreference(mob/user, role,desiredLvl)
 	var/datum/job/job = SSjob.GetJob(role)
 	if(!job)
 		return
 
-	var/jpval = JP_LOW
-	switch(job_preferences[job.title])
-		if(JP_LOW)
+	if (!isnum(desiredLvl))
+		to_chat(user, "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>")
+		ShowChoices(user)
+		CRASH("UpdateJobPreference called with desiredLvl value of [isnull(desiredLvl) ? "null" : desiredLvl]")
+
+	var/jpval = null
+	switch(desiredLvl)
+		if(3)
+			jpval = JP_LOW
+		if(2)
 			jpval = JP_MEDIUM
-		if(JP_MEDIUM)
+		if(1)
 			jpval = JP_HIGH
-		if(JP_HIGH)
-			jpval = null
 
 	if(role == "Test Subject")
 		if(job_preferences["Test Subject"] == JP_LOW)
