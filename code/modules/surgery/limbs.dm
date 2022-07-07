@@ -203,6 +203,7 @@
 		target.b_grad = B.b_grad
 		target.hair_painted = B.hair_painted
 		target.update_hair()
+		target.timeofdeath = min(target.timeofdeath, world.time - DEFIB_TIME_LIMIT) // so they cannot be defibbed
 		if(HAS_TRAIT(B.brainmob, TRAIT_NO_CLONE))
 			ADD_TRAIT(target, TRAIT_NO_CLONE, GENERIC_TRAIT)
 

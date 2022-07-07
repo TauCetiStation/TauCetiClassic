@@ -161,6 +161,7 @@
 		target.dna = B.brainmob.dna
 	var/obj/item/organ/internal/brain/brain = new(null)
 	brain.insert_organ(target)
+	target.timeofdeath = min(target.timeofdeath, world.time - DEFIB_TIME_LIMIT) // so they cannot be defibbed
 	if(HAS_TRAIT(B.brainmob, TRAIT_NO_CLONE))
 		ADD_TRAIT(target, TRAIT_NO_CLONE, GENERIC_TRAIT)
 	qdel(tool)
