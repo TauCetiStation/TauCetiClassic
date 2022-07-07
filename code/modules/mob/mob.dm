@@ -323,7 +323,7 @@
 		return
 	if(ishuman(src) && H.wear_mask && H.wear_mask.flags_inv && HIDEEYES)
 		return
-	if(!A.z)
+	if(!A.z) //no message if we examine something in a backpack
 		return
 	visible_message("<font size='0.5'><b>[src]</b> looks at <b>[A]</b></font>")
 
