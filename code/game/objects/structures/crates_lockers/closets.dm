@@ -304,3 +304,4 @@
 			C.ignite()
 	dump_contents()
 	qdel(src)
+	return TRUE

@@ -206,7 +206,7 @@
 
 	for(var/datum/component/thermite/C in O.GetComponents(/datum/component/thermite))
 		if(C.burn_timer == null)
-			C.amount -= volume * 10
+			C.set_amount(C.amount - volume * 10)
 
 /datum/reagent/space_cleaner/reaction_turf(turf/T, volume)
 	. = ..()
@@ -223,7 +223,7 @@
 			M.adjustToxLoss(rand(5,10))
 
 	for(var/datum/component/thermite/C in T.GetComponents(/datum/component/thermite))
-		C.amount -= volume * 10
+		C.set_amount(C.amount - volume * 10)
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, volume)
 	if(iscarbon(M))
@@ -933,12 +933,10 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 
 /datum/reagent/silicon_dioxide/reaction_obj(obj/O, volume)
 	for(var/datum/component/thermite/C in O.GetComponents(/datum/component/thermite))
-		C.amount -= volume * 0.5
-		if(C.amount <= 0)
-			C.RemoveComponent()
+		C.set_amount(C.amount - volume * 0.5, TRUE)
 
 /datum/reagent/silicon_dioxide/reaction_turf(turf/T, volume)
 	. = ..()
 
 	for(var/datum/component/thermite/C in T.GetComponents(/datum/component/thermite))
-		C.amount -= volume * 0.5
+		C.set_amount(C.amount - volume * 0.5, TRUE)

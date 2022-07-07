@@ -58,7 +58,7 @@
 
 	for(var/datum/component/thermite/C in T.GetComponents(/datum/component/thermite))
 		if(C.burn_timer == null)
-			C.amount -= volume * 3
+			C.set_amount(C.amount - volume * 3)
 
 /datum/reagent/water/reaction_obj(obj/O, volume)
 	var/turf/T = get_turf(O)
@@ -81,9 +81,7 @@
 
 	for(var/datum/component/thermite/C in O.GetComponents(/datum/component/thermite))
 		if(C.burn_timer == null)
-			C.amount -= volume * 3
-			if(C.amount <= 0)
-				C.RemoveComponent()
+			C.set_amount(C.amount - volume * 3)
 
 /datum/reagent/water/on_general_digest(mob/living/M)
 	..()

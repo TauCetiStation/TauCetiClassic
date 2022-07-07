@@ -140,6 +140,13 @@
 
 	return COMPONENT_NO_ATTACK_PROCESSING
 
+/datum/component/thermite/proc/set_amount(_amount, ignore_burning = FALSE)
+	if(!ignore_burning && burn_timer != null)
+		return
+	amount = _amount
+	if(amount <= 0)
+		qdel(src)
+
 
 
 #undef THERMITE_TIP
