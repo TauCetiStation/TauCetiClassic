@@ -173,6 +173,7 @@
 /obj/structure/window/attack_tk(mob/user)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+	return TRUE
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)

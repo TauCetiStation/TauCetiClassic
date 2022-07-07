@@ -161,7 +161,7 @@
 		destroy()
 
 /obj/structure/table/attack_tk() // no telehulk sorry
-	return
+	return FALSE
 
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
@@ -699,4 +699,4 @@
 		destroy()
 
 /obj/structure/rack/attack_tk() // no telehulk sorry
-	return
+	return FALSE

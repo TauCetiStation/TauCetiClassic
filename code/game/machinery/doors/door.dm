@@ -196,7 +196,7 @@ var/global/list/wedge_image_cache = list()
 
 /obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
-		return
+		return FALSE
 
 	..()
 
