@@ -144,6 +144,7 @@ var/global/list/uncommon_loot = list(
 		/obj/item/weapon/legcuffs/bola = 1,
 		/obj/item/weapon/handcuffs/cable = 1,
 		/obj/item/weapon/spear = 1,
+		/obj/item/weapon/toolboxhammer/mechanical = 1,
 		/obj/item/weapon/shield/riot = 1,
 		/obj/item/weapon/grenade/cancasing = 1,
 		/obj/item/weapon/melee/cattleprod = 1,

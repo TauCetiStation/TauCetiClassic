@@ -16,6 +16,10 @@
 						prob(40);/obj/item/weapon/melee/icepick,\
 						prob(40);/obj/item/weapon/melee/powerfist,\
 						prob(40);/obj/item/weapon/spear,\
+						prob(10);/obj/item/weapon/toolboxhammer/mechanical,\
+						prob(10);/obj/item/weapon/toolboxhammer/electrical,\
+						prob(10);/obj/item/weapon/toolboxhammer/emergency,\
+						prob(10);/obj/item/weapon/toolboxhammer/syndicate ,\
 						prob(60);/obj/item/weapon/hatchet,\
 						prob(60);/obj/item/weapon/hatchet/unathiknife,\
 						prob(40);/obj/item/weapon/melee/energy/sword,\
