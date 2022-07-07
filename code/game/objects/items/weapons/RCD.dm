@@ -96,7 +96,7 @@ RCD
 		if(1)
 			if(istype(target, /turf/space))
 				var/turf/space/S = target
-				if(useResource(1, user))
+				if(useResource(1, user) || canBuildOnTurf(S))
 					to_chat(user, "Building Floor...")
 					activate()
 					S.ChangeTurf(/turf/simulated/floor/plating/airless)
@@ -105,10 +105,9 @@ RCD
 
 			if(istype(target, /turf/simulated/floor) && !user.is_busy())
 				var/turf/simulated/floor/F = target
-				for(var/atom/AT in target)
-					if(AT.density || istype(AT, /obj/machinery/door) || istype(AT, /obj/structure/mineral_door))
-						to_chat(user, "<span class='warning'>You can't build Wall here.</span>")
-						return 0
+				if(canBuildOnTurf(F))
+					to_chat(user, "<span class='warning'>You can't build Wall here.</span>")
+					return 0
 				if(checkResource(3, user))
 					to_chat(user, "Building Wall ...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
@@ -122,10 +121,9 @@ RCD
 
 		if(2)
 			if(istype(target, /turf/simulated/floor))
-				for(var/atom/AT in target)
-					if(AT.density || istype(AT, /obj/machinery/door) || istype(AT, /obj/structure/mineral_door))
-						to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
-						return 0
+				if(canBuildOnTurf(target))
+					to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
+					return 0
 				if(checkResource(10, user) && !user.is_busy())
 					to_chat(user, "Building Airlock...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
@@ -182,6 +180,12 @@ RCD
 		else
 			to_chat(user, "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin.")
 			return 0
+
+/obj/item/weapon/rcd/proc/canBuildOnTurf(turf/target)
+	for(var/atom/AT in target)
+		if(AT.density || istype(AT, /obj/machinery/door) || istype(AT, /obj/structure/mineral_door))
+			return 1
+		return 0
 
 /obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
