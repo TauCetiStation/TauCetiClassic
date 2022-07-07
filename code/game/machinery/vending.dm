@@ -249,7 +249,10 @@
 	if(emagged)
 		return FALSE
 	src.emagged = 1
-	to_chat(user, "You short out the product lock on [src] and reveal hidden products.")
+	if(syndie.len)
+		to_chat(user, "You short out the product lock on [src] and reveal hidden products.")
+	else
+		to_chat(user, "You short out the product lock on [src].")
 	return TRUE
 
 /obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)

@@ -45,6 +45,7 @@
 /obj/item/clothing/under/rank/chemist/skirt
 	name = "chemist's jumpskirt"
 	icon_state = "skirt_chemistry"
+	item_state = "skirt_chemistry"
 	flags = NONE
 
 /*
@@ -62,6 +63,7 @@
 /obj/item/clothing/under/rank/chief_medical_officer/skirt
 	name = "chief medical officer's jumpskirt"
 	icon_state = "skirt_cmo"
+	item_state = "skirt_cmo"
 	flags = NONE
 
 /obj/item/clothing/under/rank/geneticist
@@ -76,6 +78,7 @@
 /obj/item/clothing/under/rank/geneticist/skirt
 	name = "geneticist's jumpskirt"
 	icon_state = "skirt_genetics"
+	item_state = "skirt_genetics"
 	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
 
 /obj/item/clothing/under/rank/virologist
@@ -90,6 +93,7 @@
 /obj/item/clothing/under/rank/virologist/skirt
 	name = "virologist's jumpskirt"
 	icon_state = "skirt_virology"
+	item_state = "skirt_virology"
 	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
 
 /obj/item/clothing/under/rank/nursesuit
@@ -131,24 +135,28 @@
 /obj/item/clothing/under/rank/medical/skirt
 	name = "medical doctor's jumpskirt"
 	icon_state = "skirt_medical"
+	item_state = "skirt_medical"
 	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
 
 /obj/item/clothing/under/rank/medical/blue
 	name = "medical scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in baby blue."
 	icon_state = "scrubsblue"
+	item_state = "scrubsblue"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/medical/green
 	name = "medical scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in dark green."
 	icon_state = "scrubsgreen"
+	item_state = "scrubsgreen"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/medical/purple
 	name = "medical scrubs"
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in deep purple."
 	icon_state = "scrubspurple"
+	item_state = "scrubspurple"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/psych

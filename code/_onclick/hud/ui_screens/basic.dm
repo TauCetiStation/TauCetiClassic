@@ -87,6 +87,22 @@
 	..()
 	hud.mymob.healths = src
 
+/atom/movable/screen/health/living
+	icon = 'icons/hud/living.dmi'
+
+/atom/movable/screen/health/living/add_to_hud(datum/hud/hud)
+	..()
+	var/mob/mymob = hud.mymob
+	var/icon/mob_mask = icon(mymob.icon, mymob.icon_state)
+	if(mob_mask.Height() > world.icon_size || mob_mask.Width() > world.icon_size)
+		if(mob_mask.Height() > mob_mask.Width())
+			mob_mask.Scale(mob_mask.Width() * world.icon_size / mob_mask.Height(), world.icon_size)
+		else
+			mob_mask.Scale(world.icon_size, mob_mask.Height() * world.icon_size / mob_mask.Width())
+			
+	add_filter("mob_shape_mask", 1, alpha_mask_filter(icon = mob_mask))
+	add_filter("inset_drop_shadow", 2, drop_shadow_filter(size = -1))
+
 /atom/movable/screen/health_doll
 	icon = 'icons/mob/screen_gen.dmi'
 	name = "health doll"
@@ -350,8 +366,12 @@
 		to_chat(C, "<span class='notice'>You are not wearing a mask.</span>")
 		internal_switch = world.time + 8
 		return
-
+	if(istype(C.wear_mask, /obj/item/clothing/mask/breath))
+		var/obj/item/clothing/mask/breath/M = C.wear_mask
+		if(M.hanging) // if mask on face but pushed down
+			M.attack_self() // adjust it back
 	if(!(C.wear_mask.flags & MASKINTERNALS))
+
 		to_chat(C, "<span class='notice'>This mask doesn't support breathing through the tanks.</span>")
 		return
 
