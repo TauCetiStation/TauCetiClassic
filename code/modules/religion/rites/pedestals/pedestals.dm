@@ -17,10 +17,39 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple = 1,
 	)
 
-	var/need_members = 4
+	var/need_members = 1
+
+/datum/religion_rites/pedestals/cult/narsie/proc/checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+	if(istype(get_area(AOG), religion.area_type))
+		if(user)
+			to_chat(user, "<span class='warning'>Мне нужно пространство станции.</span>")
+		return FALSE
+
+	if(religion.members.len < need_members)
+		if(user)
+			to_chat(user, "<span class='warning'>Слишком мало последователей.</span>")
+		return FALSE
+
+	var/cultists_around = 0
+	for(var/mob/M in AOG.mobs_around)
+		if(religion.is_member(M) && M.get_species() != HOMUNCULUS)
+			cultists_around++
+	if(cultists_around < need_members)
+		if(user)
+			to_chat(user, "<span class='warning'>Недостаточно последователей вокруг алтаря.</span>")
+		return FALSE
+
+	if(SSticker.nar_sie_has_risen)
+		if(user)
+			to_chat(user, "<font size='4'><span class='danger'>Я УЖЕ ЗДЕСЬ!</span></font>")
+		return FALSE
 
 /datum/religion_rites/pedestals/cult/narsie/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
+
+	if(!checks(user, AOG))
+		return FALSE
+
 	var/datum/faction/cult/C = find_faction_by_type(/datum/faction/cult)
 	var/datum/objective/target/sacrifice/O = C.objective_holder.FindObjective(/datum/objective/target/sacrifice)
 	if(O)
@@ -56,7 +85,7 @@
 		return
 	*/
 
-	playsound_frequency_admin = 0.92 //Something is coming
+	playsound_frequency_admin = 0.96 //Something is coming
 	A = new(user)
 	A.play()
 
@@ -65,31 +94,8 @@
 /datum/religion_rites/pedestals/cult/narsie/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
-
-	if(istype(get_area(AOG), religion.area_type))
-		if(user)
-			to_chat(user, "<span class='warning'>Мне нужно пространство станции.</span>")
+	if(!checks(user, AOG))
 		return FALSE
-
-	if(religion.members.len < need_members)
-		if(user)
-			to_chat(user, "<span class='warning'>Слишком мало последователей.</span>")
-		return FALSE
-
-	var/cultists_around = 0
-	for(var/mob/M in AOG.mobs_around)
-		if(religion.is_member(M) && M.get_species() != HOMUNCULUS)
-			cultists_around++
-	if(cultists_around < need_members)
-		if(user)
-			to_chat(user, "<span class='warning'>Недостаточно последователей вокруг алтаря.</span>")
-		return FALSE
-
-	if(SSticker.nar_sie_has_risen)
-		if(user)
-			to_chat(user, "<font size='4'><span class='danger'>Я УЖЕ ЗДЕСЬ!</span></font>")
-		return FALSE
-
 	return TRUE
 
 /datum/religion_rites/pedestals/cult/narsie/reset_rite()
