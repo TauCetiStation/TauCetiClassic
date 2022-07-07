@@ -325,7 +325,7 @@
 		return
 	if(!A.z) //no message if we examine something in a backpack
 		return
-	visible_message("<font size='0.5'><b>[src]</b> looks at <b>[A]</b></font>")
+	visible_message("<font size='0.5'><b>[src]</b> looks at <b>[A]</b>.</font>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
