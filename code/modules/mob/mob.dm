@@ -742,12 +742,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 // Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 // We need speed out of this proc, thats why using incapacitated() helper here is a bad idea.
 /mob/proc/update_canmove(no_transform = FALSE)
-
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 
-	lying = (ko || crawling) && !captured && !buckled && !pinned.len
-	canmove = !(ko || stunned || captured || pinned.len)
-	anchored = captured || pinned.len
+	anchored = HAS_TRAIT(src, TRAIT_ANCHORED)
+	lying = (ko || crawling) && !anchored
+	canmove = !(ko || stunned || anchored)
 
 	if(buckled)
 		if(buckled.buckle_lying != -1)
@@ -761,11 +760,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 				V.unload(src)
 			else
 				pixel_y = V.mob_offset_y
-		else
-			if(istype(buckled, /obj/structure/stool/bed/chair))
-				var/obj/structure/stool/bed/chair/C = buckled
-				if(C.flipped)
-					lying = 1
 
 	density = !lying
 
@@ -776,7 +770,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			SEND_SIGNAL(src, COMSIG_MOB_STATUS_NOT_LYING)
 		was_lying = lying
 
-	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isxeno(src))
+	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)))
 		drop_l_hand()
 		drop_r_hand()
 
@@ -797,7 +791,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(update_icon)	//forces a full overlay update
 		update_icon = FALSE
 		regenerate_icons()
-	return canmove
 
 
 /mob/proc/facedir(ndir)
@@ -1025,11 +1018,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	var/mob/S = src
 	var/mob/U = usr
-	var/list/valid_objects = list()
-	var/self = FALSE
-
-	if(S == U)
-		self = TRUE // Removing object from yourself.
+	var/list/valid_objects
+	var/self = S == U // Removing object from yourself.
 
 	valid_objects = get_visible_implants(1)
 	if(!valid_objects.len)
@@ -1048,17 +1038,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(!do_skilled(U, S, SKILL_TASK_DIFFICULT, list(/datum/skill/medical/trained), -0.2))
 		return
-	if(!selection || !S || !U)
+	if(QDELETED(S) || QDELETED(U) || selection.loc != S)
 		return
 
 	if(self)
 		visible_message("<span class='warning'><b>[src] rips [selection] out of their body.</b></span>","<span class='warning'><b>You rip [selection] out of your body.</b></span>")
 	else
 		visible_message("<span class='warning'><b>[usr] rips [selection] out of [src]'s body.</b></span>","<span class='warning'><b>[usr] rips [selection] out of your body.</b></span>")
-	valid_objects = get_visible_implants(0)
-	if(valid_objects.len == 1) //Yanking out last object - removing verb.
-		src.verbs -= /mob/proc/yank_out_object
-		clear_alert("embeddedobject")
 
 	embedded -= selection
 
@@ -1068,9 +1054,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 		var/obj/item/organ/external/BP
 
 		for(var/obj/item/organ/external/limb in H.bodyparts) //Grab the organ holding the implant.
-			for(var/obj/item/weapon/O in limb.implants)
-				if(O == selection)
-					BP = limb
+			if(selection in limb.implants)
+				BP = limb
+				break
 
 		BP.implants -= selection
 		H.sec_hud_set_implants()
@@ -1087,14 +1073,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 			var/mob/living/carbon/human/human_user = U
 			human_user.bloody_hands(H)
 
-	selection.loc = get_turf(src)
+	selection.forceMove(get_turf(S))
 
-	for(var/obj/item/weapon/O in pinned)
-		if(O == selection)
-			pinned -= O
-		if(!pinned.len)
-			anchored = FALSE
-	return 1
+	valid_objects = get_visible_implants(1)
+	if(!valid_objects.len) //Yanked out last object - removing verb.
+		src.verbs -= /mob/proc/yank_out_object
+		clear_alert("embeddedobject")
 
 ///Get the ghost of this mob (from the mind)
 /mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
@@ -1173,7 +1157,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M)
 	if(M.buckled)
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
@@ -1181,7 +1165,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		var/can_step = step_towards(M, T)
 		density = old_density
 		if(!can_step)
-			return 0
+			return FALSE
 	return ..()
 
 //Default buckling shift visual for mobs
@@ -1191,12 +1175,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(M.layer < layer)
 			M.layer = layer + 0.1
 	else //post unbuckling
-		M.layer = initial(M.layer)
-		M.plane = initial(M.plane)
-		M.pixel_y = initial(M.pixel_y)
+		M.layer = M.default_layer
+		M.pixel_y = M.default_pixel_y
 
 /mob/proc/can_unbuckle(mob/user)
-	return 1
+	return TRUE
 
 /mob/proc/get_targetzone()
 	return null

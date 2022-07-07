@@ -34,10 +34,11 @@
 	else
 		. = null
 
-/proc/initTemplateBounds(list/bounds)
+/proc/initTemplateBounds(list/bounds, forcemove_mobs = FALSE)
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
+	var/list/mob/mobs = list()
 
 	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 	                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
@@ -51,10 +52,17 @@
 			if(istype(A,/obj/machinery/atmospherics))
 				atmos_machines += A
 				continue
+			if(ismob(A))
+				mobs += A
+				continue
 
 	SSatoms.InitializeAtoms(atoms)
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
+
+	if(forcemove_mobs) // if we need to register change of area/loc
+		for(var/mob/M in mobs)
+			M.forceMove(M.loc, keep_buckled = TRUE)
 
 /datum/map_template/proc/load(turf/T, centered = FALSE, initBounds = TRUE)
 	if(centered)
@@ -78,7 +86,7 @@
 	. = stuff
 	//initialize things that are normally initialized after map load
 	if(initBounds)
-		initTemplateBounds(bounds)
+		initTemplateBounds(bounds, forcemove_mobs = TRUE)
 
 	log_game("[name] loaded at [COORD(T)]")
 	loaded_stuff.Cut()
