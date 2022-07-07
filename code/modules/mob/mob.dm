@@ -316,6 +316,8 @@
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
+	if(isobserver(src))
+		return
 	var/mob/living/carbon/human/H = src
 	if(ishuman(src) && H.head && H.head.flags_inv && HIDEEYES)
 		return
