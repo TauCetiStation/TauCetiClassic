@@ -17,6 +17,7 @@
 	origin_tech = "combat=1"
 	hitsound = list('sound/items/tools/toolbox-hit.ogg')
 	attack_verb = list("robusted")
+	var/empty = FALSE
 
 /obj/item/weapon/storage/toolbox/atom_init()
 	. = ..()
@@ -31,6 +32,9 @@
 
 /obj/item/weapon/storage/toolbox/emergency/atom_init()
 	. = ..()
+	if (empty)
+		return
+	
 	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned(src)
 	if(prob(50))
@@ -47,6 +51,9 @@
 
 /obj/item/weapon/storage/toolbox/mechanical/atom_init()
 	. = ..()
+	if (empty)
+		return
+
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
@@ -61,6 +68,9 @@
 
 /obj/item/weapon/storage/toolbox/electrical/atom_init()
 	. = ..()
+	if (empty)
+		return
+
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
@@ -81,6 +91,8 @@
 
 /obj/item/weapon/storage/toolbox/syndicate/atom_init()
 	. = ..()
+	if (empty)
+		return
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
@@ -88,3 +100,15 @@
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
 	new /obj/item/clothing/gloves/combat(src)
+
+/obj/item/weapon/storage/toolbox/emergency/empty
+	empty = TRUE
+
+/obj/item/weapon/storage/toolbox/mechanical/empty
+	empty = TRUE
+
+/obj/item/weapon/storage/toolbox/electrical/empty
+	empty = TRUE
+
+/obj/item/weapon/storage/toolbox/syndicate/empty
+	empty = TRUE

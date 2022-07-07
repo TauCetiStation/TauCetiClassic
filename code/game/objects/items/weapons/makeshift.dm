@@ -46,6 +46,65 @@
 	else
 		return ..()
 
+/obj/item/weapon/toolboxhammer
+	name = "Toolbox Hammer"
+	icon = 'icons/obj/makeshift.dmi'
+	icon_state = "bluetoolboxhammer"
+	force = 10
+	throwforce = 15
+	throw_speed = 1
+	throw_range = 3
+	desc = "This thing breaks skulls pretty well, right?"
+	hitsound = list('sound/items/tools/toolbox-hit.ogg')
+	w_class = SIZE_BIG
+	slot_flags = SLOT_FLAGS_BACK
+	attack_verb = list("attacked", "smashed", "hit", "robusted")
+	var/toolbox = null
+
+/obj/item/weapon/toolboxhammer/atom_init()
+	. = ..()
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 25
+	TCB.force_unwielded = 10
+	TCB.icon_wielded = "[icon_state]1"
+	AddComponent(/datum/component/twohanded, TCB)
+
+/obj/item/weapon/toolboxhammer/attack(mob/living/target, mob/living/user)
+	..()
+	var/target_zone = user.get_targetzone()
+	if(target_zone == BP_HEAD)
+		shake_camera(target, 2, 2)
+
+/obj/item/weapon/toolboxhammer/AltClick(mob/user)
+	. = ..()
+	new toolbox(get_turf(src))
+	new /obj/item/weapon/wirerod(get_turf(src))
+	qdel(src)
+
+/obj/item/weapon/toolboxhammer/mechanical
+	toolbox = /obj/item/weapon/storage/toolbox/mechanical/empty
+	
+/obj/item/weapon/toolboxhammer/electrical
+	icon_state = "yellowtoolboxhammer"
+	toolbox = /obj/item/weapon/storage/toolbox/electrical/empty
+
+/obj/item/weapon/toolboxhammer/emergency 
+	icon_state = "redtoolboxhammer"
+	toolbox = /obj/item/weapon/storage/toolbox/emergency/empty
+
+/obj/item/weapon/toolboxhammer/syndicate 
+	icon_state = "synditoolboxhammer"
+	force = 15
+	toolbox = /obj/item/weapon/storage/toolbox/syndicate/empty
+
+/obj/item/weapon/toolboxhammer/syndicate/atom_init()
+	. = ..()
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 30
+	TCB.force_unwielded = 15
+	TCB.icon_wielded = "[icon_state]1"
+	AddComponent(/datum/component/twohanded, TCB)
+
 /obj/item/clothing/head/helmet/battlebucket
 	icon = 'icons/obj/makeshift.dmi'
 	name = "Battle Bucket"
@@ -214,6 +273,23 @@
 	w_class = SIZE_SMALL
 	m_amt = 1875
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
+
+/obj/item/weapon/wirerod/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/storage/toolbox) && !I.contents.len)
+		qdel(I)
+		qdel(src)
+		if(istype(I, /obj/item/weapon/storage/toolbox/mechanical))
+			var/obj/item/weapon/toolboxhammer/mechanical/TB = new (user.loc)
+			TB.add_fingerprint(user)
+		if(istype(I, /obj/item/weapon/storage/toolbox/electrical))
+			var/obj/item/weapon/toolboxhammer/electrical/TB = new (user.loc)
+			TB.add_fingerprint(user)
+		if(istype(I, /obj/item/weapon/storage/toolbox/emergency))
+			var/obj/item/weapon/toolboxhammer/emergency/TB = new (user.loc)
+			TB.add_fingerprint(user)
+		if(istype(I, /obj/item/weapon/storage/toolbox/syndicate))
+			var/obj/item/weapon/toolboxhammer/syndicate/TB = new (user.loc)
+			TB.add_fingerprint(user)
 
 /obj/item/weapon/noose
 	name = "noose"
