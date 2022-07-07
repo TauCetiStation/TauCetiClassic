@@ -319,10 +319,11 @@
 	if(isobserver(src))
 		return
 	var/mob/living/carbon/human/H = src
-	if(ishuman(src) && H.head && H.head.flags_inv && HIDEEYES)
-		return
-	if(ishuman(src) && H.wear_mask && H.wear_mask.flags_inv && HIDEEYES)
-		return
+	if(ishuman(src))
+		if(H.head && H.head.flags_inv && HIDEEYES)
+			return
+		if(H.wear_mask && H.wear_mask.flags_inv && HIDEEYES)
+			return
 	if(!A.z) //no message if we examine something in a backpack
 		return
 	visible_message("<font size='0.5'><b>[src]</b> looks at <b>[A]</b>.</font>")
