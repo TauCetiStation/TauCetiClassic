@@ -166,7 +166,7 @@
 	return
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer
-	name = "\improper Derringer"
+	name = "Derringer"
 	desc = "A small pocket pistol and your best friend. Manufactured by Hephaestus Industries without much changes from the earliest designs. Chambered in .38."
 	icon_state = "derringer"
 	item_state = null
@@ -182,7 +182,7 @@
 	recoil = 2
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate
-	name = "\improper The Opressor"
+	name = "Opressor"
 	desc = "Issued to Syndicate agents who aren't really valuable to HQ. Atleast the name sounds badass. Chambered in .357 Magnum."
 	icon_state = "synderringer"
 	force = 5
