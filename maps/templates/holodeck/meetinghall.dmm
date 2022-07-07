@@ -5,9 +5,7 @@
 	},
 /area/station/civilian/holodeck/source_meetinghall)
 "b" = (
-/obj/item/weapon/flora/pottedplant{
-	icon_state = "plant-6"
-	},
+/obj/structure/table/holotable/wooden,
 /turf/simulated/floor/holofloor{
 	icon_state = "wooden"
 	},
@@ -31,204 +29,231 @@
 	},
 /area/station/civilian/holodeck/source_meetinghall)
 "f" = (
+/obj/structure/window/reinforced/holowindow,
 /turf/simulated/floor/holofloor{
-	icon_state = "grimy"
-	},
-/turf/simulated/floor/holofloor{
-	icon_state = "siding1"
+	icon_state = "wooden"
 	},
 /area/station/civilian/holodeck/source_meetinghall)
 "g" = (
-/turf/simulated/floor/holofloor{
-	icon_state = "wood_stairs2"
-	},
-/area/station/civilian/holodeck/source_meetinghall)
-"h" = (
-/obj/structure/holostool,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet10-8"
-	},
-/area/station/civilian/holodeck/source_meetinghall)
-"i" = (
-/obj/structure/holostool,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet11-12"
-	},
-/area/station/civilian/holodeck/source_meetinghall)
-"j" = (
-/obj/structure/holostool,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet9-4"
-	},
-/area/station/civilian/holodeck/source_meetinghall)
-"k" = (
-/turf/simulated/floor/holofloor{
-	icon_state = "grimy"
-	},
-/area/station/civilian/holodeck/source_meetinghall)
-"m" = (
-/obj/structure/holostool,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet14-10"
-	},
-/area/station/civilian/holodeck/source_meetinghall)
-"n" = (
-/obj/structure/holostool,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet15-15"
-	},
-/area/station/civilian/holodeck/source_meetinghall)
-"o" = (
-/obj/structure/holostool,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet13-5"
-	},
-/area/station/civilian/holodeck/source_meetinghall)
-"p" = (
-/obj/structure/holostool,
+/turf/environment/space,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet6-2"
 	},
 /area/station/civilian/holodeck/source_meetinghall)
-"q" = (
-/obj/structure/holostool,
+"h" = (
+/turf/environment/space,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet14-10"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"i" = (
+/obj/structure/window/reinforced/holowindow{
+	dir = 4
+	},
+/turf/environment/space,
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet10-8"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"j" = (
+/turf/environment/space,
+/turf/simulated/floor/holofloor{
+	icon_state = "wood_stairs2"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"k" = (
+/turf/environment/space,
+/turf/simulated/floor/holofloor{
+	dir = 6;
+	icon_state = "wood_stairs2"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"l" = (
+/obj/structure/stool/bed/chair/holochair{
+	dir = 8
+	},
+/turf/simulated/floor/holofloor{
+	icon_state = "dark"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"m" = (
+/obj/structure/window/reinforced/holowindow,
+/obj/structure/table/holotable/wooden,
+/turf/simulated/floor/holofloor{
+	icon_state = "wooden"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"n" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet7-3"
 	},
 /area/station/civilian/holodeck/source_meetinghall)
+"o" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet15-15"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"p" = (
+/obj/structure/stool/bed/chair/holochair{
+	dir = 1
+	},
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet15-15"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"q" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet11-12"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
 "r" = (
-/obj/structure/holostool,
+/turf/simulated/floor/holofloor{
+	icon_state = "dark"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"s" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet5-1"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"t" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet13-5"
+	},
+/area/station/civilian/holodeck/source_meetinghall)
+"u" = (
+/turf/simulated/floor/holofloor{
+	dir = 4;
+	icon_state = "carpet9-4"
 	},
 /area/station/civilian/holodeck/source_meetinghall)
 
 (1,1,1) = {"
 a
 a
-a
 f
-k
-k
-k
-k
-k
-k
+g
+n
+n
+n
+n
+n
+s
 "}
 (2,1,1) = {"
 a
-a
-a
+c
 f
+h
 p
-q
-q
-q
-r
-k
+p
+p
+p
+p
+t
 "}
 (3,1,1) = {"
 a
-c
-a
+d
 f
-m
-n
-n
-n
-o
-e
+h
+p
+p
+p
+p
+p
+t
 "}
 (4,1,1) = {"
 a
-d
-a
+e
 f
-m
-n
-n
-n
+h
 o
-k
+o
+o
+o
+o
+t
 "}
 (5,1,1) = {"
 a
-e
-a
+c
 f
-m
-n
-n
-n
-o
-k
+h
+p
+p
+p
+p
+p
+t
 "}
 (6,1,1) = {"
 a
-c
-a
+d
 f
-m
-n
-n
-n
-o
-k
+h
+p
+p
+p
+p
+p
+t
 "}
 (7,1,1) = {"
 a
-d
 a
 f
-m
-n
-n
-n
-o
-k
+i
+q
+q
+q
+q
+q
+u
 "}
 (8,1,1) = {"
 a
 a
 a
-f
-h
-i
-i
-i
 j
-e
+r
+r
+r
+r
+r
+r
 "}
 (9,1,1) = {"
 a
 a
 a
-f
 k
-k
-k
-k
-k
-k
+r
+r
+r
+r
+r
+r
 "}
 (10,1,1) = {"
 b
-a
-a
-g
-k
-k
-k
-k
-k
-k
+b
+b
+m
+l
+l
+l
+l
+l
+r
 "}

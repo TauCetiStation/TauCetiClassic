@@ -34,6 +34,13 @@
 	icon_state = "snow"
 	},
 /area/station/civilian/holodeck/source_snowfield)
+"g" = (
+/obj/structure/flora/grass/green,
+/obj/structure/flora/tree/pine,
+/turf/simulated/floor/holofloor{
+	icon_state = "snow"
+	},
+/area/station/civilian/holodeck/source_snowfield)
 
 (1,1,1) = {"
 a
@@ -54,7 +61,7 @@ a
 a
 a
 a
-a
+c
 a
 e
 a
@@ -86,8 +93,8 @@ a
 (5,1,1) = {"
 a
 a
-a
 c
+a
 a
 a
 b
@@ -132,11 +139,11 @@ a
 a
 "}
 (9,1,1) = {"
+f
 a
 a
-c
 a
-e
+g
 a
 a
 a

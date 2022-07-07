@@ -3,18 +3,18 @@
 /obj/structure/table/holotable,
 /obj/item/clothing/gloves/boxing/hologlove,
 /turf/simulated/floor/holofloor{
-	icon_state = "dark"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "b" = (
 /turf/simulated/floor/holofloor{
-	icon_state = "dark"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "c" = (
-/obj/structure/holostool,
+/obj/structure/stool/bed/chair/holochair,
 /turf/simulated/floor/holofloor{
-	icon_state = "dark"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "d" = (
@@ -24,72 +24,64 @@
 	name = "Red Corner"
 	},
 /turf/simulated/floor/holofloor{
-	icon_state = "dark"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "e" = (
 /obj/structure/window/reinforced/holowindow,
 /turf/simulated/floor/holofloor{
-	icon_state = "dark"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "f" = (
+/obj/structure/stool/bed/chair/holochair{
+	dir = 4
+	},
+/turf/simulated/floor/holofloor{
+	icon_state = "wooden-2"
+	},
+/area/station/civilian/holodeck/source_boxingcourt)
+"g" = (
 /obj/structure/window/reinforced/holowindow{
 	dir = 4
 	},
 /turf/simulated/floor/holofloor{
-	icon_state = "dark"
-	},
-/area/station/civilian/holodeck/source_boxingcourt)
-"g" = (
-/turf/simulated/floor/holofloor{
-	dir = 9;
-	icon_state = "red"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "h" = (
+/obj/structure/holostool,
 /turf/simulated/floor/holofloor{
-	dir = 1;
-	icon_state = "red"
+	icon_state = "boxing"
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "i" = (
-/turf/simulated/floor/holofloor,
+/turf/simulated/floor/holofloor{
+	icon_state = "boxing"
+	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "j" = (
 /obj/structure/window/reinforced/holowindow{
 	dir = 8
 	},
 /turf/simulated/floor/holofloor{
-	icon_state = "dark"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "k" = (
+/obj/structure/stool/bed/chair/holochair{
+	dir = 8
+	},
 /turf/simulated/floor/holofloor{
-	dir = 8;
-	icon_state = "red"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "l" = (
-/turf/simulated/floor/holofloor{
-	icon_state = "bluefull"
+/obj/structure/stool/bed/chair/holochair{
+	dir = 1
 	},
-/area/station/civilian/holodeck/source_boxingcourt)
-"m" = (
 /turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "green"
-	},
-/area/station/civilian/holodeck/source_boxingcourt)
-"n" = (
-/turf/simulated/floor/holofloor{
-	icon_state = "green"
-	},
-/area/station/civilian/holodeck/source_boxingcourt)
-"o" = (
-/turf/simulated/floor/holofloor{
-	dir = 6;
-	icon_state = "green"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "p" = (
@@ -97,7 +89,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/holofloor{
-	icon_state = "dark"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "q" = (
@@ -106,7 +98,7 @@
 	name = "Green Corner"
 	},
 /turf/simulated/floor/holofloor{
-	icon_state = "dark"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "r" = (
@@ -116,7 +108,7 @@
 	item_state = "boxinggreen"
 	},
 /turf/simulated/floor/holofloor{
-	icon_state = "dark"
+	icon_state = "wooden-2"
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 
@@ -136,10 +128,10 @@ b
 a
 b
 b
-c
-c
-c
-c
+f
+f
+f
+f
 b
 b
 b
@@ -148,48 +140,48 @@ b
 b
 b
 b
-f
-f
-f
-f
+g
+g
+g
+g
 b
 b
 b
 "}
 (4,1,1) = {"
 b
-b
+c
 d
-g
-k
-k
+h
+i
+i
 i
 p
-c
+l
 b
 "}
 (5,1,1) = {"
 b
 c
 e
-h
-l
-l
-n
+i
+i
+i
+i
 p
-c
+l
 b
 "}
 (6,1,1) = {"
 b
 c
 e
-h
-l
-l
-n
+i
+i
+i
+i
 p
-c
+l
 b
 "}
 (7,1,1) = {"
@@ -197,11 +189,11 @@ b
 c
 e
 i
-m
-m
-o
+i
+i
+h
 q
-b
+l
 b
 "}
 (8,1,1) = {"
@@ -220,10 +212,10 @@ b
 b
 b
 b
-c
-c
-c
-c
+k
+k
+k
+k
 b
 b
 r

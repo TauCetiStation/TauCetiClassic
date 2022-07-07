@@ -5,10 +5,12 @@
 	},
 /area/station/civilian/holodeck/source_basketball)
 "b" = (
-/obj/structure/holostool,
+/obj/machinery/door/window/holowindoor{
+	dir = 1;
+	name = "Door"
+	},
 /turf/simulated/floor/holofloor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/holodeck/source_basketball)
 "c" = (
@@ -34,10 +36,7 @@
 /area/station/civilian/holodeck/source_basketball)
 "f" = (
 /obj/item/weapon/beach_ball/holoball,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "red"
-	},
+/turf/simulated/floor/holofloor,
 /area/station/civilian/holodeck/source_basketball)
 "g" = (
 /turf/simulated/floor/holofloor{
@@ -81,8 +80,10 @@
 	},
 /area/station/civilian/holodeck/source_basketball)
 "n" = (
-/obj/structure/holostool,
 /obj/structure/window/reinforced/holowindow{
+	dir = 1
+	},
+/obj/structure/stool/bed/chair/holochair{
 	dir = 1
 	},
 /turf/simulated/floor/holofloor{
@@ -126,6 +127,15 @@
 	icon_state = "green"
 	},
 /area/station/civilian/holodeck/source_basketball)
+"u" = (
+/obj/structure/stool/bed/chair/holochair{
+	dir = 1
+	},
+/turf/simulated/floor/holofloor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/civilian/holodeck/source_basketball)
 "v" = (
 /turf/simulated/floor/holofloor{
 	icon_state = "green"
@@ -135,6 +145,12 @@
 /turf/simulated/floor/holofloor{
 	dir = 10;
 	icon_state = "green"
+	},
+/area/station/civilian/holodeck/source_basketball)
+"x" = (
+/turf/simulated/floor/holofloor{
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/civilian/holodeck/source_basketball)
 "y" = (
@@ -153,104 +169,104 @@ l
 h
 l
 n
-b
-a
+u
+x
 "}
 (2,1,1) = {"
 e
 i
 g
-j
+i
 o
 i
 m
 n
-b
-a
+u
+x
 "}
 (3,1,1) = {"
 e
 i
 i
-i
+h
 i
 i
 m
+b
 a
-a
-a
+x
 "}
 (4,1,1) = {"
 e
 i
 i
-i
+j
 i
 i
 m
 n
-b
-a
+u
+x
 "}
 (5,1,1) = {"
 g
 j
-j
+d
 f
-j
+l
 j
 o
 n
-b
-a
+u
+x
 "}
 (6,1,1) = {"
 p
 s
-s
-s
-s
+r
+i
+y
 s
 w
 n
-b
-a
+u
+x
 "}
 (7,1,1) = {"
 q
 i
 i
-i
+s
 i
 i
 v
 n
-b
-a
+u
+x
 "}
 (8,1,1) = {"
 q
 i
 i
-i
+t
 i
 i
 v
+b
 a
-a
-a
+x
 "}
 (9,1,1) = {"
 q
 i
 p
-s
+i
 w
 i
 v
 n
-b
-a
+u
+x
 "}
 (10,1,1) = {"
 r
@@ -261,6 +277,6 @@ y
 t
 y
 n
-b
-a
+u
+x
 "}
