@@ -1820,15 +1820,17 @@
 		var/mob/living/L = hit_atom
 		L.visible_message("<span class='danger'>\The [src] leaps at [L]!</span>", "<span class='userdanger'>[src] leaps on you!</span>")
 		if(issilicon(L))
-			L.Weaken(1) //Only brief stun
+			L.Stun(1) //Only brief stun
 			step_towards(src, L)
 		else
+			L.Stun(2)
 			L.Weaken(2)
 			step_towards(src, L)
 
 	else if(hit_atom.density)
 		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
-		weakened = 2
+		Stun(2)
+		Weaken(2)
 
 	update_canmove()
 
