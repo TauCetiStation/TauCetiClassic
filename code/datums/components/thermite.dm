@@ -68,7 +68,6 @@
 		var/atom/movable/M = A
 		M.freeze_movement = FALSE
 		M.anchored = old_anchor
-	A.anchored = old_anchor
 	if(burn_overlay != null)
 		qdel(burn_overlay)
 	if(burn_timer != null)
@@ -101,7 +100,7 @@
 	melt(time)
 
 //called after ignition to add overlay and launch timer
-/datum/component/thermite/proc/melt(var/time)
+/datum/component/thermite/proc/melt(time)
 	var/atom/A = parent
 	var/r = A.thermite_melt()
 

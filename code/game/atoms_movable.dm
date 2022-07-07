@@ -159,7 +159,7 @@
 		A.last_bumped = world.time
 		A.Bumped(src)
 
-/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
+/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE)
 	if(freeze_movement)
 		return
 
