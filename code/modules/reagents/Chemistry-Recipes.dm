@@ -2136,3 +2136,10 @@ TODO: Convert everything to custom hair dye,
 	result = "metatrombine"
 	required_reagents = list("bicaridine" = 1, "nitrogen" = 1, "potassium" = 1)
 	result_amount = 3
+
+/datum/chemical_reaction/silicon_dioxide
+	name = "Silicon dioxide"
+	id = "silicon_dioxide"
+	result = "silicon_dioxide"
+	required_reagents = list("oxygen" = 2, "silicon" = 1)
+	result_amount = 3

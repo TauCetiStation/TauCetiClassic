@@ -115,10 +115,14 @@
 #define COMSIG_ATOM_CANPASS "movable_canpass"
 	#define COMPONENT_CANPASS  1
 	#define COMPONENT_CANTPASS 2
-/// from base of atom/attackby(): (/obj/item, /mob/living, params)
+/// from mob/ClickOn(): (/obj/item, /mob/living, params)
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"
 	// Return this in response if you don't want afterattack to be called
 	#define COMPONENT_NO_AFTERATTACK 1
+	// Return this in response if you don't want attackby to be called
+	#define COMPONENT_NO_ATTACKBY 2
+	// Return this in reposnse if you don't want both attack by and afterattack to be called
+	#define COMPONENT_NO_ATTACK_PROCESSING 3
 /// from base of atom/examine(): (/mob)
 #define COMSIG_PARENT_EXAMINE "atom_examine"
 /// from base of mob/examinate(): (/mob)

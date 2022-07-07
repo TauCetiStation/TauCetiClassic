@@ -1104,9 +1104,12 @@
 	item_state = initial(dye_type.item_state)
 	desc = "The colors are a bit dodgy."
 
-/obj/item/thermite_melt(var/time)
+/obj/item/thermite_melt()
+	visible_message("<span class='warning'>Thermite starts melting [src]. </span>")
 	var/image/burn_overlay = image('icons/effects/effects.dmi', "welding_sparks", layer = ABOVE_LIGHTING_LAYER)
 	burn_overlay.plane = ABOVE_LIGHTING_PLANE
+	burn_overlay.color = "#fff6a4"
+	add_overlay(burn_overlay)
 	return burn_overlay
 
 /obj/item/thermite_burn()

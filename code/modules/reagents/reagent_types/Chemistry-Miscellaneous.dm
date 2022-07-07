@@ -121,7 +121,6 @@
 
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
 	. = ..()
-
 	T.AddComponent(/datum/component/thermite, volume, T.min_thermite_amount, T.max_thermite_time, T.min_thermite_time)
 
 /datum/reagent/thermite/reaction_obj(obj/O, volume)
@@ -205,6 +204,10 @@
 		if(O)
 			O.clean_blood()
 
+	for(var/datum/component/thermite/C in O.GetComponents(/datum/component/thermite))
+		if(C.burn_timer == null)
+			C.amount -= volume * 10
+
 /datum/reagent/space_cleaner/reaction_turf(turf/T, volume)
 	. = ..()
 	if(volume >= 1)
@@ -218,6 +221,9 @@
 
 		for(var/mob/living/carbon/slime/M in T)
 			M.adjustToxLoss(rand(5,10))
+
+	for(var/datum/component/thermite/C in T.GetComponents(/datum/component/thermite))
+		C.amount -= volume * 10
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, volume)
 	if(iscarbon(M))
@@ -705,10 +711,6 @@
 				C.toggle_cam(FALSE) // Do not show deactivation message, it's just paint.
 				C.triggerCameraAlarm()
 			C.color = color
-	if(istype(O, /obj/item/canvas))
-		var/obj/item/canvas/C = O
-		C.canvas_color = color
-		C.reset_grid()
 
 /datum/reagent/paint_remover
 	name = "Paint Remover"
@@ -922,3 +924,21 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	..()
 	M.adjustToxLoss(REM)
 	return FALSE
+
+/datum/reagent/silicon_dioxide
+	name = "Silicon dioxide"
+	id = "silicon_dioxide"
+	description = "White colorless crystals. Main component of sand; Used in production of glass."
+	color = "#949494" //rgb: 58, 58, 58
+
+/datum/reagent/silicon_dioxide/reaction_obj(obj/O, volume)
+	for(var/datum/component/thermite/C in O.GetComponents(/datum/component/thermite))
+		C.amount -= volume * 0.5
+		if(C.amount <= 0)
+			C.RemoveComponent()
+
+/datum/reagent/silicon_dioxide/reaction_turf(turf/T, volume)
+	. = ..()
+
+	for(var/datum/component/thermite/C in T.GetComponents(/datum/component/thermite))
+		C.amount -= volume * 0.5

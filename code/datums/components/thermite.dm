@@ -3,7 +3,7 @@
 
 
 #define THERMITE_TIP "Этот объект покрыт термитом."
-#define THERMITE_COLOR "#423b26" //rgb: 26, 23, 15
+#define THERMITE_COLOR "#86784e"
 
 /datum/mechanic_tip/thermite
 	tip_name = THERMITE_TIP
@@ -35,7 +35,10 @@
 	//color which parent had before thermite was splashed on it
 	var/old_color
 
-/datum/component/thermite/Initialize(var/_amount, var/_min_amount = 30, var/_max_time = 60, var/_min_time = 5)
+	//anchor state which parent had before thermite was ignited on it
+	var/old_anchor
+
+/datum/component/thermite/Initialize(_amount, _min_amount = 30, _max_time = 60, _min_time = 5)
 	amount = _amount
 	min_amount = _min_amount
 	max_time = _max_time
@@ -44,7 +47,7 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), .proc/remove_overlay)
+	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), .proc/Destroy)
 	RegisterSignal(parent, list(COMSIG_PARENT_ATTACKBY), .proc/attack_reaction)
 
 	var/atom/A = parent
@@ -61,25 +64,35 @@
 
 	var/atom/A = parent
 	A.color = old_color
-	remove_overlay()
+	if(istype(A, /atom/movable))
+		var/atom/movable/M = A
+		M.freeze_movement = FALSE
+		M.anchored = old_anchor
+	A.anchored = old_anchor
+	if(burn_overlay != null)
+		qdel(burn_overlay)
+	if(burn_timer != null)
+		deltimer(burn_timer)
 
 //called when thermite is ignited by someone
 /datum/component/thermite/proc/ignite(mob/user)
 	var/atom/A = parent
 
+	if(istype(A, /atom/movable))
+		var/atom/movable/M = A
+		M.freeze_movement = TRUE //we don't want for stuff to move while it's burning (i.e officier beepsky)
+		old_anchor = M.anchored
+		M.anchored = TRUE
+
 	if(min_amount <= 0)
-		A.visible_message("<span class='warning'>Thermite isn't strong enough to melt [src]! </span>")
-		var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread()
-		S.set_up(1, 1, parent)
+		A.visible_message("<span class='warning'>Thermite isn't strong enough to melt [parent]! </span>")
 		qdel(src)
-		return FALSE
+		return
 
 	else if(amount < min_amount)
-		A.visible_message("<span class='warning'>There isn't enough thermite to melt [src]! </span>")
-		var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread()
-		S.set_up(1, 1, parent)
+		A.visible_message("<span class='warning'>There isn't enough thermite to melt [parent]! </span>")
 		qdel(src)
-		return FALSE
+		return
 
 	var/time = max_time * (min_amount / amount)
 	if(time < min_time)
@@ -94,7 +107,7 @@
 
 	var/overlay_loc = isturf(A) ? A : A.loc
 
-	if(r == FALSE) //we don't have special overload for parent, so do the default melting
+	if(r == FALSE) //we don't have overload for parent, so do the default melting
 		var/datum/effect/effect/system/spark_spread/S = new /datum/effect/effect/system/spark_spread()
 		S.set_up(3, 1, parent)
 		burn_overlay = new /obj/effect/overlay/thermite(overlay_loc)
@@ -102,36 +115,31 @@
 
 		var/turf/L = isturf(A) ? A : get_turf(parent)
 		L.hotspot_expose(3200, 10, parent)
-
-		burn_timer = addtimer(CALLBACK(src, .proc/burn), time SECONDS, TIMER_STOPPABLE)
 	else
 		burn_overlay = r
+	burn_timer = addtimer(CALLBACK(src, .proc/burn), time SECONDS, TIMER_STOPPABLE)
 
 //actually destroys the parent
 /datum/component/thermite/proc/burn()
 	var/atom/A = parent
 	var/r = A.thermite_burn()
 
-	if(r == FALSE)
+	if(r == FALSE) //we don't have overload for parent, so do the default burning
 		qdel(parent)
 
-/datum/component/thermite/proc/remove_overlay()
-	if(burn_overlay != null)
-		qdel(burn_overlay)
-
 /datum/component/thermite/proc/attack_reaction(datum/source, obj/item/I,  mob/living/user, params)
-	var/atom/A = parent
 	var/datum/gas_mixture/env = I.return_air()
 	var/temp = 0.0
-
 	temp = (env.temperature + I.get_current_temperature()) - T0C
 	if(temp > 1920)
 		ignite(user)
-
-	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/soap))
+	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/soap) && burn_timer == null)
+		to_chat(user, "You clean [parent], scrubbing thermite off it.")
 		qdel(src)
+	else if(istype(I, /obj/item/weapon/reagent_containers))
+		return
 
-	return COMPONENT_NO_AFTERATTACK
+	return COMPONENT_NO_ATTACK_PROCESSING
 
 
 

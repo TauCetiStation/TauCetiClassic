@@ -299,6 +299,8 @@
 
 /obj/structure/closet/thermite_burn()
 	for(var/atom/A in src)
-		if(prob(25))
-			var/datum/component/thermite/T = A.AddComponent(/datum/component/thermite, A.min_thermite_amount, A.min_thermite_amount, A.max_thermite_time, A.min_thermite_time) //we're kinda duping thermite, but I think it's fine
-			T.ignite()
+		if(rand(1, 3) == 3)
+			var/datum/component/thermite/C = A.AddComponent(/datum/component/thermite, A.min_thermite_amount, A.min_thermite_amount, A.max_thermite_time, A.min_thermite_time) //we're kinda duping thermite, but I think it's fine
+			C.ignite()
+	dump_contents()
+	qdel(src)

@@ -796,7 +796,6 @@
 		/obj/item/weapon/rocksliver = list("ground_rock" = 50),
 
 
-
 		//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this!,
 		/obj/item/weapon/reagent_containers/pill = list(),
 		/obj/item/weapon/reagent_containers/food = list(),

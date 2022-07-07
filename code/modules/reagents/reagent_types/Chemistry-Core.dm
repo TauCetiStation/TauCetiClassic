@@ -56,6 +56,10 @@
 		T.assume_air(lowertemp)
 		qdel(hotspot)
 
+	for(var/datum/component/thermite/C in T.GetComponents(/datum/component/thermite))
+		if(C.burn_timer == null)
+			C.amount -= volume * 3
+
 /datum/reagent/water/reaction_obj(obj/O, volume)
 	var/turf/T = get_turf(O)
 	var/hotspot = (locate(/obj/fire) in T)
@@ -74,6 +78,12 @@
 		if(C.painted)
 			C.remove_paint_state()
 			C.color = null
+
+	for(var/datum/component/thermite/C in O.GetComponents(/datum/component/thermite))
+		if(C.burn_timer == null)
+			C.amount -= volume * 3
+			if(C.amount <= 0)
+				C.RemoveComponent()
 
 /datum/reagent/water/on_general_digest(mob/living/M)
 	..()

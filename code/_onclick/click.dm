@@ -157,8 +157,11 @@
 			if(W)
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 				// But consider that components have higher priority in deciding whenether to call afterattack() or not
-				var/resolved = A.attackby(W, src, params)
-				if(SEND_SIGNAL(A, COMSIG_PARENT_ATTACKBY, W, src, params) & COMPONENT_NO_AFTERATTACK)
+				var/resolved = FALSE
+				var/bmap = SEND_SIGNAL(A, COMSIG_PARENT_ATTACKBY, W, src, params)
+				if(!(bmap & COMPONENT_NO_ATTACKBY) && !(bmap & COMPONENT_NO_ATTACK_PROCESSING))
+					resolved = A.attackby(W, src, params)
+				if((bmap & COMPONENT_NO_AFTERATTACK) || (bmap & COMPONENT_NO_ATTACK_PROCESSING))
 					resolved = TRUE
 				if(!resolved && A && W)
 					W.afterattack(A, src, 1, params) // 1: clicking something Adjacent

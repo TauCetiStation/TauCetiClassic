@@ -97,19 +97,14 @@
 
 	//BubbleWrap: Should stop you pushing a restrained person out of the way
 	if(ishuman(M))
-		if(M.anchored)
-			if(!(world.time % 5))
-				to_chat(src, "<span class='warning'>[M] is anchored, you cannot push past.</span>")
-			return 1
-		if((M.pulledby && M.pulledby.stat == CONSCIOUS && !M.pulledby.restrained() && M.restrained()) || locate(/obj/item/weapon/grab, M.grabbed_by))
-			if(!(world.time % 5))
-				to_chat(src, "<span class='warning'>[M] is restrained, you cannot push past.</span>")
-			return 1
-		if(ismob(M.pulling))
-			var/mob/pulling_mob = M.pulling
-			if(pulling_mob.restrained() && !M.restrained() && M.stat == CONSCIOUS)
-				if(!(world.time % 5))
-					to_chat(src, "<span class='warning'>[M] is restraining [pulling_mob], you cannot push past.</span>")
+		for(var/mob/MM in range(M, 1))
+			if(MM.pinned.len || ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
+				if ( !(world.time % 5) )
+					to_chat(src, "<span class='warning'>[M] is restrained, you cannot push past.</span>")
+				return 1
+			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
+				if ( !(world.time % 5) )
+					to_chat(src, "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>")
 				return 1
 
 	//switch our position with M
@@ -564,13 +559,18 @@
 
 	// shut down ongoing problems
 	radiation = 0
-	nutrition = NUTRITION_LEVEL_NORMAL
+	nutrition = 400
 	bodytemperature = T20C
 	sdisabilities = 0
 	disabilities = 0
 	ExtinguishMob()
 	fire_stacks = 0
 	suiciding = FALSE
+
+	if(pinned.len)
+		for(var/obj/O in pinned)
+			O.forceMove(loc)
+		pinned.Cut()
 
 	// fix blindness and deafness
 	blinded = 0
@@ -886,6 +886,10 @@
 	//resisting grabs (as if it helps anyone...)
 	if (!L.incapacitated())
 		var/resisting = 0
+		for(var/obj/O in L.requests)
+			L.requests.Remove(O)
+			qdel(O)
+			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
 			switch(G.state)
@@ -1426,7 +1430,6 @@
 
 /mob/living/death(gibbed)
 	beauty.AddModifier("stat", additive=beauty_dead)
-	update_health_hud()
 	return ..()
 
 /mob/living/proc/update_beauty(datum/source, old_value)
@@ -1515,3 +1518,13 @@
 
 /mob/living/proc/get_pumped(bodypart)
 	return 0
+
+/mob/living/thermite_melt()
+	adjustFireLoss(rand(20, 60))
+	Weaken(5)
+	fire_stacks += 3
+	IgniteMob()
+	return TRUE
+
+/mob/livinng/thermite_burn()
+	return TRUE
