@@ -118,7 +118,7 @@
 	add_language(LANGUAGE_SIIKTAJR)
 
 /mob/living/carbon/monkey/movement_delay(tally = 0)
-	if(reagents && reagents.has_reagent("nuka_cola"))
+	if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
 
 	var/health_deficiency = (100 - health)

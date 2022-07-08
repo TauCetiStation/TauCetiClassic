@@ -290,7 +290,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 /mob/living/carbon/ian/movement_delay(tally = 0)
 	if(crawling)
 		tally += 5
-	else if(reagents && reagents.has_reagent("nuka_cola"))
+	else if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
 	else if(m_intent == "run" && a_intent == INTENT_HARM && stamina >= 10)
 		stamina = max(0, stamina - 10)
