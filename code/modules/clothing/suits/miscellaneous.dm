@@ -603,6 +603,7 @@
 	name = "brown jacket"
 	desc = "A good jacket for good men."
 	icon_state = "gmjacket"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/goodman_jacket/verb/toggle()
 	set name = "Toggle Jacket Buttons"
