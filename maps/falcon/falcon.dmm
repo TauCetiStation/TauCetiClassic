@@ -1951,8 +1951,6 @@
 /area/station/cargo/recycler)
 "adw" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/jetpack/carbondioxide,
-/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/suit/space/rig/science/rd,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/rig/science/rd,
@@ -4068,7 +4066,6 @@
 /area/station/hallway/secondary/arrival)
 "ahv" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/item/clothing/mask/breath,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/machinery/camera{
@@ -4076,7 +4073,6 @@
 	dir = 6;
 	network = list("SS13","Research")
 	},
-/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/suit/space/rig/science,
 /obj/item/clothing/head/helmet/space/rig/science,
 /obj/machinery/light_switch{
