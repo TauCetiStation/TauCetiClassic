@@ -18,6 +18,7 @@
 	desc = "Worn by a Captain to show their class."
 	icon_state = "captunic"
 	item_state = "bio_suit"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	body_parts_covered = UPPER_TORSO|ARMS
 	flags_inv = HIDEJUMPSUIT
 
@@ -35,6 +36,7 @@
 	desc = "This suit says to you 'hush'!"
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	body_parts_covered = UPPER_TORSO|ARMS
 
 /obj/item/clothing/suit/hooded/skhima
@@ -42,6 +44,7 @@
 	desc = "That's an ancient religion robe Skhima, decorated with white runes and symbols. Commonly weared by monks."
 	icon_state = "skhima"
 	item_state = "skhima"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	icon_suit_up = "skhima_up"
 	hoodtype = /obj/item/clothing/head/skhima_hood
 	flags_inv = HIDEJUMPSUIT
@@ -59,6 +62,7 @@
 	desc = "A religion female suit commonly weared by monastery sisters."
 	icon_state = "nun"
 	item_state = "nun"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	var/sleeves = TRUE
 	hoodtype = /obj/item/clothing/head/nun_hood
 	flags_inv = HIDEJUMPSUIT
@@ -169,6 +173,7 @@
 	desc = "A high-visibility vest used in work zones."
 	icon_state = "hazard_orange"
 	item_state = "hazard_orange"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	blood_overlay_type = "armor"
 	allowed = list (/obj/item/device/analyzer, /obj/item/device/flashlight, /obj/item/device/multitool, /obj/item/device/radio, /obj/item/device/t_scanner,
 	/obj/item/weapon/crowbar, /obj/item/weapon/screwdriver, /obj/item/weapon/weldingtool, /obj/item/weapon/wirecutters, /obj/item/weapon/wrench, /obj/item/weapon/tank/emergency_oxygen,
@@ -188,6 +193,7 @@
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_blue_open"
 	item_state = "suitjacket_blue_open"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
@@ -196,6 +202,7 @@
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_purp"
 	item_state = "suitjacket_purp"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
@@ -205,6 +212,7 @@
 	desc = "A smooth black jacket."
 	icon_state = "ia_jacket_open"
 	item_state = "ia_jacket"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
@@ -234,6 +242,7 @@
 	desc = "A high-visibility jacket worn by medical first responders."
 	icon_state = "fr_jacket_open"
 	item_state = "fr_jacket"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/stack/medical, /obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/hypospray, /obj/item/weapon/reagent_containers/syringe,
 	/obj/item/device/healthanalyzer, /obj/item/device/flashlight, /obj/item/device/radio, /obj/item/weapon/tank/emergency_oxygen)

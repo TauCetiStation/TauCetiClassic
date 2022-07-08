@@ -104,6 +104,7 @@
 	desc = "For some classy, murderous fun."
 	icon_state = "vest"
 	item_state = "wcoat"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
@@ -178,6 +179,7 @@
 	desc = "An ordinary cardboard box with holes cut in the sides."
 	icon_state = "cardborg"
 	item_state = "cardborg"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags_inv = HIDEJUMPSUIT
 
@@ -224,6 +226,7 @@
 	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it but it's pretty close. Good for sleeping in."
 	icon_state = "ianshirt"
 	item_state = "ianshirt"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	body_parts_covered = UPPER_TORSO|ARMS
 
 /obj/item/clothing/suit/nerdshirt
@@ -231,72 +234,84 @@
 	desc = "A baggy shirt with a vintage game character on it. Why would someone wear this?"
 	icon_state = "nerdshirt"
 	item_state = "nerdshirt"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/blueshirt
 	name = "blue shirt"
 	desc = "A blue shirt with some strange symbols. Look out for aliens!"
 	icon_state = "blueshirt"
 	item_state = "blueshirt"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/chemshirt
 	name = "chemistry shirt"
 	desc = "A nice orange shirt made from a special fabric that hides any reagent stains. Has a drawn beaker with some glowy acid inside. Wanna cook?"
 	icon_state = "chemshirt"
 	item_state = "chemshirt"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/roundshirt
 	name = "science shirt"
 	desc = "A purple, sciency t-shirt with a picture of a burning star. Save the Earth! Oh wait, already too late for that"
 	icon_state = "roundshirt"
 	item_state = "roundshirt"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/catshirt
 	name = "cat shirt"
 	desc = "Very comfy, grey t-shirt with a picture of a cute kitty. And the best part: any cat or tajaran hair blends into the design very well!"
 	icon_state = "catshirt"
 	item_state = "catshirt"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/engishirt
 	name = "engineer shirt"
 	desc = "Loose t-shirt made of insulating material. Trust me i'm an engineer"
 	icon_state = "engishirt"
 	item_state = "engishirt"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/badengishirt
 	name = "bad engineer shirt"
 	desc = "A loose T-shirt made of insulating material with a picture of gravitational singularity on it. Don't trust me i'm a bad engineer"
 	icon_state = "badengishirt"
 	item_state = "badengishirt"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/docshirt
 	name = "doc shirt"
 	desc = "Nice white T-shirt, designed to show that you are a fashionable doctor. Blood stains are not included"
 	icon_state = "docshirt"
 	item_state = "docshirt"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/battonshirt
 	name = "stunning shirt"
 	desc = "A red T-shirt made from durable Rip-Stop material with a picture of bloody stun batton on it. It makes you stunned"
 	icon_state = "battonshirt"
 	item_state = "battonshirt"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/arstotzkashirt
 	name = "dictator shirt"
 	desc = "Grim-looking T-shirt with a picture of red eagle. A good banner for creating your own state in a single department"
 	icon_state = "arstotzkashirt"
 	item_state = "arstotzkashirt"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/toxicshirt
 	name = "toxic shirt"
 	desc = "Acidic-green t-shirt in order to show who is the biggest asshole here"
 	icon_state = "toxicshirt"
 	item_state = "toxicshirt"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
 	desc = "Aviators not included."
 	icon_state = "bomberjacket"
 	item_state = "johnny"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
 
 /obj/item/clothing/suit/jacket/leather
@@ -304,11 +319,13 @@
 	desc = "Pompadour not included."
 	icon_state = "leatherjacket"
 	item_state = "hostrench"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
 	desc = "That's a damn fine coat."
 	icon_state = "leather_overcoat"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
@@ -317,6 +334,7 @@
 	desc = "A thick jacket with a rubbery, water-resistant shell."
 	icon_state = "pufferjacket"
 	item_state = "hostrench"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 35, rad = 0)
@@ -326,6 +344,7 @@
 	desc = "A thick vest with a rubbery, water-resistant shell."
 	icon_state = "puffervest"
 	item_state = "armor"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
@@ -335,6 +354,7 @@
 	desc = "A black trenchcoat."
 	icon_state = "dude_coat"
 	item_state = "jensensuit"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 //pyjamas
 //originally intended to be pinstripes >.>
@@ -360,12 +380,14 @@
 	desc = "A flowing, black coat."
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/serifcoat
 	name = "serif coat"
 	desc = "A old coat"
 	icon_state = "serif_coat"
 	item_state = "det_suit"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 //stripper
 /obj/item/clothing/under/stripper
@@ -466,6 +488,7 @@
 	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Classic olive."
 	icon_state = "miljacket_army"
 	item_state = "miljacket_army"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	var/can_button_up = 1
 	var/is_button_up = 1
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS
@@ -508,6 +531,7 @@
 	desc = "Your classic, non-racist poncho."
 	icon_state = "classicponcho"
 	item_state = "classicponcho"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/poncho/green
 	name = "green poncho"
@@ -662,6 +686,7 @@
 	name = "sukeban coat"
 	desc = "Just a Street Japanese coat"
 	icon_state = "sukeban_coat"
+	valid_accessory_slots = list("armband", "decor", "armor")
 
 /obj/item/clothing/suit/plaid
 	name = "plaid"
@@ -678,6 +703,7 @@
 	desc = "Brand new, incredibly comfortable t-shirt with a logo of Syndicate."
 	icon_state = "syndieshirt"
 	item_state = "syndieshirt"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	body_parts_covered = UPPER_TORSO|ARMS
 
 /obj/item/clothing/suit/jacket/letterman
@@ -705,4 +731,5 @@
 	desc = "Leather jaket with an old security badge attached to it"
 	icon_state = "kung_jacket"
 	item_state = "kung_jacket"
+	valid_accessory_slots = list("armband", "decor", "armor")
 	w_class = SIZE_SMALL
