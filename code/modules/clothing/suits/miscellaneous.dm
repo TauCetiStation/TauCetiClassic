@@ -105,6 +105,7 @@
 	icon_state = "vest"
 	item_state = "wcoat"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
@@ -170,6 +171,8 @@
 	desc = "This is a nice holiday my son."
 	icon_state = "holidaypriest"
 	item_state = "holidaypriest"
+	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 
@@ -227,6 +230,7 @@
 	icon_state = "ianshirt"
 	item_state = "ianshirt"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	body_parts_covered = UPPER_TORSO|ARMS
 
 /obj/item/clothing/suit/nerdshirt
@@ -235,6 +239,7 @@
 	icon_state = "nerdshirt"
 	item_state = "nerdshirt"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/blueshirt
 	name = "blue shirt"
@@ -242,6 +247,7 @@
 	icon_state = "blueshirt"
 	item_state = "blueshirt"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/chemshirt
 	name = "chemistry shirt"
@@ -249,6 +255,7 @@
 	icon_state = "chemshirt"
 	item_state = "chemshirt"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/roundshirt
 	name = "science shirt"
@@ -256,6 +263,7 @@
 	icon_state = "roundshirt"
 	item_state = "roundshirt"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/catshirt
 	name = "cat shirt"
@@ -263,6 +271,7 @@
 	icon_state = "catshirt"
 	item_state = "catshirt"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/engishirt
 	name = "engineer shirt"
@@ -270,6 +279,7 @@
 	icon_state = "engishirt"
 	item_state = "engishirt"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/badengishirt
 	name = "bad engineer shirt"
@@ -277,6 +287,7 @@
 	icon_state = "badengishirt"
 	item_state = "badengishirt"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/docshirt
 	name = "doc shirt"
@@ -284,6 +295,7 @@
 	icon_state = "docshirt"
 	item_state = "docshirt"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/battonshirt
 	name = "stunning shirt"
@@ -291,6 +303,7 @@
 	icon_state = "battonshirt"
 	item_state = "battonshirt"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/arstotzkashirt
 	name = "dictator shirt"
@@ -298,6 +311,7 @@
 	icon_state = "arstotzkashirt"
 	item_state = "arstotzkashirt"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/toxicshirt
 	name = "toxic shirt"
@@ -305,6 +319,7 @@
 	icon_state = "toxicshirt"
 	item_state = "toxicshirt"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
@@ -312,6 +327,7 @@
 	icon_state = "bomberjacket"
 	item_state = "johnny"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
 
 /obj/item/clothing/suit/jacket/leather
@@ -320,12 +336,14 @@
 	icon_state = "leatherjacket"
 	item_state = "hostrench"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
 	desc = "That's a damn fine coat."
 	icon_state = "leather_overcoat"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
@@ -335,6 +353,7 @@
 	icon_state = "pufferjacket"
 	item_state = "hostrench"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 35, rad = 0)
@@ -345,6 +364,7 @@
 	icon_state = "puffervest"
 	item_state = "armor"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
@@ -381,6 +401,7 @@
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/serifcoat
 	name = "serif coat"
@@ -388,6 +409,7 @@
 	icon_state = "serif_coat"
 	item_state = "det_suit"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 //stripper
 /obj/item/clothing/under/stripper
@@ -489,6 +511,7 @@
 	icon_state = "miljacket_army"
 	item_state = "miljacket_army"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	var/can_button_up = 1
 	var/is_button_up = 1
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS
@@ -532,6 +555,7 @@
 	icon_state = "classicponcho"
 	item_state = "classicponcho"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/poncho/green
 	name = "green poncho"
@@ -604,6 +628,7 @@
 	desc = "A good jacket for good men."
 	icon_state = "gmjacket"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/goodman_jacket/verb/toggle()
 	set name = "Toggle Jacket Buttons"
@@ -688,6 +713,7 @@
 	desc = "Just a Street Japanese coat"
 	icon_state = "sukeban_coat"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/plaid
 	name = "plaid"
@@ -698,6 +724,8 @@
 	name = "tuxedo"
 	desc = "A semi-formal evening suit distinguished primarily by satin or grosgrain facings on the jacket's lapels"
 	icon_state = "tuxedo"
+	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 /obj/item/clothing/suit/syndieshirt
 	name = "red shirt"
@@ -705,6 +733,7 @@
 	icon_state = "syndieshirt"
 	item_state = "syndieshirt"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	body_parts_covered = UPPER_TORSO|ARMS
 
 /obj/item/clothing/suit/jacket/letterman
@@ -733,4 +762,5 @@
 	icon_state = "kung_jacket"
 	item_state = "kung_jacket"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	w_class = SIZE_SMALL

@@ -4,6 +4,7 @@
 	icon_state = "labcoat"
 	item_state = "labcoat"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	blood_overlay_type = "coat"
 	var/can_button_up = 1
 	var/is_button_up = 1

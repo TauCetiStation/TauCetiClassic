@@ -19,6 +19,7 @@
 	icon_state = "captunic"
 	item_state = "bio_suit"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	body_parts_covered = UPPER_TORSO|ARMS
 	flags_inv = HIDEJUMPSUIT
 
@@ -45,6 +46,7 @@
 	icon_state = "skhima"
 	item_state = "skhima"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	icon_suit_up = "skhima_up"
 	hoodtype = /obj/item/clothing/head/skhima_hood
 	flags_inv = HIDEJUMPSUIT
@@ -63,6 +65,7 @@
 	icon_state = "nun"
 	item_state = "nun"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	var/sleeves = TRUE
 	hoodtype = /obj/item/clothing/head/nun_hood
 	flags_inv = HIDEJUMPSUIT
@@ -174,6 +177,7 @@
 	icon_state = "hazard_orange"
 	item_state = "hazard_orange"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	blood_overlay_type = "armor"
 	allowed = list (/obj/item/device/analyzer, /obj/item/device/flashlight, /obj/item/device/multitool, /obj/item/device/radio, /obj/item/device/t_scanner,
 	/obj/item/weapon/crowbar, /obj/item/weapon/screwdriver, /obj/item/weapon/weldingtool, /obj/item/weapon/wirecutters, /obj/item/weapon/wrench, /obj/item/weapon/tank/emergency_oxygen,
@@ -194,6 +198,7 @@
 	icon_state = "suitjacket_blue_open"
 	item_state = "suitjacket_blue_open"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
@@ -203,6 +208,7 @@
 	icon_state = "suitjacket_purp"
 	item_state = "suitjacket_purp"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
@@ -213,6 +219,7 @@
 	icon_state = "ia_jacket_open"
 	item_state = "ia_jacket"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
@@ -243,6 +250,7 @@
 	icon_state = "fr_jacket_open"
 	item_state = "fr_jacket"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/stack/medical, /obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/hypospray, /obj/item/weapon/reagent_containers/syringe,
 	/obj/item/device/healthanalyzer, /obj/item/device/flashlight, /obj/item/device/radio, /obj/item/weapon/tank/emergency_oxygen)
