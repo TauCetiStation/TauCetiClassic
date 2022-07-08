@@ -63,7 +63,7 @@
 			playsound(get_turf(src), pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
 			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
 			apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
-			Stun(3)
+			Stun(1)
 			Weaken(2)
 
 	if(ismob(A))
@@ -942,7 +942,8 @@
 		if(CM.on_fire)
 			if(!CM.canmove && !CM.crawling)	return
 			CM.fire_stacks -= 5
-			CM.weakened = 5
+			CM.Stun(5)
+			CM.Weaken(5)
 			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
 				"<span class='rose'>You stop, drop, and roll!</span>")
 			if(fire_stacks <= 0)

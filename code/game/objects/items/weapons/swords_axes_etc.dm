@@ -100,7 +100,8 @@
 /obj/item/weapon/melee/classic_baton/attack(mob/living/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
-		user.Weaken(3 * force)
+		user.Stun(16)
+		user.Weaken(16)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2 * force, BRUTE, BP_HEAD)
@@ -202,7 +203,7 @@
 	if(on)
 		if ((CLUMSY in user.mutations) && prob(50))
 			to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
-			user.Weaken(3 * force)
+			user.adjustHalLoss(70)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				H.apply_damage(2 * force, BRUTE, BP_HEAD)
