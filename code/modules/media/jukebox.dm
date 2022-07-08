@@ -367,7 +367,15 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/syndi/atom_init()
 	. = ..()
-	emag_act()
+	current_song = 0
+	playlist_id = "emagged"
+	last_reload=world.time
+	playlist=null
+	loop_mode = JUKEMODE_SHUFFLE
+	emagged = 1
+	playing = 1
+	update_icon()
+	update_music()
 
 /obj/machinery/media/jukebox/syndi/attackby(obj/item/W, mob/user, params)
 	if(iswrench(W))
