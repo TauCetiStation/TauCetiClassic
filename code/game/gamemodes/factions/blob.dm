@@ -208,7 +208,7 @@ Message ends."}
 		var/datum/role/R = M
 		if(!R.antag.current)
 			return
-		if(!istype(R.antag.current,/mob/camera/blob))
+		if(!isovermind(R.antag.current))
 			continue
 		var/mob/camera/blob/O = R.antag.current
 		for(var/mob/B in O.blob_mobs)
