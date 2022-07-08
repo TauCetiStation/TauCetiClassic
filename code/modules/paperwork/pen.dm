@@ -21,7 +21,7 @@
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 10
-	var/colour = "black"	//what colour the ink is!
+	var/colour = "black"	// can we make it HEX?
 	var/click_cooldown = 0
 
 /obj/item/weapon/pen/proc/get_signature(mob/user)

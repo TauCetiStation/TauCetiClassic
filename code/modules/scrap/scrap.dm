@@ -136,6 +136,7 @@ var/global/list/scrap_base_cache = list()
 				if(BP.is_robotic())
 					return
 				to_chat(M, "<span class='danger'>You step on the sharp debris!</span>")
+				H.Stun(1)
 				H.Weaken(3)
 				BP.take_damage(5, 0)
 				H.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))

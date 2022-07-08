@@ -100,6 +100,7 @@
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
 			if(prob(15))
 				M.apply_effect((rand(30,80)),IRRADIATE)
+				M.Stun(2)
 				M.Weaken(5)
 				visible_message("<span class='warning'>[M] writhes in pain as \his vacuoles boil.</span>", blind_message = "<span class='warning'>You hear the crunching of leaves.</span>")
 			if(prob(35))
@@ -217,6 +218,7 @@
 	icon_state = "energy2"
 	damage = 5
 	weaken = 10
+	stun = 10
 	damage_type = TOX
 	flag = "bio"
 

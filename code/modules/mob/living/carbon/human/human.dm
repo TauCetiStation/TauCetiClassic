@@ -931,6 +931,8 @@
 			number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/night/shadowling))
 		number -= 1
+	if(istype(glasses, /obj/item/clothing/glasses/cult_blindfold))
+		number += 2
 	return number
 
 
@@ -1785,7 +1787,7 @@
 		to_chat(src, "<span class='notice'>It is unsafe to leap without gravity!</span>")
 		return
 
-	if(incapacitated(LEGS) || buckled || pinned.len || stance_damage >= 4) //because you need !restrained legs to leap
+	if(incapacitated(LEGS) || buckled || anchored || stance_damage >= 4) //because you need !restrained legs to leap
 		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
 		return
 
@@ -1818,15 +1820,17 @@
 		var/mob/living/L = hit_atom
 		L.visible_message("<span class='danger'>\The [src] leaps at [L]!</span>", "<span class='userdanger'>[src] leaps on you!</span>")
 		if(issilicon(L))
-			L.Weaken(1) //Only brief stun
+			L.Stun(1) //Only brief stun
 			step_towards(src, L)
 		else
+			L.Stun(2)
 			L.Weaken(2)
 			step_towards(src, L)
 
 	else if(hit_atom.density)
 		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
-		weakened = 2
+		Stun(2)
+		Weaken(2)
 
 	update_canmove()
 
@@ -2052,7 +2056,17 @@
 	for(var/mob/M in viewers(src))
 		if(M.client)
 			viewing += M.client
-	var/image/I = image(icon,src,"electrocuted_generic",MOB_LAYER+1)
+	var/electrocuted_sprite = "electrocuted_generic"
+	switch(get_species())
+		if(UNATHI)
+			electrocuted_sprite += "_unathi"
+		if(TAJARAN)
+			electrocuted_sprite += "_tajaran"
+		if(SKRELL)
+			electrocuted_sprite += "_skrell"
+		if(VOX)
+			electrocuted_sprite += "_vox"
+	var/image/I = image(icon, src, electrocuted_sprite, MOB_LAYER+1)
 	I = update_height(I)
 	flick_overlay(I, viewing, anim_duration)
 

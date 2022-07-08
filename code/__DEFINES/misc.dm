@@ -80,6 +80,13 @@
 #define EVENT_LEVEL_MODERATE 3
 #define EVENT_LEVEL_MAJOR 4
 
+// shows STORAGE levels deep:
+// 1 lvl: item in backpack in src
+// 2 lvl: item in box in backpack in src
+// 3 lvl: item in matchbox in box in backpack in src
+// and so on
+#define MAX_STORAGE_DEEP_LEVEL 2
+
 //defines
 #define RESIZE_DEFAULT_SIZE 1
 
@@ -188,8 +195,6 @@
 #define PROJECTILE_ACTED 0 // it means that something else has took control of bullet_act() proc and it didn't run till the end.
 #define PROJECTILE_ABSORBED 2
 #define PROJECTILE_ALL_OK 3
-
-#define COORD(A) "([A.x],[A.y],[A.z])"
 
 #define RUNE_WORDS list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
 
