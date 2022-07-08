@@ -13,6 +13,12 @@
 	var/nuclear_outfit = /datum/outfit/nuclear
 	skillset_type = /datum/skillset/nuclear_operative
 
+	var/TC_num = 0 // using for statistics
+
+/datum/role/operative/New()
+	..()
+	AddComponent(/datum/component/gamemode/syndicate, TC_num)
+
 /datum/role/operative/proc/NukeNameAssign(datum/mind/synd_mind)
 	var/choose_name = sanitize_safe(input(synd_mind.current, "You are a Gorlex Maradeurs agent! What is your name?", "Choose a name") as text, MAX_NAME_LEN)
 
@@ -69,9 +75,7 @@
 	nuclear_outfit = /datum/outfit/nuclear/leader
 	skillset_type = /datum/skillset/nuclear_operative_leader
 
-/datum/role/operative/leader/New()
-	..()
-	AddComponent(/datum/component/gamemode/syndicate, 25)
+	TC_num = 25
 
 /datum/role/operative/leader/OnPostSetup(laterole)
 	. = ..()

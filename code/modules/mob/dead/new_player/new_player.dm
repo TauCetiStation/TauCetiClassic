@@ -218,11 +218,12 @@
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
 
-	SSjob.EquipRank(character, rank, 1)					//equips the human
-
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
 		SSqualities.give_quality(character, TRUE)
+
+	SSjob.EquipRank(character, rank, TRUE)					//equips the human
+
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")
@@ -243,13 +244,8 @@
 		qdel(src)
 		return
 
-	character.loc = pick(latejoin)
-	character.lastarea = get_area(loc)
+	character.forceMove(pick(latejoin), keep_buckled = TRUE)
 	show_location_blurb(character.client)
-	// Moving wheelchair if they have one
-	if(character.buckled && istype(character.buckled, /obj/structure/stool/bed/chair/wheelchair))
-		character.buckled.loc = character.loc
-		character.buckled.set_dir(character.dir)
 
 	SSticker.mode.latespawn(character)
 

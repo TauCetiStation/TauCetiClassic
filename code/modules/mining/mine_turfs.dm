@@ -63,7 +63,7 @@
 	var/turf/T
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
-		if(istype(T, /turf/simulated/floor) || isspaceturf(T) || istype(T, /turf/simulated/shuttle/floor))
+		if(isfloorturf(T) || isspaceturf(T) || istype(T, /turf/simulated/shuttle/floor))
 			var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
 			I.plane = FLOOR_PLANE
 			T.add_overlay(I)
@@ -356,7 +356,6 @@
 		for(var/mob/living/M in range(src, 200))
 			to_chat(M, "<span class='danger'>[pick("A high pitched [pick("keening","wailing","whistle")]","A rumbling noise like [pick("thunder","heavy machinery")]")] somehow penetrates your mind before fading away!</span>")
 			if(pain)
-				flick("pain",M.pain)
 				if(prob(50))
 					M.adjustBruteLoss(5)
 			else

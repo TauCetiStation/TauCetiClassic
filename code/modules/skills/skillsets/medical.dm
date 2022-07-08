@@ -1,94 +1,94 @@
 /datum/skillset/cmo
 	name = "Chief Medical Officer"
 	initial_skills = list(
-		/datum/skill/medical/master,
-		/datum/skill/surgery/master,
-		/datum/skill/chemistry/master,
-		/datum/skill/command/pro,
-		/datum/skill/civ_mech/master,
-		/datum/skill/research/trained
+		/datum/skill/medical = SKILL_LEVEL_MASTER,
+		/datum/skill/surgery = SKILL_LEVEL_MASTER,
+		/datum/skill/chemistry = SKILL_LEVEL_MASTER,
+		/datum/skill/command = SKILL_LEVEL_PRO,
+		/datum/skill/civ_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/research = SKILL_LEVEL_TRAINED
 	)
 
 
 /datum/skillset/doctor
 	name = "Medical Doctor"
 	initial_skills = list(
-		/datum/skill/medical/pro,
-		/datum/skill/surgery/pro,
-		/datum/skill/civ_mech/trained,
-		/datum/skill/chemistry/pro
+		/datum/skill/medical = SKILL_LEVEL_PRO,
+		/datum/skill/surgery = SKILL_LEVEL_PRO,
+		/datum/skill/civ_mech = SKILL_LEVEL_TRAINED,
+		/datum/skill/chemistry = SKILL_LEVEL_PRO
 	)
 
 /datum/skillset/doctor/surgeon
 	name = "Surgeon"
 	initial_skills = list(
-		/datum/skill/surgery/master,
-		/datum/skill/medical/pro,
-		/datum/skill/chemistry/trained,
-		/datum/skill/civ_mech/novice
+		/datum/skill/surgery = SKILL_LEVEL_MASTER,
+		/datum/skill/medical = SKILL_LEVEL_PRO,
+		/datum/skill/chemistry = SKILL_LEVEL_TRAINED,
+		/datum/skill/civ_mech = SKILL_LEVEL_NOVICE
 	)
 
 /datum/skillset/doctor/nurse
 	name = "Nurse"
 	initial_skills = list(
-		/datum/skill/surgery/trained,
-		/datum/skill/medical/master,
-		/datum/skill/chemistry/pro,
-		/datum/skill/civ_mech/novice
+		/datum/skill/surgery = SKILL_LEVEL_TRAINED,
+		/datum/skill/medical = SKILL_LEVEL_MASTER,
+		/datum/skill/chemistry = SKILL_LEVEL_PRO,
+		/datum/skill/civ_mech = SKILL_LEVEL_NOVICE
 	)
 
 /datum/skillset/virologist
 	name = "Virologist"
 	initial_skills = list(
-		/datum/skill/chemistry/trained,
-		/datum/skill/research/trained,
-		/datum/skill/medical/pro,
-		/datum/skill/surgery/novice,
-		/datum/skill/civ_mech/novice
+		/datum/skill/chemistry = SKILL_LEVEL_TRAINED,
+		/datum/skill/research = SKILL_LEVEL_TRAINED,
+		/datum/skill/medical = SKILL_LEVEL_PRO,
+		/datum/skill/surgery = SKILL_LEVEL_NOVICE,
+		/datum/skill/civ_mech = SKILL_LEVEL_NOVICE
 	)
 
 /datum/skillset/chemist
 	name = "Chemist"
 	initial_skills = list(
-		/datum/skill/chemistry/master,
-		/datum/skill/medical/pro,
-		/datum/skill/surgery/novice,
-		/datum/skill/civ_mech/novice
+		/datum/skill/chemistry = SKILL_LEVEL_MASTER,
+		/datum/skill/medical = SKILL_LEVEL_PRO,
+		/datum/skill/surgery = SKILL_LEVEL_NOVICE,
+		/datum/skill/civ_mech = SKILL_LEVEL_NOVICE
 	)
 
 /datum/skillset/paramedic
 	name = "Paramedic"
 	initial_skills = list(
-		/datum/skill/medical/pro,
-		/datum/skill/surgery/trained,
-		/datum/skill/civ_mech/master,
-		/datum/skill/chemistry/trained
+		/datum/skill/medical = SKILL_LEVEL_PRO,
+		/datum/skill/surgery = SKILL_LEVEL_TRAINED,
+		/datum/skill/civ_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/chemistry = SKILL_LEVEL_TRAINED
 	)
 
 /datum/skillset/psychiatrist
 	name = "Psychiatrist"
 	initial_skills = list(
-		/datum/skill/medical/trained,
-		/datum/skill/command/novice,
-		/datum/skill/chemistry/trained,
-		/datum/skill/surgery/novice
+		/datum/skill/medical = SKILL_LEVEL_TRAINED,
+		/datum/skill/command = SKILL_LEVEL_NOVICE,
+		/datum/skill/chemistry = SKILL_LEVEL_TRAINED,
+		/datum/skill/surgery = SKILL_LEVEL_NOVICE
 	)
 
 /datum/skillset/geneticist
 	name = "Geneticist"
 	initial_skills = list(
-		/datum/skill/research/trained,
-		/datum/skill/medical/pro,
-		/datum/skill/surgery/novice,
-		/datum/skill/chemistry/novice,
-		/datum/skill/civ_mech/novice,
+		/datum/skill/research = SKILL_LEVEL_TRAINED,
+		/datum/skill/medical = SKILL_LEVEL_PRO,
+		/datum/skill/surgery = SKILL_LEVEL_NOVICE,
+		/datum/skill/chemistry = SKILL_LEVEL_NOVICE,
+		/datum/skill/civ_mech = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/skillset/intern
 	name = "Medical intern"
 	initial_skills = list(
-		/datum/skill/medical/trained,
-		/datum/skill/surgery/trained,
-		/datum/skill/chemistry/trained,
-		/datum/skill/civ_mech/trained
+		/datum/skill/medical = SKILL_LEVEL_TRAINED,
+		/datum/skill/surgery = SKILL_LEVEL_TRAINED,
+		/datum/skill/chemistry = SKILL_LEVEL_TRAINED,
+		/datum/skill/civ_mech = SKILL_LEVEL_TRAINED
 	)

@@ -1,54 +1,54 @@
 /datum/skillset/max
 	name = "Maximum skillset"
 	initial_skills = list(
-		/datum/skill/police/master,
-		/datum/skill/firearms/master,
-		/datum/skill/melee/master,
-		/datum/skill/engineering/master,
-		/datum/skill/construction/master,
-		/datum/skill/atmospherics/master,
-		/datum/skill/civ_mech/master,
-		/datum/skill/combat_mech/master,
-		/datum/skill/surgery/master,
-		/datum/skill/medical/master,
-		/datum/skill/chemistry/master,
-		/datum/skill/research/master,
-		/datum/skill/command/master
+		/datum/skill/police = SKILL_LEVEL_MASTER,
+		/datum/skill/firearms = SKILL_LEVEL_MASTER,
+		/datum/skill/melee = SKILL_LEVEL_MASTER,
+		/datum/skill/engineering = SKILL_LEVEL_MASTER,
+		/datum/skill/construction = SKILL_LEVEL_MASTER,
+		/datum/skill/atmospherics = SKILL_LEVEL_MASTER,
+		/datum/skill/civ_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/combat_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/surgery = SKILL_LEVEL_MASTER,
+		/datum/skill/medical = SKILL_LEVEL_MASTER,
+		/datum/skill/chemistry = SKILL_LEVEL_MASTER,
+		/datum/skill/research = SKILL_LEVEL_MASTER,
+		/datum/skill/command = SKILL_LEVEL_MASTER
 	)
 
 /datum/skillset/nuclear_operative_leader
 	name = NUKE_OP_LEADER
 	initial_skills = list(
-		/datum/skill/police/master,
-		/datum/skill/firearms/master,
-		/datum/skill/melee/master,
-		/datum/skill/engineering/master,
-		/datum/skill/construction/master,
-		/datum/skill/atmospherics/master,
-		/datum/skill/civ_mech/master,
-		/datum/skill/combat_mech/master,
-		/datum/skill/surgery/master,
-		/datum/skill/medical/master,
-		/datum/skill/chemistry/master,
-		/datum/skill/research/master,
-		/datum/skill/command/master
+		/datum/skill/police = SKILL_LEVEL_MASTER,
+		/datum/skill/firearms = SKILL_LEVEL_MASTER,
+		/datum/skill/melee = SKILL_LEVEL_MASTER,
+		/datum/skill/engineering = SKILL_LEVEL_MASTER,
+		/datum/skill/construction = SKILL_LEVEL_MASTER,
+		/datum/skill/atmospherics = SKILL_LEVEL_MASTER,
+		/datum/skill/civ_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/combat_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/surgery = SKILL_LEVEL_MASTER,
+		/datum/skill/medical = SKILL_LEVEL_MASTER,
+		/datum/skill/chemistry = SKILL_LEVEL_MASTER,
+		/datum/skill/research = SKILL_LEVEL_MASTER,
+		/datum/skill/command = SKILL_LEVEL_MASTER
 	)
 /datum/skillset/nuclear_operative
 	name = NUKE_OP
 	initial_skills = list(
-		/datum/skill/police/master,
-		/datum/skill/firearms/master,
-		/datum/skill/melee/master,
-		/datum/skill/engineering/master,
-		/datum/skill/construction/master,
-		/datum/skill/atmospherics/pro,
-		/datum/skill/civ_mech/pro,
-		/datum/skill/combat_mech/master,
-		/datum/skill/surgery/master,
-		/datum/skill/medical/master,
-		/datum/skill/chemistry/master,
-		/datum/skill/research/master,
-		/datum/skill/command/pro
+		/datum/skill/police = SKILL_LEVEL_MASTER,
+		/datum/skill/firearms = SKILL_LEVEL_MASTER,
+		/datum/skill/melee = SKILL_LEVEL_PRO,
+		/datum/skill/engineering = SKILL_LEVEL_MASTER,
+		/datum/skill/construction = SKILL_LEVEL_MASTER,
+		/datum/skill/atmospherics = SKILL_LEVEL_PRO,
+		/datum/skill/civ_mech = SKILL_LEVEL_PRO,
+		/datum/skill/combat_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/surgery = SKILL_LEVEL_MASTER,
+		/datum/skill/medical = SKILL_LEVEL_MASTER,
+		/datum/skill/chemistry = SKILL_LEVEL_MASTER,
+		/datum/skill/research = SKILL_LEVEL_MASTER,
+		/datum/skill/command = SKILL_LEVEL_PRO
 	)
 
 
@@ -56,171 +56,172 @@
 /datum/skillset/ERT_leader
 	name = "Emergency Response Team Leader"
 	initial_skills = list(
-		/datum/skill/police/master,
-		/datum/skill/firearms/master,
-		/datum/skill/melee/master,
-		/datum/skill/engineering/pro,
-		/datum/skill/construction/pro,
-		/datum/skill/atmospherics/trained,
-		/datum/skill/civ_mech/master,
-		/datum/skill/combat_mech/master,
-		/datum/skill/surgery/pro,
-		/datum/skill/medical/pro,
-		/datum/skill/chemistry/pro,
-		/datum/skill/research/pro,
-		/datum/skill/command/master
+		/datum/skill/police = SKILL_LEVEL_MASTER,
+		/datum/skill/firearms = SKILL_LEVEL_MASTER,
+		/datum/skill/melee = SKILL_LEVEL_MASTER,
+		/datum/skill/engineering = SKILL_LEVEL_PRO,
+		/datum/skill/construction = SKILL_LEVEL_PRO,
+		/datum/skill/atmospherics = SKILL_LEVEL_TRAINED,
+		/datum/skill/civ_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/combat_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/surgery = SKILL_LEVEL_PRO,
+		/datum/skill/medical = SKILL_LEVEL_PRO,
+		/datum/skill/chemistry = SKILL_LEVEL_PRO,
+		/datum/skill/research = SKILL_LEVEL_PRO,
+		/datum/skill/command = SKILL_LEVEL_MASTER
 	)
 
 /datum/skillset/ERT_medic
 	name = "Emergency Response Team"
 	initial_skills = list(
-		/datum/skill/police/master,
-		/datum/skill/firearms/master,
-		/datum/skill/melee/master,
-		/datum/skill/engineering/pro,
-		/datum/skill/construction/master,
-		/datum/skill/atmospherics/master,
-		/datum/skill/civ_mech/master,
-		/datum/skill/combat_mech/master,
-		/datum/skill/surgery/pro,
-		/datum/skill/medical/pro,
-		/datum/skill/chemistry/pro,
-		/datum/skill/research/pro,
-		/datum/skill/command/pro
+		/datum/skill/police = SKILL_LEVEL_MASTER,
+		/datum/skill/firearms = SKILL_LEVEL_MASTER,
+		/datum/skill/melee = SKILL_LEVEL_PRO,
+		/datum/skill/engineering = SKILL_LEVEL_PRO,
+		/datum/skill/construction = SKILL_LEVEL_MASTER,
+		/datum/skill/atmospherics = SKILL_LEVEL_MASTER,
+		/datum/skill/civ_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/combat_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/surgery = SKILL_LEVEL_PRO,
+		/datum/skill/medical = SKILL_LEVEL_PRO,
+		/datum/skill/chemistry = SKILL_LEVEL_PRO,
+		/datum/skill/research = SKILL_LEVEL_PRO,
+		/datum/skill/command = SKILL_LEVEL_PRO
 	)
 
 /datum/skillset/revolutionary
 	name = REV
 	initial_skills = list(
-		/datum/skill/police/trained,
-		/datum/skill/firearms/trained,
-		/datum/skill/command/novice,
-		/datum/skill/melee/trained
+		/datum/skill/police = SKILL_LEVEL_TRAINED,
+		/datum/skill/firearms = SKILL_LEVEL_TRAINED,
+		/datum/skill/command = SKILL_LEVEL_NOVICE,
+		/datum/skill/melee = SKILL_LEVEL_TRAINED
 	)
 
 /datum/skillset/gangster
 	name = GANGSTER
 	initial_skills = list(
-		/datum/skill/firearms/master,
-		/datum/skill/melee/master
+		/datum/skill/firearms = SKILL_LEVEL_MASTER,
+		/datum/skill/melee = SKILL_LEVEL_TRAINED
 	)
 
 /datum/skillset/cultist
 	name = CULTIST
 	initial_skills = list(
-		/datum/skill/melee/master,
-		/datum/skill/surgery/master,
-		/datum/skill/medical/master,
-		/datum/skill/chemistry/novice,
-		/datum/skill/research/novice
+		/datum/skill/melee = SKILL_LEVEL_PRO,
+		/datum/skill/surgery = SKILL_LEVEL_MASTER,
+		/datum/skill/medical = SKILL_LEVEL_MASTER,
+		/datum/skill/chemistry = SKILL_LEVEL_NOVICE,
+		/datum/skill/research = SKILL_LEVEL_NOVICE
 	)
 
 /datum/skillset/cultist/leader
 	name = CULT_LEADER
 	initial_skills = list(
-		/datum/skill/command/pro,
-		/datum/skill/police/trained,
-		/datum/skill/firearms/trained,
-		/datum/skill/chemistry/trained,
-		/datum/skill/combat_mech/trained,
-		/datum/skill/civ_mech/trained,
-		/datum/skill/research/trained
+		/datum/skill/command = SKILL_LEVEL_PRO,
+		/datum/skill/police = SKILL_LEVEL_TRAINED,
+		/datum/skill/firearms = SKILL_LEVEL_TRAINED,
+		/datum/skill/chemistry = SKILL_LEVEL_TRAINED,
+		/datum/skill/combat_mech = SKILL_LEVEL_TRAINED,
+		/datum/skill/civ_mech = SKILL_LEVEL_TRAINED,
+		/datum/skill/research = SKILL_LEVEL_TRAINED,
+		/datum/skill/melee = SKILL_LEVEL_MASTER,
 	)
 
 /datum/skillset/abductor/agent
 	name = ABDUCTOR_AGENT
 	initial_skills = list(
-		/datum/skill/melee/master,
-		/datum/skill/firearms/master,
-		/datum/skill/police/master,
-		/datum/skill/medical/trained,
-		/datum/skill/surgery/novice,
-		/datum/skill/research/novice
+		/datum/skill/melee = SKILL_LEVEL_MASTER,
+		/datum/skill/firearms = SKILL_LEVEL_MASTER,
+		/datum/skill/police = SKILL_LEVEL_MASTER,
+		/datum/skill/medical = SKILL_LEVEL_TRAINED,
+		/datum/skill/surgery = SKILL_LEVEL_TRAINED,
+		/datum/skill/research = SKILL_LEVEL_TRAINED
 	)
 
 /datum/skillset/abductor/scientist
 	name = ABDUCTOR_SCI
 	initial_skills = list(
-		/datum/skill/surgery/master,
-		/datum/skill/medical/master,
-		/datum/skill/research/pro,
-		/datum/skill/police/trained,
-		/datum/skill/firearms/trained
+		/datum/skill/surgery = SKILL_LEVEL_MASTER,
+		/datum/skill/medical = SKILL_LEVEL_MASTER,
+		/datum/skill/research = SKILL_LEVEL_PRO,
+		/datum/skill/police = SKILL_LEVEL_TRAINED,
+		/datum/skill/firearms = SKILL_LEVEL_TRAINED
 	)
 
 
 /datum/skillset/wizard
 	name = WIZARD
 	initial_skills = list(
-		/datum/skill/melee/master,
-		/datum/skill/medical/master,
-		/datum/skill/surgery/master,
-		/datum/skill/chemistry/master,
-		/datum/skill/command/trained
+		/datum/skill/melee = SKILL_LEVEL_PRO,
+		/datum/skill/medical = SKILL_LEVEL_MASTER,
+		/datum/skill/surgery = SKILL_LEVEL_MASTER,
+		/datum/skill/chemistry = SKILL_LEVEL_MASTER,
+		/datum/skill/command = SKILL_LEVEL_TRAINED
 	)
 
 /datum/skillset/undercover
 	name = UNDERCOVER_COP
 	initial_skills = list(
-		/datum/skill/police/master,
-		/datum/skill/firearms/master,
-		/datum/skill/command/trained,
-		/datum/skill/combat_mech/trained,
-		/datum/skill/melee/trained
+		/datum/skill/police = SKILL_LEVEL_MASTER,
+		/datum/skill/firearms = SKILL_LEVEL_MASTER,
+		/datum/skill/command = SKILL_LEVEL_TRAINED,
+		/datum/skill/combat_mech = SKILL_LEVEL_TRAINED,
+		/datum/skill/melee = SKILL_LEVEL_TRAINED
 	)
 
 /datum/skillset/cop
 	name = SPACE_COP
 	initial_skills = list(
-		/datum/skill/police/master,
-		/datum/skill/firearms/master,
-		/datum/skill/combat_mech/master,
-		/datum/skill/command/pro,
-		/datum/skill/melee/master
+		/datum/skill/police = SKILL_LEVEL_MASTER,
+		/datum/skill/firearms = SKILL_LEVEL_MASTER,
+		/datum/skill/combat_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/command = SKILL_LEVEL_PRO,
+		/datum/skill/melee = SKILL_LEVEL_PRO
 	)
 
 /datum/skillset/cyborg
 	initial_skills = list(
-		/datum/skill/police/master,
-		/datum/skill/firearms/master,
-		/datum/skill/engineering/master,
-		/datum/skill/construction/pro,
-		/datum/skill/atmospherics/master,
-		/datum/skill/civ_mech/master,
-		/datum/skill/combat_mech/master,
-		/datum/skill/surgery/pro,
-		/datum/skill/medical/pro,
-		/datum/skill/chemistry/master,
-		/datum/skill/research/pro,
-		/datum/skill/command/novice
+		/datum/skill/police = SKILL_LEVEL_MASTER,
+		/datum/skill/firearms = SKILL_LEVEL_MASTER,
+		/datum/skill/engineering = SKILL_LEVEL_PRO,
+		/datum/skill/construction = SKILL_LEVEL_PRO,
+		/datum/skill/atmospherics = SKILL_LEVEL_MASTER,
+		/datum/skill/civ_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/combat_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/surgery = SKILL_LEVEL_PRO,
+		/datum/skill/medical = SKILL_LEVEL_PRO,
+		/datum/skill/chemistry = SKILL_LEVEL_MASTER,
+		/datum/skill/research = SKILL_LEVEL_PRO,
+		/datum/skill/command = SKILL_LEVEL_NOVICE
 	)
 
 /datum/skillset/golem
 	initial_skills = list(
-		/datum/skill/engineering/pro,
-		/datum/skill/construction/trained,
-		/datum/skill/atmospherics/master,
-		/datum/skill/surgery/pro,
-		/datum/skill/medical/pro,
-		/datum/skill/chemistry/master,
-		/datum/skill/research/trained,
-		/datum/skill/melee/none // beacause fuck golems
+		/datum/skill/engineering = SKILL_LEVEL_PRO,
+		/datum/skill/construction = SKILL_LEVEL_TRAINED,
+		/datum/skill/atmospherics = SKILL_LEVEL_MASTER,
+		/datum/skill/surgery = SKILL_LEVEL_PRO,
+		/datum/skill/medical = SKILL_LEVEL_PRO,
+		/datum/skill/chemistry = SKILL_LEVEL_MASTER,
+		/datum/skill/research = SKILL_LEVEL_TRAINED,
+		/datum/skill/melee = SKILL_LEVEL_NONE // beacause fuck golems
 	)
 
 /datum/skillset/god
 	name = "God"
 	initial_skills = list(
-		/datum/skill/police/robust,
-		/datum/skill/firearms/robust,
-		/datum/skill/melee/robust,
-		/datum/skill/engineering/robust,
-		/datum/skill/construction/robust,
-		/datum/skill/atmospherics/robust,
-		/datum/skill/civ_mech/robust,
-		/datum/skill/combat_mech/robust,
-		/datum/skill/surgery/robust,
-		/datum/skill/medical/robust,
-		/datum/skill/chemistry/robust,
-		/datum/skill/research/robust,
-		/datum/skill/command/robust
+		/datum/skill/police = SKILL_LEVEL_ROBUST,
+		/datum/skill/firearms = SKILL_LEVEL_ROBUST,
+		/datum/skill/melee = SKILL_LEVEL_ROBUST,
+		/datum/skill/engineering = SKILL_LEVEL_ROBUST,
+		/datum/skill/construction = SKILL_LEVEL_ROBUST,
+		/datum/skill/atmospherics = SKILL_LEVEL_ROBUST,
+		/datum/skill/civ_mech = SKILL_LEVEL_ROBUST,
+		/datum/skill/combat_mech = SKILL_LEVEL_ROBUST,
+		/datum/skill/surgery = SKILL_LEVEL_ROBUST,
+		/datum/skill/medical = SKILL_LEVEL_ROBUST,
+		/datum/skill/chemistry = SKILL_LEVEL_ROBUST,
+		/datum/skill/research = SKILL_LEVEL_ROBUST,
+		/datum/skill/command = SKILL_LEVEL_ROBUST
 	)

@@ -18,7 +18,7 @@
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/loading = 0 // Nice loading text
 	var/autoprocess = 0
-	required_skills = list(/datum/skill/medical/pro, /datum/skill/research/trained)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_PRO, /datum/skill/research = SKILL_LEVEL_TRAINED)
 	fumbling_time = 3 SECONDS
 
 /obj/machinery/computer/cloning/atom_init()
@@ -57,7 +57,7 @@
 
 /obj/machinery/computer/cloning/proc/findcloner()
 	var/obj/machinery/clonepod/podf = locate(/obj/machinery/clonepod) in range(4, src)
-	
+
 	if(!isnull(podf))
 		return podf
 

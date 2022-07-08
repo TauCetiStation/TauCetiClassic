@@ -381,7 +381,7 @@ SUBSYSTEM_DEF(job)
 	return TRUE
 
 //Gives the player the stuff he should have with his rank
-/datum/controller/subsystem/job/proc/EquipRank(mob/living/carbon/human/H, rank, joined_late=0)
+/datum/controller/subsystem/job/proc/EquipRank(mob/living/carbon/human/H, rank, joined_late=FALSE)
 	if(!H)	return FALSE
 	var/datum/job/job = GetJob(rank)
 	var/list/spawn_in_storage = list()
@@ -467,11 +467,7 @@ SUBSYSTEM_DEF(job)
 			spawn_mark = fallback_landmark
 
 		if(istype(spawn_mark, /obj/effect/landmark/start) && istype(spawn_mark.loc, /turf))
-			H.loc = spawn_mark.loc
-		// Moving wheelchair if they have one
-		if(H.buckled && istype(H.buckled, /obj/structure/stool/bed/chair/wheelchair))
-			H.buckled.loc = H.loc
-			H.buckled.set_dir(H.dir)
+			H.forceMove(spawn_mark.loc, keep_buckled = TRUE)
 
 	//give them an account in the station database
 	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary
@@ -591,7 +587,7 @@ SUBSYSTEM_DEF(job)
 			C.associated_account_number = H.mind.initial_account.account_number
 			H.mind.initial_account.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
 
-		H.equip_to_slot_or_del(C, SLOT_WEAR_ID)
+		H.equip_or_collect(C, SLOT_WEAR_ID)
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda(H), SLOT_BELT)
 	if(locate(/obj/item/device/pda,H))
