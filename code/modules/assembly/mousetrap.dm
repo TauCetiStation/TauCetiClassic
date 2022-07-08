@@ -29,6 +29,7 @@
 			if("feet")
 				if(!H.shoes && !H.buckled)
 					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
+					H.Stun(1)
 					H.Weaken(3)
 			if(BP_L_ARM, BP_R_ARM)
 				if(!H.gloves)

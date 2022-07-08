@@ -213,6 +213,7 @@
 
 	to_chat(src, "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>")
 	to_chat(M, "<span class='warning'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
+	M.Stun(3)
 	M.Weaken(3)
 
 	dominate_cd = world.time
