@@ -66,6 +66,20 @@
 	var/obj/effect/blob/factory/factory = null
 	var/independent = FALSE
 
+/mob/living/simple_animal/hostile/blob/Login()
+	. = ..()
+	if(!client)
+		return
+	var/datum/faction/blob_conglomerate/C = find_faction_by_type(/datum/faction/blob_conglomerate)
+	for(var/M in C.members)
+		var/datum/role/R = M
+		if(!R.antag.current)
+			return
+		if(!istype(R.antag.current,/mob/camera/blob))
+			continue
+		var/mob/camera/blob/O = R.antag.current
+		client.images |= O.ghostimage
+
 /mob/living/simple_animal/hostile/blob/Destroy()
 	if(overmind)
 		overmind.blob_mobs.Remove(src)
@@ -271,7 +285,7 @@
 	if(healths)
 		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(health)]</font></div>"
 		healths.name = "Healths"
-	if(independent) //Is it came with blob or not
+	if(independent) //Was it with blob or not
 		return
 	if(overmind.blob_core && pwr_display) //Just in case, otherwise it is looped runtime
 		pwr_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(overmind.blob_core.health)]</font></div>"
@@ -304,14 +318,14 @@
 		damagesources++
 	else
 		if(locate(/obj/effect/blob/core) in blobs_in_area)
-			health += maxHealth*0.05 //* 0.5
+			health += maxHealth*0.05
 			update_health_hud()
 		if(locate(/obj/effect/blob/node) in blobs_in_area)
-			health += maxHealth*0.025 //* 0.5
+			health += maxHealth*0.025
 			update_health_hud()
 
 	if(damagesources)
-		health -= maxHealth * 0.0125 * damagesources //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
+		health -= maxHealth * 0.0125 * damagesources *2 //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
 		update_health_hud()
 		var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 		I.appearance_flags = RESET_COLOR
