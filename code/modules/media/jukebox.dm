@@ -364,7 +364,10 @@ var/global/loopModeNames=list(
 	autoplay = 1
 
 /obj/machinery/media/jukebox/syndi
-	emagged = TRUE
+
+/obj/machinery/media/jukebox/syndi/atom_init()
+	. = ..()
+	emag_act()
 
 /obj/machinery/media/jukebox/syndi/attackby(obj/item/W, mob/user, params)
 	if(iswrench(W))
