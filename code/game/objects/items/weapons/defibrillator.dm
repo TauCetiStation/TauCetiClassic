@@ -419,6 +419,7 @@
 		if(F)
 			F.electrocute_act(150)
 		else
+			user.Stun(6)
 			user.Weaken(6)
 
 	make_announcement("pings, \"Defibrillation successful.\"")

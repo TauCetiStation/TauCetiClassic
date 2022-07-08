@@ -214,6 +214,7 @@
 			if(istype(chambered.BB, /obj/item/projectile/bullet/chameleon))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel weakness and the taste of gunpowder, but no more.</span>")
+				user.Stun(5)
 				user.apply_effect(5,WEAKEN,0)
 				return
 
