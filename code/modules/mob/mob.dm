@@ -1116,6 +1116,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 	spell_list -= S
 	if(mind)
 		mind.spell_list -= S
+		if(isliving(mind.current))
+			var/mob/living/L = mind.current
+			if(S.action)
+				S.action.Remove(L)
 	qdel(S)
 
 /mob/proc/ClearSpells()
@@ -1124,9 +1128,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 		qdel(spell)
 
 	if(mind)
-		for(var/spell in mind.spell_list)
-			mind.spell_list -= spell
-			qdel(spell)
+		for(var/obj/effect/proc_holder/spell/S in mind.spell_list)
+			mind.spell_list -= S
+			if(isliving(mind.current))
+				var/mob/living/L = mind.current
+				if(S.action)
+					S.action.Remove(L)
+			qdel(S)
 
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return
