@@ -75,7 +75,7 @@
 		var/datum/role/R = M
 		if(!R.antag.current)
 			return
-		if(!istype(R.antag.current,/mob/camera/blob))
+		if(!isovermind(R.antag.current))
 			continue
 		var/mob/camera/blob/O = R.antag.current
 		client.images |= O.ghostimage
