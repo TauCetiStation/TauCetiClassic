@@ -29125,6 +29125,11 @@
 /obj/item/clothing/suit/space/rig/science/rd,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/rig/science/rd,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "RD Office APC";
+	pixel_x = -25
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
