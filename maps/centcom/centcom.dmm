@@ -7885,14 +7885,6 @@
 /obj/machinery/door/poddoor/shutters/syndi{
 	dock_tag = "Syndicate_shuttle"
 	},
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1331;
-	master_tag = "synd_airlock";
-	name = "exterior access button";
-	pixel_x = -23;
-	pixel_y = 22
-	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -22010,6 +22002,14 @@
 	frequency = 1331;
 	id_tag = "synd_outer";
 	name = "Ship External Access"
+	},
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1331;
+	master_tag = "synd_airlock";
+	name = "exterior access button";
+	pixel_x = 9;
+	pixel_y = 22
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
