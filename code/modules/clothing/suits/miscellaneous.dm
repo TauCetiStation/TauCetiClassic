@@ -375,6 +375,7 @@
 	icon_state = "dude_coat"
 	item_state = "jensensuit"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 
 //pyjamas
 //originally intended to be pinstripes >.>

@@ -38,6 +38,7 @@
 	icon_state = "chaplain_hoodie"
 	item_state = "chaplain_hoodie"
 	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armor")
 	body_parts_covered = UPPER_TORSO|ARMS
 
 /obj/item/clothing/suit/hooded/skhima
