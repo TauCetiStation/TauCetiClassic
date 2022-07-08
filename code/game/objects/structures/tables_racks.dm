@@ -269,6 +269,8 @@
 			if(W.force > 3)
 				laser_cut(W, user)
 				return
+		if(istype(W, /obj/item/weapon/reagent_containers)) //splashing
+			return FALSE
 
 	return ..()
 

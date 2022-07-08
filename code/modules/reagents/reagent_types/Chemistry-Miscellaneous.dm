@@ -121,11 +121,27 @@
 
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
 	. = ..()
-	T.AddComponent(/datum/component/thermite, volume, T.min_thermite_amount, T.max_thermite_time, T.min_thermite_time)
+	var/valid_comp = FALSE
+	var/list/L = T.GetComponents(/datum/component/thermite)
+	if(L != null)
+		for(var/datum/component/thermite/C in L)
+			if(C != null)
+				valid_comp = TRUE
+				C.set_amount(C.amount + volume)
+	if(!valid_comp)
+		T.AddComponent(/datum/component/thermite, volume, T.min_thermite_amount, T.max_thermite_time, T.min_thermite_time)
 
 /datum/reagent/thermite/reaction_obj(obj/O, volume)
 	..()
-	O.AddComponent(/datum/component/thermite, volume, O.min_thermite_amount, O.max_thermite_time, O.min_thermite_time)
+	var/valid_comp = FALSE
+	var/list/L = O.GetComponents(/datum/component/thermite)
+	if(L != null)
+		for(var/datum/component/thermite/C in L)
+			if(C != null)
+				valid_comp = TRUE
+				C.set_amount(C.amount + volume)
+	if(!valid_comp)
+		O.AddComponent(/datum/component/thermite, volume, O.min_thermite_amount, O.max_thermite_time, O.min_thermite_time)
 
 /datum/reagent/thermite/on_general_digest(mob/living/M)
 	..()

@@ -69,12 +69,15 @@
 		M.freeze_movement = FALSE
 		M.anchored = old_anchor
 	if(burn_overlay != null)
-		qdel(burn_overlay)
+		if(istype(burn_overlay, /image))
+			A.cut_overlay(burn_overlay)
+		else
+			qdel(burn_overlay)
 	if(burn_timer != null)
 		deltimer(burn_timer)
 
 //called when thermite is ignited by someone
-/datum/component/thermite/proc/ignite(mob/user)
+/datum/component/thermite/proc/ignite()
 	var/atom/A = parent
 
 	if(istype(A, /atom/movable))
@@ -131,7 +134,7 @@
 	var/temp = 0.0
 	temp = (env.temperature + I.get_current_temperature()) - T0C
 	if(temp > 1920)
-		ignite(user)
+		ignite()
 	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/soap) && burn_timer == null)
 		to_chat(user, "You clean [parent], scrubbing thermite off it.")
 		qdel(src)
