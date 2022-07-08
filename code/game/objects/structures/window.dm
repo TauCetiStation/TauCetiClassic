@@ -173,6 +173,7 @@
 /obj/structure/window/attack_tk(mob/user)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+	return TRUE
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
@@ -269,12 +270,14 @@
 					M.log_combat(user, "slammed against [name]")
 				if(2)
 					if (prob(50))
+						M.Stun(1)
 						M.Weaken(1)
 					M.apply_damage(8)
 					take_damage(9)
 					visible_message("<span class='danger'>[A] bashes [M] against \the [src]!</span>")
 					M.log_combat(user, "bashed against [name]")
 				if(3)
+					M.Stun(5)
 					M.Weaken(5)
 					M.apply_damage(20)
 					take_damage(12)

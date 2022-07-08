@@ -382,6 +382,7 @@
 					return
 				BP.take_damage(5, 0)
 				if(!H.species.flags[NO_PAIN])
+					H.Stun(1)
 					H.Weaken(3)
 				H.updatehealth()
 	. = ..()

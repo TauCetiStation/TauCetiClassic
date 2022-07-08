@@ -92,12 +92,15 @@
 		var/obj/item/weapon/shield/shield = L.is_in_hands(/obj/item/weapon/shield)
 		if(shield && check_shield_dir(hit_atom) && prob(shield.Get_shield_chance() + 20))
 			L.visible_message("<span class='danger'>[src] smashed into [L]'s [shield]!</span>", "<span class='userdanger'>[src] pounces on your [shield]!</span>")
-			weakened = 2
+			Stun(2)
+			Weaken(2)
 		else
 			L.visible_message("<span class='danger'>[src] pounces on [L]!</span>", "<span class='userdanger'>[src] pounces on you!</span>")
 			if(issilicon(L))
+				L.Stun(1)
 				L.Weaken(1) //Only brief stun
 			else
+				L.Stun(5)
 				L.Weaken(5)
 			sleep(2)  // Runtime prevention (infinite bump() calls on hulks)
 			step_towards(src, L)
@@ -107,7 +110,8 @@
 			playsound(src, pick(SOUNDIN_HUNTER_LEAP), VOL_EFFECTS_MASTER, vary = FALSE)
 	else if(hit_atom.density)
 		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>You smashes into [hit_atom]!</span>")
-		weakened = 2
+		Stun(2)
+		Weaken(2)
 
 	update_canmove()
 

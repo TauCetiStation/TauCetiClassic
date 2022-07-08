@@ -27,7 +27,7 @@
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		tally += 1.5
 
-	if(crawling)
+	if(lying)
 		tally += 7
 
 	if(embedded_flag)

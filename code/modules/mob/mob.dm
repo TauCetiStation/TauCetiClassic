@@ -742,10 +742,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 // Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 // We need speed out of this proc, thats why using incapacitated() helper here is a bad idea.
 /mob/proc/update_canmove(no_transform = FALSE)
-	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+
+	var/ko = paralysis || stat || (status_flags & FAKEDEATH)
 
 	anchored = HAS_TRAIT(src, TRAIT_ANCHORED)
-	lying = (ko || crawling) && !anchored
+	lying = (ko || weakened || crawling) && !anchored
 	canmove = !(ko || stunned || anchored)
 
 	if(buckled)
