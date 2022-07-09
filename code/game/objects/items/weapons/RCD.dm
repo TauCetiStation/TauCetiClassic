@@ -109,7 +109,7 @@ RCD
 			if(istype(target, /turf/simulated/floor) && !user.is_busy())
 				var/turf/simulated/floor/F = target
 				if(!canBuildOnTurf(F))
-					to_chat(user, "<span class='warning'>You can't build Wall here.</span>")
+					to_chat(user, "<span class='warning'>You can't build wall here.</span>")
 					return 0
 				if(checkResource(3, user))
 					to_chat(user, "Building Wall ...")
