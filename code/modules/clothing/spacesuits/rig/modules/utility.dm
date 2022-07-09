@@ -744,13 +744,13 @@
 	interface_name = "Turn invisibility"
 	interface_desc = "System that makes hardsuit invisible."
 	origin_tech = "engineering=6;programming=6;bluespace=6;combat=6;phorontech=6"
-	active_power_cost = 2500
+	active_power_cost = 55
 	permanent = TRUE
 	show_toggle_button = TRUE
 	toggleable = TRUE
 	activate_string = "Invisibility On"
 	deactivate_string = "Invisibility Off"
-	module_cooldown = 60 SECONDS
+	module_cooldown = 30 SECONDS
 
 /obj/item/rig_module/stealth/activate(forced = FALSE)
 	if(!..())
