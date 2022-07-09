@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/laser
 	name = "laser rifle"
-	desc = "a basic weapon designed kill with concentrated energy bolts."
+	desc = "A basic weapon designed kill with concentrated energy bolts."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "laser"
 	item_state = null	//so the human update icon uses the icon_state instead.
@@ -23,38 +23,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
 
-/obj/item/weapon/gun/energy/laser/classic
-	name = "laser carbine"
-	desc = "J10 carbine, pretty old model of corporate security laser weaponry with constant cooling issues. Faster firerate but reduced damage."
-	icon_state = "oldlaser"
-	icon_custom = null
-	fire_delay = 5
-
-/obj/item/weapon/gun/energy/laser/tactifool
-	name = "laser rifle"
-	desc = "T6 impulse laser rifle"
-	icon_state = "lasor"
-	icon_custom = null
-	fire_delay = 0
-	ammo_type = list(/obj/item/ammo_casing/energy/laser_pulse)
-
-
-/obj/item/weapon/gun/energy/laser/classic/newshot()
-	if (!ammo_type || !power_supply)	return
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if (!power_supply.use(shot.e_cost))	return
-	chambered = shot
-	if(chambered && chambered.BB)
-		chambered.BB.damage -= 10
-	chambered.newshot()
-	return
-
-/obj/item/weapon/gun/energy/laser/retro
-	name ="retro laser"
-	icon_state = "retro"
-	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
-	can_be_holstered = TRUE
-
 /obj/item/weapon/gun/energy/laser/selfcharging
 	var/charge_tick = 0
 	var/chargespeed = 0
@@ -68,7 +36,6 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-
 /obj/item/weapon/gun/energy/laser/selfcharging/process()
 	charge_tick++
 	if(charge_tick < 4) return 0
@@ -78,15 +45,30 @@
 	update_icon()
 	return 1
 
-/obj/item/weapon/gun/energy/laser/cyborg/newshot()
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-			if(R.cell.use(shot.e_cost))
-				chambered = shot
-				chambered.newshot()
-	return
+/obj/item/weapon/gun/energy/laser/selfcharging/cyborg
+	name = "laser gun"
+	desc = "A basic weapon designed kill with concentrated energy bolts."
+	icon_state = "laser"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/cyborg)
+	cell_type = /obj/item/weapon/stock_parts/cell/secborg
+
+/obj/item/weapon/gun/energy/laser/selfcharging/cyborg/atom_init()
+	. = ..()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	chargespeed = shot.e_cost * 0.01
+
+/obj/item/weapon/gun/energy/laser/selfcharging/cyborg/process()
+	if(!isrobot(loc))
+		return 0
+	var/mob/living/silicon/robot/R = loc
+	if(R.cell)
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+		if(R.cell.use(shot.e_cost))
+			if(power_supply.charge == power_supply.maxcharge)
+				return 0
+			..()
+			return 1
+	return 0
 
 /obj/item/weapon/gun/energy/laser/selfcharging/captain
 	name = "antique laser gun"

@@ -72,7 +72,7 @@
 		M.forceMove(src)
 
 		occupant_angle = dir2angle(dir)
-		occupant = image(M.appearance, loc, layer = (SHUTTERS_LAYER - 0.01))
+		occupant = image(M.appearance, loc, layer = ABOVE_OBJ_LATER)
 		if(M.w_class == SIZE_HUMAN)
 			occupant.transform = occupant.transform.Scale(0.9, 0.9)
 		occupant.transform = occupant.transform.Turn(occupant_angle)
@@ -385,7 +385,7 @@
 			move_out_content()
 			mob.client.Move(get_step(loc, direction), direction)
 
-			//if(moving && istype(loc, /turf/space))
+			//if(moving && isspaceturf(loc))
 				// Todo: If you get out of a moving pod in space, you should move as well.
 				//  Same direction as pod? Direcion you moved? Halfway between?
 

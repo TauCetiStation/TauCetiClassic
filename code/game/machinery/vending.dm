@@ -85,21 +85,15 @@
 
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(25))
+		if(EXPLODE_LIGHT)
+			if(prob(25))
 				spawn(0)
 					malfunction()
-					return
-				return
-		else
-	return
+			return
+	qdel(src)
 
 /obj/machinery/vending/blob_act()
 	if (prob(50))
@@ -255,7 +249,10 @@
 	if(emagged)
 		return FALSE
 	src.emagged = 1
-	to_chat(user, "You short out the product lock on [src] and reveal hidden products.")
+	if(syndie.len)
+		to_chat(user, "You short out the product lock on [src] and reveal hidden products.")
+	else
+		to_chat(user, "You short out the product lock on [src].")
 	return TRUE
 
 /obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)

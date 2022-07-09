@@ -37,94 +37,101 @@
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user)
 	if(iscrowbar(I))
-		if(!src.buckled_mob)
-			if(user.is_busy()) return
-			if(I.use_tool(src, user, 20, volume = 100))
-				to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
-				new /obj/item/stack/rods(loc, 4)
-				var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
-				transfer_fingerprints_to(F)
-				qdel(src)
-		else
+		if(buckled_mob)
 			to_chat(user, "<span class='notice'>You can't do that while something's on the spike!</span>")
+			return
+		if(user.is_busy() || !I.use_tool(src, user, 2 SECONDS, volume = 100))
+			return
+		to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
+		new /obj/item/stack/rods(loc, 4)
+		var/obj/F = new /obj/structure/kitchenspike_frame(loc)
+		transfer_fingerprints_to(F)
+		qdel(src)
+		return
+
 	else if(istype(I, /obj/item/weapon/grab))
 		if(user.is_busy())
 			return
 
 		var/obj/item/weapon/grab/G = I
-		if(istype(G.affecting, /mob/living))
-			if(!buckled_mob)
-				if(do_mob(user, src, 120))
-					if(buckled_mob) //to prevent spam/queing up attacks
-						return
-					if(G.affecting.buckled)
-						return
-					var/mob/living/H = G.affecting
-					playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, 25)
-					H.visible_message("<span class='danger'>[user] slams [G.affecting] onto the meat spike!</span>", \
-					                  "<span class='userdanger'>[user] slams you onto the meat spike!</span>", \
-					                  "<span class='notice'>You hear a squishy wet noise.</span>")
-					H.forceMove(src.loc)
-					H.emote("scream")
-					if(istype(H, /mob/living/carbon)) //So you don't get human blood when you spike a giant spidere
-						var/turf/simulated/pos = get_turf(H)
-						pos.add_blood_floor(H)
-					H.adjustBruteLoss(30)
-					H.buckled = src
-					H.set_dir(2)
-					buckled_mob = H
-					var/matrix/m = matrix(H.transform)
-					m.Turn(180)
-					animate(H, transform = m, time = 3)
-					H.pixel_y = H.default_pixel_y
-					qdel(G)
-		else
+		if(!isliving(G.affecting))
 			to_chat(user, "<span class='danger'>You can't use that on the spike!</span>")
-	else
-		..()
+			return
+
+		var/mob/living/M = G.affecting
+		if(M.buckled || M.anchored || buckled_mob || !do_mob(user, src, 12 SECONDS))
+			return
+
+		M.forceMove(loc)
+
+		if(buckle_mob(M))
+			M.visible_message(
+				"<span class='danger'>[user] slams [M] onto the meat spike!</span>",
+				"<span class='userdanger'>[user] slams you onto the meat spike!</span>",
+				"<span class='notice'>You hear a squishy wet noise.</span>")
+
+		return
+
+	..()
+
+/obj/structure/kitchenspike/buckle_mob(mob/living/M)
+	if(!..())
+		return FALSE
+
+	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, 25)
+	M.emote("scream")
+	if(iscarbon(M)) //So you don't get human blood when you spike a giant spidere
+		var/turf/pos = get_turf(M)
+		pos.add_blood_floor(M)
+	M.adjustBruteLoss(30)
+	M.set_dir(2)
+	var/matrix/m = matrix(M.transform)
+	m.Turn(180)
+	animate(M, transform = m, time = 3)
+	M.pixel_y = M.default_pixel_y
+	return TRUE
 
 /obj/structure/kitchenspike/user_buckle_mob(mob/living/M, mob/living/user) //Don't want them getting put on the rack other than by spiking
 	return
 
 /obj/structure/kitchenspike/user_unbuckle_mob(mob/living/carbon/human/user)
-	if(buckled_mob)
-		if(user.is_busy())
-			return
+	if(!buckled_mob || user.is_busy())
+		return
 
-		var/mob/living/L = buckled_mob
-		if(L != user)
-			if(user.is_busy()) return
-			L.visible_message(\
-				"<span class='notice'>[user.name] tries to pull [L.name] free of the [src]!</span>",\
-				"<span class='warning'>[user.name] is trying to pull you off the [src], opening up fresh wounds!</span>",\
-				"<span class='italics'>You hear a squishy wet noise.</span>")
-			if(!do_after(user, 300, target = user))
-				if(L && L.buckled)
-					L.visible_message(\
-					"<span class'notice'>[user.name] fails to free [L.name]!</span>",\
+	var/mob/living/L = buckled_mob
+	add_fingerprint(user)
+	if(L != user)
+		L.visible_message(
+			"<span class='notice'>[user.name] tries to pull [L.name] free of the [src]!</span>",
+			"<span class='warning'>[user.name] is trying to pull you off the [src], opening up fresh wounds!</span>",
+			"<span class='italics'>You hear a squishy wet noise.</span>")
+		if(!do_after(user, 30 SECONDS, target = user))
+			if(buckled_mob == L)
+				L.visible_message(
+					"<span class'notice'>[user.name] fails to free [L.name]!</span>",
 					"<span class='warning'>[user.name] fails to pull you off of the [src].</span>")
-				return
-
-		else
-			L.visible_message(\
-			"<span class='warning'>[L.name] struggles to break free from the [src]!</span>",\
-			"<span class='notice'>You struggle to break free from the [src], exacerbating your wounds! (Stay still for two minutes.)</span>",\
-			"<span class='italics'>You hear a wet squishing noise..</span>")
-			L.adjustBruteLoss(15)
-			if(!do_after(L, 1200, target = src))
-				if(L && L.buckled)
-					to_chat(L, "<span class='warning'>You fail to free yourself!</span>")
-				return
-
-		if(!L.buckled)
 			return
 
-		var/matrix/m = matrix(L.transform)
-		m.Turn(180)
-		animate(L, transform = m, time = 3)
-		L.pixel_y = L.default_pixel_y
+	else
+		L.visible_message(
+			"<span class='warning'>[L.name] struggles to break free from the [src]!</span>",
+			"<span class='notice'>You struggle to break free from the [src], exacerbating your wounds! (Stay still for two minutes.)</span>",
+			"<span class='italics'>You hear a wet squishing noise..</span>")
 		L.adjustBruteLoss(15)
-		visible_message(text("<span class='danger'>[L] falls free of the [src]!</span>"))
-		unbuckle_mob()
-		L.emote("scream")
-		L.AdjustWeakened(10)
+		if(!do_after(L, 2 MINUTES, target = src))
+			if(buckled_mob == L)
+				to_chat(L, "<span class='warning'>You fail to free yourself!</span>")
+			return
+
+	if(buckled_mob != L)
+		return
+
+	var/matrix/m = matrix(L.transform)
+	m.Turn(180)
+	animate(L, transform = m, time = 3)
+	L.pixel_y = L.default_pixel_y
+	L.adjustBruteLoss(15)
+	visible_message("<span class='danger'>[L] falls free of the [src]!</span>")
+	unbuckle_mob()
+	L.emote("scream")
+	L.AdjustWeakened(10)

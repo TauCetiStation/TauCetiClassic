@@ -25,6 +25,7 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/xenomeat = 5)
 	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds,
 						/obj/effect/proc_holder/spell/targeted/xeno_whisp,
+						/obj/effect/proc_holder/spell/no_target/xenowinds,
 						/obj/effect/proc_holder/spell/targeted/transfer_plasma)
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated

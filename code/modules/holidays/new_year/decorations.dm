@@ -1,3 +1,6 @@
+#define FLICKER_CD_MAX 5
+#define FLICKER_CD_MIN 4
+
 /obj/item/decoration
 	name = "decoration"
 	desc = "Winter is coming!"
@@ -13,7 +16,7 @@
 /obj/item/decoration/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(istype(target,/turf/simulated/wall))
+	if(iswallturf(target))
 		usr.remove_from_mob(src)
 		forceMove(target)
 
@@ -104,10 +107,37 @@
 	name = "present xmas tree"
 	desc = "Hello, happy holidays, we have got presents..."
 
-	layer = 5
+	layer = FLY_LAYER
 	var/gifts_dealt = 0
-	var/list/decals = list()
+	var/flicker_raising = FALSE
+	var/light_flicker = 5
 
+/obj/item/device/flashlight/lamp/fir/special/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+	AddComponent(/datum/component/clickplace)
+
+/obj/item/device/flashlight/lamp/fir/special/process()
+	if(!on)
+		STOP_PROCESSING(SSobj, src)
+		return
+
+	if(light_flicker >= FLICKER_CD_MAX)
+		flicker_raising = FALSE
+	else if(light_flicker <= FLICKER_CD_MIN)
+		flicker_raising = TRUE
+	light_color = pick("#39ff49", "#ff2f2f", "#248aff", "#fffa18")
+	light_flicker += flicker_raising ? 1 : -1
+	set_light(light_flicker)
+
+/obj/item/device/flashlight/lamp/fir/special/attack_self(mob/user)
+	. = ..()
+	if(!.)
+		return
+	if(on)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/lamp/fir/special/examine(mob/user)
 	..()
@@ -116,6 +146,10 @@
 	to_chat(user, "<span class='notice'>You can place a wrapped item here as a gift to someone special.</span>")
 
 /obj/item/device/flashlight/lamp/fir/special/attackby(obj/item/I, mob/user, params)
+	if(iswrench(I))
+		return ..()
+	if(I.flags & ABSTRACT)
+		return
 	if(istype(I, /obj/item/weapon/gift))
 		var/obj/item/weapon/gift/present = I
 		var/recipient = sanitize(input("Who is that present for? Write a name (Do it right):") as text|null)
@@ -126,20 +160,15 @@
 			user.drop_from_inventory(present, src)
 			user.visible_message("[user] gently puts a gift under \the [src] .", "<span class='notice'>You gently put a gift under \the [src].</span>")
 		return
-	if(!(I.flags & ABSTRACT))
-		if(user.drop_from_inventory(I, loc))
-			user.visible_message("[user] attaches [I] to \the [src] .", "<span class='notice'>You attach [I] to \the [src].</span>")
-			I.layer = 5.1 // Item should be on the tree, not under
-			I.anchored = TRUE // Make item a part of the tree
-			decals += I
-			var/list/click_params = params2list(params)
-			// Center the icon where the user clicked.
-			I.pixel_x = (text2num(click_params[ICON_X]) - 16)
-			I.pixel_y = (text2num(click_params[ICON_Y]) - 16)
-			if(istype(I, /obj/item/organ/external/head))
-				I.pixel_y -= 10 // Head always has 10 pixels shift
-				I.set_dir(2) // Rotate head face to us
-				I.transform = turn(null, null)	//Turn it to initial angle
+	user.visible_message("<span class='notice'>[user] stands on \his tiptoes to hang [I] on [src].</span>")
+	if(!do_after(user, 10, TRUE, src))
+		to_chat(user, "<span class='warning'>You fail to hang [I] on [src]!</span>")
+		return
+	. = ..()
+	if(istype(I, /obj/item/organ/external/head))
+		I.set_dir(2) // Rotate head face to us
+		I.transform = turn(null, null)	//Turn it to initial angle
+	I.layer = layer + 0.1
 
 /obj/item/device/flashlight/lamp/fir/special/attack_hand(mob/user)
 	if(!ishuman(user))
@@ -206,20 +235,6 @@
 		else
 			C.visible_message("<span class='notice'>[C] shakes [src].</span>", "<span class='notice'>You shake [src] but nothing happens. Have patience!</span>")
 
-	if(decals.len && (C.a_intent != INTENT_HELP))
-		for(var/item in decals)
-			var/obj/item/I = item
-			if(!I)
-				return
-			I.forceMove(src.loc)
-			I.layer = initial(layer)
-			I.pixel_x = initial(pixel_x)
-			I.pixel_y = initial(pixel_y)
-			I.anchored = FALSE
-			decals.Cut()
-
-		visible_message("Something dropped from \the [src].")
-
 /obj/item/device/flashlight/lamp/fir/special/alternative
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_c"
@@ -254,3 +269,6 @@
 			qdel(src)
 		else
 			visible_message("<span class='notice'>[src] is damaged!</span>")
+
+#undef FLICKER_CD_MAX
+#undef FLICKER_CD_MIN

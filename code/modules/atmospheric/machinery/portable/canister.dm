@@ -28,6 +28,7 @@
 	var/canister_color = "yellow"
 	var/can_label = 1
 	var/update_flag = 0
+	required_skills = list()
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
@@ -264,13 +265,13 @@ update_flag
 /obj/machinery/portable_atmospherics/canister/blob_act()
 	take_damage(200)
 
-/obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		return
 
 	if(Proj.damage)
 		take_damage(round(Proj.damage / 2))
-	..()
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
@@ -304,7 +305,7 @@ update_flag
 		user.SetNextMove(CLICK_CD_MELEE)
 		take_damage(W.force)
 
-	if(istype(user, /mob/living/silicon/robot) && istype(W, /obj/item/weapon/tank/jetpack))
+	if(isrobot(user) && istype(W, /obj/item/weapon/tank/jetpack))
 		var/obj/item/weapon/tank/jetpack/J = W
 		var/datum/gas_mixture/thejetpack = J.air_contents
 		var/env_pressure = thejetpack.return_pressure()
@@ -458,8 +459,6 @@ update_flag
 			if(holding)
 				if (valve_open)
 					log_investigate("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the <span class='boldannounce'>air</span><br>", INVESTIGATE_ATMOS)
-				if(istype(holding, /obj/item/weapon/tank))
-					holding.manipulated_by = usr.real_name
 				holding.forceMove(get_turf(src))
 				holding = null
 				. = TRUE

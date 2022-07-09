@@ -202,12 +202,14 @@
 					new_letter = "х"
 
 		switch(rand(1,15))
-			if(1,3,5,8)
+			if(1 to 4)
 				new_letter = lowertext(new_letter)
-			if(2,4,6,15)
+			if(5 to 9)
 				new_letter = uppertext(new_letter)
-			if(7)
+			if(10)
 				new_letter += "'"
+			if(11 to 15)
+				SWITCH_PASS
 
 		new_text += new_letter
 
@@ -395,6 +397,12 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 			else
 				return INTENT_HARM
 
+/mob/proc/set_a_intent(new_intent)
+	SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, new_intent)
+	a_intent = new_intent
+	if(hud_used)
+		action_intent?.update_icon(src)
+
 //change a mob's act-intent. Use the defines of style INTENT_%thingy%
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
@@ -403,13 +411,11 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 	if(isliving(src))
 		switch(input)
 			if(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
-				a_intent = input
+				set_a_intent(input)
 			if(INTENT_HOTKEY_RIGHT)
-				a_intent = intent_numeric((intent_numeric(a_intent)+1) % 4)
+				set_a_intent(intent_numeric((intent_numeric(a_intent)+1) % 4))
 			if(INTENT_HOTKEY_LEFT)
-				a_intent = intent_numeric((intent_numeric(a_intent)+3) % 4)
-		if(hud_used && hud_used.action_intent)
-			hud_used.action_intent.icon_state = "intent_[a_intent]"
+				set_a_intent(intent_numeric((intent_numeric(a_intent)+3) % 4))
 
 /proc/broadcast_security_hud_message(message, broadcast_source)
 	var/datum/atom_hud/hud = huds[DATA_HUD_SECURITY]

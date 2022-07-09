@@ -5,12 +5,11 @@
 	var/can_unwrench = TRUE
 	var/health = 3000
 
-/obj/structure/cult/bullet_act(obj/item/projectile/Proj)
+/obj/structure/cult/bullet_act(obj/item/projectile/Proj, def_zone)
 	health -= Proj.damage
-	..()
+	. = ..()
 	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
 	healthcheck()
-	return PROJECTILE_ACTED
 
 /obj/structure/cult/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W) && can_unwrench)
@@ -211,7 +210,7 @@
 	can_unwrench = FALSE
 
 /obj/structure/cult/portal_to_station/Bumped(atom/A)
-	var/area/area = findEventArea()
+	var/area/area = SSevents.findEventArea()
 	var/turf/target = get_turf(pick(get_area_turfs(area.type, FALSE)))
 	if(ismob(A))
 		var/mob/user = A
@@ -246,13 +245,15 @@
 		destroying(user.my_religion)
 
 /obj/structure/cult/anomaly/proc/async_destroying(datum/religion/cult/C)
+	density = FALSE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	animate(src, 1 SECONDS, alpha = 0)
 	sleep(1 SECONDS)
 	qdel(src)
 
 	C.adjust_favor(rand(1, 5))
 	// statistics!
-	score["destranomaly"]++
+	SSStatistics.score.destranomaly++
 
 /obj/structure/cult/anomaly/proc/destroying(datum/religion/cult/C)
 	INVOKE_ASYNC(src, .proc/async_destroying, C)

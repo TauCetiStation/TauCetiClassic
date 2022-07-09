@@ -28,12 +28,12 @@
 	var/salvage_num = 15
 
 /obj/effect/decal/mecha_wreckage/ex_act(severity)
-	if(severity == 1)
+	if(severity == EXPLODE_DEVASTATE)
 		qdel(src)
 	return
 
-/obj/effect/decal/mecha_wreckage/bullet_act(obj/item/projectile/Proj)
-	return
+/obj/effect/decal/mecha_wreckage/bullet_act(obj/item/projectile/Proj, def_zone)
+	return ..()
 
 /obj/effect/decal/mecha_wreckage/attackby(obj/item/weapon/W, mob/user)
 	var/salvage_with = ""

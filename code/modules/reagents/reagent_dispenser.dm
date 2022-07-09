@@ -61,21 +61,17 @@
 
 /obj/structure/reagent_dispensers/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2.0)
-			if (prob(50))
-				new /obj/effect/effect/water(src.loc)
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(5))
-				new /obj/effect/effect/water(src.loc)
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(95))
 				return
-		else
-	return
+	new /obj/effect/effect/water(src.loc)
+	qdel(src)
 
 /obj/structure/reagent_dispensers/blob_act()
 	if(prob(50))
@@ -137,7 +133,7 @@
 			user.visible_message("<span class='notice'>[user] rigs [W] to \the [src].</span>", "<span class='notice'>You rig [W] to \the [src]</span>")
 
 			var/obj/item/device/assembly_holder/H = W
-			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
+			if (isigniter(H.a_left) || isigniter(H.a_right))
 				message_admins("[key_name_admin(user)] rigged [src] at [COORD(loc)] for explosion. [ADMIN_JMP(user)]")
 				log_game("[key_name(user)] rigged [src] at [COORD(loc)] for explosion.")
 
@@ -153,7 +149,8 @@
 	add_fingerprint(usr)
 	return
 
-/obj/structure/reagent_dispensers/bullet_act(obj/item/projectile/Proj)
+/obj/structure/reagent_dispensers/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 		if(!istype(Proj ,/obj/item/projectile/beam/lasertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
 			explode()

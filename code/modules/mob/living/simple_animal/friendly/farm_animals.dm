@@ -90,14 +90,6 @@
 	else
 		..()
 
-/mob/living/simple_animal
-	name = "animal"
-	desc = "Just simple animal"
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "kicks"
-
 //cow
 /mob/living/simple_animal/cow
 	name = "cow"
@@ -150,7 +142,7 @@
 		if(udder && prob(5))
 			udder.add_reagent("milk", rand(5, 10))
 		else if(prob(15))
-			playsound(src, 'sound/voice/cowmoos.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
+			playsound(src, 'sound/voice/cow_moo.ogg', VOL_EFFECTS_MASTER, null, TRUE, null, -3)
 
 /mob/living/simple_animal/cow/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
@@ -293,6 +285,17 @@ var/global/chicken_count = 0
 	has_head = TRUE
 	has_leg = TRUE
 
+/mob/living/simple_animal/pig/shadowpig
+	name = "Shadowpig"
+	icon_state = "shadowpig"
+	icon_living = "shadowpig"
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE 
+
+/mob/living/simple_animal/pig/shadowpig/atom_init()
+	. = ..()
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/veil)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/blindness_smoke)
+
 /mob/living/simple_animal/turkey
 	name = "turkey"
 	desc = "Benjamin Franklin would be proud."
@@ -364,3 +367,10 @@ var/global/chicken_count = 0
 
 	has_head = TRUE
 	has_arm = TRUE
+
+/mob/living/simple_animal/walrus/syndicate
+	icon_state = "walrus-syndi"
+	icon_living = "walrus-syndi"
+	icon_dead = "walrus-syndi_dead"
+	speak = list("Urk?","urk","URK","Furk NT")
+	health = 80

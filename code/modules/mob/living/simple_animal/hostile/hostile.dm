@@ -82,7 +82,7 @@
 	if(search_objects)
 		var/list/Objects = oview(vision_range, src)
 		L += Objects
-	else
+	else if(SSchunks.has_enemy_faction(src, vision_range))
 		var/list/Mobs = hearers(vision_range, src) - src //Remove self, so we don't suicide
 		L += Mobs
 		for(var/obj/mecha/M in range(vision_range, src))
@@ -288,7 +288,7 @@
 		EscapeConfinement()
 		for(var/dir in cardinal) // North, South, East, West
 			var/turf/T = get_step(src, dir)
-			if(istype(T, /turf/simulated/wall) || istype(T, /turf/simulated/mineral))
+			if(iswallturf(T) || istype(T, /turf/simulated/mineral))
 				if(T.Adjacent(src))
 					T.attack_animal(src)
 			for(var/obj/structure/window/W in get_step(src, dir))

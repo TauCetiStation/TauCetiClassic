@@ -48,26 +48,22 @@
 /obj/structure/inflatable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 0
 
-/obj/structure/inflatable/bullet_act(obj/item/projectile/Proj)
+/obj/structure/inflatable/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
-	..()
 	if(health <= 0)
 		deflate(1)
 
 
 /obj/structure/inflatable/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2.0)
-			deflate(1)
-			return
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			if(prob(50))
-				deflate(1)
 				return
-
+	deflate(1)
 
 /obj/structure/inflatable/blob_act()
 	deflate(1)

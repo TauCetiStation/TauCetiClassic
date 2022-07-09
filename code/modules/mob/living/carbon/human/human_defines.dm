@@ -55,6 +55,7 @@
 	var/citizenship = ""
 	var/personal_faction = ""
 	var/religion = ""
+	var/vox_rank = ""
 
 	//Equipment slots
 	var/obj/item/wear_suit = null
@@ -68,10 +69,6 @@
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
-
-	var/used_skillpoints = 0
-	var/skill_specialization = null
-	var/list/skills = null
 
 	var/voice = ""	//Instead of new say code calling GetVoice() over and over and over, we're just going to ask this variable, which gets updated in Life()
 
@@ -117,6 +114,13 @@
 	var/busy_left_hand = FALSE // See ambidextrous quirk and is_busy() override.
 	var/busy_right_hand = FALSE
 
+	// Mood affecting how we see the world.
+	var/list/moody_color
+
 	// Clothes count. Used in mood.
 	var/wet_clothes = 0
 	var/dirty_clothes = 0
+
+	// Reagent allergies.
+	var/list/allergies
+	var/next_allergy_message = 0

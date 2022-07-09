@@ -48,7 +48,7 @@ var/global/list/mechtoys = list(
 	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob) //if it's a bed/chair and someone is buckled, it will not pass
 		return FALSE
 
-	else if(istype(A, /mob/living)) // You Shall Not Pass!
+	else if(isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if(M.throwing) // so disposal outlets can throw mobs through plastic flaps
 			return TRUE
@@ -60,14 +60,13 @@ var/global/list/mechtoys = list(
 
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
-		if (1)
-			qdel(src)
-		if (2)
-			if (prob(50))
-				qdel(src)
-		if (3)
-			if (prob(5))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(95))
+				return
+	qdel(src)
 
 /obj/structure/plasticflaps/explosion_proof/ex_act(severity)
 	return
@@ -85,6 +84,6 @@ var/global/list/mechtoys = list(
 /obj/structure/plasticflaps/mining/Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor
 	var/turf/T = get_turf(loc)
 	if(T)
-		if(istype(T, /turf/simulated/floor))
+		if(isfloorturf(T))
 			T.blocks_air = 0
 	return ..()

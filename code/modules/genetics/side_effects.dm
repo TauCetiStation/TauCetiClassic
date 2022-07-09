@@ -21,7 +21,7 @@
 	duration = 10*30
 
 /datum/genetics/side_effect/genetic_burn/start(mob/living/carbon/human/H)
-	H.emote("me", 1, "starts turning very red..")
+	H.me_emote("starts turning very red.")
 
 /datum/genetics/side_effect/genetic_burn/finish(mob/living/carbon/human/H)
 	for(var/bodypart in list(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN))
@@ -39,7 +39,7 @@
 	duration = 10*60
 
 /datum/genetics/side_effect/bone_snap/start(mob/living/carbon/human/H)
-	H.emote("me", 1, "'s limbs start shivering uncontrollably.")
+	H.me_emote("starts shivering uncontrollably.")
 
 /datum/genetics/side_effect/bone_snap/finish(mob/living/carbon/human/H)
 	var/bodypart = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_HEAD , BP_GROIN)
@@ -58,10 +58,10 @@
 	duration = 10*120
 
 /datum/genetics/side_effect/monkey/start(mob/living/carbon/human/H)
-	H.emote("me", 1, "has drool running down from his mouth and hair starts to cover whole body.")
+	H.me_emote("has drool running down from his mouth and hair starts to cover whole body.")
 
 /datum/genetics/side_effect/monkey/finish(mob/living/carbon/human/H)
-	H.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
+	H.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 
 /datum/genetics/side_effect/confuse
 	name = "Confuse"
@@ -71,10 +71,10 @@
 	duration = 10*30
 
 /datum/genetics/side_effect/confuse/start(mob/living/carbon/human/H)
-	H.emote("me", 1, "has drool running down from his mouth.")
+	H.me_emote("has drool running down from his mouth.")
 
 /datum/genetics/side_effect/confuse/finish(mob/living/carbon/human/H)
-	H.confused += 100
+	H.AdjustConfused(100)
 
 /datum/genetics/side_effect/bald_madness
 	name = "Bald madness"
@@ -84,7 +84,7 @@
 	duration = 10*5
 
 /datum/genetics/side_effect/bald_madness/start(mob/living/carbon/human/H)
-	H.emote("me", 1, "starts loosing his hair..")
+	H.me_emote("starts loosing his hair..")
 
 /datum/genetics/side_effect/bald_madness/finish(mob/living/carbon/human/H)
 	H.f_style = "Shaved"
@@ -102,10 +102,13 @@
 	sleep(20)
 	if(!H || !istype(H))
 		return
-	H.Weaken(rand(0, S.duration / 50))
+	var/waek_amt = rand(0, S.duration / 50)
+	H.Stun(waek_amt)
+	H.Weaken(waek_amt)
 
 	sleep(S.duration)
 	if(!H || !istype(H))
 		return
+	H.SetStunned(0)
 	H.SetWeakened(0)
 	S.finish(H)

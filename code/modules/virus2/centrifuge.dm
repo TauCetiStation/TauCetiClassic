@@ -8,6 +8,7 @@
 
 	var/obj/item/weapon/reagent_containers/glass/beaker/vial/sample = null
 	var/datum/disease2/disease/virus2 = null
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_PRO)
 
 /obj/machinery/computer/centrifuge/attackby(obj/O, mob/user)
 	if(isscrewdriver(O))
@@ -17,7 +18,8 @@
 		if(sample)
 			to_chat(user, "\The [src] is already loaded.")
 			return
-
+		if(!do_skill_checks(user))
+			return
 		sample = O
 		user.drop_from_inventory(O, src)
 

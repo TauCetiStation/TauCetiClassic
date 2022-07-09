@@ -304,7 +304,8 @@
 			to_chat(AM, "<b>You accidentally touch [src].</b>")
 	..()
 
-/obj/machinery/artifact/bullet_act(obj/item/projectile/P)
+/obj/machinery/artifact/bullet_act(obj/item/projectile/P, def_zone)
+	. = ..()
 	if(istype(P,/obj/item/projectile/bullet) ||\
 		istype(P,/obj/item/projectile/hivebotbullet))
 		try_toggle_effects(TRIGGER_FORCE)
@@ -318,18 +319,18 @@
 
 /obj/machinery/artifact/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				qdel(src)
-			else
 				try_toggle_effects(TRIGGER_FORCE)
 				try_toggle_effects(TRIGGER_HEAT)
-		if(3.0)
+				return
+		if(EXPLODE_LIGHT)
 			try_toggle_effects(TRIGGER_FORCE)
 			try_toggle_effects(TRIGGER_HEAT)
-	return
+			return
+	qdel(src)
 
 /obj/machinery/artifact/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()

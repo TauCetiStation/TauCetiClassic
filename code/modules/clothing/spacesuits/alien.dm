@@ -4,7 +4,7 @@
 	desc = "Smoothly contoured and polished to a shine. Still looks like a fishbowl."
 	armor = list(melee = 20, bullet = 20, laser = 25,energy = 50, bomb = 50, bio = 100, rad = 100)
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list(SKRELL , HUMAN)
+	species_restricted = list(SKRELL , HUMAN, PODMAN)
 
 
 	action_button_name = "Toggle Helmet Light" //this copypaste everywhere!
@@ -31,12 +31,10 @@
 /obj/item/clothing/head/helmet/space/skrell/white
 	icon_state = "skrell_helmet_white"
 	item_state = "skrell_helmet_white"
-	item_color = "skrell_helmet_white"
 
 /obj/item/clothing/head/helmet/space/skrell/black
 	icon_state = "skrell_helmet_black"
 	item_state = "skrell_helmet_black"
-	item_color = "skrell_helmet_black"
 
 /obj/item/clothing/suit/space/skrell
 	name = "skrellian hardsuit"
@@ -45,17 +43,15 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list(SKRELL , HUMAN)
+	species_restricted = list(SKRELL , HUMAN, PODMAN)
 
 /obj/item/clothing/suit/space/skrell/white
 	icon_state = "skrell_suit_white"
 	item_state = "skrell_suit_white"
-	item_color = "skrell_suit_white"
 
 /obj/item/clothing/suit/space/skrell/black
 	icon_state = "skrell_suit_black"
 	item_state = "skrell_suit_black"
-	item_color = "skrell_suit_black"
 
 //Unathi space gear. Huge and restrictive.
 /obj/item/clothing/head/helmet/space/unathi
@@ -70,7 +66,6 @@
 	desc = "Hey! Watch it with that thing! It's a knock-off of a Unathi battle-helm, and that spike could put someone's eye out."
 	icon_state = "unathi_helm_cheap"
 	item_state = "unathi_helm_cheap"
-	item_color = "unathi_helm_cheap"
 
 	action_button_name = "Toggle Helmet Light"
 	var/brightness_on = 4 //luminosity when on
@@ -105,29 +100,27 @@
 	desc = "A cheap NT knock-off of a Unathi battle-rig. Looks like a fish, moves like a fish, steers like a cow."
 	icon_state = "rig-unathi-cheap"
 	item_state = "rig-unathi-cheap"
-	slowdown = 2.3
+	slowdown = 1.6
 
 /obj/item/clothing/head/helmet/space/unathi/breacher
 	name = "breacher helm"
 	desc = "Weathered, ancient and battle-scarred. The helmet is too."
 	icon_state = "unathi_breacher"
 	item_state = "unathi_breacher"
-	item_color = "unathi_breacher"
 
 /obj/item/clothing/suit/space/unathi/breacher
 	name = "breacher chassis"
 	desc = "Huge, bulky and absurdly heavy. It must be like wearing a tank."
 	icon_state = "unathi_breacher"
 	item_state = "unathi_breacher"
-	item_color = "unathi_breacher"
-	slowdown = 1
+	slowdown = 0.5
 
 // Vox space gear (vaccuum suit, low pressure armour)
 // Can't be equipped by any other species due to bone structure and vox cybernetics.
 /obj/item/clothing/suit/space/vox
 	w_class = SIZE_SMALL
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
-	slowdown = 1.5
+	slowdown = 0.7
 	armor = list(melee = 60, bullet = 50, laser = 40, energy = 15, bomb = 30, bio = 30, rad = 30)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
@@ -150,7 +143,7 @@
 	icon_state = "vox-pressure"
 	item_state = "vox-pressure"
 	desc = "A huge, armoured, pressurized suit, designed for distinctly nonhuman proportions."
-	slowdown = 2
+	slowdown = 1
 	armor = list(melee = 80, bullet = 75, laser = 50, energy = 10, bomb = 35, bio = 30, rad = 30)
 
 /obj/item/clothing/head/helmet/space/vox/carapace
@@ -179,7 +172,7 @@
 	icon_state = "vox-medic"
 	item_state = "vox-medic"
 	desc = "An almost organic looking nonhuman pressure suit."
-	slowdown = 1
+	slowdown = 0.5
 	var/mob/living/carbon/human/wearer
 	armor = list(melee = 50, bullet = 40, laser = 45, energy = 15, bomb = 25, bio = 30, rad = 30)
 
@@ -236,7 +229,7 @@
 
 	armor = list(melee = 45, bullet = 20, laser = 25, energy = 5, bomb = 15, bio = 30, rad = 30)
 
-	slowdown = 0.5
+	slowdown = 0.2
 	action_button_name = "Toggle Stealth Technology"
 	var/on = FALSE
 	var/mob/living/carbon/human/wearer
@@ -310,12 +303,13 @@
 	if(on)
 		playsound(src, 'sound/rig/stealthrig_turn_off.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -4)
 		on = FALSE
-		slowdown = 0.5
+		slowdown = 0.2
 		wearer.alpha = 255
 		wearer.mouse_opacity = MOUSE_OPACITY_ICON
 	else if(!deactive)
 		if(!istype(wearer.head, /obj/item/clothing/head/helmet/space/vox/stealth))
 			to_chat(wearer, "<span class='warning'>The cloaking system cannot function without a helmet.</span>")
+			return
 		if(last_try > world.time)
 			return
 		if(wearer.is_busy())
@@ -331,7 +325,7 @@
 			playsound(src, 'sound/rig/stealthrig_turn_on.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 			on = TRUE
 			to_chat(wearer, "<span class='notice'>Stealth mode in now on!</span>")
-			slowdown = 2
+			slowdown = 1
 			wearer.alpha = 4
 			wearer.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			START_PROCESSING(SSobj, src)
@@ -380,7 +374,6 @@
 	name = "alien clothing"
 	desc = "This doesn't look very comfortable."
 	icon_state = "vox-casual-1"
-	item_color = "vox-casual-1"
 	item_state = "vox-casual-1"
 	body_parts_covered = LEGS
 
@@ -388,7 +381,6 @@
 	name = "alien robes"
 	desc = "Weird and flowing!"
 	icon_state = "vox-casual-2"
-	item_color = "vox-casual-2"
 	item_state = "vox-casual-2"
 
 /obj/item/clothing/gloves/yellow/vox
@@ -398,7 +390,6 @@
 	item_state = "gloves-vox"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	item_color = "gloves-vox"
 	species_restricted = list(VOX , VOX_ARMALIS)
 
 /obj/item/clothing/shoes/magboots/vox

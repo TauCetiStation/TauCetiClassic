@@ -97,46 +97,47 @@ Class Procs:
 /connection_edge/proc/recheck()
 
 /connection_edge/proc/flow(list/movable, differential, repelled)
-	for(var/i in 1 to movable.len)
-		var/atom/movable/AM = movable[i]
+	for(var/atom/movable/AM as anything in movable)
 
 		//If they're already being tossed, don't do it again.
-		if(AM.last_airflow > world.time - vsc.airflow_delay)
-			continue
-		if(AM.airflow_speed)
+		if(!COOLDOWN_FINISHED(AM, last_airflow) || AM.airflow_dest)
 			continue
 
 		//Check for knocking people over
 		if(ismob(AM) && differential > vsc.airflow_stun_pressure)
 			var/mob/M = AM
+			INVOKE_ASYNC(M, /mob/proc/playsound_local, null, 'sound/effects/airflow.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 			if(M.status_flags & GODMODE)
 				continue
-			INVOKE_ASYNC(M, /mob/proc/playsound_local, null, 'sound/effects/airflow.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 			M.airflow_stun()
 
-		if(AM.check_airflow_movable(differential))
-			//Check for things that are in range of the midpoint turfs.
-			var/list/close_turfs = list()
-			for(var/turf/U in connecting_turfs)
-				if(get_dist(AM, U) < world.view)
-					close_turfs += U
-				CHECK_TICK
-			if(!close_turfs.len)
-				continue
+		if(!AM.check_airflow_movable(differential))
+			CHECK_TICK
+			continue
+	
+		//Check for things that are in range of the midpoint turfs.
+		var/list/close_turfs = list()
+		for(var/turf/U as anything in connecting_turfs)
+			if(get_dist(AM, U) < world.view)
+				close_turfs += U
+			CHECK_TICK
+		if(!close_turfs.len)
+			continue
 
-			AM.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
+		if(QDELETED(AM))
+			continue
 
-			if(!QDELETED(AM))
-				if(repelled)
-					AM.RepelAirflowDest(differential / 5)
-				else
-					AM.GotoAirflowDest(differential / 10)
+		var/turf/dest = pick(close_turfs) //Pick a random midpoint to fly towards.
+		if(repelled)
+			AM.AirflowDest(differential / 5, dest, TRUE)
+		else
+			AM.AirflowDest(differential / 10, dest, FALSE)
+
 		CHECK_TICK
 
 
-
-
-/connection_edge/zone/var/zone/B
+/connection_edge/zone
+	var/zone/B
 
 /connection_edge/zone/New(zone/A, zone/B)
 
@@ -211,12 +212,16 @@ Class Procs:
 
 /connection_edge/unsimulated/var/turf/B
 /connection_edge/unsimulated/var/datum/gas_mixture/air
+/connection_edge/unsimulated/var/air_share_ratio = 0
 
 /connection_edge/unsimulated/New(zone/A, turf/B)
 	src.A = A
 	src.B = B
 	A.edges.Add(src)
 	air = B.return_air()
+	if(B.air_unsim_multiplier)
+		air_share_ratio = B.air_unsim_multiplier
+
 	//id = 52*A.id
 //	log_debug("New edge from [A] to [B].")
 
@@ -224,11 +229,11 @@ Class Procs:
 /connection_edge/unsimulated/add_connection(connection/c)
 	. = ..()
 	connecting_turfs.Add(c.B)
-	air.group_multiplier = coefficient
+	air.group_multiplier = coefficient + air_share_ratio
 
 /connection_edge/unsimulated/remove_connection(connection/c)
 	connecting_turfs.Remove(c.B)
-	air.group_multiplier = coefficient
+	air.group_multiplier = coefficient + air_share_ratio
 	. = ..()
 
 /connection_edge/unsimulated/erase()

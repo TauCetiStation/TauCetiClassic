@@ -58,11 +58,11 @@
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack //goliath kiting
 	name = "stimpack"
-	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
+	desc = "A rapid way to stimulate healing of minor wounds."
 	icon_state = "stimpen"
 	item_state = "autoinjector_empty"
 	volume = 20
-	list_reagents = list("inaprovaline" = 5, "coffee" = 13, "hyperzine" = 2)
+	list_reagents = list("inaprovaline" = 5, "coffee" = 13, "tricordrazine" = 2)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/atom_init()
 	flags &= ~OPENCONTAINER
@@ -85,3 +85,11 @@
 	else
 		icon_state = "autoinjector_empty"
 		item_state = "autoinjector_empty"
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine
+	name = "metatrombine autoinjector"
+	desc = "Accelerates blood clotting."
+	icon_state = "autobrut"
+	item_state = "autobrut"
+	volume = 5
+	list_reagents = list("metatrombine" = 5)

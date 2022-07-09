@@ -30,17 +30,16 @@
 	..()
 	icon_state = icon_living
 
-/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
+/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P, def_zone)//Reduces damage from most projectiles to curb off-screen kills
+	. = ..()
 	if(!stat)
 		Aggro()
 	if(P.damage < 30)
 		P.damage /= 3
 		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
 
-	return ..()
-
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
-	if(istype(AM, /obj/item))
+	if(isitem(AM))
 		var/obj/item/T = AM
 		if(!stat)
 			Aggro()
@@ -105,11 +104,11 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			gib()
-		if(2)
+		if(EXPLODE_HEAVY)
 			adjustBruteLoss(maxHealth * 0.8)
-		if(3)
+		if(EXPLODE_LIGHT)
 			adjustBruteLoss(maxHealth * 0.4)
 
 ////////////Drone(miniBoss)/////////////
@@ -217,14 +216,13 @@
 	ore_types_eaten.Cut()
 	ore_eaten = 0
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P, def_zone)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/death()
+	. = ..()
 	alerted = FALSE
 	Reward()
-	..()
-
 
 ////////////////Hivelord////////////////
 
@@ -379,7 +377,6 @@
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
-	attack_sound = list('sound/weapons/punch4.ogg')
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 40
 	ranged = TRUE
@@ -399,6 +396,10 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 	var/pre_attack = 0
+
+/mob/living/simple_animal/hostile/asteroid/goliath/atom_init()
+	attack_sound = SOUNDIN_PUNCH_HEAVY
+	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	..()

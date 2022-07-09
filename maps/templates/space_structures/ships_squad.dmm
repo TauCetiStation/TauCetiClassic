@@ -172,7 +172,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion_l"
 	},
-/turf/space,
+/turf/environment/space,
 /area/space_structures/nt_troopship)
 "lM" = (
 /obj/structure/closet/emergency_wall{
@@ -256,7 +256,8 @@
 	icon_state = "weaponcrateopen";
 	opened = 1
 	},
-/obj/item/weapon/gun/energy/laser/classic,
+/obj/item/clothing/suit/chef/classic,
+/obj/item/weapon/gun/energy/laser,
 /turf/simulated/floor/plating/airless{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor4"
@@ -376,7 +377,7 @@
 "yC" = (
 /obj/structure/lattice,
 /obj/effect/meteor/dust,
-/turf/space,
+/turf/environment/space,
 /area/space_structures/nt_troopship)
 "zq" = (
 /obj/item/weapon/disk/research_points,
@@ -707,7 +708,7 @@
 	},
 /area/space_structures/nt_fighter_skeora)
 "Rh" = (
-/turf/space,
+/turf/environment/space,
 /area/space)
 "RY" = (
 /turf/simulated/shuttle/wall{
@@ -834,7 +835,7 @@
 /area/space_structures/nt_fighter_blaton)
 "Vo" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/space,
+/turf/environment/space,
 /area/space_structures/nt_fighter_blaton)
 "Wy" = (
 /obj/structure/table/reinforced,
@@ -907,7 +908,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion_r"
 	},
-/turf/space,
+/turf/environment/space,
 /area/space_structures/nt_troopship)
 
 (1,1,1) = {"

@@ -28,6 +28,8 @@
 	var/order = 1                            // -1 = Descending - 1 = Ascending
 	var/docname
 
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_TRAINED)
+
 /obj/machinery/computer/skills/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
 		usr.drop_from_inventory(O, src)
@@ -162,7 +164,6 @@ What a mess.*/
 
 	if (!( data_core.general.Find(active1) ))
 		active1 = null
-
 	switch(href_list["choice"])
 		// SORTING!
 		if("Sorting")
@@ -186,7 +187,7 @@ What a mess.*/
 
 		if("Confirm Identity")
 			if (scan)
-				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
+				if(ishuman(usr) && !usr.get_active_hand())
 					usr.put_in_hands(scan)
 				else
 					scan.loc = get_turf(src)

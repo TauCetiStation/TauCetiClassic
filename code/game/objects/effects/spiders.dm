@@ -10,15 +10,13 @@
 //similar to weeds, but only barfed out by nurses manually
 /obj/effect/spider/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-		if(3.0)
-			if (prob(5))
-				qdel(src)
-	return
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(95))
+				return
+	qdel(src)
 
 /obj/effect/spider/attackby(obj/item/weapon/W, mob/user)
 	if(W.attack_verb.len)
@@ -39,8 +37,8 @@
 	health -= damage
 	healthcheck()
 
-/obj/effect/spider/bullet_act(obj/item/projectile/Proj)
-	..()
+/obj/effect/spider/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
 	healthcheck()
 
@@ -65,7 +63,7 @@
 	if(air_group || (height==0)) return 1
 	if(istype(mover, /mob/living/simple_animal/hostile/giant_spider))
 		return 1
-	else if(istype(mover, /mob/living))
+	else if(isliving(mover))
 		if(prob(50))
 			to_chat(mover, "<span class='warning'>You get stuck in \the [src] for a moment.</span>")
 			return 0
@@ -101,6 +99,7 @@
 	layer = 2.7
 	health = 3
 	var/amount_grown = -1
+	var/grow_as = null
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
 
@@ -115,22 +114,64 @@
 
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
-		src.loc = user.loc
+		forceMove(user.loc)
 	else
 		..()
 
+/obj/effect/spider/spiderling/attack_hand(mob/living/user)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='notice'>You touch [src]!</span>")
+		return
+	playsound(src, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
+	visible_message("<span class='alert'>\The [user] has punched [src]!</span>")
+	var/list/damObj = user.get_unarmed_attack()
+	var/damage = damObj["damage"]
+	health -= damage
+	healthcheck()
+
 /obj/effect/spider/spiderling/proc/die()
 	visible_message("<span class='alert'>[src] dies!</span>")
-	new /obj/effect/decal/cleanable/spiderling_remains(src.loc)
+	new /obj/effect/decal/cleanable/spiderling_remains(get_turf(src))
 	qdel(src)
 
 /obj/effect/spider/spiderling/healthcheck()
 	if(health <= 0)
 		die()
 
+/obj/effect/spider/spiderling/proc/cancel_vent_move()
+	forceMove(entry_vent.loc)
+	entry_vent = null
+
+/obj/effect/spider/spiderling/proc/vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
+	if(QDELETED(exit_vent) || exit_vent.welded)
+		cancel_vent_move()
+		return
+
+	forceMove(exit_vent.loc)
+	var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
+	addtimer(CALLBACK(src, .proc/do_vent_move, exit_vent, travel_time), travel_time)
+
+/obj/effect/spider/spiderling/proc/do_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent, travel_time)
+	if(QDELETED(exit_vent) || exit_vent.welded)
+		cancel_vent_move()
+		return
+
+	if(prob(50))
+		audible_message("<span class='notice'>You hear something scampering through the ventilation ducts.</span>")
+
+	addtimer(CALLBACK(src, .proc/finish_vent_move, exit_vent), travel_time)
+
+/obj/effect/spider/spiderling/proc/finish_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
+	if(QDELETED(exit_vent) || exit_vent.welded)
+		cancel_vent_move()
+		return
+	forceMove(exit_vent.loc)
+	entry_vent = null
+
 /obj/effect/spider/spiderling/process()
 	if(travelling_in_vent)
-		if(istype(src.loc, /turf))
+		if(isturf(loc))
 			travelling_in_vent = 0
 			entry_vent = null
 	else if(entry_vent)
@@ -143,56 +184,33 @@
 				entry_vent = null
 				return
 			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
-			/*if(prob(50))
-				visible_message("<B>[src] scrambles into the ventillation ducts!</B>")*/
+			if(prob(40))
+				visible_message("<B>[src] scrambles into the ventilation ducts!</B>", \
+							"<span class='notice'>You hear something scampering through the ventilation ducts.</span>")
 
-			spawn(rand(20,60))
-				loc = exit_vent
-				var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
-				spawn(travel_time)
+			addtimer(CALLBACK(src, .proc/vent_move, exit_vent), rand(15,30))
 
-					if(!exit_vent || exit_vent.welded)
-						loc = entry_vent
-						entry_vent = null
-						return
-
-					if(prob(50))
-						visible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>",2)
-					sleep(travel_time)
-
-					if(!exit_vent || exit_vent.welded)
-						loc = entry_vent
-						entry_vent = null
-						return
-					loc = exit_vent.loc
-					entry_vent = null
-					var/area/new_area = get_area(loc)
-					if(new_area)
-						new_area.Entered(src)
 	//=================
 
-	else if(prob(25))
-		var/list/nearby = oview(5, src)
+	else if(prob(33))
+		var/list/nearby = oview(1, src)
 		if(nearby.len)
 			var/target_atom = pick(nearby)
-			walk_to(src, target_atom, 5)
-			if(prob(25))
-				visible_message("<span class='notice'>\the [src] skitters[pick(" away"," around","")].</span>")
-	else if(prob(5))
+			walk_to(src, target_atom)
+			if(prob(40))
+				visible_message("<span class='notice'>\The [src] skitters[pick(" away"," around","")].</span>")
+	else if(prob(10))
 		//ventcrawl!
-		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(3,src))
 			if(!v.welded)
 				entry_vent = v
-				walk_to(src, entry_vent, 5)
+				walk_to(src, entry_vent, 1)
 				break
-
-	if(prob(1))
-		visible_message("<span class='notice'>\the [src] chitters.</span>")
 	if(isturf(loc) && amount_grown > 0)
 		amount_grown += rand(0,2)
 		if(amount_grown >= 100)
-			var/spawn_type = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
-			new spawn_type(src.loc)
+			grow_as = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
+			new grow_as(loc)
 			qdel(src)
 
 /obj/effect/decal/cleanable/spiderling_remains

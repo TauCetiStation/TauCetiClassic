@@ -188,6 +188,11 @@
 		t = replacetext(t, char, repl_chars[char])
 	return t
 
+/proc/replaceEx_characters(t, list/repl_chars)
+	for(var/char in repl_chars)
+		t = replacetextEx(t, char, repl_chars[char])
+	return t
+
 /proc/random_string(length, list/characters)
 	. = ""
 	for (var/i in 1 to length)
@@ -284,15 +289,6 @@
 	var/static/regex/non_ascii_regex = regex(@"[^\x00-\x7F]+", "g")
 	return non_ascii_regex.Replace(text, "")
 
-/proc/strip_html_simple(t, limit=MAX_MESSAGE_LEN)
-	var/list/strip_chars = list("<",">")
-	t = copytext(t,1,limit)
-	for(var/char in strip_chars)
-		var/index = findtext(t, char)
-		while(index)
-			t = copytext(t, 1, index) + copytext(t, index+1)
-			index = findtext(t, char)
-	return t
 //This proc strips html properly, remove < > and all text between
 //for complete text sanitizing should be used sanitize()
 /proc/strip_html_properly(input)
@@ -472,6 +468,3 @@
 			return two
 		else
 			return five
-
-/// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
-#define MAPTEXT(text) {"<span style='font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1;'>[##text]</span>"}

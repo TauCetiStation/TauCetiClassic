@@ -12,7 +12,7 @@
 	animation.master = src
 
 	flick("gibbed-r", animation)
-	robogibs(loc, viruses)
+	robogibs(loc)
 
 	alive_mob_list -= src
 	dead_mob_list -= src
@@ -48,5 +48,6 @@
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 
 	sql_report_cyborg_death(src)
+	SSStatistics.add_death_stat(src)
 
 	return ..(gibbed)

@@ -16,7 +16,7 @@
 	var/icon_locking = "secureb"
 	var/icon_sparking = "securespark"
 	var/icon_opened = "secure0"
-	var/locked = 1
+	var/locked = TRUE
 	var/code = ""
 	var/l_code = null
 	var/l_set = 0
@@ -48,7 +48,7 @@
 			sleep(6)
 			cut_overlays()
 			add_overlay(image('icons/obj/storage.dmi', icon_locking))
-			locked = 0
+			locked = FALSE
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
@@ -94,7 +94,7 @@
 	sleep(6)
 	cut_overlays()
 	add_overlay(image('icons/obj/storage.dmi', icon_locking))
-	locked = 0
+	locked = FALSE
 	to_chat(user, "You short out the lock on [src].")
 	return TRUE
 
@@ -134,7 +134,7 @@
 					l_code = code
 					l_set = 1
 				else if ((code == l_code) && (emagged == 0) && (l_set == 1))
-					locked = 0
+					locked = FALSE
 					overlays = null
 					overlays += image('icons/obj/storage.dmi', icon_opened)
 					code = null
@@ -142,7 +142,7 @@
 					code = "ERROR"
 			else
 				if ((digit == "R") && (emagged == 0) && (!l_setshort))
-					locked = 1
+					locked = TRUE
 					overlays = null
 					code = null
 					close(usr)
@@ -173,11 +173,19 @@
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
 
+/obj/item/weapon/storage/secure/briefcase/try_open(mob/user)
+	if(locked)
+		if(user.in_interaction_vicinity(src))
+			to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
+		return FALSE
+	else
+		return ..()
+
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
 	if ((src.loc == user) && (src.locked == 1))
-		to_chat(usr, "<span class='warning'>[src] is locked and cannot be opened!</span>")
+		to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
 	else if ((src.loc == user) && (!src.locked))
-		open(usr)
+		open(user)
 	else
 		..()
 		for(var/mob/M in range(1))

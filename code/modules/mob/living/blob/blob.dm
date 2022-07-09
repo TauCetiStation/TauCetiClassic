@@ -22,10 +22,6 @@
 	return//No talking for you
 
 
-/mob/living/blob/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
-	return
-
-
 /mob/living/blob/Life()
 	set invisibility = 0
 	//set background = 1
@@ -53,6 +49,7 @@
 
 /mob/living/blob/death(gibbed)
 	if(key)
+		logout_reason = LOGOUT_GHOST
 		var/mob/dead/observer/ghost = new(src)
 		ghost.name = ghost_name
 		ghost.real_name = ghost_name
@@ -89,7 +86,7 @@
 		to_chat(usr, "There is no blob here!")
 		creating_blob = 0
 		return
-	if(istype(B,/obj/effect/blob/node)||istype(B,/obj/effect/blob/core)||istype(B,/obj/effect/blob/factory))
+	if(isblobnode(B)||isblobcore(B)||isblobfactory(B))
 		to_chat(usr, "Unable to use this blob, find a normal one.")
 		creating_blob = 0
 		return
@@ -120,20 +117,20 @@
 		to_chat(usr, "You must be on a blob!")
 		creating_blob = 0
 		return
-	if(istype(B,/obj/effect/blob/node)||istype(B,/obj/effect/blob/core)||istype(B,/obj/effect/blob/factory))
+	if(isblobnode(B)||isblobcore(B)||isblobfactory(B))
 		to_chat(usr, "Unable to use this blob, find a normal one.")
 		creating_blob = 0
 		return
 	for(var/obj/effect/blob/blob in orange(2))//Not right next to nodes/cores
-		if(istype(B,/obj/effect/blob/node))
+		if(isblobnode(B))
 			to_chat(usr, "There is a node nearby, move away from it!")
 			creating_blob = 0
 			return
-		if(istype(B,/obj/effect/blob/core))
+		if(isblobcore(B))
 			to_chat(usr, "There is a core nearby, move away from it!")
 			creating_blob = 0
 			return
-		if(istype(B,/obj/effect/blob/factory))
+		if(isblobfactory(B))
 			to_chat(usr, "There is another porous blob nearby, move away from it!")
 			creating_blob = 0
 			return
@@ -157,7 +154,7 @@
 		to_chat(usr, "You must be on a blob!")
 		creating_blob = 0
 		return
-	if(!istype(B,/obj/effect/blob/factory))
+	if(!isblobfactory(B))
 		to_chat(usr, "Unable to use this blob, find another one.")
 		creating_blob = 0
 		return

@@ -9,7 +9,7 @@
 		////////////////
 	var/datum/admins/holder = null
 	var/datum/admins/deadmin_holder = null
-	var/buildmode		= 0
+	var/datum/buildmode/click_intercept = null
 	var/AI_Interact		= 0
 
 	var/jobbancache = null //Used to cache this client's jobbans to save on DB queries
@@ -64,11 +64,6 @@
 	var/datum/tooltip/tooltips
 
 	var/list/datum/browser/browsers
-
-
-	// Their chat window, sort of important.
-	// See /goon/code/datums/browserOutput.dm
-	var/datum/chatOutput/chatOutput
 
 	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = atom/movable/screen.
 
@@ -125,3 +120,6 @@
 	var/last_ui_resource_send = 0
 
 	var/fullscreen = NONE
+
+	/// Messages currently seen by this client
+	var/list/seen_messages

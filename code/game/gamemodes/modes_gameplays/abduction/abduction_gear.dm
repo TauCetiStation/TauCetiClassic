@@ -35,7 +35,7 @@
 			DeactivateStealth()
 			armor = combat_armor
 			icon_state = "vest_combat"
-			if(istype(loc, /mob/living/carbon/human))
+			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_wear_suit()
 			return
@@ -43,7 +43,7 @@
 			mode = VEST_STEALTH
 			armor = stealth_armor
 			icon_state = "vest_stealth"
-			if(istype(loc, /mob/living/carbon/human))
+			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_wear_suit()
 			return
@@ -478,8 +478,7 @@
 	toggle(user)
 
 /obj/item/weapon/abductor_baton/proc/StunAttack(mob/living/L,mob/living/user)
-	user.lastattacked = L
-	L.lastattacker = user
+	L.set_lastattacker_info(user)
 
 	L.Stun(7)
 	L.Weaken(7)
@@ -597,7 +596,7 @@
 	name = "alien optable"
 	desc = "Used for experiments on creatures."
 	icon = 'icons/obj/abductor.dmi'
-	var/holding = 0
+	var/holding = FALSE
 	var/belt = null
 	var/mob/living/carbon/fastened = null
 
@@ -646,6 +645,7 @@
 		add_overlay(belt)
 		fastened.anchored = TRUE
 		fastened.SetStunned(INFINITY)
+		fastened.can_be_pulled = FALSE
 		qdel(animation)
 	else
 		cut_overlay(belt)
@@ -656,6 +656,7 @@
 		sleep(9)
 		fastened.SetStunned(0)
 		fastened.anchored = FALSE
+		fastened.can_be_pulled = TRUE
 		fastened = null
 		qdel(animation)
 

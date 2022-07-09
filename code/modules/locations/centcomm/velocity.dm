@@ -115,20 +115,19 @@
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/melee/classic_baton(src)
 	new /obj/item/weapon/storage/firstaid/regular(src)
-	new /obj/item/clothing/suit/armor/vest/fluff/deus_blueshield(src)
-	new /obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat(src)
+	new /obj/item/clothing/suit/armor/vest/velocity(src)
+	new /obj/item/clothing/suit/storage/det_suit/velocity(src)
 	new /obj/item/clothing/head/soft/sec/corp(src)
 	new /obj/item/clothing/accessory/storage/webbing(src)
 	new /obj/item/clothing/accessory/storage/black_vest(src)
 	new /obj/item/weapon/storage/backpack/satchel(src)
 	new /obj/item/weapon/storage/backpack/satchel/sec(src)
 	new /obj/item/weapon/storage/belt/security(src)
-	new /obj/item/clothing/gloves/fluff/chal_appara_1(src)
+	new /obj/item/clothing/gloves/left(src)
 	new /obj/item/clothing/shoes/boots/combat(src)
 	new /obj/item/clothing/gloves/combat(src)
 	new /obj/item/clothing/shoes/sandal(src)
-	new /obj/item/clothing/under/fluff/olddressuniform(src)
-	new /obj/item/clothing/under/det/fluff/retpoluniform(src)
+	new /obj/item/clothing/under/det/velocity(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/device/radio/headset/velocity(src)
@@ -149,48 +148,24 @@
 	icon = 'icons/locations/centcomm/monitor.dmi'
 	icon_state = "PDA_X_on"
 
-/*
- * Originally - "Retired Patrol Outfit".
- * Now - Velocity officer outfits.
- * "desiderium: Rook Maudlin"
- */
-/obj/item/clothing/suit/storage/det_suit/fluff/retpolcoat
+/obj/item/clothing/suit/storage/det_suit/velocity
 	name = "velocity officer's coat"
 	desc = "A clean, black nylon windbreaker with the words \"OFFICER OF THE LAW\" embroidered in gold-dyed thread on the back. \"VELOCITY\" is tastefully embroidered below in a smaller font."
-	icon_state = "retpolcoat"
-	item_state = "retpolcoat"
-	item_color = "retpolcoat"
+	icon_state = "velocitycoat"
+	item_state = "velocitycoat"
 
-/obj/item/clothing/head/det_hat/fluff/retpolcap
+/obj/item/clothing/head/det_hat/velocity
 	name = "velocity officer's cap"
 	desc = "A clean and properly creased velocity officer's cap. The badge is shined and polished, the word \"VELOCITY\" engraved professionally under the words \"OFFICER OF THE LAW.\""
-	icon_state = "retpolcap"
+	icon_state = "velocitycap"
 
-/obj/item/clothing/under/det/fluff/retpoluniform
+/obj/item/clothing/under/det/velocity
 	name = "velocity officer's uniform"
 	desc = "A meticulously clean guard uniform belonging to Dock-42, CITS Velocity. The word \"OFFICER OF THE LAW\" is engraved tastefully and professionally in the badge below the number, 42."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "retpoluniform"
-	item_color = "retpoluniform"
+	icon_state = "velocityuniform"
 
-/*
-	This is here since it belongs to the same author even though not thematically adherent to Velocity. ~Luduk.
-*/
-/obj/item/clothing/head/det_hat/fluff/kung
-	name = "Kung headband"
-	desc = "Stripe of red cloth.You can wear it on your head."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "kung_headband_w"
-	item_state = "kung_headband_w"
-
-/*
- * Originally - blue shield security armor
- * Now - CITS armored vest
- * Author: deusdactyl
- */
-/obj/item/clothing/suit/armor/vest/fluff/deus_blueshield
+/obj/item/clothing/suit/armor/vest/velocity
 	name = "CITS armored vest"
 	desc = "An armored vest with the badge of a Blue Shield squadron of CITS \"Velocity\"'s Security lieutenant."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "deus_blueshield"
-	item_state = "deus_blueshield"
+	icon_state = "velocityarmor"
+	item_state = "velocityarmor"

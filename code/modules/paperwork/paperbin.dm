@@ -15,14 +15,14 @@
 	. = ..()
 	if(user == usr && !usr.incapacitated() && Adjacent(usr))
 		var/prev_intent = user.a_intent
-		user.a_intent = INTENT_GRAB
+		user.set_a_intent(INTENT_GRAB)
 		attack_hand(user)
-		user.a_intent = prev_intent
+		user.set_a_intent(prev_intent)
 
 /obj/item/weapon/paper_bin/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/weapon/paper_bin/attack_hand(mob/user)
+/obj/item/weapon/paper_bin/attack_hand(mob/living/user)
 	if(user && user.a_intent == INTENT_GRAB)
 		return ..()
 
@@ -53,8 +53,7 @@
 			else if (response == "Carbon-Copy")
 				P = new /obj/item/weapon/paper/carbon
 
-		P.forceMove(loc)
-		user.put_in_hands(P)
+		user.try_take(P, loc)
 		to_chat(user, "<span class='notice'>You take [P] out of the [src].</span>")
 	else
 		to_chat(user, "<span class='notice'>[src] is empty!</span>")

@@ -37,7 +37,7 @@
 	if (!(ndir in cardinal))
 		return
 	var/turf/loc = get_turf_loc(usr)
-	if (!istype(loc, /turf/simulated/floor))
+	if (!isfloorturf(loc))
 		to_chat(usr, "<span class='warning'>[src.name] cannot be placed on this spot.</span>")
 		return
 	to_chat(usr, "Attaching [src] to the wall.")
@@ -532,7 +532,7 @@
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
 
-/obj/machinery/light/attack_hand(mob/user)
+/obj/machinery/light/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return
@@ -583,40 +583,12 @@
 	L.update()
 	L.add_fingerprint(user)
 
-	if(!user.put_in_active_hand(L))	//puts it in our active hand (don't forget check)
-		L.loc = get_turf(user)
-
-	status = LIGHT_EMPTY
-	update()
-
-
-/obj/machinery/light/attack_tk(mob/user)
-	if(status == LIGHT_EMPTY)
-		to_chat(user, "There is no [fitting] in this light.")
-		return
-
-	to_chat(user, "You telekinetically remove the light [fitting].")
-	// create a light tube/bulb item and put it in the user's hand
-	var/obj/item/weapon/light/L = new light_type()
-	L.status = status
-	L.rigged = rigged
-	L.brightness_range = brightness_range
-	L.brightness_power = brightness_power
-	L.brightness_color = brightness_color
-
-	// light item inherits the switchcount, then zero it
-	L.switchcount = switchcount
-	switchcount = 0
-
-	L.update()
-	L.add_fingerprint(user)
-	L.loc = loc
+	user.try_take(L, loc)
 
 	status = LIGHT_EMPTY
 	update()
 
 // break the light and make sparks if was on
-
 /obj/machinery/light/proc/broken(skip_sound_and_sparks = 0)
 	if(status == LIGHT_EMPTY)
 		return
@@ -643,16 +615,16 @@
 
 /obj/machinery/light/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2.0)
-			if (prob(75))
-				broken()
-		if(3.0)
-			if (prob(50))
-				broken()
-	return
+		if(EXPLODE_HEAVY)
+			if(prob(25))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(50))
+				return
+	broken()
 
 //blob effect
 
@@ -687,6 +659,7 @@
 	explosion(T, 0, 0, 2, 2)
 	sleep(1)
 	qdel(src)
+
 
 // the light item
 // can be tube or bulb subtypes

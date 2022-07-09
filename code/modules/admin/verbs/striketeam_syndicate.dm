@@ -78,7 +78,7 @@ var/global/sent_syndicate_strike_team = FALSE
 		if(L.name == "Syndicate-Commando-Paper")
 			SCP = L
 
-	var/datum/faction/strike_team/syndiesquad/S = SSticker.mode.CreateFaction(/datum/faction/strike_team/syndiesquad)
+	var/datum/faction/strike_team/syndiesquad/S = create_faction(/datum/faction/strike_team/syndiesquad, FALSE, FALSE)
 	S.forgeObjectives(mission)
 	for(var/i = 1; i <= commandos.len; i++)
 		var/mob/living/carbon/human/new_syndicate_commando = new(get_turf(landmarkpos[i]))
@@ -150,9 +150,8 @@ var/global/sent_syndicate_strike_team = FALSE
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 	new_syndicate_commando.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
-	var/datum/faction/strike_team/syndiesquad/S = find_faction_by_type(/datum/faction/strike_team/syndiesquad)
-	if(S)
-		add_faction_member(S, new_syndicate_commando, FALSE)
+	var/datum/faction/strike_team/syndiesquad/S = create_uniq_faction(/datum/faction/strike_team/syndiesquad)
+	add_faction_member(S, new_syndicate_commando, FALSE)
 
 /mob/living/carbon/human/proc/equip_syndicate_commando(syndicate_leader = FALSE)
 
@@ -160,8 +159,7 @@ var/global/sent_syndicate_strike_team = FALSE
 	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
 	equip_to_slot_or_del(R, SLOT_L_EAR)
 	var/obj/item/weapon/implant/dexplosive/DE = new(src)
-	DE.imp_in = src
-	DE.implanted = TRUE
+	DE.stealth_inject(src)
 	var/obj/item/clothing/under/syndicate/US = new (src)
 	var/obj/item/clothing/accessory/storage/syndi_vest/SV = new (US)
 	US.accessories += SV

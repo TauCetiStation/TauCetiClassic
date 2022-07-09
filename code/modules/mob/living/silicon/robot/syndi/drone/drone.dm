@@ -13,6 +13,8 @@
 	var/operator_health_last = null
 	var/msg_cooldown = 0
 
+	spawner_args = null
+
 /mob/living/silicon/robot/drone/syndi/atom_init()
 	. = ..()
 	set_ai_link(null)
@@ -77,6 +79,11 @@
 	key = M.key
 	M.key = "@[key]"
 	to_chat(src, "You're now controlling the [name].")
+
+/mob/living/silicon/robot/drone/syndi/create_mind()
+	..()
+	mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	mind.skills.maximize_active_skills()
 
 /mob/living/silicon/robot/drone/syndi/proc/loose_control()
 	if(!operator)

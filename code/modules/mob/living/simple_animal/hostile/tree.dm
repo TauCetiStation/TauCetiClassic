@@ -41,13 +41,14 @@
 /mob/living/simple_animal/hostile/tree/FindTarget()
 	. = ..()
 	if(.)
-		emote("growls at [.]")
+		me_emote("growls at [.]")
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
 	. =..()
 	var/mob/living/L = .
 	if(istype(L))
 		if(prob(15))
+			L.Stun(1)
 			L.Weaken(3)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 

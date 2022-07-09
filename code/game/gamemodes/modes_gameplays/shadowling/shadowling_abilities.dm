@@ -98,7 +98,7 @@
 			to_chat(target, "<span class='userdanger'>You are hit by a blast of paralyzingly cold air and feel goosebumps break out across your body!</span>")
 			target.Stun(2)
 			if(target.bodytemperature)
-				target.bodytemperature -= 200 //Extreme amount of initial cold
+				target.adjust_bodytemperature(-200) //Extreme amount of initial cold
 			if(target.reagents)
 				target.reagents.add_reagent("frostoil", 15) //Half of a cryosting
 
@@ -169,6 +169,7 @@
 					to_chat(usr, "<span class='notice'>You begin the enthralling of [target].</span>")
 					usr.visible_message("<span class='danger'>[usr] leans over [target], their eyes glowing a deep crimson, and stares into their face.</span>")
 					to_chat(target, "<span class='boldannounce'>Your gaze is forcibly drawn into a blinding red light. You fall to the floor as conscious thought is wiped away.</span>")
+					target.Stun(12)
 					target.Weaken(12)
 					sleep(20)
 				if(3)
@@ -241,8 +242,6 @@
 		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, SLOT_GLASSES)
 		var/mob/living/carbon/human/H = usr
 		H.set_species(SHADOWLING)
-		H.dna.mutantrace = "shadowling"
-		H.update_mutantrace()
 		H.regenerate_icons()
 
 /obj/effect/proc_holder/spell/targeted/collective_mind
@@ -369,8 +368,7 @@
 	clothes_req = 0
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets)
-	//usr.audible_message("<span class='warning'><b>[usr] lets out a horrible scream!</b></span>")
-	usr.emote("scream", SHOWMSG_AUDIO, message = "<span class='warning'><b>lets out a horrible scream!</b></span>", auto = FALSE)
+	usr.emote("scream", intentional = TRUE)
 	playsound(usr, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/turf/T in targets)
@@ -384,7 +382,7 @@
 				var/mob/living/carbon/M = target
 				to_chat(M, "<span class='danger'><b>A spike of pain drives into your head and scrambles your thoughts!</b></span>")
 				M.Weaken(2)
-				M.confused += 10
+				M.AdjustConfused(10)
 				//M.setEarDamage(M.ear_damage + 3)
 				M.ear_damage += 3
 			else if(issilicon(target))
@@ -394,7 +392,7 @@
 				var/datum/effect/effect/system/spark_spread/sp = new /datum/effect/effect/system/spark_spread
 				sp.set_up(5, 1, S)
 				sp.start()
-				S.Weaken(6)
+				S.Stun(6)
 		for(var/obj/structure/window/W in T.contents)
 			W.take_damage(rand(80, 100))
 
@@ -611,9 +609,10 @@
 					to_chat(target, "<span class='danger'>You feel a blast of paralyzingly cold air wrap around you and flow past, but you are unaffected!</span>")
 					continue
 			to_chat(target, "<span class='userdanger'>You are hit by a blast of cold unlike anything you have ever felt. Your limbs instantly lock in place and you feel ice burns across your body!</span>")
+			target.Stun(15)
 			target.Weaken(15)
 			if(target.bodytemperature)
-				target.bodytemperature -= INFINITY //:^)
+				target.adjust_bodytemperature(-INFINITY) //:^)
 			target.take_bodypart_damage(0, 80)
 
 

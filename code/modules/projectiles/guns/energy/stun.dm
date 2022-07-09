@@ -7,6 +7,11 @@
 	can_be_holstered = TRUE
 	cell_type = /obj/item/weapon/stock_parts/cell/crap
 
+/obj/item/weapon/gun/energy/taser/select_fire(mob/living/user)
+	if(!handle_fumbling(user,src, SKILL_TASK_TRIVIAL, list(/datum/skill/police = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around figuring out how to switch mode on [src]...</span>", can_move = TRUE))
+		return
+	..()
+
 /obj/item/weapon/gun/energy/taser/cyborg
 	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."

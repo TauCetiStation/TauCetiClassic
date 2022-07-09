@@ -18,9 +18,11 @@
 	if(!user.loc || user.loc.density)
 		to_chat(user, "<span class='warning'>You can't plant a mine here.</span>")
 		return
-
+	if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self =  "<span class='notice'>You fumble around figuring out how to deploy [src]...</span>"))
+		return
+	var/planting_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED, /datum/skill/engineering = SKILL_LEVEL_TRAINED), -0.1)
 	user.visible_message("<span class='notice'>[user] starts deploying [src].</span>", "<span class='notice'>You start deploying [src].</span>")
-	if(!do_after(user, 40, target = src))
+	if(!do_after(user, planting_time, target = src))
 		user.visible_message("<span class='notice'>[user] stops deploying [src].</span>", "<span class='notice'>You stop deploying \the [src].</span>")
 		return
 	user.visible_message("<span class='notice'>[user] finishes deploying [src].</span>", "<span class='notice'>You finish deploying [src].</span>")
@@ -43,7 +45,8 @@
 /obj/item/mine/Bumped(atom/movable/AM)
 	try_trigger(AM)
 
-/obj/item/mine/bullet_act(obj/item/projectile/Proj)
+/obj/item/mine/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	trigger_act(Proj)
 	qdel(src)
 

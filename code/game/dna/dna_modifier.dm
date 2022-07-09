@@ -232,26 +232,16 @@
 
 /obj/machinery/dna_scannernew/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			for(var/atom/movable/A in src)
-				A.loc = loc
-				A.ex_act(severity)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				qdel(src)
 				return
-		if(3.0)
-			if(prob(25))
-				for(var/atom/movable/A in src)
-					A.loc = loc
-					A.ex_act(severity)
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(75))
 				return
+	for(var/atom/movable/A as anything in src)
+		A.loc = loc
+		A.ex_act(severity)
+	qdel(src)
 
 /obj/machinery/dna_scannernew/blob_act()
 	if(prob(75))
@@ -290,9 +280,14 @@
 	active_power_usage = 400
 	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
 
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_TRAINED)
+
+
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
 		if (!disk)
+			if(!do_skill_checks(user))
+				return
 			user.drop_from_inventory(I, src)
 			disk = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
@@ -307,11 +302,9 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/scan_consolenew/atom_init_late()
-	for(var/newdir in cardinal)
-		connected = locate(/obj/machinery/dna_scannernew, get_step(src, newdir))
-		if(!isnull(connected))
-			break
-	spawn(250)
+	connected = locate(/obj/machinery/dna_scannernew) in range(4, src)
+	if(!isnull(connected))
+		spawn(250)
 		injector_ready = 1
 
 /obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(list/buffer)
@@ -346,7 +339,6 @@
 	if(connected && connected.is_operational())
 		if(user == connected.occupant)
 			return
-
 		// this is the data which will be sent to the ui
 		var/data[0]
 		data["selectedMenuKey"] = selected_menu_key
@@ -441,6 +433,7 @@
 	. = ..()
 	if(!.)
 		return
+
 	if(!src || !connected)
 		return FALSE // don't update uis
 	else if(irradiating) // Make sure that it isn't already irradiating someone...
@@ -550,6 +543,8 @@
 			selected_ui_subblock = select_subblock
 
 	else if (href_list["pulseUIRadiation"])
+		if(!connected.occupant)
+			return FALSE
 		var/block = connected.occupant.dna.GetUISubBlock(selected_ui_block, selected_ui_subblock)
 
 		irradiating = radiation_duration
@@ -584,6 +579,8 @@
 	else if (href_list["injectRejuvenators"])
 		if (!connected.occupant)
 			return FALSE
+		if(!connected.beaker)
+			return FALSE
 		var/inject_amount = round(text2num(href_list["injectRejuvenators"]), 5) // round to nearest 5
 		if (inject_amount < 0) // Since the user can actually type the commands himself, some sanity checking
 			inject_amount = 0
@@ -604,6 +601,9 @@
 		//testing("User selected block [selected_se_block] (sent [select_block]), subblock [selected_se_subblock] (sent [select_block]).")
 
 	else if (href_list["pulseSERadiation"])
+		if(!connected.occupant)
+			return FALSE
+
 		var/block = connected.occupant.dna.GetSESubBlock(selected_se_block, selected_se_subblock)
 		//var/original_block=block
 		//testing("Irradiating SE block [selected_se_block]:[selected_se_subblock] ([block])...")
@@ -616,6 +616,9 @@
 		sleep(radiation_duration SECONDS) // sleep for radiation_duration seconds
 
 		irradiating = 0
+
+		if(!connected)
+			return FALSE
 
 		if(connected.occupant)
 			if (prob(80 + connected.precision_coeff + radiation_duration / 2))

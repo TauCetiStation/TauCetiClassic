@@ -52,29 +52,26 @@
 
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2.0)
-			if (prob(25))
+		if(EXPLODE_HEAVY)
+			if(prob(25))
 				qdel(src)
 				return
-			if (prob(50))
-				for(var/x in verbs)
-					verbs -= x
-				set_broken()
-		if(3.0)
-			if (prob(25))
-				for(var/x in verbs)
-					verbs -= x
-				set_broken()
-		else
-	return
+			else if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				return
+	for(var/x in verbs)
+		verbs -= x
+	set_broken()
 
-/obj/machinery/computer/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/computer/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(prob(Proj.damage))
 		set_broken()
-	..()
 
 /obj/machinery/computer/update_icon()
 	..()
@@ -205,6 +202,20 @@
 			else
 				H.visible_message("<span class='danger'>[H.name] stares cluelessly at [src] and drools.</span>")
 				return 1
+		if(HAS_TRAIT_FROM(H, TRAIT_WET_HANDS, QUALITY_TRAIT))
+			var/emp_luck = rand(1, 20)
+			if(emp_luck > 12)
+				emp_act(1)
+				to_chat(H, "<span class='warning'>You pressed something and sparks appeared.</span>")
+				return 1
+			else if(emp_luck <= 2)
+				emp_act(2)
+				to_chat(H, "<span class='warning'>You pressed something and everything is gone.</span>")
+				return 1
+			else if(emp_luck == 10)
+				emp_act(3)
+				to_chat(H, "<span class='warning'>You poured water on the device.</span>") 
+				return 1
 	. = ..()
 
 /obj/machinery/computer/attack_paw(mob/user)
@@ -222,7 +233,7 @@
 	"<span class='danger'>You hear a clicking sound.</span>")
 
 /obj/machinery/computer/attack_alien(mob/user)
-	if(istype(user, /mob/living/carbon/xenomorph/humanoid/queen))
+	if(isxenoqueen(user))
 		attack_hand(user)
 		return
 	else

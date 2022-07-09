@@ -27,6 +27,8 @@
 		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten"
 	)
 	var/list/premium_reagents = list()
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
+	fumbling_time = 2 SECONDS
 
 /obj/machinery/chem_dispenser/atom_init()
 	. = ..()
@@ -64,13 +66,12 @@
 
 /obj/machinery/chem_dispenser/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
+		if(EXPLODE_LIGHT)
+			return
+	qdel(src)
 
 /obj/machinery/chem_dispenser/blob_act()
 	if (prob(50))
@@ -188,6 +189,8 @@
 			if(!C.canopened)
 				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 				return
+		if(!do_skill_checks(user))
+			return
 		src.beaker =  B
 		user.drop_from_inventory(B, src)
 		to_chat(user, "You set [B] on the machine.")
@@ -244,6 +247,7 @@
 				"diethylamine"
 		)
 	)
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/chem_dispenser/constructable/atom_init()
 	. = ..()
@@ -307,6 +311,7 @@
 	hackable = TRUE
 	msg_hack_enable = "You change the mode from 'McNano' to 'Pizza King'."
 	msg_hack_disable = "You change the mode from 'Pizza King' to 'McNano'."
+	required_skills = list()
 
 /obj/machinery/chem_dispenser/beer
 	icon_state = "booze_dispenser"
@@ -321,8 +326,7 @@
 	hackable = TRUE
 	msg_hack_enable = "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes."
 	msg_hack_disable = "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes."
-
-
+	required_skills = list()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -344,6 +348,7 @@
 	var/pillsprite = 1
 	var/client/has_sprites = list()
 	var/max_pill_count = 24
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
 
 
 /obj/machinery/chem_master/atom_init()
@@ -354,13 +359,12 @@
 
 /obj/machinery/chem_master/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
+		if(EXPLODE_LIGHT)
+			return
+	qdel(src)
 
 /obj/machinery/chem_master/blob_act()
 	if (prob(50))
@@ -407,6 +411,7 @@
 	. = ..()
 	if(!.)
 		return
+
 	if(href_list["ejectp"])
 		if(loaded_pill_bottle)
 			loaded_pill_bottle.loc = src.loc
@@ -687,12 +692,14 @@
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	condi = 1
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_master/constructable
 	name = "ChemMaster 2999"
 	desc = "Used to seperate chemicals and distribute them in a variety of forms."
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/chem_master/constructable/atom_init()
 	. = ..()
@@ -747,250 +754,6 @@
 
 	return
 
-////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////
-
-/obj/machinery/computer/pandemic
-	name = "PanD.E.M.I.C 2200"
-	density = TRUE
-	anchored = TRUE
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "mixer0"
-	circuit = /obj/item/weapon/circuitboard/pandemic
-	//use_power = IDLE_POWER_USE
-	//idle_power_usage = 20		//defaults make more sense.
-	var/temphtml = ""
-	var/wait = null
-	var/obj/item/weapon/reagent_containers/glass/beaker = null
-
-
-/obj/machinery/computer/pandemic/set_broken()
-	icon_state = (src.beaker?"mixer1_b":"mixer0_b")
-	stat |= BROKEN
-
-
-/obj/machinery/computer/pandemic/power_change()
-
-	if(stat & BROKEN)
-		icon_state = (src.beaker?"mixer1_b":"mixer0_b")
-
-	else if(powered())
-		icon_state = (src.beaker?"mixer1":"mixer0")
-		stat &= ~NOPOWER
-
-	else
-		spawn(rand(0, 15))
-			src.icon_state = (src.beaker?"mixer1_nopower":"mixer0_nopower")
-			stat |= NOPOWER
-			update_power_use()
-	update_power_use()
-
-
-/obj/machinery/computer/pandemic/Topic(href, href_list)
-	. = ..()
-	if(!.)
-		return
-
-	if(!beaker)
-		return FALSE
-
-	if (href_list["create_vaccine"])
-		if(!src.wait)
-			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
-			if(B)
-				var/path = href_list["create_vaccine"]
-				var/vaccine_type = text2path(path)
-				var/datum/disease/D = null
-
-				if(!vaccine_type)
-					D = archive_diseases[path]
-					vaccine_type = path
-				else
-					if(vaccine_type in diseases)
-						D = new vaccine_type(0, null)
-
-				if(D)
-					B.name = "[D.name] vaccine bottle"
-					B.reagents.add_reagent("vaccine", 15, vaccine_type)
-					wait = 1
-					var/datum/reagents/R = beaker.reagents
-					var/datum/reagent/blood/Blood = null
-					for(var/datum/reagent/blood/L in R.reagent_list)
-						if(L)
-							Blood = L
-							break
-					var/list/res = Blood.data["resistances"]
-					if(res)
-						VARSET_IN(src, wait, null, res.len * 200)
-					else
-						wait = null
-		else
-			src.temphtml = "The replicator is not ready yet."
-	else if (href_list["create_virus_culture"])
-		if(!wait)
-			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
-			B.icon_state = "bottle3"
-			var/type = text2path(href_list["create_virus_culture"])//the path is received as string - converting
-			var/datum/disease/D = null
-			if(!type)
-				var/datum/disease/advance/A = archive_diseases[href_list["create_virus_culture"]]
-				if(A)
-					D = new A.type(0, A)
-			else
-				if(type in diseases) // Make sure this is a disease
-					D = new type(0, null)
-			var/list/data = list("viruses"=list(D))
-			var/name = sanitize_safe(input(usr,"Name:","Name the culture",input_default(D.name)) as text|null, MAX_NAME_LEN)
-			if(!name || name == " ") name = D.name
-			B.name = "[name] culture bottle"
-			B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
-			B.reagents.add_reagent("blood", 20, data)
-			updateUsrDialog()
-			wait = 1
-			VARSET_IN(src, wait, null, 1000)
-		else
-			src.temphtml = "The replicator is not ready yet."
-	else if (href_list["empty_beaker"])
-		beaker.reagents.clear_reagents()
-	else if (href_list["eject"])
-		beaker.loc = src.loc
-		beaker = null
-		icon_state = "mixer0"
-	else if(href_list["clear"])
-		src.temphtml = ""
-	else if(href_list["name_disease"])
-		if(stat & (NOPOWER|BROKEN))
-			return
-		var/new_name = sanitize_safe(input(usr, "Name the Disease", "New Name") as text|null, MAX_NAME_LEN)
-		if(!new_name)
-			return
-		if(usr.incapacitated())
-			return
-		if(!Adjacent(usr))
-			return
-		var/id = href_list["name_disease"]
-		if(archive_diseases[id])
-			var/datum/disease/advance/A = archive_diseases[id]
-			A.AssignName(new_name)
-			for(var/datum/disease/advance/AD in SSdiseases.processing)
-				AD.Refresh()
-	else
-		usr << browse(null, "window=pandemic")
-		return FALSE
-
-	updateUsrDialog()
-
-
-/obj/machinery/computer/pandemic/ui_interact(mob/user)
-	var/dat = ""
-	if(src.temphtml)
-		dat = "[src.temphtml]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"
-	else if(!beaker)
-		dat += "Please insert beaker.<BR>"
-	else
-		var/datum/reagents/R = beaker.reagents
-		var/datum/reagent/blood/Blood = null
-		for(var/datum/reagent/blood/B in R.reagent_list)
-			if(B)
-				Blood = B
-				break
-		if(!R.total_volume||!R.reagent_list.len)
-			dat += "The beaker is empty<BR>"
-		else if(!Blood)
-			dat += "No blood sample found in beaker"
-		else if(!Blood.data)
-			dat += "No blood data found in beaker."
-		else
-			dat += "<h3>Blood sample data:</h3>"
-			dat += "<b>Blood DNA:</b> [(Blood.data["blood_DNA"]||"none")]<BR>"
-			dat += "<b>Blood Type:</b> [(Blood.data["blood_type"]||"none")]<BR>"
-
-
-			if(Blood.data["viruses"])
-				var/list/vir = Blood.data["viruses"]
-				if(vir.len)
-					for(var/datum/disease/D in vir)
-						if(!D.hidden[PANDEMIC])
-
-
-							var/disease_creation = D.type
-							if(istype(D, /datum/disease/advance))
-
-								var/datum/disease/advance/A = D
-								D = archive_diseases[A.GetDiseaseID()]
-								disease_creation = A.GetDiseaseID()
-								if(D.name == "Unknown")
-									dat += "<b><a href='?src=\ref[src];name_disease=[A.GetDiseaseID()]'>Name Disease</a></b><BR>"
-
-							if(!D)
-								CRASH("We weren't able to get the advance disease from the archive.")
-
-							dat += "<b>Disease Agent:</b> [D?"[D.agent] - <A href='?src=\ref[src];create_virus_culture=[disease_creation]'>Create virus culture bottle</A>":"none"]<BR>"
-							dat += "<b>Common name:</b> [(D.name||"none")]<BR>"
-							dat += "<b>Description: </b> [(D.desc||"none")]<BR>"
-							dat += "<b>Spread:</b> [(D.spread||"none")]<BR>"
-							dat += "<b>Possible cure:</b> [(D.cure||"none")]<BR><BR>"
-
-							if(istype(D, /datum/disease/advance))
-								var/datum/disease/advance/A = D
-								dat += "<b>Symptoms:</b> "
-								var/english_symptoms = list()
-								for(var/datum/symptom/S in A.symptoms)
-									english_symptoms += S.name
-								dat += get_english_list(english_symptoms)
-
-
-			dat += "<BR><b>Contains antibodies to:</b> "
-			if(Blood.data["resistances"])
-				var/list/res = Blood.data["resistances"]
-				if(res.len)
-					dat += "<ul>"
-					for(var/type in Blood.data["resistances"])
-						var/disease_name = "Unknown"
-
-						if(!ispath(type))
-							var/datum/disease/advance/A = archive_diseases[type]
-							if(A)
-								disease_name = A.name
-						else
-							var/datum/disease/D = new type(0, null)
-							disease_name = D.name
-
-						dat += "<li>[disease_name] - <A href='?src=\ref[src];create_vaccine=[type]'>Create vaccine bottle</A></li>"
-					dat += "</ul><BR>"
-				else
-					dat += "nothing<BR>"
-			else
-				dat += "nothing<BR>"
-		dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>"
-
-	var/datum/browser/popup = new(user, "pandemic", src.name, 575, 400)
-	popup.set_content(dat)
-	popup.open()
-
-
-/obj/machinery/computer/pandemic/attackby(obj/I, mob/user)
-	if(istype(I, /obj/item/weapon/reagent_containers/glass))
-		if(stat & (NOPOWER|BROKEN)) return
-		if(src.beaker)
-			to_chat(user, "A beaker is already loaded into the machine.")
-			return
-
-		src.beaker =  I
-		user.drop_from_inventory(I, src)
-		to_chat(user, "You add the beaker to the machine!")
-		updateUsrDialog()
-		icon_state = "mixer1"
-
-	else if(isscrewdriver(I))
-		if(src.beaker)
-			beaker.loc = get_turf(src)
-		..()
-		return
-
-	else
-		..()
-	return
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 /obj/machinery/reagentgrinder
@@ -1059,6 +822,7 @@
 
 
 	var/list/holdingitems = list()
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/reagentgrinder/atom_init()
 	. = ..()
@@ -1174,7 +938,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	switch(href_list["action"])
 		if ("grind")
 			grind()

@@ -137,7 +137,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/condiment_shelf/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(iswrench(I))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		new /obj/item/stack/sheet/wood(loc)
 		qdel(src)
@@ -153,7 +153,7 @@
 	var/turf/T = target
 	if(!proximity)
 		return
-	if(!istype(T, /turf/simulated/wall))
+	if(!iswallturf(T))
 		return
 	var/ndir = get_dir(user, T)
 	if(!(ndir in cardinal))
@@ -198,7 +198,7 @@
 	update_icon()
 
 /obj/structure/condiment_shelf/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/weapon/wrench))
+	if(iswrench(O))
 		if(user.is_busy())
 			return
 		user.visible_message("<span class='warning'>[user] starts to disassemble \the [src].</span>")
@@ -233,21 +233,20 @@
 
 /obj/structure/condiment_shelf/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
 				qdel(b)
-			qdel(src)
-		if(2.0)
+
+		if(EXPLODE_HEAVY)
 			for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
 				if(prob(50))
 					b.forceMove(get_turf(src))
 				else qdel(b)
-			qdel(src)
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			if(prob(50))
 				for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
 					b.forceMove(get_turf(src))
-				qdel(src)
+	qdel(src)
 
 /obj/structure/condiment_shelf/update_icon()
 	cut_overlays()

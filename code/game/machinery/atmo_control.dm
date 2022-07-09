@@ -82,6 +82,7 @@
 	var/list/sensors = list()
 
 	var/list/sensor_information = list()
+	required_skills = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)
 
 
 /obj/machinery/computer/general_air_control/ui_interact(mob/user)
@@ -119,15 +120,15 @@
 				if(data["temperature"])
 					sensor_part += "   <B>Temperature:</B> [data["temperature"]] K<BR>"
 				if(data["oxygen"]||data["phoron"]||data["nitrogen"]||data["carbon_dioxide"])
-					sensor_part += "   <B>Gas Composition :</B>"
+					sensor_part += "   <B>Gas Composition:</B>"
 					if(data["oxygen"])
-						sensor_part += "[data["oxygen"]]% O2; "
+						sensor_part += " [data["oxygen"]]% O2; "
 					if(data["nitrogen"])
-						sensor_part += "[data["nitrogen"]]% N; "
+						sensor_part += " [data["nitrogen"]]% N; "
 					if(data["carbon_dioxide"])
-						sensor_part += "[data["carbon_dioxide"]]% CO2; "
+						sensor_part += " [data["carbon_dioxide"]]% CO2; "
 					if(data["phoron"])
-						sensor_part += "[data["phoron"]]% TX; "
+						sensor_part += " [data["phoron"]]% TX; "
 				sensor_part += "<HR>"
 
 			else
@@ -218,7 +219,6 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 	. = ..()
 	if(!.)
 		return
-
 	if(href_list["adj_pressure"])
 		var/change = text2num(href_list["adj_pressure"])
 		pressure_setting = between(0, pressure_setting + change, MAX_PUMP_PRESSURE)
@@ -279,6 +279,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 
 	var/cutoff_temperature = 2000
 	var/on_temperature = 1200
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 /obj/machinery/computer/general_air_control/fuel_injection/process()
 	if(automation)

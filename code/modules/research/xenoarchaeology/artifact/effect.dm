@@ -93,7 +93,9 @@
 	if(istype(holder, /obj/machinery/artifact))
 		var/obj/machinery/artifact/A = holder
 		A.update_icon()
-	if(!reveal_toggle && !holder)
+	if(!reveal_toggle)
+		return
+	if(!holder)
 		return
 	var/display_msg = activated ? pick(ARTIFACT_ACTIVATION_MESSAGES): pick(ARTIFACT_DEACTIVATION_MESSAGES)
 	var/atom/toplevelholder = holder

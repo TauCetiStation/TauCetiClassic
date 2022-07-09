@@ -227,9 +227,8 @@
 
 	return camera_cache
 
-/obj/machinery/computer/security/tgui_data()
+/obj/machinery/computer/security/tgui_data(mob/user)
 	var/list/data = list()
-	data["network"] = network
 	data["activeCamera"] = null
 	if(!QDELETED(active_camera))
 		data["activeCamera"] = list(
@@ -238,7 +237,7 @@
 		)
 	return data
 
-/obj/machinery/computer/security/tgui_static_data()
+/obj/machinery/computer/security/tgui_static_data(mob/user)
 	var/list/data = list()
 	data["mapRef"] = map_name
 	var/list/cameras = get_cached_cameras()

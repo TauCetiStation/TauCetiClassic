@@ -27,7 +27,7 @@
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		tally += 1.5
 
-	if(crawling)
+	if(lying)
 		tally += 7
 
 	if(embedded_flag)
@@ -50,6 +50,13 @@
 	else
 		hands_or_legs = list(BP_L_LEG , BP_R_LEG)
 
+	// Movement delay coming from heavy items being carried.
+	var/weight_tally = 0
+	// Currently there is a meme that `slowdown` var is not really weight, it's just a speed modifier
+	// So you can have items causing you to go faster, and thus we need a seperate counter of weight negation
+	// to not negate weight that is not there. ~Luduk
+	var/weight_negation = 0
+
 	for(var/bodypart_name in hands_or_legs)
 		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
 		if(!BP || (BP.is_stump))
@@ -58,29 +65,29 @@
 			tally += 0.8
 		else if(BP.status & ORGAN_BROKEN)
 			tally += 3
+		else
+			weight_negation += BP.pumped / 100
 
-	// hyperzine removes equipment slowdowns (no blood = no chemical effects).
+	// cola removes equipment slowdowns (no blood = no chemical effects).
 	var/chem_nullify_debuff = FALSE
 	if(!species.flags[NO_BLOOD] && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
 		chem_nullify_debuff = TRUE
 
 	if(wear_suit && wear_suit.slowdown && !species.flags[IS_SYNTHETIC] && !(wear_suit.slowdown > 0 && chem_nullify_debuff))
-		tally += wear_suit.slowdown
+		weight_tally += wear_suit.slowdown
 
 	if(back && back.slowdown && !(back.slowdown > 0 && chem_nullify_debuff))
-		tally += back.slowdown
+		weight_tally += back.slowdown
 
-	if (shoes)
-		if (shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
-			tally += shoes.slowdown
+	if(shoes && shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
+		weight_tally += shoes.slowdown
 	else
 		tally += species.speed_mod_no_shoes
 
-	if(!chem_nullify_debuff)
-		for(var/x in list(l_hand, r_hand))
-			var/obj/item/I = x
-			if(I && !(I.flags & ABSTRACT) && I.w_class >= SIZE_SMALL)
-				tally += 0.5 * (I.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
+	if(weight_tally > 0)
+		weight_tally = max(weight_tally - weight_negation, 0)
+
+	tally += weight_tally
 
 	if(shock_stage >= 10)
 		tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)

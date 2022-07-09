@@ -7,6 +7,7 @@
 
 	// Dont uplink
 	var/syndicate_awareness = SYNDICATE_UNAWARE
+	var/list/datum/stat/uplink_purchase/uplink_purchases = list()
 
 /datum/component/gamemode/syndicate/Initialize(crystals)
 	..()
@@ -173,12 +174,13 @@
 		to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		traitor_mob.mutations.Remove(CLUMSY)
 
-	var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(traitor_mob)
-	if(!guplink)
-		give_uplink()
-	else
-		guplink.uses = uplink_uses
-		total_TC = uplink_uses
+	if(uplink_uses > 0)
+		var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(traitor_mob)
+		if(!guplink)
+			give_uplink()
+		else
+			guplink.uses = uplink_uses
+			total_TC = uplink_uses
 
 	var/datum/role/R = parent
 	for(var/datum/objective/target/dehead/D in R.objectives.GetObjectives())

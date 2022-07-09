@@ -117,34 +117,48 @@
 	if(!UI_style_new)
 		return
 
-	var/UI_style_alpha_new = input(usr, "Select a new alpha(transparence) parametr for UI, between 50 and 255") as num
-	if(!UI_style_alpha_new || !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50))
+	var/UI_alpha_new = input(usr, "Select a new alpha(transparence) parametr for UI, between 50 and 255") as num
+	if(!UI_alpha_new || !(UI_alpha_new <= 255 && UI_alpha_new >= 50))
 		return
 
-	var/UI_style_color_new = input(usr, "Choose your UI color, dark colors are not recommended!") as color|null
-	if(!UI_style_color_new)
+	var/UI_color_new = input(usr, "Choose your UI color, dark colors are not recommended!") as color|null
+	if(!UI_color_new)
 		return
+
+	var/datum/hud/hud = usr.hud_used
 
 	//update UI
-	var/list/icons = usr.hud_used.adding + usr.hud_used.other + usr.hud_used.hotkeybuttons
-	icons.Add(usr.zone_sel)
+	var/list/screens = hud.main + hud.adding + hud.hotkeybuttons
+
+	for(var/atom/movable/screen/complex/complex as anything in hud.complex)
+		screens += complex.screens
 
 	var/ui_style = ui_style2icon(UI_style_new)
 	var/list/icon_states = icon_states(ui_style) // so it wont break hud with dmi that has no specific icon_state.
 
-	for(var/atom/movable/screen/I in icons)
-		if(I.alpha && (I.icon_state in icon_states)) // I.color can AND will be null if player doesn't use it, don't check it.
-			I.icon = ui_style
-			I.color = UI_style_color_new
-			I.alpha = UI_style_alpha_new
+	hud.ui_style = ui_style
+	hud.ui_color = UI_color_new
+	hud.ui_alpha = UI_alpha_new
 
+	for(var/atom/movable/screen/screen as anything in screens)
+		if(screen.alpha && (screen.icon_state in icon_states))
+			screen.update_by_hud(hud)
 
 	if(tgui_alert(usr, "Like it? Save changes?",, list("Yes", "No")) == "Yes")
 		prefs.UI_style = UI_style_new
-		prefs.UI_style_alpha = UI_style_alpha_new
-		prefs.UI_style_color = UI_style_color_new
+		prefs.UI_style_alpha = UI_alpha_new
+		prefs.UI_style_color = UI_color_new
 		prefs.save_preferences()
 		to_chat(usr, "UI was saved")
+		return
+
+	hud.ui_style = ui_style2icon(prefs.UI_style)
+	hud.ui_color = prefs.UI_style_color
+	hud.ui_alpha = prefs.UI_style_alpha
+
+	for(var/atom/movable/screen/screen as anything in screens)
+		if(screen.alpha && (screen.icon_state in icon_states))
+			screen.update_by_hud(hud)
 
 /client/verb/toggle_anim_attacks()
 	set name = "Show/Hide Melee Animations"
@@ -163,21 +177,6 @@
 	prefs.save_preferences()
 	to_chat(src, "You will [(prefs.toggles & SHOW_PROGBAR) ? "now" : "no longer"] see progress bars.")
 	feedback_add_details("admin_verb","PRB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON)
-
-/client/verb/pick_ghost_orbit()
-	set name = "Choose Ghost Orbit"
-	set category = "Preferences"
-	set desc = "Choose your preferred ghostly orbit."
-
-	var/new_orbit = input(src, "Choose your ghostly orbit:") as null|anything in ghost_orbits
-	if(new_orbit)
-		prefs.ghost_orbit = new_orbit
-		prefs.save_preferences()
-		if(istype(mob, /mob/dead/observer))
-			var/mob/dead/observer/O = mob
-			O.ghost_orbit = new_orbit
 
 /client/verb/set_ckey_show()
 	set name = "Show/Hide Ckey"
@@ -340,6 +339,14 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	to_chat(src, "You [prefs.eorg_enabled ? "will be" : "won't be"] teleported to Thunderdome at round end.")
 	feedback_add_details("admin_verb", "ED")
+
+/client/verb/toggle_runechat()
+	set name = "Toggle Runechat (Above-Head-Speech)"
+	set category = "Preferences"
+	prefs.show_runechat = !prefs.show_runechat
+
+	to_chat(src, "Runechat is [prefs.show_runechat ? "enabled" : "disabled"].")
+	feedback_add_details("admin_verb", "TRC")
 
 /client/verb/toggle_hotkeys_mode()
 	set name = "Toggle Hotkeys Mode"

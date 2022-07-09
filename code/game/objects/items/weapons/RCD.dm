@@ -59,6 +59,8 @@ RCD
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED)))
+		return
 	switch(mode)
 		if(1)
 			mode = 2
@@ -94,7 +96,7 @@ RCD
 
 	switch(mode)
 		if(1)
-			if(istype(target, /turf/space))
+			if(isenvironmentturf(target)
 				var/turf/space/S = target
 				if(!canBuildOnTurf(S))
 					to_chat(user, "<span class='warning'>You can't build floor here.</span>")
@@ -102,11 +104,11 @@ RCD
 				if(useResource(1, user))
 					to_chat(user, "Building Floor...")
 					activate()
-					S.ChangeTurf(/turf/simulated/floor/plating/airless)
+					T.ChangeTurf(/turf/simulated/floor/plating/airless)
 					return 1
 				return 0
 
-			if(istype(target, /turf/simulated/floor) && !user.is_busy())
+			if(isfloorturf(target) && !user.is_busy())
 				var/turf/simulated/floor/F = target
 				if(!canBuildOnTurf(F))
 					to_chat(user, "<span class='warning'>You can't build wall here.</span>")
@@ -123,7 +125,7 @@ RCD
 				return 0
 
 		if(2)
-			if(istype(target, /turf/simulated/floor))
+			if(isfloorturf(target))
 				if(!canBuildOnTurf(target))
 					to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
 					return 0
@@ -140,7 +142,7 @@ RCD
 				return 0
 
 		if(3)
-			if(istype(target, /turf/simulated/wall))
+			if(iswallturf(target))
 				var/turf/simulated/wall/W = target
 				if(istype(W, /turf/simulated/wall/r_wall) && !canRwall)
 					return 0
@@ -155,7 +157,7 @@ RCD
 						return 1
 				return 0
 
-			if(istype(target, /turf/simulated/floor))
+			if(isfloorturf(target))
 				var/turf/simulated/floor/F = target
 				if(checkResource(5, user) && !user.is_busy())
 					to_chat(user, "Deconstructing Floor...")

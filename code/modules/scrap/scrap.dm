@@ -1,6 +1,5 @@
 var/global/list/scrap_base_cache = list()
 
-ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 /obj/structure/scrap
 	name = "scrap pile"
 	desc = "Pile of industrial debris. It could use a shovel and pair of hands in gloves. "
@@ -75,13 +74,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 	if (prob(25))
 		new /obj/effect/effect/smoke(src.loc)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			new /obj/effect/scrapshot(src.loc, 1)
 			dig_amount = 0
-		if(2)
+		if(EXPLODE_HEAVY)
 			new /obj/effect/scrapshot(src.loc, 2)
 			dig_amount = dig_amount / 3
-		if(3)
+		if(EXPLODE_LIGHT)
 			dig_amount = dig_amount / 2
 	if(dig_amount < 4)
 		qdel(src)
@@ -137,6 +136,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 				if(BP.is_robotic())
 					return
 				to_chat(M, "<span class='danger'>You step on the sharp debris!</span>")
+				H.Stun(1)
 				H.Weaken(3)
 				BP.take_damage(5, 0)
 				H.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
@@ -256,6 +256,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 	if(do_dig  && !user.is_busy())
 		user.do_attack_animation(src)
 		if(W.use_tool(src, user, do_dig))
+			if(ishuman(user))
+				var/mob/living/carbon/human/H = user
+				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
+				BPHand.adjust_pumped(0.1)
 			visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
 			shuffle_loot()
 			dig_out_lump(user.loc, 0)
@@ -359,6 +363,15 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 		/obj/random/science/science_supply
 	)
 
+/obj/structure/scrap/science_safe
+	icontype = "science"
+	name = "scientific trash pile"
+	desc = "Pile of refuse from research department."
+	parts_icon = 'icons/obj/structures/scrap/science.dmi'
+	loot_list = list(
+		/obj/random/science/science_supply_safe
+	)
+
 /obj/structure/scrap/cloth
 	icontype = "cloth"
 	name = "cloth pile"
@@ -366,6 +379,15 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 	parts_icon = 'icons/obj/structures/scrap/cloth.dmi'
 	loot_list = list(
 		/obj/random/cloth/random_cloth
+	)
+
+/obj/structure/scrap/cloth_safe
+	icontype = "cloth"
+	name = "cloth pile"
+	desc = "Pile of second hand clothing for charity."
+	parts_icon = 'icons/obj/structures/scrap/cloth.dmi'
+	loot_list = list(
+		/obj/random/cloth/random_cloth_safe
 	)
 
 /obj/structure/scrap/syndie

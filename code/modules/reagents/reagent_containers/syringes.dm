@@ -25,6 +25,8 @@
 
 /obj/item/weapon/reagent_containers/syringe/pickup(mob/living/user)
 	. = ..()
+	if(HAS_TRAIT_FROM(user, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+		cause_syringe_fear(user)
 	update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/dropped(mob/user)
@@ -72,13 +74,13 @@
 				return
 
 			if(ismob(target))//Blood!
-				if(istype(target, /mob/living/carbon/slime))
+				if(isslime(target))
 					to_chat(user, "<span class='warning'>You are unable to locate any blood.</span>")
 					return
 				if(reagents.has_reagent("blood"))
 					to_chat(user, "<span class='warning'>There is already a blood sample in this syringe</span>")
 					return
-				if(istype(target, /mob/living/carbon))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
+				if(iscarbon(target))//maybe just add a blood reagent to all mobs. Then you can suck them dry...With hundreds of syringes. Jolly good idea.
 					var/amount = src.reagents.maximum_volume - src.reagents.total_volume
 					var/mob/living/carbon/T = target
 					if(!T.dna)
@@ -89,7 +91,7 @@
 						return
 
 					var/datum/reagent/B
-					if(istype(T,/mob/living/carbon/human))
+					if(ishuman(T))
 						var/mob/living/carbon/human/H = T
 						if(H.species && H.species.flags[NO_BLOOD])
 							H.reagents.trans_to(src,amount)
@@ -105,6 +107,8 @@
 						reagents.handle_reactions()
 					infect_limb(user, target)
 					user.visible_message("<span class='warning'>[user] takes a blood sample from [target].</span>", self_message = "<span class='notice'>You take a blood sample from [target]</span>", viewing_distance = 4)
+					if(HAS_TRAIT_FROM(target, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+						cause_syringe_fear(target)
 
 			else //if not mob
 				if(!target.reagents.total_volume)
@@ -129,7 +133,7 @@
 			if(istype(target, /obj/item/weapon/implantcase/chem))
 				return
 
-			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
+			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes) && !istype(target, /obj/item/weapon/changeling_test))
 				to_chat(user, "<span class='warning'>You cannot directly fill this object.</span>")
 				return
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -153,6 +157,8 @@
 					M.log_combat(user, "injected with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
 					reagents.reaction(target, INGEST)
+					if(HAS_TRAIT_FROM(target, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+						cause_syringe_fear(target)
 				else
 					if(!L.try_inject(user, TRUE, TRUE))
 						return
@@ -164,7 +170,7 @@
 				B = d
 				break
 			var/trans = 5
-			if(B && istype(target,/mob/living/carbon))
+			if(B && iscarbon(target))
 				var/list/virus2 = B.data["virus2"]
 				if(virus2 && virus2.len)
 					message_admins("<font color='red'>Injected blood with virus to [target] by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) [ADMIN_JMP(user)]</font>",0,1)
@@ -174,6 +180,8 @@
 			else
 				trans = reagents.trans_to(target, amount_per_transfer_from_this)
 			to_chat(user, "<span class='notice'>You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>")
+			if(HAS_TRAIT_FROM(target, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+				cause_syringe_fear(target)
 			if (reagents.total_volume <= 0 && mode == SYRINGE_INJECT)
 				mode = SYRINGE_DRAW
 				update_icon()
@@ -216,6 +224,8 @@
 	add_blood(target)
 	add_fingerprint(usr)
 	update_icon()
+	if(HAS_TRAIT_FROM(target, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+		cause_syringe_fear(target)
 
 /obj/item/weapon/reagent_containers/syringe/update_icon()
 	if(mode == SYRINGE_BROKEN)
@@ -274,6 +284,8 @@
 
 /obj/item/weapon/reagent_containers/ld50_syringe/pickup(mob/living/user)
 	. = ..()
+	if(HAS_TRAIT_FROM(user, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+		cause_syringe_fear(user)
 	update_icon()
 
 /obj/item/weapon/reagent_containers/ld50_syringe/dropped(mob/user)
@@ -304,7 +316,7 @@
 				return
 
 			if(ismob(target))
-				if(istype(target, /mob/living/carbon))//I Do not want it to suck 50 units out of people
+				if(iscarbon(target))//I Do not want it to suck 50 units out of people
 					to_chat(usr, "This needle isn't designed for drawing blood.")
 					return
 			else //if not mob
@@ -453,5 +465,13 @@
 /obj/item/weapon/reagent_containers/syringe/mulligan/atom_init()
 	. = ..()
 	reagents.add_reagent("mulligan", 1)
+	mode = SYRINGE_INJECT
+	update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/nutriment
+
+/obj/item/weapon/reagent_containers/syringe/nutriment/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 15)
 	mode = SYRINGE_INJECT
 	update_icon()

@@ -57,7 +57,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if (busy)
 		to_chat(user, "<span class='warning'> The protolathe is busy right now.</span>")
 		return
-	if (istype(O, /obj/item) && !loaded_item)
+	if (isitem(O) && !loaded_item)
 		if(isrobot(user)) //Don't put your module items in there!
 			return
 		if(!O.origin_tech)
@@ -66,6 +66,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
 		if (temp_tech.len == 0)
 			to_chat(user, "<span class='warning'> You cannot deconstruct this item!</span>")
+			return
+		if(!do_skill_checks(user))
 			return
 		busy = 1
 		loaded_item = O

@@ -45,7 +45,8 @@
 			LE.grabber = TRUE
 		if(INTENT_PUSH)
 			if(prob(65))
-				LE.weaken = 2.5
+				LE.weaken = 3
+				LE.stun = 2
 		if(INTENT_HARM)
 			LE.damage = 30
 		else
@@ -87,7 +88,7 @@
 	if(T.Adjacent(host) && !host.get_inactive_hand() && !host.lying)
 		if(iscarbon(T))
 			host.Grab(T, GRAB_AGGRESSIVE, FALSE)
-		else if(istype(T, /obj/item))
+		else if(isitem(T))
 			host.put_in_inactive_hand(T)
 
 /obj/item/projectile/changeling_whip/process()

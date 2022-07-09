@@ -9,8 +9,11 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 7
+
 	w_class = SIZE_NORMAL
-	max_storage_space = DEFAULT_BOX_STORAGE + 2 // fits all tools and around 2 extra items
+	max_w_class = SIZE_SMALL
+	max_storage_space = DEFAULT_BOX_STORAGE + 3 // fits all tools and around 2 extra items
+
 	origin_tech = "combat=1"
 	hitsound = list('sound/items/tools/toolbox-hit.ogg')
 	attack_verb = list("robusted")
@@ -80,8 +83,9 @@
 	. = ..()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
-	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/weldingtool/largetank(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
 	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/glasses/welding(src)

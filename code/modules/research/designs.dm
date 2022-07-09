@@ -111,16 +111,6 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/camera_advanced/xenobio
 	category = list("Computer")
 
-
-/datum/design/pandemic
-	name = "Circuit Design (PanD.E.M.I.C. 2200)"
-	desc = "Allows for the construction of circuit boards used to build a PanD.E.M.I.C. 2200 console."
-	id = "pandemic"
-	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/pandemic
-	category = list("Machine")
-
 /datum/design/scan_console
 	name = "Circuit Design (DNA Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new DNA scanning console."
@@ -1812,6 +1802,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1200, MAT_GLASS = 1000)
 	build_path = /obj/item/device/biocan
+	category = list("Support")
+
+/datum/design/changeling_test
+	name = "Changeling test"
+	desc = "Allows you to identify hidden changelings"
+	id = "changtest"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 12500, MAT_GOLD = 2000, MAT_DIAMOND = 3750, MAT_URANIUM = 4000)
+	build_path = /obj/item/weapon/changeling_test
 	category = list("Support")
 
 /////////////////////////////////////////

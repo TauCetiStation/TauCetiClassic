@@ -27,6 +27,7 @@
 	var/stored_core_stability_delay = 0
 
 	var/stored_power = 0//Power to deploy per tick
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 
 /obj/machinery/power/am_control_unit/atom_init()
@@ -116,21 +117,20 @@
 
 /obj/machinery/power/am_control_unit/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			stability -= 60
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			stability -= 40
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			stability -= 20
 	check_stability()
 	return
 
 
-/obj/machinery/power/am_control_unit/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/power/am_control_unit/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(Proj.flag != "bullet")
 		stability -= Proj.force
-	return 0
-
 
 /obj/machinery/power/am_control_unit/power_change()
 	..()
@@ -258,7 +258,7 @@
 
 /obj/machinery/power/am_control_unit/ui_interact(mob/user)
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)) || !anchored)
-		if(!istype(user, /mob/living/silicon/ai))
+		if(!isAI(user))
 			user.unset_machine()
 			user << browse(null, "window=AMcontrol")
 			return

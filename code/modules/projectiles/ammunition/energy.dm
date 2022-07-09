@@ -12,11 +12,8 @@
 	projectile_type = /obj/item/projectile/beam
 	select_name = "kill"
 
-/obj/item/ammo_casing/energy/laser_pulse
-	projectile_type = /obj/item/projectile/energy/laser
-	select_name = "kill"
-	e_cost = 50
-	fire_sound = 'sound/weapons/guns/gunpulse_laser3.ogg'
+/obj/item/ammo_casing/energy/laser/cyborg
+	e_cost = 250
 
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/item/projectile/beam/practice
@@ -183,3 +180,9 @@
 /obj/item/ammo_casing/energy/pyrometer/medical
 	projectile_type = /obj/item/projectile/pyrometer/medical
 	select_name = "non-contact thermometer (medical)"
+
+/obj/item/ammo_casing/energy/phaser
+	projectile_type = /obj/item/projectile/energy/phaser
+	select_name = "phase"
+	e_cost = 100
+	fire_sound = 'sound/weapons/guns/phaser.ogg'

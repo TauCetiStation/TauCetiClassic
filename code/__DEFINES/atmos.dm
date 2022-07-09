@@ -6,6 +6,7 @@
 #define N2STANDARD 0.79
 
 #define MOLES_PHORON_VISIBLE 0.7 // Moles in a standard cell after which phoron is visible.
+#define TEMPERATURE_OVERLAY_MOLES 15 // Moles in a standard cell after which temperature overlays applied.
 #define MOLES_O2STANDARD     (MOLES_CELLSTANDARD * O2STANDARD) // O2 standard value (21%)
 #define MOLES_N2STANDARD     (MOLES_CELLSTANDARD * N2STANDARD) // N2 standard value (79%)
 #define MOLES_O2ATMOS        (MOLES_O2STANDARD*50) // floor should
@@ -18,8 +19,8 @@
 #define BREATH_VOLUME       0.5 // Liters in a normal breath.
 #define BREATH_MOLES        (ONE_ATMOSPHERE * BREATH_VOLUME / (T20C * R_IDEAL_GAS_EQUATION)) // Amount of air to take a from a tile
 #define BREATH_PERCENTAGE   (BREATH_VOLUME / CELL_VOLUME)
+#define BREATH_USED_PART    (1 / 6)
 #define HUMAN_NEEDED_OXYGEN (MOLES_CELLSTANDARD * BREATH_PERCENTAGE * 0.16) // unused TODO check feature and for define below.
-#define HUMAN_HEAT_CAPACITY 280000 //J/K For 80kg person
 
 #define SOUND_MINIMUM_PRESSURE 10
 
@@ -46,6 +47,8 @@
 #define  SPACE_HEAT_TRANSFER_COEFFICIENT 0.2 // A hack to partly simulate radiative heat. // unused
 #define   OPEN_HEAT_TRANSFER_COEFFICIENT 0.4
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT 0.1 // A hack for now. // unused
+/// a hack to help make vacuums "cold", sacrificing realism for gameplay
+#define HEAT_CAPACITY_VACUUM 7000
 
 // Fire damage. (unused)
 #define CARBON_LIFEFORM_FIRE_RESISTANCE (T0C + 200)

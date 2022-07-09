@@ -87,6 +87,7 @@
 	unacidable = 1
 
 /obj/effect/forcefield/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	for(var/mob/living/M in get_turf(loc))
 		M.bullet_act(Proj, def_zone)
 
@@ -158,4 +159,5 @@
 	if(!volume)
 		volume = 1
 	if(volume > 5)
+		M.Stun(2)
 		M.Weaken(4)

@@ -38,7 +38,7 @@
 	name = "alien facehugger ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
-	a_intent = INTENT_GRAB
+	set_a_intent(INTENT_GRAB)
 	alien_list[ALIEN_FACEHUGGER] += src
 
 /mob/living/carbon/xenomorph/facehugger/Destroy()
@@ -58,7 +58,7 @@
 
 /mob/living/carbon/xenomorph/facehugger/movement_delay()
 	var/tally = 0
-	if (istype(src, /mob/living/carbon/xenomorph/facehugger)) //just in case
+	if (isfacehugger(src)) //just in case
 		tally = -1
 	return (tally + move_delay_add + config.alien_delay)
 
@@ -135,7 +135,7 @@
 	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "facehugger_dead"
-	else if(stat == UNCONSCIOUS || lying || resting)
+	else if(stat == UNCONSCIOUS || lying || crawling)
 		icon_state = "facehugger_inactive"
 	else
 		icon_state = "facehugger"
@@ -259,6 +259,7 @@ This is chestburster mechanic for damaging
 			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 			H.apply_damage(rand(7, 14), BRUTE, BP_CHEST)
 			H.SetShockStage(20)
+			H.Stun(1)
 			H.Weaken(1)
 			H.emote("scream")
 	else if(ismonkey(affecting))
@@ -273,6 +274,7 @@ This is chestburster mechanic for damaging
 			last_bite = world.time
 			M.adjustBruteLoss(rand(35, 65))
 			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
+			M.Stun(8)
 			M.Weaken(8)
 
 /obj/item/weapon/larva_bite/proc/confirm()
@@ -281,7 +283,7 @@ This is chestburster mechanic for damaging
 		return FALSE
 
 	if(affecting)
-		if(istype(chestburster.loc, /mob/living))
+		if(isliving(chestburster.loc))
 			return TRUE
 		else
 			qdel(src)
