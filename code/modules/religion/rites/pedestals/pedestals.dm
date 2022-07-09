@@ -17,7 +17,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple = 1,
 	)
 
-	var/need_members = 1
+	var/need_members = 4
 
 /datum/religion_rites/pedestals/cult/narsie/proc/checks(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(istype(get_area(AOG), religion.area_type))
@@ -73,10 +73,6 @@
 
 	if(!(A in summon_objective.summon_spots))
 		to_chat(user, span_cultlarge("The Geometer can only be summoned where the veil is weak - in [english_list(summon_objective.summon_spots)]!"))
-		return
-	var/confirm_final = tgui_alert(user, "This is the FINAL step to summon Nar'Sie; it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", list("My life for Nar'Sie!", "No"))
-	if(confirm_final == "No")
-		to_chat(user, span_cult("You decide to prepare further before scribing the rune."))
 		return
 	Turf = get_turf(user)
 	A = get_area(src)
