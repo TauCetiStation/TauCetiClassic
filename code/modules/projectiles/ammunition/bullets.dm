@@ -243,3 +243,12 @@
 	desc = "A 12.7 bullet casing."
 	caliber = "12.7mm"
 	projectile_type = /obj/item/projectile/bullet/rifle2
+
+/obj/item/ammo_casing/c763mm
+	name = "7.63"
+	desc = "7.63"
+	icon = 'icons/obj/ammo.dmi'
+	caliber = "7.63mm"
+	icon_state = "763"
+	projectile_type = /obj/item/projectile/bullet/trashrifleBullet
+	m_amt = 100

@@ -263,3 +263,7 @@
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(1)
 		M.IgniteMob()
+
+/obj/item/projectile/bullet/trashrifleBullet
+	damage = 35
+	embed = 0

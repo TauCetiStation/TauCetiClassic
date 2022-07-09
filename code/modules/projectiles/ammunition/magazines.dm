@@ -117,6 +117,14 @@
 	max_ammo = 1
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/cylinder/rifle763
+	name = "763 internal magazine"
+	desc = "This doesn't even exist!"
+	ammo_type = /obj/item/ammo_casing/c763mm
+	caliber = "7.63mm"
+	max_ammo = 1
+	multiload = 0
+
 /obj/item/ammo_box/magazine/internal/cylinder/rev38/dungeon
 	name = "d-tiv revolver cylinder"
 	desc = "Oh god, this shouldn't be here."

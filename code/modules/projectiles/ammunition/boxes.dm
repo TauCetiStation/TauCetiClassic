@@ -65,6 +65,15 @@
 	max_ammo = 7
 	multiple_sprites = 2
 
+/obj/item/ammo_box/c763mm
+	name = "Ammunition Box (7.63mm)"
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "box-ammo-763"
+	ammo_type = /obj/item/ammo_casing/c763mm
+	caliber = "7.63mm"
+	max_ammo = 20
+	m_amt = 1200
+
 /obj/item/ammo_box/c45r
 	name = "Ammunition Box (.45 rubber)"
 	caliber = ".45"
@@ -139,3 +148,4 @@
 	name = "shotgun shells box (stunshot)"
 	icon_state = "stanshellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/stunshot
+

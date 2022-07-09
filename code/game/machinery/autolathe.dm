@@ -86,6 +86,8 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/ammo_box/magazine/c45r,          CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/m9mm_2/rubber, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/c38,                    CATEGORY_AMMO),
+	R(/obj/item/ammo_casing/c763mm,           CATEGORY_AMMO),
+	R(/obj/item/ammo_box/c763mm,                 CATEGORY_AMMO),
 	R(/obj/item/device/taperecorder,         CATEGORY_DEVICES),
 	R(/obj/item/device/assembly/igniter,     CATEGORY_DEVICES),
 	R(/obj/item/device/assembly/signaler,    CATEGORY_DEVICES),
@@ -133,7 +135,9 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
 	R(/obj/item/ammo_box/magazine/m9mm_2, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/c38m,                    CATEGORY_AMMO),
 	R(/obj/item/ammo_box/eight_shells, CATEGORY_AMMO),
-	R(/obj/item/ammo_box/eight_shells/buckshot, CATEGORY_AMMO)
+	R(/obj/item/ammo_box/eight_shells/buckshot, CATEGORY_AMMO),
+	R(/obj/item/ammo_casing/c763mm,           CATEGORY_AMMO),
+	R(/obj/item/ammo_box/c763mm,                 CATEGORY_AMMO)
 
 )
 #undef R
