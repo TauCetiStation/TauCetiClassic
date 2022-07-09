@@ -103,7 +103,7 @@
 	repeating = TRUE
 	heal_brute = 1
 
-	required_skills = list(/datum/skill/medical/novice)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
 
 /obj/item/stack/medical/bruise_pack/announce_heal(mob/living/L, mob/user)
 	..()
@@ -169,7 +169,7 @@
 	repeating = FALSE
 	heal_burn = 1
 
-	required_skills = list(/datum/skill/medical/novice)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
 
 /obj/item/stack/medical/ointment/can_heal(mob/living/L, mob/living/user)
 	. = ..()
@@ -234,7 +234,7 @@
 	origin_tech = "biotech=1"
 
 	repeating = TRUE
-	required_skills = list(/datum/skill/medical/trained)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
 /obj/item/stack/medical/advanced/bruise_pack/update_icon()
 	var/icon_amount = clamp(amount, 1, max_amount)
@@ -297,7 +297,7 @@
 	origin_tech = "biotech=1"
 
 	repeating = FALSE
-	required_skills = list(/datum/skill/medical/trained)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
 /obj/item/stack/medical/advanced/ointment/update_icon()
 	var/icon_amount = clamp(amount, 1, max_amount)
@@ -343,7 +343,7 @@
 	self_delay = 200
 
 	repeating = FALSE
-	required_skills = list(/datum/skill/medical/pro, /datum/skill/surgery/novice)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_PRO, /datum/skill/surgery = SKILL_LEVEL_NOVICE)
 
 /obj/item/stack/medical/splint/can_heal(mob/living/L, mob/living/user)
 	. = ..()
@@ -393,7 +393,7 @@
 	origin_tech = "biotech=2"
 
 	repeating = FALSE
-	required_skills = list(/datum/skill/medical/master, /datum/skill/surgery/trained)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_MASTER, /datum/skill/surgery = SKILL_LEVEL_TRAINED)
 
 /obj/item/stack/medical/suture/update_icon()
 	var/icon_amount = clamp(amount, 1, max_amount)
