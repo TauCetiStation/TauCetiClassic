@@ -71,7 +71,8 @@
 	if(!client)
 		return
 	var/datum/faction/blob_conglomerate/C = find_faction_by_type(/datum/faction/blob_conglomerate)
-	for(var/M in C.members)
+	if(!C) return FALSE
+	for(var/datum/role/blob_overmind/M in C.members)
 		var/datum/role/R = M
 		if(!R.antag.current)
 			return
@@ -272,6 +273,11 @@
 /mob/living/simple_animal/hostile/blob/blobbernaut/Login()
 	..()
 	update_hud()
+
+	var/datum/faction/blob_conglomerate/C = find_faction_by_type(/datum/faction/blob_conglomerate)
+	if(!C) return FALSE
+	var/datum/role/blobbernaut/R = SSticker.mode.CreateRole(/datum/role/blobbernaut, src)
+	C.HandleRecruitedRole(R)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/update_health_hud() //ONLY healths
 	if(!hud_used) //Yes, we really need it

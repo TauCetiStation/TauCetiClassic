@@ -202,23 +202,6 @@ Message ends."}
 
 /datum/faction/blob_conglomerate/GetScoreboard()
 	var/dat = ..()
-	dat += "<HR><BR>"
-	var/icon/I
-	for(var/M in members)
-		var/datum/role/R = M
-		if(!R.antag.current)
-			return
-		if(!isovermind(R.antag.current))
-			continue
-		var/mob/camera/blob/O = R.antag.current
-		for(var/mob/B in O.blob_mobs)
-			I = icon(B.icon, B.icon_state)
-			end_icons += I
-			var/tempstate = end_icons.len
-			dat += "<tr><td>"
-			dat += {"<img src="logo_[tempstate].png"></td> <B>[B.client.key]</B> as <B>[B.name]</B><BR>"}
-			dat += "</td></tr>"
-	dat += "<HR><BR><B>"
 	var/list/result = check_quarantaine()
 	if (detect_overminds() && (result["numOffStation"] + result["numSpace"]))
 		dat += "<span class='danger'>The AI has failed to enforce the quarantine.</span>"
