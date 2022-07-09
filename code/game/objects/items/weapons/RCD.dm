@@ -96,7 +96,7 @@ RCD
 
 	switch(mode)
 		if(1)
-			if(isenvironmentturf(target)
+			if(isenvironmentturf(target))
 				var/turf/space/S = target
 				if(!canBuildOnTurf(S))
 					to_chat(user, "<span class='warning'>You can't build floor here.</span>")
