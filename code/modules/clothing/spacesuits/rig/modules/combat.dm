@@ -28,6 +28,7 @@
 	charges["flashbang"]   = new /datum/rig_charge("flashbang",   /obj/item/weapon/grenade/flashbang,  3)
 	charges["smoke bomb"]  = new /datum/rig_charge("smoke bomb",  /obj/item/weapon/grenade/smokebomb,  3)
 	charges["EMP grenade"] = new /datum/rig_charge("EMP grenade", /obj/item/weapon/grenade/empgrenade, 3)
+
 /obj/item/rig_module/grenade_launcher/accepts_item(obj/item/input_device, mob/living/user)
 
 	if(!istype(input_device) || !istype(user))
