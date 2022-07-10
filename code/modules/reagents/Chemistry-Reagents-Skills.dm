@@ -79,7 +79,7 @@
 	..()
 	var/mob/living/carbon/brain/brainmob = data["brainmob"]
 	if(brainmob)
-		M.add_command_buff(brainmob, buff_duration)
+		M.add_skills_buff(brainmob.mind.skills.available, buff_duration)
 
 /datum/reagent/mentat/preset
 	taste_message = "hard work"
