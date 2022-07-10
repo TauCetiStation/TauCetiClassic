@@ -5,6 +5,13 @@
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/infirmary)
+"ac" = (
+/obj/item/weapon/ore/glass,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "ad" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -21,6 +28,15 @@
 	icon_state = "freezerfloor2"
 	},
 /area/space_structures/telestation/infirmary)
+"ae" = (
+/obj/machinery/atmospherics/pipe/simple/visible/supply,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/space)
 "ag" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/table,
@@ -155,12 +171,18 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/dormitories)
 "aT" = (
-/obj/machinery/atmospherics/pipe/simple/visible/supply,
+/obj/machinery/atmospherics/pipe/simple/visible/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
+	dir = 10
+	},
 /obj/structure/cable{
-	icon_state = "1-2"
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "aW" = (
 /obj/structure/window/reinforced{
@@ -439,7 +461,6 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "dr" = (
 /obj/machinery/atmospherics/pipe/simple/visible/black{
@@ -591,7 +612,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "eq" = (
 /obj/structure/closet,
@@ -890,7 +910,6 @@
 	dir = 10
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "gv" = (
 /turf/simulated/floor/carpet/red,
@@ -1264,10 +1283,16 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/bluespace_research)
 "iW" = (
+/obj/machinery/atmospherics/pipe/simple/visible/supply{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
+	dir = 5
+	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -1486,7 +1511,6 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "kE" = (
 /mob/living/simple_animal/hostile/cellular/meat/changeling,
@@ -2626,8 +2650,11 @@
 	},
 /area/space_structures/telestation/infirmary)
 "rW" = (
+/obj/machinery/atmospherics/pipe/simple/visible/supply,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "rX" = (
 /obj/structure/cable{
@@ -2959,7 +2986,6 @@
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
 /turf/environment/space,
 /area/space)
 "uP" = (
@@ -3110,7 +3136,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "wb" = (
 /obj/structure/cable{
@@ -3254,7 +3279,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "wK" = (
 /obj/item/organ/external/head/robot,
@@ -4351,19 +4375,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_theatre_cafeteria)
 "DI" = (
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 5
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 5
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "DJ" = (
 /obj/machinery/alarm,
@@ -4374,7 +4388,6 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "DP" = (
 /obj/structure/rack,
@@ -4384,12 +4397,10 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "DQ" = (
-/obj/item/weapon/ore/glass,
-/obj/structure/cable{
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "DW" = (
 /turf/simulated/wall,
@@ -4636,7 +4647,6 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "FG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -4849,18 +4859,19 @@
 /area/space_structures/telestation/command_post)
 "GM" = (
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 10
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 10
+	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 2;
+	d1 = 4;
 	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
-/turf/environment/space,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
 /area/space)
 "GP" = (
 /obj/item/weapon/shard,
@@ -5541,8 +5552,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
-/turf/environment/space,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
 /area/space)
 "Lo" = (
 /obj/structure/rack,
@@ -6040,7 +6052,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "Os" = (
 /obj/item/weapon/melee/baton,
@@ -6131,7 +6142,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "OW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -6425,7 +6435,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "Qh" = (
 /obj/structure/computerframe,
@@ -6738,7 +6747,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "Ss" = (
 /obj/structure/cable{
@@ -6984,7 +6992,6 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "TN" = (
 /obj/machinery/porta_turret,
@@ -7457,7 +7464,6 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "Wy" = (
 /obj/structure/cable{
@@ -7921,7 +7927,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/turf/environment/space,
 /area/space)
 "Zy" = (
 /obj/item/pipe{
@@ -14401,7 +14406,7 @@ Qg
 Qg
 kw
 HQ
-rW
+HQ
 sU
 sU
 HQ
@@ -14430,8 +14435,8 @@ HQ
 HQ
 HQ
 HQ
-HQ
-aT
+gL
+ae
 Qg
 Qg
 Pa
@@ -14527,7 +14532,7 @@ HQ
 HQ
 sU
 sU
-rW
+HQ
 sU
 sU
 sU
@@ -14663,12 +14668,12 @@ HQ
 HQ
 HQ
 sU
-rW
+HQ
 sU
 sU
 dv
 wa
-rW
+HQ
 sU
 Wx
 Qg
@@ -14814,10 +14819,10 @@ Qg
 Qg
 Qg
 Qg
-aT
+rW
 RT
 HQ
-DQ
+ac
 JZ
 HQ
 Fc
@@ -15062,7 +15067,7 @@ HQ
 HQ
 HQ
 HQ
-rW
+HQ
 gt
 TM
 HQ
@@ -15194,8 +15199,8 @@ HQ
 HQ
 HQ
 HQ
-rW
-rW
+HQ
+HQ
 wa
 HQ
 HQ
@@ -15719,7 +15724,7 @@ HQ
 HQ
 HQ
 HQ
-gL
+HQ
 HQ
 HQ
 HQ
@@ -15845,7 +15850,7 @@ Bj
 iu
 Mg
 HQ
-gL
+HQ
 HQ
 HQ
 HQ
@@ -15978,7 +15983,6 @@ iu
 Mg
 HQ
 HQ
-gL
 HQ
 HQ
 HQ
@@ -15989,7 +15993,8 @@ HQ
 HQ
 HQ
 HQ
-uO
+HQ
+DQ
 HQ
 HQ
 HQ
@@ -16121,7 +16126,7 @@ HQ
 HQ
 HQ
 HQ
-HQ
+SZ
 fh
 JZ
 HQ
@@ -16252,7 +16257,7 @@ HQ
 HQ
 HQ
 HQ
-HQ
+XZ
 HQ
 MZ
 HQ
@@ -16263,7 +16268,7 @@ HQ
 HQ
 HQ
 HQ
-HQ
+DI
 Mg
 HQ
 HQ
@@ -16780,7 +16785,7 @@ HQ
 HQ
 HQ
 HQ
-iW
+HQ
 Xh
 HQ
 HQ
@@ -17176,8 +17181,8 @@ HQ
 HQ
 HQ
 HQ
-rW
-wa
+HQ
+GM
 HQ
 HQ
 HQ
@@ -17572,8 +17577,8 @@ HQ
 HQ
 HQ
 HQ
-gL
-uO
+HQ
+DQ
 sU
 HQ
 HQ
@@ -17969,8 +17974,8 @@ HQ
 HQ
 HQ
 HQ
-GM
-DI
+aT
+iW
 sU
 HQ
 HQ
@@ -18207,7 +18212,7 @@ HQ
 HQ
 HQ
 sU
-HQ
+gL
 HQ
 HQ
 HQ
@@ -18222,20 +18227,20 @@ HQ
 Mg
 HQ
 HQ
-gL
-HQ
-HQ
-HQ
-HQ
-HQ
-HQ
-HQ
-HQ
-HQ
-HQ
-HQ
-GM
 DI
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+aT
+iW
 sU
 sU
 HQ
@@ -18367,9 +18372,9 @@ HQ
 HQ
 HQ
 HQ
-GM
-DI
-rW
+aT
+iW
+HQ
 HQ
 HQ
 HQ
@@ -18501,7 +18506,7 @@ HQ
 HQ
 HQ
 wa
-rW
+HQ
 HQ
 HQ
 HQ
@@ -18633,7 +18638,7 @@ HQ
 HQ
 HQ
 wa
-rW
+HQ
 HQ
 HQ
 HQ
@@ -18735,7 +18740,7 @@ HQ
 HQ
 HQ
 HQ
-rW
+HQ
 HQ
 HQ
 HQ
@@ -18867,7 +18872,7 @@ HQ
 HQ
 HQ
 HQ
-HQ
+DI
 HQ
 HQ
 HQ
@@ -18896,9 +18901,9 @@ HQ
 HQ
 HQ
 HQ
-GM
-DI
-rW
+aT
+iW
+HQ
 sU
 HQ
 HQ
@@ -19029,8 +19034,8 @@ HQ
 HQ
 HQ
 HQ
-GM
-DI
+aT
+iW
 sU
 HQ
 HQ
@@ -19426,8 +19431,8 @@ it
 lD
 tD
 HQ
-GM
-DI
+aT
+iW
 sU
 sU
 HQ
@@ -19559,8 +19564,8 @@ GK
 tD
 HQ
 HQ
-GM
-DI
+aT
+iW
 sU
 HQ
 HQ
