@@ -14,9 +14,9 @@
 	)
 
 
-	//Determines maximum amount of points that can be earned by certain methods. 
+	//Determines maximum amount of points that can be earned by certain methods.
 	//Total points that can be earned equal highest score multiplied by this number
-	var/cap_coeff = 2 
+	var/cap_coeff = 2
 
 	var/list/tech_points = list(
 		"materials" = 200,
@@ -389,15 +389,16 @@
 	m_amt = 30
 	g_amt = 10
 	var/stored_points
+	var/point_multiplier = 1000
 
 /obj/item/weapon/disk/research_points/atom_init()
 	. = ..()
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
 
-	stored_points = rand(1,10)*1000
+	stored_points = rand(1,10)*point_multiplier
 
 /obj/item/weapon/disk/research_points/rare/atom_init()
 	. = ..()
 
-	stored_points = rand(10, 20)*1000
+	stored_points = rand(10, 20)*point_multiplier

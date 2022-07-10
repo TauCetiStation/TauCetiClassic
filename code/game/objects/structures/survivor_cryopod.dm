@@ -129,3 +129,13 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/globose(H), SLOT_WEAR_SUIT)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/globose(H), SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(H), SLOT_S_STORE)
+
+/obj/structure/survivor_cryopod/tele_derelict/attack_hand(mob/user)
+	if(opened)
+		to_chat(user, "<span class='notice'>Cryopod is empty</span>")
+	else
+		to_chat(user, "<span class='notice'>You can not interrupt cryosleep forcefully.</span>")
+
+/obj/structure/survivor_cryopod/tele_derelict/atom_init(mapload)
+	global.tele_derelict_start += loc
+	create_spawner(/datum/spawner/derelict)

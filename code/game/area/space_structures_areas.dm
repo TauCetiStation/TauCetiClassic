@@ -69,6 +69,112 @@
 	name = "Derelict Singularity Engine"
 	icon_state = "engine"
 
+//TELESTATION
+/area/space_structures/telestation
+	name = "Tele-Station"
+	icon_state = "storage"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
+
+/area/space_structures/telestation/service
+	name = "Telestation Service"
+	icon_state = "yellow"
+
+/area/space_structures/telestation/dormitories
+	name = "Telestation Dormitories"
+	icon_state = "crew_quarters"
+
+/area/space_structures/telestation/cafeteria
+	name = "Telestation Cafeteria"
+	icon_state = "cafeteria"
+
+/area/space_structures/telestation/kitchen
+	name = "Telestation Kitchen"
+	icon_state = "kitchen"
+
+/area/space_structures/telestation/theatre
+	name = "Telestation Theatre"
+	icon_state = "yellow"
+
+/area/space_structures/telestation/engineering
+	name = "Telestation Engineering"
+	icon_state = "engine"
+
+/area/space_structures/telestation/reactor
+	name = "Telestation Reactor"
+	icon_state = "engine"
+
+/area/space_structures/telestation/atmospherics
+	name = "Telestation Atmospherics"
+	icon_state = "engine"
+
+/area/space_structures/telestation/infirmary
+	name = "Telestation Infirmary"
+	icon_state = "medbay"
+
+/area/space_structures/telestation/morgue
+	name = "Telestation Morgue"
+	icon_state = "morgue"
+
+/area/space_structures/telestation/surgery
+	name = "Telestation Surgery"
+	icon_state = "surgery"
+
+/area/space_structures/telestation/research
+	name = "Telestation Laboratories"
+	icon_state = "research"
+
+/area/space_structures/telestation/phoron_research
+	name = "Telestation Phoron Research"
+	icon_state = "toxlab"
+
+/area/space_structures/telestation/robotics
+	name = "Telestation Robotics"
+	icon_state = "scirobo"
+
+/area/space_structures/telestation/bio_lab
+	name = "Telestation Biolab"
+	icon_state = "scixeno"
+
+/area/space_structures/telestation/server_room
+	name = "Telestation Server Room"
+	icon_state = "purple"
+
+/area/space_structures/telestation/command_post
+	name = "Telestation Command Post"
+	icon_state = "bridge"
+
+/area/space_structures/telestation/bluespace_research
+	name = "Telestation Bluespace Research"
+	icon_state = "research"
+
+/area/space_structures/telestation/maint_morgue_surgery
+	name = "Telestation Maintenance (Morgue-Surgery)"
+	icon_state = "dark128"
+
+/area/space_structures/telestation/maint_infirmary_cafeteria
+	name = "Telestation Maintenance (Infirmary-cafeteria)"
+	icon_state = "dark128"
+
+/area/space_structures/telestation/maint_theatre_cafeteria
+	name = "Telestation Maintenance (Theatre-cafeteria)"
+	icon_state = "dark128"
+
+/area/space_structures/telestation/maint_reactor
+	name = "Telestation Maintenance (Reactor)"
+	icon_state = "dark128"
+
+/area/space_structures/telestation/maint_biolab_server
+	name = "Telestation Maintenance (Biolab-server room)"
+	icon_state = "dark128"
+
+/area/space_structures/telestation/maint_robotics
+	name = "Telestation Maintenance (Robotics)"
+	icon_state = "dark128"
+
+/area/space_structures/telestation/maint_phoron
+	name = "Telestation Maintenance (Phoron research)"
+	icon_state = "dark128"
+
 //Random structures
 
 /area/space_structures/teleporter

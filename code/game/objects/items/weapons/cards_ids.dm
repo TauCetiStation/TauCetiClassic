@@ -437,3 +437,33 @@
 /obj/item/weapon/card/id/space_police/atom_init()
 	. = ..()
 	access = get_all_accesses()
+
+/obj/item/weapon/card/id/tele_derelict
+	name = "Old ID card"
+	desc = "Old ID card. Inscryptions on it are severely faded, but still visible."
+	assignment = ""
+	icon_state = "blank"
+
+/obj/item/weapon/card/id/tele_derelict/officer
+	name = "Old ID card"
+	assignment = "Security officer"
+	icon_state = "data"
+	access = list(access_external_airlocks, access_security, access_heads)
+
+/obj/item/weapon/card/id/tele_derelict/engineer
+	name = "Old ID card"
+	assignment = "Engineer"
+	icon_state = "data"
+	access = list(access_external_airlocks, access_engine)
+
+/obj/item/weapon/card/id/tele_derelict/medic
+	name = "Old ID card"
+	assignment = "Doctor"
+	icon_state = "data"
+	access = list(access_external_airlocks, access_medical)
+
+/obj/item/weapon/card/id/tele_derelict/scientist
+	name = "Old ID card"
+	assignment = "Scientist"
+	icon_state = "data"
+	access = list(access_external_airlocks, access_research)

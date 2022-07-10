@@ -298,6 +298,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
 	var/is_payed = 0
+	var/is_free = 0 //thank great leader for free shower
 	var/cost_per_activation = 10
 
 //add heat controls? when emagged, you can freeze to death in it?
@@ -315,7 +316,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	if(.)
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
-	if(is_payed)
+	if(is_payed || is_free)
 		on = !on
 		update_icon()
 		if(on)
@@ -346,6 +347,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I].</span>")
 			add_fingerprint(user)
 	else if(istype(I, /obj/item/weapon/card))
+		if(is_free) return
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!is_payed && cost_per_activation)
 			if(!on)
@@ -543,7 +545,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				qdel(E)
 
 /obj/machinery/shower/process()
-	if(!on) return
+	if(!on || is_free) return
 	if(is_payed < 1)
 		on = 0
 		update_icon()
