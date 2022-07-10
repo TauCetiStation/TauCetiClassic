@@ -454,11 +454,8 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
 	if(!l_leg && !r_leg) // TODO cane if its only single leg.
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
-		character.buckled = W
-		character.update_canmove()
 		W.set_dir(character.dir)
-		W.buckled_mob = character
-		W.add_fingerprint(character)
+		W.buckle_mob(character)
 
 	if(underwear > underwear_m.len || underwear < 1)
 		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES

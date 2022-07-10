@@ -234,7 +234,7 @@
 		icon_state = "floorbot-c"
 
 		addtimer(CALLBACK(src, .proc/finish_task), 50)
-	else if(task == FLOORBOT_TASK_BREAKTILE && istype(t, /turf/simulated/floor))
+	else if(task == FLOORBOT_TASK_BREAKTILE && isfloorturf(t))
 		state = FLOORBOT_BUSY
 		visible_message("<span class='warning'>[src] begins repairing the floor.</span>") // troll message
 		anchored = TRUE
@@ -264,7 +264,7 @@
 		else
 			F.make_plasteel_floor()
 			amount -= 1
-	else if(task == FLOORBOT_TASK_BREAKTILE && istype(t, /turf/simulated/floor))
+	else if(task == FLOORBOT_TASK_BREAKTILE && isfloorturf(t))
 		var/turf/simulated/floor/F = t
 		if(prob(90))
 			F.break_tile_to_plating()
@@ -352,7 +352,7 @@
 					return
 			if(maketiles)
 				for(var/obj/item/stack/sheet/metal/M in view(7, src))
-					if(M.get_amount() == 1 && !(istype(M.loc, /turf/simulated/wall)))
+					if(M.get_amount() == 1 && !(iswallturf(M.loc)))
 						state = FLOORBOT_MOVING_TO_PICKUP
 						boringness = 0
 						target = M

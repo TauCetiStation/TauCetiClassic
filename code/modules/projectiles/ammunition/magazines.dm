@@ -202,7 +202,7 @@
 	icon_state = "12mmhp"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45hp
-	caliber = ".45S"
+	caliber = ".45"
 	max_ammo = 15
 
 /obj/item/ammo_box/magazine/m12mm/hp/update_icon()
@@ -218,7 +218,7 @@
 	icon_state = "12mmhv"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45hv
-	caliber = ".45S"
+	caliber = ".45"
 	max_ammo = 15
 
 /obj/item/ammo_box/magazine/m12mm/hv/update_icon()
@@ -235,7 +235,7 @@
 	icon_state = "12mmimp"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45imp
-	caliber = ".45S"
+	caliber = ".45"
 	max_ammo = 15
 
 /obj/item/ammo_box/magazine/m12mm/imp/update_icon()

@@ -27,7 +27,7 @@
 						"Support",
 						"Misc"
 						)
-	required_skills = list(/datum/skill/research/novice)
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/mecha_part_fabricator/mining_fabricator/New_parts()
 	component_parts = list()

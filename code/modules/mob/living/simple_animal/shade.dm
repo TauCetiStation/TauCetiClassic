@@ -220,11 +220,7 @@
 				container.forceMove(get_turf(container.loc))
 
 /mob/living/simple_animal/shade/god/update_canmove(no_transform = FALSE)
-	if(paralysis || stunned || weakened || buckled || pinned.len)
-		canmove = FALSE
-	else
-		canmove = TRUE
-	return canmove
+	canmove = !buckled
 
 /mob/living/simple_animal/shade/evil_shade
 	layer = TURF_LAYER

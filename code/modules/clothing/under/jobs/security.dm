@@ -30,6 +30,7 @@
 	name = "security officer's jumpskirt"
 	icon_state = "skirt_security"
 	item_state = "secskirtred"
+	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
 
 /obj/item/clothing/under/rank/dispatch
 	name = "dispatcher's uniform"
@@ -133,7 +134,7 @@
 	name = "head of security's turtleneck"
 	icon_state = "hos_turtleneck"
 	item_state = "hos_turtleneck"
-	flags = 0
+	flags = NONE // there is no sprite for this in uniform_fat.dmi yet
 
 /obj/item/clothing/under/rank/head_of_security/corp
 	icon_state = "hos_corporate"

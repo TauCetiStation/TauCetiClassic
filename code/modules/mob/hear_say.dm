@@ -96,6 +96,7 @@
 		if(H != src && H.mind?.assigned_role == "Mime" && length(H.languages))
 			H.emote("gasp")
 			H.adjustOxyLoss(20)
+			H.Stun(3)
 			H.Weaken(3)
 
 			H.loc.shake_act(2)
