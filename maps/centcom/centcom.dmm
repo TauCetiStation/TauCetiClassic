@@ -15902,9 +15902,6 @@
 /turf/environment/space,
 /area/centcom/evac)
 "aKk" = (
-/obj/structure/closet/medical_wall{
-	pixel_x = 28
-	},
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin,
