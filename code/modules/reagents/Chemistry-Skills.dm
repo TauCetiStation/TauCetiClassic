@@ -1,5 +1,5 @@
 /datum/reagent/brain_juice
-	name = "Brain juice"
+	name = "Pink juice"
 	id = "brainjuice"
 	description = "You don't want to know how it's made..."
 	reagent_state = LIQUID
