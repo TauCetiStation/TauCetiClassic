@@ -2635,7 +2635,7 @@
 	dir = 4;
 	name = "filling pipe"
 	},
-/obj/item/weapon/crowbar/red,
+/obj/item/weapon/emergencycrowbar,
 /obj/item/weapon/wrench,
 /obj/structure/cable{
 	d1 = 1;

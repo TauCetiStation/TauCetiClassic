@@ -10330,7 +10330,7 @@
 	},
 /area/velocity)
 "ayt" = (
-/obj/item/weapon/crowbar/red,
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/shuttle/plating,
 /area/space)
 "ayu" = (

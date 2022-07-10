@@ -111,7 +111,7 @@
 		/obj/item/weapon/screwdriver,
 		/obj/item/weapon/wrench,
 		/obj/item/weapon/weldingtool,
-		/obj/item/weapon/crowbar/red,
+		/obj/item/weapon/emergencycrowbar,
 		/obj/item/weapon/wirecutters,
 		/obj/item/device/multitool
 	)

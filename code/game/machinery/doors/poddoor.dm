@@ -41,7 +41,7 @@
 
 	if(!hasPower())
 		var/can_wedge = FALSE
-		if(iscrowbar(C))
+		if(iscrowbar(C) || istype(C, /obj/item/weapon/emergencycrowbar))
 			can_wedge = TRUE
 		else if(istype(C, /obj/item/weapon/fireaxe))
 			var/obj/item/weapon/fireaxe/F = C

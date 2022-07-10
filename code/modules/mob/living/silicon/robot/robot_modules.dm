@@ -397,7 +397,7 @@
 	modules += new /obj/item/weapon/scalpel(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher(src) //To unfuck xenobiology up
 
-	modules += new /obj/item/weapon/crowbar/red(src)
+	modules += new /obj/item/weapon/emergencycrowbar(src)
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/screwdriver(src)
 	modules += new /obj/item/weapon/wirecutters(src)

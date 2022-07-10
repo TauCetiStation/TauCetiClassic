@@ -963,13 +963,15 @@ var/global/list/airlock_overlays = list()
 	else if(istype(C, /obj/item/weapon/pai_cable))	// -- TLE
 		var/obj/item/weapon/pai_cable/cable = C
 		cable.afterattack(src, user)
-	else if(iscrowbar(C) || istype(C, /obj/item/weapon/fireaxe) )
+	else if(iscrowbar(C) || istype(C, /obj/item/weapon/emergencycrowbar) || istype(C, /obj/item/weapon/fireaxe))
 		var/beingcrowbarred = null
 		if(iscrowbar(C) )
 			beingcrowbarred = 1 //derp, Agouri
+		else if(istype(C, /obj/item/weapon/emergencycrowbar))
+			beingcrowbarred = 2
 		else
 			beingcrowbarred = 0
-		if( beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
+		if( (beingcrowbarred == 1) && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
 			if(user.is_busy(src)) return
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			if(C.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))

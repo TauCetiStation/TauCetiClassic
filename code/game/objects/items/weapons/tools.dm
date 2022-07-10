@@ -545,36 +545,45 @@
 	desc = "Used to remove floors and to pry open doors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
+	item_state = "crowbar"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 5.0
 	throwforce = 7.0
-	item_state = "crowbar"
 
 	w_class = SIZE_SMALL
-
 	m_amt = 50
+
 	origin_tech = "engineering=1"
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Crowbar.ogg'
-	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 	qualities = list(
 		QUALITY_PRYING = 1
 	)
 
-/obj/item/weapon/crowbar/red
+/obj/item/weapon/emergencycrowbar
 	name = "emergency crowbar"
 	desc = "A little emergency crowbar, used to open unpowered doors and emergency shutters."
-	icon_state = "red_crowbar"
-	item_state = "crowbar_red"
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "emergency_crowbar"
+	item_state = "crowbar_emergency"
+	flags = CONDUCT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 4.0
 	throwforce = 5.0
 
 	w_class = SIZE_TINY
 	m_amt = 15
 
+	origin_tech = "engineering=1"
+	hitsound = list('sound/items/tools/crowbar-hit.ogg')
+	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
+	usesound = 'sound/items/Crowbar.ogg'
+
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)
 	qualities = list(
 		QUALITY_PRYING = 0.7
 	)

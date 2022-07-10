@@ -1966,6 +1966,7 @@
 /obj/machinery/light_switch{
 	pixel_x = 28
 	},
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkpurple"
@@ -4077,6 +4078,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkpurple"
@@ -5518,7 +5520,6 @@
 	pixel_x = -9;
 	pixel_y = 4
 	},
-/obj/item/weapon/crowbar,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 21
@@ -5528,6 +5529,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -22
 	},
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -14942,7 +14944,7 @@
 /turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "fub" = (
-/obj/item/weapon/crowbar/red,
+/obj/item/weapon/emergencycrowbar,
 /obj/item/clothing/head/festive,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
@@ -16214,6 +16216,7 @@
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/item/clothing/suit/space/rig/security/hos,
 /obj/item/clothing/head/helmet/space/rig/security/hos,
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -17472,7 +17475,7 @@
 	input_tag = "o2_in";
 	name = "Oxygen Supply Control";
 	output_tag = "o2_out";
-	sensors = list("o2_sensor" = "Tank")
+	sensors = list("o2_sensor"="Tank")
 	},
 /obj/machinery/light{
 	dir = 8
@@ -20200,6 +20203,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -28
 	},
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	icon_state = "darkyellow"
 	},
@@ -21938,7 +21942,7 @@
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
-	sensors = list("air_sensor" = "Tank")
+	sensors = list("air_sensor"="Tank")
 	},
 /obj/machinery/light,
 /turf/simulated/floor{
@@ -23276,11 +23280,11 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/rig/wizard{
-	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20);
+	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
 	desc = "Old bizarre gem-encrusted suit that radiates magical energies."
 	},
 /obj/item/clothing/head/helmet/space/rig/wizard{
-	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20);
+	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
 	desc = "Old bizarre gem-encrusted helmet that radiates magical energies."
 	},
 /obj/machinery/light/small{
@@ -26121,6 +26125,7 @@
 /obj/machinery/requests_console/cmo{
 	pixel_y = -32
 	},
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -26731,6 +26736,7 @@
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = 32
 	},
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "qEf" = (
@@ -31778,7 +31784,7 @@
 	input_tag = "n2_in";
 	name = "Nitrogen Supply Control";
 	output_tag = "n2_out";
-	sensors = list("n2_sensor" = "Tank")
+	sensors = list("n2_sensor"="Tank")
 	},
 /obj/machinery/light{
 	dir = 8

@@ -31,7 +31,6 @@
 
 /obj/item/weapon/storage/toolbox/emergency/atom_init()
 	. = ..()
-	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned(src)
 	if(prob(50))
 		new /obj/item/device/flashlight(src)
@@ -39,6 +38,9 @@
 		new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/radio(src)
 	new /obj/item/weapon/storage/fancy/glowsticks(src) //Gloooouuuwstiicks :3
+	new /obj/item/weapon/emergencycrowbar(src)
+	new /obj/item/weapon/emergencycrowbar(src)
+	new /obj/item/weapon/emergencycrowbar(src)
 
 /obj/item/weapon/storage/toolbox/mechanical
 	name = "mechanical toolbox"

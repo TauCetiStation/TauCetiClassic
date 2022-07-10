@@ -212,11 +212,14 @@
 		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
 		return
 
-	if(iscrowbar(C) || ( istype(C,/obj/item/weapon/fireaxe) && HAS_TRAIT(C, TRAIT_DOUBLE_WIELDED)))
+	if(iscrowbar(C) || istype(C, /obj/item/weapon/emergencycrowbar) || ( istype(C,/obj/item/weapon/fireaxe) && HAS_TRAIT(C, TRAIT_DOUBLE_WIELDED)))
 		if(operating)
 			return
 
-		if( blocked && iscrowbar(C) )
+		var/crowbared = FALSE
+		if(iscrowbar(C) || istype(C, /obj/item/weapon/emergencycrowbar))
+			crowbared = TRUE
+		if( blocked && crowbared )
 			user.visible_message("<span class='warning'>\The [user] pries at \the [src] with \a [C], but \the [src] is welded in place!</span>",\
 			"You try to pry \the [src] [density ? "open" : "closed"], but it is welded in place!",\
 			"You hear someone struggle and metal straining.")
@@ -225,8 +228,12 @@
 		user.visible_message("<span class='warning'>\The [user] starts to force \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\
 				"You start forcing \the [src] [density ? "open" : "closed"] with \the [C]!",\
 				"You hear metal strain.")
-		if(C.use_tool(src, user, 30, volume = 50))
-			if( iscrowbar(C) )
+
+		var/delay = 30
+		if(istype(C, /obj/item/weapon/emergencycrowbar))
+			delay /= 2
+		if(C.use_tool(src, user, delay, volume = 50))
+			if(crowbared)
 				if( stat & (BROKEN|NOPOWER) || !density)
 					user.visible_message("<span class='warning'>\The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\
 					"You force \the [src] [density ? "open" : "closed"] with \the [C]!",\

@@ -12,7 +12,7 @@
 /obj/structure/closet/syndicate/personal/PopulateContents()
 	new /obj/item/clothing/glasses/night(src)
 	new /obj/item/clothing/under/syndicate(src)
-	new /obj/item/weapon/crowbar/red(src)
+	new /obj/item/weapon/emergencycrowbar(src)
 	new /obj/item/weapon/storage/belt/military(src)
 	new /obj/item/clothing/gloves/combat(src)
 	new /obj/item/clothing/accessory/storage/syndi_vest(src)

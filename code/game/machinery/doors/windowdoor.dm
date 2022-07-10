@@ -351,7 +351,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 
 	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
-	if(iscrowbar(I) || istype(I, /obj/item/weapon/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
+	if(iscrowbar(I) || istype(I, /obj/item/weapon/emergencycrowbar) || istype(I, /obj/item/weapon/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
 		if(!hasPower())
 			user.SetNextMove(CLICK_CD_INTERACT)
 			if(density)

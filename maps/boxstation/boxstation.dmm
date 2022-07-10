@@ -1314,6 +1314,7 @@
 	},
 /area/station/security/execution)
 "aco" = (
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -5306,7 +5307,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/weapon/crowbar,
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5862,6 +5863,7 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_x = 32
 	},
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -11477,6 +11479,7 @@
 "atx" = (
 /obj/item/weapon/wrench,
 /obj/machinery/atmospherics/components/trinary/tvalve/mirrored/digital,
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor/plating{
 	dir = 8;
 	icon_state = "warnplate"
@@ -18968,6 +18971,7 @@
 /obj/item/stack/rods{
 	amount = 15
 	},
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aHO" = (
@@ -19801,8 +19805,8 @@
 /obj/item/device/multitool{
 	pixel_x = 10
 	},
-/obj/item/weapon/crowbar,
 /obj/item/weapon/gun/energy/pyrometer/science_phoron,
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
@@ -22598,6 +22602,7 @@
 "aOx" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/emergency,
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -23674,6 +23679,7 @@
 /obj/item/clothing/suit/space/rig/science/rd,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/rig/science/rd,
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -27111,11 +27117,11 @@
 	pixel_x = 9;
 	pixel_y = 1
 	},
-/obj/item/weapon/crowbar,
 /obj/machinery/camera{
 	c_tag = "Gateway Control";
 	dir = 5
 	},
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -27168,7 +27174,6 @@
 	},
 /area/station/civilian/bar)
 "aWz" = (
-/obj/item/weapon/crowbar,
 /obj/item/device/flash,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -27178,6 +27183,7 @@
 	dir = 1;
 	network = list("SS13","Security")
 	},
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "red"
@@ -31206,6 +31212,7 @@
 /obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bdE" = (
@@ -36828,6 +36835,7 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -32
 	},
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bnZ" = (
@@ -37040,7 +37048,7 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/obj/item/weapon/crowbar,
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -47390,7 +47398,7 @@
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor" = "Nitrogen", "o2_sensor" = "Oxygen", "co2_sensor" = "Carbon Dioxide", "tox_sensor" = "Toxins", "n2o_sensor" = "Nitrous Oxide", "waste_sensor" = "Gas Mix Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous Oxide","waste_sensor"="Gas Mix Tank")
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -49477,7 +49485,7 @@
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "bKx" = (
-/obj/item/weapon/crowbar/red,
+/obj/item/weapon/emergencycrowbar,
 /obj/item/weapon/wrench,
 /obj/structure/cable{
 	d1 = 1;
@@ -54589,7 +54597,7 @@
 	frequency = 1443;
 	level = 3;
 	name = "Distribution and Waste Monitor";
-	sensors = list("mair_in_meter" = "Mixed Air In", "air_sensor" = "Mixed Air Supply Tank", "mair_out_meter" = "Mixed Air Out", "dloop_atm_meter" = "Distribution Loop", "wloop_atm_meter" = "Waste Loop")
+	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -55580,7 +55588,7 @@
 	input_tag = "waste_in";
 	name = "Gas Mix Tank Control";
 	output_tag = "waste_out";
-	sensors = list("waste_sensor" = "Tank")
+	sensors = list("waste_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -58591,7 +58599,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "ciJ" = (
-/obj/item/weapon/crowbar/red,
+/obj/item/weapon/emergencycrowbar,
 /obj/item/clothing/head/festive,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
@@ -60064,7 +60072,7 @@
 	},
 /area/station/aisat/antechamber_interior)
 "cmR" = (
-/obj/item/weapon/crowbar/red,
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "cmT" = (
@@ -61685,7 +61693,7 @@
 	input_tag = "n2_in";
 	name = "Nitrogen Supply Control";
 	output_tag = "n2_out";
-	sensors = list("n2_sensor" = "Tank")
+	sensors = list("n2_sensor"="Tank")
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/green,
 /turf/simulated/floor{
@@ -61764,7 +61772,7 @@
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
-	sensors = list("air_sensor" = "Tank")
+	sensors = list("air_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "arrival"
@@ -63064,7 +63072,7 @@
 	input_tag = "tox_in";
 	name = "Toxin Supply Control";
 	output_tag = "tox_out";
-	sensors = list("tox_sensor" = "Tank")
+	sensors = list("tox_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -63077,7 +63085,7 @@
 	input_tag = "n2o_in";
 	name = "Nitrous Oxide Supply Control";
 	output_tag = "n2o_out";
-	sensors = list("n2o_sensor" = "Tank")
+	sensors = list("n2o_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -63691,7 +63699,7 @@
 	input_tag = "o2_in";
 	name = "Oxygen Supply Control";
 	output_tag = "o2_out";
-	sensors = list("o2_sensor" = "Tank")
+	sensors = list("o2_sensor"="Tank")
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/green,
 /turf/simulated/floor{
@@ -64856,7 +64864,7 @@
 	input_tag = "co2_in";
 	name = "Carbon Dioxide Supply Control";
 	output_tag = "co2_out";
-	sensors = list("co2_sensor" = "Tank")
+	sensors = list("co2_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -65121,11 +65129,11 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/gas/coloured,
 /obj/item/clothing/gloves/black,
-/obj/item/weapon/crowbar,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cAd" = (
@@ -72006,6 +72014,7 @@
 	dir = 4;
 	network = list("SS13","Engineering")
 	},
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkyellow"
@@ -75397,8 +75406,8 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "kdb" = (
-/obj/item/weapon/crowbar,
 /obj/item/weapon/screwdriver,
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
@@ -79802,6 +79811,7 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -80359,6 +80369,7 @@
 /obj/structure/rack,
 /obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "qpb" = (
@@ -82117,9 +82128,9 @@
 /area/station/medical/virology)
 "snb" = (
 /obj/structure/rack,
-/obj/item/weapon/crowbar,
 /obj/item/weapon/wrench,
 /obj/item/weapon/handcuffs,
+/obj/item/weapon/emergencycrowbar,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitegreen"
