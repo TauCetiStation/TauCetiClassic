@@ -1,5 +1,3 @@
-#define BRAIN_JUICE_AMOUNT 50
-
 /datum/reagent/brain_juice
 	name = "Brain juice"
 	id = "brainjuice"
@@ -7,15 +5,56 @@
 	reagent_state = LIQUID
 	color = "#a17193"
 	custom_metabolism = 0.01
+	taste_message = "despair"
 	restrict_species = list(IPC, DIONA, VOX, SKRELL)
 
 /datum/reagent/brain_juice/on_general_digest(mob/living/M)
 	..()
-	//while amount < BRAIN_JUICE_AMOUNT
-	M.adjustBrainLoss(5 * REM)
-	//if amount > BRAIN_JUICE_AMOUNT
+	var/transfer_threshold = BRAIN_JUICE_AMOUNT - 0.5
+	var/mob/living/carbon/brain/brainmob = data["brainmob"]
+	if(brainmob)
+		M.adjustToxLoss(40)
+		M.adjustBrainLoss(40)
+	else
+		M.adjustToxLoss(15)
+		M.adjustBrainLoss(15)
 
+	if(volume < transfer_threshold)
+		return
+	to_chat(M, "<span class='danger'>You can feel that your brain has changed!</span>")
 
+	for(var/datum/skillset/skillset in M.mind.skills.available_skillsets)
+		M.mind.skills.remove_available_skillset(skillset.type)
+
+	M.mind.skills.transfer_skills(brainmob.mind)
+	M.mind.skills.maximize_active_skills()
+	M.reagents.remove_all_type(/datum/reagent/brain_juice, BRAIN_JUICE_AMOUNT, 0, 1)
+	M.adjustBrainLoss(50)
+
+/datum/reagent/brain_juice/on_merge(other_data, other_amount)  //to avoid diluting or duplication of the juice
+	if(other_data["brainmob"] != data["brainmob"])
+		holder.remove_reagent("brainjuice", 1)
+		holder.add_reagent("grayjuice", 1)
+
+/datum/chemical_reaction/gray_juice
+	name = "Gray juice"
+	id = "grayjuice"
+	result = "grayjuice"
+	required_reagents = list("grayjuice" = 0.1, "brainjuice" = 0.1)
+	result_amount = 0.2
+
+/datum/reagent/gray_juice
+	name = "Gray juice"
+	id = "grayjuice"
+	description = "It smells really bad."
+	reagent_state = LIQUID
+	color = "#696969"
+	taste_message = null
+	restrict_species = list(IPC)
+
+/datum/reagent/gray_juice/on_general_digest(mob/living/M)
+	M.adjustBrainLoss(2)
+	M.adjustToxLoss(2)
 
 /datum/reagent/mentat
 	name = "Mentat"
@@ -23,8 +62,10 @@
 	description = "Improves cognitive and motor skills, allowing you to do some tasks faster and better."
 	reagent_state = LIQUID
 	color = "#d8c238"
-	custom_metabolism = 0.01
-	restrict_species = list(IPC, DIONA, VOX)
+	taste_message = "intelligence"
+	custom_metabolism = 0.005
+	var/buff_duration = 5 MINUTES
+	restrict_species = list(IPC, DIONA, VOX, SKRELL)
 
 /datum/chemical_reaction/mentat
 	name = "Mentat"
@@ -34,12 +75,16 @@
 	required_catalysts = list("phoron" = 5)
 	result_amount = 5
 
-/datum/chemical_reaction/explosion_potassium/on_reaction(datum/reagents/holder, created_volume)
+/datum/reagent/mentat/on_general_digest(mob/living/M)
+	..()
+	var/mob/living/carbon/brain/brainmob = data["brainmob"]
+	if(brainmob)
+		M.add_command_buff(brainmob, buff_duration)
 
-	var/datum/reagent/brain_juice/juice
-	for(var/datum/reagent/R in holder.reagent_list)
-		if(R.id == "brainjuice")
-			juice = R
-	var/mob/living/carbon/brain/brainmob = juice.data["brainmob"]
-	brainmob.mind.skills.available
-	holder.clear_reagents()
+/datum/reagent/mentat/preset
+	taste_message = "hard work"
+	var/skillset_type = /datum/skillset/test_subject
+
+/datum/reagent/mentat/preset/on_general_digest(mob/living/M)
+	..()
+	M.add_skills_buff(all_skillsets[skillset_type])

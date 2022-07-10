@@ -83,9 +83,13 @@
 	LAZYREMOVE(target.helpers_skillsets, mind.skills.active)
 	visible_message("<span class='notice'>[src] removes [P_THEIR(gender)] hand from \the [target]'s shoulder.</span>", "<span class='notice'>You remove your hand from \the [target]'s shoulder.</span>")
 
-/mob/living/proc/add_command_buff(mob/commander, time)
-	LAZYDISTINCTADD(helpers_skillsets, commander.mind.skills.active)
-	addtimer(CALLBACK(src, .proc/remove_command_buff, commander), time)
+/mob/living/proc/add_skills_buff(datum/skillset/skillset, time = -1)
+	LAZYDISTINCTADD(helpers_skillsets, skillset)
+	if(time != -1)
+		addtimer(CALLBACK(src, .proc/remove_skills_buff, skillset), time)
 
-/mob/living/proc/remove_command_buff(mob/commander)
-	LAZYREMOVE(helpers_skillsets, commander.mind.skills.active)
+/mob/living/proc/remove_skills_buff(datum/skillset/skillset)
+	LAZYREMOVE(helpers_skillsets, skillset)
+
+/mob/living/proc/add_command_buff(mob/commander, time)
+	add_skills_buff(commander.mind.skills.active, time)

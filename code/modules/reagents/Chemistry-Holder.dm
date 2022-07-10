@@ -421,7 +421,8 @@ var/global/const/INGEST = 2
 					R.data[color] = (R.data[color] + data[color]) * 0.5
 				// I am well aware of RGB_CONTRAST define, but in reagent colors everywhere else we use hex codes, so I did the thing below. ~Luduk.
 				R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
-
+			else if(R.id == reagent)
+				R.on_merge(data, amount)
 			// Update:
 			update_total()
 			if(my_atom)

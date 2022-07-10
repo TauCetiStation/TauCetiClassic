@@ -183,7 +183,7 @@
 	. = ..()
 	reagents.add_reagent("tramadol", 15)
 
-/obj/item/weapon/reagent_containers/pill/methylphenidate
+
 	name = "Methylphenidate pill (15u)"
 	desc = "Improves the ability to concentrate."
 	icon_state = "pill8"

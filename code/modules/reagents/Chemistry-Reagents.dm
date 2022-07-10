@@ -140,14 +140,14 @@
 	handle_religions()
 	return
 
-// Called when two reagents of the same are mixing.
-/datum/reagent/proc/on_merge(data)
-	return
-
 /datum/reagent/proc/on_update(atom/A)
 	return
 
 /// Everything under now does. end EUGH
+
+// Called when two reagents of the same are mixing.
+/datum/reagent/proc/on_merge(other_data, other_amount)
+	return
 
 /datum/reagent/proc/check_digesting(mob/living/M)
 	var/species_name = M.get_species()

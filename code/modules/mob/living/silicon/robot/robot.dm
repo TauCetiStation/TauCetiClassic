@@ -164,7 +164,7 @@
 		if(T)	mmi.loc = T
 		if(mind)
 			mind.transfer_to(mmi.brainmob)
-			mmi.brainmob.mind.skills.remove_available_skillset(/datum/skillset/max)
+			mmi.brainmob.mind.skills.remove_available_skillset(/datum/skillset/cyborg)
 		mmi = null
 	return ..()
 
