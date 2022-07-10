@@ -311,3 +311,12 @@
 /obj/item/weapon/reagent_containers/pill/adminordrazine/atom_init()
 	. = ..()
 	reagents.add_reagent("adminordrazine", 1)
+
+/obj/item/weapon/reagent_containers/pill/mentats_engi
+	name = "Engineering mentats (1u)"
+	desc = "Temporarily improves living being's engineering abilities."
+	icon_state = "yellow"
+
+/obj/item/weapon/reagent_containers/pill/mentats_engi/atom_init()
+	. = ..()
+	reagents.add_reagent("mentat_engi", 1)

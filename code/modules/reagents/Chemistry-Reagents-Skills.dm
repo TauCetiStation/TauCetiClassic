@@ -76,15 +76,25 @@
 	result_amount = 5
 
 /datum/reagent/mentat/on_general_digest(mob/living/M)
-	..()
 	var/mob/living/carbon/brain/brainmob = data["brainmob"]
 	if(brainmob)
 		M.add_skills_buff(brainmob.mind.skills.available, buff_duration)
 
 /datum/reagent/mentat/preset
+	id = "mentat_preset"
 	taste_message = "hard work"
 	var/skillset_type = /datum/skillset/test_subject
 
 /datum/reagent/mentat/preset/on_general_digest(mob/living/M)
-	..()
 	M.add_skills_buff(all_skillsets[skillset_type])
+
+/datum/reagent/mentat/preset/engineering
+	id = "mentat_engi"
+	taste_message = "phoron"
+	skillset_type = /datum/skillset/engineer
+
+/datum/reagent/mentat/preset/science
+	id = "mentat_sci"
+	taste_message = "books"
+	color = "#9612e3"
+	skillset_type = /datum/skillset/scientist

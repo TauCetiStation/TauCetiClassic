@@ -275,3 +275,11 @@
 			/obj/item/weapon/reagent_containers/pill/kelotane = 2,
 			/obj/item/weapon/reagent_containers/pill/hyronalin = 2
 		)
+
+/obj/item/weapon/storage/pill_bottle/mentats/engineering
+	name = "pill bottle (mentats engineering)"
+	desc = "Stimulator of brain activity and fine motor skills. Take one pill at a time."
+
+	startswith = list(
+			/obj/item/weapon/reagent_containers/pill/mentats_engi = 5,
+		)
