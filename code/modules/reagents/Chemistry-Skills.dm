@@ -63,7 +63,7 @@
 	reagent_state = LIQUID
 	color = "#d8c238"
 	taste_message = "intelligence"
-	custom_metabolism = 0.005
+	custom_metabolism = 1000
 	var/buff_duration = 5 MINUTES
 	restrict_species = list(IPC, DIONA, VOX, SKRELL)
 
