@@ -105,7 +105,8 @@
 		if(!output_to_chat)
 			message += "</BODY></HTML>"
 		return message
-	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>","<span class='notice'>You have analyzed [M]'s vitals.</span>")
+
+	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>", "<span class='notice'>You have analyzed [M]'s vitals.</span>")
 
 	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
 	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getOxyLoss()]</b>" 		: M.getOxyLoss()
@@ -120,8 +121,16 @@
 	message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
 	message += "&emsp; Damage Specifics: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font><br>"
 	message += "<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
+
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
-		message += "<span class='notice'>Time of Death: [M.tod]</span><br>"
+		var/since_death = world.time - M.timeofdeath
+		if(since_death >= DEFIB_TIME_LIMIT)
+			message += "<span class='notice'>Время смерти: [M.tod] (Мозг мертв)</span><br>"
+		else
+			var/m = (DEFIB_TIME_LIMIT - since_death) / 600 % 60 + 1
+			var/m_left = pluralize_russian(m, "[m] минута", "[m] минуты", "[m] минут")
+			message += "<span class='notice'>Время смерти: [M.tod] ([m_left] до смерти мозга)</span><br>"
+
 	if(ishuman(M) && mode)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_bodyparts(1, 1)
@@ -207,6 +216,8 @@
 
 	if(!output_to_chat)
 		message += "</BODY></HTML>"
+	else
+		message += "-------"
 	return message
 
 /obj/item/Destroy()
