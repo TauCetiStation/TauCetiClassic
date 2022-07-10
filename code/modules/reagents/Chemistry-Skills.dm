@@ -33,8 +33,8 @@
 
 /datum/reagent/brain_juice/on_merge(other_data, other_amount)  //to avoid diluting or duplication of the juice
 	if(other_data["brainmob"] != data["brainmob"])
-		holder.remove_reagent("brainjuice", 1)
-		holder.add_reagent("grayjuice", 1)
+		holder.remove_reagent("brainjuice", other_amount * 2)
+		holder.add_reagent("grayjuice", other_amount * 2)
 
 /datum/chemical_reaction/gray_juice
 	name = "Gray juice"
@@ -76,6 +76,8 @@
 	result_amount = 5
 
 /datum/reagent/mentat/on_general_digest(mob/living/M)
+	if(volume < 0.4)
+		return
 	var/mob/living/carbon/brain/brainmob = data["brainmob"]
 	if(brainmob)
 		M.add_skills_buff(brainmob.mind.skills.available, buff_duration)
@@ -86,6 +88,8 @@
 	var/skillset_type = /datum/skillset/test_subject
 
 /datum/reagent/mentat/preset/on_general_digest(mob/living/M)
+	if(volume < 0.4)
+		return
 	M.add_skills_buff(all_skillsets[skillset_type])
 
 /datum/reagent/mentat/preset/engineering
