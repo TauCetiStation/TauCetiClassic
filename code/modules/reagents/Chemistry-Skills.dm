@@ -34,7 +34,7 @@
 /datum/reagent/brain_juice/on_merge(other_data, other_amount)  //to avoid diluting or duplication of the juice
 	if(other_data["brainmob"] != data["brainmob"])
 		holder.remove_reagent("brainjuice", other_amount * 2)
-		holder.add_reagent("grayjuice", other_amount * 2)
+		holder.add_reagent("grayjuice", other_amount)
 
 /datum/chemical_reaction/gray_juice
 	name = "Gray juice"
