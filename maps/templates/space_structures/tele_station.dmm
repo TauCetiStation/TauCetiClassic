@@ -13,21 +13,11 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ad" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
+/obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/morgue)
 "ae" = (
 /obj/machinery/atmospherics/pipe/simple/visible/supply,
 /obj/structure/cable{
@@ -117,12 +107,11 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "aq" = (
-/obj/structure/table,
-/obj/item/bodybag,
+/mob/living/simple_animal/hostile/cellular/meat/changeling,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/morgue)
 "ar" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor,
@@ -181,6 +170,19 @@
 /obj/item/weapon/poster/contraband,
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_robotics)
+"az" = (
+/obj/effect/decal/cleanable/cellular,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/space_structures/telestation/morgue)
 "aA" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor,
@@ -233,6 +235,87 @@
 /obj/structure/rack,
 /turf/simulated/floor,
 /area/space_structures/telestation/engineering)
+"aH" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/space_structures/telestation/morgue)
+"aI" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/space_structures/telestation/morgue)
+"aJ" = (
+/obj/structure/stool/bed/chair/metal,
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/space_structures/telestation/morgue)
+"aK" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/space_structures/telestation/morgue)
+"aL" = (
+/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/supply{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Maintenance access"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/telestation/morgue)
+"aM" = (
+/obj/structure/table,
+/obj/item/weapon/scalpel,
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/space_structures/telestation/morgue)
+"aN" = (
+/obj/structure/table,
+/obj/item/weapon/paper/derelict_medicnote,
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/space_structures/telestation/morgue)
+"aO" = (
+/obj/structure/table,
+/obj/item/bodybag,
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/space_structures/telestation/morgue)
 "aQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -354,13 +437,9 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/infirmary)
 "bC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "freezerfloor2"
-	},
-/area/space_structures/telestation/infirmary)
+/obj/machinery/alarm,
+/turf/simulated/wall,
+/area/space_structures/telestation/morgue)
 "bD" = (
 /obj/structure/rack,
 /obj/machinery/light{
@@ -577,7 +656,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/morgue)
 "dM" = (
 /obj/structure/table,
 /turf/simulated/floor,
@@ -800,7 +879,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "ff" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 8
@@ -893,7 +972,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "fU" = (
 /obj/structure/window/phoronreinforced{
 	dir = 1
@@ -1310,7 +1389,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/morgue)
 "iK" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable{
@@ -1475,7 +1554,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/morgue)
 "jS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
@@ -1764,7 +1843,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "lD" = (
 /obj/structure/table,
 /obj/item/weapon/grenade/flashbang,
@@ -1911,7 +1990,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "mk" = (
 /obj/item/device/camera,
 /turf/simulated/floor,
@@ -1965,7 +2044,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "mC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4
@@ -2349,22 +2428,13 @@
 /turf/simulated/floor/wood,
 /area/space_structures/telestation/theatre)
 "ps" = (
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 8
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/maintenance{
-	name = "Maintenance access"
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/morgue)
 "pt" = (
 /obj/structure/barricade/wooden,
 /turf/simulated/floor/plating,
@@ -2721,7 +2791,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "rW" = (
 /obj/machinery/atmospherics/pipe/simple/visible/supply,
 /obj/structure/cable{
@@ -2969,7 +3039,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall,
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/morgue)
 "tZ" = (
 /turf/simulated/floor{
 	icon_state = "damaged1"
@@ -3308,7 +3378,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "wy" = (
 /obj/structure/window/reinforced{
 	dir = 5
@@ -3758,7 +3828,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "zw" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -3771,7 +3841,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "zy" = (
 /obj/structure/table,
 /turf/simulated/floor,
@@ -3815,7 +3885,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/morgue)
 "zS" = (
 /obj/structure/survivor_cryopod/tele_derelict,
 /turf/simulated/floor,
@@ -4228,11 +4298,8 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/reactor)
 "CT" = (
-/mob/living/simple_animal/hostile/cellular/meat/changeling,
-/turf/simulated/floor{
-	icon_state = "freezerfloor2"
-	},
-/area/space_structures/telestation/infirmary)
+/turf/simulated/wall,
+/area/space_structures/telestation/surgery)
 "CU" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -4278,11 +4345,9 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/command_post)
 "Dc" = (
-/obj/structure/stool/bed/chair/metal,
-/turf/simulated/floor{
-	icon_state = "freezerfloor2"
-	},
-/area/space_structures/telestation/infirmary)
+/obj/machinery/alarm,
+/turf/simulated/wall,
+/area/space_structures/telestation/surgery)
 "Dd" = (
 /obj/structure/grille,
 /obj/item/weapon/shard,
@@ -4765,15 +4830,10 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/bluespace_research)
 "FM" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "FO" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/fancy/crayons,
@@ -4797,13 +4857,13 @@
 	},
 /area/space_structures/telestation/research)
 "FZ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "Ga" = (
 /obj/structure/table,
 /turf/simulated/floor{
@@ -4874,14 +4934,11 @@
 /turf/simulated/floor/engine,
 /area/space_structures/telestation/reactor)
 "Gp" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/machinery/door/airlock/maintenance{
+	name = "Maintenance access"
 	},
-/turf/simulated/floor{
-	icon_state = "freezerfloor2"
-	},
-/area/space_structures/telestation/infirmary)
+/turf/simulated/floor/plating,
+/area/space_structures/telestation/surgery)
 "Gq" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -5046,13 +5103,14 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/research)
 "Hw" = (
-/obj/structure/table,
-/obj/item/weapon/paper/derelict_medicnote,
-/obj/machinery/light/small,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "Hz" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -5735,7 +5793,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "LT" = (
 /obj/structure/table,
 /obj/item/weapon/airalarm_electronics,
@@ -6294,7 +6352,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "Ps" = (
 /obj/structure/grille,
 /turf/simulated/floor/plating,
@@ -6345,18 +6403,8 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/command_post)
 "PF" = (
-/obj/effect/decal/cleanable/cellular,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	icon_state = "freezerfloor2"
-	},
-/area/space_structures/telestation/infirmary)
+/turf/simulated/wall,
+/area/space_structures/telestation/morgue)
 "PI" = (
 /turf/simulated/shuttle/wall,
 /area/space)
@@ -6374,7 +6422,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "PO" = (
 /turf/simulated/wall,
 /area/space_structures/telestation/robotics)
@@ -7088,7 +7136,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/surgery)
 "Ua" = (
 /turf/simulated/floor{
 	icon_state = "damaged4"
@@ -7346,12 +7394,14 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "VG" = (
-/obj/structure/table,
-/obj/item/weapon/scalpel,
+/obj/machinery/door/airlock/medical{
+	name = "Infirmary access";
+	req_access = list(5)
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/morgue)
 "VH" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor{
@@ -7392,11 +7442,10 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/bluespace_research)
 "VP" = (
-/obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/morgue)
 "VQ" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -7909,9 +7958,7 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/infirmary)
 "Zd" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -7919,7 +7966,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/morgue)
 "Zf" = (
 /obj/machinery/light{
 	dir = 8
@@ -16529,11 +16576,11 @@ HQ
 HQ
 HQ
 HQ
-Ix
-Ix
-Ix
-Ix
-Ix
+CT
+CT
+CT
+CT
+CT
 HQ
 Ix
 HF
@@ -16660,14 +16707,14 @@ HQ
 HQ
 HQ
 HQ
-Ix
-Ix
-YN
+CT
+CT
+FM
 wx
-YN
-Ix
-Ix
-Ix
+FM
+CT
+CT
+CT
 HF
 UM
 HF
@@ -16791,29 +16838,29 @@ HQ
 HQ
 HQ
 HQ
-Ix
-Ix
-YN
-YN
-YN
-YN
-YN
-Ix
-Ix
+CT
+CT
+FM
+FM
+FM
+FM
+FM
+CT
+CT
 HF
 UM
 HF
-Ix
-Ix
-Ix
-Ix
-Ix
-Ix
-Ix
-Ix
-Ix
-Ix
-Ix
+PF
+PF
+PF
+PF
+PF
+PF
+PF
+PF
+PF
+PF
+PF
 HQ
 HQ
 HQ
@@ -16923,29 +16970,29 @@ HQ
 HQ
 HQ
 HQ
-uP
-YN
-YN
+Dc
+FM
+FM
 Pq
 mj
-Gp
-YN
-YN
-Ix
+Hw
+FM
+FM
+CT
 HF
 UM
 HF
-Ix
+PF
 zR
-YN
+VP
 zR
-YN
+VP
 zR
-YN
+VP
 zR
-YN
-VG
-Ix
+VP
+aM
+PF
 HQ
 HQ
 HQ
@@ -17055,7 +17102,7 @@ HQ
 HQ
 HQ
 HQ
-Ix
+CT
 lC
 TX
 rS
@@ -17067,17 +17114,17 @@ mA
 lX
 mf
 HF
-mM
-YN
-jR
-YN
+VG
 VP
-CT
-FZ
-bC
-Dc
-Hw
-Ix
+jR
+VP
+ad
+aq
+ps
+aH
+aJ
+aN
+PF
 HQ
 HQ
 HQ
@@ -17187,29 +17234,29 @@ HQ
 HQ
 HQ
 HQ
-Ix
+CT
 zw
-YN
+FM
 fK
 zv
 PL
-YN
-YN
-Ix
+FM
+FM
+CT
 HF
 zp
 HJ
 tY
 iJ
-FM
-dK
-FM
-FM
-PF
 Zd
-ad
-aq
-Ix
+dK
+Zd
+Zd
+az
+aI
+aK
+aO
+PF
 HQ
 HQ
 HQ
@@ -17319,29 +17366,29 @@ HQ
 HQ
 HQ
 HQ
-Ix
-Ix
-YN
-YN
-YN
-YN
-YN
-Ix
-Ix
-Ix
-Ix
-Ix
-Ix
-Ix
-uP
+CT
+CT
+FM
+FM
+FM
+FM
+FM
+CT
+CT
 Ix
 Ix
 Ix
-Ix
-Ix
-ps
-Ix
-Ix
+PF
+PF
+bC
+PF
+PF
+PF
+PF
+PF
+aL
+PF
+PF
 sU
 sU
 sU
@@ -17452,13 +17499,13 @@ HQ
 HQ
 HQ
 HQ
-Ix
-Ix
-YN
-Sg
-YN
-Ix
-Ix
+CT
+CT
+FM
+FZ
+FM
+CT
+CT
 bO
 ZP
 ZP
@@ -17585,11 +17632,11 @@ HQ
 HQ
 HQ
 HQ
-Ix
-Ix
-CP
-Ix
-Ix
+CT
+CT
+Gp
+CT
+CT
 Yf
 ZP
 ZP

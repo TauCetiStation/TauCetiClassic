@@ -137,5 +137,7 @@
 		to_chat(user, "<span class='notice'>You can not interrupt cryosleep forcefully.</span>")
 
 /obj/structure/survivor_cryopod/tele_derelict/atom_init(mapload)
+	..()
 	global.tele_derelict_start += loc
 	create_spawner(/datum/spawner/tele_derelict)
+	return INITIALIZE_HINT_NORMAL
