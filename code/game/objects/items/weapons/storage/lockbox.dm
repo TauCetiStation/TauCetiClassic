@@ -61,7 +61,7 @@
 	return TRUE
 
 /obj/item/weapon/storage/lockbox/try_open(mob/user)
-	if(locked)
+	if(locked && !broken)
 		if(user.in_interaction_vicinity(src))
 			to_chat(user, "<span class='warning'>Its locked!</span>")
 		return FALSE
@@ -109,3 +109,121 @@
 		new /obj/item/ammo_casing/caseless/rocket/anti_singulo(src)
 	new /obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo(src)
 	make_exact_fit()
+
+/obj/item/storage/lockbox/medal
+	name = "medal box"
+	desc = "A locked box used to store medals of honor."
+	icon_state = "medalbox+l"
+	req_access = list(access_captain)
+	icon_locked = "medalbox+l"
+	icon_closed = "medalbox"
+	icon_broken = "medalbox+b"
+
+	max_w_class = SIZE_TINY
+	max_storage_space = null
+	storage_slots = 10
+	can_hold = list(/obj/item/clothing/accessory/medal)
+
+	var/open = FALSE // used for overlays
+
+/obj/item/storage/lockbox/medal/AltClick(mob/user)
+	try_open(user)
+
+/obj/item/storage/lockbox/medal/atom_init(mapload, ...)
+	. = ..()
+	new /obj/item/clothing/accessory/medal/gold/captain(src)
+	new /obj/item/clothing/accessory/medal/silver/security(src)
+	new /obj/item/clothing/accessory/medal/bronze_heart(src)
+	new /obj/item/clothing/accessory/medal/silver/valor(src)
+	new /obj/item/clothing/accessory/medal/silver/valor(src)
+	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
+	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
+	new /obj/item/clothing/accessory/medal/conduct(src)
+	new /obj/item/clothing/accessory/medal/conduct(src)
+	new /obj/item/clothing/accessory/medal/conduct(src)
+
+/obj/item/storage/lockbox/medal/try_open(mob/user)
+	. = ..()
+	update_icon()
+
+/obj/item/storage/lockbox/medal/update_icon()
+	if(locked)
+		icon_state = "medalbox+l"
+		return
+
+	icon_state = "medalbox"
+	if(open)
+		icon_state += "open"
+	if(broken)
+		icon_state += "+b"
+
+	overlays = update_overlays()
+
+/obj/item/storage/lockbox/medal/proc/update_overlays()
+	if(!contents || !open)
+		return
+	if(locked)
+		return
+	for(var/i in 1 to contents.len)
+		var/obj/item/clothing/accessory/medal/M = contents[i]
+		var/mutable_appearance/medalicon = mutable_appearance(initial(icon), M.medaltype)
+		if(i > 1 && i <= 5)
+			medalicon.pixel_x += ((i-1)*3)
+		else if(i > 5)
+			medalicon.pixel_y -= 7
+			medalicon.pixel_x -= 2
+			medalicon.pixel_x += ((i-6)*3)
+		. += medalicon
+
+/obj/item/storage/lockbox/medal/hop
+	name = "Head of Personnel medal box"
+	desc = "A locked box used to store medals to be given to those exhibiting excellence in management."
+	req_access = list(access_hop)
+
+/obj/item/storage/lockbox/medal/hop/atom_init(mapload, ...)
+	. = ..()
+	new /obj/item/clothing/accessory/medal/silver/bureaucracy(src)
+	new /obj/item/clothing/accessory/medal/silver/bureaucracy(src)
+	new /obj/item/clothing/accessory/medal/silver/bureaucracy(src)
+	new /obj/item/clothing/accessory/medal/silver/excellence(src)
+
+/obj/item/storage/lockbox/medal/sec
+	name = "security medal box"
+	desc = "A locked box used to store medals to be given to members of the security department."
+	req_access = list(access_hos)
+
+/obj/item/storage/lockbox/medal/med
+	name = "medical medal box"
+	desc = "A locked box used to store medals to be given to members of the medical department."
+	req_access = list(access_cmo)
+
+/obj/item/storage/lockbox/medal/med/atom_init(mapload, ...)
+	. = ..()
+	new /obj/item/clothing/accessory/medal/med_medal(src)
+	new /obj/item/clothing/accessory/medal/med_medal2(src)
+
+/obj/item/storage/lockbox/medal/sec/atom_init(mapload, ...)
+	. = ..()
+	new /obj/item/clothing/accessory/medal/silver/security(src)
+	new /obj/item/clothing/accessory/medal/silver/security(src)
+	new /obj/item/clothing/accessory/medal/silver/security(src)
+
+/obj/item/storage/lockbox/medal/cargo
+	name = "cargo award box"
+	desc = "A Cargo Industries locked box used to store awards to be given to members of the cargo department."
+	req_access = list(access_qm)
+
+/obj/item/storage/lockbox/medal/cargo/atom_init(mapload, ...)
+	. = ..()
+	new /obj/item/clothing/accessory/medal/ribbon/cargo(src)
+
+/obj/item/storage/lockbox/medal/sci
+	name = "science medal box"
+	desc = "A locked box used to store medals to be given to members of the science department."
+	req_access = list(access_rd)
+
+/obj/item/storage/lockbox/medal/sci/atom_init(mapload, ...)
+	. = ..()
+	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
+	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
+	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
