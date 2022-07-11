@@ -1,3 +1,4 @@
+ADD_TO_GLOBAL_LIST(/obj/structure/ch_feeder, ch_feeder_list)
 /obj/structure/ch_feeder
 	name = "Chicken Feeder"
 	desc = "Co-co-co"
@@ -9,14 +10,6 @@
 	var/maxFood = 10
 
 var/global/list/ch_feeder_list = list()
-
-/obj/structure/ch_feeder/atom_init()
-	..()
-	ch_feeder_list += src
-
-/obj/structure/ch_feeder/Destroy()
-	ch_feeder_list -= src
-	..()
 
 /obj/structure/ch_feeder/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat))
