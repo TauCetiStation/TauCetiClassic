@@ -173,9 +173,8 @@
 
 	var/obj/item/device/pda/heads/pda = belt
 	if(istype(pda))
-		pda.owner = H.real_name
 		pda.ownjob = "Reaper"
-		pda.name = "PDA-[H.real_name] ([pda.ownjob])"
+		pda.assign(H.real_name)
 
 	var/obj/item/weapon/card/id/W = id
 	if(istype(W))
@@ -320,9 +319,8 @@
 /datum/outfit/nanotrasen/post_equip(mob/living/carbon/human/H)
 	var/obj/item/device/pda/pda = locate() in H
 	if(pda)
-		pda.owner = H.real_name
 		pda.ownjob = ownjob
-		pda.name = "PDA-[H.real_name] ([pda.ownjob])"
+		pda.assign(H.real_name)
 
 	var/obj/item/weapon/card/id/W = locate() in H
 	if(W)
