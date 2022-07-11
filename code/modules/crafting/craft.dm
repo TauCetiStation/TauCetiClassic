@@ -90,7 +90,7 @@
 		if(check_tools(user, R, contents))
 			var/required_time = R.time
 			if(R.required_proficiency)
-				required_time = apply_skill_bonus(user, R.time, list(R.required_proficiency), multiplier = -0.4)
+				required_time = apply_skill_bonus(user, R.time, R.required_proficiency, multiplier = -0.4)
 			if(do_after(user, required_time, target = user))
 				contents = get_surroundings(user)
 				if(!check_contents(R, contents))

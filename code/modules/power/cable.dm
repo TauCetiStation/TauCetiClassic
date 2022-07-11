@@ -102,7 +102,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 //Telekinesis has no effect on a cable
 /obj/structure/cable/attack_tk(mob/user)
-	return
+	return FALSE
 
 /obj/structure/cable/proc/remove_cable(turf/T, mob/user)
 	// 0-X cables are 1 unit, X-X cables are 2 units long
