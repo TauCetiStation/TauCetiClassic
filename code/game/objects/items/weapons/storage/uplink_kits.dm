@@ -427,7 +427,7 @@
 	/obj/item/weapon/reagent_containers/watertank_backpack/syndie,
 	/obj/item/weapon/lighter/zippo,
 	/obj/item/weapon/gun/projectile/revolver/syndie,
-	/obj/item/ammo_box/a357 = 2
+	/obj/item/ammo_box/a357 = 2,
 	/obj/item/weapon/melee/energy/sword,
 	/obj/item/weapon/grenade/chem_grenade/acid = 3,
 	/obj/item/weapon/grenade/chem_grenade/incendiary = 2,
