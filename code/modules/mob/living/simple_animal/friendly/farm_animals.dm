@@ -261,6 +261,16 @@ var/global/chicken_count = 0
 		E.pixel_y = rand(-6,6)
 		if(chicken_count < MAX_CHICKENS && prob(10))
 			START_PROCESSING(SSobj, E)
+	if(stat != DEAD && !buckled)
+		if(eggsleft < 2) //hungry
+			for(var/obj/structure/ch_feeder/C as anything in ch_feeder_list)
+				if(get_dist(src, C) < 7)
+					if(C.food > 0)
+						step_to(src, C)
+						if(loc == C.loc)
+							C.food -= 1
+							eggsleft += rand(1, 4)
+	stop_automated_movement = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
@@ -297,7 +307,7 @@ var/global/chicken_count = 0
 	name = "Shadowpig"
 	icon_state = "shadowpig"
 	icon_living = "shadowpig"
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE 
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 /mob/living/simple_animal/pig/shadowpig/atom_init()
 	. = ..()
