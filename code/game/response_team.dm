@@ -218,14 +218,12 @@ var/global/can_call_ert
 		var/obj/item/weapon/card/id/centcom/ert/W = new(src)
 		W.assignment = "Emergency Response Team Leader"
 		W.rank = "Emergency Response Team Leader"
-		W.registered_name = real_name
-		W.name = "[real_name]'s ID Card ([W.assignment])"
+		W.assign(real_name)
 		W.icon_state = "ert-leader"
 		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 	else
 		var/obj/item/weapon/card/id/centcom/ert/W = new(src)
-		W.registered_name = real_name
-		W.name = "[real_name]'s ID Card ([W.assignment])"
+		W.assign(real_name)
 		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(src)

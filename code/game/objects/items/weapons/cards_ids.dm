@@ -160,6 +160,10 @@
 		to_chat(usr, GetDisabilities())
 	return
 
+/obj/item/weapon/card/id/proc/assign(real_name)
+	name = "[real_name]'s ID Card[assignment ? "([assignment])" : ""]"
+	registered_name = real_name
+
 
 /obj/item/weapon/card/id/silver
 	name = "identification card"
@@ -279,6 +283,7 @@
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate, access_external_airlocks)
 	origin_tech = "syndicate=3"
+	assignment = "Agent"
 	var/registered_user=null
 	var/obj/item/weapon/card/id/scard = null
 	customizable_view = TRAITOR_VIEW
@@ -290,11 +295,9 @@
 	. = ..()
 	if(ismob(loc)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
 		var/mob/user = loc
-		registered_name = ishuman(user) ? user.real_name : user.name
+		assign(ishuman(user) ? user.real_name : user.name)
 	else
-		registered_name = "Agent Card"
-	assignment = "Agent"
-	name = "[registered_name]'s ID Card ([assignment])"
+		assign(registered_name)
 
 /obj/item/weapon/card/id/syndicate/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
@@ -312,7 +315,6 @@
 		if(!t) //Same as mob/dead/new_player/prefrences.dm
 			tgui_alert(usr, "Invalid name.")
 			return
-		src.registered_name = t
 
 		var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent"))
 		if(!u)
@@ -320,7 +322,7 @@
 			src.registered_name = ""
 			return
 		src.assignment = u
-		src.name = "[src.registered_name]'s ID Card ([src.assignment])"
+		assign(registered_name)
 		to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 		registered_user = user
 	else if(!registered_user || registered_user == user)
@@ -333,14 +335,13 @@
 				if(!t) //Same as mob/dead/new_player/prefrences.dm
 					tgui_alert(usr, "Invalid name.")
 					return
-				src.registered_name = t
 
 				var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Test Subject"))
 				if(!u)
 					tgui_alert(usr, "Invalid assignment.")
 					return
 				src.assignment = u
-				src.name = "[src.registered_name]'s ID Card ([src.assignment])"
+				assign(t)
 				to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 				return
 			if("Change look")

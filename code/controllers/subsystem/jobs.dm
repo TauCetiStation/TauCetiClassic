@@ -577,10 +577,9 @@ SUBSYSTEM_DEF(job)
 	else
 		C = new /obj/item/weapon/card/id(H)
 	if(C)
-		C.registered_name = H.real_name
 		C.rank = rank
 		C.assignment = title ? title : rank
-		C.name = "[C.registered_name]'s ID Card ([C.assignment])"
+		C.assign(H.real_name)
 
 		//put the player's account number onto the ID
 		if(H.mind && H.mind.initial_account)

@@ -122,8 +122,7 @@
 /datum/outfit/tunnel_clown/post_equip(mob/living/carbon/human/H)
 	var/obj/item/weapon/card/id/W = id
 	if(istype(W))
-		W.name = "[H.real_name]'s ID Card ([W.assignment])"
-		W.registered_name = H.real_name
+		W.assign(H.real_name)
 
 /datum/outfit/masked_killer
 	name = "masked killer"
@@ -180,8 +179,7 @@
 
 	var/obj/item/weapon/card/id/W = id
 	if(istype(W))
-		W.name = "[H.real_name]'s ID Card ([W.assignment])"
-		W.registered_name = H.real_name
+		W.assign(H.real_name)
 	
 /datum/outfit/preparation
 	name = "preparation"
@@ -199,9 +197,8 @@
 	var/obj/item/weapon/card/id/syndicate/W = id
 	if(istype(W))
 		W.assignment = "Unknown"
-		W.name = "[H.real_name]'s ID Card ([W.assignment])"
+		W.assign(H.real_name)
 		W.access = get_all_accesses()
-		W.registered_name = H.real_name
 
 /datum/outfit/death_squad
 	name = "death squad"
@@ -237,8 +234,7 @@
 /datum/outfit/death_squad/post_equip(mob/living/carbon/human/H)
 	var/obj/item/weapon/card/id/W = id
 	if(istype(W))
-		W.name = "[H.real_name]'s ID Card"
-		W.registered_name = H.real_name
+		W.assign(H.real_name)
 
 /datum/outfit/death_squad/leader
 	name = "death squad leader"
@@ -298,8 +294,7 @@
 
 	var/obj/item/weapon/card/id/syndicate/W = id
 	if(istype(W))
-		W.name = "[H.real_name]'s ID Card"
-		W.registered_name = H.real_name
+		W.assign(H.real_name)
 
 /datum/outfit/syndicate_commando/leader
 	name = "syndicate commando comander"
@@ -329,11 +324,10 @@
 		pda.ownjob = ownjob
 		pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 
-	var/obj/item/weapon/card/id/id = locate() in H
-	if(id)
-		id.assignment = ownjob
-		id.name = "[H.real_name]'s ID Card ([id.assignment])"
-		id.registered_name = H.real_name
+	var/obj/item/weapon/card/id/W = locate() in H
+	if(W)
+		W.assignment = ownjob
+		W.assign(H.real_name)
 
 /datum/outfit/nanotrasen/representatives
 	name = "nanotrasen representative"

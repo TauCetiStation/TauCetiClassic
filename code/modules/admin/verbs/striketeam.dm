@@ -164,8 +164,7 @@ var/global/sent_strike_team = FALSE
 	L.inject(src)
 
 	var/obj/item/weapon/card/id/centcom/C = new(src)
-	C.name = "[real_name]'s ID Card"
-	C.registered_name = real_name
+	C.assign(real_name)
 	equip_to_slot_or_del(C, SLOT_WEAR_ID)
 
 #undef COMMANDOS_POSSIBLE

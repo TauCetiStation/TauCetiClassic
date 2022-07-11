@@ -208,14 +208,13 @@ var/global/sent_syndicate_strike_team = FALSE
 	equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen/red(src), SLOT_S_STORE)
 
 	var/obj/item/weapon/card/id/syndicate/W = new(src) //Untrackable by AI
-	W.name = "[real_name]'s ID Card"
 	if(syndicate_leader)
 		W.icon_state = "syndicate-command"
 		W.assignment = "Syndicate Commando Leader"
 	else
 		W.icon_state = "syndicate"
 		W.assignment = "Syndicate Commando"
-	W.registered_name = real_name
+	W.assign(real_name)
 
 	equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
