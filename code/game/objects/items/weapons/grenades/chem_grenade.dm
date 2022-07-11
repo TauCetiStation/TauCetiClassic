@@ -320,7 +320,7 @@
 	stage = 2
 	path = 1
 
-/obj/item/weapon/grenade/chem_grenade/teargas/atom_init()
+/obj/item/weapon/grenade/chem_grenade/acid/atom_init()
 	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
