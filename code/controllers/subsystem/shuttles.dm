@@ -373,6 +373,7 @@ SUBSYSTEM_DEF(shuttle)
 				shake_camera(M, 2, 1) // buckled, not a lot of shaking
 			else
 				shake_camera(M, 4, 2)// unbuckled, HOLY SHIT SHAKE THE ROOM
+				M.Stun(1)
 				M.Weaken(3)
 		if(isliving(M) && !issilicon(M) && !M.buckled)
 			var/mob/living/L = M
