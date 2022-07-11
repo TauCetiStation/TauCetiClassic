@@ -724,13 +724,13 @@ var/global/list/datum/spawners_cooldown = list()
 
 	ranks = list(ROLE_GHOSTLY)
 
-/datum/spawner/derelict/can_spawn(mob/dead/observer/ghost)
+/datum/spawner/tele_derelict/can_spawn(mob/dead/observer/ghost)
 	if(SSticker.current_state != GAME_STATE_PLAYING)
 		to_chat(ghost, "<span class='notice'>Please wait till round start!</span>")
 		return FALSE
 	return ..()
 
-/datum/spawner/derelict/spawn_ghost(mob/dead/observer/ghost)
+/datum/spawner/tele_derelict/spawn_ghost(mob/dead/observer/ghost)
 	var/spawnloc = pick(tele_derelict_start)
 	tele_derelict_start -= spawnloc
 	var/client/C = ghost.client
@@ -766,6 +766,6 @@ var/global/list/datum/spawners_cooldown = list()
 
 	H.SetSleeping(20 SECONDS)
 
-/datum/spawner/derelict/jump(mob/dead/observer/ghost)
+/datum/spawner/tele_derelict/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(tele_derelict_start)
 	ghost.forceMove(get_turf(jump_to))
