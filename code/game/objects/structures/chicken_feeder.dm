@@ -4,6 +4,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/ch_feeder, ch_feeder_list)
 	desc = "Co-co-co"
 	icon = 'icons/obj/feeder.dmi'
 	icon_state = "empty"
+	layer = 7
 	density = FALSE
 	anchored = TRUE
 	var/food = 0
