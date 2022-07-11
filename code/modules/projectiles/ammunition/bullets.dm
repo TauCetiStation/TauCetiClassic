@@ -50,17 +50,17 @@
 
 /obj/item/ammo_casing/c45hp
 	desc = "A .45 HP bullet casing."
-	caliber = ".45S"
+	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg_hp
 
 /obj/item/ammo_casing/c45hv
 	desc = "A .45 HV bullet casing."
-	caliber = ".45S"
+	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg_hv
 
 /obj/item/ammo_casing/c45imp
 	desc = "A .45 IMP bullet casing."
-	caliber = ".45S"
+	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg_imp
 
 /obj/item/ammo_casing/c45r

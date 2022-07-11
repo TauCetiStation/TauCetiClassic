@@ -24,8 +24,9 @@
 	dead_mob_list -= src
 
 /mob/living/carbon/monkey/death(gibbed)
-	if(stat == DEAD)	return
-	if(healths)			healths.icon_state = "health5"
+	if(stat == DEAD)
+		return
+	
 	stat = DEAD
 
 	if(!gibbed)
