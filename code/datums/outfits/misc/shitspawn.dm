@@ -412,119 +412,98 @@
 		M.mutations += list(NO_SHOCK, TK, REMOTE_TALK)
 		M.update_mutations()
 
+/datum/outfit/velocity
+	name = null
+
+	belt = /obj/item/device/pda/velocity
+	id = /obj/item/weapon/card/id/velocity
+
+	var/ownjob
+
+/datum/outfit/velocity/post_equip(mob/living/carbon/human/H)
+	var/obj/item/device/pda/pda = locate() in H
+	if(pda)
+		pda.ownjob = ownjob
+		pda.assign(H.real_name)
+
+	var/obj/item/weapon/card/id/W = locate() in H
+	if(W)
+		W.assignment = ownjob
+		W.rank = ownjob
+		W.assign(H.real_name)
+
+	H.mind?.assigned_role = ownjob
+	H.universal_speak = TRUE
+	H.universal_understand = TRUE
+
+/datum/outfit/velocity/officer
 	name = "velocity officer"
-		/obj/item/clothing/under/det/velocity(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/shoes/boots/combat(M), SLOT_SHOES)
-		/obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
-		/obj/item/device/radio/headset/velocity(M), SLOT_L_EAR)
-		/obj/item/weapon/storage/backpack/satchel(M), SLOT_BACK)
 
-			var/obj/item/device/pda/velocity/pda = new(M)
-			pda.owner = M.real_name
-			pda.ownjob = "Velocity Officer"
-			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+	uniform = /obj/item/clothing/under/det/velocity
+	shoes = /obj/item/clothing/shoes/boots/combat
+	gloves = /obj/item/clothing/gloves/combat
+	l_ear = /obj/item/device/radio/headset/velocity
+	back = /obj/item/weapon/storage/backpack/satchel
+	glasses = obj/item/clothing/glasses/sunglasses/hud/sechud
 
-			M.equip_to_slot_or_del(pda, SLOT_BELT)
-		/obj/item/clothing/glasses/sunglasses/hud/sechud(M), SLOT_GLASSES)
+	ownjob = "Velocity Officer"
 
-			spawned_card = new/obj/item/weapon/card/id/velocity(M)
-			spawned_card.assignment = "Velocity Officer"
-			spawned_card.name = "[M.real_name]'s ID Card ([spawned_card.assignment])"
-			spawned_card.rank = "Velocity Officer"
-			spawned_card.registered_name = M.real_name
-			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
-
-		name = M.mind
-				M.mind.assigned_role = "Velocity Officer"
-
-			M.universal_speak = TRUE
-			M.universal_understand = TRUE
-
+/datum/outfit/velocity/chief
 	name = "velocity chief"
-		/obj/item/clothing/under/rank/head_of_security/corp(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/shoes/boots/combat(M), SLOT_SHOES)
-		/obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
-		/obj/item/device/radio/headset/velocity/chief(M), SLOT_L_EAR)
-		/obj/item/clothing/head/beret/sec/hos(M), SLOT_HEAD)
-		/obj/item/clothing/suit/storage/det_suit/velocity(M), SLOT_WEAR_SUIT)
 
-			var/obj/item/weapon/storage/backpack/satchel/back_storage = new /obj/item/weapon/storage/backpack/satchel(M)
-			M.equip_to_slot_or_del(back_storage, SLOT_BACK)
-			new /obj/item/weapon/storage/box/handcuffs(back_storage)
-			new /obj/item/device/flash(back_storage)
-			new /obj/item/weapon/storage/belt/security(back_storage)
-			new /obj/item/device/megaphone(back_storage)
-			new /obj/item/device/contraband_finder/deluxe(back_storage)
-			new /obj/item/device/reagent_scanner(back_storage)
-			new /obj/item/weapon/stamp/cargo_industries(back_storage)
+	uniform = /obj/item/clothing/under/rank/head_of_security/corp
+	shoes = /obj/item/clothing/shoes/boots/combat
+	gloves = /obj/item/clothing/gloves/combat
+	l_ear = /obj/item/device/radio/headset/velocity/chief
+	head = /obj/item/clothing/head/beret/sec/hos
+	suit = /obj/item/clothing/suit/storage/det_suit/velocity
+	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
 
-			var/obj/item/device/pda/velocity/pda = new(M)
-			pda.owner = M.real_name
-			pda.ownjob = "Velocity Chief"
-			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+	back = /obj/item/weapon/storage/backpack/satchel
+	backpack_contents = list(
+		/obj/item/weapon/storage/box/handcuffs,
+		/obj/item/device/flash,
+		/obj/item/weapon/storage/belt/security,
+		/obj/item/device/megaphone,
+		/obj/item/device/contraband_finder/deluxe,
+		/obj/item/device/reagent_scanner,
+		/obj/item/weapon/stamp/cargo_industries,
+	)
 
-			var/obj/item/weapon/storage/pouch/baton_holster/BH = new(M)
-			new /obj/item/weapon/melee/classic_baton(BH)
-			BH.update_icon()
-			M.equip_to_slot_or_del(BH, SLOT_L_STORE)
+	l_pocket = /obj/item/weapon/storage/pouch/baton_holster
+	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster
 
-			var/obj/item/weapon/storage/pouch/pistol_holster/PH = new(M)
-			var/obj/item/weapon/gun/energy/laser/selfcharging/SG = new /obj/item/weapon/gun/energy/laser/selfcharging(PH)
-			SG.name = "laser pistol rifle"
-			SG.can_be_holstered = TRUE
-			PH.update_icon()
-			M.equip_to_slot_or_del(PH, SLOT_R_STORE)
+	ownjob = "Velocity Chief"
 
-			M.equip_to_slot_or_del(pda, SLOT_BELT)
-		/obj/item/clothing/glasses/sunglasses/hud/sechud(M), SLOT_GLASSES)
+/datum/outfit/velocity/post_equip(mob/living/carbon/human/H)
+	..()
 
-			spawned_card = new/obj/item/weapon/card/id/velocity(M)
-			spawned_card.assignment = "Velocity Chief"
-			spawned_card.name = "[M.real_name]'s ID Card ([spawned_card.assignment])"
-			spawned_card.access += get_all_accesses()
-			spawned_card.rank = "Velocity Chief"
-			spawned_card.registered_name = M.real_name
-			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
+	var/obj/item/weapon/storage/pouch/baton_holster/BH = l_pocket
+	new /obj/item/weapon/melee/classic_baton(BH)
+	BH.update_icon()
 
-			var/obj/item/weapon/implant/mind_protect/mindshield/IMP = new(M)
-			IMP.inject(M)
 
-		name = M.mind
-				M.mind.assigned_role = "Velocity Chief"
+	var/obj/item/weapon/storage/pouch/pistol_holster/PH = r_pocket
+	var/obj/item/weapon/gun/energy/laser/selfcharging/SG = new /obj/item/weapon/gun/energy/laser/selfcharging(PH)
+	SG.name = "laser pistol rifle"
+	SG.can_be_holstered = TRUE
+	PH.update_icon()
 
-			M.universal_speak = TRUE
-			M.universal_understand = TRUE
+	implants = list(/obj/item/weapon/implant/mind_protect/mindshield)
 
+/datum/outfit/velocity/doctor
 	name = "velocity doctor"
-		/obj/item/clothing/under/det/velocity(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/shoes/brown(M), SLOT_SHOES)
-		/obj/item/clothing/gloves/latex/nitrile(M), SLOT_GLOVES)
-		/obj/item/clothing/suit/storage/labcoat/blue(M), SLOT_WEAR_SUIT)
-		/obj/item/device/radio/headset/velocity(M), SLOT_L_EAR)
-		/obj/item/weapon/storage/backpack/satchel/med(M), SLOT_BACK)
+	uniform = /obj/item/clothing/under/det/velocity
+	shoes = /obj/item/clothing/shoes/brown
+	gloves = /obj/item/clothing/gloves/latex/nitrile
+	suit = /obj/item/clothing/suit/storage/labcoat/blue
+	l_ear = /obj/item/device/radio/headset/velocity
+	back = /obj/item/weapon/storage/backpack/satchel/med
+	glasses = /obj/item/clothing/glasses/hud/health
 
-			var/obj/item/device/pda/velocity/doctor/pda = new(M)
-			pda.owner = M.real_name
-			pda.ownjob = "Velocity Medical Doctor"
-			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+	l_pocket = /obj/item/weapon/reagent_containers/hypospray/cmo
 
-			M.equip_to_slot_or_del(pda, SLOT_BELT)
-		/obj/item/clothing/glasses/hud/health(M), SLOT_GLASSES)
-
-		/obj/item/weapon/reagent_containers/hypospray/cmo(M), SLOT_L_STORE)
-
-			spawned_card = new/obj/item/weapon/card/id/velocity(M)
-			spawned_card.assignment = "Velocity Medical Doctor"
-			spawned_card.name = "[M.real_name]'s ID Card ([spawned_card.assignment])"
-			spawned_card.rank = "Velocity Medical Doctor"
-			spawned_card.registered_name = M.real_name
-			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
-
-		name = M.mind
-				M.mind.assigned_role = "Velocity Medical Doctor"
-
-			M.universal_speak = TRUE
-			M.universal_understand = TRUE
+	ownjob = "Velocity Medical Doctor"
 
 	name = "emergency response team"
 		/obj/item/clothing/under/rank/centcom_officer(M), SLOT_W_UNIFORM)
