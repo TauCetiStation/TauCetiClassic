@@ -151,12 +151,14 @@
 	if ((HULK in mutations) && health <= 25)
 		mutations.Remove(HULK)
 		to_chat(src, "<span class='warning'>You suddenly feel very weak.</span>")
+		Stun(1)
 		Weaken(3)
 		emote("collapse")
 
 	if (radiation)
 		if (radiation > 100)
 			radiation = 100
+			Stun(5)
 			Weaken(10)
 			if(!lying)
 				to_chat(src, "<span class='warning'>You feel weak.</span>")
@@ -173,6 +175,7 @@
 				adjustToxLoss(1)
 				if(prob(5))
 					radiation -= 5
+					Stun(1)
 					Weaken(3)
 					if(!lying)
 						to_chat(src, "<span class='warning'>You feel weak.</span>")

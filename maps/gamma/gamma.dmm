@@ -54390,7 +54390,7 @@
 	},
 /area/station/civilian/janitor)
 "qgH" = (
-/obj/structure/closet/lawcloset,
+/obj/structure/closet/secure_closet/iaa,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

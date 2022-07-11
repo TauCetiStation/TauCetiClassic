@@ -65,7 +65,7 @@
 	return 1
 
 /obj/singularity/attack_tk(mob/user)
-	return
+	return FALSE
 
 /obj/singularity/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(current_size >= STAGE_FIVE || check_turfs_in(Dir))
