@@ -107,7 +107,6 @@
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	log_name = "TS"
 	category = "Оборона"
-	cost = 3
 
 /datum/spellbook_entry/smoke
 	name = "Дым"
