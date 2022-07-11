@@ -7,5 +7,6 @@
 	back = /obj/item/weapon/storage/backpack
 	survival_box = TRUE
 
-	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi, /obj/item/weapon/reagent_containers/food/snacks/beans, /obj/item/device/flashlight/flare, /obj/item/stack/medical/bruise_pack)
+	//lets be merciful
+	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi, /obj/item/weapon/reagent_containers/food/snacks/beans, /obj/item/device/flashlight/flare, /obj/item/stack/medical/bruise_pack, /obj/item/stack/medical/suture)
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)

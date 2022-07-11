@@ -138,4 +138,4 @@
 
 /obj/structure/survivor_cryopod/tele_derelict/atom_init(mapload)
 	global.tele_derelict_start += loc
-	create_spawner(/datum/spawner/derelict)
+	create_spawner(/datum/spawner/tele_derelict)

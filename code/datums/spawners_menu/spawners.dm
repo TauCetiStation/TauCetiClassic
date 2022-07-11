@@ -717,7 +717,7 @@ var/global/list/datum/spawners_cooldown = list()
 	var/jump_to = pick(global.heiststart)
 	ghost.forceMove(jump_to)
 
-/datum/spawner/derelict
+/datum/spawner/tele_derelict
 	name = "Выживший на дереликте"
 	id = "derelict_survivor"
 	desc = "Вы появляетесь на дереликте и должны его восстановить и выжить."
@@ -733,12 +733,6 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/derelict/spawn_ghost(mob/dead/observer/ghost)
 	var/spawnloc = pick(tele_derelict_start)
 	tele_derelict_start -= spawnloc
-	for(var/atom/A in spawnloc)
-		if(istype(A, /obj/structure/survivor_cryopod/tele_derelict))
-			var/obj/structure/survivor_cryopod/tele_derelict/S = A
-			S.opened = 1
-			break
-
 	var/client/C = ghost.client
 
 	var/mob/living/carbon/human/H = new(null)
@@ -759,7 +753,18 @@ var/global/list/datum/spawners_cooldown = list()
 	to_chat(H, "<B>Вы - <span class='boldwarning'>Офицер СБ дереликта</span>.</B>")
 	to_chat(H, "<B>Вы ушли в криосон в ожидании следующего челнока до Земли, чтобы вернутся домой. Однако после пробуждения из капсулы, вы сразу почувствовали что что-то не так. А следы крови и чьи-то ошмётки прямо в главном корридоре это чувство подкрепили.</B>")
 	to_chat(H, "<B>Попытайтесь восстановить дереликт и выжить. После этого, вы можете отправится исследовать космос или остатся на дереликте.</B>")
-	to_chat(H, "<span class='boldwarning'>Если ваш товарищ так же пробудится ото сна, не покидайте его и работайте вместе.</span>.")
+	to_chat(H, "<span class='boldwarning'>Если ваш товарищ так же пробудится ото сна, не покидайте его, и работайте вместе.</span>.")
+
+	for(var/atom/A in spawnloc)
+		if(istype(A, /obj/structure/survivor_cryopod/tele_derelict))
+			var/obj/structure/survivor_cryopod/tele_derelict/S = A
+			S.opened = 1
+			S.density = FALSE
+			H.forceMove(spawnloc)
+			S.icon_state = S.open_state
+			break
+
+	H.SetSleeping(20 SECONDS)
 
 /datum/spawner/derelict/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(tele_derelict_start)
