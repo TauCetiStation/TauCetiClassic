@@ -27,7 +27,7 @@
 		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten"
 	)
 	var/list/premium_reagents = list()
-	required_skills = list(/datum/skill/chemistry/trained)
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
 	fumbling_time = 2 SECONDS
 
 /obj/machinery/chem_dispenser/atom_init()
@@ -247,7 +247,7 @@
 				"diethylamine"
 		)
 	)
-	required_skills = list(/datum/skill/chemistry/novice)
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/chem_dispenser/constructable/atom_init()
 	. = ..()
@@ -348,7 +348,7 @@
 	var/pillsprite = 1
 	var/client/has_sprites = list()
 	var/max_pill_count = 24
-	required_skills = list(/datum/skill/chemistry/trained)
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
 
 
 /obj/machinery/chem_master/atom_init()
@@ -692,14 +692,14 @@
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	condi = 1
-	required_skills = list(/datum/skill/chemistry/novice)
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_master/constructable
 	name = "ChemMaster 2999"
 	desc = "Used to seperate chemicals and distribute them in a variety of forms."
-	required_skills = list(/datum/skill/chemistry/trained)
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/chem_master/constructable/atom_init()
 	. = ..()
@@ -822,7 +822,7 @@
 
 
 	var/list/holdingitems = list()
-	required_skills = list(/datum/skill/chemistry/novice)
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/reagentgrinder/atom_init()
 	. = ..()

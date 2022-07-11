@@ -594,7 +594,7 @@
 	name = "alien optable"
 	desc = "Used for experiments on creatures."
 	icon = 'icons/obj/abductor.dmi'
-	var/holding = 0
+	var/holding = FALSE
 	var/belt = null
 	var/mob/living/carbon/fastened = null
 
@@ -643,6 +643,7 @@
 		add_overlay(belt)
 		fastened.anchored = TRUE
 		fastened.SetStunned(INFINITY)
+		fastened.can_be_pulled = FALSE
 		qdel(animation)
 	else
 		cut_overlay(belt)
@@ -653,6 +654,7 @@
 		sleep(9)
 		fastened.SetStunned(0)
 		fastened.anchored = FALSE
+		fastened.can_be_pulled = TRUE
 		fastened = null
 		qdel(animation)
 

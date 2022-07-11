@@ -67,11 +67,9 @@
 	if(!.)
 		return
 	owner.weakened = TRUE
-	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
 
 /datum/status_effect/incapacitating/weakened/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, id)
 	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
 	owner.weakened = FALSE
 	return ..()

@@ -58,7 +58,7 @@
 		if(B.health < initial(B.health) / 2)
 			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified!</span>")
 			return
-		B.change_to(/obj/effect/blob/shield/reflective)
+		B.change_to(/obj/effect/blob/shield/reflective,src)
 	else
 		B.change_to(/obj/effect/blob/shield)
 

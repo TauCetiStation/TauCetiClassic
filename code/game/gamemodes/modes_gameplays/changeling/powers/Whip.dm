@@ -45,7 +45,8 @@
 			LE.grabber = TRUE
 		if(INTENT_PUSH)
 			if(prob(65))
-				LE.weaken = 2.5
+				LE.weaken = 3
+				LE.stun = 2
 		if(INTENT_HARM)
 			LE.damage = 30
 		else
