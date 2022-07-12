@@ -71,7 +71,8 @@
 	if(!client)
 		return
 	var/datum/faction/blob_conglomerate/C = find_faction_by_type(/datum/faction/blob_conglomerate)
-	if(!C) return FALSE
+	if(!C)
+		return FALSE
 	for(var/datum/role/blob_overmind/M in C.members)
 		var/datum/role/R = M
 		if(!R.antag.current)
@@ -128,10 +129,10 @@
 
 	message = sanitize(message)
 
-	log_say("[key_name(src)] : [message]")
-
 	if (!message)
 		return
+
+	log_say("[key_name(src)] : [message]")
 
 	message = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
 	message = "<span style='color:#EE4000'><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></span>"
@@ -275,7 +276,8 @@
 	update_hud()
 
 	var/datum/faction/blob_conglomerate/C = find_faction_by_type(/datum/faction/blob_conglomerate)
-	if(!C) return FALSE
+	if(!C)
+		return FALSE
 	var/datum/role/blobbernaut/R = SSticker.mode.CreateRole(/datum/role/blobbernaut, src)
 	C.HandleRecruitedRole(R)
 
