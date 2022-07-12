@@ -3090,6 +3090,33 @@
 	icon_state = "circuit"
 	},
 /area/custom/syndicate_mothership)
+"aid" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/hooded/wintercoat/wiz_red,
+/obj/item/clothing/suit/hooded/wintercoat/wiz_red,
+/obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
+/obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
+/obj/item/clothing/head/wizard/ushanka/brown_white,
+/obj/item/clothing/head/wizard/ushanka/brown,
+/obj/item/clothing/head/wizard/ushanka/black_white,
+/obj/item/clothing/head/wizard/ushanka/black,
+/obj/item/clothing/head/wizard/ushanka,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/winterboots/wizard,
+/obj/item/clothing/shoes/winterboots/wizard,
+/obj/item/clothing/shoes/winterboots/wizard,
+/obj/item/clothing/shoes/winterboots/wizard,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
 "aie" = (
 /turf/unsimulated/wall,
 /area/custom/syndicate_mothership)
@@ -13750,9 +13777,6 @@
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -13772,12 +13796,9 @@
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
 /obj/item/weapon/storage/backpack/ert/security,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/clothing/shoes/magboots,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -13809,6 +13830,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -13983,32 +14005,31 @@
 	},
 /area/custom/wizard_station)
 "aFM" = (
-/obj/structure/closet/cabinet,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/suit/hooded/wintercoat/wiz_red,
-/obj/item/clothing/suit/hooded/wintercoat/wiz_red,
-/obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
-/obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
-/obj/item/clothing/head/wizard/ushanka/brown_white,
-/obj/item/clothing/head/wizard/ushanka/brown,
-/obj/item/clothing/head/wizard/ushanka/black_white,
-/obj/item/clothing/head/wizard/ushanka/black,
-/obj/item/clothing/head/wizard/ushanka,
-/obj/item/weapon/tank/emergency_oxygen,
-/obj/item/weapon/tank/emergency_oxygen,
-/obj/item/weapon/tank/emergency_oxygen,
-/obj/item/weapon/tank/emergency_oxygen,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/turf/unsimulated/floor{
-	icon_state = "wood"
+/obj/structure/table/reinforced,
+/obj/item/weapon/melee/baton,
+/obj/item/weapon/storage/belt/security,
+/obj/item/device/flash,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/clothing/glasses/night,
+/obj/item/weapon/gun/projectile/glock/spec,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
+/obj/item/weapon/plastique,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/area/custom/wizard_station)
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/structure/window/reinforced,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "aFN" = (
 /obj/structure/table/woodentable,
 /obj/item/candle/infinite{
@@ -21295,6 +21316,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -21376,6 +21398,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
+/obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -21383,11 +21406,12 @@
 /area/centcom/living)
 "bfl" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/r4046,
-/obj/item/weapon/storage/box/r4046,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/weapon/storage/box/r4046/rubber,
+/obj/item/weapon/storage/box/r4046/teargas,
+/obj/item/weapon/storage/box/r4046/EMP,
 /obj/item/weapon/gun/projectile/grenade_launcher/m79,
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -21497,16 +21521,19 @@
 /obj/item/weapon/gun/projectile/glock/spec,
 /obj/item/clothing/glasses/sunglasses/hud/sechud,
 /obj/item/weapon/plastique,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/centcom/living)
 "bfv" = (
 /obj/structure/rack,
+/obj/item/weapon/shield/riot,
+/obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot,
@@ -36680,7 +36707,7 @@ aDl
 aGq
 aEx
 baA
-aFM
+aid
 abg
 aBh
 aFe
@@ -53547,7 +53574,7 @@ aFr
 beQ
 bfk
 aFr
-bfk
+aFM
 bfu
 aAm
 aHv
