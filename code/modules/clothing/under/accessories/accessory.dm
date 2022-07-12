@@ -181,7 +181,7 @@
 				to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits.</span>")
 				return
 
-		if(H.w_uniform && istype(U, /obj/item/clothing))
+		if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing))
 			var/obj/item/clothing/U = H.w_uniform
 			var/delay = 20
 			if(user == H)
@@ -191,19 +191,19 @@
 					"<span class='notice'>You try to pin [src] on [H]'s chest.</span>")
 			var/input
 			if(!commended && (user != H))
-				input = sanitize((input(user, "Reason for this commendation? Describe their accomplishments", "Commendation") as null|text))
+				input = sanitize(input(user, "Reason for this commendation? Describe their accomplishments", "Commendation") as null|text)
 			if(do_after(user, delay, target = H))
-				if(U.attach_accessory(src, user))
-					if(user == H)
-						to_chat(user, "<span class='notice'>You attach [src] to [U].</span>")
-					else
-						user.visible_message("<span class='notice'>[user] pins \the [src] on [H]'s chest.</span>", \
-							"<span class='notice'>You pin \the [src] on [H]'s chest.</span>")
-						if(input)
-							commended = TRUE
-							desc += "<br>The inscription reads: [input] - [user.real_name]"
-							log_game("<b>[key_name(H)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
-							message_admins("<b>[key_name_admin(H)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
+				U.attach_accessory(src, user)
+				if(user == H)
+					to_chat(user, "<span class='notice'>You attach [src] to [U].</span>")
+				else
+					user.visible_message("<span class='notice'>[user] pins \the [src] on [H]'s chest.</span>", \
+						"<span class='notice'>You pin \the [src] on [H]'s chest.</span>")
+					if(input)
+						commended = TRUE
+						desc += "<br>The inscription reads: [input] - [user.real_name]"
+						log_game("<b>[key_name(H)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
+						message_admins("<b>[key_name_admin(H)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
 
 		else
 			to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
@@ -219,14 +219,10 @@
 	desc = "A bronze heart-shaped medal awarded for sacrifice. It is often awarded posthumously or for severe injury in the line of duty."
 	icon_state = "bronze_heart"
 
-/obj/item/clothing/accessory/medal/ribbon
-	name = "ribbon"
-	desc = "A ribbon"
-	icon_state = "cargo"
-
-/obj/item/clothing/accessory/medal/ribbon/cargo
+/obj/item/clothing/accessory/medal/cargo
 	name = "\"cargo tech of the shift\" award"
 	desc = "An award bestowed only upon those cargotechs who have exhibited devotion to their duty in keeping with the highest traditions of Cargonia."
+	icon_state = "ribbon_cargo"
 
 /obj/item/clothing/accessory/medal/silver
 	name = "silver medal"
@@ -247,9 +243,15 @@
 	name = "\proper the head of personnel award for outstanding achievement in the field of excellence"
 	desc = "Nanotrasen's dictionary defines excellence as \"the quality or condition of being excellent\". This is awarded to those rare crewmembers who fit that definition."
 
-/obj/item/clothing/accessory/medal/silver/bureaucracy
-	name = "\improper Excellence in Bureaucracy Medal"
-	desc = "Awarded for exemplary managerial services rendered while under contract with Nanotrasen."
+/obj/item/clothing/accessory/medal/silver/med_medal
+	name = "exemplary performance medal"
+	desc = "A medal awarded to those who have shown distinguished conduct, performance, and initiative within the medical department."
+	icon_state = "med_medal"
+
+/obj/item/clothing/accessory/medal/silver/med_medal2
+	name = "excellence in medicine medal"
+	desc = "A medal awarded to those who have shown legendary performance, competence, and initiative beyond all expectations within the medical department."
+	icon_state = "med_medal2"
 
 /obj/item/clothing/accessory/medal/gold
 	name = "gold medal"
@@ -257,32 +259,31 @@
 	icon_state = "gold"
 	medaltype = "medal-gold"
 	m_amt = 0
+	unacidable = TRUE
 
 /obj/item/clothing/accessory/medal/gold/captain
 	name = "medal of captaincy"
 	desc = "A golden medal awarded exclusively to those promoted to the rank of captain. It signifies the codified responsibilities of a captain to Nanotrasen, and their undisputable authority over their crew."
-	unacidable = TRUE
 
 /obj/item/clothing/accessory/medal/gold/heroism
 	name = "medal of exceptional heroism"
 	desc = "An extremely rare golden medal awarded only by CentCom. To receive such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
 
-/obj/item/clothing/accessory/medal/med_medal
-	name = "exemplary performance medal"
-	desc = "A medal awarded to those who have shown distinguished conduct, performance, and initiative within the medical department."
-	icon_state = "med_medal"
+/obj/item/clothing/accessory/medal/gold/bureaucracy
+	name = "\improper Excellence in Bureaucracy Medal"
+	desc = "Awarded for exemplary managerial services rendered while under contract with Nanotrasen."
+	icon_state = "medal_paperwork"
 
-/obj/item/clothing/accessory/medal/med_medal2
-	name = "excellence in medicine medal"
-	desc = "A medal awarded to those who have shown legendary performance, competence, and initiative beyond all expectations within the medical department."
-	icon_state = "med_medal2"
+/obj/item/clothing/accessory/medal/gold/nanotrasen
+	name = "NanoTrasen Exclusive award"
+	desc = "The most rare golden medal ever awarded only by highest NanoTrasen officers. There aren't any specific instructions how to get this award, because it hasn't been received by anyone before. If you received this one, you are most likely the most helpful person at NanoTrasen."
+	icon_state = "gold_nt"
 
 /obj/item/clothing/accessory/medal/plasma
 	name = "plasma medal"
 	desc = "An eccentric medal made of plasma."
 	icon_state = "plasma"
 	medaltype = "medal-plasma"
-	armor = list(melee = 0, bullet = 0, laser = -10, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/accessory/medal/plasma/nobel_science
 	name = "nobel sciences award"
