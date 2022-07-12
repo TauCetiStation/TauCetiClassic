@@ -1148,6 +1148,12 @@
 	},
 /turf/environment/space,
 /area/shuttle/arrival/velocity)
+"acW" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/custom/syndicate_mothership)
 "acX" = (
 /obj/structure/object_wall/evac{
 	icon_state = "6,2"
@@ -88647,7 +88653,7 @@ ajz
 aIb
 aIb
 aIb
-aIb
+acW
 aly
 aly
 aly
