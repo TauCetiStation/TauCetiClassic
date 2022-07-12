@@ -202,31 +202,31 @@
 	new /obj/item/clothing/accessory/medal/gold/bureaucracy(src)
 	new /obj/item/clothing/accessory/medal/silver/excellence(src)
 
-/obj/item/weapon/storage/lockbox/medal/sec
+/obj/item/weapon/storage/lockbox/medal/hos
 	name = "security medal box"
 	desc = "A locked box used to store medals to be given to members of the security department."
 	req_access = list(access_hos)
 
-/obj/item/weapon/storage/lockbox/medal/sec/PopulateContents()
+/obj/item/weapon/storage/lockbox/medal/hos/PopulateContents()
 	new /obj/item/clothing/accessory/medal/silver/security(src)
 	new /obj/item/clothing/accessory/medal/silver/security(src)
 	new /obj/item/clothing/accessory/medal/silver/security(src)
 
-/obj/item/weapon/storage/lockbox/medal/med
+/obj/item/weapon/storage/lockbox/medal/cmo
 	name = "medical medal box"
 	desc = "A locked box used to store medals to be given to members of the medical department."
 	req_access = list(access_cmo)
 
-/obj/item/weapon/storage/lockbox/medal/med/PopulateContents()
+/obj/item/weapon/storage/lockbox/medal/cmo/PopulateContents()
 	new /obj/item/clothing/accessory/medal/silver/med_medal(src)
 	new /obj/item/clothing/accessory/medal/silver/med_medal2(src)
 
-/obj/item/weapon/storage/lockbox/medal/sci
+/obj/item/weapon/storage/lockbox/medal/rd
 	name = "science medal box"
 	desc = "A locked box used to store medals to be given to members of the science department."
 	req_access = list(access_rd)
 
-/obj/item/weapon/storage/lockbox/medal/sci/PopulateContents()
+/obj/item/weapon/storage/lockbox/medal/rd/PopulateContents()
 	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
 	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
 	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
