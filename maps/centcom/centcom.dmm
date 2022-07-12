@@ -14688,16 +14688,12 @@
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aHj" = (
-/obj/machinery/computer/arcade{
-	emagged = 1;
-	light_color = "#ff0000";
-	name = "Hacked arcade machine"
-	},
 /obj/structure/sign/warning{
 	desc = "There is a washing machine behind this wall. Maybe we should take another path?";
 	name = "WARNING! DIED IN GAME - DIED IN LIFE!";
 	pixel_y = 32
 	},
+/obj/machinery/computer/arcade/emagged,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
