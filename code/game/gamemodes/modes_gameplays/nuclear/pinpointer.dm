@@ -111,6 +111,8 @@
 						return
 					var/obj/item/item_path = itemlist.possible_items[targetitem]
 					for(var/obj/item/I in global.possible_items_for_steal)
+						if(I.z != I.z)
+							continue
 						if(!istype(I, item_path))
 							continue
 						target = I
