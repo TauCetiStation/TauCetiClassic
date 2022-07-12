@@ -81,6 +81,11 @@
 	var/list/possible_human_phrases = list("Я убью тебя!", "Ты чё?", "Я вырву твой имплант сердца и сожгу его!", "Я выпью твою кровь!", "Я уничтожу тебя!", "Молись, сука!", "Я вырву и съем твои кишки!", "Моргало выколю!", "Эй ты!", "Я измельчу тебя на мелкие кусочки и выброшу их в чёрную дыру!", "Пошёл нахуй!", "Ты умрешь в ужасных судорогах!", "Ильс'м уль чах!", "Твое призвание - это чистить канализацию на Марсе!", "Тупое животное!", "АХ-ХА-ХА-ХА-ХА-ХА!", "Что б ты бобов объелся!", "Ёбаный в рот этого ада!", "Эй обезьяна свинорылая!", "Обабок бля!", "Ну ты и маслёнок!",\
 	 						"Пиздакряк ты тупой!", "Твои потроха съедят кибер-свиньи вместе с помоями, а мозг будут разрывать на куски бездомные космо-кошки!", "Твою плоть разорвут космо-карпы, а кишки съедят мыши!", "Тупоголовый дегенерат!", "Ты никому не нужный биомусор!", "Ты тупое ничтожество!", "Лучше б ты у папы на синих трусах засох!", "ААА-Р-Р-Р-Р-Р-Г-Г-Г-Х-Х-Х!")
 
+	//Has our being already shown its nature? Red eyes
+	var/risen = FALSE
+	//We have something that no one can overlook anymore. Halo
+	var/ascendent = FALSE
+
 /datum/religion/cult/New()
 	..()
 	// Init anomalys
@@ -234,7 +239,65 @@
 		return FALSE
 	if(!M.mind?.GetRole(CULTIST))
 		add_faction_member(mode, M, TRUE)
+
+	if(risen)
+		rise(M) //No return here
+
+	if(ascendent) //To avoid useless counts through all players in Nar-Nar stage
+		ascend(M)
+		return
+
+	var/alive = 0
+	var/cultplayers = 0
+	for(var/I in player_list)
+		var/mob/P = I
+		if(P.stat != DEAD)
+			if(iscultist(P))
+				++cultplayers
+			else
+				++alive
+
+	if(!cultplayers || !alive)//Just in case to avoid 0
+		cultplayers = 1
+		alive = 10
+	var/ratio = cultplayers / alive
+	if(ratio > 0.25 && !risen) //Red eye check
+		for(var/datum/mind/B in members)
+			if(B.current)
+				playsound(B.current, 'sound/hallucinations/i_see_you_2.ogg', VOL_EFFECTS_MASTER)
+				to_chat(B.current, "<span class='cult'>The veil weakens as your cult grows, your eyes begin to glow...</span>")
+				addtimer(CALLBACK(src, .proc/rise, B.current), 200)
+		risen = TRUE
+		log_game("The blood cult has risen with [cultplayers] players.")
+
+	if(ratio > 0.4 && !ascendent)
+		for(var/datum/mind/B in members)
+			if(B.current)
+				playsound(B.current, 'sound/hallucinations/im_here1.ogg', VOL_EFFECTS_MASTER)
+				to_chat(B.current, "<span class='cult'>Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!</span>")
+				addtimer(CALLBACK(src, .proc/ascend, B.current), 200)
+		ascendent = TRUE
+		log_game("The blood cult has ascended with [cultplayers] players.")
+
 	return TRUE
+
+/datum/religion/cult/proc/rise(cultist)
+	if(ishuman(cultist))
+		var/mob/living/carbon/human/H = cultist
+		H.r_eyes = 255
+		H.g_eyes = 0
+		H.b_eyes = 0
+		ADD_TRAIT(H, TRAIT_CULT_EYES, RELIGION_TRAIT)
+		H.update_body()
+
+/datum/religion/cult/proc/ascend(cultist)
+	if(ishuman(cultist))
+		var/mob/living/carbon/human/human = cultist
+		new /obj/effect/temp_visual/cult/sparks(get_turf(human), human.dir)
+		var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
+		var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', istate)
+		human.overlays_standing[CULT_HALO] = new_halo_overlay
+		human.apply_overlay(CULT_HALO)
 
 /datum/religion/cult/add_deity(mob/M)
 	..()
@@ -244,3 +307,15 @@
 /datum/religion/cult/on_exit(mob/M)
 	for(var/obj/effect/proc_holder/spell/targeted/communicate/C in M.spell_list)
 		M.RemoveSpell(C)
+
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	if(HAS_TRAIT(H, TRAIT_CULT_EYES))
+		REMOVE_TRAIT(H, TRAIT_CULT_EYES, RELIGION_TRAIT)
+		H.r_eyes = rand(0,125)
+		H.g_eyes = rand(0,255)
+		H.b_eyes = rand(0,255)
+		H.update_body()
+	if(ascendent)
+		H.remove_overlay(CULT_HALO)
