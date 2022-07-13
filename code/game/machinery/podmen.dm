@@ -173,10 +173,10 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 	mutatelist = list(/obj/item/seeds/replicapod)
 
-	product_type = /mob/living/carbon/monkey/diona/podman/fake
+	product_type = /mob/living/carbon/monkey/diona
 	copycat_replica = FALSE
 
-	spawner_type = /datum/spawner/living/podman/fake_nymph
+	spawner_type = /datum/spawner/living/diona
 
 	var/vine_timer
 
@@ -222,7 +222,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	product_type = /mob/living/carbon/monkey/diona
 	copycat_replica = TRUE
 
-	spawner_type = /datum/spawner/living/podman/nymph
+	spawner_type = /datum/spawner/living/diona
 
 /obj/item/seeds/replicapod/real_deal/attack_self(mob/living/carbon/user)
 	if(user.get_species() == DIONA && iscarbon(user))
