@@ -271,11 +271,16 @@
 /obj/item/weapon/reagent_containers/food/snacks/chips
 	name = "chips"
 	desc = "Commander Riker's What-The-Crisps"
-	icon_state = "chips"
-	trash = /obj/item/trash/chips
+	eat_sound = 'sound/items/chips_bite.ogg'
+	w_class = SIZE_MIDGET
+	icon_state = "chips-1"
 	filling_color = "#e8c31e"
-	bitesize = 1
-	list_reagents = list("nutriment"= 3, "sodiumchloride" = 1, "sugar" = 1)
+	bitesize = 2
+	list_reagents = list("nutriment"= 1, "sodiumchloride" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/atom_init()
+	. = ..()
+	icon_state = "chips-[pick("1", "2", "3", "4")]"
 
 /obj/item/weapon/reagent_containers/food/snacks/cookie
 	name = "cookie"
@@ -508,7 +513,7 @@
 	icon_state = "bearmeat"
 	filling_color = "#db0000"
 	bitesize = 3
-	list_reagents = list("protein" = 12, "hyperzine" = 5, "vitamin" = 2)
+	list_reagents = list("protein" = 12, "vodka" = 5, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeat
 	name = "meat"
@@ -841,18 +846,27 @@
 	name = "Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
 	desc = "Beef jerky made from the finest space cows."
-	trash = /obj/item/trash/sosjerky
 	filling_color = "#631212"
+	w_class = SIZE_MIDGET
 	bitesize = 2
-	list_reagents = list("protein" = 3, "sugar" = 1)
+	list_reagents = list("protein" = 1, "sugar" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/sosjerky/atom_init()
+	. = ..()
+	icon_state = "sosjerky-[pick("1", "2")]"
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	name = "4no Raisins"
 	icon_state = "4no_raisins"
 	desc = "Best raisins in the universe. Not sure why."
-	trash = /obj/item/trash/raisins
 	filling_color = "#343834"
-	list_reagents = list("plantmatter" = 2, "sugar" = 4)
+	w_class = SIZE_MIDGET
+	bitesize = 2
+	list_reagents = list("plantmatter" = 1, "sugar" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/no_raisin/atom_init()
+	. = ..()
+	icon_state = "4no_raisins-[pick("1", "2")]"
 
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "Space Twinkie"
@@ -864,12 +878,17 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers
 	name = "Cheesie Honkers"
-	icon_state = "cheesie_honkers"
+	icon_state = "cheesie_honkers-1"
 	desc = "Bite sized cheesie snacks that will honk all over your mouth."
-	trash = /obj/item/trash/cheesie
+	eat_sound = 'sound/items/chips_bite.ogg'
+	w_class = SIZE_MIDGET
 	filling_color = "#ffa305"
 	bitesize = 2
-	list_reagents = list("nutriment" = 1, "sugar" = 3)
+	list_reagents = list("nutriment" = 1, "sugar" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers/atom_init()
+	. = ..()
+	icon_state = "cheesie_honkers-[pick("1", "2", "3", "4")]"
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein
 	name = "chow mein"
@@ -907,13 +926,16 @@
 	list_reagents = list("nutriment" = 1, "sugar" = 2, "rice" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/syndicake
-	name = "Syndi-Cakes"
+	name = "Syndi-Cake"
 	icon_state = "syndi_cakes"
 	desc = "An extremely moist snack cake that tastes just as good after being nuked."
 	filling_color = "#ff5d05"
 	bitesize = 3
-	trash = /obj/item/trash/syndi_cakes
 	list_reagents = list("nutriment" = 4, "syndicream" = 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/syndicake/atom_init()
+	. = ..()
+	icon_state = "syndi_cakes-[pick("1", "2")]"
 
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
 	name = "Loaded Baked Potato"

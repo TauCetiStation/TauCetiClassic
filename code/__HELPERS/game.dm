@@ -24,7 +24,14 @@
 		locate(max(CENTER.x-(RADIUS),1), max(CENTER.y-(RADIUS),1),CENTER.z), \
 	)
 
-/proc/get_area_name(N) //get area by its name
+///Returns the name of the area the atom is in
+/proc/get_area_name(atom/checked_atom)
+	var/area/checked_area = isarea(checked_atom) ? checked_atom : get_area(checked_atom)
+	if(!checked_area)
+		return null
+	return checked_area.name
+
+/proc/get_area_by_name(N) //get area by its name
 	for(var/area/A in all_areas)
 		if(A.name == N)
 			return A

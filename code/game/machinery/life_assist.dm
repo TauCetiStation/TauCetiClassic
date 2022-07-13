@@ -8,7 +8,7 @@
 
 	var/icon_state_attached
 	var/icon_state_detached
-	required_skills = list(/datum/skill/medical/trained)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/life_assist/atom_init()
 	. = ..()

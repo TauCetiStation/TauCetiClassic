@@ -521,7 +521,7 @@
 	can_infect = FALSE
 	priority = 2
 	allowed_species = list(IPC)
-	required_skills = list(/datum/skill/surgery/trained, /datum/skill/engineering/novice)
+	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED, /datum/skill/engineering = SKILL_LEVEL_NOVICE)
 
 /datum/surgery_step/ipc/ribcage/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))

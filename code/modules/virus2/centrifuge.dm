@@ -8,7 +8,7 @@
 
 	var/obj/item/weapon/reagent_containers/glass/beaker/vial/sample = null
 	var/datum/disease2/disease/virus2 = null
-	required_skills = list(/datum/skill/chemistry/trained, /datum/skill/research/trained, /datum/skill/medical/pro)
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_PRO)
 
 /obj/machinery/computer/centrifuge/attackby(obj/O, mob/user)
 	if(isscrewdriver(O))

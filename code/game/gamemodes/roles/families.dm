@@ -100,7 +100,7 @@
 	name = "Gun Dealer"
 	id = GANGSTER_DEALER
 	required_pref = ROLE_FAMILIES
-
+	change_to_maximum_skills = TRUE
 	telecrystals = 10
 
 /datum/role/traitor/dealer/OnPostSetup(laterole)

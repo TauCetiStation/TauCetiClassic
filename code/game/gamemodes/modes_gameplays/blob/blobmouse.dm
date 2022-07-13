@@ -23,9 +23,8 @@
 	if (!message)
 		return
 
-	//var/message_a = say_quote(message)
 	message = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
-	message = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></font>"
+	message = "<span style='color:#EE4000'><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></span>"
 
 	for (var/mob/M as anything in mob_list)
 		if(isobserver(M) || isanyblob(M))

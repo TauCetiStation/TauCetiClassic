@@ -91,7 +91,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		return
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
+	if (!isfloorturf(loc))
 		to_chat(usr, "<span class='alert'>Newscaster cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")

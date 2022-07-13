@@ -9,13 +9,14 @@
 	light_range = 3
 	desc = "Some blob creature thingy."
 	density = FALSE
-	opacity = TRUE
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
+	var/max_health = 30
 	var/health = 30
 	var/health_timestamp = 0
 	var/brute_resist = 4
 	var/fire_resist = 1
+	var/mob/camera/blob/OV //Optional
 
 /obj/effect/blob/atom_init()
 	blobs += src
@@ -65,7 +66,7 @@
 	// All blobs heal over time when pulsed, but it has a cool down
 	if(health_timestamp > world.time)
 		return
-	if(health < initial(health))
+	if(health < max_health)
 		health++
 		update_icon()
 		health_timestamp = world.time + 10 // 1 seconds
@@ -182,6 +183,8 @@
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	..()
+	if(M.faction == "blob") //No friendly slams
+		return
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	visible_message("<span class='danger'>The [src.name] has been attacked by \the [M].</span>")
 	var/damage = M.melee_damage
@@ -192,11 +195,14 @@
 	update_icon()
 	return
 
-/obj/effect/blob/proc/change_to(type)
+/obj/effect/blob/proc/change_to(type, overmind)
 	if(!ispath(type))
 		error("[type] is an invalid type for the blob.")
-	new type(src.loc)
+	var/obj/effect/blob/B = new type(src.loc)
+	if(overmind)
+		B.OV = overmind
 	qdel(src)
+	return B
 
 /obj/effect/blob/normal
 	icon_state = "blob"
