@@ -13,7 +13,7 @@
 	active_power_usage = 80
 	circuit = /obj/item/weapon/circuitboard/powermonitor
 	var/datum/powernet/powernet = null
-	required_skills = list(/datum/skill/engineering/trained)
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 //fix for issue 521, by QualityVan.
 //someone should really look into why circuits have a powernet var, it's several kinds of retarded.

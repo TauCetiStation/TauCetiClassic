@@ -4,7 +4,7 @@
 
 	hud.ui_style = 'icons/mob/screen_corgi.dmi'
 
-	..()
+	..(hud, FALSE)
 
 	hud.init_screens(list(
 		/atom/movable/screen/resist/ian,

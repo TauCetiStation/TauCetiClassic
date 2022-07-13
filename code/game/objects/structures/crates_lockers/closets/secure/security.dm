@@ -61,6 +61,7 @@
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/weapon/storage/briefcase/centcomm(src)
+	new /obj/item/device/radio/headset/headset_int(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "Head of Personnel's Locker"
