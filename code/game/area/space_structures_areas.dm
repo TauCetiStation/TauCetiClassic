@@ -70,9 +70,10 @@
 	icon_state = "engine"
 
 //TELESTATION
+
 /area/space_structures/telestation
 	name = "Tele-Station"
-	icon_state = "storage"
+	icon_state = "telestation"
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/space_structures/telestation/service
@@ -83,6 +84,10 @@
 	name = "Telestation Dormitories"
 	icon_state = "crew_quarters"
 
+/area/space_structures/telestation/chapel
+	name = "Telestation Chapel"
+	icon_state = "chapel"
+
 /area/space_structures/telestation/cafeteria
 	name = "Telestation Cafeteria"
 	icon_state = "cafeteria"
@@ -90,10 +95,6 @@
 /area/space_structures/telestation/kitchen
 	name = "Telestation Kitchen"
 	icon_state = "kitchen"
-
-/area/space_structures/telestation/theatre
-	name = "Telestation Theatre"
-	icon_state = "yellow"
 
 /area/space_structures/telestation/engineering
 	name = "Telestation Engineering"
@@ -105,8 +106,7 @@
 
 /area/space_structures/telestation/atmospherics
 	name = "Telestation Atmospherics"
-	icon_state = "engine"
-
+	icon_state = "atmos"
 /area/space_structures/telestation/infirmary
 	name = "Telestation Infirmary"
 	icon_state = "medbay"
@@ -118,6 +118,14 @@
 /area/space_structures/telestation/surgery
 	name = "Telestation Surgery"
 	icon_state = "surgery"
+
+/area/space_structures/telestation/security
+	name = "Telestation Security"
+	icon_state = "security"
+
+/area/space_structures/telestation/armory
+	name = "Telestation Armory"
+	icon_state = "armory"
 
 /area/space_structures/telestation/research
 	name = "Telestation Laboratories"
@@ -139,40 +147,36 @@
 	name = "Telestation Server Room"
 	icon_state = "purple"
 
-/area/space_structures/telestation/command_post
-	name = "Telestation Command Post"
-	icon_state = "bridge"
-
 /area/space_structures/telestation/bluespace_research
 	name = "Telestation Bluespace Research"
-	icon_state = "research"
+	icon_state = "scitele"
 
-/area/space_structures/telestation/maint_morgue_surgery
-	name = "Telestation Maintenance (Morgue-Surgery)"
+/area/space_structures/telestation/maint_sec
+	name = "Telestation Security Maintenance"
 	icon_state = "dark128"
 
-/area/space_structures/telestation/maint_infirmary_cafeteria
-	name = "Telestation Maintenance (Infirmary-cafeteria)"
+/area/space_structures/telestation/maint_sci_e
+	name = "Telestation Science Maintenance (east)"
 	icon_state = "dark128"
 
-/area/space_structures/telestation/maint_theatre_cafeteria
-	name = "Telestation Maintenance (Theatre-cafeteria)"
+/area/space_structures/telestation/maint_sci_w
+	name = "Telestation Science Maintenance (west)"
 	icon_state = "dark128"
 
-/area/space_structures/telestation/maint_reactor
-	name = "Telestation Maintenance (Reactor)"
+/area/space_structures/telestation/maint_eng
+	name = "Telestation Engineering Maintenance"
 	icon_state = "dark128"
 
-/area/space_structures/telestation/maint_biolab_server
-	name = "Telestation Maintenance (Biolab-server room)"
+/area/space_structures/telestation/maint_srv_s
+	name = "Telestation Service Maintenance (south)"
 	icon_state = "dark128"
 
-/area/space_structures/telestation/maint_robotics
-	name = "Telestation Maintenance (Robotics)"
+/area/space_structures/telestation/maint_srv_n
+	name = "Telestation Service Maintenance (north)"
 	icon_state = "dark128"
 
-/area/space_structures/telestation/maint_phoron
-	name = "Telestation Maintenance (Phoron research)"
+/area/space_structures/telestation/maint_med
+	name = "Telestation Medical Maintenance"
 	icon_state = "dark128"
 
 //Random structures

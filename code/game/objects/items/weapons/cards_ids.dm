@@ -448,7 +448,7 @@
 	name = "Old ID card"
 	assignment = "Security officer"
 	icon_state = "data"
-	access = list(access_external_airlocks, access_security, access_heads)
+	access = list(access_external_airlocks, access_security)
 
 /obj/item/weapon/card/id/tele_derelict/engineer
 	name = "Old ID card"
@@ -467,3 +467,9 @@
 	assignment = "Scientist"
 	icon_state = "data"
 	access = list(access_external_airlocks, access_research)
+
+/obj/item/weapon/card/id/tele_derelict/director
+	name = "Old ID card"
+	assignment = "Site director"
+	icon_state = "id"
+	access = list(access_external_airlocks, access_security, access_armory, access_engine, access_medical, access_research, access_heads)
