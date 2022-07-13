@@ -112,14 +112,22 @@
 /obj/item/weapon/card/id/atom_init()
 	. = ..()
 
-	if(ishuman(loc)) // this should be ok without any spawn as long, as item spawned inside mob by equip procs.
-		var/mob/living/carbon/human/H = loc
-		blood_type = H.dna.b_type
-		dna_hash = H.dna.unique_enzymes
-		fingerprint_hash = md5(H.dna.uni_identity)
-		for(var/datum/quirk/Q in H.roundstart_quirks)
-			if(Q.disability)
-				disabilities += Q.name
+	if(!ismob(loc))
+		return
+	
+	var/mob/user = loc
+	if(!ishuman(loc))
+		assign(user.name)
+		return
+
+	assign(user.real_name)
+	var/mob/living/carbon/human/H = user
+	blood_type = H.dna.b_type
+	dna_hash = H.dna.unique_enzymes
+	fingerprint_hash = md5(H.dna.uni_identity)
+	for(var/datum/quirk/Q in H.roundstart_quirks)
+		if(Q.disability)
+			disabilities += Q.name
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")
@@ -288,14 +296,6 @@
 	var/obj/item/weapon/card/id/scard = null
 	customizable_view = TRAITOR_VIEW
 	var/list/radial_chooses
-
-
-
-/obj/item/weapon/card/id/syndicate/atom_init()
-	. = ..()
-	if(ismob(loc)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
-		var/mob/user = loc
-		assign(ishuman(user) ? user.real_name : user.name)
 
 /obj/item/weapon/card/id/syndicate/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
