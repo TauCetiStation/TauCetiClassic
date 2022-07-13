@@ -66,6 +66,7 @@
 	desc = "It's an apron which is given only to the most <b>hardcore</b> chefs in space."
 	name = "chef's uniform"
 	icon_state = "chef"
+	item_state = "chef"
 	flags = ONESIZEFITSALL
 
 
