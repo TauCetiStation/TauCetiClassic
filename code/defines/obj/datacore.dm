@@ -23,14 +23,15 @@ var/global/ManifestJSON
 	var/list/nonhuman_ordered = list()
 
 
+/obj/effect/datacore/New()
+	order_lists()
+
 /obj/effect/datacore/proc/order_one_list(var/list/L_from, var/list/L_to)
 	L_to.Cut()
 	for(var/p in L_from)
 		L_to[p] = L_from.Find(p)
 
 /obj/effect/datacore/proc/order_lists()
-	if(command_ordered.len)
-		return
 	order_one_list(command_positions,      command_ordered)
 	order_one_list(security_positions,     security_ordered)
 	order_one_list(engineering_positions,  engineering_ordered)
@@ -54,7 +55,6 @@ using /obj/effect/datacore/proc/manifest_inject( )
 /obj/effect/datacore/proc/load_manifest()
 	if (PDA_Manifest.len)
 		return
-	order_lists()
 
 	var/heads[0]
 	var/sec[0]
@@ -105,13 +105,13 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		if(!in_department)
 			misc[++misc.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
 
-	sortTim(heads, /proc/cmp_filter_data_priority, FALSE)
-	sortTim(sec,   /proc/cmp_filter_data_priority, FALSE)
-	sortTim(eng,   /proc/cmp_filter_data_priority, FALSE)
-	sortTim(med,   /proc/cmp_filter_data_priority, FALSE)
-	sortTim(sci,   /proc/cmp_filter_data_priority, FALSE)
-	sortTim(civ,   /proc/cmp_filter_data_priority, FALSE)
-	sortTim(bot,   /proc/cmp_filter_data_priority, FALSE)
+	sortTim(heads, /proc/cmp_job_titles, FALSE)
+	sortTim(sec,   /proc/cmp_job_titles, FALSE)
+	sortTim(eng,   /proc/cmp_job_titles, FALSE)
+	sortTim(med,   /proc/cmp_job_titles, FALSE)
+	sortTim(sci,   /proc/cmp_job_titles, FALSE)
+	sortTim(civ,   /proc/cmp_job_titles, FALSE)
+	sortTim(bot,   /proc/cmp_job_titles, FALSE)
 
 	remove_priority_field(heads)
 	remove_priority_field(sec)
@@ -161,7 +161,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 			prio = 1
 		Silicon_Manifest[++Silicon_Manifest.len] = list("name" = name, "rank" = rank, "active" = is_active, "net" = net, "priority" = prio)
 
-	sortTim(Silicon_Manifest, /proc/cmp_filter_data_priority, FALSE)
+	sortTim(Silicon_Manifest, /proc/cmp_job_titles, FALSE)
 	remove_priority_field(Silicon_Manifest)
 
 /obj/effect/datacore/proc/get_manifest()
