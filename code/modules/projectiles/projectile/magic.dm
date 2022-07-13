@@ -120,7 +120,7 @@
 
 /obj/item/projectile/magic/door/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(!(getOPressureDifferential(target) >= FIREDOOR_MAX_PRESSURE_DIFF))
-		if(istype(target, /turf/simulated/wall))
+		if(iswallturf(target))
 			var/turf/place = target
 			place.ChangeTurf(/turf/simulated/floor/plating)
 			var/pickedtype = pick(doors)

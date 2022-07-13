@@ -69,7 +69,7 @@
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>You start to add cables to the frame.</span>")
-				if(P.use_tool(src, user, SKILL_TASK_EASY, target = src, volume = 50, required_skills_override = list(/datum/skill/construction/pro)))
+				if(P.use_tool(src, user, SKILL_TASK_EASY, target = src, volume = 50, required_skills_override = list(/datum/skill/construction = SKILL_LEVEL_PRO)))
 					if(state == 1)
 						if(!C.use(5))
 							return
@@ -158,7 +158,7 @@
 						component_check = 0
 						break
 				if(component_check)
-					if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/construction/pro), "<span class='notice'>You fumble around, figuring out how to construct machine.</span>"))
+					if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/construction = SKILL_LEVEL_PRO), "<span class='notice'>You fumble around, figuring out how to construct machine.</span>"))
 						return
 					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 					var/obj/machinery/new_machine = new circuit.build_path(src.loc)

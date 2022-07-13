@@ -28,6 +28,7 @@
 	user.visible_message("<span class='notice'>[user] flails their [src] at [H]</span>")
 	if(!H.isimplantedobedience())
 		return
+	H.Stun(5)
 	H.apply_effect(5, WEAKEN)
 	H.apply_effect(20, AGONY)
 	to_chat(H, "<span class='danger'You feel something beep inside of you and a wave of electricity pierces your body!</span>")
