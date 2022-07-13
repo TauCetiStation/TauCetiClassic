@@ -420,8 +420,8 @@ BLIND     // can't see anything
 
 	sprite_sheet_slot = SPRITE_SHEET_SUIT
 
-	valid_accessory_slots = list("armband", "decor")
-	restricted_accessory_slots = list("armband")
+	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armband", "armor")
 
 /obj/item/clothing/proc/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	return
@@ -452,6 +452,8 @@ BLIND     // can't see anything
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
 	icon_state = "space"
 	item_state = "s_suit"
+	valid_accessory_slots = list("armband", "decor")
+	restricted_accessory_slots = list("armband")
 	w_class = SIZE_NORMAL//bulky item
 	throw_range = 2
 	gas_transfer_coefficient = 0.01

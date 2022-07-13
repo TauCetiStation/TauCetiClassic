@@ -7,6 +7,8 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.4
+	valid_accessory_slots = list("armband", "decor")
+	restricted_accessory_slots = list("armband")
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
