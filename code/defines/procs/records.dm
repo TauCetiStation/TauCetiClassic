@@ -16,7 +16,8 @@
 	G.fields["religion"]	= "Unknown"
 	G.fields["photo_f"] = new /icon()
 	G.fields["photo_s"] = new /icon()
-	data_core.general += G
+	PDA_Manifest.Cut()
+	data_core?.general += G
 	return G
 
 /proc/CreateSecurityRecord(name, id)
@@ -30,7 +31,7 @@
 	R.fields["ma_crim"] = "None"
 	R.fields["ma_crim_d"] = "No major crime convictions."
 	R.fields["notes"] = "No notes."
-	data_core.security += R
+	data_core?.security += R
 	return R
 
 /proc/get_id_photo(mob/living/carbon/human/H, client/C, show_directions = list(SOUTH))
@@ -41,13 +42,13 @@
 	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)
 
 /proc/find_general_record(field, value)
-	return find_record(field, value, data_core.general)
+	return find_record(field, value, data_core?.general)
 
 /proc/find_medical_record(field, value)
-	return find_record(field, value, data_core.medical)
+	return find_record(field, value, data_core?.medical)
 
 /proc/find_security_record(field, value)
-	return find_record(field, value, data_core.security)
+	return find_record(field, value, data_core?.security)
 
 /proc/find_record(field, value, list/L)
 	for(var/datum/data/record/R in L)
@@ -58,11 +59,11 @@
 /proc/find_record_by_name(mob/user, target_name)
 	var/list/possible_records = list()
 	var/record_name = null
-	for(var/datum/data/record/E in data_core.general)
+	for(var/datum/data/record/E in data_core?.general)
 		if(E.fields["name"] == target_name)
 			record_name = "[E.fields["name"]] ([E.fields["rank"]]) ID=[E.fields["id"]]"
 			possible_records[record_name] = E.fields["id"]
-	if(!possible_records)
+	if(!possible_records.len)
 		return null
 	if(possible_records.len > 1)
 		var/choice = input(user, "В базе данных найдено несколько человек с таким именем.", "Сделайте выбор", null) in possible_records

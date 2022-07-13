@@ -65,7 +65,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 	var/bot[0]
 	var/misc[0]
 
-	for(var/datum/data/record/t in data_core.general)
+	for(var/datum/data/record/t in general)
 		var/name = sanitize(t.fields["name"])
 		var/rank = sanitize(t.fields["rank"])
 		var/real_rank = t.fields["real_rank"]
@@ -262,12 +262,11 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		CHECK_TICK
 
 /obj/effect/datacore/proc/manifest_modify(name, assignment)
-	if(PDA_Manifest.len)
-		PDA_Manifest.Cut()
+	PDA_Manifest.Cut()
 	var/datum/data/record/foundrecord
 	var/real_title = assignment
 
-	for(var/datum/data/record/t in data_core.general)
+	for(var/datum/data/record/t in general)
 		if (t)
 			if(t.fields["name"] == name)
 				foundrecord = t
@@ -277,7 +276,8 @@ using /obj/effect/datacore/proc/manifest_inject( )
 
 	for(var/datum/job/J in all_jobs)
 		var/list/alttitles = get_alternate_titles(J.title)
-		if(!J)	continue
+		if(!J)
+			continue
 		if(assignment in alttitles)
 			real_title = J.title
 			break
@@ -287,10 +287,8 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		foundrecord.fields["real_rank"] = real_title
 
 /obj/effect/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
-
 	set waitfor = FALSE
-	if(PDA_Manifest.len)
-		PDA_Manifest.Cut()
+	PDA_Manifest.Cut()
 
 	if(H.mind && (H.mind.assigned_role != "MODE"))
 		var/assignment
