@@ -40,7 +40,7 @@
 	shoes = /obj/item/clothing/shoes/black
 	
 	suit = /obj/item/clothing/suit/storage/det_suit
-	glasses = /obj/item/clothing/glasses/thermal/monocle\
+	glasses = /obj/item/clothing/glasses/thermal/monocle
 	head = /obj/item/clothing/head/det_hat
 
 	r_hand = /obj/item/weapon/gun/projectile
@@ -162,9 +162,11 @@
 	var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = l_hand
 	for(var/obj/item/briefcase_item in sec_briefcase)
 		qdel(briefcase_item)
-	for(var/i in 1 to 3)
-		sec_briefcase.contents += new /obj/item/weapon/spacecash/c1000
-	sec_briefcase.contents += list(
+
+	sec_briefcase.contents = list(
+		new /obj/item/weapon/spacecash/c1000,
+		new /obj/item/weapon/spacecash/c1000,
+		new /obj/item/weapon/spacecash/c1000,
 		new /obj/item/weapon/gun/energy/crossbow,
 		new /obj/item/weapon/gun/projectile/revolver/mateba,
 		new /obj/item/ammo_box/a357,
@@ -227,7 +229,7 @@
 	belt = /obj/item/weapon/gun/projectile/revolver/mateba
 
 	r_hand = /obj/item/weapon/gun/energy/pulse_rifle
-	implants = list(/obj/item/weapon/implant/mind_protect/loyalty)
+	implants = list(/obj/item/weapon/implant/mind_protect/loyalty = BP_CHEST)
 	id = /obj/item/weapon/card/id/centcom
 
 /datum/outfit/death_squad/post_equip(mob/living/carbon/human/H)
@@ -256,7 +258,7 @@
 	l_ear = /obj/item/device/radio/headset/syndicate
 
 	uniform = /obj/item/clothing/under/syndicate
-	implants = list(/obj/item/weapon/implant/dexplosive)
+	implants = list(/obj/item/weapon/implant/dexplosive = BP_CHEST)
 	shoes = /obj/item/clothing/shoes/boots/combat
 	gloves = /obj/item/clothing/gloves/combat
 	mask = /obj/item/clothing/mask/gas/syndicate
@@ -489,7 +491,7 @@
 	SG.can_be_holstered = TRUE
 	PH.update_icon()
 
-	implants = list(/obj/item/weapon/implant/mind_protect/mindshield)
+	implants = list(/obj/item/weapon/implant/mind_protect/mindshield = BP_CHEST)
 
 /datum/outfit/velocity/doctor
 	name = "velocity doctor"
@@ -505,121 +507,117 @@
 
 	ownjob = "Velocity Medical Doctor"
 
+/datum/outfit/ert
 	name = "emergency response team"
-		/obj/item/clothing/under/rank/centcom_officer(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/shoes/boots/swat(M), SLOT_SHOES)
-		/obj/item/clothing/gloves/swat(M), SLOT_GLOVES)
-		/obj/item/device/radio/headset/ert(M), SLOT_L_EAR)
-		/obj/item/weapon/gun/energy/gun(M), SLOT_BELT)
-		/obj/item/clothing/glasses/sunglasses(M), SLOT_GLASSES)
-		/obj/item/weapon/storage/backpack/satchel(M), SLOT_BACK)
 
-			var/obj/item/weapon/card/id/centcom/ert/W = new(M)
-			W.assignment = "Emergency Response Team"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.registered_name = M.real_name
-			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+	uniform = /obj/item/clothing/under/rank/
+	shoes = /obj/item/clothing/shoes/boots/swat
+	gloves = /obj/item/clothing/gloves/swat
+	l_ear = /obj/item/device/radio/headset/ert
+	belt = /obj/item/weapon/gun/energy/gun
+	glasses = /obj/item/clothing/glasses/sunglasses
+	back = /obj/item/weapon/storage/backpack/satchel
 
+	id = /obj/item/weapon/card/id/centcom/ert
+	ownjob = "Emergency Response Team"
+
+/datum/outfit/special_ops_officer
 	name = "special ops officer"
-		/obj/item/clothing/under/syndicate/combat(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/suit/armor/swat/officer(M), SLOT_WEAR_SUIT)
-		/obj/item/clothing/shoes/boots/combat(M), SLOT_SHOES)
-		/obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
-		/obj/item/device/radio/headset/heads/captain(M), SLOT_L_EAR)
-		/obj/item/clothing/glasses/thermal/eyepatch(M), SLOT_GLASSES)
-		/obj/item/clothing/mask/cigarette/cigar/havana(M), SLOT_WEAR_MASK)
-		/obj/item/clothing/head/helmet/space/deathsquad/beret(M), SLOT_HEAD)
-		/obj/item/weapon/gun/energy/pulse_rifle/M1911(M), SLOT_BELT)
-		/obj/item/weapon/lighter/zippo(M), SLOT_R_STORE)
-		/obj/item/weapon/storage/backpack/satchel(M), SLOT_BACK)
 
-			var/obj/item/weapon/card/id/centcom/W = new(M)
-			W.assignment = "Special Operations Officer"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.registered_name = M.real_name
-			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+	uniform = /obj/item/clothing/under/syndicate/combat
+	suit = /obj/item/clothing/suit/armor/swat/officer
+	shoes = /obj/item/clothing/shoes/boots/combat
+	gloves = /obj/item/clothing/gloves/combat
+	l_ear = /obj/item/device/radio/headset/heads/captain
+	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	head = /obj/item/clothing/head/helmet/space/deathsquad/beret
+	belt = /obj/item/weapon/gun/energy/pulse_rifle/M1911
+	r_pcket = /obj/item/weapon/lighter/zippo
+	back = /obj/item/weapon/storage/backpack/satchel
 
+	id = /obj/item/weapon/card/id/centcom
+	ownjob = "Special Operations Officer"
+
+/datum/outfit/wizard
+	name = null
+
+	uniform = /obj/item/clothing/under/lightpurple
+	shoes = /obj/item/clothing/shoes/sandal
+	l_ear = /obj/item/device/radio/headset
+	r_pocket = /obj/item/weapon/teleportation_scroll
+	r_hand = /obj/item/weapon/spellbook
+	l_hand = /obj/item/weapon/staff
+	back = /obj/item/weapon/storage/backpack
+	backpack_contents = list(
+		/obj/item/weapon/storage/box
+	)
+
+/datum/outfit/wizard/blue
 	name = "blue wizard"
-		/obj/item/clothing/under/lightpurple(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/suit/wizrobe(M), SLOT_WEAR_SUIT)
-		/obj/item/clothing/shoes/sandal(M), SLOT_SHOES)
-		/obj/item/device/radio/headset(M), SLOT_L_EAR)
-		/obj/item/clothing/head/wizard(M), SLOT_HEAD)
-		/obj/item/weapon/teleportation_scroll(M), SLOT_R_STORE)
-		/obj/item/weapon/spellbook(M), SLOT_R_HAND)
-		/obj/item/weapon/staff(M), SLOT_L_HAND)
-		/obj/item/weapon/storage/backpack(M), SLOT_BACK)
-		/obj/item/weapon/storage/box(M), SLOT_IN_BACKPACK)
 
+	suit = /obj/item/clothing/suit/wizrobe
+	head = /obj/item/clothing/head/wizard
+
+/datum/outfit/wizard/red
 	name = "red wizard"
-		/obj/item/clothing/under/lightpurple(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/suit/wizrobe/red(M), SLOT_WEAR_SUIT)
-		/obj/item/clothing/shoes/sandal(M), SLOT_SHOES)
-		/obj/item/device/radio/headset(M), SLOT_L_EAR)
-		/obj/item/clothing/head/wizard/red(M), SLOT_HEAD)
-		/obj/item/weapon/teleportation_scroll(M), SLOT_R_STORE)
-		/obj/item/weapon/spellbook(M), SLOT_R_HAND)
-		/obj/item/weapon/staff(M), SLOT_L_HAND)
-		/obj/item/weapon/storage/backpack(M), SLOT_BACK)
-		/obj/item/weapon/storage/box(M), SLOT_IN_BACKPACK)
 
+	suit = /obj/item/clothing/suit/wizrobe/red
+	head = /obj/item/clothing/head/wizard/red
+
+/datum/outfit/wizard/marisa
 	name = "marisa wizard"
-		/obj/item/clothing/under/lightpurple(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/suit/wizrobe/marisa(M), SLOT_WEAR_SUIT)
-		/obj/item/clothing/shoes/sandal/marisa(M), SLOT_SHOES)
-		/obj/item/device/radio/headset(M), SLOT_L_EAR)
-		/obj/item/clothing/head/wizard/marisa(M), SLOT_HEAD)
-		/obj/item/weapon/teleportation_scroll(M), SLOT_R_STORE)
-		/obj/item/weapon/spellbook(M), SLOT_R_HAND)
-		/obj/item/weapon/staff(M), SLOT_L_HAND)
-		/obj/item/weapon/storage/backpack(M), SLOT_BACK)
-		/obj/item/weapon/storage/box(M), SLOT_IN_BACKPACK)
+
+	suit = /obj/item/clothing/suit/wizrobe/marisa
+	shoes = /obj/item/clothing/shoes/sandal/marisa
+	head = /obj/item/clothing/head/wizard/marisa
+
+/datum/outfit/admiral
 	name = "soviet admiral"
-		/obj/item/clothing/head/hgpiratecap(M), SLOT_HEAD)
-		/obj/item/clothing/shoes/boots/combat(M), SLOT_SHOES)
-		/obj/item/clothing/gloves/combat(M), SLOT_GLOVES)
-		/obj/item/device/radio/headset/heads/captain(M), SLOT_L_EAR)
-		/obj/item/clothing/glasses/thermal/eyepatch(M), SLOT_GLASSES)
-		/obj/item/clothing/suit/hgpirate(M), SLOT_WEAR_SUIT)
-		/obj/item/weapon/storage/backpack/satchel(M), SLOT_BACK)
-		/obj/item/weapon/gun/projectile/revolver/mateba(M), SLOT_BELT)
-		/obj/item/clothing/under/soviet(M), SLOT_W_UNIFORM)
-			var/obj/item/weapon/card/id/W = new(M)
-			W.assignment = "Admiral"
-			W.name = "[M.real_name]'s ID Card ([W.assignment])"
-			W.access = get_all_accesses()
-			W.access += get_all_centcom_access()
-			W.registered_name = M.real_name
-			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+
+	head = /obj/item/clothing/head/hgpiratecap
+	shoes = /obj/item/clothing/shoes/boots/combat
+	gloves = /obj/item/clothing/gloves/combat
+	l_ear = /obj/item/device/radio/headset/heads/captain
+	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+	suit = /obj/item/clothing/suit/hgpirate
+	back = /obj/item/weapon/storage/backpack/satchel
+	belt = /obj/item/weapon/gun/projectile/revolver/mateba
+	uniform = /obj/item/clothing/under/soviet
+
+	id = /obj/item/weapon/card/id/admiral
+	ownjob = "Admiral"
+
+/datum/outfit/tourist
 	name = "tourist"
-		/obj/item/clothing/under/tourist(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/shoes/tourist(M), SLOT_SHOES)
-		/obj/item/device/radio/headset(M), SLOT_L_EAR)
 
+	uniform = /obj/item/clothing/under/tourist
+	shoes = /obj/item/clothing/shoes/tourist
+	l_ear = /obj/item/device/radio/headset
+
+/datum/outfit/jolly_gravedigger
 	name = "jolly gravedigger"
-		/obj/item/clothing/shoes/jolly_gravedigger(M), SLOT_SHOES)
-		/obj/item/clothing/under/suit_jacket/charcoal(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/gloves/white(M), SLOT_GLOVES)
-		/obj/item/clothing/glasses/aviator_mirror(M), SLOT_GLASSES)
-		/obj/item/clothing/head/beret/black(M), SLOT_HEAD)
 
-			M.real_name = pick("Tyler", "Tyrone", "Tom", "Timmy", "Takeuchi", "Timber", "Tyrell")
+	shoes = /obj/item/clothing/shoes/jolly_gravedigger
+	uniform = /obj/item/clothing/under/suit_jacket/charcoal
+	gloves = /obj/item/clothing/gloves/white
+	glasses = /obj/item/clothing/glasses/aviator_mirror
+	head = /obj/item/clothing/head/beret/black
 
-			M.s_tone = max(min(round(rand(130, 170)), 220), 1)
-			M.s_tone = -M.s_tone + 35
+/datum/outfit/jolly_gravedigger/post_equip(mob/living/carbon/human/H)
+	H.real_name = pick("Tyler", "Tyrone", "Tom", "Timmy", "Takeuchi", "Timber", "Tyrell")
 
-			M.apply_recolor()
+	H.s_tone = max(min(round(rand(130, 170)), 220), 1)
+	H.s_tone = -H.s_tone + 35
 
+	H.apply_recolor()
+
+/datum/outfit/jolly_gravedigger/surpeme
 	name = "jolly gravedigger supreme"
-		/obj/item/clothing/shoes/jolly_gravedigger(M), SLOT_SHOES)
-		/obj/item/clothing/under/suit_jacket/charcoal(M), SLOT_W_UNIFORM)
-		/obj/item/clothing/gloves/white(M), SLOT_GLOVES)
-		/obj/item/clothing/glasses/aviator_mirror(M), SLOT_GLASSES)
-		/obj/item/clothing/head/that(M), SLOT_HEAD)
+		
+	head = /obj/item/clothing/head/that
 
-			M.real_name = "Jimbo"
+/datum/outfit/jolly_gravedigger/surpeme/post_equip(mob/living/carbon/human/H)
+	..()
 
-			M.s_tone = max(min(round(rand(130, 170)), 220), 1)
-			M.s_tone = -M.s_tone + 35
-
-			M.apply_recolor()
+	H.real_name = "Jimbo"

@@ -280,7 +280,7 @@
 	item_state = "cargoGold_id"
 
 /obj/item/weapon/card/id/syndicate
-	name = "agent card"
+	name = "Agent card"
 	access = list(access_maint_tunnels, access_syndicate, access_external_airlocks)
 	origin_tech = "syndicate=3"
 	assignment = "Agent"
@@ -296,8 +296,6 @@
 	if(ismob(loc)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
 		var/mob/user = loc
 		assign(ishuman(user) ? user.real_name : user.name)
-	else
-		assign(registered_name)
 
 /obj/item/weapon/card/id/syndicate/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
@@ -439,6 +437,14 @@
 	. = ..()
 	access = get_all_accesses()
 
+/obj/item/weapon/card/id/admiral
+	assignment = "Admiral"
+	rank = "Admiral"
+
+/obj/item/weapon/card/id/admiral/atom_init()
+	. = ..()
+	access = get_all_accesses() + get_all_centcom_access()
+
 /obj/item/weapon/card/id/clown/tunnel
 	assignment = "Tunnel Clown!"
 	rank = "Tunnel Clown!"
@@ -462,5 +468,3 @@
 /obj/item/weapon/card/id/syndicate/strike/leader
 	icon_state = "syndicate-command"
 	assignment = "Syndicate Commando Leader"
-
-
