@@ -110,6 +110,7 @@
 
 /datum/combat_combo/push/execute(mob/living/victim, mob/living/attacker)
 	var/list/attack_obj = attacker.get_unarmed_attack()
+	apply_effect(3, STUN, victim, attacker, attack_obj=attack_obj, min_value=1)
 	apply_effect(3, WEAKEN, victim, attacker, attack_obj=attack_obj, min_value=1)
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has pushed [victim] to the ground!</span>")
@@ -279,6 +280,7 @@
 
 	victim_G.force_down = TRUE
 	apply_effect(3, WEAKEN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
+	apply_effect(3, STUN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
 	victim.visible_message("<span class='danger'>[attacker] presses [victim] to the ground!</span>")
 
 	step_to(attacker, victim)
@@ -355,7 +357,8 @@
 
 	attacker.anchored = prev_anchored
 	attacker.transform = prev_transform
-	attacker.apply_effect(3, WEAKEN, blocked = 0)
+	attacker.Weaken(3)
+	attacker.Stun(3)
 
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	attacker.visible_message("<span class='danger'>[attacker] dropkicks [victim], pushing them onward!</span>")
@@ -418,6 +421,7 @@
 					L.pixel_y = prev_info_el["pix_y"]
 					L.pass_flags = prev_info_el["pass_flags"]
 					apply_effect(4, WEAKEN, L, attacker, attack_obj=attack_obj, min_value=1)
+					apply_effect(4, STUN, L, attacker, attack_obj=attack_obj, min_value=1)
 				return
 
 	for(var/j in 1 to i)
@@ -427,6 +431,7 @@
 		L.pixel_y = prev_info_el["pix_y"]
 		L.pass_flags = prev_info_el["pass_flags"]
 		apply_effect(4, WEAKEN, L, attacker, attack_obj=attack_obj, min_value=1)
+		apply_effect(4, STUN, L, attacker, attack_obj=attack_obj, min_value=1)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/dropkick/execute(mob/living/victim, mob/living/attacker)

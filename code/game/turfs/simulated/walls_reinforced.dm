@@ -88,7 +88,7 @@
 	switch(d_state)
 		if(INTACT)
 			if (iswirecutter(W))
-				if(!handle_fumbling(user, src, SKILL_TASK_TOUGH, list(/datum/skill/engineering/pro),"<span class='notice'>You fumble around figuring out how to cut the outer grille.</span>"))
+				if(!handle_fumbling(user, src, SKILL_TASK_TOUGH, list(/datum/skill/engineering = SKILL_LEVEL_PRO),"<span class='notice'>You fumble around figuring out how to cut the outer grille.</span>"))
 					return
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				d_state = SUPPORT_LINES
@@ -102,7 +102,7 @@
 				to_chat(user, "<span class='notice'>Вы начинаете удалять поддерживающие ряды.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
-				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills_override = list(/datum/skill/engineering/pro)))
+				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -117,7 +117,7 @@
 				var/obj/item/stack/O = W
 				if(!O.use(1))
 					return
-				if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering/pro),"<span class='notice'>You fumble around figuring out how to replace the outer grille.</span>"))
+				if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_PRO),"<span class='notice'>You fumble around figuring out how to replace the outer grille.</span>"))
 					return
 				d_state = INTACT
 				update_icon()
@@ -130,7 +130,7 @@
 				if(WT.use(0,user))
 
 					to_chat(user, "<span class='notice'>Вы начинаете разрезать металлическое покрытие.</span>")
-					if(WT.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering/pro)))
+					if(WT.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
@@ -144,7 +144,7 @@
 
 			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 				to_chat(user, "<span class='notice'>Вы начинаете разрезать металлическое покрытие.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering/pro)))
+				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -157,7 +157,7 @@
 		if(CUT_COVER)
 			if (iscrowbar(W))
 				to_chat(user, "<span class='notice'>Вы пытаетесь отделить покрытие.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills_override = list(/datum/skill/engineering/pro)))
+				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -171,7 +171,7 @@
 			if (iswrench(W))
 
 				to_chat(user, "<span class='notice'>Вы ослабляете болты, закрепляющие поддерживающие балки.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills_override = list(/datum/skill/engineering/pro)))
+				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -187,7 +187,7 @@
 				if(WT.use(0,user))
 
 					to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки.</span>")
-					if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills_override = list(/datum/skill/engineering/pro)))
+					if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
@@ -203,7 +203,7 @@
 			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 
 				to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering/pro)))
+				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -218,7 +218,7 @@
 			if(iscrowbar(W))
 
 				to_chat(user, "<span class='notice'>Вы отделяете внешнюю обшивку.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume  = 100,  required_skills_override = list(/datum/skill/engineering/pro)))
+				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume  = 100,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 

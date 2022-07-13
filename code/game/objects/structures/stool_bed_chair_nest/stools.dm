@@ -115,6 +115,7 @@
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		qdel(src)
 		var/mob/living/T = M
+		T.Stun(5)
 		T.Weaken(10)
 		T.apply_damage(20)
 		return

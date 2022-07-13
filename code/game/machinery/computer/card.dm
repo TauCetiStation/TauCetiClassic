@@ -11,7 +11,7 @@
 	var/mode = 0.0
 	var/printing = null
 	var/datum/money_account/datum_account = null	//if money account is tied to the card and the card is inserted into the console, the account is stored here
-	required_skills = list(/datum/skill/command/pro)
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_PRO)
 	fumbling_time = SKILL_TASK_TOUGH
 
 /obj/machinery/computer/card/proc/is_centcom()
@@ -114,8 +114,8 @@
 	data["civilian_jobs"] = format_jobs(civilian_positions)
 	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
 
-	data["fast_modify_region"] = is_skill_competent(user, list(/datum/skill/command/pro))
-	data["fast_full_access"] = is_skill_competent(user, list(/datum/skill/command/master))
+	data["fast_modify_region"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_PRO))
+	data["fast_full_access"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_MASTER))
 
 	if (modify && is_centcom())
 		var/list/all_centcom_access = list()

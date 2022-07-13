@@ -6,7 +6,7 @@ var/global/const/NUKE_WIRE_SAFETY = 4
 	random = TRUE
 	holder_type = /obj/machinery/nuclearbomb
 	wire_count = 7
-	required_skill = /datum/skill/engineering/master
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 /datum/wires/nuclearbomb/can_use()
 	var/obj/machinery/nuclearbomb/N = holder

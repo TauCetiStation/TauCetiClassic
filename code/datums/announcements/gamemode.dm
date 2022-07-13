@@ -32,6 +32,11 @@
 		src.message = message
 	..()
 
+/datum/announcement/centcomm/nuclear/gateway
+	name = "Hacked gateway"
+	subtitle = "Активация гейтвея."
+	message = "Произведена синхронизация гейтвеев. Ожидайте гостей."
+
 /* Vox */
 /datum/announcement/centcomm/vox/arrival
 	name = "Vox: Shuttle Arrives"
