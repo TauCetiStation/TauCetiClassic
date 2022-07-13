@@ -34,14 +34,14 @@
 	name = "chaplain hoodie"
 	desc = "This suit says to you 'hush'!"
 	icon_state = "chaplain_hoodie"
-	item_state = "chaplain_hoodie"	
+	item_state = "chaplain_hoodie"
 	body_parts_covered = UPPER_TORSO|ARMS
 
 /obj/item/clothing/suit/hooded/skhima
 	name = "Skhima Suit"
 	desc = "That's an ancient religion robe Skhima, decorated with white runes and symbols. Commonly weared by monks."
 	icon_state = "skhima"
-	item_state = "skhima"	
+	item_state = "skhima"
 	icon_suit_up = "skhima_up"
 	hoodtype = /obj/item/clothing/head/skhima_hood
 	flags_inv = HIDEJUMPSUIT
