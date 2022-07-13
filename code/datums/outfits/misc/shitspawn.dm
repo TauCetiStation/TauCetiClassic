@@ -316,6 +316,10 @@
 
 /datum/outfit/nanotrasen
 	name = null
+
+	r_pocket = /obj/item/device/pda/heads
+	id = /obj/item/weapon/card/id/centcom
+
 	var/ownjob
 
 /datum/outfit/nanotrasen/post_equip(mob/living/carbon/human/H)
@@ -337,10 +341,8 @@
 	shoes = /obj/item/clothing/shoes/centcom
 	gloves = /obj/item/clothing/gloves/white
 	l_ear = /obj/item/device/radio/headset/heads/hop
-	r_pocket = /obj/item/device/pda/heads
 	l_pocket = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/weapon/clipboard
-	id = /obj/item/weapon/card/id/centcom
 
 /datum/outfit/nanotrasen/officer
 	name = "nanotrasen officer"
@@ -351,10 +353,8 @@
 	gloves = /obj/item/clothing/gloves/white
 	l_ear = /obj/item/device/radio/headset/heads/captain
 	head = /obj/item/clothing/head/beret/centcomofficer
-	r_pocket = /obj/item/device/pda/heads
 	l_pocket = /obj/item/clothing/glasses/sunglasses
-	belt = /obj/item/weapon/gun/energy
-	id = /obj/item/weapon/card/id/centcom
+	belt = /obj/item/weapon/gun/energys
 
 /datum/outfit/nanotrasen/captain
 	name = "nanotrasen captain"
@@ -365,10 +365,8 @@
 	gloves = /obj/item/clothing/gloves/white
 	l_ear = /obj/item/device/radio/headset/heads/captain
 	head = /obj/item/clothing/head/beret/centcomcaptain
-	r_pocket = /obj/item/device/pda/heads
 	l_pocket = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/weapon/gun/energy
-	id = /obj/item/weapon/card/id/centcom
 
 /datum/outfit/psyops_officer
 	name = "psyops officer"
@@ -382,37 +380,37 @@
 	r_hand = /obj/item/weapon/nullrod/forcefield_staff
 	r_pocket = /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment
 	l_pocket = /obj/item/weapon/storage/firstaid/small_firstaid_kit/psyops
-	l_ear = /obj/item/clothing/ears/earmuffs(M), SLOT_L_EAR)
+	l_ear = /obj/item/clothing/ears/earmuffs
 
 /datum/outfit/psyops_officer/post_equip(mob/living/carbon/human/H)
-		H.set_species(SKRELL)
-		H.r_eyes = 102
-		H.g_eyes = 204
-		H.b_eyes = 255
+	H.set_species(SKRELL)
+	H.r_eyes = 102
+	H.g_eyes = 204
+	H.b_eyes = 255
 
-		var/list/skin_variations = list(
-			list(0, 0, 0),
-			list(28, 28, 28),
-			list(0, 0, 102),
-			list(63, 31, 0),
-			list(0, 51, 0),
-		)
+	var/list/skin_variations = list(
+		list(0, 0, 0),
+		list(28, 28, 28),
+		list(0, 0, 102),
+		list(63, 31, 0),
+		list(0, 51, 0),
+	)
 
-		var/list/variation = pick(skin_variations)
+	var/list/variation = pick(skin_variations)
 
-		H.r_skin = variation[1]
-		H.g_skin = variation[2]
-		H.b_skin = variation[3]
+	H.r_skin = variation[1]
+	H.g_skin = variation[2]
+	H.b_skin = variation[3]
 
-		H.r_hair = variation[1]
-		H.g_hair = variation[2]
-		H.b_hair = variation[3]
+	H.r_hair = variation[1]
+	H.g_hair = variation[2]
+	H.b_hair = variation[3]
 
-		H.universal_speak = TRUE
-		H.universal_understand = TRUE
+	H.universal_speak = TRUE
+	H.universal_understand = TRUE
 
-		M.mutations += list(NO_SHOCK, TK, REMOTE_TALK)
-		M.update_mutations()
+	M.mutations += list(NO_SHOCK, TK, REMOTE_TALK)
+	M.update_mutations()
 
 /datum/outfit/velocity
 	name = null
@@ -440,6 +438,7 @@
 
 /datum/outfit/velocity/officer
 	name = "velocity officer"
+	ownjob = "Velocity Officer"
 
 	uniform = /obj/item/clothing/under/det/velocity
 	shoes = /obj/item/clothing/shoes/boots/combat
@@ -448,10 +447,9 @@
 	back = /obj/item/weapon/storage/backpack/satchel
 	glasses = obj/item/clothing/glasses/sunglasses/hud/sechud
 
-	ownjob = "Velocity Officer"
-
 /datum/outfit/velocity/chief
 	name = "velocity chief"
+	ownjob = "Velocity Chief"
 
 	uniform = /obj/item/clothing/under/rank/head_of_security/corp
 	shoes = /obj/item/clothing/shoes/boots/combat
@@ -475,9 +473,7 @@
 	l_pocket = /obj/item/weapon/storage/pouch/baton_holster
 	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster
 
-	ownjob = "Velocity Chief"
-
-/datum/outfit/velocity/post_equip(mob/living/carbon/human/H)
+/datum/outfit/velocity/chief/post_equip(mob/living/carbon/human/H)
 	..()
 
 	var/obj/item/weapon/storage/pouch/baton_holster/BH = l_pocket
@@ -495,6 +491,8 @@
 
 /datum/outfit/velocity/doctor
 	name = "velocity doctor"
+	ownjob = "Velocity Medical Doctor"
+
 	uniform = /obj/item/clothing/under/det/velocity
 	shoes = /obj/item/clothing/shoes/brown
 	gloves = /obj/item/clothing/gloves/latex/nitrile
@@ -504,8 +502,6 @@
 	glasses = /obj/item/clothing/glasses/hud/health
 
 	l_pocket = /obj/item/weapon/reagent_containers/hypospray/cmo
-
-	ownjob = "Velocity Medical Doctor"
 
 /datum/outfit/ert
 	name = "emergency response team"
@@ -519,7 +515,6 @@
 	back = /obj/item/weapon/storage/backpack/satchel
 
 	id = /obj/item/weapon/card/id/centcom/ert
-	ownjob = "Emergency Response Team"
 
 /datum/outfit/special_ops_officer
 	name = "special ops officer"
