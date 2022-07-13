@@ -253,7 +253,7 @@
 
 /mob/living/simple_animal/hostile/proc/start_shoot(the_target)
 	for(var/i in 1 to amount_shoot)
-		Shoot(the_target, src.loc, src)
+		Shoot(the_target, loc, src)
 		if(casingtype)
 			new casingtype(get_turf(src))
 		sleep(4)
