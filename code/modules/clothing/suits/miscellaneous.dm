@@ -167,7 +167,7 @@
 	name = "holiday priest"
 	desc = "This is a nice holiday my son."
 	icon_state = "holidaypriest"
-	item_state = "holidaypriest"	
+	item_state = "holidaypriest"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 
@@ -175,7 +175,7 @@
 	name = "cardborg suit"
 	desc = "An ordinary cardboard box with holes cut in the sides."
 	icon_state = "cardborg"
-	item_state = "cardborg"	
+	item_state = "cardborg"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags_inv = HIDEJUMPSUIT
 
@@ -221,7 +221,7 @@
 	name = "worn shirt"
 	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it but it's pretty close. Good for sleeping in."
 	icon_state = "ianshirt"
-	item_state = "ianshirt"	
+	item_state = "ianshirt"
 	body_parts_covered = UPPER_TORSO|ARMS
 
 /obj/item/clothing/suit/nerdshirt
@@ -235,7 +235,6 @@
 	desc = "A blue shirt with some strange symbols. Look out for aliens!"
 	icon_state = "blueshirt"
 	item_state = "blueshirt"
-
 
 /obj/item/clothing/suit/chemshirt
 	name = "chemistry shirt"
@@ -661,6 +660,7 @@
 	name = "sukeban coat"
 	desc = "Just a Street Japanese coat"
 	icon_state = "sukeban_coat"
+
 /obj/item/clothing/suit/plaid
 	name = "plaid"
 	desc = "Home warm plaid"
