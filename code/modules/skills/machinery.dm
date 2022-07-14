@@ -1,5 +1,5 @@
-/obj/item/weapon/circuitboard/clonescanner
-	name = "Circuit board (XXX Scanner)"
+/obj/item/weapon/circuitboard/skill_scanner
+	name = "Circuit board (CMF modifier)"
 	build_path = /obj/machinery/skill_scanner
 	board_type = "machine"
 	origin_tech = "programming=2;biotech=2"
@@ -10,11 +10,14 @@
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/stack/cable_coil = 2)
 
-
+/obj/item/weapon/circuitboard/skills_console
+	name = "Circuit board (CMF Console)"
+	build_path = /obj/machinery/computer/skills_console
+	origin_tech = "programming=2;biotech=2"
 
 /obj/machinery/skill_scanner
-	name = "XXX modifier"
-	desc = "It scans DNA structures."
+	name = "CMF modifier"
+	desc = "Used to scan and change the cognitive and motor functions of living beings."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "scanner"
 	density = TRUE
@@ -42,13 +45,8 @@
 
 
 
-/obj/item/weapon/circuitboard/skills_console
-	name = "Circuit board (XXX Console)"
-	build_path = /obj/machinery/computer/skills_console
-	origin_tech = "programming=2;biotech=2"
-
 /obj/machinery/computer/skills_console
-	name = "XXX Modifier Access Console"
+	name = "CMF Modifier Access Console"
 	desc = "Used for scanning and modyfing XXX of user."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
@@ -79,9 +77,10 @@
 	return ..()
 
 
+
 /obj/item/weapon/skill_cartridge
-	name = "XXX cartridge"
-	desc = "Emergency use only."
+	name = "USP cartridge"
+	desc = "Used in conjunction with the CMF apparatus to rapidly alter skills."
 	icon = 'icons/obj/items.dmi'
 	w_class = SIZE_TINY
 	item_state = "card-id"
@@ -90,33 +89,39 @@
 	var/list/compatible_species = list(HUMAN, TAJARAN, UNATHI)
 
 /obj/item/weapon/skill_cartridge/green
-	name = "XXX cartridge"
+	name = "USP-5 cartridge"
 	item_state = "card-id"
 	icon_state = "datadisk0"
 	points = 5
 
+/obj/item/weapon/skill_cartridge/blue
+	name = "USP-7 cartridge"
+	item_state = "card-id"
+	icon_state = "datadisk0"
+	points = 7
+
 /obj/item/weapon/skill_cartridge/red
-	name = "XXX cartridge"
+	name = "USP-10 cartridge"
 	item_state = "card-id"
 	icon_state = "datadisk0"
 	points = 10
 
 /obj/item/weapon/skill_cartridge/purple
-	name = "XXX cartridge"
+	name = "USP-15 cartridge"
 	item_state = "card-id"
 	icon_state = "datadisk0"
 	points = 15
 
 /obj/item/weapon/skill_cartridge/ipc
-	name = "XXX cartridge"
+	name = "CSP-15 cartridge"
+	desc = "Used together with the CMF apparatus to rapidly alter skills. Specifically, this one can be used with the IPC."
 	item_state = "card-id"
 	icon_state = "datadisk0"
 	points = 15
 	compatible_species= list(IPC)
 
 /obj/item/weapon/implant/skill
-	name = "XXX implant"
-	desc = "Used to change the XXX of user."
+	name = "CMF implant"
 	var/datum/skillset/added_skillset
 
 
@@ -130,7 +135,6 @@
 	source.add_skills_buff(added_skillset)
 	return 1
 
-
 /obj/item/weapon/implant/skill/emp_act(severity)
 	if (malfunction)
 		return
@@ -141,7 +145,6 @@
 			meltdown()
 	spawn(20)
 		malfunction--
-
 
 /obj/item/weapon/implant/skill/meltdown()
 	..()
