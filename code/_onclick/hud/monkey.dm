@@ -1,5 +1,5 @@
 /mob/living/carbon/monkey/add_to_hud(datum/hud/hud)
-	..()
+	..(hud, FALSE)
 
 	hud.init_screens(list(
 		/atom/movable/screen/inventory/hand/r,

@@ -20,15 +20,10 @@ Must right click on a mob to activate.*/
 						return
 				spawn(0)
 					U.Beam(M,"n_beam",,15)
-				M.captured = 1
 				U.say("Get over here!")
 				var/obj/effect/energy_net/E = new /obj/effect/energy_net(M.loc)
-				E.layer = M.layer+1//To have it appear one layer above the mob.
 				U.visible_message("<span class='warning'>[U] caught [M] with an energy net!</span>")
-				E.affecting = M
-				E.master = U
-				spawn(0)//Parallel processing.
-					E.process(M)
+				E.start_cooldown(M)
 				cell.use(C*10) // Nets now cost what should be most of a standard battery, since your taking someone out of the round
 			else
 				to_chat(U, "They are already trapped inside an energy net.")

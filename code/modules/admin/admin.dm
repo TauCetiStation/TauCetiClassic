@@ -181,8 +181,7 @@ var/global/BSACooldown = 0
 				Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A>
 				<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A>
 				<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A>
-				<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>|
-				<A href='?src=\ref[src];simplemake=meme;mob=\ref[M]'>Meme</A>
+				<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>
 				<br>
 			"}
 			body += "</div>"
@@ -979,12 +978,12 @@ var/global/BSACooldown = 0
 
 	if(!check_rights(R_SERVER))	return
 	if(SSticker.current_state > GAME_STATE_PREGAME)
-		SSticker.delay_end = !SSticker.delay_end
-		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		message_admins("<span class='adminnotice'>[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
+		SSticker.admin_delayed = !SSticker.admin_delayed
+		log_admin("[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].")
+		message_admins("<span class='adminnotice'>[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].</span>")
 		world.send2bridge(
 			type = list(BRIDGE_ROUNDSTAT),
-			attachment_msg = "**[key_name(usr)]** [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
+			attachment_msg = "**[key_name(usr)]** [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 	else
