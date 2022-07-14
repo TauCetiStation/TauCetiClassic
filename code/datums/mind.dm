@@ -213,8 +213,8 @@
 		var/datum/skill/skill = all_skills[skill_type]
 		if(row % 3 == 0)
 			out += "</tr><tr>"
-		var/rank_name = skill.custom_ranks[skills.get_max(skill)]
-		out +="<td>[skill]:  [rank_name] ([skills.get_max(skill)])</td>"
+		var/rank_name = skill.custom_ranks[skills.get_max(skill.type) + 1]
+		out +="<td>[skill]:  [rank_name] ([skills.get_max(skill.type)])</td>"
 		row++
 	out +="</table>"
 	out += "<br><a href='?src=\ref[src];add_skillset=1'>Add skillset</a><br>"

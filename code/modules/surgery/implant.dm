@@ -235,6 +235,9 @@
 					if(istype(imp, /obj/item/weapon/implant/storage))
 						var/obj/item/weapon/implant/storage/Simp = imp
 						Simp.removed()
+					if(istype(imp, /obj/item/weapon/implant/skill))
+						var/obj/item/weapon/implant/skill/skill_impant = imp
+						skill_impant.removed()
 					remove_from_cavity(user, target, choosen_object, BP, tool)
 					target.sec_hud_set_implants()
 			if("Else")

@@ -31,7 +31,7 @@
 /obj/machinery/dna_scannernew/atom_init()
 	. = ..()
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/clonescanner(null)
+	component_parts += new /obj/item/weapon/circuitboard/skills_console(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
@@ -123,29 +123,33 @@
 /obj/item/weapon/implant/skill/implanted(mob/source)
 	if(!ishuman(source))
 		return
-	START_PROCESSING(SSobj, src)
+	if(source.ismindprotect())
+		source.adjustBrainLoss(25)
+		return
+	source.add_skills_buff(added_skillset)
 	return 1
 
 
-/obj/item/weapon/implant/death_alarm/process()
-	if (!implanted) return
-	var/mob/M = imp_in
-	M.help// TODO finish
-
-
-
-/obj/item/weapon/implant/death_alarm/emp_act(severity)
+/obj/item/weapon/implant/skill/emp_act(severity)
 	if (malfunction)
 		return
 	malfunction = MALFUNCTION_TEMPORARY
 
-	activate("emp")	//let's shout that this dude is dead
 	if(severity == 1)
 		if(prob(40))	//small chance of obvious meltdown
 			meltdown()
-		else if (prob(60))	//but more likely it will just quietly die
-			malfunction = MALFUNCTION_PERMANENT
-		STOP_PROCESSING(SSobj, src)
-
 	spawn(20)
 		malfunction--
+
+
+/obj/item/weapon/implant/skill/meltdown()
+	..()
+	if(!ishuman(imp_in))
+		return
+	var/mob/living/M = imp_in
+	M.adjustBrainLoss(100)
+
+/obj/item/weapon/implant/skill/proc/removed()
+	..()
+	imp_in.remove_skills_buff(added_skillset)
+	imp_in.adjustBrainLoss(100)
