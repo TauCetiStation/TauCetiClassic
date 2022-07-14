@@ -44,7 +44,7 @@
 	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/red/wizard
-
+	flags = NOSLIP
 /obj/item/clothing/shoes/red/wizard/atom_init(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/magic_item/wizard)

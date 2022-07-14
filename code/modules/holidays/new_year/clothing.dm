@@ -170,7 +170,7 @@
 	heat_protection = LEGS
 
 /obj/item/clothing/shoes/winterboots/wizard
-
+	flags = NOSLIP
 /obj/item/clothing/shoes/winterboots/wizard/atom_init(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/magic_item/wizard)

@@ -43,7 +43,7 @@
 	knife = null
 
 /obj/item/clothing/shoes/boots/wizard
-
+	flags = NOSLIP
 /obj/item/clothing/shoes/boots/wizard/atom_init(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/magic_item/wizard)

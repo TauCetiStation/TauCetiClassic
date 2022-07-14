@@ -318,7 +318,7 @@
 /datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. = ..()
 	if(.)
-		new /obj/item/clothing/shoes/sandal(get_turf(user)) //In case they've lost them.
+		new /obj/item/clothing/shoes/sandal/wizard(get_turf(user)) //In case they've lost them.
 		new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(user))//To complete the outfit
 
 /datum/spellbook_entry/item/contract

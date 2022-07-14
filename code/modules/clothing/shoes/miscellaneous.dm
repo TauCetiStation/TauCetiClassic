@@ -44,9 +44,34 @@
 	species_restricted = null
 	body_parts_covered = 0
 
-/obj/item/clothing/shoes/sandal/atom_init(mapload, ...)
+/obj/item/clothing/shoes/sandal/wizard
+	flags = NOSLIP
+
+/obj/item/clothing/shoes/sandal/wizard/atom_init(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/magic_item/wizard)
+
+/obj/item/clothing/shoes/sandal/brown/wizard
+	flags = NOSLIP
+
+/obj/item/clothing/shoes/sandal/brown/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
+/obj/item/clothing/shoes/sandal/pink/wizard
+	flags = NOSLIP
+
+/obj/item/clothing/shoes/sandal/pink/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
+/obj/item/clothing/shoes/sandal/marisa/wizard
+	flags = NOSLIP
+
+/obj/item/clothing/shoes/sandal/marisa/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
 
 /obj/item/clothing/shoes/sandal/brown
 	name = "Brown Sandals"
@@ -201,7 +226,7 @@
 	icon_state = "western_boots"
 
 /obj/item/clothing/shoes/western/wizard
-
+	flags = NOSLIP
 /obj/item/clothing/shoes/western/wizard/atom_init(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/magic_item/wizard)
@@ -249,13 +274,13 @@
 	icon_state = "high_shoes2"
 
 /obj/item/clothing/shoes/heels/wizard
-
+	flags = NOSLIP
 /obj/item/clothing/shoes/heels/wizard/atom_init(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/shoes/heels/alternate/wizard
-
+	flags = NOSLIP
 /obj/item/clothing/shoes/heels/alternate/wizard/atom_init(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/magic_item/wizard)
@@ -267,7 +292,7 @@
 	item_state = "jackboots"
 
 /obj/item/clothing/shoes/boots/German/wizard
-
+	flags = NOSLIP
 /obj/item/clothing/shoes/boots/German/wizard/atom_init(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/magic_item/wizard)
