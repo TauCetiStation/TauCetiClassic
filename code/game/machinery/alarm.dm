@@ -917,7 +917,7 @@ Code shamelessly copied from apc_frame
 
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
+	if (!isfloorturf(loc))
 		to_chat(usr, "<span class='warning'>Air Alarm cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")
@@ -1248,7 +1248,7 @@ Code shamelessly copied from apc_frame
 
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = get_area(src)
-	if (!istype(loc, /turf/simulated/floor))
+	if (!isfloorturf(loc))
 		to_chat(usr, "<span class='warning'>Fire Alarm cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")

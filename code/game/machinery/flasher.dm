@@ -84,6 +84,7 @@
 		if (isxeno(O))//So aliens don't get flashed (they have no external eyes)/N
 			continue
 
+		O.Stun(strength * 0.5)
 		O.Weaken(strength)
 		if (ishuman(O))
 			var/mob/living/carbon/human/H = O

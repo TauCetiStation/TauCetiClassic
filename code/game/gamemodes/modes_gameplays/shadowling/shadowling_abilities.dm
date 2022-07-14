@@ -169,6 +169,7 @@
 					to_chat(usr, "<span class='notice'>You begin the enthralling of [target].</span>")
 					usr.visible_message("<span class='danger'>[usr] leans over [target], their eyes glowing a deep crimson, and stares into their face.</span>")
 					to_chat(target, "<span class='boldannounce'>Your gaze is forcibly drawn into a blinding red light. You fall to the floor as conscious thought is wiped away.</span>")
+					target.Stun(12)
 					target.Weaken(12)
 					sleep(20)
 				if(3)
@@ -391,7 +392,7 @@
 				var/datum/effect/effect/system/spark_spread/sp = new /datum/effect/effect/system/spark_spread
 				sp.set_up(5, 1, S)
 				sp.start()
-				S.Weaken(6)
+				S.Stun(6)
 		for(var/obj/structure/window/W in T.contents)
 			W.take_damage(rand(80, 100))
 
@@ -608,6 +609,7 @@
 					to_chat(target, "<span class='danger'>You feel a blast of paralyzingly cold air wrap around you and flow past, but you are unaffected!</span>")
 					continue
 			to_chat(target, "<span class='userdanger'>You are hit by a blast of cold unlike anything you have ever felt. Your limbs instantly lock in place and you feel ice burns across your body!</span>")
+			target.Stun(15)
 			target.Weaken(15)
 			if(target.bodytemperature)
 				target.adjust_bodytemperature(-INFINITY) //:^)

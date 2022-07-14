@@ -79,11 +79,6 @@
 			to_chat(src, "<span class='userdanger'>You cannot speak in IC (Muted).</span>")
 			return
 
-	//Meme stuff
-	if(!speech_allowed && usr == src)
-		to_chat(usr, "<span class='userdanger'>You can't speak.</span>")
-		return
-
 	message =  sanitize(message)
 	if(!message)
 		return
