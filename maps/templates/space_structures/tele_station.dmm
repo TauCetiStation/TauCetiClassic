@@ -4968,19 +4968,8 @@
 	},
 /area/space_structures/telestation/engineering)
 "kO" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/bible{
-	pixel_x = 4
-	},
-/obj/item/weapon/lighter/zippo{
-	pixel_x = -10;
-	pixel_y = -8
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
 /turf/simulated/floor/carpet/black{
-	icon_state = "blackcarpet8-0"
+	icon_state = "blackcarpet-broken"
 	},
 /area/space_structures/telestation/chapel)
 "kP" = (
@@ -7948,7 +7937,6 @@
 /area/space_structures/telestation/chapel)
 "qk" = (
 /obj/structure/big_bell,
-/obj/effect/effect/bell,
 /obj/structure/cable{
 	dir = 4;
 	icon_state = "1-2"
@@ -7959,7 +7947,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor/carpet/black{
+	icon_state = "blackcarpet-broken"
+	},
 /area/space_structures/telestation/chapel)
 "ql" = (
 /obj/item/candle/red,
@@ -8666,6 +8656,26 @@
 	icon_state = "white"
 	},
 /area/space_structures/telestation/research)
+"rF" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/bible{
+	pixel_x = 4
+	},
+/obj/item/weapon/lighter/zippo{
+	pixel_x = -10;
+	pixel_y = -8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/weapon/paper/derelict_chaplainnote{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/turf/simulated/floor/carpet/black{
+	icon_state = "blackcarpet8-0"
+	},
+/area/space_structures/telestation/chapel)
 "rJ" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance access"
@@ -27137,7 +27147,7 @@ fc
 hS
 iM
 qi
-hS
+kO
 hS
 fc
 kX
@@ -27795,7 +27805,7 @@ go
 hS
 go
 hS
-hS
+kO
 ql
 hS
 lK
@@ -29644,7 +29654,7 @@ HQ
 HQ
 fc
 fc
-kO
+rF
 fc
 fc
 HQ
