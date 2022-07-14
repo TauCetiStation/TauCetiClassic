@@ -2249,6 +2249,7 @@
 #include "code\modules\shieldgen\shield_gen.dm"
 #include "code\modules\shieldgen\shield_gen_external.dm"
 #include "code\modules\skills\helpers.dm"
+#include "code\modules\skills\machinery.dm"
 #include "code\modules\skills\skill.dm"
 #include "code\modules\skills\skillset.dm"
 #include "code\modules\skills\skillsets\cargo.dm"
