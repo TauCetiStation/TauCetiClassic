@@ -127,13 +127,6 @@
 
 	var/open = FALSE // used for overlays
 
-/obj/item/weapon/storage/lockbox/medal/atom_init(mapload, ...)
-	. = ..()
-	PopulateContents()
-
-/obj/item/weapon/storage/lockbox/medal/proc/PopulateContents()
-	return
-
 /obj/item/weapon/storage/lockbox/medal/open(mob/user)
 	..()
 	open = TRUE
@@ -179,57 +172,57 @@
 	name = "Captain medal box"
 	desc = "A locked box used to store medals to be given to crew."
 
-/obj/item/weapon/storage/lockbox/medal/captain/PopulateContents()
-	new /obj/item/clothing/accessory/medal/conduct(src)
-	new /obj/item/clothing/accessory/medal/conduct(src)
-	new /obj/item/clothing/accessory/medal/conduct(src)
-	new /obj/item/clothing/accessory/medal/bronze_heart(src)
-	new /obj/item/clothing/accessory/medal/silver/security(src)
-	new /obj/item/clothing/accessory/medal/silver/valor(src)
-	new /obj/item/clothing/accessory/medal/silver/valor(src)
-	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
-	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
-	new /obj/item/clothing/accessory/medal/gold/captain(src)
+	startswith = list(
+		/obj/item/clothing/accessory/medal/conduct,
+		/obj/item/clothing/accessory/medal/conduct,
+		/obj/item/clothing/accessory/medal/conduct,
+		/obj/item/clothing/accessory/medal/bronze_heart,
+		/obj/item/clothing/accessory/medal/silver/security,
+		/obj/item/clothing/accessory/medal/silver/valor,
+		/obj/item/clothing/accessory/medal/silver/valor,
+		/obj/item/clothing/accessory/medal/plasma/nobel_science,
+		/obj/item/clothing/accessory/medal/plasma/nobel_science,
+		/obj/item/clothing/accessory/medal/gold/captain)
 
 /obj/item/weapon/storage/lockbox/medal/hop
 	name = "Head of Personnel medal box"
 	desc = "A locked box used to store medals to be given to those exhibiting excellence in management."
 	req_access = list(access_hop)
 
-/obj/item/weapon/storage/lockbox/medal/hop/PopulateContents()
-	new /obj/item/clothing/accessory/medal/gold/bureaucracy(src)
-	new /obj/item/clothing/accessory/medal/gold/bureaucracy(src)
-	new /obj/item/clothing/accessory/medal/gold/bureaucracy(src)
-	new /obj/item/clothing/accessory/medal/silver/excellence(src)
+	startswith = list(
+		/obj/item/clothing/accessory/medal/gold/bureaucracy,
+		/obj/item/clothing/accessory/medal/gold/bureaucracy,
+		/obj/item/clothing/accessory/medal/gold/bureaucracy,
+		/obj/item/clothing/accessory/medal/silver/excellence)
 
 /obj/item/weapon/storage/lockbox/medal/hos
 	name = "security medal box"
 	desc = "A locked box used to store medals to be given to members of the security department."
 	req_access = list(access_hos)
 
-/obj/item/weapon/storage/lockbox/medal/hos/PopulateContents()
-	new /obj/item/clothing/accessory/medal/silver/security(src)
-	new /obj/item/clothing/accessory/medal/silver/security(src)
-	new /obj/item/clothing/accessory/medal/silver/security(src)
+	startswith = list(
+		/obj/item/clothing/accessory/medal/silver/security,
+		/obj/item/clothing/accessory/medal/silver/security,
+		/obj/item/clothing/accessory/medal/silver/security)
 
 /obj/item/weapon/storage/lockbox/medal/cmo
 	name = "medical medal box"
 	desc = "A locked box used to store medals to be given to members of the medical department."
 	req_access = list(access_cmo)
 
-/obj/item/weapon/storage/lockbox/medal/cmo/PopulateContents()
-	new /obj/item/clothing/accessory/medal/silver/med_medal(src)
-	new /obj/item/clothing/accessory/medal/silver/med_medal2(src)
+	startswith = list(
+		/obj/item/clothing/accessory/medal/silver/med_medal,
+		/obj/item/clothing/accessory/medal/silver/med_medal2)
 
 /obj/item/weapon/storage/lockbox/medal/rd
 	name = "science medal box"
 	desc = "A locked box used to store medals to be given to members of the science department."
 	req_access = list(access_rd)
 
-/obj/item/weapon/storage/lockbox/medal/rd/PopulateContents()
-	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
-	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
-	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
+	startswith = list(
+		/obj/item/clothing/accessory/medal/plasma/nobel_science,
+		/obj/item/clothing/accessory/medal/plasma/nobel_science,
+		/obj/item/clothing/accessory/medal/plasma/nobel_science)
 
 /obj/item/weapon/storage/lockbox/medal/nanotrasen
 	name = "NanoTrasen medal box"
@@ -237,20 +230,20 @@
 	req_access = list(access_cent_captain)
 	storage_slots = 13
 
-/obj/item/weapon/storage/lockbox/medal/nanotrasen/PopulateContents()
-	new /obj/item/clothing/accessory/medal/cargo(src)
-	new /obj/item/clothing/accessory/medal/conduct(src)
-	new /obj/item/clothing/accessory/medal/bronze_heart(src)
-	new /obj/item/clothing/accessory/medal/silver/med_medal(src)
-	new /obj/item/clothing/accessory/medal/silver/med_medal2(src)
-	new /obj/item/clothing/accessory/medal/silver/security(src)
-	new /obj/item/clothing/accessory/medal/silver/valor(src)
-	new /obj/item/clothing/accessory/medal/silver/excellence(src)
-	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
-	new /obj/item/clothing/accessory/medal/gold/captain(src)
-	new /obj/item/clothing/accessory/medal/gold/heroism(src)
-	new /obj/item/clothing/accessory/medal/gold/bureaucracy(src)
-	new /obj/item/clothing/accessory/medal/gold/nanotrasen(src)
+	startswith = list(
+		/obj/item/clothing/accessory/medal/cargo,
+		/obj/item/clothing/accessory/medal/conduct,
+		/obj/item/clothing/accessory/medal/bronze_heart,
+		/obj/item/clothing/accessory/medal/silver/med_medal,
+		/obj/item/clothing/accessory/medal/silver/med_medal2,
+		/obj/item/clothing/accessory/medal/silver/security,
+		/obj/item/clothing/accessory/medal/silver/valor,
+		/obj/item/clothing/accessory/medal/silver/excellence,
+		/obj/item/clothing/accessory/medal/plasma/nobel_science,
+		/obj/item/clothing/accessory/medal/gold/captain,
+		/obj/item/clothing/accessory/medal/gold/heroism,
+		/obj/item/clothing/accessory/medal/gold/bureaucracy,
+		/obj/item/clothing/accessory/medal/gold/nanotrasen)
 
 /obj/item/weapon/storage/lockbox/medal/nanotrasen/update_overlays()
 	return
