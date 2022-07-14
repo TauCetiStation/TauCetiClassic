@@ -21637,6 +21637,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/item/clothing/suit/chef,
 /turf/simulated/floor,
 /area/station/civilian/cold_room)
 "mhl" = (
