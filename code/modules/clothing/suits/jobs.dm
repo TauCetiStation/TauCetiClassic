@@ -97,8 +97,10 @@
 	item_state = "chef"
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
+	flags = ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	allowed = list (/obj/item/weapon/kitchenknife)
+	allowed = list (/obj/item/weapon/kitchenknife,
+					/obj/item/weapon/kitchen/rollingpin)
 
 //Chef
 /obj/item/clothing/suit/chef/classic

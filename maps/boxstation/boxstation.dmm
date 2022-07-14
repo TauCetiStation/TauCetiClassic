@@ -81187,6 +81187,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/item/clothing/suit/chef,
 /turf/simulated/floor,
 /area/station/civilian/cold_room)
 "rnU" = (
