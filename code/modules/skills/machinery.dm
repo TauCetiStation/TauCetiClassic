@@ -76,7 +76,30 @@
 		return FALSE
 	return ..()
 
+/obj/machinery/computer/skills_console/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MyMachine")
+		ui.open()
 
+/obj/machinery/computer/skills_console/ui_data(mob/user)
+	var/list/data = list()
+	data["health"] = health
+	data["color"] = color
+
+	return data
+
+/obj/machinery/my_machine/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	if(action == "change_color")
+		var/new_color = params["color"]
+	if(!(color in allowed_coors))
+		return FALSE
+		color = new_color
+		. = TRUE
+	update_icon()
 
 /obj/item/weapon/skill_cartridge
 	name = "USP cartridge"
