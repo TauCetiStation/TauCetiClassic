@@ -22,9 +22,9 @@
 	icon_state = "scanner"
 	density = TRUE
 	anchored = TRUE
-	use_power = ACTIVE_POWER_USE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
-	active_power_usage = 40000
+	active_power_usage = 10000
 	var/damage_coeff
 	var/scan_level
 	var/precision_coeff
