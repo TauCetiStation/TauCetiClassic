@@ -559,6 +559,7 @@
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Crowbar.ogg'
 
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 	qualities = list(
 		QUALITY_PRYING = 1
 	)
@@ -568,7 +569,7 @@
 	desc = "A little emergency crowbar, used to open unpowered doors and emergency shutters."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "emergency_crowbar"
-	item_state = "crowbar_emergency"
+	item_state = "crowbar_red"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	force = 4.0
