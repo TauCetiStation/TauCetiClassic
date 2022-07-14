@@ -63,7 +63,7 @@
 	
 	uniform = /obj/item/clothing/under/rank/janitor
 	shoes = /obj/item/clothing/shoes/black
-	backpack = /obj/item/weapon/storage/backpack
+	back = /obj/item/weapon/storage/backpack
 
 	r_hand = /obj/item/weapon/mop
 	l_hand = /obj/item/weapon/reagent_containers/glass/bucket/full
@@ -132,7 +132,7 @@
 	suit = /obj/item/clothing/suit/apron
 	l_pocket = /obj/item/weapon/kitchenknife
 	r_pocket = /obj/item/weapon/scalpel
-	r_hand = /obj/item/weapon/fireaxe/fire_axe
+	r_hand = /obj/item/weapon/fireaxe
 
 /datum/outfit/masked_killer/post_equip(mob/living/carbon/human/H)
 	for(var/obj/item/carried_item in H.contents)
@@ -149,7 +149,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	suit = /obj/item/clothing/suit/wcoat
 	l_pocket = /obj/item/weapon/melee/energy/sword
-	l_hand = /item/weapon/storage/secure/briefcase
+	l_hand = /obj/item/weapon/storage/secure/briefcase
 	belt = /obj/item/device/pda/heads
 	id = /obj/item/weapon/card/id/syndicate/reaper
 
@@ -285,8 +285,8 @@
 		/obj/item/weapon/pinpointer/advpinpointer,
 	)
 
-	suit = /obj/item/clothing/suit/space/rig/syndi/elite/commander
-	head = /obj/item/clothing/head/helmet/space/rig/syndi/elite/commander
+	suit = /obj/item/clothing/suit/space/rig/syndi/elite/comander
+	head = /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander
 	id = /obj/item/weapon/card/id/syndicate/strike/leader
 
 /datum/outfit/nanotrasen
@@ -329,7 +329,7 @@
 	l_ear = /obj/item/device/radio/headset/heads/captain
 	head = /obj/item/clothing/head/beret/centcomofficer
 	l_pocket = /obj/item/clothing/glasses/sunglasses
-	belt = /obj/item/weapon/gun/energys
+	belt = /obj/item/weapon/gun/energy
 
 /datum/outfit/nanotrasen/captain
 	name = "nanotrasen captain"
@@ -384,8 +384,8 @@
 	H.universal_speak = TRUE
 	H.universal_understand = TRUE
 
-	M.mutations += list(NO_SHOCK, TK, REMOTE_TALK)
-	M.update_mutations()
+	H.mutations += list(NO_SHOCK, TK, REMOTE_TALK)
+	H.update_mutations()
 
 /datum/outfit/velocity
 	name = null
@@ -420,7 +420,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	l_ear = /obj/item/device/radio/headset/velocity
 	back = /obj/item/weapon/storage/backpack/satchel
-	glasses = obj/item/clothing/glasses/sunglasses/hud/sechud
+	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
 
 /datum/outfit/velocity/chief
 	name = "velocity chief"
@@ -453,12 +453,12 @@
 /datum/outfit/velocity/chief/post_equip(mob/living/carbon/human/H)
 	..()
 
-	var/obj/item/weapon/storage/pouch/baton_holster/BH = H.l_pocket
+	var/obj/item/weapon/storage/pouch/baton_holster/BH = H.l_store
 	new /obj/item/weapon/melee/classic_baton(BH)
 	BH.update_icon()
 
 
-	var/obj/item/weapon/storage/pouch/pistol_holster/PH = H.r_pocket
+	var/obj/item/weapon/storage/pouch/pistol_holster/PH = H.r_store
 	var/obj/item/weapon/gun/energy/laser/selfcharging/SG = new /obj/item/weapon/gun/energy/laser/selfcharging(PH)
 	SG.name = "laser pistol rifle"
 	SG.can_be_holstered = TRUE
@@ -503,7 +503,7 @@
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	head = /obj/item/clothing/head/helmet/space/deathsquad/beret
 	belt = /obj/item/weapon/gun/energy/pulse_rifle/M1911
-	r_pcket = /obj/item/weapon/lighter/zippo
+	r_pocket = /obj/item/weapon/lighter/zippo
 	back = /obj/item/weapon/storage/backpack/satchel
 
 	id = /obj/item/weapon/card/id/centcom/special_ops

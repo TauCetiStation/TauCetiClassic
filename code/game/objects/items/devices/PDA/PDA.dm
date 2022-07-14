@@ -130,7 +130,7 @@
 
 /obj/item/device/pda/proc/assign(real_name)
 	owner = real_name
-	name = "PDA-[real_name][pda.ownjob ? "([pda.ownjob])" : ""]"
+	name = "PDA-[real_name][ownjob ? "([ownjob])" : ""]"
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -724,7 +724,7 @@
 			id_check(U, 1)
 		if("UpdateInfo")
 			ownjob = id.assignment
-			pda.assign(id.registered_name)
+			assign(id.registered_name)
 			ownrank = id.rank
 			check_rank(id.rank)		//check if we became the head
 			if(owner_account && owner_account.account_number == id.associated_account_number)
@@ -1395,7 +1395,7 @@
 			return
 		if(!owner)
 			ownjob = idcard.assignment
-			pda.assign(idcard.registered_name)
+			assign(idcard.registered_name)
 			ownrank = idcard.rank
 			check_rank(idcard.rank)
 			var/datum/money_account/account = get_account(idcard.associated_account_number)
