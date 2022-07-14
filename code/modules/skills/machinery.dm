@@ -126,6 +126,7 @@
 	if(source.ismindprotect())
 		source.adjustBrainLoss(25)
 		return
+	if(source.speci)
 	source.add_skills_buff(added_skillset)
 	return 1
 
@@ -144,12 +145,12 @@
 
 /obj/item/weapon/implant/skill/meltdown()
 	..()
-	if(!ishuman(imp_in))
+	if(!imp_in || !ishuman(imp_in))
 		return
 	var/mob/living/M = imp_in
+	M.remove_skills_buff(added_skillset)
 	M.adjustBrainLoss(100)
 
 /obj/item/weapon/implant/skill/proc/removed()
 	..()
-	imp_in.remove_skills_buff(added_skillset)
-	imp_in.adjustBrainLoss(100)
+	meltdown()
