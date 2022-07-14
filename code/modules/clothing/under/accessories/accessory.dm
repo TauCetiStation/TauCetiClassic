@@ -176,37 +176,35 @@
 /obj/item/clothing/accessory/medal/attack(mob/living/M, mob/living/user, def_zone)
 	if(ishuman(M) && user.a_intent != INTENT_HARM)
 		var/mob/living/carbon/human/H = M
-		if(H.wear_suit)
-			if((H.wear_suit.flags_inv & HIDEJUMPSUIT)) //Check if the jumpsuit is covered
-				to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits.</span>")
-				return
+		var/obj/item/wearing = H.w_uniform
 
-		if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing))
-			var/obj/item/clothing/U = H.w_uniform
-			var/delay = 20
-			if(user == H)
-				delay = 0
-			else
-				user.visible_message("<span class='notice'>[user] is trying to pin [src] on [H]'s chest.</span>", \
-					"<span class='notice'>You try to pin [src] on [H]'s chest.</span>")
-			var/input
-			if(!commended && (user != H))
-				input = sanitize(input(user, "Reason for this commendation? Describe their accomplishments", "Commendation") as null|text)
-			if(do_after(user, delay, target = H))
-				U.attach_accessory(src, user)
-				if(user == H)
-					to_chat(user, "<span class='notice'>You attach [src] to [U].</span>")
-				else
-					user.visible_message("<span class='notice'>[user] pins \the [src] on [H]'s chest.</span>", \
-						"<span class='notice'>You pin \the [src] on [H]'s chest.</span>")
-					if(input)
-						commended = TRUE
-						desc += "<br>The inscription reads: [input] - [user.real_name]"
-						log_game("<b>[key_name(H)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
-						message_admins("<b>[key_name_admin(H)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
+		if(!wearing || H.wear_suit?.flags_inv & HIDEJUMPSUIT) //Check if the jumpsuit is covered
+			wearing = H.wear_suit
 
+		if(!wearing || !istype(wearing, /obj/item/clothing))
+			to_chat(user, "<span class='warning'>You can't pin a medal to [H].</span>")
+			return
+		var/obj/item/clothing/C = wearing
+
+		var/delay = 20
+		if(user == H)
+			delay = 0
 		else
-			to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
+			user.visible_message("<span class='notice'>[user] is trying to pin [src] on [H]'s chest.</span>", \
+				"<span class='notice'>You try to pin [src] on [H]'s chest.</span>")
+		var/input
+		if(!commended && (user != H))
+			input = sanitize(input(user, "Reason for this commendation? Describe their accomplishments", "Commendation") as null|text)
+		if(do_after(user, delay, target = H))
+			C.attach_accessory(src, user)
+			if(user != H)
+				user.visible_message("<span class='notice'>[user] pins \the [src] on [H]'s chest.</span>", \
+					"<span class='notice'>You pin \the [src] on [H]'s chest.</span>")
+				if(input)
+					commended = TRUE
+					desc += "<br>The inscription reads: [input] - [user.real_name]"
+					log_game("<b>[key_name(H)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
+					message_admins("<b>[key_name_admin(H)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
 	else
 		..()
 
