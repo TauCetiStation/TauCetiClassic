@@ -11132,11 +11132,15 @@
 	},
 /area/space_structures/telestation/infirmary)
 "NV" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/environment/space,
-/area/space)
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/external{
+	name = "External access";
+	req_access = list(13)
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/space_structures/telestation/reactor)
 "NW" = (
 /obj/structure/table,
 /obj/item/stack/medical/splint,
@@ -12855,14 +12859,15 @@
 /area/space_structures/telestation/dormitories)
 "Yl" = (
 /obj/structure/table,
+/obj/machinery/light{
+	dir = 1
+	},
 /obj/item/weapon/reagent_containers/food/drinks/coffee{
 	pixel_x = 7
 	},
 /obj/item/weapon/game_kit{
-	pixel_y = 11
-	},
-/obj/machinery/light{
-	dir = 1
+	pixel_x = -10;
+	pixel_y = 3
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/dormitories)
@@ -15653,9 +15658,9 @@ jr
 qH
 qK
 qK
+NV
 qK
-qK
-qK
+NV
 ro
 gg
 mc
@@ -21267,7 +21272,7 @@ Mg
 Mg
 Mg
 Mg
-NV
+Mg
 Mg
 HQ
 sU
