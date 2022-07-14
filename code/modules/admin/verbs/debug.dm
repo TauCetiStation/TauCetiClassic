@@ -390,9 +390,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)
 
 	for(var/datum/outfit/O as anything in paths)
-		outfits[initial(O.name)] = O
+		if(initial(O.name))
+			outfits[initial(O.name)] = O
 
-	var/dresscode = input("Select outfit", "Robust quick dress shop") as null|anything in baseoutfits + sort_list(outfits)
+	var/dresscode = input("Select outfit", "Robust quick dress shop") as null|anything in baseoutfits + sortList(outfits)
 	if(isnull(dresscode))
 		return
 
@@ -405,7 +406,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		for(var/datum/outfit/O as anything in job_paths)
 			job_outfits[initial(O.name)] = O
 
-		dresscode = input("Select job equipment", "Robust quick dress shop") as null|anything in sort_list(job_outfits)
+		dresscode = input("Select job equipment", "Robust quick dress shop") as null|anything in sortList(job_outfits)
 		dresscode = job_outfits[dresscode]
 		if(isnull(dresscode))
 			return
