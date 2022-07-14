@@ -748,7 +748,6 @@ var/global/list/datum/spawners_cooldown = list()
 	H.mind.skills.maximize_active_skills()
 
 	H.add_language(LANGUAGE_SOLCOMMON)
-	H.add_language(LANGUAGE_SALACKYI)
 
 	to_chat(H, "<B>Вы - <span class='boldwarning'>Офицер СБ дереликта</span>.</B>")
 	to_chat(H, "<B>Вы ушли в криосон в ожидании следующего челнока до Земли, чтобы вернутся домой. Однако после пробуждения из капсулы, вы сразу почувствовали что что-то не так. А следы крови и чьи-то ошмётки прямо в главном корридоре это чувство подкрепили.</B>")
