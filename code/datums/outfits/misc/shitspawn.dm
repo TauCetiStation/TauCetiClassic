@@ -292,6 +292,10 @@
 /datum/outfit/nanotrasen
 	name = null
 
+	shoes = /obj/item/clothing/shoes/centcom
+	gloves = /obj/item/clothing/gloves/white
+
+	l_pocket = /obj/item/clothing/glasses/sunglasses
 	r_pocket = /obj/item/device/pda/heads
 	id = /obj/item/weapon/card/id/centcom
 
@@ -313,10 +317,7 @@
 	ownjob = "NanoTrasen Navy Representative"
 	
 	uniform = /obj/item/clothing/under/rank/centcom/representative
-	shoes = /obj/item/clothing/shoes/centcom
-	gloves = /obj/item/clothing/gloves/white
 	l_ear = /obj/item/device/radio/headset/heads/hop
-	l_pocket = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/weapon/clipboard
 
 /datum/outfit/nanotrasen/officer
@@ -324,11 +325,8 @@
 	ownjob = "NanoTrasen Navy Officer"
 
 	uniform = /obj/item/clothing/under/rank/centcom/officer
-	shoes = /obj/item/clothing/shoes/centcom
-	gloves = /obj/item/clothing/gloves/white
 	l_ear = /obj/item/device/radio/headset/heads/captain
 	head = /obj/item/clothing/head/beret/centcomofficer
-	l_pocket = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/weapon/gun/energy
 
 /datum/outfit/nanotrasen/captain
@@ -336,11 +334,8 @@
 	ownjob = "NanoTrasen Navy Captain"
 
 	uniform = /obj/item/clothing/under/rank/centcom/captain
-	shoes = /obj/item/clothing/shoes/centcom
-	gloves = /obj/item/clothing/gloves/white
 	l_ear = /obj/item/device/radio/headset/heads/captain
 	head = /obj/item/clothing/head/beret/centcomcaptain
-	l_pocket = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/weapon/gun/energy
 
 /datum/outfit/psyops_officer
@@ -481,7 +476,7 @@
 /datum/outfit/ert
 	name = "emergency response team"
 
-	uniform = /obj/item/clothing/under/rank/
+	uniform = /obj/item/clothing/under/rank
 	shoes = /obj/item/clothing/shoes/boots/swat
 	gloves = /obj/item/clothing/gloves/swat
 	l_ear = /obj/item/device/radio/headset/ert
