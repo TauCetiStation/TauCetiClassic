@@ -603,6 +603,16 @@ var/global/list/datum/spawners_cooldown = list()
 	..()
 	religion.add_member(mob, HOLY_ROLE_PRIEST)
 
+/datum/spawner/living/mimic
+	name = "Оживлённый предмет"
+	id = "mimic"
+	desc = "Вы магическим образом ожили на станции"
+
+/datum/spawner/living/evil_shade
+	name = "Злой Дух"
+	id = "evil_shade"
+	desc = "Магическая сила призвала вас в мир, отомстите живым за причинённые обиды!"
+
 /datum/spawner/living/rat
 	name = "Крыса"
 	id = "rat"
@@ -649,6 +659,7 @@ var/global/list/datum/spawners_cooldown = list()
 	H.equipOutfit(/datum/outfit/spy)
 	H.mind.skills.add_available_skillset(/datum/skillset/max)
 	H.mind.skills.maximize_active_skills()
+	H.add_language(LANGUAGE_SYCODE)
 
 	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на [station_name_ru()].</B>")
 	if(mode_has_antags())

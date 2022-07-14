@@ -84,7 +84,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 					return
 
 				var/message = "<span class='notice'>[src] licks [A].</span>"
-				if(istype(A, /turf/simulated/floor))
+				if(isfloorturf(A))
 					var/turf/simulated/S = A
 					S.make_wet_floor(soap_eaten ? LUBE_FLOOR : WATER_FLOOR)
 				else if(isliving(A))
@@ -468,7 +468,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message,2))
+		return emote(copytext(message, 2))
 
 	var/verb = "says"
 

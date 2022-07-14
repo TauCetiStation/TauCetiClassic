@@ -35,13 +35,13 @@
 	else
 		icon_state = "[initial(icon_state)]"
 
-/obj/item/weapon/melee/baton/attack_self(mob/user)
+/obj/item/weapon/melee/baton/attack_self(mob/living/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>You grab the [src] on the wrong side.</span>")
-		user.Weaken(30)
+		user.apply_effect(agony * 2, AGONY, 0)
 		discharge()
 		return
-	if(!handle_fumbling(user, src, SKILL_TASK_VERY_EASY, list(/datum/skill/police/master), "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>", can_move = TRUE))
+	if(!handle_fumbling(user, src, SKILL_TASK_VERY_EASY, list(/datum/skill/police = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>", can_move = TRUE))
 		return
 	if(charges > 0)
 		set_status(!status)
@@ -53,10 +53,10 @@
 		to_chat(user, "<span class='warning'>\The [src] is out of charge.</span>")
 	add_fingerprint(user)
 
-/obj/item/weapon/melee/baton/attack(mob/M, mob/user)
+/obj/item/weapon/melee/baton/attack(mob/M, mob/living/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with the [src]!</span>")
-		user.Weaken(30)
+		user.apply_effect(agony * 2, AGONY, 0)
 		discharge()
 		return
 

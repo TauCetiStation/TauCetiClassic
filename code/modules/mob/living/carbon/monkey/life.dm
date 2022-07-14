@@ -60,7 +60,13 @@
 			step(src, pick(cardinal))
 
 		if(prob(1))
-			emote(pick("scratch","jump","roll","tail"))
+			var/list/rand_emote = list(
+				"scratches.",
+				"jumps!",
+				"rolls.",
+				"waves his tail.",
+			)
+			me_emote(pick(rand_emote))
 	updatehealth()
 	if(client)
 		handle_alerts()
@@ -100,6 +106,7 @@
 	if ((HULK in mutations) && health <= 25)
 		mutations.Remove(HULK)
 		to_chat(src, "<span class='warning'>You suddenly feel very weak.</span>")
+		Stun(1)
 		Weaken(3)
 		emote("collapse")
 
@@ -116,6 +123,7 @@
 
 		if (radiation > 100)
 			radiation = 100
+			Stun(5)
 			Weaken(10)
 			if(!lying)
 				to_chat(src, "<span class='warning'>You feel weak.</span>")
@@ -132,6 +140,7 @@
 				adjustToxLoss(1)
 				if(prob(5))
 					radiation -= 5
+					Stun(1)
 					Weaken(3)
 					if(!lying)
 						to_chat(src, "<span class='warning'>You feel weak.</span>")
@@ -193,12 +202,10 @@
 		return null
 	if(!(contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS)))
 		internal = null
-		if(internals)
-			internals.icon_state = "internal0"
+		internals?.update_icon(src)
 		return null
-
-	if(internals)
-		internals.icon_state = "internal1"
+		
+	internals?.update_icon(src)
 	return internal.remove_air_volume(volume_needed)
 
 /mob/living/carbon/monkey/proc/handle_chemicals_in_body()
@@ -301,36 +308,13 @@
 			adjustDrugginess(-1)
 	return 1
 
-
 /mob/living/carbon/monkey/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return
 
 	update_sight()
 
-	if (healths)
-		if (stat != DEAD)
-			switch(health)
-				if(100 to INFINITY)
-					healths.icon_state = "health0"
-				if(80 to 100)
-					healths.icon_state = "health1"
-				if(60 to 80)
-					healths.icon_state = "health2"
-				if(40 to 60)
-					healths.icon_state = "health3"
-				if(20 to 40)
-					healths.icon_state = "health4"
-				if(0 to 20)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
-
 	..()
-
-	return 1
 
 /mob/living/carbon/monkey/proc/handle_random_events()
 	if (prob(1) && prob(2))
@@ -359,8 +343,8 @@
 		nutrition += light_amount
 		traumatic_shock -= light_amount
 
-		if(nutrition > 400)
-			nutrition = 400
+		if(nutrition > NUTRITION_LEVEL_NORMAL)
+			nutrition = NUTRITION_LEVEL_NORMAL
 		if(light_amount > 2) //if there's enough light, heal
 			adjustBruteLoss(-1)
 			adjustToxLoss(-1)

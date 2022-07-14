@@ -61,6 +61,7 @@
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/weapon/storage/briefcase/centcomm(src)
+	new /obj/item/device/radio/headset/headset_int(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "Head of Personnel's Locker"
@@ -142,7 +143,7 @@
 	new /obj/item/device/radio/headset/heads/hos(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/clothing/gloves/black/hos(src)
-	new /obj/item/clothing/glasses/thermal/hos_thermals(src)
+	new /obj/item/clothing/glasses/night/hos_nights(src)
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/weapon/storage/lockbox/loyalty(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)

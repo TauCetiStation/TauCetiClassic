@@ -221,6 +221,8 @@ var/global/can_call_ert
 		W.registered_name = real_name
 		W.name = "[real_name]'s ID Card ([W.assignment])"
 		W.icon_state = "ert-leader"
+		mind.skills.add_available_skillset(/datum/skillset/ERT_leader)
+		mind.skills.maximize_active_skills()
 		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 	else
 		var/obj/item/weapon/card/id/centcom/ert/W = new(src)
