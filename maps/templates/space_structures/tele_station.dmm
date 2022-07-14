@@ -848,12 +848,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
-	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -878,20 +872,15 @@
 	},
 /area/space_structures/telestation/research)
 "bS" = (
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/machinery/door/airlock/science{
+	name = "Research access";
+	req_access = list(47)
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1041,11 +1030,11 @@
 /turf/simulated/wall,
 /area/space_structures/telestation/infirmary)
 "cg" = (
-/obj/structure/cable{
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1166,7 +1155,13 @@
 	},
 /area/space_structures/telestation/infirmary)
 "ct" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -1711,10 +1706,9 @@
 	},
 /area/space_structures/telestation/infirmary)
 "dv" = (
-/obj/machinery/power/apc/largecell{
-	pixel_y = -27
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1
 	},
-/obj/structure/cable,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -8666,6 +8660,12 @@
 /obj/machinery/alarm,
 /turf/simulated/wall,
 /area/space_structures/telestation/maint_srv_s)
+"rE" = (
+/obj/machinery/constructable_frame/machine_frame,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/telestation/research)
 "rJ" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance access"
@@ -16906,11 +16906,11 @@ Hw
 Hs
 OE
 bQ
-cg
-ct
-cL
-cL
 dv
+rE
+Eh
+Eh
+Eh
 FG
 Iz
 FG
@@ -17037,7 +17037,7 @@ Ea
 FG
 FG
 FG
-bR
+bS
 LA
 LA
 LA
@@ -17169,7 +17169,7 @@ Eh
 Eh
 Eh
 Eh
-cI
+cg
 Eh
 Eh
 Eh
@@ -17301,7 +17301,7 @@ bc
 bk
 bw
 bG
-bS
+ct
 ch
 bG
 cM
