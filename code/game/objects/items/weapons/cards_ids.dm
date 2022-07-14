@@ -410,6 +410,9 @@
 	. = ..()
 	access = get_all_accesses() + get_all_centcom_access()
 
+/obj/item/weapon/card/id/centcom/special_ops
+	name = "Special Operations Officer"
+
 /obj/item/weapon/card/id/velocity
 	name = "Cargo Industries. ID"
 	desc = "An ID designed for Velocity crew workers."
@@ -468,3 +471,10 @@
 /obj/item/weapon/card/id/syndicate/strike/leader
 	icon_state = "syndicate-command"
 	assignment = "Syndicate Commando Leader"
+
+/obj/item/weapon/card/id/syndicate/unknown
+	assignment = "Unknown"
+
+/obj/item/weapon/card/id/syndicate/unknown/atom_init()
+	. = ..()
+	access = get_all_accesses()

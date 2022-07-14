@@ -10,8 +10,8 @@
 	back = /obj/item/weapon/tank/jetpack/oxygen
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/space_gear/post_equip()
-	var/obj/item/weapon/tank/jetpack/J = back
+/datum/outfit/space_gear/post_equip(mob/living/carbon/human/H)
+	var/obj/item/weapon/tank/jetpack/J = H.back
 	J.toggle()
 	J.Topic(null, list("stat" = 1))
 
@@ -119,11 +119,6 @@
 	id = /obj/item/weapon/card/id/clown/tunnel
 	r_hand = /obj/item/weapon/fireaxe
 
-/datum/outfit/tunnel_clown/post_equip(mob/living/carbon/human/H)
-	var/obj/item/weapon/card/id/W = id
-	if(istype(W))
-		W.assign(H.real_name)
-
 /datum/outfit/masked_killer
 	name = "masked killer"
 	
@@ -141,7 +136,7 @@
 
 /datum/outfit/masked_killer/post_equip(mob/living/carbon/human/H)
 	for(var/obj/item/carried_item in H.contents)
-		if(!istype(carried_item, /obj/item/weapon/implant)
+		if(!istype(carried_item, /obj/item/weapon/implant))
 			carried_item.add_blood(H)//Oh yes, there will be blood...
 
 /datum/outfit/assasin
@@ -159,11 +154,11 @@
 	id = /obj/item/weapon/card/id/syndicate/reaper
 
 /datum/outfit/assasin/post_equip(mob/living/carbon/human/H)
-	var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = l_hand
+	var/obj/item/weapon/storage/secure/briefcase/sec_briefcase = H.l_hand
 	for(var/obj/item/briefcase_item in sec_briefcase)
 		qdel(briefcase_item)
 
-	sec_briefcase.contents = list(
+	sec_briefcase.contents += list(
 		new /obj/item/weapon/spacecash/c1000,
 		new /obj/item/weapon/spacecash/c1000,
 		new /obj/item/weapon/spacecash/c1000,
@@ -173,14 +168,10 @@
 		new /obj/item/weapon/plastique,
 	)
 
-	var/obj/item/device/pda/heads/pda = belt
+	var/obj/item/device/pda/heads/pda = H.belt
 	if(istype(pda))
 		pda.ownjob = "Reaper"
 		pda.assign(H.real_name)
-
-	var/obj/item/weapon/card/id/W = id
-	if(istype(W))
-		W.assign(H.real_name)
 	
 /datum/outfit/preparation
 	name = "preparation"
@@ -192,14 +183,7 @@
 	back = /obj/item/weapon/storage/backpack/satchel/norm
 	l_pocket = /obj/item/device/flashlight
 	gloves = /obj/item/clothing/gloves/black
-	id = /obj/item/weapon/card/id/syndicate
-
-/datum/outfit/preparation/post_equip(mob/living/carbon/human/H)
-	var/obj/item/weapon/card/id/syndicate/W = id
-	if(istype(W))
-		W.assignment = "Unknown"
-		W.assign(H.real_name)
-		W.access = get_all_accesses()
+	id = /obj/item/weapon/card/id/syndicate/unknown
 
 /datum/outfit/death_squad
 	name = "death squad"
@@ -231,11 +215,6 @@
 	r_hand = /obj/item/weapon/gun/energy/pulse_rifle
 	implants = list(/obj/item/weapon/implant/mind_protect/loyalty = BP_CHEST)
 	id = /obj/item/weapon/card/id/centcom
-
-/datum/outfit/death_squad/post_equip(mob/living/carbon/human/H)
-	var/obj/item/weapon/card/id/W = id
-	if(istype(W))
-		W.assign(H.real_name)
 
 /datum/outfit/death_squad/leader
 	name = "death squad leader"
@@ -292,10 +271,6 @@
 		new /obj/item/weapon/wirecutters/power(SV.hold)
 		new /obj/item/weapon/weldingtool/largetank(SV.hold)
 		new /obj/item/device/multitool(SV.hold)
-
-	var/obj/item/weapon/card/id/syndicate/W = id
-	if(istype(W))
-		W.assign(H.real_name)
 
 /datum/outfit/syndicate_commando/leader
 	name = "syndicate commando comander"
@@ -473,21 +448,21 @@
 	l_pocket = /obj/item/weapon/storage/pouch/baton_holster
 	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster
 
+	implants = list(/obj/item/weapon/implant/mind_protect/mindshield = BP_CHEST)
+
 /datum/outfit/velocity/chief/post_equip(mob/living/carbon/human/H)
 	..()
 
-	var/obj/item/weapon/storage/pouch/baton_holster/BH = l_pocket
+	var/obj/item/weapon/storage/pouch/baton_holster/BH = H.l_pocket
 	new /obj/item/weapon/melee/classic_baton(BH)
 	BH.update_icon()
 
 
-	var/obj/item/weapon/storage/pouch/pistol_holster/PH = r_pocket
+	var/obj/item/weapon/storage/pouch/pistol_holster/PH = H.r_pocket
 	var/obj/item/weapon/gun/energy/laser/selfcharging/SG = new /obj/item/weapon/gun/energy/laser/selfcharging(PH)
 	SG.name = "laser pistol rifle"
 	SG.can_be_holstered = TRUE
 	PH.update_icon()
-
-	implants = list(/obj/item/weapon/implant/mind_protect/mindshield = BP_CHEST)
 
 /datum/outfit/velocity/doctor
 	name = "velocity doctor"
@@ -531,8 +506,7 @@
 	r_pcket = /obj/item/weapon/lighter/zippo
 	back = /obj/item/weapon/storage/backpack/satchel
 
-	id = /obj/item/weapon/card/id/centcom
-	ownjob = "Special Operations Officer"
+	id = /obj/item/weapon/card/id/centcom/special_ops
 
 /datum/outfit/wizard
 	name = null
@@ -581,7 +555,6 @@
 	uniform = /obj/item/clothing/under/soviet
 
 	id = /obj/item/weapon/card/id/admiral
-	ownjob = "Admiral"
 
 /datum/outfit/tourist
 	name = "tourist"
