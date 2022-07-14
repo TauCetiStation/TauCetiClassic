@@ -500,6 +500,7 @@
 		skills.maximize_active_skills()
 		message_admins("[usr.key]/([usr.name]) set up the skills of \the [key]/[name] to their maximum.")
 		log_admin("[usr.key]/([usr.name]) set up the skills of \the [key]/[name] to their maximum.")
+		edit_skills()
 		return
 	else if (href_list["delete_skillset"])
 		var/to_delete = global.skillset_names_aliases[href_list["delete_skillset"]]
