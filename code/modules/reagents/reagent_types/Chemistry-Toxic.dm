@@ -201,6 +201,7 @@
 	..()
 	M.add_status_flags(FAKEDEATH)
 	M.adjustOxyLoss(0.5 * REM)
+	M.Stun(10)
 	M.Weaken(10)
 	M.silent = max(M.silent, 10)
 	M.tod = worldtime2text()
@@ -333,9 +334,11 @@
 			M.blurEyes(10)
 		if(15 to 49)
 			if(prob(50))
+				M.Stun(1)
 				M.Weaken(2)
 			M.drowsyness  = max(M.drowsyness, 20)
 		if(50 to INFINITY)
+			M.Stun(10)
 			M.Weaken(20)
 			M.drowsyness  = max(M.drowsyness, 30)
 	data["ticks"]++
@@ -363,6 +366,7 @@
 			M.AdjustConfused(2)
 			M.drowsyness += 2
 		if(2 to 199)
+			M.Stun(30)
 			M.Weaken(30)
 		if(200 to INFINITY)
 			M.SetSleeping(20 SECONDS)
@@ -384,6 +388,7 @@
 			if(M.losebreath >= 10)
 				M.losebreath = max(10, M.losebreath - 10)
 			M.adjustOxyLoss(2)
+			M.Stun(5)
 			M.Weaken(10)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -407,6 +412,7 @@
 			if(H.losebreath >= 10)
 				H.losebreath = max(10, M.losebreath - 10)
 			H.adjustOxyLoss(2)
+			H.Stun(5)
 			H.Weaken(10)
 		if(volume >= overdose)
 			H.attack_heart(5, 0)

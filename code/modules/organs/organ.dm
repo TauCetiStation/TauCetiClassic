@@ -197,6 +197,7 @@
 					crawl()
 				else
 					emote("collapse")
+					Stun(5)
 					Weaken(5)
 
 			var/has_arm = FALSE
@@ -206,6 +207,7 @@
 					has_arm = TRUE
 					break
 			if(!has_arm) //need atleast one hand to crawl
+				Stun(5)
 				Weaken(5)
 			return
 
@@ -220,3 +222,4 @@
 					emote("scream")
 			emote("collapse")
 		Weaken(5) //can't emote while weakened, apparently.
+		Stun(5)

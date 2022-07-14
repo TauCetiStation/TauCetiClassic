@@ -205,6 +205,7 @@
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has thrown [victim] over their shoulder!</span>")
 
+	apply_effect(2, STUN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
 	apply_effect(4, WEAKEN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
 	apply_damage(23, victim, attacker, attack_obj=attack_obj)
 
@@ -299,6 +300,7 @@
 			continue
 		if(L.lying || L.crawling)
 			apply_damage(28, L, attacker, attack_obj=attack_obj)
+		apply_effect(3, STUN, L, attacker, attack_obj=attack_obj, min_value = 1)
 		apply_effect(6, WEAKEN, L, attacker, attack_obj=attack_obj, min_value = 1)
 
 		event_log(L, attacker, "Diving Elbow Drop bypasser.")
@@ -374,6 +376,7 @@
 						playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 						victim.visible_message("<span class='danger'>[attacker] slams [victim] into an obstacle!</span>")
 
+					apply_effect(3, STUN, L, attacker, attack_obj=attack_obj, min_value=1)
 					apply_effect(6, WEAKEN, L, attacker, attack_obj=attack_obj, min_value=1)
 					apply_damage(33, L, attacker, attack_obj=attack_obj)
 				break try_steps_loop
@@ -476,6 +479,7 @@
 				M.log_combat(attacker, "throwm from [start_T_descriptor] with the target [end_T_descriptor]")
 
 				M.throw_at(target, 6, 8, attacker)
+				apply_effect(3, STUN,  M, attacker, attack_obj=attack_obj, min_value=1)
 				apply_effect(7, WEAKEN, M, attacker, attack_obj=attack_obj, min_value=1)
 
 				if(ishuman(src))
