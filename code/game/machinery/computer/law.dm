@@ -43,6 +43,7 @@
 		return FALSE
 	req_access = list()
 	emagged = TRUE
+	to_chat(user, "<span class='notice'>You emag the upload console.</span>")
 	return TRUE
 
 /obj/machinery/computer/borgupload
@@ -88,4 +89,5 @@
 		return FALSE
 	req_access = list()
 	emagged = TRUE
+	to_chat(user, "<span class='notice'>You emag the upload console.</span>")
 	return TRUE
