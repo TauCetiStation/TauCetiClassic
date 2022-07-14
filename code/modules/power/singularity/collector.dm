@@ -14,7 +14,7 @@ var/global/list/rad_collectors = list()
 	var/active = FALSE
 	var/locked = FALSE
 	var/drainratio = 1
-	required_skills = list(/datum/skill/engineering/trained)
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/power/rad_collector/atom_init()
 	. = ..()
