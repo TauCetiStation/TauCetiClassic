@@ -110,10 +110,6 @@
 	AddComponent(/datum/component/forcefield, "strong blood aura", 80, 5 SECONDS, 6 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
-/mob/living/simple_animal/construct/armoured/Life()
-	weakened = 0
-	..()
-
 /mob/living/simple_animal/construct/armoured/bullet_act(obj/item/projectile/P, def_zone)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
