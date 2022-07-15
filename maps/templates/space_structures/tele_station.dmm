@@ -53,7 +53,7 @@
 /obj/item/weapon/stock_parts/cell/high,
 /obj/item/weapon/stock_parts/cell/high,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "ag" = (
@@ -62,20 +62,16 @@
 	amount = 15
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "ah" = (
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
+/turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "ai" = (
 /obj/machinery/light,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
+/turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "aj" = (
 /obj/structure/closet/crate/bin,
@@ -219,9 +215,17 @@
 	},
 /area/space_structures/telestation/research)
 "aB" = (
-/turf/simulated/floor{
-	icon_state = "white"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
+	},
+/obj/structure/cable{
+	dir = 8;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "aC" = (
 /obj/effect/decal/cleanable/blood/gibs,
@@ -325,7 +329,7 @@
 	req_access = list(10)
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "aP" = (
@@ -730,7 +734,7 @@
 /obj/item/stack/cable_coil,
 /obj/item/stack/cable_coil,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "bF" = (
@@ -5344,9 +5348,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
+/turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "lF" = (
 /obj/machinery/door/airlock/glass{
@@ -5546,7 +5548,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "mb" = (
@@ -5565,7 +5567,7 @@
 /obj/structure/closet/crate/rcd,
 /obj/item/blueprints/junkyard,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "me" = (
@@ -5577,9 +5579,7 @@
 	dir = 1;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
+/turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "mf" = (
 /obj/machinery/fusion_fuel_compressor,
@@ -5594,20 +5594,6 @@
 /obj/item/trash/plate,
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_s)
-"mh" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/space_structures/telestation/engineering)
 "mi" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
@@ -5729,7 +5715,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "my" = (
@@ -5739,7 +5725,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "mz" = (
@@ -5754,7 +5740,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "mA" = (
@@ -5775,7 +5761,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "mC" = (
@@ -5795,7 +5781,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "mE" = (
@@ -5833,7 +5819,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "mH" = (
@@ -5853,9 +5839,7 @@
 	dir = 1;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
+/turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "mI" = (
 /obj/machinery/light,
@@ -5881,9 +5865,7 @@
 	dir = 8;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
+/turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "mL" = (
 /obj/effect/decal/cleanable/blood,
@@ -5898,9 +5880,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
+/turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "mM" = (
 /obj/machinery/door/airlock/maintenance{
@@ -6163,7 +6143,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "nh" = (
@@ -6177,9 +6157,7 @@
 	dir = 1;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
+/turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "ni" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -13069,7 +13047,7 @@
 "Zv" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "Zw" = (
@@ -13084,7 +13062,7 @@
 	amount = 50
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "Zx" = (
@@ -13099,7 +13077,7 @@
 	amount = 50
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "ZD" = (
@@ -15645,9 +15623,9 @@ kx
 XS
 XS
 ZT
+YW
 aB
-mB
-aB
+YW
 ar
 bp
 nE
@@ -15909,9 +15887,9 @@ Xc
 Xo
 Ww
 Wc
+YW
 aB
-mB
-aB
+YW
 Wc
 bq
 nH
@@ -16173,8 +16151,8 @@ YD
 kQ
 hm
 ZW
+YW
 aB
-mB
 ah
 Wc
 cS
@@ -16305,7 +16283,7 @@ YW
 kR
 lj
 lE
-mh
+lj
 mL
 ai
 Wc
@@ -16437,9 +16415,9 @@ YW
 kT
 YW
 ZW
+YW
 aB
-mB
-aB
+YW
 Wc
 bu
 nL
