@@ -273,7 +273,7 @@
 		new /obj/item/device/multitool(SV.hold)
 
 /datum/outfit/syndicate_commando/leader
-	name = "Syndicate: commando comander"
+	name = "Syndicate: commando commander"
 	
 	backpack_contents = list(
 		/obj/item/weapon/storage/box,
