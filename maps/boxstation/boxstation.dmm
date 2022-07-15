@@ -36058,7 +36058,7 @@
 "bmu" = (
 /obj/effect/decal/cleanable/generic,
 /obj/machinery/power/apc{
-	dir = 4;
+	dir = 8;
 	name = "Science Maintenance APC";
 	pixel_x = -26
 	},
