@@ -61,6 +61,7 @@ SUBSYSTEM_DEF(icon_smooth)
 	var/STATE_COUNT_NORMAL = 4
 	var/STATE_COUNT_DIAGONAL = 7
 
+	//if(!isicon(dmifile) || (isfile(dmifile) && copytext("[dmifile]",-4) != ".dmi"))
 	if(!isfile(dmifile) || (copytext("[dmifile]",-4) != ".dmi"))
 		CRASH("Bad DMI file '[dmifile]'")
 

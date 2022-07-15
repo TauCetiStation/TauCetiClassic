@@ -589,3 +589,48 @@
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
 		return TRUE
 	return ..()
+
+
+
+// new smooth window structure
+/obj/structure/window/fulltile
+	can_be_unanchored = FALSE //todo: need to update build procs
+	
+	flags = 0
+	dir = 5 // temp before we move small windows to own subtype
+	maxhealth = 100.0 // temp
+	reinf = 1 // temp
+	damage_threshold = 15 // temp
+
+	var/glass_color
+	var/grilled = FALSE
+
+	icon = 'icons/obj/smooth_structures/windows/placeholder.dmi'
+	icon_state = "window"
+
+	var/icon/smooth_icon_frame = 'icons/obj/smooth_structures/windows/window.dmi'
+	var/icon/smooth_icon_glass = 'icons/obj/smooth_structures/windows/window_glass.dmi'
+
+	canSmoothWith = CAN_SMOTH_WITH_WALLS
+	smooth = SMOOTH_TRUE|SMOOTH_TRANSITION
+
+	canSmoothWith_transitions = list(
+		/obj/machinery/door/airlock = "transition_airlock"
+	)
+
+/obj/structure/window/fulltile/update_icon()
+	return
+
+/obj/structure/window/fulltile/atom_init() //temp, need to fix map
+	. = ..()
+
+	var/obj/structure/grille/G = locate(/obj/structure/grille, loc) 
+	if(G)
+		grilled = TRUE
+		qdel(G)
+
+	color = null
+	glass_color = color_windows()
+
+/obj/structure/window/fulltile/reinforced
+	name = "reinforced window"

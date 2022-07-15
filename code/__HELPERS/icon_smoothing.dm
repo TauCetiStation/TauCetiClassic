@@ -25,6 +25,8 @@
 	To see an example of a diagonal wall, see 'no example >:|' and its subtypes.
 */
 
+// todo update me ^
+
 //#define MANUAL_ICON_SMOOTH // uncomment this if you want manual mode enabled for debugging or whatever (look for ChooseDMI() verb in command tab when running server).
 
 //Redefinitions of the diagonal directions so they can be stored in one var without conflicts
@@ -42,7 +44,8 @@
 #define SMOOTH_MORE       (1<<1) //smooths with all subtypes of specified types or just itself (this value can replace SMOOTH_TRUE)
 #define SMOOTH_DIAGONAL   (1<<2) //if atom should smooth diagonally, this should be present in 'smooth' var
 #define SMOOTH_BORDER     (1<<3) //atom will smooth with the borders of the map
-#define SMOOTH_QUEUED     (1<<4) //atom is currently queued to smooth.
+#define SMOOTH_TRANSITION (1<<4) //atom need transition overlay with some types
+#define SMOOTH_QUEUED     (1<<5) //atom is currently queued to smooth.
 
 #define NULLTURF_BORDER 123456789
 
@@ -54,6 +57,9 @@
 /atom/var/icon/smooth_icon_initial // don't touch this, value assigned automatically in the process.
 /atom/movable/var/can_be_unanchored = FALSE
 /turf/var/list/fixed_underlay = null
+
+/atom/var/list/canSmoothWith_transitions // list(type = state)
+/atom/var/list/canSmoothWith_transitions_idk // list(state = dir)
 
 /proc/calculate_adjacencies(atom/A)
 	if(!A.loc)
@@ -74,6 +80,10 @@
 				adjacencies |= 1 << direction
 		else if( (AM && !istype(AM)) || (istype(AM) && AM.anchored) )
 			adjacencies |= 1 << direction
+			
+			//if(A.smooth & SMOOTH_TRANSITION && AM.type in (A.canSmoothWith_transitions))
+				//LAZYADD(canSmoothWith_transitions_idk, A.canSmoothWith_transitions[AM.type])
+				//canSmoothWith_transitions_idk[A.canSmoothWith_transitions[AM.type]] |= 1 << direction
 
 	if(adjacencies & N_NORTH)
 		if(adjacencies & N_WEST)
@@ -156,6 +166,8 @@
 	if(diagonal_states)
 		if(!read_values)
 			smooth_set_icon(adjacencies, diagonal_states)
+			if(smooth & SMOOTH_TRANSITION)
+				smooth_set_transitions()
 		else
 			return diagonal_states
 
@@ -251,6 +263,8 @@
 
 	if(A)
 		A.smooth_set_icon(adjacencies, list(nw, ne, sw, se))
+		if(A.smooth & SMOOTH_TRANSITION)
+			A.smooth_set_transitions()
 	else
 		return list(nw, ne, sw, se)
 
@@ -308,7 +322,7 @@
 				else
 					queue_smooth(A)
 
-/atom/proc/smooth_set_icon(adjacencies, list/parts)
+/atom/proc/smooth_set_icon(adjacencies, list/parts) // what parts
 #ifdef MANUAL_ICON_SMOOTH
 	return
 #endif
@@ -318,10 +332,58 @@
 	var/cache_string = "["[type]"]"
 	if(!global.baked_smooth_icons[cache_string])
 		var/icon/I = SliceNDice(smooth_icon_initial)
-		global.baked_smooth_icons[cache_string] = I
+		global.baked_smooth_icons[cache_string] = I // todo: we can filecache it
 
 	icon = global.baked_smooth_icons[cache_string]
 	icon_state = "[adjacencies]"
+
+/obj/structure/window/fulltile/smooth_set_icon(adjacencies, list/parts)
+#ifdef MANUAL_ICON_SMOOTH
+	return
+#endif
+
+	var/cache_string = "["[type]"]"
+
+	if(glass_color)
+		cache_string += "[glass_color]"
+
+	if(grilled)
+		cache_string += "_grilled"
+
+	if(!global.baked_smooth_icons[cache_string])
+
+		var/icon/blended = new(smooth_icon_frame)
+		var/icon/mask = new(smooth_icon_glass)
+		blended.Blend(mask,ICON_OVERLAY) // workaround for current icons
+		if(glass_color)
+			mask.Blend(glass_color, ICON_MULTIPLY)
+		blended.Blend(mask,ICON_UNDERLAY)
+
+		if(grilled)
+			var/icon/grille = new('icons/obj/structures.dmi', "grille")
+			blended.Blend(grille,ICON_UNDERLAY)
+		
+		var/fname = "tempo_[rand(1, 9999)].dmi"
+		fcopy(blended, fname) // todo SliceNDice works strange with /icon/
+		var/icon/I = SliceNDice(file(fname))
+		fdel(fname)
+
+		global.baked_smooth_icons[cache_string] = I
+	
+	icon = global.baked_smooth_icons[cache_string]
+	icon_state = "[adjacencies]"
+
+
+
+	//var/atom/movable/AM
+	//for(var/direction in adjacencies) //!!! adjacencies != directions
+	//	AM = find_type_in_direction(src, direction)
+	//	if(AM && (AM.type in canSmoothWith_transitions))
+	//		var/image/IM = image(icon='icons/obj/smooth_structures/windows/transition.dmi', icon_state="transition_airlock", dir = direction)
+	//		add_overlay(IM)
+
+/atom/proc/smooth_set_transitions()
+	return
 
 /proc/reverse_ndir(ndir)
 	switch(ndir)
@@ -410,3 +472,8 @@
 	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL|SMOOTH_BORDER
 	canSmoothWith = null
 */
+
+/client/verb/checksmooth()
+	var/choice = tgui_input_list(src,"Choose a file to access:","Download", global.baked_smooth_icons)
+	var/icon/I = global.baked_smooth_icons[choice]
+	usr << ftp(I,"smooth.dmi")
