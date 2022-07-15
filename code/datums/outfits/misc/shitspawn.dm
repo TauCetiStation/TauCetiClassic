@@ -16,7 +16,7 @@
 	J.Topic(null, list("stat" = 1))
 
 /datum/outfit/tournament
-	name = "tournament standard red"
+	name = "Tournament: standard red"
 
 	uniform = /obj/item/clothing/under/color/red
 	shoes = /obj/item/clothing/shoes/black
@@ -29,12 +29,12 @@
 	r_pocket = /obj/item/weapon/grenade/smokebomb
 
 /datum/outfit/tournament/green
-	name = "tournament standard green"
+	name = "Tournament: standard green"
 
 	uniform = /obj/item/clothing/under/color/green
 
 /datum/outfit/tournament_ganster
-	name = "tournament gangster"
+	name = "Tournament: gangster"
 
 	uniform = /obj/item/clothing/under/det
 	shoes = /obj/item/clothing/shoes/black
@@ -47,7 +47,7 @@
 	l_pocket = /obj/item/ammo_box/a357
 
 /datum/outfit/tournament_chief
-	name = "tournament chef"
+	name = "Tournament: chef"
 	
 	uniform = /obj/item/clothing/under/rank/chef
 	shoes = /obj/item/clothing/shoes/black
@@ -59,7 +59,7 @@
 	suit_store = /obj/item/weapon/kitchenknife
 
 /datum/outfit/tournament_janitor
-	name = "tournament janitor"
+	name = "Tournament: janitor"
 	
 	uniform = /obj/item/clothing/under/rank/janitor
 	shoes = /obj/item/clothing/shoes/black
@@ -290,8 +290,6 @@
 	id = /obj/item/weapon/card/id/syndicate/strike/leader
 
 /datum/outfit/nanotrasen
-	name = null
-
 	shoes = /obj/item/clothing/shoes/centcom
 	gloves = /obj/item/clothing/gloves/white
 
@@ -313,7 +311,7 @@
 		W.assign(H.real_name)
 
 /datum/outfit/nanotrasen/representatives
-	name = "nanotrasen representative"
+	name = "NanoTraset: representative"
 	ownjob = "NanoTrasen Navy Representative"
 	
 	uniform = /obj/item/clothing/under/rank/centcom/representative
@@ -321,7 +319,7 @@
 	belt = /obj/item/weapon/clipboard
 
 /datum/outfit/nanotrasen/officer
-	name = "nanotrasen officer"
+	name = "NanoTraset: officer"
 	ownjob = "NanoTrasen Navy Officer"
 
 	uniform = /obj/item/clothing/under/rank/centcom/officer
@@ -330,7 +328,7 @@
 	belt = /obj/item/weapon/gun/energy
 
 /datum/outfit/nanotrasen/captain
-	name = "nanotrasen captain"
+	name = "NanoTraset: captain"
 	ownjob = "NanoTrasen Navy Captain"
 
 	uniform = /obj/item/clothing/under/rank/centcom/captain
@@ -383,8 +381,6 @@
 	H.update_mutations()
 
 /datum/outfit/velocity
-	name = null
-
 	belt = /obj/item/device/pda/velocity
 	id = /obj/item/weapon/card/id/velocity
 
@@ -407,7 +403,7 @@
 	H.universal_understand = TRUE
 
 /datum/outfit/velocity/officer
-	name = "velocity officer"
+	name = "Velocity: officer"
 	ownjob = "Velocity Officer"
 
 	uniform = /obj/item/clothing/under/det/velocity
@@ -418,7 +414,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
 
 /datum/outfit/velocity/chief
-	name = "velocity chief"
+	name = "Velocity: chief"
 	ownjob = "Velocity Chief"
 
 	uniform = /obj/item/clothing/under/rank/head_of_security/corp
@@ -460,7 +456,7 @@
 	PH.update_icon()
 
 /datum/outfit/velocity/doctor
-	name = "velocity doctor"
+	name = "Velocity: doctor"
 	ownjob = "Velocity Medical Doctor"
 
 	uniform = /obj/item/clothing/under/det/velocity
@@ -504,8 +500,6 @@
 	id = /obj/item/weapon/card/id/centcom/special_ops
 
 /datum/outfit/wizard
-	name = null
-
 	uniform = /obj/item/clothing/under/lightpurple
 	shoes = /obj/item/clothing/shoes/sandal
 	l_ear = /obj/item/device/radio/headset
@@ -518,19 +512,19 @@
 	)
 
 /datum/outfit/wizard/blue
-	name = "blue wizard"
+	name = "Wizard: blue"
 
 	suit = /obj/item/clothing/suit/wizrobe
 	head = /obj/item/clothing/head/wizard
 
 /datum/outfit/wizard/red
-	name = "red wizard"
+	name = "Wizard: red"
 
 	suit = /obj/item/clothing/suit/wizrobe/red
 	head = /obj/item/clothing/head/wizard/red
 
 /datum/outfit/wizard/marisa
-	name = "marisa wizard"
+	name = "Wizard: marisa"
 
 	suit = /obj/item/clothing/suit/wizrobe/marisa
 	shoes = /obj/item/clothing/shoes/sandal/marisa

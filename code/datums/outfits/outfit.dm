@@ -14,7 +14,7 @@
   * that can be restored at a later date
   */
 /datum/outfit
-	var/name = "Naked"  ///Name of the outfit (shows up in the equip admin verb)
+	var/name = null  ///Name of the outfit (shows up in the equip admin verb)
 
 	var/uniform = null    /// Type path of item to go in uniform slot
 	var/uniform_f = null    /// Type path of item to go in uniform slot	(female)
