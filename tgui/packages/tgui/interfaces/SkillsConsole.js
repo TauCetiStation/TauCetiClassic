@@ -1,13 +1,29 @@
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section, ProgressBar, Box } from '../components';
+import {
+  Button,
+  LabeledList,
+  Section,
+  ProgressBar,
+  Box,
+  Stack,
+  Slider,
+} from '../components';
 import { Window } from '../layouts';
 
 export const SkillsConsole = (props, context) => {
   const { act, data } = useBackend(context);
   // Extract `health` and `color` variables from the `data` object.
-  const { IQ, MDI } = { IQ: 135, MDI: 15 }; //MDI from 0 to 20
-  const skill_list = ['Engineering', 'Chemistry', 'Surgery'];
-  const cartridge_unpacked = false;
+  const {
+    skill_list,
+    IQ,
+    MDI,
+    skill_min_value,
+    skill_max_value,
+    skill_values,
+    compatible_species,
+    cartridge_name,
+    cartridge_unpacked,
+  } = data;
   return (
     <Window resizable>
       <Window.Content scrollable>
@@ -28,26 +44,44 @@ export const SkillsConsole = (props, context) => {
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <Section title="Patient status">
-          <LabeledList>
-            <LabeledList.Item label="IQ">{IQ}</LabeledList.Item>
-            <LabeledList.Item label="MDI">{MDI}</LabeledList.Item>
-          </LabeledList>
-        </Section>
-        <Section title="Cartridge information">
-          <LabeledList>
-            <LabeledList.Item label="Installed cartridge">
-              USP-7 cartridge
-            </LabeledList.Item>
-            <LabeledList.Item label="Compatible species">
-              Human, Tajaran, Unathi
-            </LabeledList.Item>
-            <LabeledList.Item label="Available USP">7</LabeledList.Item>
-          </LabeledList>
-        </Section>
+
+        <Stack>
+          <Stack.Item>
+            <Section title="Patient status">
+              <LabeledList>
+                <LabeledList.Item label="IQ">{IQ}</LabeledList.Item>
+                <LabeledList.Item label="MDI">{MDI}</LabeledList.Item>
+              </LabeledList>
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section title="Cartridge information">
+              <LabeledList>
+                <LabeledList.Item label="Installed cartridge">
+                  {cartridge_name}
+                  {!cartridge_unpacked && (
+                    <Box as="span" m={5}>
+                      <Button style={{ marginLeft: 20 }}>
+                        Eject cartridge
+                      </Button>
+                    </Box>
+                  )}
+                </LabeledList.Item>
+                <LabeledList.Item label="Compatible species">
+                  {compatible_species.join(', ')}
+                </LabeledList.Item>
+                <LabeledList.Item label="Available USP">7</LabeledList.Item>
+              </LabeledList>
+            </Section>
+          </Stack.Item>
+        </Stack>
+
         {!cartridge_unpacked && (
           <Box textAlign="center">
             <Button
+              onClick={() => {
+                act('unpack');
+              }}
               fluid
               color="danger"
               tooltip="This action will destroy the cartridge and begin the CMF manipulation procedure.">
@@ -56,7 +90,43 @@ export const SkillsConsole = (props, context) => {
           </Box>
         )}
 
-        {cartridge_unpacked && <Section title="CMF manipulation"></Section>}
+        {cartridge_unpacked && (
+          <Section title="CMF manipulation">
+            {skill_list.map((skill, v) => {
+              return (
+                <Slider
+                  onChange={(_e, value) => {
+                    act('change_skill', value);
+                  }}
+                  step={1}
+                  value={skill_values[v]}
+                  maxValue={skill_max_value}
+                  minValue={skill_min_value}>
+                  {skill}
+                </Slider>
+              );
+            })}
+            <Box textAlign="center">
+              <Button
+                onClick={() => {
+                  act('inject');
+                }}
+                fluid
+                color="green">
+                Inject implant
+              </Button>
+              <Button.Confirm
+                onClick={() => {
+                  act('abort');
+                }}
+                fluid
+                color="danger"
+                confirmContent="Confirm ">
+                Abort
+              </Button.Confirm>
+            </Box>
+          </Section>
+        )}
       </Window.Content>
     </Window>
   );
