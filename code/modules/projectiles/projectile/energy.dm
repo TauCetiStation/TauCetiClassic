@@ -57,7 +57,7 @@
 
 /obj/item/projectile/energy/bolt/large
 	name = "largebolt"
-	damage = 20
+	damage = 60
 
 /obj/item/projectile/energy/phoron
 	name = "phoron bolt"
@@ -76,7 +76,7 @@
 	light_power = 2
 	light_range = 2
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	damage = 40
+	damage = 150
 
 
 /obj/item/projectile/energy/laser/atom_init()
@@ -89,7 +89,7 @@
 	light_color = LIGHT_COLOR_PLASMA
 	light_power = 2
 	light_range = 2
-	damage = 25
+	damage = 90
 	light_color = COLOR_PAKISTAN_GREEN
 
 /obj/item/projectile/energy/phaser/atom_init()
