@@ -409,7 +409,7 @@
 	reagents.maximum_volume = 20
 	reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 	bitesize = reagents.maximum_volume // Always eat the apple in one
-	throwforce = 6+(potency / 4)
+	throwforce = 5+(potency / 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned
 	seed_type = /obj/item/seeds/poisonedappleseed
@@ -424,7 +424,7 @@
 	reagents.maximum_volume = 20
 	reagents.add_reagent("cyanide", 1+round((potency / 5), 1))
 	bitesize = reagents.maximum_volume // Always eat the apple in one
-	throwforce = 6+(potency / 4)
+	throwforce = 5+(potency / 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/goldapple
 	seed_type = /obj/item/seeds/goldappleseed
@@ -439,7 +439,7 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 	reagents.add_reagent("gold", 1+round((potency / 5), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
-	throwforce = 16+(potency / 2)
+	throwforce = 12+(potency / 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/plant_analyzer))
