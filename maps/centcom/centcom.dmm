@@ -510,7 +510,7 @@
 /obj/machinery/vending/snack{
 	name = "Magic Getmore Chocolate Corp";
 	prices = list();
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 10, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 10, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 10, /obj/item/weapon/reagent_containers/food/snacks/chips = 10, /obj/item/weapon/reagent_containers/food/snacks/sosjerky = 10, /obj/item/weapon/reagent_containers/food/snacks/no_raisin = 10, /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 10, /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 10, /obj/item/weapon/reagent_containers/food/snacks/candy_corn = 10, /obj/item/weapon/reagent_containers/food/snacks/cracker = 20)
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar=10,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen=10,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen=10,/obj/item/weapon/reagent_containers/food/snacks/chips=10,/obj/item/weapon/reagent_containers/food/snacks/sosjerky=10,/obj/item/weapon/reagent_containers/food/snacks/no_raisin=10,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie=10,/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers=10,/obj/item/weapon/reagent_containers/food/snacks/candy_corn=10,/obj/item/weapon/reagent_containers/food/snacks/cracker=20)
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -520,7 +520,7 @@
 /obj/machinery/vending/cigarette{
 	name = "Magic Cigarette machine";
 	prices = list();
-	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10, /obj/item/weapon/storage/fancy/cigarettes/menthol = 5, /obj/item/weapon/storage/box/matches = 10, /obj/item/weapon/lighter/random = 4, /obj/item/clothing/mask/ecig = 4, /obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 5, /obj/item/weapon/lighter/zippo = 5, /obj/item/clothing/mask/cigarette/cigar/havana = 5)
+	products = list(/obj/item/weapon/storage/fancy/cigarettes=10,/obj/item/weapon/storage/fancy/cigarettes/menthol=5,/obj/item/weapon/storage/box/matches=10,/obj/item/weapon/lighter/random=4,/obj/item/clothing/mask/ecig=4,/obj/item/weapon/storage/fancy/cigarettes/dromedaryco=5,/obj/item/weapon/lighter/zippo=5,/obj/item/clothing/mask/cigarette/cigar/havana=5)
 	},
 /obj/structure/sign/poster/contraband/space_up{
 	pixel_x = 32
@@ -12429,6 +12429,7 @@
 /obj/item/clothing/head/wizard/bearpelt{
 	pixel_y = 8
 	},
+/obj/item/weapon/wirecutters,
 /turf/unsimulated/floor{
 	icon_state = "cult"
 	},
@@ -27570,7 +27571,7 @@
 	},
 /obj/machinery/vending/boozeomat{
 	name = "Magic Booze-O-Mat";
-	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/gin = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/wine = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/cognac = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/beer = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/ale = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/tonic = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/cola = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/sodawater = 15, /obj/item/weapon/reagent_containers/food/drinks/flask/barflask = 5, /obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask = 5, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 50, /obj/item/weapon/reagent_containers/food/drinks/ice = 15, /obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/champagne = 10);
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/gin=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/beer=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/ale=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/cream=10,/obj/item/weapon/reagent_containers/food/drinks/cans/tonic=10,/obj/item/weapon/reagent_containers/food/drinks/cans/cola=10,/obj/item/weapon/reagent_containers/food/drinks/cans/sodawater=15,/obj/item/weapon/reagent_containers/food/drinks/flask/barflask=5,/obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask=5,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass=50,/obj/item/weapon/reagent_containers/food/drinks/ice=15,/obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne=10);
 	req_access = list()
 	},
 /turf/unsimulated/floor{
