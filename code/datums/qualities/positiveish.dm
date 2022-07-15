@@ -322,10 +322,19 @@
 	var/obj/item/weapon/implant/death_alarm/DA = new(H)
 	DA.stealth_inject(H)
 
-/datum/quality/negativeish/anatomist
+/datum/quality/positiveish/anatomist
 	name = "Anatomist"
 	desc = "Ты с первого взгляда можешь по походке и телосложению узнать расу гуманоида перед тобой."
 	requirement = "Нет."
 
-/datum/quality/negativeish/anatomist/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/positiveish/anatomist/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_ANATOMIST, QUALITY_TRAIT)
+
+/datum/quality/positiveish/selfdefense
+	name = "Self Defense"
+	desc = "На станции всё опаснее и опаснее. Руководство выдало тебе новое средство самозащиты."
+	requirement = "Безоружные главы, АВД."
+	jobs_required = list("Research Director", "Chief Engineer", "Cheif Medical Officer", "Internal Affairs Agent")
+
+/datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer(H), SLOT_R_STORE)

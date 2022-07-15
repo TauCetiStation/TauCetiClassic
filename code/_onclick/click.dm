@@ -96,7 +96,7 @@
 	if(RegularClickOn(A))
 		return
 
-	if(stat || paralysis || stunned || weakened)
+	if(incapacitated(NONE))
 		return
 
 	face_atom(A) // change direction to face what you clicked on

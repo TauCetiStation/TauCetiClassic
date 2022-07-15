@@ -147,7 +147,7 @@
 /obj/machinery/disposal/proc/MouseDrop_Mob(mob/living/target, mob/living/user)
 	if(user.incapacitated())
 		return
-	if(target.buckled)
+	if(target.buckled || target.anchored)
 		return
 	//animals cannot put mobs other than themselves into disposal
 	if(isanimal(user) && target != user)
@@ -160,28 +160,31 @@
 	var/msg
 	var/self_msg
 
-	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
+	if(target == user)
+		if(user.incapacitated(LEGS))
+			return
 		user.visible_message("<span class='red'>[usr] starts climbing into the disposal.</span>")
-	if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-		if(target.anchored)
+	else
+		if(user.incapacitated(ARMS))
 			return
 		user.visible_message("<span class='red'>[usr] starts stuffing [target.name] into the disposal.</span>")
 
 	if(user.is_busy() || !do_after(usr, 20, target = src))
 		return
-	if(target_loc != target.loc)
+	if(target_loc != target.loc || target.anchored)
 		return
-	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)	// if drop self, then climbed in
-											// must be awake, not stunned or whatever
+	if(target == user)
+		if(user.incapacitated(LEGS))
+			return
 		msg = "<span class='red'>[user.name] climbs into the [src].</span>"
 		self_msg = "<span class='notice'>You climb into the [src].</span>"
-	else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
+	else
+		if(user.incapacitated(ARMS))
+			return
 		msg = "<span class='danger'>[user.name] stuffs [target.name] into the [src]!</span>"
 		self_msg = "<span class='red'>You stuff [target.name] into the [src]!</span>"
 
 		target.log_combat(user, "placed in disposals")
-	else
-		return
 
 	INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src)
 	target.forceMove(src)
