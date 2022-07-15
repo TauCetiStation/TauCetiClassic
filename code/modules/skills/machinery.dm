@@ -47,11 +47,11 @@
 
 /obj/machinery/computer/skills_console
 	name = "CMF Modifier Access Console"
-	desc = "Used for scanning and modyfing XXX of user."
+	desc = "Used for scanning and modyfing XXX of connected patient."
 	icon = 'icons/obj/computer.dmi'
-	icon_state = "dna"
-	state_broken_preset = "crewb"
-	state_nopower_preset = "crew0"
+	icon_state = "laptop_skills"
+	state_broken_preset = "laptopb"
+	state_nopower_preset = "laptop0"
 	light_color = "#315ab4"
 	density = TRUE
 	circuit = /obj/item/weapon/circuitboard/skills_console
@@ -64,7 +64,7 @@
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE, /datum/skill/medical = SKILL_LEVEL_NOVICE, /datum/skill/research = SKILL_LEVEL_NOVICE)
 
 
-/obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user)
+/obj/machinery/computer/skills_console/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/skill_cartridge))
 		if (!cartridge)
 			if(!do_skill_checks(user))
@@ -79,25 +79,22 @@
 /obj/machinery/computer/skills_console/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "MyMachine")
+		ui = new(user, src, "SkillsConsole")
 		ui.open()
 
-/obj/machinery/computer/skills_console/ui_data(mob/user)
+/obj/machinery/computer/skills_console/tgui_data(mob/user)
+	. = ..()
 	var/list/data = list()
-	data["health"] = health
-	data["color"] = color
+	data["cartridge"] = cartridge.name
 
 	return data
 
-/obj/machinery/my_machine/ui_act(action, params)
+/obj/machinery/computer/skills_console/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
 	if(.)
 		return
 	if(action == "change_color")
 		var/new_color = params["color"]
-	if(!(color in allowed_coors))
-		return FALSE
-		color = new_color
 		. = TRUE
 	update_icon()
 
@@ -151,11 +148,11 @@
 /obj/item/weapon/implant/skill/implanted(mob/source)
 	if(!ishuman(source))
 		return
-	if(source.ismindprotect())
-		source.adjustBrainLoss(25)
+	var/mob/living/carbon/human/H = source
+	if(H.ismindprotect())
+		H.adjustBrainLoss(25)
 		return
-	if(source.speci)
-	source.add_skills_buff(added_skillset)
+	H.add_skills_buff(added_skillset)
 	return 1
 
 /obj/item/weapon/implant/skill/emp_act(severity)
@@ -178,5 +175,4 @@
 	M.adjustBrainLoss(100)
 
 /obj/item/weapon/implant/skill/proc/removed()
-	..()
 	meltdown()
