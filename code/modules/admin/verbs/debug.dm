@@ -385,7 +385,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		to_chat(world, "* [areatype]")
 
 /client/proc/robust_dress_shop()
-	var/list/baseoutfits = list("Naked", "Custom", "As Job...")
+	var/list/baseoutfits = list("Naked", "As Job...")
 	var/list/outfits = list()
 	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)
 
@@ -410,16 +410,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		dresscode = job_outfits[dresscode]
 		if(isnull(dresscode))
 			return
-	/*
-	else if(dresscode == "Custom")
-		var/list/custom_names = list()
-		for(var/datum/outfit/D in custom_outfits)
-			custom_names[D.name] = D
-		var/selected_name = input("Select outfit", "Robust quick dress shop") as null|anything in sort_list(custom_names)
-		dresscode = custom_names[selected_name]
-		if(isnull(dresscode))
-			return
-	*/
 
 	return dresscode
 
