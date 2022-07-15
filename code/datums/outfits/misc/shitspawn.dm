@@ -265,7 +265,7 @@
 	var/obj/item/clothing/under/syndicate/US = H.w_uniform
 	if(istype(US))
 		var/obj/item/clothing/accessory/storage/syndi_vest/SV = new (US)
-		US.accessories += SV
+		LAZYADD(US.accessories, SV)
 		SV.on_attached(US, H, TRUE)
 		new /obj/item/weapon/screwdriver/power(SV.hold)
 		new /obj/item/weapon/wirecutters/power(SV.hold)
