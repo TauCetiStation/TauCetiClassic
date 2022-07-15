@@ -275,6 +275,8 @@
 		prev_gain = favor_for_turf[F]
 	var/favor_gain = get_light_gain(F)
 
+	if(!F?.holy?.religion)
+		return
 	if(favor_gain != 0.0)
 		START_PROCESSING(SSreligion, F.holy.religion)
 		LAZYSET(favor_for_turf, F, favor_gain)

@@ -110,7 +110,7 @@
 /obj/item/weapon/robot_module/standard/respawn_consumable(mob/living/silicon/robot/R)
 	..()
 	var/obj/item/weapon/melee/baton/B = locate() in src.modules
-	if(B.charges < 10)
+	if(B?.charges < 10)
 		B.charges += 1
 
 /obj/item/weapon/robot_module/medical
