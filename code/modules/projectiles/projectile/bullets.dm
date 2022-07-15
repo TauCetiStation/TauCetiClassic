@@ -1,7 +1,7 @@
 /obj/item/projectile/bullet
 	name = "bullet"
 	icon_state = "bullet"
-	damage = 60
+	damage = 120
 	damage_type = BRUTE
 	nodamage = 0
 	flag = "bullet"
@@ -24,7 +24,7 @@
 	damage = 10
 	stun = 0
 	weaken = 0
-	agony = 40
+	agony = 90
 	embed = 0
 	sharp = 0
 
@@ -35,70 +35,70 @@
 
 /obj/item/projectile/bullet/slug
 	name = "shotgun slug"
-	damage = 40
-	stoping_power = 3
+	damage = 195
+	stoping_power = 25
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = 15
+	damage = 50
 	dispersion = 4.0
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
-	agony = 95
+	agony = 100
 
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
 
 /obj/item/projectile/bullet/smg //.45 ACP
-	damage = 20
+	damage = 90
 
 /obj/item/projectile/bullet/smg_hp
 	name = "high power bullet"
-	damage = 35
+	damage = 120
 
 /obj/item/projectile/bullet/smg_imp
 	name = "impact bullet"
-	damage = 20
-	impact_force = 1
-	stoping_power = 4
+	damage = 90
+	impact_force = 99
+	stoping_power = 50
 
 /obj/item/projectile/bullet/smg_hv
 	name = "high velocity bullet"
-	damage = 20
+	damage = 90
 	hitscan = 1
 
 /obj/item/projectile/bullet/midbullet2 // 9x19
-	damage = 25
+	damage = 120
 
 /obj/item/projectile/bullet/revbullet //.357
-	damage = 35
+	damage = 195
 	stoping_power = 8
 
 /obj/item/projectile/bullet/rifle1
-	damage = 40
+	damage = 150
 	embed = 0
 
 /obj/item/projectile/bullet/rifle2
-	damage = 45
+	damage = 190
 	embed = 0
 
 /obj/item/projectile/bullet/rifle3
-	damage = 35
+	damage = 150
 	embed = 0
 
 /obj/item/projectile/bullet/heavy/a145
-	damage = 110
-	stun = 3
-	weaken = 3
-	impact_force = 5
+	damage = 228
+	stun = 60
+	weaken = 60
+	impact_force = 99
 	hitscan = 1
 
 /obj/item/projectile/bullet/grenade/r4046
 	name = "rubber grenade"
 	damage = 10
-	stun = 10
-	weaken = 10
+	stun = 60
+	weaken = 60
 	//impact_force = 5
 	embed = 0
 	sharp = 0
@@ -212,7 +212,7 @@
 	stun = 0
 	weaken = 0
 	stutter = 10
-	agony = 80
+	agony = 100
 	embed = 0
 	sharp = 0
 	dispersion = 2.0
@@ -227,12 +227,12 @@
 
 /obj/item/projectile/bullet/incendiary
 	name = "incendiary bullet"
-	damage = 20
+	damage = 90
 	incendiary = 10
 
 /obj/item/projectile/bullet/incendiary/buckshot
 	name = "incendiary shell"
-	damage = 7
+	damage = 40
 	incendiary = 2
 	dispersion = 2.0
 
