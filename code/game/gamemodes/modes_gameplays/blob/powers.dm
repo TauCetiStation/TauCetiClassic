@@ -109,7 +109,16 @@
 
 	B.naut = TRUE //temporary placeholder to prevent creation of more than one per factory.
 	to_chat(src, "<span class='notice'>You attempt to produce a blobbernaut.</span>")
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50) //players must answer rapidly
+
+	var/list/candidates = pollGhostCandidates(Question = "Хотите стать блоббернаутом?", \
+	                                          role_name = "Блоббернаут", \
+	                                          be_role = ROLE_BLOB, \
+	                                          Ignore_Role = ROLE_BLOB, \
+	                                          poll_time = 5 SECONDS, /* Players must answer rapidly */ \
+	                                          check_antaghud = TRUE, \
+	                                          add_spawner = TRUE, \
+	                                          positions = list(B))
+
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
 		B.max_health = B.max_health * 0.25 //factories that produced a blobbernaut have much lower health
 		B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")

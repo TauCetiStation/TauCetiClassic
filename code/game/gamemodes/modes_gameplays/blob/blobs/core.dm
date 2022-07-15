@@ -85,7 +85,14 @@ var/global/list/blob_nodes = list()
 	var/list/candidates = list()
 
 	if(!new_overmind)
-		candidates = pollGhostCandidates("Would you like to be a BLOB?!", ROLE_BLOB, IGNORE_EVENT_BLOB)
+		candidates = pollGhostCandidates(Question = "Хотите стать БЛОБОМ?!", \
+		                                 role_name = "Блоб", \
+		                                 be_role = ROLE_BLOB, \
+		                                 Ignore_Role = IGNORE_EVENT_BLOB, \
+		                                 poll_time = 30 SECONDS, \
+		                                 check_antaghud = TRUE, \
+		                                 add_spawner = TRUE, \
+		                                 positions = list(src))
 		if(candidates.len)
 			var/mob/M = pick(candidates)
 			C = M.client

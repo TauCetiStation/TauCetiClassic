@@ -256,10 +256,17 @@
 			light_power = 5
 			searching = TRUE
 			request_player(user)
-			addtimer(CALLBACK(src, .proc/reset_search), 200)
+			addtimer(CALLBACK(src, .proc/reset_search), 20 SECONDS)
 
 /obj/item/weapon/nullrod/staff/proc/request_player(mob/living/user)
-	var/list/candidates = pollGhostCandidates("Do you want to serve [user.my_religion.name] in divine staff?", ROLE_GHOSTLY, IGNORE_TSTAFF, 100, TRUE)
+	var/list/candidates = pollGhostCandidates(Question = "Хотите служить [user.my_religion.name] в качестве божественного посоха?", \
+	                                          role_name = "Божественный посох", \
+	                                          be_role = ROLE_GHOSTLY, \
+	                                          Ignore_Role = IGNORE_TSTAFF, \
+	                                          poll_time = 10 SECONDS, \
+	                                          check_antaghud = TRUE, \
+	                                          add_spawner = TRUE, \
+	                                          positions = list(src))
 	for(var/mob/M in candidates) // No random
 		if(next_apply[M.client.ckey] > world.time)
 			to_chat(M, "You were forcibly kicked from staff, left [round((next_apply[M.client.ckey] - world.time) / 600)] minutes")

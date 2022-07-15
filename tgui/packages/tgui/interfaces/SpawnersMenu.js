@@ -41,13 +41,24 @@ export const SpawnersMenu = (props, context) => {
                             type: spawner.type,
                           })}
                       />
-                      <Button
-                        content="Появиться"
-                        onClick={() =>
-                          act('spawn', {
-                            type: spawner.type,
-                          })}
-                      />
+                      {spawner.toggleable && (
+                        <Button
+                          content={spawner.switched_on ? 'Отказаться' : 'Принять'}
+                          selected={spawner.switched_on}
+                          onClick={() =>
+                            act('toggle', {
+                              type: spawner.type,
+                            })}
+                        />
+                      ) || (
+                        <Button
+                          content="Появиться"
+                          onClick={() =>
+                            act('spawn', {
+                              type: spawner.type,
+                            })}
+                        />
+                      )}
                     </Flex.Item>
                   </Flex>
                 }>

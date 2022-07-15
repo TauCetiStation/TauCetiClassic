@@ -96,7 +96,14 @@
 					to_chat(M, "<b>[src]</b> transmits, \"[message]\"")
 
 /mob/living/silicon/robot/drone/maintenance/request_player()
-	var/list/candidates = pollGhostCandidates("Someone is attempting to reboot a maintenance drone. Would you like to play as one?", ROLE_GHOSTLY, IGNORE_DRONE, 100, TRUE)
+	var/list/candidates = pollGhostCandidates(Question = "Хотите стать обслуживающим дроном?", \
+	                                          role_name = "Дрон", \
+	                                          be_role = ROLE_GHOSTLY, \
+	                                          Ignore_Role = IGNORE_DRONE, \
+	                                          poll_time = 10 SECONDS, \
+	                                          check_antaghud = TRUE, \
+	                                          add_spawner = TRUE, \
+	                                          positions = list(src))
 	for(var/mob/M in candidates) // No random
 		transfer_personality(M.client)
 		break

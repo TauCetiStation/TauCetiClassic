@@ -603,12 +603,24 @@
 
 	var/list/mob/candidates
 	if(recruitment_source == FROM_GHOSTS)
-		candidates = pollGhostCandidates("Do you want to be [fac_type ? "in" : "a"] [role_name]?", role_req, role_req, 100)
+		candidates = pollGhostCandidates(Question = "Хотите [fac_type ? "вступить в" : "стать"] [role_name]?", \
+		                                 role_name = "[role_name]", \
+		                                 be_role = role_req, \
+		                                 Ignore_Role = role_req, \
+		                                 poll_time = 10 SECONDS, \
+		                                 check_antaghud = TRUE, \
+		                                 add_spawner = TRUE)
 	else
 		if(stealth)
 			candidates = alive_mob_list
 		else
-			candidates = pollCandidates("Do you want to be [fac_type ? "in" : "a"] [role_name]?", role_req, role_req, 100, alive_mob_list)
+			candidates = pollCandidates(Question = "Хотите [fac_type ? "вступить в" : "стать"] [role_name]?", \
+			                            role_name = "[role_name]", \
+			                            be_role = role_req, \
+			                            Ignore_Role = role_req, \
+			                            poll_time = 10 SECONDS, \
+			                            group = alive_mob_list, \
+			                            add_spawner = TRUE)
 
 	var/recruit_count = 0
 	if(!candidates.len)

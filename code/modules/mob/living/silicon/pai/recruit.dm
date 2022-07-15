@@ -214,7 +214,7 @@ var/global/datum/paiController/paiController			// Global handler for pAI candida
 	if(!p.searching)
 		p.searching = TRUE
 		addtimer(CALLBACK(p, /obj/item/device/paicard.proc/reset_searching), 3 MINUTES)
-		requestRecruits()
+		requestRecruits(p)
 	var/list/available = list()
 	for(var/datum/paiCandidate/c in paiController.pai_candidates)
 		if(c.ready)
@@ -330,7 +330,14 @@ var/global/datum/paiController/paiController			// Global handler for pAI candida
 
 	user << browse(dat, "window=findPai")
 
-/datum/paiController/proc/requestRecruits()
-	var/list/candidates = pollGhostCandidates("Someone is requesting a pAI personality. Would you like to play as a personal AI?", ROLE_GHOSTLY, IGNORE_PAI, 100, TRUE)
+/datum/paiController/proc/requestRecruits(obj/item/device/paicard/p)
+	var/list/candidates = pollGhostCandidates(Question = "Хотите стать персональным ИИ?", \
+	                                          role_name = "пИИ", \
+	                                          be_role = ROLE_GHOSTLY, \
+	                                          Ignore_Role = IGNORE_PAI, \
+	                                          poll_time = 10 SECONDS, \
+	                                          check_antaghud = TRUE, \
+	                                          add_spawner = TRUE, \
+	                                          positions = list(p))
 	for(var/mob/M in candidates)
 		recruitWindow(M)

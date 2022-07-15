@@ -614,7 +614,14 @@
 // Procs for grabbing players.
 
 // grab random ghost from candidates after poll_time
-/proc/pollGhostCandidates(Question, be_special_type, Ignore_Role, poll_time = 300, check_antaghud = TRUE)
+/proc/pollGhostCandidates(Question, /* Message to ghosts */ \
+                          role_name, /* Short text of role name */ \
+                          be_role, /* Which role to become */ \
+                          Ignore_Role, /* Role to check, if player already ignored it */ \
+                          poll_time = (30 SECONDS), /* Time limit of the question */ \
+                          check_antaghud = TRUE, /* Don't ask ghosts with AntagHUD enabled */ \
+                          add_spawner = TRUE, /* Add question into Spawners Menu */ \
+                          list/positions = null) /* Potential positions for spawn */
 	var/list/mob/dead/observer/candidates = list()
 
 	for(var/mob/dead/observer/O as anything in observer_list)
@@ -622,21 +629,33 @@
 			continue
 		candidates += O
 
-	candidates = pollCandidates(Question, be_special_type, Ignore_Role, poll_time, candidates)
+	candidates = pollCandidates(Question, role_name, be_role, Ignore_Role, \
+	                            poll_time, candidates, add_spawner, positions)
 
 	return candidates
 
-/proc/pollCandidates(Question = "Would you like to be a special role?", be_special_type, Ignore_Role, poll_time = 300, list/group = null)
+/proc/pollCandidates(Question = "Хотите стать специальной ролью?", /* Message to candidates */ \
+                     role_name, /* Short text of role name */ \
+                     be_role, /* Which role to become */ \
+                     Ignore_Role, /* Role to check, if player already ignored it */ \
+                     poll_time = (30 SECONDS), /* Time limit of the question */ \
+                     list/group = null, /* List of candidates */ \
+                     add_spawner = TRUE, /* Add question into Spawners Menu */ \
+                     list/positions = null) /* Potential positions for spawn */
 	var/list/mob/candidates = list()
 	var/time_passed = world.time
 
 	if(!Ignore_Role)
-		Ignore_Role = be_special_type
+		Ignore_Role = be_role
+
+	if(add_spawner)
+		create_spawner(/datum/spawner/candidate, candidates, Question, role_name, \
+		               be_role, max(poll_time - (0.5 SECONDS), 1 SECOND), positions)
 
 	for(var/mob/M in group)
 		if(!M.client)
 			continue
-		if(jobban_isbanned(M, be_special_type) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(be_special_type) || role_available_in_minutes(M, be_special_type))
+		if(jobban_isbanned(M, be_role) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(be_role) || role_available_in_minutes(M, be_role))
 			continue
 		if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
 			continue

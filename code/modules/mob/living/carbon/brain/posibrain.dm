@@ -6,26 +6,33 @@
 	w_class = SIZE_SMALL
 	origin_tech = "engineering=4;materials=4;bluespace=2;programming=4"
 
-	var/searching = 0
+	var/searching = FALSE
 	brainmob = null
 	req_access = list(access_robotics)
 	locked = 0
-	mecha = null//This does not appear to be used outside of reference in mecha.dm.
+	mecha = null //This does not appear to be used outside of reference in mecha.dm.
 
-	var/ping_cd = 0//attack_ghost cooldown
+	var/ping_cd = FALSE //attack_ghost cooldown
 
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
-	if(brainmob && !brainmob.key && searching == 0)
+	if(brainmob && !brainmob.key && !searching)
 		//Start the process of searching for a new user.
 		to_chat(user, "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>")
 		icon_state = "posibrain-searching"
 		searching = TRUE
 		request_player()
-		addtimer(CALLBACK(src, .proc/reset_search), 300)
+		addtimer(CALLBACK(src, .proc/reset_search), 30 SECONDS)
 
 /obj/item/device/mmi/posibrain/proc/request_player()
-	var/list/candidates = pollGhostCandidates("Someone is requesting a personality for a positronic brain. Would you like to play as one?", ROLE_GHOSTLY, IGNORE_POSBRAIN, 200, TRUE)
+	var/list/candidates = pollGhostCandidates(Question = "Хотите \"ожить\" в виде позитронного мозга?", \
+	                                          role_name = "Позитронный мозг", \
+	                                          be_role = ROLE_GHOSTLY, \
+	                                          Ignore_Role = IGNORE_POSBRAIN, \
+	                                          poll_time = 20 SECONDS, \
+	                                          check_antaghud = TRUE, \
+	                                          add_spawner = TRUE, \
+	                                          positions = list(src))
 	for(var/mob/M in candidates) // No random
 		transfer_personality(M)
 		break
@@ -53,15 +60,14 @@
 	return
 
 /obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
+	searching = FALSE
+	brainmob.key = candidate.key
+	name = "positronic brain ([brainmob.name])"
 
-	src.searching = FALSE
-	src.brainmob.key = candidate.key
-	src.name = "positronic brain ([src.brainmob.name])"
-
-	to_chat(src.brainmob, "<b>You are a positronic brain, brought into existence on [station_name()].</b>")
-	to_chat(src.brainmob, "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>")
-	to_chat(src.brainmob, "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>")
-	src.brainmob.mind.assigned_role = "Positronic Brain"
+	to_chat(brainmob, "<b>You are a positronic brain, brought into existence on [station_name()].</b>")
+	to_chat(brainmob, "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>")
+	to_chat(brainmob, "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>")
+	brainmob.mind.assigned_role = "Positronic Brain"
 
 	brainmob.mind.skills.add_available_skillset(/datum/skillset/cyborg)
 	brainmob.mind.skills.maximize_active_skills()
@@ -69,10 +75,10 @@
 	icon_state = "posibrain-occupied"
 
 /obj/item/device/mmi/posibrain/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
+	if(brainmob && brainmob.key)
+		return
 
-	if(src.brainmob && src.brainmob.key) return
-
-	src.searching = 0
+	searching = FALSE
 	icon_state = "posibrain"
 
 	visible_message("<span class='notice'>\The [src] buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>")
@@ -80,10 +86,10 @@
 /obj/item/device/mmi/posibrain/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]</span>\n"
 
-	if(src.brainmob && src.brainmob.key)
-		switch(src.brainmob.stat)
+	if(brainmob && brainmob.key)
+		switch(brainmob.stat)
 			if(CONSCIOUS)
-				if(!src.brainmob.client)
+				if(!brainmob.client)
 					msg += "<span class='warning'>It appears to be in stand-by mode.</span>\n" //afk
 			if(UNCONSCIOUS)
 				msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
@@ -95,28 +101,26 @@
 	to_chat(user, msg)
 
 /obj/item/device/mmi/posibrain/emp_act(severity)
-	if(!src.brainmob)
+	if(!brainmob)
 		return
-	else
-		switch(severity)
-			if(1)
-				src.brainmob.emp_damage += rand(20,30)
-			if(2)
-				src.brainmob.emp_damage += rand(10,20)
-			if(3)
-				src.brainmob.emp_damage += rand(0,10)
+
+	switch(severity)
+		if(1)
+			brainmob.emp_damage += rand(20,30)
+		if(2)
+			brainmob.emp_damage += rand(10,20)
+		if(3)
+			brainmob.emp_damage += rand(0,10)
 	..()
 
 /obj/item/device/mmi/posibrain/attack_ghost(mob/dead/observer/O)
 	if(!ping_cd)
-		ping_cd = 1
-		spawn(50)
-			ping_cd = 0
+		ping_cd = TRUE
+		VARSET_IN(src, ping_cd, FALSE, 5 SECONDS)
 		audible_message("<span class='notice'>\The [src] pings softly.</span>", deaf_message = "\The [src] indicator blinks.")
 		playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, 10, FALSE)
 
 /obj/item/device/mmi/posibrain/atom_init()
-
 	brainmob = new(src)
 	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","CHRI","CDB","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD","XHS","BOB","EXAD","JMAD"))]-[rand(100, 999)]"
 	brainmob.real_name = brainmob.name

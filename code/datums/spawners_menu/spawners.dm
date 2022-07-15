@@ -40,6 +40,10 @@ var/global/list/datum/spawners_cooldown = list()
 	var/infinity = FALSE
 	// Cooldown between the opportunity become a role
 	var/cooldown = 10 MINUTES
+	// Add to list of candidates instead of spawn now, if TRUE
+	var/toggleable = FALSE
+	// State (on/off) when toggleable
+	var/switched_on = FALSE
 
 	// Time to del the spawner
 	var/time_to_del
@@ -97,6 +101,9 @@ var/global/list/datum/spawners_cooldown = list()
 	return TRUE
 
 /datum/spawner/proc/do_spawn(mob/dead/observer/ghost)
+	if(toggleable)
+		return
+
 	if(!can_spawn(ghost))
 		return
 
@@ -140,6 +147,23 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/proc/jump(mob/dead/observer/ghost)
 	return
+
+/datum/spawner/proc/toggleChoice(mob/dead/observer/ghost)
+	if(!toggleable)
+		return FALSE
+
+	if(!switched_on)
+		if(!can_spawn(ghost))
+			return FALSE
+
+		switched_on = TRUE
+		to_chat(ghost, "<span class='notice'>Вы - кандидат на роль \"[name]\".</span>")
+	else
+		switched_on = FALSE
+		to_chat(ghost, "<span class='notice'>Вы отказались от роли \"[name]\".</span>")
+
+	return switched_on
+
 
 /*
  * Families
@@ -392,6 +416,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/gladiator/spawn_ghost(mob/dead/observer/ghost)
 	SSticker.spawn_gladiator(ghost, FALSE)
 
+
 /datum/spawner/mouse
 	name = "Мышь"
 	id = "mouse"
@@ -410,6 +435,7 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/mouse/spawn_ghost(mob/dead/observer/ghost)
 	ghost.mousize()
 
+
 /datum/spawner/space_bum
 	name = "Космо-бомж"
 	id = "space_bum"
@@ -424,6 +450,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/space_bum/spawn_ghost(mob/dead/observer/ghost)
 	ghost.make_bum()
+
 
 /datum/spawner/drone
 	name = "Дрон"
@@ -447,6 +474,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/drone/spawn_ghost(mob/dead/observer/ghost)
 	ghost.dronize()
+
 
 /datum/spawner/living
 	name = "Свободное тело"
@@ -490,6 +518,9 @@ var/global/list/datum/spawners_cooldown = list()
 	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
 	mob.key = ghost.key
 
+/*
+ * Podmen
+*/
 /datum/spawner/living/podman
 	name = "Подмена"
 	id = "podman"
@@ -716,3 +747,42 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/vox/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(global.heiststart)
 	ghost.forceMove(jump_to)
+
+
+/*
+ * Candidate(s)
+*/
+/datum/spawner/candidate
+	name = "Стать кандидатом на роль?"
+	desc = "По истечении таймера один из нажавших \"Принять\" получит роль"
+	toggleable = TRUE
+
+	var/list/mob/candidates = list()
+	var/list/positions
+
+/datum/spawner/candidate/New(list/_candidates, question, _name, rank, timeout, list/_positions = null)
+	if(_candidates)
+		candidates = _candidates
+	id = "candidate_\ref[candidates]"
+	if(question)
+		desc = question
+	if(_name)
+		name = _name
+	if(rank)
+		ranks = list(rank)
+	time_to_del = timeout
+	positions = _positions
+	. = ..()
+
+/datum/spawner/candidate/toggleChoice(mob/dead/observer/ghost)
+	. = ..()
+	if(.)
+		candidates += ghost
+	else
+		candidates -= ghost
+
+/datum/spawner/candidate/jump(mob/dead/observer/ghost)
+	if(positions?.len)
+		var/P = pick(positions)
+		if(P)
+			ghost.forceMove(get_turf(P))

@@ -36,6 +36,8 @@
 		this["important_warning"] = spawner.important_info
 		this["amount_left"] = spawners_list.len
 		this["is_infinite"] = spawner.infinity
+		this["toggleable"] = spawner.toggleable
+		this["switched_on"] = spawner.switched_on
 
 		var/min_time = INFINITY
 		for(var/datum/spawner/S as anything in spawners_list)
@@ -79,4 +81,7 @@
 			role_selected = TRUE
 			spawner.do_spawn(owner)
 			role_selected = FALSE
+			return TRUE
+		if("toggle")
+			spawner.toggleChoice(owner)
 			return TRUE

@@ -268,7 +268,14 @@
 /datum/drone_upgrade/internal/ai/install(mob/living/silicon/robot/drone/syndi/D)
 	to_chat(D, "<span class='notice'>Searching for available drone personality. Please wait 30 seconds...</span>")
 	poll_running = TRUE
-	var/list/drone_candicates = pollGhostCandidates("Syndicate requesting a personality for a syndicate drone. Would you like to play as one?", ROLE_OPERATIVE)
+	var/list/drone_candicates = pollGhostCandidates(Question = "Хотите стать дроном Синдиката?", \
+	                                                role_name = "Дрон Синдиката", \
+	                                                be_role = ROLE_OPERATIVE, \
+	                                                Ignore_Role = ROLE_OPERATIVE, \
+	                                                poll_time = 30 SECONDS, \
+	                                                check_antaghud = TRUE, \
+	                                                add_spawner = TRUE, \
+	                                                positions = list(D))
 	poll_running = FALSE //other instances of poll just couldn't start, so this is safe
 
 	if(!can_install(D, TRUE)) //drone could've died or spent all points during the async poll, we need to double-check

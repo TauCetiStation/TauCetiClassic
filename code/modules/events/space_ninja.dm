@@ -18,6 +18,12 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	var/mob/candidate_mob
 	var/list/candidates = list()
 
+	//Here we pick a location and spawn the ninja.
+	if(ninjastart.len == 0)
+		for(var/obj/effect/landmark/L in landmarks_list)
+			if(L.name == "ninja")
+				ninjastart.Add(L)
+
 	if(assign_key)
 		ninja_key = assign_key
 		for(var/mob/M in player_list)
@@ -27,24 +33,32 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		if(!candidates.len)
 			to_chat(usr, "<span class='warning'>[assign_key]'s mob not found</span>")
 			return
-		candidates = pollCandidates("The spider clan has a special mission for YOU! Would you like to play as space ninja?", ROLE_NINJA, ROLE_NINJA, group = candidates)
+		candidates = pollCandidates(Question = "У Клана Паука есть специальное задание для ТЕБЯ! Хочешь стать космическим ниндзя?", \
+		                            role_name = "Космический ниндзя", \
+		                            be_role = ROLE_NINJA, \
+		                            Ignore_Role = ROLE_NINJA, \
+		                            poll_time = 30 SECONDS, \
+		                            group = candidates, \
+		                            add_spawner = TRUE, \
+		                            positions = ninjastart.len ? ninjastart : latejoin)
 		if(!candidates.len)
 			to_chat(usr, "<span class='warning'>The ninja ([assign_key]) did not accept the role in time</span>")
 			return
 	else
-		candidates = pollGhostCandidates("The spider clan has a mission for true space ninja. Would you like to play as one?", ROLE_NINJA, ROLE_NINJA)
+		candidates = pollGhostCandidates(Question = "У Клана Паука есть задание для настоящего космического ниндзя. Хотите им стать?", \
+		                                 role_name = "Космический ниндзя", \
+		                                 be_role = ROLE_NINJA, \
+		                                 Ignore_Role = ROLE_NINJA, \
+		                                 poll_time = 30 SECONDS, \
+		                                 check_antaghud = TRUE, \
+		                                 add_spawner = TRUE, \
+		                                 positions = ninjastart.len ? ninjastart : latejoin)
 		if(!candidates.len)
 			message_admins("Candidates for Space Ninja not found. Shutting down.")
 			return
 		candidates = shuffle(candidates)//Incorporating Donkie's list shuffle
 		candidate_mob = pick(candidates)
 		ninja_key = candidate_mob.ckey
-
-	//Here we pick a location and spawn the ninja.
-	if(ninjastart.len == 0)
-		for(var/obj/effect/landmark/L in landmarks_list)
-			if(L.name == "ninja")
-				ninjastart.Add(L)
 
 	//The ninja will be created on the right spawn point or at late join.
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
