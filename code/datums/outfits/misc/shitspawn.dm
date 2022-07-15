@@ -186,7 +186,7 @@
 	id = /obj/item/weapon/card/id/syndicate/unknown
 
 /datum/outfit/death_squad
-	name = "death squad"
+	name = "NanoTrasen: death squad"
 
 	l_ear = /obj/item/device/radio/headset/deathsquad
 	uniform = /obj/item/clothing/under/color/green
@@ -213,11 +213,11 @@
 	belt = /obj/item/weapon/gun/projectile/revolver/mateba
 
 	r_hand = /obj/item/weapon/gun/energy/pulse_rifle
-	implants = list(/obj/item/weapon/implant/mind_protect/loyalty = BP_CHEST)
+	implants = list(/obj/item/weapon/implant/mind_protect/loyalty)
 	id = /obj/item/weapon/card/id/centcom
 
 /datum/outfit/death_squad/leader
-	name = "death squad leader"
+	name = "NanoTrasen: death squad leader"
 	
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 
@@ -232,12 +232,12 @@
 	)
 
 /datum/outfit/syndicate_commando
-	name = "syndicate commando"
+	name = "Syndicate: commando"
 	
 	l_ear = /obj/item/device/radio/headset/syndicate
 
 	uniform = /obj/item/clothing/under/syndicate
-	implants = list(/obj/item/weapon/implant/dexplosive = BP_CHEST)
+	implants = list(/obj/item/weapon/implant/dexplosive)
 	shoes = /obj/item/clothing/shoes/boots/combat
 	gloves = /obj/item/clothing/gloves/combat
 	mask = /obj/item/clothing/mask/gas/syndicate
@@ -273,7 +273,7 @@
 		new /obj/item/device/multitool(SV.hold)
 
 /datum/outfit/syndicate_commando/leader
-	name = "syndicate commando comander"
+	name = "Syndicate: commando comander"
 	
 	backpack_contents = list(
 		/obj/item/weapon/storage/box,
@@ -439,7 +439,7 @@
 	l_pocket = /obj/item/weapon/storage/pouch/baton_holster
 	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster
 
-	implants = list(/obj/item/weapon/implant/mind_protect/mindshield = BP_CHEST)
+	implants = list(/obj/item/weapon/implant/mind_protect/mindshield)
 
 /datum/outfit/velocity/chief/post_equip(mob/living/carbon/human/H)
 	..()
@@ -470,7 +470,7 @@
 	l_pocket = /obj/item/weapon/reagent_containers/hypospray/cmo
 
 /datum/outfit/ert
-	name = "emergency response team"
+	name = "NanoTrasen: emergency response team"
 
 	uniform = /obj/item/clothing/under/rank
 	shoes = /obj/item/clothing/shoes/boots/swat
