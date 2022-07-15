@@ -21,8 +21,11 @@ export const SkillsConsole = (props, context) => {
     skill_max_value,
     skill_values,
     compatible_species,
+    inserted_cartridge,
     cartridge_name,
     cartridge_unpacked,
+    connected_table,
+    connected_patient
   } = data;
   return (
     <Window resizable>
