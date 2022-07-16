@@ -134,7 +134,6 @@
 	var/coughedtime = null
 
 	var/next_point_to = 0
-	var/next_examine_log = 0
 
 	var/job = null//Living
 

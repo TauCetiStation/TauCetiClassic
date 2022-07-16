@@ -326,10 +326,7 @@
 			return
 	if(!A.z) //no message if we examine something in a backpack
 		return
-	if(next_examine_log > world.time)
-		return
 	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
-	next_examine_log = world.time + 0.5 SECONDS
 
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
