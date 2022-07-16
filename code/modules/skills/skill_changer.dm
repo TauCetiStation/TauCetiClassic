@@ -4,11 +4,11 @@
 	board_type = "machine"
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/scanning_module = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/scanning_module = 4,
+							/obj/item/weapon/stock_parts/manipulator = 4,
 							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/stack/cable_coil = 2)
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/capacitor= 1)
 
 /obj/item/weapon/circuitboard/skills_console
 	name = "Circuit board (CMF Console)"
@@ -75,6 +75,14 @@
 	var/obj/machinery/optable/skill_scanner/scanner = null
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE, /datum/skill/medical = SKILL_LEVEL_NOVICE, /datum/skill/research = SKILL_LEVEL_NOVICE)
 
+/obj/machinery/computer/skills_console/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/skills_console/atom_init_late()
+	for(var/obj/machinery/optable/skill_scanner in orange(5, src))
+		scanner = skill_scanner
+		break
 
 /obj/machinery/computer/skills_console/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/skill_cartridge))
@@ -112,10 +120,10 @@
 		var/list/mdi_skills = list(/datum/skill/firearms, /datum/skill/civ_mech, /datum/skill/combat_mech, /datum/skill/construction, /datum/skill/surgery)
 		var/mob/living/carbon/human/H = scanner.victim
 		for(var/skill in H.mind.skills.active.skills)
-			for(var/skill_type in iq_skills)
+			for(var/skill_type as anything in iq_skills)
 				if(istype(skill, skill_type))
 					iq += H.mind.skills.active.get_value(skill)
-			for(var/skill_type in mdi_skills)
+			for(var/skill_type as anything in mdi_skills)
 				if(istype(skill, skill_type))
 					mdi +=  H.mind.skills.active.get_value(skill)
 		data["IQ"] = iq

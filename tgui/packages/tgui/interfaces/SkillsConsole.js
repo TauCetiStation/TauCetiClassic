@@ -25,7 +25,7 @@ export const SkillsConsole = (props, context) => {
     cartridge_name,
     cartridge_unpacked,
     connected_table,
-    connected_patient
+    cartridge_points,
   } = data;
   return (
     <Window resizable>
@@ -59,27 +59,30 @@ export const SkillsConsole = (props, context) => {
           </Stack.Item>
           <Stack.Item>
             <Section title="Cartridge information">
-              <LabeledList>
-                <LabeledList.Item label="Installed cartridge">
-                  {cartridge_name}
-                  {!cartridge_unpacked && (
-                    <Box as="span" m={5}>
-                      <Button style={{ marginLeft: 20 }}>
-                        Eject cartridge
-                      </Button>
-                    </Box>
-                  )}
-                </LabeledList.Item>
-                <LabeledList.Item label="Compatible species">
-                  {compatible_species.join(', ')}
-                </LabeledList.Item>
-                <LabeledList.Item label="Available USP">7</LabeledList.Item>
-              </LabeledList>
+              {!inserted_cartridge && <Box>No cartridge inserted</Box>}
+              {inserted_cartridge && (
+                <LabeledList>
+                  <LabeledList.Item label="Installed cartridge">
+                    {cartridge_name}
+                    {!cartridge_unpacked && (
+                      <Box as="span" m={5}>
+                        <Button style={{ marginLeft: 20 }}>
+                          Eject cartridge
+                        </Button>
+                      </Box>
+                    )}
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Compatible species">
+                    {compatible_species.join(', ')}
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Available USP">{cartridge_points}</LabeledList.Item>
+                </LabeledList>
+              )}
             </Section>
           </Stack.Item>
         </Stack>
 
-        {!cartridge_unpacked && (
+        {!cartridge_unpacked && inserted_cartridge && (
           <Box textAlign="center">
             <Button
               onClick={() => {
@@ -97,7 +100,7 @@ export const SkillsConsole = (props, context) => {
           <Section title="CMF manipulation">
             {skill_list.map((skill, v) => {
               return (
-                <Slider
+                <Slider key={skill}
                   onChange={(_e, value) => {
                     act('change_skill', value);
                   }}
