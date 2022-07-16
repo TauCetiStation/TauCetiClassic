@@ -35,7 +35,7 @@
 			user.drop_from_inventory(I, src)
 			cartridge = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
-			updateDialog()
+			tgui_interact(user)
 		return FALSE
 	else if(ismultitool(I))
 		var/obj/item/device/multitool/M = I
@@ -44,26 +44,26 @@
 			scanner.console = src
 			M.buffer = null
 			to_chat(user, "<span class='notice'>You upload the data from the [I.name]'s buffer.</span>")
-			updateDialog()
+			tgui_interact(user)
 		return FALSE
 	return ..()
 
-/obj/machinery/computer/skills_console/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/computer/skills_console/attack_hand(mob/user)
+	user.set_machine(src)
+	tgui_interact(user)
+
+/obj/machinery/computer/skills_console/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SkillsConsole")
 		ui.open()
+		ui.set_autoupdate(TRUE)
 
 /obj/machinery/computer/skills_console/tgui_data(mob/user)
 	. = ..()
 	var/list/data = list()
 	data["connected_table"] = scanner
 	data["connected_patient"] = scanner && scanner.victim
-
-	var/skill_list = list()
-	for(var/skill_type in all_skills)
-		skill_list += all_skills[skill_type]
-	data["skill_list"] = skill_list
 
 	if(scanner && scanner.victim && scanner.victim.mind)
 		var/iq = 100
@@ -82,33 +82,40 @@
 	data["skill_max_value"] = SKILL_LEVEL_MAX
 	data["inserted_cartridge"] = cartridge != null
 	if(cartridge)
+		data["skill_list"] = cartridge.get_buff_list()
 		data["compatible_species"] = cartridge.compatible_species
 		data["cartridge_name"] = cartridge.name
 		data["cartridge_unpacked"] = cartridge.unpacked
 		data["cartridge_points"] = cartridge.points
+		data["free_points"] = cartridge.points - cartridge.get_used_points()
+
 
 	return data
-/obj/machinery/computer/skills_console/ui_interact(mob/user)
-	tgui_interact(user)
 
 /obj/machinery/computer/skills_console/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
 	if(.)
 		return
-	if(action == "eject")
-		if(cartridge && !cartridge.unpacked)
-			cartridge.forceMove(loc)
-			cartridge = null
+	switch(action)
+		if("eject")
+			if(cartridge && !cartridge.unpacked)
+				cartridge.forceMove(loc)
+				cartridge = null
 			. = TRUE
-	if(action == "inject")
-		var/new_color = params["color"]
-		. = TRUE
-	if(action == "abort")
-		if(cartridge && cartridge.unpacked)
-			qdel(cartridge)
-			cartridge = null
-	if(action == "unpack")
-		if(cartridge && !cartridge.unpacked)
-			cartridge.unpacked = TRUE
+		if("inject")
+			var/new_color = params["color"]
+			. = TRUE
+		if("change_skill")
+			if(cartridge && cartridge.unpacked)
+				cartridge.set_skills_buff(params)
+
+		if("abort")
+			if(cartridge && cartridge.unpacked)
+				qdel(cartridge)
+				cartridge = null
+			. = TRUE
+		if("unpack")
+			if(cartridge && !cartridge.unpacked)
+				cartridge.unpacked = TRUE
 			. = TRUE
 	update_icon()

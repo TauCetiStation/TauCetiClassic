@@ -7,6 +7,38 @@
 	var/points
 	var/list/compatible_species = list(HUMAN, TAJARAN, UNATHI)
 	var/unpacked = FALSE
+	var/list/selected_buffs
+
+/obj/item/weapon/skill_cartridge/atom_init()
+	. = ..()
+	selected_buffs = list()
+	for(var/skill_type in all_skills)
+		selected_buffs[skill_type] = 0
+
+/obj/item/weapon/skill_cartridge/proc/set_skills_buff(skills_list)
+	var/new_points = 0
+	for(var/skill_name in skills_list)
+		new_points += skills_list[skill_name]
+	if(new_points > points)
+		return
+	for(var/skill_name in skills_list)
+		for(var/skill_type in selected_buffs)
+			var/datum/skill/skill = all_skills[skill_type]
+			if(skill.name == skill_name)
+				selected_buffs[skill_type] = skills_list[skill_name]
+		
+/obj/item/weapon/skill_cartridge/proc/get_used_points()
+	var/result = 0
+	for(var/skill_type in selected_buffs)
+		result += selected_buffs[skill_type]
+	return result
+
+/obj/item/weapon/skill_cartridge/proc/get_buff_list()
+	var/list/result = list()
+	for(var/skill_type in selected_buffs)
+		var/datum/skill/skill = all_skills[skill_type]
+		result[skill.name] = selected_buffs[skill_type]
+	return result
 
 /obj/item/weapon/skill_cartridge/green
 	name = "USP-5 cartridge"

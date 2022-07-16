@@ -54,3 +54,4 @@
 	. = ..()
 	if(!victim && panel_open)
 		icon_state = "table_open"
+
