@@ -588,6 +588,11 @@
 	icon = 'icons/obj/abductor.dmi'
 	toolspeed = 0.3
 
+/obj/item/weapon/FixOVein/alien
+	name = "alien capillar suturer"
+	icon = 'icons/obj/abductor.dmi'
+	toolspeed = 0.3
+
 
 // OPERATING TABLE / BEDS / LOCKERS	/ OTHER
 /obj/machinery/optable/abductor
