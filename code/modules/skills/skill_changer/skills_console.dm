@@ -24,6 +24,7 @@
 /obj/machinery/computer/skills_console/atom_init_late()
 	for(var/obj/machinery/optable/skill_scanner in orange(5, src))
 		scanner = skill_scanner
+		scanner.console = src
 		break
 
 /obj/machinery/computer/skills_console/attackby(obj/item/I, mob/user)
@@ -34,7 +35,16 @@
 			user.drop_from_inventory(I, src)
 			cartridge = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
-			nanomanager.update_uis(src) // update all UIs attached to src
+			updateDialog()
+		return FALSE
+	else if(ismultitool(I))
+		var/obj/item/device/multitool/M = I
+		if(M.buffer && istype(M.buffer, /obj/machinery/optable/skill_scanner))
+			scanner = M.buffer
+			scanner.console = src
+			M.buffer = null
+			to_chat(user, "<span class='notice'>You upload the data from the [I.name]'s buffer.</span>")
+			updateDialog()
 		return FALSE
 	return ..()
 
@@ -55,19 +65,17 @@
 		skill_list += all_skills[skill_type]
 	data["skill_list"] = skill_list
 
-	if(scanner.victim)
+	if(scanner && scanner.victim && scanner.victim.mind)
 		var/iq = 100
 		var/mdi = 0
 		var/list/iq_skills = list(/datum/skill/chemistry, /datum/skill/research, /datum/skill/medical, /datum/skill/engineering)
 		var/list/mdi_skills = list(/datum/skill/firearms, /datum/skill/civ_mech, /datum/skill/combat_mech, /datum/skill/construction, /datum/skill/surgery)
 		var/mob/living/carbon/human/H = scanner.victim
 		for(var/skill in H.mind.skills.active.skills)
-			for(var/skill_type as anything in iq_skills)
-				if(istype(skill, skill_type))
-					iq += H.mind.skills.active.get_value(skill)
-			for(var/skill_type as anything in mdi_skills)
-				if(istype(skill, skill_type))
-					mdi +=  H.mind.skills.active.get_value(skill)
+			if(skill in iq_skills)
+				iq += H.mind.skills.active.get_value(skill) * 6
+			if(skill in mdi_skills)
+				mdi +=  H.mind.skills.active.get_value(skill)
 		data["IQ"] = iq
 		data["MDI"] = mdi
 	data["skill_min_value"] = SKILL_LEVEL_MIN
@@ -80,12 +88,27 @@
 		data["cartridge_points"] = cartridge.points
 
 	return data
+/obj/machinery/computer/skills_console/ui_interact(mob/user)
+	tgui_interact(user)
 
 /obj/machinery/computer/skills_console/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
 	if(.)
 		return
-	if(action == "change_color")
+	if(action == "eject")
+		if(cartridge && !cartridge.unpacked)
+			cartridge.forceMove(loc)
+			cartridge = null
+			. = TRUE
+	if(action == "inject")
 		var/new_color = params["color"]
 		. = TRUE
+	if(action == "abort")
+		if(cartridge && cartridge.unpacked)
+			qdel(cartridge)
+			cartridge = null
+	if(action == "unpack")
+		if(cartridge && !cartridge.unpacked)
+			cartridge.unpacked = TRUE
+			. = TRUE
 	update_icon()

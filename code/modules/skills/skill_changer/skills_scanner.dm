@@ -1,5 +1,5 @@
 /obj/machinery/optable/skill_scanner
-	name = "CMF Table"
+	name = "CMF manipulation table"
 	desc = "Used to scan and change the cognitive and motor functions of living beings. Also a very comfortable table to lie on."
 	icon = 'icons/obj/skills/skills_machinery.dmi'
 	icon_state = "table_idle"
@@ -10,6 +10,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 10000
+	var/obj/machinery/computer/skills_console/console
 
 /obj/machinery/optable/skill_scanner/atom_init()
 	. = ..()
@@ -32,9 +33,24 @@
 /obj/machinery/optable/skill_scanner/attackby(obj/item/W, mob/user)
 	if(victim)
 		return
-	if(default_deconstruction_screwdriver(user, "table_open", "table_idle", W))
+	if(default_deconstruction_screwdriver(user, "table_open", icon_state_idle, W))
 		return
 	if(exchange_parts(user, W))
 		return
-
+	if(panel_open)
+		if(ismultitool(W))
+			var/obj/item/device/multitool/M = W
+			M.buffer = src
+			to_chat(user, "<span class='notice'>You save the data in the [W.name]'s buffer.</span>")
 	default_deconstruction_crowbar(W)
+
+/obj/machinery/optable/skill_scanner/take_victim(mob/living/carbon/C, mob/living/carbon/user)
+	. = ..()
+	if(!victim || !console)
+		return
+	console.updateDialog()
+
+/obj/machinery/optable/skill_scanner/process()
+	. = ..()
+	if(!victim && panel_open)
+		icon_state = "table_open"

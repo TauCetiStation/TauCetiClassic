@@ -26,6 +26,7 @@ export const SkillsConsole = (props, context) => {
     cartridge_unpacked,
     connected_table,
     cartridge_points,
+    connected_patient,
   } = data;
   return (
     <Window resizable>
@@ -52,21 +53,33 @@ export const SkillsConsole = (props, context) => {
           <Stack.Item>
             <Section title="Patient status">
               <LabeledList>
-                <LabeledList.Item label="IQ">{IQ}</LabeledList.Item>
-                <LabeledList.Item label="MDI">{MDI}</LabeledList.Item>
+                {!connected_table && (
+                  <Box>CMF manipulion table is not connected</Box>
+                )}
+                {!connected_patient && <Box>No patient detected</Box>}
+                {connected_table && connected_patient && (
+                  <>
+                    <LabeledList.Item label="IQ">{IQ}</LabeledList.Item>
+                    <LabeledList.Item label="MDI">{MDI}</LabeledList.Item>
+                  </>
+                )}
               </LabeledList>
             </Section>
           </Stack.Item>
           <Stack.Item>
             <Section title="Cartridge information">
               {!inserted_cartridge && <Box>No cartridge inserted</Box>}
-              {inserted_cartridge && (
+              {inserted_cartridge === 1 && (
                 <LabeledList>
                   <LabeledList.Item label="Installed cartridge">
                     {cartridge_name}
                     {!cartridge_unpacked && (
                       <Box as="span" m={5}>
-                        <Button style={{ marginLeft: 20 }}>
+                        <Button
+                          onClick={() => {
+                            act('eject');
+                          }}
+                          style={{ marginLeft: 20 }}>
                           Eject cartridge
                         </Button>
                       </Box>
@@ -75,14 +88,16 @@ export const SkillsConsole = (props, context) => {
                   <LabeledList.Item label="Compatible species">
                     {compatible_species.join(', ')}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Available USP">{cartridge_points}</LabeledList.Item>
+                  <LabeledList.Item label="Available USP">
+                    {cartridge_points}
+                  </LabeledList.Item>
                 </LabeledList>
               )}
             </Section>
           </Stack.Item>
         </Stack>
 
-        {!cartridge_unpacked && inserted_cartridge && (
+        {!cartridge_unpacked === true && inserted_cartridge && (
           <Box textAlign="center">
             <Button
               onClick={() => {
@@ -96,8 +111,9 @@ export const SkillsConsole = (props, context) => {
           </Box>
         )}
 
-        {cartridge_unpacked && (
-          <Section title="CMF manipulation">
+        {cartridge_unpacked === 1 && (
+          <Box>
+            <Section title="CMF manipulation">
             {skill_list.map((skill, v) => {
               return (
                 <Slider key={skill}
@@ -112,26 +128,27 @@ export const SkillsConsole = (props, context) => {
                 </Slider>
               );
             })}
-            <Box textAlign="center">
-              <Button
-                onClick={() => {
-                  act('inject');
-                }}
-                fluid
-                color="green">
-                Inject implant
-              </Button>
-              <Button.Confirm
-                onClick={() => {
-                  act('abort');
-                }}
-                fluid
-                color="danger"
-                confirmContent="Confirm ">
-                Abort
-              </Button.Confirm>
-            </Box>
-          </Section>
+              <Box textAlign="center">
+                <Button
+                  onClick={() => {
+                    act('inject');
+                  }}
+                  fluid
+                  color="green">
+                  Inject implant
+                </Button>
+                <Button.Confirm
+                  onClick={() => {
+                    act('abort');
+                  }}
+                  fluid
+                  color="danger"
+                  confirmContent="Confirm ">
+                  Abort
+                </Button.Confirm>
+              </Box>
+            </Section>
+          </Box>
         )}
       </Window.Content>
     </Window>
