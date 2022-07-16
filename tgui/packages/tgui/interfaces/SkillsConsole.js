@@ -28,6 +28,7 @@ export const SkillsConsole = (props, context) => {
     cartridge_points,
     connected_patient,
     free_points,
+    can_inject,
   } = data;
   return (
     <Window resizable width={600} height={675}>
@@ -114,7 +115,7 @@ export const SkillsConsole = (props, context) => {
           </Box>
         )}
 
-        {cartridge_unpacked === 1 && (
+        {cartridge_unpacked === 1 && inserted_cartridge === 1 && (
           <Box>
             <Section title="CMF manipulation">
               {Object.keys(skill_list).map((skill) => {
@@ -124,7 +125,12 @@ export const SkillsConsole = (props, context) => {
                       <Flex.Item grow={1} mx={1}>
                         <Slider
                           onDrag={(_e, value) => {
-                            skill_list[skill] = value;
+                            if (value > free_points) {
+                              skill_list[skill] = free_points;
+                            } else {
+                              skill_list[skill] = value;
+                            }
+
                             act('change_skill', skill_list);
                           }}
                           step={1}
@@ -144,6 +150,7 @@ export const SkillsConsole = (props, context) => {
                     act('inject');
                   }}
                   fluid
+                  disabled={can_inject === 0}
                   color="green">
                   Inject implant
                 </Button>

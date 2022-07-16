@@ -79,7 +79,7 @@
 		data["IQ"] = iq
 		data["MDI"] = mdi
 	data["skill_min_value"] = SKILL_LEVEL_MIN
-	data["skill_max_value"] = SKILL_LEVEL_MAX
+	data["skill_max_value"] = SKILL_LEVEL_HUMAN_MAX
 	data["inserted_cartridge"] = cartridge != null
 	if(cartridge)
 		data["skill_list"] = cartridge.get_buff_list()
@@ -88,9 +88,19 @@
 		data["cartridge_unpacked"] = cartridge.unpacked
 		data["cartridge_points"] = cartridge.points
 		data["free_points"] = cartridge.points - cartridge.get_used_points()
-
+	data["can_inject"] = can_inject(user)
 
 	return data
+
+/obj/machinery/computer/skills_console/proc/can_inject(mob/user)
+	if(cartridge && scanner && scanner.victim && scanner.victim.mind)
+		if(ishuman(scanner.victim))
+			var/mob/living/carbon/human/H = scanner.victim
+			var/same_user = H == user
+			var/compatible = (H.species.name in cartridge.compatible_species)
+			if(compatible && !same_user)
+				return TRUE
+	return FALSE
 
 /obj/machinery/computer/skills_console/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
@@ -103,7 +113,13 @@
 				cartridge = null
 			. = TRUE
 		if("inject")
-			var/new_color = params["color"]
+			if(can_inject(usr))
+				var/mob/living/carbon/human/H = scanner.victim
+				var/obj/item/weapon/implant/skill/implant = new(H)
+				implant.set_skills(cartridge.selected_buffs)
+				implant.inject(H)
+				qdel(cartridge)
+				cartridge = null
 			. = TRUE
 		if("change_skill")
 			if(cartridge && cartridge.unpacked)

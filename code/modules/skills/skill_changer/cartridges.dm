@@ -18,6 +18,8 @@
 /obj/item/weapon/skill_cartridge/proc/set_skills_buff(skills_list)
 	var/new_points = 0
 	for(var/skill_name in skills_list)
+		if(skills_list[skill_name] < SKILL_LEVEL_MIN || skills_list[skill_name] > SKILL_LEVEL_HUMAN_MAX)
+			return
 		new_points += skills_list[skill_name]
 	if(new_points > points)
 		return
@@ -72,6 +74,10 @@
 	name = "CMF implant"
 	var/datum/skillset/added_skillset
 
+/obj/item/weapon/implant/skill/proc/set_skills(list/skills_list)
+	var/datum/skillset/skillset = new()
+	skillset.skills = skills_list
+	added_skillset = skillset
 
 /obj/item/weapon/implant/skill/implanted(mob/source)
 	if(!ishuman(source))
