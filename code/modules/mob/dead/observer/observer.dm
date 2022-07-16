@@ -202,9 +202,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else
 			ghostize(can_reenter_corpse = TRUE)
 	else
-		var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
-		if(response != "Ghost")
-			return	//didn't want to ghost after-all
+		if(istype(loc, /obj/machinery/cryopod))
+			var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
+			if(response != "Ghost")
+				return	//didn't want to ghost after-all
+		else
+			to_chat(src, "<span class='warning'>You can't leave your body because you're still alive. Tough luck.</span>")
+			return
 
 		if(isrobot(usr))
 			var/mob/living/silicon/robot/robot = usr
