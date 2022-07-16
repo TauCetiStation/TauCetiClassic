@@ -4994,6 +4994,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4
 	},
+/obj/item/clothing/head/welding,
 /turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "kR" = (
@@ -5594,6 +5595,18 @@
 /obj/item/trash/plate,
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_s)
+"mh" = (
+/obj/machinery/door/window,
+/obj/structure/drain,
+/obj/machinery/shower{
+	is_free = 1;
+	pixel_y = 12
+	},
+/mob/living/simple_animal/hostile/cellular/meat/changeling,
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/space_structures/telestation/dormitories)
 "mi" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
@@ -8654,6 +8667,13 @@
 	icon_state = "blackcarpet8-0"
 	},
 /area/space_structures/telestation/chapel)
+"rG" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/rack,
+/turf/simulated/floor,
+/area/space_structures/telestation/service)
 "rJ" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance access"
@@ -12630,9 +12650,9 @@
 /turf/simulated/shuttle/floor,
 /area/space_structures/telestation/service)
 "Xe" = (
-/obj/structure/closet/emcloset,
+/obj/structure/rack,
 /turf/simulated/floor,
-/area/space_structures/telestation/service)
+/area/space_structures/telestation/engineering)
 "Xf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
@@ -12816,10 +12836,7 @@
 	},
 /area/space_structures/telestation/engineering)
 "Yg" = (
-/obj/structure/closet/emcloset,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/structure/rack,
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
 "Yi" = (
@@ -12959,16 +12976,13 @@
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_n)
 "YV" = (
-/obj/machinery/door/window,
-/obj/structure/drain,
-/obj/machinery/shower{
-	is_free = 1;
-	pixel_y = 12
-	},
-/turf/simulated/floor{
-	icon_state = "freezerfloor2"
-	},
-/area/space_structures/telestation/dormitories)
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate/civilian,
+/obj/item/clothing/mask/breath,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
+/obj/item/clothing/head/helmet/space/syndicate/civilian,
+/turf/simulated/floor,
+/area/space_structures/telestation/service)
 "YW" = (
 /turf/simulated/floor,
 /area/space_structures/telestation/engineering)
@@ -16278,7 +16292,7 @@ HQ
 HQ
 Wc
 WZ
-YW
+Xe
 YW
 kR
 lj
@@ -24859,9 +24873,9 @@ wy
 sh
 Ac
 Ac
-Xe
-Xe
+YV
 Yg
+rG
 Px
 JE
 Ac
@@ -27368,7 +27382,7 @@ UW
 DW
 vf
 cC
-YV
+mh
 VQ
 DW
 eq

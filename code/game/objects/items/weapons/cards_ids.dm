@@ -454,7 +454,7 @@
 	name = "Old ID card"
 	assignment = "Engineer"
 	icon_state = "data"
-	access = list(access_external_airlocks, access_engine)
+	access = list(access_external_airlocks, access_engine, access_engine_equip)
 
 /obj/item/weapon/card/id/tele_derelict/medic
 	name = "Old ID card"
