@@ -115,7 +115,7 @@
 
 /datum/quality/quirkieish/iseedeadpeople
 	name = "I See Dead People"
-	desc = "При крещение тебя окунули в чан с проклятой водой. Это дало тебе возможность видеть призраков."
+	desc = "После экспериментов, включающих в себя погружение в глубокую кому, ты стал замечать вокруг едва видимые тени..."
 	requirement = "Нет."
 
 /datum/quality/quirkieish/iseedeadpeople/add_effect(mob/living/carbon/human/H, latespawn)
