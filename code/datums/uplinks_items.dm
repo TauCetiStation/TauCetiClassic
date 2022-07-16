@@ -909,7 +909,7 @@
 	name = "Fake Nuke"
 	desc = "The most common nuclear bomb. With one but: it doesn't explode. You can <activate> it by double deploying."
 	item = /obj/machinery/nuclearbomb/fake
-	cost = 4
+	cost = 6
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/nuke_teleporter
