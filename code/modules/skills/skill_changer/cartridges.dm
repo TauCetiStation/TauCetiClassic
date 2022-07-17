@@ -98,7 +98,7 @@
 			H.adjustBrainLoss(50)
 		if(rand(10))
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-			BP.take_damage(10, 0, used_weapon = "CMFimplant")
+			BP.take_damage(10, 0, used_weapon = "CMF implant")
 			H.adjustBrainLoss(75)
 			H.adjustToxLoss(50)
 			H.Stun(5)
