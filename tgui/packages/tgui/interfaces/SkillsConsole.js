@@ -36,7 +36,7 @@ export const SkillsConsole = (props, context) => {
   return (
     <Window resizable width={600} height={675}>
       <Window.Content scrollable>
-        <Stack>
+        <Stack vertical>
           <Stack.Item>
             <Section title="Power info">
               <LabeledList>
@@ -60,118 +60,120 @@ export const SkillsConsole = (props, context) => {
               </LabeledList>
             </Section>
           </Stack.Item>
-        </Stack>
-        <br />
-        <Stack>
           <Stack.Item>
-            <Section title="Patient status">
-              <LabeledList>
-                {!connected_table && (
-                  <Box>CMF manipulion table is not connected</Box>
-                )}
-                {!connected_patient && <Box>No patient detected</Box>}
-                {connected_table && connected_patient && (
-                  <>
-                    <LabeledList.Item label="IQ">{IQ}</LabeledList.Item>
-                    <LabeledList.Item label="MDI">{MDI}</LabeledList.Item>
-                  </>
-                )}
-              </LabeledList>
-            </Section>
-          </Stack.Item>
-          <Stack.Item>
-            <Section title="Cartridge information">
-              {!inserted_cartridge && <Box>No cartridge inserted</Box>}
-              {inserted_cartridge === 1 && (
-                <LabeledList>
-                  <LabeledList.Item label="Installed cartridge">
-                    {cartridge_name}
-                    {!cartridge_unpacked && (
-                      <Box as="span" m={5}>
-                        <Button
-                          icon="eject"
-                          content="Eject cartridge"
-                          onClick={() => {
-                            act('eject');
-                          }}
-                          style={{ marginLeft: 20 }}
-                        />
-                      </Box>
+            <Stack>
+              <Stack.Item>
+                <Section title="Patient status">
+                  <LabeledList>
+                    {!connected_table && (
+                      <Box>CMF manipulion table is not connected</Box>
                     )}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Compatible species">
-                    {compatible_species.join(', ')}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Available USP">
-                    {cartridge_unpacked === 0 && cartridge_points}
-                    {cartridge_unpacked === 1 && free_points}
-                  </LabeledList.Item>
-                </LabeledList>
-              )}
-            </Section>
+                    {!connected_patient && <Box>No patient detected</Box>}
+                    {connected_table && connected_patient && (
+                      <>
+                        <LabeledList.Item label="IQ">{IQ}</LabeledList.Item>
+                        <LabeledList.Item label="MDI">{MDI}</LabeledList.Item>
+                      </>
+                    )}
+                  </LabeledList>
+                </Section>
+              </Stack.Item>
+              <Stack.Item>
+                <Section title="Cartridge information">
+                  {!inserted_cartridge && <Box>No cartridge inserted</Box>}
+                  {inserted_cartridge === 1 && (
+                    <LabeledList>
+                      <LabeledList.Item label="Installed cartridge">
+                        {cartridge_name}
+                        {!cartridge_unpacked && (
+                          <Box as="span" m={5}>
+                            <Button
+                              icon="eject"
+                              content="Eject cartridge"
+                              onClick={() => {
+                                act('eject');
+                              }}
+                              style={{ marginLeft: 20 }}
+                            />
+                          </Box>
+                        )}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Compatible species">
+                        {compatible_species.join(', ')}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Available USP">
+                        {cartridge_unpacked === 0 && cartridge_points}
+                        {cartridge_unpacked === 1 && free_points}
+                      </LabeledList.Item>
+                    </LabeledList>
+                  )}
+                </Section>
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
-        </Stack>
 
-        {cartridge_unpacked === 0 && inserted_cartridge === 1 && (
-          <Box textAlign="center">
-            <Button
-              onClick={() => {
-                act('unpack');
-              }}
-              fluid
-              color="danger"
-              tooltip="This action will destroy the cartridge and begin the CMF manipulation procedure.">
-              Unpack cartridge
-            </Button>
-          </Box>
-        )}
-        <br />
-        {cartridge_unpacked === 1 && inserted_cartridge === 1 && (
-          <Section title="CMF manipulation">
-            {Object.keys(skill_list).map((skill) => {
-              return (
-                <LabeledList.Item label={skill} key={skill}>
-                  <Flex inline width="100%">
-                    <Flex.Item grow={1} mx={1}>
-                      <Slider
-                        onChange={(_e, value) => {
-                          skill_list[skill] = value;
-
-                          act('change_skill', skill_list);
-                        }}
-                        step={1}
-                        value={skill_list[skill]}
-                        maxValue={skill_max_value}
-                        stepPixelSize={50}
-                        minValue={skill_min_value}
-                      />
-                    </Flex.Item>
-                  </Flex>
-                </LabeledList.Item>
-              );
-            })}
+          {cartridge_unpacked === 0 && inserted_cartridge === 1 && (
             <Box textAlign="center">
               <Button
                 onClick={() => {
-                  act('inject');
-                }}
-                fluid
-                disabled={can_inject === 0}
-                color="green">
-                Inject implant
-              </Button>
-              <Button.Confirm
-                onClick={() => {
-                  act('abort');
+                  act('unpack');
                 }}
                 fluid
                 color="danger"
-                confirmContent="Confirm ">
-                Abort
-              </Button.Confirm>
+                tooltip="This action will destroy the cartridge and begin the CMF manipulation procedure.">
+                Unpack cartridge
+              </Button>
             </Box>
-          </Section>
-        )}
+          )}
+          {cartridge_unpacked === 1 && inserted_cartridge === 1 && (
+            <Stack.Item>
+              <Section title="CMF manipulation">
+                {Object.keys(skill_list).map((skill) => {
+                  return (
+                    <LabeledList.Item label={skill} key={skill}>
+                      <Flex inline width="100%">
+                        <Flex.Item grow={1} mx={1}>
+                          <Slider
+                            onChange={(_e, value) => {
+                              skill_list[skill] = value;
+
+                              act('change_skill', skill_list);
+                            }}
+                            step={1}
+                            value={skill_list[skill]}
+                            maxValue={skill_max_value}
+                            stepPixelSize={50}
+                            minValue={skill_min_value}
+                          />
+                        </Flex.Item>
+                      </Flex>
+                    </LabeledList.Item>
+                  );
+                })}
+                <Box textAlign="center">
+                  <Button
+                    onClick={() => {
+                      act('inject');
+                    }}
+                    fluid
+                    disabled={can_inject === 0}
+                    color="green">
+                    Inject implant
+                  </Button>
+                  <Button.Confirm
+                    onClick={() => {
+                      act('abort');
+                    }}
+                    fluid
+                    color="danger"
+                    confirmContent="Confirm ">
+                    Abort
+                  </Button.Confirm>
+                </Box>
+              </Section>
+            </Stack.Item>
+          )}
+        </Stack>
       </Window.Content>
     </Window>
   );
