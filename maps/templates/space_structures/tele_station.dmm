@@ -20,6 +20,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -103,26 +106,17 @@
 	},
 /area/space_structures/telestation/kitchen)
 "ao" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12
-	},
 /obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/space_structures/telestation/security)
+/area/space_structures/telestation/research)
 "ap" = (
 /obj/effect/decal/remains/human,
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor,
 /area/space_structures/telestation/security)
 "aq" = (
@@ -207,7 +201,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -222,11 +215,14 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/floor,
-/area/space_structures/telestation/engineering)
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/telestation/infirmary)
 "aC" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor{
@@ -306,16 +302,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/space_structures/telestation/security)
+/turf/simulated/floor,
+/area/space_structures/telestation/infirmary)
 "aN" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -424,12 +412,13 @@
 /turf/simulated/wall/r_wall,
 /area/space_structures/telestation/phoron_research)
 "bc" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
+/obj/machinery/door/airlock/science{
+	name = "Research access";
+	req_access = list(47)
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -446,17 +435,20 @@
 	pixel_x = -27
 	},
 /obj/structure/cable{
-	dir = 8
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/security)
 "bf" = (
+/obj/machinery/door/airlock/glass{
+	name = "Public access"
+	},
 /obj/structure/cable{
-	dir = 4;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/space_structures/telestation/security)
+/area/space_structures/telestation/infirmary)
 "bg" = (
 /obj/item/trash/sosjerky,
 /turf/simulated/floor/plating,
@@ -468,14 +460,7 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -497,7 +482,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -512,14 +498,13 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	d1 = 1;
+	d1 = 2;
 	d2 = 4;
-	icon_state = "1-4"
+	icon_state = "2-4"
 	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	dir = 8;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor{
@@ -537,8 +522,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -550,8 +536,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_sci_e)
@@ -564,8 +551,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_sci_e)
@@ -577,8 +565,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/maint_sci_e)
@@ -613,17 +602,16 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/maint_sci_e)
 "bs" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -645,16 +633,16 @@
 	},
 /area/space_structures/telestation/engineering)
 "bv" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 9
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -684,7 +672,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -710,20 +697,9 @@
 	},
 /area/space_structures/telestation/phoron_research)
 "bC" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 1
-	},
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/space_structures/telestation/research)
+/mob/living/simple_animal/hostile/bot/secbot,
+/turf/simulated/floor,
+/area/space_structures/telestation/infirmary)
 "bD" = (
 /obj/structure/grille,
 /turf/simulated/floor/plating,
@@ -746,7 +722,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -793,7 +770,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -810,7 +786,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -868,8 +845,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -898,10 +876,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -917,10 +891,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
 	},
@@ -931,11 +901,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
@@ -951,6 +916,9 @@
 /area/space_structures/telestation/kitchen)
 "bX" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
 	},
@@ -995,28 +963,30 @@
 /obj/structure/rack,
 /obj/structure/window/reinforced,
 /obj/effect/spawner/lootdrop/maintenance/four,
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/maint_sci_e)
 "ce" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/wall,
 /area/space_structures/telestation/maint_sci_e)
@@ -1028,7 +998,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/wall,
@@ -1060,10 +1031,6 @@
 	},
 /area/space_structures/telestation/research)
 "ci" = (
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1
 	},
@@ -1074,6 +1041,9 @@
 "cj" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 5
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
@@ -1123,7 +1093,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -1162,11 +1133,6 @@
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -1175,11 +1141,12 @@
 /area/space_structures/telestation/research)
 "cu" = (
 /obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/turf/simulated/wall/r_wall,
-/area/space_structures/telestation/server_room)
+/turf/simulated/floor,
+/area/space_structures/telestation/research)
 "cv" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 1
@@ -1202,7 +1169,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -1282,8 +1250,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1300,10 +1269,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
 	},
@@ -1317,11 +1282,11 @@
 /area/space_structures/telestation/maint_eng)
 "cL" = (
 /obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
+/turf/simulated/floor,
 /area/space_structures/telestation/research)
 "cM" = (
 /obj/effect/decal/cleanable/blood,
@@ -1344,7 +1309,10 @@
 	dir = 8;
 	pixel_x = -27
 	},
-/obj/structure/cable,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1390,7 +1358,8 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -1659,7 +1628,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -1667,16 +1637,16 @@
 	},
 /area/space_structures/telestation/infirmary)
 "dr" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 10
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -1796,7 +1766,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -1871,7 +1842,8 @@
 	pixel_x = 27
 	},
 /obj/structure/cable{
-	dir = 1
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_med)
@@ -1882,11 +1854,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
@@ -1899,6 +1866,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/space_structures/telestation/infirmary)
 "dO" = (
@@ -1907,6 +1879,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/infirmary)
@@ -1926,6 +1903,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/space_structures/telestation/infirmary)
 "dR" = (
@@ -1933,6 +1915,11 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1940,6 +1927,11 @@
 "dS" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1972,7 +1964,13 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -1981,7 +1979,8 @@
 /area/space_structures/telestation/infirmary)
 "dX" = (
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/wall,
@@ -1998,6 +1997,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/wall/r_wall,
 /area/space_structures/telestation/security)
@@ -2027,10 +2029,9 @@
 	dir = 6
 	},
 /obj/structure/cable{
-	d1 = 1;
+	d1 = 2;
 	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2086,8 +2087,9 @@
 /area/space_structures/telestation/engineering)
 "ej" = (
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2106,8 +2108,9 @@
 	req_access = list(47)
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2146,7 +2149,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -2160,14 +2164,16 @@
 "er" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_med)
 "es" = (
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
@@ -2240,10 +2246,12 @@
 /area/space_structures/telestation/kitchen)
 "eA" = (
 /obj/structure/cable{
-	icon_state = "1-2"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/turf/simulated/wall/r_wall,
-/area/space_structures/telestation/research)
+/turf/simulated/floor,
+/area/space_structures/telestation/infirmary)
 "eB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
 /turf/simulated/floor{
@@ -2292,77 +2300,95 @@
 	},
 /area/space_structures/telestation/kitchen)
 "eI" = (
+/obj/machinery/atmospherics/pipe/simple/visible/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
+	dir = 1
+	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
-/area/space_structures/telestation/research)
+/turf/simulated/floor/plating,
+/area/space_structures/telestation/maint_med)
 "eJ" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor,
-/area/space_structures/telestation/infirmary)
-"eK" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/wall,
-/area/space_structures/telestation/infirmary)
-"eL" = (
+/area/space_structures/telestation/surgery)
+"eK" = (
+/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/supply{
+	dir = 1
+	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/r_wall,
-/area/space_structures/telestation/security)
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/telestation/maint_med)
+"eL" = (
+/obj/structure/dispenser/phoron{
+	oxygentanks = 10
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "darkyellowfull"
+	},
+/area/space_structures/telestation/engineering)
 "eM" = (
 /obj/structure/cable{
-	dir = 4;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
-/area/space_structures/telestation/maint_med)
+/turf/simulated/floor,
+/area/space_structures/telestation/engineering)
 "eN" = (
+/obj/structure/window/reinforced{
+	dir = 5
+	},
 /obj/structure/grille,
 /obj/structure/cable{
-	dir = 4;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
-/area/space_structures/telestation/maint_med)
+/turf/simulated/floor{
+	icon_state = "darkyellowfull"
+	},
+/area/space_structures/telestation/engineering)
 "eO" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance access"
-	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
 /area/space_structures/telestation/maint_med)
 "eP" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "white"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
 	},
-/area/space_structures/telestation/infirmary)
+/turf/simulated/floor,
+/area/space_structures/telestation/engineering)
 "eQ" = (
 /obj/item/stack/cable_coil{
 	amount = 2
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 5
@@ -2372,6 +2398,11 @@
 "eR" = (
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -2391,26 +2422,21 @@
 	},
 /area/space_structures/telestation/engineering)
 "eU" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2427,30 +2453,32 @@
 	name = "Morgue access";
 	req_access = list(5)
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/telestation/morgue)
 "eX" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2464,15 +2492,16 @@
 /area/space_structures/telestation/phoron_research)
 "eZ" = (
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2486,15 +2515,16 @@
 /area/space_structures/telestation/research)
 "fb" = (
 /obj/effect/decal/cleanable/blood,
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2505,30 +2535,32 @@
 /area/space_structures/telestation/chapel)
 "fd" = (
 /mob/living/simple_animal/hostile/cellular/meat/changeling,
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/telestation/morgue)
 "fe" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2543,13 +2575,14 @@
 /area/space_structures/telestation/chapel)
 "fg" = (
 /obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2557,9 +2590,6 @@
 /area/space_structures/telestation/morgue)
 "fh" = (
 /obj/item/stack/cable_coil,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1
 	},
@@ -2580,8 +2610,9 @@
 	name = "Maintenance access"
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2634,34 +2665,25 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor,
 /area/space_structures/telestation/research)
 "fq" = (
 /obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/floor,
-/area/space_structures/telestation/infirmary)
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/space)
 "fr" = (
-/obj/effect/decal/cleanable/blood,
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
+/obj/machinery/door/airlock/hatch{
+	name = "Reactor access";
+	req_access = list(10)
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 1
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/space_structures/telestation/infirmary)
+/turf/simulated/floor/plating,
+/area/space_structures/telestation/maint_eng)
 "fs" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -2776,7 +2798,10 @@
 /obj/machinery/power/apc/largecell{
 	pixel_y = -27
 	},
-/obj/structure/cable,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor,
 /area/space_structures/telestation/research)
 "fG" = (
@@ -2784,19 +2809,27 @@
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_n)
 "fH" = (
-/obj/item/weapon/shard,
-/obj/machinery/light{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "darkyellowfull"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "fI" = (
 /obj/machinery/power/apc/largecell{
 	pixel_y = -27
 	},
-/obj/structure/cable,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor,
 /area/space_structures/telestation/infirmary)
 "fJ" = (
@@ -2814,18 +2847,24 @@
 /turf/simulated/wall,
 /area/space_structures/telestation/service)
 "fL" = (
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 1
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/wall,
-/area/space_structures/telestation/infirmary)
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/space_structures/telestation/engineering)
 "fM" = (
 /obj/machinery/atmospherics/pipe/simple/visible/black{
 	dir = 1
@@ -2846,7 +2885,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
@@ -2895,8 +2935,8 @@
 /turf/simulated/floor/grass,
 /area/space_structures/telestation/service)
 "fV" = (
-/obj/item/stack/cable_coil{
-	amount = 2
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -2911,18 +2951,16 @@
 	},
 /area/space_structures/telestation/phoron_research)
 "fX" = (
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
+/obj/item/stack/cable_coil{
+	amount = 2
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
+/obj/structure/stool/bed/chair/office/light{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 1
+/turf/simulated/floor{
+	icon_state = "darkyellowfull"
 	},
-/turf/simulated/floor/plating,
-/area/space_structures/telestation/maint_med)
+/area/space_structures/telestation/engineering)
 "fY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4
@@ -3199,23 +3237,25 @@
 	},
 /area/space_structures/telestation/atmospherics)
 "gJ" = (
-/obj/effect/decal/cleanable/blood,
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
+/obj/machinery/door/airlock/hatch{
+	name = "Reactor access";
+	req_access = list(10)
 	},
-/turf/simulated/floor,
-/area/space_structures/telestation/security)
+/turf/simulated/floor{
+	icon_state = "darkyellowfull"
+	},
+/area/space_structures/telestation/engineering)
 "gK" = (
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -3270,12 +3310,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
-	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -3290,10 +3324,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -3304,10 +3334,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
-	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
 	},
 /turf/simulated/wall,
 /area/space_structures/telestation/surgery)
@@ -3321,20 +3347,14 @@
 	},
 /area/space_structures/telestation/reactor)
 "gV" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/visible/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/visible/supply{
 	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_med)
@@ -3387,13 +3407,14 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/chapel)
 "hd" = (
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable{
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	icon_state = "darkpurplefull"
-	},
-/area/space_structures/telestation/robotics)
+/turf/simulated/floor/plating,
+/area/space_structures/telestation/maint_srv_s)
 "he" = (
 /obj/structure/window/reinforced{
 	dir = 5
@@ -3502,10 +3523,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -3518,7 +3535,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
@@ -3586,8 +3602,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/bluespace_research)
@@ -3609,6 +3626,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "damaged2"
 	},
@@ -3621,6 +3643,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/space_structures/telestation/bluespace_research)
 "hF" = (
@@ -3630,6 +3657,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "damaged3"
@@ -3650,6 +3682,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/space_structures/telestation/bluespace_research)
 "hI" = (
@@ -3657,34 +3694,26 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
 "hJ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+/mob/living/simple_animal/hostile/bot/secbot,
+/turf/simulated/floor/carpet/black{
+	icon_state = "blackcarpet9-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	icon_state = "damaged2"
-	},
-/area/space_structures/telestation/bluespace_research)
+/area/space_structures/telestation/chapel)
 "hK" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
-	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/bluespace_research)
 "hL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "damaged2"
@@ -3711,12 +3740,15 @@
 	},
 /area/space_structures/telestation/chapel)
 "hQ" = (
+/obj/machinery/door/airlock/external{
+	name = "External access";
+	req_access = list(13)
+	},
 /obj/structure/cable{
-	dir = 4;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
-/area/space_structures/telestation/bluespace_research)
+/turf/simulated/floor/engine/vacuum,
+/area/space_structures/telestation/reactor)
 "hR" = (
 /mob/living/simple_animal/hostile/cellular/bluespace/meelee{
 	maxHealth = 40;
@@ -3740,10 +3772,9 @@
 /area/space_structures/telestation/reactor)
 "hU" = (
 /obj/structure/cable{
-	d1 = 1;
+	d1 = 2;
 	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -3764,8 +3795,9 @@
 /area/space_structures/telestation/chapel)
 "hX" = (
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -3780,14 +3812,12 @@
 /area/space)
 "hZ" = (
 /obj/structure/cable{
-	d1 = 1;
+	d1 = 4;
 	d2 = 8;
-	icon_state = "1-8"
+	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	icon_state = "whitebluefull"
-	},
-/area/space_structures/telestation/surgery)
+/turf/simulated/floor/plating,
+/area/space_structures/telestation/maint_srv_s)
 "ia" = (
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -3838,18 +3868,12 @@
 /area/space_structures/telestation/chapel)
 "ig" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 5
-	},
-/turf/simulated/floor/plating,
-/area/space)
+/turf/simulated/wall,
+/area/space_structures/telestation/maint_srv_s)
 "ih" = (
 /obj/structure/closet/cabinet,
 /turf/simulated/floor/wood,
@@ -3873,10 +3897,9 @@
 	dir = 6
 	},
 /obj/structure/cable{
-	d1 = 1;
+	d1 = 2;
 	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_med)
@@ -3910,17 +3933,21 @@
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 5
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_sec)
 "io" = (
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 4
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/telestation/maint_sec)
+/area/space_structures/telestation/maint_srv_s)
 "ip" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4
@@ -3955,13 +3982,12 @@
 	},
 /area/space_structures/telestation/atmospherics)
 "it" = (
-/obj/structure/grille,
+/obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable{
-	dir = 4;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/telestation/maint_sec)
+/area/space_structures/telestation/maint_srv_s)
 "iu" = (
 /turf/simulated/shuttle/wall,
 /area/space_structures/telestation/service)
@@ -3972,14 +3998,14 @@
 /turf/simulated/floor/engine/nitrogen,
 /area/space_structures/telestation/atmospherics)
 "iw" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -4043,7 +4069,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/wall,
@@ -4113,7 +4140,8 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/supply,
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
@@ -4218,9 +4246,6 @@
 /area/space_structures/telestation/atmospherics)
 "jg" = (
 /obj/item/weapon/firstaid_arm_assembly,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
 	},
@@ -4259,8 +4284,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_med)
@@ -4449,7 +4475,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/wall,
@@ -4495,56 +4522,64 @@
 /turf/simulated/floor/wood,
 /area/space_structures/telestation/dormitories)
 "jR" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 10
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_sec)
 "jS" = (
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating,
-/area/space_structures/telestation/maint_sec)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/telestation/reactor)
 "jT" = (
 /obj/machinery/atmospherics/pipe/simple/visible/supply,
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 10
 	},
 /obj/structure/cable{
-	d1 = 1;
+	d1 = 2;
 	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
 /area/space_structures/telestation/atmospherics)
 "jU" = (
-/obj/structure/grille,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating,
-/area/space_structures/telestation/maint_sec)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/telestation/reactor)
 "jV" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -4558,7 +4593,8 @@
 	},
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/structure/cable{
-	dir = 4
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -4607,7 +4643,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -4625,6 +4660,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
@@ -4669,7 +4706,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -4695,6 +4731,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
@@ -4769,8 +4807,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -4800,8 +4839,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -4883,7 +4923,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -4913,14 +4952,16 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/dormitories)
 "kH" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/wall,
 /area/space_structures/telestation/maint_sec)
@@ -4943,8 +4984,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/wall,
 /area/space_structures/telestation/maint_med)
@@ -4982,7 +5024,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -5004,12 +5045,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
-	},
 /turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "kS" = (
@@ -5025,7 +5060,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 4
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/engineering)
@@ -5034,20 +5071,12 @@
 	dir = 8;
 	pixel_x = -27
 	},
-/obj/structure/cable{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
 "kV" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
@@ -5104,6 +5133,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
@@ -5129,19 +5160,20 @@
 	pixel_y = -27
 	},
 /obj/structure/cable{
-	dir = 8
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/dormitories)
 "lh" = (
 /obj/effect/decal/cleanable/blood,
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1
+	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/dormitories)
@@ -5161,9 +5193,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "lk" = (
@@ -5181,17 +5210,14 @@
 	pixel_y = -27
 	},
 /obj/structure/cable{
-	dir = 8
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
 	},
 /area/space_structures/telestation/phoron_research)
 "lm" = (
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
@@ -5272,6 +5298,8 @@
 	name = "Maintenance access"
 	},
 /obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -5283,6 +5311,9 @@
 "lx" = (
 /obj/structure/window/reinforced,
 /obj/structure/reagent_dispensers/watertank,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_s)
 "ly" = (
@@ -5301,7 +5332,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -5346,18 +5376,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "lF" = (
 /obj/machinery/door/airlock/glass{
 	name = "Public access"
-	},
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
@@ -5424,8 +5447,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -5439,11 +5463,6 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
 "lO" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
@@ -5451,7 +5470,13 @@
 	dir = 10
 	},
 /obj/structure/cable{
-	dir = 8;
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/red{
@@ -5472,11 +5497,6 @@
 /area/space_structures/telestation/phoron_research)
 "lQ" = (
 /obj/item/weapon/reagent_containers/syringe,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -5548,6 +5568,9 @@
 	amount = 50
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5577,7 +5600,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -5628,10 +5650,6 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
 "ml" = (
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
 	},
@@ -5653,22 +5671,22 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
 	},
 /area/space)
 "mo" = (
+/obj/effect/decal/cleanable/blood/oil,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 10
-	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/telestation/maint_srv_s)
 "mp" = (
 /turf/simulated/floor,
 /area/space_structures/telestation/maint_srv_s)
@@ -5690,7 +5708,6 @@
 /obj/machinery/power/apc/largecell{
 	pixel_y = -27
 	},
-/obj/structure/cable,
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
 	},
@@ -5711,32 +5728,24 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/dormitories)
 "mw" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/supply,
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 1
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/space)
 "mx" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/telestation/engineering)
 "my" = (
 /obj/effect/decal/cleanable/blood,
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5747,10 +5756,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
-	},
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5769,10 +5774,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5788,10 +5789,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
-	},
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5827,10 +5824,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5839,18 +5832,14 @@
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/engineering)
@@ -5875,8 +5864,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/engineering)
@@ -5885,13 +5875,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 1;
+	d1 = 4;
 	d2 = 8;
-	icon_state = "1-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/engineering)
@@ -5919,8 +5905,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -5933,14 +5920,13 @@
 	},
 /obj/structure/cable{
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -5948,6 +5934,11 @@
 /area/space_structures/telestation/engineering)
 "mQ" = (
 /obj/item/stack/cable_coil,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5967,8 +5958,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -5982,8 +5974,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -6000,8 +5993,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -6023,10 +6017,6 @@
 /area/space_structures/telestation/maint_eng)
 "mV" = (
 /mob/living/simple_animal/hostile/bot/secbot,
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
 	},
@@ -6047,8 +6037,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
@@ -6066,13 +6057,15 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance access"
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/space_structures/telestation/dormitories)
 "mZ" = (
@@ -6140,7 +6133,6 @@
 /area/space_structures/telestation/dormitories)
 "nf" = (
 /obj/machinery/power/port_gen/pacman,
-/obj/structure/cable,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warndark"
@@ -6167,7 +6159,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
@@ -6197,14 +6188,16 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/dormitories)
@@ -6250,7 +6243,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -6279,13 +6271,15 @@
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_eng)
 "nr" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/space_structures/telestation/dormitories)
 "ns" = (
@@ -6345,7 +6339,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -6384,13 +6377,12 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -6421,7 +6413,6 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -6445,10 +6436,9 @@
 /area/space_structures/telestation/engineering)
 "nI" = (
 /obj/structure/cable{
-	d1 = 1;
+	d1 = 2;
 	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -6467,14 +6457,14 @@
 /area/space_structures/telestation/maint_sec)
 "nL" = (
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
+	d1 = 2;
 	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -6501,8 +6491,9 @@
 	req_access = list(10)
 	},
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -6543,21 +6534,16 @@
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_s)
 "nU" = (
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
@@ -6569,15 +6555,16 @@
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_s)
 "nW" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
@@ -6585,42 +6572,45 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/grass,
 /area/space_structures/telestation/service)
 "nY" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/grass,
 /area/space_structures/telestation/service)
 "nZ" = (
 /obj/structure/flora/tree/jungle,
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/grass,
 /area/space_structures/telestation/service)
@@ -6628,15 +6618,16 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/grass,
 /area/space_structures/telestation/service)
@@ -6644,26 +6635,27 @@
 /obj/machinery/door/airlock/glass{
 	name = "Public access"
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/space_structures/telestation/dormitories)
 "oc" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor,
 /area/space_structures/telestation/dormitories)
 "od" = (
@@ -6707,13 +6699,14 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/dormitories)
 "oh" = (
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -6721,11 +6714,12 @@
 /area/space_structures/telestation/engineering)
 "oi" = (
 /obj/machinery/power/smes/fullcharge,
+/obj/structure/cable,
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/cable,
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
 	},
@@ -6736,7 +6730,8 @@
 	pixel_x = -27
 	},
 /obj/structure/cable{
-	dir = 1
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
@@ -6750,15 +6745,16 @@
 	},
 /area/space_structures/telestation/kitchen)
 "ol" = (
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
@@ -6800,8 +6796,10 @@
 	dir = 9
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
+	},
+/obj/item/weapon/shard{
+	icon_state = "small"
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -6815,10 +6813,9 @@
 	dir = 6
 	},
 /obj/structure/cable{
-	d1 = 1;
+	d1 = 2;
 	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_eng)
@@ -6830,8 +6827,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_eng)
@@ -6844,8 +6842,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_eng)
@@ -6871,11 +6870,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
@@ -6899,6 +6900,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -6913,24 +6917,24 @@
 	},
 /area/space_structures/telestation/kitchen)
 "oA" = (
-/obj/structure/stool/bed/chair/office/light,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
 	},
+/obj/item/weapon/shard,
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
 	},
 /area/space_structures/telestation/engineering)
 "oB" = (
-/obj/structure/stool/bed/chair/office/light{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -6938,10 +6942,10 @@
 /area/space_structures/telestation/engineering)
 "oC" = (
 /obj/machinery/light,
-/obj/structure/cable,
 /obj/machinery/power/terminal{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
 	},
@@ -6960,11 +6964,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "blackchecker"
@@ -6992,21 +6998,11 @@
 	},
 /area/space_structures/telestation/engineering)
 "oH" = (
-/obj/structure/computerframe{
-	dir = 1
-	},
-/obj/item/weapon/shard,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "darkyellowfull"
-	},
-/area/space_structures/telestation/engineering)
+/turf/simulated/floor/plating,
+/area/space_structures/telestation/maint_srv_s)
 "oI" = (
 /obj/machinery/light{
 	dir = 1
@@ -7014,14 +7010,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
@@ -7029,12 +7024,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
@@ -7042,13 +7038,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
@@ -7073,7 +7069,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -7086,10 +7081,12 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
 "oO" = (
@@ -7138,7 +7135,6 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -7158,25 +7154,28 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
 "oX" = (
 /obj/effect/decal/cleanable/blood,
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
@@ -7191,12 +7190,12 @@
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 5
 	},
+/obj/structure/grille,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_eng)
 "pa" = (
@@ -7207,33 +7206,12 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/wall,
 /area/space_structures/telestation/maint_eng)
-"pb" = (
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/space)
-"pc" = (
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 10
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "pd" = (
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 10
@@ -7247,10 +7225,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
 "pf" = (
@@ -7281,36 +7261,17 @@
 	dir = 5
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/telestation/reactor)
-"pi" = (
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 5
-	},
-/turf/simulated/floor/plating,
-/area/space)
-"pj" = (
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 4
-	},
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "pk" = (
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
@@ -7321,10 +7282,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
 "pm" = (
@@ -7337,21 +7300,21 @@
 /obj/machinery/door/airlock/glass{
 	name = "Public access"
 	},
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
 "po" = (
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -7373,16 +7336,19 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
 "pr" = (
 /obj/machinery/power/emitter/gyrotron/anchored,
 /obj/structure/cable{
-	dir = 8
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7405,8 +7371,9 @@
 /area/space_structures/telestation/reactor)
 "pt" = (
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7422,34 +7389,14 @@
 	icon_state = "dark"
 	},
 /area/space_structures/telestation/reactor)
-"pv" = (
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "pw" = (
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/space)
-"px" = (
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 10
-	},
-/obj/structure/cable{
-	d1 = 2;
+	d1 = 4;
 	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 10
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -7457,39 +7404,23 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor,
-/area/space_structures/telestation/cafeteria)
-"pz" = (
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 5
-	},
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 5
-	},
-/turf/simulated/floor/plating,
-/area/space)
-"pA" = (
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	dir = 8;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 4
+/turf/simulated/floor,
+/area/space_structures/telestation/cafeteria)
+"pA" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Maintenance access"
 	},
-/turf/simulated/floor/plating,
-/area/space)
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/space_structures/telestation/maint_srv_s)
 "pB" = (
 /turf/simulated/floor/engine,
 /area/space_structures/telestation/phoron_research)
@@ -7498,10 +7429,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
 "pD" = (
@@ -7509,18 +7442,11 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
 "pE" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 1
-	},
 /turf/simulated/floor,
-/area/space_structures/telestation/service)
+/area/space_structures/telestation/maint_srv_s)
 "pF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
 /turf/simulated/floor/carpet/black{
@@ -7534,7 +7460,8 @@
 	pixel_x = 27
 	},
 /obj/structure/cable{
-	dir = 1
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/wood,
 /area/space_structures/telestation/chapel)
@@ -7551,13 +7478,6 @@
 	icon_state = "blackcarpet6-2"
 	},
 /area/space_structures/telestation/chapel)
-"pJ" = (
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
-/turf/simulated/wall/r_wall,
-/area/space_structures/telestation/security)
 "pK" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
@@ -7565,35 +7485,23 @@
 	},
 /turf/environment/space,
 /area/space)
-"pL" = (
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "pM" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
 	},
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
@@ -7603,12 +7511,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
@@ -7617,12 +7526,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
@@ -7632,12 +7542,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
@@ -7645,12 +7556,13 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
@@ -7658,11 +7570,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
 "pS" = (
@@ -7672,12 +7585,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
@@ -7685,12 +7599,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
@@ -7703,32 +7618,29 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
 "pW" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
 "pX" = (
@@ -7748,12 +7660,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/chapel)
@@ -7761,12 +7674,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black{
 	icon_state = "blackcarpet4-0"
@@ -7774,15 +7688,16 @@
 /area/space_structures/telestation/chapel)
 "qa" = (
 /obj/structure/barricade/wooden,
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black{
 	icon_state = "blackcarpet12-0"
@@ -7792,43 +7707,46 @@
 /obj/item/stack/sheet/wood{
 	amount = 15
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/black{
 	icon_state = "blackcarpet15-3"
 	},
 /area/space_structures/telestation/chapel)
 "qc" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/black{
 	icon_state = "blackcarpet15-12"
 	},
 /area/space_structures/telestation/chapel)
 "qd" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black{
 	icon_state = "blackcarpet12-0"
@@ -7836,15 +7754,16 @@
 /area/space_structures/telestation/chapel)
 "qe" = (
 /obj/effect/decal/cleanable/blood,
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black{
 	icon_state = "blackcarpet15-3"
@@ -7854,30 +7773,32 @@
 /obj/machinery/door/airlock/glass{
 	name = "Public access"
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black{
 	icon_state = "blackcarpet12-0"
 	},
 /area/space_structures/telestation/chapel)
 "qg" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black{
 	icon_state = "blackcarpet15-3"
@@ -7887,56 +7808,60 @@
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black,
 /area/space_structures/telestation/chapel)
 "qi" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black,
 /area/space_structures/telestation/chapel)
 "qj" = (
 /obj/item/trash/candle/red,
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black,
 /area/space_structures/telestation/chapel)
 "qk" = (
 /obj/structure/big_bell,
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black{
 	icon_state = "blackcarpet-broken"
@@ -7944,29 +7869,31 @@
 /area/space_structures/telestation/chapel)
 "ql" = (
 /obj/item/candle/red,
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black,
 /area/space_structures/telestation/chapel)
 "qm" = (
 /obj/effect/decal/cleanable/blood,
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black,
 /area/space_structures/telestation/chapel)
@@ -7974,28 +7901,30 @@
 /obj/structure/stool/bed/chair/lectern{
 	dir = 8
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black,
 /area/space_structures/telestation/chapel)
 "qo" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black{
 	icon_state = "blackcarpet15-12"
@@ -8004,15 +7933,16 @@
 "qp" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/beanbags,
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/black{
 	icon_state = "blackcarpet15-0"
@@ -8020,16 +7950,16 @@
 /area/space_structures/telestation/chapel)
 "qq" = (
 /obj/effect/decal/remains/human,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/black{
 	icon_state = "blackcarpet12-0"
@@ -8072,9 +8002,12 @@
 	},
 /area/space_structures/telestation/chapel)
 "qu" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 1
+	},
+/obj/machinery/door/airlock/hatch{
+	name = "Reactor access";
+	req_access = list(10)
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_eng)
@@ -8082,11 +8015,13 @@
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -8100,9 +8035,6 @@
 "qx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
@@ -8147,7 +8079,6 @@
 /area/space_structures/telestation/maint_eng)
 "qD" = (
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -8184,7 +8115,8 @@
 "qH" = (
 /obj/machinery/power/fusion_core/mapped,
 /obj/structure/cable{
-	dir = 1
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/space_structures/telestation/reactor)
@@ -8207,10 +8139,6 @@
 /turf/simulated/floor/engine/vacuum,
 /area/space_structures/telestation/reactor)
 "qL" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -8221,32 +8149,39 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_s)
 "qM" = (
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 10
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/supply{
+	dir = 10
+	},
+/obj/structure/inflatable,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 10
-	},
-/obj/structure/inflatable,
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_s)
 "qN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
@@ -8263,9 +8198,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
 	},
@@ -8279,11 +8211,11 @@
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_s)
@@ -8291,10 +8223,12 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
 "qT" = (
@@ -8317,9 +8251,6 @@
 /obj/machinery/power/apc/largecell{
 	pixel_y = -27
 	},
-/obj/structure/cable{
-	dir = 8
-	},
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
 "qW" = (
@@ -8333,15 +8264,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor,
 /area/space_structures/telestation/cafeteria)
 "qY" = (
@@ -8380,17 +8308,6 @@
 	icon_state = "dark"
 	},
 /area/space_structures/telestation/reactor)
-"rc" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/space_structures/telestation/reactor)
 "rd" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -8411,10 +8328,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/wall,
 /area/space_structures/telestation/cafeteria)
 "rg" = (
@@ -8433,9 +8352,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
 	},
@@ -8453,13 +8369,13 @@
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/supply{
+	dir = 5
+	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_s)
@@ -8468,12 +8384,13 @@
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_s)
@@ -8481,12 +8398,13 @@
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 4
 	},
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/supply{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_s)
@@ -8502,17 +8420,16 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_s)
 "ro" = (
 /obj/structure/cable{
-	dir = 8;
 	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -8555,9 +8472,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
@@ -8569,29 +8483,17 @@
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
-"ru" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/space_structures/telestation/service)
 "rv" = (
 /obj/effect/decal/remains/human,
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
 "rw" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/item/weapon/spear,
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
 "rx" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance access"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/service)
@@ -8601,41 +8503,13 @@
 /obj/machinery/power/apc/largecell{
 	pixel_y = -27
 	},
-/obj/structure/cable{
-	dir = 8
-	},
+/obj/structure/cable,
 /turf/simulated/floor,
 /area/space_structures/telestation/maint_srv_s)
 "rz" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/three,
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor,
-/area/space_structures/telestation/maint_srv_s)
-"rA" = (
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
-/turf/simulated/wall,
-/area/space_structures/telestation/maint_srv_s)
-"rB" = (
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/telestation/maint_srv_s)
-"rC" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_srv_s)
 "rD" = (
 /obj/machinery/alarm,
@@ -8827,7 +8701,8 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -8878,7 +8753,9 @@
 	pixel_y = 27
 	},
 /obj/structure/cable{
-	dir = 1
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
 	},
 /turf/simulated/floor{
 	icon_state = "darkredfull"
@@ -9033,21 +8910,21 @@
 /area/space_structures/telestation/bio_lab)
 "By" = (
 /obj/effect/decal/cleanable/blood,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/telestation/armory)
 "Bz" = (
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -9120,8 +8997,9 @@
 	name = "Armory shutters"
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkredfull"
@@ -9275,12 +9153,13 @@
 /area/space_structures/telestation/bio_lab)
 "Db" = (
 /obj/structure/stool/bed/chair/office/light,
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -9351,15 +9230,16 @@
 	},
 /area/space_structures/telestation/security)
 "Ds" = (
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -9441,8 +9321,9 @@
 /area/space)
 "DJ" = (
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkredfull"
@@ -9507,10 +9388,6 @@
 "Em" = (
 /obj/structure/table,
 /obj/item/weapon/scalpel,
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
 	},
@@ -9525,11 +9402,6 @@
 "Ev" = (
 /obj/machinery/optable,
 /obj/effect/decal/cleanable/blood,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
 	},
@@ -9539,15 +9411,16 @@
 	name = "Security access";
 	req_access = list(1)
 	},
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -9579,15 +9452,16 @@
 /turf/simulated/wall/r_wall,
 /area/space_structures/telestation/security)
 "EL" = (
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -9685,11 +9559,10 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/security)
 "Fu" = (
-/obj/structure/table,
-/obj/item/device/healthanalyzer,
 /obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
@@ -9757,7 +9630,8 @@
 	pixel_y = 27
 	},
 /obj/structure/cable{
-	dir = 8
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
@@ -9809,9 +9683,8 @@
 /area/space_structures/telestation/maint_sec)
 "Ga" = (
 /obj/structure/table,
-/obj/item/weapon/retractor,
+/obj/item/device/healthanalyzer,
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -9896,8 +9769,9 @@
 /area/space_structures/telestation/security)
 "GK" = (
 /obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
@@ -9912,19 +9786,14 @@
 /area/space_structures/telestation/phoron_research)
 "GP" = (
 /obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkpurplefull"
 	},
-/area/space_structures/telestation/security)
+/area/space_structures/telestation/bio_lab)
 "GR" = (
 /turf/simulated/floor{
 	icon_state = "darkpurplefull"
@@ -9944,16 +9813,21 @@
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_sec)
 "GV" = (
-/obj/structure/table,
-/obj/structure/cellular_biomass/core/meat,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 1
+	},
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "darkpurplefull"
+	icon_state = "dark"
 	},
-/area/space_structures/telestation/bio_lab)
+/area/space_structures/telestation/security)
 "GZ" = (
 /obj/structure/table,
 /obj/item/weapon/paper{
@@ -9986,32 +9860,27 @@
 	},
 /area/space_structures/telestation/robotics)
 "Hd" = (
+/obj/structure/table,
+/obj/item/weapon/retractor,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "darkpurplefull"
+	},
+/area/space_structures/telestation/bio_lab)
+"Hh" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/space_structures/telestation/security)
-"Hh" = (
-/mob/living/simple_animal/hostile/bot/secbot,
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -10136,14 +10005,21 @@
 /turf/simulated/shuttle/floor,
 /area/space_structures/telestation/service)
 "Ii" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Server access";
-	req_access = list(47)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "darkpurplefull"
+	icon_state = "dark"
 	},
-/area/space_structures/telestation/server_room)
+/area/space_structures/telestation/security)
 "Ir" = (
 /obj/structure/table,
 /obj/item/device/healthanalyzer,
@@ -10164,22 +10040,15 @@
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_sci_w)
 "IB" = (
+/obj/structure/table,
+/obj/structure/cellular_biomass/core/meat,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkpurplefull"
 	},
-/area/space_structures/telestation/security)
+/area/space_structures/telestation/bio_lab)
 "IC" = (
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_med)
@@ -10191,25 +10060,36 @@
 	},
 /area/space_structures/telestation/phoron_research)
 "IH" = (
-/obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
+	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/telestation/security)
 "IK" = (
-/obj/machinery/door/airlock/glass{
-	name = "Public access"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 8
 	},
-/turf/simulated/floor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/space_structures/telestation/security)
 "IN" = (
 /obj/effect/spawner/lootdrop/maintenance,
@@ -10233,21 +10113,17 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/maint_sci_w)
 "IY" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	dir = 8;
-	icon_state = "1-4"
-	},
+/mob/living/simple_animal/hostile/bot/secbot,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -10305,27 +10181,27 @@
 	},
 /area/space_structures/telestation/research)
 "Jr" = (
-/obj/machinery/door/airlock/science{
-	name = "Server access";
-	req_access = list(47)
-	},
-/turf/simulated/floor{
-	icon_state = "darkpurplefull"
-	},
-/area/space_structures/telestation/server_room)
-"Jt" = (
-/obj/machinery/door/airlock/security{
-	name = "Security access";
-	req_access = list(1)
-	},
+/mob/living/simple_animal/hostile/bot/secbot,
 /obj/structure/cable{
-	dir = 1;
+	d1 = 1;
+	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/space_structures/telestation/security)
+"Jt" = (
+/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/space)
 "Jx" = (
 /obj/machinery/door/airlock/medical{
 	name = "Infirmary access";
@@ -10383,15 +10259,21 @@
 	},
 /area/space_structures/telestation/maint_sci_w)
 "JP" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -10412,19 +10294,12 @@
 /area/space_structures/telestation/security)
 "JU" = (
 /obj/structure/cable{
-	dir = 4;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkpurplefull"
 	},
-/area/space_structures/telestation/security)
+/area/space_structures/telestation/bio_lab)
 "JW" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
@@ -10543,16 +10418,16 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/security)
 "KK" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -10563,28 +10438,35 @@
 	name = "Security access";
 	req_access = list(1)
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/telestation/security)
 "KP" = (
-/obj/machinery/door/airlock/science{
-	name = "Research access";
-	req_access = list(47)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
-/area/space_structures/telestation/research)
+/area/space_structures/telestation/security)
 "KR" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
@@ -10673,8 +10555,9 @@
 	},
 /area/space_structures/telestation/security)
 "Lp" = (
-/obj/structure/cable{
-	icon_state = "1-2"
+/obj/machinery/door/airlock/security{
+	name = "Security access";
+	req_access = list(1)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 1
@@ -10682,8 +10565,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "white"
 	},
 /area/space_structures/telestation/security)
 "Lq" = (
@@ -10743,6 +10629,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/security)
@@ -10819,8 +10710,9 @@
 /area/space_structures/telestation/infirmary)
 "Mb" = (
 /obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/security)
@@ -10867,16 +10759,16 @@
 	},
 /area/space_structures/telestation/infirmary)
 "Mq" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -10908,11 +10800,13 @@
 	},
 /area/space_structures/telestation/research)
 "MB" = (
-/obj/item/weapon/circuitboard/protolathe,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/area/space_structures/telestation/server_room)
+/turf/simulated/floor,
+/area/space_structures/telestation/security)
 "MG" = (
 /mob/living/simple_animal/hostile/cellular/bluespace/meelee{
 	maxHealth = 40;
@@ -10932,7 +10826,6 @@
 	dir = 10
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -11027,9 +10920,16 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/maint_med)
 "Nq" = (
-/obj/effect/decal/remains/human,
+/obj/machinery/door/airlock/glass{
+	name = "Public access"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
-/area/space_structures/telestation/infirmary)
+/area/space_structures/telestation/security)
 "Ns" = (
 /obj/item/device/radio/intercom/pod,
 /turf/simulated/shuttle/wall,
@@ -11078,6 +10978,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/space_structures/telestation/security)
@@ -11141,14 +11046,12 @@
 /area/space_structures/telestation/infirmary)
 "NV" = (
 /obj/structure/cable{
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/external{
-	name = "External access";
-	req_access = list(13)
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/space_structures/telestation/reactor)
+/turf/simulated/floor,
+/area/space_structures/telestation/security)
 "NW" = (
 /obj/structure/table,
 /obj/item/stack/medical/splint,
@@ -11172,15 +11075,16 @@
 	},
 /area/space_structures/telestation/infirmary)
 "Of" = (
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkredfull"
@@ -11209,14 +11113,16 @@
 	},
 /area/space_structures/telestation/morgue)
 "Ot" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -11301,15 +11207,16 @@
 	name = "Security access";
 	req_access = list(1)
 	},
-/obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkredfull"
@@ -11462,16 +11369,16 @@
 	},
 /area/space_structures/telestation/morgue)
 "PO" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkredfull"
@@ -11506,7 +11413,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -11658,10 +11564,6 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/bluespace_research)
 "Re" = (
-/obj/structure/cable{
-	dir = 1;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4
 	},
@@ -11720,11 +11622,11 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Maintenance access"
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "darkredfull"
@@ -11743,7 +11645,6 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -11935,6 +11836,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/space_structures/telestation/security)
 "SL" = (
@@ -11983,11 +11889,24 @@
 	},
 /area/space_structures/telestation/bluespace_research)
 "Th" = (
-/obj/machinery/door/airlock/glass{
-	name = "Public access"
+/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
+	dir = 4
 	},
-/turf/simulated/floor,
-/area/space_structures/telestation/infirmary)
+/obj/machinery/atmospherics/pipe/simple/visible/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/telestation/maint_sci_e)
 "Ti" = (
 /obj/item/stack/sheet/metal{
 	amount = 2
@@ -12277,18 +12196,17 @@
 	},
 /area/space_structures/telestation/engineering)
 "Vg" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Server access";
+	req_access = list(47)
+	},
 /obj/structure/cable{
-	dir = 4;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/supply{
-	dir = 4
+/turf/simulated/floor{
+	icon_state = "darkpurplefull"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/telestation/server_room)
 "Vk" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
 /turf/simulated/floor{
@@ -12350,11 +12268,13 @@
 	},
 /area/space_structures/telestation/atmospherics)
 "Vy" = (
-/obj/machinery/door/poddoor,
-/turf/simulated/floor{
-	icon_state = "darkyellowfull"
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
-/area/space_structures/telestation/engineering)
+/turf/simulated/floor{
+	icon_state = "darkpurplefull"
+	},
+/area/space_structures/telestation/server_room)
 "VA" = (
 /obj/structure/girder/reinforced,
 /turf/simulated/floor/plating{
@@ -12386,14 +12306,16 @@
 /turf/simulated/floor/wood,
 /area/space_structures/telestation/dormitories)
 "VJ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -12560,8 +12482,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	dir = 8;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/telestation/maint_sec)
@@ -12573,8 +12496,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	dir = 4;
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/wall,
 /area/space_structures/telestation/maint_sec)
@@ -12650,9 +12574,19 @@
 /turf/simulated/shuttle/floor,
 /area/space_structures/telestation/service)
 "Xe" = (
-/obj/structure/rack,
-/turf/simulated/floor,
-/area/space_structures/telestation/engineering)
+/obj/machinery/atmospherics/pipe/simple/visible/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "Xf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
@@ -12685,16 +12619,17 @@
 	},
 /area/space_structures/telestation/engineering)
 "Xt" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/door/airlock/science{
+	name = "Server access";
+	req_access = list(47)
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkpurplefull"
 	},
-/area/space_structures/telestation/security)
+/area/space_structures/telestation/server_room)
 "Xu" = (
 /obj/structure/table,
 /obj/random/cloth/shittysuit{
@@ -12891,6 +12826,11 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -12910,7 +12850,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	dir = 1;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
@@ -12964,6 +12903,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -12987,14 +12931,16 @@
 /turf/simulated/floor,
 /area/space_structures/telestation/engineering)
 "YY" = (
-/obj/structure/dispenser/phoron,
-/obj/machinery/light{
-	dir = 8
+/obj/item/weapon/circuitboard/protolathe,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
-	icon_state = "darkyellowfull"
+	icon_state = "dark"
 	},
-/area/space_structures/telestation/engineering)
+/area/space_structures/telestation/server_room)
 "Zd" = (
 /obj/structure/table,
 /obj/item/weapon/melee/baton,
@@ -13003,45 +12949,38 @@
 	},
 /area/space_structures/telestation/security)
 "Zf" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/telestation/security)
 "Zh" = (
-/obj/machinery/door/airlock/security{
-	name = "Security access";
-	req_access = list(1)
-	},
+/obj/effect/decal/remains/human,
 /obj/structure/cable{
-	icon_state = "1-2"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/space_structures/telestation/security)
+/turf/simulated/floor,
+/area/space_structures/telestation/infirmary)
 "Zm" = (
 /obj/structure/cable{
-	icon_state = "1-2"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
-/area/space)
+/turf/simulated/floor,
+/area/space_structures/telestation/infirmary)
 "Zn" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -14603,7 +14542,7 @@ qu
 qC
 ns
 VW
-bD
+fr
 VW
 VW
 VW
@@ -14711,7 +14650,7 @@ kJ
 XQ
 Xa
 Xk
-YY
+eL
 Wc
 Wc
 aO
@@ -15380,8 +15319,8 @@ Wc
 cO
 dY
 Wc
-fH
 fV
+fX
 gG
 gU
 oS
@@ -15531,8 +15470,8 @@ jr
 ij
 ij
 ij
-rc
-po
+gg
+jS
 rp
 TC
 VW
@@ -15638,7 +15577,7 @@ XS
 XS
 ZT
 YW
-aB
+eP
 YW
 ar
 bp
@@ -15660,11 +15599,11 @@ jr
 qH
 qK
 qK
-NV
+hQ
 qK
-NV
+hQ
 ro
-gg
+jU
 mc
 TC
 VW
@@ -15763,7 +15702,7 @@ HQ
 Wc
 WC
 Vl
-Vy
+WY
 XS
 ky
 kP
@@ -15778,7 +15717,7 @@ nF
 nz
 oq
 oB
-oH
+oB
 oM
 oU
 oU
@@ -15795,8 +15734,8 @@ jr
 ij
 ij
 ij
-pt
 gg
+pt
 mf
 rq
 VW
@@ -15895,21 +15834,21 @@ HQ
 Wc
 Vc
 Vm
-Vy
+WY
 Ww
 Xc
 Xo
 Ww
 Wc
 YW
-aB
+fH
 YW
 Wc
 bq
 nH
 eT
 XS
-XS
+gJ
 XS
 fu
 oV
@@ -15925,10 +15864,10 @@ jr
 jr
 jr
 ij
-rc
-po
-rd
 gg
+gg
+jS
+rd
 gg
 TC
 VW
@@ -16057,9 +15996,9 @@ ij
 ij
 ij
 ij
-pt
-mQ
 gg
+mQ
+rd
 gr
 TC
 TC
@@ -16166,7 +16105,7 @@ kQ
 hm
 ZW
 YW
-aB
+fH
 ah
 Wc
 cS
@@ -16189,8 +16128,8 @@ qD
 qD
 po
 po
+po
 rd
-gg
 gg
 TC
 TC
@@ -16292,7 +16231,7 @@ HQ
 HQ
 Wc
 WZ
-Xe
+YW
 YW
 kR
 lj
@@ -16427,10 +16366,10 @@ Wa
 XY
 YW
 kT
-YW
-ZW
-YW
-aB
+eM
+eN
+eM
+fL
 YW
 Wc
 bu
@@ -16711,11 +16650,11 @@ bD
 VW
 VW
 VW
-bD
+fr
 VW
 VW
 VW
-bD
+fr
 VW
 VW
 VW
@@ -17022,7 +16961,7 @@ gy
 Ao
 Ax
 FK
-Bb
+GK
 Bb
 Bb
 Bb
@@ -17101,7 +17040,7 @@ VM
 sU
 sU
 gL
-pb
+Xe
 gL
 sU
 HQ
@@ -17154,7 +17093,7 @@ BP
 Ao
 Ax
 Em
-Bb
+GP
 Bb
 CY
 Bb
@@ -17233,8 +17172,8 @@ VM
 HQ
 HQ
 gL
-pc
-pi
+dr
+jx
 sU
 HQ
 HQ
@@ -17286,25 +17225,25 @@ Ap
 Ao
 Ax
 Ev
-GK
 Fu
-GV
 Ga
-GK
+IB
+Hd
+JU
 MI
 PT
 Rv
 YA
 PT
 aA
-bC
+bG
 bh
-bC
-bC
-bC
+bG
+bG
+bG
 kE
 nC
-bc
+bw
 bk
 bw
 bG
@@ -17366,7 +17305,7 @@ HQ
 HQ
 HQ
 gL
-pb
+Xe
 sU
 HQ
 HQ
@@ -17430,7 +17369,7 @@ Xf
 Ax
 Zx
 FJ
-cI
+cg
 fa
 Eh
 Eh
@@ -17498,7 +17437,7 @@ HQ
 HQ
 HQ
 HQ
-pb
+Xe
 sU
 HQ
 HQ
@@ -17630,7 +17569,7 @@ HQ
 HQ
 HQ
 sU
-pb
+Xe
 sU
 HQ
 HQ
@@ -17696,8 +17635,8 @@ Ao
 aQ
 dM
 fh
-hd
-hd
+GR
+GR
 jg
 mt
 aQ
@@ -17706,7 +17645,7 @@ mq
 bH
 bV
 ci
-cu
+mq
 cN
 MR
 mq
@@ -17714,10 +17653,10 @@ Ao
 FX
 FG
 Eh
-em
-cL
-eA
-eI
+ej
+Eh
+FG
+Cg
 fp
 fF
 FG
@@ -17726,7 +17665,7 @@ HQ
 uB
 SC
 YK
-hJ
+hD
 LH
 Sq
 SX
@@ -17762,7 +17701,7 @@ HQ
 HQ
 HQ
 HQ
-pb
+Xe
 HQ
 HQ
 HQ
@@ -17833,25 +17772,25 @@ Gp
 GR
 GR
 aQ
-bm
-Ii
-Jc
+Th
+Vg
+Vy
 bX
 cj
-Jr
-MB
+Xt
+YY
 MT
 mq
 Ao
 Ao
 OE
 Eh
-Eh
-Eh
-KP
-Cg
-Cg
-Cg
+em
+ao
+bc
+cL
+cL
+cu
 FG
 HQ
 HQ
@@ -17894,7 +17833,7 @@ HQ
 HQ
 sU
 gL
-pb
+Xe
 HQ
 HQ
 HQ
@@ -18026,7 +17965,7 @@ HQ
 HQ
 sU
 gL
-pj
+eR
 sU
 HQ
 HQ
@@ -18122,7 +18061,7 @@ HQ
 uB
 LH
 iS
-hQ
+YK
 vE
 Sq
 Tb
@@ -18818,7 +18757,7 @@ HQ
 HQ
 HQ
 HQ
-SZ
+pk
 HQ
 jy
 HQ
@@ -19275,7 +19214,7 @@ Bl
 Bl
 Bl
 YQ
-cq
+Lp
 oy
 ac
 dZ
@@ -19288,7 +19227,7 @@ HQ
 HQ
 sU
 HQ
-Vg
+Xe
 HQ
 HQ
 HQ
@@ -19406,14 +19345,14 @@ CL
 Cd
 Bl
 Bl
-Xt
+Ii
 Ed
 aG
 ad
 Fs
 HC
 CL
-io
+WF
 YN
 HQ
 HQ
@@ -19538,14 +19477,14 @@ CL
 Dh
 Bl
 Bl
-Xt
+Ii
 CL
 CL
 CL
 CL
 CL
 CL
-io
+WF
 YN
 HQ
 sU
@@ -19670,14 +19609,14 @@ CL
 Ln
 Dr
 Bl
-Xt
+Ii
 CL
 nK
 nu
 GT
 AB
 FZ
-io
+WF
 YN
 sU
 sU
@@ -19802,7 +19741,7 @@ CL
 EJ
 Bl
 Dr
-Xt
+Ii
 CL
 FL
 Ff
@@ -19934,14 +19873,14 @@ CL
 MO
 Bl
 Bl
-Xt
+Ii
 CL
 CL
 CL
 CL
 HG
 YN
-jS
+AB
 YN
 gL
 sU
@@ -20073,7 +20012,7 @@ ae
 CL
 CL
 CL
-it
+AC
 YN
 HQ
 HQ
@@ -20198,14 +20137,14 @@ CL
 Dj
 DE
 Bl
-Xt
+Ii
 Ed
 aG
 Fg
 Fs
 HC
 CL
-jS
+AB
 YN
 HQ
 HQ
@@ -20272,8 +20211,8 @@ HQ
 HQ
 sU
 HQ
-pv
-SZ
+gL
+pk
 HQ
 HQ
 HQ
@@ -20330,14 +20269,14 @@ CL
 Lo
 Bl
 TB
-Xt
+Ii
 CL
 CL
 CL
 CL
 CL
 CL
-jS
+AB
 YN
 HQ
 HQ
@@ -20462,14 +20401,14 @@ CL
 ZD
 ES
 Bl
-Xt
+Ii
 CL
 GU
 Fj
 AB
 CP
 Fj
-jS
+AB
 YN
 HQ
 HQ
@@ -20536,7 +20475,7 @@ HQ
 HQ
 HQ
 sU
-pv
+gL
 HQ
 HQ
 HQ
@@ -20594,14 +20533,14 @@ CL
 Cd
 Bl
 Bl
-Xt
+Ii
 CL
 AB
 AB
 AB
 AB
 Fj
-jS
+AB
 YN
 HQ
 HQ
@@ -20668,7 +20607,7 @@ HQ
 HQ
 HQ
 sU
-DI
+fq
 HQ
 HQ
 HQ
@@ -20726,14 +20665,14 @@ CL
 Bl
 Bl
 So
-Xt
+Ii
 CL
 CL
 CL
 CL
 DB
 AC
-jS
+AB
 YN
 HQ
 HQ
@@ -20853,19 +20792,19 @@ Bf
 Bl
 Bl
 Bl
-IB
+IH
 KO
-Lp
+GV
 Ot
 VJ
 Zf
-Zh
-aM
-ao
-eL
-eL
-eL
-jU
+cq
+aK
+ae
+CL
+CL
+CL
+AC
 YN
 HQ
 HQ
@@ -20932,7 +20871,7 @@ HQ
 HQ
 HQ
 sU
-pb
+Xe
 HQ
 HQ
 HQ
@@ -20982,10 +20921,10 @@ Db
 EL
 Ds
 Ez
-GP
-GP
-GP
-Hd
+GV
+GV
+GV
+Hh
 LC
 Bl
 Pc
@@ -21064,8 +21003,8 @@ HQ
 HQ
 HQ
 sU
-px
-pz
+jz
+jj
 sU
 sU
 sU
@@ -21117,7 +21056,7 @@ AF
 CL
 CL
 Bl
-IH
+IK
 CL
 EK
 Ps
@@ -21197,7 +21136,7 @@ HQ
 HQ
 sU
 sU
-pA
+lL
 HQ
 HQ
 HQ
@@ -21249,7 +21188,7 @@ AF
 HQ
 CL
 Cd
-IH
+IK
 CL
 Ly
 Pw
@@ -21329,7 +21268,7 @@ HQ
 HQ
 HQ
 sU
-pA
+lL
 HQ
 HQ
 HQ
@@ -21381,7 +21320,7 @@ AF
 HQ
 CL
 DE
-Hh
+IY
 CL
 DO
 Qo
@@ -21461,7 +21400,7 @@ HQ
 HQ
 sU
 sU
-pA
+lL
 sU
 HQ
 HQ
@@ -21513,7 +21452,7 @@ HQ
 HQ
 CL
 Bl
-IH
+IK
 CL
 EN
 EN
@@ -21524,7 +21463,7 @@ EO
 EO
 EO
 EO
-EO
+Dx
 EO
 EO
 CL
@@ -21593,7 +21532,7 @@ HQ
 HQ
 gL
 gL
-pA
+lL
 sU
 HQ
 HQ
@@ -21645,7 +21584,7 @@ HQ
 HQ
 CL
 Bl
-IH
+IK
 CL
 EO
 EO
@@ -21658,9 +21597,9 @@ EO
 EO
 EO
 EO
-EO
-IK
-bf
+Mb
+Nq
+bi
 EO
 JR
 KJ
@@ -21725,7 +21664,7 @@ HQ
 HQ
 HQ
 HQ
-pA
+lL
 sU
 sU
 HQ
@@ -21777,22 +21716,22 @@ HQ
 HQ
 CL
 Bl
-IY
-Jt
-Mb
+Ii
+LC
+EO
 Re
-Mb
-Mb
-Mb
-Mb
+EO
+EO
+EO
+EO
 ap
-Mb
-gJ
-Mb
-Mb
-Mb
-pJ
-bi
+EO
+Gh
+EO
+EO
+NV
+CL
+EO
 JA
 EO
 CL
@@ -21857,7 +21796,7 @@ HQ
 HQ
 HQ
 HQ
-pA
+lL
 HQ
 sU
 sU
@@ -21913,16 +21852,16 @@ JP
 LG
 NG
 SH
-Dx
-EO
-EO
-EO
-EO
-EO
-EO
-EO
-EO
-EO
+Jr
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+bi
 CL
 CL
 CL
@@ -21989,8 +21928,8 @@ HQ
 HQ
 HQ
 gL
-px
-pz
+jz
+jj
 sU
 HQ
 HQ
@@ -22041,7 +21980,7 @@ YN
 YN
 CL
 Cd
-JU
+IK
 LC
 EO
 Rh
@@ -22122,7 +22061,7 @@ HQ
 HQ
 HQ
 HQ
-pL
+lL
 gL
 gL
 HQ
@@ -22173,7 +22112,7 @@ VG
 VP
 CL
 Bl
-JU
+IK
 CL
 CL
 CL
@@ -22254,11 +22193,11 @@ HQ
 HQ
 HQ
 sU
-px
+jz
 qv
 qv
 qv
-pz
+jj
 gL
 sU
 gL
@@ -22305,7 +22244,7 @@ AB
 iJ
 CL
 Bl
-JU
+IK
 Zd
 az
 CL
@@ -22438,7 +22377,7 @@ AC
 CL
 Bl
 KK
-GP
+KP
 Mq
 CL
 HQ
@@ -23054,7 +22993,7 @@ qO
 qT
 mF
 rg
-lT
+hZ
 kp
 HQ
 HQ
@@ -23186,7 +23125,7 @@ oO
 Is
 oO
 oO
-lU
+hd
 kp
 HQ
 HQ
@@ -23318,7 +23257,7 @@ lT
 lT
 kp
 lT
-lT
+hZ
 kp
 HQ
 HQ
@@ -23450,7 +23389,7 @@ kw
 lT
 kp
 mM
-kp
+ig
 kp
 kp
 kp
@@ -23582,14 +23521,14 @@ lX
 lT
 lT
 lT
-lT
-lU
+io
+it
 lx
-lb
-lT
-mm
-mp
-mp
+mo
+oH
+pA
+pE
+pE
 ry
 kp
 HQ
@@ -23629,7 +23568,7 @@ HQ
 HQ
 PS
 sU
-Vg
+pp
 sN
 HQ
 HQ
@@ -23761,7 +23700,7 @@ HQ
 HQ
 PS
 sU
-Wj
+Jt
 MZ
 HQ
 HQ
@@ -23895,7 +23834,7 @@ PS
 PS
 Wm
 HQ
-Zm
+SZ
 HQ
 HQ
 HQ
@@ -23917,13 +23856,13 @@ HF
 HF
 HF
 HF
-Nq
-HF
-HF
-Th
-HF
-HF
-HF
+Zh
+aM
+aM
+bf
+aM
+aM
+eA
 Ix
 HQ
 sU
@@ -23986,7 +23925,7 @@ nJ
 Px
 kp
 mm
-rA
+kp
 kp
 HQ
 HQ
@@ -24049,12 +23988,12 @@ HF
 HF
 HF
 HF
-HF
-HF
+Zm
+bC
 HF
 Ix
-eJ
-fq
+HF
+HF
 fI
 Ix
 HQ
@@ -24118,7 +24057,7 @@ Ac
 nN
 ms
 lT
-rB
+lT
 kp
 HQ
 HQ
@@ -24181,11 +24120,11 @@ HF
 HF
 lc
 HF
-HF
+Zm
 HF
 Nz
 Ix
-eK
+Ix
 Ix
 Ix
 Ix
@@ -24250,7 +24189,7 @@ wy
 Px
 Px
 Px
-rB
+lT
 kp
 HQ
 HQ
@@ -24313,11 +24252,11 @@ Mo
 HF
 HF
 HF
-HF
+Zm
 Nv
 tD
 Ix
-eM
+IC
 PY
 QG
 Pk
@@ -24382,7 +24321,7 @@ rr
 Ac
 pm
 Px
-rB
+lT
 kp
 HQ
 HQ
@@ -24449,7 +24388,7 @@ dN
 en
 Oa
 Ix
-eN
+Li
 Li
 HS
 IC
@@ -24497,7 +24436,7 @@ ol
 pn
 oX
 ol
-pE
+ol
 pW
 qx
 qx
@@ -24511,10 +24450,10 @@ qx
 qx
 qx
 rs
-ru
+Ac
 rw
 rx
-rC
+lT
 kp
 HQ
 HQ
@@ -24581,7 +24520,7 @@ dO
 HF
 PC
 Ix
-eM
+IC
 IC
 HS
 QL
@@ -24692,7 +24631,7 @@ HQ
 PS
 dr
 gK
-ig
+jx
 HQ
 HQ
 HQ
@@ -24841,11 +24780,11 @@ NR
 Kf
 Kf
 Kg
-cX
+aB
 Kg
 PD
 Ix
-eP
+Kg
 zz
 Ph
 Pm
@@ -24977,7 +24916,7 @@ dR
 eo
 Od
 Ix
-eP
+Kg
 Kg
 QK
 dP
@@ -25109,7 +25048,7 @@ dS
 Kg
 PD
 Ix
-eP
+Kg
 Kg
 CT
 CT
@@ -25118,7 +25057,7 @@ Qg
 dP
 gR
 hq
-hZ
+hX
 TO
 CT
 ik
@@ -25241,7 +25180,7 @@ dQ
 Kw
 Ix
 Ix
-eP
+Kg
 LY
 Ix
 QN
@@ -25250,7 +25189,7 @@ CT
 dP
 gS
 SF
-dP
+hX
 CT
 CT
 jk
@@ -25369,11 +25308,11 @@ Kw
 Kg
 Kg
 Kg
-cX
+aB
 Kg
 LY
 Kw
-eP
+Kg
 Kg
 Ix
 IC
@@ -25382,7 +25321,7 @@ CT
 CT
 gT
 CT
-CT
+eJ
 CT
 ik
 im
@@ -25506,15 +25445,15 @@ ep
 dq
 dD
 eU
-fr
-fL
+ep
+cf
 fO
-fO
-fX
-fX
+eI
+eI
+eI
 gV
 hr
-hr
+eK
 hr
 im
 HS
@@ -25933,7 +25872,7 @@ kA
 Xu
 lw
 lQ
-mo
+dr
 mY
 nk
 nr
@@ -26083,7 +26022,7 @@ HQ
 hc
 pF
 qc
-lA
+hJ
 hc
 HQ
 HQ
