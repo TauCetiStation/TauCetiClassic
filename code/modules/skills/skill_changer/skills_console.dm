@@ -55,7 +55,7 @@
 /obj/machinery/computer/skills_console/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "SkillsConsole")
+		ui = new(user, src, "SkillsConsole", name)
 		ui.open()
 
 /obj/machinery/computer/skills_console/tgui_data(mob/user)
@@ -107,7 +107,7 @@
 			var/mob/living/carbon/human/H = scanner.victim
 			var/same_user = H == user
 			var/compatible = (H.species.name in cartridge.compatible_species)
-			if(compatible && !same_user)
+			if(compatible && !same_user && !H.ismindprotect())
 				return TRUE
 	return FALSE
 
