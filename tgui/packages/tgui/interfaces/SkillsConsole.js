@@ -36,28 +36,32 @@ export const SkillsConsole = (props, context) => {
   return (
     <Window resizable width={600} height={675}>
       <Window.Content scrollable>
-        <Section title="Power info">
-          <LabeledList>
-            <LabeledList.Item label="Active power usage">
-              {power_usage / 1000} kW
-            </LabeledList.Item>
-            <LabeledList.Item label="Available power in area">
-              <ProgressBar
-                ranges={{
-                  good: [0.5, Infinity],
-                  average: [0.25, 0.5],
-                  bad: [-Infinity, 0.25],
-                }}
-                value={
-                  power_max !== 'No data'
-                    ? power_current / power_max
-                    : 'No data'
-                }
-              />
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-
+        <Stack>
+          <Stack.Item>
+            <Section title="Power info">
+              <LabeledList>
+                <LabeledList.Item label="Active power usage">
+                  {power_usage / 1000} kW
+                </LabeledList.Item>
+                <LabeledList.Item label="Available power in area">
+                  <ProgressBar
+                    ranges={{
+                      good: [0.5, Infinity],
+                      average: [0.25, 0.5],
+                      bad: [-Infinity, 0.25],
+                    }}
+                    value={
+                      power_max !== 'No data'
+                        ? power_current / power_max
+                        : 'No data'
+                    }
+                  />
+                </LabeledList.Item>
+              </LabeledList>
+            </Section>
+          </Stack.Item>
+        </Stack>
+        <br />
         <Stack>
           <Stack.Item>
             <Section title="Patient status">
@@ -123,52 +127,50 @@ export const SkillsConsole = (props, context) => {
         )}
         <br />
         {cartridge_unpacked === 1 && inserted_cartridge === 1 && (
-          <Stack>
-            <Section title="CMF manipulation">
-              {Object.keys(skill_list).map((skill) => {
-                return (
-                  <LabeledList.Item label={skill} key={skill}>
-                    <Flex inline width="100%">
-                      <Flex.Item grow={1} mx={1}>
-                        <Slider
-                          onChange={(_e, value) => {
-                            skill_list[skill] = value;
+          <Section title="CMF manipulation">
+            {Object.keys(skill_list).map((skill) => {
+              return (
+                <LabeledList.Item label={skill} key={skill}>
+                  <Flex inline width="100%">
+                    <Flex.Item grow={1} mx={1}>
+                      <Slider
+                        onChange={(_e, value) => {
+                          skill_list[skill] = value;
 
-                            act('change_skill', skill_list);
-                          }}
-                          step={1}
-                          value={skill_list[skill]}
-                          maxValue={skill_max_value}
-                          stepPixelSize={50}
-                          minValue={skill_min_value}
-                        />
-                      </Flex.Item>
-                    </Flex>
-                  </LabeledList.Item>
-                );
-              })}
-              <Box textAlign="center">
-                <Button
-                  onClick={() => {
-                    act('inject');
-                  }}
-                  fluid
-                  disabled={can_inject === 0}
-                  color="green">
-                  Inject implant
-                </Button>
-                <Button.Confirm
-                  onClick={() => {
-                    act('abort');
-                  }}
-                  fluid
-                  color="danger"
-                  confirmContent="Confirm ">
-                  Abort
-                </Button.Confirm>
-              </Box>
-            </Section>
-          </Stack>
+                          act('change_skill', skill_list);
+                        }}
+                        step={1}
+                        value={skill_list[skill]}
+                        maxValue={skill_max_value}
+                        stepPixelSize={50}
+                        minValue={skill_min_value}
+                      />
+                    </Flex.Item>
+                  </Flex>
+                </LabeledList.Item>
+              );
+            })}
+            <Box textAlign="center">
+              <Button
+                onClick={() => {
+                  act('inject');
+                }}
+                fluid
+                disabled={can_inject === 0}
+                color="green">
+                Inject implant
+              </Button>
+              <Button.Confirm
+                onClick={() => {
+                  act('abort');
+                }}
+                fluid
+                color="danger"
+                confirmContent="Confirm ">
+                Abort
+              </Button.Confirm>
+            </Box>
+          </Section>
         )}
       </Window.Content>
     </Window>

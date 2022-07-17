@@ -125,6 +125,9 @@
 		if("inject")
 			if(can_inject(usr))
 				var/mob/living/carbon/human/H = scanner.victim
+				for(var/obj/item/weapon/implant/skill/S in H)
+					if(S.implanted)
+						S.meltdown()
 				var/obj/item/weapon/implant/skill/implant = new(H)
 				implant.set_skills(cartridge.selected_buffs, cartridge.compatible_species)
 				implant.inject(H, BP_HEAD)
