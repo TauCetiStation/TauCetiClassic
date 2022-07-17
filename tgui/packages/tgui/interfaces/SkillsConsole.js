@@ -121,9 +121,9 @@ export const SkillsConsole = (props, context) => {
             </Button>
           </Box>
         )}
-
+        <br />
         {cartridge_unpacked === 1 && inserted_cartridge === 1 && (
-          <Box>
+          <Stack>
             <Section title="CMF manipulation">
               {Object.keys(skill_list).map((skill) => {
                 return (
@@ -168,7 +168,7 @@ export const SkillsConsole = (props, context) => {
                 </Button.Confirm>
               </Box>
             </Section>
-          </Box>
+          </Stack>
         )}
       </Window.Content>
     </Window>
