@@ -29,7 +29,7 @@
 /mob/living/silicon/robot/can_use_topic(src_object, datum/topic_state/custom_state)
 	if(stat || !client)
 		return STATUS_CLOSE
-	if(lockcharge || stunned || weakened)
+	if(lockcharge || incapacitated(NONE))
 		return STATUS_DISABLED
 	if(isobj(src_object))
 		var/obj/O = src_object
