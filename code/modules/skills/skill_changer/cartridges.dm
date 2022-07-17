@@ -75,6 +75,10 @@
 	var/list/compatible_species
 	var/datum/skillset/added_skillset
 
+/obj/item/weapon/implant/skill/inject(mob/living/carbon/C, def_zone)
+	. = ..()
+	implanted(C)
+
 /obj/item/weapon/implant/skill/proc/set_skills(list/skills_list, list/species)
 	var/datum/skillset/skillset = new()
 	skillset.skills = skills_list

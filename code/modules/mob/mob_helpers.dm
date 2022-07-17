@@ -49,12 +49,6 @@
 			return TRUE
 	return FALSE
 
-/mob/proc/isimplantskill()
-	for(var/obj/item/weapon/implant/skill/S in src)
-		if(S.implanted)
-			return TRUE
-	return FALSE
-
 /proc/check_zone(zone)
 	if(!zone)
 		return BP_CHEST
