@@ -837,3 +837,46 @@
 
 	update_icon()
 	updateinfolinks()
+
+/obj/item/weapon/paper/cmf_manual
+	name = "CMF manipulation manual"
+	info = {"<h1 style="text-align: center;">User manual</h1>
+	<h2>Introduction</h2>
+	<p>Thanks to the developments of our scientists, we have been able to produce nearly stable prototypes of USP cartridges. These cartridges allow us to alter the cognitive and motor capabilities of creatures.&nbsp;</p>
+	<p>This technology consists of four parts</p>
+	<div>
+	<ul>
+	<li>CMF Modifier Access Console - is used to set up the cartridges. Shows IQ (Intelligence quotient) and MDI (Motor development index) information.</li>
+	</ul>
+	</div>
+	<ul>
+	<li>CMF manipulation table - receives data from the console and installs a CMF implant with the desired parameters. It can also serve as an operating table for the treatment of brain injuries.</li>
+	<li>USP cartridge - <span style="text-decoration: line-through;"><strong>\[classified\]</strong></span></li>
+	<li>CMF implant - Changes the creature's skills, allowing it to be a more useful employee.</li>
+	</ul>
+	<h2>Procedure</h2>
+	<ol>
+	<li>Place patient on CMF manipulation table</li>
+	<li>Ask the patient about his or her knowledge and skills. Check IQ and MDI scores</li>
+	<li>Insert the cartridge</li>
+	<li>Unpack the cartridge (Procedure is not reversible)</li>
+	<li>Use the console to set the desired parameters of the implant</li>
+	<li>Implant the patient</li>
+	<li>In the case of brain damage, refer the patient to a qualified specialist for treatment</li>
+	<li>End of Procedure. The employee is now ready to perform his duties.</li>
+	</ol>
+	<h2>Hazards and contraindications</h2>
+	<ul>
+	<li>Because of the way mindshield and loyalty implants work, they cannot be used together with CMF implants.</li>
+	<li>The console will not allow you to inject this implant into a creature of an unsuitable race. If such a situation occurs, the creature will suffer severe brain damage and the implant will be destroyed.</li>
+	<li>CMF implants are still at the prototype stage, strong EMI pulses can destroy this implant.</li>
+	<li>Since this technology is top secret, any removal of the implant would result in its destruction.</li>
+	</ul>
+	<h1 style="text-align: center;">Technical information</h1>
+	<h2>Connecting the equipment</h2>
+	<p>To connect the CMF manipulation table to the console, open the maintenance panel of the table with a screwdriver, then use a multitool to connect the table to the console and close the maintenance panel after this.</p>
+	<h2>Power consumption</h2>
+	<p>After the cartridge was unpacked, the equipment consumes much more power, so a APC charge sensor was installed in the console. Keep an eye on the charge during CMF manipulation.</p>
+	<h2>Production cost of USP cartridges</h2>
+	<p>Since these cartridges are prototypes that have not yet entered mass production, each cartridge is hand-assembled, and their distribution is limited to the stations where crew death/unqualified personnel are common. Use them wisely and don't waste them. Look carefully at patients' IQ and MDI scores to determine which cartridge is needed. One basic green cartridge cost twenty-five man-years. We also cannot allow these technologies to fall into the hands of our competitors.</p>
+	"}

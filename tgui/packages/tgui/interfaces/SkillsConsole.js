@@ -29,6 +29,9 @@ export const SkillsConsole = (props, context) => {
     connected_patient,
     free_points,
     can_inject,
+    power_usage,
+    power_max,
+    power_current,
   } = data;
   return (
     <Window resizable width={600} height={675}>
@@ -36,7 +39,7 @@ export const SkillsConsole = (props, context) => {
         <Section title="Power info">
           <LabeledList>
             <LabeledList.Item label="Active power usage">
-              4000 kW
+              {power_usage} kW
             </LabeledList.Item>
             <LabeledList.Item label="Available power in area">
               <ProgressBar
@@ -45,7 +48,11 @@ export const SkillsConsole = (props, context) => {
                   average: [0.25, 0.5],
                   bad: [-Infinity, 0.25],
                 }}
-                value={0.35}
+                value={
+                  power_max !== 'No data'
+                    ? power_current / power_max
+                    : 'No data'
+                }
               />
             </LabeledList.Item>
           </LabeledList>
@@ -124,19 +131,15 @@ export const SkillsConsole = (props, context) => {
                     <Flex inline width="100%">
                       <Flex.Item grow={1} mx={1}>
                         <Slider
-                          onDrag={(_e, value) => {
-                            if (value > free_points) {
-                              skill_list[skill] = free_points;
-                            } else {
-                              skill_list[skill] = value;
-                            }
+                          onChange={(_e, value) => {
+                            skill_list[skill] = value;
 
                             act('change_skill', skill_list);
                           }}
                           step={1}
                           value={skill_list[skill]}
                           maxValue={skill_max_value}
-                          stepPixelSize={75}
+                          stepPixelSize={50}
                           minValue={skill_min_value}
                         />
                       </Flex.Item>

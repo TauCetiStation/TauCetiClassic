@@ -72,20 +72,38 @@
 
 /obj/item/weapon/implant/skill
 	name = "CMF implant"
+	var/list/compatible_species
 	var/datum/skillset/added_skillset
 
-/obj/item/weapon/implant/skill/proc/set_skills(list/skills_list)
+/obj/item/weapon/implant/skill/proc/set_skills(list/skills_list, list/species)
 	var/datum/skillset/skillset = new()
 	skillset.skills = skills_list
 	added_skillset = skillset
+	compatible_species = species
 
 /obj/item/weapon/implant/skill/implanted(mob/source)
 	if(!ishuman(source))
 		return
 	var/mob/living/carbon/human/H = source
+	var/compatible = (H.species.name in compatible_species)
+	if(!compatible)
+		H.adjustBrainLoss(100)
+		meltdown()
 	if(H.ismindprotect())
 		H.adjustBrainLoss(25)
+		meltdown()
 		return
+	if(compatible_species.len > 1)
+		if(rand(50))
+			H.adjustBrainLoss(50)
+		if(rand(10))
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			BP.take_damage(10, 0, used_weapon = "Hematoma")
+			H.adjustBrainLoss(75)
+			H.adjustToxLoss(50)
+			H.Stun(5)
+			H.Weaken(5)
+	
 	H.add_skills_buff(added_skillset)
 	return 1
 

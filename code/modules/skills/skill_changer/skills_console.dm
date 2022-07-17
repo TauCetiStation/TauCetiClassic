@@ -1,6 +1,6 @@
 /obj/machinery/computer/skills_console
 	name = "CMF Modifier Access Console"
-	desc = "Used for scanning and modyfing XXX of connected patient."
+	desc = "Used for scanning and modyfing cognitive and motor functions of connected patient."
 	icon = 'icons/obj/skills/skills_machinery.dmi'
 	icon_state = "laptop_skills"
 	state_broken_preset = "laptopb"
@@ -11,8 +11,8 @@
 	var/selected_menu_key = null
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 400
+	idle_power_usage = 100
+	active_power_usage = 7500
 	var/obj/item/weapon/skill_cartridge/cartridge = null
 	var/obj/machinery/optable/skill_scanner/scanner = null
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE, /datum/skill/medical = SKILL_LEVEL_NOVICE, /datum/skill/research = SKILL_LEVEL_NOVICE)
@@ -57,11 +57,20 @@
 	if(!ui)
 		ui = new(user, src, "SkillsConsole")
 		ui.open()
-		ui.set_autoupdate(TRUE)
 
 /obj/machinery/computer/skills_console/tgui_data(mob/user)
 	. = ..()
 	var/list/data = list()
+	var/area/A = get_area(src)
+	data["power_usage"] = current_power_usage
+	data["power_max"] = "No data"
+	data["power_current"] = "No data"
+	if(A)
+		var/obj/machinery/power/apc/apc = A.get_apc()
+		if(apc)
+			data["power_current"] = apc.cell.charge
+			data["power_max"] = apc.cell.maxcharge
+
 	data["connected_table"] = scanner
 	data["connected_patient"] = scanner && scanner.victim
 
@@ -110,15 +119,17 @@
 		if("eject")
 			if(cartridge && !cartridge.unpacked)
 				cartridge.forceMove(loc)
+				set_power_use(IDLE_POWER_USE)
 				cartridge = null
 			. = TRUE
 		if("inject")
 			if(can_inject(usr))
 				var/mob/living/carbon/human/H = scanner.victim
 				var/obj/item/weapon/implant/skill/implant = new(H)
-				implant.set_skills(cartridge.selected_buffs)
-				implant.inject(H)
+				implant.set_skills(cartridge.selected_buffs, cartridge.compatible_species)
+				implant.inject(H, BP_HEAD)
 				qdel(cartridge)
+				set_power_use(IDLE_POWER_USE)
 				cartridge = null
 			. = TRUE
 		if("change_skill")
@@ -128,10 +139,12 @@
 		if("abort")
 			if(cartridge && cartridge.unpacked)
 				qdel(cartridge)
+				set_power_use(IDLE_POWER_USE)
 				cartridge = null
 			. = TRUE
 		if("unpack")
 			if(cartridge && !cartridge.unpacked)
 				cartridge.unpacked = TRUE
+				set_power_use(ACTIVE_POWER_USE)
 			. = TRUE
 	update_icon()
