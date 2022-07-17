@@ -39,7 +39,7 @@ export const SkillsConsole = (props, context) => {
         <Section title="Power info">
           <LabeledList>
             <LabeledList.Item label="Active power usage">
-              {power_usage} kW
+              {power_usage / 1000} kW
             </LabeledList.Item>
             <LabeledList.Item label="Available power in area">
               <ProgressBar

@@ -12,7 +12,7 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
-	active_power_usage = 7500
+	active_power_usage = 85000
 	var/obj/item/weapon/skill_cartridge/cartridge = null
 	var/obj/machinery/optable/skill_scanner/scanner = null
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE, /datum/skill/medical = SKILL_LEVEL_NOVICE)
