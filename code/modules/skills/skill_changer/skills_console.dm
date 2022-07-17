@@ -15,7 +15,7 @@
 	active_power_usage = 7500
 	var/obj/item/weapon/skill_cartridge/cartridge = null
 	var/obj/machinery/optable/skill_scanner/scanner = null
-	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE, /datum/skill/medical = SKILL_LEVEL_NOVICE, /datum/skill/research = SKILL_LEVEL_NOVICE)
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE, /datum/skill/medical = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/computer/skills_console/atom_init()
 	..()

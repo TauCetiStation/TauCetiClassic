@@ -31292,7 +31292,7 @@
 "bdL" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder/blue,
-/obj/item/weapon/stamp/captain,
+/obj/item/weapon/skill_cartridge/red,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bdM" = (
@@ -31392,6 +31392,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
+/obj/item/weapon/stamp/captain,
 /obj/item/device/megaphone,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -31407,6 +31408,7 @@
 "bdV" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp/green,
+/obj/item/weapon/paper/cmf_manual,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bdW" = (
@@ -38990,10 +38992,12 @@
 	pixel_y = 20
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/table/reinforced,
+/obj/item/weapon/paper/cmf_manual,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/server)
+/area/station/bridge/cmf_room)
 "brR" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -39064,10 +39068,8 @@
 	name = "Station Intercom (General)";
 	pixel_y = 20
 	},
-/obj/structure/stool/bed/chair/office/dark{
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/recharge_station,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -40055,7 +40057,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/server)
+/area/station/bridge/cmf_room)
 "btM" = (
 /obj/machinery/hologram/holopad,
 /obj/structure/cable{
@@ -40845,17 +40847,11 @@
 /obj/machinery/light_switch{
 	pixel_y = -25
 	},
-/obj/machinery/camera{
-	c_tag = "Messaging Server";
-	dir = 1
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/bridge/server)
+/turf/simulated/floor/bluegrid,
+/area/station/bridge/cmf_room)
 "bvi" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -41936,10 +41932,6 @@
 /turf/simulated/floor,
 /area/station/medical/surgery2)
 "bwS" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "Messaging Server";
-	req_access = list(30)
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -41951,11 +41943,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/door/airlock/highsecurity{
+	name = "CMF altering";
+	req_access = list(60)
+	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/server)
+/area/station/bridge/cmf_room)
 "bwT" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -42794,13 +42790,14 @@
 	},
 /area/station/hallway/primary/port)
 "byt" = (
-/obj/machinery/message_server,
-/turf/simulated/floor/bluegrid,
-/area/station/bridge/server)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/bridge/cmf_room)
 "byu" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Messaging Server APC";
+	name = "USP implanting APC";
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -42808,8 +42805,12 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/turf/simulated/floor/bluegrid,
-/area/station/bridge/server)
+/obj/structure/table/reinforced,
+/obj/machinery/computer/skills_console,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/bridge/cmf_room)
 "byv" = (
 /obj/machinery/camera{
 	c_tag = "Recycler Lobby";
@@ -42825,7 +42826,7 @@
 /area/station/cargo/recycleroffice)
 "byw" = (
 /turf/simulated/wall/r_wall,
-/area/station/bridge/server)
+/area/station/bridge/cmf_room)
 "byx" = (
 /obj/machinery/camera{
 	c_tag = "Pre Vault"
@@ -42891,15 +42892,13 @@
 	name = "Cyborg Station APC";
 	pixel_y = 24
 	},
-/obj/structure/table,
-/obj/item/weapon/phone{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
+	},
+/obj/machinery/computer/message_monitor{
+	dir = 3
 	},
 /turf/simulated/floor/bluegrid,
 /area/station/bridge/comms{
@@ -43540,6 +43539,7 @@
 /obj/structure/table,
 /obj/item/weapon/folder/blue,
 /obj/item/weapon/stamp/hop,
+/obj/item/weapon/paper/cmf_manual,
 /turf/simulated/floor,
 /area/station/bridge/hop_office)
 "bzM" = (
@@ -43549,13 +43549,15 @@
 /turf/simulated/floor,
 /area/station/bridge/hop_office)
 "bzN" = (
-/obj/machinery/computer/message_monitor{
-	dir = 4
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/highsecurity{
+	name = "CMF altering";
+	req_access = list(60)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/server)
+/area/station/bridge/hop_office)
 "bzO" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -43565,7 +43567,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/server)
+/area/station/bridge/cmf_room)
 "bzP" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -44590,18 +44592,15 @@
 /obj/machinery/meter,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-"bBH" = (
-/obj/machinery/blackbox_recorder,
-/turf/simulated/floor/bluegrid,
-/area/station/bridge/server)
 "bBI" = (
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -22
 	},
 /obj/machinery/light/small,
+/obj/machinery/optable/skill_scanner,
 /turf/simulated/floor/bluegrid,
-/area/station/bridge/server)
+/area/station/bridge/cmf_room)
 "bBJ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -44676,13 +44675,13 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/machinery/recharge_station,
+/obj/machinery/blackbox_recorder,
 /turf/simulated/floor/bluegrid,
 /area/station/bridge/comms{
 	name = "Cyborg Station"
 	})
 "bBR" = (
-/obj/machinery/recharge_station,
+/obj/machinery/message_server,
 /turf/simulated/floor/bluegrid,
 /area/station/bridge/comms{
 	name = "Cyborg Station"
@@ -47390,7 +47389,7 @@
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor" = "Nitrogen", "o2_sensor" = "Oxygen", "co2_sensor" = "Carbon Dioxide", "tox_sensor" = "Toxins", "n2o_sensor" = "Nitrous Oxide", "waste_sensor" = "Gas Mix Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous Oxide","waste_sensor"="Gas Mix Tank")
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -54589,7 +54588,7 @@
 	frequency = 1443;
 	level = 3;
 	name = "Distribution and Waste Monitor";
-	sensors = list("mair_in_meter" = "Mixed Air In", "air_sensor" = "Mixed Air Supply Tank", "mair_out_meter" = "Mixed Air Out", "dloop_atm_meter" = "Distribution Loop", "wloop_atm_meter" = "Waste Loop")
+	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -55580,7 +55579,7 @@
 	input_tag = "waste_in";
 	name = "Gas Mix Tank Control";
 	output_tag = "waste_out";
-	sensors = list("waste_sensor" = "Tank")
+	sensors = list("waste_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -61685,7 +61684,7 @@
 	input_tag = "n2_in";
 	name = "Nitrogen Supply Control";
 	output_tag = "n2_out";
-	sensors = list("n2_sensor" = "Tank")
+	sensors = list("n2_sensor"="Tank")
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/green,
 /turf/simulated/floor{
@@ -61764,7 +61763,7 @@
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
-	sensors = list("air_sensor" = "Tank")
+	sensors = list("air_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "arrival"
@@ -63064,7 +63063,7 @@
 	input_tag = "tox_in";
 	name = "Toxin Supply Control";
 	output_tag = "tox_out";
-	sensors = list("tox_sensor" = "Tank")
+	sensors = list("tox_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -63077,7 +63076,7 @@
 	input_tag = "n2o_in";
 	name = "Nitrous Oxide Supply Control";
 	output_tag = "n2o_out";
-	sensors = list("n2o_sensor" = "Tank")
+	sensors = list("n2o_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -63691,7 +63690,7 @@
 	input_tag = "o2_in";
 	name = "Oxygen Supply Control";
 	output_tag = "o2_out";
-	sensors = list("o2_sensor" = "Tank")
+	sensors = list("o2_sensor"="Tank")
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/green,
 /turf/simulated/floor{
@@ -64856,7 +64855,7 @@
 	input_tag = "co2_in";
 	name = "Carbon Dioxide Supply Control";
 	output_tag = "co2_out";
-	sensors = list("co2_sensor" = "Tank")
+	sensors = list("co2_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -64892,6 +64891,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "blue"
@@ -68468,10 +68471,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 4;
@@ -71677,6 +71676,12 @@
 	icon_state = "blue"
 	},
 /area/station/medical/reception)
+"fTn" = (
+/obj/structure/closet/secure_closet/usp_cartridges,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/bridge/cmf_room)
 "fUb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -74338,10 +74343,6 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "iTp" = (
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_x = 32
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -74351,6 +74352,10 @@
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blue"
@@ -76789,6 +76794,9 @@
 	icon_state = "yellow"
 	},
 /area/station/hallway/primary/aft)
+"lJR" = (
+/turf/simulated/floor/bluegrid,
+/area/station/bridge/cmf_room)
 "lKb" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -114095,7 +114103,7 @@ bra
 bra
 bra
 bra
-bra
+bzN
 bra
 bra
 cxb
@@ -114351,9 +114359,9 @@ aah
 aaa
 aaa
 byw
+fTn
 byt
-bzN
-bBH
+lJR
 byw
 cxe
 ovb
