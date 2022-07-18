@@ -1,7 +1,7 @@
 
 /obj/machinery/power/generator
 	name = "thermoelectric generator"
-	desc = "It's a high efficiency thermoelectric generator."
+	desc = "Generator able to produce power using difference of temperatures in nearby circulators."
 	icon_state = "teg"
 	density = TRUE
 	anchored = FALSE
@@ -15,8 +15,25 @@
 	var/lastgen = 0
 	var/lastgenlev = -1
 
+	var/efficiency = 0.3 //how much heat is converted into energy
+
 /obj/machinery/power/generator/atom_init()
 	..()
+
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/teg(src)
+	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/stack/cable_coil(src, 5)
+
+	var/cap_rating = 0
+	for(var/obj/item/weapon/stock_parts/P in component_parts)
+		if(istype(P, /obj/item/weapon/stock_parts/capacitor))
+			cap_rating += P.rating
+	efficiency = efficiency * ((cap_rating / 3) * 0.75)
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/power/generator/atom_init_late()
@@ -30,6 +47,7 @@
 /obj/machinery/power/generator/proc/reconnect()
 	circ1 = null
 	circ2 = null
+	anchored ? connect_to_network() : disconnect_from_network()
 	if(src.loc && anchored)
 		power_change()
 		if(src.dir & (EAST|WEST))
@@ -49,7 +67,7 @@
 				circ1 = null
 				circ2 = null
 
-/obj/machinery/power/generator/proc/updateicon()
+/obj/machinery/power/generator/update_icon()
 	if(stat & (NOPOWER|BROKEN))
 		cut_overlays()
 	else
@@ -74,10 +92,9 @@
 		var/delta_temperature = abs(air2.temperature - air1.temperature)
 
 		if(delta_temperature > 0 && air1_heat_capacity > 0 && air2_heat_capacity > 0)
-			var/efficiency = 0.65
 			var/energy_transfer = delta_temperature*air2_heat_capacity*air1_heat_capacity/(air2_heat_capacity+air1_heat_capacity)
 			var/heat = energy_transfer*(1-efficiency)
-			lastgen = energy_transfer*efficiency*0.05
+			lastgen = energy_transfer*efficiency
 
 			if(air2.temperature > air1.temperature)
 				air2.temperature = air2.temperature - energy_transfer/air2_heat_capacity
@@ -87,12 +104,11 @@
 				air1.temperature = air1.temperature - energy_transfer/air1_heat_capacity
 
 			//Transfer the air
-			var/datum/gas_mixture/circ_air1 = circ1.AIR1
-			var/datum/gas_mixture/circ_air2 = circ2.AIR2
+			var/datum/gas_mixture/circ1_air2 = circ1.AIR2
+			var/datum/gas_mixture/circ2_air2 = circ2.AIR2
 
-
-			circ_air1.merge(air1)
-			circ_air2.merge(air2)
+			circ1_air2.merge(air1)
+			circ2_air2.merge(air2)
 
 			//Update the gas networks
 			var/datum/pipeline/parent1 = circ1.PARENT1
@@ -112,17 +128,26 @@
 		genlev = 1
 	if(genlev != lastgenlev)
 		lastgenlev = genlev
-		updateicon()
+		update_icon()
 	add_avail(lastgen)
 
 /obj/machinery/power/generator/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.</span>")
-		set_power_use(anchored)
+		lastgenlev = 0
 		reconnect()
+		update_icon()
 	else
 		..()
+
+	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), W))
+		set_power_use(NO_POWER_USE)
+		update_icon()
+		return
+
+	if(default_deconstruction_crowbar(W))
+		return
 
 /obj/machinery/power/generator/interact(mob/user)
 	if(anchored)
@@ -134,27 +159,28 @@
 		user << browse(null, "window=teg")
 		return
 
-	var/datum/gas_mixture/circ1_air1 = circ1.AIR1
-	var/datum/gas_mixture/circ1_air2 = circ1.AIR2
-	var/datum/gas_mixture/circ2_air1 = circ2.AIR1
-	var/datum/gas_mixture/circ2_air2 = circ2.AIR2
-
 	var/t = "<PRE><B>Thermo-Electric Generator</B><HR>"
 
 	if(circ1 && circ2)
+		var/datum/gas_mixture/circ1_air1 = circ1.AIR1
+		var/datum/gas_mixture/circ1_air2 = circ1.AIR2
+		var/datum/gas_mixture/circ2_air1 = circ2.AIR1
+		var/datum/gas_mixture/circ2_air2 = circ2.AIR2
+		
 		t += "Output : [round(lastgen)] W<BR><BR>"
 
 		t += "<B>Primary Circulator (top or right)</B><BR>"
-		t += "Inlet Pressure: [round(circ1.air1.return_pressure(), 0.1)] kPa<BR>"
-		t += "Inlet Temperature: [round(circ1.air1.temperature, 0.1)] K<BR>"
-		t += "Outlet Pressure: [round(circ1.air2.return_pressure(), 0.1)] kPa<BR>"
-		t += "Outlet Temperature: [round(circ1.air2.temperature, 0.1)] K<BR>"
+
+		t += "Inlet Pressure: [round(circ1_air1.return_pressure(), 0.1)] kPa<BR>"
+		t += "Inlet Temperature: [round(circ1_air1.temperature, 0.1)] K<BR>"
+		t += "Outlet Pressure: [round(circ1_air2.return_pressure(), 0.1)] kPa<BR>"
+		t += "Outlet Temperature: [round(circ1_air2.temperature, 0.1)] K<BR>"
 
 		t += "<B>Secondary Circulator (bottom or left)</B><BR>"
-		t += "Inlet Pressure: [round(circ2.air1.return_pressure(), 0.1)] kPa<BR>"
-		t += "Inlet Temperature: [round(circ2.air1.temperature, 0.1)] K<BR>"
-		t += "Outlet Pressure: [round(circ2.air2.return_pressure(), 0.1)] kPa<BR>"
-		t += "Outlet Temperature: [round(circ2.air2.temperature, 0.1)] K<BR>"
+		t += "Inlet Pressure: [round(circ2_air1.return_pressure(), 0.1)] kPa<BR>"
+		t += "Inlet Temperature: [round(circ2_air1.temperature, 0.1)] K<BR>"
+		t += "Outlet Pressure: [round(circ2_air2.return_pressure(), 0.1)] kPa<BR>"
+		t += "Outlet Temperature: [round(circ2_air2.temperature, 0.1)] K<BR>"
 
 	else
 		t += "Unable to connect to circulators.<br>"
@@ -164,7 +190,7 @@
 	t += "<HR>"
 	t += "<A href='?src=\ref[src]'>Refresh</A>"
 
-	var/datum/browser/popup = new(user, teg, null, 460, 300)
+	var/datum/browser/popup = new(user, "teg", null, 460, 300)
 	popup.set_content(t)
 	popup.open()
 
@@ -175,11 +201,6 @@
 		return
 
 	updateDialog()
-
-
-/obj/machinery/power/generator/power_change()
-	..()
-	updateicon()
 
 
 /obj/machinery/power/generator/verb/rotate_clock()

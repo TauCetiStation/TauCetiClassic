@@ -835,3 +835,23 @@ to destroy them and players will be able to make replacements.
 	req_components = list(
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 3)
+
+/obj/item/weapon/circuitboard/circulator
+	name = "circuit board (TEG circulator)"
+	build_path = /obj/machinery/atmospherics/components/binary/circulator
+	board_type = "machine"
+	origin_tech = "engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 3,
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/stack/cable_coil = 5)
+
+/obj/item/weapon/circuitboard/teg
+	name = "circuit board (TEG generator)"
+	build_path = /obj/machinery/power/generator
+	board_type = "machine"
+	origin_tech = "engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/stock_parts/capacitor = 3,
+							/obj/item/stack/cable_coil = 5)
