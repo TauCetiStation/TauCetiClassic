@@ -2359,6 +2359,7 @@
 #include "code\unit_tests\unit_test.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
+#include "maps\boxstation\boxstation.dmm"
 #include "maps\centcom\centcom.dmm"
 #include "maps\falcon\job_changes.dm"
 #include "maps\testmap\job_changes.dm"
