@@ -67692,7 +67692,7 @@
 /obj/item/device/eftpos{
 	eftpos_name = "Captain EFTPOS scanner"
 	},
-/obj/item/weapon/skill_cartridge/red,
+/obj/item/weapon/skill_cartridge/usp10,
 /obj/item/weapon/paper/cmf_manual,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)

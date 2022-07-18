@@ -42,28 +42,28 @@
 		result[skill.name] = selected_buffs[skill_type]
 	return result
 
-/obj/item/weapon/skill_cartridge/green
+/obj/item/weapon/skill_cartridge/usp5
 	name = "USP-5 cartridge"
 	icon_state = "green"
 	points = 5
 
-/obj/item/weapon/skill_cartridge/blue
+/obj/item/weapon/skill_cartridge/usp7
 	name = "USP-7 cartridge"
 	icon_state = "blue"
 	points = 7
 
-/obj/item/weapon/skill_cartridge/red
+/obj/item/weapon/skill_cartridge/usp10
 	name = "USP-10 cartridge"
 	icon_state = "red"
 	points = 10
 
-/obj/item/weapon/skill_cartridge/purple
+/obj/item/weapon/skill_cartridge/usp15
 	name = "USP-15 cartridge"
 	item_state = "card-id"
 	icon_state = "purple"
 	points = 15
 
-/obj/item/weapon/skill_cartridge/ipc
+/obj/item/weapon/skill_cartridge/csp15
 	name = "CSP-15 cartridge"
 	desc = "Used together with the CMF apparatus to rapidly alter skills. Specifically, this one can be used with the IPC."
 	icon_state = "ipc"

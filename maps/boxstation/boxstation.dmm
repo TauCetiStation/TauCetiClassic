@@ -31289,7 +31289,7 @@
 "bdL" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder/blue,
-/obj/item/weapon/skill_cartridge/red,
+/obj/item/weapon/skill_cartridge/usp10,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bdM" = (
