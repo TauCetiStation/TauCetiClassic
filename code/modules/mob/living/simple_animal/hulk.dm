@@ -154,7 +154,6 @@
 			if(prob(15))
 				emote("gasp")
 
-	weakened = 0
 	if(health > 0)
 		health = min(health + health_regen, maxHealth)
 	..()
@@ -189,6 +188,7 @@
 /mob/living/simple_animal/hulk/MobBump(mob/M)
 	if(isliving(M) && !(istype(M, /mob/living/simple_animal/hulk) || issilicon(M)))
 		var/mob/living/L = M
+		L.Stun(1)
 		L.Weaken(3)
 		L.take_overall_damage(rand(4,12), 0)
 	return 0

@@ -316,6 +316,17 @@
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
+	if(isobserver(src))
+		return
+	var/mob/living/carbon/human/H = src
+	if(ishuman(src))
+		if(H.head && H.head.flags_inv && HIDEEYES)
+			return
+		if(H.wear_mask && H.wear_mask.flags_inv && HIDEEYES)
+			return
+	if(!A.z) //no message if we examine something in a backpack
+		return
+	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
@@ -742,11 +753,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 // Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 // We need speed out of this proc, thats why using incapacitated() helper here is a bad idea.
 /mob/proc/update_canmove(no_transform = FALSE)
-	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+
+	var/ko = paralysis || stat || (status_flags & FAKEDEATH)
 
 	anchored = HAS_TRAIT(src, TRAIT_ANCHORED)
-	lying = (ko || crawling) && !anchored
-	canmove = !(ko || stunned || anchored)
+	lying = (ko || weakened || crawling) && !anchored
+	canmove = !(ko || anchored || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 
 	if(buckled)
 		if(buckled.buckle_lying != -1)
@@ -830,11 +842,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 // ======STATUS_FLAGS=======
 /mob/proc/remove_status_flags(remove_flags)
 	if(remove_flags & CANSTUN)
-		stunned = 0
+		SetStunned(0, TRUE)
 	if(remove_flags & CANWEAKEN)
-		weakened = 0
+		SetWeakened(0, TRUE)
 	if(remove_flags & CANPARALYSE)
-		paralysis = 0
+		SetParalysis(0, TRUE)
 	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN))
 		update_canmove()
 	status_flags &= ~remove_flags
@@ -843,96 +855,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(add_flags & GODMODE)
 		stuttering = 0
 	status_flags |= add_flags
-
-// ========== STUN ==========
-/mob/proc/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
-	if(!isnull(lock))
-		if(lock)
-			status_flags |= LOCKSTUN
-		else
-			status_flags &= ~LOCKSTUN
-	else if(status_flags & LOCKSTUN)
-		return
-
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(max(stunned, amount), 0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		if(updating)
-			update_canmove()
-	else
-		stunned = 0
-
-/mob/proc/SetStunned(amount, updating = 1, ignore_canstun = 0, lock = null) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(!isnull(lock))
-		if(lock)
-			status_flags |= LOCKSTUN
-		else
-			status_flags &= ~LOCKSTUN
-	else if(status_flags & LOCKSTUN)
-		return
-
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(amount, 0)
-		if(updating)
-			update_canmove()
-	else
-		stunned = 0
-
-/mob/proc/AdjustStunned(amount, updating = 1, ignore_canstun = 0, lock = null)
-	if(!isnull(lock))
-		if(lock)
-			status_flags |= LOCKSTUN
-		else
-			status_flags &= ~LOCKSTUN
-	else if(status_flags & LOCKSTUN)
-		return
-
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(stunned + amount, 0)
-		if(updating)
-			update_canmove()
-	else
-		stunned = 0
-
-// ========== WEAKEN ==========
-/mob/proc/Weaken(amount)
-	if(status_flags & CANWEAKEN)
-		weakened = max(max(weakened, amount), 0)
-		update_canmove() // updates lying, canmove and icons
-	else
-		weakened = 0
-
-/mob/proc/SetWeakened(amount)
-	if(status_flags & CANWEAKEN)
-		weakened = max(amount, 0)
-		update_canmove()
-	else
-		weakened = 0
-
-/mob/proc/AdjustWeakened(amount)
-	if(status_flags & CANWEAKEN)
-		weakened = max(weakened + amount, 0)
-		update_canmove()
-	else
-		weakened = 0
-
-// ========== PARALYSE ==========
-/mob/proc/Paralyse(amount)
-	if(status_flags & CANPARALYSE)
-		paralysis = max(max(paralysis, amount), 0)
-	else
-		paralysis = 0
-
-/mob/proc/SetParalysis(amount)
-	if(status_flags & CANPARALYSE)
-		paralysis = max(amount, 0)
-	else
-		paralysis = 0
-
-/mob/proc/AdjustParalysis(amount)
-	if(status_flags & CANPARALYSE)
-		paralysis = max(paralysis + amount, 0)
-	else
-		paralysis = 0
 
 // ========== CRAWLING ==========
 /mob/proc/SetCrawling(value)
@@ -1036,7 +958,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		to_chat(U, "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>")
 
-	if(!do_skilled(U, S, SKILL_TASK_DIFFICULT, list(/datum/skill/medical/trained), -0.2))
+	if(!do_skilled(U, S, SKILL_TASK_DIFFICULT, list(/datum/skill/medical = SKILL_LEVEL_TRAINED), -0.2))
 		return
 	if(QDELETED(S) || QDELETED(U) || selection.loc != S)
 		return
@@ -1115,6 +1037,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 	spell_list -= S
 	if(mind)
 		mind.spell_list -= S
+		if(isliving(mind.current))
+			var/mob/living/L = mind.current
+			if(S.action)
+				S.action.Remove(L)
 	qdel(S)
 
 /mob/proc/ClearSpells()
@@ -1123,9 +1049,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 		qdel(spell)
 
 	if(mind)
-		for(var/spell in mind.spell_list)
-			mind.spell_list -= spell
-			qdel(spell)
+		for(var/obj/effect/proc_holder/spell/S in mind.spell_list)
+			mind.spell_list -= S
+			if(isliving(mind.current))
+				var/mob/living/L = mind.current
+				if(S.action)
+					S.action.Remove(L)
+			qdel(S)
 
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return

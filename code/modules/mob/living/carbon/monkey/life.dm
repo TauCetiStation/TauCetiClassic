@@ -74,17 +74,17 @@
 /mob/living/carbon/monkey/proc/handle_disabilities()
 
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
-		if ((prob(1) && paralysis < 10))
+		if (prob(1))
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
-		if ((prob(5) && paralysis <= 1))
+		if ((prob(5) && !paralysis))
 			drop_item()
 			spawn( 0 )
 				emote("cough")
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
-		if ((prob(10) && paralysis <= 1))
+		if (prob(10) && !paralysis)
 			Stun(10)
 			spawn( 0 )
 				emote("twitch")
@@ -106,6 +106,7 @@
 	if ((HULK in mutations) && health <= 25)
 		mutations.Remove(HULK)
 		to_chat(src, "<span class='warning'>You suddenly feel very weak.</span>")
+		Stun(1)
 		Weaken(3)
 		emote("collapse")
 
@@ -122,6 +123,7 @@
 
 		if (radiation > 100)
 			radiation = 100
+			Stun(5)
 			Weaken(10)
 			if(!lying)
 				to_chat(src, "<span class='warning'>You feel weak.</span>")
@@ -138,6 +140,7 @@
 				adjustToxLoss(1)
 				if(prob(5))
 					radiation -= 5
+					Stun(1)
 					Weaken(3)
 					if(!lying)
 						to_chat(src, "<span class='warning'>You feel weak.</span>")
@@ -255,7 +258,6 @@
 			setHalLoss(99)
 
 		if(paralysis)
-			AdjustParalysis(-1)
 			blinded = 1
 			stat = UNCONSCIOUS
 			if(halloss > 0)
@@ -289,12 +291,6 @@
 			ear_damage = max(ear_damage-0.05, 0)
 
 		//Other
-		if(stunned)
-			AdjustStunned(-1)
-
-		if(weakened)
-			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
-
 		if(stuttering > 0)
 			AdjustStuttering(-1)
 
