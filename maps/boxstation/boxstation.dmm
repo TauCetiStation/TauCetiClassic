@@ -46959,8 +46959,15 @@
 	},
 /area/station/rnd/robotics)
 "bGb" = (
-/obj/effect/decal/cleanable/blood/oil,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "bGc" = (
@@ -51938,11 +51945,16 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "bPd" = (
-/obj/machinery/atmospherics/components/binary/circulator,
-/turf/simulated/floor{
-	icon_state = "delivery"
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/area/station/engineering/atmos)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "bPe" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -52470,11 +52482,24 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "bPZ" = (
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
-/turf/simulated/floor{
-	icon_state = "bot"
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
-/area/station/engineering/atmos)
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "bQa" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -53895,15 +53920,14 @@
 /turf/simulated/floor/plating,
 /area/station/construction/assembly_line)
 "bTw" = (
-/obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "bTx" = (
@@ -58457,19 +58481,11 @@
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cik" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor{
+	icon_state = "delivery"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/atmos)
+/area/station/engineering/atmos)
 "cil" = (
 /obj/structure/reagent_dispensers/aqueous_foam_tank,
 /turf/simulated/floor/plating,
@@ -63515,21 +63531,22 @@
 /area/station/engineering/atmos)
 "cvh" = (
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 2;
+	d1 = 4;
 	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
 /area/station/maintenance/atmos)
 "cvj" = (
 /obj/machinery/reagentgrinder,
@@ -67278,11 +67295,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cGI" = (
-/obj/machinery/power/generator,
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/station/engineering/atmos)
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/six,
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "cGM" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/simulated/floor/grass,
@@ -68249,7 +68265,7 @@
 	dir = 10
 	},
 /turf/simulated/floor{
-	dir = 5;
+	dir = 1;
 	icon_state = "warning"
 	},
 /area/station/engineering/atmos)
@@ -68509,25 +68525,9 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "cLj" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "cLk" = (
 /obj/structure/rack,
@@ -120546,8 +120546,8 @@ kEb
 cLm
 bPY
 bSV
-bPZ
-bPZ
+cik
+cik
 cKt
 bRd
 coF
@@ -120803,9 +120803,9 @@ rOb
 rOb
 bSq
 bSV
-bPd
-cGI
-bPd
+bSV
+bSV
+bSV
 bSV
 bRZ
 cgw
@@ -121058,11 +121058,11 @@ bof
 kEb
 cce
 cce
-cik
-bSV
-bSV
-bSV
-bSV
+bLw
+bTw
+bGb
+bPd
+bPZ
 bSV
 bQT
 ciw
@@ -121315,11 +121315,11 @@ ayH
 bLF
 bLF
 bLF
+cdA
+cdA
+cdA
+cce
 cvh
-cKD
-bTw
-cKD
-cLj
 bSV
 bVO
 bYE
@@ -121572,8 +121572,8 @@ bKt
 btc
 bwR
 bLF
-cdA
-cdA
+cGI
+cLj
 cdA
 cce
 bQa
@@ -122087,7 +122087,7 @@ ckt
 bPz
 bLF
 cdR
-bGb
+cdE
 cdA
 cyG
 bgk
