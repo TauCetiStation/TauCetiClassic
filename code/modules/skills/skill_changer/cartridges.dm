@@ -109,7 +109,7 @@
 			H.Weaken(5)
 	
 	H.add_skills_buff(added_skillset)
-	return 1
+	return TRUE
 
 /obj/item/weapon/implant/skill/emp_act(severity)
 	if (malfunction)
