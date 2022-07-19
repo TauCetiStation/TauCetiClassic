@@ -56580,7 +56580,6 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "ccy" = (
-/obj/item/clothing/glasses/gglasses,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "cautioncorner"
