@@ -279,6 +279,15 @@
 				var/obj/item/weapon/implant/I = new implant_type(H)
 				I.inject(H, implants[implant_type])
 
+	if(istype(H.wear_id, /obj/item/weapon/card/id)) // check id card
+		var/obj/item/weapon/card/id/wear_id = H.wear_id
+		wear_id.assign(H.real_name)
+
+		var/obj/item/device/pda/pda = locate() in H // find closest pda
+		if(pda)
+			pda.ownjob = wear_id.assignment
+			pda.assign(H.real_name)
+
 	H.sec_hud_set_ID()
 	H.update_body()
 	return TRUE
