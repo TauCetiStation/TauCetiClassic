@@ -27,7 +27,7 @@
 	if(.)
 		return
 	var/mob/living/carbon/human/H = user
-	if(!check_access(H.get_active_hand()) || !check_access(H.wear_id))
+	if(!check_access(H.get_active_hand()) && !check_access(H.wear_id))
 		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	if(!do_skill_checks(user))
@@ -75,7 +75,7 @@
 	if(!do_skill_checks(user))
 		return
 	var/mob/living/carbon/human/H = user
-	if(!check_access(H.get_active_hand()) || !check_access(H.wear_id))
+	if(!check_access(H.get_active_hand()) && !check_access(H.wear_id))
 		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	current = freeborg()
