@@ -112,16 +112,10 @@
 /obj/item/weapon/card/id/atom_init()
 	. = ..()
 
-	if(!ismob(loc))
-		return
-	
-	var/mob/user = loc
 	if(!ishuman(loc))
-		assign(user.name)
 		return
 
-	assign(user.real_name)
-	var/mob/living/carbon/human/H = user
+	var/mob/living/carbon/human/H = loc
 	blood_type = H.dna.b_type
 	dna_hash = H.dna.unique_enzymes
 	fingerprint_hash = md5(H.dna.uni_identity)
@@ -410,8 +404,22 @@
 	. = ..()
 	access = get_all_accesses() + get_all_centcom_access()
 
+/obj/item/weapon/card/id/centcom/representative
+	assignment = "NanoTrasen Navy Representative"
+
+/obj/item/weapon/card/id/centcom/officer
+	assignment = "NanoTrasen Navy Officer"
+
+/obj/item/weapon/card/id/centcom/captain
+	assignment = "NanoTrasen Navy Captain"
+
 /obj/item/weapon/card/id/centcom/special_ops
-	name = "Special Operations Officer"
+	assignment = "Special Operations Officer"
+
+/obj/item/weapon/card/id/centcom/ert
+	icon_state = "ert"
+	assignment = "Emergency Response Team"
+	rank = "Emergency Response Team"
 
 /obj/item/weapon/card/id/velocity
 	name = "Cargo Industries. ID"
@@ -425,10 +433,17 @@
 	. = ..()
 	access = get_all_centcom_access()
 
-/obj/item/weapon/card/id/centcom/ert
-	icon_state = "ert"
-	assignment = "Emergency Response Team"
-	rank = "Emergency Response Team"
+/obj/item/weapon/card/id/velocity/officer
+	assignment = "Velocity Officer"
+	rank = "Velocity Officer"
+
+/obj/item/weapon/card/id/velocity/chief
+	assignment = "Velocity Chief"
+	rank = "Velocity Chief"
+
+/obj/item/weapon/card/id/velocity/doctor
+	assignment = "Velocity Medical Doctor"
+	rank = "Velocity Medical Doctor"
 
 /obj/item/weapon/card/id/space_police
 	assignment = "Organized Crimes Department"
