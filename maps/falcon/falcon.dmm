@@ -3510,6 +3510,7 @@
 "aga" = (
 /obj/structure/closet,
 /obj/effect/decal/cleanable/cobweb2,
+/obj/item/clothing/under/owl,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "agb" = (
