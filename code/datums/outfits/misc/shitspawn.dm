@@ -168,11 +168,6 @@
 		new /obj/item/weapon/plastique,
 	)
 
-	var/obj/item/device/pda/heads/pda = H.belt
-	if(istype(pda))
-		pda.ownjob = "Reaper"
-		pda.assign(H.real_name)
-	
 /datum/outfit/preparation
 	name = "preparation"
 
@@ -297,44 +292,31 @@
 	r_pocket = /obj/item/device/pda/heads
 	id = /obj/item/weapon/card/id/centcom
 
-	var/ownjob
-
-/datum/outfit/nanotrasen/post_equip(mob/living/carbon/human/H)
-	var/obj/item/device/pda/pda = locate() in H
-	if(pda)
-		pda.ownjob = ownjob
-		pda.assign(H.real_name)
-
-	var/obj/item/weapon/card/id/W = locate() in H
-	if(W)
-		W.assignment = ownjob
-		W.assign(H.real_name)
-
 /datum/outfit/nanotrasen/representatives
 	name = "NanoTraset: representative"
-	ownjob = "NanoTrasen Navy Representative"
 	
 	uniform = /obj/item/clothing/under/rank/centcom/representative
 	l_ear = /obj/item/device/radio/headset/heads/hop
 	belt = /obj/item/weapon/clipboard
+	id = /obj/item/weapon/card/id/centcom/representative
 
 /datum/outfit/nanotrasen/officer
 	name = "NanoTraset: officer"
-	ownjob = "NanoTrasen Navy Officer"
 
 	uniform = /obj/item/clothing/under/rank/centcom/officer
 	l_ear = /obj/item/device/radio/headset/heads/captain
 	head = /obj/item/clothing/head/beret/centcomofficer
 	belt = /obj/item/weapon/gun/energy
+	id = /obj/item/weapon/card/id/centcom/officer
 
 /datum/outfit/nanotrasen/captain
 	name = "NanoTraset: captain"
-	ownjob = "NanoTrasen Navy Captain"
 
 	uniform = /obj/item/clothing/under/rank/centcom/captain
 	l_ear = /obj/item/device/radio/headset/heads/captain
 	head = /obj/item/clothing/head/beret/centcomcaptain
 	belt = /obj/item/weapon/gun/energy
+	id = /obj/item/weapon/card/id/centcom/captain
 
 /datum/outfit/psyops_officer
 	name = "psyops officer"
@@ -384,27 +366,12 @@
 	belt = /obj/item/device/pda/velocity
 	id = /obj/item/weapon/card/id/velocity
 
-	var/ownjob
-
 /datum/outfit/velocity/post_equip(mob/living/carbon/human/H)
-	var/obj/item/device/pda/pda = locate() in H
-	if(pda)
-		pda.ownjob = ownjob
-		pda.assign(H.real_name)
-
-	var/obj/item/weapon/card/id/W = locate() in H
-	if(W)
-		W.assignment = ownjob
-		W.rank = ownjob
-		W.assign(H.real_name)
-
-	H.mind?.assigned_role = ownjob
 	H.universal_speak = TRUE
 	H.universal_understand = TRUE
 
 /datum/outfit/velocity/officer
 	name = "Velocity: officer"
-	ownjob = "Velocity Officer"
 
 	uniform = /obj/item/clothing/under/det/velocity
 	shoes = /obj/item/clothing/shoes/boots/combat
@@ -412,10 +379,10 @@
 	l_ear = /obj/item/device/radio/headset/velocity
 	back = /obj/item/weapon/storage/backpack/satchel
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
+	id = /obj/item/weapon/card/id/velocity/officer
 
 /datum/outfit/velocity/chief
 	name = "Velocity: chief"
-	ownjob = "Velocity Chief"
 
 	uniform = /obj/item/clothing/under/rank/head_of_security/corp
 	shoes = /obj/item/clothing/shoes/boots/combat
@@ -440,14 +407,12 @@
 	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster
 
 	implants = list(/obj/item/weapon/implant/mind_protect/mindshield)
+	id = /obj/item/weapon/card/id/velocity/chief
 
 /datum/outfit/velocity/chief/post_equip(mob/living/carbon/human/H)
-	..()
-
 	var/obj/item/weapon/storage/pouch/baton_holster/BH = H.l_store
 	new /obj/item/weapon/melee/classic_baton(BH)
 	BH.update_icon()
-
 
 	var/obj/item/weapon/storage/pouch/pistol_holster/PH = H.r_store
 	var/obj/item/weapon/gun/energy/laser/selfcharging/SG = new /obj/item/weapon/gun/energy/laser/selfcharging(PH)
@@ -457,7 +422,6 @@
 
 /datum/outfit/velocity/doctor
 	name = "Velocity: doctor"
-	ownjob = "Velocity Medical Doctor"
 
 	uniform = /obj/item/clothing/under/det/velocity
 	shoes = /obj/item/clothing/shoes/brown
@@ -468,6 +432,7 @@
 	glasses = /obj/item/clothing/glasses/hud/health
 
 	l_pocket = /obj/item/weapon/reagent_containers/hypospray/cmo
+	id = /obj/item/weapon/card/id/velocity/doctor
 
 /datum/outfit/ert
 	name = "NanoTrasen: emergency response team"
