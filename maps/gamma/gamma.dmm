@@ -11332,7 +11332,6 @@
 /obj/item/clothing/shoes/slippers{
 	pixel_y = -10
 	},
-/obj/item/clothing/mask/balaclava/rasmus,
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
 "cBY" = (
@@ -30086,7 +30085,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "izg" = (
-/obj/item/clothing/mask/balaclava/rasmus,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
 	},
