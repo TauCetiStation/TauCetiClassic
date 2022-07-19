@@ -103,8 +103,18 @@
 /obj/machinery/telescience_jammer/emag_act(mob/user)
 	if(emagged)
 		return FALSE
-	to_chat(user, "<span class='notice'>Looks like you can unlock it now with any ID card...</span>")
+	to_chat(user, "<span class='notice'>Looks like you can unlock it now with any ID card.</span>")
 	emagged = TRUE
+
+/obj/machinery/telescience_jammer/emp_act(severity)
+	if(!is_operational())
+		return
+	if(prob(80/severity))
+		stat |= EMPED
+		addtimer(CALLBACK(src, .proc/after_emp), 10 MINUTES / severity)
+
+/obj/machinery/telescience_jammer/proc/after_emp()
+	stat &= ~EMPED
 
 /obj/machinery/telescience_jammer/Destroy()
 	for(var/datum/component/teleblock/jammer/COMP as anything in teleblocks)

@@ -11,12 +11,12 @@
 
 /datum/component/teleblock/RegisterWithParent() //RegisterSignal
 	RegisterSignal(parent, COMSIG_ATOM_INTERCEPT_TELEPORT, .proc/intercept)
-	var/turf/T = parent
+	//var/turf/T = parent
 	//T.color = "#ff0000"
 
 /datum/component/teleblock/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_INTERCEPT_TELEPORT)
-	var/turf/T = parent
+	//var/turf/T = parent
 	//T.color = null
 
 /datum/component/teleblock/proc/intercept()
