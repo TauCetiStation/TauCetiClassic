@@ -16574,8 +16574,7 @@
 /area/station/maintenance/eva)
 "aDl" = (
 /obj/structure/closet,
-/obj/item/clothing/under/owl,
-/obj/item/weapon/nullrod,
+/obj/item/clothing/mask/balaclava/rasmus,
 /turf/simulated/floor/wood,
 /area/station/maintenance/chapel)
 "aDm" = (
@@ -20604,7 +20603,7 @@
 /area/station/civilian/gym)
 "aKQ" = (
 /obj/structure/table/woodentable,
-/obj/item/clothing/mask/gas/owl_mask,
+/obj/item/weapon/nullrod,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken4"
 	},
@@ -56580,6 +56579,7 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "ccy" = (
+/obj/item/clothing/glasses/gglasses,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "cautioncorner"
