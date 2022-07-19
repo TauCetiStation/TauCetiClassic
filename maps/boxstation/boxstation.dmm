@@ -16574,8 +16574,8 @@
 /area/station/maintenance/eva)
 "aDl" = (
 /obj/structure/closet,
-/obj/item/weapon/nullrod,
 /obj/item/clothing/under/owl,
+/obj/item/weapon/nullrod,
 /turf/simulated/floor/wood,
 /area/station/maintenance/chapel)
 "aDm" = (
