@@ -68,7 +68,7 @@
 
 	if(istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/card = I
-		if(emagged || access_heads in card.access)
+		if(emagged || (access_heads in card.access))
 			if(locked)
 				locked = FALSE
 				stat |= MAINT
