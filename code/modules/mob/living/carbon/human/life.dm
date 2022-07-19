@@ -131,19 +131,19 @@
 
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
-		if ((prob(1) && paralysis < 1))
+		if (prob(1) && !paralysis)
 			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 			make_jittery(1000)
 	if ((disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH)) && !reagents.has_reagent("dextromethorphan"))
-		if ((prob(5) && paralysis <= 1))
+		if (prob(5) && !paralysis)
 			drop_item()
 			spawn( 0 )
 				emote("cough")
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		speech_problem_flag = 1
-		if ((prob(10) && paralysis <= 1))
+		if (prob(10) && !paralysis)
 			Stun(10)
 			spawn( 0 )
 				switch(rand(1, 3))
@@ -246,6 +246,7 @@
 		if (radiation > 100)
 			radiation = 100
 			if(!species.flags[RAD_ABSORB])
+				Stun(5)
 				Weaken(10)
 				if(!lying)
 					to_chat(src, "<span class='warning'>You feel weak.</span>")
@@ -772,11 +773,11 @@
 				if(prob(3))
 					Paralyse(10)
 				else
+					Stun(5)
 					Weaken(10)
 				setHalLoss(99)
 
 		if(paralysis)
-			AdjustParalysis(-1)
 			blinded = 1
 			stat = UNCONSCIOUS
 			if(halloss > 0)
@@ -833,10 +834,6 @@
 		//Other
 		if(stunned)
 			speech_problem_flag = 1
-			AdjustStunned(-1)
-
-		if(weakened)
-			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 
 		if(stuttering)
 			speech_problem_flag = 1
@@ -865,9 +862,70 @@
 
 	return 1
 
+/mob/living/carbon/human/update_health_hud()
+	if(stat == DEAD)
+		healths?.icon_state = "health7"	//DEAD healthmeter
+		if(healthdoll)
+			healthdoll.icon_state = "healthdoll_DEAD"
+			healthdoll.cut_overlays()
+		return
+
+	if(healthdoll)
+		healthdoll.cut_overlays()
+		healthdoll.icon_state = "healthdoll_EMPTY"
+		for(var/obj/item/organ/external/BP in bodyparts)
+			if(!BP || BP.is_stump)
+				continue
+
+			var/damage = BP.burn_dam + BP.brute_dam
+			var/icon_num
+
+			if(damage <= 0)
+				icon_num = 0
+			else switch(damage / BP.max_damage)
+				if(0 to 0.2)
+					icon_num = 1
+				if(0.2 to 0.4)
+					icon_num = 2
+				if(0.4 to 0.6)
+					icon_num = 3
+				if(0.6 to 0.8)
+					icon_num = 4
+				else
+					icon_num = 5
+
+			healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
+
+	if(!healths)
+		return
+
+	switch(hal_screwyhud)
+		if(1)
+			healths.icon_state = "health6"
+			return
+		if(2)
+			healths.icon_state = "health7"
+			return
+
+	switch(100 - ((species && species.flags[NO_PAIN] && !species.flags[IS_SYNTHETIC]) ? 0 : traumatic_shock))
+		if(100 to INFINITY)
+			healths.icon_state = "health0"
+		if(80 to 100)
+			healths.icon_state = "health1"
+		if(60 to 80)
+			healths.icon_state = "health2"
+		if(40 to 60)
+			healths.icon_state = "health3"
+		if(20 to 40)
+			healths.icon_state = "health4"
+		if(0 to 20)
+			healths.icon_state = "health5"
+		else
+			healths.icon_state = "health6"
+
 /mob/living/carbon/human/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return
 
 	if(stat == UNCONSCIOUS && health <= 0)
 		//Critical damage passage overlay
@@ -920,138 +978,84 @@
 	update_sight()
 
 	if(stat == DEAD)
-		if(healths)
-			healths.icon_state = "health7"	//DEAD healthmeter
+		return ..()
+	
+	if(nutrition_icon)
+		var/full_perc // Nutrition pecentage
+		var/fullness_icon = species.flags[IS_SYNTHETIC] ? "lowcell" : "burger"
+		var/get_nutrition_max
+		if (species.flags[IS_SYNTHETIC])
+			var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
+			var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in IO
+			if (I)
+				get_nutrition_max = I.maxcharge
+			else
+				get_nutrition_max = 1 // IPC nutrition should be set to zero to this moment
+		else
+			get_nutrition_max = NUTRITION_LEVEL_FAT
+		full_perc = clamp(((get_nutrition() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
+		nutrition_icon.icon_state = "[fullness_icon][CEILING(full_perc, 20)]"
+
+	//OH cmon...
+	var/nearsighted = 0
+	var/impaired    = 0
+
+	if(disabilities & NEARSIGHTED || HAS_TRAIT(src, TRAIT_NEARSIGHT))
+		nearsighted = 1
+
+	if(glasses)
+		var/obj/item/clothing/glasses/G = glasses
+		if(G.prescription)
+			nearsighted = 0
+
+	if(istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/unathi))
+		var/obj/item/clothing/head/welding/O = head
+		if(!O.up && tinted_weldhelh)
+			impaired = 2
+	if(istype(wear_mask, /obj/item/clothing/mask/gas/welding) )
+		var/obj/item/clothing/mask/gas/welding/O = wear_mask
+		if(!O.up && tinted_weldhelh)
+			impaired = 2
+	if(istype(glasses, /obj/item/clothing/glasses/welding) )
+		var/obj/item/clothing/glasses/welding/O = glasses
+		if(!O.up && tinted_weldhelh)
+			impaired = max(impaired, 2)
+
+	if(eye_blurry)
+		update_eye_blur()
 	else
+		update_eye_blur()
+	if(nearsighted)
+		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
+	else
+		clear_fullscreen("nearsighted")
 
-		if(healths)
-			if (analgesic)
-				healths.icon_state = "health_health_numb"
-			else
-				switch(hal_screwyhud)
-					if(1)
-						healths.icon_state = "health6"
-					if(2)
-						healths.icon_state = "health7"
+	if(impaired)
+		overlay_fullscreen("impaired", /atom/movable/screen/fullscreen/impaired, impaired)
+	else
+		clear_fullscreen("impaired")
+
+	if(!machine)
+		var/isRemoteObserve = 0
+		if((REMOTE_VIEW in mutations) && remoteview_target)
+			if(getBrainLoss() <= 100)//#Z2 We burn our brain with active remote_view mutation
+				if(remoteview_target.stat==CONSCIOUS)
+					isRemoteObserve = 1
+					if(getBrainLoss() > 50)
+						adjustBrainLoss(2)
 					else
-						//switch(health - halloss)
-						switch(100 - ((species && species.flags[NO_PAIN] && !species.flags[IS_SYNTHETIC]) ? 0 : traumatic_shock))
-							if(100 to INFINITY)
-								healths.icon_state = "health0"
-							if(80 to 100)
-								healths.icon_state = "health1"
-							if(60 to 80)
-								healths.icon_state = "health2"
-							if(40 to 60)
-								healths.icon_state = "health3"
-							if(20 to 40)
-								healths.icon_state = "health4"
-							if(0 to 20)
-								healths.icon_state = "health5"
-							else
-								healths.icon_state = "health6"
-
-		if(healthdoll)
-			healthdoll.cut_overlays()
-			if(stat == DEAD)
-				healthdoll.icon_state = "healthdoll_DEAD"
+						adjustBrainLoss(1)
 			else
-				healthdoll.icon_state = "healthdoll_EMPTY"
-				for(var/obj/item/organ/external/BP in bodyparts)
-					if(BP && !BP.is_stump)
-						var/damage = BP.burn_dam + BP.brute_dam
-						var/comparison = (BP.max_damage / 5)
-						var/icon_num = 0
-						if(damage)
-							icon_num = 1
-						if(damage > (comparison))
-							icon_num = 2
-						if(damage > (comparison*2))
-							icon_num = 3
-						if(damage > (comparison*3))
-							icon_num = 4
-						if(damage > (comparison*4))
-							icon_num = 5
-						healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
-
-		if(nutrition_icon)
-			var/full_perc // Nutrition pecentage
-			var/fullness_icon = species.flags[IS_SYNTHETIC] ? "lowcell" : "burger"
-			var/get_nutrition_max
-			if (species.flags[IS_SYNTHETIC])
-				var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
-				var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in IO
-				if (I)
-					get_nutrition_max = I.maxcharge
-				else
-					get_nutrition_max = 1 // IPC nutrition should be set to zero to this moment
-			else
-				get_nutrition_max = NUTRITION_LEVEL_FAT
-			full_perc = clamp(((get_nutrition() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
-			nutrition_icon.icon_state = "[fullness_icon][CEILING(full_perc, 20)]"
-
-		//OH cmon...
-		var/nearsighted = 0
-		var/impaired    = 0
-
-		if(disabilities & NEARSIGHTED || HAS_TRAIT(src, TRAIT_NEARSIGHT))
-			nearsighted = 1
-
-		if(glasses)
-			var/obj/item/clothing/glasses/G = glasses
-			if(G.prescription)
-				nearsighted = 0
-
-		if(istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/unathi))
-			var/obj/item/clothing/head/welding/O = head
-			if(!O.up && tinted_weldhelh)
-				impaired = 2
-		if(istype(wear_mask, /obj/item/clothing/mask/gas/welding) )
-			var/obj/item/clothing/mask/gas/welding/O = wear_mask
-			if(!O.up && tinted_weldhelh)
-				impaired = 2
-		if(istype(glasses, /obj/item/clothing/glasses/welding) )
-			var/obj/item/clothing/glasses/welding/O = glasses
-			if(!O.up && tinted_weldhelh)
-				impaired = max(impaired, 2)
-
-		if(eye_blurry)
-			update_eye_blur()
-		else
-			update_eye_blur()
-		if(nearsighted)
-			overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
-		else
-			clear_fullscreen("nearsighted")
-
-		if(impaired)
-			overlay_fullscreen("impaired", /atom/movable/screen/fullscreen/impaired, impaired)
-		else
-			clear_fullscreen("impaired")
-
-		if(!machine)
-			var/isRemoteObserve = 0
-			if((REMOTE_VIEW in mutations) && remoteview_target)
-				if(getBrainLoss() <= 100)//#Z2 We burn our brain with active remote_view mutation
-					if(remoteview_target.stat==CONSCIOUS)
-						isRemoteObserve = 1
-						if(getBrainLoss() > 50)
-							adjustBrainLoss(2)
-						else
-							adjustBrainLoss(1)
-				else
-					to_chat(src, "Too hard to concentrate...")
-					remoteview_target = null
-					reset_view(null)//##Z2
-			if(force_remote_viewing)
-				isRemoteObserve = TRUE
-			if(!isRemoteObserve && client && !client.adminobs)
+				to_chat(src, "Too hard to concentrate...")
 				remoteview_target = null
-				reset_view(null)
+				reset_view(null)//##Z2
+		if(force_remote_viewing)
+			isRemoteObserve = TRUE
+		if(!isRemoteObserve && client && !client.adminobs)
+			remoteview_target = null
+			reset_view(null)
 
 	..()
-
-	return 1
 
 /mob/living/carbon/human/update_sight()
 	if(!..())
@@ -1185,11 +1189,13 @@
 			visible_message("<span class='name'>[src]'s</span> body becomes limp.")
 		if (prob(2))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
+			Stun(10)
 			Weaken(20)
 
 	if(shock_stage >= 80)
 		if (prob(5))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
+			Stun(10)
 			Weaken(20)
 
 	if(shock_stage >= 120)
@@ -1199,9 +1205,11 @@
 
 	if(shock_stage == 150)
 		me_emote("can no longer stand, collapsing!")
+		Stun(10)
 		Weaken(20)
 
 	if(shock_stage >= 150)
+		Stun(10)
 		Weaken(20)
 
 /mob/living/carbon/human/proc/handle_heart_beat()

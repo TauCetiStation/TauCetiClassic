@@ -25,6 +25,8 @@
 	return
 
 /mob/proc/can_tk(mana=0, level=TK_LEVEL_NORMAL, show_warnings=TRUE)
+	if(!(TK in mutations))
+		return FALSE
 	if(get_tk_level() < level)
 		if(show_warnings)
 			to_chat(src, "<span class='warning'>Such an action would require vastly superior psychokinetic skills.</span>")
@@ -35,16 +37,13 @@
 		return FALSE
 	return TRUE
 
-/mob/proc/resolve_tk(mana=0, level=TK_LEVEL_NORMAL)
-	spend_tk_power(mana)
-
 /mob/proc/try_tk(mana=0, level=TK_LEVEL_NORMAL)
 	mana = mana / get_tk_level()
 
 	if(!can_tk(mana, level))
 		return FALSE
 
-	resolve_tk(mana, level)
+	spend_tk_power(mana)
 	return TRUE
 
 /*
@@ -64,6 +63,15 @@
 */
 /atom/proc/attack_tk(mob/living/user)
 	user.UnarmedAttack(src)
+	return TRUE
+
+/turf/attack_tk(mob/living/user)
+	return FALSE
+
+/atom/movable/attack_tk(mob/living/user)
+	if(user.a_intent == INTENT_GRAB)
+		return telekinetic_grab(user)
+	return ..()
 
 /*
 	Telekinetic grab:
@@ -74,10 +82,11 @@
 	var/obj/item/tk_grab/O = new(src)
 	O.focus_object(src)
 	user.put_in_active_hand(O)
+	return TRUE
 
 /mob/telekinetic_grab(mob/living/user)
 	if(!user.can_tk(level=TK_LEVEL_THREE))
-		return
+		return FALSE
 
 	return ..()
 
@@ -91,7 +100,7 @@
 	return
 
 /obj/item/attack_self_tk(mob/living/user)
-	if(!user.can_tk(level=TK_LEVEL_TWO))
+	if(!user.try_tk(mana=TK_MANA_PER_W_CLASS(w_class), level=TK_LEVEL_TWO))
 		return
 	attack_self(user)
 
@@ -104,7 +113,7 @@
 	return
 
 /obj/item/afterattack_tk(mob/living/user, atom/target, params)
-	if(!user.can_tk(level=TK_LEVEL_TWO))
+	if(!user.try_tk(mana=TK_MANA_PER_W_CLASS(w_class), level=TK_LEVEL_TWO))
 		return
 
 	// TG calls this a "melee attack chain"

@@ -12,7 +12,7 @@
 	var/emagged = 0
 	var/insults = 0
 	var/list/insultmsg = list("FUCK EVERYONE!", "I'M A TATER!", "ALL SECURITY TO SHOOT ME ON SIGHT!", "I HAVE A BOMB!", "CAPTAIN IS A COMDOM!", "FOR THE SYNDICATE!")
-	required_skills = list(/datum/skill/command/novice)
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE)
 
 /obj/item/device/megaphone/attack_self(mob/living/user)
 	if (user.client)
@@ -35,7 +35,7 @@
 		return
 	message = (capitalize(message))
 	var/cooldown = apply_skill_bonus(user, 10 SECONDS, required_skills, 0.5) //+50% for each level
-	var/command_power = user.mind.skills.get_value(SKILL_COMMAND) * 2 + 1//to avoid recursive increase with help
+	var/command_power = user.mind.skills.get_value(/datum/skill/command) * 2 + 1//to avoid recursive increase with help
 
 	if ((src.loc == user && usr.stat == CONSCIOUS))
 		if(emagged)

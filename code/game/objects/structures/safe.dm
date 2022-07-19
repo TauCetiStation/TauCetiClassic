@@ -151,7 +151,7 @@
 					current_tumbler_index = 1
 
 				if(!invalid_turn && dial == tumblers[current_tumbler_index])
-					notify_user(user, canhear, list("tink", "krink", "plink"), ticks, i)
+					notify_user(user, canhear, list("TINK", "KRINK", "PLINK"), ticks, i)
 					current_tumbler_index++
 				else
 					notify_user(user, canhear, list("clack", "scrape", "clank"), ticks, i)
@@ -169,7 +169,7 @@
 					current_tumbler_index = 1
 
 				if(!invalid_turn && dial == tumblers[current_tumbler_index])
-					notify_user(user, canhear, list("tonk", "krunk", "plunk"), ticks, i)
+					notify_user(user, canhear, list("TONK", "KRUNK", "PLUNK"), ticks, i)
 					current_tumbler_index++
 				else
 					notify_user(user, canhear, list("click", "chink", "clink"), ticks, i)

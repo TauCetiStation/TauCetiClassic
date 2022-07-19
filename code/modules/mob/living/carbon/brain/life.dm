@@ -154,12 +154,6 @@
 					emp_damage -= 1
 
 		//Other
-		if(stunned)
-			AdjustStunned(-1)
-
-		if(weakened)
-			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
-
 		if(stuttering)
 			AdjustStuttering(-1)
 
@@ -172,30 +166,8 @@
 
 /mob/living/carbon/brain/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return
 
 	update_sight()
 
-	if (healths)
-		if (stat != DEAD)
-			switch(health)
-				if(100 to INFINITY)
-					healths.icon_state = "health0"
-				if(80 to 100)
-					healths.icon_state = "health1"
-				if(60 to 80)
-					healths.icon_state = "health2"
-				if(40 to 60)
-					healths.icon_state = "health3"
-				if(20 to 40)
-					healths.icon_state = "health4"
-				if(0 to 20)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
-
 	..()
-
-	return 1
