@@ -191,7 +191,7 @@
 			. = FALSE
 			break
 
-		if(user.stat || user.weakened || user.stunned)
+		if(user.incapacitated(NONE))
 			. = FALSE
 			break
 

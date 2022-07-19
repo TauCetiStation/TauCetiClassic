@@ -126,35 +126,15 @@
 		handle_alerts()
 
 /mob/living/carbon/ian/handle_regular_hud_updates()
-	if(!..())
-		return FALSE
+	if(!client)
+		return
 
 	update_sight()
-
-	if(healths)
-		if(stat != DEAD)
-			switch(health)
-				if(100 to INFINITY)
-					healths.icon_state = "health0"
-				if(80 to 100)
-					healths.icon_state = "health1"
-				if(60 to 80)
-					healths.icon_state = "health2"
-				if(40 to 60)
-					healths.icon_state = "health3"
-				if(20 to 40)
-					healths.icon_state = "health4"
-				if(0 to 20)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
 
 	if(hud_used)
 		staminadisplay?.update_icon(src)
 
-	return TRUE
+	..()
 
 /mob/living/carbon/ian/is_skip_breathe()
 	return ..() || istype(head, /obj/item/clothing/head/helmet/space) || reagents?.has_reagent("lexorin")
@@ -171,12 +151,14 @@
 	if ((HULK in mutations) && health <= 25)
 		mutations.Remove(HULK)
 		to_chat(src, "<span class='warning'>You suddenly feel very weak.</span>")
+		Stun(1)
 		Weaken(3)
 		emote("collapse")
 
 	if (radiation)
 		if (radiation > 100)
 			radiation = 100
+			Stun(5)
 			Weaken(10)
 			if(!lying)
 				to_chat(src, "<span class='warning'>You feel weak.</span>")
@@ -193,6 +175,7 @@
 				adjustToxLoss(1)
 				if(prob(5))
 					radiation -= 5
+					Stun(1)
 					Weaken(3)
 					if(!lying)
 						to_chat(src, "<span class='warning'>You feel weak.</span>")
@@ -249,15 +232,15 @@
 
 /mob/living/carbon/ian/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
-		if (prob(1) && paralysis < 10)
+		if (prob(1))
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
-		if (prob(5) && paralysis <= 1)
+		if (prob(5) && !paralysis)
 			drop_item()
 			emote("cough")
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
-		if (prob(10) && paralysis <= 1)
+		if (prob(10) && !paralysis)
 			Stun(10)
 			emote("twitch")
 	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
@@ -375,7 +358,6 @@
 			setHalLoss(99)
 
 		if(paralysis)
-			AdjustParalysis(-1)
 			blinded = TRUE
 			stat = UNCONSCIOUS
 			if(halloss > 0)
@@ -408,12 +390,6 @@
 			ear_damage = max(ear_damage - 0.05, 0)
 
 		//Other
-		if(stunned)
-			AdjustStunned(-1)
-
-		if(weakened)
-			weakened = max(weakened - 1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
-
 		if(stuttering > 0)
 			AdjustStuttering(-1)
 
@@ -439,8 +415,6 @@
 /mob/living/carbon/ian/death(gibbed)
 	if(stat == DEAD)
 		return
-	if(healths)
-		healths.icon_state = "health5"
 
 	stat = DEAD
 

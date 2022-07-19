@@ -363,39 +363,13 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.9
 	body_parts_covered = LEGS
 	slot_flags = SLOT_FLAGS_FEET
-	var/clipped_status = NO_CLIPPING
 
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
-	species_restricted = list("exclude" , UNATHI , TAJARAN, VOX, VOX_ARMALIS)
 
 	sprite_sheet_slot = SPRITE_SHEET_FEET
 
 	dyed_type = DYED_SHOES
-
-//Cutting shoes
-/obj/item/clothing/shoes/attackby(obj/item/I, mob/user, params)
-	if(iswirecutter(I))
-		switch(clipped_status)
-			if(CLIPPABLE)
-				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-				user.visible_message("<span class='red'>[user] cuts the toe caps off of [src].</span>","<span class='red'>You cut the toe caps off of [src].</span>")
-
-				name = "mangled [name]"
-				desc = "[desc]<br>They have the toe caps cut off of them."
-				if("exclude" in species_restricted)
-					species_restricted -= UNATHI
-					species_restricted -= TAJARAN
-					species_restricted -= VOX
-				src.icon_state += "_cut"
-				user.update_inv_shoes()
-				clipped_status = CLIPPED
-			if(NO_CLIPPING)
-				to_chat(user, "<span class='notice'>You have no idea of how to clip [src]!</span>")
-			if(CLIPPED)
-				to_chat(user, "<span class='notice'>[src] have already been clipped!</span>")
-	else
-		return ..()
 
 /obj/item/clothing/shoes/play_unique_footstep_sound()
 	..()
@@ -536,8 +510,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if(I.sharp && !ishuman(loc)) //you can cut only clothes lying on the floor
-		for (var/i in 1 to 3)
-			new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), null, null, crit_fail)
+		new /obj/item/stack/sheet/cloth(get_turf(src), 3, null, crit_fail)
 		qdel(src)
 		return
 

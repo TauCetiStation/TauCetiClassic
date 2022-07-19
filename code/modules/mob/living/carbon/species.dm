@@ -150,7 +150,11 @@
 	// The usual species for the station
 	var/is_common = FALSE
 
+	// The type of skeleton species they would be turned into. default is human
+	var/skeleton_type = SKELETON
+
 	var/default_mood_event
+
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -357,13 +361,7 @@
 
 	is_common = TRUE
 
-	replace_outfit = list(
-			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
-			)
-
-/datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
-	..()
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
+	skeleton_type = SKELETON_UNATHI
 
 /datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_unathi_digest(M)
@@ -426,13 +424,7 @@
 
 	is_common = TRUE
 
-	replace_outfit = list(
-			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
-			)
-
-/datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
-	..()
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
+	skeleton_type = SKELETON_TAJARAN
 
 /datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_tajaran_digest(M)
@@ -480,6 +472,8 @@
 	max_age = 150
 
 	is_common = TRUE
+
+	skeleton_type = SKELETON_SKRELL
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
@@ -563,9 +557,10 @@
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
 	replace_outfit = list(
-			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
 			/obj/item/clothing/mask/gas/syndicate = /obj/item/clothing/mask/gas/vox,
 			)
+
+	skeleton_type = SKELETON_VOX
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	..()
@@ -577,8 +572,6 @@
 	if(H.wear_mask)
 		qdel(H.wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
-
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_vox_digest(M)
@@ -682,6 +675,8 @@
 
 	has_gendered_icons = TRUE
 
+	skeleton_type = SKELETON_VOX
+
 /datum/species/diona
 	name = DIONA
 	icobase = 'icons/mob/human_races/r_diona.dmi'
@@ -709,6 +704,7 @@
 	heat_level_3 = 4000
 
 	burn_mod = 1.3
+	oxy_mod = 0
 	speed_mod = 7
 	speed_mod_no_shoes = -2
 
@@ -798,7 +794,7 @@
 	if(light_amount >= 5) // If you can regen organs - do so.
 		for(var/obj/item/organ/internal/O in H.organs)
 			if(O.damage)
-				O.damage -= light_amount * regen_mod / 5
+				O.damage = max(0, O.damage - light_amount * regen_mod / 5)
 				H.nutrition -= light_amount
 				return
 
@@ -997,7 +993,7 @@
 
 	is_common = TRUE
 
-	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST)
 
 	emotes = list(
 		/datum/emote/robot/beep,
@@ -1135,6 +1131,41 @@
 /datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skeleton_digest(M)
 
+/datum/species/skeleton/unathi
+	name = SKELETON_UNATHI
+	icobase = 'icons/mob/human_races/r_skeleton_lizard.dmi'
+	deform = 'icons/mob/human_races/r_skeleton_lizard.dmi'
+	tail = "unathi_skeleton"
+
+/datum/species/skeleton/unathi/New()
+	.=..()
+	flags[HAS_TAIL]=TRUE
+
+/datum/species/skeleton/tajaran
+	name = SKELETON_TAJARAN
+	icobase = 'icons/mob/human_races/r_skeleton_tajaran.dmi'
+	deform = 'icons/mob/human_races/r_skeleton_tajaran.dmi'
+	tail = "tajaran_skeleton"
+
+/datum/species/skeleton/tajaran/New()
+	.=..()
+	flags[HAS_TAIL]=TRUE
+
+/datum/species/skeleton/skrell
+	name = SKELETON_SKRELL
+	icobase = 'icons/mob/human_races/r_skeleton_skrell.dmi'
+	deform = 'icons/mob/human_races/r_skeleton_skrell.dmi'
+
+/datum/species/skeleton/vox
+	name = SKELETON_VOX
+	icobase = 'icons/mob/human_races/r_skeleton_vox.dmi'
+	deform = 'icons/mob/human_races/r_skeleton_vox.dmi'
+	tail = "vox_skeleton"
+
+/datum/species/skeleton/vox/New()
+	.=..()
+	flags[HAS_TAIL]=TRUE
+
 //Species unarmed attacks
 
 /datum/unarmed_attack
@@ -1254,7 +1285,7 @@
 
 /datum/species/shadowling/regen(mob/living/carbon/human/H)
 	H.nutrition = NUTRITION_LEVEL_NORMAL //i aint never get hongry
-	
+
 	var/light_amount = 0
 	if(isturf(H.loc))
 		var/turf/T = H.loc
@@ -1656,7 +1687,7 @@
 
 /datum/species/homunculus/create_bodyparts(mob/living/carbon/human/H)
 	var/list/keys = get_list_of_primary_keys(global.all_species)
-	keys -= list(PODMAN, IPC, SKELETON, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
+	keys -= list(PODMAN, IPC, SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
 
 	var/datum/species/head = global.all_species[pick(keys - VOX)]
 

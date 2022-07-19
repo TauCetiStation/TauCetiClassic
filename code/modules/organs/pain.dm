@@ -1,6 +1,7 @@
-/mob/var/list/pain_stored = list()
-/mob/var/last_pain_message = ""
-/mob/var/next_pain_time = 0
+
+/mob
+	var/last_pain_message = ""
+	var/next_pain_time = 0
 
 // partname is the name of a body part
 // amount is a num from 1 to 100
@@ -17,8 +18,8 @@
 	if(world.time < next_pain_time && !force)
 		return
 	if(amount > 10 && ishuman(src))
-		if(src:paralysis)
-			src:paralysis = max(0, src:paralysis-round(amount/10))
+		if(paralysis)
+			SetParalysis(AmountParalyzed() - amount / 10)
 	if(amount > 50 && prob(amount / 5))
 		drop_item()
 	var/msg

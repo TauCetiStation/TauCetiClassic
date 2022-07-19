@@ -312,9 +312,9 @@ Implant Specifics:<BR>"}
 	imp_in.SetParalysis(0)
 	imp_in.SetStunned(0)
 	imp_in.SetWeakened(0)
-	imp_in.lying = 0
-	imp_in.update_canmove()
-	imp_in.reagents.add_reagent("hyperzine", 1)
+	imp_in.reagents.add_reagent("tricordrazine", 20)
+	imp_in.reagents.add_reagent("doctorsdelight", 25)
+	imp_in.reagents.add_reagent("oxycodone", 5)
 	imp_in.reagents.add_reagent("stimulants", 4)
 	if (!uses)
 		qdel(src)

@@ -211,7 +211,7 @@
 		src.area = A
 		name = "[area.name] APC"
 	else
-		src.area = get_area_name(areastring)
+		src.area = get_area_by_name(areastring)
 		name = "[area.name] APC"
 	area.apc = src
 	update_icon()

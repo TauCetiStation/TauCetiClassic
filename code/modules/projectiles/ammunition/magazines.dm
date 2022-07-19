@@ -82,6 +82,18 @@
 	max_ammo = 2
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer
+	name = "derringer internal magazine"
+	desc = "This doesn't even exist!"
+	ammo_type = /obj/item/ammo_casing/c38m
+	caliber = "38"
+	max_ammo = 2
+	multiload = 0
+
+/obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer/syndicate
+	ammo_type = /obj/item/ammo_casing/a357
+	caliber = "357"
+
 /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	name = "bazooka internal magazine"
 	desc = "This doesn't even exist!"
@@ -202,7 +214,7 @@
 	icon_state = "12mmhp"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45hp
-	caliber = ".45S"
+	caliber = ".45"
 	max_ammo = 15
 
 /obj/item/ammo_box/magazine/m12mm/hp/update_icon()
@@ -218,7 +230,7 @@
 	icon_state = "12mmhv"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45hv
-	caliber = ".45S"
+	caliber = ".45"
 	max_ammo = 15
 
 /obj/item/ammo_box/magazine/m12mm/hv/update_icon()
@@ -235,7 +247,7 @@
 	icon_state = "12mmimp"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45imp
-	caliber = ".45S"
+	caliber = ".45"
 	max_ammo = 15
 
 /obj/item/ammo_box/magazine/m12mm/imp/update_icon()
