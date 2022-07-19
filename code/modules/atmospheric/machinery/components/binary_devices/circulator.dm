@@ -4,8 +4,8 @@
 /obj/machinery/atmospherics/components/binary/circulator
 	name = "circulator"
 	desc = "A gas circulator turbine and heat exchanger."
-	icon = 'icons/obj/pipes.dmi'
-	icon_state = "circ-off"
+	icon = 'icons/obj/machines/power/thermoelectric.dmi'
+	icon_state = "circ-unassembled-0"
 
 	anchored = FALSE
 	density = TRUE
@@ -13,6 +13,9 @@
 	var/recent_moles_transferred = 0
 	var/last_pressure_delta = 0
 	var/last_worldtime_transfer = 0
+
+	var/flipped = 0
+	var/obj/machinery/power/generator/gen = null
 
 /obj/machinery/atmospherics/components/binary/circulator/atom_init()
 	. = ..()
@@ -37,9 +40,7 @@
 		var/datum/gas_mixture/air1 = AIR1
 		var/datum/gas_mixture/air2 = AIR2
 
-		var/input_starting_pressure = air1.return_pressure()
-		var/output_starting_pressure = air2.return_pressure()
-		last_pressure_delta = max(input_starting_pressure - output_starting_pressure - 5, 0)
+		last_pressure_delta = max(air1.return_pressure() - air2.return_pressure() - 5, 0)
 
 		//only circulate air if there is a pressure difference (plus 5kPa kinetic, 10kPa static friction)
 		if(air1.temperature > 0 && last_pressure_delta > 5)
@@ -65,15 +66,44 @@
 		update_icon()
 
 /obj/machinery/atmospherics/components/binary/circulator/update_icon()
-	if(stat & (BROKEN|NOPOWER) || !anchored)
-		icon_state = "circ-p"
-	else if(last_pressure_delta > 0 && recent_moles_transferred > 0)
-		if(last_pressure_delta > 5 * ONE_ATMOSPHERE)
-			icon_state = "circ-run"
-		else
-			icon_state = "circ-slow"
+	set_light(0, 0, null)
+	cut_overlays()
+	if(stat & BROKEN)
+		icon_state = "circ-broken"
+		return
+	if(panel_open)
+		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-panel"))
+	if(gen != null)
+		icon_state = "circ-assembled-[flipped]"
 	else
-		icon_state = "circ-off"
+		icon_state = "circ-unassembled-[flipped]"
+
+	if(!last_pressure_delta)
+		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-off"))
+	else if(last_pressure_delta > 5 * ONE_ATMOSPHERE)
+		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-run"))
+	else
+		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-slow"))
+
+	var/datum/gas_mixture/air = AIR1
+	var/heat = air.temperature * air.heat_capacity()
+	var/per_kelvin = 600 //oxygen heat capacity per 30 moles
+
+	if(heat == 0) //input gas mixture is empty/we have gas with zero heat capacity/we cooled gas to absolute zero. all of those options are excluded.
+		return
+	
+	if(heat < per_kelvin * 173) //-100C
+		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-excold"))
+		set_light(5, 5, "#0044ff")
+	if(heat < per_kelvin * 243) //-30C
+		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-cold"))
+		set_light(3, 1, "#0044ff")
+	if(heat > per_kelvin * 1773) //1500C
+		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-hot"))
+		set_light(3, 1, "#ff0000")
+	if(heat > per_kelvin * 4773) //4500C
+		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-exhot"))
+		set_light(5, 5, "#ff0000")
 
 	return TRUE
 
@@ -85,6 +115,10 @@
 			"[user.name] [anchored ? "secures" : "unsecures"] the bolts holding [src.name] to the floor.", \
 			"You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.", \
 			"You hear a ratchet")
+
+		if(!anchored)
+			gen = null
+			update_icon()
 
 		SetInitDirections()
 		var/obj/machinery/atmospherics/node1 = NODE1
@@ -115,6 +149,7 @@
 				node2.addMember(src)
 
 			build_network()
+		gen.reconnect()
 
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), W))
 		set_power_use(NO_POWER_USE)
@@ -149,3 +184,15 @@
 
 	set_dir(turn(src.dir, -90))
 	desc = initial(desc) + " Its outlet port is to the [dir2text(dir)]."
+
+/obj/machinery/atmospherics/components/binary/circulator/verb/flip()
+	set category = "Object"
+	set name = "Flip Circulator"
+	set src in view(1)
+
+	if (usr.incapacitated() || anchored)
+		return
+
+	flipped = !flipped
+
+	update_icon()

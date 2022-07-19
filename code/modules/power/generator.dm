@@ -2,7 +2,8 @@
 /obj/machinery/power/generator
 	name = "thermoelectric generator"
 	desc = "Generator able to produce power using difference of temperatures in nearby circulators."
-	icon_state = "teg"
+	icon = 'icons/obj/machines/power/thermoelectric.dmi'
+	icon_state = "teg-unassembled"
 	density = TRUE
 	anchored = FALSE
 
@@ -39,11 +40,42 @@
 /obj/machinery/power/generator/atom_init_late()
 	reconnect()
 
+/obj/machinery/power/generator/proc/is_facing_gen(obj/machinery/atmospherics/components/binary/circulator/C, rd)
+	. = FALSE
+	var/gd = src.dir
+	var/cd = C.dir
+	var/f = C.flipped
+	if(gd & (EAST|WEST))
+		if(rd & WEST)
+			if((cd & NORTH) && !f)
+				return TRUE
+			else if((cd & SOUTH) && f)
+				return TRUE
+
+		else if(rd & EAST)
+			if((cd & NORTH) && f)
+				return TRUE
+			else if((cd & SOUTH) && !f)
+				return TRUE
+	else if(gd & (NORTH|SOUTH))
+		if(rd & NORTH)
+			if((cd & EAST) && !f)
+				return TRUE
+			else if((cd & WEST) && f)
+				return TRUE
+
+		else if(rd & SOUTH)
+			if((cd & EAST) && f)
+				return TRUE
+			else if((cd & WEST) && !f)
+				return TRUE
+
+
 //generators connect in dir and reverse_dir(dir) directions
 //mnemonic to determine circulator/generator directions: the cirulators orbit clockwise around the generator
 //so a circulator to the NORTH of the generator connects first to the EAST, then to the WEST
 //and a circulator to the WEST of the generator connects first to the NORTH, then to the SOUTH
-//note that the circulator's outlet dir is it's always facing dir, and it's inlet is always the reverse
+//note that the circulator"s outlet dir is it"s always facing dir, and it"s inlet is always the reverse
 /obj/machinery/power/generator/proc/reconnect()
 	circ1 = null
 	circ2 = null
@@ -55,7 +87,7 @@
 			circ2 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,WEST)
 
 			if(circ1 && circ2)
-				if(circ1.dir != SOUTH || circ2.dir != NORTH)
+				if((is_facing_gen(circ1, EAST) || circ1.anchored || !circ1.panel_open)  || (is_facing_gen(circ2, WEST) || circ2.anchored || !circ1.panel_open))
 					circ1 = null
 					circ2 = null
 
@@ -63,18 +95,36 @@
 			circ1 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,NORTH)
 			circ2 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,SOUTH)
 
-			if(circ1 && circ2 && (circ1.dir != EAST || circ2.dir != WEST))
-				circ1 = null
-				circ2 = null
+			if(circ1 && circ2)
+				if((is_facing_gen(circ1, NORTH) || circ1.anchored || !circ1.panel_open)  || (is_facing_gen(circ2, SOUTH) || circ2.anchored || !circ2.panel_open))
+					circ1 = null
+					circ2 = null
+	
+	circ1.gen = src
+	circ2.gen = src
+	if(circ1 && circ2)
+		circ1.gen = src
+		circ1.update_icon()
+		circ2.gen = src
+		circ2.update_icon()
+	update_icon()
 
 /obj/machinery/power/generator/update_icon()
-	if(stat & (NOPOWER|BROKEN))
-		cut_overlays()
-	else
-		cut_overlays()
+	cut_overlays()
+	if(stat & BROKEN)
+		icon_state = "teg-broken"
+		return
+	if(panel_open)
+		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "teg-panel"))
 
+	if(circ1 && circ2 && anchored)
+		icon_state = "teg-assembled"
+	else
+		icon_state = "teg-unassembled"
+
+	if(!(stat & (NOPOWER|BROKEN)))
 		if(lastgenlev != 0)
-			add_overlay(image('icons/obj/power.dmi', "teg-op[lastgenlev]"))
+			add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "teg-op[lastgenlev]"))
 
 /obj/machinery/power/generator/process()
 	if(!circ1 || !circ2 || !anchored || stat & (BROKEN|NOPOWER))
@@ -166,7 +216,7 @@
 		var/datum/gas_mixture/circ1_air2 = circ1.AIR2
 		var/datum/gas_mixture/circ2_air1 = circ2.AIR1
 		var/datum/gas_mixture/circ2_air2 = circ2.AIR2
-		
+
 		t += "Output : [round(lastgen)] W<BR><BR>"
 
 		t += "<B>Primary Circulator (top or right)</B><BR>"
