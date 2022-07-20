@@ -2257,6 +2257,7 @@
 #include "code\modules\skills\skillsets\civilian.dm"
 #include "code\modules\skills\skillsets\engineering.dm"
 #include "code\modules\skills\skillsets\medical.dm"
+#include "code\modules\skills\skillsets\misc.dm"
 #include "code\modules\skills\skillsets\roles.dm"
 #include "code\modules\skills\skillsets\science.dm"
 #include "code\modules\skills\skillsets\security.dm"
