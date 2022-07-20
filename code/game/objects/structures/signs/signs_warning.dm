@@ -109,7 +109,7 @@
 
 /obj/structure/sign/warning/bomb_range/mine
 	name = "MINEFIELD"
-	desc = "Sign indicating a minefield ahead"
+	desc = "Sign indicating a minefield ahead."
 
 /obj/structure/sign/warning/secure_area/armory
 	name = "ARMORY"
