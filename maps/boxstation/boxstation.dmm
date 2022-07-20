@@ -71025,6 +71025,11 @@
 /obj/machinery/power/rad_collector,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
+"fjm" = (
+/obj/structure/lattice,
+/obj/item/mine/shock/anchored,
+/turf/environment/space,
+/area/space)
 "fkD" = (
 /obj/item/weapon/hand_labeler,
 /obj/item/weapon/packageWrap,
@@ -71662,11 +71667,6 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
-"fSd" = (
-/obj/structure/lattice,
-/obj/item/mine/shock/anchored,
-/turf/environment/space,
-/area/space)
 "fSs" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -72267,6 +72267,9 @@
 	icon_state = "floorgrime"
 	},
 /area/station/maintenance/incinerator)
+"gGn" = (
+/turf/simulated/wall/r_wall,
+/area/station/security/range)
 "gGO" = (
 /obj/structure/sign/warning/docking,
 /turf/simulated/wall,
@@ -73006,9 +73009,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor,
 /area/station/cargo/storage)
-"hvR" = (
-/turf/simulated/wall/r_wall,
-/area/station/security/range)
 "hwb" = (
 /obj/structure/rack,
 /obj/item/weapon/tank/oxygen,
@@ -74737,11 +74737,6 @@
 	icon_state = "bot"
 	},
 /area/station/engineering/atmos)
-"jnp" = (
-/obj/structure/lattice,
-/obj/item/mine/shock,
-/turf/environment/space,
-/area/space)
 "job" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/snacks/soap,
@@ -81847,6 +81842,11 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"rXO" = (
+/obj/structure/lattice,
+/obj/item/mine/anchored,
+/turf/environment/space,
+/area/space)
 "rYb" = (
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/weapon/reagent_containers/syringe/antiviral,
@@ -84553,11 +84553,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
-"wFU" = (
-/obj/structure/lattice,
-/obj/item/mine/anchored,
-/turf/environment/space,
-/area/space)
 "wFY" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/item/weapon/reagent_containers/glass/bucket,
@@ -109434,14 +109429,14 @@ aaa
 aaa
 aaa
 aah
-fSd
+fjm
 aah
 acO
 ahJ
 acJ
 amu
 aah
-jnp
+fjm
 aah
 aaa
 agO
@@ -109692,12 +109687,12 @@ aah
 aah
 aah
 aaa
-fSd
+fjm
 acO
 acE
 acE
 acO
-jnp
+fjm
 agO
 agO
 agO
@@ -111229,9 +111224,9 @@ aah
 aah
 aah
 aah
-fSd
+fjm
 aah
-fSd
+fjm
 afm
 adJ
 cVb
@@ -111484,7 +111479,7 @@ aaa
 aah
 aaW
 aaa
-fSd
+fjm
 aaa
 acX
 acX
@@ -111995,7 +111990,7 @@ aaa
 aaa
 aah
 aah
-fSd
+fjm
 adJ
 aeB
 afq
@@ -112252,7 +112247,7 @@ aaa
 aah
 aah
 aah
-fSd
+fjm
 adP
 aeE
 ado
@@ -112508,7 +112503,7 @@ aaa
 aah
 aah
 aah
-fSd
+fjm
 aah
 adJ
 abm
@@ -113782,11 +113777,11 @@ aaa
 aaa
 aaa
 cAd
-wFU
+rXO
 aah
-wFU
+rXO
 aah
-fSd
+fjm
 aah
 bEP
 bEP
@@ -114040,12 +114035,12 @@ aaa
 aaa
 cAd
 aah
-wFU
+rXO
 aah
-fSd
+fjm
 aah
-fSd
-hvR
+fjm
+gGn
 amB
 abl
 abl
@@ -114296,13 +114291,13 @@ aaa
 aaa
 aaa
 cAd
-wFU
+rXO
 aah
-wFU
+rXO
 aah
-hvR
-hvR
-hvR
+gGn
+gGn
+gGn
 aaj
 abl
 abJ
@@ -114554,10 +114549,10 @@ aaa
 aaa
 cAd
 aah
-wFU
+rXO
 aah
-fSd
-hvR
+fjm
+gGn
 aao
 aao
 aao
@@ -114810,11 +114805,11 @@ aaa
 aaa
 aaa
 cAd
-wFU
+rXO
 aah
-wFU
+rXO
 aah
-hvR
+gGn
 aao
 aam
 aao
@@ -115068,10 +115063,10 @@ aaa
 aaa
 cAd
 aah
-wFU
+rXO
 aah
-fSd
-hvR
+fjm
+gGn
 aao
 aaE
 aaT
@@ -115324,10 +115319,10 @@ aaa
 aaa
 aaa
 cAd
-wFU
+rXO
 aah
 rtF
-hvR
+gGn
 aaj
 aau
 aaG
@@ -115582,7 +115577,7 @@ aaa
 aaa
 cAd
 aah
-wFU
+rXO
 aah
 aak
 aao
@@ -115838,9 +115833,9 @@ aaa
 aaa
 aaa
 cAd
-wFU
+rXO
 aah
-fSd
+fjm
 aBS
 aaq
 aao
@@ -116096,7 +116091,7 @@ aaa
 aaa
 cAd
 aah
-wFU
+rXO
 aah
 axb
 aap
@@ -116352,9 +116347,9 @@ aaa
 aaa
 aaa
 cAd
-wFU
+rXO
 aah
-fSd
+fjm
 aAu
 aCN
 aEH
@@ -116610,7 +116605,7 @@ aaa
 aaa
 cAd
 aah
-wFU
+rXO
 aah
 aat
 aCb
@@ -116866,10 +116861,10 @@ aaa
 aaa
 aaa
 cAd
-wFU
+rXO
 aah
-fSd
-hvR
+fjm
+gGn
 aDL
 aEO
 aaj
@@ -117124,7 +117119,7 @@ aaa
 aaa
 cAd
 aah
-wFU
+rXO
 aah
 aAu
 aax
@@ -117380,9 +117375,9 @@ aaa
 aaa
 aaa
 cAd
-wFU
+rXO
 aah
-fSd
+fjm
 aat
 aay
 aaN
@@ -117895,7 +117890,7 @@ aaa
 aaa
 cAd
 aah
-fSd
+fjm
 rnU
 aaA
 aaP
@@ -118151,7 +118146,7 @@ aaa
 aaa
 aaa
 cAd
-wFU
+rXO
 qDo
 rnU
 aaz
@@ -118409,7 +118404,7 @@ aaa
 aaa
 cAd
 aah
-fSd
+fjm
 rnU
 aaC
 aaQ
@@ -118665,8 +118660,8 @@ aaa
 aaa
 aaa
 cAd
-wFU
-fSd
+rXO
+fjm
 rnU
 bQb
 bQb
@@ -118923,7 +118918,7 @@ aaa
 aaa
 cAd
 aah
-fSd
+fjm
 rnU
 fJb
 fKb
@@ -119179,7 +119174,7 @@ aaa
 aaa
 aaa
 cAd
-wFU
+rXO
 mUK
 rnU
 rnU
@@ -119437,10 +119432,10 @@ aaa
 aaa
 cAd
 aah
-fSd
-fSd
+fjm
+fjm
 cAd
-fSd
+fjm
 aDr
 aFr
 aLq
@@ -119693,11 +119688,11 @@ aaa
 aaa
 aaa
 cAd
-wFU
-fSd
+rXO
+fjm
 aah
 cAd
-fSd
+fjm
 rnU
 rnU
 rnU
@@ -119952,12 +119947,12 @@ aaa
 cAd
 aah
 aah
-wFU
+rXO
 cAe
-fSd
-fSd
-fSd
-fSd
+fjm
+fjm
+fjm
+fjm
 aef
 kjb
 aef
@@ -120208,7 +120203,7 @@ aaa
 aaa
 cAd
 aah
-wFU
+rXO
 aah
 cAd
 aaa
@@ -120464,7 +120459,7 @@ aaa
 aaa
 aaa
 cAd
-fSd
+fjm
 aah
 aah
 cAd
