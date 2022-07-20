@@ -69596,11 +69596,6 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/drone_fabrication)
-"dqU" = (
-/obj/structure/lattice,
-/obj/item/mine/anchored,
-/turf/environment/space,
-/area/space)
 "dra" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -70064,11 +70059,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
-"dSQ" = (
-/obj/structure/lattice,
-/obj/item/mine/shock/anchored,
-/turf/environment/space,
-/area/space)
 "dUb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -71672,6 +71662,11 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"fSd" = (
+/obj/structure/lattice,
+/obj/item/mine/shock/anchored,
+/turf/environment/space,
+/area/space)
 "fSs" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -73011,6 +73006,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"hvR" = (
+/turf/simulated/wall/r_wall,
+/area/station/security/range)
 "hwb" = (
 /obj/structure/rack,
 /obj/item/weapon/tank/oxygen,
@@ -74739,6 +74737,11 @@
 	icon_state = "bot"
 	},
 /area/station/engineering/atmos)
+"jnp" = (
+/obj/structure/lattice,
+/obj/item/mine/shock,
+/turf/environment/space,
+/area/space)
 "job" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/snacks/soap,
@@ -76824,9 +76827,6 @@
 	icon_state = "browncorner"
 	},
 /area/station/cargo/storage)
-"lLC" = (
-/turf/simulated/wall/r_wall,
-/area/station/security/range)
 "lLD" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -77786,13 +77786,6 @@
 	dir = 1;
 	network = list("SS13","Security")
 	},
-/turf/environment/space,
-/area/space)
-"mUN" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/item/mine/shock/anchored,
 /turf/environment/space,
 /area/space)
 "mVb" = (
@@ -84560,6 +84553,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
+"wFU" = (
+/obj/structure/lattice,
+/obj/item/mine/anchored,
+/turf/environment/space,
+/area/space)
 "wFY" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/item/weapon/reagent_containers/glass/bucket,
@@ -84957,11 +84955,6 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
-"xKl" = (
-/obj/structure/lattice,
-/obj/item/mine/shock,
-/turf/environment/space,
-/area/space)
 "xLk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -109441,14 +109434,14 @@ aaa
 aaa
 aaa
 aah
-dSQ
+fSd
 aah
 acO
 ahJ
 acJ
 amu
 aah
-xKl
+jnp
 aah
 aaa
 agO
@@ -109699,12 +109692,12 @@ aah
 aah
 aah
 aaa
-dSQ
+fSd
 acO
 acE
 acE
 acO
-xKl
+jnp
 agO
 agO
 agO
@@ -111236,9 +111229,9 @@ aah
 aah
 aah
 aah
-dSQ
+fSd
 aah
-dSQ
+fSd
 afm
 adJ
 cVb
@@ -111491,7 +111484,7 @@ aaa
 aah
 aaW
 aaa
-dSQ
+fSd
 aaa
 acX
 acX
@@ -112002,7 +111995,7 @@ aaa
 aaa
 aah
 aah
-dSQ
+fSd
 adJ
 aeB
 afq
@@ -112259,7 +112252,7 @@ aaa
 aah
 aah
 aah
-dSQ
+fSd
 adP
 aeE
 ado
@@ -112515,7 +112508,7 @@ aaa
 aah
 aah
 aah
-dSQ
+fSd
 aah
 adJ
 abm
@@ -113789,11 +113782,11 @@ aaa
 aaa
 aaa
 cAd
-dqU
+wFU
 aah
-dqU
+wFU
 aah
-dSQ
+fSd
 aah
 bEP
 bEP
@@ -114047,12 +114040,12 @@ aaa
 aaa
 cAd
 aah
-dqU
+wFU
 aah
-dSQ
+fSd
 aah
-dSQ
-lLC
+fSd
+hvR
 amB
 abl
 abl
@@ -114303,13 +114296,13 @@ aaa
 aaa
 aaa
 cAd
-dqU
+wFU
 aah
-dqU
+wFU
 aah
-lLC
-lLC
-lLC
+hvR
+hvR
+hvR
 aaj
 abl
 abJ
@@ -114561,10 +114554,10 @@ aaa
 aaa
 cAd
 aah
-dqU
+wFU
 aah
-dSQ
-lLC
+fSd
+hvR
 aao
 aao
 aao
@@ -114817,11 +114810,11 @@ aaa
 aaa
 aaa
 cAd
-dqU
+wFU
 aah
-dqU
+wFU
 aah
-lLC
+hvR
 aao
 aam
 aao
@@ -115075,10 +115068,10 @@ aaa
 aaa
 cAd
 aah
-dqU
+wFU
 aah
-dSQ
-lLC
+fSd
+hvR
 aao
 aaE
 aaT
@@ -115331,10 +115324,10 @@ aaa
 aaa
 aaa
 cAd
-dqU
+wFU
 aah
 rtF
-lLC
+hvR
 aaj
 aau
 aaG
@@ -115589,7 +115582,7 @@ aaa
 aaa
 cAd
 aah
-dqU
+wFU
 aah
 aak
 aao
@@ -115845,9 +115838,9 @@ aaa
 aaa
 aaa
 cAd
-dqU
+wFU
 aah
-dSQ
+fSd
 aBS
 aaq
 aao
@@ -116103,7 +116096,7 @@ aaa
 aaa
 cAd
 aah
-dqU
+wFU
 aah
 axb
 aap
@@ -116359,9 +116352,9 @@ aaa
 aaa
 aaa
 cAd
-dqU
+wFU
 aah
-dSQ
+fSd
 aAu
 aCN
 aEH
@@ -116617,7 +116610,7 @@ aaa
 aaa
 cAd
 aah
-dqU
+wFU
 aah
 aat
 aCb
@@ -116873,10 +116866,10 @@ aaa
 aaa
 aaa
 cAd
-dqU
+wFU
 aah
-dSQ
-lLC
+fSd
+hvR
 aDL
 aEO
 aaj
@@ -117131,7 +117124,7 @@ aaa
 aaa
 cAd
 aah
-dqU
+wFU
 aah
 aAu
 aax
@@ -117387,9 +117380,9 @@ aaa
 aaa
 aaa
 cAd
-dqU
+wFU
 aah
-dSQ
+fSd
 aat
 aay
 aaN
@@ -117902,7 +117895,7 @@ aaa
 aaa
 cAd
 aah
-dSQ
+fSd
 rnU
 aaA
 aaP
@@ -118158,7 +118151,7 @@ aaa
 aaa
 aaa
 cAd
-dqU
+wFU
 qDo
 rnU
 aaz
@@ -118416,7 +118409,7 @@ aaa
 aaa
 cAd
 aah
-dSQ
+fSd
 rnU
 aaC
 aaQ
@@ -118672,8 +118665,8 @@ aaa
 aaa
 aaa
 cAd
-dqU
-dSQ
+wFU
+fSd
 rnU
 bQb
 bQb
@@ -118930,7 +118923,7 @@ aaa
 aaa
 cAd
 aah
-dSQ
+fSd
 rnU
 fJb
 fKb
@@ -119186,7 +119179,7 @@ aaa
 aaa
 aaa
 cAd
-dqU
+wFU
 mUK
 rnU
 rnU
@@ -119444,10 +119437,10 @@ aaa
 aaa
 cAd
 aah
-dSQ
-dSQ
+fSd
+fSd
 cAd
-dSQ
+fSd
 aDr
 aFr
 aLq
@@ -119700,11 +119693,11 @@ aaa
 aaa
 aaa
 cAd
-dqU
-dSQ
+wFU
+fSd
 aah
 cAd
-dSQ
+fSd
 rnU
 rnU
 rnU
@@ -119959,12 +119952,12 @@ aaa
 cAd
 aah
 aah
-dqU
+wFU
 cAe
-dSQ
-dSQ
-mUN
-dSQ
+fSd
+fSd
+fSd
+fSd
 aef
 kjb
 aef
@@ -120215,7 +120208,7 @@ aaa
 aaa
 cAd
 aah
-dqU
+wFU
 aah
 cAd
 aaa
@@ -120471,7 +120464,7 @@ aaa
 aaa
 aaa
 cAd
-dSQ
+fSd
 aah
 aah
 cAd
