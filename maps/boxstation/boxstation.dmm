@@ -2997,6 +2997,7 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
 	},
+/obj/item/mine/shock/anchored,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "afk" = (
@@ -13341,7 +13342,7 @@
 	icon_state = "shock";
 	name = "HIGH VOLTAGE"
 	},
-/turf/simulated/wall,
+/turf/simulated/wall/r_wall,
 /area/station/security/range)
 "axc" = (
 /obj/structure/filingcabinet,
@@ -70038,6 +70039,9 @@
 	icon_state = "warnplate"
 	},
 /area/station/engineering/singularity)
+"dRC" = (
+/turf/simulated/wall/r_wall,
+/area/station/security/range)
 "dRG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -71900,6 +71904,11 @@
 	icon_state = "dark"
 	},
 /area/station/cargo/recycleroffice)
+"giC" = (
+/obj/structure/lattice,
+/obj/item/mine/shock/anchored,
+/turf/environment/space,
+/area/space)
 "gjb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -72681,6 +72690,11 @@
 	},
 /turf/environment/space,
 /area/shuttle/mining/station)
+"gZM" = (
+/obj/structure/lattice,
+/obj/item/mine/anchored,
+/turf/environment/space,
+/area/space)
 "haq" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -77219,6 +77233,12 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/civilian/fitness)
+"mjx" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/obj/item/mine/anchored,
+/turf/environment/space,
+/area/space)
 "mjX" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -81352,6 +81372,8 @@
 	dir = 1;
 	network = list("SS13","Security")
 	},
+/obj/structure/lattice,
+/obj/item/mine/shock/anchored,
 /turf/environment/space,
 /area/space)
 "rub" = (
@@ -82776,6 +82798,11 @@
 	icon_state = "dark"
 	},
 /area/station/cargo/recycleroffice)
+"sVO" = (
+/obj/structure/lattice,
+/obj/item/mine/shock,
+/turf/environment/space,
+/area/space)
 "sWb" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -83696,6 +83723,13 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"uzo" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/obj/structure/lattice,
+/obj/item/mine/shock/anchored,
+/turf/environment/space,
+/area/space)
 "uBz" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/disposalpipe/segment{
@@ -83905,6 +83939,12 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
+"vch" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/obj/item/mine/shock/anchored,
+/turf/environment/space,
+/area/space)
 "vcK" = (
 /turf/simulated/floor/plating/airless{
 	icon_state = "warnplate"
@@ -109413,14 +109453,14 @@ aaa
 aaa
 aaa
 aah
-aah
+giC
 aah
 acO
 ahJ
 acJ
 amu
 aah
-aaa
+sVO
 aah
 aaa
 agO
@@ -109671,12 +109711,12 @@ aah
 aah
 aah
 aaa
-aah
+giC
 acO
 acE
 acE
 acO
-aaa
+sVO
 agO
 agO
 agO
@@ -109927,8 +109967,8 @@ aaa
 aaa
 aaa
 aah
-alm
-alm
+akd
+akd
 acO
 ahJ
 acJ
@@ -110184,7 +110224,7 @@ aaa
 aaa
 aaa
 aah
-alm
+akd
 abY
 agI
 agI
@@ -110441,7 +110481,7 @@ aaa
 aaa
 aaa
 aah
-alm
+akd
 abG
 acb
 acA
@@ -110698,7 +110738,7 @@ aaa
 aaa
 aaa
 aex
-alm
+akd
 agz
 acv
 acB
@@ -111208,9 +111248,9 @@ aah
 aah
 aah
 aah
+giC
 aah
-aah
-aah
+giC
 afm
 adJ
 cVb
@@ -111463,7 +111503,7 @@ aaa
 aah
 aaW
 aaa
-aah
+giC
 aaa
 acX
 acX
@@ -111973,8 +112013,8 @@ aaa
 aaa
 aaa
 aah
-aah
-aaa
+giC
+giC
 adJ
 aeB
 afq
@@ -112230,8 +112270,8 @@ aaa
 aaa
 aah
 aah
-aaa
-aaa
+aah
+giC
 adP
 aeE
 ado
@@ -112486,9 +112526,9 @@ aaa
 aaa
 aah
 aah
-aaa
-aaa
-aaa
+aah
+giC
+aah
 adJ
 abm
 aeP
@@ -113761,12 +113801,12 @@ aaa
 aaa
 aaa
 cAd
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+gZM
+aah
+gZM
+aah
+giC
+aah
 bEP
 bEP
 rQH
@@ -114018,13 +114058,13 @@ aaa
 aaa
 aaa
 cAd
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaj
+aah
+gZM
+aah
+giC
+aah
+giC
+dRC
 amB
 abl
 abl
@@ -114275,13 +114315,13 @@ aaa
 aaa
 aaa
 cAd
-aaa
-aaa
-aaa
-aaa
-aaj
-aaj
-aaj
+gZM
+aah
+gZM
+aah
+dRC
+dRC
+dRC
 aaj
 abl
 abJ
@@ -114532,11 +114572,11 @@ aaa
 aaa
 aaa
 cAd
-aaa
-aaa
-aaa
-aaa
-aaj
+aah
+gZM
+aah
+giC
+dRC
 aao
 aao
 aao
@@ -114789,11 +114829,11 @@ aaa
 aaa
 aaa
 cAd
-aaa
-aaa
-aaa
+gZM
 aah
-aaj
+gZM
+aah
+dRC
 aao
 aam
 aao
@@ -115046,11 +115086,11 @@ aaa
 aaa
 aaa
 cAd
-aaa
 aah
+gZM
 aah
-aah
-aaj
+giC
+dRC
 aao
 aaE
 aaT
@@ -115303,10 +115343,10 @@ aaa
 aaa
 aaa
 cAd
-aah
+gZM
 aah
 rtF
-aaj
+dRC
 aaj
 aau
 aaG
@@ -115560,8 +115600,8 @@ aaa
 aaa
 aaa
 cAd
-aaa
 aah
+gZM
 aah
 aak
 aao
@@ -115817,9 +115857,9 @@ aaa
 aaa
 aaa
 cAd
-aaa
-aaa
-aaa
+gZM
+aah
+giC
 aBS
 aaq
 aao
@@ -116074,9 +116114,9 @@ aaa
 aaa
 aaa
 cAd
-aaa
-aaa
-aaa
+aah
+gZM
+aah
 axb
 aap
 aaH
@@ -116331,9 +116371,9 @@ aaa
 aaa
 aaa
 cAd
-aaa
-aaa
-aaa
+gZM
+aah
+giC
 aAu
 aCN
 aEH
@@ -116589,8 +116629,8 @@ aaa
 aaa
 cAd
 aah
-aaa
-aaa
+gZM
+aah
 aat
 aCb
 aaJ
@@ -116845,10 +116885,10 @@ aaa
 aaa
 aaa
 cAd
+gZM
 aah
-aah
-aah
-aaj
+giC
+dRC
 aDL
 aEO
 aaj
@@ -117102,9 +117142,9 @@ aaa
 aaa
 aaa
 cAd
-aaa
-aaa
-aaa
+aah
+gZM
+aah
 aAu
 aax
 aaL
@@ -117359,9 +117399,9 @@ aaa
 aaa
 aaa
 cAd
-aaa
-aaa
-aaa
+gZM
+aah
+giC
 aat
 aay
 aaN
@@ -117618,7 +117658,7 @@ aaa
 cAd
 cAd
 cAd
-aaV
+rnU
 aaV
 aaV
 aaV
@@ -117873,9 +117913,9 @@ aaa
 aaa
 aaa
 cAd
-aaa
-aaa
-aaV
+aah
+giC
+rnU
 aaA
 aaP
 aaV
@@ -118130,9 +118170,9 @@ aaa
 aaa
 aaa
 cAd
-aaa
+gZM
 qDo
-aaV
+rnU
 aaz
 aaO
 abb
@@ -118387,9 +118427,9 @@ aaa
 aaa
 aaa
 cAd
-aaa
 aah
-aaV
+giC
+rnU
 aaC
 aaQ
 aaV
@@ -118644,9 +118684,9 @@ aaa
 aaa
 aaa
 cAd
-aaa
+gZM
 aah
-aaV
+rnU
 bQb
 bQb
 aaV
@@ -118901,9 +118941,9 @@ aaa
 aaa
 aaa
 cAd
-aaa
 aah
-aaV
+giC
+rnU
 fJb
 fKb
 aaV
@@ -119158,11 +119198,11 @@ aaa
 aaa
 aaa
 cAd
-aah
+mjx
 mUK
-aaV
-aaV
-aaV
+rnU
+rnU
+rnU
 aaV
 aEy
 acl
@@ -119415,11 +119455,11 @@ aaa
 aaa
 aaa
 cAd
-aaa
 aah
-aaa
+giC
+aah
 cAd
-aaa
+giC
 aDr
 aFr
 aLq
@@ -119672,14 +119712,14 @@ aaa
 aaa
 aaa
 cAd
-aah
-aah
+gZM
+giC
 aah
 cAd
-aaa
-aaV
-aaV
-aaV
+giC
+rnU
+rnU
+rnU
 aaV
 aaV
 aaV
@@ -119930,13 +119970,13 @@ aaa
 aaa
 cAd
 aah
-aaa
-aaa
+aah
+gZM
 cAe
-aaa
-aaa
-aaa
-aaa
+vch
+vch
+uzo
+giC
 aef
 kjb
 aef
@@ -120187,8 +120227,8 @@ aaa
 aaa
 cAd
 aah
-aaa
-aaa
+gZM
+aah
 cAd
 aaa
 aaa
@@ -120443,9 +120483,9 @@ aaa
 aaa
 aaa
 cAd
+giC
 aah
-aaa
-aaa
+aah
 cAd
 cAd
 aah
