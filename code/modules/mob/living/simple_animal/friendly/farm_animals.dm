@@ -254,7 +254,7 @@ var/global/chicken_count = 0
 		E.pixel_y = rand(-6,6)
 		if(chicken_count < MAX_CHICKENS && prob(10))
 			START_PROCESSING(SSobj, E)
-	if(stat != DEAD && !buckled)
+	if(stat != DEAD || stat != CONSCIOUS && !buckled)
 		if(eggsleft < 2) //hungry
 			for(var/obj/structure/ch_feeder/C as anything in ch_feeder_list)
 				if(get_dist(src, C) < FEEDER_DISTANT)
@@ -387,4 +387,4 @@ var/global/chicken_count = 0
 	speak = list("Urk?","urk","URK","Furk NT")
 	health = 80
 
-#undef FEEDER_DISTANT 7
+#undef FEEDER_DISTANT
