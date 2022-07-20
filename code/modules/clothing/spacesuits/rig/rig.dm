@@ -164,7 +164,7 @@
 		fail_msg = "<span class='warning'>You must be wearing \the [src] to do this.</span>"
 	else if((use_unconcious && user.stat == DEAD) || (!use_unconcious && user.stat != CONSCIOUS))
 		fail_msg = "<span class='warning'>You are in no fit state to do that.</span>"
-	else if(!use_stunned && (user.lying || user.stunned || user.paralysis || user.weakened))
+	else if(!use_stunned && user.incapacitated(NONE))
 		fail_msg = "<span class='warning'>You cannot use the suit in this state.</span>"
 	else if(!cell)
 		fail_msg = "<span class='warning'>There is no cell installed in the suit.</span>"
@@ -616,6 +616,7 @@
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating."
 	icon_state = "rig0-mining"
 	item_state = "mining_helm"
+	slowdown = 0.6
 	rig_variant = "mining"
 	armor = list(melee = 60, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
 

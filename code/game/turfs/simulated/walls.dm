@@ -361,13 +361,13 @@
 			if(!damage)
 				return
 			to_chat(user, "<span class='warning'>Вы ремонтируете стену.</span>")
-			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100, required_skills_override = list(/datum/skill/engineering/trained)))
+			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "<span class='notice'>Вы отремонтировали стену.</span>")
 				take_damage(-damage)
 
 		else
 			to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
-			if(WT.use_tool(src, user, SKILL_TASK_DIFFICULT, 3, 100, required_skills_override = list(/datum/skill/engineering/trained)))
+			if(WT.use_tool(src, user, SKILL_TASK_DIFFICULT, 3, 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
 				if(!iswallturf(src))
 					return
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")

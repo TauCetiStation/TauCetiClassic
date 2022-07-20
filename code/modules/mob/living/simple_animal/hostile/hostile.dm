@@ -252,10 +252,8 @@
 	ranged_cooldown = ranged_cooldown_cap
 
 /mob/living/simple_animal/hostile/proc/start_shoot(the_target)
-	var/tturf
 	for(var/i in 1 to amount_shoot)
-		tturf = get_turf(the_target) // need for refresh target location between shoots
-		Shoot(tturf, src.loc, src)
+		Shoot(the_target, loc, src)
 		if(casingtype)
 			new casingtype(get_turf(src))
 		sleep(4)
@@ -271,13 +269,9 @@
 	if(!A)
 		return
 
-	if (!istype(target, /turf))
-		qdel(A)
-		return
-
 	A.current = target
 	A.starting = get_turf(src)
-	A.original = get_turf(target)
+	A.original = target
 	A.yo = target:y - start:y
 	A.xo = target:x - start:x
 	spawn(0)

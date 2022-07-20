@@ -21,7 +21,7 @@ var/global/list/alldepartments = list("Central Command")
 
 	var/department = "Unknown" // our department
 	var/dptdest = "Central Command" // the department we're sending to
-	required_skills = list(/datum/skill/command/trained)
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_TRAINED)
 
 
 /obj/machinery/faxmachine/atom_init()
