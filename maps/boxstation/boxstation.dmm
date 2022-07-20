@@ -69765,13 +69765,6 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/bar)
-"dyR" = (
-/obj/structure/lattice,
-/obj/structure/sign/warning/bomb_range/mine{
-	pixel_x = -32
-	},
-/turf/environment/space,
-/area/space)
 "dzb" = (
 /obj/machinery/light{
 	dir = 4
@@ -70127,6 +70120,13 @@
 	icon_state = "delivery"
 	},
 /area/station/engineering/engine)
+"dWR" = (
+/obj/structure/lattice,
+/obj/structure/sign/warning/bomb_range/mine{
+	pixel_x = -32
+	},
+/turf/environment/space,
+/area/space)
 "dYb" = (
 /obj/machinery/light{
 	dir = 1
@@ -73280,13 +73280,6 @@
 "hMb" = (
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
-"hNN" = (
-/obj/structure/lattice,
-/obj/structure/sign/warning/bomb_range/mine{
-	pixel_x = 32
-	},
-/turf/environment/space,
-/area/space)
 "hNO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -77784,6 +77777,13 @@
 	icon_state = "dark"
 	},
 /area/station/cargo/recycleroffice)
+"mTZ" = (
+/obj/structure/lattice,
+/obj/structure/sign/warning/bomb_range/mine{
+	pixel_x = 32
+	},
+/turf/environment/space,
+/area/space)
 "mUb" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -77795,6 +77795,7 @@
 	dir = 1;
 	network = list("SS13","Security")
 	},
+/obj/item/mine/anchored,
 /turf/environment/space,
 /area/space)
 "mVb" = (
@@ -80584,6 +80585,7 @@
 	name = "WARNING! WASHING MACHINE!";
 	pixel_y = -32
 	},
+/obj/item/mine/shock/anchored,
 /turf/environment/space,
 /area/space)
 "qDA" = (
@@ -83340,12 +83342,6 @@
 	icon_state = "stairs_middle"
 	},
 /area/station/civilian/chapel)
-"tNO" = (
-/obj/structure/sign/warning/bomb_range/mine{
-	pixel_x = 32
-	},
-/turf/environment/space,
-/area/space)
 "tOb" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -84510,6 +84506,12 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
+"wzw" = (
+/obj/structure/sign/warning/bomb_range/mine{
+	pixel_x = 32
+	},
+/turf/environment/space,
+/area/space)
 "wAe" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -109457,7 +109459,7 @@ acJ
 amu
 aah
 fjm
-hNN
+mTZ
 aaa
 agO
 agO
@@ -109706,7 +109708,7 @@ aah
 aah
 aah
 aah
-tNO
+wzw
 fjm
 acO
 acE
@@ -113797,12 +113799,12 @@ aaa
 aaa
 aaa
 cAd
-rXO
-aah
-rXO
-aah
 fjm
 aah
+fjm
+fjm
+fjm
+fjm
 bEP
 bEP
 rQH
@@ -114055,10 +114057,10 @@ aaa
 aaa
 cAd
 aah
-rXO
-aah
 fjm
-aah
+fjm
+fjm
+rXO
 fjm
 gGn
 amB
@@ -114311,10 +114313,10 @@ aaa
 aaa
 aaa
 cAd
-rXO
+fjm
 aah
+fjm
 rXO
-aah
 gGn
 gGn
 gGn
@@ -114569,8 +114571,8 @@ aaa
 aaa
 cAd
 aah
-rXO
-aah
+fjm
+fjm
 fjm
 gGn
 aao
@@ -114825,10 +114827,10 @@ aaa
 aaa
 aaa
 cAd
-rXO
+fjm
 aah
+fjm
 rXO
-aah
 gGn
 aao
 aam
@@ -115083,8 +115085,8 @@ aaa
 aaa
 cAd
 aah
+fjm
 rXO
-aah
 fjm
 gGn
 aao
@@ -115339,8 +115341,8 @@ aaa
 aaa
 aaa
 cAd
-rXO
-aah
+fjm
+fjm
 rtF
 gGn
 aaj
@@ -115597,8 +115599,8 @@ aaa
 aaa
 cAd
 aah
+fjm
 rXO
-aah
 aak
 aao
 aao
@@ -115853,8 +115855,8 @@ aaa
 aaa
 aaa
 cAd
-rXO
-aah
+fjm
+fjm
 fjm
 aBS
 aaq
@@ -116111,8 +116113,8 @@ aaa
 aaa
 cAd
 aah
+fjm
 rXO
-aah
 axb
 aap
 aaH
@@ -116367,8 +116369,8 @@ aaa
 aaa
 aaa
 cAd
-rXO
-aah
+fjm
+fjm
 fjm
 aAu
 aCN
@@ -116625,8 +116627,8 @@ aaa
 aaa
 cAd
 aah
+fjm
 rXO
-aah
 aat
 aCb
 aaJ
@@ -116881,8 +116883,8 @@ aaa
 aaa
 aaa
 cAd
-rXO
-aah
+fjm
+fjm
 fjm
 gGn
 aDL
@@ -117139,8 +117141,8 @@ aaa
 aaa
 cAd
 aah
+fjm
 rXO
-aah
 aAu
 aax
 aaL
@@ -117395,8 +117397,8 @@ aaa
 aaa
 aaa
 cAd
-rXO
-aah
+fjm
+fjm
 fjm
 aat
 aay
@@ -117909,7 +117911,7 @@ aaa
 aaa
 aaa
 cAd
-aah
+fjm
 fjm
 rnU
 aaA
@@ -118166,7 +118168,7 @@ aaa
 aaa
 aaa
 cAd
-rXO
+fjm
 qDo
 rnU
 aaz
@@ -118423,8 +118425,8 @@ aaa
 aaa
 aaa
 cAd
-aah
 fjm
+rXO
 rnU
 aaC
 aaQ
@@ -118680,8 +118682,8 @@ aaa
 aaa
 aaa
 cAd
-rXO
 fjm
+rXO
 rnU
 bQb
 bQb
@@ -118937,8 +118939,8 @@ aaa
 aaa
 aaa
 cAd
-aah
 fjm
+rXO
 rnU
 fJb
 fKb
@@ -119194,7 +119196,7 @@ aaa
 aaa
 aaa
 cAd
-rXO
+fjm
 mUK
 rnU
 rnU
@@ -119451,7 +119453,7 @@ aaa
 aaa
 aaa
 cAd
-aah
+fjm
 fjm
 fjm
 cAd
@@ -119708,9 +119710,9 @@ aaa
 aaa
 aaa
 cAd
-rXO
 fjm
 aah
+fjm
 cAd
 fjm
 rnU
@@ -119965,9 +119967,9 @@ aaa
 aaa
 aaa
 cAd
+fjm
 aah
-aah
-rXO
+fjm
 cAe
 fjm
 fjm
@@ -120222,9 +120224,9 @@ aaa
 aaa
 aaa
 cAd
+fjm
 aah
-rXO
-aah
+fjm
 cAd
 aaa
 aaa
@@ -120480,8 +120482,8 @@ aaa
 aaa
 cAd
 fjm
-aah
-aah
+fjm
+fjm
 cAd
 cAd
 aah
@@ -120745,7 +120747,7 @@ aaa
 aaa
 aah
 aah
-dyR
+dWR
 aah
 aah
 aef
