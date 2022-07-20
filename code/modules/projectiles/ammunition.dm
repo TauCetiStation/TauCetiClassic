@@ -57,14 +57,14 @@
 			to_chat(user, "<span class='notice'>There is no bullet in the casing to inscribe anything into.</span>")
 		return
 
-	if(istype(I, /obj/item/ammo_box))
+	if(istype(I, /obj/item/ammo_box) && isturf(loc))
 		var/obj/item/ammo_box/B = I
 		if(B.ammo_type == type)
-			var/initial_amount = B.stored_ammo.len
 			for(var/obj/item/ammo_casing/AC in loc)
+				if(!do_after(user, 2, target = AC))
+					break
 				if(!B.give_round(AC))
 					break
-			if(B.stored_ammo.len != initial_amount)
 				B.update_icon()
 				playsound(B, 'sound/weapons/guns/ammo_insert.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		return
