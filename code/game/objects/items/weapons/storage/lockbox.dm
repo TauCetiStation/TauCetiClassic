@@ -151,11 +151,11 @@
 	update_overlays()
 
 /obj/item/weapon/storage/lockbox/medal/proc/update_overlays()
+	cut_overlays()
+
 	if(!contents || !open || locked)
-		overlays.Cut()
 		return
 
-	var/list/_overlays = list()
 	for(var/i in 1 to contents.len)
 		var/obj/item/clothing/accessory/medal/M = contents[i]
 		var/mutable_appearance/medalicon = mutable_appearance(initial(icon), M.medaltype)
@@ -165,8 +165,7 @@
 			medalicon.pixel_y -= 7
 			medalicon.pixel_x -= 2
 			medalicon.pixel_x += ((i-6)*3)
-		_overlays += medalicon
-	overlays = _overlays
+		add_overlay(medalicon)
 
 /obj/item/weapon/storage/lockbox/medal/captain
 	name = "Captain medal box"
