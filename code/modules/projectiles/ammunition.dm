@@ -64,7 +64,6 @@
 			for(var/obj/item/ammo_casing/AC in loc)
 				if(!B.give_round(AC))
 					break
-				user.drop_from_inventory(AC, B)
 			if(B.stored_ammo.len != initial_amount)
 				B.update_icon()
 				playsound(B, 'sound/weapons/guns/ammo_insert.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
