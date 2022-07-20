@@ -276,8 +276,6 @@
 
 /obj/item/weapon/wirerod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/storage/toolbox) && !I.contents.len)
-		qdel(I)
-		qdel(src)
 		if(istype(I, /obj/item/weapon/storage/toolbox/mechanical))
 			var/obj/item/weapon/toolboxhammer/mechanical/TB = new (user.loc)
 			TB.add_fingerprint(user)
@@ -290,6 +288,8 @@
 		if(istype(I, /obj/item/weapon/storage/toolbox/syndicate))
 			var/obj/item/weapon/toolboxhammer/syndicate/TB = new (user.loc)
 			TB.add_fingerprint(user)
+		qdel(I)
+		qdel(src)
 
 /obj/item/weapon/noose
 	name = "noose"
