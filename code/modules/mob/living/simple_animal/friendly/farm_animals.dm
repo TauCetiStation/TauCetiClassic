@@ -261,9 +261,7 @@ var/global/chicken_count = 0
 					if(C.food > 0)
 						step_to(src, C)
 						if(loc == C.loc)
-							C.food -= 1
-							C.update_icon()
-							eggsleft += rand(1, 4)
+							C.feed(src)
 	stop_automated_movement = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0

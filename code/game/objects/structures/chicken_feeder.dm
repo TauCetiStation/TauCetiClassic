@@ -28,6 +28,14 @@ var/global/list/ch_feeder_list = list()
 	else
 		..()
 
+/obj/structure/ch_feeder/proc/feed(mob/living/simple_animal/chicken/C)
+	food -= 1
+	if(food < 0) // i dont know how
+		food = 0
+	C.eggsleft += rand(1, 4)
+	update_icon()
+
+
 
 /obj/structure/ch_feeder/update_icon()
 	if(food >=8)
