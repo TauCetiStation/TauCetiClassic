@@ -1,3 +1,8 @@
+#define FEEDER_FULL 8
+#define FEEDER_HALF 5
+#define FEEDER_ALMOST_EMPTY 3
+#define FEEDER_EMPTY 0
+
 ADD_TO_GLOBAL_LIST(/obj/structure/ch_feeder, ch_feeder_list)
 /obj/structure/ch_feeder
 	name = "Chicken Feeder"
@@ -38,16 +43,20 @@ var/global/list/ch_feeder_list = list()
 
 
 /obj/structure/ch_feeder/update_icon()
-	if(food >=8)
+	if(food >= FEEDER_FULL)
 		icon_state = "full"
 		return
-	if(food >=5)
+	if(food >= FEEDER_HALF)
 		icon_state = "half"
 		return
-	if(food >=3)
+	if(food >= FEEDER_ALMOST_EMPTY)
 		icon_state = "almost empty"
 		return
-	if(food == 0)
+	if(food == FEEDER_EMPTY)
 		icon_state = "empty"
 		return
 
+#undef FEEDER_FULL
+#undef FEEDER_HALF
+#undef FEEDER_ALMOST_EMPTY
+#undef FEEDER_EMPTY
