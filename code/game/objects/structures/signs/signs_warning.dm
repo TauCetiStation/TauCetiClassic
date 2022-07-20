@@ -107,6 +107,10 @@
 	name = "BOMB RANGE"
 	icon_state = "blast"
 
+/obj/structure/sign/warning/bomb_range/mine
+	name = "MINEFIELD"
+	desc = "Sign indicating a minefield ahead"
+
 /obj/structure/sign/warning/secure_area/armory
 	name = "ARMORY"
 	icon_state = "armory"

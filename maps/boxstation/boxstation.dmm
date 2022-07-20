@@ -69765,6 +69765,13 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/bar)
+"dyR" = (
+/obj/structure/lattice,
+/obj/structure/sign/warning/bomb_range/mine{
+	pixel_x = -32
+	},
+/turf/environment/space,
+/area/space)
 "dzb" = (
 /obj/machinery/light{
 	dir = 4
@@ -73273,6 +73280,13 @@
 "hMb" = (
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
+"hNN" = (
+/obj/structure/lattice,
+/obj/structure/sign/warning/bomb_range/mine{
+	pixel_x = 32
+	},
+/turf/environment/space,
+/area/space)
 "hNO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -83326,6 +83340,12 @@
 	icon_state = "stairs_middle"
 	},
 /area/station/civilian/chapel)
+"tNO" = (
+/obj/structure/sign/warning/bomb_range/mine{
+	pixel_x = 32
+	},
+/turf/environment/space,
+/area/space)
 "tOb" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -109437,7 +109457,7 @@ acJ
 amu
 aah
 fjm
-aah
+hNN
 aaa
 agO
 agO
@@ -109686,7 +109706,7 @@ aah
 aah
 aah
 aah
-aaa
+tNO
 fjm
 acO
 acE
@@ -120725,7 +120745,7 @@ aaa
 aaa
 aah
 aah
-aah
+dyR
 aah
 aah
 aef
