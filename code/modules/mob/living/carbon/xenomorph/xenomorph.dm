@@ -190,7 +190,7 @@
 			if(count)
 				stat("[key]: [count]")
 
-/mob/living/carbon/xenomorph/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
+/mob/living/carbon/xenomorph/Stun(amount, ignore_canstun = 0)
 	if(status_flags & CANSTUN || ignore_canstun)
 		..()
 	else
@@ -280,7 +280,13 @@ Hit Procs
 	return "xltrails"
 
 /mob/living/carbon/xenomorph/update_canmove()
-	canmove = !(weakened || paralysis || stat || (status_flags & FAKEDEATH) || crawling || stunned || HAS_TRAIT(src, TRAIT_ANCHORED))
+	..()
+
+	if(lying)
+		canmove = FALSE
+	if(density)
+		density = initial(density)
+
 
 /mob/living/carbon/xenomorph/crawl()
 	SetCrawling(!crawling)
