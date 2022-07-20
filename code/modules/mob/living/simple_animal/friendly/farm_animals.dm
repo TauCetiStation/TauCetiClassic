@@ -1,3 +1,4 @@
+#define FEEDER_DISTANT 7
 //goat
 /mob/living/simple_animal/hostile/retaliate/goat
 	name = "goat"
@@ -256,7 +257,7 @@ var/global/chicken_count = 0
 	if(stat != DEAD && !buckled)
 		if(eggsleft < 2) //hungry
 			for(var/obj/structure/ch_feeder/C as anything in ch_feeder_list)
-				if(get_dist(src, C) < 7)
+				if(get_dist(src, C) < FEEDER_DISTANT)
 					if(C.food > 0)
 						step_to(src, C)
 						if(loc == C.loc)
@@ -385,3 +386,5 @@ var/global/chicken_count = 0
 	icon_dead = "walrus-syndi_dead"
 	speak = list("Urk?","urk","URK","Furk NT")
 	health = 80
+
+#undef FEEDER_DISTANT 7
