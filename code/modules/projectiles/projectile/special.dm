@@ -302,6 +302,7 @@
 	icon_state = "plasma_bolt_oc"
 	light_color = LIGHT_COLOR_PLASMA_OC
 	damage = 25
+	impact_force = 1
 
 	muzzle_type = /obj/effect/projectile/plasma/muzzle/overcharge
 

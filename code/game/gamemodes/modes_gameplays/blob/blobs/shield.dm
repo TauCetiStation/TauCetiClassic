@@ -3,6 +3,8 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_idle"
 	desc = "Some blob creature thingy."
+	opacity = TRUE
+	max_health = 75
 	health = 75
 	fire_resist = 2
 
