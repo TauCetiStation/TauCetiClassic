@@ -867,19 +867,24 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/adjustDrugginess(amount)
 	druggy = max(druggy + amount, 0)
 	updateDrugginesOverlay()
+	MakeHappy()
 
 /mob/proc/setDrugginess(amount)
 	druggy = max(amount, 0)
 	updateDrugginesOverlay()
+	MakeHappy()
 
 /mob/proc/updateDrugginesOverlay()
 	if(druggy)
 		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
 		throw_alert("high", /atom/movable/screen/alert/high)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drugged", /datum/mood_event/drugged)
 	else
 		clear_fullscreen("high")
 		clear_alert("high")
+
+/mob/proc/MakeHappy()
+	if(druggy)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drugged", /datum/mood_event/drugged)
 
 // ========== STUTTERING ==========
 /mob/proc/Stuttering(amount)
