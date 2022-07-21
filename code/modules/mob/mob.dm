@@ -876,6 +876,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(druggy)
 		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
 		throw_alert("high", /atom/movable/screen/alert/high)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drugged", /datum/mood_event/drugged)
 	else
 		clear_fullscreen("high")
 		clear_alert("high")
