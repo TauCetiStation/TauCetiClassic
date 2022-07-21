@@ -3927,18 +3927,14 @@
 	},
 /area/custom/syndicate_mothership)
 "ajU" = (
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 1
+	},
 /obj/machinery/door_control{
 	id = "syndieshutters";
 	name = "remote shutter control";
 	pixel_x = -28;
 	req_access = list(150)
-	},
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_y = 4
-	},
-/obj/item/weapon/pen{
-	pixel_y = 6
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -5509,15 +5505,6 @@
 	icon_state = "floor5"
 	},
 /area/velocity)
-"anv" = (
-/obj/structure/shuttle/engine/heater{
-	icon_state = "heater1"
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating/airless,
-/area/shuttle/syndicate/start)
 "anw" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
@@ -5624,9 +5611,6 @@
 "anG" = (
 /obj/structure/shuttle/engine/heater{
 	icon_state = "heater1"
-	},
-/obj/structure/window/reinforced{
-	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/shuttle/syndicate/start)
@@ -15089,8 +15073,17 @@
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aHZ" = (
-/turf/unsimulated/wall/fakeglass,
-/area/space)
+/obj/structure/table,
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen{
+	pixel_y = 6
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
 "aIa" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/fancy/donut_box/traitor,
@@ -30668,13 +30661,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
 acS
 acS
 acS
 acS
 acS
-aaM
+acS
+acS
 aaM
 aaM
 aaM
@@ -30923,7 +30916,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+acS
 acS
 acS
 acS
@@ -31191,7 +31184,7 @@ acS
 acS
 acS
 acS
-aaM
+acS
 aaM
 aaM
 aaM
@@ -31431,7 +31424,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+acS
 acS
 acS
 acS
@@ -31685,7 +31678,6 @@ aaM
 ahG
 aaM
 aaM
-aaM
 acS
 acS
 acS
@@ -31706,7 +31698,8 @@ acS
 acS
 acS
 acS
-aaM
+acS
+acS
 aaM
 aaM
 ahG
@@ -31947,7 +31940,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+acS
 acS
 acS
 acS
@@ -32204,7 +32197,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+acS
 acS
 acS
 acS
@@ -32461,7 +32454,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+acS
 acS
 acS
 acS
@@ -32713,7 +32706,6 @@ aaM
 ahG
 aaM
 aaM
-aaM
 acS
 acS
 acS
@@ -32734,7 +32726,8 @@ acS
 acS
 acS
 acS
-aaM
+acS
+acS
 aaM
 aaM
 ahG
@@ -32973,7 +32966,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+acS
 acS
 acS
 acS
@@ -33247,7 +33240,7 @@ acS
 acS
 acS
 acS
-aaM
+acS
 aaM
 aaM
 aaM
@@ -33493,7 +33486,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+acS
 acS
 acS
 acS
@@ -33752,13 +33745,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
 acS
 acS
 acS
 acS
 acS
-aaM
+acS
+acS
 aaM
 aaM
 aaM
@@ -83101,13 +83094,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aka
 aku
 aku
 aku
+aku
+aku
 alp
-aaM
 aaM
 aaM
 aaM
@@ -83356,8 +83349,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aka
+aku
 aku
 aku
 aku
@@ -83623,8 +83616,8 @@ aku
 als
 als
 als
+als
 alp
-aaM
 aaM
 aaM
 aaM
@@ -83864,8 +83857,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aka
+aku
 aku
 aku
 aku
@@ -83881,7 +83874,7 @@ als
 aJd
 aiA
 als
-alp
+als
 aaM
 aaM
 aaM
@@ -84118,8 +84111,8 @@ ahF
 aaM
 aaM
 aaM
-aaM
 aka
+aku
 aku
 aku
 aku
@@ -84139,7 +84132,7 @@ aJg
 amu
 amG
 als
-aaM
+alp
 aaM
 aaM
 aaM
@@ -84374,7 +84367,6 @@ ahF
 ahF
 aaM
 aaM
-aaM
 abu
 aaM
 aaM
@@ -84382,8 +84374,9 @@ aaM
 aaM
 aaM
 ajK
+aHZ
 ajU
-akR
+akM
 akM
 akM
 akM
@@ -84631,7 +84624,6 @@ ahF
 aaM
 aaM
 aaM
-aaM
 abu
 aaM
 aaM
@@ -84641,6 +84633,7 @@ aaM
 alb
 akx
 akR
+akM
 akM
 akN
 akM
@@ -84888,7 +84881,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 abu
 aaM
 aaM
@@ -84898,6 +84890,7 @@ aaM
 ajN
 akw
 akR
+akM
 akM
 akM
 akM
@@ -85146,8 +85139,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
 ake
+aku
 aku
 aku
 aku
@@ -85167,7 +85160,7 @@ aJs
 aiB
 ajH
 als
-aaM
+alr
 aaM
 aaM
 aaM
@@ -85406,8 +85399,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
 ake
+aku
 aku
 aku
 aku
@@ -85423,7 +85416,7 @@ als
 als
 als
 als
-alr
+als
 aaM
 aaM
 aaM
@@ -85676,11 +85669,11 @@ aku
 amh
 amb
 akg
-als
-als
-als
+aku
+aku
+aku
+aku
 alr
-aaM
 aaM
 aaM
 aaM
@@ -85918,9 +85911,8 @@ ahI
 aaM
 ahI
 ahI
-aaM
+ahI
 ahJ
-aaM
 aaM
 aaM
 aaM
@@ -85930,17 +85922,18 @@ aaM
 ake
 aku
 aku
+aku
 amk
 aqb
 amA
 aku
-anv
+anG
 aiC
-aaM
-aaM
-ahI
-aKU
 ahJ
+aaM
+ahJ
+aKU
+ahI
 aaM
 aaM
 aaM
@@ -86174,12 +86167,11 @@ aaM
 ahJ
 ahJ
 ahJ
+aaM
 ahJ
 ahJ
-ahJ
-ahJ
-ahJ
-ahJ
+ahI
+aaM
 aaM
 aaM
 aaM
@@ -86188,13 +86180,14 @@ aaM
 aaM
 ake
 aku
+aku
 bRb
+aku
 aku
 alr
 aaM
-aaM
-ahJ
-aaM
+ahI
+ahI
 ahJ
 aaM
 ahJ
@@ -86438,12 +86431,12 @@ ahF
 ahF
 ahJ
 ahJ
-aeD
-aHZ
-aHZ
-aHZ
-aHZ
-aHZ
+aie
+aaN
+aaN
+aaN
+aaN
+aaN
 aaN
 atb
 aaN
