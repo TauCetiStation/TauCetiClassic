@@ -111,10 +111,10 @@
 						return
 					var/obj/item/item_path = itemlist.possible_items[targetitem]
 					for(var/obj/item/I in global.possible_items_for_steal)
+						if(!istype(I, item_path))
+							continue
 						var/turf/T = get_turf(I)
 						if(is_centcom_level(T.z))
-							continue
-						if(!istype(I, item_path))
 							continue
 						target = I
 						break
