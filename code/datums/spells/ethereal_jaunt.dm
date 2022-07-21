@@ -176,7 +176,7 @@
 	                  // chances of this occuring are very small
 	                  // as it requires 9x9 grid of impassable tiles ~getup1
 	for(var/turf/newloc in orange(1, mobloc))
-		if(newloc.is_mob_placeable(src) && !isenvironmentturf(newloc))
+		if(newloc.is_mob_placeable(src) && !isenvironmentturf(newloc) && !SEND_SIGNAL(newloc, COMSIG_ATOM_INTERCEPT_TELEPORT))
 			found_ground = TRUE
 			to_gib = FALSE
 			forceMove(newloc)
