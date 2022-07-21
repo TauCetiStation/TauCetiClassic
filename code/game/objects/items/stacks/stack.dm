@@ -272,6 +272,12 @@
 		s.update_ui_after_item_removal()
 	S.add(transfer)
 
+/obj/item/stack/Crossed(atom/movable/AM)
+	. = ..()
+	if(istype(AM, merge_type))
+		var/obj/item/stack/S = AM
+		merge(S)
+
 /obj/item/stack/attack_hand(mob/user)
 	if (user.get_inactive_hand() == src)
 		if(zero_amount())
