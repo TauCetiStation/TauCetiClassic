@@ -916,7 +916,7 @@
 	name = "Nuke Recaller"
 	desc = "A device that can teleport a nuclear bomb directly to the user. It takes a lot of time to activate. There will be an announce upon activation."
 	item = /obj/item/nuke_teleporter
-	cost = 10
+	cost = 17
 	uplink_types = list("nuclear")
 
 // IMPLANTS

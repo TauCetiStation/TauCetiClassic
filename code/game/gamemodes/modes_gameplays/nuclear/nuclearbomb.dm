@@ -479,8 +479,7 @@ var/global/bomb_set
 	. = ..()
 	r_code = "HONK"
 	if(SSticker)
-		//var/datum/faction/nuclear/N = find_faction_by_type(/datum/faction/nuclear)
-		var/image/I = image('icons/obj/items.dmi', src, "banana")
+		var/image/I = image('icons/obj/clothing/masks.dmi', src, "sexyclown")
 		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/faction, "fake_nuke", I, /datum/faction/nuclear)
 
 /obj/machinery/nuclearbomb/fake/explode()
@@ -524,7 +523,7 @@ var/global/bomb_set
 		return
 	if(!anchored)
 		return
-	if(tgui_alert(user, "Falce decoy activation. Continue?", "Decoy activation", list("Yes","No")) != "Yes")
+	if(tgui_alert(user, "False decoy activation. Continue?", "Decoy activation", list("Yes","No")) != "Yes")
 		return
 	icon_state = "nuclearbomb2"
 	timing = 1.0
