@@ -274,6 +274,8 @@
 
 /obj/item/stack/Crossed(atom/movable/AM)
 	. = ..()
+	if(throwing || AM.throwing)
+		return
 	if(istype(AM, merge_type))
 		var/obj/item/stack/S = AM
 		merge(S)
