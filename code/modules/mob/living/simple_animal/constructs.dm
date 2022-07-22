@@ -166,7 +166,7 @@
 	harm_intent_damage = 5
 	melee_damage = 10
 	attacktext = "ramm"
-	speed = 0
+	speed = -0.2
 	environment_smash = 2
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
@@ -180,6 +180,16 @@
 	. = ..()
 	var/datum/atom_hud/data/medical/adv/hud = global.huds[DATA_HUD_MEDICAL_ADV]
 	hud.add_hud_to(src)
+
+/mob/living/simple_animal/construct/builder/Bump(atom/A)
+	. = ..()
+	if(A == loc)
+		return
+
+	if(istype(A, /turf/simulated/wall/cult))
+		forceMove(A)
+	if(istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || istype(A, /mob/living/simple_animal/construct) || istype(A, /mob/living/simple_animal/hostile/pylon))
+		forceMove(A.loc)
 
 /////////////////////////////Behemoth/////////////////////////
 /mob/living/simple_animal/construct/behemoth
@@ -219,7 +229,7 @@
 	health = 60
 	melee_damage = 15
 	attacktext = "prodd"
-	speed = 0
+	speed = -1.2
 	environment_smash = 1
 	see_in_dark = 7
 	density = FALSE
