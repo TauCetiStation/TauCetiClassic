@@ -202,8 +202,7 @@ var/global/list/datum/spawners_cooldown = list()
 	add_faction_member(faction, cop, TRUE, TRUE)
 
 	var/obj/item/weapon/card/id/W = cop.wear_id
-	W.name = "[cop.real_name]'s ID Card ([W.assignment])"
-	W.registered_name = cop.real_name
+	W.assign(cop.real_name)
 
 /datum/spawner/cop/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(copsstart)

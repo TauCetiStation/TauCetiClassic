@@ -17472,7 +17472,7 @@
 	input_tag = "o2_in";
 	name = "Oxygen Supply Control";
 	output_tag = "o2_out";
-	sensors = list("o2_sensor" = "Tank")
+	sensors = list("o2_sensor"="Tank")
 	},
 /obj/machinery/light{
 	dir = 8
@@ -20998,10 +20998,6 @@
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/clothing/accessory/medal/gold/captain{
-	pixel_x = -11;
-	pixel_y = 5
-	},
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "lzD" = (
@@ -21938,7 +21934,7 @@
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
-	sensors = list("air_sensor" = "Tank")
+	sensors = list("air_sensor"="Tank")
 	},
 /obj/machinery/light,
 /turf/simulated/floor{
@@ -23276,11 +23272,11 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/rig/wizard{
-	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20);
+	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
 	desc = "Old bizarre gem-encrusted suit that radiates magical energies."
 	},
 /obj/item/clothing/head/helmet/space/rig/wizard{
-	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20);
+	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
 	desc = "Old bizarre gem-encrusted helmet that radiates magical energies."
 	},
 /obj/machinery/light/small{
@@ -28176,10 +28172,6 @@
 	pixel_y = -28
 	},
 /obj/item/clothing/head/beret/sec/hos,
-/obj/item/clothing/accessory/medal/gold/heroism{
-	pixel_x = 13;
-	pixel_y = 8
-	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "sfO" = (
@@ -31778,7 +31770,7 @@
 	input_tag = "n2_in";
 	name = "Nitrogen Supply Control";
 	output_tag = "n2_out";
-	sensors = list("n2_sensor" = "Tank")
+	sensors = list("n2_sensor"="Tank")
 	},
 /obj/machinery/light{
 	dir = 8
