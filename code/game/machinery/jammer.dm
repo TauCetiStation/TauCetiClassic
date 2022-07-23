@@ -1,6 +1,6 @@
 /obj/machinery/telescience_jammer
 	name = "Telescience Jammer"
-	desc = "Jammer that interfere with most telescience technologies"
+	desc = "Jammer that interferes with most telescience technologies"
 
 	icon = 'icons/obj/machines/jammer.dmi'
 	icon_state = "jammer"
@@ -73,12 +73,12 @@
 				locked = FALSE
 				stat |= MAINT
 				set_power_use(IDLE_POWER_USE)
-				to_chat(user, "<span class='notice'>You disabled security and turned off the power of [src].</span>")
+				to_chat(user, "<span class='notice'>You unlock and turn off [src].</span>")
 			else
 				locked = TRUE
 				stat &= ~MAINT
 				set_power_use(NO_POWER_USE)
-				to_chat(user, "<span class='notice'>You enabled security and turned on the power of [src].</span>")
+				to_chat(user, "<span class='notice'>You lock and turn on [src].</span>")
 
 			update_icon()
 		else
@@ -103,7 +103,7 @@
 /obj/machinery/telescience_jammer/emag_act(mob/user)
 	if(emagged)
 		return FALSE
-	to_chat(user, "<span class='notice'>Looks like you can unlock it now with any ID card.</span>")
+	to_chat(user, "<span class='notice'>Looks like you can unlock it with any ID card now.</span>")
 	emagged = TRUE
 
 /obj/machinery/telescience_jammer/emp_act(severity)
