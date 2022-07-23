@@ -11363,6 +11363,10 @@
 "atl" = (
 /obj/structure/table/woodentable/poker,
 /obj/item/toy/cards,
+/obj/item/device/harmonica{
+	pixel_x = 2;
+	pixel_y = 2
+	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "atm" = (
@@ -12244,9 +12248,20 @@
 	pixel_x = -28
 	},
 /obj/item/device/camera{
-	pixel_y = 5
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/painting_frame{
+	pixel_y = -10
+	},
+/obj/item/painting_frame{
+	pixel_y = -10
+	},
+/obj/item/stack/sheet/cloth{
+	amount = 50;
+	pixel_y = -11
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "auV" = (
@@ -33559,6 +33574,7 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bhL" = (
+/obj/machinery/telescience_jammer,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "bhM" = (
@@ -34589,6 +34605,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
+	},
+/obj/machinery/telescience_jammer{
+	radius = 2
 	},
 /turf/simulated/floor{
 	icon_state = "vault"
@@ -44279,6 +44298,9 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "bBe" = (
@@ -44726,8 +44748,10 @@
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "bBZ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "bCa" = (
@@ -45623,9 +45647,6 @@
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "bDD" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
@@ -45890,8 +45911,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
+/obj/machinery/telescience_jammer{
+	radius = 2
 	},
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
@@ -49860,12 +49881,25 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "bLp" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen/blue{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/weapon/pen/red{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/weapon/pen{
+	pixel_y = 6
+	},
 /obj/structure/sign/poster/random{
 	pixel_y = -32
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken7"
-	},
+/turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bLq" = (
 /turf/simulated/floor{
@@ -51267,8 +51301,8 @@
 "bNL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/random{
-	pixel_x = 32
+/obj/structure/sign/painting{
+	pixel_x = 30
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken3"
@@ -51317,6 +51351,9 @@
 "bNQ" = (
 /obj/random/vending/cola,
 /obj/effect/decal/cleanable/cobweb2,
+/obj/structure/sign/poster/random{
+	pixel_x = 32
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bNR" = (
@@ -52793,14 +52830,13 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "bQH" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -28
+/obj/structure/sign/painting{
+	pixel_y = -30
 	},
-/obj/machinery/portable_atmospherics/powered/scrubber/huge,
-/turf/simulated/floor{
-	icon_state = "delivery"
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken7"
 	},
-/area/station/rnd/storage)
+/area/station/civilian/library)
 "bQI" = (
 /obj/machinery/conveyor{
 	dir = 10;
@@ -52842,6 +52878,15 @@
 /area/station/maintenance/engineering)
 "bQM" = (
 /obj/machinery/portable_atmospherics/canister/hydrogen,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/rnd/storage)
+"bQN" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
+/obj/machinery/portable_atmospherics/powered/scrubber/huge,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -55470,7 +55515,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bYe" = (
-/obj/item/weapon/flora/random,
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -60605,6 +60651,7 @@
 	name = "AI Core Door";
 	req_access = list(16)
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -61376,12 +61423,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/station/aisat/ai_chamber)
 "cpP" = (
-/obj/machinery/hologram/holopad,
 /obj/machinery/turretid/stun/AI_special{
 	name = "AI Chamber turret control";
 	pixel_x = 26;
@@ -61396,6 +61443,9 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/machinery/telescience_jammer{
+	radius = 5
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -68632,48 +68682,40 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "cLA" = (
-/obj/machinery/disposal,
-/obj/effect/decal/cleanable/cobweb2,
-/obj/structure/disposalpipe/trunk,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/easel,
+/obj/effect/decal/cleanable/cobweb2,
+/obj/structure/sign/painting{
+	pixel_y = 30
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "cLC" = (
-/obj/structure/table/woodentable,
-/obj/item/device/harmonica{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/easel,
+/obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken7"
 	},
 /area/station/civilian/library)
 "cLD" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "cLE" = (
 /obj/machinery/hologram/holopad,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
@@ -79134,6 +79176,10 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"oBl" = (
+/obj/machinery/telescience_jammer,
+/turf/simulated/floor,
+/area/station/ai_monitored/eva)
 "oCb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /mob/living/simple_animal/cat/dusty,
@@ -83883,6 +83929,15 @@
 "uUU" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/forensic_office)
+"uUY" = (
+/obj/machinery/telescience_jammer{
+	radius = 5
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/security/armoury)
 "uXR" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
@@ -113052,7 +113107,7 @@ aCy
 hMb
 hMb
 hMb
-hMb
+oBl
 hMb
 hMb
 hMb
@@ -113823,7 +113878,7 @@ aCB
 hMb
 hMb
 hMb
-hMb
+oBl
 hMb
 hMb
 hMb
@@ -115581,7 +115636,7 @@ abl
 abR
 dFb
 ctH
-acu
+uUY
 abl
 afu
 aeW
@@ -123840,7 +123895,7 @@ aCo
 bKJ
 bRm
 bRm
-bQH
+bQN
 aKX
 aMs
 aHV
@@ -130308,7 +130363,7 @@ bhD
 aKs
 asq
 auU
-eeb
+bLp
 aKs
 bFo
 bFo
@@ -130822,7 +130877,7 @@ cLD
 asl
 asE
 avU
-bLp
+bQH
 aKs
 lBb
 cak
