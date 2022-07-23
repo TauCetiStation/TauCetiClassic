@@ -413,6 +413,7 @@
 /obj/item/clothing/under/swimsuit
 	siemens_coefficient = 1
 	body_parts_covered = 0
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/swimsuit/black
 	name = "black swimsuit"
@@ -443,6 +444,7 @@
 	desc = "An oldfashioned red swimsuit."
 	icon_state = "swim_red"
 	siemens_coefficient = 1
+	flags = NONE
 
 /obj/item/clothing/suit/batman
 	name = "Batman costume"
