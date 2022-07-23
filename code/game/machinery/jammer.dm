@@ -55,7 +55,7 @@
 	return anchored && ..()
 
 /obj/machinery/telescience_jammer/update_icon()
-	if(is_operational())
+	if(anchored && !(stat & (NOPOWER | BROKEN | MAINT)))
 		icon_state = "jammer_on"
 	else
 		icon_state = "jammer"
