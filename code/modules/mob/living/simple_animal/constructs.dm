@@ -265,6 +265,19 @@
 /mob/living/simple_animal/construct/harvester/Process_Spacemove(movement_dir = 0)
 	return TRUE
 
+/mob/living/simple_animal/construct/harvester/UnarmedAttack(atom/A)
+	if(ishuman(A))
+		var/mob/living/carbon/human/C = A
+		var/limbs = list(BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
+		limbs -= C.get_missing_bodyparts()
+		if(!limbs.len)
+			. = ..()
+		do_attack_animation(C)
+		var/obj/item/organ/external/BP = C.get_bodypart(pick(limbs))//pick(limbs)
+		if(!BP.droplimb(null, null, DROPLIMB_EDGE))
+			. = ..()
+		return FALSE
+	. = ..()
 /////////////////////////////////////Proteon from tg/////////////////////////////////
 /mob/living/simple_animal/construct/proteon
 	name = "Proteon"
