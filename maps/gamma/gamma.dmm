@@ -19103,7 +19103,6 @@
 	pixel_x = -30
 	},
 /obj/structure/closet/secure_closet/captains,
-/obj/item/clothing/accessory/medal/gold/heroism,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "eYu" = (
