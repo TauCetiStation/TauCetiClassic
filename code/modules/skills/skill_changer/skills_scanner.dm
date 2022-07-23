@@ -91,5 +91,8 @@
 
 /obj/machinery/optable/skill_scanner/deconstruction()
 	. = ..()
+	if(cartridge && !cartridge.unpacked)
+		cartridge.forceMove(loc)
+		cartridge = null
 	if(console)
 		console.scanner = null
