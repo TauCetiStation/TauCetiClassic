@@ -229,7 +229,7 @@
 	health = 60
 	melee_damage = 15
 	attacktext = "prodd"
-	speed = -1.2
+	speed = -1
 	environment_smash = 1
 	see_in_dark = 7
 	density = FALSE
