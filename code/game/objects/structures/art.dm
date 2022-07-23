@@ -52,6 +52,8 @@
 	var/framed_offset_x = 11
 	var/framed_offset_y = 10
 
+	var/painting = FALSE
+
 	pixel_x = 10
 	pixel_y = 9
 
@@ -132,11 +134,17 @@
 
 			grid[x][y] = color
 			used = TRUE
+			painting = TRUE
 			update_overlays()
 			. = TRUE
 		if("finalize")
+			painting = FALSE
 			. = TRUE
 			finalize(user)
+
+/obj/item/canvas/tgui_close(mob/user)
+	painting = FALSE
+	update_overlays()
 
 /obj/item/canvas/proc/finalize(mob/user)
 	finalized = TRUE
@@ -147,18 +155,20 @@
 	cut_overlays()
 	if(icon_generated)
 		var/mutable_appearance/detail = mutable_appearance(generated_icon)
-		detail.pixel_x = 1
-		detail.pixel_y = 1
 		add_overlay(detail)
 		return
 	if(!used)
 		return
 
-	var/mutable_appearance/detail = mutable_appearance(icon, "[icon_state]wip")
-	detail.pixel_x = 1
-	detail.pixel_y = 1
+	var/mutable_appearance/detail = mutable_appearance(icon, "[icon_state]-[rand(1, 6)]")
 	add_overlay(detail)
 	. += detail
+
+	if(painting)
+		var/mutable_appearance/painting = mutable_appearance(icon, "[icon_state]-anim")
+		add_overlay(painting)
+	else
+		cut_overlay(painting)
 
 /obj/item/canvas/proc/generate_proper_overlay()
 	if(icon_generated)
