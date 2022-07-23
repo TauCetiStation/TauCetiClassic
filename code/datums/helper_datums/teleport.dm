@@ -130,11 +130,15 @@
 				posturfs += T
 		destturf = safepick(posturfs - center)
 	else
+		// why this chain skips density_checks()
 		destturf = get_turf(destination)
 		if(isenvironmentturf(destturf) && (destturf.x <= TRANSITIONEDGE || destturf.x >= (world.maxx - TRANSITIONEDGE - 1) || destturf.y <= TRANSITIONEDGE || destturf.y >= (world.maxy - TRANSITIONEDGE - 1)))
 			return FALSE
 
 	if(!destturf || !curturf)
+		return FALSE
+
+	if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORT))
 		return FALSE
 
 	playSpecials(curturf,effectin,soundin)
