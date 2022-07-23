@@ -17866,11 +17866,9 @@
 	},
 /area/station/civilian/hydroponics)
 "aFI" = (
-/obj/machinery/portable_atmospherics/canister/hydrogen,
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
-/area/station/rnd/storage)
+/obj/machinery/space_heater,
+/turf/simulated/floor/plating,
+/area/station/maintenance/science)
 "aFJ" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -18261,7 +18259,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aGw" = (
@@ -19713,10 +19710,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aJh" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -28
-	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -52798,6 +52792,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
+"bQH" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
+/obj/machinery/portable_atmospherics/powered/scrubber/huge,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/rnd/storage)
 "bQI" = (
 /obj/machinery/conveyor{
 	dir = 10;
@@ -52837,6 +52840,12 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"bQM" = (
+/obj/machinery/portable_atmospherics/canister/hydrogen,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/rnd/storage)
 "bQO" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
@@ -123572,7 +123581,7 @@ aCh
 crB
 bFH
 aFa
-bRm
+aFI
 bRm
 bRm
 bRm
@@ -123830,8 +123839,8 @@ chD
 aCo
 bKJ
 bRm
-aHV
-aJh
+bRm
+bQH
 aKX
 aMs
 aHV
@@ -124087,11 +124096,11 @@ aCk
 bFH
 aES
 bRm
-aHW
-aHW
+aJh
+aJh
 aLd
 aMt
-aFI
+bQM
 aPa
 aQp
 aRq
@@ -124344,8 +124353,8 @@ aCl
 bFH
 aFa
 bRm
-aHX
-aHX
+aHW
+aHW
 aLe
 aMu
 aNL
@@ -124601,8 +124610,8 @@ bGX
 bFH
 aFa
 bRm
-aHY
-aHY
+aHX
+aHX
 aLf
 aMv
 aNM

@@ -84,7 +84,7 @@
 /turf/simulated/floor/engine/phoron
 	oxygen = 0
 	nitrogen = 0
-	phoron = ATMOSTANK_PHORON
+	phoron = 5500
 
 /turf/simulated/floor/engine/carbon_dioxide
 	oxygen = 0
