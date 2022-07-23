@@ -164,7 +164,7 @@
 		fail_msg = "<span class='warning'>You must be wearing \the [src] to do this.</span>"
 	else if((use_unconcious && user.stat == DEAD) || (!use_unconcious && user.stat != CONSCIOUS))
 		fail_msg = "<span class='warning'>You are in no fit state to do that.</span>"
-	else if(!use_stunned && (user.lying || user.stunned || user.paralysis || user.weakened))
+	else if(!use_stunned && user.incapacitated(NONE))
 		fail_msg = "<span class='warning'>You cannot use the suit in this state.</span>"
 	else if(!cell)
 		fail_msg = "<span class='warning'>There is no cell installed in the suit.</span>"
@@ -885,6 +885,12 @@
 	space_armor = list(melee = 65, bullet = 60, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 70)
 	combat_slowdown = 0.2
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/syndiemmessage)
+
+/obj/item/clothing/suit/space/rig/syndi/elite/atom_init()
+	. = ..()
+	var/obj/item/clothing/shoes/magboots/syndie/SB = new(src)
+	SB.name = "The syndicate magboots"
+	boots = SB
 
 /obj/item/clothing/suit/space/rig/syndi/elite/comander
 	name = "Syndicate elite hybrid suit"

@@ -114,6 +114,17 @@
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
 	new /obj/item/device/healthanalyzer(src)
 
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike
+	name = "Emergency Small first-aid kit"
+
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike/atom_init()
+	. = ..()
+
+	if (empty)
+		return
+
+	new /obj/item/stack/medical/suture(src)
+
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment
 	name = "Emergency nutriment kit"
 	icon_state = "emergency_nutriment_kit"
