@@ -236,6 +236,7 @@
 	attack_sound = list('sound/weapons/slash.ogg')
 	attack_push_vis_effect = ATTACK_EFFECT_SLASH
 	attack_disarm_vis_effect = ATTACK_EFFECT_SLASH
+	pass_flags = PASSTABLE
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
 		)
