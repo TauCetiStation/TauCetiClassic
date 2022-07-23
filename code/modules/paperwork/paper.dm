@@ -858,7 +858,7 @@
 	<ol>
 	<li>Place patient on CMF manipulation table</li>
 	<li>Ask the patient about his or her knowledge and skills. Check IQ and MDI scores</li>
-	<li>Insert the cartridge</li>
+	<li>Insert the cartridge into the table</li>
 	<li>Unpack the cartridge (Procedure is not reversible)</li>
 	<li>Use the console to set the desired parameters of the implant</li>
 	<li>Implant the patient</li>
