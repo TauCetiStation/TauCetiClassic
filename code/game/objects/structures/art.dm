@@ -160,7 +160,7 @@
 	if(!used)
 		return
 
-	var/mutable_appearance/detail = mutable_appearance(icon, "[icon_state]-[rand(1, 6)]")
+	var/mutable_appearance/detail = mutable_appearance(icon, "[icon_state]-wip")
 	add_overlay(detail)
 	. += detail
 
