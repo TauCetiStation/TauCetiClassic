@@ -13,7 +13,6 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 85000
-	var/obj/item/weapon/skill_cartridge/cartridge = null
 	var/obj/machinery/optable/skill_scanner/scanner = null
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE, /datum/skill/medical = SKILL_LEVEL_NOVICE)
 
@@ -27,17 +26,11 @@
 		scanner.console = src
 		break
 
+/obj/machinery/computer/skills_console/proc/inserted_cartridge()
+	return scanner && scanner.cartridge != null
+
 /obj/machinery/computer/skills_console/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/skill_cartridge))
-		if (!cartridge)
-			if(!do_skill_checks(user))
-				return
-			user.drop_from_inventory(I, src)
-			cartridge = I
-			to_chat(user, "<span class='notice'>You insert [I].</span>")
-			tgui_interact(user)
-		return FALSE
-	else if(ismultitool(I))
+	if(ismultitool(I))
 		var/obj/item/device/multitool/M = I
 		if(M.buffer && istype(M.buffer, /obj/machinery/optable/skill_scanner))
 			scanner = M.buffer
@@ -89,8 +82,9 @@
 		data["MDI"] = mdi
 	data["skill_min_value"] = SKILL_LEVEL_MIN
 	data["skill_max_value"] = SKILL_LEVEL_HUMAN_MAX
-	data["inserted_cartridge"] = cartridge != null
-	if(cartridge)
+	data["inserted_cartridge"] = inserted_cartridge()
+	if(inserted_cartridge())
+		var/obj/item/weapon/skill_cartridge/cartridge = scanner.cartridge
 		data["skill_list"] = cartridge.get_buff_list()
 		data["compatible_species"] = cartridge.compatible_species
 		data["cartridge_name"] = cartridge.name
@@ -102,11 +96,11 @@
 	return data
 
 /obj/machinery/computer/skills_console/proc/can_inject(mob/user)
-	if(cartridge && scanner && scanner.victim && scanner.victim.mind)
+	if(scanner && scanner.cartridge && scanner.victim && scanner.victim.mind)
 		if(ishuman(scanner.victim))
 			var/mob/living/carbon/human/H = scanner.victim
 			var/same_user = H == user
-			var/compatible = (H.species.name in cartridge.compatible_species)
+			var/compatible = (H.species.name in scanner.cartridge.compatible_species)
 			if(compatible && !same_user && !H.ismindprotect())
 				return TRUE
 	return FALSE
@@ -117,37 +111,31 @@
 		return
 	switch(action)
 		if("eject")
-			if(cartridge && !cartridge.unpacked)
-				cartridge.forceMove(loc)
+			if(scanner && scanner.eject_cartridge())
 				set_power_use(IDLE_POWER_USE)
-				cartridge = null
 			. = TRUE
 		if("inject")
 			if(can_inject(usr))
-				var/mob/living/carbon/human/H = scanner.victim
-				for(var/obj/item/weapon/implant/skill/S in H)
-					if(S.implanted)
-						S.meltdown()
-				var/obj/item/weapon/implant/skill/implant = new(H)
-				implant.set_skills(cartridge.selected_buffs, cartridge.compatible_species)
-				implant.inject(H, BP_HEAD)
-				qdel(cartridge)
+				scanner.inject_victim()
 				set_power_use(IDLE_POWER_USE)
-				cartridge = null
 			. = TRUE
 		if("change_skill")
-			if(cartridge && cartridge.unpacked)
-				cartridge.set_skills_buff(params)
+			if(scanner && scanner.cartridge && scanner.cartridge.unpacked)
+				scanner.cartridge.set_skills_buff(params)
 
 		if("abort")
-			if(cartridge && cartridge.unpacked)
-				qdel(cartridge)
+			if(scanner)
+				scanner.abort_injection()
 				set_power_use(IDLE_POWER_USE)
-				cartridge = null
 			. = TRUE
 		if("unpack")
-			if(cartridge && !cartridge.unpacked)
-				cartridge.unpacked = TRUE
+			if(scanner && scanner.cartridge && !scanner.cartridge.unpacked)
+				scanner.cartridge.unpacked = TRUE
 				set_power_use(ACTIVE_POWER_USE)
 			. = TRUE
 	update_icon()
+
+/obj/machinery/computer/skills_console/deconstruction()
+	. = ..()
+	if(scanner)
+		scanner.console = null
