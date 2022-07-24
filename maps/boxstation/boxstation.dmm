@@ -11363,6 +11363,10 @@
 "atl" = (
 /obj/structure/table/woodentable/poker,
 /obj/item/toy/cards,
+/obj/item/device/harmonica{
+	pixel_x = 2;
+	pixel_y = 2
+	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "atm" = (
@@ -12244,9 +12248,20 @@
 	pixel_x = -28
 	},
 /obj/item/device/camera{
-	pixel_y = 5
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/painting_frame{
+	pixel_y = -10
+	},
+/obj/item/painting_frame{
+	pixel_y = -10
+	},
+/obj/item/stack/sheet/cloth{
+	amount = 50;
+	pixel_y = -11
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "auV" = (
@@ -49872,12 +49887,25 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "bLp" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen/blue{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/weapon/pen/red{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/weapon/pen{
+	pixel_y = 6
+	},
 /obj/structure/sign/poster/random{
 	pixel_y = -32
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken7"
-	},
+/turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bLq" = (
 /turf/simulated/floor{
@@ -51279,8 +51307,8 @@
 "bNL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/random{
-	pixel_x = 32
+/obj/structure/sign/painting{
+	pixel_x = 30
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken3"
@@ -51329,6 +51357,9 @@
 "bNQ" = (
 /obj/random/vending/cola,
 /obj/effect/decal/cleanable/cobweb2,
+/obj/structure/sign/poster/random{
+	pixel_x = 32
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bNR" = (
@@ -52804,6 +52835,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
+"bQH" = (
+/obj/structure/sign/painting{
+	pixel_y = -30
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/station/civilian/library)
 "bQI" = (
 /obj/machinery/conveyor{
 	dir = 10;
@@ -55467,7 +55506,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bYe" = (
-/obj/item/weapon/flora/random,
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -68633,48 +68673,40 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "cLA" = (
-/obj/machinery/disposal,
-/obj/effect/decal/cleanable/cobweb2,
-/obj/structure/disposalpipe/trunk,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/easel,
+/obj/effect/decal/cleanable/cobweb2,
+/obj/structure/sign/painting{
+	pixel_y = 30
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "cLC" = (
-/obj/structure/table/woodentable,
-/obj/item/device/harmonica{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/easel,
+/obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken7"
 	},
 /area/station/civilian/library)
 "cLD" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "cLE" = (
 /obj/machinery/hologram/holopad,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
@@ -130322,7 +130354,7 @@ bhD
 aKs
 asq
 auU
-eeb
+bLp
 aKs
 bFo
 bFo
@@ -130836,7 +130868,7 @@ cLD
 asl
 asE
 avU
-bLp
+bQH
 aKs
 lBb
 cak
