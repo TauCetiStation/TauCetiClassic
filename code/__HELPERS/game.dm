@@ -627,7 +627,7 @@
 	for(var/mob/dead/observer/O as anything in observer_list)
 		if(check_antaghud && O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
-		candidates += O
+		candidates |= O
 
 	candidates = pollCandidates(Question, role_name, be_role, Ignore_Role, \
 	                            poll_time, candidates, add_spawner, positions)
@@ -674,21 +674,21 @@
 /proc/requestCandidate(mob/M, time_passed, candidates, Question, Ignore_Role, poll_time)
 	M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)//Alerting them to their consideration
 	window_flash(M.client)
-	var/ans = tgui_alert(M, Question, "Please answer in [poll_time * 0.1] seconds!", list("Yes", "No", "Not This Round"))
+	var/ans = tgui_alert(M, Question, "[poll_time * 0.1] секунд на решение!", list("Да", "Нет", "Не в этом раунде"))
 	switch(ans)
-		if("Yes")
-			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
+		if("Да")
+			to_chat(M, "<span class='notice'>Сделанный выбор: \"Да\".</span>")
 			if((world.time - time_passed) > poll_time)//If more than 30 game seconds passed.
-				to_chat(M, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
+				to_chat(M, "<span class='danger'>Извините, но время выбора уже истекло!</span>")
 				M.playsound_local(null, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
 				return
-			candidates += M
-		if("No")
-			to_chat(M, "<span class='danger'>Choice registered: No.</span>")
+			candidates |= M
+		if("Нет")
+			to_chat(M, "<span class='danger'>Сделанный выбор: \"Нет\".</span>")
 			return
-		if("Not This Round")
-			to_chat(M, "<span class='danger'>Choice registered: No.</span>")
-			to_chat(M, "<span class='notice'>You will no longer receive notifications for the role '[Ignore_Role]' for the rest of the round.</span>")
+		if("Не в этом раунде")
+			to_chat(M, "<span class='danger'>Сделанный выбор: \"Нет\".</span>")
+			to_chat(M, "<span class='notice'>В течение этого раунда вам больше не будут приходить уведомления о роли '[Ignore_Role]'.</span>")
 			M.client.prefs.ignore_question |= Ignore_Role
 			return
 

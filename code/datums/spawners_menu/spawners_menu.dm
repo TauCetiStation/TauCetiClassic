@@ -37,7 +37,7 @@
 		this["amount_left"] = spawners_list.len
 		this["is_infinite"] = spawner.infinity
 		this["toggleable"] = spawner.toggleable
-		this["switched_on"] = spawner.switched_on
+		this["switched_on"] = spawner.is_switched_on(user)
 
 		var/min_time = INFINITY
 		for(var/datum/spawner/S as anything in spawners_list)

@@ -138,7 +138,7 @@ var/global/list/datum/spawners_cooldown = list()
 			to_chat(ghost, "<span class='danger'>Роль - \"[name]\" для Вас заблокирована!</span>")
 			return FALSE
 		if(role_available_in_minutes(ghost, rank))
-			to_chat(ghost, "<span class='danger'>У Вас не хватает минут, чтобы зайди за роль \"[name]\". Чтобы её разблокировать вам нужно просто играть!</span>")
+			to_chat(ghost, "<span class='danger'>У Вас не хватает минут, чтобы зайти за роль \"[name]\". Чтобы её разблокировать вам нужно просто играть!</span>")
 			return FALSE
 	return TRUE
 
@@ -152,7 +152,7 @@ var/global/list/datum/spawners_cooldown = list()
 	if(!toggleable)
 		return FALSE
 
-	if(!switched_on)
+	if(!is_switched_on(ghost))
 		if(!can_spawn(ghost))
 			return FALSE
 
@@ -162,6 +162,9 @@ var/global/list/datum/spawners_cooldown = list()
 		switched_on = FALSE
 		to_chat(ghost, "<span class='notice'>Вы отказались от роли \"[name]\".</span>")
 
+	return switched_on
+
+/datum/spawner/proc/is_switched_on(mob/user)
 	return switched_on
 
 
@@ -777,9 +780,14 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/candidate/toggleChoice(mob/dead/observer/ghost)
 	. = ..()
 	if(.)
-		candidates += ghost
+		candidates |= ghost
 	else
 		candidates -= ghost
+
+/datum/spawner/candidate/is_switched_on(mob/user)
+	if(user in candidates)
+		return TRUE
+	return FALSE
 
 /datum/spawner/candidate/jump(mob/dead/observer/ghost)
 	if(positions?.len)
