@@ -5,6 +5,7 @@
 */
 
 /obj/machinery/telecomms
+	unacidable = 1
 	var/temp = "" // output message
 
 /obj/machinery/telecomms/attackby(obj/item/P, mob/user)

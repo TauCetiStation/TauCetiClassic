@@ -14,6 +14,7 @@
 	anchored = TRUE
 	use_power = NO_POWER_USE
 	allowed_checks = ALLOWED_CHECK_NONE
+	unacidable = 1
 
 	process_last = TRUE
 

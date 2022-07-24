@@ -9,6 +9,7 @@ var/global/list/rad_collectors = list()
 	density = TRUE
 	req_access = list(access_engine_equip)
 	use_power = NO_POWER_USE
+	unacidable = 1
 	var/obj/item/weapon/tank/phoron/P = null
 	var/last_power = 0
 	var/active = FALSE

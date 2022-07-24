@@ -63,6 +63,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 	icon_state = "none"
 	anchored = FALSE
 	density = TRUE
+	unacidable = 1
 	var/obj/machinery/particle_accelerator/control_box/master = null
 	var/construction_state = 0
 	var/reference = null
