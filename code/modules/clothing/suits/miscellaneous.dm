@@ -444,7 +444,6 @@
 	desc = "An oldfashioned red swimsuit."
 	icon_state = "swim_red"
 	siemens_coefficient = 1
-	flags = NONE
 
 /obj/item/clothing/suit/batman
 	name = "Batman costume"
