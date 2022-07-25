@@ -1,7 +1,7 @@
 #define SYNDICATE_SHUTTLE_MOVE_TIME 215
 #define SYNDICATE_SHUTTLE_COOLDOWN 200
 
-ADD_TO_GLOBAL_LIST(/obj/machinery/computer/syndicate_station, holomap_landmarks)
+//ADD_TO_GLOBAL_LIST(/obj/machinery/computer/syndicate_station, SSholomaps.holomap_landmarks)
 /obj/machinery/computer/syndicate_station
 	name = "syndicate shuttle terminal"
 	circuit = /obj/item/weapon/circuitboard/computer/syndicate_shuttle
@@ -19,6 +19,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/syndicate_station, holomap_landmarks)
 
 /obj/machinery/computer/syndicate_station/atom_init()
 	..()
+	SSholomaps.holomap_landmarks += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/syndicate_station/atom_init_late()

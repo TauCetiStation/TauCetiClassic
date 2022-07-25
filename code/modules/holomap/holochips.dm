@@ -7,8 +7,8 @@
 
 /obj/item/holochip/deathsquad/atom_init(obj/item/I)
 	. = ..()
-	frequency = deathsquad_transport_layer["frequency"]
-	encryption = deathsquad_transport_layer["encryption"]
+	frequency = SSholomaps.deathsquad_transport_layer["frequency"]
+	encryption = SSholomaps.deathsquad_transport_layer["encryption"]
 
 /obj/item/holochip/nuclear
 	desc = "A small holomap module, attached to helmets."
@@ -17,14 +17,14 @@
 
 /obj/item/holochip/nuclear/atom_init(obj/item/I)
 	. = ..()
-	frequency = nuclear_transport_layer["frequency"]
-	encryption = nuclear_transport_layer["encryption"]
+	frequency = SSholomaps.nuclear_transport_layer["frequency"]
+	encryption = SSholomaps.nuclear_transport_layer["encryption"]
 
 /obj/item/holochip/nuclear/handle_markers_extra()
-	for(var/obj/machinery/computer/syndicate_station/shuttle in holomap_landmarks)
-		if(!global.holomap_cache[shuttle])
+	for(var/obj/machinery/computer/syndicate_station/shuttle in SSholomaps.holomap_landmarks)
+		if(!SSholomaps.holomap_cache[shuttle])
 			continue
-		var/image/I = global.holomap_cache[shuttle]
+		var/image/I = SSholomaps.holomap_cache[shuttle]
 		I.loc = activator.holomap_obj//hud_used.
 		holomap_images += I
 
@@ -35,21 +35,21 @@
 
 /obj/item/holochip/ert/atom_init(obj/item/I)
 	. = ..()
-	frequency = ert_transport_layer["frequency"]
-	encryption = ert_transport_layer["encryption"]
+	frequency = SSholomaps.ert_transport_layer["frequency"]
+	encryption = SSholomaps.ert_transport_layer["encryption"]
 
 /obj/item/holochip/vox
 	color_filter = HOLOMAP_VOX_COLOR
 
 /obj/item/holochip/vox/atom_init(obj/item/I)
 	. = ..()
-	frequency = vox_transport_layer["frequency"]
-	encryption = vox_transport_layer["encryption"]
+	frequency = SSholomaps.vox_transport_layer["frequency"]
+	encryption = SSholomaps.vox_transport_layer["encryption"]
 
 /obj/item/holochip/vox/handle_markers_extra()
-	for(var/obj/machinery/computer/vox_stealth/shuttle in holomap_landmarks)
-		if(!global.holomap_cache[shuttle])
+	for(var/obj/machinery/computer/vox_stealth/shuttle in SSholomaps.holomap_landmarks)
+		if(!SSholomaps.holomap_cache[shuttle])
 			continue
-		var/image/I = global.holomap_cache[shuttle]
+		var/image/I = SSholomaps.holomap_cache[shuttle]
 		I.loc = activator.holomap_obj//hud_used.
 		holomap_images += I

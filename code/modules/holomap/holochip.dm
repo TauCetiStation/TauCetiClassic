@@ -1,4 +1,4 @@
-ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
+//ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 /obj/item/holochip
 	name = "Holomap chip"
 	desc = "A small holomap module, attached to helmets."
@@ -18,13 +18,14 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	var/encryption 		//Encryption for double security
 
 	// Magic numbers for placing holomarker on the holomap
-	var/magic_number_self = 6
+	var/magic_number_self = 6 //We have 5.3 : 1 ratio on holomap-tiles to tiles. Or I think it is
 
 /obj/item/holochip/atom_init(obj/item/I)
 	. = ..()
+	SSholomaps.holochips += src
 	holder = I
 	holomap_toggle_action = new(src)
-	holomap_base = global.default_holomap
+	holomap_base = SSholomaps.default_holomap
 	instantiate_self_marker()
 
 /obj/item/holochip/Destroy()
@@ -55,7 +56,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	if(activator)
 		return
 	activator = user
-	holomap_base = default_holomap
+	holomap_base = SSholomaps.default_holomap
 	if(color_filter)
 		holomap_base.color = color_filter
 	activator.holomap_obj.add_overlay(holomap_base)//hud_used.
@@ -79,20 +80,20 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	if(length(holomap_images))
 		activator.client.images -= holomap_images
 		QDEL_LIST(holomap_images)
-	for(var/obj/item/holochip/HC in holochips)
+	for(var/obj/item/holochip/HC in SSholomaps.holochips)
 		if(HC.frequency != frequency && HC.encryption != encryption)
 			continue
 		if(HC == src)
 			handle_own_marker()
 			continue
-		if(!global.holomap_cache[HC])
+		if(!SSholomaps.holomap_cache[HC])
 			continue
-		var/image/I = global.holomap_cache[HC]
+		var/image/I = SSholomaps.holomap_cache[HC]
 		I.loc = activator.holomap_obj//hud_used.
 		holomap_images += I
-		animate(I ,alpha = 255, time = 8, loop = -1, easing = SINE_EASING)
-		animate(I ,alpha = 0, time = 5, easing = SINE_EASING)
-		animate(I ,alpha = 255, time = 2, easing = SINE_EASING)
+		animate(I, alpha = 255, time = 8, loop = -1, easing = SINE_EASING)
+		animate(I, alpha = 0, time = 5, easing = SINE_EASING)
+		animate(I, alpha = 255, time = 2, easing = SINE_EASING)
 
 	handle_markers_extra()
 
@@ -163,3 +164,23 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 		encryption = max(1, encryption)
 
 	updateUsrDialog()
+
+//HOLOCHIP ACTION
+/datum/action/toggle_holomap
+	name = "Toggle holomap"
+	check_flags = AB_CHECK_ALIVE
+	action_type = AB_INNATE
+
+/datum/action/toggle_holomap/Activate()
+	to_chat(owner, "<span class='notice'>You activate the holomap.</span>")
+	var/obj/item/holochip/target_holochip = target
+	target_holochip.activate_holomap(owner)
+	target_holochip = null
+	active = TRUE
+
+/datum/action/toggle_holomap/Deactivate()
+	var/obj/item/holochip/target_holochip = target
+	target_holochip.deactivate_holomap()
+	target_holochip = null
+	to_chat(owner, "<span class='notice'>You deactivate the holomap.</span>")
+	active = FALSE

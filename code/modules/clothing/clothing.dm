@@ -344,6 +344,10 @@ BLIND     // can't see anything
 
 	var/obj/item/holochip/holochip
 
+/obj/item/clothing/head/Destroy()
+	QDEL_NULL(holochip)
+	return ..()
+
 /obj/item/clothing/head/equipped(mob/user, slot)
 	if(holochip && slot == SLOT_HEAD)
 		holochip.add_action(user)
@@ -382,10 +386,6 @@ BLIND     // can't see anything
 		holochip = null
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You remove the [holochip] from the [src]</span>")
-
-/obj/item/clothing/head/Destroy()
-	QDEL_NULL(holochip)
-	return ..()
 
 
 //Mask

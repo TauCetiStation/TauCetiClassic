@@ -8,10 +8,21 @@ SUBSYSTEM_DEF(holomaps)
 	var/list/processing = list()
 	var/list/currentrun = list()
 
+	var/list/holochips = list()
+	var/image/default_holomap = null
+	var/list/holomap_cache = list()
+	var/list/holomap_landmarks = list()    //List for shuttles and other stuff that might be useful
+
+	// layers (frequency/encryption pairs) for predefined holochips
+
+	var/list/nuclear_transport_layer = list()
+	var/list/ert_transport_layer = list()
+	var/list/deathsquad_transport_layer = list()
+	var/list/vox_transport_layer = list()
 
 /datum/controller/subsystem/holomaps/Initialize(timeofday)
 
-	global.default_holomap = image(generate_holo_map())
+	default_holomap = image(generate_holo_map())
 	generate_holochip_encryption()
 
 	..()
@@ -49,9 +60,10 @@ SUBSYSTEM_DEF(holomaps)
 		return
 	var/list/turf/turfs = RANGE_TURFS(world.maxx/2, center)
 	for(var/turf/T in turfs)
+		//T.density ? holomap.DrawBox(HOLOMAP_CONCRETE_TILE, T.x, T.y) : holomap.DrawBox(HOLOMAP_WALKABLE_TILE, T.x, T.y)
 		if (istype(T, /turf/simulated/floor) || istype(T, /turf/unsimulated/floor) || istype(T, /turf/simulated/shuttle/floor))
 			holomap.DrawBox(HOLOMAP_WALKABLE_TILE, T.x, T.y)
-		if(istype(T, /turf/simulated/wall) || istype(T, /turf/unsimulated/wall) || locate(/obj/structure/grille) in T || locate(/obj/structure/window) in T)
+		if(istype(T, /turf/simulated/wall) || istype(T, /turf/unsimulated/wall) || locate(/obj/structure/grille) in T || locate(/obj/structure/window) in T || locate(/obj/structure/object_wall) in T)
 			holomap.DrawBox(HOLOMAP_CONCRETE_TILE, T.x, T.y)
 	return holomap
 
@@ -67,23 +79,23 @@ SUBSYSTEM_DEF(holomaps)
 #define COLOR_HMAP_DEAD "#d3212d"
 #define COLOR_HMAP_INCAPACITATED "#ffef00"
 #define COLOR_HMAP_DEFAULT "#006e4e"
-#define HOLOMAP_MAGIC_NUMBER 16    // Offset for correct placement of markers on holomap.
+#define HOLOMAP_MAGIC_NUMBER 16 //Offset for correct placement of markers on holomap. 32 is normal turf, we need center, so 16
 
 /datum/controller/subsystem/holomaps/proc/process_holomap_markers()
-	for(var/obj/item/holochip/HC in global.holochips)
+	for(var/obj/item/holochip/HC in holochips)
 		var/turf/marker_location = get_turf(HC)
 		if(!is_station_level(marker_location.z))
 			continue
-		if(!iscarbon(HC.holder.loc))
+		if(!HC.holder || !iscarbon(HC.holder.loc))
 			continue
 		var/mob/living/carbon/C = HC.holder.loc
 		if(C.head != HC.holder)
 			continue
-		if(!(HC in global.holomap_cache) || !global.holomap_cache[HC])
+		if(!(HC in holomap_cache))
 			var/image/NI = image(HC.holder.icon, icon_state = HC.holder.icon_state)
 			NI.transform /= 2
-			global.holomap_cache[HC] = NI
-		var/image/I = global.holomap_cache[HC]
+			holomap_cache[HC] = NI
+		var/image/I = holomap_cache[HC]
 		I.filters = null
 		if(C.stat == DEAD)
 			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEAD)
@@ -100,12 +112,12 @@ SUBSYSTEM_DEF(holomaps)
 		if(!is_station_level(marker_location.z))
 			continue
 		if(istype(shuttle, /obj/machinery/computer/syndicate_station))
-			if(!(shuttle in global.holomap_cache) || !global.holomap_cache[shuttle])
-				global.holomap_cache[shuttle] = image('icons/holomaps/holomap_markers_32x32.dmi', "skipjack")
+			if(!(shuttle in holomap_cache))
+				holomap_cache[shuttle] = image('icons/holomaps/holomap_markers_32x32.dmi', "syndishuttle")
 		else if(istype(shuttle, /obj/machinery/computer/vox_stealth))
-			if(!(shuttle in global.holomap_cache) || !global.holomap_cache[shuttle])
-				global.holomap_cache[shuttle] = image('icons/holomaps/holomap_markers_32x32.dmi', "syndishuttle")
-		var/image/I = global.holomap_cache[shuttle]
+			if(!(shuttle in holomap_cache))
+				holomap_cache[shuttle] = image('icons/holomaps/holomap_markers_32x32.dmi', "skipjack")
+		var/image/I = holomap_cache[shuttle]
 		I.pixel_x = (marker_location.x - HOLOMAP_MAGIC_NUMBER) * PIXEL_MULTIPLIER
 		I.pixel_y = (marker_location.y - HOLOMAP_MAGIC_NUMBER) * PIXEL_MULTIPLIER
 		I.plane = HUD_PLANE

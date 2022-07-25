@@ -10,13 +10,17 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	visible_message("<b>[src]</b> beeps, \"[text]\'")
 
 
-ADD_TO_GLOBAL_LIST(/obj/machinery/computer/vox_stealth, holomap_landmarks)
+//ADD_TO_GLOBAL_LIST(/obj/machinery/computer/vox_stealth, SSholomaps.holomap_landmarks)
 /obj/machinery/computer/vox_stealth
 	name = "skipjack cloaking field terminal"
 	icon = 'icons/locations/shuttles/vox_pc.dmi'
 	icon_state = "vox_invs"
 	state_broken_preset = "tcbossb"
 	state_nopower_preset = "tcboss0"
+
+/obj/machinery/computer/vox_stealth/atom_init()
+	. = ..()
+	SSholomaps.holomap_landmarks += src
 
 /obj/machinery/computer/vox_stealth/attackby(obj/item/I, mob/user)
 	return attack_hand(user)
