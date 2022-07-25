@@ -25,7 +25,7 @@
 		/datum/stack_recipe,\
 		/datum/events,\
 		/atom/movable/screen/buildmode,\
-		/datum/controller/subsystem/junkyard/,\
+		/datum/controller/subsystem/junkyard,\
 		/datum/tgui_list_input,\
 		/datum/tgui_modal,\
 	)
