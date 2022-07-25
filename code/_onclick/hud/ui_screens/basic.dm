@@ -99,7 +99,7 @@
 			mob_mask.Scale(mob_mask.Width() * world.icon_size / mob_mask.Height(), world.icon_size)
 		else
 			mob_mask.Scale(world.icon_size, mob_mask.Height() * world.icon_size / mob_mask.Width())
-			
+
 	add_filter("mob_shape_mask", 1, alpha_mask_filter(icon = mob_mask))
 	add_filter("inset_drop_shadow", 2, drop_shadow_filter(size = -1))
 
@@ -468,3 +468,14 @@
 /atom/movable/screen/intent/harm
 	name = INTENT_HARM
 	index = 4
+/*// Holomap
+/atom/movable/screen/holomap
+	holomap_obj = new /atom/movable/screen/holomap()
+	holomap_obj.name = "holomap"
+	holomap_obj.icon = null
+	holomap_obj.icon_state = ""
+	holomap_obj.screen_loc = ui_holomap
+	holomap_obj.plane = HUD_PLANE
+	holomap_obj.layer = HUD_LAYER
+	holomap_obj.color = ui_color
+	holomap_obj.mouse_opacity = MOUSE_OPACITY_TRANSPARENT*/
