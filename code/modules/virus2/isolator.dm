@@ -14,7 +14,7 @@
 	var/datum/disease2/disease/virus2 = null
 	var/datum/data/record/entry = null
 	var/obj/item/weapon/reagent_containers/syringe/sample = null
-	required_skills = list(/datum/skill/chemistry/trained, /datum/skill/research/trained, /datum/skill/medical/pro)
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_PRO)
 
 /obj/machinery/disease2/isolator/update_icon()
 	if (stat & (BROKEN|NOPOWER))

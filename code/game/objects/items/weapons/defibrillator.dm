@@ -328,7 +328,7 @@
 
 // This proc is used so that we can return out of the revive process while ensuring that busy and update_icon() are handled
 /obj/item/weapon/shockpaddles/proc/try_revive(mob/living/carbon/human/H, mob/user)
-	if(!handle_fumbling(user, H, SKILL_TASK_DIFFICULT, list(/datum/skill/medical/trained), text_target = src))
+	if(!handle_fumbling(user, H, SKILL_TASK_DIFFICULT, list(/datum/skill/medical = SKILL_LEVEL_TRAINED), text_target = src))
 		return
 	//beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 	user.visible_message("<span class='warning'>\The [user] begins to place [src] on [H]'s chest.</span>", "<span class='warning'>You begin to place [src] on [H]'s chest...</span>")
@@ -419,6 +419,7 @@
 		if(F)
 			F.electrocute_act(150)
 		else
+			user.Stun(6)
 			user.Weaken(6)
 
 	make_announcement("pings, \"Defibrillation successful.\"")

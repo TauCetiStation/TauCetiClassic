@@ -21,7 +21,7 @@
 	var/datum/disease2/effectholder/selected = null
 
 	var/working = 0
-	required_skills = list(/datum/skill/chemistry/trained, /datum/skill/research/trained, /datum/skill/medical/pro)
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_PRO)
 
 /obj/machinery/disease2/incubator/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/syringe))

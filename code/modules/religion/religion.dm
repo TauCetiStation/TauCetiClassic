@@ -613,7 +613,7 @@
 	RegisterSignal(R, list(COMSIG_REAGENT_REACTION_TURF), .proc/holy_reagent_react_turf)
 
 /datum/religion/proc/holy_reagent_react_turf(datum/source, turf/T, volume)
-	if(!istype(T, /turf/simulated/floor))
+	if(!isfloorturf(T))
 		return
 
 	add_holy_turf(T, volume)

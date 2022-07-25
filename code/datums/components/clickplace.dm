@@ -188,6 +188,7 @@
 		return TRUE
 
 	if(prob(15))
+		victim.Stun(2)
 		victim.Weaken(5)
 	victim.apply_damage(8, def_zone = BP_HEAD)
 	victim.visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [A]!</span>")
@@ -218,6 +219,7 @@
 	if(G.state >= GRAB_AGGRESSIVE)
 		INVOKE_ASYNC(victim, /atom/movable.proc/do_simple_move_animation, A.loc)
 		victim.forceMove(A.loc)
+		victim.Stun(2)
 		victim.Weaken(5)
 
 		victim.log_combat(assailant, "laid on [A]")

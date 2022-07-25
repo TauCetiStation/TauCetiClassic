@@ -294,7 +294,6 @@
 	update_hair()
 
 	ADD_TRAIT(src, TRAIT_SOULSTONE_IMMUNE, GENERIC_TRAIT)
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "homunculus", /datum/mood_event/homunculus)
 
 /datum/religion_rites/instant/cult/create_slave
 	name = "Создание Гомункула"

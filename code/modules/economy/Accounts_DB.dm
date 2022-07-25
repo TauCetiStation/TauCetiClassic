@@ -12,6 +12,7 @@
 	var/obj/item/weapon/card/id/held_card
 	var/datum/money_account/detailed_account_view
 	var/creating_new_account = 0
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/account_database/proc/get_access_level()
 	if (!held_card)

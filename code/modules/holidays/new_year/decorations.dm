@@ -16,7 +16,7 @@
 /obj/item/decoration/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(istype(target,/turf/simulated/wall))
+	if(iswallturf(target))
 		usr.remove_from_mob(src)
 		forceMove(target)
 

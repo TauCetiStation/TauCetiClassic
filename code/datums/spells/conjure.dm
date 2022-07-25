@@ -159,4 +159,5 @@
 	if(!volume)
 		volume = 1
 	if(volume > 5)
+		M.Stun(2)
 		M.Weaken(4)

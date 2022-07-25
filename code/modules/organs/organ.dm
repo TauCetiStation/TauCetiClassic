@@ -1,7 +1,8 @@
-/mob/living/carbon/human/var/list/obj/item/organ/external/bodyparts = list()
-/mob/living/carbon/human/var/list/obj/item/organ/external/bodyparts_by_name = list()
-/mob/living/carbon/human/var/list/obj/item/organ/internal/organs = list()
-/mob/living/carbon/human/var/list/obj/item/organ/internal/organs_by_name = list()
+/mob/living/carbon/human
+	var/list/obj/item/organ/external/bodyparts = list()
+	var/list/obj/item/organ/external/bodyparts_by_name = list()
+	var/list/obj/item/organ/internal/organs = list()
+	var/list/obj/item/organ/internal/organs_by_name = list()
 
 /obj/item/organ
 	name = "organ"
@@ -196,6 +197,7 @@
 					crawl()
 				else
 					emote("collapse")
+					Stun(5)
 					Weaken(5)
 
 			var/has_arm = FALSE
@@ -205,6 +207,7 @@
 					has_arm = TRUE
 					break
 			if(!has_arm) //need atleast one hand to crawl
+				Stun(5)
 				Weaken(5)
 			return
 
@@ -219,3 +222,4 @@
 					emote("scream")
 			emote("collapse")
 		Weaken(5) //can't emote while weakened, apparently.
+		Stun(5)
