@@ -181,6 +181,7 @@
 	)
 
 /datum/skillset/cyborg
+	name = "Cyborg"
 	initial_skills = list(
 		/datum/skill/police = SKILL_LEVEL_MASTER,
 		/datum/skill/firearms = SKILL_LEVEL_MASTER,
