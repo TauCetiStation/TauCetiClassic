@@ -17,6 +17,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 	state_broken_preset = "commb"
 	state_nopower_preset = "comm0"
 	circuit = /obj/item/weapon/circuitboard/mine_sci_shuttle
+	unacidable = 1
 
 	var/lastMove = 0
 

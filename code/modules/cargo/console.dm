@@ -8,6 +8,7 @@
 	light_color = "#b88b2e"
 	req_access = list(access_cargo)
 	circuit = /obj/item/weapon/circuitboard/computer/cargo
+	unacidable = 1
 	var/requestonly = FALSE
 	var/contraband = FALSE
 	var/hacked = FALSE
