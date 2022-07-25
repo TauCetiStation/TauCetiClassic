@@ -1,8 +1,3 @@
-/* protected types */
-
-#define VE_PROTECTED_TYPES config.sandbox ? VE_PROTECTED_TYPES_STAT + /client : VE_PROTECTED_TYPES_STAT
-
-
 // to prevent:
 //  admin permissions escalation;
 //  savefiles corruption;
@@ -10,6 +5,10 @@
 //  inputs edit;
 //  callprocs throught VV;
 //  and edit of other things that admins better not touch;
+
+/* protected types */
+
+#define VE_PROTECTED_TYPES config.sandbox ? VE_PROTECTED_TYPES_STAT + /client : VE_PROTECTED_TYPES_STAT
 
 #define VE_PROTECTED_TYPES_STAT list(\
 		/datum/admins,\
