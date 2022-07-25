@@ -38,15 +38,12 @@ var/global/list/available_ui_styles = list(
 	var/list/atom/movable/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
 	///Assoc list of controller groups, associated with key string group name with value of the plane master controller ref
 	var/list/atom/movable/plane_master_controller/plane_master_controllers = list()
-	var/atom/movable/screen/holomap/holomap_obj
 
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 	var/ui_color
 	var/ui_alpha
 
-/atom/movable/screen/holomap
-	name = "Holomap"
 /datum/hud/New(mob/owner)
 	mymob = owner
 

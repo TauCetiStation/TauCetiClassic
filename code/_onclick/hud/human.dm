@@ -26,17 +26,9 @@
 		/atom/movable/screen/health,
 		/atom/movable/screen/health_doll,
 		/atom/movable/screen/nutrition,
+		/atom/movable/screen/holomap,
 	))
 
-	holomap_obj = new /atom/movable/screen/holomap()
-	holomap_obj.name = "holomap"
-	holomap_obj.icon = null
-	holomap_obj.icon_state = ""
-	holomap_obj.screen_loc = ui_holomap
-	holomap_obj.plane = HUD_PLANE
-	holomap_obj.layer = HUD_LAYER
-	holomap_obj.color = ui_color
-	holomap_obj.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	leap_icon?.add_to_hud(hud)
 

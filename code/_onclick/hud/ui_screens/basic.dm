@@ -468,14 +468,19 @@
 /atom/movable/screen/intent/harm
 	name = INTENT_HARM
 	index = 4
-/*// Holomap
+// Holomap
 /atom/movable/screen/holomap
-	holomap_obj = new /atom/movable/screen/holomap()
-	holomap_obj.name = "holomap"
-	holomap_obj.icon = null
-	holomap_obj.icon_state = ""
-	holomap_obj.screen_loc = ui_holomap
-	holomap_obj.plane = HUD_PLANE
-	holomap_obj.layer = HUD_LAYER
-	holomap_obj.color = ui_color
-	holomap_obj.mouse_opacity = MOUSE_OPACITY_TRANSPARENT*/
+	//= new /atom/movable/screen/holomap()
+	name = "holomap"
+	icon = null
+	icon_state = ""
+	screen_loc = ui_holomap
+	plane = HUD_PLANE
+	layer = HUD_LAYER
+	//color = ui_color
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/atom/movable/screen/holomap/add_to_hud(datum/hud/hud)
+	..()
+	update_icon(hud.mymob)
+	hud.mymob.holomap_obj = src

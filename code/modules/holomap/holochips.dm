@@ -25,7 +25,7 @@
 		if(!global.holomap_cache[shuttle])
 			continue
 		var/image/I = global.holomap_cache[shuttle]
-		I.loc = activator.hud_used.holomap_obj
+		I.loc = activator.holomap_obj//hud_used.
 		holomap_images += I
 
 /obj/item/holochip/ert
@@ -51,5 +51,5 @@
 		if(!global.holomap_cache[shuttle])
 			continue
 		var/image/I = global.holomap_cache[shuttle]
-		I.loc = activator.hud_used.holomap_obj
+		I.loc = activator.holomap_obj//hud_used.
 		holomap_images += I

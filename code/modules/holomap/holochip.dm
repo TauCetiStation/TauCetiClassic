@@ -58,13 +58,13 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 	holomap_base = default_holomap
 	if(color_filter)
 		holomap_base.color = color_filter
-	activator.hud_used.holomap_obj.add_overlay(holomap_base)
+	activator.holomap_obj.add_overlay(holomap_base)//hud_used.
 	START_PROCESSING(SSholomaps, src)
 
 /obj/item/holochip/proc/deactivate_holomap()
 	if(!activator)
 		return
-	activator.hud_used.holomap_obj.cut_overlay(holomap_base)
+	activator.holomap_obj.cut_overlay(holomap_base)//hud_used.
 	if(length(holomap_images) && activator.client)
 		activator.client.images -= holomap_images
 		QDEL_LIST(holomap_images)
@@ -88,7 +88,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 		if(!global.holomap_cache[HC])
 			continue
 		var/image/I = global.holomap_cache[HC]
-		I.loc = activator.hud_used.holomap_obj
+		I.loc = activator.holomap_obj//hud_used.
 		holomap_images += I
 		animate(I ,alpha = 255, time = 8, loop = -1, easing = SINE_EASING)
 		animate(I ,alpha = 0, time = 5, easing = SINE_EASING)
@@ -104,7 +104,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 /obj/item/holochip/proc/handle_own_marker()
 	if(!self_marker)   // Dunno why but it happens in runtime
 		instantiate_self_marker()
-	self_marker.loc = activator.hud_used.holomap_obj
+	self_marker.loc = activator.holomap_obj//hud_used.
 	var/turf/src_turf = get_turf(src)
 	self_marker.pixel_x = (src_turf.x - magic_number_self) * PIXEL_MULTIPLIER
 	self_marker.pixel_y = (src_turf.y - magic_number_self) * PIXEL_MULTIPLIER
