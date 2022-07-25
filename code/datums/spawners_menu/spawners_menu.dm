@@ -24,6 +24,19 @@
 
 /datum/spawners_menu/tgui_data(mob/user)
 	var/list/data = list()
+
+	var/askRole = user?.client?.be_ghost_candidate
+	data["askForRole"] = askRole ? 1 : 0
+
+	data["ignoredRoles"] = list()
+	var/list/ignored = user?.client?.prefs?.ignore_question
+	for(var/role in full_ignore_question)
+		if(role)
+			var/list/this = list()
+			this["name"] = role
+			this["ignored"] = (role in ignored)
+			data["ignoredRoles"] |= list(this)
+
 	data["spawners"] = list()
 	for(var/spawner_id in global.spawners)
 		var/list/this = list()
@@ -50,6 +63,7 @@
 		this["time_left"] = min_time != INFINITY ? min_time : null
 
 		data["spawners"] += list(this)
+
 	return data
 
 /datum/spawners_menu/tgui_act(action, params, datum/tgui/ui)
@@ -61,17 +75,19 @@
 		to_chat(owner, "<span class='notice'>Вы уже выбрали роль!</span>")
 		return
 
-	var/spawner_id = params["type"]
-	if(!(spawner_id in global.spawners))
-		return
+	var/datum/spawner/spawner
+	if("type" in params)
+		var/spawner_id = params["type"]
+		if(!(spawner_id in global.spawners))
+			return
 
-	var/list/spawnerlist = global.spawners[spawner_id]
-	if(!spawnerlist.len)
-		return
+		var/list/spawnerlist = global.spawners[spawner_id]
+		if(!spawnerlist.len)
+			return
 
-	var/datum/spawner/spawner = pick(spawnerlist)
-	if(!spawner)
-		return
+		spawner = pick(spawnerlist)
+		if(!spawner)
+			return
 
 	switch(action)
 		if("jump")
@@ -84,4 +100,17 @@
 			return TRUE
 		if("toggle")
 			spawner.toggleChoice(owner)
+			return TRUE
+		if("askForRole")
+			if(owner?.client)
+				owner.client.be_ghost_candidate = !owner.client.be_ghost_candidate
+			return TRUE
+		if("unignore")
+			var/role = params["role"]
+			var/ignore = params["ignore"]
+			if(role && (ignore != null) && owner?.client?.prefs?.ignore_question)
+				if(ignore)
+					owner.client.prefs.ignore_question |= role
+				else
+					owner.client.prefs.ignore_question -= role
 			return TRUE

@@ -1,14 +1,61 @@
 import { toTitleCase } from 'common/string';
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section, Flex, TimeDisplay } from '../components';
+import { Box, Button, Collapsible, LabeledList, Section, Flex, TimeDisplay } from '../components';
 import { Window } from '../layouts';
 
 export const SpawnersMenu = (props, context) => {
   const { act, data } = useBackend(context);
-  const spawners = data.spawners;
+  const {
+    askForRole,
+    ignoredRoles,
+    spawners,
+  } = data;
   return (
     <Window title="Spawner Menu" width={700} height={525}>
       <Window.Content scrollable>
+        <Section>
+          <Collapsible title="Настройка ролей">
+            <Box width="300px">
+              <LabeledList>
+                <LabeledList.Item label="Предлагать роли" buttons={
+                  <Button
+                    content={askForRole ? 'Да' : 'Нет'}
+                    selected={askForRole}
+                    color={askForRole ? 'good' : 'bad'}
+                    onClick={() => act('askForRole')}
+                  />
+                } />
+                <LabeledList.Item label="" buttons={
+                  <Box height="20px" />
+                } />
+                {ignoredRoles.length && ignoredRoles.map(role => (
+                  <LabeledList.Item key={role.name} label={toTitleCase(role.name)} buttons={
+                    <>
+                      <Button
+                        content="Спрашивать"
+                        selected={!role.ignored}
+                        onClick={() =>
+                          act('unignore', {
+                            role: role.name,
+                            ignore: 0,
+                          })}
+                      />
+                      <Button
+                        content="Игнорировать"
+                        selected={role.ignored}
+                        onClick={() =>
+                          act('unignore', {
+                            role: role.name,
+                            ignore: 1,
+                          })}
+                      />
+                    </>
+                  } />
+                ))}
+              </LabeledList>
+            </Box>
+          </Collapsible>
+        </Section>
         <Flex direction="column">
           {!spawners.length && (
             <Flex.Item fontSize="14px" bold>

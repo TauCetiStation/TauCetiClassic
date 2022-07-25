@@ -613,6 +613,7 @@
 
 // Procs for grabbing players.
 
+/client/var/be_ghost_candidate = TRUE
 // grab random ghost from candidates after poll_time
 /proc/pollGhostCandidates(Question, /* Message to ghosts */ \
                           role_name, /* Short text of role name */ \
@@ -626,6 +627,8 @@
 
 	for(var/mob/dead/observer/O as anything in observer_list)
 		if(check_antaghud && O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
+			continue
+		if(!O.client || !O.client.be_ghost_candidate)
 			continue
 		candidates |= O
 
