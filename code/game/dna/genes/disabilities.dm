@@ -25,7 +25,7 @@
 	var/deactivation_message=""
 
 /datum/dna/gene/disability/can_activate(mob/M,flags)
-	return 1 // Always set!
+	return TRUE // Always set!
 
 /datum/dna/gene/disability/activate(mob/M, connected, flags)
 	if(mutation && !(mutation in M.mutations))

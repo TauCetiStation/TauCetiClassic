@@ -16,7 +16,7 @@
 				return OBJECTIVE_WIN
 
 /datum/objective/abductee
-	completed = 1
+	completed = OBJECTIVE_WIN
 
 /datum/objective/abductee/steal
 	explanation_text = "Steal all"

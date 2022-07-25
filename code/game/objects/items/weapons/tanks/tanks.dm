@@ -19,7 +19,6 @@
 	var/integrity = 3
 	var/volume = 70
 	var/internal_switch = 0
-	var/manipulated_by = null		//Used by _onclick/hud/screen_objects.dm internals to determine if someone has messed with our tank or not.
 						//If they have and we haven't scanned it with the PDA or gas analyzer then we might just breath whatever they put in it.
 /obj/item/weapon/tank/atom_init()
 	. = ..()
@@ -159,10 +158,8 @@
 				var/mob/living/carbon/C = loc
 				if(C.internal == src)
 					C.internal = null
-					C.internals.icon_state = "internal0"
+					C.internals?.update_icon(C)
 					to_chat(usr, "<span class='notice'>You close the tank release valve.</span>")
-					if (C.internals)
-						C.internals.icon_state = "internal0"
 					internalsound = 'sound/misc/internaloff.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
@@ -173,8 +170,7 @@
 					if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
 						C.internal = src
 						to_chat(usr, "<span class='notice'>You open \the [src] valve.</span>")
-						if (C.internals)
-							C.internals.icon_state = "internal1"
+						C.internals?.update_icon(C)
 						internalsound = 'sound/misc/internalon.ogg'
 						if(ishuman(C)) // Because only human can wear a spacesuit
 							var/mob/living/carbon/human/H = C

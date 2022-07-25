@@ -259,9 +259,9 @@
 						H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK)
 		else
 			if(l_pocket_back)
-				H.equip_to_slot_or_del(new l_pocket_back(H), SLOT_L_STORE)
+				H.equip_or_collect(new l_pocket_back(H), SLOT_L_STORE)
 			if(r_pocket_back)
-				H.equip_to_slot_or_del(new r_pocket_back(H), SLOT_R_STORE)
+				H.equip_or_collect(new r_pocket_back(H), SLOT_R_STORE)
 			if(l_hand_back)
 				H.put_in_l_hand(new l_hand_back(H))
 			if(r_hand_back)
@@ -273,8 +273,7 @@
 		apply_fingerprints(H)
 		if(internals_slot)
 			H.internal = H.get_equipped_item(internals_slot)
-			if(H.internals)
-				H.internals.icon_state = "internal1"
+			H.internals?.update_icon(H)
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/weapon/implant/I = new implant_type(H)

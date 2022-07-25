@@ -24,12 +24,12 @@
 	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>",
 	 "<span class='notice'>We assimilate the [weapon_name_simple] from our body.</span>",
 	 "<span class='warning'>You hear organic matter ripping and tearing!</span>")
-	return ..(user, target)
+	..(user, target)
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/user)
 	if(!user.unEquip(user.get_active_hand()))
 		to_chat(user, "The [user.get_active_hand()] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!")
-		return
+		return FALSE
 	var/obj/item/W = new weapon_type(user)
 	user.put_in_active_hand(W)
 	return W
@@ -65,7 +65,7 @@
 		H.update_hair()
 
 		if(blood_on_castoff)
-			var/turf/simulated/T = get_turf(H)
+			var/turf/T = get_turf(H)
 			if(istype(T))
 				T.add_blood(H) //So real blood decals
 				playsound(H, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER) //So real sounds
@@ -78,10 +78,10 @@
 /obj/effect/proc_holder/changeling/suit/sting_action(mob/living/carbon/human/user)
 	if(!user.unEquip(user.wear_suit))
 		to_chat(user, "\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!")
-		return
+		return FALSE
 	if(!user.unEquip(user.head))
 		to_chat(user, "\the [user.head] is stuck on your head, you cannot grow a [helmet_name_simple] over it!")
-		return
+		return FALSE
 
 	user.drop_from_inventory(user.head)
 	user.drop_from_inventory(user.wear_suit)
@@ -91,7 +91,7 @@
 
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	changeling.chem_recharge_slowdown += recharge_slowdown
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/weapon/arm_blade
 	name = "Arm Blade"
@@ -142,11 +142,7 @@
 	else if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = target
 
-		if(!A.requiresID() || A.allowed(user)) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
-			return
-
-		if(A.hasPower())
-			to_chat(user, "<span class='notice'>The airlock's motors resist our efforts to force it.</span>")
+		if(A.hasPower() && (!A.requiresID() || A.allowed(user))) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
 			return
 
 		else if(A.locked)
@@ -154,10 +150,16 @@
 			return
 
 		else
+			if(user.is_busy())
+				return
+			if(!A.hasPower())
+				A.open(1)
+				return FALSE
 			if(prob(10))
 				user.say("Heeeeeeeeeerrre's Johnny!") // ^^
-			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
-			A.open(1)
+			user.visible_message("<span class='warning'>[user] start forces the door to open with \his [src]!</span>", "<span class='warning'>We attempt to force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
+			if(do_after(user, 70, target = A))
+				A.open(1)
 
 /obj/effect/proc_holder/changeling/weapon/shield
 	name = "Organic Shield"
@@ -284,7 +286,6 @@
 	flags = DROPDEL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 1
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 35, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0

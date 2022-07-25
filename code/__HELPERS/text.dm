@@ -23,9 +23,6 @@
 
 // You need this for every user text input()
 /proc/sanitize(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE, ascii_only = FALSE)
-	if(!input)
-		return
-
 	if(max_length)
 		input = copytext_char(input, 1, max_length)
 
@@ -74,7 +71,7 @@
 //Filters out undesirable characters from character names
 //todo: rewrite this
 /proc/sanitize_name(input, max_length = MAX_NAME_LEN, allow_numbers = 0, force_first_letter_uppercase = TRUE)
-	if(!input || length_char(input) > max_length)
+	if(length_char(input) > max_length)
 		return //Rejects the input if it is null or if it is longer then the max length allowed
 
 	var/number_of_alphanumeric	= 0
@@ -191,6 +188,11 @@
 		t = replacetext(t, char, repl_chars[char])
 	return t
 
+/proc/replaceEx_characters(t, list/repl_chars)
+	for(var/char in repl_chars)
+		t = replacetextEx(t, char, repl_chars[char])
+	return t
+
 /proc/random_string(length, list/characters)
 	. = ""
 	for (var/i in 1 to length)
@@ -257,10 +259,22 @@
 
 	return trim(result)
 
-//Returns a string with the first element of the string capitalized.
+//Returns a string with the first element of the string un- or capitalized.
 /proc/capitalize(text)
-	if(text)
-		text = uppertext(text[1]) + copytext(text, 1 + length(text[1]))
+	return uppertext(text[1]) + copytext(text, 1 + length(text[1]))
+
+/proc/uncapitalize(text)
+	return lowertext(text[1]) + copytext(text, 1 + length(text[1]))
+
+//Returns a string with a period at the end.
+/proc/add_period(text)
+	var/static/list/punctuation_marks_final = list(".", "?", "!", ";")
+	var/ending = copytext(text, -1)
+	if(!(ending in punctuation_marks_final))
+		if(ending == ",")
+			text = splicetext(text, length(text), 0, ".")
+		else
+			text += "."
 	return text
 
 //Returns a string with the first element of the every word of the string capitalized.
@@ -275,20 +289,9 @@
 	var/static/regex/non_ascii_regex = regex(@"[^\x00-\x7F]+", "g")
 	return non_ascii_regex.Replace(text, "")
 
-/proc/strip_html_simple(t, limit=MAX_MESSAGE_LEN)
-	var/list/strip_chars = list("<",">")
-	t = copytext(t,1,limit)
-	for(var/char in strip_chars)
-		var/index = findtext(t, char)
-		while(index)
-			t = copytext(t, 1, index) + copytext(t, index+1)
-			index = findtext(t, char)
-	return t
 //This proc strips html properly, remove < > and all text between
 //for complete text sanitizing should be used sanitize()
 /proc/strip_html_properly(input)
-	if(!input)
-		return
 	var/opentag = 1 //These store the position of < and > respectively.
 	var/closetag = 1
 	while(1)
@@ -465,6 +468,3 @@
 			return two
 		else
 			return five
-
-/// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
-#define MAPTEXT(text) {"<span style='font-family: 'Small Fonts'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1;'>[##text]</span>"}

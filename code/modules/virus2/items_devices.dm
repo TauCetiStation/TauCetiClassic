@@ -9,12 +9,13 @@
 	flags = CONDUCT
 
 /obj/item/device/antibody_scanner/attack(mob/M, mob/user)
-	if(!istype(M,/mob/living/carbon))
+	if(!iscarbon(M))
 		report("Scan aborted: Incompatible target.", user)
 		return
-
+	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, list(/datum/skill/medical = SKILL_LEVEL_PRO, /datum/skill/research = SKILL_LEVEL_NOVICE), text_target = src))
+		return
 	var/mob/living/carbon/C = M
-	if (istype(C,/mob/living/carbon/human))
+	if (ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(H.species && H.species.flags[NO_BLOOD])
 			report("Scan aborted: The target does not have blood.", user)

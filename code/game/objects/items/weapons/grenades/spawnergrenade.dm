@@ -38,4 +38,4 @@
 
 /obj/item/weapon/grenade/spawnergrenade/syndiesoap
 	name = "Mister Scrubby"
-	spawner_type = /obj/item/weapon/soap/syndie
+	spawner_type = /obj/item/weapon/reagent_containers/food/snacks/soap/syndie

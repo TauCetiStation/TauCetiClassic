@@ -3,22 +3,20 @@
 	desc = "A neosilk clip-on tie."
 	icon = 'icons/obj/clothing/accessory.dmi'
 	icon_state = "bluetie"
-	item_state = "" // no inhands
-	item_color = "bluetie"
 	slot_flags = SLOT_FLAGS_TIE
 	w_class = SIZE_TINY
 
 	var/slot = "decor"
-	var/obj/item/clothing/under/has_suit = null // the suit the tie may be attached to
+	var/obj/item/clothing/has_suit = null // the suit the accessory may be attached to
 	var/image/inv_overlay = null                // overlay used when attached to clothing.
 	var/layer_priority = 0                      // so things such as medals won't be drawn under webbings or holsters on mob, still problem with inside inventory.
 
 /obj/item/clothing/accessory/atom_init()
 	. = ..()
-	inv_overlay = image("icon" = 'icons/obj/clothing/accessory_overlay.dmi', "icon_state" = "[item_color ? "[item_color]" : "[icon_state]"]")
+	inv_overlay = image("icon" = 'icons/obj/clothing/accessory_overlay.dmi', "icon_state" = icon_state)
 
 //when user attached an accessory to S
-/obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/under/S, mob/user, silent)
+/obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/S, mob/user, silent)
 	if(!istype(S))
 		return
 	has_suit = S
@@ -58,29 +56,24 @@
 /obj/item/clothing/accessory/tie/blue
 	name = "blue tie"
 	icon_state = "bluetie"
-	item_color = "bluetie"
 
 /obj/item/clothing/accessory/tie/red
 	name = "red tie"
 	icon_state = "redtie"
-	item_color = "redtie"
 
 /obj/item/clothing/accessory/tie/black
 	name = "black tie"
 	icon_state = "blacktie"
-	item_color = "blacktie"
 
 /obj/item/clothing/accessory/tie/horrible
 	name = "horrible tie"
 	desc = "A neosilk clip-on tie. This one is disgusting."
 	icon_state = "horribletie"
-	item_color = "horribletie"
 
 /obj/item/clothing/accessory/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
 	icon_state = "stethoscope"
-	item_color = "stethoscope"
 	layer_priority = 0.1
 	m_amt = 150
 	g_amt = 20
@@ -158,25 +151,22 @@
 	return ..(M, user)
 
 /obj/item/clothing/accessory/bronze_cross
-    name = "bronze cross"
-    desc = "That's a little bronze cross for wearing under the clothes."
-    icon_state = "bronze_cross"
-    item_state = "bronze_cross"
-    item_color = "bronze_cross"
+	name = "bronze cross"
+	desc = "That's a little bronze cross for wearing under the clothes."
+	icon_state = "bronze_cross"
+	item_state = "bronze_cross"
 
 /obj/item/clothing/accessory/metal_cross
-    name = "metal cross"
-    desc = "That's a little metal cross for wearing under the clothes."
-    icon_state = "metal_cross"
-    item_state = "metal_cross"
-    item_color = "metal_cross"
+	name = "metal cross"
+	desc = "That's a little metal cross for wearing under the clothes."
+	icon_state = "metal_cross"
+	item_state = "metal_cross"
 
 //Medals
 /obj/item/clothing/accessory/medal
 	name = "bronze medal"
 	desc = "A bronze medal."
 	icon_state = "bronze"
-	item_color = "bronze"
 	layer_priority = 0.1
 
 /obj/item/clothing/accessory/medal/conduct
@@ -196,7 +186,6 @@
 	name = "silver medal"
 	desc = "A silver medal."
 	icon_state = "silver"
-	item_color = "silver"
 
 /obj/item/clothing/accessory/medal/silver/valor
 	name = "medal of valor"
@@ -210,7 +199,6 @@
 	name = "gold medal"
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
-	item_color = "gold"
 
 /obj/item/clothing/accessory/medal/gold/captain
 	name = "medal of captaincy"
@@ -231,7 +219,6 @@
 	name = "holobadge"
 	desc = "This glowing blue badge marks the holder as THE LAW. Also has an in-built camera."
 	icon_state = "holobadge"
-	item_color = "holobadge"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_TIE
 
 	var/emagged = FALSE // Emagging removes Sec check.
@@ -240,7 +227,6 @@
 
 /obj/item/clothing/accessory/holobadge/cord
 	icon_state = "holobadge-cord"
-	item_color = "holobadge-cord"
 	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
 
 /obj/item/clothing/accessory/holobadge/attack_self(mob/user)
@@ -302,7 +288,7 @@
 		camera.status = FALSE
 	return TRUE
 
-/obj/item/clothing/accessory/holobadge/on_attached(obj/item/clothing/under/S, mob/user, silent)
+/obj/item/clothing/accessory/holobadge/on_attached(obj/item/clothing/S, mob/user, silent)
 	..()
 	if(camera && !emagged)
 		camera.status = TRUE

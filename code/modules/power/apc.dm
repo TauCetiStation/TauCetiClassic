@@ -137,6 +137,7 @@
 	var/static/list/status_overlays_equipment
 	var/static/list/status_overlays_lighting
 	var/static/list/status_overlays_environ
+	required_skills = list()
 
 
 /obj/machinery/power/apc/atom_init(mapload, ndir, building = 0)
@@ -210,7 +211,7 @@
 		src.area = A
 		name = "[area.name] APC"
 	else
-		src.area = get_area_name(areastring)
+		src.area = get_area_by_name(areastring)
 		name = "[area.name] APC"
 	area.apc = src
 	update_icon()
@@ -638,7 +639,7 @@
 			update_icon()
 
 	else if(opened == APC_COVER_CLOSED && wiresexposed && is_wire_tool(W))
-		if(istype(user, /mob/living/silicon))
+		if(issilicon(user))
 			return wires.interact(user)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
@@ -954,7 +955,6 @@
 	var/lowest_treshold = 3//lowest treshold in hacked apcs for an announcement to start
 	var/datum/faction/malf_silicons/malf_ai = find_faction_by_type(/datum/faction/malf_silicons)
 	if(malf_ai && malf_ai.intercept_hacked)
-		hacked_amount += malf_ai.intercept_apcs
 		lowest_treshold += malf_ai.intercept_apcs
 	switch (SSticker.Malf_announce_stage)
 		if(0)
@@ -1198,22 +1198,22 @@
 
 /obj/machinery/power/apc/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			//set_broken() //now Destroy() do what we need
 			if(cell)
-				cell.ex_act(1.0) // more lags woohoo
+				cell.ex_act(EXPLODE_DEVASTATE) // more lags woohoo
 			qdel(src)
 			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				set_broken()
 				if(cell && prob(50))
-					cell.ex_act(2.0)
-		if(3.0)
+					cell.ex_act(EXPLODE_HEAVY)
+		if(EXPLODE_LIGHT)
 			if(prob(25))
 				set_broken()
 				if(cell && prob(25))
-					cell.ex_act(3.0)
+					cell.ex_act(EXPLODE_LIGHT)
 
 /obj/machinery/power/apc/blob_act()
 	if(prob(75))

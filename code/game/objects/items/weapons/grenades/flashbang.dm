@@ -48,14 +48,14 @@
 				ear_safety += 2
 			if(HULK in M.mutations)
 				ear_safety += 1
-			if(istype(H.head, /obj/item/clothing/head/helmet))
-				ear_safety += 1
+			if(H.head)
+				var/obj/item/clothing/C = H.head
+				if(istype(C) && C.flashbang_protection)
+					ear_safety += 1
 
 //Flashing everyone
 	if(eye_safety < 1)
 		M.flash_eyes()
-		M.Stun(2)
-		M.Weaken(10)
 
 //Now applying sound
 	var/distance = get_dist(M, T)

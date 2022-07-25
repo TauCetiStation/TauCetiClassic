@@ -2,7 +2,6 @@
 
 //Transformation proc stuff
 #define TR_KEEPITEMS    (1<<0)
-#define TR_KEEPVIRUS    (1<<1)
 #define TR_KEEPDAMAGE   (1<<2)
 #define TR_KEEPIMPLANTS (1<<3)
 /// changelings shouldn't edit the DNA's SE when turning into a monkey
@@ -12,10 +11,10 @@
 #define TR_KEEPREAGENTS (1<<7)
 
 // What each index means:
-#define DNA_OFF_LOWERBOUND 0
-#define DNA_OFF_UPPERBOUND 1
-#define DNA_ON_LOWERBOUND  2
-#define DNA_ON_UPPERBOUND  3
+#define DNA_OFF_LOWERBOUND 1
+#define DNA_OFF_UPPERBOUND 2
+#define DNA_ON_LOWERBOUND  3
+#define DNA_ON_UPPERBOUND  4
 
 // Define block bounds (off-low,off-high,on-low,on-high)
 // Used in setupgame.dm
@@ -34,13 +33,14 @@
 #define DNA_UI_SKIN_R      8
 #define DNA_UI_SKIN_G      9
 #define DNA_UI_SKIN_B      10
-#define DNA_UI_EYES_R      11
-#define DNA_UI_EYES_G      12
-#define DNA_UI_EYES_B      13
-#define DNA_UI_GENDER      14
-#define DNA_UI_BEARD_STYLE 15
-#define DNA_UI_HAIR_STYLE  16
-#define DNA_UI_LENGTH      16 // Update this when you add something, or you WILL break shit.
+#define DNA_UI_HEIGHT      11
+#define DNA_UI_EYES_R      12
+#define DNA_UI_EYES_G      13
+#define DNA_UI_EYES_B      14
+#define DNA_UI_GENDER      15
+#define DNA_UI_BEARD_STYLE 16
+#define DNA_UI_HAIR_STYLE  17
+#define DNA_UI_LENGTH      17 // Update this when you add something, or you WILL break shit.
 
 #define DNA_SE_LENGTH 27
 #define DNA_UNIQUE_ENZYMES_LEN 32

@@ -29,7 +29,7 @@
 			sleep(40)
 
 	feedback_add_details("changeling_powers","CAM")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/digitalcamo/proc/HideFromAIHuds(mob/living/target)
 	for(var/mob/living/silicon/ai/AI in global.ai_list)

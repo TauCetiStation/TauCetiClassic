@@ -116,9 +116,13 @@ var/global/list/airlock_overlays = list()
 		else if(user.hallucination > 50 && prob(10) && !operating)
 			to_chat(user, "<span class='warning'><B>You feel a powerful shock course through your body!</B></span>")
 			user.halloss += 10
-			user.stunned += 10
+			user.AdjustStunned(10)
 			return
 	..(user)
+
+/obj/machinery/door/airlock/finish_crush_wedge_animation()
+	playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 50, FALSE, 3)
+	..()
 
 /obj/machinery/door/airlock/bumpopen(mob/living/simple_animal/user)
 	..(user)
@@ -245,6 +249,13 @@ var/global/list/airlock_overlays = list()
 		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate"
 	set_airlock_overlays(state)
+
+	if(underlays.len)
+		underlays.Cut()
+
+	if(wedged_item)
+		generate_wedge_overlay()
+
 	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/airlock/proc/set_airlock_overlays(state)
@@ -372,8 +383,8 @@ var/global/list/airlock_overlays = list()
 		old_filling_overlay = filling_overlay
 	if(lights_overlay != old_lights_overlay)
 		if(lights_overlay)
-			lights_overlay.layer = LIGHTING_LAYER + 1
 			lights_overlay.plane = ABOVE_LIGHTING_PLANE
+			lights_overlay.layer = ABOVE_LIGHTING_LAYER
 		cut_overlay(old_lights_overlay)
 		add_overlay(lights_overlay)
 		old_lights_overlay = lights_overlay
@@ -390,8 +401,8 @@ var/global/list/airlock_overlays = list()
 		old_weld_overlay = weld_overlay
 	if(sparks_overlay != old_sparks_overlay)
 		if(sparks_overlay)
-			sparks_overlay.layer = LIGHTING_LAYER + 1
 			sparks_overlay.plane = ABOVE_LIGHTING_PLANE
+			sparks_overlay.layer = ABOVE_LIGHTING_LAYER
 		cut_overlay(old_sparks_overlay)
 		add_overlay(sparks_overlay)
 		old_sparks_overlay = sparks_overlay
@@ -591,7 +602,7 @@ var/global/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (isElectrified())
-		if (istype(mover, /obj/item))
+		if (isitem(mover))
 			var/obj/item/i = mover
 			if (i.m_amt)
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -600,7 +611,7 @@ var/global/list/airlock_overlays = list()
 	return ..()
 
 /obj/machinery/door/airlock/attack_paw(mob/user)
-	if(istype(user, /mob/living/carbon/xenomorph/humanoid))
+	if(isxenoadult(user))
 		if(welded || locked)
 			to_chat(user, "<span class='warning'>The door is sealed, it cannot be pried open.</span>")
 			return
@@ -619,6 +630,7 @@ var/global/list/airlock_overlays = list()
 		H.attack_hulk(src)
 
 /obj/machinery/door/airlock/proc/door_rupture(mob/user)
+	take_out_wedged_item()
 	var/obj/structure/door_assembly/da = new assembly_type(loc)
 	da.anchored = FALSE
 	var/target = da.loc
@@ -676,7 +688,7 @@ var/global/list/airlock_overlays = list()
 		var/turf/target = user.loc
 		open()
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		if(istype(target,/turf/simulated/floor))
+		if(isfloorturf(target))
 			var/turf/simulated/floor/tile = target
 			tile.break_tile()
 		for(var/i in 1 to 2)
@@ -694,11 +706,12 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/attack_hand(mob/user)
 	if(wires.interact(user))
 		return
-	else
-		if(HULK in user.mutations)
-			hulk_break_reaction(user)
-			return
-		..()
+
+	if(HULK in user.mutations)
+		hulk_break_reaction(user)
+		return
+
+	return ..()
 
 
 /obj/machinery/door/airlock/Topic(href, href_list, no_window = 0)
@@ -925,9 +938,11 @@ var/global/list/airlock_overlays = list()
 	if(iswelder(C) && !(operating > 0))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.use(0, user))
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY , list(/datum/skill/engineering = SKILL_LEVEL_NOVICE), message_self = "<span class='notice'>You fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [W]... </span>"))
+				return
 			user.visible_message("[user] begins [welded? "unwelding":"welding"] [src]'s shutters with [W].",
 			                     "<span class='notice'>You begin [welded? "remove welding from":"welding"] [src]'s shutters with [W]...</span>")
-			if(W.use_tool(src, user, 30, volume = 100))
+			if(W.use_tool(src, user, SKILL_TASK_EASY, volume = 100))
 				welded = !welded
 				update_icon()
 				user.visible_message("[user] [welded ? "welds" : "unwelds"] [src]'s shutters with [W].",
@@ -943,7 +958,7 @@ var/global/list/airlock_overlays = list()
 		return attack_hand(user)
 	else if(ismultitool(C))
 		return attack_hand(user)
-	else if(istype(C, /obj/item/device/assembly/signaler))
+	else if(issignaler(C))
 		return attack_hand(user)
 	else if(istype(C, /obj/item/weapon/pai_cable))	// -- TLE
 		var/obj/item/weapon/pai_cable/cable = C
@@ -957,9 +972,10 @@ var/global/list/airlock_overlays = list()
 		if( beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
 			if(user.is_busy(src)) return
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
-			if(C.use_tool(src, user, 40, volume = 100))
+			if(C.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
 				to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 
+				take_out_wedged_item()
 				var/obj/structure/door_assembly/da = new assembly_type(loc)
 				da.anchored = TRUE
 				if(mineral)
@@ -1203,7 +1219,7 @@ var/global/list/airlock_overlays = list()
 
 /obj/structure/door_scrap/atom_init()
 	. = ..()
-	var/image/fire_overlay = image("icon"='icons/effects/effects.dmi', "icon_state"="s_fire", "layer" = (LIGHTING_LAYER + 1))
+	var/image/fire_overlay = image(icon = 'icons/effects/effects.dmi', icon_state = "s_fire", layer = ABOVE_LIGHTING_LAYER)
 	fire_overlay.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(fire_overlay)
 	START_PROCESSING(SSobj, src)

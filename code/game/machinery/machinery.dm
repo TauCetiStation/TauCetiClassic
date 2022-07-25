@@ -134,9 +134,13 @@ Class Procs:
 	var/radio_filter_out
 	var/radio_filter_in
 	var/speed_process = FALSE  // Process as fast as possible?
+	var/process_last = FALSE   // Process after others
 
 	var/min_operational_temperature = 5
 	var/max_operational_temperature = 10
+
+	var/list/required_skills //e.g. medical, engineering
+	var/fumbling_time = 5 SECONDS
 
 /obj/machinery/atom_init()
 	. = ..()
@@ -144,6 +148,8 @@ Class Procs:
 
 	if (speed_process)
 		START_PROCESSING(SSfastprocess, src)
+	else if (process_last)
+		START_PROCESSING_NAMED(SSmachines, src, processing_second)
 	else
 		START_PROCESSING(SSmachines, src)
 
@@ -159,6 +165,8 @@ Class Procs:
 
 	if (speed_process)
 		STOP_PROCESSING(SSfastprocess, src)
+	else if (process_last)
+		STOP_PROCESSING_NAMED(SSmachines, src, processing_second)
 	else
 		STOP_PROCESSING(SSmachines, src)
 
@@ -235,19 +243,13 @@ Class Procs:
 
 /obj/machinery/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if (prob(50))
-				qdel(src)
 				return
-		if(3.0)
-			if (prob(25))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if (prob(75))
 				return
-		else
-	return
+	qdel(src)
 
 /obj/machinery/blob_act()
 	if(prob(50))
@@ -328,6 +330,9 @@ Class Procs:
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
+	if(!do_skill_checks(usr))
+		return FALSE
+
 	return TRUE
 
 /obj/machinery/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
@@ -336,6 +341,8 @@ Class Procs:
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
+	if(!do_skill_checks(usr))
+		return TRUE
 	return FALSE
 
 /obj/machinery/proc/issilicon_allowed(mob/living/silicon/S)
@@ -387,6 +394,10 @@ Class Procs:
 		return TRUE
 	if(!can_interact_with(user))
 		return TRUE
+	if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
+		if(prob(75))
+			to_chat(user, "<span class='notice'>Your fingers are slipping.</span>")
+			return TRUE
 
 	if(hasvar(src, "wires"))              // Lets close wires window if panel is closed.
 		var/datum/wires/DW = vars["wires"] // Wires and machinery that uses this feature actually should be refactored.
@@ -426,6 +437,8 @@ Class Procs:
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
+		if(!handle_fumbling(usr, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to deconstruct [src].</span>"))
+			return
 		deconstruction()
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
@@ -442,10 +455,14 @@ Class Procs:
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(!panel_open)
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to open the maintenance hatch of [src].</span>"))
+				return 0
 			panel_open = 1
 			icon_state = icon_state_open
 			to_chat(user, "<span class='notice'>You open the maintenance hatch of [src].</span>")
 		else
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to close the maintenance hatch of [src].</span>"))
+				return 1
 			panel_open = 0
 			icon_state = icon_state_closed
 			to_chat(user, "<span class='notice'>You close the maintenance hatch of [src].</span>")
@@ -460,11 +477,11 @@ Class Procs:
 		return 1
 	return 0
 
-/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = SKILL_TASK_VERY_EASY)
 	if(istype(W) &&  !(flags & NODECONSTRUCT))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
-		if(W.use_tool(src, user, time, volume = 50))
+		if(W.use_tool(src, user, time, volume = 50, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
@@ -536,8 +553,13 @@ Class Procs:
 	if(prob(85))
 		emp_act(2)
 	else if(prob(50))
-		ex_act(3)
+		ex_act(EXPLODE_LIGHT)
 	else if(prob(90))
-		ex_act(2)
+		ex_act(EXPLODE_HEAVY)
 	else
-		ex_act(1)
+		ex_act(EXPLODE_DEVASTATE)
+
+/obj/machinery/proc/do_skill_checks(mob/user)
+	if (!required_skills || !user || issilicon(user) || isobserver(user))
+		return TRUE
+	return handle_fumbling(user, src, fumbling_time, required_skills, check_busy = FALSE)

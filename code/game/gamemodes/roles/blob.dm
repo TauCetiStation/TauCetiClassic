@@ -5,8 +5,6 @@
 	logo_state = "blob-logo"
 	greets = list(GREET_DEFAULT,GREET_CUSTOM)
 
-	restricted_jobs = list("Cyborg", "AI")
-	restricted_species_flags = list(IS_SYNTHETIC)
 	disallow_job = TRUE
 
 /datum/role/blob_overmind/cerebrate
@@ -55,7 +53,7 @@
 		if(directory[ckey(antag.key)])
 			blob_client = directory[ckey(antag.key)]
 			location = get_turf(C)
-			if(!is_station_level(location.z)|| istype(location, /turf/space))
+			if(!is_station_level(location.z) || isspaceturf(location))
 				location = null
 			C.gib()
 
@@ -75,3 +73,12 @@
 	to_chat(antag.current, "<span class='warning'>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</span>")
 
 	return TRUE
+
+/datum/role/blobbernaut
+	name = BLOBBERNAUT
+	id = BLOBBERNAUT
+	required_pref = ROLE_BLOB
+	logo_state = "blob-logo"
+	greets = list(GREET_DEFAULT,GREET_CUSTOM)
+
+	disallow_job = TRUE

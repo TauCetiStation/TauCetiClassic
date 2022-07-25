@@ -167,7 +167,7 @@
 			new /obj/effect/temp_visual/religion/pulse(user.loc)
 			user.apply_damage(50, BURN, null, used_weapon="Electrocution")
 			user.visible_message("<span class='danger'>[src] извергает свою силу [user].</span>")
-			M.confused += 10
+			M.AdjustConfused(10)
 
 /obj/item/weapon/nullrod/staff
 	name = "divine staff"
@@ -280,8 +280,7 @@
 	// All of this could be made religion-dependant.
 	brainmob = new(get_turf(src))
 	brainmob.mutations.Add(XRAY) //its the god
-	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-	brainmob.status_flags |= GODMODE
+	brainmob.add_status_flags(GODMODE)
 
 	var/god_name = pick(summoner.my_religion.deity_names)
 	var/god_lore = summoner.my_religion.lore
@@ -303,7 +302,7 @@
 
 	summoner.my_religion.add_deity(brainmob)
 
-	for(var/datum/language/L in summoner.languages)
+	for(var/datum/language/L as anything in summoner.languages)
 		brainmob.add_language(L.name)
 
 	name = "staff of the [god_name]"

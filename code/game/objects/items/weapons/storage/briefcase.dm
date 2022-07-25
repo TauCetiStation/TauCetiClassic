@@ -25,7 +25,7 @@
 	if (M.stat < 2 && M.health < 50 && prob(90))
 		var/mob/H = M
 		// ******* Check
-		if ((istype(H, /mob/living/carbon/human) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
+		if ((ishuman(H) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))
 			to_chat(M, "<span class='warning'>The helmet protects you from being hit hard in the head!</span>")
 			return
 		var/time = rand(2, 6)

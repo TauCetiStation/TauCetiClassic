@@ -5,11 +5,11 @@
 	icon = 'icons/misc/tooltip.dmi'
 	icon_state = "transparent"
 	screen_loc = TOOLTIP_NORTH
-	plane = ABOVE_HUD_PLANE + 1
-	layer = ABOVE_HUD_LAYER + 1
+	plane = ABOVE_HUD_PLANE
 	maptext_width = 999
 	maptext_x = -385
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/looking_at
 	var/state = TRUE
 	var/font_size = 8
 
@@ -30,6 +30,7 @@
 /client/MouseEntered(atom/hoverOn, location, control, params)
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
+	tooltip.looking_at = "\ref[hoverOn]"
 	if(prefs.tooltip && tooltip?.state)
 		var/text_in_tooltip = hoverOn.get_name()
 		screen |= tooltip

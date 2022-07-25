@@ -1,4 +1,4 @@
-/datum/event/roundstart/area/replace/vault_gold
+/datum/event/feature/area/replace/vault_gold
 	special_area_types = list(/area/station/bridge/nuke_storage)
 	replace_types = list(
 		/obj/item/weapon/coin/silver = /obj/item/stack/sheet/mineral/gold,

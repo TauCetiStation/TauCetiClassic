@@ -6,4 +6,6 @@
 	var/datum/faction/props/P = faction
 	if(!istype(P))
 		return OBJECTIVE_LOSS
-	return P.points > need_points
+	if(P.points > need_points)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS

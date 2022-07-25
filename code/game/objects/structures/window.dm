@@ -80,30 +80,25 @@
 	qdel(src)
 	return
 
-/obj/structure/window/bullet_act(obj/item/projectile/Proj)
+/obj/structure/window/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...
-		return -1
+		return PROJECTILE_FORCE_MISS
 
+	. = ..()
 	//Tasers and the like should not damage windows.
 	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		return
 
-	..()
 	take_damage(Proj.damage, Proj.damage_type)
-	return
-
 
 /obj/structure/window/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			take_damage(rand(30, 50))
-			return
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			take_damage(rand(5, 15))
-			return
 
 /obj/structure/window/airlock_crush_act()
 	take_damage(DOOR_CRUSH_DAMAGE * 2)
@@ -155,17 +150,13 @@
 		step(src, get_dir(AM, src))
 	take_damage(tforce)
 
-/obj/structure/window/attack_tk(mob/user)
-	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
-	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-
 /obj/structure/window/attack_hand(mob/user)	//specflags please!!
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 		user.do_attack_animation(src)
 		take_damage(rand(15,25), "generic")
-	else if(user.dna && user.dna.mutantrace == "adamantine")
+	else if(user.get_species() == GOLEM || user.get_species() == ABOMINATION)
 		user.do_attack_animation(src)
 		take_damage(rand(15,25), "generic")
 	else if (user.a_intent == INTENT_HARM)
@@ -179,6 +170,10 @@
 							"You knock on the [src.name].", \
 							"You hear a knocking sound.")
 
+/obj/structure/window/attack_tk(mob/user)
+	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
+	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+	return TRUE
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
@@ -227,11 +222,15 @@
 
 	else if(isscrewdriver(W))
 		if(reinf && state >= 1)
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [state == 1 ? "fasten the window to the frame." : "unfasten the window from the frame."]</span>" ))
+				return
 			state = 3 - state
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>"))
 
 		else if(reinf && state == 0)
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [anchored ? "unfasten the frame from the floor." : "fasten the frame to the floor."]</span>" ))
+				return
 			anchored = !anchored
 			update_nearby_icons()
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -239,6 +238,8 @@
 			fastened_change()
 
 		else if(!reinf)
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY,list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [anchored ? "fasten the window to the floor." : "unfasten the window."]</span>" ))
+				return
 			anchored = !anchored
 			update_nearby_icons()
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -246,13 +247,15 @@
 			fastened_change()
 
 	else if(iscrowbar(W) && reinf && state <= 1)
+		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [state ? "pry the window out of the frame." : "pry the window into the frame."]</span>" ))
+			return
 		state = 1 - state
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>"))
 
 	else if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
-		if (istype(G.affecting, /mob/living))
+		if (isliving(G.affecting))
 			user.SetNextMove(CLICK_CD_MELEE)
 			var/mob/living/M = G.affecting
 			var/mob/living/A = G.assailant
@@ -267,12 +270,14 @@
 					M.log_combat(user, "slammed against [name]")
 				if(2)
 					if (prob(50))
+						M.Stun(1)
 						M.Weaken(1)
 					M.apply_damage(8)
 					take_damage(9)
 					visible_message("<span class='danger'>[A] bashes [M] against \the [src]!</span>")
 					M.log_combat(user, "bashed against [name]")
 				if(3)
+					M.Stun(5)
 					M.Weaken(5)
 					M.apply_damage(20)
 					take_damage(12)

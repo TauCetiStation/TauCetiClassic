@@ -94,11 +94,10 @@ for reference:
 
 /obj/structure/barricade/wooden/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			visible_message("<span class='warning'><B>The barricade is blown apart!</B></span>")
 			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			src.health -= 25
 			if (src.health <= 0)
 				visible_message("<span class='warning'><B>The barricade is blown apart!</B></span>")
@@ -106,7 +105,6 @@ for reference:
 				new /obj/item/stack/sheet/wood(get_turf(src))
 				new /obj/item/stack/sheet/wood(get_turf(src))
 				qdel(src)
-			return
 
 /obj/structure/barricade/wooden/blob_act()
 	src.health -= 25
@@ -215,14 +213,13 @@ for reference:
 
 /obj/machinery/deployable/barrier/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			explode()
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			src.health -= 25
-			if (src.health <= 0)
+			if(src.health <= 0)
 				explode()
-			return
+
 /obj/machinery/deployable/barrier/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		return

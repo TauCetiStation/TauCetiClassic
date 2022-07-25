@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(vote)
 
 	vote_start_time = world.time
 
-	for(var/client/C as anything in clients)
+	for(var/client/C in clients)
 		interface_client(C)
 
 	var/text = "[poll.initiator] начал голосование \"[poll.name]\"."
@@ -74,7 +74,14 @@ SUBSYSTEM_DEF(vote)
 	return TRUE
 
 /datum/controller/subsystem/vote/proc/get_vote_time()	//How many seconds vote lasts
-	return round((vote_start_time + config.vote_period - world.time)/10)
+	var/vote_period
+
+	if(active_vote && active_vote.vote_period)
+		vote_period = active_vote.vote_period
+	else
+		vote_period = config.vote_period
+
+	return round((vote_start_time + vote_period - world.time)/10)
 
 /datum/controller/subsystem/vote/proc/interface(client/C)
 	if(!C)

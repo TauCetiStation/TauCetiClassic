@@ -27,6 +27,7 @@
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
 	desc = "Какое-то богохульство."
+	amt_stunned = 2
 	amt_weakened = 5
 	amt_dam_fire = 10
 	sound = 'sound/magic/MAGIC_MISSILE.ogg'

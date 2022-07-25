@@ -14,7 +14,7 @@
 	var/delete_after_no_hits = 10 SECONDS
 
 	// Amount of "combo points" accumulated.
-	var/fullness = 0
+	var/points = 0
 	// An icon of current available combo.
 	var/image/combo_icon
 	var/list/combo_elements_icons = list()
@@ -158,7 +158,6 @@
 					CC_icon_state = "combo_element_hurt"
 			var/image/C_EL_I = image(icon='icons/mob/unarmed_combat_combos.dmi', icon_state="[CC_icon_state]_[i]")
 			C_EL_I.loc = victim
-			C_EL_I.layer = ABOVE_HUD_LAYER
 			C_EL_I.plane = ABOVE_HUD_PLANE
 			C_EL_I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 			C_EL_I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -199,12 +198,14 @@
 	if(!CC.do_combo(victim, attacker, ANIM_DELAY_WINDUP + ANIM_DELAY_RETURN))
 		if(CC.heavy_animation)
 			CC.after_animation(victim, attacker)
+			CC.after_combo_finished(victim, attacker)
 		animating_combo = FALSE
 		return
 	CC.animate_combo(victim, attacker)
 
 	if(CC.heavy_animation)
 		CC.after_animation(victim, attacker)
+		CC.after_combo_finished(victim, attacker)
 
 	if(QDELING(src))
 		victim = null
@@ -232,7 +233,9 @@
 		INVOKE_ASYNC(src, .proc/do_animation, CC)
 
 		CC.execute(victim, attacker)
-		fullness -= CC.fullness_lose_on_execute
+		if(!CC.heavy_animation)
+			CC.after_combo_finished(victim, attacker)
+		points -= CC.cost
 		set_combo_icon(null)
 		combo_elements.Cut()
 		register_attack(CC.name, 0)
@@ -275,7 +278,7 @@
 
 	combo_elements += combo_element
 
-	fullness = min(100, fullness + combo_value)
+	points = min(100, points + combo_value)
 
 	if(next_combo)
 		set_combo_icon(null)
@@ -298,15 +301,15 @@
 	if(combo_icon && (SSmobs.times_fired % 3) == 0)
 		INVOKE_ASYNC(src, .proc/shake_combo_icon)
 
-	progbar.update(fullness)
+	progbar.update(points)
 
-	var/fullness_to_remove = COMBOPOINTS_LOSE_PER_TICK
-	fullness_to_remove = max(MIN_COMBOPOINTS_LOSE_PER_TICK, fullness_to_remove - length(attacker.combos_performed) * 0.1)
-	fullness -= fullness_to_remove
+	var/points_cost = COMBOPOINTS_LOSE_PER_TICK
+	points_cost = max(MIN_COMBOPOINTS_LOSE_PER_TICK, points_cost - length(attacker.combos_performed) * 0.1)
+	points -= points_cost
 
 	if(next_combo)
 		// Lose combo since we lost the thing.
-		if(next_combo.fullness_lose_on_execute > fullness)
+		if(next_combo.cost > points)
 			set_combo_icon(null)
 			next_combo = null
 			// Perhaps a less powerful combo is there?
@@ -315,7 +318,7 @@
 	else if(get_next_combo())
 		update_combo_elements()
 
-	if(fullness < 0 || last_hit_registered + delete_after_no_hits < world.time)
+	if(points < 0 || last_hit_registered + delete_after_no_hits < world.time)
 		qdel(src)
 
 #undef ANIM_MAX_HIT_TURN_ANGLE

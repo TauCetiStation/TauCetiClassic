@@ -12,7 +12,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/syndicate_station, holomap_landmarks)
 	light_color = "#a91515"
 	req_access = list(access_syndicate)
 	var/area/curr_location
-	var/moving = 0
+	var/moving = FALSE
 	var/lastMove = 0
 
 /obj/effect/landmark/syndi_shuttle
@@ -31,12 +31,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/syndicate_station, holomap_landmarks)
 			updateUsrDialog()
 
 /obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination)
-	if(moving)	return
-	if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN > world.time)	return
+	if(moving)
+		return
+	if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN > world.time)
+		return
 	var/area/dest_location = locate(destination)
-	if(curr_location == dest_location)	return
+	if(curr_location == dest_location)
+		return
 
-	moving = 1
+	moving = TRUE
 	lastMove = world.time
 
 	if(curr_location.z != dest_location.z)
@@ -49,8 +52,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/syndicate_station, holomap_landmarks)
 
 	curr_location.move_contents_to(dest_location)
 	curr_location = dest_location
-	moving = 0
-	return 1
+	moving = FALSE
+	return TRUE
 
 /obj/machinery/computer/syndicate_station/ui_interact(mob/user)
 	var/dat = {"Location: [curr_location]<br>
@@ -107,3 +110,4 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/syndicate_station, holomap_landmarks)
 
 #undef SYNDICATE_SHUTTLE_MOVE_TIME
 #undef SYNDICATE_SHUTTLE_COOLDOWN
+

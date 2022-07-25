@@ -2,8 +2,7 @@
 /obj/random/scrap/dense_even
 	name = "Random dense even trash"
 	desc = "This is a random trash."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "welder"
+
 /obj/random/scrap/dense_even/item_to_spawn()
 		return pick(\
 						/obj/structure/scrap/large,\
@@ -20,8 +19,7 @@
 /obj/random/scrap/dense_weighted
 	name = "Random dense weighted trash"
 	desc = "This is a random trash."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "welder"
+
 /obj/random/scrap/dense_weighted/item_to_spawn()
 		return pick(\
 						prob(70);/obj/structure/scrap/poor/large,\
@@ -39,8 +37,7 @@
 /obj/random/scrap/sparse_even
 	name = "Random sparse even trash"
 	desc = "This is a random trash."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "welder"
+
 /obj/random/scrap/sparse_even/item_to_spawn()
 		return pick(\
 						/obj/structure/scrap,\
@@ -56,8 +53,6 @@
 /obj/random/scrap/sparse_weighted
 	name = "Random sparse weighted trash"
 	desc = "This is a random trash."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "welder"
 
 /obj/random/scrap/sparse_weighted/item_to_spawn()
 	var/holiday_prob = 0
@@ -79,10 +74,27 @@
 /obj/random/scrap/moderate_weighted
 	name = "Random moderate weighted trash"
 	desc = "This is a random tool."
-	icon = 'icons/obj/items.dmi'
-	icon_state = "welder"
+
 /obj/random/scrap/moderate_weighted/item_to_spawn()
 		return pick(\
 						prob(2);/obj/random/scrap/sparse_weighted,\
 						prob(1);/obj/random/scrap/dense_weighted\
 					)
+
+/obj/random/scrap/safe_even
+	name = "Random safe even trash"
+	desc = "This is a random trash."
+
+/obj/random/scrap/safe_even/item_to_spawn()
+	var/holiday_prob = 0
+	if(SSholiday.holidays[NEW_YEAR])
+		holiday_prob = 80
+	return pick(\
+					prob(holiday_prob);/obj/structure/scrap/newyear,\
+					prob(40);/obj/structure/scrap,\
+					prob(40);/obj/structure/scrap/food,\
+					prob(20);/obj/structure/scrap/vehicle,\
+					prob(15);/obj/structure/scrap/medical,\
+					prob(10);/obj/structure/scrap/science_safe,\
+					prob(5);/obj/structure/scrap/cloth_safe,\
+				)

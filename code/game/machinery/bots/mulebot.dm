@@ -145,22 +145,22 @@
 /obj/machinery/bot/mulebot/ex_act(severity)
 	unload(0)
 	switch(severity)
-		if(2)
+		if(EXPLODE_HEAVY)
 			wires.random_cut()
 			wires.random_cut()
 			wires.random_cut()
-		if(3)
+		if(EXPLODE_LIGHT)
 			wires.random_cut()
 	..()
 	return
 
-/obj/machinery/bot/mulebot/bullet_act()
+/obj/machinery/bot/mulebot/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(prob(50) && !isnull(load))
 		unload(0)
 	if(prob(25))
 		visible_message("<span class='red'>Something shorts out inside [src]!</span>")
 		wires.random_cut()
-	..()
 
 /obj/machinery/bot/mulebot/ui_interact(mob/user)
 	var/ai = isAI(user) || isobserver(user)
@@ -428,9 +428,8 @@
 
 	else //post unbuckling
 		load = null
-		M.layer = initial(M.layer)
-		M.plane = initial(M.plane)
-		M.pixel_y = initial(M.pixel_y)
+		M.layer = M.default_layer
+		M.pixel_y = M.default_pixel_y
 
 // called to unload the bot
 // argument is optional direction to unload
@@ -450,7 +449,6 @@
 	load.loc = loc
 	load.pixel_y = initial(load.pixel_y)
 	load.layer = initial(load.layer)
-	load.plane = initial(load.plane)
 	if(dirn)
 		var/turf/T = loc
 		var/turf/newT = get_step(T,dirn)
@@ -665,14 +663,13 @@
 	if(!wires.mob_avoid())		//usually just bumps, but if avoidance disabled knock over mobs
 		var/mob/M = obs
 		if(ismob(M))
-			if(istype(M,/mob/living/silicon/robot))
+			if(isrobot(M))
 				visible_message("<span class='warning'>[src] bumps into [M]!</span>")
 			else
 				visible_message("<span class='warning'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
-				M.Stun(8)
+				M.Stun(2)
 				M.Weaken(5)
-				M.lying = 1
 	..()
 
 /obj/machinery/bot/mulebot/alter_health()

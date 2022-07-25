@@ -56,8 +56,8 @@
 	occupant.apply_effect(2, STUN, 0)
 	occupant.apply_effect(2, WEAKEN, 0)
 	occupant.apply_effect(6, STUTTER, 0)
-	playsound(src, 'sound/weapons/punch1.ogg', VOL_EFFECTS_MASTER)
-	if(istype(A, /mob/living))
+	playsound(src, pick(SOUNDIN_PUNCH_HEAVY), VOL_EFFECTS_MASTER)
+	if(isliving(A))
 		var/mob/living/victim = A
 		victim.apply_effect(4, STUN, 0)
 		victim.apply_effect(4, WEAKEN, 0)
@@ -101,23 +101,18 @@
 		..()
 
 /obj/structure/stool/bed/chair/user_buckle_mob(mob/living/M, mob/user)
-	if(dir == NORTH && !istype(src, /obj/structure/stool/bed/chair/schair/wagon/bench))
-		layer = FLY_LAYER
-	else
-		layer = OBJ_LAYER
 	if(flipped)
 		to_chat(usr, "<span class='notice'>You can't do it, while \the [src] is flipped.</span>")
 		if(usr != M)
 			to_chat(M, "<span class='warning'>Tried buckle you to \the [src].</span>")
-	else
-		..()
+		return
 
-/obj/structure/stool/bed/chair/attack_tk(mob/user)
-	if(buckled_mob)
-		..()
+	if(dir == NORTH && !istype(src, /obj/structure/stool/bed/chair/schair/wagon/bench))
+		layer = FLY_LAYER
 	else
-		rotate()
-	return
+		layer = OBJ_LAYER
+
+	..()
 
 /obj/structure/stool/bed/chair/handle_rotation() // making this into a seperate proc so office chairs can call it on Move()
 	if(dir == NORTH && buckled_mob)
@@ -178,13 +173,15 @@
 		else
 			offset_y = -4
 			offset_x = -2
-		flipped = 1
+		flipped = TRUE
+		buckle_lying = TRUE
 		anchored = FALSE		// can be pulled
 		buckle_movable = 0
 		playsound(src, 'sound/items/chair_fall.ogg', VOL_EFFECTS_MASTER, 25)
 	else
 		M.TurnTo(flip_angle,0)
-		flipped = 0
+		flipped = FALSE
+		buckle_lying = FALSE
 		anchored = initial(anchored)
 		buckle_movable = initial(buckle_movable)
 
@@ -299,51 +296,49 @@
 	return ..()
 
 /obj/structure/stool/bed/chair/noose/post_buckle_mob(mob/living/M)
-	if(has_buckled_mobs())
+	if(buckled_mob)
 		layer = MOB_LAYER
 		START_PROCESSING(SSobj, src)
 		M.dir = SOUTH
 		animate(M, pixel_y = M.lying ? initial(pixel_y) + 14 : initial(pixel_y) + 8, time = 8, easing = LINEAR_EASING)
 	else
 		layer = initial(layer)
-		STOP_PROCESSING(SSobj, src)
-		M.pixel_x = initial(M.pixel_x)
 		pixel_x = initial(pixel_x)
-		M.pixel_y = M.lying ? -6 : initial(M.pixel_y)
+		STOP_PROCESSING(SSobj, src)
+		M.pixel_x = M.default_pixel_x
+		M.pixel_y = M.default_pixel_y
 
 /obj/structure/stool/bed/chair/noose/user_unbuckle_mob(mob/living/user)
-	if(!has_buckled_mobs())
+	if(!buckled_mob || user.is_busy())
 		return
-	if(user.is_busy())
-		return
-	if(buckled_mob != user)
-		user.visible_message("<span class='notice'>[user] begins to untie the noose over [buckled_mob]'s neck...</span>")
-		to_chat(user, "<span class='notice'>You begin to untie the noose over [buckled_mob]'s neck...</span>")
-		if(!do_mob(user, buckled_mob, 10 SECONDS))
-			return
-		user.visible_message("<span class='notice'>[user] unties the noose over [buckled_mob]'s neck!</span>")
-		to_chat(user,"<span class='notice'>You untie the noose over [buckled_mob]'s neck!</span>")
-	else
-		buckled_mob.visible_message("<span class='warning'>[buckled_mob] struggles to untie the noose over their neck!</span>")
-		to_chat(buckled_mob,"<span class='notice'>You struggle to untie the noose over your neck... (Stay still for 15 seconds.)</span>")
-		if(!do_after(buckled_mob, 15 SECONDS, target = src))
-			if(buckled_mob && buckled_mob.buckled)
-				to_chat(buckled_mob, "<span class='warning'>You fail to untie yourself!</span>")
-			return
-		if(!buckled_mob.buckled)
-			return
-		buckled_mob.visible_message("<span class='warning'>[buckled_mob] unties the noose over their neck!</span>")
-		to_chat(buckled_mob,"<span class='notice'>You untie the noose over your neck!</span>")
-	if(buckled_mob)
-		buckled_mob.pixel_z = initial(buckled_mob.pixel_z)
-		buckled_mob.pixel_x = initial(buckled_mob.pixel_x)
-		buckled_mob.AdjustWeakened(5)
-		unbuckle_mob(buckled_mob)
-	pixel_z = initial(pixel_z)
-	pixel_x = initial(pixel_x)
+	var/mob/living/L = buckled_mob
 	add_fingerprint(user)
+	if(L != user)
+		user.visible_message(
+			"<span class='notice'>[user] begins to untie the noose over [L]'s neck...</span>",
+			"<span class='notice'>You begin to untie the noose over [L]'s neck...</span>")
+		if(!(do_mob(user, L, 10 SECONDS) && buckled_mob == L))
+			return
+		user.visible_message(
+			"<span class='notice'>[user] unties the noose over [L]'s neck!</span>",
+			"<span class='notice'>You untie the noose over [L]'s neck!</span>")
+	else
+		L.visible_message(
+			"<span class='warning'>[L] struggles to untie the noose over their neck!</span>",
+			"<span class='notice'>You struggle to untie the noose over your neck... (Stay still for 15 seconds.)</span>")
+		if(!do_after(L, 15 SECONDS, target = src))
+			if(buckled_mob == L)
+				to_chat(L, "<span class='warning'>You fail to untie yourself!</span>")
+			return
+		if(buckled_mob != L)
+			return
+		L.visible_message(
+			"<span class='warning'>[L] unties the noose over their neck!</span>",
+			"<span class='notice'>You untie the noose over your neck!</span>")
+	L.AdjustWeakened(5)
+	unbuckle_mob(L)
 
-/obj/structure/stool/bed/chair/noose/user_buckle_mob(mob/living/carbon/human/M, mob/user)
+/obj/structure/stool/bed/chair/noose/can_user_buckle(mob/living/carbon/human/M, mob/user)
 	if(!Adjacent(user) || user.stat || user.restrained() || !ishuman(M) || user.is_busy())
 		return FALSE
 
@@ -359,30 +354,35 @@
 		to_chat(user, "<span class='notice'>You need to have a stool or a chair under the noose to hang someone</span>")
 		return FALSE
 
+	return TRUE
+
+/obj/structure/stool/bed/chair/noose/user_buckle_mob(mob/living/carbon/human/M, mob/user)
+	if(!can_user_buckle(M, user))
+		return
+
 	add_fingerprint(user)
 	message_admins("[key_name_admin(user)] attempted to hang [key_name(M)]. [ADMIN_JMP(M)]")
-	M.visible_message("<span class='danger'>[user] attempts to tie \the [src] over [M]'s neck!</span>")
-	if(user != M)
-		to_chat(user, "<span class='notice'>It will take 15 seconds and you have to stand still.</span>")
-	if(do_mob(user, M, user == M ? 3 : 15 SECONDS))
-		if(buckle_mob(M))
-			user.visible_message("<span class='warning'>[user] ties \the [src] over [M]'s neck!</span>")
-			if(user == M)
-				to_chat(M, "<span class='userdanger'>You tie \the [src] over your neck!</span>")
-			else
-				to_chat(M, "<span class='userdanger'>[user] ties \the [src] over your neck!</span>")
-			playsound(src, 'sound/effects/noosed.ogg', VOL_EFFECTS_MASTER)
-			message_admins("[key_name_admin(M)] was hanged by [key_name(user)]. [ADMIN_JMP(M)]")
-			for(var/alert in M.alerts)
-				var/atom/movable/screen/alert/A = M.alerts[alert]
-				if(A.master.icon_state == "noose") // our alert icon is terrible, let's build a new one
-					A.cut_overlays()
-					A.add_overlay(image(icon, "noose"))
-					A.add_overlay(image(icon, "noose_overlay"))
-			return TRUE
-	user.visible_message("<span class='warning'>[user] fails to tie \the [src] over [M]'s neck!</span>")
-	to_chat(user, "<span class='warning'>You fail to tie \the [src] over [M]'s neck!</span>")
-	return FALSE
+	M.visible_message(
+		"<span class='danger'>[user] attempts to tie \the [src] over [M]'s neck!</span>",
+		user != M ? "<span class='notice'>It will take 15 seconds and you have to stand still.</span>" : null)
+	if(!(do_mob(user, M, (user == M ? 3 : 15) SECONDS) && buckle_mob(M)))
+		user.visible_message(
+			"<span class='warning'>[user] fails to tie \the [src] over [M]'s neck!</span>",
+			"<span class='warning'>You fail to tie \the [src] over [M]'s neck!</span>")
+		return FALSE
+
+	M.visible_message(
+		"<span class='warning'>[user] ties \the [src] over [M]'s neck!</span>",
+		"<span class='userdanger'>[user == M ? "You tie" : "[user] ties"] \the [src] over your neck!</span>")
+	playsound(src, 'sound/effects/noosed.ogg', VOL_EFFECTS_MASTER)
+	message_admins("[key_name_admin(M)] was hanged by [key_name(user)]. [ADMIN_JMP(M)]")
+	for(var/alert in M.alerts)
+		var/atom/movable/screen/alert/A = M.alerts[alert]
+		if(A.master.icon_state == "noose") // our alert icon is terrible, let's build a new one
+			A.cut_overlays()
+			A.add_overlay(image(icon, "noose"))
+			A.add_overlay(image(icon, "noose_overlay"))
+	return TRUE
 
 /obj/structure/stool/bed/chair/noose/process()
 	if(!has_buckled_mobs())

@@ -19,6 +19,7 @@
 	desc = "Can hold various tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	max_w_class = SIZE_SMALL
 	can_hold = list(
 		/obj/item/weapon/crowbar,
 		/obj/item/weapon/screwdriver,
@@ -162,7 +163,6 @@
 	desc = "A belt from military soldier set."
 	icon_state = "Leather_Belt_Officer"
 	icon_state = "Leather_Belt_Officer"
-	item_color = "Leather_Belt_Officer"
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"

@@ -20,6 +20,8 @@ SUBSYSTEM_DEF(shuttle)
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
+	msg_lobby = "Заправляем шаттлы..."
+
 		//emergency shuttle stuff
 	var/alert = 0				//0 = emergency, 1 = crew cycle
 	var/location = 0			//0 = somewhere far away (in spess), 1 = at SS13, 2 = returned from SS13
@@ -33,8 +35,6 @@ SUBSYSTEM_DEF(shuttle)
 	var/deny_shuttle = 0		//for admins not allowing it to be called.
 	var/departed = 0
 
-		//supply shuttle stuff
-	var/points = 5000
 	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
 	var/contraband = FALSE
 	var/hacked = FALSE
@@ -373,6 +373,7 @@ SUBSYSTEM_DEF(shuttle)
 				shake_camera(M, 2, 1) // buckled, not a lot of shaking
 			else
 				shake_camera(M, 4, 2)// unbuckled, HOLY SHIT SHAKE THE ROOM
+				M.Stun(1)
 				M.Weaken(3)
 		if(isliving(M) && !issilicon(M) && !M.buckled)
 			var/mob/living/L = M
@@ -463,7 +464,7 @@ SUBSYSTEM_DEF(shuttle)
 
 //To stop things being sent to centcom which should not be sent to centcom. Recursively checks for these types.
 /datum/controller/subsystem/shuttle/proc/forbidden_atoms_check(atom/A)
-	if(istype(A,/mob/living))
+	if(isliving(A))
 		return TRUE
 	if(istype(A,/obj/item/weapon/disk/nuclear))
 		return TRUE
@@ -510,7 +511,9 @@ SUBSYSTEM_DEF(shuttle)
 			continue
 
 		msg += export_text + "\n"
-		SSshuttle.points += E.total_cost
+		var/tax = round(E.total_cost * SSeconomy.tax_cargo_export * 0.01)
+		station_account.money += tax
+		global.cargo_account.money += E.total_cost - tax
 		E.export_end()
 
 	centcom_message = msg
@@ -562,7 +565,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(SO.object.dangerous)
 			message_admins("[SO.object.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
 
-		score["stuffshipped"]++
+		SSStatistics.score.stuffshipped++
 		CHECK_TICK
 
 	SSshuttle.shoppinglist.Cut()
@@ -651,7 +654,7 @@ SUBSYSTEM_DEF(shuttle)
 	name = "star"
 	var/speed = 10
 	var/direction = SOUTH
-	layer = 2 // TURF_LAYER
+	layer = TURF_LAYER
 
 /obj/effect/bgstar/New()
 	..()

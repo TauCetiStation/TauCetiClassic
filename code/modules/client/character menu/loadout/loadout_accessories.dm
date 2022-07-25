@@ -87,7 +87,7 @@
 
 /datum/gear/accessory/left_black_glove
 	display_name = "Left Black Glove"
-	path = /obj/item/clothing/gloves/fluff/chal_appara_1
+	path = /obj/item/clothing/gloves/left
 
 /datum/gear/accessory/silver_collar
 	display_name = "Silver Collar"

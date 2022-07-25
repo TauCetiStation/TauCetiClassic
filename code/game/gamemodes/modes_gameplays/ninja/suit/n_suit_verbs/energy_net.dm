@@ -16,67 +16,53 @@
 
 	var/health = 100//How much health it has.
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
-	var/mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.
 
 /obj/effect/energy_net/Destroy()
+	if(affecting)
+		REMOVE_TRAIT(affecting, TRAIT_ANCHORED, src)
+		affecting.update_canmove()
+		affecting.visible_message("[affecting.name] was recovered from the energy net!", "You hear a grunt.")
 	affecting = null
-	master = null
 	return ..()
 
 /obj/effect/energy_net/proc/healthcheck()
-	if(health <=0)
-		density = FALSE
-		if(affecting)
-			var/mob/living/carbon/M = affecting
-			M.captured = 0 //Important.
-			M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
-			M.visible_message("[M.name] was recovered from the energy net!", "You hear a grunt.")
-			//if(!isnull(master))//As long as they still exist.
-			//	master << "<span class='warning'><b>ERROR</b>:</span> unable to initiate transport protocol. Procedure terminated."
+	if(health <= 0)
 		qdel(src)
-	return
 
-/obj/effect/energy_net/process(mob/living/carbon/M)
-	var/check = 60//30 seconds before teleportation. Could be extended I guess. - Extended to one minute
-	//var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
+/obj/effect/energy_net/proc/start_cooldown(mob/living/carbon/M)
+	set waitfor = FALSE
+
+	affecting = M
+	layer = M.layer + 1 //To have it appear one layer above the mob.
+	ADD_TRAIT(M, TRAIT_ANCHORED, src)
+	M.update_canmove()
+
+	var/check = 60
+
 	//The person can still try and attack the net when inside.
-	while(!isnull(M)&&!isnull(src)&&check>0)//While M and net exist, and 60 seconds have not passed.
+	while(!QDELETED(src) && check>0)//While M and net exist, and 60 seconds have not passed.
 		var/turf/T = get_turf(src)
-		if(M.loc == T)
-			check--
-			sleep(10)
-		else
-			check = 0
-			M.captured = 0 //Important.
-			M.anchored = initial(M.anchored) //Changes the mob's anchored status to the original one; this is not handled by the can_move proc.
+		if(M.loc != T)
+			qdel(src)
+			return
 
-	if(isnull(M)||M.loc!=loc)//If mob is gone or not at the location.
-		//if(!isnull(master))//As long as they still exist.
-		//	master << "<span class='warning'><b>ERROR</b>:</span> unable to locate \the [mob_name]. Procedure terminated."
-		qdel(src)//Get rid of the net.
-		return
+		check--
+		sleep(1 SECOND)
 
-	if(!isnull(src))
-		M.captured = 0
-		M.anchored = initial(M.anchored)
-		qdel(src)
-	return
+	qdel(src)
 
-/obj/effect/energy_net/bullet_act(obj/item/projectile/Proj)
+/obj/effect/energy_net/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
 	healthcheck()
-	return 0
 
 /obj/effect/energy_net/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			health-=50
-		if(2.0)
-			health-=50
-		if(3.0)
-			health-=prob(50)?50:25
+	if(severity == EXPLODE_LIGHT && prob(50))
+		health -= 25
+		healthcheck()
+		return
+	health -= 50
 	healthcheck()
-	return
 
 /obj/effect/energy_net/blob_act()
 	health-=50

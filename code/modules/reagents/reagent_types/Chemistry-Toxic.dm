@@ -98,7 +98,7 @@
 	T.assume_gas("phoron", volume, T20C)
 
 /datum/reagent/toxin/phoron/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with plasma is stronger than fuel!
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(volume / 5)
@@ -199,8 +199,9 @@
 
 /datum/reagent/toxin/zombiepowder/on_general_digest(mob/living/M)
 	..()
-	M.status_flags |= FAKEDEATH
+	M.add_status_flags(FAKEDEATH)
 	M.adjustOxyLoss(0.5 * REM)
+	M.Stun(10)
 	M.Weaken(10)
 	M.silent = max(M.silent, 10)
 	M.tod = worldtime2text()
@@ -208,7 +209,7 @@
 /datum/reagent/toxin/zombiepowder/Destroy()
 	if(holder && ismob(holder.my_atom))
 		var/mob/M = holder.my_atom
-		M.status_flags &= ~FAKEDEATH
+		M.remove_status_flags(FAKEDEATH)
 	return ..()
 
 /datum/reagent/toxin/mindbreaker
@@ -238,7 +239,7 @@
 // Clear off wallrot fungi
 /datum/reagent/toxin/plantbgone/reaction_turf(turf/T, volume)
 	. = ..()
-	if(istype(T, /turf/simulated/wall))
+	if(iswallturf(T))
 		var/turf/simulated/wall/W = T
 		if(W.rotting)
 			W.rotting = 0
@@ -274,7 +275,7 @@
 	var/mob/living/carbon/human/H = M
 
 	if(!H.species.flags[IS_PLANT])
-		if((method == INGEST) || H.wear_mask || !H.need_breathe()) // different behaviour only for inhaling
+		if((method == INGEST) || H.wear_mask || H.is_skip_breathe()) // different behaviour only for inhaling
 			return
 		H.adjustToxLoss(2 * toxpwr)
 		return
@@ -333,9 +334,11 @@
 			M.blurEyes(10)
 		if(15 to 49)
 			if(prob(50))
+				M.Stun(1)
 				M.Weaken(2)
 			M.drowsyness  = max(M.drowsyness, 20)
 		if(50 to INFINITY)
+			M.Stun(10)
 			M.Weaken(20)
 			M.drowsyness  = max(M.drowsyness, 30)
 	data["ticks"]++
@@ -360,9 +363,10 @@
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1)
-			M.confused += 2
+			M.AdjustConfused(2)
 			M.drowsyness += 2
 		if(2 to 199)
+			M.Stun(30)
 			M.Weaken(30)
 		if(200 to INFINITY)
 			M.SetSleeping(20 SECONDS)
@@ -384,6 +388,7 @@
 			if(M.losebreath >= 10)
 				M.losebreath = max(10, M.losebreath - 10)
 			M.adjustOxyLoss(2)
+			M.Stun(5)
 			M.Weaken(10)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -407,6 +412,7 @@
 			if(H.losebreath >= 10)
 				H.losebreath = max(10, M.losebreath - 10)
 			H.adjustOxyLoss(2)
+			H.Stun(5)
 			H.Weaken(10)
 		if(volume >= overdose)
 			H.attack_heart(5, 0)
@@ -427,7 +433,7 @@
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1)
-			M.confused += 2
+			M.AdjustConfused(2)
 			M.drowsyness += 2
 		if(2 to 50)
 			M.SetSleeping(20 SECONDS)
@@ -464,7 +470,7 @@
 	M.take_bodypart_damage(0, 1 * REM)
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/M, method=TOUCH, volume)//magic numbers everywhere
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		if(ishuman(M))
@@ -523,7 +529,7 @@
 			M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr))
 
 /datum/reagent/toxin/acid/reaction_obj(obj/O, volume)
-	if((istype(O,/obj/item) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
+	if((isitem(O) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
 		if(!O.unacidable)
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 			I.desc = "Looks like this was \an [O] some time ago."
@@ -659,15 +665,7 @@
 		return
 	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
-	H.gender = pick(MALE, FEMALE)
-	if(H.gender == MALE)
-		H.name = pick(first_names_male)
-	else
-		H.name = pick(first_names_female)
-	H.name += " [pick(last_names)]"
-	H.real_name = H.name
-	var/datum/preferences/A = new()	//Randomize appearance for the human
-	A.randomize_appearance_for(H)
+	randomize_human(H)
 
 /datum/reagent/slimetoxin
 	name = "Mutation Toxin"
@@ -709,8 +707,6 @@
 			if(30)
 				if(H.set_species(SLIME))
 					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
-					H.dna.mutantrace = "slime"
-					H.update_mutantrace()
 					for(var/obj/item/organ/external/BP in H.bodyparts)
 						BP.status = 0
 					for(var/obj/item/organ/internal/BP in H.organs)
@@ -729,7 +725,7 @@
 
 /datum/reagent/aslimetoxin/on_general_digest(mob/living/M)
 	..()
-	if(istype(M, /mob/living/carbon) && M.stat != DEAD)
+	if(iscarbon(M) && M.stat != DEAD)
 		to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
 		if(M.notransform)
 			return
@@ -747,7 +743,7 @@
 			W.dropped(M)
 		M.sec_hud_set_implants()
 		var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
-		new_mob.a_intent = INTENT_HARM
+		new_mob.set_a_intent(INTENT_HARM)
 		new_mob.universal_speak = 1
 		if(M.mind)
 			M.mind.transfer_to(new_mob)
@@ -771,7 +767,7 @@
 /datum/reagent/space_drugs/on_general_digest(mob/living/M)
 	..()
 	M.adjustDrugginess(2)
-	if(isturf(M.loc) && !istype(M.loc, /turf/space))
+	if(isturf(M.loc) && !isspaceturf(M.loc))
 		if(M.canmove && !M.incapacitated())
 			if(prob(10))
 				step(M, pick(cardinal))
@@ -808,9 +804,7 @@
 /datum/reagent/cryptobiolin/on_general_digest(mob/living/M)
 	..()
 	M.make_dizzy(1)
-	if(!M.confused)
-		M.confused = 1
-	M.confused = max(M.confused, 20)
+	M.MakeConfused(20)
 
 /datum/reagent/impedrezene
 	name = "Impedrezene"

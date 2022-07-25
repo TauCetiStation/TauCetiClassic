@@ -23,22 +23,15 @@
 	AddComponent(/datum/component/clickplace)
 
 /obj/machinery/optable/ex_act(severity)
-
 	switch(severity)
-		if(1.0)
-			//SN src = null
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				//SN src = null
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(25))
+		if(EXPLODE_LIGHT)
+			if(prob(25))
 				src.density = FALSE
-		else
-	return
+				return
+	qdel(src)
 
 /obj/machinery/optable/blob_act()
 	if(prob(75))
@@ -86,7 +79,7 @@
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.resting)
+		if(M.crawling)
 			src.victim = M
 			icon_state = M.pulse ? "table2-active" : "table2-idle"
 			return 1
@@ -105,7 +98,7 @@
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
-	C.resting = 1
+	C.SetCrawling(TRUE)
 	C.loc = src.loc
 	for(var/obj/O in src)
 		O.loc = src.loc

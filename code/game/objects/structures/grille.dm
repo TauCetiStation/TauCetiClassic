@@ -21,11 +21,11 @@
 
 /obj/structure/grille/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(EXPLODE_DEVASTATE)
 			health -= rand(30, 50)
-		if(2)
+		if(EXPLODE_HEAVY)
 			health -= rand(15, 30)
-		if(3)
+		if(EXPLODE_LIGHT)
 			health -= rand(5, 15)
 	healthcheck()
 	return
@@ -60,7 +60,7 @@
 /obj/structure/grille/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(istype(user, /mob/living/carbon/xenomorph/larva))	return
+	if(isxenolarva(user))	return
 
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", \
@@ -73,7 +73,7 @@
 		return
 
 /obj/structure/grille/attack_slime(mob/user)
-	if(!istype(user, /mob/living/carbon/slime/adult))	return
+	if(!isslimeadult(user))	return
 	user.SetNextMove(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
@@ -108,17 +108,17 @@
 		else
 			return !density
 
-/obj/structure/grille/bullet_act(obj/item/projectile/Proj)
-
-	if(!Proj)	return
+/obj/structure/grille/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
+	if(!Proj)
+		return
 
 	//Tasers and the like should not damage grilles.
 	if(Proj.damage_type == HALLOSS)
 		return
 
-	src.health -= Proj.damage*0.2
+	health -= Proj.damage*0.2
 	healthcheck()
-	return 0
 
 /obj/structure/grille/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)

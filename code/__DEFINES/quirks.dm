@@ -6,6 +6,7 @@
 #define QUIRK_ALCOHOL_TOLERANCE "Стойкость к Алкоголю"
 #define QUIRK_FREERUNNING "Фриран"
 #define QUIRK_LIGHT_STEP "Лёгкий Шаг"
+#define QUIRK_FAST_EQUIP "Улучшенная Координация"
 
 // neutral quirks.
 #define QUIRK_HIGH_PAIN_THRESHOLD "Высокий Болевой Порог"

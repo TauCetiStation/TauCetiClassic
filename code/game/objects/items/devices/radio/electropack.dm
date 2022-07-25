@@ -96,6 +96,7 @@
 		s.set_up(3, 1, M)
 		s.start()
 
+		M.Stun(10)
 		M.Weaken(10)
 
 	if(master && !wires.is_index_cut(RADIO_WIRE_SIGNAL))
@@ -104,7 +105,7 @@
 
 /obj/item/device/radio/electropack/attack_self(mob/user, flag1)
 
-	if(!istype(user, /mob/living/carbon/human))
+	if(!ishuman(user))
 		return
 	user.set_machine(src)
 	var/dat = {"<TT>

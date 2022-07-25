@@ -29,7 +29,7 @@
 		recharge_coeff = C.rating
 
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
-	if(istype(user,/mob/living/silicon))
+	if(issilicon(user))
 		return
 	if(is_type_in_list(G, allowed_items))
 		if(charging || panel_open)

@@ -100,7 +100,7 @@
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 	if(is_mining_level(z))
-		score["oremined"]++ //When ore spawns, increment score.  Only include ore spawned on mining asteroid.
+		SSStatistics.score.oremined++ //When ore spawns, increment score.  Only include ore spawned on mining asteroid.
 
 /obj/item/weapon/ore/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/core_sampler))

@@ -28,7 +28,7 @@
 		return
 
 	var/turf/T = get_turf_loc(user)
-	if (!istype(T, /turf/simulated/floor))
+	if (!isfloorturf(T))
 		to_chat(user, "<span class='warning'>Noticeboard cannot be placed on this spot.</span>")
 		return
 
@@ -106,11 +106,14 @@
 
 	QDEL_LIST(notices)
 	for(var/hash in paper_icons)
-		var/list/icons = paper_icons[hash]
-		QDEL_LIST(icons)
+		var/I = paper_icons[hash]
+		qdel(I)
+	paper_icons = null
+
 	for(var/hash in photo_icons)
-		var/list/icons = photo_icons[hash]
-		QDEL_LIST(icons)
+		var/I = photo_icons[hash]
+		qdel(I)
+	photo_icons = null
 
 	QDEL_NULL(quest)
 

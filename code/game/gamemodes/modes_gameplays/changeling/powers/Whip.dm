@@ -45,7 +45,8 @@
 			LE.grabber = TRUE
 		if(INTENT_PUSH)
 			if(prob(65))
-				LE.weaken = 2.5
+				LE.weaken = 3
+				LE.stun = 2
 		if(INTENT_HARM)
 			LE.damage = 30
 		else
@@ -70,7 +71,7 @@
 
 /obj/item/projectile/changeling_whip/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(isturf(target))
-		return FALSE
+		return
 	var/atom/movable/T = target
 	if(grabber)
 		var/grab_chance
@@ -87,13 +88,13 @@
 	if(T.Adjacent(host) && !host.get_inactive_hand() && !host.lying)
 		if(iscarbon(T))
 			host.Grab(T, GRAB_AGGRESSIVE, FALSE)
-		else if(istype(T, /obj/item))
+		else if(isitem(T))
 			host.put_in_inactive_hand(T)
 
 /obj/item/projectile/changeling_whip/process()
 	spawn while(src && loc)
 		if(paused)
-			host.Stun(2, TRUE, TRUE)
+			host.Stun(2, TRUE)
 		sleep(1)
 	..()
 

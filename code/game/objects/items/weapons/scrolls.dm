@@ -31,7 +31,7 @@
 	if (usr.incapacitated() || src.loc != usr)
 		return
 	var/mob/living/carbon/human/H = usr
-	if (!( istype(H, /mob/living/carbon/human)))
+	if (!( ishuman(H)))
 		return 1
 	if (Adjacent(usr))
 		usr.set_machine(src)

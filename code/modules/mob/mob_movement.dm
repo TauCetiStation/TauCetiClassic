@@ -9,7 +9,7 @@
 		return 1
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
-	if(mover.checkpass(PASSMOB))
+	if(mover.checkpass(PASSMOB) || checkpass(PASSMOB))
 		return 1
 	if(buckled == mover)
 		return 1
@@ -37,11 +37,6 @@
 /client/East()
 	..()
 
-/client/verb/drop_item()
-	set hidden = 1
-	if(!isrobot(mob) && mob.stat == CONSCIOUS && isturf(mob.loc))
-		return mob.drop_item()
-	return
 /client/proc/Move_object(direct)
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
@@ -105,7 +100,7 @@
 		move_delay = world.time
 		//drunk driving
 		if(mob.confused)
-			direct = pick(cardinal)
+			direct = mob.confuse_input(direct)
 		return mob.buckled.relaymove(mob,direct)
 
 	if(!forced && !mob.canmove)
@@ -124,17 +119,13 @@
 	if(isturf(mob.loc))
 
 		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
-			for(var/mob/M in range(mob, 1))
-				if(M.pulling == mob)
-					if(!M.incapacitated() && M.canmove && mob.Adjacent(M))
-						to_chat(src, "<span class='notice'>You're incapacitated! You can't move!</span>")
-						return 0
-					else
-						M.stop_pulling()
-
-		if(mob.pinned.len)
-			to_chat(src, "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>")
-			return 0
+			var/mob/M = mob.pulledby
+			if(M)
+				if(!M.incapacitated() && M.canmove && mob.Adjacent(M))
+					to_chat(src, "<span class='notice'>You're incapacitated! You can't move!</span>")
+					return 0
+				else
+					M.stop_pulling()
 
 		//We are now going to move
 		var/add_delay
@@ -151,7 +142,7 @@
 		move_delay += add_delay
 
 		if(mob.pulledby || mob.buckled) // Wheelchair driving!
-			if(istype(mob.loc, /turf/space))
+			if(isspaceturf(mob.loc))
 				return // No wheelchair driving in space
 			if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
 				return mob.pulledby.relaymove(mob, direct)
@@ -203,16 +194,10 @@
 							M.animate_movement = 2
 							return
 
-		else if(mob.confused)
-			var/newdir = direct
-			if(mob.confused > 40)
-				newdir = pick(alldirs)
-			else if(prob(mob.confused * 1.5))
-				newdir = angle2dir(dir2angle(direct) + 180)
-			else if(prob(mob.confused * 3))
-				newdir = angle2dir(dir2angle(direct) + pick(90, -90))
-			step(mob, newdir)
 		else
+			if(mob.confused && !mob.crawling)
+				direct = mob.confuse_input(direct)
+				n = get_step(get_turf(mob), direct)
 			. = mob.SelfMove(n, direct)
 
 		for (var/obj/item/weapon/grab/G in mob.GetGrabs())
@@ -243,9 +228,14 @@
 	if(!Adjacent(machine) || !machine.can_interact_with(src))
 		return FALSE
 	var/obj/machinery/computer/security/console = machine
+
+	if(QDELETED(console.active_camera))
+		console.active_camera = null // if qdeling, set it null
+		return FALSE
+
 	var/turf/T = get_turf(console.active_camera)
 	var/list/cameras = list()
-	
+
 	for(var/cam_tag in console.camera_cache)
 		var/obj/C = console.camera_cache[cam_tag]
 		if(C == console.active_camera)
@@ -275,12 +265,6 @@
 			minDist = dist
 	console.jump_on_click(src, minCam)
 	return TRUE
-
-/mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	if (pinned.len)
-		return FALSE
-
-	return ..()
 
 ///Process_Incorpmove
 ///Called by client/Move()
@@ -357,7 +341,7 @@
 
 		else if(isturf(A))
 			var/turf/turf = A
-			if(istype(turf,/turf/space))
+			if(isspaceturf(turf))
 				continue
 
 			if(!turf.density && !mob_negates_gravity())

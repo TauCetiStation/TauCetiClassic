@@ -154,7 +154,7 @@
 			iconholder = TRUE
 			reqpower = 700
 
-		if(/obj/item/weapon/gun/energy/laser/retro)
+		if(/obj/item/weapon/gun/energy/retro)
 			iconholder = TRUE
 
 		if(/obj/item/weapon/gun/energy/laser/selfcharging/captain)
@@ -266,18 +266,8 @@ var/global/list/turret_icons
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/porta_turret/proc/HasController()
-	var/area/A = get_area(src)
-	if(!A.turret_controls.len)
-		return FALSE
-	else
-		for(var/obj/machinery/turretid/controller in A.turret_controls)
-			if(controller.is_operational())
-				return TRUE
-	return FALSE
-
 /obj/machinery/porta_turret/is_operational()
-	return !((stat & (NOPOWER | BROKEN)) || HasController()) && anchored
+	return !(stat & (NOPOWER | BROKEN)) && anchored
 
 /obj/machinery/porta_turret/Topic(href, href_list)
 	. = ..()
@@ -327,7 +317,7 @@ var/global/list/turret_icons
 			//try and salvage its components
 			if(user.is_busy()) return
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off.</span>")
-			if(I.use_tool(src, user, 20, volume = 50))
+			if(I.use_tool(src, user, SKILL_TASK_EASY, volume = 50))
 				if(prob(70))
 					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
 					if(t_gun)
@@ -344,7 +334,7 @@ var/global/list/turret_icons
 				qdel(src) // qdel
 
 	else if(iswrench(I))
-		if(enabled || raised)
+		if((anchored && enabled) || raised)
 			to_chat(user, "<span class='warning'>You cannot unsecure an active turret!</span>")
 			return
 		if(user.is_busy(src, FALSE))
@@ -358,7 +348,7 @@ var/global/list/turret_icons
 				"<span class='warning'>[user] begins [anchored ? "un" : ""]securing the turret.</span>", \
 				"<span class='notice'>You begin [anchored ? "un" : ""]securing the turret.</span>" \
 			)
-		if(I.use_tool(src, user, 50, volume = 100))
+		if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
 			//This code handles moving the turret around. After all, it's a portable turret!
 			if(!anchored)
 				anchored = TRUE
@@ -414,9 +404,9 @@ var/global/list/turret_icons
 	if(health <= 0)
 		die() //the death process :(
 
-/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	var/damage = Proj.damage
-
 	if(!damage)
 		return
 
@@ -424,8 +414,6 @@ var/global/list/turret_icons
 		if(!attacked && !emagged)
 			attacked = TRUE
 			VARSET_IN(src, attacked, FALSE, 60)
-
-	..()
 
 	take_damage(damage)
 
@@ -449,15 +437,14 @@ var/global/list/turret_icons
 
 /obj/machinery/porta_turret/ex_act(severity)
 	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(25))
-				qdel(src)
-			else
+		if(EXPLODE_HEAVY)
+			if(prob(75))
 				take_damage(initial(health) * 8) //should instakill most turrets
-		if(3)
+				return
+		if(EXPLODE_LIGHT)
 			take_damage(initial(health) * 8 * 0.33) // 8/3 ~ 8*0.33
+			return
+	qdel(src)
 
 /obj/machinery/porta_turret/proc/die()	//called when the turret dies, ie, health <= 0
 	health = 0
@@ -468,7 +455,7 @@ var/global/list/turret_icons
 /obj/machinery/porta_turret/process()
 	//the main machinery process
 
-	if(stat & (NOPOWER|BROKEN))
+	if(!is_operational())
 		//if the turret has no power or is broken, make the turret pop down if it hasn't already
 		popDown()
 		return
@@ -703,7 +690,7 @@ var/global/list/turret_icons
 	var/ailock
 
 /obj/machinery/porta_turret/proc/setState(datum/turret_checks/TC)
-	if(controllock)
+	if(controllock || !is_operational())
 		return
 	src.enabled = TC.enabled
 	src.lethal = TC.lethal

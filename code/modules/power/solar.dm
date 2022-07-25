@@ -147,22 +147,20 @@
 
 /obj/machinery/power/solar/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			if(prob(15))
 				new /obj/item/weapon/shard( src.loc )
-			return
-		if(2.0)
-			if (prob(25))
+		if(EXPLODE_HEAVY)
+			if(prob(25))
 				new /obj/item/weapon/shard( src.loc )
 				qdel(src)
 				return
-			if (prob(50))
+			if(prob(50))
 				broken()
-		if(3.0)
-			if (prob(25))
+		if(EXPLODE_LIGHT)
+			if(prob(25))
 				broken()
-	return
 
 
 /obj/machinery/power/solar/blob_act()
@@ -474,17 +472,16 @@
 
 /obj/machinery/power/solar_control/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			//SN src = null
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2.0)
-			if (prob(50))
-				broken()
-		if(3.0)
-			if (prob(25))
-				broken()
-	return
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				return
+	broken()
 
 
 /obj/machinery/power/solar_control/blob_act()

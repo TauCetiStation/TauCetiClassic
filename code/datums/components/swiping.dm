@@ -277,7 +277,7 @@
 			var/obj/item/I = parent
 			I.afterattack(target, user, TRUE, list()) // 1 indicates adjacency
 
-	if(!has_gravity(parent) && !istype(target, /turf/space))
+	if(!has_gravity(parent) && !isspaceturf(target))
 		step_away(user, T_target)
 	else if(istype(target, /atom/movable))
 		var/atom/movable/AM = target
@@ -372,7 +372,7 @@
 			var/obj/item/I = parent
 			I.afterattack(target, user, TRUE, list()) // 1 indicates adjacency
 
-	if(!has_gravity(parent) && !istype(target, /turf/space))
+	if(!has_gravity(parent) && !isspaceturf(target))
 		step_to(user, T_target)
 	else if(istype(target, /atom/movable))
 		var/atom/movable/AM = target

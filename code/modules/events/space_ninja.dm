@@ -1,5 +1,11 @@
 /datum/event/space_ninja/setup()
-	space_ninja_arrival()
+	//Here we pick a location and spawn the ninja.
+	if(ninjastart.len == 0)
+		for(var/obj/effect/landmark/L in landmarks_list)
+			if(L.name == "ninja")
+				ninjastart.Add(L)
+
+	create_spawner(/datum/spawner/ninja_event)
 
 /*
 Also a dynamic ninja mission generator.
@@ -44,9 +50,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 	new_ninja.key = ninja_key
 
-	var/datum/faction/ninja/N = find_faction_by_type(/datum/faction/ninja)
-	if(!N)
-		N = SSticker.mode.CreateFaction(/datum/faction/ninja)
+	var/datum/faction/ninja/N = create_uniq_faction(/datum/faction/ninja)
 	add_faction_member(N, new_ninja, FALSE)
 
 	message_admins("[new_ninja] has spawned at [COORD(new_ninja)] [ADMIN_JMP(new_ninja)] [ADMIN_FLW(new_ninja)].")

@@ -2,8 +2,9 @@
 SUBSYSTEM_DEF(junkyard)
 	name = "Junkyard"
 	flags = SS_NO_FIRE
+	msg_lobby = "Уничтожаем Землю..."
 	var/list/junk = list()
-	var/junkyard_initialised = 0
+	var/junkyard_initialised = FALSE
 
 /datum/controller/subsystem/junkyard/Initialize(timeofday)
 	..()
@@ -22,7 +23,10 @@ SUBSYSTEM_DEF(junkyard)
 /datum/controller/subsystem/junkyard/proc/populate_junkyard()
 	var/zlevel = SSmapping.level_by_trait(ZTRAIT_JUNKYARD)
 	if(!zlevel)
-		return
+		SSmapping.LoadGroup(list(), "Junkyard", "junkyard", "junkyard.dmm", default_traits = list(ZTRAIT_JUNKYARD = TRUE))
+		zlevel = SSmapping.level_by_trait(ZTRAIT_JUNKYARD)
+		if(!zlevel)
+			CRASH("Somehow junkyard wasn't loaded, missing file or smt like that")
 
 	var/list/turfs_to_init = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
 	for(var/thing in turfs_to_init)
@@ -33,8 +37,13 @@ SUBSYSTEM_DEF(junkyard)
 			T.surround_by_scrap()
 			T.resource_definition()
 		CHECK_TICK
-	junkyard_initialised = 1
-	SSweather.eligible_zlevels.Add(zlevel) //junkyard
+
+	if(!junkyard_initialised)
+		SSweather.eligible_zlevels.Add(zlevel) //junkyard
+
+		create_spawner(/datum/spawner/space_bum)
+
+	junkyard_initialised = TRUE
 
 /datum/controller/subsystem/junkyard/proc/add_junk_to_stats(junktype)
 	if(!junktype)

@@ -29,7 +29,6 @@
 	status_flags = CANPUSH
 	universal_speak = 1
 	universal_understand = 1
-	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -54,6 +53,7 @@
 /turf/var/scp_was_here = 0
 
 /mob/living/simple_animal/special/scp173/atom_init()
+	attack_sound = SOUNDIN_PUNCH_MEDIUM
 	. = ..()
 	for(var/mob/living/simple_animal/special/scp173/SA in mob_list) //only 1 can exist at the same time
 		if(SA != src)
@@ -82,7 +82,7 @@
 		life_cicle = 0
 
 		for(var/turf/T in view(7, src))
-			if(istype(T,/turf/space)) continue
+			if(isspaceturf(T)) continue
 			turfs_around += T
 			for(var/obj/item/F in T.contents)
 				F.set_light(0)
@@ -114,7 +114,7 @@
 	for(var/mob/living/L in view(7,src))
 		if(L == src) continue
 		var/turf/T = get_turf(L)
-		if(istype(T,/turf/space)) continue
+		if(isspaceturf(T)) continue
 
 		var/light_amount = 0
 		light_amount = round(T.get_lumcount()*10)
@@ -187,7 +187,7 @@
 			L.scp_mark = 0
 
 /mob/living/simple_animal/special/scp173/attack_animal(mob/living/simple_animal/M)
-	M.emote("[M.friendly] \the <EM>[src]</EM>")
+	M.me_emote("[M.friendly] \the <EM>[src]</EM>")
 
 /mob/living/simple_animal/special/scp173/Process_Spacemove(movement_dir = 0)
 	return 1 //copypasta from carp code
@@ -197,5 +197,6 @@
 	to_chat(user, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 	visible_message("<span class='warning'>[user] gently taps [src] with [O].</span>")
 
-/mob/living/simple_animal/special/scp173/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/special/scp173/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	visible_message("[Proj] ricochets off [src]!")

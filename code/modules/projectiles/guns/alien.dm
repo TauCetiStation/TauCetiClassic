@@ -97,7 +97,7 @@
 	if (!istype(targloc) || !istype(curloc))
 		return
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.species && H.species.name != VOX)
 			to_chat(user, "<span class='warning'>The weapon does not respond to you!</span>")

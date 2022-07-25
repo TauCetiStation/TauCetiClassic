@@ -90,7 +90,8 @@
 	//--3--Move wheelchair--3--//
 	if(!buckled_mob)
 		step(src, direction)
-	Move(buckled_mob.loc)
+	else
+		Move(buckled_mob.loc)
 	set_dir(direction)
 	handle_rotation()
 	if(pulling) // Driver

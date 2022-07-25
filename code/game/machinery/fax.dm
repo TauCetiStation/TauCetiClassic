@@ -21,6 +21,8 @@ var/global/list/alldepartments = list("Central Command")
 
 	var/department = "Unknown" // our department
 	var/dptdest = "Central Command" // the department we're sending to
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_TRAINED)
+
 
 /obj/machinery/faxmachine/atom_init()
 	. = ..()
@@ -196,7 +198,7 @@ var/global/list/alldepartments = list("Central Command")
 
 	send_fax(sender, P, "Central Command")
 
-	add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
+	SSStatistics.add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
 
 	for(var/client/X in global.admins)
 		X.mob.playsound_local(null, 'sound/machines/fax_centcomm.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)

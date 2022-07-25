@@ -19,6 +19,9 @@
 	var/config_max_users = 0
 	var/config_min_users = 0
 
+	var/votable = FALSE
+	var/voteweight = 1
+
 	var/traits = null
 	var/space_ruin_levels = 2
 	var/space_empty_levels = 1
@@ -146,6 +149,26 @@
 	. = list()
 	for (var/file in map_file)
 		. += "maps/[map_path]/[file]"
+
+/datum/map_config/proc/GetFullMapName()
+	var/mapname = map_name
+	if (src == config.defaultmap)
+		mapname += " (Default)"
+
+	if (config_min_users > 0 || config_max_users > 0)
+		mapname += " \["
+		if (config_min_users > 0)
+			mapname += "[config_min_users]"
+		else
+			mapname += "0"
+		mapname += "-"
+		if (config_max_users > 0)
+			mapname += "[config_max_users]"
+		else
+			mapname += "inf"
+		mapname += "\]"
+	
+	return mapname
 
 /datum/map_config/proc/MakeNextMap()
 	return config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")

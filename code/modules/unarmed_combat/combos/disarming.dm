@@ -2,12 +2,16 @@
 	name = COMBO_DISARM
 	desc = "A move that knocks anything out of your opponent's hands."
 	combo_icon_state = "weapon_disarm"
-	fullness_lose_on_execute = 10
+	cost = 10
 	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
 
 	ignore_size = TRUE
 
 	allowed_target_zones = TARGET_ZONE_ALL
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 1,
+	)
 
 /datum/combat_combo/disarm/proc/item_swaparoo(mob/living/victim, mob/living/attacker)
 	if(!iscarbon(attacker))
@@ -92,15 +96,21 @@
 	name = COMBO_PUSH
 	desc = "A move that simply pushes your opponent to the ground."
 	combo_icon_state = "push"
-	fullness_lose_on_execute = 40
+	cost = 40
 	combo_elements = list(COMBO_DISARM, INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
 
 	check_bodyarmor = TRUE
 
 	allowed_target_zones = list(BP_CHEST)
 
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 4,
+		BP_INACTIVE_ARM = 4,
+	)
+
 /datum/combat_combo/push/execute(mob/living/victim, mob/living/attacker)
 	var/list/attack_obj = attacker.get_unarmed_attack()
+	apply_effect(3, STUN, victim, attacker, attack_obj=attack_obj, min_value=1)
 	apply_effect(3, WEAKEN, victim, attacker, attack_obj=attack_obj, min_value=1)
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has pushed [victim] to the ground!</span>")
@@ -111,7 +121,7 @@
 	name = COMBO_SLIDE_KICK
 	desc = "A move that makes you slide, kicking down people on your way."
 	combo_icon_state = "slide_kick"
-	fullness_lose_on_execute = 40
+	cost = 40
 	combo_elements = list(COMBO_DISARM, INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
 
 	ignore_size = TRUE
@@ -122,6 +132,11 @@
 	require_leg_to_perform = TRUE
 
 	heavy_animation = TRUE
+
+	pump_bodyparts = list(
+		BP_L_LEG = 4,
+		BP_R_LEG = 4,
+	)
 
 // Returns what to replace the append to the slide kick message with
 /datum/combat_combo/slide_kick/proc/take_pants_off(mob/living/L, mob/living/attacker)
@@ -222,7 +237,7 @@
 	name = COMBO_CAPTURE
 	desc = "A move that allows you to quickly grab your opponent into a jointlock, and press them against the ground."
 	combo_icon_state = "capture"
-	fullness_lose_on_execute = 75
+	cost = 75
 	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_PUSH, INTENT_GRAB)
 
 	scale_size_exponent = 0.0
@@ -230,6 +245,12 @@
 	allowed_target_zones = list(BP_L_ARM, BP_R_ARM)
 
 	require_arm = TRUE
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 7,
+		BP_INACTIVE_ARM = 7,
+		BP_CHEST = 7,
+	)
 
 /datum/combat_combo/capture/execute(mob/living/victim, mob/living/attacker)
 	var/saved_targetzone = attacker.get_targetzone()
@@ -259,6 +280,7 @@
 
 	victim_G.force_down = TRUE
 	apply_effect(3, WEAKEN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
+	apply_effect(3, STUN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
 	victim.visible_message("<span class='danger'>[attacker] presses [victim] to the ground!</span>")
 
 	step_to(attacker, victim)
@@ -271,7 +293,7 @@
 	name = COMBO_DROPKICK
 	desc = "A move in which you jump with your both legs into opponent's belly, knocking them backwards."
 	combo_icon_state = "dropkick"
-	fullness_lose_on_execute = 25
+	cost = 25
 	combo_elements = list(INTENT_PUSH, INTENT_HARM, INTENT_PUSH, INTENT_HARM)
 
 	armor_pierce = TRUE
@@ -285,6 +307,12 @@
 	require_leg_to_perform = TRUE
 
 	heavy_animation = TRUE
+
+	pump_bodyparts = list(
+		BP_L_LEG = 2,
+		BP_R_LEG = 2,
+		BP_GROIN = 2,
+	)
 
 /datum/combat_combo/dropkick/animate_combo(mob/living/victim, mob/living/attacker)
 	var/list/attack_obj = attacker.get_unarmed_attack()
@@ -329,7 +357,8 @@
 
 	attacker.anchored = prev_anchored
 	attacker.transform = prev_transform
-	attacker.apply_effect(3, WEAKEN, blocked = 0)
+	attacker.Weaken(3)
+	attacker.Stun(3)
 
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	attacker.visible_message("<span class='danger'>[attacker] dropkicks [victim], pushing them onward!</span>")
@@ -392,6 +421,7 @@
 					L.pixel_y = prev_info_el["pix_y"]
 					L.pass_flags = prev_info_el["pass_flags"]
 					apply_effect(4, WEAKEN, L, attacker, attack_obj=attack_obj, min_value=1)
+					apply_effect(4, STUN, L, attacker, attack_obj=attack_obj, min_value=1)
 				return
 
 	for(var/j in 1 to i)
@@ -401,6 +431,7 @@
 		L.pixel_y = prev_info_el["pix_y"]
 		L.pass_flags = prev_info_el["pass_flags"]
 		apply_effect(4, WEAKEN, L, attacker, attack_obj=attack_obj, min_value=1)
+		apply_effect(4, STUN, L, attacker, attack_obj=attack_obj, min_value=1)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/dropkick/execute(mob/living/victim, mob/living/attacker)

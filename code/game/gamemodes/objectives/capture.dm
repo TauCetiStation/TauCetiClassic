@@ -19,7 +19,7 @@
 			continue
 		captured_amount+=1
 	for(var/mob/living/carbon/xenomorph/humanoid/M in A)//Aliens are worth twice as much as humans.
-		if(istype(M, /mob/living/carbon/xenomorph/humanoid/queen))//Queens are worth three times as much as humans.
+		if(isxenoqueen(M))//Queens are worth three times as much as humans.
 			if(M.stat==2)
 				captured_amount+=1.5
 			else

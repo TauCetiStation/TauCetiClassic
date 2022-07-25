@@ -32,11 +32,11 @@
 /mob/living/simple_animal/cat/Life()
 	//MICE!
 	if((src.loc) && isturf(src.loc))
-		if(!stat && !resting && !buckled)
+		if(!stat && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(!M.stat)
 					M.splat()
-					emote(pick("<span class='warning'>splats the [M]!</span>","<span class='warning'>toys with the [M]</span>","worries the [M]"))
+					me_emote(pick("<span class='warning'>splats the [M]!</span>","<span class='warning'>toys with the [M]</span>","worries the [M]"))
 					movement_target = null
 					stop_automated_movement = FALSE
 					break
@@ -45,10 +45,10 @@
 
 	for(var/mob/living/simple_animal/mouse/snack in oview(src, 3))
 		if(prob(15))
-			emote(pick("hisses and spits!","mrowls fiercely!","eyes [snack] hungrily."))
+			me_emote(pick("hisses and spits!","mrowls fiercely!","eyes [snack] hungrily."))
 		break
 
-	if(!stat && !resting && !buckled)
+	if(!stat && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			walk_to(src,0)
@@ -185,17 +185,17 @@ var/global/cat_number = 0
 	faction = "untouchable"
 
 	var/const/cat_life_duration = 1 MINUTES
+	var/disappear = TRUE
 
 /mob/living/simple_animal/cat/runtime/atom_init(mapload, runtime_line)
 	. = ..()
-	cat_number += 1
 	playsound(loc, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER, 50)
 	new /obj/effect/temp_visual/pulse(loc)
 	new /obj/effect/temp_visual/sparkles(loc)
-
-	addtimer(CALLBACK(src, .proc/back_to_bluespace), cat_life_duration)
-	addtimer(CALLBACK(src, .proc/say_runtime, runtime_line), 5 SECONDS)
-
+	if(disappear)
+		cat_number += 1
+		addtimer(CALLBACK(src, .proc/back_to_bluespace), cat_life_duration)
+		addtimer(CALLBACK(src, .proc/say_runtime, runtime_line), 5 SECONDS)
 	for(var/i in rand(1, 3))
 		step(src, pick(global.alldirs))
 
@@ -253,7 +253,7 @@ var/global/cat_number = 0
 		return
 	target_mob.attack_unarmed(src)
 
-/mob/living/simple_animal/cat/runtime/bullet_act(obj/item/projectile/proj)
+/mob/living/simple_animal/cat/runtime/bullet_act(obj/item/projectile/Proj, def_zone)
 	return PROJECTILE_FORCE_MISS
 
 /mob/living/simple_animal/cat/runtime/ex_act(severity)
@@ -264,3 +264,6 @@ var/global/cat_number = 0
 
 /mob/living/simple_animal/cat/runtime/MouseDrop(atom/over_object)
 	return
+
+/mob/living/simple_animal/cat/runtime/fake // fake runtime cat, does not disappear
+	disappear = FALSE

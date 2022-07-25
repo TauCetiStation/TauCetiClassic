@@ -26,7 +26,7 @@
 	if (!( istype(T, /turf) ))
 		to_chat(user, "<span class='warning'>You must be on the ground!</span>")
 		return
-	if (!( istype(T, /turf/space) ))
+	if (!( isspaceturf(T) ))
 		to_chat(user, "<span class='warning'>You cannot build on or repair this turf!</span>")
 		return
 	build(T)
@@ -36,7 +36,7 @@
 */
 
 /obj/item/stack/tile/plasteel/proc/build(turf/S)
-	if (istype(S,/turf/space))
+	if (isenvironmentturf(S))
 		S.ChangeTurf(/turf/simulated/floor/plating/airless)
 	else
 		S.ChangeTurf(/turf/simulated/floor/plating)

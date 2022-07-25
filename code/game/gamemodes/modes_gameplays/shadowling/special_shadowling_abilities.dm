@@ -135,6 +135,7 @@ var/global/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-u
 			to_chat(usr, "<font size=5><b><i>YE--</b></I></font>")
 			sleep(1)
 			for(var/mob/living/M in orange(7, src))
+				M.Stun(10)
 				M.Weaken(10)
 				to_chat(M, "<span class='userdanger'>An immense pressure slams you onto the ground!</span>")
 			for(var/mob/M in player_list - new_player_list)
@@ -154,7 +155,7 @@ var/global/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-u
 			A.name = usr.real_name
 			if(A.real_name)
 				A.real_name = usr.real_name
-			usr.invisibility = 60 //This is pretty bad, but is also necessary for the shuttle call to function properly
+			usr.invisibility = INVISIBILITY_OBSERVER //This is pretty bad, but is also necessary for the shuttle call to function properly
 			usr.flags |= GODMODE
 			usr.notransform = TRUE
 			sleep(50)

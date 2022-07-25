@@ -11,23 +11,33 @@
 	mood_change = 2
 	timeout = 10 MINUTES
 
-/datum/mood_event/chit_chat
-	mood_change = 2
-	timeout = 10 SECONDS
+/datum/mood_event/happiness
+	mood_change = 6
+	description = "<span class='bold nicegreen'>For no apparent reason I feel great! I love life!</span>"
 
-/datum/mood_event/chit_chat/add_effects(_speaker)
-	description = "<span class='nicegreen'>I had a little chit-chat with [_speaker].</span>"
+/datum/mood_event/drunk
+	mood_change = 1
+	description = "<span class='nicegreen'>Everything just feels better after a drink or two.</span>"
 
-/datum/mood_event/conversation
-	mood_change = 5
-	timeout = 1 MINUTE
+/datum/mood_event/very_drunk
+	mood_change = 3
+	description = "<span class='nicegreen'>I *hicc* do not feel my hands, what regrets?</span>"
 
-/datum/mood_event/conversation/add_effects(_speaker)
-	description = "<span class='nicegreen'>I had a nice conversation with [_speaker].</span>"
-
-/datum/mood_event/deep_conversation
+/datum/mood_event/drunk_catharsis
 	mood_change = 10
-	timeout = 1 MINUTE
+	description = "<span class='bold nicegreen'>Whatever happens - happens. I do not care any longer. Void, consume me.</span>"
 
-/datum/mood_event/deep_conversation/add_effects(_speaker)
-	description = "<span class='bold nicegreen'>I just had the deepest conversation of my life with [_speaker]. Lots to ponder about...</span>"
+/datum/mood_event/smoked
+	description = "<span class='nicegreen'>I have had a smoke recently.</span>"
+	mood_change = 2
+	timeout = 6 MINUTES
+
+/datum/mood_event/shower
+	description = "<span class='nicegreen'>I've had a relaxing shower-time.</span>"
+	mood_change = 2
+	timeout = 5 MINUTES
+
+/datum/mood_event/sauna
+	description = "<span class='nicegreen'>I've had a relaxing time in sauna.</span>"
+	mood_change = 3
+	timeout = 10 MINUTES

@@ -96,7 +96,7 @@
 	set category = "Object"
 	set name = "HALT"
 	set src in usr
-	if(!istype(usr, /mob/living)) return
+	if(!isliving(usr)) return
 	if(usr.incapacitated())
 		return
 
@@ -175,6 +175,12 @@
 		usr.visible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
 		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, vary = FALSE)
 		cooldown = world.time
+
+/obj/item/clothing/mask/gas/sechailer/police
+	name = "police respirator"
+	desc = "A standard issue police respirator with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you detain them. Do not tamper with the device."
+	icon_state = "police_mask"
+	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 //Plague Dr suit can be found in clothing/suits/bio.dm
 /obj/item/clothing/mask/gas/plaguedoctor
@@ -301,4 +307,3 @@
 	name = "German Gas Mask"
 	desc = "Soldier's black gas mask."
 	icon_state = "German_gasmask"
-	item_color = "German_gasmask"

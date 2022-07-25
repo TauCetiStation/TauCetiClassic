@@ -5,7 +5,11 @@
 
 #define COLOR_BLACK                     "#000000"
 #define COLOR_NAVY_BLUE                 "#000080"
+#define COLOR_ADMIRAL_BLUE              "#051094"
+#define COLOR_INDIGO                    "#281e5d"
 #define COLOR_GREEN                     "#008000"
+#define COLOR_CROCODILE                 "#607d3b"
+#define COLOR_SEAWEED                   "#354a21"
 #define COLOR_DARK_GRAY                 "#404040"
 #define COLOR_MAROON                    "#800000"
 #define COLOR_PURPLE                    "#800080"
@@ -23,10 +27,15 @@
 #define COLOR_CYAN                      "#00ffff"
 #define COLOR_TEAL                      "#33cccc"
 #define COLOR_RED                       "#ff0000"
+#define COLOR_CRIMSON                   "#dc143c"
+#define COLOR_CRIMSON_RED               "#990000"
 #define COLOR_PINK                      "#ff00ff"
+#define COLOR_ROSE_PINK                 "#ffc0cb"
 #define COLOR_LIGHT_PINK                "#ff87ff"
 #define COLOR_ORANGE                    "#ff9900"
+#define COLOR_TIGER                     "#fc6a03"
 #define COLOR_YELLOW                    "#ffff00"
+#define COLOR_GOLD                      "#d4af37"
 #define COLOR_GRAY                      "#808080"
 #define COLOR_RED_GRAY                  "#aa5f61"
 #define COLOR_BROWN                     "#b19664"
@@ -83,6 +92,7 @@
 
 //These ones aren't a direct colour like the ones above, because nothing would fit
 #define LIGHT_COLOR_FIRE         "#faa019" //Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)
+#define LIGHT_COLOR_FIREPLACE    "#f07f13"
 #define LIGHT_COLOR_FLARE        "#fa644b" //Bright, non-saturated red. Leaning slightly towards pink for visibility. rgb(250, 100, 75)
 #define LIGHT_COLOR_GHOST_CANDLE "#a2fad1" // Used by ghost candles. rgb(162, 250, 209)
 #define LIGHT_COLOR_PLASMA       "#2be4b8" // Used in plasma gun. rgb(43, 228, 184)
@@ -107,3 +117,18 @@
 #define SLIME_COLOR_BLUE SLIME_COLOR(0.2, 0.2, 0.5)
 #define SLIME_COLOR_YELLOW SLIME_COLOR(0.5, 0.5, 0.2)
 #define SLIME_COLOR_CYAN SLIME_COLOR(0.2, 0.5, 0.5)
+
+#define SADNESS_COLOR(amount) list( \
+	0.3 + 0.7 * (1.0 - amount), \
+	0.3 - 0.3 * (1.0 - amount), \
+	0.2 - 0.2 * (1.0 - amount), \
+	0.7 - 0.7 * (1.0 - amount), \
+	0.6 + 0.4 * (1.0 - amount), \
+	0.5 - 0.5 * (1.0 - amount), \
+	0.1 - 0.1 * (1.0 - amount), \
+	0.1 - 0.1 * (1.0 - amount), \
+	0.1 + 0.9 * (1.0 - amount), \
+	0.0, \
+	0.0, \
+	0.0 \
+)

@@ -56,8 +56,10 @@
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
-	if(recoil)
-		shake_camera(user, recoil + 1, recoil)
+
+	var/skill_recoil = max(0, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
+	if(skill_recoil)
+		shake_camera(user, skill_recoil + 1, skill_recoil)
 
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
@@ -116,11 +118,11 @@
 			return
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.species.name == SHADOWLING)
+			if(H.species.name == SHADOWLING || H.species.name == ABOMINATION)
 				to_chat(H, "<span class='notice'>Your fingers don't fit in the trigger guard!</span>")
 				return
 
-			if(user.dna && user.dna.mutantrace == "adamantine")
+			if(user.get_species() == GOLEM)
 				to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
 				return
 			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
@@ -154,7 +156,7 @@
 			if(!chambered.BB.fake)
 				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
 			chambered.BB.damage *= 1.3
-		if(!chambered.fire(target, user, params, , silenced))
+		if(!chambered.fire(src, target, user, params, , silenced))
 			shoot_with_empty_chamber(user)
 		else
 			shoot_live_shot(user)
@@ -212,6 +214,7 @@
 			if(istype(chambered.BB, /obj/item/projectile/bullet/chameleon))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel weakness and the taste of gunpowder, but no more.</span>")
+				user.Stun(5)
 				user.apply_effect(5,WEAKEN,0)
 				return
 

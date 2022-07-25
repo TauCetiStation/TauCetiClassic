@@ -27,7 +27,7 @@
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	if(P.impact_force) // we want this to be before everything as this is unblockable type of effect at this moment. If something changes, then mob_bullet_act() won't be needed probably as separate proc.
-		if(istype(loc, /turf/simulated))
+		if(isturf(loc))
 			loc.add_blood(src)
 		throw_at(get_edge_target_turf(src, P.dir), P.impact_force, 1, P.firer, spin = TRUE)
 
@@ -38,8 +38,6 @@
 	. = mob_bullet_act(P, def_zone)
 	if(. != PROJECTILE_ALL_OK)
 		return
-
-	flash_weak_pain()
 
 	//Being hit while using a deadman switch
 	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
@@ -136,7 +134,7 @@
 	var/created_wound = apply_damage(throw_damage, dtype, zone, armor, damage_flags, O)
 
 	//thrown weapon embedded object code.
-	if(dtype == BRUTE && istype(O, /obj/item))
+	if(dtype == BRUTE && isitem(O))
 		var/obj/item/I = O
 		if(!I.can_embed || I.is_robot_module())
 			return
@@ -161,6 +159,12 @@
 	embedded += I
 	verbs += /mob/proc/yank_out_object
 
+/mob/living/proc/unpin_signal(obj/item/I)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_ANCHORED, I)
+	update_canmove()
+	UnregisterSignal(I, COMSIG_MOVABLE_MOVED)
+
 /mob/living/proc/pin_to_turf(obj/item/I)
 	if(!I)
 		return
@@ -176,8 +180,8 @@
 
 		visible_message("<span class='warning'>[src] is pinned to the [T] by [I]!</span>",
 			"<span class='danger'>You are pinned to the wall by [I]!</span>")
-		anchored = TRUE
-		pinned += I
+		ADD_TRAIT(src, TRAIT_ANCHORED, I)
+		RegisterSignal(I, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/unpin_signal, I))
 		update_canmove() // instant update, no need to wait Life() tick
 
 //This is called when the mob is thrown into a dense turf
@@ -291,7 +295,7 @@
 	update_action_buttons()
 
 /mob/living/incapacitated(restrained_type = ARMS)
-	return stat || paralysis || stunned || weakened || restrained(restrained_type)
+	return stat || HAS_TRAIT(src, TRAIT_INCAPACITATED) || restrained(restrained_type)
 
 // These procs define whether this mob has a usable limb at a given targetzone. Heavily used in combo-combat.
 // If targetzone is not specified, returns TRUE if the mob has the bodypart in general.

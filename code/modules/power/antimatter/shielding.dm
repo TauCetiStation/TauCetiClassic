@@ -105,21 +105,20 @@
 
 /obj/machinery/am_shielding/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			stability -= 80
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			stability -= 40
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			stability -= 20
 	check_stability()
 	return
 
 
-/obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(Proj.flag != "bullet")
 		stability -= Proj.force/2
-	return 0
-
 
 /obj/machinery/am_shielding/update_icon()
 	cut_overlays()

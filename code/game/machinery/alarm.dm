@@ -917,7 +917,7 @@ Code shamelessly copied from apc_frame
 
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
+	if (!isfloorturf(loc))
 		to_chat(usr, "<span class='warning'>Air Alarm cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")
@@ -974,8 +974,9 @@ FIRE ALARM
 			alarm()			// added check of detector status here
 	return
 
-/obj/machinery/firealarm/bullet_act(BLAH)
-	return alarm()
+/obj/machinery/firealarm/bullet_act(obj/item/projectile/P, def_zone)
+	. = ..()
+	alarm()
 
 /obj/machinery/firealarm/emp_act(severity)
 	if(prob(50/severity))
@@ -1247,7 +1248,7 @@ Code shamelessly copied from apc_frame
 
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = get_area(src)
-	if (!istype(loc, /turf/simulated/floor))
+	if (!isfloorturf(loc))
 		to_chat(usr, "<span class='warning'>Fire Alarm cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")

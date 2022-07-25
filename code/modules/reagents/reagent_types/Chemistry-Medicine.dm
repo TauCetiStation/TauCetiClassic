@@ -31,7 +31,8 @@
 			M.dizziness = 0
 			M.drowsyness = 0
 			M.setStuttering(0)
-			M.confused = 0
+			M.SetDrunkenness(0)
+			M.SetConfused(0)
 			M.jitteriness = 0
 
 /datum/reagent/inaprovaline
@@ -156,9 +157,9 @@
 /datum/reagent/leporazine/on_general_digest(mob/living/M)
 	..()
 	if(M.bodytemperature > BODYTEMP_NORMAL)
-		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	else if(M.bodytemperature < 311)
-		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
+		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = BODYTEMP_NORMAL)
+	else if(M.bodytemperature < BODYTEMP_NORMAL + 1)
+		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/kelotane
 	name = "Kelotane"
@@ -360,14 +361,9 @@
 	M.dizziness = 0
 	M.drowsyness = 0
 	M.setStuttering(0)
-	M.confused = 0
+	M.SetConfused(0)
 	M.SetSleeping(0)
 	M.jitteriness = 0
-	for(var/datum/disease/D in M.viruses)
-		D.spread = "Remissive"
-		D.stage--
-		if(D.stage < 1)
-			D.cure()
 
 /datum/reagent/synaptizine
 	name = "Synaptizine"
@@ -522,6 +518,7 @@
 		H.regenerating_bodypart = H.find_damaged_bodypart()
 	if(H.regenerating_bodypart)
 		H.nutrition -= 3
+		H.Stun(3)
 		H.apply_effect(3, WEAKEN)
 		H.apply_damages(0,0,1,4,0,5)
 		H.regen_bodyparts(4, FALSE)
@@ -648,7 +645,7 @@
 	M.dizziness = 0
 	M.drowsyness = 0
 	M.setStuttering(0)
-	M.confused = 0
+	M.SetConfused(0)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1 * REM, 0, 1)
 
 /datum/reagent/vitamin //Helps to regen blood and hunger(but doesn't really regen hunger because of the commented code below).
@@ -735,7 +732,7 @@
 			if(M.reagents.has_reagent("tramadol") || M.reagents.has_reagent("oxycodone"))
 				M.adjustToxLoss(5)
 			else
-				M.confused += 2
+				M.AdjustConfused(2)
 		if(20 to 60)
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
@@ -745,3 +742,12 @@
 						E.status &= ~ORGAN_BROKEN
 						E.perma_injury = 0
 						holder.remove_reagent("nanocalcium", 10)
+
+/datum/reagent/metatrombine
+	name = "Metatrombine"
+	id = "metatrombine"
+	description = "Metatrombine is a drug that induces high plateletes production. Can be used to temporarily coagulate blood in internal bleedings."
+	reagent_state = LIQUID
+	color = "#990000"
+	restrict_species = list(IPC, DIONA)
+	overdose = 5

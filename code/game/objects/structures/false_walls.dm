@@ -3,7 +3,7 @@
  */
 /obj/structure/falsewall
 	name = "wall"
-	desc = "A huge chunk of metal used to seperate rooms."
+	desc = "Огромный кусок металла для разделения комнат."
 	icon = 'icons/turf/walls/has_false_walls/wall.dmi'
 	icon_state = "box"
 	anchored = TRUE
@@ -73,17 +73,17 @@
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user)
 	if(opening)
-		to_chat(user, "<span class='warning'>You must wait until the door has stopped moving.</span>")
+		to_chat(user, "<span class='warning'>Вы должны подождать, пока дверь не закончит движение.</span>")
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(density)
 		var/turf/T = get_turf(src)
 		if(T.density)
-			to_chat(user, "<span class='warning'>The wall is blocked!</span>")
+			to_chat(user, "<span class='warning'>Стена заблокирована!</span>")
 			return
 		if(isscrewdriver(W))
-			user.visible_message("[user] tightens some bolts on the wall.", "You tighten the bolts on the wall.")
+			user.visible_message("[user] tightens some screws on the wall.", "Вы затягиваете винты на стене.")
 			T.ChangeTurf(walltype)
 			qdel(src)
 
@@ -96,8 +96,7 @@
 					T.attackby(W, user)
 				qdel(src)
 	else
-		to_chat(user, "<span class='notice'>You can't reach, close it first!</span>")
-
+		to_chat(user, "<span class='notice'>Вы не можете этого сделать пока стена открыта.</span>")
 	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(walltype)
@@ -128,7 +127,7 @@
 
 /obj/structure/falsewall/reinforced
 	name = "reinforced wall"
-	desc = "A huge chunk of reinforced metal used to seperate rooms."
+	desc = "Огромный кусок укреплённого металла для разделения комнат."
 	icon = 'icons/turf/walls/has_false_walls/reinforced_wall.dmi'
 	walltype = /turf/simulated/wall/r_wall
 
@@ -138,7 +137,7 @@
 
 /obj/structure/falsewall/uranium
 	name = "uranium wall"
-	desc = "A wall with uranium plating. This is probably a bad idea."
+	desc = "Стена с урановой обшивкой. Наверное, это плохая идея."
 	icon = 'icons/turf/walls/has_false_walls/uranium_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/uranium
 	canSmoothWith = list(/obj/structure/falsewall/uranium, /turf/simulated/wall/mineral/uranium)
@@ -171,42 +170,42 @@
 
 /obj/structure/falsewall/gold
 	name = "gold wall"
-	desc = "A wall with gold plating. Swag!"
+	desc = "Стена с золотой обшивкой. Оу-ееее!"
 	icon = 'icons/turf/walls/has_false_walls/gold_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/gold
 	canSmoothWith = list(/obj/structure/falsewall/gold, /turf/simulated/wall/mineral/gold)
 
 /obj/structure/falsewall/silver
 	name = "silver wall"
-	desc = "A wall with silver plating. Shiny."
+	desc = "Стена с серебрянной обшивкой. Блестит."
 	icon = 'icons/turf/walls/has_false_walls/silver_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/silver
 	canSmoothWith = list(/obj/structure/falsewall/silver, /turf/simulated/wall/mineral/silver)
 
 /obj/structure/falsewall/diamond
 	name = "diamond wall"
-	desc = "A wall with diamond plating. You monster."
+	desc = "Стена с алмазной обшивкой. Ты чудовище."
 	icon = 'icons/turf/walls/has_false_walls/diamond_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/diamond
 	canSmoothWith = list(/obj/structure/falsewall/diamond, /turf/simulated/wall/mineral/diamond)
 
 /obj/structure/falsewall/bananium
 	name = "bananium wall"
-	desc = "A wall with bananium plating. Honk!"
+	desc = "Стена с бананиумовой обшивкой. Хонк!"
 	icon = 'icons/turf/walls/has_false_walls/bananium_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/bananium
 	canSmoothWith = list(/obj/structure/falsewall/bananium, /turf/simulated/wall/mineral/bananium)
 
 /obj/structure/falsewall/sandstone
 	name = "sandstone wall"
-	desc = "A wall with sandstone plating."
+	desc = "Стена с песчаной обшивкой."
 	icon = 'icons/turf/walls/has_false_walls/sandstone_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/sandstone
 	canSmoothWith = list(/obj/structure/falsewall/sandstone, /turf/simulated/wall/mineral/sandstone)
 
 /obj/structure/falsewall/phoron
 	name = "phoron wall"
-	desc = "A wall with phoron plating. This is definately a bad idea."
+	desc = "Стена с обшивкой из форона. Определённо плохая идея."
 	icon = 'icons/turf/walls/has_false_walls/phoron_wall.dmi'
 	walltype = /turf/simulated/wall/mineral/phoron
 	canSmoothWith = list(/obj/structure/falsewall/phoron, /turf/simulated/wall/mineral/phoron)

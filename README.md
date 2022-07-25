@@ -23,11 +23,11 @@
 
 ---
 
-[Baystation12](http://baystation12.net/)-based build with many changes from another upstream and sibling builds like:
-* [/tg/station13](https://tgstation13.org/)
-* [ParadiseSS13](http://nanotrasen.se/phpBB3/index.php)
-* [/vg/station13](http://ss13.pomf.se/)
-* [Goonstation](http://goonhub.com/)
+[Baystation12](https://bay.ss13.me)-based build with many changes from another upstream and sibling builds like:
+* [/tg/station13](https://tgstation13.org)
+* [ParadiseSS13](https://paradisestation.org)
+* [/vg/station13](http://ss13.moe)
+* [Goonstation](https://goonhub.com)
 
 
 ### LICENSE
@@ -39,4 +39,4 @@ All commits whose authorship dates are not prior to `1417392000 +0000` are assum
 
 If you wish to develop and host this codebase in a closed source manner you may use all commits prior to `1417392000 +0000`, which are licensed under GPL v3.  The major change here is that if you host a server using any code licensed under AGPLv3 you are required to provide full source code for your servers users as well including addons and modifications you have made.
 
-All assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
+All assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](https://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated. Autorship and exact license of these assets can be found in the description of related Pull Requests on [github project page](https://github.com/TauCetiStation/TauCetiClassic/pulls?q=is%3Apr+is%3Amerged).

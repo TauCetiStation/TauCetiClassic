@@ -40,7 +40,7 @@
 
 /mob/living/simple_animal/ascendant_shadowling/atom_init()
 	. = ..()
-	var/image/ascend = image("icon" = 'icons/mob/shadowling.dmi', "icon_state" = "shadowling_ascended_ms", "layer" = LIGHTING_LAYER + 1)
+	var/image/ascend = image(icon = 'icons/mob/shadowling.dmi', icon_state = "shadowling_ascended_ms", layer = ABOVE_LIGHTING_LAYER)
 	ascend.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(ascend)
 
@@ -53,4 +53,4 @@
 
 //mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(movement_dir = 0)//TG
 /mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(movement_dir = 0)
-	return 1 //copypasta from carp code
+	return TRUE //copypasta from carp code

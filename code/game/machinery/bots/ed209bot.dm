@@ -506,15 +506,14 @@
 	deltimer(on_timer_id)
 	return ..()
 
-/obj/machinery/bot/secbot/ed209/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/bot/secbot/ed209/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(on && istype(Proj, /obj/item/projectile/beam/lasertag))
 		var/obj/item/projectile/beam/lasertag/L = Proj
 		if(L.lasertag_color != lasertag_color)
 			turn_off()
 			qdel(Proj)
 			on_timer_id = addtimer(CALLBACK(src, .proc/turn_on_cb), 100, TIMER_STOPPABLE)
-		return
-	return ..()
 
 /obj/machinery/bot/secbot/ed209/bluetag
 	lasertag_color = "blue"

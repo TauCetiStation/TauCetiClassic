@@ -47,8 +47,42 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	if(!SSticker)
 		return
 
+	// Protection from the moron admin
+	if(R_BAN & holder.rights)
+		if(tgui_alert(mob, "Если Вы используется это просто так, то не надо!", "Вы уверены?", list("Да", "Нет")) != "Да")
+			return
+
+		if(tgui_alert(mob, "Нажав \"Да\" Вы начинаете нести ответственность за поломанную статистику, информацию о конце раунда и введёте игроков в заблуждение.", "Вы уверены?", list("Нет", "Да")) != "Да")
+			return
+
+		if(tgui_alert(mob, "Подумайте трижды, прежде чем нажимать на \"Да\"", "Вы уверены?", list("Нет", "Да")) != "Да")
+			return
+
+		if(tgui_alert(mob, "Вы уверены? Раз.", "Вы уверены?", list("Да", "Нет")) != "Да")
+			return
+
+		if(tgui_alert(mob, "Вы уверены? Два.", "Вы уверены?", list("Нет", "Да")) != "Да")
+			return
+
+		// First "Да" have english "a" and russian "Д"
+		if(tgui_alert(mob, "Вы уверены? Три.", "Вы уверены?", list("Дa", "Да", "Нет")) != "Да")
+			return
+
 	SSticker.generate_scoreboard(mob)
 	message_admins("Admin [key_name_admin(usr)] has forced made a scoreboard.")
+
+/client/proc/save_statistics()
+	set category = "Debug"
+	set name = "Force save statistics"
+	set desc = "Force save statistics"
+
+	if(!holder)
+		return
+	if(!check_rights(R_DEBUG))
+		return
+
+	SSStatistics.drop_round_stats(stealth = TRUE)
+	message_admins("Admin [key_name_admin(usr)] has forced save the statistics.")
 
 // Debug verbs.
 /client/proc/restart_controller(controller in list("Master", "Failsafe"))

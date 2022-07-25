@@ -33,9 +33,7 @@ var/global/cmp_field = "name"
 	return initial(b.init_order) - initial(a.init_order)	//uses initial() so it can be used on types
 
 /proc/cmp_subsystem_display(datum/controller/subsystem/a, datum/controller/subsystem/b)
-	if(a.display_order == b.display_order)
-		return sorttext(b.name, a.name)
-	return a.display_order - b.display_order
+	return sorttext(b.name, a.name)
 
 /proc/cmp_subsystem_priority(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return a.priority - b.priority

@@ -48,13 +48,9 @@
 		deity = "their progenitor"
 
 	//parse the language code and consume it
-	var/datum/language/speaking = parse_language(msg)
-	if(speaking)
-		msg = copytext_char(msg, 2 + length_char(speaking.key))
-	else if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.species.force_racial_language)
-			speaking = all_languages[H.species.language]
+	var/list/parsed = parse_language(msg)
+	msg = parsed[1]
+	var/datum/language/speaking = parsed[2]
 
 	if(speaking)
 		msg = speaking.color_message(msg)

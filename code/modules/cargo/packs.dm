@@ -277,18 +277,18 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
-/datum/supply_pack/shotgunammo_nonlethal 
+/datum/supply_pack/shotgunammo_nonlethal
 	name = "Shotgun shells (non-lethal)"
 	contains = list(/obj/item/ammo_box/eight_shells/beanbag,
 					/obj/item/ammo_box/eight_shells/beanbag,
 					/obj/item/ammo_box/eight_shells/beanbag,
 					/obj/item/ammo_box/eight_shells/beanbag,
 					/obj/item/ammo_box/eight_shells/beanbag,
-					/obj/item/ammo_box/eight_shells/stunslug,
-					/obj/item/ammo_box/eight_shells/stunslug,
-					/obj/item/ammo_box/eight_shells/stunslug,
-					/obj/item/ammo_box/eight_shells/stunslug,
-					/obj/item/ammo_box/eight_shells/stunslug)
+					/obj/item/ammo_box/eight_shells/stunshot,
+					/obj/item/ammo_box/eight_shells/stunshot,
+					/obj/item/ammo_box/eight_shells/stunshot,
+					/obj/item/ammo_box/eight_shells/stunshot,
+					/obj/item/ammo_box/eight_shells/stunshot)
 	cost = 2000
 	crate_name = "Shotgun shells (non-lethal) crate"
 	group = "Security"
@@ -342,7 +342,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/m79
 	name = "m79 grenade launcher"
-	contains = list(/obj/item/weapon/gun/projectile/m79,
+	contains = list(/obj/item/weapon/gun/projectile/grenade_launcher/m79,
 					/obj/item/weapon/storage/box/r4046/rubber)
 	cost = 3000
 	crate_type = /obj/structure/closet/crate/secure
@@ -1209,7 +1209,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/storage/box/bodybags)
 	crate_name = "body bags crate"
 	group = "Medical / Science"
-	
+
 /datum/supply_pack/body_bags
 	name = "Stasis Bags Crate"
 	cost = 10000
@@ -1243,7 +1243,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Emergency Floodlight Crate"
 	group = "Medical / Science"
 
-/datum/supply_pack/artifical_ventilation_machine 
+/datum/supply_pack/artifical_ventilation_machine
 	name = "Artifical Ventilation Machine"
 	cost = 3000
 	contains = list(/obj/machinery/life_assist/artificial_ventilation)
@@ -1671,7 +1671,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Barber supplies"
 	group = "Supply"
 
-/datum/supply_pack/clown 
+/datum/supply_pack/clown
 	name = "Clown supply crate"
 	contains = list(/obj/item/weapon/bikehorn,
 					/obj/item/weapon/bikehorn,

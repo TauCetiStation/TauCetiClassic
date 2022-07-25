@@ -2,7 +2,7 @@
 	if (!user)
 		user = usr
 	if (!istype(user))
-		if (istype(user, /client))
+		if (isclient(user))
 			var/client/client = user
 			user = client.mob
 		else
@@ -30,7 +30,7 @@
 	if (!user)
 		user = usr
 	if (!istype(user))
-		if (!istype(user, /client))
+		if (!isclient(user))
 			return
 		var/client/client = user
 		user = client.mob
@@ -406,6 +406,11 @@
 	name = "Hacked"
 	desc = "Hazardous non-standard equipment detected. Please ensure any usage of this equipment is in line with unit's laws, if any."
 	icon_state = "hacked"
+
+/atom/movable/screen/alert/not_locked
+	name = "Interface Unlocked"
+	desc = "Unit's interface has been unlocked. Somebody accidentally or intentionally left it open. Robotics may provide assistance."
+	icon_state = "not_locked"
 
 /atom/movable/screen/alert/locked
 	name = "Locked Down"

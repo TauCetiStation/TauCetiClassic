@@ -78,7 +78,7 @@
 	prob(100);/obj/item/clothing/shoes/syndigaloshes,\
 	prob(100);/obj/item/weapon/storage/belt/military,\
 	prob(100);/obj/item/weapon/storage/toolbox/syndicate,\
-	prob(100);/obj/item/weapon/soap/syndie,\
+	prob(100);/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,\
 	prob(100);/obj/item/weapon/storage/box/syndie_kit/cutouts,\
 	prob(100);/obj/item/weapon/reagent_containers/food/snacks/donkpocket,\
 	prob(100);/obj/item/weapon/reagent_containers/food/snacks/syndicake\

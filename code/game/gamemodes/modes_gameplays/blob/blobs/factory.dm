@@ -2,49 +2,55 @@
 	name = "factory blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
+	max_health = 100
 	health = 100
 	fire_resist = 2
 	var/list/spores = list()
 	var/max_spores = 3
 	var/spore_delay = 0
+	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
+	var/mob/camera/blob/overmind = null
 
 /obj/effect/blob/factory/update_icon()
 	if(health <= 0)
 		qdel(src)
 
 /obj/effect/blob/factory/Destroy()
-	for(var/mob/living/simple_animal/hostile/blobspore/spore in spores)
+	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore as anything in spores)
 		if(spore.factory == src)
 			spore.factory = null
 	return ..()
 
 /obj/effect/blob/factory/run_action()
+	if(naut)
+		return
 	if(spores.len >= max_spores)
-		return 0
+		return
 	if(spore_delay > world.time)
-		return 0
+		return
 
 	spore_delay = world.time + 100 // 10 seconds
 	PulseAnimation()
 
-	new/mob/living/simple_animal/hostile/blobspore(src.loc, src)
-	return 0
+	var/mob/living/simple_animal/hostile/blob/blobspore/S = new (loc, src)
+	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
+		S.overmind = overmind
+		overmind.blob_mobs.Add(S)
 
+////////////////
+// BASE TYPE //
+////////////////
 
-/mob/living/simple_animal/hostile/blobspore
-	name = "blob spore"
-	desc = "Some blob thing."
+//Do not spawn
+/mob/living/simple_animal/hostile/blob
 	icon = 'icons/mob/blob.dmi'
-	icon_state = "blobpod"
-	icon_living = "blobpod"
 	pass_flags = PASSBLOB
-	health = 40
-	maxHealth = 40
-	melee_damage = 3
-	attacktext = "attack"
-	attack_sound = list('sound/weapons/genhit1.ogg')
-	var/obj/effect/blob/factory/factory = null
-	var/is_zombie = 0
+	speak_emote = null //so we use verb_yell/verb_say/etc
+	minbodytemp = 0
+	maxbodytemp = INFINITY
+	pass_flags = PASSBLOB
+	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	faction = "blob"
 	min_oxy = 0
 	max_oxy = 0
@@ -56,26 +62,119 @@
 	max_n2 = 0
 	minbodytemp = 0
 	maxbodytemp = 360
+	var/mob/camera/blob/overmind = null
+	var/obj/effect/blob/factory/factory = null
+	var/independent = FALSE
 
-/mob/living/simple_animal/hostile/blobspore/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/mob/living/simple_animal/hostile/blob/Login()
+	. = ..()
+	if(!client)
+		return
+	var/datum/faction/blob_conglomerate/C = find_faction_by_type(/datum/faction/blob_conglomerate)
+	if(!C)
+		return FALSE
+	for(var/datum/role/blob_overmind/M in C.members)
+		var/datum/role/R = M
+		if(!R.antag.current)
+			return
+		if(!isovermind(R.antag.current))
+			continue
+		var/mob/camera/blob/O = R.antag.current
+		client.images |= O.ghostimage
+
+/mob/living/simple_animal/hostile/blob/Destroy()
+	if(overmind)
+		overmind.blob_mobs.Remove(src)
+		overmind = null
+		factory = null
+	return ..()
+
+/mob/living/simple_animal/hostile/blob/Stat()
 	..()
-	adjustBruteLoss(clamp(0.01 * exposed_temperature, 1, 5))
+	if(statpanel("Status") && !independent)
+		if(overmind)
+			if(overmind.blob_core)
+				stat(null, "Core Health: [overmind.blob_core.health]")
+			stat(null, "Progress: [blobs.len]/[overmind.b_congl.blobwincount]")
 
-/mob/living/simple_animal/hostile/blobspore/blob_act()
-	return
+/mob/living/simple_animal/hostile/blob/blob_act(/obj/effect/blob/B)
+	if(stat != DEAD && health < maxHealth)
+		health += maxHealth*0.0125
 
-/mob/living/simple_animal/hostile/blobspore/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(istype(mover, /obj/effect/blob))
+/mob/living/simple_animal/hostile/blob/fire_act(exposed_temperature, exposed_volume)
+	..()
+	if(exposed_temperature)
+		adjustFireLoss(clamp(0.01 * exposed_temperature, 1, 5))
+	else
+		adjustFireLoss(5)
+
+/mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0)
+	for(var/obj/effect/blob/B in range(1, src))
 		return 1
 	return ..()
 
-/mob/living/simple_animal/hostile/blobspore/atom_init(mapload, obj/effect/blob/factory/linked_node)
+/mob/living/simple_animal/hostile/blob/say(message)
+	if (!message)
+		return
+
+	if (src.client)
+		if(client.prefs.muted & MUTE_IC)
+			to_chat(src, "You cannot send IC messages (muted).")
+			return
+		if (client.handle_spam_prevention(message,MUTE_IC))
+			return
+
+	if (stat)
+		return
+
+	message = sanitize(message)
+
+	if (!message)
+		return
+
+	log_say("[key_name(src)] : [message]")
+
+	message = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
+	message = "<span style='color:#EE4000'><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></span>"
+
+	for(var/M in mob_list)
+		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
+			to_chat(M, message)
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, src)
+			to_chat(M, "[link] [message]")
+
+////////////////
+// BLOB SPORE //
+////////////////
+/mob/living/simple_animal/hostile/blob/blobspore
+	name = "blob spore"
+	desc = "Some blob thing."
+	icon_state = "blobpod"
+	icon_living = "blobpod"
+	pass_flags = PASSBLOB
+	health = 40
+	maxHealth = 40
+	melee_damage = 3
+	attacktext = "attack"
+	attack_sound = list('sound/weapons/genhit1.ogg')
+	var/is_zombie = 0
+
+/mob/living/simple_animal/hostile/blob/blobspore/blob_act()
+	return
+
+/mob/living/simple_animal/hostile/blob/blobspore/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if(isblob(mover))
+		return TRUE
+	return ..()
+
+/mob/living/simple_animal/hostile/blob/blobspore/atom_init(mapload, obj/effect/blob/factory/linked_node)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
 	. = ..()
 
-/mob/living/simple_animal/hostile/blobspore/Life()
+/mob/living/simple_animal/hostile/blob/blobspore/Life()
 
 	if(!is_zombie && isturf(src.loc))
 		for(var/mob/living/carbon/human/H in oview(src,1)) //Only for corpse right next to/on same tile
@@ -84,7 +183,7 @@
 				break
 	..()
 
-/mob/living/simple_animal/hostile/blobspore/proc/Zombify(mob/living/carbon/human/H)
+/mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	if(H.wear_suit)
 		var/obj/item/clothing/suit/armor/A = H.wear_suit
 		if(A.armor && A.armor["melee"])
@@ -104,7 +203,7 @@
 	is_zombie = 1
 	loc.visible_message("<span class='warning'> The corpse of [H.name] suddenly rises!</span>")
 
-/mob/living/simple_animal/hostile/blobspore/death()
+/mob/living/simple_animal/hostile/blob/blobspore/death()
 // On death, create a small smoke of harmful gas (s-Acid)
 	var/datum/effect/effect/system/smoke_spread/chem/S = new
 	var/turf/location = get_turf(src)
@@ -120,7 +219,7 @@
 
 	qdel(src)
 
-/mob/living/simple_animal/hostile/blobspore/Destroy()
+/mob/living/simple_animal/hostile/blob/blobspore/Destroy()
 	if(factory)
 		factory.spores -= src
 	if(contents)
@@ -139,3 +238,115 @@
 	..()
 	M.damageoverlaytemp = 60
 	M.blurEyes(15)
+
+/////////////////
+// BLOBBERNAUT //
+/////////////////
+
+/mob/living/simple_animal/hostile/blob/blobbernaut
+	name = "blobbernaut"
+	desc = "A hulking, mobile chunk of blobmass."
+	icon_state = "blobbernaut"
+	icon_living = "blobbernaut"
+	icon_dead = "blobbernaut_dead"
+	health = 200
+	maxHealth = 200
+	attacktext = "slams"
+	melee_damage = 20
+	attack_sound = 'sound/effects/blobattack.ogg'
+	environment_smash = 1
+	speed = 3 //Bots
+	sight = SEE_TURFS | SEE_MOBS
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/atom_init()
+	. = ..()
+	var/new_name = "[initial(name)] ([rand(1, 999)])"
+	name = new_name
+	real_name = new_name
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/add_to_hud(datum/hud/hud, add_health=FALSE)
+	. = ..()
+	hud.init_screens(list(
+		/atom/movable/screen/health/blob/blobbernaut,
+		/atom/movable/screen/blob_power/blobbernaut,
+		))
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/Login()
+	..()
+	update_hud()
+
+	var/datum/faction/blob_conglomerate/C = find_faction_by_type(/datum/faction/blob_conglomerate)
+	if(!C)
+		return FALSE
+	var/datum/role/blobbernaut/R = SSticker.mode.CreateRole(/datum/role/blobbernaut, src)
+	C.HandleRecruitedRole(R)
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/update_health_hud() //ONLY healths
+	if(!hud_used) //Yes, we really need it
+		return
+	if(healths)
+		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(health)]</font></div>"
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/update_hud() //Basically called only once per join
+	if(!hud_used) //Yes, we really need it
+		return
+	if(healths)
+		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(health)]</font></div>"
+		healths.name = "Healths"
+	if(independent) //Was it with blob or not
+		return
+	if(overmind.blob_core && pwr_display) //Just in case, otherwise it is looped runtime
+		pwr_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(overmind.blob_core.health)]</font></div>"
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/attack_animal(mob/user)
+	if(faction == user.faction) //To avoid blobbernaut vs blobbernaut and spore's kills
+		return
+	..()
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/adjustBruteLoss(damage) //I hate it. Where is my AdjustHealth?
+	. = ..()
+	update_health_hud()
+/mob/living/simple_animal/hostile/blob/blobbernaut/adjustFireLoss(damage)
+	. = ..()
+	update_health_hud()
+/mob/living/simple_animal/hostile/blob/blobbernaut/ex_act(severity)
+	. = ..()
+	update_health_hud()
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/Life()
+	. = ..()
+	if(independent)
+		return // strong independent blobbernaut that don't need blob
+	var/list/blobs_in_area = range(2, src)
+	var/damagesources = 0
+	if(!(locate(/obj/effect/blob) in blobs_in_area))
+		damagesources++
+
+	if(!factory)
+		damagesources++
+	else
+		if(locate(/obj/effect/blob/core) in blobs_in_area)
+			health += maxHealth*0.05
+			update_health_hud()
+		if(locate(/obj/effect/blob/node) in blobs_in_area)
+			health += maxHealth*0.025
+			update_health_hud()
+
+	if(damagesources)
+		health -= maxHealth * 0.0125 * damagesources *2 //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
+		update_health_hud()
+		var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
+		I.appearance_flags = RESET_COLOR
+		flick_overlay_view(I, src, 8)
+	if(stat != DEAD)
+		return 1
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
+	..(gibbed)
+	if(factory)
+		factory.naut = null //remove this naut from its factory
+		factory.max_health = initial(factory.max_health)
+	flick("blobbernaut_death", src)
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/independent
+	independent = TRUE

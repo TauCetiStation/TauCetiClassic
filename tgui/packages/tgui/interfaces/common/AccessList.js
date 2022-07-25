@@ -1,5 +1,4 @@
 import { sortBy } from 'common/collections';
-import { Fragment } from 'inferno';
 import { useLocalState } from '../../backend';
 import { Box, Button, Flex, LabeledList, Section, Tabs } from '../../components';
 
@@ -70,7 +69,7 @@ export const AccessList = (props, context) => {
       title="Access"
       flexGrow={sectionFlexGrow}
       buttons={(
-        <Fragment>
+        <>
           <Button
             icon="check-double"
             content="Select All"
@@ -82,7 +81,7 @@ export const AccessList = (props, context) => {
             color="bad"
             onClick={() => denyAll()} />
           {sectionButtons}
-        </Fragment>
+        </>
       )}>
       <Flex>
         <Flex.Item>

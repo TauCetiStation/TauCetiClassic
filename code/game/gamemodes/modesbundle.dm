@@ -87,7 +87,7 @@
 	votable = TRUE
 
 /datum/modesbundle/all/secret/New()
-	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended)
+	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended, /datum/game_mode/malfunction)
 	..()
 
 /datum/modesbundle/run_anyway

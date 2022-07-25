@@ -1,14 +1,14 @@
-/datum/event/roundstart/area/replace/del_cable
+/datum/event/feature/area/replace/del_cable
 	special_area_types = list(/area/station/maintenance)
 	replace_types = list(/obj/structure/cable = null)
 	num_replaceable = 1
 
-/datum/event/roundstart/area/replace/del_cable/setup()
+/datum/event/feature/area/replace/del_cable/setup()
 	. = ..()
-	num_replaceable = rand(1, 2)
+	num_replaceable = rand(2, 8)
 	replace_callback = CALLBACK(src, .proc/remove_wire)
 
-/datum/event/roundstart/area/replace/del_cable/proc/remove_wire(obj/structure/cable/C)
+/datum/event/feature/area/replace/del_cable/proc/remove_wire(obj/structure/cable/C)
 	var/turf/T = get_turf(C)
 	C.remove_cable(T)
 

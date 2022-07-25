@@ -68,7 +68,7 @@
 		return 0
 	if(!on)
 		return 0
-	if(istype(loc, /turf/space) && !istype(src, /obj/vehicle/space))
+	if(isspaceturf(loc) && !istype(src, /obj/vehicle/space))
 		return 0
 	return 1
 
@@ -107,9 +107,9 @@
 		healthcheck()
 		return ..()
 
-/obj/vehicle/bullet_act(obj/item/projectile/Proj)
+/obj/vehicle/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
-	..()
 	healthcheck()
 
 /obj/vehicle/blob_act()
@@ -119,21 +119,17 @@
 
 /obj/vehicle/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			explode()
 			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			health -= rand(5,10)*fire_dam_coeff
 			health -= rand(10,20)*brute_dam_coeff
-			healthcheck()
-			return
-		if(3.0)
-			if (prob(50))
+		if(EXPLODE_LIGHT)
+			if(prob(50))
 				health -= rand(1,5)*fire_dam_coeff
 				health -= rand(1,5)*brute_dam_coeff
-				healthcheck()
-				return
-	return
+	healthcheck()
 
 /obj/vehicle/attack_ai(mob/user)
 	return
@@ -172,7 +168,7 @@
 	new /obj/item/stack/cable_coil/red(Tsec, 2)
 
 	//stuns people who are thrown off a train that has been blown up
-	if(istype(load, /mob/living))
+	if(isliving(load))
 		var/mob/living/M = load
 		M.apply_effects(5, 5)
 

@@ -166,7 +166,7 @@ var/global/datum/controller/master/Master = new()
 
 	world.log << "Initializations complete in [time] second[time == 1 ? "" : "s"]!"
 	log_initialization("Initializations complete in [time] second[time == 1 ? "" : "s"]!")
-	to_chat(world, "<span class='success'>Initializations complete!</span>")
+	to_chat(world, "<span class='success'>Инициализация завершена за [time] сек.!</span>")
 
 	SetRunLevel(RUNLEVEL_LOBBY)
 
@@ -179,6 +179,7 @@ var/global/datum/controller/master/Master = new()
 #else
 	world.sleep_offline = TRUE
 #endif
+	// this place break BUCKET_LEN, because default fps = 20. and new fps = 25
 	world.fps = config.fps
 
 	sleep(1)

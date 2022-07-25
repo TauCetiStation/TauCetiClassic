@@ -44,7 +44,7 @@
 		icon_state = "queen_dead"
 	else if((stat == UNCONSCIOUS && !IsSleeping()) || weakened)
 		icon_state = "queen_l"
-	else if(lying || resting)
+	else if(lying || crawling)
 		icon_state = "queen_sleep"
 	else
 		icon_state = "queen_s"
@@ -55,6 +55,11 @@
 	return(3 + move_delay_add + config.alien_delay)
 
 /mob/living/carbon/xenomorph/humanoid/queen/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
+	return FALSE
+
+/mob/living/carbon/xenomorph/humanoid/queen/can_pickup(obj/O)
+	if(istype(O, /obj/item/clothing/mask/facehugger))
+		return TRUE
 	return FALSE
 
 /mob/living/carbon/xenomorph/humanoid/queen/large
@@ -69,7 +74,7 @@
 		icon_state = "queen_dead-old"
 	else if((stat == UNCONSCIOUS && !IsSleeping()) || weakened)
 		icon_state = "queen_l-old"
-	else if(lying || resting)
+	else if(lying || crawling)
 		icon_state = "queen_sleep-old"
 	else
 		icon_state = "queen_s-old"

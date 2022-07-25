@@ -80,7 +80,7 @@
 		if(alive_heads >= dead_heads)
 			dat += "<span class='green'>The heads of staff were overthrown! The revolutionaries win! It's a clear victory!</span>"
 			feedback_add_details("[ID]_success","SUCCESS")
-			score["roleswon"]++
+			SSStatistics.score.roleswon++
 		else
 			dat += "<span class='orange'>The heads of staff were overthrown, but many heads died. The revolutionaries win, but lose support.</span>"
 			feedback_add_details("[ID]_success","HALF")
@@ -169,31 +169,31 @@
 	for(var/datum/role/rev_leader/lead in members)
 		foecount++
 		if (!lead.antag.current)
-			score["opkilled"]++
+			SSStatistics.score.opkilled++
 			continue
 		var/turf/T = lead.antag.current.loc
 		if(T)
 			if (istype(T.loc, /area/station/security/brig))
-				score["arrested"] += 1
+				SSStatistics.score.arrested += 1
 			else if (lead.antag.current.stat == DEAD)
-				score["opkilled"]++
-	if(foecount == score["arrested"])
-		score["allarrested"] = 1
+				SSStatistics.score.opkilled++
+	if(foecount == SSStatistics.score.arrested)
+		SSStatistics.score.allarrested = 1
 	for(var/mob/living/carbon/human/player as anything in human_list)
 		if(player.mind)
 			var/role = player.mind.assigned_role
 			if(role in global.command_positions)
 				if (player.stat == DEAD)
-					score["deadcommand"]++
+					SSStatistics.score.deadcommand++
 
-	var/arrestpoints = score["arrested"] * 1000
-	var/killpoints = score["opkilled"] * 500
-	var/comdeadpts = score["deadcommand"] * 500
-	if (score["traitorswon"])
-		score["crewscore"] -= 10000
-	score["crewscore"] += arrestpoints
-	score["crewscore"] += killpoints
-	score["crewscore"] -= comdeadpts
+	var/arrestpoints = SSStatistics.score.arrested * 1000
+	var/killpoints = SSStatistics.score.opkilled * 500
+	var/comdeadpts = SSStatistics.score.deadcommand * 500
+	if (SSStatistics.score.traitorswon)
+		SSStatistics.score.crewscore -= 10000
+	SSStatistics.score.crewscore += arrestpoints
+	SSStatistics.score.crewscore += killpoints
+	SSStatistics.score.crewscore -= comdeadpts
 
 /datum/faction/revolution/get_scorestat()
 	var/dat = ""
@@ -227,10 +227,10 @@
 	<B>Number of Surviving Command Staff:</B> [comcount]<BR>
 	<B>Number of Surviving Revolutionaries:</B> [revcount]<BR>
 	<B>Number of Surviving Loyal Crew:</B> [loycount]<BR><BR>
-	<B>Revolution Heads Arrested:</B> [score["arrested"]] ([score["arrested"] * 1000] Points)<BR>
-	<B>Revolution Heads Slain:</B> [score["opkilled"]] ([score["opkilled"] * 500] Points)<BR>
-	<B>Command Staff Slain:</B> [score["deadcommand"]] (-[score["deadcommand"] * 500] Points)<BR>
-	<B>Revolution Successful:</B> [score["traitorswon"] ? "Yes" : "No"] (-[score["traitorswon"] * revpenalty] Points)<BR>
-	<B>All Revolution Heads Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>"}
+	<B>Revolution Heads Arrested:</B> [SSStatistics.score.arrested] ([SSStatistics.score.arrested * 1000] Points)<BR>
+	<B>Revolution Heads Slain:</B> [SSStatistics.score.opkilled] ([SSStatistics.score.opkilled * 500] Points)<BR>
+	<B>Command Staff Slain:</B> [SSStatistics.score.deadcommand] (-[SSStatistics.score.deadcommand * 500] Points)<BR>
+	<B>Revolution Successful:</B> [SSStatistics.score.traitorswon ? "Yes" : "No"] (-[SSStatistics.score.traitorswon * revpenalty] Points)<BR>
+	<B>All Revolution Heads Arrested:</B> [SSStatistics.score.allarrested ? "Yes" : "No"] (Score tripled)<BR>"}
 
 	return dat

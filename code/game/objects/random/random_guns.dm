@@ -29,7 +29,7 @@
 /obj/random/guns/energy_weapon/item_to_spawn()
 		return pick(\
 						prob(25);/obj/item/weapon/gun/energy/taser/stunrevolver,\
-						prob(15);/obj/item/weapon/gun/energy/laser/retro,\
+						prob(15);/obj/item/weapon/gun/energy/retro,\
 						prob(15);/obj/item/weapon/gun/energy/laser/practice,\
 						prob(10);/obj/item/weapon/gun/energy/toxgun,\
 						prob(10);/obj/item/weapon/gun/energy/laser,\
@@ -114,7 +114,7 @@
 		return pick(\
 						prob(6);/obj/item/weapon/gun/grenadelauncher,\
 						prob(1);/obj/item/weapon/gun/projectile/revolver/rocketlauncher,\
-						prob(3);/obj/item/weapon/gun/projectile/m79\
+						prob(3);/obj/item/weapon/gun/projectile/grenade_launcher/m79\
 					)
 
 /obj/random/guns/weapon_item
@@ -155,7 +155,7 @@
 /obj/random/guns/set_shotgun/item_to_spawn()
 		return pick(\
 						prob(100);/obj/item/ammo_casing/shotgun/beanbag,\
-						prob(75);/obj/item/ammo_casing/shotgun/stunslug,\
+						prob(75);/obj/item/ammo_casing/shotgun/stunshot,\
 						prob(50);/obj/item/ammo_casing/shotgun/buckshot,\
 						prob(50);/obj/item/ammo_casing/shotgun/incendiary,\
 						prob(50);/obj/item/ammo_casing/shotgun/dart,\

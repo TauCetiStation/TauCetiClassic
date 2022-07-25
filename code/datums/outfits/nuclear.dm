@@ -1,16 +1,28 @@
+/obj/item/weapon/storage/backpack/nuke
+	startswith = list(
+	/obj/item/weapon/reagent_containers/pill/cyanide,
+	/obj/item/weapon/gun/projectile/automatic/pistol,
+	/obj/item/weapon/crowbar/red,
+	/obj/item/ammo_box/magazine/m9mm,
+	/obj/item/clothing/accessory/holster/armpit,
+	/obj/item/weapon/pinpointer/nukeop,
+	/obj/item/weapon/kitchenknife/combat,
+	/obj/item/clothing/accessory/storage/syndi_vest,
+	/obj/item/weapon/mining_voucher/syndi,)
+
 /datum/outfit/nuclear
 	name = "Nuclear Agent"
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/boots/combat
+	glasses = /obj/item/clothing/glasses/night
+	mask = /obj/item/clothing/mask/gas/syndicate
+	gloves = /obj/item/clothing/gloves/combat
 	l_ear = /obj/item/device/radio/headset/syndicate
+	l_pocket = /obj/item/weapon/storage/pouch/ammo
+	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster
 	id = /obj/item/weapon/card/id/syndicate/nuker
-	belt = /obj/item/weapon/gun/projectile/automatic/pistol
-	back = PREFERENCE_BACKPACK_FORCE
-	backpack_contents = list(
-		/obj/item/device/radio/uplink,
-		/obj/item/weapon/reagent_containers/pill/cyanide,
-		/obj/item/ammo_box/magazine/m9mm,
-		)
+	belt = /obj/item/weapon/storage/belt/military
+	back = /obj/item/weapon/storage/backpack/nuke
 	implants = list(
 		/obj/item/weapon/implant/dexplosive
 		)
@@ -19,15 +31,25 @@
 	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 
+
+/obj/item/weapon/storage/backpack/nuke/commander
+	startswith = list(
+	/obj/item/weapon/reagent_containers/pill/cyanide,
+	/obj/item/weapon/crowbar/red,
+	/obj/item/weapon/gun/projectile/revolver,
+	/obj/item/ammo_box/a357,
+	/obj/item/clothing/accessory/holster/armpit,
+	/obj/item/weapon/pinpointer/nukeop,
+	/obj/item/device/radio/uplink,
+	/obj/item/weapon/kitchenknife/combat,
+	/obj/item/clothing/accessory/storage/syndi_vest,
+	/obj/item/weapon/mining_voucher/syndi,)
+
 /datum/outfit/nuclear/leader
 	name = "Nuclear Commander"
 	id = /obj/item/weapon/card/id/syndicate/commander
-	belt = /obj/item/weapon/gun/projectile/revolver
-	backpack_contents = list(
-		/obj/item/device/radio/uplink,
-		/obj/item/weapon/reagent_containers/pill/cyanide,
-		/obj/item/ammo_box/a357,
-		)
+	back = /obj/item/weapon/storage/backpack/nuke/commander
+
 
 /datum/outfit/nuclear/unathi_equip()
 	backpack_contents += list(/obj/item/device/modkit/syndie/unathi)

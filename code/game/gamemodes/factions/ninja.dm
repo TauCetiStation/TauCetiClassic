@@ -34,13 +34,12 @@
 		return FALSE
 	var/ninjas_alive = 0
 	for(var/datum/role/ninja_role in members)
-		if(!istype(ninja_role.antag.current, /mob/living/carbon/human))
+		if(!ishuman(ninja_role.antag.current))
 			continue
 		if(ninja_role.antag.current.stat==2)
 			continue
 		ninjas_alive++
 	if(ninjas_alive)
 		return FALSE
-	else
-		stage = FS_ENDGAME
-		return TRUE
+	stage = FS_ENDGAME
+	return TRUE

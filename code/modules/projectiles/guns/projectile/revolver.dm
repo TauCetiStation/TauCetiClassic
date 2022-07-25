@@ -202,7 +202,7 @@
 		if(isliving(target) && isliving(user))
 			if(def_zone == BP_HEAD)
 				var/obj/item/ammo_casing/AC = chambered
-				if(AC.fire(user, user))
+				if(AC.fire(src, user, user))
 					user.apply_damage(300, BRUTE, def_zone, null, DAM_SHARP)
 					playsound(user, fire_sound, VOL_EFFECTS_MASTER)
 					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
@@ -231,6 +231,9 @@
 		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src].</span>")
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+
+/obj/item/weapon/gun/projectile/revolver/peacemaker/detective
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45/rubber
 
 /obj/item/weapon/gun/projectile/revolver/flare
 	name = "flare gun"

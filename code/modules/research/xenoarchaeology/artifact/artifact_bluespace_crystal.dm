@@ -56,12 +56,12 @@
 	tesla_zap(src,round(damage/10),round(damage/5)*25000)
 	empulse(src, round(damage/10),round(damage/5))
 	if(health < 0)
-		Destroy()
+		qdel(src)
 
-/obj/machinery/artifact/bluespace_crystal/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/artifact/bluespace_crystal/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(prob(Proj.damage))
 		get_damage(Proj.damage)
-	..()
 
 /obj/machinery/artifact/bluespace_crystal/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)

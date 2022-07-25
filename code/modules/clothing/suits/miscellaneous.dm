@@ -335,7 +335,6 @@
 	desc = "A black trenchcoat."
 	icon_state = "dude_coat"
 	item_state = "jensensuit"
-	item_color = "dude_coat"
 
 //pyjamas
 //originally intended to be pinstripes >.>
@@ -376,35 +375,30 @@
 	name = "pink swimsuit"
 	desc = "A rather skimpy pink swimsuit."
 	icon_state = "stripper_p"
-	item_color = "stripper_p"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/stripper_green
 	name = "green swimsuit"
 	desc = "A rather skimpy green swimsuit."
 	icon_state = "stripper_g"
-	item_color = "stripper_g"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/stripper_pink
 	name = "pink skimpy dress"
 	desc = "A rather skimpy pink dress."
 	icon_state = "stripper_p"
-	item_state = "stripper_p"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/stripper_green
 	name = "green skimpy dress"
 	desc = "A rather skimpy green dress."
 	icon_state = "stripper_g"
-	item_state = "stripper_g"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/mankini
 	name = "the mankini"
 	desc = "No honest man would wear this abomination"
 	icon_state = "mankini"
-	item_color = "mankini"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/xenos
@@ -424,35 +418,30 @@
 	name = "black swimsuit"
 	desc = "An oldfashioned black swimsuit."
 	icon_state = "swim_black"
-	item_color = "swim_black"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/blue
 	name = "blue swimsuit"
 	desc = "An oldfashioned blue swimsuit."
 	icon_state = "swim_blue"
-	item_color = "swim_blue"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/purple
 	name = "purple swimsuit"
 	desc = "An oldfashioned purple swimsuit."
 	icon_state = "swim_purp"
-	item_color = "swim_purp"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/green
 	name = "green swimsuit"
 	desc = "An oldfashioned green swimsuit."
 	icon_state = "swim_green"
-	item_color = "swim_green"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/red
 	name = "red swimsuit"
 	desc = "An oldfashioned red swimsuit."
 	icon_state = "swim_red"
-	item_color = "swim_red"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/batman
@@ -710,3 +699,10 @@
 	name = "blue letterman jacket"
 	desc = "A blue letterman jacket with a proud Nanotrasen N on the back. The tag says that it was made in Space China."
 	icon_state = "letterman_n"
+
+/obj/item/clothing/suit/kung
+	name = "Kung jacket"
+	desc = "Leather jaket with an old security badge attached to it"
+	icon_state = "kung_jacket"
+	item_state = "kung_jacket"
+	w_class = SIZE_SMALL

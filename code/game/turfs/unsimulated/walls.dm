@@ -10,6 +10,9 @@
 /turf/unsimulated/wall/iron
 	icon = 'icons/turf/walls/iron.dmi'
 
+/turf/unsimulated/wall/log
+	icon = 'icons/turf/walls/log.dmi'
+
 /turf/unsimulated/wall/fakeglass
 	name = "window"
 	icon = 'icons/turf/walls/fakeglass.dmi'

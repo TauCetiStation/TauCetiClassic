@@ -3,9 +3,9 @@
 /mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
 		to_chat(src, "<span class='warning'>You cannot afford this.</span>")
-		return 0
+		return FALSE
 	add_points(-cost)
-	return 1
+	return TRUE
 
 // Power verbs
 
@@ -33,8 +33,8 @@
 
 /mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
-	set name = "Create Shield Blob (10)"
-	set desc = "Create a shield blob."
+	set name = "Create/Upgrade Shield Blob (10)"
+	set desc = "Create a shield blob. Use it again on existing shield blob to upgrade it into a reflective blob."
 
 	var/turf/T = get_turf(src)
 	create_shield(T)
@@ -47,15 +47,91 @@
 		to_chat(src, "There is no blob here!")
 		return
 
-	if(!istype(B, /obj/effect/blob/normal))
+	if(!isblobnormal(B) && !isblobshield(B)) //Not special blob nor shield to upgrade
 		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
 	if(!can_buy(10))
 		return
 
+	if(isblobshield(B))
+		if(B.health < initial(B.health) / 2)
+			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified!</span>")
+			return
+		B.change_to(/obj/effect/blob/shield/reflective,src)
+	else
+		B.change_to(/obj/effect/blob/shield)
 
-	B.change_to(/obj/effect/blob/shield)
+/mob/camera/blob/verb/relocate_core_power()
+	set category = "Blob"
+	set name = "Relocate Core (70)"
+	set desc = "Swaps a node and your core."
+
+	relocate_core()
+
+/mob/camera/blob/proc/relocate_core()
+	var/turf/T = get_turf(src)
+	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
+	if(!B)
+		to_chat(src, "<span class='warning'>You must be on a blob node!</span>")
+		return
+	if(isspaceturf(T))
+		to_chat(src, "<span class='warning'>You cannot relocate your core here!</span>")
+		return
+	if(!can_buy(70))
+		return
+	var/turf/old_turf = get_turf(blob_core)
+	blob_core.forceMove(T)
+	B.forceMove(old_turf)
+
+/mob/camera/blob/verb/blobbernaut_power()
+	set category = "Blob"
+	set name = "Create Blobbernaut (40)"
+	set desc = "Create a shield blob. Use it again on existing shield blob to upgrade it into a reflective blob."
+
+	create_blobbernaut()
+
+/mob/camera/blob/proc/create_blobbernaut()
+	var/turf/T = get_turf(src)
+	var/obj/effect/blob/factory/B = locate(/obj/effect/blob/factory) in T
+	if(!B)
+		to_chat(src, "<span class='warning'>You must be on a factory blob!</span>")
+		return
+	if(B.naut) //if it already made a blobbernaut, it can't do it again
+		to_chat(src, "<span class='warning'>This factory blob is already sustaining a blobbernaut.</span>")
+		return
+	if(B.health < B.max_health * 0.5)
+		to_chat(src, "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>")
+		return
+	if(blob_points < 40)
+		to_chat(src, "<span class='warning'>You cannot afford this.</span>")
+		return FALSE
+
+	B.naut = TRUE //temporary placeholder to prevent creation of more than one per factory.
+	to_chat(src, "<span class='notice'>You attempt to produce a blobbernaut.</span>")
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50) //players must answer rapidly
+	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
+		B.max_health = B.max_health * 0.25 //factories that produced a blobbernaut have much lower health
+		B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
+		playsound(B.loc, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, 50)
+		var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
+		flick("blobbernaut_produce", blobber)
+		B.naut = blobber
+		blobber.factory = B
+		blobber.overmind = src
+		blobber.update_icons()
+		blobber.health = blobber.maxHealth * 0.5
+		blob_mobs += blobber
+		var/mob/dead/observer/C = pick(candidates)
+		blobber.key = C.key
+		playsound(blobber, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
+		to_chat(blobber, "<b>You are a blobbernaut!</b> \
+		<br>You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='danger'but will slowly die if not near the blob </span> or if the factory that made you is killed. \
+		<br>You can communicate with other blobbernauts and overminds<BR>")
+		add_points(-40)
+	else
+		to_chat(src, "<span class='warning'>You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later.</span>")
+		B.naut = null
 
 /mob/camera/blob/verb/create_resource_power()
 	set category = "Blob"
@@ -76,7 +152,7 @@
 		to_chat(src, "There is no blob here!")
 		return
 
-	if(!istype(B, /obj/effect/blob/normal))
+	if(!isblobnormal(B))
 		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
@@ -113,7 +189,7 @@
 		to_chat(src, "There is no blob here!")
 		return
 
-	if(!istype(B, /obj/effect/blob/normal))
+	if(!isblobnormal(B))
 		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
@@ -145,7 +221,7 @@
 		to_chat(src, "You must be on a blob!")
 		return
 
-	if(!istype(B, /obj/effect/blob/normal))
+	if(!isblobnormal(B))
 		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
@@ -156,7 +232,8 @@
 	if(!can_buy(60))
 		return
 
-	B.change_to(/obj/effect/blob/factory)
+	var/obj/effect/blob/factory/F = B.change_to(/obj/effect/blob/factory)
+	F.overmind = src
 
 /mob/camera/blob/verb/revert()
 	set category = "Blob"
@@ -166,17 +243,17 @@
 	var/turf/T = get_turf(src)
 	remove_blob(T)
 
-/mob/camera/blob/verb/remove_blob(turf/T)	
+/mob/camera/blob/verb/remove_blob(turf/T)
 	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
 	if(!B)
 		to_chat(src, "You must be on a blob!")
 		return
 
-	if(istype(B, /obj/effect/blob/core))
+	if(isblobcore(B))
 		to_chat(src, "Unable to remove this blob.")
 		return
 
-	B.Destroy()
+	qdel(B)
 
 
 /mob/camera/blob/verb/expand_blob_power()
@@ -226,7 +303,7 @@
 	if(!surrounding_turfs.len)
 		return
 
-	for(var/mob/living/simple_animal/hostile/blobspore/BS in alive_mob_list)
+	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in blob_mobs)
 		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)

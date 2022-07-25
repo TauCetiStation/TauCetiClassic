@@ -39,15 +39,7 @@ var/global/list/junkyard_bum_list = list()     //list of all bums placements
 	for(var/obj/item/loot in contents)
 		loot.make_old()
 	qdel(CATCH)
-	gender = pick(MALE, FEMALE)
-	if(gender == MALE)
-		name = pick(first_names_male)
-	else
-		name = pick(first_names_female)
-	name += " [pick(last_names)]"
-	real_name = name
-	var/datum/preferences/A = new()	//Randomize appearance for the human
-	A.randomize_appearance_for(src)
+	randomize_human(src)
 	sight |= SEE_BLACKNESS
 	update_inv_head()
 	update_inv_wear_suit()
@@ -56,33 +48,6 @@ var/global/list/junkyard_bum_list = list()     //list of all bums placements
 	update_inv_w_uniform()
 	update_inv_r_hand()
 	update_inv_l_hand()
-
-
-/mob/dead/observer/verb/become_bum()
-	set name = "Become space bum"
-	set category = "Ghost"
-	var/mob/dead/observer/M = usr
-	if(SSticker.current_state < GAME_STATE_PLAYING)
-		to_chat(src, "<span class='warning'> The game hasn't started yet!</span>")
-		return
-	if(!SSjunkyard.junkyard_initialised)
-		to_chat(src, "<span class='warning'>Junkyard not loaded. No space hobos for you. Ask admins to load junkyard.</span>")
-		return
-	if(!junkyard_bum_list.len)
-		to_chat(src, "<span class='warning'>No spawn points were loaded at this moment. Please try again later or ask admins.</span>")
-		return
-	if(config.antag_hud_restricted && M.has_enabled_antagHUD == 1)
-		to_chat(src, "<span class='warning'>antagHUD restrictions prevent you from spawning in as a bum.</span>")
-		return
-	if(client.time_joined_as_spacebum + 1200 >= world.time)
-		to_chat(src, "<span class='warning'>You may only spawn as space bum once per 7 minutes. [(3600 - world.time + client.time_joined_as_spacebum) / 10] seconds to respawn.</span>")
-		return
-	client.time_joined_as_spacebum = world.time
-	var/response = tgui_alert(src, "Are you -sure- you want to become a space bum?","Are you sure you want to hobo?", list("Yeah!","Nope!"))
-	if(response != "Yeah!")
-		return  //Hit the wrong key...again.
-
-	make_bum()
 
 /mob/proc/make_bum()
 	var/obj/effect/landmark/location = pick(junkyard_bum_list)

@@ -209,12 +209,13 @@
 		to_chat(user, "<span class='notice'>You link the tool to the console.</span>")
 		gizmo = G
 		G.console = src
-	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest))
+		return FALSE
+	if(istype(O, /obj/item/clothing/suit/armor/abductor/vest))
 		var/obj/item/clothing/suit/armor/abductor/vest/V = O
 		to_chat(user, "<span class='notice'>You link the vest to the console.</span>")
 		vest = V
-	else
-		return ..()
+		return FALSE
+	return ..()
 
 /obj/machinery/abductor/console/proc/Dispense(item,cost=1)
 	if(experiment && experiment.points >= cost)

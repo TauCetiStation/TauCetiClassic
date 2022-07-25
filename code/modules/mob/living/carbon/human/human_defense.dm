@@ -51,7 +51,7 @@
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
 		return PROJECTILE_ACTED
 
-	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug))
+	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunshot))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
 		P.agony *= get_siemens_coefficient_organ(BP)
 		P.stun *= get_siemens_coefficient_organ(BP)
@@ -64,7 +64,6 @@
 				if(hand && !(hand.flags & ABSTRACT))
 					drop_item()
 		P.on_hit(src)
-		flash_pain()
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
 		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
@@ -89,7 +88,6 @@
 		var/armorblock = run_armor_check(BP, "energy")
 		apply_damage(P.damage, P.damage_type, BP, armorblock, P.damage_flags(), P)
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
-		flash_pain()
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
 		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
@@ -192,6 +190,8 @@
 		return 0
 	var/protection = 0
 	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
+
+	protection += BP.pumped * 0.3
 	for(var/gear in protective_gear)
 		if(gear && istype(gear ,/obj/item/clothing))
 			var/obj/item/clothing/C = gear
@@ -225,13 +225,13 @@
 		if( (!hit_dir || is_the_opposite_dir(dir, hit_dir)) && prob(I.Get_shield_chance() - round(damage / 3) ))
 			visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [r_hand.name]!</span>")
 			return 1
-	if(wear_suit && istype(wear_suit, /obj/item))
+	if(wear_suit && isitem(wear_suit))
 		var/obj/item/I = wear_suit
 		if(prob(I.Get_shield_chance() - round(damage / 3) ))
 			visible_message("<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
 			var/list/turfs = list()
 			for(var/turf/T in orange(6))
-				if(istype(T,/turf/space)) continue
+				if(isenvironmentturf(T)) continue
 				if(T.density) continue
 				if(T.x>world.maxx-6 || T.x<6)	continue
 				if(T.y>world.maxy-6 || T.y<6)	continue
@@ -305,16 +305,17 @@
 		return FALSE
 
 	//Apply weapon damage
+	var/force_with_melee_skill = apply_skill_bonus(user, I.force, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // +15% for each melee level
 	var/damage_flags = I.damage_flags()
 	if(prob(armor))
 		damage_flags &= ~(DAM_SHARP | DAM_EDGE)
 
-	var/datum/wound/created_wound = apply_damage(I.force, I.damtype, BP, armor, damage_flags, I)
+	var/datum/wound/created_wound = apply_damage(force_with_melee_skill, I.damtype, BP, armor, damage_flags, I)
 
 	//Melee weapon embedded object code.
 	if(I.damtype == BRUTE && !I.anchored && I.can_embed && !I.is_robot_module())
 		var/weapon_sharp = (damage_flags & DAM_SHARP)
-		var/damage = I.force // just the effective damage used for sorting out embedding, no further damage is applied here
+		var/damage = force_with_melee_skill // just the effective damage used for sorting out embedding, no further damage is applied here
 		if (armor)
 			damage *= blocked_mult(armor)
 
@@ -327,7 +328,7 @@
 			BP.embed(I, null, null, created_wound)
 
 	var/bloody = 0
-	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (I.force * 2)))
+	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (force_with_melee_skill * 2)))
 		I.add_blood(src)	//Make the weapon bloody, not the person.
 //		if(user.hand)	user.update_inv_l_hand()	//updates the attacker's overlay for the (now bloodied) weapon
 //		else			user.update_inv_r_hand()	//removed because weapons don't have on-mob blood overlays
@@ -344,10 +345,10 @@
 
 		switch(hit_area)
 			if(BP_HEAD)//Harder to score a stun but if you do it lasts a bit longer
-				if(prob(I.force))
+				if(prob(force_with_melee_skill))
 					apply_effect(20, PARALYZE, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
-				if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
+				if(prob(force_with_melee_skill + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 					if(src != user && I.damtype == BRUTE && mind)
 						for(var/id in list(HEADREV, REV))
 							var/datum/role/R = mind.GetRole(id)
@@ -366,7 +367,7 @@
 						update_inv_glasses()
 
 			if(BP_CHEST)//Easier to score a stun but lasts less time
-				if(prob((I.force + 10)))
+				if(prob((force_with_melee_skill + 10)))
 					apply_effect(5, WEAKEN, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked down!</span>")
 
@@ -418,17 +419,17 @@
 		w_uniform.add_blood(source)
 		update_inv_w_uniform()
 
-/mob/living/carbon/human/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood)
+/mob/living/carbon/human/crawl_in_blood(datum/dirt_cover/dirt_cover)
 	if(wear_suit)
-		wear_suit.add_dirt_cover(floor_blood.basedatum)
+		wear_suit.add_dirt_cover(dirt_cover)
 		update_inv_wear_suit()
 	if(w_uniform)
-		w_uniform.add_dirt_cover(floor_blood.basedatum)
+		w_uniform.add_dirt_cover(dirt_cover)
 		update_inv_w_uniform()
 	if (gloves)
-		gloves.add_dirt_cover(floor_blood.basedatum)
+		gloves.add_dirt_cover(dirt_cover)
 	else
-		add_dirt_cover(floor_blood.basedatum)
+		add_dirt_cover(dirt_cover)
 	update_inv_gloves()
 
 /mob/living/carbon/proc/check_pierce_protection(obj/item/organ/external/BP, target_zone)

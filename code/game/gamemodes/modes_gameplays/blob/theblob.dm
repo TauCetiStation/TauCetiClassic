@@ -9,13 +9,14 @@
 	light_range = 3
 	desc = "Some blob creature thingy."
 	density = FALSE
-	opacity = TRUE
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
+	var/max_health = 30
 	var/health = 30
 	var/health_timestamp = 0
 	var/brute_resist = 4
 	var/fire_resist = 1
+	var/mob/camera/blob/OV //Optional
 
 /obj/effect/blob/atom_init()
 	blobs += src
@@ -36,9 +37,11 @@
 
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0))	return 0
-	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
-	return 0
+	if(air_group || (height==0))
+		return FALSE
+	if(istype(mover) && mover.checkpass(PASSBLOB))
+		return TRUE
+	return FALSE
 
 
 /obj/effect/blob/process()
@@ -62,8 +65,8 @@
 /obj/effect/blob/proc/RegenHealth()
 	// All blobs heal over time when pulsed, but it has a cool down
 	if(health_timestamp > world.time)
-		return 0
-	if(health < initial(health))
+		return
+	if(health < max_health)
 		health++
 		update_icon()
 		health_timestamp = world.time + 10 // 1 seconds
@@ -104,22 +107,25 @@
 
 /obj/effect/blob/proc/run_action()
 	PulseAnimation()
-	return 0
 
 
 /obj/effect/blob/proc/expand(turf/T = null, prob = 1)
-	if(prob && !prob(health))	return
-	if(istype(T, /turf/space) && prob(75)) 	return
+	if(prob && !prob(health))
+		return
+	if(isspaceturf(T) && prob(75))
+		return
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
 		for(var/i = 1 to 4)
 			var/dirn = pick(dirs)
 			dirs.Remove(dirn)
 			T = get_step(src, dirn)
-			if(!(locate(/obj/effect/blob) in T))	break
-			else	T = null
+			if(!(locate(/obj/effect/blob) in T))
+				break
+			T = null
 
-	if(!T)	return 0
+	if(!T)
+		return
 	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc, min(src.health, 30))
 	B.density = TRUE
 	if(T.Enter(B,src))//Attempt to move into the tile
@@ -132,7 +138,6 @@
 
 	for(var/atom/A in T)//Hit everything in the turf
 		A.blob_act()
-	return 1
 
 /obj/effect/blob/ex_act(severity)
 	var/damage = 150
@@ -141,8 +146,8 @@
 	return
 
 
-/obj/effect/blob/bullet_act(obj/item/projectile/Proj)
-	..()
+/obj/effect/blob/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	switch(Proj.damage_type)
 	 if(BRUTE)
 		 health -= (Proj.damage/brute_resist)
@@ -150,7 +155,6 @@
 		 health -= (Proj.damage/fire_resist)
 
 	update_icon()
-	return 0
 
 /obj/effect/blob/Crossed(atom/movable/AM)
 	. = ..()
@@ -179,6 +183,8 @@
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	..()
+	if(M.faction == "blob") //No friendly slams
+		return
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	visible_message("<span class='danger'>The [src.name] has been attacked by \the [M].</span>")
 	var/damage = M.melee_damage
@@ -189,11 +195,14 @@
 	update_icon()
 	return
 
-/obj/effect/blob/proc/change_to(type)
+/obj/effect/blob/proc/change_to(type, overmind)
 	if(!ispath(type))
 		error("[type] is an invalid type for the blob.")
-	new type(src.loc)
+	var/obj/effect/blob/B = new type(src.loc)
+	if(overmind)
+		B.OV = overmind
 	qdel(src)
+	return B
 
 /obj/effect/blob/normal
 	icon_state = "blob"

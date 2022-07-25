@@ -35,7 +35,7 @@
 	pass_flags = PASSTABLE
 	w_class = SIZE_TINY
 
-	speak = list("Hi","Hello!","Cracker?","BAWWWWK george mellons griffing me")
+	speak = list("Прривет","Здаррова!","Кррекер?","БВААААА! Джамес Морган дрразнит меня!")
 	speak_emote = list("squawks","says","yells")
 	emote_hear = list("squawks","bawks")
 	emote_see = list("flutters its wings")
@@ -150,9 +150,9 @@
 				if("ears")
 					if(ears)
 						if(available_channels.len)
-							say("[pick(available_channels)] BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+							say("[pick(available_channels)] БВААААА! ОСТАВЬ НАУШНИК! БВААААА!")
 						else
-							say("BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+							say("БВААААА! ОСТАВЬ НАУШНИК! БВААААА!")
 						ears.loc = src.loc
 						ears = null
 						for(var/possible_phrase in speak)
@@ -249,7 +249,7 @@
 	return
 
 //Bullets
-/mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
@@ -344,7 +344,7 @@
 			//Search for item to steal
 			parrot_interest = search_for_item()
 			if(parrot_interest)
-				emote("looks in [parrot_interest]'s direction and takes flight")
+				me_emote("looks in [parrot_interest]'s direction and takes flight")
 				parrot_state = PARROT_SWOOP | PARROT_STEAL
 				icon_state = "parrot_fly"
 			return
@@ -364,9 +364,9 @@
 		if(!held_item && !parrot_perch) //If we've got nothing to do.. look for something to do.
 			var/atom/movable/AM = search_for_perch_and_item() //This handles checking through lists so we know it's either a perch or stealable item
 			if(AM)
-				if(istype(AM, /obj/item) || isliving(AM))	//If stealable item
+				if(isitem(AM) || isliving(AM))	//If stealable item
 					parrot_interest = AM
-					emote("turns and flies towards [parrot_interest]")
+					me_emote("turns and flies towards [parrot_interest]")
 					parrot_state = PARROT_SWOOP | PARROT_STEAL
 					return
 				else	//Else it's a perch
@@ -481,11 +481,11 @@
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(pick(parrot_dam_zone))]
 
 				H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP)
-				emote(pick("pecks [H]'s [BP.name]", "cuts [H]'s [BP.name] with its talons"))
+				me_emote(pick("pecks [H]'s [BP.name]", "cuts [H]'s [BP.name] with its talons"))
 
 			else
 				L.adjustBruteLoss(damage)
-				emote(pick("pecks at [L]", "claws [L]"))
+				me_emote(pick("pecks at [L]", "claws [L]"))
 			return
 
 		//Otherwise, fly towards the mob!
@@ -516,7 +516,7 @@
 		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
 			continue
 
-		if(istype(AM, /obj/item))
+		if(isitem(AM))
 			var/obj/item/I = AM
 			if(I.w_class < SIZE_TINY)
 				return I
@@ -545,7 +545,7 @@
 		if(parrot_perch && AM.loc == parrot_perch.loc || AM.loc == src)
 			continue
 
-		if(istype(AM, /obj/item))
+		if(isitem(AM))
 			var/obj/item/I = AM
 			if(I.w_class <= SIZE_TINY)
 				return I
@@ -683,7 +683,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
-	speak = list("Poly wanna cracker!", ":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS LOOSE CALL THE SHUTTLE")
+	speak = list("Поли хочет кррекер!", ":e Прроверьте сингулярность, лоботррясы!", ":e Подключайте солнечные панели, ленивые даррмоеды!", ":e КТО ВЗЯЛ ГРРЁБАНЫЕ РРИГИ?", ":e О БОЖЕ, ОНА СБЕЖАЛА! ВЫЗЫВАЙТЕ ШАТТЛ!")
 	speak_chance = 3
 	var/memory_saved = 0
 	var/rounds_survived = 0
@@ -695,19 +695,19 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	available_channels = list(":e")
 	Read_Memory()
 	if(rounds_survived == longest_survival)
-		speak += pick("...[longest_survival].", "The things I have seen!", "I have lived many lives!", "What are you before me?")
+		speak += pick("...[longest_survival].", "Чего я только не видал!", "Я прожил так много жизней!", "Что ты предо мной?")
 		desc += " Old as sin, and just as loud. Claimed to be [rounds_survived]."
 		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
 		color = "#eeee22"
 	else if(rounds_survived == longest_deathstreak)
-		speak += pick("What are you waiting for!", "Violence breeds violence!", "Blood! Blood!", "Strike me down if you dare!")
+		speak += pick("Чего же ты ждёшь!?", "Насилие поррождает насилие!", "Крровь! Кровь!", "Убей меня, если посмеешь!")
 		desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
 		color = "#bb7777"
 	else if(rounds_survived > 0)
-		speak += pick("...again?", "No, It was over!", "Let me out!", "It never ends!")
+		speak += pick("...снова?", "Нет, всё было кончено!", "Выпустите меня!", "Это никогда не закончится!")
 		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"
 	else
-		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
+		speak += pick("...я жив?", "Это не птичий ррай!", "Я живу, умирраю, и снова живу!", "Пустота исчезает!")
 	. = ..()
 
 /mob/living/simple_animal/parrot/Poly/Life()

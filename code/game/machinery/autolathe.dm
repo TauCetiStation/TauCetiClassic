@@ -127,7 +127,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
 	R(/obj/item/weapon/flamethrower/full, CATEGORY_TOOLS),
 	R(/obj/item/weapon/rcd, CATEGORY_TOOLS),
 	R(/obj/item/weapon/weldingtool/largetank, CATEGORY_TOOLS),
-	R(/obj/item/ammo_box/a357, CATEGORY_AMMO),
+	R(/obj/item/ammo_casing/a357, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/m9mm, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/c45m, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/m9mm_2, CATEGORY_AMMO),
@@ -354,7 +354,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	if (.)
 		return
 
-	if(istype(usr, /mob/living/silicon/pai))
+	if(ispAI(usr))
 		var/mob/living/silicon/pai/TempUsr = usr
 		if(TempUsr.hackobj != src)
 			return

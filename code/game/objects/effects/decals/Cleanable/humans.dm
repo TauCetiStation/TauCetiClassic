@@ -13,7 +13,6 @@ var/global/list/image/splatter_cache=list()
 	icon_state = "mfloor1"
 	random_icon_states = list("mfloor1", "mfloor2", "mfloor3", "mfloor4", "mfloor5", "mfloor6", "mfloor7")
 	var/base_icon = 'icons/effects/blood.dmi'
-	var/list/viruses = list()
 	blood_DNA = list()
 	var/datum/dirt_cover/basedatum = /datum/dirt_cover/red_blood // Color when wet.
 	var/list/datum/disease2/disease/virus2 = list()
@@ -23,8 +22,6 @@ var/global/list/image/splatter_cache=list()
 	beauty = -100
 
 /obj/effect/decal/cleanable/blood/Destroy()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
 	return ..()
 
 /obj/effect/decal/cleanable/blood/atom_init()
@@ -54,6 +51,50 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/update_icon()
 	color = basedatum.color
 
+/mob/living/carbon/proc/add_feet_dirt(datum/dirt_cover/dirt_cover, track_amount, blood = TRUE, list/dirt_DNA = list())
+	var/hasfeet = TRUE
+	var/skip = FALSE
+
+	if (buckled)
+		if (blood && istype(buckled, /obj/structure/stool/bed/chair/wheelchair)) // useless a bit because of unbuckling in relaymove
+			var/obj/structure/stool/bed/chair/wheelchair/W = buckled
+			W.bloodiness = 4
+	else
+		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
+			var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
+			var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
+
+			if((!l_foot || l_foot.is_stump) && (!r_foot || r_foot.is_stump))
+				hasfeet = FALSE
+			else if(H.shoes) //Adding dirt to shoes
+				var/obj/item/clothing/shoes/S = H.shoes
+				if(istype(S))
+					if(!S.dirt_overlay || (S.dirt_overlay.color != dirt_cover.color))
+						S.cut_overlays()
+						S.add_dirt_cover(dirt_cover)
+					S.track_blood = max(track_amount, S.track_blood)
+					if(S.blood_DNA)
+						S.blood_DNA |= dirt_DNA
+					else
+						S.blood_DNA = dirt_DNA.Copy()
+				skip = TRUE
+
+		if (hasfeet && !skip) // Or feet
+			if(feet_dirt_color)
+				feet_dirt_color.add_dirt(dirt_cover)
+			else
+				feet_dirt_color = new/datum/dirt_cover(dirt_cover)
+			track_blood = max(track_amount, track_blood)
+			if(feet_blood_DNA)
+				feet_blood_DNA |= dirt_DNA
+			else
+				feet_blood_DNA = dirt_DNA.Copy()
+
+		update_inv_shoes()
+		if(blood && lying)
+			crawl_in_blood(dirt_cover)
+
 /obj/effect/decal/cleanable/blood/Crossed(atom/movable/AM)
 	. = ..()
 	if(!iscarbon(AM) || HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
@@ -64,43 +105,7 @@ var/global/list/image/splatter_cache=list()
 	if(!islist(blood_DNA))	//prevent from runtime errors connected with shitspawn
 		blood_DNA = list()
 
-	var/hasfeet = TRUE
-	var/skip = FALSE
-	if (ishuman(perp))
-		var/mob/living/carbon/human/H = perp
-		var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
-		var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
-		if((!l_foot || l_foot.is_stump) && (!r_foot || r_foot.is_stump))
-			hasfeet = FALSE
-		if(perp.shoes && !perp.buckled)//Adding blood to shoes
-			var/obj/item/clothing/shoes/S = perp.shoes
-			if(istype(S))
-				if((dirt_overlay && dirt_overlay.color != basedatum.color) || (!dirt_overlay))
-					S.cut_overlays()
-					S.add_dirt_cover(basedatum)
-				S.track_blood = max(amount,S.track_blood)
-				if(!S.blood_DNA)
-					S.blood_DNA = list()
-				if(blood_DNA.len)
-					S.blood_DNA |= blood_DNA.Copy()
-			skip = TRUE
-
-	if (hasfeet && !skip) // Or feet
-		if(perp.feet_dirt_color)
-			perp.feet_dirt_color.add_dirt(basedatum)
-		else
-			perp.feet_dirt_color = new/datum/dirt_cover(basedatum)
-		perp.track_blood = max(amount,perp.track_blood)
-		if(!perp.feet_blood_DNA)
-			perp.feet_blood_DNA = list()
-		perp.feet_blood_DNA |= blood_DNA.Copy()
-	else if (perp.buckled && istype(perp.buckled, /obj/structure/stool/bed/chair/wheelchair))
-		var/obj/structure/stool/bed/chair/wheelchair/W = perp.buckled
-		W.bloodiness = 4
-
-	perp.update_inv_shoes()
-	if(perp.lying)
-		perp.crawl_in_blood(src)
+	perp.add_feet_dirt(basedatum, amount, dirt_DNA=blood_DNA)
 	amount--
 
 /obj/effect/decal/cleanable/blood/proc/dry()
@@ -236,10 +241,6 @@ var/global/list/image/splatter_cache=list()
 				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
 				b.basedatum = new/datum/dirt_cover(src.basedatum)
 				b.update_icon()
-				for(var/datum/disease/D in src.viruses)
-					var/datum/disease/ND = D.Copy(1)
-					b.viruses += ND
-					ND.holder = b
 
 				if (step_to(src, get_step(src, direction), 0))
 					break

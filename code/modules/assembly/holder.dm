@@ -105,7 +105,7 @@
 	if(a_right)
 		a_right.on_found(finder)
 	if(special_assembly)
-		if(istype(special_assembly, /obj/item))
+		if(isitem(special_assembly))
 			var/obj/item/S = special_assembly
 			S.on_found(finder)
 
@@ -163,9 +163,9 @@
 				if("Right")	a_right.attack_self(user)
 			return
 		else
-			if(!istype(a_left,/obj/item/device/assembly/igniter))
+			if(!isigniter(a_left))
 				a_left.attack_self(user)
-			if(!istype(a_right,/obj/item/device/assembly/igniter))
+			if(!isigniter(a_right))
 				a_right.attack_self(user)
 	else
 		var/turf/T = get_turf(src)
@@ -231,9 +231,9 @@
 			var/obj/item/weapon/grenade/chem_grenade/gren = src
 			holder=gren.detonator
 		var/obj/item/device/assembly/timer/tmr = holder.a_left
-		if(!istype(tmr,/obj/item/device/assembly/timer))
+		if(!istimer(tmr))
 			tmr = holder.a_right
-		if(!istype(tmr,/obj/item/device/assembly/timer))
+		if(!istimer(tmr))
 			to_chat(usr, "<span class='notice'>This detonator has no timer.</span>")
 			return
 

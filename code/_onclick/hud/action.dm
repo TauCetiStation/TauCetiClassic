@@ -3,8 +3,7 @@
 #define AB_INNATE 3
 #define AB_GENERIC 4
 
-#define AB_CHECK_RESTRAINED 1
-#define AB_CHECK_STUNNED 2
+#define AB_CHECK_INCAPACITATED 2
 #define AB_CHECK_LYING 4
 #define AB_CHECK_ALIVE 8
 #define AB_CHECK_INSIDE 16
@@ -16,6 +15,7 @@
 	var/action_type = AB_ITEM
 	var/atom/movable/target = null
 	var/check_flags = 0
+	var/restained_check = ARMS // for AB_CHECK_INCAPACITATED
 	var/processing = 0
 	var/active = 0
 	var/atom/movable/screen/movable/action_button/button = null
@@ -107,11 +107,8 @@
 /datum/action/proc/Checks()// returns 1 if all checks pass
 	if(!owner)
 		return FALSE
-	if(check_flags & AB_CHECK_RESTRAINED)
-		if(owner.restrained())
-			return FALSE
-	if(check_flags & AB_CHECK_STUNNED)
-		if(owner.stunned || owner.weakened)
+	if(check_flags & AB_CHECK_INCAPACITATED)
+		if(owner.incapacitated(restained_check))
 			return FALSE
 	if(check_flags & AB_CHECK_LYING)
 		if(owner.lying && !owner.crawling)
@@ -258,7 +255,16 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(!client)
 		return FALSE
+
 	sync_lighting_plane_alpha()
+
+	if(stat == DEAD)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		set_EyesVision(null)
+		return FALSE
+
 	return TRUE
 
 ///Set the lighting plane hud alpha to the mobs lighting_alpha var
@@ -289,7 +295,7 @@
 
 //Presets for item actions
 /datum/action/item_action
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_ALIVE|AB_CHECK_INSIDE
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_LYING|AB_CHECK_INSIDE
 
 /datum/action/item_action/CheckRemoval(mob/living/user)
 	return !(target in user)

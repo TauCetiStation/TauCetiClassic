@@ -79,7 +79,8 @@
 	set src in oview(1)
 	if(in_range(usr, src))
 		show(usr)
-		to_chat(usr, desc)
+		if(desc)
+			to_chat(usr, desc)
 	else
 		to_chat(usr, "<span class='notice'>It is too far away.</span>")
 
@@ -127,30 +128,20 @@
 	max_storage_space = DEFAULT_BOX_STORAGE
 
 /obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
+	if(!ishuman(usr))
+		return FALSE
 
-	if((istype(usr, /mob/living/carbon/human)))
-		var/mob/M = usr
-		if(!( istype(over_object, /atom/movable/screen) ))
-			return ..()
+	if(istype(over_object, /atom/movable/screen/inventory/hand))
 		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
-		if(!M.incapacitated() && M.back == src)
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-			add_fingerprint(usr)
-			return
-		if(over_object == usr && usr.Adjacent(src))
-			if(usr.s_active)
-				usr.s_active.close(usr)
-			show_to(usr)
-			return
-	return
+		over_object.MouseDrop_T(src, usr)
+		return TRUE
+	else if(over_object == usr && usr.Adjacent(src))
+		if(usr.s_active)
+			usr.s_active.close(usr)
+		show_to(usr)
+		return TRUE
+	return ..()
+
 
 /*********
 * camera *
@@ -242,7 +233,7 @@
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
-		if(istype(A, /mob/living) && A:lying)
+		if(isliving(A) && A:lying)
 			img.Turn(A:lying_current)
 
 		var/offX = 1 + (photo_size-1)*16 + (A.x - center.x) * 32 + A.pixel_x
@@ -264,7 +255,7 @@
 	var/names_detail = list()
 	for(var/mob/M in the_turf)
 		if(M.invisibility)
-			if(see_ghosts && istype(M,/mob/dead/observer))
+			if(see_ghosts && isobserver(M))
 				var/mob/dead/observer/O = M
 				if(O.orbiting)
 					continue
@@ -278,7 +269,7 @@
 
 		var/holding = null
 
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			var/mob/living/L = M
 			if(L.l_hand || L.r_hand)
 				if(L.l_hand) holding = "They are holding \a [L.l_hand]"
@@ -323,7 +314,7 @@
 
 	var/mobs = ""
 	var/list/mob_names = list()
-	var/isAi = istype(user, /mob/living/silicon/ai)
+	var/isAi = isAI(user)
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
 		if(user.client)		//To make shooting through security cameras possible

@@ -6,8 +6,8 @@
 	var/obj/effect/essence_phantom/phantom
 	var/self_voice = FALSE
 	var/is_changeling = FALSE
-	var/atom/movable/screen/essence_voice/voice
-	var/atom/movable/screen/essence_phantom/phantom_s
+	var/atom/movable/screen/essence/voice/voice
+	var/atom/movable/screen/essence/phantom/phantom_s
 	var/rehost_timer_id = 0
 
 /mob/living/parasite/essence/atom_init(mapload, mob/living/carbon/host, mob/living/carbon/victim)
@@ -36,6 +36,7 @@
 		for(var/mob/living/parasite/essence/E in changeling.essences)
 			if(E.phantom && E.phantom.showed)
 				client.images += E.phantom.overlay
+		changeling.add_ui(hud_used)
 	if(rehost_timer_id)
 		deltimer(rehost_timer_id)
 		rehost_timer_id = 0
@@ -147,11 +148,11 @@
 
 	return host.whisper(message)
 
-/mob/living/parasite/essence/me_verb(message as text)
-	set name = "Me"
-	if(!host)
+/mob/living/parasite/essence/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
+	if(!host && intentional)
 		to_chat(src, "<span class='userdanger'>You can't speak without host!</span>")
 		return
+
 	if(host.stat == DEAD)
 		return
 
@@ -159,7 +160,7 @@
 		to_chat(src, "<span class='userdanger'>Your host forbade you emoting!</span>")
 		return
 
-	return host.custom_emote(1, message)
+	return host.me_emote(message, message_type, intentional)
 
 /mob/living/parasite/essence/say_understands(mob/other, datum/language/speaking)
 	if(!host)
@@ -202,7 +203,7 @@
 	if(!host)
 		return
 	if(changeling)
-		hud_used?.lingchemdisplay.maptext = host.hud_used.lingchemdisplay.maptext
+		client.screen += changeling.lingchemdisplay
 
 	sight = host.sight
 	see_in_dark = host.see_in_dark
@@ -257,7 +258,7 @@
 /obj/effect/proc_holder/changeling/manage_essencies/sting_action(mob/user)
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!changeling || changeling.controled_by)
-		return
+		return FALSE
 	var/dat = ""
 	for(var/mob/living/parasite/essence/M in changeling.essences)
 		dat += "Essence of [M.name] is [M.client ? "<font color='green'>active</font>" : "<font color='red'>hibernating</font>"]<BR> \
@@ -309,6 +310,7 @@
 	var/datum/browser/popup = new(user, "essence_managing", "Essence Management Panel", 350)
 	popup.set_content(dat)
 	popup.open()
+	return FALSE
 
 /mob/living/carbon/proc/delegate_body_to_essence(mob/living/parasite/essence/E)
 	if(!ischangeling(src))
@@ -376,7 +378,7 @@
 	else if(href_list["toggle_voice"])
 		choosen_essence.flags_allowed ^= ESSENCE_SELF_VOICE
 		choosen_essence.self_voice = FALSE
-		choosen_essence.voice.icon_state = "voice_off"
+		choosen_essence.voice.update_icon(choosen_essence)
 	else if(href_list["toggle_phantom"])
 		choosen_essence.flags_allowed ^= ESSENCE_PHANTOM
 		choosen_essence.phantom.hide_phantom()
@@ -412,10 +414,9 @@
 		return
 	if(showed)
 		return
-	if(host.phantom_s)
-		host.phantom_s.icon_state = "phantom_on"
 	loc = get_turf(place ? place : host)
 	showed = TRUE
+	host.phantom_s?.update_icon(host)
 	for(var/mob/living/M in host.changeling.essences)
 		if(!M.client)
 			continue
@@ -429,9 +430,9 @@
 		return
 	if(!showed)
 		return
-	host.phantom_s.icon_state = "phantom_off"
 	showed = FALSE
 	loc = host
+	host.phantom_s?.update_icon(host)
 	for(var/mob/living/M in host.changeling.essences)
 		if(!M.client)
 			continue
