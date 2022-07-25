@@ -21,7 +21,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/skills_console/atom_init_late()
-	for(var/obj/machinery/optable/skill_scanner in orange(5, src))
+	for(var/obj/machinery/optable/skill_scanner/skill_scanner in orange(5, src))
 		scanner = skill_scanner
 		scanner.console = src
 		break

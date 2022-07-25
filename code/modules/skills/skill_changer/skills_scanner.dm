@@ -41,6 +41,9 @@
 			user.drop_from_inventory(W, src)
 			cartridge = W
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
+		else
+			to_chat(user, "<span class='notice'>There is already [cartridge] inserted.</span>")
+
 		return FALSE
 	if(victim)
 		return

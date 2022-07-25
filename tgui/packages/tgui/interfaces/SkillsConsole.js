@@ -62,7 +62,7 @@ export const SkillsConsole = (props, context) => {
           </Stack.Item>
           <Stack.Item>
             <Stack>
-              <Stack.Item>
+              <Stack.Item width="40%" mr={1}>
                 <Section title="Patient status">
                   <LabeledList>
                     {!connected_table && (
@@ -78,7 +78,7 @@ export const SkillsConsole = (props, context) => {
                   </LabeledList>
                 </Section>
               </Stack.Item>
-              <Stack.Item>
+              <Stack.Item width="60%">
                 <Section title="Cartridge information">
                   {!inserted_cartridge && <Box>No cartridge inserted</Box>}
                   {inserted_cartridge === 1 && (
