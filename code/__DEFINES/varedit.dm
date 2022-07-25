@@ -2,9 +2,22 @@
 
 #define VE_PROTECTED_TYPES config.sandbox ? VE_PROTECTED_TYPES_STAT + /client : VE_PROTECTED_TYPES_STAT
 
+
+// to prevent:
+//  admin permissions escalation;
+//  savefiles corruption;
+//  feedback/db corruption;
+//  inputs edit;
+//  callprocs throught VV;
+//  and edit of other things that admins better not touch;
+
 #define VE_PROTECTED_TYPES_STAT list(\
 		/datum/admins,\
 		/datum/configuration,\
+		/datum/preferences,\
+		/datum/custom_item,\
+		/datum/guard,\
+		/datum/paiCandidate,\
 		/obj/machinery/blackbox_recorder,\
 		/datum/feedback_variable,\
 		/datum/timedevent,\
@@ -12,6 +25,7 @@
 		/datum/stack_recipe,\
 		/datum/events,\
 		/atom/movable/screen/buildmode,\
+		/datum/controller/subsystem/junkyard/,\
 		/datum/tgui_list_input,\
 		/datum/tgui_modal,\
 	)
