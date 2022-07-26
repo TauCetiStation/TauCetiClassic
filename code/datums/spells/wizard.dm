@@ -395,6 +395,8 @@
 
 	var/text = "<span class='[user.my_religion.style_text]'>Аколит [user.real_name]: [input]</span>"
 	log_say("([user.my_religion.name]) Аколит [user.real_name]: [input]")
+	if(user.mind.holy_role == CULT_ROLE_MASTER)
+		text = "<font size='4'>[text]</font>"
 	for(var/mob/M in global.mob_list)
 		if(isobserver(M))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [text]")
