@@ -350,6 +350,15 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
+/datum/supply_pack/ion_rifle
+	name = "ion rifles"
+	contains = list(/obj/item/weapon/gun/energy/ionrifle,
+					/obj/item/weapon/gun/energy/ionrifle)
+	cost = 7000
+	crate_type = /obj/structure/closet/crate/secure/weapon
+	crate_name = "ion rifles crate"
+	access = access_armory
+	group = "Security"
 
 /datum/supply_pack/expenergy
 	name = "Experimental energy gear crate"
