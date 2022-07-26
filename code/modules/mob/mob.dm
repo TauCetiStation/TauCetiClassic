@@ -286,23 +286,6 @@
 	else
 		to_chat(src, "The game appears to have misplaced your mind datum, so we can't show you your notes.")
 
-/mob/proc/update_flavor_text()
-	set src in usr
-	if(usr != src)
-		to_chat(usr, "No.")
-	var/msg = sanitize(input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",input_default(flavor_text)) as message|null)
-
-	if(msg)
-		flavor_text = msg
-
-/mob/proc/print_flavor_text()
-	if(flavor_text && flavor_text != "")
-		var/msg = flavor_text
-		if(length_char(msg) <= 40)
-			return "<span class='notice'>[msg]</span>"
-		else
-			return "<span class='notice'>[copytext_char(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a></span>"
-
 //mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
 /mob/verb/examinate(atom/A as mob|obj|turf in view())
 	set name = "Examine"
@@ -484,11 +467,6 @@
 	if (href_list["refresh"])
 		if(machine && in_range(src, usr)) // ? i'm sure changing this to Adjacent() will bug something
 			show_inv(machine)
-
-	if(href_list["flavor_more"])
-		var/datum/browser/popup = new(usr, "window=flavor [name]", "Flavor [name]", 500, 200, ntheme = CSS_THEME_LIGHT)
-		popup.set_content(flavor_text)
-		popup.open()
 	return
 
 

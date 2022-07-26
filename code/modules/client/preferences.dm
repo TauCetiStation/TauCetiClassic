@@ -127,7 +127,6 @@ var/global/const/MAX_SAVE_SLOTS = 10
 
 	var/list/player_alt_titles = new()		// the default name of a job like "Medical Doctor"
 
-	var/flavor_text = ""
 	var/med_record = ""
 	var/sec_record = ""
 	var/gen_record = ""
@@ -342,7 +341,6 @@ var/global/const/MAX_SAVE_SLOTS = 10
 
 	character.set_species(species)
 
-	character.flavor_text = flavor_text
 	character.metadata = metadata
 	character.med_record = med_record
 	character.sec_record = sec_record

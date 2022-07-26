@@ -545,8 +545,6 @@
 	if(w_class)
 		msg += "[t_He] [t_is] a [get_size_flavor()] sized creature.\n"
 
-	if(!skipface && print_flavor_text())
-		msg += "[print_flavor_text()]\n"
 
 	msg += "*---------*</span><br>"
 

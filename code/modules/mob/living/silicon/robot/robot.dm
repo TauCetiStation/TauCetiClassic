@@ -494,12 +494,12 @@
 		to_chat(usr, "<span class='warning'>Невозможно заблокировать интерфейс, если открыта панель.</span>")
 		emote("buzz")
 		return
-	
+
 	if(!do_after(usr, 10, target = usr))
 		return
-	
+
 	if(locked)
-		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")		
+		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")
 	else
 		to_chat(usr, "<span class='notice'>Интерфейс заблокирован.</span>")
 
@@ -516,17 +516,17 @@
 		to_chat(usr, "<span class='warning'>Невозможно открыть панель, если заблокирован интерфейс.</span>")
 		emote("buzz")
 		return
-	
+
 	if(!do_after(usr, 10, target = usr))
 		return
-	
+
 	if(opened)
 		to_chat(usr, "<span class='notice'>Панель закрыта.</span>")
 		playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
 	else
 		to_chat(usr, "<span class='notice'>Панель открыта.</span>")
 		playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
-	
+
 	opened = !opened
 	updateicon()
 
@@ -1147,13 +1147,6 @@
 	set category = "IC"
 
 	pose = sanitize(input(usr, "This is [src]. It is...", "Pose", input_default(pose)) as text)
-
-/mob/living/silicon/robot/verb/set_flavor()
-	set name = "Set Flavour Text"
-	set desc = "Sets an extended description of your character's features."
-	set category = "IC"
-
-	flavor_text =  sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", input_default(flavor_text))  as text)
 
 // Uses power from cyborg's cell. Returns 1 on success or 0 on failure.
 // Properly converts using CELLRATE now! Amount is in Joules.

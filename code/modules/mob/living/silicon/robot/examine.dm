@@ -37,7 +37,7 @@
 
 	msg += "*---------*</span>"
 
-	if(print_flavor_text()) msg += "\n[print_flavor_text()]\n"
+	if(desc) msg += "\n[desc]\n"
 
 	if (pose)
 		if( findtext(pose,".",-1) == 0 && findtext(pose,"!",-1) == 0 && findtext(pose,"?",-1) == 0 )

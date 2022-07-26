@@ -6,7 +6,7 @@
 	req_access = list(access_syndicate)
 	holder_type = /obj/item/weapon/holder/syndi_drone
 	eyes_overlay = "eyes-syndibot"
-
+	desc = "It's a tiny little repair drone. The casing is stamped with a Cybersun Ind. logo and the subscript: 'Cybersun Industries: I will definitely fix it tomorrow!'"
 	var/obj/item/device/drone_uplink/uplink = null
 	var/mob/living/carbon/human/operator = null //Mob controlling the drone
 	var/datum/mind/operator_mind = null
@@ -26,7 +26,6 @@
 	var/datum/action/stop_control/A = new(src)
 	A.Grant(src)
 
-	flavor_text = "It's a tiny little repair drone. The casing is stamped with a Cybersun Ind. logo and the subscript: 'Cybersun Industries: I will definitely fix it tomorrow!'"
 
 /mob/living/silicon/robot/drone/syndi/Destroy()
 	loose_control()

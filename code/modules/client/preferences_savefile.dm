@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 39
+#define SAVEFILE_VERSION_MAX 40
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -188,7 +188,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["be_role"] << be_role
 
 	if(current_version < 31)
-		flavor_text = fix_cyrillic(flavor_text)
 		med_record  = fix_cyrillic(med_record)
 		sec_record  = fix_cyrillic(sec_record)
 		gen_record  = fix_cyrillic(gen_record)
@@ -198,7 +197,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		faction     = fix_cyrillic(faction)
 		religion    = fix_cyrillic(religion)
 
-		S["flavor_text"] << flavor_text
 		S["med_record"]  << med_record
 		S["sec_record"]  << sec_record
 		S["gen_record"]  << gen_record
@@ -240,11 +238,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			be_role -= "Raider"
 
 		S["be_role"] << be_role
-	
+
 	if(current_version < 39)
 		S["ghost_orbit"] << null
 
-// 
+//
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
 	if(current_version < SAVEFILE_VERSION_SPECIES_JOBS)
@@ -549,7 +547,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["neutral_quirks"]   >> neutral_quirks
 
 	//Miscellaneous
-	S["flavor_text"]       >> flavor_text
 	S["med_record"]        >> med_record
 	S["sec_record"]        >> sec_record
 	S["gen_record"]        >> gen_record
@@ -737,7 +734,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["neutral_quirks"]  << neutral_quirks
 
 	//Miscellaneous
-	S["flavor_text"]       << flavor_text
 	S["med_record"]        << med_record
 	S["sec_record"]        << sec_record
 	S["gen_record"]        << gen_record

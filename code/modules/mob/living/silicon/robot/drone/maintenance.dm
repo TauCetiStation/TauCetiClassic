@@ -1,6 +1,6 @@
 /mob/living/silicon/robot/drone/maintenance
 	req_access = list(access_engine, access_robotics)
-
+	desc = "It's a tiny little repair drone. The casing is stamped with a Cybersun Ind. logo and the subscript: 'Cybersun Industries: I will definitely fix it tomorrow!'"
 	// We need to keep track of a few module items so we don't need to do list operations
 	// every time we need them. These get set in New() after the module is chosen.
 	var/obj/item/stack/sheet/metal/cyborg/stack_metal = null
@@ -28,7 +28,6 @@
 	decompiler = locate(/obj/item/weapon/matter_decompiler) in src.module
 
 	//Some tidying-up.
-	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
 	updateicon()
 
 /mob/living/silicon/robot/drone/maintenance/Destroy()

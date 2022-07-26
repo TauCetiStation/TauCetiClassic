@@ -39,7 +39,6 @@
 	H.mind.name = H.real_name
 	H.f_style = "Shaved"
 	H.h_style = "Bald"
-	H.flavor_text = ""
 	equip_common(H)
 	equip_class()
 	H.regenerate_icons()

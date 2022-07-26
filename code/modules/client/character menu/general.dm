@@ -168,10 +168,6 @@
 		. += 					"<br>Employment Records:"
 		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=gen_record\">[length(gen_record)>0?"[copytext_char(gen_record, 1, 3)]...":"\[...\]"]</a>"
 
-	. += 						"<br><br>"
-
-	. += 						"<b>Flavor:</b>"
-	. += 						" <a href='byond://?src=\ref[user];preference=flavor_text;task=input'>[length(flavor_text)>0?"[copytext_char(flavor_text, 1, 3)]...":"\[...\]"]</a>"
 	. += 					"</td>"
 	. += 				"</tr>"
 	. += 			"</table>"	//Backstory table end
@@ -506,12 +502,6 @@
 					if(!choice)
 						return
 					vox_rank = choice
-
-				if("flavor_text")
-					var/msg = sanitize(input(usr,"Set the flavor text in your 'examine' verb.","Flavor Text", input_default(flavor_text)) as message)
-
-					if(msg != null)
-						flavor_text = msg
 
 				if("organs")
 					var/menu_type = input(user, "Menu") as null|anything in list("Limbs", "Organs")
