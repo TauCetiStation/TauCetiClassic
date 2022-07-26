@@ -125,7 +125,9 @@ effective or pretty fucking useless.
 			return
 
 		spark(5, 0, N.loc, loc)
-		do_teleport(N,get_turf(src),2)
+		if(!do_teleport(N,get_turf(src),2))
+			to_chat(user, "<span class ='warning'>Ошибка перемещения. Возможно, этому помешало окружение. Совет: сменить место.</span>")
+			return
 		to_chat(user, "<span class ='warning'>Перемещение завершено.</span>")
 		return
 	to_chat(user, "<span class ='warning'>Внимание! Бомба не найдена! Предположительная причина: Бомба уничтожена.</span>")

@@ -251,7 +251,7 @@ var/global/list/active_alternate_appearances = list()
 		var/datum/faction/F = find_faction_by_type(faction2check)
 		if(!F) return //Causes runtimes otherwise
 		for(var/datum/role/role in F.members)
-			if(isliving(role.antag.current))
+			if(role.antag.current)
 				add_hud_to(role.antag.current)
 
 /datum/atom_hud/alternate_appearance/basic/faction/mobShouldSee(mob/M)
@@ -259,7 +259,7 @@ var/global/list/active_alternate_appearances = list()
 		return FALSE
 	var/datum/faction/F = find_faction_by_type(faction2check)
 	if(!F) return FALSE
-	if(M in F.members || M.faction == "syndicate")
+	if(M in F.members)
 		return TRUE
 	return FALSE
 
