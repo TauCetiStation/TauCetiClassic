@@ -471,16 +471,14 @@
 
 // Holomap
 /atom/movable/screen/holomap
-	//= new /atom/movable/screen/holomap()
 	name = "holomap"
 	icon = null
 	icon_state = null
 	screen_loc = ui_holomap
 	plane = HUD_PLANE
 	layer = HUD_LAYER
-	//color = ui_color
+	copy_flags = HUD_COPY_ALPHA || HUD_COPY_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	alpha = 0
 
 /atom/movable/screen/holomap/add_to_hud(datum/hud/hud)
 	..()
