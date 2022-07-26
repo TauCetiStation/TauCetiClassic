@@ -30,7 +30,7 @@
 
 	data["ignoredRoles"] = list()
 	var/list/ignored = user?.client?.prefs?.ignore_question
-	for(var/role in full_ignore_question)
+	for(var/role in (full_ignore_question | ignored))
 		if(role)
 			var/list/this = list()
 			this["name"] = role
