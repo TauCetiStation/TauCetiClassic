@@ -163,7 +163,7 @@
 	return
 
 /obj/item/weapon/card/id/proc/assign(real_name)
-	name = "[real_name]'s ID Card [assignment ? "([assignment])" : ""]"
+	name = "[real_name]'s ID Card[assignment ? " ([assignment])" : ""]"
 	registered_name = real_name
 
 

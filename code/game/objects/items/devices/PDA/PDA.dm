@@ -130,7 +130,7 @@
 
 /obj/item/device/pda/proc/assign(real_name)
 	owner = real_name
-	name = "PDA-[real_name] [ownjob ? "([ownjob])" : ""]"
+	name = "PDA-[real_name][ownjob ? " ([ownjob])" : ""]"
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
