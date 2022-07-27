@@ -1,8 +1,8 @@
 /mob/living/carbon/human/add_to_hud(datum/hud/hud)
 	hud.ui_color = client.prefs.UI_style_color
 	hud.ui_alpha = client.prefs.UI_style_alpha
-	
-	..()
+
+	..(hud, FALSE)
 
 	hud.init_screens(list(
 		/atom/movable/screen/inventory/hand/r,

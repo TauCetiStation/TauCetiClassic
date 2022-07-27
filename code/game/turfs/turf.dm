@@ -15,7 +15,7 @@
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
-	var/heat_capacity = 1
+	var/heat_capacity = 0
 
 	//Properties for both
 	var/temperature = T20C
@@ -133,7 +133,7 @@
 				return 0
 	return 1 //Nothing found to block so return success!
 
-/turf/proc/is_mob_placeable(mob/M)
+/turf/proc/is_mob_placeable(mob/M) // todo: maybe rewrite as COMSIG_ATOM_INTERCEPT_TELEPORT
 	if(density)
 		return FALSE
 	var/static/list/allowed_types = list(/obj/structure/window, /obj/machinery/door,
@@ -322,7 +322,7 @@
 	W.resources = temp_res
 
 	if(ispath(path, /turf/simulated/floor))
-		if (istype(W, /turf/simulated/floor))
+		if (isfloorturf(W))
 			W.RemoveLattice()
 
 	if(SSair)
@@ -387,10 +387,6 @@
 	for(var/obj/mecha/M in src)//Mecha are not gibbed but are damaged.
 		spawn(0)
 			M.take_damage(100, "brute")
-
-/turf/proc/Bless()
-	flags |= NOJAUNT
-
 
 ////////////////
 //Distance procs

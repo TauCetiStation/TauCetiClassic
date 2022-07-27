@@ -75,6 +75,8 @@
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(AOG), "Son of Heaven", religion.bible_info.laws_type, FALSE, religion)
 	god.mind.transfer_to(O)
 	O.job = "Cyborg"
+	O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	O.mind.skills.maximize_active_skills()
 	qdel(god)
 	religion.add_deity(O, HOLY_ROLE_PRIEST)
 	return TRUE

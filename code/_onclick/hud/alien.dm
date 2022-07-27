@@ -1,7 +1,7 @@
 /mob/living/carbon/xenomorph/add_to_hud(datum/hud/hud)
 	hud.ui_style = 'icons/mob/screen1_xeno.dmi'
 
-	..()
+	..(hud, FALSE)
 
 	hud.init_screen(/atom/movable/screen/xenomorph/nightvision)
 	hud.init_screen(/atom/movable/screen/health/alien)

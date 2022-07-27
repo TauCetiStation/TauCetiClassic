@@ -115,8 +115,8 @@
 		M.pixel_y = -1
 		update_buckle_mob(M)
 	else
-		M.pixel_x = 0
-		M.pixel_y = 0
+		M.pixel_x = M.default_pixel_x
+		M.pixel_y = M.default_pixel_y
 
 /obj/structure/closet/coffin/update_buckle_mob(mob/living/M)
 	// When mob layering will properly work:

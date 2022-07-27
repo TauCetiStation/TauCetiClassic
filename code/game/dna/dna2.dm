@@ -268,7 +268,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	if(on)
 		val=rand(BOUNDS[DNA_ON_LOWERBOUND],BOUNDS[DNA_ON_UPPERBOUND])
 	else
-		val=rand(DNA_OFF_LOWERBOUND,BOUNDS[DNA_OFF_UPPERBOUND])
+		val=rand(BOUNDS[DNA_OFF_LOWERBOUND],BOUNDS[DNA_OFF_UPPERBOUND])
 	SetSEValue(block,val,defer)
 
 // Get hex-encoded SE block.

@@ -12188,7 +12188,8 @@
 "aCg" = (
 /mob/living/simple_animal/hostile/shantak{
 	a_intent = "help";
-	aggro_vision_range = 0
+	aggro_vision_range = 0;
+	faction = "wizard"
 	},
 /turf/unsimulated/floor/snow{
 	nitrogen = 100;
@@ -12216,17 +12217,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/living)
-"aCj" = (
-/mob/living/simple_animal/hostile/tree{
-	a_intent = "help";
-	aggro_vision_range = 0
-	},
-/turf/unsimulated/floor/snow{
-	nitrogen = 100;
-	oxygen = 25;
-	temperature = 243
-	},
-/area/space)
 "aCk" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
@@ -13371,18 +13361,6 @@
 	icon_state = "cult"
 	},
 /area/custom/wizard_station)
-"aEF" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/mob/living/simple_animal/hostile/tree{
-	a_intent = "help";
-	aggro_vision_range = 0
-	},
-/turf/unsimulated/floor/snow{
-	nitrogen = 100;
-	oxygen = 25;
-	temperature = 243
-	},
-/area/space)
 "aEG" = (
 /obj/machinery/door/poddoor{
 	id = "ASSAULT0";
@@ -14487,7 +14465,8 @@
 "aGM" = (
 /mob/living/simple_animal/hostile/samak{
 	a_intent = "help";
-	aggro_vision_range = 0
+	aggro_vision_range = 0;
+	faction = "wizard"
 	},
 /turf/unsimulated/floor/snow{
 	nitrogen = 100;
@@ -33981,7 +33960,7 @@ abi
 abt
 abi
 abi
-aCj
+abi
 abi
 abi
 afT
@@ -36280,7 +36259,7 @@ baz
 abi
 abi
 abi
-aCj
+abi
 abg
 abo
 abo
@@ -38853,7 +38832,7 @@ bbz
 abi
 abi
 abi
-aEF
+abl
 abi
 bbd
 abg

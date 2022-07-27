@@ -220,11 +220,8 @@
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
-		if(istype(src.loc, container))
-			return 1
-	else if(src in container)
-		return 1
-	return
+		return istype(src.loc, container)
+	return src in container
 
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)
@@ -298,7 +295,7 @@
 			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
 				for(var/datum/reagent/R in reagents.reagent_list)
 					msg += "<br><span class='info'>[R.volume] units of [R.name]</span>"
-			else if (is_skill_competent(user, list(/datum/skill/chemistry/master)))
+			else if (is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_MASTER)))
 				if(length(reagents.reagent_list) == 1)
 					msg += "<br><span class='info'>[reagents.reagent_list[1].volume] units of [reagents.reagent_list[1].name]</span>"
 				else

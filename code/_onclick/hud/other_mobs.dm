@@ -1,5 +1,5 @@
 /mob/living/carbon/brain/add_to_hud(datum/hud/hud)
-	return
+	hud.init_screen(/atom/movable/screen/health/living)
 
 /mob/camera/blob/add_to_hud(datum/hud/hud)
 	hud.init_screens(list(

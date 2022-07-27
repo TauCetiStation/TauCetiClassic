@@ -135,6 +135,7 @@ var/global/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-u
 			to_chat(usr, "<font size=5><b><i>YE--</b></I></font>")
 			sleep(1)
 			for(var/mob/living/M in orange(7, src))
+				M.Stun(10)
 				M.Weaken(10)
 				to_chat(M, "<span class='userdanger'>An immense pressure slams you onto the ground!</span>")
 			for(var/mob/M in player_list - new_player_list)

@@ -11,11 +11,19 @@
 
 #define isiceturf(A) (istype(A, /turf/environment/snow/ice))
 
+#define isfloorturf(A) (istype(A, /turf/simulated/floor))
+
+#define isplatingturf(A) (istype(A, /turf/simulated/floor/plating))
+
+#define iswallturf(A) (istype(A, /turf/simulated/wall))
+
 // HUMAN
 
 #define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
+
+#define isskeleton(A) (A.get_species() in list(SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX))
 
 // CARBON
 #define isxenoqueen(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/queen))

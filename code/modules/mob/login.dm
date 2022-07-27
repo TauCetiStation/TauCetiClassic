@@ -86,3 +86,6 @@
 		client.show_popup_menus = 0
 	else
 		client.show_popup_menus = 1
+
+	if(client.click_intercept)
+		client.click_intercept.post_login()
