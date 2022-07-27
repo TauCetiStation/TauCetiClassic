@@ -56,10 +56,10 @@ var/global/list/all_emotes
 		if(H.miming)
 			miming = TRUE
 
-	if(message_muzzled && istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
-		msg = message_muzzled
-	else if(message_miming && miming)
+	if(message_miming && miming)
 		msg = message_miming
+	else if(message_muzzled && istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
+		msg = message_muzzled
 	else if(message_impaired_production && (message_type & SHOWMSG_AUDIO) && HAS_TRAIT(user, TRAIT_MUTE))
 		msg = message_impaired_production
 
