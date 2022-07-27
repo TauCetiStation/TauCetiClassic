@@ -222,6 +222,7 @@
 			"fancy" = user.client.prefs.tgui_fancy,
 			"locked" = user.client.prefs.tgui_lock,
 		),
+		"mapName" = SSmapping.station_image,
 		"client" = list(
 			"ckey" = user.client.ckey,
 			"address" = user.client.address,

@@ -3,7 +3,7 @@ import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Button, ByondUi, Flex, Input, Section } from '../components';
+import { Button, ByondUi, Flex, Input, Section, Box, NanoMap, Icon } from '../components';
 import { Window } from '../layouts';
 
 /**
@@ -49,9 +49,7 @@ export const CameraConsole = (props, context) => {
     nextCameraName,
   ] = prevNextCamera(cameras, activeCamera);
   return (
-    <Window
-      width={870}
-      height={708}>
+    <Window resizable>
       <div className="CameraConsole__left">
         <Window.Content>
           <CameraConsoleContent />
@@ -91,6 +89,93 @@ export const CameraConsole = (props, context) => {
 };
 
 export const CameraConsoleContent = (props, context) => {
+  const [
+    isMinimapShown,
+    setMinimapShown,
+  ] = useLocalState(context, 'isMinimapShown', false);
+
+  const tabUi = minimapShown => {
+    switch (minimapShown) {
+      case false:
+        return <CameraConsoleListContent />;
+      case true:
+        return <CameraMinimapContent />;
+    }
+  };
+
+  const toggleMode = () => {
+    setMinimapShown(!isMinimapShown);
+  };
+
+  return (
+    <Flex
+      direction={"column"}
+      height="100%">
+      <Button
+        onClick={() => toggleMode()}>
+        {isMinimapShown ? "Switch to List" : "Switch to Minimap"}
+      </Button>
+
+      {tabUi(isMinimapShown)}
+    </Flex>
+  );
+};
+
+export const CameraMinimapContent = (props, context) => {
+  const { act, data, config } = useBackend(context);
+  const { activeCamera } = data;
+  const cameras = selectCameras(data.cameras);
+
+  const [
+    prevCameraName,
+    nextCameraName,
+  ] = prevNextCamera(cameras, activeCamera);
+
+  const [zoom, setZoom] = useLocalState(context, 'zoom', 1);
+
+  return (
+    <Box height="100%" display="flex">
+      <Box height="100%" flex="0 0 500px" display="flex">
+        <NanoMap onZoom={v => setZoom(v)}>
+          {cameras.filter(cam => cam.z === 1).map(cm => (
+            <div
+            key={camera.name}
+            title={camera.name}
+            className={classes([
+              'Button',
+              'Button--fluid',
+              'Button--color--transparent',
+              'Button--ellipsis',
+              activeCamera
+              && camera.name === activeCamera.name
+              && 'Button--selected',
+            ])}
+            onClick={() => act('switch_camera', {
+              name: camera.name,
+            })}>
+            {camera.name}
+          </div>
+            // <NanoMap.NanoButton
+            //   activeCamera={activeCamera}
+            //   key={cm.ref}
+            //   x={cm.x}
+            //   y={cm.y}
+            //   context={context}
+            //   zoom={zoom}
+            //   icon="circle"
+            //   tooltip={cm.name}
+            //   name={cm.name}
+            //   color={"blue"}
+            //   status={cm.status}
+            // />
+          ))}
+        </NanoMap>
+      </Box>
+    </Box>
+  );
+};
+
+export const CameraConsoleListContent = (props, context) => {
   const { act, data } = useBackend(context);
   const [
     searchText,
