@@ -43,7 +43,7 @@
 		var/datum/objective/target/rp_rev/rev_obj = AppendObjective(/datum/objective/target/rp_rev, TRUE)
 		if(rev_obj)
 			rev_obj.target = head_mind
-			rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
+			rev_obj.explanation_text = "Capture or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
 	return TRUE
 
 /datum/faction/revolution/proc/check_heads_victory()

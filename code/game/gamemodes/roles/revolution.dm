@@ -86,6 +86,8 @@
 		to_chat(src, "<span class='warning'><b>[M] is already be a revolutionary!</b></span>")
 	else if(M.ismindprotect())
 		to_chat(src, "<span class='warning'><b>[M] is implanted with a mind protected implant - Remove it first!</b></span>")
+	else if(M.is_head_role())
+		to_chat(src, "<span class='warning'><b>[M] is a head of staff, your sworn enemy! Kill or exile them, not convert these corporate dogs!</b></span>")
 	else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate"))
 		to_chat(src, "<span class='warning'><b>[M] is a blacklisted player!</b></span>")
 	else
