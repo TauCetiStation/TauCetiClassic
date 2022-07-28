@@ -73,8 +73,7 @@
 	var/obj/item/weapon/implant/skill/implant = new(H)
 	implant.set_skills(cartridge.selected_buffs, cartridge.compatible_species)
 	implant.inject(H, BP_HEAD)
-	qdel(cartridge)
-	cartridge = null
+	QDEL_NULL(cartridge)
 
 /obj/machinery/optable/skill_scanner/proc/abort_injection()
 	if(cartridge && cartridge.unpacked)
