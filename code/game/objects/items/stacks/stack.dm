@@ -272,14 +272,17 @@
 		s.update_ui_after_item_removal()
 	S.add(transfer)
 
-/obj/item/stack/Crossed(atom/movable/AM)
+/obj/item/stack/Move(NewLoc, Dir, step_x, step_y)
 	. = ..()
-	if(throwing || AM.throwing)
+	if(!isturf(NewLoc) || !isturf(loc))
 		return
-	if(!isturf(AM.loc) || !isturf(loc)) return
-	if(istype(AM, merge_type))
-		var/obj/item/stack/S = AM
-		merge(S)
+	var/turf/T = NewLoc
+	for(var/obj/item/stack/AM in T.contents)
+		if(throwing || AM.throwing)
+			continue
+		if(istype(AM, merge_type))
+			var/obj/item/stack/S = AM
+			S.merge(src)
 
 /obj/item/stack/attack_hand(mob/user)
 	if (user.get_inactive_hand() == src)
@@ -324,7 +327,6 @@
 	F.copy_evidences(src)
 	add_fingerprint(user)
 	F.add_fingerprint(user)
-
 
 /obj/item/stack/attackby(obj/item/I, mob/user, params)
 	if(istype(I, merge_type))
