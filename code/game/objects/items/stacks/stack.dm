@@ -276,6 +276,7 @@
 	. = ..()
 	if(throwing || AM.throwing)
 		return
+	if(!isturf(AM.loc) || !isturf(loc)) return
 	if(istype(AM, merge_type))
 		var/obj/item/stack/S = AM
 		merge(S)
@@ -315,13 +316,15 @@
 			to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>")
 
 /obj/item/stack/proc/change_stack(mob/living/user, amount)
+	if(!use(amount, TRUE))
+		return
 	var/obj/item/stack/F = new type(loc, amount, FALSE)
 	user.try_take(F, loc)
 	. = F
 	F.copy_evidences(src)
 	add_fingerprint(user)
 	F.add_fingerprint(user)
-	use(amount, TRUE)
+
 
 /obj/item/stack/attackby(obj/item/I, mob/user, params)
 	if(istype(I, merge_type))
