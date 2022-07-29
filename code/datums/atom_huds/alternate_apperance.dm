@@ -258,7 +258,8 @@ var/global/list/active_alternate_appearances = list()
 	if(!SSticker) //We can't check it anyway without it
 		return FALSE
 	var/datum/faction/F = find_faction_by_type(faction2check)
-	if(!F) return FALSE
+	if(!F)
+		return FALSE
 	if(M in F.members)
 		return TRUE
 	return FALSE
