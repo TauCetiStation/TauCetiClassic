@@ -213,9 +213,7 @@
 		if(!text)
 			return
 		log_say("Shadowling Hivemind: [key_name(usr)] : [text]")
-		var/text2speak = "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>"
-		if(isshadowling(usr))
-			text2speak = "<font size='large'>[text2speak]</font>"
+		var/text2speak = "<span class='shadowling [isshadowling(usr) ? "large" : ""]'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>"
 
 		for(var/mob/M as anything in mob_list)
 			if(isshadowling(M) || isshadowthrall(M) || isobserver(M))
