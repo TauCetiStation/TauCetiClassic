@@ -249,7 +249,8 @@ var/global/list/active_alternate_appearances = list()
 	if(SSticker)
 		faction2check = faction
 		var/datum/faction/F = find_faction_by_type(faction2check)
-		if(!F) return //Causes runtimes otherwise
+		if(!F)
+			return //Causes runtimes otherwise
 		for(var/datum/role/role in F.members)
 			if(role.antag.current)
 				add_hud_to(role.antag.current)
