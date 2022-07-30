@@ -880,7 +880,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		clear_fullscreen("high")
 		clear_alert("high")
 
-
 // ========== STUTTERING ==========
 /mob/proc/Stuttering(amount)
 	if(status_flags & GODMODE)
