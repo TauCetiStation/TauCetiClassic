@@ -295,7 +295,7 @@
 	god_desc = "Вам нужная тьма на святой земле."
 
 /datum/aspect/lightbending/darkness/get_light_gain(turf/simulated/floor/F)
-	return (0.6 - F.get_lumcount()) * power * 0.05
+	return (0.6 - F.get_lumcount()) * 0.05 * (1.4 * sqrt(power) + (power / 4)) //https://www.desmos.com/calculator?lang=ru
 
 //Gives mana from: light levels on holy turfs
 //Needed for: spells and rituals related to the theme of receiving light
