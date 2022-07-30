@@ -67,20 +67,6 @@
 		to_chat(user, "<span class='cult'>Вы решили подготовиться перед началом ритуала</span>")
 		return FALSE
 
-	/*
-	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
-	var/datum/objective/sacrifice/sac_objective = locate() in user_antag.cult_team.objectives
-
-	if(!(A in summon_objective.summon_spots))
-		to_chat(user, span_cultlarge("The Geometer can only be summoned where the veil is weak - in [english_list(summon_objective.summon_spots)]!"))
-		return
-	Turf = get_turf(user)
-	A = get_area(src)
-	if(!(A in summon_objective.summon_spots))  // Check again to make sure they didn't move
-		to_chat(user, span_cultlarge("The Geometer can only be summoned where the veil is weak - in [english_list(summon_objective.summon_spots)]!"))
-		return
-	*/
-
 	playsound_frequency_admin = 0.96 //Something is coming
 	A = new(user)
 	A.play()
