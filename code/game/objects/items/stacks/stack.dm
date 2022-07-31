@@ -274,8 +274,10 @@
 
 /obj/item/stack/Move(NewLoc, Dir, step_x, step_y)
 	. = ..()
-	if(!isturf(NewLoc) || !isturf(loc))
-		return
+	if(!.)
+		return .
+	if(!isturf(NewLoc, loc))
+		return .
 	var/turf/T = NewLoc
 	for(var/obj/item/stack/AM in T.contents)
 		if(throwing || AM.throwing)
