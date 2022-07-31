@@ -176,6 +176,8 @@
 				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
+		if(console.gizmo && console.gizmo.marked == H)
+			console.gizmo.marked = null
 
 		var/datum/faction/abductors/req_f
 		for(var/datum/faction/abductors/F in find_factions_by_type(/datum/faction/abductors))
