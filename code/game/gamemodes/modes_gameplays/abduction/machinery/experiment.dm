@@ -9,6 +9,7 @@
 	anchored = TRUE
 	state_open = 1
 	var/points = 0
+	var/all_points = 0
 	var/list/history = new
 	var/flash = " - || - "
 	var/obj/machinery/abductor/console/console
@@ -185,12 +186,13 @@
 		add_faction_member(req_f, H, TRUE)
 		for(var/obj/item/gland/G in H)
 			G.Start()
-			point_reward++
+			point_reward = 1
 		if(point_reward > 0)
 			open_machine()
 			SendBack(H)
 			playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
-			points += point_reward
+			points++
+			all_points++
 			return "<span class='good'>Experiment successfull! [point_reward] new data-points collected.</span>"
 		playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
 		return "<span class='bad'>Experiment failed! No replacement organ detected.</span>"
