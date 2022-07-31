@@ -345,9 +345,14 @@
 
 		switch(hit_area)
 			if(BP_HEAD)//Harder to score a stun but if you do it lasts a bit longer
-				if(prob(force_with_melee_skill / (100 / armor + 0.1)))
-					apply_effect(20, PARALYZE, armor)
-					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
+				if(armor >= 10)
+					if(prob(force_with_melee_skill / (100 / armor)))
+						apply_effect(20, PARALYZE, armor)
+						visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
+				if(armor == 0)
+					if(prob(force_with_melee_skill))
+						apply_effect(20, PARALYZE, armor)
+						visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
 				if(prob(force_with_melee_skill + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 					if(src != user && I.damtype == BRUTE && mind)
 						for(var/id in list(HEADREV, REV))
@@ -367,10 +372,14 @@
 						update_inv_glasses()
 
 			if(BP_CHEST)//Easier to score a stun but lasts less time
-				if(prob(((force_with_melee_skill + 10) / (100 / armor + 0.1))))
-					apply_effect(5, WEAKEN, armor)
-					visible_message("<span class='userdanger'>[src] has been knocked down!</span>")
-
+				if(armor >= 10)
+					if(prob((force_with_melee_skill + 10) / (100 / armor)))
+						apply_effect(5, WEAKEN, armor)
+						visible_message("<span class='userdanger'>[src] has been knocked down!</span>")
+				if(armor == 0)
+					if(prob(force_with_melee_skill + 10))
+						apply_effect(5, WEAKEN, armor)
+						visible_message("<span class='userdanger'>[src] has been knocked down!</span>")
 				if(!(damage_flags & (DAM_SHARP|DAM_EDGE)) && prob(I.force + 10)) // A chance to force puke with a blunt hit.
 					for(var/obj/item/weapon/grab/G in grabbed_by)
 						if(G.state >= GRAB_AGGRESSIVE && G.assailant == user)
