@@ -42,13 +42,7 @@
 /obj/item/device/radio/borg/syndicate/atom_init()
 	. = ..()
 	set_frequency(SYND_FREQ)
-	for(var/ch_name in keyslot.channels)
-		if(ch_name in src.channels)
-			continue
-		src.channels += ch_name
-		src.channels[ch_name] += keyslot.channels[ch_name]
-	for(var/ch_name in src.channels)
-		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
+	INVOKE_ASYNC(src, .proc/recalculateChannels)
 
 /obj/item/weapon/melee/energy/sword/cyborg
 	var/hitcost = 500
