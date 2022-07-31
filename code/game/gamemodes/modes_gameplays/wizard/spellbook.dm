@@ -109,6 +109,13 @@
 	category = "Оборона"
 	cost = 3
 
+/datum/spellbook_entry/timestop
+	name = "Остановка времени"
+	spell_type = /obj/effect/proc_holder/spell/targeted/shapeshift
+	log_name = "SS"
+	category = "Оборона"
+	cost = 2
+
 /datum/spellbook_entry/smoke
 	name = "Дым"
 	spell_type = /obj/effect/proc_holder/spell/targeted/smoke
