@@ -162,8 +162,12 @@
 			moving = FALSE
 			return
 		//Something with pulling things
-		if(locate(/obj/item/weapon/grab, mob))
-			move_delay = max(move_delay, world.time + 7)
+		var/list/grabs = mob.GetGrabs()
+		if(grabs.len)
+			var/grab_delay
+			for(var/obj/item/weapon/grab/G in grabs)
+				grab_delay += max(0, (G.state - 1) * 4 + (grabs.len - 1) * 4) // so if we have 2 grabs or 1 in high level we will be sloow
+			move_delay = max(move_delay, world.time + grab_delay)
 			var/list/L = mob.ret_grab()
 			if(istype(L, /list))
 				if(L.len == 2)
@@ -207,8 +211,8 @@
 		for (var/obj/item/weapon/grab/G in mob.grabbed_by)
 			G.adjust_position()
 
-		if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
-			move_delay += add_delay
+		if((direct & (direct - 1)) && mob.loc == n)
+			move_delay += add_delay * 0.4 // in general moving diagonally will be 1.4 (sqrt(2)) times slower
 		moving = FALSE
 		if(mob && .)
 			mob.throwing = FALSE

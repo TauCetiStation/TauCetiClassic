@@ -126,8 +126,9 @@
 			//TODO: Make this use Move(). we're pretty much recreating it here.
 			//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob
 			var/oldloc = loc
-			forceMove(M.loc)
-			M.forceMove(oldloc)
+			var/will_pull = pulling == M
+			forceMove(M.loc, will_pull)
+			M.forceMove(oldloc, TRUE)
 			M.LAssailant = src
 
 			for(var/mob/living/carbon/slime/slime in view(1,M))
@@ -163,7 +164,7 @@
 	if(!AM.anchored)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
-		if(istype(AM, /obj/structure/window))
+		if(istype(AM, /obj/structure/window)) // Why is it here?
 			var/obj/structure/window/W = AM
 			if(W.ini_dir == NORTHWEST || W.ini_dir == NORTHEAST || W.ini_dir == SOUTHWEST || W.ini_dir == SOUTHEAST)
 				for(var/obj/structure/window/win in get_step(AM,t))
@@ -176,6 +177,7 @@
 		if(pulling == AM)
 			stop_pulling()
 		step(AM, t)
+		step(src, t)
 		now_pushing = 0
 
 //mob verbs are a lot faster than object verbs
@@ -197,22 +199,21 @@
 			tally += 1
 		else if(isslime(src))
 			tally += 1.5
-		else
-			tally += 0.3
 
 		var/atom/movable/AM = pulling
 		//Mob pulling
 		if(ismob(AM))
-			tally += 1
+			var/mob/M = AM
+			tally += M.stat == CONSCIOUS ? ( M.a_intent == INTENT_HELP ? 0 : 0.5 ) : 1
 		//Structure pulling
 		if(istype(AM, /obj/structure))
-			tally += 0.5
+			tally += 0.3
 			var/obj/structure/S = AM
 			if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
-				tally -= 0.5
+				tally -= 0.3
 		//Machinery pulling
 		if(ismachinery(AM))
-			tally += 0.5
+			tally += 0.3
 		pull_debuff += tally
 
 /mob/living/proc/add_ingame_age()
