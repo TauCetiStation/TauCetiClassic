@@ -367,7 +367,7 @@
 						update_inv_glasses()
 
 			if(BP_CHEST)//Easier to score a stun but lasts less time
-				if(prob(((force_with_melee_skill + 10) && (armor <= 50))))
+				if(prob(force_with_melee_skill + 10) && (armor <= 50))
 					apply_effect(5, WEAKEN, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked down!</span>")
 
