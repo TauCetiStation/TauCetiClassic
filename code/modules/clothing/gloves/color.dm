@@ -19,14 +19,6 @@
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
 
-/obj/item/clothing/gloves/wizard
-	desc = "A pair of gloves, look very magical."
-	name = "magic glovess"
-	icon_state = "wizard"
-	item_state = "wizardgloves"
-	siemens_coefficient = 0
-	permeability_coefficient = 0.05
-
 /obj/item/clothing/gloves/black
 	desc = "These gloves are fire-resistant."
 	name = "black gloves"
