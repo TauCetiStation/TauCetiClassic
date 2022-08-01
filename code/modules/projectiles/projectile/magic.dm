@@ -22,7 +22,7 @@
 	wabbajack(target)
 
 /obj/item/projectile/magic/proc/wabbajack(mob/living/M)
-	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags) || !M.client || isxenoqueen(M))
+	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags) || isxenoqueen(M))
 		return
 
 	M.notransform = TRUE
@@ -33,12 +33,44 @@
 
 	var/mob/living/new_mob
 
-	var/randomizer = pick("animal", "cyborg", "xeno")
-	if(isxeno(M))
-		randomizer = "xeno"
+	var/randomizer = pick("monkey", "hostile", "hostile", "animal", "cyborg", "xeno", "humanoid", "humanoid")
 	switch(randomizer)
+		if("monkey")
+			new_mob = new /mob/living/carbon/monkey(loc)
 		if("animal")
-			var/beast = pick(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/tomato/angry_tomato, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/pig/shadowpig)
+			var/beast = pick(
+			/mob/living/simple_animal/hostile/retaliate/goat,
+			/mob/living/simple_animal/pig/shadowpig,
+			/mob/living/simple_animal/hostile/bear,
+			/mob/living/simple_animal/hostile/tree,
+			/mob/living/simple_animal/hostile/retaliate/goat,
+			/mob/living/simple_animal/parrot,
+			/mob/living/simple_animal/corgi,
+			/mob/living/simple_animal/crab,
+			/mob/living/simple_animal/pug,
+			/mob/living/simple_animal/cat,
+			/mob/living/simple_animal/mouse,
+			/mob/living/simple_animal/chicken,
+			/mob/living/simple_animal/cow,
+			/mob/living/simple_animal/lizard,
+			/mob/living/simple_animal/fox,
+			/mob/living/simple_animal/chick)
+			new_mob = new beast(M.loc)
+			new_mob.universal_speak = TRUE
+		if("hostile")
+			var/beast = pick(
+			/mob/living/simple_animal/hostile/carp,
+			/mob/living/simple_animal/hostile/carp,
+			/mob/living/simple_animal/hostile/bear,
+			/mob/living/simple_animal/hostile/tree,
+			/mob/living/simple_animal/hostile/giant_spider,
+			/mob/living/simple_animal/hostile/giant_spider/hunter,
+			/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
+			//mob/living/simple_animal/hostile/carp/ranged,
+			//mob/living/simple_animal/hostile/carp/ranged/chaos,
+			/mob/living/simple_animal/hostile/asteroid/basilisk,
+			/mob/living/simple_animal/hostile/asteroid/goliath,
+			/mob/living/simple_animal/construct/proteon)
 			new_mob = new beast(M.loc)
 			new_mob.universal_speak = TRUE
 		if("cyborg")
@@ -47,8 +79,26 @@
 			new_mob.invisibility = 0
 			new_mob.job = "Cyborg"
 		if("xeno")
-			new_mob = new /mob/living/carbon/xenomorph/humanoid/maid(M.loc)
+			var/xeno_type = pick(
+				/mob/living/carbon/xenomorph/humanoid/hunter,
+				/mob/living/carbon/xenomorph/humanoid/sentinel,
+				/mob/living/carbon/xenomorph/humanoid/maid,
+			)
+			new_mob = new xeno_type(loc)
 			new_mob.universal_speak = TRUE
+		if("humanoid")
+			var/mob/living/carbon/human/new_human = new (loc)
+			if(prob(80))
+				var/list/possibilites = all_species
+				possibilites -= list(ZOMBIE, ZOMBIE_TAJARAN, ZOMBIE_SKRELL, ZOMBIE_UNATHI)
+				new_human.set_species(pick(possibilites))
+
+			// Randomize everything but the species, which was already handled above.
+			new_human.update_body()
+			new_human.update_hair()
+			new_human.dna.ResetUI()
+			new_human.dna.ResetSE()
+			new_mob = new_human
 	if(!new_mob)
 		return
 
