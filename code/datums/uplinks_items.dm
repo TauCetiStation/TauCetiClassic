@@ -812,7 +812,7 @@
 			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
 	item = /obj/item/device/encryptionkey/syndicate
 	cost = 2
-	uplink_types = list("traitor")
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/headcan
 	name = "Biogel can"
