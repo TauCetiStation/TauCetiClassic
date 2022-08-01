@@ -117,7 +117,7 @@
 	else
 		notransform = TRUE
 		forceMove(new_mob)
-		addtimer(CALLBACK(new_mob, .proc/wabbajack, src), 5 SECONDS)
+		addtimer(CALLBACK(new_mob, .proc/wabbajack, src), 40 SECONDS)
 	to_chat(new_mob, "<B>Your body forms to something else!</B>")
 
 	return new_mob
