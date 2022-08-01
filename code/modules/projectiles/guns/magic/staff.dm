@@ -7,6 +7,12 @@
 	fire_delay = 30
 	max_charges = 1
 
+/obj/item/weapon/gun/magic/change/debug
+	fire_delay = 1
+	max_charges = 10000
+	charges = 100000
+	global_access = 1
+
 /obj/item/weapon/gun/magic/animate
 	name = "staff of animation"
 	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."

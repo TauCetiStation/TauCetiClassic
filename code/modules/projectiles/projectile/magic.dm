@@ -19,31 +19,31 @@
 	light_color = "#00bfff"
 
 /obj/item/projectile/magic/change/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	wabbajack(target)
+	if(isliving(target))
+		var/mob/living/L = target
+		L.wabbajack()
 
-/obj/item/projectile/magic/proc/wabbajack(mob/living/M)
-	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags) || isxenoqueen(M))
+/mob/living/proc/wabbajack(randomize)
+	if(!istype(src) || stat == DEAD || notransform || (GODMODE & status_flags) || isxenoqueen(src))
 		return
-
-	M.notransform = TRUE
-	M.canmove = 0
-	M.icon = null
-	M.cut_overlays()
-	M.invisibility = 101
 
 	var/mob/living/new_mob
 
-	var/randomizer = pick("monkey", "hostile", "hostile", "animal", "cyborg", "xeno", "humanoid", "humanoid")
-	switch(randomizer)
+	if(isliving(randomize)) //Returny case
+		var/mob/living/L = randomize
+		to_chat(world,"[L] as rand, [src] as src")
+		L.forceMove(get_turf(src))
+		new_mob = L
+
+	if(!randomize)
+		randomize = pick("monkey", "hostile", "hostile", "animal", "cyborg", "xeno", "humanoid", "humanoid")
+	switch(randomize)
 		if("monkey")
-			new_mob = new /mob/living/carbon/monkey(loc)
+			new_mob = new /mob/living/carbon/monkey(get_turf(loc))
 		if("animal")
 			var/beast = pick(
 			/mob/living/simple_animal/hostile/retaliate/goat,
 			/mob/living/simple_animal/pig/shadowpig,
-			/mob/living/simple_animal/hostile/bear,
-			/mob/living/simple_animal/hostile/tree,
-			/mob/living/simple_animal/hostile/retaliate/goat,
 			/mob/living/simple_animal/parrot,
 			/mob/living/simple_animal/corgi,
 			/mob/living/simple_animal/crab,
@@ -55,8 +55,9 @@
 			/mob/living/simple_animal/lizard,
 			/mob/living/simple_animal/fox,
 			/mob/living/simple_animal/chick)
-			new_mob = new beast(M.loc)
+			new_mob = new beast(get_turf(loc))
 			new_mob.universal_speak = TRUE
+			new_mob.add_status_flags(GODMODE)
 		if("hostile")
 			var/beast = pick(
 			/mob/living/simple_animal/hostile/carp,
@@ -71,11 +72,11 @@
 			/mob/living/simple_animal/hostile/asteroid/basilisk,
 			/mob/living/simple_animal/hostile/asteroid/goliath,
 			/mob/living/simple_animal/construct/proteon)
-			new_mob = new beast(M.loc)
+			new_mob = new beast(get_turf(loc))
 			new_mob.universal_speak = TRUE
 		if("cyborg")
-			new_mob = new /mob/living/silicon/robot(M.loc, "Default", /datum/ai_laws/asimov_xenophile, FALSE, global.chaplain_religion)
-			new_mob.gender = M.gender
+			new_mob = new /mob/living/silicon/robot(get_turf(loc), "Default", /datum/ai_laws/asimov_xenophile, FALSE, global.chaplain_religion)
+			new_mob.gender = gender
 			new_mob.invisibility = 0
 			new_mob.job = "Cyborg"
 		if("xeno")
@@ -84,10 +85,10 @@
 				/mob/living/carbon/xenomorph/humanoid/sentinel,
 				/mob/living/carbon/xenomorph/humanoid/maid,
 			)
-			new_mob = new xeno_type(loc)
+			new_mob = new xeno_type(get_turf(loc))
 			new_mob.universal_speak = TRUE
 		if("humanoid")
-			var/mob/living/carbon/human/new_human = new (loc)
+			var/mob/living/carbon/human/new_human = new (get_turf(loc))
 			if(prob(80))
 				var/list/possibilites = all_species
 				possibilites -= list(ZOMBIE, ZOMBIE_TAJARAN, ZOMBIE_SKRELL, ZOMBIE_UNATHI)
@@ -102,18 +103,23 @@
 	if(!new_mob)
 		return
 
-	new_mob.attack_log = M.attack_log
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
+	new_mob.attack_log = attack_log
+	attack_log += text("\[[time_stamp()]\] <font color='orange'>[real_name] ([ckey]) became [new_mob.real_name].</font>")
 
 	new_mob.set_a_intent(INTENT_HARM)
-	if(M.mind)
-		M.mind.transfer_to(new_mob)
+	if(mind)
+		mind.transfer_to(new_mob)
 	else
-		new_mob.key = M.key
+		new_mob.key = key
 
+	if(isliving(randomize)) //Returny case
+		qdel(src)
+	else
+		notransform = TRUE
+		forceMove(new_mob)
+		addtimer(CALLBACK(new_mob, .proc/wabbajack, src), 5 SECONDS)
 	to_chat(new_mob, "<B>Your body forms to something else!</B>")
 
-	qdel(M)
 	return new_mob
 
 /obj/item/projectile/magic/animate
@@ -132,7 +138,8 @@
 		C.ChangeOwner(firer)
 		create_spawner(/datum/spawner/living/mimic, C)
 	else if(istype(change, /mob/living/simple_animal/shade) || isxeno(change))
-		var/mob/living/M = wabbajack(change)
+		var/mob/living/M = change
+		M = M.wabbajack()
 		if(firer && iswizard(firer))
 			var/datum/role/wizard/mage = firer.mind.GetRole(WIZARD)
 			var/datum/faction/wizards/federation = mage.GetFaction()
