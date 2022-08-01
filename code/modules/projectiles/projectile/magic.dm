@@ -31,12 +31,11 @@
 
 	if(isliving(randomize)) //Returny case
 		var/mob/living/L = randomize
-		to_chat(world,"[L] as rand, [src] as src")
 		L.forceMove(get_turf(src))
 		new_mob = L
 
 	if(!randomize)
-		randomize = pick("monkey", "hostile", "hostile", "animal", "cyborg", "xeno", "humanoid", "humanoid")
+		randomize = pick("monkey", "hostile", "hostile", "animal", "cyborg", "xeno", "humanoid")
 	switch(randomize)
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(get_turf(loc))
@@ -54,13 +53,13 @@
 			/mob/living/simple_animal/cow,
 			/mob/living/simple_animal/lizard,
 			/mob/living/simple_animal/fox,
-			/mob/living/simple_animal/chick)
+			/mob/living/simple_animal/chick,
+			/mob/living/simple_animal/cat/Syndi)
 			new_mob = new beast(get_turf(loc))
 			new_mob.universal_speak = TRUE
 			new_mob.add_status_flags(GODMODE)
 		if("hostile")
 			var/beast = pick(
-			/mob/living/simple_animal/hostile/carp,
 			/mob/living/simple_animal/hostile/carp,
 			/mob/living/simple_animal/hostile/bear,
 			/mob/living/simple_animal/hostile/tree,
