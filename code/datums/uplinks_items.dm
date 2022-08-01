@@ -537,6 +537,7 @@
 			space a small item can."
 	item = /obj/item/weapon/gun/syringe/syndicate
 	cost = 2
+	uplink_types = list("traitor")
 
 /datum/uplink_item/stealthy_tools/cutouts
 	name = "Adaptive Cardboard Cutouts"
@@ -569,6 +570,7 @@
 	The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer. It has a chance to detonate your PDA."
 	item = /obj/item/weapon/cartridge/syndicate
 	cost = 2
+	uplink_types = list("traitor")
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
@@ -630,7 +632,7 @@
 			known to survive intact even beyond the current shift. "
 	item = /obj/item/weapon/storage/backpack/satchel/flat
 	cost = 1
-	uplink_types = list()
+	uplink_types = list("traitor", "dealer")
 
 /datum/uplink_item/stealthy_tools/syndigolashes
 	name = "No-Slip Brown Shoes"
@@ -644,6 +646,7 @@
 	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and can copy access from other identification cards. The access is cumulative, so scanning one card does not erase the access gained from another."
 	item = /obj/item/weapon/card/id/syndicate
 	cost = 4
+	uplink_types = list("traitor")
 
 /datum/uplink_item/stealthy_tools/voice_changer
 	name = "Voice Changer"
@@ -662,6 +665,7 @@
 	desc = "Enables you to view all cameras on the network and track a target. Bugging cameras allows you to disable them remotely"
 	item = /obj/item/device/camera_bug
 	cost = 2
+	uplink_types = list("traitor")
 
 /datum/uplink_item/stealthy_weapons/silencer
 	name = "Syndicate Silencer"
@@ -701,7 +705,7 @@
 			and wavelength, which controls how long the radiation delay is."
 	item = /obj/item/device/healthanalyzer/rad_laser
 	cost = 7
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list("traitor")
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
@@ -735,6 +739,7 @@
 	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
 	item = /obj/item/weapon/storage/belt/military
 	cost = 1
+	uplink_types = list("traitor", "dealer")
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Medical Supply Kit"
@@ -762,13 +767,14 @@
 	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity and appearance."
 	item = /obj/item/weapon/reagent_containers/syringe/mulligan
 	cost = 4
+	uplink_types = list("traitor")
 
 /datum/uplink_item/device_tools/space_suit
 	name = "Syndicate Space Suit"
 	desc = "The red syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
 	cost = 4
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list("traitor")
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
@@ -806,27 +812,21 @@
 			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
 	item = /obj/item/device/encryptionkey/syndicate
 	cost = 2
-
-/datum/uplink_item/device_tools/poster_kit
-	name = "Poster kit"
-	desc = "Box of illegal posters"
-	item = /obj/item/weapon/storage/box/syndie_kit/posters
-	cost = 1
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list("traitor")
 
 /datum/uplink_item/device_tools/headcan
 	name = "Biogel can"
 	desc = "Sophisticated device for sustaining life in head for a long period"
 	item = /obj/item/device/biocan
 	cost = 1
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list("traitor")
 
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector" // changed name in case newfriends thought it detected disguised ai's
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."
 	item = /obj/item/device/multitool/ai_detect
 	cost = 2
-	uplink_types = list("nuclear", "traitor")
+	uplink_types = list("traitor")
 
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Law Upload Module"
@@ -988,6 +988,12 @@
 	desc = "To show your loalty to the Syndicate! Contains new red t-shirt with Syndicate logo, red cap and a fancy baloon!"
 	item = /obj/item/weapon/storage/box/syndie_kit/merch
 	cost = 20
+
+/datum/uplink_item/badass/poster_kit
+	name = "Poster kit"
+	desc = "Box of illegal posters"
+	item = /obj/item/weapon/storage/box/syndie_kit/posters
+	cost = 1
 
 /datum/uplink_item/badass/syndiecigs
 	name = "Syndicate Smokes"
