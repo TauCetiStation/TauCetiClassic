@@ -126,8 +126,7 @@
 			//TODO: Make this use Move(). we're pretty much recreating it here.
 			//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob
 			var/oldloc = loc
-			var/will_pull = pulling == M
-			forceMove(M.loc, will_pull)
+			forceMove(M.loc, pulling == M) // so if we pulling this mob we will continue so
 			M.forceMove(oldloc, TRUE)
 			M.LAssailant = src
 
