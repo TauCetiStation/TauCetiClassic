@@ -294,7 +294,9 @@
 	return
 
 /atom/movable/CtrlClick(mob/user)
-	if(Adjacent(user))
+	if(user.pulling == src)
+		user.stop_pulling()
+	else if(Adjacent(user))
 		user.start_pulling(src)
 
 /*
