@@ -81,10 +81,9 @@
 			owner.bodyparts_by_name -= body_zone
 		owner.bad_bodyparts -= src
 		for(var/obj/item/organ/internal/internal_organ in bodypart_organs)
-			if(istype(internal_organ))
-				owner -= internal_organ
-				if(owner.organs_by_name[internal_organ.organ_tag] == internal_organ)
-					owner.organs_by_name -= internal_organ.organ_tag
+			owner -= internal_organ
+			if(owner.organs_by_name[internal_organ.organ_tag] == internal_organ)
+				owner.organs_by_name -= internal_organ.organ_tag
 	QDEL_LIST(bodypart_organs)
 	if(pumped)
 		owner.metabolism_factor.RemoveModifier("Pumped_[name]")
