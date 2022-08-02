@@ -846,6 +846,7 @@
 			silent = max(silent-1, 0)
 
 		if(druggy)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drugged", /datum/mood_event/drugged)
 			adjustDrugginess(-1)
 
 		if (drowsyness)
