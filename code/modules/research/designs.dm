@@ -1970,9 +1970,9 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/gun/projectile/automatic
 	category = list("Weapons")
 
-/datum/design/ammo_9mm
-	name = "Ammunition Box (9mm)"
-	desc = "A box of prototype 9mm ammunition."
+/datum/design/msmg9mm
+	name = "SMG magazine (9mm)"
+	desc = "Magazine, full of 9mm submachine gun ammo."
 	id = "ammo_9mm"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3750, MAT_SILVER = 100)
