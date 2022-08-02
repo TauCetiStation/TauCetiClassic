@@ -17,7 +17,7 @@ var/global/timestop_count = 0
 	var/list/immune = list() // the one who creates the timestop is immune
 	var/list/stopped_atoms = list()
 	var/freezerange = 2
-	var/duration = 4 SECONDS
+	var/duration = 6 SECONDS
 	alpha = 125
 
 /obj/effect/timestop/atom_init()
@@ -110,12 +110,12 @@ var/global/timestop_count = 0
 /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	name = "Остановка Времени"
 	desc = "Останавливает время для всего, кроме вас и позволяет свободно перемещаться в зоне действия, пока ваши враги застыли на месте."
-	charge_max = 200
+	charge_max = 300
 	clothes_req = 1
 	invocation = "TOKI WO TOMARE"
 	invocation_type = "shout"
 	range = 0
 	summon_amt = 1
 	action_icon_state = "time"
-	newVars = list("duration" = 40)
+	newVars = list("duration" = 60)
 	summon_type = list(/obj/effect/timestop)
