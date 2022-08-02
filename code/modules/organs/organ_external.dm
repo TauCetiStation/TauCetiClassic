@@ -866,17 +866,17 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/obj/item/weapon/tool = I
 		if(!open)
 			//todo: Use actual surgery_step code
-			user.visible_message("[user] starts the incision on [brainmob] with \the [tool].", \
-			"You start the incision on [brainmob] with \the [tool].")
+			user.visible_message("[user] starts the incision on [brainmob]'s head with \the [tool].", \
+			"You start the incision on [brainmob]'s head with \the [tool].")
 			user.visible_message()
 			var/step_duration = rand(90, 110)
 			if(tool.use_tool(src, user, step_duration, volume=100, required_skills_override = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED), skills_speed_bonus = -0.30))
-				user.visible_message("<span class='notice'>[user] has made an incision on [brainmob] with \the [tool].</span>", \
-				"<span class='notice'>You have made an incision on [brainmob] with \the [tool].</span>",)
+				user.visible_message("<span class='notice'>[user] has made an incision on [brainmob]'s head with \the [tool].</span>", \
+				"<span class='notice'>You have made an incision on [brainmob]'s head with \the [tool].</span>",)
 				open = TRUE
 				return
 			else
-				user.visible_message("<span class='warning'>[user]'s hand slips, slicing open [brainmob] in the wrong place with \the [tool]!</span>", \
+				user.visible_message("<span class='warning'>[user]'s hand slips, slicing open [brainmob]'s head in the wrong place with \the [tool]!</span>", \
 				"<span class='warning'>Your hand slips, slicing open [brainmob] in the wrong place with \the [tool]!</span>")
 		else if(brain_op_stage == BRAIN_OP_STAGE_SAWED_OPEN)
 			if(!(species in list(DIONA, IPC)))
@@ -898,15 +898,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/obj/item/weapon/tool = I
 		if(open && brain_op_stage == BRAIN_OP_STAGE_NOT_STARTED)
 			user.visible_message("[user] begins to cut through [brainmob]'s skull \the [tool].",
-			"You begin to cut through [brainmob]'skull with \the [tool].")
+			"You begin to cut through [brainmob]'s skull with \the [tool].")
 			var/step_duration = rand(50, 70)
 			if(tool.use_tool(src, user, step_duration, volume=100, required_skills_override = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED), skills_speed_bonus = -0.30))
-				user.visible_message("<span class='notice'>[user] has cut [brainmob]'s skull' open with \the [tool].</span>",
+				user.visible_message("<span class='notice'>[user] has cut [brainmob]'s skull open with \the [tool].</span>",
 				"<span class='notice'>You have cut [brainmob]'s skull open with \the [tool].</span>")
 				brain_op_stage = BRAIN_OP_STAGE_SAWED_OPEN
 				return
 			else
-				user.visible_message("<span class='warning'>[user]'s hand slips, cracking [brainmob] with \the [tool]!</span>",
+				user.visible_message("<span class='warning'>[user]'s hand slips, cracking [brainmob]'s skull with \the [tool]!</span>",
 				"<span class='warning'>Your hand slips, cracking [brainmob] with \the [tool]!</span>" )
 		if(brain_op_stage == BRAIN_OP_STAGE_DISCONNECTED)
 			if(!(species in list(DIONA, IPC)))

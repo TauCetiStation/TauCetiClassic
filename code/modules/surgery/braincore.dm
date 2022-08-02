@@ -144,7 +144,7 @@
 /datum/surgery_step/brain/insert_brain/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='notice'>[user] inserts [tool] into [target]'s [BP.name].</span>",
-	"<span class='notice'>You inserts [tool] into [target]'s [BP.name].</span>")
+	"<span class='notice'>You insert [tool] into [target]'s [BP.name].</span>")
 
 	if(!istype(tool, /obj/item/brain))
 		return
