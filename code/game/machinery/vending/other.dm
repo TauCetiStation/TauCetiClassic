@@ -105,6 +105,9 @@
 		/obj/item/clothing/glasses/gglasses = 1,
 		/obj/item/toy/figure/wizard = 1,
 		/obj/item/weapon/storage/fancy/crayons = 1,
+		/obj/item/clothing/mask/balaclava/richard = 1,
+		/obj/item/clothing/mask/balaclava/don_juan = 1,
+		/obj/item/clothing/mask/balaclava/rasmus = 1,
 	)
 	product_slogans = "Amicitiae nostrae memoriam spero sempiternam fore;Aequam memento rebus in arduis servare mentem;Vitanda est improba siren desidia;Serva me, servabo te;Faber est suae quisque fortunae"
 	vend_reply = "Have fun! No returns!"
@@ -254,6 +257,7 @@
 		"Hacker kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker,
 		"Machinengunner kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner,
 		"Field Medic kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/medic,
+		"Chemical Fighter Kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/chemwarfare,
 		"Custom kit" =  /obj/item/weapon/storage/backpack/dufflebag/nuke/custom,
 	)
 	var/static/list/selections_kits
@@ -284,6 +288,7 @@
 	"Hacker kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "bulldog"),
 	"Machinengunner kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "l6closed100"),
 	"Field Medic kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "medigun_syndi"),
+	"Chemical Fighter Kit" = image(icon = 'icons/obj/hydroponics/equipment.dmi', icon_state = "misternuke"),
 	"Custom kit" = image(icon = 'icons/obj/radio.dmi', icon_state = "radio"),
 	)
 

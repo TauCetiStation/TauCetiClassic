@@ -41,7 +41,7 @@
 		user.apply_effect(agony * 2, AGONY, 0)
 		discharge()
 		return
-	if(!handle_fumbling(user, src, SKILL_TASK_VERY_EASY, list(/datum/skill/police/master), "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>", can_move = TRUE))
+	if(!handle_fumbling(user, src, SKILL_TASK_VERY_EASY, list(/datum/skill/police = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around figuring out how to toggle [status ? "on" : "off"] [src]...</span>", can_move = TRUE))
 		return
 	if(charges > 0)
 		set_status(!status)

@@ -8,6 +8,7 @@ var/global/list/blob_nodes = list()
 	name = "blob core"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_core"
+	max_health = 200
 	health = 200
 	fire_resist = 2
 	var/mob/camera/blob/overmind = null // the blob core's overmind
@@ -56,7 +57,7 @@ var/global/list/blob_nodes = list()
 		overmind.add_points(points_to_collect)
 		last_resource_collection = world.time
 
-	health = min(initial(health), health + 1)
+	health = min(max_health, health + 1)
 	if(overmind)
 		overmind.update_health_hud()
 	for(var/dir in cardinal)

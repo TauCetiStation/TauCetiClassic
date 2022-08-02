@@ -285,7 +285,7 @@
 		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
-	var/chem = input("Select a chemical to secrete.", "Chemicals") as null|anything in list("bicaridine","tramadol","hyperzine","alkysine")
+	var/chem = input("Select a chemical to secrete.", "Chemicals") as null|anything in list("bicaridine","tramadol","nuka_cola","alkysine")
 	if(!chem)
 		return
 

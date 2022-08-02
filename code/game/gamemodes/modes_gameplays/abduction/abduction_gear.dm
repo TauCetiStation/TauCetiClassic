@@ -127,8 +127,6 @@
 		M.SetParalysis(0)
 		M.SetStunned(0)
 		M.SetWeakened(0)
-		M.lying = 0
-		M.update_canmove()
 //		M.adjustStaminaLoss(-75)
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)

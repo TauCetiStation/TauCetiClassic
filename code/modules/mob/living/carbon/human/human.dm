@@ -626,7 +626,6 @@
 	else if(def_zone)
 		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
-	attack_heart(clamp(((shock_damage - 10) ** 2) / 100, 0, 100), shock_damage) //small shock can heal your heart
 	if(species)
 		siemens_coeff *= species.siemens_coefficient
 
@@ -1583,14 +1582,13 @@
 		for(var/datum/skill/s as anything in sliders_data)
 			var/datum/skill/skill = all_skills[s]
 			var/slider_id = skill.name
-			var/slider_value = mind.skills.get_value(slider_id)
-			var/slider_min_value = skill.min_value
-			var/slider_max_value = mind.skills.get_max(slider_id)
-			var/rank_list = get_skill_rank_list(s)
+			var/slider_value = mind.skills.get_value(s)
+			var/slider_min_value = SKILL_LEVEL_MIN
+			var/slider_max_value = mind.skills.get_max(s)
+			var/rank_list = skill.custom_ranks
 			var/rank_list_element = ""
 			for(var/rank in rank_list)
 				rank_list_element += "[rank]\n"
-			rank_list_element += ""
 			if(slider_max_value == slider_min_value)
 				continue
 			var/slider_hint = "Hint: [skill.hint]\n\nSkill ranks:\n[rank_list_element]"
@@ -1651,13 +1649,18 @@
 	popup.open()
 
 /mob/living/carbon/human/proc/update_skills(href_list)
-	var/skill = href_list["skill"]
+	var/skill_name = href_list["skill"]
 	var/value = text2num(href_list["value"])
-	if(!isnum(value) || !istext(skill))
+	if(!isnum(value) || !istext(skill_name))
 		return
 	if(!mind)
 		return
-	mind.skills.choose_value(skill, value)
+	for(var/skill_type in all_skills)
+		var/datum/skill/skill = all_skills[skill_type]
+		if(skill.name == skill_name)
+			mind.skills.choose_value(skill_type, value)
+			return
+
 
 /mob/living/carbon/human/verb/examine_ooc()
 	set name = "Examine OOC"
@@ -1712,7 +1715,7 @@
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
 		//untrained 8 seconds, novice 6.8, trained 5.6, pro 4.4, expert 3.2 and master 2
-		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical/default), multiplier = -0.15) //-15% for each medical level
+		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) //-15% for each medical level
 		if(!instant)
 			if(hunt_injection_port) // takes additional time
 				if(!stealth)

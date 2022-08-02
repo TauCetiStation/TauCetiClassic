@@ -145,6 +145,11 @@
 /// from base of atom/clean_blood (WHICH APPERANTLY CLEANS ALL DIRT OVERLAYS ?? ??? ?)
 #define COMSIG_ATOM_CLEAN_BLOOD "atom_clean_blood"
 
+///called when teleporting into a protected turf: (channel, turf/origin)
+#define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"
+	#define COMPONENT_BLOCK_TELEPORT (1<<0)
+	//#define COMPONENT_INTERFERE_TELEPORT (1<<1)
+
 /// from base /atom/movable/proc/Moved() and /atom/proc/set_dir() return dir
 #define COMSIG_ATOM_CHANGE_DIR "change_dir"
 

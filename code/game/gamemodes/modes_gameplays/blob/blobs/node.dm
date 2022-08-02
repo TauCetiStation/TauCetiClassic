@@ -2,6 +2,7 @@
 	name = "blob node"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_node"
+	max_health = 100
 	health = 100
 	fire_resist = 2
 	var/given_name = null

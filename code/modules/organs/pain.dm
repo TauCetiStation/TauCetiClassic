@@ -18,8 +18,8 @@
 	if(world.time < next_pain_time && !force)
 		return
 	if(amount > 10 && ishuman(src))
-		if(src:paralysis)
-			src:paralysis = max(0, src:paralysis-round(amount/10))
+		if(paralysis)
+			SetParalysis(AmountParalyzed() - amount / 10)
 	if(amount > 50 && prob(amount / 5))
 		drop_item()
 	var/msg
