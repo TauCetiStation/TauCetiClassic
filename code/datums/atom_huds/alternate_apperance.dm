@@ -250,7 +250,7 @@ var/global/list/active_alternate_appearances = list()
 		faction2check = faction
 		var/datum/faction/F = find_faction_by_type(faction2check)
 		if(!F)
-			return //Causes runtimes otherwise
+			return // in case if someone spawned faction-related stuff with hud, but we don't have faction in current round
 		for(var/datum/role/role in F.members)
 			if(role.antag.current)
 				add_hud_to(role.antag.current)
