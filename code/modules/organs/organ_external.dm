@@ -735,10 +735,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 
 #define BRAIN_OP_STAGE_NOT_STARTED 0
-#define BRAIN_OP_STAGE_CUT_OPEN 1
-#define BRAIN_OP_STAGE_SAWED_OPEN 2
-#define BRAIN_OP_STAGE_DISCONNECTED 3
-#define BRAIN_OP_STAGE_DEBRAINED 4
+#define BRAIN_OP_STAGE_SAWED_OPEN 1
+#define BRAIN_OP_STAGE_DISCONNECTED 2
+#define BRAIN_OP_STAGE_DEBRAINED 3
 
 /obj/item/organ/external/head
 	name = "head"
@@ -864,51 +863,68 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(!brainmob)
 		return ..()
 	if(istype(I, /obj/item/weapon/scalpel) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/shard))
-		switch(brain_op_stage)
-			if(BRAIN_OP_STAGE_NOT_STARTED)
-				//todo: should be replaced with visible_message
-				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("<span class='warning'>[brainmob] is beginning to have \his head cut open with [I] by [user].</span>", SHOWMSG_VISUAL)
-				to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [I]!</span>")
-				to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [I]!</span>")
-
-				brain_op_stage = BRAIN_OP_STAGE_CUT_OPEN
+		var/obj/item/weapon/tool = I
+		if(!open)
+			//todo: Use actual surgery_step code
+			user.visible_message("[user] starts the incision on [brainmob] with \the [tool].", \
+			"You start the incision on [brainmob] with \the [tool].")
+			user.visible_message()
+			var/step_duration = rand(90, 110)
+			if(tool.use_tool(src, user, step_duration, volume=100, required_skills_override = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED), skills_speed_bonus = -0.30))
+				user.visible_message("<span class='notice'>[user] has made an incision on [brainmob] with \the [tool].</span>", \
+				"<span class='notice'>You have made an incision on [brainmob] with \the [tool].</span>",)
 				open = TRUE
-
-			if(BRAIN_OP_STAGE_SAWED_OPEN)
-				if(!(species in list(DIONA, IPC)))
-					for(var/mob/O in (oviewers(brainmob) - user))
-						O.show_message("<span class='warning'>[brainmob] is having \his connections to the brain delicately severed with [I] by [user].</span>", SHOWMSG_VISUAL)
-					to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [I]!</span>")
-					to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [I]!</span>")
-
-					brain_op_stage = BRAIN_OP_STAGE_DISCONNECTED
+				return
 			else
-				return ..()
+				user.visible_message("<span class='warning'>[user]'s hand slips, slicing open [brainmob] in the wrong place with \the [tool]!</span>", \
+				"<span class='warning'>Your hand slips, slicing open [brainmob] in the wrong place with \the [tool]!</span>")
+		else if(brain_op_stage == BRAIN_OP_STAGE_SAWED_OPEN)
+			if(!(species in list(DIONA, IPC)))
+				user.visible_message("[user] starts separating connections to [brainmob]'s brain with \the [tool].",
+				"You start separating connections to [brainmob]'s brain with \the [tool].")
+
+				var/step_duration = rand(80, 100)
+				if(tool.use_tool(src, user, step_duration, volume=100, required_skills_override = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED), skills_speed_bonus = -0.30))
+					user.visible_message("<span class='notice'>[user] separates connections to [brainmob]'s brain with \the [tool].</span>",
+					"<span class='notice'>You separate connections to [brainmob]'s brain with \the [tool].</span>")
+					
+					brain_op_stage = BRAIN_OP_STAGE_DISCONNECTED
+					return
+				else
+					user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [brainmob]'s brain with \the [tool]!</span>",
+					"<span class='warning'>Your hand slips, cutting a vein in [brainmob]'s brain with \the [tool]!</span>")
 
 	else if(istype(I, /obj/item/weapon/circular_saw) || iscrowbar(I) || istype(I, /obj/item/weapon/hatchet))
-		switch(brain_op_stage)
-			if(BRAIN_OP_STAGE_CUT_OPEN)
-				for(var/mob/O in (oviewers(brainmob) - user))
-					O.show_message("<span class='warning'>[brainmob] has \his head sawed open with [I] by [user].</span>", SHOWMSG_VISUAL)
-				to_chat(brainmob, "<span class='warning'>[user] begins to saw open your head with [I]!</span>")
-				to_chat(user, "<span class='warning'>You saw [brainmob]'s head open with [I]!</span>")
-
+		var/obj/item/weapon/tool = I
+		if(open && brain_op_stage == BRAIN_OP_STAGE_NOT_STARTED)
+			user.visible_message("[user] begins to cut through [brainmob]'s skull \the [tool].",
+			"You begin to cut through [brainmob]'skull with \the [tool].")
+			var/step_duration = rand(50, 70)
+			if(tool.use_tool(src, user, step_duration, volume=100, required_skills_override = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED), skills_speed_bonus = -0.30))
+				user.visible_message("<span class='notice'>[user] has cut [brainmob]'s skull' open with \the [tool].</span>",
+				"<span class='notice'>You have cut [brainmob]'s skull open with \the [tool].</span>")
 				brain_op_stage = BRAIN_OP_STAGE_SAWED_OPEN
-			if(BRAIN_OP_STAGE_DISCONNECTED)
-				if(!(species in list(DIONA, IPC)))
-					for(var/mob/O in (oviewers(brainmob) - user))
-						O.show_message("<span class='warning'>[brainmob] has \his spine's connection to the brain severed with [I] by [user].</span>", SHOWMSG_VISUAL)
-					to_chat(brainmob, "<span class='warning'>[user] severs your brain's connection to the spine with [I]!</span>")
-					to_chat(user, "<span class='warning'>You sever [brainmob]'s brain's connection to the spine with [I]!</span>")
+				return
+			else
+				user.visible_message("<span class='warning'>[user]'s hand slips, cracking [brainmob] with \the [tool]!</span>",
+				"<span class='warning'>Your hand slips, cracking [brainmob] with \the [tool]!</span>" )
+		if(brain_op_stage == BRAIN_OP_STAGE_DISCONNECTED)
+			if(!(species in list(DIONA, IPC)))
+				user.visible_message("[user] starts separating [brainmob]'s brain from \his skull with \the [tool].",
+				"You start separating [brainmob]'s brain from skull with \the [tool].")
 
+				var/step_duration = rand(50, 70)
+				if(tool.use_tool(src, user, step_duration, volume=100, required_skills_override = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED), skills_speed_bonus = -0.30))
 					brainmob.log_combat(user, "debrained with [I.name] (INTENT: [uppertext(user.a_intent)])")
 
+					user.visible_message("<span class='notice'>[user] separates [brainmob]'s brain from \his spine with \the [tool].</span>",
+					"<span class='notice'>You separate [brainmob]'s brain from skull with \the [tool].</span>")
+
 					if(istype(src,/obj/item/organ/external/head/robot))
-						var/obj/item/device/mmi/posibrain/B = new(loc)
+						var/obj/item/device/mmi/posibrain/B = new(get_turf(src))
 						B.transfer_identity(brainmob)
 					else
-						var/obj/item/brain/B = new(loc)
+						var/obj/item/brain/B = new(get_turf(src))
 						B.transfer_identity(brainmob)
 					
 					QDEL_NULL(src.brainmob)
@@ -919,10 +935,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 							qdel(brain)
 
 					brain_op_stage = BRAIN_OP_STAGE_DEBRAINED
-			else
-				return ..()
-	else
-		return ..()
+					return
+				else
+					user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [brainmob]'s brain with \the [tool]!</span>",
+					"<span class='warning'>Your hand slips, cutting a vein in [brainmob]'s brain with \the [tool]!</span>")
+
+	return ..()
 
 #undef BRAIN_OP_STAGE_NOT_STARTED
 #undef BRAIN_OP_STAGE_CUT_OPEN
