@@ -943,7 +943,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return ..()
 
 #undef BRAIN_OP_STAGE_NOT_STARTED
-#undef BRAIN_OP_STAGE_CUT_OPEN
 #undef BRAIN_OP_STAGE_SAWED_OPEN
 #undef BRAIN_OP_STAGE_DISCONNECTED
 #undef BRAIN_OP_STAGE_DEBRAINED
