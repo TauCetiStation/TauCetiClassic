@@ -31,7 +31,7 @@
 	owner.organs += src
 	owner.organs_by_name[organ_tag] = src
 
-	if(parent)
+	if(parent && !(src in parent.bodypart_organs))
 		parent.bodypart_organs += src
 
 

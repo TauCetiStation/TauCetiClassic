@@ -80,6 +80,11 @@
 		if(owner.bodyparts_by_name[body_zone] == src)
 			owner.bodyparts_by_name -= body_zone
 		owner.bad_bodyparts -= src
+		for(var/obj/item/organ/internal/internal_organ in bodypart_organs)
+			if(istype(internal_organ))
+				owner -= internal_organ
+				if(owner.organs_by_name[internal_organ.organ_tag] == internal_organ)
+					owner.organs_by_name -= internal_organ.organ_tag
 	QDEL_LIST(bodypart_organs)
 	if(pumped)
 		owner.metabolism_factor.RemoveModifier("Pumped_[name]")
@@ -125,6 +130,10 @@
 
 	owner.bodyparts += src
 	owner.bodyparts_by_name[body_zone] = src
+
+	for(var/obj/item/organ/internal/internal_organ in bodypart_organs)
+		if(istype(internal_organ))
+			internal_organ.insert_organ(H, surgically, S)
 
 	if(parent)
 		parent.children += src
@@ -444,6 +453,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 		S.insert_organ(owner, FALSE)
 	owner.updatehealth()
 
+	for(var/obj/item/organ/internal/internal_organ in bodypart_organs)
+		if(istype(internal_organ))
+			owner.organs -= internal_organ
+			if(owner.organs_by_name[internal_organ.organ_tag] == internal_organ)
+				owner.organs_by_name -= internal_organ.organ_tag
+
 	if(!should_delete)
 		handle_cut()
 		owner = null
@@ -719,6 +734,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 	w_class = SIZE_NORMAL
 
 
+#define BRAIN_OP_STAGE_NOT_STARTED 0
+#define BRAIN_OP_STAGE_CUT_OPEN 1
+#define BRAIN_OP_STAGE_SAWED_OPEN 2
+#define BRAIN_OP_STAGE_DISCONNECTED 3
+#define BRAIN_OP_STAGE_DEBRAINED 4
+
 /obj/item/organ/external/head
 	name = "head"
 	artery_name = "cartoid artery"
@@ -746,7 +767,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	var/disfigured = FALSE
 	var/mob/living/carbon/brain/brainmob
-	var/brain_op_stage = 0
+	var/brain_op_stage = BRAIN_OP_STAGE_NOT_STARTED
 	var/f_style // So we can put his haircut back when we attach the head
 	var/h_style
 	var/grad_style
@@ -840,38 +861,41 @@ Note that amputating the affected organ does in fact remove the infection from t
 			add_overlay(mutable_appearance(hair_s, "[hair_style.icon_state]_s"))
 
 /obj/item/organ/external/head/attackby(obj/item/I, mob/user, params)
+	if(!brainmob)
+		return ..()
 	if(istype(I, /obj/item/weapon/scalpel) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/shard))
 		switch(brain_op_stage)
-			if(0)
+			if(BRAIN_OP_STAGE_NOT_STARTED)
 				//todo: should be replaced with visible_message
 				for(var/mob/O in (oviewers(brainmob) - user))
 					O.show_message("<span class='warning'>[brainmob] is beginning to have \his head cut open with [I] by [user].</span>", SHOWMSG_VISUAL)
 				to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [I]!</span>")
 				to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [I]!</span>")
 
-				brain_op_stage = 1
+				brain_op_stage = BRAIN_OP_STAGE_CUT_OPEN
+				open = TRUE
 
-			if(2)
+			if(BRAIN_OP_STAGE_SAWED_OPEN)
 				if(!(species in list(DIONA, IPC)))
 					for(var/mob/O in (oviewers(brainmob) - user))
 						O.show_message("<span class='warning'>[brainmob] is having \his connections to the brain delicately severed with [I] by [user].</span>", SHOWMSG_VISUAL)
 					to_chat(brainmob, "<span class='warning'>[user] begins to cut open your head with [I]!</span>")
 					to_chat(user, "<span class='warning'>You cut [brainmob]'s head open with [I]!</span>")
 
-					brain_op_stage = 3.0
+					brain_op_stage = BRAIN_OP_STAGE_DISCONNECTED
 			else
 				return ..()
 
 	else if(istype(I, /obj/item/weapon/circular_saw) || iscrowbar(I) || istype(I, /obj/item/weapon/hatchet))
 		switch(brain_op_stage)
-			if(1)
+			if(BRAIN_OP_STAGE_CUT_OPEN)
 				for(var/mob/O in (oviewers(brainmob) - user))
 					O.show_message("<span class='warning'>[brainmob] has \his head sawed open with [I] by [user].</span>", SHOWMSG_VISUAL)
 				to_chat(brainmob, "<span class='warning'>[user] begins to saw open your head with [I]!</span>")
 				to_chat(user, "<span class='warning'>You saw [brainmob]'s head open with [I]!</span>")
 
-				brain_op_stage = 2
-			if(3)
+				brain_op_stage = BRAIN_OP_STAGE_SAWED_OPEN
+			if(BRAIN_OP_STAGE_DISCONNECTED)
 				if(!(species in list(DIONA, IPC)))
 					for(var/mob/O in (oviewers(brainmob) - user))
 						O.show_message("<span class='warning'>[brainmob] has \his spine's connection to the brain severed with [I] by [user].</span>", SHOWMSG_VISUAL)
@@ -886,12 +910,25 @@ Note that amputating the affected organ does in fact remove the infection from t
 					else
 						var/obj/item/brain/B = new(loc)
 						B.transfer_identity(brainmob)
+					
+					QDEL_NULL(src.brainmob)
 
-					brain_op_stage = 4.0
+					for (var/obj/item/organ/internal/brain/brain in bodypart_organs)
+						if(istype(brain))
+							bodypart_organs -= brain
+							qdel(brain)
+
+					brain_op_stage = BRAIN_OP_STAGE_DEBRAINED
 			else
 				return ..()
 	else
 		return ..()
+
+#undef BRAIN_OP_STAGE_NOT_STARTED
+#undef BRAIN_OP_STAGE_CUT_OPEN
+#undef BRAIN_OP_STAGE_SAWED_OPEN
+#undef BRAIN_OP_STAGE_DISCONNECTED
+#undef BRAIN_OP_STAGE_DEBRAINED
 
 /obj/item/organ/external/head/diona
 	vital = FALSE
