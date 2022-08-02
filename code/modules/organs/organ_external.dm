@@ -132,8 +132,7 @@
 	owner.bodyparts_by_name[body_zone] = src
 
 	for(var/obj/item/organ/internal/internal_organ in bodypart_organs)
-		if(istype(internal_organ))
-			internal_organ.insert_organ(H, surgically, S)
+		internal_organ.insert_organ(H, surgically, S)
 
 	if(parent)
 		parent.children += src
@@ -454,10 +453,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	owner.updatehealth()
 
 	for(var/obj/item/organ/internal/internal_organ in bodypart_organs)
-		if(istype(internal_organ))
-			owner.organs -= internal_organ
-			if(owner.organs_by_name[internal_organ.organ_tag] == internal_organ)
-				owner.organs_by_name -= internal_organ.organ_tag
+		owner.organs -= internal_organ
+		if(owner.organs_by_name[internal_organ.organ_tag] == internal_organ)
+			owner.organs_by_name -= internal_organ.organ_tag
 
 	if(!should_delete)
 		handle_cut()
@@ -929,9 +927,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 					QDEL_NULL(src.brainmob)
 
 					for (var/obj/item/organ/internal/brain/brain in bodypart_organs)
-						if(istype(brain))
-							bodypart_organs -= brain
-							qdel(brain)
+						bodypart_organs -= brain
+						qdel(brain)
 
 					brain_op_stage = BRAIN_OP_STAGE_DEBRAINED
 					return
