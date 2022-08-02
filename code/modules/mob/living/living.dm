@@ -205,13 +205,13 @@
 			var/mob/M = AM
 			tally += M.stat == CONSCIOUS ? ( M.a_intent == INTENT_HELP ? 0 : 0.5 ) : 1
 		//Structure pulling
-		if(istype(AM, /obj/structure))
+		else if(istype(AM, /obj/structure))
 			tally += 0.3
 			var/obj/structure/S = AM
 			if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
 				tally -= 0.3
 		//Machinery pulling
-		if(ismachinery(AM))
+		else if(ismachinery(AM))
 			tally += 0.3
 		pull_debuff += tally
 
