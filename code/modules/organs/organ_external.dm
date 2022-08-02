@@ -866,17 +866,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/obj/item/weapon/tool = I
 		if(!open)
 			//todo: Use actual surgery_step code
-			user.visible_message("[user] starts the incision on [brainmob]'s head with \the [tool].", \
+			user.visible_message("[user] starts the incision on [brainmob]'s head with \the [tool].",
 			"You start the incision on [brainmob]'s head with \the [tool].")
-			user.visible_message()
 			var/step_duration = rand(90, 110)
 			if(tool.use_tool(src, user, step_duration, volume=100, required_skills_override = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED), skills_speed_bonus = -0.30))
-				user.visible_message("<span class='notice'>[user] has made an incision on [brainmob]'s head with \the [tool].</span>", \
+				user.visible_message("<span class='notice'>[user] has made an incision on [brainmob]'s head with \the [tool].</span>",
 				"<span class='notice'>You have made an incision on [brainmob]'s head with \the [tool].</span>",)
 				open = TRUE
 				return
 			else
-				user.visible_message("<span class='warning'>[user]'s hand slips, slicing open [brainmob]'s head in the wrong place with \the [tool]!</span>", \
+				user.visible_message("<span class='warning'>[user]'s hand slips, slicing open [brainmob]'s head in the wrong place with \the [tool]!</span>",
 				"<span class='warning'>Your hand slips, slicing open [brainmob] in the wrong place with \the [tool]!</span>")
 		else if(brain_op_stage == BRAIN_OP_STAGE_SAWED_OPEN)
 			if(!(species in list(DIONA, IPC)))
