@@ -105,7 +105,7 @@
 
 		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
 		if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50, required_skills_override = list(/datum/skill/firearms = SKILL_LEVEL_TRAINED)))
-			icon_state = "dshotgun[short ? "-short" : ""][open ? "-o" : ""]"
+			icon_state = "dshotgun"
 			w_class = SIZE_SMALL
 			item_state = "gun"
 			slot_flags &= ~SLOT_FLAGS_BACK	//you can't sling it on your back
