@@ -750,10 +750,18 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
+	if(length(speech_buffer))
+		for(var/text in speech_buffer)
+			if(!istext(text))
+				speech_buffer = null // omg we somehow corrupted
+
 	S["phrases"] 			<< speech_buffer
-	S["roundssurvived"]		<< rounds_survived
-	S["longestsurvival"]	<< longest_survival
-	S["longestdeathstreak"] << longest_deathstreak
+	if(isnum(rounds_survived))
+		S["roundssurvived"]		<< rounds_survived
+	if(isnum(longest_survival))
+		S["longestsurvival"]	<< longest_survival
+	if(isnum(longest_deathstreak))
+		S["longestdeathstreak"] << longest_deathstreak
 	memory_saved = 1
 
 /mob/living/simple_animal/parrot/Poly/ghost

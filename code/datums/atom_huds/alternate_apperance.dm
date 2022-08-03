@@ -239,6 +239,32 @@ var/global/list/active_alternate_appearances = list()
 		return TRUE
 	return FALSE
 
+// Fake-image can see only the specified faction
+/datum/atom_hud/alternate_appearance/basic/faction
+	var/datum/faction2check
+	add_ghost_version = TRUE
+
+/datum/atom_hud/alternate_appearance/basic/faction/New(key, image/I, faction)
+	..(key, I, FALSE)
+	if(SSticker)
+		faction2check = faction
+		var/datum/faction/F = find_faction_by_type(faction2check)
+		if(!F)
+			return // in case if someone spawned faction-related stuff with hud, but we don't have faction in current round
+		for(var/datum/role/role in F.members)
+			if(role.antag.current)
+				add_hud_to(role.antag.current)
+
+/datum/atom_hud/alternate_appearance/basic/faction/mobShouldSee(mob/M)
+	if(!SSticker) //We can't check it anyway without it
+		return FALSE
+	var/datum/faction/F = find_faction_by_type(faction2check)
+	if(!F)
+		return FALSE
+	if(M in F.members)
+		return TRUE
+	return FALSE
+
 /datum/atom_hud/alternate_appearance/basic/exclude_ckeys
 	// Dictionary of form list(ckey = TRUE) for all who shouldn't see this appearance.
 	var/list/ckeys
