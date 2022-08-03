@@ -23,20 +23,25 @@
 		var/mob/living/L = target
 		L.wabbajack()
 
-/mob/living/proc/wabbajack(randomize)
-	if(!istype(src) || stat == DEAD || notransform || (GODMODE & status_flags) || isxenoqueen(src))
+/mob/living/proc/wabbajack(new_body, permanent = FALSE)
+	if(!istype(src) || stat == DEAD || notransform || isxenoqueen(src))
 		return
+	if(!isliving(new_body))
+		for(var/mob/living/L in src.contents)
+			if(L || (GODMODE & status_flags))
+				return
 
 	var/mob/living/new_mob
 
-	if(isliving(randomize)) //Returny case
-		var/mob/living/L = randomize
+	if(isliving(new_body)) //Returny case
+		var/mob/L = new_body
 		L.forceMove(get_turf(src))
+		L.notransform = FALSE
 		new_mob = L
 
-	if(!randomize)
-		randomize = pick("monkey", "hostile", "hostile", "animal", "cyborg", "xeno", "humanoid")
-	switch(randomize)
+	if(!new_body)
+		new_body = pick("monkey", "animal", "hostile", "hostile", "cyborg", "xeno", "humanoid")
+	switch(new_body)
 		if("monkey")
 			new_mob = new /mob/living/carbon/monkey(get_turf(loc))
 		if("animal")
@@ -105,18 +110,21 @@
 	new_mob.attack_log = attack_log
 	attack_log += text("\[[time_stamp()]\] <font color='orange'>[real_name] ([ckey]) became [new_mob.real_name].</font>")
 
-	new_mob.set_a_intent(INTENT_HARM)
 	if(mind)
 		mind.transfer_to(new_mob)
 	else
 		new_mob.key = key
-
-	if(isliving(randomize)) //Returny case
+	if(isliving(new_body)) //Returny case
+		new_mob.burn_skin((maxHealth - health) / maxHealth * new_mob.maxHealth) //You can bring them to the doorstep of death
 		qdel(src)
 	else
-		notransform = TRUE
-		forceMove(new_mob)
-		addtimer(CALLBACK(new_mob, .proc/wabbajack, src), 40 SECONDS)
+		new_mob.set_a_intent(INTENT_HARM)
+		if(!permanent)
+			forceMove(new_mob)
+			addtimer(CALLBACK(new_mob, .proc/wabbajack, src), 40 SECONDS)
+			notransform = TRUE
+		else
+			qdel(src)
 	to_chat(new_mob, "<B>Your body forms to something else!</B>")
 
 	return new_mob
@@ -138,7 +146,7 @@
 		create_spawner(/datum/spawner/living/mimic, C)
 	else if(istype(change, /mob/living/simple_animal/shade) || isxeno(change))
 		var/mob/living/M = change
-		M = M.wabbajack()
+		M = M.wabbajack("animal", TRUE)
 		if(firer && iswizard(firer))
 			var/datum/role/wizard/mage = firer.mind.GetRole(WIZARD)
 			var/datum/faction/wizards/federation = mage.GetFaction()
