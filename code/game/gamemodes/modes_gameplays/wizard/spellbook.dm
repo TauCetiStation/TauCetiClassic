@@ -71,6 +71,18 @@
 	spell_type = /obj/effect/proc_holder/spell/in_hand/fireball
 	log_name = "FB"
 
+/datum/spellbook_entry/icebolt
+	name = "Ледяной шар"
+	spell_type = /obj/effect/proc_holder/spell/in_hand/icebolt
+	log_name = "IB"
+	cost = 1 // because this spell does not deal much damage and only slows down
+
+/datum/spellbook_entry/acid
+	name = "Кислотный чих"
+	spell_type = /obj/effect/proc_holder/spell/in_hand/acid
+	log_name = "ACI"
+	cost = 1
+
 /datum/spellbook_entry/res_touch
 	name = "Воскрешение"
 	spell_type = /obj/effect/proc_holder/spell/in_hand/res_touch
@@ -83,6 +95,13 @@
 	spell_type = /obj/effect/proc_holder/spell/in_hand/heal
 	log_name = "HT"
 	category = "Оборона"
+
+/datum/spellbook_entry/carp
+	name = "Призыв Карпа"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
+	log_name = "SC"
+	category = "Оборона"
+	cost = 2
 
 /datum/spellbook_entry/magicm
 	name = "Магическая ракета"
@@ -286,6 +305,14 @@
 	log_name = "SH"
 	category = "Оборона"
 	cost = 4
+
+/datum/spellbook_entry/item/jakboots
+	name = "Сапоги Быстроногого Джека"
+	desc = "Ботинки, способные ускорять того, кто их носит."
+	item_path = /obj/item/clothing/shoes/boots/work/jak
+	log_name = "JB"
+	category = "Мобильность"
+	cost = 3
 
 /datum/spellbook_entry/item/soulstones
 	name = "Шесть осколков камня душ и заклинание ремесленника"

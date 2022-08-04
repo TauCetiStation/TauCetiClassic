@@ -98,3 +98,12 @@
 	icon_state = "police_boots"
 	item_state = "wjboots"
 	siemens_coefficient = 0.7
+
+/obj/item/clothing/shoes/boots/work/jak
+	name = "Boots of Springheel Jak"
+	desc = "A pair of some old boots."
+	slowdown = -2.0
+
+/obj/item/clothing/shoes/boots/work/jak/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)

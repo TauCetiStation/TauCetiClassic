@@ -143,7 +143,59 @@
 	explosion(get_turf(target), 1)
 	return ..()
 
+///////////////////////////////////////////
+
+/obj/effect/proc_holder/spell/in_hand/icebolt
+	name = "Ледяная Стрела"
+	desc = "Слабая ледяная стрела, не наносит большого ущерба здоровью, но неплохо замедляет цель."
+	school = "evocation"
+	action_icon_state = "ice_bolt"
+	summon_path = /obj/item/weapon/magic/icebolt
+	charge_max = 150
+
+/obj/item/weapon/magic/icebolt
+	name = "ледяная стрела"
+	invoke = "SI'ON MAD'I"
+	icon_state = "ice_bolt"
+	s_fire = 'sound/weapons/sear.ogg'
+	proj_path = /obj/item/projectile/temp/icebolt
+
+/obj/item/projectile/temp/icebolt
+	name = "bolt of ice"
+	damage = 10
+	flag = "magic"
+	damage_type = BURN
+	temperature = 25 // reduces body temperature to VERY low values
+
 //////////////////////////////////////////////////////////////
+
+/obj/effect/proc_holder/spell/in_hand/acid
+	name = "Кислотный Чих"
+	desc = "Вы используете магию для того, чтобы чихнуть кислотой во врага."
+	school = "evocation"
+	action_icon_state = "alien_neurotoxin"
+	summon_path = /obj/item/weapon/magic/acid
+	charge_max = 200
+
+/obj/item/weapon/magic/acid
+	name = "кислота"
+	invoke = "AP'CHKHI"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "neurotoxin"
+	s_fire = 'sound/voice/mob/mbcough_1.ogg'
+	proj_path = /obj/item/projectile/neurotoxin/magic
+
+/obj/item/projectile/neurotoxin/magic
+	name = "toxin"
+	damage = 40
+	weaken = 1
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "neurotoxin"
+	flag = "magic"
+	neurotoxin
+	damage_type = TOX
+
+///////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/tesla
 	name = "Шаровая Молния"
