@@ -81,7 +81,7 @@
 			owner.bodyparts_by_name -= body_zone
 		owner.bad_bodyparts -= src
 		for(var/obj/item/organ/internal/internal_organ in bodypart_organs)
-			owner -= internal_organ
+			owner.organs -= internal_organ
 			if(owner.organs_by_name[internal_organ.organ_tag] == internal_organ)
 				owner.organs_by_name -= internal_organ.organ_tag
 	QDEL_LIST(bodypart_organs)
