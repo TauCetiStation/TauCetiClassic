@@ -84,7 +84,7 @@
 		BP.trace_chemicals[A.name] = 100
 
 //Adds autopsy data for used_weapon. Use type damage: brute, burn, mixed, bruise (weak punch, e.g. fist punch)
-/obj/item/organ/proc/add_autopsy_data(used_weapon, damage, type_damage)
+/obj/item/organ/proc/add_autopsy_data(atom/used_weapon, damage, type_damage)
 	var/datum/autopsy_data/W = autopsy_data[used_weapon + worldtime2text()]
 	if(!W)
 		W = new()

@@ -159,7 +159,7 @@ var/global/list/department_radio_keys = list(
 	var/list/listening = list()
 	var/list/listening_obj = list()
 
-	if(T)
+	if(T) // todo: get_hearers_in_view
 		var/list/hear = hear(message_range, T)
 		var/list/hearturfs = list()
 
@@ -167,6 +167,12 @@ var/global/list/department_radio_keys = list(
 			listening |= AM.get_listeners()
 			listening_obj |= AM.get_listening_objs()
 			hearturfs += AM.locs[1]
+
+		// need to do second pass because of mobs who can hold objects who can hold mobs
+		// future refactoring needed
+		for(var/atom/movable/AM in listening_obj)
+			if(AM.flags & HEAR_PASS_SAY)
+				listening |= AM.get_listeners()
 
 		for(var/mob/M in player_list)
 			if(QDELETED(M)) // avoid not hard-deleted mobs with client

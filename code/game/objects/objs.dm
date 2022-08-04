@@ -186,6 +186,8 @@
 /obj/proc/hides_under_flooring()
 	return level == 1
 
+// haha we spam with empty lists recursively for every mob and object in view for each SAY call
+// todo: we don't need these listeners procs, replace with get_hearers_in_view
 /atom/movable/proc/get_listeners()
 	. = list()
 	for(var/mob/M in contents)
@@ -197,7 +199,9 @@
 		. |= M.get_listeners()
 
 /atom/movable/proc/get_listening_objs()
-	return list(src)
+	. = list() 
+	if(flags & (HEAR_TALK | HEAR_PASS_SAY))
+		. = list(src)
 
 /mob/get_listening_objs()
 	. = list()
@@ -205,7 +209,7 @@
 		. |= AM.get_listening_objs()
 
 /obj/proc/hear_talk(mob/M, text, verb, datum/language/speaking)
-	if(talking_atom)
+	if(talking_atom) // what
 		talking_atom.catchMessage(text, M)
 /*
 	var/mob/mo = locate(/mob) in src

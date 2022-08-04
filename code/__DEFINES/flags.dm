@@ -55,6 +55,10 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define NOATTACKANIMATION      (1<<19)   // Removes attack animation
 
+//objects hear flags
+#define HEAR_TALK              (1<<20)   // like old tg HEAR_1, marks objects with hear_talk()
+#define HEAR_PASS_SAY          (1<<21)   // temp for say code, for objects that need to pass SAY to inner mobs through get_listeners()
+
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 #define HOLOGRAM_2         (1<<0)
 /// atom queued to SSoverlay
