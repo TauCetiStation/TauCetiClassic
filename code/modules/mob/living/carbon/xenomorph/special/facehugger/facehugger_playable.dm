@@ -45,10 +45,6 @@
 	alien_list[ALIEN_FACEHUGGER] -= src
 	return ..()
 
-/mob/living/carbon/xenomorph/facehugger/update_canmove(no_transform = FALSE)
-	..()
-	density = initial(density)
-
 /mob/living/carbon/xenomorph/facehugger/start_pulling(atom/movable/AM)
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return
