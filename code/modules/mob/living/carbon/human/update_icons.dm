@@ -98,6 +98,7 @@ Please contact me on #coderbus IRC. ~Carn x
 //Human Overlays Indexes/////////
 #define FIRE_LOWER_LAYER      28
 #define BODY_LAYER            27
+#define CULT_HALO             26
 #define MUTATIONS_LAYER       25
 #define DAMAGE_LAYER          24
 #define SURGERY_LAYER         23 //bs12 specific.
@@ -123,7 +124,7 @@ Please contact me on #coderbus IRC. ~Carn x
 #define R_HAND_LAYER          3
 #define FIRE_UPPER_LAYER      2
 #define TARGETED_LAYER        1  //BS12: Layer for the target overlay from weapon targeting system
-#define TOTAL_LAYERS          28
+#define TOTAL_LAYERS          29
 //////////////////////////////////
 //Human Limb Overlays Indexes/////
 #define LIMB_HEAD_LAYER			7

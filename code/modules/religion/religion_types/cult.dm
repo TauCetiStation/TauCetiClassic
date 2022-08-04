@@ -249,8 +249,7 @@
 
 	var/alive = 0
 	var/cultplayers = 0
-	for(var/I in player_list)
-		var/mob/P = I
+	for(var/mob/living/P in player_list)
 		if(P.stat != DEAD)
 			if(iscultist(P))
 				++cultplayers
@@ -270,7 +269,7 @@
 		risen = TRUE
 		log_game("The blood cult has risen with [cultplayers] players.")
 
-	if(ratio > 0.4 && !ascendent)
+	if(ratio > 0.4 && !ascendent) //Halo check
 		for(var/datum/mind/B in members)
 			if(B.current)
 				playsound(B.current, 'sound/hallucinations/im_here1.ogg', VOL_EFFECTS_MASTER)
