@@ -199,7 +199,6 @@
 			msg += "<span class='warning'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] [glasses.dirt_description()] covering [t_his] eyes!</span>\n"
 		else if(glasses.wet)
 			msg += "<span class='wet'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] wet [glasses] covering [t_his] eyes!</span>\n"
-
 		else
 			msg += "[t_He] [t_has] [bicon(glasses)] \a [glasses] covering [t_his] eyes.\n"
 	if(HAS_TRAIT(src, TRAIT_CULT_EYES))
