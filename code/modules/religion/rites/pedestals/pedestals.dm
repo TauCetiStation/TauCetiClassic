@@ -5,7 +5,7 @@
 /datum/religion_rites/pedestals/cult/narsie
 	name = "Призыв Нар-Си"
 	desc = "Призывает древнего бога, не бойтесь пожертвовать частями тела своего друга, вам всё сочтётся."
-	ritual_length = (3 MINUTE)
+	ritual_length = (2 MINUTE)
 	invoke_msg = "Venit ad nos!"
 	favor_cost = 2000
 	var/datum/announcement/centcomm/summon/A //New should be called only on summon!
@@ -41,7 +41,7 @@
 
 	if(SSticker.nar_sie_has_risen)
 		if(user)
-			to_chat(user, "<font size='4'><span class='danger'>Я УЖЕ ЗДЕСЬ!</span></font>")
+			to_chat(user, "<span class='danger big'>Я УЖЕ ЗДЕСЬ!</span>")
 		return FALSE
 
 /datum/religion_rites/pedestals/cult/narsie/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
