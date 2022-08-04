@@ -309,7 +309,7 @@
 	god_desc = "Вам нужен свет на святой земле."
 
 /datum/aspect/lightbending/light/get_light_gain(turf/simulated/floor/F)
-	return (F.get_lumcount() - 0.4)  * 0.03 * (1.4 * sqrt(power) + (power / 4)) //https://www.desmos.com/calculator/nwle5biewp
+	return (F.get_lumcount() - 0.4) * 0.03 * (1.4 * sqrt(power) + (power / 4)) //https://www.desmos.com/calculator/nwle5biewp
 
 //Gives mana for economical cost of an item.
 //Needed for: anything economy related
