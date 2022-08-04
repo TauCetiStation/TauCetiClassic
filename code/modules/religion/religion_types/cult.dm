@@ -256,7 +256,7 @@
 			else
 				++alive
 
-	if(!cultplayers || !alive)//Just in case to avoid 0
+	if(cultplayers == 0 || alive == 0) //Just in case to avoid 0
 		cultplayers = 1
 		alive = 10
 	var/ratio = cultplayers / alive
