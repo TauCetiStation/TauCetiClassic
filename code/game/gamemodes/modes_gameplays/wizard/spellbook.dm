@@ -72,7 +72,7 @@
 	log_name = "FB"
 
 /datum/spellbook_entry/icebolt
-	name = "Ледяной шар"
+	name = "Ледяная стрела"
 	spell_type = /obj/effect/proc_holder/spell/in_hand/icebolt
 	log_name = "IB"
 	cost = 1 // because this spell does not deal much damage and only slows down
