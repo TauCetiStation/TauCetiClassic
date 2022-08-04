@@ -71,42 +71,43 @@ SUBSYSTEM_DEF(holomaps)
 #undef HOLOMAP_CONCRETE_TILE
 
 /datum/controller/subsystem/holomaps/proc/generate_holochip_encryption()		// Here we generate unique combinations of frequency/encryption for each predefined holochip sets
-	nuclear_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,100))
-	ert_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,100))
-	deathsquad_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,100))
-	vox_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,100))
+	nuclear_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,1000))
+	ert_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,1000))
+	deathsquad_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,1000))
+	vox_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,1000))
 
 #define COLOR_HMAP_DEAD "#d3212d"
 #define COLOR_HMAP_INCAPACITATED "#ffef00"
 #define COLOR_HMAP_DEFAULT "#006e4e"
-#define HOLOMAP_MAGIC_NUMBER 16 //Offset for correct placement of markers on holomap. 32 is normal turf, we need center, so 16
+#define HOLOMAP_OFFSET 16 //Offset for correct placement of markers on holomap. 32 is normal turf, we need center, so 16
 
 /datum/controller/subsystem/holomaps/proc/process_holomap_markers()
-	for(var/obj/item/holochip/HC in holochips)
-		var/turf/marker_location = get_turf(HC)
-		if(!is_station_level(marker_location.z))
-			continue
-		if(!HC.holder || !iscarbon(HC.holder.loc))
-			continue
-		var/mob/living/carbon/C = HC.holder.loc
-		if(C.head != HC.holder)
-			continue
-		if(!(HC in holomap_cache))
-			var/image/NI = image(HC.holder.icon, icon_state = HC.holder.icon_state)
-			NI.transform /= 2
-			holomap_cache[HC] = NI
-		var/image/I = holomap_cache[HC]
-		I.filters = null
-		if(C.stat == DEAD)
-			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEAD)
-		else if(C.stat == UNCONSCIOUS || C.incapacitated())
-			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_INCAPACITATED)
-		else
-			I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEFAULT)
-		I.pixel_x = (marker_location.x - 16) * PIXEL_MULTIPLIER
-		I.pixel_y = (marker_location.y - 16) * PIXEL_MULTIPLIER
-		I.plane = HUD_PLANE
-		I.layer = HUD_LAYER
+	for(var/freq in SSholomaps.holochips)
+		for(var/obj/item/holochip/HC in SSholomaps.holochips[freq])
+			var/turf/marker_location = get_turf(HC)
+			if(!is_station_level(marker_location.z))
+				continue
+			if(!HC.holder || !iscarbon(HC.holder.loc))
+				continue
+			var/mob/living/carbon/C = HC.holder.loc
+			if(C.head != HC.holder)
+				continue
+			if(!(HC in holomap_cache))
+				var/image/NI = image(HC.holder.icon, icon_state = HC.holder.icon_state)
+				NI.transform /= 2
+				holomap_cache[HC] = NI
+			var/image/I = holomap_cache[HC]
+			I.filters = null
+			if(C.stat == DEAD)
+				I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEAD)
+			else if(C.stat == UNCONSCIOUS || C.incapacitated())
+				I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_INCAPACITATED)
+			else
+				I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEFAULT)
+			I.pixel_x = (marker_location.x - 16) * PIXEL_MULTIPLIER
+			I.pixel_y = (marker_location.y - 16) * PIXEL_MULTIPLIER
+			I.plane = HUD_PLANE
+			I.layer = HUD_LAYER
 	for(var/obj/machinery/computer/shuttle in holomap_landmarks)
 		var/turf/marker_location = get_turf(shuttle)
 		if(!is_station_level(marker_location.z))
@@ -118,8 +119,8 @@ SUBSYSTEM_DEF(holomaps)
 			if(!(shuttle in holomap_cache))
 				holomap_cache[shuttle] = image('icons/holomaps/holomap_markers_32x32.dmi', "skipjack")
 		var/image/I = holomap_cache[shuttle]
-		I.pixel_x = (marker_location.x - HOLOMAP_MAGIC_NUMBER) * PIXEL_MULTIPLIER
-		I.pixel_y = (marker_location.y - HOLOMAP_MAGIC_NUMBER) * PIXEL_MULTIPLIER
+		I.pixel_x = (marker_location.x - HOLOMAP_OFFSET) * PIXEL_MULTIPLIER
+		I.pixel_y = (marker_location.y - HOLOMAP_OFFSET) * PIXEL_MULTIPLIER
 		I.plane = HUD_PLANE
 		I.layer = HUD_LAYER
 

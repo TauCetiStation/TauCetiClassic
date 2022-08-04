@@ -1,4 +1,5 @@
 //ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
+#define OFFSET_CORRECTOR 6
 /obj/item/holochip
 	name = "Holomap chip"
 	desc = "A small holomap module, attached to helmets."
@@ -16,17 +17,21 @@
 
 	var/frequency		//Frequency for transmitting data
 	var/encryption 		//Encryption for double security
-
-	// Magic numbers for placing holomarker on the holomap
-	var/magic_number_self = 6 //We have 5.3 : 1 ratio on holomap-tiles to tiles. Or I think it is
+	var/raw_freq		//Ref to list of chips wit same freq. Touch only if you know what you do
 
 /obj/item/holochip/atom_init(obj/item/I)
 	. = ..()
-	SSholomaps.holochips += src
+	//SSholomaps.holochips += src
 	holder = I
 	holomap_toggle_action = new(src)
 	holomap_base = SSholomaps.default_holomap
 	instantiate_self_marker()
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/holochip/atom_init_late()
+	. = ..()
+	update_freq(frequency) //Because child defines it's freq in init
 
 /obj/item/holochip/Destroy()
 	STOP_PROCESSING(SSholomaps, src)
@@ -80,8 +85,11 @@
 	if(length(holomap_images))
 		activator.client.images -= holomap_images
 		QDEL_LIST(holomap_images)
-	for(var/obj/item/holochip/HC in SSholomaps.holochips)
-		if(HC.frequency != frequency && HC.encryption != encryption)
+	for(var/obj/item/holochip/HC in raw_freq)
+		if(HC.frequency != frequency)
+			//HC.update_freq(HC.frequency)
+			continue
+		if(HC.encryption != encryption)
 			continue
 		if(HC == src)
 			handle_own_marker()
@@ -107,8 +115,8 @@
 		instantiate_self_marker()
 	self_marker.loc = activator.holomap_obj//hud_used.
 	var/turf/src_turf = get_turf(src)
-	self_marker.pixel_x = (src_turf.x - magic_number_self) * PIXEL_MULTIPLIER
-	self_marker.pixel_y = (src_turf.y - magic_number_self) * PIXEL_MULTIPLIER
+	self_marker.pixel_x = (src_turf.x - OFFSET_CORRECTOR) * PIXEL_MULTIPLIER
+	self_marker.pixel_y = (src_turf.y - OFFSET_CORRECTOR) * PIXEL_MULTIPLIER
 	animate(self_marker, alpha = 255, time = 8, loop = -1, easing = SINE_EASING)
 	animate(self_marker, alpha = 0, time = 5, easing = SINE_EASING)
 	animate(self_marker, alpha = 255, time = 2, easing = SINE_EASING)
@@ -126,22 +134,43 @@
 				<B>Transport layer</B> for holochip:<BR>
 				Frequency:
 				<A href='byond://?src=\ref[src];frequency=-10'>-</A>
-				<A href='byond://?src=\ref[src];frequency=-2'>-</A>
+				<A href='byond://?src=\ref[src];frequency=-1'>-</A>
 				[format_frequency(frequency)]
-				<A href='byond://?src=\ref[src];frequency=2'>+</A>
+				<A href='byond://?src=\ref[src];frequency=1'>+</A>
 				<A href='byond://?src=\ref[src];frequency=10'>+</A><BR>
 				Encryption:
-				<A href='byond://?src=\ref[src];encryption=-5'>-</A>
+				<A href='byond://?src=\ref[src];encryption=-100'>---</A>
+				<A href='byond://?src=\ref[src];encryption=-50'>--</A>
+				<A href='byond://?src=\ref[src];encryption=-10'>-</A>
 				<A href='byond://?src=\ref[src];encryption=-1'>-</A>
 				[encryption]
 				<A href='byond://?src=\ref[src];encryption=1'>+</A>
-				<A href='byond://?src=\ref[src];encryption=5'>+</A><BR>
+				<A href='byond://?src=\ref[src];encryption=10'>+</A>
+				<A href='byond://?src=\ref[src];encryption=50'>++</A>
+				<A href='byond://?src=\ref[src];encryption=100'>+++</A><BR>
 				</TT>"}
 
 	var/datum/browser/popup = new(user, "holochip")
 	popup.set_content(dat)
 	popup.open()
 	return ..()
+
+/datum/holochip_frequency
+	var/list/holochips = list()
+
+/obj/item/holochip/proc/update_freq(new_frequency) //For structurizing holochip' markers
+	if(new_frequency)
+		return
+	if(raw_freq)
+		raw_freq -= src
+	var/freque = SSholomaps.holochips[new_frequency]
+	if(!freque) //We need new freq
+		SSholomaps.holochips[new_frequency] = list()
+		SSholomaps.holochips[new_frequency] += src
+	else //Add to existing freq
+		freque += src
+	to_chat(world,"[frequency],[encryption],[SSholomaps.holochips[new_frequency]]")
+	raw_freq = SSholomaps.holochips[new_frequency]
 
 /obj/item/holochip/Topic(href, href_list)
 	if(usr.incapacitated() || !Adjacent(usr) || !ishuman(usr))
@@ -162,6 +191,8 @@
 		encryption = round(encryption)
 		encryption = min(100, encryption)
 		encryption = max(1, encryption)
+	usr << browse(null, "window=holochip")
+	update_freq(frequency)
 
 	updateUsrDialog()
 
@@ -175,6 +206,7 @@
 	to_chat(owner, "<span class='notice'>You activate the holomap.</span>")
 	var/obj/item/holochip/target_holochip = target
 	target_holochip.activate_holomap(owner)
+	target_holochip.update_freq(target_holochip.frequency)
 	target_holochip = null
 	active = TRUE
 
