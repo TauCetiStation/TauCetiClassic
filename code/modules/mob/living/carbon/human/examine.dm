@@ -194,15 +194,16 @@
 			msg += "[t_He] [t_has] [bicon(wear_mask)] \a [wear_mask] on [t_his] face.\n"
 
 	//eyes
-	if(glasses && !skipeyes)
-		if(glasses.dirt_overlay)
-			msg += "<span class='warning'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] [glasses.dirt_description()] covering [t_his] eyes!</span>\n"
-		else if(glasses.wet)
-			msg += "<span class='wet'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] wet [glasses] covering [t_his] eyes!</span>\n"
-		else
-			msg += "[t_He] [t_has] [bicon(glasses)] \a [glasses] covering [t_his] eyes.\n"
-	if(HAS_TRAIT(src, TRAIT_CULT_EYES))
-		msg += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>"
+	if(!skipeyes)
+		if(glasses)
+			if(glasses.dirt_overlay)
+				msg += "<span class='warning'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] [glasses.dirt_description()] covering [t_his] eyes!</span>\n"
+			else if(glasses.wet)
+				msg += "<span class='wet'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] wet [glasses] covering [t_his] eyes!</span>\n"
+			else
+				msg += "[t_He] [t_has] [bicon(glasses)] \a [glasses] covering [t_his] eyes.\n"
+		if(HAS_TRAIT(src, TRAIT_CULT_EYES))
+			msg += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>"
 
 	//left ear
 	if(l_ear && !skipears)
