@@ -83,6 +83,12 @@
 	log_name = "ACI"
 	cost = 1
 
+/datum/spellbook_entry/item/fireballstaff
+	name = "Посох Огненных Шаров"
+	item_path = /obj/item/weapon/gun/magic/fireball
+	desc = "Старый посох, позволяет создавать огненные шары"
+	cost = 5
+
 /datum/spellbook_entry/res_touch
 	name = "Воскрешение"
 	spell_type = /obj/effect/proc_holder/spell/in_hand/res_touch

@@ -102,7 +102,7 @@
 /obj/item/clothing/shoes/boots/work/jak
 	name = "Boots of Springheel Jak"
 	desc = "A pair of some old boots."
-	slowdown = -2.0
+	slowdown = -2.0 //because we don't have acrobatics skill
 
 /obj/item/clothing/shoes/boots/work/jak/atom_init(mapload, ...)
 	. = ..()
