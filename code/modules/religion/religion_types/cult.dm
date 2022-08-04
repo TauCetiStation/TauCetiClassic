@@ -239,7 +239,10 @@
 		return FALSE
 	if(!M.mind?.GetRole(CULTIST))
 		add_faction_member(mode, M, TRUE)
+	handle_appearence(M)
+	return TRUE
 
+/datum/religion/cult/proc/handle_appearence(mob/M)
 	if(risen)
 		rise(M) //No return here
 
@@ -256,29 +259,31 @@
 			else
 				++alive
 
-	if(cultplayers == 0 || alive == 0) //Just in case to avoid 0
-		cultplayers = 1
-		alive = 10
+	//if(cultplayers == 0 || alive == 0) //Just in case to avoid 0
+	//	return
 	var/ratio = cultplayers / alive
 	if(ratio > 0.25 && !risen) //Red eye check
-		for(var/datum/mind/B in members)
-			if(B.current)
-				playsound(B.current, 'sound/hallucinations/i_see_you_2.ogg', VOL_EFFECTS_MASTER)
-				to_chat(B.current, "<span class='cult'>The veil weakens as your cult grows, your eyes begin to glow...</span>")
-				addtimer(CALLBACK(src, .proc/rise, B.current), 200)
-		risen = TRUE
-		log_game("The blood cult has risen with [cultplayers] players.")
-
+		first_rise()
 	if(ratio > 0.4 && !ascendent) //Halo check
-		for(var/datum/mind/B in members)
-			if(B.current)
-				playsound(B.current, 'sound/hallucinations/im_here1.ogg', VOL_EFFECTS_MASTER)
-				to_chat(B.current, "<span class='cult'>Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!</span>")
-				addtimer(CALLBACK(src, .proc/ascend, B.current), 200)
-		ascendent = TRUE
-		log_game("The blood cult has ascended with [cultplayers] players.")
+		first_ascend()
 
 	return TRUE
+
+/datum/religion/cult/proc/first_rise()
+	for(var/mob/living/L in members)
+		playsound(L, 'sound/hallucinations/i_see_you_2.ogg', VOL_EFFECTS_MASTER)
+		to_chat(L, "<span class='cult'>Культ набирает силы, вуаль реальности всё слабее, ваши глаза начинают светиться...</span>")
+		rise(L)
+	risen = TRUE
+	log_game("The blood cult has risen with [length(members)] players.")
+
+/datum/religion/cult/proc/first_ascend()
+	for(var/mob/living/L in members)
+		playsound(L, 'sound/hallucinations/im_here1.ogg', VOL_EFFECTS_MASTER)
+		to_chat(L, "<span class='cult'>Культ всё сильнее, и приближается жатва - вы не можете больше скрывать свою истинную природу!</span>")
+		ascend(L)
+	ascendent = TRUE
+	log_game("The blood cult has ascended with [length(members)] players.")
 
 /datum/religion/cult/proc/rise(cultist)
 	if(ishuman(cultist))
