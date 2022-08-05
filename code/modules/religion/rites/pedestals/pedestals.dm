@@ -54,12 +54,12 @@
 	var/datum/objective/target/sacrifice/O = C.objective_holder.FindObjective(/datum/objective/target/sacrifice)
 	if(O)
 		if(O.check_completion() != OBJECTIVE_WIN)
-			to_chat(user, "<span class='warning'>Жертвоприношение не было проведено! Порталу не хватит мощи на раскрытие, если вы попытаетесь провести ритуал!</span>")
+			to_chat(user, "<span class='cult'>Жертвоприношение не было проведено! Порталу не хватит мощи на раскрытие, если вы попытаетесь провести ритуал!</span>")
 			return FALSE
 
 	var/datum/objective/cult/summon_narsie/S = C.objective_holder.FindObjective(/datum/objective/cult/summon_narsie)
 	if(!S)
-		to_chat(user, "<span class='cult'>Я не желаю к вам приходить!</span>")
+		to_chat(user, "<span class='cult big'>Я НЕ ЖЕЛАЮ К ВАМ ПРИХОДИТЬ!</span>")
 		return FALSE
 
 	var/confirm_final = tgui_alert(user, "Это ФИНАЛЬНЫЙ шаг к призыву Нар'Си; это очень долгий и сложный ритуал, а также экипаж определённо узнает о вашей попытке призыва", "Вы готовы к последнему бою?", list("Моя жизнь за Нар'Си!", "Нет"))
@@ -91,9 +91,11 @@
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			M.playsound_local(null, 'sound/effects/dimensional_rend.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
-	sleep(40)
-	new /obj/singularity/narsie(get_turf(AOG), religion)
+	addtimer(CALLBACK(src,.proc/summon,get_turf(AOG)),40)
 	return TRUE
+
+/datum/religion_rites/pedestals/cult/narsie/proc/summon(turf/T)
+	new /obj/singularity/narsie(T, religion)
 
 /datum/religion_rites/pedestals/cult/cult_portal
 	name = "Призыв Портала"

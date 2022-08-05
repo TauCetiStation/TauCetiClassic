@@ -33,4 +33,4 @@
 	name = "Central Command Higher Dimensional Affairs"
 	subtitle = "Центральное Командование"
 /datum/announcement/centcomm/summon/New(mob/user)
-	message = "Зафиксирован призыв дрвеного бога, проводимый [user? user.name : "неизвестными"] в [get_area(user)] из неизвестного измерения. Прервите ритуал любой ценой!"
+	message = "Зафиксирована блюспейс аномалия в [get_area(user)], возможно раскрытие неизвестного портала."
