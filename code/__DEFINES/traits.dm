@@ -160,6 +160,7 @@
 #define TRAIT_ANATOMIST           "anatomist"
 #define TRAIT_SOULSTONE_IMMUNE    "soulstone_immune"
 #define TRAIT_CULT_EYES           "cult_eyes"
+#define TRAIT_CULT_HALO           "cult_halo"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

@@ -259,8 +259,8 @@
 			else
 				++alive
 
-	//if(cultplayers == 0 || alive == 0) //Just in case to avoid 0
-	//	return
+	if(cultplayers == 0 || alive == 0) //Just in case to avoid 0
+		return
 	var/ratio = cultplayers / alive
 	if(ratio > 0.25 && !risen) //Red eye check
 		first_rise()
@@ -296,12 +296,9 @@
 
 /datum/religion/cult/proc/ascend(cultist)
 	if(ishuman(cultist))
-		var/mob/living/carbon/human/human = cultist
-		new /obj/effect/temp_visual/cult/sparks(get_turf(human), human.dir)
-		var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
-		var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', istate)
-		human.overlays_standing[CULT_HALO] = new_halo_overlay
-		human.apply_overlay(CULT_HALO)
+		var/mob/living/carbon/human/H = cultist
+		ADD_TRAIT(H, TRAIT_CULT_HALO, RELIGION_TRAIT)
+		H.update_external_appearance()
 
 /datum/religion/cult/add_deity(mob/M)
 	..()
@@ -321,5 +318,5 @@
 		H.g_eyes = rand(0,255)
 		H.b_eyes = rand(0,255)
 		H.update_body()
-	if(ascendent)
-		H.remove_overlay(CULT_HALO)
+	if(HAS_TRAIT(H, TRAIT_CULT_HALO))
+		H.remove_overlay(EXTERNAL_APPEARANCE)
