@@ -112,7 +112,7 @@
 
 	return 0
 
-//Gives mana from: does not affect mana accumulation
+//Gives mana from: guns and weapons
 //Needed for: spells and rituals related to the theme of weapon and armor, their damage, buff etc
 /datum/aspect/weapon
 	name = ASPECT_WEAPON //with armor
@@ -120,6 +120,32 @@
 	icon_state = "aspect_weapon"
 
 	color = COLOR_DARK_GRAY
+
+/datum/aspect/weapon/sacrifice(obj/item/I, mob/living/L, obj/AOG)
+	if(istype(I,/obj/item/weapon/gun/energy))
+		var/obj/item/weapon/gun/energy/G = I
+		for(var/obj/item/ammo_casing/A in G.ammo_type)
+			var/obj/item/projectile/P = text2path(A.projectile_type)
+			return P.damage*10
+
+	if(istype(I,/obj/item/weapon/gun/projectile))
+		var/obj/item/weapon/gun/projectile/W = I
+
+		var/obj/item/ammo_box/A = new W.mag_type()
+		var/obj/item/ammo_casing/C = new A.ammo_type()
+		var/obj/item/projectile/P = new C.projectile_type()
+
+		var/obj/item/ammo_box/A2 = new W.mag_type2()
+		var/obj/item/ammo_casing/C2 = new A2.ammo_type()
+		var/obj/item/projectile/P2 = new C2.projectile_type()
+		return (P.damage+P2.damage)*10
+
+	if(istype(I, /obj/item/weapon) && !istype(I,/obj/item/weapon/melee/cultblade))
+		var/obj/item/weapon/W = I
+		for(var/datum/twohanded_component_builder/TCB in W.datum_components)
+			return TCB.force_wielded*20
+		return I.force*20
+	return 0
 
 //Gives mana from: minerals, sheet, steel, money etc
 //Needed for: spells and rituals related to the theme of materials, his shell, manipulation of the molecular composition of the resource
