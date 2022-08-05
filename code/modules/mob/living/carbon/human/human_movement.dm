@@ -67,7 +67,7 @@
 	var/bp_weight_negation = 0
 	for(var/bodypart_name in moving_bodyparts)
 		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-		if(!BP.is_usable())
+		if(!BP?.is_usable())
 			bp_tally += 12
 		else if(BP.status & ORGAN_SPLINTED)
 			bp_tally += 1.6
