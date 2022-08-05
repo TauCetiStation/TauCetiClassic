@@ -20,7 +20,6 @@
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/move_delay_add = 0 // movement delay to add
-	var/speed_mod = 0
 
 	status_flags = CANPARALYSE|CANPUSH
 	var/heal_rate = 1

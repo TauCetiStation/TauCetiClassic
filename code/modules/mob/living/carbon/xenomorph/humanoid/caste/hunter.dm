@@ -5,7 +5,7 @@
 	health = 180
 	storedPlasma = 100
 	max_plasma = 150
-	speeed_mod = -1
+	speed = -1
 	icon_state = "alienh_s"	//default invisibility
 	var/invisible = FALSE
 
