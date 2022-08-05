@@ -769,9 +769,13 @@
 /area/shuttle/escape/centcom)
 "abI" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 2;
+	pixel_y = 2
+	},
 /obj/item/weapon/nullrod{
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 2
 	},
 /obj/machinery/light{
 	dir = 4
@@ -1510,11 +1514,13 @@
 /area/shuttle/escape/centcom)
 "adM" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1{
-	pixel_x = 10;
-	pixel_y = 8
+/obj/item/weapon/lighter/zippo{
+	pixel_x = 6;
+	pixel_y = 4
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = -6
+	},
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
