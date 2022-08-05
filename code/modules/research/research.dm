@@ -681,22 +681,6 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	unlocks_designs = list("med_data", "operating")
 
-/datum/technology/virology
-	name = "Virology"
-	desc = "Virology"
-	id = "virology"
-	tech_type = RESEARCH_BIOTECH
-
-	x = 0.4
-	y = 0.8
-	icon = "vialbox"
-
-	required_technologies = list("basic_med_machines")
-	required_tech_levels = list()
-	cost = 500
-
-	unlocks_designs = list("pandemic")
-
 /datum/technology/adv_med_machines
 	name = "Advanced Medical Machines"
 	desc = "Advanced Medical Machines"
@@ -1391,7 +1375,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mechacontrol", "mechapower", "mechfab", "robocontrol", "dronecontrol", "mmi_radio", "intellicard", "paicard", "posibrain", "borg_upgrade_security")
+	unlocks_designs = list("mechacontrol", "mechapower", "mechfab", "robocontrol", "dronecontrol", "mmi_radio", "intellicard", "paicard", "posibrain")
 
 /datum/technology/artificial_intelligence
 	name = "Artificial intelligence"

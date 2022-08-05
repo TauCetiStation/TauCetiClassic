@@ -93,7 +93,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 		if(try_start)
 			to_chat(user, "Not when you're incapacitated.")
 		return FALSE
-	
+
 	if(plasma_cost && isxeno(user))
 		var/mob/living/carbon/xenomorph/alien = user
 		if(!alien.check_enough_plasma(plasma_cost))
@@ -113,15 +113,15 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 				to_chat(user, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
 			return FALSE
 		var/mob/living/carbon/human/H = user
-		if(!is_type_in_typecache(H.wear_suit, casting_clothes))
+		if(!H.wear_suit?.GetComponent(/datum/component/magic_item/wizard))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my robe.")
 			return FALSE
-		if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
+		if(!H.shoes?.GetComponent(/datum/component/magic_item/wizard))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my sandals.")
 			return FALSE
-		if(!is_type_in_typecache(H.head, casting_clothes))
+		if(!H.head?.GetComponent(/datum/component/magic_item/wizard))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my hat.")
 			return FALSE
@@ -291,7 +291,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 			if(range < 0)
 				targets += user // use spell/no_target instead
 			else
-				var/possible_targets = list()
+				var/list/possible_targets = list()
 
 				for(var/mob/living/M in view_or_range(range, user, selection_type))
 					if(!include_user && user == M)
@@ -300,9 +300,12 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 					I.appearance = M
 					possible_targets[M] = I
 
-				var/radial_choose = show_radial_menu(user, user, possible_targets, tooltips = TRUE)
-				if(radial_choose)
-					targets += radial_choose
+				if(possible_targets.len == 1) //We have only one possible target
+					targets += possible_targets[1]
+				else //We have 2 and more targets
+					var/radial_choose = show_radial_menu(user, user, possible_targets, tooltips = TRUE)
+					if(radial_choose)
+						targets += radial_choose
 		else
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))

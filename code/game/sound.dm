@@ -13,10 +13,33 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 =======================================================================================================================================*/
 
+// Default override for echo
+/sound
+	echo = list(
+		0,		// Direct
+		0,		// DirectHF
+		-10000,	// Room, -10000 means no low frequency sound reverb
+		-10000,	// RoomHF, -10000 means no high frequency sound reverb
+		0,		// Obstruction
+		0,		// ObstructionLFRatio
+		0,		// Occlusion
+		0.25,	// OcclusionLFRatio
+		1.5,	// OcclusionRoomRatio
+		1.0,	// OcclusionDirectRatio
+		0,		// Exclusion
+		1.0,	// ExclusionLFRatio
+		0,		// OutsideVolumeHF
+		0,		// DopplerFactor
+		0,		// RolloffFactor
+		0,		// RoomRolloffFactor
+		1.0,	// AirAbsorptionFactor
+		0,		// Flags (1 = Auto Direct, 2 = Auto Room, 4 = Auto RoomHF)
+	)
+
 /turf
 	var/sound_coefficient = 1.0
 
-/proc/playsound(atom/source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, extrarange = 0, falloff, channel, wait, ignore_environment = FALSE, voluminosity = TRUE)
+/proc/playsound(atom/source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, extrarange = 0, falloff, channel, wait, ignore_environment = FALSE, voluminosity = TRUE, use_reverb = TRUE)
 	if(isarea(source))
 		CRASH("[source] is an area and is trying to make the sound: [soundin]")
 
@@ -37,10 +60,10 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			var/turf/T = get_turf(M)
 
 			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, volume_channel, vol, vary, frequency, falloff, channel, null, wait, ignore_environment, voluminosity)
+				M.playsound_local(turf_source, soundin, volume_channel, vol, vary, frequency, falloff, channel, null, wait, ignore_environment, use_reverb)
 
 //todo: inconsistent behaviour and meaning of first parameter in playsound/playsound_local
-/mob/proc/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE)
+/mob/proc/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE, use_reverb = TRUE)
 	if(!client || !client.prefs_ready || !ignore_environment && ear_deaf > 0)
 		return
 
@@ -54,7 +77,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.wait = wait
 	S.channel = channel // Note. Channel 802 is busy with sound of automatic AI announcements
 	S.volume = vol
-	S.environment = 2 // this is the default environment and should not ever be ignored or overwrited (this exact line).
+	S.environment = SOUND_AREA_DEFAULT // this is the default environment and should not ever be ignored or overwrited (this exact line).
 	S.frequency = 1
 	
 	if(frequency)
@@ -105,10 +128,27 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 			// The y value is for above your head, but there is no ceiling in 2d spessmens.
 			S.y = 1
 			S.falloff = (falloff ? falloff : 0.5)
-	if(!ignore_environment) // this is the entry point for any IC environment effects, don't mix this with OOC.
+
+	if(!ignore_environment)
+		var/area/A = get_area(src)
+		S.environment = A.sound_environment // area's defaults is SOUND_AREA_DEFAULT
+
 		if(stat == UNCONSCIOUS) // unconscious people will hear illegible sounds
 			S.volume *= 0.3
-			S.environment = 10
+			S.environment = SOUND_ENVIRONMENT_HANGAR
+		else
+			if(is_dizzy == TRUE || is_jittery == TRUE)
+				S.environment = SOUND_ENVIRONMENT_PSYCHOTIC
+			else
+				if(isliving(src))
+					var/mob/living/L = src
+					if(L.drunkenness >= DRUNKENNESS_BLUR || druggy > 0)
+						S.environment = SOUND_ENVIRONMENT_DRUGGED
+
+		if(use_reverb && S.environment != SOUND_AREA_DEFAULT) // We have reverb, reset our echo setting
+			S.echo[3] = 0 //Room setting, 0 means normal reverb
+			S.echo[4] = 0 //RoomHF setting, 0 means normal reverb.
+
 	src << S
 
 /mob/living/parasite/playsound_local(turf/turf_source, soundin, volume_channel = NONE, vol = 100, vary = TRUE, frequency = null, falloff, channel, repeat, wait, ignore_environment = FALSE, voluminosity = TRUE)
@@ -153,7 +193,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.priority = priority
 	S.status = status
 	S.volume = vol
-	S.environment = 2
+	S.environment = SOUND_AREA_DEFAULT
 	src << S
 
 /mob/proc/playsound_music_update_volume(volume_channel, channel)
@@ -164,7 +204,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.volume = SANITIZE_VOL(100) * client.get_sound_volume(volume_channel)
 	S.channel = channel
 	S.status = SOUND_UPDATE | SOUND_STREAM
-	S.environment = 2
+	S.environment = SOUND_AREA_DEFAULT
 	src << S
 
 /mob/proc/playsound_stop(_channel)

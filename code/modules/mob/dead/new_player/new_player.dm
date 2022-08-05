@@ -88,7 +88,7 @@
 		return
 
 	if(href_list["lobby_be_special"])
-		if(client.prefs.have_quality)
+		if(client.prefs.selected_quality_name)
 			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
 			return
 		if(!client.prefs.selecting_quality)
@@ -218,7 +218,8 @@
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
 
-	SSjob.EquipRank(character, rank, 1)					//equips the human
+
+	SSjob.EquipRank(character, rank, TRUE)					//equips the human
 
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
@@ -243,13 +244,8 @@
 		qdel(src)
 		return
 
-	character.loc = pick(latejoin)
-	character.lastarea = get_area(loc)
+	character.forceMove(pick(latejoin), keep_buckled = TRUE)
 	show_location_blurb(character.client)
-	// Moving wheelchair if they have one
-	if(character.buckled && istype(character.buckled, /obj/structure/stool/bed/chair/wheelchair))
-		character.buckled.loc = character.loc
-		character.buckled.set_dir(character.dir)
 
 	SSticker.mode.latespawn(character)
 

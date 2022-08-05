@@ -95,12 +95,12 @@
 
 /obj/item/projectile/energy/floramut/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	var/mob/living/M = target
-//	if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
 			if(prob(15))
 				M.apply_effect((rand(30,80)),IRRADIATE)
+				M.Stun(2)
 				M.Weaken(5)
 				visible_message("<span class='warning'>[M] writhes in pain as \his vacuoles boil.</span>", blind_message = "<span class='warning'>You hear the crunching of leaves.</span>")
 			if(prob(35))
@@ -134,7 +134,6 @@
 
 /obj/item/projectile/energy/florayield/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	var/mob/M = target
-//	if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //These rays make plantmen fat.
 	if(ishuman(target)) //These rays make plantmen fat.
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
@@ -219,6 +218,7 @@
 	icon_state = "energy2"
 	damage = 5
 	weaken = 10
+	stun = 10
 	damage_type = TOX
 	flag = "bio"
 
@@ -237,10 +237,12 @@
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_bodypart_damage(damage)
+		S.Stun(2)
 
 	if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(damage)
+		M.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
@@ -250,7 +252,7 @@
 			if(istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
-					if(prob(30))
+					if(prob(60))
 						C.make_old()
 						if(bp == H.head)
 							H.update_inv_head()
@@ -279,7 +281,6 @@
 	name = "plasma"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "plasma_bolt"
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	light_color = LIGHT_COLOR_PLASMA
 	light_power = 2
@@ -301,6 +302,7 @@
 	icon_state = "plasma_bolt_oc"
 	light_color = LIGHT_COLOR_PLASMA_OC
 	damage = 25
+	impact_force = 1
 
 	muzzle_type = /obj/effect/projectile/plasma/muzzle/overcharge
 

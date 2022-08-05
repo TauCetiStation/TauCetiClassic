@@ -69,13 +69,18 @@
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
+
+	default_emotes = list(
+		/datum/emote/dance,
+	)
+
 	var/turns_since_scan = 0
 	var/puppies = 0
 
 /mob/living/simple_animal/corgi/Lisa/Life()
 	..()
 
-	if(!stat && !resting && !buckled)
+	if(!stat && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 15)
 			turns_since_scan = 0
@@ -100,11 +105,7 @@
 
 
 		if(prob(1))
-			me_emote(pick("dances around", "chases her tail"))
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					set_dir(i)
-					sleep(1)
+			emote("dance")
 
 ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/corgi/borgi, chief_animal_list)
 /mob/living/simple_animal/corgi/borgi

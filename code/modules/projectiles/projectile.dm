@@ -52,6 +52,7 @@
 	var/eyeblur = 0
 	var/drowsy = 0
 	var/agony = 0
+	var/incendiary = 0
 	var/embed = 0 // whether or not the projectile can embed itself in the mob
 	var/impact_force = 0
 
@@ -109,9 +110,14 @@
 	return H
 
 /obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(!isliving(target))	return 0
-	if(isanimal(target))	return 0
+	if(!isliving(target))
+		return 0
+	if(isanimal(target))
+		return 0
 	var/mob/living/L = target
+	if(incendiary && blocked <= 100)
+		L.adjust_fire_stacks(incendiary)
+		L.IgniteMob(target)
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 
 	//called when the projectile stops flying because it collided with something
@@ -121,13 +127,13 @@
 		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
 
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
-	return check_trajectory(target, user, pass_flags, flags)
+	return check_trajectory(target, src, pass_flags, flags)
 
-/proc/check_trajectory(atom/target, atom/firer, pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE, flags = 0) //Spherical test in vacuum
-	if(!istype(target) || !istype(firer))
+/proc/check_trajectory(atom/target, atom/gun, pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE, flags = 0) //Spherical test in vacuum
+	if(!istype(target) || !istype(gun))
 		return FALSE
 
-	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(firer)) //Making the test....
+	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(gun)) //Making the test....
 
 	//Set the flags and pass flags to that of the real projectile...
 	trace.flags = flags

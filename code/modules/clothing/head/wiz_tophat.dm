@@ -139,7 +139,7 @@ var/global/list/tophats_list = list()
 
 		var/matrix/M = matrix()
 		M.Scale(0.5)
-		animate(AM, pixel_y=AM.pixel_y + 32, transform=M, time=5)
+		animate(AM, pixel_y=AM.pixel_y - 32, transform=M, time=5)
 		sleep(5)
 
 		AM.visible_message("<span class='warning'>[AM] dissapears into [src]!</span>")

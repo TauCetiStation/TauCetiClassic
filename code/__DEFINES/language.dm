@@ -21,8 +21,8 @@
 #define LANGUAGE_USL "Universal Sign Language"
 #define LANGUAGE_XENOMORPH "Xenomorph language"
 // ё priovioiols!
-#define LANGUAGE_SHKIONDIONIOVIOION "Shkёndёnёvёёn"
-#define LANGUAGE_SALARIAN "Salarian"
+#define LANGUAGE_SHKIONDIONIOVIOION "Shkёndёnёvёёёn"
+#define LANGUAGE_SALACKYI "Salackyi"
 
 #define LANGUAGE_CAN_UNDERSTAND 0
 #define LANGUAGE_CAN_SPEAK 1

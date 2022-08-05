@@ -45,10 +45,6 @@
 	alien_list[ALIEN_FACEHUGGER] -= src
 	return ..()
 
-/mob/living/carbon/xenomorph/facehugger/update_canmove(no_transform = FALSE)
-	..()
-	density = initial(density)
-
 /mob/living/carbon/xenomorph/facehugger/start_pulling(atom/movable/AM)
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 	return
@@ -135,7 +131,7 @@
 	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "facehugger_dead"
-	else if(stat == UNCONSCIOUS || lying || resting)
+	else if(stat == UNCONSCIOUS || lying || crawling)
 		icon_state = "facehugger_inactive"
 	else
 		icon_state = "facehugger"
@@ -259,6 +255,7 @@ This is chestburster mechanic for damaging
 			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 			H.apply_damage(rand(7, 14), BRUTE, BP_CHEST)
 			H.SetShockStage(20)
+			H.Stun(1)
 			H.Weaken(1)
 			H.emote("scream")
 	else if(ismonkey(affecting))
@@ -273,6 +270,7 @@ This is chestburster mechanic for damaging
 			last_bite = world.time
 			M.adjustBruteLoss(rand(35, 65))
 			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
+			M.Stun(8)
 			M.Weaken(8)
 
 /obj/item/weapon/larva_bite/proc/confirm()

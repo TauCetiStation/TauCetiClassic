@@ -194,7 +194,6 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 	severity = EVENT_LEVEL_MODERATE
 	available_events = list(
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Nothing",                 /datum/event/nothing,                   1230),
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Appendicitis",            /datum/event/spontaneous_appendicitis,  0,     list(ASSIGNMENT_MEDICAL = 10), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Carp School",             /datum/event/carp_migration,            200,   list(ASSIGNMENT_ENGINEER = 10, ASSIGNMENT_SECURITY = 20), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Rogue Drones",            /datum/event/rogue_drone,               0,     list(ASSIGNMENT_SECURITY = 20)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Space Vines",             /datum/event/spacevine,                 250,   list(ASSIGNMENT_ENGINEER = 10)),
@@ -213,7 +212,6 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Brand Intelligence",      /datum/event/brand_intelligence,        50,    list(ASSIGNMENT_ENGINEER = 25), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Space Dust",              /datum/event/space_dust,                50,    list(ASSIGNMENT_ENGINEER = 50)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Grid Check",              /datum/event/grid_check,                0,     list(ASSIGNMENT_ENGINEER = 25), ONESHOT),
-		new /datum/event_meta/ninja(EVENT_LEVEL_MODERATE, "Space Ninja",       /datum/event/space_ninja,               0,     list(ASSIGNMENT_SECURITY = 15), ONESHOT, 1, 15),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Organ Failure",           /datum/event/organ_failure,             0,     list(ASSIGNMENT_MEDICAL = 150), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Pyro Anomaly",            /datum/event/anomaly/anomaly_pyro,      75,    list(ASSIGNMENT_ENGINEER = 60)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Vortex Anomaly",          /datum/event/anomaly/anomaly_vortex,    75,    list(ASSIGNMENT_ENGINEER = 25)),
@@ -223,6 +221,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Viral Infection",         /datum/event/viral_infection,           0,     list(ASSIGNMENT_MEDICAL = 150), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Sandstorm",               /datum/event/sandstorm,                 0,     list(ASSIGNMENT_ENGINEER = 25), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Portal of Cult",          /datum/event/anomaly/cult_portal,       60,    list(ASSIGNMENT_SECURITY = 40), ONESHOT),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Heist",                   /datum/event/heist,                     40,    list(ASSIGNMENT_SECURITY = 15, ASSIGNMENT_ENGINEER = 15), ONESHOT),
 		new /datum/event_meta/alien(EVENT_LEVEL_MODERATE, "Alien Infestation", /datum/event/alien_infestation,         0,     list(ASSIGNMENT_SECURITY = 15, ASSIGNMENT_MEDICAL = 15), ONESHOT, 1, 35),
 	)
 

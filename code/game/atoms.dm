@@ -216,15 +216,12 @@
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
 	P.on_hit(src, def_zone, 0)
-	. = 0
+	return PROJECTILE_ACTED
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
-		if(istype(src.loc, container))
-			return 1
-	else if(src in container)
-		return 1
-	return
+		return istype(src.loc, container)
+	return src in container
 
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)
@@ -298,6 +295,12 @@
 			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
 				for(var/datum/reagent/R in reagents.reagent_list)
 					msg += "<br><span class='info'>[R.volume] units of [R.name]</span>"
+			else if (is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_MASTER)))
+				if(length(reagents.reagent_list) == 1)
+					msg += "<br><span class='info'>[reagents.reagent_list[1].volume] units of [reagents.reagent_list[1].name]</span>"
+				else
+					for(var/datum/reagent/R in reagents.reagent_list)
+						msg += "<br><span class='info'>[R.volume + R.volume * rand(-25,25) / 100] units of [R.name]</span>"
 			else
 				msg += "<br><span class='info'>[reagents.total_volume] units of liquid.</span>"
 		else
@@ -500,13 +503,16 @@
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M)
-	if(flags & NOBLOODY) return 0
-	.=1
+	if(flags & NOBLOODY) return FALSE
+	. = TRUE
 	if (!istype(M))
-		return 0
+		return FALSE
 
 	if(M.species.flags[NO_BLOOD_TRAILS])
-		return 0
+		return FALSE
+
+	if(M.reagents.has_reagent("metatrombine"))
+		return FALSE
 
 	if (!istype(M.dna, /datum/dna))
 		M.dna = new /datum/dna(null)

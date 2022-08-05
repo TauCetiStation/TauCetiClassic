@@ -27,7 +27,7 @@
 
 /obj/item/weapon/holder/pickup(mob/living/user)
 	. = ..()
-	user.status_flags |= PASSEMOTES
+	user.add_status_flags(PASSEMOTES)
 
 /obj/item/weapon/holder/dropped(mob/living/carbon/user)
 	..()
@@ -43,7 +43,7 @@
 /mob/living/proc/get_scooped(mob/living/carbon/human/grabber)
 	if(!istype(grabber))
 		return
-	if(!holder_type || buckled || pinned.len)
+	if(!holder_type || buckled || anchored)
 		return
 	var/obj/item/weapon/holder/H = new holder_type(loc)
 	forceMove(H)

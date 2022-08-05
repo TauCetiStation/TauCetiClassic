@@ -285,22 +285,23 @@ var/global/dmm_suite/preloader/_preloader = new
 
 /dmm_suite/proc/load_new_z_level(mappath, linkage)
 	var/file = file(mappath)
-	if(isfile(file))
-		var/list/loaded_stuff = load_map(file)
-		if(!loaded_stuff || !loaded_stuff.len)
-			return FALSE
 
-		var/list/bounds = loaded_stuff["bounds"]
-		if(!bounds || !bounds.len)
-			return FALSE
-
-		//initialize things that are normally initialized after map load
-		SSmapping.add_new_zlevel(mappath, list(ZTRAIT_AWAY = TRUE, ZTRAIT_LINKAGE = linkage))
-		initTemplateBounds(bounds)
-		log_game("Z-level loaded [world.maxz]")
-		return TRUE
-	else
+	if(!isfile(file))
 		return FALSE
+
+	var/datum/map_template/pm = new(map=file)
+	var/list/bounds = pm.bounds
+	if(!(bounds && bounds.len))
+		return FALSE
+
+	SSmapping.add_new_zlevel(mappath, list(ZTRAIT_AWAY = TRUE, ZTRAIT_LINKAGE = linkage))
+
+	var/loaded_stuff = pm.loadMap(world.maxz)
+
+	//initialize things that are normally initialized after map load
+	initTemplateBounds(loaded_stuff["bounds"])
+	log_game("Z-level loaded [world.maxz]")
+	return TRUE
 
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes

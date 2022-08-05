@@ -115,7 +115,7 @@
 	)
 
 /obj/item/stack/tgui_state(mob/user)
-	return global.hands_state
+	return global.interactive_reach_state
 
 /obj/item/stack/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
@@ -137,7 +137,7 @@
 			produce_recipe(R, multiplier, usr)
 			return TRUE
 
-/obj/item/stack/proc/produce_recipe(datum/stack_recipe/recipe, quantity, mob/user)
+/obj/item/stack/proc/produce_recipe(datum/stack_recipe/recipe, quantity, mob/living/user)
 	var/datum/stack_recipe/R = recipe
 	var/multiplier = quantity
 	if (!multiplier) multiplier = 1
@@ -157,11 +157,13 @@
 		if(usr.is_busy())
 			return
 		to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
-		if (!do_after(usr, R.time, target = usr))
+		if (!do_skilled(usr, usr, R.time, R.required_skills, -0.2))
 			return
+	var/atom/build_loc = loc
 	if(!use(R.req_amount*multiplier))
 		return
-	var/atom/O = new R.result_type( usr.loc )
+	var/atom/movable/O = new R.result_type(build_loc)
+	user.try_take(O, build_loc)
 	O.set_dir(usr.dir)
 	if (R.max_res_amount>1)
 		var/obj/item/stack/new_item = O
@@ -270,6 +272,14 @@
 		s.update_ui_after_item_removal()
 	S.add(transfer)
 
+/obj/item/stack/Crossed(atom/movable/AM)
+	. = ..()
+	if(throwing || AM.throwing)
+		return
+	if(istype(AM, merge_type))
+		var/obj/item/stack/S = AM
+		merge(S)
+
 /obj/item/stack/attack_hand(mob/user)
 	if (user.get_inactive_hand() == src)
 		if(zero_amount())
@@ -304,11 +314,11 @@
 			change_stack(user, stackmaterial)
 			to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>")
 
-/obj/item/stack/proc/change_stack(mob/user, amount)
-	var/obj/item/stack/F = new type(user, amount, FALSE)
+/obj/item/stack/proc/change_stack(mob/living/user, amount)
+	var/obj/item/stack/F = new type(loc, amount, FALSE)
+	user.try_take(F, loc)
 	. = F
 	F.copy_evidences(src)
-	user.put_in_hands(F)
 	add_fingerprint(user)
 	F.add_fingerprint(user)
 	use(amount, TRUE)
@@ -345,8 +355,9 @@
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
 	var/floor_path
+	var/list/required_skills
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, floor_path = list(/turf/simulated/floor))
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, required_skills = null, floor_path = list(/turf/simulated/floor))
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
@@ -355,6 +366,7 @@
 	src.time = time
 	src.one_per_turf = one_per_turf
 	src.on_floor = on_floor
+	src.required_skills = required_skills
 	src.floor_path = floor_path
 
 /*

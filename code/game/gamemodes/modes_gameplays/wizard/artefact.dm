@@ -28,7 +28,7 @@
 	if(M.stat != DEAD)
 		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
 		return
-	if(M.species.name == SKELETON)
+	if(isskeleton(M))
 		to_chat(user, "<span class='warning'>This body has been already dried!</span>")
 		return
 
@@ -40,7 +40,8 @@
 	if(spooky_scaries.len >= 3 && !unlimited)
 		to_chat(user, "<span class='warning'>This artifact can only affect three undead at a time!</span>")
 		return
-	M.set_species(SKELETON)
+
+	M.makeSkeleton()
 	M.revive()
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")

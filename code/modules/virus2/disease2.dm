@@ -145,7 +145,7 @@
 		spread(mob, 1)
 
 	//fever
-	mob.bodytemperature = max(mob.bodytemperature, min(310+2*stage ,mob.bodytemperature+2*stage))
+	mob.adjust_bodytemperature(2*stage, max_temp = BODYTEMP_NORMAL + 2*stage)
 	clicks+=speed
 
 /datum/disease2/disease/proc/advance_stage()

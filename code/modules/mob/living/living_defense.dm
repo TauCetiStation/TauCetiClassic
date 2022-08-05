@@ -39,8 +39,6 @@
 	if(. != PROJECTILE_ALL_OK)
 		return
 
-	flash_weak_pain()
-
 	//Being hit while using a deadman switch
 	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
 		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
@@ -161,6 +159,12 @@
 	embedded += I
 	verbs += /mob/proc/yank_out_object
 
+/mob/living/proc/unpin_signal(obj/item/I)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_ANCHORED, I)
+	update_canmove()
+	UnregisterSignal(I, COMSIG_MOVABLE_MOVED)
+
 /mob/living/proc/pin_to_turf(obj/item/I)
 	if(!I)
 		return
@@ -176,8 +180,8 @@
 
 		visible_message("<span class='warning'>[src] is pinned to the [T] by [I]!</span>",
 			"<span class='danger'>You are pinned to the wall by [I]!</span>")
-		anchored = TRUE
-		pinned += I
+		ADD_TRAIT(src, TRAIT_ANCHORED, I)
+		RegisterSignal(I, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/unpin_signal, I))
 		update_canmove() // instant update, no need to wait Life() tick
 
 //This is called when the mob is thrown into a dense turf
@@ -291,7 +295,7 @@
 	update_action_buttons()
 
 /mob/living/incapacitated(restrained_type = ARMS)
-	return stat || paralysis || stunned || weakened || restrained(restrained_type)
+	return stat || HAS_TRAIT(src, TRAIT_INCAPACITATED) || restrained(restrained_type)
 
 // These procs define whether this mob has a usable limb at a given targetzone. Heavily used in combo-combat.
 // If targetzone is not specified, returns TRUE if the mob has the bodypart in general.

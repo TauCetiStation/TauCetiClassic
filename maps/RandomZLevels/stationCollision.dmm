@@ -1193,7 +1193,7 @@
 /obj/item/clothing/under/rank/captain,
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/item/weapon/gun/energy/laser/retro,
+/obj/item/weapon/gun/energy/retro,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},

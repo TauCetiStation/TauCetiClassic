@@ -26,11 +26,10 @@
 	healthcheck()
 
 
-/obj/structure/lamarr/bullet_act(obj/item/projectile/Proj)
+/obj/structure/lamarr/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	health -= Proj.damage
-	..()
 	healthcheck()
-	return
 
 
 /obj/structure/lamarr/blob_act()

@@ -5,12 +5,27 @@
 	amount_per_transfer_from_this = 5
 	volume = 25
 
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/afterattack(atom/target, mob/user, proximity, params)
+	. = ..()
+	if(target.is_open_container())
+		if(reagents.total_volume && target.reagents.total_volume < target.reagents.maximum_volume)
+			playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER)
+
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
 	..()
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	reagents.standard_splash(loc)
 	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/pickup(mob/living/user)
+	. = ..()
+	playsound(user, 'sound/items/glass_containers/bottle_take-empty.ogg', VOL_EFFECTS_MASTER)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/dropped(mob/user)
+	. = ..()
+	if(isturf(loc) && (user.loc != loc))
+		playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	/*if(reagents.reagent_list.len > 1 )

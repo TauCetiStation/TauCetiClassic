@@ -407,6 +407,11 @@
 	desc = "Hazardous non-standard equipment detected. Please ensure any usage of this equipment is in line with unit's laws, if any."
 	icon_state = "hacked"
 
+/atom/movable/screen/alert/not_locked
+	name = "Interface Unlocked"
+	desc = "Unit's interface has been unlocked. Somebody accidentally or intentionally left it open. Robotics may provide assistance."
+	icon_state = "not_locked"
+
 /atom/movable/screen/alert/locked
 	name = "Locked Down"
 	desc = "Unit has remotely locked down. Usage of a Robotics Control Computer like the one in the Research Director's \

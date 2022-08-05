@@ -160,7 +160,7 @@
 		A.Bumped(src)
 
 
-/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE)
+/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
 	if(destination)
 		if(pulledby && !keep_pulling)
 			pulledby.stop_pulling()
@@ -190,15 +190,18 @@
 		return TRUE
 	return FALSE
 
-/mob/living/forceMove(atom/destination, keep_pulling = FALSE)
+/mob/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
 	if(!keep_pulling)
 		stop_pulling()
-	if(buckled)
+	if(buckled && !keep_buckled)
 		buckled.unbuckle_mob()
 	. = ..()
+	if(buckled && keep_buckled)
+		buckled.loc = loc
+		buckled.set_dir(dir)
 	update_canmove()
 
-/mob/dead/observer/forceMove(atom/destination, keep_pulling)
+/mob/dead/observer/forceMove(atom/destination, keep_pulling, keep_buckled)
 	if(destination)
 		if(loc)
 			loc.Exited(src)
@@ -403,6 +406,8 @@
 
 /atom/movable/proc/get_size_flavor()
 	switch(w_class)
+		if(SIZE_MIDGET)
+			. = "midget"
 		if(SIZE_MINUSCULE)
 			. = "minuscule"
 		if(SIZE_TINY)
@@ -468,6 +473,21 @@
 	var/atom/old_loc = loc
 	loc = new_loc
 	Moved(old_loc)
+
+// Return what item *should* be thrown, when a mob tries to throw us. Return null for no throw to happen.
+/atom/movable/proc/be_thrown(mob/living/thrower, atom/target)
+	return src
+
+/*
+	Handle trying to be taken by user.
+	If it's impossible to be taken by user, appear in fallback.
+	If it's impossible to resolve those two rules - return FALSE.
+*/
+/atom/movable/proc/taken(mob/living/user, atom/fallback)
+	forceMove(fallback)
+	// We failed to be taken, but still are in some mob. Drop down.
+	if(ismob(loc))
+		forceMove(loc.loc)
 
 /atom/movable/proc/jump_from_contents(rec_level=1)
 	for(var/i in 1 to rec_level)

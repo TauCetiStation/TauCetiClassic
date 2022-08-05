@@ -156,30 +156,17 @@
 		adjustToxLoss(rand(10,20))
 		return
 
-	//var/environment_heat_capacity = environment.heat_capacity()
 	var/loc_temp = get_temperature(environment)
-	/*
-	if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
-		var/transfer_coefficient
+	var/divisitor = 10
 
-		transfer_coefficient = 1
-		if(wear_mask && (wear_mask.body_parts_covered & HEAD) && (environment.temperature < wear_mask.protective_temperature))
-			transfer_coefficient *= wear_mask.heat_transfer_coefficient
+	var/temp_delta = loc_temp - bodytemperature
 
-		// handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
-	*/
+	if(abs(temp_delta) > 50) // If the difference is great, reduce the divisor for faster stabilization
+		divisitor = 5
 
+	if(!on_fire)
+		adjust_bodytemperature(temp_delta / divisitor)
 
-	if(loc_temp < 310.15) // a cold place
-		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
-	else // a hot place
-		bodytemperature += adjust_body_temperature(bodytemperature, loc_temp, 1)
-
-	/*
-	if(stat==2)
-		bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
-
-	*/
 	//Account for massive pressure differences
 
 	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
@@ -198,24 +185,6 @@
 	updatehealth()
 
 	return //TODO: DEFERRED
-
-
-/mob/living/carbon/slime/proc/adjust_body_temperature(current, loc_temp, boost)
-	var/temperature = current
-	var/difference = abs(current-loc_temp)	//get difference
-	var/increments// = difference/10			//find how many increments apart they are
-	if(difference > 50)
-		increments = difference/5
-	else
-		increments = difference/10
-	var/change = increments*boost	// Get the amount to change by (x per increment)
-	var/temp_change
-	if(current < loc_temp)
-		temperature = min(loc_temp, temperature+change)
-	else if(current > loc_temp)
-		temperature = max(loc_temp, temperature-change)
-	temp_change = (temperature - current)
-	return temp_change
 
 /mob/living/carbon/slime/proc/handle_chemicals_in_body()
 	if(reagents)
@@ -260,15 +229,12 @@
 
 	else
 		if (src.paralysis || src.stunned || src.weakened || (status_flags && FAKEDEATH)) //Stunned etc.
-			if (src.stunned > 0)
-				AdjustStunned(-1)
+			if (src.stunned)
 				src.stat = CONSCIOUS
-			if (src.weakened > 0)
-				AdjustWeakened(-1)
+			if (src.weakened)
 				src.lying = 0
 				src.stat = CONSCIOUS
-			if (src.paralysis > 0)
-				AdjustParalysis(-1)
+			if (src.paralysis)
 				src.blinded = 0
 				src.lying = 0
 				src.stat = CONSCIOUS
@@ -672,7 +638,14 @@
 	if (to_say)
 		say (to_say)
 	else if(prob(1))
-		emote(pick("bounce","sway","light","vibrate","jiggle"))
+		var/list/rand_emote = list(
+			"bounces in place.",
+			"sways around dizzily.",
+			"lights up for a bit, then stops.",
+			"vibrates!",
+			"jiggles!",
+		)
+		me_emote(pick(rand_emote))
 	else
 		var/t = 10
 		var/slimes_near = 0

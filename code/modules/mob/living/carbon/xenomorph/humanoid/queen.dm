@@ -44,7 +44,7 @@
 		icon_state = "queen_dead"
 	else if((stat == UNCONSCIOUS && !IsSleeping()) || weakened)
 		icon_state = "queen_l"
-	else if(lying || resting)
+	else if(lying || crawling)
 		icon_state = "queen_sleep"
 	else
 		icon_state = "queen_s"
@@ -74,7 +74,7 @@
 		icon_state = "queen_dead-old"
 	else if((stat == UNCONSCIOUS && !IsSleeping()) || weakened)
 		icon_state = "queen_l-old"
-	else if(lying || resting)
+	else if(lying || crawling)
 		icon_state = "queen_sleep-old"
 	else
 		icon_state = "queen_s-old"

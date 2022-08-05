@@ -1685,17 +1685,17 @@
 	species_allowed = list(VOX, PODMAN)
 
 /datum/sprite_accessory/hair/vox_dreads
-	name = "Dreads"
+	name = "Vox Dreads"
 	icon_state = "vox_dreads"
 	species_allowed = list(VOX, PODMAN)
 
 /datum/sprite_accessory/hair/vox_long_dreads
-	name = "Long Dreads"
+	name = "Vox Long Dreads"
 	icon_state = "vox_long_dreads"
 	species_allowed = list(VOX, PODMAN)
 
 /datum/sprite_accessory/hair/vox_king_dreads
-	name = "Kingly Dreads"
+	name = "Vox Kingly Dreads"
 	icon_state = "vox_kingly_dreads"
 	species_allowed = list(VOX, PODMAN)
 

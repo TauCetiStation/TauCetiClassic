@@ -326,8 +326,8 @@
 /datum/language/shkiondioniovioion/scramble(input)
 	return replace_characters(input, replacements)
 
-/datum/language/salarian
-	name = LANGUAGE_SALARIAN
+/datum/language/salackyi
+	name = LANGUAGE_SALACKYI
 	desc = "One of the most prominent space-slavic languages out there. Consists of many funny sounds, as well as deep, melodic structure."
 	speech_verb = "says"
 	ask_verb = "asks"
@@ -342,7 +342,7 @@
 
 	var/list/replacements
 
-/datum/language/salarian/New()
+/datum/language/salackyi/New()
 	var/list/lowercase_letters = list(
 		"и" = "і",
 		"ы" = "и",
@@ -358,7 +358,7 @@
 		var/replacement = lowercase_letters[letter]
 		replacements[letter] = replacement
 
-/datum/language/salarian/scramble(input)
+/datum/language/salackyi/scramble(input)
 	return replace_characters(input, replacements)
 
 // Language handling.
@@ -368,37 +368,39 @@
 
 	var/datum/language/new_language = all_languages[language]
 	if(!new_language)
-		return 0
+		return FALSE
 
-	if((new_language in languages) && flags == LANGUAGE_CAN_UNDERSTAND)
-		return 0
+	if((new_language in languages) && languages[new_language] >= flags)
+		return FALSE
 
-	for(var/sound in new_language.approximations)
-		remove_approximation(sound)
+	if(flags != LANGUAGE_CAN_UNDERSTAND)
+		for(var/sound in new_language.approximations)
+			remove_approximation(sound)
 
-	for(var/sound in new_language.special_symbols)
-		add_approximation(sound, new_language.special_symbols[sound], case_sensitive=TRUE)
+		for(var/sound in new_language.special_symbols)
+			add_approximation(sound, new_language.special_symbols[sound], case_sensitive=TRUE)
 
 	languages[new_language] = flags
-	return 1
+	return TRUE
 
 /mob/proc/remove_language(language, flags)
 	var/datum/language/L = all_languages[language]
 	if(!L)
-		return
+		return FALSE
+
+	if(languages[L] != LANGUAGE_CAN_UNDERSTAND)
+		for(var/sound in L.approximations)
+			add_approximation(sound, L.approximations[sound])
+
+		for(var/sound in L.special_symbols)
+			remove_approximation(sound, case_sensitive=TRUE)
 
 	languages.Remove(L)
-
-	for(var/sound in L.approximations)
-		add_approximation(sound, L.approximations[sound])
-
-	for(var/sound in L.special_symbols)
-		remove_approximation(sound, case_sensitive=TRUE)
 
 	if(default_language == L.name)
 		default_language = null
 
-	return 0
+	return TRUE
 
 /mob/proc/can_understand(datum/language/speaking)
 	return universal_understand || (speaking in languages)
@@ -434,18 +436,19 @@
 		for(var/l_key in L.key)
 			dat += "(:[l_key])"
 
-		var/sound_macros = ""
-		var/first_macro = TRUE
-		for(var/m_key in L.special_symbols)
-			if(m_key == uppertext(m_key))
-				continue
-			if(!first_macro)
-				sound_macros += ", "
-			first_macro = FALSE
-			sound_macros += "[m_key]"
+		if(languages[L] != LANGUAGE_CAN_UNDERSTAND)
+			var/sound_macros = ""
+			var/first_macro = TRUE
+			for(var/m_key in L.special_symbols)
+				if(m_key == uppertext(m_key))
+					continue
+				if(!first_macro)
+					sound_macros += ", "
+				first_macro = FALSE
+				sound_macros += "[m_key]"
 
-		if(sound_macros != "")
-			dat += " ([sound_macros])"
+			if(sound_macros != "")
+				dat += " ([sound_macros])"
 
 		var/remark = ""
 		if(languages[L] == LANGUAGE_CAN_UNDERSTAND)

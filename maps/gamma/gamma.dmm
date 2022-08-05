@@ -52,9 +52,7 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
 	},
-/obj/effect/landmark/start{
-	name = "Atmospheric Technician"
-	},
+/obj/effect/landmark/start/atmospheric_technician,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -166,9 +164,7 @@
 /area/station/engineering/monitoring)
 "aal" = (
 /obj/structure/stool/bed/chair/office/dark,
-/obj/effect/landmark/start{
-	name = "Station Engineer"
-	},
+/obj/effect/landmark/start/station_engineer,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -401,9 +397,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start{
-	name = "Medical Doctor"
-	},
+/obj/effect/landmark/start/medical_doctor,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -842,9 +836,7 @@
 /area/station/hallway/primary/central)
 "abk" = (
 /obj/structure/stool,
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
 	icon_state = "wood_siding2"
@@ -1513,9 +1505,7 @@
 /area/station/hallway/primary/central)
 "aco" = (
 /obj/structure/stool,
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -4028,9 +4018,7 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
-/obj/effect/landmark/start{
-	name = "Detective"
-	},
+/obj/effect/landmark/start/detective,
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
 "amv" = (
@@ -4835,9 +4823,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start{
-	name = "Technical Assistant"
-	},
+/obj/effect/landmark/start/technical_assistant,
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "aAq" = (
@@ -7189,9 +7175,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/effect/landmark/start{
-	name = "Recycler"
-	},
+/obj/effect/landmark/start/recycler,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -8037,9 +8021,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "bzF" = (
-/obj/effect/landmark/start{
-	name = "Medical Intern"
-	},
+/obj/effect/landmark/start/medical_intern,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitebluecorner"
@@ -8807,9 +8789,7 @@
 	},
 /area/station/civilian/gym)
 "bMR" = (
-/obj/effect/landmark/start{
-	name = "Internal Affairs Agent"
-	},
+/obj/effect/landmark/start/internal_affairs_agent,
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
 	},
@@ -10442,9 +10422,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/effect/landmark/start{
-	name = "Medical Doctor"
-	},
+/obj/effect/landmark/start/medical_doctor,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -11278,9 +11256,7 @@
 /obj/structure/stool/bed/chair/barber{
 	dir = 8
 	},
-/obj/effect/landmark/start{
-	name = "Barber"
-	},
+/obj/effect/landmark/start/barber,
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -11312,9 +11288,7 @@
 /area/station/rnd/hallway)
 "cBu" = (
 /obj/structure/stool/bed/chair/office/dark,
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
+/obj/effect/landmark/start/security_officer,
 /turf/simulated/floor/carpet,
 /area/station/security/secconfhall)
 "cBz" = (
@@ -11805,9 +11779,7 @@
 	name = "Food Court Maintenance"
 	})
 "cIZ" = (
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "cJb" = (
@@ -12700,9 +12672,7 @@
 	},
 /area/station/security/iaa_office)
 "cUF" = (
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "cUH" = (
@@ -19132,7 +19102,6 @@
 	pixel_x = -30
 	},
 /obj/structure/closet/secure_closet/captains,
-/obj/item/clothing/accessory/medal/gold/heroism,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "eYu" = (
@@ -19448,9 +19417,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -20064,7 +20031,6 @@
 	req_access = list(64)
 	},
 /obj/item/weapon/storage/box/cups,
-/obj/item/weapon/fluff/farwadoll,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -20310,9 +20276,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/effect/landmark/start{
-	name = "Medical Doctor"
-	},
+/obj/effect/landmark/start/medical_doctor,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -20698,9 +20662,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 1
 	},
-/obj/effect/landmark/start{
-	name = "Psychiatrist"
-	},
+/obj/effect/landmark/start/psychiatrist,
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "fwL" = (
@@ -21901,9 +21863,7 @@
 /turf/simulated/floor,
 /area/station/storage/tools)
 "fPv" = (
-/obj/effect/landmark/start{
-	name = "Bartender"
-	},
+/obj/effect/landmark/start/bartender,
 /turf/simulated/floor/exodus{
 	icon_state = "bar_floor"
 	},
@@ -22779,9 +22739,7 @@
 /area/station/cargo/office)
 "geA" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
-/obj/effect/landmark/start{
-	name = "Atmospheric Technician"
-	},
+/obj/effect/landmark/start/atmospheric_technician,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "geC" = (
@@ -23654,9 +23612,7 @@
 	},
 /area/station/medical/sleeper)
 "guD" = (
-/obj/effect/landmark/start{
-	name = "Clown"
-	},
+/obj/effect/landmark/start/clown,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
@@ -24591,9 +24547,7 @@
 	pixel_x = -27;
 	pixel_y = 4
 	},
-/obj/effect/landmark/start{
-	name = "AI"
-	},
+/obj/effect/landmark/start/ai,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
 	freerange = 1;
@@ -24769,9 +24723,7 @@
 /area/station/maintenance/incinerator)
 "gLx" = (
 /obj/structure/stool/bed/chair/metal/green,
-/obj/effect/landmark/start{
-	name = "Geneticist"
-	},
+/obj/effect/landmark/start/geneticist,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -25709,9 +25661,7 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/bar)
 "haZ" = (
-/obj/effect/landmark/start{
-	name = "Cyborg"
-	},
+/obj/effect/landmark/start/cyborg,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -26315,9 +26265,7 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
 	},
-/obj/effect/landmark/start{
-	name = "Warden"
-	},
+/obj/effect/landmark/start/warden,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -26345,9 +26293,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start{
-	name = "Security Cadet"
-	},
+/obj/effect/landmark/start/security_cadet,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -26394,9 +26340,7 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxstarboard)
 "hld" = (
-/obj/effect/landmark/start{
-	name = "Station Engineer"
-	},
+/obj/effect/landmark/start/station_engineer,
 /obj/structure/stool/bed/chair/comfy/lime{
 	dir = 1
 	},
@@ -26496,9 +26440,7 @@
 	},
 /area/station/tcommsat/chamber)
 "hlU" = (
-/obj/effect/landmark/start{
-	name = "Internal Affairs Agent"
-	},
+/obj/effect/landmark/start/internal_affairs_agent,
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
 	},
@@ -27358,7 +27300,7 @@
 	input_tag = "o2_in";
 	name = "Oxygen Supply Control";
 	output_tag = "o2_out";
-	sensors = list("o2_sensor" = "Tank")
+	sensors = list("o2_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -28034,7 +27976,7 @@
 	input_tag = "n2o_in";
 	name = "Nitrous Oxide Supply Control";
 	output_tag = "n2o_out";
-	sensors = list("n2o_sensor" = "Tank")
+	sensors = list("n2o_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "escape"
@@ -29788,6 +29730,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/device/gps/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -29838,9 +29781,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/landmark/start{
-	name = "Janitor"
-	},
+/obj/effect/landmark/start/janitor,
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "iuw" = (
@@ -30756,9 +30697,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "iJC" = (
-/obj/effect/landmark/start{
-	name = "Paramedic"
-	},
+/obj/effect/landmark/start/paramedic,
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 4
 	},
@@ -30947,9 +30886,7 @@
 /area/station/maintenance/science)
 "iMq" = (
 /obj/structure/stool,
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -32419,7 +32356,7 @@
 	input_tag = "n2_in";
 	name = "Nitrogen Supply Control";
 	output_tag = "n2_out";
-	sensors = list("n2_sensor" = "Tank")
+	sensors = list("n2_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -34112,9 +34049,7 @@
 /turf/simulated/wall,
 /area/station/medical/surgery)
 "jMj" = (
-/obj/effect/landmark/start{
-	name = "Atmospheric Technician"
-	},
+/obj/effect/landmark/start/atmospheric_technician,
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
@@ -34597,9 +34532,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/landmark/start{
-	name = "Technical Assistant"
-	},
+/obj/effect/landmark/start/technical_assistant,
 /turf/simulated/floor{
 	icon_state = "yellowcorner"
 	},
@@ -35276,7 +35209,6 @@
 /obj/item/device/camera,
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
-/obj/item/clothing/under/fluff/terezi_suit,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 29
@@ -35529,9 +35461,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/effect/landmark/start{
-	name = "Security Cadet"
-	},
+/obj/effect/landmark/start/security_cadet,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "dark"
@@ -36043,9 +35973,7 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
 	},
-/obj/effect/landmark/start{
-	name = "Chief Medical Officer"
-	},
+/obj/effect/landmark/start/chief_medical_officer,
 /obj/machinery/door_control{
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter Control";
@@ -39434,9 +39362,7 @@
 "lrQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/landmark/start{
-	name = "Medical Intern"
-	},
+/obj/effect/landmark/start/medical_intern,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -39869,9 +39795,7 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
-/obj/effect/landmark/start{
-	name = "Head of Security"
-	},
+/obj/effect/landmark/start/head_of_security,
 /turf/simulated/floor/carpet,
 /area/station/security/hos)
 "lAY" = (
@@ -40155,9 +40079,7 @@
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 8
 	},
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bluecorner"
@@ -40209,7 +40131,7 @@
 	input_tag = "tox_in";
 	name = "Toxin Supply Control";
 	output_tag = "tox_out";
-	sensors = list("tox_sensor" = "Tank")
+	sensors = list("tox_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -40453,9 +40375,7 @@
 /area/station/hallway/primary/bridgehall)
 "lKv" = (
 /obj/structure/stool/bed/chair/office/light,
-/obj/effect/landmark/start{
-	name = "Chief Engineer"
-	},
+/obj/effect/landmark/start/chief_engineer,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -41866,9 +41786,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/landmark/start{
-	name = "Scientist"
-	},
+/obj/effect/landmark/start/scientist,
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -41938,9 +41856,7 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
 	},
-/obj/effect/landmark/start{
-	name = "Xenoarcheologist"
-	},
+/obj/effect/landmark/start/xenoarchaeologist,
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -42609,9 +42525,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/landmark/start{
-	name = "Research Assistant"
-	},
+/obj/effect/landmark/start/research_assistant,
 /turf/simulated/floor{
 	icon_state = "purple"
 	},
@@ -42942,9 +42856,7 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
 	},
-/obj/effect/landmark/start{
-	name = "Research Director"
-	},
+/obj/effect/landmark/start/research_director,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -43162,6 +43074,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/device/gps/medical,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
@@ -43192,9 +43105,7 @@
 	},
 /area/station/maintenance/science)
 "mAg" = (
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 1
 	},
@@ -43629,9 +43540,7 @@
 /obj/structure/stool/bed/chair/metal/yellow{
 	dir = 8
 	},
-/obj/effect/landmark/start{
-	name = "Cargo Technician"
-	},
+/obj/effect/landmark/start/cargo_technician,
 /obj/machinery/camera{
 	c_tag = "Cargo cafe"
 	},
@@ -43655,9 +43564,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "mJh" = (
@@ -43676,9 +43583,7 @@
 /area/station/hallway/secondary/exit)
 "mJs" = (
 /obj/structure/stool/bed/chair/metal/red,
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -43762,9 +43667,7 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "mKG" = (
-/obj/effect/landmark/start{
-	name = "Chef"
-	},
+/obj/effect/landmark/start/chef,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -45417,9 +45320,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
 	},
-/obj/effect/landmark/start{
-	name = "Xenoarcheologist"
-	},
+/obj/effect/landmark/start/xenoarchaeologist,
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -45562,9 +45463,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/security/warden)
 "nnZ" = (
-/obj/effect/landmark/start{
-	name = "Security Cadet"
-	},
+/obj/effect/landmark/start/security_cadet,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "dark"
@@ -46584,9 +46483,7 @@
 	},
 /area/station/medical/hallway)
 "nDd" = (
-/obj/effect/landmark/start{
-	name = "Cyborg"
-	},
+/obj/effect/landmark/start/cyborg,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warning"
@@ -47250,7 +47147,7 @@
 	frequency = 1443;
 	level = 3;
 	name = "Distribution and Waste Monitor";
-	sensors = list("mair_in_meter" = "Mixed Air In", "air_sensor" = "Mixed Air Supply Tank", "mair_out_meter" = "Mixed Air Out", "dloop_atm_meter" = "Distribution Loop", "wloop_atm_meter" = "Waste Loop")
+	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -47558,9 +47455,7 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/miningoffice)
 "nUb" = (
-/obj/effect/landmark/start{
-	name = "Librarian"
-	},
+/obj/effect/landmark/start/librarian,
 /obj/structure/stool/bed/chair/office/dark,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -48492,9 +48387,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/effect/landmark/start{
-	name = "Forensic Technician"
-	},
+/obj/effect/landmark/start/forensic_technician,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor{
@@ -50428,9 +50321,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/effect/landmark/start{
-	name = "Xenobiologist"
-	},
+/obj/effect/landmark/start/xenobiologist,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -50935,9 +50826,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
-/obj/effect/landmark/start{
-	name = "Captain"
-	},
+/obj/effect/landmark/start/captain,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "oZN" = (
@@ -51400,9 +51289,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "pjp" = (
-/obj/effect/landmark/start{
-	name = "Xenobiologist"
-	},
+/obj/effect/landmark/start/xenobiologist,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
@@ -51487,9 +51374,7 @@
 /turf/environment/space,
 /area/space)
 "plA" = (
-/obj/effect/landmark/start{
-	name = "Virologist"
-	},
+/obj/effect/landmark/start/virologist,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -51817,9 +51702,7 @@
 	name = "Shutters Control";
 	pixel_y = 26
 	},
-/obj/effect/landmark/start{
-	name = "Shaft Miner"
-	},
+/obj/effect/landmark/start/shaft_miner,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -52004,9 +51887,7 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
 	},
-/obj/effect/landmark/start{
-	name = "Quartermaster"
-	},
+/obj/effect/landmark/start/quartermaster,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -53023,9 +52904,7 @@
 /area/station/rnd/telesci)
 "pKH" = (
 /obj/structure/stool/bed/chair/office/light,
-/obj/effect/landmark/start{
-	name = "Chemist"
-	},
+/obj/effect/landmark/start/chemist,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitedelivery"
@@ -54190,7 +54069,7 @@
 	input_tag = "waste_in";
 	name = "Gas Mix Tank Control";
 	output_tag = "waste_out";
-	sensors = list("waste_sensor" = "Tank")
+	sensors = list("waste_sensor"="Tank")
 	},
 /obj/machinery/atmospherics/pipe/manifold/visible/cyan{
 	dir = 4
@@ -54510,7 +54389,7 @@
 	},
 /area/station/civilian/janitor)
 "qgH" = (
-/obj/structure/closet/lawcloset,
+/obj/structure/closet/secure_closet/iaa,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -55708,9 +55587,7 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
-/obj/effect/landmark/start{
-	name = "Chaplain"
-	},
+/obj/effect/landmark/start/chaplain,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
@@ -55980,9 +55857,7 @@
 /area/station/maintenance/eva)
 "qDC" = (
 /obj/structure/stool/bar,
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "redyellowfull"
@@ -57176,9 +57051,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "qXN" = (
-/obj/effect/landmark/start{
-	name = "Research Assistant"
-	},
+/obj/effect/landmark/start/research_assistant,
 /turf/simulated/floor{
 	icon_state = "purplecorner"
 	},
@@ -57765,9 +57638,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/effect/landmark/start{
-	name = "Research Assistant"
-	},
+/obj/effect/landmark/start/research_assistant,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "purplecorner"
@@ -58254,9 +58125,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "rsq" = (
-/obj/effect/landmark/start{
-	name = "Cargo Technician"
-	},
+/obj/effect/landmark/start/cargo_technician,
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
 	},
@@ -58377,9 +58246,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start{
-	name = "Station Engineer"
-	},
+/obj/effect/landmark/start/station_engineer,
 /turf/simulated/floor,
 /area/station/engineering/equip)
 "rtL" = (
@@ -59360,9 +59227,7 @@
 /obj/structure/sign/map/right{
 	pixel_y = 32
 	},
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -59431,9 +59296,7 @@
 	},
 /area/station/medical/hallway)
 "rLw" = (
-/obj/effect/landmark/start{
-	name = "Atmospheric Technician"
-	},
+/obj/effect/landmark/start/atmospheric_technician,
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
@@ -60284,7 +60147,7 @@
 	input_tag = "co2_in";
 	name = "Carbon Dioxide Supply Control";
 	output_tag = "co2_out";
-	sensors = list("co2_sensor" = "Tank")
+	sensors = list("co2_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	icon_state = "yellow"
@@ -61008,9 +60871,7 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
 	},
-/obj/effect/landmark/start{
-	name = "Chemist"
-	},
+/obj/effect/landmark/start/chemist,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitedelivery"
@@ -61728,9 +61589,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "svp" = (
-/obj/effect/landmark/start{
-	name = "Technical Assistant"
-	},
+/obj/effect/landmark/start/technical_assistant,
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "svw" = (
@@ -62414,9 +62273,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/effect/landmark/start{
-	name = "Recycler"
-	},
+/obj/effect/landmark/start/recycler,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -64117,9 +63974,7 @@
 	density = 0;
 	pixel_y = 32
 	},
-/obj/effect/landmark/start{
-	name = "Roboticist"
-	},
+/obj/effect/landmark/start/roboticist,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -64313,9 +64168,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "ton" = (
-/obj/effect/landmark/start{
-	name = "Shaft Miner"
-	},
+/obj/effect/landmark/start/shaft_miner,
 /turf/simulated/floor,
 /area/station/cargo/miningoffice)
 "tot" = (
@@ -64449,9 +64302,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "tqP" = (
@@ -65099,9 +64950,7 @@
 /area/station/engineering/equip)
 "tAo" = (
 /obj/structure/stool,
-/obj/effect/landmark/start{
-	name = "Botanist"
-	},
+/obj/effect/landmark/start/botanist,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "green"
@@ -65171,9 +65020,7 @@
 /area/station/medical/patient_a)
 "tBj" = (
 /obj/structure/stool,
-/obj/effect/landmark/start{
-	name = "Roboticist"
-	},
+/obj/effect/landmark/start/roboticist,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -65330,18 +65177,14 @@
 	},
 /area/station/hallway/secondary/arrival)
 "tEL" = (
-/obj/effect/landmark/start{
-	name = "Botanist"
-	},
+/obj/effect/landmark/start/botanist,
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "tEU" = (
 /obj/structure/stool/bed/chair/metal/yellow{
 	dir = 8
 	},
-/obj/effect/landmark/start{
-	name = "Cargo Technician"
-	},
+/obj/effect/landmark/start/cargo_technician,
 /turf/simulated/floor,
 /area/station/cargo/office)
 "tFm" = (
@@ -67623,9 +67466,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start{
-	name = "Scientist"
-	},
+/obj/effect/landmark/start/scientist,
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -68060,9 +67901,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/effect/landmark/start{
-	name = "Geneticist"
-	},
+/obj/effect/landmark/start/geneticist,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -68851,7 +68690,7 @@
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
-	sensors = list("air_sensor" = "Tank")
+	sensors = list("air_sensor"="Tank")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -70036,7 +69875,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/fluff/eleanor_stone{
+/obj/item/weapon/reagent_containers/glass/beaker/teapot{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -70055,9 +69894,7 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
 	},
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
+/obj/effect/landmark/start/security_officer,
 /turf/simulated/floor/carpet,
 /area/station/security/secconfhall)
 "vbB" = (
@@ -72169,9 +72006,7 @@
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
 	},
-/obj/effect/landmark/start{
-	name = "Scientist"
-	},
+/obj/effect/landmark/start/scientist,
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -73643,9 +73478,7 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
 	},
-/obj/effect/landmark/start{
-	name = "Head of Personnel"
-	},
+/obj/effect/landmark/start/head_of_personnel,
 /turf/simulated/floor/carpet,
 /area/station/bridge/hop_office)
 "wce" = (
@@ -74085,7 +73918,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "wjL" = (
-/obj/item/weapon/crowbar/fluff/zelda_creedy_1,
+/obj/item/weapon/crowbar/red,
 /obj/item/clothing/head/festive,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/simulated/floor/plating,
@@ -74642,9 +74475,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
+/obj/effect/landmark/start/security_officer,
 /turf/simulated/floor/carpet,
 /area/station/security/secconfhall)
 "wvW" = (
@@ -75259,9 +75090,7 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
 	},
-/obj/effect/landmark/start{
-	name = "Station Engineer"
-	},
+/obj/effect/landmark/start/station_engineer,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -75469,9 +75298,7 @@
 /turf/simulated/floor,
 /area/station/rnd/tox_launch)
 "wML" = (
-/obj/effect/landmark/start{
-	name = "Mime"
-	},
+/obj/effect/landmark/start/mime,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
@@ -75711,9 +75538,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "wQh" = (
@@ -76190,9 +76015,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start{
-	name = "Medical Intern"
-	},
+/obj/effect/landmark/start/medical_intern,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -77183,9 +77006,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
+/obj/effect/landmark/start/security_officer,
 /turf/simulated/floor/carpet,
 /area/station/security/secconfhall)
 "xqc" = (
@@ -78109,9 +77930,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start{
-	name = "Test Subject"
-	},
+/obj/effect/landmark/start/assistant/test_subject,
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 8
 	},
@@ -78248,10 +78067,6 @@
 /area/station/bridge/hop_office)
 "xHY" = (
 /obj/structure/rack,
-/obj/item/weapon/circuitboard/pandemic{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/weapon/circuitboard/rdconsole,
 /obj/item/weapon/circuitboard/rdserver{
 	pixel_x = 3;
@@ -79611,7 +79426,7 @@
 	pixel_y = 30
 	},
 /obj/structure/closet/wardrobe/chaplain_black,
-/obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1,
+/obj/item/weapon/lighter/zippo,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -79901,7 +79716,7 @@
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
 	name = "Tank Monitor";
-	sensors = list("n2_sensor" = "Nitrogen", "o2_sensor" = "Oxygen", "co2_sensor" = "Carbon Dioxide", "tox_sensor" = "Toxins", "n2o_sensor" = "Nitrous Oxide", "waste_sensor" = "Gas Mix Tank")
+	sensors = list("n2_sensor"="Nitrogen","o2_sensor"="Oxygen","co2_sensor"="Carbon Dioxide","tox_sensor"="Toxins","n2o_sensor"="Nitrous Oxide","waste_sensor"="Gas Mix Tank")
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
@@ -86075,9 +85890,9 @@ bsd
 bsd
 bsd
 bsd
-bsd
-bsd
-bsd
+plf
+plf
+plf
 plf
 plf
 plf
@@ -86323,18 +86138,18 @@ plf
 plf
 plf
 plf
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
 plf
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
+plf
 plf
 plf
 plf
@@ -86576,11 +86391,11 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-plf
-plf
+bsd
+bsd
+bsd
+bsd
+bsd
 bsd
 bsd
 bsd
@@ -86831,13 +86646,13 @@ plf
 plf
 plf
 plf
-plf
 bsd
 bsd
 bsd
 bsd
 bsd
-plf
+bsd
+bsd
 bsd
 bsd
 bsd
@@ -87085,9 +86900,6 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
 bsd
 bsd
 bsd
@@ -87106,7 +86918,10 @@ bsd
 bsd
 bsd
 bsd
-plf
+bsd
+bsd
+bsd
+bsd
 plf
 plf
 plf
@@ -87345,25 +87160,25 @@ plf
 plf
 plf
 plf
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
 plf
 plf
-plf
-plf
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
 plf
 plf
 plf
@@ -87602,25 +87417,25 @@ plf
 plf
 plf
 plf
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
 plf
 plf
-plf
-plf
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
 plf
 plf
 plf
@@ -87859,25 +87674,25 @@ plf
 plf
 plf
 plf
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
 plf
 plf
-plf
-plf
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
 plf
 plf
 plf
@@ -88113,9 +87928,6 @@ kbM
 kHU
 lgc
 plf
-plf
-plf
-plf
 bsd
 bsd
 bsd
@@ -88134,7 +87946,10 @@ bsd
 bsd
 bsd
 bsd
-plf
+bsd
+bsd
+bsd
+bsd
 plf
 plf
 plf
@@ -88373,13 +88188,13 @@ plf
 plf
 plf
 plf
-plf
 bsd
 bsd
 bsd
 bsd
 bsd
-plf
+bsd
+bsd
 bsd
 bsd
 bsd
@@ -88632,11 +88447,11 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-plf
-plf
+bsd
+bsd
+bsd
+bsd
+bsd
 bsd
 bsd
 bsd
@@ -88893,18 +88708,18 @@ plf
 plf
 plf
 plf
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
+bsd
 plf
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
-bsd
+plf
 plf
 plf
 plf
@@ -89159,9 +88974,9 @@ bsd
 bsd
 bsd
 bsd
-bsd
-bsd
-bsd
+plf
+plf
+plf
 plf
 plf
 plf
@@ -93636,6 +93451,8 @@ plf
 plf
 plf
 plf
+plf
+plf
 cDH
 cDH
 cDH
@@ -93643,9 +93460,7 @@ cDH
 cDH
 cDH
 cDH
-cDH
-cDH
-cDH
+plf
 plf
 plf
 plf
@@ -93892,7 +93707,7 @@ plf
 plf
 plf
 plf
-cDH
+plf
 cDH
 cDH
 cDH
@@ -94146,9 +93961,6 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
 cDH
 cDH
 cDH
@@ -94160,8 +93972,11 @@ cDH
 cDH
 cDH
 cDH
-plf
-plf
+cDH
+cDH
+cDH
+cDH
+cDH
 plf
 plf
 plf
@@ -94400,11 +94215,6 @@ plf
 plf
 plf
 plf
-cDH
-cDH
-cDH
-cDH
-cDH
 plf
 cDH
 cDH
@@ -94417,8 +94227,13 @@ cDH
 cDH
 cDH
 cDH
-plf
-plf
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
 plf
 plf
 plf
@@ -94655,7 +94470,6 @@ plf
 plf
 plf
 plf
-plf
 cDH
 cDH
 cDH
@@ -94674,9 +94488,10 @@ cDH
 cDH
 cDH
 cDH
-plf
-plf
-plf
+cDH
+cDH
+cDH
+cDH
 plf
 plf
 plf
@@ -94913,27 +94728,27 @@ plf
 plf
 plf
 plf
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
 plf
 plf
 plf
 plf
-plf
-plf
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
 plf
 plf
 plf
@@ -95170,27 +94985,27 @@ plf
 plf
 plf
 plf
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
 plf
 plf
 plf
 plf
-plf
-plf
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
 plf
 plf
 plf
@@ -95427,27 +95242,27 @@ plf
 plf
 plf
 plf
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
-cDH
 plf
 plf
 plf
 plf
-plf
-plf
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
 plf
 plf
 plf
@@ -95683,7 +95498,6 @@ plf
 plf
 plf
 plf
-plf
 cDH
 cDH
 cDH
@@ -95702,9 +95516,10 @@ cDH
 cDH
 cDH
 cDH
-plf
-plf
-plf
+cDH
+cDH
+cDH
+cDH
 plf
 plf
 plf
@@ -95942,11 +95757,6 @@ plf
 plf
 plf
 plf
-cDH
-cDH
-cDH
-cDH
-cDH
 plf
 cDH
 cDH
@@ -95959,8 +95769,13 @@ cDH
 cDH
 cDH
 cDH
-plf
-plf
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
+cDH
 plf
 plf
 plf
@@ -96202,9 +96017,6 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
 cDH
 cDH
 cDH
@@ -96216,8 +96028,11 @@ cDH
 cDH
 cDH
 cDH
-plf
-plf
+cDH
+cDH
+cDH
+cDH
+cDH
 plf
 plf
 plf
@@ -96462,7 +96277,7 @@ plf
 plf
 plf
 plf
-cDH
+plf
 cDH
 cDH
 cDH
@@ -96720,6 +96535,8 @@ plf
 plf
 plf
 plf
+plf
+plf
 cDH
 cDH
 cDH
@@ -96727,9 +96544,7 @@ cDH
 cDH
 cDH
 cDH
-cDH
-cDH
-cDH
+plf
 plf
 plf
 plf
@@ -109210,9 +109025,9 @@ aAC
 aAC
 aAC
 aAC
-aAC
-aAC
-aAC
+plf
+plf
+plf
 plf
 plf
 plf
@@ -109311,9 +109126,9 @@ rNG
 rNG
 rNG
 rNG
-rNG
-rNG
-rNG
+plf
+plf
+plf
 plf
 plf
 plf
@@ -109458,18 +109273,18 @@ plf
 plf
 plf
 plf
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
 plf
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
+plf
 plf
 plf
 plf
@@ -109559,18 +109374,18 @@ plf
 plf
 plf
 plf
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
 plf
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
+plf
 plf
 plf
 plf
@@ -109711,11 +109526,11 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-plf
-plf
+aAC
+aAC
+aAC
+aAC
+aAC
 aAC
 aAC
 aAC
@@ -109812,11 +109627,11 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-plf
-plf
+rNG
+rNG
+rNG
+rNG
+rNG
 rNG
 rNG
 rNG
@@ -109966,13 +109781,13 @@ plf
 plf
 plf
 plf
-plf
 aAC
 aAC
 aAC
 aAC
 aAC
-plf
+aAC
+aAC
 aAC
 aAC
 aAC
@@ -110067,13 +109882,13 @@ plf
 plf
 plf
 plf
-plf
 rNG
 rNG
 rNG
 rNG
 rNG
-plf
+rNG
+rNG
 rNG
 rNG
 rNG
@@ -110220,9 +110035,6 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
 aAC
 aAC
 aAC
@@ -110241,7 +110053,10 @@ aAC
 aAC
 aAC
 aAC
-plf
+aAC
+aAC
+aAC
+aAC
 plf
 plf
 plf
@@ -110321,9 +110136,6 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
 rNG
 rNG
 rNG
@@ -110342,7 +110154,10 @@ rNG
 rNG
 rNG
 rNG
-plf
+rNG
+rNG
+rNG
+rNG
 plf
 plf
 plf
@@ -110480,25 +110295,25 @@ plf
 plf
 plf
 plf
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
 plf
 plf
-plf
-plf
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
 plf
 plf
 plf
@@ -110581,25 +110396,25 @@ plf
 plf
 plf
 plf
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
 plf
 plf
-plf
-plf
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
 plf
 plf
 plf
@@ -110737,25 +110552,25 @@ plf
 plf
 plf
 plf
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
 plf
 plf
-plf
-plf
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
 plf
 plf
 plf
@@ -110838,25 +110653,25 @@ plf
 plf
 plf
 plf
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
 plf
 plf
-plf
-plf
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
 plf
 plf
 plf
@@ -110994,25 +110809,25 @@ plf
 plf
 plf
 plf
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
 plf
 plf
-plf
-plf
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
 plf
 plf
 plf
@@ -111095,25 +110910,25 @@ plf
 plf
 plf
 plf
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
 plf
 plf
-plf
-plf
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
 plf
 plf
 plf
@@ -111248,9 +111063,6 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
 aAC
 aAC
 aAC
@@ -111269,7 +111081,10 @@ aAC
 aAC
 aAC
 aAC
-plf
+aAC
+aAC
+aAC
+aAC
 plf
 plf
 plf
@@ -111349,9 +111164,6 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
 rNG
 rNG
 rNG
@@ -111370,7 +111182,10 @@ rNG
 rNG
 rNG
 rNG
-plf
+rNG
+rNG
+rNG
+rNG
 plf
 plf
 plf
@@ -111508,13 +111323,13 @@ plf
 plf
 plf
 plf
-plf
 aAC
 aAC
 aAC
 aAC
 aAC
-plf
+aAC
+aAC
 aAC
 aAC
 aAC
@@ -111609,13 +111424,13 @@ plf
 plf
 plf
 plf
-plf
 rNG
 rNG
 rNG
 rNG
 rNG
-plf
+rNG
+rNG
 rNG
 rNG
 rNG
@@ -111768,10 +111583,10 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-plf
+aAC
+aAC
+aAC
+aAC
 aAC
 aAC
 aAC
@@ -111868,11 +111683,11 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-plf
-plf
+rNG
+rNG
+rNG
+rNG
+rNG
 rNG
 rNG
 rNG
@@ -112028,18 +111843,18 @@ plf
 plf
 plf
 plf
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
+aAC
 plf
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
-aAC
+plf
 plf
 plf
 plf
@@ -112129,18 +111944,18 @@ plf
 plf
 plf
 plf
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
+rNG
 plf
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
-rNG
+plf
 plf
 plf
 plf
@@ -112294,9 +112109,9 @@ aAC
 aAC
 aAC
 aAC
-aAC
-aAC
-aAC
+plf
+plf
+plf
 plf
 plf
 plf
@@ -112395,9 +112210,9 @@ rNG
 rNG
 rNG
 rNG
-rNG
-rNG
-rNG
+plf
+plf
+plf
 plf
 plf
 plf
@@ -121820,16 +121635,16 @@ plf
 plf
 plf
 plf
+plf
 gPm
 gPm
 gPm
 gPm
 gPm
 gPm
-gPm
-gPm
-gPm
-gPm
+plf
+plf
+plf
 plf
 plf
 plf
@@ -122085,8 +121900,8 @@ gPm
 gPm
 gPm
 gPm
-gPm
-gPm
+plf
+plf
 plf
 plf
 plf
@@ -122329,10 +122144,10 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-plf
+gPm
+gPm
+gPm
+gPm
 gPm
 gPm
 gPm
@@ -122589,7 +122404,7 @@ gPm
 gPm
 gPm
 gPm
-plf
+gPm
 gPm
 gPm
 gPm
@@ -122838,8 +122653,6 @@ plf
 plf
 plf
 plf
-plf
-plf
 gPm
 gPm
 gPm
@@ -122858,7 +122671,9 @@ gPm
 gPm
 gPm
 gPm
-plf
+gPm
+gPm
+gPm
 plf
 plf
 plf
@@ -123097,25 +122912,25 @@ plf
 plf
 plf
 plf
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
 plf
 plf
 plf
-plf
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
 plf
 plf
 plf
@@ -123354,25 +123169,25 @@ plf
 plf
 plf
 plf
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
 plf
 plf
 plf
-plf
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
 plf
 plf
 plf
@@ -123611,25 +123426,25 @@ plf
 plf
 plf
 plf
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
-gPm
 plf
 plf
 plf
-plf
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
+gPm
 plf
 plf
 plf
@@ -123866,8 +123681,6 @@ plf
 plf
 plf
 plf
-plf
-plf
 gPm
 gPm
 gPm
@@ -123886,7 +123699,9 @@ gPm
 gPm
 gPm
 gPm
-plf
+gPm
+gPm
+gPm
 plf
 plf
 plf
@@ -124131,7 +123946,7 @@ gPm
 gPm
 gPm
 gPm
-plf
+gPm
 gPm
 gPm
 gPm
@@ -124385,10 +124200,10 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-plf
+gPm
+gPm
+gPm
+gPm
 gPm
 gPm
 gPm
@@ -124655,8 +124470,8 @@ gPm
 gPm
 gPm
 gPm
-gPm
-gPm
+plf
+plf
 plf
 plf
 plf
@@ -124904,16 +124719,16 @@ plf
 plf
 plf
 plf
+plf
 gPm
 gPm
 gPm
 gPm
 gPm
 gPm
-gPm
-gPm
-gPm
-gPm
+plf
+plf
+plf
 plf
 plf
 plf
@@ -133244,9 +133059,9 @@ fyr
 fyr
 fyr
 fyr
-fyr
-fyr
-fyr
+plf
+plf
+plf
 plf
 plf
 plf
@@ -133492,18 +133307,18 @@ plf
 plf
 plf
 plf
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
 plf
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
+plf
 plf
 plf
 plf
@@ -133745,11 +133560,11 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-plf
-plf
+fyr
+fyr
+fyr
+fyr
+fyr
 fyr
 fyr
 fyr
@@ -134000,13 +133815,13 @@ plf
 plf
 plf
 plf
-plf
 fyr
 fyr
 fyr
 fyr
 fyr
-plf
+fyr
+fyr
 fyr
 fyr
 fyr
@@ -134254,9 +134069,6 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
 fyr
 fyr
 fyr
@@ -134275,7 +134087,10 @@ fyr
 fyr
 fyr
 fyr
-plf
+fyr
+fyr
+fyr
+fyr
 plf
 plf
 plf
@@ -134514,25 +134329,25 @@ plf
 plf
 plf
 plf
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
 plf
 plf
-plf
-plf
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
 plf
 plf
 plf
@@ -134771,25 +134586,25 @@ plf
 plf
 plf
 plf
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
 plf
 plf
-plf
-plf
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
 plf
 plf
 plf
@@ -135028,25 +134843,25 @@ plf
 plf
 plf
 plf
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
 plf
 plf
-plf
-plf
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
 plf
 plf
 plf
@@ -135282,9 +135097,6 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
 fyr
 fyr
 fyr
@@ -135303,7 +135115,10 @@ fyr
 fyr
 fyr
 fyr
-plf
+fyr
+fyr
+fyr
+fyr
 plf
 plf
 plf
@@ -135542,13 +135357,13 @@ plf
 plf
 plf
 plf
-plf
 fyr
 fyr
 fyr
 fyr
 fyr
-plf
+fyr
+fyr
 fyr
 fyr
 fyr
@@ -135801,11 +135616,11 @@ plf
 plf
 plf
 plf
-plf
-plf
-plf
-plf
-plf
+fyr
+fyr
+fyr
+fyr
+fyr
 fyr
 fyr
 fyr
@@ -136062,18 +135877,18 @@ plf
 plf
 plf
 plf
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
+fyr
 plf
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
-fyr
+plf
 plf
 plf
 plf
@@ -136328,9 +136143,9 @@ fyr
 fyr
 fyr
 fyr
-fyr
-fyr
-fyr
+plf
+plf
+plf
 plf
 plf
 plf

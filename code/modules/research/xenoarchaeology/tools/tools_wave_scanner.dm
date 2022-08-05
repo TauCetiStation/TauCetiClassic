@@ -125,7 +125,7 @@
 /obj/item/device/wave_scanner_backpack/MouseDrop()
 	. = ..()
 	if(ismob(loc))
-		if(!CanMouseDrop(src))
+		if(!CanMouseDrop(src, usr))
 			return
 		var/mob/M = loc
 		if(!M.unEquip(src))

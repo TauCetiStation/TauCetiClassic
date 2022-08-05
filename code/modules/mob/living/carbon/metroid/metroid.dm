@@ -204,9 +204,9 @@
 	..(-abs(amount)) // Heals them
 	return
 
-/mob/living/carbon/slime/bullet_act(obj/item/projectile/Proj)
+/mob/living/carbon/slime/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	attacked += 10
-	return ..()
 
 /mob/living/carbon/slime/emp_act(severity)
 	powerlevel = 0 // oh no, the power!
@@ -255,8 +255,6 @@
 	if(shielded)
 		damage /= 4
 
-		//paralysis += 1
-
 	to_chat(src, "<span class='warning'>The blob attacks you!</span>")
 
 	adjustFireLoss(damage)
@@ -288,12 +286,12 @@
 	if(Victim)
 		if(Victim == attacker)
 			visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
-			playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 			return FALSE
 		else
 			if(prob(30))
 				visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+				playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 				return FALSE
 
 			if(prob(90) && !client)
@@ -588,7 +586,6 @@
 	desc = "A golem's skin."
 	icon_state = "golem"
 	item_state = "golem"
-	item_color = "golem"
 	has_sensor = 0
 	canremove = 0
 	unacidable = 1
@@ -631,7 +628,6 @@
 /obj/item/clothing/head/helmet/space/golem
 	icon_state = "golem"
 	item_state = "dermal"
-	item_color = "dermal"
 	name = "golem's head"
 	desc = "A golem's head."
 	canremove = 0
@@ -746,6 +742,8 @@
 
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [H], and assist them in completing their goals at any cost.")
 	G.mind.memory += "<B>[H]</B> - your master."
+	G.mind.skills.add_available_skillset(/datum/skillset/golem)
+	G.mind.skills.maximize_active_skills()
 	qdel(src)
 
 /obj/effect/golemrune/proc/announce_to_ghosts()

@@ -171,8 +171,6 @@ var/global/list/ai_verbs_default = list(
 
 	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
 
-	proc_holder_list = new()
-
 	if(L)
 		if (istype(L, /datum/ai_laws))
 			laws = L
@@ -221,6 +219,10 @@ var/global/list/ai_verbs_default = list(
 	new /obj/machinery/ai_powersupply(src)
 
 	ai_list += src
+
+	if(mind)
+		mind.skills.add_available_skillset(/datum/skillset/max)
+		mind.skills.maximize_active_skills()
 
 /mob/living/silicon/ai/proc/announce_role()
 	to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
@@ -570,7 +572,7 @@ var/global/list/ai_verbs_default = list(
 
 	return
 
-/mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)
+/mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return

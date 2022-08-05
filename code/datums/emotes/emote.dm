@@ -38,60 +38,76 @@ var/global/list/all_emotes
 	// Cooldown for emote usage.
 	var/cooldown = 0.8 SECONDS
 	// Cooldown for the audio of the emote, if it has one.
-	var/audio_cooldown = 2 SECONDS
+	var/audio_cooldown = 3 SECONDS
 
 	// Visual cue with a cloud above head for some emotes.
 	var/cloud
 
 	var/list/state_checks
 
-/datum/emote/proc/get_emote_message_1p(mob/living/carbon/human/user)
+/datum/emote/proc/get_emote_message_1p(mob/user)
 	return "<i>[message_1p]</i>"
 
-/datum/emote/proc/get_emote_message_3p(mob/living/carbon/human/user)
+/datum/emote/proc/get_emote_message_3p(mob/user)
 	var/msg = message_3p
+	var/miming = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.miming)
+			miming = TRUE
 
-	if(message_miming && user.miming)
+	if(message_miming && miming)
 		msg = message_miming
-	else if(message_impaired_production && (message_type & SHOWMSG_AUDIO) && HAS_TRAIT(user, TRAIT_MUTE))
-		msg = message_impaired_production
 	else if(message_muzzled && istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 		msg = message_muzzled
+	else if(message_impaired_production && (message_type & SHOWMSG_AUDIO) && HAS_TRAIT(user, TRAIT_MUTE))
+		msg = message_impaired_production
 
 	if(!msg)
 		return null
 
 	return "<b>[user]</b> <i>[msg]</i>"
 
-/datum/emote/proc/get_cooldown_group(mob/living/carbon/human/user)
+/datum/emote/proc/get_cooldown_group()
 	if(isnull(cooldown_group))
 		return type
 
 	return cooldown_group
 
-/datum/emote/proc/check_cooldown(mob/living/carbon/human/user, list/cooldowns, intentional)
-	if(!intentional)
-		return TRUE
-
+/datum/emote/proc/check_cooldown(list/cooldowns, intentional)
 	if(!cooldowns)
 		return TRUE
 
-	return cooldowns[get_cooldown_group(user)] < world.time
+	return cooldowns[get_cooldown_group()] < world.time
 
-/datum/emote/proc/set_cooldown(mob/living/carbon/human/user, list/cooldowns, value, intentional)
-	if(!intentional)
-		return
+/datum/emote/proc/set_cooldown(list/cooldowns, value, intentional)
+	LAZYSET(cooldowns, get_cooldown_group(), world.time + value)
 
-	LAZYSET(cooldowns, get_cooldown_group(user), world.time + value)
+/datum/emote/proc/can_play_sound(mob/user, intentional)
+	if(HAS_TRAIT(user, TRAIT_MUTE))
+		return FALSE
+	if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
+		return FALSE
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.silent)
+			return FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.miming)
+			return FALSE
+	if(!check_cooldown(user.next_audio_emote_produce, intentional))
+		return FALSE
+	return TRUE
 
-/datum/emote/proc/get_sound(mob/living/carbon/human/user, intentional)
+/datum/emote/proc/get_sound(mob/user, intentional)
 	return sound
 
-/datum/emote/proc/play_sound(mob/living/carbon/human/user, intentional, emote_sound)
+/datum/emote/proc/play_sound(mob/user, intentional, emote_sound)
 	playsound(user, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, null)
 
-/datum/emote/proc/can_emote(mob/living/carbon/human/user, intentional)
-	if(!check_cooldown(user, user.next_emote_use, intentional))
+/datum/emote/proc/can_emote(mob/user, intentional)
+	if(!check_cooldown(user.next_emote_use, intentional))
 		if(intentional)
 			to_chat(user, "<span class='notice'>You can't emote so much, give it a rest.</span>")
 		return FALSE
@@ -102,8 +118,9 @@ var/global/list/all_emotes
 
 	return TRUE
 
-/datum/emote/proc/do_emote(mob/living/carbon/human/user, emote_key, intentional)
-	set_cooldown(user, user.next_emote_use, cooldown, intentional)
+/datum/emote/proc/do_emote(mob/user, emote_key, intentional)
+	LAZYINITLIST(user.next_emote_use)
+	set_cooldown(user.next_emote_use, cooldown, intentional)
 
 	for(var/obj/item/weapon/implant/I in user)
 		if(!I.implanted)
@@ -129,8 +146,9 @@ var/global/list/all_emotes
 		to_chat(user, msg_1p)
 
 	var/emote_sound = get_sound(user, intentional)
-	if(emote_sound && check_cooldown(user, user.next_audio_emote_produce, intentional))
-		set_cooldown(user, user.next_audio_emote_produce, audio_cooldown, intentional)
+	if(emote_sound && can_play_sound(user, intentional))
+		LAZYINITLIST(user.next_audio_emote_produce)
+		set_cooldown(user.next_audio_emote_produce, audio_cooldown, intentional)
 		play_sound(user, intentional, emote_sound)
 
 	for(var/mob/M as anything in observer_list)
@@ -146,7 +164,10 @@ var/global/list/all_emotes
 					to_chat(M, "[FOLLOW_LINK(M, user)] [msg_3p]")
 
 	if(cloud)
-		var/image/emote_bubble = image('icons/mob/emote.dmi', user, cloud, EMOTE_LAYER)
-		emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		flick_overlay(emote_bubble, clients, 30)
-		QDEL_IN(emote_bubble, 3 SECONDS)
+		add_cloud(user)
+
+/datum/emote/proc/add_cloud(mob/user)
+	var/image/emote_bubble = image('icons/mob/emote.dmi', user, cloud, EMOTE_LAYER)
+	emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	flick_overlay(emote_bubble, clients, 30)
+	QDEL_IN(emote_bubble, 3 SECONDS)

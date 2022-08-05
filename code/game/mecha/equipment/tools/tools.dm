@@ -311,7 +311,7 @@
 	//meh
 	switch(mode)
 		if(0)
-			if (istype(target, /turf/simulated/wall))
+			if (iswallturf(target))
 				occupant_message("Deconstructing [target]...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -320,7 +320,7 @@
 					target:ChangeTurf(/turf/simulated/floor/plating)
 					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.use_power(energy_drain)
-			else if (istype(target, /turf/simulated/floor))
+			else if (isfloorturf(target))
 				occupant_message("Deconstructing [target]...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -348,7 +348,7 @@
 					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.spark_system.start()
 					chassis.use_power(energy_drain*2)
-			else if(istype(target, /turf/simulated/floor))
+			else if(isfloorturf(target))
 				occupant_message("Building Wall...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -358,7 +358,7 @@
 					chassis.spark_system.start()
 					chassis.use_power(energy_drain*2)
 		if(2)
-			if(istype(target, /turf/simulated/floor))
+			if(isfloorturf(target))
 				occupant_message("Building Airlock...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -500,7 +500,7 @@
 				return
 			else if(target!=locked)
 				if(locked in view(chassis))
-					locked.throw_at(target, 14, 1.5, chassis)
+					locked.throw_at(target, 14, 1.5, chassis.occupant)
 					locked = null
 					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 					set_ready_state(0)
@@ -1084,21 +1084,6 @@
 		chassis.use_power(energy_drain)
 		do_after_cooldown()
 	return 1
-
-
-/********Mecha customisation kit********/
-/obj/item/weapon/paintkit //Please don't use this for anything, it's a base type for custom mech paintjobs.
-	name = "mecha customisation kit"
-	desc = "A generic kit containing all the needed tools and parts to turn a mech into another mech."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "royce_kit"
-
-	var/new_name = "mech"    //What is the variant called?
-	var/new_desc = "A mech." //How is the new mech described?
-	var/new_icon = "ripley"  //What base icon will the new mech use?
-	var/removable = null     //Can the kit be removed?
-	var/list/allowed_types = list() //Types of mech that the kit will work on.
-
 
 /********Mecha Drop System********/
 /obj/item/mecha_parts/mecha_equipment/Drop_system

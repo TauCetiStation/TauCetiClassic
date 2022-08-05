@@ -2,6 +2,8 @@
 	icon = 'icons/turf/snow2.dmi'
 	name = "snow"
 	icon_state = "snow0"
+	plane = FLOOR_PLANE
+	
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	force_lighting_update = TRUE
 
@@ -15,6 +17,7 @@
 	nitrogen = MOLES_N2STANDARD
 	temperature = TM50C
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
+	heat_capacity = 12000 // ~6 snow tiles
 
 	light_color = COLOR_BLUE
 
@@ -90,12 +93,12 @@
 		return
 	if(user.is_busy())
 		return
-	playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/effects/shovel_digging.ogg', VOL_EFFECTS_MASTER)
 	var/type = src.type
 	if(!do_after(user, 20 SECONDS, target = src) || type != src.type)
 		return
 	new /obj/effect/overlay/ice_hole(src)
-	playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/effects/shovel_digging.ogg', VOL_EFFECTS_MASTER)
 
 /atom/movable
 	var/ice_slide_count = 0

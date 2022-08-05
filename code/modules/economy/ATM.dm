@@ -276,9 +276,11 @@ log transactions
 				// check if they have low security enabled
 				scan_user(usr)
 
-				if(!ticks_left_locked_down && held_card)
-					var/tried_account_num = text2num(href_list["account_num"])
-					if(!tried_account_num)
+				if(!ticks_left_locked_down)
+					var/tried_account_num
+					if(!held_card)
+						tried_account_num = text2num(href_list["account_num"])
+					else
 						tried_account_num = held_card.associated_account_number
 					var/tried_pin = text2num(href_list["account_pin"])
 

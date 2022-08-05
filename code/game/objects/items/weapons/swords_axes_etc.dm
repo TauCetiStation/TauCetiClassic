@@ -29,7 +29,7 @@
 
 /obj/item/weapon/melee/energy/sword/atom_init()
 	. = ..()
-	item_color = pick("red","blue","green","purple","yellow","pink","black")
+	blade_color = pick("red","blue","green","purple","yellow","pink","black")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
@@ -46,7 +46,7 @@
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
-			icon_state = "sword[item_color]"
+			icon_state = "sword[blade_color]"
 		w_class = SIZE_NORMAL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
@@ -100,7 +100,8 @@
 /obj/item/weapon/melee/classic_baton/attack(mob/living/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
-		user.Weaken(3 * force)
+		user.Stun(16)
+		user.Weaken(16)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2 * force, BRUTE, BP_HEAD)
@@ -202,7 +203,7 @@
 	if(on)
 		if ((CLUMSY in user.mutations) && prob(50))
 			to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
-			user.Weaken(3 * force)
+			user.adjustHalLoss(70)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				H.apply_damage(2 * force, BRUTE, BP_HEAD)
@@ -211,7 +212,7 @@
 			return
 		if(user.a_intent == INTENT_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
+			playsound(src, 'sound/weapons/hit_metalic.ogg', VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
 
 			if(H.wear_suit)
@@ -242,31 +243,31 @@
 
 /obj/item/weapon/melee/energy/sword/green/atom_init()
 	. = ..()
-	item_color = "green"
+	blade_color = "green"
 
 /obj/item/weapon/melee/energy/sword/red/atom_init()
 	. = ..()
-	item_color = "red"
+	blade_color = "red"
 
 /obj/item/weapon/melee/energy/sword/blue/atom_init()
 	. = ..()
-	item_color = "blue"
+	blade_color = "blue"
 
 /obj/item/weapon/melee/energy/sword/purple/atom_init()
 	. = ..()
-	item_color = "purple"
+	blade_color = "purple"
 
 /obj/item/weapon/melee/energy/sword/yellow/atom_init()
 	. = ..()
-	item_color = "yellow"
+	blade_color = "yellow"
 
 /obj/item/weapon/melee/energy/sword/pink/atom_init()
 	. = ..()
-	item_color = "pink"
+	blade_color = "pink"
 
 /obj/item/weapon/melee/energy/sword/black/atom_init()
 	. = ..()
-	item_color = "black"
+	blade_color = "black"
 
 
 /obj/item/weapon/melee/energy/blade/atom_init()

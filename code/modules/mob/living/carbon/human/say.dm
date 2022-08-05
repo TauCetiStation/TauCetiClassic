@@ -79,11 +79,6 @@
 			to_chat(src, "<span class='userdanger'>You cannot speak in IC (Muted).</span>")
 			return
 
-	//Meme stuff
-	if(!speech_allowed && usr == src)
-		to_chat(usr, "<span class='userdanger'>You can't speak.</span>")
-		return
-
 	message =  sanitize(message)
 	if(!message)
 		return
@@ -99,7 +94,7 @@
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message, 2), auto = FALSE)
+		return emote(copytext(message, 2), intentional = TRUE)
 
 	//check if we are miming
 	if (miming && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))

@@ -4,8 +4,8 @@
 	desc = "Younger brother of combat autoinjector."
 	icon_state = "stimpen"
 	item_state = "autoinjector_empty"
-	volume = 10
-	list_reagents = list("synaptizine" = 1, "hyperzine" = 2.5, "oxycodone" = 2.5, "anti_toxin" = 5)
+	volume = 15
+	list_reagents = list("doctorsdelight" = 5, "stimulants" = 1, "bicaridine" = 2.5, "oxycodone" = 2.5, "kelotane" = 5)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine
 	name = "bicaridine autoinjector"
@@ -45,15 +45,7 @@
 	icon_state = "auto_minig_t2"
 	item_state = "autoburn"
 	volume = 20
-	list_reagents = list("hyperzine" = 3, "paracetamol" = 10, "tricordrazine" = 7)
-
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_imp/atom_init()
-	. = ..()
-	reagents.clear_reagents()
-	reagents.add_reagent("hyperzine", 3)
-	reagents.add_reagent("paracetamol", 10)
-	reagents.add_reagent("tricordrazine", 7)
-	update_icon()
+	list_reagents = list("kelotane" = 1.5, "bicaridine" = 1.5, "paracetamol" = 10, "tricordrazine" = 7)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv
 	name = "advanced stimpack"
@@ -61,7 +53,7 @@
 	icon_state = "auto_minig_t3"
 	item_state = "autobrut"
 	volume = 25
-	list_reagents = list("hyperzine" = 5, "tramadol" = 9, "dexalinp" = 1, "tricordrazine" = 10)
+	list_reagents = list("dermaline" = 2.5, "bicaridine" = 2.5, "tramadol" = 9, "dexalinp" = 1, "doctorsdelight" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine
 	name = "leporazine autoinjector"
@@ -85,3 +77,35 @@
 	item_state = "bonepen"
 	volume = 30
 	list_reagents = list("nanocalcium" = 30)
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/nuka_cola
+	name = "nuka cola autoinjector"
+	desc = "Drugs, drugs never change."
+	icon_state = "autobrut"
+	item_state = "autobrut"
+	volume = 15
+	list_reagents = list("nuka_cola" = 15)
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/hippiesdelight
+	name = "hippie's delight autoinjector"
+	desc = "Drugs, drugs never change."
+	icon_state = "autoantitox"
+	item_state = "autoantitox"
+	volume = 15
+	list_reagents = list("hippiesdelight" = 15)
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/lean
+	name = "lean autoinjector"
+	desc = "Drugs, drugs never change."
+	icon_state = "autopainkiller"
+	item_state = "autopainkiller"
+	volume = 15
+	list_reagents = list("lean" = 15)
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/space_drugs
+	name = "space drugs autoinjector"
+	desc = "Drugs, drugs never change."
+	icon_state = "autonutriment"
+	item_state = "autonutriment"
+	volume = 15
+	list_reagents = list("space_drugs" = 15)

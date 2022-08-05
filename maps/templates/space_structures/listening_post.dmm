@@ -79,6 +79,7 @@
 /obj/item/clothing/head/helmet/space/syndicate/jailbreaker,
 /obj/machinery/alarm{
 	dir = 4;
+	hidden_from_console = 1;
 	pixel_x = -23;
 	req_one_access = list(150)
 	},
@@ -202,6 +203,7 @@
 /obj/random/foods/food_without_garbage,
 /obj/random/foods/food_without_garbage,
 /obj/machinery/alarm{
+	hidden_from_console = 1;
 	pixel_y = 23;
 	req_one_access = list(150)
 	},
@@ -211,13 +213,13 @@
 /obj/machinery/chem_dispenser/beer{
 	pixel_y = 6
 	},
-/obj/structure/sign/poster{
-	pixel_y = 32
-	},
 /obj/structure/table/woodentable,
 /obj/item/weapon/coin/gold{
 	pixel_x = -5;
 	pixel_y = -11
+	},
+/obj/structure/sign/poster/random{
+	pixel_y = 32
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
@@ -368,9 +370,6 @@
 	},
 /area/space_structures/listening_post)
 "aI" = (
-/obj/item/device/radio/intercom{
-	pixel_x = -30
-	},
 /obj/machinery/newscaster{
 	layer = 3.3;
 	pixel_y = 32
@@ -418,6 +417,7 @@
 	req_one_access = list(150)
 	},
 /obj/machinery/alarm{
+	hidden_from_console = 1;
 	pixel_y = 23;
 	req_one_access = list(150)
 	},
@@ -714,7 +714,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -724,6 +724,7 @@
 /area/space_structures/listening_post)
 "bm" = (
 /obj/machinery/alarm{
+	hidden_from_console = 1;
 	pixel_y = 23;
 	req_one_access = list(150)
 	},
@@ -888,11 +889,6 @@
 /obj/structure/closet/cabinet,
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -23;
-	req_one_access = list(150)
-	},
 /obj/item/clothing/head/ushanka/black,
 /obj/item/clothing/suit/jacket/letterman_syndie,
 /turf/simulated/floor{
@@ -962,6 +958,7 @@
 /area/space_structures/listening_post)
 "bK" = (
 /obj/machinery/bot/medbot/mysterious{
+	declare_treatment = 0;
 	name = "Friday";
 	req_access = list(150)
 	},
@@ -1009,10 +1006,6 @@
 	req_access = list(150)
 	},
 /obj/item/clothing/accessory/stethoscope,
-/obj/machinery/alarm{
-	pixel_y = 23;
-	req_one_access = list(150)
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteblue"
@@ -1056,6 +1049,14 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -1158,6 +1159,7 @@
 	},
 /obj/machinery/alarm{
 	dir = 8;
+	hidden_from_console = 1;
 	pixel_x = 23;
 	req_one_access = list(150)
 	},

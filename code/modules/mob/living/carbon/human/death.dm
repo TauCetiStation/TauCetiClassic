@@ -20,7 +20,7 @@
 
 	if(!species.flags[NO_BLOOD_TRAILS])
 		flick("gibbed-h", animation)
-		hgibs(loc, viruses, dna, species.flesh_color, species.blood_datum)
+		hgibs(loc, dna, species.flesh_color, species.blood_datum)
 
 	spawn(15)
 		if(animation)	qdel(animation)
@@ -33,8 +33,8 @@
 	dead_mob_list -= src
 
 /mob/living/carbon/human/death(gibbed)
-	if(stat == DEAD)	return
-	if(healths)		healths.icon_state = "health5"
+	if(stat == DEAD)
+		return
 
 	stat = DEAD
 	dizziness = 0
@@ -51,7 +51,7 @@
 		species.handle_death(src)
 
 	//Check for heist mode kill count.
-	if(SSticker.mode && ( istype( SSticker.mode,/datum/game_mode/heist) ) )
+	if(find_faction_by_type(/datum/faction/heist))
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
 
 	if(!gibbed)
@@ -144,15 +144,14 @@
 
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(!species || (species.name == SKELETON))
+	if(!species || (isskeleton(src)))
 		return
 	if(f_style)
 		f_style = "Shaved"
 	if(h_style)
 		h_style = "Bald"
-
-	set_species(SKELETON)
-	status_flags |= DISFIGURED
+	set_species(species.skeleton_type)
+	add_status_flags(DISFIGURED)
 	regenerate_icons()
 	return
 
@@ -171,10 +170,8 @@
 
 	update_hair()
 	mutations.Add(HUSK)
-	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
+	add_status_flags(DISFIGURED)	//makes them unknown without fucking up other stuff like admintools
 	update_body()
-	update_mutantrace()
-	return
 
 /mob/living/carbon/human/proc/Drain()
 	if(fake_death)

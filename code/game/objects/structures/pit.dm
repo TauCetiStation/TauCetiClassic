@@ -153,7 +153,6 @@
 
 	if(prob(30))
 		var/list/misc = list(
-			/obj/item/clothing/accessory/fluff/altair_locket,
 			/obj/item/clothing/accessory/holobadge,
 			/obj/item/clothing/accessory/tie/horrible,
 			/obj/item/clothing/accessory/medal,
@@ -161,7 +160,7 @@
 			/obj/item/clothing/accessory/medal/silver/valor,
 			/obj/item/clothing/accessory/medal/gold,
 			/obj/item/clothing/accessory/medal/gold/heroism,
-			/obj/item/weapon/gun/energy/laser/retro/jetsons
+			/obj/item/weapon/gun/energy/laser/jetsons
 			)
 		loot = pick(misc)
 		new loot(C)
@@ -220,16 +219,17 @@
 //Grave jetsons items
 
 
-/obj/item/weapon/gun/energy/laser/retro/jetsons
+/obj/item/weapon/gun/energy/laser/jetsons
 	name ="unwanted laser"
 	icon_state = "jetsons"
 	item_state = "jetsons"
 	desc = "Very unusual version of laser gun, oldschool style"
 	origin_tech = "combat=2;magnets=1"
+	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice/jetsons)
 
 
-/obj/item/weapon/gun/energy/laser/retro/jetsons/update_icon()
+/obj/item/weapon/gun/energy/laser/jetsons/update_icon()
 	return 0
 
 /obj/item/ammo_casing/energy/laser/practice/jetsons
@@ -250,10 +250,8 @@
 	name = "old overall"
 	desc = "Mr. Spacely's favorite overalls"
 	icon_state = "jetsons_s"
-	item_color = "jetsons_s"
 
 /obj/item/clothing/under/jetsons/j2
 	name = "old dress"
 	desc = "Jetson is coming appart"
 	icon_state = "jetsons_f"
-	item_color = "jetsons_f"

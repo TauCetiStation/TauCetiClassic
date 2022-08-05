@@ -151,3 +151,10 @@
 	structure_id = "broken_breacher"
 	desc = "Unknown huge object"
 	mappath = "maps/templates/space_structures/broken_breacher.dmm"
+
+
+/datum/map_template/space_structure/export_outpost
+	name = "Export Outpost"
+	structure_id = "export_outpost"
+	desc = "Unknown object"
+	mappath = "maps/templates/space_structures/export_outpost.dmm"

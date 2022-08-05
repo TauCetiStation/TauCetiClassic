@@ -46,7 +46,7 @@
 	bandanas["green"] = /obj/item/clothing/mask/bandana/green
 	bandanas["gold"] = /obj/item/clothing/mask/bandana/gold
 	bandanas["black"] = /obj/item/clothing/mask/bandana/black
-	bandanas["orange"] = /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
+	bandanas["orange"] = /obj/item/clothing/head/orange_bandana
 	gear_tweaks += new/datum/gear_tweak/path(bandanas)
 
 /datum/gear/head/flatcap
@@ -60,10 +60,6 @@
 /datum/gear/head/fedora
 	display_name = "Fedora"
 	path = /obj/item/clothing/head/fedora
-
-/datum/gear/head/orangebandana
-	display_name = "Orange bandana"
-	path = /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
 
 /datum/gear/head/fez
 	display_name =  "Fez"
@@ -79,7 +75,7 @@
 
 /datum/gear/head/kung
 	display_name = "Kung bandana"
-	path = /obj/item/clothing/head/det_hat/fluff/kung
+	path = /obj/item/clothing/head/kung
 	cost = 1
 
 /datum/gear/head/black_hood

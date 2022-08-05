@@ -15,7 +15,7 @@
 
 	//Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
-	var/heat_capacity = 1
+	var/heat_capacity = 0
 
 	//Properties for both
 	var/temperature = T20C
@@ -84,17 +84,16 @@
 /turf/ex_act(severity)
 	return 0
 
-/turf/bullet_act(obj/item/projectile/Proj)
+/turf/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(istype(Proj ,/obj/item/projectile/beam/pulse))
 		ex_act(EXPLODE_HEAVY)
 	else if(istype(Proj ,/obj/item/projectile/bullet/gyro))
 		explosion(src, -1, 0, 2)
-	..()
-	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
+		to_chat(usr, "<span class='warning'>Передвижение отключено администрацией.</span>")//This is to identify lag problems
 		return
 	if (!mover || !isturf(mover.loc))
 		return 1
@@ -134,25 +133,20 @@
 				return 0
 	return 1 //Nothing found to block so return success!
 
-/turf/proc/is_mob_placeable(mob/M)
+/turf/proc/is_mob_placeable(mob/M) // todo: maybe rewrite as COMSIG_ATOM_INTERCEPT_TELEPORT
 	if(density)
 		return FALSE
-	var/list/allowed_types = list(/obj/structure/window, /obj/machinery/door,
-								  /obj/structure/table, /obj/structure/grille,
-								  /obj/structure/cult, /obj/structure/mineral_door)
+	var/static/list/allowed_types = list(/obj/structure/window, /obj/machinery/door,
+										 /obj/structure/table,  /obj/structure/grille,
+										 /obj/structure/cult,   /obj/structure/mineral_door,
+										 /obj/item/tape,        /obj/structure/rack,
+										 /obj/structure/closet,)
 	for(var/atom/movable/on_turf in contents)
 		if(on_turf == M)
 			continue
-		if(istype(on_turf, /mob) && !on_turf.anchored)
+		if(ismob(on_turf) && !on_turf.anchored)
 			continue
-		if(on_turf.density)
-			var/allow = FALSE
-			for(var/type in allowed_types)
-				if(istype(on_turf, type))
-					allow = TRUE
-					break
-			if(allow)
-				continue
+		if(on_turf.density && !is_type_in_list(on_turf, allowed_types))
 			return FALSE
 	return TRUE
 
@@ -250,8 +244,10 @@
 		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
 		return*/
 
-	if(ispath(path, /turf/environment/space))
-		path = SSenvironment.turf_type[z]
+	if(ispath(path, /turf/environment))
+		var/env_turf_type = SSenvironment.turf_type[z]
+		if(!ispath(path, env_turf_type))
+			path = env_turf_type
 
 	if (path == type)
 		return src
@@ -326,7 +322,7 @@
 	W.resources = temp_res
 
 	if(ispath(path, /turf/simulated/floor))
-		if (istype(W, /turf/simulated/floor))
+		if (isfloorturf(W))
 			W.RemoveLattice()
 
 	if(SSair)
@@ -391,10 +387,6 @@
 	for(var/obj/mecha/M in src)//Mecha are not gibbed but are damaged.
 		spawn(0)
 			M.take_damage(100, "brute")
-
-/turf/proc/Bless()
-	flags |= NOJAUNT
-
 
 ////////////////
 //Distance procs

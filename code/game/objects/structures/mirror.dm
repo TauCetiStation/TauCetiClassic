@@ -35,14 +35,13 @@
 	desc = "Oh no, seven years of bad luck!"
 
 
-/obj/structure/mirror/bullet_act(obj/item/projectile/Proj)
+/obj/structure/mirror/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(prob(Proj.damage * 2))
 		if(!shattered)
 			shatter()
 		else
 			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
-	..()
-
 
 /obj/structure/mirror/attackby(obj/item/I, mob/user)
 	user.do_attack_animation(src)

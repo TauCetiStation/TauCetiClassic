@@ -30,9 +30,7 @@
 				spawn(0)
 					S.ninitialize(10, H)
 
-			var/datum/faction/ninja/N = find_faction_by_type(/datum/faction/ninja)
-			if(!N)
-				N = SSticker.mode.CreateFaction(/datum/faction/ninja)
+			var/datum/faction/ninja/N = create_uniq_faction(/datum/faction/ninja)
 			add_faction_member(N, H, FALSE)
 
 	else
@@ -161,7 +159,7 @@
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
 	affecting = null
 	canremove = 1
-	slowdown = 1
+	slowdown = 0.5
 	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
 		n_hood.canremove=1

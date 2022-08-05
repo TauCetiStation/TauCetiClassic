@@ -81,6 +81,8 @@
 /obj/mecha/combat/gygax/proc/overload()
 	if(usr != src.occupant)
 		return
+	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to [overload? "en" : "dis"]able leg actuators overload.</span>"))
+		return
 	if(overload)
 		overload = 0
 		step_in = initial(step_in)

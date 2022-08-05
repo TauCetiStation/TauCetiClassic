@@ -22,10 +22,6 @@
 	return//No talking for you
 
 
-/mob/living/blob/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
-	return
-
-
 /mob/living/blob/Life()
 	set invisibility = 0
 	//set background = 1
@@ -37,9 +33,6 @@
 
 
 /mob/living/blob/proc/clamp_values()
-	AdjustStunned(0)
-	AdjustParalysis(0)
-	AdjustWeakened(0)
 	SetSleeping(0)
 	if(stat)
 		stat = CONSCIOUS
@@ -53,6 +46,7 @@
 
 /mob/living/blob/death(gibbed)
 	if(key)
+		logout_reason = LOGOUT_GHOST
 		var/mob/dead/observer/ghost = new(src)
 		ghost.name = ghost_name
 		ghost.real_name = ghost_name

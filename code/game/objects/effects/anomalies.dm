@@ -275,7 +275,7 @@
 	for(var/i in 1 to 4)
 		var/list/L = locate(x + coord_of_pylons[1], y + coord_of_pylons[2], z)
 		var/turf/F = get_turf(pick(L))
-		if(F && istype(F, /turf/simulated/floor))
+		if(F && isfloorturf(F))
 			for(var/obj in L)
 				if(istype(obj, /turf))
 					continue
@@ -288,7 +288,7 @@
 			P.icon_state = "pylon_glow"
 			if(prob(30)) // activate() is return /mob/living/simple_animal/hostile/pylon and since there is dynamic typing, it works
 				P = P.activate(null, global.cult_religion)
-			var/datum/beam/B = P.Beam(src, "drainblood", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_layer = 2.9)
+			var/datum/beam/B = P.Beam(src, "drainblood", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_plane = ABOVE_LIGHTING_PLANE)
 			RegisterSignal(B, list(COMSIG_PARENT_QDELETING), .proc/remove_beam)
 			beams += B
 
@@ -370,7 +370,7 @@
 	if(global.cult_religion)
 		global.cult_religion.add_member(C, CULT_ROLE_HIGHPRIEST)
 	else
-		SSticker.mode.CreateFaction(/datum/faction/cult)
+		create_faction(/datum/faction/cult, FALSE, FALSE)
 		global.cult_religion.add_member(C, CULT_ROLE_HIGHPRIEST)// religion was created in faction
 
 	var/rand_num = rand(1, 3)

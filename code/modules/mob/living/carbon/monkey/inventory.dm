@@ -52,7 +52,6 @@
 		r_hand = null
 		update_inv_r_hand()
 
-	W.layer = ABOVE_HUD_LAYER
 	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
 	W.slot_equipped = slot
