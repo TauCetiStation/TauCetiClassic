@@ -50,7 +50,7 @@
 	if(!checks(user, AOG))
 		return FALSE
 
-	var/datum/faction/cult/C = find_faction_by_type(/datum/faction/cult)
+	var/datum/faction/cult/C = cult_religion.mode
 	var/datum/objective/target/sacrifice/O = C.objective_holder.FindObjective(/datum/objective/target/sacrifice)
 	if(O)
 		if(O.check_completion() != OBJECTIVE_WIN)
