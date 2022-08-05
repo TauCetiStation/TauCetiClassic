@@ -124,9 +124,12 @@
 /datum/aspect/weapon/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	if(istype(I,/obj/item/weapon/gun/energy))
 		var/obj/item/weapon/gun/energy/G = I
+		var/cost = 0
 		for(var/obj/item/ammo_casing/A in G.ammo_type)
-			var/obj/item/projectile/P = text2path(A.projectile_type)
-			return P.damage*10
+			var/obj/item/projectile/P = new A.projectile_type()
+			cost += P.damage*10
+			P = null
+		return cost
 
 	if(istype(I,/obj/item/weapon/gun/projectile))
 		var/obj/item/weapon/gun/projectile/W = I
@@ -138,7 +141,9 @@
 		var/obj/item/ammo_box/A2 = new W.mag_type2()
 		var/obj/item/ammo_casing/C2 = new A2.ammo_type()
 		var/obj/item/projectile/P2 = new C2.projectile_type()
-		return (P.damage+P2.damage)*10
+		var/cost = (P.damage+P2.damage)*10
+		A = C = P = A2 = C2 = P2 = null
+		return cost
 
 	if(istype(I, /obj/item/weapon) && !istype(I,/obj/item/weapon/melee/cultblade))
 		var/obj/item/weapon/W = I
