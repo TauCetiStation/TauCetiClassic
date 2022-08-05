@@ -193,10 +193,19 @@
 	
 	if(!lying)
 		if(species && !species.flags[NO_PAIN])
-			var/turf/T = get_turf(src)
 			emote("scream")
 		emote("collapse")
-	Weaken(5) //can't emote while weakened, apparently.
+
+	if(iszombie(src)) // workaroud for zombie attack without stance
+		if(!crawling)
+			if(crawl_can_use())
+				crawl()
+			else
+				Stun(5)
+				Weaken(5)
+				return
+	else
+		Weaken(5) //can't emote while weakened, apparently.
 
 	if(lying)
 		var/has_arm = FALSE
