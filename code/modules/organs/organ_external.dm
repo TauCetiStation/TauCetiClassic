@@ -148,7 +148,7 @@
 	var/g
 	var/pump
 
-	if(HAS_TRAIT(owner, TRAIT_FAT))
+	if(owner && HAS_TRAIT(owner, TRAIT_FAT))
 		if(body_zone == BP_CHEST)
 			fat = "fat"
 		else if(species.fat_limb_icons == TRUE && (body_zone in list(BP_GROIN, BP_HEAD, BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)))
