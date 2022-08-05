@@ -173,8 +173,6 @@
 				spark_system.set_up(5, 0, src)
 				spark_system.attach(src)
 				spark_system.start()
-				spawn(10)
-					qdel(spark_system)
 		else if(E.is_broken())
 			if(!(E.status & ORGAN_SPLINTED))
 				stance_damage += 1

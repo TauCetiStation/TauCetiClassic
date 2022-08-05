@@ -69,7 +69,7 @@
 			bp_tally += 1.6
 		else if(BP.status & ORGAN_BROKEN)
 			bp_tally += 6
-		else
+		else if(BP.pumped)
 			bp_weight_negation += BP.pumped * 0.02
 
 	tally += bp_tally / moving_bodyparts.len
@@ -107,7 +107,7 @@
 	else
 		tally += species.speed_mod_no_shoes
 
-	if(weight_tally > 0)
+	if(weight_tally)
 		tally += max(weight_tally - weight_negation, 0)
 
 	if(pull_debuff)
@@ -130,9 +130,8 @@
 	if(get_species() == UNATHI && bodytemperature > species.body_temperature)
 		tally -= min((bodytemperature - species.body_temperature) / 10, 1) //will be on the border of heat_level_1
 
-	tally += max(2 * stance_damage, 0) //damaged/missing feet or legs is slow
-
-	tally += mood_additive_speed_modifier
+	if(mood_additive_speed_modifier < 0 || !nullify_debuffs)
+		tally += mood_additive_speed_modifier
 
 	return (tally + config.human_delay)
 
