@@ -43,6 +43,12 @@
 		if(hungry >= 350) // Slow down if nutrition <= 150
 			tally += hungry / 250
 
+		if(shock_stage >= 10)
+			tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
+
+		if(bodytemperature < species.cold_level_1)
+			tally += 1.75 * (species.cold_level_1 - bodytemperature) / 10 
+
 	var/list/moving_bodyparts
 	if(buckled) // so, if we buckled we have large debuff
 		tally += 5.5
@@ -107,18 +113,11 @@
 	else
 		tally += species.speed_mod_no_shoes
 
-	if(weight_tally)
-		tally += max(weight_tally - weight_negation, 0)
+	if(weight_tally > weight_negation)
+		tally += weight_tally - weight_negation
 
 	if(pull_debuff)
 		tally += pull_debuff
-
-	if(!nullify_debuffs)
-		if(shock_stage >= 10)
-			tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
-
-		if(bodytemperature < species.cold_level_1)
-			tally += 1.75 * (species.cold_level_1 - bodytemperature) / 10 
 
 	var/turf/T = get_turf(src)
 	if(T)
