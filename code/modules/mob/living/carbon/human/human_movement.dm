@@ -7,11 +7,12 @@
 		if(C.strained_muscles)
 			tally -= 2
 			nullify_debuffs = TRUE
-	else if(iszombie(src))
-		nullify_debuffs = TRUE
 
 	if(!has_gravity(src))
 		return tally - 1 // It's hard to be slowed down in space by... anything
+
+	if(iszombie(src))
+		nullify_debuffs = TRUE
 
 	tally += species.speed_mod
 
@@ -24,10 +25,7 @@
 	if(!nullify_debuffs)
 		if(is_type_organ(O_HEART, /obj/item/organ/internal/heart/ipc)) // IPC's heart is a servomotor, damaging it influences speed.
 			var/obj/item/organ/internal/IO = organs_by_name[O_HEART]
-			if(!IO) // If it's servomotor somehow is missing, it's absence should be treated as 100 damage to it.
-				tally += 20
-			else
-				tally += IO.damage/5
+			tally += IO ? IO.damage / 5 : 20 // If it's servomotor somehow is missing, it's absence should be treated as 100 damage to it.
 
 		if(HAS_TRAIT(src, TRAIT_FAT))
 			tally += 1.5
