@@ -678,12 +678,22 @@
 	dir = 8
 	},
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /obj/structure/table/woodentable,
+/obj/item/weapon/pen{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/weapon/pen/red{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/item/weapon/pen/blue{
+	pixel_x = -4
+	},
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon_state = "wood"
 	},
 /area/shuttle/escape/centcom)
 "abF" = (
@@ -693,28 +703,31 @@
 	icon_state = "wood"
 	},
 /area/shuttle/escape/centcom)
-"abG" = (
-/turf/simulated/shuttle/floor/evac/eng1,
-/area/shuttle/escape/centcom)
 "abH" = (
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/regular,
 /obj/structure/table/woodentable,
+/obj/item/device/flashlight/lamp{
+	pixel_x = -2;
+	pixel_y = 8
+	},
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon_state = "wood"
 	},
 /area/shuttle/escape/centcom)
 "abI" = (
-/obj/item/weapon/phone,
 /obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/nullrod{
+	pixel_x = -8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon_state = "wood"
 	},
 /area/shuttle/escape/centcom)
 "abJ" = (
@@ -808,7 +821,7 @@
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon_state = "wood"
 	},
 /area/shuttle/escape/centcom)
 "abY" = (
@@ -970,8 +983,12 @@
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/velocity)
 "acv" = (
-/obj/structure/reagent_dispensers/aqueous_foam_tank,
-/turf/simulated/shuttle/floor/evac/eng2,
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
+	},
 /area/shuttle/escape/centcom)
 "acw" = (
 /obj/structure/table/woodentable/fancy,
@@ -989,16 +1006,6 @@
 /turf/simulated/shuttle/floor{
 	icon = 'icons/turf/carpets.dmi';
 	icon_state = "carpetsymbol"
-	},
-/area/shuttle/escape/centcom)
-"acx" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor{
-	dir = 4;
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "chapel"
 	},
 /area/shuttle/escape/centcom)
 "acy" = (
@@ -1191,16 +1198,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
-"adf" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor{
-	dir = 1;
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "chapel"
-	},
-/area/shuttle/escape/centcom)
 "adg" = (
 /obj/structure/table/glass{
 	pixel_x = -6;
@@ -1335,9 +1332,6 @@
 "adx" = (
 /turf/unsimulated/wall/cult/runed/anim,
 /area/space)
-"ady" = (
-/turf/simulated/floor/wood,
-/area/space)
 "adz" = (
 /obj/structure/curtain/black,
 /obj/structure/stool/bed,
@@ -1438,10 +1432,15 @@
 /area/shuttle/escape/centcom)
 "adM" = (
 /obj/structure/table/woodentable,
+/obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon_state = "wood"
 	},
 /area/shuttle/escape/centcom)
 "adN" = (
@@ -1457,7 +1456,7 @@
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon_state = "wood"
 	},
 /area/shuttle/escape/centcom)
 "adP" = (
@@ -1600,11 +1599,24 @@
 	},
 /area/centcom/holding)
 "aeg" = (
-/obj/structure/closet/toolcloset,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 32
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/fancy/candle_box{
+	pixel_y = 10
 	},
-/turf/simulated/shuttle/floor/evac/eng2,
+/obj/item/weapon/storage/fancy/candle_box{
+	pixel_y = 6
+	},
+/obj/item/weapon/storage/fancy/candle_box{
+	pixel_y = 2
+	},
+/obj/item/weapon/lipstick/random{
+	pixel_x = -12;
+	pixel_y = 6
+	},
+/turf/simulated/shuttle/floor{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
+	},
 /area/shuttle/escape/centcom)
 "aeh" = (
 /obj/structure/object_wall/evac{
@@ -1666,16 +1678,21 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
-"aep" = (
-/turf/simulated/floor/carpet/black,
-/area/space)
 "aeq" = (
 /obj/structure/window/reinforced,
-/obj/structure/table/reinforced,
-/obj/machinery/recharger{
+/obj/structure/table/woodentable/fancy,
+/obj/item/weapon/storage/bible{
 	pixel_y = 4
 	},
-/turf/simulated/shuttle/floor/evac/sec2,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "wood"
+	},
 /area/shuttle/escape/centcom)
 "aer" = (
 /turf/unsimulated/wall,
@@ -1745,17 +1762,16 @@
 	},
 /area/custom/ninjaspawn)
 "aeB" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /turf/simulated/shuttle/floor{
-	dir = 5;
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "vault"
 	},
 /area/shuttle/escape/centcom)
 "aeC" = (
-/turf/simulated/shuttle/floor/evac/sec1,
+/turf/simulated/shuttle/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "carpet"
+	},
 /area/shuttle/escape/centcom)
 "aeD" = (
 /turf/unsimulated/wall,
@@ -1767,7 +1783,10 @@
 /obj/machinery/door/unpowered/shuttle/pod{
 	dock_tag = "shuttle_escape"
 	},
-/turf/simulated/shuttle/floor/evac,
+/turf/simulated/shuttle/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "carpet"
+	},
 /area/shuttle/escape/centcom)
 "aeG" = (
 /obj/structure/mirror{
@@ -1878,6 +1897,7 @@
 /obj/structure/object_wall/evac{
 	icon_state = "10,6"
 	},
+/obj/structure/sign/departments/holy,
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "aeU" = (
@@ -1903,17 +1923,18 @@
 /obj/structure/object_wall/evac{
 	icon_state = "9,6"
 	},
-/obj/machinery/status_display{
-	pixel_x = 4;
-	pixel_y = -1
-	},
+/obj/structure/sign/departments/holy,
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "aeX" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
-/turf/simulated/shuttle/floor/evac/sec2,
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "wood"
+	},
 /area/shuttle/escape/centcom)
 "aeY" = (
 /obj/effect/decal/cleanable/blood/gibs,
@@ -1969,16 +1990,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
-"aff" = (
-/obj/structure/sign/departments/holy{
-	pixel_y = 32
-	},
-/turf/simulated/shuttle/floor{
-	dir = 5;
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "wood"
-	},
-/area/shuttle/escape/centcom)
 "afg" = (
 /obj/machinery/light{
 	dir = 1;
@@ -1996,26 +2007,12 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
-"afi" = (
-/turf/simulated/shuttle/floor{
-	dir = 5;
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "wood"
-	},
-/area/space)
 "afj" = (
 /obj/structure/object_wall/evac{
 	icon_state = "5,16"
 	},
 /obj/structure/noticeboard/chaplain,
 /turf/environment/space,
-/area/shuttle/escape/centcom)
-"afk" = (
-/obj/machinery/flasher{
-	id = "shutflash";
-	pixel_y = 16
-	},
-/turf/simulated/shuttle/floor/evac/sec1,
 /area/shuttle/escape/centcom)
 "afl" = (
 /mob/living/simple_animal/hostile/carp/dog/polkan,
@@ -2053,9 +2050,8 @@
 	dir = 4
 	},
 /turf/simulated/shuttle/floor{
-	dir = 5;
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "wood"
+	icon_state = "wood_stairs"
 	},
 /area/shuttle/escape/centcom)
 "afq" = (
@@ -2096,34 +2092,42 @@
 	name = "plating"
 	},
 /area/shuttle/administration/centcom)
-"afv" = (
+"afw" = (
+/obj/item/clothing/accessory/metal_cross{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/bible{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/weapon/storage/bible{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/clothing/accessory/metal_cross{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/clothing/accessory/metal_cross{
+	pixel_x = 8
+	},
+/turf/simulated/shuttle/floor{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
+	},
+/area/shuttle/escape/centcom)
+"afx" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/storage/bible{
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
 /turf/simulated/shuttle/floor{
 	icon = 'icons/turf/carpets.dmi';
 	icon_state = "blackcarpet"
 	},
-/area/space)
-"afw" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high{
-	charge = 100;
-	maxcharge = 15000
-	},
-/obj/item/device/assembly/signaler{
-	pixel_x = 3;
-	pixel_y = 1
-	},
-/obj/item/device/multitool{
-	pixel_x = -3;
-	pixel_y = -2
-	},
-/turf/simulated/shuttle/floor/evac/eng2,
-/area/shuttle/escape/centcom)
-"afx" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
 "afy" = (
 /obj/structure/object_wall/evac{
@@ -2199,12 +2203,16 @@
 	},
 /area/shuttle/administration/centcom)
 "afI" = (
-/obj/structure/table/reinforced,
-/obj/machinery/flasher_button{
-	id = "shutflash";
+/obj/structure/table/woodentable/fancy,
+/obj/item/weapon/storage/fancy/candle_box{
 	pixel_y = 2
 	},
-/turf/simulated/shuttle/floor/evac/sec2,
+/obj/item/clothing/accessory/metal_cross,
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "wood"
+	},
 /area/shuttle/escape/centcom)
 "afJ" = (
 /obj/structure/object_wall/vox{
@@ -2309,11 +2317,6 @@
 	icon_state = "wood"
 	},
 /area/custom/wizard_station)
-"afU" = (
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
-/area/space)
 "afV" = (
 /obj/effect/landmark/mafia_game_area,
 /turf/environment/space,
@@ -2343,13 +2346,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/vox/arkship)
-"aga" = (
-/turf/simulated/shuttle/floor{
-	dir = 5;
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "grimy"
-	},
-/area/space)
 "agb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Gateway room";
@@ -2984,17 +2980,35 @@
 /turf/environment/space,
 /area/shuttle/syndicate_elite/mothership)
 "ahS" = (
-/obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical{
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = -8;
 	pixel_y = 6
 	},
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/clothing/head/welding,
-/obj/machinery/recharger/wallcharger{
-	pixel_x = 4;
-	pixel_y = 26
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = 8;
+	pixel_y = 10
 	},
-/turf/simulated/shuttle/floor/evac/eng2,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = -8;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/turf/simulated/shuttle/floor{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
+	},
 /area/shuttle/escape/centcom)
 "ahT" = (
 /obj/structure/object_wall/vox{
@@ -5134,9 +5148,6 @@
 	icon_state = "floorplace"
 	},
 /area/shuttle/vox/arkship)
-"amS" = (
-/turf/simulated/shuttle/floor/evac/eva,
-/area/shuttle/escape/centcom)
 "amT" = (
 /obj/structure/object_wall/vox{
 	icon_state = "14,9"
@@ -7202,7 +7213,10 @@
 	dock_tag = "shuttle_escape";
 	req_access = list(1)
 	},
-/turf/simulated/shuttle/floor/evac/sec2,
+/turf/simulated/shuttle/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "carpet"
+	},
 /area/shuttle/escape/centcom)
 "arF" = (
 /obj/structure/object_wall/evac{
@@ -9469,14 +9483,6 @@
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
-"awB" = (
-/turf/simulated/floor/carpet,
-/area/space)
-"awC" = (
-/turf/simulated/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
-/area/space)
 "awD" = (
 /obj/item/weapon/scalpel/alien,
 /obj/item/weapon/surgicaldrill/alien,
@@ -10490,13 +10496,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/specops/centcom)
-"ayM" = (
-/turf/simulated/shuttle/floor{
-	dir = 1;
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "chapel"
-	},
-/area/space)
 "ayN" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "10,2"
@@ -10895,13 +10894,6 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/specops/centcom)
-"azH" = (
-/turf/simulated/shuttle/floor{
-	dir = 4;
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "chapel"
-	},
-/area/space)
 "azI" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -11454,11 +11446,15 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "aAO" = (
-/turf/simulated/shuttle/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "carpet"
+/obj/structure/stool/bed/chair/wood/normal{
+	dir = 4
 	},
-/area/space)
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "wood"
+	},
+/area/shuttle/escape/centcom)
 "aAP" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -11473,11 +11469,15 @@
 	},
 /area/centcom/living)
 "aAQ" = (
-/turf/simulated/shuttle/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "carpetsymbol"
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -31;
+	pixel_y = 4
 	},
-/area/space)
+/turf/simulated/shuttle/floor{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
+	},
+/area/shuttle/escape/centcom)
 "aAR" = (
 /obj/structure/dresser,
 /turf/unsimulated/floor{
@@ -11671,21 +11671,36 @@
 	},
 /area/centcom/prison)
 "aBg" = (
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "chapel"
+/obj/machinery/door/window/brigdoor{
+	name = "Security Shuttle Prisoners";
+	req_access = list(2)
 	},
-/area/space)
+/turf/simulated/shuttle/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "carpet"
+	},
+/area/shuttle/escape/centcom)
 "aBh" = (
-/turf/simulated/floor{
-	icon_state = "chapel"
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 31;
+	pixel_y = 4
 	},
-/area/space)
-"aBi" = (
-/turf/simulated/floor{
+/turf/simulated/shuttle/floor{
+	icon = 'icons/turf/floors.dmi';
 	icon_state = "vault"
 	},
-/area/space)
+/area/shuttle/escape/centcom)
+"aBi" = (
+/obj/structure/window/reinforced,
+/obj/structure/stool/bed/chair/wood/normal{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "wood"
+	},
+/area/shuttle/escape/centcom)
 "aBj" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -11748,33 +11763,29 @@
 	},
 /area/centcom/living)
 "aBo" = (
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+/obj/machinery/light/small{
+	dir = 4
 	},
-/area/space)
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet"
+	},
+/area/shuttle/escape/centcom)
 "aBp" = (
 /turf/unsimulated/wall,
 /area/centcom/specops)
-"aBq" = (
-/turf/simulated/shuttle/floor{
-	dir = 8;
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "chapel"
-	},
-/area/space)
 "aBr" = (
-/turf/simulated/shuttle/floor{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "chapel"
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 8
 	},
-/area/space)
-"aBs" = (
 /turf/simulated/shuttle/floor{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet"
 	},
-/area/space)
+/area/shuttle/escape/centcom)
 "aBt" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor{
@@ -11797,13 +11808,6 @@
 	icon_state = "warning"
 	},
 /area/velocity)
-"aBw" = (
-/turf/simulated/shuttle/floor{
-	dir = 5;
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
-	},
-/area/space)
 "aBx" = (
 /turf/simulated/shuttle/floor{
 	dir = 5;
@@ -11829,6 +11833,10 @@
 /obj/item/stack/medical/bruise_pack{
 	pixel_x = 10;
 	pixel_y = 2
+	},
+/obj/item/stack/medical/ointment{
+	pixel_x = -4;
+	pixel_y = 6
 	},
 /obj/item/stack/medical/ointment{
 	pixel_x = -4;
@@ -12083,7 +12091,7 @@
 	pixel_y = 12
 	},
 /obj/machinery/driver_button{
-	id = "chapelgun";
+	id = "evac_chapelgun";
 	name = "Chapel Mass Driver";
 	pixel_x = -25;
 	pixel_y = -10
@@ -12182,17 +12190,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/living)
-"aCg" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -31;
-	pixel_y = 4
-	},
-/obj/structure/stool/bed/chair/pew/left,
-/turf/simulated/shuttle/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "carpetsymbol"
-	},
-/area/shuttle/escape/centcom)
 "aCh" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Engineering Special Operations";
@@ -12213,17 +12210,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/living)
-"aCj" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 31;
-	pixel_y = 4
-	},
-/obj/structure/stool/bed/chair/pew/right,
-/turf/simulated/shuttle/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "carpetsymbol"
-	},
-/area/shuttle/escape/centcom)
 "aCk" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
@@ -12249,13 +12235,17 @@
 	},
 /area/centcom/living)
 "aCn" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 4
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/shuttle/floor/evac/sec2,
+/obj/structure/stool/bed/chair/wood/normal{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "wood"
+	},
 /area/shuttle/escape/centcom)
 "aCo" = (
 /obj/machinery/door/airlock/centcom{
@@ -12272,9 +12262,9 @@
 	name = "Chapel Launcher Door"
 	},
 /turf/simulated/shuttle/floor{
-	dir = 5;
+	dir = 8;
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon_state = "Floor3"
 	},
 /area/shuttle/escape/centcom)
 "aCq" = (
@@ -12365,7 +12355,7 @@
 "aCA" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	id = "chapelgun"
+	id = "evac_chapelgun"
 	},
 /obj/machinery/door/window{
 	dir = 1;
@@ -12377,9 +12367,9 @@
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/shuttle/floor{
-	dir = 5;
+	dir = 8;
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon_state = "warnplate"
 	},
 /area/shuttle/escape/centcom)
 "aCB" = (
@@ -12458,13 +12448,13 @@
 	},
 /area/shuttle/escape/centcom)
 "aCJ" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 8
-	},
-/obj/machinery/light/small{
+/obj/structure/stool/bed/chair/metal/black{
 	dir = 4
 	},
-/turf/simulated/shuttle/floor/evac/sec2,
+/turf/simulated/shuttle/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet"
+	},
 /area/shuttle/escape/centcom)
 "aCK" = (
 /obj/structure/morgue,
@@ -12588,22 +12578,39 @@
 /area/shuttle/escape/centcom)
 "aCX" = (
 /obj/structure/stool/bed/chair/metal/black,
-/turf/simulated/shuttle/floor/evac/eng2,
+/turf/simulated/shuttle/floor{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
+	},
 /area/shuttle/escape/centcom)
 "aCY" = (
-/obj/structure/dispenser/oxygen,
 /obj/machinery/light/small,
-/turf/simulated/shuttle/floor/evac/eng2,
+/obj/structure/closet/crate,
+/obj/item/weapon/storage/fancy/crayons,
+/obj/item/device/camera,
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
+	},
 /area/shuttle/escape/centcom)
 "aCZ" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/shuttle/floor/evac/eng2,
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
+	},
 /area/shuttle/escape/centcom)
 "aDa" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 1
 	},
-/turf/simulated/shuttle/floor/evac/eng2,
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
+	},
 /area/shuttle/escape/centcom)
 "aDb" = (
 /obj/machinery/vending/coffee{
@@ -12619,7 +12626,11 @@
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 1
 	},
-/turf/simulated/shuttle/floor/evac/eng2,
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
+	},
 /area/shuttle/escape/centcom)
 "aDi" = (
 /obj/machinery/door/poddoor{
@@ -17897,6 +17908,7 @@
 /obj/item/weapon/storage/fancy/candle_box{
 	pixel_y = 8
 	},
+/obj/structure/window/reinforced,
 /turf/simulated/shuttle/floor{
 	icon = 'icons/turf/carpets.dmi';
 	icon_state = "blackcarpet"
@@ -20526,7 +20538,7 @@
 	},
 /area/centcom/creed)
 "bJl" = (
-/obj/item/weapon/flora/pottedplant/orientaltree,
+/obj/item/weapon/flora/pottedplant/minitree,
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
@@ -21289,12 +21301,6 @@
 	icon_state = "floor"
 	},
 /area/velocity)
-"cYR" = (
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "chapel"
-	},
-/area/space)
 "cZb" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/velocity{
@@ -21995,11 +22001,16 @@
 	},
 /area/velocity)
 "ehN" = (
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault"
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/bible{
+	pixel_y = 2
 	},
-/area/space)
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "wood"
+	},
+/area/shuttle/escape/centcom)
 "eib" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_10"
@@ -24355,10 +24366,8 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
 	},
-/turf/simulated/shuttle/floor{
-	dir = 5;
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+/turf/simulated/floor/carpet{
+	icon_state = "carpetsymbol"
 	},
 /area/shuttle/escape/centcom)
 "iQb" = (
@@ -24969,12 +24978,6 @@
 	icon_state = "grass2"
 	},
 /area/centcom/living)
-"kcE" = (
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "chapel"
-	},
-/area/space)
 "kdb" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -26223,7 +26226,7 @@
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon_state = "wood"
 	},
 /area/shuttle/escape/centcom)
 "mQF" = (
@@ -26817,18 +26820,20 @@
 /turf/environment/space,
 /area/shuttle/arrival/transit)
 "ojb" = (
-/obj/machinery/door/window/brigdoor{
-	name = "Security Shuttle Prisoners";
-	req_access = list(2)
-	},
-/turf/simulated/shuttle/floor/evac/sec1,
-/area/shuttle/escape/centcom)
-"okb" = (
-/obj/structure/window/reinforced,
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/shuttle/floor/evac/sec2,
+/turf/simulated/shuttle/floor{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "wood_stairs"
+	},
+/area/shuttle/escape/centcom)
+"okb" = (
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "wood-broken4"
+	},
 /area/shuttle/escape/centcom)
 "olb" = (
 /obj/structure/object_wall/evac{
@@ -26874,6 +26879,7 @@
 /obj/item/weapon/storage/fancy/candle_box{
 	pixel_y = 8
 	},
+/obj/structure/window/reinforced,
 /turf/simulated/shuttle/floor{
 	icon = 'icons/turf/carpets.dmi';
 	icon_state = "blackcarpet"
@@ -26943,17 +26949,23 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "oAb" = (
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
+	pixel_y = 2
 	},
-/area/space)
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "wood"
+	},
+/area/shuttle/escape/centcom)
 "oBb" = (
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "vault"
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "wood-broken"
 	},
-/area/space)
+/area/shuttle/escape/centcom)
 "oCb" = (
 /turf/simulated/shuttle/floor{
 	dir = 8;
@@ -27006,11 +27018,13 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "oKb" = (
-/obj/structure/table/woodentable/fancy,
-/obj/item/clothing/accessory/metal_cross{
-	pixel_x = 4;
-	pixel_y = 6
+/obj/structure/stool/bed/chair/comfy/black,
+/turf/simulated/floor/carpet{
+	icon_state = "carpetsymbol"
 	},
+/area/shuttle/escape/centcom)
+"oLb" = (
+/obj/structure/table/woodentable/fancy,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
 	pixel_x = -8;
 	pixel_y = 8
@@ -27018,25 +27032,23 @@
 /obj/item/clothing/accessory/metal_cross{
 	pixel_x = 4;
 	pixel_y = 8
-	},
-/obj/item/clothing/accessory/metal_cross{
-	pixel_x = 4
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
 	pixel_x = -8;
 	pixel_y = 4
+	},
+/obj/item/clothing/accessory/metal_cross{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/clothing/accessory/metal_cross{
+	pixel_x = 4
 	},
 /turf/simulated/shuttle/floor{
 	icon = 'icons/turf/carpets.dmi';
 	icon_state = "carpetsymbol"
 	},
 /area/shuttle/escape/centcom)
-"oLb" = (
-/obj/structure/altar_of_gods,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/space)
 "oMb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "14,13"
@@ -27054,6 +27066,13 @@
 /area/shuttle/escape/centcom)
 "oOb" = (
 /obj/structure/altar_of_gods,
+/obj/item/weapon/nullrod{
+	pixel_x = -8
+	},
+/obj/item/weapon/storage/bible{
+	pixel_x = 4;
+	pixel_y = 2
+	},
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
@@ -27061,10 +27080,11 @@
 	},
 /area/shuttle/escape/centcom)
 "oPb" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 4
+/obj/structure/object_wall/evac{
+	icon_state = "6,6"
 	},
-/turf/simulated/shuttle/floor/evac/sec2,
+/obj/structure/sign/departments/holy,
+/turf/environment/space,
 /area/shuttle/escape/centcom)
 "oQb" = (
 /obj/machinery/light/spot{
@@ -27316,7 +27336,7 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "pyb" = (
-/obj/structure/stool/bed/chair/lectern,
+/obj/structure/window/reinforced,
 /turf/simulated/shuttle/floor{
 	icon = 'icons/turf/carpets.dmi';
 	icon_state = "blackcarpet"
@@ -27469,7 +27489,7 @@
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon_state = "wood"
 	},
 /area/shuttle/escape/centcom)
 "qbb" = (
@@ -43957,8 +43977,8 @@ aaM
 aaM
 aaM
 aaM
-kcE
-aBg
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -44213,9 +44233,9 @@ aaM
 aaM
 aaM
 aaM
-ady
-cYR
-aBh
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -44470,9 +44490,9 @@ aaM
 aaM
 aaM
 aaM
-aep
-awB
-aBi
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -44727,9 +44747,9 @@ aaM
 aaM
 aaM
 aaM
-afU
-awC
-aBo
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -44979,9 +44999,9 @@ aaM
 aaM
 aaM
 aaM
-ehN
-oAb
-oBb
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -45236,9 +45256,9 @@ aaM
 aaM
 aaM
 aaM
-oAb
-oLb
-oAb
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -45493,9 +45513,9 @@ aaM
 aaM
 aaM
 aaM
-oBb
-oAb
-ehN
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -45756,8 +45776,8 @@ aaM
 aaM
 aaM
 aaM
-ayM
-aBq
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -46012,9 +46032,9 @@ aaM
 aaM
 aaM
 aaM
-afi
-azH
-aBr
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -46269,9 +46289,9 @@ aaM
 aaM
 aaM
 aaM
-afv
-aAO
-aBs
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -46526,9 +46546,9 @@ aaM
 aaM
 aaM
 aaM
-aga
-aAQ
-aBw
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -48061,24 +48081,24 @@ phb
 plb
 prb
 mPb
-adM
+oAb
 iPu
 abE
-aad
-aff
-pNb
+oPb
+abW
+ojb
 adW
 arD
 aAV
 aBB
-aCg
-aRG
+aAV
+aAQ
 aAV
 aBB
 aAV
 aad
 ahS
-abG
+aRG
 aCY
 acX
 oxb
@@ -48319,23 +48339,23 @@ pmb
 psb
 adM
 iPu
-aRG
+oBb
 adO
 afF
 aWR
 orb
-acx
+adw
 avJ
 aAX
 aAX
 aAX
-aRG
+aeB
 aAX
 aAX
 aAX
 aeV
 aCX
-abG
+aRG
 acv
 acY
 aej
@@ -48576,8 +48596,8 @@ pnb
 ptb
 mQb
 iPu
-aRG
-aRG
+abF
+abF
 abX
 pHb
 pyb
@@ -48591,8 +48611,8 @@ aRG
 aRG
 aRG
 aCW
-amS
-abG
+aeB
+aRG
 aCZ
 acZ
 aek
@@ -48831,25 +48851,25 @@ aaM
 pkb
 pob
 pub
-adM
+ehN
 iPu
-aRG
+abF
 abH
 ozb
 aWR
 aWq
-adf
+adW
 arD
 aAV
 aAV
 aAV
-aRG
+aeB
 aAV
 aAV
 aAV
 aeW
 afw
-abG
+aRG
 aDa
 ada
 ael
@@ -49090,23 +49110,23 @@ ppb
 pvb
 mRb
 qab
-iPu
+oKb
 abI
 aeT
-aff
+abW
 afp
 adw
 avJ
 aAX
 aBN
-aCj
-aRG
+aAX
+aBh
 aAX
 aBN
 aAX
 abq
 aeg
-abG
+aRG
 aDc
 add
 aen
@@ -49609,14 +49629,14 @@ aYJ
 abF
 pNb
 abF
-abF
+okb
 skC
 aBd
-oPb
+aAO
 aCn
 afI
 aeq
-oPb
+aCJ
 lNb
 abv
 abK
@@ -49864,7 +49884,7 @@ aaM
 aRs
 acw
 abF
-abF
+oBb
 abF
 abF
 abF
@@ -49872,9 +49892,9 @@ adh
 aeC
 aeC
 aeC
-ojb
-aeC
-afk
+aBg
+pHb
+pHb
 afx
 abL
 arF
@@ -50119,7 +50139,7 @@ aaM
 aaM
 aaM
 aUE
-oKb
+oLb
 abW
 abW
 adT
@@ -50129,9 +50149,9 @@ oMb
 aeX
 aeX
 aeC
-okb
-aCJ
-aeX
+aBi
+aBo
+aBr
 abw
 abM
 pJb
