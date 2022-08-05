@@ -28,7 +28,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Ratchet.ogg'
 	var/random_color = TRUE
-	required_skills = list(/datum/skill/engineering/trained)
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 /obj/item/weapon/wrench/atom_init(mapload, param_color)
 	. = ..()
@@ -85,7 +85,7 @@
 
 	var/random_color = TRUE
 
-	required_skills = list(/datum/skill/engineering/trained)
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
@@ -149,7 +149,7 @@
 	edge = 1
 	usesound = 'sound/items/Wirecutter.ogg'
 	var/random_color = TRUE
-	required_skills = list(/datum/skill/engineering/trained)
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 /obj/item/weapon/wirecutters/atom_init(mapload, param_color)
 	. = ..()
@@ -224,7 +224,7 @@
 	var/max_fuel = 20           // The max amount of fuel the welder can hold
 	var/image/welding_sparks    // Welding overlay for targets
 
-	required_skills = list(/datum/skill/engineering/trained)
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 /obj/item/weapon/weldingtool/atom_init()
 	. = ..()
@@ -558,7 +558,7 @@
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Crowbar.ogg'
-	required_skills = list(/datum/skill/engineering/trained)
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 	qualities = list(
 		QUALITY_PRYING = 1

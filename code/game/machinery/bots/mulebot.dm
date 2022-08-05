@@ -668,9 +668,8 @@
 			else
 				visible_message("<span class='warning'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
-				M.Stun(8)
+				M.Stun(2)
 				M.Weaken(5)
-				M.lying = 1
 	..()
 
 /obj/machinery/bot/mulebot/alter_health()

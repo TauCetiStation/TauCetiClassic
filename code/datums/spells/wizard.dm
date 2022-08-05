@@ -27,6 +27,7 @@
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
 	desc = "Какое-то богохульство."
+	amt_stunned = 2
 	amt_weakened = 5
 	amt_dam_fire = 10
 	sound = 'sound/magic/MAGIC_MISSILE.ogg'
@@ -392,7 +393,7 @@
 		usr.RemoveSpell(src)
 		return
 
-	var/text = "<span class='[user.my_religion.style_text]'>Аколит [user.real_name]: [input]</span>"
+	var/text = "<span class='[user.my_religion.style_text]'>[user.mind.holy_role == CULT_ROLE_MASTER ? "Предвестник" : "Аколит"] [user.real_name]: [input]</span>"
 	log_say("([user.my_religion.name]) Аколит [user.real_name]: [input]")
 	for(var/mob/M in global.mob_list)
 		if(isobserver(M))

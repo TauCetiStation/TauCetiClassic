@@ -96,7 +96,7 @@
 	if(RegularClickOn(A))
 		return
 
-	if(stat || paralysis || stunned || weakened)
+	if(incapacitated(NONE))
 		return
 
 	face_atom(A) // change direction to face what you clicked on
@@ -203,16 +203,14 @@
 		to_chat(src, "<span class='notice'>Your mind won't reach that far.</span>")
 		return
 
-	if(!try_tk(mana=dist * TK_MANA_PER_TILE))
+	var/mana = dist * TK_MANA_PER_TILE / get_tk_level()
+
+	if(!can_tk(mana))
 		return
 
-	SetNextMove(CLICK_CD_MELEE)
-
-	if(a_intent == INTENT_GRAB && ismovable(A))
-		var/atom/movable/AM = A
-		AM.telekinetic_grab(src)
-	else
-		A.attack_tk(src)
+	if(A.attack_tk(src))
+		SetNextMove(CLICK_CD_MELEE)
+		spend_tk_power(mana)
 
 /*
 	Restrained ClickOn

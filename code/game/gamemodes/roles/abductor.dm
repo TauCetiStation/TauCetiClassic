@@ -37,12 +37,13 @@
 	var/faction_name = faction ? faction.name : ""
 	H.real_name = faction_name + " " + name
 	H.mind.name = H.real_name
+	H.f_style = "Shaved"
+	H.h_style = "Bald"
 	H.flavor_text = ""
 	equip_common(H)
 	equip_class()
 	H.regenerate_icons()
 	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "abductor", /datum/mood_event/abductor)
-	
 	return TRUE
 
 /datum/role/abductor/proc/get_team_num()

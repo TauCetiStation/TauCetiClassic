@@ -289,20 +289,6 @@
 	new /obj/item/toy/syndicateballoon(src)
 	make_exact_fit()
 
-/obj/item/weapon/storage/box/syndie_kit/chemical
-	name = "box (CH)"
-	desc = "Box containing Spacegeneva violation."
-	icon_state = "syndie_box"
-
-/obj/item/weapon/storage/box/syndie_kit/chemical/atom_init()
-	. = ..()
-	new /obj/item/clothing/head/helmet/space/rig/syndi/hazmat(src)
-	new /obj/item/clothing/suit/space/rig/syndi/hazmat(src)
-	new /obj/item/clothing/shoes/magboots/syndie(src)
-	new /obj/item/weapon/reagent_containers/watertank_backpack/syndie(src)
-	new /obj/item/weapon/lighter/zippo(src)
-	make_exact_fit()
-
 /obj/item/weapon/storage/box/syndie_kit/drone
 	name = "box (D)"
 	desc = "Box containing a brand-new Cybersun Industries RC drone."
@@ -432,6 +418,22 @@
 	/obj/item/weapon/storage/pouch/medical_supply/syndicate,
 	/obj/item/clothing/suit/space/rig/syndi,
 	/obj/item/clothing/head/helmet/space/rig/syndi,
+	)
+
+
+/obj/item/weapon/storage/backpack/dufflebag/nuke/chemwarfare
+	name = "chemical fighter kit"
+	startswith = list(
+	/obj/item/weapon/reagent_containers/watertank_backpack/syndie,
+	/obj/item/weapon/lighter/zippo,
+	/obj/item/weapon/gun/projectile/revolver/syndie,
+	/obj/item/ammo_box/a357 = 2,
+	/obj/item/weapon/melee/energy/sword,
+	/obj/item/weapon/grenade/chem_grenade/acid = 3,
+	/obj/item/weapon/grenade/chem_grenade/incendiary = 2,
+	/obj/item/weapon/card/emag,
+	/obj/item/clothing/head/helmet/space/rig/syndi/hazmat,
+	/obj/item/clothing/suit/space/rig/syndi/hazmat,
 	)
 
 

@@ -18,8 +18,6 @@
 	user.SetParalysis(0)
 	user.SetStunned(0)
 	user.SetWeakened(0)
-	user.lying = 0
-	user.update_canmove()
 	user.reagents.add_reagent("synaptizine", 0.5)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

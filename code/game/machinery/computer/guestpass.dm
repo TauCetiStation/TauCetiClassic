@@ -12,7 +12,7 @@
 	var/reason = "NOT SPECIFIED"
 	var/expiration_time = 0
 
-	required_skills = list(/datum/skill/command/novice)
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE)
 
 /obj/item/weapon/card/id/guest/GetAccess()
 	if(world.time > expiration_time)

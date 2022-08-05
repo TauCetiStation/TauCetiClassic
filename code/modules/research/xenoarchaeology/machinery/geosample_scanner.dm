@@ -42,7 +42,7 @@
 	var/radiation = 0 // 0-100 mSv
 	var/t_left_radspike = 0
 	var/rad_shield = 0
-	required_skills = list(/datum/skill/research/trained)
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
 
 
 /obj/machinery/radiocarbon_spectrometer/atom_init()
@@ -56,7 +56,6 @@
 	coolant_reagents_purity["kelotane"] = 0.7
 	coolant_reagents_purity["sterilizine"] = 0.7
 	coolant_reagents_purity["dermaline"] = 0.7
-	coolant_reagents_purity["hyperzine"] = 0.8
 	coolant_reagents_purity["cryoxadone"] = 0.9
 	coolant_reagents_purity["coolant"] = 1
 	coolant_reagents_purity["adminordrazine"] = 2

@@ -252,8 +252,6 @@
 	if(shielded)
 		damage /= 4
 
-		//paralysis += 1
-
 	to_chat(src, "<span class='warning'>The blob attacks you!</span>")
 
 	adjustFireLoss(damage)

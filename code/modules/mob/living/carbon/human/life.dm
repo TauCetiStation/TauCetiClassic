@@ -131,19 +131,19 @@
 
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
-		if ((prob(1) && paralysis < 1))
+		if (prob(1) && !paralysis)
 			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 			make_jittery(1000)
 	if ((disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH)) && !reagents.has_reagent("dextromethorphan"))
-		if ((prob(5) && paralysis <= 1))
+		if (prob(5) && !paralysis)
 			drop_item()
 			spawn( 0 )
 				emote("cough")
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		speech_problem_flag = 1
-		if ((prob(10) && paralysis <= 1))
+		if (prob(10) && !paralysis)
 			Stun(10)
 			spawn( 0 )
 				switch(rand(1, 3))
@@ -246,6 +246,7 @@
 		if (radiation > 100)
 			radiation = 100
 			if(!species.flags[RAD_ABSORB])
+				Stun(5)
 				Weaken(10)
 				if(!lying)
 					to_chat(src, "<span class='warning'>You feel weak.</span>")
@@ -772,11 +773,11 @@
 				if(prob(3))
 					Paralyse(10)
 				else
+					Stun(5)
 					Weaken(10)
 				setHalLoss(99)
 
 		if(paralysis)
-			AdjustParalysis(-1)
 			blinded = 1
 			stat = UNCONSCIOUS
 			if(halloss > 0)
@@ -833,10 +834,6 @@
 		//Other
 		if(stunned)
 			speech_problem_flag = 1
-			AdjustStunned(-1)
-
-		if(weakened)
-			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
 
 		if(stuttering)
 			speech_problem_flag = 1
@@ -849,6 +846,7 @@
 			silent = max(silent-1, 0)
 
 		if(druggy)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drugged", /datum/mood_event/drugged)
 			adjustDrugginess(-1)
 
 		if (drowsyness)
@@ -1192,11 +1190,13 @@
 			visible_message("<span class='name'>[src]'s</span> body becomes limp.")
 		if (prob(2))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
+			Stun(10)
 			Weaken(20)
 
 	if(shock_stage >= 80)
 		if (prob(5))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
+			Stun(10)
 			Weaken(20)
 
 	if(shock_stage >= 120)
@@ -1206,9 +1206,11 @@
 
 	if(shock_stage == 150)
 		me_emote("can no longer stand, collapsing!")
+		Stun(10)
 		Weaken(20)
 
 	if(shock_stage >= 150)
+		Stun(10)
 		Weaken(20)
 
 /mob/living/carbon/human/proc/handle_heart_beat()

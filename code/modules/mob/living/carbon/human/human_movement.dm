@@ -75,7 +75,7 @@
 	tally += bp_tally / moving_bodyparts.len
 	weight_negation += bp_weight_negation / moving_bodyparts.len
 
-	// hyperzine removes equipment slowdowns (no blood = no chemical effects).
+	// cola removes equipment slowdowns (no blood = no chemical effects).
 	var/chem_nullify_debuff = nullify_debuffs
 	if(!species.flags[NO_BLOOD] && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
 		chem_nullify_debuff = TRUE
@@ -109,12 +109,6 @@
 
 	if(weight_tally > 0)
 		tally += max(weight_tally - weight_negation, 0)
-
-	if(!chem_nullify_debuff)
-		for(var/x in list(l_hand, r_hand))
-			var/obj/item/I = x
-			if(I && !(I.flags & ABSTRACT) && I.w_class >= SIZE_SMALL)
-				tally += 0.25 * (I.w_class - 2) // (3 = 0.25) || (4 = 0.5) || (5 = 0.75)
 
 	if(pull_debuff)
 		tally += pull_debuff

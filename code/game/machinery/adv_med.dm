@@ -10,7 +10,7 @@
 	density = TRUE
 	anchored = TRUE
 	light_color = "#00ff00"
-	required_skills = list(/datum/skill/medical/novice)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/bodyscanner/power_change()
 	..()
@@ -157,7 +157,7 @@
 	anchored = TRUE
 	var/next_print = 0
 	var/storedinfo = null
-	required_skills = list(/datum/skill/medical/trained)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/body_scanconsole/atom_init()
 	..()
@@ -205,7 +205,8 @@
 				dat += text("<font color='[]'>\tRadiation Level %: []</font><BR>", (occupant.radiation < 10 ?"blue" : "red"), occupant.radiation)
 				dat += text("<font color='[]'>\tGenetic Tissue Damage %: []</font><BR>", (occupant.getCloneLoss() < 1 ?"blue" : "red"), occupant.getCloneLoss())
 				dat += text("<font color='[]'>\tApprox. Brain Damage %: []</font><BR>", (occupant.getBrainLoss() < 1 ?"blue" : "red"), occupant.getBrainLoss())
-				dat += text("Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
+				var/occupant_paralysis = occupant.AmountParalyzed()
+				dat += text("Paralysis Summary %: [] ([] seconds left!)<BR>", occupant_paralysis, round(occupant_paralysis / 4))
 				dat += text("Body Temperature: [occupant.bodytemperature-T0C]&deg;C ([occupant.bodytemperature*1.8-459.67]&deg;F)<BR><HR>")
 
 				if(occupant.has_brain_worms())
