@@ -84,7 +84,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/update_icon()
 	if(short)
-		icon_state = "[icon_state][short ? "-short" : ""][open ? "-o" : ""]"
+		icon_state = "[initial(icon_state)][short ? "-short" : ""][open ? "-o" : ""]"
 	else
 		icon_state = "[initial(icon_state)][open ? "-o" : ""]"
 
@@ -105,7 +105,7 @@
 
 		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
 		if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50, required_skills_override = list(/datum/skill/firearms = SKILL_LEVEL_TRAINED)))
-			icon_state = "sawnshotgun[open ? "-o" : ""]"
+			icon_state = "dshotgun"
 			w_class = SIZE_SMALL
 			item_state = "gun"
 			slot_flags &= ~SLOT_FLAGS_BACK	//you can't sling it on your back
@@ -115,6 +115,7 @@
 			desc = "Omar's coming!"
 			short = TRUE
 			can_be_holstered = TRUE
+			update_icon()
 		return
 
 	else if(istype(I, /obj/item/ammo_box) || istype(I, /obj/item/ammo_casing))
