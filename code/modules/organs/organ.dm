@@ -174,10 +174,7 @@
 				spark_system.attach(src)
 				spark_system.start()
 		else if(E.is_broken())
-			if(!(E.status & ORGAN_SPLINTED))
-				stance_damage += 1
-			else
-				stance_damage += 0.5
+			stance_damage += 1
 
 	// Canes and crutches help you stand (if the latter is ever added)
 	// One cane mitigates a broken leg+foot, or a missing foot.
