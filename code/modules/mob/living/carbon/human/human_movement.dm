@@ -61,6 +61,8 @@
 
 	// Movement delay coming from heavy items being carried.
 	var/weight_tally = 0
+	// So you can have items causing you to go faster, and thus we need a seperate counter of weight negation
+	// to not negate weight that is not there. ~Luduk
 	var/weight_negation = 0
 
 	var/bp_tally = 0
@@ -85,8 +87,6 @@
 		chem_nullify_debuff = TRUE
 
 	// Currently there is a meme that `slowdown` var is not really weight, it's just a speed modifier
-	// So you can have items causing you to go faster, and thus we need a seperate counter of weight negation
-	// to not negate weight that is not there. ~Luduk
 	var/item_slowdown = wear_suit?.slowdown
 	if(item_slowdown)
 		if(item_slowdown < 0)
