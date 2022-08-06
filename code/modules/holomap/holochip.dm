@@ -1,4 +1,3 @@
-//ADD_TO_GLOBAL_LIST(/obj/item/holochip, holochips)
 #define OFFSET_CORRECTOR 6
 /obj/item/holochip
 	name = "Holomap chip"
@@ -21,7 +20,6 @@
 
 /obj/item/holochip/atom_init(obj/item/I)
 	. = ..()
-	//SSholomaps.holochips += src
 	holder = I
 	holomap_toggle_action = new(src)
 	holomap_base = SSholomaps.default_holomap
@@ -64,13 +62,13 @@
 	holomap_base = SSholomaps.default_holomap
 	if(color_filter)
 		holomap_base.color = color_filter
-	activator.holomap_obj.add_overlay(holomap_base)//hud_used.
+	activator.holomap_obj.add_overlay(holomap_base)
 	START_PROCESSING(SSholomaps, src)
 
 /obj/item/holochip/proc/deactivate_holomap()
 	if(!activator)
 		return
-	activator.holomap_obj.cut_overlay(holomap_base)//hud_used.
+	activator.holomap_obj.cut_overlay(holomap_base)
 	if(length(holomap_images) && activator.client)
 		activator.client.images -= holomap_images
 		QDEL_LIST(holomap_images)
@@ -87,7 +85,7 @@
 		QDEL_LIST(holomap_images)
 	for(var/obj/item/holochip/HC in raw_freq)
 		if(HC.frequency != frequency)
-			//HC.update_freq(HC.frequency)
+			HC.update_freq(HC.frequency)
 			continue
 		if(HC.encryption != encryption)
 			continue
@@ -97,7 +95,7 @@
 		if(!SSholomaps.holomap_cache[HC])
 			continue
 		var/image/I = SSholomaps.holomap_cache[HC]
-		I.loc = activator.holomap_obj//hud_used.
+		I.loc = activator.holomap_obj
 		holomap_images += I
 		animate(I, alpha = 255, time = 8, loop = -1, easing = SINE_EASING)
 		animate(I, alpha = 0, time = 5, easing = SINE_EASING)
@@ -113,7 +111,7 @@
 /obj/item/holochip/proc/handle_own_marker()
 	if(!self_marker)   // Dunno why but it happens in runtime
 		instantiate_self_marker()
-	self_marker.loc = activator.holomap_obj//hud_used.
+	self_marker.loc = activator.holomap_obj
 	var/turf/src_turf = get_turf(src)
 	self_marker.pixel_x = (src_turf.x - OFFSET_CORRECTOR) * PIXEL_MULTIPLIER
 	self_marker.pixel_y = (src_turf.y - OFFSET_CORRECTOR) * PIXEL_MULTIPLIER
@@ -155,22 +153,25 @@
 	popup.open()
 	return ..()
 
-/datum/holochip_frequency
-	var/list/holochips = list()
-
 /obj/item/holochip/proc/update_freq(new_frequency) //For structurizing holochip' markers
-	if(new_frequency)
+	if(!new_frequency)
 		return
-	if(raw_freq)
-		raw_freq -= src
-	var/freque = SSholomaps.holochips[new_frequency]
+
+	if(frequency)
+		var/old_freq = num2text(frequency) //Handle old freq
+		if(SSholomaps.holochips[old_freq])
+			SSholomaps.holochips[old_freq] -= src
+			if(!length(SSholomaps.holochips[old_freq]))
+				SSholomaps.holochips -= old_freq
+
+	var/texted_freq = num2text(new_frequency) //Hande new freq
+	var/freque = SSholomaps.holochips[texted_freq]
 	if(!freque) //We need new freq
-		SSholomaps.holochips[new_frequency] = list()
-		SSholomaps.holochips[new_frequency] += src
+		SSholomaps.holochips[texted_freq] = list()
+		SSholomaps.holochips[texted_freq] += src
 	else //Add to existing freq
 		freque += src
-	to_chat(world,"[frequency],[encryption],[SSholomaps.holochips[new_frequency]]")
-	raw_freq = SSholomaps.holochips[new_frequency]
+	raw_freq = SSholomaps.holochips[texted_freq]
 
 /obj/item/holochip/Topic(href, href_list)
 	if(usr.incapacitated() || !Adjacent(usr) || !ishuman(usr))
@@ -189,9 +190,9 @@
 	if(href_list["encryption"])
 		encryption += text2num(href_list["encryption"])
 		encryption = round(encryption)
-		encryption = min(100, encryption)
+		encryption = min(1000, encryption)
 		encryption = max(1, encryption)
-	usr << browse(null, "window=holochip")
+	attack_self(usr)
 	update_freq(frequency)
 
 	updateUsrDialog()

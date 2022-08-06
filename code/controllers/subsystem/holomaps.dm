@@ -60,7 +60,6 @@ SUBSYSTEM_DEF(holomaps)
 		return
 	var/list/turf/turfs = RANGE_TURFS(world.maxx/2, center)
 	for(var/turf/T in turfs)
-		//T.density ? holomap.DrawBox(HOLOMAP_CONCRETE_TILE, T.x, T.y) : holomap.DrawBox(HOLOMAP_WALKABLE_TILE, T.x, T.y)
 		if (istype(T, /turf/simulated/floor) || istype(T, /turf/unsimulated/floor) || istype(T, /turf/simulated/shuttle/floor))
 			holomap.DrawBox(HOLOMAP_WALKABLE_TILE, T.x, T.y)
 		if(istype(T, /turf/simulated/wall) || istype(T, /turf/unsimulated/wall) || locate(/obj/structure/grille) in T || locate(/obj/structure/window) in T || locate(/obj/structure/object_wall) in T)
