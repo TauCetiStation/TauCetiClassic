@@ -16,7 +16,7 @@
 
 	var/frequency		//Frequency for transmitting data
 	var/encryption 		//Encryption for double security
-	//var/raw_freq		//Ref to list of chips wit same freq. Touch only if you know what you do
+	var/raw_freq		//Ref to list of chips wit same freq. Touch only if you know what you do
 
 /obj/item/holochip/atom_init(obj/item/I)
 	. = ..()
@@ -83,7 +83,7 @@
 	if(length(holomap_images))
 		activator.client.images -= holomap_images
 		QDEL_LIST(holomap_images)
-	for(var/obj/item/holochip/HC in SSholomaps.holochips[num2text(frequency)])
+	for(var/obj/item/holochip/HC in raw_freq)
 		if(HC.frequency != frequency)
 			HC.update_freq(HC.frequency)
 			continue
