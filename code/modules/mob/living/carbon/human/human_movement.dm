@@ -5,7 +5,7 @@
 	if(ischangeling(src))
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if(C.strained_muscles)
-			tally -= 2
+			tally -= 2.5
 			nullify_debuffs = TRUE
 
 	if(!has_gravity(src))
