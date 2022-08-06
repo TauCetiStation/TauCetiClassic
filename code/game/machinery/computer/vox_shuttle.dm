@@ -9,8 +9,6 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 /obj/machinery/proc/console_say(text)
 	visible_message("<b>[src]</b> beeps, \"[text]\'")
 
-
-//ADD_TO_GLOBAL_LIST(/obj/machinery/computer/vox_stealth, SSholomaps.holomap_landmarks)
 /obj/machinery/computer/vox_stealth
 	name = "skipjack cloaking field terminal"
 	icon = 'icons/locations/shuttles/vox_pc.dmi'

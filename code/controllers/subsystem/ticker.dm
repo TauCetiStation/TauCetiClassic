@@ -67,6 +67,7 @@ SUBSYSTEM_DEF(ticker)
 	global.syndicate_code_response = generate_code_phrase()
 	global.code_phrase_highlight_rule = generate_code_regex(global.syndicate_code_phrase, @"\u0430-\u0451") // Russian chars only
 	global.code_response_highlight_rule = generate_code_regex(global.syndicate_code_response, @"\u0430-\u0451") // Russian chars only
+
 	..()
 
 /datum/controller/subsystem/ticker/fire()

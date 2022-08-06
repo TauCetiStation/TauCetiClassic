@@ -17,6 +17,49 @@
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 	flashbang_protection = TRUE
 
+/obj/item/clothing/head/helmet/Destroy()
+	QDEL_NULL(holochip)
+	return ..()
+
+/obj/item/clothing/head/helmet/equipped(mob/user, slot)
+	if(holochip && slot == SLOT_HEAD)
+		holochip.add_action(user)
+	..()
+
+/obj/item/clothing/head/helmet/dropped(mob/user)
+	if(holochip)
+		holochip.remove_action(user)
+		holochip.deactivate_holomap()
+	..()
+
+/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/holochip))
+		if(I.flags & ABSTRACT)
+			return    //You can't insert holochip in abstract item.
+		if(holochip)
+			to_chat(user, "<span class='notice'>The [src] is already modified with the [holochip]</span>")
+			return
+		user.drop_from_inventory(I, src)
+		holochip = I
+		holochip.holder = src
+		var/mob/living/carbon/human/H = user
+		if(istype(H) && H.head == src)
+			holochip.add_action(user)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>You modify the [src] with the [holochip]</span>")
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		if(!holochip)
+			to_chat(user, "<span class='notice'>There's no holochip to remove from the [src]</span>")
+			return
+		holochip.deactivate_holomap()
+		holochip.remove_action(user)
+		holochip.holder = null
+		if(!user.put_in_hands(holochip))
+			holochip.forceMove(get_turf(src))
+		holochip = null
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>You remove the [holochip] from the [src]</span>")
+
 /obj/item/clothing/head/helmet/psyamp
 	name = "psychic amplifier"
 	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot."
