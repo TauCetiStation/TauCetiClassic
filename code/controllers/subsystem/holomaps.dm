@@ -96,6 +96,8 @@ SUBSYSTEM_DEF(holomaps)
 				NI.transform /= 2
 				holomap_cache[HC] = NI
 			var/image/I = holomap_cache[HC]
+			if(!I)
+				continue
 			I.filters = null
 			if(C.stat == DEAD)
 				I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEAD)
