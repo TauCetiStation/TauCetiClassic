@@ -127,8 +127,8 @@
 		var/cost = 0
 		for(var/obj/item/ammo_casing/A in G.ammo_type)
 			var/obj/item/projectile/P = new A.projectile_type()
-			cost += P.damage*7
-			P = null
+			cost += P.damage * 7
+			qdel(P)
 		return cost
 
 	if(istype(I,/obj/item/weapon/gun/projectile))
@@ -141,15 +141,20 @@
 		var/obj/item/ammo_box/A2 = new W.mag_type2()
 		var/obj/item/ammo_casing/C2 = new A2.ammo_type()
 		var/obj/item/projectile/P2 = new C2.projectile_type()
-		var/cost = (P.damage+P2.damage)*7
-		A = C = P = A2 = C2 = P2 = null
+		var/cost = (P.damage + P2.damage) * 7
+		qdel(A)
+		qdel(C)
+		qdel(P)
+		qdel(A2)
+		qdel(C2)
+		qdel(P2)
 		return cost
 
 	if(istype(I, /obj/item/weapon) && !istype(I,/obj/item/weapon/melee/cultblade))
 		var/obj/item/weapon/W = I
 		for(var/datum/twohanded_component_builder/TCB in W.datum_components)
-			return TCB.force_wielded*16
-		return I.force*16
+			return TCB.force_wielded * 16
+		return I.force * 16
 	return 0
 
 //Gives mana from: minerals, sheet, steel, money etc
