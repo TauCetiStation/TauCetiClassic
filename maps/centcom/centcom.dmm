@@ -24,10 +24,20 @@
 	},
 /area/shuttle/escape/centcom)
 "aad" = (
-/obj/structure/object_wall/evac{
-	icon_state = "6,6"
+/obj/structure/table/woodentable/fancy,
+/obj/item/weapon/storage/fancy/candle_box/red{
+	pixel_x = 2;
+	pixel_y = 2
 	},
-/turf/environment/space,
+/obj/item/weapon/storage/fancy/candle_box{
+	pixel_x = 12;
+	pixel_y = 6
+	},
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
+	},
 /area/shuttle/escape/centcom)
 "aae" = (
 /obj/structure/object_wall/evac{
@@ -629,10 +639,16 @@
 	},
 /area/centcom/holding)
 "abq" = (
-/obj/structure/object_wall/evac{
-	icon_state = "10,6"
+/obj/machinery/light/small,
+/obj/structure/table/woodentable/fancy,
+/obj/item/weapon/storage/bible{
+	pixel_y = 6
 	},
-/turf/environment/space,
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
+	},
 /area/shuttle/escape/centcom)
 "abr" = (
 /obj/structure/object_wall/evac{
@@ -746,9 +762,10 @@
 /area/shuttle/escape/centcom)
 "abG" = (
 /obj/machinery/door/poddoor{
-	id = "chapelgun";
+	id = "evac_chapelgun";
 	name = "Chapel Launcher Door"
 	},
+/obj/structure/fans/tiny,
 /turf/simulated/shuttle/floor{
 	dir = 8;
 	icon = 'icons/turf/floors.dmi';
@@ -769,16 +786,13 @@
 /area/shuttle/escape/centcom)
 "abI" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/weapon/nullrod{
-	pixel_x = -8;
-	pixel_y = 2
-	},
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/item/weapon/flora/deskleaf{
+	desc = "A tiny holy waxy leafed plant specimen.";
+	name = "Holy Anthony";
+	pixel_y = 4
 	},
 /turf/simulated/shuttle/floor{
 	dir = 5;
@@ -872,12 +886,11 @@
 "abX" = (
 /obj/machinery/door/airlock/erokez{
 	name = "Command Airlock";
-	req_access = list(22)
+	req_one_access = list(19, 22)
 	},
 /turf/simulated/shuttle/floor{
-	dir = 5;
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "wood"
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet"
 	},
 /area/shuttle/escape/centcom)
 "abY" = (
@@ -1298,7 +1311,10 @@
 	name = "Security Airlock";
 	req_access = list(1)
 	},
-/turf/simulated/shuttle/floor/evac/sec2,
+/turf/simulated/shuttle/floor{
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "carpet"
+	},
 /area/shuttle/escape/centcom)
 "adi" = (
 /obj/structure/object_wall/evac{
@@ -1405,6 +1421,10 @@
 "ady" = (
 /obj/structure/object_wall/evac{
 	icon_state = "2,13"
+	},
+/obj/machinery/status_display{
+	pixel_x = -4;
+	pixel_y = -1
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
@@ -1577,7 +1597,7 @@
 /obj/structure/closet/hydrant{
 	pixel_x = 32
 	},
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor{
@@ -1983,16 +2003,15 @@
 /area/custom/arena)
 "aeT" = (
 /obj/structure/object_wall/evac{
-	icon_state = "10,18"
-	},
-/obj/structure/object_wall/evac{
 	icon_state = "10,6"
 	},
-/obj/structure/sign/departments/holy,
+/obj/structure/sign/departments/holy{
+	pixel_x = 2
+	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "aeU" = (
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor{
@@ -2111,6 +2130,10 @@
 /obj/structure/object_wall/evac{
 	icon_state = "12,13"
 	},
+/obj/machinery/status_display{
+	pixel_x = -4;
+	pixel_y = -1
+	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "afj" = (
@@ -2121,14 +2144,14 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "afk" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 31;
-	pixel_y = 4
+/obj/structure/object_wall/evac{
+	icon_state = "6,6"
 	},
-/turf/simulated/shuttle/floor{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+/obj/machinery/status_display{
+	pixel_x = -2;
+	pixel_y = -1
 	},
+/turf/environment/space,
 /area/shuttle/escape/centcom)
 "afl" = (
 /mob/living/simple_animal/hostile/carp/dog/polkan,
@@ -2259,7 +2282,7 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "afz" = (
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor{
@@ -2305,6 +2328,10 @@
 "afF" = (
 /obj/structure/object_wall/evac{
 	icon_state = "7,6"
+	},
+/obj/machinery/status_display{
+	pixel_x = -4;
+	pixel_y = -1
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
@@ -2520,29 +2547,15 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "agg" = (
-/obj/structure/torch_holder/magic,
-/obj/structure/closet/cabinet{
-	name = "Crusader"
+/obj/structure/object_wall/evac{
+	icon_state = "10,6"
 	},
-/obj/item/clothing/suit/wizrobe/crusader,
-/obj/item/clothing/gloves/black,
-/obj/item/clothing/head/wizard/crusader,
-/obj/item/clothing/under/color/black,
-/obj/item/weapon/storage/backpack/chaplain,
-/obj/item/weapon/claymore/religion,
-/obj/item/weapon/shield/riot/roman{
-	name = "Sacred shield"
+/obj/machinery/status_display{
+	pixel_x = 2;
+	pixel_y = -1
 	},
-/obj/item/weapon/storage/bible,
-/obj/structure/mirror/magic{
-	pixel_x = -25;
-	pixel_y = -3
-	},
-/obj/item/clothing/shoes/boots/wizard,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
+/turf/environment/space,
+/area/shuttle/escape/centcom)
 "agh" = (
 /obj/structure/object_wall/vox{
 	icon_state = "12,14"
@@ -5408,11 +5421,6 @@
 	dir = 8;
 	id = "evac_chapelgun"
 	},
-/obj/machinery/door/window{
-	dir = 1;
-	name = "Mass Driver";
-	req_access = list(22)
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -5514,7 +5522,9 @@
 	},
 /area/custom/syndicate_mothership)
 "anc" = (
-/obj/machinery/light/small,
+/obj/structure/closet/emergency_wall{
+	pixel_x = -30
+	},
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
@@ -14747,29 +14757,29 @@
 /turf/unsimulated/wall,
 /area/velocity)
 "aGJ" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Magic Intercom";
-	pixel_x = 27;
-	pixel_y = -4;
-	subspace_transmission = 1;
-	syndie = 1
+/obj/item/stack/medical/bruise_pack,
+/obj/item/stack/medical/bruise_pack{
+	pixel_x = 8;
+	pixel_y = 2
 	},
-/obj/structure/closet/cabinet{
-	name = "Priest"
+/obj/item/stack/medical/ointment{
+	pixel_x = -4;
+	pixel_y = 6
 	},
-/obj/item/clothing/under/rank/chaplain/light,
-/obj/item/weapon/storage/bible,
-/obj/item/weapon/storage/backpack/chaplain,
-/obj/item/clothing/suit/wizrobe/holidaypriest,
-/obj/item/clothing/glasses/sunglasses/hud/chaplain,
-/obj/item/clothing/head/wizard/nimb,
-/turf/unsimulated/floor{
-	icon_state = "wood-broken4"
+/obj/item/stack/medical/ointment{
+	pixel_x = -4;
+	pixel_y = 6
 	},
-/area/custom/wizard_station)
+/obj/structure/table/woodentable,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "grimy"
+	},
+/area/shuttle/escape/centcom)
 "aGK" = (
 /obj/item/weapon/grown/log{
 	pixel_x = -8;
@@ -16656,10 +16666,15 @@
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aLm" = (
-/obj/machinery/light/small{
-	dir = 4
+/obj/structure/crematorium{
+	id = "evac"
 	},
-/obj/structure/crematorium,
+/obj/machinery/crema_switch{
+	id = "evac";
+	pixel_x = 24;
+	req_access = list();
+	req_one_access = list(27, 45)
+	},
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
@@ -16694,14 +16709,13 @@
 /turf/unsimulated/floor,
 /area/centcom/control)
 "aLp" = (
-/obj/machinery/light/small,
-/obj/structure/stool/bed/chair/metal/black{
-	dir = 1
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 31;
+	pixel_y = 4
 	},
 /turf/simulated/shuttle/floor{
-	dir = 5;
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "carpet"
 	},
 /area/shuttle/escape/centcom)
 "aLq" = (
@@ -16742,9 +16756,6 @@
 	},
 /area/centcom/control)
 "aLv" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
@@ -16757,7 +16768,12 @@
 	id = "evac_chapelgun";
 	name = "Chapel Mass Driver";
 	pixel_x = -25;
-	pixel_y = -10
+	pixel_y = -10;
+	req_one_access = list(45, 22)
+	},
+/obj/machinery/door/window{
+	name = "Mass Driver";
+	req_one_access = list(45, 22)
 	},
 /turf/simulated/shuttle/floor{
 	dir = 5;
@@ -16766,11 +16782,15 @@
 	},
 /area/shuttle/escape/centcom)
 "aLw" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
-	dir = 5;
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "blackcarpet"
 	},
 /area/shuttle/escape/centcom)
 "aLx" = (
@@ -16783,11 +16803,17 @@
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aLz" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -31;
-	pixel_y = 4
+/obj/machinery/light/small,
+/obj/structure/table/woodentable/fancy,
+/obj/item/clothing/accessory/metal_cross{
+	pixel_x = 2
+	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /turf/simulated/shuttle/floor{
+	dir = 5;
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "vault"
 	},
@@ -16815,11 +16841,11 @@
 	},
 /area/centcom/control)
 "aLC" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/simulated/shuttle/floor{
 	dir = 5;
@@ -16848,7 +16874,7 @@
 "aLE" = (
 /obj/item/stack/medical/bruise_pack,
 /obj/item/stack/medical/bruise_pack{
-	pixel_x = 10;
+	pixel_x = 8;
 	pixel_y = 2
 	},
 /obj/item/stack/medical/ointment{
@@ -16923,26 +16949,24 @@
 	},
 /area/shuttle/escape/centcom)
 "aLN" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/structure/stool/bed/chair/metal/black{
+/obj/structure/closet/coffin,
+/obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet"
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "grimy"
 	},
 /area/shuttle/escape/centcom)
 "aLO" = (
-/obj/machinery/light/small,
-/obj/structure/closet/crate,
-/obj/item/weapon/storage/fancy/crayons,
-/obj/item/device/camera,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -31;
+	pixel_y = 4
+	},
 /turf/simulated/shuttle/floor{
-	dir = 5;
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon = 'icons/turf/carpets.dmi';
+	icon_state = "carpet"
 	},
 /area/shuttle/escape/centcom)
 "aLP" = (
@@ -17043,6 +17067,19 @@
 	},
 /turf/simulated/shuttle/plating,
 /area/centcom/evac)
+"aMa" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/storage/fancy/crayons,
+/obj/item/device/camera,
+/obj/item/toy/plushie/white_cat{
+	name = "plushie Scinia"
+	},
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
+	},
+/area/shuttle/escape/centcom)
 "aMb" = (
 /obj/machinery/light{
 	dir = 8
@@ -17059,6 +17096,67 @@
 	icon_state = "bot"
 	},
 /area/centcom/evac)
+"aMd" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light,
+/turf/simulated/shuttle/floor{
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
+	},
+/area/shuttle/escape/centcom)
+"aMe" = (
+/obj/structure/torch_holder/magic,
+/obj/structure/closet/cabinet{
+	name = "Crusader"
+	},
+/obj/item/clothing/suit/wizrobe/crusader,
+/obj/item/clothing/gloves/black,
+/obj/item/clothing/head/wizard/crusader,
+/obj/item/clothing/under/color/black,
+/obj/item/weapon/storage/backpack/chaplain,
+/obj/item/weapon/claymore/religion,
+/obj/item/weapon/shield/riot/roman{
+	name = "Sacred shield"
+	},
+/obj/item/weapon/storage/bible{
+	pixel_y = 6
+	},
+/obj/structure/mirror/magic{
+	pixel_x = -25;
+	pixel_y = -3
+	},
+/obj/item/clothing/shoes/boots/wizard,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"aMf" = (
+/obj/item/device/radio/intercom{
+	desc = "Talk through this. Evilly";
+	freerange = 1;
+	frequency = 1213;
+	name = "Magic Intercom";
+	pixel_x = 27;
+	pixel_y = -4;
+	subspace_transmission = 1;
+	syndie = 1
+	},
+/obj/structure/closet/cabinet{
+	name = "Priest"
+	},
+/obj/item/clothing/under/rank/chaplain/light,
+/obj/item/weapon/storage/bible{
+	pixel_y = 6
+	},
+/obj/item/weapon/storage/backpack/chaplain,
+/obj/item/clothing/suit/wizrobe/holidaypriest,
+/obj/item/clothing/glasses/sunglasses/hud/chaplain,
+/obj/item/clothing/head/wizard/nimb,
+/turf/unsimulated/floor{
+	icon_state = "wood-broken4"
+	},
+/area/custom/wizard_station)
 "aMh" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -19864,12 +19962,20 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "aWR" = (
-/obj/structure/mirror{
-	pixel_y = 28
+/obj/structure/table/woodentable/fancy,
+/obj/item/device/flashlight/lamp{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/toy/plushie/tabby_cat{
+	name = "plushie Buch";
+	pixel_x = 2;
+	pixel_y = 2
 	},
 /turf/simulated/shuttle/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet"
+	dir = 5;
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "vault"
 	},
 /area/shuttle/escape/centcom)
 "aWS" = (
@@ -28877,13 +28983,22 @@
 /obj/structure/object_wall/evac{
 	icon_state = "9,6"
 	},
+/obj/machinery/status_display{
+	pixel_x = 4;
+	pixel_y = -1
+	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "oAb" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
-	pixel_y = 2
+/obj/item/ashtray/glass{
+	pixel_y = -2
 	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/cigarette/cigar,
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
@@ -28997,12 +29112,12 @@
 /area/shuttle/escape/centcom)
 "oOb" = (
 /obj/structure/altar_of_gods,
-/obj/item/weapon/nullrod{
-	pixel_x = -8
-	},
 /obj/item/weapon/storage/bible{
 	pixel_x = 4;
 	pixel_y = 2
+	},
+/obj/item/weapon/nullrod{
+	pixel_x = -8
 	},
 /turf/simulated/shuttle/floor{
 	dir = 5;
@@ -29014,7 +29129,9 @@
 /obj/structure/object_wall/evac{
 	icon_state = "6,6"
 	},
-/obj/structure/sign/departments/holy,
+/obj/structure/sign/departments/holy{
+	pixel_x = -1
+	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "oQb" = (
@@ -29033,15 +29150,13 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "oSb" = (
-/obj/machinery/door/window/eastleft{
-	dir = 2;
-	name = "Altar";
-	req_access = list(22)
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/simulated/shuttle/floor{
-	dir = 4;
+	dir = 5;
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "vault"
+	icon_state = "wood"
 	},
 /area/shuttle/escape/centcom)
 "oTb" = (
@@ -29345,13 +29460,14 @@
 	},
 /area/centcom/evac)
 "pNb" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/machinery/door/window/eastleft{
+	dir = 2;
+	name = "Altar"
 	},
 /turf/simulated/shuttle/floor{
-	dir = 5;
+	dir = 4;
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "wood"
+	icon_state = "vault"
 	},
 /area/shuttle/escape/centcom)
 "pOb" = (
@@ -29540,11 +29656,13 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "skC" = (
-/obj/machinery/light/small,
+/obj/structure/closet/emergency_wall{
+	pixel_x = 30
+	},
 /turf/simulated/shuttle/floor{
 	dir = 5;
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "wood"
+	icon_state = "vault"
 	},
 /area/shuttle/escape/centcom)
 "sAN" = (
@@ -40027,7 +40145,7 @@ abg
 abg
 aXm
 baA
-agg
+aMe
 abg
 abg
 abi
@@ -40799,7 +40917,7 @@ bbk
 aDd
 aDy
 aDT
-aGJ
+aMf
 aaY
 abi
 aFw
@@ -48988,7 +49106,7 @@ aaM
 aRs
 aac
 oCb
-oSb
+pNb
 afz
 aRG
 bJl
@@ -48997,7 +49115,7 @@ afv
 aLv
 amS
 acx
-acx
+aLN
 aLM
 pXb
 abz
@@ -49505,10 +49623,10 @@ aeU
 oWb
 onb
 aRG
-anc
+aRG
 bOb
 aLE
-aLE
+aGJ
 amd
 aLm
 afv
@@ -50021,16 +50139,16 @@ ojb
 adW
 arD
 afU
-aCj
-afU
-aLz
 afU
 aCj
 afU
-aad
-ahS
-aRG
+afU
 aLO
+aLz
+afk
+ahS
+anc
+aMa
 acX
 oxb
 adB
@@ -50273,17 +50391,17 @@ iPu
 oBb
 adO
 afF
-aWR
+pHb
 orb
 adw
 avJ
 aLP
 aLP
 aLP
-aeB
 aLP
 aLP
-aLP
+aeC
+aWR
 aeV
 aep
 aRG
@@ -50544,7 +50662,7 @@ aRG
 aLW
 aeB
 aRG
-aLw
+aMd
 acZ
 aek
 aeh
@@ -50787,17 +50905,17 @@ iPu
 abF
 abH
 ozb
-aWR
+pHb
 aWq
 adW
 arD
 afU
 afU
 afU
-aeB
 afU
 afU
-afU
+aeC
+aad
 aeW
 afw
 aRG
@@ -51049,16 +51167,16 @@ afp
 adw
 avJ
 aLP
-aLt
-aLP
-afk
 aLP
 aLt
 aLP
-abq
-aeg
-aRG
+aLP
 aLp
+abq
+agg
+aeg
+skC
+aLn
 add
 aen
 adF
@@ -51557,11 +51675,11 @@ aaM
 aaM
 abV
 aYJ
+oSb
 abF
-pNb
 abF
 okb
-skC
+abF
 afi
 aLb
 aLC
@@ -52081,7 +52199,7 @@ aeX
 aeX
 aeC
 aga
-aLN
+aLw
 adf
 abw
 abM
