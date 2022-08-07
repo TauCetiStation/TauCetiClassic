@@ -2,5 +2,5 @@
     if(..())
         return TRUE
     god_attack(A)
+    SetNextMove(CLICK_CD_RAPID)
     return TRUE
-    
