@@ -7,7 +7,7 @@
 
 	for(var/i = max(1, pellets), i > 0, i--)
 		boolet_number++
-		var/atom/curloc = get_turf(weapon)
+		var/turf/curloc = get_turf(weapon)
 		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet)
 		if(distro)
