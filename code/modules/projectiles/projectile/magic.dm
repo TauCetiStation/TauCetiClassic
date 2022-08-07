@@ -75,7 +75,8 @@
 			//mob/living/simple_animal/hostile/carp/ranged/chaos,
 			/mob/living/simple_animal/hostile/asteroid/basilisk,
 			/mob/living/simple_animal/hostile/asteroid/goliath,
-			/mob/living/simple_animal/construct/proteon)
+			/mob/living/simple_animal/construct/proteon,
+			/mob/living/carbon/xenomorph/humanoid/maid,)
 			new_mob = new beast(get_turf(loc))
 			new_mob.universal_speak = TRUE
 		if("cyborg")
@@ -87,7 +88,6 @@
 			var/xeno_type = pick(
 				/mob/living/carbon/xenomorph/humanoid/hunter,
 				/mob/living/carbon/xenomorph/humanoid/sentinel,
-				/mob/living/carbon/xenomorph/humanoid/maid,
 			)
 			new_mob = new xeno_type(get_turf(loc))
 			new_mob.universal_speak = TRUE
@@ -144,7 +144,7 @@
 		var/mob/living/simple_animal/hostile/mimic/copy/C = change
 		C.ChangeOwner(firer)
 		create_spawner(/datum/spawner/living/mimic, C)
-	else if(istype(change, /mob/living/simple_animal/shade) || isxeno(change))
+	else if(istype(change, /mob/living/simple_animal/shade))
 		var/mob/living/M = change
 		M = M.wabbajack("animal", TRUE)
 		if(firer && iswizard(firer))
