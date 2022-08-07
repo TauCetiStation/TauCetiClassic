@@ -119,6 +119,8 @@
 	desc = "Weapons and related things, war"
 	icon_state = "aspect_weapon"
 
+	god_desc = "И пускай оружейный барон станет самым религиозным человеком."
+
 	color = COLOR_DARK_GRAY
 
 /datum/aspect/weapon/sacrifice(obj/item/I, mob/living/L, obj/AOG)
@@ -127,7 +129,7 @@
 		var/cost = 0
 		for(var/obj/item/ammo_casing/A in G.ammo_type)
 			var/obj/item/projectile/P = new A.projectile_type()
-			cost += P.damage * 7
+			cost += P.damage * 15
 			qdel(P)
 		return cost
 
@@ -141,7 +143,7 @@
 		var/obj/item/ammo_box/A2 = new W.mag_type2()
 		var/obj/item/ammo_casing/C2 = new A2.ammo_type()
 		var/obj/item/projectile/P2 = new C2.projectile_type()
-		var/cost = (P.damage + P2.damage) * 7
+		var/cost = (P.damage + P2.damage) * 15
 		qdel(A)
 		qdel(C)
 		qdel(P)
@@ -153,8 +155,9 @@
 	if(istype(I, /obj/item/weapon) && !istype(I,/obj/item/weapon/melee/cultblade))
 		var/obj/item/weapon/W = I
 		for(var/datum/twohanded_component_builder/TCB in W.datum_components)
-			return TCB.force_wielded * 16
-		return I.force * 16
+			//to_chat(world,"[I] - [TCB.force_wielded * (TCB.force_wielded / 400 * sqrt(TCB.force_wielded))], [TCB.force_wielded]")
+			return round(20 *TCB.force_wielded / 400 * sqrt(TCB.force_wielded))
+		return round(20 * I.force / 400 * sqrt(I.force))
 	return 0
 
 //Gives mana from: minerals, sheet, steel, money etc
