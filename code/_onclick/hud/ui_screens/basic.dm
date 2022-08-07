@@ -482,5 +482,4 @@
 
 /atom/movable/screen/holomap/add_to_hud(datum/hud/hud)
 	..()
-	update_icon(hud.mymob)
 	hud.mymob.holomap_obj = src

@@ -342,8 +342,6 @@ BLIND     // can't see anything
 
 	sprite_sheet_slot = SPRITE_SHEET_HEAD
 
-	var/obj/item/holochip/holochip
-
 //Mask
 /obj/item/clothing/mask
 	name = "mask"

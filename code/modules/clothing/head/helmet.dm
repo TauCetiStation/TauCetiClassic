@@ -17,6 +17,8 @@
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 	flashbang_protection = TRUE
 
+	var/obj/item/holochip/holochip
+
 /obj/item/clothing/head/helmet/Destroy()
 	QDEL_NULL(holochip)
 	return ..()
@@ -34,7 +36,7 @@
 
 /obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/holochip))
-		if(I.flags & ABSTRACT)
+		if(flags & ABSTRACT)
 			return    //You can't insert holochip in abstract item.
 		if(holochip)
 			to_chat(user, "<span class='notice'>The [src] is already modified with the [holochip]</span>")

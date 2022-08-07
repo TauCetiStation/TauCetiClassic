@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(holomaps)
 	if(!center)
 		return
 	var/list/turf/turfs = RANGE_TURFS(world.maxx/2, center)
-	for(var/turf/T in turfs)
+	for(var/turf/T as anything in turfs)
 		if (isfloorturf(T) || istype(T, /turf/unsimulated/floor) || istype(T, /turf/simulated/shuttle/floor))
 			holomap.DrawBox(HOLOMAP_WALKABLE_TILE, T.x, T.y)
 		if(iswallturf(T) || istype(T, /turf/unsimulated/wall) || locate(/obj/structure/grille) in T || locate(/obj/structure/window) in T || locate(/obj/structure/object_wall) in T)
@@ -105,10 +105,8 @@ SUBSYSTEM_DEF(holomaps)
 				I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_INCAPACITATED)
 			else
 				I.filters += filter(type = "outline", size = 1, color = COLOR_HMAP_DEFAULT)
-			I.pixel_x = (marker_location.x - 16) * PIXEL_MULTIPLIER
-			I.pixel_y = (marker_location.y - 16) * PIXEL_MULTIPLIER
-			I.plane = HUD_PLANE
-			I.layer = HUD_LAYER
+			I.pixel_x = (marker_location.x - HOLOMAP_OFFSET) * PIXEL_MULTIPLIER
+			I.pixel_y = (marker_location.y - HOLOMAP_OFFSET) * PIXEL_MULTIPLIER
 	for(var/obj/machinery/computer/shuttle in holomap_landmarks)
 		var/turf/marker_location = get_turf(shuttle)
 		if(!is_station_level(marker_location.z))
@@ -122,8 +120,6 @@ SUBSYSTEM_DEF(holomaps)
 		var/image/I = holomap_cache[shuttle]
 		I.pixel_x = (marker_location.x - HOLOMAP_OFFSET) * PIXEL_MULTIPLIER
 		I.pixel_y = (marker_location.y - HOLOMAP_OFFSET) * PIXEL_MULTIPLIER
-		I.plane = HUD_PLANE
-		I.layer = HUD_LAYER
 
 #undef COLOR_HMAP_DEAD
 #undef COLOR_HMAP_INCAPACITATED
