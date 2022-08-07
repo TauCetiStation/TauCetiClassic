@@ -5,6 +5,7 @@
 	if(!SSjob)
 		return
 	. = "<tt><center>"
+
 	switch(alternate_option)
 		if(GET_RANDOM_JOB)
 			. += "<u><a href='?_src_=prefs;preference=job;task=random'><font color=green>\[Get random job if preferences unavailable\]</font></a></u>"
@@ -69,6 +70,7 @@
 		. += "</td><td width='40%'>"
 
 		. += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;dir=higher;text=[rank]' oncontextmenu='window.location.href=\"?_src_=prefs;preference=job;task=setJobLevel;text=[rank]\";return false;'>"
+
 		if(rank == "Test Subject")//Assistant is special
 			if(job_preferences["Test Subject"])
 				. += " <font color=green size=2>Yes</font>"
@@ -163,6 +165,7 @@
 
 	SetJobPreferenceLevel(job, jpval)
 	return TRUE
+
 /datum/preferences/proc/ResetJobs()
 	job_preferences = list()
 
