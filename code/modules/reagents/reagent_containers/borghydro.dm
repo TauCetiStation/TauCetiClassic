@@ -116,3 +116,10 @@
 				empty = 0
 		if(empty)
 			to_chat(user, "<span class='notice'>It is currently empty. Allow some time for the internal syntheszier to produce more.</span>")
+
+/obj/item/weapon/reagent_containers/borghypo/peace
+	name = "Peace Hypospray"
+	reagent_ids = list("cryptobiolin")
+
+/obj/item/weapon/reagent_containers/borghypo/peace/attack_self(mob/user)
+	return FALSE
