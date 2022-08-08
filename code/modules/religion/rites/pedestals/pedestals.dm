@@ -68,10 +68,13 @@
 		return FALSE
 
 	playsound_frequency_admin = 0.96 //Something is coming
-	A = new(user)
-	A.play()
+	addtimer(CALLBACK(src, .proc/announce_summon, user), 15 SECONDS)
 
 	return TRUE
+
+/datum/religion_rites/pedestals/cult/narsie/proc/announce_summon(mob/living/user)
+	A = new(user)
+	A.play()
 
 /datum/religion_rites/pedestals/cult/narsie/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
