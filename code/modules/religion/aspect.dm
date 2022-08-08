@@ -157,11 +157,10 @@
 
 	if(istype(I, /obj/item/weapon) && !istype(I,/obj/item/weapon/melee/cultblade))
 		var/obj/item/weapon/W = I
-		for(var/datum/component/twohanded/TCB in W.datum_components)
+		var/datum/component/twohanded/T = I.GetComponent(/datum/component/twohanded)
+		if(T)
 			var/total = TCB.force_wielded * sqrt(TCB.force_wielded)
-			to_chat(world,"1 [src] - [TCB.force_wielded * sqrt(TCB.force_wielded)]")
 			return total
-		to_chat(world,"2 [src] - [I.force * sqrt(I.force)]")
 		var/total = I.force * sqrt(I.force)
 		return total
 	return 0
