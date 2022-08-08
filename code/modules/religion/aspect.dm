@@ -136,27 +136,29 @@
 	if(istype(I,/obj/item/weapon/gun/projectile))
 		var/obj/item/weapon/gun/projectile/W = I
 
+		var/cost = 0
 		var/obj/item/ammo_box/A = new W.mag_type()
 		var/obj/item/ammo_casing/C = new A.ammo_type()
 		var/obj/item/projectile/P = new C.projectile_type()
-
-		var/obj/item/ammo_box/A2 = new W.mag_type2()
-		var/obj/item/ammo_casing/C2 = new A2.ammo_type()
-		var/obj/item/projectile/P2 = new C2.projectile_type()
-		var/cost = (P.damage + P2.damage) * 15
+		cost += P.damage * 20
 		qdel(A)
 		qdel(C)
 		qdel(P)
-		qdel(A2)
-		qdel(C2)
-		qdel(P2)
+
+		if(W.mag_type2)
+			var/obj/item/ammo_box/A2 = new W.mag_type2()
+			var/obj/item/ammo_casing/C2 = new A2.ammo_type()
+			var/obj/item/projectile/P2 = new C2.projectile_type()
+			cost += P2.damage * 20
+			qdel(A2)
+			qdel(C2)
+			qdel(P2)
 		return cost
 
 	if(istype(I, /obj/item/weapon) && !istype(I,/obj/item/weapon/melee/cultblade))
 		var/obj/item/weapon/W = I
-		for(var/datum/twohanded_component_builder/TCB in W.datum_components)
-			//to_chat(world,"[I] - [TCB.force_wielded * (TCB.force_wielded / 400 * sqrt(TCB.force_wielded))], [TCB.force_wielded]")
-			return round(20 *TCB.force_wielded / 400 * sqrt(TCB.force_wielded))
+		for(var/datum/component/twohanded/TCB in W.datum_components)
+			return round(20 * TCB.force_wielded / 400 * sqrt(TCB.force_wielded))
 		return round(20 * I.force / 400 * sqrt(I.force))
 	return 0
 
