@@ -158,8 +158,12 @@
 	if(istype(I, /obj/item/weapon) && !istype(I,/obj/item/weapon/melee/cultblade))
 		var/obj/item/weapon/W = I
 		for(var/datum/component/twohanded/TCB in W.datum_components)
-			return round(20 * TCB.force_wielded / 400 * sqrt(TCB.force_wielded))
-		return round(20 * I.force / 400 * sqrt(I.force))
+			var/total = TCB.force_wielded * sqrt(TCB.force_wielded)
+			to_chat(world,"1 [src] - [TCB.force_wielded * sqrt(TCB.force_wielded)]")
+			return total
+		to_chat(world,"2 [src] - [I.force * sqrt(I.force)]")
+		var/total = I.force * sqrt(I.force)
+		return total
 	return 0
 
 //Gives mana from: minerals, sheet, steel, money etc
