@@ -36,53 +36,109 @@
 	COOLDOWN_DECLARE(alarm_cooldown)
 
 /obj/item/harmalarm/attack_self(mob/user)
-	var/safety = !(obj_flags & EMAGGED)
 	if (!COOLDOWN_FINISHED(src, alarm_cooldown))
-		to_chat(user, "<font color='red'>The device is still recharging!</font>")
+		to_chat(user, "<span class='warning'>The device is still recharging!</span>")
 		return
 
-	if(iscyborg(user))
-		var/mob/living/silicon/robot/robot_user = user
+	var/mob/living/silicon/robot/robot_user = null
+	//early silicon check
+	if(isrobot(user))
+		robot_user = user
+
+	if(robot_user)
 		if(!robot_user.cell || robot_user.cell.charge < 1200)
-			to_chat(user, span_warning("You don't have enough charge to do this!"))
+			to_chat(user, "<span class='warning'>You don't have enough charge to do this!</span>")
 			return
 		robot_user.cell.charge -= 1000
-		if(robot_user.emagged)
-			safety = FALSE
 
-	if(safety == TRUE)
-		user.visible_message("<font color='red' size='2'>[user] blares out a near-deafening siren from its speakers!</font>", \
-			span_userdanger("The siren pierces your hearing and confuses you!"), \
-			span_danger("The siren pierces your hearing!"))
+	//emagged borg should screech loudly than normally
+	if(!robot_user.emagged)
+		user.visible_message("<span class='userdanger'>The siren pierces your hearing!</span>", \
+			"<span class='danger'>[user] blares out a near-deafening siren from its speakers!</span>)")
 		for(var/mob/living/carbon/carbon in get_hearers_in_view(9, user))
-			if(carbon.get_ear_protection())
-				continue
-			carbon.adjust_timed_status_effect(6 SECONDS, /datum/status_effect/confusion)
+			if(ishuman(carbon))
+				var/mob/living/carbon/human/H = carbon
+				if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) && istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+					continue
+			carbon.MakeConfused(6)
 
-		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
-		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', 70, 3)
+		user.audible_message("<span class='userdanger'>HUMAN HARM!</span>")
+		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', VOL_EFFECTS_MASTER, 70)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_SAFETY_COOLDOWN)
-		user.log_message("used a Cyborg Harm Alarm in [AREACOORD(user)]", LOG_ATTACK)
-		if(iscyborg(user))
-			var/mob/living/silicon/robot/robot_user = user
-			to_chat(robot_user.connected_ai, "<br>[span_notice("NOTICE - Peacekeeping 'HARM ALARM' used by: [user]")]<br>")
+		log_message("[user] used a Cyborg Harm Alarm in [COORD(user.loc)]", TRUE)
+		//send message for AI
+		to_chat(robot_user.connected_ai, "<span class='notice'>('HARM ALARM' used by: [user]")
 	else
-		user.audible_message("<font color='red' size='7'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</font>")
+		user.audible_message("<span class='userdanger'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</span>")
 		for(var/mob/living/carbon/carbon in get_hearers_in_view(9, user))
-			var/bang_effect = carbon.soundbang_act(2, 0, 0, 5)
-			switch(bang_effect)
-				if(1)
-					carbon.adjust_timed_status_effect(5 SECONDS, /datum/status_effect/confusion)
-					carbon.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/speech/stutter)
-					carbon.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/jitter)
-				if(2)
-					carbon.Paralyze(40)
-					carbon.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
-					carbon.adjust_timed_status_effect(30 SECONDS, /datum/status_effect/speech/stutter)
-					carbon.adjust_timed_status_effect(50 SECONDS, /datum/status_effect/jitter)
-		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
+			if(ishuman(carbon))
+				var/mob/living/carbon/human/H = carbon
+				//Can lings be stunned by loud sound? i think not
+				if(!(ischangeling(H) || isshadowling(H)))
+					H.ear_deaf += 30
+					H.AdjustConfused(20)
+					H.make_jittery(500)
+			//Let's pretend to be a changeling
+		for(var/obj/machinery/light/L in range(4, user))
+			L.on = 1
+			L.broken()
+
+		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg')
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
-		user.log_message("used an emagged Cyborg Harm Alarm in [AREACOORD(user)]", LOG_ATTACK)
+		log_message("[user] used an emagged Cyborg Harm Alarm in [COORD(user)]", TRUE)
+
+/obj/item/weapon/robot_helper_tool
+	name = "Helper tool"
+	desc = "A tool that helps organics get back on feet."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "robot_helper"
+	item_state = "robot_helper"
+	var/charge_cost = 50
+
+/obj/item/weapon/robot_helper_tool/proc/check_charge(charge_amt)
+	if(isrobot(loc))
+		var/mob/living/silicon/robot/R = loc
+		return (R.cell && R.cell.charge >= charge_amt)
+
+/obj/item/weapon/robot_helper_tool/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
+	if(!user.cell || (user.cell.charge < charge_cost))
+		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
+		return FALSE
+
+	return TRUE
+
+/obj/item/weapon/robot_helper_tool/attack(mob/living/carbon/human/M, mob/living/silicon/robot/user, def_zone)
+	var/mob/living/carbon/human/H = M
+	if(!istype(H) || !can_use(user, M))
+		return
+
+	robot_help_shake(M, user)
+
+/obj/item/weapon/robot_helper_tool/proc/robot_help_shake(mob/living/carbon/human/M, mob/living/silicon/robot/user)
+	if(M.lying)
+		if(!M.IsSleeping())
+			M.resting = FALSE
+			if(M.crawling)
+			if(M.pass_flags & PASSCRAWL)
+				M.pass_flags ^= PASSCRAWL
+				M.crawling = FALSE
+		user.visible_message("<span class='notice'>[user] shakes [M] trying to wake [P_THEM(M.gender)] up!</span>", \
+							"<span class='notice'>You shake [M] trying to wake [P_THEM(M.gender)] up!</span>")
+	else
+		if(!M.IsSleeping())
+			user.visible_message("<span class='notice'>[user] cuddles with [M] to make [P_THEM(M.gender)] feel better!</span>", \
+								"<span class='notice'>You cuddle with [M] to make [P_THEM(M.gender)] feel better!</span>")
+		else
+			user.visible_message("<span class='notice'>[user] gently touches [M] trying to wake [P_THEM(M.gender)] up!</span>", \
+								"<span class='notice'>You gently touch [M] trying to wake [P_THEM(M.gender)] up!</span>")
+	M.AdjustSleeping(-10 SECONDS)
+	M.AdjustParalysis(-3)
+	M.AdjustStunned(-3)
+	M.AdjustWeakened(-3)
+
+	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
+
+	user.cell.use(charge_cost)
 
 /**********************************************************************
 						HUD/SIGHT things

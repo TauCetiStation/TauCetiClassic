@@ -243,7 +243,7 @@ RSF
 /obj/item/rsf/cookiesynth/attack_self(mob/user)
 	var/mob/living/silicon/robot/P = null
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	if(iscyborg(user))
+	if(isrobot(user))
 		P = user
 	if(P?.emagged)
 		mode = 8
