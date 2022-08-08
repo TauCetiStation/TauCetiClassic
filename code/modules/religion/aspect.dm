@@ -156,7 +156,6 @@
 		return cost
 
 	if(istype(I, /obj/item/weapon) && !istype(I,/obj/item/weapon/melee/cultblade))
-		var/obj/item/weapon/W = I
 		var/datum/component/twohanded/T = I.GetComponent(/datum/component/twohanded)
 		if(T)
 			var/total = T.force_wielded * sqrt(T.force_wielded)
