@@ -99,6 +99,12 @@
 		walk_link(AM)
 
 /obj/effect/cross_action/spacetime_dist/attackby(obj/item/W, mob/user, params)
+	var/f = ..()
+	if(f > AB_NO_AFTERATTACK)
+		return f - AB_NO_ATTACKBY
+	else
+		. = f
+
 	if(user.drop_item(W))
 		walk_link(W)
 	else

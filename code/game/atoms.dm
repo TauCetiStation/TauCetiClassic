@@ -344,6 +344,7 @@
 	return
 
 /atom/proc/fire_act()
+	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT)
 	return
 
 /atom/proc/singularity_act()

@@ -5,6 +5,12 @@
 	density = TRUE
 
 /obj/structure/signpost/attackby(obj/item/weapon/W, mob/user)
+		var/f = ..()
+	if(f > AB_NO_AFTERATTACK)
+		return f - AB_NO_ATTACKBY
+	else
+		. = f
+	
 	return attack_hand(user)
 
 /obj/structure/signpost/attack_hand(mob/user)

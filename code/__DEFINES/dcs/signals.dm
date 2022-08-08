@@ -148,9 +148,10 @@
 #define COMSIG_ATOM_ADD_DIRT "atom_add_dirt"
 /// from base of atom/clean_blood (WHICH APPERANTLY CLEANS ALL DIRT OVERLAYS ?? ??? ?)
 #define COMSIG_ATOM_CLEAN_BLOOD "atom_clean_blood"
-
 /// from base /atom/movable/proc/Moved() and /atom/proc/set_dir() return dir
 #define COMSIG_ATOM_CHANGE_DIR "change_dir"
+/// from base /atom/fire_act()
+#define COMSIG_ATOM_FIRE_ACT "atom_fire_act"
 
 // /atom/movable signals
 /// from base of atom/movable/Move(): (/atom/newLoc)

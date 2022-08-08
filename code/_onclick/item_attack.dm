@@ -7,12 +7,30 @@
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(user)
 
-// No comment
+//structure of attackby overload:
+//	var/f = ..()
+//	if(f > AB_NO_AFTERATTACK)
+//		return f - AB_NO_ATTACKBY
+//	else
+//		. = f
+//		*custom code here*
+
 /atom/proc/attackby(obj/item/W, mob/user, params)
-	return FALSE
+	var/feedback = 0
+	var/bit_map = SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, src, params)
+	if((bit_map & COMPONENT_NO_ATTACKBY) || (bit_map & COMPONENT_NO_ATTACK_PROCESSING))
+		feedback += AB_NO_ATTACKBY
+	if((bit_map & COMPONENT_NO_AFTERATTACK) || (bit_map & COMPONENT_NO_ATTACK_PROCESSING))
+		feedback += AB_NO_AFTERATTACK
+	return feedback
 
 /atom/movable/attackby(obj/item/W, mob/user, params)
-	. = ..()
+	var/f = ..()
+	if(f > AB_NO_AFTERATTACK)
+		return f - AB_NO_ATTACKBY
+	else
+		. = f
+	
 	if(.) // Clickplace, no need for attack animation.
 		return FALSE
 
@@ -41,6 +59,12 @@
 	return TRUE
 
 /mob/living/attackby(obj/item/I, mob/user, params)
+	var/f = ..()
+	if(f > AB_NO_AFTERATTACK)
+		return f - AB_NO_ATTACKBY
+	else
+		. = f
+	
 	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself

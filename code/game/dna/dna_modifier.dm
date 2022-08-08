@@ -184,6 +184,12 @@
 	return
 
 /obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user)
+	var/f = ..()
+	if(f > AB_NO_AFTERATTACK)
+		return f - AB_NO_ATTACKBY
+	else
+		. = f
+	
 	if(!occupant && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]", I))
 		return FALSE
 
@@ -284,6 +290,12 @@
 
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user)
+	var/f = ..()
+	if(f > AB_NO_AFTERATTACK)
+		return f - AB_NO_ATTACKBY
+	else
+		. = f
+	
 	if(istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
 		if (!disk)
 			if(!do_skill_checks(user))

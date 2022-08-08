@@ -48,7 +48,8 @@
 		return COMPONENT_INCOMPATIBLE
 
 	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), .proc/Destroy)
-	RegisterSignal(parent, list(COMSIG_PARENT_ATTACKBY), .proc/attack_reaction)
+	RegisterSignal(parent, list(COMSIG_PARENT_ATTACKBY), .proc/item_attack_reaction)
+	RegisterSignal(parent, list(COMSIG_ATOM_FIRE_ACT), .proc/fire_attack_reaction)
 
 	var/atom/A = parent
 	old_color = A.color
@@ -129,7 +130,7 @@
 	if(r == FALSE) //we don't have overload for parent, so do the default burning
 		qdel(parent)
 
-/datum/component/thermite/proc/attack_reaction(datum/source, obj/item/I,  mob/living/user, params)
+/datum/component/thermite/proc/item_attack_reaction(datum/source, obj/item/I,  mob/living/user, params)
 	var/datum/gas_mixture/env = I.return_air()
 	var/temp = 0.0
 	temp = (env.temperature + I.get_current_temperature()) - T0C
@@ -142,6 +143,9 @@
 		return
 
 	return COMPONENT_NO_ATTACK_PROCESSING
+
+/datum/component/thermite/proc/fire_attack_reaction()
+	ignite()
 
 /datum/component/thermite/proc/set_amount(_amount, ignore_burning = FALSE)
 	if(!ignore_burning && burn_timer != null)

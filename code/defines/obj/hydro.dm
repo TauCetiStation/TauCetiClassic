@@ -62,6 +62,12 @@
 	var/list/mutatelist = list()
 
 /obj/item/seeds/attackby(obj/item/I, mob/user, params)
+		var/f = ..()
+	if(f > AB_NO_AFTERATTACK)
+		return f - AB_NO_ATTACKBY
+	else
+		. = f
+		
 	if(istype(I, /obj/item/device/plant_analyzer))
 		to_chat(user, "*** <B>[plantname]</B> ***")
 		to_chat(user, "-Plant Endurance: <span class='notice'>[endurance]</span>")

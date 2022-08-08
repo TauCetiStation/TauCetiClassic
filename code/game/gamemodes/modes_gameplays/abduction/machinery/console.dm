@@ -204,6 +204,12 @@
 	return
 
 /obj/machinery/abductor/console/attackby(O, user, params)
+	var/f = ..()
+	if(f > AB_NO_AFTERATTACK)
+		return f - AB_NO_ATTACKBY
+	else
+		. = f
+	
 	if(istype(O, /obj/item/device/abductor/gizmo))
 		var/obj/item/device/abductor/gizmo/G = O
 		to_chat(user, "<span class='notice'>You link the tool to the console.</span>")

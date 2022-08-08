@@ -306,3 +306,7 @@
 
 //For crawl_can_use() in /mob/living
 #define IS_ABOVE(A, B) (A.layer > B.layer || A.plane > B.plane)
+
+//attackby feedback
+#define AB_NO_ATTACKBY 2
+#define AB_NO_AFTERATTACK 1
