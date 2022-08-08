@@ -380,7 +380,7 @@
 /obj/item/weapon/robot_module/peacekeeper
 	name = "peacekeeper robot module"
 
-/obj/item/weapon/robot_module/science/atom_init()
+/obj/item/weapon/robot_module/peacekeeper/atom_init()
 	. = ..()
 
 	modules += new /obj/item/device/flash(src)

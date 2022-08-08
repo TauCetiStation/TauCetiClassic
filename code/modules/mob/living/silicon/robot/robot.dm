@@ -174,7 +174,7 @@
 
 	if(!choose_module)
 		var/list/modules = list(
-				"Standard" = "robot_old",
+				"PeaceKeeper" = "Peace",
 				"Engineering" = "Engineering",
 				"Medical" = "medicalrobot",
 				"Miner" = "Miner_old",
@@ -201,6 +201,9 @@
 		return
 
 	switch(modtype)
+		if("PeaceKeeper")
+			module = new /obj/item/weapon/robot_module/peacekeeper(src)
+			module_sprites["Peacekeeper"] = "Peace"
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
 			module_sprites["Waitress"] = "Service"
