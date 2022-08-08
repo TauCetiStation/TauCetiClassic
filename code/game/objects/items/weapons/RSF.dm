@@ -239,6 +239,8 @@ RSF
 	desc = "A device used to rapidly deploy cookies."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "COOKIE!!!"
+	matter = 30
+	mode = 7
 
 /obj/item/weapon/rsf/cookiesynth/attack_self(mob/user)
 	var/mob/living/silicon/robot/P = null
@@ -256,15 +258,15 @@ RSF
 	. = ..()
 	if(matter < 1)
 		return
-	if ((istype(target, /obj/structure/table) || isfloorturf(target)) && mode == 7)
+	if((istype(target, /obj/structure/table) || isfloorturf(target)) && mode == 7)
 		to_chat(user, "Dispensing Cookie...")
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 		new /obj/item/weapon/reagent_containers/food/snacks/cookie(target.loc)
-		if (isrobot(user))
+		if(isrobot(user))
 			var/mob/living/silicon/robot/engy = user
 			engy.cell.charge -= 100
 
-	else if ((istype(target, /obj/structure/table) || isfloorturf(target)) && mode == 8)
+	else if((istype(target, /obj/structure/table) || isfloorturf(target)) && mode == 8)
 		to_chat(user, "Dispensing Bad Cookie...")
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 		new /obj/item/weapon/reagent_containers/food/snacks/cookie/toxin_cookie(target.loc)

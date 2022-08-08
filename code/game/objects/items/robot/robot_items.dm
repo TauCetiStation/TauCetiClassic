@@ -54,13 +54,12 @@
 	//emagged borg should screech loudly than normally
 	if(!robot_user.emagged)
 		user.visible_message("<span class='userdanger'>The siren pierces your hearing!</span>", \
-			"<span class='danger'>[user] blares out a near-deafening siren from its speakers!</span>)")
-		for(var/mob/living/carbon/carbon in get_hearers_in_view(9, user))
-			if(ishuman(carbon))
-				var/mob/living/carbon/human/H = carbon
-				if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) && istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
-					continue
-			carbon.MakeConfused(6)
+			"<span class='danger'>[user] blares out a near-deafening siren from its speakers!</span>")
+		for(var/mob/living/carbon/human/H in view(9, user))
+			to_chat(world, "[H] is human")
+			if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) && istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+				continue
+			H.MakeConfused(6)
 
 		user.audible_message("<span class='userdanger'>HUMAN HARM!</span>")
 		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', VOL_EFFECTS_MASTER, 70)
@@ -70,20 +69,24 @@
 		to_chat(robot_user.connected_ai, "<span class='notice'>('HARM ALARM' used by: [user]")
 	else
 		user.audible_message("<span class='userdanger'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</span>")
-		for(var/mob/living/carbon/carbon in get_hearers_in_view(9, user))
-			if(ishuman(carbon))
-				var/mob/living/carbon/human/H = carbon
-				//Can lings be stunned by loud sound? i think not
-				if(!(ischangeling(H) || isshadowling(H)))
-					H.ear_deaf += 30
-					H.AdjustConfused(20)
-					H.make_jittery(500)
-			//Let's pretend to be a changeling
+		playsound(usr, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, 100)
+		var/list/hearers = get_hearers_in_view(9, user)
+		for(var/mob/living/carbon/human/H in hearers)
+			//Can lings be stunned by loud sound? i think not
+			if(ischangeling(H))
+				continue
+			if(isshadowling(H))
+				continue
+			if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) && istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+				continue
+			H.ear_deaf += 30
+			H.MakeConfused(20)
+			H.make_jittery(500)
+		//Let's pretend to be a changeling
 		for(var/obj/machinery/light/L in range(4, user))
 			L.on = 1
 			L.broken()
 
-		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg')
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
 		user.attack_log += "\[[time_stamp()]\]<font color='red'>used emagged Cyborg Harm Alarm in [COORD(user.loc)]</font>"
 
@@ -129,7 +132,7 @@
 							"<span class='notice'>You shake [M] trying to wake [P_THEM(M.gender)] up!</span>")
 	else
 		if(!M.IsSleeping())
-			if(M.has_bodypart(BP_HEAD) && (user.get_targetzone() & BP_HEAD))
+			if(M.has_bodypart(BP_HEAD) && (user.get_targetzone() && BP_HEAD))
 				user.visible_message("<span class='notice'>[user] bops [M] on the head!</span>", \
 									"<span class='notice'>You bop [M] on the head!</span>")
 			else
