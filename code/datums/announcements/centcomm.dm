@@ -29,7 +29,7 @@
 /datum/announcement/centcomm/noert/New()
 	message = "Похоже, отряд быстрого реагирования был запрошен на [station_name_ru()]. К сожалению, мы не сможем его отправить сейчас."
 
-/datum/announcement/centcomm/summon
+/datum/announcement/centcomm/narsie_summon
 	name = "Central Command Higher Dimensional Affairs"
 	subtitle = "Центральное Командование"
 /datum/announcement/centcomm/summon/New(mob/user)
