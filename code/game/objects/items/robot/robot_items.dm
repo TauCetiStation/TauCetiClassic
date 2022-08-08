@@ -87,47 +87,54 @@
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
 		log_message("[user] used an emagged Cyborg Harm Alarm in [COORD(user)]", TRUE)
 
-/obj/item/weapon/robot_helper_tool
-	name = "Helper tool"
+/obj/item/weapon/grab/cyborghug
+	name = "cyborg hug"
 	desc = "A tool that helps organics get back on feet."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "robot_helper"
 	item_state = "robot_helper"
-	var/charge_cost = 50
+	allow_upgrade = FALSE
+	var/charge_cost = 500
 
-/obj/item/weapon/robot_helper_tool/proc/check_charge(charge_amt)
-	if(isrobot(loc))
-		var/mob/living/silicon/robot/R = loc
-		return (R.cell && R.cell.charge >= charge_amt)
-
-/obj/item/weapon/robot_helper_tool/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
+/obj/item/weapon/cyborghug/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
 	if(!user.cell || (user.cell.charge < charge_cost))
 		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
 		return FALSE
 
 	return TRUE
 
-/obj/item/weapon/robot_helper_tool/attack(mob/living/carbon/human/M, mob/living/silicon/robot/user, def_zone)
+/obj/item/weapon/cyborghug/attack(mob/living/carbon/human/M, mob/living/silicon/robot/user, def_zone)
 	var/mob/living/carbon/human/H = M
 	if(!istype(H) || !can_use(user, M))
 		return
+	if(state = GRAB_PASSIVE)
+		robot_help_shake(M, user)
+	else
+		. = ..()
 
-	robot_help_shake(M, user)
+/obj/item/weapon/cyborghug/attack_self(mob/user)
+	if(state = GRAB_PASSIVE)
+		state = GRAB_AGGRESSIVE
+		to_chat(user, "<span class='warning'>Power increased!</span>")
+	else
+		state = GRAB_PASSIVE
+		to_chat(user, "<span class='notice'>Hugs!</span>")
 
-/obj/item/weapon/robot_helper_tool/proc/robot_help_shake(mob/living/carbon/human/M, mob/living/silicon/robot/user)
+/obj/item/weapon/cyborghug/proc/robot_help_shake(mob/living/carbon/human/M, mob/living/silicon/robot/user)
 	if(M.lying)
 		if(!M.IsSleeping())
-			M.resting = FALSE
 			if(M.crawling)
-			if(M.pass_flags & PASSCRAWL)
-				M.pass_flags ^= PASSCRAWL
-				M.crawling = FALSE
+				M.SetCrawling(FALSE)
 		user.visible_message("<span class='notice'>[user] shakes [M] trying to wake [P_THEM(M.gender)] up!</span>", \
 							"<span class='notice'>You shake [M] trying to wake [P_THEM(M.gender)] up!</span>")
 	else
 		if(!M.IsSleeping())
-			user.visible_message("<span class='notice'>[user] cuddles with [M] to make [P_THEM(M.gender)] feel better!</span>", \
-								"<span class='notice'>You cuddle with [M] to make [P_THEM(M.gender)] feel better!</span>")
+			if(user.zone_selected == BODY_ZONE_HEAD)
+				user.visible_message("<span class='notice'>[user] bops [M] on the head!</span>", \
+									"<span class='notice'>You bop [M] on the head!</span>")
+			else
+				user.visible_message("<span class='notice'>[user] hugs [M] in a firm bear-hug!</span>", \
+								"<span class='notice'>You hug [M] firmly to make [P_THEM(M.gender)] feel better!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] gently touches [M] trying to wake [P_THEM(M.gender)] up!</span>", \
 								"<span class='notice'>You gently touch [M] trying to wake [P_THEM(M.gender)] up!</span>")
