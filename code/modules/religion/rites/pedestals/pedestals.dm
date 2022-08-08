@@ -91,7 +91,7 @@
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			M.playsound_local(null, 'sound/effects/dimensional_rend.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
-	addtimer(CALLBACK(src,.proc/summon,get_turf(AOG)),40)
+	addtimer(CALLBACK(src, .proc/summon, get_turf(AOG)), 40)
 	return TRUE
 
 /datum/religion_rites/pedestals/cult/narsie/proc/summon(turf/T)
