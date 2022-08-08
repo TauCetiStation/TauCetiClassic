@@ -159,7 +159,7 @@
 		var/obj/item/weapon/W = I
 		var/datum/component/twohanded/T = I.GetComponent(/datum/component/twohanded)
 		if(T)
-			var/total = TCB.force_wielded * sqrt(TCB.force_wielded)
+			var/total = T.force_wielded * sqrt(T.force_wielded)
 			return total
 		var/total = I.force * sqrt(I.force)
 		return total
