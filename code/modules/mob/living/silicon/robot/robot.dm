@@ -201,16 +201,6 @@
 		return
 
 	switch(modtype)
-		if("Standard")
-			module = new /obj/item/weapon/robot_module/standard(src)
-			module_sprites["Basic"] = "robot_old"
-			module_sprites["Android"] = "droid"
-			module_sprites["Default"] = "robot"
-			module_sprites["Drone"] = "drone-standard"
-			module_sprites["Acheron"] = "mechoid-Standard"
-			module_sprites["Spider"] = "spider-standard"
-			module_sprites["Kodiak"] = "kodiak-standard"
-
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
 			module_sprites["Waitress"] = "Service"
@@ -494,12 +484,12 @@
 		to_chat(usr, "<span class='warning'>Невозможно заблокировать интерфейс, если открыта панель.</span>")
 		emote("buzz")
 		return
-	
+
 	if(!do_after(usr, 10, target = usr))
 		return
-	
+
 	if(locked)
-		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")		
+		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")
 	else
 		to_chat(usr, "<span class='notice'>Интерфейс заблокирован.</span>")
 
@@ -516,17 +506,17 @@
 		to_chat(usr, "<span class='warning'>Невозможно открыть панель, если заблокирован интерфейс.</span>")
 		emote("buzz")
 		return
-	
+
 	if(!do_after(usr, 10, target = usr))
 		return
-	
+
 	if(opened)
 		to_chat(usr, "<span class='notice'>Панель закрыта.</span>")
 		playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
 	else
 		to_chat(usr, "<span class='notice'>Панель открыта.</span>")
 		playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
-	
+
 	opened = !opened
 	updateicon()
 

@@ -234,23 +234,23 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-/obj/item/rsf/cookiesynth
+/obj/item/weapon/rsf/cookiesynth
 	name = "Cookie Synthesizer"
 	desc = "A device used to rapidly deploy cookies."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "COOKIE!!!"
 
-/obj/item/rsf/cookiesynth/attack_self(mob/user)
+/obj/item/weapon/rsf/cookiesynth/attack_self(mob/user)
 	var/mob/living/silicon/robot/P = null
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	if(isrobot(user))
 		P = user
 	if(P?.emagged)
 		mode = 8
-		to_chat(user, span_alert("Cookie Synthesizer hacked."))
+		to_chat(user, "<span class='warning'>Cookie Synthesizer hacked.</span>")
 	else
 		mode = 7
-		to_chat(user, span_notice("Cookie Synthesizer operating normally."))
+		to_chat(user, "<span class='notice'>Cookie Synthesizer operating normally.</span>")
 
 /obj/item/weapon/rsf/cookiesynth/afterattack(atom/target, mob/user, proximity, params)
 	. = ..()

@@ -65,7 +65,7 @@
 		user.audible_message("<span class='userdanger'>HUMAN HARM!</span>")
 		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', VOL_EFFECTS_MASTER, 70)
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_SAFETY_COOLDOWN)
-		log_message("[user] used a Cyborg Harm Alarm in [COORD(user.loc)]", TRUE)
+		user.attack_log += "\[[time_stamp()]\]<font color='red'>used a Cyborg Harm Alarm in [COORD(user.loc)]</font>"
 		//send message for AI
 		to_chat(robot_user.connected_ai, "<span class='notice'>('HARM ALARM' used by: [user]")
 	else
@@ -85,7 +85,7 @@
 
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg')
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
-		log_message("[user] used an emagged Cyborg Harm Alarm in [COORD(user)]", TRUE)
+		user.attack_log += "\[[time_stamp()]\]<font color='red'>used emagged Cyborg Harm Alarm in [COORD(user.loc)]</font>"
 
 /obj/item/weapon/grab/cyborghug
 	name = "cyborg hug"
@@ -96,31 +96,31 @@
 	allow_upgrade = FALSE
 	var/charge_cost = 500
 
-/obj/item/weapon/cyborghug/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
+/obj/item/weapon/grab/cyborghug/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
 	if(!user.cell || (user.cell.charge < charge_cost))
 		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
 		return FALSE
 
 	return TRUE
 
-/obj/item/weapon/cyborghug/attack(mob/living/carbon/human/M, mob/living/silicon/robot/user, def_zone)
+/obj/item/weapon/grab/cyborghug/attack(mob/living/carbon/human/M, mob/living/silicon/robot/user, def_zone)
 	var/mob/living/carbon/human/H = M
 	if(!istype(H) || !can_use(user, M))
 		return
-	if(state = GRAB_PASSIVE)
+	if(state == GRAB_PASSIVE)
 		robot_help_shake(M, user)
 	else
 		. = ..()
 
-/obj/item/weapon/cyborghug/attack_self(mob/user)
-	if(state = GRAB_PASSIVE)
+/obj/item/weapon/grab/cyborghug/attack_self(mob/user)
+	if(state == GRAB_PASSIVE)
 		state = GRAB_AGGRESSIVE
 		to_chat(user, "<span class='warning'>Power increased!</span>")
 	else
 		state = GRAB_PASSIVE
 		to_chat(user, "<span class='notice'>Hugs!</span>")
 
-/obj/item/weapon/cyborghug/proc/robot_help_shake(mob/living/carbon/human/M, mob/living/silicon/robot/user)
+/obj/item/weapon/grab/cyborghug/proc/robot_help_shake(mob/living/carbon/human/M, mob/living/silicon/robot/user)
 	if(M.lying)
 		if(!M.IsSleeping())
 			if(M.crawling)
@@ -129,7 +129,7 @@
 							"<span class='notice'>You shake [M] trying to wake [P_THEM(M.gender)] up!</span>")
 	else
 		if(!M.IsSleeping())
-			if(user.zone_selected == BODY_ZONE_HEAD)
+			if(M.has_bodypart(BP_HEAD) && (user.get_targetzone() & BP_HEAD))
 				user.visible_message("<span class='notice'>[user] bops [M] on the head!</span>", \
 									"<span class='notice'>You bop [M] on the head!</span>")
 			else

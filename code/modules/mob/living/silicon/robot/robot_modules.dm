@@ -384,10 +384,10 @@
 	. = ..()
 
 	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/rsf/cookiesynth(src)
+	modules += new /obj/item/weapon/rsf/cookiesynth(src)
 	modules += new /obj/item/harmalarm(src)
-	modules += new /obj/item/reagent_containers/borghypo/peace(src)
-	modules += new /obj/item/borg/cyborghug/peacekeeper(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/peace(src)
+	modules += new /obj/item/weapon/grab/cyborghug(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 
