@@ -79,7 +79,7 @@
 				continue
 			H.ear_deaf += 30
 			H.MakeConfused(20)
-			H.make_jittery(500)
+			H.make_jittery(250)
 		//Let's pretend to be a changeling
 		for(var/obj/machinery/light/L in range(4, user))
 			L.on = 1
@@ -111,7 +111,7 @@
 
 /obj/item/weapon/cyborghug/attack_self(mob/living/silicon/robot/user)
 	if(user.emagged)
-		to_chat(user, "<span class='warning'>Power increased!</span>")
+		to_chat(user, "<span class='warning'>Power increased! Electrifying arms...</span>")
 	else
 		to_chat(user, "<span class='notice'>Hugs!</span>")
 
@@ -145,10 +145,10 @@
 	var/calc_power = 100
 	var/obj/item/organ/external/BP = M.get_bodypart(user.get_targetzone())
 	calc_power *= M.get_siemens_coefficient_organ(BP)
-	M.visible_message("<span class='warning bold'>[M] has been touched with the electrical cyberhug by [user]!</span>")
+	M.visible_message("<span class='warning bold'>[user] electrocutes [M] with [src] touch!</span>")
 	M.log_combat(user, "stunned witht [name]")
 	M.apply_effects(0,0,0,0,2,0,0,calc_power)
-
+	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, M)
 	s.start()
