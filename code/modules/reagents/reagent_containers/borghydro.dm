@@ -119,7 +119,4 @@
 
 /obj/item/weapon/reagent_containers/borghypo/peace
 	name = "Peace Hypospray"
-	reagent_ids = list("cryptobiolin")
-
-/obj/item/weapon/reagent_containers/borghypo/peace/attack_self(mob/user)
-	return FALSE
+	reagent_ids = list("cryptobiolin", "rezadone") //rezadon heals broken faces after a fight. slightly toxic

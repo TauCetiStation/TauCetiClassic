@@ -240,41 +240,22 @@ RSF
 	icon = 'icons/obj/food.dmi'
 	icon_state = "COOKIE!!!"
 	matter = 30
-	mode = 7
 
-/obj/item/weapon/rsf/cookiesynth/attack_self(mob/user)
-	var/mob/living/silicon/robot/P = null
+/obj/item/weapon/rsf/cookiesynth/attack_self(mob/living/silicon/robot/user)
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	if(isrobot(user))
-		P = user
-	if(P?.emagged)
-		mode = 8
+	if(user.emagged)
 		to_chat(user, "<span class='warning'>Cookie Synthesizer hacked.</span>")
 	else
-		mode = 7
 		to_chat(user, "<span class='notice'>Cookie Synthesizer operating normally.</span>")
 
-/obj/item/weapon/rsf/cookiesynth/afterattack(atom/target, mob/user, proximity, params)
-	. = ..()
-	if(matter < 1)
+/obj/item/weapon/rsf/cookiesynth/afterattack(atom/target, mob/living/silicon/robot/user, proximity, params)
+	if(matter < 1 || !proximity || target.density || user.cell.charge < 100 || !user.cell
 		return
-	if((istype(target, /obj/structure/table) || isfloorturf(target)) && mode == 7)
+	if(!user.emagged)
 		to_chat(user, "Dispensing Cookie...")
-		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 		new /obj/item/weapon/reagent_containers/food/snacks/cookie(target.loc)
-		if(isrobot(user))
-			var/mob/living/silicon/robot/engy = user
-			engy.cell.charge -= 100
-
-	else if((istype(target, /obj/structure/table) || isfloorturf(target)) && mode == 8)
+	else
 		to_chat(user, "Dispensing Bad Cookie...")
-		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 		new /obj/item/weapon/reagent_containers/food/snacks/cookie/toxin_cookie(target.loc)
-		if (isrobot(user))
-			var/mob/living/silicon/robot/engy = user
-			engy.cell.charge -= 25
-
-	if(!isrobot(user))
-		matter--
-		to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")
-		desc = "A RSF. It currently holds [matter]/30 fabrication-units."
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
+	user.cell.use(100)

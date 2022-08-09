@@ -52,11 +52,10 @@
 		robot_user.cell.charge -= 1000
 
 	//emagged borg should screech loudly than normally
-	if(!robot_user.emagged)
+	if(robot_user && !robot_user.emagged)
 		user.visible_message("<span class='userdanger'>The siren pierces your hearing!</span>", \
 			"<span class='danger'>[user] blares out a near-deafening siren from its speakers!</span>")
 		for(var/mob/living/carbon/human/H in view(9, user))
-			to_chat(world, "[H] is human")
 			if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) && istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
 				continue
 			H.MakeConfused(6)
@@ -70,8 +69,7 @@
 	else
 		user.audible_message("<span class='userdanger'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</span>")
 		playsound(usr, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, 100)
-		var/list/hearers = get_hearers_in_view(9, user)
-		for(var/mob/living/carbon/human/H in hearers)
+		for(var/mob/living/carbon/human/H in view(9, user))
 			//Can lings be stunned by loud sound? i think not
 			if(ischangeling(H))
 				continue
@@ -91,18 +89,16 @@
 		user.attack_log += "\[[time_stamp()]\]<font color='red'>used emagged Cyborg Harm Alarm in [COORD(user.loc)]</font>"
 
 /obj/item/weapon/cyborghug
-	name = "cyborg hug"
-	desc = "A tool that helps organics get back on feet."
+	name = "hugging module"
+	desc = "For when a someone really needs a hug."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "robot_helper"
 	item_state = "robot_helper"
 
-
 /obj/item/weapon/cyborghug/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
 	if(!user.cell || (user.cell.charge < 500))
-		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
+		to_chat(user, "<span class='warning'>You doesn't have enough charge left to do that.</span>")
 		return FALSE
-
 	return TRUE
 
 /obj/item/weapon/cyborghug/attack(mob/living/carbon/human/M, mob/living/silicon/robot/user, def_zone)
@@ -129,7 +125,7 @@
 							"<span class='notice'>You shake [M] trying to wake [P_THEM(M.gender)] up!</span>")
 	else
 		if(!M.IsSleeping())
-			if(M.has_bodypart(BP_HEAD) && (user.get_targetzone() && BP_HEAD))
+			if(M.has_bodypart(BP_HEAD) && (user.get_targetzone() == BP_HEAD))
 				user.visible_message("<span class='notice'>[user] bops [M] on the head!</span>", \
 									"<span class='notice'>You bop [M] on the head!</span>")
 			else

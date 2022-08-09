@@ -203,7 +203,9 @@
 	switch(modtype)
 		if("PeaceKeeper")
 			module = new /obj/item/weapon/robot_module/peacekeeper(src)
-			module_sprites["Peacekeeper"] = "Peace"
+			module_sprites["Peacekeeper"] = "Peacekeeper"
+			module_sprites["Clown"] = "Clown"
+			module_sprites["Scottland"] = "Scottland"
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
 			module_sprites["Waitress"] = "Service"
