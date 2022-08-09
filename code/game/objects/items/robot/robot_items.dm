@@ -49,7 +49,7 @@
 		if(!robot_user.cell || robot_user.cell.charge < 1200)
 			to_chat(user, "<span class='warning'>You don't have enough charge to do this!</span>")
 			return
-		robot_user.cell.charge -= 1000
+		robot_user.cell.use(1000)
 
 	//emagged borg should screech loudly than normally
 	if(robot_user && !robot_user.emagged)
