@@ -387,7 +387,7 @@
 	modules += new /obj/item/weapon/rsf/cookiesynth(src)
 	modules += new /obj/item/harmalarm(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo/peace(src)
-	modules += new /obj/item/weapon/grab/cyborghug(src)
+	modules += new /obj/item/weapon/cyborghug(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 

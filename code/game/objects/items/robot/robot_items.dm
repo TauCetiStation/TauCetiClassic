@@ -90,40 +90,37 @@
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
 		user.attack_log += "\[[time_stamp()]\]<font color='red'>used emagged Cyborg Harm Alarm in [COORD(user.loc)]</font>"
 
-/obj/item/weapon/grab/cyborghug
+/obj/item/weapon/cyborghug
 	name = "cyborg hug"
 	desc = "A tool that helps organics get back on feet."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "robot_helper"
 	item_state = "robot_helper"
-	allow_upgrade = FALSE
-	var/charge_cost = 500
 
-/obj/item/weapon/grab/cyborghug/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
-	if(!user.cell || (user.cell.charge < charge_cost))
+
+/obj/item/weapon/cyborghug/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
+	if(!user.cell || (user.cell.charge < 500))
 		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
 		return FALSE
 
 	return TRUE
 
-/obj/item/weapon/grab/cyborghug/attack(mob/living/carbon/human/M, mob/living/silicon/robot/user, def_zone)
+/obj/item/weapon/cyborghug/attack(mob/living/carbon/human/M, mob/living/silicon/robot/user, def_zone)
 	var/mob/living/carbon/human/H = M
-	if(!istype(H) || !can_use(user, M))
+	if(!istype(H) || !can_use(user, H))
 		return
-	if(state == GRAB_PASSIVE)
-		robot_help_shake(M, user)
+	if(isrobot(user) && user.emagged)
+		robot_stun_act(H, user)
 	else
-		. = ..()
+		robot_help_shake(H, user)
 
-/obj/item/weapon/grab/cyborghug/attack_self(mob/user)
-	if(state == GRAB_PASSIVE)
-		state = GRAB_AGGRESSIVE
+/obj/item/weapon/cyborghug/attack_self(mob/living/silicon/robot/user)
+	if(user.emagged)
 		to_chat(user, "<span class='warning'>Power increased!</span>")
 	else
-		state = GRAB_PASSIVE
 		to_chat(user, "<span class='notice'>Hugs!</span>")
 
-/obj/item/weapon/grab/cyborghug/proc/robot_help_shake(mob/living/carbon/human/M, mob/living/silicon/robot/user)
+/obj/item/weapon/cyborghug/proc/robot_help_shake(mob/living/carbon/human/M, mob/living/silicon/robot/user)
 	if(M.lying)
 		if(!M.IsSleeping())
 			if(M.crawling)
@@ -145,10 +142,21 @@
 	M.AdjustParalysis(-3)
 	M.AdjustStunned(-3)
 	M.AdjustWeakened(-3)
-
+	user.cell.use(500)
 	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
-	user.cell.use(charge_cost)
+/obj/item/weapon/cyborghug/proc/robot_stun_act(mob/living/carbon/human/M, mob/living/silicon/robot/user)
+	user.cell.use(500)
+	var/calc_power = 100
+	var/obj/item/organ/external/BP = M.get_bodypart(user.get_targetzone())
+	calc_power *= M.get_siemens_coefficient_organ(BP)
+	M.visible_message("<span class='warning bold'>[M] has been touched with the electrical cyberhug by [user]!</span>")
+	M.log_combat(user, "stunned witht [name]")
+	M.apply_effects(0,0,0,0,2,0,0,calc_power)
+
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
+	s.set_up(3, 1, M)
+	s.start()
 
 /**********************************************************************
 						HUD/SIGHT things
