@@ -139,7 +139,7 @@ for reference:
 /obj/structure/barricade/bubble/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	for(var/mob/living/L in loc) //no need protecc abusers
-		L.apply_damage(Proj.damage)
+		L.bullet_act(Proj, def_zone)
 	take_damage(Proj.damage)
 
 /obj/structure/barricade/bubble/attackby(obj/item/W, mob/user)
