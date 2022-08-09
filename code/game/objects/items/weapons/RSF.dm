@@ -249,7 +249,7 @@ RSF
 		to_chat(user, "<span class='notice'>Cookie Synthesizer operating normally.</span>")
 
 /obj/item/weapon/rsf/cookiesynth/afterattack(atom/target, mob/living/silicon/robot/user, proximity, params)
-	if(matter < 1 || !proximity || target.density || user.cell.charge < 100 || !user.cell
+	if(matter < 1 || !proximity || user.cell.charge < 100 || !user.cell || !istype(target, /obj/structure/table))
 		return
 	if(!user.emagged)
 		to_chat(user, "Dispensing Cookie...")

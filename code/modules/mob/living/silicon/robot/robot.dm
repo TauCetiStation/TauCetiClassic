@@ -174,7 +174,7 @@
 
 	if(!choose_module)
 		var/list/modules = list(
-				"PeaceKeeper" = "Peace",
+				"PeaceKeeper" = "Peacekeeper",
 				"Engineering" = "Engineering",
 				"Medical" = "medicalrobot",
 				"Miner" = "Miner_old",
