@@ -92,8 +92,7 @@
 	name = "hugging module"
 	desc = "For when a someone really needs a hug."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "robot_helper"
-	item_state = "robot_helper"
+	icon_state = "help"
 
 /obj/item/weapon/cyborghug/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
 	if(!user.cell || (user.cell.charge < 500))
@@ -153,6 +152,26 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, M)
 	s.start()
+
+/obj/item/borg/bubble_creator
+	name = "Energy Barrier Projector"
+	desc = "A projector that creates fragile energy fields."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "bubble_creator"
+	var/max_fields = 5
+
+/obj/item/borg/bubble_creator/attack_self(mob/living/silicon/robot/user)
+	if(!user || !user.cell)
+		return
+	if(bubble_shields_count >= max_fields)
+		to_chat(user, "<span class='warning'>Recharging!</span>")
+		return
+	if(user.cell.charge < 250)
+		to_chat(user, "<span class='warning'>Not enough charge!</span>")
+		return
+	user.cell.use(250)
+	var/cyborg_bubble = new /obj/structure/barricade/bubble(user.loc)
+	QDEL_IN(cyborg_bubble, 5 SECONDS)
 
 /**********************************************************************
 						HUD/SIGHT things

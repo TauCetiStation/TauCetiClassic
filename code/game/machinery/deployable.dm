@@ -55,15 +55,17 @@ for reference:
 
 
 //Barricades, maybe there will be a metal one later...
+/obj/structure/barricade
+	var/health = 100.0
+	var/maxhealth = 100.0
+	anchored = TRUE
+	density = TRUE
+
 /obj/structure/barricade/wooden
 	name = "wooden barricade"
 	desc = "This space is blocked off by a wooden barricade."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
-	anchored = TRUE
-	density = TRUE
-	var/health = 100.0
-	var/maxhealth = 100.0
 
 /obj/structure/barricade/wooden/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/sheet/wood))
@@ -121,6 +123,46 @@ for reference:
 	else
 		return 0
 
+//Peacekeeper wall
+/obj/structure/barricade/bubble
+	health = 7.0 //one hit for crowbar
+	maxhealth = 7.0
+	name = "bubble barricade"
+	desc = "A fragile energy field that blocks movement. Excels at blocking lethal projectiles."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "bubble"
+
+/obj/structure/barricade/bubble/atom_init()
+	. = ..()
+	global.bubble_shields_count++
+
+/obj/structure/barricade/bubble/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
+	for(var/mob/living/L in loc) //no need protecc abusers
+		L.apply_damage(Proj.damage)
+	take_damage(Proj.damage)
+
+/obj/structure/barricade/bubble/attackby(obj/item/W, mob/user)
+	. = ..()
+	take_damage(W.force)
+
+/obj/structure/barricade/bubble/proc/take_damage(damage)
+	health -= damage
+	check_health()
+
+/obj/structure/barricade/bubble/proc/check_health()
+	if(health <= 0)
+		qdel(src)
+
+/obj/structure/barricade/bubble/CanPass(atom/movable/mover, turf/target, height=0, air_group=0) //make robots can pass
+	if(isrobot(mover))
+		return TRUE
+	else
+		return FALSE
+
+/obj/structure/barricade/bubble/Destroy()
+	global.bubble_shields_count--
+	return ..()
 
 //Actual Deployable machinery stuff
 
