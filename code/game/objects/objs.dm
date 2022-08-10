@@ -58,12 +58,6 @@
 	else
 		return null
 
-/obj/singularity_act()
-	ex_act(EXPLODE_DEVASTATE)
-	if(src && !QDELETED(src))
-		qdel(src)
-	return 2
-
 /obj/singularity_pull(S, current_size)
 	if(anchored)
 		if(current_size >= STAGE_FIVE)
@@ -71,10 +65,6 @@
 			step_towards(src,S)
 	else
 		step_towards(src,S)
-
-// the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
-/obj/proc/deconstruct(disassembled = TRUE)
-	qdel(src)
 
 /obj/proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 	//Return: (NONSTANDARD)
@@ -214,12 +204,6 @@
 		mo.oldshow_message(rendered, 2)
 		*/
 	return
-
-/obj/proc/tesla_act(power)
-	being_shocked = 1
-	var/power_bounced = power / 2
-	tesla_zap(src, 3, power_bounced)
-	VARSET_IN(src, being_shocked, FALSE, 10)
 
 //mob - who is being feed
 //user - who is feeding
