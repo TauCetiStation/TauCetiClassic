@@ -257,6 +257,7 @@
 		"Hacker kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker,
 		"Machinengunner kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner,
 		"Field Medic kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/medic,
+		"Chemical Fighter Kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/chemwarfare,
 		"Custom kit" =  /obj/item/weapon/storage/backpack/dufflebag/nuke/custom,
 	)
 	var/static/list/selection_items
@@ -277,6 +278,7 @@
 	"Hacker kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "bulldog"),
 	"Machinengunner kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "l6closed100"),
 	"Field Medic kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "medigun_syndi"),
+	"Chemical Fighter Kit" = image(icon = 'icons/obj/hydroponics/equipment.dmi', icon_state = "misternuke"),
 	"Custom kit" = image(icon = 'icons/obj/radio.dmi', icon_state = "radio"),
 	)
 
