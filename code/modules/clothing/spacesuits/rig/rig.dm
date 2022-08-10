@@ -454,9 +454,6 @@
 
 /obj/item/clothing/suit/space/rig/proc/Togglemagboots()
 
-	set name = "Toggle Space Suit Magboots"
-	set category = "Object"
-	set src in usr
 
 	if(!isliving(src.loc)) return
 
