@@ -42915,9 +42915,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/obj/machinery/computer/message_monitor{
-	dir = 3
-	},
+/obj/machinery/computer/message_monitor,
 /turf/simulated/floor/bluegrid,
 /area/station/bridge/comms{
 	name = "Cyborg Station"
@@ -43570,7 +43568,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
 	name = "CMF altering";
-	req_access = list(60)
+	req_access = list(57)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
