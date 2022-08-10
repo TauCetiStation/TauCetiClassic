@@ -22,7 +22,7 @@
 	// TODO playsound(src, P.hitsound, 50, TRUE)
 	var/damage
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
-		damage = take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180)) // TODO flag -> armor_flag, add penetration
+		damage = take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180)) // TODO flag -> armor_flag
 	//if(P.suppressed != SUPPRESSED_VERY)
 	visible_message(span_danger("[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE)
 
@@ -32,7 +32,7 @@
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	else
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-	var/damage = take_damage(hulk_damage(), BRUTE, MELEE, 0, get_dir(src, user)) // TODO where the fuck hulk damage is?
+	var/damage = take_damage(hulk_damage(), BRUTE, MELEE, 0, get_dir(src, user))
 	user.visible_message(span_danger("[user] smashes [src][damage ? "" : ", without leaving a mark"]!"), span_danger("You smash [src][damage ? "" : ", without leaving a mark"]!"), null, COMBAT_MESSAGE_RANGE)
 	return TRUE
 
@@ -60,13 +60,13 @@
 	if(. && !play_soundeffect)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	if(user.client)
-		log_combat(user, src, "attacked") // TODO fix log_combat
+		log_combat(user, "[user] attacked [src]")
 
 /obj/attack_slime(mob/living/simple_animal/slime/user)
 	if(!isslimeadult(user))
 		return
 	if(attack_generic(user, rand(10, 15), BRUTE, MELEE, 1))
-		log_combat(user, src, "attacked")
+		log_combat(user, "[user] attacked [src]")
 
 /obj/singularity_act()
 	ex_act(EXPLODE_DEVASTATE)
@@ -97,7 +97,6 @@
 
 ///the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
 /obj/proc/deconstruct(disassembled = TRUE)
-	SEND_SIGNAL(src, COMSIG_OBJ_DECONSTRUCT, disassembled) // TODO add COMSIG_OBJ_DECONSTRUCT
 	qdel(src)
 
 ///what happens when the obj's integrity reaches zero.
