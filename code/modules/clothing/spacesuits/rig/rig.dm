@@ -60,6 +60,8 @@
 	icon_state = "rig-engineering"
 	item_state = "eng_hardsuit"
 	slowdown = 0.5
+	action_button_name = TRUE
+	action_button_name = "Toggle magpulse system"
 	var/offline_slowdown = 2
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 20)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
@@ -447,7 +449,10 @@
 		to_chat(H, "<span class='notice'>You deploy your hardsuit helmet, sealing you off from the world.</span>")
 		return
 
-/obj/item/clothing/suit/space/rig/verb/toggle_magboots()
+/obj/item/clothing/suit/space/rig/ui_action_click()
+	Togglemagboots()
+
+/obj/item/clothing/suit/space/rig/proc/Togglemagboots()
 
 	set name = "Toggle Space Suit Magboots"
 	set category = "Object"
@@ -779,7 +784,6 @@
 	               /obj/item/weapon/melee/energy/sword,
 	               /obj/item/weapon/handcuffs)
 	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA, VOX)
-	action_button_name = "Toggle space suit mode"
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair)
 	cell_type = /obj/item/weapon/stock_parts/cell/super
@@ -803,8 +807,6 @@
 	icon_state = "[rig_variant]-[combat_mode ? "combat" : "space"]"
 	user.update_inv_wear_suit()
 
-/obj/item/clothing/suit/space/rig/syndi/ui_action_click()
-	toggle_mode()
 
 /obj/item/clothing/suit/space/rig/syndi/verb/toggle_mode()
 	set category = "Object"
@@ -1017,13 +1019,12 @@
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
 
-	action_button_name = "Toggle Hardsuit Light"
 	var/brightness_on = 2 //luminosity when on
 	var/on = 0
 
 	light_color = "#ff00ff"
 
-/obj/item/clothing/suit/space/rig/security/attack_self(mob/user)
+/obj/item/clothing/suit/space/rig/security/AltClick(mob/user)
 	if(!isturf(user.loc))
 		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
 		return
@@ -1055,7 +1056,8 @@
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/grenade_launcher/flashbang)
 
-	action_button_name = FALSE
+/obj/item/clothing/suit/space/rig/security/hos/AltClick(mob/user) //not to break the sprite
+	return
 
 //Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/rig/atmos
