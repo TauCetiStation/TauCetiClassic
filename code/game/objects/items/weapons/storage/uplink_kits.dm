@@ -212,7 +212,6 @@
 
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
 	new /obj/item/clothing/suit/space/rig/syndi(src)
-	new /obj/item/clothing/shoes/magboots/syndie(src)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/heavy_rig
@@ -223,7 +222,6 @@
 
 	new /obj/item/clothing/head/helmet/space/rig/syndi/heavy(src)
 	new /obj/item/clothing/suit/space/rig/syndi/heavy(src)
-	new /obj/item/clothing/shoes/magboots/syndie(src)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/armor
