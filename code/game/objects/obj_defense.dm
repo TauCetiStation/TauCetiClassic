@@ -63,14 +63,11 @@
 	. = attack_generic(user, user.melee_damage, user.melee_damtype, MELEE, play_soundeffect)
 	if(. && !play_soundeffect)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-	if(user.client)
-		log_combat(user, "[user] attacked [src]")
 
 /obj/attack_slime(mob/living/simple_animal/slime/user)
 	if(!isslimeadult(user))
 		return
-	if(attack_generic(user, rand(10, 15), BRUTE, MELEE, 1))
-		log_combat(user, "[user] attacked [src]")
+	attack_generic(user, rand(10, 15), BRUTE, MELEE, TRUE)
 
 /obj/singularity_act()
 	ex_act(EXPLODE_DEVASTATE)
