@@ -76,11 +76,11 @@
 		if("left arm")
 			var/obj/item/organ/external/l_arm/LARM = BP
 			if(LARM.DNA_under_fingernail)
-				D.more_info += "<tr><th colspan=\"5\"><b>DNA found under nail on left hand: [LARM.DNA_under_fingernail]</b></th></tr>"
+				D.more_info += "<tr><th colspan=\"5\"><b>DNA found under nails on left hand: [LARM.DNA_under_fingernail]</b></th></tr>"
 		if("right arm")
 			var/obj/item/organ/external/r_arm/RARM = BP
 			if(RARM.DNA_under_fingernail)
-				D.more_info += "<tr><th colspan=\"5\"><b>DNA found under nail on right hand: [RARM.DNA_under_fingernail]</b><br></th></tr>"
+				D.more_info += "<tr><th colspan=\"5\"><b>DNA found under nails on right hand: [RARM.DNA_under_fingernail]</b><br></th></tr>"
 
 	for(var/V in BP.trace_chemicals)
 		if(BP.trace_chemicals[V] > 0 && !chemtraces.Find(V))
