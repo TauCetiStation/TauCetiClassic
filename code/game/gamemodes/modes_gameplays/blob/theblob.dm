@@ -11,8 +11,7 @@
 	density = FALSE
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
-	var/max_health = 30
-	var/health = 30
+	max_integrity = 30
 	var/health_timestamp = 0
 	var/brute_resist = 4
 	var/fire_resist = 1
@@ -48,12 +47,24 @@
 	Life()
 	return
 
+/obj/effect/blob/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
+	switch(damage_type)
+		if(BRUTE)
+			return damage_amount / brute_resist
+		if(BURN)
+			return damage_amount / fire_resist
+
+/obj/effect/blob/atom_break(damage_flag)
+	. = ..()
+	update_icon()
+	
+/obj/effect/blob/atom_fix()
+	. = ..()
+	update_icon()
+
 /obj/effect/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	..()
 	var/damage = clamp(0.01 * exposed_temperature / fire_resist, 0, 4 - fire_resist)
-	if(damage)
-		health -= damage
-		update_icon()
+	. = take_damage(damage, BURN, FIRE, FALSE)
 
 /obj/effect/blob/proc/Life()
 	return
@@ -66,10 +77,9 @@
 	// All blobs heal over time when pulsed, but it has a cool down
 	if(health_timestamp > world.time)
 		return
-	if(health < max_health)
-		health++
-		update_icon()
-		health_timestamp = world.time + 10 // 1 seconds
+	if(get_integrity() < max_integrity)
+		repair_damage(1)
+		health_timestamp = world.time + 1 SECOND // 1 seconds
 
 
 /obj/effect/blob/proc/Pulse(max_pulse_path = BLOB_NODE_MAX_PATH, origin_dir = 0) //Todo: Fix spaceblob expand
@@ -110,7 +120,7 @@
 
 
 /obj/effect/blob/proc/expand(turf/T = null, prob = 1)
-	if(prob && !prob(health))
+	if(prob && !prob(get_integrity()))
 		return
 	if(isspaceturf(T) && prob(75))
 		return
@@ -126,7 +136,7 @@
 
 	if(!T)
 		return
-	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc, min(src.health, 30))
+	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc)
 	B.density = TRUE
 	if(T.Enter(B,src))//Attempt to move into the tile
 		B.density = initial(B.density)
@@ -140,21 +150,9 @@
 		A.blob_act()
 
 /obj/effect/blob/ex_act(severity)
-	var/damage = 150
-	health -= ((damage/brute_resist) - (severity * 5))
-	update_icon()
+	var/damage = 150 - (severity * 5)
+	take_damage(damage, BRUTE, BOMB, FALSE)
 	return
-
-
-/obj/effect/blob/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	switch(Proj.damage_type)
-	 if(BRUTE)
-		 health -= (Proj.damage/brute_resist)
-	 if(BURN)
-		 health -= (Proj.damage/fire_resist)
-
-	update_icon()
 
 /obj/effect/blob/Crossed(atom/movable/AM)
 	. = ..()
@@ -162,38 +160,19 @@
 		var/mob/living/L = AM
 		L.blob_act()
 
-
-/obj/effect/blob/attackby(obj/item/weapon/W, mob/user)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-	var/damage = 0
-	switch(W.damtype)
-		if("fire")
-			damage = (W.force / max(src.fire_resist,1))
-			if(iswelder(W))
-				playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
-		if("brute")
-			damage = (W.force / max(src.brute_resist,1))
-
-	health -= damage
-	update_icon()
+/obj/effect/blob/play_attack_sound(damage_amount, damage_type, damage_flag)
+	switch(damage_type)
+		if(BURN)
+			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
+		if(BRUTE)
+			playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
-	..()
 	if(M.faction == "blob") //No friendly slams
 		return
-	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-	visible_message("<span class='danger'>The [src.name] has been attacked by \the [M].</span>")
-	var/damage = M.melee_damage
-	if(!damage) // Avoid divide by zero errors
-		return
-	damage /= max(src.brute_resist, 1)
-	health -= damage
-	update_icon()
-	return
+	. = ..()
+	if(.)
+		visible_message("<span class='danger'>The [src.name] has been attacked by \the [M].</span>")
 
 /obj/effect/blob/proc/change_to(type, overmind)
 	if(!ispath(type))
@@ -206,20 +185,13 @@
 
 /obj/effect/blob/normal
 	icon_state = "blob"
-	health = 21
+	integrity_failure = 15
 
 /obj/effect/blob/normal/update_icon()
-	if(health <= 0)
-		qdel(src)
-	else if(health <= 15)
+	if(get_integrity() <= 15)
 		icon_state = "blob_damaged"
 	else
 		icon_state = "blob"
-
-/obj/effect/blob/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if(temperature > T0C+200)
-		health -= 1 * temperature
-		update_icon()
 
 /* // Used to create the glow sprites. Remember to set the animate loop to 1, instead of infinite!
 
