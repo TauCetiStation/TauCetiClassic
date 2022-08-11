@@ -8,7 +8,7 @@
 
 	var/icon_state_attached
 	var/icon_state_detached
-	required_skills = list(/datum/skill/medical/trained)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/life_assist/atom_init()
 	. = ..()
@@ -141,11 +141,10 @@
 			visible_message("<span class='notice'>\the [attached] is already attached to tank</span>")
 			return
 		attached.internal = holding
-		if(attached.internals)
-			attached.internals.icon_state = "internal1"
-	else if(attached.internals)
-		attached.internals.icon_state = "internal0"
+		attached.internals?.update_icon(attached)
+	else if(attached.internal == holding)
 		attached.internal = null
+		attached.internals?.update_icon(attached)
 
 /obj/machinery/life_assist/cardiopulmonary_bypass/assist(mob/living/carbon/human/H)
 	..()

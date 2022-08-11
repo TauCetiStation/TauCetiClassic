@@ -63,7 +63,7 @@
 			playsound(get_turf(src), pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
 			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
 			apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
-			Stun(3)
+			Stun(1)
 			Weaken(2)
 
 	if(ismob(A))
@@ -97,14 +97,19 @@
 
 	//BubbleWrap: Should stop you pushing a restrained person out of the way
 	if(ishuman(M))
-		for(var/mob/MM in range(M, 1))
-			if(MM.pinned.len || ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
-				if ( !(world.time % 5) )
-					to_chat(src, "<span class='warning'>[M] is restrained, you cannot push past.</span>")
-				return 1
-			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
-				if ( !(world.time % 5) )
-					to_chat(src, "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>")
+		if(M.anchored)
+			if(!(world.time % 5))
+				to_chat(src, "<span class='warning'>[M] is anchored, you cannot push past.</span>")
+			return 1
+		if((M.pulledby && M.pulledby.stat == CONSCIOUS && !M.pulledby.restrained() && M.restrained()) || locate(/obj/item/weapon/grab, M.grabbed_by))
+			if(!(world.time % 5))
+				to_chat(src, "<span class='warning'>[M] is restrained, you cannot push past.</span>")
+			return 1
+		if(ismob(M.pulling))
+			var/mob/pulling_mob = M.pulling
+			if(pulling_mob.restrained() && !M.restrained() && M.stat == CONSCIOUS)
+				if(!(world.time % 5))
+					to_chat(src, "<span class='warning'>[M] is restraining [pulling_mob], you cannot push past.</span>")
 				return 1
 
 	//switch our position with M
@@ -559,18 +564,13 @@
 
 	// shut down ongoing problems
 	radiation = 0
-	nutrition = 400
+	nutrition = NUTRITION_LEVEL_NORMAL
 	bodytemperature = T20C
 	sdisabilities = 0
 	disabilities = 0
 	ExtinguishMob()
 	fire_stacks = 0
 	suiciding = FALSE
-
-	if(pinned.len)
-		for(var/obj/O in pinned)
-			O.forceMove(loc)
-		pinned.Cut()
 
 	// fix blindness and deafness
 	blinded = 0
@@ -886,10 +886,6 @@
 	//resisting grabs (as if it helps anyone...)
 	if (!L.incapacitated())
 		var/resisting = 0
-		for(var/obj/O in L.requests)
-			L.requests.Remove(O)
-			qdel(O)
-			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
 			switch(G.state)
@@ -905,7 +901,7 @@
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				if(GRAB_NECK)
-					if(prob(5 - L.stunned * 2))
+					if(prob(5))
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
 						qdel(G)
 		if(resisting)
@@ -936,7 +932,7 @@
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(loc && istype(loc, /obj) && !isturf(loc))
-		if(L.stat == CONSCIOUS && !L.stunned && !L.weakened && !L.paralysis)
+		if(!L.incapacitated(NONE))
 			var/obj/C = loc
 			C.container_resist(L)
 
@@ -946,7 +942,8 @@
 		if(CM.on_fire)
 			if(!CM.canmove && !CM.crawling)	return
 			CM.fire_stacks -= 5
-			CM.weakened = 5
+			CM.Stun(5)
+			CM.Weaken(5)
 			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
 				"<span class='rose'>You stop, drop, and roll!</span>")
 			if(fire_stacks <= 0)
@@ -1059,21 +1056,12 @@
 	if((status_flags & FAKEDEATH) || buckled)
 		return
 
-//Already crawling and have others debuffs
-	if( crawling && (IsSleeping() || weakened || paralysis || stunned) )
-		to_chat(src, "<span class='rose'>You can't wake up.</span>")
-
-//Restrained and some debuffs
-	else if( restrained() && (paralysis || stunned) )
-		to_chat(src, "<span class='rose'>You can't move.</span>")
-
-//Restrained and lying on optable or simple table
-	else if( restrained() && can_operate(src) )	//TO DO: Refactor OpTable code to /bed subtype or "Rest" verb
-		to_chat(src, "<span class='rose'>You can't move.</span>")
-
-//Debuffs check
-	else if(!crawling && (IsSleeping() || weakened || paralysis || stunned) )
-		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
+	if(incapacitated(NONE))
+		if(crawling)
+			to_chat(src, "<span class='rose'>You can't wake up.</span>")
+		else
+			to_chat(src, "<span class='rose'>You can't control yourself.</span>")
+		return
 
 	if(crawling)
 		crawl_getup = TRUE
@@ -1421,8 +1409,7 @@
 
 	m_intent = intent
 	if(hud_used)
-		if(hud_used.move_intent)
-			hud_used.move_intent.icon_state = intent == MOVE_INTENT_WALK ? "walking" : "running"
+		move_intent?.update_icon(src)
 
 	return TRUE
 
@@ -1431,6 +1418,7 @@
 
 /mob/living/death(gibbed)
 	beauty.AddModifier("stat", additive=beauty_dead)
+	update_health_hud()
 	return ..()
 
 /mob/living/proc/update_beauty(datum/source, old_value)
@@ -1486,7 +1474,7 @@
 		AdjustDrunkenness(-1)
 
 	if(drunkenness >= DRUNKENNESS_PASS_OUT)
-		paralysis = max(paralysis, 3)
+		Paralyse(3)
 		drowsyness = max(drowsyness, 3)
 		return
 

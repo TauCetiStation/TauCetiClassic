@@ -190,7 +190,7 @@
 			if(count)
 				stat("[key]: [count]")
 
-/mob/living/carbon/xenomorph/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
+/mob/living/carbon/xenomorph/Stun(amount, ignore_canstun = 0)
 	if(status_flags & CANSTUN || ignore_canstun)
 		..()
 	else
@@ -280,7 +280,13 @@ Hit Procs
 	return "xltrails"
 
 /mob/living/carbon/xenomorph/update_canmove()
-	canmove = !(weakened || paralysis || stat || (status_flags & FAKEDEATH) || crawling || stunned || captured || pinned.len)
+	..()
+
+	if(lying)
+		canmove = FALSE
+	if(density)
+		density = initial(density)
+
 
 /mob/living/carbon/xenomorph/crawl()
 	SetCrawling(!crawling)
@@ -293,14 +299,9 @@ Hit Procs
 		to_chat(src, "<span class='warning'>Your other hand is too busy holding [item_in_hand].</span>")
 		return
 	src.hand = !( src.hand )
-	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
-		if(hand)	//This being 1 means the left hand is in use
-			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
-		else
-			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
-	return
+	if(hud_used && l_hand_hud_object && r_hand_hud_object)
+		l_hand_hud_object.update_icon(src)
+		r_hand_hud_object.update_icon(src)
 
 /mob/living/carbon/xenomorph/get_pixel_y_offset(lying = 0)
 	return initial(pixel_y)

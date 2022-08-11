@@ -437,7 +437,7 @@ Class Procs:
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
-		if(!handle_fumbling(usr, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering/trained), "<span class='notice'>You fumble around, figuring out how to deconstruct [src].</span>"))
+		if(!handle_fumbling(usr, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to deconstruct [src].</span>"))
 			return
 		deconstruction()
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
@@ -455,13 +455,13 @@ Class Procs:
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(!panel_open)
-			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering/trained), "<span class='notice'>You fumble around, figuring out how to open the maintenance hatch of [src].</span>"))
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to open the maintenance hatch of [src].</span>"))
 				return 0
 			panel_open = 1
 			icon_state = icon_state_open
 			to_chat(user, "<span class='notice'>You open the maintenance hatch of [src].</span>")
 		else
-			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering/trained), "<span class='notice'>You fumble around, figuring out how to close the maintenance hatch of [src].</span>"))
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to close the maintenance hatch of [src].</span>"))
 				return 1
 			panel_open = 0
 			icon_state = icon_state_closed
@@ -481,7 +481,7 @@ Class Procs:
 	if(istype(W) &&  !(flags & NODECONSTRUCT))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
-		if(W.use_tool(src, user, time, volume = 50, required_skills_override = list(/datum/skill/engineering/novice)))
+		if(W.use_tool(src, user, time, volume = 50, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)

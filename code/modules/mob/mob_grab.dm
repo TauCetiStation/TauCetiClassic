@@ -245,6 +245,7 @@
 			if(affecting.loc != assailant.loc)
 				force_down = 0
 			else
+				affecting.Stun(2)
 				affecting.Weaken(2)
 
 	if(state >= GRAB_NECK)
@@ -264,6 +265,7 @@
 		//affecting.apply_effect(STUTTER, 5) //would do this, but affecting isn't declared as mob/living for some stupid reason.
 		affecting.Stuttering(5) //It will hamper your voice, being choked and all.
 		affecting.Weaken(5)	//Should keep you down unless you get help.
+		affecting.Stun(5)
 		affecting.losebreath = max(affecting.losebreath + 2, 3)
 
 	adjust_position()
@@ -359,6 +361,7 @@
 			assailant.visible_message("<span class='warning'>[assailant] pins [affecting] down to the ground (now hands)!</span>")
 			force_down = 1
 			affecting.Weaken(3)
+			affecting.Stun(3)
 			step_to(assailant, affecting)
 			if(QDELING(src)) // grab was deleted during step_to
 				return
@@ -553,7 +556,7 @@
 						assailant.visible_message("<span class='danger'>[assailant] is forcing [affecting] to the ground!</span>")
 						force_down = 1
 						affecting.Weaken(3)
-						affecting.lying = 1
+						affecting.Stun(3)
 						step_to(assailant, affecting)
 						assailant.set_dir(EAST) //face the victim
 						affecting.set_dir(SOUTH) //face up

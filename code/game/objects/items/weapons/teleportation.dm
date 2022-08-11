@@ -128,7 +128,7 @@ Frequency:
 	desc = "A portable item using bluespace technology."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hand_tele"
-	item_state = "electronic"
+	item_state = "hand_tele"
 	throwforce = 5
 	w_class = SIZE_TINY
 	throw_speed = 3

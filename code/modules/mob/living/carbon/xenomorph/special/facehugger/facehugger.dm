@@ -315,7 +315,7 @@
 			new_xeno.key = FH.key
 			qdel(current_hugger)
 		target.unEquip(src)
-		target.status_flags |= XENO_HOST
+		target.add_status_flags(XENO_HOST)
 		target.med_hud_set_status()
 
 	else

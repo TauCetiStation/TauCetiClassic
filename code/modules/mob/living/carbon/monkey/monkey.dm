@@ -141,7 +141,7 @@
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
 		if(istype(src, /mob/living/carbon/monkey/diona))
-			stat(null, "Nutriment: [nutrition]/400")
+			stat(null, "Nutriment: [nutrition]/[NUTRITION_LEVEL_NORMAL]")
 	if(mind)
 		for(var/role in mind.antag_roles)
 			var/datum/role/R = mind.antag_roles[role]
@@ -206,7 +206,7 @@
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message,2))
+		return emote(copytext(message, 2))
 
 	if(speak_emote.len)
 		verb = pick(speak_emote)

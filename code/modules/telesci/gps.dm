@@ -13,7 +13,7 @@ var/global/list/GPS_list = list()
 	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016."
 	icon = 'icons/obj/telescience.dmi'
-	icon_state = "gps-c"
+	icon_state = "gps-com"
 	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "programming=2;engineering=2"
@@ -147,16 +147,20 @@ var/global/list/GPS_list = list()
 	update_icon()
 
 /obj/item/device/gps/science
-	icon_state = "gps-s"
+	icon_state = "gps-sci"
 	gpstag = "SCI0"
 
 /obj/item/device/gps/engineering
-	icon_state = "gps-e"
+	icon_state = "gps-eng"
 	gpstag = "ENG0"
 
 /obj/item/device/gps/mining
-	icon_state = "gps-e"
+	icon_state = "gps-mine"
 	gpstag = "MIN0"
+
+/obj/item/device/gps/medical
+	icon_state = "gps-med"
+	gpstag = "MED0"
 
 /obj/item/device/gps/cyborg
 	gpstag = "BORG0"

@@ -76,7 +76,7 @@
 
 /mob/living/attack_animal(mob/living/simple_animal/attacker)
 	if(attacker.melee_damage <= 0)
-		attacker.emote("[attacker.friendly] [src]")
+		attacker.me_emote("[attacker.friendly] [src]")
 		return TRUE
 	return attack_unarmed(attacker)
 

@@ -64,7 +64,6 @@
 				if(hand && !(hand.flags & ABSTRACT))
 					drop_item()
 		P.on_hit(src)
-		flash_pain()
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
 		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
@@ -89,7 +88,6 @@
 		var/armorblock = run_armor_check(BP, "energy")
 		apply_damage(P.damage, P.damage_type, BP, armorblock, P.damage_flags(), P)
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
-		flash_pain()
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
 		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
@@ -307,7 +305,7 @@
 		return FALSE
 
 	//Apply weapon damage
-	var/force_with_melee_skill = apply_skill_bonus(user, I.force, list(/datum/skill/melee/default), 0.2) // +20% for each melee level
+	var/force_with_melee_skill = apply_skill_bonus(user, I.force, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // +15% for each melee level
 	var/damage_flags = I.damage_flags()
 	if(prob(armor))
 		damage_flags &= ~(DAM_SHARP | DAM_EDGE)

@@ -86,7 +86,7 @@
 		visible_message(src, "<span class='notice'>[M]'s body seems to repel [src], as it attempts to twine with it's being.</span>")
 		return
 	to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
-	M.status_flags |= PASSEMOTES
+	M.add_status_flags(PASSEMOTES)
 	to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
 	forceMove(M)
 	gestalt = M
@@ -308,7 +308,7 @@
 		to_chat(src, "You are not yet ready for your growth...")
 		return
 
-	if(nutrition < 400)
+	if(nutrition < NUTRITION_LEVEL_NORMAL)
 		to_chat(src, "You have not yet consumed enough to grow...")
 		return
 

@@ -266,21 +266,16 @@
 
 		to_chat(user, stat_flavor)
 
-/obj/item/attack_hand(mob/user)
+/obj/item/proc/mob_pickup(mob/user, hand_index=null)
 	if (!user || anchored)
 		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
-		if(istype(src, /obj/item/weapon/melee))
-			if(src.w_class < SIZE_NORMAL)
-				to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
-				return
-		else if(istype(src, /obj/item/weapon/gun))
+		if(istype(src, /obj/item/weapon/gun))
 			if(prob(20))
 				user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
 			user.visible_message("<span class='notice'>[user] crushes \a [src] with hands.</span>", "<span class='notice'>You crush the [src].</span>")
 			qdel(src)
-			//user << "<span class='warning'>\The [src] is far too small for you to pick up.</span>"
 			return
 		else if(istype(src, /obj/item/clothing))
 			if(prob(20))
@@ -297,11 +292,22 @@
 			to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
 			return
 
-	src.throwing = 0
+	throwing = FALSE
 
-	if(src.loc == user)
+	if(freeze_movement || !user.can_pickup(src))
+		return
+
+	remove_outline()
+	add_fingerprint(user)
+
+	if(!pickup(user))
+		return
+
+	user.SetNextMove(CLICK_CD_RAPID)
+
+	if(loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		if(!src.canremove)
+		if(!canremove)
 			return
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -310,45 +316,45 @@
 				return
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				if(istype(H.wear_suit, /obj/item/clothing/suit))
 					var/obj/item/clothing/suit/V = H.wear_suit
 					V.attack_reaction(H, REACTION_ITEM_TAKEOFF)
-				if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
-					if(user.get_item_by_slot(SLOT_L_HAND) != src && user.get_item_by_slot(SLOT_R_HAND) != src) //swap item in hands have no delay
-						if(!user.delay_clothing_unequip(src))
-							return
-
+				if(!user.delay_clothing_unequip(src))
+					return
+		. = user.remove_from_mob(src, user)
 	else
-		if(isliving(src.loc))
+		if(isliving(loc))
 			return
-		user.SetNextMove(CLICK_CD_RAPID)
-
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+			if(istype(H.wear_suit, /obj/item/clothing/suit))
 				var/obj/item/clothing/suit/V = H.wear_suit
 				V.attack_reaction(H, REACTION_ITEM_TAKE)
 
-	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
+		if(istype(loc, /obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = src.loc
+			. = S.remove_from_storage(src, user)
+		else
+			. = TRUE
+
+	if(QDELETED(src)) // remove_from_mob() may remove DROPDEL items, so...
 		return
 
-	if(!user.can_pickup(src))
-		return
+	if(.)
+		if(isnull(hand_index))
+			. = user.put_in_active_hand(src)
+		else
+			switch(hand_index)
+				if(0)
+					. = user.put_in_r_hand(src)
+				if(1)
+					. = user.put_in_l_hand(src)
 
-	remove_outline()
-	if(!pickup(user))
-		return
-	add_fingerprint(user)
+		if(!(. || isturf(loc)))
+			forceMove(get_turf(user))
 
-	if(istype(src.loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = src.loc
-		if(!S.remove_from_storage(src, user) || !user.put_in_active_hand(src))
-			forceMove(get_turf(src))
-	else if(loc == user)
-		if(!user.remove_from_mob(src, user) || !user.put_in_active_hand(src))
-			forceMove(get_turf(src))
-	else
-		user.put_in_active_hand(src)
+/obj/item/attack_hand(mob/user)
+	mob_pickup(user)
 
 /obj/item/attack_paw(mob/user)
 	if (!user || anchored)
@@ -878,14 +884,6 @@
 	M.log_combat(user, "eyestabbed with [name]")
 
 	add_fingerprint(user)
-	//if((CLUMSY in user.mutations) && prob(50))
-	//	M = user
-		/*
-		to_chat(M, "<span class='warning'>You stab yourself in the eye.</span>")
-		M.sdisabilities |= BLIND
-		M.weakened += 4
-		M.adjustBruteLoss(10)
-		*/
 	if(M != user)
 		visible_message("<span class='warning'>[M] has been stabbed in the eye with [src] by [user].</span>", ignored_mobs = list(user, M))
 		to_chat(M, "<span class='warning'>[user] stabs you in the eye with [src]!</span>")
