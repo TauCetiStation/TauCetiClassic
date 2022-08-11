@@ -17,7 +17,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/base_state = "left"
-	var/health = 150.0 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
 	// For use with door control buttons. Currently just that.
 	var/id = null
 
@@ -200,53 +200,36 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 			flick("[base_state]deny", src)
 	return
 
+/obj/machinery/door/window/deconstruct(disassembled)
+	shatter()
 
-/obj/machinery/door/window/proc/take_damage(damage)
-	src.health = max(0, src.health - damage)
-	if(src.health <= 0)
-		shatter()
-		return
-
-/obj/machinery/door/window/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	if(Proj.damage)
-		take_damage(round(Proj.damage / 2))
+/obj/machinery/door/window/bullet_act(obj/item/projectile/Proj)
+	Proj.damage /= 2
+	. = ..(Proj)
 
 //When an object is thrown at the window
 /obj/machinery/door/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-
-	..()
 	visible_message("<span class='warning'><B>The glass door was hit by [AM].</B></span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 40
 	else
 		tforce = AM:throwforce
-	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-	take_damage(tforce)
-	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
+	take_damage(tforce, BRUTE, MELEE, 1, get_dir(src, AM))
 	return
 
-/obj/machinery/door/window/proc/attack_generic(mob/user, damage = 0)
+/obj/machinery/door/window/play_attack_sound(damage_amount, damage_type, damage_flag)
+	if(damage_amount)
+		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+		return
+	..()
+
+/obj/machinery/door/window/attack_generic(mob/user)
 	if(src.operating)
 		return
-	user.do_attack_animation(src)
-	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='danger'>[user] smashes against the [src.name].</span>", \
 						"<span class='userdanger'>[user] smashes against the [src.name].</span>")
-	take_damage(damage)
-
-/obj/machinery/door/window/attack_alien(mob/user)
-	if(isxenolarva(user))
-		return
-	user.SetNextMove(CLICK_CD_MELEE)
-	attack_generic(user, 25)
-
-/obj/machinery/door/window/attack_animal(mob/living/simple_animal/attacker)
-	..()
-	if(attacker.melee_damage <= 0)
-		return
-	attack_generic(attacker, attacker.melee_damage)
+	return ..()
 
 /obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user)
 	if(!isslimeadult(user))
@@ -367,10 +350,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		if( (I.flags&NOBLUDGEON) || !I.force )
 			return
 		var/aforce = I.force
-		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='warning'><B>[src] was hit by [I].</B></span>")
 		if(I.damtype == BRUTE || I.damtype == BURN)
-			take_damage(aforce)
+			take_damage(aforce, I.damtype, I.damage_flags())
 		return
 
 	try_open(user)
@@ -403,7 +385,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	req_access = list(access_security)
-	health = 300.0 //Stronger doors for prison (regular window door health is 200)
+	max_integrity = 300 //Stronger doors for prison (regular window door health is 150)
 
 /obj/machinery/door/window/brigdoor/atom_init()
 	. = ..()
