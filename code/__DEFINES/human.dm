@@ -22,3 +22,9 @@
 #define LIGHT_DAM_THRESHOLD 3
 #define LIGHT_HEAL_THRESHOLD 3
 #define LIGHT_DAMAGE_TAKEN 10
+
+#define HUMANHEIGHT_SHORTEST "shortest height"
+#define HUMANHEIGHT_SHORT    "short height"
+#define HUMANHEIGHT_MEDIUM   "medium height"
+#define HUMANHEIGHT_TALL     "tall height"
+#define HUMANHEIGHT_TALLEST  "tallest height"

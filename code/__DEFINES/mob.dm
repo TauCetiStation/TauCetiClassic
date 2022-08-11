@@ -225,12 +225,6 @@
 #define SYNDICATE_RESPONSE 2
 #define SYNDICATE_AWARE    3
 
-#define HUMANHEIGHT_SHORTEST "shortest height"
-#define HUMANHEIGHT_SHORT    "short height"
-#define HUMANHEIGHT_MEDIUM   "medium height"
-#define HUMANHEIGHT_TALL     "tall height"
-#define HUMANHEIGHT_TALLEST  "tallest height"
-
 // How much of the reagent needs to be ingested before moving onto the next stage.
 #define ALLERGY_NONE 0
 #define ALLERGY_UNDISCOVERED 1

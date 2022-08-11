@@ -276,6 +276,16 @@
 		var/mob/living/carbon/human/H = src
 		BP = H.get_bodypart(ran_zone(BP))
 		armor_block = run_armor_check(BP, "melee")
+		if(H.dna)
+			switch(attacker.hand)
+				if(0)
+					var/obj/item/organ/external/r_arm/RARM = attacker.get_bodypart(BP_R_ARM)
+					if(RARM)
+						RARM.DNA_under_fingernail = H.dna.unique_enzymes
+				if(1)
+					var/obj/item/organ/external/l_arm/LARM = attacker.get_bodypart(BP_L_ARM)
+					if(LARM)
+						LARM.DNA_under_fingernail = H.dna.unique_enzymes
 
 	if(damSound)
 		playsound(src, damSound, VOL_EFFECTS_MASTER)

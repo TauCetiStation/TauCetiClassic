@@ -626,6 +626,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		user.visible_message("<span class='notice'>[user] washes their hands using \the [src].</span>")
 		if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
 			var/mob/living/carbon/human/H = user
+			switch(H.hand)
+				if(BP_L_ARM)
+					var/obj/item/organ/external/r_arm/RHand = H.get_bodypart(BP_R_ARM)
+					RHand.DNA_under_fingernail = null
+				if(BP_R_ARM)
+					var/obj/item/organ/external/l_arm/LHand = H.get_bodypart(BP_L_ARM)
+					LHand.DNA_under_fingernail = null
+
 			var/time_amount = rand(3000, 6000)
 			H.apply_status_effect(STATUS_EFFECT_REMOVE_GREASY, time_amount)
 	else

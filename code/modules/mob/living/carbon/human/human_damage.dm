@@ -376,7 +376,7 @@ This function restores all bodyparts.
 
 	return bodyparts_by_name[zone]
 
-/mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
+/mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null, impact_direction = null)
 
 	if(damagetype == HALLOSS && species && species.flags[NO_PAIN])
 		return FALSE
@@ -409,9 +409,9 @@ This function restores all bodyparts.
 	damageoverlaytemp = 20
 	switch(damagetype)
 		if(BRUTE)
-			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon)
+			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon, impact_direction)
 		if(BURN)
-			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon)
+			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon, impact_direction)
 
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 	updatehealth()

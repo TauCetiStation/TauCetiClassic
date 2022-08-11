@@ -26,6 +26,7 @@
 	var/type_damage = ""
 	var/hits = 0
 	var/time_inflicted = ""
+	var/impact_direction = null
 
 /datum/autopsy_data/proc/copy()
 	var/datum/autopsy_data/W = new()
@@ -35,10 +36,12 @@
 	W.type_damage = type_damage
 	W.hits = hits
 	W.time_inflicted = time_inflicted
+	W.impact_direction = impact_direction
 	return W
 
 /datum/autopsy_body_part
 	var/organ = ""
+	var/more_info = null
 	var/list/datum/autopsy_data/trauma = list()
 
 /obj/item/weapon/autopsy_scanner/proc/add_data(obj/item/organ/external/BP)
@@ -68,6 +71,16 @@
 
 		if(!D.trauma[tdata])
 			D.trauma[tdata] = W.copy()
+
+	switch(D.organ)
+		if("left arm")
+			var/obj/item/organ/external/l_arm/LARM = BP
+			if(LARM.DNA_under_fingernail)
+				D.more_info += "<tr><th colspan=\"5\"><b>DNA found under nail on left hand: [LARM.DNA_under_fingernail]</b></th></tr>"
+		if("right arm")
+			var/obj/item/organ/external/r_arm/RARM = BP
+			if(RARM.DNA_under_fingernail)
+				D.more_info += "<tr><th colspan=\"5\"><b>DNA found under nail on right hand: [RARM.DNA_under_fingernail]</b><br></th></tr>"
 
 	for(var/V in BP.trace_chemicals)
 		if(BP.trace_chemicals[V] > 0 && !chemtraces.Find(V))
@@ -145,6 +158,8 @@
 			scan_data += "[hits_desc]"
 			scan_data += "</td>"
 			scan_data += "<td>[W.time_inflicted]</td>"
+			if(W.impact_direction)
+				scan_data += "<td>[W.impact_direction]</td>"
 			scan_data += "<td>"
 			scan_data += "[W.pretend_weapon]"
 			scan_data += "</td>"
@@ -152,6 +167,9 @@
 			scan_data += "-<font size = \"2\"><span class=\"paper_field\"></span></font>"
 			scan_data += "</td>"
 			scan_data += "</tr>"
+
+		if(D.more_info)
+			scan_data += D.more_info
 
 		scan_data += "</table>"
 		scan_data += "<br>"

@@ -914,7 +914,11 @@
 				if(H.stat != DEAD)
 					to_chat(H, "<span class='warning'>You go blind!</span>")
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-		BP.take_damage(force)
+		if(ishuman(user))
+			var/mob/living/carbon/human/A = user
+			BP.take_damage(force, impact_direction = check_hit_direction(A, H))
+		else
+			BP.take_damage(force)
 	else
 		M.take_bodypart_damage(force)
 
