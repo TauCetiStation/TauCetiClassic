@@ -82,6 +82,9 @@
 	icon_state = "boxing"
 	item_state = "boxing"
 
+/obj/structure/window/reinforced/holowindow
+	flags = NODECONSTRUCT | ON_BORDER
+
 /obj/structure/window/reinforced/holowindow/attackby(obj/item/W, mob/user)
 	if(isscrewdriver(W))
 		to_chat(user, ("<span class='notice'>It's a holowindow, you can't unfasten it!</span>"))
@@ -89,12 +92,6 @@
 		to_chat(user, ("<span class='notice'>It's a holowindow, you can't pry it!</span>"))
 	else
 		return ..()
-
-/obj/structure/window/reinforced/holowindow/shatter()
-	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	visible_message("[src] fades away as it shatters!")
-	qdel(src)
-	return
 
 /obj/structure/window/reinforced/holowindow/disappearing
 

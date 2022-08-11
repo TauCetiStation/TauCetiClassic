@@ -74,12 +74,13 @@
 /obj/structure/window/proc/shatter()
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	visible_message("[src] shatters!")
-	var/fulltile = is_fulltile()
-	new shardtype(loc)
-	if(fulltile)
-		new shardtype
-	if(reinf)
-		new /obj/item/stack/rods(loc, fulltile ? 2 : 1)
+	if(!(flags & NODECONSTRUCT))
+		var/fulltile = is_fulltile()
+		new shardtype(loc)
+		if(fulltile)
+			new shardtype
+		if(reinf)
+			new /obj/item/stack/rods(loc, fulltile ? 2 : 1)
 	qdel(src)
 	return
 
@@ -188,6 +189,10 @@
 
 
 /obj/structure/window/attackby(obj/item/W, mob/user)
+	if(flags & NODECONSTRUCT)
+		if(isscrewdriver(W) | iscrowbar(W))
+			return ..()
+
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/airlock_painter))
 		change_paintjob(W, user)
