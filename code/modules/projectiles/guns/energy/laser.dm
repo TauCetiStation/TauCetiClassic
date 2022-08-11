@@ -33,15 +33,6 @@
 /obj/item/weapon/gun/energy/laser/selfcharging/cyborg/atom_init()
 	. = ..()
 	power_supply.AddComponent(/datum/component/cell_selfrecharge, 125, 4)
-	RegisterSignal(parent, list(COMSIG_UPDATE_MY_ICON), /atom.proc/update_icon)
-
-/obj/item/weapon/gun/energy/laser/selfcharging/cyborg/update_icon()
-	SIGNAL_HANDLER
-	return ..()
-
-/obj/item/weapon/gun/energy/laser/selfcharging/cyborg/Destroy()
-	UnregisterSignal(parent, list(COMSIG_UPDATE_MY_ICON))
-	return ..()
 
 /obj/item/weapon/gun/energy/laser/selfcharging/captain
 	name = "antique laser gun"

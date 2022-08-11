@@ -12,9 +12,10 @@
 /datum/component/cell_selfrecharge/process()
 	var/obj/item/weapon/stock_parts/cell/cell = parent
 	cell.give(charge_add)
-	var/borg_cell_charge = charge_add * 2	//charge_per_second * process's tick
-	SEND_SIGNAL(cell, COMSIG_TAKE_CYBORG_CHARGE, borg_cell_charge)
-	SEND_SIGNAL(cell, COMSIG_UPDATE_MY_ICON)
+	for(var/mob/living/silicon/robot/borg in get_turf(cell))
+		borg.use_power(charge_add*2)
+	for(var/obj/item/weapon/gun/energy/laser/selfcharging/gun in get_turf(cell))
+		gun.update_icon()
 
 /datum/component/cell_selfrecharge/proc/fullcharged()
 	SIGNAL_HANDLER

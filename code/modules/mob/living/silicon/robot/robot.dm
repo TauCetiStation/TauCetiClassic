@@ -122,7 +122,6 @@
 		cell_component.installed = 1
 
 	diag_hud_set_borgcell()
-	RegisterSignal(parent, list(COMSIG_TAKE_CYBORG_CHARGE), .proc/use_power)
 
 /mob/living/silicon/robot/Login()
 	..()
@@ -167,7 +166,6 @@
 			mind.transfer_to(mmi.brainmob)
 			mmi.brainmob.mind.skills.remove_available_skillset(/datum/skillset/max)
 		mmi = null
-	UnregisterSignal(parent, list(COMSIG_TAKE_CYBORG_CHARGE))
 	return ..()
 
 /mob/living/silicon/robot/proc/pick_module()
