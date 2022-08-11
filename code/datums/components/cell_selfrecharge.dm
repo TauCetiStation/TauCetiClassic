@@ -6,8 +6,13 @@
 		return COMPONENT_INCOMPATIBLE
 	//default is 1 energy per second
 	charge_add = _charge_per_second / _charge_speed
-	START_PROCESSING(SSobj, src)
+	RegisterSignal(parent, list(COMSIG_I_NEED_CHARGE), .proc/begin_charging)
 	RegisterSignal(parent, list(COMSIG_I_AM_CHARGED), .proc/fullcharged)
+
+/datum/component/cell_selfrecharge/proc/begin_charging(charge, maxcharge)
+	SIGNAL_HANDLER
+	if(charge != maxcharge)
+		START_PROCESSING(SSobj, src)
 
 /datum/component/cell_selfrecharge/process()
 	var/obj/item/weapon/stock_parts/cell/cell = parent

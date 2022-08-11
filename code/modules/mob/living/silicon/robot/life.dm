@@ -33,7 +33,6 @@
 	adjustFireLoss(0)
 
 /mob/living/silicon/robot/proc/use_power()
-	SIGNAL_HANDLER
 	// Debug only
 	used_power_this_tick = 0
 	for(var/V in components)

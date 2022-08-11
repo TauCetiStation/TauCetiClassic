@@ -349,3 +349,4 @@
 #define COMSIG_UPDATE_MY_ICON
 //send this signal to datum/component/cell_selfrecharge
 #define COMSIG_I_AM_CHARGED
+#define COMSIG_I_NEED_CHARGE
