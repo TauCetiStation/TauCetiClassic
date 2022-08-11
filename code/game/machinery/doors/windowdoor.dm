@@ -18,6 +18,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/base_state = "left"
 	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	integrity_failure = 0
+	armor = list(MELEE = 20, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
 	// For use with door control buttons. Currently just that.
 	var/id = null
 
@@ -203,10 +205,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 /obj/machinery/door/window/deconstruct(disassembled)
 	shatter()
 
-/obj/machinery/door/window/bullet_act(obj/item/projectile/Proj)
-	Proj.damage /= 2
-	. = ..(Proj)
-
 //When an object is thrown at the window
 /obj/machinery/door/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	visible_message("<span class='warning'><B>The glass door was hit by [AM].</B></span>")
@@ -219,8 +217,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	return
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type, damage_flag)
-	if(damage_amount)
-		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+	if(damage_amount && damage_type == BRUTE)
+		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER, 90)
 		return
 	..()
 
