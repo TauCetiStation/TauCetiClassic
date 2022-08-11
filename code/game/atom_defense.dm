@@ -78,7 +78,7 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER 50, TRUE)
+				playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 			else
 				playsound(src, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 		if(BURN)

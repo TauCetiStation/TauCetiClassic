@@ -23,7 +23,7 @@
 */
 
 /obj/attackby(obj/item/attacking_item, mob/user, params)
-	return ..() || ((obj_flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params)) // TODO object flags?
+	return ..() || ((flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params))
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -274,11 +274,11 @@
 
 	var/had_effect = FALSE
 	if(!(flags & NOATTACKANIMATION))
-		user.do_attack_animation(src)
+		user.do_attack_animation(attacked_atom)
 		had_effect = TRUE
 
 	if(!(flags & NOBLUDGEON))
-		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
+		visible_message("<span class='danger'>[attacked_atom] has been hit by [user] with [src].</span>")
 		had_effect = TRUE
 
 	if(!had_effect)
