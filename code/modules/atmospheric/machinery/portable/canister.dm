@@ -21,7 +21,8 @@
 	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
 	var/release_flow_rate = ATMOS_DEFAULT_VOLUME_PUMP // in L/s
 
-	var/health = 100
+	max_integrity = 100
+	integrity_failure = 0.1
 	var/temperature_resistance = 1000 + T0C
 	var/starter_temp
 
@@ -208,16 +209,13 @@ update_flag
 
 /obj/machinery/portable_atmospherics/canister/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
-		take_damage(5)
+		take_damage(5, BURN, FIRE)
 
-/obj/machinery/portable_atmospherics/canister/proc/take_damage(amount)
-	if((stat & BROKEN) || (flags & NODECONSTRUCT))
+/obj/machinery/portable_atmospherics/canister/take_damage()
+	if(flags & NODECONSTRUCT)
 		return
-
-	health = clamp(health - amount, 0, initial(health))
-
-	if(health <= 10)
-		canister_break()
+	
+	..()
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	..()
@@ -262,25 +260,15 @@ update_flag
 		return GM.return_pressure()
 	return 0
 
-/obj/machinery/portable_atmospherics/canister/blob_act()
-	take_damage(200)
-
 /obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/Proj, def_zone)
+	Proj.damage /= 2
 	. = ..()
-	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		return
-
-	if(Proj.damage)
-		take_damage(round(Proj.damage / 2))
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
-		if(!(stat & BROKEN))
-			canister_break()
-		if(disassembled)
-			new /obj/item/stack/sheet/metal (loc, 10)
-		else
-			new /obj/item/stack/sheet/metal (loc, 5)
+	if(flags & NODECONSTRUCT)
+		return
+	atom_break()
+	new /obj/item/stack/sheet/metal(loc, disassembled ? 10 : 5)
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user)
@@ -323,7 +311,10 @@ update_flag
 
 	nanomanager.update_uis(src) // Update all NanoUIs attached to src
 
-/obj/machinery/portable_atmospherics/canister/proc/canister_break()
+/obj/machinery/portable_atmospherics/canister/atom_break(damage_flag)
+	if(stat & BROKEN)
+		return
+	. = ..()
 	disconnect()
 
 	var/turf/T = get_turf(src)

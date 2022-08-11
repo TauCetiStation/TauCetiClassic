@@ -34,7 +34,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/d2 = 1   // cable direction 2 (see above)
 	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	color = COLOR_RED
-	atom_integrity = 5
+	max_integrity = 5
 
 /obj/structure/cable/yellow
 	color = COLOR_YELLOW
