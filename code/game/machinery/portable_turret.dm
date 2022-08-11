@@ -27,8 +27,7 @@
 
 	var/raised = FALSE			//if the turret cover is "open" and the turret is raised
 	var/raising= FALSE			//if the turret is currently opening or closing its cover
-	var/health = 80			//the turret's health
-	var/maxhealth = 80		//turrets maximal health.
+	max_integrity = 80		//turrets maximal health.
 	var/auto_repair = FALSE		//if 1 the turret slowly repairs itself.
 	var/locked = TRUE			//if the turret's behaviour control access is locked
 	var/controllock = FALSE		//if the turret responds to control panels
@@ -392,30 +391,29 @@ var/global/list/turret_icons
 	VARSET_IN(src, enabled, TRUE, 80) //8 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
 	return TRUE
 
-/obj/machinery/porta_turret/proc/take_damage(force)
-	if(!raised && !raising)
-		force = force / 8
-		if(force < 5)
+/obj/machinery/porta_turret/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
+	if(!(raised || raising))
+		damage_amount /= 8
+		if(damage_amount < 5)
 			return
 
-	health -= force
-	if (force > 5 && prob(45))
-		spark_system.start()
-	if(health <= 0)
-		die() //the death process :(
+	if(damage_flag == MELEE)
+		damage_amount /= 2
 
-/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj, def_zone)
+	return damage_amount
+
+/obj/machinery/porta_turret/take_damage()
 	. = ..()
-	var/damage = Proj.damage
-	if(!damage)
-		return
+	if(. && enabled && !(attacked || emagged))
+		attacked = TRUE
+		VARSET_IN(src, attacked, FALSE, 60)
+	if(. > 5 && prob(45))
+		spark_system.start()
 
-	if(enabled)
-		if(!attacked && !emagged)
-			attacked = TRUE
-			VARSET_IN(src, attacked, FALSE, 60)
-
-	take_damage(damage)
+/obj/machinery/porta_turret/deconstruct(disassembled)
+	stat |= BROKEN	//enables the BROKEN bit
+	spark_system.start()	//creates some sparks because they look cool
+	update_icon()
 
 /obj/machinery/porta_turret/emp_act(severity)
 	if(enabled)
@@ -439,18 +437,12 @@ var/global/list/turret_icons
 	switch(severity)
 		if(EXPLODE_HEAVY)
 			if(prob(75))
-				take_damage(initial(health) * 8) //should instakill most turrets
+				take_damage(640, BRUTE, BOMB, FALSE) //should instakill most turrets
 				return
 		if(EXPLODE_LIGHT)
-			take_damage(initial(health) * 8 * 0.33) // 8/3 ~ 8*0.33
+			take_damage(220, BRUTE, BOMB, FALSE)
 			return
 	qdel(src)
-
-/obj/machinery/porta_turret/proc/die()	//called when the turret dies, ie, health <= 0
-	health = 0
-	stat |= BROKEN	//enables the BROKEN bit
-	spark_system.start()	//creates some sparks because they look cool
-	update_icon()
 
 /obj/machinery/porta_turret/process()
 	//the main machinery process
@@ -475,9 +467,9 @@ var/global/list/turret_icons
 		if(!tryToShootAt(secondarytargets)) // if no valid targets, go for secondary targets
 			popDown() // no valid targets, close the cover
 
-	if(auto_repair && (health < maxhealth))
+	if(auto_repair && (get_integrity() < max_integrity))
 		use_power(20000)
-		health = min(health + 1, maxhealth) // 1HP for 20kJ
+		repair_damage(1)
 
 /obj/machinery/porta_turret/proc/assess_and_assign(mob/living/L, list/targets, list/secondarytargets)
 	switch(assess_living(L))
