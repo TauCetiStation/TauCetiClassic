@@ -32,7 +32,10 @@
 
 /datum/role/abductor/OnPostSetup(laterole)
 	. = ..()
-	var/mob/living/carbon/human/abductor/H = antag.current
+	var/mob/living/S = antag.current
+	var/mob/living/carbon/human/abductor/H = new /mob/living/carbon/human/abductor(S.loc)
+	usr.mind.transfer_to(H)
+	qdel(S)
 	H.set_species(ABDUCTOR)
 	var/faction_name = faction ? faction.name : ""
 	H.real_name = faction_name + " " + name
