@@ -290,6 +290,7 @@
 #include "code\datums\components\attack_self_effect.dm"
 #include "code\datums\components\bell_death_alarm.dm"
 #include "code\datums\components\bound.dm"
+#include "code\datums\components\cell_selfrecharge.dm"
 #include "code\datums\components\clickplace.dm"
 #include "code\datums\components\footstep.dm"
 #include "code\datums\components\forcefield.dm"

@@ -342,3 +342,10 @@
 
 // send this signal to toggle zoom in /datum/component/zoom: (mob/user)
 #define COMSIG_ZOOM_TOGGLE "zoom_toggle"
+
+//send this signal to /mob/living/silicon/robot/proc/use_power()
+#define COMSIG_TAKE_CYBORG_CHARGE
+//send this signal to /obj/item/weapon/gun/energy/laser/selfcharging/cyborg/update_icon()
+#define COMSIG_UPDATE_MY_ICON
+//send this signal to datum/component/cell_selfrecharge
+#define COMSIG_I_AM_CHARGED

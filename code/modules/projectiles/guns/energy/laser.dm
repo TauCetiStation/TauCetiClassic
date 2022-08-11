@@ -23,28 +23,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
 
-/obj/item/weapon/gun/energy/laser/selfcharging
-	var/charge_tick = 0
-	var/chargespeed = 0
-
-/obj/item/weapon/gun/energy/laser/selfcharging/atom_init()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-
-/obj/item/weapon/gun/energy/laser/selfcharging/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/weapon/gun/energy/laser/selfcharging/process()
-	charge_tick++
-	if(charge_tick < 4) return 0
-	charge_tick = 0
-	if(!power_supply) return 0
-	power_supply.give(100 * chargespeed)
-	update_icon()
-	return 1
-
 /obj/item/weapon/gun/energy/laser/selfcharging/cyborg
 	name = "laser gun"
 	desc = "A basic weapon designed kill with concentrated energy bolts."
@@ -54,21 +32,16 @@
 
 /obj/item/weapon/gun/energy/laser/selfcharging/cyborg/atom_init()
 	. = ..()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	chargespeed = shot.e_cost * 0.01
+	power_supply.AddComponent(/datum/component/cell_selfrecharge, 125, 4)
+	RegisterSignal(parent, list(COMSIG_UPDATE_MY_ICON), /atom.proc/update_icon)
 
-/obj/item/weapon/gun/energy/laser/selfcharging/cyborg/process()
-	if(!isrobot(loc))
-		return 0
-	var/mob/living/silicon/robot/R = loc
-	if(R.cell)
-		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-		if(R.cell.use(shot.e_cost))
-			if(power_supply.charge == power_supply.maxcharge)
-				return 0
-			..()
-			return 1
-	return 0
+/obj/item/weapon/gun/energy/laser/selfcharging/cyborg/update_icon()
+	SIGNAL_HANDLER
+	return ..()
+
+/obj/item/weapon/gun/energy/laser/selfcharging/cyborg/Destroy()
+	UnregisterSignal(parent, list(COMSIG_UPDATE_MY_ICON))
+	return ..()
 
 /obj/item/weapon/gun/energy/laser/selfcharging/captain
 	name = "antique laser gun"
@@ -78,7 +51,10 @@
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = null
 	can_be_holstered = TRUE
-	chargespeed = 1
+
+/obj/item/weapon/gun/energy/laser/selfcharging/captain/atom_init()
+	. = ..()
+	power_supply.AddComponent(/datum/component/cell_selfrecharge, 25)
 
 /obj/item/weapon/gun/energy/laser/selfcharging/alien
 	name = "Alien blaster"
@@ -86,7 +62,10 @@
 	desc = " The object menaces with spikes of energy. You don't kmown what kind of weapon."
 	force = 5
 	origin_tech = null
-	chargespeed = 2
+
+/obj/item/weapon/gun/energy/laser/selfcharging/alien/atom_init()
+	. = ..()
+	power_supply.AddComponent(/datum/component/cell_selfrecharge, 50)
 
 /obj/item/weapon/gun/energy/laser/scatter
 	name = "scatter laser gun"
