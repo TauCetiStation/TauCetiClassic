@@ -54,10 +54,18 @@
 #define ATTACK_EFFECT_DISARM "disarm"
 #define ATTACK_EFFECT_SLIME  "glomp"
 
+//the define for visible message range in combat
+#define SAMETILE_MESSAGE_RANGE 1
+#define COMBAT_MESSAGE_RANGE 3
+#define DEFAULT_MESSAGE_RANGE 7
+
 // Damage flags
 #define DAM_SHARP 1
 #define DAM_EDGE  2
 #define DAM_LASER 4
+
+//We will round to this value in damage calculations.
+#define DAMAGE_PRECISION 0.1
 
 // These control the amount of blood lost from burns. The loss is calculated so
 // that dealing just enough burn damage to kill the player will cause the given

@@ -36,7 +36,7 @@
 	user.visible_message(span_danger("[user] smashes [src][damage ? "" : ", without leaving a mark"]!"), span_danger("You smash [src][damage ? "" : ", without leaving a mark"]!"), null, COMBAT_MESSAGE_RANGE)
 	return TRUE
 
-/obj/blob_act(/obj/effect/blob/B) // TODO blob to structure
+/obj/blob_act(obj/effect/blob/B) // TODO blob to structure
 	if (!..())
 		return
 	take_damage(400, BRUTE, MELEE, 0, get_dir(src, B))
@@ -56,7 +56,7 @@
 	//if(user.obj_damage)
 	//	. = attack_generic(user, user.obj_damage, user.melee_damtype, MELEE, play_soundeffect)
 	//else
-	. = attack_generic(user, melee_damage, user.melee_damtype, MELEE, play_soundeffect)
+	. = attack_generic(user, user.melee_damage, user.melee_damtype, MELEE, play_soundeffect)
 	if(. && !play_soundeffect)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	if(user.client)
@@ -87,7 +87,7 @@
 	deconstruct(FALSE)
 
 ///Called when the obj is hit by a tesla bolt.
-/obj/tesla_act(power)
+/obj/proc/tesla_act(power)
 	if(QDELETED(src))
 		return 0
 	being_shocked = TRUE

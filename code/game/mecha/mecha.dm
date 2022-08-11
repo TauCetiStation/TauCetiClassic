@@ -8,7 +8,7 @@
 #define TIME_TO_RECALIBRATION 10 SECOND
 
 #define RANGE_MELEE 1
-#define RANGE_RANGED 2
+#define RANGED 2
 
 
 /obj/mecha
