@@ -49,7 +49,7 @@
 
 /obj/attack_animal(mob/living/simple_animal/user)
 	if(!user.melee_damage) // TODO obj damage
-		user.emote("custom", message = "[user.friendly] [src].")
+		user.me_emote("[user.friendly] [src].")
 		return FALSE
 
 	var/play_soundeffect = TRUE
