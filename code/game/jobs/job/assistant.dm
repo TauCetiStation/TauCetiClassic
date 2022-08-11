@@ -15,7 +15,8 @@
 		"Reporter"       = /datum/outfit/job/assistant/reporter,
 		"Waiter"         = /datum/outfit/job/assistant/waiter,
 		"Vice Officer"   = /datum/outfit/job/assistant/vice_officer,
-		"Paranormal Investigator" = /datum/outfit/job/assistant/paranormal_investigator
+		"Paranormal Investigator" = /datum/outfit/job/assistant/paranormal_investigator,
+		"Mecha Operator" = /datum/outfit/job/assistant/mecha_operator
 		)
 	outfit = /datum/outfit/job/assistant/test_subject
 	skillsets = list(
