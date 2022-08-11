@@ -397,7 +397,7 @@
 ////////  Health related procs  ////////
 ////////////////////////////////////////
 
-/obj/mecha/proc/take_damage(amount, type="brute")
+/obj/mecha/take_damage(amount, type=BRUTE) // TODO port tg mechs
 	if(amount)
 		var/damage = absorbDamage(amount,type)
 		health -= damage
