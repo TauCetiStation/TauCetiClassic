@@ -98,39 +98,8 @@
 
 /obj/structure/window/reinforced/holowindow/disappearing
 
-/obj/machinery/door/window/holowindoor/attackby(obj/item/weapon/I, mob/user)
-
-	if (src.operating == 1)
-		return
-	user.SetNextMove(CLICK_CD_MELEE)
-	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
-		var/aforce = I.force
-		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-
-		visible_message("<span class='warning'><B>[src] was hit by [I].</B></span>")
-		if(I.damtype == BRUTE || I.damtype == BURN)
-			take_damage(aforce)
-		return
-
-	add_fingerprint(user)
-	if (!requiresID())
-		user = null
-
-	if (allowed(user))
-		if (src.density)
-			open()
-		else
-			close()
-
-	else if (src.density)
-		flick(text("[]deny", src.base_state), src)
-
-	return
-
-/obj/machinery/door/window/holowindoor/shatter()
-	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	visible_message("[src] fades away as it shatters!")
-	qdel(src)
+/obj/machinery/door/window/holowindoor
+	flags = NODECONSTRUCT | ON_BORDER
 
 /obj/structure/stool/bed/chair/holochair
 	icon_state = "chair_gray"

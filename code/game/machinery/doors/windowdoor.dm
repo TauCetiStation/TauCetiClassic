@@ -53,7 +53,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		icon_state = "[src.base_state]open"
 	SSdemo.mark_dirty(src)
 
-/obj/machinery/door/window/proc/shatter(display_message = 1)
+/obj/machinery/door/window/proc/shatter()
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/weapon/shard(loc)
@@ -77,10 +77,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 			ae.icon_state = "door_electronics_smoked"
 			ae.broken = TRUE
 			operating = 0
-	src.density = FALSE
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	if(display_message)
-		visible_message("[src] shatters!")
+	visible_message("[src] shatters!")
 	qdel(src)
 
 //painter
@@ -213,7 +211,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		tforce = 40
 	else
 		tforce = AM:throwforce
-	take_damage(tforce, BRUTE, MELEE, 1, get_dir(src, AM))
+	take_damage(tforce, BRUTE, MELEE, TRUE, get_dir(src, AM))
 	return
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type, damage_flag)
@@ -342,15 +340,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
-		user.do_attack_animation(src)
-		user.SetNextMove(CLICK_CD_MELEE)
-		if( (I.flags&NOBLUDGEON) || !I.force )
-			return
-		var/aforce = I.force
-		visible_message("<span class='warning'><B>[src] was hit by [I].</B></span>")
-		if(I.damtype == BRUTE || I.damtype == BURN)
-			take_damage(aforce, I.damtype, I.damage_flags())
-		return
+		return ..()
 
 	try_open(user)
 
