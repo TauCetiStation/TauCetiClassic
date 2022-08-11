@@ -1,6 +1,8 @@
 /obj/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	..()
-	take_damage(AM.throwforce, BRUTE, MELEE, 1, get_dir(src, AM))
+	if(isobj(AM))
+		var/obj/O = AM
+		take_damage(O.throwforce, BRUTE, MELEE, 1, get_dir(src, AM)) // TODO add throwforce to atom movable
 
 /obj/ex_act(severity)
 	if(resistance_flags & INDESTRUCTIBLE)
@@ -41,7 +43,7 @@
 		return
 	take_damage(400, BRUTE, MELEE, 0, get_dir(src, B))
 
-/obj/attack_alien(mob/living/carbon/alien/humanoid/user)
+/obj/attack_alien(mob/living/carbon/xenomorph/humanoid/user)
 	if(attack_generic(user, 60, BRUTE, MELEE, 0))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
 
