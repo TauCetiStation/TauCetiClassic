@@ -123,8 +123,6 @@
 
 	diag_hud_set_borgcell()
 
-	RegisterSignal(src, COMSIG_CELL_TAKE_BORG_CHARGE, .proc/cell_use_power)
-
 /mob/living/silicon/robot/Login()
 	..()
 	set_all_components(TRUE)
@@ -168,7 +166,6 @@
 			mind.transfer_to(mmi.brainmob)
 			mmi.brainmob.mind.skills.remove_available_skillset(/datum/skillset/max)
 		mmi = null
-	UnregisterSignal(cell, COMSIG_CELL_TAKE_BORG_CHARGE)
 	return ..()
 
 /mob/living/silicon/robot/proc/pick_module()
@@ -1161,7 +1158,6 @@
 // Uses power from cyborg's cell. Returns 1 on success or 0 on failure.
 // Properly converts using CELLRATE now! Amount is in Joules.
 /mob/living/silicon/robot/proc/cell_use_power(amount = 0)
-	SIGNAL_HANDLER
 	// No cell inserted
 	if(!cell)
 		return FALSE

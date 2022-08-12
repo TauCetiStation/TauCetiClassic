@@ -345,5 +345,3 @@
 
 //send this signal to datum/component/cell_selfrecharge and /obj/laser/selfcharging
 #define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed"
-//send this signal to mob/silicon/robot
-#define COMSIG_CELL_TAKE_BORG_CHARGE "cell_take_borg_charge"
