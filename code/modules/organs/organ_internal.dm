@@ -74,9 +74,12 @@
 				BP.germ_level++
 
 			if (prob(3))	//about once every 30 seconds
-				take_damage(1,silent=prob(30))
+				take_damage(1,silent=prob(30))	
 
-/obj/item/organ/internal/proc/take_damage(amount, silent=0)
+/obj/item/organ/internal/attacked_by(obj/item/attacking_item, mob/living/user)
+	return  // TODO remove workaround
+
+/obj/item/organ/internal/take_damage(amount, silent=0)
 	if(src.robotic == 2)
 		src.damage += (amount * 0.8)
 	else
