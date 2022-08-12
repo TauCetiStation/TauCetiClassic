@@ -295,7 +295,7 @@
 	god_desc = "Вам нужная тьма на святой земле."
 
 /datum/aspect/lightbending/darkness/get_light_gain(turf/simulated/floor/F)
-	return (0.6 - F.get_lumcount()) * power * 0.05
+	return (0.6 - F.get_lumcount()) * 0.05 * (1.4 * sqrt(power) + (power / 4)) //https://www.desmos.com/calculator/nwle5biewp
 
 //Gives mana from: light levels on holy turfs
 //Needed for: spells and rituals related to the theme of receiving light
@@ -309,7 +309,7 @@
 	god_desc = "Вам нужен свет на святой земле."
 
 /datum/aspect/lightbending/light/get_light_gain(turf/simulated/floor/F)
-	return (F.get_lumcount() - 0.4) * power * 0.03
+	return (F.get_lumcount() - 0.4) * 0.03 * (1.4 * sqrt(power) + (power / 4)) //https://www.desmos.com/calculator/nwle5biewp
 
 //Gives mana for economical cost of an item.
 //Needed for: anything economy related
