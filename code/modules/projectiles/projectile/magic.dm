@@ -24,11 +24,13 @@
 		L.wabbajack()
 
 /mob/living/proc/wabbajack(new_body, permanent = FALSE)
-	if(!istype(src) || stat == DEAD || notransform || isxenoqueen(src))
+	if(!istype(src)|| notransform || isxenoqueen(src))
 		return
 	if(!isliving(new_body))
 		for(var/mob/living/L in src.contents)
 			if(L || (GODMODE & status_flags))
+				return
+			if(!L && stat == DEAD)
 				return
 
 	var/mob/living/new_mob
@@ -114,7 +116,14 @@
 		mind.transfer_to(new_mob)
 	else
 		new_mob.key = key
+
+	to_chat(new_mob, "<B>Твоё тело меняется!</B>")
+	to_chat(new_mob,"<span class='notice'><b> Вы превратились во что-то странное! Теперь вам предстоит провести какое-то время или даже всю оставшуюся жизнь в этом обличии! Но не стоит отчаиваться, тот, кто это сделал, наверняка сможет и вернуть.<br> \
+	Вы поменяли тело, но это не значит, что вы стали кем-то другим в голове (если она вообще у вас есть). Вы всё также несёте ответственность за свои действия, как и было прежде.</span></b>")
 	if(isliving(new_body)) //Returny case
+		var/mob/dead/observer/ghost = new_mob.get_ghost()
+		if(ghost)
+			ghost.reenter_corpse()
 		new_mob.burn_skin((maxHealth - health) / maxHealth * new_mob.maxHealth) //You can bring them to the doorstep of death
 		qdel(src)
 	else
@@ -125,7 +134,6 @@
 			notransform = TRUE
 		else
 			qdel(src)
-	to_chat(new_mob, "<B>Your body forms to something else!</B>")
 
 	return new_mob
 
