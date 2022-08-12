@@ -203,6 +203,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 /obj/machinery/door/window/deconstruct(disassembled)
 	shatter()
 
+/obj/machinery/door/window/bullet_act(obj/item/projectile/P)
+	if(Proj.pass_flags & PASSGLASS)
+		return PROJECTILE_FORCE_MISS
+	return ..()
+
 //When an object is thrown at the window
 /obj/machinery/door/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	visible_message("<span class='warning'><B>The glass door was hit by [AM].</B></span>")
