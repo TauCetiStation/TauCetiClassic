@@ -1221,6 +1221,19 @@
 		if(cell && prob(5))
 			cell.blob_act()
 
+/obj/machinery/power/apc/run_atom_armor(damage_amount, damage_flag, damage_flag = 0, attack_dir)
+	if(stat & BROKEN)
+		switch(damage_flag)
+			if(BRUTE, BURN)
+				return damage_amount
+		return
+	. = ..()
+
+/obj/machinery/power/apc/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		set_broken()
+
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
