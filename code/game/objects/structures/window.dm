@@ -459,6 +459,9 @@
 	reinf = 1
 	damage_threshold = 15
 
+/obj/structure/window/reinforced/indestructible
+	resistance_flags = INDESTRUCTIBLE
+
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
 	desc = "It looks rather strong and opaque. Might take a few good hits to shatter it."
