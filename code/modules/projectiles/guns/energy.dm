@@ -45,8 +45,6 @@
 		return
 	chambered = shot
 	chambered.newshot()
-	var/obj/item/weapon/stock_parts/cell/cell = power_supply
-	SEND_SIGNAL(cell, COMSIG_I_NEED_CHARGE, cell.charge, cell.maxcharge)
 	return
 
 /obj/item/weapon/gun/energy/process_chamber()

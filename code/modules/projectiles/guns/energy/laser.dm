@@ -23,12 +23,19 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
 
+//obj/item/weapon/gun/energy/laser/selfcharging
+
+/obj/item/weapon/gun/energy/laser/selfcharging/newshot()
+	. = ..()
+	SEND_SIGNAL(power_supply, COMSIG_I_NEED_CHARGE, power_supply.charge, power_supply.maxcharge)
+
 /obj/item/weapon/gun/energy/laser/selfcharging/cyborg
 	name = "laser gun"
 	desc = "A basic weapon designed kill with concentrated energy bolts."
 	icon_state = "laser"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/cyborg)
 	cell_type = /obj/item/weapon/stock_parts/cell/secborg
+
 
 /obj/item/weapon/gun/energy/laser/selfcharging/cyborg/atom_init()
 	. = ..()

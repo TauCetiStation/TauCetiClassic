@@ -42,7 +42,6 @@
 	if(rigged && amount > 0)
 		explode()
 		return 0
-
 	if(maxcharge < amount)	return 0
 	var/power_used = min(maxcharge-charge,amount)
 	if(crit_fail)	return 0
@@ -52,9 +51,12 @@
 			crit_fail = 1
 			return 0
 	charge += power_used
+	check_charge()
 	return power_used
 
-
+/obj/item/weapon/stock_parts/cell/proc/check_charge()
+	if(charge == maxcharge)
+		SEND_SIGNAL(src, COMSIG_I_AM_CHARGED)
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
 	if(src in view(1, user))
