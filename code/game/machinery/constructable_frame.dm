@@ -53,7 +53,7 @@
 
 /obj/machinery/constructable_frame/deconstruct(disassembled)
 	if(!(flags & NODECONSTRUCT))
-		new /obj/item/stack/sheet/iron(loc, 5)
+		new /obj/item/stack/sheet/metal(loc, 5)
 		if(circuit)
 			circuit.forceMove(loc)
 			circuit = null

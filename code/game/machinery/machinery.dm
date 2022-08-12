@@ -540,14 +540,13 @@ Class Procs:
 		return ..() //Just delete us, no need to call anything else.
 
 	deconstruction()
-	if(!LAZYLEN(component_parts))
+	if(!length(component_parts))
 		return ..() //we don't have any parts.
 	spawn_frame(disassembled)
 	for(var/obj/item/part in component_parts)
 		part.forceMove(loc)
 		if(part.reliability != 100 && crit_fail)
 			part.crit_fail = 1
-		I.loc = loc
 	LAZYCLEARLIST(component_parts)
 	..()
 
