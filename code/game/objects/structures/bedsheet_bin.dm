@@ -134,7 +134,7 @@ LINEN BINS
 	. = ..()
 
 	var/obj/effect/effect/forcefield/F = new
-	AddComponent(/datum/component/forcefield, "wizard field", 20, 5 SECONDS, 3 SECONDS, F, TRUE)
+	AddComponent(/datum/component/forcefield, "wizard field", 20, 3 SECONDS, 5 SECONDS, F, TRUE)
 
 /obj/item/weapon/bedsheet/wiz/proc/activate(mob/living/user)
 	if(iswizard(user) || iswizardapprentice(user))
@@ -148,8 +148,6 @@ LINEN BINS
 
 	if(slot == SLOT_BACK)
 		activate(user)
-	else if(slot_equipped == SLOT_BACK)
-		deactivate(user)
 
 /obj/item/weapon/bedsheet/wiz/dropped(mob/living/user)
 	. = ..()
