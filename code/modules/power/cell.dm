@@ -53,13 +53,10 @@
 			return 0
 	charge += power_used
 	SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED, charge)
-	for(var/mob/living/silicon/robot/borg in get_turf(src))
-		borg.cell_use_power(power_used)
 	return power_used
 
 /obj/item/weapon/stock_parts/cell/Destroy()
 	UnregisterSignal(src, COMSIG_CELL_CHARGE_CHANGED)
-	UnregisterSignal(src, COMSIG_CELL_TAKE_BORG_CHARGE)
 	return ..()
 
 /obj/item/weapon/stock_parts/cell/examine(mob/user)

@@ -47,6 +47,13 @@
 	. = ..()
 	power_supply.AddComponent(/datum/component/cell_selfrecharge, 125, 4)
 
+/obj/item/weapon/gun/energy/laser/selfcharging/cyborg/newshot()
+	if(..())
+		var/mob/living/silicon/robot/R = loc
+		if(R && R.cell)
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+			R.cell.use(shot.e_cost)
+
 /obj/item/weapon/gun/energy/laser/selfcharging/captain
 	name = "antique laser gun"
 	icon_state = "caplaser"
