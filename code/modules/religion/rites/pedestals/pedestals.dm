@@ -8,7 +8,6 @@
 	ritual_length = (2 MINUTE)
 	invoke_msg = "Venit ad nos!"
 	favor_cost = 2000
-	var/datum/announcement/centcomm/summon/A //New should be called only on summon!
 
 	rules = list(
 		/obj/item/organ/external/r_arm = 3,
@@ -73,7 +72,7 @@
 	return TRUE
 
 /datum/religion_rites/pedestals/cult/narsie/proc/announce_summon(mob/living/user)
-	A = new(user)
+	var/datum/announcement/centcomm/narsie_summon/A = new(user)
 	A.play()
 
 /datum/religion_rites/pedestals/cult/narsie/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)

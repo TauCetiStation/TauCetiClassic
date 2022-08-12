@@ -32,5 +32,5 @@
 /datum/announcement/centcomm/narsie_summon
 	name = "Central Command Higher Dimensional Affairs"
 	subtitle = "Центральное Командование"
-/datum/announcement/centcomm/summon/New(mob/user)
+/datum/announcement/centcomm/narsie_summon/New(mob/user)
 	message = "Зафиксирована блюспейс аномалия в [get_area(user)], возможно раскрытие неизвестного портала."
