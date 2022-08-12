@@ -26,7 +26,7 @@
 	laws = new /datum/ai_laws/syndicate_override()
 	if(!sword_overlay)
 		sword_overlay = image(icon, "syndie_android_sword", "layer" = 4.5)
-		sword_overlay.plane = sword_overlay.layer
+		sword_overlay.plane = -4
 
 /mob/living/silicon/robot/syndicate/updateicon()
 	..()
@@ -45,7 +45,7 @@
 	INVOKE_ASYNC(src, .proc/recalculateChannels)
 
 /obj/item/weapon/melee/energy/sword/cyborg
-	var/hitcost = 500
+	blade_color = "blue"
 
 /obj/item/weapon/melee/energy/sword/cyborg/attack_self(mob/living/user)
 	..()
@@ -55,16 +55,6 @@
 			S.add_overlay(S.sword_overlay)
 		else
 			S.cut_overlay(S.sword_overlay)
-
-/obj/item/weapon/melee/energy/sword/cyborg/attack(mob/M, mob/living/silicon/robot/R)
-	if(R.cell)
-		var/obj/item/weapon/stock_parts/cell/C = R.cell
-		if(active && !(C.use(hitcost)))
-			attack_self(R)
-			to_chat(R, "<span class='notice'>It's out of charge!</span>")
-			return
-		..()
-	return
 
 /obj/item/weapon/gun/energy/crossbow/cyborg/newshot()
 	if(isrobot(src.loc))

@@ -186,3 +186,10 @@
 	select_name = "phase"
 	e_cost = 100
 	fire_sound = 'sound/weapons/guns/phaser.ogg'
+
+/obj/item/ammo_casing/energy/syndiborg
+	name = "3D printed casing"
+	caliber = "3d"
+	e_cost = 25
+	projectile_type = /obj/item/projectile/bullet/smg
+	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'

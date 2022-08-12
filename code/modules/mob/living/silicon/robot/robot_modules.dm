@@ -335,7 +335,7 @@
 	modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
 	modules += new /obj/item/weapon/card/emag/borg(src)
 	modules += new /obj/item/borg/sight/night(src)
-	modules += new /obj/item/weapon/gun/projectile/automatic/borg(src)
+	modules += new /obj/item/weapon/gun/energy/syndiborg_printer(src)
 	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
