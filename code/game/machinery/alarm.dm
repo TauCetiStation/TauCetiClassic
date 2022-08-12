@@ -1169,7 +1169,7 @@ FIRE ALARM
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc, 1)
-		if(!(machine_stat & BROKEN))
+		if(!(stat & BROKEN))
 			var/obj/item/item = new /obj/item/weapon/firealarm_electronics(loc)
 			if(!disassembled)
 				item.update_integrity(item.max_integrity * 0.5)

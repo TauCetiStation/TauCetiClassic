@@ -186,7 +186,13 @@
 	origin_tech = "syndicate=6;combat=5"
 
 /obj/item/weapon/syndicatebombcore/ex_act(severity) //Little boom can chain a big boom
-	try_detonate(TRUE)
+	detonate()
+
+/obj/item/weapon/syndicatebombcore/proc/detonate()
+	explosion(get_turf(loc), 2, 5, 11)
+	if(loc && istype(loc, /obj/machinery/syndicatebomb))
+		qdel(loc) // delete machinery just in case
+	qdel(src)
 
 /obj/item/device/syndicatedetonator
 	name = "big red button"

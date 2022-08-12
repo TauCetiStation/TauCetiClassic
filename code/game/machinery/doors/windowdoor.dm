@@ -203,7 +203,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 /obj/machinery/door/window/deconstruct(disassembled)
 	shatter()
 
-/obj/machinery/door/window/bullet_act(obj/item/projectile/P)
+/obj/machinery/door/window/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.pass_flags & PASSGLASS)
 		return PROJECTILE_FORCE_MISS
 	return ..()

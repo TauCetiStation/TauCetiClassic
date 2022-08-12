@@ -48,7 +48,7 @@
 /obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(machine_stat & BROKEN)
+			if(stat & BROKEN)
 				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 			else
 				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
