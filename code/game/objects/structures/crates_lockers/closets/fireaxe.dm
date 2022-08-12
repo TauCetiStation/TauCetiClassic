@@ -17,7 +17,7 @@
 	var/smashed = FALSE
 
 /obj/structure/closet/fireaxecabinet/Destroy()
-	fireaxe = null
+	QDEL_NULL(fireaxe)
 	return ..()
 
 /obj/structure/closet/fireaxecabinet/PopulateContents()
@@ -45,19 +45,13 @@
 					icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
 					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 				return
-			else
+			if(O.force < 15)
 				user.do_attack_animation(src)
 				playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER) //We don't want this playing every time
-			if(O.force < 15)
 				visible_message("<span class='notice'>The cabinet's protective glass glances off the hit.</span>")
 			else
-				hitstaken++
-				if(hitstaken == 4)
-					playsound(src, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER) //Break cabinet, receive goodies. Cabinet's fucked for life after that.
-					smashed = TRUE
-					locked = FALSE
-					localopened = TRUE
-			update_icon()
+				..()
+			
 	else if (istype(O, /obj/item/weapon/fireaxe) && localopened)
 		if(!fireaxe)
 			user.drop_from_inventory(O, src)
@@ -97,6 +91,50 @@
 			else
 				icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
 				addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
+
+/obj/structure/closet/fireaxecabinet/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(smashed)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, TRUE)
+			else
+				playsound(loc, 'sound/effects/Glasshit.ogg', 90, TRUE)
+		if(BURN)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, TRUE)
+
+/obj/structure/closet/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = TRUE, attack_dir)
+	if(localopened)
+		return
+	. = ..()
+	if(.)
+		hitstaken = CEIL(get_integrity() / max_integrity)
+		update_icon()
+
+/obj/structure/closet/fireaxecabinet/atom_break(damage_flag)
+	if(smashed || flags & NODECONSTRUCT)
+		return ..()
+	smashed = TRUE
+	update_icon()
+	playsound(src, 'sound/effects/Glassbr3.ogg', 100, TRUE)
+	new /obj/item/weapon/shard(loc)
+	new /obj/item/weapon/shard(loc)
+	. = ..()
+
+/obj/structure/closet/fireaxecabinet/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	if(fireaxe && loc)
+		fireaxe.forceMove(loc)
+		fireaxe = null
+	new /obj/item/stack/sheet/metal(loc, 2)
+	return ..()
+
+/obj/structure/closet/fireaxecabinet/blob_act()
+	if(fireaxe)
+		fireaxe.forceMove(loc)
+		fireaxe = null
+	qdel(src)
 
 /obj/structure/closet/fireaxecabinet/attack_hand(mob/living/user)
 	if(user.is_busy(src))
