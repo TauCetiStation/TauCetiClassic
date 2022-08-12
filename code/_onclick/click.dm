@@ -91,8 +91,6 @@
 	if(modifiers[CTRL_CLICK])
 		CtrlClickOn(A)
 		return
-	if(HardsuitClickOn(A))
-		return
 	if(RegularClickOn(A))
 		return
 
