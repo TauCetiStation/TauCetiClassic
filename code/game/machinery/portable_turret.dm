@@ -27,7 +27,8 @@
 
 	var/raised = FALSE			//if the turret cover is "open" and the turret is raised
 	var/raising= FALSE			//if the turret is currently opening or closing its cover
-	max_integrity = 80		//turrets maximal health.
+	max_integrity = 160		//turrets maximal health.
+	integrity_failure = 0.5
 	var/auto_repair = FALSE		//if 1 the turret slowly repairs itself.
 	var/locked = TRUE			//if the turret's behaviour control access is locked
 	var/controllock = FALSE		//if the turret responds to control panels
@@ -410,10 +411,13 @@ var/global/list/turret_icons
 	if(. > 5 && prob(45))
 		spark_system.start()
 
+/obj/machinery/porta_turret/atom_break(disassembled)
+	. = ..()
+	if(.)
+		spark_system.start()	//creates some sparks because they look cool
+
 /obj/machinery/porta_turret/deconstruct(disassembled)
-	stat |= BROKEN	//enables the BROKEN bit
-	spark_system.start()	//creates some sparks because they look cool
-	update_icon()
+	qdel(src)
 
 /obj/machinery/porta_turret/emp_act(severity)
 	if(enabled)

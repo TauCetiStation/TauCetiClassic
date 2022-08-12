@@ -208,6 +208,15 @@
 	air_contents.react()
 	check_status()
 
+/obj/item/weapon/tank/deconstruct(disassembled)
+	var/turf/location = get_turf(loc)
+	if(!isturf(location))
+		return ..()
+
+	if(air_contents)
+		location.assume_air(air_contents)
+
+	return ..()
 
 /obj/item/weapon/tank/proc/check_status()
 	//Handle exploding, leaking, and rupturing of the tank
