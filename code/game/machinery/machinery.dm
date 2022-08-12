@@ -439,17 +439,8 @@ Class Procs:
 	if(.)
 		if(!handle_fumbling(usr, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to deconstruct [src].</span>"))
 			return
-		deconstruction()
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
-		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
-		transfer_fingerprints_to(M)
-		M.state = 2
-		M.icon_state = "box_1"
-		for(var/obj/item/I in component_parts)
-			if(I.reliability != 100 && crit_fail)
-				I.crit_fail = 1
-			I.loc = loc
-		qdel(src)
+		deconstruct(TRUE)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
@@ -533,6 +524,32 @@ Class Procs:
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/construction()
 	return
+
+/obj/machinery/proc/spawn_frame(disassembled)
+	var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(loc)
+
+	new_frame.state = 2
+	new_frame.icon_state = "box_1"
+	. = new_frame
+	if(!disassembled)
+		new_frame.update_integrity(new_frame.max_integrity * 0.5) //the frame is already half broken
+	transfer_fingerprints_to(new_frame)
+
+/obj/machinery/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..() //Just delete us, no need to call anything else.
+
+	deconstruction()
+	if(!LAZYLEN(component_parts))
+		return ..() //we don't have any parts.
+	spawn_frame(disassembled)
+	for(var/obj/item/part in component_parts)
+		part.forceMove(loc)
+		if(part.reliability != 100 && crit_fail)
+			part.crit_fail = 1
+		I.loc = loc
+	LAZYCLEARLIST(component_parts)
+	..()
 
 //called on deconstruction before the final deletion
 /obj/machinery/proc/deconstruction()

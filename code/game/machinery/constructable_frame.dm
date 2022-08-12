@@ -51,6 +51,19 @@
 	else
 		desc += "."
 
+/obj/machinery/constructable_frame/deconstruct(disassembled)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/iron(loc, 5)
+		if(circuit)
+			circuit.forceMove(loc)
+			circuit = null
+		if(state >= 2)
+			new /obj/item/stack/cable_coil(loc , 5)
+		for(var/obj/item/I in components)
+			I.forceMove(loc)
+		LAZYCLEARLIST(components)
+	..()
+
 /obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P, mob/user)
 	if(P.crit_fail)
 		to_chat(user, "<span class='danger'>This part is faulty, you cannot add this to the machine!</span>")
