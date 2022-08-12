@@ -1973,7 +1973,7 @@ other types of metals and chemistry for reagents).
 /datum/design/msmg9mm
 	name = "SMG magazine (9mm)"
 	desc = "Magazine, full of 9mm submachine gun ammo."
-	id = "ammo_9mm"
+	id = "smg_ammo_9mm"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3750, MAT_SILVER = 100)
 	build_path = /obj/item/ammo_box/magazine/msmg9mm
