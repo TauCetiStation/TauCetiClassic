@@ -30,6 +30,8 @@
 
 /obj/attack_hulk(mob/living/carbon/human/user)
 	..()
+	if(user.a_intent != INTENT_HARM)
+		return FALSE
 	if(density)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	else

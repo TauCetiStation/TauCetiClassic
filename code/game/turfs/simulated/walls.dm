@@ -261,13 +261,16 @@
 	to_chat(M, "<span class='notice'>You push the wall but nothing happens!</span>")
 	return */
 
+/turf/simulated/wall/attack_hulk(mob/living/simple_animal/hulk/M)
+	if(istype(M))
+		playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+		M.health -= rand(4, 10)
+		attack_animal(M)
+		return TRUE
+
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	..()
 	if(M.environment_smash >= 2)
-		if(istype(M, /mob/living/simple_animal/hulk))
-			var/mob/living/simple_animal/hulk/Hulk = M
-			playsound(Hulk, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-			Hulk.health -= rand(4, 10)
 		playsound(M, 'sound/effects/hulk_hit_wall.ogg', VOL_EFFECTS_MASTER)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash >= 3)

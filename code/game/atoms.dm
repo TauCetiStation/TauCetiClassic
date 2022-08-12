@@ -146,6 +146,10 @@
 
 	return ..()
 
+///This atom has been hit by hulk (TODO a hulkified mob in hulk mode (user))
+/atom/proc/attack_hulk(mob/living/user)
+	return
+
 /atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
 		if(istype(A, /datum/reagent))

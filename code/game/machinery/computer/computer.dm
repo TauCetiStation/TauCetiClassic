@@ -239,17 +239,23 @@
 	else
 		to_chat(user, "You don't want to break these thing")
 
-/obj/machinery/computer/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hulk))
-		var/mob/living/simple_animal/hulk/Hulk = M
-		Hulk.do_attack_animation(src)
-		playsound(Hulk, 'sound/effects/hulk_hit_computer.ogg', VOL_EFFECTS_MASTER)
-		to_chat(M, "<span class='warning'>You hit the computer, glass fragments hurt you!</span>")
-		Hulk.health -= rand(2,4)
-		if(prob(40))
-			set_broken()
-			to_chat(M, "<span class='warning'>You broke the computer.</span>")
-			return
+/obj/machinery/computer/attack_hulk(mob/living/simple_animal/hulk/user)
+	. = ..()
+
+	if(.)
+		return TRUE
+	if(!istype(user))
+		return
+
+	user.SetNextMove(CLICK_CD_INTERACT)
+	user.do_attack_animation(src)
+	playsound(user, 'sound/effects/hulk_hit_computer.ogg', VOL_EFFECTS_MASTER)
+	to_chat(user, "<span class='warning'>You hit the computer, glass fragments hurt you!</span>")
+	user.health -= rand(2,4)
+	if(prob(40))
+		set_broken()
+		to_chat(user, "<span class='warning'>You broke the computer.</span>")
+	return TRUE
 
 /obj/machinery/computer/proc/print_document(text, docname)
 	var/obj/item/weapon/paper/Paper = new /obj/item/weapon/paper()

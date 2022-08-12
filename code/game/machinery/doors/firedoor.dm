@@ -108,12 +108,27 @@
 				open(1)
 	return
 
-/obj/machinery/door/firedoor/attack_animal(mob/user)
-	if(istype(user, /mob/living/simple_animal/hulk))
-		var/mob/living/simple_animal/hulk/H = user
-		H.attack_hulk(src)
+/obj/machinery/door/firedoor/attack_hulk(mob/living/user)
+	. = ..()
+
+	if(.)
+		return .
+
+	user.SetNextMove(CLICK_CD_INTERACT)
+	
+	if(blocked)
+		if(user.hulk_scream(src))
+			qdel(src)
 		return
 
+	if(density)
+		to_chat(user, "<span class='userdanger'>You force your fingers between \
+		 the doors and begin to pry them open...</span>")
+		playsound(src, 'sound/machines/firedoor_open.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
+		if (!user.is_busy() && do_after(user, 4 SECONDS, target = src) && !QDELETED(src))
+			open(1)
+
+/obj/machinery/door/firedoor/attack_animal(mob/user)
 	..()
 	if(density && !blocked)
 		open()

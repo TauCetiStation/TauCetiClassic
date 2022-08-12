@@ -712,24 +712,29 @@
 			M.Weaken(2)
 			M.make_jittery(500)
 
+/obj/item/organ/attack_hulk(mob/living/simple_animal/hulk/unathi/user)
+	. = ..()
+	if(.)
+		return TRUE
+	if(!istype(user))
+		return
 
-/obj/item/organ/attack_animal(mob/user)
-	..()
-	if(istype(user, /mob/living/simple_animal/hulk/unathi))
-		if(istype(src, /obj/item/organ/external/head))
-			to_chat(usr, "<span class='notice'>Head? Ewww..</span>")
-			return
-		var/mob/living/simple_animal/hulk/unathi/U = user
-		playsound(user, 'sound/weapons/zilla_eat.ogg', VOL_EFFECTS_MASTER)
-		U.health += 10
-		usr.visible_message("<span class='warning'><b>[usr.name]</b> eats [src.name]!</span>")
-		qdel(src)
+	if(istype(src, /obj/item/organ/external/head))
+		to_chat(usr, "<span class='notice'>Head? Ewww..</span>")
+		return
+	playsound(user, 'sound/weapons/zilla_eat.ogg', VOL_EFFECTS_MASTER)
+	user.health += 10
+	user.visible_message("<span class='warning'><b>[user.name]</b> eats [src.name]!</span>")
+	qdel(src)
+	return TRUE
 
-/obj/effect/decal/cleanable/blood/gibs/attack_animal(mob/user)
-	..()
-	if(istype(user, /mob/living/simple_animal/hulk/unathi))
-		var/mob/living/simple_animal/hulk/unathi/U = user
-		playsound(user, 'sound/weapons/zilla_eat.ogg', VOL_EFFECTS_MASTER)
-		U.health += 20
-		usr.visible_message("<span class='warning'><b>[usr.name]</b> eats gibs!</span>")
-		qdel(src)
+/obj/effect/decal/cleanable/blood/gibs/attack_hulk(mob/living/simple_animal/hulk/unathi/user)
+	. = ..()
+	if(.)
+		return TRUE
+	if(!istype(user))
+		return
+	playsound(user, 'sound/weapons/zilla_eat.ogg', VOL_EFFECTS_MASTER)
+	user.health += 20
+	user.visible_message("<span class='warning'><b>[user.name]</b> eats gibs!</span>")
+	qdel(src)

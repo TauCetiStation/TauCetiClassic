@@ -624,10 +624,25 @@ var/global/list/airlock_overlays = list()
 				open(1)
 	return
 
-/obj/machinery/door/airlock/attack_animal(mob/user)
-	if(istype(user, /mob/living/simple_animal/hulk))
-		var/mob/living/simple_animal/hulk/H = user
-		H.attack_hulk(src)
+/obj/machinery/door/airlock/attack_hulk(mob/living/user)
+	. = ..()
+
+	if(.)
+		return .
+
+	user.SetNextMove(CLICK_CD_INTERACT)
+
+	if(welded || locked)
+		if(user.hulk_scream(src, 75))
+			door_rupture(user)
+		return
+
+	if(density)
+		to_chat(user, "<span class='userdanger'>You force your fingers between \
+		 the doors and begin to pry them open...</span>")
+		playsound(src, 'sound/machines/firedoor_open.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
+		if (!user.is_busy() && do_after(user, 4 SECONDS, target = src) && !QDELETED(src))
+			open(1)
 
 /obj/machinery/door/airlock/proc/door_rupture(mob/user)
 	take_out_wedged_item()
