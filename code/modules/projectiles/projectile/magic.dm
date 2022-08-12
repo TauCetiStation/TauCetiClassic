@@ -65,6 +65,7 @@
 			new_mob = new beast(get_turf(loc))
 			new_mob.universal_speak = TRUE
 			new_mob.add_status_flags(GODMODE)
+			new_mob.health = 10000
 		if("hostile")
 			var/beast = pick(
 			/mob/living/simple_animal/hostile/carp,
