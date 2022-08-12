@@ -36,8 +36,10 @@
 	return
 
 /obj/item/ammo_casing/proc/throw_proj(obj/item/weapon/gun/weapon, atom/target, turf/targloc, mob/living/user, params, boolet_number)
-	var/turf/curloc = get_turf(weapon)
+	var/turf/curloc = weapon.loc
 	if(istype(curloc, /obj/item/weapon/gun/projectile))
+		curloc = curloc.loc
+	if(ismob(curloc))
 		curloc = curloc.loc
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
