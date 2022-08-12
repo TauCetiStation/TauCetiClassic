@@ -23,11 +23,17 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
 
-//obj/item/weapon/gun/energy/laser/selfcharging
-
-/obj/item/weapon/gun/energy/laser/selfcharging/newshot()
+/obj/item/weapon/gun/energy/laser/selfcharging/atom_init()
 	. = ..()
-	SEND_SIGNAL(power_supply, COMSIG_I_NEED_CHARGE, power_supply.charge, power_supply.maxcharge)
+	RegisterSignal(power_supply, COMSIG_CELL_CHARGE_CHANGED, /atom.proc/update_icon)
+
+/obj/item/weapon/gun/energy/laser/selfcharging/update_icon()
+	SIGNAL_HANDLER
+	return ..()
+
+/obj/item/weapon/gun/energy/laser/selfcharging/Destroy()
+	UnregisterSignal(power_supply, COMSIG_CELL_CHARGE_CHANGED)
+	return ..()
 
 /obj/item/weapon/gun/energy/laser/selfcharging/cyborg
 	name = "laser gun"

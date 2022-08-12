@@ -32,6 +32,7 @@
 
 	var/used = min(charge, amount)
 	charge -= used
+	SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED, charge, maxcharge)
 	return used
 
 // recharge the cell
@@ -51,12 +52,16 @@
 			crit_fail = 1
 			return 0
 	charge += power_used
-	check_charge()
+	SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED, charge)
+	for(var/mob/living/silicon/robot/borg in get_turf(src))
+		SEND_SIGNAL(borg, COMSIG_CELL_TAKE_BORG_CHARGE, power_used)
 	return power_used
 
-/obj/item/weapon/stock_parts/cell/proc/check_charge()
-	if(charge == maxcharge)
-		SEND_SIGNAL(src, COMSIG_I_AM_CHARGED)
+/obj/item/weapon/stock_parts/cell/Destroy()
+	UnregisterSignal(src, COMSIG_CELL_CHARGE_CHANGED)
+	UnregisterSignal(src, COMSIG_CELL_TAKE_BORG_CHARGE)
+	return ..()
+
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
 	if(src in view(1, user))
