@@ -19,6 +19,8 @@
 
 	var/being_shocked = 0
 
+	uses_integrity = TRUE
+
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
 /obj/process()
