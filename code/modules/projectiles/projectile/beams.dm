@@ -107,6 +107,7 @@
 		if(istype(H.wear_suit, /obj/item/clothing/suit/lasertag))
 			var/obj/item/clothing/suit/lasertag/L = H.wear_suit
 			if(L.lasertag_color != lasertag_color)
+				H.Stun(1)
 				H.Weaken(2)
 	return TRUE
 

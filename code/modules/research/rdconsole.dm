@@ -54,7 +54,7 @@ cause a ton of data to be lost, an admin can go send it back.
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 	allowed_checks = ALLOWED_CHECK_NONE
 
-	required_skills = list(/datum/skill/research/trained)
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(ID)
 	var/datum/reagent/temp_reagent
@@ -675,7 +675,7 @@ cause a ton of data to be lost, an admin can go send it back.
 	id = 2
 	req_access = list(29)
 	can_research = FALSE
-	required_skills = list(/datum/skill/research/trained)
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/computer/rdconsole/robotics/atom_init()
 	. = ..()
@@ -693,7 +693,7 @@ cause a ton of data to be lost, an admin can go send it back.
 	id = 3
 	req_access = list(48)
 	can_research = FALSE
-	required_skills = list(/datum/skill/research/novice)
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/computer/rdconsole/mining/atom_init()
 	. = ..()

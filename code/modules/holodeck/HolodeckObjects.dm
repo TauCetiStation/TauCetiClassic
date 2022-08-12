@@ -99,11 +99,13 @@
 				if(2)
 					M.visible_message("<span class='danger'>[user] bashes [M] against \the [src]!</span>")
 					if (prob(50))
+						M.Stun(1)
 						M.Weaken(1)
 					M.apply_damage(10)
 					take_damage(25)
 				if(3)
 					M.visible_message("<span class='danger'><big>[user] crushes [M] against \the [src]!</big></span>")
+					M.Stun(5)
 					M.Weaken(5)
 					M.apply_damage(20)
 					take_damage(50)
@@ -267,6 +269,7 @@
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
+		G.affecting.Stun(5)
 		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
 		qdel(W)

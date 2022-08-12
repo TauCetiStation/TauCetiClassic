@@ -3,6 +3,8 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_idle"
 	desc = "Some blob creature thingy."
+	opacity = TRUE
+	max_health = 75
 	health = 75
 	fire_resist = 2
 
@@ -21,7 +23,7 @@
 
 /obj/effect/blob/shield/reflective
 	name = "reflective blob"
-	icon_state = "blob_glow"
+	icon_state = "blob_reflect"
 	desc = "A solid wall of slightly twitching tendrils with a reflective glow."
 	health = 30 //Normal blob
 	brute_resist = 1 //Normal is 4
@@ -36,6 +38,9 @@
 			var/new_x = P.starting.x + pick(0, 0, 0, 0, -1, 1, -2, 2, -3, 3)
 			var/new_y = P.starting.y + pick(0, 0, 0, 0, -1, 1, -2, 2, -3, 3)
 			var/turf/curloc = get_turf(src)
+			if(OV) //If we have an overmind to blame this shot on
+				P.redirect(new_x, new_y, curloc, OV) //Stolen from armor' deflection
+				return PROJECTILE_FORCE_MISS
 			P.redirect(new_x, new_y, curloc) //Stolen from armor' deflection
 			return PROJECTILE_FORCE_MISS
 	return ..()

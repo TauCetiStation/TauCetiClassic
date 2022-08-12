@@ -136,13 +136,6 @@
 	if(client)
 		handle_regular_hud_updates()
 
-	if(stunned)
-		AdjustStunned(-1)
-	if(weakened)
-		AdjustWeakened(-1)
-	if(paralysis)
-		AdjustParalysis(-1)
-
 	// Movement
 	if(!client && !stop_automated_movement && wander && !anchored)
 		if(isturf(src.loc) && !buckled && canmove) // This is so it only moves if it's not inside a closet, gentics machine, etc.
@@ -407,7 +400,7 @@
 
 /mob/living/simple_animal/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
 	if(has_effect && !visual_effect_icon && melee_damage)
-		if(attack_push_vis_effect && !istype(A, /turf/simulated/wall)) // override the standard visual effect.
+		if(attack_push_vis_effect && !iswallturf(A)) // override the standard visual effect.
 			visual_effect_icon = attack_push_vis_effect
 		else if(melee_damage < 10)
 			visual_effect_icon = ATTACK_EFFECT_PUNCH

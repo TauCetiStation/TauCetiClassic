@@ -19,7 +19,7 @@
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = STATIC_ENVIRON
-	required_skills = list(/datum/skill/command/trained)
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/keycard_auth/attack_ai(mob/user)
 	if(IsAdminGhost(user))

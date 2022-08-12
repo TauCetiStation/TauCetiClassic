@@ -126,7 +126,7 @@
 		qdel(A)
 		return
 
-	if(istype(A, /turf/simulated/floor))
+	if(isfloorturf(A))
 		var/turf/T = A
 		if(prob(50))
 			T.ChangeTurf(pick(my_religion.floor_types))
@@ -136,7 +136,7 @@
 		var/area/area = get_area(A)
 		area.religion = global.cult_religion
 		return
-	if(istype(A, /turf/simulated/wall))
+	if(iswallturf(A))
 		var/turf/T = A
 		if(prob(20))
 			T.ChangeTurf(pick(my_religion.wall_types))

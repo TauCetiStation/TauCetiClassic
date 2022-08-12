@@ -2,7 +2,7 @@
 	name = "flash"
 	desc = "Used for blinding and being an asshole."
 	icon_state = "flash"
-	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
+	item_state = "flash"
 	throwforce = 5
 	w_class = SIZE_TINY
 	throw_speed = 4
@@ -182,6 +182,7 @@
 	name = "synthetic flash"
 	desc = "When a problem arises, SCIENCE is the solution."
 	icon_state = "sflash"
+	item_state = "sflash"
 	origin_tech = "magnets=2;combat=1"
 
 /obj/item/device/flash/synthetic/attack(mob/living/M, mob/user)

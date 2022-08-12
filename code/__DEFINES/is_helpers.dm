@@ -11,6 +11,12 @@
 
 #define isiceturf(A) (istype(A, /turf/environment/snow/ice))
 
+#define isfloorturf(A) (istype(A, /turf/simulated/floor))
+
+#define isplatingturf(A) (istype(A, /turf/simulated/floor/plating))
+
+#define iswallturf(A) (istype(A, /turf/simulated/wall))
+
 // HUMAN
 
 #define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))

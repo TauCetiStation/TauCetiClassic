@@ -76,6 +76,7 @@
 	active = 1
 	off_state = "night"
 	activation_sound = 'sound/effects/glasses_on.ogg'
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
@@ -352,6 +353,7 @@
 	active = 1
 	off_state = "healthhudnight"
 	hud_types = list(DATA_HUD_MEDICAL_ADV)
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 
 /obj/item/clothing/glasses/gar
 	name = "gar glasses"

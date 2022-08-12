@@ -23,7 +23,7 @@ Must right click on a mob to activate.*/
 				U.say("Get over here!")
 				var/obj/effect/energy_net/E = new /obj/effect/energy_net(M.loc)
 				U.visible_message("<span class='warning'>[U] caught [M] with an energy net!</span>")
-				E.process(M)
+				E.start_cooldown(M)
 				cell.use(C*10) // Nets now cost what should be most of a standard battery, since your taking someone out of the round
 			else
 				to_chat(U, "They are already trapped inside an energy net.")

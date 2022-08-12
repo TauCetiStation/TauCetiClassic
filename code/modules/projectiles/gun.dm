@@ -57,7 +57,7 @@
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
 
-	var/skill_recoil = max(0, apply_skill_bonus(user, recoil, list(/datum/skill/firearms/trained), multiplier = -1))
+	var/skill_recoil = max(0, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
 	if(skill_recoil)
 		shake_camera(user, skill_recoil + 1, skill_recoil)
 
@@ -214,6 +214,7 @@
 			if(istype(chambered.BB, /obj/item/projectile/bullet/chameleon))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel weakness and the taste of gunpowder, but no more.</span>")
+				user.Stun(5)
 				user.apply_effect(5,WEAKEN,0)
 				return
 
