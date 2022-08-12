@@ -228,26 +228,6 @@
 	mag_type = /obj/item/ammo_box/magazine/c45m
 	mag_type2 = /obj/item/ammo_box/magazine/c45r
 
-/obj/item/weapon/gun/projectile/automatic/borg
-	name = "Robot SMG"
-	icon_state = "borg_smg"
-	mag_type = /obj/item/ammo_box/magazine/borg45
-	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
-
-/obj/item/weapon/gun/projectile/automatic/borg/update_icon()
-	return
-
-/obj/item/weapon/gun/projectile/automatic/borg/attack_self(mob/user)
-	if (magazine)
-		magazine.loc = get_turf(src.loc)
-		magazine.update_icon()
-		magazine = null
-		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
-	else
-		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
-	return
-
 /obj/item/weapon/gun/projectile/automatic/bulldog
 	name = "V15 Bulldog shotgun"
 	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Compatible only with specialized magazines."

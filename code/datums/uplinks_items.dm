@@ -365,13 +365,6 @@
 /datum/uplink_item/ammo
 	category = "Ammunition"
 
-/datum/uplink_item/ammo/borg
-	name = "Robot Ammo Box"
-	desc = "A 40-round .45 magazine for use in Robot submachine gun."
-	item = /obj/item/ammo_box/magazine/borg45
-	cost = 2
-	uplink_types = list("nuclear", "traitor")
-
 /datum/uplink_item/ammo/pistol
 	name = "9mm Handgun Magazine"
 	desc = "An additional 16-round 9mm magazine; compatible with the Stechkin Pistol. These subsonic rounds \
