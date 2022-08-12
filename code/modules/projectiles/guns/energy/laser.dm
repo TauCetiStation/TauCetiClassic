@@ -25,11 +25,11 @@
 
 /obj/item/weapon/gun/energy/laser/selfcharging/atom_init()
 	. = ..()
-	RegisterSignal(power_supply, COMSIG_CELL_CHARGE_CHANGED, /atom.proc/update_icon)
+	RegisterSignal(power_supply, COMSIG_CELL_CHARGE_CHANGED, .proc/update_selfrecharger_icon)
 
-/obj/item/weapon/gun/energy/laser/selfcharging/update_icon()
+/obj/item/weapon/gun/energy/laser/selfcharging/proc/update_selfrecharger_icon()
 	SIGNAL_HANDLER
-	return ..()
+	update_icon()
 
 /obj/item/weapon/gun/energy/laser/selfcharging/Destroy()
 	UnregisterSignal(power_supply, COMSIG_CELL_CHARGE_CHANGED)
@@ -48,6 +48,8 @@
 	power_supply.AddComponent(/datum/component/cell_selfrecharge, 125, 4)
 
 /obj/item/weapon/gun/energy/laser/selfcharging/cyborg/newshot()
+	if(!isrobot(loc))
+		return FALSE
 	if(..())
 		var/mob/living/silicon/robot/R = loc
 		if(R && R.cell)
