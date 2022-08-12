@@ -45,8 +45,56 @@
 		return 0
 	return 1
 
+/obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(machine_stat & BROKEN)
+				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+			else
+				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+		if(BURN)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+
+/obj/machinery/computer/atom_break(damage_flag)
+	if(!circuit) //no circuit, no breaking
+		return
+	. = ..()
+	if(.)
+		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		set_light(0)
+
+/obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
+	deconstruction()
+	if(flags & NODECONSTRUCT)
+		qdel(src)
+		return
+	if(circuit) //no circuit, no computer frame
+		var/obj/structure/computerframe/A = new /obj/structure/computerframe(loc)
+		A.set_dir(dir)
+		A.circuit = circuit
+		A.anchored = TRUE
+		transfer_fingerprints_to(A)
+		circuit = null
+		if(stat & BROKEN)
+			if(user)
+				to_chat(user, span_notice("The broken glass falls out."))
+			else
+				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+			new /obj/item/weapon/shard(loc)
+			A.state = 3
+			A.icon_state = "3"
+		else
+			if(user)
+				to_chat(user, span_notice("You disconnect the monitor."))
+			A.state = 4
+			A.icon_state = "4"
+	for(var/obj/C in src)
+		C.forceMove(loc)
+	qdel(src)
+
 /obj/machinery/computer/emp_act(severity)
-	if(prob(20/severity)) set_broken()
+	if(prob(20 / severity))
+		set_broken()
 	..()
 
 
@@ -118,25 +166,7 @@
 	if(isscrewdriver(I) && circuit && !(flags&NODECONSTRUCT))
 		if(user.is_busy(src)) return
 		if(I.use_tool(src, user, 20, volume = 50))
-			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-			transfer_fingerprints_to(A)
-			A.circuit = circuit
-			A.anchored = TRUE
-			A.set_dir(dir)
-			circuit = null
-			for (var/obj/C in src)
-				C.loc = src.loc
-			if (src.stat & BROKEN)
-				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
-				new /obj/item/weapon/shard( src.loc )
-				A.state = 3
-				A.icon_state = "3"
-			else
-				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
-				set_light(0)
-				A.state = 4
-				A.icon_state = "4"
-			qdel(src)
+			deconstruct(TRUE)
 	if(iswrench(I))
 		if(user.is_busy(src))
 			return

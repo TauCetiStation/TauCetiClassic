@@ -1161,6 +1161,21 @@ FIRE ALARM
 		FA.update_icon()
 		playsound(src, 'sound/machines/alarm_fire.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
+/obj/machinery/firealarm/atom_break(damage_flag)
+	if(buildstage == 0) //can't break the electronics if there isn't any inside.
+		return
+	return ..()
+
+/obj/machinery/firealarm/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 1)
+		if(!(machine_stat & BROKEN))
+			var/obj/item/item = new /obj/item/weapon/firealarm_electronics(loc)
+			if(!disassembled)
+				item.update_integrity(item.max_integrity * 0.5)
+		new /obj/item/stack/cable_coil(loc, 3)
+	qdel(src)
+
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
 	var/msg

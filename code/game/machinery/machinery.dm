@@ -535,6 +535,14 @@ Class Procs:
 		new_frame.update_integrity(new_frame.max_integrity * 0.5) //the frame is already half broken
 	transfer_fingerprints_to(new_frame)
 
+/obj/machinery/atom_break(damage_flag)
+	. = ..()
+	if(stat & BROKEN || flags & NODECONSTRUCT)
+		return
+	stat |= BROKEN
+	update_icon()
+	return TRUE
+
 /obj/machinery/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
 		return ..() //Just delete us, no need to call anything else.

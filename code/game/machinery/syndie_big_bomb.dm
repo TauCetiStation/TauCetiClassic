@@ -32,16 +32,29 @@
 
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
+/obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
+	. = !degutted && (active || ignore_active)
+	if(.)
+		explosion(loc, 2, 5, 11)
+		qdel(src)
+
+/obj/machinery/syndicatebomb/atom_break()
+	if(!try_detonate())
+		..()
+
+/obj/machinery/syndicatebomb/atom_destruction()
+	if(!try_detonate())
+		..()
+
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
 		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 5, FALSE)
 		timer--
 	if(active && !defused && (timer <= 0))	//Boom
-		active = 0
-		timer = 60
+		active = FALSE
+		timer = initial(timer)
 		STOP_PROCESSING(SSobj, src)
-		explosion(src.loc,2,5,11)
-		qdel(src)
+		try_detonate(TRUE)
 		return
 	if(!active || defused)					//Counter terrorists win
 		STOP_PROCESSING(SSobj, src)
@@ -173,8 +186,7 @@
 	origin_tech = "syndicate=6;combat=5"
 
 /obj/item/weapon/syndicatebombcore/ex_act(severity) //Little boom can chain a big boom
-	explosion(src.loc,2,5,11)
-	qdel(src)
+	try_detonate(TRUE)
 
 /obj/item/device/syndicatedetonator
 	name = "big red button"
