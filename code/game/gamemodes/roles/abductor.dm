@@ -34,7 +34,7 @@
 	. = ..()
 	var/mob/living/S = antag.current
 	var/mob/living/carbon/human/abductor/H = new /mob/living/carbon/human/abductor(S.loc)
-	usr.mind.transfer_to(H)
+	S.mind.transfer_to(H)
 	qdel(S)
 	H.set_species(ABDUCTOR)
 	var/faction_name = faction ? faction.name : ""
