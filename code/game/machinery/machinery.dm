@@ -106,6 +106,10 @@ Class Procs:
 	icon = 'icons/obj/stationobjs.dmi'
 	layer = DEFAULT_MACHINERY_LAYER
 	w_class = SIZE_MASSIVE
+
+	integrity_failure = 0.3
+	damage_deflection = 15
+
 	var/stat = 0
 	var/emagged = 0 // Can be 0, 1 or 2
 	var/use_power = IDLE_POWER_USE

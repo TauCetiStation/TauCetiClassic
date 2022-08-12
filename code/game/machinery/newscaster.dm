@@ -866,7 +866,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 
 
 /obj/machinery/newscaster/deconstruct(disassembled = TRUE)
-	if(stat & NODECONSTRUCT)
+	if(flags & NODECONSTRUCT)
 		qdel(src)
 		return
 	if(disassembled)
@@ -880,7 +880,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 /obj/machinery/newscaster/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects//Glassbr3.ogg', 100, TRUE)
+		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, TRUE)
 
 /obj/machinery/newscaster/attack_paw(mob/user)
 	to_chat(user, "<span class='info'>The newscaster controls are far too complicated for your tiny brain!</span>")
@@ -888,7 +888,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 
 /obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(.)
+	if(. && hitstaken < 3)
 		hitstaken++
 		update_icon()
 

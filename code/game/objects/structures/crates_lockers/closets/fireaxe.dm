@@ -11,6 +11,8 @@
 	opened = TRUE
 	locked = TRUE
 
+	integrity_failure = 0.5
+
 	var/obj/item/weapon/fireaxe/fireaxe
 	var/localopened = FALSE // Setting this to keep it from behaviouring like a normal closet and obstructing movement in the map. -Agouri
 	var/hitstaken = 0
@@ -106,14 +108,16 @@
 	if(localopened)
 		return
 	. = ..()
-	if(.)
-		hitstaken = CEIL(get_integrity() / max_integrity)
+	if(. && hitstaken < 3)
+		hitstaken++
 		update_icon()
 
 /obj/structure/closet/fireaxecabinet/atom_break(damage_flag)
 	if(smashed || flags & NODECONSTRUCT)
 		return ..()
 	smashed = TRUE
+	localopened = TRUE
+	hitstaken = 4
 	update_icon()
 	playsound(src, 'sound/effects/Glassbr3.ogg', 100, TRUE)
 	new /obj/item/weapon/shard(loc)

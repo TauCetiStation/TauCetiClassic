@@ -5,6 +5,9 @@
 	icon_state = "closed"
 	density = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
+
+	max_integrity = 100
+
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/opened = 0
@@ -12,7 +15,6 @@
 	var/locked = 0
 	var/broken = 0
 	var/wall_mounted = 0 //never solid (You can always pass over it)
-	var/health = 100
 	var/lastbang
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
@@ -155,25 +157,12 @@
 	dump_contents()
 	qdel(src)
 
-/obj/structure/closet/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	health -= Proj.damage
-	if(health <= 0)
-		dump_contents()
-		qdel(src)
+/obj/structure/closet/deconstruct(disassembled)
+	dump_contents()
+	return ..()
 
-/obj/structure/closet/attack_animal(mob/living/simple_animal/user)
-	if(user.environment_smash)
-		..()
-		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		visible_message("<span class='warning'>[user] destroys the [src]. </span>")
-		dump_contents()
-		qdel(src)
-
-/obj/structure/closet/blob_act()
-	if(prob(75))
-		dump_contents()
-		qdel(src)
+/obj/structure/closet/play_attack_sound(damage_amount, damage_type, damage_flag)
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user)
 	if(tools_interact(W, user))
