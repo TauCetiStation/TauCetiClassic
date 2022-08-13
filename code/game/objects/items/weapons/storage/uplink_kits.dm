@@ -31,7 +31,7 @@
 			new /obj/item/device/chameleon(src)
 			new	/obj/item/weapon/storage/box/syndie_kit/chameleon(src)
 			new /obj/item/clothing/mask/gas/voice(src)
-			new /obj/item/weapon/storage/box/syndie_kit/imp_freedom(src)
+			new /obj/item/weapon/implanter/freedom(src)
 
 		if("screwed")
 			for (var/i in 1 to 2)
