@@ -105,8 +105,11 @@
 ///what happens when the obj's integrity reaches zero.
 /obj/atom_destruction(damage_flag)
 	. = ..()
-	if(damage_flag == FIRE)
-		burn()
-	else
-		deconstruct(FALSE)
+	switch(damage_flag)
+		if(ACID)
+			// TODO ACID SS
+		if(FIRE)
+			burn()
+		else
+			deconstruct(FALSE)
 

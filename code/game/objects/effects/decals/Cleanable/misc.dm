@@ -130,6 +130,12 @@
 	if(!src) return
 	set_light(0)
 
+// TODO copy icon state to fle
+/obj/effect/decal/cleanable/shreds
+	name = "shreds"
+	desc = "The shredded remains of what appears to be clothing."
+	icon_state = "shreds"
+
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"
 	desc = "It's red."
