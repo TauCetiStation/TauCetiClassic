@@ -16,6 +16,7 @@
 	anchored = TRUE
 	density = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
+	var/health = 100
 	var/vend_ready = 1 //Are we ready to vend?? Is it time??
 	var/vend_delay = 10 //How long does it take to vend?
 	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
@@ -86,23 +87,48 @@
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
+			take_damage(75)
 		if(EXPLODE_LIGHT)
-			if(prob(25))
-				spawn(0)
-					malfunction()
-			return
-	qdel(src)
+			take_damage(40)
 
 /obj/machinery/vending/blob_act()
-	if (prob(50))
-		spawn(0)
-			malfunction()
-			qdel(src)
-		return
+	take_damage(50)
 
-	return
+/obj/machinery/vending/bullet_act(obj/item/projectile/P, def_zone)
+	take_damage(P.damage)
+
+/obj/machinery/vending/attack_paw()
+	. = ..()
+	take_damage(round(1, 10))
+
+/obj/machinery/vending/proc/is_item_in_blacklist(var/obj/item/I)
+	istype(I, /obj/item/weapon/holo)
+		return TRUE
+	return FALSE
+
+/obj/machinery/vending/proc/take_damage(amount)
+	if(amount <= 0)
+		return
+	is_item_in_blacklist()
+	if(amount < 30)
+		if(prob(amount))
+			throw_item()
+	health -= amount
+	check_health()
+
+/obj/machinery/vending/proc/check_health()
+	if(health <= 0)
+		malfunction()
+		deconstruction()
+	if(health < 5)
+		say_slogan()
+
+/obj/machinery/vending/deconstruction()
+	var/obj/machinery/constructable_frame/machine_frame/M = new(loc)
+	for(var/obj/item/I in M.component_parts)
+		if(prob(50))
+			qdel(I)
+	qdel(src)
 
 /obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0,req_emag=0)
 	for(var/typepath in productlist)
@@ -243,12 +269,14 @@
 				stock(R, user)
 				qdel(W)
 	else
-		..()
+		if(!is_item_in_blacklist)
+			take_damage(W.force)
+		return ..()
 
 /obj/machinery/vending/emag_act(mob/user)
 	if(emagged)
 		return FALSE
-	src.emagged = 1
+	emagged = TRUE
 	if(syndie.len)
 		to_chat(user, "You short out the product lock on [src] and reveal hidden products.")
 	else
@@ -271,7 +299,7 @@
 					safety--
 			if(safety <= 0)
 				break
-	..()
+	return ..()
 
 /obj/machinery/vending/proc/scan_card(obj/item/weapon/card/I)
 	if(!currently_vending)
@@ -582,13 +610,13 @@
 		if (!dump_path)
 			continue
 
-		while(R.amount>0)
+		while(R.amount > 0)
 			new dump_path(src.loc)
 			R.amount--
 		continue
 
 	stat |= BROKEN
-	src.icon_state = "[initial(icon_state)]-broken"
+	icon_state = "[initial(icon_state)]-broken"
 	return
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
@@ -596,7 +624,7 @@
 	var/obj/throw_item = null
 	var/mob/living/target = locate() in view(7,src)
 	if(!target)
-		return 0
+		return FALSE
 
 	for(var/datum/data/vending_product/R in src.product_records)
 		if (R.amount <= 0) //Try to use a record that actually has something to dump.
@@ -609,23 +637,23 @@
 		throw_item = new dump_path(src.loc)
 		break
 	if (!throw_item)
-		return 0
+		return FALSE
 	throw_item.throw_at(target, 16, 3)
 	visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
-	return 1
+	return TRUE
 
 /obj/machinery/vending/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0
+		return FALSE
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if (electrocute_mob(user, get_area(src), src, 0.7))
-		return 1
+	if(electrocute_mob(user, get_area(src), src, 0.7))
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /*
  * Vending machine types
