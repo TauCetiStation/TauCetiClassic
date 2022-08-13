@@ -11,7 +11,7 @@
 	/obj/item/weapon/mining_voucher/syndi,)
 
 /datum/outfit/nuclear
-	name = "Nuclear Agent"
+	name = "Syndicate: Nuclear Agent"
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/boots/combat
 	glasses = /obj/item/clothing/glasses/night
@@ -46,7 +46,7 @@
 	/obj/item/weapon/mining_voucher/syndi,)
 
 /datum/outfit/nuclear/leader
-	name = "Nuclear Commander"
+	name = "Syndicate: Nuclear Commander"
 	id = /obj/item/weapon/card/id/syndicate/commander
 	back = /obj/item/weapon/storage/backpack/nuke/commander
 

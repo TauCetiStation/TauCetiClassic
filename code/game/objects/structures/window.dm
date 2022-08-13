@@ -173,6 +173,7 @@
 /obj/structure/window/attack_tk(mob/user)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+	return TRUE
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
@@ -221,14 +222,14 @@
 
 	else if(isscrewdriver(W))
 		if(reinf && state >= 1)
-			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction/trained), message_self = "<span class='notice'>You fumble around, figuring out how to [state == 1 ? "fasten the window to the frame." : "unfasten the window from the frame."]</span>" ))
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [state == 1 ? "fasten the window to the frame." : "unfasten the window from the frame."]</span>" ))
 				return
 			state = 3 - state
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>"))
 
 		else if(reinf && state == 0)
-			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction/trained), message_self = "<span class='notice'>You fumble around, figuring out how to [anchored ? "unfasten the frame from the floor." : "fasten the frame to the floor."]</span>" ))
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [anchored ? "unfasten the frame from the floor." : "fasten the frame to the floor."]</span>" ))
 				return
 			anchored = !anchored
 			update_nearby_icons()
@@ -237,7 +238,7 @@
 			fastened_change()
 
 		else if(!reinf)
-			if(!handle_fumbling(user, src, SKILL_TASK_EASY,list(/datum/skill/construction/trained), message_self = "<span class='notice'>You fumble around, figuring out how to [anchored ? "fasten the window to the floor." : "unfasten the window."]</span>" ))
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY,list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [anchored ? "fasten the window to the floor." : "unfasten the window."]</span>" ))
 				return
 			anchored = !anchored
 			update_nearby_icons()
@@ -246,7 +247,7 @@
 			fastened_change()
 
 	else if(iscrowbar(W) && reinf && state <= 1)
-		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction/trained), message_self = "<span class='notice'>You fumble around, figuring out how to [state ? "pry the window out of the frame." : "pry the window into the frame."]</span>" ))
+		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [state ? "pry the window out of the frame." : "pry the window into the frame."]</span>" ))
 			return
 		state = 1 - state
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
@@ -269,12 +270,14 @@
 					M.log_combat(user, "slammed against [name]")
 				if(2)
 					if (prob(50))
+						M.Stun(1)
 						M.Weaken(1)
 					M.apply_damage(8)
 					take_damage(9)
 					visible_message("<span class='danger'>[A] bashes [M] against \the [src]!</span>")
 					M.log_combat(user, "bashed against [name]")
 				if(3)
+					M.Stun(5)
 					M.Weaken(5)
 					M.apply_damage(20)
 					take_damage(12)

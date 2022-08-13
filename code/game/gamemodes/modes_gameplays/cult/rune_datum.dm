@@ -303,13 +303,13 @@
 /datum/rune/cult/look_to_future/action(mob/living/carbon/user)
 	var/mob/living/carbon/human/H = locate() in holder.loc
 	for(var/atom/A in range(3))
-		if(istype(A, /turf/simulated/wall))
+		if(iswallturf(A))
 			if(religion.wall_types)
 				var/atom/type = pick(religion.wall_types)
 				var/image/I = image(initial(type.icon), A, initial(type.icon_state))
 				H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-wall-[H.name]", I, H)
 
-		else if(istype(A, /turf/simulated/floor))
+		else if(isfloorturf(A))
 			if(religion.floor_types)
 				var/atom/type = pick(religion.floor_types)
 				var/image/I = image(initial(type.icon), A, initial(type.icon_state))

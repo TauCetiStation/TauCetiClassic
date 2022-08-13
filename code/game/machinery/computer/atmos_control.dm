@@ -13,7 +13,7 @@
 
 	var/obj/machinery/alarm/current
 	var/overridden = FALSE //not set yet, can't think of a good way to do it
-	required_skills = list(/datum/skill/atmospherics/trained)
+	required_skills = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/computer/atmoscontrol/ui_interact(mob/user)
 	if(allowed(user)) // this is very strange when you know, that this var will be set everytime someone opens with and without access and interfere with each other... but maybe i don't understand smth.

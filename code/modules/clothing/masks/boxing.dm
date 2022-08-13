@@ -17,6 +17,24 @@
 	flags_inv = HIDEFACE
 	w_class = SIZE_TINY
 
+/obj/item/clothing/mask/balaclava/richard
+	name = "cock mask"
+	desc = "Do you like hurting other people?"
+	icon_state = "richard"
+	item_state = "richard"
+
+/obj/item/clothing/mask/balaclava/rasmus
+	name = "owl mask"
+	desc = "You're not a nice person, are you?"
+	icon_state = "rasmus"
+	item_state = "rasmus"
+
+/obj/item/clothing/mask/balaclava/don_juan
+	name = "horse mask"
+	desc = "Some things work out best when you don't try so hard."
+	icon_state = "don_juan"
+	item_state = "don_juan"
+
 /obj/item/clothing/mask/luchador
 	name = "luchador mask"
 	desc = "Worn by robust fighters, flying high to defeat their foes!"

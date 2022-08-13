@@ -275,7 +275,7 @@
 	for(var/i in 1 to 4)
 		var/list/L = locate(x + coord_of_pylons[1], y + coord_of_pylons[2], z)
 		var/turf/F = get_turf(pick(L))
-		if(F && istype(F, /turf/simulated/floor))
+		if(F && isfloorturf(F))
 			for(var/obj in L)
 				if(istype(obj, /turf))
 					continue

@@ -27,7 +27,7 @@
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		tally += 1.5
 
-	if(crawling)
+	if(lying)
 		tally += 7
 
 	if(embedded_flag)
@@ -68,7 +68,7 @@
 		else
 			weight_negation += BP.pumped / 100
 
-	// hyperzine removes equipment slowdowns (no blood = no chemical effects).
+	// cola removes equipment slowdowns (no blood = no chemical effects).
 	var/chem_nullify_debuff = FALSE
 	if(!species.flags[NO_BLOOD] && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
 		chem_nullify_debuff = TRUE
@@ -88,12 +88,6 @@
 		weight_tally = max(weight_tally - weight_negation, 0)
 
 	tally += weight_tally
-
-	if(!chem_nullify_debuff)
-		for(var/x in list(l_hand, r_hand))
-			var/obj/item/I = x
-			if(I && !(I.flags & ABSTRACT) && I.w_class >= SIZE_SMALL)
-				tally += 0.25 * (I.w_class - 2) // (3 = 0.25) || (4 = 0.5) || (5 = 0.75)
 
 	if(shock_stage >= 10)
 		tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)

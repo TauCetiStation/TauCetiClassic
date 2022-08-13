@@ -33,6 +33,7 @@
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
+	AddComponent(/datum/component/mood)
 
 	dna = new
 	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
@@ -56,7 +57,6 @@
 	. = ..()
 
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
-	AddComponent(/datum/component/mood)
 	human_list += src
 
 	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), .proc/mood_item_equipped)
@@ -626,7 +626,6 @@
 	else if(def_zone)
 		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
-	attack_heart(clamp(((shock_damage - 10) ** 2) / 100, 0, 100), shock_damage) //small shock can heal your heart
 	if(species)
 		siemens_coeff *= species.siemens_coefficient
 
@@ -931,6 +930,8 @@
 			number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/night/shadowling))
 		number -= 1
+	if(istype(glasses, /obj/item/clothing/glasses/cult_blindfold))
+		number += 2
 	return number
 
 
@@ -1581,14 +1582,13 @@
 		for(var/datum/skill/s as anything in sliders_data)
 			var/datum/skill/skill = all_skills[s]
 			var/slider_id = skill.name
-			var/slider_value = mind.skills.get_value(slider_id)
-			var/slider_min_value = skill.min_value
-			var/slider_max_value = mind.skills.get_max(slider_id)
-			var/rank_list = get_skill_rank_list(s)
+			var/slider_value = mind.skills.get_value(s)
+			var/slider_min_value = SKILL_LEVEL_MIN
+			var/slider_max_value = mind.skills.get_max(s)
+			var/rank_list = skill.custom_ranks
 			var/rank_list_element = ""
 			for(var/rank in rank_list)
 				rank_list_element += "[rank]\n"
-			rank_list_element += ""
 			if(slider_max_value == slider_min_value)
 				continue
 			var/slider_hint = "Hint: [skill.hint]\n\nSkill ranks:\n[rank_list_element]"
@@ -1649,13 +1649,18 @@
 	popup.open()
 
 /mob/living/carbon/human/proc/update_skills(href_list)
-	var/skill = href_list["skill"]
+	var/skill_name = href_list["skill"]
 	var/value = text2num(href_list["value"])
-	if(!isnum(value) || !istext(skill))
+	if(!isnum(value) || !istext(skill_name))
 		return
 	if(!mind)
 		return
-	mind.skills.choose_value(skill, value)
+	for(var/skill_type in all_skills)
+		var/datum/skill/skill = all_skills[skill_type]
+		if(skill.name == skill_name)
+			mind.skills.choose_value(skill_type, value)
+			return
+
 
 /mob/living/carbon/human/verb/examine_ooc()
 	set name = "Examine OOC"
@@ -1710,7 +1715,7 @@
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
 		//untrained 8 seconds, novice 6.8, trained 5.6, pro 4.4, expert 3.2 and master 2
-		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical/default), multiplier = -0.15) //-15% for each medical level
+		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) //-15% for each medical level
 		if(!instant)
 			if(hunt_injection_port) // takes additional time
 				if(!stealth)
@@ -1785,7 +1790,7 @@
 		to_chat(src, "<span class='notice'>It is unsafe to leap without gravity!</span>")
 		return
 
-	if(incapacitated(LEGS) || buckled || pinned.len || stance_damage >= 4) //because you need !restrained legs to leap
+	if(incapacitated(LEGS) || buckled || anchored || stance_damage >= 4) //because you need !restrained legs to leap
 		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
 		return
 
@@ -1818,15 +1823,17 @@
 		var/mob/living/L = hit_atom
 		L.visible_message("<span class='danger'>\The [src] leaps at [L]!</span>", "<span class='userdanger'>[src] leaps on you!</span>")
 		if(issilicon(L))
-			L.Weaken(1) //Only brief stun
+			L.Stun(1) //Only brief stun
 			step_towards(src, L)
 		else
+			L.Stun(2)
 			L.Weaken(2)
 			step_towards(src, L)
 
 	else if(hit_atom.density)
 		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
-		weakened = 2
+		Stun(2)
+		Weaken(2)
 
 	update_canmove()
 
@@ -2052,7 +2059,17 @@
 	for(var/mob/M in viewers(src))
 		if(M.client)
 			viewing += M.client
-	var/image/I = image(icon,src,"electrocuted_generic",MOB_LAYER+1)
+	var/electrocuted_sprite = "electrocuted_generic"
+	switch(get_species())
+		if(UNATHI)
+			electrocuted_sprite += "_unathi"
+		if(TAJARAN)
+			electrocuted_sprite += "_tajaran"
+		if(SKRELL)
+			electrocuted_sprite += "_skrell"
+		if(VOX)
+			electrocuted_sprite += "_vox"
+	var/image/I = image(icon, src, electrocuted_sprite, MOB_LAYER+1)
 	I = update_height(I)
 	flick_overlay(I, viewing, anim_duration)
 

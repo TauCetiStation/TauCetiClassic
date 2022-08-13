@@ -134,15 +134,15 @@ var/global/list/combat_combos_by_name = list()
 
 /datum/combat_combo/proc/can_execute(datum/combo_handler/CS, show_warning = FALSE)
 	if(heavy_animation)
-		if(CS.attacker.pinned.len)
+		if(CS.attacker.anchored)
 			if(show_warning)
-				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> because you are pinned to a wall.</span>")
+				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> because you are anchored.</span>")
 			return FALSE
-		if(CS.victim.pinned.len)
+		if(CS.victim.anchored)
 			if(show_warning)
-				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> because they are pinned to a wall.</span>")
+				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> because they are anchored.</span>")
 			return FALSE
-		if(CS.attacker.anchored || !CS.attacker.canmove)
+		if(!CS.attacker.canmove)
 			if(show_warning)
 				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while not being able to move.</span>")
 			return FALSE

@@ -170,14 +170,17 @@
 		return
 	if(!iszombie(H))
 		H.zombify()
-	//H.rejuvenate()
+
+	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)  // restore every thing in this dumb head (brain and eyes)
+		IO.rejuvenate()
+
 	H.setCloneLoss(0)
 	H.setBrainLoss(0)
 	H.setHalLoss(0)
 	H.SetParalysis(0)
 	H.SetStunned(0)
 	H.SetWeakened(0)
-	H.nutrition = 400
+	H.nutrition = NUTRITION_LEVEL_NORMAL
 	H.SetSleeping(0)
 	H.radiation = 0
 	H.heal_overall_damage(H.getBruteLoss(), H.getFireLoss())

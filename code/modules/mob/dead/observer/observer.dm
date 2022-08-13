@@ -28,7 +28,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/golem_rune = null //Used to check, if we already queued as a golem.
 
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
-	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 	var/datum/orbit_menu/orbit_menu
 	var/datum/spawners_menu/spawners_menu
@@ -376,22 +375,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(orbiting && orbiting.orbiting != target)
 		to_chat(src, "<span class='notice'>Now orbiting [target].</span>")
 
-	var/rot_seg
-
-	switch(ghost_orbit)
-		if(GHOST_ORBIT_TRIANGLE)
-			rot_seg = 3
-		if(GHOST_ORBIT_SQUARE)
-			rot_seg = 4
-		if(GHOST_ORBIT_PENTAGON)
-			rot_seg = 5
-		if(GHOST_ORBIT_HEXAGON)
-			rot_seg = 6
-		else //Circular
-			rot_seg = 36 //360/10 bby, smooth enough aproximation of a circle
-
 	forceMove(target)
-	orbit(target, orbitsize, FALSE, 20, rot_seg)
+	orbit(target, orbitsize, FALSE, 20, 36)
 
 /mob/dead/observer/orbit()
 	set_dir(SOUTH) // Reset dir so the right directional sprites show up

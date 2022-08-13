@@ -205,17 +205,16 @@
 		out +="<i>[skillset]</i><a href='?src=\ref[src];delete_skillset=[skillset]'>-</a><br>"
 	out += "<B>Maximum skill values:</B><br><table>"
 	var/sorted_max = list()
-	for(var/datum/skill/s as anything in skills_list)
-		var/datum/skill/skill = all_skills[s]
-		sorted_max[skill.name] = skills.get_max(skill.name)
+	for(var/skill_type in all_skills)
+		sorted_max[skill_type] = skills.get_max(skill_type)
 	sorted_max = sortTim(sorted_max, /proc/cmp_numeric_dsc, TRUE)
 	var/row = 0
-	for(var/skill_name in sorted_max)
+	for(var/skill_type in sorted_max)
+		var/datum/skill/skill = all_skills[skill_type]
 		if(row % 3 == 0)
 			out += "</tr><tr>"
-		var/datum/skill/available_skill =  skills.available.get_skill(skill_name)
-		var/rank_name = get_skill_rank_name(available_skill, available_skill.value)
-		out +="<td>[skill_name]:  [rank_name] ([available_skill.value])</td>"
+		var/rank_name = skill.custom_ranks[skills.get_max(skill)]
+		out +="<td>[skill]:  [rank_name] ([skills.get_max(skill)])</td>"
 		row++
 	out +="</table>"
 	out += "<br><a href='?src=\ref[src];add_skillset=1'>Add skillset</a><br>"

@@ -567,6 +567,7 @@
 		if(do_teleport(M, target, 3))
 			if(isliving(M))
 				var/mob/living/L = M
+				L.Stun(1)
 				L.Weaken(3)
 				shake_camera(L, 20, 1)
 				if(ishuman(L))
