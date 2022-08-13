@@ -953,7 +953,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("large_Grenade", "ammo_9mm")
+	unlocks_designs = list("large_Grenade", "smg_ammo_9mm")
 
 /datum/technology/exotic_weaponry
 	name = "Exotic Weaponry"
