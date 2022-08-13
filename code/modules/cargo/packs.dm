@@ -354,7 +354,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "ion rifles"
 	contains = list(/obj/item/weapon/gun/energy/ionrifle,
 					/obj/item/weapon/gun/energy/ionrifle)
-	cost = 7000
+	cost = 14000
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "ion rifles crate"
 	access = access_armory
