@@ -1092,3 +1092,18 @@
 	icon_state = initial(dye_type.icon_state)
 	item_state = initial(dye_type.item_state)
 	desc = "The colors are a bit dodgy."
+
+/obj/item/attack_hulk(mob/living/user)
+	return FALSE
+
+/obj/item/attack_generic(mob/living/simple_animal/user, list/modifiers)
+	if (flags & CAN_BE_HIT)
+		return ..()
+
+/obj/item/burn()
+	var/turf/T = get_turf(src)
+	var/ash_type = w_class >= SIZE_BIG ? \
+		/obj/effect/decal/cleanable/ash/large : /obj/effect/decal/cleanable/ash
+	var/obj/effect/decal/cleanable/ash/A = new ash_type(T)
+	A.desc += "\nLooks like this used to be \an [name] some time ago."
+	..()

@@ -203,8 +203,8 @@
 	sleep(1)
 	new /obj/effect/decal/cleanable/shreds(T, name)
 
-/obj/item/clothing/deconstruct(damage_flag)
-	switch(damage_flags)
+/obj/item/clothing/atom_destruction(damage_flag)
+	switch(damage_flag)
 		if(FIRE, ACID)
 			return ..()
 		else

@@ -988,40 +988,7 @@ var/global/list/airlock_overlays = list()
 			if(user.is_busy(src)) return
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			if(C.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
-				to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
-
-				take_out_wedged_item()
-				var/obj/structure/door_assembly/da = new assembly_type(loc)
-				da.anchored = TRUE
-				if(mineral)
-					da.change_mineral_airlock_type(mineral)
-				if(glass && da.can_insert_glass)
-					da.set_glass(TRUE)
-				da.state = ASSEMBLY_WIRED
-				da.set_dir(dir)
-				da.created_name = name
-				da.update_state()
-
-				var/obj/item/weapon/airlock_electronics/ae
-				if(!electronics)
-					ae = new/obj/item/weapon/airlock_electronics(loc)
-					if(!req_access)
-						check_access()
-					if(req_access.len)
-						ae.conf_access = req_access
-					else if (req_one_access.len)
-						ae.conf_access = req_one_access
-						ae.one_access = 1
-				else
-					ae = electronics
-					electronics = null
-					ae.loc = loc
-				if(operating == -1)
-					ae.icon_state = "door_electronics_smoked"
-					ae.broken = TRUE
-					operating = 0
-
-				qdel(src)
+				deconstruct(TRUE, user)
 				return
 		else if(hasPower())
 			to_chat(user, "<span class='notice'>The airlock's motors resist your efforts to force it.</span>")
@@ -1209,6 +1176,58 @@ var/global/list/airlock_overlays = list()
 			continue
 		var/wire = 1 << rand(0, wires.wire_count - 1)
 		wires.pulse_index(wire)
+
+/obj/machinery/door/airlock/atom_destruction(damage_flag)
+	if(damage_flag == BOMB) //If an explosive took us out, don't drop the assembly
+		flags |= NODECONSTRUCT
+	return ..()
+
+/obj/machinery/door/airlock/proc/prepare_deconstruction_assembly(obj/structure/door_assembly/assembly)
+	assembly.anchored = TRUE
+	if(mineral)
+		assembly.change_mineral_airlock_type(mineral)
+	if(glass && assembly.can_insert_glass)
+		assembly.set_glass(TRUE)
+	assembly.state = ASSEMBLY_WIRED
+	assembly.set_dir(dir)
+	assembly.created_name = name
+	assembly.update_state()
+
+/obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
+	if(flags & NODECONSTRUCT)
+		qdel(src)
+		return
+	take_out_wedged_item()
+	var/obj/structure/door_assembly/A = new assembly_type(loc)
+	prepare_deconstruction_assembly(A)
+
+	if(!disassembled)
+		A.update_integrity(A.max_integrity * 0.5)
+		qdel(src)
+		return
+
+	if(user)
+		to_chat(user, span_notice("You remove the airlock electronics."))
+
+	var/obj/item/weapon/airlock_electronics/ae
+	if(!electronics)
+		ae = new/obj/item/weapon/airlock_electronics(loc)
+		if(!req_access)
+			check_access()
+		if(req_access.len)
+			ae.conf_access = req_access
+		else if (req_one_access.len)
+			ae.conf_access = req_one_access
+			ae.one_access = 1
+	else
+		ae = electronics
+		electronics = null
+		ae.loc = loc
+	if(operating == -1)
+		ae.icon_state = "door_electronics_smoked"
+		ae.broken = TRUE
+		operating = 0
+	qdel(src)
 
 /obj/structure/door_scrap
 	name = "Door Scrap"

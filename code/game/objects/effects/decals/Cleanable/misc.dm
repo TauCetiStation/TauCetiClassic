@@ -28,6 +28,12 @@
 		F.dirt += 4
 	qdel(src)
 
+// TODO copy icon_state to file
+/obj/effect/decal/cleanable/ash/large
+	name = "large pile of ashes"
+	icon_state = "big_ash"
+	beauty = -100
+
 /obj/effect/decal/cleanable/greenglow
 
 /obj/effect/decal/cleanable/greenglow/atom_init()
