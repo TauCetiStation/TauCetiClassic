@@ -182,7 +182,7 @@
 	invocation_type = "shout"
 	range = 1
 
-	summon_type = list(/mob/living/simple_animal/hostile/carp)
+	summon_type = list(/mob/living/simple_animal/hostile/carp/wizard)
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
