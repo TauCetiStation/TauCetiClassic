@@ -42,6 +42,7 @@
 	damage = 5
 	damage_type = TOX
 	weaken = 5
+	stun = 5
 
 /obj/item/projectile/energy/bolt
 	name = "bolt"
@@ -50,20 +51,13 @@
 	damage_type = TOX
 	nodamage = 0
 	weaken = 10
+	stun = 10
 	stutter = 10
 
 
 /obj/item/projectile/energy/bolt/large
 	name = "largebolt"
 	damage = 20
-
-
-/obj/item/projectile/energy/neurotoxin
-	name = "neuro"
-	icon_state = "neurotoxin"
-	damage = 5
-	damage_type = TOX
-	weaken = 10
 
 /obj/item/projectile/energy/phoron
 	name = "phoron bolt"

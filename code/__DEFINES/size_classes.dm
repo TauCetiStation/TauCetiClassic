@@ -9,6 +9,7 @@
 
 // mob.small -> SIZE_MINUSCULE or SIZE_TINY
 
+#define SIZE_MIDGET     0.5 // Size of chips and other snacks
 #define SIZE_MINUSCULE  1   // Usually items smaller then a human hand, ex: Mouse, Playing Cards, Lighter, Scalpel, Coins/Money
 #define SIZE_TINY       2   // Pockets can hold small and tiny items, ex: Flashlight, Multitool, Grenades, GPS Device
 #define SIZE_SMALL      3   // ex: Fire extinguisher, Stunbaton, Gas Mask, Metal Sheets

@@ -446,7 +446,7 @@
 						t = sanitize(form.content, free_space, extra = FALSE)
 						break
 		else
-			if (is_skill_competent(usr, list(/datum/skill/command/novice)) && id == "end" )
+			if (is_skill_competent(usr, list(/datum/skill/command = SKILL_LEVEL_NOVICE)) && id == "end" )
 				if(tgui_alert(usr, "You want to write text of create form?",, list("Text","Form")) == "Form")
 					select_form(usr)
 				else

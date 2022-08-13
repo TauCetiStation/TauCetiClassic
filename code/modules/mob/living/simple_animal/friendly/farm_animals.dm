@@ -90,14 +90,6 @@
 	else
 		..()
 
-/mob/living/simple_animal
-	name = "animal"
-	desc = "Just simple animal"
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "kicks"
-
 //cow
 /mob/living/simple_animal/cow
 	name = "cow"

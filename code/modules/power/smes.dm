@@ -35,7 +35,7 @@
 
 	var/obj/machinery/power/terminal/terminal = null
 	var/power_failure = FALSE
-	required_skills = list(/datum/skill/engineering/novice)
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/power/smes/atom_init()
 	. = ..()

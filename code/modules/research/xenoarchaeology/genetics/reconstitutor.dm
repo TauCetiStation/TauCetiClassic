@@ -29,7 +29,7 @@
 	var/list/manually_placed_genomes = list()
 	var/list/discovered_genomes = list("! Clear !")
 	var/list/accepted_fossil_types = list(/obj/item/weapon/fossil/plant)
-	required_skills = list(/datum/skill/research/trained)
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/computer/reconstitutor/atom_init()
 	. = ..()

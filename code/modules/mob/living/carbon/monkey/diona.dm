@@ -308,7 +308,7 @@
 		to_chat(src, "You are not yet ready for your growth...")
 		return
 
-	if(nutrition < 400)
+	if(nutrition < NUTRITION_LEVEL_NORMAL)
 		to_chat(src, "You have not yet consumed enough to grow...")
 		return
 

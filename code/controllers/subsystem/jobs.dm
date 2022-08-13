@@ -381,7 +381,7 @@ SUBSYSTEM_DEF(job)
 	return TRUE
 
 //Gives the player the stuff he should have with his rank
-/datum/controller/subsystem/job/proc/EquipRank(mob/living/carbon/human/H, rank, joined_late=0)
+/datum/controller/subsystem/job/proc/EquipRank(mob/living/carbon/human/H, rank, joined_late=FALSE)
 	if(!H)	return FALSE
 	var/datum/job/job = GetJob(rank)
 	var/list/spawn_in_storage = list()
@@ -467,11 +467,7 @@ SUBSYSTEM_DEF(job)
 			spawn_mark = fallback_landmark
 
 		if(istype(spawn_mark, /obj/effect/landmark/start) && istype(spawn_mark.loc, /turf))
-			H.loc = spawn_mark.loc
-		// Moving wheelchair if they have one
-		if(H.buckled && istype(H.buckled, /obj/structure/stool/bed/chair/wheelchair))
-			H.buckled.loc = H.loc
-			H.buckled.set_dir(H.dir)
+			H.forceMove(spawn_mark.loc, keep_buckled = TRUE)
 
 	//give them an account in the station database
 	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary
@@ -581,28 +577,26 @@ SUBSYSTEM_DEF(job)
 	else
 		C = new /obj/item/weapon/card/id(H)
 	if(C)
-		C.registered_name = H.real_name
 		C.rank = rank
 		C.assignment = title ? title : rank
-		C.name = "[C.registered_name]'s ID Card ([C.assignment])"
+		C.assign(H.real_name)
 
 		//put the player's account number onto the ID
 		if(H.mind && H.mind.initial_account)
 			C.associated_account_number = H.mind.initial_account.account_number
 			H.mind.initial_account.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
 
-		H.equip_to_slot_or_del(C, SLOT_WEAR_ID)
+		H.equip_or_collect(C, SLOT_WEAR_ID)
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda(H), SLOT_BELT)
 	if(locate(/obj/item/device/pda,H))
 		var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
-		pda.owner = H.real_name
 		pda.ownjob = C.assignment
+		pda.assign(H.real_name)
 		pda.ownrank = C.rank
 		pda.check_rank(C.rank)
 		pda.owner_account = H.mind.initial_account		//bind the account to the pda
 		pda.owner_fingerprints += C.fingerprint_hash	//save fingerprints in pda from ID card
-		pda.name = "PDA-[H.real_name] ([pda.ownjob])"
 		H.mind.initial_account.owner_PDA = pda			//add PDA in /datum/money_account
 
 	return TRUE

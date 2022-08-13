@@ -96,6 +96,7 @@
 		s.set_up(3, 1, M)
 		s.start()
 
+		M.Stun(10)
 		M.Weaken(10)
 
 	if(master && !wires.is_index_cut(RADIO_WIRE_SIGNAL))

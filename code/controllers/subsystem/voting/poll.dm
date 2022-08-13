@@ -35,6 +35,8 @@
 	var/next_vote = 0 //When will we next be allowed to call it again?
 	//You can set this time to a nonzero value to force a minimum roundtime before the vote can be called
 
+	var/vote_period = null //overrides default config.vote_period
+
 /datum/poll/proc/init_choices()
 	for(var/ch in choice_types)
 		choices.Add(new ch)
@@ -98,7 +100,7 @@
 			choice.voters.Remove(ckey)
 	else
 		if(multiple_votes)
-			choice.voters[ckey] = get_vote_power(C)
+			choice.voters[ckey] = get_vote_power(C, choice)
 		else
 			var/already_voted = FALSE
 			for(var/datum/vote_choice/VC in choices)
@@ -107,12 +109,12 @@
 					if(can_revote)
 						VC.voters.Remove(ckey)
 			if(can_revote || !already_voted)
-				choice.voters[ckey] = get_vote_power(C)
+				choice.voters[ckey] = get_vote_power(C, choice)
 
 
 //How much does this person's vote count for?
-/datum/poll/proc/get_vote_power(client/C)
-	return VOTE_WEIGHT_NORMAL
+/datum/poll/proc/get_vote_power(client/C, datum/vote_choice/choice)
+	return VOTE_WEIGHT_NORMAL * choice.vote_weight
 
 //How many unique people have cast votes?
 /datum/poll/proc/total_voters()

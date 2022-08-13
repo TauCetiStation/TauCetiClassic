@@ -18,7 +18,7 @@
 	g_amt = 3750
 	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/basic
-	required_skills = list(/datum/skill/construction/novice)
+	required_skills = list(/datum/skill/construction = SKILL_LEVEL_NOVICE)
 
 /obj/item/stack/sheet/glass/cyborg
 	name = "glass"
@@ -189,7 +189,7 @@
 	g_amt = 3750
 	m_amt = 1875
 	origin_tech = "materials=2"
-	required_skills = list(/datum/skill/construction/trained)
+	required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED)
 
 /obj/item/stack/sheet/rglass/cyborg
 	name = "reinforced glass"
@@ -382,6 +382,7 @@
 					return
 				BP.take_damage(5, 0)
 				if(!H.species.flags[NO_PAIN])
+					H.Stun(1)
 					H.Weaken(3)
 				H.updatehealth()
 	. = ..()
@@ -397,7 +398,7 @@
 	g_amt = 7500
 	origin_tech = "materials=3;phorontech=2"
 	created_window = /obj/structure/window/phoronbasic
-	required_skills = list(/datum/skill/construction/pro)
+	required_skills = list(/datum/skill/construction = SKILL_LEVEL_PRO)
 
 /obj/item/stack/sheet/glass/phoronglass/attack_self(mob/user)
 	construct_window(user)
@@ -414,7 +415,7 @@
 	m_amt = 1875
 	origin_tech = "materials=4;phorontech=2"
 	created_window = /obj/structure/window/phoronreinforced
-	required_skills = list(/datum/skill/construction/master)
+	required_skills = list(/datum/skill/construction = SKILL_LEVEL_MASTER)
 
 /obj/item/stack/sheet/glass/phoronrglass/attack_self(mob/user)
 	construct_window(user)

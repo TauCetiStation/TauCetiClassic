@@ -37,7 +37,7 @@
 
 	var/datum/announcement/station/command/announcement = new
 
-	required_skills = list(/datum/skill/command/pro)
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_PRO)
 
 /obj/machinery/computer/communications/atom_init()
 	. = ..()
