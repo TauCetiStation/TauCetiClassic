@@ -52,6 +52,7 @@
 	if(rig_connect)
 		rig_connect.helmet = null
 		rig_connect = null
+		canremove = 1
 	return ..()
 
 /obj/item/clothing/suit/space/rig
@@ -131,6 +132,7 @@
 
 	selected_module = null
 	QDEL_NULL(cell)
+	QDEL_NULL(helmet)
 	QDEL_LIST(installed_modules)
 	. = ..()
 
