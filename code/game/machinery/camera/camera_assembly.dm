@@ -140,12 +140,30 @@
 
 /obj/item/weapon/camera_assembly/proc/weld(obj/item/weapon/weldingtool/WT, mob/user)
 	if(!WT.isOn())
-		return 0
+		return FALSE
 	if(user.is_busy(src)) return
 	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
 	WT.eyecheck(user)
 	if(WT.use_tool(src, user, 20, volume = 50))
 		if(!WT.isOn())
-			return 0
-		return 1
-	return 0
+			return FALSE
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/camera_assembly/proc/auto_turn()
+	//Automatically turns based on nearby walls.
+	var/turf/simulated/wall/T = null
+	for(var/i = 1, i <= 8; i += i)
+		T = get_ranged_target_turf(src, i, 1)
+		if(istype(T))
+			//If someone knows a better way to do this, let me know. -Giacom
+			switch(i)
+				if(NORTH)
+					set_dir(SOUTH)
+				if(SOUTH)
+					set_dir(NORTH)
+				if(WEST)
+					set_dir(EAST)
+				if(EAST)
+					set_dir(WEST)
+			break

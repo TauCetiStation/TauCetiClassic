@@ -8,12 +8,13 @@
 	active_power_usage = 10
 	layer = 5
 
+	var/health = 20
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/status = 1
 	anchored = TRUE
-	var/invuln = null
+	var/explosive_immune = FALSE
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
 	var/hidden = 0	//Hidden cameras will be unreachable for AI
@@ -25,7 +26,7 @@
 	var/short_range = 2
 
 	var/light_disabled = 0
-	var/alarm_on = 0
+	var/alarm_on = FALSE
 	var/painted = FALSE // Barber's paint can obstruct camera's view.
 
 	var/show_paper_cooldown = 0
@@ -74,10 +75,12 @@
 	return ..()
 
 /obj/machinery/camera/update_icon()
-	if(!status)
+	if(stat & (NOPOWER))
 		icon_state = "[initial(icon_state)]1"
-	else if(stat & EMPED)
+	if(stat & EMPED)
 		icon_state = "[initial(icon_state)]emp"
+	if(stat & (BROKEN))
+		icon_state = "[initial(icon_state)]x"
 	else
 		icon_state = "[initial(icon_state)]"
 
@@ -87,54 +90,43 @@
 		to_chat(user, "<span class='warning'>This camera appears to be painted.</span>")
 
 /obj/machinery/camera/emp_act(severity)
-	if(!isEmpProof() && status)
-		if(prob(100/severity))
-			addtimer(CALLBACK(src, .proc/fix_emp_state, network), 900)
-			network = list()
-			stat |= EMPED
-			toggle_cam(TRUE)
-			triggerCameraAlarm()
-			..()
-
-/obj/machinery/camera/proc/fix_emp_state(list/previous_network)
-	stat &= ~EMPED
-	if(!painted)
-		network = previous_network
-		cancelCameraAlarm()
-		toggle_cam(TRUE)
-
-/obj/machinery/camera/proc/remove_paint_state()
-	if(!painted) // Water and paint remover can remove paint before the callback call, failsafe.
+	if(isEmpProof() && (stat & (BROKEN|NOPOWER)))
 		return
-	painted = FALSE
-	if(!(stat & EMPED))
-		visible_message("[bicon(src)] <span class='notice'>Paint drips from [src].</span>")
-		cancelCameraAlarm()
-		toggle_cam(FALSE)
+	if(prob(100/severity))
+		addtimer(CALLBACK(src, .proc/energize_cam, network), 900)
+		network = list()
+		stat |= EMPED
+		triggerCameraAlarm()
+		return ..()
 
 /obj/machinery/camera/ex_act(severity)
-	if(src.invuln)
+	if(explosive_immune)
 		return
-	else
-		..(severity)
-	return
+	switch(severity)
+		if(EXPLODE_HEAVY)
+			take_damage(60)
+		if(EXPLODE_LIGHT)
+			take_damage(30)
 
 /obj/machinery/camera/blob_act()
-	return
+	take_damage(10, alarm = TRUE)
+
+/obj/machinery/camera/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > 300)
+		take_damage(1, alarm = TRUE)
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
-	src.view_range = num
+	view_range = num
 	cameranet.updateVisibility(src, 0)
 
 /obj/machinery/camera/attack_paw(mob/living/carbon/xenomorph/humanoid/user)
 	if(!istype(user))
 		return
-	if(status)
-		user.do_attack_animation(src)
-		user.SetNextMove(CLICK_CD_MELEE)
-		visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
-		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-		toggle_cam(FALSE, user)
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
+	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
+	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
+	broke_cam()
 
 /obj/machinery/camera/attackby(W, mob/living/user)
 	var/msg = "<span class='notice'>You attach [W] into the assembly inner circuits.</span>"
@@ -154,8 +146,8 @@
 
 	else if(iswelder(W) && wires.is_deconstructable())
 		if(weld(W, user))
-			drop_assembly(1)
-			qdel(src)
+			deconstruction(sparks = FALSE)
+
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
 		if(!isXRay())
 			upgradeXRay()
@@ -212,61 +204,91 @@
 			return
 		if(bug)
 			to_chat(user, "<span class='notice'>Camera bug removed.</span>")
-			src.bug.bugged_cameras -= src.c_tag
-			src.bug = null
+			bug.bugged_cameras -= src.c_tag
+			bug = null
 		else
 			to_chat(user, "<span class='notice'>Camera bugged.</span>")
-			src.bug = W
-			src.bug.bugged_cameras[src.c_tag] = src
-	else if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/dualsaber))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
-		if(W:force > 3)
-			user.do_attack_animation(src)
-			disconnect_viewers()
-			var/datum/effect/effect/system/spark_spread/spark_system = new()
-			spark_system.set_up(5, 0, loc)
-			spark_system.start()
-			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
-			drop_assembly()
-			new /obj/item/stack/cable_coil/cut/red(loc)
-			qdel(src)
+			bug = W
+			bug.bugged_cameras[c_tag] = src
 	else
 		..()
-	return
+		if(istype(W, /obj/item))
+			take_damage(W.damage, alarm = TRUE)
 
-/obj/machinery/camera/proc/drop_assembly(state = 0)
+
+/obj/machinery/camera/proc/enable_cam()
+	if(stat & BROKEN)
+		stat &= ~BROKEN
+	if(stat & NOPOWER)
+		stat &= ~NOPOWER
+	cameranet.addCamera(src)
+	update_icon()
+
+/obj/machinery/camera/proc/broke_cam()
+	if(stat & BROKEN)
+		return
+	stat |= BROKEN
+	set_light(0)
+	cameranet.removeCamera(src)
+	disconnect_viewers()
+	update_icon()
+
+/obj/machinery/camera/proc/de_energize_cam()
+	if(stat & NOPOWER)
+		return
+	stat |= NOPOWER
+	set_light(0)
+	cameranet.removeCamera(src)
+	disconnect_viewers()
+	update_icon()
+
+/obj/machinery/camera/proc/energize_cam(list/previous_network)
+	if(stat & EMPED)
+		stat &= ~EMPED
+	if(stat & NOPOWER)
+		stat &= ~NOPOWER
+	network = previous_network
+	cancelCameraAlarm()
+	enable_cam()
+
+/obj/machinery/camera/proc/is_item_in_blacklist(obj/item/I)
+	var/list/black_list = list(/obj/item/weapon/holo)
+	for(var/black_list_weapon in black_list)
+		if(istype(I, black_list_weapon))
+			return TRUE
+	return FALSE
+
+/obj/machinery/camera/proc/take_damage(amount, alarm = FALSE)
+	if(alarm)
+		triggerCameraAlarm()
+		addtimer(CALLBACK(src, .proc/try_cancel_alarm), 100)
+	if(amount <= 0)
+		return
+	if(is_item_in_blacklist())
+		return
+	health -= amount
+	check_health()
+
+/obj/machinery/camera/proc/check_health()
+	if(health <= 0)
+		if(alarm_on)
+			cancelCameraAlarm()
+		deconstruction()
+
+/obj/machinery/camera/deconstruction(state = 0, sparks = TRUE)
 	if(assembly)
 		assembly.state = state
 		assembly.anchored = !!state
 		assembly.forceMove(loc)
 		assembly.update_icon()
 		assembly = null
-
-/obj/machinery/camera/proc/toggle_cam(show_message, mob/living/user = null)
-	status = !status
-
-	if(can_use())
-		cameranet.addCamera(src)
-	else
-		set_light(0)
-		cameranet.removeCamera(src)
-
-	if(user)
-		add_hiddenprint(user)
-
-	if(show_message)
-		var/status_message = (status ? "reactivates" : "deactivates")
-		if(user)
-			visible_message("[bicon(src)] <span class='danger'>[user] [status_message] [src]!</span>")
-		else
-			visible_message("[bicon(src)] <span class='danger'>\The [src] [status_message]!</span>")
-		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-
-	update_icon()
-
-	if(!status)
-		disconnect_viewers()
+	new /obj/item/stack/cable_coil/cut/red(loc)
+	if(sparks)
+		var/datum/effect/effect/system/spark_spread/spark_system = new()
+		spark_system.set_up(5, 0, loc)
+		spark_system.start()
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+	qdel(src)
 
 /obj/machinery/camera/proc/disconnect_viewers()
 	for(var/mob/O in player_list)
@@ -275,23 +297,24 @@
 			O.reset_view(null)
 			to_chat(O, "The screen bursts into static.")
 
+/obj/machinery/camera/proc/try_cancel_alarm()
+	if(stat & (NOPOWER|BROKEN|EMPED))
+		return
+	cancelCameraAlarm()
+
 /obj/machinery/camera/proc/triggerCameraAlarm()
-	alarm_on = 1
+	alarm_on = TRUE
 	for(var/mob/living/silicon/S as anything in silicon_list)
 		S.triggerAlarm("Camera", get_area(src), list(src), src)
 
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
-	alarm_on = 0
+	alarm_on = FALSE
 	for(var/mob/living/silicon/S as anything in silicon_list)
 		S.cancelAlarm("Camera", get_area(src), src)
 
-/obj/machinery/camera/proc/can_use(check_paint = TRUE)
-	if(!status)
-		return FALSE
-	if(stat & EMPED)
-		return FALSE
-	if(check_paint && painted && !isXRay())
+/obj/machinery/camera/proc/can_use()
+	if(stat & (NOPOWER|BROKEN|EMPED))
 		return FALSE
 	return TRUE
 
@@ -304,7 +327,7 @@
 		see = hear(view_range, pos)
 	return see
 
-/atom/proc/auto_turn()
+/obj/machinery/camera/proc/auto_turn()
 	//Automatically turns based on nearby walls.
 	var/turf/simulated/wall/T = null
 	for(var/i = 1, i <= 8; i += i)
@@ -339,16 +362,16 @@
 	return null
 
 /obj/machinery/camera/proc/weld(obj/item/weapon/weldingtool/WT, mob/user)
-
 	if(!WT.isOn())
-		return 0
-	if(user.is_busy(src)) return
+		return FALSE
+	if(user.is_busy(src))
+		return
 	// Do after stuff here
 	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
 	WT.eyecheck(user)
 	if(WT.use_tool(src, user, 100, volume = 50))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/camera/proc/add_network(network_name)
 	add_networks(list(network_name))
@@ -357,23 +380,21 @@
 	remove_networks(list(network_name))
 
 /obj/machinery/camera/proc/add_networks(list/networks)
-	var/network_added
-	network_added = 0
+	var/network_added = FALSE
 	for(var/network_name in networks)
-		if(!(network_name in src.network))
+		if(!(network_name in network))
 			network += network_name
-			network_added = 1
+			network_added = TRUE
 
 	if(network_added)
 		invalidateCameraCache()
 
 /obj/machinery/camera/proc/remove_networks(list/networks)
-	var/network_removed
-	network_removed = 0
+	var/network_removed = FALSE
 	for(var/network_name in networks)
-		if(network_name in src.network)
+		if(network_name in network)
 			network -= network_name
-			network_removed = 1
+			network_removed = TRUE
 
 	if(network_removed)
 		invalidateCameraCache()
