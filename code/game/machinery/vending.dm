@@ -17,7 +17,7 @@
 	density = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/health = 100
-	var/vend_ready = 1 //Are we ready to vend?? Is it time??
+	var/vend_ready = TRUE //Are we ready to vend?? Is it time??
 	var/vend_delay = 10 //How long does it take to vend?
 	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
 
@@ -25,7 +25,7 @@
 	var/list/products	= list() // For each, use the following pattern:
 	var/list/contraband	= list() // list(/type/path = amount,/type/path2 = amount2)
 	var/list/premium 	= list() // No specified amount = only one in stock
-	var/list/syndie	= list()
+	var/list/syndie		= list()
 	var/list/prices     = list() // Prices for each item, list(/type/path = price), items not in the list don't have a price.
 
 	var/product_slogans = "" //String of slogans separated by semicolons, optional
@@ -46,7 +46,7 @@
 	//var/emagged = 0 //Ignores if somebody doesn't have card access to that machine.
 	var/electrified_until = 0 //Shock customers like an airlock.
 	var/shoot_inventory = 0 //Fire items at customers! We're broken!
-	var/shut_up = 1 //Stop spouting those godawful pitches!
+	var/shut_up = TRUE //Stop spouting those godawful pitches!
 	var/extended_inventory = 0 //can we access the hidden inventory?
 	var/obj/item/weapon/coin/coin
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
@@ -60,7 +60,7 @@
 /obj/machinery/vending/atom_init()
 	. = ..()
 	wires = new(src)
-	src.anchored = TRUE
+	anchored = TRUE
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
 
@@ -95,33 +95,45 @@
 	take_damage(50)
 
 /obj/machinery/vending/bullet_act(obj/item/projectile/P, def_zone)
-	take_damage(P.damage)
+	take_damage(P.damage, P)
 
 /obj/machinery/vending/attack_paw()
 	. = ..()
 	take_damage(round(1, 10))
 
-/obj/machinery/vending/proc/is_item_in_blacklist(var/obj/item/I)
-	istype(I, /obj/item/weapon/holo)
-		return TRUE
+/obj/machinery/vending/proc/is_item_in_blacklist(obj/item/I)
+	var/list/black_list = list(/obj/item/weapon/holo)
+	for(var/black_list_weapon in black_list)
+		if(istype(I, black_list_weapon))
+			return TRUE
 	return FALSE
 
-/obj/machinery/vending/proc/take_damage(amount)
+/obj/machinery/vending/proc/take_damage(amount, obj/item/W = null)
+	if(W)
+		if(is_item_in_blacklist(W))
+			return
+		if(istype(W, /obj/item/projectile))
+			var/obj/item/projectile/P = W
+			if(P.damage < 15)	//no need much damaging from rubber and other proj, i think
+				amount -= 10
 	if(amount <= 0)
 		return
-	is_item_in_blacklist()
 	if(amount < 30)
-		if(prob(amount))
-			throw_item()
+		if(prob(50 - amount))
+			throw_item()	//throw VEND item, not a item which attacked
+	destroy_some_content(amount)	//some content was damaged, unlucky
 	health -= amount
 	check_health()
 
 /obj/machinery/vending/proc/check_health()
 	if(health <= 0)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/stack/rods(loc, 2)
+		new /obj/item/stack/cable_coil/red(loc, 2)
 		malfunction()
 		deconstruction()
-	if(health < 5)
-		say_slogan()
+	if(health < 15)
+		make_me_broken()
 
 /obj/machinery/vending/deconstruction()
 	var/obj/machinery/constructable_frame/machine_frame/M = new(loc)
@@ -222,8 +234,8 @@
 			if(user.loc == T && user.get_active_hand() == W)
 				anchored = !anchored
 				to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-				if (!(src.anchored & powered()))
-					src.icon_state = "[initial(icon_state)]-off"
+				if (!(anchored & powered()))
+					icon_state = "[initial(icon_state)]-off"
 					stat |= NOPOWER
 					set_light(0)
 				else
@@ -263,15 +275,14 @@
 		ewallet = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 
-	else if(src.panel_open)
+	else if(panel_open)
 		for(var/datum/data/vending_product/R in product_records)
 			if(istype(W, R.product_path))
 				stock(R, user)
 				qdel(W)
 	else
-		if(!is_item_in_blacklist)
-			take_damage(W.force)
-		return ..()
+		..()
+		take_damage(W.force, W)		//for saving animation attack
 
 /obj/machinery/vending/emag_act(mob/user)
 	if(emagged)
@@ -329,13 +340,13 @@
 
 							//create entries in the two account transaction logs
 							var/datum/transaction/T = new()
-							T.target_name = "[vendor_account.owner_name] (via [src.name])"
+							T.target_name = "[vendor_account.owner_name] (via [name])"
 							T.purpose = "Purchase of [currently_vending.product_name]"
 							if(transaction_amount > 0)
 								T.amount = "([transaction_amount])"
 							else
 								T.amount = "[transaction_amount]"
-							T.source_terminal = src.name
+							T.source_terminal = name
 							T.date = current_date_string
 							T.time = worldtime2text()
 							D.transaction_log.Add(T)
@@ -344,7 +355,7 @@
 							T.target_name = D.owner_name
 							T.purpose = "Purchase of [currently_vending.product_name]"
 							T.amount = "[transaction_amount]"
-							T.source_terminal = src.name
+							T.source_terminal = name
 							T.date = current_date_string
 							T.time = worldtime2text()
 							vendor_account.transaction_log.Add(T)
@@ -488,15 +499,15 @@
 					vend(R, usr)
 				else
 					to_chat(usr, "<span class='warning'>The ewallet doesn't have enough money to pay for that.</span>")
-					src.currently_vending = R
+					currently_vending = R
 					updateUsrDialog()
 			else
-				src.currently_vending = R
+				currently_vending = R
 				updateUsrDialog()
 		return
 
 	else if (href_list["cancel_buying"])
-		src.currently_vending = null
+		currently_vending = null
 		updateUsrDialog()
 		return
 
@@ -507,7 +518,7 @@
 		to_chat(user, "<span class='warning'>Access denied.</span>")//Unless emagged of course
 		flick(src.icon_deny,src)
 		return
-	src.vend_ready = 0 //One thing at a time!!
+	vend_ready = FALSE //One thing at a time!!
 
 	if (R in coin_records)
 		if(!coin)
@@ -524,23 +535,23 @@
 
 	R.amount--
 
-	if(((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
+	if(((last_reply + (vend_delay + 200)) <= world.time) && vend_reply)
 		spawn(0)
 			speak(src.vend_reply)
-			src.last_reply = world.time
+			last_reply = world.time
 
 	use_power(5)
-	if (src.icon_vend) //Show the vending animation if needed
+	if (icon_vend) //Show the vending animation if needed
 		flick(src.icon_vend,src)
 	spawn(src.vend_delay)
 		new R.product_path(get_turf(src))
 		playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
-		src.vend_ready = 1
-		src.currently_vending = null
+		vend_ready = TRUE
+		currently_vending = null
 		updateUsrDialog()
 
 /obj/machinery/vending/proc/stock(datum/data/vending_product/R, mob/user)
-	if(src.panel_open)
+	if(panel_open)
 		to_chat(user, "<span class='notice'>You stock the [src] with \a [R.product_name]</span>")
 		R.amount++
 
@@ -586,16 +597,15 @@
 
 /obj/machinery/vending/power_change()
 	if(stat & BROKEN)
-		icon_state = "[initial(icon_state)]-broken"
-		set_light(0)
+		make_me_broken()
 	else
-		if( powered() & src.anchored )
+		if(powered() & anchored)
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
 			set_light(light_range_on, light_power_on)
 		else
 			spawn(rand(0, 15))
-				src.icon_state = "[initial(icon_state)]-off"
+				icon_state = "[initial(icon_state)]-off"
 				stat |= NOPOWER
 				set_light(0)
 				update_power_use()
@@ -603,21 +613,34 @@
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
-	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
+	for(var/datum/data/vending_product/R in product_records)
+		if(R.amount <= 0) //Try to use a record that actually has something to dump.
 			continue
 		var/dump_path = R.product_path
-		if (!dump_path)
+		if(!dump_path)
 			continue
 
 		while(R.amount > 0)
-			new dump_path(src.loc)
+			new dump_path(loc)
 			R.amount--
 		continue
 
+/obj/machinery/vending/proc/make_me_broken()
+	if(stat & BROKEN)
+		return
 	stat |= BROKEN
 	icon_state = "[initial(icon_state)]-broken"
-	return
+	set_light(0)
+
+/obj/machinery/vending/proc/destroy_some_content(hit_damage)
+	for(var/datum/data/vending_product/R in product_records)
+		if(hit_damage > 50)	//lasercannon or explode
+			R.amount = 0
+		else
+			if(prob(25))
+				break
+			R.amount--
+			continue
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item()
@@ -626,19 +649,22 @@
 	if(!target)
 		return FALSE
 
-	for(var/datum/data/vending_product/R in src.product_records)
+	for(var/datum/data/vending_product/R in product_records)
 		if (R.amount <= 0) //Try to use a record that actually has something to dump.
 			continue
 		var/dump_path = R.product_path
 		if (!dump_path)
 			continue
-
-		R.amount--
-		throw_item = new dump_path(src.loc)
-		break
+		if(prob(30))
+			R.amount--
+			throw_item = new dump_path(loc)
+			break
+		continue
 	if (!throw_item)
 		return FALSE
-	throw_item.throw_at(target, 16, 3)
+	if(throw_item.throw_speed)
+		throw_item.throw_speed = 0.8
+	throw_item.throw_at(target, 16, 3, spin = TRUE)
 	visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
 	return TRUE
 
