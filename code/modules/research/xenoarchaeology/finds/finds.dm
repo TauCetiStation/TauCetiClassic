@@ -556,4 +556,4 @@
 		return INITIALIZE_HINT_QDEL
 
 	else if(talkative)
-		src.AddComponent(/datum/component/talking_atom)
+		AddComponent(/datum/component/talking_atom)
