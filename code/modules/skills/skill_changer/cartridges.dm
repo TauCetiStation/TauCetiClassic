@@ -119,8 +119,7 @@
 	if(severity == 1)
 		if(prob(40))	//small chance of obvious meltdown
 			meltdown()
-	spawn(20)
-		malfunction--
+	VARSET_IN(src, malfunction, malfunction - 1, 20)
 
 /obj/item/weapon/implant/skill/meltdown()
 	..()

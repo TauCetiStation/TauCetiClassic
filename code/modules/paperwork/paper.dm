@@ -840,43 +840,43 @@
 
 /obj/item/weapon/paper/cmf_manual
 	name = "CMF manipulation manual"
-	info = {"<h1 style="text-align: center;">User manual</h1>
-	<h2>Introduction</h2>
-	<p>Thanks to the developments of our scientists, we have been able to produce nearly stable prototypes of USP cartridges. These cartridges allow us to alter the cognitive and motor capabilities of creatures.&nbsp;</p>
-	<p>This technology consists of four parts</p>
+	info = {"<h1 style="text-align: center;">Руководство пользователя</h1>
+	<h2>Введение</h2>
+	<p>Благодаря разработкам наших ученых мы смогли изготовить около стабильные прототипы картриджей USP. Эти картриджи позволяют изменять когнитивно-моторные способности существ.&nbsp;</p>
+	<p>Эта технология состоит из четырех частей</p>
 	<div>
 	<ul>
-	<li>CMF Modifier Access Console - is used to set up the cartridges. Shows IQ (Intelligence quotient) and MDI (Motor development index) information.</li>
+	<li>CMF Modifier Access Console - используется для настройки картриджей. Показывает информацию о IQ (коэффициент интеллекта) и MDI (индекс моторного развития).</li>
 	</ul>
 	</div>
 	<ul>
-	<li>CMF manipulation table - receives data from the console and installs a CMF implant with the desired parameters. It can also serve as an operating table for the treatment of brain injuries.</li>
-	<li>USP cartridge - <span style="text-decoration: line-through;"><strong>\[classified\]</strong></span></li>
-	<li>CMF implant - Changes the creature's skills, allowing it to be a more useful employee.</li>
+	<li>CMF manipulation table - получает данные с консоли и устанавливает имплант CMF с нужными параметрами. Он также может служить хирургическим операционным столом для лечения черепно-мозговых травм.</li>
+	<li>USP cartridge - <span style="text-decoration: line-through;"><strong>\[секретно\]</strong></span></li>
+	<li>Имплант CMF - изменяет навыки существа, позволяя ему быть более полезным работником.</li>
 	</ul>
-	<h2>Procedure</h2>
+	<h2>Процедура</h2>
 	<ol>
 	<li>Place patient on CMF manipulation table</li>
-	<li>Ask the patient about his or her knowledge and skills. Check IQ and MDI scores</li>
-	<li>Insert the cartridge into the table</li>
-	<li>Unpack the cartridge (Procedure is not reversible)</li>
-	<li>Use the console to set the desired parameters of the implant</li>
-	<li>Implant the patient</li>
-	<li>In the case of brain damage, refer the patient to a qualified specialist for treatment</li>
-	<li>End of Procedure. The employee is now ready to perform his duties.</li>
+	<li>Спросите пациента о его знаниях и навыках. Проверьте показатели IQ и MDI</li>
+	<li>Вставьте картридж в стол</li>
+	<li>Распакуйте картридж (процедура не является обратимой)</li>
+	<li>Используйте консоль для установки желаемых параметров импланта</li>
+	<li>Имплантируйте пациента с помощью консоли</li>
+	<li>В случае повреждения головного мозга направьте пациента на лечение к квалифицированному специалисту</li>
+	<li>Окончание процедуры. Теперь работник готов к выполнению своих обязанностей.</li>
 	</ol>
-	<h2>Hazards and contraindications</h2>
+	<h2>Опасности и противопоказания</h2>
 	<ul>
-	<li>Because of the way mindshield and loyalty implants work, they cannot be used together with CMF implants.</li>
-	<li>The console will not allow you to inject this implant into a creature of an unsuitable race. If such a situation occurs, the creature will suffer severe brain damage and the implant will be destroyed.</li>
-	<li>CMF implants are still at the prototype stage, strong EMI pulses can destroy this implant.</li>
-	<li>Since this technology is top secret, any removal of the implant would result in its destruction.</li>
+	<li>Из-за особенностей работы имплантов защиты разума и лояльности их нельзя использовать вместе с имплантами CMF.</li>
+	<li>Консоль не позволит вам ввести этот имплантат существу неподходящей расы. Если такое произойдет, существо получит серьезные повреждения мозга, а имплант будет уничтожен.</li>
+	<li>Импланты CMF все еще находятся на стадии прототипа, сильный ЭМИ может разрушить его.</li>
+	<li>Поскольку эта технология является совершенно секретной, любое удаление импланта приведет к его уничтожению.</li>
 	</ul>
-	<h1 style="text-align: center;">Technical information</h1>
-	<h2>Connecting the equipment</h2>
-	<p>To connect the CMF manipulation table to the console, open the maintenance panel of the table with a screwdriver, then use a multitool to connect the table to the console and close the maintenance panel after this.</p>
-	<h2>Power consumption</h2>
-	<p>After the cartridge was unpacked, the equipment consumes much more power, so a APC charge sensor was installed in the console. Keep an eye on the charge during CMF manipulation.</p>
-	<h2>Production cost of USP cartridges</h2>
-	<p>Since these cartridges are prototypes that have not yet entered mass production, each cartridge is hand-assembled, and their distribution is limited to the stations where crew death/unqualified personnel are common. Use them wisely and don't waste them. Look carefully at patients' IQ and MDI scores to determine which cartridge is needed. One basic green cartridge cost twenty-five man-years. We also cannot allow these technologies to fall into the hands of our competitors.</p>
+	<h1 style="text-align: center;">Техническая информация</h1>
+	<h2>Подключение оборудования</h2>
+	<p>Чтобы подключить манипуляционный стол CMF к консоли, откройте панель обслуживания стола с помощью отвертки, затем с помощью мультиинструмента подсоедините стол к консоли и закройте панель обслуживания после этого.</p>
+	<h2>Потребляемая мощность</h2>
+	<p>После распаковки картриджа оборудование потребляет гораздо больше энергии, поэтому в консоли был установлен датчик заряда APC. Следите за зарядом во время манипуляций CMF.</p>
+	<h2>Стоимость производства картриджей USP</h2>
+	<p>Поскольку эти картриджи являются прототипами, которые еще не поступили в массовое производство, каждый картридж собирается вручную, и их распространение ограничено станциями, где гибель экипажа или наличие неквалифицированного персонала является обычным явлением. Используйте их с умом и не тратьте впустую. Внимательно изучите показатели IQ и MDI пациентов, чтобы определить, какой картридж необходим. Один базовый зеленый картридж стоил двадцать пять человеко-лет. Мы также не можем допустить, чтобы эти технологии попали в руки наших конкурентов.</p>
 	"}
