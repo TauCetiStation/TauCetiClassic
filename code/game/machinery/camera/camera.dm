@@ -7,13 +7,12 @@
 	idle_power_usage = 5
 	active_power_usage = 10
 	layer = 5
+	anchored = TRUE
 
 	var/health = 20
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
-	var/status = 1
-	anchored = TRUE
 	var/explosive_immune = FALSE
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
@@ -75,11 +74,11 @@
 	return ..()
 
 /obj/machinery/camera/update_icon()
-	if(stat & (NOPOWER))
+	if(stat & NOPOWER)
 		icon_state = "[initial(icon_state)]1"
 	if(stat & EMPED)
 		icon_state = "[initial(icon_state)]emp"
-	if(stat & (BROKEN))
+	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]x"
 	else
 		icon_state = "[initial(icon_state)]"
@@ -128,10 +127,12 @@
 	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 	broke_cam()
 
-/obj/machinery/camera/attackby(W, mob/living/user)
-	var/msg = "<span class='notice'>You attach [W] into the assembly inner circuits.</span>"
-	var/msg2 = "<span class='notice'>The camera already has that upgrade!</span>"
+/obj/machinery/camera/proc/upgrade_message(item, user, value = TRUE)
+	if(!value)
+		to_chat(user, "<span class='notice'>You attach [item] into the assembly inner circuits.</span>")
+	to_chat(user, "<span class='notice'>The camera already has that upgrade!</span>")
 
+/obj/machinery/camera/attackby(W, mob/living/user)
 	// DECONSTRUCTION
 	if(isscrewdriver(W))
 		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
@@ -152,25 +153,34 @@
 		if(!isXRay())
 			upgradeXRay()
 			qdel(W)
-			to_chat(user, "[msg]")
+			upgrade_message(W, user)
 		else
-			to_chat(user, "[msg2]")
+			upgrade_message(W, user, FALSE)
 
 	else if(istype(W, /obj/item/stack/sheet/mineral/phoron) && panel_open)
 		if(!isEmpProof())
 			upgradeEmpProof()
-			to_chat(user, "[msg]")
+			upgrade_message(W, user)
 			qdel(W)
 		else
-			to_chat(user, "[msg2]")
+			upgrade_message(W, user, FALSE)
 	else if(istype(W, /obj/item/device/assembly/prox_sensor) && panel_open)
 		if(!isMotion())
 			upgradeMotion()
-			to_chat(user, "[msg]")
+			upgrade_message(W, user)
 			qdel(W)
 		else
-			to_chat(user, "[msg2]")
-
+			upgrade_message(W, user, FALSE)
+	//repair broken stat
+	else if(istype(W, /obj/item/stack/sheet/glass && panel_open))
+		enable_cam()
+		to_chat(user, "<span class='notice'>You fixed some [src] damage.</span>")
+		qdel(W)
+	//repair damage
+	else if(istype(W, /obj/item/stack/sheet/metal) && panel_open)
+		if(try_increase_health(10))
+			qdel(W)
+		to_chat(user, "<span class='notice'>[src] has enough margin of safety.</span>")
 	// OTHER
 	else if(istype(W, /obj/item/weapon/paper))
 		user.SetNextMove(CLICK_CD_INTERACT)
@@ -204,24 +214,41 @@
 			return
 		if(bug)
 			to_chat(user, "<span class='notice'>Camera bug removed.</span>")
-			bug.bugged_cameras -= src.c_tag
+			bug.bugged_cameras -= c_tag
 			bug = null
 		else
 			to_chat(user, "<span class='notice'>Camera bugged.</span>")
 			bug = W
 			bug.bugged_cameras[c_tag] = src
+
+	else if(istype(W, /obj/item/weapon/gun))
+		bombastic_shot()
+
 	else
 		..()
 		if(istype(W, /obj/item))
-			take_damage(W.damage, alarm = TRUE)
+			take_damage(W.force, alarm = TRUE)
 
+/obj/machinery/camera/proc/bombastic_shot()
+	if(do_after(user, 20, target = src, can_move = TRUE))
+		user.visible_message("<span class='warning'>[user] shoots in the [src]!</span>",
+		"<span class='notice'>You look at the [src], raise your weapon, and after a second, fire into the [src] lens.</span>")
+		broke_cam()
+
+/obj/machinery/camera/proc/try_increase_health(amount)
+	if(!health)
+		return FALSE
+	if(health >= 60 || amount + health > 60)
+		return FALSE
+	if(0 <= amount)
+		return FALSE
+	health += amount
 
 /obj/machinery/camera/proc/enable_cam()
 	if(stat & BROKEN)
 		stat &= ~BROKEN
-	if(stat & NOPOWER)
-		stat &= ~NOPOWER
 	cameranet.addCamera(src)
+	set_power_use(IDLE_POWER_USE)
 	update_icon()
 
 /obj/machinery/camera/proc/broke_cam()
@@ -231,6 +258,7 @@
 	set_light(0)
 	cameranet.removeCamera(src)
 	disconnect_viewers()
+	set_power_use(NO_POWER_USE)
 	update_icon()
 
 /obj/machinery/camera/proc/de_energize_cam()
@@ -240,6 +268,7 @@
 	set_light(0)
 	cameranet.removeCamera(src)
 	disconnect_viewers()
+	set_power_use(NO_POWER_USE)
 	update_icon()
 
 /obj/machinery/camera/proc/energize_cam(list/previous_network)
@@ -249,6 +278,7 @@
 		stat &= ~NOPOWER
 	network = previous_network
 	cancelCameraAlarm()
+	set_power_use(IDLE_POWER_USE)
 	enable_cam()
 
 /obj/machinery/camera/proc/is_item_in_blacklist(obj/item/I)
