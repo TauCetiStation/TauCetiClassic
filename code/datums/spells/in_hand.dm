@@ -115,7 +115,7 @@
 
 /obj/effect/proc_holder/spell/in_hand/fireball
 	name = "Огненный Шар"
-	desc = "Выстреливает огненным шаром в цель и не требует одежды для использования."
+	desc = "Выстреливает огненным шаром в цель."
 	school = "evocation"
 	action_icon_state = "fireball"
 	summon_path = /obj/item/weapon/magic/fireball

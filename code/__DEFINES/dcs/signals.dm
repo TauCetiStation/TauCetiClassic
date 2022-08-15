@@ -144,6 +144,9 @@
 #define COMSIG_ATOM_ADD_DIRT "atom_add_dirt"
 /// from base of atom/clean_blood (WHICH APPERANTLY CLEANS ALL DIRT OVERLAYS ?? ??? ?)
 #define COMSIG_ATOM_CLEAN_BLOOD "atom_clean_blood"
+///from /mob/living/say() when atom catches message: (proc args list(message, atom/movable/speaker))
+// currently works for talking_atom only
+#define COMSIG_MOVABLE_HEAR "movable_hear"
 
 ///called when teleporting into a protected turf: (channel, turf/origin)
 #define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"
