@@ -174,7 +174,8 @@
 /obj/structure/girder/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
 		return ..()
-	if(deconstruct)
+	var/remains
+	if(disassembled)
 		remains = /obj/item/stack/sheet/metal
 	else
 		remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/metal)

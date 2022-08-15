@@ -175,7 +175,7 @@
 				feedback_inc("cyborg_ais_created",1)
 				qdel(src)
 
-/obj/structure/Aicore/deconstruct(disassembled = TRUE)
+/obj/structure/AIcore/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
 		return ..()
 	if(state >= 4)

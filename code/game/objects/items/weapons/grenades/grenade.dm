@@ -76,9 +76,9 @@
 		return
 	return ..()
 
-/obj/item/grenade/deconstruct(disassembled = TRUE)
+/obj/item/weapon/grenade/deconstruct(disassembled = TRUE)
 	if(!disassembled)
-		detonate()
+		prime()
 	..()
 
 /obj/item/weapon/grenade/syndieminibomb

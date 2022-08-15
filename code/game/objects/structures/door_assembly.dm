@@ -184,14 +184,14 @@
 		return ..()
 	var/material_amt = disassembled ? 4 : rand(2, 4)
 	new /obj/item/stack/sheet/metal(loc, material_amt)
-	if(glass)
+	if(glass_material)
 		if(disassembled)
 			new /obj/item/stack/sheet/rglass(loc)
 		else
 			new /obj/item/weapon/shard(loc)
 	if(mineral)
 		var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-		new mineral_path(T, 2)
+		new mineral_path(loc, 2)
 	..()
 
 /obj/structure/door_assembly/proc/set_glass(has_glass, glass_material = "glass")

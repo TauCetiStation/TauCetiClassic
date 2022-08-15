@@ -85,7 +85,7 @@
 /obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
 		return ..()
-	new /obj/item/stack/sheet/iron(loc)
+	new /obj/item/stack/sheet/metal(loc)
 	..()
 
 /obj/machinery/iv_drip/process()

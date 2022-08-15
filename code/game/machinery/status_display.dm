@@ -219,9 +219,9 @@
 /obj/machinery/status_display/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
 		return ..()
-	new /obj/item/stack/sheet/iron(loc, 2)
-	new /obj/item/shard(loc)
-	new /obj/item/shard(loc)
+	new /obj/item/stack/sheet/metal(loc, 2)
+	new /obj/item/weapon/shard(loc)
+	new /obj/item/weapon/shard(loc)
 	// new /obj/item/wallframe/status_display(loc) // TODO add?
 	..()
 

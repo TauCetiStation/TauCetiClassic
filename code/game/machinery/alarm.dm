@@ -1167,7 +1167,7 @@ FIRE ALARM
 	return ..()
 
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
-	if(flgas & NODECONSTRUCT)
+	if(flags & NODECONSTRUCT)
 		return ..()
 	new /obj/item/stack/sheet/metal(loc, 1)
 	if(buildstage >= 1)
