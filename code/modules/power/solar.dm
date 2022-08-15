@@ -197,10 +197,16 @@
 		..()
 
 // Give back the glass type we were supplied with
-/obj/item/solar_assembly/proc/give_glass()
-	if(glass_type)
-		new glass_type(src.loc, 2)
-		glass_type = null
+/obj/item/solar_assembly/proc/give_glass(device_broken)
+	if(!glass_type)
+		return
+	var/turf/T = get_turf(loc)
+	if(device_broken)
+		new /obj/item/weapon/shard(T)
+		new /obj/item/weapon/shard(T)
+	else
+		new glass_type(T, 2)
+	glass_type = null
 
 
 /obj/item/solar_assembly/attackby(obj/item/I, mob/user, params)

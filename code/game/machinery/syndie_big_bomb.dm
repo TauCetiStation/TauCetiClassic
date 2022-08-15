@@ -36,6 +36,7 @@
 	. = !degutted && (active || ignore_active)
 	if(.)
 		explosion(loc, 2, 5, 11)
+		degutted = TRUE // prevent double caboom
 		qdel(src)
 
 /obj/machinery/syndicatebomb/atom_break()

@@ -156,7 +156,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.name = "space carp"
 	hologram.desc = "Hologram of cute space carp... Wait, WHAT?"
 
-/obj/machinery/hologram/holopad/proc/clear_holo()
+/obj/machinery/hologram/holopad/clear_holo()
 //	hologram.set_light(0)//Clear lighting.	//handled by the lighting controller when its ower is deleted
 	qdel(hologram)//Get rid of hologram.
 	hologram = null
@@ -202,12 +202,20 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	active_power_usage = 100
 	var/obj/effect/overlay/hologram//The projection itself. If there is one, the instrument is on, off otherwise.
 
+/obj/machinery/hologram/proc/clear_holo()
+	return
+
 /obj/machinery/hologram/power_change()
 	if (powered())
 		stat &= ~NOPOWER
 	else
 		stat |= ~NOPOWER
 	update_power_use()
+
+/obj/machinery/hologram/atom_break()
+	. = ..()
+	if(hologram)
+		clear_holo()
 
 //Destruction procs.
 /obj/machinery/hologram/ex_act(severity)
@@ -226,7 +234,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/hologram/Destroy()
 	if(hologram)
-		src:clear_holo()
+		clear_holo()
 	return ..()
 /*
 Holographic project of everything else.

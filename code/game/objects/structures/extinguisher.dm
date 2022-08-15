@@ -67,6 +67,29 @@
 	else
 		icon_state = "extinguisher_[FE]_closed"
 
+/obj/structure/extinguisher_cabinet/atom_break(damage_flag)
+	. = ..()
+	if(. || flags & NODECONSTRUCT)
+		return
+	opened = TRUE
+	if(has_extinguisher)
+		has_extinguisher.forceMove(loc)
+		has_extinguisher = null
+	update_icon()
+
+
+/obj/structure/extinguisher_cabinet/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	//if(disassembled) TODO /obj/item/wallframe
+	//	new /obj/item/wallframe/extinguisher_cabinet(loc)
+	//else
+	new /obj/item/stack/sheet/metal(loc, 2)
+	if(has_extinguisher)
+		has_extinguisher.forceMove(loc)
+		has_extinguisher = null
+	..()
+
 /obj/structure/extinguisher_cabinet/highrisk
 	name = "expensive extinguisher cabinet"
 	icon_state = "extinguisher_golden_closed"

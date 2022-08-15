@@ -103,3 +103,16 @@
 				cell = W
 				to_chat(user, "You insert the power cell.")
 	update_icon()
+
+/obj/machinery/floodlight/atom_break(damage_flag)
+	. = ..()
+	if(!.)
+		return
+	playsound(loc, 'sound/effects/Glassbr3.ogg', 100, TRUE) // TODO fix all sound like this one
+	//var/obj/structure/floodlight_frame/F = new(loc)
+	//F.state = FLOODLIGHT_NEEDS_LIGHTS
+	//new /obj/item/light/tube/broken(loc)
+	qdel(src)
+
+/obj/machinery/floodlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	playsound(src, 'sound/effects/Glasshit.ogg', 75, TRUE)

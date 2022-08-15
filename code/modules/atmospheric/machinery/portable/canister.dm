@@ -312,9 +312,9 @@ update_flag
 	nanomanager.update_uis(src) // Update all NanoUIs attached to src
 
 /obj/machinery/portable_atmospherics/canister/atom_break(damage_flag)
-	if(stat & BROKEN)
-		return
 	. = ..()
+	if(!.)
+		return
 	disconnect()
 
 	var/turf/T = get_turf(src)
