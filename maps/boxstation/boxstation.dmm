@@ -36226,6 +36226,10 @@
 	},
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/storage/pill_bottle/dexalin{
+	pixel_x = -13;
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
