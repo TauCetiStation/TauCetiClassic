@@ -61,6 +61,8 @@
 		G.hacked = TRUE
 		G.update_icon()
 	opened = TRUE
+	var/datum/announcement/centcomm/nuclear/gateway/announce = new
+	announce.play()
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 /obj/effect/landmark/syndie_gateway

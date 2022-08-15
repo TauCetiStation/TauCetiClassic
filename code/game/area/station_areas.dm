@@ -250,6 +250,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambience = list('sound/ambience/vault_1.ogg')
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
+/area/station/bridge/cmf_room
+	name = "CMF altering room"
+	icon_state = "cmf"
+	is_force_ambience = TRUE
+	ambience = list('sound/ambience/bridge_1.ogg')
+	sound_environment = SOUND_AREA_SMALL_METALLIC
+
 //Civilian
 
 /area/station/civilian/dormitories

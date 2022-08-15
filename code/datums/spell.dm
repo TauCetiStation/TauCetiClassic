@@ -47,7 +47,6 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 	var/smoke_spread = 0 //1 - harmless, 2 - harmful
 	var/smoke_amt = 0 //cropped at 10
 
-	var/critfailchance = 0
 	var/centcomm_cancast = TRUE //Whether or not the spell should be allowed on z2
 
 	var/datum/action/spell_action/action = null
@@ -93,7 +92,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 		if(try_start)
 			to_chat(user, "Not when you're incapacitated.")
 		return FALSE
-	
+
 	if(plasma_cost && isxeno(user))
 		var/mob/living/carbon/xenomorph/alien = user
 		if(!alien.check_enough_plasma(plasma_cost))
@@ -181,15 +180,14 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 		if(cooldown)
 			cooldown.tick()
 
+	qdel(cooldown)
+
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets, user)
 	invocation(user)
 	if(charge_type == "recharge" && recharge)
 		INVOKE_ASYNC(src, .proc/start_recharge, user)
-	if(prob(critfailchance))
-		critfail(targets, user)
-	else
-		cast(targets, user)
+	cast(targets, user)
 	after_cast(targets, user)
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets, mob/user = usr)
@@ -232,9 +230,6 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 				smoke.start()
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets, mob/user = usr)
-	return
-
-/obj/effect/proc_holder/spell/proc/critfail(list/targets, mob/user = usr)
 	return
 
 /obj/effect/proc_holder/spell/proc/revert_cast(mob/user = usr) //resets recharge or readds a charge
@@ -291,7 +286,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 			if(range < 0)
 				targets += user // use spell/no_target instead
 			else
-				var/possible_targets = list()
+				var/list/possible_targets = list()
 
 				for(var/mob/living/M in view_or_range(range, user, selection_type))
 					if(!include_user && user == M)
@@ -300,9 +295,12 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 					I.appearance = M
 					possible_targets[M] = I
 
-				var/radial_choose = show_radial_menu(user, user, possible_targets, tooltips = TRUE)
-				if(radial_choose)
-					targets += radial_choose
+				if(possible_targets.len == 1) //We have only one possible target
+					targets += possible_targets[1]
+				else //We have 2 and more targets
+					var/radial_choose = show_radial_menu(user, user, possible_targets, tooltips = TRUE)
+					if(radial_choose)
+						targets += radial_choose
 		else
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))

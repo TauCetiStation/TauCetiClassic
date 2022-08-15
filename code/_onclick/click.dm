@@ -91,12 +91,10 @@
 	if(modifiers[CTRL_CLICK])
 		CtrlClickOn(A)
 		return
-	if(HardsuitClickOn(A))
-		return
 	if(RegularClickOn(A))
 		return
 
-	if(stat || paralysis || stunned || weakened)
+	if(incapacitated(NONE))
 		return
 
 	face_atom(A) // change direction to face what you clicked on

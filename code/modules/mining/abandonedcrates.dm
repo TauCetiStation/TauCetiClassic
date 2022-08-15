@@ -154,6 +154,7 @@
 					playsound(src, 'sound/misc/mining_crate_fail.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 				if(!attempts)
 					GetReward(successful_numbers)
+				. = TRUE
 
 #undef GOOD_LOOT
 #undef MEDIUM_LOOT
