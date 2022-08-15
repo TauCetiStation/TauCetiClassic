@@ -363,6 +363,24 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/libraryconsole
 	category = list("Computer")
 
+/datum/design/cmf_console
+	name = "Circuit Design (CMF Console)"
+	desc = "Allows for the construction of circuit boards used to build a CMF modifier console."
+	id = "cmf_console"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/skills_console
+	category = list("Computer")
+
+/datum/design/cmf_scanner
+	name = "Circuit Design (CMF table)"
+	desc = "Allows for the construction of circuit boards used to build a CMF manipulation table."
+	id = "cmf_scanner"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/skill_scanner
+	category = list("Machine")
+
 ///////////////////////////////////
 //////////AI Module Disks//////////
 ///////////////////////////////////

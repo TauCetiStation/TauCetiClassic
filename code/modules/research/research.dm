@@ -711,7 +711,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("scan_console", "clonecontrol", "clonepod", "clonescanner")
+	unlocks_designs = list("scan_console", "clonecontrol", "clonepod", "clonescanner", "cmf_console", "cmf_scanner")
 
 /datum/technology/hydroponics
 	name = "Hydroponics"
