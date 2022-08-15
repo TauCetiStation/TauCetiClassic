@@ -55532,7 +55532,25 @@
 	},
 /area/station/maintenance/engineering)
 "bYp" = (
-/obj/structure/closet/crate,
+/obj/structure/closet/crate{
+	name = "TEG crate"
+	},
+/obj/item/weapon/circuitboard/teg,
+/obj/item/weapon/circuitboard/circulator,
+/obj/item/weapon/circuitboard/circulator,
+/obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/stock_parts/console_screen,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/matter_bin,
+/obj/item/weapon/stock_parts/matter_bin,
+/obj/item/stack/cable_coil,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
