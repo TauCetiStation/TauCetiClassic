@@ -31,7 +31,7 @@ var/global/const/CAMERA_WIRE_NOTHING2 = 32
 			C.setViewRange(range)
 
 		if(CAMERA_WIRE_POWER)
-			C.toggle_cam(TRUE, usr)
+			C.functioning = !C.functioning
 
 		if(CAMERA_WIRE_LIGHT)
 			C.light_disabled = !mended

@@ -341,7 +341,7 @@ robot_fabricator
 
 	var/list/disabled_cameras = list()
 	for(var/obj/machinery/camera/cam in range(eyeobj))
-		if(!cam.status)
+		if(!cam.functioning)
 			disabled_cameras += cam
 
 	if(!length(disabled_cameras))
@@ -352,7 +352,7 @@ robot_fabricator
 	if(!sel_cam)
 		return
 
-	sel_cam.status = !sel_cam.status
+	sel_cam.functioning = TRUE
 	camera_mod.uses--
 	sel_cam.audible_message("<span class='notice'>You hear a quiet click.</span>")
 	to_chat(src, "<span class='notice'>Camera successully reactivated!</span>")
