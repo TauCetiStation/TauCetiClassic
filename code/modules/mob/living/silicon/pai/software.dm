@@ -426,7 +426,7 @@
 			var/obj/machinery/camera/A = hackobj
 			switch(interaction_type)
 				if(INTERACTION_CAMERA_TOGGLE)
-					A.try_enable_cam()
+					A.functioning = !A.functioning
 				if(INTERACTION_CAMERA_DISCONNECT)
 					A.disconnect_viewers()
 				if(INTERACTION_CAMERA_ALARM)

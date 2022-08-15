@@ -17,7 +17,7 @@
 	var/explosive_immune = FALSE
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
-	var/hidden = 0	//Hidden cameras will be unreachable for AI
+	var/hidden = FALSE	//Hidden cameras will be unreachable for AI
 	var/functioning = TRUE //TRUE if enabled, FALSE if disabled
 	var/datum/wires/camera/wires = null
 
@@ -96,6 +96,7 @@
 		network = list()
 		stat |= EMPED
 		triggerCameraAlarm()
+		disable_cam()
 		return ..()
 
 /obj/machinery/camera/ex_act(severity)

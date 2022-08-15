@@ -343,6 +343,7 @@
 				if(has_suit)
 					camera.functioning = TRUE
 					to_chat(user, "<span class='notice'>[bicon(src)]Camera activated.</span>")
+			//сбрасывается в теченнии сессии если переключить
 			to_chat(user, "<span class='notice'>User registered as [stored_name].</span>")
 			if(camera)
 				camera.c_tag = "[stored_name] #[rand(999)]"
