@@ -85,17 +85,26 @@
 
 //Adds autopsy data for used_weapon. Use type damage: brute, burn, mixed, bruise (weak punch, e.g. fist punch)
 /obj/item/organ/proc/add_autopsy_data(used_weapon, damage, type_damage)
-	var/datum/autopsy_data/W = autopsy_data[used_weapon + worldtime2text()]
+	var/weapon_name
+	
+	if(isatom(used_weapon))
+		var/atom/weapon = used_weapon
+		weapon_name = initial(weapon.name)
+	else
+		weapon_name = used_weapon
+
+	var/datum/autopsy_data/W = autopsy_data[weapon_name + worldtime2text()]
+
 	if(!W)
 		W = new()
-		W.weapon = used_weapon
-		autopsy_data[used_weapon + worldtime2text()] = W
+		W.weapon = weapon_name
+		autopsy_data[weapon_name + worldtime2text()] = W
 
 	var/time = W.time_inflicted
 	if(time != worldtime2text())
 		W = new()
-		W.weapon = used_weapon
-		autopsy_data[used_weapon + worldtime2text()] = W
+		W.weapon = weapon_name
+		autopsy_data[weapon_name + worldtime2text()] = W
 
 	W.hits += 1
 	W.damage += damage
