@@ -372,3 +372,15 @@
 
 	else
 		return ..()
+
+/obj/item/weapon/baseball_bat
+	name = "baseball bat"
+	desc = ""
+	icon_state = "baseball_bat"
+	item_state = "baseball_bat"
+	force = 10
+	w_class = SIZE_NORMAL
+	slot_flags = SLOT_FLAGS_BACK
+	throwforce = 15
+	hitsound = list('sound/weapons/hit_metalic.ogg')
+	attack_verb = list("attacked", "nailed", "smashed", "whacked")

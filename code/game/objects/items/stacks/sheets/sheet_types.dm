@@ -136,6 +136,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
  * Wood
  */
 var/global/list/datum/stack_recipe/wood_recipes = list (
+	new/datum/stack_recipe("baseball bat", /obj/item/weapon/baseball_bat, 10, time = 20)
 	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1),
 	new/datum/stack_recipe("condiment shelf", /obj/item/weapon/condiment_shelf, 5, time = 15),
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20),
