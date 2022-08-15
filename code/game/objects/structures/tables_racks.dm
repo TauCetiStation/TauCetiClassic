@@ -235,7 +235,9 @@
 	if(flags & NODECONSTRUCT)
 		return ..()
 	var/obj/item/weapon/table_parts/t_parts = new parts(loc)
-	if(!disassembled)
+	if(disassembled)
+		transfer_fingerprints_to(t_parts)
+	else
 		t_parts.deconstruct(FALSE)
 	..()
 
@@ -626,7 +628,9 @@
 	if(flags & NODECONSTRUCT)
 		return ..()
 	var/obj/item/weapon/rack_parts/r_parts = new /obj/item/weapon/table_parts(loc)
-	if(!disassembled)
+	if(disassembled)
+		transfer_fingerprints_to(r_parts)
+	else
 		r_parts.deconstruct(FALSE)
 	..()
 
