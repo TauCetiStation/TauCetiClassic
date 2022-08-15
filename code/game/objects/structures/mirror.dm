@@ -57,6 +57,26 @@
 		visible_message("<span class='warning'>[user] hits [src] with [I]!</span>")
 		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
+/obj/structure/mirror/play_attack_sound(damage_amount, damage_type, damage_flag)
+	if(damage_type == BRUTE)
+		if(shattered)
+			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
+		else
+			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+	else
+		..()
+
+/obj/structure/mirror/atom_break(damage_flag, mapload)
+	. = ..()
+	if(!shattered)
+		shatter()
+
+/obj/structure/mirror/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(!disassembled)
+		new /obj/item/weapon/shard(loc)
+	..()
 
 /obj/structure/mirror/attack_alien(mob/user)
 	user.do_attack_animation(src)

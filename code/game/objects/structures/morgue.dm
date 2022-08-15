@@ -174,6 +174,11 @@
 	else
 		..()
 
+/obj/structure/morgue/deconstruct(disassembled)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 5)
+	..()
+
 /obj/structure/morgue/emag_act(mob/user)
 	if(emagged)
 		return FALSE
@@ -244,6 +249,10 @@
 				to_chat(B, text("<span class='rose'>[] stuffs [] into []!</span>", user, O, src))
 	return
 
+/obj/structure/m_tray/deconstruct(disassembled)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 2)
+	..()
 
 /*
  * Crematorium
@@ -410,6 +419,10 @@
 		playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 	return
 
+/obj/structure/crematorium/deconstruct(disassembled)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 5)
+	..()
 
 /*
  * Crematorium tray
@@ -424,6 +437,11 @@
 	var/obj/structure/crematorium/connected = null
 	anchored = TRUE
 	throwpass = 1
+
+/obj/structure/c_tray/deconstruct(disassembled)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 2)
+	..()
 
 /obj/structure/c_tray/attack_paw(mob/user)
 	return attack_hand(user)
