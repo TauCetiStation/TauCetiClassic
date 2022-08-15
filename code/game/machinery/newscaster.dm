@@ -867,15 +867,14 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 
 /obj/machinery/newscaster/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
-		qdel(src)
-		return
+		return ..()
 	if(disassembled)
 		new /obj/item/newscaster_frame(loc)
 	else
 		new /obj/item/stack/sheet/metal(loc, 2)
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/weapon/shard(loc)
-	qdel(src)
+	..()
 
 /obj/machinery/newscaster/atom_break(damage_flag)
 	. = ..()

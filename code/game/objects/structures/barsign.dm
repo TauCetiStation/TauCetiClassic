@@ -25,3 +25,10 @@
 		return
 
 	return ..()
+
+/obj/structure/sign/double/barsign/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 2)
+	new /obj/item/stack/cable_coil(loc, 2)
+	..()

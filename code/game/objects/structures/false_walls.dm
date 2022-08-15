@@ -115,11 +115,20 @@
 
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
 		var/turf/T = get_turf(src)
-		T.ChangeTurf(walltype)
+		deconstruct(TRUE)
 		if(walltype != /turf/simulated/wall/mineral/phoron)
 			T = get_turf(src)
 			T.attackby(W, user)
 		qdel(src)
+
+/obj/structure/falsewall/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	var/turf/T = loc
+	T.ChangeTurf(walltype)
+	var/turf/simulated/wall/wall = loc
+	wall.dismantle_wall(!disassembled)
+	..()
 
 /*
  * False R-Walls

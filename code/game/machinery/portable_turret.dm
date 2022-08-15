@@ -416,9 +416,6 @@ var/global/list/turret_icons
 	if(.)
 		spark_system.start()	//creates some sparks because they look cool
 
-/obj/machinery/porta_turret/deconstruct(disassembled)
-	qdel(src)
-
 /obj/machinery/porta_turret/emp_act(severity)
 	if(enabled)
 		//if the turret is on, the EMP no matter how severe disables the turret for a while

@@ -6,6 +6,12 @@
 	density = TRUE
 	anchored = TRUE
 
+/obj/structure/dresser/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/wood(loc, 10)
+	..()
+
 /obj/structure/dresser/attack_hand(mob/user)
 	if(!Adjacent(user))//no tele-grooming
 		return

@@ -41,8 +41,7 @@
 			if(W.use_tool(src, user, 40, volume = 100))
 				if(!src) return
 				to_chat(user, "<span class='notice'>Вы разобрали каркас!</span>")
-				new /obj/item/stack/sheet/metal(get_turf(src))
-				qdel(src)
+				deconstruct(TRUE)
 		else if(!anchored)
 			to_chat(user, "<span class='notice'>Вы фиксируете каркас.</span>")
 			if(W.use_tool(src, user, 40, volume = 100))
@@ -55,13 +54,11 @@
 		if(W.use_tool(src, user, 30, volume = 100))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы разрезали каркас!</span>")
-			new /obj/item/stack/sheet/metal(get_turf(src))
-			qdel(src)
+			deconstruct(TRUE)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		to_chat(user, "<span class='notice'>Вы просверлили каркас!</span>")
-		new /obj/item/stack/sheet/metal(get_turf(src))
-		qdel(src)
+		deconstruct(TRUE)
 
 	else if(isscrewdriver(W) && state == 2 && istype(src,/obj/structure/girder/reinforced))
 		to_chat(user, "<span class='notice'>Вы ослабляете кронштейны.</span>")
@@ -174,6 +171,15 @@
 	else
 		..()
 
+/obj/structure/girder/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(deconstruct)
+		remains = /obj/item/stack/sheet/metal
+	else
+		remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/metal)
+	new remains(loc)
+	..()
 
 /obj/structure/girder/blob_act()
 	if(prob(40))
@@ -191,9 +197,7 @@
 		if(EXPLODE_LIGHT)
 			if(prob(95))
 				return
-	var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
-	new remains(loc)
-	qdel(src)
+	deconstruct(FALSE)
 
 /obj/structure/girder/attack_animal(mob/living/simple_animal/attacker)
 	if(attacker.environment_smash)

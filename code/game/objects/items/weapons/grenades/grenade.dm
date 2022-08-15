@@ -76,6 +76,11 @@
 		return
 	return ..()
 
+/obj/item/grenade/deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		detonate()
+	..()
+
 /obj/item/weapon/grenade/syndieminibomb
 	desc = "A syndicate manufactured explosive used to sow destruction and chaos."
 	name = "syndicate minibomb"

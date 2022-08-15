@@ -28,8 +28,7 @@
 				if(user.is_busy(src)) return
 				if(WT.use_tool(src, user, 20, amount = 0, volume = 50))
 					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
-					new /obj/item/stack/sheet/plasteel( loc, 4)
-					qdel(src)
+					deconstruct(TRUE)
 		if(1)
 			if(iswrench(P))
 				if(user.is_busy(src))
@@ -175,6 +174,19 @@
 						A.rename_self("ai", 1)
 				feedback_inc("cyborg_ais_created",1)
 				qdel(src)
+
+/obj/structure/Aicore/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(state >= 4)
+		new /obj/item/stack/sheet/rglass(loc, 2)
+	if(state >= 3)
+		new /obj/item/stack/cable_coil(loc, 5)
+	if(circuit)
+		circuit.forceMove(loc)
+		circuit = null
+	new /obj/item/stack/sheet/plasteel(loc, 4)
+	..()
 
 /obj/structure/AIcore/deactivated
 	name = "Inactive AI"
