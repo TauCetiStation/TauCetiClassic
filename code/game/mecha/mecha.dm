@@ -15,6 +15,7 @@
 	name = "Mecha"
 	desc = "Exosuit."
 	icon = 'icons/mecha/mecha.dmi'
+	flags = HEAR_TALK
 	density = TRUE //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
 	anchored = TRUE //no pulling around.

@@ -1,4 +1,5 @@
 /obj/item/clothing/suit/storage
+	flags = HEAR_TALK
 	var/obj/item/weapon/storage/internal/pockets
 
 /obj/item/clothing/suit/storage/atom_init()
