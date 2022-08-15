@@ -504,8 +504,11 @@
 	if(circuit)
 		circuit.forceMove(loc)
 		circuit = null
+	if(state == 4)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
 	if(state >= 3)
-		new /obj/item/stack/cable_coil(loc , 5)
+		new /obj/item/stack/cable_coil(loc, 5)
 	..()
 
 /obj/structure/computerframe/verb/rotate()

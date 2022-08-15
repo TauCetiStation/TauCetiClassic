@@ -273,6 +273,12 @@
 	else
 		..()
 
+/obj/machinery/shieldgen/atom_break(damage_flag)
+	. = ..()
+	if(!.)
+		return
+	locked = FALSE
+
 /obj/machinery/shieldgen/emag_act(mob/user)
 	if(malfunction)
 		return FALSE

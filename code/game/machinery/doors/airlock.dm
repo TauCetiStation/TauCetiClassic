@@ -1139,16 +1139,14 @@ var/global/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
 	if(flags & NODECONSTRUCT)
-		qdel(src)
-		return
+		return ..()
 	take_out_wedged_item()
 	var/obj/structure/door_assembly/A = new assembly_type(loc)
 	prepare_deconstruction_assembly(A)
 
 	if(!disassembled)
 		A.update_integrity(A.max_integrity * 0.5)
-		qdel(src)
-		return
+		return ..()
 
 	if(user)
 		to_chat(user, span_notice("You remove the airlock electronics."))
@@ -1171,7 +1169,7 @@ var/global/list/airlock_overlays = list()
 		ae.icon_state = "door_electronics_smoked"
 		ae.broken = TRUE
 		operating = 0
-	qdel(src)
+	..()
 
 /obj/structure/door_scrap
 	name = "Door Scrap"

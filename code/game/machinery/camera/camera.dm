@@ -250,14 +250,13 @@
 
 /obj/machinery/camera/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
-		qdel(src)
-		return
+		return ..()
 	if(disassembled)
 		drop_assembly(1)
 	else
 		drop_assembly()
 		new /obj/item/stack/cable_coil(loc, 2)
-	qdel(src)
+	..()
 
 /obj/machinery/camera/proc/drop_assembly(state = 0)
 	if(assembly)

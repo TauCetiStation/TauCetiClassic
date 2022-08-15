@@ -213,14 +213,7 @@
 					user.visible_message("<span class='danger'>[user] has removed the electronics from \the [src].</span>",
 										"You have removed the electronics from [src].")
 
-					new/obj/item/weapon/airalarm_electronics(src.loc)
-					take_out_wedged_item()
-					var/obj/structure/firedoor_assembly/FA = new/obj/structure/firedoor_assembly(src.loc)
-					FA.anchored = TRUE
-					FA.density = TRUE
-					FA.wired = 1
-					FA.update_icon()
-					qdel(src)
+					deconstruct(TRUE)
 		return
 
 	if(blocked)
@@ -258,6 +251,18 @@
 					close()
 			return
 
+/obj/machinery/door/firedoor/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	take_out_wedged_item()
+	if(disassembled || prob(40))
+		var/obj/structure/firedoor_assembly/FA = new (loc)
+		if(disassembled)
+			FA.anchored = TRUE
+			FA.density = TRUE
+			FA.wired = TRUE
+			FA.update_icon()
+	..()
 
 /obj/machinery/door/firedoor/proc/latetoggle()
 	if(operating || stat & NOPOWER || !nextstate)

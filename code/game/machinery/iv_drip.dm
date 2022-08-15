@@ -82,6 +82,11 @@
 	else
 		return ..()
 
+/obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/iron(loc)
+	..()
 
 /obj/machinery/iv_drip/process()
 	//set background = 1

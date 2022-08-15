@@ -64,10 +64,9 @@
 		set_light(0)
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
-	deconstruction()
 	if(flags & NODECONSTRUCT)
-		qdel(src)
-		return
+		return ..()
+	deconstruction()
 	if(circuit) //no circuit, no computer frame
 		var/obj/structure/computerframe/A = new /obj/structure/computerframe(loc)
 		A.set_dir(dir)
@@ -90,7 +89,7 @@
 			A.icon_state = "4"
 	for(var/obj/C in src)
 		C.forceMove(loc)
-	qdel(src)
+	..()
 
 /obj/machinery/computer/emp_act(severity)
 	if(prob(20 / severity))

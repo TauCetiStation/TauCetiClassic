@@ -128,6 +128,12 @@
 	else
 		return ..()
 
+/obj/item/weapon/camera_assembly/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc)
+	..()
+
 /obj/item/weapon/camera_assembly/update_icon()
 	if(anchored)
 		icon_state = "camera1"
