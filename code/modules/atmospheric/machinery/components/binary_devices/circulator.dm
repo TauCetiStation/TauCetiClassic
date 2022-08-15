@@ -72,7 +72,8 @@
 		icon_state = "circ-broken"
 		return
 	if(panel_open)
-		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-panel"))
+		var/fd = flipped ? get_inverse_direction(dir) : dir
+		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-panel", dir = fd))
 	if(gen != null)
 		icon_state = "circ-assembled-[flipped]"
 	else
@@ -87,23 +88,23 @@
 
 	var/datum/gas_mixture/air = AIR1
 	var/heat = air.temperature * air.heat_capacity()
-	var/per_kelvin = 600 //oxygen heat capacity per 30 moles
+	var/per_kelvin = 2400 //oxygen heat capacity per 120 moles
 
 	if(heat == 0) //input gas mixture is empty/we have gas with zero heat capacity/we cooled gas to absolute zero. all of those options are excluded.
 		return
 	
 	if(heat < per_kelvin * 173) //-100C
 		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-excold"))
-		set_light(5, 5, "#0044ff")
+		set_light(3, 5, "#0044ff")
 	if(heat < per_kelvin * 243) //-30C
 		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-cold"))
-		set_light(3, 1, "#0044ff")
+		set_light(1, 3, "#0044ff")
 	if(heat > per_kelvin * 1773) //1500C
 		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-hot"))
-		set_light(3, 1, "#ff0000")
+		set_light(1, 3, "#ff0000")
 	if(heat > per_kelvin * 4773) //4500C
 		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-exhot"))
-		set_light(5, 5, "#ff0000")
+		set_light(3, 5, "#ff0000")
 
 	return TRUE
 
@@ -115,10 +116,6 @@
 			"[user.name] [anchored ? "secures" : "unsecures"] the bolts holding [src.name] to the floor.", \
 			"You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.", \
 			"You hear a ratchet")
-
-		if(!anchored)
-			gen = null
-			update_icon()
 
 		SetInitDirections()
 		var/obj/machinery/atmospherics/node1 = NODE1
@@ -149,7 +146,9 @@
 				node2.addMember(src)
 
 			build_network()
-		gen.reconnect()
+
+		if(gen)
+			gen.reconnect()
 
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), W))
 		set_power_use(NO_POWER_USE)

@@ -77,6 +77,12 @@
 //and a circulator to the WEST of the generator connects first to the NORTH, then to the SOUTH
 //note that the circulator"s outlet dir is it"s always facing dir, and it"s inlet is always the reverse
 /obj/machinery/power/generator/proc/reconnect()
+	if(circ1 && circ2)
+		circ1.gen = null
+		circ1.update_icon()
+		circ2.gen = null
+		circ2.update_icon()
+	
 	circ1 = null
 	circ2 = null
 	anchored ? connect_to_network() : disconnect_from_network()
@@ -87,7 +93,7 @@
 			circ2 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,WEST)
 
 			if(circ1 && circ2)
-				if((is_facing_gen(circ1, EAST) || circ1.anchored || !circ1.panel_open)  || (is_facing_gen(circ2, WEST) || circ2.anchored || !circ1.panel_open))
+				if((!is_facing_gen(circ1, EAST) || !circ1.anchored || circ1.panel_open)  || (!is_facing_gen(circ2, WEST) || !circ2.anchored || circ2.panel_open))
 					circ1 = null
 					circ2 = null
 
@@ -96,17 +102,16 @@
 			circ2 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,SOUTH)
 
 			if(circ1 && circ2)
-				if((is_facing_gen(circ1, NORTH) || circ1.anchored || !circ1.panel_open)  || (is_facing_gen(circ2, SOUTH) || circ2.anchored || !circ2.panel_open))
+				if((!is_facing_gen(circ1, NORTH) || !circ1.anchored || circ1.panel_open)  || (!is_facing_gen(circ2, SOUTH) || !circ2.anchored || circ2.panel_open))
 					circ1 = null
 					circ2 = null
-	
-	circ1.gen = src
-	circ2.gen = src
+
 	if(circ1 && circ2)
 		circ1.gen = src
 		circ1.update_icon()
 		circ2.gen = src
 		circ2.update_icon()
+
 	update_icon()
 
 /obj/machinery/power/generator/update_icon()
@@ -143,7 +148,7 @@
 
 		if(delta_temperature > 0 && air1_heat_capacity > 0 && air2_heat_capacity > 0)
 			var/energy_transfer = delta_temperature*air2_heat_capacity*air1_heat_capacity/(air2_heat_capacity+air1_heat_capacity)
-			var/heat = energy_transfer*(1-efficiency)
+			var/heat = energy_transfer*(1-efficiency)*2
 			lastgen = energy_transfer*efficiency
 
 			if(air2.temperature > air1.temperature)
