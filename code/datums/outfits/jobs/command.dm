@@ -18,9 +18,6 @@
 		/obj/item/weapon/implant/mind_protect/loyalty
 		)
 
-/datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H)
-	if(H.age > (H.species.min_age + H.species.max_age) / 2)
-		neck = /obj/item/clothing/accessory/medal/gold/captain
 // HOP OUTFIT
 /datum/outfit/job/hop
 	name = OUTFIT_JOB_NAME("Head of Personnel")

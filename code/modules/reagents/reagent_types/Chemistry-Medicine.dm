@@ -92,6 +92,7 @@
 
 /datum/reagent/paracetamol/on_general_digest(mob/living/M)
 	..()
+	M.adjustHalLoss(-1)
 	if(volume > overdose)
 		M.hallucination = max(M.hallucination, 2)
 
@@ -107,6 +108,7 @@
 
 /datum/reagent/tramadol/on_general_digest(mob/living/M)
 	..()
+	M.adjustHalLoss(-4)
 	if(volume > overdose)
 		M.hallucination = max(M.hallucination, 2)
 
@@ -122,6 +124,7 @@
 
 /datum/reagent/oxycodone/on_general_digest(mob/living/M)
 	..()
+	M.adjustHalLoss(-8)
 	if(volume > overdose)
 		M.adjustDrugginess(1)
 		M.hallucination = max(M.hallucination, 3)

@@ -213,8 +213,8 @@
 		var/datum/skill/skill = all_skills[skill_type]
 		if(row % 3 == 0)
 			out += "</tr><tr>"
-		var/rank_name = skill.custom_ranks[skills.get_max(skill)]
-		out +="<td>[skill]:  [rank_name] ([skills.get_max(skill)])</td>"
+		var/rank_name = skill.custom_ranks[skills.get_max(skill.type) + 1]
+		out +="<td>[skill]:  [rank_name] ([skills.get_max(skill.type)])</td>"
 		row++
 	out +="</table>"
 	out += "<br><a href='?src=\ref[src];add_skillset=1'>Add skillset</a><br>"
@@ -500,6 +500,7 @@
 		skills.maximize_active_skills()
 		message_admins("[usr.key]/([usr.name]) set up the skills of \the [key]/[name] to their maximum.")
 		log_admin("[usr.key]/([usr.name]) set up the skills of \the [key]/[name] to their maximum.")
+		edit_skills()
 		return
 	else if (href_list["delete_skillset"])
 		var/to_delete = global.skillset_names_aliases[href_list["delete_skillset"]]
