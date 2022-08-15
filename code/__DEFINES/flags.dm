@@ -61,8 +61,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define HEAR_PASS_SAY          (1<<21)   // temp for say code, for objects that need to pass SAY to inner mobs through get_listeners()
 #define HEAR_TA_SAY            (1<<22)   // temp for talking_atoms
 
-#define CAN_BE_HIT             (1<<23)
-
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 #define HOLOGRAM_2         (1<<0)
 /// atom queued to SSoverlay
@@ -142,6 +140,8 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ACID_PROOF (1<<5)
 /// doesn't take damage
 #define INDESTRUCTIBLE (1<<6)
+/// can be hit with melee (mb change to CANT_BE_HIT)
+#define CAN_BE_HIT (1<<7)
 
 //turf-only flags
 #define NOSTEPSOUND   1

@@ -1096,10 +1096,6 @@
 /obj/item/attack_hulk(mob/living/user)
 	return FALSE
 
-/obj/item/attack_generic(mob/living/simple_animal/user, list/modifiers)
-	if (flags & CAN_BE_HIT)
-		return ..()
-
 /obj/item/burn()
 	var/turf/T = get_turf(src)
 	var/ash_type = w_class >= SIZE_BIG ? \

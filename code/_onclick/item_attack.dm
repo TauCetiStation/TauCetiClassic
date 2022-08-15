@@ -23,7 +23,7 @@
 */
 
 /obj/attackby(obj/item/attacking_item, mob/user, params)
-	return ..() || ((flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params))
+	return ..() || ((resistance_flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params))
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.SetNextMove(CLICK_CD_MELEE)

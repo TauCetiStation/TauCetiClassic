@@ -91,6 +91,8 @@
 /atom/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1) //used by attack_alien, attack_animal, and attack_slime
 	if(!uses_integrity)
 		CRASH("unimplemented /atom/proc/attack_generic()!")
+	if(!(resistance_flags & CAN_BE_HIT))
+		return
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	return take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user))
