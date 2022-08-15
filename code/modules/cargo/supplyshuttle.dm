@@ -58,6 +58,11 @@ var/global/list/mechtoys = list(
 			return FALSE
 	return ..()
 
+/obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/mineral/plastic(loc, 5)
+	..()
+
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_HEAVY)

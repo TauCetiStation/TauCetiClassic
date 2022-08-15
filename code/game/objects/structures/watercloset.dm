@@ -394,6 +394,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		else
 			to_chat(usr, "[bicon(src)]<span class='notice'>Is payed, you may turn it on now.</span>")
 
+/obj/machinery/shower/deconstruct(disassembled)
+	new /obj/item/stack/sheet/metal(loc, 2)
+	..()
+
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
 	cut_overlays()					//once it's been on for a while, in addition to handling the water overlay.
 	if(mymist)

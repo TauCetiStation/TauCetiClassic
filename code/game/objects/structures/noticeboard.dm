@@ -274,10 +274,9 @@
 
 /obj/structure/noticeboard/deconstruct(disassembled)
 	if(!(flags & NODECONSTRUCT))
-		if(disassembled)
-			new frame_type(loc)
-		else
-			new initial(frame_type.material)(loc, 5)
+		var/obj/frame = new frame_type(loc)
+		if(!disassembled)
+			frame.deconstruct(FALSE)
 	for(var/notice in notices)
 		remove_note(notices[notice])
 	..()
