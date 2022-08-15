@@ -52,16 +52,17 @@
 		desc += "."
 
 /obj/machinery/constructable_frame/deconstruct(disassembled)
-	if(!(flags & NODECONSTRUCT))
-		new /obj/item/stack/sheet/metal(loc, 5)
-		if(circuit)
-			circuit.forceMove(loc)
-			circuit = null
-		if(state >= 2)
-			new /obj/item/stack/cable_coil(loc , 5)
-		for(var/obj/item/I in components)
-			I.forceMove(loc)
-		LAZYCLEARLIST(components)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 5)
+	if(circuit)
+		circuit.forceMove(loc)
+		circuit = null
+	if(state >= 2)
+		new /obj/item/stack/cable_coil(loc , 5)
+	for(var/obj/item/I in components)
+		I.forceMove(loc)
+	LAZYCLEARLIST(components)
 	..()
 
 /obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P, mob/user)
@@ -99,9 +100,7 @@
 				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
-						var/obj/item/stack/sheet/metal/M = new (loc, 5)
-						M.add_fingerprint(user)
-						qdel(src)
+						deconstruct(TRUE)
 
 			else if(iswrench(P))
 				if(user.is_busy())

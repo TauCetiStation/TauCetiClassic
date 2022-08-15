@@ -497,6 +497,17 @@
 				transfer_fingerprints_to(new_computer)
 				qdel(src)
 
+/obj/structure/computerframe/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 5)
+	if(circuit)
+		circuit.forceMove(loc)
+		circuit = null
+	if(state >= 3)
+		new /obj/item/stack/cable_coil(loc , 5)
+	..()
+
 /obj/structure/computerframe/verb/rotate()
 	set category = "Object"
 	set name = "Rotate"
