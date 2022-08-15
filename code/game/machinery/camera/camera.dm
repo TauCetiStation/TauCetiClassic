@@ -9,7 +9,8 @@
 	layer = 5
 	anchored = TRUE
 
-	var/health = 20
+	var/max_integrity = 60
+	var/integrity = 20	//ready to full_destruction system
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
@@ -26,9 +27,8 @@
 
 	var/light_disabled = 0
 	var/alarm_on = FALSE
-	var/painted = FALSE // Barber's paint can obstruct camera's view.
-
 	var/show_paper_cooldown = 0
+	var/lens_free = TRUE
 
 /obj/machinery/camera/atom_init(mapload, obj/item/weapon/camera_assembly/CA)
 	. = ..()
@@ -84,9 +84,9 @@
 		icon_state = "[initial(icon_state)]"
 
 /obj/machinery/camera/examine(mob/user)
-	..()
-	if(painted)
-		to_chat(user, "<span class='warning'>This camera appears to be painted.</span>")
+	. = ..()
+	if(!lens_free)
+		to_chat(user, "<span class='warning'>The lens of [src] is obscured by paint.</span>")
 
 /obj/machinery/camera/emp_act(severity)
 	if(isEmpProof() && (stat & (BROKEN|NOPOWER)))
@@ -173,12 +173,14 @@
 			upgrade_message(W, user, FALSE)
 	//repair broken stat
 	else if(istype(W, /obj/item/stack/sheet/glass && panel_open))
-		enable_cam()
+		if(stat & BROKEN)
+			stat &= ~BROKEN
+		try_enable_cam()
 		to_chat(user, "<span class='notice'>You fixed some [src] damage.</span>")
 		qdel(W)
 	//repair damage
 	else if(istype(W, /obj/item/stack/sheet/metal) && panel_open)
-		if(try_increase_health(10))
+		if(try_increase_integrity(10))
 			qdel(W)
 		to_chat(user, "<span class='notice'>[src] has enough margin of safety.</span>")
 	// OTHER
@@ -222,31 +224,37 @@
 			bug.bugged_cameras[c_tag] = src
 
 	else if(istype(W, /obj/item/weapon/gun))
-		bombastic_shot()
-
+		bombastic_shot(user)
 	else
 		..()
 		if(istype(W, /obj/item))
-			take_damage(W.force, alarm = TRUE)
+			var/obj/item/I = W
+			take_damage(I.force, alarm = TRUE)
 
-/obj/machinery/camera/proc/bombastic_shot()
+/obj/machinery/camera/proc/bombastic_shot(mob/living/user)
 	if(do_after(user, 20, target = src, can_move = TRUE))
 		user.visible_message("<span class='warning'>[user] shoots in the [src]!</span>",
 		"<span class='notice'>You look at the [src], raise your weapon, and after a second, fire into the [src] lens.</span>")
 		broke_cam()
 
-/obj/machinery/camera/proc/try_increase_health(amount)
-	if(!health)
+/obj/machinery/camera/proc/close_lens()	//gangstar's spray can or smoke
+	lens_free = FALSE
+	disconnect_viewers()
+
+/obj/machinery/camera/proc/try_increase_integrity(amount)
+	if(!integrity || !max_integrity)
 		return FALSE
-	if(health >= 60 || amount + health > 60)
+	if(integrity >= max_integrity || amount + integrity > max_integrity)
 		return FALSE
 	if(0 <= amount)
 		return FALSE
-	health += amount
+	integrity += amount
 
-/obj/machinery/camera/proc/enable_cam()
+/obj/machinery/camera/proc/try_enable_cam()
 	if(stat & BROKEN)
-		stat &= ~BROKEN
+		return
+	if(stat & EMPED|NOPOWER)
+		return
 	cameranet.addCamera(src)
 	set_power_use(IDLE_POWER_USE)
 	update_icon()
@@ -279,7 +287,7 @@
 	network = previous_network
 	cancelCameraAlarm()
 	set_power_use(IDLE_POWER_USE)
-	enable_cam()
+	try_enable_cam()
 
 /obj/machinery/camera/proc/is_item_in_blacklist(obj/item/I)
 	var/list/black_list = list(/obj/item/weapon/holo)
@@ -296,16 +304,20 @@
 		return
 	if(is_item_in_blacklist())
 		return
-	health -= amount
-	check_health()
+	integrity -= amount
+	check_integrity()
 
-/obj/machinery/camera/proc/check_health()
-	if(health <= 0)
+/obj/machinery/camera/proc/check_integrity()
+	if(integrity <= 0)
 		if(alarm_on)
 			cancelCameraAlarm()
+		disconnect_viewers()
 		deconstruction()
 
 /obj/machinery/camera/deconstruction(state = 0, sparks = TRUE)
+	if(flags & NODECONSTRUCT)
+		qdel(src)
+		return
 	if(assembly)
 		assembly.state = state
 		assembly.anchored = !!state
@@ -317,7 +329,7 @@
 		var/datum/effect/effect/system/spark_spread/spark_system = new()
 		spark_system.set_up(5, 0, loc)
 		spark_system.start()
-	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	qdel(src)
 
 /obj/machinery/camera/proc/disconnect_viewers()
@@ -345,6 +357,10 @@
 
 /obj/machinery/camera/proc/can_use()
 	if(stat & (NOPOWER|BROKEN|EMPED))
+		return FALSE
+	if(!lens_free)
+		/*if(isXRay)
+			return TRUE*/
 		return FALSE
 	return TRUE
 
@@ -374,6 +390,8 @@
 				if(EAST)
 					set_dir(WEST)
 			break
+	if(!T)
+		set_dir(NORTH)	//on the ceiling
 
 //Return a working camera that can see a given mob
 //or null if none

@@ -347,6 +347,12 @@
 	if((istype(target, /obj/mecha) || isrobot(target)) && uses >= 10)
 		target.color = normalize_color(colour)
 		uses -= 10
+	if(istype(target, /obj/machinery/camera))
+		var/obj/machinery/camera/C = target
+		if(do_after(user, 20, target = C, can_move = TRUE))
+			user.visible_message("<span class='warning'>[user] paints the [C] lens!</span>",
+			"<span class='notice'>you paint over the [C] lens. Respect received.</span>")
+			C.close_lens()
 	playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
 	..()
 

@@ -69,11 +69,6 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
 			cube.Expand()
-	else if(istype(O, /obj/machinery/camera))
-		var/obj/machinery/camera/C = O
-		if(C.painted)
-			C.remove_paint_state()
-			C.color = null
 
 /datum/reagent/water/on_general_digest(mob/living/M)
 	..()

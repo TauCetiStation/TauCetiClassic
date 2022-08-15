@@ -39,7 +39,7 @@
 
 	update_canmove()
 	if(camera)
-		camera.status = 0
+		camera.deconstruction(sparks = TRUE)
 
 	update_sight()
 	updateicon()

@@ -339,9 +339,9 @@
 				camera.name = "bodycam"
 				camera.replace_networks(list("SECURITY UNIT"))
 				cameranet.removeCamera(camera)
-				camera.status = FALSE
+				camera.de_energize_cam()
 				if(has_suit)
-					camera.status = TRUE
+					camera.energize_cam()
 					to_chat(user, "<span class='notice'>[bicon(src)]Camera activated.</span>")
 			to_chat(user, "<span class='notice'>User registered as [stored_name].</span>")
 			if(camera)
@@ -364,19 +364,19 @@
 	emagged = TRUE
 	to_chat(user, "<span class='warning'>You swipe card and crack the holobadge security checks.</span>")
 	if(camera)
-		camera.status = FALSE
+		camera.broke_cam()
 	return TRUE
 
 /obj/item/clothing/accessory/holobadge/on_attached(obj/item/clothing/S, mob/user, silent)
 	..()
 	if(camera && !emagged)
-		camera.status = TRUE
+		camera.energize_cam()
 		to_chat(user, "<span class='notice'>[bicon(src)]Camera activated.</span>")
 
 /obj/item/clothing/accessory/holobadge/on_removed(mob/user)
 	..()
 	if(camera && !emagged)
-		camera.status = FALSE
+		camera.de_energize_cam()
 		to_chat(user, "<span class='notice'>[bicon(src)]Camera deactivated.</span>")
 
 /obj/item/clothing/accessory/holobadge/emp_act(severity)

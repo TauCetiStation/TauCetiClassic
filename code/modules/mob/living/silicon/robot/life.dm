@@ -62,11 +62,11 @@
 
 /mob/living/silicon/robot/proc/handle_regular_status_updates()
 
-	if(src.camera && !scrambledcodes)
-		if(src.stat == DEAD || wires.is_index_cut(BORG_WIRE_CAMERA))
-			src.camera.status = 0
+	if(camera && !scrambledcodes)
+		if(stat == DEAD || wires.is_index_cut(BORG_WIRE_CAMERA))
+			camera.de_energize_cam()
 		else
-			src.camera.status = 1
+			camera.energize_cam(camera.network)
 
 	updatehealth()
 
