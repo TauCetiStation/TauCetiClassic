@@ -772,7 +772,7 @@
 	
 	
 	delay *= toolspeed
-	delay *= skill_bonus
+	delay *= max(skill_bonus, 0.1)
 
 	if(!isnull(quality))
 		var/qual_mod = get_quality(quality)
