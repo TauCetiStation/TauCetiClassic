@@ -13,7 +13,8 @@
 		access_rd, access_heads, access_tox, access_genetics, access_morgue,
 		access_tox_storage, access_teleporter, access_sec_doors, access_minisat,
 		access_research, access_robotics, access_xenobiology, access_ai_upload,
-		access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_maint_tunnels
+		access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway,
+		access_xenoarch, access_maint_tunnels, access_eva
 	)
 	salary = 250
 	minimal_player_age = 7
@@ -39,7 +40,7 @@
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
-	access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
+	access = list(access_tox, access_tox_storage, access_research, access_xenoarch, access_eva)
 	alt_titles = list("Phoron Researcher")
 	salary = 180
 	minimal_player_ingame_minutes = 1560
