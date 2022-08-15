@@ -233,7 +233,7 @@
 	if(!QDELETED(active_camera))
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
-			status = active_camera.can_use(),
+			status = active_camera.functioning,
 		)
 	return data
 

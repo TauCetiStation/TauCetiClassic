@@ -171,7 +171,7 @@
 		reset_view(null)
 		current = null
 		return FALSE
-	if (stat == DEAD || !C.can_use() || !(src.network in C.network))
+	if (stat == DEAD || !C.functioning || !(src.network in C.network))
 		return FALSE
 
 	// ok, we're alive, camera is good and in our network...

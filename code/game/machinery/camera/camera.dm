@@ -18,7 +18,7 @@
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
 	var/hidden = 0	//Hidden cameras will be unreachable for AI
-
+	var/functioning = TRUE //TRUE if enabled, FALSE if disabled
 	var/datum/wires/camera/wires = null
 
 	//OTHER
@@ -74,7 +74,7 @@
 	return ..()
 
 /obj/machinery/camera/update_icon()
-	if(stat & NOPOWER)
+	if(stat & NOPOWER || !functioning)
 		icon_state = "[initial(icon_state)]1"
 	if(stat & EMPED)
 		icon_state = "[initial(icon_state)]emp"
@@ -89,7 +89,7 @@
 		to_chat(user, "<span class='warning'>The lens of [src] is obscured by paint.</span>")
 
 /obj/machinery/camera/emp_act(severity)
-	if(isEmpProof() && (stat & (BROKEN|NOPOWER)))
+	if(isEmpProof() && (stat & (BROKEN|NOPOWER|EMPED)))
 		return
 	if(prob(100/severity))
 		addtimer(CALLBACK(src, .proc/energize_cam, network), 900)
@@ -119,7 +119,7 @@
 	cameranet.updateVisibility(src, 0)
 
 /obj/machinery/camera/attack_paw(mob/living/carbon/xenomorph/humanoid/user)
-	if(!istype(user))
+	if(!istype(user) || !functioning)
 		return
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -173,8 +173,7 @@
 			upgrade_message(W, user, FALSE)
 	//repair broken stat
 	else if(istype(W, /obj/item/stack/sheet/glass && panel_open))
-		if(stat & BROKEN)
-			stat &= ~BROKEN
+		fix_broking_cam()
 		try_enable_cam()
 		to_chat(user, "<span class='notice'>You fixed some [src] damage.</span>")
 		qdel(W)
@@ -239,7 +238,7 @@
 
 /obj/machinery/camera/proc/close_lens()	//gangstar's spray can or smoke
 	lens_free = FALSE
-	disconnect_viewers()
+	broke_cam()
 
 /obj/machinery/camera/proc/try_increase_integrity(amount)
 	if(!integrity || !max_integrity)
@@ -251,42 +250,45 @@
 	integrity += amount
 
 /obj/machinery/camera/proc/try_enable_cam()
-	if(stat & BROKEN)
-		return
-	if(stat & EMPED|NOPOWER)
+	if(stat & BROKEN|EMPED|NOPOWER)
 		return
 	cameranet.addCamera(src)
 	set_power_use(IDLE_POWER_USE)
+	functioning = TRUE
+	cancelCameraAlarm()
 	update_icon()
 
 /obj/machinery/camera/proc/broke_cam()
 	if(stat & BROKEN)
 		return
 	stat |= BROKEN
-	set_light(0)
-	cameranet.removeCamera(src)
-	disconnect_viewers()
-	set_power_use(NO_POWER_USE)
+	disable_cam()
+
+/obj/machinery/camera/proc/fix_broking_cam()
+	if(stat & BROKEN)
+		stat &= ~BROKEN
+	try_enable_cam()
 	update_icon()
 
 /obj/machinery/camera/proc/de_energize_cam()
 	if(stat & NOPOWER)
 		return
 	stat |= NOPOWER
+	disable_cam()
+
+/obj/machinery/camera/proc/disable_cam()
 	set_light(0)
 	cameranet.removeCamera(src)
 	disconnect_viewers()
 	set_power_use(NO_POWER_USE)
+	functioning = FALSE
 	update_icon()
 
-/obj/machinery/camera/proc/energize_cam(list/previous_network)
+/obj/machinery/camera/proc/energize_cam() //list/previous_network //network = previous_network
 	if(stat & EMPED)
 		stat &= ~EMPED
 	if(stat & NOPOWER)
 		stat &= ~NOPOWER
-	network = previous_network
-	cancelCameraAlarm()
-	set_power_use(IDLE_POWER_USE)
 	try_enable_cam()
 
 /obj/machinery/camera/proc/is_item_in_blacklist(obj/item/I)
@@ -357,6 +359,8 @@
 
 /obj/machinery/camera/proc/can_use()
 	if(stat & (NOPOWER|BROKEN|EMPED))
+		return FALSE
+	if(!functioning)
 		return FALSE
 	if(!lens_free)
 		/*if(isXRay)
