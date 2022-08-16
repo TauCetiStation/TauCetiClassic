@@ -212,10 +212,12 @@ Pipelines + Other Objects -> Pipe network
 	user.throw_at(target, range, speed)
 
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
-		if(can_unwrench)
-			var/obj/item/pipe/stored = new(loc, null, null, src)
-			transfer_fingerprints_to(stored)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	if(can_unwrench)
+		var/obj/item/pipe/stored = new(loc, null, null, src)
+		transfer_fingerprints_to(stored)
 	..()
 
 /obj/machinery/atmospherics/construction(pipe_type, obj_color)

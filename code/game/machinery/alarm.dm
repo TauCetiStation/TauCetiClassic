@@ -851,12 +851,23 @@
 
 			else if(iswrench(W))
 				to_chat(user, "You remove the fire alarm assembly from the wall!")
-				var/obj/item/alarm_frame/frame = new /obj/item/alarm_frame()
-				frame.loc = user.loc
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-				qdel(src)
+				deconstruct(TRUE)
 
 	return ..()
+
+/obj/machinery/alarm/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(disassembled)
+		new /obj/item/alarm_frame(loc)
+	else
+		new /obj/item/stack/sheet/metal(loc, 2)
+	if(buildstage >= 1)
+		new /obj/item/weapon/airalarm_electronics(loc)
+		if(buildstage >= 2)
+			new /obj/item/stack/cable_coil(loc, 3)
+	..()
 
 /obj/machinery/alarm/power_change()
 	if(powered(power_channel))

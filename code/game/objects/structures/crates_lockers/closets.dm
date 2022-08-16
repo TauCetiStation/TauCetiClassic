@@ -158,13 +158,6 @@
 	dump_contents()
 	qdel(src)
 
-/obj/structure/closet/deconstruct(disassembled)
-	dump_contents()
-	return ..()
-
-/obj/structure/closet/play_attack_sound(damage_amount, damage_type, damage_flag)
-	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user)
 	if(tools_interact(W, user))
 		add_fingerprint(user)
@@ -201,6 +194,15 @@
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return TRUE
+
+/obj/structure/closet/deconstruct(disassembled)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 2)
+	dump_contents()
+	return ..()
+
+/obj/structure/closet/play_attack_sound(damage_amount, damage_type, damage_flag)
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/closet/attack_ai(mob/user)
 	if(isrobot(user) && Adjacent(user)) //Robots can open/close it, but not the AI

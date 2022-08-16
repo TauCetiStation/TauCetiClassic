@@ -82,7 +82,6 @@
 		if(reinf)
 			new /obj/item/stack/rods(loc, fulltile ? 2 : 1)
 	qdel(src)
-	return
 
 /obj/structure/window/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...

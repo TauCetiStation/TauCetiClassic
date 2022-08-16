@@ -21,6 +21,25 @@
 	toggle()
 	..()
 
+/obj/structure/curtain/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/cloth (loc, 2)
+	new /obj/item/stack/sheet/mineral/plastic (loc, 2)
+	new /obj/item/stack/rods (loc, 1)
+	..()
+
+/obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src.loc, 'sound/weapons/slash.ogg', 80, TRUE)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', 80, TRUE)
+
+
 /obj/structure/curtain/proc/toggle()
 	set_opacity(!opacity)
 	if(opacity)

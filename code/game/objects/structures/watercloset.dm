@@ -96,7 +96,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		to_chat(user, "You carefully place \the [I] into the cistern.")
 		return
 
-
+/obj/structure/toilet/deconstruct()
+	if(flags & NODECONSTRUCT)
+		return ..()
+	for(var/obj/toilet_item as anything in contents)
+		toilet_item.forceMove(loc)
+	new /obj/item/stack/sheet/metal(loc, 1)
+	..()
 
 /obj/structure/urinal
 	name = "urinal"
@@ -695,6 +701,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			"<span class='notice'>You wash \a [I] using \the [src].</span>")
 	else
 		busy = FALSE
+
+/obj/structure/sink/deconstruct()
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 1)
+	..()
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"

@@ -103,6 +103,12 @@
 			return
 	return ..()
 
+/obj/structure/closet/crate/secure/loot/deconstruct(disassembled)
+	if(locked)
+		SpawnDeathLoot()
+		return
+	..()
+
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)
 	if(locked)
 		visible_message("<span class='notice'>Таинственный ящик мерцает и со скрипом приоткрывается!</span>")

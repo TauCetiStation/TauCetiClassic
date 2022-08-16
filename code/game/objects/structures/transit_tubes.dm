@@ -85,6 +85,10 @@
 		occupant = null
 		occupant_angle = initial(occupant_angle)
 
+/obj/structure/transit_tube_pod/deconstruct(disassembled)
+	move_out_content()
+	..()
+
 /obj/structure/transit_tube_pod/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(user.is_busy()) return

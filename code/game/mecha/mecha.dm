@@ -981,7 +981,6 @@
 		brainmob.loc = src //should allow relaymove
 		brainmob.canmove = 1
 		mmi_as_oc.loc = src
-		mmi_as_oc.mecha = src
 		Entered(mmi_as_oc)
 		Move(src.loc)
 		src.icon_state = reset_icon()
@@ -1040,7 +1039,6 @@
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
 				occupant.loc = mmi
-			mmi.mecha = null
 			src.occupant.canmove = 0
 		src.occupant = null
 		src.icon_state = reset_icon()+"-open"

@@ -39,6 +39,14 @@
 	else
 		..()
 
+/obj/structure/bookcase/deconstruct(disassembled)
+	for(var/obj/item/I as anything in contents)
+		I.forceMove(loc)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/wood(loc, 4)
+	..()
+
 /obj/structure/bookcase/attack_hand(mob/user)
 	if(contents.len)
 		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents

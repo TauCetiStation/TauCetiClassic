@@ -52,6 +52,12 @@
 	if(H && H.crawling)
 		to_chat(user, "Someone is hiding under [src]")
 
+/obj/structure/stool/bed/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 1)
+	..()
+
 /*
  * Roller beds
  */
