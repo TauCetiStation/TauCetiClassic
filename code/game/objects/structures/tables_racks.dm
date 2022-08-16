@@ -226,10 +226,14 @@
 	return ..()
 
 /obj/structure/table/play_attack_sound(damage_amount, damage_type, damage_flag)
-	if(damage_type == BRUTE)
-		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-	else
-		..()
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(loc, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', 40, TRUE)
 
 /obj/structure/table/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
@@ -619,10 +623,14 @@
 	deconstruct(TRUE)
 
 /obj/structure/rack/play_attack_sound(damage_amount, damage_type, damage_flag)
-	if(damage_type == BRUTE)
-		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-	else
-		..()
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(loc, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', 40, TRUE)
 
 /obj/structure/rack/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)

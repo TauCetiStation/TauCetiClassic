@@ -28,6 +28,16 @@
 		return ..()
 		//Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
 
+/obj/effect/spacevine/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(loc, 'sound/weapons/slash.ogg', 50, TRUE)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+
 /obj/effect/spacevine/attack_hand(mob/user)
 	user_unbuckle_mob(user)
 	user.SetNextMove(CLICK_CD_MELEE)

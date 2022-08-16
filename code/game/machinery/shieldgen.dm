@@ -566,6 +566,10 @@
 		else
 			gen_secondary.storedpower -=10
 
+/obj/machinery/shieldwall/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BURN, BRUTE)
+			playsound(loc, 'sound/effects/EMPulse.ogg', 75, TRUE)
 
 /obj/machinery/shieldwall/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()

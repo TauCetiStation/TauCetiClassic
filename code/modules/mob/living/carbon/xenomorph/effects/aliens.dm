@@ -39,6 +39,17 @@
 		playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 
+/obj/structure/alien/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
+		if(BURN)
+			if(damage_amount)
+				playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+
 /obj/structure/alien/attack_alien(mob/user, damage)
 	if(user.a_intent != INTENT_HARM)
 		return FALSE

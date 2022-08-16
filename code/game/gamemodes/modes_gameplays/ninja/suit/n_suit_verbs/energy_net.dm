@@ -116,3 +116,8 @@
 	health = max(0, health - aforce)
 	healthcheck()
 	return ..()
+
+/obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE, BURN)
+			playsound(src, 'sound/weapons/slash.ogg', 80, TRUE)

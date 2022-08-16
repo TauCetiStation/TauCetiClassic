@@ -490,6 +490,19 @@
 			if (prob(75))
 				electrocute_mob(user, get_area(src), src, rand(70, 100) * 0.01)
 
+/obj/machinery/light/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			switch(status)
+				if(LIGHT_EMPTY)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE)
+				if(LIGHT_BROKEN)
+					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, TRUE)
+				else
+					playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+
 /obj/machinery/light/atom_break()
 	. = ..()
 	if(.)

@@ -37,6 +37,10 @@
 	health -= damage
 	healthcheck()
 
+/obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
+		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+
 /obj/effect/spider/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	health -= Proj.damage

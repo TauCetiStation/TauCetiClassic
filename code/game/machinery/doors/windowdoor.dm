@@ -220,10 +220,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	return
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type, damage_flag)
-	if(damage_amount && damage_type == BRUTE)
-		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER, 90)
-		return
-	..()
+	switch(damage_type)
+		if(BRUTE)
+			playsound(src, 'sound/effects/glasshit.ogg', 90, TRUE)
+		if(BURN)
+			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/machinery/door/window/attack_generic(mob/user)
 	if(src.operating)

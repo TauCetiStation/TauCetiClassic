@@ -59,6 +59,13 @@
 	visible_message("<span class='warning'>[user] hits [src] with [W]!</span>")
 	healthcheck()
 
+/obj/structure/stool/bed/nest/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+
 /obj/structure/stool/bed/nest/proc/healthcheck()
 	if(health <=0)
 		density = FALSE

@@ -27,6 +27,11 @@
 	FG.fields -= src
 	FG.turn_off()
 
+/obj/machinery/field/containment/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BURN, BRUTE)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
+
 /obj/machinery/containment_field/attack_hand(mob/user)
 	if(Adjacent(user) && !isobserver(user))
 		shock(user)

@@ -205,6 +205,16 @@
 
 	healthcheck()
 
+/obj/structure/grille/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src, 'sound/effects/grillehit.ogg', 80, TRUE)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+		if(BURN)
+			playsound(src, 'sound/items/welder.ogg', 80, TRUE)
+
 /obj/structure/grille/proc/healthcheck()
 	if(health <= 5)
 		if(!destroyed && !damaged)

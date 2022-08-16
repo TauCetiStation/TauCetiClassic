@@ -162,10 +162,14 @@
 
 /obj/effect/blob/play_attack_sound(damage_amount, damage_type, damage_flag)
 	switch(damage_type)
-		if(BURN)
-			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 		if(BRUTE)
-			playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
+			if(damage_amount)
+				playsound(loc, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER)
+		if(BURN)
+			playsound(loc, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
+
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
 	if(M.faction == "blob") //No friendly slams
