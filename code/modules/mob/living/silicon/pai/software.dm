@@ -426,7 +426,10 @@
 			var/obj/machinery/camera/A = hackobj
 			switch(interaction_type)
 				if(INTERACTION_CAMERA_TOGGLE)
-					A.functioning = !A.functioning
+					if(A.can_use())
+						A.disable_cam()
+					else
+						A.try_enable_cam()
 				if(INTERACTION_CAMERA_DISCONNECT)
 					A.disconnect_viewers()
 				if(INTERACTION_CAMERA_ALARM)
@@ -901,7 +904,7 @@
 			if(istype(hackobj, /obj/machinery/camera))
 				var/obj/machinery/camera/Temp = hackobj
 				dat += "Camera.<br>"
-				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_CAMERA_TOGGLE];sub=0'>Toggle Active State</a> (Currenty [Temp.functioning ? "Active" : "Disabled"]) <br>"
+				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_CAMERA_TOGGLE];sub=0'>Toggle Active State</a> (Currenty [Temp.can_use() ? "Active" : "Disabled"]) <br>"
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_CAMERA_DISCONNECT];sub=0'>Disconnect All Active Viewers</a> <br>"
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_CAMERA_ALARM];sub=0'>Toggle Alarm</a> (Currenty [Temp.alarm_on ? "Active" : "Disabled"]) <br>"
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_CAMERA_AI_ACCESS];sub=0'>Toggle AI Access</a> (Currenty [Temp.hidden ? "Unreachable for AI" : "Active"]) <br>"

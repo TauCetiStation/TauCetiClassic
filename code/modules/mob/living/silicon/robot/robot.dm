@@ -100,7 +100,7 @@
 		camera.c_tag = real_name
 		camera.replace_networks(list("SS13","Robots"))
 		if(wires.is_index_cut(BORG_WIRE_CAMERA))
-			camera.functioning = FALSE
+			camera.status = FALSE
 
 	initialize_components()
 	// Create all the robot parts.

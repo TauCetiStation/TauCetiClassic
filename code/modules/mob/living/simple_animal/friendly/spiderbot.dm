@@ -202,7 +202,7 @@
 	dead_mob_list += src
 
 	if(camera)
-		camera.functioning = FALSE
+		camera.status = FALSE
 
 	if(held_item)
 		held_item.loc = loc

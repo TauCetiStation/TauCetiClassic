@@ -39,7 +39,7 @@
 
 	update_canmove()
 	if(camera)
-		camera.functioning = FALSE
+		camera.status = FALSE
 
 	update_sight()
 	updateicon()

@@ -8,6 +8,7 @@
 	active_power_usage = 10
 	layer = 5
 	anchored = TRUE
+	var/status = TRUE	//simple var for non-standart cameras
 	var/camera_base = "camera" //used for icon_state overriding in update_icon()
 	var/max_integrity = 65	////ready to full_destruction system
 	var/integrity = 25	//1 shot from any gun is normal
@@ -18,7 +19,6 @@
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
 	var/hidden = FALSE	//Hidden cameras will be unreachable for AI
-	var/functioning = TRUE //TRUE if enabled, FALSE if disabled
 	var/datum/wires/camera/wires = null
 	var/list/camera_upgrades = list()
 
@@ -75,7 +75,7 @@
 
 /obj/machinery/camera/update_icon()
 	icon_state = "[camera_base]"
-	if(stat & NOPOWER || !functioning)
+	if(!status || !can_use())
 		icon_state = "[camera_base]1"
 	if(stat & EMPED)
 		icon_state = "[camera_base]emp"
@@ -87,20 +87,12 @@
 	if(!lens_free)
 		to_chat(user, "<span class='warning'>The lens of [src] is obscured by paint.</span>")
 
-/obj/machinery/camera/power_change()
-	. = ..()
-	if(can_use())
-		try_enable_cam()
-	update_icon()
-
 /obj/machinery/camera/emp_act(severity)
-	if(isEmpProof() || (stat & (BROKEN|NOPOWER|EMPED)))
+	if(isEmpProof() || (stat & (BROKEN|EMPED)))
 		return
 	if(prob(100/severity))
+		de_energize_cam()
 		addtimer(CALLBACK(src, .proc/energize_cam, network), 300)
-		stat |= EMPED
-		triggerCameraAlarm()
-		disable_cam()
 		return ..()
 
 /obj/machinery/camera/ex_act(severity)
@@ -127,7 +119,7 @@
 	cameranet.updateVisibility(src, 0)
 
 /obj/machinery/camera/attack_paw(mob/living/carbon/xenomorph/humanoid/user)
-	if(!istype(user) || !functioning)
+	if(!istype(user) || can_use())
 		return
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -260,13 +252,12 @@
 	integrity += amount
 
 /obj/machinery/camera/proc/try_enable_cam()
-	if(stat & BROKEN|EMPED|NOPOWER)
-		return
+	if(stat & BROKEN|EMPED)
+		return FALSE
 	cameranet.addCamera(src)
-	set_power_use(ACTIVE_POWER_USE)
-	functioning = TRUE
 	cancelCameraAlarm()
 	update_icon()
+	return TRUE
 
 /obj/machinery/camera/proc/broke_cam()
 	if(stat & BROKEN)
@@ -281,24 +272,21 @@
 	update_icon()
 
 /obj/machinery/camera/proc/de_energize_cam()
-	if(stat & NOPOWER)
+	if(stat & EMPED)
 		return
-	stat |= NOPOWER
+	stat |= EMPED
+	triggerCameraAlarm()
 	disable_cam()
 
 /obj/machinery/camera/proc/disable_cam()
 	set_light(0)
 	cameranet.removeCamera(src)
 	disconnect_viewers()
-	set_power_use(NO_POWER_USE)
-	functioning = FALSE
 	update_icon()
 
 /obj/machinery/camera/proc/energize_cam() //list/previous_network //network = previous_network
 	if(stat & EMPED)
 		stat &= ~EMPED
-	if(stat & NOPOWER)
-		stat &= ~NOPOWER
 	try_enable_cam()
 
 /obj/machinery/camera/proc/is_item_in_blacklist(obj/item/I)
@@ -354,7 +342,7 @@
 			to_chat(O, "The screen bursts into static.")
 
 /obj/machinery/camera/proc/try_cancel_alarm()
-	if(stat & (NOPOWER|BROKEN|EMPED))
+	if(stat & (BROKEN|EMPED))
 		return
 	cancelCameraAlarm()
 
@@ -370,9 +358,9 @@
 		S.cancelAlarm("Camera", get_area(src), src)
 
 /obj/machinery/camera/proc/can_use(check_paint = TRUE)
-	if(stat & (NOPOWER|BROKEN|EMPED))
+	if(stat & (BROKEN|EMPED))
 		return FALSE
-	if(!functioning)
+	if(!status)
 		return FALSE
 	if(!lens_free && check_paint)
 		if(isXRay())
@@ -385,8 +373,6 @@
 		stat &= ~EMPED
 	if(stat & BROKEN)
 		stat &= ~BROKEN
-	if(stat & NOPOWER)
-		stat &= ~NOPOWER
 	try_enable_cam()
 
 //upgrade checks
@@ -467,8 +453,6 @@
 				if(EAST)
 					set_dir(WEST)
 			break
-	if(!T)
-		set_dir(NORTH)	//on the ceiling
 
 //Return a working camera that can see a given mob
 //or null if none

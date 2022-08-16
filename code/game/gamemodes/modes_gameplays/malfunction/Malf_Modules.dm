@@ -349,7 +349,7 @@ robot_fabricator
 
 	var/list/disabled_cameras = list()
 	for(var/obj/machinery/camera/cam in range(eyeobj))
-		if(!cam.functioning)
+		if(!cam.can_use())
 			disabled_cameras += cam
 
 	if(!length(disabled_cameras))

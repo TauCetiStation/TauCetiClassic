@@ -44,7 +44,7 @@
 /obj/machinery/camera/proc/cancelAlarm()
 	if(detectTime == -1)
 		for(var/mob/living/silicon/aiPlayer in player_list)
-			if(functioning)
+			if(can_use())
 				aiPlayer.cancelAlarm("Motion", get_area(src), src)
 	detectTime = 0
 	return TRUE
@@ -53,7 +53,7 @@
 	if(!detectTime)
 		return FALSE
 	for(var/mob/living/silicon/aiPlayer in player_list)
-		if(functioning)
+		if(can_use())
 			aiPlayer.triggerAlarm("Motion", get_area(src), list(src), src)
 	detectTime = -1
 	return TRUE

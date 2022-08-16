@@ -64,9 +64,9 @@
 
 	if(camera && !scrambledcodes)
 		if(stat == DEAD || wires.is_index_cut(BORG_WIRE_CAMERA))
-			camera.functioning = FALSE
+			camera.status = FALSE
 		else
-			camera.functioning = TRUE
+			camera.status = TRUE
 
 	updatehealth()
 
