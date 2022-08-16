@@ -14,7 +14,7 @@
 
 	for(var/obj/machinery/camera/cam in range(severity_range, C))
 		if(is_valid_camera(cam))
-			cam.try_enable_cam()
+			cam.take_damage(severity_range*2, alarm = FALSE)	//no alarm because spam
 			if(prob(5 * severity))
 				cam.triggerCameraAlarm()
 
