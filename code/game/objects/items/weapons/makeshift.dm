@@ -372,14 +372,3 @@
 
 	else
 		return ..()
-
-/obj/item/weapon/baseball_bat
-	name = "baseball bat"
-	desc = "Smooth wooden club used in the sport of baseball or for crushing skulls."
-	icon_state = "baseball_bat"
-	item_state = "baseball_bat"
-	force = 12
-	w_class = SIZE_SMALL
-	throwforce = 6
-	hitsound = list('sound/weapons/wood_shield_hit.ogg')
-	attack_verb = list("attacked", "nailed", "smashed", "whacked", "bonked")
