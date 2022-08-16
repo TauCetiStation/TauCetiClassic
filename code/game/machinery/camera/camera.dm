@@ -97,7 +97,7 @@
 	if(isEmpProof() || (stat & (BROKEN|NOPOWER|EMPED)))
 		return
 	if(prob(100/severity))
-		addtimer(CALLBACK(src, .proc/energize_cam, network), 900)
+		addtimer(CALLBACK(src, .proc/energize_cam, network), 300)
 		network = list()
 		stat |= EMPED
 		triggerCameraAlarm()
@@ -105,7 +105,7 @@
 		return ..()
 
 /obj/machinery/camera/ex_act(severity)
-	if(explosive_immune)
+	if(isExplosiveImmune())
 		return
 	switch(severity)
 		if(EXPLODE_HEAVY)
@@ -152,7 +152,7 @@
 	else if(iswelder(W) && wires.is_deconstructable())
 		if(weld(W, user))
 			deconstruction(sparks = FALSE)
-
+	//upgrades
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
 		if(!isXRay())
 			upgradeXRay(user)
@@ -169,6 +169,12 @@
 	else if(istype(W, /obj/item/device/assembly/prox_sensor) && panel_open)
 		if(!isMotion())
 			upgradeMotion(user)
+			qdel(W)
+		else
+			to_chat(user, "<span class='notice'>You attach [W] into the [src] inner circuits.</span>")
+	else if(istype(W, /obj/item/stack/sheet/plasteel) && panel_open)
+		if(!isExplosiveImmune())
+			upgradeExplosiveImmune(user)
 			qdel(W)
 		else
 			to_chat(user, "<span class='notice'>You attach [W] into the [src] inner circuits.</span>")
@@ -241,7 +247,7 @@
 		"<span class='notice'>You fire into the [src] lens.</span>")
 		gun.afterattack(src, user) //there is no damage today, waiting for full desctruction
 
-/obj/machinery/camera/proc/close_lens()	//gangstar's spray can or smoke
+/obj/machinery/camera/proc/spoil_lens()	//gangstar's spray can or smoke
 	lens_free = FALSE
 	broke_cam()
 
@@ -375,7 +381,7 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/camera/proc/fix_me_all()
+/obj/machinery/camera/proc/fix_me_all()	//malfunction module
 	if(stat & EMPED)
 		stat &= ~EMPED
 	if(stat & BROKEN)
@@ -403,6 +409,12 @@
 			return TRUE
 	return FALSE
 
+/obj/machinery/camera/proc/isExplosiveImmune()
+	for(var/upgrade_module in camera_upgrades)
+		if(istype(upgrade_module, /obj/item/stack/sheet/plasteel))
+			return TRUE
+	return FALSE
+
 //upgrading procs
 /obj/machinery/camera/proc/upgradeEmpProof(mob/user = null)
 	if(user)
@@ -421,6 +433,13 @@
 	if(user)
 		to_chat(user, "<span class='notice'>[src] upgraded!</span>")
 	camera_upgrades += /obj/item/device/assembly/prox_sensor
+	update_icon()
+
+/obj/machinery/camera/proc/upgradeExplosiveImmune(mob/user = null)
+	if(user)
+		to_chat(user, "<span class='notice'>[src] upgraded!</span>")
+	camera_upgrades += /obj/item/stack/sheet/plasteel
+	integrity = max_integrity
 	update_icon()
 
 /obj/machinery/camera/proc/can_see()

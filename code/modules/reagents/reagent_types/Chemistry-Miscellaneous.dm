@@ -738,6 +738,8 @@
 	if(istype(O, /obj/machinery/camera))
 		var/obj/machinery/camera/C = O
 		C.color = null
+		C.lens_free = TRUE
+		C.try_enable_cam()
 
 ////////////////////////////////////
 ///// All the barber's bullshit/////
