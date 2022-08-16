@@ -286,13 +286,6 @@ update_flag
 			to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
 		return 1
 
-	if(!iswrench(W) && !istype(W, /obj/item/weapon/tank) && !istype(W, /obj/item/device/analyzer) && !istype(W, /obj/item/device/pda))
-		visible_message("<span class='warning'>[user] hits the [src] with a [W]!</span>")
-		add_fingerprint(user)
-		log_investigate("was smacked with \a [W] by [key_name(user)].", INVESTIGATE_ATMOS)
-		user.SetNextMove(CLICK_CD_MELEE)
-		take_damage(W.force)
-
 	if(isrobot(user) && istype(W, /obj/item/weapon/tank/jetpack))
 		var/obj/item/weapon/tank/jetpack/J = W
 		var/datum/gas_mixture/thejetpack = J.air_contents
@@ -310,6 +303,11 @@ update_flag
 	..()
 
 	nanomanager.update_uis(src) // Update all NanoUIs attached to src
+
+/obj/machinery/portable_atmospherics/canister/attacked_by(obj/item/attacking_item, mob/living/user)
+	. = ..()
+	if(.)
+		log_investigate("was smacked with \a [attacking_item] by [key_name(user)].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/canister/atom_break(damage_flag)
 	. = ..()

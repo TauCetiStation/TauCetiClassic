@@ -6,8 +6,7 @@
 	var/icon_state_arrest = "secbot-c"
 	density = FALSE
 	anchored = FALSE
-	health = 25
-	maxhealth = 25
+	max_integrity = 25
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
 

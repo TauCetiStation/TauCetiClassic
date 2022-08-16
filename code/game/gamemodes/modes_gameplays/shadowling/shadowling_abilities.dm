@@ -404,7 +404,7 @@
 				sp.start()
 				S.Stun(6)
 		for(var/obj/structure/window/W in T.contents)
-			W.take_damage(rand(80, 100))
+			W.take_damage(rand(80, 100), BRUTE, BOMB)
 
 
 

@@ -369,13 +369,6 @@ var/global/list/turret_icons
 			to_chat(user, "<span class='notice'>Access denied.</span>")
 
 	else
-		//if the turret was attacked with the intention of harming it:
-		take_damage(I.force * 0.5)
-		user.SetNextMove(CLICK_CD_MELEE)
-		if((I.force * 0.5) > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
-			if(!attacked && !emagged)
-				attacked = TRUE
-				VARSET_IN(src, attacked, FALSE, 60)
 		..()
 
 /obj/machinery/porta_turret/emag_act(mob/user)
@@ -658,17 +651,12 @@ var/global/list/turret_icons
 
 
 /obj/machinery/porta_turret/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
-	M.do_attack_animation(src)
-	M.SetNextMove(CLICK_CD_MELEE)
-	if(!(stat & BROKEN))
-		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER, 25)
+	if(stat & BROKEN)
+		to_chat(M, "<span class='alien'>That object is useless to you.</span>")
+	. = ..()
+	if(.)
 		visible_message("<span class='danger'>[M] has slashed at [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
-		take_damage(15)
-	else
-		to_chat(M, "<span class='alien'>That object is useless to you.</span>")
-	return
-
 
 /datum/turret_checks
 	var/enabled

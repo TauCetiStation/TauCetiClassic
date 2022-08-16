@@ -14,7 +14,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON//So you can hit it with stuff.
 	anchored = TRUE//Can't drag/grab the trapped mob.
 
-	var/health = 100//How much health it has.
+	max_integrity = 100
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
 
 /obj/effect/energy_net/Destroy()
@@ -24,10 +24,6 @@
 		affecting.visible_message("[affecting.name] was recovered from the energy net!", "You hear a grunt.")
 	affecting = null
 	return ..()
-
-/obj/effect/energy_net/proc/healthcheck()
-	if(health <= 0)
-		qdel(src)
 
 /obj/effect/energy_net/proc/start_cooldown(mob/living/carbon/M)
 	set waitfor = FALSE
@@ -51,23 +47,11 @@
 
 	qdel(src)
 
-/obj/effect/energy_net/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	health -= Proj.damage
-	healthcheck()
-
 /obj/effect/energy_net/ex_act(severity)
 	if(severity == EXPLODE_LIGHT && prob(50))
-		health -= 25
-		healthcheck()
+		take_damage(25, BRUTE, BOMB)
 		return
-	health -= 50
-	healthcheck()
-
-/obj/effect/energy_net/blob_act()
-	health-=50
-	healthcheck()
-	return
+	take_damage(50, BRUTE, BOMB)
 
 /obj/effect/energy_net/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	..()
@@ -78,44 +62,27 @@
 	else
 		tforce = AM:throwforce
 	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-	health = max(0, health - tforce)
-	healthcheck()
-	..()
+	take_damage(tforce, BRUTE, MELEE)
 	return
 
 /obj/effect/energy_net/attack_hand(mob/living/carbon/human/user)
 	if (HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.visible_message("<span class='warning'>[user] rips the energy net apart!</span>", "<span class='notice'>You easily destroy the energy net.</span>")
-		health-=50
-	healthcheck()
-	return
+		attack_generic(user, 50, BRUTE, MELEE)
 
 /obj/effect/energy_net/attack_paw()
 	return attack_hand()
 
 /obj/effect/energy_net/attack_alien(mob/user)
-	user.do_attack_animation(src)
-	user.SetNextMove(CLICK_CD_MELEE)
-	if (isxenolarva(user) || isfacehugger(user))
+	. = ..()
+	if(!.)
 		return
-	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-	health -= rand(10, 20)
 
-	if(health > 0)
-		user.visible_message("<span class='warning'>[user] claws at the energy net!</span>", "<span class='notice'>You claw at the net.</span>")
-	else
+	if(QDELETED(src))
 		user.visible_message("<span class='warning'>[user] slices the energy net apart!</span>", "<span class='notice'>You slice the energy net to pieces.</span>")
-
-	healthcheck()
-	return
-
-/obj/effect/energy_net/attackby(obj/item/weapon/W, mob/user)
-	var/aforce = W.force
-	user.SetNextMove(CLICK_CD_MELEE)
-	health = max(0, health - aforce)
-	healthcheck()
-	return ..()
+	else
+		user.visible_message("<span class='warning'>[user] claws at the energy net!</span>", "<span class='notice'>You claw at the net.</span>")
 
 /obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

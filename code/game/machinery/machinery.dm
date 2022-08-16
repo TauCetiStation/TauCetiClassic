@@ -196,14 +196,7 @@ Class Procs:
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
-		var/obj/effect/overlay/pulse2 = new /obj/effect/overlay(loc)
-		pulse2.icon = 'icons/effects/effects.dmi'
-		pulse2.icon_state = "empdisable"
-		pulse2.name = "emp sparks"
-		pulse2.anchored = TRUE
-		pulse2.set_dir(pick(cardinal))
-
-		QDEL_IN(pulse2, 10)
+		new /obj/effect/overlay/pulse2(loc, 10)
 	..()
 
 /obj/machinery/proc/open_machine()

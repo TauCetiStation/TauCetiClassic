@@ -436,7 +436,7 @@
 
 	else if(user.a_intent == INTENT_HARM || (O.flags & ABSTRACT))
 		user.SetNextMove(CLICK_CD_MELEE)
-		take_damage(O.force, O.damtype, O.damage_flags())
+		take_damage(O.force, O.damtype, MELEE)
 		return ..()
 
 	else

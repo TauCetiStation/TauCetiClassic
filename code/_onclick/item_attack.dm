@@ -304,6 +304,7 @@
 	//only witnesses close by and the victim see a hit message.
 	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
 		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
+	return damage
 
 /area/attacked_by(obj/item/attacking_item, mob/living/user)
 	CRASH("areas are NOT supposed to have attacked_by() called on them!")

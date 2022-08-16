@@ -28,7 +28,7 @@
 
 	for(var/obj/effect/blob/B in hear(flashbang_range + 1, flashbang_turf))	//Blob damage here
 		var/damage = round(30 / (get_dist(B, flashbang_turf) + 1))
-		B.take_damage(damage * B.brute_resist, BRUTE) // workaround to deal full damage
+		B.take_damage(damage * B.brute_resist, BRUTE, ENERGY) // workaround to deal full damage
 
 	qdel(src)
 

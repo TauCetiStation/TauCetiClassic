@@ -3,13 +3,7 @@
 	anchored = TRUE
 	icon = 'icons/obj/cult.dmi'
 	var/can_unwrench = TRUE
-	var/health = 3000
-
-/obj/structure/cult/bullet_act(obj/item/projectile/Proj, def_zone)
-	health -= Proj.damage
-	. = ..()
-	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
-	healthcheck()
+	max_integrity = 3000
 
 /obj/structure/cult/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W) && can_unwrench)
@@ -20,16 +14,16 @@
 		return FALSE
 
 	. = ..()
-	if(!.)
-		return FALSE
 
-	if(length(W.hitsound))
-		playsound(src, pick(W.hitsound), VOL_EFFECTS_MASTER)
-	else
-		playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
-
-	health -= W.force
-	healthcheck()
+/obj/structure/cult/play_attack_sound(damage_amount, damage_type, damage_flag)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+		if(BURN)
+			playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/structure/cult/attack_hand(mob/living/carbon/human/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -38,21 +32,11 @@
 	BP.take_damage(3, 0, 0, "stone")
 	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
 
-/obj/structure/cult/attack_animal(mob/living/simple_animal/user)
-	. = ..()
-	health -= user.melee_damage
-	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
-	healthcheck()
-
 /obj/structure/cult/attack_paw(mob/living/user)
 	if(ishuman(user))
 		return attack_hand(user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
-
-/obj/structure/cult/proc/healthcheck()
-	if(health <= 0)
-		qdel(src)
 
 /obj/structure/cult/tome
 	name = "desk"
@@ -70,17 +54,20 @@
 	light_power = 2
 	light_range = 6
 	pass_flags = PASSTABLE
-	health = 200
+	max_integrity = 200
 
-/obj/structure/cult/pylon/Destroy()
+/obj/structure/cult/pylon/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
 	new /obj/structure/cult/pylon_platform(loc)
 	new /obj/item/stack/sheet/metal(loc)
-	return ..()
+	. = ..()
 
 /obj/structure/cult/pylon/proc/activate(time_to_stop, datum/religion/R)
 	var/mob/living/simple_animal/hostile/pylon/charged = new(loc)
-	charged.maxHealth = health
-	charged.health = health
+	charged.maxHealth = max_integrity
+	charged.health = get_integrity()
 	forceMove(charged)
 
 	if(time_to_stop)
@@ -94,7 +81,7 @@
 	name = "pylon platform"
 	desc = "Useless."
 	icon_state = "pylon_platform"
-	health = 50
+	max_integrity = 50
 	density = FALSE
 
 // For operations
@@ -174,7 +161,7 @@
 /obj/structure/mineral_door/cult
 	name = "door"
 	icon_state = "cult"
-	health = 300
+	max_integrity = 300
 	sheetAmount = 2
 	sheetType = /obj/item/stack/sheet/metal
 	light_color = "#990000"
