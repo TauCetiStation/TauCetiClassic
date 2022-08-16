@@ -133,7 +133,7 @@
 	desc = "Smooth wooden club used in the sport of baseball or for crushing skulls."
 	icon_state = "baseball_bat"
 	item_state = "baseball_bat"
-	force = 11
+	force = 13
 	w_class = SIZE_SMALL
 	throwforce = 6
 	hitsound = list('sound/weapons/wood_shield_hit.ogg')
