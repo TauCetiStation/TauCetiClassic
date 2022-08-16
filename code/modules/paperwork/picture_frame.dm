@@ -144,7 +144,7 @@
 /obj/structure/picture_frame/Destroy()
 	. = ..()
 	QDEL_NULL(framed)
-
+	
 /obj/structure/picture_frame/wooden
 	name = "wooden picture frame"
 	frame_type = /obj/item/weapon/picture_frame/wooden

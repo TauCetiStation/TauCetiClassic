@@ -83,13 +83,7 @@
 
 				if(W.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 					to_chat(user, "You sliced the floorweld off the disposal unit.")
-					var/obj/structure/disposalconstruct/C = new (src.loc)
-					transfer_fingerprints_to(C)
-					C.ptype = 6 // 6 = disposal unit
-					C.anchored = TRUE
-					C.density = TRUE
-					C.update()
-					qdel(src)
+					deconstruct(TRUE)
 				return
 			else
 				to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
@@ -141,6 +135,20 @@
 	user.visible_message("<span class='notice'>[user.name] places \the [I] into the [src].</span>", self_message = "<span class='notice'>You place \the [I] into the [src].</span>")
 
 	update()
+
+/obj/machinery/disposal/deconstruct(disassembled)
+	var/turf/T = loc
+	for(var/atom/movable/AM in contents) //out, out, darned crowbar!
+		AM.forceMove(T)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	var/obj/structure/disposalconstruct/C = new (T)
+	transfer_fingerprints_to(C)
+	C.ptype = 6 // 6 = disposal unit
+	C.anchored = TRUE
+	C.density = TRUE
+	C.update()
+	..()
 
 // mouse drop another mob or self
 //
@@ -1284,6 +1292,9 @@
 /obj/structure/disposalpipe/broken/atom_init()
 	. = ..()
 	update()
+
+/obj/structure/disposalpipe/broken/deconstruct()
+	qdel(src)
 
 	// called when welded
 	// for broken pipe, remove and turn into scrap

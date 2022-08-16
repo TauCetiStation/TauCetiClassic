@@ -137,7 +137,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		if (shock(user, 50))
 			return
 
-		remove_cable(T, user)
+		deconstruct(TRUE, user)
 
 		return	// not needed, but for clarity
 
@@ -155,6 +155,11 @@ By design, d1 is the smallest direction and d2 is the highest
 			shock(user, 50, 0.7)
 
 	add_fingerprint(user)
+
+/obj/structure/cable/deconstruct(disassembled, user)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	remove_cable(user)
 
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)

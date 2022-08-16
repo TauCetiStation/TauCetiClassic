@@ -882,6 +882,14 @@
 	updateUsrDialog()
 	return 0
 
+/obj/machinery/reagentgrinder/deconstruct(disassembled)
+	drop_all_items()
+	if(beaker)
+		beaker.forceMove(loc)
+		beaker = null
+	return ..()
+	
+
 /obj/machinery/reagentgrinder/attack_ai(mob/user)
 	if(IsAdminGhost(user))
 		return ..()
@@ -960,17 +968,18 @@
 	beaker = null
 	update_icon()
 
+/obj/machinery/reagentgrinder/proc/drop_all_items()
+	if(holdingitems.len == 0)
+		return
+	for(var/obj/item/O as anything in holdingitems)
+		O.forceMove(loc)
+	holdingitems.Cut()
+
 /obj/machinery/reagentgrinder/proc/eject()
 
 	if(usr.incapacitated())
 		return
-	if (holdingitems && holdingitems.len == 0)
-		return
-
-	for(var/obj/item/O in holdingitems)
-		O.loc = src.loc
-		holdingitems -= O
-	holdingitems = list()
+	drop_all_items()
 
 /obj/machinery/reagentgrinder/proc/is_allowed(obj/item/weapon/reagent_containers/O)
 	for (var/i in blend_items)

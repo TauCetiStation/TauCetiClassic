@@ -84,12 +84,12 @@
 	return ..()
 
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
-	if(!refill_canister) //the non constructable vendors drop metal instead of a machine frame.
-		if(!(flags & NODECONSTRUCT))
-			new /obj/item/stack/sheet/metal(loc, 3)
-		qdel(src)
-	else
-		..()
+	if(refill_canister)
+		return ..()
+	//the non constructable vendors drop metal instead of a machine frame.
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 3)
+	qdel(src)
 
 /obj/machinery/vending/atom_break(damage_flag)
 	. = ..()

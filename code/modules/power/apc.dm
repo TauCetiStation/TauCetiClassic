@@ -595,19 +595,7 @@
 			return
 		to_chat(user, "You start welding the APC frame...")
 		if(WT.use_tool(src, user, 50, amount = 3, volume = 50))
-			if(emagged || malfhack || (stat & BROKEN) || opened == APC_COVER_REMOVED)
-				new /obj/item/stack/sheet/metal(loc)
-				user.visible_message(\
-					"<span class='warning'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
-					"You disassembled the broken APC frame.",\
-					"<span class='warning'>You hear welding.</span>")
-			else
-				new /obj/item/apc_frame(loc)
-				user.visible_message(\
-					"<span class='warning'>[src] has been cut from the wall by [user.name] with the weldingtool.</span>",\
-					"You cut the APC frame from the wall.",\
-					"<span class='warning'>You hear welding.</span>")
-			qdel(src)
+			deconstruct(TRUE, user)
 			return
 
 	else if(istype(W, /obj/item/apc_frame) && opened != APC_COVER_CLOSED && emagged)
@@ -647,6 +635,24 @@
 			"You hear bang")
 		return wires.interact(user)
 
+
+/obj/machinery/power/apc/deconstruct(disassembled, mob/user)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(!disassembled || emagged || malfhack || (stat & BROKEN) || opened == APC_COVER_REMOVED)
+		new /obj/item/stack/sheet/metal(loc)
+		user?.visible_message(\
+			"<span class='warning'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
+			"You disassembled the broken APC frame.",\
+			"<span class='warning'>You hear welding.</span>")
+	else
+		new /obj/item/apc_frame(loc)
+		user?.visible_message(\
+				"<span class='warning'>[src] has been cut from the wall by [user.name] with the weldingtool.</span>",\
+				"You cut the APC frame from the wall.",\
+				"<span class='warning'>You hear welding.</span>")
+
+	..()
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
