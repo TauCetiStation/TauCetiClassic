@@ -98,7 +98,6 @@
 		return
 	if(prob(100/severity))
 		addtimer(CALLBACK(src, .proc/energize_cam, network), 300)
-		network = list()
 		stat |= EMPED
 		triggerCameraAlarm()
 		disable_cam()
@@ -114,7 +113,7 @@
 			take_damage(30)
 
 /obj/machinery/camera/blob_act()
-	take_damage(10, alarm = TRUE)
+	take_damage(15, alarm = TRUE)
 
 /obj/machinery/camera/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
