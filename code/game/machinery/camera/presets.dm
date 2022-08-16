@@ -11,6 +11,13 @@
 	. = ..()
 	upgradeXRay()
 
+/obj/machinery/camera/ex_immune/
+	name = "reinforced security camera"
+
+/obj/machinery/camera/ex_immune/atom_init()
+	. = ..()
+	upgradeExplosiveImmune()
+
 /obj/machinery/camera/motion
 	name = "motion-sensitive security camera"
 
@@ -23,6 +30,7 @@
 	upgradeEmpProof()
 	upgradeXRay()
 	upgradeMotion()
+	upgradeExplosiveImmune()
 
 // AUTONAME
 

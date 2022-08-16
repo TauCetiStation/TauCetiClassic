@@ -246,15 +246,15 @@
 		"<span class='notice'>You fire into the [src] lens.</span>")
 		gun.afterattack(src, user) //there is no damage today, waiting for full desctruction
 
-/obj/machinery/camera/proc/spoil_lens()	//gangstar's spray can or smoke
+/obj/machinery/camera/proc/spoil_lens()	//gangstar's spray can
 	lens_free = FALSE
 	broke_cam()
 
 /obj/machinery/camera/proc/try_increase_integrity(amount)
 	if(!integrity || !max_integrity)
 		return FALSE
-	if(integrity >= max_integrity || amount + integrity > max_integrity)
-		return FALSE
+	if(amount + integrity > max_integrity)
+		amount = max_integrity - integrity
 	if(0 <= amount)
 		return FALSE
 	integrity += amount
@@ -438,7 +438,7 @@
 	if(user)
 		to_chat(user, "<span class='notice'>[src] upgraded!</span>")
 	camera_upgrades += /obj/item/stack/sheet/plasteel
-	integrity = max_integrity
+	try_increase_integrity(max_integrity)
 	update_icon()
 
 /obj/machinery/camera/proc/can_see()
