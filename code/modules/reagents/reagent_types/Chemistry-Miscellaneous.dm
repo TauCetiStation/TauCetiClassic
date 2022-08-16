@@ -323,6 +323,13 @@
 	color = "#404030" // rgb: 64, 64, 48
 	taste_message = "floor cleaner"
 
+/datum/reagent/ammonia/reaction_obj(obj/O, volume)
+	if(istype(O, /obj/machinery/camera))
+		var/obj/machinery/camera/C = O
+		C.color = null
+		C.lens_free = TRUE
+		C.try_enable_cam()
+
 /datum/reagent/ultraglue
 	name = "Ultra Glue"
 	id = "glue"
