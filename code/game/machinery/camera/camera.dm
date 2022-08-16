@@ -232,7 +232,7 @@
 		bombastic_shot(W, user)
 	else
 		..()
-		if(istype(W, /obj/item))
+		if(isitem(W))
 			var/obj/item/I = W
 			if(I.force >= 15)									//some sharp items have less than 15 damage, but its needed for balance
 				take_damage(I.force, user, alarm = TRUE)		//cameras immune to things that are easy to get (like air tank, fire extinguisher)
@@ -369,12 +369,12 @@
 	for(var/mob/living/silicon/S as anything in silicon_list)
 		S.cancelAlarm("Camera", get_area(src), src)
 
-/obj/machinery/camera/proc/can_use()
+/obj/machinery/camera/proc/can_use(check_paint = TRUE)
 	if(stat & (NOPOWER|BROKEN|EMPED))
 		return FALSE
 	if(!functioning)
 		return FALSE
-	if(!lens_free)
+	if(!lens_free && check_paint)
 		if(isXRay())
 			return TRUE
 		return FALSE
