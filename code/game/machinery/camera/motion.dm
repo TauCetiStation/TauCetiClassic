@@ -1,10 +1,8 @@
 /obj/machinery/camera
-
 	var/list/motionTargets = list()
 	var/detectTime = 0
 	var/area/station/ai_monitored/area_motion = null
 	var/alarm_delay = 100 // Don't forget, there's another 10 seconds in queueAlarm()
-
 
 /obj/machinery/camera/process()
 	// motion camera event loop
@@ -62,7 +60,7 @@
 
 /obj/machinery/camera/HasProximity(atom/movable/AM)
 	// Motion cameras outside of an "ai monitored" area will use this to detect stuff.
-	if (!area_motion)
+	if(!area_motion)
 		if(isliving(AM))
 			newTarget(AM)
 

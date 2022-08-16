@@ -8,9 +8,9 @@
 	active_power_usage = 10
 	layer = 5
 	anchored = TRUE
-
-	var/max_integrity = 60
-	var/integrity = 20	//ready to full_destruction system
+	var/camera_base = "camera" //used for icon_state overriding in update_icon()
+	var/max_integrity = 65	////ready to full_destruction system
+	var/integrity = 25	//1 shot from any gun is normal
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
@@ -20,6 +20,7 @@
 	var/hidden = FALSE	//Hidden cameras will be unreachable for AI
 	var/functioning = TRUE //TRUE if enabled, FALSE if disabled
 	var/datum/wires/camera/wires = null
+	var/list/camera_upgrades = list()
 
 	//OTHER
 	var/view_range = 7
@@ -42,7 +43,6 @@
 	CA.forceMove(src)
 	assembly = CA
 	assembly.state = 4
-
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		var/list/tempnetwork = C.network&src.network
@@ -74,22 +74,27 @@
 	return ..()
 
 /obj/machinery/camera/update_icon()
+	icon_state = "[camera_base]"
 	if(stat & NOPOWER || !functioning)
-		icon_state = "[initial(icon_state)]1"
+		icon_state = "[camera_base]1"
 	if(stat & EMPED)
-		icon_state = "[initial(icon_state)]emp"
+		icon_state = "[camera_base]emp"
 	if(stat & BROKEN)
-		icon_state = "[initial(icon_state)]x"
-	else
-		icon_state = "[initial(icon_state)]"
+		icon_state = "[camera_base]x"
 
 /obj/machinery/camera/examine(mob/user)
 	. = ..()
 	if(!lens_free)
 		to_chat(user, "<span class='warning'>The lens of [src] is obscured by paint.</span>")
 
+/obj/machinery/camera/power_change()
+	. = ..()
+	if(can_use())
+		try_enable_cam()
+	update_icon()
+
 /obj/machinery/camera/emp_act(severity)
-	if(isEmpProof() && (stat & (BROKEN|NOPOWER|EMPED)))
+	if(isEmpProof() || (stat & (BROKEN|NOPOWER|EMPED)))
 		return
 	if(prob(100/severity))
 		addtimer(CALLBACK(src, .proc/energize_cam, network), 900)
@@ -115,6 +120,9 @@
 	if(exposed_temperature > 300)
 		take_damage(1, alarm = TRUE)
 
+/obj/machinery/camera/bullet_act(obj/item/projectile/P, def_zone)
+	take_damage(P.damage, alarm = TRUE)
+
 /obj/machinery/camera/proc/setViewRange(num = 7)
 	view_range = num
 	cameranet.updateVisibility(src, 0)
@@ -127,11 +135,6 @@
 	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
 	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 	broke_cam()
-
-/obj/machinery/camera/proc/upgrade_message(item, user, value = TRUE)
-	if(!value)
-		to_chat(user, "<span class='notice'>You attach [item] into the assembly inner circuits.</span>")
-	to_chat(user, "<span class='notice'>The camera already has that upgrade!</span>")
 
 /obj/machinery/camera/attackby(W, mob/living/user)
 	// DECONSTRUCTION
@@ -152,26 +155,23 @@
 
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
 		if(!isXRay())
-			upgradeXRay()
+			upgradeXRay(user)
 			qdel(W)
-			upgrade_message(W, user)
 		else
-			upgrade_message(W, user, FALSE)
+			to_chat(user, "<span class='notice'>You attach [W] into the [src] inner circuits.</span>")
 
 	else if(istype(W, /obj/item/stack/sheet/mineral/phoron) && panel_open)
 		if(!isEmpProof())
-			upgradeEmpProof()
-			upgrade_message(W, user)
+			upgradeEmpProof(user)
 			qdel(W)
 		else
-			upgrade_message(W, user, FALSE)
+			to_chat(user, "<span class='notice'>You attach [W] into the [src] inner circuits.</span>")
 	else if(istype(W, /obj/item/device/assembly/prox_sensor) && panel_open)
 		if(!isMotion())
-			upgradeMotion()
-			upgrade_message(W, user)
+			upgradeMotion(user)
 			qdel(W)
 		else
-			upgrade_message(W, user, FALSE)
+			to_chat(user, "<span class='notice'>You attach [W] into the [src] inner circuits.</span>")
 	//repair broken stat
 	else if(istype(W, /obj/item/stack/sheet/glass && panel_open))
 		fix_broking_cam()
@@ -224,18 +224,22 @@
 			bug.bugged_cameras[c_tag] = src
 
 	else if(istype(W, /obj/item/weapon/gun))
-		bombastic_shot(user)
+		bombastic_shot(W, user)
 	else
 		..()
 		if(istype(W, /obj/item))
 			var/obj/item/I = W
-			take_damage(I.force, alarm = TRUE)
+			if(I.force >= 15)									//some sharp items have less than 15 damage, but its needed for balance
+				take_damage(I.force, user, alarm = TRUE)		//cameras immune to things that are easy to get (like air tank, fire extinguisher)
 
-/obj/machinery/camera/proc/bombastic_shot(mob/living/user)
-	if(do_after(user, 20, target = src, can_move = TRUE))
+/obj/machinery/camera/proc/bombastic_shot(obj/item/weapon/gun, mob/living/user)
+	user.visible_message("<span class='warning'>[user] looks at the [src] and raise weapon!</span>",
+	"<span class='notice'>You look at the [src] and raise your weapon.</span>")
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(do_after(user, 20, target = src))	//can_move = TRUE when it have rework
 		user.visible_message("<span class='warning'>[user] shoots in the [src]!</span>",
-		"<span class='notice'>You look at the [src], raise your weapon, and after a second, fire into the [src] lens.</span>")
-		broke_cam()
+		"<span class='notice'>You fire into the [src] lens.</span>")
+		gun.afterattack(src, user) //there is no damage today, waiting for full desctruction
 
 /obj/machinery/camera/proc/close_lens()	//gangstar's spray can or smoke
 	lens_free = FALSE
@@ -254,7 +258,7 @@
 	if(stat & BROKEN|EMPED|NOPOWER)
 		return
 	cameranet.addCamera(src)
-	set_power_use(IDLE_POWER_USE)
+	set_power_use(ACTIVE_POWER_USE)
 	functioning = TRUE
 	cancelCameraAlarm()
 	update_icon()
@@ -299,7 +303,7 @@
 			return TRUE
 	return FALSE
 
-/obj/machinery/camera/proc/take_damage(amount, alarm = FALSE)
+/obj/machinery/camera/proc/take_damage(amount, mob/attacker = null, alarm = FALSE)
 	if(alarm)
 		triggerCameraAlarm()
 		addtimer(CALLBACK(src, .proc/try_cancel_alarm), 100)
@@ -308,25 +312,27 @@
 	if(is_item_in_blacklist())
 		return
 	integrity -= amount
-	check_integrity()
+	check_integrity(attacker)
 
-/obj/machinery/camera/proc/check_integrity()
+/obj/machinery/camera/proc/check_integrity(mob/attacker = null)
 	if(integrity <= 0)
 		if(alarm_on)
 			cancelCameraAlarm()
 		disconnect_viewers()
-		deconstruction()
+		deconstruction(attacker)
 
-/obj/machinery/camera/deconstruction(state = 0, sparks = TRUE)
+/obj/machinery/camera/deconstruction(state = 0, sparks = TRUE, mob/living/carbon/human/attacker = null)
 	if(flags & NODECONSTRUCT)
 		qdel(src)
 		return
 	if(assembly)
 		assembly.state = state
-		assembly.anchored = !!state
+		assembly.anchored = FALSE
 		assembly.forceMove(loc)
 		assembly.update_icon()
 		assembly = null
+		if(attacker != null)
+			assembly.add_fingerprint(attacker)
 	new /obj/item/stack/cable_coil/cut/red(loc)
 	if(sparks)
 		var/datum/effect/effect/system/spark_spread/spark_system = new()
@@ -364,10 +370,58 @@
 	if(!functioning)
 		return FALSE
 	if(!lens_free)
-		/*if(isXRay)
-			return TRUE*/
+		if(isXRay())
+			return TRUE
 		return FALSE
 	return TRUE
+
+/obj/machinery/camera/proc/fix_me_all()
+	if(stat & EMPED)
+		stat &= ~EMPED
+	if(stat & BROKEN)
+		stat &= ~BROKEN
+	if(stat & NOPOWER)
+		stat &= ~NOPOWER
+	try_enable_cam()
+
+//upgrade checks
+/obj/machinery/camera/proc/isEmpProof()
+	for(var/upgrade_module in camera_upgrades)
+		if(istype(upgrade_module, /obj/item/stack/sheet/mineral/phoron))
+			return TRUE
+	return FALSE
+
+/obj/machinery/camera/proc/isXRay()
+	for(var/upgrade_module in camera_upgrades)
+		if(istype(upgrade_module, /obj/item/device/analyzer))
+			return TRUE
+	return FALSE
+
+/obj/machinery/camera/proc/isMotion()
+	for(var/upgrade_module in camera_upgrades)
+		if(istype(upgrade_module, /obj/item/device/assembly/prox_sensor))
+			return TRUE
+	return FALSE
+
+//upgrading procs
+/obj/machinery/camera/proc/upgradeEmpProof(mob/user = null)
+	if(user)
+		to_chat(user, "<span class='notice'>[src] upgraded!</span>")
+	camera_upgrades += /obj/item/stack/sheet/mineral/phoron
+	update_icon()
+
+/obj/machinery/camera/proc/upgradeXRay(mob/user = null)
+	if(user)
+		to_chat(user, "<span class='notice'>[src] upgraded!</span>")
+	camera_upgrades += /obj/item/device/analyzer
+	camera_base = "xraycam"
+	update_icon()
+// If you are upgrading Motion, and it isn't in the camera's New(), add it to the machines list.
+/obj/machinery/camera/proc/upgradeMotion(mob/user = null)
+	if(user)
+		to_chat(user, "<span class='notice'>[src] upgraded!</span>")
+	camera_upgrades += /obj/item/device/assembly/prox_sensor
+	update_icon()
 
 /obj/machinery/camera/proc/can_see()
 	var/list/see = null

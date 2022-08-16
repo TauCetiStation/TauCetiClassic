@@ -4,29 +4,28 @@
 
 /mob/living/silicon/ai/proc/InvalidTurf(turf/T)
 	if(!T)
-		return 1
+		return TRUE
 	if(is_centcom_level(T.z))
-		return 1
+		return TRUE
 	if(!SSmapping.has_level(T.z))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/ai/proc/get_camera_list()
-
-	if(src.stat == DEAD)
+	if(stat == DEAD)
 		return
 
 	var/list/L = list()
-	for (var/obj/machinery/camera/C in cameranet.cameras)
+	for(var/obj/machinery/camera/C in cameranet.cameras)
 		L.Add(C)
 
 	camera_sort(L)
 
 	var/list/T = list()
 	T["Cancel"] = "Cancel"
-	for (var/obj/machinery/camera/C in L)
+	for(var/obj/machinery/camera/C in L)
 		var/list/tempnetwork = C.network&src.network
-		if (tempnetwork.len)
+		if(tempnetwork.len)
 			T[text("[][]", C.c_tag, (C.can_use() ? null : " (Deactivated)"))] = C
 
 	track = new()
@@ -35,8 +34,7 @@
 
 
 /mob/living/silicon/ai/proc/ai_camera_list(camera in get_camera_list())
-
-	if(src.stat == DEAD)
+	if(stat == DEAD)
 		to_chat(src, "You can't list the cameras because you are dead!")
 		return
 
@@ -68,7 +66,7 @@
 		return
 
 	var/L = eyeobj.getLoc()
-	if (InvalidTurf(get_turf(L)))
+	if(InvalidTurf(get_turf(L)))
 		to_chat(src, "<span class='warning'>Unable to store this location</span>")
 		return
 
@@ -111,7 +109,6 @@
 	var/list/cameras = list()
 
 /mob/living/silicon/ai/proc/trackable_mobs()
-
 	if(usr.stat == DEAD)
 		return list()
 
@@ -160,18 +157,18 @@
 	var/list/targets = list()
 	targets.Add("Cancel")
 	targets.Add(sortList(TB.humans) + sortList(TB.others))
-	src.track = TB
+	track = TB
 	return targets
 
 /mob/living/silicon/ai/proc/ai_camera_track(target_name in trackable_mobs())
 
-	if(src.stat == DEAD)
+	if(stat == DEAD)
 		to_chat(src, "You can't track with camera because you are dead!")
 		return
 	if(target_name == "Cancel")
 		return 0
 	if(!target_name)
-		src.cameraFollow = null
+		cameraFollow = null
 
 	var/mob/target = (isnull(track.humans[target_name]) ? track.others[target_name] : track.humans[target_name])
 
@@ -195,10 +192,10 @@
 	target.tracking_initiated()
 
 	spawn (0)
-		while (U.cameraFollow == target)
-			if (U.cameraFollow == null)
+		while(U.cameraFollow == target)
+			if(U.cameraFollow == null)
 				return
-			if (ishuman(target))
+			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 					to_chat(U, "Follow camera mode terminated.")
@@ -220,7 +217,7 @@
 				U.cameraFollow = null
 				return
 
-			if (!near_camera(target))
+			if(!near_camera(target))
 				to_chat(U, "Target is not near any active cameras.")
 				sleep(100)
 				continue
@@ -233,20 +230,20 @@
 			sleep(10)
 
 /proc/near_camera(mob/living/M)
-	if (!isturf(M.loc))
-		return 0
+	if(!isturf(M.loc))
+		return FALSE
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if(!(R.camera && R.camera.can_use()) && !cameranet.checkCameraVis(M))
-			return 0
+			return FALSE
 	else if(!cameranet.checkCameraVis(M))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
-	if (!istype(user))
+	if(!istype(user))
 		return
-	if (!can_use())
+	if(!can_use())
 		return
 	user.eyeobj.setLoc(get_turf(src))
 
@@ -258,15 +255,15 @@
 	var/obj/machinery/camera/a
 	var/obj/machinery/camera/b
 
-	for (var/i = L.len, i > 0, i--)
-		for (var/j = 1 to i - 1)
+	for(var/i = L.len, i > 0, i--)
+		for(var/j = 1 to i - 1)
 			a = L[j]
 			b = L[j + 1]
-			if (a.c_tag_order != b.c_tag_order)
-				if (a.c_tag_order > b.c_tag_order)
+			if(a.c_tag_order != b.c_tag_order)
+				if(a.c_tag_order > b.c_tag_order)
 					L.Swap(j, j + 1)
 			else
-				if (sorttext(a.c_tag, b.c_tag) < 0)
+				if(sorttext(a.c_tag, b.c_tag) < 0)
 					L.Swap(j, j + 1)
 	return L
 

@@ -40,6 +40,7 @@ robot_fabricator
 	module_name = "Module Picker"
 	verb_caller = /mob/living/silicon/ai/proc/choose_modules
 	var/temp = null
+	var/max_processing_time = 100
 	var/processing_time = 100
 	var/list/available_modules = null
 
@@ -93,12 +94,19 @@ robot_fabricator
 					selected_module.uses += uses_to_add
 					temp = "Added uses ([uses_to_add]) to module: [selected_module.module_name]"
 					processing_time -= module_price
+					activate_accumulation()
 			else
 				selected_module = new selected_module_path(cur_AI)
 				temp = selected_module.description
 				processing_time -= module_price
 				selected_module.BuyedNewHandle()
+				activate_accumulation()
 	use(cur_AI)
+
+/datum/AI_Module/module_picker/proc/activate_accumulation()
+	processing_time += 2
+	if(processing_time < max_processing_time)
+		addtimer(CALLBACK(src, .proc/activate_accumulation), 600, TIMER_UNIQUE)
 
 /mob/living/silicon/ai/proc/choose_modules()
 	set category = "Malfunction"
@@ -352,7 +360,7 @@ robot_fabricator
 	if(!sel_cam)
 		return
 
-	sel_cam.functioning = TRUE
+	sel_cam.fix_me_all()
 	camera_mod.uses--
 	sel_cam.audible_message("<span class='notice'>You hear a quiet click.</span>")
 	to_chat(src, "<span class='notice'>Camera successully reactivated!</span>")
