@@ -382,4 +382,4 @@
 	w_class = SIZE_SMALL
 	throwforce = 6
 	hitsound = list('sound/weapons/wood_shield_hit.ogg')
-	attack_verb = list("attacked", "nailed", "smashed", "whacked", "beats")
+	attack_verb = list("attacked", "nailed", "smashed", "whacked", "bonked")
