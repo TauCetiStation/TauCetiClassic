@@ -55,10 +55,6 @@
 	SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED, charge)
 	return power_used
 
-/obj/item/weapon/stock_parts/cell/Destroy()
-	UnregisterSignal(src, COMSIG_CELL_CHARGE_CHANGED)
-	return ..()
-
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
 	if(src in view(1, user))
