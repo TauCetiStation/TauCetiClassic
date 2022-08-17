@@ -13,7 +13,7 @@
 	salary = 160
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/qm
-	skillsets = list("Quartermaster" = /datum/skillset/quartermaster)
+
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -37,7 +37,7 @@
 	salary = 50
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/cargo_tech
-	skillsets = list("Cargo Technician" = /datum/skillset/cargotech)
+
 
 
 /datum/job/mining
@@ -54,7 +54,7 @@
 	salary = 80
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/mining
-	skillsets = list("Shaft Miner" = /datum/skillset/miner)
+
 
 
 /datum/job/recycler
@@ -71,7 +71,7 @@
 	salary = 60
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/recycler
-	skillsets = list("Recycler" = /datum/skillset/recycler)
+
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm

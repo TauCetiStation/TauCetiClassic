@@ -19,7 +19,7 @@
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/hos
-	skillsets = list("Head of Security" = /datum/skillset/hos)
+
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -44,7 +44,7 @@
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
 	outfit = /datum/outfit/job/warden
-	skillsets = list("Warden" = /datum/skillset/warden)
+
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -69,7 +69,7 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/detective
-	skillsets = list("Detective" = /datum/skillset/detective)
+
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -94,7 +94,6 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/officer
-	skillsets = list("Security Officer" = /datum/skillset/officer)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -119,7 +118,6 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/forensic
-	skillsets = list("Forensic Technician" = /datum/skillset/forensic)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -144,7 +142,7 @@
 	minimal_player_age = 2
 	minimal_player_ingame_minutes = 520
 	outfit = /datum/outfit/job/cadet
-	skillsets = list("Security Cadet" = /datum/skillset/cadet)
+
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm

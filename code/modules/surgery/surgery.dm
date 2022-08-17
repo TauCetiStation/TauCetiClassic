@@ -18,7 +18,6 @@
 
 	//Cloth check
 	var/clothless = 1
-	var/skills_speed_bonus = -0.30 // -30% for each surplus level
 
 // returns how well tool is suited for this step
 /datum/surgery_step/proc/tool_quality(obj/item/tool)
@@ -135,8 +134,6 @@
 	var/covered
 	if(ishuman(M))
 		covered = get_human_covering(M)
-
-
 	for(var/datum/surgery_step/S in surgery_steps)
 		//check, if target undressed for clothless operations
 		if(S.clothless && ishuman(M) && !check_human_covering(M, user, covered))
@@ -148,10 +145,8 @@
 				return TRUE
 
 			S.begin_step(user, M, target_zone, tool)		//...start on it
-			var/step_duration = rand(S.min_duration, S.max_duration)
-
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
-			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus) && user.get_targetzone() && target_zone == user.get_targetzone())
+			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, rand(S.min_duration, S.max_duration), volume=100) && user.get_targetzone() && target_zone == user.get_targetzone())
 				S.end_step(user, M, target_zone, tool)		//finish successfully
 			else if(tool.loc == user && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
 				S.fail_step(user, M, target_zone, tool)		//malpractice~
@@ -191,8 +186,3 @@
 	var/brain_cut = 0
 	var/brain_fix = 0
 	var/list/bodyparts = list() // Holds info about removed bodyparts
-
-/datum/surgery_step/ipc
-	can_infect = FALSE
-	allowed_species = list(IPC)
-	skills_speed_bonus = -0.2
