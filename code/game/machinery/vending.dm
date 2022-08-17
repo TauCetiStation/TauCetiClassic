@@ -95,27 +95,20 @@
 	take_damage(50)
 
 /obj/machinery/vending/bullet_act(obj/item/projectile/P, def_zone)
-	take_damage(P.damage, P)
+	if(P.damage < 15)	//no need much damaging from rubber and other proj, i think
+		P.damage -= 10
+	take_damage(P.damage)
 
 /obj/machinery/vending/attack_paw()
 	. = ..()
-	take_damage(round(1, 10))
+	take_damage(1)
 
 /obj/machinery/vending/proc/is_item_in_blacklist(obj/item/I)
-	var/list/black_list = list(/obj/item/weapon/holo)
-	for(var/black_list_weapon in black_list)
-		if(istype(I, black_list_weapon))
-			return TRUE
+	if(I.damtype == HALLOSS)
+		return TRUE
 	return FALSE
 
-/obj/machinery/vending/proc/take_damage(amount, obj/item/W = null)
-	if(W)
-		if(is_item_in_blacklist(W))
-			return
-		if(istype(W, /obj/item/projectile))
-			var/obj/item/projectile/P = W
-			if(P.damage < 15)	//no need much damaging from rubber and other proj, i think
-				amount -= 10
+/obj/machinery/vending/proc/take_damage(amount)
 	if(amount <= 0)
 		return
 	if(amount < 30)
@@ -141,7 +134,7 @@
 		if(prob(50))
 			qdel(I)
 			continue
-		I.loc = loc
+		I.forceMove(loc)
 	qdel(src)
 
 /obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0,req_emag=0)
@@ -284,7 +277,9 @@
 				qdel(W)
 	else
 		..()
-		take_damage(W.force, W)		//for saving animation attack
+		if(is_item_in_blacklist(W))
+			return
+		take_damage(W.force)		//for saving animation attack
 
 /obj/machinery/vending/emag_act(mob/user)
 	if(emagged)
@@ -599,7 +594,8 @@
 
 /obj/machinery/vending/power_change()
 	if(stat & BROKEN)
-		make_me_broken()
+		icon_state = "[initial(icon_state)]-broken"
+		set_light(0)
 	else
 		if(powered() & anchored)
 			icon_state = initial(icon_state)
@@ -638,12 +634,11 @@
 	for(var/datum/data/vending_product/R in product_records)
 		if(hit_damage > 50)	//lasercannon or explode
 			R.amount = 0
-		else
-			if(prob(25))
-				break
-			if(R.amount)
-				R.amount--
 			continue
+		if(prob(25))
+			break
+		if(R.amount > 0)
+			R.amount--
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item()
