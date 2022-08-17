@@ -685,14 +685,12 @@
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	condi = 1
-	required_skills = list(/datum/skill/chemistry/novice)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_master/constructable
 	name = "ChemMaster 2999"
 	desc = "Used to seperate chemicals and distribute them in a variety of forms."
-	required_skills = list(/datum/skill/chemistry/trained)
 
 /obj/machinery/chem_master/constructable/atom_init()
 	. = ..()
@@ -815,7 +813,6 @@
 
 
 	var/list/holdingitems = list()
-	required_skills = list(/datum/skill/chemistry/novice)
 
 /obj/machinery/reagentgrinder/atom_init()
 	. = ..()

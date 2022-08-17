@@ -117,10 +117,7 @@
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(user.is_busy()) return
 			user.visible_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>")
-<<<<<<< HEAD
-			if(G.use_tool(src, usr, 20, =======
 			if(G.use_tool(src, usr, 20))
->>>>>>> parent of 0ee1a3c265 (Умения для персонажей (Fin) (#9201))
 				INVOKE_ASYNC(GM, /atom/movable.proc/do_simple_move_animation, src)
 				GM.forceMove(src)
 				GM.instant_vision_update(1,src)
@@ -1361,10 +1358,7 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the disposal outlet.")
-<<<<<<< HEAD
-			if(W.use_tool(src, user, 20, volume = 100, =======
 			if(W.use_tool(src, user, 20, volume = 100))
->>>>>>> parent of 0ee1a3c265 (Умения для персонажей (Fin) (#9201))
 				to_chat(user, "You sliced the floorweld off the disposal outlet.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				transfer_fingerprints_to(C)

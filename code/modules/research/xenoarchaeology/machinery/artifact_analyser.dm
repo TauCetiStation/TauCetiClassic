@@ -13,9 +13,6 @@
 	var/scan_duration = 100
 	var/obj/scanned_object
 	var/report_num = 0
-<<<<<<< HEAD
-	=======
->>>>>>> parent of 0ee1a3c265 (Умения для персонажей (Fin) (#9201))
 
 /obj/machinery/artifact_analyser/atom_init()
 	..()

@@ -145,7 +145,7 @@ field_generator power level display
 						"<span class='notice'>[user.name] starts to cut the [src.name] free from the floor.</span>",
 						"<span class='notice'>You start to cut the [src] free from the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50,  required_skills_override = list(/datum/skill/engineering/pro)))
+					if (WT.use_tool(src, user, 20, volume = 50))
 						state = FG_SECURED
 						to_chat(user, "<span class='notice'>You cut the [src] free from the floor.</span>")
 	else

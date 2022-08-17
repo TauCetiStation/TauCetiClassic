@@ -166,8 +166,6 @@
 	if(!ishuman(connected.occupant))
 		to_chat(user, "<span class='warning'>This device can only scan compatible lifeforms.</span>")
 		return
-	if(!do_skill_checks(user))
-		return
 	var/dat
 
 	if (src.connected) //Is something connected?

@@ -50,13 +50,7 @@
 	else
 		user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow [src].</span>")
 
-<<<<<<< HEAD
-		var/ingestion_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NOVICE), -0.2)
-		if(!do_mob(user, M, ingestion_time))
-			return
-=======
 		if(!do_mob(user, M)) return
->>>>>>> parent of 0ee1a3c265 (Умения для персонажей (Fin) (#9201))
 
 		user.drop_from_inventory(src) //icon update
 		user.visible_message("<span class='warning'>[user] forces [M] to swallow [src].</span>")
@@ -92,18 +86,6 @@
 
 	return
 
-<<<<<<< HEAD
-/obj/item/weapon/reagent_containers/pill/examine(mob/user)
-	..()
-	if(!is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)))
-		return
-	to_chat(user, "It contains:")
-	if(reagents.reagent_list.len)
-		for(var/datum/reagent/R in reagents.reagent_list)
-			to_chat(user, "<span class='info'>[R.volume + R.volume * rand(-25,25) / 100] units of [R.name]</span>")
-
-=======
->>>>>>> parent of 0ee1a3c265 (Умения для персонажей (Fin) (#9201))
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills. END
 ////////////////////////////////////////////////////////////////////////////////

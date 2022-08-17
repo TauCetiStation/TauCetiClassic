@@ -54,10 +54,7 @@ cause a ton of data to be lost, an admin can go send it back.
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 	allowed_checks = ALLOWED_CHECK_NONE
 
-<<<<<<< HEAD
 
-=======
->>>>>>> parent of 0ee1a3c265 (Умения для персонажей (Fin) (#9201))
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(ID)
 	var/datum/reagent/temp_reagent
 	var/return_name = null
