@@ -14172,11 +14172,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "dvw" = (
+/obj/machinery/idpainter,
 /obj/machinery/alarm{
 	pixel_y = 25
 	},
-/obj/structure/table/reinforced,
-/obj/machinery/computer/skills_console,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "blue"
@@ -26307,7 +26306,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/item/weapon/paper/cmf_manual,
 /turf/simulated/floor/carpet,
 /area/station/bridge/hop_office)
 "hkV" = (
@@ -28776,7 +28774,6 @@
 	pixel_x = 30
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/optable/skill_scanner,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blue"
@@ -42091,7 +42088,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/idpainter,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blue"
@@ -67691,8 +67687,6 @@
 /obj/item/device/eftpos{
 	eftpos_name = "Captain EFTPOS scanner"
 	},
-/obj/item/weapon/skill_cartridge/usp10,
-/obj/item/weapon/paper/cmf_manual,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "usc" = (
@@ -74073,7 +74067,6 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/closet/secure_closet/usp_cartridges,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
