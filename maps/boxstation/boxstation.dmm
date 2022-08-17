@@ -70905,8 +70905,8 @@
 	dir = 8;
 	network = list("SS13","Medical")
 	},
-/obj/item/weapon/storage/belt/medical,
 /obj/item/device/radio/headset/headset_med,
+/obj/item/weapon/storage/bag/chemistry,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteyellow"
