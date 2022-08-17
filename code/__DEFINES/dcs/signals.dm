@@ -227,6 +227,8 @@
 /// from mob/carbon/swap_hand: (mob/user)
 #define COMSIG_ITEM_BECOME_ACTIVE "item_become_active"
 #define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
+/// from /obj/item/weapon/stock_parts/cell
+#define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
@@ -342,6 +344,3 @@
 
 // send this signal to toggle zoom in /datum/component/zoom: (mob/user)
 #define COMSIG_ZOOM_TOGGLE "zoom_toggle"
-
-//send this signal to datum/component/cell_selfrecharge and /obj/laser/selfcharging
-#define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed"

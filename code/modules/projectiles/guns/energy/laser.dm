@@ -45,7 +45,7 @@
 
 /obj/item/weapon/gun/energy/laser/selfcharging/cyborg/atom_init()
 	. = ..()
-	power_supply.AddComponent(/datum/component/cell_selfrecharge, 125, 4)
+	power_supply.AddComponent(/datum/component/cell_selfrecharge, 30)
 
 /obj/item/weapon/gun/energy/laser/selfcharging/cyborg/newshot()
 	if(!isrobot(loc))

@@ -52,7 +52,7 @@
 			crit_fail = 1
 			return 0
 	charge += power_used
-	SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED, charge)
+	SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED, charge, maxcharge)
 	return power_used
 
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
