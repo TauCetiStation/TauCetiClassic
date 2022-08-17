@@ -401,16 +401,12 @@
 	for(var/upgrade_module in camera_upgrades)
 		if(upgrade_module == "sensor")
 			return TRUE
-		else
-			continue
 	return FALSE
 
 /obj/machinery/camera/proc/isExplosiveImmune()
 	for(var/upgrade_module in camera_upgrades)
 		if(upgrade_module == "plasteel")
 			return TRUE
-		else
-			continue
 	return FALSE
 
 //upgrading procs
