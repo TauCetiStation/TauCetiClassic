@@ -16,20 +16,18 @@
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/explosive_immune = FALSE
+	var/hidden = FALSE	//Hidden cameras will be unreachable for AI
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
-	var/hidden = FALSE	//Hidden cameras will be unreachable for AI
 	var/datum/wires/camera/wires = null
-	var/list/camera_upgrades = list()
-	var/list/camera_failing = list()
-
 	//OTHER
 	var/view_range = 7
 	var/short_range = 2
-
 	var/light_disabled = 0
 	var/alarm_on = FALSE
 	var/show_paper_cooldown = 0
+	var/list/camera_upgrades = list()
+	var/list/camera_failings = list()
 
 /obj/machinery/camera/atom_init(mapload, obj/item/weapon/camera_assembly/CA)
 	. = ..()
@@ -149,28 +147,28 @@
 			upgradeXRay(user)
 			qdel(W)
 		else
-			to_chat(user, "<span class='notice'>You attach [W] into the [src] inner circuits.</span>")
+			to_chat(user, "<span class='notice'>[src] already have that upgrade.</span>")
 
 	else if(istype(W, /obj/item/stack/sheet/mineral/phoron) && panel_open)
 		if(!isEmpProof())
 			upgradeEmpProof(user)
 			qdel(W)
 		else
-			to_chat(user, "<span class='notice'>You attach [W] into the [src] inner circuits.</span>")
+			to_chat(user, "<span class='notice'>[src] already have that upgrade.</span>")
 	else if(istype(W, /obj/item/device/assembly/prox_sensor) && panel_open)
 		if(!isMotion())
 			upgradeMotion(user)
 			qdel(W)
 		else
-			to_chat(user, "<span class='notice'>You attach [W] into the [src] inner circuits.</span>")
+			to_chat(user, "<span class='notice'>[src] already have that upgrade.</span>")
 	else if(istype(W, /obj/item/stack/sheet/plasteel) && panel_open)
 		if(!isExplosiveImmune())
 			upgradeExplosiveImmune(user)
 			qdel(W)
 		else
-			to_chat(user, "<span class='notice'>You attach [W] into the [src] inner circuits.</span>")
+			to_chat(user, "<span class='notice'>[src] already have that upgrade.</span>")
 	//repair broken stat
-	else if(istype(W, /obj/item/stack/sheet/glass && panel_open))
+	else if(istype(W, /obj/item/stack/sheet/glass) && panel_open)
 		fix_broking_cam(user)
 		try_enable_cam()
 		to_chat(user, "<span class='notice'>You fixed some [src] damage.</span>")
@@ -178,8 +176,10 @@
 	//repair damage
 	else if(istype(W, /obj/item/stack/sheet/metal) && panel_open)
 		if(try_increase_integrity(10))
+			to_chat(user, "<span class='notice'>[src] looks stronger than before.</span>")
 			qdel(W)
-		to_chat(user, "<span class='notice'>[src] has enough margin of safety.</span>")
+		else
+			to_chat(user, "<span class='notice'>[src] has enough margin of safety.</span>")
 	// OTHER
 	else if(istype(W, /obj/item/weapon/paper))
 		user.SetNextMove(CLICK_CD_INTERACT)
@@ -243,9 +243,10 @@
 		return FALSE
 	if(amount + integrity > max_integrity)
 		amount = max_integrity - integrity
-	if(0 <= amount)
+	if(0 >= amount)
 		return FALSE
 	integrity += amount
+	return TRUE
 
 /obj/machinery/camera/proc/try_enable_cam()
 	if(stat & BROKEN|EMPED)
@@ -376,76 +377,87 @@
 	try_enable_cam()
 //failings checks
 /obj/machinery/camera/proc/isGlassPainted()
-	for(var/failin in camera_failing)
-		if(istype(failin, /obj/effect/decal/cleanable/vomit))
+	for(var/failin in camera_failings)
+		if(failin == "paint")
 			return TRUE
+		else
+			continue
 	return FALSE
 
 //upgrade checks
 /obj/machinery/camera/proc/isEmpProof()
 	for(var/upgrade_module in camera_upgrades)
-		if(istype(upgrade_module, /obj/item/stack/sheet/mineral/phoron))
+		if(upgrade_module == "phoron")
 			return TRUE
+		else
+			continue
 	return FALSE
 
 /obj/machinery/camera/proc/isXRay()
 	for(var/upgrade_module in camera_upgrades)
-		if(istype(upgrade_module, /obj/item/device/analyzer))
+		if(upgrade_module == "analyzer")
 			return TRUE
+		else
+			continue
 	return FALSE
 
 /obj/machinery/camera/proc/isMotion()
 	for(var/upgrade_module in camera_upgrades)
-		if(istype(upgrade_module, /obj/item/device/assembly/prox_sensor))
+		if(upgrade_module == "sensor")
 			return TRUE
+		else
+			continue
 	return FALSE
 
 /obj/machinery/camera/proc/isExplosiveImmune()
 	for(var/upgrade_module in camera_upgrades)
-		if(istype(upgrade_module, /obj/item/stack/sheet/plasteel))
+		if(upgrade_module == "plasteel")
 			return TRUE
+		else
+			continue
 	return FALSE
 
 //upgrading procs
 /obj/machinery/camera/proc/upgradeEmpProof(mob/user = null)
 	if(user)
 		to_chat(user, "<span class='notice'>[src] upgraded!</span>")
-	camera_upgrades += /obj/item/stack/sheet/mineral/phoron
+	camera_upgrades += "phoron"
 	update_icon()
 
 /obj/machinery/camera/proc/upgradeXRay(mob/user = null)
 	if(user)
 		to_chat(user, "<span class='notice'>[src] upgraded!</span>")
-	camera_upgrades += /obj/item/device/analyzer
+	camera_upgrades += "analyzer"
 	camera_base = "xraycam"
 	update_icon()
 // If you are upgrading Motion, and it isn't in the camera's New(), add it to the machines list.
 /obj/machinery/camera/proc/upgradeMotion(mob/user = null)
 	if(user)
 		to_chat(user, "<span class='notice'>[src] upgraded!</span>")
-	camera_upgrades += /obj/item/device/assembly/prox_sensor
+	camera_upgrades += "sensor"
 	update_icon()
 
 /obj/machinery/camera/proc/upgradeExplosiveImmune(mob/user = null)
 	if(user)
 		to_chat(user, "<span class='notice'>[src] upgraded!</span>")
-	camera_upgrades += /obj/item/stack/sheet/plasteel
+	camera_upgrades += "plasteel"
 	try_increase_integrity(max_integrity)
 	update_icon()
 //camera failings
 /obj/machinery/camera/proc/paint_lens(mob/user = null)
 	if(user)
 		to_chat(user, "<span class='notice'>[src] spoiled!</span>")
-	camera_failing += /obj/effect/decal/cleanable/vomit
-	update_icon()
+	camera_failings += "paint"
+	if(!isXRay())
+		disable_cam()
 
 /obj/machinery/camera/proc/remove_painted_lens(mob/user = null)
 	if(user)
-		to_chat(user, "<span class='notice'>Paint from [src] removed!</span>")
+		to_chat(user, "<span class='notice'>Paint removed from [src]!</span>")
 	if(isGlassPainted())
-		for(var/failin in camera_failing)
-			if(istype(failin, /obj/effect/decal/cleanable/vomit))
-				camera_failing -= failin
+		for(var/failin in camera_failings)
+			if(failin == "paint")
+				camera_failings -= failin
 
 /obj/machinery/camera/proc/can_see()
 	var/list/see = null
