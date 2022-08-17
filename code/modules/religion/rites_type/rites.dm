@@ -127,7 +127,7 @@
 	end(user, AOG)
 	if(invoke_effect(user, AOG) && religion.check_costs(favor_cost, piety_cost, user))
 		religion.adjust_favor(-favor_cost)
-		religion.adjust_favor(-piety_cost)
+		religion.adjust_piety(-piety_cost)
 		religion.ritename_by_count[name]++
 	reset_rite_wrapper(src, user, AOG)
 

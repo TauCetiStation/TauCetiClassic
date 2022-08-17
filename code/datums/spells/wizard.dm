@@ -261,7 +261,7 @@
 
 /obj/effect/proc_holder/spell/dumbfire/fireball
 	name = "Огненный Шар"
-	desc = "Выстреливает огненным шаром в цель и не требует одежды для использования."
+	desc = "Выстреливает огненным шаром в цель."
 
 	school = "evocation"
 	charge_max = 100
@@ -393,7 +393,7 @@
 		usr.RemoveSpell(src)
 		return
 
-	var/text = "<span class='[user.my_religion.style_text]'>Аколит [user.real_name]: [input]</span>"
+	var/text = "<span class='[user.my_religion.style_text]'>[user.mind.holy_role == CULT_ROLE_MASTER ? "Предвестник" : "Аколит"] [user.real_name]: [input]</span>"
 	log_say("([user.my_religion.name]) Аколит [user.real_name]: [input]")
 	for(var/mob/M in global.mob_list)
 		if(isobserver(M))
