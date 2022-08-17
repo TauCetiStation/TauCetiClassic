@@ -86,7 +86,7 @@
 		animate(b_overlay, time = 5, color = "white")
 
 /datum/craft_or_build/proc/try_to_build(mob/M)
-	if(!can_build(M, over_this, get_turf(using_this)))
+	if(!can_build(M, over_this, get_turf(M)))
 		return
 
 	M.face_atom(over_this)
@@ -105,9 +105,9 @@
 		holo_build.alpha = 160
 		holo_build.color = list(-1,0,0,0,-1,0,0,0,-1,1,1,1)
 		holo_build.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		var/failed = FALSE
 		to_chat(M, "Building [from_recipe.title] ...")
-		if(!do_skilled(M, M, from_recipe.time, from_recipe.required_skills,  -0.3))
+		var/failed = FALSE
+		if(!do_after(M, from_recipe.time, target = M))
 			failed = TRUE
 		busy = FALSE
 		if(!in_building_mode)
@@ -118,10 +118,10 @@
 		if(failed)
 			return
 
-	if(!can_build(M, over_this_saved, get_turf(using_this)))
+	if(!can_build(M, over_this_saved, get_turf(M)))
 		return
 
-	if(over_this_saved && using_this.Adjacent(over_this_saved))
+	if(over_this_saved && get_dist(M, over_this_saved) <= 1)
 		playsound(M, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)//Yes, 2nd time with timed recipe.
 		var/atom/A = new from_recipe.result_type(over_this_saved)
 		A.set_dir(build_direction)
@@ -132,37 +132,28 @@
 /turf/MouseEntered(location, control, params)
 	if(!usr.client.cob)
 		return
-	if(!usr.client.cob.in_building_mode)
-		return
-
-	if(usr.incapacitated())
-		usr.client.cob.remove_build_overlay(usr.client)
-		return
-	if(!(TK in usr.mutations) && usr.get_active_hand() != usr.client.cob.using_this && usr.get_inactive_hand() != usr.client.cob.using_this)
-		usr.client.cob.remove_build_overlay(usr.client)
-		return
-
-	if(!Adjacent(usr.client.cob.using_this))
-		return
-
-	var/turf/T = src
-	if(Adjacent(usr.client.cob.using_this))
-		var/direction = get_dir(usr.client.cob.using_this, src)
-		switch(direction)
-			if(NORTHEAST)
-				direction = EAST
-			if(SOUTHEAST)
-				direction = SOUTH
-			if(SOUTHWEST)
-				direction = WEST
-			if(NORTHWEST)
-				direction = NORTH
-
-		T = get_step(usr.client.cob.using_this, direction)
-		if(!T)
+	if(usr.client.cob.in_building_mode)
+		if(usr.incapacitated() || (usr.get_active_hand() != usr.client.cob.using_this && usr.get_inactive_hand() != usr.client.cob.using_this))
+			usr.client.cob.remove_build_overlay(usr.client)
 			return
+		var/turf/T = src
+		if(get_dist(usr, src) > 0)
+			var/direction = get_dir(usr, src)
+			switch(direction)
+				if(NORTHEAST)
+					direction = EAST
+				if(SOUTHEAST)
+					direction = SOUTH
+				if(SOUTHWEST)
+					direction = WEST
+				if(NORTHWEST)
+					direction = NORTH
 
-	usr.client.cob.over_this = T
-	usr.client.cob.b_overlay.loc = T
+			T = get_step(usr, direction)
+			if(!T)
+				return
+
+		usr.client.cob.over_this = T
+		usr.client.cob.b_overlay.loc = T
 
 #undef COB_HINT

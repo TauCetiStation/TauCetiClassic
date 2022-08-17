@@ -198,9 +198,3 @@
 	name = "Jack of All Trades"
 	desc = "Пройдя ускоренный курс подготовки к работе в космосе, ты овладел навыками во многих сферах деятельности, но достичь мастерства не удалось ни в одной."
 	requirement = "Нет."
-
-/datum/quality/quirkieish/jack_of_all_trades/add_effect(mob/living/carbon/human/H, latespawn)
-	for(var/datum/skillset/s as anything in H.mind.skills.available_skillsets)
-		LAZYREMOVE(H.mind.skills.available_skillsets, s)
-	H.mind.skills.add_available_skillset(/datum/skillset/jack_of_all_trades)
-	H.mind.skills.maximize_active_skills()
