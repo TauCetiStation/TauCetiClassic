@@ -34,7 +34,7 @@
 	icon = 'icons/obj/inflatable.dmi'
 	icon_state = "wall"
 
-	var/health = 50.0
+	max_integrity = 50
 
 
 /obj/structure/inflatable/atom_init()
@@ -47,19 +47,6 @@
 
 /obj/structure/inflatable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 0
-
-/obj/structure/inflatable/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			qdel(src)
-			return
-		if(EXPLODE_LIGHT)
-			if(prob(50))
-				return
-	deflate(1)
-
-/obj/structure/inflatable/blob_act()
-	deflate(1)
 
 /obj/structure/inflatable/attack_paw(mob/user)
 	return attack_generic(user, 15, BRUTE, MELEE)

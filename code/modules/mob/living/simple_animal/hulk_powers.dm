@@ -412,18 +412,13 @@
 
 	return
 
-/obj/structure/girder/attack_animal(mob/user)
-	..()
-	if(istype(user, /mob/living/simple_animal/hulk))
-		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		if (prob(75))
-			to_chat(user, text("<span class='notice'>You destroy that girder!</span>"))
-			user.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
-			new /obj/item/stack/sheet/metal(get_turf(src))
-			qdel(src)
-		else
-			to_chat(user, text("<span class='notice'>You punch the girder.</span>"))
-	return
+/obj/structure/girder/attack_hulk(mob/user)
+	. = ..()
+	if(QDELETED(src))
+		to_chat(user, "<span class='notice'>You destroy that girder!</span>")
+		user.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
+	else
+		to_chat(user, "<span class='notice'>You punch the girder.</span>")
 
 /obj/structure/girder/attack_paw(mob/user)
 	return attack_hand(user)
@@ -441,8 +436,7 @@
 	if (prob(75))
 		to_chat(user, text("<span class='notice'>You destroy that girder!</span>"))
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		new /obj/item/stack/sheet/metal(loc)
-		qdel(src)
+		deconstruct(TRUE)
 	else
 		to_chat(user, text("<span class='notice'>You punch the girder.</span>"))
 

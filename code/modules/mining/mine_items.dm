@@ -744,7 +744,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "surv_wall0"
 	var/basestate = "surv_wall"
 	opacity = TRUE
-	health = 100
+	max_integrity = 100
 
 /obj/structure/inflatable/survival/atom_init()
 	. = ..()

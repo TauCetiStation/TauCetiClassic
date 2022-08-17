@@ -5,7 +5,7 @@
 	density = TRUE
 	layer = 2.9
 	var/state = 0
-	var/health = 200
+	max_integrity = 200
 	canSmoothWith = list(
 		/turf/simulated/wall,
 		/turf/simulated/wall/r_wall,
@@ -16,14 +16,6 @@
 		/obj/structure/girder/cult,
 	)
 	smooth = SMOOTH_TRUE
-
-/obj/structure/girder/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	if(istype(Proj, /obj/item/projectile/beam))
-		health -= Proj.damage
-		if(health <= 0)
-			new /obj/item/stack/sheet/metal(get_turf(src))
-			qdel(src)
 
 /obj/structure/girder/attackby(obj/item/W, mob/user)
 	if(user.is_busy()) return
@@ -171,6 +163,11 @@
 	else
 		..()
 
+/obj/structure/girder/play_attack_sound(damage_amount, damage_type, damage_flag)
+	switch(damage_type)
+		if(BRUTE, BURN)
+			playsound(loc, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+
 /obj/structure/girder/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
 		return ..()
@@ -182,48 +179,25 @@
 	new remains(loc)
 	..()
 
-/obj/structure/girder/blob_act()
-	if(prob(40))
-		qdel(src)
-
-
-/obj/structure/girder/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			qdel(src)
-			return
-		if(EXPLODE_HEAVY)
-			if(prob(70))
-				return
-		if(EXPLODE_LIGHT)
-			if(prob(95))
-				return
-	deconstruct(FALSE)
-
 /obj/structure/girder/attack_animal(mob/living/simple_animal/attacker)
-	if(attacker.environment_smash)
-		..()
+	. = ..()
+	if(.)
 		attacker.visible_message("<span class='warning'>[attacker] крушит каркас.</span>", \
 			 "<span class='warning'>Вы крушите каркас.</span>", \
 			 "Вы слышите скрежет металла.")
-		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		health -= attacker.melee_damage * 10
-		if(health <= 0)
-			new /obj/item/stack/sheet/metal(get_turf(src))
-			qdel(src)
 
 /obj/structure/girder/displaced
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "displaced"
 	anchored = FALSE
-	health = 50
+	max_integrity = 50
 	smooth = SMOOTH_FALSE
 
 /obj/structure/girder/reinforced
 	icon = 'icons/obj/smooth_structures/girder_reinforced.dmi'
 	icon_state = "box"
 	state = 2
-	health = 500
+	max_integrity = 500
 
 /obj/structure/girder/cult
 	icon= 'icons/obj/smooth_structures/cult_girder.dmi'
@@ -231,7 +205,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = 2.9
-	health = 250
+	max_integrity = 250
 	smooth = SMOOTH_TRUE
 
 /obj/structure/girder/cult/Destroy()
