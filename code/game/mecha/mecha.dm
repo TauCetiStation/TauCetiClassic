@@ -91,8 +91,6 @@
 	var/mouse_pointer
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
-	var/list/speed_skills = list(/datum/skill/civ_mech = SKILL_LEVEL_TRAINED)
-	var/list/interface_skills = list(/datum/skill/civ_mech = SKILL_LEVEL_TRAINED)
 
 /obj/mecha/atom_init()
 	. = ..()
@@ -299,9 +297,6 @@
 		VARSET_IN(src, can_move, TRUE, apply_skill_bonus(occupant, step_in, speed_skills, -0.2) * move_result) // -20% to step_in for each level
 		return 1
 	return 0
-
-/obj/mecha/proc/check_fumbling(fumble_text)
-	return handle_fumbling(occupant, occupant, SKILL_TASK_VERY_EASY, interface_skills, fumble_text, can_move = TRUE, check_busy = FALSE)
 
 /obj/mecha/proc/mechturn(direction)
 	set_dir(direction)
