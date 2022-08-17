@@ -577,8 +577,6 @@ SUBSYSTEM_DEF(ticker)
 	L.equipOutfit(/datum/outfit/arena)
 	L.name = L.key
 	L.real_name = L.name
-	L.mind.skills.add_available_skillset(/datum/skillset/max)
-	L.mind.skills.maximize_active_skills()
 	to_chat(L, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>")
 
 /datum/controller/subsystem/ticker/proc/achievement_declare_completion()
