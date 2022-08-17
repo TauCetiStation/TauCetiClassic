@@ -11,7 +11,6 @@
 	logo_state = "nuke-logo"
 
 	var/nuclear_outfit = /datum/outfit/nuclear
-	skillset_type = /datum/skillset/nuclear_operative
 
 	var/TC_num = 0 // using for statistics
 
@@ -73,7 +72,6 @@
 	logo_state = "nuke-logo-leader"
 
 	nuclear_outfit = /datum/outfit/nuclear/leader
-	skillset_type = /datum/skillset/nuclear_operative_leader
 
 	TC_num = 25
 
