@@ -620,7 +620,7 @@
 					BP.disfigured = FALSE
 					to_chat(M, "Your face is shaped normally again.")
 		if(35 to INFINITY)
-			M.adjustToxLoss(1)
+			//M.adjustToxLoss(1)
 			M.make_dizzy(5)
 			M.make_jittery(5)
 

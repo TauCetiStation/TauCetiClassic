@@ -30,3 +30,7 @@
 	var/datum/robot_component/actuator/A = get_component("actuator")
 	if (cell_use_power(A.active_usage))
 		return ..()
+
+/mob/living/silicon/robot/MobBump(mob/M)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_BORG_MOB_BUMP, M)
