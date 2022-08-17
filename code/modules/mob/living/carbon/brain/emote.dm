@@ -1,6 +1,6 @@
 /mob/living/carbon/brain
 	default_emotes = list(
-		/datum/emote/list,
+		/datum/emote/help,
 		/datum/emote/pray,
 		/datum/emote/robot/beep,
 		/datum/emote/robot/ping,
