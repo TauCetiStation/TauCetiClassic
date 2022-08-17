@@ -187,10 +187,9 @@
 /obj/item/organ/external/emp_act(severity)
 	controller.emp_act(severity)
 
-/obj/item/organ/external/attacked_by(obj/item/attacking_item, mob/living/user)
-	return // prevent basic take_damage usage (TODO remove workaround)
-
 /obj/item/organ/external/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
+	if(!isnum(burn))
+		return // prevent basic take_damage usage (TODO remove workaround)
 	return controller.take_damage(brute, burn, damage_flags, used_weapon)
 
 /obj/item/organ/external/proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
