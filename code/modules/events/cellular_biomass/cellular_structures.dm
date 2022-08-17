@@ -77,7 +77,7 @@
 
 /obj/structure/cellular_biomass/core
 	layer = 3
-	max_integrity =  = 120
+	max_integrity = 120
 	light_color = "#710f8c"
 	light_range = 3
 	icon_state = "light_1"
