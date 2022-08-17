@@ -13,7 +13,6 @@
 	salary = 160
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/qm
-
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -39,7 +38,6 @@
 	outfit = /datum/outfit/job/cargo_tech
 
 
-
 /datum/job/mining
 	title = "Shaft Miner"
 	flag = MINER
@@ -56,7 +54,6 @@
 	outfit = /datum/outfit/job/mining
 
 
-
 /datum/job/recycler
 	title = "Recycler"
 	flag = RECYCLER
@@ -71,7 +68,6 @@
 	salary = 60
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/recycler
-
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm

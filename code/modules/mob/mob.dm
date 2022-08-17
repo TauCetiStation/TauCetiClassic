@@ -958,7 +958,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		to_chat(U, "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>")
 
-	if(!do_skilled(U, S, SKILL_TASK_DIFFICULT, list(/datum/skill/medical = SKILL_LEVEL_TRAINED), -0.2))
+	if(!do_after(U, 80, target = S))
 		return
 	if(QDELETED(S) || QDELETED(U) || selection.loc != S)
 		return

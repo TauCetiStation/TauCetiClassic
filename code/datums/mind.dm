@@ -189,7 +189,6 @@
 	popup.set_content(out)
 	popup.open()
 
-
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))
 		return
@@ -461,6 +460,7 @@
 			if("undress")
 				for(var/obj/item/W in current)
 					current.drop_from_inventory(W)
+
 	else if (href_list["refresh"])
 		edit_memory()
 		return
@@ -638,17 +638,14 @@
 	if(mind)
 		mind.key = key
 	else
-		create_mind()
+		mind = new /datum/mind(key)
+		mind.original = src
+		if(SSticker)
+			SSticker.minds += mind
+		else
+			world.log << "## DEBUG: mind_initialize(): No SSticker ready yet! Please inform Carn"
 	if(!mind.name)	mind.name = real_name
 	mind.set_current(src)
-
-/mob/proc/create_mind()
-	mind = new /datum/mind(key)
-	mind.original = src
-	if(SSticker)
-		SSticker.minds += mind
-	else
-		world.log << "## DEBUG: mind_initialize(): No SSticker ready yet! Please inform Carn"
 
 //HUMAN
 /mob/living/carbon/human/mind_initialize()

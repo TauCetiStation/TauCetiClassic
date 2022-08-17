@@ -19,6 +19,10 @@
 		if (dish)
 			to_chat(user, "\The [src] is already loaded.")
 			return
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 0ee1a3c265 (Умения для персонажей (Fin) (#9201))
 		dish = I
 		c.drop_from_inventory(I, src)
 		updateUsrDialog()

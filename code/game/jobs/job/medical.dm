@@ -19,7 +19,6 @@
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/cmo
-
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -70,7 +69,6 @@
 	salary = 120
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
 	outfit = /datum/outfit/job/paramedic
-
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -102,7 +100,6 @@
 	outfit = /datum/outfit/job/chemist
 
 
-
 /datum/job/geneticist
 	title = "Geneticist"
 	flag = GENETICIST
@@ -117,7 +114,6 @@
 	salary = 180
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/geneticist
-
 
 
 /datum/job/virologist
@@ -135,7 +131,6 @@
 	minimal_player_ingame_minutes = 960
 	salary = 180
 	outfit = /datum/outfit/job/virologist
-
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -162,7 +157,6 @@
 	outfit = /datum/outfit/job/psychiatrist
 
 
-
 /datum/job/intern
 	title = "Medical Intern"
 	flag = INTERN
@@ -176,5 +170,4 @@
 	access = list(access_medical)
 	salary = 50
 	outfit = /datum/outfit/job/intern
-
 

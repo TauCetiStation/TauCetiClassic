@@ -17,6 +17,10 @@
 		if(sample)
 			to_chat(user, "\The [src] is already loaded.")
 			return
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 0ee1a3c265 (Умения для персонажей (Fin) (#9201))
 		sample = O
 		user.drop_from_inventory(O, src)
 

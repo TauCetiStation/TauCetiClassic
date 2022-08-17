@@ -90,6 +90,7 @@
 	if(stat & (NOPOWER|BROKEN) || get_dist(src, user) > 1 && !issilicon(user) && !isobserver(user))
 		user.unset_machine(src)
 		return
+
 	var/dat = ""
 	dat += "<HR>"
 	if(!pod1)

@@ -27,7 +27,9 @@
 	var/stored_core_stability_delay = 0
 
 	var/stored_power = 0//Power to deploy per tick
-	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
+<<<<<<< HEAD
+	=======
+>>>>>>> parent of 0ee1a3c265 (Умения для персонажей (Fin) (#9201))
 
 
 /obj/machinery/power/am_control_unit/atom_init()

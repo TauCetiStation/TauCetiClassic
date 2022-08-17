@@ -19,7 +19,6 @@
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/hos
-
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -44,7 +43,6 @@
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
 	outfit = /datum/outfit/job/warden
-
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -69,7 +67,6 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/detective
-
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -142,7 +139,6 @@
 	minimal_player_age = 2
 	minimal_player_ingame_minutes = 520
 	outfit = /datum/outfit/job/cadet
-
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm

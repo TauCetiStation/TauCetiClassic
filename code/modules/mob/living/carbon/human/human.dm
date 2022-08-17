@@ -638,16 +638,7 @@
 		electrocution_animation(40)
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(href_list["skill"])
-		update_skills(href_list)
-	if(href_list["set_max_skills"])
-		mind.skills.maximize_active_skills()
-		to_chat(usr, "<span class='notice'>You are trying your best now.</span>")
-	if(href_list["help_other"])
-		var/mob/target = locate(href_list["help_other"])
-		help_other(target)
-	if(href_list["request_help"])
-		ask_for_help()
+
 	if (href_list["item"])
 		var/slot = text2num(href_list["item"])
 		if(slot in check_obscured_slots())
@@ -1504,163 +1495,6 @@
 		W.message = message
 		W.add_fingerprint(src)
 
-/mob/living/carbon/human/verb/skills_menu()
-	set category = "IC"
-	set name = "Skills Menu"
-	var/list/tables_data = list(
-		"Engineering related skills" = list(
-			/datum/skill/engineering,
-			/datum/skill/construction,
-			/datum/skill/atmospherics
-			),
-		"Medical skills" = list(
-			/datum/skill/medical,
-			/datum/skill/surgery,
-			/datum/skill/chemistry
-			),
-		"Combat skills" = list(
-			/datum/skill/melee,
-			/datum/skill/firearms,
-			/datum/skill/police,
-			/datum/skill/combat_mech
-			),
-		"Civilian skills" = list(
-			/datum/skill/command,
-			/datum/skill/research,
-			/datum/skill/civ_mech
-			)
-	)
-	var/dat = {"
-		<style>
-			.skill_slider {
-				width: 100%;
-				position: relative;
-				padding: 0;
-			}
-			table {
-				line-height: 5px;
-				width: 100%;
-				border-collapse: collapse;
-				border: 1px solid;
-				padding: 0;
-			}
-			td {
-				width: 25%;
-			}
-			td:nth-child(2n+0) {
-				width: 65%;
-			}
-			td:nth-child(3n+0) {
-				width: 10%;
-			}
-			caption {
-				line-height: normal;
-				color: white;
-				background-color: #444;
-				font-weight: bold;
-			}
-			.container{
-				text-align: center;
-				width: 100%;
-			}
-		</style>
-		"}
-	dat += {"
-		<div class = "container">
-			<button type="submit" value="1" onclick="setMaxSkills()">Set skills values to maximum</button>
-			<button type="submit" value="1" onclick="AskHelp()">Ask others for help</button>
-		</div>
-	"}
-	for(var/category in tables_data)
-		dat += {"
-			<table>
-				<caption>[category]</caption>
-		"}
-
-		var/list/sliders_data = tables_data[category]
-
-		for(var/datum/skill/s as anything in sliders_data)
-			var/datum/skill/skill = all_skills[s]
-			var/slider_id = skill.name
-			var/slider_value = mind.skills.get_value(s)
-			var/slider_min_value = SKILL_LEVEL_MIN
-			var/slider_max_value = mind.skills.get_max(s)
-			var/rank_list = skill.custom_ranks
-			var/rank_list_element = ""
-			for(var/rank in rank_list)
-				rank_list_element += "[rank]\n"
-			if(slider_max_value == slider_min_value)
-				continue
-			var/slider_hint = "Hint: [skill.hint]\n\nSkill ranks:\n[rank_list_element]"
-			dat += {"
-				<tr>
-					<td>
-						[slider_id] <span title="[slider_hint]">(?)</span>:
-					</td>
-					<td>
-						<input type="range" class="skill_slider" min="[slider_min_value]" max="[slider_max_value]" value="[slider_value]" id="[slider_id]" onchange="updateSkill('[slider_id]')" >
-					</td>
-					<td>
-						<p><b><center><a href='?src=\ref[src];skill=[slider_id]&value=[slider_value]'><span id="[slider_id]_value">[slider_value]</span></a></center></b></p>
-					</td>
-				</tr>
-			"}
-
-		dat += {"
-			</table>
-		"}
-
-	dat +={"
-		<p><span id="notice">&nbsp;</span></p>
-		<script>
-			var skillUpdating = false;
-			function updateSkill(slider_id) {
-				if (!skillUpdating) {
-					skillUpdating = true;
-					setTimeout(function() {
-						setSkill(slider_id);
-					}, 300);
-				}
-			}
-			function setSkill(slider_id) {
-				var element =  document.getElementById(slider_id);
-				var value = element.value;
-				window.location = 'byond://?src=\ref[src];skill=' + slider_id + '&value=' + value;
-				skillUpdating = false;
-
-				document.getElementById(slider_id + "_value").innerHTML = value;
-			}
-			function setMaxSkills() {
-				window.location  = 'byond://?src=\ref[src];set_max_skills=1';
-				setTimeout("location.reload(true);", 100);
-			}
-			function AskHelp()
-			{
-				window.location  = 'byond://?src=\ref[src];request_help=1';
-				setTimeout("location.reload(true);", 100);
-			}
-		</script>
-		"}
-	var/style = CSS_THEME_DARK
-	if (mind.antag_roles.len)
-		style = CSS_THEME_SYNDICATE
-	var/datum/browser/popup = new(usr, "mob\ref[src]", "Skills menu", 620, 500, null, style)
-	popup.set_content(dat)
-	popup.open()
-
-/mob/living/carbon/human/proc/update_skills(href_list)
-	var/skill_name = href_list["skill"]
-	var/value = text2num(href_list["value"])
-	if(!isnum(value) || !istext(skill_name))
-		return
-	if(!mind)
-		return
-	for(var/skill_type in all_skills)
-		var/datum/skill/skill = all_skills[skill_type]
-		if(skill.name == skill_name)
-			mind.skills.choose_value(skill_type, value)
-			return
-
 
 /mob/living/carbon/human/verb/examine_ooc()
 	set name = "Examine OOC"
@@ -1714,19 +1548,19 @@
 			if(error_msg)
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
-		//untrained 8 seconds, novice 6.8, trained 5.6, pro 4.4, expert 3.2 and master 2
-		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) //-15% for each medical level
+
 		if(!instant)
+			var/time_to_inject = HUMAN_STRIP_DELAY
 			if(hunt_injection_port) // takes additional time
 				if(!stealth)
 					user.visible_message("<span class='danger'>[user] begins hunting for an injection port on [src]'s suit!</span>")
-				if(!do_mob(user, src, injection_time / 2, TRUE))
+				if(!do_mob(user, src, time_to_inject / 2, TRUE))
 					return FALSE
 
 			if(!stealth)
 				user.visible_message("<span class='danger'>[user] is trying to inject [src]!</span>")
 
-			if(!do_mob(user, src, injection_time, TRUE))
+			if(!do_mob(user, src, time_to_inject, TRUE))
 				return FALSE
 
 		if(!stealth)
@@ -1735,6 +1569,7 @@
 		else
 			to_chat(user, "<span class'notice'>You inject [src] with the injector.</span>")
 			to_chat(src, "<span class='warning'>You feel a tiny prick!</span>")
+
 
 	return TRUE
 

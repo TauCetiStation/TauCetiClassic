@@ -295,12 +295,6 @@
 			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
 				for(var/datum/reagent/R in reagents.reagent_list)
 					msg += "<br><span class='info'>[R.volume] units of [R.name]</span>"
-			else if (is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_MASTER)))
-				if(length(reagents.reagent_list) == 1)
-					msg += "<br><span class='info'>[reagents.reagent_list[1].volume] units of [reagents.reagent_list[1].name]</span>"
-				else
-					for(var/datum/reagent/R in reagents.reagent_list)
-						msg += "<br><span class='info'>[R.volume + R.volume * rand(-25,25) / 100] units of [R.name]</span>"
 			else
 				msg += "<br><span class='info'>[reagents.total_volume] units of liquid.</span>"
 		else

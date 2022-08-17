@@ -6,7 +6,6 @@
 
 	antag_hud_type = ANTAG_HUD_REV
 	antag_hud_name = "hudrevolutionary"
-	change_to_maximum_skills = FALSE
 
 /datum/role/rev/CanBeAssigned(datum/mind/M)
 	if(!..())

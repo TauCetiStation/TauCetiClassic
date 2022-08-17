@@ -361,13 +361,15 @@
 			if(!damage)
 				return
 			to_chat(user, "<span class='warning'>Вы ремонтируете стену.</span>")
-			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
+			if(WT.use_tool(src, user, 100, 3, 100))
+				if(!iswallturf(src))
+					return
 				to_chat(user, "<span class='notice'>Вы отремонтировали стену.</span>")
 				take_damage(-damage)
 
 		else
 			to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
-			if(WT.use_tool(src, user, SKILL_TASK_DIFFICULT, 3, 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
+			if(WT.use_tool(src, user, 100, 3, 100))
 				if(!iswallturf(src))
 					return
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
@@ -377,7 +379,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
-		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100))
+		if(W.use_tool(src, user, 60, volume = 100))
 			if(mineral == "diamond")//Oh look, it's tougher
 				sleep(60)
 			if(!iswallturf(src) || !user || !W || !T)
@@ -394,7 +396,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Вы бурите сквозь стену.</span>")
-		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
+		if(W.use_tool(src, user, 60, volume = 50))
 			if(mineral == "diamond")
 				sleep(60)
 			if(!iswallturf(src) || !user || !W || !T)

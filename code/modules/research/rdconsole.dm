@@ -54,7 +54,10 @@ cause a ton of data to be lost, an admin can go send it back.
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 	allowed_checks = ALLOWED_CHECK_NONE
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 0ee1a3c265 (Умения для персонажей (Fin) (#9201))
 /obj/machinery/computer/rdconsole/proc/CallMaterialName(ID)
 	var/datum/reagent/temp_reagent
 	var/return_name = null
@@ -427,6 +430,7 @@ cause a ton of data to be lost, an admin can go send it back.
 /obj/machinery/computer/rdconsole/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if((screen == "protolathe" && !linked_lathe) || (screen == "circuit_imprinter" && !linked_imprinter))
 		screen = "main" // Kick us from protolathe or imprinter screen if they were destroyed
+
 	var/list/data = list()
 	data["screen"] = screen
 	data["sync"] = sync

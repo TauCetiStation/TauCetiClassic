@@ -1,6 +1,6 @@
 /mob/living/carbon/xenomorph/larva
 	default_emotes = list(
-		/datum/emote/list,
+		/datum/emote/help,
 		/datum/emote/pray,
 		/datum/emote/twitch,
 		/datum/emote/drool,

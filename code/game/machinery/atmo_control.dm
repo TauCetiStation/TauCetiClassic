@@ -82,7 +82,6 @@
 	var/list/sensors = list()
 
 	var/list/sensor_information = list()
-	required_skills = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)
 
 
 /obj/machinery/computer/general_air_control/ui_interact(mob/user)
@@ -219,6 +218,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 	. = ..()
 	if(!.)
 		return
+
 	if(href_list["adj_pressure"])
 		var/change = text2num(href_list["adj_pressure"])
 		pressure_setting = between(0, pressure_setting + change, MAX_PUMP_PRESSURE)

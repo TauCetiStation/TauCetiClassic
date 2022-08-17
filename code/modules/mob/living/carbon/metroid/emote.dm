@@ -1,6 +1,6 @@
 /mob/living/carbon/slime
 	default_emotes = list(
-		/datum/emote/list,
+		/datum/emote/help,
 		/datum/emote/pray,
 		/datum/emote/moan,
 		/datum/emote/shiver,

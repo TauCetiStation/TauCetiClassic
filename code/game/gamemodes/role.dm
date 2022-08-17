@@ -34,10 +34,6 @@
 	// Allows you to change the number of greeting messages for a role
 	var/list/greets = list(GREET_DEFAULT, GREET_CUSTOM)
 
-	var/skillset_type
-	//if set to true, users skills will be set to maximum available after he gets this role
-	var/change_to_maximum_skills = TRUE
-
 	// Type for collector of statistics by this role
 	var/datum/stat/role/stat_type = /datum/stat/role
 
@@ -94,6 +90,8 @@
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
+	if(!isnull(skillset_type))
+		M.skills.remove_available_skillset(skillset_type)
 
 	remove_antag_hud()
 	if(M.current?.hud_used)

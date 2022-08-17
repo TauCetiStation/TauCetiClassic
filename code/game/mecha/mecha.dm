@@ -434,8 +434,6 @@
 	return attack_hand(user)
 
 /obj/mecha/proc/toggle_strafe()
-	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to toggle strafing mode [!strafe?"on":"off"].</span>"))
-		return
 	strafe = !strafe
 	prev_move_dir = 0
 
@@ -850,8 +848,7 @@
 
 	if(!has_charge(lights_power))
 		return
-	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to toggle lights [!lights?"on":"off"].</span>"))
-		return
+
 	lights = !lights
 	if(lights)
 		set_light(light_range + lights_power)
@@ -865,8 +862,7 @@
 /obj/mecha/proc/toggle_internal_tank()
 	if(usr != src.occupant)
 		return
-	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to toggle internal tank usage [!use_internal_tank?"on":"off"].</span>"))
-		return
+
 	use_internal_tank = !use_internal_tank
 	occupant_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
 	log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
@@ -993,8 +989,7 @@
 /obj/mecha/proc/view_stats()
 	if(usr != src.occupant)
 		return
-	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to open exosuit stats.</span>"))
-		return
+
 	src.occupant << browse(get_stats_html(), "window=exosuit")
 	return
 

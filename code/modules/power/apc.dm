@@ -137,7 +137,6 @@
 	var/static/list/status_overlays_equipment
 	var/static/list/status_overlays_lighting
 	var/static/list/status_overlays_environ
-	required_skills = list()
 
 
 /obj/machinery/power/apc/atom_init(mapload, ndir, building = 0)

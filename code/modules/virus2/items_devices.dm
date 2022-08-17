@@ -12,6 +12,7 @@
 	if(!iscarbon(M))
 		report("Scan aborted: Incompatible target.", user)
 		return
+
 	var/mob/living/carbon/C = M
 	if (ishuman(C))
 		var/mob/living/carbon/human/H = C

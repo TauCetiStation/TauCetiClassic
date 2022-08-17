@@ -77,8 +77,6 @@
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
-	// Is using this item requires any specific skills?
-	var/list/required_skills
 
 	var/dyed_type
 
@@ -292,20 +290,9 @@
 			to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
 			return
 
-	throwing = FALSE
+	src.throwing = 0
 
-	if(freeze_movement || !user.can_pickup(src))
-		return
-
-	remove_outline()
-	add_fingerprint(user)
-
-	if(!pickup(user))
-		return
-
-	user.SetNextMove(CLICK_CD_RAPID)
-
-	if(loc == user)
+	if(src.loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
 		if(!canremove)
 			return
@@ -753,7 +740,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null, required_skills_override = null, skills_speed_bonus = -0.4)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -762,17 +749,7 @@
 	if(!delay && !tool_start_check(user, amount))
 		return
 
-	var/skill_bonus = 1
-	
-	//in case item have no defined default required_skill or we need to check other skills e.g. check crowbar for surgery
-	if(required_skills_override)
-		skill_bonus = apply_skill_bonus(user, 1, required_skills_override, skills_speed_bonus)
-	else if(required_skills) //default check for item
-		skill_bonus = apply_skill_bonus(user, 1, required_skills, skills_speed_bonus)
-	
-	
 	delay *= toolspeed
-	delay *= max(skill_bonus, 0.1)
 
 	if(!isnull(quality))
 		var/qual_mod = get_quality(quality)

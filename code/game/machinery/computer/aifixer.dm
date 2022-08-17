@@ -71,6 +71,7 @@
 	. = ..()
 	if(!.)
 		return
+
 	if (href_list["fix"])
 		src.active = 1
 		add_overlay(image('icons/obj/computer.dmi', "ai-fixer-on"))

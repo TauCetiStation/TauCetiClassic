@@ -6,7 +6,21 @@
 	light_color = "#ffffff"
 	var/mob/living/silicon/ai/current = null
 	var/opened = FALSE
-	req_access = list(access_rd)
+
+/obj/machinery/computer/aiupload/verb/AccessInternals()
+	set category = "Object"
+	set name = "Access Computer's Internals"
+	set src in oview(1)
+	if(get_dist(src, usr) > 1 || usr.restrained() || usr.lying || usr.stat || issilicon(usr))
+		return
+
+	opened = !opened
+	if(opened)
+		to_chat(usr, "<span class='notice'>The access panel is now open.</span>")
+	else
+		to_chat(usr, "<span class='notice'>The access panel is now closed.</span>")
+	return
+
 
 /obj/machinery/computer/aiupload/attackby(obj/item/weapon/O, mob/user)
 	if(!is_station_level(z))
@@ -21,10 +35,6 @@
 /obj/machinery/computer/aiupload/attack_hand(mob/user)
 	. = ..()
 	if(.)
-		return
-	var/mob/living/carbon/human/H = user
-	if(!check_access(H.get_active_hand()) && !check_access(H.wear_id))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	current = select_active_ai(user)
 	if (!current)
@@ -46,7 +56,6 @@
 	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/borgupload
 	var/mob/living/silicon/robot/current = null
-	req_access = list(access_rd)
 
 /obj/machinery/computer/borgupload/attackby(obj/item/weapon/aiModule/module, mob/user)
 	if(!is_station_level(z))
@@ -62,13 +71,8 @@
 	. = ..()
 	if(.)
 		return
-	if(!do_skill_checks(user))
-		return
-	var/mob/living/carbon/human/H = user
-	if(!check_access(H.get_active_hand()) && !check_access(H.wear_id))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
-		return
 	current = freeborg()
+
 	if (!current)
 		to_chat(user, "No free cyborgs detected.")
 	else

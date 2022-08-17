@@ -28,6 +28,7 @@
 		if(beaker)
 			to_chat(user, "\The [src] is already loaded.")
 			return
+
 		beaker = O
 		user.drop_from_inventory(O, src)
 
@@ -42,6 +43,7 @@
 		if(dish)
 			to_chat(user, "The dish tray is aleady full!")
 			return
+
 		dish = O
 		user.drop_from_inventory(O, src)
 

@@ -96,7 +96,6 @@
 			user.unset_machine()
 			user << browse(null, "window=shield_generator")
 			return
-
 	var/t = ""
 	if(locked && !isobserver(user))
 		t += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"

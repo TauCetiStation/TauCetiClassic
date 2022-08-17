@@ -162,9 +162,7 @@
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
-		if(mind)
-			mind.transfer_to(mmi.brainmob)
-			mmi.brainmob.mind.skills.remove_available_skillset(/datum/skillset/max)
+		if(mind)	mind.transfer_to(mmi.brainmob)
 		mmi = null
 	return ..()
 

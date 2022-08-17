@@ -18,7 +18,6 @@
 	salary = 250
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
-
 	outfit = /datum/outfit/job/rd
 	/*
 		HEY YOU!
@@ -60,7 +59,6 @@
 	salary = 190
 	minimal_player_ingame_minutes = 1400
 	outfit = /datum/outfit/job/xenoarchaeologist
-
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
@@ -84,7 +82,6 @@
 	salary = 190
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/xenobiologist
-
 
 
 /datum/job/roboticist
@@ -117,5 +114,4 @@
 	access = list(access_research)
 	salary = 50
 	outfit = /datum/outfit/job/research_assistant
-
 
