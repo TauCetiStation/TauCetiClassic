@@ -303,19 +303,21 @@
 	else
 		to_chat(user, "It is empty.")
 
+/obj/item/toy/crayon/spraycan/verb/toggle_cap()
+	set name = "Toggle Cap"
+	set category = "Object"
+
+	to_chat(usr, "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>")
+	capped = !capped
+	icon_state = "spraycan[capped ? "_cap" : ""]"
+	update_icon()
+
 /obj/item/toy/crayon/spraycan/attack_self(mob/living/user)
-	var/choice = input(user,"Spraycan options") as null|anything in list("Toggle Cap","Change Drawing","Change Color")
-	switch(choice)
-		if("Toggle Cap")
-			to_chat(user, "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>")
-			capped = capped ? 0 : 1
-			icon_state = "spraycan[capped ? "_cap" : ""]"
-			update_icon()
-		if("Change Drawing")
-			..()
-		if("Change Color")
-			colour = input(user,"Choose Color") as color
-			update_icon()
+	if(capped)
+		toggle_cap()
+		return
+	colour = input(user,"Choose Color") as color
+	update_icon()
 
 /obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)

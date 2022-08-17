@@ -123,12 +123,15 @@
 		if("paint")
 			var/obj/item/I = user.get_active_hand()
 			var/color = get_paint_tool_color(I)
-			if(!color)
-				return FALSE
+
 			var/x = text2num(params["x"])
 			var/y = text2num(params["y"])
 			if(x < 0 || x > width || y < 0 || y > height)
 				return
+
+			if(!color)
+				to_chat(user, "<span class='notice'>After looking at this particular dot on canvas, you can surely say it's color encoding is: [grid[x][y]].</span>")
+				return FALSE
 
 			grid[x][y] = color
 			used = TRUE
