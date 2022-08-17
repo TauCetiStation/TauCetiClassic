@@ -226,7 +226,7 @@
 		..()
 		if(isitem(W))
 			var/obj/item/I = W
-			if(I.force >= 15)									//some sharp items have less than 15 damage, but its needed for balance
+			if(I.force >= 15)		//some sharp items have less than 15 damage, but its needed for balance
 				take_damage(I.force, user, alarm = TRUE)		//cameras immune to things that are easy to get (like air tank, fire extinguisher)
 
 /obj/machinery/camera/proc/bombastic_shot(obj/item/weapon/gun, mob/living/user)
@@ -236,7 +236,7 @@
 	if(do_after(user, 20, target = src))	//can_move = TRUE when it have rework
 		user.visible_message("<span class='warning'>[user] shoots in the [src]!</span>",
 		"<span class='notice'>You fire into the [src] lens.</span>")
-		gun.afterattack(src, user) //there is no damage today, waiting for full desctruction
+		gun.afterattack(src, user)
 
 /obj/machinery/camera/proc/try_increase_integrity(amount)
 	if(!integrity || !max_integrity)
@@ -283,7 +283,7 @@
 	disconnect_viewers()
 	update_icon()
 
-/obj/machinery/camera/proc/energize_cam() //list/previous_network //network = previous_network
+/obj/machinery/camera/proc/energize_cam()
 	if(stat & EMPED)
 		stat &= ~EMPED
 	try_enable_cam()
@@ -389,16 +389,12 @@
 	for(var/upgrade_module in camera_upgrades)
 		if(upgrade_module == "phoron")
 			return TRUE
-		else
-			continue
 	return FALSE
 
 /obj/machinery/camera/proc/isXRay()
 	for(var/upgrade_module in camera_upgrades)
 		if(upgrade_module == "analyzer")
 			return TRUE
-		else
-			continue
 	return FALSE
 
 /obj/machinery/camera/proc/isMotion()
