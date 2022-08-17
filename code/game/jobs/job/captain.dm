@@ -14,7 +14,6 @@
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 3900
 	outfit = /datum/outfit/job/captain
-	skillsets = list("Captain" = /datum/skillset/captain)
 
 // Non-human species can't be captains.
 /datum/job/captain/special_species_check(datum/species/S)
@@ -58,4 +57,3 @@
 		~Luduk
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
-	skillsets = list("Head of Personnel" = /datum/skillset/hop)

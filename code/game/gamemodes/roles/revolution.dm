@@ -6,7 +6,6 @@
 
 	antag_hud_type = ANTAG_HUD_REV
 	antag_hud_name = "hudrevolutionary"
-	skillset_type = /datum/skillset/revolutionary
 	change_to_maximum_skills = FALSE
 
 /datum/role/rev/CanBeAssigned(datum/mind/M)
@@ -40,7 +39,6 @@
 	antag_hud_name = "hudheadrevolutionary"
 
 	var/rev_cooldown = 0
-	skillset_type = /datum/skillset/max
 
 /datum/role/rev_leader/New()
 	..()

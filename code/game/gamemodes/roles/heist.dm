@@ -8,7 +8,6 @@
 	disallow_job = TRUE
 
 	logo_state = "raider-logo"
-	skillset_type = /datum/skillset/max
 
 /datum/role/vox_raider/Greet(greeting, custom)
 	. = ..()

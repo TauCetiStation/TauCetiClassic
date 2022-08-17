@@ -73,10 +73,6 @@
 	antag = M
 	M.antag_roles[id] = src
 	objectives.owner = M
-	if(!isnull(skillset_type))
-		M.skills.add_available_skillset(skillset_type)
-	if(change_to_maximum_skills)
-		M.skills.maximize_active_skills()
 	if(msg_admins)
 		message_admins("[key_name(M)] is now \an [id].")
 		log_mode("[key_name(M)] is now \an [id].")
@@ -98,8 +94,6 @@
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
-	if(!isnull(skillset_type))
-		M.skills.remove_available_skillset(skillset_type)
 
 	remove_antag_hud()
 	if(M.current?.hud_used)
