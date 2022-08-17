@@ -99,11 +99,14 @@
 		P.damage -= 10
 	take_damage(P.damage)
 
-/obj/machinery/vending/attack_paw(mob/user)
-	if(isxeno(user))
-		take_damage(20)
-	else if(istype(user, /mob/living/simple_animal/hostile))
+/obj/machinery/vending/attack_animal(mob/living/simple_animal/user)
+	. = ..()
+	if(ismouse(user))	//no need destroying by clicking mice
+		return
+	if(istype(user, /mob/living/simple_animal/hostile))
 		take_damage(10)
+	else if(istype(user, /mob/living/simple_animal/construct))
+		take_damage(20)
 	else
 		take_damage(1)
 
