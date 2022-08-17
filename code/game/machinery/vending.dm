@@ -638,12 +638,11 @@
 	for(var/datum/data/vending_product/R in product_records)
 		if(hit_damage > 50)	//lasercannon or explode
 			R.amount = 0
-		else
-			if(prob(25))
-				break
-			if(R.amount)
-				R.amount--
 			continue
+		if(prob(25))
+			break
+		if(R.amount > 0)
+			R.amount--
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item()
