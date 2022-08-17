@@ -6,8 +6,6 @@
 	light_color = "#ffffff"
 	var/mob/living/silicon/ai/current = null
 	var/opened = FALSE
-	required_skills = list(/datum/skill/command = SKILL_LEVEL_NONE, /datum/skill/research = SKILL_LEVEL_PRO)
-	fumbling_time = 7 SECONDS
 	req_access = list(access_rd)
 
 /obj/machinery/computer/aiupload/attackby(obj/item/weapon/O, mob/user)
@@ -15,8 +13,6 @@
 		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
 	if(istype(O, /obj/item/weapon/aiModule))
-		if(!do_skill_checks(user))
-			return
 		var/obj/item/weapon/aiModule/M = O
 		M.install(src)
 	else
@@ -29,8 +25,6 @@
 	var/mob/living/carbon/human/H = user
 	if(!check_access(H.get_active_hand()) && !check_access(H.wear_id))
 		to_chat(user, "<span class='warning'>Access denied.</span>")
-		return
-	if(!do_skill_checks(user))
 		return
 	current = select_active_ai(user)
 	if (!current)
@@ -52,8 +46,6 @@
 	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/borgupload
 	var/mob/living/silicon/robot/current = null
-	required_skills = list(/datum/skill/command = SKILL_LEVEL_NONE, /datum/skill/research = SKILL_LEVEL_PRO)
-	fumbling_time = 7 SECONDS
 	req_access = list(access_rd)
 
 /obj/machinery/computer/borgupload/attackby(obj/item/weapon/aiModule/module, mob/user)
@@ -62,8 +54,6 @@
 		return
 
 	if(istype(module, /obj/item/weapon/aiModule))
-		if(!do_skill_checks(user))
-			return
 		module.install(src)
 	else
 		return ..()

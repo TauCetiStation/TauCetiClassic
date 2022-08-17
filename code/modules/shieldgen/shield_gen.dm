@@ -30,7 +30,6 @@
 							//2 use active power
 	idle_power_usage = 20
 	active_power_usage = 100
-	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 /obj/machinery/shield_gen/atom_init()
 	field = list()

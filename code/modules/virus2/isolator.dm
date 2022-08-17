@@ -37,8 +37,6 @@
 	if(sample)
 		to_chat(user, "\The [src] is already loaded.")
 		return
-	if(!do_skill_checks(user))
-		return
 	sample = S
 	user.drop_from_inventory(S, src)
 
