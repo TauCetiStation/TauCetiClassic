@@ -143,6 +143,8 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// can be hit with melee (mb change to CANT_BE_HIT)
 #define CAN_BE_HIT (1<<7)
 
+#define FULL_INDESTRUCTIBLE INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
 //turf-only flags
 #define NOSTEPSOUND   1
 
