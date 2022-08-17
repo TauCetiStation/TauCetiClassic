@@ -99,9 +99,13 @@
 		P.damage -= 10
 	take_damage(P.damage)
 
-/obj/machinery/vending/attack_paw()
-	. = ..()
-	take_damage(1)
+/obj/machinery/vending/attack_paw(mob/user)
+	if(isxeno(user))
+		take_damage(20)
+	else if(istype(user, /mob/living/simple_animal/hostile))
+		take_damage(10)
+	else
+		take_damage(1)
 
 /obj/machinery/vending/proc/is_item_in_blacklist(obj/item/I)
 	if(I.damtype == HALLOSS)
