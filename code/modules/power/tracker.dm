@@ -72,8 +72,7 @@
 
 /obj/machinery/power/tracker/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
-		qdel(src)
-		return
+		return ..()
 	if(disassembled)
 		var/obj/item/solar_assembly/S = locate() in src
 		if(S)
@@ -83,7 +82,7 @@
 		playsound(src, pick(SOUNDIN_SHATTER), 70, TRUE)
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/weapon/shard(loc)
-	qdel(src)
+	..()
 
 // timed process
 // make sure we can draw power from the powernet

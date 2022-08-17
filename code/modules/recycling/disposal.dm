@@ -698,7 +698,7 @@
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
 	dir = 0				// dir will contain dominant direction for junction pipes
-	var/health = 10 	// health points 0-10
+	max_integrity = 200
 	layer = 2.3			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
 
@@ -793,13 +793,12 @@
 	// Leaving it intact and sitting in a wall is stupid.
 	if(T.density)
 		for(var/atom/movable/AM in H)
-			AM.loc = T
+			AM.forceMove(T)
 			AM.pipe_eject(0)
 		qdel(H)
 		return
 	if(T.intact && isfloorturf(T)) //intact floor, pop the tile
 		var/turf/simulated/floor/F = T
-		//F.health	= 100
 		F.burnt	= 1
 		F.intact	= 0
 		F.levelupdate()
@@ -807,90 +806,46 @@
 		F.icon_state = "Floor[F.burnt ? "1" : ""]"
 
 	var/turf/target
+	playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	if(direction)		// direction is specified
 		if(isspaceturf(T)) // if ended in space, then range is unlimited
 			target = get_edge_target_turf(T, direction)
 		else						// otherwise limit to 10 tiles
 			target = get_ranged_target_turf(T, direction, 10)
-
-		playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		if(H)
-			for(var/atom/movable/AM in H)
-				AM.forceMove(T)
-				AM.pipe_eject(direction)
-				AM.throw_at(target, 100, 2)
-			H.vent_gas(T)
-			qdel(H)
-
+		for(var/atom/movable/AM in H)
+			AM.forceMove(T)
+			AM.pipe_eject(direction)
+			AM.throw_at(target, 100, 2)
 	else	// no specified direction, so throw in random direction
+		for(var/atom/movable/AM in H)
+			target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
+			AM.forceMove(T)
+			AM.pipe_eject(0)
+			AM.throw_at(target, 5, 2)
 
-		playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		if(H)
-			for(var/atom/movable/AM in H)
-				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
-				AM.forceMove(T)
-				AM.pipe_eject(0)
-				AM.throw_at(target, 5, 2)
-
-			H.vent_gas(T)	// all gas vent to turf
-			qdel(H)
-
-	return
+	H.vent_gas(T)	// all gas vent to turf
+	qdel(H)
 
 // call to break the pipe
 // will expel any holder inside at the time
 // then delete the pipe
 // remains : set to leave broken pipe pieces in place
 /obj/structure/disposalpipe/proc/broken(remains = 0)
+	SHOULD_NOT_SLEEP(TRUE)
 	if(remains)
 		for(var/D in cardinal)
 			if(D & dpdir)
-				var/obj/structure/disposalpipe/broken/P = new(src.loc)
+				var/obj/structure/disposalpipe/broken/P = new(loc)
 				P.set_dir(D)
 
-	src.invisibility = 101	// make invisible (since we won't delete the pipe immediately)
 	var/obj/structure/disposalholder/H = locate() in src
-	if(H)
-		// holder was present
-		H.active = 0
-		var/turf/T = src.loc
-		if(T.density)
-			// broken pipe is inside a dense turf (wall)
-			// this is unlikely, but just dump out everything into the turf in case
+	if(H) // holder was present
+		H.active = FALSE
+		expel(H, loc, 0)
+	qdel(src)
 
-			for(var/atom/movable/AM in H)
-				AM.loc = T
-				AM.pipe_eject(0)
-			qdel(H)
-			return
-
-		// otherwise, do normal expel from turf
-		if(H)
-			expel(H, T, 0)
-
-	QDEL_IN(src, 2) // delete pipe after 2 ticks to ensure expel proc finished
-
-
-// pipe affected by explosion
-/obj/structure/disposalpipe/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			broken(0)
-			return
-		if(EXPLODE_HEAVY)
-			health -= rand(5,15)
-		if(EXPLODE_LIGHT)
-			health -= rand(0,15)
-	healthcheck()
-
-
-// test health for brokenness
-/obj/structure/disposalpipe/proc/healthcheck()
-	if(health < -2)
-		broken(0)
-	else if(health<1)
-		broken(1)
-	return
+/obj/structure/disposalpipe/deconstruct(disassembled)
+	broken(!(disassembled || flags & NODECONSTRUCT || get_integrity() > -100))
 
 //attack by item
 //weldingtool: unfasten and convert to obj/disposalconstruct
