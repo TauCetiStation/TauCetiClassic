@@ -76,16 +76,16 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(stat & BROKEN)
-				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, TRUE)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 60, TRUE)
 			else
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+				playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 90, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/machinery/power/solar/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		playsound(loc, 'sound/effects/glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/machinery/power/solar/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
@@ -96,7 +96,7 @@
 			S.forceMove(loc)
 			S.give_glass(stat & BROKEN)
 	else
-		playsound(src, pick(SOUNDIN_SHATTER), 70, TRUE)
+		playsound(loc, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER, 70, TRUE)
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/weapon/shard(loc)
 	..()
@@ -300,16 +300,16 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(stat & BROKEN)
-				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 70, TRUE)
 			else
-				playsound(loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+				playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 75, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/machinery/power/solar_control/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		playsound(loc, 'sound/effects/glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/machinery/power/solar_control/deconstruct(disassembled = TRUE, mob/user) // TODO change to computer?
 	if(flags & NODECONSTRUCT)
@@ -323,7 +323,7 @@
 		if(user)
 			to_chat(user, span_notice("The broken glass falls out."))
 		else
-			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+			playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 70, TRUE)
 		new /obj/item/weapon/shard(loc)
 		A.state = 3
 		A.icon_state = "3"

@@ -98,11 +98,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(smashed)
-				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, TRUE)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 90, TRUE)
 			else
-				playsound(loc, 'sound/effects/Glasshit.ogg', 90, TRUE)
+				playsound(loc, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER, 90, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/structure/closet/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = TRUE, attack_dir)
 	if(localopened)
@@ -119,7 +119,7 @@
 	localopened = TRUE
 	hitstaken = 4
 	update_icon()
-	playsound(src, 'sound/effects/Glassbr3.ogg', 100, TRUE)
+	playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 	new /obj/item/weapon/shard(loc)
 	new /obj/item/weapon/shard(loc)
 	. = ..()

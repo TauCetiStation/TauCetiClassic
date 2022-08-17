@@ -228,13 +228,13 @@ var/global/list/wedge_image_cache = list()
 	switch(damage_type)
 		if(BRUTE)
 			if(glass)
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+				playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 90, TRUE)
 			else if(damage_amount)
-				playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE)
+				playsound(loc, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 
 /obj/machinery/door/emag_act(mob/user)

@@ -222,12 +222,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type, damage_flag)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/effects/glasshit.ogg', 90, TRUE)
+			playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 90, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/machinery/door/window/attack_generic(mob/user)
-	if(src.operating)
+	if(operating)
 		return
 	user.visible_message("<span class='danger'>[user] smashes against the [src.name].</span>", \
 						"<span class='userdanger'>[user] smashes against the [src.name].</span>")

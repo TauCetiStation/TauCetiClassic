@@ -142,7 +142,7 @@
 
 /obj/effect/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN && damage_amount)
-		playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+		playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/effect/glowshroom/ex_act(severity)
 	switch(severity)

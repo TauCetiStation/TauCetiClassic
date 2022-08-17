@@ -1097,8 +1097,11 @@
 
 /obj/item/burn()
 	var/turf/T = get_turf(src)
-	var/ash_type = w_class >= SIZE_BIG ? \
-		/obj/effect/decal/cleanable/ash/large : /obj/effect/decal/cleanable/ash
+	var/ash_type 
+	if(w_class >= SIZE_BIG)
+		ash_type = /obj/effect/decal/cleanable/ash/large
+	else
+		ash_type = /obj/effect/decal/cleanable/ash
 	var/obj/effect/decal/cleanable/ash/A = new ash_type(T)
 	A.desc += "\nLooks like this used to be \an [name] some time ago."
 	..()

@@ -33,11 +33,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/weapons/slash.ogg', 80, TRUE)
+				playsound(loc, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER, 80, TRUE)
 			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 80, TRUE)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 80, TRUE)
 
 
 /obj/structure/curtain/proc/toggle()

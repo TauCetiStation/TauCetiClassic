@@ -23,8 +23,8 @@
 	. = ..()
 	if(QDELING(src)) //Bullet on_hit effect might have already destroyed this object
 		return
-	// TODO playsound(src, P.hitsound, 50, TRUE)
-	var/damage = take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180)) // TODO flag -> armor_flag
+	// TODO playsound(src, P.hitsound, VOL_EFFECTS_MASTER, 50, TRUE)
+	var/damage = take_damage(P.damage, P.damage_type, P.flag, TRUE, turn(P.dir, 180)) // TODO flag -> armor_flag
 	visible_message(span_danger("[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!"), null, null, COMBAT_MESSAGE_RANGE)
 
 /obj/attack_hulk(mob/living/user)
@@ -32,9 +32,9 @@
 	if(user.a_intent != INTENT_HARM)
 		return FALSE
 	if(density)
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+		playsound(loc, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 	else
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+		playsound(loc, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 	var/damage = take_damage(hulk_damage(), BRUTE, MELEE, 0, get_dir(src, user))
 	user.visible_message(span_danger("[user] smashes [src][damage ? "" : ", without leaving a mark"]!"), span_danger("You smash [src][damage ? "" : ", without leaving a mark"]!"), null, COMBAT_MESSAGE_RANGE)
 	return TRUE
@@ -48,7 +48,7 @@
 	if(!istype(user))
 		return
 	if(attack_generic(user, 25, BRUTE, MELEE, 0))
-		playsound(loc, 'sound/weapons/slash.ogg', 100, TRUE)
+		playsound(loc, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/attack_animal(mob/living/simple_animal/user)
 	if(!user.melee_damage) // TODO obj damage
@@ -62,7 +62,7 @@
 		damage *= 10
 	. = attack_generic(user, damage, user.melee_damtype, MELEE, play_soundeffect)
 	if(. && !play_soundeffect)
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+		playsound(loc, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/attack_slime(mob/living/simple_animal/slime/user)
 	if(!isslimeadult(user))

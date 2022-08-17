@@ -30,7 +30,7 @@
 /obj/machinery/field/containment/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN, BRUTE)
-			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
+			playsound(loc, 'sound/effects/empulse.ogg', VOL_EFFECTS_MASTER, 75, TRUE)
 
 /obj/machinery/containment_field/attack_hand(mob/user)
 	if(Adjacent(user) && !isobserver(user))

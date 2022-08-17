@@ -49,18 +49,18 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(stat & BROKEN)
-				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 70, TRUE)
 			else
-				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+				playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/machinery/computer/atom_break(damage_flag)
 	if(!circuit) //no circuit, no breaking
 		return
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		playsound(loc, 'sound/effects/glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 		set_light(0)
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
@@ -78,7 +78,7 @@
 			if(user)
 				to_chat(user, span_notice("The broken glass falls out."))
 			else
-				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
+				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 70, TRUE)
 			new /obj/item/weapon/shard(loc)
 			A.state = 3
 			A.icon_state = "3"

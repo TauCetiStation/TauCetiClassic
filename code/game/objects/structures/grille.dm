@@ -154,11 +154,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, 'sound/effects/grillehit.ogg', 80, TRUE)
+				playsound(loc, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER, 80, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 80, TRUE)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 80, TRUE)
 
 /obj/structure/grille/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()

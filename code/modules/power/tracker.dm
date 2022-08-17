@@ -68,7 +68,7 @@
 /obj/machinery/power/tracker/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, TRUE)
+		playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/machinery/power/tracker/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
@@ -79,7 +79,7 @@
 			S.forceMove(loc)
 			S.give_glass(stat & BROKEN)
 	else
-		playsound(src, pick(SOUNDIN_SHATTER), 70, TRUE)
+		playsound(loc, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER, 70, TRUE)
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/weapon/shard(loc)
 	..()

@@ -27,7 +27,7 @@
 /obj/machinery/shield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN, BRUTE)
-			playsound(loc, 'sound/effects/EMPulse.ogg', 75, TRUE)
+			playsound(loc, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER, 75, TRUE)
 
 /obj/machinery/shield/deconstruct(disassembled)
 	visible_message("<span class='notice'>The [src] dissipates!</span>")
@@ -503,7 +503,7 @@
 /obj/machinery/shieldwall/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN, BRUTE)
-			playsound(loc, 'sound/effects/EMPulse.ogg', 75, TRUE)
+			playsound(loc, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER, 75, TRUE)
 
 /obj/machinery/shieldwall/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()

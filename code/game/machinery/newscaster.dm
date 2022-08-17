@@ -858,11 +858,11 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	switch(damage_type)
 		if(BRUTE)
 			if(stat & BROKEN)
-				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, TRUE)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 			else
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+				playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 90, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 
 /obj/machinery/newscaster/deconstruct(disassembled = TRUE)
@@ -879,7 +879,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 /obj/machinery/newscaster/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, TRUE)
+		playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/machinery/newscaster/attack_paw(mob/user)
 	to_chat(user, "<span class='info'>The newscaster controls are far too complicated for your tiny brain!</span>")

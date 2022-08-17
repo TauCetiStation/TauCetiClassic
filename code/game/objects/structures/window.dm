@@ -26,11 +26,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER, 90)
+				playsound(loc, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER, 90)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/structure/window/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
 	if(is_fulltile() && damage_threshold)

@@ -21,12 +21,12 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
+				playsound(loc, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 		if(BURN)
 			if(damage_amount)
-				playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+				playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/structure/alien/attack_alien(mob/user, damage)
 	if (!isxenoadult(user) || user.a_intent != INTENT_HARM)	//Safety check for larva.
