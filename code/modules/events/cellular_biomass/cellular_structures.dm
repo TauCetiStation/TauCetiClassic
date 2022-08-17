@@ -13,7 +13,7 @@
 	opacity = 0
 	var/faction = "generic"
 	var/grip = 0
-	var/health = 100
+	max_integrity = 100
 	var/obj/effect/cellular_biomass_controller/master = null
 
 /obj/structure/cellular_biomass/Destroy()
@@ -28,25 +28,6 @@
 	master = newmaster
 	return
 
-/obj/structure/cellular_biomass/proc/healthcheck()
-	if(health <=0)
-		qdel(src)
-	return
-
-/obj/structure/cellular_biomass/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	health -= Proj.damage
-	healthcheck()
-
-/obj/structure/cellular_biomass/ex_act(severity)
-	health -= 100 / severity
-	healthcheck()
-
-/obj/structure/cellular_biomass/blob_act()
-	health -= 50
-	healthcheck()
-	return
-
 /obj/structure/cellular_biomass/attack_hand(mob/user)
 	..()
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -59,12 +40,13 @@
 /obj/structure/cellular_biomass/attack_alien()
 	return attack_hand()
 
-/obj/structure/cellular_biomass/attackby(obj/item/weapon/W, mob/user)
-	. = ..()
-	if(user.a_intent == INTENT_HARM)
-		health -= W.force
-		playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-		healthcheck()
+/obj/structure/cellular_biomass/play_attack_sound(damage_amount, damage_type, damage_flag)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
+		if(BURN)
+			playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
 
 ////////////////////////////
 // WALLS GRASS AND CORES////
@@ -80,7 +62,7 @@
 	return 0
 
 /obj/structure/cellular_biomass/grass
-	health = 40
+	max_integrity = 40
 	layer = 2
 
 /obj/structure/cellular_biomass/grass/atom_init()
@@ -95,7 +77,7 @@
 
 /obj/structure/cellular_biomass/core
 	layer = 3
-	health = 120
+	max_integrity =  = 120
 	light_color = "#710f8c"
 	light_range = 3
 	icon_state = "light_1"
@@ -106,7 +88,8 @@
 	set_light(light_range)
 
 /obj/structure/cellular_biomass/core/process()
-	health = max(120, health + 1)
+	if(get_integrity() < max_integrity)
+		repair_damage(1)
 
 
 

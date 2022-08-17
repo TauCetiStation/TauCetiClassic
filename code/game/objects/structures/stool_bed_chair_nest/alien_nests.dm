@@ -5,7 +5,7 @@
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "nest"
-	var/health = 100
+	max_integrity = 100
 	layer = 2.55
 
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
@@ -51,23 +51,9 @@
 	M.pixel_y = 2
 	return TRUE
 
-/obj/structure/stool/bed/nest/attackby(obj/item/weapon/W, mob/user)
-	var/aforce = W.force
-	health = max(0, health - aforce)
-	user.SetNextMove(CLICK_CD_MELEE)
-	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-	visible_message("<span class='warning'>[user] hits [src] with [W]!</span>")
-	healthcheck()
-
 /obj/structure/stool/bed/nest/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
 			playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
-
-/obj/structure/stool/bed/nest/proc/healthcheck()
-	if(health <=0)
-		density = FALSE
-		qdel(src)
-	return
