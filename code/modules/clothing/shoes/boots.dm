@@ -16,6 +16,9 @@
 			playsound(user, 'sound/effects/throat_cutting.ogg', VOL_EFFECTS_MASTER, 25)
 			to_chat(user, "<span class='notice'>You slide [knife] out of [src].</span>")
 			remove_knife()
+			if(icon_state == "wjbootsknifed")
+				icon_state = "wjboots"
+				user.update_inv_shoes()
 			update_icon()
 	else
 		return ..()
@@ -29,6 +32,10 @@
 		playsound(user, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 		to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
 		add_knife(I)
+		if(icon_state == "wjboots")
+			icon_state = "wjbootsknifed"
+			user.update_inv_shoes()
+		update_icon()
 		return
 
 	return ..()

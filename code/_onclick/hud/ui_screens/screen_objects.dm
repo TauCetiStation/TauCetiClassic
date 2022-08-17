@@ -166,6 +166,8 @@
 		timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
 
 /atom/movable/screen/cooldown_overlay/proc/stop_cooldown()
+	if(cooldown_time == 0)
+		return
 	cooldown_time = 0
 	parent_button.color = "#ffffffff"
 	parent_button.vis_contents -= src
