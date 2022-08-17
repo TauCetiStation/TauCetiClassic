@@ -27,10 +27,6 @@
 	var/stored_core_stability_delay = 0
 
 	var/stored_power = 0//Power to deploy per tick
-<<<<<<< HEAD
-	=======
->>>>>>> parent of 0ee1a3c265 (Умения для персонажей (Fin) (#9201))
-
 
 /obj/machinery/power/am_control_unit/atom_init()
 	. = ..()
