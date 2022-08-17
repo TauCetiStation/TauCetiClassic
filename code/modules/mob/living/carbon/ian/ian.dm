@@ -429,7 +429,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	if(back && istype(back,/obj/item/clothing/suit/armor))
 		chance += luck
 
-	if(chance && prob(chance) && !stat)
+	if(chance && prob(chance) && stat == CONSCIOUS)
 		switch(msg)
 			if("dodges")
 				msg = "<span class='notice'>[src] dodges [AM]'s attack!</span>"
@@ -459,7 +459,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	..()
 
 /mob/living/carbon/ian/say(message)
-	if(stat)
+	if(stat >= UNCONSCIOUS)
 		return
 
 	message = sanitize(message)

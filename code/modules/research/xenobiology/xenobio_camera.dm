@@ -212,7 +212,7 @@
 		for(var/mob/living/carbon/slime/S in remote_eye.loc)
 			if(X.stored_slimes.len >= X.max_slimes)
 				break
-			if(S.stat)
+			if(S.stat >= UNCONSCIOUS)
 				if(!X.connected_recycler)
 					to_chat(owner, "<span class='warning'>There is no connected recycler. Use a multitool to link one.</span>")
 					return
@@ -295,7 +295,7 @@
 		return
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
-			if(M.stat)
+			if(M.stat >= UNCONSCIOUS)
 				M.visible_message("<span class='notice'>[M] vanishes!</span>")
 				X.connected_recycler.grind(M,owner)
 	else
@@ -368,7 +368,7 @@
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
 	if (istype(get_area(S), E.allowed_area_type))
-		if(S.stat)
+		if(S.stat >= UNCONSCIOUS)
 			if(!X.connected_recycler)
 				to_chat(C, "<span class='warning'>There is no connected recycler. Use a multitool to link one.</span>")
 				return
@@ -442,7 +442,7 @@
 		return
 
 	if (istype(get_area(M), E.allowed_area_type))
-		if(!M.stat)
+		if(M.stat == CONSCIOUS)
 			return
 		M.visible_message("<span class='notice'>[M] vanishes!</span>")
 		X.connected_recycler.grind(M,user)

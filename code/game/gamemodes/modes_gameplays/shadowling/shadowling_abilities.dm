@@ -12,7 +12,7 @@
 			charge_counter = charge_max
 			to_chat(usr, "<span class='warning'>Your glare does not seem to affect [target].</span>")
 			return
-		if(target.stat)
+		if(target.stat >= UNCONSCIOUS)
 			charge_counter = charge_max
 			return
 		if(isshadowling(target) || isshadowthrall(target))
@@ -137,7 +137,7 @@
 			to_chat(usr, "<span class='warning'>The target has no mind.</span>")
 			charge_counter = charge_max
 			return
-		if(target.stat)
+		if(target.stat >= UNCONSCIOUS)
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return
@@ -551,7 +551,7 @@
 			to_chat(usr, "<span class='warning'>The target has no mind.</span>")
 			charge_counter = charge_max
 			return
-		if(target.stat)
+		if(target.stat >= UNCONSCIOUS)
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return

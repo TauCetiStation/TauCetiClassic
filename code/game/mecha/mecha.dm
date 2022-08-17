@@ -206,7 +206,7 @@
 
 /obj/mecha/proc/click_action(atom/target,mob/user)
 	if(!src.occupant || src.occupant != user ) return
-	if(user.stat) return
+	if(user.stat >= UNCONSCIOUS) return
 	if(state)
 		occupant_message("<font color='red'>Maintenance protocols in effect</font>")
 		return
@@ -945,7 +945,7 @@
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		to_chat(user, "Consciousness matrix not detected.")
 		return 0
-	else if(mmi_as_oc.brainmob.stat)
+	else if(mmi_as_oc.brainmob.stat >= UNCONSCIOUS)
 		to_chat(user, "Beta-rhythm below acceptable level.")
 		return 0
 	else if(occupant)
@@ -971,7 +971,7 @@
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 			to_chat(user, "Consciousness matrix not detected.")
 			return 0
-		else if(mmi_as_oc.brainmob.stat)
+		else if(mmi_as_oc.brainmob.stat >= UNCONSCIOUS)
 			to_chat(user, "Beta-rhythm below acceptable level.")
 			return 0
 		user.drop_from_inventory(mmi_as_oc)

@@ -162,7 +162,7 @@
 	. = ..()
 	if(kickstand)
 		return 0
-	if(buckled_mob && (buckled_mob.stat || buckled_mob.lying))
+	if(buckled_mob && (buckled_mob.stat >= UNCONSCIOUS || buckled_mob.lying))
 		return 0
 
 /obj/vehicle/space/spacebike/turn_on()

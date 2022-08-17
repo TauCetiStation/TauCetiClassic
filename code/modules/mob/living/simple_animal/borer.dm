@@ -133,7 +133,7 @@
 	if (stat == DEAD)
 		return say_dead(message)
 
-	if (stat)
+	if (stat >= UNCONSCIOUS)
 		return
 
 	if (client)

@@ -114,7 +114,7 @@
 		if(owner.lying && !owner.crawling)
 			return FALSE
 	if(check_flags & AB_CHECK_ALIVE)
-		if(owner.stat)
+		if(owner.stat >= UNCONSCIOUS)
 			return FALSE
 	if(check_flags & AB_CHECK_INSIDE)
 		if(!(target in owner))

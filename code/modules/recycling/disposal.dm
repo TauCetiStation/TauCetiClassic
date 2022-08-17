@@ -662,7 +662,7 @@
 
 	var/mob/living/U = user
 
-	if (U.stat || U.last_special <= world.time)
+	if (U.stat >= UNCONSCIOUS || U.last_special <= world.time)
 		return
 
 	U.last_special = world.time+100

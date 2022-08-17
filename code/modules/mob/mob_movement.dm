@@ -68,7 +68,7 @@
 
 	if(!n || !direct)
 		return
-	if(!forced && mob.stat)
+	if(!forced && mob.stat >= UNCONSCIOUS)
 		return
 
 /*	// handle possible spirit movement

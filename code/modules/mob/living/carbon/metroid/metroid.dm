@@ -502,7 +502,7 @@
 	if(isslimeadult(M)) //Can't tame adults
 		to_chat(user, "<span class='warning'>Only baby slimes can be tamed!</span>")
 		return..()
-	if(M.stat)
+	if(M.stat >= UNCONSCIOUS)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
@@ -530,7 +530,7 @@
 	if(!isslimeadult(M))//If target is not a slime.
 		to_chat(user, "<span class='warning'>The potion only works on adult slimes!</span>")
 		return ..()
-	if(M.stat)
+	if(M.stat >= UNCONSCIOUS)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
@@ -562,7 +562,7 @@
 	if(isslimeadult(M)) //Can't tame adults
 		to_chat(user, "<span class='warning'>Only baby slimes can use the steroid!</span>")
 		return..()
-	if(M.stat)
+	if(M.stat >= UNCONSCIOUS)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	if(M.cores == 3)

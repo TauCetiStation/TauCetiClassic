@@ -88,7 +88,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 					to_chat(user, "<span class ='warning'>You need [favor_cost - user.my_religion.favor] more favors.</span>")
 				return FALSE
 
-	if(user.stat && !stat_allowed)
+	if(user.stat >= UNCONSCIOUS && !stat_allowed)
 		if(try_start)
 			to_chat(user, "Not when you're incapacitated.")
 		return FALSE

@@ -51,7 +51,7 @@
 					continue
 
 				dat += "[R.name] |"
-				if(R.stat)
+				if(R.stat >= UNCONSCIOUS)
 					dat += " Not Responding |"
 				else if (!R.canmove)
 					dat += " Locked Down |"

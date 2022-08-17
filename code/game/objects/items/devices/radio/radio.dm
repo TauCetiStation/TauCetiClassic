@@ -118,7 +118,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/Topic(href, href_list)
 	//..()
-	if ((usr.stat && !IsAdminGhost(usr)) || !on)
+	if ((usr.stat >= UNCONSCIOUS && !IsAdminGhost(usr)) || !on)
 		return
 
 	if (!(issilicon(usr) || IsAdminGhost(usr) || Adjacent(usr)))
@@ -413,7 +413,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
 						  src, message, displayname, jobname, real_name, M.voice_name,
 		                  filter_type, signal.data["compression"], list(position.z), connection.frequency,verb,speaking)
-		
+
 		return TRUE
 
 
