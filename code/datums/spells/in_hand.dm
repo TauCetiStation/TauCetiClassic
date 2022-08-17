@@ -134,6 +134,7 @@
 	damage = 10
 	damage_type = BRUTE
 	nodamage = 0
+	light_color = LIGHT_COLOR_FIRE
 
 /obj/item/projectile/magic/fireball/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(isliving(target))
@@ -167,6 +168,7 @@
 	damage = 15
 	damage_type = BURN
 	nodamage = 0
+	light_color = LIGHT_COLOR_LIGHTNING
 
 /obj/item/projectile/magic/lightning/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	..()
@@ -222,6 +224,7 @@
 	nodamage = 0
 	flag = "laser"
 	damage_type = BURN
+	light_color = COLOR_PINK
 
 //////////////////////////////////////////////////////////////
 
@@ -387,6 +390,7 @@
 	damage_type = OXY
 	nodamage = 1
 	flag = "magic"
+	light_color = "#00ff00"
 
 /obj/item/projectile/magic/healing_ball/atom_init()
 	. = ..()
