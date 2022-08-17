@@ -262,7 +262,7 @@
 
 /obj/effect/proc_holder/spell/dumbfire/fireball
 	name = "Огненный Шар"
-	desc = "Выстреливает огненным шаром в цель и не требует одежды для использования."
+	desc = "Выстреливает огненным шаром в цель."
 
 	school = "evocation"
 	charge_max = 100

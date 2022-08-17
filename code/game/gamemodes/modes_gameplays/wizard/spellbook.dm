@@ -353,6 +353,7 @@
 	if(.)
 		new /obj/item/clothing/shoes/sandal(get_turf(user)) //In case they've lost them.
 		new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(user))//To complete the outfit
+		new /obj/item/clothing/gloves/combat/wizard(get_turf(user))//To complete the outfit COMPLETELY
 
 /datum/spellbook_entry/item/contract
 	name = "Контракт ученичества"

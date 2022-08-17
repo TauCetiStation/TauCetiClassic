@@ -249,7 +249,8 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/dungeon
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
-	icon_state = "sawnshotgun"
+	icon_state = "dshotgun"
+	item_state = "shotgun-short"
 	w_class = SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"
