@@ -14,7 +14,7 @@ var/global/const/BORG_WIRE_CAMERA      = 16
 	. = ..()
 	. += "[R.lawupdate ? "The LawSync light is on." : "The LawSync light is off."]"
 	. += "[R.connected_ai ? "The AI link light is on." : "The AI link light is off."]"
-	. += "[(!isnull(R.camera) && R.camera.can_use()) ? "The Camera light is on." : "The Camera light is off."]"
+	. += "[(!isnull(R.camera) && R.camera.status) ? "The Camera light is on." : "The Camera light is off."]"
 	. += "[R.lockcharge ? "The lockdown light is on." : "The lockdown light is off."]"
 
 /datum/wires/robot/can_use()
@@ -55,7 +55,7 @@ var/global/const/BORG_WIRE_CAMERA      = 16
 				R.set_ai_link(select_active_ai())
 
 		if(BORG_WIRE_CAMERA)
-			if(!isnull(R.camera) && R.camera.can_use() && !R.scrambledcodes)
+			if(!isnull(R.camera) && R.camera.status && !R.scrambledcodes)
 				R.camera.disconnect_viewers()
 				R.visible_message(
 					"<span class='notice'>Your camera lens focuses loudly.</span>",

@@ -21,6 +21,7 @@
 	var/hidden = FALSE	//Hidden cameras will be unreachable for AI
 	var/datum/wires/camera/wires = null
 	var/list/camera_upgrades = list()
+	var/list/camera_failing = list()
 
 	//OTHER
 	var/view_range = 7
@@ -29,7 +30,6 @@
 	var/light_disabled = 0
 	var/alarm_on = FALSE
 	var/show_paper_cooldown = 0
-	var/lens_free = TRUE
 
 /obj/machinery/camera/atom_init(mapload, obj/item/weapon/camera_assembly/CA)
 	. = ..()
@@ -75,16 +75,16 @@
 
 /obj/machinery/camera/update_icon()
 	icon_state = "[camera_base]"
-	if(!status || !can_use())
+	if(!can_use())
 		icon_state = "[camera_base]1"
 	if(stat & EMPED)
 		icon_state = "[camera_base]emp"
-	if(stat & BROKEN)
+	if(stat & BROKEN || isGlassPainted())
 		icon_state = "[camera_base]x"
 
 /obj/machinery/camera/examine(mob/user)
 	. = ..()
-	if(!lens_free)
+	if(isGlassPainted())
 		to_chat(user, "<span class='warning'>The lens of [src] is obscured by paint.</span>")
 
 /obj/machinery/camera/emp_act(severity)
@@ -171,7 +171,7 @@
 			to_chat(user, "<span class='notice'>You attach [W] into the [src] inner circuits.</span>")
 	//repair broken stat
 	else if(istype(W, /obj/item/stack/sheet/glass && panel_open))
-		fix_broking_cam()
+		fix_broking_cam(user)
 		try_enable_cam()
 		to_chat(user, "<span class='notice'>You fixed some [src] damage.</span>")
 		qdel(W)
@@ -238,10 +238,6 @@
 		"<span class='notice'>You fire into the [src] lens.</span>")
 		gun.afterattack(src, user) //there is no damage today, waiting for full desctruction
 
-/obj/machinery/camera/proc/spoil_lens()	//gangstar's spray can
-	lens_free = FALSE
-	broke_cam()
-
 /obj/machinery/camera/proc/try_increase_integrity(amount)
 	if(!integrity || !max_integrity)
 		return FALSE
@@ -265,9 +261,11 @@
 	stat |= BROKEN
 	disable_cam()
 
-/obj/machinery/camera/proc/fix_broking_cam()
+/obj/machinery/camera/proc/fix_broking_cam(mob/user = null)
 	if(stat & BROKEN)
 		stat &= ~BROKEN
+	if(isGlassPainted())
+		remove_painted_lens(user)
 	try_enable_cam()
 	update_icon()
 
@@ -362,7 +360,7 @@
 		return FALSE
 	if(!status)
 		return FALSE
-	if(!lens_free && check_paint)
+	if(isGlassPainted() && check_paint)
 		if(isXRay())
 			return TRUE
 		return FALSE
@@ -373,7 +371,15 @@
 		stat &= ~EMPED
 	if(stat & BROKEN)
 		stat &= ~BROKEN
+	if(isGlassPainted())
+		remove_painted_lens()
 	try_enable_cam()
+//failings checks
+/obj/machinery/camera/proc/isGlassPainted()
+	for(var/failin in camera_failing)
+		if(istype(failin, /obj/effect/decal/cleanable/vomit))
+			return TRUE
+	return FALSE
 
 //upgrade checks
 /obj/machinery/camera/proc/isEmpProof()
@@ -426,6 +432,20 @@
 	camera_upgrades += /obj/item/stack/sheet/plasteel
 	try_increase_integrity(max_integrity)
 	update_icon()
+//camera failings
+/obj/machinery/camera/proc/paint_lens(mob/user = null)
+	if(user)
+		to_chat(user, "<span class='notice'>[src] spoiled!</span>")
+	camera_failing += /obj/effect/decal/cleanable/vomit
+	update_icon()
+
+/obj/machinery/camera/proc/remove_painted_lens(mob/user = null)
+	if(user)
+		to_chat(user, "<span class='notice'>Paint from [src] removed!</span>")
+	if(isGlassPainted())
+		for(var/failin in camera_failing)
+			if(istype(failin, /obj/effect/decal/cleanable/vomit))
+				camera_failing -= failin
 
 /obj/machinery/camera/proc/can_see()
 	var/list/see = null

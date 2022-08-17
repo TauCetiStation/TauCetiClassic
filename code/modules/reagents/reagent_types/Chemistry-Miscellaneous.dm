@@ -327,7 +327,7 @@
 	if(istype(O, /obj/machinery/camera))
 		var/obj/machinery/camera/C = O
 		C.color = null
-		C.lens_free = TRUE
+		C.remove_painted_lens()
 		C.try_enable_cam()
 
 /datum/reagent/ultraglue
@@ -745,7 +745,7 @@
 	if(istype(O, /obj/machinery/camera))
 		var/obj/machinery/camera/C = O
 		C.color = null
-		C.lens_free = TRUE
+		C.remove_painted_lens()
 		C.try_enable_cam()
 
 ////////////////////////////////////
