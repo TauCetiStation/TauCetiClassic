@@ -256,7 +256,7 @@
 		user.do_attack_animation(src)
 		visible_message("<span class='warning'><B>[user]</B> бьет укрепленную стену!</span>")
 		if(C.use_charge(user, 4))
-			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+			playsound(user, pick('sound/weapons/metal_shield_hit.ogg'), VOL_EFFECTS_MASTER)
 			take_damage(pick(10, 20, 30))
 		return
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))

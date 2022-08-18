@@ -288,7 +288,7 @@
 		var/obj/item/weapon/changeling_hammer/C = W
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(C.use_charge(user))
-			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+			playsound(src, pick('sound/weapons/metal_shield_hit.ogg'), VOL_EFFECTS_MASTER)
 			shatter()
 
 	else if(user.a_intent == INTENT_HARM)

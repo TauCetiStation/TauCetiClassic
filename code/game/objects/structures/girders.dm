@@ -33,7 +33,7 @@
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(C.use_charge(user, 1) && prob(40))
-			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+			playsound(src, pick('sound/weapons/metal_shield_hit.ogg'), VOL_EFFECTS_MASTER)
 			qdel(src)
 	else if(iswrench(W) && state == 0)
 		if(anchored && !istype(src,/obj/structure/girder/displaced))

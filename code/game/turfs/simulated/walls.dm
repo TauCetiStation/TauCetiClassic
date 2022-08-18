@@ -431,7 +431,7 @@
 		visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
 		user.do_attack_animation(src)
 		if(C.use_charge(user))
-			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+			playsound(user, pick('sound/weapons/metal_shield_hit.ogg'), VOL_EFFECTS_MASTER)
 			take_damage(pick(10, 20, 30))
 		return
 

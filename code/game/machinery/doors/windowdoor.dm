@@ -269,7 +269,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(W.use_charge(user, 6))
 			visible_message("<span class='red'><B>[user]</B> has punched [src]!</span>")
-			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+			playsound(user, pick('sound/weapons/metal_shield_hit.ogg'), VOL_EFFECTS_MASTER)
 			shatter()
 		return
 

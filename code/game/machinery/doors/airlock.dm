@@ -928,7 +928,7 @@ var/global/list/airlock_overlays = list()
 		visible_message("<span class='userdanger'>[user] has punched the [src]!</span>")
 		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		if(W.use_charge(user) && prob(20))
-			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+			playsound(src, pick('sound/weapons/metal_shield_hit.ogg'), VOL_EFFECTS_MASTER)
 			door_rupture(user)
 		return
 
