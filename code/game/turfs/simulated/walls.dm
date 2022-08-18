@@ -432,7 +432,7 @@
 		user.do_attack_animation(src)
 		if(C.use_charge(user))
 			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			take_damage(pick(10, 20, 30))
+			take_damage(pick(30))
 		return
 
 	else if(istype(W,/obj/item/apc_frame))
