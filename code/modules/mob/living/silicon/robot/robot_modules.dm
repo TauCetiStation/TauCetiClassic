@@ -418,7 +418,7 @@
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 
-	emag = new /obj/item/weapon/melee/energy/sword(src)
+	emag = new /obj/item/weapon/gun/grenadelauncher/cyborg(src)
 
 /obj/item/weapon/robot_module/drone
 	name = "drone module"

@@ -177,21 +177,6 @@
 	var/cyborg_bubble = new /obj/structure/barricade/bubble(user.loc)
 	QDEL_IN(cyborg_bubble, 5 SECONDS)
 
-/obj/item/borg/lovetrain
-	name = "Love Train"
-	desc = "Increases your cross-country ability."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "lovetrain"
-
-/obj/item/borg/lovetrain/attack_self(mob/living/silicon/robot/user)
-	if(SEND_SIGNAL(user, COMSIG_BORG_TRAIN_ENABLED, src) & COMPONENT_BORG_TRAIN_BLOCK)
-		SEND_SIGNAL(user, COMSIG_BORG_TRAIN_REMOVED, src)
-		to_chat(user, "Love Train is disabled")
-		return
-	else
-		user.AddComponent(/datum/component/borg_train)
-		to_chat(user, "Love Train is enabled")
-
 /**********************************************************************
 						HUD/SIGHT things
 ***********************************************************************/

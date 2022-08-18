@@ -349,3 +349,5 @@
 #define COMSIG_BORG_TRAIN_ENABLED "borg_train_enabled"
 #define COMPONENT_BORG_TRAIN_BLOCK "borg_train_block_component"
 #define COMSIG_BORG_TRAIN_REMOVED "borg_train_removed"
+#define COMSIG_BORG_MOB_BUMP "borg_mob_bump"
+#define COMSIG_BORG_CROSSED_MOB "borg_crossed_mob"
