@@ -86,7 +86,7 @@
 			to_chat(user, "<span class='notice'>Manhacks selected.</span>")
 
 /obj/item/weapon/gun/grenadelauncher/cyborg/afterattack(atom/target, mob/living/silicon/robot/user, proximity, params)
-	user.SetNextMove(CLICK_CD_MELEE)
+	user.SetNextMove(CLICK_CD_MELEE*2)
 	if(!current_grenade)
 		to_chat(user, "<span class='warning'>[src] is empty.</span>")
 		return

@@ -96,6 +96,7 @@
 	desc = "For when a someone really needs a hug."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "help"
+	var/electrify = 0
 
 /obj/item/weapon/cyborghug/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
 	if(!isrobot(user))
@@ -109,13 +110,14 @@
 	var/mob/living/carbon/human/H = M
 	if(!istype(H) || !can_use(user, H))
 		return
-	if(isrobot(user) && user.emagged)
+	if(electrify && user.emagged)
 		robot_stun_act(H, user)
 	else
 		robot_help_shake(H, user)
 
 /obj/item/weapon/cyborghug/attack_self(mob/living/silicon/robot/user)
-	if(user.emagged)
+	electrify = !electrify
+	if(electrify && user.emagged)
 		to_chat(user, "<span class='warning'>Power increased! Electrifying arms...</span>")
 	else
 		to_chat(user, "<span class='notice'>Hugs!</span>")
