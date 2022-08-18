@@ -44,7 +44,7 @@
 
 /obj/item/weapon/changeling_hammer/attack(atom/target, mob/living/carbon/human/user, def_zone)
 	if(user.a_intent == INTENT_HARM && use_charge(user, 4))
-		playsound(user, (pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')), VOL_EFFECTS_MASTER)
+		playsound(user, pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'), VOL_EFFECTS_MASTER)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
