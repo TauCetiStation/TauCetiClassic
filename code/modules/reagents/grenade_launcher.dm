@@ -87,19 +87,23 @@
 
 /obj/item/weapon/gun/grenadelauncher/cyborg/afterattack(atom/target, mob/living/silicon/robot/user, proximity, params)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if((mode == 4 && user.cell.charge < 5000) || user.cell.charge < 500)
-		to_chat(user, "<span class='warning'>Not enough charge.</span>")
-		return
 	if(!current_grenade)
 		to_chat(user, "<span class='warning'>[src] is empty.</span>")
 		return
 	if(target == user)
 		return
 	if(mode == 4)
-		if(user.cell.use(5000))	//5 manhacks is dangerous
+		//no need spamming mannhacks with bluespace cell
+		var/calculate_power_use = user.cell.maxcharge / 3
+		if(user.cell.use(calculate_power_use))
 			fire_grenade(target,user)
-	else if(user.cell.use(500))
+		else
+			to_chat(user, "<span class='warning'>Not enough charge.</span>")
+		return
+	if(user.cell.use(500))
 		fire_grenade(target,user)
+	else
+		to_chat(user, "<span class='warning'>Not enough charge.</span>")
 
 /obj/item/weapon/gun/grenadelauncher/cyborg/fire_grenade(atom/target, mob/living/silicon/robot/user)
 	user.visible_message("<span class='warning'>[user] fired a grenade!</span>",
