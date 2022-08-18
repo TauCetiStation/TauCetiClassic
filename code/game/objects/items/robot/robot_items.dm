@@ -100,7 +100,7 @@
 /obj/item/weapon/cyborghug/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
 	if(!isrobot(user))
 		return FALSE
-	if(!user.cell || (user.cell.charge < 750))
+	if(!user.cell || (user.cell.charge < 500))
 		to_chat(user, "<span class='warning'>You doesn't have enough charge left to do that.</span>")
 		return FALSE
 	return TRUE
