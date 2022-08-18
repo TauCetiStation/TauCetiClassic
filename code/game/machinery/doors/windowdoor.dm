@@ -264,14 +264,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		change_paintjob(I, user)
 		return
 
-	if( istype(I,/obj/item/weapon/changeling_hammer))
-		var/obj/item/weapon/changeling_hammer/W = I
+	if(istype(I,/obj/item/weapon/changeling_hammer))
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(W.use_charge(user, 6))
-			visible_message("<span class='red'><B>[user]</B> has punched [src]!</span>")
-			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			shatter()
-		return
+		visible_message("<span class='red'><B>[user]</B> has punched [src]!</span>")
+		playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+		shatter()
 
 	//Emags and ninja swords? You may pass.
 	if (density && istype(I, /obj/item/weapon/melee/energy/blade))

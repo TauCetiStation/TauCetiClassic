@@ -727,7 +727,7 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'><B>[user]</B> has punched \the <B>[src]!</B></span>")
 		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		if(prob(50) && Ham.use_charge(user,6))
+		if(prob(50))
 			take_damage(Ham.force * 3)
 	else
 		user.SetNextMove(CLICK_CD_MELEE)

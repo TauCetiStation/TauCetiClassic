@@ -29,7 +29,7 @@
 	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his hammer into an arm!</span>", "<span class='notice'>We assimilate the hammer back into our body.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 	..()
 
-
+//Now only whimp uses that
 /obj/item/weapon/proc/use_charge(mob/living/carbon/human/user, req_chem = 3)
 	if(!ischangeling(user))
 		return FALSE
@@ -43,7 +43,7 @@
 	return TRUE
 
 /obj/item/weapon/changeling_hammer/attack(atom/target, mob/living/carbon/human/user, def_zone)
-	if(user.a_intent == INTENT_HARM && use_charge(user, 4))
+	if(user.a_intent == INTENT_HARM)
 		playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target

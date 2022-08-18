@@ -252,13 +252,11 @@
 
 	//DRILLING
 	if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
-		var/obj/item/weapon/changeling_hammer/C = W
 		user.do_attack_animation(src)
 		visible_message("<span class='warning'><B>[user]</B> бьет укрепленную стену!</span>")
-		if(C.use_charge(user, 4))
-			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			take_damage(pick(10, 20, 30))
-		return
+		playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+		take_damage(pick(10, 20, 30))
+
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
 		to_chat(user, "<span class='notice'>Вы бурите сквозь укрепленную стену.</span>")

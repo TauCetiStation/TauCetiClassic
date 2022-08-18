@@ -285,11 +285,9 @@
 					M.log_combat(user, "crushed against [name]")
 
 	else if(istype(W,/obj/item/weapon/changeling_hammer))
-		var/obj/item/weapon/changeling_hammer/C = W
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(C.use_charge(user))
-			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			shatter()
+		playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+		shatter()
 
 	else if(user.a_intent == INTENT_HARM)
 		if(W.damtype == BRUTE || W.damtype == BURN)

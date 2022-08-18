@@ -28,11 +28,10 @@
 /obj/structure/girder/attackby(obj/item/W, mob/user)
 	if(user.is_busy()) return
 	if(istype (W,/obj/item/weapon/changeling_hammer))
-		var/obj/item/weapon/changeling_hammer/C = W
 		visible_message("<span class='warning'><B>[user]</B> бьет каркас!</span>")
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(C.use_charge(user, 1) && prob(40))
+		if(prob(40))
 			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 			qdel(src)
 	else if(iswrench(W) && state == 0)
