@@ -29,7 +29,7 @@
 	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his hammer into an arm!</span>", "<span class='notice'>We assimilate the hammer back into our body.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 	..()
 
-//Now only whimp uses that
+//Now only whip uses that
 /obj/item/weapon/proc/use_charge(mob/living/carbon/human/user, req_chem = 3)
 	if(!ischangeling(user))
 		return FALSE
