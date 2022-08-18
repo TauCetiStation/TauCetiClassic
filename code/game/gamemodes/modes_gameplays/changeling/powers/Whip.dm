@@ -36,17 +36,14 @@
 		return
 	if(next_click > world.time)
 		return
-	if(!use_charge(user, 2))
-		return
 	next_click = world.time + 10
 	var/obj/item/projectile/changeling_whip/LE = new (get_turf(src))
 	switch(user.a_intent)
 		if(INTENT_GRAB)
 			LE.grabber = TRUE
 		if(INTENT_PUSH)
-			if(prob(65))
-				LE.weaken = 3
-				LE.stun = 2
+			LE.weaken = 3
+			LE.stun = 2
 		if(INTENT_HARM)
 			LE.damage = 30
 		else
