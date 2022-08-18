@@ -35,24 +35,23 @@
 	icon_state = "megaphone"
 	COOLDOWN_DECLARE(alarm_cooldown)
 
-/obj/item/harmalarm/attack_self(mob/user)
+/obj/item/harmalarm/attack_self(mob/living/silicon/robot/user)
 	if (!COOLDOWN_FINISHED(src, alarm_cooldown))
 		to_chat(user, "<span class='warning'>The device is still recharging!</span>")
 		return
-
-	var/mob/living/silicon/robot/robot_user = null
 	//early silicon check
-	if(isrobot(user))
-		robot_user = user
+	if(!isrobot(user))
+		return
 
-	if(robot_user)
-		if(!robot_user.cell || robot_user.cell.charge < 1000)
-			to_chat(user, "<span class='warning'>You don't have enough charge to do this!</span>")
-			return
-		robot_user.cell.use(1000)
-
+	if(!user.cell || user.cell.charge < 1000 || (user.emagged && user.cell.charge < 2500))
+		to_chat(user, "<span class='warning'>You don't have enough charge to do this!</span>")
+		return
+	if(user.emagged)
+		user.cell.use(2500)
+	else
+		user.cell.use(1000)
 	//emagged borg should screech loudly than normally
-	if(robot_user && !robot_user.emagged)
+	if(!user.emagged)
 		user.visible_message("<span class='userdanger'>The siren pierces your hearing!</span>", \
 			"<span class='danger'>[user] blares out a near-deafening siren from its speakers!</span>")
 		for(var/mob/living/carbon/human/H in view(9, user))
@@ -69,7 +68,7 @@
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_SAFETY_COOLDOWN)
 		user.attack_log += "\[[time_stamp()]\]<font color='red'>used a Cyborg Harm Alarm in [COORD(user.loc)]</font>"
 		//send message for AI
-		to_chat(robot_user.connected_ai, "<span class='info'>HARM ALARM used by <a href=?src=\ref[robot_user.connected_ai];track=\ref[user]>[user]</span>")
+		to_chat(user.connected_ai, "<span class='info'>HARM ALARM used by <a href=?src=\ref[user.connected_ai];track=\ref[user]>[user]</span>")
 	else
 		user.audible_message("<span class='userdanger'>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT</span>")
 		playsound(usr, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, 100)
@@ -82,11 +81,11 @@
 			if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) && istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
 				continue
 			H.ear_deaf += 30
-			H.MakeConfused(20)
+			H.MakeConfused(10)
 			H.make_jittery(250)
 		//Let's pretend to be a changeling
 		for(var/obj/machinery/light/L in range(4, user))
-			L.on = 1
+			L.on = TRUE
 			L.broken()
 
 		COOLDOWN_START(src, alarm_cooldown, HARM_ALARM_NO_SAFETY_COOLDOWN)
@@ -99,6 +98,8 @@
 	icon_state = "help"
 
 /obj/item/weapon/cyborghug/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
+	if(!isrobot(user))
+		return FALSE
 	if(!user.cell || (user.cell.charge < 750))
 		to_chat(user, "<span class='warning'>You doesn't have enough charge left to do that.</span>")
 		return FALSE
@@ -165,7 +166,7 @@
 	var/max_fields = 5
 
 /obj/item/borg/bubble_creator/attack_self(mob/living/silicon/robot/user)
-	if(!user || !user.cell)
+	if(!isrobot(user) || !user.cell)
 		return
 	if(global.peacekeeper_shields_count >= max_fields)
 		to_chat(user, "<span class='warning'>Recharging!</span>")
