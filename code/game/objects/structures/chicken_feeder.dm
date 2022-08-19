@@ -3,8 +3,9 @@
 #define FEEDER_ALMOST_EMPTY 3
 #define FEEDER_EMPTY 0
 
-ADD_TO_GLOBAL_LIST(/obj/structure/ch_feeder, ch_feeder_list)
-/obj/structure/ch_feeder
+ADD_TO_GLOBAL_LIST(/obj/structure/chicken_feeder, chicken_feeder_list)
+
+/obj/structure/chicken_feeder
 	name = "Chicken Feeder"
 	desc = "Co-co-co"
 	icon = 'icons/obj/feeder.dmi'
@@ -14,9 +15,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/ch_feeder, ch_feeder_list)
 	var/food = 0
 	var/maxFood = 10
 
-var/global/list/ch_feeder_list = list()
+var/global/list/chicken_feeder_list = list()
 
-/obj/structure/ch_feeder/attackby(obj/item/O, mob/user)
+/obj/structure/chicken_feeder/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat))
 		if(food != maxFood)
 			qdel(O)
@@ -33,7 +34,7 @@ var/global/list/ch_feeder_list = list()
 	else
 		..()
 
-/obj/structure/ch_feeder/proc/feed(mob/living/simple_animal/chicken/C)
+/obj/structure/chicken_feeder/proc/feed(mob/living/simple_animal/chicken/C)
 	food -= 1
 	if(food < 0) // i dont know how
 		food = 0
@@ -42,7 +43,7 @@ var/global/list/ch_feeder_list = list()
 
 
 
-/obj/structure/ch_feeder/update_icon()
+/obj/structure/chicken_feeder/update_icon()
 	if(food >= FEEDER_FULL)
 		icon_state = "full"
 		return

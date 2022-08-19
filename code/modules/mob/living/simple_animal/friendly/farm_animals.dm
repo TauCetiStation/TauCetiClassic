@@ -256,7 +256,7 @@ var/global/chicken_count = 0
 			START_PROCESSING(SSobj, E)
 	if(stat != DEAD || stat != CONSCIOUS && !buckled)
 		if(eggsleft < 2) //hungry
-			for(var/obj/structure/ch_feeder/C as anything in ch_feeder_list)
+			for(var/obj/structure/chicken_feeder/C as anything in chicken_feeder_list)
 				if(get_dist(src, C) < FEEDER_DISTANT)
 					if(C.food > 0)
 						step_to(src, C)
