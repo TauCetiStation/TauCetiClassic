@@ -36,14 +36,17 @@
 		return
 	if(next_click > world.time)
 		return
+	if(!use_charge(user, 2))
+		return
 	next_click = world.time + 10
 	var/obj/item/projectile/changeling_whip/LE = new (get_turf(src))
 	switch(user.a_intent)
 		if(INTENT_GRAB)
 			LE.grabber = TRUE
 		if(INTENT_PUSH)
-			LE.weaken = 3
-			LE.stun = 2
+			if(prob(65))
+				LE.weaken = 3
+				LE.stun = 2
 		if(INTENT_HARM)
 			LE.damage = 30
 		else
@@ -66,17 +69,17 @@
 	tracer_type = /obj/effect/projectile/changeling/tracer
 	impact_type = /obj/effect/projectile/changeling/impact
 
-/obj/item/projectile/changeling_whip/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+/obj/item/projectile/changeling_whip/on_hit(atom/target, blocked = 0)
 	if(isturf(target))
 		return
 	var/atom/movable/T = target
 	if(grabber)
-		var/grab_chance
+		var/grab_chance = 100
 		if(iscarbon(T))
 			var/mob/living/carbon/C = T
-			grab_chance = 60 - (C.getarmor(BP_CHEST, "melee") * 0.4)
-		else
-			grab_chance = 90
+			grab_chance -= C.run_armor_check(def_zone, absorb_text = TRUE)
+			if(def_zone == BP_CHEST || def_zone == BP_GROIN)	//limbs are easier to catch with a tentacle
+				grab_chance -= 20
 		if(!T.anchored && prob(grab_chance))
 			T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
 	return ..()
