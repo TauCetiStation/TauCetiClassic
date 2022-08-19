@@ -71,8 +71,8 @@
 	if(stat & BROKEN)
 		icon_state = "circ-broken"
 		return
+	var/fd = flipped ? reverse_dir[dir] : dir
 	if(panel_open)
-		var/fd = flipped ? reverse_dir[dir] : dir
 		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-panel", dir = fd))
 	if(gen != null)
 		icon_state = "circ-assembled-[flipped]"
