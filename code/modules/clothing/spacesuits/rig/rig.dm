@@ -52,6 +52,7 @@
 	if(rig_connect)
 		rig_connect.helmet = null
 		rig_connect = null
+		canremove = 1
 	return ..()
 
 /obj/item/clothing/suit/space/rig
@@ -131,6 +132,7 @@
 
 	selected_module = null
 	QDEL_NULL(cell)
+	QDEL_NULL(helmet)
 	QDEL_LIST(installed_modules)
 	. = ..()
 
@@ -885,6 +887,12 @@
 	space_armor = list(melee = 65, bullet = 60, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 70)
 	combat_slowdown = 0.2
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/syndiemmessage)
+
+/obj/item/clothing/suit/space/rig/syndi/elite/atom_init()
+	. = ..()
+	var/obj/item/clothing/shoes/magboots/syndie/SB = new(src)
+	SB.name = "The syndicate magboots"
+	boots = SB
 
 /obj/item/clothing/suit/space/rig/syndi/elite/comander
 	name = "Syndicate elite hybrid suit"

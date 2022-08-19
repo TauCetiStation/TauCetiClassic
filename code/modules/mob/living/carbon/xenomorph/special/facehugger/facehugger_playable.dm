@@ -19,6 +19,8 @@
 	storedPlasma = 50
 	max_plasma = 50
 
+	speed = -1
+
 	density = FALSE
 	w_class = SIZE_SMALL
 
@@ -51,12 +53,6 @@
 
 /mob/living/carbon/xenomorph/facehugger/swap_hand()
 	return
-
-/mob/living/carbon/xenomorph/facehugger/movement_delay()
-	var/tally = 0
-	if (isfacehugger(src)) //just in case
-		tally = -1
-	return (tally + move_delay_add + config.alien_delay)
 
 /mob/living/carbon/xenomorph/facehugger/u_equip(obj/item/W)
 	if (W == r_hand)
