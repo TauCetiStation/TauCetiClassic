@@ -81,6 +81,7 @@
 /obj/item/clothing/glasses/night/hos_nights
 	name = "augmented shades"
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
+	sightglassesmod = "hos"
 	icon_state = "hos_shades"
 	item_state = "hos_shades"
 	toggleable = FALSE
