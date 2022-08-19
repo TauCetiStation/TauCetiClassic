@@ -22728,7 +22728,7 @@
 	c_tag = "Hydroponics Pasture";
 	dir = 1
 	},
-/obj/structure/ch_feeder,
+/obj/structure/chicken_feeder,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aOK" = (
