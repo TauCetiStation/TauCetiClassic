@@ -21,10 +21,6 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "quill"
 	item_state = "quill"
-	w_class = SIZE_MINUSCULE
-	throwforce = 8
-	force = 5
-	sharp = 1
 
 /obj/item/weapon/arrow/rod
 
