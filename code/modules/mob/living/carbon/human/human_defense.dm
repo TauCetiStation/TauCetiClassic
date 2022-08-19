@@ -348,12 +348,6 @@
 				if(prob(force_with_melee_skill))
 					apply_effect(20, PARALYZE, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
-				if(prob(force_with_melee_skill + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
-					if(src != user && I.damtype == BRUTE && mind)
-						for(var/id in list(HEADREV, REV))
-							var/datum/role/R = mind.GetRole(id)
-							if(R)
-								R.Deconvert()
 
 				if(bloody)//Apply blood
 					if(wear_mask)
