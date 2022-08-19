@@ -1117,7 +1117,7 @@
 	cost = 1
 
 /datum/uplink_item/revolution/stechkin
-	name = "Stechkin Pistol."
+	name = "Stechkin Pistol"
 	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 7-round magazines."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
 	cost = 5
@@ -1144,6 +1144,12 @@
 	name = "A74U Magazine"
 	desc = "Lower-capacity A74 mag for use in Krinkov."
 	item = /obj/item/weapon/gun/projectile/automatic/a74/krinkov
+	cost = 2
+
+/datum/uplink_item/revolution/emp
+	name = "EMP Grenade"
+	desc = "Classic EMP grenade. Throw it at those pesky cyborgs."
+	item = /obj/item/weapon/grenade/empgrenade
 	cost = 2
 
 /datum/uplink_item/revolution/armor
