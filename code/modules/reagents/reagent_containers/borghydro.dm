@@ -121,4 +121,4 @@
 	name = "Peace Hypospray"
 	charge_cost = 150
 	volume = 15
-	reagent_ids = list("cryptobiolin", "rezadone", "bicaridine") //rezadon heals broken faces after a fight
+	reagent_ids = list("cryptobiolin", "rezadone", "inaprovaline", "tramadol", "anti_toxin") //rezadon heals broken faces after a fight

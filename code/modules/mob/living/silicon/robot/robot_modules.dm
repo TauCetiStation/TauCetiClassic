@@ -416,6 +416,7 @@
 	modules += new /obj/item/weapon/cyborghug(src)
 	modules += new /obj/item/borg/bubble_creator(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
+	modules += new /obj/item/weapon/crowbar/red(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 
 	emag = new /obj/item/weapon/gun/grenadelauncher/cyborg(src)
