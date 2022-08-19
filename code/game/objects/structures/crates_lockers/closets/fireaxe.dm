@@ -112,6 +112,7 @@
 		return ..()
 	smashed = TRUE
 	localopened = TRUE
+	locked = FALSE
 	hitstaken = 4
 	update_icon()
 	playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)

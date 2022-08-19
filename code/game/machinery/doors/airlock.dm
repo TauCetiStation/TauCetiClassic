@@ -1112,6 +1112,11 @@ var/global/list/airlock_overlays = list()
 			overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 	update_icon()
 
+/obj/machinery/door/airlock/proc/on_break()
+	if(!panel_open)
+		panel_open = TRUE
+	wires.cut_all()
+
 /obj/machinery/door/airlock/emp_act(severity)
 	if(!wires)
 		return
@@ -1120,6 +1125,11 @@ var/global/list/airlock_overlays = list()
 			continue
 		var/wire = 1 << rand(0, wires.wire_count - 1)
 		wires.pulse_index(wire)
+
+/obj/machinery/door/airlock/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		on_break()
 
 /obj/machinery/door/airlock/atom_destruction(damage_flag)
 	if(damage_flag == BOMB) //If an explosive took us out, don't drop the assembly
