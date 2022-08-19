@@ -309,7 +309,6 @@
 
 	to_chat(usr, "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>")
 	capped = !capped
-	icon_state = "spraycan[capped ? "_cap" : ""]"
 	update_icon()
 
 /obj/item/toy/crayon/spraycan/attack_self(mob/living/user)
@@ -354,6 +353,7 @@
 
 /obj/item/toy/crayon/spraycan/update_icon()
 	cut_overlays()
+	icon_state = "spraycan[capped ? "_cap" : ""]"
 	var/image/I = image('icons/obj/crayons.dmi',icon_state = "[capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 	I.color = colour
 	add_overlay(I)
