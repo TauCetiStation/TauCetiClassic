@@ -31,10 +31,6 @@
 	name = "metal rod"
 	desc = "Don't cry for me, Orithena."
 	icon_state = "metal-rod"
-	w_class = SIZE_MINUSCULE
-	throwforce = 8
-	force = 5
-	sharp = 1
 
 /obj/item/weapon/arrow/rod/removed(mob/user)
 	if(throwforce == 15) // The rod has been superheated - we don't want it to be useable when removed from the bow.
