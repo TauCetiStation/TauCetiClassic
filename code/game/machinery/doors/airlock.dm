@@ -327,7 +327,7 @@ var/global/list/airlock_overlays = list()
 		set_light(0, 0)
 
 	if(p_open)
-		. += get_airlock_overlay("panel_[frame_state]", overlays_file, TRUE)
+		. += get_airlock_overlay("panel_[frame_state]", overlays_file)
 	if(frame_state == AIRLOCK_FRAME_CLOSED && welded)
 		. += get_airlock_overlay("welded", overlays_file)
 
@@ -1135,6 +1135,11 @@ var/global/list/airlock_overlays = list()
 	if(damage_flag == BOMB) //If an explosive took us out, don't drop the assembly
 		flags |= NODECONSTRUCT
 	return ..()
+
+/obj/machinery/door/airlock/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+	. = ..()
+	if(.)
+		update_icon()
 
 /obj/machinery/door/airlock/proc/prepare_deconstruction_assembly(obj/structure/door_assembly/assembly)
 	assembly.anchored = TRUE

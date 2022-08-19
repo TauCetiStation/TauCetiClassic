@@ -201,10 +201,10 @@
 	else
 		..()
 
-/obj/machinery/bot/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+/obj/machinery/bot/medbot/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()
 	if(. && !QDELING(src))
-		step(src, attack_dir)
+		step(src, reverse_dir[attack_dir])
 
 /obj/machinery/bot/medbot/emag_act(mob/user)
 	..()

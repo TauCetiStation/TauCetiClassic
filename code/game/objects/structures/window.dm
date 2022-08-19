@@ -39,6 +39,7 @@
 				return max(0, damage_amount - damage_threshold)
 			if(BURN)
 				return damage_amount * 0.3
+	return ..()
 
 /obj/structure/window/atom_break(damage_flag)
 	. = ..()
