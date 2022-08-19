@@ -43,7 +43,7 @@
 		var/datum/objective/target/rp_rev/rev_obj = AppendObjective(/datum/objective/target/rp_rev, TRUE)
 		if(rev_obj)
 			rev_obj.target = head_mind
-			rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
+			rev_obj.explanation_text = "Плените, обратите или изгоните со станции [head_mind.name], the [head_mind.assigned_role]. Убейте, если не будет другого выхода."
 	return TRUE
 
 /datum/faction/revolution/proc/check_heads_victory()
@@ -97,7 +97,7 @@
 		var/datum/objective/target/rp_rev/rev_obj = AppendObjective(/datum/objective/target/rp_rev, TRUE)
 		if(rev_obj)
 			rev_obj.target = M.mind
-			rev_obj.explanation_text = "Capture, convert or exile from station [M.mind.name], the [M.mind.assigned_role]. Assassinate if you have no choice."
+			rev_obj.explanation_text = "Плените, обратите или изгоните со станции [M.mind.name], the [M.mind.assigned_role]. Убейте, если не будет другого выхода."
 			AnnounceObjectives()
 
 /datum/faction/revolution/process()
@@ -130,7 +130,7 @@
 				tried_to_add_revheads = world.time + 10 MINUTES
 
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
-		command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")
+		command_report("Вынуждены сообщить, что эффективность работы станции оказалась удручающей, поэтому нам придётся снизить финансирование. С этой целью заработная плата всего персонала, исключая Глав и Службу Безопасности, будет снижена вдвое.")
 		last_command_report = 1
 		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
 		for(var/datum/job/J in SSjob.occupations)
@@ -145,10 +145,10 @@
 			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
 
 	else if(last_command_report == 1 && world.time >= 30 MINUTES)
-		command_report("Statistics hint that a high amount of leisure time, and associated activities, are responsible for the poor performance of many of our stations. You are to bolt and close down any leisure facilities, such as the holodeck, the theatre and the bar. Food can be distributed through vendors and the kitchen.")
+		command_report("Статистика показывает, что обилие свободного времени и связанные с ним мероприятия негативно влияют на продуктивность большинства наших станций. Следовательно, вам необходимо остановить работу мест отдыха, таких как голодек и бар. Раздачу пищи можно производить через кухню или торговые автоматы.")
 		last_command_report = 2
 	else if(last_command_report == 2 && world.time >= 60 MINUTES)
-		command_report("It is reported that merely closing down leisure facilities has not been successful. You and your Heads of Staff are to ensure that all crew are working hard, and not wasting time or energy. Any crew caught off duty without leave from their Head of Staff are to be warned, and on repeated offence, to be brigged until the next transfer shuttle arrives, which will take them to facilities where they can be of more use.")
+		command_report("Судя по отчётам, одно лишь закрытие мест отдыха не принесло успехов. Вам, а также Главам отделов необходимо убедиться, что все члены экипажа усердно трудятся, а не расточают время и ресурсы. Любой работник, замеченный за отсутствием на рабочем месте без разрешения соответствующего Главы, должен быть предупреждён, а при повторном нарушении заключён в бриг до прибытия следующего шаттла транспортировки экипажа.")
 		last_command_report = 3
 
 /datum/faction/revolution/proc/command_report(message)
