@@ -463,7 +463,8 @@
 	damage_threshold = 15
 
 /obj/structure/window/reinforced/indestructible
-	resistance_flags = INDESTRUCTIBLE
+	flags = NODECONSTRUCT | ON_BORDER
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
