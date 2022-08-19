@@ -57,3 +57,7 @@
 			playsound(loc, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/structure/stool/bed/nest/deconstruct(disassembled)
+	flags |= NODECONSTRUCT // prevent metal spawning
+	..()

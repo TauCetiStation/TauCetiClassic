@@ -104,5 +104,3 @@
 			return
 
 	to_chat(src, "<span class='warning'>There are no available drone spawn points, sorry.</span>")
-
-

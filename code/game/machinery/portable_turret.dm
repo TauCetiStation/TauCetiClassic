@@ -400,7 +400,7 @@ var/global/list/turret_icons
 	. = ..()
 	if(. && enabled && !(attacked || emagged))
 		attacked = TRUE
-		VARSET_IN(src, attacked, FALSE, 60)
+		VARSET_IN(src, attacked, FALSE, 6 SECONDS)
 	if(. > 5 && prob(45))
 		spark_system.start()
 

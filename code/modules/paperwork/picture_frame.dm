@@ -144,7 +144,7 @@
 /obj/structure/picture_frame/Destroy()
 	. = ..()
 	QDEL_NULL(framed)
-	
+
 /obj/structure/picture_frame/wooden
 	name = "wooden picture frame"
 	frame_type = /obj/item/weapon/picture_frame/wooden
@@ -281,7 +281,7 @@
 		if(frame_type == /obj/item/weapon/picture_frame/metal)
 			new /obj/item/stack/sheet/metal(T)
 	..()
-	
+
 /obj/structure/picture_frame/attack_hand(mob/user)
 	if(framed)
 		framed.show(user)

@@ -167,9 +167,9 @@
 	if(QDELETED(src)) // prevent double explosion
 		return
 	var/fuel_am = reagents.get_reagent_amount("fuel") + reagents.get_reagent_amount("phoron") * 5
+	if(fuel_am <= 0)
+		return FALSE
 	switch(fuel_am)
-		if(-INFINITY to 0)
-			return FALSE
 		if(0 to 100)
 			explosion(loc, -1, 1, 2)
 		if(100 to 500)
@@ -177,7 +177,7 @@
 		else
 			explosion(loc, 1, 2, 4)
 	qdel(src)
-	return FALSE
+	return TRUE
 
 /obj/structure/reagent_dispensers/fire_act(datum/gas_mixture/air, temperature, volume)
 	if(temperature > T0C+500)

@@ -189,10 +189,10 @@
 
 /obj/effect/blob/normal
 	icon_state = "blob"
-	integrity_failure = 15
+	integrity_failure = 0.5
 
 /obj/effect/blob/normal/update_icon()
-	if(get_integrity() <= 15)
+	if(get_integrity() <= max_integrity * integrity_failure)
 		icon_state = "blob_damaged"
 	else
 		icon_state = "blob"

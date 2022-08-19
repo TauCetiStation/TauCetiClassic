@@ -61,9 +61,8 @@
 		tforce = 10
 	else
 		tforce = AM:throwforce
-	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
+	
 	take_damage(tforce, BRUTE, MELEE)
-	return
 
 /obj/effect/energy_net/attack_hand(mob/living/carbon/human/user)
 	if (HULK in user.mutations)

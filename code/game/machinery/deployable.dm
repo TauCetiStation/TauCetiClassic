@@ -135,7 +135,7 @@ for reference:
 /obj/machinery/deployable/barrier/deconstruct(disassembled)
 	explode()
 
-/obj/structure/barricade/wooden/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
+/obj/structure/barricade/barrier/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
 	switch(damage_type)
 		if(BRUTE)
 			return damage_amount * 0.5

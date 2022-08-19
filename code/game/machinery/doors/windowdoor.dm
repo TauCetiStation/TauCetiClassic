@@ -17,7 +17,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/base_state = "left"
-	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	max_integrity = 150
 	integrity_failure = 0
 	armor = list(MELEE = 20, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
 	// For use with door control buttons. Currently just that.

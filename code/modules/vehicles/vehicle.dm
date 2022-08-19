@@ -108,6 +108,8 @@
 
 /obj/vehicle/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()
+	if(QDELING(src))
+		return
 	if(.)
 		if(prob(10))
 			new /obj/effect/decal/cleanable/blood/oil(loc)

@@ -845,7 +845,7 @@
 	qdel(src)
 
 /obj/structure/disposalpipe/deconstruct(disassembled)
-	broken(!(disassembled || flags & NODECONSTRUCT || get_integrity() > -100))
+	broken(!(disassembled || flags & NODECONSTRUCT || get_integrity() < -50))
 
 //attack by item
 //weldingtool: unfasten and convert to obj/disposalconstruct

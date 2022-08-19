@@ -107,7 +107,7 @@
 /obj/item/device/mmi/deconstruct(disassembled = TRUE)
 	if(brainmob)
 		eject_brain()
-	qdel(src)
+	..()
 
 /obj/item/device/mmi/MouseDrop_T(mob/living/carbon/monkey/diona/target, mob/user)
 	if(user.incapacitated() || !istype(target))

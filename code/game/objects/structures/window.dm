@@ -103,7 +103,7 @@
 			take_damage(rand(5, 15), BRUTE, BOMB)
 
 /obj/structure/window/airlock_crush_act()
-	take_damage(DOOR_CRUSH_DAMAGE * 2)
+	take_damage(DOOR_CRUSH_DAMAGE * 2, BRUTE, MELEE)
 	..()
 
 /obj/structure/window/blob_act()

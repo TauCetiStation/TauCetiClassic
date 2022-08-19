@@ -28,7 +28,6 @@
 		F.dirt += 4
 	qdel(src)
 
-// TODO copy icon_state to file
 /obj/effect/decal/cleanable/ash/large
 	name = "large pile of ashes"
 	icon_state = "big_ash"
@@ -136,15 +135,11 @@
 	if(!src) return
 	set_light(0)
 
-// TODO copy icon state to fle
 /obj/effect/decal/cleanable/shreds
 	name = "shreds"
 	desc = "The shredded remains of what appears to be clothing."
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "shreds"
-
-/obj/effect/decal/cleanable/shreds/ex_act(severity, target)
-	if(severity >= EXPLODE_DEVASTATE) //so shreds created during an explosion aren't deleted by the explosion.
-		qdel(src)
 
 /obj/effect/decal/cleanable/shreds/atom_init(mapload, oldname)
 	. = ..()

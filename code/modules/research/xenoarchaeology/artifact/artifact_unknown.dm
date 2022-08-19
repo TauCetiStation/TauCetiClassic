@@ -268,6 +268,8 @@
 
 /obj/machinery/artifact/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()
+	if(QDELING(src))
+		return
 	switch(damage_flag)
 		if(FIRE)
 			try_toggle_effects(TRIGGER_HEAT)

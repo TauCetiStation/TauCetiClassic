@@ -47,12 +47,7 @@
 					icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
 					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 				return
-			if(O.force < 15)
-				user.do_attack_animation(src)
-				playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER) //We don't want this playing every time
-				visible_message("<span class='notice'>The cabinet's protective glass glances off the hit.</span>")
-			else
-				..()
+			..()
 			
 	else if (istype(O, /obj/item/weapon/fireaxe) && localopened)
 		if(!fireaxe)
@@ -128,17 +123,11 @@
 	if(flags & NODECONSTRUCT)
 		return ..()
 
-	if(fireaxe && loc)
+	if(fireaxe)
 		fireaxe.forceMove(loc)
 		fireaxe = null
 	new /obj/item/stack/sheet/metal(loc, 2)
 	return ..()
-
-/obj/structure/closet/fireaxecabinet/blob_act()
-	if(fireaxe)
-		fireaxe.forceMove(loc)
-		fireaxe = null
-	qdel(src)
 
 /obj/structure/closet/fireaxecabinet/attack_hand(mob/living/user)
 	if(user.is_busy(src))

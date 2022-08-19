@@ -21,8 +21,8 @@
 	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
 	var/release_flow_rate = ATMOS_DEFAULT_VOLUME_PUMP // in L/s
 
-	max_integrity = 100
-	integrity_failure = 0.1
+	max_integrity = 200
+	integrity_failure = 0.5
 	var/temperature_resistance = 1000 + T0C
 	var/starter_temp
 
@@ -211,12 +211,6 @@ update_flag
 	if(exposed_temperature > temperature_resistance)
 		take_damage(5, BURN, FIRE)
 
-/obj/machinery/portable_atmospherics/canister/take_damage()
-	if(flags & NODECONSTRUCT)
-		return
-	
-	..()
-
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	..()
 
@@ -266,6 +260,7 @@ update_flag
 
 /obj/machinery/portable_atmospherics/canister/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
+		qdel(src)
 		return
 	atom_break()
 	new /obj/item/stack/sheet/metal(loc, disassembled ? 10 : 5)

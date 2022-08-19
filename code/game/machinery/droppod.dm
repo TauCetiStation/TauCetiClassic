@@ -435,10 +435,7 @@
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")
 
 	else if(user.a_intent == INTENT_HARM || (O.flags & ABSTRACT))
-		user.SetNextMove(CLICK_CD_MELEE)
-		take_damage(O.force, O.damtype, MELEE)
 		return ..()
-
 	else
 		if(istype(O, /obj/item/weapon/simple_drop_system))
 			if(!(flags & POOR_AIMING))
@@ -507,7 +504,6 @@
 
 /obj/structure/droppod/bullet_act(obj/item/projectile/Proj, def_zone)
 	if((Proj.damage && Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		. = ..()
 		if(flags & IS_LOCKED)
 			return
@@ -516,8 +512,12 @@
 		if(second_intruder && prob(40))
 			second_intruder.bullet_act(Proj)
 
+/obj/structure/droppod/play_attack_sound(damage_amount, damage_type, damage_flag)
+	if(damage_amount)
+		playsound(loc, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
+
 /obj/structure/droppod/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir)
-	..(damage_amount / 2, damage_type, damage_flag, sound_effect, attack_dir)
+	..(damage_amount * 0.5, damage_type, damage_flag, sound_effect, attack_dir)
 
 /obj/structure/droppod/deconstruct()
 	visible_message("<span class='warning'>The [src] has been destroyed!</span>")

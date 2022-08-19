@@ -94,7 +94,7 @@
 	being_shocked = TRUE
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)
-	VARSET_IN(src, being_shocked, FALSE, 10)
+	VARSET_IN(src, being_shocked, FALSE, 1 SECOND)
 
 ///the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
 /obj/proc/deconstruct(disassembled = TRUE)
@@ -104,8 +104,7 @@
 /obj/atom_destruction(damage_flag)
 	. = ..()
 	switch(damage_flag)
-		if(ACID)
-			// TODO ACID SS
+		//if(ACID) TODO ACID SS
 		if(FIRE)
 			burn()
 		else

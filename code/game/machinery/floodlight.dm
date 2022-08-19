@@ -108,8 +108,8 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE) // TODO fix all sound like this one
-	//var/obj/structure/floodlight_frame/F = new(loc)
+	playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+	//var/obj/structure/floodlight_frame/F = new(loc) // TODO floodligh construction
 	//F.state = FLOODLIGHT_NEEDS_LIGHTS
 	//new /obj/item/light/tube/broken(loc)
 	qdel(src)

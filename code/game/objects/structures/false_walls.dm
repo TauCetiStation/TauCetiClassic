@@ -115,7 +115,7 @@
 
 	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
 		var/turf/T = get_turf(src)
-		deconstruct(TRUE)
+		T.ChangeTurf(walltype)
 		if(walltype != /turf/simulated/wall/mineral/phoron)
 			T = get_turf(src)
 			T.attackby(W, user)

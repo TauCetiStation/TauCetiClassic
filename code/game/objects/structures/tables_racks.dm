@@ -22,6 +22,8 @@
 	climbable = TRUE
 	smooth = SMOOTH_TRUE
 
+	max_integrity = 100
+
 	var/parts = /obj/item/weapon/table_parts
 	var/flipped = 0
 	var/flipable = TRUE
@@ -102,7 +104,6 @@
 		deconstruct(FALSE)
 	else
 		deconstruct(TRUE)
-	qdel(src)
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
@@ -110,8 +111,6 @@
 		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		deconstruct(TRUE)
-
-
 
 /obj/structure/table/attack_hand(mob/user)
 	if(HULK in user.mutations)

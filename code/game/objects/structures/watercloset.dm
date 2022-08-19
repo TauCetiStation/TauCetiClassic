@@ -97,10 +97,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		return
 
 /obj/structure/toilet/deconstruct()
-	if(flags & NODECONSTRUCT)
-		return ..()
 	for(var/obj/toilet_item as anything in contents)
 		toilet_item.forceMove(loc)
+	if(flags & NODECONSTRUCT)
+		return ..()
 	new /obj/item/stack/sheet/metal(loc, 1)
 	..()
 

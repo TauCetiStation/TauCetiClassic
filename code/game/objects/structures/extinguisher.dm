@@ -69,8 +69,6 @@
 
 /obj/structure/extinguisher_cabinet/atom_break(damage_flag)
 	. = ..()
-	if(. || flags & NODECONSTRUCT)
-		return
 	opened = TRUE
 	if(has_extinguisher)
 		has_extinguisher.forceMove(loc)

@@ -55,11 +55,11 @@
 		to_chat(user, "<span class='notice'>You can't put [P] in [src]!</span>")
 
 /obj/structure/filingcabinet/deconstruct(disassembled)
+	for(var/obj/item/I as anything in contents)
+		I.forceMove(loc)
 	if(flags & NODECONSTRUCT)
 		return ..()
 	new /obj/item/stack/sheet/metal(loc, 2)
-	for(var/obj/item/I as  anything in src)
-		I.forceMove(loc)
 	..()
 
 /obj/structure/filingcabinet/attack_hand(mob/user)

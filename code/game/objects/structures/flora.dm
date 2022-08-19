@@ -215,6 +215,7 @@
 	icon_state = "plant-10"
 	max_integrity = 40
 	damage_deflection = 5
+	flags = NODECONSTRUCT // prevent getting drop without harvesting
 	resistance_flags = INDESTRUCTIBLE
 	var/cutting_sound = 'sound/weapons/bladeslice.ogg'
 	var/list/drop_on_destroy = list()
@@ -222,9 +223,11 @@
 /obj/structure/flora/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(!attacking_item.is_sharp())
 		return
+	flags &= NODECONSTRUCT
 	. = ..()
-	if(.)
-		playsound(src, cutting_sound, VOL_EFFECTS_MASTER)
+	flags |= NODECONSTRUCT
+	if(. && !QDELETED(src))
+		playsound(loc, cutting_sound, VOL_EFFECTS_MASTER)
 
 /obj/structure/flora/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)

@@ -74,7 +74,7 @@
 				BP.germ_level++
 
 			if (prob(3))	//about once every 30 seconds
-				take_damage(1,silent=prob(30))	
+				take_damage(1,silent=prob(30))
 
 /obj/item/organ/internal/take_damage(amount, silent=0)
 	if(!isnum(silent))

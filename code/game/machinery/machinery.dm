@@ -196,7 +196,7 @@ Class Procs:
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
-		new /obj/effect/overlay/pulse2(loc, 10)
+		new /obj/effect/overlay/pulse2(loc, 1)
 	..()
 
 /obj/machinery/proc/open_machine()
