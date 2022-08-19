@@ -6,7 +6,8 @@
 	icon_state = "bolt"
 	item_state = "bolt"
 	throwforce = 8
-	w_class = SIZE_SMALL
+	force = 5
+	w_class = SIZE_MINUSCULE
 	sharp = 1
 	edge = 0
 
@@ -20,18 +21,25 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "quill"
 	item_state = "quill"
-	throwforce = 5
+	w_class = SIZE_MINUSCULE
+	throwforce = 8
+	force = 5
+	sharp = 1
 
 /obj/item/weapon/arrow/rod
 
 	name = "metal rod"
 	desc = "Don't cry for me, Orithena."
 	icon_state = "metal-rod"
+	w_class = SIZE_MINUSCULE
+	throwforce = 8
+	force = 5
+	sharp = 1
 
 /obj/item/weapon/arrow/rod/removed(mob/user)
 	if(throwforce == 15) // The rod has been superheated - we don't want it to be useable when removed from the bow.
 		to_chat(user, "[src] shatters into a scattering of overstressed metal shards as it leaves the crossbow.")
-		var/obj/item/weapon/shard/shrapnel/S = new()
+		var/obj/item/weapon/arrow/rod/S = new()
 		S.loc = get_turf(src)
 		qdel(src)
 
@@ -41,6 +49,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
+	force = 5
+	throwforce = 8
 	w_class = SIZE_BIG
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
