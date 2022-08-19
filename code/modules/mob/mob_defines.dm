@@ -107,9 +107,9 @@
 	var/dna_inject_count = 0
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
-	var/paralysis = 0.0
-	var/stunned = 0.0
-	var/weakened = 0.0
+	var/paralysis = FALSE
+	var/stunned = FALSE
+	var/weakened = FALSE
 	var/losebreath = 0.0//Carbon
 	var/a_intent = INTENT_HELP //Living
 	var/m_intent = "run"//Living

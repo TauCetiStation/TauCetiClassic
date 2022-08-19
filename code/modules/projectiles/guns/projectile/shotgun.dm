@@ -77,19 +77,20 @@
 	origin_tech = "combat=3;materials=1"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	can_be_holstered = FALSE
-	var/open = 0
-	var/short = 0
+	var/open = FALSE
+	var/short = FALSE
+	var/can_be_shortened = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/update_icon()
 	if(short)
-		icon_state = "sawnshotgun[open ? "-o" : ""]"
+		icon_state = "[icon_state][short ? "-short" : ""][open ? "-o" : ""]"
 	else
-		icon_state = "dshotgun[open ? "-o" : ""]"
+		icon_state = "[initial(icon_state)][open ? "-o" : ""]"
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/melee/energy) || istype(I, /obj/item/weapon/pickaxe/plasmacutter))
-		if(short)
+		if(short || !can_be_shortened)
 			return
 		if(get_ammo())
 			to_chat(user, "<span class='notice'>You try to shorten the barrel of \the [src].</span>")

@@ -123,7 +123,7 @@
 	name = "Unathi Soldier"
 	corpseback = /obj/item/weapon/storage/backpack
 	corpseuniform = /obj/item/clothing/under/tactical
-	corpseshoes = /obj/item/clothing/shoes/boots/combat/cut
+	corpseshoes = /obj/item/clothing/shoes/boots/combat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas/coloured
 	corpsehelmet = /obj/item/clothing/head/helmet/swat
@@ -135,7 +135,7 @@
 	name = "Unathi Commander"
 	corpseback = /obj/item/weapon/tank/jetpack/oxygen
 	corpseuniform = /obj/item/clothing/under/syndicate/tacticool
-	corpseshoes = /obj/item/clothing/shoes/boots/combat/cut
+	corpseshoes = /obj/item/clothing/shoes/boots/combat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas/coloured
 	corpsehelmet = /obj/item/clothing/head/helmet/space/unathi/breacher

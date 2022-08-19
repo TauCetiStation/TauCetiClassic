@@ -109,10 +109,10 @@
 					var/targetitem = input("Select item to search for.", "Item Mode Select","") as null|anything in itemlist.possible_items
 					if(!targetitem)
 						return
-					var/turf/Z = get_turf(src)
 					var/obj/item/item_path = itemlist.possible_items[targetitem]
 					for(var/obj/item/I in global.possible_items_for_steal)
-						if(I.z != Z.z)
+						var/turf/T = get_turf(I)
+						if(is_centcom_level(T.z))
 							continue
 						if(!istype(I, item_path))
 							continue

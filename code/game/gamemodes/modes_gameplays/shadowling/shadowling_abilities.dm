@@ -2,6 +2,7 @@
 	name = "Glare"
 	desc = "Stuns and mutes a target for a decent duration."
 	panel = "Shadowling Abilities"
+	action_icon_state = "glare"
 	charge_max = 300
 	clothes_req = 0
 
@@ -34,6 +35,7 @@
 	name = "Veil"
 	desc = "Extinguishes most nearby light sources."
 	panel = "Shadowling Abilities"
+	action_icon_state = "veil"
 	charge_max = 250 //Short cooldown because people can just turn the lights back on
 	clothes_req = 0
 	range = 5
@@ -81,6 +83,7 @@
 	panel = "Shadowling Abilities"
 	range = 5
 	charge_max = 1200
+	action_icon_state = "icy_veins"
 	clothes_req = 0
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze/cast(list/targets)
@@ -109,6 +112,7 @@
 	name = "Enthrall"
 	desc = "Allows you to enslave a conscious, non-braindead, non-catatonic human to your will. This takes some time to cast."
 	panel = "Shadowling Abilities"
+	action_icon_state = "enthrall"
 	charge_max = 450
 	clothes_req = 0
 	range = 1 //Adjacent to user
@@ -197,6 +201,7 @@
 	name = "Hivemind Commune"
 	desc = "Allows you to silently communicate with all other shadowlings and thralls."
 	panel = "Shadowling Abilities"
+	action_icon_state = "commune"
 	charge_max = 0
 	clothes_req = 0
 	range = -1
@@ -218,6 +223,7 @@
 	name = "Regenerate Chitin"
 	desc = "Re-forms protective chitin that may be lost during cloning or similar processes."
 	panel = "Shadowling Abilities"
+	action_icon_state = "regen_armor"
 	charge_max = 600
 	clothes_req = 0
 	range = -1
@@ -248,6 +254,7 @@
 	name = "Collective Hivemind"
 	desc = "Gathers the power of all of your thralls and compares it to what is needed for ascendance. Also gains you new abilities."
 	panel = "Shadowling Abilities"
+	action_icon_state = "collective_mind"
 	charge_max = 300 //30 second cooldown to prevent spam
 	clothes_req = 0
 	range = -1
@@ -319,6 +326,7 @@
 	name = "Blindness Smoke"
 	desc = "Spews a cloud of smoke which will blind enemies."
 	panel = "Shadowling Abilities"
+	action_icon_state = "black_smoke"
 	charge_max = 600
 	clothes_req = 0
 	range = -1
@@ -363,6 +371,7 @@
 	name = "Sonic Screech"
 	desc = "Deafens, stuns, and confuses nearby people. Also shatters windows."
 	panel = "Shadowling Abilities"
+	action_icon_state = "screech"
 	range = 7
 	charge_max = 300
 	clothes_req = 0
@@ -402,6 +411,7 @@
 	name = "Drain Life"
 	desc = "Damages nearby humans, draining their life and healing your own wounds."
 	panel = "Shadowling Abilities"
+	action_icon_state = "drain_life"
 	range = 3
 	charge_max = 250
 	clothes_req = 0
@@ -435,6 +445,7 @@
 	name = "Black Recuperation"
 	desc = "Brings a dead thrall back to life."
 	panel = "Shadowling Abilities"
+	action_icon_state = "revive_thrall"
 	range = 1
 	charge_max = 3000
 	clothes_req = 0
@@ -481,6 +492,7 @@
 	name = "Annihilate"
 	desc = "Gibs a human after a short time."
 	panel = "Ascendant"
+	action_icon_state = "annihilate"
 	range = 7
 	charge_max = 50
 	clothes_req = 0
@@ -517,6 +529,7 @@
 	name = "Hypnosis"
 	desc = "Instantly enthralls a human."
 	panel = "Ascendant"
+	action_icon_state = "enthrall"
 	range = 7
 	charge_max = 0
 	clothes_req = 0
@@ -561,6 +574,7 @@
 	name = "Phase Shift"
 	desc = "Phases you into the space between worlds at will, allowing you to move through walls and become invisible."
 	panel = "Ascendant"
+	action_icon_state = "shadow_walk"
 	range = -1
 	include_user = 1
 	charge_max = 15
@@ -621,6 +635,7 @@
 	name = "Ascendant Commune"
 	desc = "Allows you to LOUDLY communicate with all other shadowlings and thralls."
 	panel = "Ascendant"
+	action_icon_state = "transmit"
 	charge_max = 0
 	clothes_req = 0
 	range = -1
@@ -641,6 +656,7 @@
 	name = "Ascendant Broadcast"
 	desc = "Sends a message to the whole wide world."
 	panel = "Ascendant"
+	action_icon_state = "transmit"
 	charge_max = 200
 	clothes_req = 0
 	range = -1
