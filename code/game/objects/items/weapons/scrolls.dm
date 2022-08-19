@@ -61,7 +61,7 @@
 	smoke.start()
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.density)
+		if(!T.density && !SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
 			var/clear = 1
 			for(var/obj/O in T)
 				if(O.density)
