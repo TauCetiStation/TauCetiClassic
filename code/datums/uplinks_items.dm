@@ -144,6 +144,7 @@
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
 	cost = 6
+	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/dangerous/deagle
 	name = "Desert Eagle"
@@ -378,6 +379,7 @@
 			are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/m9mm/ex
 	cost = 1
+	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/ammo/revolver
 	name = "Speedloader-.357"
@@ -462,13 +464,6 @@
 	item = /obj/item/ammo_box/magazine/m12g/incendiary
 	cost = 4
 	uplink_types = list("nuclear")
-/*
-/datum/uplink_item/ammo/pistol
-	name = "Ammo-10mm"
-	desc = "An additional 8-round 10mm magazine for use in the Stetchkin pistol."
-	item = /obj/item/ammo_box/magazine/m10mm
-	cost = 1
-	uplink_types = list("nuclear") */
 
 /datum/uplink_item/ammo/machinegun
 	name = "Ammo-7.62x51mm"
@@ -631,7 +626,7 @@
 			known to survive intact even beyond the current shift. "
 	item = /obj/item/weapon/storage/backpack/satchel/flat
 	cost = 1
-	uplink_types = list()
+	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/stealthy_tools/syndigolashes
 	name = "No-Slip Brown Shoes"
@@ -716,6 +711,7 @@
 	desc = "The syndicate toolbox is a suspicious black and red. Aside from tools, it comes with cable and a multitool. Insulated gloves are not included."
 	item = /obj/item/weapon/storage/toolbox/syndicate
 	cost = 1
+	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Dufflebag"
@@ -723,6 +719,7 @@
 			a MMI, a straitjacket, and a muzzle."
 	item = /obj/item/weapon/storage/backpack/dufflebag/surgery
 	cost = 4
+	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/c4bag
 	name = "Bag of C-4 explosives"
@@ -736,6 +733,7 @@
 	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
 	item = /obj/item/weapon/storage/belt/military
 	cost = 1
+	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Medical Supply Kit"
@@ -750,6 +748,7 @@
 	desc = "The syndicate medkit. Included is a combat stimulant injector for rapid healing."
 	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
 	cost = 5
+	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/bonepen
 	name = "Prototype Bone Repair Kit"
@@ -807,6 +806,7 @@
 			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
 	item = /obj/item/device/encryptionkey/syndicate
 	cost = 2
+	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/poster_kit
 	name = "Poster kit"
@@ -842,6 +842,7 @@
 	It has a modifiable timer with a minimum setting of 10 seconds."
 	item = /obj/item/weapon/plastique
 	cost = 1
+	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power sink"
@@ -1093,3 +1094,66 @@
 
 	U.uses -= cost
 
+/datum/uplink_item/revolution
+	category = "Revolution!"
+	uplink_types = list("rev")
+
+/datum/uplink_item/revolution/derringer
+	name = "Derringer Pistol"
+	desc = "A double-barelled pistol, small enough to fit in a pocket. That's how it got so close to Lincoln. Chambered in .38, go get them from cargo."
+	item = /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer
+	cost = 2
+
+/datum/uplink_item/revolution/mosin
+	name = "Mosin-Nagant Rifle"
+	desc = "A simple yet powerful bolt-action rifle chambered in 7.74."
+	item = /obj/item/weapon/gun/projectile/shotgun/bolt_action
+	cost = 4
+
+/datum/uplink_item/revolution/mosin_ammo
+	name = "Mosin-Nagant Clip"
+	desc = "A simple clip of 7.74 ammo for a simple rifle."
+	item = /obj/item/ammo_box/magazine/a774clip
+	cost = 1
+
+/datum/uplink_item/revolution/stechkin
+	name = "Stechkin Pistol."
+	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 7-round magazines."
+	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	cost = 5
+
+/datum/uplink_item/revolution/stechkin_ammo
+	name = "9mm Handgun Magazine"
+	desc = "An additional 7-round 9mm magazine; compatible with the Stechkin Pistol."
+	item = /obj/item/ammo_box/magazine/m9mm
+	cost = 1
+
+/datum/uplink_item/revolution/double_barrel
+	name = "Double-Barrel Shotgun"
+	desc = "Twice the barrels - twice the fun."
+	item = /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon
+	cost = 5
+
+/datum/uplink_item/revolution/krinkov
+	name = "A74U Assault Rifle"
+	desc = "Also known as Krinkov. Nowadays mainly used by lower grade security forces on mining or prison facilites. Uses smaller 7.74 mags."
+	item = /obj/item/weapon/gun/projectile/automatic/a74/krinkov
+	cost = 12
+
+/datum/uplink_item/revolution/krinkov_ammo
+	name = "A74U Magazine"
+	desc = "Lower-capacity A74 mag for use in Krinkov."
+	item = /obj/item/weapon/gun/projectile/automatic/a74/krinkov
+	cost = 2
+
+/datum/uplink_item/revolution/armor
+	name = "Surplus Armor Set"
+	desc = "Set of cheap armor stolen from forgotten military warehouses."
+	item = /obj/item/weapon/storage/box/syndie_kit/revolution/armor
+	cost = 1
+
+/datum/uplink_item/revolution/posters
+	name = "Revolutionary Posters"
+	desc = "These posters expose NT lies and promote violence towards monopolists, allowing to convert spacemen remotely."
+	item = /obj/item/weapon/storage/box/syndie_kit/revolution/posters
+	cost = 1

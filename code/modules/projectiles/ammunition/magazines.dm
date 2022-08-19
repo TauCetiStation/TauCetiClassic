@@ -393,15 +393,15 @@
 	max_ammo = 8
 	multiload = 0
 
-/obj/item/ammo_box/magazine/a3006_clip
-	name = ".30-06 ammo clip"
+/obj/item/ammo_box/magazine/a774clip
+	name = "7.74 ammo clip"
 	icon_state = "clip"
 	origin_tech = "combat=2"
-	caliber = "a3006"
-	ammo_type = /obj/item/ammo_casing/a3006
+	caliber = "7.74mm"
+	ammo_type = /obj/item/ammo_casing/a74
 	max_ammo = 5
 
-/obj/item/ammo_box/magazine/a3006_clip/update_icon()
+/obj/item/ammo_box/magazine/a774clip/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[ammo_count()]"
 
@@ -506,6 +506,11 @@
 /obj/item/ammo_box/magazine/a74mm/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[CEIL(ammo_count(0) / 30) * 30]"
+
+/obj/item/ammo_box/magazine/a74mm/krinkov
+	name = "small A74 magazine (7.74)"
+	icon_state = "krinkov"
+	max_ammo = 15
 
 /obj/item/ammo_box/magazine/plasma
 	name = "plasma weapon battery pack"

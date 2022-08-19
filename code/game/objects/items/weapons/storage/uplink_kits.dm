@@ -301,6 +301,29 @@
 	rc_glasses.slave = new /mob/living/silicon/robot/drone/syndi(drone_holder)
 	make_exact_fit()
 
+/obj/item/weapon/storage/box/syndie_kit/revolution/posters
+	name = "box (RP)"
+	desc = "Box containing some provocative posters."
+	icon_state = "rev_box"
+
+/obj/item/weapon/storage/box/syndie_kit/revolution/posters/atom_init()
+	. = ..()
+	for(var/i in 0 to 3)
+		new /obj/item/weapon/poster/revolution(src)
+	make_exact_fit()
+
+/obj/item/weapon/storage/box/syndie_kit/revolution/armor
+	name = "box (RA)"
+	desc = "Box containing a set of surplus military armor."
+	icon_state = "rev_box"
+
+/obj/item/weapon/storage/box/syndie_kit/revolution/armor/atom_init()
+	. = ..()
+	new /obj/item/clothing/suit/armor/vest/surplus(src)
+	new /obj/item/clothing/head/helmet/surplus(src)
+	new /obj/item/clothing/mask/balaclava(src)
+	make_exact_fit()
+
 //loadouts
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/scout

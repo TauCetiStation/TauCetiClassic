@@ -202,14 +202,14 @@
 	return 1
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action
-	name = "bolt-action rifle"
-	desc = "Springfield M1903."
+	name = "Mosin-Nagant"
+	desc = "Produced by the same group of shady space-soviet people that scrapped together A74 for Gorlex Marauders, this ancient bolt-action rifle uses same 7.74 ammo in clips and is perfectly fit to arm human waves in the name of Revolution."
 	icon_state = "bolt-action"
 	item_state = "bolt-action"
 	origin_tech = "combat=5;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/a3006_clip
+	mag_type = /obj/item/ammo_box/magazine/a774clip
 	w_class = SIZE_BIG
-	slot_flags = 0
+	slot_flags = SLOT_FLAGS_BACK
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/pump(mob/M)
 	playsound(M, 'sound/weapons/guns/reload_bolt.ogg', VOL_EFFECTS_MASTER, null, FALSE)

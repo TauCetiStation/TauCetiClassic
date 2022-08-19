@@ -326,6 +326,15 @@
 	else
 		item_state = "[initial(icon_state)]-e"
 
+/obj/item/weapon/gun/projectile/automatic/a74/krinkov
+	name = "Krinkov"
+	desc = "Small and deadly, A74U is lighter than it's older brother, but nontheless packs a serious punch."
+	mag_type = /obj/item/ammo_box/magazine/a74mm/krinkov
+	recoil = 1.5
+	icon_state = "krinkov"
+	item_state = "krinkov"
+	mag_icon = icon('icons/obj/gun.dmi',"mag-krinkov")
+
 /obj/item/weapon/gun/projectile/automatic/drozd
 	name = "OTs-114 assault rifle"
 	desc = "Also known as Drozd, this little son a of bitch comes equipped with a bloody grenade launcher! How cool is that?"
