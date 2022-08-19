@@ -1664,6 +1664,3 @@ var/global/list/WALLITEMS = typecacheof(list(
 		location = location.loc
 	if(location && include_turf) //At this point, only the turf is left, provided it exists.
 		. += location
-
-/proc/get_inverse_direction(old_dir)
-	return old_dir == 1 || old_dir == 4 ? old_dir * 2 : old_dir * 0.5

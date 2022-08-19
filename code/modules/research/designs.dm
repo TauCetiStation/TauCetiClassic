@@ -1563,7 +1563,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/circulator
 	category = list("Power")
 
-/datum/design/smes
+/datum/design/teg
 	name = "TEG Board"
 	desc = "The circuit board for a TEG generator."
 	id = "teg"

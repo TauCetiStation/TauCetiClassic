@@ -119,7 +119,7 @@
 	if(stat & BROKEN)
 		icon_state = "teg-broken"
 		return
-	if(panel_open)
+	if(panel_open && !(circ1 && circ2 && anchored))
 		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "teg-panel"))
 
 	if(circ1 && circ2 && anchored)
