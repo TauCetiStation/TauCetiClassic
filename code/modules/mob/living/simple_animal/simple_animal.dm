@@ -55,8 +55,6 @@
 	var/friendly = "nuzzles" // If the mob does no damage with it's attack
 	var/environment_smash = 0 // Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
 
-	var/speed = 0 // LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
-
 	var/animalistic = TRUE // Determines whether the being here is an animal or nah.
 	var/has_head = FALSE
 	var/has_arm = FALSE
@@ -256,11 +254,7 @@
 	return ..()
 
 /mob/living/simple_animal/movement_delay()
-	var/tally = 0 // Incase I need to add stuff other than "speed" later
-
-	tally = speed
-
-	return tally+config.animal_delay
+	return speed + config.animal_delay
 
 /mob/living/simple_animal/Stat()
 	..()
