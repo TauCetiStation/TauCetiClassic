@@ -80,7 +80,7 @@
 
 	add_fingerprint(user)
 	if(integrity)
-		if(integrity > 90)
+		if(integrity >= 40)
 			to_chat(user, "<span class='notice'>looks reinforced</span>")
 		if(isSeriouslyDamaged())
 			to_chat(user, "<span class='warning'>looks seriously damaged</span>")
