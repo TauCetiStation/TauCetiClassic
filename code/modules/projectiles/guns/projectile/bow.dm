@@ -64,12 +64,8 @@
 			return
 
 		else if(istype(I, /obj/item/weapon/arrow))
-			var/obj/item/weapon/arrow/R = I
-			if(!R.use(1))
-				return
-			arrow = new /obj/item/weapon/arrow/rod(src)
 			arrow.fingerprintslast = src.fingerprintslast
-			arrow.forceMove(src)
+			user.drop_from_inventory(I, src)
 			icon_state = "crossbow-nocked"
 			user.visible_message("[user] haphazardly jams [arrow] into [src].","You jam [arrow] into [src].")
 			if(cell)

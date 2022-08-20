@@ -67,9 +67,8 @@
 	result = /obj/item/weapon/arrow/rod
 	reqs = list(/obj/item/stack/cable_coil = 1,
 				/obj/item/stack/rods = 1,
-				/obj/item/stack/sheet/mineral/plastic = 2)
-	time = 30
-	required_proficiency = list(/datum/skill/construction = SKILL_LEVEL_TRAINED)
+				/obj/item/stack/sheet/metal = 1)
+	time = 20
 
 /datum/crafting_recipe/toysword
 	name = "Toy Sword"
