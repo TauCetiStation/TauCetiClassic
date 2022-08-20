@@ -61,14 +61,9 @@
 	return
 
 /obj/structure/ore_box/attack_animal(mob/living/simple_animal/animal)
-	if(!istype(animal, /mob/living/simple_animal/hostile/asteroid))
-		take_damage(1)
-	take_damage(animal.melee_damage)
-
-/obj/structure/ore_box/bullet_act(obj/item/projectile/Proj, def_zone)
-	if(!istype(Proj, /obj/item/projectile/temp/basilisk) || !istype(Proj, /obj/item/projectile/kinetic))
-		return	//no needed
-	take_damage(Proj.damage)
+	. = ..()
+	if(istype(animal, /mob/living/simple_animal/hostile/asteroid))
+		take_damage(animal.melee_damage)
 
 /obj/structure/ore_box/examine(mob/user)
 	..()
@@ -156,9 +151,9 @@
 /obj/structure/ore_box/proc/check_integrity()
 	if(integrity <= 0)
 		broke_box()
-	if(integrity < 40)
+	else if(integrity < 40)
 		make_hole()
-	if(integrity >= 40 && seriously_damaged)
+	else if(integrity >= 40 && seriously_damaged)
 		repair_hole()
 
 /obj/structure/ore_box/proc/broke_box()
@@ -167,6 +162,7 @@
 			O.forceMove(loc)
 	new /obj/item/stack/sheet/wood(loc, 4)
 	new /obj/item/stack/sheet/metal(loc)
+	STOP_PROCESSING(SSobj, src)
 	qdel(src)
 
 /obj/structure/ore_box/proc/make_hole()
@@ -187,6 +183,3 @@
 			if(prob(20))
 				O.forceMove(loc)
 	check_integrity()
-
-/obj/structure/ore_box/Destroy()
-	STOP_PROCESSING(SSobj, src)

@@ -48,6 +48,11 @@
 			return
 	..()
 
+/mob/living/simple_animal/hostile/asteroid/DestroySurroundings()
+	for(var/obj/structure/ore_box/B in range(1, src))
+		B.attack_animal(src)
+	return ..()
+
 ////////////////////////////////////////////////////////////////
 
 
@@ -85,7 +90,7 @@
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
-	damage = 10
+	damage = 0
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
