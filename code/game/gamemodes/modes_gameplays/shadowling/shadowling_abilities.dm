@@ -77,7 +77,7 @@
 				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
 				qdel(G)
 		
-		if(istype(T, /turf/simulated/floor))
+		if(isfloorturf(T))
 			var/turf/simulated/floor/F = T
 			if(F.floor_type == /obj/item/stack/tile/light)
 				F.visible_message("<span class='danger'>\The [F] suddenly turns off!</span>")
