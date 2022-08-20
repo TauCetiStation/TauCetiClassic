@@ -175,8 +175,9 @@
 	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/ore_box/proc/isSeriouslyDamaged()
-	check_integrity()
-	if(integrity < 40)
+	if(integrity <= 0)
+		return FALSE
+	else if(integrity < 40)
 		return TRUE
 	return FALSE
 
