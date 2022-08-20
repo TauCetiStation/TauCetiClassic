@@ -85,7 +85,7 @@
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
-	damage = 0
+	damage = 10
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
@@ -462,11 +462,13 @@
 		new /obj/effect/goliath_tentacle(T, strength)
 
 /obj/effect/goliath_tentacle/proc/Trip()
-	for(var/mob/living/M in src.loc)
-		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
+	for(var/mob/living/M in loc)
+		visible_message("<span class='warning'>The [name] knocks [M.name] down!</span>")
 		playsound(M, 'sound/misc/goliath_tentacle_hit.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		M.Weaken(strength * 0.1)
 		M.adjustBruteLoss(strength * 0.4) // 40% pure damage of Goliath force
+	for(var/obj/structure/ore_box/O in loc)
+		O.take_damage(strength)
 	qdel(src)
 
 /obj/effect/goliath_tentacle/Crossed(atom/movable/AM)

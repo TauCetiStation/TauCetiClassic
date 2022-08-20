@@ -7,6 +7,9 @@
 	name = "Ore Box"
 	desc = "A heavy box used for storing ore."
 	density = TRUE
+	var/max_integrity = 150
+	var/integrity = 100
+	var/seriously_damaged = FALSE
 	var/last_update = 0
 	var/list/stored_ore = list()
 
@@ -19,6 +22,19 @@
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
 		to_chat(user, "<span class='notice'>You empty the satchel into the box.</span>")
+	else if(can_increase_integrity(user) || istype(W, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/S = W
+		var/choosed_quantity = round(input("How many sheets do you want to add?") as num)
+		if(!S)
+			return
+		if(choosed_quantity > S.get_amount())
+			choosed_quantity = S.get_amount()
+		if(istype(S, /obj/item/stack/sheet/wood))
+			increase_integrity(5 * choosed_quantity)
+		if(istype(S, /obj/item/stack/sheet/metal))
+			increase_integrity(2 * choosed_quantity)	//metal is infinite in asteroid, no need much repair wood box
+		if(istype(S, /obj/item/stack/sheet/plasteel))
+			increase_integrity(40 * choosed_quantity)
 	return
 
 /obj/structure/ore_box/Entered(atom/movable/ORE)
@@ -43,6 +59,16 @@
 	popup.open()
 
 	return
+
+/obj/structure/ore_box/attack_animal(mob/living/simple_animal/animal)
+	if(!istype(animal, /mob/living/simple_animal/hostile/asteroid))
+		take_damage(1)
+	take_damage(animal.melee_damage)
+
+/obj/structure/ore_box/bullet_act(obj/item/projectile/Proj, def_zone)
+	if(!istype(Proj, /obj/item/projectile/temp/basilisk) || !istype(Proj, /obj/item/projectile/kinetic))
+		return	//no needed
+	take_damage(Proj.damage)
 
 /obj/structure/ore_box/examine(mob/user)
 	..()
@@ -105,3 +131,62 @@
 	to_chat(usr, "<span class='notice'>You empty the ore box</span>")
 
 	return
+
+/obj/structure/ore_box/proc/take_damage(amount)
+	if(integrity <= 0 || max_integrity <= 0 || amount <= 0)
+		return
+	integrity -= amount
+	check_integrity()
+
+/obj/structure/ore_box/proc/can_increase_integrity(mob/user)
+	if(integrity >= max_integrity)
+		to_chat(user, "<span class='notice'>The ore box is already full reinforced</span>")
+		return FALSE
+	if(max_integrity <= 0)
+		return FALSE
+	if(integrity <= 0)
+		return FALSE
+	return TRUE
+
+/obj/structure/ore_box/proc/increase_integrity(amount)
+	integrity += amount
+	if(integrity > max_integrity)
+		integrity = max_integrity
+
+/obj/structure/ore_box/proc/check_integrity()
+	if(integrity <= 0)
+		broke_box()
+	if(integrity < 40)
+		make_hole()
+	if(integrity >= 40 && seriously_damaged)
+		repair_hole()
+
+/obj/structure/ore_box/proc/broke_box()
+	if(contents.len > 0)
+		for(var/obj/item/weapon/ore/O in contents)
+			O.forceMove(loc)
+	new /obj/item/stack/sheet/wood(loc, 4)
+	new /obj/item/stack/sheet/metal(loc)
+	qdel(src)
+
+/obj/structure/ore_box/proc/make_hole()
+	if(seriously_damaged)
+		return
+	seriously_damaged = TRUE
+	START_PROCESSING(SSobj, src)
+
+/obj/structure/ore_box/proc/repair_hole()
+	if(!seriously_damaged)
+		return
+	seriously_damaged = FALSE
+	STOP_PROCESSING(SSobj, src)
+
+/obj/structure/ore_box/process()
+	if(contents.len > 0)
+		for(var/obj/item/weapon/ore/O in contents)
+			if(prob(20))
+				O.forceMove(loc)
+	check_integrity()
+
+/obj/structure/ore_box/Destroy()
+	STOP_PROCESSING(SSobj, src)

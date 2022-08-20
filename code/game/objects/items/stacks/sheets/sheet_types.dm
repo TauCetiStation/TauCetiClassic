@@ -144,6 +144,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 	new/datum/stack_recipe("black fancy table parts", /obj/item/weapon/table_parts/wood/fancy/black, 2),
 	new/datum/stack_recipe("wooden chair", /obj/structure/stool/bed/chair/wood/normal, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE),
 	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 15, time = 50, one_per_turf = TRUE, on_floor = TRUE),
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE),
 	new/datum/stack_recipe("bonfire", /obj/structure/bonfire/dynamic, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE, floor_path = list(/turf/simulated/floor, /turf/environment/snow)),
 	new/datum/stack_recipe("wooden noticeboard", /obj/item/noticeboard_frame/wood, 10, time = 20, on_floor = TRUE),
