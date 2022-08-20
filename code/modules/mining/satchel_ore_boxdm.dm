@@ -9,7 +9,6 @@
 	density = TRUE
 	var/max_integrity = 150
 	var/integrity = 100
-	var/seriously_damaged = FALSE
 	var/last_update = 0
 	var/list/stored_ore = list()
 
@@ -153,7 +152,7 @@
 		broke_box()
 	else if(integrity < 40)
 		make_hole()
-	else if(integrity >= 40 && seriously_damaged)
+	else if(integrity >= 40)
 		repair_hole()
 
 /obj/structure/ore_box/proc/broke_box()
@@ -166,16 +165,20 @@
 	qdel(src)
 
 /obj/structure/ore_box/proc/make_hole()
-	if(seriously_damaged)
+	if(isSeriouslyDamaged())
 		return
-	seriously_damaged = TRUE
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/ore_box/proc/repair_hole()
-	if(!seriously_damaged)
+	if(!isSeriouslyDamaged())
 		return
-	seriously_damaged = FALSE
 	STOP_PROCESSING(SSobj, src)
+
+/obj/structure/ore_box/proc/isSeriouslyDamaged()
+	check_integrity()
+	if(integrity < 40)
+		return TRUE
+	return FALSE
 
 /obj/structure/ore_box/process()
 	if(contents.len > 0)
