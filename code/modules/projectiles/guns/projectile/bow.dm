@@ -22,16 +22,10 @@
 	icon_state = "quill"
 	item_state = "quill"
 
-/obj/item/weapon/arrow/rod
-
-	name = "metal rod"
-	desc = "Don't cry for me, Orithena."
-	icon_state = "metal-rod"
-
 /obj/item/weapon/arrow/rod/removed(mob/user)
 	if(throwforce == 15) // The rod has been superheated - we don't want it to be useable when removed from the bow.
 		to_chat(user, "[src] shatters into a scattering of overstressed metal shards as it leaves the crossbow.")
-		var/obj/item/weapon/arrow/rod/S = new()
+		var/obj/item/weapon/arrow/S = new()
 		S.loc = get_turf(src)
 		qdel(src)
 
@@ -69,8 +63,8 @@
 			icon_state = "crossbow-nocked"
 			return
 
-		else if(istype(I, /obj/item/stack/rods))
-			var/obj/item/stack/rods/R = I
+		else if(istype(I, /obj/item/weapon/arrow))
+			var/obj/item/weapon/arrow/R = I
 			if(!R.use(1))
 				return
 			arrow = new /obj/item/weapon/arrow/rod(src)
