@@ -76,7 +76,15 @@
 			if(get_dist(center, G) <= 2) //Very small radius
 				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
 				qdel(G)
-
+		
+		if(istype(T, /turf/simulated/floor))
+			var/turf/simulated/floor/F = T
+			if(F.floor_type == /obj/item/stack/tile/light)
+				F.visible_message("<span class='danger'>\The [F] suddenly turns off!</span>")
+				F.light_power = 0
+				F.light_range = 0
+				F.update_icon()
+				
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
 	name = "Flash Freeze"
 	desc = "Instantly freezes the blood of nearby people, stunning them and causing burn damage."
