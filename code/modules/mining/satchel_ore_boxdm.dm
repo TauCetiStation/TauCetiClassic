@@ -21,20 +21,23 @@
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
 		to_chat(user, "<span class='notice'>You empty the satchel into the box.</span>")
-	else if(can_increase_integrity(user) || istype(W, /obj/item/stack/sheet))
+	else if(istype(W, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = W
 		var/choosed_quantity = round(input("How many sheets do you want to add?") as num)
 		if(!S)
 			return
 		if(choosed_quantity > S.get_amount())
 			choosed_quantity = S.get_amount()
+		var/int_amount
 		if(istype(S, /obj/item/stack/sheet/wood))
-			increase_integrity(5 * choosed_quantity)
+			int_amount = (5 * choosed_quantity)
 		if(istype(S, /obj/item/stack/sheet/metal))
-			increase_integrity(2 * choosed_quantity)	//metal is infinite in asteroid, no need much repair wood box
+			int_amount = (2 * choosed_quantity)	//metal is infinite in asteroid, no need much repair wood box
 		if(istype(S, /obj/item/stack/sheet/plasteel))
-			increase_integrity(40 * choosed_quantity)
-	return
+			int_amount = (40 * choosed_quantity)
+		if(can_increase_integrity(int_amount, user))
+			if(S.use(choosed_quantity))
+				increase_integrity(int_amount)
 
 /obj/structure/ore_box/Entered(atom/movable/ORE)
 	if(istype(ORE, /obj/item/weapon/ore))
@@ -75,6 +78,11 @@
 		return
 
 	add_fingerprint(user)
+	if(integrity)
+		if(integrity > 90)
+			to_chat(user, "[src] looks reinforced")
+		if(SeriouslyDamaged())
+			to_chat(user, "[src] looks seriously damaged")
 
 	if(!contents.len)
 		to_chat(user, "It is empty.")
@@ -132,9 +140,9 @@
 	integrity -= amount
 	check_integrity()
 
-/obj/structure/ore_box/proc/can_increase_integrity(mob/user)
-	if(integrity >= max_integrity)
-		to_chat(user, "<span class='notice'>The ore box is already full reinforced</span>")
+/obj/structure/ore_box/proc/can_increase_integrity(amount, mob/user)
+	if(amount + integrity >= max_integrity)
+		to_chat(user, "<span class='notice'>There is too much for ore box</span>")
 		return FALSE
 	if(max_integrity <= 0)
 		return FALSE
