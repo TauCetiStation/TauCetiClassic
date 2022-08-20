@@ -44,13 +44,11 @@
 
 /datum/role/rev_leader/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, 2)
+	AddComponent(/datum/component/gamemode/syndicate, 1, "rev")
 
 /datum/role/rev_leader/OnPostSetup(laterole)
 	. = ..()
 	antag.current.verbs += /mob/living/carbon/human/proc/RevConvert
-	var/obj/item/device/uplink/hidden/U = find_syndicate_uplink(antag.current)
-	U.uplink_type = "rev"
 
 	// Show each head revolutionary up to 3 candidates
 	var/list/already_considered = list()
@@ -67,6 +65,7 @@
 	set name = "Rev-Convert"
 	set category = "IC"
 
+	var/datum/role/rev_leader/L = isrevhead(src)
 	if(!isrevhead(src))
 		verbs -= /mob/living/carbon/human/proc/RevConvert
 		return FALSE
@@ -105,7 +104,14 @@
 				to_chat(M, "<span class='notice'>You join the revolution!</span>")
 				to_chat(src, "<span class='notice'><b>[M] joins the revolution!</b></span>")
 				var/obj/item/device/uplink/hidden/U = find_syndicate_uplink(src)
+				if(!U)
+					return
 				U.uses += 3
+				var/datum/component/gamemode/syndicate/S = L.GetComponent(/datum/component/gamemode/syndicate)
+				if(!S)
+					return
+				S.total_TC += 3
+
 			else
 				to_chat(src, "<span class='warning'><b>[M] cannot be converted.</b></span>")
 		else if(choice == "No!")

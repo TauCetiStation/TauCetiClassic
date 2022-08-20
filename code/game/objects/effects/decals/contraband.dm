@@ -622,7 +622,7 @@
 			desc = "You can't make out anything from the poster's original print. It's ruined."
 			add_fingerprint(user)
 		if("Join Revolution")
-			if(!user.mind?.GetRole(REV) || !user.mind?.GetRole(HEADREV))
+			if(!isrevhead(user) || !isrev(user))
 				var/datum/faction/revolution/rev = find_faction_by_type(/datum/faction/revolution)
 				if(add_faction_member(rev, user, TRUE))
 					to_chat(user, "<span class='notice'>You join the revolution!</span>")
