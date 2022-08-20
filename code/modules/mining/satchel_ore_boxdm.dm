@@ -38,6 +38,7 @@
 		if(can_increase_integrity(int_amount, user))
 			if(S.use(choosed_quantity))
 				increase_integrity(int_amount)
+				to_chat(user, "The box is reinforced by [S]")
 
 /obj/structure/ore_box/Entered(atom/movable/ORE)
 	if(istype(ORE, /obj/item/weapon/ore))
@@ -80,9 +81,9 @@
 	add_fingerprint(user)
 	if(integrity)
 		if(integrity > 90)
-			to_chat(user, "[src] looks reinforced")
-		if(SeriouslyDamaged())
-			to_chat(user, "[src] looks seriously damaged")
+			to_chat(user, "<span class='notice'>looks reinforced</span>")
+		if(isSeriouslyDamaged())
+			to_chat(user, "<span class='warning'>looks seriously damaged</span>")
 
 	if(!contents.len)
 		to_chat(user, "It is empty.")
