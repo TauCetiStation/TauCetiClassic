@@ -622,7 +622,13 @@
 			desc = "You can't make out anything from the poster's original print. It's ruined."
 			add_fingerprint(user)
 		if("Join Revolution")
-			if(!isrevhead(user) || !isrev(user))
+			if(user.ismindprotect())
+				to_chat(user, "<span class='warning'><b>You shake your head in dissapproval. Who in their right mind would even believe such blatant lies?</b></span>")
+				return
+			else if(jobban_isbanned(user, ROLE_REV) || jobban_isbanned(user, "Syndicate"))
+				to_chat(user, "<span class='warning'><b>You can't overcome the guilt to join the revolutionaries. (You are banned.)</b></span>")
+				return
+			else if(!isrevhead(user) || !isrev(user))
 				var/datum/faction/revolution/rev = find_faction_by_type(/datum/faction/revolution)
 				if(add_faction_member(rev, user, TRUE))
 					to_chat(user, "<span class='notice'>You join the revolution!</span>")
