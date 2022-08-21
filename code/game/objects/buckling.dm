@@ -27,7 +27,7 @@
 /atom/movable/proc/can_buckle(mob/living/M)
 	if(!can_buckle)
 		return FALSE
-	if(!istype(M) || (M.loc != loc))
+	if(!istype(M) || (!M.Adjacent(src)))
 		return FALSE
 	if(M.buckled || buckled_mob || M.anchored)
 		return FALSE
@@ -45,6 +45,8 @@
 	if(M.grabbed_by.len)
 		for (var/obj/item/weapon/grab/G in M.grabbed_by)
 			qdel(G)
+	if(M.loc != loc)
+		M.forceMove(loc) 
 	M.buckled = src
 	M.set_dir(dir)
 	buckled_mob = M
@@ -113,27 +115,23 @@
 	add_fingerprint(user)
 	unbuckle_mob()
 
-	if(M == user)
-		if(M.loc != src.loc)
-			if(!do_after(user, 16, target = M))
-				return
-			M.forceMove(src.loc)
-
-		buckle_mob(M)
-		M.visible_message(
-			"<span class='notice'>[M.name] buckles themselves to [src].</span>",
-			"<span class='notice'>You buckle yourself to [src].</span>",
-			"<span class='notice'>You hear metal clanking.</span>")
-	else
-		visible_message("<span class='danger'>[user] is trying to buckle [M] to [src]!</span>")
-		if(do_after(user, 16, target = M)) // So a person can't instantly buckle someone to restrain their movement
-			if(M.loc != src.loc)
-				M.forceMove(src.loc)
-			buckle_mob(M)
+	if((M != user) || (M.loc != loc)) // Instant buckle only if you buckle yourself on the tile of src
+		if(M != user)
+			visible_message("<span class='danger'>[user] is trying to buckle [M] to [src]!</span>")
+		if(!do_after(user, 16, target = M)) // So a person can't instantly buckle someone to restrain their movement
+			return
+	
+	if(buckle_mob(M))
+		if(M == user)
 			M.visible_message(
-				"<span class='danger'>[M.name] is buckled to [src] by [user.name]!</span>",
-				"<span class='danger'>You are buckled to [src] by [user.name]!</span>",
+				"<span class='notice'>[M.name] buckles themselves to [src].</span>",
+				"<span class='notice'>You buckle yourself to [src].</span>",
 				"<span class='notice'>You hear metal clanking.</span>")
+		else
+			M.visible_message(
+	 			"<span class='danger'>[M.name] is buckled to [src] by [user.name]!</span>",
+	 			"<span class='danger'>You are buckled to [src] by [user.name]!</span>",
+	 			"<span class='notice'>You hear metal clanking.</span>")
 
 /atom/movable/proc/user_unbuckle_mob(mob/user)
 	if(user.is_busy())
