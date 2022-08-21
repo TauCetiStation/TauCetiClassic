@@ -623,7 +623,7 @@
 			add_fingerprint(user)
 		if("Join Revolution")
 			if(user.ismindprotect())
-				to_chat(user, "<span class='warning'><b>You shake your head in dissapproval. Who in their right mind would even believe such blatant lies?</b></span>")
+				to_chat(user, "<span class='warning'><b>You shake your head in disapproval. Who in their right mind would even believe such blatant lies?</b></span>")
 				return
 			else if(jobban_isbanned(user, ROLE_REV) || jobban_isbanned(user, "Syndicate"))
 				to_chat(user, "<span class='warning'><b>You can't overcome the guilt to join the revolutionaries. (You are banned.)</b></span>")
