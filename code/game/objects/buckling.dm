@@ -27,7 +27,7 @@
 /atom/movable/proc/can_buckle(mob/living/M)
 	if(!can_buckle)
 		return FALSE
-	if(!istype(M) || (!M.Adjacent(src)))
+	if(!istype(M) || !M.Adjacent(src))
 		return FALSE
 	if(M.buckled || buckled_mob || M.anchored)
 		return FALSE
@@ -115,9 +115,9 @@
 	add_fingerprint(user)
 	unbuckle_mob()
 
+	if(M != user)
+		visible_message("<span class='danger'>[user] is trying to buckle [M] to [src]!</span>")
 	if((M != user) || (M.loc != loc)) // Instant buckle only if you buckle yourself on the tile of src
-		if(M != user)
-			visible_message("<span class='danger'>[user] is trying to buckle [M] to [src]!</span>")
 		if(!do_after(user, 16, target = M)) // So a person can't instantly buckle someone to restrain their movement
 			return
 	
