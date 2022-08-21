@@ -1,3 +1,5 @@
+#define LASERGUN_FIRE_TIME 16
+
 /obj/item/weapon/gun/energy
 	icon_state = "energy"
 	name = "energy gun"
@@ -31,6 +33,8 @@
 	update_icon()
 
 /obj/item/weapon/gun/energy/Fire(atom/target, mob/living/user, params, reflex = 0)
+	if(!do_after(user, LASERGUN_FIRE_TIME, target = user))
+		return
 	newshot()
 	..()
 
