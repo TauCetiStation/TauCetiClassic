@@ -199,7 +199,7 @@
 	return 0
 
 /mob/living/carbon/monkey/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=0, message_range = world.view, list/used_radios = list())
-	if(stat >= UNCONSCIOUS)
+	if(stat != CONSCIOUS)
 		return
 
 	if(!message)

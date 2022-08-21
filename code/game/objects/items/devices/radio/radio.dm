@@ -118,7 +118,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/Topic(href, href_list)
 	//..()
-	if ((usr.stat >= UNCONSCIOUS && !IsAdminGhost(usr)) || !on)
+	if ((usr.stat != CONSCIOUS && !IsAdminGhost(usr)) || !on)
 		return
 
 	if (!(issilicon(usr) || IsAdminGhost(usr) || Adjacent(usr)))

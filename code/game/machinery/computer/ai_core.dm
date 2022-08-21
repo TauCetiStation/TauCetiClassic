@@ -246,7 +246,7 @@ That prevents a few funky behaviors.
 									if (T.mind == malfai.antag)
 										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")
 										return
-							if(T.stat >= UNCONSCIOUS)//If the ai is dead/dying.
+							if(T.stat != CONSCIOUS)//If the ai is dead/dying.
 								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [T.name] data core is corrupted. Unable to install.")
 							else
 								new /obj/structure/AIcore/deactivated(T.loc)
@@ -349,7 +349,7 @@ That prevents a few funky behaviors.
 								to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 						else
 							if(!C.AI && T.occupant && !T.active)
-								if (T.occupant.stat >= UNCONSCIOUS)
+								if (T.occupant.stat != CONSCIOUS)
 									to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [T.occupant.name] data core is corrupted. Unable to install.")
 								else
 									T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))

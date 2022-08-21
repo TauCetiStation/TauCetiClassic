@@ -73,7 +73,7 @@ robot_fabricator
 /datum/AI_Module/module_picker/Topic(href, href_list)
 	..()
 	var/mob/living/silicon/ai/cur_AI = usr
-	if(cur_AI.stat >= UNCONSCIOUS || !cur_AI.client)
+	if(cur_AI.stat != CONSCIOUS || !cur_AI.client)
 		return
 	if(href_list["clear"])
 		temp = null

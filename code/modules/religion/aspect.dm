@@ -270,7 +270,7 @@
 		return
 
 	// It ain't no fun if they don't suffer!
-	if(M.stat >= UNCONSCIOUS || !M.client)
+	if(M.stat != CONSCIOUS || !M.client)
 		return
 
 	F.holy.religion.adjust_favor(weaken_duration * power * 0.5)

@@ -344,7 +344,7 @@
 	return FALSE
 
 /mob/living/simple_animal/say(message)
-	if(stat >= UNCONSCIOUS)
+	if(stat != CONSCIOUS)
 		return
 
 	message = sanitize(message)

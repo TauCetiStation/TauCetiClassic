@@ -124,7 +124,7 @@
 		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if (stat >= UNCONSCIOUS)
+	if (stat != CONSCIOUS)
 		return
 
 	message = sanitize(message)

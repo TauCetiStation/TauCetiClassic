@@ -48,7 +48,7 @@
 // message is the custom message to be displayed
 // flash_strength is 0 for weak pain flash, 1 for strong pain flash
 /mob/living/carbon/human/proc/custom_pain(message, flash_strength)
-	if(stat >= UNCONSCIOUS)
+	if(stat != CONSCIOUS)
 		return
 
 	if(species && species.flags[NO_PAIN])

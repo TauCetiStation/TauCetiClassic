@@ -9,7 +9,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/hulk_jump/cast(list/targets)
 	//for(var/turf/T in targets)
 	var/failure = 0
-	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat >= UNCONSCIOUS)
+	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat != CONSCIOUS)
 		to_chat(usr, "<span class='warning'>You can't jump right now!</span>")
 		return
 
@@ -136,7 +136,7 @@
 		return
 
 	var/failure = 0
-	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat >= UNCONSCIOUS)
+	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat != CONSCIOUS)
 		to_chat(usr, "<span class='warning'>You can't dash right now!</span>")
 		return
 

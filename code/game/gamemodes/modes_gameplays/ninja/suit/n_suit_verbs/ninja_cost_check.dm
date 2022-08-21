@@ -10,7 +10,7 @@ s_cooldown ticks off each second based on the suit recharge proc, in seconds. De
 //Cost function for suit Procs/Verbs/Abilities
 /obj/item/clothing/suit/space/space_ninja/proc/ninjacost(C = 0,X = 0)
 	var/mob/living/carbon/human/U = affecting
-	if( (U.stat >= UNCONSCIOUS||U.incorporeal_move)&&X!=3 )//Will not return if user is using an adrenaline booster since you can use them when stat==UNCONSCIOUS.
+	if( (U.stat != CONSCIOUS||U.incorporeal_move)&&X!=3 )//Will not return if user is using an adrenaline booster since you can use them when stat==UNCONSCIOUS.
 		to_chat(U, "<span class='warning'>You must be conscious and solid to do this.</span>")//It's not a problem of stat==DEAD since the ninja will explode anyway if they die.
 		return 1
 	else if(C&&cell.charge<C*10)

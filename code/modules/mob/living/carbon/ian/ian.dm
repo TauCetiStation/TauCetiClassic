@@ -459,7 +459,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	..()
 
 /mob/living/carbon/ian/say(message)
-	if(stat >= UNCONSCIOUS)
+	if(stat != CONSCIOUS)
 		return
 
 	message = sanitize(message)

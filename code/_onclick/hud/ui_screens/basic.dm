@@ -344,7 +344,7 @@
 		return
 
 	var/mob/living/carbon/C = usr
-	if(C.stat >= UNCONSCIOUS || C.stunned || C.paralysis || C.restrained() || (internal_switch > world.time))
+	if(C.stat != CONSCIOUS || C.stunned || C.paralysis || C.restrained() || (internal_switch > world.time))
 		return
 
 	internal_switch = world.time + 16

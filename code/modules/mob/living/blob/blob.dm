@@ -34,7 +34,7 @@
 
 /mob/living/blob/proc/clamp_values()
 	SetSleeping(0)
-	if(stat >= UNCONSCIOUS)
+	if(stat != CONSCIOUS)
 		stat = CONSCIOUS
 	return
 

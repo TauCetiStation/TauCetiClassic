@@ -14,7 +14,7 @@
 	if(!ishuman(owner))
 		return FALSE
 	var/mob/living/carbon/human/H = owner
-	if(H.stat >= UNCONSCIOUS)
+	if(H.stat != CONSCIOUS)
 		return FALSE
 
 	// we need some stuff to fall back on if we're handlerless

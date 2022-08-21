@@ -161,7 +161,7 @@
 			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2))	//Connected, but inactive (alt+tabbed or something)
 				msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
 				continue //AFK client
-			if(L.stat >= UNCONSCIOUS)
+			if(L.stat != CONSCIOUS)
 				if(L.suiciding)	//Suicider
 					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='red'><b>Suicide</b></font>)\n"
 					continue //Disconnected client

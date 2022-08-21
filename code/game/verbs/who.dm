@@ -14,7 +14,7 @@
 			if(C.holder && C.holder.fakekey)
 				entry += " <i>(as [C.holder.fakekey])</i>"
 			entry += " - Playing as [C.mob.real_name]"
-			switch(C.mob.stat >= UNCONSCIOUS)
+			switch(C.mob.stat != CONSCIOUS)
 				if(UNCONSCIOUS)
 					entry += " - <font color='darkgray'><b>Unconscious</b></font>"
 				if(DEAD)

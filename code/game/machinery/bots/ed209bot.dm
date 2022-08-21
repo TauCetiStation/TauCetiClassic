@@ -119,7 +119,7 @@
 	var/list/mob/living/targets = list()
 	for(var/mob/living/L in view(12, src)) //Let's find us a target
 		var/threatlevel = 0
-		if(L.stat >= UNCONSCIOUS || L.lying && !L.crawling)
+		if(L.stat != CONSCIOUS || L.lying && !L.crawling)
 			continue
 		threatlevel = assess_perp(L)
 		//speak(C.real_name + text(": threat: []", threatlevel))
@@ -185,7 +185,7 @@
 	anchored = FALSE
 	threatlevel = 0
 	for(var/mob/living/L in view(12, src)) //Let's find us a criminal
-		if(L.stat >= UNCONSCIOUS || (lasertag_color && L.lying && !L.crawling))
+		if(L.stat != CONSCIOUS || (lasertag_color && L.lying && !L.crawling))
 			continue //Does not shoot at people lyind down when in lasertag mode, because it's just annoying, and they can fire once they get up.
 
 		if(iscarbon(L))
