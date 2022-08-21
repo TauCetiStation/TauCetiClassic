@@ -134,7 +134,13 @@
 		return
 	if(!do_skill_checks(user))
 		return
-	close_machine(target)
+	if(!state_open)
+		user.visible_message("<span class='danger'>[src] is closed!</span>")
+		return
+	visible_message("<span class='danger'>[user] is trying to put [target] into [src]!</span>")
+	if(do_after(user, 24, target = target))	
+		close_machine(target)
+		visible_message("<span class='danger'>[user] has put [target] into [src]!</span>")
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/allow_drop()
 	return 0

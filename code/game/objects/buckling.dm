@@ -113,13 +113,23 @@
 	add_fingerprint(user)
 	unbuckle_mob()
 
-	if(buckle_mob(M))
-		if(M == user)
-			M.visible_message(
-				"<span class='notice'>[M.name] buckles themselves to [src].</span>",
-				"<span class='notice'>You buckle yourself to [src].</span>",
-				"<span class='notice'>You hear metal clanking.</span>")
-		else
+	if(M == user)
+		if(M.loc != src.loc)
+			if(!do_after(user, 16, target = M))
+				return
+			M.forceMove(src.loc)
+
+		buckle_mob(M)
+		M.visible_message(
+			"<span class='notice'>[M.name] buckles themselves to [src].</span>",
+			"<span class='notice'>You buckle yourself to [src].</span>",
+			"<span class='notice'>You hear metal clanking.</span>")
+	else
+		visible_message("<span class='danger'>[user] is trying to buckle [M] to [src]!</span>")
+		if(do_after(user, 16, target = M)) // So a person can't instantly buckle someone to restrain their movement
+			if(M.loc != src.loc)
+				M.forceMove(src.loc)
+			buckle_mob(M)
 			M.visible_message(
 				"<span class='danger'>[M.name] is buckled to [src] by [user.name]!</span>",
 				"<span class='danger'>You are buckled to [src] by [user.name]!</span>",

@@ -170,7 +170,7 @@
 
 /obj/structure/proc/structure_shaken()
 	for(var/mob/living/M in climbers)
-		M.Weaken(2)
+		M.Weaken(1)
 		to_chat(M, "<span class='danger'>You topple as you are shaken off \the [src]!</span>")
 		climbers -= M
 
