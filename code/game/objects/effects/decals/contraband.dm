@@ -610,7 +610,7 @@
 	if(ruined)
 		return
 	var/temp_loc = user.loc
-	switch(tgui_alert(usr,"Do I want to rip the poster from the wall or does it fill me with anger?","You think...", list("Rip Off","Join Revolution")))
+	switch(tgui_alert(usr,"Do I want to rip the poster from the wall or does it inspire me to join the cuase?","You think...", list("Rip Off","Join Revolution")))
 		if("Rip Off")
 			if(user.loc != temp_loc || ruined)
 				return
