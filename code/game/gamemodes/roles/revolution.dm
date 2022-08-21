@@ -107,7 +107,7 @@
 				if(!U)
 					return
 				U.uses += 3
-				var/datum/component/gamemode/syndicate/S = L.GetComponent(/datum/component/gamemode/syndicate)
+				var/datum/component/gamemode/syndicate/S = lead.GetComponent(/datum/component/gamemode/syndicate)
 				if(!S)
 					return
 				S.total_TC += 3
