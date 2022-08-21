@@ -65,7 +65,6 @@
 	set name = "Rev-Convert"
 	set category = "IC"
 
-	var/datum/role/rev_leader/L = isrevhead(src)
 	if(!isrevhead(src))
 		verbs -= /mob/living/carbon/human/proc/RevConvert
 		return FALSE
