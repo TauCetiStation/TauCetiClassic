@@ -129,9 +129,9 @@
 				"<span class='notice'>You hear metal clanking.</span>")
 		else
 			M.visible_message(
-	 			"<span class='danger'>[M.name] is buckled to [src] by [user.name]!</span>",
-	 			"<span class='danger'>You are buckled to [src] by [user.name]!</span>",
-	 			"<span class='notice'>You hear metal clanking.</span>")
+				"<span class='danger'>[M.name] is buckled to [src] by [user.name]!</span>",
+				"<span class='danger'>You are buckled to [src] by [user.name]!</span>",
+				"<span class='notice'>You hear metal clanking.</span>")
 
 /atom/movable/proc/user_unbuckle_mob(mob/user)
 	if(user.is_busy())
