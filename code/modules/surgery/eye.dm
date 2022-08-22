@@ -148,14 +148,14 @@
 //						ROBO EYE SURGERY						//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/ipc_eye
+/datum/surgery_step/ipc/eye
 	clothless = FALSE
 	priority = 2
 	can_infect = FALSE
 
 	allowed_species = list(IPC)
 
-/datum/surgery_step/ipc_eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -163,7 +163,7 @@
 		return FALSE
 	return target_zone == O_EYES
 
-/datum/surgery_step/ipc_eye/screw_open
+/datum/surgery_step/ipc/eye/screw_open
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,
@@ -174,12 +174,12 @@
 	min_duration = 90
 	max_duration = 110
 
-/datum/surgery_step/ipc_eye/screw_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/eye/screw_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to unscrew [target]'s camera panels with \the [tool].",
 	"You unscrew [target]'s camera panels with \the [tool].")
 	..()
 
-/datum/surgery_step/ipc_eye/screw_open/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/eye/screw_open/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] unscrewed [target]'s camera panels with \the [tool].</span>" ,
 	"<span class='notice'>You unscrewed [target]'s camera panels with \the [tool].</span>")
 	target.op_stage.eyes = 1
@@ -187,7 +187,7 @@
 		to_chat(target, "<span class='warning italics'>%VISUALS DENIED%. REQUESTING ADDITIONAL PERSPECTION REACTIONS.</span>")
 	target.blinded += 1.5
 
-/datum/surgery_step/ipc_eye/screw_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/eye/screw_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s cameras wth \the [tool]!</span>" ,
@@ -195,7 +195,7 @@
 	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 	IO.take_damage(5, 0)
 
-/datum/surgery_step/ipc_eye/mend_cameras
+/datum/surgery_step/ipc/eye/mend_cameras
 	allowed_tools = list(
 	/obj/item/stack/nanopaste = 100,
 	/obj/item/weapon/bonegel = 30,
@@ -205,20 +205,20 @@
 	min_duration = 80
 	max_duration = 100
 
-/datum/surgery_step/ipc_eye/mend_cameras/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/eye/mend_cameras/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return ..() && target.op_stage.eyes == 1
 
-/datum/surgery_step/ipc_eye/mend_cameras/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/eye/mend_cameras/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts mending lenses and wires in [target]'s cameras with \the [tool].",
 	"You start mending lenses and wires in [target]'s cameras with the [tool].")
 	..()
 
-/datum/surgery_step/ipc_eye/mend_cameras/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/eye/mend_cameras/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] mends the lenses and wires in [target]'s cameras with \the [tool].</span>",
 	"<span class='notice'>You mend the lenses abd wires in [target]'s cameras with \the [tool].</span>")
 	target.op_stage.eyes = 2
 
-/datum/surgery_step/ipc_eye/mend_cameras/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/eye/mend_cameras/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, denting [target]'s cameras with \the [tool]!</span>",
@@ -236,7 +236,7 @@
 		to_chat(target, "<span class='warning italics'>SEVERE VISUAL SENSOR DAMAGE DETECTED. %REACTION_OVERLOAD%.</span>")
 	target.blinded += 3.0
 
-/datum/surgery_step/ipc_eye/close_shut
+/datum/surgery_step/ipc/eye/close_shut
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,
@@ -247,14 +247,14 @@
 	min_duration = 70
 	max_duration = 100
 
-/datum/surgery_step/ipc_eye/close_shut/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/eye/close_shut/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return ..() && target.op_stage.eyes != 0
 
-/datum/surgery_step/ipc_eye/close_shut/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/eye/close_shut/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] is beginning to lock [target]'s camera panels with \the [tool]." ,
 	"You are beginning to lock [target]'s camera panels with \the [tool].")
 
-/datum/surgery_step/ipc_eye/close_shut/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/eye/close_shut/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/internal/eyes/eyes = target.organs_by_name[O_EYES]
 	user.visible_message("<span class='notice'>[user] locks [target]'s camera panels with \the [tool].</span>",
 	"<span class='notice'>You lock [target]'s camera panels with \the [tool].</span>")
@@ -264,7 +264,7 @@
 		eyes.damage = 0
 	target.op_stage.eyes = 0
 
-/datum/surgery_step/ipc_eye/close_shut/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/eye/close_shut/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips,  denting [target]'s cameras with \the [tool]!</span>",

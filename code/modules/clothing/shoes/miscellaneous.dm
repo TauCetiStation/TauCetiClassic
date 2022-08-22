@@ -8,12 +8,10 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 	siemens_coefficient = 0.8
-	species_restricted = null
 
 /obj/item/clothing/shoes/mime
 	name = "mime shoes"
 	icon_state = "mime"
-	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
@@ -27,22 +25,23 @@
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = LEGS
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = null
 
 /obj/item/clothing/shoes/tourist
 	name = "flip-flops"
 	desc = "These cheap sandals don't look very comfortable."
 	icon_state = "tourist"
 	permeability_coefficient = 1
-	species_restricted = null
 	w_class = SIZE_TINY
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
 	name = "sandals"
 	icon_state = "wizard"
-	species_restricted = null
 	body_parts_covered = 0
+
+/obj/item/clothing/shoes/sandal/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/shoes/sandal/brown
 	name = "Brown Sandals"
@@ -66,7 +65,6 @@
 	icon_state = "clown"
 	item_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN + 1.0
-	species_restricted = null
 
 /obj/item/clothing/shoes/clown_shoes/Destroy()
 	if(slot_equipped == SLOT_SHOES)
@@ -104,7 +102,6 @@
 	name = "jolly gravedigger shoes"
 	desc = "Traditional funereal ceremony shoes originating from poor areas."
 	icon_state = "laceups"
-	clipped_status = CLIPPABLE
 
 	var/waddling = FALSE
 
@@ -157,7 +154,6 @@
 	desc = "Fluffy!"
 	icon_state = "slippers"
 	item_state = "slippers"
-	species_restricted = null
 	w_class = SIZE_TINY
 
 /obj/item/clothing/shoes/slippers_worn
@@ -171,7 +167,6 @@
 	name = "laceup shoes"
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
-	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/swimmingfins
 	desc = "Help you swim good."
@@ -179,13 +174,11 @@
 	icon_state = "flippers"
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+0.5
-	species_restricted = null
 
 /obj/item/clothing/shoes/centcom
 	name = "dress shoes"
 	desc = "They appear impeccably polished."
 	icon_state = "laceups"
-	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/rosas_shoes
 	name = "white shoes"
@@ -195,6 +188,12 @@
 /obj/item/clothing/shoes/western
 	name = "western boots"
 	icon_state = "western_boots"
+
+/obj/item/clothing/shoes/western/wizard
+
+/obj/item/clothing/shoes/western/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/shoes/magboots/syndie
 	desc = "Light-weighted magnetic boots that have a custom syndicate paintjob for use in combat."
@@ -238,30 +237,45 @@
 /obj/item/clothing/shoes/heels/alternate
 	icon_state = "high_shoes2"
 
+/obj/item/clothing/shoes/heels/wizard
+
+/obj/item/clothing/shoes/heels/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
+/obj/item/clothing/shoes/heels/alternate/wizard
+
+/obj/item/clothing/shoes/heels/alternate/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
 /obj/item/clothing/shoes/boots/German
 	name = "Black Boots"
 	desc = "Deutschland army boots."
 	icon_state = "Black_Boots"
 	item_state = "jackboots"
 
+/obj/item/clothing/shoes/boots/German/wizard
+
+/obj/item/clothing/shoes/boots/German/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
 /obj/item/clothing/shoes/brown_cut
 	name = "Cut Brown Boots"
 	desc = "Some shoes that was cut to fit unathi foot in it."
 	icon_state = "brown-cut"
-	species_restricted = null
 
 /obj/item/clothing/shoes/footwraps
 	name = "Footwraps"
 	desc = "Just some rags that you wrap around your foot to feel more comfortable. Better than nothing."
 	icon_state = "footwraps"
-	species_restricted = null
 
 /obj/item/clothing/shoes/holoboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "wjboots"
 	item_state = "wjboots"
-	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/kung
 	name = "Kung shoes"

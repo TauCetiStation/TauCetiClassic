@@ -22,17 +22,6 @@
 			if("clone")
 				user.adjustCloneLoss(rand(200,300))
 
-		//user.death(0)
-		//dead_mob_list -= user
-		//alive_mob_list += user
-		//user.status_flags |= FAKEDEATH		//play dead
-		//user.fake_death = 1
-		//user.update_canmove()
-
-		//if(user.stat != DEAD)
-		//	user.emote("deathgasp")
-		//	user.tod = worldtime2text()
-
 	if(NOCLONE in user.mutations)
 		to_chat(user, "<span class='notice'>We could not begin our stasis, something damaged all our DNA.</span>")
 		var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)

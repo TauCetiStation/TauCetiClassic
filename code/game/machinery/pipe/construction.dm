@@ -296,7 +296,7 @@ Buildable meters
 	if(!proximity)
 		return
 
-	if(istype(target, /turf/simulated/floor))
+	if(isfloorturf(target))
 		user.drop_from_inventory(src, target)
 	else
 		return ..()

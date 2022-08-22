@@ -170,14 +170,17 @@
 		return
 	if(!iszombie(H))
 		H.zombify()
-	//H.rejuvenate()
+
+	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)  // restore every thing in this dumb head (brain and eyes)
+		IO.rejuvenate()
+
 	H.setCloneLoss(0)
 	H.setBrainLoss(0)
 	H.setHalLoss(0)
 	H.SetParalysis(0)
 	H.SetStunned(0)
 	H.SetWeakened(0)
-	H.nutrition = 400
+	H.nutrition = NUTRITION_LEVEL_NORMAL
 	H.SetSleeping(0)
 	H.radiation = 0
 	H.heal_overall_damage(H.getBruteLoss(), H.getFireLoss())
@@ -248,47 +251,6 @@
 			set_species(ZOMBIE_UNATHI, TRUE, TRUE)
 		else
 			set_species(ZOMBIE, TRUE, TRUE)
-
-/mob/living/carbon/human/proc/zombie_movement_delay()
-	if(!has_gravity(src))
-		return -1
-
-	var/tally = species.speed_mod
-	if(crawling)
-		tally += 7
-	else
-		var/has_leg = FALSE
-		for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG))
-			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-			if(BP && !(BP.is_stump))
-				has_leg = TRUE
-		if(!has_leg)
-			tally += 10
-
-	if(embedded_flag)
-		handle_embedded_objects()
-
-	if(buckled)
-		tally += 5.5
-
-	if(pull_debuff)
-		tally += pull_debuff
-
-	if(wear_suit)
-		tally += wear_suit.slowdown
-
-	if(back)
-		tally += back.slowdown
-
-	if(shoes)
-		tally += shoes.slowdown
-
-	if(health <= 0)
-		tally += 0.5
-	if(health <= -50)
-		tally += 0.5
-
-	return (tally + config.human_delay)
 
 var/global/list/zombie_list = list()
 

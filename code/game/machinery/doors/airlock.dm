@@ -116,7 +116,7 @@ var/global/list/airlock_overlays = list()
 		else if(user.hallucination > 50 && prob(10) && !operating)
 			to_chat(user, "<span class='warning'><B>You feel a powerful shock course through your body!</B></span>")
 			user.halloss += 10
-			user.stunned += 10
+			user.AdjustStunned(10)
 			return
 	..(user)
 
@@ -688,7 +688,7 @@ var/global/list/airlock_overlays = list()
 		var/turf/target = user.loc
 		open()
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		if(istype(target,/turf/simulated/floor))
+		if(isfloorturf(target))
 			var/turf/simulated/floor/tile = target
 			tile.break_tile()
 		for(var/i in 1 to 2)
@@ -938,9 +938,11 @@ var/global/list/airlock_overlays = list()
 	if(iswelder(C) && !(operating > 0))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.use(0, user))
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY , list(/datum/skill/engineering = SKILL_LEVEL_NOVICE), message_self = "<span class='notice'>You fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [W]... </span>"))
+				return
 			user.visible_message("[user] begins [welded? "unwelding":"welding"] [src]'s shutters with [W].",
 			                     "<span class='notice'>You begin [welded? "remove welding from":"welding"] [src]'s shutters with [W]...</span>")
-			if(W.use_tool(src, user, 30, volume = 100))
+			if(W.use_tool(src, user, SKILL_TASK_EASY, volume = 100))
 				welded = !welded
 				update_icon()
 				user.visible_message("[user] [welded ? "welds" : "unwelds"] [src]'s shutters with [W].",
@@ -970,7 +972,7 @@ var/global/list/airlock_overlays = list()
 		if( beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
 			if(user.is_busy(src)) return
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
-			if(C.use_tool(src, user, 40, volume = 100))
+			if(C.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
 				to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 
 				take_out_wedged_item()

@@ -118,13 +118,16 @@
 	..()
 
 /mob/living/carbon/slime/movement_delay()
-	var/tally = 0
+	var/tally = speed
+
+	if (bodytemperature < BODYTEMP_NORMAL - 30)
+		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
+	else if (bodytemperature >= BODYTEMP_NORMAL + 20)
+		return -1	// slimes become supercharged at high temperatures
 
 	var/health_deficiency = (100 - health)
-	if(health_deficiency >= 45) tally += (health_deficiency / 25)
-
-	if (bodytemperature < 183.222)
-		tally += (283.222 - bodytemperature) / 10 * 1.75
+	if(health_deficiency >= 45)
+		tally += (health_deficiency / 25)
 
 	if(reagents)
 		if(reagents.has_reagent("hyperzine")) // hyperzine slows slimes down
@@ -136,13 +139,7 @@
 	if(pull_debuff)
 		tally += pull_debuff
 
-	if(health <= 0) // if damaged, the slime moves twice as slow
-		tally *= 2
-
-	if (bodytemperature >= 330.23) // 135 F
-		return -1	// slimes become supercharged at high temperatures
-
-	return tally+config.slime_delay
+	return tally + config.slime_delay
 
 /mob/living/carbon/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)
@@ -255,8 +252,6 @@
 	if(shielded)
 		damage /= 4
 
-		//paralysis += 1
-
 	to_chat(src, "<span class='warning'>The blob attacks you!</span>")
 
 	adjustFireLoss(damage)
@@ -288,12 +283,12 @@
 	if(Victim)
 		if(Victim == attacker)
 			visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
-			playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 			return FALSE
 		else
 			if(prob(30))
 				visible_message("<span class='warning'>[attacker] attempts to wrestle \the [src] off!</span>")
-				playsound(src, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+				playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 				return FALSE
 
 			if(prob(90) && !client)
@@ -744,6 +739,8 @@
 
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [H], and assist them in completing their goals at any cost.")
 	G.mind.memory += "<B>[H]</B> - your master."
+	G.mind.skills.add_available_skillset(/datum/skillset/golem)
+	G.mind.skills.maximize_active_skills()
 	qdel(src)
 
 /obj/effect/golemrune/proc/announce_to_ghosts()

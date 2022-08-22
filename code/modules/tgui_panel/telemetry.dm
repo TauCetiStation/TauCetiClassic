@@ -44,10 +44,10 @@
  */
 /datum/tgui_panel/proc/analyze_telemetry(payload)
 	if(world.time > telemetry_requested_at + TGUI_TELEMETRY_RESPONSE_WINDOW)
-		message_admins("[key_name(client)] sent telemetry outside of the allocated time window.")
+		message_admins("[key_name(client)] sent telemetry outside of the allocated time window.", R_LOG)
 		return
 	if(telemetry_analyzed_at)
-		message_admins("[key_name(client)] sent telemetry more than once.")
+		message_admins("[key_name(client)] sent telemetry more than once.", R_LOG)
 		return
 	telemetry_analyzed_at = world.time
 	if(!payload)
@@ -67,7 +67,7 @@
 		client.guard.chat_processed = TRUE
 		return
 	if(len > TGUI_TELEMETRY_MAX_CONNECTIONS)
-		message_admins("[key_name(client)] was kicked for sending a huge telemetry payload")
+		message_admins("[key_name(client)] was kicked for sending a huge telemetry payload", R_LOG)
 		qdel(client)
 		return
 
@@ -99,7 +99,7 @@
 	if(found)
 		client.guard.chat_data["cookie_match"] = found
 		var/msg = "[key_name(client)] has a banned account in connection history! (Matched: [found["ckey"]], [found["address"]], [found["computer_id"]])"
-		message_admins(msg)
+		message_admins(msg, R_LOG)
 		log_admin_private(msg)
 
 	client.guard.chat_processed = TRUE

@@ -77,6 +77,8 @@ var/global/list/wire_daltonism_colors = list()
 	var/window_x = 370
 	var/window_y = 470
 
+	var/required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)
+
 	// All possible wires colors are here.
 	var/static/list/wire_colors = list("red", "blue", "green", "white", "orange", "brown", "gold", "gray", "cyan", "lime", "purple", "pink")
 
@@ -262,6 +264,8 @@ var/global/list/wire_daltonism_colors = list()
 		return
 	var/target_wire = params["wire"]
 	var/obj/item/I = L.get_active_hand()
+	if(!handle_fumbling(L, holder, SKILL_TASK_AVERAGE, required_skills, message_self = "<span class='notice'>You fumble around figuring out the wiring.</span>"))
+		return
 	switch(action)
 		if("cut")
 			if(I && iswirecutter(I))

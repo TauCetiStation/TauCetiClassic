@@ -122,7 +122,7 @@
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
 	. = ..()
 	if(volume >= 30)
-		if(istype(T, /turf/simulated/wall))
+		if(iswallturf(T))
 			var/turf/simulated/wall/W = T
 			W.thermite = 1
 			W.add_overlay(image('icons/effects/effects.dmi',icon_state = "#673910"))
@@ -704,6 +704,10 @@
 				C.toggle_cam(FALSE) // Do not show deactivation message, it's just paint.
 				C.triggerCameraAlarm()
 			C.color = color
+	if(istype(O, /obj/item/canvas))
+		var/obj/item/canvas/C = O
+		C.canvas_color = color
+		C.reset_grid()
 
 /datum/reagent/paint_remover
 	name = "Paint Remover"

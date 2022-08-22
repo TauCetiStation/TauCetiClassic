@@ -364,6 +364,26 @@
 	var/datum/browser/popup = new(user, "paper_help", "Pen Help")
 	popup.set_content(dat)
 	popup.open()
+/obj/item/weapon/paper/proc/select_form(mob/user)
+	var/dat
+
+	for(var/department in predefined_forms_list)
+		var/color = predefined_forms_list[department]["color"]
+		var/dep_name = predefined_forms_list[department]["name"]
+		dat += "<h2>[dep_name]</h2>"
+		dat += "<table><tbody><tr>"
+		dat += "<th style='background:[color]; width:6em'>Номер</th>"
+		dat += "<th style='background:[color];'>Название</th></tr>"
+
+		for(var/premade_form in predefined_forms_list[department]["content"])
+			var/datum/form/form = new premade_form
+			dat += "<tr><th style='background-color:[color];'><A href='?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></th>"
+			dat += "<th> [form.name]</th></tr>"
+		dat +="</tbody></table>"
+
+	var/datum/browser/popup = new(user, "window=[name]", "Список форм", 700, 500, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/item/weapon/proc/burnpaper(obj/item/weapon/lighter/P, mob/user) //weapon, to use this in paper_bundle and photo
 	var/list/burnable = list(/obj/item/weapon/paper,
@@ -404,7 +424,6 @@
 	..()
 	if(!usr || usr.incapacitated())
 		return
-
 	if(href_list["write"])
 		var/id = href_list["write"]
 
@@ -417,8 +436,23 @@
 			if(tgui_alert(usr, "Are you sure you want to sign this paper?",, list("Yes","No")) == "No")
 				return
 			t = "\[sign\] "
+		else if (href_list["form"])
+			for(var/department in predefined_forms_list)
+				if(t)
+					break
+				for(var/premade_form in predefined_forms_list[department]["content"])
+					var/datum/form/form = new premade_form
+					if(form.index == href_list["form"])
+						t = sanitize(form.content, free_space, extra = FALSE)
+						break
 		else
-			t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
+			if (is_skill_competent(usr, list(/datum/skill/command = SKILL_LEVEL_NOVICE)) && id == "end" )
+				if(tgui_alert(usr, "You want to write text of create form?",, list("Text","Form")) == "Form")
+					select_form(usr)
+				else
+					t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
+			else
+				t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
 
 		if(!t)
 			return
@@ -803,3 +837,46 @@
 
 	update_icon()
 	updateinfolinks()
+
+/obj/item/weapon/paper/cmf_manual
+	name = "CMF manipulation manual"
+	info = {"<h1 style="text-align: center;">Руководство пользователя</h1>
+	<h2>Введение</h2>
+	<p>Благодаря разработкам наших ученых мы смогли изготовить около стабильные прототипы картриджей USP. Эти картриджи позволяют изменять когнитивно-моторные способности существ.&nbsp;</p>
+	<p>Эта технология состоит из четырех частей</p>
+	<div>
+	<ul>
+	<li>CMF Modifier Access Console - используется для настройки картриджей. Показывает информацию о IQ (коэффициент интеллекта) и MDI (индекс моторного развития).</li>
+	</ul>
+	</div>
+	<ul>
+	<li>CMF manipulation table - получает данные с консоли и устанавливает имплант CMF с нужными параметрами. Он также может служить хирургическим операционным столом для лечения черепно-мозговых травм.</li>
+	<li>USP cartridge - <span style="text-decoration: line-through;"><strong>\[секретно\]</strong></span></li>
+	<li>Имплант CMF - изменяет навыки существа, позволяя ему быть более полезным работником.</li>
+	</ul>
+	<h2>Процедура</h2>
+	<ol>
+	<li>Place patient on CMF manipulation table</li>
+	<li>Спросите пациента о его знаниях и навыках. Проверьте показатели IQ и MDI</li>
+	<li>Вставьте картридж в стол</li>
+	<li>Распакуйте картридж (процедура не является обратимой)</li>
+	<li>Используйте консоль для установки желаемых параметров импланта</li>
+	<li>Имплантируйте пациента с помощью консоли</li>
+	<li>В случае повреждения головного мозга направьте пациента на лечение к квалифицированному специалисту</li>
+	<li>Окончание процедуры. Теперь работник готов к выполнению своих обязанностей.</li>
+	</ol>
+	<h2>Опасности и противопоказания</h2>
+	<ul>
+	<li>Из-за особенностей работы имплантов защиты разума и лояльности их нельзя использовать вместе с имплантами CMF.</li>
+	<li>Консоль не позволит вам ввести этот имплантат существу неподходящей расы. Если такое произойдет, существо получит серьезные повреждения мозга, а имплант будет уничтожен.</li>
+	<li>Импланты CMF все еще находятся на стадии прототипа, сильный ЭМИ может разрушить его.</li>
+	<li>Поскольку эта технология является совершенно секретной, любое удаление импланта приведет к его уничтожению.</li>
+	</ul>
+	<h1 style="text-align: center;">Техническая информация</h1>
+	<h2>Подключение оборудования</h2>
+	<p>Чтобы подключить манипуляционный стол CMF к консоли, откройте панель обслуживания стола с помощью отвертки, затем с помощью мультиинструмента подсоедините стол к консоли и закройте панель обслуживания после этого.</p>
+	<h2>Потребляемая мощность</h2>
+	<p>После распаковки картриджа оборудование потребляет гораздо больше энергии, поэтому в консоли был установлен датчик заряда APC. Следите за зарядом во время манипуляций CMF.</p>
+	<h2>Стоимость производства картриджей USP</h2>
+	<p>Поскольку эти картриджи являются прототипами, которые еще не поступили в массовое производство, каждый картридж собирается вручную, и их распространение ограничено станциями, где гибель экипажа или наличие неквалифицированного персонала является обычным явлением. Используйте их с умом и не тратьте впустую. Внимательно изучите показатели IQ и MDI пациентов, чтобы определить, какой картридж необходим. Один базовый зеленый картридж стоил двадцать пять человеко-лет. Мы также не можем допустить, чтобы эти технологии попали в руки наших конкурентов.</p>
+	"}

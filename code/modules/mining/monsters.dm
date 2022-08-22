@@ -377,7 +377,6 @@
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
-	attack_sound = list('sound/weapons/punch4.ogg')
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 40
 	ranged = TRUE
@@ -397,6 +396,10 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 	var/pre_attack = 0
+
+/mob/living/simple_animal/hostile/asteroid/goliath/atom_init()
+	attack_sound = SOUNDIN_PUNCH_HEAVY
+	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	..()

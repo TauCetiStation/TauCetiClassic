@@ -475,6 +475,9 @@
 	icon_state = "mining_voucher"
 	w_class = SIZE_MINUSCULE
 
+/obj/item/weapon/mining_voucher/syndi
+	name = "strange voucher"
+	desc = "A stolen and modified token to redeem a piece of equipment. Use it on KillNTVendor."
 
 /**********************Mining Point Card**********************/
 
@@ -564,6 +567,7 @@
 		if(do_teleport(M, target, 3))
 			if(isliving(M))
 				var/mob/living/L = M
+				L.Stun(1)
 				L.Weaken(3)
 				shake_camera(L, 20, 1)
 				if(ishuman(L))

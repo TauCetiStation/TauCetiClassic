@@ -461,13 +461,9 @@
 	item_in_hand = get_active_hand()
 	if(item_in_hand)
 		SEND_SIGNAL(item_in_hand, COMSIG_ITEM_BECOME_ACTIVE, src)
-	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
-		if(hand)	//This being 1 means the left hand is in use
-			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
-		else
-			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
+	if(hud_used && l_hand_hud_object && r_hand_hud_object)
+		l_hand_hud_object.update_icon(src)
+		r_hand_hud_object.update_icon(src)
 
 	/*if (!( src.hand ))
 		src.hands.dir = NORTH
@@ -541,7 +537,7 @@
 			if(roundstart_quirks.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
 
-			if(H.species && (H.species.name == SKELETON) && !H.w_uniform && !H.wear_suit)
+			if((isskeleton(H)) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			var/t_him = "it"
@@ -677,7 +673,7 @@
 		if(isitem(item))
 			var/obj/item/O = item
 			if(O.w_class >= SIZE_SMALL)
-				playsound(loc, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+				playsound(loc, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 
 		do_attack_animation(target, has_effect = FALSE)
 
@@ -975,7 +971,7 @@
 			return
 		if(istype(thing, /mob/living/carbon/monkey/diona))
 			return
-	status_flags &= ~PASSEMOTES
+	remove_status_flags(PASSEMOTES)
 
 /mob/living/carbon/proc/can_eat(flags = 255) //I don't know how and why does it work
 	return TRUE
@@ -1075,8 +1071,7 @@
 				if (internal)
 					internal.add_fingerprint(usr)
 					internal = null
-					if (internals)
-						internals.icon_state = "internal0"
+					internals?.update_icon(src)
 					internalsound = 'sound/misc/internaloff.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
@@ -1086,8 +1081,7 @@
 				else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 					internal = ITEM
 					internal.add_fingerprint(usr)
-					if (internals)
-						internals.icon_state = "internal1"
+					internals?.update_icon(src)
 					internalsound = 'sound/misc/internalon.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
@@ -1206,7 +1200,7 @@
 	var/retFlags = 0
 	var/retVerb = "attacks"
 	var/retSound = null
-	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	var/specie = get_species()
 	var/datum/species/S = all_species[specie]
@@ -1221,7 +1215,7 @@
 		if(length(attack.attack_sound))
 			retSound = pick(attack.attack_sound)
 
-		retMissSound = 'sound/weapons/punchmiss.ogg'
+		retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	if(HULK in mutations)
 		retDam += 4

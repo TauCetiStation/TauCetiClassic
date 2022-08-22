@@ -232,7 +232,7 @@
 
 	H.see_in_dark = 8
 	H.ventcrawler = 2
-	H.status_flags &= ~CANSTUN|CANWEAKEN
+	H.remove_status_flags(CANSTUN|CANWEAKEN)
 	H.pass_flags |= PASSTABLE
 
 	saved_color = H.color

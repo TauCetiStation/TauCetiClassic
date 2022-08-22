@@ -85,7 +85,7 @@
 /obj/item/clothing/glasses/night/price = 6500
 /obj/item/clothing/glasses/thermal/price = 10000
 /obj/item/clothing/glasses/thermal/dealer/price = 5000
-/obj/item/clothing/glasses/thermal/hos_thermals/price = 14000
+/obj/item/clothing/glasses/night/hos_nights/price = 14000
 /obj/item/clothing/glasses/welding/price = 287
 /obj/item/clothing/glasses/welding/superior/price = 6200
 
@@ -133,8 +133,14 @@
 
 /obj/item/clothing/accessory/holobadge/price = 350
 /obj/item/clothing/accessory/holster/price = 1600
-/obj/item/clothing/accessory/medal/price = 9500
+/obj/item/clothing/accessory/medal/price = 1000
+/obj/item/clothing/accessory/medal/silver/price = 3000
+/obj/item/clothing/accessory/medal/silver/security/price = 4000
+/obj/item/clothing/accessory/medal/plasma/nobel_science/price = 5000
+/obj/item/clothing/accessory/medal/gold/price = 8000
 /obj/item/clothing/accessory/medal/gold/captain/price = 70000
+/obj/item/clothing/accessory/medal/gold/heroism/price = 100000
+
 
 /obj/item/clothing/under/M35_Jacket/price = 750
 /obj/item/clothing/under/M35_Jacket_Oficer/price = 1000

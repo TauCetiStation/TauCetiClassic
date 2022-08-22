@@ -36,7 +36,7 @@
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(!M.stat)
 					M.splat()
-					emote(pick("<span class='warning'>splats the [M]!</span>","<span class='warning'>toys with the [M]</span>","worries the [M]"))
+					me_emote(pick("<span class='warning'>splats the [M]!</span>","<span class='warning'>toys with the [M]</span>","worries the [M]"))
 					movement_target = null
 					stop_automated_movement = FALSE
 					break
@@ -45,7 +45,7 @@
 
 	for(var/mob/living/simple_animal/mouse/snack in oview(src, 3))
 		if(prob(15))
-			emote(pick("hisses and spits!","mrowls fiercely!","eyes [snack] hungrily."))
+			me_emote(pick("hisses and spits!","mrowls fiercely!","eyes [snack] hungrily."))
 		break
 
 	if(!stat && !buckled)

@@ -32,9 +32,6 @@
 			if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				to_chat(M, "[FOLLOW_LINK(M, src)] The captive mind of [src] whispers, \"[message]\"")
 
-/mob/living/captive_brain/emote(act, m_type = SHOWMSG_VISUAL, message, auto)
-	return
-
 /mob/living/simple_animal/borer
 	name = "cortical borer"
 	real_name = "cortical borer"
@@ -120,7 +117,7 @@
 		if(prob(5))
 			host.adjustBrainLoss(rand(1,2))
 		if(prob(host.getBrainLoss() * 0.05))
-			host.emote("[pick(list("blink", "choke", "aflap", "drool", "twitch", "gasp"))]")
+			host.emote("[pick(list("blink", "choke", "drool", "twitch", "gasp"))]")
 
 /mob/living/simple_animal/borer/say_understands(mob/other, datum/language/speaking)
 	return host == other
@@ -216,6 +213,7 @@
 
 	to_chat(src, "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>")
 	to_chat(M, "<span class='warning'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
+	M.Stun(3)
 	M.Weaken(3)
 
 	dominate_cd = world.time
@@ -287,7 +285,7 @@
 		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
-	var/chem = input("Select a chemical to secrete.", "Chemicals") as null|anything in list("bicaridine","tramadol","hyperzine","alkysine")
+	var/chem = input("Select a chemical to secrete.", "Chemicals") as null|anything in list("bicaridine","tramadol","nuka_cola","alkysine")
 	if(!chem)
 		return
 
@@ -491,5 +489,6 @@
 
 	ckey = candidate.ckey
 
-	var/datum/faction/borers/B = create_uniq_faction(/datum/faction/borers)
-	add_faction_member(B, src)
+	var/datum/faction/borers/B = find_faction_by_type(/datum/faction/borers)
+	if(B)
+		add_faction_member(B, src)

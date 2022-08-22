@@ -25,8 +25,6 @@
 	var/atom/movable/screen/inv3 = null
 
 	var/shown_robot_modules = 0 //Used to determine whether they have the module menu shown or not
-	var/shown_robot_pda = 0
-	var/shown_robot_foto = 0
 	var/atom/movable/screen/robot_modules_background
 
 //3 Modules can be activated at any one time.
@@ -68,7 +66,6 @@
 	var/lawcheck[1] //For stating laws.
 	var/ioncheck[1] //Ditto.
 	var/lockcharge //Used when locking down a borg to preserve cell charge
-	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
 	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
@@ -164,7 +161,9 @@
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
-		if(mind)	mind.transfer_to(mmi.brainmob)
+		if(mind)
+			mind.transfer_to(mmi.brainmob)
+			mmi.brainmob.mind.skills.remove_available_skillset(/datum/skillset/max)
 		mmi = null
 	return ..()
 
@@ -305,12 +304,12 @@
 			module_sprites["Kodiak"] = "kodiak-combat"
 			module.channels = list("Security" = 1)
 
-	hands.icon_state = lowertext(modtype)
+	module_icon.update_icon(src)
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
 
 	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
-		status_flags &= ~CANPUSH
+		remove_status_flags(CANPUSH)
 
 	// Radial menu for choose icon_state
 	var/choose_icon = list()
@@ -483,6 +482,52 @@
 			stat(null, "GPS: [COORD(T)]")
 
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
+
+/mob/living/silicon/robot/verb/unlock_hatch()
+	set name = "Unlock maintenance hatch"
+	set category = "Commands"
+
+	if(incapacitated())
+		return
+	if(opened)
+		to_chat(usr, "<span class='warning'>Невозможно заблокировать интерфейс, если открыта панель.</span>")
+		emote("buzz")
+		return
+	
+	if(!do_after(usr, 10, target = usr))
+		return
+	
+	if(locked)
+		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")		
+	else
+		to_chat(usr, "<span class='notice'>Интерфейс заблокирован.</span>")
+
+	playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
+	locked = !locked
+
+/mob/living/silicon/robot/verb/open_hatch()
+	set name = "Open maintenance hatch"
+	set category = "Commands"
+
+	if(incapacitated())
+		return
+	if(locked)
+		to_chat(usr, "<span class='warning'>Невозможно открыть панель, если заблокирован интерфейс.</span>")
+		emote("buzz")
+		return
+	
+	if(!do_after(usr, 10, target = usr))
+		return
+	
+	if(opened)
+		to_chat(usr, "<span class='notice'>Панель закрыта.</span>")
+		playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
+	else
+		to_chat(usr, "<span class='notice'>Панель открыта.</span>")
+		playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
+	
+	opened = !opened
+	updateicon()
 
 /mob/living/silicon/robot/restrained()
 	return 0

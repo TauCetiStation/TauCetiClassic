@@ -361,14 +361,14 @@
 			if(!damage)
 				return
 			to_chat(user, "<span class='warning'>Вы ремонтируете стену.</span>")
-			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
+			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "<span class='notice'>Вы отремонтировали стену.</span>")
 				take_damage(-damage)
 
 		else
 			to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
-			if(WT.use_tool(src, user, 100, 3, 100))
-				if(!istype(src, /turf/simulated/wall))
+			if(WT.use_tool(src, user, SKILL_TASK_DIFFICULT, 3, 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
+				if(!iswallturf(src))
 					return
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
@@ -377,10 +377,10 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
-		if(W.use_tool(src, user, 60, volume = 100))
+		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100))
 			if(mineral == "diamond")//Oh look, it's tougher
 				sleep(60)
-			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
+			if(!iswallturf(src) || !user || !W || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
@@ -394,10 +394,10 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Вы бурите сквозь стену.</span>")
-		if(W.use_tool(src, user, 60, volume = 50))
+		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
 			if(mineral == "diamond")
 				sleep(60)
-			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
+			if(!iswallturf(src) || !user || !W || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
@@ -416,7 +416,7 @@
 		if(W.use_tool(src, user, 70))
 			if(mineral == "diamond")
 				sleep(70)
-			if(!istype(src, /turf/simulated/wall) || !user || !EB || !T)
+			if(!iswallturf(src) || !user || !EB || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
@@ -474,6 +474,10 @@
 	else if(istype(W, /obj/item/noticeboard_frame))
 		var/obj/item/noticeboard_frame/NF = W
 		NF.try_build(user, src)
+
+	else if(istype(W,/obj/item/painting_frame))
+		var/obj/item/painting_frame/AH = W
+		AH.try_build(src)
 		return
 
 	//Poster stuff

@@ -103,9 +103,9 @@
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
-		O.Stun(stunned, ignore_canstun = TRUE)
+		O.Stun(AmountStun())
 		O.Weaken(weakened)
-		O.Paralyse(paralysis - 22)
+		O.SetParalysis(AmountParalyzed())
 		O.SetSleeping(AmountSleeping())
 
 	//transfer reagents
@@ -233,9 +233,9 @@
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
-		O.Stun(stunned, ignore_canstun = TRUE)
+		O.Stun(AmountStun())
 		O.Weaken(weakened)
-		O.Paralyse(paralysis - 22)
+		O.Paralyse(AmountParalyzed())
 		O.SetSleeping(AmountSleeping())
 
 	//transfer reagents
@@ -323,6 +323,8 @@
 	if(mind)
 		mind.transfer_to(O)
 		O.mind.original = O
+		O.mind.skills.add_available_skillset(/datum/skillset/max)
+		O.mind.skills.maximize_active_skills()
 	else
 		O.key = key
 
@@ -363,6 +365,8 @@
 
 	if(mind)		//TODO
 		mind.transfer_to(O)
+		O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+		O.mind.skills.maximize_active_skills()
 		if(O.mind.assigned_role == "Cyborg")
 			O.mind.original = O
 		else if(mind && mind.special_role)
