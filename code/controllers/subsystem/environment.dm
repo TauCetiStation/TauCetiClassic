@@ -54,6 +54,9 @@ SUBSYSTEM_DEF(environment)
 			turf_type_ = /turf/environment/snow
 			post_gen_type_ = /datum/map_generator/snow
 			turf_light_color_ = COLOR_BLUE
+		if (ENV_TYPE_TRASH)
+			turf_type_ = /turf/environment/ironsand
+			post_gen_type_ = /datum/map_generator/junkyard
 		else
 			error("[envtype_] is not valid environment type, revert to space")
 			envtype_ = ENV_TYPE_SPACE
