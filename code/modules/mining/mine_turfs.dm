@@ -650,7 +650,7 @@
 	var/turf/T
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
-		if(T && isenvironmentturf(T))
+		if(T && isspaceturf(T))
 			var/lattice = 0
 			for(var/obj/O in T)
 				if(istype(O, /obj/structure/lattice))
