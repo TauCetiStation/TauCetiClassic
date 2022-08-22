@@ -87,7 +87,8 @@
 	end_duration = 300
 	end_sound = 'sound/ambience/specific/ash_storm_end.ogg'
 	end_overlay = "light_ash"
-	area_type = /area/awaymission/junkyard
+	area_type = /area
+	protect_indoors = TRUE
 	target_ztrait = ZTRAIT_JUNKYARD
 
 	immunity_type = "ash"
@@ -104,11 +105,12 @@
 
 /datum/weather/scrap_storm/start()
 	..()
-	if(spawn_tornadoes)
-		var/area/A = locate(area_type)
+	if(!spawn_tornadoes)
+		return
+	for(var/area/A as anything in impacted_areas)
 		for(var/obj/item/weapon/scrap_lump/C in A)
 			qdel(C)
-		var/list/turfs = get_area_turfs(area_type)
+		var/list/turfs = get_area_turfs(A, FALSE)
 		for(var/i = 1 to 4)
 			var/turf/wheretospawn = pick(turfs)
 			if(!wheretospawn.density)
@@ -237,7 +239,8 @@
 	end_message = "<span class='notice'>The rain starts to dissipate.</span>"
 	end_sound = 'sound/ambience/specific/acidrain_end.ogg'
 	additional_action = TRUE
-	area_type = /area/awaymission/junkyard
+	area_type = /area
+	protect_indoors = TRUE
 	target_ztrait = ZTRAIT_JUNKYARD
 
 	immunity_type = "acid" // temp
@@ -246,15 +249,17 @@
 
 
 /datum/weather/acid_rain/impact(mob/living/L)
-	if(!istype(/turf, L.loc))
+	if(!istype(L.loc, /turf))
 		return
 	L.water_act(5)
 	if(!prob(L.getarmor(null, "bio")))
-		L.take_overall_damage(0, 1)
+		L.adjustFireLoss(1)
 
 /datum/weather/acid_rain/additional_action() //Proc for other actions?
-	if(prob(15))
-		var/list/turfs = get_area_turfs(area_type)
+	if(!prob(15))
+		return
+	for(var/area/impact_area as anything in impacted_areas)
+		var/list/turfs = get_area_turfs(impact_area, FALSE)
 		for(var/i = 1 to turfs.len / 400)
 			var/turf/wheretospawn = pick(turfs)
 			if(wheretospawn.density)
