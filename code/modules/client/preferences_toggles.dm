@@ -104,6 +104,15 @@
 	to_chat(src, "You will receive requests for \"[role]\" again")
 	feedback_add_details("admin_verb","TBeSpecialIgnore") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_votes_autoopening()
+	set name = "Toggle Votes Autoopening"
+	set category = "Preferences"
+	set desc = "Toggle votes and scoreboard autoopening (you can still open them via a link)."
+	prefs.votes_autoopening = !prefs.votes_autoopening
+	to_chat(src, "Voting and scoreboard interfaces will [prefs.votes_autoopening ? "now" : "no longer"] open automatically (you can still open them via a link).")
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TVA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/verb/change_ui()
 	set name = "Change UI"
 	set category = "Preferences"

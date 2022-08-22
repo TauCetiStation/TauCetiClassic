@@ -119,12 +119,31 @@
 
 	completions += scorestats()
 
+	fdel("data/scoreboard/last_score.txt")
+	text2file(completions, "data/scoreboard/last_score.txt")
+
 	if(one_mob)
-		one_mob.scorestats(completions)
+		show_scoreboard(one_mob)
 	else
 		for(var/mob/E in player_list)
-			if(E.client)
-				E.scorestats(completions)
+			show_scoreboard(E)
+
+/datum/controller/subsystem/ticker/proc/show_scoreboard(mob/M)
+	if(!M.client)
+		return
+
+	to_chat(M, "<b>The crew's final score is:</b>")
+	to_chat(M, "<b><font size='4'>[SSStatistics.score.crewscore]</font></b>")
+
+	fdel("data/scoreboard/end_icons/") // deleting all we saved last round
+	for(var/i in 1 to end_icons.len)
+
+		var/F = file("data/scoreboard/end_icons/logo_[i].png") // and save new
+		F << end_icons[i]
+
+	to_chat(M, "<span class='vote'>Чтобы посмотреть титры раунда нажмите <a href='?src=\ref[M]'>сюда</a> или Show Last Scoreboard во вкладке OOC.</span>")
+	if(M.client.prefs.votes_autoopening)
+		M.client.scoreboard(global.round_id)
 
 /datum/controller/subsystem/ticker/proc/scorestats(completions)
 	var/dat = completions
@@ -207,14 +226,15 @@
 
 	return dat
 
-/mob/proc/scorestats(completions)//omg why we count this for every player
-	// Show the score - might add "ranks" later
-	to_chat(src, "<b>The crew's final score is:</b>")
-	to_chat(src, "<b><font size='4'>[SSStatistics.score.crewscore]</font></b>")
+/datum/controller/subsystem/ticker/Topic(href, href_list[], hsrc)
+	if(href_list["src"])
+		var/mob/M = href_list["src"]
+		M?.client?.scoreboard(global.round_id)
 
-	for(var/i in 1 to end_icons.len)
-		src << browse_rsc(end_icons[i],"logo_[i].png")
-
-	var/datum/browser/popup = new(src, "roundstats", "Round #[global.round_id] Stats", 1000, 600)
-	popup.set_content(completions)
+/client/proc/scoreboard(roundid)
+	var/list/F = flist("data/scoreboard/end_icons/")
+	for(var/i in 1 to F.len)
+		src << browse_rsc(F[i], "logo_[i].png")
+	var/datum/browser/popup = new(src, "roundstats", "[roundid ? "Round #[roundid]" : "Last Round"] Stats", 1000, 600)
+	popup.set_content(file2text("data/last_score.txt"))
 	popup.open()

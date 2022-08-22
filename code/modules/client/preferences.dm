@@ -50,6 +50,7 @@ var/global/const/MAX_SAVE_SLOTS = 10
 	var/outline_enabled = TRUE
 	var/outline_color = COLOR_BLUE_LIGHT
 	var/eorg_enabled = TRUE
+	var/votes_autoopening = TRUE
 
 	var/show_runechat = TRUE
 

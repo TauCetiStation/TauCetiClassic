@@ -54,7 +54,8 @@ SUBSYSTEM_DEF(vote)
 	vote_start_time = world.time
 
 	for(var/client/C in clients)
-		interface_client(C)
+		if(C.prefs.votes_autoopening)
+			interface_client(C)
 
 	var/text = "[poll.initiator] начал голосование \"[poll.name]\"."
 	log_vote(text)

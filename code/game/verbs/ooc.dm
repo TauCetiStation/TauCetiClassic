@@ -209,3 +209,9 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	to_chat(src, "<span class='notice'>UI resource files resent successfully. If you are still having issues, please try manually clearing your BYOND cache.</span>")
 
+/client/verb/show_scoreboard()
+	set name = "Show Last Scoreboard"
+	set desc = "Shows the scoreboard of the last round."
+	set category = "OOC"
+
+	scoreboard()
