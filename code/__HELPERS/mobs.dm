@@ -165,7 +165,7 @@
 	var/atom/Uloc = null
 	if(!can_move)
 		Uloc = user.loc
-
+	ADD_TRAIT(user, TRAIT_BUSY_DELAY, DO_AFTER_TRAIT)
 	var/obj/item/holding = user.get_active_hand()
 
 	var/holdingnull = TRUE //User's hand started out empty, check for an empty hand
@@ -195,14 +195,12 @@
 			. = FALSE
 			break
 
-		if(distance >= 1 && get_dist(user.loc, Tloc) > distance)
+		if(distance >= 1 && get_dist(user, target) > distance)
 			. = FALSE
 			break
-
 		if(Uloc && (user.loc != Uloc))
 			. = FALSE
 			break
-
 		if(Tloc && (Tloc != target.loc))
 			. = FALSE
 			break
@@ -234,6 +232,9 @@
 				if(user.get_active_hand() != holding)
 					. = FALSE
 					break
+		if(!HAS_TRAIT_FROM(user, TRAIT_BUSY_DELAY, DO_AFTER_TRAIT))
+			. = FALSE
+			break
 
 	if(progress)
 		qdel(progbar)
@@ -241,6 +242,7 @@
 		user.become_not_busy(_hand = busy_hand)
 	if(target && target != user)
 		target.in_use_action = FALSE
+	REMOVE_TRAIT(user, TRAIT_BUSY_DELAY, DO_AFTER_TRAIT)
 
 //Returns true if this person has a job which is a department head
 /mob/proc/is_head_role()

@@ -127,6 +127,8 @@
 #define TRAIT_IMMOBILIZED "immobilized"
 /// Prevents hands and legs usage
 #define TRAIT_INCAPACITATED "incapacitated"
+/// using in do_after() for break loop
+#define TRAIT_BUSY_DELAY "busy_delay"
 
 #define TRAIT_ALCOHOL_TOLERANCE   "alcohol_tolerance"
 #define TRAIT_BLIND               "blind"
@@ -191,6 +193,7 @@
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
 #define MOOD_COMPONENT_TRAIT "mood_component"
 #define SPAWN_AREA_TRAIT "spawn_area_trait"
+#define DO_AFTER_TRAIT "do_after_trait"
 // medical stuff I guess
 #define OBESITY_TRAIT      "obesity"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
