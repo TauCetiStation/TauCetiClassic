@@ -371,11 +371,6 @@
 
 	var/turf/N = ChangeTurf(basetype)
 	N.update_overlays_full()
-	for(var/turf/simulated/floor/plating/airless/asteroid/D in RANGE_TURFS(1, src))
-		D.update_overlays()
-	for(var/turf/simulated/mineral/F in RANGE_TURFS(2, src))
-		F.update_overlays()
-
 
 	if(prob(CRATE_DROP_CHANCE))
 		visible_message("<span class='notice'>An old dusty crate was buried within!</span>")
