@@ -6,11 +6,11 @@
 	switch(noise)
 		if(120 to 125, 230 to 255)
 			result = "rocks"
-		if(0 to 20)
+		if(0 to 40)
 			result = "clearing"
-		if(20 to 25, 115 to 120, 125 to 130, 225 to 230)
+		if(40 to 45, 115 to 120, 125 to 130, 225 to 230)
 			result = "big_trash"
-		if(25 to 30, 100 to 115, 130 to 145, 210 to 225)
+		if(45 to 50, 110 to 115, 130 to 135, 220 to 225)
 			result = "trash"
 		else
 			result = "random"

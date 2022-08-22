@@ -1,0 +1,11 @@
+{
+    "map_name": "Box Station (Junkyard)",
+    "map_path": "boxstation",
+    "map_file": "boxstation.dmm",
+    "traits":[{
+        "Linkage": null,
+        "Environment Type": "Trash",
+        "Station": true,
+	  "Junkyard": true
+    }]
+}
