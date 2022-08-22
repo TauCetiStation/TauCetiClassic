@@ -940,7 +940,7 @@ FIRE ALARM
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	var/detecting = 1.0
-	var/working = 1.0
+	var/working = TRUE
 	var/time = 10.0
 	var/timing = 0.0
 	var/lockdownbyai = 0
@@ -1048,6 +1048,7 @@ FIRE ALARM
 
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
 	if(stat & (NOPOWER|BROKEN))
+		working = FALSE
 		return
 
 	if(timing)
@@ -1143,7 +1144,7 @@ FIRE ALARM
 	updateUsrDialog()
 
 /obj/machinery/firealarm/proc/reset()
-	if (!working)
+	if(!working)
 		return
 	var/area/A = get_area(src)
 	A.firereset()
@@ -1152,7 +1153,7 @@ FIRE ALARM
 		FA.update_icon()
 
 /obj/machinery/firealarm/proc/alarm()
-	if (!working)
+	if(!working)
 		return
 	var/area/A = get_area(src)
 	A.firealert()
