@@ -48,6 +48,7 @@
 	toggleable = 1
 	sightglassesmod = "meson"
 	vision_flags = SEE_TURFS
+	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 
 /obj/item/clothing/glasses/meson/prescription
 	name = "prescription mesons"
