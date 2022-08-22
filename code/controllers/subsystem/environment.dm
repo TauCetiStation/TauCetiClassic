@@ -46,6 +46,7 @@ SUBSYSTEM_DEF(environment)
 	var/datum/gas_mixture/air_
 	var/air_pressure_
 	var/post_gen_type_
+	var/has_weather
 
 	switch(envtype_)
 		if (ENV_TYPE_SPACE)
@@ -58,6 +59,7 @@ SUBSYSTEM_DEF(environment)
 		if (ENV_TYPE_TRASH)
 			turf_type_ = /turf/environment/ironsand
 			post_gen_type_ = /datum/map_generator/junkyard
+			has_weather = TRUE
 		else
 			error("[envtype_] is not valid environment type, revert to space")
 			envtype_ = ENV_TYPE_SPACE
@@ -91,3 +93,6 @@ SUBSYSTEM_DEF(environment)
 	air[z_value] = air_
 	air_pressure[z_value] = air_pressure_
 	post_gen_type[z_value] = post_gen_type_
+
+	if(has_weather)
+		SSweather.make_z_eligible(z_value)
