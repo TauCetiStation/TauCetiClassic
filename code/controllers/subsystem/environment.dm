@@ -50,6 +50,7 @@ SUBSYSTEM_DEF(environment)
 	switch(envtype_)
 		if (ENV_TYPE_SPACE)
 			turf_type_ = /turf/environment/space
+			turf_light_color_ = COLOR_WHITE
 		if (ENV_TYPE_SNOW)
 			turf_type_ = /turf/environment/snow
 			post_gen_type_ = /datum/map_generator/snow
