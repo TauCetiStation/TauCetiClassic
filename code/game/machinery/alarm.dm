@@ -1049,6 +1049,8 @@ FIRE ALARM
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
 	if(stat & (NOPOWER|BROKEN))
 		working = FALSE
+	else
+		working = TRUE
 		return
 
 	if(timing)
