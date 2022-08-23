@@ -28,7 +28,7 @@ var/global/list/faction_choices = list(
 	"Grayson Manufactories Ltd.",
 	"Hadii",
 	"Hesphaistos Industries",
-	"Kitam",
+	"Kaytam",
 	"NanoTrasen",
 	"Nazkiin",
 	"Positronic Union",
