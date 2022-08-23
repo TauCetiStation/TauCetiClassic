@@ -381,7 +381,7 @@
 	if(speaking)
 		verb = speaking.get_spoken_verb(ending)
 
-	if(!message || stat)
+	if(!message || stat != CONSCIOUS)
 		return
 
 	..(message, speaking, verb, null, null, message_range, null)

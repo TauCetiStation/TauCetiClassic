@@ -120,7 +120,7 @@
 			if(!isemptylist(disk_search))
 				if(isliving(A))
 					var/mob/living/MM = A
-					if(MM.client && !MM.stat)
+					if(MM.client && MM.stat == CONSCIOUS)
 						to_chat(MM, "<span class='warning'>Вы имеете что-то, что мешает улететь. Не прикидывайтесь: вы знаете, что это.</span>")
 						if(MM.x <= TRANSITIONEDGE)
 							MM.inertia_dir = 4
