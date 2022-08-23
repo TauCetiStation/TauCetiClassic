@@ -1051,7 +1051,6 @@ FIRE ALARM
 		working = FALSE
 	else
 		working = TRUE
-		return
 
 	if(timing)
 		if(time > 0)
