@@ -181,7 +181,7 @@
 
 /obj/item/weapon/kitchenknife/throwing
 	name = "throwing knife"
-	desc = "A blade designed to be apparently useless for normal combat, but very useful for throwing."
+	desc = "A blade designed to be apparently useless for normal melee combat, but very useful for throwing."
 	force = 5
 	throwforce = 18
 	throw_speed = 6

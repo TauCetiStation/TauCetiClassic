@@ -601,7 +601,7 @@
 /datum/uplink_item/stealthy_tools/throwingknives
 	name = "Throwing Knives"
 	desc = "Belt with a bunch of deadly sharp throwing knives."
-	item = /obj/item/weapon/storage/belt/security/tactical/knife
+	item = /obj/item/weapon/storage/belt/security/tactical/throwing
 	cost = 9
 	uplink_types = list("dealer")
 
