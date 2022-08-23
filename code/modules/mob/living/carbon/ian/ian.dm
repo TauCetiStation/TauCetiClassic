@@ -287,12 +287,14 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 /mob/living/carbon/ian/IsAdvancedToolUser()
 	return FALSE
 
-/mob/living/carbon/ian/movement_delay(tally = 0)
-	if(crawling)
+/mob/living/carbon/ian/movement_delay()
+	var/tally = speed
+
+	if(lying)
 		tally += 5
 	else if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
-	else if(m_intent == "run" && a_intent == INTENT_HARM && stamina >= 10)
+	else if(m_intent == MOVE_INTENT_RUN && a_intent == INTENT_HARM && stamina >= 10)
 		stamina = max(0, stamina - 10)
 		tally -= 1
 
@@ -303,8 +305,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	if(pull_debuff)
 		tally += pull_debuff
 
-	if (bodytemperature < 283.222)
-		tally += (283.222 - bodytemperature) / 10 * 1.75
+	if(bodytemperature < BODYTEMP_NORMAL - 30)
+		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
 	return tally
 
 /mob/living/carbon/ian/SelfMove(turf/n, direct)

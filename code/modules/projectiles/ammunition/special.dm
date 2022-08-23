@@ -20,10 +20,10 @@
 
 /obj/item/ammo_casing/magic/teleport
 	projectile_type = /obj/item/projectile/magic/teleport
-
+*/
 /obj/item/ammo_casing/magic/fireball
 	projectile_type = /obj/item/projectile/magic/fireball
-*/
+
 /obj/item/ammo_casing/syringegun
 	name = "syringe gun spring"
 	desc = "A high-power spring that throws syringes."
