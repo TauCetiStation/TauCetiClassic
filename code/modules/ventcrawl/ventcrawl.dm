@@ -92,7 +92,7 @@ var/global/list/ventcrawl_machinery = list(
 	var/time = 40
 	if(w_class)
 		time = w_class ** 2
-	if(!do_after(src, time, null, vent_found, can_move = TRUE))
+	if(!do_after(src, time, null, vent_found))
 		return
 
 	if(!can_ventcrawl())

@@ -56,8 +56,7 @@
 /mob/living/carbon/human/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	if(w_uniform)
 		w_uniform.add_fingerprint(attacker)
-	if(HAS_TRAIT_FROM(src, TRAIT_BUSY_DELAY, DO_AFTER_TRAIT))
-		REMOVE_TRAIT(src, TRAIT_BUSY_DELAY, DO_AFTER_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_BUSY_DELAY, DO_AFTER_TRAIT)
 	return ..()
 
 /*
