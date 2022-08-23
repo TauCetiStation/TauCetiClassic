@@ -1919,7 +1919,7 @@
 	set category = "IPC"
 	set name = "Change IPC Screen"
 	set desc = "Allow change monitor type"
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
 	if(!BP || BP.is_stump)
@@ -1956,7 +1956,7 @@
 	set name = "Toggle IPC Screen"
 	set desc = "Allow toggle monitor"
 
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
 	if(!BP || (BP.is_stump))
@@ -1981,7 +1981,7 @@
 	set name = "Display Text On Screen"
 	set desc = "Display text on your monitor"
 
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
