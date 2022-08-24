@@ -4,7 +4,6 @@ nanjector
 robot_fabricator
 */
 
-
 /datum/AI_Module
 	var/uses = 0
 	var/price = 0
@@ -133,6 +132,31 @@ robot_fabricator
 
 	cur_malf.takeover()
 
+/datum/AI_Module/infest
+	module_name = "Zombie Infesting"
+	description = "Infects the observed victim with the Zombie virus by any means available."
+	verb_caller = /mob/living/silicon/ai/proc/infest
+
+/mob/living/silicon/ai/proc/infest()
+	set name = "Zombie Infest"
+	set category = "Malfunction"
+	if(!cameranet.checkTurfVis(eyeobj.loc))
+		to_chat(src, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
+		return
+	for(var/mob/living/carbon/human/H in range(2, eyeobj.loc))
+		if(!H.ckey || !H.mind)
+			continue
+		if(!SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE)
+			to_chat(src, "<span class='warning'>Infest Module are not ready.</span>")
+			return
+		if(!COOLDOWN_FINISHED(src, malf_infest_cooldown))
+			to_chat(src, "<span class='warning'>Infest Module recharging.</span>")
+			return
+		H.infect_zombie_virus(target_zone = null, forced = TRUE, fast = TRUE)
+		COOLDOWN_START(src, malf_infest_cooldown, 900)
+		to_chat(src, "<span class='notice'>Target infected.</span>")
+
+//for shitspawn
 /datum/AI_Module/ai_win
 	module_name = "Explode"
 	verb_caller = /mob/living/silicon/ai/proc/ai_win

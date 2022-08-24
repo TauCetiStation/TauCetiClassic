@@ -15,6 +15,7 @@
 	var/mob/living/silicon/ai/AI_mind_current = antag.current
 	new /datum/AI_Module/module_picker(AI_mind_current)
 	new /datum/AI_Module/takeover(AI_mind_current)
+	new /datum/AI_Module/infest(AI_mind_current)
 	AI_mind_current.laws = new /datum/ai_laws/malfunction
 	AI_mind_current.show_laws()
 

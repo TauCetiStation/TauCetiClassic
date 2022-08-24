@@ -187,7 +187,7 @@
 		for(var/mod in modules)
 			choose_module[mod] = image(icon = 'icons/mob/robots.dmi', icon_state = modules[mod])
 
-	if(crisis && security_level == SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
+	if(crisis && security_level >= SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
 		to_chat(src, "<span class='warning'>Crisis mode active. Combat available.</span>")
 		choose_module["Combat"] = image(icon = 'icons/mob/robots.dmi', icon_state = "droid-combat")
 
@@ -453,11 +453,11 @@
 	if(ismalf(connected_ai))
 		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
 		if(SSticker.hacked_apcs >= 3)
-			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/3), 0)] seconds")
+			stat(null, "Time until station control secured: [max(malf.AI_capture_timeleft/(SSticker.hacked_apcs/3), 0)] seconds")
 	else
 		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
 		if(malf?.malf_mode_declared)
-			stat(null, "Time left: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
+			stat(null, "Time left: [max(malf.AI_capture_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
 	return 0
 
 
@@ -493,12 +493,12 @@
 		to_chat(usr, "<span class='warning'>Невозможно заблокировать интерфейс, если открыта панель.</span>")
 		emote("buzz")
 		return
-	
+
 	if(!do_after(usr, 10, target = usr))
 		return
-	
+
 	if(locked)
-		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")		
+		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")
 	else
 		to_chat(usr, "<span class='notice'>Интерфейс заблокирован.</span>")
 
@@ -515,17 +515,17 @@
 		to_chat(usr, "<span class='warning'>Невозможно открыть панель, если заблокирован интерфейс.</span>")
 		emote("buzz")
 		return
-	
+
 	if(!do_after(usr, 10, target = usr))
 		return
-	
+
 	if(opened)
 		to_chat(usr, "<span class='notice'>Панель закрыта.</span>")
 		playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
 	else
 		to_chat(usr, "<span class='notice'>Панель открыта.</span>")
 		playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
-	
+
 	opened = !opened
 	updateicon()
 

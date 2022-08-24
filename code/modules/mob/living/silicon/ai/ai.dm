@@ -59,6 +59,7 @@ var/global/list/ai_verbs_default = list(
 	var/processing_time = 100
 	var/list/datum/AI_Module/current_modules = list()
 	var/fire_res_on_core = 0
+	COOLDOWN_DECLARE(malf_infest_cooldown)
 
 	var/control_disabled = 0 // Set to 1 to stop AI from interacting via Click() -- TLE
 	var/malfhacking = 0 // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
@@ -304,7 +305,7 @@ var/global/list/ai_verbs_default = list(
 	if(M)
 		var/datum/faction/malf_silicons/malf = M.GetFaction()
 		if (SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE)
-			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
+			stat(null, "Time until station control secured: [max(malf.AI_capture_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
 
 
 /mob/living/silicon/ai/show_alerts()
