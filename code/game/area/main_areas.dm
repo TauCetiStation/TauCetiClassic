@@ -31,3 +31,10 @@
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = 1
+
+// other environment areas
+/area/space/snow
+	name = "Snow field"
+
+/area/space/junk
+	name = "Junk yard"

@@ -47,6 +47,7 @@ SUBSYSTEM_DEF(environment)
 	var/air_pressure_
 	var/post_gen_type_
 	var/has_weather
+	var/area_type
 
 	switch(envtype_)
 		if (ENV_TYPE_SPACE)
@@ -56,10 +57,12 @@ SUBSYSTEM_DEF(environment)
 			turf_type_ = /turf/environment/snow
 			post_gen_type_ = /datum/map_generator/snow
 			turf_light_color_ = COLOR_BLUE
+			area_type = /area/space/snow
 		if (ENV_TYPE_TRASH)
 			turf_type_ = /turf/environment/ironsand
 			post_gen_type_ = /datum/map_generator/junkyard
 			has_weather = TRUE
+			area_type = /area/space/junk
 		else
 			error("[envtype_] is not valid environment type, revert to space")
 			envtype_ = ENV_TYPE_SPACE
@@ -96,3 +99,8 @@ SUBSYSTEM_DEF(environment)
 
 	if(has_weather)
 		SSweather.make_z_eligible(z_value)
+	if(area_type)
+		spawn(100)
+			var/list/turfs = get_area_turfs(/area/space, FALSE, z_value)
+			var/area/new_area = get_area_by_type(area_type) || new area_type
+			new_area.contents.Add(turfs)
