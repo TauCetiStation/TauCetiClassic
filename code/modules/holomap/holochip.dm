@@ -16,7 +16,6 @@
 
 	var/frequency		//Frequency for transmitting data
 	var/encryption 		//Encryption for double security
-	var/raw_freq		//Ref to list of chips wit same freq. Touch only if you know what you do
 
 /obj/item/holochip/atom_init(obj/item/I)
 	. = ..()
@@ -40,6 +39,7 @@
 	QDEL_NULL(holomap_toggle_action)
 	holder = null
 	activator = null
+	SSholomaps.holochips[num2text(frequency)] -= src
 	return ..()
 
 /obj/item/holochip/proc/add_action(mob/living/carbon/human/wearer)
@@ -83,7 +83,7 @@
 	if(length(holomap_images))
 		activator.client.images -= holomap_images
 		QDEL_LIST(holomap_images)
-	for(var/obj/item/holochip/HC in raw_freq)
+	for(var/obj/item/holochip/HC in SSholomaps.holochips[num2text(frequency)])
 		if(HC.frequency != frequency)
 			HC.update_freq(HC.frequency)
 			continue
@@ -171,7 +171,6 @@
 		SSholomaps.holochips[texted_freq] += src
 	else //Add to existing freq
 		freque += src
-	raw_freq = SSholomaps.holochips[texted_freq]
 
 /obj/item/holochip/Topic(href, href_list)
 	if(usr.incapacitated() || !Adjacent(usr) || !ishuman(usr))

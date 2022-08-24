@@ -25,6 +25,10 @@
 	var/obj/O = locate(/obj/effect/landmark/syndi_shuttle) in landmarks_list
 	curr_location = get_area(O)
 
+/obj/machinery/computer/syndicate_station/Destroy()
+	SSholomaps.holomap_landmarks -= src
+	return ..()
+
 /obj/machinery/computer/syndicate_station/process()
 	if(..())
 		if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN + 20 >= world.time)

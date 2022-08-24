@@ -20,6 +20,10 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	. = ..()
 	SSholomaps.holomap_landmarks += src
 
+/obj/machinery/computer/vox_stealth/Destroy()
+	SSholomaps.holomap_landmarks -= src
+	return ..()
+
 /obj/machinery/computer/vox_stealth/attackby(obj/item/I, mob/user)
 	return attack_hand(user)
 
