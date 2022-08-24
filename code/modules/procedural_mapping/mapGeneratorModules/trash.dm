@@ -1,5 +1,6 @@
 /datum/map_generator_module/flora/trash
 	turf_type = /turf/environment/ironsand
+	persistance = 0.75
 
 /datum/map_generator_module/flora/trash/place_flora(turf/T, noise)
 	var/result
