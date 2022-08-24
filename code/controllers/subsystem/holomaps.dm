@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(holomaps)
 	for(var/freq in SSholomaps.holochips)
 		for(var/obj/item/holochip/HC in SSholomaps.holochips[freq])
 			var/turf/marker_location = get_turf(HC)
-			if(!is_station_level(marker_location.z))
+			if(!marker_location || !is_station_level(marker_location.z))
 				continue
 			if(!HC.holder || !iscarbon(HC.holder.loc))
 				continue
@@ -109,7 +109,7 @@ SUBSYSTEM_DEF(holomaps)
 			I.pixel_y = (marker_location.y - HOLOMAP_OFFSET) * PIXEL_MULTIPLIER
 	for(var/obj/machinery/computer/shuttle in holomap_landmarks)
 		var/turf/marker_location = get_turf(shuttle)
-		if(!is_station_level(marker_location.z))
+		if(!marker_location || !is_station_level(marker_location.z))
 			continue
 		if(istype(shuttle, /obj/machinery/computer/syndicate_station))
 			if(!(shuttle in holomap_cache))
