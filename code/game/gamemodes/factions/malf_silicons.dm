@@ -56,6 +56,7 @@
 	to_chat(world, "<FONT size = 3><B>The AI has won!</B></FONT>")
 	to_chat(world, "<B>It has fully taken control of all of [station_name()]'s systems.</B>")
 
+	to_nuke_or_not_to_nuke = TRUE
 	for(var/datum/role/malfAI/role in members)
 		var/mob/living/silicon/ai/AI = role.antag.current
 		to_chat(AI, "Congratulations you have taken control of the station.")
