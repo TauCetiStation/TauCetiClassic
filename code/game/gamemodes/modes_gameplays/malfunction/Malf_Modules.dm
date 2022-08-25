@@ -157,9 +157,9 @@ robot_fabricator
 		if(!COOLDOWN_FINISHED(src, malf_infest_cooldown))
 			to_chat(src, "<span class='warning'>Infest Module recharging.</span>")
 			return
-		var/chance = 100 - ((H.run_armor_check(null, "bio") + H.run_armor_check(null, "rad")) / 2)
-		if(!rand(chance))
-			to_chat(src, "<span class='warning'>[H] defense hindered action. Module recharges faster.</span>")
+		var/chance = 100 - H.run_armor_check(null, "bio")
+		if(chance <= 0 || !prob(chance))
+			to_chat(src, "<span class='warning'>[H] equipment reflects the impact. Module recharges faster.</span>")
 			COOLDOWN_START(src, malf_infest_cooldown, 300)
 			return
 		H.infect_zombie_virus(target_zone = null, forced = TRUE, fast = TRUE)
