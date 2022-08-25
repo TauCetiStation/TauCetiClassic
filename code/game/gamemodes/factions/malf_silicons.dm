@@ -9,7 +9,7 @@
 
 	max_roles = 1
 
-	var/AI_win_timeleft = 1800 //started at 1800, in case I change this for testing round end.
+	var/AI_capture_timeleft = 1800 //started at 1800, in case I change this for testing round end.
 	var/malf_mode_declared = FALSE
 	var/station_captured = FALSE
 	var/to_nuke_or_not_to_nuke = 0
@@ -48,7 +48,7 @@
 
 /datum/faction/malf_silicons/process()
 	if(SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
-		AI_win_timeleft -= (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
+		AI_capture_timeleft -= (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
 
 	..()
 
@@ -66,7 +66,7 @@
 	addtimer(CALLBACK(src, .proc/remove_ai_win_verb), 600)
 
 /datum/faction/malf_silicons/check_win()
-	if (AI_win_timeleft <= 0 && !station_captured)
+	if (AI_capture_timeleft <= 0 && !station_captured)
 		station_captured = TRUE
 		capture_the_station()
 		return TRUE
@@ -199,7 +199,6 @@
 	return dat
 
 /datum/faction/malf_silicons/zombie
-	var/AI_capture_timeleft = 1800
 	var/finished = FALSE
 
 /datum/faction/malf_silicons/zombie/OnPostSetup()
@@ -210,7 +209,7 @@
 	if(station_captured)
 		return
 	if(SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
-		AI_capture_timeleft -= (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
+		AI_capture_timeleft -= (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE)
 	if(AI_capture_timeleft <= 0)
 		capture_the_station()
 

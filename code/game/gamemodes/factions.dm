@@ -384,7 +384,7 @@
 /**
 	Should the faction make any changes to everybodies statpanel (EVERYBODIES, NOT JUST THE MEMBERS), put it here
 
-	Format it as just information you would want to print to the stat panel, such as return "Time left: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)]"
+	Format it as just information you would want to print to the stat panel, such as return "Time left: [max(malf.AI_capture_timeleft/(malf.apcs/3), 0)]"
 */
 /datum/faction/proc/get_statpanel_addition()
 	return null

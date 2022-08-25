@@ -144,19 +144,45 @@ robot_fabricator
 	if(!cameranet.checkTurfVis(eyeobj.loc))
 		to_chat(src, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return
-	for(var/mob/living/carbon/human/H in range(2, eyeobj.loc))
-		if(!H.ckey || !H.mind)
+
+	/*for(var/obj/machinery/atmospherics/components/unary/vent_pump/non_welded_vent in all_vents)
+		if(!non_welded_vent)
+			return
+		if(non_welded_vent.welded == TRUE)
 			continue
-		if(!SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE)
+		non_welded_vent += opened_vents*/
+
+
+	for(var/mob/living/carbon/human/H in view(2, eyeobj.loc))
+		if(!H.ckey || !H.mind)
+			to_chat(src, "<span class='notice'>[H] looks useless for you.</span>")
+			continue
+		if(SSticker.hacked_apcs < APC_MIN_TO_MALF_DECLARE)
 			to_chat(src, "<span class='warning'>Infest Module are not ready.</span>")
+			return
+		if(!is_vent_avaible(eyeobj))
+			to_chat(src, "<span class='warning'>There is no have opened vents in area.</span>")
 			return
 		if(!COOLDOWN_FINISHED(src, malf_infest_cooldown))
 			to_chat(src, "<span class='warning'>Infest Module recharging.</span>")
 			return
+		var/chance = 100 - ((H.run_armor_check(null, "bio") + H.run_armor_check(null, "rad")) / 2)
+		if(!rand(chance))
+			to_chat(src, "<span class='warning'>[H] defense hindered action. Module recharges faster.</span>")
+			COOLDOWN_START(src, malf_infest_cooldown, 300)
+			return
 		H.infect_zombie_virus(target_zone = null, forced = TRUE, fast = TRUE)
 		COOLDOWN_START(src, malf_infest_cooldown, 900)
-		to_chat(src, "<span class='notice'>Target infected.</span>")
+		to_chat(src, "<span class='notice'>[H] infected.</span>")
 
+//no need infest in space
+/mob/living/silicon/ai/proc/is_vent_avaible(camera)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent_in_area in get_area(camera))
+		if(!vent_in_area)
+			return FALSE
+		if(!vent_in_area.welded)
+			return TRUE
+	return FALSE
 
 /datum/AI_Module/ai_win
 	module_name = "Explode"
