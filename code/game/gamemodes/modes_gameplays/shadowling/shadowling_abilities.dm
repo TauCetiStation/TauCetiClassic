@@ -45,12 +45,8 @@
 	light_off_range(targets, usr)
 
 /proc/light_off_range(list/targets, atom/center)
-	// var/list/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime, /obj/item/weapon/reagent_containers/food/snacks/glowstick)
 	for(var/turf/T in targets)
 		for(var/obj/item/F in T.contents)
-		// 	if(is_type_in_list(F, blacklisted_lights))
-		// 		F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
-		// 		return
 			F.set_light(0)
 
 		for(var/obj/machinery/light/L in T.contents)
@@ -60,9 +56,6 @@
 
 		for(var/mob/living/carbon/human/H in T.contents)
 			for(var/obj/item/F in H)
-				// if(is_type_in_list(F, blacklisted_lights))
-				// 	F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
-				// 	return
 				F.set_light(0)
 			H.set_light(0) //This is required with the object-based lighting
 
