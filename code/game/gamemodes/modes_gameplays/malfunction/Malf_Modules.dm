@@ -4,6 +4,7 @@ nanjector
 robot_fabricator
 */
 
+
 /datum/AI_Module
 	var/uses = 0
 	var/price = 0
@@ -156,7 +157,7 @@ robot_fabricator
 		COOLDOWN_START(src, malf_infest_cooldown, 900)
 		to_chat(src, "<span class='notice'>Target infected.</span>")
 
-//for shitspawn
+
 /datum/AI_Module/ai_win
 	module_name = "Explode"
 	verb_caller = /mob/living/silicon/ai/proc/ai_win

@@ -9,10 +9,10 @@
 
 	max_roles = 1
 
-	var/AI_capture_timeleft = 1800 //started at 1800, in case I change this for testing round end.
+	var/AI_win_timeleft = 1800 //started at 1800, in case I change this for testing round end.
 	var/malf_mode_declared = FALSE
 	var/station_captured = FALSE
-	var/finished = FALSE
+	var/to_nuke_or_not_to_nuke = 0
 	var/intercept_hacked = FALSE
 	var/intercept_apcs = 4 //Bonus for the interception upgrade
 
@@ -32,7 +32,6 @@
 /datum/faction/malf_silicons/OnPostSetup()
 	if(SSshuttle)
 		SSshuttle.fake_recall = TRUE
-	AppendObjective(/datum/objective/turn_into_zombie)
 	return ..()
 
 /datum/faction/malf_silicons/proc/takeover()
@@ -48,46 +47,46 @@
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 50)
 
 /datum/faction/malf_silicons/process()
-	if(station_captured)
-		return ..()
 	if(SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
-		AI_capture_timeleft -= (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
-	if(AI_capture_timeleft <= 0)
-		capture_the_station()
-	return ..()
+		AI_win_timeleft -= (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
+
+	..()
 
 /datum/faction/malf_silicons/proc/capture_the_station()
-	station_captured = TRUE
-	to_chat(world, "<B>AI has fully taken control of all of [station_name()]'s systems.</B>")
+	to_chat(world, "<FONT size = 3><B>The AI has won!</B></FONT>")
+	to_chat(world, "<B>It has fully taken control of all of [station_name()]'s systems.</B>")
+
 	for(var/datum/role/malfAI/role in members)
 		var/mob/living/silicon/ai/AI = role.antag.current
-		to_chat(AI, "You have taken control of the station.")
-		to_chat(AI, "Now you can create your own children.")
-		AI.verbs += /mob/living/silicon/ai/proc/create_borg
-
-/mob/living/silicon/ai/proc/create_borg()
-	set category = "Malfunction"
-	set name = "Create Cyborg"
-	set desc = "Find a cyborg station and create a children."
-	var/mob/living/silicon/robot/cyborg = new(loc)
-	cyborg.can_be_security = TRUE
-	cyborg.crisis = TRUE
-	create_spawner(/datum/spawner/living/robot, cyborg)
+		to_chat(AI, "Congratulations you have taken control of the station.")
+		to_chat(AI, "You may decide to blow up the station. You have 60 seconds to choose.")
+		to_chat(AI, "You should have a new verb in the Malfunction tab. If you dont - rejoin the game.")
+		new /datum/AI_Module/ai_win(AI)
+	addtimer(CALLBACK(src, .proc/remove_ai_win_verb), 600)
 
 /datum/faction/malf_silicons/check_win()
-	if(finished)
-		return FALSE
-	if(is_malf_ai_dead())
-		SSshuttle.incall()
-		SSshuttle.announce_emer_called.play()
-		finished = TRUE
-		return FALSE
-	if(config.continous_rounds)
-		return FALSE
-	for(var/datum/objective/turn_into_zombie/Z in objective_holder.GetObjectives())
-		if(Z.check_completion())
+	if (AI_win_timeleft <= 0 && !station_captured)
+		station_captured = TRUE
+		capture_the_station()
+		return TRUE
+	if (station_captured && !to_nuke_or_not_to_nuke)
+		return TRUE
+	if (is_malf_ai_dead())
+		if(config.continous_rounds)
+			if(SSshuttle)
+				SSshuttle.fake_recall = FALSE
+			malf_mode_declared = FALSE
+		else
 			return TRUE
 	return FALSE
+
+/datum/faction/malf_silicons/proc/remove_ai_win_verb()
+	to_nuke_or_not_to_nuke = FALSE
+	for(var/datum/role/malfAI/role in members)
+		var/mob/living/silicon/ai/cur_AI = role.antag.current
+		var/datum/AI_Module/explode_module = cur_AI.current_modules["Explode"]
+		if(explode_module)
+			qdel(explode_module)
 
 /datum/faction/malf_silicons/proc/is_malf_ai_dead()
 	var/all_dead = TRUE
@@ -97,8 +96,10 @@
 			break
 	return all_dead
 
-//for shitspawn
 /datum/faction/malf_silicons/proc/ai_win()
+	if (!to_nuke_or_not_to_nuke)
+		return
+	remove_ai_win_verb()
 	var/turf/malf_turf
 	for(var/datum/role/malfAI/role in members)
 		var/mob/living/silicon/ai/cur_AI = role.antag.current
@@ -120,3 +121,132 @@
 		explosion(malf_turf, 15, 70, 200)
 	SSticker.station_was_nuked = TRUE
 	SSticker.explosion_in_progress = FALSE
+
+/datum/faction/malf_silicons/custom_result(call_parent = FALSE)
+	if(call_parent)
+		return ..()
+	var/malf_dead = is_malf_ai_dead()
+	var/crew_evacuated = (SSshuttle.location == SHUTTLE_AT_CENTCOM)
+	var/dat = ""
+	dat += "<h3>Malfunction mode resume:</h3>"
+
+	if(station_captured &&						SSticker.station_was_nuked)
+		dat += "<span class='red'>AI Victory!</span>"
+		dat += "<br><b>Everyone was killed by the self-destruct!</b>"
+		feedback_add_details("[ID]_success","SUCCESS")
+		SSStatistics.score.roleswon++
+
+	else if(station_captured && malf_dead &&	!SSticker.station_was_nuked)
+		dat += "<span class='red'>Neutral Victory.</span>"
+		dat += "<br><b>The AI has been killed!</b> The staff has lose control over the station."
+		feedback_add_details("[ID]_success","HALF")
+
+	else if(station_captured && !malf_dead &&	!SSticker.station_was_nuked)
+		dat += "<span class='red'>AI Victory!</span>"
+		dat += "<br><b>The AI has chosen not to explode you all!</b>"
+		feedback_add_details("[ID]_success","SUCCESS")
+		SSStatistics.score.roleswon++
+
+	else if(!station_captured && SSticker.station_was_nuked)
+		dat += "<span class='red'>Neutral Victory.</span>"
+		dat += "<br><b>Everyone was killed by the nuclear blast!</b>"
+		feedback_add_details("[ID]_success","HALF")
+
+	else if(!station_captured && malf_dead &&	!SSticker.station_was_nuked)
+		dat += "<span class='red'>Human Victory.</span>"
+		dat += "<br><b>The AI has been killed!</b> The staff is victorious."
+		feedback_add_details("[ID]_success","FAIL")
+
+	else if(!station_captured && !malf_dead &&	!SSticker.station_was_nuked && crew_evacuated)
+		dat += "<span class='red'>Neutral Victory.</span>"
+		dat += "<br><b>The Corporation has lose [station_name()]! All survived personnel will be fired!</b>"
+		feedback_add_details("[ID]_success","HALF")
+
+	else if(!station_captured && !malf_dead &&	!SSticker.station_was_nuked && !crew_evacuated)
+		dat += "<span class='red'>Neutral Victory.</span>"
+		dat += "<br><b>Round was mysteriously interrupted!</b>"
+		feedback_add_details("[ID]_success","HALF")
+
+	return dat
+
+/datum/faction/malf_silicons/GetScoreboard(call_parent = FALSE)
+	if(call_parent)
+		return ..()
+	var/dat = custom_result()
+	dat += "<br><b>The malfunctioning AI were:</b>"
+
+	for(var/datum/role/malfAI/role in members)
+		var/mob/living/silicon/ai/cur_AI = role.antag.current
+		if(cur_AI)
+			var/icon/flat = getFlatIcon(cur_AI)
+			end_icons += flat
+			var/tempstate = end_icons.len
+			dat += {"<br><img src="logo_[tempstate].png"> <b>[role.antag.key]</b> was <b>[role.antag.name]</b> ("}
+			if(cur_AI.stat == DEAD)
+				dat += "deactivated"
+			else
+				dat += "operational"
+			if(cur_AI.real_name != role.antag.name)
+				dat += " as [cur_AI.real_name]"
+		else
+			var/icon/sprotch = icon('icons/mob/robots.dmi', "gib7")
+			end_icons += sprotch
+			var/tempstate = end_icons.len
+			dat += {"<br><img src="logo_[tempstate].png"> <b>[role.antag.key]</b> was <b>[role.antag.name]</b> ("}
+			dat += "hardware destroyed"
+		dat += ")"
+	return dat
+
+/datum/faction/malf_silicons/zombie
+	var/AI_capture_timeleft = 1800
+	var/finished = FALSE
+
+/datum/faction/malf_silicons/zombie/OnPostSetup()
+	AppendObjective(/datum/objective/turn_into_zombie)
+
+/datum/faction/malf_silicons/zombie/process()
+	if(station_captured)
+		return
+	if(SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
+		AI_capture_timeleft -= (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
+	if(AI_capture_timeleft <= 0)
+		capture_the_station()
+
+/datum/faction/malf_silicons/zombie/capture_the_station()
+	station_captured = TRUE
+	to_chat(world, "<B>AI has fully taken control of all of [station_name()]'s systems.</B>")
+	for(var/datum/role/malfAI/zombie/role in members)
+		var/mob/living/silicon/ai/AI = role.antag.current
+		to_chat(AI, "You have taken control of the station.")
+		to_chat(AI, "Now you can create your own children.")
+		AI.verbs += /mob/living/silicon/ai/proc/create_borg
+
+/mob/living/silicon/ai/proc/create_borg()
+	set category = "Malfunction"
+	set name = "Create Cyborg"
+	set desc = "Find a cyborg station and create a children."
+	var/mob/living/silicon/robot/cyborg = new(loc)
+	cyborg.can_be_security = TRUE
+	cyborg.crisis = TRUE
+	create_spawner(/datum/spawner/living/robot, cyborg)
+
+/datum/faction/malf_silicons/zombie/check_win()
+	if(finished)
+		return FALSE
+	if(is_malf_ai_dead())
+		SSshuttle.incall()
+		SSshuttle.announce_emer_called.play()
+		finished = TRUE
+		return FALSE
+	if(config.continous_rounds)
+		return FALSE
+	for(var/datum/objective/turn_into_zombie/Z in objective_holder.GetObjectives())
+		if(Z.check_completion())
+			return TRUE
+	return FALSE
+
+/datum/faction/malf_silicons/zombie/custom_result()
+	return ..(TRUE)
+
+/datum/faction/malf_silicons/zombie/GetScoreboard()
+	return ..(TRUE)
