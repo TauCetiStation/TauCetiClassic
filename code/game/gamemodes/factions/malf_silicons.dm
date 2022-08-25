@@ -29,8 +29,8 @@
 			return TRUE
 	return FALSE
 
-/datum/faction/malf_silicons/OnPostSetup()
-	if(SSshuttle)
+/datum/faction/malf_silicons/OnPostSetup(shuttle_block = TRUE)
+	if(shuttle_block && SSshuttle)
 		SSshuttle.fake_recall = TRUE
 	return ..()
 
@@ -203,6 +203,7 @@
 	var/finished = FALSE
 
 /datum/faction/malf_silicons/zombie/OnPostSetup()
+	. = ..(FALSE)
 	AppendObjective(/datum/objective/turn_into_zombie)
 
 /datum/faction/malf_silicons/zombie/process()
