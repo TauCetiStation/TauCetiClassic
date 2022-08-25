@@ -722,7 +722,7 @@
 	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(W.use(0, user) && !stat)
+		if(W.use(0, user) && stat == CONSCIOUS)
 			if(stance != HOSTILE_STANCE_IDLE)
 				to_chat(user, "<span class='info'>You can't repair the [src] while it is moving!</span>")
 				return
