@@ -5,7 +5,7 @@
 
 	factions_allowed = list(/datum/faction/malf_silicons/zombie)
 
-	minimum_player_count = 1
+	minimum_player_count = 30
 	minimum_players_bundles = 30
 
 /datum/game_mode/malfunction/announce()

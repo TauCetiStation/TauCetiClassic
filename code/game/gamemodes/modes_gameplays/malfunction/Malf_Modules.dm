@@ -144,15 +144,6 @@ robot_fabricator
 	if(!cameranet.checkTurfVis(eyeobj.loc))
 		to_chat(src, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return
-
-	/*for(var/obj/machinery/atmospherics/components/unary/vent_pump/non_welded_vent in all_vents)
-		if(!non_welded_vent)
-			return
-		if(non_welded_vent.welded == TRUE)
-			continue
-		non_welded_vent += opened_vents*/
-
-
 	for(var/mob/living/carbon/human/H in view(2, eyeobj.loc))
 		if(!H.ckey || !H.mind)
 			to_chat(src, "<span class='notice'>[H] looks useless for you.</span>")
