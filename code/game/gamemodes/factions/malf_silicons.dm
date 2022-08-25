@@ -226,10 +226,14 @@
 	set category = "Malfunction"
 	set name = "Create Cyborg"
 	set desc = "Find a cyborg station and create a children."
+	if(!COOLDOWN_FINISHED(src, malf_infest_cooldown))
+		to_chat(src, "<span class='warning'>Recharging.</span>")
+		return
 	var/mob/living/silicon/robot/cyborg = new(loc)
 	cyborg.can_be_security = TRUE
 	cyborg.crisis = TRUE
 	create_spawner(/datum/spawner/living/robot, cyborg)
+	COOLDOWN_START(src, malf_borgcreating_cooldown, 300)
 
 /datum/faction/malf_silicons/zombie/check_win()
 	if(finished)
