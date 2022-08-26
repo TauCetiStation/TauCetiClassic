@@ -341,7 +341,7 @@ var/global/list/datum/spawners_cooldown = list()
 	set_ninja_objectives(new_ninja)
 
 /*
- * lone opator
+ * Lone operative
 */
 /datum/spawner/lone_op_event
 	name = "Оперативник Синдиката"
