@@ -1,5 +1,5 @@
 /datum/job/assistant
-	title = "Test Subject"
+	title = "Assistant"
 	flag = ASSISTANT
 	department_flag = CIVILIAN
 	faction = "Station"
@@ -19,14 +19,14 @@
 		)
 	outfit = /datum/outfit/job/assistant/test_subject
 	skillsets = list(
-		"Test Subject"   = /datum/skillset/test_subject,
-		"Lawyer"         = /datum/skillset/test_subject/lawyer,
-		"Mecha Operator" = /datum/skillset/test_subject/mecha,
-		"Private Eye"    = /datum/skillset/test_subject/detective,
-		"Reporter"       = /datum/skillset/test_subject/reporter,
-		"Waiter"         = /datum/skillset/test_subject/waiter,
-		"Vice Officer"   = /datum/skillset/test_subject/vice_officer,
-		"Paranormal Investigator" = /datum/skillset/test_subject/paranormal
+		"Assistant"      = /datum/skillset/assistant,
+		"Lawyer"         = /datum/skillset/assistant/lawyer,
+		"Mecha Operator" = /datum/skillset/assistant/mecha,
+		"Private Eye"    = /datum/skillset/assistant/detective,
+		"Reporter"       = /datum/skillset/assistant/reporter,
+		"Waiter"         = /datum/skillset/assistant/waiter,
+		"Vice Officer"   = /datum/skillset/assistant/vice_officer,
+		"Paranormal Investigator" = /datum/skillset/assistant/paranormal
 		)
 
 /datum/job/assistant/get_access()

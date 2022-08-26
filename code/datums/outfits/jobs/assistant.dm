@@ -1,8 +1,8 @@
 // ASSISTANT OUTFIT
 /datum/outfit/job/assistant
-	name = OUTFIT_JOB_NAME("Assistant Gear")
+	name = OUTFIT_JOB_NAME("Assistant")
 
-	uniform = /obj/item/clothing/under/test_subject
+	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/black
 
 /datum/outfit/job/assistant/lawyer
