@@ -499,6 +499,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(src, "<span class='notice'><B>Living and available Ian not found.</B></span>")
 
+/mob/dead/observer/pointed(atom/A as mob|obj|turf in view(client.view, src))
+	if(!..())
+		return FALSE
+	emote_dead("points to [A]")
+	return TRUE
+
+/mob/dead/observer/point_at(atom/pointed_atom)
+	..(pointed_atom, /obj/effect/decal/point/ghost)
+
 /mob/dead/observer/verb/view_manfiest()
 	set name = "View Crew Manifest"
 	set category = "Ghost"

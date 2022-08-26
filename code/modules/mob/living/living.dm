@@ -679,6 +679,14 @@
 
 	return
 
+/mob/living/pointed(atom/A)
+	if(incapacitated() || (status_flags & FAKEDEATH))
+		return
+
+	. = ..()
+	if(.)
+		usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
+
 /mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if (buckled && buckled.loc != NewLoc)
 		if (!buckled.anchored)

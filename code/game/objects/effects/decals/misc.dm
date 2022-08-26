@@ -14,6 +14,10 @@
 	src.pixel_y = old_loc.pixel_y
 	src.invisibility = invisibility
 
+//Nice purple arrow for ghost
+/obj/effect/decal/point/ghost
+	icon_state = "arrow_ghost"
+
 // Used for spray that you spray at walls, tables, hydrovats etc
 /obj/effect/decal/spraystill
 	density = FALSE
