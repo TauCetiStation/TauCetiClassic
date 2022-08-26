@@ -341,6 +341,31 @@ var/global/list/datum/spawners_cooldown = list()
 	set_ninja_objectives(new_ninja)
 
 /*
+ * lone opator
+*/
+/datum/spawner/lone_op_event
+	name = "Оперативник Синдиката"
+	id = "lone_op_event"
+	desc = "Вы появляетесь на небольшом шаттле, на нём вам предстоит отправиться на станцию для выполнения особо сложного задания."
+	wiki_ref = "Syndicate_Guide"
+	ranks = list(ROLE_GHOSTLY)
+
+/datum/spawner/lone_op_event/spawn_ghost(mob/dead/observer/ghost)
+	var/spawnloc = pick(loneopstart)
+	loneopstart -= spawnloc
+
+	var/client/C = ghost.client
+
+	var/mob/living/carbon/human/H = new(null)
+	var/new_name = "Gorlex Maradeurs Operative"
+	C.create_human_apperance(H, new_name)
+
+	H.loc = spawnloc
+	H.key = C.key
+
+	create_and_setup_role(/datum/role/operative/lone, H, TRUE)
+
+/*
  * Borer
 */
 /datum/spawner/borer_event

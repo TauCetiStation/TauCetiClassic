@@ -135,3 +135,21 @@
 						prob(40);/obj/random/misc/book,\
 						prob(1);/obj/random/misc/musical\
 					)
+
+
+/obj/random/misc/kit
+	name = "Random Syndicate Kit"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "duffle-syndie"
+/obj/random/misc/kit/item_to_spawn()
+		return pick(\
+						prob(90);/obj/item/weapon/storage/backpack/dufflebag/nuke/scout,\
+						prob(70);/obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman,\
+						prob(70);/obj/item/weapon/storage/backpack/dufflebag/nuke/hacker,\
+						prob(60);/obj/item/weapon/storage/backpack/dufflebag/nuke/sniper,\
+						prob(70);/obj/item/weapon/storage/backpack/dufflebag/nuke/demo,\
+						prob(70);/obj/item/weapon/storage/backpack/dufflebag/nuke/melee,\
+						prob(25);/obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner,\
+						prob(25);/obj/item/weapon/storage/backpack/dufflebag/nuke/chemwarfare,\
+						prob(70);/obj/item/weapon/storage/backpack/dufflebag/nuke/custom\
+					)

@@ -50,6 +50,23 @@
 	id = /obj/item/weapon/card/id/syndicate/commander
 	back = /obj/item/weapon/storage/backpack/nuke/commander
 
+/obj/item/weapon/storage/backpack/nuke/lone
+	startswith = list(
+	/obj/item/weapon/paper/nuclear_code,
+	/obj/item/weapon/crowbar/red,
+	/obj/item/weapon/gun/projectile/automatic/pistol,
+	/obj/item/ammo_box/magazine/m9mm/ex,
+	/obj/item/clothing/accessory/holster/armpit,
+	/obj/item/weapon/pinpointer/nukeop,
+	/obj/item/device/radio/uplink,
+	/obj/item/weapon/kitchenknife/combat,
+	/obj/item/clothing/accessory/storage/syndi_vest)
+
+/datum/outfit/nuclear/solo
+	name = "Syndicate: Lone Agent"
+	back = /obj/item/weapon/storage/backpack/nuke/lone
+	suit = /obj/item/clothing/suit/space/rig/syndi
+	head = /obj/item/clothing/head/helmet/space/rig/syndi
 
 /datum/outfit/nuclear/unathi_equip()
 	backpack_contents += list(/obj/item/device/modkit/syndie/unathi)

@@ -334,6 +334,14 @@
 	global.heiststart += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/lone_op_spawn
+	name = "Solo operative"
+
+/obj/effect/landmark/lone_op_spawn/atom_init(mapload)
+	..()
+	global.loneopstart += loc
+	return INITIALIZE_HINT_QDEL
+
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
 

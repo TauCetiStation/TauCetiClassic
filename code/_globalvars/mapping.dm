@@ -29,6 +29,7 @@ var/global/list/prisonwarped = list()	//list of players already warped
 var/global/list/blobstart = list()
 var/global/list/ninjastart = list()
 var/global/list/copsstart = list()
+var/global/list/loneopstart = list()
 var/global/list/dealerstart = list()
 var/global/list/heiststart = list()
 var/global/list/eorgwarp = list()

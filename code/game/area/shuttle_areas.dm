@@ -306,6 +306,31 @@
 	icon_state = "shuttle"
 	parallax_movedir = NORTH
 
+//lone oper shuttle
+/area/shuttle/lone_op
+	name = "Shuttle"
+	icon_state = "yellow"
+	ambience = 'sound/ambience/syndicate_station.ogg'
+
+/area/shuttle/lone_op/start
+	name = "Syndicate space"
+	icon_state = "yellow"
+
+/area/shuttle/lone_op/north
+	name = "north of SS13"
+	icon_state = "north"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
+
+/area/shuttle/lone_op/south
+	name = "south of SS13"
+	icon_state = "south"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
+
+/area/shuttle/lone_op/transit
+	name = "hyperspace"
+	icon_state = "shuttle"
+	parallax_movedir = NORTH
+
 //Shuttle lists, group by areas
 // CENTCOM
 var/global/list/centcom_shuttle_areas = list (
