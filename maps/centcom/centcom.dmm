@@ -17059,6 +17059,12 @@
 	icon_state = "redbluefull"
 	},
 /area/centcom/tdome/tdomeobserve)
+"aMv" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/lone_op/start)
 "aMC" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -77804,7 +77810,7 @@ aLb
 aLp
 aLp
 aLM
-aLp
+aLC
 anv
 aaM
 aaM
@@ -78061,7 +78067,7 @@ aLm
 aLp
 aLp
 aLp
-aLC
+aMv
 anv
 aaM
 aaM
