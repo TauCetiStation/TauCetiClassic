@@ -4979,6 +4979,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -34286,6 +34291,10 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Bridge North"
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -70775,10 +70784,17 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "rFw" = (
-/turf/simulated/floor{
-	icon_state = "darkbluecorners"
+/obj/machinery/computer/general_air_control{
+	dir = 8;
+	frequency = 1444;
+	level = 3;
+	name = "Supermatter Monitor";
+	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
-/area/station/bridge)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/engineering/monitoring)
 "rFM" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 8
@@ -81548,13 +81564,19 @@
 	},
 /area/station/maintenance/dormitory)
 "usb" = (
-/obj/machinery/computer/atmos_alert{
-	dir = 8
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "darkblue"
 	},
-/area/station/engineering/monitoring)
+/area/station/bridge)
 "usd" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating{
@@ -84475,9 +84497,7 @@
 /obj/item/weapon/storage/firstaid/regular{
 	pixel_y = 8
 	},
-/obj/item/weapon/storage/firstaid/toxin{
-	pixel_y = 4
-	},
+/obj/item/weapon/storage/firstaid/toxin,
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
@@ -96807,6 +96827,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/landmark/start/botanist,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "yiF" = (
@@ -129292,9 +129313,9 @@ xuN
 nXk
 cdk
 ilU
-eHO
-rFw
-wdE
+iVS
+lfX
+usb
 blW
 wdE
 ssu
@@ -130881,7 +130902,7 @@ pyu
 lAm
 fNz
 oEg
-usb
+rFw
 xAj
 oop
 vnU
