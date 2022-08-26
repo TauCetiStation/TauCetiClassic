@@ -1,4 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aab" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/prison)
 "aad" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 4
@@ -2484,7 +2492,8 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/security/execution)
 "aDD" = (
@@ -7450,10 +7459,6 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/obj/item/device/radio/off{
-	pixel_x = -5;
-	pixel_y = 9
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -9330,7 +9335,8 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/security/execution)
 "csG" = (
@@ -12280,7 +12286,8 @@
 	pixel_y = -6
 	},
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/security/execution)
 "dhg" = (
@@ -19740,7 +19747,8 @@
 /area/station/security/brig)
 "eSn" = (
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/security/execution)
 "eSo" = (
@@ -30140,12 +30148,10 @@
 /turf/simulated/wall/r_wall,
 /area/station/aisat/ai_chamber)
 "hjf" = (
-/obj/machinery/computer/security{
-	dir = 4
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -31837,15 +31843,19 @@
 	},
 /area/station/rnd/telesci)
 "hHA" = (
-/obj/structure/stool/bed/chair/office/dark{
-	dir = 8
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/plating,
 /area/station/security/prison)
 "hHB" = (
 /obj/effect/decal/cleanable/dirt,
@@ -45555,7 +45565,8 @@
 	pixel_x = 22
 	},
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/security/execution)
 "lhI" = (
@@ -64454,7 +64465,7 @@
 	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
-	icon_state = "darkredfull"
+	icon_state = "dark"
 	},
 /area/station/security/execution)
 "pYj" = (
@@ -76063,7 +76074,6 @@
 	},
 /area/station/security/main)
 "sXg" = (
-/obj/machinery/computer/secure_data,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -89468,11 +89478,11 @@
 /turf/simulated/wall,
 /area/station/medical/medbreak)
 "wnK" = (
-/obj/item/weapon/flora/random,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/structure/closet/secure_closet/brig,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -94238,10 +94248,14 @@
 /area/station/security/range)
 "xyV" = (
 /obj/structure/table/reinforced,
-/obj/machinery/computer/skills,
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
+/obj/item/device/radio/off{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/weapon/crowbar,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkred"
@@ -136489,7 +136503,7 @@ sXg
 mZF
 rfo
 weA
-hHA
+aab
 kLP
 eDF
 gfe
@@ -137259,7 +137273,7 @@ aHv
 aHv
 aHv
 aHv
-dVt
+hHA
 wHl
 dVt
 aHv
