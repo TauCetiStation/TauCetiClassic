@@ -22724,13 +22724,11 @@
 	},
 /area/station/cargo/qm)
 "aOJ" = (
-/obj/structure/flora/ausbushes/grassybush{
-	pixel_x = -8
-	},
 /obj/machinery/camera{
 	c_tag = "Hydroponics Pasture";
 	dir = 1
 	},
+/obj/structure/chicken_feeder,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aOK" = (
