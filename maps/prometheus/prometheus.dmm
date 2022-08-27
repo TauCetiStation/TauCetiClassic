@@ -17408,9 +17408,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/landmark{
-	name = "blobstart"
-	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -27153,9 +27150,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "gvq" = (
-/obj/effect/landmark{
-	name = "blobstart"
-	},
 /obj/structure/toilet{
 	pixel_y = 8
 	},
