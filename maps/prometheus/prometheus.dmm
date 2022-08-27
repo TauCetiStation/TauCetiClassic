@@ -463,6 +463,39 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/port)
+"aaJ" = (
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/maintenance/incinerator)
+"aaK" = (
+/obj/item/weapon/cigbutt,
+/obj/effect/landmark{
+	name = "xeno_spawn"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/station/maintenance/incinerator)
+"aaL" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
+"aaM" = (
+/obj/effect/landmark{
+	name = "xeno_spawn"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "aaU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -2527,9 +2560,6 @@
 /obj/machinery/flasher{
 	id = "misclab"
 	},
-/obj/effect/landmark{
-	name = "xeno_spawn"
-	},
 /turf/simulated/floor/engine,
 /area/station/rnd/misc_lab)
 "ayW" = (
@@ -4459,6 +4489,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
+	},
+/obj/effect/landmark{
+	name = "xeno_spawn"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
@@ -15961,24 +15994,15 @@
 	},
 /area/station/rnd/misc_lab)
 "dSh" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Engineering";
-	name = "Engineering Security Doors";
-	opacity = 0
+/obj/effect/landmark{
+	name = "xeno_spawn"
 	},
 /turf/simulated/floor/plating,
-/area/station/engineering/equip)
+/area/station/construction)
 "dSm" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -24501,6 +24525,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -24662,6 +24689,9 @@
 /obj/effect/decal/cleanable/blood/drip,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -24909,6 +24939,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor{
 	icon_state = "arcade_carpet"
@@ -28670,8 +28703,17 @@
 	},
 /area/station/civilian/library)
 "gNJ" = (
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
+/area/station/engineering/equip)
 "gNN" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
@@ -35570,6 +35612,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "iye" = (
@@ -38686,6 +38731,9 @@
 	name = "Tribunal"
 	})
 "joJ" = (
+/obj/effect/landmark{
+	name = "xeno_spawn"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warndark"
@@ -49444,6 +49492,9 @@
 "lZO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/broken_bottle,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "lZQ" = (
@@ -58608,6 +58659,9 @@
 	dir = 1;
 	name = "Toxins Research";
 	sortType = "Toxins Research"
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -71518,6 +71572,9 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/landmark{
+	name = "xeno_spawn"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "rHd" = (
@@ -72261,6 +72318,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/cigbutt,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/landmark{
+	name = "xeno_spawn"
+	},
 /turf/simulated/floor/carpet/orange,
 /area/station/maintenance/medbay)
 "rRD" = (
@@ -72723,6 +72783,9 @@
 "rWU" = (
 /obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -75482,12 +75545,11 @@
 	},
 /area/station/security/range)
 "sFV" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
+/area/station/engineering/engine)
 "sFZ" = (
 /obj/structure/stool/bed/chair/comfy/beige{
 	dir = 8
@@ -81938,6 +82000,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -89086,6 +89151,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "waE" = (
@@ -91579,11 +91647,11 @@
 	},
 /area/station/security/prison)
 "wHX" = (
-/obj/item/weapon/cigbutt,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
+/obj/effect/landmark{
+	name = "blobstart"
 	},
-/area/station/maintenance/incinerator)
+/turf/simulated/floor/plating,
+/area/station/construction)
 "wIn" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -94434,6 +94502,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/landmark{
+	name = "xeno_spawn"
+	},
 /turf/simulated/floor{
 	icon_state = "arcade_carpet"
 	},
@@ -94945,6 +95016,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -119223,8 +119297,8 @@ fuq
 ola
 rvP
 eMR
-sFV
-gNJ
+aaL
+aaM
 twR
 eZa
 iRy
@@ -128210,8 +128284,8 @@ lYa
 hks
 skR
 fYd
-cDB
-wHX
+aaJ
+aaK
 oua
 sCz
 pVV
@@ -133070,7 +133144,7 @@ iMx
 tNu
 jIb
 aBv
-dSh
+gNJ
 pBA
 mAM
 sWJ
@@ -133327,7 +133401,7 @@ kmh
 mcI
 aoW
 jch
-dSh
+gNJ
 gIM
 mYT
 sIK
@@ -133841,7 +133915,7 @@ kmh
 kmh
 jIb
 jIb
-dSh
+gNJ
 gng
 tQt
 rSR
@@ -134098,7 +134172,7 @@ kmh
 kvG
 rGN
 jIb
-dSh
+gNJ
 mjM
 pOX
 aaz
@@ -135390,7 +135464,7 @@ xTO
 cmk
 mXc
 mXc
-fdY
+sFV
 fdY
 tye
 tye
@@ -140777,8 +140851,8 @@ hvz
 tvs
 ezf
 eOr
-hSg
-kKS
+dSh
+wHX
 qHY
 nUe
 aNw
