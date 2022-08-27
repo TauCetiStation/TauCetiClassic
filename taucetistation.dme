@@ -1109,6 +1109,7 @@
 #include "code\game\objects\structures\bobross.dm"
 #include "code\game\objects\structures\chalkboard.dm"
 #include "code\game\objects\structures\chapel.dm"
+#include "code\game\objects\structures\chicken_feeder.dm"
 #include "code\game\objects\structures\coathanger.dm"
 #include "code\game\objects\structures\curtains.dm"
 #include "code\game\objects\structures\displaycase.dm"

@@ -6961,7 +6961,7 @@
 	},
 /area/station/civilian/hydroponics)
 "bkd" = (
-/obj/structure/flora/ausbushes/grassybush,
+/obj/structure/chicken_feeder,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "bkl" = (
@@ -72497,6 +72497,7 @@
 /mob/living/simple_animal/cow{
 	name = "Betsy"
 	},
+/obj/structure/flora/ausbushes/fullgrass,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "vOH" = (
