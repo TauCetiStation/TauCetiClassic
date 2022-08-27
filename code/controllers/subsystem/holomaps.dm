@@ -94,13 +94,9 @@ SUBSYSTEM_DEF(holomaps)
 			var/mob/living/carbon/C = HC.holder.loc
 			if(C.head != HC.holder)
 				continue
-			if(!(HC in holomap_cache))
-				var/image/NI = image(HC.holder.icon, icon_state = HC.holder.icon_state)
-				NI.transform /= 2
-				holomap_cache[HC] = NI
 			var/image/I = holomap_cache[HC]
 			if(!I)
-				stack_trace("[HC.type]/[HC.holder.loc]/[HC.frequency] failed to generate image.")
+				stack_trace("[HC.type] | [HC.holder.loc] | [HC.frequency] failed to generate image.")
 				continue
 			I.filters = null
 			if(C.stat == DEAD)

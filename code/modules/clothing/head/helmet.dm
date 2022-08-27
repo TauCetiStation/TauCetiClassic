@@ -27,6 +27,10 @@
 	if(holochip && slot == SLOT_HEAD)
 		if(user.hud_used) //NPCs don't need a map
 			user.hud_used.init_screen(/atom/movable/screen/holomap)
+		if(!(holochip in SSholomaps.holomap_cache))
+			var/image/NI = image(holochip.holder.icon, icon_state = holochip.holder.icon_state)
+			NI.transform /= 2
+			SSholomaps.holomap_cache[holochip] = NI
 		holochip.add_action(user)
 	..()
 

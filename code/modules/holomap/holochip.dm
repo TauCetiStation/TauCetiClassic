@@ -7,7 +7,7 @@
 	var/color_filter = null		//Color for station's image, defined in flags.dm
 
 	var/mob/living/carbon/human/activator = null
-	var/obj/item/holder = null
+	var/obj/item/holder
 	var/list/holomap_images = list()
 	var/datum/action/toggle_holomap/holomap_toggle_action = null
 
