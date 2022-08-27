@@ -60,7 +60,7 @@
 	name = "Syndicate: Nuclear Commander"
 	id = /obj/item/weapon/card/id/syndicate/commander
 	back = /obj/item/weapon/storage/backpack/nuke/commander
-  r_pocket = /obj/item/weapon/storage/pouch/pistol_holster/revolver
+	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster/revolver
 
 /obj/item/weapon/storage/backpack/nuke/lone
 	startswith = list(
