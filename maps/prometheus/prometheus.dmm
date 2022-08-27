@@ -245,6 +245,34 @@
 	icon_state = "darkblue"
 	},
 /area/station/tcommsat/computer)
+"aaq" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/station/medical/hallway)
+"aar" = (
+/obj/structure/table/reinforced,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/flasher_button{
+	id = "permflash";
+	name = "Prison Wing flashes";
+	pixel_y = 4
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkred"
+	},
+/area/station/security/prison)
 "aau" = (
 /obj/structure/bookcase/manuals/xenoarchaeology,
 /turf/simulated/floor{
@@ -46384,25 +46412,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "lnO" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/wiki/security_space_law{
-	pixel_y = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 6;
-	icon_state = "darkred"
+	dir = 5;
+	icon_state = "whiteblue"
 	},
-/area/station/security/prison)
+/area/station/medical/hallway)
 "loc" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/newscaster{
@@ -59729,7 +59749,13 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "oEW" = (
-/turf/simulated/wall/r_wall,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
 /area/station/medical/hallway)
 "oFc" = (
 /obj/structure/flora/ausbushes/fullgrass{
@@ -117659,11 +117685,11 @@ dNx
 nvY
 uHY
 tAc
-nIr
+gbG
 nie
 lqa
 bpe
-oEW
+aMO
 gQx
 tUk
 bxS
@@ -117921,7 +117947,7 @@ nVd
 bRt
 usx
 wAI
-oEW
+aMO
 uif
 cYJ
 doj
@@ -123576,9 +123602,9 @@ nLX
 wfl
 wnD
 bqp
-iHL
-lgN
-xlH
+lnO
+oEW
+aaq
 qNe
 xXL
 smA
@@ -137468,7 +137494,7 @@ bJI
 oAN
 bOa
 oHY
-lnO
+aar
 eDF
 bMw
 ohw
