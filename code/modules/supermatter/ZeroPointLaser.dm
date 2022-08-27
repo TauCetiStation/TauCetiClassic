@@ -31,7 +31,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if (src.anchored || usr:stat != CONSCIOUS)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	set_dir(turn(src.dir, 90))
