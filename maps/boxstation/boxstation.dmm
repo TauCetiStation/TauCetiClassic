@@ -78552,6 +78552,7 @@
 /obj/structure/window/reinforced/polarized{
 	id = "privateoffice"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/security/vacantoffice)
 "nSy" = (
@@ -84002,6 +84003,7 @@
 /obj/structure/window/reinforced/polarized{
 	id = "privateoffice"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/security/vacantoffice)
 "vls" = (

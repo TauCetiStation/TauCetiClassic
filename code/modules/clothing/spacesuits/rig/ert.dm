@@ -38,6 +38,11 @@
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
 
+/obj/item/clothing/suit/space/rig/ert/atom_init()
+	. = ..()
+	var/obj/item/clothing/shoes/magboots/ert/SB = new(src)
+	boots = SB
+
 //Commander
 /obj/item/clothing/head/helmet/space/rig/ert/commander
 	name = "emergency response team commander helmet"

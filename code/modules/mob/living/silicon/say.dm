@@ -59,7 +59,7 @@
 
 
 	//Must be concious to speak
-	if (stat)
+	if (stat != CONSCIOUS)
 		return
 
 	var/verb = say_quote(message)
