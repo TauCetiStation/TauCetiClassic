@@ -443,6 +443,26 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
+"aaF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
+/obj/item/weapon/pen,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/port)
+"aaG" = (
+/obj/item/weapon/transparant/no_nt,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/port)
+"aaH" = (
+/obj/effect/decal/remains/human,
+/obj/item/clothing/head/ushanka/black,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/port)
+"aaI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/port)
 "aaU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -68354,6 +68374,9 @@
 	},
 /area/station/maintenance/engineering)
 "qPC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/port)
 "qPE" = (
@@ -127345,10 +127368,10 @@ iUC
 evr
 evi
 qPC
-qPC
-qPC
-qPC
-qPC
+aaF
+aaG
+aaH
+aaI
 nJE
 wMi
 hNY
