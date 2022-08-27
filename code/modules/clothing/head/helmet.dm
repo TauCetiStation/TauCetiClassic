@@ -25,6 +25,8 @@
 
 /obj/item/clothing/head/helmet/equipped(mob/user, slot)
 	if(holochip && slot == SLOT_HEAD)
+		if(user.hud_used) //NPCs don't need a map
+			user.hud_used.init_screen(/atom/movable/screen/holomap)
 		holochip.add_action(user)
 	..()
 

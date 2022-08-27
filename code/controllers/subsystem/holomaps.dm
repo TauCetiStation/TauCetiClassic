@@ -84,10 +84,10 @@ SUBSYSTEM_DEF(holomaps)
 	for(var/freq in SSholomaps.holochips)
 		for(var/obj/item/holochip/HC in SSholomaps.holochips[freq])
 			var/turf/marker_location = get_turf(HC)
-			if(!is_station_level(marker_location.z))
-				continue
 			if(!marker_location)
 				stack_trace("[HC.holder]/[HC.holder.loc]/[HC.frequency] without turf.")
+				continue
+			if(!is_station_level(marker_location.z))
 				continue
 			if(!HC.holder || !iscarbon(HC.holder.loc))
 				continue

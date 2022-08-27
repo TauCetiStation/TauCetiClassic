@@ -26,7 +26,6 @@
 		/atom/movable/screen/health,
 		/atom/movable/screen/health_doll,
 		/atom/movable/screen/nutrition,
-		/atom/movable/screen/holomap,
 	))
 
 
