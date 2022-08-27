@@ -273,6 +273,25 @@
 	icon_state = "darkred"
 	},
 /area/station/security/prison)
+"aas" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/security/lobby)
+"aat" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Tribunal";
+	location = "Security"
+	},
+/obj/machinery/bot/secbot/beepsky{
+	name = "Officer Beepsky"
+	},
+/turf/simulated/floor,
+/area/station/security/lobby)
 "aau" = (
 /obj/structure/bookcase/manuals/xenoarchaeology,
 /turf/simulated/floor{
@@ -291,6 +310,50 @@
 	icon_state = "warningcorner"
 	},
 /area/station/engineering/engine)
+"aaw" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Garden";
+	location = "Escape"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"aax" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Escape";
+	location = "Cargo"
+	},
+/turf/simulated/floor,
+/area/station/cargo/office)
+"aay" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Security";
+	location = "Garden"
+	},
+/turf/simulated/floor{
+	icon_state = "asteroid"
+	},
+/area/station/civilian/garden)
 "aaB" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
@@ -4084,17 +4147,13 @@
 	},
 /area/station/engineering/atmos)
 "aVk" = (
-/obj/machinery/bot/secbot/beepsky{
-	name = "Officer Beepsky"
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/structure/disposalpipe/segment,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=RnD";
+	location = "TauCeti2"
 	},
 /turf/simulated/floor,
-/area/station/security/lobby)
+/area/station/civilian/locker)
 "aVm" = (
 /obj/effect/decal/cleanable/generic,
 /obj/random/foods/food_trash,
@@ -19956,9 +20015,12 @@
 	},
 /area/station/maintenance/chapel)
 "eRv" = (
-/obj/structure/disposalpipe/segment,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Cargo";
+	location = "RnD"
+	},
 /turf/simulated/floor,
-/area/station/civilian/locker)
+/area/station/hallway/primary/port)
 "eRG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool/bar,
@@ -48380,6 +48442,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=TauCeti2";
+	location = "Arrival"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/arrival)
 "lNf" = (
@@ -69414,18 +69480,14 @@
 	},
 /area/station/maintenance/cargo)
 "rgN" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Arrival";
+	location = "TauCeti1"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/vacantoffice{
-	name = "Tribunal"
-	})
+/turf/simulated/floor,
+/area/station/civilian/locker)
 "rgU" = (
 /obj/item/target,
 /turf/simulated/floor/plating/airless{
@@ -74459,10 +74521,16 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/turf/simulated/floor{
-	icon_state = "asteroid"
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=TauCeti1";
+	location = "Tribunal"
 	},
-/area/station/civilian/garden)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/vacantoffice{
+	name = "Tribunal"
+	})
 "swq" = (
 /obj/structure/stool/bed/chair/comfy/brown,
 /obj/effect/landmark/start/assistant/test_subject,
@@ -114631,7 +114699,7 @@ diG
 wGk
 aYa
 cTY
-gyd
+aaw
 nCX
 dAY
 kpz
@@ -125642,7 +125710,7 @@ qTN
 fqr
 qbF
 gpb
-vJG
+eRv
 cNj
 rfj
 dNu
@@ -125682,7 +125750,7 @@ ivE
 rVM
 ohW
 xxd
-vqa
+aax
 xSl
 aBk
 ovz
@@ -130011,7 +130079,7 @@ fPS
 lgG
 dfC
 fOa
-eRv
+aVk
 mis
 njB
 jUH
@@ -130525,7 +130593,7 @@ gtW
 xSb
 viC
 noV
-nzV
+rgN
 qGi
 mBm
 jUH
@@ -134420,7 +134488,7 @@ wxa
 bQr
 wbQ
 uIo
-swn
+aay
 vhF
 jIb
 tMC
@@ -134638,7 +134706,7 @@ kUi
 reb
 wco
 reb
-rgN
+swn
 oDv
 veU
 psz
@@ -134654,10 +134722,10 @@ qeX
 osV
 ibB
 nFd
-aVk
+aas
 sbs
 wik
-wik
+aat
 wik
 wik
 wik
