@@ -55,7 +55,7 @@
 			return ..()
 
 	for(var/mob/living/silicon/ai/shuttlecaller as anything in ai_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+		if(shuttlecaller.stat == CONSCIOUS && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
 	if(sent_strike_team)
