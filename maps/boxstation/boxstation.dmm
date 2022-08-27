@@ -75222,6 +75222,13 @@
 	icon_state = "blue"
 	},
 /area/station/medical/reception)
+"jPv" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "jPO" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -76217,6 +76224,10 @@
 	icon_state = "damaged4"
 	},
 /area/station/maintenance/incinerator)
+"kZn" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "lab" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -80397,6 +80408,11 @@
 	icon_state = "barber"
 	},
 /area/station/civilian/locker)
+"qoQ" = (
+/obj/machinery/light/small,
+/obj/machinery/light/small,
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "qoS" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -81443,6 +81459,11 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
+"rxg" = (
+/mob/living/carbon/monkey,
+/obj/machinery/light/small,
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "rxx" = (
 /turf/environment/space,
 /area/shuttle/supply/station)
@@ -128495,15 +128516,15 @@ aaa
 cbD
 cjr
 ckD
-ckC
+kZn
 cjv
 cjr
 ckC
-ckC
+kZn
 cjv
 cjr
 ckD
-ckC
+kZn
 cjv
 axv
 cey
@@ -130029,7 +130050,7 @@ aaa
 aah
 czC
 aqu
-cxU
+jPv
 cxU
 aqx
 arf
@@ -131065,15 +131086,15 @@ aaa
 cbD
 nXs
 nXs
-nXs
+rxg
 cjv
 cjr
 ckC
-ckC
+kZn
 cjv
 cjr
 ckC
-ckC
+qoQ
 cjv
 cuL
 cey
