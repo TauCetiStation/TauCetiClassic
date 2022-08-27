@@ -109,6 +109,12 @@
 	// string, byond_type
 	var/item_type
 
+/datum/stat/changeling_purchase
+	// string, anything
+	var/power_type
+	// int, [0...]
+	var/spent_points
+
 /datum/stat/role
 	// Default stats
 	// string, pool in ./code/game/gamemodes/roles in var name
