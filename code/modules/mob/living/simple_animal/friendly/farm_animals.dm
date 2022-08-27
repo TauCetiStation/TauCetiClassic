@@ -259,10 +259,11 @@ var/global/chicken_count = 0
 			for(var/obj/structure/chicken_feeder/C as anything in chicken_feeder_list)
 				if(get_dist(src, C) < FEEDER_DISTANT)
 					if(C.food > 0)
+						stop_automated_movement = TRUE
 						step_to(src, C)
 						if(loc == C.loc)
 							C.feed(src)
-	stop_automated_movement = FALSE
+							stop_automated_movement = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
