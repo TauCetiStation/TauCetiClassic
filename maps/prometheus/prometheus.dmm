@@ -24735,6 +24735,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
+/obj/effect/landmark{
+	name = "xeno_spawn"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "fRA" = (
@@ -28747,6 +28750,13 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Engineering";
+	name = "Engineering Security Doors";
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/equip)
