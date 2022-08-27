@@ -84,7 +84,10 @@ SUBSYSTEM_DEF(holomaps)
 	for(var/freq in SSholomaps.holochips)
 		for(var/obj/item/holochip/HC in SSholomaps.holochips[freq])
 			var/turf/marker_location = get_turf(HC)
-			if(!marker_location || !is_station_level(marker_location.z))
+			if(!is_station_level(marker_location.z))
+				continue
+			if(!marker_location)
+				stack_trace("[HC.holder]/[HC.holder.loc]/[HC.frequency] without turf.")
 				continue
 			if(!HC.holder || !iscarbon(HC.holder.loc))
 				continue
@@ -97,6 +100,7 @@ SUBSYSTEM_DEF(holomaps)
 				holomap_cache[HC] = NI
 			var/image/I = holomap_cache[HC]
 			if(!I)
+				stack_trace("[HC.type]/[HC.holder.loc]/[HC.frequency] failed to generate image.")
 				continue
 			I.filters = null
 			if(C.stat == DEAD)
@@ -109,7 +113,10 @@ SUBSYSTEM_DEF(holomaps)
 			I.pixel_y = (marker_location.y - HOLOMAP_OFFSET) * PIXEL_MULTIPLIER
 	for(var/obj/machinery/computer/shuttle in holomap_landmarks)
 		var/turf/marker_location = get_turf(shuttle)
-		if(!marker_location || !is_station_level(marker_location.z))
+		if(!marker_location)
+			stack_trace("[shuttle.type] without turf.")
+			continue
+		if(!is_station_level(marker_location.z))
 			continue
 		if(istype(shuttle, /obj/machinery/computer/syndicate_station))
 			if(!(shuttle in holomap_cache))

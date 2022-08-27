@@ -14,8 +14,8 @@
 	var/image/holomap_base
 	var/image/self_marker
 
-	var/frequency		//Frequency for transmitting data
-	var/encryption 		//Encryption for double security
+	var/frequency = 1400		//Frequency for transmitting data
+	var/encryption = 500	//Encryption for double security
 
 /obj/item/holochip/atom_init(obj/item/I)
 	. = ..()
