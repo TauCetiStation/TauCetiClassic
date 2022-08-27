@@ -75,7 +75,7 @@
 //mnemonic to determine circulator/generator directions: the cirulators orbit clockwise around the generator
 //so a circulator to the NORTH of the generator connects first to the EAST, then to the WEST
 //and a circulator to the WEST of the generator connects first to the NORTH, then to the SOUTH
-//note that the circulator"s outlet dir is it"s always facing dir, and it"s inlet is always the reverse
+//note that the circulator's outlet dir is it's always facing dir, and it's inlet is always the reverse
 /obj/machinery/power/generator/proc/reconnect()
 	if(circ1 && circ2)
 		circ1.gen = null
