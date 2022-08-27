@@ -681,7 +681,7 @@
 
 /mob/living/pointed(atom/A)
 	if(incapacitated() || (status_flags & FAKEDEATH))
-		return
+		return FALSE
 
 	. = ..()
 	if(.)

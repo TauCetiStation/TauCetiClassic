@@ -228,11 +228,11 @@
 	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_MIDDLESHIFTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
 		return
 
-	MiddleShiftClick(A)
+	A.MiddleShiftClick(src)
 
-/mob/proc/MiddleShiftClick(atom/A)
-	if(client && client.eye == src)
-		pointed(A)
+/atom/proc/MiddleShiftClick(mob/user)
+	if(user.client && user.client.eye == src)
+		user.pointed(src)
 
 /*
 	Middle click
