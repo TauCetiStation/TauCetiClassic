@@ -231,7 +231,7 @@
 	A.MiddleShiftClick(src)
 
 /atom/proc/MiddleShiftClick(mob/user)
-	if(user.client && user.client.eye == src)
+	if(user.client && user.client.eye == user)
 		user.pointed(src)
 
 /*
