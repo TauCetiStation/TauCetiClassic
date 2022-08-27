@@ -354,6 +354,46 @@
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
+"aaz" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "yellow"
+	},
+/area/station/engineering/equip)
+"aaA" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Engineering";
+	name = "Engineering Security Doors";
+	opacity = 0
+	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'HIGH VOLTAGE'";
+	icon_state = "shock";
+	name = "HIGH VOLTAGE"
+	},
+/turf/simulated/floor/plating,
+/area/station/engineering/equip)
 "aaB" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
@@ -369,6 +409,33 @@
 	icon_state = "white"
 	},
 /area/station/hallway/secondary/exit)
+"aaC" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "yellow"
+	},
+/area/station/engineering/equip)
+"aaD" = (
+/obj/structure/closet/secure_closet/engineering_personal,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/engineering/equip)
 "aaE" = (
 /obj/structure/flora/ausbushes/grassybush,
 /mob/living/carbon/monkey/unathi{
@@ -15874,24 +15941,16 @@
 	},
 /area/station/rnd/misc_lab)
 "dSh" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 2;
+	icon_state = "0-2"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "yellow"
-	},
+/turf/simulated/floor/plating,
 /area/station/engineering/equip)
 "dSm" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -16199,23 +16258,12 @@
 	},
 /area/station/medical/reception)
 "dWv" = (
-/obj/structure/rack,
-/obj/item/device/flashlight{
-	pixel_y = 10
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'HIGH VOLTAGE'";
+	icon_state = "shock";
+	name = "HIGH VOLTAGE"
 	},
-/obj/item/device/flashlight{
-	pixel_y = 6
-	},
-/obj/item/device/flashlight{
-	pixel_y = 2
-	},
-/obj/item/device/flashlight{
-	pixel_y = -2
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
+/turf/simulated/wall/r_wall,
 /area/station/engineering/equip)
 "dWx" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -26362,20 +26410,27 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "gng" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/structure/rack,
+/obj/item/device/flashlight{
+	pixel_y = 10
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/item/device/flashlight{
+	pixel_y = 6
+	},
+/obj/item/device/flashlight{
+	pixel_y = 2
+	},
+/obj/item/device/flashlight{
+	pixel_y = -2
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "yellow"
+	icon_state = "vault"
 	},
 /area/station/engineering/equip)
 "gnj" = (
@@ -28106,6 +28161,11 @@
 	pixel_y = 4
 	},
 /obj/item/device/radio/off,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -37731,9 +37791,6 @@
 /area/station/civilian/chapel/office)
 "jch" = (
 /obj/structure/flora/tree/jungle/small,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
 /turf/simulated/floor{
 	icon_state = "grass1"
 	},
@@ -49877,6 +49934,9 @@
 "mfr" = (
 /obj/structure/table/woodentable,
 /obj/item/clothing/accessory/metal_cross,
+/obj/structure/sign/departments/holy{
+	pixel_x = -32
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel)
 "mfB" = (
@@ -50225,11 +50285,13 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/airlock_painter,
-/obj/machinery/ai_status_display{
-	pixel_y = 32
-	},
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -51477,9 +51539,30 @@
 	},
 /area/station/engineering/chiefs_office)
 "mAM" = (
-/obj/structure/sign/departments/holy,
-/turf/simulated/wall,
-/area/station/civilian/chapel)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "yellow"
+	},
+/area/station/engineering/equip)
 "mAO" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
@@ -52725,6 +52808,9 @@
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/machinery/ai_status_display{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -53363,29 +53449,29 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "mYT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
-/obj/structure/sign/warning/securearea,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/obj/structure/cable,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Engineering";
-	name = "Engineering Security Doors";
-	opacity = 0
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellow"
 	},
-/turf/simulated/floor/plating,
 /area/station/engineering/equip)
 "mZc" = (
 /turf/simulated/wall,
@@ -55246,6 +55332,9 @@
 	pixel_y = 8
 	},
 /obj/item/weapon/storage/box/lights/mixed,
+/obj/machinery/status_display{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -60616,15 +60705,6 @@
 	pixel_y = 5
 	},
 /obj/item/weapon/storage/briefcase/inflatable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "apc top";
-	pixel_y = 28
-	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -63360,15 +63440,17 @@
 	pixel_x = -6;
 	pixel_y = 2
 	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/item/device/gps/engineering{
 	pixel_x = -6;
 	pixel_y = -2
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -64305,20 +64387,22 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 5;
 	icon_state = "yellow"
 	},
 /area/station/engineering/equip)
@@ -77696,7 +77780,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "Cloning Lab";
 	name = "Cloning Lab";
-	req_access = list(6,9)
+	req_one_access = list(6,9)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -80032,6 +80116,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -132442,7 +132531,7 @@ irF
 sLz
 kUn
 bFk
-mYT
+aaA
 tKW
 irF
 irF
@@ -132951,9 +133040,9 @@ iMx
 tNu
 jIb
 aBv
-irF
-pBA
 dSh
+pBA
+mAM
 sWJ
 sWJ
 sWJ
@@ -133208,9 +133297,9 @@ kmh
 mcI
 aoW
 jch
-irF
+dSh
 gIM
-vkI
+mYT
 sIK
 kDs
 kDs
@@ -133465,9 +133554,9 @@ kmh
 kmh
 sIJ
 duo
-irF
+dWv
 oQl
-pOX
+vkI
 ulz
 jBG
 dkr
@@ -133721,9 +133810,9 @@ bCX
 kmh
 kmh
 jIb
-jFs
-irF
-dWv
+jIb
+dSh
+gng
 tQt
 rSR
 gYg
@@ -133979,14 +134068,14 @@ kmh
 kvG
 rGN
 jIb
-irF
+dSh
 mjM
-gng
-kDs
-kDs
-kDs
-kDs
-kDs
+pOX
+aaz
+aaz
+aaz
+aaz
+aaC
 cuo
 pDN
 qKt
@@ -134243,7 +134332,7 @@ tjC
 dHj
 jKB
 lRG
-tjC
+aaD
 lDh
 anr
 dvO
@@ -134927,7 +135016,7 @@ woH
 woH
 qdY
 qdY
-mAM
+qdY
 qdY
 qdY
 qdY
@@ -135005,7 +135094,7 @@ pLo
 kvG
 gVW
 dLg
-jIb
+jFs
 czb
 sxb
 bfm
