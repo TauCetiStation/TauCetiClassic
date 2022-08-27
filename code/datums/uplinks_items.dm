@@ -1143,7 +1143,7 @@
 /datum/uplink_item/revolution/krinkov_ammo
 	name = "A74U Magazine"
 	desc = "Lower-capacity A74 mag for use in Krinkov."
-	item = /obj/item/weapon/gun/projectile/automatic/a74/krinkov
+	item = /obj/item/ammo_box/magazine/a74mm/krinkov
 	cost = 2
 
 /datum/uplink_item/revolution/emp
