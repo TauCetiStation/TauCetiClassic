@@ -9301,7 +9301,7 @@
 "ciy" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Brig Medical Checkpoint";
-	req_access = list(5,63)
+	req_one_access = list(5,63)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
