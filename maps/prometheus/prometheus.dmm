@@ -771,6 +771,26 @@
 	temperature = 80
 	},
 /area/station/tcommsat/chamber)
+"abg" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/medical/hallway)
+"abh" = (
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "Medbay";
+	name = "Medbay";
+	req_access = list(5)
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/medical/hallway)
 "abj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -118651,7 +118671,7 @@ usx
 wAI
 aMO
 eQK
-jIK
+abg
 gEn
 aMO
 ngU
@@ -121478,7 +121498,7 @@ eSb
 eSb
 aMO
 wPX
-jIK
+abg
 qCI
 aMO
 ePT
@@ -124562,7 +124582,7 @@ wnD
 wnD
 aMO
 ecF
-jIK
+abh
 iZV
 qNe
 qNe
