@@ -34,11 +34,31 @@
 
 	has_resources = TRUE
 
-/turf/simulated/mineral/atom_init()
-	..()
+	var/global/list/rock_side_overlays
+
+/turf/simulated/mineral/atom_init(mapload)
+	. = ..()
 	icon_state = "rock"
 	geologic_data = new(src)
-	return INITIALIZE_HINT_LATELOAD
+	if(!rock_side_overlays)
+		rock_side_overlays = list(null, null, null, null, null, null, null, null, null) // 9 nulls to create dir -> appearance list
+		for(var/direction_to_check in cardinal)
+			var/mutable_appearance/MA = mutable_appearance('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", 6, FLOOR_PLANE)
+			switch(direction_to_check)
+				if(NORTH)
+					MA.pixel_y = world.icon_size
+				if(SOUTH)
+					MA.pixel_y = -world.icon_size
+				if(WEST)
+					MA.pixel_x = -world.icon_size
+				if(EAST)
+					MA.pixel_x = world.icon_size
+			rock_side_overlays[direction_to_check] = MA
+
+	if(mapload)
+		return INITIALIZE_HINT_LATELOAD
+	update_overlays_full()
+	return .
 
 /turf/simulated/mineral/atom_init_late()
 	MineralSpread()
@@ -60,9 +80,7 @@
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
 		if(isfloorturf(T) || isenvironmentturf(T) || istype(T, /turf/simulated/shuttle/floor))
-			var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
-			I.plane = FLOOR_PLANE
-			T.add_overlay(I)
+			add_overlay(rock_side_overlays[direction_to_check])
 
 	if(excav_overlay || archaeo_overlay || mineral)
 		update_hud()
@@ -624,22 +642,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/proc/update_overlays()
-
 	cut_overlays()
-
-	for(var/direction_to_check in cardinal)
-		if(istype(get_step(src, direction_to_check), /turf/simulated/mineral))
-			var/overlay_name = null
-			switch(direction_to_check)
-				if(1)
-					overlay_name = "rock_side_2"
-				if(2)
-					overlay_name = "rock_side_1"
-				if(4)
-					overlay_name = "rock_side_8"
-				if(8)
-					overlay_name = "rock_side_4"
-			add_overlay(image('icons/turf/asteroid.dmi', "[overlay_name]", layer=6))
 
 /turf/simulated/floor/plating/airless/asteroid/update_overlays()
 	..()
@@ -660,7 +663,7 @@
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init_late()
-	update_overlays()
+	update_overlays_full()
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
 	switch(severity)
