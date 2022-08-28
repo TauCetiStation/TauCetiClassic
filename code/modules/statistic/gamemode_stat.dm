@@ -112,8 +112,7 @@
 /datum/stat/role/changeling/set_custom_stat(datum/role/changeling/C)
 	var/datum/stat/changeling_info/changeling_info = new
 	changeling_info.absorbedcount = C.absorbedcount
-	for(var/datum/stat/changeling_purchase/changeling_stat in C)
-		changeling_info.changeling_purchase += changeling_stat
+	changeling_info.changeling_purchase = C.purchasedpowers
 
 /datum/stat/changeling_info
 	// int, [0...]
