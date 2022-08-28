@@ -286,19 +286,14 @@
 	log_game("The blood cult has ascended with [length(members)] players.")
 
 /datum/religion/cult/proc/rise(cultist)
-	if(ishuman(cultist))
-		var/mob/living/carbon/human/H = cultist
-		H.r_eyes = 255
-		H.g_eyes = 0
-		H.b_eyes = 0
-		ADD_TRAIT(H, TRAIT_CULT_EYES, RELIGION_TRAIT)
-		H.update_body()
+	if(isliving(cultist))
+		var/mob/living/L = cultist
+		L.AddElement(/datum/element/cult_eyes)
 
 /datum/religion/cult/proc/ascend(cultist)
-	if(ishuman(cultist))
-		var/mob/living/carbon/human/H = cultist
-		ADD_TRAIT(H, TRAIT_CULT_HALO, RELIGION_TRAIT)
-		H.update_external_appearance()
+	if(isliving(cultist))
+		var/mob/living/L = cultist
+		L.AddElement(/datum/element/cult_halo)
 
 /datum/religion/cult/add_deity(mob/M)
 	..()
@@ -311,12 +306,8 @@
 
 	if(!ishuman(M))
 		return
-	var/mob/living/carbon/human/H = M
-	if(HAS_TRAIT(H, TRAIT_CULT_EYES))
-		REMOVE_TRAIT(H, TRAIT_CULT_EYES, RELIGION_TRAIT)
-		H.r_eyes = rand(0,125)
-		H.g_eyes = rand(0,255)
-		H.b_eyes = rand(0,255)
-		H.update_body()
-	if(HAS_TRAIT(H, TRAIT_CULT_HALO))
-		H.remove_overlay(EXTERNAL_APPEARANCE)
+	var/mob/living/L = M
+	if(HAS_TRAIT(L, TRAIT_CULT_EYES))
+		L.RemoveElement(/datum/element/cult_eyes)
+	if(HAS_TRAIT(L, TRAIT_CULT_HALO))
+		L.RemoveElement(/datum/element/cult_halo)

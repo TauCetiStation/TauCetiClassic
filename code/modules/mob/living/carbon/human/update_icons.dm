@@ -245,7 +245,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump)
 			standing += mutable_appearance('icons/mob/human_socks.dmi', "socks[socks]_s", -BODY_LAYER)
 
-	update_external_appearance()
 	update_tail_showing()
 	for(var/image/I in standing)
 		I = update_height(I)
@@ -774,15 +773,6 @@ Please contact me on #coderbus IRC. ~Carn x
 			drop_l_hand()
 
 	apply_overlay(L_HAND_LAYER)
-
-//For cult halos and such
-/mob/living/carbon/human/proc/update_external_appearance()
-	if(HAS_TRAIT(src, TRAIT_CULT_HALO))
-		new /obj/effect/temp_visual/cult/sparks(get_turf(src), dir)
-		var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
-		var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', istate)
-		overlays_standing[EXTERNAL_APPEARANCE] = new_halo_overlay
-		apply_overlay(EXTERNAL_APPEARANCE)
 
 /mob/living/carbon/human/proc/update_tail_showing()
 	remove_overlay(TAIL_LAYER)
