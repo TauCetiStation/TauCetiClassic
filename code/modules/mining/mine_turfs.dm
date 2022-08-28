@@ -44,15 +44,6 @@
 		rock_side_overlays = list(null, null, null, null, null, null, null, null, null) // 9 nulls to create dir -> appearance list
 		for(var/direction_to_check in cardinal)
 			var/mutable_appearance/MA = mutable_appearance('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", 6, FLOOR_PLANE)
-			switch(direction_to_check)
-				if(NORTH)
-					MA.pixel_y = world.icon_size
-				if(SOUTH)
-					MA.pixel_y = -world.icon_size
-				if(WEST)
-					MA.pixel_x = -world.icon_size
-				if(EAST)
-					MA.pixel_x = world.icon_size
 			rock_side_overlays[direction_to_check] = MA
 
 	if(mapload)
@@ -80,7 +71,7 @@
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
 		if(isfloorturf(T) || isenvironmentturf(T) || istype(T, /turf/simulated/shuttle/floor))
-			add_overlay(rock_side_overlays[direction_to_check])
+			T.add_overlay(rock_side_overlays[direction_to_check])
 
 	if(excav_overlay || archaeo_overlay || mineral)
 		update_hud()
@@ -644,6 +635,11 @@
 /turf/proc/update_overlays()
 	cut_overlays()
 
+	for(var/direction_to_check in cardinal)
+		var/turf/simulated/mineral/T = get_step(src, direction_to_check)
+		if(istype(T))
+			add_overlay(T.rock_side_overlays[reverse_dir[direction_to_check]])
+
 /turf/simulated/floor/plating/airless/asteroid/update_overlays()
 	..()
 	var/turf/T
@@ -663,7 +659,7 @@
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init_late()
-	update_overlays_full()
+	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
 	switch(severity)
