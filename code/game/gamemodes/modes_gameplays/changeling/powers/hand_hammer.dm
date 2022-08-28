@@ -47,9 +47,6 @@
 		playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			var/speed_modifier = H.move_speed
-			if(speed_modifier <= 0)
-				speed_modifier = 1	//fast target is harder to dent
-			var/net_damage = (H.run_armor_check(def_zone) / 10) * speed_modifier
+			var/net_damage = H.run_armor_check(def_zone) / 3
 			H.apply_damage(net_damage, BRUTE, def_zone, blocked = 0)	//damage through armor
 		return..()	//+15 brute damage to target
