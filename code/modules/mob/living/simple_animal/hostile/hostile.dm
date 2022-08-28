@@ -1,5 +1,6 @@
 /mob/living/simple_animal/hostile
-	faction = "hostile"
+	faction = list("hostile")
+	stop_automated_movement_when_pulled = 0
 
 	a_intent = INTENT_HARM
 
