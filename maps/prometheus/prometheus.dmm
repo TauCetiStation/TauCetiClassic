@@ -16122,14 +16122,14 @@
 	},
 /area/station/medical/genetics_cloning)
 "dPV" = (
-/mob/living/simple_animal/chicken{
-	name = "Commander Clucky"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
+	},
+/mob/living/simple_animal/chicken{
+	name = "Commander Clucky"
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
@@ -65141,6 +65141,7 @@
 	c_tag = "Hydroponics Pasture";
 	dir = 1
 	},
+/obj/structure/chicken_feeder,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "pSM" = (
