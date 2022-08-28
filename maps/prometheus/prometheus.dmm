@@ -12499,7 +12499,7 @@
 /area/station/maintenance/incinerator)
 "dbD" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
+	req_access = list(28)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
