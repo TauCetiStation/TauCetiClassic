@@ -46,16 +46,12 @@
 
 /turf/simulated/mineral/update_overlays()
 	cut_overlays()
-	if(!mineral)
+	if(!mineral || ore_amount < 8)
 		name = "Rock"
 		icon_state = "rock"
 	else
-		if(ore_amount >= 8)
-			name = "[mineral.display_name] rich deposit"
-			add_overlay("rock_[mineral.name]")
-		else
-			name = "Rock"
-			icon_state = "rock"
+		name = "[mineral.display_name] rich deposit"
+		add_overlay("rock_[mineral.name]")
 	if(excav_overlay)
 		add_overlay(excav_overlay)
 	if(archaeo_overlay)
@@ -68,7 +64,7 @@
 			I.plane = FLOOR_PLANE
 			T.add_overlay(I)
 
-	if((excav_overlay || archaeo_overlay || mineral) && !istype(src, /turf/simulated/floor/plating/airless/asteroid))
+	if(excav_overlay || archaeo_overlay || mineral)
 		update_hud()
 
 /turf/simulated/mineral/proc/update_hud()
@@ -651,10 +647,7 @@
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
 		if(T && isspaceturf(T))
-			var/lattice = 0
-			for(var/obj/O in T)
-				if(istype(O, /obj/structure/lattice))
-					lattice = 1
+			var/lattice = locate(/obj/structure/lattice) in T
 			if(!lattice)
 				var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_[direction_to_check]")
 				add_overlay(I)
