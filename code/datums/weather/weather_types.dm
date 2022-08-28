@@ -107,19 +107,21 @@
 	..()
 	if(!spawn_tornadoes)
 		return
+	var/list/turfs = list()
 	for(var/area/A as anything in impacted_areas)
 		for(var/obj/item/weapon/scrap_lump/C in A)
 			qdel(C)
-		var/list/turfs = get_area_turfs(A, FALSE)
-		for(var/i = 1 to 4)
-			var/turf/wheretospawn = pick(turfs)
-			if(!wheretospawn.density)
-				var/obj/singularity/scrap_ball/new_tornado = new /obj/singularity/scrap_ball(wheretospawn)
-				tornados += new_tornado
+		turfs += get_area_turfs(A, FALSE)
+	for(var/i = 1 to 4)
+		var/turf/wheretospawn = pick(turfs)
+		if(!wheretospawn.density)
+			var/obj/singularity/scrap_ball/new_tornado = new (wheretospawn)
+			tornados += new_tornado
 
 /datum/weather/scrap_storm/end()
 	for(var/obj/singularity/scrap_ball/del_tornado in tornados)
 		qdel(del_tornado)
+	tornados.Cut()
 	..()
 
 /datum/weather/scrap_storm/impact(mob/living/L)
@@ -249,7 +251,7 @@
 
 
 /datum/weather/acid_rain/impact(mob/living/L)
-	if(!istype(L.loc, /turf))
+	if(!isturf(L.loc))
 		return
 	L.water_act(5)
 	if(!prob(L.getarmor(null, "bio")))

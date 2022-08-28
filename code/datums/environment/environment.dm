@@ -56,4 +56,3 @@
 		var/datum/map_generator/gen = new gen_type
 		gen.defineRegion(locate(1, 1, z_value), locate(world.maxx, world.maxy, z_value))
 		gen.generate()
-	

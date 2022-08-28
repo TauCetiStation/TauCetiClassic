@@ -35,6 +35,3 @@
 // other environment areas
 /area/space/snow
 	name = "Snow field"
-
-/area/space/junk
-	name = "Junk yard"
