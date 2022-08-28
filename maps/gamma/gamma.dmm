@@ -10033,6 +10033,14 @@
 	icon_state = "vault"
 	},
 /area/station/security/armoury)
+"cfq" = (
+/obj/machinery/camera{
+	c_tag = "Containment Cell 3";
+	dir = 1;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "cfu" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/research_and_development,
@@ -26918,6 +26926,14 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/office)
+"hva" = (
+/obj/machinery/camera{
+	c_tag = "Containment Cell 2";
+	dir = 1;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "hvb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -37160,6 +37176,14 @@
 	icon_state = "whitehall"
 	},
 /area/station/medical/surgery2)
+"kKK" = (
+/obj/machinery/camera{
+	c_tag = "Containment Cell 1";
+	dir = 1;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "kKU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -57797,6 +57821,14 @@
 	icon_state = "red"
 	},
 /area/station/engineering/atmos)
+"rmY" = (
+/obj/machinery/camera{
+	c_tag = "Containment Cell 5";
+	dir = 1;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "rnh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
@@ -76332,6 +76364,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
+"xdv" = (
+/obj/machinery/camera{
+	c_tag = "Containment Cell 4";
+	dir = 1;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "xdB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/cleanable/flour,
@@ -121336,15 +121376,15 @@ plf
 vNi
 iwE
 mTv
-pkz
+cfq
 uhI
 iwE
 mTv
-pkz
+hva
 uhI
 iwE
 pkz
-pkz
+kKK
 vNi
 plf
 plf
@@ -124420,11 +124460,11 @@ plf
 vNi
 rrv
 pkz
-pkz
+xdv
 vNi
 rrv
 pkz
-pkz
+rmY
 vNi
 hbu
 mNG
