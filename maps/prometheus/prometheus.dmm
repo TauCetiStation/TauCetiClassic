@@ -791,12 +791,45 @@
 	icon_state = "dark"
 	},
 /area/station/medical/hallway)
+"abi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad2"
+	},
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "abj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
+"abk" = (
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor2";
+	name = "Supply Dock Loading Door"
+	},
+/obj/structure/plasticflaps/mining,
+/obj/machinery/door/firedoor,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "QMLoad2"
+	},
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
+"abl" = (
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor1";
+	name = "Supply Dock Loading Door"
+	},
+/obj/structure/plasticflaps/mining,
+/obj/machinery/door/firedoor,
+/obj/machinery/conveyor{
+	id = "QMLoad"
+	},
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "abt" = (
 /obj/structure/closet/crate/scicrate,
 /turf/simulated/floor{
@@ -9040,17 +9073,13 @@
 	},
 /area/station/hallway/primary/aft)
 "cfr" = (
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor2";
-	name = "Supply Dock Loading Door"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/structure/plasticflaps/mining,
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "QMLoad2"
+/obj/structure/closet/emcloset,
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "cfy" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
@@ -9807,16 +9836,10 @@
 	},
 /area/station/maintenance/cargo)
 "cps" = (
-/obj/structure/disposaloutlet{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
+/turf/simulated/wall,
 /area/station/cargo/storage)
 "cpC" = (
 /obj/effect/decal/cleanable/dirt,
@@ -11552,6 +11575,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/mob/living/simple_animal/parrot/Poly,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkyellow"
@@ -19775,14 +19799,12 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/kitchen)
 "eJk" = (
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor2";
-	name = "Supply Dock Loading Door"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/structure/plasticflaps/mining,
-/obj/machinery/door/firedoor,
 /obj/machinery/conveyor{
-	id = "QMLoad"
+	dir = 1;
+	id = "QMLoad2"
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
@@ -32709,6 +32731,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "hHL" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warndark"
@@ -44774,17 +44799,14 @@
 	},
 /area/station/maintenance/medbay)
 "kPD" = (
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor1";
-	name = "Supply Dock Loading Door"
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/structure/plasticflaps/mining,
-/obj/machinery/door/firedoor,
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "QMLoad2"
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warndark"
 	},
-/turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "kPZ" = (
 /obj/structure/dresser,
@@ -50647,6 +50669,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/clothing/glasses/sunglasses/hud/med,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -59802,11 +59825,16 @@
 	},
 /area/station/maintenance/science)
 "owt" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/conveyor{
-	id = "QMLoad"
+/obj/structure/disposaloutlet{
+	dir = 8
 	},
-/turf/simulated/floor/plating,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
 /area/station/cargo/storage)
 "owu" = (
 /obj/machinery/space_heater,
@@ -66127,8 +66155,11 @@
 	name = "Tribunal"
 	})
 "qeP" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /obj/machinery/conveyor_switch/oneway{
-	id = "QMLoad"
+	id = "QMLoad2"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -71816,13 +71847,6 @@
 	},
 /area/station/gateway)
 "rEo" = (
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 8;
 	frequency = 1379;
@@ -75108,17 +75132,23 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "swf" = (
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor1";
-	name = "Supply Dock Loading Door"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1379;
+	id_tag = "recycler_pump";
+	name = "Recycler Large Air Vent"
 	},
-/obj/structure/plasticflaps/mining,
-/obj/machinery/conveyor{
-	id = "QMLoad"
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = 32
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/cargo/storage)
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebotc"
+	},
+/area/station/cargo/recycleroffice)
 "swi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb2,
@@ -75414,7 +75444,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/wall,
+/obj/structure/closet/emcloset,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
 "syI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -90279,6 +90310,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/mob/living/simple_animal/cat/dusty,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -91535,17 +91567,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "wyX" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 8;
-	frequency = 1379;
-	id_tag = "recycler_pump";
-	name = "Recycler Large Air Vent"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/structure/closet/emcloset,
-/turf/simulated/floor/plating/airless{
-	icon_state = "platebotc"
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/area/station/cargo/recycleroffice)
+/area/station/cargo/storage)
 "wze" = (
 /obj/machinery/recharger{
 	pixel_y = 4
@@ -94327,8 +94355,11 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint)
 "xjw" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /obj/machinery/conveyor_switch/oneway{
-	id = "QMLoad2"
+	id = "QMLoad"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -97740,11 +97771,13 @@
 	},
 /area/station/hallway/secondary/exit)
 "yfA" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "warndark"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
+/obj/machinery/conveyor{
+	id = "QMLoad"
+	},
+/turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "yfP" = (
 /obj/effect/spawner/lootdrop/maintenance,
@@ -124373,7 +124406,7 @@ lhI
 bjW
 ozg
 rEo
-wyX
+swf
 ozg
 cJy
 iRy
@@ -125143,7 +125176,7 @@ bbQ
 ozg
 dps
 lfQ
-jMH
+cfr
 lYa
 lYa
 cJy
@@ -125657,11 +125690,11 @@ pgi
 sPI
 caI
 hPS
-xNC
-owt
 eJk
-xNC
-cfr
+abi
+abk
+rFn
+abk
 iWu
 iWu
 iWu
@@ -126171,7 +126204,7 @@ rxJ
 prd
 mTs
 vAS
-jMH
+wyX
 hXM
 lYa
 lYa
@@ -126685,11 +126718,11 @@ uEl
 hVo
 ihC
 hPS
-rFn
-rFn
-kPD
-rFn
-swf
+yfA
+xNC
+abl
+xNC
+abl
 iWu
 iWu
 iWu
@@ -126942,7 +126975,7 @@ iBF
 oVO
 vDW
 mfF
-yfA
+kPD
 dvS
 vil
 vil
@@ -127199,7 +127232,7 @@ tOL
 uYa
 aqD
 qFI
-jMH
+wyX
 jMH
 lYa
 cJy
@@ -127456,7 +127489,7 @@ ajj
 joS
 lYa
 lYa
-kcR
+owt
 kcR
 lYa
 cJy
