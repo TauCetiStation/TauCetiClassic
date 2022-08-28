@@ -176,7 +176,7 @@
 	set name = "Point To"
 	set category = "Object"
 
-	if(!host || host.stat)
+	if(!host || host.stat != CONSCIOUS)
 		return
 	if(!(flags_allowed & ESSENCE_POINT))
 		to_chat(src, "<span class='userdanger'>Your host forbade you pointing!</span>")

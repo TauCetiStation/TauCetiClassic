@@ -423,7 +423,7 @@
 				new/obj/item/stack/rods(src, rand(5,25))
 
 			if(2)
-				new/obj/item/stack/tile(src, rand(1,5))
+				new/obj/item/stack/tile/plasteel(src, rand(1,5))
 
 			if(3)
 				new/obj/item/stack/sheet/metal(src, rand(5,25))

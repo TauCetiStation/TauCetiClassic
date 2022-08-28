@@ -26,7 +26,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/maxf = 1499
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	var/grid = FALSE // protect from EMP
-	flags = CONDUCT
+	flags = CONDUCT | HEAR_TALK
 	slot_flags = SLOT_FLAGS_BELT
 	throw_speed = 2
 	throw_range = 9
@@ -118,7 +118,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/Topic(href, href_list)
 	//..()
-	if ((usr.stat && !IsAdminGhost(usr)) || !on)
+	if ((usr.stat != CONSCIOUS && !IsAdminGhost(usr)) || !on)
 		return
 
 	if (!(issilicon(usr) || IsAdminGhost(usr) || Adjacent(usr)))
@@ -413,7 +413,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
 						  src, message, displayname, jobname, real_name, M.voice_name,
 		                  filter_type, signal.data["compression"], list(position.z), connection.frequency,verb,speaking)
-		
+
 		return TRUE
 
 

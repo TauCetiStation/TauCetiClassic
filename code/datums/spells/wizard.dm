@@ -171,17 +171,18 @@
 		new summon_path(get_step(user, SOUTH), user)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
-	name = "Summon Carp"
-	desc = "This spell conjures a simple carp."
+	name = "Призыв Карпа"
+	desc = "Это заклинание призывает очень злого карпа."
 
 	school = "conjuration"
-	charge_max = 1200
+	charge_max = 300
+	action_icon_state = "purple_carp"
 	clothes_req = 1
 	invocation = "NOUK FHUNMM SACP RISSKA"
 	invocation_type = "shout"
 	range = 1
 
-	summon_type = list(/mob/living/simple_animal/hostile/carp)
+	summon_type = list(/mob/living/simple_animal/hostile/carp/wizard)
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
@@ -261,7 +262,7 @@
 
 /obj/effect/proc_holder/spell/dumbfire/fireball
 	name = "Огненный Шар"
-	desc = "Выстреливает огненным шаром в цель и не требует одежды для использования."
+	desc = "Выстреливает огненным шаром в цель."
 
 	school = "evocation"
 	charge_max = 100

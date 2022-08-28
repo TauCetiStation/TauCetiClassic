@@ -48,7 +48,7 @@
 
 /obj/item/weapon/game_kit/MouseDrop(mob/user)
 	. = ..()
-	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || Adjacent(usr)))
+	if (user == usr && !usr.restrained() && usr.stat == CONSCIOUS && (usr.contents.Find(src) || Adjacent(usr)))
 		interact(user)
 
 /obj/item/weapon/game_kit/proc/update()
