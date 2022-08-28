@@ -109,6 +109,18 @@
 	// string, byond_type
 	var/item_type
 
+/datum/stat/role/changeling/set_custom_stat(datum/role/changeling/C)
+	var/datum/stat/changeling_info/changeling_info = new
+	changeling_info.absorbedcount = C.absorbedcount
+	for(var/datum/stat/changeling_purchase/changeling_stat in C)
+		changeling_info.changeling_purchase += changeling_stat
+
+/datum/stat/changeling_info
+	// int, [0...]
+	var/absorbedcount
+	// array of objects
+	var/list/datum/stat/changeling_purchase/changeling_purchase
+
 /datum/stat/changeling_purchase
 	// string, anything
 	var/power_type
@@ -142,6 +154,8 @@
 	// Other roles stats
 	// object
 	var/datum/stat/uplink_info/uplink_info = null
+	// object
+	var/datum/stat/changeling_purchase/changeling_info = null
 
 /datum/stat/role/proc/set_custom_stat(datum/role/R)
 	var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)

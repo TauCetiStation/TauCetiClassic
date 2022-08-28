@@ -332,11 +332,9 @@ var/global/list/sting_paths
 	loging(user, thepower, thepower.genomecost)
 
 /datum/role/changeling/proc/loging(mob/living/carbon/user, power_name, geneticpoints)
-	if(user.mind)
-		for(var/role in user.mind.antag_roles)
-			var/datum/stat/changeling_purchase/stat = new
-			stat.spent_points = geneticpoints
-			stat.power_type = power_name
+	var/datum/stat/changeling_purchase/stat = new
+	stat.spent_points = geneticpoints
+	stat.power_type = power_name
 
 //Call this proc after changeling mind-transfers (ex. lesserform)
 /mob/proc/make_changeling()
