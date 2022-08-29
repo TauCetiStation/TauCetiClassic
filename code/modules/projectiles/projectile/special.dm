@@ -78,7 +78,7 @@
 			playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER, 40)
 
 			for(var/mob/M in range(10, src))
-				if(M.stat == CONSCIOUS && !isAI(M))\
+				if(!M.stat && !isAI(M))\
 					shake_camera(M, 3, 1)
 			qdel(src)
 			return 1
@@ -302,7 +302,6 @@
 	icon_state = "plasma_bolt_oc"
 	light_color = LIGHT_COLOR_PLASMA_OC
 	damage = 25
-	impact_force = 1
 
 	muzzle_type = /obj/effect/projectile/plasma/muzzle/overcharge
 

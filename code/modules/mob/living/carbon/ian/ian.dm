@@ -287,14 +287,12 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 /mob/living/carbon/ian/IsAdvancedToolUser()
 	return FALSE
 
-/mob/living/carbon/ian/movement_delay()
-	var/tally = speed
-
-	if(lying)
+/mob/living/carbon/ian/movement_delay(tally = 0)
+	if(crawling)
 		tally += 5
 	else if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
-	else if(m_intent == MOVE_INTENT_RUN && a_intent == INTENT_HARM && stamina >= 10)
+	else if(m_intent == "run" && a_intent == INTENT_HARM && stamina >= 10)
 		stamina = max(0, stamina - 10)
 		tally -= 1
 
@@ -305,8 +303,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	if(pull_debuff)
 		tally += pull_debuff
 
-	if(bodytemperature < BODYTEMP_NORMAL - 30)
-		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
+	if (bodytemperature < 283.222)
+		tally += (283.222 - bodytemperature) / 10 * 1.75
 	return tally
 
 /mob/living/carbon/ian/SelfMove(turf/n, direct)
@@ -431,7 +429,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	if(back && istype(back,/obj/item/clothing/suit/armor))
 		chance += luck
 
-	if(chance && prob(chance) && stat == CONSCIOUS)
+	if(chance && prob(chance) && !stat)
 		switch(msg)
 			if("dodges")
 				msg = "<span class='notice'>[src] dodges [AM]'s attack!</span>"
@@ -461,7 +459,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	..()
 
 /mob/living/carbon/ian/say(message)
-	if(stat != CONSCIOUS)
+	if(stat)
 		return
 
 	message = sanitize(message)

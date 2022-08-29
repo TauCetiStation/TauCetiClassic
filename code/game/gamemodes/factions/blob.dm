@@ -202,11 +202,13 @@ Message ends."}
 
 /datum/faction/blob_conglomerate/GetScoreboard()
 	var/dat = ..()
+
 	var/list/result = check_quarantaine()
 	if (detect_overminds() && (result["numOffStation"] + result["numSpace"]))
 		dat += "<span class='danger'>The AI has failed to enforce the quarantine.</span>"
 	else
 		dat += "<span class='good'>The AI has managed to enforce the quarantine.</span><BR>"
+
 	return dat
 
 /datum/faction/blob_conglomerate/get_scorestat()

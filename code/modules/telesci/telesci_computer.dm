@@ -171,10 +171,6 @@
 		var/atom/A = X
 		if(A.density)
 			return FALSE
-
-	if(SEND_SIGNAL(exit, COMSIG_ATOM_INTERCEPT_TELEPORT))
-		return FALSE
-	
 	active_wormhole = new (telepad.loc, exit)
 	active_wormhole.linked_console = src
 	return active_wormhole

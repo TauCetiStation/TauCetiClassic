@@ -91,11 +91,11 @@
 			clients++
 			var/area/mob_area = get_area(M)
 			if(ishuman(M))
-				if(M.stat == CONSCIOUS)
+				if(!M.stat)
 					surviving_humans++
 					if(mob_area.type in escape_locations)
 						escaped_humans++
-			if(M.stat == CONSCIOUS)
+			if(!M.stat)
 				surviving_total++
 				if(mob_area.type in escape_locations)
 					escaped_total++
@@ -161,7 +161,7 @@
 			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2))	//Connected, but inactive (alt+tabbed or something)
 				msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
 				continue //AFK client
-			if(L.stat != CONSCIOUS)
+			if(L.stat)
 				if(L.suiciding)	//Suicider
 					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='red'><b>Suicide</b></font>)\n"
 					continue //Disconnected client

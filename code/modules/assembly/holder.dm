@@ -3,7 +3,7 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "holder"
 	item_state = "assembly"
-	flags = CONDUCT | HEAR_TALK
+	flags = CONDUCT
 	throwforce = 5
 	w_class = SIZE_TINY
 	throw_speed = 3

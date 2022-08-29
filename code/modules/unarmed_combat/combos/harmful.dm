@@ -437,7 +437,7 @@
 					break grab_stages_loop
 
 				victim_G.adjust_position(adjust_time=0, force_loc = TRUE, force_dir = attacker.dir)
-				victim.Stun(2)
+				victim.Stun(max(0, 2 - victim.stunned))
 
 				if(!do_after(attacker, cur_spin_time, target = victim, progress = FALSE))
 					break grab_stages_loop

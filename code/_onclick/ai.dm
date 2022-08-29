@@ -13,7 +13,7 @@
 	if(client.click_intercept) // handled in normal click.
 		return
 
-	if(control_disabled || stat != CONSCIOUS) return
+	if(control_disabled || stat) return
 	SetNextMove(CLICK_CD_AI)
 
 	if(ismob(A))
@@ -31,7 +31,7 @@
 		client.click_intercept.InterceptClickOn(src, params, A)
 		return
 
-	if(control_disabled || stat != CONSCIOUS)
+	if(control_disabled || stat)
 		return
 
 	A.add_hiddenprint(src)

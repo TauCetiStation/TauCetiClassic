@@ -71,7 +71,7 @@
 
 	var/list/Possible = list()
 	for(var/mob/living/carbon/human/P in oview(src))
-		if(stat == CONSCIOUS && P.client && P.mind && (!isrev(P) || !isrevhead(P)))
+		if(!stat && P.client && P.mind && (!isrev(P) || !isrevhead(P)))
 			Possible += P
 	if(!Possible.len)
 		to_chat(src, "<span class='warning'>There doesn't appear to be anyone available for you to convert here.</span>")

@@ -1,121 +1,102 @@
 /mob/living/carbon/human/movement_delay()
-	var/tally = 0
-	var/nullify_debuffs = FALSE
-
+	if(iszombie(src))
+		return zombie_movement_delay()
 	if(ischangeling(src))
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if(C.strained_muscles)
-			tally -= 2.5
-			nullify_debuffs = TRUE
+			if(!has_gravity(src))
+				return -3   // speed boost in space.
+			else
+				return -2.5 // changeling ability also nulify any speed modifications and gives boost.
 
 	if(!has_gravity(src))
-		return tally - 1 // It's hard to be slowed down in space by... anything
+		return -1 // It's hard to be slowed down in space by... anything
 
-	if(iszombie(src))
-		nullify_debuffs = TRUE
+	var/tally = species.speed_mod
 
-	tally += species.speed_mod
+	if(is_type_organ(O_HEART, /obj/item/organ/internal/heart/ipc)) // IPC's heart is a servomotor, damaging it influences speed.
+		var/obj/item/organ/internal/IO = organs_by_name[O_HEART]
+		if(!IO) // If it's servomotor somehow is missing, it's absence should be treated as 100 damage to it.
+			tally += 20
+		else
+			tally += IO.damage/5
 
 	if(RUN in mutations)
 		tally -= 0.5
 
+	if(HAS_TRAIT(src, TRAIT_FAT))
+		tally += 1.5
+
 	if(lying)
 		tally += 7
 
-	if(!nullify_debuffs)
-		if(is_type_organ(O_HEART, /obj/item/organ/internal/heart/ipc)) // IPC's heart is a servomotor, damaging it influences speed.
-			var/obj/item/organ/internal/IO = organs_by_name[O_HEART]
-			tally += IO ? IO.damage / 5 : 20 // If it's servomotor somehow is missing, it's absence should be treated as 100 damage to it.
+	if(embedded_flag)
+		handle_embedded_objects() // Moving with objects stuck in you can cause bad times.
 
-		if(HAS_TRAIT(src, TRAIT_FAT))
-			tally += 1.5
+	var/health_deficiency = (100 - health + halloss)
+	if(health_deficiency >= 40)
+		tally += (health_deficiency / 25)
 
-		if(embedded_flag)
-			handle_embedded_objects() // Moving with objects stuck in you can cause bad times.
+	var/hungry = (500 - get_nutrition()) / 5
+	if(hungry >= 70) // Slow down if nutrition <= 150
+		tally += hungry / 50
 
-		var/health_deficiency = (100 - health + halloss)
-		if(health_deficiency >= 40)
-			tally += health_deficiency / 25
-
-		var/hungry = 500 - get_nutrition()
-		if(hungry >= 350) // Slow down if nutrition <= 150
-			tally += hungry / 250
-
-		if(shock_stage >= 10)
-			tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
-
-		if(bodytemperature < species.cold_level_1)
-			tally += 1.75 * (species.cold_level_1 - bodytemperature) / 10 
-
-	var/list/moving_bodyparts
 	if(buckled) // so, if we buckled we have large debuff
 		tally += 5.5
-		if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
-			moving_bodyparts = list(BP_L_ARM , BP_R_ARM)
-	
-	if(!moving_bodyparts)
-		if(lying)
-			moving_bodyparts = list(BP_L_LEG , BP_R_LEG, BP_L_ARM , BP_R_ARM)
-		else
-			moving_bodyparts = list(BP_L_LEG , BP_R_LEG)
+
+	var/hands_or_legs
+	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
+		hands_or_legs = list(BP_L_ARM , BP_R_ARM)
+	else
+		hands_or_legs = list(BP_L_LEG , BP_R_LEG)
 
 	// Movement delay coming from heavy items being carried.
 	var/weight_tally = 0
+	// Currently there is a meme that `slowdown` var is not really weight, it's just a speed modifier
 	// So you can have items causing you to go faster, and thus we need a seperate counter of weight negation
 	// to not negate weight that is not there. ~Luduk
 	var/weight_negation = 0
 
-	var/bp_tally = 0
-	var/bp_weight_negation = 0
-	for(var/bodypart_name in moving_bodyparts)
+	for(var/bodypart_name in hands_or_legs)
 		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-		if(!BP?.is_usable())
-			bp_tally += 12
+		if(!BP || (BP.is_stump))
+			tally += 6
 		else if(BP.status & ORGAN_SPLINTED)
-			bp_tally += 1.6
+			tally += 0.8
 		else if(BP.status & ORGAN_BROKEN)
-			bp_tally += 6
-		else if(BP.pumped)
-			bp_weight_negation += BP.pumped * 0.02
-
-	tally += bp_tally / moving_bodyparts.len
-	weight_negation += bp_weight_negation / moving_bodyparts.len
+			tally += 3
+		else
+			weight_negation += BP.pumped / 100
 
 	// cola removes equipment slowdowns (no blood = no chemical effects).
-	var/chem_nullify_debuff = nullify_debuffs
+	var/chem_nullify_debuff = FALSE
 	if(!species.flags[NO_BLOOD] && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
 		chem_nullify_debuff = TRUE
 
-	// Currently there is a meme that `slowdown` var is not really weight, it's just a speed modifier
-	var/item_slowdown = wear_suit?.slowdown
-	if(item_slowdown)
-		if(item_slowdown < 0)
-			tally += item_slowdown
-		else if(!(species.flags[IS_SYNTHETIC] || chem_nullify_debuff))
-			weight_tally += item_slowdown
+	if(wear_suit && wear_suit.slowdown && !species.flags[IS_SYNTHETIC] && !(wear_suit.slowdown > 0 && chem_nullify_debuff))
+		weight_tally += wear_suit.slowdown
 
-	item_slowdown = back?.slowdown
-	if(item_slowdown)
-		if(item_slowdown < 0)
-			tally += item_slowdown
-		else if(!chem_nullify_debuff)
-			weight_tally += item_slowdown
+	if(back && back.slowdown && !(back.slowdown > 0 && chem_nullify_debuff))
+		weight_tally += back.slowdown
 
-	if(shoes)
-		item_slowdown = shoes.slowdown
-		if(item_slowdown)
-			if(item_slowdown < 0)
-				tally += item_slowdown
-			else if(!chem_nullify_debuff)
-				weight_tally += item_slowdown
+	if(shoes && shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
+		weight_tally += shoes.slowdown
 	else
 		tally += species.speed_mod_no_shoes
 
-	if(weight_tally > weight_negation)
-		tally += weight_tally - weight_negation
+	if(weight_tally > 0)
+		weight_tally = max(weight_tally - weight_negation, 0)
+
+	tally += weight_tally
+
+	if(shock_stage >= 10)
+		tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
 
 	if(pull_debuff)
 		tally += pull_debuff
+
+	if(bodytemperature < species.cold_level_1)
+		tally += (species.cold_level_1 - bodytemperature) / 10 * 1.75
 
 	var/turf/T = get_turf(src)
 	if(T)
@@ -127,8 +108,9 @@
 	if(get_species() == UNATHI && bodytemperature > species.body_temperature)
 		tally -= min((bodytemperature - species.body_temperature) / 10, 1) //will be on the border of heat_level_1
 
-	if(mood_additive_speed_modifier < 0 || !nullify_debuffs)
-		tally += mood_additive_speed_modifier
+	tally += max(2 * stance_damage, 0) //damaged/missing feet or legs is slow
+
+	tally += mood_additive_speed_modifier
 
 	return (tally + config.human_delay)
 

@@ -1,7 +1,7 @@
 /obj/item/projectile/magic
 	name = "bolt of nothing"
 	icon_state = "energy"
-	light_color = "#ffffff"
+	light_color = "#00ff00"
 	light_power = 2
 	light_range = 2
 	nodamage = 1

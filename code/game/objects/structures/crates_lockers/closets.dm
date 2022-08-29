@@ -3,7 +3,6 @@
 	desc = "It's a basic storage unit."
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "closed"
-	flags = HEAR_TALK
 	density = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	var/icon_closed = "closed"
@@ -264,7 +263,7 @@
 	SSdemo.mark_dirty(src)
 
 /obj/structure/closet/hear_talk(mob/M, text, verb, datum/language/speaking)
-	for (var/atom/A in src) // todo: we need it? say() should already catch all objects recursively
+	for (var/atom/A in src)
 		if(istype(A,/obj))
 			var/obj/O = A
 			O.hear_talk(M, text, verb, speaking)

@@ -94,7 +94,7 @@
 /obj/item/projectile/changeling_whip/process()
 	spawn while(src && loc)
 		if(paused)
-			host.Stun(2, TRUE)
+			host.Stun(2, TRUE, TRUE)
 		sleep(1)
 	..()
 

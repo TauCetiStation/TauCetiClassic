@@ -551,9 +551,11 @@
 		new_item.desc = src.desc
 
 		if(talkative)
-			new_item.AddComponent(/datum/component/talking_atom)
+			new_item.talking_atom = new()
+			new_item.talking_atom.init(new_item)
 
 		return INITIALIZE_HINT_QDEL
 
 	else if(talkative)
-		AddComponent(/datum/component/talking_atom)
+		src.talking_atom = new()
+		talking_atom.init(src)

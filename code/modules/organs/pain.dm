@@ -6,7 +6,7 @@
 // partname is the name of a body part
 // amount is a num from 1 to 100
 /mob/living/carbon/proc/pain(partname, amount, force, burning = 0)
-	if(stat >= DEAD) return
+	if(stat >= 2) return
 	if(reagents.has_reagent("paracetamol"))
 		return
 	if(reagents.has_reagent("tramadol"))
@@ -18,8 +18,8 @@
 	if(world.time < next_pain_time && !force)
 		return
 	if(amount > 10 && ishuman(src))
-		if(paralysis)
-			SetParalysis(AmountParalyzed() - amount / 10)
+		if(src:paralysis)
+			src:paralysis = max(0, src:paralysis-round(amount/10))
 	if(amount > 50 && prob(amount / 5))
 		drop_item()
 	var/msg
@@ -48,7 +48,7 @@
 // message is the custom message to be displayed
 // flash_strength is 0 for weak pain flash, 1 for strong pain flash
 /mob/living/carbon/human/proc/custom_pain(message, flash_strength)
-	if(stat != CONSCIOUS)
+	if(stat >= 1)
 		return
 
 	if(species && species.flags[NO_PAIN])
@@ -76,7 +76,7 @@
 	if(species && species.flags[NO_PAIN])
 		return
 
-	if(stat >= DEAD)
+	if(stat >= 2)
 		return
 	if(reagents.has_reagent("tramadol"))
 		return

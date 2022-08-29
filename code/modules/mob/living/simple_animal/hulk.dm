@@ -154,6 +154,7 @@
 			if(prob(15))
 				emote("gasp")
 
+	weakened = 0
 	if(health > 0)
 		health = min(health + health_regen, maxHealth)
 	..()

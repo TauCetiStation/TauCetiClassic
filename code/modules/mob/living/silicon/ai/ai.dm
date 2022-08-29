@@ -898,7 +898,7 @@ var/global/list/ai_verbs_default = list(
 	if(ismalf(usr) && stat != DEAD)
 		to_chat(usr, "<span class='danger'>You cannot use this verb in malfunction. If you need to leave, please adminhelp.</span>")
 		return
-	if(stat != CONSCIOUS)
+	if(stat)
 		return ..()
 
 	// Wipe Core

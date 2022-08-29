@@ -42,7 +42,7 @@
 
 /mob/living/simple_animal/mouse/Life()
 	..()
-	if(stat == CONSCIOUS && prob(speak_chance))
+	if(!stat && prob(speak_chance))
 		for(var/mob/M in view())
 			M.playsound_local(loc, 'sound/effects/mousesqueek.ogg', VOL_EFFECTS_MASTER)
 	if(!ckey && stat == CONSCIOUS && prob(0.5) && can_emote_snuffles)
@@ -160,7 +160,7 @@
 
 /mob/living/simple_animal/mouse/Crossed(atom/movable/AM)
 	if( ishuman(AM) )
-		if(stat == CONSCIOUS)
+		if(!stat)
 			var/mob/M = AM
 			to_chat(M, "<span class='notice'>[bicon(src)] Squeek!</span>")
 			playsound(src, 'sound/effects/mousesqueek.ogg', VOL_EFFECTS_MASTER)

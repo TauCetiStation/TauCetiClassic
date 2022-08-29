@@ -87,7 +87,7 @@
 
 	l_hand = /obj/item/weapon/storage/briefcase/centcomm
 
-	l_pocket = /obj/item/device/flash
+	r_pocket = /obj/item/device/flash
 
 	implants = list(
 		/obj/item/weapon/implant/mind_protect/loyalty

@@ -128,10 +128,6 @@
 		fon = TRUE
 		set_light(f_lum)
 
-/obj/item/device/pda/proc/assign(real_name)
-	owner = real_name
-	name = "PDA-[real_name][ownjob ? " ([ownjob])" : ""]"
-
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-m"
@@ -723,10 +719,11 @@
 		if ("Authenticate")//Checks for ID
 			id_check(U, 1)
 		if("UpdateInfo")
+			owner = id.registered_name
 			ownjob = id.assignment
-			assign(id.registered_name)
 			ownrank = id.rank
 			check_rank(id.rank)		//check if we became the head
+			name = "PDA-[owner] ([ownjob])"
 			if(owner_account && owner_account.account_number == id.associated_account_number)
 				return
 			ui.close()
@@ -1394,8 +1391,8 @@
 			to_chat(user, "<span class='notice'>\The [src] rejects the ID.</span>")
 			return
 		if(!owner)
+			owner = idcard.registered_name
 			ownjob = idcard.assignment
-			assign(idcard.registered_name)
 			ownrank = idcard.rank
 			check_rank(idcard.rank)
 			var/datum/money_account/account = get_account(idcard.associated_account_number)
@@ -1403,6 +1400,7 @@
 				account.owner_PDA = src			//set PDA in /datum/money_account
 				owner_account = account			//bind the account to the pda
 				owner_fingerprints = list()		//remove old fingerprints
+			name = "PDA-[owner] ([ownjob])"
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
 			//Basic safety check. If card is held by user and PDA is near user or in user's hand.

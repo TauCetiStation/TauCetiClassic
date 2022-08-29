@@ -99,7 +99,7 @@
 			mob_mask.Scale(mob_mask.Width() * world.icon_size / mob_mask.Height(), world.icon_size)
 		else
 			mob_mask.Scale(world.icon_size, mob_mask.Height() * world.icon_size / mob_mask.Width())
-
+			
 	add_filter("mob_shape_mask", 1, alpha_mask_filter(icon = mob_mask))
 	add_filter("inset_drop_shadow", 2, drop_shadow_filter(size = -1))
 
@@ -344,7 +344,7 @@
 		return
 
 	var/mob/living/carbon/C = usr
-	if(C.stat != CONSCIOUS || C.stunned || C.paralysis || C.restrained() || (internal_switch > world.time))
+	if(C.stat || C.stunned || C.paralysis || C.restrained() || (internal_switch > world.time))
 		return
 
 	internal_switch = world.time + 16

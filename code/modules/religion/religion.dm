@@ -644,7 +644,7 @@
 	var/list/acolytes = list()
 	var/turf/center = get_turf(target)
 	for(var/mob/living/carbon/C in range(range, center))
-		if(is_member(C) && C.stat == CONSCIOUS)
+		if(is_member(C) && !C.stat)
 			acolytes += C
 			if(message)
 				C.say(message)

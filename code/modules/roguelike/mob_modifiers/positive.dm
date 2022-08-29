@@ -501,7 +501,7 @@
 	H.alpha = 0
 	animate(H, alpha=saved_alpha, time=1 SECOND)
 
-	if(H.stat != CONSCIOUS)
+	if(H.stat)
 		return
 
 	add_invis_timer()
@@ -509,7 +509,7 @@
 /datum/component/mob_modifier/invisible/proc/become_invisible()
 	var/mob/living/simple_animal/hostile/H = parent
 
-	if(H.stat != CONSCIOUS)
+	if(H.stat)
 		return
 
 	invisible = TRUE

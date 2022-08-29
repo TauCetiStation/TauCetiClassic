@@ -7,7 +7,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/radio/intercom, intercom_list)
 	anchored = TRUE
 	w_class = SIZE_NORMAL
 	canhear_range = 2
-	flags = CONDUCT | NOBLOODY | HEAR_TALK
+	flags = CONDUCT | NOBLOODY
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()

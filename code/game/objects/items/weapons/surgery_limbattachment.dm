@@ -1,6 +1,9 @@
 /obj/item/robot_parts/attack(mob/living/carbon/human/M, mob/living/carbon/user, def_zone)
 
-	if(!(ishuman(M) && can_operate(M)))
+	if(!ishuman(M))
+		return ..()
+
+	if(!((locate(/obj/machinery/optable, M.loc) && M.crawling) || (locate(/obj/structure/stool/bed/roller, M.loc) && (M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.stat)) && prob(75) || (locate(/obj/structure/table, M.loc) && (M.lying || M.weakened || M.stunned || M.paralysis || M.stat) && prob(66))))
 		return ..()
 
 	if(user.get_targetzone() != part)

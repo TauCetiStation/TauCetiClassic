@@ -114,17 +114,6 @@
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
 	new /obj/item/device/healthanalyzer(src)
 
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike
-	name = "Emergency Small first-aid kit"
-
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike/atom_init()
-	. = ..()
-
-	if (empty)
-		return
-
-	new /obj/item/stack/medical/suture(src)
-
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment
 	name = "Emergency nutriment kit"
 	icon_state = "emergency_nutriment_kit"
@@ -173,7 +162,7 @@
 /obj/item/weapon/reagent_containers/hypospray/combat/intdam
 	name = "internal damage hypospray"
 	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with reagents which will restore internal organs of patient."
-	icon_state = "intdam_hypo"
+	icon_state = "atox_hypo"
 	volume = 100
 	list_reagents = list("peridaxon" = 25, "dextromethorphan" = 25, "alkysine" = 25, "imidazoline" = 25)
 

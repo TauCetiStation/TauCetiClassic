@@ -901,7 +901,7 @@
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				if(GRAB_NECK)
-					if(prob(5))
+					if(prob(5 - L.stunned * 2))
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
 						qdel(G)
 		if(resisting)
@@ -932,7 +932,7 @@
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(loc && istype(loc, /obj) && !isturf(loc))
-		if(!L.incapacitated(NONE))
+		if(L.stat == CONSCIOUS && !L.stunned && !L.weakened && !L.paralysis)
 			var/obj/C = loc
 			C.container_resist(L)
 
@@ -1056,12 +1056,21 @@
 	if((status_flags & FAKEDEATH) || buckled)
 		return
 
-	if(incapacitated(NONE))
-		if(crawling)
-			to_chat(src, "<span class='rose'>You can't wake up.</span>")
-		else
-			to_chat(src, "<span class='rose'>You can't control yourself.</span>")
-		return
+//Already crawling and have others debuffs
+	if( crawling && (IsSleeping() || weakened || paralysis || stunned) )
+		to_chat(src, "<span class='rose'>You can't wake up.</span>")
+
+//Restrained and some debuffs
+	else if( restrained() && (paralysis || stunned) )
+		to_chat(src, "<span class='rose'>You can't move.</span>")
+
+//Restrained and lying on optable or simple table
+	else if( restrained() && can_operate(src) )	//TO DO: Refactor OpTable code to /bed subtype or "Rest" verb
+		to_chat(src, "<span class='rose'>You can't move.</span>")
+
+//Debuffs check
+	else if(!crawling && (IsSleeping() || weakened || paralysis || stunned) )
+		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
 
 	if(crawling)
 		crawl_getup = TRUE
@@ -1474,7 +1483,7 @@
 		AdjustDrunkenness(-1)
 
 	if(drunkenness >= DRUNKENNESS_PASS_OUT)
-		Paralyse(3)
+		paralysis = max(paralysis, 3)
 		drowsyness = max(drowsyness, 3)
 		return
 

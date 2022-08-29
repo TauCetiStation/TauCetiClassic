@@ -940,6 +940,7 @@ FIRE ALARM
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	var/detecting = 1.0
+	var/working = 1.0
 	var/time = 10.0
 	var/timing = 0.0
 	var/lockdownbyai = 0
@@ -975,8 +976,6 @@ FIRE ALARM
 
 /obj/machinery/firealarm/bullet_act(obj/item/projectile/P, def_zone)
 	. = ..()
-	if(!is_operational())
-		return
 	alarm()
 
 /obj/machinery/firealarm/emp_act(severity)
@@ -1044,13 +1043,11 @@ FIRE ALARM
 					qdel(src)
 		return
 
-	if(!is_operational())
-		return
 	alarm()
 	return
 
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
-	if(!is_operational())
+	if(stat & (NOPOWER|BROKEN))
 		return
 
 	if(timing)
@@ -1129,8 +1126,6 @@ FIRE ALARM
 
 	if (buildstage != 2)
 		return FALSE
-	if(!is_operational())
-		return
 
 	if (href_list["reset"])
 		reset()
@@ -1148,6 +1143,8 @@ FIRE ALARM
 	updateUsrDialog()
 
 /obj/machinery/firealarm/proc/reset()
+	if (!working)
+		return
 	var/area/A = get_area(src)
 	A.firereset()
 	for(var/obj/machinery/firealarm/FA in A)
@@ -1155,6 +1152,8 @@ FIRE ALARM
 		FA.update_icon()
 
 /obj/machinery/firealarm/proc/alarm()
+	if (!working)
+		return
 	var/area/A = get_area(src)
 	A.firealert()
 	for(var/obj/machinery/firealarm/FA in A)

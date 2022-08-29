@@ -1,35 +1,34 @@
-/datum/component/talking_atom
-	dupe_mode = COMPONENT_DUPE_UNIQUE
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Formerly talking crystals - these procs are now modular so that you can make any /obj/item/weapon 'parrot' player speech back to them
+// This could be extended to atoms, but it's bad enough as is
+// I genuinely tried to Add and Remove them from var and proc lists, but just couldn't get it working
+
+//for easy reference
+/obj/var/datum/talking_atom/talking_atom
+
+/datum/talking_atom
 	var/list/heard_words = list()
 	var/last_talk_time = 0
+	var/atom/holder_atom
 	var/talk_interval = 50
 	var/talk_chance = 10
 
-/datum/component/talking_atom/Initialize()
-	if(!isatom(parent))
-		return COMPONENT_INCOMPATIBLE
+/datum/talking_atom/proc/init(atom/holder = null)
+	holder_atom = holder
+	if(holder_atom)
+		START_PROCESSING(SSobj, src)
 
-/datum/component/talking_atom/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_HEAR, .proc/catchMessage)
+/datum/talking_atom/process()
+	if(!holder_atom)
+		STOP_PROCESSING(SSobj, src)
 
-	var/atom/movable/talking_parent = parent
-	talking_parent.flags ^= HEAR_TA_SAY // only one such component currently
-	                                    // need to refactore/optimise hear code and get rid of HEAR_TA_SAY
-	                                    // or make common hear_say component for atoms and make talking_atom use this new comp
-
-/datum/component/talking_atom/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOVABLE_HEAR)
-
-	var/atom/movable/talking_parent = parent
-	talking_parent.flags ^= HEAR_TA_SAY
-
-/datum/component/talking_atom/process()
-	if(heard_words.len >= 1 && world.time > last_talk_time + talk_interval && prob(talk_chance))
+	else if(heard_words.len >= 1 && world.time > last_talk_time + talk_interval && prob(talk_chance))
 		SaySomething()
 
-/datum/component/talking_atom/proc/catchMessage(datum/source, msg, mob/speaker)
-	var/atom/movable/talking_parent = parent
+/datum/talking_atom/proc/catchMessage(msg, mob/source)
+	if(!holder_atom)
+		return
 
 	var/list/seperate = list()
 	if(findtext(msg,"(("))
@@ -56,10 +55,10 @@
 		//world << "Adding [lowertext(seperate[next])] to [lowertext(seperate[Xa])]"
 
 	if(prob(30))
-		var/list/options = list("[talking_parent] seems to be listening intently to [speaker]...",\
-			"[talking_parent] seems to be focussing on [speaker]...",\
-			"[talking_parent] seems to turn it's attention to [speaker]...")
-		talking_parent.loc.visible_message("<span class='notice'>[bicon(talking_parent)] [pick(options)]</span>")
+		var/list/options = list("[holder_atom] seems to be listening intently to [source]...",\
+			"[holder_atom] seems to be focussing on [source]...",\
+			"[holder_atom] seems to turn it's attention to [source]...")
+		holder_atom.loc.visible_message("<span class='notice'>[bicon(holder_atom)] [pick(options)]</span>")
 
 	if(prob(20))
 		spawn(2)
@@ -73,8 +72,9 @@
 		for(var/X in d)
 			to_chat(world, "[X]")*/
 
-/datum/component/talking_atom/proc/SaySomething(word = null)
-	var/atom/movable/talking_parent = parent
+/datum/talking_atom/proc/SaySomething(word = null)
+	if(!holder_atom)
+		return
 
 	var/msg
 	var/limit = rand(max(5,heard_words.len/2))+3
@@ -107,8 +107,7 @@
 		else
 			msg+="!"
 
-	// todo: bad copypaste of say code, some mobs will not hear it
-	var/list/listening = viewers(talking_parent)
+	var/list/listening = viewers(holder_atom)
 	for(var/mob/M as anything in observer_list)
 		if (!M.client)
 			continue //skip leavers
@@ -116,5 +115,5 @@
 			listening |= M
 
 	for(var/mob/M in listening)
-		to_chat(M, "[bicon(talking_parent)] <b>[talking_parent]</b> reverberates, <span class='notice'>\"[msg]\"</span>")
+		to_chat(M, "[bicon(holder_atom)] <b>[holder_atom]</b> reverberates, <span class='notice'>\"[msg]\"</span>")
 	last_talk_time = world.time

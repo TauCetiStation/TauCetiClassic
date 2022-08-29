@@ -42,6 +42,7 @@
 /obj/item/clothing/shoes/custom
 	name = "Custom shoes"
 	body_parts_covered = 0
+	species_restricted = null
 
 /obj/item/clothing/accessory/custom
 	name = "Custom accessory"

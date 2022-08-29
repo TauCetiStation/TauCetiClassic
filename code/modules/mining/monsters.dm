@@ -32,7 +32,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P, def_zone)//Reduces damage from most projectiles to curb off-screen kills
 	. = ..()
-	if(stat == CONSCIOUS)
+	if(!stat)
 		Aggro()
 	if(P.damage < 30)
 		P.damage /= 3
@@ -41,7 +41,7 @@
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
 	if(isitem(AM))
 		var/obj/item/T = AM
-		if(stat == CONSCIOUS)
+		if(!stat)
 			Aggro()
 		if(T.throwforce <= 20)
 			visible_message("<span class='notice'>The [T.name] [src.throw_message] [src.name]!</span>")

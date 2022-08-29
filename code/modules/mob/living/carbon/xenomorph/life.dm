@@ -57,6 +57,7 @@
 		if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
 			Paralyse(3)
 		if(paralysis)
+			AdjustParalysis(-1)
 			blinded = 1
 			stat = UNCONSCIOUS
 		else if(IsSleeping())
@@ -87,6 +88,14 @@
 			ear_damage = 0
 
 		//Other
+		if(stunned)
+			AdjustStunned(-1)
+			if(!stunned)
+				update_icons()
+
+		if(weakened)
+			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
+
 		if(stuttering > 0)
 			setStuttering(0)
 

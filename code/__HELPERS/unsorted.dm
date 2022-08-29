@@ -211,14 +211,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if( search_id && istype(A,/obj/item/weapon/card/id) )
 				var/obj/item/weapon/card/id/ID = A
 				if(ID.registered_name == oldname)
-					ID.assign(newname)
+					ID.registered_name = newname
+					ID.name = "[newname]'s ID Card ([ID.assignment])"
 					if(!search_pda)	break
 					search_id = 0
 
 			else if( search_pda && istype(A,/obj/item/device/pda) )
 				var/obj/item/device/pda/PDA = A
 				if(PDA.owner == oldname)
-					PDA.assign(newname)
+					PDA.owner = newname
+					PDA.name = "PDA-[newname] ([PDA.ownjob])"
 					if(!search_id)	break
 					search_pda = 0
 	return TRUE

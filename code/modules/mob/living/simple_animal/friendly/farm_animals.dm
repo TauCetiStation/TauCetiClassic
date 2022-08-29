@@ -1,4 +1,3 @@
-#define FEEDER_DISTANT 7
 //goat
 /mob/living/simple_animal/hostile/retaliate/goat
 	name = "goat"
@@ -71,7 +70,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(stat == CONSCIOUS && !ISDIAGONALDIR(Dir))
+	if(!stat && !ISDIAGONALDIR(Dir))
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
 			qdel(SV)
@@ -181,7 +180,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(stat == CONSCIOUS)
+	if(!stat)
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
@@ -232,7 +231,7 @@ var/global/chicken_count = 0
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(stat == CONSCIOUS && eggsleft < 8)
+		if(!stat && eggsleft < 8)
 			user.visible_message("<span class='notice'>[user] feeds [O] to [name]! It clucks happily.</span>","<span class='notice'>You feed [O] to [name]! It clucks happily.</span>")
 			qdel(O)
 			eggsleft += rand(1, 4)
@@ -246,7 +245,7 @@ var/global/chicken_count = 0
 	. =..()
 	if(!.)
 		return
-	if(stat == CONSCIOUS && prob(3) && eggsleft > 0)
+	if(!stat && prob(3) && eggsleft > 0)
 		visible_message("[src] [pick("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")]")
 		eggsleft--
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = new(get_turf(src))
@@ -254,16 +253,6 @@ var/global/chicken_count = 0
 		E.pixel_y = rand(-6,6)
 		if(chicken_count < MAX_CHICKENS && prob(10))
 			START_PROCESSING(SSobj, E)
-	if(stat != DEAD || stat != CONSCIOUS && !buckled)
-		if(eggsleft < 2) //hungry
-			for(var/obj/structure/chicken_feeder/C as anything in chicken_feeder_list)
-				if(get_dist(src, C) < FEEDER_DISTANT && C.z == z)
-					if(C.food > 0)
-						stop_automated_movement = TRUE
-						step_to(src, C)
-						if(loc == C.loc)
-							C.feed(src)
-							stop_automated_movement = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
@@ -300,7 +289,7 @@ var/global/chicken_count = 0
 	name = "Shadowpig"
 	icon_state = "shadowpig"
 	icon_living = "shadowpig"
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE 
 
 /mob/living/simple_animal/pig/shadowpig/atom_init()
 	. = ..()
@@ -385,5 +374,3 @@ var/global/chicken_count = 0
 	icon_dead = "walrus-syndi_dead"
 	speak = list("Urk?","urk","URK","Furk NT")
 	health = 80
-
-#undef FEEDER_DISTANT

@@ -97,7 +97,6 @@
 #define LIGHT_COLOR_GHOST_CANDLE "#a2fad1" // Used by ghost candles. rgb(162, 250, 209)
 #define LIGHT_COLOR_PLASMA       "#2be4b8" // Used in plasma gun. rgb(43, 228, 184)
 #define LIGHT_COLOR_PLASMA_OC    "#e88893" // Used in plasma gun overcharge mode. rgb(232, 136, 147)
-#define LIGHT_COLOR_LIGHTNING	 "#5eacb6" // Used in lightning bolt projectiles
 
 //Human organ color mods
 #define HULK_SKIN_TONE rgb(48, 224, 40) // human

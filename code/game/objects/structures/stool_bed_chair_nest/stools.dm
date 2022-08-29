@@ -66,7 +66,7 @@
 /obj/structure/stool/MouseDrop(atom/over_object)
 	if(ishuman(over_object) && type == /obj/structure/stool)
 		var/mob/living/carbon/human/H = over_object
-		if(H == usr && !H.restrained() && H.stat == CONSCIOUS && Adjacent(over_object))
+		if(H == usr && !H.restrained() && !H.stat && Adjacent(over_object))
 			var/obj/item/weapon/stool/S = new
 			S.origin_stool = src
 			src.loc = S

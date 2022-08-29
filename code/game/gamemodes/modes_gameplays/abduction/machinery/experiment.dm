@@ -16,7 +16,7 @@
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
 	if(user.incapacitated() || !ishuman(target))
 		return
-	if(isabductor(target))
+	if(IsAbductor(target))
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
@@ -32,7 +32,7 @@
 
 /obj/machinery/abductor/experiment/close_machine(mob/target)
 	for(var/mob/living/carbon/C in loc)
-		if(isabductor(C))
+		if(IsAbductor(C))
 			return
 	if(state_open && !panel_open)
 		..(target)

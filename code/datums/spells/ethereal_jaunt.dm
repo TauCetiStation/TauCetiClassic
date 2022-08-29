@@ -12,6 +12,7 @@
 	var/icon/dissapear_animation //what animation is gonna get played on spell cast
 	var/icon/appear_animation //what animation is gonna get played on spell end
 	var/movement_cooldown = 2 //movement speed, less is faster
+	var/ignore_NOJAUNT = FALSE //ignores NOJAUNT turf flag
 	var/jaunt_duration = 6 SECONDS //how long jaunt will last
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets) //magnets, so mostly hardcoded
@@ -93,7 +94,8 @@
 	action_icon_state = "jaunt"
 	jaunt_duration = 6 SECONDS
 	movement_cooldown = -1
-	action_icon_state = "shadow_walk"
+	ignore_NOJAUNT = TRUE
+	action_icon_state = "spell_default"
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shadow_walk/cast(list/targets)
 	..()
@@ -130,24 +132,19 @@
 	var/modifier_delay = 2
 
 /obj/effect/dummy/spell_jaunt/relaymove(mob/user, direction)
-
 	if(last_move + modifier_delay > world.time)
 		return
 	if(user != master)
 		return
-
-	last_move = world.time
-	
 	var/turf/newLoc = get_step(src,direction)
-
-	if(SEND_SIGNAL(newLoc, COMSIG_ATOM_INTERCEPT_TELEPORT))
-		to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")
-		return FALSE
-
-	if(canmove)
-		loc = newLoc // breaks entered/exit callbacks, but forcemove can trigger unnecessary things like traps
-
+	for(var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/J in master.spell_list)
+		if(!(newLoc.flags & NOJAUNT) || J.ignore_NOJAUNT)
+			if(canmove)
+				loc = newLoc
+		else
+			to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")
 	dir = direction
+	last_move = world.time
 	if(indicator)
 		var/turf/T = get_turf(loc)
 		indicator.icon_state = "marker[T.is_mob_placeable() ? "" : "_danger"]"
@@ -176,7 +173,7 @@
 	                  // chances of this occuring are very small
 	                  // as it requires 9x9 grid of impassable tiles ~getup1
 	for(var/turf/newloc in orange(1, mobloc))
-		if(newloc.is_mob_placeable(src) && !isenvironmentturf(newloc) && !SEND_SIGNAL(newloc, COMSIG_ATOM_INTERCEPT_TELEPORT))
+		if(newloc.is_mob_placeable(src) && !isenvironmentturf(newloc))
 			found_ground = TRUE
 			to_gib = FALSE
 			forceMove(newloc)

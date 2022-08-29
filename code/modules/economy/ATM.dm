@@ -461,15 +461,16 @@ log transactions
 					view_screen = NO_SCREEN
 
 // put the currently held id on the ground or in the hand of the user
-/obj/machinery/atm/proc/release_held_id(mob/living/carbon/human/user)
+/obj/machinery/atm/proc/release_held_id(mob/living/carbon/human/human_user)
 	if(!held_card)
 		return
-	if(!ishuman(user))
-		return
 
-	user.put_in_hands(held_card)
 	authenticated_account = null
+
+	if(ishuman(human_user) && !human_user.get_active_hand())
+		human_user.put_in_hands(held_card)
 	held_card = null
+
 
 /obj/machinery/atm/proc/spawn_ewallet(sum, loc)
 	var/obj/item/weapon/spacecash/ewallet/E = new /obj/item/weapon/spacecash/ewallet(loc)

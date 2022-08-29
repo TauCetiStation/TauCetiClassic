@@ -164,28 +164,3 @@
 		return
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
-
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer
-	name = "Derringer"
-	desc = "A small pocket pistol and your best friend. Manufactured by Hephaestus Industries without much changes from the earliest designs. Chambered in .38."
-	icon_state = "derringer"
-	item_state = null
-	w_class = SIZE_TINY
-	force = 2
-	flags =  CONDUCT
-	slot_flags = SLOT_FLAGS_BELT
-	origin_tech = "combat=1;materials=1"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer
-	can_be_holstered = TRUE
-	can_be_shortened = FALSE
-	fire_sound = 'sound/weapons/guns/gunshot_derringer.ogg'
-	recoil = 2
-
-/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate
-	name = "Opressor"
-	desc = "Issued to Syndicate agents who aren't really valuable to HQ. Atleast the name sounds badass. Chambered in .357 Magnum."
-	icon_state = "synderringer"
-	force = 5
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer/syndicate
-	recoil = 3
-	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'

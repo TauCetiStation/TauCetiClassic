@@ -221,7 +221,7 @@
 
 	// Assume, that if we've gotten this far, it's a succesful tool use.
 	. = TRUE
-	if(!religion && user?.my_religion?.religious_tool_type && istype(I, user.my_religion.religious_tool_type))
+	if(!religion && user?.my_religion.religious_tool_type && istype(I, user.my_religion.religious_tool_type))
 		religion = user.my_religion
 		religion.altars |= src
 		interact_religious_tool(I, user)

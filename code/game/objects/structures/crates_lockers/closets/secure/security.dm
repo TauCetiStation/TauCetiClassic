@@ -31,7 +31,6 @@
 	new /obj/item/device/remote_device/captain(src)
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
-	new /obj/item/weapon/storage/lockbox/medal/captain(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
 		new /obj/item/clothing/head/santa(src)
@@ -90,7 +89,6 @@
 	new /obj/item/device/flash(src)
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
-	new /obj/item/weapon/storage/lockbox/medal/hop(src)
 
 /obj/structure/closet/secure_closet/hop2
 	name = "Head of Personnel's Attire"
@@ -161,7 +159,6 @@
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/energy/taser(src)
-	new /obj/item/weapon/storage/lockbox/medal/hos(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
@@ -410,15 +407,3 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 /obj/structure/closet/secure_closet/pistols/PopulateContents()
 	for (var/i in 1 to 3)
 		new /obj/item/weapon/gun/projectile/glock(src)
-
-/obj/structure/closet/secure_closet/usp_cartridges
-	name = "USP cartridges Secure Closet"
-	req_access = list(access_keycard_auth)	
-
-/obj/structure/closet/secure_closet/usp_cartridges/PopulateContents()
-	new /obj/item/weapon/skill_cartridge/usp7(src)
-	new /obj/item/weapon/skill_cartridge/usp7(src)
-	new /obj/item/weapon/skill_cartridge/csp15(src)
-	new /obj/item/weapon/skill_cartridge/usp5(src)
-	new /obj/item/weapon/skill_cartridge/usp5(src)
-	new /obj/item/weapon/skill_cartridge/usp5(src)

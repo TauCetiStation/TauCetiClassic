@@ -86,9 +86,16 @@
 
 	DeactivateStealth()
 
+/obj/item/clothing/suit/armor/abductor/vest/proc/IsAbductor(user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.species.name != ABDUCTOR)
+			return FALSE
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(user)
-	if(isabductor(user))
+	if(IsAbductor(user))
 		return TRUE
 	to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
 	return FALSE
@@ -120,6 +127,8 @@
 		M.SetParalysis(0)
 		M.SetStunned(0)
 		M.SetWeakened(0)
+		M.lying = 0
+		M.update_canmove()
 //		M.adjustStaminaLoss(-75)
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
@@ -131,8 +140,16 @@
 
 
 //SCIENCE TOOL
+/obj/item/device/abductor/proc/IsAbductor(user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.species.name != ABDUCTOR)
+			return FALSE
+		return TRUE
+	return FALSE
+
 /obj/item/device/abductor/proc/AbductorCheck(user)
-	if(isabductor(user))
+	if(IsAbductor(user))
 		return TRUE
 	to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
 	return FALSE
@@ -203,7 +220,7 @@
 		to_chat(user, "<span class='notice'>This specimen is already marked.</span>")
 		return
 	if(ishuman(target))
-		if(isabductor(target))
+		if(IsAbductor(target))
 			marked = target
 			to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
 		else
@@ -326,7 +343,7 @@
 	var/obj/machinery/camera/helm_cam
 
 /obj/item/clothing/head/helmet/abductor/attack_self(mob/living/carbon/human/user)
-	if(!isabductor(user))
+	if(!IsAbductor(user))
 		to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
 		return
 	if(helm_cam)
@@ -351,6 +368,17 @@
 		to_chat(user, "<span class='notice'>Abductor detected. Camera activated.</span>")
 		return
 
+/obj/item/clothing/head/helmet/abductor/proc/IsAbductor(mob/living/user)
+	if(!ishuman(user))
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	if(!H.species)
+		return FALSE
+	if(H.species.name != ABDUCTOR)
+		return FALSE
+	return TRUE
+
+
 //ADVANCED BATON
 #define BATON_STUN 0
 #define BATON_SLEEP 1
@@ -372,7 +400,7 @@
 	action_button_name = "Toggle Mode"
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
-	if(!isabductor(user))
+	if(!IsAbductor(user))
 		return
 	if(!AgentCheck(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
@@ -409,11 +437,21 @@
 			icon_state = "wonderprodProbe"
 			item_state = "wonderprodProbe"
 
+/obj/item/weapon/abductor_baton/proc/IsAbductor(mob/living/user)
+	if(!ishuman(user))
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	if(!H.species)
+		return FALSE
+	if(H.species.name != ABDUCTOR)
+		return FALSE
+	return TRUE
+
 /obj/item/weapon/abductor_baton/proc/AgentCheck(mob/living/carbon/human/user)
 	return isabductoragent(user)
 
 /obj/item/weapon/abductor_baton/attack(mob/target, mob/living/user)
-	if(!isabductor(user))
+	if(!IsAbductor(user))
 		return
 
 	if(isrobot(target))

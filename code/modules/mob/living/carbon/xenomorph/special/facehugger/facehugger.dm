@@ -38,7 +38,7 @@
 	return ismob(mover) || (stat == DEAD)
 
 /obj/item/clothing/mask/facehugger/process()
-	if(stat != CONSCIOUS)
+	if(stat) //if UNCONSCIOUS or DEAD
 		return
 	if(isturf(loc))
 		if(!target)
@@ -68,7 +68,7 @@
 		if(!isturf(loc))
 			target = null
 			return
-		else if(stat != CONSCIOUS)
+		else if(stat)
 			target = null
 			return
 

@@ -519,7 +519,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='red'>That verb is not currently permitted.</span>")
 		return
 
-	if (stat == CONSCIOUS)
+	if (!src.stat)
 		return
 
 	if (usr != src)

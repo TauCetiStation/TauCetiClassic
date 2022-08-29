@@ -118,16 +118,13 @@
 	..()
 
 /mob/living/carbon/slime/movement_delay()
-	var/tally = speed
-
-	if (bodytemperature < BODYTEMP_NORMAL - 30)
-		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
-	else if (bodytemperature >= BODYTEMP_NORMAL + 20)
-		return -1	// slimes become supercharged at high temperatures
+	var/tally = 0
 
 	var/health_deficiency = (100 - health)
-	if(health_deficiency >= 45)
-		tally += (health_deficiency / 25)
+	if(health_deficiency >= 45) tally += (health_deficiency / 25)
+
+	if (bodytemperature < 183.222)
+		tally += (283.222 - bodytemperature) / 10 * 1.75
 
 	if(reagents)
 		if(reagents.has_reagent("hyperzine")) // hyperzine slows slimes down
@@ -139,7 +136,13 @@
 	if(pull_debuff)
 		tally += pull_debuff
 
-	return tally + config.slime_delay
+	if(health <= 0) // if damaged, the slime moves twice as slow
+		tally *= 2
+
+	if (bodytemperature >= 330.23) // 135 F
+		return -1	// slimes become supercharged at high temperatures
+
+	return tally+config.slime_delay
 
 /mob/living/carbon/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)
@@ -251,6 +254,8 @@
 
 	if(shielded)
 		damage /= 4
+
+		//paralysis += 1
 
 	to_chat(src, "<span class='warning'>The blob attacks you!</span>")
 
@@ -499,7 +504,7 @@
 	if(isslimeadult(M)) //Can't tame adults
 		to_chat(user, "<span class='warning'>Only baby slimes can be tamed!</span>")
 		return..()
-	if(M.stat != CONSCIOUS)
+	if(M.stat)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
@@ -527,7 +532,7 @@
 	if(!isslimeadult(M))//If target is not a slime.
 		to_chat(user, "<span class='warning'>The potion only works on adult slimes!</span>")
 		return ..()
-	if(M.stat != CONSCIOUS)
+	if(M.stat)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
@@ -559,7 +564,7 @@
 	if(isslimeadult(M)) //Can't tame adults
 		to_chat(user, "<span class='warning'>Only baby slimes can use the steroid!</span>")
 		return..()
-	if(M.stat != CONSCIOUS)
+	if(M.stat)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	if(M.cores == 3)

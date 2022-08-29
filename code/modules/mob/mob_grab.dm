@@ -448,7 +448,7 @@
 								var/armor_block = H.run_armor_check(BP, "melee")
 
 								var/chance_to_force_vomit = 30
-								if(H.stat != CONSCIOUS)
+								if(H.stat >= UNCONSCIOUS)
 									chance_to_force_vomit += 20
 								if(prob(armor_block))
 									chance_to_force_vomit = 0

@@ -245,7 +245,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(src.loc, /turf) || usr.stat != CONSCIOUS || usr.restrained() )
+	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
 		return
 
 	var/turf/T = src.loc
@@ -763,16 +763,16 @@
 		return
 
 	var/skill_bonus = 1
-
+	
 	//in case item have no defined default required_skill or we need to check other skills e.g. check crowbar for surgery
 	if(required_skills_override)
 		skill_bonus = apply_skill_bonus(user, 1, required_skills_override, skills_speed_bonus)
 	else if(required_skills) //default check for item
 		skill_bonus = apply_skill_bonus(user, 1, required_skills, skills_speed_bonus)
-
-
+	
+	
 	delay *= toolspeed
-	delay *= max(skill_bonus, 0.1)
+	delay *= skill_bonus
 
 	if(!isnull(quality))
 		var/qual_mod = get_quality(quality)
@@ -884,6 +884,14 @@
 	M.log_combat(user, "eyestabbed with [name]")
 
 	add_fingerprint(user)
+	//if((CLUMSY in user.mutations) && prob(50))
+	//	M = user
+		/*
+		to_chat(M, "<span class='warning'>You stab yourself in the eye.</span>")
+		M.sdisabilities |= BLIND
+		M.weakened += 4
+		M.adjustBruteLoss(10)
+		*/
 	if(M != user)
 		visible_message("<span class='warning'>[M] has been stabbed in the eye with [src] by [user].</span>", ignored_mobs = list(user, M))
 		to_chat(M, "<span class='warning'>[user] stabs you in the eye with [src]!</span>")

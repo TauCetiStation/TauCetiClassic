@@ -21,7 +21,7 @@
 	return STATUS_UPDATE						// Ghosts can view updates
 
 /mob/living/silicon/pai/can_use_topic(src_object)
-	if(src_object == src && stat == CONSCIOUS)
+	if(src_object == src && !stat)
 		return STATUS_INTERACTIVE
 	else
 		return ..()
@@ -29,7 +29,7 @@
 /mob/living/silicon/robot/can_use_topic(src_object, datum/topic_state/custom_state)
 	if(stat || !client)
 		return STATUS_CLOSE
-	if(lockcharge || incapacitated(NONE))
+	if(lockcharge || stunned || weakened)
 		return STATUS_DISABLED
 	if(isobj(src_object))
 		var/obj/O = src_object

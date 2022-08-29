@@ -212,6 +212,7 @@
 
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
 	new /obj/item/clothing/suit/space/rig/syndi(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/heavy_rig
@@ -222,6 +223,7 @@
 
 	new /obj/item/clothing/head/helmet/space/rig/syndi/heavy(src)
 	new /obj/item/clothing/suit/space/rig/syndi/heavy(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/armor
@@ -287,6 +289,20 @@
 	new /obj/item/toy/syndicateballoon(src)
 	make_exact_fit()
 
+/obj/item/weapon/storage/box/syndie_kit/chemical
+	name = "box (CH)"
+	desc = "Box containing Spacegeneva violation."
+	icon_state = "syndie_box"
+
+/obj/item/weapon/storage/box/syndie_kit/chemical/atom_init()
+	. = ..()
+	new /obj/item/clothing/head/helmet/space/rig/syndi/hazmat(src)
+	new /obj/item/clothing/suit/space/rig/syndi/hazmat(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	new /obj/item/weapon/reagent_containers/watertank_backpack/syndie(src)
+	new /obj/item/weapon/lighter/zippo(src)
+	make_exact_fit()
+
 /obj/item/weapon/storage/box/syndie_kit/drone
 	name = "box (D)"
 	desc = "Box containing a brand-new Cybersun Industries RC drone."
@@ -313,6 +329,8 @@
 	/obj/item/weapon/reagent_containers/hypospray/combat,
 	/obj/item/clothing/glasses/thermal/syndi,
 	/obj/item/weapon/card/emag,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman
@@ -324,6 +342,8 @@
 	/obj/item/weapon/grenade/flashbang = 4,
 	/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 	/obj/item/weapon/plastique = 2,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)
 
 /obj/item/weapon/storage/belt/utility/hacker
@@ -346,6 +366,8 @@
 	/obj/item/device/debugger,
 	/obj/item/weapon/storage/belt/utility/hacker,
 	/obj/item/weapon/card/emag,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/sniper
@@ -358,6 +380,8 @@
 	/obj/item/weapon/card/emag,
 	/obj/item/weapon/pen/edagger,
 	/obj/item/weapon/grenade/smokebomb = 3,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/demo
@@ -370,6 +394,8 @@
 	/obj/item/weapon/plastique = 4,
 	/obj/item/weapon/grenade/syndieminibomb = 2,
 	/obj/item/device/radio/beacon/syndicate_bomb,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/melee
@@ -383,13 +409,17 @@
 	/obj/item/weapon/legcuffs/bola/tactical = 2,
 	/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
 	/obj/item/weapon/card/emag,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner
 	name = "heavy machine gunner kit"
 	startswith = list(
-	/obj/item/ammo_box/magazine/m762 = 3,
+	/obj/item/ammo_box/magazine/m762 = 2,
 	/obj/item/weapon/gun/projectile/automatic/l6_saw,
+	/obj/item/clothing/suit/space/rig/syndi/heavy,
+	/obj/item/clothing/head/helmet/space/rig/syndi/heavy,
 	)
 
 /obj/item/weapon/storage/backpack/dufflebag/nuke/medic
@@ -400,22 +430,8 @@
 	/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 	/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 	/obj/item/weapon/storage/pouch/medical_supply/syndicate,
-	)
-
-
-/obj/item/weapon/storage/backpack/dufflebag/nuke/chemwarfare
-	name = "chemical fighter kit"
-	startswith = list(
-	/obj/item/weapon/reagent_containers/watertank_backpack/syndie,
-	/obj/item/weapon/lighter/zippo,
-	/obj/item/weapon/gun/projectile/revolver/syndie,
-	/obj/item/ammo_box/a357 = 2,
-	/obj/item/weapon/melee/energy/sword,
-	/obj/item/weapon/grenade/chem_grenade/acid = 3,
-	/obj/item/weapon/grenade/chem_grenade/incendiary = 2,
-	/obj/item/weapon/card/emag,
-	/obj/item/clothing/head/helmet/space/rig/syndi/hazmat,
-	/obj/item/clothing/suit/space/rig/syndi/hazmat,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)
 
 
@@ -424,4 +440,6 @@
 	startswith = list(
 	/obj/item/device/radio/uplink,
 	/obj/item/stack/telecrystal/twenty,
+	/obj/item/clothing/suit/space/rig/syndi,
+	/obj/item/clothing/head/helmet/space/rig/syndi,
 	)

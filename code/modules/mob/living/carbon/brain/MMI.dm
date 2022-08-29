@@ -3,7 +3,6 @@
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
-	flags = HEAR_PASS_SAY
 	w_class = SIZE_SMALL
 	origin_tech = "biotech=3"
 
@@ -200,8 +199,3 @@
 			if(3)
 				brainmob.emp_damage += rand(0,10)
 	..()
-
-/obj/item/device/mmi/get_listeners()
-	. = list()
-	if(brainmob)
-		. += brainmob

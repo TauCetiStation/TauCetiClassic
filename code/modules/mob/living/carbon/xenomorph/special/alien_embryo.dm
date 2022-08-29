@@ -106,7 +106,7 @@ This is emryo growth procs
 				affected_mob.emote(pick("sneeze", "cough"))
 		if(4)
 			if(prob(1))
-				if(affected_mob.stat == CONSCIOUS)
+				if(!affected_mob.stat)
 					affected_mob.visible_message("<span class='danger'>\The [affected_mob] starts shaking uncontrollably!</span>", \
                                                  "<span class='danger'>You start shaking uncontrollably!</span>")
 					affected_mob.Paralyse(10)

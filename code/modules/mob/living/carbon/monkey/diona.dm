@@ -9,7 +9,6 @@
 	speak_emote = list("chirrups")
 	icon_state = "nymph1"
 	hazard_low_pressure = DIONA_HAZARD_LOW_PRESSURE
-	speed = 3.5
 	var/list/donors = list()
 	var/ready_evolve = 0
 	var/mob/living/carbon/human/gestalt = null
@@ -34,7 +33,6 @@
 	name = "podkid"
 	voice_name = "podkid"
 	icon_state = "podkid1"
-	speed = 0.5
 	race = PODMAN
 	holder_type = /obj/item/weapon/holder/diona/podkid
 
@@ -61,6 +59,12 @@
 	verbs -= /mob/living/carbon/monkey/diona/verb/split
 	verbs -= /mob/living/carbon/monkey/diona/verb/pass_knowledge
 	verbs -= /mob/living/carbon/monkey/diona/verb/synthesize
+
+/mob/living/carbon/monkey/diona/movement_delay(tally = 0)
+	return ..(tally = 3.5)
+
+/mob/living/carbon/monkey/diona/podman/movement_delay(tally = 0)
+	return ..(tally = 0.5)
 
 /mob/living/carbon/monkey/diona/is_facehuggable()
 	return FALSE
@@ -381,7 +385,7 @@
 	if(speaking)
 		verb = speaking.get_spoken_verb(ending)
 
-	if(!message || stat != CONSCIOUS)
+	if(!message || stat)
 		return
 
 	..(message, speaking, verb, null, null, message_range, null)

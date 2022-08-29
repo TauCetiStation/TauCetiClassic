@@ -119,14 +119,9 @@
 		: FALSE)
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
-
 //mob traits
 /// Forces user to be unmovable
 #define TRAIT_ANCHORED "anchored"
-/// Prevents voluntary movement.
-#define TRAIT_IMMOBILIZED "immobilized"
-/// Prevents hands and legs usage
-#define TRAIT_INCAPACITATED "incapacitated"
 
 #define TRAIT_ALCOHOL_TOLERANCE   "alcohol_tolerance"
 #define TRAIT_BLIND               "blind"

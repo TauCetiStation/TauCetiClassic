@@ -4,7 +4,7 @@
 	if (!message)
 		return
 
-	log_say("Ghost/[key_name(src)] : [message]")
+	log_say("Ghost/[src.key] : [message]")
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)

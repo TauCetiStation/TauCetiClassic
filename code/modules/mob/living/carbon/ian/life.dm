@@ -232,15 +232,15 @@
 
 /mob/living/carbon/ian/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
-		if (prob(1))
+		if (prob(1) && paralysis < 10)
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
-		if (prob(5) && !paralysis)
+		if (prob(5) && paralysis <= 1)
 			drop_item()
 			emote("cough")
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
-		if (prob(10) && !paralysis)
+		if (prob(10) && paralysis <= 1)
 			Stun(10)
 			emote("twitch")
 	if (disabilities & NERVOUS || HAS_TRAIT(src, TRAIT_NERVOUS))
@@ -358,6 +358,7 @@
 			setHalLoss(99)
 
 		if(paralysis)
+			AdjustParalysis(-1)
 			blinded = TRUE
 			stat = UNCONSCIOUS
 			if(halloss > 0)
@@ -390,6 +391,12 @@
 			ear_damage = max(ear_damage - 0.05, 0)
 
 		//Other
+		if(stunned)
+			AdjustStunned(-1)
+
+		if(weakened)
+			weakened = max(weakened - 1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
+
 		if(stuttering > 0)
 			AdjustStuttering(-1)
 

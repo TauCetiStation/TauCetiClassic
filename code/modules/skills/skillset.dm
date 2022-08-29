@@ -8,8 +8,7 @@
 		LAZYSET(skills, skill, initial_skills[skill])
 	for(var/skill in all_skills)
 		if(!(skill in skills))
-			var/default_value = default_skills_list[skill]
-			LAZYSET(skills, skill, default_value)
+			LAZYSET(skills, skill, SKILL_LEVEL_MIN)
 
 /datum/skillset/proc/merge(datum/skillset/other_skillset)
 	for(var/skill in skills)

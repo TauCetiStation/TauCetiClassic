@@ -130,7 +130,7 @@
 	message_impaired_reception = "You see someone opening their mouth like a fish gasping for air!"
 
 	message_miming = "acts out a scream!"
-	message_muzzled = "makes a loud noise!"
+	message_muzzled = "makes a louad noise!"
 
 	message_type = SHOWMSG_AUDIO
 

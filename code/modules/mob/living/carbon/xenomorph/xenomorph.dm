@@ -47,9 +47,6 @@
 	hud.remove_hud_from(src)
 	return ..()
 
-/mob/living/carbon/xenomorph/movement_delay()
-	return (move_delay_add + config.alien_delay + speed)
-
 /mob/living/carbon/xenomorph/adjustToxLoss(amount)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
 	updatePlasmaDisplay()
@@ -193,7 +190,7 @@
 			if(count)
 				stat("[key]: [count]")
 
-/mob/living/carbon/xenomorph/Stun(amount, ignore_canstun = 0)
+/mob/living/carbon/xenomorph/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
 	if(status_flags & CANSTUN || ignore_canstun)
 		..()
 	else
@@ -283,13 +280,7 @@ Hit Procs
 	return "xltrails"
 
 /mob/living/carbon/xenomorph/update_canmove()
-	..()
-
-	if(lying)
-		canmove = FALSE
-	if(density)
-		density = initial(density)
-
+	canmove = !(weakened || paralysis || stat || (status_flags & FAKEDEATH) || crawling || stunned || HAS_TRAIT(src, TRAIT_ANCHORED))
 
 /mob/living/carbon/xenomorph/crawl()
 	SetCrawling(!crawling)

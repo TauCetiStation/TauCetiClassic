@@ -69,7 +69,7 @@
 
 /obj/item/weapon/fuel/examine()
 	set src in view(1)
-	if(usr && usr.stat == CONSCIOUS)
+	if(usr && !usr.stat)
 		to_chat(usr, "A magnetic storage ring, it contains [fuel]kg of [content ? content : "nothing"].")
 
 /obj/item/weapon/fuel/proc/injest(mob/M)

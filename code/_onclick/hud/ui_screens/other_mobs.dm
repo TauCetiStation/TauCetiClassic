@@ -11,21 +11,11 @@
 	..()
 	hud.mymob.pwr_display = src
 
-/atom/movable/screen/blob_power/blobbernaut //Actually core healths
-	name = "core healths"
-	icon = 'icons/mob/blob.dmi'
-	icon_state = "corehealth"
-
 /atom/movable/screen/health/blob
 	name = "blob health"
-	icon = 'icons/mob/blob.dmi'
-	icon_state = "corehealth"
-	screen_loc = ui_internal
-	plane = ABOVE_HUD_PLANE
-
-/atom/movable/screen/health/blob/blobbernaut //Basically reverts icon
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "block"
+	screen_loc = ui_internal
 	plane = ABOVE_HUD_PLANE
 
 // Essence

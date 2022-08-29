@@ -5830,9 +5830,6 @@
 	flipped = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/sheet/cloth{
-	amount = 30
-	},
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
@@ -6369,22 +6366,13 @@
 /area/station/engineering/atmos)
 "alE" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/fancy/crayons{
-	pixel_y = 6
+/obj/item/device/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
 	},
-/obj/item/weapon/pen/red{
-	pixel_x = -5
-	},
-/obj/item/weapon/pen/blue{
-	pixel_x = 5
-	},
-/obj/item/weapon/pen{
-	pixel_y = 1
-	},
-/turf/simulated/floor{
-	icon_state = "asteroid7"
-	},
-/area/station/hallway/secondary/arrival)
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
 "alF" = (
 /obj/machinery/computer/libraryconsole/bookmanagement/old,
 /obj/structure/table/woodentable,
@@ -6404,20 +6392,17 @@
 /turf/simulated/floor/wood,
 /area/station/maintenance/escape)
 "alI" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/item/weapon/flora/pottedplant{
+	icon_state = "plant-21"
 	},
-/obj/structure/sign/painting{
-	pixel_x = 30
+/obj/effect/decal/cleanable/cobweb,
+/obj/machinery/alarm{
+	pixel_y = 21
 	},
-/turf/simulated/floor{
-	icon_state = "asteroid"
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken7"
 	},
-/area/station/hallway/secondary/arrival)
+/area/station/maintenance/escape)
 "alJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/folder,
@@ -9832,29 +9817,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
-"asc" = (
-/obj/structure/table/woodentable,
-/obj/item/device/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/effect/spawner/lootdrop/maintenance/two,
-/obj/item/painting_frame{
-	pixel_x = -2;
-	pixel_y = -9
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/escape)
-"asd" = (
-/obj/machinery/alarm{
-	pixel_y = 21
-	},
-/obj/structure/easel,
-/obj/effect/decal/cleanable/cobweb,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken7"
-	},
-/area/station/maintenance/escape)
 "asi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -17510,7 +17472,7 @@
 	input_tag = "o2_in";
 	name = "Oxygen Supply Control";
 	output_tag = "o2_out";
-	sensors = list("o2_sensor"="Tank")
+	sensors = list("o2_sensor" = "Tank")
 	},
 /obj/machinery/light{
 	dir = 8
@@ -21036,6 +20998,10 @@
 	pixel_x = 6;
 	pixel_y = 3
 	},
+/obj/item/clothing/accessory/medal/gold/captain{
+	pixel_x = -11;
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "lzD" = (
@@ -21972,7 +21938,7 @@
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
-	sensors = list("air_sensor"="Tank")
+	sensors = list("air_sensor" = "Tank")
 	},
 /obj/machinery/light,
 /turf/simulated/floor{
@@ -23310,11 +23276,11 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/rig/wizard{
-	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
+	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20);
 	desc = "Old bizarre gem-encrusted suit that radiates magical energies."
 	},
 /obj/item/clothing/head/helmet/space/rig/wizard{
-	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
+	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20);
 	desc = "Old bizarre gem-encrusted helmet that radiates magical energies."
 	},
 /obj/machinery/light/small{
@@ -23943,7 +23909,7 @@
 	},
 /area/station/civilian/chapel)
 "olz" = (
-/obj/structure/chicken_feeder,
+/obj/structure/flora/junglebush,
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "omu" = (
@@ -27832,11 +27798,11 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "rGx" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 1
-	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/stool,
+/obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor{
-	icon_state = "grass1"
+	icon_state = "asteroid7"
 	},
 /area/station/hallway/secondary/arrival)
 "rHg" = (
@@ -28210,6 +28176,10 @@
 	pixel_y = -28
 	},
 /obj/item/clothing/head/beret/sec/hos,
+/obj/item/clothing/accessory/medal/gold/heroism{
+	pixel_x = 13;
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "sfO" = (
@@ -29931,9 +29901,6 @@
 	c_tag = "Arrival Hallway Center";
 	pixel_x = -4
 	},
-/obj/structure/sign/painting{
-	pixel_y = 30
-	},
 /turf/simulated/floor{
 	icon_state = "grass1"
 	},
@@ -30445,21 +30412,9 @@
 /area/station/engineering/break_room)
 "umY" = (
 /obj/structure/table/woodentable,
-/obj/item/painting_frame{
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/obj/item/painting_frame{
-	pixel_x = -2
-	},
-/obj/item/stack/sheet/cloth{
-	amount = 30
-	},
-/obj/item/device/camera{
-	pixel_y = -12
-	},
+/obj/item/toy/cards,
 /turf/simulated/floor{
-	icon_state = "asteroid"
+	icon_state = "grass1"
 	},
 /area/station/hallway/secondary/arrival)
 "unh" = (
@@ -31782,9 +31737,15 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "vJa" = (
-/obj/structure/easel,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
-	icon_state = "asteroid7"
+	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
 "vJt" = (
@@ -31817,7 +31778,7 @@
 	input_tag = "n2_in";
 	name = "Nitrogen Supply Control";
 	output_tag = "n2_out";
-	sensors = list("n2_sensor"="Tank")
+	sensors = list("n2_sensor" = "Tank")
 	},
 /obj/machinery/light{
 	dir = 8
@@ -52932,7 +52893,7 @@ akb
 akb
 akb
 akb
-asc
+alE
 ama
 amp
 akb
@@ -53960,7 +53921,7 @@ pNu
 akb
 akb
 akb
-asd
+alI
 ame
 ams
 amD
@@ -63956,7 +63917,7 @@ ccc
 dNp
 eAC
 lss
-mdk
+twE
 qct
 gGT
 jaa
@@ -64212,8 +64173,8 @@ tQc
 lef
 hbt
 yjV
-vJa
-rGx
+eAC
+umY
 ahw
 hvW
 yaA
@@ -64469,8 +64430,8 @@ tEV
 twE
 dNp
 cxV
-umY
-alE
+cxV
+rGx
 dOV
 djK
 jaa
@@ -65241,7 +65202,7 @@ pln
 bcG
 ahy
 mUR
-alI
+vJa
 lJb
 qce
 vOQ

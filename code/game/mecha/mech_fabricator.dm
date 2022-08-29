@@ -511,6 +511,8 @@
 
 	if(panel_open)
 		if(iscrowbar(W))
+			for(var/material in resources)
+				remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 			default_deconstruction_crowbar(W)
 			return 1
 		else
@@ -558,9 +560,3 @@
 		else
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return
-
-/obj/machinery/mecha_part_fabricator/deconstruction()
-	. = ..()
-	for(var/material in resources)
-		remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
-

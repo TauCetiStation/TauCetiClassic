@@ -2,7 +2,7 @@
 	return TK_MAXRANGE
 
 /mob/proc/get_tk_level()
-	if(stat != CONSCIOUS)
+	if(stat)
 		return TK_LEVEL_ZERO
 
 	if(get_species() == SKRELL)

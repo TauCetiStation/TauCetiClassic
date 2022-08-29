@@ -82,18 +82,6 @@
 	max_ammo = 2
 	multiload = 0
 
-/obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer
-	name = "derringer internal magazine"
-	desc = "This doesn't even exist!"
-	ammo_type = /obj/item/ammo_casing/c38m
-	caliber = "38"
-	max_ammo = 2
-	multiload = 0
-
-/obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer/syndicate
-	ammo_type = /obj/item/ammo_casing/a357
-	caliber = "357"
-
 /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	name = "bazooka internal magazine"
 	desc = "This doesn't even exist!"

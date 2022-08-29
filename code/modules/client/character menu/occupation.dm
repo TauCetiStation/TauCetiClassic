@@ -69,7 +69,7 @@
 
 		. += "</td><td width='40%'>"
 
-		. += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;dir=higher;text=[rank]' oncontextmenu='window.location.href=\"?_src_=prefs;preference=job;task=setJobLevel;text=[rank]\";return false;'>"
+		. += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;text=[rank]'>"
 
 		if(rank == "Test Subject")//Assistant is special
 			if(job_preferences["Test Subject"])
@@ -119,7 +119,7 @@
 					if(choice)
 						SetPlayerAltTitle(job, choice)
 			if("setJobLevel")
-				UpdateJobPreference(user, href_list["text"], href_list["dir"])
+				UpdateJobPreference(user, href_list["text"])
 
 /datum/preferences/proc/GetPlayerAltTitle(datum/job/job)
 	return player_alt_titles.Find(job.title) > 0 \
@@ -134,28 +134,19 @@
 	if(job.title != new_title)
 		player_alt_titles[job.title] = new_title
 
-/datum/preferences/proc/UpdateJobPreference(mob/user, role, dir)
+/datum/preferences/proc/UpdateJobPreference(mob/user, role)
 	var/datum/job/job = SSjob.GetJob(role)
 	if(!job)
 		return
 
-	var/jpval = null //LMB
-	var/jpval2 = null //RMB
+	var/jpval = JP_LOW
 	switch(job_preferences[job.title])
-		if(null)
-			jpval = JP_LOW
-			jpval2 = JP_HIGH
 		if(JP_LOW)
 			jpval = JP_MEDIUM
-			jpval2 = null
 		if(JP_MEDIUM)
 			jpval = JP_HIGH
-			jpval2 = JP_LOW
 		if(JP_HIGH)
 			jpval = null
-			jpval2 = JP_MEDIUM
-	if(!dir) //RMB case
-		jpval = jpval2
 
 	if(role == "Test Subject")
 		if(job_preferences["Test Subject"] == JP_LOW)

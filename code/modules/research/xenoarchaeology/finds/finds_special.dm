@@ -13,7 +13,6 @@
 
 // a talking gas mask!
 /obj/item/clothing/mask/gas/poltergeist
-	flags = HEAR_TALK
 	var/list/heard_talk = list()
 	var/last_twitch = 0
 	var/max_stored_messages = 100
@@ -54,7 +53,6 @@ var/global/list/bad_messages = list("Never take me off, please!",
 	name = "statuette"
 	icon_state = "statuette"
 	icon = 'icons/obj/xenoarchaeology/finds.dmi'
-	flags = HEAR_TALK
 	var/charges = 0
 	var/list/nearby_mobs = list()
 	var/last_bloodcall = 0

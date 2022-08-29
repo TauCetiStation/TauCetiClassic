@@ -22,58 +22,6 @@
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
 		owner.update_stat()
 
-//STUN
-/datum/status_effect/incapacitating/stun
-	id = "stun"
-
-/datum/status_effect/incapacitating/stun/on_apply()
-	. = ..()
-	if(!.)
-		return
-	owner.stunned = TRUE
-	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
-	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
-
-/datum/status_effect/incapacitating/stun/on_remove()
-	owner.stunned = FALSE
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, id)
-	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
-	return ..()
-
-//PARALYZED
-/datum/status_effect/incapacitating/paralyzed
-	id = "paralyzed"
-
-/datum/status_effect/incapacitating/paralyzed/on_apply()
-	. = ..()
-	if(!.)
-		return
-	owner.paralysis = TRUE
-	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
-	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
-
-/datum/status_effect/incapacitating/paralyzed/on_remove()
-	owner.paralysis = FALSE
-	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, id)
-	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
-	return ..()
-
-//WEAKENED
-/datum/status_effect/incapacitating/weakened
-	id = "weakened"
-
-/datum/status_effect/incapacitating/weakened/on_apply()
-	. = ..()
-	if(!.)
-		return
-	owner.weakened = TRUE
-	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
-
-/datum/status_effect/incapacitating/weakened/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
-	owner.weakened = FALSE
-	return ..()
-
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"

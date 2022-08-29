@@ -161,7 +161,6 @@ Implant Specifics:<BR>"}
 	var/elevel = "Localized Limb"
 	var/phrase = "supercalifragilisticexpialidocious"
 	icon_state = "implant_evil"
-	flags = HEAR_TALK
 
 /obj/item/weapon/implant/explosive/get_data()
 	var/dat = {"
@@ -313,6 +312,8 @@ Implant Specifics:<BR>"}
 	imp_in.SetParalysis(0)
 	imp_in.SetStunned(0)
 	imp_in.SetWeakened(0)
+	imp_in.lying = 0
+	imp_in.update_canmove()
 	imp_in.reagents.add_reagent("tricordrazine", 20)
 	imp_in.reagents.add_reagent("doctorsdelight", 25)
 	imp_in.reagents.add_reagent("oxycodone", 5)

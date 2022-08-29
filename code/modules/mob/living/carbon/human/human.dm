@@ -626,6 +626,7 @@
 	else if(def_zone)
 		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
+	attack_heart(clamp(((shock_damage - 10) ** 2) / 100, 0, 100), shock_damage) //small shock can heal your heart
 	if(species)
 		siemens_coeff *= species.siemens_coefficient
 
@@ -1919,7 +1920,7 @@
 	set category = "IPC"
 	set name = "Change IPC Screen"
 	set desc = "Allow change monitor type"
-	if(stat != CONSCIOUS)
+	if(stat)
 		return
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
 	if(!BP || BP.is_stump)
@@ -1956,7 +1957,7 @@
 	set name = "Toggle IPC Screen"
 	set desc = "Allow toggle monitor"
 
-	if(stat != CONSCIOUS)
+	if(stat)
 		return
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
 	if(!BP || (BP.is_stump))
@@ -1981,7 +1982,7 @@
 	set name = "Display Text On Screen"
 	set desc = "Display text on your monitor"
 
-	if(stat != CONSCIOUS)
+	if(stat)
 		return
 
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]

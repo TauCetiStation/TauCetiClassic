@@ -7,7 +7,6 @@
 	item_state = "backpack"
 	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
-	flags = HEAR_PASS_SAY
 
 /obj/item/weapon/pedalbag/verb/quick_empty()
 	set name = "Empty Prisoners"

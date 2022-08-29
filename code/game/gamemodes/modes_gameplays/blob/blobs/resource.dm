@@ -2,7 +2,6 @@
 	name = "resource blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_resource"
-	max_health = 30
 	health = 30
 	fire_resist = 2
 	var/mob/camera/blob/overmind = null

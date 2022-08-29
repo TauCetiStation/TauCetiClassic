@@ -497,12 +497,10 @@
 /turf/environment/space,
 /area/shuttle/escape_pod1/transit)
 "abc" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
+/obj/structure/table/reinforced,
+/obj/item/device/megaphone,
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "vault"
+	icon_state = "bar"
 	},
 /area/custom/syndicate_mothership)
 "abd" = (
@@ -512,7 +510,7 @@
 /obj/machinery/vending/snack{
 	name = "Magic Getmore Chocolate Corp";
 	prices = list();
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar=10,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen=10,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen=10,/obj/item/weapon/reagent_containers/food/snacks/chips=10,/obj/item/weapon/reagent_containers/food/snacks/sosjerky=10,/obj/item/weapon/reagent_containers/food/snacks/no_raisin=10,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie=10,/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers=10,/obj/item/weapon/reagent_containers/food/snacks/candy_corn=10,/obj/item/weapon/reagent_containers/food/snacks/cracker=20)
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 10, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 10, /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 10, /obj/item/weapon/reagent_containers/food/snacks/chips = 10, /obj/item/weapon/reagent_containers/food/snacks/sosjerky = 10, /obj/item/weapon/reagent_containers/food/snacks/no_raisin = 10, /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 10, /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 10, /obj/item/weapon/reagent_containers/food/snacks/candy_corn = 10, /obj/item/weapon/reagent_containers/food/snacks/cracker = 20)
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -522,7 +520,7 @@
 /obj/machinery/vending/cigarette{
 	name = "Magic Cigarette machine";
 	prices = list();
-	products = list(/obj/item/weapon/storage/fancy/cigarettes=10,/obj/item/weapon/storage/fancy/cigarettes/menthol=5,/obj/item/weapon/storage/box/matches=10,/obj/item/weapon/lighter/random=4,/obj/item/clothing/mask/ecig=4,/obj/item/weapon/storage/fancy/cigarettes/dromedaryco=5,/obj/item/weapon/lighter/zippo=5,/obj/item/clothing/mask/cigarette/cigar/havana=5)
+	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10, /obj/item/weapon/storage/fancy/cigarettes/menthol = 5, /obj/item/weapon/storage/box/matches = 10, /obj/item/weapon/lighter/random = 4, /obj/item/clothing/mask/ecig = 4, /obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 5, /obj/item/weapon/lighter/zippo = 5, /obj/item/clothing/mask/cigarette/cigar/havana = 5)
 	},
 /obj/structure/sign/poster/contraband/space_up{
 	pixel_x = 32
@@ -1149,11 +1147,11 @@
 /turf/environment/space,
 /area/shuttle/arrival/velocity)
 "acW" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	dir = 9;
+	icon_state = "black"
 	},
-/area/custom/syndicate_mothership)
+/area/custom/syndicate_mothership/droppod_garage)
 "acX" = (
 /obj/structure/object_wall/evac{
 	icon_state = "6,2"
@@ -1184,9 +1182,9 @@
 "adc" = (
 /turf/unsimulated/floor{
 	dir = 1;
-	icon_state = "darkred"
+	icon_state = "black"
 	},
-/area/custom/syndicate_mothership)
+/area/custom/syndicate_mothership/droppod_garage)
 "add" = (
 /obj/structure/object_wall/evac{
 	icon_state = "10,2"
@@ -1256,10 +1254,10 @@
 /area/shuttle/arrival/velocity)
 "adl" = (
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "darkred"
+	dir = 5;
+	icon_state = "black"
 	},
-/area/custom/syndicate_mothership)
+/area/custom/syndicate_mothership/droppod_garage)
 "adm" = (
 /obj/machinery/door/unpowered/shuttle/wagon,
 /turf/simulated/shuttle/floor/wagon,
@@ -1321,11 +1319,14 @@
 /turf/environment/space/shuttle,
 /area/shuttle/arrival/velocity)
 "adv" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
-/obj/effect/landmark/heist_spawn,
-/turf/simulated/shuttle/floor/vox,
-/area/shuttle/vox/arkship_hold)
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "black"
+	},
+/area/custom/syndicate_mothership/droppod_garage)
 "adw" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 8
@@ -1408,16 +1409,10 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "adH" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/firstaid/adv{
-	pixel_y = 6
-	},
-/obj/item/weapon/storage/firstaid/toxin,
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "black"
+	icon_state = "floor"
 	},
-/area/custom/syndicate_mothership)
+/area/custom/syndicate_mothership/droppod_garage)
 "adI" = (
 /obj/structure/sign/mark{
 	icon_state = "yrt"
@@ -2371,16 +2366,14 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "age" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/rd,
+/obj/structure/curtain/open/bed,
+/obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
-/area/shuttle/vox/arkship)
+/area/shuttle/vox/arkship_hold)
 "agf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/flora/random,
@@ -2389,29 +2382,15 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "agg" = (
-/obj/structure/torch_holder/magic,
-/obj/structure/closet/cabinet{
-	name = "Crusader"
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/gar,
+/obj/structure/curtain/open/bed,
+/obj/effect/landmark/heist_spawn,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
 	},
-/obj/item/clothing/suit/wizrobe/crusader,
-/obj/item/clothing/gloves/black,
-/obj/item/clothing/head/wizard/crusader,
-/obj/item/clothing/under/color/black,
-/obj/item/weapon/storage/backpack/chaplain,
-/obj/item/weapon/claymore/religion,
-/obj/item/weapon/shield/riot/roman{
-	name = "Sacred shield"
-	},
-/obj/item/weapon/storage/bible,
-/obj/structure/mirror/magic{
-	pixel_x = -25;
-	pixel_y = -3
-	},
-/obj/item/clothing/shoes/boots/wizard,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
+/area/shuttle/vox/arkship_hold)
 "agh" = (
 /obj/structure/object_wall/vox{
 	icon_state = "12,14"
@@ -2734,14 +2713,14 @@
 /turf/environment/space,
 /area/shuttle/transport1/centcom)
 "ahg" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/gar,
+/obj/item/weapon/bedsheet/mime,
 /obj/structure/curtain/open/bed,
-/obj/effect/landmark/heist_spawn,
-/turf/simulated/shuttle/floor/vox{
-	icon_state = "floorplace"
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
 	},
+/obj/effect/landmark/heist_spawn,
+/turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "ahh" = (
 /obj/structure/object_wall/erokez{
@@ -3091,44 +3070,24 @@
 	},
 /area/custom/syndicate_mothership)
 "aid" = (
-/obj/structure/closet/cabinet,
-/obj/item/clothing/suit/hooded/wintercoat/wiz_red,
-/obj/item/clothing/suit/hooded/wintercoat/wiz_red,
-/obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
-/obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
-/obj/item/clothing/head/wizard/ushanka/brown_white,
-/obj/item/clothing/head/wizard/ushanka/brown,
-/obj/item/clothing/head/wizard/ushanka/black_white,
-/obj/item/clothing/head/wizard/ushanka/black,
-/obj/item/clothing/head/wizard/ushanka,
-/obj/item/weapon/tank/emergency_oxygen,
-/obj/item/weapon/tank/emergency_oxygen,
-/obj/item/weapon/tank/emergency_oxygen,
-/obj/item/weapon/tank/emergency_oxygen,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/winterboots/wizard,
-/obj/item/clothing/shoes/winterboots/wizard,
-/obj/item/clothing/shoes/winterboots/wizard,
-/obj/item/clothing/shoes/winterboots/wizard,
-/turf/unsimulated/floor{
-	icon_state = "wood"
+/obj/structure/lattice,
+/obj/structure/grille{
+	destroyed = 1
 	},
-/area/custom/wizard_station)
+/turf/environment/space,
+/area/space)
 "aie" = (
 /turf/unsimulated/wall,
 /area/custom/syndicate_mothership)
 "aif" = (
-/obj/machinery/gateway{
-	dir = 1
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	dir = 4;
+	icon_state = "black"
 	},
-/area/custom/syndicate_mothership)
+/area/custom/syndicate_mothership/droppod_garage)
 "aig" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/station_alert,
@@ -3137,64 +3096,59 @@
 	},
 /area/shuttle/vox/arkship)
 "aih" = (
-/obj/machinery/gateway{
-	dir = 10
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/obj/machinery/door_control{
+	id = "syndieshutters";
+	name = "remote shutter control";
+	pixel_x = -28;
+	req_access = list(150)
 	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "vault"
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
 	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "aii" = (
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "aij" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_l"
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "black"
 	},
-/turf/environment/space,
-/area/shuttle/syndicate/start)
+/area/custom/syndicate_mothership/droppod_garage)
 "aik" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
-/obj/machinery/light{
-	dir = 4
+/obj/effect/landmark/droppod_spawn{
+	pods_spawned = 3
 	},
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "darkred"
+	icon_state = "floor"
 	},
-/area/custom/syndicate_mothership)
+/area/custom/syndicate_mothership/droppod_garage)
 "ail" = (
-/obj/machinery/computer/telecrystals/boss{
-	dir = 4;
-	req_access = list(151)
+/obj/effect/landmark/droppod_spawn{
+	pods_spawned = 4
 	},
-/obj/effect/decal/cleanable/cobweb,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "darkred"
+	icon_state = "floor"
 	},
-/area/custom/syndicate_mothership)
+/area/custom/syndicate_mothership/droppod_garage)
 "aim" = (
-/obj/machinery/gateway,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	dir = 4;
+	icon_state = "black"
 	},
-/area/custom/syndicate_mothership)
+/area/custom/syndicate_mothership/droppod_garage)
 "ain" = (
-/obj/machinery/gateway{
-	dir = 8
+/obj/effect/landmark/droppod_spawn{
+	pods_spawned = 5
 	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "floor"
 	},
-/area/custom/syndicate_mothership)
+/area/custom/syndicate_mothership/droppod_garage)
 "aio" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "1,12"
@@ -3241,129 +3195,100 @@
 	},
 /area/shuttle/syndicate_elite/mothership)
 "aiu" = (
-/obj/machinery/computer/telecrystals/uplinker,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
-"aiv" = (
-/obj/machinery/computer/intruder_station,
-/turf/unsimulated/floor{
-	icon_state = "podhatch"
-	},
-/area/custom/syndicate_mothership)
-"aiw" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin{
-	pixel_y = 4
-	},
-/obj/item/weapon/pen{
-	pixel_y = 6
-	},
-/turf/unsimulated/floor{
-	icon_state = "darkred"
-	},
-/area/custom/syndicate_mothership)
-"aix" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "plating"
-	},
-/area/custom/syndicate_mothership)
-"aiy" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/syndie,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
+/obj/structure/table,
+/obj/item/device/flashlight/lamp,
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
 /area/custom/syndicate_mothership)
-"aiz" = (
-/obj/structure/table/woodentable,
-/obj/item/toy/crayon/spraycan{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/item/toy/sound_button/syndi{
-	pixel_x = -4;
-	pixel_y = 5
-	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
-	},
+"aiv" = (
+/obj/structure/table,
+/obj/item/device/pda/syndicate,
 /turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "black"
+	icon_state = "grimy"
 	},
 /area/custom/syndicate_mothership)
-"aiA" = (
-/obj/machinery/optable,
+"aiw" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/custom/syndicate_mothership)
+"aix" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/turf/unsimulated/floor{
+	icon_state = "dark"
 	},
-/area/shuttle/syndicate/start)
-"aiB" = (
-/obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 4;
-	pixel_y = 4
+/area/custom/syndicate_mothership)
+"aiy" = (
+/obj/machinery/gateway{
+	dir = 1
 	},
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/tactical{
-	pixel_x = -4;
-	pixel_y = -4
+/turf/unsimulated/floor{
+	icon_state = "dark"
 	},
-/obj/structure/table/glass,
+/area/custom/syndicate_mothership)
+"aiz" = (
+/obj/machinery/gateway{
+	dir = 9
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/syndicate_mothership)
+"aiA" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
-	},
-/area/shuttle/syndicate/start)
-"aiC" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_r"
-	},
-/turf/environment/space,
-/area/shuttle/syndicate/start)
-"aiD" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
+"aiB" = (
+/obj/machinery/gateway{
+	dir = 5
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/syndicate_mothership)
+"aiC" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/donkpockets{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/toy/crayon/spraycan,
+/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/weapon/storage/fancy/donut_box/traitor,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
+"aiD" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/computerframe{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
 "aiE" = (
 /obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/rd,
+/obj/item/weapon/bedsheet/hos,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/curtain/open/bed,
 /obj/effect/landmark/heist_spawn,
-/turf/simulated/shuttle/floor/vox{
-	icon_state = "floorplace"
-	},
+/turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "aiF" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3525,27 +3450,31 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "ajc" = (
-/obj/structure/table/reinforced,
-/obj/item/device/megaphone{
-	pixel_y = 2
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/syndie,
+/obj/machinery/light{
+	dir = 8
 	},
-/obj/structure/window/reinforced,
 /turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "darkred"
+	icon_state = "grimy"
 	},
 /area/custom/syndicate_mothership)
 "ajd" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/syndie,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "black"
+	icon_state = "grimy"
 	},
 /area/custom/syndicate_mothership)
 "aje" = (
-/obj/item/weapon/flora/random,
+/obj/machinery/gateway{
+	dir = 8
+	},
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "black"
+	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "ajf" = (
@@ -3597,19 +3526,11 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "ajk" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/handcuffs{
-	pixel_y = 6
-	},
-/obj/item/weapon/storage/box/flashbangs{
-	pixel_y = -6
-	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
+/obj/machinery/gateway{
+	dir = 4
 	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "black"
+	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "ajl" = (
@@ -3651,9 +3572,9 @@
 	},
 /area/custom/syndicate_mothership)
 "ajq" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/machinery/gateway,
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "ajr" = (
@@ -3672,13 +3593,13 @@
 	},
 /area/shuttle/syndicate_elite/mothership)
 "ajt" = (
-/obj/machinery/telecomms/allinone{
-	intercept = 1
+/obj/machinery/gateway{
+	dir = 10
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
+/turf/unsimulated/floor{
+	icon_state = "dark"
 	},
-/area/shuttle/syndicate/start)
+/area/custom/syndicate_mothership)
 "aju" = (
 /obj/structure/object_wall/standart{
 	icon_state = "diagonalWall3"
@@ -3710,10 +3631,11 @@
 	},
 /area/shuttle/vox/arkship)
 "ajy" = (
-/obj/machinery/computer/telecrystals/uplinker,
+/obj/machinery/gateway{
+	dir = 6
+	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "podhatch"
+	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "ajz" = (
@@ -3778,74 +3700,42 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "ajG" = (
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
-/obj/item/weapon/tank/anesthetic,
-/obj/structure/table/glass,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/obj/structure/table,
+/obj/machinery/chem_dispenser/soda,
+/turf/unsimulated/floor{
+	icon_state = "white"
 	},
-/area/shuttle/syndicate/start)
+/area/custom/syndicate_mothership)
 "ajH" = (
-/obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/syringe/antiviral,
-/obj/item/weapon/reagent_containers/syringe/antiviral,
-/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
-/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/stack/medical/suture,
-/obj/item/stack/medical/suture,
-/obj/item/stack/medical/suture,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/obj/structure/table,
+/obj/item/weapon/storage/box/drinkingglasses,
+/turf/unsimulated/floor{
+	icon_state = "white"
 	},
-/area/shuttle/syndicate/start)
+/area/custom/syndicate_mothership)
 "ajI" = (
-/obj/machinery/gateway{
-	dir = 6
+/obj/structure/sink/kitchen{
+	pixel_y = 30
 	},
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "white"
 	},
 /area/custom/syndicate_mothership)
 "ajJ" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
+/obj/structure/closet/secure_closet/freezer/fridge,
 /obj/machinery/light{
-	dir = 8
+	dir = 1
 	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "darkred"
+	icon_state = "white"
 	},
 /area/custom/syndicate_mothership)
 "ajK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/effect/landmark/droppod_spawn,
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "syndieshutters";
-	name = "Blast Shutters";
-	opacity = 0
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray_w"
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/syndicate/start)
+/area/custom/syndicate_mothership/droppod_garage)
 "ajL" = (
 /obj/structure/object_wall/vox{
 	icon_state = "15,11";
@@ -3854,43 +3744,28 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "ajM" = (
-/obj/structure/stool/bed/chair/office/dark,
+/obj/effect/landmark/droppod_spawn{
+	pods_spawned = 1
+	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "floor"
+	},
+/area/custom/syndicate_mothership/droppod_garage)
+"ajN" = (
+/turf/unsimulated/floor{
+	icon_state = "white"
 	},
 /area/custom/syndicate_mothership)
-"ajN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "syndieshutters";
-	name = "Blast Shutters";
-	opacity = 0
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray_e"
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/syndicate/start)
 "ajO" = (
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/table/reinforced,
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -3;
+	pixel_y = 6
 	},
-/obj/structure/shuttle/engine/heater{
-	icon_state = "heater1"
+/turf/unsimulated/floor{
+	icon_state = "white"
 	},
-/turf/simulated/floor/plating/airless,
-/area/shuttle/syndicate/start)
+/area/custom/syndicate_mothership)
 "ajP" = (
 /obj/structure/object_wall/vox{
 	density = 0;
@@ -3921,25 +3796,23 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "ajT" = (
-/obj/structure/closet/syndicate,
+/obj/effect/landmark/droppod_spawn{
+	pods_spawned = 2
+	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "floor"
+	},
+/area/custom/syndicate_mothership/droppod_garage)
+"ajU" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/donkpockets{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
 	},
 /area/custom/syndicate_mothership)
-"ajU" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 1
-	},
-/obj/machinery/door_control{
-	id = "syndieshutters";
-	name = "remote shutter control";
-	pixel_x = -28;
-	req_access = list(150)
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/syndicate/start)
 "ajV" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "14,5"
@@ -3968,15 +3841,16 @@
 /turf/environment/space,
 /area/shuttle/transport1/centcom)
 "ajZ" = (
-/obj/machinery/door/window/eastright{
-	dir = 2;
-	name = "Uplink Management Control";
-	req_access = list(151)
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "darkred"
+/obj/machinery/light{
+	dir = 8
 	},
-/area/custom/syndicate_mothership)
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
 "aka" = (
 /obj/structure/object_wall/standart{
 	dir = 8;
@@ -3985,35 +3859,56 @@
 /turf/environment/space,
 /area/shuttle/syndicate/start)
 "akb" = (
-/obj/structure/sign/poster/contraband/free_key{
-	pixel_y = 32
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/machinery/vending/cigarette{
-	name = "Hacked Cigarette machine";
-	prices = list()
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "black"
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "syndieshutters";
+	name = "Blast Shutters";
+	opacity = 0
 	},
-/area/custom/syndicate_mothership)
+/turf/simulated/shuttle/plating,
+/area/shuttle/syndicate/start)
 "akc" = (
-/obj/structure/sign/map/right{
-	pixel_y = 32
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "bar"
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "syndieshutters";
+	name = "Blast Shutters";
+	opacity = 0
 	},
-/area/custom/syndicate_mothership)
+/turf/simulated/shuttle/plating,
+/area/shuttle/syndicate/start)
 "akd" = (
-/obj/effect/landmark{
-	name = "Nuclear-Bomb"
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "black"
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/area/custom/syndicate_mothership)
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "syndieshutters";
+	name = "Blast Shutters";
+	opacity = 0
+	},
+/turf/simulated/shuttle/plating,
+/area/shuttle/syndicate/start)
 "ake" = (
 /obj/structure/object_wall/standart{
 	dir = 1;
@@ -4029,42 +3924,38 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "akg" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 1;
-	frequency = 1331;
-	id_tag = "synd_pump";
-	name = "Syndicate Large Air Vent"
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 8
 	},
-/obj/machinery/light/small,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
 "akh" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 4
-	},
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/machinery/light,
 /turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet6-2";
-	name = "red carpet"
+	icon_state = "white"
 	},
 /area/custom/syndicate_mothership)
 "aki" = (
-/obj/machinery/computer/telecrystals/uplinker,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/visuals/tray,
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "podhatch"
+	icon_state = "white"
 	},
 /area/custom/syndicate_mothership)
 "akj" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 8
+/obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = -4
 	},
 /turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet10-8";
-	name = "red carpet"
+	icon_state = "white"
 	},
 /area/custom/syndicate_mothership)
 "akk" = (
@@ -4139,20 +4030,14 @@
 /obj/structure/object_wall/standart{
 	icon_state = "wall3"
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
+/turf/environment/space,
 /area/shuttle/syndicate/start)
 "akv" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 4
-	},
 /turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet7-3";
-	name = "red carpet"
+	dir = 10;
+	icon_state = "black"
 	},
-/area/custom/syndicate_mothership)
+/area/custom/syndicate_mothership/droppod_garage)
 "akw" = (
 /obj/machinery/computer/security/nuclear,
 /turf/simulated/shuttle/floor{
@@ -4166,31 +4051,16 @@
 	},
 /area/shuttle/syndicate/start)
 "aky" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
-/obj/structure/table/woodentable,
-/obj/item/clothing/suit/syndieshirt{
-	pixel_x = -3
-	},
-/obj/item/toy/syndicateballoon{
-	pixel_x = 5;
-	pixel_y = 3
-	},
 /turf/unsimulated/floor{
-	dir = 4;
 	icon_state = "black"
 	},
-/area/custom/syndicate_mothership)
+/area/custom/syndicate_mothership/droppod_garage)
 "akz" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Hall";
-	req_access = list(150)
-	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 6;
+	icon_state = "black"
 	},
-/area/custom/syndicate_mothership)
+/area/custom/syndicate_mothership/droppod_garage)
 "akA" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "5,12"
@@ -4265,11 +4135,12 @@
 /turf/environment/space,
 /area/shuttle/transport1/centcom)
 "akL" = (
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "darkred"
+/obj/structure/table/reinforced,
+/obj/machinery/kitchen_machine/microwave,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
 	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "akM" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -4282,10 +4153,22 @@
 	},
 /area/shuttle/syndicate/start)
 "akO" = (
-/turf/unsimulated/floor{
-	icon_state = "darkred"
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 4
 	},
-/area/custom/syndicate_mothership)
+/obj/item/device/radio/intercom{
+	desc = "Talk through this. Evilly";
+	freerange = 1;
+	frequency = 1213;
+	name = "Syndicate Intercom";
+	pixel_x = -32;
+	subspace_transmission = 1;
+	syndie = 1
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
 "akP" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "12,12"
@@ -4300,28 +4183,36 @@
 	},
 /area/custom/syndicate_mothership)
 "akR" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 1
+/obj/structure/urinal{
+	pixel_y = 32
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/syndicate/start)
-"akS" = (
 /turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "darkred"
+	icon_state = "freezerfloor"
+	},
+/area/custom/syndicate_mothership)
+"akS" = (
+/obj/machinery/shower{
+	pixel_y = 24
+	},
+/obj/structure/window/basic{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "freezerfloor"
 	},
 /area/custom/syndicate_mothership)
 "akT" = (
-/obj/machinery/kitchen_machine/microwave{
-	pixel_y = 6
+/obj/machinery/shower{
+	pixel_y = 24
 	},
-/obj/structure/table,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
+/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
+/obj/machinery/light/small{
+	dir = 4
 	},
-/area/shuttle/syndicate/start)
+/turf/unsimulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/custom/syndicate_mothership)
 "akU" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "12,3"
@@ -4372,20 +4263,8 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "alb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "syndieshutters";
-	name = "Blast Shutters";
-	opacity = 0
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray_we"
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 4
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -4406,13 +4285,11 @@
 	},
 /area/custom/syndicate_mothership)
 "ale" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 4
+/obj/machinery/shower{
+	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet5-1";
-	name = "red carpet"
+	icon_state = "freezerfloor"
 	},
 /area/custom/syndicate_mothership)
 "alf" = (
@@ -4440,62 +4317,61 @@
 /turf/environment/space,
 /area/shuttle/transport1/centcom)
 "alj" = (
-/obj/item/weapon/flora/random,
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "black"
+/obj/structure/table/reinforced,
+/obj/item/device/aicard,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
 	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "alk" = (
-/obj/item/weapon/flora/random,
-/turf/unsimulated/floor{
-	icon_state = "black"
-	},
-/area/custom/syndicate_mothership)
-"all" = (
 /obj/machinery/light,
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
 	},
-/obj/machinery/computer/mech_bay_power_console,
-/turf/unsimulated/floor{
-	color = "#ff3333";
-	icon_state = "bcircuit"
+/area/shuttle/syndicate/start)
+"all" = (
+/obj/item/device/radio/intercom{
+	desc = "Talk through this. Evilly";
+	freerange = 1;
+	frequency = 1213;
+	name = "Syndicate Intercom";
+	pixel_y = -32;
+	subspace_transmission = 1;
+	syndie = 1
 	},
-/area/custom/syndicate_mothership)
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
 "alm" = (
-/obj/structure/dryer{
-	dir = 4;
-	pixel_x = -6
+/obj/structure/table/reinforced,
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/weapon/pen,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
+"aln" = (
+/obj/structure/mirror{
+	pixel_x = -30
+	},
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
 /area/custom/syndicate_mothership)
-"aln" = (
-/obj/structure/table/woodentable,
-/obj/item/toy/figure{
-	pixel_y = 6
-	},
-/obj/item/toy/figure/syndie{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/item/toy/figure/syndie{
-	pixel_x = 9;
-	pixel_y = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "black"
-	},
-/area/custom/syndicate_mothership)
 "alo" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 11
-	},
-/obj/structure/mirror{
-	pixel_x = 28
+/obj/machinery/light/small,
+/obj/structure/dryer{
+	dir = 8;
+	pixel_x = 6
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -4523,13 +4399,12 @@
 /turf/environment/space,
 /area/shuttle/syndicate/start)
 "als" = (
-/obj/structure/object_wall/standart{
-	icon_state = "wall3"
+/obj/machinery/mech_bay_recharge_port,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "podhatch"
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
-	},
-/area/shuttle/syndicate/start)
+/area/custom/syndicate_mothership)
 "alt" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "1,11"
@@ -4560,40 +4435,49 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "alx" = (
-/obj/item/weapon/reagent_containers/glass/bucket/full,
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/item/weapon/mop,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
+"aly" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/syndicate,
+/obj/item/weapon/storage/toolbox/syndicate,
+/obj/item/weapon/storage/toolbox/syndicate,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
-"aly" = (
-/turf/unsimulated/wall,
-/area/custom/syndicate_mothership/droppod_garage)
 "alz" = (
-/obj/machinery/computer/telecrystals/uplinker,
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "podhatch"
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 8
 	},
-/area/custom/syndicate_mothership)
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
 "alA" = (
 /obj/effect/landmark/start/new_player,
 /turf/unsimulated/floor,
 /area/start)
 "alB" = (
-/obj/structure/sign/map/left{
-	pixel_y = 32
+/obj/item/stack/cable_coil{
+	pixel_x = 3;
+	pixel_y = -7
 	},
-/obj/machinery/light{
-	dir = 1;
-	invisibility = 101;
-	name = "invisible light fixture"
+/obj/machinery/cell_charger,
+/obj/item/device/assembly/prox_sensor{
+	pixel_x = -8;
+	pixel_y = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "bar"
+/obj/item/weapon/stock_parts/cell/high,
+/obj/item/weapon/stock_parts/cell/high,
+/obj/structure/table,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
 	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "alC" = (
 /obj/structure/object_wall/vox{
 	density = 0;
@@ -4603,11 +4487,14 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "alD" = (
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "red"
+/obj/structure/table,
+/obj/item/weapon/tank/jetpack/oxygen/harness,
+/obj/item/weapon/tank/jetpack/oxygen/harness,
+/obj/item/weapon/tank/jetpack/oxygen/harness,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
 	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "alE" = (
 /obj/effect/landmark/syndi_shuttle,
 /turf/simulated/shuttle/floor{
@@ -4615,48 +4502,26 @@
 	},
 /area/shuttle/syndicate/start)
 "alF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/machinery/computer/telecrystals/uplinker,
 /turf/unsimulated/floor{
-	icon_state = "plating"
+	dir = 10;
+	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "alG" = (
-/obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 5;
-	pixel_y = 6
+/obj/structure/closet/walllocker{
+	pixel_x = -32
 	},
-/obj/item/weapon/storage/fancy/donut_box/traitor{
-	pixel_y = -9
-	},
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Syndicate Intercom";
-	pixel_x = 28;
-	pixel_y = -5;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/table,
+/obj/item/weapon/reagent_containers/glass/bucket/full,
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/weapon/mop,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
 "alH" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor{
@@ -4679,85 +4544,78 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "alK" = (
-/turf/unsimulated/floor{
-	icon_state = "recharge_floor"
-	},
-/area/custom/syndicate_mothership)
-"alL" = (
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/structure/table/woodentable,
-/obj/item/toy/prize/mauler{
-	pixel_y = -8
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet14-10";
-	name = "red carpet"
-	},
-/area/custom/syndicate_mothership)
-"alM" = (
-/turf/unsimulated/floor{
+/obj/structure/sink{
 	dir = 8;
-	icon_state = "black"
+	pixel_x = -12;
+	pixel_y = 2
 	},
-/area/custom/syndicate_mothership)
-"alN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "plating"
-	},
-/area/custom/syndicate_mothership)
-"alO" = (
-/obj/structure/stool/bed/chair/metal/red,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "black"
-	},
-/area/custom/syndicate_mothership)
-"alP" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
-/obj/machinery/light/small,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet9-4";
-	name = "black carpet"
-	},
-/area/custom/syndicate_mothership)
-"alQ" = (
-/obj/structure/sign/poster/contraband/borg_fancy_2{
-	pixel_y = 32
-	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "black"
-	},
-/area/custom/syndicate_mothership)
-"alR" = (
+/area/shuttle/syndicate/start)
+"alL" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/stool/bed/chair/metal/red,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/shuttle/syndicate/start)
+"alM" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 6
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
+"alN" = (
+/obj/structure/table/reinforced,
+/obj/item/toy/crayon/spraycan,
+/turf/unsimulated/floor{
+	icon_state = "bar"
+	},
+/area/custom/syndicate_mothership)
+"alO" = (
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1331;
+	master_tag = "synd_airlock";
+	name = "interior access button";
+	pixel_y = -25
+	},
+/obj/machinery/light,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
+"alP" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	dir = 1;
-	icon_state = "black"
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
+"alQ" = (
+/obj/machinery/recharge_station,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
+"alR" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "alS" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/environment/space,
-/area/shuttle/syndicate/start)
+/turf/unsimulated/floor{
+	icon_state = "podhatchfull"
+	},
+/area/custom/syndicate_mothership)
 "alT" = (
 /obj/effect/step_trigger/thrower{
 	affect_ghosts = 1;
@@ -4768,78 +4626,89 @@
 /turf/environment/space,
 /area/space)
 "alU" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/obj/structure/rack,
-/obj/item/clothing/under/bathtowel,
-/obj/item/clothing/under/bathtowel,
-/obj/item/clothing/under/bathtowel,
+/obj/structure/table,
+/obj/item/roller,
 /obj/item/weapon/bikehorn/rubberducky,
-/turf/simulated/floor{
-	icon_state = "freezerfloor"
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
 	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "alV" = (
-/obj/machinery/washing_machine,
-/obj/machinery/light/small{
-	dir = 1
+/obj/structure/closet/medical_wall{
+	pixel_x = 28
 	},
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
+/obj/item/weapon/surgicaldrill,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
+/obj/item/weapon/scalpel/laser3,
+/obj/item/weapon/scalpel/manager,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/suture,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
 	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "alW" = (
-/obj/item/weapon/folder/red,
-/obj/structure/table/woodentable,
-/obj/item/weapon/pen,
+/obj/machinery/door/window/eastright{
+	name = "Uplink Management Control";
+	req_access = list(151)
+	},
 /turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet";
-	name = "red carpet"
+	icon_state = "bar"
 	},
 /area/custom/syndicate_mothership)
 "alX" = (
-/obj/item/weapon/reagent_containers/food/snacks/syndicake{
-	pixel_y = 11
+/obj/machinery/computer/telecrystals/uplinker,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "podhatch"
 	},
-/obj/item/weapon/bikehorn/rubberducky{
-	pixel_x = -5
+/area/custom/syndicate_mothership)
+"alY" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "podhatch"
 	},
-/obj/item/toy/crayon/spraycan{
-	pixel_x = 7;
-	pixel_y = 2
+/area/custom/syndicate_mothership)
+"alZ" = (
+/obj/machinery/door/window{
+	name = "Seating";
+	req_access = list(150)
 	},
-/obj/structure/table,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
-"alY" = (
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "black"
-	},
-/area/custom/syndicate_mothership)
-"alZ" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet11-12";
-	name = "red carpet"
-	},
-/area/custom/syndicate_mothership)
 "ama" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Kitchen";
-	req_access = list(150)
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	frequency = 1331;
+	id_tag = "synd_airlock";
+	pixel_x = -5;
+	pixel_y = 32;
+	tag_airpump = "synd_pump";
+	tag_chamber_sensor = "synd_sensor";
+	tag_exterior_door = "synd_outer";
+	tag_interior_door = "synd_inner"
 	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
+/obj/machinery/airlock_sensor{
+	frequency = 1331;
+	id_tag = "synd_sensor";
+	pixel_x = 10;
+	pixel_y = 25
 	},
-/area/custom/syndicate_mothership)
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1331;
+	id_tag = "synd_pump";
+	name = "Syndicate Large Air Vent"
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
 "amb" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible,
 /turf/simulated/shuttle/floor{
@@ -4847,40 +4716,37 @@
 	},
 /area/shuttle/syndicate/start)
 "amc" = (
-/obj/machinery/media/jukebox/syndi,
-/turf/unsimulated/floor{
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 8;
-	icon_state = "red"
+	frequency = 1331;
+	id_tag = "synd_pump";
+	name = "Syndicate Large Air Vent"
 	},
-/area/custom/syndicate_mothership)
-"ame" = (
-/obj/machinery/shower{
-	dir = 1
-	},
-/obj/machinery/door/window{
-	dir = 1;
-	name = "Shower cabin"
-	},
-/obj/structure/drain{
-	drainage = 2
-	},
-/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
-/obj/structure/curtain/open/shower/security,
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
-	},
-/area/custom/syndicate_mothership)
-"amf" = (
-/obj/item/device/suit_cooling_unit{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/device/suit_cooling_unit,
-/obj/structure/rack,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
+"amd" = (
+/obj/structure/closet/syndicate,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
+"ame" = (
+/obj/machinery/computer/telecrystals/boss{
+	req_access = list(151)
+	},
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
+"amf" = (
+/turf/unsimulated/floor{
+	icon_state = "podblack"
+	},
+/area/custom/syndicate_mothership)
 "amg" = (
 /obj/structure/object_wall/vox{
 	icon_state = "2,9";
@@ -4889,113 +4755,107 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "amh" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	frequency = 1331;
-	id_tag = "synd_pump";
-	name = "Syndicate Large Air Vent"
-	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	frequency = 1331;
-	id_tag = "synd_airlock";
-	pixel_y = 28;
-	tag_airpump = "synd_pump";
-	tag_chamber_sensor = "synd_sensor";
-	tag_exterior_door = "synd_outer";
-	tag_interior_door = "synd_inner"
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/syndicate/start)
-"ami" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	frequency = 1331;
-	id_tag = "synd_pump";
-	name = "Syndicate Large Air Vent"
-	},
 /obj/structure/table,
-/obj/machinery/computer/pod/old/syndicate{
-	id = "smindicate";
-	pixel_y = 7
+/obj/item/weapon/storage/firstaid/o2,
+/obj/item/weapon/storage/firstaid/fire{
+	pixel_x = 6;
+	pixel_y = 6
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
+/obj/item/weapon/storage/box/bodybags{
+	pixel_x = 3;
+	pixel_y = 3
 	},
-/area/shuttle/syndicate/start)
-"amj" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Syndicate Intercom";
-	pixel_y = 22;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/obj/structure/stool/bed/roller,
-/obj/machinery/iv_drip,
+/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
+/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
 /area/shuttle/syndicate/start)
+"ami" = (
+/obj/machinery/sleeper/upgraded{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/shuttle/syndicate/start)
+"amj" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
 "amk" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+/obj/machinery/door/airlock/external{
 	frequency = 1331;
-	id_tag = "synd_pump";
-	name = "Syndicate Large Air Vent"
+	id_tag = "synd_inner";
+	name = "Ship External Access"
 	},
-/obj/machinery/airlock_sensor{
-	frequency = 1331;
-	id_tag = "synd_sensor";
-	pixel_y = 28
-	},
+/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
 "aml" = (
-/obj/machinery/light{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1331;
+	id_tag = "synd_pump";
+	name = "Syndicate Large Air Vent"
 	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
 	},
-/turf/unsimulated/floor{
-	icon_state = "Stairs2_wide"
-	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "amm" = (
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/unsimulated/floor{
-	icon_state = "stairs_middle"
+	icon_state = "bar"
 	},
 /area/custom/syndicate_mothership)
 "amn" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/structure/closet/syndicate,
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "darkred"
+	dir = 4;
+	icon_state = "podhatch"
 	},
-/area/custom/syndicate_mothership/droppod_garage)
+/area/custom/syndicate_mothership)
 "amo" = (
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "darkred"
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
 	},
-/area/custom/syndicate_mothership/droppod_garage)
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
 "amp" = (
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "darkred"
+/obj/structure/closet/syndicate,
+/obj/machinery/light{
+	dir = 8
 	},
-/area/custom/syndicate_mothership/droppod_garage)
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
 "amq" = (
+/obj/machinery/vending/syndi,
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "darkred"
+	icon_state = "podblack"
 	},
-/area/custom/syndicate_mothership/droppod_garage)
+/area/custom/syndicate_mothership)
 "amr" = (
 /obj/machinery/recharge_station,
 /turf/simulated/shuttle/floor{
@@ -5003,16 +4863,13 @@
 	},
 /area/shuttle/syndicate/start)
 "ams" = (
-/obj/machinery/kitchen_machine/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+/obj/structure/closet/syndicate,
+/obj/machinery/light{
+	dir = 4
 	},
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
-	},
-/obj/structure/table/woodentable,
 /turf/unsimulated/floor{
-	icon_state = "wood"
+	dir = 4;
+	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "amt" = (
@@ -5029,18 +4886,29 @@
 	},
 /area/shuttle/syndicate/start)
 "amv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/toxin{
+	pixel_x = 6;
+	pixel_y = 6
 	},
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/item/roller,
+/obj/item/weapon/reagent_containers/syringe/antiviral,
+/obj/item/weapon/reagent_containers/syringe/antiviral,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/device/radio/intercom{
+	desc = "Talk through this. Evilly";
+	freerange = 1;
+	frequency = 1213;
+	name = "Syndicate Intercom";
+	pixel_x = 32;
+	subspace_transmission = 1;
+	syndie = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "plating"
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
 	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "amw" = (
 /obj/structure/object_wall/vox{
 	icon_state = "3,9"
@@ -5054,16 +4922,27 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "amy" = (
+/obj/machinery/vending/snack{
+	name = "hacked Getmore Chocolate Corp";
+	prices = list()
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken5"
+	icon_state = "bar"
 	},
 /area/custom/syndicate_mothership)
 "amz" = (
-/obj/machinery/vending/sustenance,
-/turf/unsimulated/floor{
-	icon_state = "wood"
+/obj/structure/table,
+/obj/item/weapon/retractor,
+/obj/item/stack/medical/advanced/bruise_pack,
+/obj/item/stack/nanopaste,
+/obj/item/weapon/FixOVein{
+	pixel_x = -6;
+	pixel_y = 1
 	},
-/area/custom/syndicate_mothership)
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/shuttle/syndicate/start)
 "amA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 1;
@@ -5076,72 +4955,72 @@
 	},
 /area/shuttle/syndicate/start)
 "amB" = (
-/obj/structure/toilet{
-	dir = 8;
-	pixel_y = 8
+/obj/structure/table,
+/obj/machinery/computer/pod/old/syndicate{
+	id = "smindicate"
 	},
-/obj/structure/sign/poster/official/no_erp{
-	pixel_x = 32
+/obj/machinery/light/small,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
 	},
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
-	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "amC" = (
+/obj/structure/table,
 /obj/item/stack/sheet/glass{
 	amount = 10
-	},
-/obj/item/stack/sheet/metal{
-	amount = 15;
-	pixel_x = -6
 	},
 /obj/item/weapon/wrench,
 /obj/item/device/multitool,
 /obj/item/device/multitool,
-/obj/structure/rack,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
 "amD" = (
-/obj/structure/rack,
-/obj/item/weapon/tank/jetpack/oxygen/harness{
-	pixel_x = 6;
-	pixel_y = 6
+/obj/structure/table,
+/obj/item/device/assembly/prox_sensor{
+	pixel_x = -8;
+	pixel_y = 4
 	},
-/obj/item/weapon/tank/jetpack/oxygen/harness{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/weapon/tank/jetpack/oxygen/harness,
+/obj/item/device/assembly/signaler,
+/obj/item/device/assembly/infra,
+/obj/item/device/suit_cooling_unit,
+/obj/item/device/suit_cooling_unit,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
 "amE" = (
-/obj/item/device/aicard{
-	pixel_y = 4
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "smindicate";
+	name = "Outer Airlock";
+	opacity = 0
 	},
-/obj/structure/table,
+/obj/machinery/door/airlock/external{
+	frequency = 1331;
+	id_tag = "synd_outer";
+	name = "Ship External Access"
+	},
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1331;
+	master_tag = "synd_airlock";
+	name = "exterior access button";
+	pixel_x = 8;
+	pixel_y = 28
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
 "amF" = (
-/obj/structure/table/woodentable,
-/obj/item/ashtray/bronze{
-	pixel_x = 5
+/obj/machinery/light/small,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
 	},
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet13-5";
-	name = "red carpet"
-	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "amG" = (
 /obj/machinery/bodyscanner,
 /turf/simulated/shuttle/floor{
@@ -5149,28 +5028,30 @@
 	},
 /area/shuttle/syndicate/start)
 "amH" = (
-/obj/machinery/vending/snack{
-	name = "Hacked Getmore Chocolate Corp";
-	prices = list()
+/obj/machinery/body_scanconsole,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
 	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "black"
-	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "amI" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 8
+/obj/machinery/door/window{
+	dir = 4;
+	name = "Infirmary";
+	req_access = list(150)
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "redcarpet9-4";
-	name = "red carpet"
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
 	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "amJ" = (
+/obj/machinery/door/airlock/external{
+	req_access = list(150)
+	},
+/obj/machinery/door/poddoor/shutters/syndi{
+	dock_tag = "Syndicate_shuttle"
+	},
 /turf/unsimulated/floor{
-	icon_state = "black"
+	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "amK" = (
@@ -5190,12 +5071,12 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "amM" = (
-/obj/machinery/mech_bay_recharge_port{
-	dir = 8
+/obj/machinery/vending/cigarette{
+	name = "hacked Cigarette machine";
+	prices = list()
 	},
 /turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "platebot"
+	icon_state = "bar"
 	},
 /area/custom/syndicate_mothership)
 "amN" = (
@@ -5283,14 +5164,12 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "amZ" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Drop Pods room";
-	req_access = list(150)
-	},
+/obj/machinery/computer/intruder_station,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "podhatch"
 	},
-/area/custom/syndicate_mothership/droppod_garage)
+/area/custom/syndicate_mothership)
 "ana" = (
 /obj/structure/object_wall/vox{
 	icon_state = "2,8";
@@ -5299,36 +5178,15 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "anb" = (
-/obj/item/weapon/reagent_containers/food/snacks/meatsteak,
-/obj/random/foods/food_without_garbage,
-/obj/random/foods/food_without_garbage,
-/obj/item/weapon/reagent_containers/food/snacks/kabob,
-/obj/item/pizzabox/margherita,
-/obj/item/pizzabox/meat,
-/obj/item/pizzabox/mushroom,
-/obj/item/pizzabox/vegetable,
-/obj/item/pizzabox/meat,
-/obj/item/weapon/reagent_containers/food/snacks/toastedsandwich,
-/obj/item/weapon/reagent_containers/food/snacks/syndicake,
-/obj/item/weapon/reagent_containers/food/snacks/syndicake,
-/obj/item/weapon/reagent_containers/food/snacks/soup/meatballsoup,
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/orange,
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/chocolate,
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/meat,
-/obj/item/weapon/reagent_containers/food/snacks/muffin,
-/obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato,
-/obj/item/weapon/reagent_containers/food/snacks/fishandchips,
-/obj/item/weapon/reagent_containers/food/snacks/fortunecookie,
-/obj/item/weapon/reagent_containers/food/snacks/fortunecookie,
-/obj/item/weapon/reagent_containers/food/snacks/chinese/newdles,
-/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
-/obj/random/foods/food_without_garbage,
-/obj/random/foods/food_without_garbage,
-/obj/structure/closet/crate/freezer,
-/turf/unsimulated/floor{
-	icon_state = "wood"
+/obj/machinery/door/window{
+	dir = 1;
+	name = "Secure Storage";
+	req_access = list(150)
 	},
-/area/custom/syndicate_mothership)
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
 "anc" = (
 /obj/structure/object_wall/evac{
 	icon_state = "12,13"
@@ -5351,15 +5209,12 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "anf" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/mime,
-/obj/structure/curtain/open/bed,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/flour,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
 	},
-/obj/effect/landmark/heist_spawn,
-/turf/simulated/shuttle/floor/vox,
-/area/shuttle/vox/arkship_hold)
+/area/shuttle/vox/arkship)
 "ang" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/vox/stealth,
@@ -5505,6 +5360,14 @@
 	icon_state = "floor5"
 	},
 /area/velocity)
+"anv" = (
+/obj/machinery/telecomms/allinone{
+	intercept = 1
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/syndicate/start)
 "anw" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
@@ -5514,19 +5377,13 @@
 	},
 /area/velocity)
 "anx" = (
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1331;
-	master_tag = "synd_airlock";
-	name = "interior access button";
-	pixel_x = 24;
-	pixel_y = -22
+/obj/item/weapon/scalpel,
+/obj/item/weapon/circular_saw{
+	pixel_y = 10
 	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 6
-	},
+/obj/structure/table,
 /turf/simulated/shuttle/floor{
-	icon_state = "floor6"
+	icon_state = "floor3"
 	},
 /area/shuttle/syndicate/start)
 "any" = (
@@ -5573,34 +5430,20 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "anD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/table,
+/obj/item/weapon/hemostat,
+/obj/item/weapon/cautery,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	icon_state = "plating"
-	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "anE" = (
-/obj/machinery/shower{
-	dir = 1
+/obj/machinery/optable,
+/obj/machinery/light,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
 	},
-/obj/structure/curtain/open/shower/security,
-/obj/machinery/door/window{
-	dir = 1;
-	name = "Shower cabin"
-	},
-/obj/structure/drain{
-	drainage = 2
-	},
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
-	},
-/area/custom/syndicate_mothership)
+/area/shuttle/syndicate/start)
 "anF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
@@ -5609,6 +5452,9 @@
 	},
 /area/shuttle/vox/arkship)
 "anG" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/structure/shuttle/engine/heater{
 	icon_state = "heater1"
 	},
@@ -5635,13 +5481,9 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "anK" = (
-/obj/structure/sign/poster/contraband/energy_swords{
-	pixel_x = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "Stairs_wide"
-	},
-/area/custom/syndicate_mothership)
+/obj/structure/shuttle/engine/propulsion,
+/turf/environment/space,
+/area/shuttle/syndicate/start)
 "anL" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "5,11"
@@ -5716,13 +5558,11 @@
 /turf/environment/space,
 /area/shuttle/transport1/centcom)
 "anX" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/hos,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/curtain/open/bed,
-/obj/effect/landmark/heist_spawn,
-/turf/simulated/shuttle/floor/vox,
-/area/shuttle/vox/arkship_hold)
+/obj/item/trash/syndi_cakes,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
+	},
+/area/shuttle/vox/arkship)
 "anY" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/decal/cleanable/dirt,
@@ -6637,13 +6477,14 @@
 	},
 /area/velocity)
 "aqb" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 4
+/obj/machinery/door/airlock/centcom{
+	name = "Drop Pods room";
+	req_access = list(150)
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
+/turf/unsimulated/floor{
+	icon_state = "dark"
 	},
-/area/shuttle/syndicate/start)
+/area/custom/syndicate_mothership)
 "aqc" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "10,8"
@@ -7982,14 +7823,12 @@
 	},
 /area/shuttle/vox/arkship)
 "atb" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/centcom{
+	name = "Kitchen";
 	req_access = list(150)
 	},
-/obj/machinery/door/poddoor/shutters/syndi{
-	dock_tag = "Syndicate_shuttle"
-	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "white"
 	},
 /area/custom/syndicate_mothership)
 "atc" = (
@@ -8776,7 +8615,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "auJ" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -8963,11 +8802,13 @@
 	},
 /area/shuttle/vox/arkship)
 "avc" = (
-/obj/item/trash/syndi_cakes,
-/turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk"
+/obj/structure/table,
+/obj/item/ammo_casing/a357,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "podhatch"
 	},
-/area/shuttle/vox/arkship)
+/area/custom/syndicate_mothership)
 "avd" = (
 /obj/random/melee,
 /obj/effect/decal/cleanable/blood/gibs,
@@ -9060,24 +8901,29 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "avo" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "avp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "avq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/flour,
-/turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk"
+/obj/structure/table,
+/obj/item/weapon/stock_parts/cell/super{
+	pixel_x = 2;
+	pixel_y = 2
 	},
-/area/shuttle/vox/arkship)
+/obj/item/weapon/stock_parts/cell/super,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
 "avr" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -9532,7 +9378,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "aws" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -9860,11 +9706,11 @@
 /area/velocity)
 "axb" = (
 /obj/machinery/vending/cola{
-	name = "Hacked Robust Softdrinks";
+	name = "hacked Robust Softdrinks";
 	prices = list()
 	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
 "axc" = (
@@ -10168,7 +10014,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "axO" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,4"
@@ -10636,10 +10482,12 @@
 /turf/environment/space,
 /area/shuttle/specops/centcom)
 "ayM" = (
+/obj/structure/table,
+/obj/item/stack/cable_coil/random,
+/obj/item/stack/cable_coil/random,
 /turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet6-2";
-	name = "black carpet"
+	dir = 10;
+	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "ayN" = (
@@ -11042,10 +10890,20 @@
 	},
 /area/shuttle/specops/centcom)
 "azH" = (
+/obj/structure/table,
+/obj/item/toy/nuke{
+	pixel_y = 7
+	},
+/obj/item/toy/figure/syndie{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/toy/figure/syndie{
+	pixel_x = 6;
+	pixel_y = 5
+	},
 /turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet14-10";
-	name = "black carpet"
+	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "azI" = (
@@ -11484,18 +11342,8 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "aAD" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 1;
-	frequency = 1441;
-	listening = 0;
-	name = "Spec Ops Intercom";
-	pixel_y = 28
-	},
-/obj/machinery/power/port_gen/riteg,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/structure/rack,
+/obj/item/weapon/gun/medbeam,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -11579,7 +11427,14 @@
 /area/centcom/living)
 "aAK" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/medbeam,
+/obj/item/weapon/storage/belt/medical/surg/full,
+/obj/item/weapon/storage/belt/medical/surg/full,
+/obj/item/weapon/tank/anesthetic,
+/obj/item/weapon/tank/anesthetic,
+/obj/item/clothing/mask/breath/medical,
+/obj/item/clothing/mask/breath/medical,
+/obj/item/roller/roller_holder_surg,
+/obj/item/roller/roller_holder_surg,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -11799,6 +11654,9 @@
 /obj/item/clothing/head/helmet/space/rig/ert/engineer,
 /obj/item/clothing/suit/space/rig/ert/engineer,
 /obj/item/clothing/accessory/storage/brown_vest,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -11874,11 +11732,15 @@
 /area/centcom/living)
 "aBk" = (
 /obj/structure/rack,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/clothing/head/helmet/space/rig/ert/medical,
+/obj/item/clothing/suit/space/rig/ert/medical,
+/obj/item/clothing/head/helmet/space/rig/ert/medical,
+/obj/item/clothing/suit/space/rig/ert/medical,
+/obj/item/clothing/head/helmet/space/rig/ert/medical,
+/obj/item/clothing/suit/space/rig/ert/medical,
+/obj/item/weapon/storage/backpack/ert/medical,
+/obj/item/weapon/storage/backpack/ert/medical,
+/obj/item/weapon/storage/backpack/ert/medical,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -12080,17 +11942,23 @@
 	},
 /area/centcom/living)
 "aBH" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/belt/medical/surg/full,
-/obj/item/weapon/storage/belt/medical/surg/full,
-/obj/item/weapon/tank/anesthetic,
-/obj/item/weapon/tank/anesthetic,
-/obj/item/clothing/mask/breath/medical,
-/obj/item/clothing/mask/breath/medical,
-/obj/item/roller/roller_holder_surg,
-/obj/item/roller/roller_holder_surg,
+/obj/item/weapon/storage/box/flashbangs,
+/obj/item/device/flash,
+/obj/item/weapon/melee/baton,
+/obj/item/weapon/handcuffs,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
+/obj/item/device/aicard,
+/obj/item/weapon/pinpointer/advpinpointer,
+/obj/structure/closet/secure_closet,
+/obj/item/weapon/storage/backpack/ert/commander,
+/obj/item/weapon/storage/belt/security,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/gun/projectile/glock/spec,
+/obj/item/device/remote_device/ERT,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "vault"
 	},
 /area/centcom/living)
 "aBI" = (
@@ -12125,6 +11993,7 @@
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/space/rig/ert/commander,
 /obj/item/clothing/suit/space/rig/ert/commander,
+/obj/item/clothing/shoes/magboots,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -12560,7 +12429,6 @@
 /obj/item/clothing/head/wizard/bearpelt{
 	pixel_y = 8
 	},
-/obj/item/weapon/wirecutters,
 /turf/unsimulated/floor{
 	icon_state = "cult"
 	},
@@ -12729,15 +12597,12 @@
 	},
 /area/custom/wizard_station)
 "aDb" = (
-/obj/structure/table/woodentable,
-/obj/structure/sign/poster/contraband/communist_state{
-	pixel_y = 32
-	},
-/obj/item/weapon/storage/box/cups{
-	pixel_y = 3
+/obj/machinery/vending/coffee{
+	name = "hacked Hot Drinks machine";
+	prices = list()
 	},
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
 "aDc" = (
@@ -13153,20 +13018,26 @@
 	},
 /area/centcom/living)
 "aDX" = (
-/obj/structure/rack,
-/obj/item/clothing/head/helmet/space/rig/ert/medical,
-/obj/item/clothing/suit/space/rig/ert/medical,
-/obj/item/clothing/head/helmet/space/rig/ert/medical,
-/obj/item/clothing/suit/space/rig/ert/medical,
-/obj/item/clothing/head/helmet/space/rig/ert/medical,
-/obj/item/clothing/suit/space/rig/ert/medical,
-/obj/item/weapon/storage/backpack/ert/medical,
-/obj/item/weapon/storage/backpack/ert/medical,
-/obj/item/weapon/storage/backpack/ert/medical,
-/turf/unsimulated/floor{
-	icon_state = "dark"
+/obj/item/clothing/shoes/sandal/marisa,
+/obj/effect/decal/cleanable/cobweb2,
+/obj/structure/closet/cabinet{
+	name = "Marisa"
 	},
-/area/centcom/living)
+/obj/item/clothing/suit/wizrobe/marisa,
+/obj/item/weapon/staff/broom,
+/obj/item/clothing/head/wizard/marisa,
+/obj/item/clothing/under/dress/dress_evening,
+/obj/item/clothing/under/dress/dress_party,
+/obj/item/clothing/under/dress/dress_saloon,
+/obj/item/clothing/under/dress/dress_vintage,
+/obj/item/clothing/under/dress/dress_summer,
+/obj/item/clothing/under/pretty_dress,
+/obj/item/clothing/mask/scarf/violet,
+/obj/item/clothing/shoes/heels/alternate/wizard,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
 "aDY" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -13614,12 +13485,23 @@
 	},
 /area/centcom/creed)
 "aER" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo,
-/turf/unsimulated/floor{
-	icon_state = "dark"
+/obj/structure/closet/cabinet{
+	name = "Ded moroz"
 	},
-/area/centcom/living)
+/obj/item/weapon/storage/backpack/santabag{
+	name = "Ded Moroz Gift Bag"
+	},
+/obj/item/clothing/suit/wizrobe/santa{
+	name = "Ded Moroz suit"
+	},
+/obj/item/clothing/head/wizard/santa{
+	name = "Ded Moroz hat"
+	},
+/obj/item/clothing/shoes/winterboots/wizard,
+/turf/unsimulated/floor{
+	icon_state = "wood-broken4"
+	},
+/area/custom/wizard_station)
 "aES" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/unsimulated/floor/snow{
@@ -13699,15 +13581,11 @@
 	},
 /area/custom/wizard_station)
 "aFb" = (
-/obj/structure/table/woodentable,
-/obj/item/device/pda/syndicate{
-	pixel_y = 4
-	},
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
 "aFc" = (
@@ -14046,31 +13924,32 @@
 	},
 /area/custom/wizard_station)
 "aFM" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/melee/baton,
-/obj/item/weapon/storage/belt/security,
-/obj/item/device/flash,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/clothing/glasses/night,
-/obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/clothing/glasses/sunglasses/hud/sechud,
-/obj/item/weapon/plastique,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/structure/window/reinforced,
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/hooded/wintercoat/wiz_red,
+/obj/item/clothing/suit/hooded/wintercoat/wiz_red,
+/obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
+/obj/item/clothing/suit/hooded/wintercoat/wiz_blue,
+/obj/item/clothing/head/wizard/ushanka/brown_white,
+/obj/item/clothing/head/wizard/ushanka/brown,
+/obj/item/clothing/head/wizard/ushanka/black_white,
+/obj/item/clothing/head/wizard/ushanka/black,
+/obj/item/clothing/head/wizard/ushanka,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/winterboots/wizard,
+/obj/item/clothing/shoes/winterboots/wizard,
+/obj/item/clothing/shoes/winterboots/wizard,
+/obj/item/clothing/shoes/winterboots/wizard,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "wood"
 	},
-/area/centcom/living)
+/area/custom/wizard_station)
 "aFN" = (
 /obj/structure/table/woodentable,
 /obj/item/candle/infinite{
@@ -14310,25 +14189,24 @@
 	},
 /area/custom/wizard_station)
 "aGm" = (
-/obj/item/weapon/storage/box/flashbangs,
-/obj/item/device/flash,
-/obj/item/weapon/melee/baton,
-/obj/item/weapon/handcuffs,
-/obj/item/clothing/glasses/sunglasses/hud/sechud,
-/obj/item/device/aicard,
-/obj/item/weapon/pinpointer/advpinpointer,
-/obj/structure/closet/secure_closet,
-/obj/item/weapon/storage/backpack/ert/commander,
-/obj/item/weapon/storage/belt/security,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/device/remote_device/ERT,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/closet/cabinet{
+	name = "Pirate"
 	},
-/area/centcom/living)
+/obj/item/clothing/head/wizard/pirate,
+/obj/item/clothing/under/pirate,
+/obj/item/clothing/suit/wizrobe/pirate,
+/obj/item/clothing/glasses/eyepatch,
+/obj/item/weapon/storage/backpack/kitbag,
+/obj/structure/mirror/magic{
+	pixel_x = -25;
+	pixel_y = -3
+	},
+/obj/item/clothing/shoes/boots/wizard,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
 "aGn" = (
 /turf/environment/space,
 /area/shuttle/escape_pod1/centcom)
@@ -14376,22 +14254,25 @@
 	},
 /area/centcom/living)
 "aGs" = (
-/obj/item/clothing/shoes/sandal/marisa,
-/obj/effect/decal/cleanable/cobweb2,
+/obj/structure/torch_holder/magic,
 /obj/structure/closet/cabinet{
-	name = "Marisa"
+	name = "Crusader"
 	},
-/obj/item/clothing/suit/wizrobe/marisa,
-/obj/item/weapon/staff/broom,
-/obj/item/clothing/head/wizard/marisa,
-/obj/item/clothing/under/dress/dress_evening,
-/obj/item/clothing/under/dress/dress_party,
-/obj/item/clothing/under/dress/dress_saloon,
-/obj/item/clothing/under/dress/dress_vintage,
-/obj/item/clothing/under/dress/dress_summer,
-/obj/item/clothing/under/pretty_dress,
-/obj/item/clothing/mask/scarf/violet,
-/obj/item/clothing/shoes/heels/alternate/wizard,
+/obj/item/clothing/suit/wizrobe/crusader,
+/obj/item/clothing/gloves/black,
+/obj/item/clothing/head/wizard/crusader,
+/obj/item/clothing/under/color/black,
+/obj/item/weapon/storage/backpack/chaplain,
+/obj/item/weapon/claymore/religion,
+/obj/item/weapon/shield/riot/roman{
+	name = "Sacred shield"
+	},
+/obj/item/weapon/storage/bible,
+/obj/structure/mirror/magic{
+	pixel_x = -25;
+	pixel_y = -3
+	},
+/obj/item/clothing/shoes/boots/wizard,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -14693,16 +14574,28 @@
 /turf/simulated/shuttle/plating,
 /area/centcom/evac)
 "aHc" = (
+/obj/structure/table,
+/obj/item/toy/sword,
 /turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet10-8";
-	name = "black carpet"
+	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "aHd" = (
-/obj/item/weapon/flora/random,
+/obj/effect/landmark{
+	name = "Nuclear-Bomb"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/door/window/brigdoor/northleft{
+	req_access = list(150)
+	},
 /turf/unsimulated/floor{
-	icon_state = "wood"
+	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "aHe" = (
@@ -14710,11 +14603,10 @@
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aHf" = (
-/obj/effect/decal/cleanable/blood/gibs,
-/obj/item/organ/external/r_arm,
-/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/toy/prize/mauler,
 /turf/unsimulated/floor{
-	icon_state = "engine"
+	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "aHg" = (
@@ -14747,14 +14639,10 @@
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aHj" = (
-/obj/structure/sign/warning{
-	desc = "There is a washing machine behind this wall. Maybe we should take another path?";
-	name = "WARNING! DIED IN GAME - DIED IN LIFE!";
-	pixel_y = 32
-	},
-/obj/machinery/computer/arcade/emagged,
+/obj/structure/table,
+/obj/machinery/recharger,
 /turf/unsimulated/floor{
-	icon_state = "engine"
+	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "aHk" = (
@@ -14799,13 +14687,11 @@
 /turf/environment/space,
 /area/centcom/evac)
 "aHq" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/syndie,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/structure/table,
+/obj/machinery/cell_charger,
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	dir = 6;
+	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
 "aHr" = (
@@ -14914,43 +14800,17 @@
 /turf/simulated/shuttle/plating,
 /area/shuttle/administration/centcom)
 "aHE" = (
-/obj/machinery/light{
-	dir = 1
+/obj/structure/object_wall/standart{
+	icon_state = "swall12"
 	},
-/obj/machinery/vending/syndi,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/custom/syndicate_mothership)
-"aHF" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	icon_state = "black"
-	},
-/area/custom/syndicate_mothership)
+/turf/environment/space,
+/area/velocity/monorailwagon)
 "aHG" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access = list(101)
 	},
 /turf/simulated/shuttle/plating,
 /area/centcom/evac)
-"aHH" = (
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "black"
-	},
-/area/custom/syndicate_mothership)
-"aHI" = (
-/obj/machinery/vending/coffee{
-	name = "Hacked Hot Drinks machine";
-	prices = list()
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/custom/syndicate_mothership)
 "aHJ" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_specops";
@@ -14961,13 +14821,6 @@
 	icon_state = "floor5"
 	},
 /area/centcom/evac)
-"aHK" = (
-/obj/effect/landmark/droppod_spawn,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/custom/syndicate_mothership/droppod_garage)
 "aHL" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -14999,15 +14852,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/centcom/living)
-"aHP" = (
-/obj/effect/landmark/droppod_spawn{
-	pods_spawned = 1
-	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/custom/syndicate_mothership/droppod_garage)
 "aHQ" = (
 /obj/machinery/light{
 	dir = 1
@@ -15016,15 +14860,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/centcom/living)
-"aHR" = (
-/obj/effect/landmark/droppod_spawn{
-	pods_spawned = 2
-	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/custom/syndicate_mothership/droppod_garage)
 "aHS" = (
 /obj/machinery/light{
 	dir = 4
@@ -15069,25 +14904,6 @@
 /obj/machinery/computer/arcade,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
-"aHZ" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_y = 4
-	},
-/obj/item/weapon/pen{
-	pixel_y = 6
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/syndicate/start)
-"aIa" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/fancy/donut_box/traitor,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/syndicate_mothership)
 "aIb" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -15131,53 +14947,11 @@
 	icon_state = "freezerfloor"
 	},
 /area/centcom/living)
-"aIg" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet7-3";
-	name = "black carpet"
-	},
-/area/custom/syndicate_mothership)
 "aIh" = (
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
 /area/centcom/living)
-"aIi" = (
-/obj/machinery/recharge_station,
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "black"
-	},
-/area/custom/syndicate_mothership)
-"aIj" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet11-12";
-	name = "black carpet"
-	},
-/area/custom/syndicate_mothership)
-"aIk" = (
-/turf/unsimulated/floor{
-	icon_state = "wood-broken3"
-	},
-/area/custom/syndicate_mothership)
-"aIl" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Play Room";
-	req_access = list(150)
-	},
-/obj/structure/barricade/wooden,
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/syndicate_mothership)
 "aIm" = (
 /obj/machinery/dna_scannernew,
 /turf/simulated/shuttle/floor{
@@ -15223,49 +14997,6 @@
 	icon_state = "floor4"
 	},
 /area/centcom/evac)
-"aIt" = (
-/obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/item/weapon/reagent_containers/food/snacks/meat,
-/obj/effect/decal/cleanable/dirt,
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/syndicate_mothership)
-"aIu" = (
-/obj/effect/decal/cleanable/blood,
-/obj/structure/stool/bar,
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/syndicate_mothership)
-"aIv" = (
-/obj/effect/decal/cleanable/blood/gibs,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/item/organ/external/l_leg,
-/obj/effect/decal/cleanable/dirt,
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/syndicate_mothership)
-"aIw" = (
-/obj/machinery/door/window/northleft{
-	name = "Infirmary";
-	req_access = list(150)
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
-	},
-/area/shuttle/syndicate/start)
-"aIx" = (
-/obj/machinery/door/window/northright{
-	name = "Infirmary";
-	req_access = list(150)
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
-	},
-/area/shuttle/syndicate/start)
 "aIy" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -15354,40 +15085,6 @@
 	icon_state = "floor5"
 	},
 /area/centcom/evac)
-"aIK" = (
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "red"
-	},
-/area/custom/syndicate_mothership)
-"aIL" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet5-1";
-	name = "black carpet"
-	},
-/area/custom/syndicate_mothership)
-"aIM" = (
-/obj/item/weapon/flora/random,
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "black"
-	},
-/area/custom/syndicate_mothership)
-"aIN" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/drinkingglasses{
-	pixel_x = -3;
-	pixel_y = 9
-	},
-/obj/item/weapon/reagent_containers/food/drinks/flask/barflask{
-	pixel_x = 4;
-	pixel_y = -5
-	},
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/syndicate_mothership)
 "aIO" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -15399,36 +15096,12 @@
 	icon_state = "floor5"
 	},
 /area/centcom/evac)
-"aIQ" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/syndie,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "grimy"
-	},
-/area/custom/syndicate_mothership)
-"aIR" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/syndicate_mothership)
 "aIS" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
-"aIT" = (
-/obj/effect/decal/cleanable/blood/gibs,
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/syndicate_mothership)
 "aIU" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Showers"
@@ -15470,44 +15143,14 @@
 	icon_state = "floor4"
 	},
 /area/centcom/evac)
-"aJa" = (
-/obj/effect/decal/cleanable/blood/drip,
-/obj/item/weapon/reagent_containers/food/snacks/meat,
-/obj/effect/decal/cleanable/dirt,
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/syndicate_mothership)
 "aJb" = (
-/obj/item/weapon/paper_bin{
-	pixel_y = 4
-	},
-/obj/structure/table/woodentable,
-/obj/item/weapon/pen/red{
-	pixel_y = 6
-	},
-/obj/structure/sign/poster/contraband/lusty_xenomorph{
-	pixel_y = 32
-	},
-/turf/unsimulated/floor{
-	icon_state = "grimy"
-	},
-/area/custom/syndicate_mothership)
-"aJc" = (
-/obj/effect/decal/cleanable/blood,
-/obj/item/weapon/reagent_containers/food/snacks/meat,
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/syndicate_mothership)
-"aJd" = (
-/obj/machinery/sleeper/upgraded{
+/obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
-/area/shuttle/syndicate/start)
+/area/custom/syndicate_mothership)
 "aJe" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -15520,17 +15163,6 @@
 	icon_state = "wood"
 	},
 /area/centcom/living)
-"aJg" = (
-/obj/structure/mirror{
-	pixel_y = 32
-	},
-/obj/structure/sink{
-	pixel_y = 24
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
-	},
-/area/shuttle/syndicate/start)
 "aJh" = (
 /obj/machinery/door/window/northright{
 	dir = 2
@@ -15568,19 +15200,6 @@
 /obj/random/vending/cola,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
-"aJn" = (
-/obj/item/weapon/storage/toolbox/syndicate{
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/toolbox/syndicate{
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/toolbox/syndicate,
-/obj/structure/rack,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/syndicate/start)
 "aJo" = (
 /obj/structure/closet/secure_closet,
 /turf/unsimulated/floor{
@@ -15613,21 +15232,6 @@
 	icon_state = "wood"
 	},
 /area/centcom/living)
-"aJs" = (
-/obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/adv{
-	pixel_x = -4;
-	pixel_y = -4
-	},
-/obj/structure/table/glass,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
-	},
-/area/shuttle/syndicate/start)
 "aJt" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/ce,
@@ -15639,18 +15243,6 @@
 "aJu" = (
 /turf/unsimulated/wall,
 /area/centcom/control)
-"aJv" = (
-/obj/item/weapon/flora/random,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "red"
-	},
-/area/custom/syndicate_mothership)
-"aJw" = (
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/syndicate_mothership)
 "aJx" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Special Operations";
@@ -15745,13 +15337,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/evac)
-"aJH" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet13-5";
-	name = "black carpet"
-	},
-/area/custom/syndicate_mothership)
 "aJI" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet,
@@ -15786,19 +15371,6 @@
 	icon_state = "wood"
 	},
 /area/centcom/living)
-"aJM" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high,
-/obj/machinery/recharger/wallcharger{
-	dir = 1;
-	pixel_x = 5;
-	pixel_y = 25
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/syndicate/start)
 "aJN" = (
 /obj/structure/mirror{
 	pixel_x = -32
@@ -15819,45 +15391,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
-"aJQ" = (
-/obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/obj/item/weapon/stock_parts/cell/high,
-/obj/structure/table,
-/obj/item/stack/cable_coil/random,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/syndicate/start)
-"aJR" = (
-/obj/effect/landmark/droppod_spawn{
-	pods_spawned = 3
-	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/custom/syndicate_mothership/droppod_garage)
-"aJS" = (
-/obj/effect/landmark/droppod_spawn{
-	pods_spawned = 4
-	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/custom/syndicate_mothership/droppod_garage)
-"aJT" = (
-/obj/effect/landmark/droppod_spawn{
-	pods_spawned = 5
-	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/custom/syndicate_mothership/droppod_garage)
 "aJU" = (
 /obj/machinery/vending/medical,
 /turf/simulated/shuttle/floor{
@@ -15940,13 +15473,6 @@
 	icon_state = "green"
 	},
 /area/centcom/control)
-"aKg" = (
-/obj/machinery/body_scanconsole,
-/obj/machinery/life_assist/artificial_ventilation,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
-	},
-/area/shuttle/syndicate/start)
 "aKh" = (
 /obj/machinery/light{
 	dir = 4
@@ -15967,34 +15493,6 @@
 	},
 /turf/environment/space,
 /area/centcom/evac)
-"aKk" = (
-/obj/item/weapon/tank/jetpack/oxygen/harness{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/weapon/tank/jetpack/oxygen/harness{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/weapon/tank/jetpack/oxygen/harness,
-/obj/structure/rack,
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Syndicate Intercom";
-	pixel_x = -28;
-	pixel_y = -5;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/syndicate/start)
 "aKl" = (
 /turf/environment/space,
 /area/shuttle/escape_pod4/centcom)
@@ -16059,18 +15557,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
-"aKs" = (
-/obj/item/weapon/storage/visuals/surgery/full{
-	pixel_y = 5
-	},
-/obj/item/weapon/scalpel/manager,
-/obj/item/weapon/scalpel/laser3,
-/obj/item/weapon/surgicaldrill,
-/obj/structure/table/glass,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
-	},
-/area/shuttle/syndicate/start)
 "aKt" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
@@ -16089,14 +15575,6 @@
 	},
 /turf/environment/space,
 /area/space)
-"aKv" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/syndicate/start)
 "aKw" = (
 /obj/machinery/light/small,
 /turf/unsimulated/floor,
@@ -16110,12 +15588,6 @@
 	icon_state = "wood"
 	},
 /area/centcom/living)
-"aKy" = (
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "darkred"
-	},
-/area/custom/syndicate_mothership/droppod_garage)
 "aKz" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -16160,12 +15632,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
-"aKE" = (
-/obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "darkred"
-	},
-/area/custom/syndicate_mothership/droppod_garage)
 "aKF" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -16190,11 +15656,6 @@
 /obj/machinery/vending/cigarette,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
-"aKJ" = (
-/turf/unsimulated/floor{
-	icon_state = "darkred"
-	},
-/area/custom/syndicate_mothership/droppod_garage)
 "aKK" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 8
@@ -16213,12 +15674,6 @@
 	icon_state = "warning"
 	},
 /area/centcom/living)
-"aKM" = (
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "darkred"
-	},
-/area/custom/syndicate_mothership/droppod_garage)
 "aKN" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -16293,28 +15748,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
-"aKU" = (
-/obj/structure/grille,
-/obj/structure/lattice,
-/turf/environment/space,
-/area/space)
-"aKV" = (
-/obj/effect/decal/cleanable/blood/gibs,
-/obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/item/weapon/reagent_containers/food/snacks/meat,
-/obj/effect/decal/cleanable/cobweb2,
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/syndicate_mothership)
-"aKW" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/food/normal/syndi_cakes,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/syndicate_mothership)
 "aKX" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -16329,21 +15762,12 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
-"aKZ" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{
-	pixel_x = -4
+"aLb" = (
+/obj/structure/sign/map/left{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
-	name = "black carpet"
-	},
-/area/custom/syndicate_mothership)
-"aLa" = (
-/turf/unsimulated/floor{
-	icon_state = "wood-broken2"
+	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
 "aLc" = (
@@ -16376,18 +15800,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
-"aLf" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/carpets.dmi';
-	icon_state = "blackcarpet";
-	name = "black carpet"
-	},
-/area/custom/syndicate_mothership)
 "aLg" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Bridge";
@@ -16959,6 +16371,14 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"aOb" = (
+/obj/structure/sign/map/right{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/custom/syndicate_mothership)
 "aOc" = (
 /obj/machinery/photocopier,
 /turf/unsimulated/floor{
@@ -17506,6 +16926,12 @@
 	icon_state = "neutral"
 	},
 /area/centcom/holding)
+"aQb" = (
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/custom/syndicate_mothership)
 "aQg" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor,
@@ -17731,6 +17157,12 @@
 	icon_state = "2,1"
 	},
 /area/shuttle/supply/velocity)
+"aRb" = (
+/obj/structure/stool/bed/chair/comfy/black,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/custom/syndicate_mothership)
 "aRi" = (
 /turf/unsimulated/floor{
 	icon_state = "greencorner"
@@ -17922,12 +17354,6 @@
 	icon_state = "carpet"
 	},
 /area/centcom/living)
-"aSb" = (
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "darkred"
-	},
-/area/custom/syndicate_mothership)
 "aSc" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 8
@@ -19560,25 +18986,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/vox/arkship)
-"aXm" = (
-/obj/effect/decal/cleanable/cobweb,
-/obj/structure/closet/cabinet{
-	name = "Pirate"
-	},
-/obj/item/clothing/head/wizard/pirate,
-/obj/item/clothing/under/pirate,
-/obj/item/clothing/suit/wizrobe/pirate,
-/obj/item/clothing/glasses/eyepatch,
-/obj/item/weapon/storage/backpack/kitbag,
-/obj/structure/mirror/magic{
-	pixel_x = -25;
-	pixel_y = -3
-	},
-/obj/item/clothing/shoes/boots/wizard,
-/turf/unsimulated/floor{
-	icon_state = "wood"
-	},
-/area/custom/wizard_station)
 "aXn" = (
 /obj/structure/object_wall/vox{
 	icon_state = "7,19"
@@ -19962,23 +19369,16 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "aYx" = (
-/obj/structure/closet/cabinet{
-	name = "Ded moroz"
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 8
 	},
-/obj/item/weapon/storage/backpack/santabag{
-	name = "Ded Moroz Gift Bag"
+/obj/machinery/light{
+	dir = 4
 	},
-/obj/item/clothing/suit/wizrobe/santa{
-	name = "Ded Moroz suit"
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
 	},
-/obj/item/clothing/head/wizard/santa{
-	name = "Ded Moroz hat"
-	},
-/obj/item/clothing/shoes/winterboots/wizard,
-/turf/unsimulated/floor{
-	icon_state = "wood-broken4"
-	},
-/area/custom/wizard_station)
+/area/shuttle/vox/arkship)
 "aYz" = (
 /obj/structure/object_wall/vox{
 	icon_state = "12,17"
@@ -20304,11 +19704,13 @@
 	},
 /area/shuttle/vox/arkship)
 "bab" = (
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "darkred"
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
 	},
-/area/custom/syndicate_mothership/droppod_garage)
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/custom/syndicate_mothership)
 "bag" = (
 /obj/structure/object_wall/vox{
 	icon_state = "5,15"
@@ -20639,6 +20041,12 @@
 	icon_state = "wood-broken"
 	},
 /area/custom/wizard_station)
+"baV" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/glowshroom,
+/obj/effect/landmark/heist_spawn,
+/turf/simulated/shuttle/floor/vox,
+/area/shuttle/vox/arkship_hold)
 "baW" = (
 /obj/structure/flora/tree/pine{
 	layer = 9.5
@@ -20685,10 +20093,12 @@
 	},
 /area/custom/wizard_station)
 "bbb" = (
+/obj/structure/table,
+/obj/item/weapon/folder,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "floor"
 	},
-/area/custom/syndicate_mothership/droppod_garage)
+/area/custom/syndicate_mothership)
 "bbc" = (
 /obj/structure/bookcase/manuals/research_and_development,
 /turf/unsimulated/floor{
@@ -21459,9 +20869,9 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
 /obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/structure/window/reinforced,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -21694,11 +21104,17 @@
 	},
 /area/centcom/specops)
 "bnb" = (
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "darkred"
+/obj/structure/table,
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
 	},
-/area/custom/syndicate_mothership/droppod_garage)
+/obj/item/weapon/pen,
+/obj/item/weapon/storage/box/flashbangs,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/custom/syndicate_mothership)
 "bob" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/emergency,
@@ -21741,15 +21157,11 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bsb" = (
-/obj/structure/table/woodentable,
-/obj/machinery/chem_dispenser/soda{
-	pixel_y = 6
-	},
-/obj/machinery/light/small{
+/obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
 /turf/unsimulated/floor{
-	icon_state = "wood-broken"
+	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
 "bsi" = (
@@ -21822,12 +21234,9 @@
 /turf/simulated/shuttle/floor4,
 /area/centcom/living)
 "bAb" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
+/obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
 "bBb" = (
@@ -21911,13 +21320,11 @@
 	},
 /area/centcom/specops)
 "bHb" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/syndie,
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = -32
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
 "bHV" = (
@@ -22017,6 +21424,13 @@
 	icon_state = "grimy"
 	},
 /area/centcom/creed)
+"bMP" = (
+/obj/structure/table/reinforced,
+/obj/item/device/pda/syndicate,
+/turf/unsimulated/floor{
+	icon_state = "bar"
+	},
+/area/custom/syndicate_mothership)
 "bNb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_specops";
@@ -22049,17 +21463,10 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bPb" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "burst_l"
 	},
-/obj/machinery/door/airlock/external{
-	frequency = 1331;
-	id_tag = "synd_inner";
-	name = "Ship External Access"
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
+/turf/environment/space,
 /area/shuttle/syndicate/start)
 "bQb" = (
 /obj/structure/object_wall/evac{
@@ -22068,22 +21475,10 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "bRb" = (
-/obj/machinery/door/airlock/external{
-	frequency = 1331;
-	id_tag = "synd_outer";
-	name = "Ship External Access"
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "burst_r"
 	},
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1331;
-	master_tag = "synd_airlock";
-	name = "exterior access button";
-	pixel_x = 9;
-	pixel_y = 22
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
+/turf/environment/space,
 /area/shuttle/syndicate/start)
 "bSb" = (
 /obj/structure/largecrate,
@@ -22591,6 +21986,13 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
+"cMX" = (
+/obj/machinery/computer/telecrystals/uplinker,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
 "cNb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -23158,7 +22560,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dJb" = (
 /obj/machinery/door/airlock/glass{
 	icon_state = "door_locked";
@@ -23167,7 +22569,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dKb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall12"
@@ -23226,7 +22628,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dPb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -23236,7 +22638,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dQb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -23341,14 +22743,14 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "dXb" = (
 /obj/structure/shuttle/window{
 	icon_state = "2"
 	},
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
-/area/velocity)
+/area/velocity/monorailwagon)
 "dYb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -23389,14 +22791,14 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "ebb" = (
 /obj/structure/sign/monorail_map,
 /obj/structure/object_wall/standart{
 	icon_state = "swall3"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "ecb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	icon_state = "chair_a02"
@@ -23480,7 +22882,7 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "ekb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -23519,13 +22921,13 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "eob" = (
 /obj/machinery/door/airlock/glass,
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "epb" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Just billboard";
@@ -23536,7 +22938,7 @@
 	icon_state = "swall12"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "eqb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall_f9"
@@ -23547,7 +22949,7 @@
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "erb" = (
 /obj/structure/sign/mark{
 	icon_state = "b4"
@@ -23580,7 +22982,7 @@
 	icon_state = "swall12"
 	},
 /turf/environment/space,
-/area/velocity)
+/area/velocity/monorailwagon)
 "ewb" = (
 /obj/structure/sign/mark{
 	icon_state = "b2"
@@ -25347,6 +24749,13 @@
 	icon_state = "warning"
 	},
 /area/centcom/evac)
+"hGB" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "hHb" = (
 /obj/structure/sign/mark{
 	icon_state = "rrt"
@@ -25392,7 +24801,7 @@
 	dir = 8;
 	icon_state = "warnplate"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "hNb" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -25420,7 +24829,7 @@
 	dir = 8;
 	icon_state = "warnplate"
 	},
-/area/velocity)
+/area/velocity/monorailwagon)
 "hRb" = (
 /turf/unsimulated/floor{
 	icon_state = "warning"
@@ -25629,6 +25038,13 @@
 	icon_state = "vault"
 	},
 /area/centcom/control)
+"inC" = (
+/obj/machinery/computer/telecrystals/uplinker,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "podhatch"
+	},
+/area/custom/syndicate_mothership)
 "iob" = (
 /obj/machinery/light{
 	dir = 1
@@ -25847,6 +25263,23 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
+	},
+/area/centcom/living)
+"iSi" = (
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	dir = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = 28
+	},
+/obj/machinery/power/port_gen/riteg,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
 	},
 /area/centcom/living)
 "iTb" = (
@@ -26954,6 +26387,14 @@
 	icon_state = "browncorner"
 	},
 /area/centcom/holding)
+"lpk" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "bar"
+	},
+/area/custom/syndicate_mothership)
 "lpG" = (
 /obj/effect/landmark{
 	name = "Commando"
@@ -27318,6 +26759,32 @@
 	icon_state = "delivery"
 	},
 /area/centcom/control)
+"lYh" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/melee/baton,
+/obj/item/weapon/storage/belt/security,
+/obj/item/device/flash,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/clothing/glasses/night,
+/obj/item/weapon/gun/projectile/glock/spec,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
+/obj/item/weapon/plastique,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "lZb" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/westright{
@@ -28103,7 +27570,7 @@
 	},
 /obj/machinery/vending/boozeomat{
 	name = "Magic Booze-O-Mat";
-	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/gin=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/beer=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/ale=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/cream=10,/obj/item/weapon/reagent_containers/food/drinks/cans/tonic=10,/obj/item/weapon/reagent_containers/food/drinks/cans/cola=10,/obj/item/weapon/reagent_containers/food/drinks/cans/sodawater=15,/obj/item/weapon/reagent_containers/food/drinks/flask/barflask=5,/obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask=5,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass=50,/obj/item/weapon/reagent_containers/food/drinks/ice=15,/obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne=10);
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/gin = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/wine = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/cognac = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/beer = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/ale = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/tonic = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/cola = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/sodawater = 15, /obj/item/weapon/reagent_containers/food/drinks/flask/barflask = 5, /obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask = 5, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 50, /obj/item/weapon/reagent_containers/food/drinks/ice = 15, /obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/champagne = 10);
 	req_access = list()
 	},
 /turf/unsimulated/floor{
@@ -28774,6 +28241,15 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"puV" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Equipment Room";
+	req_access = list(150)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/custom/syndicate_mothership)
 "pvb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "10,23";
@@ -29011,6 +28487,17 @@
 	icon_state = "1,6"
 	},
 /area/shuttle/supply/velocity)
+"qiD" = (
+/obj/structure/rack,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "qnM" = (
 /obj/effect/step_trigger/thrower{
 	direction = 4;
@@ -29055,6 +28542,12 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"rse" = (
+/obj/structure/object_wall/standart{
+	icon_state = "swall3"
+	},
+/turf/environment/space,
+/area/velocity/monorailwagon)
 "rXM" = (
 /obj/machinery/light{
 	dir = 4
@@ -29069,6 +28562,14 @@
 /obj/item/weapon/kitchenknife/ritual,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"sjf" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/weapon/storage/firstaid/adv,
+/turf/unsimulated/floor{
+	icon_state = "bar"
+	},
+/area/custom/syndicate_mothership)
 "skC" = (
 /obj/item/weapon/reagent_containers/blood/AMinus{
 	pixel_x = -7;
@@ -30656,17 +30157,17 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-aaM
-aaM
+alT
+alT
+alT
+alT
+alT
+alT
+alT
+alT
+alT
+alT
+alT
 aaM
 aaM
 aaM
@@ -30912,7 +30413,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
+alT
 acS
 acS
 acS
@@ -30923,8 +30425,7 @@ acS
 acS
 acS
 acS
-aaM
-aaM
+alT
 aaM
 aaM
 aaM
@@ -31167,6 +30668,9 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+alT
 acS
 acS
 acS
@@ -31178,10 +30682,7 @@ acS
 acS
 acS
 acS
-acS
-acS
-acS
-acS
+alT
 aaM
 aaM
 aaM
@@ -31420,7 +30921,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alT
+alT
+alT
+alT
+alT
+alT
+alT
 acS
 acS
 acS
@@ -31432,13 +30939,7 @@ acS
 acS
 acS
 acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+alT
 aaM
 aaM
 aaM
@@ -31675,6 +31176,15 @@ aaM
 ahG
 aaM
 aaM
+aaM
+aaM
+alT
+acS
+acS
+acS
+acS
+acS
+alT
 acS
 acS
 acS
@@ -31686,17 +31196,8 @@ acS
 acS
 acS
 acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+alT
+aaM
 aaM
 aaM
 ahG
@@ -31933,27 +31434,27 @@ ahG
 aaM
 aaM
 aaM
+alT
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+alT
 aaM
-aaM
-aaM
-aaM
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
 aaM
 aaM
 ahG
@@ -32190,27 +31691,27 @@ ahG
 aaM
 aaM
 aaM
+alT
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+alT
+alT
+alT
+alT
 aaM
-aaM
-aaM
-aaM
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
 aaM
 aaM
 ahG
@@ -32447,27 +31948,27 @@ ahG
 aaM
 aaM
 aaM
+alT
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+alT
+alT
+alT
+alT
 aaM
-aaM
-aaM
-aaM
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
 aaM
 aaM
 ahG
@@ -32703,6 +32204,8 @@ aaM
 ahG
 aaM
 aaM
+aaM
+alT
 acS
 acS
 acS
@@ -32718,13 +32221,11 @@ acS
 acS
 acS
 acS
-acS
-acS
-acS
-acS
-acS
-acS
-acS
+alT
+alT
+alT
+alT
+aaM
 aaM
 aaM
 ahG
@@ -32961,8 +32462,7 @@ ahG
 aaM
 aaM
 aaM
-aaM
-aaM
+alT
 acS
 acS
 acS
@@ -32981,6 +32481,7 @@ acS
 acS
 acS
 acS
+alT
 aaM
 aaM
 aaM
@@ -33219,10 +32720,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
+alT
+acS
+acS
+acS
+acS
+acS
+alT
 acS
 acS
 acS
@@ -33234,10 +32738,7 @@ acS
 acS
 acS
 acS
-acS
-acS
-acS
-acS
+alT
 aaM
 aaM
 aaM
@@ -33476,13 +32977,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alT
+alT
+alT
+alT
+alT
+alT
+alT
 acS
 acS
 acS
@@ -33493,8 +32994,8 @@ acS
 acS
 acS
 acS
-aaM
-aaM
+acS
+alT
 aaM
 aaM
 aaM
@@ -33739,9 +33240,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
+alT
 acS
 acS
 acS
@@ -33749,9 +33248,11 @@ acS
 acS
 acS
 acS
-aaM
-aaM
-aaM
+acS
+acS
+acS
+acS
+alT
 aaM
 aaM
 aaM
@@ -33996,19 +33497,19 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alT
+alT
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+acS
+alT
 aaM
 aaM
 aaM
@@ -34253,18 +33754,18 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+alT
+alT
+alT
+alT
+alT
+alT
+alT
+alT
+alT
+alT
+alT
+alT
 aaM
 aaM
 aaM
@@ -36769,7 +36270,7 @@ aDl
 aGq
 aEx
 baA
-aid
+aFM
 abg
 aBh
 aFe
@@ -39592,9 +39093,9 @@ abi
 abi
 abg
 abg
-aXm
+aGm
 baA
-agg
+aGs
 abg
 abg
 abi
@@ -40105,7 +39606,7 @@ abi
 abi
 baY
 aaY
-aGs
+aDX
 aDv
 baR
 aDS
@@ -40621,7 +40122,7 @@ baB
 abg
 abg
 aDw
-aYx
+aER
 bbi
 abg
 abg
@@ -52849,9 +52350,9 @@ aaM
 aaM
 aaM
 aAm
-aAK
-aDX
-aDX
+aAD
+aBk
+aBk
 aAm
 btb
 aCd
@@ -53363,7 +52864,7 @@ aaM
 aaM
 aaM
 aAm
-aBH
+aAK
 aAM
 aAE
 aAm
@@ -53634,9 +53135,9 @@ aFo
 aAL
 aFr
 beQ
-bfk
+lYh
 aFr
-aFM
+bfk
 bfu
 aAm
 aHv
@@ -54649,7 +54150,7 @@ aAm
 aBc
 aAM
 aBj
-aER
+hGB
 aBm
 aEl
 aFm
@@ -54903,7 +54404,7 @@ aaM
 aaM
 aaM
 aAm
-aAD
+iSi
 aAM
 aAM
 aAM
@@ -55162,8 +54663,8 @@ aaM
 aAm
 aBc
 aAM
-aBk
-aER
+qiD
+hGB
 aBG
 aEm
 aBI
@@ -56192,7 +55693,7 @@ aaM
 aaM
 aaM
 aAm
-aGm
+aBH
 aAM
 aBJ
 aAm
@@ -79810,18 +79311,18 @@ atP
 atP
 atP
 dIb
-dNb
+rse
 avn
 avn
 avn
-dNb
+rse
 enb
 dIb
-dNb
+rse
 axN
 axN
 axN
-dNb
+rse
 enb
 atP
 ayt
@@ -80323,7 +79824,7 @@ dwb
 dwb
 dwb
 dwb
-dKb
+aHE
 dPb
 dWb
 eab
@@ -80336,7 +79837,7 @@ dWb
 eab
 dWb
 ejb
-dKb
+aHE
 dwb
 dwb
 dwb
@@ -80581,11 +80082,11 @@ atP
 atP
 atP
 auI
-dNb
+rse
 dXb
 ebb
 dXb
-dNb
+rse
 eqb
 auI
 hMb
@@ -82816,9 +82317,6 @@ aaM
 aeD
 aaM
 aaM
-ahF
-ahF
-ahF
 aaM
 aaM
 aaM
@@ -82837,13 +82335,16 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aka
+aku
+aku
+aku
+aku
+aku
+aku
+aku
+aku
+alp
 aaM
 aaM
 aaM
@@ -83073,13 +82574,12 @@ aaM
 aeD
 aaM
 aaM
-ahF
-ahF
-ahF
-ahF
 aaM
 aaM
 aaM
+aaM
+aaM
+ahF
 aaM
 aaM
 aaM
@@ -83093,14 +82593,15 @@ aaM
 aaM
 aka
 aku
-aku
-aku
-aku
-aku
-alp
-aaM
-aaM
-aaM
+amG
+amu
+alK
+alU
+amh
+anx
+anD
+anG
+bPb
 aaM
 aaM
 aaM
@@ -83330,11 +82831,13 @@ aaM
 aeD
 aaM
 aaM
+aaM
+aaM
+aaM
 ahF
 ahF
 ahF
 ahF
-ahF
 aaM
 aaM
 aaM
@@ -83345,19 +82848,17 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aka
 aku
 aku
-aku
-aku
-aku
-aku
-aku
+amH
+amu
+amu
+amu
+amu
+amu
+anE
 anG
-aij
-aaM
-aaM
+anK
 aaM
 aaM
 aaM
@@ -83586,17 +83087,15 @@ aaM
 aaM
 aeD
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 aaM
 aaM
 aaM
-aaM
-aaM
+ahF
+ahF
+ahF
+ahF
+ahF
+ahF
 aaM
 aaM
 aaM
@@ -83604,17 +83103,19 @@ aka
 aku
 aku
 aku
-aku
-aku
-amD
-aKk
-amf
-aku
-als
-als
-als
-als
 alp
+aaM
+aku
+aku
+aku
+aku
+alL
+alV
+ami
+amv
+amz
+anG
+bRb
 aaM
 aaM
 aaM
@@ -83843,35 +83344,35 @@ aaM
 aaM
 aeD
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
 aaM
 aaM
-aaM
-aaM
+ahF
+ahF
+ahF
+ahF
+ahF
+ahF
+ahF
 aaM
 aaM
 aka
 aku
+akL
+aiC
+alj
+aku
+aku
+aku
+amD
+alB
+aku
+amI
 aku
 aku
 aku
 aku
-aJM
-aJQ
-aJn
-akM
-akM
-akM
-amr
-als
-aJd
-aiA
-als
-als
+aku
+alr
 aaM
 aaM
 aaM
@@ -84100,36 +83601,36 @@ aaM
 aaM
 aeD
 aaM
+aaM
 ahF
 ahF
 ahF
 ahF
 ahF
+ahF
+ahF
+ahF
+ahF
+abu
+akb
+aih
+akM
+akM
+akM
+ajZ
+akO
+amj
+aly
+akM
+alG
+akM
+amj
+akM
+aku
 aaM
 aaM
 aaM
-aka
-aku
-aku
-aku
-aku
-aku
-aku
-aku
-amC
-akM
-akM
-akM
-akM
-akM
-akM
-amr
-als
-aJg
-amu
-amG
-als
-alp
+aaM
 aaM
 aaM
 aaM
@@ -84357,36 +83858,36 @@ aaM
 aaM
 aeD
 aaM
-ahF
-ahF
-ahF
-ahF
-ahF
 aaM
-aaM
+ahF
+ahF
+ahF
+ahF
+ahF
+ahF
+ahF
+ahF
+ahF
 abu
+akc
+akx
+akN
+akM
+akM
+akM
+akM
+alZ
+akM
+akM
+alE
+akM
+anb
+alk
+aku
 aaM
 aaM
 aaM
 aaM
-aaM
-ajK
-aHZ
-ajU
-akM
-akM
-akM
-akM
-alx
-akM
-akM
-akM
-aIw
-amu
-amu
-aKg
-ajO
-aij
 aaM
 aaM
 aaM
@@ -84573,7 +84074,7 @@ bag
 afZ
 aiQ
 amK
-avc
+anX
 aoY
 aqd
 atD
@@ -84618,32 +84119,32 @@ aaM
 aaM
 ahF
 ahF
-aaM
-aaM
+ahF
+ahF
+ahF
+ahF
+ahF
 aaM
 abu
-aaM
-aaM
-aaM
-aaM
-aaM
+akd
+akw
+akM
 alb
-akx
-akR
 akM
-akM
-akN
-akM
-alE
+akg
+alz
+amj
+amC
 akM
 akM
 akM
-aIx
-amu
-amu
-ajG
-ajO
-alS
+amj
+akM
+aku
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -84875,32 +84376,32 @@ aaM
 aaM
 aaM
 aaM
+ahF
+ahF
+ahF
+ahF
 aaM
 aaM
 aaM
-abu
-aaM
-aaM
-aaM
-aaM
-aaM
-ajN
-akw
-akR
+ake
+aku
+anv
+aiD
+alm
+aku
+aku
+aku
+amr
 akM
 akM
-akM
-akM
-akM
-akM
-anx
-aKv
-als
-amj
-amu
-aKs
-ajO
-aiC
+all
+aku
+aku
+aku
+aku
+aku
+alp
+aaM
 aaM
 aaM
 aaM
@@ -85136,28 +84637,28 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
 ake
 aku
 aku
 aku
-aku
-aku
-aku
-aku
-ajt
-alH
-alH
-alH
-aku
-aku
-bPb
-aku
-als
-aJs
-aiB
-ajH
-als
 alr
+aaM
+aku
+amr
+akM
+akM
+alO
+aku
+ama
+aml
+amB
+anG
+bPb
+aaM
 aaM
 aaM
 aaM
@@ -85396,24 +84897,24 @@ aaM
 aaM
 aaM
 aaM
-ake
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aku
-aku
-aku
-aku
-akT
-alG
-alX
-amE
-aku
-ami
+alD
+akM
+akM
+alM
+amk
+amb
 amb
 amA
-als
-als
-als
-als
-als
+anG
+anK
 aaM
 aaM
 aaM
@@ -85656,21 +85157,21 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
 ake
 aku
+alD
+alH
+amo
 aku
-aku
-aku
-aku
-aku
-amh
-amb
-akg
-aku
-aku
-aku
-aku
-alr
+amc
+amc
+amF
+anG
+bRb
 aaM
 aaM
 aaM
@@ -85901,15 +85402,17 @@ aeD
 aaM
 aaM
 aaM
-ahI
-ahI
-ahI
-ahI
+aaM
 aaM
 ahI
 ahI
 ahI
-ahJ
+ahI
+aid
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -85920,17 +85423,15 @@ ake
 aku
 aku
 aku
-amk
-aqb
-amA
 aku
-anG
-aiC
-ahJ
+aku
+aku
+amE
+aku
+alr
 aaM
-ahJ
-aKU
-ahI
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -86110,7 +85611,7 @@ aYB
 aYT
 aYk
 aAp
-age
+aYx
 anH
 bao
 ajC
@@ -86159,15 +85660,11 @@ ahF
 ahF
 ahF
 aaM
+aaM
+aaM
 ahJ
 aaM
 ahJ
-ahJ
-ahJ
-aaM
-ahJ
-ahJ
-ahI
 aaM
 aaM
 aaM
@@ -86175,19 +85672,23 @@ aaM
 aaM
 aaM
 aaM
-ake
-aku
-aku
-bRb
-aku
-aku
-alr
 aaM
-ahI
-ahI
-ahJ
 aaM
-ahJ
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaN
+amJ
+aaN
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -86372,7 +85873,7 @@ baq
 agh
 ajE
 aZT
-avq
+anf
 apH
 aqr
 aqe
@@ -86423,29 +85924,29 @@ ahF
 ahF
 ahJ
 aaM
-ahJ
-ahF
-ahF
-ahJ
-ahJ
-aie
-aaN
-aaN
-aaN
-aaN
-aaN
-aaN
-atb
-aaN
-ahJ
 aaM
-ahJ
-ahJ
-ahJ
-ahF
-ahF
-ahJ
-ahI
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaN
+aii
+aaN
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -86679,30 +86180,30 @@ ahF
 ahF
 ahF
 ahF
-ahF
-ahF
-ahF
-ahF
-aie
-aaN
-aie
-ajy
-aki
-aki
-aki
-alz
-aaN
-aii
-aaN
-ahJ
-ahJ
-ahF
-ahF
-ahF
-ahF
-ahF
 aaM
-ahJ
+aaM
+aaM
+ahF
+aie
+aaN
+aaN
+aaN
+aie
+aaM
+aie
+aaN
+aaN
+aaN
+aaN
+aie
+aaN
+alI
+aaN
+aie
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -86941,25 +86442,25 @@ ahF
 ahF
 aie
 aie
-ail
+aiR
 ajc
-aIK
-aIK
-aIK
-aIK
-aIK
-aaN
-alI
-aaN
+aiR
 aie
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahJ
+aie
+aie
+aLb
+aIb
+aIb
+bAb
+aie
+amy
+akQ
+amM
+aie
+aie
+aie
+aie
+aaM
 aaM
 aaM
 aaM
@@ -87198,25 +86699,25 @@ ahF
 ahF
 aie
 aiu
-ajM
-aiw
-akQ
-akQ
-akQ
-akQ
-akQ
-anK
-alM
-alj
+aiS
+aiS
+aiS
+aiT
+aiT
 aie
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aOb
+aIb
+aIb
+aIb
+amm
+akQ
+akQ
+akQ
+abc
+akQ
+ame
+aie
+aaM
 aaM
 aaM
 aaM
@@ -87455,25 +86956,25 @@ ahF
 ahF
 aie
 aiv
-aii
-ajZ
-akQ
-akh
-akv
-ale
-akQ
-amm
+aiT
+aiT
+aiT
+ajp
+aiT
+ajz
 aIb
-aHF
+aIb
+bab
+aIb
+akQ
+akQ
+akQ
+akQ
+alN
+akQ
+alX
 aie
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aaM
 aaM
 aaM
 aaM
@@ -87708,28 +87209,28 @@ ahF
 ahF
 ahF
 ahF
+ahF
+ahF
 aie
+aiw
+aiS
+aiS
+aiS
+aiT
+aAR
 aie
-aie
-aie
-aie
-aie
-alB
-alL
-alW
-amF
-akQ
-amm
 aIb
-aHF
+aRb
+bbb
+bHb
+akQ
+akQ
+akQ
+akQ
+bMP
+alW
+amZ
 aie
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
 aaM
 aaM
 aaM
@@ -87964,29 +87465,29 @@ ahF
 ahF
 ahF
 ahF
+ahF
+ahF
+ahF
 aie
 aie
 aiR
+ajd
+aiR
+aie
+aie
+aie
+aFb
+aRb
+bnb
 bHb
-aIQ
-aAR
-aie
-akc
-akj
-alZ
-amI
 akQ
-amm
-aIb
-aHF
+akQ
+akQ
+akQ
+akQ
+akQ
 aie
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aie
 aaM
 aaM
 aaM
@@ -88221,30 +87722,30 @@ ahF
 ahF
 ahF
 ahF
+ahF
 aie
-aDb
-aiS
-aiS
-aiS
-aiT
-ajz
-akQ
-akQ
-akQ
-akQ
-akQ
-aml
-alY
-aHH
 aie
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aie
+aie
+aie
+aie
+aie
+aie
+axb
+aIb
+aIb
+aIb
+bsb
+aIb
+akQ
+akQ
+akQ
+akQ
+akQ
+akQ
+aie
+aie
+aaM
 aaM
 aaM
 aaM
@@ -88478,32 +87979,32 @@ ahF
 ahF
 ahF
 ahF
+ahF
 aie
-aFb
-aiT
-aiT
-aiT
-ajp
+aii
 aix
-aJv
-alD
-alD
-alD
-amc
+aii
+aix
+aii
+aii
 aie
-axb
-aHI
+aDb
+aIb
+aIb
+aIb
+aIb
+aIb
+cMX
+inC
+alF
+akQ
+lpk
+sjf
 aie
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
-ahF
+aie
+aaM
+aaM
+aaM
 aaM
 aeD
 aaM
@@ -88735,31 +88236,31 @@ ahF
 ahF
 ahF
 ahF
+ahF
 aie
-aJb
-aiS
-aiS
-aiS
-aiT
-ajz
+aii
+aiz
+aje
+ajt
+aii
+aii
+aie
 aIb
 aIb
 aIb
-acW
-aly
-aly
-aly
-aly
-aly
-aly
-aly
-aly
-aly
+aie
+aie
+aie
+aie
+aie
+aie
+aie
+aie
+aie
+aie
 ahF
 ahF
-ahF
-ahF
-ahF
+aaM
 aaM
 aaM
 aeD
@@ -88992,32 +88493,32 @@ ahF
 ahF
 ahF
 ahF
+ahF
 aie
-aie
-aiR
+aii
 aiy
-aHq
+aiV
 ajq
+aii
+aii
+agb
+aIb
+aIb
+aQb
 aie
-akb
-amH
-alY
-adH
-aly
-amo
-bab
-bab
-bab
-bab
-bab
-aKy
-aly
+als
+alR
+amd
+amp
+amd
+avc
+ayM
+aie
 ahF
 ahF
 ahF
 ahF
-ahF
-ahF
+aaM
 aaM
 aeD
 aaM
@@ -89251,30 +88752,30 @@ ahF
 ahF
 ahF
 aie
+aii
+aiB
+ajk
+ajy
+aii
+aii
 aie
+aFb
+aIb
+aIb
 aie
+alx
+alS
+alS
+alS
+alS
+alS
+azH
 aie
-aie
-aie
-alF
-alN
-akz
-aix
-aly
-amn
-bbb
-aHK
-bbb
-bbb
-aJR
-aKE
-aly
 ahF
 ahF
 ahF
-ahF
-ahF
-ahF
+aaM
+aaM
 aaM
 aeD
 aaM
@@ -89507,31 +89008,31 @@ ahF
 ahF
 ahF
 ahF
-ahF
-ahF
-ahF
 aie
+aii
+aiA
+aii
+aiA
+aii
+aii
 aie
-aiz
-akd
-alM
-alM
-aIi
-aly
-amq
-bbb
-bbb
-bbb
-bbb
-bbb
-aKJ
-aly
+aIb
+aIb
+aIb
+aie
+alP
+alS
+amf
+amf
+amf
+alS
+aHc
+aie
 ahF
 ahF
 ahF
 ahF
-ahF
-ahF
+aaM
 aaM
 aeD
 aaM
@@ -89763,27 +89264,27 @@ ahF
 ahF
 ahF
 ahF
-ahF
-ahF
-ahF
-ahF
 aie
-ajT
-ajd
+aie
+aie
+aie
+aie
+aie
+aie
+aie
+aie
 aIb
 aIb
 aIb
-amJ
-amZ
+puV
+alx
+alS
+amf
 amq
-bbb
-aHP
-bbb
-bbb
-aJS
-aKJ
-aly
-ahF
+amf
+alS
+aHd
+aie
 ahF
 ahF
 ahF
@@ -90020,27 +89521,27 @@ ahF
 ahF
 ahF
 ahF
-ahF
-ahF
-ahF
-ahF
 aie
-aHE
-ajd
+acW
+adv
+aij
+aij
+aij
+adv
+akv
+aie
 aIb
 aIb
 aIb
-all
-aly
-amq
-bbb
-bbb
-bbb
-bbb
-bbb
-aKJ
-aly
-ahF
+aie
+alx
+alS
+amf
+amf
+amf
+alS
+aHf
+aie
 ahF
 ahF
 ahF
@@ -90277,27 +89778,27 @@ ahF
 ahF
 ahF
 ahF
-ahF
-ahF
-ahF
-ahF
 aie
-ajT
-ajd
+adc
+adH
+aik
+adH
+adH
+ajK
+aky
+aie
 aIb
 aIb
 aIb
-alK
-aly
-amn
-bbb
-aHR
-bbb
-bbb
-aJT
-aKE
-aly
-ahF
+aie
+alx
+alS
+alS
+alS
+alS
+alS
+aHj
+aie
 ahF
 ahF
 ahF
@@ -90534,27 +90035,27 @@ ahF
 ahF
 ahF
 ahF
-ahF
-ahF
-ahF
-ahF
 aie
-aie
-ajk
+adc
+adH
+adH
+adH
+adH
+adH
 aky
-aIM
+aie
+aFb
+aIb
+aQb
+aie
+alQ
 alY
-amM
-aly
-amp
-bnb
-bnb
-bnb
-bnb
-bnb
-aKM
-aly
-ahF
+amn
+ams
+amn
+avq
+aHq
+aie
 ahF
 ahF
 ahF
@@ -90791,7 +90292,18 @@ ahF
 ahF
 ahF
 ahF
-ahF
+aie
+adc
+adH
+ail
+adH
+adH
+ajM
+aky
+aqb
+aIb
+aIb
+aIb
 aie
 aie
 aie
@@ -90799,19 +90311,8 @@ aie
 aie
 aie
 aie
-aix
-akz
-aix
-aly
-aly
-aly
-aly
-aly
-aly
-aly
-aly
-aly
-ahF
+aie
+aie
 ahF
 ahF
 ahF
@@ -91049,23 +90550,23 @@ ahF
 ahF
 ahF
 aie
+adc
+adH
+adH
+adH
+adH
+adH
+aky
 aie
-aSb
-aSb
-ajJ
-aSb
-akL
-aie
-alO
+aFb
 aIb
-alk
-anD
-ams
-bsb
-aKW
-aIN
-aIa
+aIb
 aie
+ahF
+ahF
+ahF
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -91307,22 +90808,22 @@ ahF
 ahF
 aie
 adc
-bAb
+adH
 ain
-aih
-aii
-akO
+adH
+adH
+ajT
+aky
 aie
-alR
 aIb
-amJ
-amv
-aJw
-aJw
-aJw
-aLa
-aHd
+aIb
 aie
+aie
+aie
+aie
+aie
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -91563,23 +91064,23 @@ ahF
 ahF
 ahF
 aie
-adc
+adl
 aif
-aiV
 aim
-aii
-akO
-agb
-ajd
-aIb
-amJ
-ama
-amy
-ayM
-aIg
-aIg
-aIL
+aim
+aim
+aif
+akz
 aie
+aIb
+aIb
+alc
+ald
+ald
+aln
+aie
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -91820,23 +91321,23 @@ ahF
 ahF
 ahF
 aie
-adc
-abc
-aiD
-ajI
-aii
-akO
 aie
-alQ
+aie
+aie
+aie
+aie
+aie
+aie
+aie
 aIb
-amJ
-anD
-anb
-azH
-aKZ
-aLf
-aJH
+aIb
 aie
+akR
+ald
+ald
+aie
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -92023,7 +91524,7 @@ aaM
 abu
 aAw
 agc
-anX
+aiE
 ajS
 anJ
 anj
@@ -92076,24 +91577,24 @@ ahF
 ahF
 ahF
 ahF
+ahF
+ahF
+ahF
 aie
+ajG
+ajN
+ajN
+akh
 aie
-adl
-adl
-aik
-adl
-akS
-aie
-aje
 aIb
-aln
-amv
-amz
-aHc
-aIj
-aIj
-alP
+aIb
 aie
+akR
+ald
+alo
+aie
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -92279,7 +91780,7 @@ aaM
 aaM
 abu
 aAv
-aiE
+age
 aiG
 akA
 anL
@@ -92334,23 +91835,23 @@ ahF
 ahF
 ahF
 ahF
+ahF
+ahF
+aie
+ajH
+ajN
+ajN
+ajN
+atb
+aIb
+aIb
+aie
+akS
+ale
 aie
 aie
-aie
-aie
-aie
-aie
-aie
-aie
-alc
-aie
-aie
-aie
-aHd
-aIk
-aIR
-aJw
-aie
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -92593,21 +92094,21 @@ ahF
 ahF
 ahF
 ahF
+aie
+ajI
+ajN
+ajN
+aki
+aie
+aJb
+aIb
+aie
+akT
+ale
+aie
 ahF
 ahF
 ahF
-ahF
-aie
-alV
-ald
-alm
-ame
-aie
-aie
-aIl
-aie
-aie
-aie
 ahF
 ahF
 ahF
@@ -92850,20 +92351,20 @@ ahF
 ahF
 ahF
 ahF
-ahF
-ahF
-ahF
-ahF
 aie
-alU
-amB
-alo
-anE
+ajJ
+ajO
+ajU
+akj
 aie
-aHf
-aIt
-aIT
 aie
+aie
+aie
+aie
+aie
+aie
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -93050,7 +92551,7 @@ aaM
 aaM
 abu
 aXc
-ahg
+agg
 aiF
 ajf
 anO
@@ -93063,7 +92564,7 @@ avK
 awg
 axn
 anP
-adv
+baV
 azp
 abu
 aaM
@@ -93107,20 +92608,20 @@ ahF
 ahF
 ahF
 ahF
+aie
+aie
+aie
+aie
+aie
+aie
 ahF
 ahF
 ahF
 ahF
-aie
-aie
-aie
-aie
-aie
-aie
-aHj
-aIu
-aJa
-aie
+ahF
+ahF
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -93308,7 +92809,7 @@ aaM
 abu
 aZP
 agf
-anf
+ahg
 akH
 anR
 aoM
@@ -93373,11 +92874,11 @@ ahF
 ahF
 ahF
 ahF
-aie
-aKV
-aIv
-aJc
-aie
+ahF
+ahF
+ahF
+ahF
+ahF
 ahF
 ahF
 ahF
@@ -93630,11 +93131,11 @@ ahF
 ahF
 ahF
 ahF
-aie
-aie
-aie
-aie
-aie
+ahF
+ahF
+ahF
+ahF
+ahF
 ahF
 ahF
 ahF

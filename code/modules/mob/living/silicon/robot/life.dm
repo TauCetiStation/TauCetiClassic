@@ -25,7 +25,9 @@
 
 /mob/living/silicon/robot/proc/clamp_values()
 
-	SetParalysis(min(AmountParalyzed(), 30))
+//	SetStunned(min(stunned, 30))
+	SetParalysis(min(paralysis, 30))
+//	SetWeakened(min(weakened, 20))
 	SetSleeping(0)
 	adjustBruteLoss(0)
 	adjustToxLoss(0)
@@ -82,7 +84,16 @@
 	if (src.stat != DEAD) //Alive.
 		if (src.paralysis || src.stunned || src.weakened || !src.has_power) //Stunned etc.
 			src.stat = UNCONSCIOUS
-			blinded = paralysis
+			if (src.stunned > 0)
+				AdjustStunned(-1)
+			if (src.weakened > 0)
+				AdjustWeakened(-1)
+			if (src.paralysis > 0)
+				AdjustParalysis(-1)
+				src.blinded = 1
+			else
+				src.blinded = 0
+
 		else	//Not stunned.
 			src.stat = CONSCIOUS
 
@@ -158,7 +169,6 @@
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	else if (sight_mode & BORGNIGHT)
 		sight_modifier = "nvg"
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	else if (sight_mode & BORGTHERM)
 		sight_modifier = "thermal"
 		sight |= SEE_MOBS
@@ -226,8 +236,7 @@
 			weaponlock_time = 120
 
 /mob/living/silicon/robot/update_canmove()
-	anchored = HAS_TRAIT(src, TRAIT_ANCHORED)
-	canmove = !(buckled || anchored || weakened || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
+	canmove = !(paralysis || stunned || weakened || buckled || lockcharge || HAS_TRAIT(src, TRAIT_ANCHORED))
 
 //Robots on fire
 /mob/living/silicon/robot/handle_fire()
