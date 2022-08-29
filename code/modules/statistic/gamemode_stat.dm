@@ -113,8 +113,10 @@
 	var/datum/stat/changeling_info/_changeling_info = new
 	_changeling_info.absorbedcount = C.absorbedcount
 	for(var/obj/effect/proc_holder/changeling/P in C.purchasedpowers)
-		_changeling_info.changeling_purchase.power_type = P
-		_changeling_info.changeling_purchase.spent_points = P.genomecost
+		var/datum/stat/changeling_purchase/stat = new
+		stat.power_type = P
+		stat.spent_points = P.genomecost
+		_changeling_info.changeling_purchase += stat
 	changeling_info = _changeling_info
 
 /datum/stat/changeling_info
