@@ -113,23 +113,25 @@
 	var/datum/stat/changeling_info/_changeling_info = new
 	_changeling_info.absorbedcount = C.absorbedcount
 	for(var/obj/effect/proc_holder/changeling/P in C.purchasedpowers)
+		if(P.genomecost <= 0)
+			continue
 		var/datum/stat/changeling_purchase/stat = new
-		stat.power_type = P
+		stat.power_type = P.name
 		stat.spent_points = P.genomecost
 		_changeling_info.changeling_purchase += stat
 	changeling_info = _changeling_info
 
 /datum/stat/changeling_info
 	// int, [0...]
-	var/absorbedcount
+	var/absorbedcount = 0
 	// array of objects
-	var/list/datum/stat/changeling_purchase/changeling_purchase
+	var/list/datum/stat/changeling_purchase/changeling_purchase = list()
 
 /datum/stat/changeling_purchase
 	// string, anything
-	var/power_type
+	var/power_type = null
 	// int, [0...]
-	var/spent_points
+	var/spent_points = 0
 
 /datum/stat/role
 	// Default stats
