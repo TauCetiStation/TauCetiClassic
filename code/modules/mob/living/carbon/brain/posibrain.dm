@@ -81,7 +81,7 @@
 	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]</span>\n"
 
 	if(src.brainmob && src.brainmob.key)
-		switch(src.brainmob.stat)
+		switch(brainmob.stat != CONSCIOUS)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)
 					msg += "<span class='warning'>It appears to be in stand-by mode.</span>\n" //afk

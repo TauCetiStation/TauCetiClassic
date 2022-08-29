@@ -50,7 +50,7 @@ var/global/deaths_during_shift = 0
 		var/area/A = AA
 		var/members_in_area = 0
 		for(var/mob/living/carbon/human/H in A)
-			if(H.stat || !H.mind || !H.client)
+			if(H.stat != CONSCIOUS || !H.mind || !H.client)
 				continue
 			var/datum/role/gangster/is_gangster = isanygangster(H)
 			if(is_gangster in members)

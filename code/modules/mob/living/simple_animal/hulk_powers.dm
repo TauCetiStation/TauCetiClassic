@@ -9,7 +9,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/hulk_jump/cast(list/targets)
 	//for(var/turf/T in targets)
 	var/failure = 0
-	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat)
+	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat != CONSCIOUS)
 		to_chat(usr, "<span class='warning'>You can't jump right now!</span>")
 		return
 
@@ -75,7 +75,7 @@
 		for(var/direction in alldirs)
 			var/turf/T = get_step(usr,direction)
 			for(var/mob/living/M in T.contents)
-				if( (M != usr) && !(M.stat))
+				if( (M != usr) && (M.stat == CONSCIOUS))
 					if(snd)
 						snd = 0
 						playsound(M, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
@@ -136,7 +136,7 @@
 		return
 
 	var/failure = 0
-	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat)
+	if (istype(usr.loc,/mob) || usr.lying || usr.stunned || usr.buckled || usr.stat != CONSCIOUS)
 		to_chat(usr, "<span class='warning'>You can't dash right now!</span>")
 		return
 
@@ -592,7 +592,7 @@
 	return 0
 
 /mob/living/simple_animal/hulk/unathi/AltClickOn(atom/A)
-	if(!stat && mind && health > 0 && isliving(A) && A != src && Adjacent(A))
+	if(stat == CONSCIOUS && mind && health > 0 && isliving(A) && A != src && Adjacent(A))
 		try_to_eat(A)
 		next_click = world.time + 5
 	else

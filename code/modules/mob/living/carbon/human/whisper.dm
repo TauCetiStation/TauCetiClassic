@@ -22,7 +22,7 @@
 			return FALSE
 		return say_dead(message)
 
-	if(src.stat)
+	if(stat != CONSCIOUS)
 		return FALSE
 	message = sanitize(message)	//made consistent with say
 

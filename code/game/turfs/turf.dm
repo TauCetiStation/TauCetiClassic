@@ -133,7 +133,7 @@
 				return 0
 	return 1 //Nothing found to block so return success!
 
-/turf/proc/is_mob_placeable(mob/M)
+/turf/proc/is_mob_placeable(mob/M) // todo: maybe rewrite as COMSIG_ATOM_INTERCEPT_TELEPORT
 	if(density)
 		return FALSE
 	var/static/list/allowed_types = list(/obj/structure/window, /obj/machinery/door,
@@ -387,10 +387,6 @@
 	for(var/obj/mecha/M in src)//Mecha are not gibbed but are damaged.
 		spawn(0)
 			M.take_damage(100, "brute")
-
-/turf/proc/Bless()
-	flags |= NOJAUNT
-
 
 ////////////////
 //Distance procs

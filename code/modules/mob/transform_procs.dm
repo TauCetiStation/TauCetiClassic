@@ -103,9 +103,9 @@
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
-		O.Stun(stunned, ignore_canstun = TRUE)
+		O.Stun(AmountStun())
 		O.Weaken(weakened)
-		O.Paralyse(paralysis - 22)
+		O.SetParalysis(AmountParalyzed())
 		O.SetSleeping(AmountSleeping())
 
 	//transfer reagents
@@ -231,9 +231,9 @@
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
-		O.Stun(stunned, ignore_canstun = TRUE)
+		O.Stun(AmountStun())
 		O.Weaken(weakened)
-		O.Paralyse(paralysis - 22)
+		O.Paralyse(AmountParalyzed())
 		O.SetSleeping(AmountSleeping())
 
 	//transfer reagents

@@ -57,7 +57,7 @@
 #define CANPUSH		8       // Can be pushed
 #define LEAPING		16
 #define PASSEMOTES	32      //Mob has holders inside of it that need to see emotes.
-#define LOCKSTUN	64      // if Mob has this flag, then stunned cannot be modified using Stun() SetStun() AdjustStunned() procs.
+
 #define GODMODE		4096
 #define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath
 #define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
