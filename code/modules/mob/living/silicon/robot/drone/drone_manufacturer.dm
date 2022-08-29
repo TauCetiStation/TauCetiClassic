@@ -80,7 +80,7 @@
 	. = ..()
 	if(!.)
 		return
-	audible_message(span_warning("[src] lets out a tinny alarm before falling dark."))
+	audible_message("<span class='warning'>[src] lets out a tinny alarm before falling dark.</span>")
 	playsound(loc, 'sound/machines/warning-buzzer.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 
 /obj/machinery/drone_fabricator/deconstruct(disassembled = TRUE)

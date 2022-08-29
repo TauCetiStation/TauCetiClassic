@@ -76,7 +76,7 @@
 		circuit = null
 		if(stat & BROKEN)
 			if(user)
-				to_chat(user, span_notice("The broken glass falls out."))
+				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 			else
 				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 70, TRUE)
 			new /obj/item/weapon/shard(loc)
@@ -84,7 +84,7 @@
 			A.icon_state = "3"
 		else
 			if(user)
-				to_chat(user, span_notice("You disconnect the monitor."))
+				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 			A.state = 4
 			A.icon_state = "4"
 	for(var/obj/C in src)

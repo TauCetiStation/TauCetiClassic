@@ -1164,7 +1164,7 @@ var/global/list/airlock_overlays = list()
 		return ..()
 
 	if(user)
-		to_chat(user, span_notice("You remove the airlock electronics."))
+		to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 
 	var/obj/item/weapon/airlock_electronics/ae
 	if(!electronics)
