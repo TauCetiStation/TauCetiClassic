@@ -304,7 +304,7 @@
 	for(var/obj/effect/proc_holder/spell/targeted/communicate/C in M.spell_list)
 		M.RemoveSpell(C)
 
-	if(!ishuman(M))
+	if(!isliving(M))
 		return
 	var/mob/living/L = M
 	if(HAS_TRAIT(L, TRAIT_CULT_EYES))

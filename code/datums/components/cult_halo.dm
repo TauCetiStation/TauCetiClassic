@@ -25,7 +25,7 @@
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(target, TRAIT_CULT_HALO))
 		ADD_TRAIT(target, TRAIT_CULT_HALO, RELIGION_TRAIT)
-	var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', "halo[rand(1, 6)]", -EXTERNAL_APPEARANCE_ALT)
+	var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', "halo[rand(1, 6)]", EXTERNAL_APPEARANCE_ALT)
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_parent = target
 		new /obj/effect/temp_visual/cult/sparks(get_turf(human_parent), human_parent.dir)
