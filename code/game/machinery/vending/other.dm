@@ -262,7 +262,7 @@
 	)
 	var/static/list/selections_kits
 
-	var/list/armor = list(
+	var/list/armor_kits = list(
 		"Hybrid suit" = /obj/item/weapon/storage/box/syndie_kit/rig,
 		"Heavy hybrid suit" = /obj/item/weapon/storage/box/syndie_kit/heavy_rig,
 		"Assault Armor" = /obj/item/weapon/storage/box/syndie_kit/armor,
@@ -339,7 +339,7 @@
 	if(!selection || !Adjacent(user))
 		return
 	voucher.in_use = TRUE
-	var/bought_type = armor[selection]
+	var/bought_type = armor_kits[selection]
 	var/obj/item/bought = new bought_type(loc)
 	if(ishuman(user))
 		var/mob/living/carbon/human/A = user
