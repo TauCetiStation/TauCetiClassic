@@ -293,4 +293,8 @@
 	target_ztrait = ZTRAIT_SNOWSTORM
 
 /datum/weather/snow_storm/impact(mob/living/L)
-	L.adjust_bodytemperature(-rand(5, 15), use_insulation = TRUE)
+	if(iscarbon(L))
+		var/mob/living/carbon/C = L
+		C.adjust_bodytemperature(-rand(5, 15), use_insulation = TRUE)
+	else
+		L.adjust_bodytemperature(-rand(5, 15))
