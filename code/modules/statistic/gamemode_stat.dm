@@ -110,9 +110,12 @@
 	var/item_type
 
 /datum/stat/role/changeling/set_custom_stat(datum/role/changeling/C)
-	var/datum/stat/changeling_info/changeling_info = new
-	changeling_info.absorbedcount = C.absorbedcount
-	changeling_info.changeling_purchase = C.purchasedpowers
+	var/datum/stat/changeling_info/_changeling_info = new
+	_changeling_info.absorbedcount = C.absorbedcount
+	for(var/obj/effect/proc_holder/changeling/P in C.purchasedpowers)
+		_changeling_info.changeling_purchase.power_type += P
+		_changeling_info.changeling_purchase.spent_points += P.genomecost
+	changeling_info = _changeling_info
 
 /datum/stat/changeling_info
 	// int, [0...]
@@ -154,7 +157,7 @@
 	// object
 	var/datum/stat/uplink_info/uplink_info = null
 	// object
-	var/datum/stat/changeling_purchase/changeling_info = null
+	var/datum/stat/changeling_info/changeling_info = null
 
 /datum/stat/role/proc/set_custom_stat(datum/role/R)
 	var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
