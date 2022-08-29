@@ -30,6 +30,7 @@
 	RefreshParts()
 	build_icon()
 	update_icon()
+	global.cyborg_recharging_station += src
 
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0
@@ -209,3 +210,7 @@
 			else
 				R.cell.charge = min(R.cell.charge + recharge_speed, R.cell.maxcharge)
 				return
+
+/obj/machinery/recharge_station/Destroy()
+	global.cyborg_recharging_station -= src
+	return ..()

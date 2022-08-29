@@ -230,11 +230,25 @@
 	if(!COOLDOWN_FINISHED(src, malf_borgcreating_cooldown))
 		to_chat(src, "<span class='warning'>Recharging.</span>")
 		return
-	var/mob/living/silicon/robot/cyborg = new(loc)
+	var/list/valid_places = list()
+	for(var/obj/machinery/recharge_station/S in global.cyborg_recharging_station)
+		if(!S)
+			to_chat(src, "<span class='warning'>There are no cyborg stations at your disposal.</span>")
+			return
+		if(!is_station_level(S.z))
+			continue
+		if(S.stat & (NOPOWER|BROKEN))
+			continue
+		valid_places += S
+		if(!valid_places)
+			to_chat(src, "<span class='warning'>There are no functioning cyborg chargers at the station..</span>")
+			return
+	var/mob/living/silicon/robot/cyborg = new(get_turf(pick(valid_places)))
 	cyborg.can_be_security = TRUE
 	cyborg.crisis = TRUE
 	create_spawner(/datum/spawner/living/robot, cyborg)
 	COOLDOWN_START(src, malf_borgcreating_cooldown, 300)
+	to_chat(src, "<span class='notice'><a href=?src=\ref[src];track=\ref[cyborg]>[cyborg] created.</span>")
 
 /datum/faction/malf_silicons/zombie/check_win()
 	if(finished)
