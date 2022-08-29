@@ -22,9 +22,7 @@
  */
 /datum/element/cult_eyes/proc/set_eyes(mob/living/target)
 	SIGNAL_HANDLER
-
-
-	if (ishuman(target))
+	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.r_eyes = 255
 		H.g_eyes = 0

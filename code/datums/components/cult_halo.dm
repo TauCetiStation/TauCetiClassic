@@ -1,4 +1,4 @@
-#define EXTERNAL_APPEARANCE_ALT   26
+#define EXTERNAL_APPEARANCE   26
 /**
  * # Cult halo element
  *
@@ -25,12 +25,12 @@
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(target, TRAIT_CULT_HALO))
 		ADD_TRAIT(target, TRAIT_CULT_HALO, RELIGION_TRAIT)
-	var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', "halo[rand(1, 6)]", EXTERNAL_APPEARANCE_ALT)
+	var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', "halo[rand(1, 6)]", EXTERNAL_APPEARANCE)
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_parent = target
 		new /obj/effect/temp_visual/cult/sparks(get_turf(human_parent), human_parent.dir)
-		human_parent.overlays_standing[EXTERNAL_APPEARANCE_ALT] = new_halo_overlay
-		human_parent.apply_overlay(EXTERNAL_APPEARANCE_ALT)
+		human_parent.overlays_standing[EXTERNAL_APPEARANCE] = new_halo_overlay
+		human_parent.apply_overlay(EXTERNAL_APPEARANCE)
 	else
 		target.add_overlay(new_halo_overlay)
 
@@ -43,9 +43,9 @@
 	REMOVE_TRAIT(target, TRAIT_CULT_HALO, RELIGION_TRAIT)
 	if (ishuman(target))
 		var/mob/living/carbon/human/human_parent = target
-		human_parent.remove_overlay(EXTERNAL_APPEARANCE_ALT)
+		human_parent.remove_overlay(EXTERNAL_APPEARANCE)
 		human_parent.update_body()
 	else
-		target.cut_overlay(EXTERNAL_APPEARANCE_ALT)
+		target.cut_overlay(EXTERNAL_APPEARANCE)
 	UnregisterSignal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_HUMAN_MONKEYIZE, COMSIG_MONKEY_HUMANIZE))
 	return ..()
