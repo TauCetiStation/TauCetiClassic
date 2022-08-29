@@ -2053,9 +2053,11 @@
 /area/station/maintenance/chapel)
 "aqB" = (
 /obj/structure/table/glass,
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/computer/med_data/laptop{
+	pixel_y = 2
+	},
 /turf/simulated/floor{
-	icon_state = "whitebluefull"
+	icon_state = "dark"
 	},
 /area/station/security/prison)
 "aqD" = (
@@ -9339,7 +9341,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "whitebluefull"
+	icon_state = "dark"
 	},
 /area/station/security/prison)
 "ciV" = (
@@ -18898,7 +18900,8 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "whitebluefull"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/station/security/prison)
 "eyh" = (
@@ -57708,7 +57711,7 @@
 	req_one_access = list(1,4)
 	},
 /turf/simulated/floor{
-	icon_state = "whitebluefull"
+	icon_state = "dark"
 	},
 /area/station/security/prison)
 "nWZ" = (
@@ -67808,8 +67811,12 @@
 /area/station/maintenance/brig)
 "qBO" = (
 /obj/structure/table/glass,
-/obj/item/weapon/folder/white,
-/obj/item/clothing/accessory/stethoscope,
+/obj/item/weapon/folder/white{
+	pixel_y = 4
+	},
+/obj/item/clothing/accessory/stethoscope{
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -95883,19 +95890,19 @@
 /area/station/maintenance/brig)
 "xGY" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/blood/APlus{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/blood/APlus,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_y = -7
-	},
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
 	pixel_x = -28;
 	pixel_y = -5
+	},
+/obj/item/weapon/reagent_containers/blood/OMinus{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_y = -7
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -138462,7 +138469,7 @@ iwj
 cIj
 kHV
 guU
-guU
+sQT
 tEI
 eoa
 vHV
