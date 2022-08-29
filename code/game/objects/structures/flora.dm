@@ -223,7 +223,7 @@
 /obj/structure/flora/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(!attacking_item.is_sharp())
 		return
-	flags &= NODECONSTRUCT
+	flags &= ~NODECONSTRUCT
 	. = ..()
 	flags |= NODECONSTRUCT
 
