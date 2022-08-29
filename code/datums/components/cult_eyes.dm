@@ -31,12 +31,6 @@
 		H.b_eyes = 0
 		H.update_body()
 		ADD_TRAIT(target, TRAIT_CULT_EYES, RELIGION_TRAIT)
-		/*var/mob/living/carbon/human/human_parent = target
-		human_parent.eye_color_left = BLOODCULT_EYE
-		human_parent.eye_color_right = BLOODCULT_EYE
-		human_parent.dna.update_ui_block(DNA_EYE_COLOR_LEFT_BLOCK)
-		human_parent.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
-		human_parent.update_body()*/
 
 /**
  * Detach proc
@@ -51,10 +45,5 @@
 		H.g_eyes = rand(0,255)
 		H.b_eyes = rand(0,255)
 		H.update_body()
-		/*human_parent.eye_color_left = initial(human_parent.eye_color_left)
-		human_parent.eye_color_right = initial(human_parent.eye_color_right)
-		human_parent.dna.update_ui_block(DNA_EYE_COLOR_LEFT_BLOCK)
-		human_parent.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
-		human_parent.update_body()*/
 	UnregisterSignal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_HUMAN_MONKEYIZE, COMSIG_MONKEY_HUMANIZE))
 	return ..()
