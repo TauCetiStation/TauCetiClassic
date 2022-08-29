@@ -1049,6 +1049,14 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},

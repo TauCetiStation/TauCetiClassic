@@ -140,6 +140,9 @@
 		die()
 
 /obj/effect/spider/spiderling/proc/cancel_vent_move()
+	if(!entry_vent)
+		forceMove(get_turf(src))
+		return
 	forceMove(entry_vent.loc)
 	entry_vent = null
 

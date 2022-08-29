@@ -83,7 +83,7 @@
 
 /mob/living/simple_animal/hostile/giant_spider/Life()
 	..()
-	if(!stat)
+	if(stat == CONSCIOUS)
 		if(stance == HOSTILE_STANCE_IDLE)
 			//1% chance to skitter madly away
 			if(!busy && prob(1))
@@ -106,14 +106,14 @@
 
 /mob/living/simple_animal/hostile/giant_spider/nurse/Life()
 	..()
-	if(!stat)
+	if(stat == CONSCIOUS)
 		if(stance == HOSTILE_STANCE_IDLE)
 			var/list/can_see = view(src, 10)
 			//30% chance to stop wandering and do something
 			if(!busy && prob(30))
 				//first, check for potential food nearby to cocoon
 				for(var/mob/living/C in can_see)
-					if(C.stat)
+					if(C.stat != CONSCIOUS)
 						cocoon_target = C
 						busy = MOVING_TO_TARGET
 						walk_to(src, C, 1, move_to_delay)

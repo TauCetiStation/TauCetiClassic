@@ -223,6 +223,9 @@ var/global/list/tophats_list = list()
 	desc = "You feel as if a bunch of rabbits could fit in it. Or perhaps monkeys."
 	icon_state = "tophat"
 	item_state = "that"
+
+	flags = HEAR_PASS_SAY
+
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 

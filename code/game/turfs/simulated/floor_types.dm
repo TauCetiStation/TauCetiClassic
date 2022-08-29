@@ -252,7 +252,7 @@
 /mob/living/silicon/robot/entered_water_turf()
 	Stun(2)
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 	if(prob(25))
 		adjustFireLoss(rand(10, 20))
