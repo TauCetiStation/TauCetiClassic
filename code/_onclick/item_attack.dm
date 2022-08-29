@@ -13,15 +13,6 @@
 		return TRUE
 	return FALSE
 
-/*
-/atom/movable/attackby(obj/item/W, mob/user, params)
-	. = ..()
-	if(.) // Clickplace, no need for attack animation.
-		return FALSE
-
-	return W.attack_atom(src)
-*/
-
 /obj/attackby(obj/item/attacking_item, mob/user, params)
 	return ..() || ((resistance_flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params))
 
