@@ -63,6 +63,7 @@ for reference:
 	anchored = TRUE
 	density = TRUE
 	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/barricade/wooden/deconstruct(disassembled)
 	new /obj/item/stack/sheet/wood(loc)

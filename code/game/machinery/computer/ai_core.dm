@@ -9,6 +9,8 @@
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/obj/item/device/mmi/brain = null
 
+	resistance_flags = CAN_BE_HIT
+
 
 /obj/structure/AIcore/attackby(obj/item/P, mob/user)
 	switch(state)

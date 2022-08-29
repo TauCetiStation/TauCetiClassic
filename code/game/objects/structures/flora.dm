@@ -216,7 +216,7 @@
 	max_integrity = 40
 	damage_deflection = 5
 	flags = NODECONSTRUCT // prevent getting drop without harvesting
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = FULL_INDESTRUCTIBLE
 	var/cutting_sound = 'sound/weapons/bladeslice.ogg'
 	var/list/drop_on_destroy = list()
 
@@ -247,7 +247,7 @@
 	layer = 9
 	max_integrity = 150
 	damage_deflection = 15
-	resistance_flags = NONE
+	resistance_flags = CAN_BE_HIT
 	cutting_sound = 'sound/items/Axe.ogg'
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
 
@@ -258,7 +258,7 @@
 	icon_state = "pine_1"
 
 /obj/structure/flora/tree/pine/unbreakable
-	resistance_flags = INDESTRUCTIBLE
+	resistance_flags = FULL_INDESTRUCTIBLE
 	desc = "A massive pine. Looks a lot thicker than a normal one.\n<i>You don't think you can break it without a chainsaw</i>"
 
 /obj/structure/flora/tree/pine/atom_init()
@@ -310,7 +310,7 @@
 	name = "grass"
 	icon = 'icons/obj/flora/snowflora.dmi'
 	anchored = TRUE
-	resistance_flags = NONE
+	resistance_flags = CAN_BE_HIT
 	max_integrity = 60
 
 /obj/structure/flora/grass/brown
@@ -342,7 +342,7 @@
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
 	anchored = TRUE
-	resistance_flags = NONE
+	resistance_flags = CAN_BE_HIT
 	max_integrity = 50
 
 /obj/structure/flora/bush/atom_init()
@@ -356,7 +356,7 @@
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
 	anchored = TRUE
-	resistance_flags = NONE
+	resistance_flags = CAN_BE_HIT
 	max_integrity = 50
 
 /obj/structure/flora/ausbushes/atom_init()
@@ -476,7 +476,7 @@
 	icon_state = "rock"
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	density = FALSE
-	resistance_flags = NONE
+	resistance_flags = CAN_BE_HIT
 	max_integrity = 50
 
 /obj/structure/flora/rock/jungle/atom_init()
@@ -491,7 +491,7 @@
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "busha"
 	anchored = TRUE
-	resistance_flags = NONE
+	resistance_flags = CAN_BE_HIT
 	max_integrity = 40
 
 /obj/structure/flora/junglebush/atom_init()

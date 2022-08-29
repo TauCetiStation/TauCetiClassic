@@ -10,7 +10,10 @@
 	layer = 2.1
 	light_power = 0.7
 	light_color = "#80b82e"
-	var/endurance = 30
+
+	max_integrity = 30
+	resistance_flags = CAN_BE_HIT
+
 	var/potency = 30
 	var/delay = 1200
 	var/floor = 0
@@ -93,7 +96,7 @@
 				child.potency = potency
 				child.yield = yield
 				child.delay = delay
-				child.endurance = endurance
+				child.update_integrity(get_integrity())
 
 				spreaded++
 
@@ -133,32 +136,10 @@
 	floor = 1
 	return 1
 
-/obj/effect/glowshroom/attackby(obj/item/weapon/W, mob/user)
-	..()
-
-	endurance -= W.force
-
-	CheckEndurance()
-
 /obj/effect/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN && damage_amount)
 		playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
-/obj/effect/glowshroom/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
-		if(EXPLODE_LIGHT)
-			if(prob(95))
-				return
-	qdel(src)
-
 /obj/effect/glowshroom/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		endurance -= 5
-		CheckEndurance()
-
-/obj/effect/glowshroom/proc/CheckEndurance()
-	if(endurance <= 0)
-		qdel(src)
+		take_damage(5, BURN, FIRE, FALSE)

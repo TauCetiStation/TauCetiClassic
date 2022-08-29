@@ -20,6 +20,8 @@
 				4 = Screwdriver panel closed and is fully built (you cannot attach upgrades)
 	*/
 
+	resistance_flags = CAN_BE_HIT
+
 /obj/item/weapon/camera_assembly/attackby(obj/item/I, mob/user, params)
 	switch(state)
 		if(0)

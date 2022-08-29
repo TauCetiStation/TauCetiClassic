@@ -8,6 +8,8 @@
 	layer = CONTAINER_STRUCTURE_LAYER
 
 	max_integrity = 100
+	damage_deflection = 15
+	resistance_flags = CAN_BE_HIT
 
 	var/icon_closed = "closed"
 	var/icon_opened = "open"

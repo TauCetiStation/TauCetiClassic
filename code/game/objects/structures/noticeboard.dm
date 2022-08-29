@@ -11,6 +11,9 @@
 	var/material
 	var/noticeboard
 
+	max_integrity = 150
+	resistance_flags = CAN_BE_HIT
+
 /obj/item/noticeboard_frame/attackby(obj/item/I, mob/user, params)
 	if(iswrench(I))
 		user.SetNextMove(CLICK_CD_RAPID)
@@ -77,6 +80,9 @@
 	var/obj/item/noticeboard_frame/frame_type = /obj/item/noticeboard_frame/wood
 
 	var/static/list/note_typecache
+
+	max_integrity = 150
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/noticeboard/atom_init(mapload, dir, building)
 	. = ..()

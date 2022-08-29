@@ -4,8 +4,11 @@
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
-	max_integrity = 100
+	
 	var/buildable_sign = TRUE //unwrenchable and modifiable
+
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/sign/basic
 	name = "blank sign"

@@ -17,6 +17,8 @@
 	max_integrity = 100
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
 
+	resistance_flags = CAN_BE_HIT
+
 /obj/effect/energy_net/Destroy()
 	if(affecting)
 		REMOVE_TRAIT(affecting, TRAIT_ANCHORED, src)

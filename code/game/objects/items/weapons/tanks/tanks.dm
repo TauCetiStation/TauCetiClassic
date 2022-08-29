@@ -14,6 +14,9 @@
 	throw_speed = 1
 	throw_range = 4
 
+	max_integrity = 200
+	resistance_flags = CAN_BE_HIT
+
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3

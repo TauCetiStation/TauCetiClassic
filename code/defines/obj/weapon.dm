@@ -190,6 +190,9 @@
 	flags = CONDUCT
 	m_amt = 3750
 
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
+
 /obj/item/weapon/shard
 	name = "shard"
 	icon = 'icons/obj/shards.dmi'
@@ -354,6 +357,9 @@
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 	var/table_type = /obj/structure/table
 	var/list/debris = list(/obj/item/stack/sheet/metal)
+
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
 
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"

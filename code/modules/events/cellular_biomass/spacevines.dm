@@ -12,6 +12,9 @@
 	var/obj/effect/spacevine_controller/master = null
 	var/block_light = TRUE
 
+	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
+
 /obj/effect/spacevine/Destroy()
 	if(master)
 		master.vines -= src

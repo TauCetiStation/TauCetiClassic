@@ -17,6 +17,8 @@
 	var/fire_resist = 1
 	var/mob/camera/blob/OV //Optional
 
+	resistance_flags = CAN_BE_HIT
+
 /obj/effect/blob/atom_init()
 	blobs += src
 	set_dir(pick(1, 2, 4, 8))
@@ -63,7 +65,7 @@
 	update_icon()
 
 /obj/effect/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	var/damage = clamp(0.01 * exposed_temperature / fire_resist, 0, 4 - fire_resist)
+	var/damage = clamp(0.01 * exposed_temperature, 0, 4)
 	. = take_damage(damage, BURN, FIRE, FALSE)
 
 /obj/effect/blob/proc/Life()

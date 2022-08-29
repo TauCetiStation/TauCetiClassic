@@ -5,7 +5,6 @@
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "nest"
-	max_integrity = 100
 	layer = 2.55
 
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)

@@ -10,6 +10,8 @@
 	var/last_update = 0
 	var/list/stored_ore = list()
 
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/ore))
 		user.drop_from_inventory(W, src)

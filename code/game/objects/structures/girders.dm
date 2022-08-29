@@ -5,7 +5,10 @@
 	density = TRUE
 	layer = 2.9
 	var/state = 0
+
 	max_integrity = 200
+	resistance_flags = CAN_BE_HIT
+
 	canSmoothWith = list(
 		/turf/simulated/wall,
 		/turf/simulated/wall/r_wall,

@@ -35,6 +35,7 @@
 	icon_state = "wall"
 
 	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
 
 
 /obj/structure/inflatable/atom_init()

@@ -12,6 +12,9 @@
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
 
+	max_integrity = 300
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/reagent_dispensers/AltClick(mob/user)
 	if(!Adjacent(user))
 		return

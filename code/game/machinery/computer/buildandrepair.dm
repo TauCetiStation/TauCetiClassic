@@ -8,6 +8,8 @@
 	var/obj/item/weapon/circuitboard/circuit = null
 //	weight = 1.0E8
 
+	resistance_flags = CAN_BE_HIT
+
 /obj/item/weapon/circuitboard
 	density = FALSE
 	anchored = FALSE

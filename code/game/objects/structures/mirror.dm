@@ -8,6 +8,10 @@
 	anchored = TRUE
 	var/shattered = 0
 
+	max_integrity = 200
+	integrity_failure = 0.5
+	resistance_flags = UNACIDABLE | CAN_BE_HIT
+
 
 /obj/structure/mirror/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)

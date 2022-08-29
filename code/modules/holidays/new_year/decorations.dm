@@ -245,8 +245,10 @@
 	icon = 'icons/holidays/new_year/decorations.dmi'
 	icon_state = "snowman_s"
 	anchored = FALSE
+
 	max_integrity = 50
 	damage_deflection = 5
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/snowman/attackby(obj/item/W, mob/user)
 	. = ..()

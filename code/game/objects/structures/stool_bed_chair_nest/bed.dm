@@ -15,6 +15,9 @@
 	can_buckle = 1
 	buckle_lying = 1
 
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/stool/bed/psych
 	name = "psychiatrists couch"
 	desc = "For prime comfort during psychiatric evaluations."

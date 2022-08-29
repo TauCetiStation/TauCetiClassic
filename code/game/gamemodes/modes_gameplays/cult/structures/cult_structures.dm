@@ -5,6 +5,8 @@
 	var/can_unwrench = TRUE
 	max_integrity = 3000
 
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/cult/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W) && can_unwrench)
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")

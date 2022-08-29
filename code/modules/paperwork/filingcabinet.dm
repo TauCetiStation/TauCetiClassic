@@ -17,6 +17,8 @@
 	density = TRUE
 	anchored = TRUE
 
+	resistance_flags = CAN_BE_HIT
+
 
 /obj/structure/filingcabinet/chestdrawer
 	name = "chest drawer"

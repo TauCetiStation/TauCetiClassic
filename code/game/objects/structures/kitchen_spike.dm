@@ -8,6 +8,9 @@
 	density = TRUE
 	anchored = FALSE
 
+	max_integrity = 200
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/kitchenspike_frame/attackby(obj/item/I, mob/user)
 	add_fingerprint(user)
 	if(default_unfasten_wrench(user, I))
@@ -35,6 +38,9 @@
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = FALSE
+
+	max_integrity = 250
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/kitchenspike/attack_paw(mob/user)
 	return attack_hand(user)

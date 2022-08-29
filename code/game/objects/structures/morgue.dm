@@ -24,6 +24,9 @@
 	var/beeper = TRUE // currently cooldown for sound is included with check_delay.
 	var/emagged = FALSE
 
+	max_integrity = 400
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/morgue/Destroy()
 	QDEL_NULL(connected)
 	return ..()
@@ -220,6 +223,9 @@
 	var/obj/structure/morgue/connected = null
 	anchored = TRUE
 	throwpass = 1
+
+	max_integrity = 350
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/m_tray/Destroy()
 	if(connected && connected.connected == src)

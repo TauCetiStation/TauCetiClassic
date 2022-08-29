@@ -19,6 +19,8 @@
 	var/glass_only       = FALSE   // For something like multitile airlock, where there is only one type.
 	var/created_name     = null
 
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/door_assembly/atom_init()
 	. = ..()
 	update_state()

@@ -17,6 +17,8 @@
 	desc = "theres something alien about this."
 	icon = 'icons/mob/xenomorph.dmi'
 
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/alien/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)

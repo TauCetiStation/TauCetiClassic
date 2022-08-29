@@ -107,8 +107,10 @@ Class Procs:
 	layer = DEFAULT_MACHINERY_LAYER
 	w_class = SIZE_MASSIVE
 
+	max_integrity = 200
 	integrity_failure = 0.3
 	damage_deflection = 15
+	resistance_flags = CAN_BE_HIT
 
 	var/stat = 0
 	var/emagged = 0 // Can be 0, 1 or 2

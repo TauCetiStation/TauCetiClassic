@@ -6,6 +6,8 @@
 	density = TRUE
 	anchored = TRUE
 
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/dresser/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
 		return ..()

@@ -6,8 +6,11 @@
 	density = TRUE
 	anchored = TRUE
 	unacidable = 1//Dissolving the case would also delete Lamarr
+
 	max_integrity = 100
 	integrity_failure = 0.7
+	resistance_flags = UNACIDABLE | CAN_BE_HIT
+
 	var/occupied = 1
 	var/destroyed = 0
 

@@ -9,6 +9,9 @@
 	plane = FLOOR_PLANE
 	//	flags = CONDUCT
 
+	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/lattice/atom_init()
 	. = ..()
 	if(!isenvironmentturf(loc))

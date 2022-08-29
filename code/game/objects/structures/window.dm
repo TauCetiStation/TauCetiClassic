@@ -10,6 +10,7 @@
 
 	max_integrity = 14
 	integrity_failure = 0.75
+	resistance_flags = CAN_BE_HIT
 
 	var/ini_dir = null
 	var/state = 2

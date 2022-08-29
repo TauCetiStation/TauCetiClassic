@@ -23,6 +23,7 @@
 	smooth = SMOOTH_TRUE
 
 	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
 
 	var/parts = /obj/item/weapon/table_parts
 	var/flipped = 0
@@ -571,6 +572,9 @@
 	throwpass = 1	//You can throw objects over this, despite it's density.
 	climbable = TRUE
 	var/parts = /obj/item/weapon/rack_parts
+
+	max_integrity = 20
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/rack/atom_init()
 	. = ..()

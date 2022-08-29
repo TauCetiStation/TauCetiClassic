@@ -8,6 +8,8 @@
 	unacidable = 1//Dissolving the case would also delete the gun.
 	max_integrity = 60
 	integrity_failure = 0.5
+	resistance_flags = UNACIDABLE | CAN_BE_HIT
+
 	var/occupied = 1
 	var/destroyed = 0
 

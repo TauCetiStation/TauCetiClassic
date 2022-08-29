@@ -13,8 +13,10 @@
 	opacity = 0
 	var/faction = "generic"
 	var/grip = 0
-	max_integrity = 100
 	var/obj/effect/cellular_biomass_controller/master = null
+
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/cellular_biomass/Destroy()
 	if(density)

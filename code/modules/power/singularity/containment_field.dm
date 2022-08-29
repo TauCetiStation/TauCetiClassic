@@ -14,6 +14,8 @@
 	var/last_shock     = 0    // Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
 	var/shock_cooldown = 20
 
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 /obj/machinery/containment_field/Destroy()
 	detach_from_field_generator(FG1)
 	FG1 = null
@@ -27,7 +29,7 @@
 	FG.fields -= src
 	FG.turn_off()
 
-/obj/machinery/field/containment/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/machinery/containment_field/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN, BRUTE)
 			playsound(loc, 'sound/effects/empulse.ogg', VOL_EFFECTS_MASTER, 75, TRUE)

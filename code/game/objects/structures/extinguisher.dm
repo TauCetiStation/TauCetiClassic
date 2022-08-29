@@ -9,6 +9,10 @@
 	var/obj/item/weapon/reagent_containers/spray/extinguisher/has_extinguisher = null
 	var/opened = FALSE
 
+	max_integrity = 200
+	integrity_failure = 0.25
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/extinguisher_cabinet/atom_init()
 	. = ..()
 	if(!has_extinguisher)

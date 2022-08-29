@@ -19,6 +19,9 @@
 	density = TRUE
 	opacity = 1
 
+	max_integrity = 200
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/bookcase/atom_init()
 	. = ..()
 	for(var/obj/item/I in loc)

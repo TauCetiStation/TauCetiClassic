@@ -293,6 +293,7 @@
 	desc = "Different from the Middle Ages version."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
+	flags = NODECONSTRUCT
 
 /obj/structure/rack/holorack/attack_hand(mob/user)
 	return

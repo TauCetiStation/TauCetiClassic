@@ -6,7 +6,9 @@
 
 	load_item_visible = 1
 	mob_offset_y = 5
+
 	max_integrity = 300
+	resistance_flags = CAN_BE_HIT
 
 	fire_dam_coeff = 0.6
 	brute_dam_coeff = 0.5

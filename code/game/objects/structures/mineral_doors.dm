@@ -10,10 +10,12 @@
 	var/close_state = TRUE
 	var/isSwitchingStates = FALSE
 	var/sheetAmount = 7
-	max_integrity = 100
 	var/can_unwrench = TRUE
 
 	var/sheetType
+
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/mineral_door/atom_init()
 	. = ..()

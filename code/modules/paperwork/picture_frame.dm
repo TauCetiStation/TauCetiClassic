@@ -127,7 +127,10 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "wooden_frame"
 	anchored = TRUE
+
 	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
+
 	var/obj/item/weapon/photo/framed
 	var/frame_type = /obj/item/weapon/picture_frame/wooden
 	var/frame_glass = FALSE
