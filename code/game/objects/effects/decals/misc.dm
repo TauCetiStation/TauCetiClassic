@@ -18,6 +18,16 @@
 /obj/effect/decal/point/ghost
 	icon_state = "arrow_ghost"
 
+/obj/effect/decal/point/ghost/atom_init(mapload, invisibility)
+	. = ..()
+	var/image/I = image(icon, src, icon_state)
+	I.plane = GHOST_ILLUSION_PLANE
+	I.alpha = 200
+	// s = short buffer
+	var/s = add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/see_ghosts, "see_ghosts", I)
+	var/datum/atom_hud/alternate_appearance/basic/see_ghosts/AA = s
+	AA.set_image_layering(GHOST_ILLUSION_PLANE)
+
 // Used for spray that you spray at walls, tables, hydrovats etc
 /obj/effect/decal/spraystill
 	density = FALSE
