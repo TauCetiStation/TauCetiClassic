@@ -2073,10 +2073,6 @@
 	},
 /area/station/cargo/storage)
 "aqR" = (
-/obj/machinery/door/airlock/security{
-	name = "Brig Reception";
-	req_access = list(63)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -2092,6 +2088,17 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Secure Gate";
+	name = "Security Blast Door";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/security{
+	name = "Brig Reception";
+	req_access = list(63)
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -2208,13 +2215,6 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/office)
 "ast" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
 	name = "Research Division Access";
@@ -13057,6 +13057,13 @@
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 22
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Biohazard";
+	name = "Biohazard Shutter";
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/chargebay)
@@ -32712,11 +32719,18 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Biohazard";
+	name = "Biohazard Shutter";
+	opacity = 0
+	},
 /obj/machinery/door/airlock/research{
 	name = "Science Maintenance";
 	req_access = list(7)
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -47788,13 +47802,20 @@
 	},
 /area/station/civilian/garden)
 "lzy" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Secure Gate";
+	name = "Security Blast Door";
+	opacity = 0
+	},
 /obj/machinery/door/airlock/security{
 	name = "Security Maintenance";
 	req_access = list(1)
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/security/range)
 "lzG" = (
@@ -57074,13 +57095,6 @@
 /area/station/civilian/chapel/mass_driver)
 "nOs" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Secure Gate";
-	name = "Security Blast Door";
-	opacity = 0
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -69483,11 +69497,18 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Biohazard";
+	name = "Biohazard Shutter";
+	opacity = 0
+	},
 /obj/machinery/door/airlock/research{
 	name = "Robotics Maintenance";
 	req_access = list(29)
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/rnd/robotics)
 "qYB" = (
@@ -71809,10 +71830,6 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "rCV" = (
-/obj/machinery/door/airlock/research/glass{
-	name = "Xenoarchaeologist office";
-	req_access = list(65)
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -71824,6 +71841,17 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Biohazard";
+	name = "Biohazard Shutter";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/research/glass{
+	name = "Xenoarchaeologist office";
+	req_access = list(65)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -73929,6 +73957,13 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Biohazard";
+	name = "Biohazard Shutter";
+	opacity = 0
 	},
 /obj/machinery/door/airlock/research{
 	name = "Science Maintenance";
@@ -78648,14 +78683,21 @@
 	name = "Tribunal"
 	})
 "tqS" = (
-/obj/machinery/door/airlock/research{
-	name = "Research Division Access";
-	req_access = list(47)
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Biohazard";
+	name = "Biohazard Shutter";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/research{
+	name = "Research Division Access";
+	req_access = list(47)
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -98144,16 +98186,23 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "yjx" = (
-/obj/machinery/door/airlock/security{
-	name = "Security Maintenance";
-	req_one_access = list(1,4)
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Secure Gate";
+	name = "Security Blast Door";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/security{
+	name = "Security Maintenance";
+	req_one_access = list(1,4)
 	},
 /turf/simulated/floor/plating,
 /area/station/security/secconfhall)
