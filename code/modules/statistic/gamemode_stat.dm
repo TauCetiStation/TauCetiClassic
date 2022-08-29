@@ -120,8 +120,6 @@
 	var/instatis
 	// list of absorbed species
 	var/list/absorbed_species
-	// list of humans names
-	var/list/absorbed_dna
 	// array of objects
 	var/list/datum/stat/changeling_purchase/changeling_purchase
 
@@ -176,10 +174,6 @@
 	_changeling_info.used_trusted_entity = C.delegating_control_during_the_round
 	_changeling_info.instatis = C.instatis
 	_changeling_info.absorbed_species = C.absorbed_species
-
-	_changeling_info.absorbed_dna = list()
-	for(var/mob/living/carbon/human/H in C.absorbed_dna)
-		_changeling_info.absorbed_dna += H.name
 
 	_changeling_info.changeling_purchase = list()
 	for(var/obj/effect/proc_holder/changeling/P in C.purchasedpowers)
