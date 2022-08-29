@@ -36,6 +36,7 @@
 	var/list/essences = list()
 	var/mob/living/parasite/essence/trusted_entity
 	var/mob/living/parasite/essence/controled_by
+	var/delegating_control_during_the_round = FALSE
 	var/delegating = FALSE
 	var/absorbedamount = 0 //precise amount of ppl absorbed
 
