@@ -85,17 +85,26 @@
 
 //Adds autopsy data for used_weapon. Use type damage: brute, burn, mixed, bruise (weak punch, e.g. fist punch)
 /obj/item/organ/proc/add_autopsy_data(used_weapon, damage, type_damage)
-	var/datum/autopsy_data/W = autopsy_data[used_weapon + worldtime2text()]
+	var/weapon_name
+	
+	if(isatom(used_weapon))
+		var/atom/weapon = used_weapon
+		weapon_name = initial(weapon.name)
+	else
+		weapon_name = used_weapon
+
+	var/datum/autopsy_data/W = autopsy_data[weapon_name + worldtime2text()]
+
 	if(!W)
 		W = new()
-		W.weapon = used_weapon
-		autopsy_data[used_weapon + worldtime2text()] = W
+		W.weapon = weapon_name
+		autopsy_data[weapon_name + worldtime2text()] = W
 
 	var/time = W.time_inflicted
 	if(time != worldtime2text())
 		W = new()
-		W.weapon = used_weapon
-		autopsy_data[used_weapon + worldtime2text()] = W
+		W.weapon = weapon_name
+		autopsy_data[weapon_name + worldtime2text()] = W
 
 	W.hits += 1
 	W.damage += damage
@@ -151,7 +160,7 @@
 /mob/living/carbon/human/proc/handle_stance()
 	// Don't need to process any of this if they aren't standing anyways
 	// unless their stance is damaged, and we want to check if they should stay down
-	if(!stance_damage && (lying || crawling) && (life_tick % 4) != 0)
+	if(!stance_damage && lying && (life_tick % 4) != 0)
 		return
 
 	stance_damage = 0
@@ -162,7 +171,7 @@
 
 	for(var/limb_tag in list(BP_L_LEG, BP_R_LEG))
 		var/obj/item/organ/external/E = bodyparts_by_name[limb_tag]
-		if(!E || !E.is_usable())
+		if(!E?.is_usable())
 			stance_damage += 2 // let it fail even if just foot&leg
 		else if(E.is_malfunctioning())
 			//malfunctioning only happens intermittently so treat it as a missing limb when it procs
@@ -173,13 +182,8 @@
 				spark_system.set_up(5, 0, src)
 				spark_system.attach(src)
 				spark_system.start()
-				spawn(10)
-					qdel(spark_system)
 		else if(E.is_broken())
-			if(!(E.status & ORGAN_SPLINTED))
-				stance_damage += 1
-			else
-				stance_damage += 0.5
+			stance_damage += 1
 
 	// Canes and crutches help you stand (if the latter is ever added)
 	// One cane mitigates a broken leg+foot, or a missing foot.
@@ -189,37 +193,32 @@
 	if (r_hand && istype(r_hand, /obj/item/weapon/cane))
 		stance_damage -= 2
 
-	// standing is poor
-	if(stance_damage >= 4 || (stance_damage >= 2 && prob(5)))
-		if(iszombie(src)) //zombies crawl when they can't stand
-			if(!crawling && !lying)
-				if(crawl_can_use())
-					crawl()
-				else
-					emote("collapse")
-					Stun(5)
-					Weaken(5)
+	// standing is good
+	if(stance_damage < 2 || (stance_damage < 4 && prob(95)))
+		return
+	
+	if(!lying)
+		if(species && !species.flags[NO_PAIN])
+			emote("scream")
+		emote("collapse")
 
-			var/has_arm = FALSE
-			for(var/limb_tag in list(BP_L_ARM, BP_R_ARM))
-				var/obj/item/organ/external/E = bodyparts_by_name[limb_tag]
-				if(E && E.is_usable())
-					has_arm = TRUE
-					break
-			if(!has_arm) //need atleast one hand to crawl
+	if(iszombie(src)) // workaroud for zombie attack without stance
+		if(!crawling)
+			if(crawl_can_use())
+				crawl()
+			else
 				Stun(5)
 				Weaken(5)
-			return
-
-		if(!(lying || crawling))
-			if(species && !species.flags[NO_PAIN])
-				var/turf/T = get_turf(src)
-				var/do_we_scream = 1
-				for(var/obj/O in T.contents)
-					if(!(istype(O, /obj/structure/stool/bed/chair)))
-						do_we_scream = 0
-				if(do_we_scream)
-					emote("scream")
-			emote("collapse")
+				return
+	else
 		Weaken(5) //can't emote while weakened, apparently.
-		Stun(5)
+
+	if(lying)
+		var/has_arm = FALSE
+		for(var/limb_tag in list(BP_L_ARM, BP_R_ARM))
+			var/obj/item/organ/external/E = bodyparts_by_name[limb_tag]
+			if(E?.is_usable())
+				has_arm = TRUE
+				break
+		if(!has_arm) //need atleast one hand to crawl
+			Stun(5)

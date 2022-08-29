@@ -3,6 +3,8 @@
 	desc = "Used for advanced medical procedures."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "table2-idle"
+	var/icon_state_active = "table2-active"
+	var/icon_state_idle = "table2-idle"
 	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
@@ -81,10 +83,10 @@
 		var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, src.loc)
 		if(M.crawling)
 			src.victim = M
-			icon_state = M.pulse ? "table2-active" : "table2-idle"
+			icon_state = M.pulse ? icon_state_active : icon_state_idle
 			return 1
 	src.victim = null
-	icon_state = "table2-idle"
+	icon_state = icon_state_idle
 	return 0
 
 /obj/machinery/optable/process()
@@ -100,15 +102,14 @@
 		C.client.eye = src
 	C.SetCrawling(TRUE)
 	C.loc = src.loc
-	for(var/obj/O in src)
-		O.loc = src.loc
+
 	add_fingerprint(user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		src.victim = H
-		icon_state = H.pulse ? "table2-active" : "table2-idle"
+		icon_state = H.pulse ? icon_state_active : icon_state_idle
 	else
-		icon_state = "table2-idle"
+		icon_state = icon_state_idle
 
 /obj/machinery/optable/verb/climb_on()
 	set name = "Climb On Table"
