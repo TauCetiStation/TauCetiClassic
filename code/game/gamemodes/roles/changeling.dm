@@ -10,6 +10,8 @@
 	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
 	logo_state = "change-logoa"
 
+	stat_type = /datum/stat/role/changeling
+
 	var/list/absorbed_dna = list()
 	var/list/absorbed_species = list()
 	var/list/absorbed_languages = list()
@@ -39,7 +41,6 @@
 
 	var/atom/movable/screen/lingchemdisplay
 	var/atom/movable/screen/lingstingdisplay
-	stat_type = /datum/stat/role/changeling
 
 /datum/role/changeling/OnPostSetup(laterole = FALSE)
 	. = ..()
