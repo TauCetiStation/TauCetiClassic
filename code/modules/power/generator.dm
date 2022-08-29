@@ -16,7 +16,7 @@
 	var/lastgen = 0
 	var/lastgenlev = -1
 
-	var/efficiency = 0.3 //how much heat is converted into energy
+	var/efficiency = 0.15 //how much heat is converted into energy
 
 /obj/machinery/power/generator/atom_init()
 	..()
@@ -33,7 +33,7 @@
 	for(var/obj/item/weapon/stock_parts/P in component_parts)
 		if(istype(P, /obj/item/weapon/stock_parts/capacitor))
 			cap_rating += P.rating
-	efficiency = efficiency * ((cap_rating / 3) * 0.75)
+	efficiency = efficiency * ((cap_rating / 3) * 0.15)
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -82,7 +82,7 @@
 		circ1.update_icon()
 		circ2.gen = null
 		circ2.update_icon()
-	
+
 	circ1 = null
 	circ2 = null
 	anchored ? connect_to_network() : disconnect_from_network()
