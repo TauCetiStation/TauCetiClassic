@@ -36,7 +36,7 @@
 	else
 		playsound(loc, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 	var/damage = take_damage(hulk_damage(), BRUTE, MELEE, 0, get_dir(src, user))
-	user.visible_message("<span class='danger'>[user] smashes [src][damage ? "" : ", without leaving a mark"]!"), span_danger("You smash [src][damage ? "" : ", without leaving a mark"]!</span>", null, COMBAT_MESSAGE_RANGE)
+	user.visible_message("<span class='danger'>[user] smashes [src][damage ? "" : ", without leaving a mark"]!", "<span class='danger'>You smash [src][damage ? "" : ", without leaving a mark"]!</span>", null, COMBAT_MESSAGE_RANGE)
 	return TRUE
 
 /obj/blob_act(obj/effect/blob/B) // TODO blob to structure
