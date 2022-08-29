@@ -252,48 +252,7 @@
 	return FALSE
 
 /datum/faction/malf_silicons/zombie/custom_result()
-	var/dat = custom_result()
-	dat += "<br><b>The malfunctioning AI were:</b>"
-
-	for(var/datum/role/malfAI/zombie/role in members)
-		var/mob/living/silicon/ai/cur_AI = role.antag.current
-		if(cur_AI)
-			var/icon/flat = getFlatIcon(cur_AI)
-			end_icons += flat
-			var/tempstate = end_icons.len
-			dat += {"<br><img src="logo_[tempstate].png"> <b>[role.antag.key]</b> was <b>[role.antag.name]</b> ("}
-			if(cur_AI.stat == DEAD)
-				dat += "deactivated"
-			else
-				dat += "operational"
-			if(cur_AI.real_name != role.antag.name)
-				dat += " as [cur_AI.real_name]"
-		else
-			var/icon/sprotch = icon('icons/mob/robots.dmi', "gib7")
-			end_icons += sprotch
-			var/tempstate = end_icons.len
-			dat += {"<br><img src="logo_[tempstate].png"> <b>[role.antag.key]</b> was <b>[role.antag.name]</b> ("}
-			dat += "hardware destroyed"
-		dat += ")"
-		for(var/datum/objective/obj in role)
-			if(obj.check_completion() == OBJECTIVE_LOSS)
-				var/datum/faction/my_faction = role.GetFaction()
-				to_chat(world, "my_faction is [my_faction]")
-				if(!my_faction.members.len)
-					to_chat(world, "my_faction.members.len is [my_faction.members.len]")
-				else
-					to_chat(world, "284 idi naxuy")
-				for(var/mob/living/carbon/human/H as anything in human_list)
-					to_chat(world, "human_list is [human_list], H is [H]")
-					if(!H || !H.mind || !is_station_level(H.z))
-						to_chat(world, "H ne podhodit [H]")
-						continue
-					if(!H.mind.GetRoleByType(my_faction.initroletype) || !H.mind.GetRoleByType(my_faction.roletype))
-						to_chat(world, "H.mind.GetRoleByType(faction.initroletype) is [H.mind.GetRoleByType(my_faction.initroletype)]")
-						to_chat(world, "H.mind.GetRoleByType(faction.roletype)) is [H.mind.GetRoleByType(my_faction.roletype)]")
-	return dat
-
-	//return ..(TRUE)
+	return ..(TRUE)
 
 /datum/faction/malf_silicons/zombie/GetScoreboard()
 	return ..(TRUE)
