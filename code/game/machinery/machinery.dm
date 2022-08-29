@@ -384,7 +384,7 @@ Class Procs:
 
 // set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user)
-	if((user.lying || user.stat) && !IsAdminGhost(user))
+	if((user.lying || user.stat != CONSCIOUS) && !IsAdminGhost(user))
 		return TRUE
 	if(!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user)))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")

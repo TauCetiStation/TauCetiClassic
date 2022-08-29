@@ -491,7 +491,7 @@ var/global/list/turret_icons
 	if(isAI(L))		//don't accidentally kill the AI!
 		return TURRET_NOT_TARGET
 
-	if(L.stat)		//if the perp is dead/dying...
+	if(L.stat != CONSCIOUS)		//if the perp is dead/dying...
 		if(!emagged)
 			return TURRET_NOT_TARGET	//no need to bother really, move onto next potential victim!
 		else

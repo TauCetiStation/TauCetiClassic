@@ -103,6 +103,24 @@
 
 	melee_damage = 20
 
+/mob/living/simple_animal/hostile/carp/wizard
+	faction = "wizard"
+	desc = "A ferocious, fang-bearing creature that resembles a fish. This one looks kinda weird."
+	melee_damage = 10
+	maxHealth = 60
+	health = 60
+
+/mob/living/simple_animal/hostile/carp/wizard/Life()
+	..()
+	adjustBruteLoss(30)
+
+
+/mob/living/simple_animal/hostile/carp/wizard/death()
+	..()
+	visible_message("<span class='warning'><b>[src]</b> disappears.</span>")
+	qdel(src)
+	return
+
 /mob/living/simple_animal/hostile/carp/dog
 	name = "REX"
 	desc = "That's a cute little doge... WAIT, WHAT???!!"

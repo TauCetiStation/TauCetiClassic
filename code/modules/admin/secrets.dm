@@ -339,7 +339,7 @@
 		if("flicklights")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","FL")
-			while(!usr.stat)
+			while(usr.stat == CONSCIOUS)
 				//knock yourself out to stop the ghosts
 				for(var/mob/M in player_list)
 					if(M.stat != DEAD && prob(25))

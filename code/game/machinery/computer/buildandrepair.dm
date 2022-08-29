@@ -96,7 +96,7 @@
 			return ..()
 
 	for(var/mob/living/silicon/ai/shuttlecaller as anything in ai_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+		if(shuttlecaller.stat == CONSCIOUS && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
 	if(find_faction_by_type(/datum/faction/revolution) || find_faction_by_type(/datum/faction/malf_silicons) || sent_strike_team)

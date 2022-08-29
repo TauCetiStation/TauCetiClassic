@@ -403,6 +403,8 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 	possible_transfer_amounts = null
 	volume = 40
 	safety = 1
+	spray_cloud_move_delay = 1
+	spray_cloud_react_delay = 0.5
 
 
 /obj/item/weapon/reagent_containers/spray/pepper/atom_init()

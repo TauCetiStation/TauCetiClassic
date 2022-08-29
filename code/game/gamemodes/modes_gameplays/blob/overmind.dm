@@ -71,7 +71,7 @@
 		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if (stat)
+	if (stat != CONSCIOUS)
 		return
 
 	blob_talk(message)
