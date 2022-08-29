@@ -1,4 +1,3 @@
-#define EXTERNAL_APPEARANCE   26
 /**
  * # Cult halo element
  *
