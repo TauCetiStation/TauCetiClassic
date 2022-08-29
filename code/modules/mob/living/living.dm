@@ -189,31 +189,30 @@
 		start_pulling(AM)
 
 /mob/living/count_pull_debuff()
-	pull_debuff = 0
-	if(pulling)
-		var/tally = 0
+	var/tally = 0
 
-		//General pull debuff for playable mobs (playable without shitspawn, yeah)
-		if(ismonkey(src))
-			tally += 1
-		else if(isslime(src))
-			tally += 1.5
+	//General pull debuff for playable mobs (playable without shitspawn, yeah)
+	if(ismonkey(src))
+		tally += 1
+	else if(isslime(src))
+		tally += 1.5
 
-		var/atom/movable/AM = pulling
-		//Mob pulling
-		if(ismob(AM))
-			var/mob/M = AM
-			tally += M.stat == CONSCIOUS ? ( M.a_intent == INTENT_HELP ? 0 : 0.5 ) : 1
-		//Structure pulling
-		else if(istype(AM, /obj/structure))
-			tally += 0.3
-			var/obj/structure/S = AM
-			if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
-				tally -= 0.3
-		//Machinery pulling
-		else if(ismachinery(AM))
-			tally += 0.3
-		pull_debuff += tally
+	var/atom/movable/AM = pulling
+	//Mob pulling
+	if(ismob(AM))
+		var/mob/M = AM
+		tally += M.stat == CONSCIOUS ? ( M.a_intent == INTENT_HELP ? 0 : 0.5 ) : 1
+	//Structure pulling
+	else if(istype(AM, /obj/structure))
+		tally += 0.3
+		var/obj/structure/S = AM
+		if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
+			tally -= 0.3
+	//Machinery pulling
+	else if(ismachinery(AM))
+		tally += 0.3
+
+	return tally
 
 /mob/living/proc/add_ingame_age()
 	if(client && isnum(client.player_ingame_age) && !client.is_afk(5 MINUTES)) // 5 minutes of inactive time will disable this, until player come back.

@@ -302,8 +302,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	if(health_deficiency >= 45)
 		tally += (health_deficiency / 25)
 
-	if(pull_debuff)
-		tally += pull_debuff
+	if(pulling)
+		tally += count_pull_debuff()
 
 	if(bodytemperature < BODYTEMP_NORMAL - 30)
 		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
