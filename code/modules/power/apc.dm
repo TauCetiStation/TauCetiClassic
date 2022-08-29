@@ -634,6 +634,8 @@
 			"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
 			"You hear bang")
 		return wires.interact(user)
+	else
+		..()
 
 
 /obj/machinery/power/apc/deconstruct(disassembled, mob/user)
@@ -1227,9 +1229,9 @@
 		if(cell && prob(5))
 			cell.blob_act()
 
-/obj/machinery/power/apc/run_atom_armor(damage_amount, damage_flag, damage_flag = 0, attack_dir)
+/obj/machinery/power/apc/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(stat & BROKEN)
-		switch(damage_flag)
+		switch(damage_type)
 			if(BRUTE, BURN)
 				return damage_amount
 		return

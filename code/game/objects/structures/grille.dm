@@ -146,6 +146,8 @@
 			to_chat(user, "<span class='notice'>You place the [WD] on [src].</span>")
 			WD.update_icon()
 		return
+	else
+		..()
 //window placing end
 
 /obj/structure/grille/attacked_by(obj/item/attacking_item, mob/living/user)

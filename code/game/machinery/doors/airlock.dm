@@ -74,6 +74,10 @@ var/global/list/airlock_overlays = list()
 	var/door_bolt_up_sound      = 'sound/machines/airlock/bolts_up_1.ogg'
 	var/door_bolt_down_sound    = 'sound/machines/airlock/bolts_down_1.ogg'
 
+	max_integrity = 300
+	integrity_failure = 0.25
+	damage_deflection = 21
+
 /obj/machinery/door/airlock/atom_init(mapload, dir = null)
 	..()
 	airlock_list += src

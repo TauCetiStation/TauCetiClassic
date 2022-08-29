@@ -813,8 +813,6 @@
 				wires.interact(user)
 				return
 
-			return
-
 		if(1)
 			if(iscoil(W))
 				var/obj/item/stack/cable_coil/coil = W

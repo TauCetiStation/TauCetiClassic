@@ -226,7 +226,12 @@
 	flags &= NODECONSTRUCT
 	. = ..()
 	flags |= NODECONSTRUCT
-	if(. && !QDELETED(src))
+
+/obj/structure/flora/play_attack_sound(damage_amount, damage_type, damage_flag)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	if(damage_amount)
 		playsound(loc, cutting_sound, VOL_EFFECTS_MASTER)
 
 /obj/structure/flora/deconstruct(disassembled)
