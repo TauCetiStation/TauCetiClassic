@@ -109,22 +109,6 @@
 	// string, byond_type
 	var/item_type
 
-/datum/stat/role/changeling/set_custom_stat(datum/role/changeling/C)
-	var/datum/stat/changeling_info/_changeling_info = new
-	_changeling_info.absorbedcount = C.absorbedcount
-	
-	_changeling_info.changeling_purchase = list()
-	for(var/obj/effect/proc_holder/changeling/P in C.purchasedpowers)
-		if(P.genomecost <= 0)
-			continue
-		var/datum/stat/changeling_purchase/stat = new
-		stat.power_type = P.name
-		stat.spent_points = P.genomecost
-
-		_changeling_info.changeling_purchase += stat
-
-	changeling_info = _changeling_info
-
 /datum/stat/changeling_info
 	// int, [0...]
 	var/absorbedcount
@@ -174,3 +158,19 @@
 		uplink_info.total_TC = S.total_TC
 		uplink_info.spent_TC = S.spent_TC
 		uplink_info.uplink_purchases = S.uplink_purchases
+
+/datum/stat/role/changeling/set_custom_stat(datum/role/changeling/C)
+	var/datum/stat/changeling_info/_changeling_info = new
+	_changeling_info.absorbedcount = C.absorbedcount
+
+	_changeling_info.changeling_purchase = list()
+	for(var/obj/effect/proc_holder/changeling/P in C.purchasedpowers)
+		if(P.genomecost <= 0)
+			continue
+		var/datum/stat/changeling_purchase/stat = new
+		stat.power_type = P.name
+		stat.spent_points = P.genomecost
+
+		_changeling_info.changeling_purchase += stat
+
+	changeling_info = _changeling_info
