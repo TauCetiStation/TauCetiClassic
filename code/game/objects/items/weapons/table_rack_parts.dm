@@ -41,7 +41,7 @@
 	if(flags & NODECONSTRUCT)
 		return ..()
 	var/turf/T = get_turf(user || src)
-	for(var/debrit_type in debrits)
+	for(var/debrit_type in debris)
 		new debrit_type(T)
 	..()
 
