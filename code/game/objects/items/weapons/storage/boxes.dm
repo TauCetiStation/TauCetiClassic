@@ -242,11 +242,13 @@
 	name = "stimpack value kit"
 	desc = "A box with several stimpack autoinjectors for the economical miner."
 	icon_state = "box"
+	startswith = list(/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack = 5)
 
-/obj/item/weapon/storage/box/autoinjector/stimpack/atom_init()
-	. = ..()
-	for(var/i in 1 to 5)
-		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack(src)
+
+/obj/item/weapon/storage/box/autoinjector/stimpack/adv
+	name = "Advanced stimpack kit"
+	desc = "A box with several cool stimpack autoinjectors for the economical miner."
+	startswith = list(/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv = 5)
 
 //Prescription glasses
 /obj/item/weapon/storage/box/rxglasses
@@ -535,11 +537,54 @@
 	name = "body bags"
 	desc = "This box contains body bags."
 	icon_state = "bodybags_box"
+	startswith = list(/obj/item/bodybag = 5)
 
-/obj/item/weapon/storage/box/bodybags/atom_init()
-	. = ..()
-	for(var/i in 1 to 7)
-		new /obj/item/bodybag(src)
+/obj/item/weapon/storage/box/bodybags/cryo
+	name = "cryo body bags"
+	icon_state = "cryobodybag_box"
+	startswith = list(/obj/item/bodybag/cryobag = 5)
+
+//Seeds
+
+/obj/item/weapon/storage/box/seed
+	name = "Seeds box"
+	desc = "This box contains various seeds."
+	icon_state = "box"
+	max_storage_space = DEFAULT_BOX_STORAGE + 1
+	startswith = list(/obj/item/seeds/chiliseed,
+					/obj/item/seeds/berryseed,
+					/obj/item/seeds/cornseed,
+					/obj/item/seeds/eggplantseed,
+					/obj/item/seeds/tomatoseed,
+					/obj/item/seeds/appleseed,
+					/obj/item/seeds/soyaseed,
+					/obj/item/seeds/wheatseed,
+					/obj/item/seeds/carrotseed,
+					/obj/item/seeds/harebell,
+					/obj/item/seeds/lemonseed,
+					/obj/item/seeds/orangeseed,
+					/obj/item/seeds/grassseed,
+					/obj/item/seeds/sunflowerseed,
+					/obj/item/seeds/chantermycelium,
+					/obj/item/seeds/potatoseed,
+					/obj/item/seeds/sugarcaneseed)
+
+/obj/item/weapon/storage/box/seed/rare
+	name = "Exotic seeds box"
+	startswith = list(/obj/item/seeds/nettleseed,
+					/obj/item/seeds/replicapod,
+					/obj/item/seeds/replicapod,
+					/obj/item/seeds/replicapod,
+					/obj/item/seeds/plumpmycelium,
+					/obj/item/seeds/libertymycelium,
+					/obj/item/seeds/amanitamycelium,
+					/obj/item/seeds/reishimycelium,
+					/obj/item/seeds/bananaseed,
+					/obj/item/seeds/riceseed,
+					/obj/item/seeds/eggplantseed,
+					/obj/item/seeds/limeseed,
+					/obj/item/seeds/grapeseed,
+					/obj/item/seeds/eggyseed)
 
 //Holobadge
 /obj/item/weapon/storage/box/holobadge
@@ -721,6 +766,20 @@
 	name = "granny's gift"
 	desc = "XOXO! - Granny"
 	startswith = list(/obj/item/seeds/gelthi = 1, /obj/item/seeds/vale = 1, /obj/item/seeds/surik = 1, /obj/item/seeds/blackberry = 1, /obj/item/seeds/amauri = 1, /obj/item/seeds/jurlmah = 1)
+
+/obj/item/weapon/storage/box/condiment
+	name = "condiment box"
+	startswith = list(/obj/item/weapon/reagent_containers/food/condiment/sugar,
+					/obj/item/weapon/reagent_containers/food/condiment/rice,
+					/obj/item/weapon/reagent_containers/food/condiment/soysauce,
+					/obj/item/weapon/reagent_containers/food/condiment/hotsauce,
+					/obj/item/weapon/reagent_containers/food/condiment/ketchup,
+					/obj/item/weapon/reagent_containers/food/condiment/coldsauce,
+					/obj/item/weapon/reagent_containers/food/condiment/cornoil,
+					/obj/item/weapon/reagent_containers/food/condiment/enzyme,
+					/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
+					/obj/item/weapon/reagent_containers/food/condiment/peppermill)
+
 
 //NOT USED ANYWHERE
 /obj/item/weapon/storage/box/syndielogo_box

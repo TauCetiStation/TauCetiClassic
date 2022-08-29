@@ -35,7 +35,7 @@
 	if(require_opened && !opened)
 		to_chat(user, "<span class='notice'>You can't view [src]'s inventory without opening it up!</span>")
 		return FALSE
-	
+
 	open(user)
 	return TRUE
 
