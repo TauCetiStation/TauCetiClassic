@@ -140,8 +140,7 @@ var/global/image/contamination_overlay = image('icons/effects/contamination.dmi'
 		if(vsc.plc.PHORONGUARD_ONLY)
 			if(wear_suit.flags & PHORONGUARD)
 				return TRUE
-		else if(wear_suit.body_parts_covered & ARMS & LEGS)
-			return TRUE
+		return BIT_TEST_ALL(wear_suit.body_parts_covered, UPPER_TORSO|LOWER_TORSO|LEGS|ARMS)
 	return FALSE
 
 /mob/living/carbon/human/proc/suit_contamination()
