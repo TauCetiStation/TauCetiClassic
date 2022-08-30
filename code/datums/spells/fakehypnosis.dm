@@ -13,11 +13,8 @@
 
 /obj/effect/proc_holder/spell/targeted/fakehypnosis/cast(list/targets, mob/user = usr)
 	for(var/mob/living/carbon/human/target in targets)
-		if(!target.key || !target.client)
-			to_chat(user, "<span class='warning'>The target has no mind.</span>")
-			return
-		if(target.stat != CONSCIOUS)
-			to_chat(user, "<span class='warning'>The target must be conscious.</span>")
+		if(!target.key || !target.client || target.stat != CONSCIOUS)
+			to_chat(user, "<span class='warning'>The target must be conscious and have mind.</span>")
 			return
 		if(target.ismindprotect())
 			to_chat(user, "<span class='notice'>Their mind seems to be protected!</span>")
