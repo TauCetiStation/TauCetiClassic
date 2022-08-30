@@ -117,7 +117,7 @@
 	cameranet.updateVisibility(src, 0)
 
 /obj/machinery/camera/attack_paw(mob/living/carbon/xenomorph/humanoid/user)
-	if(!istype(user) || can_use())
+	if(!istype(user) || !can_use())
 		return
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -228,7 +228,7 @@
 			var/obj/item/I = W
 			if(I.force >= 15)		//some sharp items have less than 15 damage, but its needed for balance
 				take_damage(I.force, user, alarm = TRUE)		//cameras immune to things that are easy to get (like air tank, fire extinguisher)
-
+// maybe in future it can triggering AI or human on the computer
 /obj/machinery/camera/proc/bombastic_shot(obj/item/weapon/gun, mob/living/user)
 	user.visible_message("<span class='warning'>[user] looks at the [src] and raise weapon!</span>",
 	"<span class='notice'>You look at the [src] and raise your weapon.</span>")
@@ -289,10 +289,8 @@
 	try_enable_cam()
 
 /obj/machinery/camera/proc/is_item_in_blacklist(obj/item/I)
-	var/list/black_list = list(/obj/item/weapon/holo)
-	for(var/black_list_weapon in black_list)
-		if(istype(I, black_list_weapon))
-			return TRUE
+	if(I.damtype == HALLOSS)
+		return TRUE
 	return FALSE
 
 /obj/machinery/camera/proc/take_damage(amount, mob/attacker = null, alarm = FALSE)
