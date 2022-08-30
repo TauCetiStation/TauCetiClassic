@@ -16,7 +16,8 @@
 	anchored = TRUE
 	density = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
-	var/health = 100
+	var/max_integrity = 100
+	var/integrity = 100
 	var/vend_ready = TRUE //Are we ready to vend?? Is it time??
 	var/vend_delay = 10 //How long does it take to vend?
 	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
@@ -122,14 +123,14 @@
 		if(prob(50 - amount))
 			throw_item()	//throw VEND item, not a item which attacked
 	destroy_some_content(amount)	//some content was damaged, unlucky
-	health -= amount
-	check_health()
+	integrity -= amount
+	check_integrity()
 
-/obj/machinery/vending/proc/check_health()
-	if(health <= 0)
+/obj/machinery/vending/proc/check_integrity()
+	if(integrity <= 0)
 		malfunction()
 		deconstruction()
-	if(health < 15)
+	if(integrity < 15)
 		make_me_broken()
 
 /obj/machinery/vending/deconstruction()
