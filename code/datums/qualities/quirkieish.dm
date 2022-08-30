@@ -204,3 +204,20 @@
 		LAZYREMOVE(H.mind.skills.available_skillsets, s)
 	H.mind.skills.add_available_skillset(/datum/skillset/jack_of_all_trades)
 	H.mind.skills.maximize_active_skills()
+
+
+/datum/quality/quirkieish/obedient
+	name = "Гипнотизёр"
+	desc = "Вы обладаете техниками гипноза."
+	requirement = "Тестовик, Клоун, Библиотекарь, Психиатр, Священник."
+
+	jobs_required = list(
+		"Test Subject",
+		"Librarian",
+		"Clown",
+		"Psychiatrist",
+		"Chaplain"
+	)
+
+/datum/quality/quirkieish/obedient/add_effect(mob/living/carbon/human/H, latespawn)
+	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/сonventional_hypnosis)
