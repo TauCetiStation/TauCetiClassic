@@ -70,13 +70,11 @@
 				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
 				qdel(G)
 		
-		if(isfloorturf(T))
+		if(T.is_light_floor())
 			var/turf/simulated/floor/F = T
-			if(F.floor_type == /obj/item/stack/tile/light)
-				F.visible_message("<span class='danger'>\The [F] suddenly turns off!</span>")
-				F.light_power = 0
-				F.light_range = 0
-				F.update_icon()
+			F.set_lightfloor_on(FALSE)
+			F.visible_message("<span class='danger'>\The [T] suddenly turns off!</span>")
+			F.update_icon()
 				
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
 	name = "Flash Freeze"
