@@ -912,6 +912,36 @@
 	icon_state = "blackcorner"
 	},
 /area/station/civilian/playroom)
+"abr" = (
+/obj/machinery/door/airlock/security{
+	name = "Detective";
+	req_one_access = list(4,68)
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/detectives_office)
+"abs" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/engineering)
 "abt" = (
 /obj/structure/closet/crate/scicrate,
 /turf/simulated/floor{
@@ -15549,18 +15579,20 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "dJT" = (
-/obj/machinery/door/airlock/security{
-	name = "Detective";
-	req_one_access = list(4,68)
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "darkredfull"
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
-/area/station/security/detectives_office)
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/chapel)
 "dKa" = (
 /obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/dirt,
@@ -23523,24 +23555,17 @@
 /turf/simulated/floor/wood,
 /area/station/security/detectives_office)
 "fzI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/scrap_lump,
 /obj/random/scrap/safe_even,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/turf/simulated/floor{
+	icon_state = "floorgrime"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/station/maintenance/engineering)
+/area/station/maintenance/chapel)
 "fzQ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -25190,19 +25215,12 @@
 /turf/simulated/floor/carpet/purple,
 /area/station/civilian/theatre)
 "fSv" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -22
+/obj/random/foods/food_trash,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
-/obj/machinery/light,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/station/civilian/chapel/mass_driver)
+/turf/simulated/floor,
+/area/station/maintenance/chapel)
 "fSE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -36174,24 +36192,19 @@
 	},
 /area/station/maintenance/engineering)
 "izP" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Detective Maintenance";
-	req_one_access = list(4,68)
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/light,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/forensic_office)
+/area/station/civilian/chapel/mass_driver)
 "izQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/shard,
@@ -38855,6 +38868,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/scrap_lump,
 /obj/random/scrap/safe_even,
+/obj/machinery/alarm{
+	pixel_x = 29;
+	pixel_y = -6
+	},
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
 "jkq" = (
@@ -45207,6 +45224,10 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -22
+	},
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -49215,6 +49236,8 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "lRk" = (
@@ -50999,6 +51022,10 @@
 /area/station/rnd/hor)
 "mnF" = (
 /obj/effect/decal/cleanable/generic,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -52941,6 +52968,9 @@
 /area/station/security/prison)
 "mKg" = (
 /obj/item/weapon/cigbutt,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "mKh" = (
@@ -74253,6 +74283,9 @@
 "skC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/cigbutt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -76918,14 +76951,24 @@
 	},
 /area/station/cargo/recycler)
 "sSX" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/area/station/civilian/chapel/mass_driver)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/security{
+	name = "Forensic Maintenance";
+	req_one_access = list(4,68)
+	},
+/turf/simulated/floor/plating,
+/area/station/security/forensic_office)
 "sSZ" = (
 /obj/structure/window/reinforced,
 /obj/structure/table/reinforced,
@@ -80969,10 +81012,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "tTN" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Detective Maintenance";
-	req_one_access = list(4,68)
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -80982,6 +81021,10 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/security{
+	name = "Detective Maintenance";
+	req_one_access = list(4,68)
+	},
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "tUk" = (
@@ -87674,11 +87717,11 @@
 	},
 /area/station/maintenance/engineering)
 "vBN" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/scrap_lump,
 /obj/random/scrap/safe_even,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
 /area/station/maintenance/chapel)
 "vBS" = (
@@ -88990,8 +89033,11 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "vSL" = (
-/obj/random/foods/food_trash,
-/turf/simulated/floor,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/chapel)
 "vSZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -135435,7 +135481,7 @@ bDc
 qQB
 hag
 nBP
-dJT
+abr
 kUi
 reb
 wco
@@ -136164,13 +136210,13 @@ sZx
 gNb
 oPI
 ecE
-dmo
-jhr
+dJT
+vBN
 lRi
-eyw
+vSL
 mnF
 mKg
-vBN
+fzI
 oPI
 qdY
 qdY
@@ -136426,7 +136472,7 @@ oPI
 oPI
 jkh
 skC
-vSL
+fSv
 gNb
 yfP
 qdY
@@ -138774,7 +138820,7 @@ euL
 keP
 keP
 keP
-izP
+sSX
 keP
 keP
 fGH
@@ -139267,7 +139313,7 @@ igf
 nOq
 kup
 cJs
-fSv
+izP
 sQT
 sQT
 sQT
@@ -139524,7 +139570,7 @@ guU
 krv
 cJs
 tDP
-sSX
+cJs
 hls
 guU
 ojq
@@ -139855,8 +139901,8 @@ brB
 uls
 loZ
 uLm
-fzI
-nZt
+abs
+sbx
 vdJ
 kmF
 nPe
