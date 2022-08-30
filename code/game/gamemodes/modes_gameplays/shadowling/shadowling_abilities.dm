@@ -202,8 +202,8 @@
 	add_faction_member(faction, target)
 
 /obj/effect/proc_holder/spell/targeted/enthrall/weak
-	name = "Гипноз"
-	desc = "Проводит ритуал гипноза цели."
+	name = "Hypnosis"
+	desc = "Performs a ritual of hypnotize the target."
 	panel = "Spells"
 	action_icon_state = "genetic_view"
 	enthralling = FALSE
