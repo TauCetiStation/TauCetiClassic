@@ -1397,9 +1397,13 @@
 	},
 /area/station/hallway/secondary/mine_sci_shuttle)
 "agf" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
+/obj/structure/stool/bed/chair/metal/black,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1480;
+	name = "Confessional Intercom";
+	pixel_x = -28;
+	pixel_y = -5
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
@@ -2268,7 +2272,6 @@
 	dir = 8;
 	pixel_x = -22
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "aso" = (
@@ -9856,20 +9859,23 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "coC" = (
-/obj/structure/table/woodentable,
-/obj/item/stack/sheet/wood{
-	amount = 20;
-	pixel_x = 5;
-	pixel_y = 8
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 6
 	},
-/obj/item/weapon/storage/bible{
-	pixel_y = 6
+/obj/machinery/light/small{
+	dir = 8
 	},
-/obj/machinery/requests_console/chapel{
-	pixel_y = 28
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "science_airlock";
+	pixel_x = -28;
+	req_one_access = list(13,45,1);
+	tag_airpump = "science_pump";
+	tag_chamber_sensor = "science_sensor";
+	tag_exterior_door = "science_outer";
+	tag_interior_door = "science_inner"
 	},
-/turf/simulated/floor/wood,
-/area/station/civilian/chapel/office)
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "cpb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/landmark/start/assistant/test_subject,
@@ -10241,15 +10247,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "ctB" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/lighter/zippo{
-	pixel_x = 15;
-	pixel_y = 8
+/obj/machinery/requests_console/chapel{
+	pixel_y = 28
 	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
@@ -11424,6 +11427,10 @@
 	id = "chapel"
 	},
 /obj/structure/sign/departments/holy,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
 "cKZ" = (
@@ -11501,6 +11508,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 10
+	},
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
@@ -12281,10 +12291,12 @@
 /area/station/civilian/cold_room)
 "cXr" = (
 /obj/structure/table/woodentable,
-/obj/item/device/flashlight/lamp,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 22
+	},
+/obj/item/weapon/storage/bible{
+	pixel_y = 6
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
@@ -12849,19 +12861,19 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "dea" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/structure/grille,
+/obj/structure/window/reinforced/tinted{
+	dir = 1
 	},
-/obj/structure/disposalpipe/sortjunction{
-	dir = 4;
-	icon_state = "pipe-j2s";
-	name = "Chapel Office";
-	sortType = "Chapel Office"
+/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted{
+	dir = 4
 	},
-/turf/simulated/floor/carpet,
-/area/station/civilian/chapel)
+/obj/structure/window/reinforced/tinted{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel/office)
 "dej" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -13062,21 +13074,12 @@
 	},
 /area/station/security/hos)
 "dgt" = (
-/obj/structure/closet,
-/obj/item/weapon/storage/box/matches,
-/obj/item/clothing/shoes/orange/candals{
-	pixel_x = -4;
-	pixel_y = -5
+/obj/machinery/door/morgue{
+	dir = 1;
+	name = "Confession Booth"
 	},
-/obj/item/clothing/head/soft/blue,
-/obj/machinery/light/small,
-/obj/machinery/ai_status_display{
-	pixel_y = -32
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/prison)
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel)
 "dgz" = (
 /obj/machinery/camera{
 	c_tag = "Brig Interrogation";
@@ -13651,20 +13654,25 @@
 	},
 /area/station/engineering/monitoring)
 "dmW" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	frequency = 1379;
-	id_tag = "aftstarboard_pump";
-	name = "Aft Starboard Solar Large Air Vent"
+/obj/structure/stool/bed/chair/pew/left,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/airlock_sensor{
-	id_tag = "aftstarboard_sensor";
-	layer = 3.3;
-	pixel_y = 28
+/obj/structure/disposalpipe/sortjunction{
+	dir = 4;
+	icon_state = "pipe-j2s";
+	name = "Chapel Office";
+	sortType = "Chapel Office"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "chapel"
 	},
-/area/station/maintenance/starboardsolar)
+/area/station/civilian/chapel)
 "dnb" = (
 /obj/structure/stool/bed,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -14035,10 +14043,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -14650,6 +14655,10 @@
 	id = "chapel"
 	},
 /obj/structure/sign/departments/holy,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
 "dzU" = (
@@ -15236,6 +15245,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 10
+	},
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
@@ -16948,6 +16960,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel/office)
 "dZj" = (
@@ -17332,6 +17345,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -19944,16 +19958,9 @@
 /obj/structure/stool/bed/chair/pew/left,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "chapel"
 	},
 /area/station/civilian/chapel)
@@ -20047,10 +20054,6 @@
 	},
 /area/station/medical/virology)
 "eLP" = (
-/obj/machinery/door/airlock/glass{
-	name = "Chapel Office";
-	req_access = list(22)
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -20060,6 +20063,17 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "chapel";
+	name = "Privacy Shutters";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/glass{
+	name = "Chapel Office";
+	req_access = list(22)
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
@@ -20625,6 +20639,13 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "chapel";
+	name = "Privacy Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/office)
 "eSL" = (
@@ -20750,12 +20771,18 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/misc_lab)
 "eUC" = (
-/obj/structure/closet/emcloset,
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/brig)
 "eUD" = (
 /obj/machinery/door/airlock/security{
@@ -22363,6 +22390,7 @@
 	c_tag = "Chapel Office";
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel/office)
 "fnB" = (
@@ -22688,13 +22716,23 @@
 	},
 /area/station/medical/cmo)
 "fpV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	frequency = 1379;
+	id_tag = "construction_area_pump";
+	name = "Construction Area Large Air Vent"
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
+/obj/machinery/airlock_sensor{
+	id_tag = "construction_area_sensor";
+	pixel_y = 28;
+	req_one_access = list(13,45,1)
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/station/construction)
 "fqe" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -22758,12 +22796,24 @@
 	},
 /area/station/tcommsat/computer)
 "frf" = (
-/obj/item/weapon/pen,
-/obj/item/taperoll/science,
-/obj/item/taperoll/science,
-/obj/item/weapon/hand_labeler,
-/obj/item/weapon/packageWrap,
-/obj/item/weapon/packageWrap,
+/obj/item/weapon/pen{
+	pixel_y = 4
+	},
+/obj/item/taperoll/science{
+	pixel_y = 6
+	},
+/obj/item/taperoll/science{
+	pixel_y = 2
+	},
+/obj/item/weapon/hand_labeler{
+	pixel_y = 4
+	},
+/obj/item/weapon/packageWrap{
+	pixel_y = 2
+	},
+/obj/item/weapon/packageWrap{
+	pixel_y = 6
+	},
 /obj/structure/table,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -23790,6 +23840,9 @@
 	tag_exterior_door = "med_outer";
 	tag_interior_door = "med_inner"
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
@@ -24235,6 +24288,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -25275,10 +25329,14 @@
 /area/station/rnd/mixing)
 "fTL" = (
 /obj/structure/table,
-/obj/item/weapon/storage/belt/utility,
-/obj/item/clothing/gloves/latex,
+/obj/item/weapon/storage/belt/utility{
+	pixel_y = 4
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_y = 4
+	},
 /obj/item/clothing/glasses/science{
-	pixel_y = 1
+	pixel_y = 6
 	},
 /obj/machinery/alarm{
 	pixel_y = 22
@@ -26348,8 +26406,8 @@
 	},
 /area/station/medical/morgue)
 "ggT" = (
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /obj/structure/closet,
+/obj/item/clothing/glasses/sunglasses/gar/super,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "ghc" = (
@@ -26481,7 +26539,6 @@
 /area/station/civilian/gym)
 "ghT" = (
 /obj/structure/girder,
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -30377,7 +30434,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "wooden-2"
+	icon_state = "dark"
 	},
 /area/station/civilian/gym)
 "hbb" = (
@@ -31764,9 +31821,6 @@
 /area/station/security/vacantoffice{
 	name = "Tribunal"
 	})
-"hst" = (
-/turf/simulated/wall/r_wall,
-/area/station/civilian/garden)
 "hsC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -31796,8 +31850,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/barbershop)
 "htl" = (
@@ -31837,6 +31890,8 @@
 /area/station/civilian/library)
 "htG" = (
 /obj/structure/table/glass,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -33063,8 +33118,7 @@
 "hKS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+	dir = 4
 	},
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
@@ -34229,12 +34283,26 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "hZN" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	frequency = 1379;
+	id_tag = "escape_dock_pump";
+	name = "Escape Dock Large Air Vent"
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "escape_dock_airlock";
+	pixel_y = 28;
+	req_one_access = list(13,45,1);
+	tag_airpump = "escape_dock_pump";
+	tag_chamber_sensor = "escape_dock_sensor";
+	tag_exterior_door = "escape_dock_outer";
+	tag_interior_door = "escape_dock_inner"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
 /area/station/maintenance/escape)
 "hZR" = (
 /obj/item/weapon/flora/random,
@@ -40909,6 +40977,7 @@
 /obj/effect/landmark/start/assistant/test_subject,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "chapel"
@@ -43237,6 +43306,9 @@
 	tag_exterior_door = "aftportsolar_outer";
 	tag_interior_door = "aftportsolar_inner"
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
@@ -43704,14 +43776,12 @@
 	id_tag = "science_pump";
 	name = "Science Large Air Vent"
 	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	id_tag = "science_airlock";
-	pixel_x = 28;
-	req_one_access = list(13,45,1);
-	tag_airpump = "science_pump";
-	tag_chamber_sensor = "science_sensor";
-	tag_exterior_door = "science_outer";
-	tag_interior_door = "science_inner"
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = 32
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
@@ -47199,7 +47269,9 @@
 /area/station/maintenance/cargo)
 "lrM" = (
 /obj/structure/table,
-/obj/item/clothing/head/soft/orange,
+/obj/item/weapon/storage/fancy/cigarettes{
+	pixel_y = 1
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "lrU" = (
@@ -47898,10 +47970,7 @@
 "lBv" = (
 /obj/structure/closet,
 /obj/item/clothing/head/soft/orange,
-/obj/item/clothing/under/color/orange{
-	pixel_x = 7;
-	pixel_y = 5
-	},
+/obj/item/clothing/under/color/orange,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -50354,6 +50423,9 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "wood_stairs2"
@@ -50371,8 +50443,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/barbershop)
 "mgc" = (
@@ -51810,6 +51881,11 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/disposalpipe/sortjunction{
+	dir = 2;
+	name = "Kitchen";
+	sortType = "Kitchen"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "myN" = (
@@ -52009,7 +52085,8 @@
 	icon_state = "1-4"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
@@ -54655,6 +54732,11 @@
 "niU" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 8
+	},
+/obj/machinery/airlock_sensor{
+	id_tag = "science_sensor";
+	pixel_x = -28;
+	req_one_access = list(13,45,1)
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -57652,6 +57734,7 @@
 	tag_exterior_door = "starboardsolar_outer";
 	tag_interior_door = "starboardsolar_inner"
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
@@ -58130,6 +58213,7 @@
 "odt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel/office)
 "odw" = (
@@ -59633,6 +59717,9 @@
 	req_access = list(22)
 	},
 /obj/structure/closet/coffin,
+/obj/item/stack/sheet/wood{
+	amount = 20
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -60272,6 +60359,10 @@
 /obj/structure/table/glass,
 /obj/machinery/newscaster{
 	pixel_y = -28
+	},
+/obj/item/device/flashlight/lamp{
+	pixel_x = -4;
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -61240,7 +61331,9 @@
 /area/station/rnd/tox_launch)
 "oRy" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
+/obj/item/weapon/storage/box/cups{
+	pixel_y = 4
+	},
 /obj/machinery/camera{
 	c_tag = "Medbay Break Room";
 	dir = 4;
@@ -61630,8 +61723,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/barbershop)
 "oWr" = (
@@ -62018,14 +62110,6 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "pcs" = (
-/obj/item/weapon/flora/random,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 28
-	},
-/obj/machinery/camera{
-	c_tag = "Chapel Hall East";
-	dir = 9
-	},
 /turf/simulated/floor/carpet{
 	icon_state = "carpetsymbol"
 	},
@@ -63009,7 +63093,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/four,
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "prS" = (
@@ -64090,6 +64173,9 @@
 /obj/machinery/airlock_sensor{
 	id_tag = "engineering_aux_sensor";
 	pixel_x = -28
+	},
+/obj/machinery/light/small{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
@@ -68100,6 +68186,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel/office)
 "qGi" = (
@@ -68305,8 +68392,9 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
-/obj/machinery/light{
-	dir = 4
+/obj/machinery/camera{
+	c_tag = "Chapel Hall East";
+	dir = 9
 	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
@@ -68676,6 +68764,15 @@
 /obj/structure/window/reinforced/polarized{
 	dir = 1;
 	id = "chapel"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
@@ -70556,6 +70653,9 @@
 	pixel_y = -5
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "wood_stairs2"
 	},
@@ -72243,6 +72343,8 @@
 /area/station/maintenance/cargo)
 "rLO" = (
 /obj/structure/table/glass,
+/obj/item/ashtray/bronze,
+/obj/item/weapon/cigbutt,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -73053,7 +73155,7 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor{
-	icon_state = "wooden-2"
+	icon_state = "dark"
 	},
 /area/station/civilian/gym)
 "rVN" = (
@@ -73724,7 +73826,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/structure/disposalpipe/segment{
-	dir = 2;
+	dir = 8;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/carpet/black,
@@ -75095,10 +75197,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
 	},
-/obj/machinery/camera{
-	c_tag = "Chapel Hall West";
-	dir = 5
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/carpet{
 	icon_state = "carpetsymbol"
@@ -75954,6 +76052,9 @@
 	tag_chamber_sensor = "security_sensor";
 	tag_exterior_door = "security_outer";
 	tag_interior_door = "security_inner"
+	},
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
@@ -77988,21 +78089,23 @@
 	},
 /area/station/civilian/holodeck)
 "tio" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced/polarized{
-	id = "chapel"
-	},
-/obj/structure/window/reinforced/polarized{
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 4;
-	id = "chapel"
+	frequency = 1379;
+	id_tag = "arrival_dock_pump";
+	name = "Arrival Dock Large Air Vent"
 	},
-/obj/structure/window/reinforced/polarized{
-	dir = 1;
-	id = "chapel"
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = -32
 	},
-/turf/simulated/floor/plating,
-/area/station/civilian/chapel/altar)
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/station/maintenance/chapel)
 "tip" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
@@ -79201,7 +79304,7 @@
 /area/station/aisat/antechamber_interior)
 "tAQ" = (
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/structure/table,
@@ -80120,6 +80223,16 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -82825,24 +82938,19 @@
 	},
 /area/station/engineering/monitoring)
 "utN" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	frequency = 1379;
-	id_tag = "escape_dock_pump";
-	name = "Escape Dock Large Air Vent"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	id_tag = "escape_dock_airlock";
-	pixel_y = 28;
-	req_one_access = list(13,45,1);
-	tag_airpump = "escape_dock_pump";
-	tag_chamber_sensor = "escape_dock_sensor";
-	tag_exterior_door = "escape_dock_outer";
-	tag_interior_door = "escape_dock_inner"
-	},
+/mob/living/simple_animal/mouse,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating{
-	icon_state = "platebotc"
+	icon_state = "panelscorched"
 	},
-/area/station/maintenance/escape)
+/area/station/maintenance/brig)
 "utQ" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -83372,10 +83480,22 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "uBl" = (
-/obj/item/clothing/glasses/sunglasses/gar/super,
-/obj/structure/closet,
-/turf/simulated/floor/plating,
-/area/station/maintenance/chapel)
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 1
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1480;
+	name = "Confessional Intercom";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/obj/item/weapon/storage/bible,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel)
 "uBs" = (
 /obj/structure/rack,
 /obj/item/weapon/pickaxe/drill{
@@ -85230,18 +85350,27 @@
 	},
 /area/station/maintenance/medbay)
 "uZb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/table/woodentable,
+/obj/item/weapon/lighter/zippo{
+	pixel_x = 15;
+	pixel_y = 8
 	},
-/mob/living/simple_animal/mouse,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/machinery/light/small{
+	dir = 1
 	},
-/area/station/maintenance/brig)
+/obj/machinery/door_control{
+	id = "chapel";
+	name = "Privacy Shutters";
+	pixel_y = 28
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel/office)
 "uZk" = (
 /obj/item/device/taperecorder{
 	pixel_x = -4;
@@ -86637,8 +86766,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/barbershop)
 "voV" = (
@@ -87184,15 +87312,18 @@
 	},
 /area/station/cargo/storage)
 "vxw" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/closet,
+/obj/machinery/light/small,
+/obj/machinery/ai_status_display{
+	pixel_y = -32
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/brig)
+/obj/item/clothing/shoes/orange/candals,
+/obj/item/clothing/head/soft/blue,
+/obj/item/weapon/storage/box/matches,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/prison)
 "vxP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -89025,17 +89156,30 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "vUH" = (
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/polarized{
+	id = "chapel"
 	},
-/obj/structure/disposalpipe/segment{
+/obj/structure/window/reinforced/polarized{
 	dir = 4;
-	icon_state = "pipe-c"
+	id = "chapel"
 	},
-/turf/simulated/floor{
-	icon_state = "vault"
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "chapel"
 	},
-/area/station/civilian/chapel)
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/chapel/altar)
 "vUY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -90910,12 +91054,23 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "wrX" = (
-/obj/effect/decal/cleanable/generic,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	frequency = 1379;
+	id_tag = "aftstarboard_pump";
+	name = "Aft Starboard Solar Large Air Vent"
 	},
-/area/station/maintenance/brig)
+/obj/machinery/airlock_sensor{
+	id_tag = "aftstarboard_sensor";
+	layer = 3.3;
+	pixel_y = 28
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/station/maintenance/starboardsolar)
 "wrZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -91799,20 +91954,18 @@
 	},
 /area/station/hallway/primary/fore)
 "wFn" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	frequency = 1379;
-	id_tag = "construction_area_pump";
-	name = "Construction Area Large Air Vent"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/airlock_sensor{
-	id_tag = "construction_area_sensor";
-	pixel_y = 28;
-	req_one_access = list(13,45,1)
-	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating{
-	icon_state = "platebotc"
+	icon_state = "panelscorched"
 	},
-/area/station/construction)
+/area/station/maintenance/brig)
 "wFr" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -92180,9 +92333,18 @@
 	},
 /area/station/security/warden)
 "wJS" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor/carpet,
-/area/station/civilian/chapel)
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
+	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = -32
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "wKh" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -92300,10 +92462,14 @@
 /turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "wLz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/safe_even,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor/plating,
+/obj/structure/closet/emcloset,
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/station/maintenance/brig)
 "wLD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -96343,8 +96509,9 @@
 	dir = 8;
 	pixel_x = -22
 	},
-/obj/machinery/light{
-	dir = 8
+/obj/machinery/camera{
+	c_tag = "Chapel Hall West";
+	dir = 5
 	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
@@ -96732,10 +96899,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/disposalpipe/sortjunction{
-	dir = 2;
-	name = "Kitchen";
-	sortType = "Kitchen"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
@@ -97531,10 +97696,6 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/genetics_cloning)
-"ydH" = (
-/obj/structure/sign/departments/holy,
-/turf/simulated/wall,
-/area/station/civilian/chapel/office)
 "ydQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -97747,11 +97908,6 @@
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "ygv" = (
-/obj/machinery/airlock_sensor{
-	id_tag = "science_sensor";
-	pixel_x = 28;
-	req_one_access = list(13,45,1)
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 8;
 	frequency = 1379;
@@ -114715,7 +114871,7 @@ cJy
 cJy
 iRy
 cJy
-eAP
+xVs
 dIw
 uPx
 uPx
@@ -114777,7 +114933,7 @@ vZC
 kak
 kts
 gSs
-utN
+hZN
 gOG
 ghe
 cJy
@@ -114975,7 +115131,7 @@ iRy
 eAP
 rst
 sgD
-niU
+wJS
 nyQ
 jEi
 kRI
@@ -115229,8 +115385,8 @@ cJy
 cJy
 iRy
 cJy
-xVs
-dIw
+eAP
+uPx
 fDn
 vSB
 dIw
@@ -115291,7 +115447,7 @@ hcS
 hcS
 gSs
 gSs
-hZN
+niF
 nNT
 niF
 niF
@@ -120192,7 +120348,7 @@ tfs
 drr
 oIb
 xfX
-fpV
+oIb
 oIb
 cDK
 tIi
@@ -122132,7 +122288,7 @@ iRy
 iRy
 cJy
 cJy
-eAP
+cxe
 dIw
 dIw
 dIw
@@ -122391,7 +122547,7 @@ cJy
 iRy
 eAP
 cVD
-sgD
+coC
 niU
 wBb
 jEi
@@ -122646,8 +122802,8 @@ cJy
 cJy
 cJy
 iRy
-cxe
-dIw
+eAP
+uPx
 kBf
 ygv
 dIw
@@ -133693,8 +133849,8 @@ cJy
 cJy
 uIC
 pnS
-pnS
-dxo
+tio
+oPI
 pJH
 xMP
 kMV
@@ -133987,12 +134143,12 @@ syk
 icp
 cXo
 xpB
-eUC
-wLz
+juo
+efy
 asn
 ghT
 prP
-wrX
+okZ
 xTU
 hKS
 sQT
@@ -134245,13 +134401,13 @@ bLS
 kXi
 bJk
 mAU
-vxw
+kXp
 fHS
-uZb
-uRR
-chy
+utN
+eUC
+wFn
 myL
-hEZ
+wLz
 gdP
 gdP
 qKH
@@ -135070,7 +135226,7 @@ aay
 vhF
 jIb
 tMC
-czb
+vNe
 irF
 irF
 qdz
@@ -136543,7 +136699,7 @@ eEb
 qyG
 eEb
 odn
-tio
+vUH
 kgK
 jvw
 eyy
@@ -137049,10 +137205,10 @@ eEb
 tCE
 iVr
 rmM
-vUH
-wJS
-wJS
-dea
+exR
+eEb
+eEb
+ljm
 eEb
 qyG
 vSl
@@ -137308,8 +137464,8 @@ biY
 qqa
 dtf
 jMJ
-swC
 eKd
+dmW
 swC
 ndU
 jwr
@@ -137631,9 +137787,9 @@ eDF
 gfe
 leb
 leb
-hst
-hst
-hst
+ndk
+ndk
+ndk
 ndk
 urM
 oaY
@@ -138069,15 +138225,15 @@ gNb
 geP
 wex
 jbT
-coC
+ctB
 vFD
 dhL
 jbT
 eSw
 eLP
-ydH
 jbT
-qdY
+jbT
+dgt
 qdY
 nib
 nJM
@@ -138326,16 +138482,16 @@ uyf
 jhr
 opB
 jbT
-ctB
+uZb
 qFU
 odt
 fnw
 dZh
 sdW
 agf
-jbT
+dea
 uBl
-guU
+qdY
 guU
 iwj
 cIj
@@ -138591,8 +138747,8 @@ fez
 ljC
 gqB
 jbT
-oPI
-oPI
+qdY
+qdY
 bSP
 xxR
 jJR
@@ -141230,7 +141386,7 @@ wXC
 dwV
 ruE
 uhW
-dgt
+vxw
 ndk
 hvz
 tvs
@@ -141497,7 +141653,7 @@ vWC
 wJc
 kKS
 nUe
-dmW
+wrX
 hek
 rry
 cJy
@@ -143290,7 +143446,7 @@ qvt
 qvt
 dbz
 ezf
-gWA
+ezf
 gYE
 ezf
 ezf
@@ -143804,7 +143960,7 @@ sQT
 cJy
 cJy
 ezf
-wFn
+fpV
 spW
 otJ
 pLv
@@ -147896,7 +148052,7 @@ sQT
 bty
 sQT
 sQT
-jpr
+sQT
 gWR
 sQT
 sQT
