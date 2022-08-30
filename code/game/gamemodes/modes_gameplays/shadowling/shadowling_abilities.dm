@@ -116,86 +116,97 @@
 	charge_max = 450
 	clothes_req = 0
 	range = 1 //Adjacent to user
-	var/enthralling = 0
+	var/enthralling = TRUE
 
 /obj/effect/proc_holder/spell/targeted/enthrall/cast(list/targets)
-	var/thrallsPresent = 0
 	var/mob/living/carbon/human/user = usr
+	var/mob/living/carbon/human/victim
+	for(var/mob/living/carbon/human/target in targets)
+		if(!target.key || !target.client || target.stat != CONSCIOUS)
+			to_chat(user, "<span class='warning'>The target must be conscious and have mind.</span>")
+			charge_counter = charge_max
+			return
+		if(target.ismindprotect())
+			to_chat(user, "<span class='notice'>Their mind seems to be protected!</span>")
+			charge_counter = charge_max
+			return
+		if(enthralling)
+			if(!try_enthrall(user, target))
+				charge_counter = charge_max
+				return
+		victim = target
+		break
+	if(!istype(victim))
+		return
+	user.visible_message("<span class='userdanger'>[user] stares at [victim]. You feel your head begin to pulse.</span>" , \
+	"<span class='warning'>This target is valid.</span>" )
+	if(begin_loop(user, victim))
+		victim.visible_message("<span class='big'>[victim]'s expression appears as if they have experienced a revelation!</span>", \
+		"<span class='shadowling'><b>You see the Truth. Reality has been torn away and you realize what a fool you've been.</b></span>" )
+		if(!enthralling)
+			to_chat(user, "<span class='notice'>You have successfully completed a hypnosis session!</span>")
+			return
+		add_to_faction(user, victim)
+
+/obj/effect/proc_holder/spell/targeted/enthrall/proc/try_enthrall(mob/user, mob/target)
+	var/thrallsPresent = 0
 	var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
 	for(var/datum/role/thrall/mindToCount in faction.members)
 		thrallsPresent++
 	if(thrallsPresent >= 5 && (user.dna.species != SHADOWLING))
 		to_chat(user, "<span class='warning'>With your telepathic abilities suppressed, your human form will not allow you to enthrall any others. Hatch first.</span>")
-		charge_counter = charge_max
-		return
-	for(var/mob/living/carbon/human/target in targets)
-		if(!in_range(usr, target))
-			to_chat(usr, "<span class='warning'>You need to be closer to enthrall [target].</span>")
-			charge_counter = charge_max
-			return
-		if(!target.key)
-			to_chat(usr, "<span class='warning'>The target has no mind.</span>")
-			charge_counter = charge_max
-			return
-		if(target.stat != CONSCIOUS)
-			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
-			charge_counter = charge_max
-			return
-		if(isshadowling(target) || isshadowthrall(target))
-			to_chat(usr, "<span class='warning'>You can not enthrall allies.</span>")
-			charge_counter = charge_max
-			return
-		var/datum/species/S = all_species[target.get_species()]
-		if(!ishuman(target) || (S && S.flags[NO_EMOTION]))
-			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
-			charge_counter = charge_max
-			return
-		if(target.ismindprotect())
-			to_chat(usr, "<span class='notice'>Their mind seems to be protected!</span>")
-			charge_counter = charge_max
-			return
-		if(enthralling)
-			to_chat(usr, "<span class='warning'>You are already enthralling!</span>")
-			charge_counter = charge_max
-			return
-		if(!target.client)
-			to_chat(usr, "<span class='warning'>[target]'s mind is vacant of activity. Still, you may rearrange their memories in the case of their return.</span>")
-		enthralling = 1
-		to_chat(usr, "<span class='danger'>This target is valid. You begin the enthralling.</span>")
-		to_chat(target, "<span class='userdanger'>[usr] stares at you. You feel your head begin to pulse.</span>")
+		return FALSE
+	if(isshadowling(target) || isshadowthrall(target))
+		to_chat(usr, "<span class='warning'>You can not enthrall allies.</span>")
+		return FALSE
+	var/datum/species/S = all_species[target.get_species()]
+	if(!ishuman(target) || (S && S.flags[NO_EMOTION]))
+		to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
+		return FALSE
+	return TRUE
 
-		for(var/progress = 0, progress <= 3, progress++)
-			switch(progress)
-				if(1)
-					to_chat(usr, "<span class='notice'>You begin allocating energy for the enthralling.</span>")
-					usr.visible_message("<span class='warning'>[usr]'s eyes begin to throb a piercing red.</span>")
-				if(2)
-					to_chat(usr, "<span class='notice'>You begin the enthralling of [target].</span>")
-					usr.visible_message("<span class='danger'>[usr] leans over [target], their eyes glowing a deep crimson, and stares into their face.</span>")
-					to_chat(target, "<span class='boldannounce'>Your gaze is forcibly drawn into a blinding red light. You fall to the floor as conscious thought is wiped away.</span>")
-					target.Stun(12)
-					target.Weaken(12)
-					sleep(20)
-				if(3)
-					to_chat(usr, "<span class='notice'>You begin rearranging [target]'s memories.</span>")
-					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
-					to_chat(target, "<span class='boldannounce'>Your head cries out. The veil of reality begins to crumple and something evil bleeds through.</span>")//Ow the edge
-			if(!do_mob(usr, target, 100)) //around 30 seconds total for enthralling
-				to_chat(usr, "<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>")
-				to_chat(target, "<span class='userdanger'>A spike of pain drives into your head. You aren't sure what's happened, but you feel a faint sense of revulsion.</span>")
-				enthralling = 0
-				return
+/obj/effect/proc_holder/spell/targeted/enthrall/proc/begin_loop(mob/user, mob/target)
+	var/type_impact = "enthralling"
+	if(!enthralling)
+		type_impact = "hypnosis"
+	for(var/progress = 0, progress <= 3, progress++)
+		switch(progress)
+			if(1)
+				user.visible_message("<span class='warning'>[user]'s eyes begin to throb a piercing red.</span>" , \
+				"<span class='notice'>You begin allocating energy for the [type_impact].</span>" )
+			if(2)
+				user.visible_message("<span class='danger'>[user] leans over [target], their eyes glowing a deep crimson, and stares into their face.</span>" , \
+				"<span class='notice'>You begin the [type_impact] of [target].</span>" )
+				target.AdjustStunned(12)
+				target.AdjustWeakened(12)
+				sleep(20)
+			if(3)
+				user.visible_message("<span class='danger'>[user]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>" , \
+				"<span class='notice'>You begin looking through the [target]'s memories.</span>" )
+				to_chat(target, "<span class='boldannounce'>Your head cries out. The veil of reality begins to crumple and something frightening bleeds through.</span>")//Ow the edge
+		if(!do_mob(user, target, 100)) //around 30 seconds total
+			to_chat(user, "<span class='warning'>The [type_impact] has been interrupted - your target's mind returns to its previous state.</span>")
+			to_chat(target, "<span class='userdanger'>A spike of pain drives into your head. You aren't sure what's happened, but you feel a faint sense of revulsion.</span>")
+			return FALSE
+	return TRUE
 
-		enthralling = 0
-		to_chat(usr, "<span class='shadowling'>You have enthralled <b>[target]</b>!</span>")
-		target.visible_message("<span class='big'>[target]'s expression appears as if they have experienced a revelation!</span>", \
-		"<span class='shadowling'><b>You see the Truth. Reality has been torn away and you realize what a fool you've been.</b></span>")
-		to_chat(target, "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>")
-		to_chat(target, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
-		to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
-		target.setOxyLoss(0) //In case the shadowling was choking them out
-		add_faction_member(faction, target)
+/obj/effect/proc_holder/spell/targeted/enthrall/proc/add_to_faction(mob/user, mob/living/carbon/human/target)
+	var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
+	to_chat(user, "<span class='shadowling'>You have enthralled <b>[target]</b>!</span>")
+	target.visible_message("<span class='big'>[target]'s expression appears as if they have experienced a revelation!</span>", \
+	"<span class='shadowling'><b>You see the Truth. Reality has been torn away and you realize what a fool you've been.</b></span>")
+	to_chat(target, "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>")
+	to_chat(target, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
+	to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
+	target.setOxyLoss(0) //In case the shadowling was choking them out
+	add_faction_member(faction, target)
 
+/obj/effect/proc_holder/spell/targeted/enthrall/weak
+	name = "Гипноз"
+	desc = "Проводит ритуал гипноза цели."
+	panel = "Spells"
+	action_icon_state = "genetic_view"
+	enthralling = FALSE
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 	name = "Hivemind Commune"
