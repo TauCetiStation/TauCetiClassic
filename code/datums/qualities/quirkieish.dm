@@ -207,7 +207,7 @@
 
 
 /datum/quality/quirkieish/obedient
-	name = "Гипнотизёр"
+	name = "Hypnotist"
 	desc = "Вы обладаете техниками гипноза."
 	requirement = "Тестовик, Клоун, Библиотекарь, Психиатр, Священник."
 
