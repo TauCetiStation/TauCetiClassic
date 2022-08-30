@@ -136,18 +136,13 @@ var/global/image/contamination_overlay = image('icons/effects/contamination.dmi'
 
 /mob/living/carbon/human/proc/pl_suit_protected()
 	//Checks if the suit is adequately sealed.
-	var/coverage = 0
-	for(var/obj/item/protection in list(wear_suit, gloves, shoes))
-		if(!protection)
-			continue
-		if(vsc.plc.PHORONGUARD_ONLY && !(protection.flags & PHORONGUARD))
-			return FALSE
-		coverage |= protection.body_parts_covered
-
-	if(vsc.plc.PHORONGUARD_ONLY)
-		return TRUE
-
-	return BIT_TEST_ALL(coverage, UPPER_TORSO|LOWER_TORSO|LEGS|ARMS)
+	if(wear_suit)
+		if(vsc.plc.PHORONGUARD_ONLY)
+			if(wear_suit.flags & PHORONGUARD)
+				return TRUE
+		else if(wear_suit.body_parts_covered & ARMS & LEGS)
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/suit_contamination()
 	//Runs over the things that can be contaminated and does so.
