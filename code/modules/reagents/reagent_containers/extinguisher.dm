@@ -114,8 +114,10 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg
 	name = "rechargeable fire extinguisher"
 	desc = "self-recharging traditional red fire extinguisher."
+	var/energy_cost = 200
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg/attackby(obj/item/I, mob/user, params)
+	to_chat(user, "<span class='notice'>[src] reagents under pressure, don't open.</span>")
 	return FALSE
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg/afterattack(atom/target, mob/user, proximity, params)
@@ -128,3 +130,21 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 		STOP_PROCESSING(SSobj, src)
 		return
 	reagents.add_reagent(reagent_inside, reagents.maximum_volume / 10)
+	var/mob/living/silicon/robot/R = loc
+		if(R && R.cell)
+			R.cell.use(energy_cost)
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/cyborg/mini
+	name = "rechargeable fire extinguisher"
+	desc = "A light, self-recharging and compact fibreglass-framed model fire extinguisher."
+	icon_state = "miniFE"
+	item_state = "miniFE"
+	hitsound = null
+	throwforce = 2
+	w_class = SIZE_TINY
+	force = 3.0
+	m_amt = 0
+	volume = 120
+	random_overlay = FALSE
+	FE_type = "mini"
+	energy_cost = 50
