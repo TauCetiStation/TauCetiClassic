@@ -110,3 +110,21 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	random_overlay = FALSE
 	reagent_inside = "champagne"
 	FE_type = "golden"
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/cyborg
+	name = "rechargeable fire extinguisher"
+	desc = "self-recharging traditional red fire extinguisher."
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/cyborg/attackby(obj/item/I, mob/user, params)
+	return FALSE
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/cyborg/afterattack(atom/target, mob/user, proximity, params)
+	. = ..()
+	if(reagents.total_volume < reagents.maximum_volume)
+		START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/cyborg/process()
+	if(reagents.total_volume == reagents.maximum_volume)
+		STOP_PROCESSING(SSobj, src)
+		return
+	reagents.add_reagent(reagent_inside, reagents.maximum_volume / 10)
