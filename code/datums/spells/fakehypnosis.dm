@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/targeted/сonventional_hypnosis
+/obj/effect/proc_holder/spell/targeted/fakehypnosis
 	name = "Гипноз"
 	desc = "Проводит ритуал гипноза цели."
 	charge_type = "recharge"
@@ -12,12 +12,8 @@
 	clothes_req = 0
 	var/session_started = FALSE
 
-/obj/effect/proc_holder/spell/targeted/hypnosis/cast(list/targets, mob/user = usr)
-	charge_counter = charge_max
+/obj/effect/proc_holder/spell/targeted/fakehypnosis/cast(list/targets, mob/user = usr)
 	for(var/mob/living/carbon/human/target in targets)
-		if(!in_range(user, target))
-			to_chat(user, "<span class='warning'>You must be closer to the [target] for that.</span>")
-			return
 		if(!target.key || !target.client)
 			to_chat(user, "<span class='warning'>The target has no mind.</span>")
 			return
@@ -37,7 +33,7 @@
 		if(!do_after(user, 50, target = target))
 			to_chat(user, "<span class='warning'>The hypnosis has been interrupted - your target's mind returns to its previous state.</span>")
 			to_chat(target, "<span class='userdanger'>A spike of pain drives into your head. You aren't sure what's happened, but you feel a faint sense of revulsion.</span>")
-			enthralling = FALSE
+			session_started = FALSE
 			return
 		user.visible_message("<span class='warning'>[user]'s eyes begin to throb a piercing red.</span>" , \
 		"<span class='notice'>You begin allocating energy for the hypnosis.</span>" )
@@ -45,7 +41,7 @@
 		if(!do_after(user, 100, target = target))
 			to_chat(user, "<span class='warning'>The hypnosis has been interrupted - your target's mind returns to its previous state.</span>")
 			to_chat(target, "<span class='userdanger'>A spike of pain drives into your head. You aren't sure what's happened, but you feel a faint sense of revulsion.</span>")
-			enthralling = FALSE
+			session_started = FALSE
 			return
 		user.visible_message("<span class='danger'>[user] leans over [target], their eyes glowing a deep crimson, and stares into their face.</span>" , \
 		"<span class='notice'>You begin the hypnosis of [target].</span>" )
@@ -55,13 +51,17 @@
 		if(!do_after(user, 100, target = target))
 			to_chat(user, "<span class='warning'>The hypnosis has been interrupted - your target's mind returns to its previous state.</span>")
 			to_chat(target, "<span class='userdanger'>A spike of pain drives into your head. You aren't sure what's happened, but you feel a faint sense of revulsion.</span>")
-			enthralling = FALSE
+			session_started = FALSE
 			return
 		user.visible_message("<span class='danger'>[user]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>" , \
 		"<span class='notice'>You begin looking through the [target]'s memories.</span>" )
 		to_chat(target, "<span class='boldannounce'>Your head cries out. The veil of reality begins to crumple and something hidden bleeds through.</span>")
-
-		enthralling = FALSE
+		if(!do_after(user, 50, target = target))
+			to_chat(user, "<span class='warning'>The hypnosis has been interrupted - your target's mind returns to its previous state.</span>")
+			to_chat(target, "<span class='userdanger'>A spike of pain drives into your head. You aren't sure what's happened, but you feel a faint sense of revulsion.</span>")
+			session_started = FALSE
+			return
 		to_chat(user, "<span class='notice'>You have successfully completed a hypnosis session!</span>")
 		target.visible_message("<span class='big'>[target]'s expression appears as if they have experienced a revelation!</span>", \
 		"<span class='shadowling'><b>You see the Truth. Reality has been torn away and you realize what a fool you've been.</b></span>" )
+		session_started = FALSE

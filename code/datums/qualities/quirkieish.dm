@@ -220,4 +220,4 @@
 	)
 
 /datum/quality/quirkieish/obedient/add_effect(mob/living/carbon/human/H, latespawn)
-	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/сonventional_hypnosis)
+	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/fakehypnosis)
