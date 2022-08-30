@@ -114,7 +114,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg
 	name = "rechargeable fire extinguisher"
 	desc = "self-recharging traditional red fire extinguisher."
-	var/energy_cost = 200
+	var/energy_cost = 20
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg/attackby(obj/item/I, mob/user, params)
 	to_chat(user, "<span class='notice'>[src] reagents under pressure, don't open.</span>")
@@ -129,10 +129,11 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	if(reagents.total_volume == reagents.maximum_volume)
 		STOP_PROCESSING(SSobj, src)
 		return
-	reagents.add_reagent(reagent_inside, reagents.maximum_volume / 10)
 	var/mob/living/silicon/robot/R = loc
-		if(R && R.cell)
-			R.cell.use(energy_cost)
+	if(!R || !R.cell)
+		return
+	R.cell.use(energy_cost)
+	reagents.add_reagent(reagent_inside, reagents.maximum_volume / 20)
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg/mini
 	name = "rechargeable fire extinguisher"
@@ -147,4 +148,4 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	volume = 120
 	random_overlay = FALSE
 	FE_type = "mini"
-	energy_cost = 50
+	energy_cost = 5
