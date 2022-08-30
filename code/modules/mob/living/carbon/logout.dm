@@ -7,8 +7,6 @@
 
 		if(C.trusted_entity && C.trusted_entity.client)
 			delegate_body_to_essence(C.trusted_entity)
-			// stat staff
-			C.delegating_control_during_the_round = TRUE
 		else
 			var/list/pickable = list()
 			for(var/mob/living/parasite/essence/E in C.essences)

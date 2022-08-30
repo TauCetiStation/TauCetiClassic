@@ -115,8 +115,6 @@
 	// int, [0...]. victims
 	var/absorbedamount
 	// bool, [1, 0]
-	var/used_trusted_entity
-	// bool, [1, 0]
 	var/instatis
 	// list of absorbed species
 	var/list/absorbed_species
@@ -171,7 +169,6 @@
 	var/datum/stat/changeling_info/_changeling_info = new
 	_changeling_info.absorbedcount = C.absorbedcount
 	_changeling_info.absorbedamount = C.absorbedamount
-	_changeling_info.used_trusted_entity = C.delegating_control_during_the_round
 	_changeling_info.instatis = C.instatis
 	_changeling_info.absorbed_species = C.absorbed_species
 
