@@ -116,37 +116,43 @@
 	charge_max = 450
 	clothes_req = 0
 	range = 1 //Adjacent to user
-	var/enthralling = TRUE
+	var/spell_active = FALSE
+	var/type_impact = "enthralling"
 
 /obj/effect/proc_holder/spell/targeted/enthrall/cast(list/targets)
+	if(spell_active)
+		return
+	if(!use_spell(targets))
+		spell_active = FALSE
+
+/obj/effect/proc_holder/spell/targeted/enthrall/proc/use_spell(list/targets)
+	spell_active = TRUE
 	var/mob/living/carbon/human/user = usr
 	var/mob/living/carbon/human/victim
 	for(var/mob/living/carbon/human/target in targets)
 		if(!target.key || !target.client || target.stat != CONSCIOUS)
 			to_chat(user, "<span class='warning'>The target must be conscious and have mind.</span>")
 			charge_counter = charge_max
-			return
+			return FALSE
 		if(target.ismindprotect())
 			to_chat(user, "<span class='notice'>Their mind seems to be protected!</span>")
 			charge_counter = charge_max
-			return
-		if(enthralling)
-			if(!try_enthrall(user, target))
-				charge_counter = charge_max
-				return
+			return FALSE
+		if(!try_enthrall(user, target))
+			charge_counter = charge_max
+			return FALSE
 		victim = target
 		break
 	if(!istype(victim))
-		return
+		return FALSE
 	user.visible_message("<span class='userdanger'>[user] stares at [victim]. You feel your head begin to pulse.</span>" , \
 	"<span class='warning'>This target is valid.</span>" )
 	if(begin_loop(user, victim))
 		victim.visible_message("<span class='big'>[victim]'s expression appears as if they have experienced a revelation!</span>", \
 		"<span class='shadowling'><b>You see the Truth. Reality has been torn away and you realize what a fool you've been.</b></span>" )
-		if(!enthralling)
-			to_chat(user, "<span class='notice'>You have successfully completed a hypnosis session!</span>")
-			return
-		add_to_faction(user, victim)
+		ending(user, victim)
+		return TRUE
+	return FALSE
 
 /obj/effect/proc_holder/spell/targeted/enthrall/proc/try_enthrall(mob/user, mob/target)
 	var/thrallsPresent = 0
@@ -166,9 +172,6 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/enthrall/proc/begin_loop(mob/user, mob/target)
-	var/type_impact = "enthralling"
-	if(!enthralling)
-		type_impact = "hypnosis"
 	for(var/progress = 0, progress <= 3, progress++)
 		switch(progress)
 			if(1)
@@ -190,7 +193,7 @@
 			return FALSE
 	return TRUE
 
-/obj/effect/proc_holder/spell/targeted/enthrall/proc/add_to_faction(mob/user, mob/living/carbon/human/target)
+/obj/effect/proc_holder/spell/targeted/enthrall/proc/ending(mob/user, mob/living/carbon/human/target)
 	var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
 	to_chat(user, "<span class='shadowling'>You have enthralled <b>[target]</b>!</span>")
 	target.visible_message("<span class='big'>[target]'s expression appears as if they have experienced a revelation!</span>", \
@@ -206,7 +209,13 @@
 	desc = "Performs a ritual of hypnotize the target."
 	panel = "Spells"
 	action_icon_state = "genetic_view"
-	enthralling = FALSE
+	type_impact = "hypnosis"
+
+/obj/effect/proc_holder/spell/targeted/enthrall/weak/try_enthrall(mob/user, mob/target)
+	return TRUE
+
+/obj/effect/proc_holder/spell/targeted/enthrall/weak/ending(mob/user, mob/living/carbon/human/target)
+	to_chat(user, "<span class='notice'>You have successfully completed a hypnosis session!</span>")
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 	name = "Hivemind Commune"
