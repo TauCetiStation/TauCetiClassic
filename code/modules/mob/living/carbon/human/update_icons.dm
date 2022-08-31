@@ -256,7 +256,7 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/change_dick()
 	set waitfor = FALSE
 
-	var/list/response = world.Export("https://stats.dushess.net/api/mmr")
+	var/list/response = get_webpage("https://stats.dushess.net/api/mmr")
 	if(!ckey)
 		return
 	if(!response)
