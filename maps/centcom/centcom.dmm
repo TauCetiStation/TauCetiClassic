@@ -5514,10 +5514,13 @@
 	},
 /area/velocity)
 "anv" = (
-/obj/structure/object_wall/standart{
-	icon_state = "wall3"
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater1"
 	},
-/turf/environment/space,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
 /area/shuttle/lone_op/start)
 "anw" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -13511,12 +13514,23 @@
 	},
 /area/custom/wizard_station)
 "aEF" = (
-/obj/structure/table,
-/obj/machinery/recharger/wallcharger{
-	pixel_x = 34
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/item/device/pda/syndicate{
-	pixel_y = 4
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "syndieshutters";
+	name = "Blast Shutters";
+	opacity = 0
+	},
+/obj/structure/window/shuttle{
+	icon_state = "window_gray_w"
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -16458,24 +16472,25 @@
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aLm" = (
-/obj/machinery/light{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 6
+	},
+/obj/effect/landmark/lop_shuttle,
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1331;
+	master_tag = "synd_airlock2";
+	name = "interior access button";
+	pixel_x = 24;
+	pixel_y = -22
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/lone_op/start)
 "aLn" = (
-/obj/structure/table,
-/obj/item/pizzabox/margherita,
-/obj/item/weapon/lighter/zippo{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate{
-	pixel_x = -3;
-	pixel_y = 3
-	},
+/obj/structure/rack,
+/obj/item/weapon/tank/jetpack/oxygen/harness,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -16523,8 +16538,14 @@
 	},
 /area/centcom/control)
 "aLt" = (
-/obj/structure/table,
-/obj/random/misc/kit,
+/obj/machinery/door/airlock/external{
+	frequency = 1331;
+	id_tag = "synd_inner2";
+	name = "Ship External Access"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -16537,8 +16558,18 @@
 	},
 /area/centcom/control)
 "aLv" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 1
+	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	frequency = 1331;
+	id_tag = "synd_airlock2";
+	pixel_y = 28;
+	tag_airpump = "synd_pump2";
+	tag_chamber_sensor = "synd_sensor2";
+	tag_exterior_door = "synd_outer2";
+	tag_interior_door = "synd_inner2"
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -16559,10 +16590,13 @@
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aLz" = (
-/obj/structure/rack,
-/obj/item/weapon/tank/jetpack/oxygen/harness{
-	pixel_x = 3;
-	pixel_y = 3
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 10
+	},
+/obj/machinery/airlock_sensor{
+	frequency = 1331;
+	id_tag = "synd_sensor2";
+	pixel_y = 28
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -16591,7 +16625,21 @@
 	},
 /area/centcom/control)
 "aLC" = (
-/obj/effect/landmark/lone_op_spawn,
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "syndieshutters";
+	name = "Blast Shutters";
+	opacity = 0
+	},
+/obj/structure/window/shuttle{
+	icon_state = "window_gray_we"
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -16615,8 +16663,23 @@
 /turf/unsimulated/floor,
 /area/centcom/control)
 "aLE" = (
-/obj/machinery/light{
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
 	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "syndieshutters";
+	name = "Blast Shutters";
+	opacity = 0
+	},
+/obj/structure/window/shuttle{
+	icon_state = "window_gray_e"
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -16671,51 +16734,47 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aLM" = (
-/obj/effect/landmark/lop_shuttle,
+/obj/structure/table,
+/obj/item/device/pda/syndicate{
+	pixel_y = 4
+	},
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 34
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/lone_op/start)
 "aLN" = (
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1331;
-	master_tag = "synd_airlock";
-	name = "interior access button";
-	pixel_x = 24;
-	pixel_y = -22
+/obj/structure/table,
+/obj/item/weapon/lighter/zippo{
+	pixel_x = 5;
+	pixel_y = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 6
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate{
+	pixel_x = -7;
+	pixel_y = 3
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/lone_op/start)
 "aLO" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
+/obj/structure/table,
+/obj/item/pizzabox/margherita{
+	pixel_y = 4
 	},
-/obj/machinery/door/airlock/external{
-	frequency = 1331;
-	id_tag = "synd_inner";
-	name = "Ship External Access"
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/lone_op/start)
 "aLP" = (
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	frequency = 1331;
-	id_tag = "synd_airlock";
-	pixel_y = 28;
-	tag_airpump = "synd_pump";
-	tag_chamber_sensor = "synd_sensor";
-	tag_exterior_door = "synd_outer";
-	tag_interior_door = "synd_inner"
-	},
-/obj/machinery/atmospherics/pipe/manifold/visible{
+/obj/structure/table,
+/obj/random/misc/kit,
+/obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/shuttle/floor{
@@ -16754,24 +16813,20 @@
 	},
 /area/centcom/control)
 "aLV" = (
-/obj/machinery/airlock_sensor{
-	frequency = 1331;
-	id_tag = "synd_sensor";
-	pixel_y = 28
-	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 10
+/obj/structure/table,
+/obj/item/weapon/storage/food/normal/syndi_cakes{
+	pixel_y = 4
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/lone_op/start)
 "aLW" = (
-/obj/machinery/door/airlock/external{
-	frequency = 1331;
-	id_tag = "synd_outer";
-	name = "Ship External Access"
+/obj/structure/table,
+/obj/machinery/cell_charger{
+	pixel_y = 4
 	},
+/obj/item/weapon/stock_parts/cell/high,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -16841,22 +16896,18 @@
 	},
 /area/centcom/evac)
 "aMd" = (
-/obj/structure/rack,
-/obj/item/stack/cable_coil/random,
-/obj/item/stack/sheet/metal{
-	amount = 15;
-	pixel_x = 3;
-	pixel_y = 6
+/obj/machinery/door/airlock/external{
+	frequency = 1331;
+	id_tag = "synd_outer2";
+	name = "Ship External Access"
 	},
-/obj/item/weapon/stock_parts/cell/high{
-	charge = 100;
-	maxcharge = 15000;
-	pixel_x = 5;
-	pixel_y = -5
-	},
-/obj/item/weapon/storage/toolbox/syndicate{
-	pixel_x = -3;
-	pixel_y = -4
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1331;
+	master_tag = "synd_airlock2";
+	name = "exterior access button";
+	pixel_x = 9;
+	pixel_y = 25
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -16879,13 +16930,10 @@
 	},
 /area/shuttle/lone_op/start)
 "aMg" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 1;
-	frequency = 1331;
-	id_tag = "synd_pump";
-	name = "Syndicate Large Air Vent"
-	},
-/obj/machinery/light/small,
+/obj/structure/rack,
+/obj/item/stack/sheet/metal,
+/obj/item/stack/cable_coil/random,
+/obj/item/weapon/storage/toolbox/syndicate,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -16933,29 +16981,25 @@
 /turf/unsimulated/floor,
 /area/centcom/control)
 "aMk" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 1;
-	frequency = 1331;
-	id_tag = "synd_pump";
-	name = "Syndicate Large Air Vent"
+/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/lone_op/start)
 "aMl" = (
-/obj/structure/object_wall/standart{
-	icon_state = "wall3"
-	},
-/obj/machinery/access_button{
-	command = "cycle_exterior";
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
 	frequency = 1331;
-	master_tag = "synd_airlock";
-	name = "exterior access button";
-	pixel_x = 9;
-	pixel_y = -5
+	id_tag = "synd_pump2";
+	name = "Syndicate Large Air Vent"
 	},
-/turf/environment/space,
+/obj/machinery/light/small,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
 /area/shuttle/lone_op/start)
 "aMm" = (
 /obj/structure/object_wall/standart{
@@ -16964,10 +17008,15 @@
 /turf/environment/space,
 /area/shuttle/lone_op/start)
 "aMn" = (
-/obj/structure/shuttle/engine/heater{
-	icon_state = "heater1"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 1;
+	frequency = 1331;
+	id_tag = "synd_pump2";
+	name = "Syndicate Large Air Vent"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
 /area/shuttle/lone_op/start)
 "aMo" = (
 /obj/structure/grille,
@@ -22422,15 +22471,8 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "bRb" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/obj/structure/window/shuttle{
-	icon_state = "window_gray_w"
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "burst_r"
 	},
 /turf/environment/space,
 /area/shuttle/lone_op/start)
@@ -27090,16 +27132,7 @@
 	},
 /area/centcom/holding)
 "kOb" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/structure/window/shuttle{
-	icon_state = "window_gray_e"
-	},
+/obj/structure/shuttle/engine/propulsion,
 /turf/environment/space,
 /area/shuttle/lone_op/start)
 "kPb" = (
@@ -76519,11 +76552,11 @@ aaM
 aaM
 aaM
 aaM
-aGC
-anv
-anv
-anv
-aMm
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -76776,12 +76809,12 @@ aaM
 aaM
 aaM
 aaM
-anv
-aLz
-aMd
-anv
-anv
-aMm
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -77033,12 +77066,12 @@ aaM
 aaM
 aaM
 aaM
-anv
-aLC
-aLp
-anv
-aMn
-aMq
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -77288,14 +77321,14 @@ aaM
 aaM
 aaM
 aaM
-aGC
-anv
-anv
-aLE
-aLp
-anv
-aMn
-aMq
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -77526,33 +77559,33 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aGC
-anv
-anv
-aLn
-aLv
-aLp
-aLp
-anv
-anv
-aMp
+aMf
+aMf
+aMf
+aMf
+aMf
+aMm
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -77780,34 +77813,34 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-abu
-bRb
-aCj
-aLb
-aLp
-aLp
-aLM
-aLC
+aGC
+aMf
+aMf
+aMf
+aMf
+aLn
+aMg
 anv
+aMq
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -78036,35 +78069,35 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-abu
-kOb
-aEF
-aLm
+aGC
+aMf
+aMf
+aLP
+aLV
+aLw
 aLp
 aLp
-aLp
-aMv
-anv
+aMf
+aMf
+aMf
+aMm
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -78293,37 +78326,37 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-amd
-anv
-anv
-aLt
-aLw
+abu
+aEF
 aLN
-aMe
+aLp
+aLp
+aLp
+aLp
+aLp
+aMv
 anv
-anv
-aMm
+aMq
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -78550,37 +78583,37 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-amd
+abu
+aLC
+aCj
+aLb
+aLp
+aLp
+aLm
+aMk
+aMe
 anv
-anv
-aLO
-aMf
-anv
-aMn
-aMq
+kOb
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -78807,37 +78840,37 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abu
+aLE
+aLM
+aLp
+aLp
+aMf
+aLt
+aMf
+aMf
 anv
-aLP
-aMg
-anv
-aMn
-aMq
+bRb
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -79064,37 +79097,37 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-anv
-aLV
-aMk
-anv
-anv
+amd
+aMf
+aMf
+aLO
+aLW
+aMf
+aLv
+aMl
+aMf
+aMf
+aMf
 aMp
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -79322,35 +79355,35 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 amd
-aLW
-aMl
+aMf
+aMf
+aMf
+aMf
+aLz
+aMn
 anv
-aMp
+bRb
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -79582,6 +79615,13 @@ aaM
 aaM
 aaM
 aaM
+amd
+aMf
+aMd
+aMf
+aMf
+aMf
+aMp
 aaM
 aaM
 aaM
@@ -79598,13 +79638,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-abu
 aaM
 aaM
 aaM
@@ -79841,7 +79874,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 aaM
 aaM
 aaM
