@@ -247,10 +247,30 @@ Please contact me on #coderbus IRC. ~Carn x
 	update_tail_showing()
 	for(var/image/I in standing)
 		I = update_height(I)
+
+	change_dick()
+
 	overlays_standing[BODY_LAYER] = standing
 	apply_overlay(BODY_LAYER)
 
+/mob/living/carbon/human/proc/change_dick()
+	set waitfor = FALSE
 
+	var/list/response = world.Export("https://stats.dushess.net/api/mmr")
+	if(!ckey)
+		return
+	if(!response)
+		return
+	response = json_decode(response)
+	var/mmr = 1000
+	for(var/i in response)
+		if(i["Ckey"] == ckey)
+			mmr = i["MMR"]
+
+	var/size = round(mmr / 1000, 1000)
+
+	var/static/icon/dick_mask = icon('icons/effects/cut.dmi',"dick")
+	add_filter("dick_size", 1, displacement_map_filter(dick_mask, x = 0, y = 0, size = size))
 
 //HAIR OVERLAY
 /mob/living/carbon/human/proc/update_hair()
