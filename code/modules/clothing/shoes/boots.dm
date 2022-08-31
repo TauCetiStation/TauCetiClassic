@@ -106,11 +106,46 @@
 	item_state = "wjboots"
 	siemens_coefficient = 0.7
 
+#define SLIP_TIMER_LOWEST 10 SECONDS
+#define SLIP_TIMER_HIGHEST 30 SECONDS
+
 /obj/item/clothing/shoes/boots/work/jak
 	name = "Boots of Springheel Jak"
 	desc = "A pair of some old boots."
 	slowdown = -2.0 //because we don't have acrobatics skill
+	var/slip_timer
+
+/obj/item/clothing/shoes/boots/work/jak/proc/try_unequip(mob/living/carbon/user, slot)
+	slip_timer = null
+	if(user?.shoes != src)
+		return
+	user.unEquip(src, TRUE)
+	user.visible_message("<span class='notice'>[name] flies off \the [user] feet.", "<span class='notice'>[name] slips off your feet</span>")
+	throw_at(get_step(user, user.dir), 6, 5)
+	user.Stun(1)
+	user.Weaken(3)
+
+/obj/item/clothing/shoes/boots/work/jak/proc/on_equip(datum/source, mob/living/carbon/user, slot)
+	SIGNAL_HANDLER
+
+	if(slot != SLOT_SHOES)
+		return
+	if(iswizard(user) || iswizardapprentice(user))
+		deltimer(slip_timer)
+		return
+	if(slip_timer)
+		return
+	slip_timer = addtimer(CALLBACK(src, .proc/try_unequip, user, slot), rand(SLIP_TIMER_LOWEST, SLIP_TIMER_HIGHEST), TIMER_STOPPABLE)
 
 /obj/item/clothing/shoes/boots/work/jak/atom_init(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/magic_item/wizard)
+	RegisterSignal(src, list(COMSIG_ITEM_EQUIPPED), .proc/on_equip)
+
+/obj/item/clothing/shoes/boots/work/jak/Destroy()
+	deltimer(slip_timer)
+	UnregisterSignal(src, COMSIG_ITEM_EQUIPPED)
+	return ..()
+
+#undef SLIP_TIMER_LOWEST
+#undef SLIP_TIMER_HIGHEST
