@@ -120,7 +120,7 @@
 	if(user?.shoes != src)
 		return
 	user.unEquip(src, TRUE)
-	user.visible_message("<span class='notice'>[name] flies off \the [user] feet.", "<span class='notice'>[name] slips off your feet</span>")
+	user.visible_message("<span class='notice'>[name] flies off \the [user] feet.</span>", "<span class='notice'>[name] slips off your feet.</span>")
 	throw_at(get_step(user, user.dir), 6, 5)
 	user.Stun(1)
 	user.Weaken(3)
