@@ -120,13 +120,11 @@
 	var/type_impact = "enthralling"
 
 /obj/effect/proc_holder/spell/targeted/enthrall/cast(list/targets)
-	if(spell_active)
-		return
+	spell_active = TRUE
 	if(!use_spell(targets))
 		spell_active = FALSE
 
 /obj/effect/proc_holder/spell/targeted/enthrall/proc/use_spell(list/targets)
-	spell_active = TRUE
 	var/mob/living/carbon/human/user = usr
 	var/mob/living/carbon/human/victim
 	for(var/mob/living/carbon/human/target in targets)
@@ -138,7 +136,7 @@
 			to_chat(user, "<span class='notice'>Their mind seems to be protected!</span>")
 			charge_counter = charge_max
 			return FALSE
-		if(!try_enthrall(user, target))
+		if(!can_enhtrall(user, target))
 			charge_counter = charge_max
 			return FALSE
 		victim = target
@@ -154,7 +152,7 @@
 		return TRUE
 	return FALSE
 
-/obj/effect/proc_holder/spell/targeted/enthrall/proc/try_enthrall(mob/user, mob/target)
+/obj/effect/proc_holder/spell/targeted/enthrall/proc/can_enhtrall(mob/user, mob/target)
 	var/thrallsPresent = 0
 	var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
 	for(var/datum/role/thrall/mindToCount in faction.members)
@@ -211,7 +209,7 @@
 	action_icon_state = "genetic_view"
 	type_impact = "hypnosis"
 
-/obj/effect/proc_holder/spell/targeted/enthrall/weak/try_enthrall(mob/user, mob/target)
+/obj/effect/proc_holder/spell/targeted/enthrall/weak/can_enhtrall(mob/user, mob/target)
 	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/enthrall/weak/ending(mob/user, mob/living/carbon/human/target)
