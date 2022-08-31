@@ -221,7 +221,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 					if(namejob in inactive_players_namejob)
 						dat += "<td>Inactive</td>"
 					else
-						dat += "<td>Active</td>"
+						dat += "<td>[person["active"]]</td>"
 				// Show record activity
 				else
 					dat += "<td>[person["active"]]</td>"
