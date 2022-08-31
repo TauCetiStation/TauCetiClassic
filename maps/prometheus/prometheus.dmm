@@ -87796,16 +87796,13 @@
 	},
 /area/station/gateway)
 "vCY" = (
-/obj/structure/closet/secure_closet/chemical{
-	req_access = list();
-	req_one_access = list(45,70)
-	},
 /obj/item/weapon/storage/box/beakers,
 /obj/item/weapon/storage/box/syringes,
 /obj/machinery/light/small,
 /obj/machinery/light_switch{
 	pixel_x = 28
 	},
+/obj/structure/closet/secure_closet/chemical,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteyellow"
