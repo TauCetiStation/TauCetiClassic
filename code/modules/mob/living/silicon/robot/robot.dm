@@ -158,6 +158,9 @@
 	if(connected_ai) // Remove robot from connected to ai robots
 		connected_ai.connected_robots -= src
 		connected_ai = null
+	//selfdestruct mode on
+	if(istype(module, /obj/item/weapon/robot_module/combat))
+		return ..()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
@@ -187,7 +190,7 @@
 		for(var/mod in modules)
 			choose_module[mod] = image(icon = 'icons/mob/robots.dmi', icon_state = modules[mod])
 
-	if(crisis && security_level == SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
+	if(security_level >= SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
 		to_chat(src, "<span class='warning'>Crisis mode active. Combat available.</span>")
 		choose_module["Combat"] = image(icon = 'icons/mob/robots.dmi', icon_state = "droid-combat")
 
@@ -298,11 +301,22 @@
 			module_sprites["Acheron"] = "mechoid-Janitor"
 
 		if("Combat")
-			module = new /obj/item/weapon/robot_module/combat(src)
+			bulid_combat_borg()
+			return
+			/*
+			var/mob/living/silicon/robot/combat/C = new(get_turf(src))
+			//C.module = new /obj/item/weapon/robot_module/combat(src)
+			/*C.module.channels = list("Security" = 1)
+			C.*/
+			if(mind)
+				mind.transfer_to(C)
+			/*module = new /obj/item/weapon/robot_module/combat(src)
 			module_sprites["Combat Android"] = "droid-combat"
 			module_sprites["Acheron"] = "mechoid-Combat"
 			module_sprites["Kodiak"] = "kodiak-combat"
-			module.channels = list("Security" = 1)
+			module.channels = list("Security" = 1)*/
+			qdel(src)
+			return*/
 
 	module_icon.update_icon(src)
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
@@ -324,6 +338,21 @@
 		icon_state = module_sprites[new_icon_state]
 
 	radio.config(module.channels)
+
+/mob/living/silicon/robot/proc/bulid_combat_borg()
+	var/mob/living/silicon/robot/combat/C = new(get_turf(src))
+	//C.module = new /obj/item/weapon/robot_module/combat(src)
+	/*C.module.channels = list("Security" = 1)
+	C.*/
+	if(mind)
+		mind.transfer_to(C)
+	C.hud_used = new(C)
+	/*module = new /obj/item/weapon/robot_module/combat(src)
+	module_sprites["Combat Android"] = "droid-combat"
+	module_sprites["Acheron"] = "mechoid-Combat"
+	module_sprites["Kodiak"] = "kodiak-combat"
+	module.channels = list("Security" = 1)*/
+	qdel(src)
 
 /mob/living/silicon/robot/proc/updatename(prefix)
 	if(prefix)
@@ -921,20 +950,6 @@
 			add_overlay("ov-openpanel +c")
 		else
 			add_overlay("ov-openpanel -c")
-
-
-
-	if(module_active && istype(module_active,/obj/item/borg/combat/shield))
-		add_overlay("[icon_state]-shield")
-
-	if(modtype == "Combat")
-//		var/base_icon = ""
-//		base_icon = icon_state
-		if(module_active && istype(module_active,/obj/item/borg/combat/mobility))
-			icon_state = "droid-combat-roll"
-		else
-			icon_state = "droid-combat"
-		return
 
 //Call when target overlay should be added/removed
 /mob/living/silicon/robot/update_targeted()
