@@ -359,7 +359,7 @@
 /obj/item/weapon/robot_module/combat/atom_init()
 	. = ..()
 	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/borg/sight/thermal(src)
+	modules += new /obj/item/borg/sight/night(src)
 	modules += new /obj/item/weapon/gun/energy/laser/selfcharging/cyborg(src)
 	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
 	modules += new /obj/item/borg/combat/shield(src)

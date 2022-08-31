@@ -3,31 +3,26 @@
 	modtype = "Combat"
 	var/modtype_icon
 
-/mob/living/silicon/robot/combat/atom_init()
+/mob/living/silicon/robot/combat/atom_init(mapload, name_prefix = "Combat", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
 	. = ..()
-	var/obj/item/weapon/robot_module/combat/M = new(src)
-	module = M
-	updatename()
+	module = new /obj/item/weapon/robot_module/combat(src)
+	updatename(name_prefix)
 	if(!modtype_icon)
 		modtype_icon = "droid-combat"
+	module.channels = list("Security" = 1)
 
-/mob/living/silicon/robot/combat/Login()
-	pick_new_icon()
-	radio.config(module.channels)
-	return ..()
-
-/mob/living/silicon/robot/combat/proc/pick_new_icon()
+/mob/living/silicon/robot/combat/pick_module()
 	var/module_sprites[0]
 	module_sprites["Combat Android"] = "droid-combat"
 	module_sprites["Acheron"] = "mechoid-Combat"
 	module_sprites["Kodiak"] = "kodiak-combat"
-	module.channels = list("Security" = 1)
 	var/choose_icon = list()
 	for(var/name in module_sprites)
 		choose_icon[name] = image(icon = 'icons/mob/robots.dmi', icon_state = module_sprites[name])
 	var/new_modtype_icon = show_radial_menu(usr, usr, choose_icon, radius = 50, tooltips = TRUE)
 	if(new_modtype_icon)
 		modtype_icon = module_sprites[new_modtype_icon]
+	radio.config(module.channels)
 	updateicon()
 
 /mob/living/silicon/robot/combat/updateicon()
