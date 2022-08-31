@@ -106,17 +106,17 @@
 	item_state = "wjboots"
 	siemens_coefficient = 0.7
 
-#define SLIP_TIMER_LOWEST 10 SECONDS
-#define SLIP_TIMER_HIGHEST 30 SECONDS
+#define UNEQUIP_TIMER_LOWEST 10 SECONDS
+#define UNEQUIP_TIMER_HIGHEST 30 SECONDS
 
 /obj/item/clothing/shoes/boots/work/jak
 	name = "Boots of Springheel Jak"
 	desc = "A pair of some old boots."
 	slowdown = -2.0 //because we don't have acrobatics skill
-	var/slip_timer
+	var/unequip_timer
 
 /obj/item/clothing/shoes/boots/work/jak/proc/try_unequip(mob/living/carbon/user, slot)
-	slip_timer = null
+	unequip_timer = null
 	if(user?.shoes != src)
 		return
 	user.unEquip(src, TRUE)
@@ -131,11 +131,11 @@
 	if(slot != SLOT_SHOES)
 		return
 	if(iswizard(user) || iswizardapprentice(user))
-		deltimer(slip_timer)
+		deltimer(unequip_timer)
 		return
-	if(slip_timer)
+	if(unequip_timer)
 		return
-	slip_timer = addtimer(CALLBACK(src, .proc/try_unequip, user, slot), rand(SLIP_TIMER_LOWEST, SLIP_TIMER_HIGHEST), TIMER_STOPPABLE)
+	unequip_timer = addtimer(CALLBACK(src, .proc/try_unequip, user, slot), rand(UNEQUIP_TIMER_LOWEST, UNEQUIP_TIMER_HIGHEST), TIMER_STOPPABLE)
 
 /obj/item/clothing/shoes/boots/work/jak/atom_init(mapload, ...)
 	. = ..()
@@ -143,9 +143,9 @@
 	RegisterSignal(src, list(COMSIG_ITEM_EQUIPPED), .proc/on_equip)
 
 /obj/item/clothing/shoes/boots/work/jak/Destroy()
-	deltimer(slip_timer)
+	deltimer(unequip_timer)
 	UnregisterSignal(src, COMSIG_ITEM_EQUIPPED)
 	return ..()
 
-#undef SLIP_TIMER_LOWEST
-#undef SLIP_TIMER_HIGHEST
+#undef UNEQUIP_TIMER_LOWEST
+#undef UNEQUIP_TIMER_HIGHEST
