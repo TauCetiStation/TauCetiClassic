@@ -122,11 +122,11 @@
 /obj/effect/proc_holder/spell/targeted/enthrall/cast(list/targets)
 	if(spell_active)
 		return
+	spell_active = TRUE
 	if(!use_spell(targets))
 		spell_active = FALSE
 
 /obj/effect/proc_holder/spell/targeted/enthrall/proc/use_spell(list/targets)
-	spell_active = TRUE
 	var/mob/living/carbon/human/user = usr
 	var/mob/living/carbon/human/victim
 	for(var/mob/living/carbon/human/target in targets)
