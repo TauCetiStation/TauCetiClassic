@@ -164,11 +164,12 @@ robot_fabricator
 			to_chat(src, "<span class='warning'>Infest Module recharging.</span>")
 			return
 		var/armor
-		var/item/clothing/S = H.suit
-		if(S && S.flags_pressure == STOPS_LOWPRESSUREDMAGE)
-			//no need running around the station in rig when mode is zombie
-			armor = (H.run_armor_check(null, "bio") + H.run_armor_check(null, "rad")) / 2
-		else
+		var/list/items = get_equipped_items()
+		for(var/obj/item/clothing/C in items)
+			if(C && C.flags_pressure & STOPS_LOWPRESSUREDMAGE)
+				//no need running around the station in rig when mode is zombie
+				armor = (H.run_armor_check(null, "bio") + H.run_armor_check(null, "rad")) / 2
+				break
 			armor = H.run_armor_check(null, "bio")
 		var/chance = 100 - armor
 		if(chance <= 0 || !prob(chance))
