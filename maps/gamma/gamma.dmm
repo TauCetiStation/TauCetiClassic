@@ -2353,6 +2353,19 @@
 	icon_state = "siding1"
 	},
 /area/station/civilian/chapel)
+"adO" = (
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/machinery/computer/cargo/request{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/station/medical/medbreak)
 "adQ" = (
 /obj/structure/sign/mark{
 	icon_state = "b4"
@@ -15230,10 +15243,9 @@
 	},
 /area/station/civilian/hydroponics)
 "dNc" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/lights/mixed,
-/obj/item/device/flashlight,
-/obj/item/device/megaphone,
+/obj/machinery/computer/cargo/request{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -24337,7 +24349,6 @@
 	network = list("SS13","Medical")
 	},
 /obj/structure/table,
-/obj/item/device/healthanalyzer,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
@@ -27081,6 +27092,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/item/weapon/phone,
 /turf/simulated/floor/carpet,
 /area/station/bridge/captain_quarters)
 "hxp" = (
@@ -34105,6 +34117,7 @@
 	},
 /area/station/engineering/break_room)
 "jMl" = (
+/obj/machinery/computer/cargo/request,
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -40729,6 +40742,7 @@
 	},
 /obj/item/weapon/folder/blue,
 /obj/item/weapon/pen,
+/obj/item/device/megaphone,
 /turf/simulated/floor/carpet,
 /area/station/security/secconfhall)
 "lPx" = (
@@ -52828,7 +52842,7 @@
 	},
 /area/station/medical/surgery2)
 "pIH" = (
-/obj/structure/table,
+/obj/machinery/computer/cargo/request,
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -56072,6 +56086,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/item/weapon/storage/box/lights/mixed,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/security)
 "qGz" = (
@@ -66117,11 +66132,11 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "tox_airlock_control";
 	pixel_x = -28;
+	pixel_y = -10;
 	tag_airpump = "tox_airlock_pump";
 	tag_chamber_sensor = "tox_airlock_sensor";
 	tag_exterior_door = "tox_airlock_exterior";
-	tag_interior_door = "tox_airlock_interior";
-	pixel_y = -10
+	tag_interior_door = "tox_airlock_interior"
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -75464,8 +75479,8 @@
 	id = "mixvent";
 	name = "Mixing Room Vent Control";
 	pixel_x = 25;
-	req_access = list(8);
-	pixel_y = 5
+	pixel_y = 5;
+	req_access = list(8)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/meter,
@@ -75474,17 +75489,12 @@
 	},
 /area/station/rnd/mixing)
 "wOl" = (
-/obj/machinery/computer/med_data/laptop,
-/obj/structure/table/glass,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/structure/table,
+/obj/item/trash/chips,
 /turf/simulated/floor{
-	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/station/medical/medbreak)
+/area/station/rnd/hallway)
 "wOp" = (
 /turf/simulated/floor{
 	dir = 10;
@@ -79631,7 +79641,9 @@
 	},
 /area/station/security/armoury)
 "yil" = (
-/obj/machinery/computer/cargo/request,
+/obj/machinery/computer/cargo/request{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -118014,7 +118026,7 @@ kmW
 bsf
 sta
 qEc
-wOl
+adO
 dnK
 xqf
 uNw
@@ -120057,7 +120069,7 @@ fwU
 fbi
 qaY
 vzO
-pIH
+wOl
 med
 uet
 oto
