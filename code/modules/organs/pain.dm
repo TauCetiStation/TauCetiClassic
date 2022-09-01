@@ -6,7 +6,7 @@
 // partname is the name of a body part
 // amount is a num from 1 to 100
 /mob/living/carbon/proc/pain(partname, amount, force, burning = 0)
-	if(stat >= 2) return
+	if(stat >= DEAD) return
 	if(reagents.has_reagent("paracetamol"))
 		return
 	if(reagents.has_reagent("tramadol"))
@@ -48,7 +48,7 @@
 // message is the custom message to be displayed
 // flash_strength is 0 for weak pain flash, 1 for strong pain flash
 /mob/living/carbon/human/proc/custom_pain(message, flash_strength)
-	if(stat >= 1)
+	if(stat != CONSCIOUS)
 		return
 
 	if(species && species.flags[NO_PAIN])
@@ -76,7 +76,7 @@
 	if(species && species.flags[NO_PAIN])
 		return
 
-	if(stat >= 2)
+	if(stat >= DEAD)
 		return
 	if(reagents.has_reagent("tramadol"))
 		return

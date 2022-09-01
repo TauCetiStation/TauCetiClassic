@@ -36,7 +36,7 @@
 	maxbodytemp = INFINITY
 	environment_smash = 3
 
-	faction = list("faithless")
+	faction = "faithless"
 
 /mob/living/simple_animal/ascendant_shadowling/atom_init()
 	. = ..()

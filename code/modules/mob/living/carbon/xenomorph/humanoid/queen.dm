@@ -10,6 +10,7 @@
 	status_flags = CANPARALYSE
 	heal_rate = 4
 	plasma_rate = 20
+	speed = 3
 	neurotoxin_delay = 10
 	ventcrawler = 0
 	w_class = SIZE_GYGANT
@@ -50,9 +51,6 @@
 		icon_state = "queen_s"
 	for(var/image/I in overlays_standing)
 		add_overlay(I)
-
-/mob/living/carbon/xenomorph/humanoid/queen/movement_delay()
-	return(3 + move_delay_add + config.alien_delay)
 
 /mob/living/carbon/xenomorph/humanoid/queen/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
 	return FALSE
