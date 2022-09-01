@@ -25769,7 +25769,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
-/obj/random/vending/cola,
+/obj/machinery/computer/cargo/request,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -40196,11 +40196,10 @@
 /obj/machinery/camera{
 	c_tag = "Bridge East"
 	},
-/obj/item/weapon/storage/fancy/donut_box,
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/structure/table/glass,
+/obj/machinery/computer/cargo,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -46338,6 +46337,9 @@
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
+/obj/machinery/computer/cargo/request{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -47081,6 +47083,7 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
+/obj/item/weapon/storage/fancy/donut_box,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -69723,7 +69726,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 30
 	},
-/obj/machinery/vending/cigarette,
+/obj/machinery/computer/cargo/request,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellow"
@@ -72605,6 +72608,9 @@
 "gVm" = (
 /obj/machinery/requests_console/security{
 	pixel_x = 30
+	},
+/obj/machinery/computer/cargo/request{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
