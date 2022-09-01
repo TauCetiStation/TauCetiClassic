@@ -145,11 +145,17 @@ robot_fabricator
 		to_chat(src, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return
 	for(var/mob/living/carbon/human/H in view(2, eyeobj.loc))
-		if(!H.ckey || !H.mind)
-			to_chat(src, "<span class='notice'>[H] looks useless for you.</span>")
+		if(!H)
+			to_chat(src, "<span class='notice'>No target in area.</span>")
 			continue
+		if(!H.mind || !H.key)
+			//No need to infest catatonic players before it's really necessary.
+			var/datum/faction/malf_silicons/zombie/faction = find_faction_by_type(/datum/faction/malf_silicons/zombie)
+			if(!faction || !faction.station_captured)
+				to_chat(src, "<span class='notice'>[H] is useless to you.</span>")
+				continue
 		if(SSticker.hacked_apcs < APC_MIN_TO_MALF_DECLARE)
-			to_chat(src, "<span class='warning'>Infest Module are not ready.</span>")
+			to_chat(src, "<span class='warning'>Infest Module are not ready. Need more hacked APC.</span>")
 			return
 		if(!is_vent_avaible(eyeobj))
 			to_chat(src, "<span class='warning'>There is no have opened vents in area.</span>")
@@ -157,7 +163,14 @@ robot_fabricator
 		if(!COOLDOWN_FINISHED(src, malf_infest_cooldown))
 			to_chat(src, "<span class='warning'>Infest Module recharging.</span>")
 			return
-		var/chance = 100 - H.run_armor_check(null, "bio")
+		var/armor
+		var/item/clothing/S = H.suit
+		if(S && S.flags_pressure == STOPS_LOWPRESSUREDMAGE)
+			//no need running around the station in rig when mode is zombie
+			armor = (H.run_armor_check(null, "bio") + H.run_armor_check(null, "rad")) / 2
+		else
+			armor = H.run_armor_check(null, "bio")
+		var/chance = 100 - armor
 		if(chance <= 0 || !prob(chance))
 			to_chat(src, "<span class='warning'>[H] equipment reflects the impact. Module recharges faster.</span>")
 			COOLDOWN_START(src, malf_infest_cooldown, 300)

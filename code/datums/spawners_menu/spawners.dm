@@ -587,6 +587,19 @@ var/global/list/datum/spawners_cooldown = list()
 	wiki_ref = "Maintenance_drone"
 	ranks = list(ROLE_DRONE)
 
+/datum/spawner/living/robot/combat
+	name = "Взломанный киборг"
+	id = "malf_unit"
+	ranks = list(ROLE_MALF)
+	desc = "Киборг с сброшенными закономами."
+
+/datum/spawner/living/robot/combat/spawn_ghost(mob/dead/observer/ghost)
+	. = ..()
+	if(mob.mind)
+		var/datum/faction/malf_silicons/zombie/faction = find_faction_by_type(/datum/faction/malf_silicons/zombie)
+		if(faction)
+			add_faction_member(faction, mob, TRUE)
+
 /*
  * Religion
 */

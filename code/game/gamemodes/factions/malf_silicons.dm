@@ -240,13 +240,13 @@
 		if(S.stat & (NOPOWER|BROKEN))
 			continue
 		valid_places += S
-		if(!valid_places)
-			to_chat(src, "<span class='warning'>There are no functioning cyborg chargers at the station..</span>")
-			return
+	if(!valid_places.len)
+		to_chat(src, "<span class='warning'>There are no functioning cyborg chargers at the station..</span>")
+		return
 	var/mob/living/silicon/robot/cyborg = new(get_turf(pick(valid_places)))
 	cyborg.can_be_security = TRUE
 	cyborg.crisis = TRUE
-	create_spawner(/datum/spawner/living/robot, cyborg)
+	create_spawner(/datum/spawner/living/robot/combat, cyborg)
 	COOLDOWN_START(src, malf_borgcreating_cooldown, 300)
 	to_chat(src, "<span class='notice'><a href=?src=\ref[src];track=\ref[cyborg]>[cyborg] created.</span>")
 
@@ -257,8 +257,6 @@
 		SSshuttle.incall()
 		SSshuttle.announce_emer_called.play()
 		finished = TRUE
-		return FALSE
-	if(config.continous_rounds)
 		return FALSE
 	for(var/datum/objective/turn_into_zombie/Z in objective_holder.GetObjectives())
 		if(Z.check_completion())
