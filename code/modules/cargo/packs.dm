@@ -775,7 +775,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/plasteel25
 	name = "25 plasteel sheets"
 	contains = list(/obj/item/stack/sheet/plasteel)
-	cost = 2500
+	cost = 5000
 	amount = 25
 	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Glass sheets crate"
