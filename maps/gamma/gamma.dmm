@@ -16735,6 +16735,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/computer/cargo/request{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -34117,7 +34120,6 @@
 	},
 /area/station/engineering/break_room)
 "jMl" = (
-/obj/machinery/computer/cargo/request,
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
