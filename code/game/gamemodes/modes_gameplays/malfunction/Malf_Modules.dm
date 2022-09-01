@@ -164,7 +164,7 @@ robot_fabricator
 			to_chat(src, "<span class='warning'>Infest Module recharging.</span>")
 			return
 		var/armor
-		var/list/items = get_equipped_items()
+		var/list/items = H.get_equipped_items()
 		for(var/obj/item/clothing/C in items)
 			if(C && C.flags_pressure & STOPS_LOWPRESSUREDMAGE)
 				//no need running around the station in rig when mode is zombie
