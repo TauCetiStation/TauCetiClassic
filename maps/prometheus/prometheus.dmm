@@ -7620,11 +7620,10 @@
 	pixel_y = 6
 	},
 /obj/machinery/light/small,
-/obj/machinery/power/apc/largecell{
-	name = "largecell apc down";
-	pixel_y = -28
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
 	},
-/obj/structure/cable,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken6"
 	},
@@ -13236,6 +13235,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -17711,14 +17715,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
-"ejy" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/carpet/blue2,
-/area/station/bridge/hop_office)
 "ejC" = (
 /obj/random/vending/snack,
 /obj/structure/extinguisher_cabinet{
@@ -23937,11 +23933,6 @@
 "fEf" = (
 /obj/structure/stool/bed/chair/comfy/teal,
 /obj/effect/landmark/start/head_of_personnel,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
 "fEk" = (
@@ -28325,9 +28316,6 @@
 	},
 /area/station/rnd/xenobiology)
 "gEj" = (
-/obj/machinery/requests_console/hop{
-	pixel_x = -28
-	},
 /obj/structure/table,
 /obj/machinery/computer/skills_console{
 	pixel_y = 4
@@ -28337,6 +28325,11 @@
 	},
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -28;
+	pixel_y = -5
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -31814,6 +31807,10 @@
 /obj/structure/table/woodentable,
 /obj/random/foods/donuts,
 /obj/item/device/taperecorder,
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 4;
+	pixel_y = -30
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
 "hsq" = (
@@ -32375,6 +32372,10 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -28
 	},
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 5;
+	pixel_y = -28
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
 "hAX" = (
@@ -32828,11 +32829,6 @@
 /obj/structure/table,
 /obj/item/device/megaphone{
 	pixel_y = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -46821,6 +46817,15 @@
 	},
 /area/station/civilian/chapel/altar)
 "llO" = (
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	name = "largecell apc left";
+	pixel_x = -28
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -48700,8 +48705,8 @@
 	},
 /area/station/maintenance/medbay)
 "lIS" = (
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = -22
+/obj/machinery/requests_console/hop{
+	pixel_x = -28
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken3"
@@ -62885,10 +62890,6 @@
 /area/station/aisat/teleport)
 "pmV" = (
 /obj/structure/table,
-/obj/machinery/recharger/wallcharger{
-	pixel_x = -24;
-	pixel_y = -4
-	},
 /obj/machinery/computer/skills,
 /obj/machinery/camera{
 	c_tag = "Bridge Head of Personnel's Office";
@@ -64996,11 +64997,6 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "pQv" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -65928,11 +65924,6 @@
 	},
 /area/station/security/main)
 "qcf" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
 "qcq" = (
@@ -80174,8 +80165,8 @@
 	},
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -83301,16 +83292,6 @@
 	icon_state = "darkred"
 	},
 /area/station/ai_monitored/eva)
-"uyH" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	icon_state = "darkblue"
-	},
-/area/station/bridge/hop_office)
 "uyJ" = (
 /obj/structure/table/woodentable,
 /obj/structure/window/reinforced{
@@ -84452,11 +84433,6 @@
 	},
 /area/station/maintenance/brig)
 "uLW" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -133193,7 +133169,7 @@ eId
 kUb
 tJY
 hHi
-uyH
+kaW
 qcf
 eVR
 gKA
@@ -133709,7 +133685,7 @@ xLQ
 wQg
 kaW
 pQv
-ejy
+eVR
 fEf
 bHU
 hRX
