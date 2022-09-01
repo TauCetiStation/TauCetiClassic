@@ -127,6 +127,11 @@
 				else
 					M.stop_pulling()
 
+		if(mob.buckled)
+			var/atom/movable/A = mob.buckled
+			if(!A.buckle_movable)
+				A.user_unbuckle_mob(mob)
+
 		//We are now going to move
 		var/add_delay
 		move_delay = world.time//set move delay
