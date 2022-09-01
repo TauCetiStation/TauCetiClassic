@@ -98,6 +98,7 @@
 #define MONKEY         	 "Monkey"
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
+#define HUMAN_FORCED_BUCKLE_DELAY 16 // delay to possibly unwanted interactions like buckling, putting in cryo etc.
 
 #define SHOES_SLOWDOWN -1.0			// How much shoes slow you down by default. Negative values speed you up
 

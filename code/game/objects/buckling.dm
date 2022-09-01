@@ -117,7 +117,7 @@
 
 	if(buckle_lying && M != user && !M.incapacitated() && !M.crawling)
 		visible_message("<span class='danger'>[user] is trying to buckle [M] to [src]!</span>")
-		if(!do_after(user, 16, target = M)) // Only already lying people can get instantly buckled to beds
+		if(!do_after(user, HUMAN_FORCED_BUCKLE_DELAY, target = M)) // Only already lying people can get instantly buckled to beds
 			return
 	
 	if(buckle_mob(M))
