@@ -186,7 +186,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		.manifest tr.alt td {[monochrome?"border-top-width: 2px":"background-color: #DEF"]}
 	</style></head>
 	<table class="manifest" width='350px'>
-	<tr class='head'><th>Name</th><th>Rank</th><th>Activity</th></tr>
+	<tr class='head'><th>Name</th><th>Rank</th><th>Status</th></tr>
 	"}
 	var/even = 0
 	// Formating keyword -> Description
