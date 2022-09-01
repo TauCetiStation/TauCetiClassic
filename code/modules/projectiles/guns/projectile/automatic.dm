@@ -190,6 +190,10 @@
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
 
+/obj/item/weapon/gun/projectile/automatic/tommygun/update_icon()
+	..()
+	item_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+
 /obj/item/weapon/gun/projectile/automatic/bar
 	name = "Browning M1918"
 	desc = "Browning Automatic Rifle."
