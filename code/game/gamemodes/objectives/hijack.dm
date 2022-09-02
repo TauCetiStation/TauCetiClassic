@@ -1,3 +1,4 @@
+// Do not use, no one knows how to admin it
 /datum/objective/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping alone."
 
