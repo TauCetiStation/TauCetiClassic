@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(holomaps)
 		for(var/obj/item/holochip/HC in SSholomaps.holochips[freq])
 			var/turf/marker_location = get_turf(HC)
 			if(!marker_location)
-				stack_trace("[HC.holder]/[HC.holder.loc]/[HC.frequency] without turf.")
+				stack_trace("[HC.holder] | [HC.holder.loc] | [HC.frequency] without turf.")
 				continue
 			if(!is_station_level(marker_location.z))
 				continue
@@ -115,10 +115,10 @@ SUBSYSTEM_DEF(holomaps)
 		if(!is_station_level(marker_location.z))
 			continue
 		if(istype(shuttle, /obj/machinery/computer/syndicate_station))
-			if(!(shuttle in holomap_cache))
+			if(!(holomap_cache[shuttle]))//shuttle in holomap_cache))
 				holomap_cache[shuttle] = image('icons/holomaps/holomap_markers_32x32.dmi', "syndishuttle")
 		else if(istype(shuttle, /obj/machinery/computer/vox_stealth))
-			if(!(shuttle in holomap_cache))
+			if(!(holomap_cache[shuttle]))//shuttle in holomap_cache))
 				holomap_cache[shuttle] = image('icons/holomaps/holomap_markers_32x32.dmi', "skipjack")
 		var/image/I = holomap_cache[shuttle]
 		I.pixel_x = (marker_location.x - HOLOMAP_OFFSET) * PIXEL_MULTIPLIER
