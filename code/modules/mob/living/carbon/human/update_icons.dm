@@ -855,33 +855,3 @@ Please contact me on #coderbus IRC. ~Carn x
 		I.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
 		I.add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
 	return I
-
-//Human Overlays Indexes/////////
-#undef FIRE_LOWER_LAYER
-#undef BODY_LAYER
-#undef MUTATIONS_LAYER
-#undef DAMAGE_LAYER
-#undef SURGERY_LAYER
-#undef BANDAGE_LAYER
-#undef UNIFORM_LAYER
-#undef ID_LAYER
-#undef SHOES_LAYER
-#undef TAIL_LAYER
-#undef GLOVES_LAYER
-#undef EARS_LAYER
-#undef SUIT_LAYER
-#undef GLASSES_LAYER
-#undef BELT_LAYER
-#undef SUIT_STORE_LAYER
-#undef BACK_LAYER
-#undef HAIR_LAYER
-#undef FACEMASK_LAYER
-#undef HEAD_LAYER
-#undef COLLAR_LAYER
-#undef HANDCUFF_LAYER
-#undef LEGCUFF_LAYER
-#undef L_HAND_LAYER
-#undef R_HAND_LAYER
-#undef FIRE_UPPER_LAYER
-#undef TARGETED_LAYER
-#undef TOTAL_LAYERS
