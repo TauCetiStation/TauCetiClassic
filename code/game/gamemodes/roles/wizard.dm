@@ -99,14 +99,12 @@
 			AppendObjective(/datum/objective/steal)
 			AppendObjective(/datum/objective/survive)
 
-		if(101 to 139)
+		if(101 to 140)
 			AppendObjective(/datum/objective/target/assassinate)
 			AppendObjective(/datum/objective/steal)
 			AppendObjective(/datum/objective/steal)
 			AppendObjective(/datum/objective/survive)
 
-		else
-			AppendObjective(/datum/objective/hijack)
 	return TRUE
 
 /datum/role/wizard/GetScoreboard()
