@@ -180,7 +180,7 @@
 		return
 	if(damage_amount >= 10)
 		visible_message("<span class='danger'>[user] smashes into [src]!</span>")
-		return ..(damage_amount * 0.5, damage_type, damage_flag, sound_effect)
+		return ..(user, damage_amount * 0.5, damage_type, damage_flag, sound_effect)
 
 	visible_message("<span class='notice'>\The [user] bonks \the [src] harmlessly.</span>")
 	user.do_attack_animation(src)
