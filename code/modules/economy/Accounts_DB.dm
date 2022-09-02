@@ -150,9 +150,7 @@
 					var/trx = create_transation(account_name, "New account activation", "([starting_funds])")
 					station_account.transaction_log.Add(trx)
 
-					creating_new_account = 0
-					ui.close()
-
+				ui.close()
 				creating_new_account = 0
 			if("insert_card")
 				if(held_card)
