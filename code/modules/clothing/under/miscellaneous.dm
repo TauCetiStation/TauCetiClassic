@@ -462,6 +462,7 @@
 /obj/item/clothing/under/rank/cadet/skirt
 	name = "security cadet's jumpskirt"
 	icon_state = "skirt_cadet"
+	item_state = "skirt_cadet"
 
 /obj/item/clothing/under/rank/forensic_technician
 	desc = "It has a Forensics rank stripe on it."

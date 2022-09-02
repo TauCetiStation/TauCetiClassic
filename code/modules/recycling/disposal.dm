@@ -662,7 +662,7 @@
 
 	var/mob/living/U = user
 
-	if (U.stat || U.last_special <= world.time)
+	if (U.stat != CONSCIOUS || U.last_special <= world.time)
 		return
 
 	U.last_special = world.time+100
@@ -795,7 +795,7 @@
 		F.burnt	= 1
 		F.intact	= 0
 		F.levelupdate()
-		new /obj/item/stack/tile(H)	// add to holder so it will be thrown with other stuff
+		new F.floor_type(H)	// add to holder so it will be thrown with other stuff
 		F.icon_state = "Floor[F.burnt ? "1" : ""]"
 
 	var/turf/target

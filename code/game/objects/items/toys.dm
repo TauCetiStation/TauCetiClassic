@@ -957,7 +957,7 @@ Owl & Griffin toys
 	if(!..())
 		playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
 		for(var/mob/M in orange(10, src))
-			if(!M.stat && !isAI(M))\
+			if(M.stat == CONSCIOUS && !isAI(M))\
 				shake_camera(M, 3, 1)
 		qdel(src)
 
