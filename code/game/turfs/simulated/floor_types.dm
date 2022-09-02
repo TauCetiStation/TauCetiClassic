@@ -252,11 +252,11 @@
 /mob/living/silicon/robot/entered_water_turf()
 	Stun(2)
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 	if(prob(25))
 		adjustFireLoss(rand(10, 20))
-		Weaken(rand(10, 15))
+		Stun(rand(10, 15))
 		eye_blind += rand(20, 25)
 		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -4)
 	if(!eye_blind)

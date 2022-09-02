@@ -33,11 +33,8 @@
 
 
 /mob/living/blob/proc/clamp_values()
-	AdjustStunned(0)
-	AdjustParalysis(0)
-	AdjustWeakened(0)
 	SetSleeping(0)
-	if(stat)
+	if(stat != CONSCIOUS)
 		stat = CONSCIOUS
 	return
 

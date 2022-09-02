@@ -9,7 +9,7 @@
 	var/burning = 0
 	var/splicing = 0
 	var/scanning = 0
-	required_skills = list(/datum/skill/research/trained, /datum/skill/medical/pro, /datum/skill/chemistry/novice)
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_PRO, /datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/computer/diseasesplicer/attackby(obj/I, mob/user)
 	if(isscrewdriver(I))

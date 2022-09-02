@@ -35,7 +35,7 @@
 	pass_flags = PASSTABLE
 	w_class = SIZE_TINY
 
-	speak = list("Hi","Hello!","Cracker?","BAWWWWK george mellons griffing me")
+	speak = list("Прривет","Здаррова!","Кррекер?","БВААААА! Джамес Морган дрразнит меня!")
 	speak_emote = list("squawks","says","yells")
 	emote_hear = list("squawks","bawks")
 	emote_see = list("flutters its wings")
@@ -150,9 +150,9 @@
 				if("ears")
 					if(ears)
 						if(available_channels.len)
-							say("[pick(available_channels)] BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+							say("[pick(available_channels)] БВААААА! ОСТАВЬ НАУШНИК! БВААААА!")
 						else
-							say("BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+							say("БВААААА! ОСТАВЬ НАУШНИК! БВААААА!")
 						ears.loc = src.loc
 						ears = null
 						for(var/possible_phrase in speak)
@@ -219,7 +219,7 @@
 	. = ..()
 	if(client)
 		return
-	if(!stat)
+	if(stat == CONSCIOUS)
 		icon_state = "parrot_fly" //It is going to be flying regardless of whether it flees or attacks
 
 		if(parrot_state == PARROT_PERCH)
@@ -237,7 +237,7 @@
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(obj/item/O, mob/user)
 	..()
-	if(!stat && !client && !istype(O, /obj/item/stack/medical))
+	if(stat == CONSCIOUS && !client && !istype(O, /obj/item/stack/medical))
 		if(O.force)
 			if(parrot_state == PARROT_PERCH)
 				parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -253,7 +253,7 @@
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
-	if(!stat && !client)
+	if(stat == CONSCIOUS && !client)
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
@@ -276,7 +276,7 @@
 			parrot_state = PARROT_WANDER
 		return
 
-	if(client || stat)
+	if(client || stat != CONSCIOUS)
 		return //Lets not force players or dead/incap parrots to move
 
 	if(!isturf(src.loc) || !canmove)
@@ -461,7 +461,7 @@
 		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it
 											// ! and i'm not going to invent new alg for this
 			//If the mob we've been chasing/attacking dies or falls into crit, check for loot!
-			if(L.stat)
+			if(L.stat != CONSCIOUS)
 				parrot_interest = null
 				if(!held_item)
 					held_item = steal_from_ground()
@@ -683,7 +683,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
-	speak = list("Poly wanna cracker!", ":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS LOOSE CALL THE SHUTTLE")
+	speak = list("Поли хочет кррекер!", ":e Прроверьте сингулярность, лоботррясы!", ":e Подключайте солнечные панели, ленивые даррмоеды!", ":e КТО ВЗЯЛ ГРРЁБАНЫЕ РРИГИ?", ":e О БОЖЕ, ОНА СБЕЖАЛА! ВЫЗЫВАЙТЕ ШАТТЛ!")
 	speak_chance = 3
 	var/memory_saved = 0
 	var/rounds_survived = 0
@@ -695,23 +695,23 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	available_channels = list(":e")
 	Read_Memory()
 	if(rounds_survived == longest_survival)
-		speak += pick("...[longest_survival].", "The things I have seen!", "I have lived many lives!", "What are you before me?")
+		speak += pick("...[longest_survival].", "Чего я только не видал!", "Я прожил так много жизней!", "Что ты предо мной?")
 		desc += " Old as sin, and just as loud. Claimed to be [rounds_survived]."
 		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
 		color = "#eeee22"
 	else if(rounds_survived == longest_deathstreak)
-		speak += pick("What are you waiting for!", "Violence breeds violence!", "Blood! Blood!", "Strike me down if you dare!")
+		speak += pick("Чего же ты ждёшь!?", "Насилие поррождает насилие!", "Крровь! Кровь!", "Убей меня, если посмеешь!")
 		desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
 		color = "#bb7777"
 	else if(rounds_survived > 0)
-		speak += pick("...again?", "No, It was over!", "Let me out!", "It never ends!")
+		speak += pick("...снова?", "Нет, всё было кончено!", "Выпустите меня!", "Это никогда не закончится!")
 		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"
 	else
-		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
+		speak += pick("...я жив?", "Это не птичий ррай!", "Я живу, умирраю, и снова живу!", "Пустота исчезает!")
 	. = ..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
-	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(stat == CONSCIOUS && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		rounds_survived = max(++rounds_survived,1)
 		if(rounds_survived > longest_survival)
 			longest_survival = rounds_survived
@@ -750,10 +750,18 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
+	if(length(speech_buffer))
+		for(var/text in speech_buffer)
+			if(!istext(text))
+				speech_buffer = null // omg we somehow corrupted
+
 	S["phrases"] 			<< speech_buffer
-	S["roundssurvived"]		<< rounds_survived
-	S["longestsurvival"]	<< longest_survival
-	S["longestdeathstreak"] << longest_deathstreak
+	if(isnum(rounds_survived))
+		S["roundssurvived"]		<< rounds_survived
+	if(isnum(longest_survival))
+		S["longestsurvival"]	<< longest_survival
+	if(isnum(longest_deathstreak))
+		S["longestdeathstreak"] << longest_deathstreak
 	memory_saved = 1
 
 /mob/living/simple_animal/parrot/Poly/ghost
@@ -817,6 +825,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 
 
 /mob/living/simple_animal/parrot/proc/parrot_hear(message="")
-	if(!message || stat)
+	if(!message || stat != CONSCIOUS)
 		return
 	speech_buffer.Add(message)

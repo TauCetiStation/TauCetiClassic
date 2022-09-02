@@ -40,6 +40,12 @@
 	heat_protection = ARMS
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 
+/obj/item/clothing/gloves/combat/wizard
+	name = "Magic Gloves"
+	desc = "A pair of shockproof gloves, look very magical."
+	icon_state = "wizard"
+	item_state = "wizardgloves"
+
 /obj/item/clothing/gloves/latex
 	name = "latex gloves"
 	desc = "Sterile latex gloves."

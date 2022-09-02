@@ -9,7 +9,7 @@
 	req_access = list(access_robotics)
 	circuit = /obj/item/weapon/circuitboard/robotics
 
-	required_skills = list(/datum/skill/research/pro)
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_PRO)
 
 	var/id = 0.0
 	var/temp = null
@@ -51,7 +51,7 @@
 					continue
 
 				dat += "[R.name] |"
-				if(R.stat)
+				if(R.stat != CONSCIOUS)
 					dat += " Not Responding |"
 				else if (!R.canmove)
 					dat += " Locked Down |"

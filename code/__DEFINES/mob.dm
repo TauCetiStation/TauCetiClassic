@@ -147,7 +147,7 @@
 #define TK_BONUS_UPSET 1
 
 // How much resource should be wasted per tile of distance to target.
-#define TK_MANA_PER_TILE 10
+#define TK_MANA_PER_TILE 1
 // How much resource should be wasted per upping of a size class of target.
 #define TK_MANA_PER_W_CLASS(cl) (2**cl)
 

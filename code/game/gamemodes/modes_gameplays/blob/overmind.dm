@@ -13,6 +13,7 @@
 	faction = "blob"
 
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
+	var/list/blob_mobs = list()
 	var/blob_points = 0
 	var/max_blob_points = 100
 	var/victory_in_progress = FALSE
@@ -44,11 +45,15 @@
 	to_chat(src, "<b>Resource Blob</b> is a blob which will collect more resources for you, try to build these earlier to get a strong income. It will benefit from being near your core or multiple nodes, by having an increased resource rate; put it alone and it won't create resources at all.")
 	to_chat(src, "<b>Node Blob</b> is a blob which will grow, like the core. Unlike the core it won't give you a small income but it can power resource and factory blobs to increase their rate.")
 	to_chat(src, "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. Putting this nearby nodes and your core will increase the spawn rate; put it alone and it will not spawn any spores.")
+	to_chat(src, "<b>Blobbernauts</b> can be produced from factories for a cost, and are hard to kill, powerful, and moderately smart. The factory used to create one will become fragile and briefly unable to produce spores.")
 	to_chat(src, "<b>Shortcuts:</b> Click = Expand Blob / CTRL Click = Remove Blob OR Rename Node / Shift Click = Upgrade Blob / Middle Mouse Click = Rally Spores / Alt Click = Create Shield")
 
 /mob/camera/blob/proc/update_health_hud()
 	if(blob_core && hud_used)
 		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
+		for(var/mob/living/simple_animal/hostile/blob/blobbernaut/B in blob_mobs)
+			if(B.hud_used && B.pwr_display)
+				B.pwr_display.maptext = healths.maptext
 
 /mob/camera/blob/proc/add_points(points)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
@@ -66,7 +71,7 @@
 		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if (stat)
+	if (stat != CONSCIOUS)
 		return
 
 	blob_talk(message)
@@ -79,13 +84,15 @@
 	if (!message)
 		return
 
-	//var/message_a = say_quote(message)
 	message = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
-	message = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></font>"
+	message = "<span style='color:#EE4000'><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></span>"
 
-	for (var/mob/M as anything in mob_list)
-		if(isobserver(M) || isanyblob(M))
+	for(var/M in mob_list)
+		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
 			to_chat(M, message)
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, src)
+			to_chat(M, "[link] [message]")
 
 /mob/camera/blob/blob_act()
 	return
@@ -112,4 +119,9 @@
 		ghost_sightless_images -= ghostimage
 		QDEL_NULL(ghostimage)
 		updateallghostimages()
+	for(var/BLO as anything in blob_mobs)
+		var/mob/living/simple_animal/hostile/blob/BM = BLO
+		if(BM)
+			BM.overmind = null
+	blob_mobs = null
 	return ..()

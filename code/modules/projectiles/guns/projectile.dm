@@ -135,7 +135,7 @@
 /obj/item/weapon/gun/projectile/proc/tactical_reload(obj/item/ammo_box/magazine/new_magazine, mob/living/user)
 	if(!istype(user) || user.incapacitated())
 		return
-	if(!is_skill_competent(user, list(/datum/skill/firearms/trained)))
+	if(!is_skill_competent(user, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED)))
 		return
 	if(!user.is_in_hands(src))
 		to_chat(user, "<span class='warning'>[src] must be in your hand to do that.</span>")
@@ -144,7 +144,7 @@
 		return
 
 	to_chat(user, "<span class='notice'>You start a tactical reload.</span>")
-	var/tac_reload_time = apply_skill_bonus(user, SKILL_TASK_TRIVIAL, list(/datum/skill/firearms/trained), multiplier = -0.5)
+	var/tac_reload_time = apply_skill_bonus(user, SKILL_TASK_TRIVIAL, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.2)
 	if(!do_after(user, tac_reload_time, TRUE, new_magazine, can_move = TRUE) && loc == user)
 		return
 	var/old_magazine = magazine

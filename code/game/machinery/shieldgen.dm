@@ -123,7 +123,7 @@
 	var/list/deployed_shields = list()
 	var/is_open = FALSE //Whether or not the wires are exposed
 	var/locked = FALSE
-	required_skills = list(/datum/skill/engineering/pro)
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 /obj/machinery/shieldgen/Destroy()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
@@ -311,7 +311,7 @@
 	var/destroyed = FALSE
 	var/obj/structure/cable/attached		// the attached cable
 	var/storedpower = 0
-	required_skills = list(/datum/skill/engineering/trained)
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)
