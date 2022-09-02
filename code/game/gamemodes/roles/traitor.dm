@@ -45,13 +45,14 @@
 			add_one_objective()
 			objectives_count--
 
-		switch(rand(1,120))
-			if(1 to 60)
+		if(!global.hijack_already_in_game && prob(42))
+			AppendObjective(/datum/objective/hijack)
+		else
+			if(prob(50))
 				AppendObjective(/datum/objective/escape)
-			if(61 to 119)
-				AppendObjective(/datum/objective/survive)
 			else
-				AppendObjective(/datum/objective/hijack)
+				AppendObjective(/datum/objective/survive)
+
 	return TRUE
 
 /datum/role/traitor/process()
