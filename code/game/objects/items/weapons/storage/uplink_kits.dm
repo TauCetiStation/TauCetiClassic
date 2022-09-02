@@ -24,7 +24,7 @@
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/clothing/mask/balaclava(src)
 			new /obj/item/weapon/card/id/syndicate(src)
-		
+
 		if("stealth")
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/weapon/card/id/syndicate(src)
@@ -36,13 +36,12 @@
 		if("screwed")
 			for (var/i in 1 to 2)
 				new /obj/item/weapon/grenade/syndieminibomb(src)
-			new /obj/item/device/radio/beacon/syndicate_bomb(src)
-			new /obj/item/device/syndicatedetonator(src)
 			new /obj/item/clothing/suit/space/syndicate(src)
 			new /obj/item/weapon/cartridge/syndicate(src)
 			new /obj/item/clothing/head/helmet/space/syndicate(src)
 			new /obj/item/clothing/gloves/combat(src)
-			new /obj/item/weapon/plastique(src)
+			for (var/i in 1 to 5)
+				new /obj/item/weapon/plastique(src)
 
 		if("guns")
 			new /obj/item/weapon/gun/projectile/revolver/syndie(src)
@@ -116,7 +115,6 @@
 			new /obj/item/device/flashlight/emp(src)
 			new /obj/item/device/healthanalyzer/rad_laser(src)
 			new /obj/item/clothing/shoes/syndigaloshes(src)
-			new /obj/item/weapon/storage/box/syndie_kit/drone(src)
 			new /obj/item/device/chameleon(src)
 
 		if("liar")
