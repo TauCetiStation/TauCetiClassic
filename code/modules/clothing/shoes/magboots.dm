@@ -8,6 +8,7 @@
 	var/slowdown_off = 2
 	action_button_name = "Toggle Magboots"
 	origin_tech = "materials=3;magnets=4;engineering=4"
+	species_restricted = list("exclude", VOX, TAJARAN, UNATHI)
 //	flags = NOSLIP //disabled by default
 
 /obj/item/clothing/shoes/magboots/attack_self(mob/user)
