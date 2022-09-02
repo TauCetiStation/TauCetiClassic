@@ -627,7 +627,7 @@
 	name = "mining hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating."
 	item_state = "mining_hardsuit"
-	armor = list(melee = 90, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
+	armor = list(melee = 80, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
 	breach_threshold = 26
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/orescanner, /obj/item/rig_module/device/drill)
