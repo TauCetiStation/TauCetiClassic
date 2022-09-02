@@ -48,10 +48,9 @@
 		switch(rand(1,120))
 			if(1 to 60)
 				AppendObjective(/datum/objective/escape)
-			if(61 to 119)
+			if(61 to 120)
 				AppendObjective(/datum/objective/survive)
-			else
-				AppendObjective(/datum/objective/hijack)
+
 	return TRUE
 
 /datum/role/traitor/process()
