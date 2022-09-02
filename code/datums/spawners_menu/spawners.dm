@@ -461,6 +461,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/malf_borg/spawn_ghost(mob/dead/observer/ghost)
 	if(!global.creating_cyborg_places.len)
+		to_chat(ghost, "<span class='warning'>Something went wrong. Make sure that these are not administration fault and send issue to Github</span>")
 		return
 	var/client/C = ghost.client
 	var/spawn_turf = get_turf(pick(global.creating_cyborg_places))

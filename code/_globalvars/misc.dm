@@ -50,7 +50,7 @@ var/global/datum/religion/cult/cult_religion
 var/global/list/datum/religion/all_religions = list()
 
 var/global/wizard_shades_count = 0
-var/global/list/creating_cyborg_places = list()
+var/global/list/creating_cyborg_places = list()	//Zombie-Malf content
 
 var/global/timezoneOffset = 0       // The difference betwen midnight (of the host computer) and 0 world.ticks.
 var/global/gametime_offset = 12 HOURS //Deciseconds to add to world.time for station time.
