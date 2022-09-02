@@ -139,7 +139,7 @@
 					detailed_account_view.suspended = !detailed_account_view.suspended
 
 			if("finalise_create_account")
-				var/account_name = sanitize(href_list["holder_name"], MAX_NAME_LEN)
+				var/account_name = href_list["holder_name"]
 				var/starting_funds = min(max(text2num(href_list["starting_funds"]), 0), station_account.money)
 				create_account(account_name, starting_funds, src)
 				if(starting_funds > 0)
