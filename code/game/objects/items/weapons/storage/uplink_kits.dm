@@ -66,7 +66,7 @@
 			new /obj/item/device/encryptionkey/binary(src)
 			new /obj/item/device/camera_bug(src)
 			new	/obj/item/weapon/storage/belt/utility/hacker(src)
-			new /obj/item/weapon/implanter/emp(src)
+			new /obj/item/weapon/grenade/empgrenade(src)
 
 		if("smoothoperator")
 			new /obj/item/weapon/gun/projectile/automatic/pistol(src)
