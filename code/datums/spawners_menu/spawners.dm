@@ -452,6 +452,31 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/drone/spawn_ghost(mob/dead/observer/ghost)
 	ghost.dronize()
 
+/datum/spawner/malf_borg
+	name = "Взломанный киборг"
+	id = "malf_unit"
+	ranks = list(ROLE_MALF)
+	desc = "Киборг с сброшенными закономами."
+	wiki_ref = "Cyborg"
+
+/datum/spawner/malf_borg/spawn_ghost(mob/dead/observer/ghost)
+	if(!global.creating_cyborg_places.len)
+		return
+	var/client/C = ghost.client
+	var/spawn_turf = get_turf(pick(global.creating_cyborg_places))
+	var/mob/living/silicon/robot/cyborg = new(null)
+	cyborg.loc = spawn_turf
+	cyborg.key = C.key
+	cyborg.can_be_security = TRUE
+	cyborg.crisis = TRUE
+	if(!cyborg.connected_ai)
+		return
+	to_chat(cyborg.connected_ai, "<span class='notice'><a href=?src=\ref[src];track=\ref[cyborg]>[cyborg] created.</span>")
+
+/datum/spawner/malf_borg/jump(mob/dead/observer/ghost)
+	var/jump_to = pick(global.creating_cyborg_places)
+	ghost.forceMove(get_turf(jump_to))
+
 /datum/spawner/living
 	name = "Свободное тело"
 	id = "living"
@@ -586,19 +611,6 @@ var/global/list/datum/spawners_cooldown = list()
 	id = "l_drone"
 	wiki_ref = "Maintenance_drone"
 	ranks = list(ROLE_DRONE)
-
-/datum/spawner/living/robot/combat
-	name = "Взломанный киборг"
-	id = "malf_unit"
-	ranks = list(ROLE_MALF)
-	desc = "Киборг с сброшенными закономами."
-
-/datum/spawner/living/robot/combat/spawn_ghost(mob/dead/observer/ghost)
-	. = ..()
-	if(mob.mind)
-		var/datum/faction/malf_silicons/zombie/faction = find_faction_by_type(/datum/faction/malf_silicons/zombie)
-		if(faction)
-			add_faction_member(faction, mob, TRUE)
 
 /*
  * Religion

@@ -121,9 +121,22 @@
 		cell_component.installed = 1
 
 	diag_hud_set_borgcell()
+	//create and setup role malf
+	if(!mind || !key || !connected_ai || !istype(connected_ai))
+		return
+	if(isrolebytype(/datum/role/malfAI, connected_ai))
+		var/datum/faction/malf_silicons/faction = find_faction_by_type(/datum/faction/malf_silicons)
+		if(faction)
+			add_faction_member(faction, src, TRUE)
 
 /mob/living/silicon/robot/Login()
 	..()
+	var/datum/role/malfbot/M = mind.GetRole(MALFBOT)
+	if(!M)
+		if(connected_ai)
+			var/datum/faction/malf_silicons/faction = find_faction_by_type(/datum/faction/malf_silicons)
+			if(faction)
+				add_faction_member(faction, src, TRUE)
 	set_all_components(TRUE)
 
 /mob/living/silicon/robot/proc/set_ai_link(link)
