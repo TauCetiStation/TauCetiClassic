@@ -26,7 +26,7 @@ var/global/ManifestJSON
 /obj/effect/datacore/New()
 	order_lists()
 
-/obj/effect/datacore/proc/order_one_list(var/list/L_from, var/list/L_to)
+/obj/effect/datacore/proc/order_one_list(list/L_from, list/L_to)
 	L_to.Cut()
 	for(var/p in L_from)
 		L_to[p] = L_from.Find(p)
@@ -40,7 +40,7 @@ var/global/ManifestJSON
 	order_one_list(civilian_positions,     civilian_ordered)
 	order_one_list(nonhuman_positions,     nonhuman_ordered)
 
-/obj/effect/datacore/proc/remove_priority_field(var/list/L)
+/obj/effect/datacore/proc/remove_priority_field(list/L)
 	for(var/list/R in L)
 		R.Remove("priority")
 
