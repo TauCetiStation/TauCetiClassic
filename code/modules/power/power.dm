@@ -14,7 +14,7 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
-	required_skills = list(/datum/skill/engineering/novice)
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()

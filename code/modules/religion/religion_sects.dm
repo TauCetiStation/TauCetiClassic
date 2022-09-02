@@ -163,6 +163,16 @@
 		/datum/aspect/lightbending/darkness = 2,
 	)
 
+/datum/religion_sect/preset/cult/darkness
+	name = "The Cult of Darkness"
+	desc = "The seizure of territories can be not only aggressive for darkness"
+	convert_opener = "May the Darkness lead your way."
+	aspect_preset = list(
+		/datum/aspect/lightbending/darkness = 3,
+		/datum/aspect/weapon = 2,
+		/datum/aspect/technology = 1,
+	)
+
 /datum/religion_sect/custom/cult
 	name = "Custom Cult"
 	convert_opener = "Chaos is power."

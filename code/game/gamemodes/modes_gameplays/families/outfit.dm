@@ -96,7 +96,7 @@
 	mask = /obj/item/clothing/mask/gas/voice
 	shoes = /obj/item/clothing/shoes/boots/combat
 	l_hand = /obj/item/weapon/tank/jetpack/oxygen/harness
-	l_pocket = /obj/item/weapon/tank/emergency_oxygen/engi
+	suit_store = /obj/item/weapon/tank/emergency_oxygen/engi
 	l_ear = /obj/item/device/radio/headset
 	id = /obj/item/weapon/card/id/syndicate/nuker
 	belt = /obj/item/device/pda
@@ -109,3 +109,4 @@
 		/obj/item/weapon/implant/dexplosive
 		)
 	survival_box = TRUE
+	internals_slot = SLOT_S_STORE

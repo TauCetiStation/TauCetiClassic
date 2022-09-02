@@ -4,8 +4,6 @@
 
 	var/list/available_skillsets
 
-/datum/skills/New()
-	active.skills = active.copy_skills() // new instance of skills because we will change the skills in active skillset
 
 /datum/skills/proc/get_value(skill)
 	return active.get_value(skill)
@@ -15,7 +13,6 @@
 
 /datum/skills/proc/update_available()
 	var/datum/skillset/temporary = new
-	temporary.skills = temporary.copy_skills() //we want different instance beceause of merging proc
 	if(length(available_skillsets) == 1)
 		temporary = LAZYACCESS(available_skillsets, 1)
 	for(var/datum/skillset/sk_set as anything in available_skillsets)
@@ -43,16 +40,18 @@
 	LAZYADD(available_skillsets, target.skills.available_skillsets)
 	update_available()
 
-/datum/skills/proc/choose_value(skill_name,value)
-	var/datum/skill/skill = active.get_skill(skill_name)
-	if (!skill || value > skill.max_value || value < skill.min_value)
+/datum/skills/proc/choose_value(skill_type, value)
+	if (value > SKILL_LEVEL_MAX || value < SKILL_LEVEL_MIN)
 		return
-	if (value > available.get_value(skill_name))
+	if (value > available.get_value(skill_type))
 		return
-	if (value == get_value(skill_name))
+	if (value == get_value(skill_type))
 		return
-	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill_name] from [active.get_value(skill_name)] to [value].</span>")
-	active.set_value(skill_name, value)
+	var/datum/skill/skill = all_skills[skill_type]
+	var/prev_rank = skill.custom_ranks[active.get_value(skill_type) + 1]
+	var/new_rank = skill.custom_ranks[value + 1]
+	to_chat(usr, "<span class='notice'>You changed your skill proficiency in [skill] from [prev_rank] to [new_rank].</span>")
+	active.set_value(skill_type, value)
 
 /mob/living
 	var/list/helpers_skillsets
@@ -70,7 +69,7 @@
 		return
 	if(incapacitated() || crawling || is_busy() || get_active_hand() || !Adjacent(target))
 		return
-	
+
 	if(target.a_intent == INTENT_HARM)
 		visible_message("<span class='notice'>[target] pranks \the [src].</span>", "<span class='notice'>You tried to help \the [target], but [P_THEY(target.gender)] rejects your help and pranks you instead!</span>")
 		to_chat(target, "<span class='notice'>You prank \the [src]!</span>")
@@ -84,9 +83,13 @@
 	LAZYREMOVE(target.helpers_skillsets, mind.skills.active)
 	visible_message("<span class='notice'>[src] removes [P_THEIR(gender)] hand from \the [target]'s shoulder.</span>", "<span class='notice'>You remove your hand from \the [target]'s shoulder.</span>")
 
-/mob/living/proc/add_command_buff(mob/commander, time)
-	LAZYDISTINCTADD(helpers_skillsets, commander.mind.skills.active)
-	addtimer(CALLBACK(src, .proc/remove_command_buff, commander), time)
+/mob/living/proc/add_skills_buff(datum/skillset/skillset, time = -1)
+	LAZYDISTINCTADD(helpers_skillsets, skillset)
+	if(time != -1)
+		addtimer(CALLBACK(src, .proc/remove_skills_buff, skillset), time)
 
-/mob/living/proc/remove_command_buff(mob/commander)
-	LAZYREMOVE(helpers_skillsets, commander.mind.skills.active)
+/mob/living/proc/remove_skills_buff(datum/skillset/skillset)
+	LAZYREMOVE(helpers_skillsets, skillset)
+
+/mob/living/proc/add_command_buff(mob/commander, time)
+	add_skills_buff(commander.mind.skills.active, time)

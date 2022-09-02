@@ -18,8 +18,8 @@
 
 	//Cloth check
 	var/clothless = 1
-	var/required_skills = list(/datum/skill/surgery/pro)
-	var/skills_speed_bonus = -0.4 // -40% for each surplus level 
+	var/required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
+	var/skills_speed_bonus = -0.30 // -30% for each surplus level
 
 // returns how well tool is suited for this step
 /datum/surgery_step/proc/tool_quality(obj/item/tool)
@@ -137,7 +137,7 @@
 	if(ishuman(M))
 		covered = get_human_covering(M)
 
-	if(!handle_fumbling(user, M, SKILL_TASK_FORMIDABLE, list(/datum/skill/surgery/trained), "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
+	if(!handle_fumbling(user, M, SKILL_TASK_CHALLENGING, list(/datum/skill/surgery = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
 		return
 
 	for(var/datum/surgery_step/S in surgery_steps)
@@ -198,5 +198,5 @@
 /datum/surgery_step/ipc
 	can_infect = FALSE
 	allowed_species = list(IPC)
-	required_skills = list(/datum/skill/engineering/trained, /datum/skill/surgery/trained)
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	skills_speed_bonus = -0.2

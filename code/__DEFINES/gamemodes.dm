@@ -29,6 +29,7 @@
 #define BORER "Cortical Borer"
 #define BLOBOVERMIND "Blob Overmind"
 #define BLOBCEREBRATE "Blob Cerebrate"
+#define BLOBBERNAUT "Blobbernaut"
 #define CHANGELING "Changeling"
 #define CULTIST "Cultist"
 #define CULT_LEADER "Cult Harbinger"

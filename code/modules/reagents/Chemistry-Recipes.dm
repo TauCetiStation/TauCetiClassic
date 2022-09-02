@@ -420,6 +420,7 @@
 		M.flash_eyes()
 		switch(get_dist(M, location))
 			if(0 to 3)
+				M.Stun(7)
 				M.Weaken(15)
 
 			if(4 to 5)

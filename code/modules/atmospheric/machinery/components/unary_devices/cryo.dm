@@ -14,7 +14,7 @@
 	var/efficiency
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/list/cryo_medicine = list("cryoxadone", "clonexadone")
-	required_skills = list(/datum/skill/medical/pro)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_PRO)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/atom_init()
 	. = ..()
@@ -197,7 +197,7 @@
   * @return nothing
   */
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main")
-	if(user == occupant || (user.stat && !isobserver(user)) || panel_open)
+	if(user == occupant || (user.stat != CONSCIOUS && !isobserver(user)) || panel_open)
 		return
 
 	// this is the data which will be sent to the ui
