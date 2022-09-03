@@ -173,6 +173,8 @@
 
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)  // restore every thing in this dumb head (brain and eyes)
 		IO.rejuvenate()
+	for(var/obj/item/organ/external/O in H.bodyparts)  // restore every thing in this dumb head (brain and eyes)
+		O.rejuvenate()
 
 	H.setCloneLoss(0)
 	H.setBrainLoss(0)

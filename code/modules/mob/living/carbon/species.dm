@@ -1426,11 +1426,11 @@
 	,NO_EMOTION = TRUE
 	)
 
-	brute_mod = 2
+	brute_mod = 1.8
 	burn_mod = 1
 	oxy_mod = 0
 	tox_mod = 0
-	speed_mod = -0.2
+	speed_mod_no_shoes = -1
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
 
@@ -1449,6 +1449,9 @@
 
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
+
+	var/obj/item/organ/external/head/O = H.bodyparts_by_name[BP_HEAD]
+	O.max_damage = 200
 
 	add_zombie(H)
 
@@ -1471,7 +1474,7 @@
 	icobase = 'icons/mob/human_races/r_zombie_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_zombie_tajaran.dmi'
 
-	brute_mod = 2.2
+	brute_mod = 2
 	burn_mod = 1.2
 	speed_mod = -0.8
 
@@ -1513,7 +1516,7 @@
 	icobase = 'icons/mob/human_races/r_zombie_lizard.dmi'
 	deform = 'icons/mob/human_races/r_zombie_lizard.dmi'
 
-	brute_mod = 1.80
+	brute_mod = 1.6
 	burn_mod = 0.90
 	speed_mod = -0.2
 
