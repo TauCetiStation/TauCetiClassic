@@ -6,7 +6,7 @@
 #define X_HEAD_LAYER          4
 #define X_FIRE_UPPER_LAYER    3
 #define X_SHRIEC_LAYER        2
-#define TARGETED_LAYER        1
+//#define TARGETED_LAYER        1 // For recordkeeping
 #define X_TOTAL_LAYERS        7
 /////////////////////////////////
 
