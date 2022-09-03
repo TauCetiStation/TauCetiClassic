@@ -948,6 +948,29 @@
 	icon_state = "dark"
 	},
 /area/station/hallway/secondary/mine_sci_shuttle)
+"abu" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Secure Gate";
+	name = "Security Blast Door";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Brig Medical Checkpoint";
+	req_one_access = list(1,4)
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/prison)
 "abv" = (
 /obj/structure/mirror{
 	pixel_y = 32
@@ -57775,27 +57798,26 @@
 	},
 /area/station/maintenance/auxsolarport)
 "nWW" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "Prison Gate";
+	id = "Secure Gate";
 	name = "Security Blast Door";
 	opacity = 0
 	},
-/obj/machinery/door/airlock/medical/glass{
-	name = "Brig Medical Checkpoint";
-	req_one_access = list(1,4)
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/plating,
 /area/station/security/prison)
 "nWZ" = (
 /obj/item/weapon/shard,
@@ -137284,9 +137306,9 @@ akx
 xXp
 xXp
 xXp
-qKm
 nWW
-qKm
+abu
+nWW
 leb
 eyb
 aqB
