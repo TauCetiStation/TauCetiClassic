@@ -10,26 +10,31 @@
 	//var/invisa_view = 0
 	var/prescription = 0
 	body_parts_covered = EYES
-	var/toggleable = 0
+	var/toggleable = FALSE
 	var/off_state = "degoggles"
-	var/active = 1
+	var/active = TRUE
 	var/sightglassesmod = null
 	var/activation_sound = 'sound/items/buttonclick.ogg'
 
 	sprite_sheet_slot = SPRITE_SHEET_EYES
 
 /obj/item/clothing/glasses/attack_self(mob/user)
+	
+	if(usr.incapacitated())
+		return
+
 	if(toggleable)
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			if(active)
-				active = 0
+				active = FALSE
 				icon_state = off_state
 				vision_flags = 0
 				lighting_alpha = null
+				darkness_view = -1
 				to_chat(usr, "You deactivate the optical matrix on the [src].")
 			else
-				active = 1
+				active = TRUE
 				icon_state = initial(icon_state)
 				vision_flags = initial(vision_flags)
 				lighting_alpha = initial(lighting_alpha)
@@ -45,7 +50,7 @@
 	item_state = "glasses"
 	action_button_name = "Toggle Goggles"
 	origin_tech = "magnets=2;engineering=2"
-	toggleable = 1
+	toggleable = TRUE
 	sightglassesmod = "meson"
 	vision_flags = SEE_TURFS
 
@@ -60,7 +65,7 @@
 	icon_state = "purple"
 	item_state = "glasses"
 	action_button_name = "Toggle Goggles"
-	toggleable = 1
+	toggleable = TRUE
 	sightglassesmod = "sci"
 
 /obj/item/clothing/glasses/night
@@ -70,10 +75,10 @@
 	item_state = "glasses"
 	origin_tech = "magnets=2"
 	darkness_view = 7
-	toggleable = 1
+	toggleable = TRUE
 	sightglassesmod = "nvg"
 	action_button_name = "Toggle Goggles"
-	active = 1
+	active = TRUE
 	off_state = "night"
 	activation_sound = 'sound/effects/glasses_on.ogg'
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -98,7 +103,7 @@
 	icon_state = "material"
 	item_state = "glasses"
 	origin_tech = "magnets=3;engineering=3"
-	toggleable = 1
+	toggleable = TRUE
 	action_button_name = "Toggle Goggles"
 	vision_flags = SEE_OBJS
 
@@ -246,36 +251,24 @@
 	icon_state = "hos_shades"
 	item_state = "hos_shades"
 	off_state = "hos_shades_ngv"
-
-	action_button_name = "Switch Shades Mode"
-	toggleable = TRUE
-	var/mode = TRUE
-
 	hud_types = list(DATA_HUD_SECURITY)
+	toggleable = TRUE
+	active = TRUE
+	action_button_name = "Switch Shades Mode"
+	activation_sound = 'sound/effects/glasses_switch.ogg'
+	sightglassesmod  = "sepia"
+	darkness_view = 7
+	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 
 /obj/item/clothing/glasses/hud/hos_aug/attack_self(mob/user)
 	switch_shade()
 
 /obj/item/clothing/glasses/hud/hos_aug/verb/switch_shade()
-
 	set name = "Switch Shades Mode"
 	set category = "Object"
 
-	if (mode)
-		icon_state = off_state
-		playsound(src, 'sound/effects/glasses_switch.ogg', VOL_EFFECTS_MASTER)
-		lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
-		sightglassesmod  = "sepia"
-		darkness_view = 7		
-	else
-		icon_state = initial(icon_state)
-		playsound(src, 'sound/effects/glasses_switch.ogg', VOL_EFFECTS_MASTER)
-		lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
-		sightglassesmod = null
-		darkness_view = -1
-		
-	mode = !mode
-	to_chat(usr, "<span class='notice'>You switch the augmented shades [mode ? "on sunglasses." : "on night vision."]</span>")
+	active = !active
+	to_chat(usr, "<span class='notice'>You switch the augmented shades [active ? "on night vision." : "on sunglasses."]</span>")
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
 	name = "tactical HUD"
@@ -290,7 +283,7 @@
 	origin_tech = "magnets=3"
 	vision_flags = SEE_MOBS
 	invisa_view = 2
-	toggleable = 1
+	toggleable = TRUE
 	sightglassesmod = "thermal"
 	action_button_name = "Toggle Goggles"
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -319,7 +312,7 @@
 	icon_state = "thermoncle"
 	flags = null //doesn't protect eyes because it's a monocle, duh
 	body_parts_covered = 0
-	toggleable = 1
+	toggleable = TRUE
 	off_state = "thermoncle_off"
 	action_button_name = "Toggle Monocle"
 
@@ -329,7 +322,7 @@
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
 	body_parts_covered = 0
-	toggleable = 0
+	toggleable = FALSE
 	action_button_name = null
 
 /obj/item/clothing/glasses/thermal/jensen
@@ -350,7 +343,7 @@
 	toggleable = TRUE
 	sightglassesmod = "nvg"
 	action_button_name = "Toggle Goggles"
-	active = 1
+	active = TRUE
 	off_state = "healthhudnight"
 	hud_types = list(DATA_HUD_MEDICAL_ADV)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -369,7 +362,7 @@
 	name = "gar meson scanner"
 	icon_state = "garm"
 	item_state = "garm"
-	toggleable = 0
+	toggleable = FALSE
 	action_button_name = null
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud/gar
@@ -391,7 +384,7 @@
 	name = "supergar glasses"
 	icon_state = "supergar"
 	item_state = "supergar"
-	toggleable = 0
+	toggleable = FALSE
 
 /obj/item/clothing/glasses/sunglasses/noir
 	name = "noir sunglasses"
@@ -407,7 +400,5 @@
 	set name = "Toggle Noir"
 	set category = "Object"
 
-	if(usr.incapacitated())
-		return
 	active = !active
 	to_chat(usr, "<span class='notice'>You toggle the Noire Mode [active ? "on. Let the investigation begin." : "off."]</span>")

@@ -922,7 +922,7 @@
 		number += 1
 	if(istype(glasses, /obj/item/clothing/glasses/hud/hos_aug))
 		var/obj/item/clothing/glasses/hud/hos_aug/G = glasses
-		if(G.mode)
+		if(!G.active)
 			number += 1
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/welding))
 		var/obj/item/clothing/mask/gas/welding/W = wear_mask
