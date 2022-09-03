@@ -1023,7 +1023,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	group = "Engineering"
 	access = access_ce
 
-/datum/supply_pack/teg // teg currently were broken for a long time ago, so no point to have it in-game until fixed.
+/datum/supply_pack/teg
 	contains = list(/obj/machinery/power/generator)
 	name = "Mark I Thermoelectric Generator"
 	cost = 7500
