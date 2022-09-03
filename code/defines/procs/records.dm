@@ -42,7 +42,7 @@
 	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)
 
 /proc/find_general_record(field, value)
-	return find_record(field, value, .general)
+	return find_record(field, value, data_core.general)
 
 /proc/find_medical_record(field, value)
 	return find_record(field, value, data_core.medical)
