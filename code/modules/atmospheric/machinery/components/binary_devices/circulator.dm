@@ -87,28 +87,22 @@
 
 	var/datum/gas_mixture/air = AIR1
 	var/heat = air.temperature * air.heat_capacity()
-	var/per_kelvin = 2400 //oxygen heat capacity per 120 moles
 
 	if(heat == 0) //input gas mixture is empty/we have gas with zero heat capacity/we cooled gas to absolute zero. all of those options are excluded.
 		return
 
-	if(heat <= per_kelvin * 243) //-30C
+	if(air.temperature <= 243) //-30C
 		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-cold", dir = fd))
-
-		if(heat <= per_kelvin * 173) //-100C
+		set_light(1, 3, "#0044ff")
+		if(air.temperature <= 173) //-100C
 			add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-excold", dir = fd))
 			set_light(3, 5, "#0044ff")
-		else
-			set_light(1, 3, "#0044ff")
-
-	else if(heat >= per_kelvin * 1773) //1500C
+	else if(air.temperature >= 1773) //1500C
 		add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-hot", dir = fd))
-
-		if(heat >= per_kelvin * 4773) //4500C
+		set_light(1, 3, "#ff0000")
+		if(air.temperature >= 4773) //4500C
 			add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-exhot", dir = fd))
 			set_light(3, 5, "#ff0000")
-		else
-			set_light(1, 3, "#ff0000")
 	
 	return TRUE
 
