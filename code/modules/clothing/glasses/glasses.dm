@@ -259,15 +259,6 @@
 	darkness_view = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 
-///obj/item/clothing/glasses/hud/hos_aug/attack_self(mob/user)
-//	switch_shade()
-
-/obj/item/clothing/glasses/hud/hos_aug/verb/switch_shade()
-	set name = "Switch Shades Mode"
-	set category = "Object"
-
-	to_chat(usr, "<span class='notice'>You switch the augmented shades [active ? "on night vision." : "on sunglasses."]</span>")
-
 /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
 	name = "tactical HUD"
 	desc = "Flash-resistant goggles with inbuilt combat and security information."
