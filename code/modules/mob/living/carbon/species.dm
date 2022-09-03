@@ -10,6 +10,8 @@
 	var/damage_mask = TRUE
 	var/eyes = "eyes"                                    // Icon for eyes.
 	var/eyes_glowing = FALSE                             // To make those eyes gloooow.
+	var/gender_limb_icons = FALSE
+	var/fat_limb_icons = FALSE
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
@@ -381,6 +383,8 @@
 	name = TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
+	gender_limb_icons = TRUE
+	fat_limb_icons = TRUE
 	language = LANGUAGE_SIIKMAAS
 	additional_languages = list(LANGUAGE_SIIKTAJR = LANGUAGE_NATIVE)
 	tail = "tajaran"

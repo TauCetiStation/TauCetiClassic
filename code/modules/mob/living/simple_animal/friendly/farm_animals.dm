@@ -1,3 +1,4 @@
+#define FEEDER_DISTANT 7
 //goat
 /mob/living/simple_animal/hostile/retaliate/goat
 	name = "goat"
@@ -253,6 +254,16 @@ var/global/chicken_count = 0
 		E.pixel_y = rand(-6,6)
 		if(chicken_count < MAX_CHICKENS && prob(10))
 			START_PROCESSING(SSobj, E)
+	if(stat != DEAD || stat != CONSCIOUS && !buckled)
+		if(eggsleft < 2) //hungry
+			for(var/obj/structure/chicken_feeder/C as anything in chicken_feeder_list)
+				if(get_dist(src, C) < FEEDER_DISTANT && C.z == z)
+					if(C.food > 0)
+						stop_automated_movement = TRUE
+						step_to(src, C)
+						if(loc == C.loc)
+							C.feed(src)
+							stop_automated_movement = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
@@ -374,3 +385,5 @@ var/global/chicken_count = 0
 	icon_dead = "walrus-syndi_dead"
 	speak = list("Urk?","urk","URK","Furk NT")
 	health = 80
+
+#undef FEEDER_DISTANT

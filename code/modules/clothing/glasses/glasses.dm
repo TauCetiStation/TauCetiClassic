@@ -48,6 +48,7 @@
 	toggleable = 1
 	sightglassesmod = "meson"
 	vision_flags = SEE_TURFS
+	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 
 /obj/item/clothing/glasses/meson/prescription
 	name = "prescription mesons"
@@ -81,6 +82,7 @@
 /obj/item/clothing/glasses/night/hos_nights
 	name = "augmented shades"
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
+	sightglassesmod = "hos"
 	icon_state = "hos_shades"
 	item_state = "hos_shades"
 	toggleable = FALSE

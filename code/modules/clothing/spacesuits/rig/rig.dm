@@ -798,6 +798,8 @@
 /obj/item/clothing/suit/space/rig/syndi/atom_init()
 	. = ..()
 	armor = combat_mode ? combat_armor : space_armor // in case some child spawns with combat mode on
+	var/obj/item/clothing/shoes/magboots/syndie/SB = new(src)
+	boots = SB
 
 /obj/item/clothing/suit/space/rig/syndi/AltClick(mob/user)
 	if(wearer?.wear_suit != src)
@@ -893,11 +895,6 @@
 	combat_slowdown = 0.2
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/syndiemmessage)
 
-/obj/item/clothing/suit/space/rig/syndi/elite/atom_init()
-	. = ..()
-	var/obj/item/clothing/shoes/magboots/syndie/SB = new(src)
-	SB.name = "The syndicate magboots"
-	boots = SB
 
 /obj/item/clothing/suit/space/rig/syndi/elite/comander
 	name = "Syndicate elite hybrid suit"
