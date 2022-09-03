@@ -121,7 +121,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							playsound_local(null, DEMON_SOUNDS, VOL_EFFECTS_MASTER, null, FALSE)
 							if(ishuman(src))
 								var/mob/living/carbon/human/H = src
-								if(!H.stat)
+								if(H.stat == CONSCIOUS)
 									H.emote(pick("scream", "laugh"))
 						if(client)
 							client.images += halimage
@@ -166,7 +166,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							playsound_local(null, DEMON_SOUNDS, VOL_EFFECTS_MASTER, null, FALSE)
 						if(ishuman(src))
 							var/mob/living/carbon/human/H = src
-							if(!H.stat)
+							if(H.stat == CONSCIOUS)
 								H.emote(pick("scream", "laugh"))
 					if(7) // GUNSHOTS
 						var/list/gunsound_list = list('sound/weapons/guns/gunshot_heavy.ogg',
