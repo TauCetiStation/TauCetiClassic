@@ -684,11 +684,10 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/syndiborg)
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	fire_delay = 0
-	var/charge_tick = 0
 
 /obj/item/weapon/gun/energy/syndiborg_printer/examine(mob/user)
 	..()
-	var/ammo_count = power_supply.charge/25
+	var/ammo_count = FLOOR(power_supply.charge/25, 1)
 	to_chat(user, "Ammo counter reads: <span class='danger'>[ammo_count].</span>")
 
 
@@ -697,25 +696,7 @@
 
 /obj/item/weapon/gun/energy/syndiborg_printer/atom_init()
 	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/weapon/gun/energy/syndiborg_printer/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/weapon/gun/energy/syndiborg_printer/process()
-	charge_tick++
-	if(charge_tick < 5)
-		return FALSE
-	charge_tick = 0
-	if(!power_supply)
-		return FALSE
-	power_supply.give(25)
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			R.cell.use(75)
-	update_icon()
+	power_supply.AddComponent(/datum/component/cell_selfrecharge, 6.25)
 
 /obj/item/weapon/gun/energy/syndiborg_printer/emp_act(severity)
 	return
