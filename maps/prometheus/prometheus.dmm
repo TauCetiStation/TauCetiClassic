@@ -4602,14 +4602,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1379;
-	master_tag = "xeno_airlock_control";
-	name = "Xenobiology Access Button";
-	pixel_y = 28;
-	req_access = list(55)
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
@@ -25641,14 +25633,6 @@
 /area/station/rnd/brainstorm_center)
 "fWO" = (
 /obj/structure/filingcabinet/chestdrawer,
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "virology_airlock_control";
-	name = "Virology Access Button";
-	pixel_x = 28;
-	req_access = list(39)
-	},
 /obj/machinery/light_switch{
 	pixel_y = 24
 	},
@@ -28208,14 +28192,6 @@
 	},
 /area/station/hallway/secondary/exit)
 "gBT" = (
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1379;
-	master_tag = "virology_airlock_control";
-	name = "Virology Access Button";
-	pixel_x = -28;
-	req_access = list(39)
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 29
@@ -29058,6 +29034,14 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "virology_airlock_control";
+	name = "Virology Access Button";
+	pixel_y = 28;
+	req_access = list(39)
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -29150,6 +29134,14 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "virology_airlock_control";
+	name = "Virology Access Button";
+	pixel_y = 28;
+	req_access = list(39)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -55801,14 +55793,6 @@
 /obj/item/weapon/book/manual/wiki/guide_to_xenobiology{
 	pixel_y = 4
 	},
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "xeno_airlock_control";
-	name = "Xenobiology Access Button";
-	pixel_y = -28;
-	req_access = list(55)
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warndark"
@@ -56468,6 +56452,14 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1379;
+	master_tag = "xeno_airlock_control";
+	name = "Xenobiology Access Button";
+	pixel_x = 28;
+	req_access = list(55)
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -60831,6 +60823,14 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "xeno_airlock_control";
+	name = "Xenobiology Access Button";
+	pixel_x = 28;
+	req_access = list(55)
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
