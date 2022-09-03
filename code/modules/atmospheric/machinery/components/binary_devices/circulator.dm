@@ -57,13 +57,12 @@
 		else
 			recent_moles_transferred = 0
 
-		update_icon()
 		return transfered
 
 /obj/machinery/atmospherics/components/binary/circulator/process_atmos()
 	if(last_worldtime_transfer < world.time - 50)
 		recent_moles_transferred = 0
-		update_icon()
+	update_icon()
 
 /obj/machinery/atmospherics/components/binary/circulator/update_icon()
 	set_light(0, 0, null)
