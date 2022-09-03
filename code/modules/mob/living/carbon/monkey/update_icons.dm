@@ -170,6 +170,5 @@
 #undef M_MASK_LAYER
 #undef M_HEAD_LAYER
 #undef M_FIRE_UPPER_LAYER
-//#undef TARGETED_LAYER
 #undef M_TOTAL_LAYERS
 
