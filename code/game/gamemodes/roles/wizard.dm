@@ -78,6 +78,7 @@
 
 	if(!global.hijack_already_in_game && prob(42))
 		AppendObjective(/datum/objective/hijack)
+		global.hijack_already_in_game = TRUE
 
 	else
 
