@@ -31,7 +31,6 @@
 				icon_state = off_state
 				vision_flags = 0
 				lighting_alpha = null
-				darkness_view = -1
 				to_chat(usr, "You deactivate the optical matrix on the [src].")
 			else
 				active = TRUE
@@ -248,9 +247,9 @@
 /obj/item/clothing/glasses/hud/hos_aug
 	name = "augmented shades"
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
-	icon_state = "hos_shades"
+	icon_state = "hos_shades_ngv"
 	item_state = "hos_shades"
-	off_state = "hos_shades_ngv"
+	off_state = "hos_shades"
 	hud_types = list(DATA_HUD_SECURITY)
 	toggleable = TRUE
 	active = TRUE
@@ -260,14 +259,13 @@
 	darkness_view = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 
-/obj/item/clothing/glasses/hud/hos_aug/attack_self(mob/user)
-	switch_shade()
+///obj/item/clothing/glasses/hud/hos_aug/attack_self(mob/user)
+//	switch_shade()
 
 /obj/item/clothing/glasses/hud/hos_aug/verb/switch_shade()
 	set name = "Switch Shades Mode"
 	set category = "Object"
 
-	active = !active
 	to_chat(usr, "<span class='notice'>You switch the augmented shades [active ? "on night vision." : "on sunglasses."]</span>")
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
