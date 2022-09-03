@@ -190,13 +190,6 @@
 
 /mob/living/count_pull_debuff()
 	var/tally = 0
-
-	//General pull debuff for playable mobs (playable without shitspawn, yeah)
-	if(ismonkey(src))
-		tally += 1
-	else if(isslime(src))
-		tally += 1.5
-
 	var/atom/movable/AM = pulling
 	//Mob pulling
 	if(ismob(AM))

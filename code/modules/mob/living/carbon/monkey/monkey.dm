@@ -134,6 +134,9 @@
 		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
 	return tally + config.monkey_delay
 
+/mob/living/carbon/monkey/count_pull_debuff()
+	return ..() + 1
+
 /mob/living/carbon/monkey/helpReaction(mob/living/attacker, show_message = TRUE)
 	help_shake_act(attacker)
 	get_scooped(attacker)
