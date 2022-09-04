@@ -62,7 +62,12 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/circuit_imprinter/attackby(obj/item/O, mob/user)
 	if (shocked)
 		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "circuit_imprinter_t", "circuit_imprinter", O))
+	if (default_deconstruction_screwdriver(user, "circuit_imprinter", "circuit_imprinter", O))
+		power_change()
+		if(panel_open)
+			add_overlay("[initial(icon_state)]-open")
+		else
+			cut_overlay("[initial(icon_state)]-open")
 		if(linked_console)
 			linked_console.linked_imprinter = null
 			linked_console = null
@@ -83,7 +88,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	if (disabled)
 		return
 	if (!linked_console)
-		to_chat(user, "\The [name] must be linked to an R&D console first!")
+		to_chat(user, "<span class='warning'>\The [name] must be linked to an R&D console first!</span>")
 		return 1
 	if (O.is_open_container())
 		return
@@ -176,7 +181,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		else
 			reagents.remove_reagent(M, D.materials[M]/efficiency_coeff)
 
-	addtimer(CALLBACK(src, .proc/create_design, RNDD), 16)
+	addtimer(CALLBACK(src, .proc/create_design, RNDD), 19)
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/create_design(datum/rnd_queue_design/RNDD)
 	var/datum/design/D = RNDD.design

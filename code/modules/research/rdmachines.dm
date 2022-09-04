@@ -38,3 +38,10 @@
 /obj/machinery/r_n_d/attack_hand(mob/user)
 	if(!shock(user, 50) && !disabled)
 		return ..()
+
+/obj/machinery/r_n_d/power_change()
+	if(powered())
+		icon_state = initial(icon_state)
+	else
+		icon_state = "[initial(icon_state)]-off"
+

@@ -276,8 +276,13 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		to_chat(user, "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
 		return 1
 
-	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", I))
+	if(default_deconstruction_screwdriver(user, "autolathe", "autolathe", I))
+		power_change()
 		updateUsrDialog()
+		if(panel_open)
+			add_overlay("[initial(icon_state)]-open")
+		else
+			cut_overlay("[initial(icon_state)]-open")
 		return
 
 	if(exchange_parts(user, I))
@@ -303,10 +308,14 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		amount = stack.get_amount()
 		if(m_amt)
 			amount = min(amount, round((storage_capacity[MAT_METAL] - stored_material[MAT_METAL]) / m_amt))
-			flick("autolathe_o",src)//plays metal insertion animation
+			add_overlay("[initial(icon_state)]_metal")
+			sleep(10)
+			cut_overlay("[initial(icon_state)]_metal")
 		if(g_amt)
 			amount = min(amount, round((storage_capacity[MAT_GLASS] - stored_material[MAT_GLASS]) / g_amt))
-			flick("autolathe_r",src)//plays glass insertion animation
+			add_overlay("[initial(icon_state)]_glass")
+			sleep(10)
+			cut_overlay("[initial(icon_state)]_glass")
 	else if(istype(I, /obj/item/ammo_box))
 		m_amt = 0
 		g_amt = 0
@@ -343,6 +352,12 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		new /obj/item/stack/sheet/metal(loc, round(stored_material[MAT_METAL] / 3750))
 	if(stored_material[MAT_GLASS] >= 3750)
 		new /obj/item/stack/sheet/glass(loc, round(stored_material[MAT_GLASS] / 3750))
+
+/obj/machinery/autolathe/power_change()
+	if(powered())
+		icon_state = initial(icon_state)
+	else
+		icon_state = "[initial(icon_state)]-off"
 
 /obj/machinery/autolathe/proc/take_item(obj/item/I, amount)
 	if(istype(I, /obj/item/stack))
