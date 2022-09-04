@@ -34,7 +34,7 @@
 				if(2)
 					to_chat(U, "<span class='notice'>Extending neural-net interface...\nNow monitoring brain wave pattern...</span>")
 				if(3)
-					if(U.stat==2||U.health<=0)
+					if(U.stat==DEAD||U.health<=0)
 						to_chat(U, "<span class='warning'><B>FĆAL �Rr�R</B>: 344--93#�&&21 BR��N |/|/aV� PATT$RN <B>RED</B>\nA-A-aB�rT�NG...</span>")
 						unlock_suit()
 						break

@@ -57,7 +57,7 @@
 			LoseTarget()
 		return 0
 
-	if(!stat)
+	if(stat == CONSCIOUS)
 		switch(stance)
 			if(HOSTILE_STANCE_IDLE)
 				if(environment_smash)
@@ -187,7 +187,7 @@
 
 /mob/living/simple_animal/hostile/adjustBruteLoss(damage)
 	..()
-	if(!stat && search_objects < 3)//Not unconscious, and we don't ignore mobs
+	if(stat == CONSCIOUS && search_objects < 3)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
 			search_objects = 0
 			target = null

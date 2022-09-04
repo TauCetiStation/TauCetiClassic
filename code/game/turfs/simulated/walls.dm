@@ -429,8 +429,10 @@
 	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
 		visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
 		user.do_attack_animation(src)
-		playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-		take_damage(pick(10, 20, 30))
+		if(C.use_charge(user))
+			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+			take_damage(30)
+		return
 
 	else if(istype(W,/obj/item/apc_frame))
 		var/obj/item/apc_frame/AH = W

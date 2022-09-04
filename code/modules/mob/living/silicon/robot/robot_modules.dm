@@ -92,7 +92,7 @@
 /obj/item/weapon/robot_module/standard/atom_init()
 	. = ..()
 	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg(src)
 	modules += new /obj/item/weapon/weldingtool(src)
 	modules += new /obj/item/weapon/screwdriver(src)
 	modules += new /obj/item/weapon/wrench(src)
@@ -119,6 +119,7 @@
 
 /obj/item/weapon/robot_module/medical/atom_init()
 	. = ..()
+	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo/medical(src)
 	modules += new /obj/item/weapon/scalpel/manager(src)
@@ -131,7 +132,7 @@
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/surgicaldrill(src)
 	modules += new /obj/item/weapon/razor(src)
-	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/mini(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg/mini(src)
 	modules += new /obj/item/stack/medical/advanced/bruise_pack(src)
 	modules += new /obj/item/stack/medical/advanced/ointment(src)
 	modules += new /obj/item/stack/nanopaste(src)
@@ -180,7 +181,7 @@
 	. = ..()
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/borg/sight/meson(src)
-	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg(src)
 	modules += new /obj/item/weapon/weldingtool/largetank(src)
 	modules += new /obj/item/weapon/screwdriver(src)
 	modules += new /obj/item/weapon/wrench(src)
@@ -314,6 +315,7 @@
 
 /obj/item/weapon/robot_module/miner/atom_init()
 	. = ..()
+	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/borg/sight/meson(src)
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/screwdriver(src)
@@ -372,6 +374,7 @@
 
 /obj/item/weapon/robot_module/science/atom_init()
 	. = ..()
+	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/gripper/science(src)
 	modules += new /obj/item/device/analyzer(src)
 	modules += new /obj/item/device/assembly/signaler(src)
@@ -389,7 +392,7 @@
 
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/scalpel(src)
-	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher(src) //To unfuck xenobiology up
+	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg(src) //To unfuck xenobiology up
 
 	modules += new /obj/item/weapon/crowbar/red(src)
 	modules += new /obj/item/weapon/wrench(src)
