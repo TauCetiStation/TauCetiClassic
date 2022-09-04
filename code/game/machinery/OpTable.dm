@@ -1,5 +1,3 @@
-#define OPTABLE_PUT_TIME 16
-
 /obj/machinery/optable
 	name = "Operating Table"
 	desc = "Used for advanced medical procedures."
@@ -98,9 +96,10 @@
 	if (C == user)
 		user.visible_message("<span class='rose'>[user] climbs on [src].</span>","<span class='notice'>You climb on [src].</span>")
 	else
-		visible_message("<span class='danger'>[user] is trying to put [C] on the operating table!</span>")
-		if(!do_after(user, OPTABLE_PUT_TIME, target = C))
-			return
+		if(!C.incapacitated() && !C.crawling)
+			visible_message("<span class='danger'>[user] is trying to put [C] on the operating table!</span>")
+			if(!do_after(user, HUMAN_INTERACTION_DELAY, target = C))
+				return
 		visible_message("<span class='notice'>[C] has been laid on [src] by [user].</span>")
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
