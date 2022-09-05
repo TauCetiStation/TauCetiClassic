@@ -16,7 +16,7 @@
 	var/lastgen = 0
 	var/lastgenlev = -1
 
-	var/efficiency = 0.15 //how much heat is converted into energy
+	var/efficiency = 0.3 //how much heat is converted into energy
 
 /obj/machinery/power/generator/atom_init()
 	..()
