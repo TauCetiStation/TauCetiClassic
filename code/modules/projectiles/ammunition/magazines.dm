@@ -207,12 +207,11 @@
 /obj/item/ammo_box/magazine/m12mm/update_icon()
 	..()
 	cut_overlays()
-	var/ammo_perc = (1 - ((max_ammo - ammo_count()) / max_ammo )) * 100
+	if(ammo_count() == 0)
+		return
+	var/ammo_perc = (ammo_count() * 100) / max_ammo 
 	var/image/ammo_icon = image('icons/obj/ammo.dmi', "12mmsh-[round(ammo_perc, 25)]")
 	add_overlay(ammo_icon)
-	if (ammo_count() == 0)
-		cut_overlay(ammo_icon)
-	return
 
 /obj/item/ammo_box/magazine/m12mm/hp
 	name = "magazine (.45 HP)"
