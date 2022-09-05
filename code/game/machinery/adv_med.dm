@@ -164,7 +164,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/body_scanconsole/atom_init_late()
-	connected = locate(/obj/machinery/bodyscanner, get_step(src, WEST))
+	connected = locate(/obj/machinery/bodyscanner) in range(1, src)
 
 /obj/machinery/body_scanconsole/ui_interact(mob/user)
 	if(!ishuman(connected.occupant))
