@@ -121,6 +121,7 @@
 	new /obj/item/clothing/shoes/brown	(src)
 	new /obj/item/device/radio/headset/heads/cmo(src)
 	new /obj/item/weapon/storage/belt/medical/surg/full(src)
+	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/weapon/reagent_containers/hypospray/cmo(src)
 	new /obj/item/clothing/suit/surgicalapron(src)
