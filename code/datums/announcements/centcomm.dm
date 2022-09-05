@@ -28,3 +28,9 @@
 	sound = "yesert"
 /datum/announcement/centcomm/noert/New()
 	message = "Похоже, отряд быстрого реагирования был запрошен на [station_name_ru()]. К сожалению, мы не сможем его отправить сейчас."
+
+/datum/announcement/centcomm/narsie_summon
+	name = "Central Command Higher Dimensional Affairs"
+	subtitle = "Центральное Командование"
+/datum/announcement/centcomm/narsie_summon/New(mob/user)
+	message = "Зафиксирована блюспейс аномалия в [get_area(user)], возможно раскрытие неизвестного портала."

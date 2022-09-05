@@ -2,7 +2,7 @@
 	explanation_text = "Hijack the emergency shuttle by escaping alone."
 
 /datum/objective/hijack/check_completion()
-	if(!owner.current || owner.current.stat)
+	if(!owner.current || owner.current.stat != CONSCIOUS)
 		return OBJECTIVE_LOSS
 	if(SSshuttle.location<2)
 		return OBJECTIVE_LOSS

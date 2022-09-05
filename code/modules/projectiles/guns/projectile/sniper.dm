@@ -64,3 +64,7 @@
 		to_chat(user, "<span class='warning'>You can't fire [src] while the bolt is open!</span>")
 		return 0
 	return ..()
+
+/obj/item/weapon/gun/projectile/heavyrifle/atom_init()
+	. = ..()
+	AddComponent(/datum/component/zoom, 9, TRUE)
