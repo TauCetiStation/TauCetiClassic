@@ -1554,6 +1554,23 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/pacman/mrs
 	category = list("Power")
 
+/datum/design/circulator
+	name = "Circulator Board"
+	desc = "The circuit board for a TEG circulator."
+	id = "circ"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/circulator
+	category = list("Power")
+
+/datum/design/teg
+	name = "TEG Board"
+	desc = "The circuit board for a TEG generator."
+	id = "teg"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/teg
+	category = list("Power")
 
 /////////////////////////////////////////
 ////////////Medical Tools////////////////

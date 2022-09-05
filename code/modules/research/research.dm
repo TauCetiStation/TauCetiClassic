@@ -1131,7 +1131,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mrspacman")
+	unlocks_designs = list("mrspacman", "circ", "teg")
 
 /datum/technology/fusion_power_generation
 	name = "R-UST Mk. 8 Tokamak Generator"
