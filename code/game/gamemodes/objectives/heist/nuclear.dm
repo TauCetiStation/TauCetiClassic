@@ -3,7 +3,7 @@
 	var/list/area/arkship_areas = list(/area/shuttle/vox/arkship, /area/shuttle/vox/arkship_hold)
 
 /datum/objective/heist/nuclear/check_completion()
-	var/list/point_interest = getpoi(with_mobs = FALSE)
+	var/list/point_interest = getpois(with_mobs = FALSE)
 	if(!is_type_in_list(/obj/machinery/nuclearbomb, point_interest) || !is_type_in_list(/obj/item/weapon/disk/nuclear, point_interest))
 		return OBJECTIVE_LOSS
 
