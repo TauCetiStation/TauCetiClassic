@@ -14,6 +14,7 @@
 		for(var/area/vox_area in arkship_areas)
 			if(!istype(A, vox_area))
 				return OBJECTIVE_LOSS
+
 	for(var/obj/item/weapon/disk/nuclear/D in poi_list)
 		var/turf/T = get_turf(D)
 		if(!is_centcom_level(T.z))
@@ -22,4 +23,5 @@
 		for(var/area/vox_area in arkship_areas)
 			if(!istype(A, vox_area))
 				return OBJECTIVE_LOSS
+
 	return OBJECTIVE_WIN

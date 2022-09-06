@@ -4,8 +4,8 @@
 	probability = 80
 	factions_allowed = list(
 		/datum/faction/nuclear/crossfire,
-		//datum/faction/heist/nuclear,
+		//datum/faction/heist removed after reorganize in event
 	)
 
-	minimum_player_count = 1
+	minimum_player_count = 50
 	minimum_players_bundles = 50
