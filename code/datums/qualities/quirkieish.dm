@@ -219,5 +219,5 @@
 		"Chaplain"
 	)
 
-/datum/quality/quirkieish/obedient/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/quirkieish/hypnotist/add_effect(mob/living/carbon/human/H, latespawn)
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall/weak)
