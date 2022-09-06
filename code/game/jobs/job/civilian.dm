@@ -67,7 +67,7 @@
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
-	access = list(access_mining, access_mint, access_mailsorting, access_recycler)
+	access = list(access_mailsorting, access_recycler)
 	salary = 60
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/recycler

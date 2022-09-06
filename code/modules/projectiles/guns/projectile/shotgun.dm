@@ -69,7 +69,7 @@
 	name = "double-barreled shotgun"
 	desc = "A true classic."
 	icon_state = "dshotgun"
-	item_state = "shotgun"
+	item_state = "dshotgun"
 	w_class = SIZE_NORMAL
 	force = 10
 	flags =  CONDUCT
