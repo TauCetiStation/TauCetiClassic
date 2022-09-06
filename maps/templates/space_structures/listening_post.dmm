@@ -915,7 +915,6 @@
 /turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "bH" = (
-/obj/structure/table/holotable/wooden,
 /obj/item/device/flashlight/lamp/green{
 	layer = 3.3;
 	on = 0;
@@ -931,6 +930,7 @@
 	pixel_x = 24
 	},
 /obj/item/clothing/mask/cigarette/cigar/havana,
+/obj/structure/table/woodentable,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -1040,7 +1040,6 @@
 	},
 /area/space_structures/listening_post)
 "bS" = (
-/obj/structure/table/holotable/wooden,
 /obj/item/toy/figure/syndie{
 	pixel_x = 7;
 	pixel_y = 11
@@ -1057,6 +1056,7 @@
 /obj/item/ammo_casing/a357,
 /obj/item/ammo_casing/a357,
 /obj/item/ammo_casing/a357,
+/obj/structure/table/woodentable,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -1186,11 +1186,11 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
-/obj/structure/table/holotable/wooden,
 /obj/machinery/computer/libraryconsole/bookmanagement{
 	layer = 4.1;
 	pixel_y = 6
 	},
+/obj/structure/table/woodentable,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
