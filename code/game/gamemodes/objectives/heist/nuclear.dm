@@ -3,23 +3,32 @@
 	var/list/area/arkship_areas = list(/area/shuttle/vox/arkship, /area/shuttle/vox/arkship_hold)
 
 /datum/objective/heist/nuclear/check_completion()
-	if(!is_type_in_list(/obj/machinery/nuclearbomb, poi_list) || !is_type_in_list(/obj/item/weapon/disk/nuclear, poi_list))
+	var/list/point_interest = getpoi(with_mobs = FALSE)
+	if(!is_type_in_list(/obj/machinery/nuclearbomb, point_interest) || !is_type_in_list(/obj/item/weapon/disk/nuclear, point_interest))
 		return OBJECTIVE_LOSS
 
-	for(var/obj/machinery/nuclearbomb/B in poi_list)
+	for(var/obj/machinery/nuclearbomb/B in point_interest)
+		if(!B.loc)
+			continue
 		var/turf/T = get_turf(B)
+		to_chat(world, "src is [src], T is [T]")
 		if(!is_centcom_level(T.z))
 			return OBJECTIVE_LOSS
 		var/area/A = get_area(T)
+		to_chat(world, "A is [A]")
 		for(var/area/vox_area in arkship_areas)
 			if(!istype(A, vox_area))
 				return OBJECTIVE_LOSS
 
-	for(var/obj/item/weapon/disk/nuclear/D in poi_list)
+	for(var/obj/item/weapon/disk/nuclear/D in point_interest)
+		if(!D.loc)
+			continue
 		var/turf/T = get_turf(D)
+		to_chat(world, "disk src is [src], T is [T]")
 		if(!is_centcom_level(T.z))
 			return OBJECTIVE_LOSS
 		var/area/A = get_area(T)
+		to_chat(world, "disk A is [A]")
 		for(var/area/vox_area in arkship_areas)
 			if(!istype(A, vox_area))
 				return OBJECTIVE_LOSS
