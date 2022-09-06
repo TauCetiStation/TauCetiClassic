@@ -5100,8 +5100,7 @@
 	},
 /obj/item/stack/sheet/metal{
 	amount = 15;
-	pixel_x = 3;
-	pixel_y = 6
+	pixel_x = -6
 	},
 /obj/item/weapon/wrench,
 /obj/item/device/multitool,
@@ -12365,12 +12364,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/living)
-"aCj" = (
-/obj/machinery/computer/lop_shuttle,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/lone_op/start)
 "aCk" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
@@ -13637,9 +13630,6 @@
 	icon_state = "grimy"
 	},
 /area/centcom/creed)
-"aEP" = (
-/turf/environment/space,
-/area/shuttle/lone_op/transit)
 "aEQ" = (
 /obj/structure/bookcase{
 	name = "bookcase (Reports)"
@@ -16471,23 +16461,6 @@
 /obj/machinery/computer/communications,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
-"aLm" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 6
-	},
-/obj/effect/landmark/lop_shuttle,
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1331;
-	master_tag = "synd_airlock2";
-	name = "interior access button";
-	pixel_x = 24;
-	pixel_y = -22
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/lone_op/start)
 "aLn" = (
 /obj/structure/rack,
 /obj/item/weapon/tank/jetpack/oxygen/harness,
@@ -16873,7 +16846,7 @@
 	master_tag = "synd_airlock";
 	name = "exterior access button";
 	pixel_x = 9;
-	pixel_y = 25
+	pixel_y = 22
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -17053,10 +17026,7 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/secure/briefcase,
 /obj/item/weapon/storage/fancy/cigarettes,
-/obj/item/weapon/lighter/zippo{
-	pixel_x = 5;
-	pixel_y = 5
-	},
+/obj/item/weapon/lighter/zippo,
 /obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/backpack/satchel,
 /obj/machinery/light{
@@ -17070,20 +17040,14 @@
 /obj/structure/table/reinforced{
 	icon_state = "reinf_tabledir"
 	},
-/obj/item/weapon/lighter/zippo{
-	pixel_x = 5;
-	pixel_y = 5
-	},
+/obj/item/weapon/lighter/zippo,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
 /area/shuttle/administration/centcom)
 "aMt" = (
 /obj/structure/table,
-/obj/item/weapon/lighter/zippo{
-	pixel_x = 5;
-	pixel_y = 5
-	},
+/obj/item/weapon/lighter/zippo,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -17094,10 +17058,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/lighter/zippo{
-	pixel_x = 5;
-	pixel_y = 5
-	},
+/obj/item/weapon/lighter/zippo,
 /obj/item/weapon/storage/fancy/cigarettes,
 /turf/unsimulated/floor{
 	dir = 8;
@@ -27935,28 +27896,21 @@
 	},
 /area/centcom/tdome/tdomeobserve)
 "mwb" = (
-/obj/effect/step_trigger/teleporter/random{
-	affect_ghosts = 1;
-	name = "escapeshuttle_leave";
-	teleport_x = 25;
-	teleport_x_offset = 245;
-	teleport_y = 25;
-	teleport_y_offset = 245;
-	teleport_z = 6;
-	teleport_z_offset = 6
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 6
 	},
-/obj/effect/step_trigger/teleporter/random{
-	affect_ghosts = 1;
-	name = "escapeshuttle_leave";
-	teleport_x = 25;
-	teleport_x_offset = 245;
-	teleport_y = 25;
-	teleport_y_offset = 245;
-	teleport_z = 6;
-	teleport_z_offset = 6
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1331;
+	master_tag = "synd_airlock2";
+	name = "interior access button";
+	pixel_x = 24;
+	pixel_y = -22
 	},
-/turf/environment/space,
-/area/space)
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/lone_op/start)
 "mxb" = (
 /obj/structure/table{
 	icon_state = "tabledir"
@@ -49059,7 +49013,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -49316,7 +49270,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -49573,7 +49527,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -49830,7 +49784,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -50087,7 +50041,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -50344,7 +50298,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -50601,7 +50555,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -50850,15 +50804,15 @@ aaM
 aaM
 aaM
 aaM
-aEP
-aEP
-aEP
-aEP
-aEP
 aaM
 aaM
 aaM
-ahG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -51107,15 +51061,15 @@ aaM
 aaM
 aaM
 aaM
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
 aaM
 aaM
-ahG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -51364,15 +51318,15 @@ aaM
 aaM
 aaM
 aaM
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
 aaM
 aaM
-ahG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -51619,17 +51573,17 @@ aaM
 aaM
 aaM
 aaM
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
 aaM
 aaM
-ahG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -51874,19 +51828,19 @@ aaM
 aaM
 aaM
 aaM
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
 aaM
 aaM
-ahG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -52131,19 +52085,19 @@ aaM
 aaM
 aaM
 aaM
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
 aaM
 aaM
 aaM
 aaM
-ahG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -52388,19 +52342,19 @@ aaM
 aaM
 aaM
 aaM
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
 aaM
 aaM
 aaM
 aaM
-ahG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -52645,19 +52599,19 @@ aaM
 aaM
 aaM
 aaM
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
 aaM
 aaM
-ahG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -52904,17 +52858,17 @@ aaM
 aaM
 aaM
 aaM
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
 aaM
 aaM
-ahG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -53163,15 +53117,15 @@ aaM
 aaM
 aaM
 aaM
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
 aaM
 aaM
-ahG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -53420,15 +53374,15 @@ aaM
 aaM
 aaM
 aaM
-aEP
-aEP
-aEP
-aEP
-aEP
-aEP
 aaM
 aaM
-ahG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -53677,15 +53631,15 @@ aaM
 aaM
 aaM
 aaM
-aEP
-aEP
-aEP
-aEP
-aEP
 aaM
 aaM
 aaM
-ahG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -53942,7 +53896,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -54199,7 +54153,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -54456,7 +54410,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -54713,7 +54667,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -54970,7 +54924,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -55227,7 +55181,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -55484,7 +55438,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -55741,7 +55695,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -55998,7 +55952,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -56255,7 +56209,7 @@ aaM
 aaM
 aaM
 aaM
-ahG
+aaM
 aaM
 aaM
 aaM
@@ -56494,25 +56448,25 @@ aaM
 aaM
 aaM
 ahG
-mwb
-mwb
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -77559,13 +77513,13 @@ aaM
 aaM
 aaM
 aaM
-aGC
-aMf
-aMf
-aMf
-aMf
-aMf
-aMm
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -77813,15 +77767,15 @@ aaM
 aaM
 aaM
 aaM
-aGC
-aMf
-aMf
-aMf
-aMf
-aLn
-aMg
-anv
-aMq
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -78069,23 +78023,23 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aGC
 aMf
 aMf
-aLP
-aLV
-aLw
-aLp
-aLp
 aMf
 aMf
 aMf
 aMm
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -78326,22 +78280,22 @@ aaM
 aaM
 aaM
 aaM
-abu
-aEF
-aLN
-aLp
-aLp
-aLp
-aLp
-aLp
-aMv
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aGC
+aMf
+aMf
+aMf
+aMf
+aLn
+aMg
 anv
 aMq
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -78583,24 +78537,24 @@ aaM
 aaM
 aaM
 aaM
-abu
-aLC
-aCj
-aLb
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aGC
+aMf
+aMf
+aLP
+aLV
+aLw
 aLp
 aLp
-aLm
-aMk
-aMe
-anv
-kOb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aMf
+aMf
+aMf
+aMm
 aaM
 aaM
 aaM
@@ -78840,23 +78794,23 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 abu
-aLE
-aLM
+aEF
+aLN
 aLp
 aLp
-aMf
-aLt
-aMf
-aMf
+aLp
+aLp
+aLp
+aMv
 anv
-bRb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aMq
 aaM
 aaM
 aaM
@@ -79097,23 +79051,23 @@ aaM
 aaM
 aaM
 aaM
-amd
-aMf
-aMf
-aLO
-aLW
-aMf
-aLv
-aMl
-aMf
-aMf
-aMf
-aMp
 aaM
 aaM
 aaM
 aaM
 aaM
+aaM
+abu
+aLC
+aLp
+aLb
+aLp
+aLp
+mwb
+aMk
+aMe
+anv
+kOb
 aaM
 aaM
 aaM
@@ -79355,22 +79309,22 @@ aaM
 aaM
 aaM
 aaM
-amd
+aaM
+aaM
+aaM
+aaM
+aaM
+abu
+aLE
+aLM
+aLp
+aLp
+aMf
+aLt
 aMf
 aMf
-aMf
-aMf
-aLz
-aMn
 anv
 bRb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -79615,20 +79569,20 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
 amd
 aMf
-aMd
+aMf
+aLO
+aLW
+aMf
+aLv
+aMl
 aMf
 aMf
 aMf
 aMp
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -79874,16 +79828,16 @@ aaM
 aaM
 aaM
 aaM
-abu
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+amd
+aMf
+aMf
+aMf
+aMf
+aLz
+aMn
+anv
+bRb
 aaM
 aaM
 aaM
@@ -80135,13 +80089,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+amd
+aMf
+aMd
+aMf
+aMf
+aMf
+aMp
 aaM
 aaM
 aaM
@@ -80394,7 +80348,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 aaM
 aaM
 aaM
