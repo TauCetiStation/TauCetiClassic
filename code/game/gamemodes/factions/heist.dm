@@ -79,3 +79,15 @@
 			return TRUE
 
 	return FALSE
+
+/datum/faction/heist/nuclear/can_setup()
+	if(!is_type_in_list(/obj/machinery/nuclearbomb, poi_list))
+		return FALSE
+	return ..()
+
+/datum/faction/heist/nuclear/is_raider_crew_safe()
+	return TRUE
+
+/datum/faction/heist/nuclear/forgeObjectives()
+	. = ..()
+	AppendObjective(/datum/objective/heist/nuclear)

@@ -8,7 +8,7 @@
 
 	initroletype = /datum/role/operative
 
-	min_roles = 2
+	min_roles = 1
 	max_roles = 6
 
 	var/nukes_left = TRUE // Call 3714-PRAY right now and order more nukes! Limited offer!
@@ -300,3 +300,7 @@
 
 #undef MAX_OPS
 #undef MIN_OPS
+
+/datum/faction/nuclear/crossfire/OnPostSetup()
+	. = ..()
+	new /datum/event/heist/nuclear

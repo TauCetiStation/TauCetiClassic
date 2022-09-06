@@ -8,3 +8,10 @@
 		return
 
 	create_uniq_faction(/datum/faction/heist)
+
+/datum/event/heist/nuclear/start()
+	if(!global.heiststart.len)
+		kill()
+		return
+
+	create_uniq_faction(/datum/faction/heist/nuclear)
