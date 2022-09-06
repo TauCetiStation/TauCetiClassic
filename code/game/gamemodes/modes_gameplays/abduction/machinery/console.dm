@@ -36,12 +36,29 @@
 	var/list/datum/icon_snapshot/disguises = list()
 	var/show_price_list = FALSE
 	var/list/price_list = list(
-							"heal injector" =4,
-							"decloner"		=3,
-							"advanced baton"=2,
-							"science tool" 	=1,
-							"agent helmet" 	=1,
-							"radio silencer"=1)
+							"heal injector" 					=2,
+							"decloner"							=2,
+							"advanced baton"					=2,
+							"science tool" 						=1,
+							"agent helmet" 						=1,
+							"radio silencer"					=1,
+							"additional agent equipment" 		=1,
+							"additional scientist equipment" 	=1,
+							"silence_gloves"					=3)
+
+	var/baton_modules_bought = FALSE
+
+/obj/machinery/abductor/console/Destroy()
+	if(gizmo)
+		gizmo.console = null
+		gizmo = null
+	if(experiment)
+		experiment.console = null
+		experiment = null
+	if(pad)
+		pad.console = null
+		pad = null
+	return ..()
 
 /obj/machinery/abductor/console/interact(mob/user)
 	if(!IsAbductor(user) && !isAI(user) && !isobserver(user))
@@ -67,6 +84,9 @@
 		dat += "<a href='?src=\ref[src];dispense=helmet'>Agent Helmet</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=silencer'>Radio Silencer</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=tool'>Science Tool</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=agent_gear'>Additional agent equipment</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=scientist_gear'>Additional scientist equipment</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=silence_gloves'>Silence gloves</A><br>"
 		dat += "<a href='?src=\ref[src];show_prices=1'>[show_price_list ? "Close Price List" : "Open Price List"]</a><br>"
 		if(show_price_list)
 			dat += "<div class='Section'>[get_price_list()]</div>"
@@ -122,17 +142,28 @@
 	else if(href_list["dispense"])
 		switch(href_list["dispense"])
 			if("injector")
-				Dispense(/obj/item/weapon/lazarus_injector/alien,cost=4)
+				Dispense(/obj/item/weapon/lazarus_injector/alien, 2)
 			if("pistol")
-				Dispense(/obj/item/weapon/gun/energy/decloner/alien,cost=3)
+				Dispense(/obj/item/weapon/gun/energy/decloner/alien, 2)
 			if("baton")
-				Dispense(/obj/item/weapon/abductor_baton,cost=2)
+				Dispense(/obj/item/weapon/abductor_baton, 2)
 			if("helmet")
 				Dispense(/obj/item/clothing/head/helmet/abductor)
 			if("silencer")
 				Dispense(/obj/item/device/abductor/silencer)
 			if("tool")
 				Dispense(/obj/item/device/abductor/gizmo)
+			if("agent_gear")
+				if(Dispense(/obj/item/clothing/gloves/combat))
+					var/obj/item/weapon/card/id/syndicate/C = new(pad.loc)
+					C.name = "Card"
+					C.access = list()
+			if("scientist_gear")
+				if(Dispense(/obj/item/clothing/gloves/combat))
+					new /obj/item/clothing/glasses/hud/health/night(pad.loc)
+					new /obj/item/weapon/storage/visuals/surgery(pad.loc)
+			if("silence_gloves")
+				Dispense(/obj/item/clothing/gloves/black/silence, 3)
 	else if(href_list["show_prices"])
 		show_price_list = !show_price_list
 	updateUsrDialog()
@@ -151,6 +182,15 @@
 	if(pad)
 		pad.teleport_target = teleportlocs[A]
 		pad.target_name = pad.teleport_target.name
+
+/obj/machinery/abductor/console/proc/SetDroppoint(turf/location,user)
+	if(!istype(location))
+		to_chat(user, "<span class='warning'>That place is not safe for the specimen.</span>")
+		return
+
+	if(pad)
+		pad.teleport_target = location
+		to_chat(user, "<span class='notice'>Location marked as test subject release point.</span>")
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
 	if(gizmo && pad && gizmo.marked)
@@ -215,6 +255,11 @@
 		to_chat(user, "<span class='notice'>You link the vest to the console.</span>")
 		vest = V
 		return FALSE
+	if(istype(O, /obj/item/weapon/abductor_baton))
+		var/obj/item/weapon/abductor_baton/B = O
+		to_chat(user, "<span class='notice'>You link the advanced baton to the console.</span>")
+		B.console = src
+		return FALSE
 	return ..()
 
 /obj/machinery/abductor/console/proc/Dispense(item,cost=1)
@@ -226,5 +271,7 @@
 			new item(pad.loc)
 		else
 			new item(loc)
+		return TRUE
 	else
 		visible_message("Insufficent data!")
+		return FALSE

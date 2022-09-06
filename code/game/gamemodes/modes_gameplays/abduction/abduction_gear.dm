@@ -396,12 +396,16 @@
 	force = 7
 	w_class = SIZE_SMALL
 	action_button_name = "Toggle Mode"
+	var/obj/machinery/abductor/console/console
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
 	if(!IsAbductor(user))
 		return
 	if(!AgentCheck(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
+		return
+	if(!console || !console.baton_modules_bought)
+		to_chat(user, "<span class='notice'>You need additional permissions from Mothership to use other modes of [name]!</span>")
 		return
 	mode = (mode + 1) % BATON_MODES
 	var/txt

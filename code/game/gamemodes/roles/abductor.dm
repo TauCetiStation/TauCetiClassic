@@ -66,8 +66,9 @@
 /datum/role/abductor/agent/equip_class()
 	var/mob/living/carbon/human/agent = antag.current
 	var/obj/item/clothing/suit/armor/abductor/vest/V = new /obj/item/clothing/suit/armor/abductor/vest(agent)
+	var/obj/item/weapon/abductor_baton/B = new(agent)
 	agent.equip_to_slot_or_del(V, SLOT_WEAR_SUIT)
-	agent.equip_to_slot_or_del(new /obj/item/weapon/abductor_baton(agent), SLOT_IN_BACKPACK)
+	agent.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
 	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/decloner/alien(agent), SLOT_BELT)
 	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), SLOT_IN_BACKPACK)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), SLOT_HEAD)
@@ -78,6 +79,7 @@
 	var/obj/machinery/abductor/console/console = A.get_team_console()
 	if(console)
 		console.vest = V
+		B.console = console
 
 /datum/role/abductor/scientist
 	name = "Scientist"
