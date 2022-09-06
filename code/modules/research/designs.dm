@@ -2801,3 +2801,12 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 2000, MAT_PHORON = 4000)
 	build_path = /obj/item/rig_module/teleporter_stabilizer
 	category = list("Rig Modules")
+
+/datum/design/hardsuit_emp_shield
+	name = "Hardsuit EMP shield"
+	desc = "Device for protecting hardsuit against EMPs."
+	id = "rigempshield"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	build_path = /obj/item/rig_module/emp_shield
+	category = list("Rig Modules")
