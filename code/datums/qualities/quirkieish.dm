@@ -206,7 +206,7 @@
 	H.mind.skills.maximize_active_skills()
 
 
-/datum/quality/quirkieish/obedient
+/datum/quality/quirkieish/hypnotist
 	name = "Hypnotist"
 	desc = "Вы обладаете техниками гипноза."
 	requirement = "Тестовик, Клоун, Библиотекарь, Психиатр, Священник."
