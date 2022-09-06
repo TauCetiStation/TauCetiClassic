@@ -11,11 +11,9 @@
 		if(!B.loc)
 			continue
 		var/turf/T = get_turf(B)
-		to_chat(world, "src is [src], T is [T]")
 		if(!is_centcom_level(T.z))
 			return OBJECTIVE_LOSS
 		var/area/A = get_area(T)
-		to_chat(world, "A is [A]")
 		for(var/area/vox_area in arkship_areas)
 			if(!istype(A, vox_area))
 				return OBJECTIVE_LOSS
@@ -24,11 +22,9 @@
 		if(!D.loc)
 			continue
 		var/turf/T = get_turf(D)
-		to_chat(world, "disk src is [src], T is [T]")
 		if(!is_centcom_level(T.z))
 			return OBJECTIVE_LOSS
 		var/area/A = get_area(T)
-		to_chat(world, "disk A is [A]")
 		for(var/area/vox_area in arkship_areas)
 			if(!istype(A, vox_area))
 				return OBJECTIVE_LOSS
