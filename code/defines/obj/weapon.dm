@@ -134,7 +134,7 @@
 	icon_state = "bola"
 	breakouttime = 35 //easy to apply, easy to break out of
 	origin_tech = "engineering=3;combat=1"
-	throw_speed = 0.8
+	throw_speed = 6
 	var/weaken = 0
 
 /obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
@@ -161,9 +161,7 @@
 	breakouttime = 70
 	origin_tech = "engineering=4;combat=3"
 	weaken = 2
-	throw_range = 5
-	throw_speed = 2
-
+	throw_range = 7
 
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"
