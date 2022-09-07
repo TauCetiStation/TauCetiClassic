@@ -40,7 +40,7 @@
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
-	access = list(access_tox, access_tox_storage, access_research, access_xenoarch, access_eva)
+	access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 	alt_titles = list("Phoron Researcher")
 	salary = 180
 	minimal_player_ingame_minutes = 1560
