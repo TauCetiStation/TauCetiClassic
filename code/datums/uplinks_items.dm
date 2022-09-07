@@ -372,12 +372,22 @@
 	cost = 2
 	uplink_types = list("nuclear", "traitor")
 
-/datum/uplink_item/ammo/pistol
-	name = "9mm Handgun Magazine"
+/datum/uplink_item/ammo/pistol_extended
+	name = "Extended Capacity 9mm Handgun Magazine"
 	desc = "An additional 16-round 9mm magazine; compatible with the Stechkin Pistol. These subsonic rounds \
 			are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/m9mm/ex
 	cost = 1
+	uplink_types = list("traitor")
+
+/datum/uplink_item/ammo/pistol
+	name = "9mm Handgun Magazine"
+	desc = "An additional 7-round 9mm magazine; compatible with the Stechkin Pistol. These subsonic rounds \
+			are dirt cheap but are half as effective as .357 rounds."
+	item = /obj/item/ammo_box/magazine/m9mm
+	cost = 1
+	uplink_types = list("nuclear", "dealer")
+
 
 /datum/uplink_item/ammo/revolver
 	name = "Speedloader-.357"
