@@ -80,14 +80,14 @@
 
 	return FALSE
 
-/datum/faction/heist/nuclear/can_setup()
+/datum/faction/heist/saboteurs/can_setup()
 	if(!is_type_in_list(/obj/machinery/nuclearbomb, poi_list))
 		return FALSE
 	return ..()
 
-/datum/faction/heist/nuclear/is_raider_crew_safe()
+/datum/faction/heist/saboteurs/is_raider_crew_safe()
 	return TRUE
 
-/datum/faction/heist/nuclear/forgeObjectives()
+/datum/faction/heist/saboteurs/forgeObjectives()
 	. = ..()
-	AppendObjective(/datum/objective/heist/nuclear)
+	AppendObjective(/datum/objective/heist/stealnuke)

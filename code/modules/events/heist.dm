@@ -10,5 +10,5 @@
 
 	create_uniq_faction(vox_faction)
 
-/datum/event/heist/nuclear
-	vox_faction = /datum/faction/heist/nuclear
+/datum/event/heist/saboteurs
+	vox_faction = /datum/faction/heist/saboteurs

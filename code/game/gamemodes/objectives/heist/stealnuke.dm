@@ -1,14 +1,10 @@
-/datum/objective/heist/nuclear
+/datum/objective/heist/stealnuke
 	explanation_text = "Escape with a Nuclear Fission Explosive and Authentication Disk."
 	var/list/area/arkship_areas = list(/area/shuttle/vox/arkship, /area/shuttle/vox/arkship_hold)
 
-/datum/objective/heist/nuclear/check_completion()
-	var/list/point_interest = getpois(with_mobs = FALSE)
-	if(!is_type_in_list(/obj/machinery/nuclearbomb, point_interest) || !is_type_in_list(/obj/item/weapon/disk/nuclear, point_interest))
-		return OBJECTIVE_LOSS
-
-	for(var/obj/machinery/nuclearbomb/B in point_interest)
-		if(!B.loc)
+/datum/objective/heist/stealnuke/check_completion()
+	for(var/obj/machinery/nuclearbomb/B in poi_list)
+		if(!B || !B.loc)
 			continue
 		var/turf/T = get_turf(B)
 		if(!is_centcom_level(T.z))
@@ -18,8 +14,8 @@
 			if(!istype(A, vox_area))
 				return OBJECTIVE_LOSS
 
-	for(var/obj/item/weapon/disk/nuclear/D in point_interest)
-		if(!D.loc)
+	for(var/obj/item/weapon/disk/nuclear/D in poi_list)
+		if(!D || !D.loc)
 			continue
 		var/turf/T = get_turf(D)
 		if(!is_centcom_level(T.z))

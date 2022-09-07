@@ -303,4 +303,4 @@
 
 /datum/faction/nuclear/crossfire/OnPostSetup()
 	. = ..()
-	new /datum/event/heist/nuclear
+	new /datum/event/heist/saboteurs
