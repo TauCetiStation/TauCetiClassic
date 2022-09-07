@@ -40,9 +40,9 @@
 	used = TRUE
 	var/turf/turf = Syndie_landmark.loc
 	qdel(Syndie_landmark)
-	addtimer(CALLBACK(src, .proc/perform_gate, turf), GATEWAY_HACK_TIME)
+	addtimer(CALLBACK(src, .proc/perform_gate, turf, user), GATEWAY_HACK_TIME)
 
-/obj/item/device/gateway_locker/proc/perform_gate(turf/turf)
+/obj/item/device/gateway_locker/proc/perform_gate(turf/turf, mob/user)
 	new /obj/effect/effect/sparks(turf)
 	var/obj/machinery/gateway/center/Gate = new(turf)
 	Gate.detect()
@@ -64,6 +64,16 @@
 	var/datum/announcement/centcomm/nuclear/gateway/announce = new
 	announce.play()
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+	if(user)
+		var/datum/mind/M = user.mind
+		if(M)
+			for(var/role in list(NUKE_OP, NUKE_OP_LEADER))
+				var/datum/role/R = M.GetRole(role)
+				if(R)
+					var/datum/faction/nuclear/mob_faction = R.GetFaction()
+					if(mob_faction)
+						SEND_SIGNAL(mob_faction, COMSIG_NUKE_OP_STARTED)
+						break
 
 /obj/effect/landmark/syndie_gateway
 

@@ -29,7 +29,7 @@
 		if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN + 20 >= world.time)
 			updateUsrDialog()
 
-/obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination)
+/obj/machinery/computer/syndicate_station/proc/syndicate_move_to(mob/user, area/destination)
 	if(moving)
 		return
 	if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN > world.time)
@@ -40,7 +40,16 @@
 
 	moving = TRUE
 	lastMove = world.time
-
+	if(user)
+		var/datum/mind/M = user.mind
+		if(M)
+			for(var/role in list(NUKE_OP, NUKE_OP_LEADER))
+				var/datum/role/R = M.GetRole(role)
+				if(R)
+					var/datum/faction/nuclear/mob_faction = R.GetFaction()
+					if(mob_faction)
+						SEND_SIGNAL(mob_faction, COMSIG_NUKE_OP_STARTED)
+						break
 	if(curr_location.z != dest_location.z)
 		var/area/transit_location = locate(/area/shuttle/syndicate/transit)
 		curr_location.move_contents_to(transit_location)
@@ -83,23 +92,23 @@
 			return
 	else
 		war_device_activation_forbidden = TRUE
-
+	var/mob/M = usr
 	if(href_list["syndicate"])
-		syndicate_move_to(/area/shuttle/syndicate/start)
+		syndicate_move_to(M, /area/shuttle/syndicate/start)
 	else if(href_list["station_nw"])
-		syndicate_move_to(/area/shuttle/syndicate/northwest)
+		syndicate_move_to(M, /area/shuttle/syndicate/northwest)
 	else if(href_list["station_n"])
-		syndicate_move_to(/area/shuttle/syndicate/north)
+		syndicate_move_to(M, /area/shuttle/syndicate/north)
 	else if(href_list["station_ne"])
-		syndicate_move_to(/area/shuttle/syndicate/northeast)
+		syndicate_move_to(M, /area/shuttle/syndicate/northeast)
 	else if(href_list["station_sw"])
-		syndicate_move_to(/area/shuttle/syndicate/southwest)
+		syndicate_move_to(M, /area/shuttle/syndicate/southwest)
 	else if(href_list["station_s"])
-		syndicate_move_to(/area/shuttle/syndicate/south)
+		syndicate_move_to(M, /area/shuttle/syndicate/south)
 	else if(href_list["station_se"])
-		syndicate_move_to(/area/shuttle/syndicate/southeast)
+		syndicate_move_to(M, /area/shuttle/syndicate/southeast)
 	else if(href_list["mining"])
-		syndicate_move_to(/area/shuttle/syndicate/mining)
+		syndicate_move_to(M, /area/shuttle/syndicate/mining)
 
 	updateUsrDialog()
 

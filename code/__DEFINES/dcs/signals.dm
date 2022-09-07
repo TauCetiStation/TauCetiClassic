@@ -62,7 +62,7 @@
 
 // /datum/faction signals
 // from /datum/faction/nuclear/crossfire
-#define COMSIG_NUKE_DEPLOYED "nuke_deployed"
+#define COMSIG_NUKE_OP_STARTED "nuke_deployed"
 
 // /datum/role signals
 /// from base of role/GetScoreboard(): ()

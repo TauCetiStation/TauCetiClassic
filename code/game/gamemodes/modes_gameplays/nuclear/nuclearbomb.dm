@@ -293,16 +293,6 @@ var/global/bomb_set
 						var/area/nuclearbombloc = get_area(loc)
 						announce_nuke.play(nuclearbombloc)
 						set_security_level("delta")
-						var/mob/L = usr
-						var/datum/mind/M = L.mind
-						if(M)
-							for(var/role in list(NUKE_OP, NUKE_OP_LEADER))
-								var/datum/role/R = M.GetRole(role)
-								if(R)
-									var/datum/faction/nuclear/mob_faction = R.GetFaction()
-									if(mob_faction)
-										SEND_SIGNAL(mob_faction, COMSIG_NUKE_DEPLOYED)
-										break
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else
 						bomb_set = 0
