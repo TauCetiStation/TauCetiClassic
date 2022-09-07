@@ -60,6 +60,10 @@
 /// from base of religion/remove_member(): (/mob)
 #define COMSIG_REL_REMOVE_MEMBER "rel_remove_member"
 
+// /datum/faction signals
+// from /datum/faction/nuclear/crossfire
+#define COMSIG_NUKE_DEPLOYED "nuke_deployed"
+
 // /datum/role signals
 /// from base of role/GetScoreboard(): ()
 #define COMSIG_ROLE_GETSCOREBOARD "role_getscoreboard"

@@ -1,5 +1,5 @@
 /datum/objective/heist/stealnuke
-	explanation_text = "Escape with a Nuclear Fission Explosive and Authentication Disk."
+	explanation_text = "Escape with all Nuclear Fission Explosives and Authentication Disk."
 	var/list/area/arkship_areas = list(/area/shuttle/vox/arkship, /area/shuttle/vox/arkship_hold)
 
 /datum/objective/heist/stealnuke/check_completion()

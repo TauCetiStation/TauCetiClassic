@@ -303,4 +303,13 @@
 
 /datum/faction/nuclear/crossfire/OnPostSetup()
 	. = ..()
+	RegisterSignal(src, COMSIG_NUKE_DEPLOYED, .proc/call_saboteurs)
+
+/datum/faction/nuclear/crossfire/proc/call_saboteurs()
+	SIGNAL_HANDLER
 	new /datum/event/heist/saboteurs
+	UnregisterSignal(src, list(COMSIG_NUKE_DEPLOYED))
+
+/datum/faction/nuclear/crossfire/Destroy()
+	UnregisterSignal(src, list(COMSIG_NUKE_DEPLOYED))
+	return ..()
