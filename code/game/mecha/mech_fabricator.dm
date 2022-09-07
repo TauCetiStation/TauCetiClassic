@@ -504,12 +504,7 @@
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab", "fab", W))
-		power_change()
-		if(panel_open)
-			add_overlay("[initial(icon_state)]-open")
-		else
-			cut_overlay("[initial(icon_state)]-open")
-		return
+		update_icon()
 
 	if(exchange_parts(user, W))
 		return
@@ -569,9 +564,15 @@
 	for(var/material in resources)
 		remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 
-/obj/machinery/mecha_part_fabricator/power_change()
+/obj/machinery/mecha_part_fabricator/update_icon()
 	if(powered())
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
+	if(panel_open)
+		add_overlay("[initial(icon_state)]-open")
+	else
+		cut_overlay("[initial(icon_state)]-open")
 
+/obj/machinery/mecha_part_fabricator/power_change()
+	update_icon()

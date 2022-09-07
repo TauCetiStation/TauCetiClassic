@@ -63,11 +63,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	if (shocked)
 		shock(user,50)
 	if (default_deconstruction_screwdriver(user, "circuit_imprinter", "circuit_imprinter", O))
-		power_change()
-		if(panel_open)
-			add_overlay("[initial(icon_state)]-open")
-		else
-			cut_overlay("[initial(icon_state)]-open")
+		update_icon()
 		if(linked_console)
 			linked_console.linked_imprinter = null
 			linked_console = null

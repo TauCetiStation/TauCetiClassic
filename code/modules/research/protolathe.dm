@@ -92,11 +92,7 @@ Note: Must be placed west/left of and R&D console to function.
 	if (I.is_open_container())
 		return 1
 	if (default_deconstruction_screwdriver(user, "protolathe", "protolathe", I))
-		power_change()
-		if(panel_open)
-			add_overlay("[initial(icon_state)]-open")
-		else
-			cut_overlay("[initial(icon_state)]-open")
+		update_icon()
 		if(linked_console)
 			linked_console.linked_lathe = null
 			linked_console = null

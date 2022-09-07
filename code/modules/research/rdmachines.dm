@@ -39,9 +39,15 @@
 	if(!shock(user, 50) && !disabled)
 		return ..()
 
-/obj/machinery/r_n_d/power_change()
+/obj/machinery/r_n_d/update_icon()
 	if(powered())
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
+	if(panel_open)
+		add_overlay("[initial(icon_state)]-open")
+	else
+		cut_overlay("[initial(icon_state)]-open")
 
+/obj/machinery/r_n_d/power_change()
+	update_icon()

@@ -38,11 +38,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		shock(user,50)
 	if(!loaded_item)
 		if (default_deconstruction_screwdriver(user, "d_analyzer", "d_analyzer", O))
-			power_change()
-			if(panel_open)
-				add_overlay("[initial(icon_state)]-open")
-			else
-				cut_overlay("[initial(icon_state)]-open")
+			update_icon()
 			if(linked_console)
 				linked_console.linked_destroy = null
 				linked_console = null
@@ -123,13 +119,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/obj/item/stack/sheet/S = loaded_item
 		if(S.amount == 1)
 			qdel(S)
-			icon_state = "d_analyzer"
+			update_icon()
 			loaded_item = null
 		else
 			S.use(1)
 	else
 		qdel(loaded_item)
-		icon_state = "d_analyzer"
+		update_icon()
 		loaded_item = null
 
 	use_power(250)
@@ -145,10 +141,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(loaded_item)
 		loaded_item.forceMove(loc)
 		loaded_item = null
-		icon_state = "d_analyzer"
+		update_icon()
 
-/obj/machinery/r_n_d/destructive_analyzer/power_change()
-	if(!powered())
-		eject_item()
-	return ..()
+
 

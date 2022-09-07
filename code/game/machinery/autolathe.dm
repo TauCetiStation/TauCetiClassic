@@ -277,7 +277,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		return 1
 
 	if(default_deconstruction_screwdriver(user, "autolathe", "autolathe", I))
-		power_change()
+		update_icon()
 		updateUsrDialog()
 		if(panel_open)
 			add_overlay("[initial(icon_state)]-open")
@@ -353,11 +353,18 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	if(stored_material[MAT_GLASS] >= 3750)
 		new /obj/item/stack/sheet/glass(loc, round(stored_material[MAT_GLASS] / 3750))
 
-/obj/machinery/autolathe/power_change()
+/obj/machinery/autolathe/update_icon()
+	if(panel_open)
+		add_overlay("[initial(icon_state)]-open")
+	else
+		cut_overlay("[initial(icon_state)]-open")
 	if(powered())
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
+
+/obj/machinery/autolathe/power_change()
+	update_icon()
 
 /obj/machinery/autolathe/proc/take_item(obj/item/I, amount)
 	if(istype(I, /obj/item/stack))
