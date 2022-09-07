@@ -505,6 +505,7 @@
 /obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab", "fab", W))
 		update_icon()
+		return
 
 	if(exchange_parts(user, W))
 		return

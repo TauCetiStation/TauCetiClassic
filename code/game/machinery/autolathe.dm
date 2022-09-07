@@ -279,10 +279,6 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	if(default_deconstruction_screwdriver(user, "autolathe", "autolathe", I))
 		update_icon()
 		updateUsrDialog()
-		if(panel_open)
-			add_overlay("[initial(icon_state)]-open")
-		else
-			cut_overlay("[initial(icon_state)]-open")
 		return
 
 	if(exchange_parts(user, I))

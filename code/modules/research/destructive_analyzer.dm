@@ -142,6 +142,3 @@ Note: Must be placed within 3 tiles of the R&D Console
 		loaded_item.forceMove(loc)
 		loaded_item = null
 		update_icon()
-
-
-
