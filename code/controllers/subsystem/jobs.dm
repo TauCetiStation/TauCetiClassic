@@ -451,8 +451,11 @@ SUBSYSTEM_DEF(job)
 
 	if(!joined_late)
 		var/obj/effect/landmark/start/spawn_mark = null
+		var/occupation_name = rank
+		if(H.mind.role_alt_title != rank)
+			occupation_name = H.mind.role_alt_title
 		for(var/obj/effect/landmark/start/landmark in landmarks_list)
-			if((landmark.name == rank) && !(locate(/mob/living) in landmark.loc))
+			if((landmark.name == occupation_name) && !(locate(/mob/living) in landmark.loc))
 				spawn_mark = landmark
 				break
 		if(!spawn_mark)
