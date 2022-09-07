@@ -29,6 +29,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 
+	var/next_point_to = 0
+
 	var/datum/orbit_menu/orbit_menu
 	var/datum/spawners_menu/spawners_menu
 
@@ -500,9 +502,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'><B>Living and available Ian not found.</B></span>")
 
 /mob/dead/observer/pointed(atom/A)
+	if(next_point_to > world.time)
+		return FALSE
 	if(!..())
 		return FALSE
 	emote_dead("points to [A]")
+	next_point_to = world.time + 2 SECONDS
 	return TRUE
 
 /mob/dead/observer/point_at(atom/pointed_atom)
