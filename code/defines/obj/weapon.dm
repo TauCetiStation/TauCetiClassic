@@ -161,7 +161,7 @@
 	breakouttime = 70
 	origin_tech = "engineering=4;combat=3"
 	weaken = 2
-	throw_range = 7
+	throw_range = 5
 
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"
