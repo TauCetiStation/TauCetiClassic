@@ -598,6 +598,13 @@
 	cost = 2
 	uplink_types = list("dealer")
 
+/datum/uplink_item/stealthy_tools/throwingknives
+	name = "Throwing Knives"
+	desc = "Belt with a bunch of deadly sharp throwing knives."
+	item = /obj/item/weapon/storage/belt/security/tactical/throwing
+	cost = 9
+	uplink_types = list("dealer")
+
 /datum/uplink_item/stealthy_tools/icepick
 	name = "Ice Pick"
 	desc = "Used for chopping ice. Also excellent for mafia esque murders."

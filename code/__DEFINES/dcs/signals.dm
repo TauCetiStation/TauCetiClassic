@@ -230,6 +230,8 @@
 /// from mob/carbon/swap_hand: (mob/user)
 #define COMSIG_ITEM_BECOME_ACTIVE "item_become_active"
 #define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
+/// from /obj/item/weapon/stock_parts/cell
+#define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
