@@ -119,8 +119,8 @@
 
 	completions += scorestats()
 
-	fdel("data/scoreboard/last_score.txt")
-	text2file(completions, "data/scoreboard/last_score.txt")
+	fdel("data/last_score.txt")
+	text2file(completions, "data/last_score.txt")
 
 	if(one_mob)
 		show_scoreboard(one_mob)
@@ -135,13 +135,7 @@
 	to_chat(M, "<b>The crew's final score is:</b>")
 	to_chat(M, "<b><font size='4'>[SSStatistics.score.crewscore]</font></b>")
 
-	fdel("data/scoreboard/end_icons/") // deleting all we saved last round
-	for(var/i in 1 to end_icons.len)
-
-		var/F = file("data/scoreboard/end_icons/logo_[i].png") // and save new
-		F << end_icons[i]
-
-	to_chat(M, "<span class='vote'>Чтобы посмотреть титры раунда нажмите <a href='?src=\ref[M]'>сюда</a> или Show Last Scoreboard во вкладке OOC.</span>")
+	to_chat(M, "<span class='vote'>Чтобы посмотреть титры раунда нажмите <a href='?src=\ref[src]'>сюда</a> или Show Last Scoreboard во вкладке OOC.</span>")
 	if(M.client.prefs.votes_autoopening)
 		M.client.scoreboard(global.round_id)
 
@@ -227,14 +221,12 @@
 	return dat
 
 /datum/controller/subsystem/ticker/Topic(href, href_list[], hsrc)
-	if(href_list["src"])
-		var/mob/M = href_list["src"]
-		M?.client?.scoreboard(global.round_id)
+	usr?.client?.scoreboard(global.round_id)
 
 /client/proc/scoreboard(roundid)
-	var/list/F = flist("data/scoreboard/end_icons/")
-	for(var/i in 1 to F.len)
-		src << browse_rsc(F[i], "logo_[i].png")
+	for(var/i in 1 to end_icons.len)
+		src << browse_rsc(end_icons[i],"logo_[i].png")
+
 	var/datum/browser/popup = new(src, "roundstats", "[roundid ? "Round #[roundid]" : "Last Round"] Stats", 1000, 600)
 	popup.set_content(file2text("data/last_score.txt"))
 	popup.open()

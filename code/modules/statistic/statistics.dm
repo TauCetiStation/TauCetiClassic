@@ -91,7 +91,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 
 	var/start_time = world.realtime
 	statfile << datum2json(src)
-	to_chat(stealth ? usr : world, "<span class='info'>Статистика была записана в файл за [(start_time - world.realtime)/10] секунд. </span>")
+	log_admin("Статистика была записана в файл за [(start_time - world.realtime)/10] секунд.")
+	message_admins("<font color='blue'>Статистика была записана в файл за [(start_time - world.realtime)/10] секунд.</font>")
 
 	to_chat(stealth ? usr : world, "<span class='info'>Статистика по этому раунду вскоре будет доступа по ссылке [generate_url()]</span>")
 
