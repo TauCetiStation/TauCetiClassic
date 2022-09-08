@@ -22,6 +22,7 @@
 	ID.access = list()
 	for(var/access in region_access)
 		ID.access += get_region_accesses(access)
+	icon_state = "[initial(icon_state)]_open"
 
 /obj/item/device/remote_device/Destroy()
 	remote_device_list -= src
