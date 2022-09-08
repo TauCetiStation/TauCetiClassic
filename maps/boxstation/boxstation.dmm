@@ -1641,6 +1641,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1726,6 +1729,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -2689,6 +2695,9 @@
 	},
 /area/station/security/main)
 "aeG" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 29
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -3659,6 +3668,9 @@
 "agu" = (
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 29
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -5042,6 +5054,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -5208,6 +5223,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5562,6 +5578,7 @@
 /obj/machinery/vending/wallmed1{
 	pixel_y = 30
 	},
+/obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitered"
@@ -9686,6 +9703,9 @@
 /area/station/security/detectives_office)
 "aql" = (
 /obj/item/weapon/flora/random,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -15774,6 +15794,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aBI" = (
@@ -17979,6 +18000,9 @@
 /area/station/civilian/bar)
 "aFT" = (
 /obj/machinery/computer/secure_data,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 29
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -19941,6 +19965,9 @@
 /obj/item/target,
 /obj/item/target,
 /obj/item/target,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -50864,6 +50891,7 @@
 /obj/item/weapon/storage/box/matches,
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/head/soft/orange,
+/obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brownold"
@@ -50874,6 +50902,7 @@
 /obj/item/clothing/suit/apron,
 /obj/item/clothing/suit/chef/classic,
 /obj/machinery/light/small,
+/obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned,
 /turf/simulated/floor{
 	icon_state = "brownold"
 	},
@@ -76123,6 +76152,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "kRb" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
@@ -77742,6 +77774,18 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"mOa" = (
+/obj/structure/closet{
+	name = "Evidence Closet"
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/security/brig)
 "mOb" = (
 /obj/structure/grille{
 	destroyed = 1
@@ -83929,6 +83973,9 @@
 "uUY" = (
 /obj/machinery/telescience_jammer{
 	radius = 5
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -113836,7 +113883,7 @@ aal
 abf
 acU
 aaZ
-adV
+mOa
 aeK
 afc
 afO
