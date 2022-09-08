@@ -1148,10 +1148,6 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "aca" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
 /obj/structure/rack,
 /obj/item/clothing/mask/gas/sechailer,
 /obj/item/clothing/mask/gas/sechailer,
@@ -1161,6 +1157,10 @@
 /obj/item/clothing/mask/gas/sechailer,
 /obj/item/clothing/mask/gas/sechailer,
 /obj/item/clothing/mask/gas/sechailer,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1816,6 +1816,10 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/alarm{
+	pixel_x = -28;
+	pixel_y = -6
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -2345,15 +2349,15 @@
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
+/obj/machinery/firealarm{
+	pixel_y = 22
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
 	},
 /area/station/security/armoury)
 "aea" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
 /obj/structure/table,
 /obj/machinery/recharger,
 /turf/simulated/floor{
@@ -2690,6 +2694,9 @@
 	dir = 4
 	},
 /obj/machinery/vending/donut,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -5578,7 +5585,6 @@
 /obj/machinery/vending/wallmed1{
 	pixel_y = 30
 	},
-/obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitered"
@@ -15794,7 +15800,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aBI" = (
@@ -50891,7 +50896,6 @@
 /obj/item/weapon/storage/box/matches,
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/head/soft/orange,
-/obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brownold"
@@ -50902,7 +50906,6 @@
 /obj/item/clothing/suit/apron,
 /obj/item/clothing/suit/chef/classic,
 /obj/machinery/light/small,
-/obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned,
 /turf/simulated/floor{
 	icon_state = "brownold"
 	},
@@ -77774,18 +77777,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"mOa" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -28
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/station/security/brig)
 "mOb" = (
 /obj/structure/grille{
 	destroyed = 1
@@ -113883,7 +113874,7 @@ aal
 abf
 acU
 aaZ
-mOa
+adV
 aeK
 afc
 afO
