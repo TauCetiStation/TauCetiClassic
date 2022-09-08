@@ -22724,13 +22724,11 @@
 	},
 /area/station/cargo/qm)
 "aOJ" = (
-/obj/structure/flora/ausbushes/grassybush{
-	pixel_x = -8
-	},
 /obj/machinery/camera{
 	c_tag = "Hydroponics Pasture";
 	dir = 1
 	},
+/obj/structure/chicken_feeder,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aOK" = (
@@ -55583,7 +55581,25 @@
 	},
 /area/station/maintenance/engineering)
 "bYp" = (
-/obj/structure/closet/crate,
+/obj/structure/closet/crate{
+	name = "TEG crate"
+	},
+/obj/item/weapon/circuitboard/teg,
+/obj/item/weapon/circuitboard/circulator,
+/obj/item/weapon/circuitboard/circulator,
+/obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/stock_parts/console_screen,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/matter_bin,
+/obj/item/weapon/stock_parts/matter_bin,
+/obj/item/stack/cable_coil,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -75224,6 +75240,13 @@
 	icon_state = "blue"
 	},
 /area/station/medical/reception)
+"jPv" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "jPO" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -76219,6 +76242,10 @@
 	icon_state = "damaged4"
 	},
 /area/station/maintenance/incinerator)
+"kZn" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "lab" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -78546,6 +78573,7 @@
 /obj/structure/window/reinforced/polarized{
 	id = "privateoffice"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/security/vacantoffice)
 "nSy" = (
@@ -80398,6 +80426,11 @@
 	icon_state = "barber"
 	},
 /area/station/civilian/locker)
+"qoQ" = (
+/obj/machinery/light/small,
+/obj/machinery/light/small,
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "qoS" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -81444,6 +81477,11 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
+"rxg" = (
+/mob/living/carbon/monkey,
+/obj/machinery/light/small,
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "rxx" = (
 /turf/environment/space,
 /area/shuttle/supply/station)
@@ -83996,6 +84034,7 @@
 /obj/structure/window/reinforced/polarized{
 	id = "privateoffice"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/security/vacantoffice)
 "vls" = (
@@ -128495,15 +128534,15 @@ aaa
 cbD
 cjr
 ckD
-ckC
+kZn
 cjv
 cjr
 ckC
-ckC
+kZn
 cjv
 cjr
 ckD
-ckC
+kZn
 cjv
 axv
 cey
@@ -130029,7 +130068,7 @@ aaa
 aah
 czC
 aqu
-cxU
+jPv
 cxU
 aqx
 arf
@@ -131065,15 +131104,15 @@ aaa
 cbD
 nXs
 nXs
-nXs
+rxg
 cjv
 cjr
 ckC
-ckC
+kZn
 cjv
 cjr
 ckC
-ckC
+qoQ
 cjv
 cuL
 cey

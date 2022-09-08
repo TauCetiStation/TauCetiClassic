@@ -245,7 +245,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
+	if(!istype(src.loc, /turf) || usr.stat != CONSCIOUS || usr.restrained() )
 		return
 
 	var/turf/T = src.loc
@@ -763,14 +763,14 @@
 		return
 
 	var/skill_bonus = 1
-	
+
 	//in case item have no defined default required_skill or we need to check other skills e.g. check crowbar for surgery
 	if(required_skills_override)
 		skill_bonus = apply_skill_bonus(user, 1, required_skills_override, skills_speed_bonus)
 	else if(required_skills) //default check for item
 		skill_bonus = apply_skill_bonus(user, 1, required_skills, skills_speed_bonus)
-	
-	
+
+
 	delay *= toolspeed
 	delay *= max(skill_bonus, 0.1)
 

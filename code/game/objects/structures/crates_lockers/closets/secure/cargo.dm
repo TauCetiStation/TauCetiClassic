@@ -79,3 +79,7 @@
 	new /obj/item/clothing/head/soft/trash(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/clothing/suit/recyclervest(src)
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
+		new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
