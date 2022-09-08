@@ -32,6 +32,7 @@
 	if(!emagged)
 		emagged = TRUE
 		to_chat(user, "<span class='notice'>You sneakily swipe through [src], and now it can electrify doors.</span>")
+		add_overlay(image(icon, "emagged"))
 		return TRUE
 	return FALSE
 
@@ -42,14 +43,20 @@
 	if(mode == REMOTE_OPEN)
 		if(emagged)
 			mode = REMOTE_ELECT
-		else mode = REMOTE_BOLT
+		else
+			mode = REMOTE_BOLT
+			icon_state = "[initial(icon_state)]_bolt"
 	else if(mode == REMOTE_BOLT)
 		mode = REMOTE_EMERGENCY
+		icon_state = "[initial(icon_state)]_emergency"
 	else if(mode == REMOTE_EMERGENCY)
 		mode = REMOTE_OPEN
+		icon_state = "[initial(icon_state)]_open"
 	else if(mode == REMOTE_ELECT)
 		mode = REMOTE_BOLT
+		icon_state = "[initial(icon_state)]_bolt"
 	to_chat(user, "Now in mode: [mode].")
+	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/item/device/remote_device/afterattack(atom/target, mob/user, proximity, params)
 	if(!istype(target, /obj/machinery/door/airlock))
@@ -93,6 +100,9 @@
 		D.add_hiddenprint(user)
 	else
 		to_chat(user, "<span class='danger'>[src] does not have access to this door.</span>")
+
+/obj/item/device/remote_device/update_icon()
+
 
 /obj/item/device/remote_device/ERT
 	name = "ERT door remote"
