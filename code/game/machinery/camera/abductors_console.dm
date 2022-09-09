@@ -1,11 +1,7 @@
 /obj/machinery/computer/camera_advanced/abductor
 	name = "Human Observation Console"
-	//var/team_number = 0
 	networks = list("SS13", "abductor")
 	var/obj/machinery/abductor/console/console
-	/// We can't create our actions until after LateInitialize
-	/// So we instead do it on the first call to GrantActions
-	//var/abduct_created = FALSE
 	var/team = 0
 	lock_override = CAMERA_LOCK_STATION | CAMERA_LOCK_MINING | CAMERA_LOCK_CENTCOM
 
@@ -18,18 +14,10 @@
 
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "camera"
-	//icon_keyboard = null
-	//resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/machinery/computer/camera_advanced/abductor/atom_init()
 	. = ..()
 	abductor_machinery_list += src
-	/*actions += new I (console.pad)
-	actions += new O (console)
-	actions += new S (console.pad)
-	actions += new M (console)
-	actions += new D (console)
-	actions += new P (console)*/
 	actions += I
 	actions += O
 	actions += S
@@ -37,13 +25,7 @@
 	actions += D
 	actions += P
 	networks += "Abductor[team]"
-	/*actions += new /datum/action/innate/teleport_in(console.pad)
-	actions += new /datum/action/innate/teleport_out(console)
-	actions += new /datum/action/innate/teleport_self(console.pad)
-	actions += new /datum/action/innate/vest_mode_swap(console)
-	actions += new /datum/action/innate/vest_disguise_swap(console)
-	actions += new /datum/action/innate/set_droppoint(console)
-*/
+
 /obj/machinery/computer/camera_advanced/abductor/Destroy()
 	if(console)
 		console.camera = null
@@ -55,31 +37,10 @@
 	user_camera_icon = 'icons/obj/abductor.dmi'
 	icon_state = "camera_target"
 
-/*/obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/user)
-	for(var/datum/action/to_grant as anything in actions)
-		to_grant.target = console
-		to_grant.Grant(user)
-*/
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
 	..()
 	eyeobj = new /mob/camera/Eye/remote/abductor(get_turf(src))
 	eyeobj.origin = src
-	/*//eyeobj.visible_icon = TRUE
-	eyeobj.user_camera_icon = 'icons/obj/abductor.dmi'
-	eyeobj.icon_state = "camera_target"
-	//eyeobj.invisibility = INVISIBILITY_OBSERVER
-*/
-/*/obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/carbon/user)
-	if(!abduct_created)
-		abduct_created = TRUE
-		actions += new (console.pad)
-		actions += new (console.pad)
-		actions += new (console.pad)
-		actions += new (console.pad)
-		actions += new (console.pad)
-		actions += new (console.pad)
-	..()
-*/
 /datum/action/innate
 	action_type = AB_INNATE
 
@@ -103,10 +64,6 @@
 	var/obj/machinery/computer/camera_advanced/abductor/A = target
 	var/obj/machinery/abductor/pad/P = A.console.pad
 
-	/*var/area/target_area = get_area(remote_eye)
-	if(target_area.area_flags & ABDUCTOR_PROOF)
-		to_chat(owner, "<span class='warning'>This area is too heavily shielded to safely transport to.</span>")
-		return*/
 	if(remote_eye.loc.z in SSmapping.levels_by_trait(ZTRAIT_CENTCOM))
 		to_chat(owner, "<span class='warning'>This place is out of bounds of pad' working zone</span>")
 		return
@@ -147,10 +104,6 @@
 	var/obj/machinery/computer/camera_advanced/abductor/A = target
 	var/obj/machinery/abductor/pad/P = A.console.pad
 
-	/*var/area/target_area = get_area(remote_eye)
-	if(target_area.area_flags & ABDUCTOR_PROOF)
-		to_chat(owner, "<span class='warning'>This area is too heavily shielded to safely transport to.</span>")
-		return*/
 	if(remote_eye.loc.z in SSmapping.levels_by_trait(ZTRAIT_CENTCOM))
 		to_chat(owner, "<span class='warning'>This place is out of bounds of pad' working zone</span>")
 		return

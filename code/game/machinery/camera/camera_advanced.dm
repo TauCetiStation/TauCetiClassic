@@ -47,15 +47,6 @@
 	for(var/datum/action/to_grant as anything in actions)
 		to_grant.target = src
 		to_grant.Grant(user)
-/*	if(off_action)
-		off_action.target = user
-		off_action.Grant(user)
-
-
-	if(jump_action)
-		jump_action.target = user
-		jump_action.Grant(user)
-*/
 
 /obj/machinery/computer/camera_advanced/proc/remove_eye_control(mob/living/user)
 	if(!user)
