@@ -2,11 +2,16 @@
 	pools = list(
 		QUALITY_POOL_QUIRKIEISH
 	)
-
+	/*
+	Fill in one of the two fields to move there at the beginning of the round
+	Check SSjob substystem for more info
+	*/
 	var/list/area/target_area = list()
 	var/turf/target_turf = null
 
 /datum/quality/relocate/proc/setup()
+	if(target_turf)
+		return target_turf
 	if(target_area.len)
 		var/area/avaible_area = get_area_by_type(pick(target_area))
 		var/list/list_of_turfs = list()
@@ -37,13 +42,32 @@
 		if(generate_turf)
 			return generate_turf
 
-/datum/quality/relocate/escrava_isaura
-	name = "Escrava Isaura"
-	desc = "ВНИМАНИЕ: ТЯЖЁЛЫЙ СЦЕНАРИЙ, БУДЬТЕ ГОТОВЫ К ТЯЖЁЛОМУ НАЧАЛУ ИЛИ ЧТО ИГРА ДЛЯ ВАС НЕ НАЧНЁТСЯ ВОВСЕ. Вы просыпаетесь в ящике и обнаруживаете, что вы в неизвестном для вас месте. Не дайте себя в обиду!"
-	requirement = "Раса Таяран."
-	target_area = list(/area/station/cargo/storage)
+/datum/quality/relocate/special_case
+	name = "Special case"
+	desc = "У тебя сегодня очень плохой день. Возможно, ты помнишь как оказался здесь и откуда у тебя эти раны."
+	requirement = "Нет."
+	//slimes from xenobio gets alot time for awaking and get away from cell
+	target_area = list(
+				/area/station/cargo/miningoffice,
+				/area/station/cargo/storage,
+				/area/station/engineering/engine,
+				/area/station/engineering/drone_fabrication,
+				/area/station/maintenance/escape,
+				/area/station/maintenance/incinerator,
+				/area/station/bridge/nuke_storage,
+				/area/station/gateway,
+				/area/station/medical/medbreak,
+				/area/station/medical/psych,
+				/area/station/security/execution,
+				/area/station/security/prison,
+				/area/station/security/armoury,
+				/area/station/rnd/xenobiology,
+				/area/station/storage/emergency2,
+				/area/station/storage/tech,
+				/area/station/aisat/teleport,
+				)
 
-/datum/quality/relocate/tajaran_prisoner/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/relocate/special_case/add_effect(mob/living/carbon/human/H, latespawn)
 	var/list/slots = H.get_all_slots()
 	for(var/obj/W in slots)
 		if(W == H.wear_id)
@@ -51,29 +75,7 @@
 		if(W == H.l_ear)
 			continue
 		qdel(W)
-	/*if(H.wear_mask)
-		qdel(H.wear_mask)
-	if(H.belt)
-		qdel(H.belt)
-	if(H.w_uniform)
-		qdel(H.w_uniform)
-	if(H.head)
-		qdel(H.head)
-	if(H.wear_suit)
-		qdel(H.wear_suit)
-	if(H.back)
-		qdel(H.back)
-	if(H.shoes)
-		qdel(H.shoes)
-	if(H.l_ear)
-		qdel(H.l_ear)
-
-	var/spawn_loc = get_turf(H.loc)
-	var/obj/structure/closet/critter/C = new(spawn_loc)
-	H.loc = C
-	var/obj/structure/bigDelivery/P = new(spawn_loc)
-	C.loc = P
-	*/
-	H.AdjustDrunkenness(100)
-	H.adjust_bodytemperature(-80, min_temp = 80)
-	H.adjustBruteLoss(50)
+	H.AdjustDrunkenness(500)
+	H.adjust_bodytemperature(-300, min_temp = 0)
+	H.adjustBruteLoss(100)
+	H.AdjustSleeping(150, ignore_sleepimmune = TRUE)

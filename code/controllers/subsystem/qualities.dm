@@ -18,9 +18,9 @@ SUBSYSTEM_DEF(qualities)
 	// Balance between NEGATIVEISH and QUIRKEISH should be around 1 to 1, but since (so 40-30-30 overall)
 	// there's not many QUIRKEISH qualities at all, they are given lower priority.
 	var/list/pool_distribution = list(
-		QUALITY_POOL_POSITIVEISH = 1,
-		QUALITY_POOL_QUIRKIEISH = 98,
-		QUALITY_POOL_NEGATIVEISH = 1,
+		QUALITY_POOL_POSITIVEISH = 50,
+		QUALITY_POOL_QUIRKIEISH = 20,
+		QUALITY_POOL_NEGATIVEISH = 30,
 	)
 
 	// ckey = quality_type
