@@ -33,15 +33,18 @@
 	var/obj/item/clothing/suit/armor/abductor/vest/vest
 	var/obj/machinery/abductor/experiment/experiment
 	var/obj/machinery/abductor/pad/pad
+	var/obj/machinery/computer/camera_advanced/abductor/camera
 	var/list/datum/icon_snapshot/disguises = list()
 	var/show_price_list = FALSE
 	var/list/price_list = list(
 							"heal injector" 					=2,
 							"decloner"							=2,
 							"advanced baton"					=2,
+							"addtional permissions"				=2,
+							"advanced console"					=1,
+							"radio silencer"					=1,
 							"science tool" 						=1,
 							"agent helmet" 						=1,
-							"radio silencer"					=1,
 							"additional agent equipment" 		=1,
 							"additional scientist equipment" 	=1,
 							"silence_gloves"					=3)
@@ -58,6 +61,9 @@
 	if(pad)
 		pad.console = null
 		pad = null
+	if(camera)
+		camera.console = null
+		camera = null
 	return ..()
 
 /obj/machinery/abductor/console/interact(mob/user)
@@ -81,7 +87,9 @@
 		dat += "<a href='?src=\ref[src];dispense=injector'>Heal Injector</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=pistol'>Decloner</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=baton'>Advanced Baton</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=permissions'>Additional Permissions for Advanced Baton</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=helmet'>Agent Helmet</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=adv_console'>Advanced Console</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=silencer'>Radio Silencer</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=tool'>Science Tool</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=agent_gear'>Additional agent equipment</A><br>"
@@ -145,6 +153,24 @@
 				Dispense(/obj/item/weapon/lazarus_injector/alien, 2)
 			if("pistol")
 				Dispense(/obj/item/weapon/gun/energy/decloner/alien, 2)
+			if("permissions")
+				if(experiment && experiment.points >= 2)
+					experiment.points -= 2
+					visible_message("Addtitional permisions has been aquired! You can use all advanced baton's modes now!")
+					baton_modules_bought = TRUE
+				else
+					visible_message("Insufficent data!")
+			if("adv_console")
+				if(experiment && experiment.points >= 2)
+					experiment.points -= 2
+					visible_message("Agent Observation Console has been replaced with advanced one.")
+					for(var/obj/machinery/computer/security/abductor_ag/C in computer_list)
+						if(C.team == team)
+							camera = new(get_turf(C))
+							camera.console = src
+							qdel(C)
+				else
+					visible_message("Insufficent data!")
 			if("baton")
 				Dispense(/obj/item/weapon/abductor_baton, 2)
 			if("helmet")
@@ -227,6 +253,11 @@
 		if(e.team == team)
 			experiment = e
 			e.console = src
+
+	for(var/obj/machinery/computer/camera_advanced/abductor/c in abductor_machinery_list)
+		if(c.team == team)
+			camera = c
+			c.console = src
 
 /obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
 	var/datum/icon_snapshot/entry = new

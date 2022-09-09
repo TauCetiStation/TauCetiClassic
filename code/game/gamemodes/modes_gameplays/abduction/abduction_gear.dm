@@ -217,12 +217,17 @@
 	if(marked == target)
 		to_chat(user, "<span class='notice'>This specimen is already marked.</span>")
 		return
-	if(ishuman(target))
-		if(IsAbductor(target))
-			marked = target
-			to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
-		else
-			prepare(target, user)
+	if(IsAbductor(target) || istype(target, /mob/living/simple_animal/cow))
+		var/mob/M = target
+		var/datum/role/R = M.mind.GetRoleByType(/datum/role/abductor)
+		if(R) // Now, we shouldn't let two teams to steal one another
+			var/datum/role/R2 = user.mind.GetRoleByType(/datum/role/abductor)
+			if(R.faction != R2.faction)
+				to_chat(user, "<span class='notice'>One team shouldn't interfere with another by this means!</span>")
+				user.burn_skin(40)
+				return
+		marked = target
+		to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
 	else
 		prepare(target, user)
 
@@ -698,10 +703,10 @@
  4.Сделайте надрез скальпелем в области груди особи.<br>
  5.Остановите кровотечение с помощью щипцов.<br>
  6.Раскройте надрез хирургическим зажимом.<br>
- 7.Вскройте грудную клетку пилой и зафиксируйте с помощью зажима.<br>
+ 7.Вскройте грудную клетку пилой и раскройте с помощью щипцов.<br>
  8.Сделайте небольшое углубление во внутренностях особи дрелью. Это не так плохо для субъекта, как звучит.<br>
  9.Поместите внутрь разреза гланду. (Их можно получить в раздатчике гланд.)<br>
- 10.<b>ОПЦИОНАЛЬНО.</b> Закройте вскрытую грудную клетку субъекта, замажьте гелем или эктоплазмой и прижгите рану.<br>
+ 10.Закройте вскрытую грудную клетку субъекта, замажьте гелем или эктоплазмой и прижгите рану.<br>
  11.Оденьте особь, чтобы не потревожить среду обитания.<br>
  12.Поместите субъект в устройство для экспериментов.<br>
  13.Выберите одну из настроек устройства и следуйте показанным там инструкциям.<br>

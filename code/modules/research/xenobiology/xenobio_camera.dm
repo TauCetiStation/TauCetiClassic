@@ -69,7 +69,7 @@
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/user)
 	..()
 
-	if(slime_up_action)
+	/*if(slime_up_action)
 		slime_up_action.target = src
 		slime_up_action.Grant(user)
 
@@ -92,7 +92,7 @@
 	if(hotkey_help)
 		hotkey_help.target = src
 		hotkey_help.Grant(user)
-
+*/
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, .proc/XenoSlimeClickCtrl)
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)
 	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)

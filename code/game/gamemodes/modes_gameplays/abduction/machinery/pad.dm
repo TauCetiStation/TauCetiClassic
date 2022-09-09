@@ -6,6 +6,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "alien-pad-idle"
 	anchored = TRUE
+	var/obj/machinery/abductor/console/console
 	var/area/teleport_target
 	var/target_name
 
@@ -65,3 +66,34 @@
 	spawn(0)
 		anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 	Warp(target)
+
+/obj/machinery/abductor/pad/proc/doMobToLoc(place, atom/movable/target)
+	flick("alien-pad", src)
+	target.forceMove(place)
+	new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
+
+/obj/machinery/abductor/pad/proc/MobToLoc(place,mob/living/target)
+	new /obj/effect/temp_visual/teleport_abductor(place)
+	addtimer(CALLBACK(src, .proc/doMobToLoc, place, target), 80)
+
+/obj/machinery/abductor/pad/proc/doPadToLoc(place)
+	flick("alien-pad", src)
+	for(var/mob/living/target in get_turf(src))
+		target.forceMove(place)
+		new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
+
+/obj/machinery/abductor/pad/proc/PadToLoc(place)
+	new /obj/effect/temp_visual/teleport_abductor(place)
+	addtimer(CALLBACK(src, .proc/doPadToLoc, place), 80)
+
+/obj/effect/temp_visual/teleport_abductor
+	name = "Huh"
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "teleport"
+	duration = 80
+
+/obj/effect/temp_visual/teleport_abductor/atom_init()
+	. = ..()
+	var/datum/effect/effect/system/spark_spread/S = new
+	S.set_up(10,0,loc)
+	S.start()
