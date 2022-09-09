@@ -30,7 +30,7 @@
 
 /datum/event/carp_migration/end()
 	for(var/mob/living/simple_animal/hostile/carp/C in spawned_carp)
-		if(!C.stat)
+		if(C.stat == CONSCIOUS)
 			var/turf/T = get_turf(C)
 			if(isenvironmentturf(T))
 				qdel(C)
