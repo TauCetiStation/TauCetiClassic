@@ -531,5 +531,5 @@
 	global.quality_landmarks += src
 
 
-/obj/effect/landmark/quality_relocate/special_case
-	name = "Quality SC"
+/obj/effect/landmark/quality_relocate/bad_day
+	name = "Quality BD"

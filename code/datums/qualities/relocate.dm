@@ -9,7 +9,6 @@
 
 
 /datum/quality/relocate/add_effect(mob/living/carbon/human/H, latespawn)
-	SHOULD_CALL_PARENT(TRUE)
 	var/obj/effect/landmark/quality_relocate/spawn_landmark = pick(quality_landmarks)
 	if(!spawn_landmark)
 		return
@@ -22,13 +21,13 @@
 	if(spawn_locs.len)
 		H.forceMove(pick(spawn_locs))
 
-/datum/quality/relocate/special_case
-	name = "Special case"
+/datum/quality/relocate/bad_day
+	name = "Bad Day"
 	desc = "У тебя сегодня очень плохой день. Возможно, ты помнишь как оказался здесь и откуда у тебя эти раны."
 	requirement = "Нет."
-	quality_landmarks = list(/obj/effect/landmark/quality_relocate/special_case)
+	quality_landmarks = list(/obj/effect/landmark/quality_relocate/bad_day)
 
-/datum/quality/relocate/special_case/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/relocate/bad_day/add_effect(mob/living/carbon/human/H, latespawn)
 	. = ..()
 	var/list/slots = H.get_all_slots()
 	for(var/obj/W in slots)
