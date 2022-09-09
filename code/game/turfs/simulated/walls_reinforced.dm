@@ -254,9 +254,8 @@
 	if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
 		user.do_attack_animation(src)
 		visible_message("<span class='warning'><B>[user]</B> бьет укрепленную стену!</span>")
-		if(C.use_charge(user, 4))
-			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			take_damage(30)
+		playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+		take_damage(30)
 		return
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
