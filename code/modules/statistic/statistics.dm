@@ -30,8 +30,6 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	// int, [1...]
 	var/round_id
 	// int, [1...]
-	var/last_round_id
-	// string, [hh:mm:ss]
 	var/start_time
 	// string, [hh:mm:ss]
 	var/end_time
