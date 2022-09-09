@@ -291,6 +291,7 @@
 	if(cooldown < initial(cooldown))
 		cooldown++
 		if(cooldown == initial(cooldown))
+			to_chat(imp_in, "<span class='warning'>Your [name] recharged!</span>")
 			STOP_PROCESSING(SSobj, src)
 
 

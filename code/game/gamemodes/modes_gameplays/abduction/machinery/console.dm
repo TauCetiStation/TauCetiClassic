@@ -80,9 +80,19 @@
 		dat += "<a href='?src=\ref[src];dispense=injector'>Heal Injector</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=pistol'>Decloner</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=baton'>Advanced Baton</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=permissions'>Additional Permissions for Advanced Baton</A><br>"
+
+		if(!baton_modules_bought)
+			dat += "<a href='?src=\ref[src];dispense=permissions'>Additional Permissions for Advanced Baton</A><br>"
+		else
+			dat += "<span class='disabled'>Additional Permissions for Advanced Baton</span><br>"
+
 		dat += "<a href='?src=\ref[src];dispense=helmet'>Agent Helmet</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=adv_console'>Advanced Console</A><br>"
+
+		if(!camera)
+			dat += "<a href='?src=\ref[src];dispense=adv_console'>Advanced Console</A><br>"
+		else
+			dat += "<span class='disabled'>Advanced Console</span><br>"
+
 		dat += "<a href='?src=\ref[src];dispense=silencer'>Radio Silencer</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=tool'>Science Tool</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=agent_gear'>Additional agent equipment</A><br>"
@@ -135,7 +145,8 @@
 	else if(href_list["teleporter_send"])
 		TeleporterSend()
 	else if(href_list["teleporter_retrieve"])
-		TeleporterRetrieve()
+		if(do_after(usr, 7 SECONDS, FALSE, src))
+			TeleporterRetrieve()
 	else if(href_list["flip_vest"])
 		FlipVest()
 	else if(href_list["select_disguise"])
@@ -177,6 +188,7 @@
 					var/obj/item/weapon/card/id/syndicate/C = new(pad.loc)
 					C.name = "Card"
 					C.access = list()
+					new /obj/item/clothing/shoes/boots/combat(pad.loc)
 			if("scientist_gear")
 				if(Dispense(/obj/item/clothing/gloves/combat))
 					new /obj/item/clothing/glasses/hud/health/night(pad.loc)
