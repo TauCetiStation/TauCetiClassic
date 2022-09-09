@@ -8665,8 +8665,8 @@
 	name = "KEEP CLEAR: DOCKING AREA";
 	pixel_y = -32
 	},
-/turf/environment/space,
-/area/shuttle/arrival/station)
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space)
 "bSb" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
@@ -132524,7 +132524,7 @@ lUa
 lUa
 lUa
 lUa
-bRU
+lUa
 icY
 icY
 icY
@@ -133038,7 +133038,7 @@ hGN
 hGN
 hGN
 hGN
-hGN
+bRU
 oPI
 tod
 oPI
