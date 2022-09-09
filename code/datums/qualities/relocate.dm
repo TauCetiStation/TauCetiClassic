@@ -21,13 +21,13 @@
 				return null
 			if(T.density == 1)
 				continue
-			var/list/obj = list()
+			var/list/obstacles = list()
 			for(var/i in T.contents)
 				if(istype(i, /atom/movable/lighting_object))
 					continue
 				if(i)
-					obj += i
-			if(obj.len)
+					obstacles += i
+			if(obstacles.len)
 				continue
 			list_of_turfs += T
 		if(list_of_turfs.len)
