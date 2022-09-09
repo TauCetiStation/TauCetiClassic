@@ -8,6 +8,7 @@
 /obj/item/weapon/storage
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
+	flags = HEAR_TALK
 	w_class = SIZE_SMALL
 	var/list/can_hold = list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = list() //List of objects which this item can't store (in effect only if can_hold isn't set)
@@ -446,7 +447,7 @@
 //BubbleWrap END
 
 /obj/item/weapon/storage/hear_talk(mob/M, text, verb, datum/language/speaking)
-	for (var/atom/A in src)
+	for (var/atom/A in src) // todo: we need it? say() should already catch all objects recursively
 		if(istype(A,/obj))
 			var/obj/O = A
 			O.hear_talk(M, text, verb, speaking)

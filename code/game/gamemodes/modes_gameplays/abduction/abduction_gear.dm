@@ -86,27 +86,17 @@
 
 	DeactivateStealth()
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/IsAbductor(user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.species.name != ABDUCTOR)
-			return FALSE
-		return TRUE
-	return FALSE
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(user)
-	if(IsAbductor(user))
+/obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(mob/user)
+	if(isabductor(user))
 		return TRUE
 	to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
 	return FALSE
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/AgentCheck(mob/living/carbon/human/user)
-	return isabductoragent(user)
-
 /obj/item/clothing/suit/armor/abductor/vest/attack_self(mob/user)
 	if(!AbductorCheck(user))
 		return
-	if(!AgentCheck(user))
+	if(!isabductoragent(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
@@ -138,22 +128,11 @@
 
 
 //SCIENCE TOOL
-/obj/item/device/abductor/proc/IsAbductor(user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.species.name != ABDUCTOR)
-			return FALSE
-		return TRUE
-	return FALSE
-
-/obj/item/device/abductor/proc/AbductorCheck(user)
-	if(IsAbductor(user))
+/obj/item/device/abductor/proc/AbductorCheck(mob/user)
+	if(isabductor(user))
 		return TRUE
 	to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
 	return FALSE
-
-/obj/item/device/abductor/proc/ScientistCheck(mob/living/carbon/human/user)
-	return isabductorsci(user)
 
 /obj/item/device/abductor/gizmo
 	name = "science tool"
@@ -169,7 +148,7 @@
 /obj/item/device/abductor/gizmo/attack_self(mob/user)
 	if(!AbductorCheck(user))
 		return
-	if(!ScientistCheck(user))
+	if(!isabductorsci(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	if(mode == GIZMO_SCAN)
@@ -183,7 +162,7 @@
 /obj/item/device/abductor/gizmo/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
 		return
-	if(!ScientistCheck(user))
+	if(!isabductorsci(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
@@ -198,7 +177,7 @@
 		return
 	if(!AbductorCheck(user))
 		return
-	if(!ScientistCheck(user))
+	if(!isabductorsci(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
@@ -217,7 +196,7 @@
 	if(marked == target)
 		to_chat(user, "<span class='notice'>This specimen is already marked.</span>")
 		return
-	if(IsAbductor(target) || istype(target, /mob/living/simple_animal/cow))
+	if(isabductor(M) || istype(target, /mob/living/simple_animal/cow))
 		var/mob/M = target
 		var/datum/role/R = M.mind.GetRoleByType(/datum/role/abductor)
 		if(R) // Now, we shouldn't let two teams to steal one another
@@ -346,7 +325,7 @@
 	var/obj/machinery/camera/helm_cam
 
 /obj/item/clothing/head/helmet/abductor/attack_self(mob/living/carbon/human/user)
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
 		return
 	if(helm_cam)
@@ -371,17 +350,6 @@
 		to_chat(user, "<span class='notice'>Abductor detected. Camera activated.</span>")
 		return
 
-/obj/item/clothing/head/helmet/abductor/proc/IsAbductor(mob/living/user)
-	if(!ishuman(user))
-		return FALSE
-	var/mob/living/carbon/human/H = user
-	if(!H.species)
-		return FALSE
-	if(H.species.name != ABDUCTOR)
-		return FALSE
-	return TRUE
-
-
 //ADVANCED BATON
 #define BATON_STUN 0
 #define BATON_SLEEP 1
@@ -404,9 +372,9 @@
 	var/obj/machinery/abductor/console/console
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		return
-	if(!AgentCheck(user))
+	if(!isabductoragent(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	if(!console || !console.baton_modules_bought)
@@ -444,21 +412,8 @@
 			icon_state = "wonderprodProbe"
 			item_state = "wonderprodProbe"
 
-/obj/item/weapon/abductor_baton/proc/IsAbductor(mob/living/user)
-	if(!ishuman(user))
-		return FALSE
-	var/mob/living/carbon/human/H = user
-	if(!H.species)
-		return FALSE
-	if(H.species.name != ABDUCTOR)
-		return FALSE
-	return TRUE
-
-/obj/item/weapon/abductor_baton/proc/AgentCheck(mob/living/carbon/human/user)
-	return isabductoragent(user)
-
 /obj/item/weapon/abductor_baton/attack(mob/target, mob/living/user)
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		return
 
 	if(isrobot(target))

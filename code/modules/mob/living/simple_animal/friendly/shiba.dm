@@ -45,7 +45,7 @@
 /mob/living/simple_animal/shiba/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/newspaper))
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(!stat)
+		if(stat == CONSCIOUS)
 			visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
@@ -57,7 +57,7 @@
 /mob/living/simple_animal/shiba/Life()
 	..()
 
-	if(!stat && !buckled)
+	if(stat == CONSCIOUS && !buckled)
 		if(prob(1))
 			emote("dance")
 
@@ -66,7 +66,7 @@
 			me_emote(pick("barks!","woofs loudly!","eyes [histoy] joyfully."))
 		break
 
-	if(!stat && !buckled)
+	if(stat == CONSCIOUS && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			walk_to(src,0)

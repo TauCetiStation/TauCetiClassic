@@ -23943,7 +23943,7 @@
 	},
 /area/station/civilian/chapel)
 "olz" = (
-/obj/structure/flora/junglebush,
+/obj/structure/chicken_feeder,
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "omu" = (

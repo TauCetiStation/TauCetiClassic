@@ -219,7 +219,7 @@
 	. = ..()
 	if(client)
 		return
-	if(!stat)
+	if(stat == CONSCIOUS)
 		icon_state = "parrot_fly" //It is going to be flying regardless of whether it flees or attacks
 
 		if(parrot_state == PARROT_PERCH)
@@ -237,7 +237,7 @@
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(obj/item/O, mob/user)
 	..()
-	if(!stat && !client && !istype(O, /obj/item/stack/medical))
+	if(stat == CONSCIOUS && !client && !istype(O, /obj/item/stack/medical))
 		if(O.force)
 			if(parrot_state == PARROT_PERCH)
 				parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -253,7 +253,7 @@
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
-	if(!stat && !client)
+	if(stat == CONSCIOUS && !client)
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
@@ -276,7 +276,7 @@
 			parrot_state = PARROT_WANDER
 		return
 
-	if(client || stat)
+	if(client || stat != CONSCIOUS)
 		return //Lets not force players or dead/incap parrots to move
 
 	if(!isturf(src.loc) || !canmove)
@@ -461,7 +461,7 @@
 		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it
 											// ! and i'm not going to invent new alg for this
 			//If the mob we've been chasing/attacking dies or falls into crit, check for loot!
-			if(L.stat)
+			if(L.stat != CONSCIOUS)
 				parrot_interest = null
 				if(!held_item)
 					held_item = steal_from_ground()
@@ -711,7 +711,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	. = ..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
-	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(stat == CONSCIOUS && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		rounds_survived = max(++rounds_survived,1)
 		if(rounds_survived > longest_survival)
 			longest_survival = rounds_survived
@@ -825,6 +825,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 
 
 /mob/living/simple_animal/parrot/proc/parrot_hear(message="")
-	if(!message || stat)
+	if(!message || stat != CONSCIOUS)
 		return
 	speech_buffer.Add(message)
