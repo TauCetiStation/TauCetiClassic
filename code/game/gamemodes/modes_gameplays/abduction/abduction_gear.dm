@@ -192,18 +192,18 @@
 			console.AddSnapshot(target)
 			to_chat(user, "<span class='notice'>You scan [target] and add them to the database.</span>")
 
-/obj/item/device/abductor/gizmo/proc/mark(atom/target, mob/living/user)
+/obj/item/device/abductor/gizmo/proc/mark(mob/target, mob/living/user)
 	if(marked == target)
 		to_chat(user, "<span class='notice'>This specimen is already marked.</span>")
 		return
-	if(isabductor(M) || istype(target, /mob/living/simple_animal/cow))
+	if(isabductor(target) || istype(target, /mob/living/simple_animal/cow))
 		var/mob/M = target
 		var/datum/role/R = M.mind.GetRoleByType(/datum/role/abductor)
 		if(R) // Now, we shouldn't let two teams to steal one another
 			var/datum/role/R2 = user.mind.GetRoleByType(/datum/role/abductor)
 			if(R.faction != R2.faction)
-				to_chat(user, "<span class='notice'>One team shouldn't interfere with another by this means!</span>")
-				user.burn_skin(40)
+				to_chat(user, "<span class='notice'>One team shouldn't interfere with another by these means!</span>")
+				user.burn_skin(40) //You dont wanna to repeat, yea?
 				return
 		marked = target
 		to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
