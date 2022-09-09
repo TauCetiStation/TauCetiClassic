@@ -383,6 +383,7 @@
 #include "code\datums\qualities\positiveish.dm"
 #include "code\datums\qualities\quality.dm"
 #include "code\datums\qualities\quirkieish.dm"
+#include "code\datums\qualities\relocate.dm"
 #include "code\datums\spawners_menu\spawners.dm"
 #include "code\datums\spawners_menu\spawners_menu.dm"
 #include "code\datums\spells\area_teleport.dm"
