@@ -424,12 +424,6 @@ SUBSYSTEM_DEF(ticker)
 			if(!isnewplayer(M))
 				to_chat(M, "Captainship not forced on anyone.")
 
-/datum/controller/subsystem/ticker/proc/generate_scoreboard(mob/one_mob)
-	var/completition = "<h1>Round End Information</h1><HR>"
-	completition += get_ai_completition()
-	completition += mode.declare_completion()
-	scoreboard(completition, one_mob)
-
 /datum/controller/subsystem/ticker/proc/get_ai_completition()
 	var/ai_completions = ""
 	if(silicon_list.len)
@@ -533,8 +527,6 @@ SUBSYSTEM_DEF(ticker)
 
 	//Print a list of antagonists to the server log
 	antagonist_announce()
-
-	generate_scoreboard()
 
 	mode.ShuttleDocked(location)
 

@@ -209,9 +209,11 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	to_chat(src, "<span class='notice'>UI resource files resent successfully. If you are still having issues, please try manually clearing your BYOND cache.</span>")
 
-/client/verb/show_scoreboard()
-	set name = "Show Last Scoreboard"
-	set desc = "Shows the scoreboard of the last round."
+/client/verb/show_scoreboard_verb()
+	set name = "Show Round Scoreboard"
+	set desc = "Shows the scoreboard of the last rounds."
 	set category = "OOC"
 
-	scoreboard()
+	var/roundid = input("Введите номер раунда, титры которого желаете посмотреть. Оставьте пустым и будет выбран последний закончившийся раунд.", "Номер раунда") as num|null
+
+	show_scoreboard(roundid)

@@ -68,7 +68,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 		if(tgui_alert(mob, "Вы уверены? Три.", "Вы уверены?", list("Дa", "Да", "Нет")) != "Да")
 			return
 
-	SSticker.generate_scoreboard(mob)
+	SSStatistics.generate_scoreboard(mob)
 	message_admins("Admin [key_name_admin(usr)] has forced made a scoreboard.")
 
 /client/proc/save_statistics()

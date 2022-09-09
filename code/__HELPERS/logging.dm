@@ -278,3 +278,12 @@
 		text += "no antagonists this moment"
 
 	log_game(text)
+
+//returns the id of the last round on the current port, which ended with 'proper completion' and has all the logs
+/proc/get_last_proper_ended_round_id()
+	if(!establish_db_connection("erro_round"))
+		return
+	var/DBQuery/query = dbcon.NewQuery("SELECT id FROM erro_round WHERE server_port = '[sanitize_sql(world.port)]' AND end_state = 'proper completion' ORDER BY id DESC LIMIT 1")
+	query.Execute()
+	if(query.NextRow())
+		return query.item[1]

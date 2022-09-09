@@ -29,6 +29,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/const/version = STAT_OUTPUT_VERSION
 	// int, [1...]
 	var/round_id
+	// int, [1...]
+	var/last_round_id
 	// string, [hh:mm:ss]
 	var/start_time
 	// string, [hh:mm:ss]
@@ -95,6 +97,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	message_admins("<font color='blue'>Статистика была записана в файл за [(start_time - world.realtime)/10] секунд.</font>")
 
 	to_chat(stealth ? usr : world, "<span class='info'>Статистика по этому раунду вскоре будет доступа по ссылке [generate_url()]</span>")
+
+	generate_scoreboard()
 
 /datum/stat_collector/proc/generate_url()
 	var/root = "https://stat.taucetistation.org/html"
