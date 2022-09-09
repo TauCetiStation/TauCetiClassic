@@ -522,3 +522,14 @@
 	global.espionageagent_start += loc
 	create_spawner(/datum/spawner/spy)
 	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/quality_relocate
+	name = "Quality relocate"
+
+/obj/effect/landmark/quality_relocate/atom_init(mapload)
+	..()
+	global.quality_landmarks += src
+
+
+/obj/effect/landmark/quality_relocate/special_case
+	name = "Quality SC"

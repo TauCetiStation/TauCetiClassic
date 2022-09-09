@@ -455,15 +455,7 @@ SUBSYSTEM_DEF(job)
 			if((landmark.name == rank) && !(locate(/mob/living) in landmark.loc))
 				spawn_mark = landmark
 				break
-		var/turf/spawn_turf = null
-		var/datum/quality/relocate/osobka = SSqualities.qualities_by_type[SSqualities.registered_clients[H.client.ckey]]
-		if(osobka && istype(osobka))
-			var/turf/turf_select = osobka.get_spawn_turf()
-			spawn_turf = turf_select
-		if(spawn_turf)
-			var/obj/effect/landmark/start/created_landmark = new(spawn_turf)
-			created_landmark.name = "generated-[rand(1,999)]"
-			spawn_mark = created_landmark
+
 		if(!spawn_mark)
 			spawn_mark = locate("start*[rank]") // use old stype
 
