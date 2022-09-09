@@ -722,6 +722,7 @@
 		return
 
 	else if(istype(W, /obj/item/weapon/changeling_hammer))
+		var/obj/item/weapon/changeling_hammer/Ham = W
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'><B>[user]</B> has punched \the <B>[src]!</B></span>")
