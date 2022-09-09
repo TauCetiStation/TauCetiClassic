@@ -457,7 +457,7 @@ SUBSYSTEM_DEF(job)
 				break
 		var/turf/spawn_turf = null
 		var/datum/quality/relocate/osobka = SSqualities.qualities_by_type[SSqualities.registered_clients[H.client.ckey]]
-		if(osobka)
+		if(osobka && istype(osobka))
 			var/turf/turf_select = osobka.get_spawn_turf()
 			spawn_turf = turf_select
 		if(spawn_turf)

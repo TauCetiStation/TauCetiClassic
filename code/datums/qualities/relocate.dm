@@ -4,7 +4,7 @@
 	)
 	/*
 	Fill in one of the two fields to move there at the beginning of the round
-	Check SSjob substystem for more info
+	Check SSjobs substystem for more info
 	*/
 	var/list/area/target_area = list()
 	var/turf/target_turf = null

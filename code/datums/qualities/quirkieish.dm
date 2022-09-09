@@ -4,7 +4,7 @@
 		QUALITY_POOL_QUIRKIEISH
 	)
 
-/*datum/quality/quirkieish/cyborg
+/datum/quality/quirkieish/cyborg
 	name = "Cyborg"//04
 	desc = "Все твои конечности и органы были заменены протезами в результате недавнего несчастного случая."
 	requirement = "Нет."
@@ -204,4 +204,3 @@
 		LAZYREMOVE(H.mind.skills.available_skillsets, s)
 	H.mind.skills.add_available_skillset(/datum/skillset/jack_of_all_trades)
 	H.mind.skills.maximize_active_skills()
-*/
