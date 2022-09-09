@@ -29,7 +29,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/const/version = STAT_OUTPUT_VERSION
 	// int, [1...]
 	var/round_id
-	// int, [1...]
+	// string, [hh:mm:ss]
 	var/start_time
 	// string, [hh:mm:ss]
 	var/end_time
