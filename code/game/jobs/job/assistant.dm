@@ -15,8 +15,7 @@
 		"Reporter"       = /datum/outfit/job/assistant/reporter,
 		"Waiter"         = /datum/outfit/job/assistant/waiter,
 		"Vice Officer"   = /datum/outfit/job/assistant/vice_officer,
-		"Paranormal Investigator" = /datum/outfit/job/assistant/paranormal_investigator,
-		"Prisoner"		= /datum/outfit/job/assistant/prisoner
+		"Paranormal Investigator" = /datum/outfit/job/assistant/paranormal_investigator
 		)
 	outfit = /datum/outfit/job/assistant/test_subject
 	skillsets = list(
@@ -27,8 +26,7 @@
 		"Reporter"       = /datum/skillset/test_subject/reporter,
 		"Waiter"         = /datum/skillset/test_subject/waiter,
 		"Vice Officer"   = /datum/skillset/test_subject/vice_officer,
-		"Paranormal Investigator" = /datum/skillset/test_subject/paranormal,
-		"Prisoner"		= /datum/skillset/test_subject
+		"Paranormal Investigator" = /datum/skillset/test_subject/paranormal
 		)
 
 /datum/job/assistant/get_access()

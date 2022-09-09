@@ -123,9 +123,6 @@ SUBSYSTEM_DEF(job)
 		if(player.client.prefs.job_preferences[job.title] == level)
 			Debug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
-		var/datum/quality/relocate/osobka = SSqualities.qualities_by_type[SSqualities.registered_clients[player.client.ckey]]
-		if(osobka && job.title == "Test Subject")
-			candidates += player
 	return candidates
 
 /datum/controller/subsystem/job/proc/GiveRandomJob(mob/dead/new_player/player)
@@ -454,32 +451,18 @@ SUBSYSTEM_DEF(job)
 
 	if(!joined_late)
 		var/obj/effect/landmark/start/spawn_mark = null
-		var/occupation_name = rank
-		if(H.mind.role_alt_title != rank)
-			occupation_name = H.mind.role_alt_title
 		for(var/obj/effect/landmark/start/landmark in landmarks_list)
-			if((landmark.name == occupation_name) && !(locate(/mob/living) in landmark.loc))
+			if((landmark.name == rank) && !(locate(/mob/living) in landmark.loc))
 				spawn_mark = landmark
 				break
-		//var/datum/preferences/P = H.client.prefs
-		//var/current_quality = P.selected_quality_name
-		//var/list/osobki_name = SSqualities.qualities_by_name
 		var/turf/spawn_turf = null
 		var/datum/quality/relocate/osobka = SSqualities.qualities_by_type[SSqualities.registered_clients[H.client.ckey]]
 		if(osobka)
 			var/turf/turf_select = osobka.get_spawn_turf()
 			spawn_turf = turf_select
-
-		/*for(var/i in osobki_name)
-			if(name == current_quality)
-				qual = SSqualities.qualities_by_type[i]
-				if(istype(qual, /datum/quality/relocate))
-					var/turf/turf_select = qual.get_spawn_turf()
-					spawn_turf = turf_select*/
-
 		if(spawn_turf)
 			var/obj/effect/landmark/start/created_landmark = new(spawn_turf)
-			created_landmark.name = "idi naxuy"
+			created_landmark.name = "generated-[rand(1,999)]"
 			spawn_mark = created_landmark
 		if(!spawn_mark)
 			spawn_mark = locate("start*[rank]") // use old stype

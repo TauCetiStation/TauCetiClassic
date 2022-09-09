@@ -37,41 +37,43 @@
 		if(generate_turf)
 			return generate_turf
 
-/datum/quality/relocate/tajaran_prisoner
-	name = "Tajaran"
-	desc = "Пройдя ускоренный курс подготовки к работе в космосе, ты овладел навыками во многих сферах деятельности, но достичь мастерства не удалось ни в одной."
-	requirement = "Нет."
-	target_area = list(/area/station/cargo/storage )
+/datum/quality/relocate/escrava_isaura
+	name = "Escrava Isaura"
+	desc = "ВНИМАНИЕ: ТЯЖЁЛЫЙ СЦЕНАРИЙ, БУДЬТЕ ГОТОВЫ К ТЯЖЁЛОМУ НАЧАЛУ ИЛИ ЧТО ИГРА ДЛЯ ВАС НЕ НАЧНЁТСЯ ВОВСЕ. Вы просыпаетесь в ящике и обнаруживаете, что вы в неизвестном для вас месте. Не дайте себя в обиду!"
+	requirement = "Раса Таяран."
+	target_area = list(/area/station/cargo/storage)
 
 /datum/quality/relocate/tajaran_prisoner/add_effect(mob/living/carbon/human/H, latespawn)
-	if(H.wear_mask)
+	var/list/slots = H.get_all_slots()
+	for(var/obj/W in slots)
+		if(W == H.wear_id)
+			continue
+		if(W == H.l_ear)
+			continue
+		qdel(W)
+	/*if(H.wear_mask)
 		qdel(H.wear_mask)
-	/*if(H.belt)
+	if(H.belt)
 		qdel(H.belt)
-	if(w.uniformas)*/
+	if(H.w_uniform)
+		qdel(H.w_uniform)
 	if(H.head)
 		qdel(H.head)
 	if(H.wear_suit)
 		qdel(H.wear_suit)
 	if(H.back)
 		qdel(H.back)
-	/*if(H.shoes)
-		qdel(H.shoes)*/
+	if(H.shoes)
+		qdel(H.shoes)
 	if(H.l_ear)
 		qdel(H.l_ear)
-	/*H.remove_from_mob(H.w_uniform)
-	H.remove_from_mob(H.head)
-	H.remove_from_mob(H.wear_suit)
-	H.remove_from_mob(H.back)
-	H.remove_from_mob(H.shoes)*/
-
-	H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs/cable(H), SLOT_HANDCUFFED)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/tie/collar(H), SLOT_WEAR_MASK)
-	/*H.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(H), SLOT_SHOES)*/
 
 	var/spawn_loc = get_turf(H.loc)
 	var/obj/structure/closet/critter/C = new(spawn_loc)
 	H.loc = C
 	var/obj/structure/bigDelivery/P = new(spawn_loc)
 	C.loc = P
+	*/
+	H.AdjustDrunkenness(100)
+	H.adjust_bodytemperature(-80, min_temp = 80)
+	H.adjustBruteLoss(50)
