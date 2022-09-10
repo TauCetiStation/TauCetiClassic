@@ -164,9 +164,9 @@
 						to_chat(user, "<span class='red'>There is nothing to clean!</span>")
 						return
 				if("arms")
-					var/obj/item/organ/external/r_hand = H.bodyparts_by_name[BP_L_ARM]
-					var/obj/item/organ/external/l_hand = H.bodyparts_by_name[BP_R_ARM]
-					if((l_hand && !(l_hand.is_stump)) && (r_hand && !(r_hand.is_stump)))
+					var/obj/item/organ/external/r_arm/R = H.bodyparts_by_name[BP_L_ARM]
+					var/obj/item/organ/external/l_arm/L = H.bodyparts_by_name[BP_R_ARM]
+					if((L && !(L.is_stump)) || (R && !(R.is_stump)))
 						if(H.gloves && H.gloves.clean_blood())
 							H.update_inv_gloves()
 							H.gloves.germ_level = 0
@@ -175,6 +175,8 @@
 								H.bloody_hands = 0
 								H.update_inv_gloves()
 							H.germ_level = 0
+							R.DNA_under_fingernail = null
+							L.DNA_under_fingernail = null
 			H.clean_blood()
 			if(target == user)
 				user.visible_message("<span class='notice'>\the [user] cleans \his [body_part_name] out with soap.</span>")

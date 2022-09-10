@@ -73,11 +73,11 @@
 			D.trauma[tdata] = W.copy()
 
 	switch(D.organ)
-		if("left arm")
+		if(BP_L_ARM)
 			var/obj/item/organ/external/l_arm/LARM = BP
 			if(LARM.DNA_under_fingernail)
 				D.more_info += "<tr><th colspan=\"5\"><b>DNA found under nails on left hand: [LARM.DNA_under_fingernail]</b></th></tr>"
-		if("right arm")
+		if(BP_R_ARM)
 			var/obj/item/organ/external/r_arm/RARM = BP
 			if(RARM.DNA_under_fingernail)
 				D.more_info += "<tr><th colspan=\"5\"><b>DNA found under nails on right hand: [RARM.DNA_under_fingernail]</b><br></th></tr>"

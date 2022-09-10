@@ -313,7 +313,7 @@
 	var/impact_direction = null
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		impact_direction = check_hit_direction(H, src)
+		impact_direction = check_hit_direction(H)
 	var/datum/wound/created_wound = apply_damage(force_with_melee_skill, I.damtype, BP, armor, damage_flags, I, impact_direction)
 
 	//Melee weapon embedded object code.
