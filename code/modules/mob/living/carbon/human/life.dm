@@ -316,7 +316,6 @@
 
 /mob/living/carbon/human/breathe()
 	var/datum/gas_mixture/breath = ..()
-
 	failed_last_breath = inhale_alert
 
 	if(breath)
@@ -325,6 +324,7 @@
 			if (prob(10) && get_infection_chance(src))
 				for(var/mob/living/carbon/M in view(1,src))
 					spread_disease_to(M)
+		loc.remove_air(BREATH_MOLES * 100)
 
 /mob/living/carbon/human/get_breath_from_internal(volume_needed)
 	if(!internal)
