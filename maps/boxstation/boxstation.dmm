@@ -1956,6 +1956,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "adx" = (
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warning"
@@ -2458,7 +2459,6 @@
 	pixel_y = -29;
 	req_access = list(3)
 	},
-/obj/effect/landmark/quality_relocate/special_case,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
@@ -12343,7 +12343,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
-/obj/effect/landmark/quality_relocate/special_case,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "ave" = (
@@ -15003,7 +15002,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "aAh" = (
-/obj/effect/landmark/quality_relocate/special_case,
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -29502,6 +29501,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -33867,7 +33867,7 @@
 /obj/structure/extinguisher_cabinet/highrisk{
 	pixel_x = 30
 	},
-/obj/effect/landmark/quality_relocate/special_case,
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "vault"
@@ -33898,7 +33898,7 @@
 	dir = 4;
 	id = "garbage"
 	},
-/obj/effect/landmark/quality_relocate/special_case,
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bir" = (
@@ -48739,7 +48739,7 @@
 	},
 /area/station/rnd/brainstorm_center)
 "bIY" = (
-/obj/effect/landmark/quality_relocate/special_case,
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -49996,6 +49996,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/brown,
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brownold"
@@ -58909,6 +58910,7 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "cjC" = (
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor/engine/vacuum,
 /area/station/rnd/mixing)
 "cjD" = (
@@ -61785,7 +61787,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/effect/landmark/quality_relocate/special_case,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -66683,6 +66684,7 @@
 "cEm" = (
 /obj/structure/stool/bed/psych,
 /obj/item/weapon/bedsheet/psych,
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "cEn" = (
@@ -73314,7 +73316,7 @@
 	},
 /area/station/medical/hallway)
 "hLa" = (
-/obj/effect/landmark/quality_relocate/special_case,
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -75331,7 +75333,7 @@
 	},
 /area/station/bridge/captain_quarters)
 "jVU" = (
-/obj/effect/landmark/quality_relocate/special_case,
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "jWb" = (
@@ -75813,7 +75815,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/effect/landmark/quality_relocate/special_case,
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
 "kvF" = (
@@ -78061,7 +78062,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/effect/landmark/quality_relocate/special_case,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -80728,6 +80728,7 @@
 /area/station/civilian/chapel/crematorium)
 "qGb" = (
 /obj/structure/stool/bed,
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -81578,9 +81579,11 @@
 	},
 /area/station/engineering/break_room)
 "rBv" = (
-/obj/effect/landmark/quality_relocate/special_case,
-/turf/simulated/floor/engine,
-/area/station/rnd/mixing)
+/obj/effect/landmark/quality_relocate/bad_day,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/medical/morgue)
 "rBR" = (
 /turf/simulated/floor/plating/airless{
 	dir = 5;
@@ -82009,6 +82012,7 @@
 "sbs" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -82747,7 +82751,7 @@
 	id = "Incinerator";
 	on = 0
 	},
-/obj/effect/landmark/quality_relocate/special_case,
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor/engine/vacuum,
 /area/station/maintenance/incinerator)
 "sQb" = (
@@ -82768,7 +82772,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/effect/landmark/quality_relocate/special_case,
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -83486,7 +83490,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "tVd" = (
-/obj/effect/landmark/quality_relocate/special_case,
+/obj/effect/landmark/quality_relocate/bad_day,
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "tWb" = (
@@ -83941,12 +83945,6 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/chapel/mass_driver)
-"uLw" = (
-/obj/effect/landmark/quality_relocate/special_case,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
-/area/station/security/prison)
 "uMv" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -112393,7 +112391,7 @@ axL
 aBT
 aGf
 aNm
-uLw
+arg
 bNh
 ayr
 agO
@@ -127572,7 +127570,7 @@ bTM
 bUP
 cgD
 cjC
-rBv
+aUz
 aWc
 aXx
 bWa
@@ -128109,7 +128107,7 @@ ctM
 bJi
 cyM
 eMb
-bNS
+rBv
 bNS
 kab
 bNS
