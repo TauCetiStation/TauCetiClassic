@@ -316,7 +316,7 @@
 
 /mob/living/carbon/human/breathe()
 	var/datum/gas_mixture/breath = ..()
-	
+
 	failed_last_breath = inhale_alert
 
 	if(breath)
