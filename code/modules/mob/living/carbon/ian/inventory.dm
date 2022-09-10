@@ -105,6 +105,13 @@
 /mob/living/carbon/ian/put_in_inactive_hand(obj/item/W)
 	return put_in_active_hand(W)
 
+// ian have only one hand
+/mob/living/carbon/ian/put_in_r_hand(obj/item/W)
+	return put_in_active_hand(W)
+
+/mob/living/carbon/ian/put_in_l_hand(obj/item/W)
+	return put_in_active_hand(W)
+
 /mob/living/carbon/ian/put_in_hands(obj/item/W)
 	if(!W)
 		return FALSE

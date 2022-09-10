@@ -67,14 +67,18 @@ var/global/list/SOUNDIN_RIGBREATH   = list('sound/misc/rigbreath1.ogg', 'sound/m
 var/global/list/SOUNDIN_BREATHMASK  = list('sound/misc/breathmask1.ogg', 'sound/misc/breathmask2.ogg')
 var/global/list/SOUNDIN_DESCERATION = list('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
 
+// ----- Punches -----
+var/global/list/SOUNDIN_PUNCH_MEDIUM    = list('sound/effects/mob/hits/medium_1.ogg', 'sound/effects/mob/hits/medium_2.ogg', 'sound/effects/mob/hits/medium_3.ogg', 'sound/effects/mob/hits/medium_4.ogg', 'sound/effects/mob/hits/medium_5.ogg')
+var/global/list/SOUNDIN_PUNCH_HEAVY     = list('sound/effects/mob/hits/heavy_1.ogg', 'sound/effects/mob/hits/heavy_2.ogg', 'sound/effects/mob/hits/heavy_3.ogg', 'sound/effects/mob/hits/heavy_4.ogg')
+var/global/list/SOUNDIN_PUNCH_VERYHEAVY = list('sound/effects/mob/hits/veryheavy_1.ogg', 'sound/effects/mob/hits/veryheavy_2.ogg', 'sound/effects/mob/hits/veryheavy_3.ogg', 'sound/effects/mob/hits/veryheavy_4.ogg')
+
 // ----- Weapons -----
 // Melee
 var/global/list/SOUNDIN_GENHIT = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
-var/global/list/SOUNDIN_PUNCH  = list('sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 
 // ----- Items -----
 // Medical
-var/global/list/SOUNDIN_BANDAGE = list('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
+var/global/list/SOUNDIN_BANDAGE = list('sound/items/bandage1.ogg', 'sound/items/bandage2.ogg')
 var/global/list/SOUNDIN_KNIFE_CUTTING = list('sound/items/knife_cutting1.ogg', 'sound/items/knife_cutting2.ogg', 'sound/items/knife_cutting3.ogg')
 
 // ----- Footsteps -----

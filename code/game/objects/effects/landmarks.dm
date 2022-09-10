@@ -326,6 +326,14 @@
 	global.dealerstart += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/heist_spawn
+	name = "Heist"
+
+/obj/effect/landmark/heist_spawn/atom_init(mapload)
+	..()
+	global.heiststart += loc
+	return INITIALIZE_HINT_QDEL
+
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
 

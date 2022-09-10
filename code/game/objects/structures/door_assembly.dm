@@ -45,14 +45,14 @@
 			return
 		if(glass_material)
 			user.visible_message("[user] welds the glass panel out of the airlock assembly.", "You start to weld the glass panel out of the airlock assembly.")
-			if(WT.use_tool(src, user, 40, volume = 50))
+			if(WT.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 				to_chat(user, "<span class='notice'>You welded the glass panel out!</span>")
 				new /obj/item/stack/sheet/rglass(loc)
 				set_glass(FALSE)
 
 		else if(mineral)
 			user.visible_message("[user] welds the [mineral] plating off the airlock assembly.", "You start to weld the [mineral] plating off the airlock assembly.")
-			if(WT.use_tool(src, user, 40, volume = 50))
+			if(WT.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 				to_chat(user, "<span class='notice'>You welded the [mineral] plating off!</span>")
 				var/M = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 				new M(loc, 2)
@@ -60,7 +60,7 @@
 
 		else if(!anchored)
 			user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
-			if(WT.use_tool(src, user, 40, volume = 50))
+			if(WT.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 				to_chat(user, "<span class='notice'>You dissasembled the airlock assembly!</span>")
 				new /obj/item/stack/sheet/metal(loc, 4)
 				qdel (src)
@@ -72,7 +72,7 @@
 		else
 			user.visible_message("[user] secures the airlock assembly to the floor.", "You start to secure the airlock assembly to the floor.")
 
-		if(W.use_tool(src, user, 40, volume = 50))
+		if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secured the airlock assembly!</span>")
 			anchored = !anchored
 
@@ -81,7 +81,7 @@
 			return
 		var/obj/item/stack/cable_coil/coil = W
 		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
-		if(coil.use_tool(src, user, 40, amount = 1, volume = 50))
+		if(coil.use_tool(src, user, SKILL_TASK_AVERAGE, amount = 1, volume = 50))
 			state = ASSEMBLY_WIRED
 			to_chat(user, "<span class='notice'>You wire the airlock!</span>")
 
@@ -90,7 +90,7 @@
 		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 
-		if(W.use_tool(src, user, 40, volume = 50))
+		if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 			to_chat(user, "<span class='notice'>You cut the airlock wires!</span>")
 			new /obj/item/stack/cable_coil/random(loc, 1)
 			state = ASSEMBLY_SECURED
@@ -101,7 +101,7 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
 
-			if(W.use_tool(src, user, 40, volume = 50))
+			if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 				user.drop_from_inventory(AE, src)
 				to_chat(user, "<span class='notice'>You installed the airlock electronics!</span>")
 				state = ASSEMBLY_NEAR_FINISHED
@@ -109,7 +109,7 @@
 
 	else if(iscrowbar(W) && state == ASSEMBLY_NEAR_FINISHED)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove the electronics from the airlock assembly.")
-		if(W.use_tool(src, user, 40, volume = 100))
+		if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
 			to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 			state = ASSEMBLY_WIRED
 			var/obj/item/weapon/airlock_electronics/AE
@@ -130,7 +130,7 @@
 					if(user.is_busy()) return
 					playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 					user.visible_message("[user] adds [S.name] to the [src].", "You start to install [S.name] into the [src].")
-					if(W.use_tool(src, user, 40, amount = 1, volume = 100))
+					if(W.use_tool(src, user, SKILL_TASK_AVERAGE, amount = 1, volume = 100))
 						to_chat(user, "<span class='notice'>You installed reinforced glass windows into the [src]!</span>")
 						set_glass(TRUE)
 				else
@@ -144,7 +144,7 @@
 							return
 						playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 						user.visible_message("[user] adds [S.name] to the airlock assembly.", "You start to install [S.name] into the airlock assembly.")
-						if(S.use_tool(src, user, 40, amount = 2, volume = 100))
+						if(S.use_tool(src, user, SKILL_TASK_AVERAGE, amount = 2, volume = 100))
 							to_chat(user, "<span class='notice'>You installed [M] plating into the airlock assembly!</span>")
 							change_mineral_airlock_type(M)
 					else
@@ -157,7 +157,7 @@
 			return
 		to_chat(user, "<span class='notice'>Now finishing the airlock.</span>")
 
-		if(W.use_tool(src, user, 40, volume = 100))
+		if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
 			to_chat(user, "<span class='notice'>You finish the airlock!</span>")
 			var/obj/machinery/door/airlock/door = null
 			if(glass_material && !glass_only)

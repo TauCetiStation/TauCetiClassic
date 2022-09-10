@@ -5,24 +5,19 @@
 
 // 1 decisecond click delay (above and beyond mob/next_move)
 // This is mainly modified by click code, to modify click delays elsewhere, use next_move and SetNextMove()
-/mob/var/next_click = 0
-
-// THESE DO NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
-/mob/var/next_move_adjust = 0   // Amount to adjust action/click delays by, + or -
-/mob/var/next_move_modifier = 1 // Value to multiply action/click delays by
+/mob
+	var/next_click = 0
 
 
 //Delays the mob's next click/action by num deciseconds
-// eg: 10-3 = 7 deciseconds of delay
-// eg: 10*0.5 = 5 deciseconds of delay
 // DOES NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
 
 /mob/proc/SetNextMove(num)
-	next_move = world.time + ((num + next_move_adjust) * next_move_modifier)
+	next_move = world.time + num
 
 // Delays the mob's next click/action either by num deciseconds, or maximum that was already there.
 /mob/proc/AdjustNextMove(num)
-	var/new_next_move = world.time + ((num + next_move_adjust) * next_move_modifier)
+	var/new_next_move = world.time + num
 	if(new_next_move > next_move)
 		next_move = new_next_move
 
@@ -65,8 +60,8 @@
 	if(notransform)
 		return
 
-	if(client.buildmode)
-		build_click(src, client.buildmode, params, A)
+	if(client.click_intercept)
+		client.click_intercept.InterceptClickOn(src, params, A)
 		return
 
 	var/list/modifiers = params2list(params)
@@ -96,12 +91,10 @@
 	if(modifiers[CTRL_CLICK])
 		CtrlClickOn(A)
 		return
-	if(HardsuitClickOn(A))
-		return
 	if(RegularClickOn(A))
 		return
 
-	if(stat || paralysis || stunned || weakened)
+	if(incapacitated(NONE))
 		return
 
 	face_atom(A) // change direction to face what you clicked on
@@ -137,9 +130,8 @@
 			P.click_to_pay(A) //Click on someone to pay
 			return
 
-	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)
-	if(A == loc || (A.loc == loc) || (sdepth != -1 && sdepth <= 1))
+	if(A == loc || (A.loc == loc) || (sdepth != -1 && sdepth <= MAX_STORAGE_DEEP_LEVEL))
 
 		// No adjacency needed
 		if(W)
@@ -155,9 +147,9 @@
 			ranged_attack_tk(A)
 		return
 
-	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
+	// Allows you to click on a box's contents, if that box is on the ground
 	sdepth = A.storage_depth_turf()
-	if(isturf(A) || isturf(A.loc) || (sdepth != -1 && sdepth <= 1))
+	if(isturf(A) || isturf(A.loc) || (sdepth != -1 && sdepth <= MAX_STORAGE_DEEP_LEVEL))
 
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
@@ -209,16 +201,14 @@
 		to_chat(src, "<span class='notice'>Your mind won't reach that far.</span>")
 		return
 
-	if(!try_tk(mana=dist * TK_MANA_PER_TILE))
+	var/mana = dist * TK_MANA_PER_TILE / get_tk_level()
+
+	if(!can_tk(mana))
 		return
 
-	SetNextMove(CLICK_CD_MELEE)
-
-	if(a_intent == INTENT_GRAB && ismovable(A))
-		var/atom/movable/AM = A
-		AM.telekinetic_grab(src)
-	else
-		A.attack_tk(src)
+	if(A.attack_tk(src))
+		SetNextMove(CLICK_CD_MELEE)
+		spend_tk_power(mana)
 
 /*
 	Restrained ClickOn
@@ -379,7 +369,7 @@
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(atom/A)
-	if( stat || buckled || !A || !x || !y || !A.x || !A.y ) return
+	if( stat != CONSCIOUS || buckled || !A || !x || !y || !A.x || !A.y ) return
 	var/dx = A.x - x
 	var/dy = A.y - y
 	if(!dx && !dy) return
@@ -394,7 +384,7 @@
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 // This proc is currently only used in multi_carry.dm (/datum/component/multi_carry)
 /mob/proc/face_pixeldiff(pixel_x, pixel_y, pixel_x_new, pixel_y_new)
-	if( stat || buckled)
+	if( stat != CONSCIOUS || buckled)
 		return
 
 	var/dx = pixel_x_new - pixel_x

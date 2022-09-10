@@ -21,7 +21,7 @@
 
 
 /datum/action/innate/mecha
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_ALIVE
+	check_flags = AB_CHECK_INCAPACITATED
 	button_icon = 'icons/mob/actions_mecha.dmi'
 	action_type = AB_INNATE
 	var/obj/mecha/chassis
@@ -98,6 +98,8 @@
 		chassis.occupant_message("<span class='warning'>No equipment available!</span>")
 		return
 	if(!chassis.selected)
+		if(!chassis.check_fumbling("<span class='notice'>You fumble around, figuring out how to switch selected equipment.</span>"))
+			return
 		chassis.selected = available_equipment[1]
 		chassis.occupant_message("<span class='notice'>You select [chassis.selected].</span>")
 		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
@@ -109,6 +111,8 @@
 	for(var/A in available_equipment)
 		number++
 		if(A == chassis.selected)
+			if(!chassis.check_fumbling("<span class='notice'>You fumble around, figuring out how to switch selected equipment.</span>"))
+				return
 			if(available_equipment.len == number)
 				chassis.selected = null
 				chassis.occupant_message("<span class='notice'>You switch to no equipment.</span>")

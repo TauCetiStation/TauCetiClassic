@@ -28,7 +28,7 @@
 		return
 
 	var/turf/T = get_turf_loc(user)
-	if (!istype(T, /turf/simulated/floor))
+	if (!isfloorturf(T))
 		to_chat(user, "<span class='warning'>Noticeboard cannot be placed on this spot.</span>")
 		return
 

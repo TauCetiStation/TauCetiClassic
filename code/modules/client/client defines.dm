@@ -9,7 +9,7 @@
 		////////////////
 	var/datum/admins/holder = null
 	var/datum/admins/deadmin_holder = null
-	var/buildmode		= 0
+	var/datum/buildmode/click_intercept = null
 	var/AI_Interact		= 0
 
 	var/jobbancache = null //Used to cache this client's jobbans to save on DB queries

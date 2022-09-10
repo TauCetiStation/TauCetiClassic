@@ -40,7 +40,6 @@
 	name = "reinforced floor"
 	icon_state = "engine"
 	thermal_conductivity = 0.025
-	heat_capacity = 325000
 	footstep = FOOTSTEP_PLATING
 
 /turf/simulated/floor/goonplaque
@@ -142,7 +141,6 @@
 	name = "shuttle"
 	icon = 'icons/turf/shuttle.dmi'
 	thermal_conductivity = 0.05
-	heat_capacity = 0
 	layer = 2
 
 
@@ -254,11 +252,11 @@
 /mob/living/silicon/robot/entered_water_turf()
 	Stun(2)
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 	if(prob(25))
 		adjustFireLoss(rand(10, 20))
-		Weaken(rand(10, 15))
+		Stun(rand(10, 15))
 		eye_blind += rand(20, 25)
 		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -4)
 	if(!eye_blind)
@@ -401,7 +399,7 @@
 	desc = "Рабочий помост с сомнительным функционалом."
 
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 700000
+	heat_capacity = HEAT_CAPACITY_VACUUM
 	intact = 0
 	footstep = FOOTSTEP_CATWALK
 

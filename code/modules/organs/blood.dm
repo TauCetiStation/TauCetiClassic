@@ -10,8 +10,9 @@ var/global/const/BLOOD_VOLUME_BAD = 224
 var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 
-/mob/living/carbon/human/var/datum/reagents/vessel // Container for blood and BLOOD ONLY. Do not transfer other chems here.
-/mob/living/carbon/human/var/pale = FALSE          // Should affect how mob sprite is drawn, but currently doesn't.
+/mob/living/carbon/human
+	var/datum/reagents/vessel // Container for blood and BLOOD ONLY. Do not transfer other chems here.
+	var/pale = FALSE          // Should affect how mob sprite is drawn, but currently doesn't.
 
 
 // Initializes blood vessels
@@ -30,8 +31,8 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	var/datum/reagent/blood/B = blood_get()
 	if(istype(B))
 		if(clean)
-			B.data = list("donor" = src, "viruses" = null, "blood_DNA" = dna.unique_enzymes,
-						"blood_type" = dna.b_type, "resistances" = null, "trace_chem" = null,
+			B.data = list("donor" = src, "blood_DNA" = dna.unique_enzymes,
+						"blood_type" = dna.b_type, "trace_chem" = null,
 						"virus2" = null, "antibodies" = null, "changeling_marker" = null)
 		else // Change DNA to ours, left the rest intact
 			B.data["donor"] = src
@@ -389,11 +390,6 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	B.data["blood_DNA"] = dna.unique_enzymes // todo: for some reason we ignore original blood datum and all his data here, refactoring needed
 	B.data["blood_type"] = dna.b_type
 	B.data["time"] = world.time
-	if(resistances && resistances.len)
-		if(B.data["resistances"])
-			B.data["resistances"] |= resistances.Copy()
-		else
-			B.data["resistances"] = resistances.Copy()
 
 	if (mind)
 		// Changeling blood has unique marker like DNA but invisible for scanners

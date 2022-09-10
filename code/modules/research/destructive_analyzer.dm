@@ -67,6 +67,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if (temp_tech.len == 0)
 			to_chat(user, "<span class='warning'> You cannot deconstruct this item!</span>")
 			return
+		if(!do_skill_checks(user))
+			return
 		busy = 1
 		loaded_item = O
 		user.drop_from_inventory(O, src)

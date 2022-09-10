@@ -115,7 +115,7 @@
 
 /datum/quality/quirkieish/iseedeadpeople
 	name = "I See Dead People"
-	desc = "При крещение тебя окунули в чан с проклятой водой. Это дало тебе возможность видеть призраков."
+	desc = "После экспериментов, включающих в себя погружение в глубокую кому, ты стал замечать вокруг едва видимые тени..."
 	requirement = "Нет."
 
 /datum/quality/quirkieish/iseedeadpeople/add_effect(mob/living/carbon/human/H, latespawn)
@@ -155,7 +155,7 @@
 	if(new_intent != INTENT_HARM)
 		return
 
-	H.emote("scream", auto = FALSE)
+	H.emote("scream", intentional = TRUE)
 
 /datum/quality/quirkieish/war_face/add_effect(mob/living/carbon/human/H, latespawn)
 	H.lip_style = "spray_face"
@@ -191,3 +191,16 @@
 /datum/quality/quirkieish/obedient/add_effect(mob/living/carbon/human/H, latespawn)
 	var/obj/item/weapon/implant/obedience/O = new(H)
 	O.stealth_inject(H)
+
+
+
+/datum/quality/quirkieish/jack_of_all_trades
+	name = "Jack of All Trades"
+	desc = "Пройдя ускоренный курс подготовки к работе в космосе, ты овладел навыками во многих сферах деятельности, но достичь мастерства не удалось ни в одной."
+	requirement = "Нет."
+
+/datum/quality/quirkieish/jack_of_all_trades/add_effect(mob/living/carbon/human/H, latespawn)
+	for(var/datum/skillset/s as anything in H.mind.skills.available_skillsets)
+		LAZYREMOVE(H.mind.skills.available_skillsets, s)
+	H.mind.skills.add_available_skillset(/datum/skillset/jack_of_all_trades)
+	H.mind.skills.maximize_active_skills()

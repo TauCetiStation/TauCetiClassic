@@ -121,7 +121,7 @@
 			if(special_weapons[weapon])
 				points += special_weapons[weapon]
 			else
-				points += rand(5,10) * 200 // 1000-2000 points for random weapon
+				points += rand(1,5) * 100 // 100-500 points for random weapon
 
 	for(var/list/scanning_artifact in I.scanned_artifacts)
 		var/already_scanned = FALSE

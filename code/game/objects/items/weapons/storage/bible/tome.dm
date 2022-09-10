@@ -197,6 +197,10 @@
 		return
 
 	var/turf/targeted_turf = get_step(src, user.dir)
+	for(var/atom/A in targeted_turf.contents)
+		if(A.density)
+			to_chat(user, "<span class='warning'>Что-то мешает построить!</span>")
+			return
 	if(ispath(choice.building_type, /turf))
 		targeted_turf.ChangeTurf(choice.building_type)
 	else if(ispath(choice.building_type, /obj/structure/altar_of_gods/cult))

@@ -103,9 +103,9 @@
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
-		O.Stun(stunned, ignore_canstun = TRUE)
+		O.Stun(AmountStun())
 		O.Weaken(weakened)
-		O.Paralyse(paralysis - 22)
+		O.SetParalysis(AmountParalyzed())
 		O.SetSleeping(AmountSleeping())
 
 	//transfer reagents
@@ -122,14 +122,12 @@
 			O.changeling_update_languages(C.absorbed_languages)
 			for(var/mob/living/parasite/essence/M in src)
 				M.transfer(O)
-
+	SEND_SIGNAL(O, COMSIG_HUMAN_MONKEYIZE)
 	transfer_trait_datums(O)
 
 	if(tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a monkey.</B>")
-
 	. = O
-
 	qdel(src)
 
 //////////////////////////           Humanize               //////////////////////////////
@@ -233,9 +231,9 @@
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
-		O.Stun(stunned, ignore_canstun = TRUE)
+		O.Stun(AmountStun())
 		O.Weaken(weakened)
-		O.Paralyse(paralysis - 22)
+		O.Paralyse(AmountParalyzed())
 		O.SetSleeping(AmountSleeping())
 
 	//transfer reagents
@@ -256,10 +254,9 @@
 
 	if(tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a human.</B>")
-
 	. = O
-
 	qdel(src)
+	SEND_SIGNAL(O, COMSIG_MONKEY_HUMANIZE)
 
 /mob/dead/new_player/AIize()
 	spawning = 1
@@ -323,6 +320,8 @@
 	if(mind)
 		mind.transfer_to(O)
 		O.mind.original = O
+		O.mind.skills.add_available_skillset(/datum/skillset/max)
+		O.mind.skills.maximize_active_skills()
 	else
 		O.key = key
 
@@ -363,6 +362,8 @@
 
 	if(mind)		//TODO
 		mind.transfer_to(O)
+		O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+		O.mind.skills.maximize_active_skills()
 		if(O.mind.assigned_role == "Cyborg")
 			O.mind.original = O
 		else if(mind && mind.special_role)

@@ -34,6 +34,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/d2 = 1   // cable direction 2 (see above)
 	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	color = COLOR_RED
+	var/health = 5
 
 /obj/structure/cable/yellow
 	color = COLOR_YELLOW
@@ -101,7 +102,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 //Telekinesis has no effect on a cable
 /obj/structure/cable/attack_tk(mob/user)
-	return
+	return FALSE
 
 /obj/structure/cable/proc/remove_cable(turf/T, mob/user)
 	// 0-X cables are 1 unit, X-X cables are 2 units long
@@ -391,6 +392,11 @@ By design, d1 is the smallest direction and d2 is the highest
 		for(var/obj/machinery/power/P in T1)
 			if(!P.connect_to_network()) //can't find a node cable on a the turf to connect to
 				P.disconnect_from_network() //remove from current network
+
+/obj/structure/cable/proc/take_damage(damage)
+	health -= damage
+	if(health <= 0)
+		qdel(src)
 
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable

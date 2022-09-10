@@ -6,6 +6,10 @@
 	siemens_coefficient = 0.4
 	body_parts_covered = 0
 
+/obj/item/clothing/head/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
+
 /obj/item/clothing/head/wizard/santa
 	name = "Santa's hat"
 	desc = "Ho ho ho. Merrry X-mas!"
@@ -153,6 +157,10 @@
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.4
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+
+/obj/item/clothing/suit/wizrobe/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/suit/wizrobe/santa
 	name = "Santa's suit"

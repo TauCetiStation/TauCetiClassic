@@ -45,7 +45,8 @@
 			LE.grabber = TRUE
 		if(INTENT_PUSH)
 			if(prob(65))
-				LE.weaken = 2.5
+				LE.weaken = 3
+				LE.stun = 2
 		if(INTENT_HARM)
 			LE.damage = 30
 		else
@@ -73,12 +74,12 @@
 		return
 	var/atom/movable/T = target
 	if(grabber)
-		var/grab_chance
+		var/grab_chance = 100
 		if(iscarbon(T))
 			var/mob/living/carbon/C = T
-			grab_chance = 60 - (C.getarmor(BP_CHEST, "melee") * 0.4)
-		else
-			grab_chance = 90
+			grab_chance -= C.run_armor_check(def_zone, absorb_text = TRUE)
+			if(def_zone == BP_CHEST || def_zone == BP_GROIN)	//limbs are easier to catch with a tentacle
+				grab_chance -= 20
 		if(!T.anchored && prob(grab_chance))
 			T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
 	return ..()
@@ -93,7 +94,7 @@
 /obj/item/projectile/changeling_whip/process()
 	spawn while(src && loc)
 		if(paused)
-			host.Stun(2, TRUE, TRUE)
+			host.Stun(2, TRUE)
 		sleep(1)
 	..()
 

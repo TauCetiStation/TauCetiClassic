@@ -58,7 +58,7 @@
 	var/retFlags = 0
 	var/retVerb = "attack"
 	var/retSound = null
-	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	if(HULK in mutations)
 		retDam += 4
@@ -76,7 +76,7 @@
 
 /mob/living/attack_animal(mob/living/simple_animal/attacker)
 	if(attacker.melee_damage <= 0)
-		attacker.emote("[attacker.friendly] [src]")
+		attacker.me_emote("[attacker.friendly] [src]")
 		return TRUE
 	return attack_unarmed(attacker)
 

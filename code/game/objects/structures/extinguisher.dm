@@ -29,6 +29,10 @@
 		user.visible_message("<span class='notice'>[user] places \the [O] in \the [src].</span>", "<span class='notice'>You place \the [O] in \the [src].</span>")
 	else
 		opened = !opened
+		if(opened)
+			playsound(src, 'sound/items/extinguisher_cabinet_open.ogg', VOL_EFFECTS_MASTER)
+		else
+			playsound(src, 'sound/items/extinguisher_cabinet_close.ogg', VOL_EFFECTS_MASTER)
 
 	update_icon()
 
@@ -43,6 +47,10 @@
 		opened = TRUE
 	else
 		opened = !opened
+		if(opened)
+			playsound(src, 'sound/items/extinguisher_cabinet_open.ogg', VOL_EFFECTS_MASTER)
+		else
+			playsound(src, 'sound/items/extinguisher_cabinet_close.ogg', VOL_EFFECTS_MASTER)
 
 	update_icon()
 

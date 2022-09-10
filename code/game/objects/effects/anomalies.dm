@@ -104,7 +104,7 @@
 	return
 
 /obj/effect/anomaly/grav/proc/gravShock(mob/A)
-	if(boing && isliving(A) && !A.stat)
+	if(boing && isliving(A) && A.stat == CONSCIOUS)
 		A.Weaken(2)
 		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
 		A.throw_at(target, 5, 1)
@@ -275,7 +275,7 @@
 	for(var/i in 1 to 4)
 		var/list/L = locate(x + coord_of_pylons[1], y + coord_of_pylons[2], z)
 		var/turf/F = get_turf(pick(L))
-		if(F && istype(F, /turf/simulated/floor))
+		if(F && isfloorturf(F))
 			for(var/obj in L)
 				if(istype(obj, /turf))
 					continue
@@ -370,7 +370,7 @@
 	if(global.cult_religion)
 		global.cult_religion.add_member(C, CULT_ROLE_HIGHPRIEST)
 	else
-		SSticker.mode.CreateFaction(/datum/faction/cult)
+		create_faction(/datum/faction/cult, FALSE, FALSE)
 		global.cult_religion.add_member(C, CULT_ROLE_HIGHPRIEST)// religion was created in faction
 
 	var/rand_num = rand(1, 3)
