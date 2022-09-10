@@ -19,7 +19,6 @@
 	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0
-	var/next_act = 0
 	basetype = /turf/simulated/floor/plating/airless/asteroid
 	var/datum/geosample/geologic_data
 	var/excavation_level = 0
@@ -90,8 +89,22 @@
 	GetDrilled()
 /turf/simulated/mineral/Bumped(AM)
 	. = ..()
+	if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		if(istype(H.l_hand, /obj/item/weapon/pickaxe))
+			if(istype(H.l_hand, /obj/item/weapon/pickaxe/drill))
+				var/obj/item/weapon/pickaxe/drill/D = H.l_hand
+				if(!D.mode)
+					return
+			attackby(H.l_hand, H)
+		else if(istype(H.r_hand, /obj/item/weapon/pickaxe))
+			if(istype(H.r_hand, /obj/item/weapon/pickaxe/drill))
+				var/obj/item/weapon/pickaxe/drill/D = H.r_hand
+				if(!D.mode)
+					return
+			attackby(H.r_hand, H)
 
-	if(isrobot(AM))
+	else if(isrobot(AM))
 		var/mob/living/silicon/robot/R = AM
 		if(istype(R.module_active, /obj/item/weapon/pickaxe))
 			attackby(R.module_active, R)
@@ -146,10 +159,10 @@
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
-	if(user.is_busy(src))
-		return
-
 	user.SetNextMove(CLICK_CD_RAPID)
+
+	if (user.is_busy(src))
+		return
 
 	if (istype(W, /obj/item/device/core_sampler))
 		geologic_data.UpdateNearbyArtifactInfo(src)
@@ -163,8 +176,7 @@
 		return
 
 	if (istype(W, /obj/item/device/measuring_tape))
-		if(user.is_busy(src))
-			return
+
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
 		if(W.use_tool(src, user, 25, volume = 50))
@@ -185,7 +197,6 @@
 			return
 
 		var/obj/item/weapon/pickaxe/P = W
-
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
 			var/obj/item/weapon/pickaxe/drill/D = P
 			if(!(istype(D, /obj/item/weapon/pickaxe/drill/borgdrill) || istype(D, /obj/item/weapon/pickaxe/drill/jackhammer)))	//borgdrill & jackhammer can't lose energy and crit fail
@@ -215,14 +226,14 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(P.use_tool(src, user, 5 SECONDS, volume = 100))
+		if(P.use_tool(src, user, 50, volume = 100))
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
 				BPHand.adjust_pumped(0.1, 30)
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
-			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
+			if(istype(P, /obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
 				for(var/turf/simulated/mineral/M in range(user, 1))
 					if(get_dir(user, M) & user.dir)
 						M.GetDrilled()
@@ -393,7 +404,7 @@
 
 	//Give a random amount of loot from 1 to 3 or 5, varying on severity.
 	for(var/j in 1 to rand(1, 3 + max(min(severity, 1), 0) * 2))
-		switch(rand(1,7))
+		switch(rand(1, 7))
 			if(1)
 				new/obj/item/stack/rods(src, rand(5,25))
 
