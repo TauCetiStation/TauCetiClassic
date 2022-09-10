@@ -96,7 +96,10 @@ SUBSYSTEM_DEF(holomaps)
 				continue
 			var/image/I = holomap_cache[HC]
 			if(!I)
-				stack_trace("[HC.type] | [HC.holder.loc] | [HC.frequency] failed to generate image.")
+				var/image/NI = image(HC.holder.icon, icon_state = HC.holder.icon_state)
+				NI.transform /= 2.5
+				SSholomaps.holomap_cache[HC] = NI
+				I = NI
 				continue
 			I.filters = null
 			if(C.stat == DEAD)
