@@ -110,22 +110,18 @@
 	var/item_type
 
 /datum/stat/changeling_info
-	// int, [0...]. absorbed DNA
-	var/absorbedcount
 	// int, [0...]. victims
 	var/absorbedamount
-	// bool, [1, 0]
-	var/instatis
-	// list of absorbed species
-	var/list/absorbed_species
 	// array of objects
 	var/list/datum/stat/changeling_purchase/changeling_purchase
 
 /datum/stat/changeling_purchase
-	// string, anything
+	// string, byond_type
 	var/power_type
+	// string, anything
+	var/power_name
 	// int, [0...]
-	var/spent_points
+	var/cost
 
 /datum/stat/role
 	// Default stats
@@ -167,18 +163,16 @@
 
 /datum/stat/role/changeling/set_custom_stat(datum/role/changeling/C)
 	var/datum/stat/changeling_info/_changeling_info = new
-	_changeling_info.absorbedcount = C.absorbedcount
 	_changeling_info.absorbedamount = C.absorbedamount
-	_changeling_info.instatis = C.instatis
-	_changeling_info.absorbed_species = C.absorbed_species
 
 	_changeling_info.changeling_purchase = list()
 	for(var/obj/effect/proc_holder/changeling/P in C.purchasedpowers)
 		if(P.genomecost <= 0)
 			continue
 		var/datum/stat/changeling_purchase/stat = new
-		stat.power_type = P.name
-		stat.spent_points = P.genomecost
+		stat.power_name = P.name
+		stat.power_type = P.type
+		stat.cost = P.genomecost
 
 		_changeling_info.changeling_purchase += stat
 
