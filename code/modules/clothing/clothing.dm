@@ -603,7 +603,7 @@ BLIND     // can't see anything
 
 	if(copytext(item_state,-2) != "_d")
 		basecolor = item_state
-	if((basecolor + "_d") in icon_states('icons/mob/uniform.dmi'))
+	if(basecolor + "_d")
 		item_state = item_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
 		usr.update_inv_w_uniform()
 	else
