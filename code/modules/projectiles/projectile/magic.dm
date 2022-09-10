@@ -51,18 +51,18 @@
 			/mob/living/simple_animal/hostile/retaliate/goat,
 			/mob/living/simple_animal/pig/shadowpig,
 			/mob/living/simple_animal/parrot,
+			/mob/living/simple_animal/mouse,
 			/mob/living/simple_animal/corgi,
 			/mob/living/simple_animal/crab,
 			/mob/living/simple_animal/pug,
 			/mob/living/simple_animal/cat,
-			/mob/living/simple_animal/mouse,
-			/mob/living/simple_animal/chicken,
 			/mob/living/simple_animal/cow,
-			/mob/living/simple_animal/lizard,
 			/mob/living/simple_animal/fox,
 			/mob/living/simple_animal/chick,
+			/mob/living/simple_animal/lizard,
+			/mob/living/simple_animal/chicken,
+			/mob/living/simple_animal/mushroom,
 			/mob/living/simple_animal/cat/Syndi,
-			/mob/living/simple_animal/mushroom
 			)
 			new_mob = new beast(get_turf(loc))
 			new_mob.universal_speak = TRUE
@@ -84,7 +84,7 @@
 			/mob/living/simple_animal/construct/proteon,
 			/mob/living/simple_animal/construct/behemoth,
 			/mob/living/simple_animal/construct/wraith,
-			/mob/living/carbon/xenomorph/humanoid/maid
+			/mob/living/carbon/xenomorph/humanoid/maid,
 			)
 			new_mob = new beast(get_turf(loc))
 			new_mob.universal_speak = TRUE
@@ -132,7 +132,7 @@
 		qdel(src)
 	else
 		var/output_text = {"<font color='red'>============Полиморфизм - краткий курс============</font><BR>
-		[sanitize("- Запомните! Хоть ваше тело и изменилось, может быть даже очень сильно, однако это не значит, что вашум разум также претерпел изменения!")]<BR>
+		[sanitize("- Запомните! Хоть ваше тело и изменилось, может быть даже очень сильно, однако это не значит, что ваш разум также претерпел изменения!")]<BR>
 		[sanitize("- Вы - всё тот же, что и были раньше. Были членом экипажа? Остались тем же членом экипажа.")]<BR>
 		[sanitize("- На вас действуют всё те же правила и ограничения, что и прежде")]<BR>
 		<font color='red'>============Прочие детали============</font><BR>
