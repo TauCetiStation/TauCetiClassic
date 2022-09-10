@@ -3572,7 +3572,6 @@
 /area/station/maintenance/science)
 "agk" = (
 /obj/structure/rack,
-/obj/item/device/camera,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
 /turf/simulated/floor/plating,
@@ -3728,6 +3727,7 @@
 	},
 /obj/item/weapon/lipstick/random,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/device/camera/oldcamera,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "agG" = (
@@ -4580,7 +4580,6 @@
 /obj/structure/closet/theatrecloset,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
-/obj/item/device/camera,
 /obj/machinery/light/small,
 /obj/item/clothing/gloves/rainbow,
 /obj/random/randomtoy,
@@ -6044,12 +6043,6 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
-"akT" = (
-/obj/item/device/camera,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/station/maintenance/escape)
 "akU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -9843,6 +9836,7 @@
 	pixel_x = -2;
 	pixel_y = -9
 	},
+/obj/item/device/camera/oldcamera,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "asd" = (
@@ -11140,6 +11134,7 @@
 /obj/machinery/camera{
 	c_tag = "Theater"
 	},
+/obj/item/device/camera/polar,
 /turf/simulated/floor/carpet/purple,
 /area/station/civilian/theatre)
 "bBj" = (
@@ -24434,6 +24429,8 @@
 	pixel_y = 2
 	},
 /obj/structure/rack,
+/obj/item/device/lens/rentgene,
+/obj/item/device/camera,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -27984,6 +27981,7 @@
 	pixel_x = 3;
 	pixel_y = -2
 	},
+/obj/item/device/lens/nude,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -53444,7 +53442,7 @@ lIp
 pNu
 akd
 akr
-akT
+akv
 all
 alG
 amc

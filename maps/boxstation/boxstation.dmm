@@ -12247,10 +12247,6 @@
 /obj/machinery/newscaster{
 	pixel_x = -28
 	},
-/obj/item/device/camera{
-	pixel_x = -4;
-	pixel_y = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/painting_frame{
 	pixel_y = -10
@@ -12262,6 +12258,7 @@
 	amount = 50;
 	pixel_y = -11
 	},
+/obj/item/device/camera/lomo,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "auV" = (
@@ -13448,9 +13445,7 @@
 	pixel_x = -4;
 	pixel_y = 15
 	},
-/obj/item/device/camera{
-	pixel_x = -5
-	},
+/obj/item/device/camera,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -16539,6 +16534,7 @@
 "aDg" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/razor,
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/maintenance/chapel)
 "aDh" = (
@@ -18643,10 +18639,10 @@
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
-/obj/item/device/camera,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "aHh" = (
@@ -19364,6 +19360,7 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/item/device/lens/invert,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aIA" = (
@@ -21141,7 +21138,6 @@
 /area/station/maintenance/chapel)
 "aLG" = (
 /obj/structure/rack,
-/obj/item/device/camera,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
 /turf/simulated/floor/wood{
@@ -27106,10 +27102,6 @@
 	pixel_x = -24
 	},
 /obj/structure/table,
-/obj/item/device/camera{
-	pixel_x = -2;
-	pixel_y = 5
-	},
 /obj/item/weapon/paper/pamphlet{
 	pixel_x = 9;
 	pixel_y = 1
@@ -30706,7 +30698,6 @@
 /obj/structure/closet{
 	name = "Evidence Closet"
 	},
-/obj/item/device/camera,
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
 /turf/simulated/floor/wood,
@@ -36242,7 +36233,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/item/device/camera,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -45888,7 +45878,6 @@
 /area/station/civilian/locker)
 "bEa" = (
 /obj/structure/table/woodentable,
-/obj/item/device/camera,
 /obj/item/weapon/storage/photo_album{
 	pixel_y = -10
 	},
@@ -45898,6 +45887,7 @@
 /obj/machinery/telescience_jammer{
 	radius = 2
 	},
+/obj/item/device/camera,
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "bEb" = (
@@ -47823,10 +47813,6 @@
 	},
 /area/station/medical/storage)
 "bHz" = (
-/obj/item/device/camera{
-	pixel_x = 8;
-	pixel_y = 7
-	},
 /obj/structure/table/woodentable,
 /obj/item/device/taperecorder{
 	pixel_x = -8;
@@ -47835,6 +47821,7 @@
 /obj/machinery/newscaster{
 	pixel_y = -28
 	},
+/obj/item/device/camera,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -55720,7 +55707,6 @@
 /area/station/civilian/library)
 "bYL" = (
 /obj/structure/closet/cabinet,
-/obj/item/device/camera,
 /obj/item/clothing/under/suit_jacket/red,
 /obj/item/device/eftpos{
 	eftpos_name = "Library EFTPOS scanner"
@@ -55734,6 +55720,10 @@
 /obj/item/clothing/suit/wcoat,
 /obj/item/clothing/head/beret/black,
 /obj/effect/decal/cleanable/cobweb,
+/obj/item/device/camera,
+/obj/item/device/lens/posterization,
+/obj/item/device/lens/sepia,
+/obj/item/device/lens/grayscale,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -57320,11 +57310,11 @@
 /area/station/security/armoury)
 "ceV" = (
 /obj/structure/table/woodentable,
-/obj/item/device/camera,
 /obj/machinery/newscaster{
 	pixel_x = -28;
 	pixel_y = 1
 	},
+/obj/item/device/camera/oldcamera,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -65960,6 +65950,8 @@
 /obj/item/weapon/gun/syringe,
 /obj/item/weapon/medical/teleporter,
 /obj/item/weapon/medical/teleporter,
+/obj/item/device/lens/rentgene,
+/obj/item/device/camera,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -74651,6 +74643,7 @@
 /obj/item/weapon/folder,
 /obj/item/weapon/pen,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/device/lens/nude,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "jhb" = (
