@@ -5,6 +5,7 @@
 	desc = "A hand made chemical grenade."
 	w_class = SIZE_TINY
 	force = 2.0
+	flags = HEAR_TALK
 	var/stage = 0
 	var/state = 0
 	var/path = 0

@@ -4,6 +4,7 @@
 	icon_state = "valve_1"
 	item_state = "ttv"
 	desc = "Regulates the transfer of air between two tanks."
+	flags = HEAR_TALK
 	var/obj/item/weapon/tank/tank_one
 	var/obj/item/weapon/tank/tank_two
 	var/obj/item/device/attached_device

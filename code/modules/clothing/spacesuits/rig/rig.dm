@@ -10,6 +10,7 @@
 	allowed = list(/obj/item/device/flashlight)
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
+
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/obj/item/clothing/suit/space/rig/rig_connect
@@ -52,6 +53,7 @@
 	if(rig_connect)
 		rig_connect.helmet = null
 		rig_connect = null
+		canremove = 1
 	return ..()
 
 /obj/item/clothing/suit/space/rig
@@ -131,6 +133,7 @@
 
 	selected_module = null
 	QDEL_NULL(cell)
+	QDEL_NULL(helmet)
 	QDEL_LIST(installed_modules)
 	. = ..()
 
@@ -486,6 +489,10 @@
 	to_chat(user, "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"].")
 
 /obj/item/clothing/suit/space/rig/emp_act(severity)
+	for(var/obj/item/rig_module/installed_mod in installed_modules)
+		if(installed_mod.type == /obj/item/rig_module/emp_shield)
+			to_chat(wearer, "<span class='warning'>[installed_mod.name] absorbs EMP.</span>")
+			return
 	//drain some charge
 	if(cell)
 		cell.emplode(severity + 1)
@@ -607,8 +614,8 @@
 	slowdown = 0.5
 	armor = list(melee = 55, bullet = 5, laser = 15,energy = 10, bomb = 65, bio = 100, rad = 90)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	max_mounted_devices = 6
-	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/rcd, /obj/item/rig_module/nuclear_generator, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit)
+	max_mounted_devices = 7
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/rcd, /obj/item/rig_module/nuclear_generator, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/emp_shield)
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -791,6 +798,8 @@
 /obj/item/clothing/suit/space/rig/syndi/atom_init()
 	. = ..()
 	armor = combat_mode ? combat_armor : space_armor // in case some child spawns with combat mode on
+	var/obj/item/clothing/shoes/magboots/syndie/SB = new(src)
+	boots = SB
 
 /obj/item/clothing/suit/space/rig/syndi/AltClick(mob/user)
 	if(wearer?.wear_suit != src)
@@ -886,11 +895,6 @@
 	combat_slowdown = 0.2
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/syndiemmessage)
 
-/obj/item/clothing/suit/space/rig/syndi/elite/atom_init()
-	. = ..()
-	var/obj/item/clothing/shoes/magboots/syndie/SB = new(src)
-	SB.name = "The syndicate magboots"
-	boots = SB
 
 /obj/item/clothing/suit/space/rig/syndi/elite/comander
 	name = "Syndicate elite hybrid suit"

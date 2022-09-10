@@ -120,7 +120,7 @@
 	next_pray_anim = world.time + 1 SECOND
 
 	// So restrained people can also pray.
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 
 	//Show an image of the wielded weapon over the person who got dunked.

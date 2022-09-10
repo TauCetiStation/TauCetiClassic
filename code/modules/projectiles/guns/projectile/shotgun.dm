@@ -69,7 +69,7 @@
 	name = "double-barreled shotgun"
 	desc = "A true classic."
 	icon_state = "dshotgun"
-	item_state = "shotgun"
+	item_state = "dshotgun"
 	w_class = SIZE_NORMAL
 	force = 10
 	flags =  CONDUCT
@@ -106,8 +106,8 @@
 		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
 		if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50, required_skills_override = list(/datum/skill/firearms = SKILL_LEVEL_TRAINED)))
 			icon_state = "dshotgun"
+			item_state = "shotgun-short"
 			w_class = SIZE_SMALL
-			item_state = "gun"
 			slot_flags &= ~SLOT_FLAGS_BACK	//you can't sling it on your back
 			slot_flags |= SLOT_FLAGS_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 			to_chat(user, "<span class='warning'>You shorten the barrel of \the [src]!</span>")

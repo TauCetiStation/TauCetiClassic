@@ -104,7 +104,7 @@
 	return
 
 /obj/effect/anomaly/grav/proc/gravShock(mob/A)
-	if(boing && isliving(A) && !A.stat)
+	if(boing && isliving(A) && A.stat == CONSCIOUS)
 		A.Weaken(2)
 		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
 		A.throw_at(target, 5, 1)

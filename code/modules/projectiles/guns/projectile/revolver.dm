@@ -84,7 +84,7 @@
 	var/mob/M = usr
 	var/input = sanitize_safe(input(M,"What do you want to name the gun?"), MAX_NAME_LEN)
 
-	if(input && !M.stat && Adjacent(M))
+	if(input && M.stat == CONSCIOUS && Adjacent(M))
 		name = input
 		to_chat(M, "You name the gun [input]. Say hello to your new friend.")
 		return 1
@@ -250,6 +250,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
 	icon_state = "dshotgun"
+	item_state = "shotgun-short"
 	w_class = SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"
