@@ -17,7 +17,7 @@
 							/obj/item/weapon/storage/bag/trash,
 							/obj/item/device/lightreplacer,
 							/obj/item/weapon/reagent_containers/glass/bucket,
-							/obj/item/weapon/reagent_containers/glass/rag
+							/obj/item/weapon/rag
 							)
 
 
