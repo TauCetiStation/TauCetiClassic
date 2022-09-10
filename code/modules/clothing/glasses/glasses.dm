@@ -19,10 +19,6 @@
 	sprite_sheet_slot = SPRITE_SHEET_EYES
 
 /obj/item/clothing/glasses/attack_self(mob/user)
-	
-	if(usr.incapacitated())
-		return
-
 	if(toggleable)
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
@@ -389,6 +385,8 @@
 /obj/item/clothing/glasses/sunglasses/noir/verb/toggle_noir()
 	set name = "Toggle Noir"
 	set category = "Object"
-
+	
+	if(usr.incapacitated())
+		return
 	active = !active
 	to_chat(usr, "<span class='notice'>You toggle the Noire Mode [active ? "on. Let the investigation begin." : "off."]</span>")
