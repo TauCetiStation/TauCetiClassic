@@ -184,20 +184,17 @@
 	icon_state = "rentgene_filter"
 	effect = list(XRAY_FILTER, "", null)
 
+/obj/item/device/lens/rentgene/process_icon(atom/A)
+	if(!ishuman(A))
+		return FALSE
+	return icon("icons/mob/human.dmi","electrocuted_generic",A.dir)
+
 /obj/item/device/lens/nude
 	name = "red film filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A red filter lens that shows people nude."
 	icon_state = "nude_filter"
 	effect = list(NUDE_FILTER, "", null)
-
-/obj/item/device/lens/proc/process_icon(atom/A)
-	return FALSE
-
-/obj/item/device/lens/rentgene/process_icon(atom/A)
-	if(!ishuman(A))
-		return FALSE
-	return icon("icons/mob/human.dmi","electrocuted_generic",A.dir)
 
 /obj/item/device/lens/nude/process_icon(atom/A)
 	if(!ishuman(A))
@@ -238,6 +235,9 @@
 				hair_s.Blend(grad_s, ICON_OVERLAY)
 			img.Blend(hair_s, ICON_OVERLAY)
 	return img
+
+/obj/item/device/lens/proc/process_icon(atom/A)
+	return
 
 
 /**************
