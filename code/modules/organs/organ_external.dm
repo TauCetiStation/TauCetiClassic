@@ -1039,7 +1039,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/r_leg/diona/podman
 	controller_type = /datum/bodypart_controller/plant
 
-/obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
+/obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon, impact_direction = null)
 	if(!disfigured)
 		if(brute_dam > 40)
 			if (prob(50))
