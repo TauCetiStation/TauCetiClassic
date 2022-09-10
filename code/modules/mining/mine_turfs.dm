@@ -49,7 +49,7 @@
 		name = "Rock"
 		icon_state = "rock"
 	else
-		if(ore_amount >= 8)
+		if(ore_amount >= 7)
 			name = "[mineral.display_name] rich deposit"
 			add_overlay("rock_[mineral.name]")
 		else
@@ -92,16 +92,8 @@
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		if(istype(H.l_hand, /obj/item/weapon/pickaxe))
-			if(istype(H.l_hand, /obj/item/weapon/pickaxe/drill))
-				var/obj/item/weapon/pickaxe/drill/D = H.l_hand
-				if(!D.mode)
-					return
 			attackby(H.l_hand, H)
 		else if(istype(H.r_hand, /obj/item/weapon/pickaxe))
-			if(istype(H.r_hand, /obj/item/weapon/pickaxe/drill))
-				var/obj/item/weapon/pickaxe/drill/D = H.r_hand
-				if(!D.mode)
-					return
 			attackby(H.r_hand, H)
 
 	else if(isrobot(AM))
@@ -176,17 +168,18 @@
 		return
 
 	if (istype(W, /obj/item/device/measuring_tape))
-
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
-		if(W.use_tool(src, user, 25, volume = 50))
+		if(W.use_tool(src, user, 2.5 SECONDS, volume = 50))
 			to_chat(user, "<span class='notice'>[bicon(P)] [src] has been excavated to a depth of [2*excavation_level]cm.</span>")
 		return
 
 	if (istype(W, /obj/item/weapon/sledgehammer))
 		var/obj/item/weapon/sledgehammer/S = W
 		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED))
-			to_chat(user, "<span class='notice'>You successfully break [name].</span>")
+			user.do_attack_animation(src)
+			shake_camera(user, 1, 1)
+			playsound(src, 'sound/misc/sledgehammer_hit_rock.ogg', VOL_EFFECTS_MASTER)
 			GetDrilled(artifact_fail = 1, mineral_drop_koef = 0.7)
 		else
 			to_chat(user, "<span class='warning'>You need to take it with both hands to break it!</span>")
