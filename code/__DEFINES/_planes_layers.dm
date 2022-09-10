@@ -125,8 +125,6 @@ What is the naming convention for planes or layers?
 
 #define ABOVE_GAME_PLANE  -1
 
-#define ABOVE_GAME_PLANE -3
-
 #define BLACKNESS_PLANE   0
 
 #define SINGULARITY_PLANE 10
