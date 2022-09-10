@@ -111,7 +111,7 @@
 
 /datum/stat/changeling_info
 	// int, [0...]. victims
-	var/absorbedamount
+	var/victims_number
 	// array of objects
 	var/list/datum/stat/changeling_purchase/changeling_purchase
 
@@ -163,7 +163,7 @@
 
 /datum/stat/role/changeling/set_custom_stat(datum/role/changeling/C)
 	var/datum/stat/changeling_info/_changeling_info = new
-	_changeling_info.absorbedamount = C.absorbedamount
+	_changeling_info.victims_number = C.absorbedamount
 
 	_changeling_info.changeling_purchase = list()
 	for(var/obj/effect/proc_holder/changeling/P in C.purchasedpowers)
