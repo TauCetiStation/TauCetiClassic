@@ -12,14 +12,19 @@
 	var/obj/effect/landmark/quality_relocate/spawn_landmark = pick(quality_landmarks)
 	if(!spawn_landmark)
 		return
-	var/list/spawn_locs = list()
+	var/list/list_landmarks[0] = LAZYACCESSASSOC(global.quality_landmarks, spawn_landmark.name, spawn_landmark)
+	H.forceMove(pick(list_landmarks))
+	/*var/obj/effect/landmark/quality_relocate/Q = pick(global.quality_landmarks["/obj/effect/landmark/quality_relocate"])
+	if(istype(Q, spawn_landmark))
+		H.forceMove(Q.loc)*/
+	/*var/list/spawn_locs = list()
 	for(var/obj/effect/landmark/quality_relocate/Q in global.quality_landmarks)
 		if(!Q)
 			return
 		if(istype(Q, spawn_landmark))
 			spawn_locs += Q.loc
 	if(spawn_locs.len)
-		H.forceMove(pick(spawn_locs))
+		H.forceMove(pick(spawn_locs))*/
 
 /datum/quality/relocate/bad_day
 	name = "Bad Day"

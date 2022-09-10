@@ -528,7 +528,8 @@
 
 /obj/effect/landmark/quality_relocate/atom_init(mapload)
 	..()
-	global.quality_landmarks += src
+	LAZYADDASSOCLIST(global.quality_landmarks, name , src)
+	//global.quality_landmarks += src
 
 
 /obj/effect/landmark/quality_relocate/bad_day
