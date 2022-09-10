@@ -124,7 +124,6 @@
 	return
 
 /obj/item/toy/spinningtoy/Destroy()
-	turn_off()
 	return ..()
 
 /*
