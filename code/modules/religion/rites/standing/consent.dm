@@ -34,15 +34,19 @@
 	var/mob/living/simple_animal/shade/god/god = locate() in get_turf(AOG)
 	if(!istype(god))
 		if(!ishuman(AOG.buckled_mob))
-			to_chat(user, "<span class='warning'>Only humanoid bodies can be accepted.</span>")
+			to_chat(user, "<span class='warning'>Только тела гуманоидов могут быть приняты.</span>")
+			return FALSE
+
+		if(AOG.buckled_mob.get_species() == HOMUNCULUS)
+			to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
 			return FALSE
 
 		if(jobban_isbanned(AOG.buckled_mob, "Cyborg") || role_available_in_minutes(AOG.buckled_mob, ROLE_GHOSTLY))
-			to_chat(user, "<span class='warning'>[AOG.buckled_mob]Тело [AOG.buckled_mob] слишком слабо!</span>")
+			to_chat(user, "<span class='warning'>Тело [AOG.buckled_mob] слишком слабо!</span>")
 			return FALSE
 	else
 		if(jobban_isbanned(god, "Cyborg") || role_available_in_minutes(god, ROLE_GHOSTLY))
-			to_chat(user, "<span class='warning'>[god] is too weak!</span>")
+			to_chat(user, "<span class='warning'>[god] слишком слаб!</span>")
 			return FALSE
 
 	return TRUE
@@ -56,7 +60,7 @@
 	var/mob/living/carbon/human/human2borg = AOG.buckled_mob
 	if(!istype(human2borg))
 		return FALSE
-	hgibs(get_turf(AOG), human2borg.viruses, human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
+	hgibs(get_turf(AOG), human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [pick(religion.deity_names)]!</span>")
 	var/mob/living/silicon/robot/R = human2borg.Robotize(religion.bible_info.borg_name, religion.bible_info.laws_type, FALSE, religion)
 	religion.add_member(R, HOLY_ROLE_PRIEST)
@@ -71,6 +75,8 @@
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(AOG), "Son of Heaven", religion.bible_info.laws_type, FALSE, religion)
 	god.mind.transfer_to(O)
 	O.job = "Cyborg"
+	O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	O.mind.skills.maximize_active_skills()
 	qdel(god)
 	religion.add_deity(O, HOLY_ROLE_PRIEST)
 	return TRUE
@@ -145,7 +151,7 @@
 
 	needed_aspects = list(
 		ASPECT_WACKY = 1,
-		ASPECT_HERD = 1
+		ASPECT_CHAOS = 1,
 	)
 
 /datum/religion_rites/standing/consent/clownconversion/can_start(mob/living/user, obj/AOG)
@@ -215,10 +221,6 @@
 	favor_cost = 250
 
 	consent_msg = "Do you believe in God?"
-
-	needed_aspects = list(
-		ASPECT_HERD = 1
-	)
 
 /datum/religion_rites/standing/consent/invite/can_start(mob/living/user, obj/AOG)
 	if(!..())

@@ -77,25 +77,6 @@
 
 /mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
 	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
-/*
-	if(!effect || (blocked >= 2))	return 0
-	switch(effecttype)
-		if(STUN)
-			stunned = max(stunned,(effect/(blocked+1)))
-		if(WEAKEN)
-			weakened = max(weakened,(effect/(blocked+1)))
-		if(PARALYZE)
-			paralysis = max(paralysis,(effect/(blocked+1)))
-		if(IRRADIATE)
-			radiation += min((effect - (effect*getarmor(null, "rad"))), 0)//Rads auto check armor
-		if(STUTTER)
-			Stuttering(effect/(blocked+1))
-		if(EYE_BLUR)
-			eye_blurry = max(eye_blurry,(effect/(blocked+1)))
-		if(DROWSY)
-			drowsyness = max(drowsyness,(effect/(blocked+1)))
-	updatehealth()
-	return 1*/
 
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
@@ -149,7 +130,7 @@
 
 /mob/living/silicon/add_language(language, flags=LANGUAGE_CAN_SPEAK)
 	. = ..()
-	if(. && flags == LANGUAGE_CAN_SPEAK)
+	if(. && flags >= LANGUAGE_CAN_SPEAK)
 		speech_synthesizer_langs.Add(all_languages[language])
 
 /mob/living/silicon/remove_language(rem_language)

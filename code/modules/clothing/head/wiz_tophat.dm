@@ -139,7 +139,7 @@ var/global/list/tophats_list = list()
 
 		var/matrix/M = matrix()
 		M.Scale(0.5)
-		animate(AM, pixel_y=AM.pixel_y + 32, transform=M, time=5)
+		animate(AM, pixel_y=AM.pixel_y - 32, transform=M, time=5)
 		sleep(5)
 
 		AM.visible_message("<span class='warning'>[AM] dissapears into [src]!</span>")
@@ -223,6 +223,9 @@ var/global/list/tophats_list = list()
 	desc = "You feel as if a bunch of rabbits could fit in it. Or perhaps monkeys."
 	icon_state = "tophat"
 	item_state = "that"
+
+	flags = HEAR_PASS_SAY
+
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 

@@ -16,8 +16,8 @@ LINEN BINS
 	throw_speed = 1
 	throw_range = 2
 	w_class = SIZE_TINY
-	item_color = "white"
 
+	dyed_type = DYED_BEDSHEET
 
 /obj/item/weapon/bedsheet/attack_self(mob/user)
 	user.drop_item()
@@ -33,131 +33,132 @@ LINEN BINS
 		if(!ishuman(user))
 			to_chat(user, "<span class='notice'>You try, but you can't.</span>")
 			return
-		user.visible_message("<span class='notice'>[user] starts tearing \the [src] into rags.</span>", "<span class='notice'>You start tearing \the [src] into rags.</span>")
+		user.visible_message("<span class='notice'>[user] starts cutting \the [src] into cloth.</span>", "<span class='notice'>You start cutting \the [src] into cloth.</span>")
 		if(do_after(user, 40, target = src))
-			user.visible_message("<span class='notice'>[user] tears \the [src] into rags using [I].</span>", "<span class='notice'>You finish tearing \the [src] into rags.</span>")
-			var/obj/item/stack/medical/bruise_pack/rags/R = new(get_turf(src))
-			R.amount = 3
+			user.visible_message("<span class='notice'>[user] cuts \the [src] into cloth using [I].</span>", "<span class='notice'>You finish cutting \the [src] into cloth.</span>")
+			new /obj/item/stack/sheet/cloth(get_turf(src), 3)
 			qdel(src)
 		return
 	return ..()
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"
-	item_color = "blue"
 
 /obj/item/weapon/bedsheet/green
 	icon_state = "sheetgreen"
-	item_color = "green"
 
 /obj/item/weapon/bedsheet/orange
 	icon_state = "sheetorange"
-	item_color = "orange"
 
 /obj/item/weapon/bedsheet/purple
 	icon_state = "sheetpurple"
-	item_color = "purple"
 
 /obj/item/weapon/bedsheet/rainbow
 	name = "rainbow bedsheet"
 	desc = "A multicolored blanket.  It's actually several different sheets cut up and sewn together."
 	icon_state = "sheetrainbow"
-	item_color = "rainbow"
 
 /obj/item/weapon/bedsheet/red
 	icon_state = "sheetred"
-	item_color = "red"
 
 /obj/item/weapon/bedsheet/yellow
 	icon_state = "sheetyellow"
-	item_color = "yellow"
 
 /obj/item/weapon/bedsheet/mime
 	name = "mime's blanket"
 	desc = "A very soothing striped blanket.  All the noise just seems to fade out when you're under the covers in this."
 	icon_state = "sheetmime"
-	item_color = "mime"
 
 /obj/item/weapon/bedsheet/clown
 	name = "clown's blanket"
 	desc = "A rainbow blanket with a clown mask woven in.  It smells faintly of bananas."
 	icon_state = "sheetclown"
-	item_color = "clown"
 
 /obj/item/weapon/bedsheet/captain
 	name = "captain's bedsheet"
 	desc = "It has a Nanotrasen symbol on it, and was woven with a revolutionary new kind of thread guaranteed to have 0.01% permeability for most non-chemical substances, popular among most modern captains."
 	icon_state = "sheetcaptain"
-	item_color = "captain"
 
 /obj/item/weapon/bedsheet/rd
 	name = "research director's bedsheet"
 	desc = "It appears to have a beaker emblem, and is made out of fire-resistant material, although it probably won't protect you in the event of fires you're familiar with every day."
 	icon_state = "sheetrd"
-	item_color = "director"
 
 /obj/item/weapon/bedsheet/medical
 	name = "medical blanket"
 	desc = "It's a sterilized* blanket commonly used in the Medbay.  *Sterilization is voided if a virologist is present onboard the station."
 	icon_state = "sheetmedical"
-	item_color = "medical"
 
 /obj/item/weapon/bedsheet/hos
 	name = "head of security's bedsheet"
 	desc = "It is decorated with a shield emblem.  While crime doesn't sleep, you do, but you are still THE LAW!"
 	icon_state = "sheethos"
-	item_color = "hosred"
 
 /obj/item/weapon/bedsheet/hop
 	name = "head of personnel's bedsheet"
 	desc = "It is decorated with a key emblem.  For those rare moments when you can rest and cuddle with Ian without someone screaming for you over the radio."
 	icon_state = "sheethop"
-	item_color = "hop"
 
 /obj/item/weapon/bedsheet/ce
 	name = "chief engineer's bedsheet"
 	desc = "It is decorated with a wrench emblem.  It's highly reflective and stain resistant, so you don't need to worry about ruining it with oil."
 	icon_state = "sheetce"
-	item_color = "chief"
 
 /obj/item/weapon/bedsheet/brown
 	icon_state = "sheetbrown"
-	item_color = "brown"
 
 /obj/item/weapon/bedsheet/psych
 	icon_state = "sheetpsych"
-	item_color = "brown"
 
 /obj/item/weapon/bedsheet/centcom
 	name = "Centcom bedsheet"
 	desc = "Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials."
 	icon_state = "sheetcentcom"
-	item_color = "centcom"
 
 /obj/item/weapon/bedsheet/syndie
 	name = "syndicate bedsheet"
 	desc = "It has a syndicate emblem and it has an aura of evil."
 	icon_state = "sheetsyndie"
-	item_color = "syndie"
 
 /obj/item/weapon/bedsheet/cult
 	name = "cultist's bedsheet"
 	desc = "You might dream of Nar'Sie if you sleep with this.  It seems rather tattered and glows of an eldritch presence."
 	icon_state = "sheetcult"
-	item_color = "cult"
 
 /obj/item/weapon/bedsheet/wiz
 	name = "wizard's bedsheet"
 	desc = "A special fabric enchanted with magic so you can have an enchanted night.  It even glows!"
 	icon_state = "sheetwiz"
-	item_color = "wiz"
+
+/obj/item/weapon/bedsheet/wiz/atom_init()
+	. = ..()
+
+	var/obj/effect/effect/forcefield/F = new
+	AddComponent(/datum/component/forcefield, "wizard field", 20, 3 SECONDS, 5 SECONDS, F, TRUE)
+
+/obj/item/weapon/bedsheet/wiz/proc/activate(mob/living/user)
+	if(iswizard(user) || iswizardapprentice(user))
+		SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, user)
+
+/obj/item/weapon/bedsheet/wiz/proc/deactivate(mob/living/user)
+	SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
+
+/obj/item/weapon/bedsheet/wiz/equipped(mob/living/user, slot)
+	. = ..()
+
+	if(slot == SLOT_BACK)
+		activate(user)
+
+/obj/item/weapon/bedsheet/wiz/dropped(mob/living/user)
+	. = ..()
+	if(slot_equipped == SLOT_BACK)
+		deactivate(user)
 
 /obj/item/weapon/bedsheet/gar
 	name = "gar bedsheet"
 	desc = "A surprisingly soft gar bedsheet."
 	icon_state = "sheetgurren"
 	item_state = "bedsheet"
-	item_color = "gurren"
 
 
 /obj/structure/bedsheetbin
@@ -203,11 +204,11 @@ LINEN BINS
 
 
 
-/obj/structure/bedsheetbin/attack_paw(mob/user)
+/obj/structure/bedsheetbin/attack_paw(mob/living/user)
 	return attack_hand(user)
 
 
-/obj/structure/bedsheetbin/attack_hand(mob/user)
+/obj/structure/bedsheetbin/attack_hand(mob/living/user)
 	if(amount >= 1)
 		amount--
 
@@ -219,36 +220,12 @@ LINEN BINS
 		else
 			B = new /obj/item/weapon/bedsheet(loc)
 
-		B.loc = user.loc
-		user.put_in_hands(B)
+		user.try_take(B, loc)
 		to_chat(user, "<span class='notice'>You take [B] out of [src].</span>")
 
 		if(hidden)
-			hidden.loc = user.loc
+			hidden.forceMove(loc)
 			to_chat(user, "<span class='notice'>[hidden] falls out of [B]!</span>")
-			hidden = null
-
-
-	add_fingerprint(user)
-
-/obj/structure/bedsheetbin/attack_tk(mob/user)
-	if(amount >= 1)
-		amount--
-
-		var/obj/item/weapon/bedsheet/B
-		if(sheets.len > 0)
-			B = sheets[sheets.len]
-			sheets.Remove(B)
-
-		else
-			B = new /obj/item/weapon/bedsheet(loc)
-
-		B.loc = loc
-		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
-		update_icon()
-
-		if(hidden)
-			hidden.loc = loc
 			hidden = null
 
 

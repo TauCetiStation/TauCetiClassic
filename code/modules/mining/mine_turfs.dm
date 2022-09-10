@@ -63,7 +63,7 @@
 	var/turf/T
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
-		if(istype(T, /turf/simulated/floor) || isspaceturf(T) || istype(T, /turf/simulated/shuttle/floor))
+		if(isfloorturf(T) || isspaceturf(T) || istype(T, /turf/simulated/shuttle/floor))
 			var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
 			I.plane = FLOOR_PLANE
 			T.add_overlay(I)
@@ -356,7 +356,6 @@
 		for(var/mob/living/M in range(src, 200))
 			to_chat(M, "<span class='danger'>[pick("A high pitched [pick("keening","wailing","whistle")]","A rumbling noise like [pick("thunder","heavy machinery")]")] somehow penetrates your mind before fading away!</span>")
 			if(pain)
-				flick("pain",M.pain)
 				if(prob(50))
 					M.adjustBruteLoss(5)
 			else
@@ -424,7 +423,7 @@
 				new/obj/item/stack/rods(src, rand(5,25))
 
 			if(2)
-				new/obj/item/stack/tile(src, rand(1,5))
+				new/obj/item/stack/tile/plasteel(src, rand(1,5))
 
 			if(3)
 				new/obj/item/stack/sheet/metal(src, rand(5,25))
@@ -608,9 +607,6 @@
 	name = "Asteroid"
 	icon = 'icons/turf/asteroid.dmi'
 	icon_state = "asteroid"
-	oxygen = 0.01
-	nitrogen = 0.01
-	temperature = TCMB
 	icon_plating = "asteroid"
 	var/dug = FALSE       //FALSE = has not yet been dug, TRUE = has already been dug
 	has_resources = TRUE
@@ -703,7 +699,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='warning'>You start digging.</span>")
-		if(W.use_tool(src, user, 40, volume = 50))
+		if(W.use_tool(src, user, 40, volume = 100))
 			if((user.loc == T && user.get_active_hand() == W))
 				to_chat(user, "<span class='notice'>You dug a hole.</span>")
 				gets_dug()

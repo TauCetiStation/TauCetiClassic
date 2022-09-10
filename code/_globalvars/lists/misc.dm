@@ -18,7 +18,6 @@ var/global/list/roles_ingame_minute_unlock = list(
 	ROLE_TRAITOR = 720,
 	ROLE_OPERATIVE = 2160,
 	ROLE_CHANGELING = 2160,
-	ROLE_RAIDER = 4320,
 	ROLE_ALIEN = 1440,
 	ROLE_WIZARD = 2880,
 	ROLE_ERT = 1440,

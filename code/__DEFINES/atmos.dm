@@ -47,6 +47,8 @@
 #define  SPACE_HEAT_TRANSFER_COEFFICIENT 0.2 // A hack to partly simulate radiative heat. // unused
 #define   OPEN_HEAT_TRANSFER_COEFFICIENT 0.4
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT 0.1 // A hack for now. // unused
+/// a hack to help make vacuums "cold", sacrificing realism for gameplay
+#define HEAT_CAPACITY_VACUUM 7000
 
 // Fire damage. (unused)
 #define CARBON_LIFEFORM_FIRE_RESISTANCE (T0C + 200)

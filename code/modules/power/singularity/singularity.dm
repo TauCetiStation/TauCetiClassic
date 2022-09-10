@@ -88,6 +88,9 @@
 	consume(user)
 	return 1
 
+/obj/singularity/attack_tk(mob/user)
+	return FALSE
+
 /obj/singularity/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(current_size >= STAGE_FIVE || check_turfs_in(Dir))
 		last_failed_movement = 0//Reset this because we moved

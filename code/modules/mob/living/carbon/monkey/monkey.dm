@@ -103,39 +103,36 @@
 	return ..()
 
 /mob/living/carbon/monkey/unathi/atom_init()
-
 	. = ..()
-	dna.mutantrace = "lizard"
 	greaterform = UNATHI
 	add_language(LANGUAGE_SINTAUNATHI)
 
 /mob/living/carbon/monkey/skrell/atom_init()
-
 	. = ..()
-	dna.mutantrace = "skrell"
 	greaterform = SKRELL
 	add_language(LANGUAGE_SKRELLIAN)
 
 /mob/living/carbon/monkey/tajara/atom_init()
-
 	. = ..()
-	dna.mutantrace = "tajaran"
 	greaterform = TAJARAN
 	add_language(LANGUAGE_SIIKTAJR)
 
-/mob/living/carbon/monkey/movement_delay(tally = 0)
+/mob/living/carbon/monkey/movement_delay()
+	var/tally = speed
+
 	if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
 
 	var/health_deficiency = (100 - health)
-	if(health_deficiency >= 45) tally += (health_deficiency / 25)
+	if(health_deficiency >= 45)
+		tally += (health_deficiency / 25)
 
 	if(pull_debuff)
 		tally += pull_debuff
 
-	if (bodytemperature < 283.222)
-		tally += (283.222 - bodytemperature) / 10 * 1.75
-	return tally+config.monkey_delay
+	if (bodytemperature < BODYTEMP_NORMAL - 30)
+		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
+	return tally + config.monkey_delay
 
 /mob/living/carbon/monkey/helpReaction(mob/living/attacker, show_message = TRUE)
 	help_shake_act(attacker)
@@ -147,7 +144,7 @@
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
 		if(istype(src, /mob/living/carbon/monkey/diona))
-			stat(null, "Nutriment: [nutrition]/400")
+			stat(null, "Nutriment: [nutrition]/[NUTRITION_LEVEL_NORMAL]")
 	if(mind)
 		for(var/role in mind.antag_roles)
 			var/datum/role/R = mind.antag_roles[role]
@@ -196,7 +193,7 @@
 		gib()
 		return
 	if (stat == DEAD && !client)
-		gibs(loc, viruses)
+		gibs(loc)
 		qdel(src)
 		return
 
@@ -205,14 +202,14 @@
 	return 0
 
 /mob/living/carbon/monkey/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=0, message_range = world.view, list/used_radios = list())
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 
 	if(!message)
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message,2))
+		return emote(copytext(message, 2))
 
 	if(speak_emote.len)
 		verb = pick(speak_emote)

@@ -276,9 +276,11 @@ log transactions
 				// check if they have low security enabled
 				scan_user(usr)
 
-				if(!ticks_left_locked_down && held_card)
-					var/tried_account_num = text2num(href_list["account_num"])
-					if(!tried_account_num)
+				if(!ticks_left_locked_down)
+					var/tried_account_num
+					if(!held_card)
+						tried_account_num = text2num(href_list["account_num"])
+					else
 						tried_account_num = held_card.associated_account_number
 					var/tried_pin = text2num(href_list["account_pin"])
 
@@ -459,16 +461,15 @@ log transactions
 					view_screen = NO_SCREEN
 
 // put the currently held id on the ground or in the hand of the user
-/obj/machinery/atm/proc/release_held_id(mob/living/carbon/human/human_user)
+/obj/machinery/atm/proc/release_held_id(mob/living/carbon/human/user)
 	if(!held_card)
 		return
+	if(!ishuman(user))
+		return
 
+	user.put_in_hands(held_card)
 	authenticated_account = null
-
-	if(ishuman(human_user) && !human_user.get_active_hand())
-		human_user.put_in_hands(held_card)
 	held_card = null
-
 
 /obj/machinery/atm/proc/spawn_ewallet(sum, loc)
 	var/obj/item/weapon/spacecash/ewallet/E = new /obj/item/weapon/spacecash/ewallet(loc)

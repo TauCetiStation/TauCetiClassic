@@ -1679,6 +1679,26 @@
 	icon_state = "vox_long"
 	species_allowed = list(VOX, PODMAN)
 
+/datum/sprite_accessory/hair/vox_classic
+	name = "Classic Quills"
+	icon_state = "vox_classic"
+	species_allowed = list(VOX, PODMAN)
+
+/datum/sprite_accessory/hair/vox_dreads
+	name = "Vox Dreads"
+	icon_state = "vox_dreads"
+	species_allowed = list(VOX, PODMAN)
+
+/datum/sprite_accessory/hair/vox_long_dreads
+	name = "Vox Long Dreads"
+	icon_state = "vox_long_dreads"
+	species_allowed = list(VOX, PODMAN)
+
+/datum/sprite_accessory/hair/vox_king_dreads
+	name = "Vox Kingly Dreads"
+	icon_state = "vox_kingly_dreads"
+	species_allowed = list(VOX, PODMAN)
+
 /datum/sprite_accessory/facial_hair/taj_sideburns
 	name = "Tajara Sideburns"
 	icon_state = "taj_facial_sideburns"

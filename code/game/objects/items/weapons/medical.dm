@@ -5,7 +5,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "combat_hypo"
 	volume = 60
-	list_reagents = list("synaptizine" = 5, "hyperzine" = 15, "oxycodone" = 15, "anti_toxin" = 25)
+	list_reagents = list("stimulants" = 5, "bicaridine" = 15, "oxycodone" = 15, "kelotane" = 15, "doctorsdelight" = 10)
 /obj/item/weapon/reagent_containers/hypospray/combat/atom_init()
 	. = ..()
 	if (!possible_transfer_amounts)
@@ -52,6 +52,27 @@
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
 	new /obj/item/device/healthanalyzer(src)
 
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/psyops
+	name = "psyops small kit"
+	icon_state = "first_aid_kit_com"
+	desc = "A small kit of auto injectors with drugs. Like the real deal drugs."
+	max_w_class = SIZE_TINY
+	w_class = SIZE_TINY
+
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/psyops/atom_init()
+	. = ..()
+
+	if (empty)
+		return
+
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/nuka_cola(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/hippiesdelight(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/lean(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/space_drugs(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/nuka_cola(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/hippiesdelight(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/lean(src)
+
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space
 	name = "Space first-aid small kit"
 	icon_state = "first_aid_kit_sp"
@@ -93,6 +114,17 @@
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
 	new /obj/item/device/healthanalyzer(src)
 
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike
+	name = "Emergency Small first-aid kit"
+
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike/atom_init()
+	. = ..()
+
+	if (empty)
+		return
+
+	new /obj/item/stack/medical/suture(src)
+
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment
 	name = "Emergency nutriment kit"
 	icon_state = "emergency_nutriment_kit"
@@ -108,3 +140,46 @@
 
 	for (var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/nutriment(src)
+
+/obj/item/weapon/reagent_containers/hypospray/combat/bleed
+	name = "bloodloss hypospray"
+	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with reagents to stop the bleedings."
+	icon_state = "qc_hypo"
+	volume = 100
+	list_reagents = list("metatrombine" = 5, "iron" = 25, "dexalin" = 25, "bicaridine" = 25, "inaprovaline" = 20)
+
+/obj/item/weapon/reagent_containers/hypospray/combat/bruteburn
+	name = "bruteburn hypospray"
+	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with reagents to heal brute and burn damage."
+	icon_state = "bruteburn_hypo"
+	volume = 100
+	list_reagents = list("kelotane" = 25, "dermaline" = 25, "bicaridine" = 25, "tricordrazine" = 25)
+
+/obj/item/weapon/reagent_containers/hypospray/combat/dexalin
+	name = "dexalin+ hypospray"
+	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with pure dexalin plus."
+	amount_per_transfer_from_this = 1
+	icon_state = "dex_hypo"
+	volume = 10
+	list_reagents = list("dexalinp" = 10)
+
+/obj/item/weapon/reagent_containers/hypospray/combat/atoxin
+	name = "anti-toxin hypospray"
+	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with reagents that combat radioactive and regular poisoning."
+	icon_state = "atox_hypo"
+	volume = 100
+	list_reagents = list("anti_toxin" = 60, "hyronalin" = 40)
+
+/obj/item/weapon/reagent_containers/hypospray/combat/intdam
+	name = "internal damage hypospray"
+	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with reagents which will restore internal organs of patient."
+	icon_state = "intdam_hypo"
+	volume = 100
+	list_reagents = list("peridaxon" = 25, "dextromethorphan" = 25, "alkysine" = 25, "imidazoline" = 25)
+
+/obj/item/weapon/reagent_containers/hypospray/combat/pain
+	name = "painstop hypospray"
+	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with reagents which will quench the pain."
+	icon_state = "pain_hypo"
+	volume = 100
+	list_reagents = list("tramadol" = 25, "paracetamol" = 25, "oxycodone" = 25, "inaprovaline" = 25)

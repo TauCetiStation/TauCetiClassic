@@ -76,6 +76,7 @@
 					<A href='?src=\ref[src];secretsfun=securitylevel3'>Security Level - Delta</A><BR>
 					<h4>Do something stupid</h4>
 					<A href='?src=\ref[src];secretsfun=spawncompletesandwich'>Create a Complete Sandwich</A><BR>
+					<A href='?src=\ref[src];secretsfun=forcedquality'>Force a \"Random\" Quality</A><BR>
 					"}
 
 		if(2) // OOC Events
@@ -338,7 +339,7 @@
 		if("flicklights")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","FL")
-			while(!usr.stat)
+			while(usr.stat == CONSCIOUS)
 				//knock yourself out to stop the ghosts
 				for(var/mob/M in player_list)
 					if(M.stat != DEAD && prob(25))
@@ -450,8 +451,7 @@
 			feedback_add_details("admin_secrets_fun_used","SG")
 			for(var/obj/item/clothing/under/W in world)
 				W.icon_state = "schoolgirl"
-				W.item_state = "w_suit"
-				W.item_color = "schoolgirl"
+				W.item_state = "schoolgirl"
 			message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
 			announcement_ping.play("animes")
 		// Egalitarian Station Mode
@@ -508,6 +508,20 @@
 			feedback_add_details("admin_secrets_fun_used","DASANDWICH")
 			var/obj/item/weapon/reagent_containers/food/snacks/csandwich/CS = new(get_turf(usr))
 			CS.complete()
+		if("forcedquality")
+			if(!check_rights(R_EVENT|R_FUN))
+				to_chat(usr, "<span class='warning'>You don't have permissions for this</span>")
+				return
+			if(!SSqualities)
+				to_chat(usr, "<span class='warning'>Please wait untill Qualities Subsystem loads</span>")
+				return
+			var/quality_name = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.qualities_by_name
+			if(!quality_name)
+				return
+
+			var/datum/quality/Q = SSqualities.qualities_by_name[quality_name]
+			SSqualities.forced_quality_type = Q.type
+
 		if("global_sound_speed")
 			if(!check_rights(R_SOUNDS))
 				return
@@ -555,7 +569,7 @@
 		// Restore air in your zone
 		if("restore_air") // this is unproper way to restore turfs default gas values, since you can delete sleeping agent for example.
 			var/turf/simulated/T = get_turf(usr)
-			if((istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor)) && T.zone.air)
+			if((isfloorturf(T) || istype(T, /turf/simulated/shuttle/floor)) && T.zone.air)
 				var/datum/gas_mixture/GM = T.zone.air
 
 				for(var/g in gas_data.gases)

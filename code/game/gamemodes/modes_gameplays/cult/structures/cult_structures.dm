@@ -5,12 +5,11 @@
 	var/can_unwrench = TRUE
 	var/health = 3000
 
-/obj/structure/cult/bullet_act(obj/item/projectile/Proj)
+/obj/structure/cult/bullet_act(obj/item/projectile/Proj, def_zone)
 	health -= Proj.damage
-	..()
+	. = ..()
 	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
 	healthcheck()
-	return PROJECTILE_ACTED
 
 /obj/structure/cult/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W) && can_unwrench)
@@ -246,6 +245,8 @@
 		destroying(user.my_religion)
 
 /obj/structure/cult/anomaly/proc/async_destroying(datum/religion/cult/C)
+	density = FALSE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	animate(src, 1 SECONDS, alpha = 0)
 	sleep(1 SECONDS)
 	qdel(src)

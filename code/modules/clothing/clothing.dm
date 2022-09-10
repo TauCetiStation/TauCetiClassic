@@ -1,4 +1,3 @@
-
 /obj/item/clothing
 	name = "clothing"
 	var/list/species_restricted = null //Only these species can wear this kit.
@@ -25,92 +24,6 @@
 	var/list/restricted_accessory_slots
 
 	var/flashbang_protection = FALSE
-
-/obj/item/clothing/atom_init()
-	. = ..()
-	if (!species_restricted_locked)
-		update_species_restrictions()
-
-/*
-	This is for the Vox among you.
-	Finds whether a sprite for this piece of clothing for a Vox exists, and if it does
-	allows Vox to wear this.
-*/
-var/global/list/specie_sprite_sheet_cache = list()
-var/global/list/icon_state_allowed_cache = list()
-
-/obj/item/clothing/proc/get_sprite_sheet_icon_list(specie, overwrite_slot = null)
-	// Return list of icon states of current spirte_sheet_slot or null
-	if(!specie || !(specie in global.all_species))
-		return
-	var/slot = sprite_sheet_slot
-	if(overwrite_slot)
-		slot = overwrite_slot
-	var/sprite_sheet_cache_key = "[specie]|[slot]"
-	if(global.specie_sprite_sheet_cache[sprite_sheet_cache_key])
-		. = global.specie_sprite_sheet_cache[sprite_sheet_cache_key]
-	else
-		var/datum/species/S = global.all_species[specie]
-		var/i_path = S.sprite_sheets[slot]
-		// If you specified the mob as sprite_sheet_restricted, but
-		// want to use default sprite sheets for some "slots"
-		// then specify it.
-		if(i_path)
-			global.specie_sprite_sheet_cache[sprite_sheet_cache_key] = icon_states(i_path)
-			. = global.specie_sprite_sheet_cache[sprite_sheet_cache_key]
-
-/obj/item/clothing/proc/update_species_restrictions()
-	if(!species_restricted)
-		species_restricted = list("exclude")
-
-	var/exclusive = !("exclude" in species_restricted)
-
-	for(var/specie in global.sprite_sheet_restricted)
-		if(exclusive)
-			species_restricted -= specie
-		else
-			species_restricted |= specie
-
-	if(!sprite_sheet_slot)
-		if(!species_restricted.len || (species_restricted.len == 1 && !exclusive))
-			species_restricted = null
-		return
-
-	for(var/specie in global.sprite_sheet_restricted)
-		var/allowed = FALSE
-		var/cache_key = "[specie]|[icon_state]"
-
-		if(global.icon_state_allowed_cache[cache_key])
-			allowed = TRUE
-		else
-			var/list/icons_exist = get_sprite_sheet_icon_list(specie)
-			if(icons_exist)
-				var/t_state
-				if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES || sprite_sheet_slot == SPRITE_SHEET_BELT)
-					t_state = item_state
-
-				if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
-					t_state = item_color
-
-				if(!t_state)
-					t_state = icon_state
-
-				if (sprite_sheet_slot == SPRITE_SHEET_UNIFORM)
-					t_state = "[t_state]_s"
-
-				if("[t_state]" in icons_exist)
-					allowed = TRUE
-
-		if(allowed)
-			if(exclusive)
-				species_restricted |= specie
-			else
-				species_restricted -= specie
-
-			global.icon_state_allowed_cache[cache_key] = TRUE
-
-	if(!species_restricted.len || (species_restricted.len == 1 && !exclusive))
-		species_restricted = null
 
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)
@@ -184,41 +97,6 @@ var/global/list/icon_state_allowed_cache = list()
 		icon = sprite_sheets_obj[target_species]
 	else
 		icon = initial(icon)
-
-/obj/item/clothing/MouseDrop(obj/over_object)
-	. = ..()
-	if (ishuman(usr) || ismonkey(usr))
-		var/mob/M = usr
-		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
-		if (loc != usr)
-			return
-		if (!over_object)
-			return
-		if (usr.incapacitated())
-			return
-		add_fingerprint(usr)
-		if(!equip_time)
-			switch(over_object.name)
-				if("r_hand")
-					if(M.unEquip(src))
-						M.put_in_r_hand(src)
-				if("l_hand")
-					if(M.unEquip(src))
-						M.put_in_l_hand(src)
-		else
-			switch(over_object.name)
-				if("r_hand")
-					if(slot_equipped == SLOT_L_HAND) //item swap
-						if(M.unEquip(src))
-							M.put_in_r_hand(src)
-					else
-						usr.delay_clothing_unequip(src)
-				if("l_hand")
-					if(slot_equipped == SLOT_R_HAND) //item swap
-						if(M.unEquip(src))
-							M.put_in_l_hand(src)
-					else
-						usr.delay_clothing_unequip(src)
 
 /obj/item/clothing/emp_act(severity)
 	..()
@@ -440,6 +318,8 @@ BLIND     // can't see anything
 	species_restricted_locked = TRUE
 	sprite_sheet_slot = SPRITE_SHEET_GLOVES
 
+	dyed_type = DYED_GLOVES
+
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
 		//why is this not part of the powercell code?
@@ -483,37 +363,13 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.9
 	body_parts_covered = LEGS
 	slot_flags = SLOT_FLAGS_FEET
-	var/clipped_status = NO_CLIPPING
 
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
-	species_restricted = list("exclude" , UNATHI , TAJARAN, VOX, VOX_ARMALIS)
 
 	sprite_sheet_slot = SPRITE_SHEET_FEET
 
-//Cutting shoes
-/obj/item/clothing/shoes/attackby(obj/item/I, mob/user, params)
-	if(iswirecutter(I))
-		switch(clipped_status)
-			if(CLIPPABLE)
-				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-				user.visible_message("<span class='red'>[user] cuts the toe caps off of [src].</span>","<span class='red'>You cut the toe caps off of [src].</span>")
-
-				name = "mangled [name]"
-				desc = "[desc]<br>They have the toe caps cut off of them."
-				if("exclude" in species_restricted)
-					species_restricted -= UNATHI
-					species_restricted -= TAJARAN
-					species_restricted -= VOX
-				src.icon_state += "_cut"
-				user.update_inv_shoes()
-				clipped_status = CLIPPED
-			if(NO_CLIPPING)
-				to_chat(user, "<span class='notice'>You have no idea of how to clip [src]!</span>")
-			if(CLIPPED)
-				to_chat(user, "<span class='notice'>[src] have already been clipped!</span>")
-	else
-		return ..()
+	dyed_type = DYED_SHOES
 
 /obj/item/clothing/shoes/play_unique_footstep_sound()
 	..()
@@ -562,7 +418,7 @@ BLIND     // can't see anything
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
-	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
+	species_restricted = list("exclude", DIONA, VOX_ARMALIS)
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 
 /obj/item/clothing/suit/space
@@ -579,14 +435,14 @@ BLIND     // can't see anything
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/suit_cooling_unit)
-	slowdown = 3
+	slowdown = 1.5
 	equip_time = 100 // Bone White - time to equip/unequip. see /obj/item/attack_hand (items.dm) and /obj/item/clothing/mob_can_equip (clothing.dm)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
-	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
+	species_restricted = list("exclude", DIONA, VOX_ARMALIS)
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
 
 /obj/item/clothing/suit/space/equipped(mob/M)
@@ -644,6 +500,8 @@ BLIND     // can't see anything
 	valid_accessory_slots = list("utility","armband","decor")
 	restricted_accessory_slots = list("utility", "armband")
 
+	dyed_type = DYED_UNIFORM
+
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
 	if(slot == SLOT_W_UNIFORM && fresh_laundered_until > world.time)
@@ -652,8 +510,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if(I.sharp && !ishuman(loc)) //you can cut only clothes lying on the floor
-		for (var/i in 1 to 3)
-			new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), null, null, crit_fail)
+		new /obj/item/stack/sheet/cloth(get_turf(src), 3, null, crit_fail)
 		qdel(src)
 		return
 
@@ -744,13 +601,17 @@ BLIND     // can't see anything
 	if(usr.incapacitated())
 		return
 
-	if(copytext(item_color,-2) != "_d")
-		basecolor = item_color
-	if((basecolor + "_d_s") in icon_states('icons/mob/uniform.dmi'))
-		item_color = item_color == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
+	if(copytext(item_state,-2) != "_d")
+		basecolor = item_state
+	if((basecolor + "_d") in icon_states('icons/mob/uniform.dmi'))
+		item_state = item_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
 		usr.update_inv_w_uniform()
 	else
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
+
+/obj/item/clothing/under/wash_act(w_color)
+	. = ..()
+	fresh_laundered_until = world.time + 5 MINUTES
 
 /obj/item/clothing/under/rank/atom_init()
 	sensor_mode = pick(SUIT_SENSOR_OFF, SUIT_SENSOR_BINARY, SUIT_SENSOR_VITAL, SUIT_SENSOR_TRACKING)

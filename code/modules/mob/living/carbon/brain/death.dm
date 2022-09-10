@@ -26,7 +26,7 @@
 	animation.master = src
 
 //	flick("gibbed-m", animation)
-	gibs(loc, viruses, dna)
+	gibs(loc, dna)
 
 	dead_mob_list -= src
 	if(container && isMMI(container))

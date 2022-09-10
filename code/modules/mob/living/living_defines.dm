@@ -27,11 +27,6 @@
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	var/incorporeal_move = 0 //0 is off, 1 is normal, 2 is for ninjas.
 
-	var/t_phoron = null
-	var/t_oxygen = null
-	var/t_sl_gas = null
-	var/t_n2 = null
-
 	var/now_pushing = null
 
 	var/mob/living/cameraFollow = null
@@ -41,6 +36,7 @@
 	var/update_slimes = 1
 	var/silent = null 		//Can't talk. Value goes down every life proc.
 	var/pull_debuff = 0		//Movement debuff when pulling
+	var/speed = 0			//Movement addditive modifier
 
 	var/on_fire = 0 //The "Are we on fire?" var
 	var/fire_stacks = 0 //Tracks how many stacks of fire we have on, max is usually 20
@@ -74,3 +70,5 @@
 
 	var/beauty_living = 0.0
 	var/beauty_dead = -100.0
+
+	var/list/spawner_args = null

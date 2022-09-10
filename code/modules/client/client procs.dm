@@ -811,3 +811,8 @@ var/global/list/disconnected_ckey_by_stat = list()
 	if(holder)
 		holder.filteriffic = new /datum/filter_editor(in_atom)
 		holder.filteriffic.tgui_interact(mob)
+
+/client/proc/open_particles_editor(atom/in_atom)
+	if(holder)
+		holder.particool = new /datum/particle_editor(in_atom)
+		holder.particool.tgui_interact(mob)

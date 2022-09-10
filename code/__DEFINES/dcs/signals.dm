@@ -144,6 +144,14 @@
 #define COMSIG_ATOM_ADD_DIRT "atom_add_dirt"
 /// from base of atom/clean_blood (WHICH APPERANTLY CLEANS ALL DIRT OVERLAYS ?? ??? ?)
 #define COMSIG_ATOM_CLEAN_BLOOD "atom_clean_blood"
+///from /mob/living/say() when atom catches message: (proc args list(message, atom/movable/speaker))
+// currently works for talking_atom only
+#define COMSIG_MOVABLE_HEAR "movable_hear"
+
+///called when teleporting into a protected turf: (channel, turf/origin)
+#define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"
+	#define COMPONENT_BLOCK_TELEPORT (1<<0)
+	//#define COMPONENT_INTERFERE_TELEPORT (1<<1)
 
 /// from base /atom/movable/proc/Moved() and /atom/proc/set_dir() return dir
 #define COMSIG_ATOM_CHANGE_DIR "change_dir"
@@ -222,6 +230,8 @@
 /// from mob/carbon/swap_hand: (mob/user)
 #define COMSIG_ITEM_BECOME_ACTIVE "item_become_active"
 #define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
+/// from /obj/item/weapon/stock_parts/cell
+#define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
@@ -242,6 +252,11 @@
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
 
 // mob signals
+/// from base of mob/Login(): ()
+#define COMSIG_LOGIN "mob_login"
+/// from base of mob/Logout(): (logout_reason)
+#define COMSIG_LOGOUT "mob_logout"
+
 /// from  base of mob/ClickOn(): (atom/target, params)
 #define COMSIG_MOB_CLICK "mob_click"
 	#define COMPONENT_CANCEL_CLICK 1
@@ -249,8 +264,6 @@
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)
 #define COMSIG_MOB_DIED "mob_died"
-///from base of mob/ghost(): (can_reenter_corpse)
-#define COMSIG_MOB_GHOST "mob_ghost"
 ///from base of mob/create_mob_hud(): ()
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 ///from base of item/equipped(): (obj/item/I, slot)
@@ -298,6 +311,13 @@
 ///from base of mob/living/carbon/swap_hand(): (obj/item)
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
 	#define COMPONENT_BLOCK_SWAP 1
+
+/// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
+#define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
+/// from /mob/living/carbon/proc/finish_monkeyize()
+#define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
+/// from /mob/living/carbon/proc/finish_humanize(): (species)
+#define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)

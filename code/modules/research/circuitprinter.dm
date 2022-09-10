@@ -73,13 +73,6 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 	if (panel_open)
 		if(iscrowbar(O))
-			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
-				reagents.trans_to(G, G.reagents.maximum_volume)
-			for(var/M in loaded_materials)
-				if(loaded_materials[M].amount >= loaded_materials[M].sheet_size)
-					var/sheet_type = loaded_materials[M].sheet_type
-					var/obj/item/stack/sheet/G = new sheet_type(loc)
-					G.set_amount(round(loaded_materials[M].amount / G.perunit))
 			default_deconstruction_crowbar(O)
 			return
 		else if(is_wire_tool(O) && wires.interact(user))
@@ -128,6 +121,16 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		busy = 0
 		if(linked_console)
 			nanomanager.update_uis(linked_console)
+
+/obj/machinery/r_n_d/circuit_imprinter/deconstruction()
+	. = ..()
+	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+		reagents.trans_to(G, G.reagents.maximum_volume)
+	for(var/M in loaded_materials)
+		if(loaded_materials[M].amount >= loaded_materials[M].sheet_size)
+			var/sheet_type = loaded_materials[M].sheet_type
+			var/obj/item/stack/sheet/G = new sheet_type(loc)
+			G.set_amount(round(loaded_materials[M].amount / G.perunit))
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/queue_design(datum/design/D)
 	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, 1)

@@ -9,6 +9,7 @@
 	speak_emote = list("chirrups")
 	icon_state = "nymph1"
 	hazard_low_pressure = DIONA_HAZARD_LOW_PRESSURE
+	speed = 3.5
 	var/list/donors = list()
 	var/ready_evolve = 0
 	var/mob/living/carbon/human/gestalt = null
@@ -33,38 +34,23 @@
 	name = "podkid"
 	voice_name = "podkid"
 	icon_state = "podkid1"
+	speed = 0.5
 	race = PODMAN
 	holder_type = /obj/item/weapon/holder/diona/podkid
-	var/spawner_type = /datum/spawner/podkid
-	var/spawner_id = "podkid"
 
-/mob/living/carbon/monkey/diona/podman/atom_init()
-	. = ..()
-	RegisterSignal(src, list(COMSIG_MOB_GHOST), .proc/find_replacement)
-
-/mob/living/carbon/monkey/diona/podman/Destroy()
-	UnregisterSignal(src, list(COMSIG_MOB_GHOST))
-	return ..()
-
-/mob/living/carbon/monkey/diona/podman/proc/find_replacement(datum/source, can_reenter_corpse)
-	SIGNAL_HANDLER
-
-	if(can_reenter_corpse)
-		return
-	create_spawner(spawner_type, spawner_id, src)
+	spawner_args = list(/datum/spawner/living/podman/podkid, 2 MINUTES)
 
 /mob/living/carbon/monkey/diona/podman/fake
 	name = "diona nymph"
 	voice_name = "diona nymph"
 	icon_state = "nymph1"
 	holder_type = /obj/item/weapon/holder/diona
-	spawner_type = /datum/spawner/fake_diona
-	spawner_id = "nymph"
+
+	spawner_args = list(/datum/spawner/living/podman/fake_nymph, 2 MINUTES)
 
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()
 	gender = NEUTER
-	dna.mutantrace = "plant"
 	greaterform = DIONA
 	add_language(LANGUAGE_ROOTSPEAK)
 
@@ -75,12 +61,6 @@
 	verbs -= /mob/living/carbon/monkey/diona/verb/split
 	verbs -= /mob/living/carbon/monkey/diona/verb/pass_knowledge
 	verbs -= /mob/living/carbon/monkey/diona/verb/synthesize
-
-/mob/living/carbon/monkey/diona/movement_delay(tally = 0)
-	return ..(tally = 3.5)
-
-/mob/living/carbon/monkey/diona/podman/movement_delay(tally = 0)
-	return ..(tally = 0.5)
 
 /mob/living/carbon/monkey/diona/is_facehuggable()
 	return FALSE
@@ -102,7 +82,7 @@
 		visible_message(src, "<span class='notice'>[M]'s body seems to repel [src], as it attempts to twine with it's being.</span>")
 		return
 	to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
-	M.status_flags |= PASSEMOTES
+	M.add_status_flags(PASSEMOTES)
 	to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
 	forceMove(M)
 	gestalt = M
@@ -303,7 +283,7 @@
 		mind.transfer_to(adult)
 
 	for (var/obj/item/W in contents)
-		drop_from_inventory(W)
+		drop_from_inventory(W, loc)
 	qdel(src)
 
 /mob/living/carbon/monkey/diona/verb/evolve()
@@ -324,7 +304,7 @@
 		to_chat(src, "You are not yet ready for your growth...")
 		return
 
-	if(nutrition < 400)
+	if(nutrition < NUTRITION_LEVEL_NORMAL)
 		to_chat(src, "You have not yet consumed enough to grow...")
 		return
 
@@ -393,12 +373,15 @@
 	if(stat == DEAD)
 		return say_dead(message)
 
-	var/datum/language/speaking = parse_language(message)
-	if(speaking)
-		verb = speaking.speech_verb
-		message = trim(copytext_char(message,2+length_char(speaking.key)))
+	var/ending = copytext(message, -1)
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
 
-	if(!message || stat)
+	if(speaking)
+		verb = speaking.get_spoken_verb(ending)
+
+	if(!message || stat != CONSCIOUS)
 		return
 
 	..(message, speaking, verb, null, null, message_range, null)

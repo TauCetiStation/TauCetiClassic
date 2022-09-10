@@ -125,7 +125,7 @@
 	return pick(summon_type)
 
 /datum/religion_rites/standing/spawn_item/call_animal/proc/call_ghost(mob/animal)
-	create_spawner(/datum/spawner/religion_familiar, "[animal]/[religion]", _animal = animal, _religion = religion)
+	create_spawner(/datum/spawner/living/religion_familiar, _mob = animal, _religion = religion)
 
 	var/god_name
 	if(religion.active_deities.len == 0)

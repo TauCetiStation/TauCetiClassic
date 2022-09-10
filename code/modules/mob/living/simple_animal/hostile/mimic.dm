@@ -40,7 +40,7 @@
 /mob/living/simple_animal/hostile/mimic/FindTarget()
 	. = ..()
 	if(.)
-		emote("growls at [.]")
+		me_emote("growls at [.]")
 
 
 
@@ -119,6 +119,7 @@
 	var/mob/living/L = .
 	if(istype(L))
 		if(prob(15))
+			L.Stun(1)
 			L.Weaken(2)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
@@ -194,6 +195,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		var/mob/living/L = .
 		if(istype(L))
 			if(prob(15))
+				L.Stun(1)
 				L.Weaken(1)
 				L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
@@ -207,6 +209,12 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	response_help = "pets the"
 	attacktext = "hugs"
 	a_intent = INTENT_HELP
+
+/mob/living/simple_animal/hostile/mimic/copy/flora/atom_init(mapload)
+	var/obj/structure/flora/copy = locate() in loc
+	if (!copy)
+		return INITIALIZE_HINT_QDEL
+	return ..(mapload, copy)
 
 /mob/living/simple_animal/hostile/mimic/prophunt
 	name = "mimic"

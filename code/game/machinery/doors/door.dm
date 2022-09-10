@@ -145,7 +145,7 @@ var/global/list/wedge_image_cache = list()
 	return !density
 
 /obj/machinery/door/proc/bumpopen(mob/user)
-	if(user.last_airflow > world.time - vsc.airflow_delay) //Fakkit
+	if(!COOLDOWN_FINISHED(user, last_airflow)) //Fakkit
 		return
 	if(!density)
 		return
@@ -164,7 +164,7 @@ var/global/list/wedge_image_cache = list()
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				visible_message("<span class='userdanger'> [user] headbutts the [src].</span>")
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-				H.Stun(8)
+				H.Stun(2)
 				H.Weaken(5)
 				BP.take_damage(10, 0, used_weapon = "Hematoma")
 			else
@@ -196,7 +196,8 @@ var/global/list/wedge_image_cache = list()
 
 /obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
-		return
+		return FALSE
+
 	..()
 
 /obj/machinery/door/attack_ghost(mob/user)

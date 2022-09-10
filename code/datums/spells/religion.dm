@@ -204,6 +204,7 @@
 	divine_power = 1 //count
 	needed_aspects = list(ASPECT_SPAWN = 1)
 	summon_amt = 1
+	delay = 0
 
 	clothes_req = FALSE
 

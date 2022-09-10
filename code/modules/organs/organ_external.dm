@@ -55,6 +55,8 @@
 	var/open = 0
 	var/stage = 0
 	var/cavity = 0
+	var/trauma_kit = FALSE
+	var/burn_kit = FALSE
 	var/atom/movable/applied_pressure
 
 	// Misc
@@ -79,6 +81,8 @@
 			owner.bodyparts_by_name -= body_zone
 		owner.bad_bodyparts -= src
 	QDEL_LIST(bodypart_organs)
+	if(pumped)
+		owner.metabolism_factor.RemoveModifier("Pumped_[name]")
 	return ..()
 
 /obj/item/organ/external/proc/harvest(obj/item/I, mob/user)
@@ -99,20 +103,24 @@
 	else
 		return ..()
 
-/obj/item/organ/external/set_owner(mob/living/carbon/human/H)
+/obj/item/organ/external/set_owner(mob/living/carbon/human/H, datum/species/S)
 	..()
 
-	recolor()
+	if(!S)
+		S = H.species
+
 	controller = new controller_type(src)
 
 	if(H)
-		species = owner.species
+		species = S
 		b_type = owner.dna.b_type
 	else // Bodypart was spawned outside of the body so we need to update its sprite
 		species = all_species[HUMAN]
 		update_sprite()
 
-/obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
+	recolor()
+
+/obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	..()
 
 	owner.bodyparts += src
@@ -136,13 +144,19 @@
 /obj/item/organ/external/proc/update_sprite()
 	var/gender = owner ? owner.gender : MALE
 	var/mutations = owner ? owner.mutations : list()
-	var/fat
+	var/fat = null
 	var/g
 	var/pump
 
-	if(body_zone == BP_CHEST && owner)
-		fat = HAS_TRAIT(owner, TRAIT_FAT) ? "fat" : null
+	if(owner && HAS_TRAIT(owner, TRAIT_FAT))
+		if(body_zone == BP_CHEST)
+			fat = "fat"
+		else if(species.fat_limb_icons == TRUE && (body_zone in list(BP_GROIN, BP_HEAD, BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)))
+			fat = "fat"
+
 	if(body_zone in list(BP_CHEST, BP_GROIN, BP_HEAD))
+		g = (gender == FEMALE ? "f" : "m")
+	else if(species.gender_limb_icons == TRUE && (body_zone in list(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)))
 		g = (gender == FEMALE ? "f" : "m")
 
 	if (!species.has_gendered_icons)
@@ -416,6 +430,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 				owner.remove_from_mob(owner.shoes)
 			else
 				qdel(owner.shoes)
+	if(pumped)
+		owner.metabolism_factor.RemoveModifier("Pumped_[name]")
 
 	owner.update_body()
 	if(body_zone == BP_HEAD)
@@ -430,7 +446,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	owner.UpdateDamageIcon(src)
 	if(!clean && leaves_stump)
 		var/obj/item/organ/external/stump/S = new(null)
-		S.insert_organ(owner, null, src)
+		S.copy_original_limb(src)
+		S.insert_organ(owner, FALSE)
 	owner.updatehealth()
 
 	if(!should_delete)
@@ -558,11 +575,20 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	//Eyes
 	if(species && species.eyes)
-		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', species.eyes, -icon_layer)
-		if(!(HULK in owner.mutations))
-			img_eyes_s.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
-		else
+		var/eyes_layer = -icon_layer
+
+		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', species.eyes, eyes_layer)
+		if(species.eyes_glowing)
+			img_eyes_s.plane = ABOVE_LIGHTING_PLANE
+			img_eyes_s.layer = ABOVE_LIGHTING_LAYER
+
+		if(HULK in owner.mutations)
 			img_eyes_s.color = "#ff0000"
+		else if(species.name == SHADOWLING || iszombie(owner))
+			img_eyes_s.color = null
+		else
+			img_eyes_s.color = rgb(owner.r_eyes, owner.g_eyes, owner.b_eyes)
+
 		. += img_eyes_s
 
 	//Mouth	(lipstick!)
@@ -607,11 +633,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(is_broken())
 		owner.drop_from_inventory(c_hand)
-		var/emote_scream = pick("screams in pain and", "lets out a sharp cry and", "cries out and")
-		owner.emote("grunt", SHOWMSG_VISUAL, "[(owner.species && owner.species.flags[NO_PAIN]) ? "" : emote_scream ] drops what they were holding in their [hand_name]!")
+		owner.emote("grunt")
 	if(is_malfunctioning())
 		owner.drop_from_inventory(c_hand)
-		owner.emote("grunt", SHOWMSG_VISUAL, "drops what they were holding, their [hand_name] malfunctioning!")
+		owner.emote("grunt")
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, owner)
 		spark_system.attach(owner)
@@ -754,7 +779,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	QDEL_NULL(brainmob)
 	return ..()
 
-/obj/item/organ/external/head/set_owner()
+/obj/item/organ/external/head/set_owner(mob/living/carbon/human/H, datum/species/S)
 	..()
 	organ_head_list += src
 
@@ -1109,5 +1134,41 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /mob/living/carbon/human/proc/apply_recolor()
 	for(var/obj/item/organ/external/BP in bodyparts)
-		BP.species = BP.owner.species
 		BP.recolor()
+
+// lol yes
+/obj/item/organ/external/chest/homunculus
+/obj/item/organ/external/chest/homunculus/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
+/obj/item/organ/external/groin/homunculus
+/obj/item/organ/external/groin/homunculus/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
+/obj/item/organ/external/head/homunculus
+/obj/item/organ/external/head/homunculus/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
+/obj/item/organ/external/l_arm/homunculus
+/obj/item/organ/external/l_arm/homunculus/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
+/obj/item/organ/external/r_arm/homunculus
+/obj/item/organ/external/r_arm/homunculus/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
+/obj/item/organ/external/l_leg/homunculus
+/obj/item/organ/external/l_leg/homunculus/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+
+/obj/item/organ/external/r_leg/homunculus
+/obj/item/organ/external/r_leg/homunculus/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_SACRIFICE, RELIGION_TRAIT)
+

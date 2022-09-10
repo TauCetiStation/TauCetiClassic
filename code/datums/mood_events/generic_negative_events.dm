@@ -67,3 +67,8 @@
 	description = "<span class='warning'>I puked. Gross!</span>"
 	mood_change = -3
 	timeout = 5 MINUTES
+
+/datum/mood_event/scared
+	description = "<span class='warning'>I'm scared.</span>"
+	mood_change = -2
+	timeout = 1 MINUTE

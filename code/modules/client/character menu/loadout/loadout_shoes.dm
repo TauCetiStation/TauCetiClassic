@@ -14,7 +14,6 @@
 	shoes["black"] = /obj/item/clothing/shoes/black
 	shoes["blue"] = /obj/item/clothing/shoes/blue
 	shoes["brown"] = /obj/item/clothing/shoes/brown
-	shoes["dress"] = /obj/item/clothing/shoes/laceup
 	shoes["green"] = /obj/item/clothing/shoes/green
 	shoes["leather"] = /obj/item/clothing/shoes/leather
 	shoes["orange"] = /obj/item/clothing/shoes/orange
@@ -38,7 +37,7 @@
 
 /datum/gear/shoes/kung
 	display_name = "Kung shoes"
-	path = /obj/item/clothing/shoes/fluff/kung
+	path = /obj/item/clothing/shoes/kung
 
 /datum/gear/shoes/heels
 	display_name = "Red Heels"

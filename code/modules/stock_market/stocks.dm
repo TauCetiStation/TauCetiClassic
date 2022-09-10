@@ -109,8 +109,8 @@
 
 /datum/stock/proc/modifyAccount(whose, amount)
 	. = FALSE
-	if (SSshuttle && isnum(SSshuttle.points) && (amount > 0 || SSshuttle.points + amount > 0))
-		SSshuttle.points += amount
+	if (global.cargo_account && (amount > 0 || global.cargo_account.money + amount > 0))
+		global.cargo_account.money += amount
 		stockExchange.balanceLog(whose, amount)
 		. = TRUE
 

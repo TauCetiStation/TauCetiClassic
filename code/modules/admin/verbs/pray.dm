@@ -48,12 +48,9 @@
 		deity = "their progenitor"
 
 	//parse the language code and consume it
-	var/datum/language/speaking = parse_language(msg)
-	if(speaking)
-		msg = copytext_char(msg, 2 + length_char(speaking.key))
-
-	if(!speaking)
-		speaking = get_language()
+	var/list/parsed = parse_language(msg)
+	msg = parsed[1]
+	var/datum/language/speaking = parsed[2]
 
 	if(speaking)
 		msg = speaking.color_message(msg)
@@ -123,7 +120,7 @@
 	next_pray_anim = world.time + 1 SECOND
 
 	// So restrained people can also pray.
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 
 	//Show an image of the wielded weapon over the person who got dunked.

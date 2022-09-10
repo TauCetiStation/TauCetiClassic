@@ -3,11 +3,17 @@
 	name = "space"
 	icon_state = "0"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	force_lighting_update = TRUE
+
+	oxygen = 0
+	carbon_dioxide = 0
+	nitrogen = 0
+	phoron = 0
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	plane = PLANE_SPACE
-//	heat_capacity = 700000 No.
+	heat_capacity = HEAT_CAPACITY_VACUUM
 
 	flags = NOBLOODY | NOSTEPSOUND
 
@@ -54,19 +60,19 @@
 		user.SetNextMove(CLICK_CD_RAPID)
 		if(L)
 			if(R.get_amount() < 2)
-				to_chat(user, "<span class='warning'>You don't have enough rods to do that.</span>")
+				to_chat(user, "<span class='warning'>Недостаточно стержней.</span>")
 				return
 			if(user.is_busy()) return
-			to_chat(user, "<span class='notice'>You begin to build a catwalk.</span>")
+			to_chat(user, "<span class='notice'>Вы начинаете собирать помост.</span>")
 			if(R.use_tool(src, user, 30, amount = 2, volume = volume))
-				to_chat(user, "<span class='notice'>You build a catwalk!</span>")
+				to_chat(user, "<span class='notice'>Вы собрали помост!</span>")
 				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
 				qdel(L)
 				return
 
 		if(!R.use(1))
 			return
-		to_chat(user, "<span class='notice'>Constructing support lattice ...</span>")
+		to_chat(user, "<span class='notice'>Создание поддерживающей решетки...</span>")
 		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 		ReplaceWithLattice()
 
@@ -82,7 +88,7 @@
 			S.build(src)
 			return
 		else
-			to_chat(user, "<span class='warning'>The plating is going to need some support.</span>")
+			to_chat(user, "<span class='warning'>Для покрытия нужна опора.</span>")
 
 /turf/environment/space/attackby(obj/item/C, mob/user)
 	build_floor_support(C, user)
@@ -91,7 +97,7 @@
 
 /turf/environment/space/Entered(atom/movable/A as mob|obj)
 	if(movement_disabled)
-		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
+		to_chat(usr, "<span class='warning'>Передвижение отключено администрацией.</span>")//This is to identify lag problems
 		return
 	..()
 	if ((!(A) || src != A.loc))	return
@@ -114,8 +120,8 @@
 			if(!isemptylist(disk_search))
 				if(isliving(A))
 					var/mob/living/MM = A
-					if(MM.client && !MM.stat)
-						to_chat(MM, "<span class='warning'>Something you are carrying is preventing you from leaving. Don't play stupid; you know exactly what it is.</span>")
+					if(MM.client && MM.stat == CONSCIOUS)
+						to_chat(MM, "<span class='warning'>Вы имеете что-то, что мешает улететь. Не прикидывайтесь: вы знаете, что это.</span>")
 						if(MM.x <= TRANSITIONEDGE)
 							MM.inertia_dir = 4
 						else if(MM.x >= world.maxx -TRANSITIONEDGE)
@@ -276,9 +282,6 @@
 				if ((A && A.loc))
 					A.loc.Entered(A)
 	return
-
-/turf/environment/space/ChangeTurf(path, force_lighting_update = 0)
-	return ..(path, TRUE)
 
 /turf/environment/space/singularity_act()
 	return

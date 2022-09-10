@@ -109,7 +109,7 @@
 	},
 /area/space_structures/iss)
 "as" = (
-/obj/item/weapon/gun/energy/laser/retro,
+/obj/item/weapon/gun/energy/retro,
 /obj/effect/decal/remains/human,
 /turf/simulated/floor{
 	icon_state = "floorgrime"

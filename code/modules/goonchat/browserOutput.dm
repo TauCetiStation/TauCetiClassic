@@ -67,7 +67,7 @@ var/global/list/bicon_cache = list()
 	if(!isatom(obj) && !istype(obj, /image)) // we don't need datums here. no runtimes :<
 		return
 
-	// Thanks to dynamic typing, this atom can be both an image and a mutable_apperance
+	// Thanks to dynamic typing, this atom can be both an image and a mutable_appearance
 	var/atom/A = obj
 	var/key = "\ref[A.icon]#[A.icon_state]"
 	var/bicon_obj = timestamp_cache_get(key, time_stamp)

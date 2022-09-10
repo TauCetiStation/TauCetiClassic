@@ -17,16 +17,12 @@
 		if (client.handle_spam_prevention(message,MUTE_IC))
 			return FALSE
 
-	if(!speech_allowed && usr == src)
-		to_chat(usr, "<span class='warning'>You can't speak.</span>")
-		return FALSE
-
 	if (src.stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
 			return FALSE
 		return say_dead(message)
 
-	if(src.stat)
+	if(stat != CONSCIOUS)
 		return FALSE
 	message = sanitize(message)	//made consistent with say
 
@@ -40,11 +36,9 @@
 		alt_name = "(as [get_id_name("Unknown")])"
 
 	//parse the language code and consume it
-	var/datum/language/speaking = parse_language(message)
-	if(speaking)
-		message = copytext(message,2+length_char(speaking.key))
-	else
-		speaking = get_language()
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
 
 	return whisper_say(message, speaking, alt_name)
 

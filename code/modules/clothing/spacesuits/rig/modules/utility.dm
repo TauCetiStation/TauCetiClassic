@@ -357,9 +357,16 @@
 	if (temp_adj < 0.5)
 		return passive_power_cost
 
-	H.bodytemperature -= temp_adj
+	H.adjust_bodytemperature(-temp_adj)
 	active_power_cost = round((temp_adj/max_cooling)*charge_consumption)
 	return active_power_cost
+
+/obj/item/rig_module/emp_shield
+	name = "hardsuit EMP shield"
+	icon_state = "powersink"
+	origin_tech = "engineering=2;magnets=2"
+	interface_name = "EMP shield"
+	interface_desc = "Device for protecting hardsuit against EMPs."
 
 /obj/item/rig_module/teleporter_stabilizer
 	name = "hardsuit teleporter stabilizer"

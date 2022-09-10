@@ -8,6 +8,7 @@ on:
 jobs:
   triage:
     runs-on: ubuntu-latest
+    if: github.repository == 'TauCetiStation/TauCetiClassic'
     steps:
       - uses: mschilde/auto-label-merge-conflicts@2e8fcc76c6430272ec8bb64fb74ec1592156aa6a
         with:

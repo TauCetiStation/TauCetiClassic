@@ -70,6 +70,8 @@
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
+	action_button_name = "Toggle light"
+
 /obj/item/device/pda/atom_init()
 	. = ..()
 	PDAs += src
@@ -108,6 +110,27 @@
 		return
 
 	return ..()
+
+/obj/item/device/pda/ui_action_click()
+	toggle_light()
+
+/obj/item/device/pda/verb/toggle_light()
+	set name = "Toggle light"
+	set category = "Object"
+
+	if(usr.incapacitated())
+		return
+
+	if(fon)
+		fon = FALSE
+		set_light(0)
+	else
+		fon = TRUE
+		set_light(f_lum)
+
+/obj/item/device/pda/proc/assign(real_name)
+	owner = real_name
+	name = "PDA-[real_name][ownjob ? " ([ownjob])" : ""]"
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -700,11 +723,10 @@
 		if ("Authenticate")//Checks for ID
 			id_check(U, 1)
 		if("UpdateInfo")
-			owner = id.registered_name
 			ownjob = id.assignment
+			assign(id.registered_name)
 			ownrank = id.rank
 			check_rank(id.rank)		//check if we became the head
-			name = "PDA-[owner] ([ownjob])"
 			if(owner_account && owner_account.account_number == id.associated_account_number)
 				return
 			ui.close()
@@ -1372,8 +1394,8 @@
 			to_chat(user, "<span class='notice'>\The [src] rejects the ID.</span>")
 			return
 		if(!owner)
-			owner = idcard.registered_name
 			ownjob = idcard.assignment
+			assign(idcard.registered_name)
 			ownrank = idcard.rank
 			check_rank(idcard.rank)
 			var/datum/money_account/account = get_account(idcard.associated_account_number)
@@ -1381,7 +1403,6 @@
 				account.owner_PDA = src			//set PDA in /datum/money_account
 				owner_account = account			//bind the account to the pda
 				owner_fingerprints = list()		//remove old fingerprints
-			name = "PDA-[owner] ([ownjob])"
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
 			//Basic safety check. If card is held by user and PDA is near user or in user's hand.
@@ -1436,10 +1457,6 @@
 							data_message += text("<span class='notice'>&emsp; []: []-[]</span>",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.brute_dam]</span>":0,(BP.burn_dam > 0)?"<span class='warning'>[BP.burn_dam]</span>":0)
 					else
 						data_message += "<span class='notice'>&emsp; Limbs are OK.</span>"
-
-				for(var/datum/disease/D in C.viruses)
-					if(!D.hidden[SCANNER])
-						data_message += "<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"
 
 				visible_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>")
 				to_chat(user, data_message)

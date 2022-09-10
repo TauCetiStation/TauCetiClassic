@@ -344,7 +344,7 @@
 
 /datum/disease2/effect/heal/coma/proc/coma(mob/living/carbon/human/M)
 	//M.emote("deathgasp")
-	M.status_flags |= FAKEDEATH
+	M.add_status_flags(FAKEDEATH)
 	M.SetSleeping(999 SECONDS) //Well, I hope its good enough
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
 
@@ -352,7 +352,7 @@
 	if(!active_coma)
 		return
 	active_coma = FALSE
-	M.status_flags &= ~FAKEDEATH
+	M.remove_status_flags(FAKEDEATH)
 	M.SetSleeping(0)
 
 /datum/disease2/effect/heal/coma/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
@@ -970,7 +970,7 @@
 	level = 2
 	max_stage = 3
 	cooldown = 10
-	var/target_nutrition = 400
+	var/target_nutrition = NUTRITION_LEVEL_NORMAL
 
 /datum/disease2/effect/weight_even/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 	var/speed = 0
@@ -1090,7 +1090,7 @@
 
 /datum/disease2/effect/stimulant
 	name = "Adrenaline Extra"
-	desc = "The virus synthesizes hyperzine in the bloodstream, giving host a lot of energy."
+	desc = "The virus synthesizes stimulants in the bloodstream, giving host a lot of energy."
 	level = 2
 	max_stage = 3
 	cooldown = 10
@@ -1100,13 +1100,13 @@
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class = 'notice'>[pick("You want to jump around.", "You want to run.")]</span>")
 	else if(prob(20) || holder.stage == 2)
-		if (mob.reagents.get_reagent_amount("hyperzine") < 1)
+		if (mob.reagents.get_reagent_amount("stimulants") < 1)
 			to_chat(mob, "<span class='notice'>You feel a small boost of energy.</span>")
-			mob.reagents.add_reagent("hyperzine", 1)
+			mob.reagents.add_reagent("stimulants", 1)
 	else if(holder.stage == 3)
-		if (mob.reagents.get_reagent_amount("hyperzine") < 10)
+		if (mob.reagents.get_reagent_amount("stimulants") < 10)
 			to_chat(mob, "<span class='notice'>You feel a rush of energy inside you!</span>")
-			mob.reagents.add_reagent("hyperzine", 4)
+			mob.reagents.add_reagent("stimulants", 4)
 		else if(prob(muscles_ache_chance))
 			to_chat(mob, "<span class='userdanger'>Your muscles ache.</span>")
 			mob.apply_effect(35,AGONY,0)

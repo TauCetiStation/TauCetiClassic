@@ -119,7 +119,7 @@
 	var/list/mob/living/targets = list()
 	for(var/mob/living/L in view(12, src)) //Let's find us a target
 		var/threatlevel = 0
-		if(L.stat || L.lying && !L.crawling)
+		if(L.stat != CONSCIOUS || L.lying && !L.crawling)
 			continue
 		threatlevel = assess_perp(L)
 		//speak(C.real_name + text(": threat: []", threatlevel))
@@ -185,7 +185,7 @@
 	anchored = FALSE
 	threatlevel = 0
 	for(var/mob/living/L in view(12, src)) //Let's find us a criminal
-		if(L.stat || (lasertag_color && L.lying && !L.crawling))
+		if(L.stat != CONSCIOUS || (lasertag_color && L.lying && !L.crawling))
 			continue //Does not shoot at people lyind down when in lasertag mode, because it's just annoying, and they can fire once they get up.
 
 		if(iscarbon(L))
@@ -506,15 +506,14 @@
 	deltimer(on_timer_id)
 	return ..()
 
-/obj/machinery/bot/secbot/ed209/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/bot/secbot/ed209/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(on && istype(Proj, /obj/item/projectile/beam/lasertag))
 		var/obj/item/projectile/beam/lasertag/L = Proj
 		if(L.lasertag_color != lasertag_color)
 			turn_off()
 			qdel(Proj)
 			on_timer_id = addtimer(CALLBACK(src, .proc/turn_on_cb), 100, TIMER_STOPPABLE)
-		return
-	return ..()
 
 /obj/machinery/bot/secbot/ed209/bluetag
 	lasertag_color = "blue"

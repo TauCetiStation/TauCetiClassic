@@ -69,10 +69,6 @@
 /obj/item/weapon/circuitboard/med_data
 	name = "Circuit board (Medical Records)"
 	build_path = /obj/machinery/computer/med_data
-/obj/item/weapon/circuitboard/pandemic
-	name = "Circuit board (PanD.E.M.I.C. 2200)"
-	build_path = /obj/machinery/computer/pandemic
-	origin_tech = "programming=2;biotech=2"
 /obj/item/weapon/circuitboard/scan_consolenew
 	name = "Circuit board (DNA Machine)"
 	build_path = /obj/machinery/computer/scan_consolenew
@@ -100,7 +96,7 @@
 			return ..()
 
 	for(var/mob/living/silicon/ai/shuttlecaller as anything in ai_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+		if(shuttlecaller.stat == CONSCIOUS && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
 	if(find_faction_by_type(/datum/faction/revolution) || find_faction_by_type(/datum/faction/malf_silicons) || sent_strike_team)

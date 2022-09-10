@@ -239,6 +239,32 @@ var/global/list/active_alternate_appearances = list()
 		return TRUE
 	return FALSE
 
+// Fake-image can see only the specified faction
+/datum/atom_hud/alternate_appearance/basic/faction
+	var/datum/faction2check
+	add_ghost_version = TRUE
+
+/datum/atom_hud/alternate_appearance/basic/faction/New(key, image/I, faction)
+	..(key, I, FALSE)
+	if(SSticker)
+		faction2check = faction
+		var/datum/faction/F = find_faction_by_type(faction2check)
+		if(!F)
+			return // in case if someone spawned faction-related stuff with hud, but we don't have faction in current round
+		for(var/datum/role/role in F.members)
+			if(role.antag.current)
+				add_hud_to(role.antag.current)
+
+/datum/atom_hud/alternate_appearance/basic/faction/mobShouldSee(mob/M)
+	if(!SSticker) //We can't check it anyway without it
+		return FALSE
+	var/datum/faction/F = find_faction_by_type(faction2check)
+	if(!F)
+		return FALSE
+	if(M in F.members)
+		return TRUE
+	return FALSE
+
 /datum/atom_hud/alternate_appearance/basic/exclude_ckeys
 	// Dictionary of form list(ckey = TRUE) for all who shouldn't see this appearance.
 	var/list/ckeys
@@ -323,9 +349,9 @@ var/global/list/active_alternate_appearances = list()
 			return FALSE
 	return TRUE
 
-/datum/atom_hud/alternate_appearance/basic/ghost_buster
+/datum/atom_hud/alternate_appearance/basic/see_ghosts
 
-/datum/atom_hud/alternate_appearance/basic/ghost_buster/New()
+/datum/atom_hud/alternate_appearance/basic/see_ghosts/New()
 	..()
 	RegisterSignal(target, COMSIG_MOVABLE_ORBIT_BEGIN, .proc/remove_hud)
 	RegisterSignal(target, COMSIG_MOVABLE_ORBIT_STOP, .proc/add_hud)
@@ -333,16 +359,16 @@ var/global/list/active_alternate_appearances = list()
 		if(mobShouldSee(M))
 			add_hud_to(M)
 
-/datum/atom_hud/alternate_appearance/basic/ghost_buster/mobShouldSee(mob/M)
-	if(HAS_TRAIT(M, TRAIT_GHOST_BUSTER))
+/datum/atom_hud/alternate_appearance/basic/see_ghosts/mobShouldSee(mob/M)
+	if(HAS_TRAIT(M, TRAIT_SEE_GHOSTS))
 		return TRUE
 	return FALSE
 
-/datum/atom_hud/alternate_appearance/basic/ghost_buster/proc/add_hud(atom/movable/ghost, atom/target)
+/datum/atom_hud/alternate_appearance/basic/see_ghosts/proc/add_hud(atom/movable/ghost, atom/target)
 	for(var/mob/M as anything in global.player_list)
 		if(mobShouldSee(M))
 			add_hud_to(M)
 
-/datum/atom_hud/alternate_appearance/basic/ghost_buster/proc/remove_hud(atom/movable/ghost, atom/target)
+/datum/atom_hud/alternate_appearance/basic/see_ghosts/proc/remove_hud(atom/movable/ghost, atom/target)
 	for(var/v in hudusers)
 		remove_hud_from(v)

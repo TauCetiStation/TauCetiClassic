@@ -29,8 +29,8 @@
 /mob/living/simple_animal/crab/Life()
 	..()
 	//CRAB movement
-	if(!ckey && !stat)
-		if(isturf(src.loc) && !resting && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+	if(!ckey && stat == CONSCIOUS)
+		if(isturf(src.loc) && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				var/east_vs_west = pick(4, 8)
@@ -82,7 +82,7 @@
 					M.show_messageold("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
 
 /mob/living/simple_animal/crab/Topic(href, href_list)
-	if(usr.stat) return
+	if(usr.stat != CONSCIOUS) return
 
 	//Removing from inventory
 	if(href_list["remove_inv"])

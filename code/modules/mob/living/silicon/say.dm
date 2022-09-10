@@ -43,7 +43,7 @@
 		return say_dead(message)
 
 	if(message[1] == "*")
-		return emote(copytext(message,2))
+		return emote(copytext(message, 2))
 
 	var/bot_type = 0			//Let's not do a fuck ton of type checks, thanks.
 	if(isAI(src))
@@ -59,7 +59,7 @@
 
 
 	//Must be concious to speak
-	if (stat)
+	if (stat != CONSCIOUS)
 		return
 
 	var/verb = say_quote(message)
@@ -82,10 +82,13 @@
 			return
 
 	//parse language key and consume it
-	var/datum/language/speaking = parse_language(message)
+	var/ending = copytext(message, -1)
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
+
 	if (speaking)
-		verb = speaking.speech_verb
-		message = trim(copytext(message,2+length_char(speaking.key)))
+		verb = speaking.get_spoken_verb(ending)
 
 	var/area/A = get_area(src)
 

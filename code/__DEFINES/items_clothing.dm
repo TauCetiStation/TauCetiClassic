@@ -16,7 +16,6 @@
 #define BODYTEMP_NORMAL 310.055             // Normal body temperature for carbons.
 #define BODYTEMP_HEAT_DAMAGE_LIMIT 360.15   // The limit the human body can take before it starts taking damage from heat.
 #define BODYTEMP_COLD_DAMAGE_LIMIT 260.15   // The limit the human body can take before it starts taking damage from coldness.
-#define BODYTEMP_SIGNIFICANT_CHANGE 20      // Minimum temperature difference that will be applied, must be at lest more than BODYTEMP_NORMAL - T20C.
 
 #define SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE 2.0 // What min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
 #define   SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE 2.0 // What min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.

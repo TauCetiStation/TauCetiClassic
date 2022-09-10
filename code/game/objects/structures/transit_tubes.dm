@@ -72,7 +72,7 @@
 		M.forceMove(src)
 
 		occupant_angle = dir2angle(dir)
-		occupant = image(M.appearance, loc, layer = (SHUTTERS_LAYER - 0.01))
+		occupant = image(M.appearance, loc, layer = ABOVE_OBJ_LATER)
 		if(M.w_class == SIZE_HUMAN)
 			occupant.transform = occupant.transform.Scale(0.9, 0.9)
 		occupant.transform = occupant.transform.Turn(occupant_angle)
@@ -110,7 +110,7 @@
 		to_chat(M, "<span class='warning'>The tube's support pylons block your way.</span>")
 		return ..()
 	else
-		M.forceMove(loc)
+		M.forceMove(loc, TRUE)
 		to_chat(M, "<span class='info'>You slip under the tube.</span>")
 
 /obj/structure/transit_tube/station/Bumped(mob/M)

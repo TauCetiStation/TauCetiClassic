@@ -127,7 +127,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
 	R(/obj/item/weapon/flamethrower/full, CATEGORY_TOOLS),
 	R(/obj/item/weapon/rcd, CATEGORY_TOOLS),
 	R(/obj/item/weapon/weldingtool/largetank, CATEGORY_TOOLS),
-	R(/obj/item/ammo_box/a357, CATEGORY_AMMO),
+	R(/obj/item/ammo_casing/a357, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/m9mm, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/c45m, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/m9mm_2, CATEGORY_AMMO),
@@ -285,10 +285,6 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 	if(panel_open)
 		if(iscrowbar(I))
-			if(stored_material[MAT_METAL] >= 3750)
-				new /obj/item/stack/sheet/metal(loc, round(stored_material[MAT_METAL] / 3750))
-			if(stored_material[MAT_GLASS] >= 3750)
-				new /obj/item/stack/sheet/glass(loc, round(stored_material[MAT_GLASS] / 3750))
 			default_deconstruction_crowbar(I)
 			return 1
 		else if(is_wire_tool(I))
@@ -340,6 +336,13 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		qdel(I)
 	busy = FALSE
 	updateUsrDialog()
+
+/obj/machinery/autolathe/deconstruction()
+	. = ..()
+	if(stored_material[MAT_METAL] >= 3750)
+		new /obj/item/stack/sheet/metal(loc, round(stored_material[MAT_METAL] / 3750))
+	if(stored_material[MAT_GLASS] >= 3750)
+		new /obj/item/stack/sheet/glass(loc, round(stored_material[MAT_GLASS] / 3750))
 
 /obj/machinery/autolathe/proc/take_item(obj/item/I, amount)
 	if(istype(I, /obj/item/stack))

@@ -162,7 +162,7 @@
 	. = ..()
 	if(kickstand)
 		return 0
-	if(buckled_mob && (buckled_mob.stat || buckled_mob.lying))
+	if(buckled_mob && (buckled_mob.stat != CONSCIOUS || buckled_mob.lying))
 		return 0
 
 /obj/vehicle/space/spacebike/turn_on()
@@ -247,12 +247,11 @@
 	kickstand = !kickstand
 	anchored = (kickstand || on)
 
-/obj/vehicle/space/spacebike/bullet_act(obj/item/projectile/Proj)
+/obj/vehicle/space/spacebike/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(isliving(load) && prob(protection_percent))
 		var/mob/living/M = load
-		M.bullet_act(Proj)
-		return
-	..()
+		return M.bullet_act(Proj)
+	return ..()
 
 /obj/vehicle/space/spacebike/update_icon()
 	cut_overlays()

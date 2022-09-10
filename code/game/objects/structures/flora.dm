@@ -251,6 +251,10 @@
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_1"
 
+/obj/structure/flora/tree/pine/unbreakable
+	can_be_cut = FALSE
+	desc = "A massive pine. Looks a lot thicker than a normal one.\n<i>You don't think you can break it without a chainsaw</i>"
+
 /obj/structure/flora/tree/pine/atom_init()
 	. = ..()
 	icon_state = "pine_[rand(1, 3)]"

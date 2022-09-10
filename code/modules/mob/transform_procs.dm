@@ -1,4 +1,4 @@
-/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
+/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
 	if (notransform)
 		return
 
@@ -82,13 +82,6 @@
 		suiciding = FALSE
 	O.set_a_intent(INTENT_HARM)
 
-	//keep viruses?
-	if(tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/datum/disease/D in O.viruses)
-			D.affected_mob = O
-
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
 		O.adjustToxLoss(getToxLoss())
@@ -110,9 +103,9 @@
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
-		O.Stun(stunned, ignore_canstun = TRUE)
+		O.Stun(AmountStun())
 		O.Weaken(weakened)
-		O.Paralyse(paralysis - 22)
+		O.SetParalysis(AmountParalyzed())
 		O.SetSleeping(AmountSleeping())
 
 	//transfer reagents
@@ -129,20 +122,18 @@
 			O.changeling_update_languages(C.absorbed_languages)
 			for(var/mob/living/parasite/essence/M in src)
 				M.transfer(O)
-
+	SEND_SIGNAL(O, COMSIG_HUMAN_MONKEYIZE)
 	transfer_trait_datums(O)
 
 	if(tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a monkey.</B>")
-
 	. = O
-
 	qdel(src)
 
 //////////////////////////           Humanize               //////////////////////////////
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
-/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
+/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
 	if (notransform)
 		return
 
@@ -217,14 +208,6 @@
 		suiciding = FALSE
 	O.set_a_intent(INTENT_HELP)
 
-	//keep viruses?
-	if(tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/datum/disease/D in O.viruses)
-			D.affected_mob = O
-		O.med_hud_set_status()
-
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
 		O.adjustToxLoss(getToxLoss())
@@ -248,9 +231,9 @@
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
-		O.Stun(stunned, ignore_canstun = TRUE)
+		O.Stun(AmountStun())
 		O.Weaken(weakened)
-		O.Paralyse(paralysis - 22)
+		O.Paralyse(AmountParalyzed())
 		O.SetSleeping(AmountSleeping())
 
 	//transfer reagents
@@ -271,10 +254,9 @@
 
 	if(tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a human.</B>")
-
 	. = O
-
 	qdel(src)
+	SEND_SIGNAL(O, COMSIG_MONKEY_HUMANIZE)
 
 /mob/dead/new_player/AIize()
 	spawning = 1
@@ -338,6 +320,8 @@
 	if(mind)
 		mind.transfer_to(O)
 		O.mind.original = O
+		O.mind.skills.add_available_skillset(/datum/skillset/max)
+		O.mind.skills.maximize_active_skills()
 	else
 		O.key = key
 
@@ -378,6 +362,8 @@
 
 	if(mind)		//TODO
 		mind.transfer_to(O)
+		O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+		O.mind.skills.maximize_active_skills()
 		if(O.mind.assigned_role == "Cyborg")
 			O.mind.original = O
 		else if(mind && mind.special_role)

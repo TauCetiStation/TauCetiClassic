@@ -1,6 +1,6 @@
 /turf/simulated/wall/r_wall
 	name = "reinforced wall"
-	desc = "A huge chunk of reinforced metal used to seperate rooms."
+	desc = "Огромный кусок укрепленного металла для разделения комнат."
 	icon = 'icons/turf/walls/has_false_walls/reinforced_wall.dmi'
 	opacity = 1
 	density = TRUE
@@ -18,7 +18,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2
 		if(user.a_intent == INTENT_HARM)
-			to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
+			to_chat(user, text("<span class='notice'>Вы бьете укрепленную стену.</span>"))
 			take_damage(rand(5, 25))
 			if(prob(25))
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -27,13 +27,13 @@
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
 				BP.take_damage(rand(5, 15), used_weapon = "Reinforced wall")
-				to_chat(user, text("<span class='warning'>Ouch!!</span>"))
+				to_chat(user, text("<span class='warning'>Ауч!!</span>"))
 			else
 				playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 			return //##Z2
 
 	if(rotting)
-		to_chat(user, "<span class='notice'>This wall feels rather unstable.</span>")
+		to_chat(user, "<span class='notice'>Стена кажется не очень крепкой.</span>")
 		return
 
 	/*user << "<span class='notice'>You push the wall but nothing happens!</span>"
@@ -54,14 +54,14 @@
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
-				to_chat(user, "<span class='notice'>You burn away the fungi with \the [WT].</span>")
+				to_chat(user, "<span class='notice'>Вы сжигаете грибок сваркой.</span>")
 				playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER, 10)
 				for(var/obj/effect/E in src) if(E.name == "Wallrot")
 					qdel(E)
 				rotting = 0
 				return
 		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
-			to_chat(user, "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>")
+			to_chat(user, "<span class='notice'>Укрепленная стена рассыпется от удара [W.name].</span>")
 			dismantle_wall()
 			return
 
@@ -81,7 +81,7 @@
 			var/obj/item/weapon/melee/energy/blade/EB = W
 
 			EB.spark_system.start()
-			to_chat(user, "<span class='notice'>You slash \the [src] with \the [EB]; the thermite ignites!</span>")
+			to_chat(user, "<span class='notice'>Вы бьете укрепленную стену энергетическим мечом; термит вспыхивает!</span>")
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 
@@ -89,47 +89,48 @@
 			return
 
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
-		to_chat(user, "<span class='notice'>This wall is too thick to slice through. You will need to find a different path.</span>")
+		to_chat(user, "<span class='notice'>Эта стена слишком толстая. Лучше найти другой способ.</span>")
 		return
 
 	if(damage && iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0,user))
-			to_chat(user, "<span class='notice'>You start repairing the damage to [src].</span>")
+			to_chat(user, "<span class='notice'>Вы начинаете ремонтировать укрепленную стену.</span>")
 			if(W.use_tool(src, user, max(5, damage / 5), volume = 100))
-				to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
+				to_chat(user, "<span class='notice'>Вы закончили ремонтировать укрепленную стену.</span>")
 				take_damage(-damage)
 			return
 		else
-			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
+			to_chat(user, "<span class='warning'>Нужно больше топлива.</span>")
 			return
 
 	var/turf/T = user.loc	//get user's location for delay checks
-
 	//DECONSTRUCTION
 	switch(d_state)
 		if(INTACT)
 			if (iswirecutter(W))
+				if(!handle_fumbling(user, src, SKILL_TASK_TOUGH, list(/datum/skill/engineering = SKILL_LEVEL_PRO),"<span class='notice'>You fumble around figuring out how to cut the outer grille.</span>"))
+					return
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				d_state = SUPPORT_LINES
 				update_icon()
 				new /obj/item/stack/rods(src)
-				to_chat(user, "<span class='notice'>You cut the outer grille.</span>")
+				to_chat(user, "<span class='notice'>Вы срезаете внешнюю решетку.</span>")
 				return
 
 		if(SUPPORT_LINES)
 			if (isscrewdriver(W))
-				to_chat(user, "<span class='notice'>You begin removing the support lines.</span>")
+				to_chat(user, "<span class='notice'>Вы начинаете удалять поддерживающие ряды.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
-				if(W.use_tool(src, user, 40, volume = 100))
+				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
 					if(d_state == SUPPORT_LINES && user.loc == T && user.get_active_hand() == W)
 						d_state = COVER
 						update_icon()
-						to_chat(user, "<span class='notice'>You remove the support lines.</span>")
+						to_chat(user, "<span class='notice'>Вы удаляете поддерживающие ряды.</span>")
 				return
 
 			//REPAIRING (replacing the outer grille for cosmetic damage)
@@ -137,9 +138,11 @@
 				var/obj/item/stack/O = W
 				if(!O.use(1))
 					return
+				if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_PRO),"<span class='notice'>You fumble around figuring out how to replace the outer grille.</span>"))
+					return
 				d_state = INTACT
 				update_icon()
-				to_chat(user, "<span class='notice'>You replace the outer grille.</span>")
+				to_chat(user, "<span class='notice'>Вы заменяете внешнюю решетку.</span>")
 				return
 
 		if(COVER)
@@ -147,56 +150,56 @@
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.use(0,user))
 
-					to_chat(user, "<span class='notice'>You begin slicing through the metal cover.</span>")
-					if(WT.use_tool(src, user, 60, volume = 100))
+					to_chat(user, "<span class='notice'>Вы начинаете разрезать металлическое покрытие.</span>")
+					if(WT.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
 						if(d_state == COVER && user.loc == T && user.get_active_hand() == WT)
 							d_state = CUT_COVER
 							update_icon()
-							to_chat(user, "<span class='notice'>You press firmly on the cover, dislodging it.</span>")
+							to_chat(user, "<span class='notice'>Вы сильно давите на покрытие, смещая его.</span>")
 				else
-					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+					to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 				return
 
 			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-				to_chat(user, "<span class='notice'>You begin slicing through the metal cover.</span>")
-				if(W.use_tool(src, user, 60, volume = 100))
+				to_chat(user, "<span class='notice'>Вы начинаете разрезать металлическое покрытие.</span>")
+				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
 					if(d_state == COVER && user.loc == T && user.get_active_hand() == W)
 						d_state = CUT_COVER
 						update_icon()
-						to_chat(user, "<span class='notice'>You press firmly on the cover, dislodging it.</span>")
+						to_chat(user, "<span class='notice'>Вы сильно давите на покрытие, смещая его.</span>")
 				return
 
 		if(CUT_COVER)
 			if (iscrowbar(W))
-				to_chat(user, "<span class='notice'>You struggle to pry off the cover.</span>")
-				if(W.use_tool(src, user, 100, volume = 100))
+				to_chat(user, "<span class='notice'>Вы пытаетесь отделить покрытие.</span>")
+				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
 					if(d_state == CUT_COVER && user.loc == T && user.get_active_hand() == W)
 						d_state = ANCHOR_BOLTS
 						update_icon()
-						to_chat(user, "<span class='notice'>You pry off the cover.</span>")
+						to_chat(user, "<span class='notice'>Вы отделили покрытие.</span>")
 				return
 
 		if(ANCHOR_BOLTS)
 			if (iswrench(W))
 
-				to_chat(user, "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame.</span>")
-				if(W.use_tool(src, user, 40, volume = 100))
+				to_chat(user, "<span class='notice'>Вы ослабляете болты, закрепляющие поддерживающие балки.</span>")
+				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
 					if(d_state == ANCHOR_BOLTS && user.loc == T && user.get_active_hand() == W)
 						d_state = SUPPORT_RODS
 						update_icon()
-						to_chat(user, "<span class='notice'>You remove the bolts anchoring the support rods.</span>")
+						to_chat(user, "<span class='notice'>Вы ослабили болты, закрепляющие поддерживающие балки.</span>")
 				return
 
 		if(SUPPORT_RODS)
@@ -204,8 +207,8 @@
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.use(0,user))
 
-					to_chat(user, "<span class='notice'>You begin slicing through the support rods.</span>")
-					if(W.use_tool(src, user, 100, volume = 100))
+					to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки.</span>")
+					if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
@@ -213,15 +216,15 @@
 							d_state = SHEATH
 							update_icon()
 							new /obj/item/stack/rods(src)
-							to_chat(user, "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>")
+							to_chat(user, "<span class='notice'>Вы убрали поддерживающие балки.</span>")
 				else
-					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+					to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 				return
 
 			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 
-				to_chat(user, "<span class='notice'>You begin slicing through the support rods.</span>")
-				if(W.use_tool(src, user, 70, volume = 100))
+				to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки.</span>")
+				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -229,19 +232,19 @@
 						d_state = SHEATH
 						update_icon()
 						new /obj/item/stack/rods(src)
-						to_chat(user, "<span class='notice'>The support rods drop out as you cut them loose from the frame.</span>")
+						to_chat(user, "<span class='notice'>Вы убрали поддерживающие балки.</span>")
 				return
 
 		if(SHEATH)
 			if(iscrowbar(W))
 
-				to_chat(user, "<span class='notice'>You struggle to pry off the outer sheath.</span>")
-				if(W.use_tool(src, user, 100, volume  = 100))
+				to_chat(user, "<span class='notice'>Вы отделяете внешнюю обшивку.</span>")
+				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume  = 100,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
 					if(d_state == SHEATH && user.loc == T && user.get_active_hand() == W)
-						to_chat(user, "<span class='notice'>You pry off the outer sheath.</span>")
+						to_chat(user, "<span class='notice'>Вы отделили внешнюю обшивку.</span>")
 						dismantle_wall()
 				return
 
@@ -251,28 +254,28 @@
 	if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
 		var/obj/item/weapon/changeling_hammer/C = W
 		user.do_attack_animation(src)
-		visible_message("<span class='warning'><B>[user]</B> has punched \the <B>[src]!</B></span>")
+		visible_message("<span class='warning'><B>[user]</B> бьет укрепленную стену!</span>")
 		if(C.use_charge(user, 4))
 			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			take_damage(pick(10, 20, 30))
+			take_damage(30)
 		return
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
-		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
+		to_chat(user, "<span class='notice'>Вы бурите сквозь укрепленную стену.</span>")
 
-		if(W.use_tool(src, user, 200, volume = 50))
+		if(W.use_tool(src, user, SKILL_TASK_FORMIDABLE, volume = 50))
 			if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
-				to_chat(user, "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>")
+				to_chat(user, "<span class='notice'>Вы пробурили последнюю укрепленную пластину.</span>")
 				dismantle_wall()
 
 	//REPAIRING
 	else if(istype(W, /obj/item/stack/sheet/metal) && d_state)
 		var/obj/item/stack/sheet/metal/MS = W
 
-		to_chat(user, "<span class='notice'>You begin patching-up the wall with \a [MS].</span>")
+		to_chat(user, "<span class='notice'>Вы ремонтируете укрепленную стену металлом.</span>")
 
 		if(W.use_tool(src, user, (max(20*d_state,100)), volume = 100))	//time taken to repair is proportional to the damage! (max 10 seconds)
 			if(!istype(src, /turf/simulated/wall/r_wall) || !T)
@@ -284,7 +287,7 @@
 				d_state = INTACT
 				update_icon()
 				queue_smooth(src)	//call smoothwall stuff
-				to_chat(user, "<span class='notice'>You repair the last of the damage.</span>")
+				to_chat(user, "<span class='notice'>Вы отремонтировали укрепленную стену.</span>")
 
 	//APC
 	else if(istype(W,/obj/item/apc_frame))
@@ -324,6 +327,10 @@
 	else if(istype(W, /obj/item/noticeboard_frame))
 		var/obj/item/noticeboard_frame/NF = W
 		NF.try_build(user, src)
+
+	else if(istype(W,/obj/item/painting_frame))
+		var/obj/item/painting_frame/AH = W
+		AH.try_build(src)
 		return
 
 	//Poster stuff

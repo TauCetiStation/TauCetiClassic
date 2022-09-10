@@ -101,6 +101,20 @@
 
 	START_PROCESSING(SSobj, src)
 
+/obj/item/weapon/grab/be_thrown(mob/living/thrower, atom/target)
+	. = throw_held() //throw the person instead of the grab
+	if(isliving(.))
+		var/mob/living/L = .
+		var/turf/start_T = get_turf(thrower.loc) //Get the start and target tile for the descriptors
+		var/turf/end_T = get_turf(target)
+		if(start_T && end_T)
+			var/start_T_descriptor = "<font color='#6b5d00'>tile at [COORD(start_T)] in area [get_area(start_T)]</font>"
+			var/end_T_descriptor = "<font color='#6b4400'>tile at [COORD(end_T)] in area [get_area(end_T)]</font>"
+
+			L.log_combat(usr, "thrown from [start_T_descriptor] with the target [end_T_descriptor]")
+
+	qdel(src)
+
 //Used by throw code to hand over the mob, instead of throwing the grab. The grab is then deleted by the throw code.
 /obj/item/weapon/grab/proc/throw_held()
 	if(affecting)
@@ -231,6 +245,7 @@
 			if(affecting.loc != assailant.loc)
 				force_down = 0
 			else
+				affecting.Stun(2)
 				affecting.Weaken(2)
 
 	if(state >= GRAB_NECK)
@@ -250,6 +265,7 @@
 		//affecting.apply_effect(STUTTER, 5) //would do this, but affecting isn't declared as mob/living for some stupid reason.
 		affecting.Stuttering(5) //It will hamper your voice, being choked and all.
 		affecting.Weaken(5)	//Should keep you down unless you get help.
+		affecting.Stun(5)
 		affecting.losebreath = max(affecting.losebreath + 2, 3)
 
 	adjust_position()
@@ -345,6 +361,7 @@
 			assailant.visible_message("<span class='warning'>[assailant] pins [affecting] down to the ground (now hands)!</span>")
 			force_down = 1
 			affecting.Weaken(3)
+			affecting.Stun(3)
 			step_to(assailant, affecting)
 			if(QDELING(src)) // grab was deleted during step_to
 				return
@@ -431,7 +448,7 @@
 								var/armor_block = H.run_armor_check(BP, "melee")
 
 								var/chance_to_force_vomit = 30
-								if(H.stat >= UNCONSCIOUS)
+								if(H.stat != CONSCIOUS)
 									chance_to_force_vomit += 20
 								if(prob(armor_block))
 									chance_to_force_vomit = 0
@@ -539,7 +556,7 @@
 						assailant.visible_message("<span class='danger'>[assailant] is forcing [affecting] to the ground!</span>")
 						force_down = 1
 						affecting.Weaken(3)
-						affecting.lying = 1
+						affecting.Stun(3)
 						step_to(assailant, affecting)
 						assailant.set_dir(EAST) //face the victim
 						affecting.set_dir(SOUTH) //face up

@@ -43,7 +43,7 @@
 		var/obj/item/organ/external/IO = O
 		if(IO.species.name == DIONA)
 			to_chat(user, "<span class='notice'>You extract some seeds from \the [IO.name].</span>")
-			new /obj/item/seeds/replicapod(loc)
+			new /obj/item/seeds/replicapod/real_deal(loc)
 			qdel(IO)
 		else if(IO.species.name == PODMAN)
 			to_chat(user, "<span class='warning'>You fail to extract any seeds from \the [IO.name].</span>")

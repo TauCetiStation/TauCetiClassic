@@ -55,6 +55,7 @@
 	var/citizenship = ""
 	var/personal_faction = ""
 	var/religion = ""
+	var/vox_rank = ""
 
 	//Equipment slots
 	var/obj/item/wear_suit = null
@@ -68,10 +69,6 @@
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
-
-	var/used_skillpoints = 0
-	var/skill_specialization = null
-	var/list/skills = null
 
 	var/voice = ""	//Instead of new say code calling GetVoice() over and over and over, we're just going to ask this variable, which gets updated in Life()
 

@@ -3,6 +3,7 @@
 #define R_IDEAL_GAS_EQUATION	8.31 	//kPa*L/(K*mol)
 #define ONE_ATMOSPHERE			101.325	//kPa
 
+#define TM50C 223.15   // -50degC
 #define T0C 273.15	// 0degC
 #define T20C 293.15	// 20degC
 #define TCMB 2.7	// -270.3degC
@@ -72,6 +73,8 @@
 // Digital T-valves
 #define PIPE_DTVALVE                52
 #define PIPE_DTVALVEM               53
+// Alert pipe
+#define PIPE_SAMPLER                54
 
 #define CONNECT_TYPE_REGULAR    1
 #define CONNECT_TYPE_SUPPLY     2

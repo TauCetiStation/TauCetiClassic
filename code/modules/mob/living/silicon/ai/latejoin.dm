@@ -11,7 +11,7 @@ var/global/list/empty_playable_ai_cores = list()
 	return 1
 
 /mob/living/silicon/ai/proc/wipe_core()
-	if(ismalf(src) || istype(loc,/obj/item/device/aicard) || stat)
+	if(ismalf(src) || istype(loc,/obj/item/device/aicard) || stat != CONSCIOUS)
 		wipe_timer_id = 0
 		return
 	perform_wipe_core()

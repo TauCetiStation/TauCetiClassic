@@ -5,6 +5,8 @@
 	icon_state = "stool"
 	anchored = TRUE
 
+	var/material = /obj/item/stack/sheet/metal
+
 /obj/structure/stool/bar
 	name = "bar stool"
 	icon = 'icons/obj/objects.dmi'
@@ -32,7 +34,7 @@
 /obj/structure/stool/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W) && !(flags & NODECONSTRUCT))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		new /obj/item/stack/sheet/metal(loc)
+		new material(loc)
 		qdel(src)
 		return
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -46,14 +48,14 @@
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
 			if(!(flags & NODECONSTRUCT))
-				new /obj/item/stack/sheet/metal(loc)
+				new material(loc)
 			qdel(src)
 			return
 
 	else if(istype(W, /obj/item/weapon/sledgehammer))
 		var/obj/item/weapon/sledgehammer/S = W
 		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED) && !(flags & NODECONSTRUCT))
-			new /obj/item/stack/sheet/metal(loc)
+			new material(loc)
 			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
 			shake_camera(user, 1, 1)
 			qdel(src)
@@ -64,7 +66,7 @@
 /obj/structure/stool/MouseDrop(atom/over_object)
 	if(ishuman(over_object) && type == /obj/structure/stool)
 		var/mob/living/carbon/human/H = over_object
-		if(H == usr && !H.restrained() && !H.stat && Adjacent(over_object))
+		if(H == usr && !H.restrained() && H.stat == CONSCIOUS && Adjacent(over_object))
 			var/obj/item/weapon/stool/S = new
 			S.origin_stool = src
 			src.loc = S
@@ -113,6 +115,7 @@
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		qdel(src)
 		var/mob/living/T = M
+		T.Stun(5)
 		T.Weaken(10)
 		T.apply_damage(20)
 		return

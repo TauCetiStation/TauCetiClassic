@@ -2,14 +2,14 @@ var/global/list/datum/spawners = list()
 var/global/list/datum/spawners_cooldown = list()
 
 // Don't call this proc directly! Use defines create_spawner and create_spawners
-/proc/_create_spawners(type, id, num, list/arguments)
+/proc/_create_spawners(type, num, list/arguments)
 	// arguments must have at least 1 element due to the use of arglist
 	if(!arguments.len)
 		arguments += null
 
 	for(var/i in 1 to num)
 		var/datum/spawner/spawner = new type(arglist(arguments))
-		spawner.add_to_global_list(id)
+		spawner.add_to_global_list()
 
 	for(var/mob/dead/observer/ghost in observer_list)
 		if(!ghost.client)
@@ -60,10 +60,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	return ..()
 
-/datum/spawner/proc/add_to_global_list(_id)
-	if(!isnull(_id))
-		id = _id
-
+/datum/spawner/proc/add_to_global_list()
 	LAZYADDASSOCLIST(global.spawners, id, src)
 
 	for(var/mob/dead/observer/ghost in observer_list)
@@ -149,6 +146,7 @@ var/global/list/datum/spawners_cooldown = list()
 */
 /datum/spawner/dealer
 	name = "Контрабандист"
+	id = "dealer"
 	desc = "Вы появляетесь в космосе вблизи со станцией."
 	wiki_ref = "Families"
 
@@ -175,12 +173,14 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/cop
 	name = "Офицер ОБОП"
+	id = "cop"
 	desc = "Вы появляетесь на ЦК в полном обмундирование с целью прилететь на станцию и задержать всех бандитов."
 	wiki_ref = "Families"
 
 	ranks = list(ROLE_FAMILIES)
 
 	var/roletype
+	var/list/prefixes = list("Officer")
 
 /datum/spawner/cop/spawn_ghost(mob/dead/observer/ghost)
 	var/spawnloc = pick(copsstart)
@@ -190,23 +190,20 @@ var/global/list/datum/spawners_cooldown = list()
 
 	var/mob/living/carbon/human/cop = new(null)
 
-	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
+	var/new_name = "[pick(prefixes)] [pick(last_names)]"
 	C.create_human_apperance(cop, new_name)
 
 	cop.loc = spawnloc
 	cop.key = C.key
 
 	//Give antag datum
-	var/datum/faction/cops/faction = find_faction_by_type(/datum/faction/cops)
-	if(!faction)
-		faction = SSticker.mode.CreateFaction(/datum/faction/cops)
+	var/datum/faction/cops/faction = create_uniq_faction(/datum/faction/cops)
 
 	faction.roletype = roletype
 	add_faction_member(faction, cop, TRUE, TRUE)
 
 	var/obj/item/weapon/card/id/W = cop.wear_id
-	W.name = "[cop.real_name]'s ID Card ([W.assignment])"
-	W.registered_name = cop.real_name
+	W.assign(cop.real_name)
 
 /datum/spawner/cop/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(copsstart)
@@ -214,23 +211,32 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/cop/beatcop
 	name = "Офицер ОБОП"
+	id = "c_beatcop"
 	roletype = /datum/role/cop/beatcop
 
 /datum/spawner/cop/armored
 	name = "Вооруженный Офицер ОБОП"
+	id = "c_armored"
 	roletype = /datum/role/cop/beatcop/armored
 
 /datum/spawner/cop/swat
 	name = "Боец Тактической Группы ОБОП"
+	id = "c_swat"
 	roletype = /datum/role/cop/beatcop/swat
+	prefixes = list("Sergeant", "Captain")
 
 /datum/spawner/cop/fbi
 	name = "Инспектор ОБОП"
+	id = "c_fbi"
 	roletype = /datum/role/cop/beatcop/fbi
+	prefixes = list("Inspector")
 
 /datum/spawner/cop/military
 	name = "Боец ВСНТ ОБОП"
+	id = "c_military"
 	roletype = /datum/role/cop/beatcop/military
+	prefixes = list("Pvt.", "PFC", "Cpl.", "LCpl.", "SGT")
+
 
 /*
  * ERT
@@ -246,6 +252,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/ert/New(mission)
 	..()
+	id = mission
 	important_info += mission
 
 /datum/spawner/ert/jump(mob/dead/observer/ghost)
@@ -293,6 +300,7 @@ var/global/list/datum/spawners_cooldown = list()
 */
 /datum/spawner/blob_event
 	name = "Блоб"
+	id = "blob_event"
 	desc = "Вы появляетесь в случайной точки станции в виде блоба."
 	wiki_ref = "Blob"
 
@@ -312,6 +320,7 @@ var/global/list/datum/spawners_cooldown = list()
 */
 /datum/spawner/ninja_event
 	name = "Космический Ниндзя"
+	id = "ninja_event"
 	desc = "Вы появляетесь в додзё. Из него вы можете телепортироваться на станцию."
 	wiki_ref = "Space_Ninja"
 
@@ -326,9 +335,7 @@ var/global/list/datum/spawners_cooldown = list()
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 	new_ninja.key = ghost.key
 
-	var/datum/faction/ninja/N = find_faction_by_type(/datum/faction/ninja)
-	if(!N)
-		N = SSticker.mode.CreateFaction(/datum/faction/ninja)
+	var/datum/faction/ninja/N = create_uniq_faction(/datum/faction/ninja)
 	add_faction_member(N, new_ninja, FALSE)
 
 	set_ninja_objectives(new_ninja)
@@ -338,6 +345,7 @@ var/global/list/datum/spawners_cooldown = list()
 */
 /datum/spawner/borer_event
 	name = "Изначальный Борер"
+	id = "borer_event"
 	desc = "Вы появляетесь где-то в вентиляции на станции."
 	wiki_ref = "Cortical_Borer"
 
@@ -350,41 +358,12 @@ var/global/list/datum/spawners_cooldown = list()
 	var/mob/living/simple_animal/borer/B = new(vent.loc, FALSE, 1)
 	B.transfer_personality(ghost.client)
 
-/datum/spawner/borer
-	name = "Борер"
-	desc = "Вы становитесь очередным отпрыском бореров."
-	wiki_ref = "Cortical_Borer"
-
-	ranks = list(ROLE_GHOSTLY)
-
-	var/mob/borer
-
-/datum/spawner/borer/New(_borer)
-	. = ..()
-	borer = _borer
-	RegisterSignal(borer, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
-
-/datum/spawner/borer/Destroy()
-	UnregisterSignal(borer, list(COMSIG_PARENT_QDELETING))
-	borer = null
-	return ..()
-
-/datum/spawner/borer/proc/on_target_del()
-	SIGNAL_HANDLER
-	qdel(src)
-
-/datum/spawner/borer/jump(mob/dead/observer/ghost)
-	ghost.forceMove(get_turf(borer))
-
-/datum/spawner/borer/spawn_ghost(mob/dead/observer/ghost)
-	UnregisterSignal(borer, list(COMSIG_PARENT_QDELETING))
-	borer.transfer_personality(ghost.client)
-
 /*
  * Aliens
 */
 /datum/spawner/alien_event
 	name = "Изначальный Лицехват"
+	id = "alien_event"
 	desc = "Вы появляетесь где-то в вентиляции станции и должны развить потомство."
 	wiki_ref = "Xenomorph"
 
@@ -398,47 +377,11 @@ var/global/list/datum/spawners_cooldown = list()
 	new_xeno.key = ghost.key
 
 /*
- * Religion
-*/
-/datum/spawner/religion_familiar
-	name = "Фамильяр Религии"
-	desc = "Вы появляетесь в виде какого-то животного в подчинении определённой религии."
-
-	ranks = list(ROLE_GHOSTLY)
-
-	var/mob/animal
-	var/datum/religion/religion
-
-/datum/spawner/religion_familiar/New(mob/_animal, datum/religion/_religion)
-	. = ..()
-	animal = _animal
-	religion = _religion
-
-	desc = "Вы появляетесь в виде [animal.name] в подчинении [religion.name]."
-	RegisterSignal(animal, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
-
-/datum/spawner/religion_familiar/Destroy()
-	UnregisterSignal(animal, list(COMSIG_PARENT_QDELETING))
-	animal = null
-	return ..()
-
-/datum/spawner/religion_familiar/proc/on_target_del()
-	SIGNAL_HANDLER
-	qdel(src)
-
-/datum/spawner/religion_familiar/jump(mob/dead/observer/ghost)
-	ghost.forceMove(get_turf(animal))
-
-/datum/spawner/religion_familiar/spawn_ghost(mob/dead/observer/ghost)
-	UnregisterSignal(animal, list(COMSIG_PARENT_QDELETING))
-	animal.ckey = ghost.ckey
-	religion.add_member(animal, HOLY_ROLE_PRIEST)
-
-/*
  * Other
 */
 /datum/spawner/gladiator
 	name = "Гладиатор"
+	id = "gladiator"
 	desc = "Вы появляетесь на арене и должны выжить."
 	wiki_ref = "Starter_Guide#Арена"
 
@@ -455,6 +398,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/mouse
 	name = "Мышь"
+	id = "mouse"
 	desc = "Вы появляетесь в суровом мире людей и должны выжить."
 	wiki_ref = "Mouse"
 
@@ -472,6 +416,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/space_bum
 	name = "Космо-бомж"
+	id = "space_bum"
 	desc = "Вы появляетесь где-то на свалке."
 	wiki_ref = "Junkyard"
 
@@ -486,6 +431,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/drone
 	name = "Дрон"
+	id = "drone"
 	desc = "Вы появляетесь на дронстанции и обязаны ремонтировать станцию."
 	wiki_ref = "Drone"
 
@@ -506,107 +452,192 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/drone/spawn_ghost(mob/dead/observer/ghost)
 	ghost.dronize()
 
-/datum/spawner/podman
-	name = "Подмена"
-	desc = "Подмена умерла, да здраствует подмена."
-	wiki_ref = "Podmen"
+/datum/spawner/living
+	name = "Свободное тело"
+	id = "living"
+	desc = "Продолжи его дело!"
 
 	ranks = list(ROLE_GHOSTLY)
 
-	var/mob/podman
-	var/replicant_memory
+	var/mob/living/mob
 
-/datum/spawner/podman/New(mob/_podman, _replicant_memory)
+/datum/spawner/living/New(mob/living/_mob)
 	. = ..()
-	podman = _podman
-	replicant_memory = _replicant_memory
 
-	RegisterSignal(podman, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
+	mob = _mob
+	add_mob_roles()
 
-/datum/spawner/podman/Destroy()
-	UnregisterSignal(podman, list(COMSIG_PARENT_QDELETING))
-	podman = null
+	RegisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED), .proc/self_qdel)
+
+/datum/spawner/living/Destroy()
+	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
+	mob = null
 	return ..()
 
-/datum/spawner/podman/proc/on_target_del()
+/datum/spawner/living/proc/add_mob_roles()
+	ranks |= mob.job
+
+	if(!mob.mind)
+		return
+
+	var/datum/mind/mind = mob.mind
+	ranks |= mind.antag_roles
+
+/datum/spawner/living/proc/self_qdel()
 	SIGNAL_HANDLER
 	qdel(src)
 
-/datum/spawner/podman/jump(mob/dead/observer/ghost)
-	ghost.forceMove(get_turf(podman))
+/datum/spawner/living/jump(mob/dead/observer/ghost)
+	ghost.forceMove(get_turf(mob))
 
-/datum/spawner/podman/spawn_ghost(mob/dead/observer/ghost)
-	UnregisterSignal(podman, list(COMSIG_PARENT_QDELETING))
-	podman.key = ghost.key
-	podman.mind.memory = replicant_memory
+/datum/spawner/living/spawn_ghost(mob/dead/observer/ghost)
+	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
+	mob.key = ghost.key
 
-	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
-	msg += "<B>You are now in possession of Podmen's body. It's previous owner found it no longer appealing, by rejecting it - they brought you here. You are now, again, an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
-	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
-	to_chat(podman, msg)
-
-/datum/spawner/podkid
-	name = "Подкидыш"
-	desc = "Человечка вырастили на грядке."
+/datum/spawner/living/podman
+	name = "Подмена"
+	id = "podman"
+	desc = "Подмена умерла, да здравствует подмена."
 	wiki_ref = "Podmen"
 
-	ranks = list(ROLE_GHOSTLY)
+	var/replicant_memory
 
-	var/mob/podkid
+/datum/spawner/living/podman/New(mob/_mob, _replicant_memory)
+	replicant_memory = _replicant_memory
+	. = ..(_mob)
 
-/datum/spawner/podkid/New(mob/_podkid)
-	. = ..()
-	podkid = _podkid
+/datum/spawner/living/podman/spawn_ghost(mob/dead/observer/ghost)
+	..()
 
-/datum/spawner/podkid/jump(mob/dead/observer/ghost)
-	ghost.forceMove(get_turf(podkid))
+	if(replicant_memory)
+		mob.mind.memory = replicant_memory
 
-/datum/spawner/podkid/spawn_ghost(mob/dead/observer/ghost)
-	podkid.key = ghost.key
+	to_chat(mob, greet_message())
 
-	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
-	msg += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
-	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
-	to_chat(podkid, msg)
+/datum/spawner/living/podman/proc/greet_message()
+	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	. += "<B>You are now in possession of Podmen's body. It's previous owner found it no longer appealing, by rejecting it - they brought you here. You are now, again, an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
+	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
 
-/datum/spawner/fake_diona
+/datum/spawner/living/podman/podkid
+	name = "Подкидыш"
+	id = "podkid"
+	desc = "Человечка вырастили на грядке."
+
+/datum/spawner/living/podman/podkid/greet_message()
+	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	. += "<B>You are now one of the Podmen, a race of failures, created to never leave their trace. You are an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
+	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+
+/datum/spawner/living/podman/nymph
 	name = "Нимфа Дионы"
+	id = "nymph_pod"
 	desc = "Диону вырастили на грядке."
 	wiki_ref = "Dionaea"
 
-	ranks = list(ROLE_GHOSTLY)
+/datum/spawner/living/podman/nymph/can_spawn(mob/dead/observer/ghost)
+	if(is_alien_whitelisted_banned(ghost, DIONA) || !is_alien_whitelisted(ghost, DIONA))
+		to_chat(ghost, "<span class='warning'>Вы не можете играть за дион.</span>")
+		return FALSE
 
-	var/mob/diona
-
-/datum/spawner/fake_diona/New(mob/_diona, _replicant_memory)
-	. = ..()
-	diona = _diona
-
-	RegisterSignal(diona, list(COMSIG_PARENT_QDELETING), .proc/on_target_del)
-
-/datum/spawner/fake_diona/Destroy()
-	UnregisterSignal(diona, list(COMSIG_PARENT_QDELETING))
-	diona = null
 	return ..()
 
-/datum/spawner/fake_diona/proc/on_target_del()
-	SIGNAL_HANDLER
-	qdel(src)
+/datum/spawner/living/podman/nymph/greet_message()
+	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	. += "<B>You are now one of the Dionaea, or were you always one of us? Welcome to the Gestalt, we see you now, again.</B><BR>"
+	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
 
-/datum/spawner/fake_diona/jump(mob/dead/observer/ghost)
-	ghost.forceMove(get_turf(diona))
+/datum/spawner/living/podman/fake_nymph
+	name = "Нимфа Дионы"
+	id = "fake_nymph_pod"
+	desc = "Диону вырастили на грядке."
 
-/datum/spawner/fake_diona/spawn_ghost(mob/dead/observer/ghost)
-	UnregisterSignal(diona, list(COMSIG_PARENT_QDELETING))
-	diona.key = ghost.key
+/datum/spawner/living/podman/fake_nymph/greet_message()
+	. = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	. += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B><BR>"
+	. += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
 
-	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
-	msg += "<B>You are now one of the Dionaea, sorta, you failed at your attempt to join the Gestalt Consciousness. You are not empty, nor you are full. You are a failure good enough to fool everyone into thinking you are not. DO NOT EVOLVE.</B><BR>"
-	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
-	to_chat(diona, msg)
+/datum/spawner/living/borer
+	name = "Борер"
+	id = "borer"
+	desc = "Вы становитесь очередным отпрыском бореров."
+	wiki_ref = "Cortical_Borer"
+
+/datum/spawner/living/borer/spawn_ghost(mob/dead/observer/ghost)
+	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
+	mob.transfer_personality(ghost.client)
+
+/*
+ * Robots
+*/
+/datum/spawner/living/robot
+	name = "Киборг"
+	id = "robot"
+	desc = "Перезагрузка позитронного мозга."
+	wiki_ref = "Cyborg"
+
+/datum/spawner/living/robot/syndi
+	name = "Киборг синдиката"
+	id = "robot_syndi"
+	ranks = list(ROLE_OPERATIVE)
+
+/datum/spawner/living/robot/drone
+	name = "Дрон"
+	id = "l_drone"
+	wiki_ref = "Maintenance_drone"
+	ranks = list(ROLE_DRONE)
+
+/*
+ * Religion
+*/
+/datum/spawner/living/religion_familiar
+	name = "Фамильяр Религии"
+	desc = "Вы появляетесь в виде какого-то животного в подчинении определённой религии."
+
+	var/datum/religion/religion
+
+/datum/spawner/living/religion_familiar/New(mob/_mob, datum/religion/_religion)
+	. = ..(_mob)
+	religion = _religion || mob.my_religion
+
+	id = "[mob.name]/[religion.name]"
+	desc = "Вы появляетесь в виде [mob.name] в подчинении [religion.name]."
+
+/datum/spawner/living/religion_familiar/spawn_ghost(mob/dead/observer/ghost)
+	..()
+	religion.add_member(mob, HOLY_ROLE_PRIEST)
+
+/datum/spawner/living/mimic
+	name = "Оживлённый предмет"
+	id = "mimic"
+	desc = "Вы магическим образом ожили на станции"
+
+/datum/spawner/living/evil_shade
+	name = "Злой Дух"
+	id = "evil_shade"
+	desc = "Магическая сила призвала вас в мир, отомстите живым за причинённые обиды!"
+
+/datum/spawner/living/rat
+	name = "Крыса"
+	id = "rat"
+	desc = "Вы появляетесь в своём новом доме"
+
+/datum/spawner/living/rat/spawn_ghost(mob/dead/observer/ghost)
+	. = ..()
+	to_chat(mob, "<B>Эта посудина теперь ваш новый дом, похозяйничайте в нём.</B>")
+	to_chat(mob, "<B>(Вы можете грызть провода и лампочки).</B>")
+
+/*
+ * Heist
+*/
+/datum/spawner/living/vox
+	name = "Вокс-Налётчик"
+	desc = "Воксы-налётчики это представители расы Воксов, птице-подобных гуманоидов, дышащих азотом. Прибыли на станцию что бы украсть что-нибудь ценное."
+	wiki_ref = "Vox_Raider"
 
 /datum/spawner/spy
 	name = "Агент Прослушки"
+	id = "spy"
 	desc = "Вы появляетесь на аванпосте прослушки Синдиката."
 
 	ranks = list(ROLE_GHOSTLY)
@@ -630,6 +661,9 @@ var/global/list/datum/spawners_cooldown = list()
 	H.loc = spawnloc
 	H.key = C.key
 	H.equipOutfit(/datum/outfit/spy)
+	H.mind.skills.add_available_skillset(/datum/skillset/max)
+	H.mind.skills.maximize_active_skills()
+	H.add_language(LANGUAGE_SYCODE)
 
 	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на [station_name_ru()].</B>")
 	if(mode_has_antags())
@@ -641,3 +675,48 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/spy/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(espionageagent_start)
 	ghost.forceMove(get_turf(jump_to))
+
+/datum/spawner/vox
+	name = "Вокс-Налётчик"
+	desc = "Воксы-налётчики это представители расы Воксов, птице-подобных гуманоидов, дышащих азотом. Прибыли на станцию что бы украсть что-нибудь ценное."
+	wiki_ref = "Vox_Raider"
+
+	ranks = list(ROLE_RAIDER, ROLE_GHOSTLY)
+	time_to_del = 5 MINUTES
+
+/datum/spawner/vox/spawn_ghost(mob/dead/observer/ghost)
+	var/spawnloc = pick(global.heiststart)
+	global.heiststart -= spawnloc
+
+	var/datum/faction/heist/faction = create_uniq_faction(/datum/faction/heist)
+	var/mob/living/carbon/human/vox/event/vox = new(spawnloc)
+
+	vox.key = ghost.client.key
+
+	var/sounds = rand(2, 8)
+	var/newname = ""
+	for(var/i in 1 to sounds)
+		newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
+
+	vox.real_name = capitalize(newname)
+	vox.name = vox.real_name
+	vox.age = rand(5, 15) // its fucking lore
+	vox.add_language(LANGUAGE_VOXPIDGIN)
+	if(faction.members.len % 2 == 0 || prob(33)) // first vox always gets Sol, everyone else by random.
+		vox.add_language(LANGUAGE_SOLCOMMON)
+	vox.h_style = "Short Vox Quills"
+	vox.f_style = "Shaved"
+	vox.grad_style = "none"
+
+	//Now apply cortical stack.
+	var/obj/item/weapon/implant/cortical/I = new(vox)
+	I.inject(vox, BP_HEAD)
+
+	vox.equip_vox_raider()
+	vox.regenerate_icons()
+
+	add_faction_member(faction, vox)
+
+/datum/spawner/vox/jump(mob/dead/observer/ghost)
+	var/jump_to = pick(global.heiststart)
+	ghost.forceMove(jump_to)

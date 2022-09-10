@@ -59,7 +59,6 @@ There are several things that need to be remembered:
 
 >	There are also these special cases:
 		update_mutations()	//handles updating your appearance for certain mutations.  e.g TK head-glows
-		update_mutantrace()	//handles updating your appearance after setting the mutantrace var
 		UpdateDamageIcon()	//handles damage overlays for brute/burn damage //(will rename this when I geta round to it)
 		update_body()	//Handles updating your mob's icon to reflect their gender/race/complexion etc
 		update_hair()	//Handles updating your hair overlay (used to be update_face, but mouth and
@@ -96,58 +95,14 @@ If you have any questions/constructive-comments/bugs-to-report/or have a massivl
 Please contact me on #coderbus IRC. ~Carn x
 */
 
-//Human Overlays Indexes/////////
-#define BODY_LAYER				27
-#define MUTANTRACE_LAYER		26
-#define MUTATIONS_LAYER			25
-#define DAMAGE_LAYER			24
-#define SURGERY_LAYER			23		//bs12 specific.
-#define BANDAGE_LAYER			22
-#define UNIFORM_LAYER			21
-#define ID_LAYER				20
-#define SHOES_LAYER				19
-#define TAIL_LAYER				18		//bs12 specific. this hack is probably gonna come back to haunt me
-#define GLOVES_LAYER			17
-#define EARS_LAYER				16
-#define SUIT_LAYER				15
-#define GLASSES_LAYER			14
-#define BELT_LAYER				13		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		12
-#define BACK_LAYER				11
-#define HAIR_LAYER				10		//TODO: make part of head layer?
-#define FACEMASK_LAYER			9
-#define HEAD_LAYER				8
-#define COLLAR_LAYER			7
-#define HANDCUFF_LAYER			6
-#define LEGCUFF_LAYER			5
-#define L_HAND_LAYER			4
-#define R_HAND_LAYER			3
-#define TARGETED_LAYER			2		//BS12: Layer for the target overlay from weapon targeting system
-#define FIRE_LAYER				1
-#define TOTAL_LAYERS			27
-//////////////////////////////////
-//Human Limb Overlays Indexes/////
-#define LIMB_HEAD_LAYER			7
-#define LIMB_TORSO_LAYER		6
-#define LIMB_L_ARM_LAYER		5
-#define LIMB_R_ARM_LAYER		4
-#define LIMB_GROIN_LAYER		3
-#define LIMB_L_LEG_LAYER		2
-#define LIMB_R_LEG_LAYER		1
-#define TOTAL_LIMB_LAYERS		7
-//////////////////////////////////
-
 /obj/item/proc/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
 	var/icon_path = def_icon_path
 
 	var/t_state
-	if(sprite_sheet_slot == SPRITE_SHEET_HELD || sprite_sheet_slot == SPRITE_SHEET_GLOVES || sprite_sheet_slot == SPRITE_SHEET_BELT)
+	if(sprite_sheet_slot in list(SPRITE_SHEET_HELD, SPRITE_SHEET_GLOVES, SPRITE_SHEET_BELT, SPRITE_SHEET_UNIFORM, SPRITE_SHEET_UNIFORM_FAT))
 		t_state = item_state
 		if(!icon_custom)
 			icon_state_appendix = null
-
-	if(sprite_sheet_slot == SPRITE_SHEET_UNIFORM || sprite_sheet_slot == SPRITE_SHEET_UNIFORM_FAT)
-		t_state = item_color
 
 	if(!t_state)
 		t_state = icon_state
@@ -161,13 +116,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	else if(icon_override)
 		icon_path = icon_override
 	else if(S.sprite_sheets[sprite_sheet_slot])
-		if (istype(src, /obj/item/clothing) && H.species)
-			var/obj/item/clothing/C = src
-			var/list/avaiable_icon_states = C.get_sprite_sheet_icon_list(H.species.name, sprite_sheet_slot)
-			if("[t_state][icon_state_appendix]" in avaiable_icon_states)
-				icon_path = S.sprite_sheets[sprite_sheet_slot]
-		else
-			icon_path = S.sprite_sheets[sprite_sheet_slot]
+		icon_path = S.sprite_sheets[sprite_sheet_slot]
 
 	var/image/I = image(icon = icon_path, icon_state = "[t_state][icon_state_appendix]", layer = layer)
 	I.color = color
@@ -235,6 +184,10 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		standing += BP.get_icon(BODY_LAYER)
 
+	if(species.name == VOX)
+		var/mutable_appearance/tatoo = mutable_appearance('icons/mob/human.dmi', "[vox_rank]_s", -BODY_LAYER)
+		tatoo.color = rgb(r_eyes, g_eyes, b_eyes)
+		standing += tatoo
 	//Underwear
 	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
@@ -276,7 +229,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
-		if(facial_hair_style && facial_hair_style.species_allowed && (BP.species.name in facial_hair_style.species_allowed))
+		if(facial_hair_style)
 			var/mutable_appearance/facial_s = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]_s", -HAIR_LAYER)
 			if(facial_hair_style.do_colouration)
 				if(!facial_painted)
@@ -289,7 +242,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)) && !(wear_mask && (wear_mask.flags & BLOCKHEADHAIR)) && !(wear_suit && (wear_suit.flags & BLOCKHEADHAIR)) && !(w_uniform && (w_uniform.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
-		if(hair_style && hair_style.species_allowed && (BP.species.name in hair_style.species_allowed))
+		if(hair_style)
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
 			if(hair_style.do_colouration)
 				var/icon/grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = hair_gradients[grad_style])
@@ -350,42 +303,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	apply_overlay(MUTATIONS_LAYER)
 
-
-/mob/living/carbon/human/proc/update_mutantrace()
-	remove_overlay(MUTANTRACE_LAYER)
-
-	var/list/standing = list()
-	var/fat = HAS_TRAIT(src, TRAIT_FAT) ? "fat" : null
-
-	if(dna)
-		switch(dna.mutantrace)
-			if("golem" , "shadow")
-				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_s", -MUTANTRACE_LAYER)
-
-	if(species.name == SHADOWLING && head)
-		var/image/eyes = image('icons/mob/shadowling.dmi', null, "[dna.mutantrace]_ms_s", LIGHTING_LAYER + 1)
-		eyes.plane = ABOVE_LIGHTING_PLANE
-		standing += eyes
-
-	if(iszombie(src) && stat != DEAD)
-		var/image/eyes = image(species.icobase, null, "zombie_ms_s", LIGHTING_LAYER + 1)
-		eyes.plane = ABOVE_LIGHTING_PLANE
-		standing += eyes
-
-	if(!dna || !(dna.mutantrace == "golem"))
-		update_body()
-
-	if(standing.len)
-		for(var/image/I in standing)
-			I = update_height(I)
-		overlays_standing[MUTANTRACE_LAYER]	= standing
-
-	if(species.flags[HAS_HAIR] || !(HUSK in mutations))
-		update_hair()
-
-	apply_overlay(MUTANTRACE_LAYER)
-
-
 //Call when target overlay should be added/removed
 /mob/living/carbon/human/update_targeted()
 	remove_overlay(TARGETED_LAYER)
@@ -399,14 +316,19 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_fire() //TG-stuff, fire layer
-	remove_overlay(FIRE_LAYER)
+	remove_overlay(FIRE_LOWER_LAYER)
+	remove_overlay(FIRE_UPPER_LAYER)
 
 	if(on_fire)
-		var/image/standing = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"=-FIRE_LAYER)
-		standing = update_height(standing)
-		overlays_standing[FIRE_LAYER]	= standing
+		var/image/under = image('icons/mob/OnFire.dmi', "human_underlay", layer = -FIRE_LOWER_LAYER)
+		var/image/over = image('icons/mob/OnFire.dmi', "human_overlay", layer = -FIRE_UPPER_LAYER)
+		under = update_height(under)
+		over = update_height(over)
+		overlays_standing[FIRE_LOWER_LAYER] = under
+		overlays_standing[FIRE_UPPER_LAYER] = over
 
-	apply_overlay(FIRE_LAYER)
+	apply_overlay(FIRE_LOWER_LAYER)
+	apply_overlay(FIRE_UPPER_LAYER)
 
 
 /* --------------------------------------- */
@@ -417,7 +339,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		return
 	update_hair()
 	update_mutations()
-	update_mutantrace()
+	update_body()
 	update_inv_w_uniform()
 	update_inv_wear_id()
 	update_inv_gloves()
@@ -471,14 +393,12 @@ Please contact me on #coderbus IRC. ~Carn x
 				to_chat(src, "<span class='warning'>You burst out of \the [U]!</span>")
 				drop_from_inventory(U)
 				return
-		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood", "_s")
+		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
 		standing = update_height(standing)
 		overlays_standing[UNIFORM_LAYER] = standing
 
 		for(var/obj/item/clothing/accessory/A in U.accessories)
-			var/tie_color = A.item_color
-			if(!tie_color)
-				tie_color = A.icon_state
+			var/tie_color = A.icon_state
 			var/image/tie
 			if(A.icon_custom)
 				tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -UNIFORM_LAYER + A.layer_priority)
@@ -679,9 +599,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[SUIT_LAYER] = standing
 
 		for(var/obj/item/clothing/accessory/A in S.accessories)
-			var/tie_color = A.item_color
-			if(!tie_color)
-				tie_color = A.icon_state
+			var/tie_color = A.icon_state
 			var/image/tie
 			if(A.icon_custom)
 				tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -SUIT_LAYER + A.layer_priority)
@@ -814,25 +732,30 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	apply_overlay(L_HAND_LAYER)
 
-
 /mob/living/carbon/human/proc/update_tail_showing()
 	remove_overlay(TAIL_LAYER)
 
-	if(species.tail && species.flags[HAS_TAIL] && !(HUSK in mutations) && bodyparts_by_name[BP_CHEST])
+	if((random_tail_holder || species.tail) && species.flags[HAS_TAIL] && !(HUSK in mutations) && bodyparts_by_name[BP_CHEST])
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
-			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = species.tail)
+			var/tail_state = species.tail
+			if(random_tail_holder)
+				tail_state = random_tail_holder
+
+			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = tail_state)
 
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
-
-			if(species.flags[HAS_SKIN_COLOR])
-				if(BP.status & ORGAN_DEAD)
-					tail_s.color = NECROSIS_COLOR_MOD
-				else if(HULK in mutations)
-					tail_s.color = HULK_SKIN_COLOR
-				else
+			if(BP.status & ORGAN_DEAD)
+				tail_s.color = NECROSIS_COLOR_MOD
+			else if(HULK in mutations)
+				tail_s.color = HULK_SKIN_COLOR
+			else
+				if(species.flags[HAS_SKIN_COLOR])
 					tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
+				else if(species.flags[HAS_SKIN_TONE])
+					tail_s.color = RGB_CONTRAST(s_tone, s_tone, s_tone)
+
 			var/image/standing = image("icon" = tail_s, "layer" = -TAIL_LAYER)
-			standing = human_update_offset(standing)
+			standing = human_update_offset(standing, FALSE)
 			overlays_standing[TAIL_LAYER] = standing
 
 	apply_overlay(TAIL_LAYER)
@@ -932,33 +855,3 @@ Please contact me on #coderbus IRC. ~Carn x
 		I.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
 		I.add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
 	return I
-
-//Human Overlays Indexes/////////
-#undef BODY_LAYER
-#undef MUTANTRACE_LAYER
-#undef MUTATIONS_LAYER
-#undef DAMAGE_LAYER
-#undef SURGERY_LAYER
-#undef BANDAGE_LAYER
-#undef UNIFORM_LAYER
-#undef TAIL_LAYER
-#undef ID_LAYER
-#undef SHOES_LAYER
-#undef GLOVES_LAYER
-#undef EARS_LAYER
-#undef SUIT_LAYER
-#undef GLASSES_LAYER
-#undef FACEMASK_LAYER
-#undef BELT_LAYER
-#undef SUIT_STORE_LAYER
-#undef BACK_LAYER
-#undef HAIR_LAYER
-#undef HEAD_LAYER
-#undef COLLAR_LAYER
-#undef HANDCUFF_LAYER
-#undef LEGCUFF_LAYER
-#undef L_HAND_LAYER
-#undef R_HAND_LAYER
-#undef TARGETED_LAYER
-#undef FIRE_LAYER
-#undef TOTAL_LAYERS

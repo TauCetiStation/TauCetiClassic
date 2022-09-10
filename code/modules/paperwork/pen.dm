@@ -21,7 +21,7 @@
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 10
-	var/colour = "black"	//what colour the ink is!
+	var/colour = "black"	// can we make it HEX?
 	var/click_cooldown = 0
 
 /obj/item/weapon/pen/proc/get_signature(mob/user)
@@ -36,7 +36,6 @@
 /obj/item/weapon/pen/ghost
 	desc = "An expensive looking pen. You wonder, what is it's cost?"
 	colour = "purple"
-	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "fountainpen" //paththegreat: Eli Stevens
 	var/entity = ""
 
@@ -171,9 +170,11 @@
 	var/on = 0
 	var/hacked = 0
 
+	var/blade_color
+
 /obj/item/weapon/pen/edagger/atom_init()
 	. = ..()
-	item_color = pick("blue", "red", "green", "purple", "yellow", "pink", "black")
+	blade_color = pick("blue", "red", "green", "purple", "yellow", "pink", "black")
 
 /obj/item/weapon/pen/edagger/attack_self(mob/living/user)
 	..()
@@ -216,7 +217,7 @@
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")
-			item_color = "rainbow"
+			blade_color = "rainbow"
 			if (on)
 				toggle(user)
 		else
@@ -225,8 +226,8 @@
 
 /obj/item/weapon/pen/edagger/update_icon()
 	if(on)
-		icon_state = "edagger[item_color]"
-		item_state = "edagger[item_color]"
+		icon_state = "edagger[blade_color]"
+		item_state = "edagger[blade_color]"
 	else
 		clean_blood()
 		icon_state = initial(icon_state) //looks like a normal pen when off.
@@ -238,31 +239,31 @@
 
 /obj/item/weapon/pen/edagger/blue/atom_init()
 	. = ..()
-	item_color = "blue"
+	blade_color = "blue"
 
 /obj/item/weapon/pen/edagger/red/atom_init()
 	. = ..()
-	item_color = "red"
+	blade_color = "red"
 
 /obj/item/weapon/pen/edagger/green/atom_init()
 	. = ..()
-	item_color = "green"
+	blade_color = "green"
 
 /obj/item/weapon/pen/edagger/purple/atom_init()
 	. = ..()
-	item_color = "purple"
+	blade_color = "purple"
 
 /obj/item/weapon/pen/edagger/yellow/atom_init()
 	. = ..()
-	item_color = "yellow"
+	blade_color = "yellow"
 
 /obj/item/weapon/pen/edagger/pink/atom_init()
 	. = ..()
-	item_color = "pink"
+	blade_color = "pink"
 
 /obj/item/weapon/pen/edagger/black/atom_init()
 	. = ..()
-	item_color = "black"
+	blade_color = "black"
 
 /*
  * Legit edagger for NT boys
@@ -273,7 +274,7 @@
 
 /obj/item/weapon/pen/edagger/legitimate/atom_init()
 	. = ..()
-	item_color = "blue"
+	blade_color = "blue"
 
 /*
  * Chameleon pen

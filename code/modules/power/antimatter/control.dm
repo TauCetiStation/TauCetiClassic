@@ -27,6 +27,7 @@
 	var/stored_core_stability_delay = 0
 
 	var/stored_power = 0//Power to deploy per tick
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 
 /obj/machinery/power/am_control_unit/atom_init()
@@ -126,11 +127,10 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/power/am_control_unit/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(Proj.flag != "bullet")
 		stability -= Proj.force
-	return 0
-
 
 /obj/machinery/power/am_control_unit/power_change()
 	..()

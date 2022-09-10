@@ -49,6 +49,7 @@
 								"Misc",
 								"Stock Parts",
 								)
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_PRO)
 
 /obj/machinery/mecha_part_fabricator/atom_init()
 	. = ..()
@@ -306,7 +307,6 @@
 /obj/machinery/mecha_part_fabricator/ui_interact(mob/user)
 	var/dat
 	var/left_part
-
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
 		visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")
@@ -511,8 +511,6 @@
 
 	if(panel_open)
 		if(iscrowbar(W))
-			for(var/material in resources)
-				remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 			default_deconstruction_crowbar(W)
 			return 1
 		else
@@ -560,3 +558,9 @@
 		else
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return
+
+/obj/machinery/mecha_part_fabricator/deconstruction()
+	. = ..()
+	for(var/material in resources)
+		remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
+
