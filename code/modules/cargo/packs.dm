@@ -1645,7 +1645,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/watertank_backpack/janitor,
 					/obj/item/weapon/storage/bag/trash,
 					/obj/item/weapon/reagent_containers/spray/cleaner,
-					/obj/item/weapon/reagent_containers/glass/rag,
+					/obj/item/weapon/rag,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,

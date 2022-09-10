@@ -21,7 +21,7 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/hair_growth_accelerator(src)
 	new /obj/item/weapon/scissors(src)
 	new /obj/item/weapon/reagent_containers/spray/cleaner(src)
-	new /obj/item/weapon/reagent_containers/glass/rag(src)
+	new /obj/item/weapon/rag(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/head/santa(src)

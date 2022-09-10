@@ -12,21 +12,18 @@
 /obj/item/clothing/shoes
 	var/track_blood = 0
 
-/obj/item/weapon/reagent_containers/glass/rag
+/obj/item/weapon/rag
 	name = "damp rag"
 	desc = "For cleaning up messes, you suppose."
 	w_class = SIZE_MINUSCULE
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
-	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = list(5)
-	volume = 5
 	can_be_placed_into = null
 
-/obj/item/weapon/reagent_containers/glass/rag/attack_self(mob/user)
+/obj/item/weapon/rag/attack_self(mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/glass/rag/attack(atom/target, mob/user , flag)
+/obj/item/weapon/rag/attack(atom/target, mob/user , flag)
 	if(ismob(target) && target.reagents && reagents.total_volume)
 		user.visible_message("<span class='warning'>\The [target] has been smothered with \the [src] by \the [user]!</span>", "<span class='warning'>You smother \the [target] with \the [src]!</span>", "You hear some struggling and muffled cries of surprise")
 		// Yeah, it turns out the rag splashes.
@@ -35,7 +32,7 @@
 	else
 		..()
 
-/obj/item/weapon/reagent_containers/glass/rag/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/weapon/rag/afterattack(atom/target, mob/user, proximity, params)
 	if (!proximity || user.is_busy())
 		return
 
@@ -52,7 +49,7 @@
 			user.visible_message("<span class='notice'>[user] finishes wiping off the [new_target].</span>")
 			target.clean_blood()
 
-/obj/item/weapon/reagent_containers/glass/rag/examine()
+/obj/item/weapon/rag/examine()
 	if (!usr)
 		return
 	to_chat(usr, "That's \a [src].")
