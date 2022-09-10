@@ -61,7 +61,9 @@
 			/mob/living/simple_animal/lizard,
 			/mob/living/simple_animal/fox,
 			/mob/living/simple_animal/chick,
-			/mob/living/simple_animal/cat/Syndi)
+			/mob/living/simple_animal/cat/Syndi,
+			/mob/living/simple_animal/mushroom
+			)
 			new_mob = new beast(get_turf(loc))
 			new_mob.universal_speak = TRUE
 			new_mob.add_status_flags(GODMODE)
@@ -70,8 +72,8 @@
 		if("hostile")
 			var/beast = pick(
 			/mob/living/simple_animal/hostile/carp,
-			/mob/living/simple_animal/hostile/bear,
 			/mob/living/simple_animal/hostile/tree,
+			/mob/living/simple_animal/hostile/tomato,
 			/mob/living/simple_animal/hostile/giant_spider,
 			/mob/living/simple_animal/hostile/giant_spider/hunter,
 			/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
@@ -80,7 +82,10 @@
 			/mob/living/simple_animal/hostile/asteroid/basilisk,
 			/mob/living/simple_animal/hostile/asteroid/goliath,
 			/mob/living/simple_animal/construct/proteon,
-			/mob/living/carbon/xenomorph/humanoid/maid,)
+			/mob/living/simple_animal/construct/behemoth,
+			/mob/living/simple_animal/construct/wraith,
+			/mob/living/carbon/xenomorph/humanoid/maid
+			)
 			new_mob = new beast(get_turf(loc))
 			new_mob.universal_speak = TRUE
 		if("cyborg")
@@ -119,18 +124,6 @@
 	else
 		new_mob.key = key
 
-	var/output_text = {"<font color='red'>============Полиморфизм - краткий курс============</font><BR>
-	[sanitize("- Запомните! Хоть ваше тело и изменилось, может быть даже очень сильно, однако это не значит, что вашум разум также претерпел изменения!")]<BR>
-	[sanitize("- Вы - всё тот же, что и были раньше. Были членом экипажа? Остались тем же членом экипажа.")]<BR>
-	[sanitize("- На вас действуют всё те же правила и ограничения, что и прежде")]<BR>
-	<font color='red'>============Прочие детали============</font><BR>
-	[sanitize("- Вам предстоит в таком обличии провести некоторое время. Иногда это может занять минуту, а иногда это до конца.")]<BR>
-	[sanitize("- В случае превращения на время, полученный вами урон перейдёт на старое тело. До 100 ожогов. Не убьёт моментально, однако может сильно ранить.")]<BR>
-	"}
-	var/datum/browser/popup = new(new_mob, "window=vxrd", nwidth = 600, nheight = 230)
-	popup.set_content(output_text)
-	popup.open()
-
 	if(isliving(new_body)) //Returny case
 		var/mob/dead/observer/ghost = new_mob.get_ghost()
 		if(ghost)
@@ -138,6 +131,18 @@
 		new_mob.burn_skin((maxHealth - health) / maxHealth * new_mob.maxHealth) //You can bring them to the doorstep of death
 		qdel(src)
 	else
+		var/output_text = {"<font color='red'>============Полиморфизм - краткий курс============</font><BR>
+		[sanitize("- Запомните! Хоть ваше тело и изменилось, может быть даже очень сильно, однако это не значит, что вашум разум также претерпел изменения!")]<BR>
+		[sanitize("- Вы - всё тот же, что и были раньше. Были членом экипажа? Остались тем же членом экипажа.")]<BR>
+		[sanitize("- На вас действуют всё те же правила и ограничения, что и прежде")]<BR>
+		<font color='red'>============Прочие детали============</font><BR>
+		[sanitize("- Вам предстоит в таком обличии провести некоторое время. Иногда это может занять минуту, а иногда это до конца.")]<BR>
+		[sanitize("- В случае превращения на время, полученный вами урон перейдёт на старое тело. До 100 ожогов. Не убьёт моментально, однако может сильно ранить.")]<BR>
+		"}
+		var/datum/browser/popup = new(new_mob, "window=vxrd", nwidth = 600, nheight = 230)
+		popup.set_content(output_text)
+		popup.open()
+
 		new_mob.set_a_intent(INTENT_HARM)
 		if(!permanent)
 			forceMove(new_mob)
