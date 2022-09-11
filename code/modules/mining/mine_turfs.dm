@@ -178,7 +178,7 @@
 		var/obj/item/weapon/sledgehammer/S = W
 		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED))
 			user.do_attack_animation(src)
-			shake_camera(user, 1, 1)
+			shake_camera(user, 1, 0.35)
 			playsound(src, 'sound/misc/sledgehammer_hit_rock.ogg', VOL_EFFECTS_MASTER)
 			GetDrilled(artifact_fail = 1, mineral_drop_koef = 0.7)
 		else
