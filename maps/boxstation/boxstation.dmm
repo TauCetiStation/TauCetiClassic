@@ -4969,11 +4969,6 @@
 /area/station/medical/cryo)
 "aiE" = (
 /obj/structure/table,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
 /obj/machinery/camera{
@@ -4982,6 +4977,7 @@
 	network = list("SS13","Security");
 	pixel_y = -18
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -10506,11 +10502,6 @@
 /area/station/security/detectives_office)
 "arL" = (
 /obj/structure/table/woodentable,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
 /obj/item/weapon/storage/photo_album{
 	pixel_y = -10
 	},
@@ -10520,6 +10511,7 @@
 	dir = 1;
 	network = list("SS13","Security")
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},

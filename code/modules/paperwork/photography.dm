@@ -126,63 +126,63 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A LOMOgraphy filter lens."
 	icon_state = "lomo_filter"
-	effect = list(LOMO_FILTER, "vignette", null)
+	effect = list("effect1" = LOMO_FILTER, "mask" = "vignette", "effect2" = null)
 
 /obj/item/device/lens/posterization
 	name = "poster filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A poster filter lens."
 	icon_state = "poster_filter"
-	effect = list(POSTERIZATION_FILTER, "", null)
+	effect = list("effect1" = POSTERIZATION_FILTER, "mask" = "", "effect2" = null)
 
 /obj/item/device/lens/grayscale
 	name = "gray filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A gray filter lens."
 	icon_state = "grey_filter"
-	effect = list(GRAYSCALE_FILTER, "", null)
+	effect = list("effect1" = GRAYSCALE_FILTER, "mask" = "", "effect2" = null)
 
 /obj/item/device/lens/invert
 	name = "invert filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A invert filter lens."
 	icon_state = "invert_filter"
-	effect = list(INVERT_FILTER, "vignette", null)
+	effect = list("effect1" = INVERT_FILTER, "mask" = "vignette", "effect2" = null)
 
 /obj/item/device/lens/sepia
 	name = "sepia filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A sepia filter lens."
 	icon_state = "sepia_filter"
-	effect = list(SEPIA_FILTER, "", null)
+	effect = list("effect1" = SEPIA_FILTER, "mask" = "", "effect2" = null)
 
 /obj/item/device/lens/detective
 	name = "detective filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A detective filter lens."
 	icon_state = "detective_filter"
-	effect = list(BLACKANDWHITE_FILTER, "vignette", null)
+	effect = list("effect1" = BLACKANDWHITE_FILTER, "mask" = "vignette", "effect2" = null)
 
 /obj/item/device/lens/polar
 	name = "polaroid filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A Polaroid filter lens."
 	icon_state = "polaroid_filter"
-	effect = list(POLAROID_FILTER, "", null)
+	effect = list("effect1" = POLAROID_FILTER, "mask" = "", "effect2" = null)
 
 /obj/item/device/lens/old
 	name = "old film filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "An old filter lens."
 	icon_state = "old_filter"
-	effect = list(OLD_1_FILTER, "old_vignette", OLD_2_FILTER)
+	effect = list("effect1" = OLD_1_FILTER, "mask" = "old_vignette", "effect2" = OLD_2_FILTER)
 
 /obj/item/device/lens/rentgene
 	name = "rentgene filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A rentgene filter lens that shows people's sceletones."
 	icon_state = "rentgene_filter"
-	effect = list(XRAY_FILTER, "", null)
+	effect = list("effect1" = XRAY_FILTER, "mask" = "", "effect2" = null)
 
 /obj/item/device/lens/rentgene/process_icon(atom/A)
 	if(!ishuman(A))
@@ -194,7 +194,7 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A red filter lens that shows people nude."
 	icon_state = "nude_filter"
-	effect = list(NUDE_FILTER, "", null)
+	effect = list("effect1" = NUDE_FILTER, "mask" = "", "effect2" = null)
 
 /obj/item/device/lens/nude/process_icon(atom/A)
 	if(!ishuman(A))
@@ -578,24 +578,24 @@
 	for(var/obj/item/device/lens/F in contents)
 		if(F.effect)
 			//First Flter
-			if(F.effect[1])
-				temp.MapColors(arglist(F.effect[1]))
+			if(F.effect["effect1"])
+				temp.MapColors(arglist(F.effect["effect1"]))
 
 			//Additions
-			if(F.effect[2])
+			if(F.effect["mask"])
 				var/icon/vign
 				switch(photo_size)
 					if(1)
-						vign = icon('icons/effects/32x32.dmi', F.effect[2])
+						vign = icon('icons/effects/32x32.dmi', F.effect["mask"])
 					if(3)
-						vign = icon('icons/effects/96x96.dmi', F.effect[2])
+						vign = icon('icons/effects/96x96.dmi', F.effect["mask"])
 					if(5)
-						vign = icon('icons/effects/160x160.dmi', F.effect[2])
+						vign = icon('icons/effects/160x160.dmi', F.effect["mask"])
 				temp.Blend(vign, ICON_OVERLAY, 1, 1)
 
 			//Second Filter
-			if(F.effect[3])
-				temp.MapColors(arglist(F.effect[3]))
+			if(F.effect["effect2"])
+				temp.MapColors(arglist(F.effect["effect2"]))
 
 	var/datum/picture/P = createpicture(user, temp, mobs, mob_names, flag)
 	printpicture(user, P)
