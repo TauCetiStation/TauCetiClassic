@@ -147,6 +147,7 @@
 	modules += new /obj/item/weapon/shockpaddles/robot(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 	modules += new /obj/item/stack/medical/suture(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/cleaner(src)
 
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
