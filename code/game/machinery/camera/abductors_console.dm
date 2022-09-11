@@ -153,4 +153,4 @@
 		return
 
 	var/obj/machinery/abductor/console/console = target
-	console.SetDroppoint(remote_eye.loc,owner)
+	console.SetDroppoint(get_turf(remote_eye.loc),owner)

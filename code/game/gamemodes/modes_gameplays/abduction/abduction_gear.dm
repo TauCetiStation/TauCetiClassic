@@ -483,17 +483,22 @@
 	return
 
 /obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
-	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
-						"<span class='userdanger'>[user] probes you!</span>")
-
 	var/species = "<span class='warning'>Unknown species</span>"
+	var/gland = "<span class='warning'>Experimental gland <span class='danger'>wasn't</span> detected!</span>"
+
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(H.dna && H.dna.species)
-			species = "<span clas=='notice'>[H.species.name]</span>"
+		species = "<span class='notice'>[H.species.name]</span>"
 		if(ischangeling(L))
-			species = "<span class='warning'>Changeling lifeform</span>"
-	to_chat(user, "<span class='notice'>Probing result: </span>[species]")
+			species = "<span class='warning'> Changeling lifeform</span>"
+		var/obj/item/gland/temp = locate() in H
+		if(temp)
+			gland = "<span class='warning'>Experimental gland detected!</span>"
+
+	to_chat(user, "["<span class='notice'>Probing result:"][species]</span>")
+	to_chat(user, "[gland]")
+	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
+						"<span class='userdanger'>[user] probes you!</span>")
 
 /obj/item/weapon/abductor_baton/examine(mob/user)
 	..()
