@@ -128,7 +128,7 @@
 					M.stop_pulling()
 
 		//We are now going to move
-		var/add_delay
+		var/add_delay = 0
 		mob.last_move_intent = world.time + 10
 		switch(mob.m_intent)
 			if("run")

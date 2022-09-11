@@ -127,15 +127,14 @@
 	if(health_deficiency >= 45)
 		tally += (health_deficiency / 25)
 
-	if(pulling)
-		tally += count_pull_debuff()
+	tally += count_pull_debuff()
 
 	if (bodytemperature < BODYTEMP_NORMAL - 30)
 		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
 	return tally + config.monkey_delay
 
 /mob/living/carbon/monkey/count_pull_debuff()
-	return ..() + 1
+	return pulling ? ..() + 1 : 0
 
 /mob/living/carbon/monkey/helpReaction(mob/living/attacker, show_message = TRUE)
 	help_shake_act(attacker)

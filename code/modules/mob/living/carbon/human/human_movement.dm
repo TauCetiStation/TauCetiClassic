@@ -114,8 +114,7 @@
 	if(weight_tally > weight_negation)
 		tally += weight_tally - weight_negation
 
-	if(pulling)
-		tally += count_pull_debuff()
+	tally += count_pull_debuff()
 
 	var/turf/T = get_turf(src)
 	if(T)

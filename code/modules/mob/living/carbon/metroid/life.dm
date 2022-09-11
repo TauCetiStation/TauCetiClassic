@@ -711,7 +711,7 @@
 			say (pick(phrases))
 
 /mob/living/carbon/slime/count_pull_debuff()
-	return ..() + 1.5
+	return pulling ? ..() + 1.5 : 0
 
 /mob/living/carbon/slime/proc/will_hunt(hunger = -1) // Check for being stopped from feeding and chasing
 	//if (docile)	return 0

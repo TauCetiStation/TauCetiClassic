@@ -189,6 +189,9 @@
 		start_pulling(AM)
 
 /mob/living/count_pull_debuff()
+	if(!pulling)
+		return 0
+
 	var/tally = 0
 	var/atom/movable/AM = pulling
 	//Mob pulling

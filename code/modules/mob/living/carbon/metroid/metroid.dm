@@ -136,8 +136,7 @@
 		if(reagents.has_reagent("frostoil")) // frostoil also makes them move VEEERRYYYYY slow
 			tally *= 5
 
-	if(pulling)
-		tally += count_pull_debuff()
+	tally += count_pull_debuff()
 
 	return tally + config.slime_delay
 
