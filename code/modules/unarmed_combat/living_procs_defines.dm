@@ -276,7 +276,7 @@
 		var/mob/living/carbon/human/H = src
 		BP = H.get_bodypart(ran_zone(BP))
 		armor_block = run_armor_check(BP, "melee")
-		if(H.dna)
+		if(H.dna && !H.gloves)
 			switch(attacker.hand)
 				if(0)
 					var/obj/item/organ/external/r_arm/RARM = attacker.get_bodypart(BP_R_ARM)

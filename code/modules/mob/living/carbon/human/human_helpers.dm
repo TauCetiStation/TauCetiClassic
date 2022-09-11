@@ -82,42 +82,14 @@
 	var/message = ""
 	var/difference = compare_heights(Attacker)
 	switch(difference)
-		if(-9)
+		if(-9 to -6)
 			message = "The hit has been dealt from a very below"
-		if(-8)
-			message = "The hit has been dealt from a very below"
-		if(-7)
-			message = "The hit has been dealt from a very below"
-		if(-6)
-			message = "The hit has been dealt from a very below"
-		if(-5)
+		if(-5 to -2)
 			message = "The hit has been dealt from a below"
-		if(-4)
-			message = "The hit has been dealt from a below"
-		if(-3)
-			message = "The hit has been dealt from a below"
-		if(-2)
-			message = "The hit has been dealt from a below"
-		if(-1)
+		if(-1 to 1)
 			message = "The hit has been dealt from a same height"
-		if(0)
-			message = "The hit has been dealt from a same height"
-		if(1)
-			message = "The hit has been dealt from a same height"
-		if(2)
+		if(2 to 5)
 			message = "The hit has been dealt from an above"
-		if(3)
-			message = "The hit has been dealt from an above"
-		if(4)
-			message = "The hit has been dealt from an above"
-		if(5)
-			message = "The hit has been dealt from an above"
-		if(6)
-			message = "The hit has been dealt from a very above"
-		if(7)
-			message = "The hit has been dealt from a very above"
-		if(8)
-			message = "The hit has been dealt from a very above"
-		if(9)
+		if(6 to 9)
 			message = "The hit has been dealt from a very above"
 	return message
