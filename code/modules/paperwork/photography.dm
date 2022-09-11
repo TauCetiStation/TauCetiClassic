@@ -1,3 +1,7 @@
+#define MASK_NOTHING ""
+#define MASK_VIGNETTE "vignette"
+#define MASK_OLDVIGNETTE "old_vignette"
+
 /*	Photography!
  *	Contains:
  *		Camera
@@ -119,70 +123,70 @@
 // Camera filters
 /obj/item/device/lens
 	w_class = SIZE_TINY
-	var/effect
+	var/list/effect = list("effect1", "mask", "effect2")
 
 /obj/item/device/lens/lomo
 	name = "lomo filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A LOMOgraphy filter lens."
 	icon_state = "lomo_filter"
-	effect = list("effect1" = LOMO_FILTER, "mask" = "vignette", "effect2" = null)
+	effect = list("effect1" = LOMO_FILTER, "mask" = MASK_VIGNETTE, "effect2" = null)
 
 /obj/item/device/lens/posterization
 	name = "poster filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A poster filter lens."
 	icon_state = "poster_filter"
-	effect = list("effect1" = POSTERIZATION_FILTER, "mask" = "", "effect2" = null)
+	effect = list("effect1" = POSTERIZATION_FILTER, "mask" = MASK_NOTHING, "effect2" = null)
 
 /obj/item/device/lens/grayscale
 	name = "gray filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A gray filter lens."
 	icon_state = "grey_filter"
-	effect = list("effect1" = GRAYSCALE_FILTER, "mask" = "", "effect2" = null)
+	effect = list("effect1" = GRAYSCALE_FILTER, "mask" = MASK_NOTHING, "effect2" = null)
 
 /obj/item/device/lens/invert
 	name = "invert filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A invert filter lens."
 	icon_state = "invert_filter"
-	effect = list("effect1" = INVERT_FILTER, "mask" = "vignette", "effect2" = null)
+	effect = list("effect1" = INVERT_FILTER, "mask" = MASK_VIGNETTE, "effect2" = null)
 
 /obj/item/device/lens/sepia
 	name = "sepia filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A sepia filter lens."
 	icon_state = "sepia_filter"
-	effect = list("effect1" = SEPIA_FILTER, "mask" = "", "effect2" = null)
+	effect = list("effect1" = SEPIA_FILTER, "mask" = MASK_NOTHING, "effect2" = null)
 
 /obj/item/device/lens/detective
 	name = "detective filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A detective filter lens."
 	icon_state = "detective_filter"
-	effect = list("effect1" = BLACKANDWHITE_FILTER, "mask" = "vignette", "effect2" = null)
+	effect = list("effect1" = BLACKANDWHITE_FILTER, "mask" = MASK_VIGNETTE, "effect2" = null)
 
 /obj/item/device/lens/polar
 	name = "polaroid filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A Polaroid filter lens."
 	icon_state = "polaroid_filter"
-	effect = list("effect1" = POLAROID_FILTER, "mask" = "", "effect2" = null)
+	effect = list("effect1" = POLAROID_FILTER, "mask" = MASK_NOTHING, "effect2" = null)
 
 /obj/item/device/lens/old
 	name = "old film filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "An old filter lens."
 	icon_state = "old_filter"
-	effect = list("effect1" = OLD_1_FILTER, "mask" = "old_vignette", "effect2" = OLD_2_FILTER)
+	effect = list("effect1" = OLD_1_FILTER, "mask" = MASK_OLDVIGNETTE, "effect2" = OLD_2_FILTER)
 
 /obj/item/device/lens/rentgene
 	name = "rentgene filter lens"
 	icon = 'icons/obj/items.dmi'
 	desc = "A rentgene filter lens that shows people's sceletones."
 	icon_state = "rentgene_filter"
-	effect = list("effect1" = XRAY_FILTER, "mask" = "", "effect2" = null)
+	effect = list("effect1" = XRAY_FILTER, "mask" = MASK_NOTHING, "effect2" = null)
 
 /obj/item/device/lens/rentgene/process_icon(atom/A)
 	if(!ishuman(A))
@@ -194,7 +198,7 @@
 	icon = 'icons/obj/items.dmi'
 	desc = "A red filter lens that shows people nude."
 	icon_state = "nude_filter"
-	effect = list("effect1" = NUDE_FILTER, "mask" = "", "effect2" = null)
+	effect = list("effect1" = NUDE_FILTER, "mask" = MASK_NOTHING, "effect2" = null)
 
 /obj/item/device/lens/nude/process_icon(atom/A)
 	if(!ishuman(A))
@@ -304,7 +308,8 @@
 	var/see_ghosts = 0 //for the spoop of it
 	var/photo_size = 3 //Default is 3x3. 1x1, 5x5 are also options
 	var/can_put_lens = TRUE
-	var/obj/item/device/lens/base_lens
+	var/obj/item/device/lens/lens
+	var/base_lens
 
 /obj/item/device/camera/polar
 	name = "polaroid"
@@ -352,7 +357,7 @@
 /obj/item/device/camera/atom_init()
 	. = ..()
 	if(base_lens)
-		base_lens = new base_lens(src)
+		lens = new base_lens(src)
 	update_desc()
 
 /obj/item/device/camera/AltClick(mob/user)
@@ -414,7 +419,8 @@
 		var/obj/item/device/lens/F = I
 		if(!user.unEquip(F))
 			return
-		F.forceMove(src)
+		user.drop_from_inventory(F, src)
+		lens = F
 	return ..()
 
 /obj/item/device/camera/spooky/attackby(obj/item/I, mob/user, params)
@@ -440,6 +446,7 @@
 /obj/item/device/camera/proc/eject_lens(mob/user)
 	for(var/obj/item/device/lens/F in contents)
 		usr.put_in_hands(F)
+		lens = null
 		to_chat(user, "<span class='warning'>You detach the filter out of camera's lens.</span>")
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
@@ -575,27 +582,27 @@
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
 	//Photo Effects
-	for(var/obj/item/device/lens/F in contents)
-		if(F.effect)
+	if(lens)
+		if(lens.effect)
 			//First Flter
-			if(F.effect["effect1"])
-				temp.MapColors(arglist(F.effect["effect1"]))
+			if(lens.effect["effect1"])
+				temp.MapColors(arglist(lens.effect["effect1"]))
 
 			//Additions
-			if(F.effect["mask"])
+			if(lens.effect["mask"])
 				var/icon/vign
 				switch(photo_size)
 					if(1)
-						vign = icon('icons/effects/32x32.dmi', F.effect["mask"])
+						vign = icon('icons/effects/32x32.dmi', lens.effect["mask"])
 					if(3)
-						vign = icon('icons/effects/96x96.dmi', F.effect["mask"])
+						vign = icon('icons/effects/96x96.dmi', lens.effect["mask"])
 					if(5)
-						vign = icon('icons/effects/160x160.dmi', F.effect["mask"])
+						vign = icon('icons/effects/160x160.dmi', lens.effect["mask"])
 				temp.Blend(vign, ICON_OVERLAY, 1, 1)
 
 			//Second Filter
-			if(F.effect["effect2"])
-				temp.MapColors(arglist(F.effect["effect2"]))
+			if(lens.effect["effect2"])
+				temp.MapColors(arglist(lens.effect["effect2"]))
 
 	var/datum/picture/P = createpicture(user, temp, mobs, mob_names, flag)
 	printpicture(user, P)
@@ -654,3 +661,7 @@
 	photographed_names = P.fields["mob_names"]
 	pixel_x = P.fields["pixel_x"]
 	pixel_y = P.fields["pixel_y"]
+
+#undef MASK_NOTHING
+#undef MASK_VIGNETTE
+#undef MASK_OLDVIGNETTE
