@@ -310,6 +310,7 @@
 	var/can_put_lens = TRUE
 	var/obj/item/device/lens/lens
 	var/base_lens
+	var/reloaded = TRUE
 
 /obj/item/device/camera/polar
 	name = "polaroid"
@@ -530,7 +531,7 @@
 	return list("mob_detail" = mob_detail, "names_detail" = names_detail)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, proximity, params)
-	if(!on || ismob(target.loc))
+	if(!on || !reloaded || ismob(target.loc))
 		return
 	if(!pictures_left)
 		to_chat(user, "<span class='warning'>There is no photos left. Insert more camera film.</span>")
@@ -543,12 +544,12 @@
 	update_desc()
 	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = icon_off
-	on = 0
+	reloaded = FALSE
 	addtimer(CALLBACK(src, .proc/reload), 64)
 
 /obj/item/device/camera/proc/reload()
 	icon_state = icon_on
-	on = 1
+	reloaded = TRUE
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
 	if(flash_enabled)
