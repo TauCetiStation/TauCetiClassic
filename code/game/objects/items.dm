@@ -421,7 +421,7 @@
 /obj/item/proc/after_throw(datum/callback/callback)
 	if (callback) //call the original callback
 		. = callback.Invoke()
-	flags &= ~IN_INVENTORY
+	flags &= ~IN_INVENTORY // #10047
 	update_world_icon()
 
 /obj/item/proc/talk_into(mob/M, text)
