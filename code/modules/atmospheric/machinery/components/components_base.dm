@@ -85,12 +85,16 @@ On top of that, now people can add component-speciic procs/vars if they want!
 	var/turf/T = get_turf(loc)
 	if(T)
 		//Remove the gas from airs and assume it
-		var/datum/gas_mixture/environment = T.return_air()
+		var/datum/gas_mixture/int_air = return_air()
+		var/datum/gas_mixture/env_air = T.return_air()
+		var/pressure = int_air.return_pressure() - env_air.return_pressure()
+		if(pressure <= 0)
+			return
 		var/lost = null
 		var/times_lost = 0
 		for(DEVICE_TYPE_LOOP)
 			var/datum/gas_mixture/air = AIR_I
-			lost += pressures * environment.volume / (air.temperature * R_IDEAL_GAS_EQUATION)
+			lost += pressures * env_air.volume / (air.temperature * R_IDEAL_GAS_EQUATION)
 			times_lost++
 		var/shared_loss = lost/times_lost
 
