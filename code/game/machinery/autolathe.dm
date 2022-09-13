@@ -304,14 +304,10 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		amount = stack.get_amount()
 		if(m_amt)
 			amount = min(amount, round((storage_capacity[MAT_METAL] - stored_material[MAT_METAL]) / m_amt))
-			add_overlay("[initial(icon_state)]_metal")
-			sleep(10)
-			cut_overlay("[initial(icon_state)]_metal")
+			flick("[initial(icon_state)]_metal", src)
 		if(g_amt)
 			amount = min(amount, round((storage_capacity[MAT_GLASS] - stored_material[MAT_GLASS]) / g_amt))
-			add_overlay("[initial(icon_state)]_glass")
-			sleep(10)
-			cut_overlay("[initial(icon_state)]_glass")
+			flick("[initial(icon_state)]_glass", src)
 	else if(istype(I, /obj/item/ammo_box))
 		m_amt = 0
 		g_amt = 0
@@ -350,16 +346,16 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		new /obj/item/stack/sheet/glass(loc, round(stored_material[MAT_GLASS] / 3750))
 
 /obj/machinery/autolathe/update_icon()
+	cut_overlays()
 	if(panel_open)
 		add_overlay("[initial(icon_state)]-open")
-	else
-		cut_overlay("[initial(icon_state)]-open")
 	if(powered())
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
 
 /obj/machinery/autolathe/power_change()
+	..()
 	update_icon()
 
 /obj/machinery/autolathe/proc/take_item(obj/item/I, amount)
