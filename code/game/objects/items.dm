@@ -1092,3 +1092,8 @@
 	icon_state = initial(dye_type.icon_state)
 	item_state = initial(dye_type.item_state)
 	desc = "The colors are a bit dodgy."
+
+/obj/item/CtrlShiftClick(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	SEND_SIGNAL(H, COMSIG_ITEM_CTRLSHIFTCLICK, src)

@@ -65,6 +65,7 @@
 		dna.real_name = real_name
 
 	handcrafting = new()
+	AddComponent(/datum/component/altcraft)
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
