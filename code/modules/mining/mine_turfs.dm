@@ -128,7 +128,7 @@
 			ore_amount = rand(5, 7)
 		else
 			ore_amount = rand(3, 5)
-	if(ore_amount >= 7)
+	if(ore_amount >= 8)
 		name = "[mineral.display_name] rich deposit"
 		cut_overlays()
 		add_overlay("rock_[mineral.name]")
