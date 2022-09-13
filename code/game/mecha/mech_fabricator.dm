@@ -575,4 +575,5 @@
 		add_overlay("[initial(icon_state)]-open")
 
 /obj/machinery/mecha_part_fabricator/power_change()
+	..()
 	update_icon()

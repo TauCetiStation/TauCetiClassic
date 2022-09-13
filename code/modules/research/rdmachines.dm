@@ -49,4 +49,5 @@
 		add_overlay("[initial(icon_state)]-open")
 
 /obj/machinery/r_n_d/power_change()
+	..()
 	update_icon()
