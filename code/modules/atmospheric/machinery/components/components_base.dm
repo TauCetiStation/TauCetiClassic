@@ -81,10 +81,8 @@ On top of that, now people can add component-speciic procs/vars if they want!
 	var/I = parents.Find(Old)
 	PARENT_I = New
 
-/obj/machinery/atmospherics/components/unsafe_pressure_release(mob/user, pressures)
-	..()
-
-	var/turf/T = get_turf(src)
+/obj/machinery/atmospherics/components/deconstruct(disassembled)
+	var/turf/T = get_turf(loc)
 	if(T)
 		//Remove the gas from airs and assume it
 		var/datum/gas_mixture/environment = T.return_air()
@@ -104,6 +102,8 @@ On top of that, now people can add component-speciic procs/vars if they want!
 				continue
 			to_release.merge(air.remove(shared_loss))
 		T.assume_air(to_release)
+
+	..()
 
 /*
 	Helpers
