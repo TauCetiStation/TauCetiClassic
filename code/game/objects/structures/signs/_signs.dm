@@ -25,10 +25,7 @@
 			playsound(src, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] unfastens [src].</span>",
 								 "<span class='notice'>You unfasten [src].</span>")
-			var/obj/item/sign_backing/SB = new (get_turf(src))
-			SB.icon_state = icon_state
-			SB.sign_path = type
-			qdel(src)
+			deconstruct(TRUE)
 		return
 	else if(istype(W, /obj/item/weapon/airlock_painter) && buildable_sign)
 		if(user.is_busy())
@@ -86,6 +83,15 @@
 		..()
 		if(QDELING(src))
 			visible_message("<span class='warning'>[user] smashed [src] apart!</span>")
+
+/obj/structure/sign/deconstruct(disassembled)
+	if(resistance_flags & NODECONSTRUCT)
+		return ..()
+	if(buildable_sign)
+		var/obj/item/sign_backing/SB = new(loc)
+		SB.icon_state = icon_state
+		SB.sign_path = type
+	..()
 
 /obj/structure/sign/play_attack_sound(damage_amount, damage_type, damage_flag)
 	switch(damage_type)
