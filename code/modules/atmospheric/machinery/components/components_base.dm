@@ -83,29 +83,19 @@ On top of that, now people can add component-speciic procs/vars if they want!
 
 /obj/machinery/atmospherics/components/deconstruct(disassembled)
 	var/turf/T = get_turf(loc)
-	if(T)
-		//Remove the gas from airs and assume it
-		var/datum/gas_mixture/int_air = return_air()
-		var/datum/gas_mixture/env_air = T.return_air()
-		var/pressures = int_air.return_pressure() - env_air.return_pressure()
-		if(pressures <= 0)
-			return
-		var/lost = null
-		var/times_lost = 0
-		for(DEVICE_TYPE_LOOP)
-			var/datum/gas_mixture/air = AIR_I
-			lost += pressures * env_air.volume / (air.temperature * R_IDEAL_GAS_EQUATION)
-			times_lost++
-		var/shared_loss = lost/times_lost
-
-		var/datum/gas_mixture/to_release
-		for(DEVICE_TYPE_LOOP)
-			var/datum/gas_mixture/air = AIR_I
-			if(!to_release)
-				to_release = air.remove(shared_loss)
-				continue
-			to_release.merge(air.remove(shared_loss))
-		T.assume_air(to_release)
+	if(!(T && device_type))
+		return ..()
+	
+	//Remove the gas from airs and assume it
+	var/datum/gas_mixture/to_release
+	for(DEVICE_TYPE_LOOP)
+		var/datum/gas_mixture/air = AIR_I
+		if(!to_release)
+			to_release = new
+			to_release.copy_from(air)
+			continue
+		to_release.merge(air)
+	T.assume_air(to_release)
 
 	..()
 
