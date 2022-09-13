@@ -191,6 +191,7 @@
 	if(flags & NODECONSTRUCT)
 		return ..()
 	var/obj/item/door_control_frame/frame = new(loc)
+	transfer_fingerprints_to(frame)
 	..()
 
 /obj/machinery/door_control/emag_act(mob/user)

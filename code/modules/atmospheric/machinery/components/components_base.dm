@@ -88,7 +88,7 @@ On top of that, now people can add component-speciic procs/vars if they want!
 		var/datum/gas_mixture/int_air = return_air()
 		var/datum/gas_mixture/env_air = T.return_air()
 		var/pressures = int_air.return_pressure() - env_air.return_pressure()
-		if(pressure <= 0)
+		if(pressures <= 0)
 			return
 		var/lost = null
 		var/times_lost = 0
