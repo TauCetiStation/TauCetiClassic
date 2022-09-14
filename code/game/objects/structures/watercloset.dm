@@ -315,7 +315,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	if(.)
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
-	if(is_payed())
+	if(is_paid())
 		on = !on
 		update_icon()
 		if(on)
@@ -329,7 +329,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	else
 		to_chat(user, "You didn't pay for that. Swipe a card against [src].")
 
-/obj/machinery/shower/proc/is_payed()
+/obj/machinery/shower/proc/is_paid()
 	if(payed_time)
 		return TRUE
 	return FALSE
@@ -593,7 +593,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				to_chat(C, "<span class='danger'>The water is searing!</span>")
 				return
 
-/obj/machinery/shower/free/is_payed()
+/obj/machinery/shower/free/is_paid()
 	if(!payed_time)
 		payed_time = 60
 	return TRUE
