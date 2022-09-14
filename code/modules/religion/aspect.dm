@@ -8,7 +8,7 @@
 	// Whether this aspect is allowed roundstart.
 	var/starter = TRUE
 	// Used in the radial menu when choosing a ritual
-	var/icon = 'icons/mob/radial.dmi'
+	var/icon = 'icons/hud/radial.dmi'
 	var/icon_state = "radial_magic"
 	var/image/aspect_image
 
