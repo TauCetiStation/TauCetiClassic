@@ -10641,13 +10641,13 @@
 	},
 /area/station/medical/chemistry)
 "csH" = (
-/obj/structure/rack,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
 	frequency = 1447;
 	name = "Private AI Channel";
 	pixel_y = 22
 	},
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkblue"
@@ -30710,7 +30710,7 @@
 "hah" = (
 /obj/machinery/door/airlock/medical{
 	name = "Morgue Maintenance";
-	req_access = list(6)
+	req_one_access = list(6,28)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -51685,7 +51685,7 @@
 "mqg" = (
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
-	req_access = list(6)
+	req_one_access = list(6,28)
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -55402,7 +55402,6 @@
 	},
 /area/station/civilian/library)
 "nlt" = (
-/obj/structure/rack,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -64122,9 +64121,6 @@
 	},
 /area/station/medical/sleeper)
 "pzh" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -64134,6 +64130,9 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/maintenance{
+	req_one_access = list(47,12)
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "pzz" = (
@@ -95660,7 +95659,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
+	req_one_access = list(47,12)
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
