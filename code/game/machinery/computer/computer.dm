@@ -25,6 +25,8 @@
 	else
 		if(circuit)
 			circuit = new circuit(null)
+		else
+			resistance_flags |= FULL_INDESTRUCTIBLE // no circuit = INDESTRUCTIBLE cuz we cant build it
 	power_change()
 
 /obj/machinery/computer/Topic(href, href_list)
