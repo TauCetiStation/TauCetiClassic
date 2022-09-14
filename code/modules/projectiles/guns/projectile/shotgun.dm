@@ -120,9 +120,6 @@
 
 	else if(istype(I, /obj/item/ammo_box) || istype(I, /obj/item/ammo_casing))
 		if(open)
-			to_chat(user, "<span class='notice'>You load shell into \the [src]!</span>")
-			playsound(src, 'sound/weapons/guns/reload_shotgun.ogg', VOL_EFFECTS_MASTER)
-			chamber_round()
 			return ..()
 		else
 			to_chat(user, "<span class='notice'>You can't load shell while [src] is closed!</span>")
