@@ -100,7 +100,7 @@
 		else
 			to_chat(user, "<span class='warning'>Not enough charge.</span>")
 		return
-	if(user.cell.use(500))
+	if(user.cell.use(1500))
 		fire_grenade(target,user)
 	else
 		to_chat(user, "<span class='warning'>Not enough charge.</span>")
