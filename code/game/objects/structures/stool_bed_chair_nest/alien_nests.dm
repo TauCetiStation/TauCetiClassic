@@ -6,6 +6,8 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "nest"
 	layer = 2.55
+	flags = NODECONSTRUCT
+	material = null
 
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
 	if(!buckled_mob || user.is_busy())
@@ -56,7 +58,3 @@
 			playsound(loc, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
-
-/obj/structure/stool/bed/nest/deconstruct(disassembled)
-	flags |= NODECONSTRUCT // prevent metal spawning
-	..()

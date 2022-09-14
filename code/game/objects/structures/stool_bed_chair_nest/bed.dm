@@ -15,9 +15,6 @@
 	can_buckle = 1
 	buckle_lying = 1
 
-	max_integrity = 100
-	resistance_flags = CAN_BE_HIT
-
 /obj/structure/stool/bed/psych
 	name = "psychiatrists couch"
 	desc = "For prime comfort during psychiatric evaluations."
@@ -54,12 +51,6 @@
 	var/mob/living/carbon/human/H = locate() in T
 	if(H && H.crawling)
 		to_chat(user, "Someone is hiding under [src]")
-
-/obj/structure/stool/bed/deconstruct(disassembled)
-	if(flags & NODECONSTRUCT)
-		return ..()
-	new /obj/item/stack/sheet/metal(loc, 1)
-	..()
 
 /*
  * Roller beds
