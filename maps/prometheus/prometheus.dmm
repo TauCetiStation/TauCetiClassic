@@ -40432,16 +40432,16 @@
 	name = "Biohazard Shutter";
 	opacity = 0
 	},
-/obj/machinery/door/airlock/research{
-	name = "Mech Bay";
-	req_access = list(29)
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/door/airlock/research/glass{
+	name = "Mech Bay";
+	req_access = list(29)
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
