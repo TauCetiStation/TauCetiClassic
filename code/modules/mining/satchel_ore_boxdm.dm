@@ -1,4 +1,3 @@
-
 /**********************Ore box**************************/
 
 /obj/structure/ore_box
@@ -7,7 +6,6 @@
 	name = "Ore Box"
 	desc = "A heavy box used for storing ore."
 	density = TRUE
-	var/last_update = 0
 	var/list/stored_ore = list()
 
 /obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user)
@@ -16,33 +14,49 @@
 	else if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		user.SetNextMove(CLICK_CD_INTERACT)
+
+		var/have_ore = FALSE
+		if(locate(/obj/item/weapon/ore) in S.contents)
+			have_ore = TRUE
+
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
-		to_chat(user, "<span class='notice'>You empty the satchel into the box.</span>")
-	return
+		if(have_ore)
+			to_chat(user, "<span class='notice'>You empty the satchel into the box.</span>")
+			playsound(src, 'sound/items/mining_satchel_unload.ogg', VOL_EFFECTS_MASTER)
+		else
+			to_chat(user, "<span class='warning'>There is no ore to unload here!</span>")
+
 
 /obj/structure/ore_box/Entered(atom/movable/ORE)
 	if(istype(ORE, /obj/item/weapon/ore))
-		stored_ore[ORE.name]++
+		// stored ore is association list: ore sprite -> quantity
+		stored_ore[bicon(ORE, "style='position: relative; width:40px; height:40px; top:15px'")]++
+		//stored_ore[ORE.name] = ORE.type
 
 /obj/structure/ore_box/Exited(atom/movable/ORE)
 	if(istype(ORE, /obj/item/weapon/ore))
-		stored_ore[ORE.name]--
+		stored_ore[bicon(ORE, "style='position: relative; width:40px; height:40px; top:15px'")]--
 	if(!contents.len)
 		stored_ore = list()
 
 /obj/structure/ore_box/attack_hand(mob/user)
 	var/dat = ""
+	var/num_of_columns = 0
 	for(var/ore in stored_ore)
-		dat += "[ore]: [stored_ore[ore]]<br>"
+		if(!(num_of_columns % 4) && num_of_columns > 0)
+			dat += "<br>"
+		num_of_columns++
+		dat += "[ore]x[stored_ore[ore]]"
 
-	dat += "<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>"
+	if(length(contents))
+		dat += "<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>"
+	else
+		dat += "The box is empty"
 
-	var/datum/browser/popup = new(user, "orebox", "The contents of the ore box reveal...")
+	var/datum/browser/popup = new(user, "orebox", "The contents of the ore box reveal...", 280, 400)
 	popup.set_content(dat)
 	popup.open()
-
-	return
 
 /obj/structure/ore_box/examine(mob/user)
 	..()
@@ -62,8 +76,7 @@
 
 	to_chat(user, "It holds:")
 	for(var/ore in stored_ore)
-		to_chat(user, "- [stored_ore[ore]] [ore]")
-	return
+		to_chat(user, "- [ore]x[stored_ore[ore]]")
 
 /obj/structure/ore_box/Topic(href, href_list)
 	if(..())
@@ -71,11 +84,8 @@
 	usr.set_machine(src)
 	add_fingerprint(usr)
 	if(href_list["removeall"])
-		for (var/obj/item/weapon/ore/O in contents)
-			O.Move(src.loc)
-		to_chat(usr, "<span class='notice'>You empty the box</span>")
+		empty_box()
 	updateUsrDialog()
-	return
 
 /obj/structure/ore_box/verb/empty_box()
 	set name = "Empty Ore Box"
@@ -90,18 +100,17 @@
 		return
 
 	if(!Adjacent(usr)) //You can only empty the box if you can physically reach it
-		to_chat(usr, "You cannot reach the ore box.")
+		to_chat(usr, "<span class='warning'>You cannot reach the ore box.</span>")
 		return
 
 	add_fingerprint(usr)
 
 	if(contents.len < 1)
-		to_chat(usr, "<span class='warning'>The ore box is empty</span>")
+		to_chat(usr, "<span class='warning'>The ore box is empty!</span>")
 		return
 
 	for (var/obj/item/weapon/ore/O in contents)
-		O.Move(src.loc)
+		O.forceMove(src.loc)
 
-	to_chat(usr, "<span class='notice'>You empty the ore box</span>")
-
-	return
+	playsound(src, 'sound/items/orebox_unload.ogg', VOL_EFFECTS_MASTER)
+	to_chat(usr, "<span class='notice'>You empty the ore box.</span>")
