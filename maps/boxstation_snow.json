@@ -5,6 +5,7 @@
     "traits":[{
         "Linkage": null,
         "Environment Type": "Snow",
-        "Station": true
+        "Station": true,
+        "Snowstorm": true
     }]
 }

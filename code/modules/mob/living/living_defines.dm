@@ -35,7 +35,6 @@
 	var/tod = null // Time of death
 	var/update_slimes = 1
 	var/silent = null 		//Can't talk. Value goes down every life proc.
-	var/pull_debuff = 0		//Movement debuff when pulling
 	var/speed = 0			//Movement addditive modifier
 
 	var/on_fire = 0 //The "Are we on fire?" var

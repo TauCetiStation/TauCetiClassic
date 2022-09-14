@@ -710,6 +710,9 @@
 					phrases += "[M]... feed me..."
 			say (pick(phrases))
 
+/mob/living/carbon/slime/count_pull_debuff()
+	return pulling ? ..() + 1.5 : 0
+
 /mob/living/carbon/slime/proc/will_hunt(hunger = -1) // Check for being stopped from feeding and chasing
 	//if (docile)	return 0
 	if (hunger == 2 || rabid || attacked) return 1
