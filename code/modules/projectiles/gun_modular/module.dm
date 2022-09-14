@@ -4,7 +4,7 @@
     var/list/allowed_module_id = list()
     var/datum/component/point_and_point/point_module
     var/datum/configuration_module/configuration
-    var/obj/item/gun_modular/module/next_module
+    var/list/obj/item/gun_modular/module/next_modules
     var/obj/item/gun_modular/module/previous_module
 
 /obj/item/gun_modular/module/atom_init(mapload, ...)
@@ -63,13 +63,21 @@
 
     return TRUE
 
+/obj/item/gun_modular/module/proc/prepare_next_modules()
+
+    LAZYINITLIST(next_modules)
+
+    return TRUE
+
 // прицепляем модуль к этому
 /obj/item/gun_modular/module/proc/attach(obj/item/gun_modular/module/M)
 
     if(!check_attach(M))
         return FALSE
 
-    next_module = M
+    prepare_next_modules()
+
+    LAZYADD(next_modules, M)
     point_module.AddPoint(M.point_module)
     M.attach_to_module(src)
     M.loc = src
@@ -86,7 +94,7 @@
 // отцепляем модуль от этого
 /obj/item/gun_modular/module/proc/detach(obj/item/gun_modular/module/M)
 
-    next_module = null
+    LAZYREMOVE(next_modules, M)
     M.loc = get_turf(src.loc)
     point_module.RemovePoint(M.point_module)
     M.detach_to_module(src)
@@ -109,25 +117,20 @@
     if(!process.GetData(ACTIVE_FIRE))
         return FALSE
     
-    if(next_module_activate(process))
-        return post_activate(process)
-
-/obj/item/gun_modular/module/proc/next_module_activate(datum/process_fire/process)
-
-    if(next_module)
-        return next_module.activate(process)
+    for(var/obj/item/gun_modular/module/M in next_modules)
+        if(M.activate(process))
+            M.post_activate(process)
     
     return TRUE
 
 /obj/item/gun_modular/module/proc/post_activate(datum/process_fire/process)
 
-    return next_module_post_activate(process)
+    if(!process.GetData(ACTIVE_FIRE))
+        return FALSE
 
-/obj/item/gun_modular/module/proc/next_module_post_activate(datum/process_fire/process)
+    for(var/obj/item/gun_modular/module/M in next_modules)
+        M.post_activate(process)
 
-    if(next_module)
-        return next_module.post_activate(process)
-    
     return TRUE
 
 // посылаем сигнал с запросом вперед по модулям, но никак не назад, во избежания зацикливания. 
@@ -155,14 +158,18 @@
 /obj/item/gun_modular/module/proc/relaying_module(datum/process_fire/process)
 
     if(check_signal_module(process))
-        return receive_signal_module(process)
+        var/result = receive_signal_module(process)
+        if(result)
+            return result
     
-    return relay_next_module(process)
+    return relay_next_modules(process)
 
 // метод отправки сигнала следующему модулю, вынесен на случай, если в одном модуле есть разветвление на несколько цепочек, чтобы можно было по очереди послать в них
-/obj/item/gun_modular/module/proc/relay_next_module(datum/process_fire/process)
+/obj/item/gun_modular/module/proc/relay_next_modules(datum/process_fire/process)
 
-    if(next_module)
-        return next_module.relaying_module(process)
+    for(var/obj/item/gun_modular/module/M in next_modules)
+        var/result = M.relaying_module(process)
+        if(result)
+            return result
     
     return FALSE

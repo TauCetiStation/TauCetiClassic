@@ -12,7 +12,14 @@
 
 // process fire
 #define ACTIVE_FIRE "active"
+#define FIRE "fire"
 #define TARGET_FIRE "target"
 #define USER_FIRE "user"
 #define PROXIMITY_FIRE "proximity"
 #define PARAMS_FIRE "params"
+#define AMMO_FIRE "ammo"
+#define BULLET_FIRE "bullet"
+#define FIRE_SOUND "fire_sound"
+#define SILENSED "silensed"
+#define START_FIRE_LOC "start_fire_loc"
+#define GUN_LOC "gun_loc"
