@@ -53,6 +53,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/atmospheric_technician,
+/obj/effect/landmark/start/station_engineer/electrician,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -166,6 +167,8 @@
 /obj/structure/stool/bed/chair/office/dark,
 /obj/effect/landmark/start/station_engineer,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/landmark/start/station_engineer/maintenance_technician,
+/obj/effect/landmark/start/station_engineer/electrician,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10602,6 +10605,15 @@
 	temperature = 80
 	},
 /area/station/tcommsat/chamber)
+"coR" = (
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant/vice_officer,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/bar)
 "coT" = (
 /obj/structure/table/woodentable/fancy/black,
 /obj/item/trash/candle{
@@ -11271,6 +11283,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/barber,
+/obj/effect/landmark/start/barber/stylist,
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -16747,6 +16760,13 @@
 	icon_state = "white"
 	},
 /area/station/medical/morgue)
+"ekx" = (
+/obj/structure/stool/bed/chair/metal/red,
+/obj/effect/landmark/start/assistant/vice_officer,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/bar)
 "ekJ" = (
 /obj/structure/sign/warning/server_room,
 /turf/simulated/wall/r_wall,
@@ -18365,6 +18385,7 @@
 /obj/structure/stool/bed/chair/metal/yellow{
 	dir = 8
 	},
+/obj/effect/landmark/start/station_engineer/maintenance_technician,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowcorner"
@@ -20672,6 +20693,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/psychiatrist,
+/obj/effect/landmark/start/psychiatrist/psychologist,
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "fwL" = (
@@ -21157,6 +21179,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/start/medical_doctor/surgeon,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitehall"
@@ -22508,6 +22531,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
+"gaA" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 4
+	},
+/obj/effect/landmark/start/assistant/lawyer,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkred"
+	},
+/area/station/security/lobby)
 "gaU" = (
 /obj/machinery/newscaster{
 	dir = 1;
@@ -24221,6 +24257,15 @@
 "gCD" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/kitchen/utensil/fork,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/bar)
+"gCJ" = (
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 4
+	},
+/obj/effect/landmark/start/assistant/private_eye,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -26535,6 +26580,13 @@
 	icon_state = "warnplate"
 	},
 /area/station/aisat)
+"hnD" = (
+/obj/effect/landmark/start/scientist/phoron_researcher,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whitehall"
+	},
+/area/station/rnd/mixing)
 "hnF" = (
 /obj/machinery/bookbinder,
 /turf/simulated/floor/carpet,
@@ -28786,6 +28838,13 @@
 	icon_state = "wood-broken5"
 	},
 /area/station/maintenance/eva)
+"icy" = (
+/obj/effect/landmark/start/station_engineer/maintenance_technician,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellow"
+	},
+/area/station/engineering/equip)
 "icH" = (
 /obj/machinery/requests_console/hop{
 	pixel_x = 30
@@ -32224,6 +32283,7 @@
 /area/station/engineering/break_room)
 "jjY" = (
 /obj/machinery/recharge_station,
+/obj/effect/landmark/start/cyborg/robot,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "yellow"
@@ -34100,6 +34160,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/effect/landmark/start/station_engineer/maintenance_technician,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -36059,6 +36120,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/landmark/start/cyborg/robot,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -39024,6 +39086,13 @@
 	icon_state = "dark"
 	},
 /area/station/security/forensic_office)
+"llI" = (
+/obj/structure/stool/bed/chair/metal/red,
+/obj/effect/landmark/start/assistant/paranormal_investigator,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/bar)
 "llS" = (
 /turf/simulated/floor/plating/airless,
 /area/station/hallway/secondary/entry)
@@ -40494,6 +40563,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/landmark/start/medical_doctor/nurse,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -43718,6 +43788,7 @@
 /area/station/engineering/atmos)
 "mKG" = (
 /obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/chef/cook,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -47504,6 +47575,7 @@
 /obj/structure/stool/bed/chair/office/dark,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/landmark/start/librarian/journalist,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "nUl" = (
@@ -49716,6 +49788,15 @@
 	icon_state = "floorgrime"
 	},
 /area/station/maintenance/science)
+"oFH" = (
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 8
+	},
+/obj/effect/landmark/start/assistant/private_eye,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/bar)
 "oFP" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -51411,6 +51492,8 @@
 /area/space)
 "plA" = (
 /obj/effect/landmark/start/virologist,
+/obj/effect/landmark/start/virologist/microbiologist,
+/obj/effect/landmark/start/virologist/pathologist,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -52072,6 +52155,19 @@
 	icon_state = "white"
 	},
 /area/station/medical/virology)
+"pvI" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 8
+	},
+/obj/effect/landmark/start/assistant/reporter,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/station/security/lobby)
 "pvL" = (
 /obj/machinery/chem_dispenser{
 	name = "old chem dispenser"
@@ -52940,6 +53036,7 @@
 "pKH" = (
 /obj/structure/stool/bed/chair/office/light,
 /obj/effect/landmark/start/chemist,
+/obj/effect/landmark/start/chemist/pharmacist,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitedelivery"
@@ -55622,6 +55719,7 @@
 	pixel_x = 25;
 	pixel_y = -25
 	},
+/obj/effect/landmark/start/chaplain/counselor,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -55882,7 +55980,7 @@
 /area/station/maintenance/eva)
 "qDC" = (
 /obj/structure/stool/bar,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant/waiter,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "redyellowfull"
@@ -57456,6 +57554,7 @@
 "rdf" = (
 /obj/machinery/light,
 /obj/structure/stool,
+/obj/effect/landmark/start/station_engineer/engine_technician,
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -58283,6 +58382,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/landmark/start/station_engineer,
+/obj/effect/landmark/start/station_engineer/electrician,
 /turf/simulated/floor,
 /area/station/engineering/equip)
 "rtL" = (
@@ -59345,6 +59445,7 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
+/obj/effect/landmark/start/station_engineer/maintenance_technician,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -60908,6 +61009,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/chemist,
+/obj/effect/landmark/start/chemist/pharmacist,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitedelivery"
@@ -63253,6 +63355,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/start/medical_doctor/surgeon,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
@@ -64023,6 +64126,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/effect/landmark/start/roboticist/biomechanical_engineer,
+/obj/effect/landmark/start/roboticist/mechatronic_engineer,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -64996,6 +65101,7 @@
 "tAo" = (
 /obj/structure/stool,
 /obj/effect/landmark/start/botanist,
+/obj/effect/landmark/start/botanist/hydroponicist,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "green"
@@ -65070,6 +65176,8 @@
 "tBj" = (
 /obj/structure/stool,
 /obj/effect/landmark/start/roboticist,
+/obj/effect/landmark/start/roboticist/biomechanical_engineer,
+/obj/effect/landmark/start/roboticist/mechatronic_engineer,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -65227,6 +65335,7 @@
 /area/station/hallway/secondary/arrival)
 "tEL" = (
 /obj/effect/landmark/start/botanist,
+/obj/effect/landmark/start/botanist/hydroponicist,
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "tEU" = (
@@ -67968,6 +68077,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/effect/landmark/start/cyborg/android,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -68275,6 +68385,7 @@
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
+/obj/effect/landmark/start/assistant/reporter,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -74958,6 +75069,7 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/janitor)
 "wGn" = (
+/obj/effect/landmark/start/medical_doctor/nurse,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -75132,6 +75244,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/station_engineer,
+/obj/effect/landmark/start/station_engineer/maintenance_technician,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -75966,6 +76079,7 @@
 /area/station/rnd/hallway)
 "wYb" = (
 /obj/structure/stool,
+/obj/effect/landmark/start/station_engineer/engine_technician,
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -77958,10 +78072,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 8
 	},
+/obj/effect/landmark/start/assistant/lawyer,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -78728,6 +78842,7 @@
 	dir = 4
 	},
 /obj/machinery/recharge_station,
+/obj/effect/landmark/start/cyborg/android,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
@@ -105097,7 +105212,7 @@ hUm
 gUU
 cQg
 xrX
-xrX
+pvI
 cQg
 qYu
 bFH
@@ -105354,7 +105469,7 @@ mMJ
 blY
 nnZ
 cDM
-cDM
+gaA
 cQg
 cQg
 kKo
@@ -105382,10 +105497,10 @@ eRd
 dTp
 dTp
 ejH
-oDZ
+ekx
 ryx
 gCD
-xQG
+coR
 eXe
 dTp
 wIL
@@ -105885,13 +106000,13 @@ wIL
 dTp
 dTp
 eKj
-oDZ
+llI
 gCD
 ryx
 xQG
 dTp
 ejH
-oDZ
+llI
 bYg
 xQG
 dTp
@@ -106402,7 +106517,7 @@ vTd
 oUf
 qDC
 oUf
-oUf
+qDC
 hSM
 abg
 dTp
@@ -107433,7 +107548,7 @@ dPi
 hal
 oCg
 abT
-aGp
+gCJ
 nWX
 aGp
 abt
@@ -107949,7 +108064,7 @@ oCg
 abV
 pML
 haX
-pML
+oFH
 abt
 gYQ
 rHn
@@ -117938,7 +118053,7 @@ lKv
 lWZ
 llT
 kSE
-bnH
+icy
 sCO
 sCO
 bnH
@@ -125209,8 +125324,8 @@ cSV
 qyq
 rKi
 sgc
-pJh
-pJh
+hnD
+hnD
 tXC
 pJh
 mSb
