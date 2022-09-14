@@ -268,6 +268,7 @@ var/global/list/departments_genitive = list()
 			return FALSE
 
 		announcement.play(department_genitive, message)
+		message_admins("[key_name_admin(usr)] has made a department announcement. [ADMIN_JMP(usr)]")
 
 		announceAuth = FALSE
 		message = ""

@@ -12,7 +12,7 @@
 	anchored = FALSE
 	use_power = NO_POWER_USE
 
-	var/active = 0
+	var/active = FALSE
 	var/power_gen = 5000
 	var/recent_fault = 0
 	var/power_output = 1
@@ -37,7 +37,7 @@
 		updateDialog()
 
 	else
-		active = 0
+		active = FALSE
 		icon_state = initial(icon_state)
 		handleInactive()
 
@@ -60,6 +60,7 @@
 	var/sheet_left = 0 // How much is left of the sheet
 	var/time_per_sheet = 40
 	var/heat = 0
+	var/capacity_scale_with_upgrades = TRUE
 
 /obj/machinery/power/port_gen/pacman/atom_init()
 	. = ..()
@@ -85,7 +86,7 @@
 	var/temp_rating = 0
 	var/consumption_coeff = 0
 	for(var/obj/item/weapon/stock_parts/SP in component_parts)
-		if(istype(SP, /obj/item/weapon/stock_parts/matter_bin))
+		if(istype(SP, /obj/item/weapon/stock_parts/matter_bin) && capacity_scale_with_upgrades)
 			max_sheets = SP.rating * SP.rating * 50
 		else if(istype(SP, /obj/item/weapon/stock_parts/capacitor))
 			temp_rating += SP.rating
@@ -155,18 +156,21 @@
 /obj/machinery/power/port_gen/pacman/proc/overheat()
 	explosion(src.loc, 2, 5, 2, -1)
 
+/obj/machinery/power/port_gen/pacman/proc/add_sheets(obj/item/I, mob/user, params)
+	var/obj/item/stack/addstack = I
+	var/amount = min((max_sheets - sheets), addstack.get_amount())
+	if(amount < 1)
+		to_chat(user, "<span class='notice'>The [name] is full!</span>")
+		return
+	to_chat(user, "<span class='notice'>You add [amount] sheets to the [name].</span>")
+	sheets += amount
+	addstack.use(amount)
+	playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
+
 /obj/machinery/power/port_gen/pacman/attackby(obj/item/O, mob/user, params)
 	if(istype(O, sheet_path))
-		var/obj/item/stack/addstack = O
-		var/amount = min((max_sheets - sheets), addstack.get_amount())
-		if(amount < 1)
-			to_chat(user, "<span class='notice'>The [src.name] is full!</span>")
-			return
-		to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
-		sheets += amount
-		addstack.use(amount)
+		add_sheets(O, user, params)
 		updateUsrDialog()
-		return
 	else if(!active)
 
 		if(exchange_parts(user, O))
@@ -236,12 +240,14 @@
 	if(href_list["action"])
 		if(href_list["action"] == "enable")
 			if(!active && HasFuel() && !crit_fail)
-				active = 1
+				active = TRUE
 				icon_state = icon_state_on
+				playsound(src, 'sound/machines/pacman_on.ogg', VOL_EFFECTS_MASTER)
 		if(href_list["action"] == "disable")
 			if (active)
-				active = 0
+				active = FALSE
 				icon_state = initial(icon_state)
+				playsound(src, 'sound/machines/pacman_off.ogg', VOL_EFFECTS_MASTER)
 		if(href_list["action"] == "eject")
 			if(!active)
 				DropFuel()
@@ -280,3 +286,30 @@
 
 /obj/machinery/power/port_gen/pacman/mrs/overheat()
 	explosion(src.loc, 4, 4, 4, -1)
+
+/obj/machinery/power/port_gen/pacman/money
+	name = "A.N.C.A.P.M.A.N.-type Portable Generator"
+	desc = "Don't simply waste your money - burn them to get power instead!"
+	icon_state = "gen_money-off"
+	icon_state_on = "gen_money-on"
+	sheet_name = "cash"
+	sheet_path = /obj/item/weapon/spacecash
+	power_gen = 10000
+	max_sheets = 10000
+	time_per_sheet = 5
+	board_path = /obj/item/weapon/circuitboard/pacman/money
+	capacity_scale_with_upgrades = FALSE
+
+/obj/machinery/power/port_gen/pacman/money/add_sheets(obj/item/I, mob/user, params)
+	var/obj/item/weapon/spacecash/addstack = I
+	var/amount = min((max_sheets - sheets), addstack.worth)
+	if(amount < 1)
+		to_chat(user, "<span class='notice'>The [name] is full!</span>")
+		return
+	to_chat(user, "<span class='notice'>You add [amount] sheets to the [name].</span>")
+	sheets += amount
+	qdel(addstack)
+
+/obj/machinery/power/port_gen/pacman/money/overheat()
+	visible_message("<span class='notice'>[src] overheats and quietly disintegrates. No customer should ever worry!</span>")
+	qdel(src)

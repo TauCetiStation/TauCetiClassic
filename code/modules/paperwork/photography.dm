@@ -128,30 +128,20 @@
 	max_storage_space = DEFAULT_BOX_STORAGE
 
 /obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
+	if(!ishuman(usr))
+		return FALSE
 
-	if((ishuman(usr)))
-		var/mob/M = usr
-		if(!( istype(over_object, /atom/movable/screen) ))
-			return ..()
+	if(istype(over_object, /atom/movable/screen/inventory/hand))
 		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
-		if(!M.incapacitated() && M.back == src)
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-			add_fingerprint(usr)
-			return
-		if(over_object == usr && usr.Adjacent(src))
-			if(usr.s_active)
-				usr.s_active.close(usr)
-			show_to(usr)
-			return
-	return
+		over_object.MouseDrop_T(src, usr)
+		return TRUE
+	else if(over_object == usr && usr.Adjacent(src))
+		if(usr.s_active)
+			usr.s_active.close(usr)
+		show_to(usr)
+		return TRUE
+	return ..()
+
 
 /*********
 * camera *

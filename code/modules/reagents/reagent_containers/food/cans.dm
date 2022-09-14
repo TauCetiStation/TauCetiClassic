@@ -138,7 +138,7 @@
 	"stoxin2", "inaprovaline", "ryetalyn", "paracetamol", "tramadol", "oxycodone", "sterilizine", "leporazine",\
 	"kelotane", "dermaline", "dexalin", "dextromethorphan", "dexalinp", "tricordrazine", "anti_toxin", "thermopsis",\
 	"synaptizine", "hyronalin", "arithrazine", "alkysine", "imidazoline", "aurisine", "peridaxon", "kyphotorin",\
-	"bicaridine", "hyperzine", "cryoxadone", "clonexadone", "rezadone", "spaceacillin", "ethylredoxrazine",\
+	"bicaridine", "cryoxadone", "clonexadone", "rezadone", "spaceacillin", "ethylredoxrazine",\
 	"vitamin", "lipozine", "stimulants", "nanocalcium", "toxin", "amatoxin", "mutagen", "phoron", "lexorin",\
 	"slimejelly", "cyanide", "minttoxin", "carpotoxin", "zombiepowder", "mindbreaker", "plantbgone", "stoxin",\
 	"chloralhydrate", "potassium_chloride", "potassium_chlorophoride", "beer2", "mutetoxin", "sacid", "pacid",\

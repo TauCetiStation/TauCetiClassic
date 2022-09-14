@@ -82,6 +82,18 @@
 	max_ammo = 2
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer
+	name = "derringer internal magazine"
+	desc = "This doesn't even exist!"
+	ammo_type = /obj/item/ammo_casing/c38m
+	caliber = "38"
+	max_ammo = 2
+	multiload = 0
+
+/obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer/syndicate
+	ammo_type = /obj/item/ammo_casing/a357
+	caliber = "357"
+
 /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	name = "bazooka internal magazine"
 	desc = "This doesn't even exist!"
@@ -190,11 +202,16 @@
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
-	max_ammo = 20
+	max_ammo = 30
 
 /obj/item/ammo_box/magazine/m12mm/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
+	cut_overlays()
+	if(ammo_count() == 0)
+		return
+	var/ammo_perc = (ammo_count() * 100) / max_ammo 
+	var/image/ammo_icon = image('icons/obj/ammo.dmi', "12mmsh-[round(ammo_perc, 25)]")
+	add_overlay(ammo_icon)
 
 /obj/item/ammo_box/magazine/m12mm/hp
 	name = "magazine (.45 HP)"
@@ -202,15 +219,8 @@
 	icon_state = "12mmhp"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45hp
-	caliber = ".45S"
-	max_ammo = 15
-
-/obj/item/ammo_box/magazine/m12mm/hp/update_icon()
-	..()
-	if(ammo_count() == 1)
-		icon_state = "[initial(icon_state)]-1"
-	else
-		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
+	caliber = ".45"
+	max_ammo = 20
 
 /obj/item/ammo_box/magazine/m12mm/hv
 	name = "magazine (.45 HV)"
@@ -218,16 +228,8 @@
 	icon_state = "12mmhv"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45hv
-	caliber = ".45S"
-	max_ammo = 15
-
-/obj/item/ammo_box/magazine/m12mm/hv/update_icon()
-	..()
-	if(ammo_count() == 1)
-		icon_state = "[initial(icon_state)]-1"
-	else
-		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
-
+	caliber = ".45"
+	max_ammo = 20
 
 /obj/item/ammo_box/magazine/m12mm/imp
 	name = "magazine (.45 IMP)"
@@ -235,16 +237,8 @@
 	icon_state = "12mmimp"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45imp
-	caliber = ".45S"
-	max_ammo = 15
-
-/obj/item/ammo_box/magazine/m12mm/imp/update_icon()
-	..()
-	if(ammo_count() == 1)
-		icon_state = "[initial(icon_state)]-1"
-	else
-		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
-
+	caliber = ".45"
+	max_ammo = 20
 
 /obj/item/ammo_box/magazine/sm45
 	name = "magazine (.45)"

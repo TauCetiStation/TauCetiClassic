@@ -15,6 +15,7 @@
 	name = "Mecha"
 	desc = "Exosuit."
 	icon = 'icons/mecha/mecha.dmi'
+	flags = HEAR_TALK
 	density = TRUE //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
 	anchored = TRUE //no pulling around.
@@ -90,6 +91,8 @@
 	var/mouse_pointer
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
+	var/list/speed_skills = list(/datum/skill/civ_mech = SKILL_LEVEL_TRAINED)
+	var/list/interface_skills = list(/datum/skill/civ_mech = SKILL_LEVEL_TRAINED)
 
 /obj/mecha/atom_init()
 	. = ..()
@@ -203,7 +206,7 @@
 
 /obj/mecha/proc/click_action(atom/target,mob/user)
 	if(!src.occupant || src.occupant != user ) return
-	if(user.stat) return
+	if(user.stat != CONSCIOUS) return
 	if(state)
 		occupant_message("<font color='red'>Maintenance protocols in effect</font>")
 		return
@@ -293,9 +296,12 @@
 	prev_move_dir = direction
 	if(move_result)
 		can_move = 0
-		VARSET_IN(src, can_move, TRUE, step_in * move_result)
+		VARSET_IN(src, can_move, TRUE, apply_skill_bonus(occupant, step_in, speed_skills, -0.2) * move_result) // -20% to step_in for each level
 		return 1
 	return 0
+
+/obj/mecha/proc/check_fumbling(fumble_text)
+	return handle_fumbling(occupant, occupant, SKILL_TASK_VERY_EASY, interface_skills, fumble_text, can_move = TRUE, check_busy = FALSE)
 
 /obj/mecha/proc/mechturn(direction)
 	set_dir(direction)
@@ -433,6 +439,8 @@
 	return attack_hand(user)
 
 /obj/mecha/proc/toggle_strafe()
+	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to toggle strafing mode [!strafe?"on":"off"].</span>"))
+		return
 	strafe = !strafe
 	prev_move_dir = 0
 
@@ -445,7 +453,7 @@
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(!prob(src.deflect_chance))
-		take_damage(15)
+		take_damage(40)
 		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='warning'>You slash at the armored suit!</span>")
@@ -464,7 +472,7 @@
 	..()
 
 	if(attacker.melee_damage == 0)
-		attacker.emote("[attacker.friendly] [src]")
+		attacker.me_emote("[attacker.friendly] [src]")
 	else
 		if(!prob(src.deflect_chance))
 			var/damage = attacker.melee_damage
@@ -719,8 +727,8 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'><B>[user]</B> has punched \the <B>[src]!</B></span>")
 		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		if(prob(50) && Ham.use_charge(user,6))
-			take_damage(Ham.force * 3)
+		if(Ham.use_charge(user,6))
+			take_damage(Ham.force * 2)
 	else
 		user.SetNextMove(CLICK_CD_MELEE)
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
@@ -847,7 +855,8 @@
 
 	if(!has_charge(lights_power))
 		return
-
+	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to toggle lights [!lights?"on":"off"].</span>"))
+		return
 	lights = !lights
 	if(lights)
 		set_light(light_range + lights_power)
@@ -861,7 +870,8 @@
 /obj/mecha/proc/toggle_internal_tank()
 	if(usr != src.occupant)
 		return
-
+	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to toggle internal tank usage [!use_internal_tank?"on":"off"].</span>"))
+		return
 	use_internal_tank = !use_internal_tank
 	occupant_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
 	log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
@@ -935,7 +945,7 @@
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		to_chat(user, "Consciousness matrix not detected.")
 		return 0
-	else if(mmi_as_oc.brainmob.stat)
+	else if(mmi_as_oc.brainmob.stat != CONSCIOUS)
 		to_chat(user, "Beta-rhythm below acceptable level.")
 		return 0
 	else if(occupant)
@@ -961,7 +971,7 @@
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 			to_chat(user, "Consciousness matrix not detected.")
 			return 0
-		else if(mmi_as_oc.brainmob.stat)
+		else if(mmi_as_oc.brainmob.stat != CONSCIOUS)
 			to_chat(user, "Beta-rhythm below acceptable level.")
 			return 0
 		user.drop_from_inventory(mmi_as_oc)
@@ -988,7 +998,8 @@
 /obj/mecha/proc/view_stats()
 	if(usr != src.occupant)
 		return
-
+	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to open exosuit stats.</span>"))
+		return
 	src.occupant << browse(get_stats_html(), "window=exosuit")
 	return
 

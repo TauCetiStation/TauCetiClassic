@@ -86,27 +86,17 @@
 
 	DeactivateStealth()
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/IsAbductor(user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.species.name != ABDUCTOR)
-			return FALSE
-		return TRUE
-	return FALSE
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(user)
-	if(IsAbductor(user))
+/obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(mob/user)
+	if(isabductor(user))
 		return TRUE
 	to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
 	return FALSE
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/AgentCheck(mob/living/carbon/human/user)
-	return isabductoragent(user)
-
 /obj/item/clothing/suit/armor/abductor/vest/attack_self(mob/user)
 	if(!AbductorCheck(user))
 		return
-	if(!AgentCheck(user))
+	if(!isabductoragent(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
@@ -127,8 +117,6 @@
 		M.SetParalysis(0)
 		M.SetStunned(0)
 		M.SetWeakened(0)
-		M.lying = 0
-		M.update_canmove()
 //		M.adjustStaminaLoss(-75)
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
@@ -140,22 +128,11 @@
 
 
 //SCIENCE TOOL
-/obj/item/device/abductor/proc/IsAbductor(user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.species.name != ABDUCTOR)
-			return FALSE
-		return TRUE
-	return FALSE
-
-/obj/item/device/abductor/proc/AbductorCheck(user)
-	if(IsAbductor(user))
+/obj/item/device/abductor/proc/AbductorCheck(mob/user)
+	if(isabductor(user))
 		return TRUE
 	to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
 	return FALSE
-
-/obj/item/device/abductor/proc/ScientistCheck(mob/living/carbon/human/user)
-	return isabductorsci(user)
 
 /obj/item/device/abductor/gizmo
 	name = "science tool"
@@ -171,7 +148,7 @@
 /obj/item/device/abductor/gizmo/attack_self(mob/user)
 	if(!AbductorCheck(user))
 		return
-	if(!ScientistCheck(user))
+	if(!isabductorsci(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	if(mode == GIZMO_SCAN)
@@ -185,7 +162,7 @@
 /obj/item/device/abductor/gizmo/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
 		return
-	if(!ScientistCheck(user))
+	if(!isabductorsci(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
@@ -200,7 +177,7 @@
 		return
 	if(!AbductorCheck(user))
 		return
-	if(!ScientistCheck(user))
+	if(!isabductorsci(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
@@ -220,7 +197,8 @@
 		to_chat(user, "<span class='notice'>This specimen is already marked.</span>")
 		return
 	if(ishuman(target))
-		if(IsAbductor(target))
+		var/mob/M = target
+		if(isabductor(M))
 			marked = target
 			to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
 		else
@@ -343,7 +321,7 @@
 	var/obj/machinery/camera/helm_cam
 
 /obj/item/clothing/head/helmet/abductor/attack_self(mob/living/carbon/human/user)
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
 		return
 	if(helm_cam)
@@ -368,17 +346,6 @@
 		to_chat(user, "<span class='notice'>Abductor detected. Camera activated.</span>")
 		return
 
-/obj/item/clothing/head/helmet/abductor/proc/IsAbductor(mob/living/user)
-	if(!ishuman(user))
-		return FALSE
-	var/mob/living/carbon/human/H = user
-	if(!H.species)
-		return FALSE
-	if(H.species.name != ABDUCTOR)
-		return FALSE
-	return TRUE
-
-
 //ADVANCED BATON
 #define BATON_STUN 0
 #define BATON_SLEEP 1
@@ -400,9 +367,9 @@
 	action_button_name = "Toggle Mode"
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		return
-	if(!AgentCheck(user))
+	if(!isabductoragent(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	mode = (mode + 1) % BATON_MODES
@@ -437,21 +404,8 @@
 			icon_state = "wonderprodProbe"
 			item_state = "wonderprodProbe"
 
-/obj/item/weapon/abductor_baton/proc/IsAbductor(mob/living/user)
-	if(!ishuman(user))
-		return FALSE
-	var/mob/living/carbon/human/H = user
-	if(!H.species)
-		return FALSE
-	if(H.species.name != ABDUCTOR)
-		return FALSE
-	return TRUE
-
-/obj/item/weapon/abductor_baton/proc/AgentCheck(mob/living/carbon/human/user)
-	return isabductoragent(user)
-
 /obj/item/weapon/abductor_baton/attack(mob/target, mob/living/user)
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		return
 
 	if(isrobot(target))
@@ -596,7 +550,7 @@
 	name = "alien optable"
 	desc = "Used for experiments on creatures."
 	icon = 'icons/obj/abductor.dmi'
-	var/holding = 0
+	var/holding = FALSE
 	var/belt = null
 	var/mob/living/carbon/fastened = null
 
@@ -645,6 +599,7 @@
 		add_overlay(belt)
 		fastened.anchored = TRUE
 		fastened.SetStunned(INFINITY)
+		fastened.can_be_pulled = FALSE
 		qdel(animation)
 	else
 		cut_overlay(belt)
@@ -655,6 +610,7 @@
 		sleep(9)
 		fastened.SetStunned(0)
 		fastened.anchored = FALSE
+		fastened.can_be_pulled = TRUE
 		fastened = null
 		qdel(animation)
 

@@ -47,7 +47,7 @@
 	cut_overlays()
 	for(var/direction_to_check in cardinal)
 		var/turf/T = get_step(src, direction_to_check)
-		if(!isspaceturf(T) && !istype(T, /turf/simulated/wall) && !locate(/obj/structure/snow, T))
+		if(!isspaceturf(T) && !iswallturf(T) && !locate(/obj/structure/snow, T))
 			var/image/snow_side = image('icons/turf/snow.dmi', "[direction_to_check]")
 			snow_side.layer = LOW_OBJ_LAYER
 			switch(direction_to_check)

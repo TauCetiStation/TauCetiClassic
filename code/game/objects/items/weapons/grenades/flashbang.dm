@@ -56,8 +56,6 @@
 //Flashing everyone
 	if(eye_safety < 1)
 		M.flash_eyes()
-		M.Stun(2)
-		M.Weaken(10)
 
 //Now applying sound
 	var/distance = get_dist(M, T)

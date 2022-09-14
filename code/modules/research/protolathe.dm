@@ -102,11 +102,6 @@ Note: Must be placed west/left of and R&D console to function.
 
 	if (panel_open)
 		if(iscrowbar(I))
-			for(var/M in loaded_materials)
-				if(loaded_materials[M].amount >= loaded_materials[M].sheet_size)
-					var/sheet_type = loaded_materials[M].sheet_type
-					var/obj/item/stack/sheet/G = new sheet_type(loc)
-					G.set_amount(round(loaded_materials[M].amount / G.perunit))
 			default_deconstruction_crowbar(I)
 			return 1
 		else if (is_wire_tool(I) && wires.interact(user))
@@ -167,6 +162,14 @@ Note: Must be placed west/left of and R&D console to function.
 	busy = FALSE
 	if(linked_console)
 		nanomanager.update_uis(linked_console)
+
+/obj/machinery/r_n_d/protolathe/deconstruction()
+	. = ..()
+	for(var/M in loaded_materials)
+		if(loaded_materials[M].amount >= loaded_materials[M].sheet_size)
+			var/sheet_type = loaded_materials[M].sheet_type
+			var/obj/item/stack/sheet/G = new sheet_type(loc)
+			G.set_amount(round(loaded_materials[M].amount / G.perunit))
 
 /obj/machinery/r_n_d/protolathe/proc/queue_design(datum/design/D, amount)
 	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, amount)

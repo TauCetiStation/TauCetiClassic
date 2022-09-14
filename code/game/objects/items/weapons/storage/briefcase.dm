@@ -22,7 +22,7 @@
 
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)])")
 
-	if (M.stat < 2 && M.health < 50 && prob(90))
+	if (M.stat < DEAD && M.health < 50 && prob(90))
 		var/mob/H = M
 		// ******* Check
 		if ((ishuman(H) && istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80)))

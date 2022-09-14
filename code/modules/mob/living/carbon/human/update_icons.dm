@@ -95,51 +95,11 @@ If you have any questions/constructive-comments/bugs-to-report/or have a massivl
 Please contact me on #coderbus IRC. ~Carn x
 */
 
-//Human Overlays Indexes/////////
-#define BODY_LAYER				27
-#define MUTATIONS_LAYER			25
-#define DAMAGE_LAYER			24
-#define SURGERY_LAYER			23		//bs12 specific.
-#define BANDAGE_LAYER			22
-#define UNIFORM_LAYER			21
-#define ID_LAYER				20
-#define SHOES_LAYER				19
-#define TAIL_LAYER				18		//bs12 specific. this hack is probably gonna come back to haunt me
-#define GLOVES_LAYER			17
-#define EARS_LAYER				16
-#define SUIT_LAYER				15
-#define GLASSES_LAYER			14
-#define BELT_LAYER				13		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		12
-#define BACK_LAYER				11
-#define HAIR_LAYER				10		//TODO: make part of head layer?
-#define FACEMASK_LAYER			9
-#define HEAD_LAYER				8
-#define COLLAR_LAYER			7
-#define HANDCUFF_LAYER			6
-#define LEGCUFF_LAYER			5
-#define L_HAND_LAYER			4
-#define R_HAND_LAYER			3
-#define TARGETED_LAYER			2		//BS12: Layer for the target overlay from weapon targeting system
-#define FIRE_LAYER				1
-#define TOTAL_LAYERS			27
-//////////////////////////////////
-//Human Limb Overlays Indexes/////
-#define LIMB_HEAD_LAYER			7
-#define LIMB_TORSO_LAYER		6
-#define LIMB_L_ARM_LAYER		5
-#define LIMB_R_ARM_LAYER		4
-#define LIMB_GROIN_LAYER		3
-#define LIMB_L_LEG_LAYER		2
-#define LIMB_R_LEG_LAYER		1
-#define TOTAL_LIMB_LAYERS		7
-//////////////////////////////////
-
 /obj/item/proc/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
 	var/icon_path = def_icon_path
 
 	var/t_state
-	if(sprite_sheet_slot in list(SPRITE_SHEET_HELD, SPRITE_SHEET_GLOVES, SPRITE_SHEET_BELT, SPRITE_SHEET_UNIFORM))
+	if(sprite_sheet_slot in list(SPRITE_SHEET_HELD, SPRITE_SHEET_GLOVES, SPRITE_SHEET_BELT, SPRITE_SHEET_UNIFORM, SPRITE_SHEET_UNIFORM_FAT))
 		t_state = item_state
 		if(!icon_custom)
 			icon_state_appendix = null
@@ -224,6 +184,10 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		standing += BP.get_icon(BODY_LAYER)
 
+	if(species.name == VOX)
+		var/mutable_appearance/tatoo = mutable_appearance('icons/mob/human.dmi', "[vox_rank]_s", -BODY_LAYER)
+		tatoo.color = rgb(r_eyes, g_eyes, b_eyes)
+		standing += tatoo
 	//Underwear
 	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
@@ -352,14 +316,19 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_fire() //TG-stuff, fire layer
-	remove_overlay(FIRE_LAYER)
+	remove_overlay(FIRE_LOWER_LAYER)
+	remove_overlay(FIRE_UPPER_LAYER)
 
 	if(on_fire)
-		var/image/standing = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"=-FIRE_LAYER)
-		standing = update_height(standing)
-		overlays_standing[FIRE_LAYER]	= standing
+		var/image/under = image('icons/mob/OnFire.dmi', "human_underlay", layer = -FIRE_LOWER_LAYER)
+		var/image/over = image('icons/mob/OnFire.dmi', "human_overlay", layer = -FIRE_UPPER_LAYER)
+		under = update_height(under)
+		over = update_height(over)
+		overlays_standing[FIRE_LOWER_LAYER] = under
+		overlays_standing[FIRE_UPPER_LAYER] = over
 
-	apply_overlay(FIRE_LAYER)
+	apply_overlay(FIRE_LOWER_LAYER)
+	apply_overlay(FIRE_UPPER_LAYER)
 
 
 /* --------------------------------------- */
@@ -763,7 +732,6 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	apply_overlay(L_HAND_LAYER)
 
-
 /mob/living/carbon/human/proc/update_tail_showing()
 	remove_overlay(TAIL_LAYER)
 
@@ -887,32 +855,3 @@ Please contact me on #coderbus IRC. ~Carn x
 		I.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
 		I.add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
 	return I
-
-//Human Overlays Indexes/////////
-#undef BODY_LAYER
-#undef MUTATIONS_LAYER
-#undef DAMAGE_LAYER
-#undef SURGERY_LAYER
-#undef BANDAGE_LAYER
-#undef UNIFORM_LAYER
-#undef TAIL_LAYER
-#undef ID_LAYER
-#undef SHOES_LAYER
-#undef GLOVES_LAYER
-#undef EARS_LAYER
-#undef SUIT_LAYER
-#undef GLASSES_LAYER
-#undef FACEMASK_LAYER
-#undef BELT_LAYER
-#undef SUIT_STORE_LAYER
-#undef BACK_LAYER
-#undef HAIR_LAYER
-#undef HEAD_LAYER
-#undef COLLAR_LAYER
-#undef HANDCUFF_LAYER
-#undef LEGCUFF_LAYER
-#undef L_HAND_LAYER
-#undef R_HAND_LAYER
-#undef TARGETED_LAYER
-#undef FIRE_LAYER
-#undef TOTAL_LAYERS

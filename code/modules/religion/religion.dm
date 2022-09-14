@@ -613,7 +613,7 @@
 	RegisterSignal(R, list(COMSIG_REAGENT_REACTION_TURF), .proc/holy_reagent_react_turf)
 
 /datum/religion/proc/holy_reagent_react_turf(datum/source, turf/T, volume)
-	if(!istype(T, /turf/simulated/floor))
+	if(!isfloorturf(T))
 		return
 
 	add_holy_turf(T, volume)
@@ -644,7 +644,7 @@
 	var/list/acolytes = list()
 	var/turf/center = get_turf(target)
 	for(var/mob/living/carbon/C in range(range, center))
-		if(is_member(C) && !C.stat)
+		if(is_member(C) && C.stat == CONSCIOUS)
 			acolytes += C
 			if(message)
 				C.say(message)

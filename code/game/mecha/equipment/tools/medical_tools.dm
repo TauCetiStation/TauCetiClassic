@@ -232,12 +232,6 @@
 	if(M.health > 0)
 		M.adjustOxyLoss(-1)
 		M.updatehealth()
-	M.AdjustStunned(-4)
-	M.AdjustWeakened(-4)
-	M.AdjustStunned(-4)
-	M.Paralyse(2)
-	M.Weaken(2)
-	M.Stun(2)
 	if(M.reagents.get_reagent_amount("inaprovaline") < 5)
 		M.reagents.add_reagent("inaprovaline", 5)
 	chassis.use_power(energy_drain)
@@ -350,7 +344,7 @@
 	last_piece = null
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/dismantleFloor(turf/new_turf)
-	if(istype(new_turf, /turf/simulated/floor))
+	if(isfloorturf(new_turf))
 		var/turf/simulated/floor/T = new_turf
 		if(!T.is_plating() && !T.is_catwalk())
 			if(!T.broken && !T.burnt)

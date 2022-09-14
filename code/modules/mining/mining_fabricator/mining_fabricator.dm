@@ -27,6 +27,7 @@
 						"Support",
 						"Misc"
 						)
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/mecha_part_fabricator/mining_fabricator/New_parts()
 	component_parts = list()
@@ -153,8 +154,6 @@
 
 	if(panel_open)
 		if(iscrowbar(W))
-			for(var/material in resources)
-				remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 			default_deconstruction_crowbar(W)
 			return 1
 		else

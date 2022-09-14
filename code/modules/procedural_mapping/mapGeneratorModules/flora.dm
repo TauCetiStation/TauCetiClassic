@@ -58,13 +58,14 @@
 	spawnableAtoms = list()
 
 	var/turf_type
+	var/persistance = 0.5
 
 	var/list/perlin_map
 
 /datum/map_generator_module/flora/New()
 	var/width = world.maxx
 	var/height = world.maxy
-	perlin_map = get_perlin_noise(get_raw_2d_noise(width, height), width, height)
+	perlin_map = get_perlin_noise(get_raw_2d_noise(width, height), width, height, persistance)
 
 /datum/map_generator_module/flora/checkPlaceAtom(turf/T)
 	if(!istype(T, turf_type))

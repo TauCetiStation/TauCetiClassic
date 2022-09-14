@@ -475,6 +475,15 @@
 	icon_state = "mining_voucher"
 	w_class = SIZE_MINUSCULE
 
+/obj/item/weapon/mining_voucher/armour
+	name = "armor voucher"
+	desc = "A totaly not stolen and modified token to redeem a piece of equipment. Use it on KillNTVendor and get your armor."
+	icon_state = "armour_voucher"
+
+/obj/item/weapon/mining_voucher/kit
+	name = "kit voucher"
+	desc = "A totaly not stolen and modified token to redeem a piece of equipment. Use it on KillNTVendor and get your equipment."
+	icon_state = "kit_voucher"
 
 /**********************Mining Point Card**********************/
 
@@ -564,6 +573,7 @@
 		if(do_teleport(M, target, 3))
 			if(isliving(M))
 				var/mob/living/L = M
+				L.Stun(1)
 				L.Weaken(3)
 				shake_camera(L, 20, 1)
 				if(ishuman(L))
@@ -718,7 +728,7 @@
 	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(W.use(0, user) && !stat)
+		if(W.use(0, user) && stat == CONSCIOUS)
 			if(stance != HOSTILE_STANCE_IDLE)
 				to_chat(user, "<span class='info'>You can't repair the [src] while it is moving!</span>")
 				return

@@ -232,7 +232,7 @@
 
 	H.see_in_dark = 8
 	H.ventcrawler = 2
-	H.status_flags &= ~CANSTUN|CANWEAKEN
+	H.remove_status_flags(CANSTUN|CANWEAKEN)
 	H.pass_flags |= PASSTABLE
 
 	saved_color = H.color
@@ -501,7 +501,7 @@
 	H.alpha = 0
 	animate(H, alpha=saved_alpha, time=1 SECOND)
 
-	if(H.stat)
+	if(H.stat != CONSCIOUS)
 		return
 
 	add_invis_timer()
@@ -509,7 +509,7 @@
 /datum/component/mob_modifier/invisible/proc/become_invisible()
 	var/mob/living/simple_animal/hostile/H = parent
 
-	if(H.stat)
+	if(H.stat != CONSCIOUS)
 		return
 
 	invisible = TRUE

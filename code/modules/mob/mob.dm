@@ -138,7 +138,6 @@
 // WHY this self_message/blind_message/deaf_message so inconsistent as positional args!
 // todo:
 // * need to combine visible_message/audible_message to one proc (something like show_message) (maybe it will be a mess because of *_distance ?)
-// * replace show_message in /emote()'s & custom_emote()
 // * need some version combined with playsound (one cycle for audio message and sound)
 /mob/visible_message(message, self_message, blind_message, viewing_distance = world.view, list/ignored_mobs)
 	for(var/mob/M in (viewers(get_turf(src), viewing_distance) - ignored_mobs)) //todo: get_hearers_in_view() (tg)
@@ -317,6 +316,17 @@
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
+	if(isobserver(src))
+		return
+	var/mob/living/carbon/human/H = src
+	if(ishuman(src))
+		if(H.head && H.head.flags_inv && HIDEEYES)
+			return
+		if(H.wear_mask && H.wear_mask.flags_inv && HIDEEYES)
+			return
+	if(!A.z) //no message if we examine something in a backpack
+		return
+	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
@@ -552,8 +562,6 @@
 			if(H.pull_damage())
 				to_chat(src, "<span class='danger'>Pulling \the [H] in their current condition would probably be a bad idea.</span>")
 
-		count_pull_debuff()
-
 /mob/verb/stop_pulling()
 	set name = "Stop Pulling"
 	set category = "IC"
@@ -568,16 +576,15 @@
 			pulling = null
 		if(pullin)
 			pullin.update_icon(src)
-		count_pull_debuff()
 
 /mob/proc/count_pull_debuff()
-	return
+	return 0
 
 /mob/proc/can_use_hands()
 	return
 
 /mob/proc/is_active()
-	return (usr.stat <= 0)
+	return (usr.stat <= CONSCIOUS)
 
 /mob/proc/is_dead()
 	return stat == DEAD
@@ -734,7 +741,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(!canmove)						return 0
 	if(client.moving)					return 0
 	if(world.time < client.move_delay)	return 0
-	if(stat==2)							return 0
+	if(stat==DEAD)						return 0
 	if(anchored)						return 0
 	if(notransform)						return 0
 	if(restrained())					return 0
@@ -744,11 +751,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 // We need speed out of this proc, thats why using incapacitated() helper here is a bad idea.
 /mob/proc/update_canmove(no_transform = FALSE)
 
-	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+	var/ko = paralysis || stat || (status_flags & FAKEDEATH)
 
-	lying = (ko || crawling) && !captured && !buckled && !pinned.len
-	canmove = !(ko || stunned || captured || pinned.len)
-	anchored = captured || pinned.len
+	anchored = HAS_TRAIT(src, TRAIT_ANCHORED)
+	lying = (ko || weakened || crawling) && !anchored
+	canmove = !(ko || anchored || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 
 	if(buckled)
 		if(buckled.buckle_lying != -1)
@@ -762,11 +769,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 				V.unload(src)
 			else
 				pixel_y = V.mob_offset_y
-		else
-			if(istype(buckled, /obj/structure/stool/bed/chair))
-				var/obj/structure/stool/bed/chair/C = buckled
-				if(C.flipped)
-					lying = 1
 
 	density = !lying
 
@@ -777,7 +779,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			SEND_SIGNAL(src, COMSIG_MOB_STATUS_NOT_LYING)
 		was_lying = lying
 
-	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isxeno(src))
+	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)))
 		drop_l_hand()
 		drop_r_hand()
 
@@ -798,7 +800,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(update_icon)	//forces a full overlay update
 		update_icon = FALSE
 		regenerate_icons()
-	return canmove
 
 
 /mob/proc/facedir(ndir)
@@ -835,95 +836,22 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
 
-// ========== STUN ==========
-/mob/proc/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
-	if(!isnull(lock))
-		if(lock)
-			status_flags |= LOCKSTUN
-		else
-			status_flags &= ~LOCKSTUN
-	else if(status_flags & LOCKSTUN)
-		return
-
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(max(stunned, amount), 0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		if(updating)
-			update_canmove()
-	else
-		stunned = 0
-
-/mob/proc/SetStunned(amount, updating = 1, ignore_canstun = 0, lock = null) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(!isnull(lock))
-		if(lock)
-			status_flags |= LOCKSTUN
-		else
-			status_flags &= ~LOCKSTUN
-	else if(status_flags & LOCKSTUN)
-		return
-
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(amount, 0)
-		if(updating)
-			update_canmove()
-	else
-		stunned = 0
-
-/mob/proc/AdjustStunned(amount, updating = 1, ignore_canstun = 0, lock = null)
-	if(!isnull(lock))
-		if(lock)
-			status_flags |= LOCKSTUN
-		else
-			status_flags &= ~LOCKSTUN
-	else if(status_flags & LOCKSTUN)
-		return
-
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(stunned + amount, 0)
-		if(updating)
-			update_canmove()
-	else
-		stunned = 0
-
-// ========== WEAKEN ==========
-/mob/proc/Weaken(amount)
-	if(status_flags & CANWEAKEN)
-		weakened = max(max(weakened, amount), 0)
-		update_canmove() // updates lying, canmove and icons
-	else
-		weakened = 0
-
-/mob/proc/SetWeakened(amount)
-	if(status_flags & CANWEAKEN)
-		weakened = max(amount, 0)
+// ======STATUS_FLAGS=======
+/mob/proc/remove_status_flags(remove_flags)
+	if(remove_flags & CANSTUN)
+		SetStunned(0, TRUE)
+	if(remove_flags & CANWEAKEN)
+		SetWeakened(0, TRUE)
+	if(remove_flags & CANPARALYSE)
+		SetParalysis(0, TRUE)
+	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN))
 		update_canmove()
-	else
-		weakened = 0
+	status_flags &= ~remove_flags
 
-/mob/proc/AdjustWeakened(amount)
-	if(status_flags & CANWEAKEN)
-		weakened = max(weakened + amount, 0)
-		update_canmove()
-	else
-		weakened = 0
-
-// ========== PARALYSE ==========
-/mob/proc/Paralyse(amount)
-	if(status_flags & CANPARALYSE)
-		paralysis = max(max(paralysis, amount), 0)
-	else
-		paralysis = 0
-
-/mob/proc/SetParalysis(amount)
-	if(status_flags & CANPARALYSE)
-		paralysis = max(amount, 0)
-	else
-		paralysis = 0
-
-/mob/proc/AdjustParalysis(amount)
-	if(status_flags & CANPARALYSE)
-		paralysis = max(paralysis + amount, 0)
-	else
-		paralysis = 0
+/mob/proc/add_status_flags(add_flags)
+	if(add_flags & GODMODE)
+		stuttering = 0
+	status_flags |= add_flags
 
 // ========== CRAWLING ==========
 /mob/proc/SetCrawling(value)
@@ -986,9 +914,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/get_species()
 	return ""
 
-/mob/proc/flash_weak_pain()
-	flick("weak_pain",pain)
-
 /mob/proc/get_visible_implants(class = 0)
 	var/list/visible_implants = list()
 	for(var/obj/item/O in embedded)
@@ -1012,11 +937,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	var/mob/S = src
 	var/mob/U = usr
-	var/list/valid_objects = list()
-	var/self = FALSE
-
-	if(S == U)
-		self = TRUE // Removing object from yourself.
+	var/list/valid_objects
+	var/self = S == U // Removing object from yourself.
 
 	valid_objects = get_visible_implants(1)
 	if(!valid_objects.len)
@@ -1033,19 +955,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		to_chat(U, "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>")
 
-	if(!do_after(U, 80, target = S))
+	if(!do_skilled(U, S, SKILL_TASK_DIFFICULT, list(/datum/skill/medical = SKILL_LEVEL_TRAINED), -0.2))
 		return
-	if(!selection || !S || !U)
+	if(QDELETED(S) || QDELETED(U) || selection.loc != S)
 		return
 
 	if(self)
 		visible_message("<span class='warning'><b>[src] rips [selection] out of their body.</b></span>","<span class='warning'><b>You rip [selection] out of your body.</b></span>")
 	else
 		visible_message("<span class='warning'><b>[usr] rips [selection] out of [src]'s body.</b></span>","<span class='warning'><b>[usr] rips [selection] out of your body.</b></span>")
-	valid_objects = get_visible_implants(0)
-	if(valid_objects.len == 1) //Yanking out last object - removing verb.
-		src.verbs -= /mob/proc/yank_out_object
-		clear_alert("embeddedobject")
 
 	embedded -= selection
 
@@ -1055,9 +973,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 		var/obj/item/organ/external/BP
 
 		for(var/obj/item/organ/external/limb in H.bodyparts) //Grab the organ holding the implant.
-			for(var/obj/item/weapon/O in limb.implants)
-				if(O == selection)
-					BP = limb
+			if(selection in limb.implants)
+				BP = limb
+				break
 
 		BP.implants -= selection
 		H.sec_hud_set_implants()
@@ -1074,14 +992,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 			var/mob/living/carbon/human/human_user = U
 			human_user.bloody_hands(H)
 
-	selection.loc = get_turf(src)
+	selection.forceMove(get_turf(S))
 
-	for(var/obj/item/weapon/O in pinned)
-		if(O == selection)
-			pinned -= O
-		if(!pinned.len)
-			anchored = FALSE
-	return 1
+	valid_objects = get_visible_implants(1)
+	if(!valid_objects.len) //Yanked out last object - removing verb.
+		src.verbs -= /mob/proc/yank_out_object
+		clear_alert("embeddedobject")
 
 ///Get the ghost of this mob (from the mind)
 /mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
@@ -1118,6 +1034,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 	spell_list -= S
 	if(mind)
 		mind.spell_list -= S
+		if(isliving(mind.current))
+			var/mob/living/L = mind.current
+			if(S.action)
+				S.action.Remove(L)
 	qdel(S)
 
 /mob/proc/ClearSpells()
@@ -1126,9 +1046,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 		qdel(spell)
 
 	if(mind)
-		for(var/spell in mind.spell_list)
-			mind.spell_list -= spell
-			qdel(spell)
+		for(var/obj/effect/proc_holder/spell/S in mind.spell_list)
+			mind.spell_list -= S
+			if(isliving(mind.current))
+				var/mob/living/L = mind.current
+				if(S.action)
+					S.action.Remove(L)
+			qdel(S)
 
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return
@@ -1160,7 +1084,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M)
 	if(M.buckled)
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
@@ -1168,7 +1092,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		var/can_step = step_towards(M, T)
 		density = old_density
 		if(!can_step)
-			return 0
+			return FALSE
 	return ..()
 
 //Default buckling shift visual for mobs
@@ -1178,12 +1102,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(M.layer < layer)
 			M.layer = layer + 0.1
 	else //post unbuckling
-		M.layer = initial(M.layer)
-		M.plane = initial(M.plane)
-		M.pixel_y = initial(M.pixel_y)
+		M.layer = M.default_layer
+		M.pixel_y = M.default_pixel_y
 
 /mob/proc/can_unbuckle(mob/user)
-	return 1
+	return TRUE
 
 /mob/proc/get_targetzone()
 	return null

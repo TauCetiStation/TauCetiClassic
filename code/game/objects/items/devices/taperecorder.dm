@@ -15,7 +15,7 @@
 	var/list/storedinfo = list()
 	var/list/timestamp = list()
 	var/canprint = TRUE
-	flags = CONDUCT
+	flags = CONDUCT | HEAR_TALK
 	throwforce = 2
 	throw_speed = 4
 	throw_range = 20

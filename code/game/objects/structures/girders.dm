@@ -32,7 +32,7 @@
 		visible_message("<span class='warning'><B>[user]</B> бьет каркас!</span>")
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(C.use_charge(user, 1) && prob(40))
+		if(C.use_charge(user, 1))
 			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 			qdel(src)
 	else if(iswrench(W) && state == 0)
@@ -87,7 +87,6 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack/sheet))
-
 		var/obj/item/stack/sheet/S = W
 		switch(S.type)
 

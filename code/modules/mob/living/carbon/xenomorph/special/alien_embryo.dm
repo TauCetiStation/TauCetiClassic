@@ -28,7 +28,7 @@ This is emryo growth procs
 
 /obj/item/alien_embryo/Destroy()
 	if(affected_mob)
-		affected_mob.status_flags &= ~(XENO_HOST)
+		affected_mob.remove_status_flags(XENO_HOST)
 		STOP_PROCESSING(SSobj, src)
 		remove_infected_hud()
 		affected_mob.med_hud_set_status()
@@ -55,7 +55,7 @@ This is emryo growth procs
 			return FALSE
 
 	if(loc != affected_mob)
-		affected_mob.status_flags &= ~(XENO_HOST)
+		affected_mob.remove_status_flags(XENO_HOST)
 		STOP_PROCESSING(SSobj, src)
 		remove_infected_hud()
 		affected_mob.med_hud_set_status()
@@ -106,7 +106,7 @@ This is emryo growth procs
 				affected_mob.emote(pick("sneeze", "cough"))
 		if(4)
 			if(prob(1))
-				if(!affected_mob.stat)
+				if(affected_mob.stat == CONSCIOUS)
 					affected_mob.visible_message("<span class='danger'>\The [affected_mob] starts shaking uncontrollably!</span>", \
                                                  "<span class='danger'>You start shaking uncontrollably!</span>")
 					affected_mob.Paralyse(10)
