@@ -473,8 +473,9 @@
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
 		for(var/obj/item/device/lens/F in contents)
-			if(F.process_icon(A))
-				img = F.process_icon(A)
+			var/image/I = F.process_icon(A)
+			if(I)
+				img = I
 
 		if(isliving(A) && A:lying)
 			img.Turn(A:lying_current)
