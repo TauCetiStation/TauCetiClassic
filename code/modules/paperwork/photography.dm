@@ -363,8 +363,8 @@
 
 /obj/item/device/camera/Destroy()
 	if(lens)
-		qdel(lens)
 		lens = null
+		qdel(lens)
 	return ..()
 
 /obj/item/device/camera/AltClick(mob/user)
