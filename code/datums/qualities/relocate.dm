@@ -5,32 +5,23 @@
 	/*
 	Fill in the sheet with the type of landmark you have set on the map
 	*/
-	var/list/quality_landmarks = list()
+	var/list/landmarks_names = list()
 
 
 /datum/quality/relocate/add_effect(mob/living/carbon/human/H, latespawn)
-	var/obj/effect/landmark/quality_relocate/spawn_landmark = pick(quality_landmarks)
-	if(!spawn_landmark)
-		return
-	var/list/list_landmarks[0] = LAZYACCESSASSOC(global.quality_landmarks, spawn_landmark.name, spawn_landmark)
-	H.forceMove(pick(list_landmarks))
-	/*var/obj/effect/landmark/quality_relocate/Q = pick(global.quality_landmarks["/obj/effect/landmark/quality_relocate"])
-	if(istype(Q, spawn_landmark))
-		H.forceMove(Q.loc)*/
-	/*var/list/spawn_locs = list()
-	for(var/obj/effect/landmark/quality_relocate/Q in global.quality_landmarks)
-		if(!Q)
-			return
-		if(istype(Q, spawn_landmark))
-			spawn_locs += Q.loc
-	if(spawn_locs.len)
-		H.forceMove(pick(spawn_locs))*/
+	var/list/L = list()
+	var/obj/effect/landmark/quality_relocate/Q = null
+	for(var/i in global.quality_landmarks)
+		var/list/spawn_landmark = pick(global.quality_landmarks[i])
+		Q = pick(spawn_landmark)
+		L += Q
+	H.forceMove(pick(L).loc)
 
 /datum/quality/relocate/bad_day
 	name = "Bad Day"
 	desc = "У тебя сегодня очень плохой день. Возможно, ты помнишь как оказался здесь и откуда у тебя эти раны."
 	requirement = "Нет."
-	quality_landmarks = list(/obj/effect/landmark/quality_relocate/bad_day)
+	landmarks_names = list(/obj/effect/landmark/quality_relocate/bad_day)
 
 /datum/quality/relocate/bad_day/add_effect(mob/living/carbon/human/H, latespawn)
 	. = ..()
