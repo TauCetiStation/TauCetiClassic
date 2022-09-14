@@ -388,7 +388,7 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
-	if(!can_put_lens || !contents)
+	if(!can_put_lens || !lens)
 		return ..()
 	if(usr.get_active_hand() != src && !isAI(usr))
 		return ..()
@@ -422,7 +422,7 @@
 		update_desc()
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 		return
-	if(istype(I, /obj/item/device/lens) && can_put_lens && !contents.len)
+	if(istype(I, /obj/item/device/lens) && can_put_lens && !lens)
 		var/obj/item/device/lens/F = I
 		if(!user.unEquip(F))
 			return
