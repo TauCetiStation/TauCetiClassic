@@ -226,7 +226,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant/waiter,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -522,6 +522,7 @@
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 4
 	},
+/obj/effect/landmark/start/medical_doctor/surgeon,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitehall"
@@ -3904,6 +3905,7 @@
 /area/station/maintenance/engineering)
 "ahd" = (
 /obj/machinery/recharge_station,
+/obj/effect/landmark/start/cyborg/robot,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkpurple"
@@ -4165,7 +4167,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant/paranormal_investigator,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -4179,7 +4181,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant/paranormal_investigator,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -4882,7 +4884,7 @@
 /obj/structure/sign/double/barsign{
 	pixel_y = 32
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant/vice_officer,
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/bar)
 "aiF" = (
@@ -6612,6 +6614,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/effect/landmark/start/scientist/phoron_researcher,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkpurple"
@@ -6809,6 +6812,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/effect/landmark/start/assistant/private_eye,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/gym)
 "amC" = (
@@ -8056,6 +8060,7 @@
 	pixel_y = 22
 	},
 /obj/machinery/recharge_station,
+/obj/effect/landmark/start/cyborg/android,
 /turf/simulated/floor/plating{
 	icon_state = "platebot"
 	},
@@ -10662,7 +10667,7 @@
 /area/asteroid/mine/dwarf)
 "bez" = (
 /obj/structure/stool/bed/chair/metal/black,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant/reporter,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11424,6 +11429,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/landmark/start/medical_doctor,
+/obj/effect/landmark/start/medical_doctor/nurse,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -21294,6 +21300,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
+/obj/effect/landmark/start/medical_doctor/surgeon,
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
@@ -22724,6 +22731,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/chaplain,
+/obj/effect/landmark/start/chaplain/counselor,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -23263,6 +23271,7 @@
 /obj/effect/landmark/start/chef,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/landmark/start/chef/cook,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -24014,7 +24023,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant/lawyer,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredfull"
@@ -25821,6 +25830,10 @@
 "pON" = (
 /turf/simulated/wall,
 /area/asteroid/research_outpost/spectro)
+"pPH" = (
+/obj/effect/landmark/start/assistant/private_eye,
+/turf/simulated/floor/carpet/black,
+/area/station/civilian/gym)
 "pPU" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
 	dir = 5
@@ -27203,6 +27216,7 @@
 	dir = 6;
 	network = list("SS13","Medical")
 	},
+/obj/effect/landmark/start/medical_doctor/nurse,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
@@ -28967,7 +28981,7 @@
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant/lawyer,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredfull"
@@ -32174,6 +32188,8 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/effect/landmark/start/station_engineer/electrician,
+/obj/effect/landmark/start/station_engineer/engine_technician,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warndarkcorners"
@@ -32268,7 +32284,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant/vice_officer,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -33345,6 +33361,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/effect/landmark/start/medical_doctor/nurse,
 /turf/simulated/floor,
 /area/station/medical/reception)
 "xjf" = (
@@ -33582,6 +33599,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/start/assistant/waiter,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -34457,7 +34475,7 @@
 /obj/structure/stool/bed/chair/metal/yellow{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant/reporter,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -58066,7 +58084,7 @@ sMI
 ajh
 ajj
 aku
-akD
+pPH
 anY
 aik
 aqk
