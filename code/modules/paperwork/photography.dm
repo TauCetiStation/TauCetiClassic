@@ -450,8 +450,8 @@
 			to_chat(user, "<span class='warning'>You set zoom level to 1.</span>")
 
 /obj/item/device/camera/proc/eject_lens(mob/user)
-	for(var/obj/item/device/lens/F in contents)
-		usr.put_in_hands(F)
+	if(lens)
+		usr.put_in_hands(lens)
 		lens = null
 		to_chat(user, "<span class='warning'>You detach the filter out of camera's lens.</span>")
 
@@ -478,8 +478,7 @@
 	for(var/atom/A in sorted)
 		var/icon/img
 		if(lens)
-			for(var/obj/item/device/lens/F in contents)
-				img = F.process_icon(A)
+			img = lens.process_icon(A)
 		else
 			img = getFlatIcon(A)
 
