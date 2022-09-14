@@ -362,8 +362,9 @@
 	update_desc()
 
 /obj/item/device/camera/Destroy()
-	dropContents()
-	lens = null
+	if(lens)
+		qdel(lens)
+		lens = null
 	return ..()
 
 /obj/item/device/camera/AltClick(mob/user)
