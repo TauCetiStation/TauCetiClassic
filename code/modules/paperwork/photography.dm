@@ -361,6 +361,11 @@
 		lens = new base_lens(src)
 	update_desc()
 
+/obj/item/device/camera/Destroy()
+	dropContents()
+	lens = null
+	return ..()
+
 /obj/item/device/camera/AltClick(mob/user)
 	if(!Adjacent(user))
 		return ..()
@@ -472,7 +477,7 @@
 
 	for(var/atom/A in sorted)
 		var/icon/img
-		if(contents.len)
+		if(lens)
 			for(var/obj/item/device/lens/F in contents)
 				img = F.process_icon(A)
 		else
