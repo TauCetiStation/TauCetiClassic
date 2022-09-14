@@ -190,7 +190,7 @@
 
 /obj/item/device/lens/rentgene/process_icon(atom/A)
 	if(!ishuman(A))
-		return FALSE
+		return getFlatIcon(A)
 	return icon("icons/mob/human.dmi","electrocuted_generic",A.dir)
 
 /obj/item/device/lens/nude
@@ -202,7 +202,7 @@
 
 /obj/item/device/lens/nude/process_icon(atom/A)
 	if(!ishuman(A))
-		return FALSE
+		return getFlatIcon(A)
 	var/icon/img = icon('icons/effects/32x32.dmi', "")
 	var/mob/living/carbon/human/H = A
 	for(var/obj/item/organ/external/BP in H.bodyparts)
@@ -241,7 +241,7 @@
 	return img
 
 /obj/item/device/lens/proc/process_icon(atom/A)
-	return
+	return getFlatIcon(A)
 
 
 /**************
@@ -471,11 +471,12 @@
 	var/icon/res = get_base_photo_icon()
 
 	for(var/atom/A in sorted)
-		var/icon/img = getFlatIcon(A)
-		for(var/obj/item/device/lens/F in contents)
-			var/image/I = F.process_icon(A)
-			if(I)
-				img = I
+		var/icon/img
+		if(var/obj/item/device/lens/F in contents)
+			for(var/obj/item/device/lens/F in contents)
+				img = F.process_icon(A)
+		else
+			img = getFlatIcon(A)
 
 		if(isliving(A) && A:lying)
 			img.Turn(A:lying_current)
