@@ -472,7 +472,7 @@
 
 	for(var/atom/A in sorted)
 		var/icon/img
-		if(var/obj/item/device/lens/F in contents)
+		if(/obj/item/device/lens in contents)
 			for(var/obj/item/device/lens/F in contents)
 				img = F.process_icon(A)
 		else
