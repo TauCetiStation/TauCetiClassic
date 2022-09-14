@@ -233,7 +233,7 @@
 /// from /obj/item/weapon/stock_parts/cell
 #define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed"
 /// from base of obj/item/AltClick()
-#define COMSIG_ITEM_CTRLSHIFTCLICK "item_ctrl_shift_click"
+#define COMSIG_CLICK_CTRL_SHIFT "ctrl_shift_click"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()

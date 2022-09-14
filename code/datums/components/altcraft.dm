@@ -1,7 +1,7 @@
 /datum/component/altcraft/Initialize()
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ITEM_CTRLSHIFTCLICK, .proc/show_radial_recipes)
+	RegisterSignal(parent, COMSIG_CLICK_CTRL_SHIFT, .proc/show_radial_recipes)
 
 /datum/component/altcraft/proc/check_menu()
 	var/mob/living/carbon/human/H = parent
@@ -43,5 +43,5 @@
 	crafting_menu.craft_until_cant(chosen_recipe, H, get_turf(parent))
 
 /datum/component/altcraft/Destroy()
-	UnregisterSignal(parent, COMSIG_ITEM_CTRLSHIFTCLICK)
+	UnregisterSignal(parent, COMSIG_CLICK_CTRL_SHIFT)
 	return ..()
