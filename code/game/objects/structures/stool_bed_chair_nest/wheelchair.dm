@@ -74,6 +74,15 @@
 		to_chat(user, "<span class='red'>You cannot drive while being pushed.</span>")
 		return
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/driver = user
+		var/obj/item/organ/external/l_hand = driver.bodyparts_by_name[BP_L_ARM]
+		var/obj/item/organ/external/r_hand = driver.bodyparts_by_name[BP_R_ARM]
+		if((!l_hand || (l_hand.is_stump)) && (!r_hand || (r_hand.is_stump)))
+			return // No hands to drive your chair? Tough luck!
+
+	user.client?.move_delay += 2
+
 	// Let's roll
 	driving = 1
 	var/turf/T = null
