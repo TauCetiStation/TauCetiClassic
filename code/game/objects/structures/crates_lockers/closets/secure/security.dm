@@ -292,6 +292,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/clothing/suit/armor/det_suit(src)
+	new /obj/item/weapon/melee/classic_baton(src)
+	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	if(prob(50))
 		new /obj/item/weapon/gun/projectile/automatic/colt1911(src)
 		for (var/i in 1 to 2)
@@ -413,7 +415,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 
 /obj/structure/closet/secure_closet/usp_cartridges
 	name = "USP cartridges Secure Closet"
-	req_access = list(access_keycard_auth)	
+	req_access = list(access_keycard_auth)
 
 /obj/structure/closet/secure_closet/usp_cartridges/PopulateContents()
 	new /obj/item/weapon/skill_cartridge/usp7(src)
