@@ -57326,12 +57326,31 @@
 /turf/simulated/floor/wood,
 /area/station/security/detectives_office)
 "nLr" = (
+/obj/structure/closet/crate{
+	name = "TEG crate"
+	},
+/obj/item/weapon/circuitboard/teg,
+/obj/item/weapon/circuitboard/circulator,
+/obj/item/weapon/circuitboard/circulator,
+/obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/stock_parts/console_screen,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/matter_bin,
+/obj/item/weapon/stock_parts/matter_bin,
+/obj/item/stack/cable_coil,
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 4
 	},
-/obj/item/weapon/flora/random,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/engineering/atmos)
 "nLK" = (
@@ -65489,6 +65508,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/green{
+	dir = 6
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -77957,8 +77979,10 @@
 /turf/environment/space,
 /area/shuttle/mining/station)
 "tap" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green,
 /obj/structure/closet/bombcloset,
+/obj/machinery/atmospherics/pipe/manifold/visible/green{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -80406,6 +80430,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/visible/green,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "tIJ" = (
@@ -138252,14 +138277,14 @@ hZR
 tye
 tye
 erK
-cJy
+iRy
+ozc
+fms
+fms
 ozc
 ozc
 ozc
-ozc
-ozc
-ozc
-ozc
+fms
 ozc
 ozc
 cJy
@@ -138507,13 +138532,13 @@ kTc
 aNB
 pRV
 tIn
-cJy
-mvA
+mEx
+rpu
 xQS
 rpu
 rpu
 rpu
-cno
+rpu
 rpu
 rpu
 rpu
@@ -138765,12 +138790,12 @@ rvs
 tap
 dId
 mEx
-wfv
-mvA
+rpu
+rpu
+rpu
 rpu
 rpu
 cno
-fGO
 mvA
 xQS
 cdU
@@ -139023,11 +139048,11 @@ tye
 tye
 fkt
 mvA
+rpu
+rpu
+rpu
+rpu
 pUD
-mvA
-cdU
-nJq
-wfv
 tKX
 mvA
 pUD
@@ -139277,12 +139302,12 @@ lZX
 jTE
 bMz
 xRK
-cJy
+iRy
 cJy
 fGO
 mvA
-pUD
-nJq
+rpu
+rpu
 xQS
 cno
 tKX
