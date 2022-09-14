@@ -63,7 +63,7 @@
 
 
 /atom/movable/screen/fullscreen
-	icon = 'icons/mob/screen1_full.dmi'
+	icon = 'icons/hud/screen1_full.dmi'
 	icon_state = "default"
 	screen_loc = "CENTER-7,CENTER-7"
 	layer = FULLSCREEN_LAYER
@@ -134,22 +134,22 @@
 	icon_state = "impairedoverlay"
 
 /atom/movable/screen/fullscreen/blurry
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "blurry"
 
 /atom/movable/screen/fullscreen/flash
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "flash"
 
 /atom/movable/screen/fullscreen/flash/noise
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "noise"
 
 /atom/movable/screen/fullscreen/high
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
 

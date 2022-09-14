@@ -91,7 +91,8 @@ Note: Must be placed west/left of and R&D console to function.
 		shock(user,50)
 	if (I.is_open_container())
 		return 1
-	if (default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", I))
+	if (default_deconstruction_screwdriver(user, "protolathe", "protolathe", I))
+		update_icon()
 		if(linked_console)
 			linked_console.linked_lathe = null
 			linked_console = null
@@ -113,7 +114,7 @@ Note: Must be placed west/left of and R&D console to function.
 	if (disabled)
 		return
 	if (!linked_console)
-		to_chat(user, "\The protolathe must be linked to an R&D console first!")
+		to_chat(user, "<span class='warning'>\The [name] must be linked to an R&D console first!</span>")
 		return 1
 	if (busy)
 		to_chat(user, "<span class='warning'>The protolathe is busy. Please wait for completion of previous operation.</span>")
