@@ -1,6 +1,6 @@
-#define DAMAGE_LAYER FULLSCREEN_LAYER + 0.1
-#define BLIND_LAYER DAMAGE_LAYER + 0.1
-#define CRIT_LAYER BLIND_LAYER + 0.1
+#define SCREEN_DAMAGE_LAYER FULLSCREEN_LAYER + 0.1
+#define SCREEN_BLIND_LAYER SCREEN_DAMAGE_LAYER + 0.1
+#define SCREEN_CRIT_LAYER SCREEN_BLIND_LAYER + 0.1
 
 /mob
 	var/list/screens = list()
@@ -92,22 +92,22 @@
 
 /atom/movable/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
-	layer = DAMAGE_LAYER
+	layer = SCREEN_DAMAGE_LAYER
 	plane = FULLSCREEN_PLANE
 
 /atom/movable/screen/fullscreen/oxy
 	icon_state = "oxydamageoverlay"
-	layer = DAMAGE_LAYER
+	layer = SCREEN_DAMAGE_LAYER
 	plane = FULLSCREEN_PLANE
 
 /atom/movable/screen/fullscreen/crit
 	icon_state = "passage"
-	layer = CRIT_LAYER
+	layer = SCREEN_CRIT_LAYER
 	plane = FULLSCREEN_PLANE
 
 /atom/movable/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"
-	layer = BLIND_LAYER
+	layer = SCREEN_BLIND_LAYER
 	plane = FULLSCREEN_PLANE
 	mouse_opacity = MOUSE_OPACITY_ICON
 
@@ -154,6 +154,6 @@
 	icon_state = "druggy"
 
 #undef FULLSCREEN_LAYER
-#undef BLIND_LAYER
-#undef DAMAGE_LAYER
-#undef CRIT_LAYER
+#undef SCREEN_BLIND_LAYER
+#undef SCREEN_DAMAGE_LAYER
+#undef SCREEN_CRIT_LAYER
