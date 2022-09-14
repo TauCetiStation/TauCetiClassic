@@ -114,7 +114,7 @@
 		to_chat(M, "<span class='warning'>The tube's support pylons block your way.</span>")
 		return ..()
 	else
-		M.forceMove(loc)
+		M.forceMove(loc, TRUE)
 		to_chat(M, "<span class='info'>You slip under the tube.</span>")
 
 /obj/structure/transit_tube/station/Bumped(mob/M)

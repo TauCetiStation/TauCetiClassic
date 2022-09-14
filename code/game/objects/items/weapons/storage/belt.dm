@@ -216,8 +216,15 @@
 		/obj/item/taperoll/police,
 		/obj/item/device/radio/headset,
 		/obj/item/weapon/melee,
+		/obj/item/weapon/kitchenknife,
 		/obj/item/device/flashlight/seclite
 		)
+
+/obj/item/weapon/storage/belt/security/tactical/throwing
+	storage_slots = 7
+	startswith = list(
+		/obj/item/weapon/kitchenknife/throwing = 7,
+	)
 
 /obj/item/weapon/storage/belt/military
 	name = "military belt"

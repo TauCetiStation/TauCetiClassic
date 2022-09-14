@@ -463,7 +463,7 @@
 /obj/structure/alien/air_plant/examine(mob/user)
 	..()
 	if(isxeno(user))
-		to_chat(user, "Сurrent ambient pressure: [pressure] kPa.")
+		to_chat(user, "Current ambient pressure: [pressure] kPa.")
 
 #undef AIR_PLANT_PRESSURE
 #undef WEED_SOUTH_EDGING

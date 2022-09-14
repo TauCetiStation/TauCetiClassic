@@ -314,6 +314,13 @@
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
 	#define COMPONENT_BLOCK_SWAP 1
 
+/// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
+#define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
+/// from /mob/living/carbon/proc/finish_monkeyize()
+#define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
+/// from /mob/living/carbon/proc/finish_humanize(): (species)
+#define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
+
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
 #define COMSIG_MOB_HOSTILE_ATTACKINGTARGET "mob_hostile_attackingtarget"
