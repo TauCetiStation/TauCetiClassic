@@ -5022,6 +5022,8 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
+/obj/item/device/camera,
+/obj/item/device/lens/rentgene,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -10435,10 +10437,10 @@
 /obj/item/weapon/folder/red,
 /obj/item/weapon/storage/box/evidence,
 /obj/item/device/taperecorder,
-/obj/item/device/camera,
 /obj/machinery/newscaster{
 	pixel_x = 28
 	},
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
 "cqC" = (
@@ -11382,9 +11384,6 @@
 /area/station/maintenance/disposal)
 "cDS" = (
 /obj/structure/table,
-/obj/item/device/camera{
-	pixel_y = 5
-	},
 /obj/machinery/newscaster{
 	pixel_y = -28
 	},
@@ -16100,6 +16099,7 @@
 	},
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/device/camera/oldcamera,
 /turf/simulated/floor/carpet/orange,
 /area/station/maintenance/medbay)
 "dKD" = (
@@ -19111,10 +19111,10 @@
 /obj/item/clothing/gloves/security/marinad,
 /obj/structure/closet,
 /obj/item/clothing/suit/marinad{
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0)
+	armor = list("melee"=0,"bullet"=0,"laser"=0,"energy"=0,"bomb"=0,"bio"=0,"rad"=0)
 	},
 /obj/item/clothing/head/helmet/tactical/marinad{
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0)
+	armor = list("melee"=0,"bullet"=0,"laser"=0,"energy"=0,"bomb"=0,"bio"=0,"rad"=0)
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -24300,14 +24300,12 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
-/obj/item/device/camera{
-	pixel_x = 13;
-	pixel_y = 5
-	},
 /obj/item/device/taperecorder{
 	pixel_x = -3;
 	pixel_y = 7
 	},
+/obj/item/device/camera,
+/obj/item/device/lens/rentgene,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkpurple"
@@ -24381,15 +24379,11 @@
 /obj/item/weapon/storage/photo_album{
 	pixel_y = 5
 	},
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken3"
 	},
@@ -24506,6 +24500,7 @@
 /obj/machinery/newscaster{
 	pixel_x = -28
 	},
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken6"
 	},
@@ -27201,7 +27196,6 @@
 /area/station/medical/medbreak)
 "gkv" = (
 /obj/structure/table/woodentable,
-/obj/item/device/camera,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
@@ -32021,6 +32015,7 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
 "hoy" = (
@@ -34313,6 +34308,7 @@
 "hVf" = (
 /obj/structure/table/glass,
 /obj/item/weapon/hemostat,
+/obj/item/device/lens/nude,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "hVg" = (
@@ -40567,7 +40563,6 @@
 /area/station/rnd/telesci)
 "jBr" = (
 /obj/structure/table/woodentable,
-/obj/item/device/camera,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -52816,6 +52811,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
@@ -60372,7 +60368,6 @@
 /area/station/engineering/atmos)
 "oyl" = (
 /obj/structure/table/woodentable,
-/obj/item/device/camera,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -63289,6 +63284,7 @@
 	pixel_y = -28
 	},
 /obj/structure/cable,
+/obj/item/device/camera/polar,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/dormitories/dormthree)
 "pmN" = (
@@ -70216,6 +70212,7 @@
 /obj/item/toy/sound_button/syndi{
 	pixel_x = 6
 	},
+/obj/item/weapon/storage/box/box_lenses,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -70657,10 +70654,6 @@
 /area/station/engineering/atmos)
 "riS" = (
 /obj/structure/table,
-/obj/item/device/camera{
-	pixel_x = -8;
-	pixel_y = 4
-	},
 /obj/item/device/taperecorder{
 	pixel_x = 5;
 	pixel_y = 6
@@ -74746,9 +74739,7 @@
 /obj/item/painting_frame{
 	pixel_y = 4
 	},
-/obj/item/device/camera{
-	pixel_y = 5
-	},
+/obj/item/device/camera/lomo,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "slu" = (
@@ -76616,7 +76607,6 @@
 /area/station/rnd/robotics)
 "sGX" = (
 /obj/structure/table/woodentable,
-/obj/item/device/camera,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
@@ -79818,6 +79808,10 @@
 /obj/item/clothing/suit/wcoat,
 /obj/item/clothing/head/beret/black,
 /obj/effect/decal/cleanable/cobweb,
+/obj/item/device/lens/posterization,
+/obj/item/device/lens/old,
+/obj/item/device/lens/grayscale,
+/obj/item/device/lens/sepia,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -80159,10 +80153,6 @@
 /area/station/maintenance/brig)
 "tFC" = (
 /obj/structure/table,
-/obj/item/device/camera{
-	pixel_x = -7;
-	pixel_y = 5
-	},
 /obj/item/device/taperecorder{
 	pixel_x = 5;
 	pixel_y = 3
@@ -81201,9 +81191,6 @@
 /area/station/maintenance/medbay)
 "tRf" = (
 /obj/structure/table/woodentable/fancy/black,
-/obj/item/device/camera{
-	pixel_y = 4
-	},
 /obj/machinery/light/small,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -93467,7 +93454,6 @@
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
-/obj/item/device/camera,
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
 	},
