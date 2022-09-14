@@ -220,6 +220,8 @@
 /// from base of mob/MiddleClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_MIDDLECLICKWITH "item_middleclickwith"
 	#define COMSIG_ITEM_CANCEL_CLICKWITH 1
+/// from base of obj/item/AltClick()
+#define COMSIG_CLICK_CTRL_SHIFT "ctrl_shift_click"
 /// from base of atom/MouseDrop(): (/atom/over, /atom/dropping, /mob/user)
 #define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"
 	// #define COMPONENT_NO_MOUSEDROP 1
@@ -232,8 +234,6 @@
 #define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
 /// from /obj/item/weapon/stock_parts/cell
 #define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed"
-/// from base of obj/item/AltClick()
-#define COMSIG_CLICK_CTRL_SHIFT "ctrl_shift_click"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
