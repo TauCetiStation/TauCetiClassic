@@ -15,7 +15,8 @@
 		var/list/spawn_landmark = pick(global.quality_landmarks[i])
 		Q = pick(spawn_landmark)
 		L += Q
-	H.forceMove(pick(L).loc)
+	var/obj/effect/landmark/quality_relocate/P = pick(L)
+	H.forceMove(P.loc)
 
 /datum/quality/relocate/bad_day
 	name = "Bad Day"
