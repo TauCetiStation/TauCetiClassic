@@ -84630,12 +84630,15 @@
 /obj/item/weapon/folder/brown{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp{
-	pixel_y = 4
-	},
 /obj/machinery/computer/guestpass{
 	dir = 1;
 	pixel_y = -28
+	},
+/obj/item/weapon/stamp{
+	name = "cargo rubber stamp";
+	pixel_x = -2;
+	pixel_y = 3;
+	stamp_message = "Cargo"
 	},
 /turf/simulated/floor{
 	dir = 5;
