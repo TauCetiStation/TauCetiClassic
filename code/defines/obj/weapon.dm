@@ -103,7 +103,7 @@
 
 /obj/item/weapon/legcuffs/beartrap/attack_self(mob/user)
 	..()
-	if(ishuman(user) && !user.stat && !user.restrained())
+	if(ishuman(user) && user.stat == CONSCIOUS && !user.restrained())
 		armed = !armed
 		icon_state = "beartrap[armed]"
 		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"].</span>")
@@ -134,7 +134,7 @@
 	icon_state = "bola"
 	breakouttime = 35 //easy to apply, easy to break out of
 	origin_tech = "engineering=3;combat=1"
-	throw_speed = 0.8
+	throw_speed = 5
 	var/weaken = 0
 
 /obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
@@ -162,8 +162,6 @@
 	origin_tech = "engineering=4;combat=3"
 	weaken = 2
 	throw_range = 5
-	throw_speed = 2
-
 
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"

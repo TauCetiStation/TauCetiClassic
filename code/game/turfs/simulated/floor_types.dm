@@ -252,7 +252,7 @@
 /mob/living/silicon/robot/entered_water_turf()
 	Stun(2)
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 	if(prob(25))
 		adjustFireLoss(rand(10, 20))
@@ -407,7 +407,9 @@
 	. = ..()
 	update_icon(1)
 
-	set_light(1.5, l_color = SSenvironment.turf_light_color[z])
+	var/env_light_color = SSenvironment.turf_light_color[z]
+	if(env_light_color)
+		set_light(1.5, l_color = env_light_color)
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
 	underlays.Cut()

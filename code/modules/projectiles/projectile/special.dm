@@ -78,7 +78,7 @@
 			playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER, 40)
 
 			for(var/mob/M in range(10, src))
-				if(!M.stat && !isAI(M))\
+				if(M.stat == CONSCIOUS && !isAI(M))\
 					shake_camera(M, 3, 1)
 			qdel(src)
 			return 1
@@ -241,7 +241,7 @@
 
 	if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
-		M.take_damage(damage)
+		M.take_damage(50)
 		M.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 
 	if(ishuman(target))

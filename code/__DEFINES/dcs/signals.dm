@@ -230,6 +230,8 @@
 /// from mob/carbon/swap_hand: (mob/user)
 #define COMSIG_ITEM_BECOME_ACTIVE "item_become_active"
 #define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
+/// from /obj/item/weapon/stock_parts/cell
+#define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
@@ -309,6 +311,13 @@
 ///from base of mob/living/carbon/swap_hand(): (obj/item)
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
 	#define COMPONENT_BLOCK_SWAP 1
+
+/// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
+#define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
+/// from /mob/living/carbon/proc/finish_monkeyize()
+#define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
+/// from /mob/living/carbon/proc/finish_humanize(): (species)
+#define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)

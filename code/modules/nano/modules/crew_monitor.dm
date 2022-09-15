@@ -44,7 +44,7 @@
 				crewmemberData["assignment"] = H.get_assignment(if_no_id="Unknown", if_no_job="No Job")
 
 				if(C.sensor_mode >= SUIT_SENSOR_BINARY)
-					crewmemberData["dead"] = H.stat > 1
+					crewmemberData["dead"] = H.stat > UNCONSCIOUS
 
 				if(C.sensor_mode >= SUIT_SENSOR_VITAL)
 					crewmemberData["oxy"] = round(H.getOxyLoss(), 1)

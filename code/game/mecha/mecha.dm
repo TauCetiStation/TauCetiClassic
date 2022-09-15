@@ -206,7 +206,7 @@
 
 /obj/mecha/proc/click_action(atom/target,mob/user)
 	if(!src.occupant || src.occupant != user ) return
-	if(user.stat) return
+	if(user.stat != CONSCIOUS) return
 	if(state)
 		occupant_message("<font color='red'>Maintenance protocols in effect</font>")
 		return
@@ -453,7 +453,7 @@
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(!prob(src.deflect_chance))
-		take_damage(15)
+		take_damage(40)
 		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='warning'>You slash at the armored suit!</span>")
@@ -727,8 +727,8 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'><B>[user]</B> has punched \the <B>[src]!</B></span>")
 		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		if(prob(50) && Ham.use_charge(user,6))
-			take_damage(Ham.force * 3)
+		if(Ham.use_charge(user,6))
+			take_damage(Ham.force * 2)
 	else
 		user.SetNextMove(CLICK_CD_MELEE)
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
@@ -945,7 +945,7 @@
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		to_chat(user, "Consciousness matrix not detected.")
 		return 0
-	else if(mmi_as_oc.brainmob.stat)
+	else if(mmi_as_oc.brainmob.stat != CONSCIOUS)
 		to_chat(user, "Beta-rhythm below acceptable level.")
 		return 0
 	else if(occupant)
@@ -971,7 +971,7 @@
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 			to_chat(user, "Consciousness matrix not detected.")
 			return 0
-		else if(mmi_as_oc.brainmob.stat)
+		else if(mmi_as_oc.brainmob.stat != CONSCIOUS)
 			to_chat(user, "Beta-rhythm below acceptable level.")
 			return 0
 		user.drop_from_inventory(mmi_as_oc)
