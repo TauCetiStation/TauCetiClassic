@@ -2979,29 +2979,12 @@
 /turf/environment/space,
 /area/shuttle/syndicate_elite/mothership)
 "ahQ" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/rig/ert/security,
-/obj/item/clothing/head/helmet/space/rig/ert/security,
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/melee/baton,
-/obj/item/device/flash,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/plastique,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/weapon/storage/belt/security,
-/obj/item/clothing/glasses/night,
-/obj/item/clothing/glasses/sunglasses/hud/sechud,
-/obj/item/weapon/storage/backpack/ert/security,
-/obj/machinery/light/small{
-	dir = 8
+/obj/machinery/door/airlock/centcom{
+	name = "Custodial Closet";
+	req_access = list(101)
 	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/centcom/specops)
 "ahR" = (
@@ -11710,28 +11693,13 @@
 	},
 /area/custom/tophat)
 "aAY" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/rig/ert/engineer,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/head/helmet/space/rig/ert/engineer,
-/obj/item/device/flash,
-/obj/item/device/multitool,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/accessory/storage/brown_vest,
-/obj/item/weapon/storage/belt/utility/full,
-/obj/item/clothing/glasses/meson,
-/obj/item/weapon/storage/backpack/ert/engineer,
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1441;
-	listening = 0;
-	name = "Spec Ops Intercom";
-	pixel_x = -28;
-	pixel_y = -5
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Drop Pod Garage";
+	network = list("ERT")
 	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	dir = 5;
+	icon_state = "darkblue"
 	},
 /area/centcom/specops)
 "aAZ" = (
@@ -12027,12 +11995,33 @@
 	},
 /area/centcom/specops)
 "aBH" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/ert/engineer,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/head/helmet/space/rig/ert/engineer,
+/obj/item/device/flash,
+/obj/item/device/multitool,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/accessory/storage/brown_vest,
+/obj/item/weapon/storage/belt/utility/full,
+/obj/item/clothing/glasses/meson,
+/obj/item/weapon/storage/backpack/ert/engineer,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Engineering";
+	dir = 4;
+	network = list("ERT")
 	},
 /turf/unsimulated/floor{
 	dir = 8;
-	icon_state = "black"
+	icon_state = "vault"
 	},
 /area/centcom/specops)
 "aBI" = (
@@ -12141,14 +12130,17 @@
 	},
 /area/velocity)
 "aBW" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/projectile/glock/spec,
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Shuttle Dock";
+	dir = 4;
+	network = list("ERT")
+	},
 /turf/unsimulated/floor{
 	dir = 8;
-	icon_state = "vault"
+	icon_state = "black"
 	},
 /area/centcom/specops)
 "aBX" = (
@@ -12279,15 +12271,40 @@
 	},
 /area/centcom/specops)
 "aCj" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger{
-	pixel_y = 4
+/obj/structure/rack,
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = 6
 	},
-/obj/machinery/light/small{
-	dir = 1
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = 6
+	},
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = -3
+	},
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = -3
+	},
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = -6
+	},
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = -6
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Conference Hall North";
+	network = list("ERT")
 	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/centcom/specops)
 "aCk" = (
@@ -12344,16 +12361,27 @@
 	},
 /area/space)
 "aCq" = (
+/obj/effect/landmark{
+	name = "Commando"
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops.";
+	network = list("ERT")
+	},
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "darkyellowcorners"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/centcom/specops)
 "aCr" = (
 /obj/structure/stool/bed/chair/metal/black,
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Hall";
+	network = list("ERT")
+	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	dir = 1;
+	icon_state = "darkyellowcorners"
 	},
 /area/centcom/specops)
 "aCs" = (
@@ -12935,31 +12963,14 @@
 /area/centcom/specops)
 "aDD" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/emergency_oxygen/double{
-	pixel_x = 6
+/obj/item/weapon/gun/projectile/glock/spec,
+/obj/machinery/light/small{
+	dir = 8
 	},
-/obj/item/weapon/tank/emergency_oxygen/double{
-	pixel_x = 6
-	},
-/obj/item/weapon/tank/emergency_oxygen/double{
-	pixel_x = 3
-	},
-/obj/item/weapon/tank/emergency_oxygen/double{
-	pixel_x = 3
-	},
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double{
-	pixel_x = -3
-	},
-/obj/item/weapon/tank/emergency_oxygen/double{
-	pixel_x = -3
-	},
-/obj/item/weapon/tank/emergency_oxygen/double{
-	pixel_x = -6
-	},
-/obj/item/weapon/tank/emergency_oxygen/double{
-	pixel_x = -6
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Commander";
+	dir = 4;
+	network = list("ERT")
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -13113,9 +13124,9 @@
 	},
 /area/centcom/specops)
 "aDW" = (
+/obj/structure/stool/bed/chair/metal/black,
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "darkbluecorners"
+	icon_state = "dark"
 	},
 /area/centcom/specops)
 "aDX" = (
@@ -13456,12 +13467,10 @@
 	},
 /area/centcom/specops)
 "aEN" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
+/obj/structure/stool/bed/chair/metal/black,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "darkblue"
+	dir = 4;
+	icon_state = "darkbluecorners"
 	},
 /area/centcom/specops)
 "aEO" = (
@@ -13689,13 +13698,17 @@
 	},
 /area/centcom/specops)
 "aFn" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/handcuffs,
 /obj/structure/sign/nanotrasen{
-	pixel_y = -32
+	pixel_x = -32
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Mecha";
+	dir = 4;
+	network = list("ERT")
 	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "darkblue"
 	},
 /area/centcom/specops)
 "aFo" = (
@@ -14191,17 +14204,15 @@
 /turf/environment/space,
 /area/shuttle/escape_pod2/centcom)
 "aGp" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic{
-	pixel_y = 6
+/obj/structure/table/reinforced,
+/obj/item/weapon/handcuffs{
+	pixel_y = 2
 	},
-/obj/item/weapon/gun/projectile/automatic{
-	pixel_y = 3
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
 	},
-/obj/item/weapon/gun/projectile/automatic,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/centcom/specops)
 "aGq" = (
@@ -14217,15 +14228,16 @@
 /area/custom/wizard_station)
 "aGr" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/shotgun/combat{
-	pixel_y = 4
+/obj/item/weapon/gun/projectile/automatic{
+	pixel_y = 6
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1441;
-	listening = 0;
-	name = "Spec Ops Intercom";
-	pixel_y = 22
+/obj/item/weapon/gun/projectile/automatic{
+	pixel_y = 3
+	},
+/obj/item/weapon/gun/projectile/automatic,
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Armory North";
+	network = list("ERT")
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -14255,21 +14267,17 @@
 /area/custom/wizard_station)
 "aGt" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/glock/spec{
-	pixel_y = 6
+/obj/item/weapon/gun/projectile/shotgun/combat{
+	pixel_y = 4
 	},
-/obj/item/weapon/gun/projectile/glock/spec{
-	pixel_y = 6
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = 22
 	},
-/obj/item/weapon/gun/projectile/glock/spec{
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/projectile/glock/spec{
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/weapon/gun/projectile/glock/spec,
-/obj/machinery/light/small{
+/obj/machinery/light/small/emergency{
 	dir = 1
 	},
 /turf/unsimulated/floor{
@@ -16644,27 +16652,20 @@
 /area/centcom/specops)
 "aLW" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = 6
+/obj/item/weapon/gun/projectile/glock/spec{
+	pixel_y = 6
 	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = 6
+/obj/item/weapon/gun/projectile/glock/spec{
+	pixel_y = 6
 	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = 6
+/obj/item/weapon/gun/projectile/glock/spec{
+	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat{
-	pixel_x = -6
+/obj/item/weapon/gun/projectile/glock/spec{
+	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat{
-	pixel_x = -6
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat{
-	pixel_x = -6
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/item/weapon/gun/projectile/glock/spec,
+/obj/item/weapon/gun/projectile/glock/spec,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -16764,16 +16765,13 @@
 	},
 /area/centcom/specops)
 "aMg" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/teargas{
-	pixel_y = 8
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Conference Hall South";
+	dir = 1;
+	network = list("ERT")
 	},
-/obj/item/weapon/storage/box/teargas{
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/box/smokegrenades,
 /turf/unsimulated/floor{
-	dir = 8;
+	dir = 5;
 	icon_state = "vault"
 	},
 /area/centcom/specops)
@@ -16832,17 +16830,25 @@
 /area/centcom/specops)
 "aMl" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/gun/nuclear{
-	pixel_y = 6
+/obj/item/clothing/suit/space/rig/ert/security,
+/obj/item/clothing/head/helmet/space/rig/ert/security,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/melee/baton,
+/obj/item/device/flash,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/plastique,
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/weapon/storage/belt/security,
+/obj/item/clothing/glasses/night,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
+/obj/item/weapon/storage/backpack/ert/security,
+/obj/machinery/light/small/emergency{
+	dir = 8
 	},
-/obj/item/weapon/gun/energy/gun/nuclear{
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/gun/nuclear,
-/obj/item/weapon/gun/energy/gun/nuclear{
-	pixel_y = -3
-	},
-/obj/machinery/light/small,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -16854,6 +16860,17 @@
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aMn" = (
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Cryogenic Storage";
+	dir = 1;
+	network = list("ERT")
+	},
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "black"
 	},
 /area/centcom/specops)
 "aMo" = (
@@ -16874,6 +16891,68 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"aMp" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
+	pixel_x = 6
+	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
+	pixel_x = 6
+	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
+	pixel_x = 6
+	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat{
+	pixel_x = -6
+	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat{
+	pixel_x = -6
+	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat{
+	pixel_x = -6
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aMq" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box/teargas{
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box/teargas{
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/box/smokegrenades,
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Armory South";
+	dir = 1;
+	network = list("ERT")
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aMr" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/gun/nuclear{
+	pixel_y = 6
+	},
+/obj/item/weapon/gun/energy/gun/nuclear{
+	pixel_y = 3
+	},
+/obj/item/weapon/gun/energy/gun/nuclear,
+/obj/item/weapon/gun/energy/gun/nuclear{
+	pixel_y = -3
+	},
+/obj/machinery/light/small/emergency,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "aMC" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -21614,6 +21693,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Mecha Modules";
+	dir = 4;
+	network = list("ERT")
+	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -21631,6 +21715,7 @@
 /obj/item/ammo_box/shotgun{
 	pixel_y = -3
 	},
+/obj/machinery/light/small/emergency,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -21648,6 +21733,11 @@
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/adv,
 /obj/item/weapon/storage/firstaid/adv,
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Medical";
+	dir = 8;
+	network = list("ERT")
+	},
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -21758,7 +21848,6 @@
 /obj/item/ammo_box/magazine/m9mm_2{
 	pixel_x = -6
 	},
-/obj/machinery/light/small,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -21884,9 +21973,6 @@
 	},
 /area/centcom/specops)
 "blb" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
@@ -21918,6 +22004,11 @@
 	name = "Spec Ops Intercom";
 	pixel_x = 28;
 	pixel_y = -5
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Custodial Closet";
+	dir = 8;
+	network = list("ERT")
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -21998,6 +22089,11 @@
 	pixel_w = 10;
 	pixel_y = 2;
 	pixel_z = 10
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Creed's Office";
+	dir = 1;
+	network = list("ERT")
 	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
@@ -24365,6 +24461,10 @@
 	frequency = 1443;
 	name = "Spec Ops Intercom";
 	pixel_y = 22
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Shuttle";
+	network = list("ERT")
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
@@ -53586,7 +53686,7 @@ aBP
 aBI
 aBI
 aBI
-aEN
+aFn
 aBI
 aBI
 aBI
@@ -55635,12 +55735,12 @@ aBp
 frb
 gbb
 gbb
-aAY
+aBH
 gbb
 gbb
 gbb
 aBp
-aDM
+bib
 aAE
 aCV
 aBQ
@@ -55897,20 +55997,20 @@ gqb
 gqb
 aBj
 aDJ
-aCo
+aDM
 aAE
 aCV
 aBQ
 aFM
 aBp
 aFu
-ahQ
+azE
+aMl
 azE
 azE
 azE
-azE
-azE
-aLW
+aMl
+aMp
 aBp
 aBp
 aaM
@@ -56154,7 +56254,7 @@ aCV
 aCV
 aBl
 aCh
-aCq
+aCo
 aAE
 aCV
 aBQ
@@ -56682,7 +56782,7 @@ blb
 bJb
 bJb
 aMd
-aMg
+aMq
 aBp
 aaM
 aaM
@@ -56922,16 +57022,16 @@ aBp
 aBp
 aBp
 aBM
-aBW
+aDD
 aCL
 aBp
-aCr
+aDW
 aAE
 aCV
 aBQ
 aFR
 aBp
-aGp
+aGr
 bKb
 azG
 bzb
@@ -57182,21 +57282,21 @@ aBP
 aBI
 aCO
 aBp
-aDW
+aEN
 aAE
 aCV
 aBQ
 aEp
 aBp
-aGr
+aGt
 bLb
 azR
 bfn
 aBp
-aCj
+anv
 bLb
 azR
-aMl
+aMr
 aBp
 aaM
 aaM
@@ -57445,7 +57545,7 @@ aCV
 aBQ
 gLb
 aBp
-aGt
+aLW
 bLb
 azR
 bfq
@@ -58215,7 +58315,7 @@ fWb
 aCR
 fWb
 gtb
-aFn
+aGp
 aBp
 aBp
 aBp
@@ -58976,7 +59076,7 @@ ayL
 lpG
 aaR
 hkb
-aBH
+aBW
 aBR
 aaR
 aCR
@@ -58987,12 +59087,12 @@ aDo
 aEc
 aCV
 aBQ
-gtb
+aMg
 aBp
 hkb
 aDY
 aDY
-aBR
+aMn
 aBp
 aaM
 aaM
@@ -60007,7 +60107,7 @@ aAK
 aBJ
 aaR
 aBp
-aDD
+aCj
 aAE
 aCV
 aCV
@@ -60019,7 +60119,7 @@ bCb
 aBp
 aBp
 bfr
-aBY
+ahQ
 aBp
 aBp
 aBp
@@ -61030,7 +61130,7 @@ aaM
 aaM
 aaM
 aBp
-hcb
+aAY
 aAP
 aAP
 aAP
@@ -61807,7 +61907,7 @@ avI
 avI
 avI
 avI
-aDK
+aCq
 aAE
 aBQ
 aCN
