@@ -9,7 +9,7 @@
 
 /obj/item/weapon/grab
 	name = "grab"
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	icon_state = "reinforce"
 	flags = DROPDEL|NOBLUDGEON
 	var/atom/movable/screen/grab/hud = null

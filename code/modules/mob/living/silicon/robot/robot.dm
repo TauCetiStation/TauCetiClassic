@@ -508,7 +508,7 @@
 	else
 		to_chat(usr, "<span class='notice'>Интерфейс заблокирован.</span>")
 
-	playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/items/swipe_card.ogg', VOL_EFFECTS_MASTER)
 	locked = !locked
 
 /mob/living/silicon/robot/verb/open_hatch()
@@ -754,7 +754,7 @@
 				else
 					clear_alert("not_locked")
 				to_chat(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
-				playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
+				playsound(src, 'sound/items/swipe_card.ogg', VOL_EFFECTS_MASTER)
 				updateicon()
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
