@@ -183,7 +183,7 @@
 		var/obj/item/weapon/sledgehammer/S = W
 		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED))
 			user.do_attack_animation(src)
-			shake_camera(user, 1, 0.35)
+			shake_camera(user, 1, 0.37)
 			playsound(src, 'sound/misc/sledgehammer_hit_rock.ogg', VOL_EFFECTS_MASTER)
 			GetDrilled(artifact_fail = 1, mineral_drop_coefficient = 0.7)
 		else
@@ -237,7 +237,7 @@
 						M.GetDrilled()
 				return
 
-			if(finds && finds.len)
+			if(length(finds))
 				var/datum/find/F = finds[1]
 				if(round(excavation_level + P.excavation_amount) == F.excavation_required)
 					//Chance to extract any items here perfectly, otherwise just pull them out along with the rock surrounding them
@@ -464,14 +464,14 @@
 /turf/simulated/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 5
-	mineralSpawnChanceList = list("Phoron" = 1, "Iron" = 35, "Coal" = 20, "Silver" = 1, "Gold" = 1, "Uranium" = 1,  "Platinum" = 1, "Diamond" = 1)
+	mineralSpawnChanceList = list("Phoron" = 1, "Iron" = 33, "Coal" = 20, "Silver" = 1, "Gold" = 1, "Uranium" = 1,  "Platinum" = 1, "Diamond" = 1)
 
 /turf/simulated/mineral/random/low_chance/atom_init()
 	icon_state = "rock"
 	. = ..()
 
 /turf/simulated/mineral/random/labormineral
-	mineralSpawnChanceList = list("Phoron" = 2, "Iron" = 30, "Coal" = 17, "Silver" = 1, "Gold" = 1, "Uranium" = 1, "Platinum" = 1, "Diamond" = 1)
+	mineralSpawnChanceList = list("Phoron" = 2, "Iron" = 28, "Coal" = 17, "Silver" = 1, "Gold" = 1, "Uranium" = 1, "Platinum" = 2, "Diamond" = 1)
 	icon_state = "rock_labor"
 
 /turf/simulated/mineral/random/labormineral/atom_init()
