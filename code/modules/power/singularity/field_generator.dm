@@ -168,7 +168,7 @@ field_generator power level display
 /obj/machinery/field_generator/bullet_act(obj/item/projectile/Proj, def_zone)
 	switch(Proj.flag)
 		if(LASER, ENERGY)
-			power += damage_amount
+			power += Proj.damage
 			update_icon()
 			return
 	. = ..()
