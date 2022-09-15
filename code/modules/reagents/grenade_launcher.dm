@@ -82,8 +82,8 @@
 			current_grenade = /obj/item/weapon/grenade/chem_grenade/teargas
 			to_chat(user, "<span class='notice'>Teargas selected.</span>")
 		if(4)
-			current_grenade = /obj/item/weapon/grenade/chem_grenade/acid
-			to_chat(user, "<span class='notice'>Acid selected.</span>")
+			current_grenade = /obj/item/weapon/grenade/chem_grenade/drugs
+			to_chat(user, "<span class='notice'>SpaceDrugs selected.</span>")
 
 /obj/item/weapon/gun/grenadelauncher/cyborg/afterattack(atom/target, mob/living/silicon/robot/user, proximity, params)
 	user.SetNextMove(CLICK_CD_MELEE*2)
