@@ -185,7 +185,7 @@
 			user.do_attack_animation(src)
 			shake_camera(user, 1, 0.35)
 			playsound(src, 'sound/misc/sledgehammer_hit_rock.ogg', VOL_EFFECTS_MASTER)
-			GetDrilled(artifact_fail = 1, mineral_drop_koef = 0.7)
+			GetDrilled(artifact_fail = 1, mineral_drop_coefficient = 0.7)
 		else
 			to_chat(user, "<span class='warning'>You need to take it with both hands to break it!</span>")
 
@@ -207,7 +207,7 @@
 
 		// handle any archaeological finds we might uncover
 		var/fail_message
-		if(finds?.len)
+		if(length(finds))
 			var/datum/find/F = finds[1]
 			if(excavation_level + P.excavation_amount > F.excavation_required)
 				// Chance to destroy / extract any finds here
@@ -322,13 +322,13 @@
 	return O
 
 
-/turf/simulated/mineral/proc/GetDrilled(artifact_fail = 0, mineral_drop_koef = 1)
+/turf/simulated/mineral/proc/GetDrilled(artifact_fail = 0, mineral_drop_coefficient = 1)
 	playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)
 	// var/destroyed = 0 //used for breaking strange rocks
 	if (mineral && ore_amount)
 		
 		// if the turf has already been excavated, some of it's ore has been removed
-		for (var/i = 1 to round((ore_amount - mined_ore) * mineral_drop_koef, 1))
+		for (var/i = 1 to round((ore_amount - mined_ore) * mineral_drop_coefficient, 1))
 			DropMineral()
 
 	// destroyed artifacts have weird, unpleasant effects
@@ -455,7 +455,7 @@
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 40
-	mineralSpawnChanceList = list("Phoron" = 50, "Silver" = 50, "Gold" = 45, "Platinum" = 45, "Uranium" = 35, "Diamond" = 30)
+	mineralSpawnChanceList = list("Phoron" = 50, "Silver" = 50, "Gold" = 45, "Uranium" = 35, "Platinum" = 45, "Diamond" = 30)
 
 /turf/simulated/mineral/random/high_chance/atom_init()
 	icon_state = "rock"
@@ -464,14 +464,14 @@
 /turf/simulated/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 5
-	mineralSpawnChanceList = list("Uranium" = 2, "Platinum" = 2, "Iron" = 40, "Coal" = 20, "Diamond" = 2, "Gold" = 2, "Silver" = 2, "Phoron" = 2)
+	mineralSpawnChanceList = list("Phoron" = 1, "Iron" = 35, "Coal" = 20, "Silver" = 1, "Gold" = 1, "Uranium" = 1,  "Platinum" = 1, "Diamond" = 1)
 
 /turf/simulated/mineral/random/low_chance/atom_init()
 	icon_state = "rock"
 	. = ..()
 
 /turf/simulated/mineral/random/labormineral
-	mineralSpawnChanceList = list("Uranium" = 3, "Platinum" = 2, "Iron" = 45, "Coal" = 30, "Diamond" = 2, "Gold" = 2, "Silver" = 2, "Phoron" = 5)
+	mineralSpawnChanceList = list("Phoron" = 2, "Iron" = 30, "Coal" = 17, "Silver" = 1, "Gold" = 1, "Uranium" = 1, "Platinum" = 1, "Diamond" = 1)
 	icon_state = "rock_labor"
 
 /turf/simulated/mineral/random/labormineral/atom_init()
@@ -481,7 +481,7 @@
 /turf/simulated/mineral/attack_animal(mob/living/simple_animal/user)
 	..()
 	if(user.environment_smash >= 2)
-		GetDrilled(mineral_drop_koef = 0.5)
+		GetDrilled(mineral_drop_coefficient = 0.5)
 
 /**********************Caves**************************/
 /turf/simulated/floor/plating/airless/asteroid
