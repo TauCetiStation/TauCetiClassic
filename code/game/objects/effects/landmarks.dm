@@ -21,25 +21,8 @@
 	. = ..()
 
 	switch(name)
-		if("shuttle")
-			shuttle_z = z
-			return INITIALIZE_HINT_QDEL
-
-		if("airtunnel_stop")
-			airtunnel_stop = x
-
-		if("airtunnel_start")
-			airtunnel_start = x
-
-		if("airtunnel_bottom")
-			airtunnel_bottom = y
-
 		if ("awaystart")
 			awaydestinations += src
-
-		if("monkey")
-			monkeystart += loc
-			return INITIALIZE_HINT_QDEL
 		if("Wizard")
 			wizardstart += loc
 			return INITIALIZE_HINT_QDEL
@@ -47,10 +30,6 @@
 		if("prisonwarp")
 			prisonwarp += loc
 			return INITIALIZE_HINT_QDEL
-	//	if("mazewarp")
-	//		mazewarp += loc
-		if("Holding Facility")
-			holdingfacility += loc
 		if("tdome1")
 			tdome1 += loc
 		if("tdome2")
