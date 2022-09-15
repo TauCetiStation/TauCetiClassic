@@ -55,7 +55,7 @@
 		return
 
 	if(isblobshield(B))
-		if(B.get_integrity() < max_integrity / 2)
+		if(B.get_integrity() < B.max_integrity / 2)
 			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified!</span>")
 			return
 		B.change_to(/obj/effect/blob/shield/reflective,src)

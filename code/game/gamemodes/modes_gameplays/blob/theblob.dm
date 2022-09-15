@@ -22,8 +22,8 @@
 /obj/effect/blob/atom_init()
 	blobs += src
 	set_dir(pick(1, 2, 4, 8))
-	update_icon()
 	. = ..()
+	update_icon()
 	for(var/atom/A in loc)
 		A.blob_act()
 	update_nearby_tiles()
