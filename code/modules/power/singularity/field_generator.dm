@@ -165,13 +165,12 @@ field_generator power level display
 	else
 		..()
 
-/obj/machinery/field_generator/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
-	switch(damage_flag)
+/obj/machinery/field_generator/bullet_act(obj/item/projectile/Proj, def_zone)
+	switch(Proj.flag)
 		if(LASER, ENERGY)
 			power += damage_amount
 			update_icon()
 			return
-	
 	. = ..()
 
 /obj/machinery/field_generator/proc/turn_off()
