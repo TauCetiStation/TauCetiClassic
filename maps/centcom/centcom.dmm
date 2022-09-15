@@ -11799,9 +11799,6 @@
 /obj/item/clothing/head/helmet/space/rig/ert/engineer,
 /obj/item/clothing/suit/space/rig/ert/engineer,
 /obj/item/clothing/accessory/storage/brown_vest,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/shoes/magboots,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -12128,7 +12125,6 @@
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/space/rig/ert/commander,
 /obj/item/clothing/suit/space/rig/ert/commander,
-/obj/item/clothing/shoes/magboots,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "vault"
@@ -27061,6 +27057,7 @@
 /area/centcom/holding)
 "lxb" = (
 /obj/structure/rack,
+/obj/item/device/lens/nude,
 /obj/item/device/camera,
 /turf/unsimulated/floor{
 	dir = 5;
