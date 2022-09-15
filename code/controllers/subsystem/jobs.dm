@@ -462,9 +462,7 @@ SUBSYSTEM_DEF(job)
 
 		if(!spawn_mark)
 			if(!fallback_landmark)
-				var/list/fallback_landmarks = landmarks_list["Fallback-Start"]
-				if(length(fallback_landmarks))
-					fallback_landmark = fallback_landmarks[1]
+				fallback_landmark = locate("start*Fallback-Start")
 			warning("Failed to find spawn position for [rank]. Using fallback spawn position!")
 			spawn_mark = fallback_landmark
 
