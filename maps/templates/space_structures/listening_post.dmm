@@ -430,12 +430,10 @@
 /obj/structure/drain{
 	drainage = 2
 	},
-/obj/machinery/shower{
-	cost_per_activation = 0;
-	dir = 1;
-	is_payed = 1
-	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
+/obj/machinery/shower/free{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
