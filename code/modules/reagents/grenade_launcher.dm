@@ -82,8 +82,8 @@
 			current_grenade = /obj/item/weapon/grenade/chem_grenade/teargas
 			to_chat(user, "<span class='notice'>Teargas selected.</span>")
 		if(4)
-			current_grenade = /obj/item/weapon/grenade/spawnergrenade/manhacks
-			to_chat(user, "<span class='notice'>Manhacks selected.</span>")
+			current_grenade = /obj/item/weapon/grenade/chem_grenade/acid
+			to_chat(user, "<span class='notice'>Acid selected.</span>")
 
 /obj/item/weapon/gun/grenadelauncher/cyborg/afterattack(atom/target, mob/living/silicon/robot/user, proximity, params)
 	user.SetNextMove(CLICK_CD_MELEE*2)
@@ -91,14 +91,6 @@
 		to_chat(user, "<span class='warning'>[src] is empty.</span>")
 		return
 	if(target == user)
-		return
-	if(mode == 4)
-		//no need spamming mannhacks with bluespace cell
-		var/calculate_power_use = user.cell.maxcharge / 3
-		if(user.cell.use(calculate_power_use))
-			fire_grenade(target,user)
-		else
-			to_chat(user, "<span class='warning'>Not enough charge.</span>")
 		return
 	if(user.cell.use(1500))
 		fire_grenade(target,user)
