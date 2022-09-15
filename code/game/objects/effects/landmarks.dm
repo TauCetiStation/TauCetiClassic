@@ -10,6 +10,8 @@
 
 /obj/effect/landmark/New()
 	..()
+	if(name == "landmark") // skip landmarks without unique name
+		return
 	tag = "landmark*[name]"
 	var/list/landmarks = landmarks_list[name]
 	if(!landmarks)
