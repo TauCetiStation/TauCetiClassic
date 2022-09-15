@@ -23,7 +23,7 @@
 	var/timer_to_destruct
 
 	var/list/icons_available
-	var/icon_directory = 'icons/mob/radial.dmi'
+	var/icon_directory = 'icons/hud/radial.dmi'
 
 	action_button_name = "Toggle Recorder"
 

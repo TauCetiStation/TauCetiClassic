@@ -139,7 +139,7 @@
 		if("Contract From Below")
 			new /obj/item/weapon/pen/ghost(loc)
 		if("Cryptorecorder")
-			new /obj/item/device/camera/spooky(loc)
+			new /obj/item/device/camera/polar/spooky(loc)
 		if("Black Candle Box")
 			new /obj/item/weapon/storage/fancy/black_candle_box(loc)
 		if("Cancel")
