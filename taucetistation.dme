@@ -1383,6 +1383,7 @@
 #include "code\modules\cargo\order.dm"
 #include "code\modules\cargo\packs.dm"
 #include "code\modules\cargo\prices.dm"
+#include "code\modules\cargo\shop.dm"
 #include "code\modules\cargo\supplyshuttle.dm"
 #include "code\modules\cargo\exports\gear.dm"
 #include "code\modules\cargo\exports\large_objects.dm"

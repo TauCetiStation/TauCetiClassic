@@ -69590,6 +69590,13 @@
 	icon_state = "warnplate"
 	},
 /area/station/engineering/engine)
+"dlY" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/packer,
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "dmb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -99807,7 +99814,7 @@ aXz
 aFg
 myC
 avg
-ofm
+dlY
 vBO
 brG
 pGd
