@@ -503,14 +503,13 @@
 /********Damage system********/
 
 /obj/structure/droppod/bullet_act(obj/item/projectile/Proj, def_zone)
-	if((Proj.damage && Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		. = ..()
-		if(flags & IS_LOCKED)
-			return
-		if(intruder && prob(60))
-			intruder.bullet_act(Proj)
-		if(second_intruder && prob(40))
-			second_intruder.bullet_act(Proj)
+	. = ..()
+	if(flags & IS_LOCKED)
+		return
+	if(intruder && prob(60))
+		intruder.bullet_act(Proj)
+	if(second_intruder && prob(40))
+		second_intruder.bullet_act(Proj)
 
 /obj/structure/droppod/play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(damage_amount)

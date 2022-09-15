@@ -20,6 +20,8 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/obj/machinery/power/am_control_unit/control_unit = null
 	var/processing = 0//To track if we are in the update list or not, we need to be when we are damaged and if we ever
 	var/stability = 100//If this gets low bad things tend to happen
