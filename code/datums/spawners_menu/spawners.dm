@@ -256,20 +256,12 @@ var/global/list/datum/spawners_cooldown = list()
 	important_info += mission
 
 /datum/spawner/ert/jump(mob/dead/observer/ghost)
-	var/list/correct_landmarks = list()
-	for (var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "Commando")
-			correct_landmarks += L
-
+	var/list/correct_landmarks = landmarks_list["Commando"]
 	var/jump_to = pick(correct_landmarks)
 	ghost.forceMove(get_turf(jump_to))
 
 /datum/spawner/ert/spawn_ghost(mob/dead/observer/ghost)
-	var/list/correct_landmarks = list()
-	for (var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "Commando")
-			correct_landmarks += L
-
+	var/list/correct_landmarks = landmarks_list["Commando"]
 	var/obj/spawnloc = pick(correct_landmarks)
 	var/new_name = sanitize_safe(input(ghost, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
 

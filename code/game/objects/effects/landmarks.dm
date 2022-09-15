@@ -10,11 +10,14 @@
 
 /obj/effect/landmark/New()
 	..()
-	tag = text("landmark*[]", name)
-	landmarks_list += src
+	tag = "landmark*[name]"
+	var/list/landmarks = landmarks_list[name]
+	if(!landmarks)
+		landmarks_list[name] = landmarks = list()
+	landmarks += src
 
 /obj/effect/landmark/Destroy()
-	landmarks_list -= src
+	landmarks_list[name] -= src
 	return ..()
 
 /obj/effect/landmark/atom_init()

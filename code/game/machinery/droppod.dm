@@ -39,7 +39,7 @@
 /obj/structure/droppod/atom_init()
 	. = ..()
 	if(!initial_eyeobj_location)
-		initial_eyeobj_location = locate(/obj/effect/landmark/droppod) in landmarks_list
+		initial_eyeobj_location = locate("landmark*Droppod")
 	if(!allowed_areas)
 		allowed_areas = new
 
@@ -145,6 +145,7 @@
 			obscured_turfs += i
 
 /obj/effect/landmark/droppod
+	name = "Droppod"
 
 /********Move in and out********/
 

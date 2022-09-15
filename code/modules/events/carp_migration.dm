@@ -22,7 +22,7 @@
 /datum/event/carp_migration/start()
 	switch(severity)
 		if(EVENT_LEVEL_MAJOR)
-			spawn_fish(landmarks_list.len)
+			spawn_fish(99)				  // use every carp spawnpoint
 		if(EVENT_LEVEL_MODERATE)
 			spawn_fish(rand(4, 6))        // 12 to 30 carp, in small groups
 		else
@@ -38,9 +38,8 @@
 /datum/event/carp_migration/proc/spawn_fish(num_groups, group_size_min = 3, group_size_max = 5)
 	var/list/spawn_locations = list()
 
-	for(var/obj/effect/landmark/C in landmarks_list)
-		if(C.name == "carpspawn")
-			spawn_locations.Add(C.loc)
+	for(var/obj/effect/landmark/C as anything in landmarks_list["carpspawn"])
+		spawn_locations.Add(C.loc)
 	spawn_locations = shuffle(spawn_locations)
 	num_groups = min(num_groups, spawn_locations.len)
 

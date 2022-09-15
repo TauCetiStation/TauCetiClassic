@@ -19,7 +19,7 @@
 	if(dir & SOUTH)
 		density = FALSE
 	if(!transit_loc)
-		transit_loc = locate(/obj/effect/landmark/gateway_transit) in landmarks_list
+		transit_loc = locate("landmark*Gateway transit")
 
 /obj/machinery/gateway/update_icon()
 	icon_state = active ? "on" : "off"
@@ -221,6 +221,7 @@
 	playsound(target, 'sound/machines/gateway/gateway_enter.ogg', VOL_EFFECTS_MASTER)
 
 /obj/effect/landmark/gateway_transit
+	name = "Gateway transit"
 
 /obj/effect/landmark/gateway_transit/Crossed(atom/movable/AM)
 	. = ..()
