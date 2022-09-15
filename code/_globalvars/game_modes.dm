@@ -7,3 +7,4 @@ var/global/master_last_mode = null // this variable contain the last played mode
 // List of modes that failed on start, as to not repeatedly choose the same mode
 // that keeps failing over and over.
 var/global/list/modes_failed_start = list()
+var/global/admin_disable_rulesets = FALSE

@@ -666,6 +666,44 @@ var/global/BSACooldown = 0
 	popup.set_content(dat)
 	popup.open()
 
+/datum/admins/proc/dynamic_mode_options(mob/user)
+	var/dat = {"
+		<center><B><h2>Dynamic Mode Options</h2></B></center><hr>
+		<br/>
+		<h3>Common options</h3>
+		<i>All these options can be changed midround.</i> <br/>
+		<br/>
+		<b>Force extended:</b> - Option is <a href='?src=\ref[src];force_extended=1'> <b>[dynamic_forced_extended ? "ON" : "OFF"]</a></b>.
+		<br/>This will force the round to be extended. No rulesets will be drafted. <br/>
+		<br/>
+		<b>No stacking:</b> - Option is <a href='?src=\ref[src];no_stacking=1'> <b>[dynamic_no_stacking ? "ON" : "OFF"]</b></a>.
+		<br/>Unless the threat goes above [stacking_limit], only one "round-ender" ruleset will be drafted. <br/>
+		<br/>
+		<b>Classic secret mode:</b> - Option is <a href='?src=\ref[src];classic_secret=1'> <b>[dynamic_classic_secret ? "ON" : "OFF"]</b></a>.
+		<br/>Only one roundstart ruleset will be drafted. Only traitors and minor roles will latespawn. <br/>
+		<br/>
+		<b>High population limit:</b> Current value : <a href='?src=\ref[src];high_pop_limit=1'><b>[dynamic_high_pop_limit]</b></a>.
+		<br/>The threshold at which "high population override" will be in effect. <br/>
+		<br/>
+		<b>Stacking threeshold:</b> Current value : <a href='?src=\ref[src];stacking_limit=1'><b>[stacking_limit]</b></a>.
+		<br/>The threshold at which "round-ender" rulesets will stack. A value higher than 100 ensure this never happens. <br/>
+		<h3>Advanced parameters</h3>
+		The distribution mode is currently : <b>[dynamic_chosen_mode]</b> <br/>
+		Glossary : <br/>
+		<ul>
+			<li> <b>Lorentz distribution</b> : default mode. Heavily weighted towards the chosen centre, but still allows extreme to happen. A wider curve means extreme are more likely.</li>
+			<li> <b>Normal distribution</b> : similar to Lorentz, but extremes are much less likely to happen. </li>
+			<li> <b>Rigged threat number</b> : the threat level will be the chosen centre.</li>
+			<li> <b>Peaceful bias</b> : heavily weighted towards more peaceful rounds. </li>
+			<li> <b>Uniform distribution</b> : a random uniformally distributed number between 1 and 100.</li>
+		</ul>
+		<A href='?src=\ref[src];change_distrib=1'>Change distribution mode</a> <br/>
+		Curve centre: <A href='?src=\ref[src];f_dynamic_roundstart_centre=1'>-> [dynamic_curve_centre] <-</A><br>
+		Curve width: <A href='?src=\ref[src];f_dynamic_roundstart_width=1'>-> [dynamic_curve_width] <-</A><br>
+		"}
+
+	user << browse(dat, "window=dyn_mode_options;size=900x650")
+
 /datum/admins/proc/Game()
 	if(!check_rights(0))	return
 
@@ -674,7 +712,23 @@ var/global/BSACooldown = 0
 		"}
 	if(master_mode == "Secret")
 		dat += "<A href='?src=\ref[src];f_secret=1'>Force Secret Mode</A><br>"
-
+	if(master_mode == "Dynamic Mode")
+		if(SSticker.current_state == GAME_STATE_PREGAME)
+			dat += "<A href='?src=\ref[src];f_dynamic_roundstart=1'>(Force Roundstart Rulesets)</A><br>"
+			dat += "<A href='?src=\ref[src];f_dynamic_options=1'>(Dynamic mode options)</A><br>"
+			if(forced_roundstart_ruleset.len > 0)
+				for(var/datum/forced_ruleset/rule in forced_roundstart_ruleset)
+					dat += {"<A href='?src=\ref[src];f_dynamic_roundstart_remove=\ref[rule]'>-> [rule.name] <-</A><br>"}
+				dat += "<A href='?src=\ref[src];f_dynamic_roundstart_clear=1'>(Clear Rulesets)</A><br>"
+		else
+			dat += "<A href='?src=\ref[src];f_dynamic_latejoin=1'>(Force Next Latejoin Ruleset)</A><br>"
+			if(SSticker && SSticker.mode && istype(SSticker.mode,/datum/game_mode/dynamic))
+				var/datum/game_mode/dynamic/mode = SSticker.mode
+				if(mode.forced_latejoin_rule)
+					dat += {"<A href='?src=\ref[src];f_dynamic_latejoin_clear=1'>-> [mode.forced_latejoin_rule.name] <-</A><br>"}
+			dat += "<A href='?src=\ref[src];f_dynamic_midround=1'>(Execute Midround Ruleset!)</A><br>"
+		dat += "Rulesets are <A href='?src=\ref[src];toggle_rulesets=1'>[global.admin_disable_rulesets ? "DISABLED" : "ENABLED"]</A><br>"
+		dat += "<hr/>"
 	dat += {"
 		<BR>
 		<A href='?src=\ref[src];create_object=1'>Create Object</A><br>
@@ -1156,7 +1210,7 @@ var/global/BSACooldown = 0
 		return
 
 	M.mind.edit_skills()
-	feedback_add_details("admin_verb","SKP") 
+	feedback_add_details("admin_verb","SKP")
 
 /datum/admins/proc/toggletintedweldhelmets()
 	set category = "Debug"

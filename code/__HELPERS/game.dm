@@ -525,6 +525,81 @@
 	winset(C, "mainwindow", "flash=5")
 
 //============VG PORTS============
+// Returns y so that y/x = a/b.
+#define RULE_OF_THREE(a, b, x) ((a*x)/b)
+#define tan(x) (sin(x)/cos(x))
+
+var/const/E		= 2.71828183
+var/const/Sqrt2	= 1.41421356
+
+// -- Returns a Lorentz-distributed number.
+// -- The probability density function has centre x0 and width s.
+/proc/lorentz_distribution(var/x0, var/s)
+	var/x = rand()
+	var/y = s*tan_rad(PI*(x-0.5)) + x0
+	return y
+
+/proc/tan_rad(const/x) // This one assumes that x is in radians.
+	return Tan(ToDegrees(x))
+
+/proc/Tan(const/x)
+	return sin(x) / cos(x)
+
+/proc/ToDegrees(const/radians)
+	// 180 / Pi
+	return radians * 57.2957795
+
+/proc/ToRadians(const/degrees)
+	// Pi / 180
+	return degrees * 0.0174532925
+
+// -- Returns the Lorentz cummulative distribution of the real x.
+/proc/lorentz_cummulative_distribution(var/x, var/x0, var/s)
+	var/y = (1/PI)*ToRadians(arctan((x-x0)/s)) + 1/2
+	return y
+
+// -- Returns an exponentially-distributed number.
+// -- The probability density function has mean lambda
+/proc/exp_distribution(var/desired_mean)
+	if (desired_mean <= 0)
+		desired_mean = 1 // Let's not allow that to happen
+	var/lambda = 1/desired_mean
+
+	var/x = rand()
+	while (x == 1)
+		x = rand()
+	var/y = -(1/lambda)*log(1-x)
+	return y
+
+// -- Returns the Lorentz cummulative distribution of the real x, with mean lambda
+/proc/exp_cummulative_distribution(var/x, var/lambda)
+	var/y = 1 - E**(lambda*x)
+	return y
+
+/proc/IsRoundAboutToEnd()
+	//Is the round even already over?
+	if(SSticker.current_state == GAME_STATE_FINISHED)
+		return TRUE
+
+	//Is the shuttle on its way to the station? or to centcomm after having departed from the station?
+	if(SSshuttle.online && SSshuttle.direction > 0)
+		return TRUE
+
+	//Is a nuke currently ticking down?
+	for(var/obj/machinery/nuclearbomb/the_bomba in global.poi_list)
+		if(the_bomba.timing)
+			return TRUE
+
+	//Is some faction about to end the round?
+	var/datum/game_mode/dynamic/dynamic_mode = SSticker.mode
+	if(istype(dynamic_mode))
+		for(var/datum/faction/faction in dynamic_mode.factions)
+			if(faction.stage >= FS_ENDGAME)
+				return TRUE
+
+	//All is well
+	return FALSE
+
 /proc/recursive_type_check(atom/O, type = /atom)
 	var/list/processing_list = list(O)
 	var/list/processed_list = list()

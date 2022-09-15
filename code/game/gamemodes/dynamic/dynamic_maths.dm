@@ -90,7 +90,7 @@
 		y = 100
 	return y
 
-/datum/gamemode/dynamic/proc/generate_threat()
+/datum/game_mode/dynamic/proc/generate_threat()
 	message_admins("Generating threat ; mode is [distribution_mode]")
 	switch (distribution_mode)
 	// Old equation.

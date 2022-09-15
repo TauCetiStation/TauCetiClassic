@@ -62,6 +62,7 @@
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"
 #define GREET_ROUNDSTART	"roundstart"
+#define GREET_MIDROUND		"midround"
 #define GREET_LATEJOIN		"latejoin"
 #define GREET_CUSTOM		"custom"
 
@@ -76,6 +77,36 @@
 #define FS_VICTORY      3
 
 /////////////////////// OTHERS ////////////////////////
+
+// Dynamic Mode
+#define CURRENT_LIVING_PLAYERS	"living"
+#define CURRENT_LIVING_ANTAGS	"antags"
+#define CURRENT_DEAD_PLAYERS	"dead"
+#define CURRENT_OBSERVERS	"observers"
+
+#define HIGHLANDER_RULESET 1
+#define TRAITOR_RULESET 2
+#define MINOR_RULESET 4
+
+// -- Distribution "modes"
+
+#define LORENTZ "Lorentz distribution"
+#define GAUSS "Normal distribution"
+#define DIRAC "Rigged threat number"
+#define EXPONENTIAL "Peaceful bias"
+#define UNIFORM "Uniform distribution"
+
+// -- Injection delays (in ticks, ie, you need the /20 to get the real result)
+#define LATEJOIN_DELAY_MIN (5 MINUTES)/20
+#define LATEJOIN_DELAY_MAX (30 MINUTES)/20
+
+#define MIDROUND_DELAY_MIN (15 MINUTES)/20
+#define MIDROUND_DELAY_MAX (50 MINUTES)/20
+
+#define UNIFORM "Uniform distribution"
+
+#define BASE_RULESET_WEIGHT 10
+#define ADDITIONAL_RULESET_WEIGHT 1.4
 
 // -- Objectives flags
 
