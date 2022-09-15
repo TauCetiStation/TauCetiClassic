@@ -25,7 +25,10 @@
 		return
 	// TODO playsound(src, P.hitsound, VOL_EFFECTS_MASTER, 50, TRUE)
 	var/damage = take_damage(P.damage, P.damage_type, P.flag, TRUE, turn(P.dir, 180)) // TODO flag -> armor_flag
-	visible_message("<span class='danger'>[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+	visible_message(
+		"<span class='danger'>[src] is hit by \a [P][damage ? "" : ", without leaving a mark"]!</span>",
+		viewing_distance = COMBAT_MESSAGE_RANGE
+	)
 
 /obj/attack_hulk(mob/living/user)
 	..()
@@ -36,7 +39,11 @@
 	else
 		playsound(loc, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 	var/damage = take_damage(hulk_damage(), BRUTE, MELEE, 0, get_dir(src, user))
-	user.visible_message("<span class='danger'>[user] smashes [src][damage ? "" : ", without leaving a mark"]!</span>", "<span class='danger'>You smash [src][damage ? "" : ", without leaving a mark"]!</span>", null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(
+		"<span class='danger'>[user] smashes [src][damage ? "" : ", without leaving a mark"]!</span>",
+		"<span class='danger'>You smash [src][damage ? "" : ", without leaving a mark"]!</span>",
+		viewing_distance = COMBAT_MESSAGE_RANGE
+	)
 	return TRUE
 
 /obj/blob_act(obj/effect/blob/B) // TODO blob to structure

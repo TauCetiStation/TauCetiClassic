@@ -258,22 +258,16 @@
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
 /obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
 	if(user.a_intent != INTENT_HARM)
-		return FALSE
+		return
 
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, attacked_atom, user) & COMPONENT_ITEM_NO_ATTACK)
 		return
 
-	var/had_effect = FALSE
 	if(!(flags & NOATTACKANIMATION))
 		user.do_attack_animation(attacked_atom)
-		had_effect = TRUE
 
-	if(!(flags & NOBLUDGEON))
-		visible_message("<span class='danger'>[attacked_atom] has been hit by [user] with [src].</span>")
-		had_effect = TRUE
-
-	if(!had_effect)
-		return FALSE
+	if(flags & NOBLUDGEON)
+		return
 
 	user.SetNextMove(CLICK_CD_MELEE)
 	attacked_atom.attacked_by(src, user)
@@ -293,8 +287,11 @@
 
 	var/damage = take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1, get_dir(src, attacking_item))
 	//only witnesses close by and the victim see a hit message.
-	user.visible_message("<span class='danger'>[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]</span>", \
-		"<span class='danger'>You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]</span>", null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(
+		"<span class='danger'>[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]</span>",
+		"<span class='danger'>You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]</span>",
+		viewing_distance = COMBAT_MESSAGE_RANGE
+	)
 	return damage
 
 /area/attacked_by(obj/item/attacking_item, mob/living/user)
