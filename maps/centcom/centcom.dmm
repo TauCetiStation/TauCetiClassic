@@ -11956,7 +11956,7 @@
 	name = "Spec Ops Intercom";
 	pixel_y = 22
 	},
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 1
 	},
 /turf/unsimulated/floor{
@@ -12964,9 +12964,6 @@
 "aDD" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/projectile/glock/spec,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/machinery/camera{
 	c_tag = "Spec. Ops. Commander";
 	dir = 4;
@@ -13382,16 +13379,6 @@
 	icon_state = "cult"
 	},
 /area/custom/wizard_station)
-"aEF" = (
-/obj/machinery/cryopod/right{
-	storage = 0
-	},
-/obj/machinery/light/small,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/centcom/specops)
 "aEG" = (
 /obj/structure/sign/mark{
 	icon_state = "rlf"
@@ -16246,6 +16233,7 @@
 	name = "Spec Ops Intercom";
 	pixel_y = -32
 	},
+/obj/machinery/light,
 /turf/unsimulated/floor{
 	icon_state = "black"
 	},
@@ -16333,12 +16321,6 @@
 /obj/machinery/computer/communications,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
-"aLm" = (
-/obj/machinery/light/small,
-/turf/unsimulated/floor{
-	icon_state = "black"
-	},
-/area/centcom/specops)
 "aLn" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light/small{
@@ -21856,15 +21838,6 @@
 "bfr" = (
 /obj/structure/sign/departments/custodian,
 /turf/unsimulated/wall/fakeglass,
-/area/centcom/specops)
-"bfs" = (
-/obj/structure/cryofeed/right,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
 /area/centcom/specops)
 "bft" = (
 /obj/structure/rack,
@@ -58576,7 +58549,7 @@ aBR
 aHl
 aBp
 azm
-bfs
+azm
 azm
 azm
 aBp
@@ -58835,7 +58808,7 @@ aBp
 bcT
 bcT
 bcT
-aEF
+bcT
 aBp
 aaM
 aaM
@@ -59606,7 +59579,7 @@ aBY
 aAE
 aCV
 aCV
-aLm
+aBQ
 aBp
 aaM
 aaM
