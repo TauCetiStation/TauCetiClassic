@@ -110,8 +110,8 @@
 /obj/item/weapon/robot_module/medical
 	name = "medical robot module"
 	stacktypes = list(
-		/obj/item/stack/medical/advanced/bruise_pack = 5,
-		/obj/item/stack/medical/advanced/ointment = 5,
+		/obj/item/stack/medical/advanced/bruise_pack = 6,
+		/obj/item/stack/medical/advanced/ointment = 6,
 		/obj/item/stack/nanopaste = 10,
 		/obj/item/stack/medical/splint = 5,
 		/obj/item/stack/medical/suture = 3
