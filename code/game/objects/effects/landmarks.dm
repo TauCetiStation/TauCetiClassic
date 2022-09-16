@@ -18,7 +18,6 @@
 		landmarks += src
 	else
 		landmarks_list[name] = landmarks = list(src)
-	
 
 /obj/effect/landmark/Destroy()
 	if(name != "landmark")
