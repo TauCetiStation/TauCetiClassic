@@ -241,10 +241,7 @@ var/stacking_limit = 90
 		var/datum/dynamic_ruleset/midround/DR = rule
 		if(initial(DR.weight))
 			midround_rules += new rule()
-	for(var/mob/living/player in player_list)
-		if(player.mind)
-			roundstart_pop_ready++
-			candidates.Add(player)
+	candidates += get_player_count(check_ready = TRUE)
 	message_admins("DYNAMIC MODE: Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	log_admin("DYNAMIC MODE: Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	if(candidates.len <= 0)
