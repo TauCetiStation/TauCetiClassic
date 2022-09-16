@@ -302,7 +302,7 @@
 				loc_landmark = tripai
 		if (!loc_landmark)
 			to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
-			for(var/obj/effect/landmark/start/sloc as anything in landmarks_list["Ai"])
+			for(var/obj/effect/landmark/start/sloc as anything in landmarks_list["AI"])
 				loc_landmark = sloc
 
 		newloc = loc_landmark.loc
