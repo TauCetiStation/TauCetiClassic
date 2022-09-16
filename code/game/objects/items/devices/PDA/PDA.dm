@@ -1670,7 +1670,8 @@
 		var/cargo_revenue = round(Lot.price * 0.25)
 		global.cargo_account.money += cargo_revenue
 		var/datum/money_account/Acc = get_account(Lot.account)
-		Acc.money += Lot.price - cargo_revenue
+		if(Acc)
+			Acc.money += Lot.price - cargo_revenue
 
 	var/obj/item/weapon/paper/P = new(get_turf(Packer.loc))
 
