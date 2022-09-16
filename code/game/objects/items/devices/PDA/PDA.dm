@@ -68,6 +68,9 @@
 	var/list/subordinate_staff = list()
 	var/last_trans_tick = 0
 
+	var/category
+	var/list/shop_lots = list()
+
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 	action_button_name = "Toggle light"
@@ -520,6 +523,10 @@
 
 	data["idInserted"] = (id ? 1 : 0)
 	data["idLink"] = (id ? text("[id.registered_name], [id.assignment]") : "--------")
+
+	data["categories"] = global.shop_categories
+	data["category"] = category
+	data["shop_lots"] = shop_lots
 
 	data["cart_loaded"] = cartridge ? 1:0
 	if(cartridge)
@@ -975,6 +982,27 @@
 					var/datum/money_account/account = person["acc_datum"]
 					account.change_salary(U, owner, name, ownrank)
 					break
+		if("Shop")
+			mode = 8
+			shop_lots = list()
+		if("Shop_Category")
+			mode = 81
+			shop_lots = list()
+			category = href_list["categ"]
+			for(var/datum/shop_lot/Lot in global.online_shop_lots)
+				if(Lot.category == category && !Lot.sold)
+					shop_lots.len+=1
+					shop_lots[shop_lots.len] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "index" = shop_lots.len)
+		if("Shop_Order")
+			var/i = text2num(href_list["order_item"])
+			var/list/Lot = shop_lots[i]
+			var/cost = Lot["price"]
+			if(owner_account && (cost <= owner_account.money))
+				var/T = sanitize(input(U, "Please enter destination and comment", "Comment", null) as text)
+				if(T)
+					owner_account.money -= cost
+					global.cargo_account.money += cost
+					order_item(Lot["number"], T)
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -1630,5 +1658,24 @@
 /obj/item/device/pda/proc/check_rank(rank)
 	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1
+
+/obj/item/device/pda/proc/order_item(num, destination)
+	var/obj/machinery/packer/Packer = locate("Packer")
+	var/datum/shop_lot/Lot = global.online_shop_lots[num]
+	Lot.sold = TRUE
+	mode = 8
+
+	var/obj/item/weapon/paper/P = new(get_turf(Packer.loc))
+
+	P.name = "Cargo supply item order"
+	P.info += "Item id #[Lot.number]<br>"
+	P.info += "Item: [Lot.name]<br>"
+	P.info += "For: [Lot.price] Credits<br>"
+	P.info += "Requested by: [owner]<br>"
+	P.info += "Comment: [destination]<br>"
+	P.info += "<hr>"
+	P.info += "STAMP BELOW TO APPROVE THIS REQUISITION:<br>"
+
+	P.update_icon()
 
 #undef TRANSCATION_COOLDOWN

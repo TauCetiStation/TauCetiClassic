@@ -82,6 +82,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 {{:helper.link('Crew Manifest', 'contact', {'choice' : "41"}, null, 'fixedLeftWide')}}
 				<!-- {{:helper.link('News', data.new_News ? 'mail-closed' : 'mail-open', {'choice' : "6"}, null, 'fixedLeftWide')}} -->
 				{{:helper.link('Finance Management', 'suitcase', {'choice' : "Finance"}, null, 'fixedLeftWide')}}
+				{{:helper.link('Cargo Shop', 'cart', {'choice' : "Shop"}, null, 'fixedLeftWide')}}
             </div>
         </div>
         <br>
@@ -1080,6 +1081,36 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 </table></center>
             </div>
         </div>
+	{{else data.mode == 8}} <!-- Online Shop -->
+        <div class="item">
+            <center><H2>Cargo Shop</H2></center>
+			<center><H3>Fast to recieve and Easy to use</H3></center>
+			<b>Your Balance:</b> <span class="good">{{:data.money}}$</span><br>
+        </div>
+		<H3>Category Selection</H3>
+        {{for data.categories}}
+            <div class="item">
+                {{:helper.link(value, 'triangle-1-e', {'choice' : "Shop_Category", 'categ' : value})}}<br>
+            </div>
+        {{/for}}
+	{{else data.mode == 81}} <!-- Online Shop -->
+        <div class="item">
+            <center><H2>Cargo Shop</H2></center>
+			<b>Your Balance:</b> <span class="good">{{:data.money}}$</span><br>
+        </div>
+		<H3>Category: {{:data.category}}<H3>
+		<center><table class="pmon"><tbody>
+		{{for data.shop_lots}}
+			{{if value}}
+				<tr><td><div class="item">
+					<B>Name: </B><SMALL><I>{{:value.name}}</I></SMALL><br>
+					<B>Description: </B><SMALL><I>{{:value.description}}</I></SMALL><br>
+					<B>Price: </B><SMALL><I>{{:value.price}}$</I></SMALL>
+					{{:helper.link('Order', 'tag', {'choice' : "Shop_Order", 'order_item' : value.index})}}<br><br>
+				</div></td></tr>
+			{{/if}}
+        {{/for}}
+		</tbody></table></center>
     {{/if}}
 {{else}}
     <div class="wholeScreen">
