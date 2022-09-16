@@ -24,13 +24,13 @@
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/health/blob/blobbernaut //Basically reverts icon
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	icon_state = "block"
 	plane = ABOVE_HUD_PLANE
 
 // Essence
 /atom/movable/screen/essence
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	plane = ABOVE_HUD_PLANE
 
 	copy_flags = NONE
