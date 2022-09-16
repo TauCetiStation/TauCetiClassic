@@ -1000,8 +1000,6 @@
 			if(owner_account && (cost <= owner_account.money))
 				var/T = sanitize(input(U, "Please enter destination and comment", "Comment", null) as text)
 				if(T)
-					owner_account.money -= cost
-					global.cargo_account.money += cost
 					order_item(Lot["number"], T)
 
 //SYNDICATE FUNCTIONS===================================
@@ -1664,6 +1662,14 @@
 	var/datum/shop_lot/Lot = global.online_shop_lots[num]
 	Lot.sold = TRUE
 	mode = 8
+
+	owner_account.money -= Lot.price
+	if(Lot.account == global.cargo_account.account_number)
+		global.cargo_account.money += Lot.price
+	else
+		var/cargo_revenue = round(Lot.price * 0.25)
+		global.cargo_account.money += cargo_revenue
+		get_account(Lot.account).money += Lot.price - cargo_revenue
 
 	var/obj/item/weapon/paper/P = new(get_turf(Packer.loc))
 

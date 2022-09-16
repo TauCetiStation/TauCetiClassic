@@ -4731,6 +4731,7 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -5024,6 +5025,12 @@
 	},
 /obj/item/device/camera,
 /obj/item/device/lens/rentgene,
+/obj/item/device/destTagger{
+	pixel_x = -1
+	},
+/obj/item/weapon/packageWrap{
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -5871,6 +5878,12 @@
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
+/obj/item/device/destTagger{
+	pixel_x = -1
+	},
+/obj/item/weapon/packageWrap{
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -7115,6 +7128,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -15069,6 +15085,7 @@
 	eftpos_name = "Quartermaster EFTPOS scanner"
 	},
 /obj/structure/table/woodentable,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkbrown"
@@ -23259,6 +23276,9 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
+/obj/item/device/destTagger{
+	pixel_x = -1
+	},
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -24398,6 +24418,7 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/cargo/qm)
 "fEv" = (
@@ -25673,6 +25694,13 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
+"fSX" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall,
+/area/station/cargo/office)
 "fSY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -26440,6 +26468,15 @@
 	icon_state = "dark"
 	},
 /area/station/aisat/antechamber)
+"gdd" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/station/cargo/storage)
 "gdv" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -34852,6 +34889,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -37721,6 +37759,9 @@
 	c_tag = "Cargo Bay East";
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -39690,6 +39731,9 @@
 "jqk" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "packageSort2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -42873,6 +42917,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/cargo/office)
 "kiH" = (
@@ -44238,6 +44285,13 @@
 	icon_state = "warnplate"
 	},
 /area/station/cargo/recycler)
+"kBv" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall,
+/area/station/cargo/office)
 "kBz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -49258,6 +49312,9 @@
 /area/station/engineering/engine)
 "lKP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "lKX" = (
@@ -49462,6 +49519,19 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/storage)
+"lOl" = (
+/obj/structure/closet/crate/engi,
+/obj/item/stack/sheet/metal,
+/obj/item/stack/cable_coil/random,
+/obj/random/tools/tool,
+/obj/random/tools/tool,
+/obj/random/tools/tool,
+/obj/random/tools/toolbox,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/station/cargo/storage)
 "lOL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -50146,6 +50216,10 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/cargo_technician,
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -62658,16 +62732,13 @@
 	},
 /area/station/rnd/robotics)
 "pem" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/machinery/conveyor{
+	id = "packageSort2"
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "brown"
-	},
+/turf/simulated/floor/plating,
 /area/station/cargo/office)
 "per" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -72740,6 +72811,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "darkbrown"
 	},
@@ -75312,6 +75384,12 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
+/obj/item/device/destTagger{
+	pixel_x = -1
+	},
+/obj/item/weapon/packageWrap{
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkpurple"
@@ -76974,6 +77052,9 @@
 	eftpos_name = "Botany EFTPOS scanner"
 	},
 /obj/machinery/light/small,
+/obj/item/device/destTagger{
+	pixel_x = -1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -78136,6 +78217,12 @@
 "tcT" = (
 /obj/structure/table,
 /obj/item/device/megaphone,
+/obj/item/device/destTagger{
+	pixel_x = -1
+	},
+/obj/item/weapon/packageWrap{
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -79820,6 +79907,9 @@
 "tBA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -84181,6 +84271,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
+/obj/item/device/destTagger{
+	pixel_x = -1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitecorner"
@@ -86032,6 +86125,9 @@
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "vaO" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "browncorner"
@@ -87644,6 +87740,9 @@
 	},
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/airlock_painter,
+/obj/item/device/destTagger{
+	pixel_x = -1
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warndark"
@@ -89383,6 +89482,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
+"vSH" = (
+/obj/structure/disposalpipe/sortjunction{
+	dir = 2;
+	name = "Post";
+	sortType = "Post"
+	},
+/turf/simulated/wall,
+/area/station/cargo/office)
 "vSL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -93369,16 +93476,13 @@
 	pixel_x = -28;
 	req_access = list(31)
 	},
-/obj/structure/closet/crate/engi,
-/obj/item/stack/sheet/metal,
-/obj/item/stack/cable_coil/random,
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/random/tools/tool,
-/obj/random/tools/tool,
-/obj/random/tools/tool,
-/obj/random/tools/toolbox,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/structure/disposaloutlet,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -96466,6 +96570,10 @@
 "xID" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -96547,6 +96655,7 @@
 	home_destination = "QM #1";
 	suffix = "#1"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -124102,12 +124211,12 @@ tuu
 aYO
 itW
 bst
-hTs
-hTs
-hTs
-hTs
-hTs
-hTs
+fSX
+rKK
+rKK
+rKK
+rKK
+kBv
 hTs
 hTs
 hTs
@@ -124359,12 +124468,12 @@ aPw
 dyZ
 kBX
 ddx
-rKK
+vSH
 mbi
 ibg
 asr
 xZt
-asr
+pem
 tKo
 lVB
 haI
@@ -124878,7 +124987,7 @@ pbD
 fjf
 iPT
 dlv
-dlv
+sLj
 bqG
 nIe
 rqX
@@ -125135,7 +125244,7 @@ yhh
 fjf
 oKA
 xSl
-xSl
+aBk
 nnq
 xwN
 sct
@@ -125649,7 +125758,7 @@ dfd
 hTs
 lRo
 pxe
-pem
+bAB
 fBP
 nIe
 vlq
@@ -126428,7 +126537,7 @@ epq
 rCw
 liW
 iQP
-hxa
+gdd
 gKF
 pSC
 dAw
@@ -126685,7 +126794,7 @@ fOt
 xwN
 nIe
 abB
-hxa
+gdd
 xZk
 rxJ
 prd
@@ -127970,7 +128079,7 @@ eQD
 xLg
 abA
 lYa
-lYa
+cps
 joS
 ajj
 joS
@@ -129254,7 +129363,7 @@ wBI
 trq
 phn
 lYa
-hxa
+lOl
 imP
 pJO
 uGV

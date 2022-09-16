@@ -8457,6 +8457,8 @@
 	pixel_x = 13
 	},
 /obj/structure/table,
+/obj/item/device/destTagger,
+/obj/item/weapon/packageWrap,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurplefull"
@@ -10462,6 +10464,7 @@
 /obj/item/device/radio/beacon/interaction_watcher{
 	pixel_x = 17
 	},
+/obj/item/device/destTagger,
 /turf/simulated/floor{
 	icon_state = "darkpurple"
 	},
@@ -18145,6 +18148,7 @@
 /obj/structure/table/glass,
 /obj/item/weapon/hand_labeler,
 /obj/item/weapon/packageWrap,
+/obj/item/device/destTagger,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -24428,6 +24432,7 @@
 /obj/structure/rack,
 /obj/item/device/lens/rentgene,
 /obj/item/device/camera,
+/obj/item/device/destTagger,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -24828,6 +24833,8 @@
 	pixel_y = -4
 	},
 /obj/item/device/camera/polar/detective,
+/obj/item/device/destTagger,
+/obj/item/weapon/packageWrap,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -26804,6 +26811,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/item/weapon/packageWrap,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -30139,6 +30147,8 @@
 	pixel_y = -12
 	},
 /obj/structure/table,
+/obj/item/device/destTagger,
+/obj/item/weapon/packageWrap,
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "tXr" = (
@@ -30675,6 +30685,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/item/device/destTagger,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"

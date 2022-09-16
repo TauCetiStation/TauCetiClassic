@@ -5874,6 +5874,7 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_x = 32
 	},
+/obj/item/device/destTagger,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
@@ -15841,6 +15842,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/packageWrap,
+/obj/item/device/destTagger,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -26050,6 +26052,8 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
+/obj/item/device/destTagger,
+/obj/item/weapon/packageWrap,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -38243,6 +38247,7 @@
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/packageWrap,
 /obj/structure/table,
+/obj/item/device/destTagger,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
@@ -56877,6 +56882,8 @@
 	pixel_y = 5
 	},
 /obj/item/weapon/airlock_painter,
+/obj/item/weapon/packageWrap,
+/obj/item/device/destTagger,
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "cdv" = (
@@ -66221,6 +66228,8 @@
 /obj/item/weapon/cane,
 /obj/item/weapon/cane,
 /obj/item/clothing/mask/muzzle,
+/obj/item/device/destTagger,
+/obj/item/weapon/packageWrap,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -70658,6 +70667,14 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/reception)
+"eGf" = (
+/obj/structure/disposalpipe/sortjunction{
+	dir = 8;
+	name = "Post";
+	sortType = "Post"
+	},
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "eHa" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/glass{
@@ -73724,6 +73741,17 @@
 	icon_state = "vault"
 	},
 /area/station/gateway)
+"ihg" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "qm_warehouse";
+	name = "Warehouse Shutters"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/cargo/storage)
 "ihZ" = (
 /obj/structure/stool/bed/chair/pew/left,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -74048,6 +74076,8 @@
 	},
 /obj/structure/table/glass,
 /obj/item/weapon/book/manual/hydroponics_beekeeping,
+/obj/item/weapon/packageWrap,
+/obj/item/device/destTagger,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "green"
@@ -75489,6 +75519,7 @@
 	},
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/airlock_painter,
+/obj/item/device/destTagger,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteyellow"
@@ -77226,6 +77257,15 @@
 	icon_state = "white"
 	},
 /area/station/medical/storage)
+"mfD" = (
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/cargo/storage)
 "mfF" = (
 /obj/machinery/shieldwallgen,
 /turf/simulated/floor/plating,
@@ -100305,9 +100345,9 @@ bsy
 bxv
 bBm
 bxz
-bxz
-aLT
-ofm
+mfD
+ihg
+eGf
 vBO
 bGI
 uEX

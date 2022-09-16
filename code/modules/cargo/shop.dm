@@ -8,15 +8,17 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 	var/number = 1
 	var/category = "Misc"
 	var/sold = FALSE
+	var/account = 111111
 
 
-/datum/shop_lot/New(name, description, price, category, number)
+/datum/shop_lot/New(name, description, price, category, number, account)
 	global.online_shop_lots[number] = src
 	src.name = name
 	src.description = description
 	src.price = price
 	src.category = category
 	src.number = number
+	src.account = account
 
 /datum/shop_lot/Destroy()
 	global.online_shop_lots -= src
@@ -39,8 +41,11 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 	var/lot_desc
 	var/lot_price
 	var/lot_category = "Misc"
+	var/lot_account
 
 	var/scanning = FALSE
+
+	var/locked = FALSE
 
 /obj/machinery/packer/atom_init()
 	. = ..()
@@ -85,9 +90,19 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 	user.drop_from_inventory(O, src)
 	Item = O
 
+	if(locate(/obj/price_tag) in O.contents)
+		locked = TRUE
+		for(var/obj/price_tag/Tag in O.contents)
+			lot_desc = Tag.desc
+			lot_price = Tag.price
+			lot_account = Tag.account_number
+	else
+		lot_desc = Item.desc ? Item.desc : "Definitely a thing"
+		lot_price = 0
+		lot_account = global.cargo_account.account_number
 	lot_name = Item.name ? Item.name : "A thing"
-	lot_desc = Item.desc ? Item.desc : "Definitely a thing"
-	lot_price = 0
+
+
 	lot_category = default_categories(O)
 
 	update_icon()
@@ -126,6 +141,7 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 	lot_desc = Item.desc ? Item.desc : "Definitely a thing"
 	lot_price = 0
 	lot_category = "Packs"
+	lot_account = global.cargo_account.account_number
 
 	update_icon()
 	updateUsrDialog()
@@ -166,7 +182,7 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 	Item.name = "Package number: [global.online_shop_lots.len]"
 	Item.desc = "Name: [lot_name], Description: [lot_desc], Price: [lot_price]"
 
-	new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, global.online_shop_lots.len)
+	new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, global.online_shop_lots.len, lot_account)
 
 	eject_item()
 	update_icon()
@@ -180,6 +196,9 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 	lot_desc = null
 	lot_price = null
 	lot_category = null
+	lot_account = null
+
+	locked = FALSE
 
 	update_icon()
 
@@ -188,8 +207,12 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 
 	if(Item)
 		dat += "Name: <A href='?src=\ref[src];field=name'>[lot_name]</A><BR>\n"
-		dat += "Description: <A href='?src=\ref[src];field=description'>[lot_desc]</A><BR>\n"
-		dat += "Price: <A href='?src=\ref[src];field=price'>[lot_price]$</A><BR>\n"
+		if(locked)
+			dat += "Description: [lot_desc]<BR>"
+			dat += "Price: [lot_price]<BR>"
+		else
+			dat += "Description: <A href='?src=\ref[src];field=description'>[lot_desc]</A><BR>\n"
+			dat += "Price: <A href='?src=\ref[src];field=price'>[lot_price]$</A><BR>\n"
 		dat += "Category: <A href='?src=\ref[src];field=category'>[lot_category]</A><BR>\n"
 
 		dat += "<A href='?src=\ref[src];scan=1'>Scan</A>"

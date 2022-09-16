@@ -178,6 +178,24 @@
 	if(src in user)
 		to_chat(user, "<span class='notice'>There are [amount] units of package wrap left!</span>")
 
+/obj/price_tag
+	icon = 'icons/obj/device.dmi'
+	icon_state = "tag"
+	var/account_number = 111111
+	price = 0
+
+/obj/price_tag/New(des, num, pri)
+	desc = des
+	account_number = num
+	price = pri
+	return ..()
+
+/obj/verb/remove_price_tag()
+	for(var/obj/price_tag/P in contents)
+		contents -= P
+		cut_overlay(P)
+		qdel(P)
+		verbs -= /obj/verb/remove_price_tag
 
 /obj/item/device/destTagger
 	name = "destination tagger"
@@ -192,18 +210,29 @@
 	m_amt = 3000
 	g_amt = 1300
 	origin_tech = "materials=1;engineering=1"
+	var/lot_description = "Definitely a thing"
+	var/lot_account_number = 111111
+	var/lot_price = 0
+	var/Tagger = FALSE
 
 /obj/item/device/destTagger/proc/openwindow(mob/user)
 	var/dat = "<tt>"
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
-	for(var/i = 1, i <= tagger_locations.len, i++)
-		dat += "<td><a href='?src=\ref[src];nextTag=[tagger_locations[i]]'>[tagger_locations[i]]</a></td>"
+	if(Tagger)
+		for(var/i = 1, i <= tagger_locations.len, i++)
+			dat += "<td><a href='?src=\ref[src];nextTag=[tagger_locations[i]]'>[tagger_locations[i]]</a></td>"
 
-		if (i%4==0)
-			dat += "</tr><tr>"
+			if (i%4==0)
+				dat += "</tr><tr>"
 
-	dat += "</tr></table><br>Current Selection: [currTag ? currTag : "None"]</tt>"
+		dat += "</tr></table><br>Current Selection: [currTag ? currTag : "None"]</tt>"
+	else
+		dat += "Description: <A href='?src=\ref[src];description=1'>[lot_description]</A><BR>\n"
+		dat += "Account Number: <A href='?src=\ref[src];number=1'>[lot_account_number]</A><BR>\n"
+		dat += "Price: <A href='?src=\ref[src];price=1'>[lot_price]$</A><BR>\n"
+
+	dat += "<br>Current Mode: <A href='?src=\ref[src];tagger=1'>[Tagger ? "Tagger" : "Pricer"]</A><BR>\n"
 
 	var/datum/browser/popup = new(user, "destTagScreen", "TagMaster 2.3", 450, 350)
 	popup.set_content(dat)
@@ -214,10 +243,53 @@
 	openwindow(user)
 	return
 
+/obj/item/device/destTagger/afterattack(obj/target, mob/user, proximity, params)
+	if(!proximity) return
+	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
+		return
+
+	if(target.anchored)
+		return
+	if(target in user)
+		return
+	if(user in target) //no wrapping closets that you are inside - it's not physically possible
+		return
+	if(locate(/obj/price_tag) in target.contents)
+		return
+
+	if(istype(target, /obj/item/smallDelivery))
+		var/obj/item/smallDelivery/D = target
+		D.sortTag = "Post"
+	else if(istype(target,/obj/structure/bigDelivery))
+		var/obj/structure/bigDelivery/D = target
+		D.sortTag = "Post"
+	else
+		return
+
+	var/obj/price_tag/Tag = new /obj/price_tag(lot_description, lot_account_number, lot_price)
+	Tag.loc = target
+	target.add_overlay(Tag)
+	target.verbs += /obj/verb/remove_price_tag
+
+
 /obj/item/device/destTagger/Topic(href, href_list)
 	add_fingerprint(usr)
 	if(href_list["nextTag"] && (href_list["nextTag"] in tagger_locations))
 		src.currTag = href_list["nextTag"]
+	else if(href_list["description"])
+		var/T = sanitize(input("Please input description:", "Tagger", input_default(lot_description), null)  as text)
+		lot_description = T ? T : "Definitely a thing"
+	else if(href_list["number"])
+		var/T = input("Please input account number:", "Tagger", input_default(lot_account_number), null)  as num
+		if(T && T >= 111111 && T <= 999999)
+			lot_account_number = T
+	else if(href_list["price"])
+		var/T = input("Please input price:", "Tagger", input_default(lot_price), null)  as num
+		if(T)
+			lot_price = T
+	else if(href_list["tagger"])
+		Tagger = !Tagger
+	updateUsrDialog()
 	openwindow(usr)
 
 /obj/machinery/disposal/deliveryChute
