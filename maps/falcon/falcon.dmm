@@ -8960,7 +8960,6 @@
 /area/station/rnd/hallway)
 "aqF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
 /obj/machinery/power/apc/largecell{
 	dir = 8;
 	pixel_x = -32
@@ -8969,6 +8968,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/packer,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "aqG" = (
