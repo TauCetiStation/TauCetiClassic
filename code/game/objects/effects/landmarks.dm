@@ -14,12 +14,15 @@
 		return
 	tag = "landmark*[name]"
 	var/list/landmarks = landmarks_list[name]
-	if(!landmarks)
-		landmarks_list[name] = landmarks = list()
-	landmarks += src
+	if(landmarks)
+		landmarks += src
+	else
+		landmarks_list[name] = landmarks = list(src)
+	
 
 /obj/effect/landmark/Destroy()
-	landmarks_list[name] -= src
+	if(name != "landmark")
+		landmarks_list[name]-= src
 	return ..()
 
 /obj/effect/landmark/atom_init()
