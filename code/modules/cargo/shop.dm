@@ -85,13 +85,31 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 	user.drop_from_inventory(O, src)
 	Item = O
 
-	lot_name = Item.name
-	lot_desc = Item.desc
+	lot_name = Item.name ? Item.name : "A thing"
+	lot_desc = Item.desc ? Item.desc : "Definitely a thing"
 	lot_price = 0
-	lot_category = "Misc"
+	lot_category = default_categories(O)
 
 	update_icon()
 	updateUsrDialog()
+
+/obj/machinery/packer/proc/default_categories(obj/item/I)
+	if(istype(I, /obj/item/weapon/reagent_containers/food))
+		return "Food"
+	if(istype(I, /obj/item/weapon/storage/food))
+		return "Food"
+	else if(istype(I, /obj/item/weapon/storage))
+		return "Packs"
+	else if(istype(I, /obj/item/weapon))
+		return "Tools"
+	else if(istype(I, /obj/item/clothing))
+		return "Clothes"
+	else if(istype(I, /obj/item/device))
+		return "Devices"
+	else if(istype(I, /obj/item/stack))
+		return "Resources"
+	else
+		return "Misc"
 
 /obj/machinery/packer/MouseDrop_T(obj/structure/closet/C, mob/living/user)
 	if(Item)
@@ -104,8 +122,8 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 	C.forceMove(src)
 	Item = C
 
-	lot_name = Item.name
-	lot_desc = Item.desc
+	lot_name = Item.name ? Item.name : "A thing"
+	lot_desc = Item.desc ? Item.desc : "Definitely a thing"
 	lot_price = 0
 	lot_category = "Packs"
 
