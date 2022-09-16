@@ -50,7 +50,7 @@
 ///Is used to compare to world.time in order to determine if the action should early return
 	var/use_delay
 	name = "Send To"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "beam_down"
 
 /datum/action/innate/teleport_in/Activate()
@@ -74,7 +74,7 @@
 
 /datum/action/innate/teleport_out
 	name = "Retrieve"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "beam_up"
 
 /datum/action/innate/teleport_out/Activate()
@@ -90,7 +90,7 @@
 	var/teleport_self_cooldown = 9 SECONDS
 	var/use_delay
 	name = "Send Self"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "beam_down"
 
 /datum/action/innate/teleport_self/Activate()
@@ -113,7 +113,7 @@
 
 /datum/action/innate/vest_mode_swap
 	name = "Switch Vest Mode"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "vest_mode"
 
 /datum/action/innate/vest_mode_swap/Activate()
@@ -126,7 +126,7 @@
 
 /datum/action/innate/vest_disguise_swap
 	name = "Switch Vest Disguise"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "vest_disguise"
 
 /datum/action/innate/vest_disguise_swap/Activate()
@@ -138,7 +138,7 @@
 
 /datum/action/innate/set_droppoint
 	name = "Set Experiment Release Point"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "set_drop"
 
 /datum/action/innate/set_droppoint/Activate()
