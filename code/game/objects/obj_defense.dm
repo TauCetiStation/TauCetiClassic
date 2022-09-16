@@ -52,8 +52,8 @@
 	take_damage(400, BRUTE, MELEE, 0, get_dir(src, B))
 
 /obj/attack_alien(mob/living/carbon/xenomorph/humanoid/user)
-	if(!istype(user))
-		return
+	if(!istype(user) || user.a_intent != INTENT_HARM)
+		return ..()
 	if(attack_generic(user, 25, BRUTE, MELEE, 0))
 		playsound(loc, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
