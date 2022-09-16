@@ -291,7 +291,7 @@
 	var/newloc = loc
 	if(move)
 		var/obj/loc_landmark
-		for(var/obj/effect/landmark/start/sloc as anything in landmarks_list["Ai"])
+		for(var/obj/effect/landmark/start/sloc as anything in landmarks_list["AI"])
 			if((locate(/mob/living) in sloc.loc) || (locate(/obj/structure/AIcore) in sloc.loc))
 				continue
 			loc_landmark = sloc
