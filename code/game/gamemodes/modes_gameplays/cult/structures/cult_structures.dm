@@ -136,7 +136,7 @@
 			validturfs += T
 	else
 		var/turf/simulated/T = pick(validturfs)
-		if(istype(T, /turf/simulated/floor)) //Cuz we can get a wall here
+		if(isfloorturf(T)) //Cuz we can get a wall here
 			T.ChangeTurf(pick(R.floor_types))
 			validturfs -= T
 			corrupt_delay += 5
