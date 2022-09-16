@@ -10717,17 +10717,16 @@
 /turf/environment/space,
 /area/shuttle/specops/centcom)
 "ayU" = (
-/obj/structure/bookcase{
-	name = "bookcase (Tactics)"
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	dir = 4;
+	icon_state = "black"
 	},
 /area/centcom/specops)
 "ayV" = (
-/obj/structure/bookcase{
-	name = "bookcase (Reports)"
-	},
+/obj/structure/closet/secure_closet/hos,
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -10740,8 +10739,12 @@
 /area/centcom/specops)
 "ayX" = (
 /obj/structure/rack,
-/obj/item/mecha_parts/mecha_equipment/sleeper,
-/obj/item/mecha_parts/mecha_equipment/sleeper,
+/obj/item/mecha_parts/mecha_equipment/sleeper{
+	pixel_y = 4
+	},
+/obj/item/mecha_parts/mecha_equipment/sleeper{
+	pixel_y = 4
+	},
 /obj/item/mecha_parts/mecha_equipment/syringe_gun,
 /turf/unsimulated/floor{
 	dir = 8;
@@ -10750,10 +10753,17 @@
 /area/centcom/specops)
 "ayY" = (
 /obj/structure/rack,
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser,
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/ion,
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/ion{
+	pixel_y = 4
+	},
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy,
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser,
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser{
+	pixel_y = -4
+	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -11058,6 +11068,11 @@
 /obj/item/weapon/reagent_containers/hypospray,
 /obj/item/weapon/reagent_containers/hypospray{
 	pixel_x = -6
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Medical";
+	dir = 8;
+	network = list("ERT")
 	},
 /turf/unsimulated/floor{
 	dir = 4;
@@ -11552,33 +11567,31 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "aAJ" = (
+/obj/machinery/door/poddoor/shutters/syndi{
+	id = "DropPodGarage"
+	},
+/obj/structure/sign/warning/pods{
+	desc = "A sign which reads 'DROP PODS'.";
+	name = "\improper DROP PODS";
+	pixel_w = 33;
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
+"aAK" = (
+/obj/structure/rack,
 /obj/item/weapon/weldpack{
 	pixel_y = 6
 	},
 /obj/item/weapon/weldpack,
-/obj/structure/rack,
 /turf/unsimulated/floor{
-	dir = 8;
+	dir = 1;
 	icon_state = "darkblue"
 	},
 /area/centcom/specops)
-"aAK" = (
-/obj/structure/sign/warning/pods{
-	desc = "A sign which reads 'DROP PODS'.";
-	name = "\improper DROP PODS";
-	pixel_w = 33
-	},
-/turf/unsimulated/wall/fakeglass,
-/area/centcom/specops)
 "aAL" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/toolbox/electrical{
-	pixel_y = 10
-	},
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 5
-	},
-/obj/item/weapon/storage/toolbox/emergency,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
 	frequency = 1441;
@@ -13231,10 +13244,16 @@
 	},
 /area/centcom/specops)
 "aEl" = (
-/obj/machinery/recharge_station,
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_y = 10
+	},
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/toolbox/emergency,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "darkblue"
 	},
 /area/centcom/specops)
 "aEm" = (
@@ -13379,6 +13398,17 @@
 	icon_state = "cult"
 	},
 /area/custom/wizard_station)
+"aEF" = (
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Cryogenic Storage";
+	dir = 8;
+	network = list("ERT")
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "black"
+	},
+/area/centcom/specops)
 "aEG" = (
 /obj/structure/sign/mark{
 	icon_state = "rlf"
@@ -13675,14 +13705,8 @@
 	},
 /area/custom/wizard_station)
 "aFm" = (
-/obj/item/weapon/flora/random,
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
-	},
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
+/obj/structure/sign/nanotrasen,
+/turf/unsimulated/wall,
 /area/centcom/specops)
 "aFn" = (
 /obj/structure/sign/nanotrasen{
@@ -13706,9 +13730,13 @@
 	},
 /area/centcom/specops)
 "aFp" = (
-/obj/machinery/light,
+/obj/machinery/recharge_station,
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
-	icon_state = "black"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/centcom/specops)
 "aFq" = (
@@ -13926,10 +13954,15 @@
 	},
 /area/custom/wizard_station)
 "aFM" = (
-/obj/machinery/light,
-/obj/machinery/recharge_station,
-/obj/structure/sign/nanotrasen{
-	pixel_y = -32
+/obj/effect/landmark{
+	name = "Commando"
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = 22
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -14254,19 +14287,9 @@
 /area/custom/wizard_station)
 "aGt" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/shotgun/combat{
-	pixel_y = 4
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1441;
-	listening = 0;
-	name = "Spec Ops Intercom";
-	pixel_y = 22
-	},
-/obj/machinery/light/small/emergency{
-	dir = 1
-	},
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -14638,12 +14661,52 @@
 /turf/environment/space,
 /area/shuttle/supply/velocity)
 "aHl" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/cups{
-	pixel_y = 4
+/obj/structure/rack,
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = 22
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/unsimulated/floor{
-	dir = 5;
+	dir = 8;
 	icon_state = "vault"
 	},
 /area/centcom/specops)
@@ -14653,17 +14716,13 @@
 	},
 /area/centcom/living)
 "aHn" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1441;
-	listening = 0;
-	name = "Spec Ops Intercom";
-	pixel_y = -32
+/obj/structure/rack,
+/obj/item/weapon/gun/projectile/shotgun/combat{
+	pixel_y = 4
 	},
-/obj/machinery/light,
-/obj/structure/reagent_dispensers/water_cooler,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/centcom/specops)
 "aHo" = (
@@ -14863,21 +14922,26 @@
 	},
 /area/centcom/specops)
 "aHN" = (
-/turf/unsimulated/wall{
-	density = 0
+/obj/machinery/light,
+/obj/machinery/recharge_station,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aHO" = (
-/obj/structure/toilet{
-	pixel_y = 7
-	},
-/obj/machinery/light/small{
-	dir = 8
+/obj/machinery/light,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = -32
 	},
 /turf/unsimulated/floor{
-	icon_state = "freezerfloor"
+	icon_state = "black"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aHP" = (
 /obj/effect/landmark/droppod_spawn{
 	pods_spawned = 1
@@ -15003,13 +15067,22 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aIf" = (
-/obj/machinery/door/airlock{
-	name = "Unit 1"
+/obj/structure/rack,
+/obj/item/ammo_box/shotgun{
+	pixel_y = 6
+	},
+/obj/item/ammo_box/shotgun{
+	pixel_y = 3
+	},
+/obj/item/ammo_box/shotgun,
+/obj/item/ammo_box/shotgun{
+	pixel_y = -3
 	},
 /turf/unsimulated/floor{
-	icon_state = "freezerfloor"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aIg" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
@@ -16226,16 +16299,15 @@
 	},
 /area/custom/syndicate_mothership)
 "aLb" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1441;
-	listening = 0;
-	name = "Spec Ops Intercom";
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 1
+	},
+/obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
-/obj/machinery/light,
 /turf/unsimulated/floor{
-	icon_state = "black"
+	dir = 5;
+	icon_state = "vault"
 	},
 /area/centcom/specops)
 "aLc" = (
@@ -16321,6 +16393,13 @@
 /obj/machinery/computer/communications,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
+"aLm" = (
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "black"
+	},
+/area/centcom/specops)
 "aLn" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light/small{
@@ -16349,17 +16428,9 @@
 /turf/unsimulated/floor,
 /area/centcom/control)
 "aLp" = (
-/obj/structure/rack,
-/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
-/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
-/obj/item/mecha_parts/mecha_equipment/repair_droid,
-/obj/item/mecha_parts/mecha_equipment/repair_droid,
-/obj/machinery/light/small,
+/obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/centcom/specops)
 "aLq" = (
@@ -16384,13 +16455,9 @@
 /area/centcom/control)
 "aLt" = (
 /obj/structure/rack,
-/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
-/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
-/obj/item/mecha_parts/mecha_equipment/repair_droid,
-/obj/item/mecha_parts/mecha_equipment/repair_droid,
-/obj/machinery/light/small,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -16484,10 +16551,13 @@
 /turf/unsimulated/floor,
 /area/centcom/control)
 "aLE" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box,
+/obj/structure/table/reinforced,
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -1;
+	pixel_y = 6
+	},
 /turf/unsimulated/floor{
-	dir = 8;
+	dir = 5;
 	icon_state = "vault"
 	},
 /area/centcom/specops)
@@ -16548,14 +16618,20 @@
 	},
 /area/centcom/specops)
 "aLN" = (
-/obj/structure/rack,
-/obj/item/weapon/grenade/chem_grenade/cleaner,
-/obj/item/weapon/grenade/chem_grenade/cleaner,
-/obj/item/weapon/grenade/chem_grenade/cleaner,
-/obj/item/weapon/grenade/chem_grenade/cleaner,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = -32
+	},
+/obj/machinery/light,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/donkpockets{
+	pixel_y = 4
+	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/centcom/specops)
 "aLO" = (
@@ -16800,14 +16876,10 @@
 /turf/unsimulated/floor,
 /area/centcom/control)
 "aMk" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/ionrifle{
-	pixel_y = 4
-	},
-/obj/item/weapon/gun/energy/ionrifle,
+/obj/structure/centcom_barrier,
+/obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "grimy"
 	},
 /area/centcom/specops)
 "aMl" = (
@@ -16828,7 +16900,7 @@
 /obj/item/clothing/glasses/night,
 /obj/item/clothing/glasses/sunglasses/hud/sechud,
 /obj/item/weapon/storage/backpack/ert/security,
-/obj/machinery/light/small/emergency{
+/obj/machinery/light{
 	dir = 8
 	},
 /turf/unsimulated/floor{
@@ -16845,14 +16917,9 @@
 	},
 /area/centcom/specops)
 "aMn" = (
-/obj/machinery/camera{
-	c_tag = "Spec. Ops. Cryogenic Storage";
-	dir = 1;
-	network = list("ERT")
-	},
 /turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "black"
+	dir = 8;
+	icon_state = "warndark"
 	},
 /area/centcom/specops)
 "aMo" = (
@@ -16874,28 +16941,9 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aMp" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = 6
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = 6
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space{
-	pixel_x = 6
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat{
-	pixel_x = -6
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat{
-	pixel_x = -6
-	},
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat{
-	pixel_x = -6
-	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	dir = 4;
+	icon_state = "warndark"
 	},
 /area/centcom/specops)
 "aMq" = (
@@ -16918,6 +16966,61 @@
 	},
 /area/centcom/specops)
 "aMr" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/specops)
+"aMs" = (
+/obj/structure/sign/warning/securearea{
+	name = "За этой стеной ничего нету";
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "black"
+	},
+/area/centcom/specops)
+"aMt" = (
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "black"
+	},
+/area/centcom/specops)
+"aMu" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box{
+	pixel_y = 8
+	},
+/obj/item/weapon/grenade/chem_grenade/cleaner,
+/obj/item/weapon/grenade/chem_grenade/cleaner,
+/obj/item/weapon/grenade/chem_grenade/cleaner,
+/obj/item/weapon/grenade/chem_grenade/cleaner,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aMv" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/ionrifle{
+	pixel_y = 4
+	},
+/obj/item/weapon/gun/energy/ionrifle,
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aMw" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/gun/nuclear{
 	pixel_y = 6
@@ -16929,12 +17032,61 @@
 /obj/item/weapon/gun/energy/gun/nuclear{
 	pixel_y = -3
 	},
-/obj/machinery/light/small/emergency,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
 	},
 /area/centcom/specops)
+"aMx" = (
+/turf/unsimulated/wall{
+	density = 0
+	},
+/area/centcom/specops)
+"aMy" = (
+/obj/structure/toilet{
+	pixel_y = 7
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/landmark/trololo,
+/obj/item/mine/shock/anchored,
+/obj/structure/sign/nanotrasen{
+	desc = ")))))))))))))))))))))";
+	icon = 'icons/obj/status_display.dmi';
+	icon_state = "ai_trollface";
+	name = "Trololo Logo";
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/centcom/living)
+"aMz" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/unsimulated/floor,
+/area/centcom/living)
+"aMA" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/machinery/porta_turret/stationary{
+	lethal = 0
+	},
+/turf/unsimulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/centcom/living)
 "aMC" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -21607,12 +21759,18 @@
 	},
 /area/velocity)
 "bfh" = (
-/obj/structure/closet/secure_closet/hos,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
+/obj/item/mecha_parts/mecha_equipment/repair_droid,
+/obj/item/mecha_parts/mecha_equipment/repair_droid,
+/obj/item/mecha_parts/mecha_equipment/repair_droid,
+/obj/item/mecha_parts/mecha_equipment/repair_droid,
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/centcom/specops)
 "bfi" = (
@@ -21656,12 +21814,13 @@
 /area/centcom/specops)
 "bfl" = (
 /obj/structure/rack,
-/obj/item/mecha_parts/mecha_equipment/rcd,
-/obj/item/mecha_parts/mecha_equipment/rcd,
-/obj/item/mecha_parts/mecha_equipment/cable_layer,
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/mecha_parts/mecha_equipment/rcd{
+	pixel_y = 6
+	},
+/obj/item/mecha_parts/mecha_equipment/rcd,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -21669,9 +21828,15 @@
 /area/centcom/specops)
 "bfm" = (
 /obj/structure/rack,
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive,
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang,
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang,
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive{
+	pixel_y = 8
+	},
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang{
+	pixel_y = 2
+	},
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang{
+	pixel_y = -4
+	},
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -21687,17 +21852,9 @@
 /area/centcom/specops)
 "bfn" = (
 /obj/structure/rack,
-/obj/item/ammo_box/shotgun{
-	pixel_y = 6
-	},
-/obj/item/ammo_box/shotgun{
-	pixel_y = 3
-	},
-/obj/item/ammo_box/shotgun,
-/obj/item/ammo_box/shotgun{
-	pixel_y = -3
-	},
-/obj/machinery/light/small/emergency,
+/obj/machinery/light/small,
+/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
+/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -21715,10 +21872,8 @@
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/adv,
 /obj/item/weapon/storage/firstaid/adv,
-/obj/machinery/camera{
-	c_tag = "Spec. Ops. Medical";
-	dir = 8;
-	network = list("ERT")
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	dir = 4;
@@ -21840,10 +21995,15 @@
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/specops)
 "bft" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/fancy/cigarettes,
-/obj/item/weapon/storage/belt/utility,
-/obj/item/weapon/storage/backpack/satchel,
+/obj/structure/table/woodentable{
+	dir = 5
+	},
+/obj/item/weapon/reagent_containers/food/drinks/flask{
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/cigarette/cigar/havana{
+	pixel_y = -7
+	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -21862,7 +22022,7 @@
 	},
 /area/centcom/specops)
 "bfv" = (
-/obj/structure/stool/bed/chair/metal{
+/obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -21870,7 +22030,7 @@
 	},
 /area/centcom/specops)
 "bfw" = (
-/obj/structure/stool/bed/chair/metal,
+/obj/structure/stool/bed/chair/comfy/brown,
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -21879,14 +22039,19 @@
 /obj/machinery/computer/card/centcom{
 	dir = 8
 	},
+/obj/item/weapon/card/id/centcom,
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
 /area/centcom/specops)
 "bgb" = (
 /obj/structure/rack,
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine,
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine{
+	pixel_y = 6
+	},
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg{
+	pixel_y = -2
+	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -21894,7 +22059,9 @@
 /area/centcom/specops)
 "bhb" = (
 /obj/structure/rack,
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp{
+	pixel_y = 6
+	},
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -21936,9 +22103,6 @@
 	name = "Spec Ops Intercom";
 	pixel_x = 28;
 	pixel_y = -5
-	},
-/obj/machinery/light{
-	dir = 4
 	},
 /turf/unsimulated/floor{
 	dir = 4;
@@ -22007,6 +22171,9 @@
 /obj/item/weapon/storage/secure/briefcase{
 	pixel_y = 6
 	},
+/obj/item/weapon/lighter/zippo{
+	pixel_y = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -22019,10 +22186,18 @@
 /obj/structure/table/woodentable{
 	dir = 5
 	},
-/obj/item/weapon/lighter/zippo{
-	pixel_y = 4
-	},
 /obj/machinery/light/small,
+/obj/machinery/door_control{
+	id = "MechaModule";
+	name = "Mecha Module";
+	pixel_w = 10;
+	pixel_y = 2;
+	pixel_z = 10
+	},
+/obj/structure/mirror/magic{
+	pixel_w = 30;
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -22052,13 +22227,9 @@
 /obj/structure/table/woodentable{
 	dir = 5
 	},
-/obj/structure/mirror/magic{
-	pixel_w = 30;
-	pixel_y = -32
-	},
 /obj/machinery/door_control{
-	id = "DropPodGarage";
-	name = "Drop Pod Garage";
+	id = "Mecha";
+	name = "Mecha";
 	pixel_w = 10;
 	pixel_y = 2;
 	pixel_z = 10
@@ -22068,6 +22239,9 @@
 	dir = 1;
 	network = list("ERT")
 	},
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -22076,11 +22250,21 @@
 /obj/structure/table/woodentable{
 	dir = 5
 	},
-/obj/item/weapon/reagent_containers/food/drinks/flask{
-	pixel_y = 4
-	},
-/obj/item/clothing/mask/cigarette/cigar/havana,
 /obj/machinery/light/small,
+/obj/machinery/door_control{
+	id = "DropPodGarage";
+	name = "Drop Pod Garage";
+	pixel_w = 10;
+	pixel_y = 2;
+	pixel_z = 10
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -22127,6 +22311,9 @@
 /area/centcom/specops)
 "byb" = (
 /obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/cable_layer{
+	pixel_y = 6
+	},
 /obj/item/mecha_parts/mecha_equipment/extinguisher,
 /turf/unsimulated/floor{
 	dir = 8;
@@ -22135,39 +22322,8 @@
 /area/centcom/specops)
 "bzb" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/msmg9mm{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/ammo_box/magazine/msmg9mm{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/ammo_box/magazine/msmg9mm{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/ammo_box/magazine/msmg9mm{
-	pixel_y = 3
-	},
-/obj/item/ammo_box/magazine/msmg9mm{
-	pixel_y = 3
-	},
-/obj/item/ammo_box/magazine/msmg9mm{
-	pixel_y = 3
-	},
-/obj/item/ammo_box/magazine/msmg9mm{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/ammo_box/magazine/msmg9mm{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/ammo_box/magazine/msmg9mm{
-	pixel_x = -5;
-	pixel_y = 3
-	},
+/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
+/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -25771,21 +25927,25 @@
 	},
 /area/centcom/evac)
 "hXb" = (
-/obj/machinery/shower{
-	dir = 4
+/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
 	},
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
 	},
-/area/centcom/living)
+/area/shuttle/specops/centcom)
 "hYb" = (
-/obj/machinery/shower{
-	dir = 8
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
 	},
-/area/centcom/living)
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
+	},
+/area/shuttle/specops/centcom)
 "hZb" = (
 /obj/structure/sign/mark{
 	icon_state = "rdn"
@@ -53669,7 +53829,7 @@ aBP
 aBI
 aBI
 aCO
-aLp
+bfh
 aBp
 aaM
 aHv
@@ -53926,7 +54086,7 @@ hcb
 aAP
 aAP
 aBa
-aLt
+bfn
 aBp
 aaM
 aHv
@@ -54183,7 +54343,7 @@ ayX
 bfl
 bhb
 byb
-aBp
+bzb
 aBp
 aaM
 aHv
@@ -54691,7 +54851,7 @@ aEK
 aEK
 aBp
 aBp
-aFr
+frb
 aFr
 aFr
 aFr
@@ -55705,19 +55865,19 @@ aaM
 aaM
 aBp
 aBp
-frb
 gbb
 gbb
 aBH
 gbb
 gbb
 gbb
+frb
 aBp
 bib
 aAE
 aCV
 aBQ
-aEl
+aFp
 aBp
 aBp
 aBp
@@ -55974,19 +56134,19 @@ aDM
 aAE
 aCV
 aBQ
-aFM
+aHN
 aBp
+aGt
+aLt
+aMl
+azE
+azE
+azE
+aMl
 aFu
-azE
-aMl
-azE
-azE
-azE
-aMl
-aMp
 aBp
 aBp
-aaM
+aBp
 aaM
 aGn
 aGn
@@ -56240,10 +56400,10 @@ bIb
 bIb
 bIb
 bIb
+bIb
 aMa
 aMe
 aBp
-aaM
 aaM
 aGn
 aGn
@@ -56497,10 +56657,10 @@ bib
 bib
 bib
 bib
+bib
 aEn
 aMf
 aBp
-aaM
 aaM
 aaM
 aaM
@@ -56751,13 +56911,13 @@ aHM
 bJb
 bJb
 bJb
+bJb
 blb
 bJb
 bJb
 aMd
 aMq
 aBp
-aaM
 aaM
 aaM
 aaM
@@ -57006,15 +57166,15 @@ aFR
 aBp
 aGr
 bKb
+aMn
 azG
-bzb
+aLW
 aBp
 anv
 bKb
 azG
-aMk
+aMv
 aBp
-aaM
 aaM
 aaM
 aaM
@@ -57261,17 +57421,17 @@ aCV
 aBQ
 aEp
 aBp
-aGt
+aHl
 bLb
+bib
 azR
-bfn
+bfq
 aBp
 anv
 bLb
 azR
-aMr
+aMw
 aBp
-aaM
 aaM
 aaM
 aaM
@@ -57518,17 +57678,17 @@ aCV
 aBQ
 gLb
 aBp
-aLW
+aHn
 bLb
+bib
 azR
-bfq
+bfp
 aBp
 anv
 bMb
 azl
 aMm
 aBp
-aaM
 aaM
 aaM
 aaM
@@ -57775,17 +57935,17 @@ aBG
 aBS
 gLb
 aBp
-aGv
+aIf
 bMb
+aMp
 azl
-bfp
 aBp
 aBp
 aBp
 aBp
 aBp
 aBp
-aaM
+aBp
 aaM
 aaM
 aaM
@@ -58035,7 +58195,7 @@ aBp
 aBp
 kEE
 azn
-aBp
+aGv
 aBp
 aaM
 aaM
@@ -58296,8 +58456,8 @@ aBp
 aBp
 aBp
 aBp
-aaM
-aaM
+aBp
+aBp
 aaM
 aaM
 aaM
@@ -58546,15 +58706,15 @@ aDY
 aDY
 aDY
 aBR
-aHl
+aLE
 aBp
 azm
 azm
 azm
 azm
+azm
+azm
 aBp
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -58803,16 +58963,16 @@ aEQ
 aCV
 aCV
 aBQ
-aHn
+aLN
 aBp
 bcT
 bcT
 bcT
 bcT
+bcT
+bcT
 aBp
-aaM
-aaM
-aaM
+aBp
 aaM
 aaM
 aaM
@@ -59043,9 +59203,9 @@ aaM
 aaM
 aaM
 lpG
-fCb
+hXb
 fUb
-ayL
+hYb
 lpG
 aaR
 hkb
@@ -59065,12 +59225,12 @@ aBp
 hkb
 aDY
 aDY
-aMn
+aDY
+aDY
+aDY
+aLm
 aBp
-aaM
-aaM
 aAm
-aHN
 aAm
 aAm
 aAm
@@ -59322,13 +59482,13 @@ aBY
 aAE
 aCV
 aCV
-aLb
-aBp
-aaM
-aaM
+aCV
+aCV
+aCV
+aMs
+aMx
+aMy
 aAm
-aHO
-aIf
 aIh
 aAm
 aAm
@@ -59579,12 +59739,12 @@ aBY
 aAE
 aCV
 aCV
-aBQ
+aCV
+aCV
+aCV
+aMt
 aBp
-aaM
-aaM
-aAm
-aAm
+aMz
 aAm
 aIh
 aAm
@@ -59836,12 +59996,12 @@ aBp
 beC
 aBG
 aBG
+ayU
+aEF
+aBG
 aBS
 aBp
-aaM
-aaM
-aAm
-hXb
+aIh
 iab
 aIh
 aIU
@@ -60076,9 +60236,9 @@ fVb
 lpG
 lpG
 aBp
-aAK
+aAJ
 aBJ
-aaR
+aBJ
 aBp
 aCj
 aAE
@@ -60096,8 +60256,8 @@ ahQ
 aBp
 aBp
 aBp
-aaM
-aAm
+aBp
+aBp
 aHQ
 aIh
 aIh
@@ -60333,7 +60493,7 @@ fUb
 lpG
 afs
 aBp
-aAJ
+aBI
 aBI
 aBI
 aBp
@@ -60345,17 +60505,17 @@ aBG
 aBG
 aBG
 aBS
-bBb
+aLb
 aBp
 beQ
 hkb
 aDY
+aDY
+aDY
 aBR
-aLE
+aMu
 aBp
-aaM
-aAm
-hYb
+aMA
 ibb
 aIE
 aAm
@@ -60601,17 +60761,17 @@ aEJ
 aER
 aEb
 bib
-aFm
-aBp
+gtb
+aLp
 aBp
 bez
 aAD
 aBG
+aBG
+aBG
 aBS
 aLM
 aBp
-aaM
-aAm
 aAm
 aAm
 aAm
@@ -60846,18 +61006,20 @@ aaM
 aaM
 aaM
 aBp
-hbb
+aAK
 bib
 bib
 bib
-aBb
+aEl
 aBp
-aBp
+aaR
 aDI
+aaR
 aBp
-aBp
-aBp
+aaR
 aFQ
+aaR
+aBp
 aBp
 aBp
 aBp
@@ -60865,10 +61027,8 @@ bfi
 bfu
 bob
 aLn
-aLN
 aBp
-aaM
-aaM
+aBp
 aaM
 aaM
 aaM
@@ -61112,19 +61272,19 @@ aBp
 aDK
 aEG
 aEM
-aBp
+aFm
 hkb
 aDY
 aBR
 aBp
+aMk
+aMr
 aBp
 aBp
 aBp
 aBp
 aBp
 aBp
-aBp
-aaM
 aaM
 aaM
 aaM
@@ -61373,9 +61533,9 @@ aCM
 aAE
 aCV
 aBQ
-aBp
-ayU
-bfh
+bDb
+ayW
+bfk
 bft
 bqb
 aBp
@@ -61623,13 +61783,13 @@ hib
 bib
 hib
 aBp
-aDK
+aFM
 aAE
 aBQ
 aCN
 aAE
 aCV
-aFp
+aHO
 aBp
 ayW
 bfk
@@ -61887,8 +62047,8 @@ aCN
 aAE
 aCV
 aBQ
-bDb
-ayW
+aaR
+bfk
 bfk
 bfk
 btb
@@ -62144,8 +62304,8 @@ aCP
 aAE
 aCV
 aBQ
-aBp
-ayW
+aaR
+bfk
 bfk
 bfv
 bub
@@ -62397,7 +62557,7 @@ avI
 aDK
 aAD
 aEO
-aBp
+aFm
 aEe
 aEs
 aFo
