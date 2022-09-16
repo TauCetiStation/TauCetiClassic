@@ -182,6 +182,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "tag"
 	var/account_number = 111111
+	w_class = SIZE_MINUSCULE
 	price = 0
 
 /obj/price_tag/New(des, num, pri)
