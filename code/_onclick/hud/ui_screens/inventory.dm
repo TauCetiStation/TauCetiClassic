@@ -112,7 +112,7 @@
 
 /atom/movable/screen/inventory/craft
 	name = "crafting menu"
-	icon = 'icons/mob/screen1_Midnight.dmi'
+	icon = 'icons/hud/screen1_Midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
 

@@ -148,7 +148,7 @@
 
 /datum/action/slime_place
 	name = "Place Slimes"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "slime_down"
 	action_type = AB_INNATE
 
@@ -173,7 +173,7 @@
 
 /datum/action/slime_pick_up
 	name = "Pick up Slime"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "slime_up"
 	action_type = AB_INNATE
 
@@ -209,7 +209,7 @@
 
 /datum/action/feed_slime
 	name = "Feed Slimes"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "monkey_down"
 	action_type = AB_INNATE
 
@@ -235,7 +235,7 @@
 
 /datum/action/innate/slime_scan
 	name = "Scan Slime"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "slime_scan"
 	action_type = AB_INNATE
 
@@ -254,7 +254,7 @@
 
 /datum/action/monkey_recycle
 	name = "Recycle Monkeys"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "monkey_up"
 	action_type = AB_INNATE
 
@@ -280,7 +280,7 @@
 
 /datum/action/hotkey_help
 	name = "Hotkey Help"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "hotkey_help"
 	action_type = AB_INNATE
 

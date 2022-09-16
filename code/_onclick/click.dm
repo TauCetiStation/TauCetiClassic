@@ -292,7 +292,9 @@
 	return
 
 /atom/movable/CtrlClick(mob/user)
-	if(Adjacent(user))
+	if(user.pulling == src)
+		user.stop_pulling()
+	else if(Adjacent(user))
 		user.start_pulling(src)
 
 /*
@@ -417,7 +419,7 @@
 		C.cob.remove_build_overlay(C)
 
 /atom/movable/screen/click_catcher
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "click_catcher"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE

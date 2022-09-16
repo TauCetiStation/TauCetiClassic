@@ -174,7 +174,7 @@
 
 /datum/action/camera_off
 	name = "End Camera View"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "camera_off"
 	action_type = AB_INNATE
 
@@ -188,7 +188,7 @@
 
 /datum/action/camera_jump
 	name = "Jump To Camera"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "camera_jump"
 	action_type = AB_INNATE
 
