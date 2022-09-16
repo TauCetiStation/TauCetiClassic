@@ -38,3 +38,6 @@
 
 /datum/religion_tech/cult/mirror_shield
 	id = RTECH_MIRROR_SHIELD
+
+/datum/religion_tech/cult/improved_pylons
+	id = RTECH_IMPROVED_PYLONS
