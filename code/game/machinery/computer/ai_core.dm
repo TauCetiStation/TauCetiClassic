@@ -193,7 +193,7 @@
 		circuit.forceMove(loc)
 		circuit = null
 	if(brain)
-		brain.froceMove(loc)
+		brain.forceMove(loc)
 		brain = null
 	new /obj/item/stack/sheet/plasteel(loc, 4)
 	..()
