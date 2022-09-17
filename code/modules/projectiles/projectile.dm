@@ -245,10 +245,9 @@
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 
-	if(istype(mover, /obj/item/projectile))
+	if(istype(mover, /obj/item/projectile) && (reverse_dir[dir] & mover.dir))
 		return prob(95)
-	else
-		return 1
+	return 1
 
 
 /obj/item/projectile/process(boolet_number = 1) // we add default arg value, because there is alot of uses of projectiles without guns (e.g turrets).
