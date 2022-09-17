@@ -16,6 +16,14 @@
 /datum/religion_rites/instant/spawn_item/cult
 	religion_type = /datum/religion/cult
 
+/datum/religion_rites/instant/spawn_item/cult/book
+	name = "Призыв Тома"
+	desc = "Призывает ваше основное оружие и инструмент - книгу."
+	ritual_length = (3 SECONDS)
+	invoke_msg = "Призываю инструмент божий!!!"
+	favor_cost = 50
+	spawn_type = /obj/item/weapon/storage/bible/tome
+
 /datum/religion_rites/instant/spawn_item/cult/talisman
 	name = "Призыв Талисмана"
 	desc = "Призывает пустой талисман, в который можно поместить ритуал."
@@ -51,3 +59,45 @@
 	needed_aspects = list(
 		ASPECT_MYSTIC = 1,
 	)
+
+/datum/religion_rites/instant/spawn_item/cult/cult_sword
+	name = "Создание Меча"
+	desc = "Создаёт меч для боя со всякой нечестью, по типу экипажа станции."
+	ritual_length = (5 SECONDS)
+	invoke_msg = "Н'ез Рез!!!"
+	favor_cost = 100
+	spawn_type = /obj/item/weapon/melee/cultblade
+
+/datum/religion_rites/instant/spawn_item/cult/cult_robes
+	name = "Создание Робы"
+	desc = "Создаёт броню для защиты вашей души и тела от посягательства врагов."
+	ritual_length = (5 SECONDS)
+	invoke_msg = "Шай'ро Ез!!!"
+	favor_cost = 200
+	spawn_type = /obj/item/weapon/storage/backpack/cultpack/armor
+
+/datum/religion_rites/instant/spawn_item/cult/cult_space_suit
+	name = "Создание Брони"
+	desc = "Создаёт набор тяжелой космической брони для защиты вашей души и тела от посягательства врагов и космоса."
+	ritual_length = (5 SECONDS)
+	invoke_msg = "Ат Драггазнор!!!"
+	favor_cost = 300
+	piety_cost = 20
+	spawn_type =/obj/item/weapon/storage/backpack/cultpack/space_armor
+
+/datum/religion_rites/instant/spawn_item/cult/cult_blindfold
+	name = "Создание Повязки"
+	desc = "Создаёт повязку, позволяющую смотреть глазами бога."
+	ritual_length = (5 SECONDS)
+	invoke_msg = "Фве'ш Мех Ерлоз!!!"
+	favor_cost = 120
+	piety_cost = 30
+	spawn_type = /obj/item/clothing/glasses/cult_blindfold
+
+/datum/religion_rites/instant/spawn_item/cult/cult_stone
+	name = "Создание Камня Прозрения"
+	desc = "Создаёт камень, позволяющую смотреть глазами пилонов."
+	ritual_length = (5 SECONDS)
+	favor_cost = 100
+	invoke_msg = "Набо'р Се'езма!!!"
+	spawn_type = /obj/item/device/cult_camera
