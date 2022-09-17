@@ -11,6 +11,10 @@
 
 	resistance_flags = CAN_BE_HIT
 
+/obj/structure/AIcore/Destroy()
+	QDEL_NULL(circuit)
+	QDEL_NULL(brain)
+	return ..()
 
 /obj/structure/AIcore/attackby(obj/item/P, mob/user)
 	switch(state)
@@ -172,6 +176,7 @@
 						empty_playable_ai_cores += D
 				else
 					var/mob/living/silicon/ai/A = new /mob/living/silicon/ai ( loc, laws, brain )
+					brain = null
 					if(A) //if there's no brain, the mob is deleted and a structure/AIcore is created
 						A.rename_self("ai", 1)
 				feedback_inc("cyborg_ais_created",1)
@@ -187,6 +192,9 @@
 	if(circuit)
 		circuit.forceMove(loc)
 		circuit = null
+	if(brain)
+		brain.froceMove(loc)
+		brain = null
 	new /obj/item/stack/sheet/plasteel(loc, 4)
 	..()
 

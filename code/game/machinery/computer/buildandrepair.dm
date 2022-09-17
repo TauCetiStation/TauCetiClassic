@@ -10,6 +10,10 @@
 
 	resistance_flags = CAN_BE_HIT
 
+/obj/structure/computerframe/Destroy()
+	QDEL_NULL(circuit)
+	return ..()
+
 /obj/item/weapon/circuitboard
 	density = FALSE
 	anchored = FALSE
@@ -495,6 +499,7 @@
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/machinery/computer/new_computer = new src.circuit.build_path (src.loc, circuit)
+				circuit = null
 				new_computer.set_dir(dir)
 				transfer_fingerprints_to(new_computer)
 				qdel(src)
