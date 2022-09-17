@@ -71,12 +71,14 @@
 	light_range = 6
 	pass_flags = PASSTABLE
 	health = 200
-	var/heal_delay = 50
-	var/last_heal = 0
-	var/corrupt_delay = 50 //Increses currupting delay by 5 each time it procs
-	var/last_corrupt = 0
 	var/list/validturfs = list()
 	var/should_corrupt = TRUE
+	var/datum/religion/cult/C
+
+	var/heal_delay = 50
+	COOLDOWN_DECLARE(heal)
+	var/corruption_delay = 50 //Increses currupting delay by 5 each time it procs
+	COOLDOWN_DECLARE(corruption)
 
 /obj/structure/cult/pylon/atom_init()
 	. = ..()
@@ -87,26 +89,30 @@
 	new /obj/item/stack/sheet/metal(loc)
 	STOP_PROCESSING(SSfastprocess, src)
 	validturfs = null
+	C.pylons -= src
+	C = null
 	return ..()
 
 /obj/structure/cult/pylon/process()
 	if(!anchored)
 		return
-	var/datum/religion/R = cult_religion
-	if(!R)
+
+	if(!C) //Roundstart pre-round case
+		if(cult_religion)
+			C = cult_religion
+			C.pylons += src
+			if(!C.get_tech(RTECH_IMPROVED_PYLONS))
+				STOP_PROCESSING(SSfastprocess, src)
 		return
-	if(!R.get_tech(RTECH_IMPROVED_PYLONS))
-		return
-	if(last_heal <= world.time)
-		last_heal = world.time + heal_delay
+
+	if(COOLDOWN_FINISHED(src, heal))
 		for(var/mob/living/L in mobs_in_view(3, src))
-			if(iscultist(L) || isshade(L) || isconstruct(L))
+			if(iscultist(L))
 				if(L.health != L.maxHealth)
 					new /obj/effect/temp_visual/heal(get_turf(L),"#960000")
 					if(ishuman(L))
-						L.adjustBruteLoss(-2, 0)
-						L.adjustFireLoss(-2, 0)
-						L.updatehealth()
+						var/mob/living/carbon/human/H = L
+						H.heal_overall_damage(2, 2)
 					if(isshade(L) || isconstruct(L))
 						var/mob/living/simple_animal/M = L
 						if(M.health < M.maxHealth)
@@ -116,32 +122,33 @@
 					var/mob/living/carbon/human/H = L
 					if(H.blood_amount() < BLOOD_VOLUME_NORMAL)
 						H.blood_add(2)
-			CHECK_TICK
+		COOLDOWN_START(src, heal, heal_delay)
+
 	if(!should_corrupt)
 		return
 	else if(should_corrupt == 2)
-		if(last_corrupt <= world.time)
+		if(COOLDOWN_FINISHED(src, corruption))
 			corrupt()
 	else if(should_corrupt)
-		if(!(z in SSmapping.levels_by_trait(ZTRAIT_CENTCOM))) //It is cult' area, after all
+		if(is_centcom_level(z))//if(!(z in SSmapping.levels_by_trait(ZTRAIT_CENTCOM))) //It is cult' area, after all
+			should_corrupt = FALSE
+		else
 			should_corrupt = 2
 
 /obj/structure/cult/pylon/proc/corrupt()
-	var/datum/religion/R = cult_religion
-	if(!R) //Sooner - better
-		return
-
 	if(!length(validturfs))
 		for(var/T as anything in circleviewturfs(src, 5))
 			validturfs += T
 	else
 		var/turf/simulated/T = pick(validturfs)
 		if(isfloorturf(T)) //Cuz we can get a wall here
-			T.ChangeTurf(pick(R.floor_types))
-			validturfs -= T
-			corrupt_delay += 5
+			T.ChangeTurf(pick(C.floor_types))
+		else if(iswallturf(T))
+			T.ChangeTurf(pick(C.wall_types))
+		validturfs -= T
+		corruption_delay += 5
 
-	last_corrupt = world.time + corrupt_delay
+	COOLDOWN_START(src, corruption, corruption_delay)
 
 /obj/structure/cult/pylon/proc/activate(time_to_stop, datum/religion/R)
 	var/mob/living/simple_animal/hostile/pylon/charged = new(loc)

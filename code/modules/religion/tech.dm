@@ -33,11 +33,13 @@
 /datum/religion_tech/cult/more_runes
 	id = RTECH_MORE_RUNES
 
-/datum/religion_tech/cult/more_runes/on_add(datum/religion/cult/R)
-	R.max_runes_on_mob += 5
 
 /datum/religion_tech/cult/mirror_shield
 	id = RTECH_MIRROR_SHIELD
 
 /datum/religion_tech/cult/improved_pylons
 	id = RTECH_IMPROVED_PYLONS
+
+/datum/religion_tech/cult/improved_pylons/on_add(datum/religion/cult/R)
+	for(var/obj/structure/cult/pylon/P as anything in R.pylons)
+		START_PROCESSING(SSfastprocess, P)
