@@ -76,14 +76,6 @@
 	piety_cost = 150
 	deconstruct_piety_cost = 20
 
-/datum/building_agent/structure/cult/forge
-	name = "Кузня"
-	building_type = /obj/structure/cult/forge
-	favor_cost = 50
-	deconstruct_favor_cost = 50
-	piety_cost = 50
-	deconstruct_piety_cost = 0
-
 /datum/building_agent/structure/cult/torture_table
 	name = "Стол Пыток"
 	building_type = /obj/machinery/optable/torture_table
@@ -182,37 +174,3 @@
 	favor_cost = 300
 	piety_cost = 80
 
-// For forge
-/datum/building_agent/tool/cult
-/datum/building_agent/tool/cult/tome
-	name = "Том"
-	building_type = /obj/item/weapon/storage/bible/tome
-	favor_cost = 50
-
-/datum/building_agent/tool/cult/armor
-	name = "Набор Брони"
-	building_type = /obj/item/weapon/storage/backpack/cultpack/armor
-	favor_cost = 200
-
-/datum/building_agent/tool/cult/blade
-	name = "Кровавая Месть"
-	building_type = /obj/item/weapon/melee/cultblade
-	favor_cost = 100
-
-/datum/building_agent/tool/cult/cult_blindfold
-	name = "Слепое Прозрение"
-	building_type = /obj/item/clothing/glasses/cult_blindfold
-	favor_cost = 120
-	piety_cost = 30
-
-/datum/building_agent/tool/cult/space_armor
-	name = "Набор Космической Брони"
-	building_type = /obj/item/weapon/storage/backpack/cultpack/space_armor
-	favor_cost = 300
-	piety_cost = 20
-
-/datum/building_agent/tool/cult/stone
-	name = "Камень Прозрения"
-	building_type = /obj/item/device/cult_camera
-	favor_cost = 100
-	piety_cost = 50
