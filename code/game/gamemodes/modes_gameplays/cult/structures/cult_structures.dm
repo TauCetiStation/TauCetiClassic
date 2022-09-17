@@ -75,13 +75,14 @@
 	var/should_corrupt = TRUE
 	var/datum/religion/cult/C
 
-	var/heal_delay = 50
-	COOLDOWN_DECLARE(heal)
 	var/corruption_delay = 50 //Increses currupting delay by 5 each time it procs
 	COOLDOWN_DECLARE(corruption)
 
 /obj/structure/cult/pylon/atom_init()
 	. = ..()
+	if(cult_religion && cult_religion.get_tech(RTECH_IMPROVED_PYLONS))
+		AddComponent(/datum/component/aura_healing, 5, 0.4, 0.4, 0.4, 1.2, FALSE, TRAIT_HEALS_FROM_PYLONS,"#960000")
+
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/structure/cult/pylon/Destroy()
@@ -105,7 +106,7 @@
 				STOP_PROCESSING(SSfastprocess, src)
 		return
 
-	if(COOLDOWN_FINISHED(src, heal))
+	/*if(COOLDOWN_FINISHED(src, heal))
 		for(var/mob/living/L in mobs_in_view(3, src))
 			if(iscultist(L))
 				if(L.health != L.maxHealth)
@@ -122,7 +123,7 @@
 					var/mob/living/carbon/human/H = L
 					if(H.blood_amount() < BLOOD_VOLUME_NORMAL)
 						H.blood_add(2)
-		COOLDOWN_START(src, heal, heal_delay)
+		COOLDOWN_START(src, heal, heal_delay)*/
 
 	if(!should_corrupt)
 		return
@@ -130,7 +131,7 @@
 		if(COOLDOWN_FINISHED(src, corruption))
 			corrupt()
 	else if(should_corrupt)
-		if(is_centcom_level(z))//if(!(z in SSmapping.levels_by_trait(ZTRAIT_CENTCOM))) //It is cult' area, after all
+		if(is_centcom_level(z))//It is cult' area, after all
 			should_corrupt = FALSE
 		else
 			should_corrupt = 2

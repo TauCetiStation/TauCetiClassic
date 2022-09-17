@@ -43,3 +43,4 @@
 /datum/religion_tech/cult/improved_pylons/on_add(datum/religion/cult/R)
 	for(var/obj/structure/cult/pylon/P as anything in R.pylons)
 		START_PROCESSING(SSfastprocess, P)
+		P.AddComponent(/datum/component/aura_healing, 5, 0.4, 0.4, 0.4, 1.2, FALSE, TRAIT_HEALS_FROM_PYLONS,"#960000")

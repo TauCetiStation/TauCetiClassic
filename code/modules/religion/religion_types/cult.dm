@@ -242,6 +242,7 @@
 	if(!M.mind?.GetRole(CULTIST))
 		add_faction_member(mode, M, TRUE)
 	handle_appearence(M)
+	ADD_TRAIT(M, TRAIT_HEALS_FROM_PYLONS, RELIGION_TRAIT)
 	return TRUE
 
 /datum/religion/cult/proc/handle_appearence(mob/M)
