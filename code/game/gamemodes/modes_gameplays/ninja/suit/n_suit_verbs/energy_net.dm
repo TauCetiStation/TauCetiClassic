@@ -75,16 +75,6 @@
 /obj/effect/energy_net/attack_paw()
 	return attack_hand()
 
-/obj/effect/energy_net/attack_alien(mob/user)
-	. = ..()
-	if(!.)
-		return
-
-	if(QDELETED(src))
-		user.visible_message("<span class='warning'>[user] slices the energy net apart!</span>", "<span class='notice'>You slice the energy net to pieces.</span>")
-	else
-		user.visible_message("<span class='warning'>[user] claws at the energy net!</span>", "<span class='notice'>You claw at the net.</span>")
-
 /obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE, BURN)

@@ -59,13 +59,6 @@
 
 /obj/structure/inflatable/deconstruct(disassembled)
 	deflate(1)
-	
-/obj/structure/inflatable/attack_generic(mob/user)
-	. = ..()
-	if(QDELETED(src))
-		user.visible_message("<span class='danger'>[user] tears open [src]!</span>")
-	else	//for nicer text~
-		user.visible_message("<span class='danger'>[user] tears at [src]!</span>")
 
 /obj/structure/inflatable/attackby(obj/item/weapon/W, mob/user)
 	if(W.can_puncture())
