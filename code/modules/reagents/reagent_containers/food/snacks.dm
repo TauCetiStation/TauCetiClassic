@@ -289,6 +289,9 @@
 	filling_color = "#dbc94f"
 	bitesize = 1
 	list_reagents = list("nutriment" = 3)
+//Peacekeeper stuff
+/obj/item/weapon/reagent_containers/food/snacks/cookie/toxin_cookie
+	list_reagents = list("pacid" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar
 	name = "Chocolate Bar"

@@ -55,6 +55,12 @@ for reference:
 
 
 //Barricades, maybe there will be a metal one later...
+/obj/structure/barricade
+	anchored = TRUE
+	density = TRUE
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/barricade/wooden
 	name = "wooden barricade"
 	desc = "This space is blocked off by a wooden barricade."
@@ -62,8 +68,6 @@ for reference:
 	icon_state = "woodenbarricade"
 	anchored = TRUE
 	density = TRUE
-	max_integrity = 100
-	resistance_flags = CAN_BE_HIT
 
 /obj/structure/barricade/wooden/deconstruct(disassembled)
 	new /obj/item/stack/sheet/wood(loc)
@@ -109,6 +113,31 @@ for reference:
 	else
 		return 0
 
+//Peacekeeper wall
+/obj/structure/barricade/bubble
+	name = "bubble barricade"
+	desc = "A fragile energy field that blocks movement. Excels at blocking lethal projectiles."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "bubble"
+	max_integrity = 7
+
+/obj/structure/barricade/bubble/atom_init()
+	. = ..()
+	global.peacekeeper_shields_count++
+
+/obj/structure/barricade/bubble/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
+	for(var/mob/living/L in loc) //no need protecc abusers
+		L.bullet_act(Proj, def_zone)
+
+/obj/structure/barricade/bubble/CanPass(atom/movable/mover, turf/target, height=0, air_group=0) //make robots can pass
+	if(isrobot(mover))
+		return TRUE
+	return FALSE
+
+/obj/structure/barricade/bubble/Destroy()
+	global.peacekeeper_shields_count--
+	return ..()
 
 //Actual Deployable machinery stuff
 
