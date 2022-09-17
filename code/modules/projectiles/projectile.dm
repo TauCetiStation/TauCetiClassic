@@ -230,8 +230,6 @@
 
 
 	if(istype(A,/turf))
-		for(var/obj/O in A)
-			O.bullet_act(src)
 		for(var/mob/Mob in A)
 			Mob.bullet_act(src, def_zone)
 
