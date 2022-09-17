@@ -81,7 +81,7 @@
 		return
 	if(get_integrity() < max_integrity)
 		repair_damage(1)
-		health_timestamp = world.time + 1 SECOND // 1 seconds
+		health_timestamp = world.time + 1 SECOND
 
 
 /obj/effect/blob/proc/Pulse(max_pulse_path = BLOB_NODE_MAX_PATH, origin_dir = 0) //Todo: Fix spaceblob expand
