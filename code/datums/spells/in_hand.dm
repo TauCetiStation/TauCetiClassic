@@ -393,11 +393,11 @@
 			to_chat(user, "<span class='notice'>[level_info] <b>очищает</b> любую <b>мутацию</b>.</span>")
 		if(6)
 			touch_spell = FALSE
-			name = "Лечащий шар"
+			name = "healing ball"
 			invoke = "In Vas Mani"
 			to_chat(user, "<span class='notice'>[level_info] <b>лечит</b> и можно <b>метнуть</b>.</span>")
 		if(7)
-			name = "Восстанавливающий шар лечения"
+			name = "regeneration healing ball"
 			invoke = "In Vas An Mani"
 			to_chat(user, "<span class='notice'>[level_info] <b>восстанавливает конечности</b>, но слабее лечит и можно <b>метнуть</b>.</span>")
 
