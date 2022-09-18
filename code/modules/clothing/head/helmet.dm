@@ -73,7 +73,7 @@
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push the visor up on")
-		usr.update_inv_head()	//so our mob-overlays update
+		update_inv_mob() //so our mob-overlays update
 
 /obj/item/clothing/head/helmet/bulletproof
 	name = "bulletproof helmet"
@@ -155,7 +155,7 @@
 /obj/item/clothing/head/helmet/helmet_of_justice/attack_self(mob/user)
 	on = !on
 	icon_state = "shitcuritron_[on]"
-	user.update_inv_head()
+	update_inv_mob()
 
 /obj/item/clothing/head/helmet/warden/blue
 	name = "warden's hat"

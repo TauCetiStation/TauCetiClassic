@@ -64,13 +64,8 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_mob()
 	add_fingerprint(user)
-	return
 
 
 /*
@@ -191,11 +186,7 @@
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_mob()
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	add_fingerprint(user)
 
@@ -321,7 +312,6 @@
 
 /obj/item/weapon/shield/energy/proc/turn_on(mob/living/user)
 	force = 10
-	icon_state = "eshield[active]"
 	w_class = SIZE_NORMAL
 	playsound(src, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='notice'> [src] is now active.</span>")
@@ -329,7 +319,6 @@
 
 /obj/item/weapon/shield/energy/proc/turn_off(mob/living/user)
 	force = 3
-	icon_state = "eshield[active]"
 	w_class = SIZE_MINUSCULE
 	playsound(src, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
@@ -337,7 +326,5 @@
 		to_chat(user, "<span class='notice'> [src] can now be concealed.</span>")
 
 /obj/item/weapon/shield/energy/update_icon()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
+	icon_state = "eshield[active]"
+	update_inv_mob()

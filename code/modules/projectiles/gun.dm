@@ -165,11 +165,7 @@
 		shoot_with_empty_chamber(user)
 	process_chamber()
 	update_icon()
-
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
+	update_inv_mob()
 
 
 /obj/item/weapon/gun/proc/can_fire()

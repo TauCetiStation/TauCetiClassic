@@ -207,9 +207,7 @@
 	else
 		A = teleportlocs[pick(teleportlocs)]
 	TeleportToArea(H,A)
-	var/obj/item/weapon/handcuffs/alien/handcuffs = H.handcuffed
-	H.drop_from_inventory(handcuffs)
-	qdel(handcuffs)
+	qdel(H.handcuffed)
 
 /obj/machinery/abductor/experiment/update_icon()
 	if(state_open)

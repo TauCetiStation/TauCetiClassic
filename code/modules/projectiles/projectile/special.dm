@@ -254,18 +254,6 @@
 				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
 					if(prob(60))
 						C.make_old()
-						if(bp == H.head)
-							H.update_inv_head()
-						if(bp == H.wear_mask)
-							H.update_inv_wear_mask()
-						if(bp == H.wear_suit)
-							H.update_inv_wear_suit()
-						if(bp == H.w_uniform)
-							H.update_inv_w_uniform()
-						if(bp == H.gloves)
-							H.update_inv_gloves()
-						if(bp == H.shoes)
-							H.update_inv_shoes()
 					visible_message("<span class='warning'>The [target.name] gets absorbed by [H]'s [C.name]!</span>")
 					return
 			else

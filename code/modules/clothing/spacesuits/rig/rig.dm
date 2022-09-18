@@ -40,14 +40,10 @@
 	on = !on
 	icon_state = "rig[on]-[rig_variant]"
 //	item_state = "rig[on]-[color]"
-	usr.update_inv_head()
+	update_inv_mob()
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
 	if(rig_connect)
@@ -717,7 +713,7 @@
 			lamp.layer = ABOVE_LIGHTING_LAYER
 			lamp.alpha = 255
 			user.add_overlay(lamp)
-		user.update_inv_head()
+		update_inv_mob()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
 	if(camera)
@@ -810,7 +806,7 @@
 /obj/item/clothing/suit/space/rig/syndi/update_icon(mob/user)
 	..()
 	icon_state = "[rig_variant]-[combat_mode ? "combat" : "space"]"
-	user.update_inv_wear_suit()
+	update_inv_mob()
 
 /obj/item/clothing/suit/space/rig/syndi/ui_action_click()
 	toggle_mode()
@@ -1033,14 +1029,10 @@
 		return
 	on = !on
 	icon_state = "rig-sec[on ? "-light" : ""]"
-	usr.update_inv_wear_suit()
+	update_inv_mob()
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_wear_suit()
 
 //HoS Rig
 /obj/item/clothing/head/helmet/space/rig/security/hos

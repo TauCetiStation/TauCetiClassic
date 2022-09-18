@@ -168,12 +168,7 @@
 /obj/item/weapon/gun/projectile/automatic/l13/update_icon(mob/M)
 	icon_state = "l13[magazine ? "" : "-e"]"
 	item_state = "l13[magazine ? "" : "-e"]"
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-		H.update_inv_belt()
-	return
+	update_inv_mob()
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"

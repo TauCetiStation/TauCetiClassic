@@ -929,6 +929,7 @@
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
 		G.transfer_blood = 0
+	update_inv_mob()
 
 /obj/item/add_dirt_cover()
 	. = ..()
@@ -940,6 +941,7 @@
 	cut_overlay(blood_overlay)
 	blood_overlay.color = dirt_overlay.color
 	add_overlay(blood_overlay)
+	update_inv_mob()
 
 /obj/item/add_blood(mob/living/carbon/human/M)
 	if (!..())
@@ -948,6 +950,7 @@
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+	update_inv_mob() // if item on mob, update mob's icon too.
 	return 1 //we applied blood to the item
 
 /obj/item/proc/generate_blood_overlay()
@@ -976,12 +979,6 @@
 	var/obj/item/I = get_active_hand()
 	if(I && !I.abstract)
 		I.showoff(src)
-
-/obj/item/proc/update_inv_mob()
-	if(!slot_equipped || !ismob(loc))
-		return
-	var/mob/M = loc
-	M.update_inv_item(src)
 
 /obj/item/proc/extinguish()
 	return

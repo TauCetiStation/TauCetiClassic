@@ -245,10 +245,7 @@
 
 	update_icon()
 
-	/*if(user.hand) with custom inhand sprites - yes, without - no.
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()*/
+	//update_inv_mob() with custom inhand sprites - yes, without - no.
 
 	return 0
 

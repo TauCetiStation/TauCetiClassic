@@ -18,8 +18,8 @@
 			remove_knife()
 			if(icon_state == "wjbootsknifed")
 				icon_state = "wjboots"
-				user.update_inv_shoes()
-			update_icon()
+				update_inv_mob()
+			update_icon() // changing icon_state above out of update_icon() proc, but then calling update_icon() to update icon..?
 	else
 		return ..()
 
@@ -34,7 +34,7 @@
 		add_knife(I)
 		if(icon_state == "wjboots")
 			icon_state = "wjbootsknifed"
-			user.update_inv_shoes()
+			update_inv_mob()
 		update_icon()
 		return
 

@@ -114,11 +114,8 @@
 		if(ishuman(AM))
 			if(isturf(src.loc))
 				var/mob/living/carbon/H = AM
-				if(H.m_intent == "run" && !H.buckled)
+				if(H.m_intent == "run" && !H.buckled && H.equip_to_slot_if_possible(src, SLOT_LEGCUFFED, disable_warning = TRUE))
 					armed = 0
-					H.legcuffed = src
-					src.loc = H
-					H.update_inv_legcuffed()
 					H.visible_message("<span class='danger'>[H] steps on \the [src].</span>", "<span class='danger'>You step on \the [src]!</span>")
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
@@ -145,11 +142,8 @@
 	if(!iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return
 	var/mob/living/carbon/C = hit_atom
-	if(!C.legcuffed)
+	if(C.equip_to_slot_if_possible(src, SLOT_LEGCUFFED, disable_warning = TRUE))
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
-		C.legcuffed = src
-		src.loc = C
-		C.update_inv_legcuffed()
 		feedback_add_details("handcuffs","B")
 		to_chat(C,"<span class='userdanger'>\The [src] ensnares you!</span>")
 		C.Weaken(weaken)

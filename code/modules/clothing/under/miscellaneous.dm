@@ -740,14 +740,6 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HEAD
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES
 
-/obj/item/clothing/under/henchmen/equipped(mob/user, slot)
-	. = ..()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_hair()
-		H.update_inv_ears()
-		H.update_inv_wear_mask()
-
 /obj/item/clothing/shoes/yakuza
 	name = "tojo clan shoes"
 	desc = "Steel-toed and intimidating."

@@ -54,7 +54,7 @@
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push \the [src] up out of your face.")
 
-		usr.update_inv_wear_mask()
+		update_inv_mob()
 
 // ********************************************************************
 

@@ -35,7 +35,7 @@
 				lighting_alpha = initial(lighting_alpha)
 				to_chat(usr, "You activate the optical matrix on the [src].")
 			playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
-			H.update_inv_glasses()
+			update_inv_mob()
 			H.update_sight()
 
 /obj/item/clothing/glasses/meson
@@ -194,7 +194,7 @@
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push \the [src] up out of your face.")
 
-		usr.update_inv_glasses()
+		update_inv_mob()
 
 /obj/item/clothing/glasses/welding/superior
 	name = "superior welding goggles"
@@ -385,7 +385,7 @@
 /obj/item/clothing/glasses/sunglasses/noir/verb/toggle_noir()
 	set name = "Toggle Noir"
 	set category = "Object"
-	
+
 	if(usr.incapacitated())
 		return
 	active = !active
