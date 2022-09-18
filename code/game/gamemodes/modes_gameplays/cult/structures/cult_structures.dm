@@ -103,7 +103,8 @@
 
 /obj/structure/cult/pylon/process()
 	if(!anchored)
-		validturfs = list()
+		if(length(validturfs))
+			validturfs = list()
 		return
 
 	//Now we have to decide whether we need to corrupt or not
