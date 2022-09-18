@@ -4853,6 +4853,16 @@
 	icon_state = "red"
 	},
 /area/custom/syndicate_mothership)
+"amd" = (
+/obj/structure/table/woodentable,
+/obj/item/clothing/suit/chef/classic{
+	name = "surgeon apron"
+	},
+/obj/item/clothing/gloves/black{
+	name = "cult gloves"
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "ame" = (
 /obj/machinery/shower{
 	dir = 1
@@ -21737,7 +21747,10 @@
 /area/centcom/specops)
 "bry" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/kitchenknife/ritual,
+/obj/item/weapon/scalpel,
+/obj/item/weapon/hemostat,
+/obj/item/weapon/cautery,
+/obj/item/weapon/retractor,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bsb" = (
@@ -21777,10 +21790,8 @@
 /area/centcom/living)
 "buc" = (
 /obj/structure/table/woodentable,
-/obj/item/clothing/shoes/boots/cult{
-	pixel_x = -1;
-	pixel_y = 6
-	},
+/obj/item/weapon/bonegel,
+/obj/item/weapon/FixOVein,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bvb" = (
@@ -21888,10 +21899,8 @@
 	},
 /area/centcom/specops)
 "bFc" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/snacks/meat/human{
-	name = "Edvard Right Leg Meat"
-	},
+/obj/effect/decal/cleanable/blood/gibs/robot/down,
+/obj/structure/cult/pylon,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bGb" = (
@@ -21989,7 +21998,7 @@
 	},
 /area/centcom/creed)
 "bKC" = (
-/obj/structure/cult/forge,
+/obj/structure/kitchenspike,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bLb" = (
@@ -22006,7 +22015,11 @@
 /area/centcom/creed)
 "bLC" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/wiki/cult,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
+	desc = "A flask of the cult water.";
+	list_reagents = list("unholywater" = 100);
+	name = "Damn Flask"
+	},
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bMb" = (
@@ -22046,6 +22059,9 @@
 /area/shuttle/escape/centcom)
 "bOm" = (
 /obj/structure/table/woodentable,
+/obj/item/weapon/circular_saw,
+/obj/item/weapon/surgicaldrill,
+/obj/item/weapon/bonesetter,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bPb" = (
@@ -22094,12 +22110,8 @@
 /area/velocity)
 "bSj" = (
 /obj/structure/table/woodentable,
-/obj/item/clothing/suit/chef/classic{
-	name = "blacksmith apron"
-	},
-/obj/item/clothing/gloves/black{
-	name = "cult gloves"
-	},
+/obj/item/stack/medical/ointment/tajaran,
+/obj/item/stack/medical/bruise_pack/tajaran,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bTb" = (
@@ -70161,10 +70173,10 @@ aaM
 aaM
 adx
 adx
-azx
-bry
 bFc
-bOm
+bry
+bLC
+bSj
 azx
 adx
 adx
@@ -70418,7 +70430,7 @@ aaM
 aaM
 adx
 bsi
-aZI
+bKC
 aZI
 wfy
 bqK
@@ -70675,9 +70687,9 @@ aaM
 aaM
 adx
 tqh
-wfy
+idX
 aZI
-bKC
+wfy
 azx
 wfy
 mQF
@@ -70932,7 +70944,7 @@ aaM
 aaM
 adx
 bsi
-bqK
+bKC
 wfy
 azx
 bqK
@@ -71189,10 +71201,10 @@ aaM
 aaM
 adx
 adx
-wfy
+bsi
 buc
-bLC
-bSj
+bOm
+amd
 aZI
 adx
 adx
