@@ -302,7 +302,7 @@
 	var/e = 0
 	//------------------------------------------------
 	var/role_id = initial(role_category.id)
-	var/role_pref = initial(role_category.required_pref)
+	//var/role_pref = initial(role_category.required_pref)
 	for(var/mob/P in candidates)
 		if(!P.client || !P.mind.assigned_role)//are they connected?
 			candidates.Remove(P)

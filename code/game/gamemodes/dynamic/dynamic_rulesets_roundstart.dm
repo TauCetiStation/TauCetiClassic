@@ -8,9 +8,9 @@
 /datum/dynamic_ruleset/roundstart/traitor
 	name = "Syndicate Traitors"
 	role_category = /datum/role/traitor
-	protected_from_jobs = list("Security Officer", "Merchant", "Warden", "Head of Personnel", "Cyborg", "Detective",
-							"Head of Security", "Captain", "Chief Engineer", "Chief Medical Officer", "Research Director", "Brig Medic")
-	restricted_from_jobs = list("AI","Mobile MMI")
+	protected_from_jobs = list("Security Officer", "Warden", "Head of Personnel", "Cyborg", "Detective",
+							"Head of Security", "Captain", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	restricted_from_jobs = list("AI")
 	required_candidates = 1
 	weight = BASE_RULESET_WEIGHT
 	cost = 10
@@ -20,7 +20,7 @@
 	high_population_requirement = 10
 
 /datum/dynamic_ruleset/roundstart/traitor/choose_candidates()
-	var/traitor_scaling_coeff = 10 - max(0,round(mode.threat_level/10)-5)//above 50 threat level, coeff goes down by 1 for every 10 levels
+	var/traitor_scaling_coeff = 10 - max(0,round(mode.threat_level / 10) - 5)//above 50 threat level, coeff goes down by 1 for every 10 levels
 	var/num_traitors = min(round(mode.roundstart_pop_ready / traitor_scaling_coeff) + 1, candidates.len)
 	for(var/i = 1 to num_traitors)
 		var/mob/M = pick(candidates)
@@ -36,7 +36,7 @@
 /datum/dynamic_ruleset/roundstart/traitor/execute()
 	for(var/mob/M in assigned)
 		var/datum/role/traitor/newTraitor = new
-		newTraitor.AssignToRole(M.mind,1)
+		newTraitor.AssignToRole(M.mind, TRUE)
 		newTraitor.Greet(GREET_ROUNDSTART)
 		// Above 3 traitors, we start to cost a bit more.
 	return TRUE
@@ -53,9 +53,9 @@
 /datum/dynamic_ruleset/roundstart/changeling
 	name = "Changelings"
 	role_category = /datum/role/changeling
-	protected_from_jobs = list("Security Officer", "Warden","Merchant", "Head of Personnel", "Detective",
-							"Head of Security", "Captain", "Chief Engineer", "Chief Medical Officer", "Research Director", "Brig Medic")
-	restricted_from_jobs = list("AI","Cyborg","Mobile MMI")
+	protected_from_jobs = list("Security Officer", "Warden", "Head of Personnel", "Detective",
+							"Head of Security", "Captain", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	restricted_from_jobs = list("AI","Cyborg")
 	enemy_jobs = list("Security Officer","Detective", "Warden", "Head of Security", "Captain")
 	required_pop = list(15,15,15,10,10,10,10,5,5,0)
 	required_candidates = 1
@@ -74,7 +74,7 @@
 /datum/dynamic_ruleset/roundstart/changeling/execute()
 	for (var/mob/M in assigned)
 		var/datum/role/changeling/newChangeling = new
-		newChangeling.AssignToRole(M.mind,1)
+		newChangeling.AssignToRole(M.mind, TRUE)
 		//Assign to the hivemind faction
 		var/datum/faction/changeling/hivemind = find_faction_by_type(/datum/faction/changeling)
 		if(!hivemind)
@@ -104,11 +104,11 @@
 	high_population_requirement = 40
 	var/list/roundstart_wizards = list()
 
-/datum/dynamic_ruleset/roundstart/wizard/acceptable(var/population=0,var/threat=0)
+/datum/dynamic_ruleset/roundstart/wizard/acceptable(population = 0, threat = 0)
 	if(wizardstart.len == 0)
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
-		return 0
+		return FALSE
 	return ..()
 
 /datum/dynamic_ruleset/roundstart/wizard/execute()
@@ -116,9 +116,11 @@
 	if(M)
 		var/datum/role/wizard/newWizard = new
 		M.forceMove(pick(wizardstart))
-		/*if(!ishuman(M))
-			M = M.Humanize("Human")*/
-		newWizard.AssignToRole(M.mind,1)
+		if(!ishuman(M))
+			var/mob/living/carbon/C = M
+			if(C)
+				C = C.humanize()
+		newWizard.AssignToRole(M.mind, TRUE)
 		roundstart_wizards += newWizard
 		var/datum/faction/wizards/federation = find_faction_by_type(/datum/faction/wizards)
 		if(!federation)
@@ -136,9 +138,9 @@
 /datum/dynamic_ruleset/roundstart/bloodcult
 	name = "Blood Cult"
 	role_category = /datum/role/cultist
-	restricted_from_jobs = list("Merchant","AI", "Cyborg", "Mobile MMI", "Security Officer", "Warden", "Detective",
+	restricted_from_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective",
 							"Head of Security", "Captain", "Chaplain", "Head of Personnel", "Internal Affairs Agent",
-							"Chief Engineer", "Chief Medical Officer", "Research Director", "Brig Medic")
+							"Chief Engineer", "Chief Medical Officer", "Research Director")
 	enemy_jobs = list("Security Officer","Warden", "Detective","Head of Security", "Captain")
 	required_pop = list(25,25,20,20,20,20,20,15,15,10)
 	required_candidates = 4
@@ -150,15 +152,15 @@
 	var/cultist_cap = list(2,2,3,4,4,4,4,4,4,4)
 	flags = HIGHLANDER_RULESET
 
-/datum/dynamic_ruleset/roundstart/bloodcult/ready(var/forced = 0)
-	var/indice_pop = min(10,round(mode.roundstart_pop_ready/5)+1)
+/datum/dynamic_ruleset/roundstart/bloodcult/ready(forced = FALSE)
+	var/indice_pop = min(10,round(mode.roundstart_pop_ready / 5) + 1)
 	required_candidates = cultist_cap[indice_pop]
-	if (forced)
+	if(forced)
 		required_candidates = 1
 	. = ..()
 
 /datum/dynamic_ruleset/roundstart/bloodcult/choose_candidates()
-	var/indice_pop = min(10,round(mode.roundstart_pop_ready/5)+1)
+	var/indice_pop = min(10,round(mode.roundstart_pop_ready / 5) + 1)
 	var/cultists = cultist_cap[indice_pop]
 	for (var/i = 1 to cultists)
 		if(candidates.len <= 0)
@@ -171,11 +173,11 @@
 /datum/dynamic_ruleset/roundstart/bloodcult/execute()
 	//if ready() did its job, candidates should have 4 or more members in it
 	var/datum/faction/cult/cult = find_faction_by_type(/datum/faction/cult)
-	if (!cult)
+	if(!cult)
 		cult = create_faction(/datum/faction/cult)
 	for(var/mob/M in assigned)
 		var/datum/role/cultist/newCultist = new
-		newCultist.AssignToRole(M.mind,1)
+		newCultist.AssignToRole(M.mind, TRUE)
 		cult.HandleRecruitedRole(newCultist)
 		newCultist.Greet(GREET_ROUNDSTART)
 	return TRUE
@@ -202,15 +204,15 @@
 	var/operative_cap = list(2, 2, 3, 3, 4, 5, 5, 5, 5, 5)
 	flags = HIGHLANDER_RULESET
 
-/datum/dynamic_ruleset/roundstart/nuclear/ready(var/forced = 0)
-	var/indice_pop = min(10, round(mode.roundstart_pop_ready/5) + 1)
+/datum/dynamic_ruleset/roundstart/nuclear/ready(forced = FALSE)
+	var/indice_pop = min(10, round(mode.roundstart_pop_ready / 5) + 1)
 	required_candidates = operative_cap[indice_pop]
-	if (forced)
+	if(forced)
 		required_candidates = 1
 	. = ..()
 
 /datum/dynamic_ruleset/roundstart/nuclear/choose_candidates()
-	var/indice_pop = min(10, round(mode.roundstart_pop_ready/5) + 1)
+	var/indice_pop = min(10, round(mode.roundstart_pop_ready / 5) + 1)
 	var/operatives = operative_cap[indice_pop]
 	message_admins("[name]: indice_pop = [indice_pop], operatives = [operatives]")
 	for(var/operatives_number = 1 to operatives)
@@ -234,27 +236,27 @@
 			continue
 
 	var/spawnpos = 1
-	var/leader = 1
+	var/leader = TRUE
 	for(var/mob/M in assigned)
 		if(spawnpos > synd_spawn.len)
 			spawnpos = 1
 		M.forceMove(synd_spawn[spawnpos])
-		/*if(!ishuman(M))
-			M = M.Humanize("Human")*/
+		if(!ishuman(M))
+			var/mob/living/carbon/C = M
+			if(C)
+				C = C.humanize()
 		if(leader)
-			leader = 0
+			leader = FALSE
 			var/datum/role/operative/leader/newCop = new
-			newCop.AssignToRole(M.mind, 1)
+			newCop.AssignToRole(M.mind, TRUE)
 			nuke.HandleRecruitedRole(newCop)
 			newCop.Greet(GREET_ROUNDSTART)
 		else
 			var/datum/role/operative/newCop = new
-			newCop.AssignToRole(M.mind, 1)
+			newCop.AssignToRole(M.mind, TRUE)
 			nuke.HandleRecruitedRole(newCop)
 			newCop.Greet(GREET_ROUNDSTART)
 		spawnpos++
-	/*for(var/obj/effect/spawner/newbomb/timer/syndicate/bomb in syndicate_bomb_spawners)
-		bomb.spawnbomb()*/
 	return TRUE
 
 //////////////////////////////////////////////
@@ -298,7 +300,7 @@
 /datum/dynamic_ruleset/roundstart/delayed/revs
 	name = "Revolution"
 	role_category = /datum/role/rev_leader
-	restricted_from_jobs = list("Merchant","AI", "Cyborg", "Mobile MMI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Internal Affairs Agent", "Brig Medic")
+	restricted_from_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Internal Affairs Agent")
 	enemy_jobs = list("Security Officer","Detective","Head of Security", "Captain", "Warden")
 	required_pop = list(25,25,25,20,20,20,15,15,15,15)
 	required_candidates = 3
@@ -310,15 +312,15 @@
 	var/required_heads = 3
 	flags = HIGHLANDER_RULESET
 
-/datum/dynamic_ruleset/roundstart/delayed/revs/ready(var/forced = 0)
-	if (forced)
+/datum/dynamic_ruleset/roundstart/delayed/revs/ready(forced = FALSE)
+	if(forced)
 		required_heads = 1
 		required_candidates = 1
-	if (!..())
+	if(!..())
 		return FALSE
 	var/head_check = 0
-	for (var/mob/player in player_list)
-		if (player.mind.assigned_role in command_positions)
+	for(var/mob/player in player_list)
+		if(player.mind.assigned_role in command_positions)
 			head_check++
 	return (head_check >= required_heads)
 
@@ -336,7 +338,7 @@
 /datum/dynamic_ruleset/roundstart/delayed/revs/execute()
 	var/datum/faction/revolution/R = find_faction_by_type(/datum/faction/revolution)
 	if(!R)
-		R = create_faction(/datum/faction/revolution)//SSticker.mode.CreateFaction(/datum/faction/revolution, null, 1)
+		R = create_faction(/datum/faction/revolution)
 	for(var/rev_ckey in assigned_ckeys)
 		var/list/L = list()
 		for(var/client/C in clients)
@@ -344,9 +346,8 @@
 				L += C.ckey
 		var/mob/M = pick(L)
 		var/datum/role/rev_leader/lenin = new
-		lenin.AssignToRole(M.mind, 1, 1)
+		lenin.AssignToRole(M.mind, TRUE)
 		R.HandleRecruitedRole(lenin)
 		lenin.Greet(GREET_ROUNDSTART)
-	//update_faction_icons()
 	R.OnPostSetup()
 	return TRUE
