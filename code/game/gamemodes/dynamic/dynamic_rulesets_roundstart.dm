@@ -35,6 +35,9 @@
 
 /datum/dynamic_ruleset/roundstart/traitor/execute()
 	for(var/mob/M in assigned)
+		var/datum/faction/traitor/traitors = find_faction_by_type(/datum/faction/traitor)
+		if(!traitors)
+			traitors = create_faction(/datum/faction/changeling)
 		var/datum/role/traitor/newTraitor = new
 		newTraitor.AssignToRole(M.mind, TRUE)
 		newTraitor.Greet(GREET_ROUNDSTART)
