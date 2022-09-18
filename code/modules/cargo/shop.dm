@@ -245,7 +245,7 @@ var/global/list/shop_categories = list("Еда", "Одежда", "Устройс
 					lot_price = T
 			if("category")
 				var/T = input("Выберите каталог", "Shop", lot_category) in global.shop_categories
-				if(T && T in global.shop_categories)
+				if(T && (T in global.shop_categories))
 					lot_category = T
 	else if(href_list["scan"])
 		scan_item()
