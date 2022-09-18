@@ -170,13 +170,13 @@ var/stacking_limit = 90
 	curve_width_of_round = dynamic_curve_width
 	message_admins("Curve centre and curve width are : [curve_centre_of_round], [curve_width_of_round]")
 	forced_extended = dynamic_forced_extended
-	if (forced_extended)
+	if(forced_extended)
 		message_admins("The round will be forced to extended.")
 	no_stacking = dynamic_no_stacking
-	if (no_stacking)
+	if(no_stacking)
 		message_admins("Round-ending rulesets won't stack, unless the threat is above stacking_limit ([stacking_limit]).")
 	classic_secret = dynamic_classic_secret
-	if (classic_secret)
+	if(classic_secret)
 		message_admins("Classic secret mode active: only autotraitors will spawn, and we will only have one roundstart ruleset.")
 	log_admin("Dynamic mode parameters for the round: distrib mode = [distribution_mode], centre = [curve_centre_of_round], width is [curve_width_of_round]. Extended : [forced_extended], no stacking : [no_stacking], classic secret: [classic_secret].")
 
@@ -210,29 +210,7 @@ var/stacking_limit = 90
 
 	return TRUE
 
-/datum/game_mode/dynamic/proc/read_previous_rounds_rulesets()
-	previously_executed_rules = list(
-		"one_round_ago" = list(),
-		"two_rounds_ago" = list(),
-		"three_rounds_ago" = list()
-	)
-	/*var/list/data = SSpersistence_misc.read_data(/datum/persistence_task/latest_dynamic_rulesets)
-	if(!length(data))
-		return
-
-	for (var/entries in data)
-		var/previous_rulesets_text = data[entries]
-		if(!length(previous_rulesets_text))
-			return
-		var/list/previous_rulesets = list()
-		for(var/entry in previous_rulesets_text)
-			var/entry_path = text2path(entry)
-			if(entry_path) // It's possible that a ruleset that existed last round doesn't exist anymore
-				previous_rulesets += entry_path
-		previously_executed_rules[entries] = previous_rulesets*/
-
 /datum/game_mode/dynamic/Setup()
-	read_previous_rounds_rulesets()
 	for(var/rule in subtypesof(/datum/dynamic_ruleset/roundstart) - /datum/dynamic_ruleset/roundstart/delayed/)
 		roundstart_rules += new rule()
 	for(var/rule in subtypesof(/datum/dynamic_ruleset/latejoin))
@@ -241,17 +219,17 @@ var/stacking_limit = 90
 		var/datum/dynamic_ruleset/midround/DR = rule
 		if(initial(DR.weight))
 			midround_rules += new rule()
-	candidates += get_player_count(check_ready = TRUE)
+	candidates += get_ready_players()
 	message_admins("DYNAMIC MODE: Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	log_admin("DYNAMIC MODE: Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	if(candidates.len <= 0)
 		message_admins("DYNAMIC MODE: Not a single player readied-up. The round will begin without any roles assigned.")
 		log_admin("DYNAMIC MODE: Not a single player readied-up. The round will begin without any roles assigned.")
-		return 1
+		return TRUE
 	if(roundstart_rules.len <= 0)
 		message_admins("DYNAMIC MODE: There are no roundstart rules within the code, what the fuck? The round will begin without any roles assigned.")
 		log_admin("DYNAMIC MODE: There are no roundstart rules within the code, what the fuck? The round will begin without any roles assigned.")
-		return 1
+		return TRUE
 	if(forced_roundstart_ruleset.len > 0)
 		rigged_roundstart()
 	else
@@ -268,15 +246,15 @@ var/stacking_limit = 90
 	log_admin("DYNAMIC MODE: [forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
 	var/forced_rules = 0
 
-	for (var/datum/forced_ruleset/forced_rule in forced_roundstart_ruleset)//By checking in this order we allow admins to set up priorities among the forced rulesets.
-		for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
+	for(var/datum/forced_ruleset/forced_rule in forced_roundstart_ruleset)//By checking in this order we allow admins to set up priorities among the forced rulesets.
+		for(var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
 			if (forced_rule.name == rule.name)
 				rule.candidates = candidates.Copy()
 				rule.trim_candidates()
-				if (rule.ready(TRUE))
+				if(rule.ready(TRUE))
 					forced_rules++
 					rule.calledBy = forced_rule.calledBy
-					if (!rule.choose_candidates())
+					if(!rule.choose_candidates())
 						stack_trace("rule [rule] failed to choose candidates despite ready() returning 1.")
 
 					message_admins("DYNAMIC MODE: <font size='3'>[rule.name]</font> successfully forced!")
@@ -285,56 +263,56 @@ var/stacking_limit = 90
 					//we don't spend threat on forced rulesets
 					threat_log += "[worldtime2text()]: Roundstart [rule.name] forced"
 
-					if (istype(rule, /datum/dynamic_ruleset/roundstart/delayed/))
+					if(istype(rule, /datum/dynamic_ruleset/roundstart/delayed/))
 						message_admins("DYNAMIC MODE: with a delay of [rule:delay/10] seconds.")
 						log_admin("DYNAMIC MODE: with a delay of [rule:delay/10] seconds.")
 						return pick_delay(rule)
 
-					if (rule.execute())//this should never fail since ready() returned 1
+					if(rule.execute())//this should never fail since ready() returned 1
 						rule.stillborn = IsRoundAboutToEnd()
 						executed_rules += rule
-						if (rule.persistent)
+						if(rule.persistent)
 							current_rules += rule
 						for(var/mob/M in rule.assigned)
 							candidates -= M
-						return 1
+						return TRUE
 					else
 						message_admins("DYNAMIC MODE: ....except not because whomever coded that ruleset forgot some cases in ready() apparently! execute() returned 0.")
 						log_admin("DYNAMIC MODE: ....except not because whomever coded that ruleset forgot some cases in ready() apparently! execute() returned 0.")
 
-	if (forced_rules == 0)
+	if(forced_rules == 0)
 		message_admins("DYNAMIC MODE: Not a single forced ruleset could be executed. Sad! Will now start a regular round of dynamic.")
 		log_admin("DYNAMIC MODE: Not a single forced ruleset could be executed. Sad! Will now start a regular round of dynamic.")
 		roundstart()
 
 /datum/game_mode/dynamic/proc/roundstart()
-	if (forced_extended)
+	if(forced_extended)
 		message_admins("DYNAMIC MODE: Starting a round of forced extended.")
 		log_admin("DYNAMIC MODE: Starting a round of forced extended.")
-		return 1
+		return TRUE
 
 	var/indice_pop = min(10,round(roundstart_pop_ready/5)+1)
 	var/extra_rulesets_amount = 0
 
-	if (classic_secret) // Classic secret experience : one & only one roundstart ruleset
+	if(classic_secret) // Classic secret experience : one & only one roundstart ruleset
 		extra_rulesets_amount = 0
 	else
 		var/rst_pop = 0
 		for(var/mob/living/player in player_list)
-			if(player.mind)
+			if(player.client)
 				rst_pop++
-		if (rst_pop > high_pop_limit)
-			if (threat_level > 50)
+		if(rst_pop > high_pop_limit)
+			if(threat_level > 50)
 				extra_rulesets_amount++
-				if (threat_level > 75)
+				if(threat_level > 75)
 					extra_rulesets_amount++
 		else
-			if (threat_level >= second_rule_req[indice_pop])
+			if(threat_level >= second_rule_req[indice_pop])
 				extra_rulesets_amount++
-				if (threat_level >= third_rule_req[indice_pop])
+				if(threat_level >= third_rule_req[indice_pop])
 					extra_rulesets_amount++
 
-	if	(extra_rulesets_amount && prob(50))
+	if(extra_rulesets_amount && prob(50))
 		message_admins("DYNAMIC MODE: Rather than extra rulesets, we'll try to draft spicier ones.")
 		log_admin("DYNAMIC MODE: Rather than extra rulesets, we'll try to draft spicier ones.")
 		highlander_rulesets_favoured = TRUE
@@ -343,15 +321,15 @@ var/stacking_limit = 90
 	var/i = 0
 	var/list/drafted_rules = list()
 
-	for (var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
-		if (rule.acceptable(roundstart_pop_ready,threat_level) && threat >= rule.cost)	//if we got the population and threat required
+	for(var/datum/dynamic_ruleset/roundstart/rule in roundstart_rules)
+		if(rule.acceptable(roundstart_pop_ready,threat_level) && threat >= rule.cost)	//if we got the population and threat required
 			i++																			//we check whether we've got eligible players
 			rule.candidates = candidates.Copy()
 			rule.trim_candidates()
-			if (rule.ready())
+			if(rule.ready())
 				drafted_rules[rule] = rule.get_weight()
 
-	if (classic_secret)
+	if(classic_secret)
 		message_admins("DYNAMIC MODE: Classic secret was forced.")
 		log_admin("DYNAMIC MODE: Classic secret was forced.")
 	else
@@ -360,21 +338,21 @@ var/stacking_limit = 90
 
 	var/list/datum/dynamic_ruleset/roundstart/candidate_rules = list()
 
-	for (var/j = 1 to (1 + extra_rulesets_amount))
+	for(var/j = 1 to (1 + extra_rulesets_amount))
 		// 1. Scrapping all the rules with cost above remaining threat level
-		for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
-			if (rule.cost > threat)
+		for(var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
+			if(rule.cost > threat)
 				drafted_rules -= rule
 
 		// 2. No rules left? Abort.
-		if (drafted_rules.len <= 0)
+		if(drafted_rules.len <= 0)
 			break
 
 		// 3. Picking up the CHOSEN ONE.
 		var/datum/dynamic_ruleset/chosen_one = picking_roundstart_rule(drafted_rules, candidate_rules)
 
 		// 4. Adding to the LIST.
-		if (chosen_one)
+		if(chosen_one)
 			message_admins("DYNAMIC MODE: Picking a [istype(chosen_one, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset...<font size='3'>[chosen_one.name]</font>!")
 			log_admin("DYNAMIC MODE: Picking a [istype(chosen_one, /datum/dynamic_ruleset/roundstart/delayed/) ? " delayed " : ""] ruleset...<font size='3'>[chosen_one.name]</font>!")
 			candidate_rules += chosen_one
@@ -385,14 +363,14 @@ var/stacking_limit = 90
 			drafted_rules = trimming_remaining_rules(chosen_one, drafted_rules)
 
 	// Is THE LIST non-empty ?
-	if (candidate_rules.len > 0)
-		for (var/datum/dynamic_ruleset/roundstart/DR in candidate_rules)
+	if(candidate_rules.len > 0)
+		for(var/datum/dynamic_ruleset/roundstart/DR in candidate_rules)
 			executing_roundstart_rule(DR)
-		return 1
+		return TRUE
 	else
 		message_admins("DYNAMIC MODE: The mode failed to pick a first ruleset. The round will begin without any roles assigned.")
 		log_admin("DYNAMIC MODE: The mode failed to pick a first ruleset. The round will begin without any roles assigned.")
-		return 0
+		return FALSE
 
 // -- PICKING a rule, which means checking if you can do it.
 // drafted_rules : the eligible rules for this round, after the threat cost of other rules has been taken into account and they have enough candidates
