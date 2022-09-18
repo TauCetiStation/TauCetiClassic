@@ -114,19 +114,24 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	test_merges = global.test_merges
 	completion_html = SSticker.mode.completition_text
 
-	var/list/black_assigned_roles = list("Animal", "Alien", "Shade", "slime", "Chaplain`s staff", "Wraith", "Artificer", "Juggernaut", "Proteon", "Positronic Brain", "Behemoth", "Corgi")
-	var/list/black_special_roles = list("Xenomorph", "Larva", "Blobbernaut")
+
+	var/list/white_assigned_roles = get_all_jobs_with_silicons() + get_all_centcom_jobs() + get_all_velocity_jobs()
+	white_assigned_roles += "MODE" // non station roles
+
+	var/list/black_special_roles = list(XENOMORPH, "Larva", BLOBBERNAUT, BLOBOVERMIND, BLOBCEREBRATE, SPACE_COP, SLAVE)
 	var/regex/is_drone = regex(@"maintenance drone \(\d+\)")
 	for(var/datum/mind/M in SSticker.minds)
-		if(M.assigned_role == "" || M.name == "")
+		if(M.assigned_role == "" || M.name == "") // wtf
 			continue
-		if(M.name == "unknown")
+		if(M.name == "unknown") // useless data
 			continue
-		if((M.assigned_role in black_assigned_roles) || (M.special_role in black_special_roles))
+		if(!(M.assigned_role in white_assigned_roles)) 
 			continue
-		if(M.assigned_role == "default" && M.special_role == "")
+		if(M.special_role in black_special_roles) // roles with boilerplate names, like xenomorphs and blobs
 			continue
-		if(M.assigned_role == "Cyborg" && is_drone.Find(M.name))
+		if(M.assigned_role == "default" && M.special_role == "") // admin shit
+			continue
+		if(M.assigned_role == "Cyborg" && is_drone.Find(M.name)) // useless data
 			continue
 		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles)
 
