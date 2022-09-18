@@ -82,7 +82,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                 {{:helper.link('Crew Manifest', 'contact', {'choice' : "41"}, null, 'fixedLeftWide')}}
 				<!-- {{:helper.link('News', data.new_News ? 'mail-closed' : 'mail-open', {'choice' : "6"}, null, 'fixedLeftWide')}} -->
 				{{:helper.link('Finance Management', 'suitcase', {'choice' : "Finance"}, null, 'fixedLeftWide')}}
-				{{:helper.link('Cargo Shop', 'cart', {'choice' : "Shop"}, null, 'fixedLeftWide')}}
+				{{:helper.link('ГрузТорг', 'cart', {'choice' : "Shop"}, null, 'fixedLeftWide')}}
             </div>
         </div>
         <br>
@@ -1083,34 +1083,52 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
         </div>
 	{{else data.mode == 8}} <!-- Online Shop -->
         <div class="item">
-            <center><H2>Cargo Shop</H2></center>
-			<center><H3>Fast to recieve and Easy to use</H3></center>
-			<b>Your Balance:</b> <span class="good">{{:data.money}}$</span><br>
+            <center><H2><span class="cargo">ГрузТорг</span></H2></center>
+			<center><H3>Быстрая и качественная доставка</H3></center>
+			<b>Баланс кошелька:</b> <span class="good">{{:data.money}}$</span><br>
         </div>
-		<H3>Category Selection</H3>
-        {{for data.categories}}
-            <div class="item">
-                {{:helper.link(value, 'triangle-1-e', {'choice' : "Shop_Category", 'categ' : value})}}<br>
-            </div>
-        {{/for}}
-	{{else data.mode == 81}} <!-- Online Shop -->
+		<H3><span class="cargo">Выбор каталога</span></H3>
+		<div class="item">
+            <div class="itemContent">
+				{{for data.categories}}
+					{{:helper.link(value, 'triangle-1-e', {'choice' : "Shop_Category", 'categ' : value}, null, 'fixedLeftWide')}}
+				{{/for}}
+			</div>
+		</div>
+		<div class="item">
+			<center><H3><span class="cargo">Заказы и Предложения</span></H3></center>
+			{{:helper.link('Добавить новый запрос', 'plusthick', {'choice' : "Add_Order_or_Offer"}, null, 'fixedLeftWider')}}<br>
+			<div class="itemContent">
+				{{for data.orders_and_offers}}
+					{{if value}}
+						<div class="fxdLft">
+						<table class="shop"><tbody>
+							<tr><th colspan="4" class="cargo"><B>Имя: </B><SMALL><I>{{:value.name}}</I></SMALL></th></tr>
+							<tr><td><B>Запрос: </B><SMALL><I>{{:value.description}}</I></SMALL></td></tr>
+						</tbody></table>
+						</div>
+					{{/if}}
+				{{/for}}
+			</div>
+        </div>
+	{{else data.mode == 81}} <!-- Online Shop Item -->
         <div class="item">
-            <center><H2>Cargo Shop</H2></center>
-			<b>Your Balance:</b> <span class="good">{{:data.money}}$</span><br>
+            <center><H2><span class="cargo">ГрузТорг</span></H2></center>
+			<b>Баланс кошелька:</b> <span class="good">{{:data.money}}$</span><br>
         </div>
-		<H3>Category: {{:data.category}}<H3>
-		<center><table class="pmon"><tbody>
+		<H3><span class="cargo">Каталог: {{:data.category}}</span><H3>
+		<center><table class="shop"><tbody>
 		{{for data.shop_lots}}
-			{{if value}}
-				<tr><td><div class="item">
-					<B>Name: </B><SMALL><I>{{:value.name}}</I></SMALL><br>
-					<B>Description: </B><SMALL><I>{{:value.description}}</I></SMALL><br>
-					<B>Price: </B><SMALL><I>{{:value.price}}$</I></SMALL>
-					{{:helper.link('Order', 'tag', {'choice' : "Shop_Order", 'order_item' : value.index})}}<br><br>
-				</div></td></tr>
-			{{/if}}
-        {{/for}}
+				<tr><th colspan="4" class="cargo"><B>Наименование: </B><SMALL><I>{{:value.name}}</I></SMALL></th></tr>
+				<tr><td><B>Описание: </B><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
+				<tr><td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
+				<td>{{:helper.link('Заказ', 'tag', {'choice' : "Shop_Order", 'order_item' : value.index})}}</td></tr>
+		{{empty}}
 		</tbody></table></center>
+			<center><table class="shop"><tbody>
+			<tr><td><center><H4>Нет предметов в наличии</H4></center></td></tr>
+			</tbody></table></center>
+        {{/for}}
     {{/if}}
 {{else}}
     <div class="wholeScreen">

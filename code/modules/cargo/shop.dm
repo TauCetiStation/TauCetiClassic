@@ -1,12 +1,12 @@
 var/global/list/online_shop_lots = list()
-var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "Resources", "Packs", "Misc")
+var/global/list/shop_categories = list("Еда", "Одежда", "Устройства", "Инструменты", "Ресурсы", "Наборы", "Разное")
 
 /datum/shop_lot
-	var/name = "Shop_Lot"
-	var/description = "Lot_Description"
+	var/name = "Лот"
+	var/description = "Описание лота"
 	var/price = 0
 	var/number = 1
-	var/category = "Misc"
+	var/category = "Разное"
 	var/sold = FALSE
 	var/account = 111111
 
@@ -26,7 +26,7 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 
 /obj/machinery/packer
 	name = "Shop Packer"
-	desc = "Used to scan and pack shop items."
+	desc = "Для упаковки предметов для онлайн-магазина."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "packer_base"
 	req_access = list(access_cargo)
@@ -40,7 +40,7 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 	var/lot_name
 	var/lot_desc
 	var/lot_price
-	var/lot_category = "Misc"
+	var/lot_category = "Разное"
 	var/lot_account
 
 	var/scanning = FALSE
@@ -97,10 +97,10 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 			lot_price = Tag.price
 			lot_account = Tag.account_number
 	else
-		lot_desc = Item.desc ? Item.desc : "Definitely a thing"
+		lot_desc = Item.desc ? Item.desc : "Это что-то"
 		lot_price = 0
 		lot_account = global.cargo_account.account_number
-	lot_name = Item.name ? Item.name : "A thing"
+	lot_name = Item.name ? Item.name : "Штука"
 
 
 	lot_category = default_categories(O)
@@ -110,21 +110,21 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 
 /obj/machinery/packer/proc/default_categories(obj/item/I)
 	if(istype(I, /obj/item/weapon/reagent_containers/food))
-		return "Food"
+		return "Еда"
 	if(istype(I, /obj/item/weapon/storage/food))
-		return "Food"
+		return "Еда"
 	else if(istype(I, /obj/item/weapon/storage))
-		return "Packs"
+		return "Наборы"
 	else if(istype(I, /obj/item/weapon))
-		return "Tools"
+		return "Инструменты"
 	else if(istype(I, /obj/item/clothing))
-		return "Clothes"
+		return "Одежда"
 	else if(istype(I, /obj/item/device))
-		return "Devices"
+		return "Устройства"
 	else if(istype(I, /obj/item/stack))
-		return "Resources"
+		return "Ресурсы"
 	else
-		return "Misc"
+		return "Разное"
 
 /obj/machinery/packer/MouseDrop_T(obj/structure/closet/C, mob/living/user)
 	if(Item)
@@ -137,10 +137,10 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 	C.forceMove(src)
 	Item = C
 
-	lot_name = Item.name ? Item.name : "A thing"
-	lot_desc = Item.desc ? Item.desc : "Definitely a thing"
+	lot_name = Item.name ? Item.name : "Штука"
+	lot_desc = Item.desc ? Item.desc : "Это что-то"
 	lot_price = 0
-	lot_category = "Packs"
+	lot_category = "Наборы"
 	lot_account = global.cargo_account.account_number
 
 	update_icon()
@@ -179,8 +179,8 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 			Item = P
 
 	Item.pixel_y = 6
-	Item.name = "Package number: [global.online_shop_lots.len]"
-	Item.desc = "Name: [lot_name], Description: [lot_desc], Price: [lot_price]"
+	Item.name = "Посылка номер: [global.online_shop_lots.len]"
+	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"
 
 	new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, global.online_shop_lots.len, lot_account)
 
@@ -203,22 +203,22 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 	update_icon()
 
 /obj/machinery/packer/ui_interact(mob/user)
-	var/dat = "<div class='Section__title'>Shop Packer</div>"
+	var/dat = "<div class='Section__title'>Упаковщик</div>"
 
 	if(Item)
-		dat += "Name: <A href='?src=\ref[src];field=name'>[lot_name]</A><BR>\n"
+		dat += "Наименование: <A href='?src=\ref[src];field=name'>[lot_name]</A><BR>\n"
 		if(locked)
-			dat += "Description: [lot_desc]<BR>"
-			dat += "Price: [lot_price]<BR>"
+			dat += "Описание: [lot_desc]<BR>"
+			dat += "Цена: [lot_price]<BR>"
 		else
-			dat += "Description: <A href='?src=\ref[src];field=description'>[lot_desc]</A><BR>\n"
-			dat += "Price: <A href='?src=\ref[src];field=price'>[lot_price]$</A><BR>\n"
-		dat += "Category: <A href='?src=\ref[src];field=category'>[lot_category]</A><BR>\n"
+			dat += "Описание: <A href='?src=\ref[src];field=description'>[lot_desc]</A><BR>\n"
+			dat += "Цена: <A href='?src=\ref[src];field=price'>[lot_price]$</A><BR>\n"
+		dat += "Каталог: <A href='?src=\ref[src];field=category'>[lot_category]</A><BR>\n"
 
-		dat += "<A href='?src=\ref[src];scan=1'>Scan</A>"
-		dat += "<A href='?src=\ref[src];eject=1'>Eject</A>"
+		dat += "<A href='?src=\ref[src];scan=1'>Сканировать</A>"
+		dat += "<A href='?src=\ref[src];eject=1'>Вытащить</A>"
 	else
-		dat += "No Item inserted"
+		dat += "Вставьте предмет"
 
 	var/datum/browser/popup = new(user, "packer", "Packer Console", 600, 400)	//Set up the popup browser window
 	popup.set_content(dat)
@@ -232,19 +232,19 @@ var/global/list/shop_categories = list("Food", "Clothes", "Devices", "Tools", "R
 	if (href_list["field"])
 		switch(href_list["field"])
 			if("name")
-				var/T = sanitize(input("Please input name:", "Shop", input_default(lot_name), null)  as text)
+				var/T = sanitize(input("Введите наименование:", "Shop", input_default(lot_name), null)  as text)
 				if(T)
 					lot_name = T
 			if("description")
-				var/T = sanitize(input("Please input description:", "Shop", input_default(lot_desc), null)  as text)
+				var/T = sanitize(input("Введите описание:", "Shop", input_default(lot_desc), null)  as text)
 				if(T)
 					lot_desc = T
 			if("price")
-				var/T = input("Please input price:", "Shop", input_default(lot_price), null)  as num
+				var/T = input("Введите цену:", "Shop", input_default(lot_price), null)  as num
 				if(T)
 					lot_price = T
 			if("category")
-				var/T = input("Please select a lot category", "Shop", lot_category) in global.shop_categories
+				var/T = input("Выберите каталог", "Shop", lot_category) in global.shop_categories
 				if(T)
 					lot_category = T
 	else if(href_list["scan"])

@@ -70,6 +70,7 @@
 
 	var/category
 	var/list/shop_lots = list()
+	var/list/orders_and_offers = list()
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -527,6 +528,7 @@
 	data["categories"] = global.shop_categories
 	data["category"] = category
 	data["shop_lots"] = shop_lots
+	data["orders_and_offers"] = orders_and_offers
 
 	data["cart_loaded"] = cartridge ? 1:0
 	if(cartridge)
@@ -993,12 +995,16 @@
 				if(Lot.category == category && !Lot.sold)
 					shop_lots.len+=1
 					shop_lots[shop_lots.len] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "index" = shop_lots.len)
+		if("Add_Order_or_Offer")
+			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
+			if(T && owner)
+				add_order_or_offer(owner, T)
 		if("Shop_Order")
 			var/i = text2num(href_list["order_item"])
 			var/list/Lot = shop_lots[i]
 			var/cost = Lot["price"]
 			if(owner_account && (cost <= owner_account.money))
-				var/T = sanitize(input(U, "Please enter destination and comment", "Comment", null) as text)
+				var/T = sanitize(input(U, "Введите адрес доставки или комментарий", "Комментарий", null) as text)
 				if(T)
 					order_item(Lot["number"], T)
 
@@ -1675,15 +1681,24 @@
 
 	var/obj/item/weapon/paper/P = new(get_turf(Packer.loc))
 
-	P.name = "Cargo supply item order"
-	P.info += "Item id #[Lot.number]<br>"
-	P.info += "Item: [Lot.name]<br>"
-	P.info += "For: [Lot.price] Credits<br>"
-	P.info += "Requested by: [owner]<br>"
-	P.info += "Comment: [destination]<br>"
+	P.name = "Заказ предмета из магазина"
+	P.info += "Посылка номер #[Lot.number]<br>"
+	P.info += "Наименование: [Lot.name]<br>"
+	P.info += "Цена: [Lot.price]$<br>"
+	P.info += "Заказал: [owner ? owner : "Unknown"]<br>"
+	P.info += "Комментарий: [destination]<br>"
 	P.info += "<hr>"
-	P.info += "STAMP BELOW TO APPROVE THIS REQUISITION:<br>"
+	P.info += "МЕСТО ДЛЯ ШТАМПОВ:<br>"
 
 	P.update_icon()
+
+/obj/item/device/pda/proc/add_order_or_offer(name, desc)
+	orders_and_offers.len++
+	orders_and_offers[orders_and_offers.len] = list("name" = name, "description" = desc)
+	mode = 8
+	addtimer(CALLBACK(src, .proc/delete_order_or_offer, orders_and_offers.len), 15 MINUTES)
+
+/obj/item/device/pda/proc/delete_order_or_offer(num)
+	orders_and_offers[num] = null
 
 #undef TRANSCATION_COOLDOWN

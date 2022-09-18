@@ -211,7 +211,7 @@
 	m_amt = 3000
 	g_amt = 1300
 	origin_tech = "materials=1;engineering=1"
-	var/lot_description = "Definitely a thing"
+	var/lot_description = "Это что-то"
 	var/lot_account_number = 111111
 	var/lot_price = 0
 	var/Tagger = FALSE
@@ -227,15 +227,15 @@
 			if (i%4==0)
 				dat += "</tr><tr>"
 
-		dat += "</tr></table><br>Current Selection: [currTag ? currTag : "None"]</tt>"
+		dat += "</tr></table><br>Выбрано: [currTag ? currTag : "None"]</tt>"
 	else
-		dat += "Description: <A href='?src=\ref[src];description=1'>[lot_description]</A><BR>\n"
-		dat += "Account Number: <A href='?src=\ref[src];number=1'>[lot_account_number]</A><BR>\n"
-		dat += "Price: <A href='?src=\ref[src];price=1'>[lot_price]$</A><BR>\n"
+		dat += "Описание: <A href='?src=\ref[src];description=1'>[lot_description]</A><BR>\n"
+		dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number]</A><BR>\n"
+		dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A><BR>\n"
 
-	dat += "<br>Current Mode: <A href='?src=\ref[src];tagger=1'>[Tagger ? "Tagger" : "Pricer"]</A><BR>\n"
+	dat += "<br>Режим: <A href='?src=\ref[src];tagger=1'>[Tagger ? "Доставка" : "Продажа"]</A><BR>\n"
 
-	var/datum/browser/popup = new(user, "destTagScreen", "TagMaster 2.3", 450, 350)
+	var/datum/browser/popup = new(user, "destTagScreen", "Маркировщик 2.3", 450, 350)
 	popup.set_content(dat)
 	popup.open()
 
@@ -278,14 +278,14 @@
 	if(href_list["nextTag"] && (href_list["nextTag"] in tagger_locations))
 		src.currTag = href_list["nextTag"]
 	else if(href_list["description"])
-		var/T = sanitize(input("Please input description:", "Tagger", input_default(lot_description), null)  as text)
-		lot_description = T ? T : "Definitely a thing"
+		var/T = sanitize(input("Введите описание:", "Маркировщик", input_default(lot_description), null)  as text)
+		lot_description = T ? T : "Это что-то"
 	else if(href_list["number"])
-		var/T = input("Please input account number:", "Tagger", input_default(lot_account_number), null)  as num
+		var/T = input("Введите номер аккаунта:", "Маркировщик", input_default(lot_account_number), null)  as num
 		if(T && T >= 111111 && T <= 999999)
 			lot_account_number = T
 	else if(href_list["price"])
-		var/T = input("Please input price:", "Tagger", input_default(lot_price), null)  as num
+		var/T = input("Вваедите цену:", "Маркировщик", input_default(lot_price), null)  as num
 		if(T)
 			lot_price = T
 	else if(href_list["tagger"])

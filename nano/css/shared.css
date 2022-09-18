@@ -189,6 +189,10 @@ h4 {
     color: #272727;
 }
 
+.cargo {
+    color: #90642c;
+}
+
 .caption {
     font-size: 10px;
     font-weight: bold;
@@ -408,6 +412,10 @@ div.notice {
     border-color: #666666;
 }
 
+.fxdLft {
+    float: left;
+}
+
 .fixedLeft {
     width: 110px;
     float: left;
@@ -515,6 +523,15 @@ table.pmon td, table.pmon th {
     padding: 0px 5px 0px 5px;
 }
 
+table.shop {
+    border: 2px solid #90642c;
+}
+
+table.shop td, table.shop th {
+    border-bottom: 1px dotted #90642c;
+    padding: 0px 5px 0px 5px;
+}
+
 /* Table Stuffs for manifest*/
 
 th.command {
@@ -558,6 +575,11 @@ th.misc {
     font-weight: bold;
     color: #ffffff;
 }
+
+th.cargo {
+	background: #90642c;
+	font-weight: bold;
+	color: #ffffff;
 
 /* Damage colors and fonts for crew monitoring computer */
 .burn, .brute, .toxin, .oxyloss {
