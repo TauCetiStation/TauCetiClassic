@@ -33,6 +33,8 @@
 /datum/religion_tech/cult/more_runes
 	id = RTECH_MORE_RUNES
 
+/datum/religion_tech/cult/more_runes/on_add(datum/religion/cult/R)
+	R.max_runes_on_mob += 5
 
 /datum/religion_tech/cult/mirror_shield
 	id = RTECH_MIRROR_SHIELD
@@ -41,6 +43,5 @@
 	id = RTECH_IMPROVED_PYLONS
 
 /datum/religion_tech/cult/improved_pylons/on_add(datum/religion/cult/R)
-	for(var/obj/structure/cult/pylon/P as anything in R.pylons)
-		START_PROCESSING(SSfastprocess, P)
-		P.AddComponent(/datum/component/aura_healing, 5, 0.4, 0.4, 0.4, 1.2, FALSE, TRAIT_HEALS_FROM_PYLONS,"#960000")
+	for(var/obj/structure/cult/pylon/P as anything in global.pylons)
+		P.init_healing()

@@ -62,6 +62,9 @@
 	light_power = 2
 	light_range = 3
 
+#define CORRUPT_FORBIDDEN 0
+#define CORRUPT_NOT_ALLOWED 1 //We don't know whether we should or not corrupt
+#define CORRUPT_ALLOWED 2
 /obj/structure/cult/pylon
 	name = "pylon"
 	desc = "A floating crystal that hums with an unearthly energy."
@@ -72,7 +75,7 @@
 	pass_flags = PASSTABLE
 	health = 200
 	var/list/validturfs = list()
-	var/should_corrupt = TRUE
+	var/should_corrupt = CORRUPT_NOT_ALLOWED
 	var/datum/religion/cult/C
 
 	var/corruption_delay = 50 //Increses currupting delay by 5 each time it procs
@@ -80,61 +83,41 @@
 
 /obj/structure/cult/pylon/atom_init()
 	. = ..()
-	if(cult_religion && cult_religion.get_tech(RTECH_IMPROVED_PYLONS))
-		AddComponent(/datum/component/aura_healing, 5, 0.4, 0.4, 0.4, 1.2, FALSE, TRAIT_HEALS_FROM_PYLONS,"#960000")
+	global.pylons += src
+	if(global.cult_religion && global.cult_religion.get_tech(RTECH_IMPROVED_PYLONS))
+		init_healing()
 
-	START_PROCESSING(SSfastprocess, src)
+/obj/structure/cult/pylon/proc/init_healing()
+	AddComponent(/datum/component/aura_healing, 5,  0.4, 0.4, 0.4, 1.2, FALSE, TRAIT_HEALS_FROM_PYLONS,"#960000")
+	AddComponent(/datum/component/aura_healing, 5, TRUE, 0.4, 0.4, 0, 1, 1, 0.1, 0.4, null, 1.2, \
+	TRAIT_HEALS_FROM_PYLONS,"#960000")
+	START_PROCESSING(SSprocessing, src)
+	C = cult_religion
 
 /obj/structure/cult/pylon/Destroy()
 	new /obj/structure/cult/pylon_platform(loc)
 	new /obj/item/stack/sheet/metal(loc)
-	STOP_PROCESSING(SSfastprocess, src)
+	STOP_PROCESSING(SSprocessing, src)
 	validturfs = null
-	C.pylons -= src
-	C = null
+	global.pylons -= src
 	return ..()
 
 /obj/structure/cult/pylon/process()
 	if(!anchored)
+		validturfs = list()
 		return
 
-	if(!C) //Roundstart pre-round case
-		if(cult_religion)
-			C = cult_religion
-			C.pylons += src
-			if(!C.get_tech(RTECH_IMPROVED_PYLONS))
-				STOP_PROCESSING(SSfastprocess, src)
+	//Now we have to decide whether we need to corrupt or not
+	if(should_corrupt == CORRUPT_FORBIDDEN)
 		return
-
-	/*if(COOLDOWN_FINISHED(src, heal))
-		for(var/mob/living/L in mobs_in_view(3, src))
-			if(iscultist(L))
-				if(L.health != L.maxHealth)
-					new /obj/effect/temp_visual/heal(get_turf(L),"#960000")
-					if(ishuman(L))
-						var/mob/living/carbon/human/H = L
-						H.heal_overall_damage(2, 2)
-					if(isshade(L) || isconstruct(L))
-						var/mob/living/simple_animal/M = L
-						if(M.health < M.maxHealth)
-							M.adjustBruteLoss(-6)
-							M.adjustFireLoss(-6)
-				if(ishuman(L))
-					var/mob/living/carbon/human/H = L
-					if(H.blood_amount() < BLOOD_VOLUME_NORMAL)
-						H.blood_add(2)
-		COOLDOWN_START(src, heal, heal_delay)*/
-
-	if(!should_corrupt)
-		return
-	else if(should_corrupt == 2)
+	else if(should_corrupt == CORRUPT_ALLOWED)
 		if(COOLDOWN_FINISHED(src, corruption))
 			corrupt()
-	else if(should_corrupt)
+	else if(should_corrupt == CORRUPT_NOT_ALLOWED)
 		if(is_centcom_level(z))//It is cult' area, after all
-			should_corrupt = FALSE
+			should_corrupt = CORRUPT_FORBIDDEN
 		else
-			should_corrupt = 2
+			should_corrupt = CORRUPT_ALLOWED
 
 /obj/structure/cult/pylon/proc/corrupt()
 	if(!length(validturfs))
@@ -142,14 +125,14 @@
 			validturfs += T
 	else
 		var/turf/simulated/T = pick(validturfs)
-		if(isfloorturf(T)) //Cuz we can get a wall here
-			T.ChangeTurf(pick(C.floor_types))
-		else if(iswallturf(T))
-			T.ChangeTurf(pick(C.wall_types))
+		T.atom_religify(C)
 		validturfs -= T
 		corruption_delay += 5
 
 	COOLDOWN_START(src, corruption, corruption_delay)
+#undef CORRUPT_FORBIDDEN
+#undef CORRUPT_NOT_ALLOWED
+#undef CORRUPT_ALLOWED
 
 /obj/structure/cult/pylon/proc/activate(time_to_stop, datum/religion/R)
 	var/mob/living/simple_animal/hostile/pylon/charged = new(loc)

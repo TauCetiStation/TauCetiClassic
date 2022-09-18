@@ -114,7 +114,8 @@
 			current_alerts += candidate
 
 		if (should_show_effect && candidate.health < candidate.maxHealth)
-			new /obj/effect/temp_visual/heal(get_turf(candidate), healing_color)
+			var/obj/effect/temp_visual/heal/H = new(get_turf(candidate))
+			H.color = healing_color
 
 		if (iscarbon(candidate) || issilicon(candidate))
 			candidate.adjustBruteLoss(-brute_heal * delta_time)
@@ -137,8 +138,7 @@
 
 		else if (isanimal(candidate))
 			var/mob/living/simple_animal/simple_candidate = candidate
-			simple_candidate.adjustHealth(-simple_heal * delta_time)
-
+			simple_candidate.heal_overall_damage(simple_heal * delta_time * 0.5, simple_heal * delta_time * 0.5)
 		candidate.updatehealth()
 
 	for (var/mob/remove_alert_from as anything in remove_alerts_from)

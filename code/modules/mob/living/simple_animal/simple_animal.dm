@@ -283,21 +283,6 @@
 
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(30)
-/**
- * Adjusts the health of a simple mob by a set amount and wakes AI if its idle to react
- *
- * Arguments:
- * * amount The amount that will be used to adjust the mob's health
- * * updating_health If the mob's health should be immediately updated to the new value
- * * forced If we should force update the adjustment of the mob's health no matter the restrictions, like GODMODE
- */
-/mob/living/simple_animal/proc/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = FALSE
-	if(forced || !(status_flags & GODMODE))
-		bruteloss = round(clamp(bruteloss + amount, 0, maxHealth * 2))
-		if(updating_health)
-			updatehealth()
-		. = amount
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	var/perc_block = (10 - harm_intent_damage) / 10 // #define MAX_HARM_INTENT_DAMAGE 10. Turn harm_intent_damage into armor or something. ~Luduk
