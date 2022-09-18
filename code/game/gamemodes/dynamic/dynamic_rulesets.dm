@@ -1,7 +1,7 @@
 /datum/dynamic_ruleset
 	var/name = ""//For admin logging, and round end scoreboard
-	var/persistent = 0//if set to 1, the rule won't be discarded after being executed, and /gamemode/dynamic will call process() every MC tick
-	var/repeatable = 0//if set to 1, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
+	var/persistent = FALSE//if set to 1, the rule won't be discarded after being executed, and /gamemode/dynamic will call process() every MC tick
+	var/repeatable = FALSE//if set to 1, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
 	var/list/candidates = list()//list of players that are being drafted for this rule
 	var/list/assigned = list()//list of players that were selected for this rule
 	var/datum/role/role_category = /datum/role/traitor //rule will only accept candidates with "Yes" or "Always" in the preferences for this role
@@ -26,7 +26,7 @@
 
 	//for midround polling
 	var/list/applicants = list()
-	var/searching = 0
+	var/searching = FALSE
 
 	var/list/requirements = list(40,30,20,10,10,10,10,10,10,10)
 	//requirements are the threat level requirements per pop range. The ranges are as follow:
@@ -60,14 +60,9 @@
 
 /datum/dynamic_ruleset/latejoin//Can be drafted when a player joins the server
 
-/datum/dynamic_ruleset/proc/acceptable(var/population=0,var/threat_level=0)
+/datum/dynamic_ruleset/proc/acceptable(population = 0, threat_level = 0)
 	//by default, a rule is acceptable if it satisfies the threat level/population requirements.
 	//If your rule has extra checks, such as counting security officers, do that in ready() instead
-	/*if(!map.map_ruleset(src))
-		message_admins("Dynamic Mode: Skipping [name] due to map blacklist.")
-		log_admin("Dynamic Mode: Skipping [name] due to map blacklist")
-		return FALSE*/
-
 	if(player_list.len >= mode.high_pop_limit)
 		return (threat_level >= high_population_requirement)
 	else
@@ -79,25 +74,26 @@
 // returns: 0 or 1 depending on success. (failure meaning something runtimed mid-code.)
 /datum/dynamic_ruleset/proc/choose_candidates()
 	var/mob/M = pick(candidates)
-	if (istype(M))
+	if(istype(M))
 		assigned += M
 		candidates -= M
 	return (assigned.len > 0)
 
+//write here your rule execution code, everything about faction/role spawning/populating.
 /datum/dynamic_ruleset/process()
-	//write here your rule execution code, everything about faction/role spawning/populating.
 	return
 
+//write here your rule execution code, everything about faction/role spawning/populating.
 /datum/dynamic_ruleset/proc/execute()
-	//write here your rule execution code, everything about faction/role spawning/populating.
-	return 1
+	return TRUE
 
-/datum/dynamic_ruleset/proc/ready(var/forced = 0)	//Here you can perform any additional checks you want. (such as checking the map, the amount of certain jobs, etc)
-	if (admin_disable_rulesets && !forced)
+//Here you can perform any additional checks you want. (such as checking the map, the amount of certain jobs, etc)
+/datum/dynamic_ruleset/proc/ready(var/forced = 0)
+	if(admin_disable_rulesets && !forced)
 		message_admins("Dynamic Mode: [name] was prevented from firing by admins.")
 		log_admin("Dynamic Mode: [name] was prevented from firing by admins.")
 		return FALSE
-	if (required_candidates > candidates.len)		//IMPORTANT: If ready() returns 1, that means execute() should never fail!
+	if(required_candidates > candidates.len)		//IMPORTANT: If ready() returns 1, that means execute() should never fail!
 		return FALSE
 	return TRUE
 
@@ -107,9 +103,9 @@
 	if(dead_dont_count)
 		for(var/mob/M in mode.living_players)
 			if(M.stat == DEAD)
-				continue//dead players cannot count as opponents
+				continue //dead players cannot count as opponents
 			if(M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_jobs) && (!(M in candidates) || (M.mind.assigned_role in restricted_from_jobs)))
-				enemies_count++//checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
+				enemies_count++ //checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 	else
 		for(var/mob/M in mode.candidates)
 			if(M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_jobs) && (!(M in candidates) || (M.mind.assigned_role in restricted_from_jobs)))
@@ -128,10 +124,10 @@
 		threat = mode.midround_threat_level != 100 ? round(mode.midround_threat_level/10)+1 : 10
 	else
 		threat = mode.threat_level != 100 ? round(mode.threat_level/10)+1 : 10
-	/*if(enemies_count < required_enemies[threat] && !map.ignore_enemy_requirement(src))
+	if(enemies_count < required_enemies[threat])
 		message_admins("Dynamic Mode: There are not enough enemy jobs ready for [name]. ([enemies_count] out of [required_enemies[threat]])")
 		log_admin("Dynamic Mode: There are not enough enemy jobs ready for [name]. ([enemies_count] out of [required_enemies[threat]])")
-		return FALSE*/
+		return FALSE
 	if(pop_and_enemies >= required_pop[threat])
 		return TRUE
 	if(!dead_dont_count)//roundstart check only
@@ -141,7 +137,6 @@
 
 /datum/dynamic_ruleset/proc/get_weight()
 	var/result = weight
-	/*result *= map.ruleset_multiplier(src)*/
 	result *= weight_time_day()
 
 	for(var/datum/dynamic_ruleset/DR in mode.executed_rules)
@@ -189,30 +184,29 @@
 	return
 
 
-/datum/dynamic_ruleset/proc/send_applications(var/list/possible_volunteers = list())
-	if (possible_volunteers.len <= 0)//this shouldn't happen, as ready() should return 0 if there is not a single valid candidate
+/datum/dynamic_ruleset/proc/send_applications(list/possible_volunteers = list())
+	if(possible_volunteers.len <= 0)//this shouldn't happen, as ready() should return 0 if there is not a single valid candidate
 		message_admins("Possible volunteers was 0. This shouldn't appear, because of ready(), unless you forced it!")
 		return
 	message_admins("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	log_admin("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
-	searching = 1
+	searching = TRUE
 	var/role_id = initial(role_category.id)
-	//var/icon/logo_icon = icon('icons/logos.dmi', logo)
+	var/icon/logo_icon = icon('icons/misc/logos.dmi', logo)
 	for(var/mob/M in possible_volunteers)
-		var/banned_factor = (jobban_isbanned(M, role_id) /*|| isantagbanned(M)*/ || (role_category_override && jobban_isbanned(M, role_category_override)))
+		var/banned_factor = (jobban_isbanned(M, role_id) || (role_category_override && jobban_isbanned(M, role_category_override)))
 		if(!M.client || banned_factor || M.client.is_afk())
 			continue
-
-		//to_chat(M, "[logo ? "[bicon(logo_icon)]" : ""]<span class='recruit'>The mode is looking for volunteers to become [initial(role_category.id)]. (<a href='?src=\ref[src];signup=\ref[M]'>Apply now!</a>)</span>[logo ? "[bicon(logo_icon)]" : ""]")
+		to_chat(M, "[logo ? "[bicon(logo_icon)]" : ""]<span class='recruit'>The mode is looking for volunteers to become [initial(role_category.id)]. (<a href='?src=\ref[src];signup=\ref[M]'>Apply now!</a>)</span>[logo ? "[bicon(logo_icon)]" : ""]")
 		window_flash(M.client)
 
-	spawn(1 MINUTES)
-		searching = 0
+	addtimer(CALLBACK(src, .proc/recruiting_end, possible_volunteers, logo_icon), 600)
+		/*searching = FALSE
 		for(var/mob/M in possible_volunteers)
 			if(!M.client || jobban_isbanned(M, role_category) || M.client.is_afk())
 				continue
-			//to_chat(M, "[logo ? "[bicon(logo_icon)]" : ""]<span class='recruit'>Applications for [initial(role_category.id)] are now closed.</span>[logo ? "[bicon(logo_icon)]" : ""]")
+			to_chat(M, "[logo ? "[bicon(logo_icon)]" : ""]<span class='recruit'>Applications for [initial(role_category.id)] are now closed.</span>[logo ? "[bicon(logo_icon)]" : ""]")
 		if(!applicants || applicants.len <= 0)
 			log_admin("DYNAMIC MODE: [name] received no applications.")
 			message_admins("DYNAMIC MODE: [name] received no applications.")
@@ -223,9 +217,29 @@
 
 		log_admin("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
 		message_admins("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
-		review_applications()
+		review_applications()*/
+
+//another proc for deleting SPAWN(1 minutes) on VG
+/datum/dynamic_ruleset/proc/recruiting_end(list/possible_volunteers = list(), icon/logo_icon)
+	searching = FALSE
+	for(var/mob/M in possible_volunteers)
+		if(!M.client || jobban_isbanned(M, role_category) || M.client.is_afk())
+			continue
+		to_chat(M, "[logo ? "[bicon(logo_icon)]" : ""]<span class='recruit'>Applications for [initial(role_category.id)] are now closed.</span>[logo ? "[bicon(logo_icon)]" : ""]")
+	if(!applicants || applicants.len <= 0)
+		log_admin("DYNAMIC MODE: [name] received no applications.")
+		message_admins("DYNAMIC MODE: [name] received no applications.")
+		mode.refund_midround_threat(cost)
+		mode.threat_log += "[worldtime2text()]: Rule [name] refunded [cost] (no applications)"
+		mode.executed_rules -= src
+		return
+
+	log_admin("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
+	message_admins("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
+	review_applications()
 
 /datum/dynamic_ruleset/proc/review_applications()
+	return
 
 /datum/dynamic_ruleset/Topic(var/href, var/list/href_list)
 	if(href_list["signup"])
@@ -235,7 +249,7 @@
 		volunteer(M)
 
 /datum/dynamic_ruleset/proc/volunteer(var/mob/M)
-	if (!searching)
+	if(!searching)
 		return
 	if(jobban_isbanned(M, role_category))
 		to_chat(M, "<span class='danger'>Banned from [initial(role_category.id)].</span>")
@@ -288,16 +302,16 @@
 	var/e = 0
 	//------------------------------------------------
 	var/role_id = initial(role_category.id)
-	//var/role_pref = initial(role_category.required_pref)
+	var/role_pref = initial(role_category.required_pref)
 	for(var/mob/P in candidates)
-		if(!P.client || !P.mind || !P.mind.assigned_role)//are they connected?
+		if(!P.client || !P.mind.assigned_role)//are they connected?
 			candidates.Remove(P)
 			a++
 			continue
-		/*if(!P.client.desires_role(role_pref))//are they willing?
+		else if(!(role_id in P.client.prefs.be_role))
 			candidates.Remove(P)
 			b++
-			continue*/
+			continue
 		else if(jobban_isbanned(P, role_id) || (role_category_override && jobban_isbanned(P, role_category_override)))//are they not antag-banned?
 			candidates.Remove(P)
 			b1++//we only count banned ones if they actually wanted to play the role
@@ -311,14 +325,11 @@
 			e++
 			continue
 		if((protected_from_jobs.len > 0) && (P.mind.assigned_role && (P.mind.assigned_role in protected_from_jobs)) || (P.mind.role_alt_title && (P.mind.role_alt_title in protected_from_jobs)))
-			/*var/probability = initial(role_category.protected_traitor_prob)
-			if(prob(probability))
-				candidates.Remove(P)
-				c1++*/
+			candidates.Remove(P)
 			c++
 			continue
-	message_admins("DYNAMIC MODE: [name] has [candidates.len] valid candidates out of [cand] players ([a ? "[a] disconnected, ":""][b ? "[b] didn't want the role, ":""][b1 ? "[b1] wanted the role but are banned from it, ":""][c1 ? "[c1] out of [c] were protected from the role, " : ""][d ? "[d] were restricted from the role, " : ""][e ? "[e] didn't pick the job necessary for the role" : ""])")
-	log_admin("DYNAMIC MODE: [name] has [candidates.len] valid candidates out of [cand] players ([a ? "[a] disconnected, ":""][b ? "[b] didn't want the role, ":""][b1 ? "[b1] wanted the role but are banned from it, ":""][c1 ? "[c1] out of [c] were protected from the role, " : ""][d ? "[d] were restricted from the role, " : ""][e ? "[e] didn't pick the job necessary for the role" : ""])")
+	message_admins("DYNAMIC MODE: [name] has [candidates.len] valid candidates out of [cand] players ([a ? "[a] disconnected, ":""][b ? "[b] didn't want the role, ":""][b1 ? "[b1] wanted the role but are banned from it, ":""][c1 ? "[c] were protected from the role, " : ""][d ? "[d] were restricted from the role, " : ""][e ? "[e] didn't pick the job necessary for the role" : ""])")
+	log_admin("DYNAMIC MODE: [name] has [candidates.len] valid candidates out of [cand] players ([a ? "[a] disconnected, ":""][b ? "[b] didn't want the role, ":""][b1 ? "[b1] wanted the role but are banned from it, ":""][c1 ? "[c] were protected from the role, " : ""][d ? "[d] were restricted from the role, " : ""][e ? "[e] didn't pick the job necessary for the role" : ""])")
 
 /datum/dynamic_ruleset/roundstart/delayed/trim_candidates()
 	if(SSticker && SSticker.current_state <  GAME_STATE_PLAYING)
@@ -344,17 +355,17 @@
 /datum/dynamic_ruleset/roundstart/ready(var/forced = 0)
 	if (!forced)
 		if(!check_enemy_jobs(FALSE))
-			return 0
+			return FALSE
 	return ..()
 
 /datum/dynamic_ruleset/proc/latejoinprompt(var/mob/user)
 	var/turf/oldloc = get_turf(user)
 	user.forceMove(null)
 	if(alert(user,"The gamemode is trying to select you for [src], do you want this?",,"Yes","No") == "Yes")
-		return 1
+		return TRUE
 	user.forceMove(oldloc)
 	message_admins("[user.key] has opted out of [src].")
-	return 0
+	return FALSE
 
 /datum/dynamic_ruleset/proc/generate_ruleset_body(mob/applicant)
 	var/mob/living/carbon/human/new_character = new(applicant)
