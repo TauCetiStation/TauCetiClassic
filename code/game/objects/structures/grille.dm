@@ -20,6 +20,7 @@
 	. = ..()
 	if(destroyed)
 		update_integrity(get_integrity() * integrity_failure)
+		destroyed = FALSE // let atom_break reset destroyed
 		atom_break() // update integrity skips atom_break and atom_repair
 
 /obj/structure/grille/Bumped(atom/user)
