@@ -165,13 +165,11 @@ var/global/list/wedge_image_cache = list()
 			if(armor_block < 10)
 				visible_message("<span class='userdanger'> [user] headbutts the [src].</span>")
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-				H.Stun(2)
-				H.Weaken(5)
 				BP.take_damage(10, 0, used_weapon = "Hematoma")
 			else
 				visible_message("<span class='userdanger'> [user] headbutts the [src]. Good thing they're wearing a helmet.</span>")
-				H.Stun(2)
-				H.Weaken(5)
+			H.Stun(2)
+			H.Weaken(5)
 			return
 
 	user.SetNextMove(CLICK_CD_INTERACT)
