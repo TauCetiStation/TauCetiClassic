@@ -1669,15 +1669,13 @@
 	Lot.sold = TRUE
 	mode = 8
 
-	owner_account.money -= Lot.price
+	charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Счёт за покупку "[Lot.name]" в "[CARGOSHOPNAME]"", CARGOSHOPNAME, -Lot.price)
 	if(Lot.account == global.cargo_account.account_number)
-		global.cargo_account.money += Lot.price
+		charge_to_account(global.cargo_account.account_number, owner_account.account_number, "Покупка "[Lot.name]" в "[CARGOSHOPNAME]"", CARGOSHOPNAME, Lot.price)
 	else
 		var/cargo_revenue = round(Lot.price * 0.25)
-		global.cargo_account.money += cargo_revenue
-		var/datum/money_account/Acc = get_account(Lot.account)
-		if(Acc)
-			Acc.money += Lot.price - cargo_revenue
+		charge_to_account(global.cargo_account.account_number, owner_account.account_number, "Налог за покупку "[Lot.name]" в "[CARGOSHOPNAME]"", CARGOSHOPNAME, cargo_revenue)
+		charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу "[Lot.name]" в "[CARGOSHOPNAME]"", CARGOSHOPNAME, Lot.price - cargo_revenue)
 
 	var/obj/item/weapon/paper/P = new(get_turf(Packer.loc))
 
