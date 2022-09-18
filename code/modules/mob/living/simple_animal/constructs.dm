@@ -269,7 +269,7 @@
 	return TRUE
 
 /mob/living/simple_animal/construct/harvester/UnarmedAttack(atom/A)
-	if(ishuman(A) && prob(30))
+	if(ishuman(A) && prob(20))
 		var/mob/living/carbon/human/C = A
 		var/list/limbs = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)
 		limbs -= C.get_missing_bodyparts()
